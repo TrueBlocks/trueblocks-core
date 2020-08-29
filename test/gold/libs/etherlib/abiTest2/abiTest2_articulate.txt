@@ -1,0 +1,71 @@
+abiTest2 argc: 1 
+abiTest2 
+[TIME ~ CLOCK - <WARNG> : Unknown type: tuple in decodeTheData
+{
+  "blockNumber": 10419885,
+  "transactionIndex": 115,
+  "from": "0x00de4b13153673bcae2616b67bf822500d325fc3",
+  "to": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
+  "value": 0,
+  "input": "0x9120491c000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000010000000000000000000000006b175474e89094c44da98b954eedeac495271d0f00000000000000000000000000000000000000000000001f711def073e9000000000000000000000000000001719c7dc8216ce67f96171e1a817195ae075d78d",
+  "isError": 0,
+  "receipt": {
+    "logs": [
+      {
+        "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
+        "articulatedLog": {
+          "name": "DonationSent",
+          "inputs": [
+            {
+              "name": "token",
+              "value": "0x6b175474e89094c44da98b954eedeac495271d0f"
+            },
+            {
+              "name": "amount",
+              "value": "580000000000000000000"
+            },
+            {
+              "name": "dest",
+              "value": "0x1719c7dc8216ce67f96171e1a817195ae075d78d"
+            },
+            {
+              "name": "donor",
+              "value": "0x00de4b13153673bcae2616b67bf822500d325fc3"
+            }
+          ]
+        }
+      },
+      {
+        "address": "0x6b175474e89094c44da98b954eedeac495271d0f",
+        "articulatedLog": {
+          "name": "Transfer",
+          "inputs": [
+            {
+              "name": "_from",
+              "value": "0x00de4b13153673bcae2616b67bf822500d325fc3"
+            },
+            {
+              "name": "_to",
+              "value": "0x1719c7dc8216ce67f96171e1a817195ae075d78d"
+            },
+            {
+              "name": "_amount",
+              "value": "580000000000000000000"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "articulatedTx": {
+    "name": "donate",
+    "inputs": [
+      {
+        "name": "donations",
+        "value": "[]"
+      }
+    ]
+  }
+}
+
+]

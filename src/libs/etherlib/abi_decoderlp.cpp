@@ -43,35 +43,23 @@ size_t decodeTheData(CParameterArray& interfaces, const CStringArray& dataArray,
         CParameter* pPtr = &interfaces[q];
         string_q type = pPtr->type;
 
-        bool isBaseType = (type.find("[") == string::npos);
+        bool isBaseType = !contains(type, "[");
         if (isBaseType) {
-            if (type.find("bool") != string::npos) {
-                // sugar
-                CParameterArray tmp;
-                {
-                    CParameter p;
-                    p.type = "uint256";
-                    tmp.push_back(p);
-                }
-                decodeTheData(tmp, dataArray, readIndex);
-                pPtr->value = ((tmp[0].value == "1") ? "true" : "false");
+            if (contains(type, "bool")) {
+                size_t bits = 128;
+                pPtr->value = bnu_2_Str(str_2_BigUint("0x" + dataArray[readIndex++], bits));
+                pPtr->value = (pPtr->value == "1" ? "true" : "false");
 
-            } else if (type.find("address") != string::npos) {
-                // sugar
-                CParameterArray tmp;
-                {
-                    CParameter p;
-                    p.type = "uint160";
-                    tmp.push_back(p);
-                }
-                decodeTheData(tmp, dataArray, readIndex);
-                pPtr->value = "0x" + padLeft(toLower(bnu_2_Hex(str_2_BigUint(tmp[0].value))), 40, '0');
+            } else if (contains(type, "address")) {
+                size_t bits = 160;
+                pPtr->value =
+                    "0x" + padLeft(toLower(bnu_2_Hex(str_2_BigUint("0x" + dataArray[readIndex++], bits))), 40, '0');
 
-            } else if (type.find("uint") != string::npos) {
+            } else if (contains(type, "uint")) {
                 size_t bits = str_2_Uint(substitute(type, "uint", ""));
                 pPtr->value = bnu_2_Str(str_2_BigUint("0x" + dataArray[readIndex++], bits));
 
-            } else if (type.find("int") != string::npos) {
+            } else if (contains(type, "int")) {
                 size_t bits = str_2_Uint(substitute(type, "int", ""));
                 pPtr->value = bni_2_Str(str_2_BigInt("0x" + dataArray[readIndex++], bits));
 
@@ -103,7 +91,7 @@ size_t decodeTheData(CParameterArray& interfaces, const CStringArray& dataArray,
                     }
                 }
 
-            } else if (type.find("bytes") != string::npos) {
+            } else if (contains(type, "bytes")) {
                 // bytes1 through bytes32 are fixed length
                 pPtr->value = "0x" + dataArray[readIndex++];
 
@@ -138,17 +126,7 @@ size_t decodeTheData(CParameterArray& interfaces, const CStringArray& dataArray,
                     }
                 }
 
-            } else if (type.find("]") != string::npos) {
-                // int tempPointer;
-                /*
-                 if(interfaces.size() != 1) {
-                 // Find offset pointing to "real values" of dynamic array
-                 uint64_t dataStart = str_2_Uint(dataArray[readIndex]);
-                 tempPointer = dataStart / 32;
-                 } else {
-                 tempPointer = readIndex;
-                 }
-                 */
+            } else if (contains(type, "]")) {
                 size_t found1 = type.find('[');
                 size_t found2 = type.find(']');
                 string subType = type.substr(0, found1);
@@ -164,7 +142,6 @@ size_t decodeTheData(CParameterArray& interfaces, const CStringArray& dataArray,
                 }
                 decodeTheData(tmp, dataArray, readIndex);
                 pPtr->value = "[" + params_2_Str(tmp) + "]";
-                // readIndex++;
             }
         }
     }

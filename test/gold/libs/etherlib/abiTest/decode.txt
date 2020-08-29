@@ -1,4 +1,4 @@
-;decode|decoding (uint[3][], uint)|function baz(uint[3][], uint)|\
+decode|decoding (uint[3][], uint)|function baz(uint[3][], uint)|\
 0x\
 0000000000000000000000000000000000000000000000000000000000000040\
 000000000000000000000000000000000000000000000000000000000000000a\
@@ -11,7 +11,7 @@
 0000000000000000000000000000000000000000000000000000000000000006\
 |[[1, 2], [3, 4], [5, 6]], 10
 
-;decode|decoding (uint[][3], uint)|function baz(uint[][3],uint)|\
+decode|decoding (uint[][3], uint)|function baz(uint[][3],uint)|\
 0x\
 0000000000000000000000000000000000000000000000000000000000000080\
 00000000000000000000000000000000000000000000000000000000000000e0\
@@ -29,6 +29,7 @@
 |[[1, 2], [3, 4], [5, 6]], 10
 
 # we comment out a bunch of these but they work
+decode|decoding void  |function baz()      |0x0000000000000000000000000000000000000000000000000000000000000000|<empty>
 decode|decoding int8  |function baz(int8)  |0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe|-2
 decode|decoding int16 |function baz(int16) |0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe|-2
 decode|decoding int32 |function baz(int32) |0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe|-2

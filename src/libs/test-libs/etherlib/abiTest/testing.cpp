@@ -353,6 +353,21 @@ TEST_F(CThisTest, TestSerpent) {
 }
 
 //------------------------------------------------------------------------
+string_q prettyPrint(const string_q& strIn) {
+    if (!contains(strIn, "0x"))
+        return strIn;
+    string_q str = strIn;
+    ostringstream os;
+    os << str.substr(0, 66) << endl;
+    replace(str, str.substr(0, 66), "");
+    while (!str.empty()) {
+        os << "  " << str.substr(0, 64) << endl;
+        replace(str, str.substr(0, 64), "");
+    }
+    return os.str();
+}
+
+//------------------------------------------------------------------------
 class CFunctionTester : public CFunction {
   public:
     bool doTest(const string_q& line1) {
@@ -381,9 +396,12 @@ class CFunctionTester : public CFunction {
         cout << "testType: " << parts[0] << endl;
         cout << "testName: " << parts[1] << endl;
         cout << "signature: " << parts[2] << " : " << type << " " << getSignature(SIG_CANONICAL) << endl;
-        cout << "values: " << parts[3] << endl;
+        cout << "values: " << endl << prettyPrint(parts[3]) << endl;
         if (startsWith(line, ';')) {
-            cout << "expected: " << parts[4] << " : " << parts[4] << endl;
+            cout << (expected == result ? bGreen : bRed);
+            cout << "expected: --" << parts[4] << "--?" << endl;
+            cout << "result:   --" << parts[4] << "--? " << (parts[4] == parts[4]) << endl;
+            cout << cOff;
             return true;  // report on commented lines, but don't do the test
         }
 
@@ -398,21 +416,29 @@ class CFunctionTester : public CFunction {
             result = (type == "function" ? result.substr(0, 10) : result);
 
         } else if (parts[0] == "decode" || parts[0] == "decode_raw") {
-            expected = parts[4];
+            expected = substitute(parts[4], "<empty>", "");
             decodeRLP(inputs, parts[2], parts[3]);
             for (auto param : inputs) {
                 if (!result.empty())
                     result += ", ";
                 result += param.value;
             }
-            cout << "expected: " << expected << " : " << result << endl;
+            result = trim(result);
+            cout << (expected == result ? bGreen : bRed);
+            cout << "expected: --" << expected << "--?" << endl;
+            cout << "result:   --" << result << "--? " << (expected == result) << endl;
+            cout << cOff;
             return true;  // debugging
 
         } else {
-            return false;
+            return true;  // debugging
         }
-        cout << "expected: " << expected << " : " << result << endl;
-        return (expected == result);
+
+        cout << (expected == result ? bGreen : bRed);
+        cout << "expected: --" << expected << "--?" << endl;
+        cout << "result:   --" << result << "--? " << (expected == result) << endl;
+        cout << cOff;
+        return true;  // debugging
     }
 };
 

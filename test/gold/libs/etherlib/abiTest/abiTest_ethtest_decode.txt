@@ -3,696 +3,1087 @@ abiTest eth_test -s 4
 ethereum test box test...
 0. --------------------------------------------------------------------------------
 	000.000 test_0                           ==> 
-line: ;decode|decoding (uint[3][], uint)|function baz(uint[3][], uint)|0x0000000000000000000000000000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000000000000a0000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000003000000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000050000000000000000000000000000000000000000000000000000000000000006|[[1, 2], [3, 4], [5, 6]], 10
-testType: ;decode
+line: decode|decoding (uint[3][], uint)|function baz(uint[3][], uint)|0x0000000000000000000000000000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000000000000a0000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000003000000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000050000000000000000000000000000000000000000000000000000000000000006|[[1, 2], [3, 4], [5, 6]], 10
+testType: decode
 testName: decoding (uint[3][], uint)
 signature: function baz(uint[3][], uint) : function baz(uint256[3][],uint256)
-values: 0x0000000000000000000000000000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000000000000a0000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000003000000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000050000000000000000000000000000000000000000000000000000000000000006
-expected: [[1, 2], [3, 4], [5, 6]], 10 : [[1, 2], [3, 4], [5, 6]], 10
+values: 
+0x0000000000000000000000000000000000000000000000000000000000000040
+  000000000000000000000000000000000000000000000000000000000000000a
+  0000000000000000000000000000000000000000000000000000000000000002
+  0000000000000000000000000000000000000000000000000000000000000001
+  0000000000000000000000000000000000000000000000000000000000000002
+  0000000000000000000000000000000000000000000000000000000000000003
+  0000000000000000000000000000000000000000000000000000000000000004
+  0000000000000000000000000000000000000000000000000000000000000005
+  0000000000000000000000000000000000000000000000000000000000000006
+
+----{ "error": "Error encountered in decodeTheData: more interfaces than data items. Ignoring..." },
+----{ "error": "Error encountered in decodeTheData: more interfaces than data items. Ignoring..." },
+expected: --[[1, 2], [3, 4], [5, 6]], 10--?
+result:   --[[1, 2], [], []], 1--? 0
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
 	000.001 test_1                           ==> 
-line: ;decode|decoding (uint[][3], uint)|function baz(uint[][3],uint)|0x000000000000000000000000000000000000000000000000000000000000008000000000000000000000000000000000000000000000000000000000000000e00000000000000000000000000000000000000000000000000000000000000140000000000000000000000000000000000000000000000000000000000000000a000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000030000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000050000000000000000000000000000000000000000000000000000000000000006|[[1, 2], [3, 4], [5, 6]], 10
-testType: ;decode
+line: decode|decoding (uint[][3], uint)|function baz(uint[][3],uint)|0x000000000000000000000000000000000000000000000000000000000000008000000000000000000000000000000000000000000000000000000000000000e00000000000000000000000000000000000000000000000000000000000000140000000000000000000000000000000000000000000000000000000000000000a000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000030000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000050000000000000000000000000000000000000000000000000000000000000006|[[1, 2], [3, 4], [5, 6]], 10
+testType: decode
 testName: decoding (uint[][3], uint)
 signature: function baz(uint[][3],uint) : function baz(uint256[][3],uint256)
-values: 0x000000000000000000000000000000000000000000000000000000000000008000000000000000000000000000000000000000000000000000000000000000e00000000000000000000000000000000000000000000000000000000000000140000000000000000000000000000000000000000000000000000000000000000a000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000030000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000050000000000000000000000000000000000000000000000000000000000000006
-expected: [[1, 2], [3, 4], [5, 6]], 10 : [[1, 2], [3, 4], [5, 6]], 10
+values: 
+0x0000000000000000000000000000000000000000000000000000000000000080
+  00000000000000000000000000000000000000000000000000000000000000e0
+  0000000000000000000000000000000000000000000000000000000000000140
+  000000000000000000000000000000000000000000000000000000000000000a
+  0000000000000000000000000000000000000000000000000000000000000002
+  0000000000000000000000000000000000000000000000000000000000000001
+  0000000000000000000000000000000000000000000000000000000000000002
+  0000000000000000000000000000000000000000000000000000000000000002
+  0000000000000000000000000000000000000000000000000000000000000003
+  0000000000000000000000000000000000000000000000000000000000000004
+  0000000000000000000000000000000000000000000000000000000000000002
+  0000000000000000000000000000000000000000000000000000000000000005
+  0000000000000000000000000000000000000000000000000000000000000006
+
+expected: --[[1, 2], [3, 4], [5, 6]], 10--?
+result:   --[[1, 2, 2], [3, 4, 2]], 224--? 0
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
 	000.002 test_2                           ==> 
+line: decode|decoding void  |function baz()      |0x0000000000000000000000000000000000000000000000000000000000000000|<empty>
+testType: decode
+testName: decoding void
+signature: function baz() : function baz()
+values: 
+0x0000000000000000000000000000000000000000000000000000000000000000
+
+expected: ----?
+result:   ----? 1
+passed 'func.doTest(line)' is true
+--------------------------------------------------------------------------------
+	000.003 test_3                           ==> 
 line: decode|decoding int8  |function baz(int8)  |0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe|-2
 testType: decode
 testName: decoding int8
 signature: function baz(int8) : function baz(int8)
-values: 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe
-expected: -2 : -2
+values: 
+0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe
+
+expected: ---2--?
+result:   ---2--? 1
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.003 test_3                           ==> 
+	000.004 test_4                           ==> 
 line: decode|decoding int16 |function baz(int16) |0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe|-2
 testType: decode
 testName: decoding int16
 signature: function baz(int16) : function baz(int16)
-values: 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe
-expected: -2 : -2
+values: 
+0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe
+
+expected: ---2--?
+result:   ---2--? 1
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.004 test_4                           ==> 
+	000.005 test_5                           ==> 
 line: decode|decoding int32 |function baz(int32) |0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe|-2
 testType: decode
 testName: decoding int32
 signature: function baz(int32) : function baz(int32)
-values: 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe
-expected: -2 : -2
+values: 
+0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe
+
+expected: ---2--?
+result:   ---2--? 1
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.005 test_5                           ==> 
+	000.006 test_6                           ==> 
 line: decode|decoding int40 |function baz(int40) |0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe|-2
 testType: decode
 testName: decoding int40
 signature: function baz(int40) : function baz(int40)
-values: 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe
-expected: -2 : -2
+values: 
+0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe
+
+expected: ---2--?
+result:   ---2--? 1
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.006 test_6                           ==> 
+	000.007 test_7                           ==> 
 line: decode|decoding int48 |function baz(int48) |0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe|-2
 testType: decode
 testName: decoding int48
 signature: function baz(int48) : function baz(int48)
-values: 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe
-expected: -2 : -2
+values: 
+0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe
+
+expected: ---2--?
+result:   ---2--? 1
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.007 test_7                           ==> 
+	000.008 test_8                           ==> 
 line: decode|decoding int56 |function baz(int56) |0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe|-2
 testType: decode
 testName: decoding int56
 signature: function baz(int56) : function baz(int56)
-values: 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe
-expected: -2 : -2
+values: 
+0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe
+
+expected: ---2--?
+result:   ---2--? 1
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.008 test_8                           ==> 
+	000.009 test_9                           ==> 
 line: decode|decoding int64 |function baz(int64) |0xffffffffffffffffffffffffffffffffffffffffffffffffffffb29c26f344fe|-85091238591234
 testType: decode
 testName: decoding int64
 signature: function baz(int64) : function baz(int64)
-values: 0xffffffffffffffffffffffffffffffffffffffffffffffffffffb29c26f344fe
-expected: -85091238591234 : -85091238591234
+values: 
+0xffffffffffffffffffffffffffffffffffffffffffffffffffffb29c26f344fe
+
+expected: ---85091238591234--?
+result:   ---85091238591234--? 1
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.009 test_9                           ==> 
+	000.010 test_10                          ==> 
 line: decode|decoding int8  |function baz(int8)  |0x0000000000000000000000000000000000000000000000000000000000000002|2
 testType: decode
 testName: decoding int8
 signature: function baz(int8) : function baz(int8)
-values: 0x0000000000000000000000000000000000000000000000000000000000000002
-expected: 2 : 2
+values: 
+0x0000000000000000000000000000000000000000000000000000000000000002
+
+expected: --2--?
+result:   --2--? 1
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.010 test_10                          ==> 
+	000.011 test_11                          ==> 
 line: decode|decoding int16 |function baz(int16) |0x0000000000000000000000000000000000000000000000000000000000000002|2
 testType: decode
 testName: decoding int16
 signature: function baz(int16) : function baz(int16)
-values: 0x0000000000000000000000000000000000000000000000000000000000000002
-expected: 2 : 2
+values: 
+0x0000000000000000000000000000000000000000000000000000000000000002
+
+expected: --2--?
+result:   --2--? 1
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.011 test_11                          ==> 
+	000.012 test_12                          ==> 
 line: decode|decoding int32 |function baz(int32) |0x0000000000000000000000000000000000000000000000000000000000000002|2
 testType: decode
 testName: decoding int32
 signature: function baz(int32) : function baz(int32)
-values: 0x0000000000000000000000000000000000000000000000000000000000000002
-expected: 2 : 2
+values: 
+0x0000000000000000000000000000000000000000000000000000000000000002
+
+expected: --2--?
+result:   --2--? 1
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.012 test_12                          ==> 
+	000.013 test_13                          ==> 
 line: decode|decoding int40 |function baz(int40) |0x0000000000000000000000000000000000000000000000000000000000000002|2
 testType: decode
 testName: decoding int40
 signature: function baz(int40) : function baz(int40)
-values: 0x0000000000000000000000000000000000000000000000000000000000000002
-expected: 2 : 2
+values: 
+0x0000000000000000000000000000000000000000000000000000000000000002
+
+expected: --2--?
+result:   --2--? 1
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.013 test_13                          ==> 
+	000.014 test_14                          ==> 
 line: decode|decoding int48 |function baz(int48) |0x0000000000000000000000000000000000000000000000000000000000000002|2
 testType: decode
 testName: decoding int48
 signature: function baz(int48) : function baz(int48)
-values: 0x0000000000000000000000000000000000000000000000000000000000000002
-expected: 2 : 2
+values: 
+0x0000000000000000000000000000000000000000000000000000000000000002
+
+expected: --2--?
+result:   --2--? 1
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.014 test_14                          ==> 
+	000.015 test_15                          ==> 
 line: decode|decoding int56 |function baz(int56) |0x0000000000000000000000000000000000000000000000000000000000000002|2
 testType: decode
 testName: decoding int56
 signature: function baz(int56) : function baz(int56)
-values: 0x0000000000000000000000000000000000000000000000000000000000000002
-expected: 2 : 2
+values: 
+0x0000000000000000000000000000000000000000000000000000000000000002
+
+expected: --2--?
+result:   --2--? 1
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.015 test_15                          ==> 
+	000.016 test_16                          ==> 
 line: decode|decoding int64 |function baz(int64) |0x0000000000000000000000000000000000000000000000000000000000000002|2
 testType: decode
 testName: decoding int64
 signature: function baz(int64) : function baz(int64)
-values: 0x0000000000000000000000000000000000000000000000000000000000000002
-expected: 2 : 2
+values: 
+0x0000000000000000000000000000000000000000000000000000000000000002
+
+expected: --2--?
+result:   --2--? 1
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.016 test_16                          ==> 
+	000.017 test_17                          ==> 
 line: decode|decoding int72 |function baz(int72) |0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe|-2
 testType: decode
 testName: decoding int72
 signature: function baz(int72) : function baz(int72)
-values: 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe
-expected: -2 : -2
+values: 
+0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe
+
+expected: ---2--?
+result:   ---2--? 1
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.017 test_17                          ==> 
+	000.018 test_18                          ==> 
 line: decode|decoding int80 |function baz(int80) |0x0000000000000000000000000000000000000000000000000000b29c26f344fe|196383738119422
 testType: decode
 testName: decoding int80
 signature: function baz(int80) : function baz(int80)
-values: 0x0000000000000000000000000000000000000000000000000000b29c26f344fe
-expected: 196383738119422 : 196383738119422
+values: 
+0x0000000000000000000000000000000000000000000000000000b29c26f344fe
+
+expected: --196383738119422--?
+result:   --196383738119422--? 1
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.018 test_18                          ==> 
+	000.019 test_19                          ==> 
 line: decode|decoding int88 |function baz(int88) |0x0000000000000000000000000000000000000000000000000000000000000002|2
 testType: decode
 testName: decoding int88
 signature: function baz(int88) : function baz(int88)
-values: 0x0000000000000000000000000000000000000000000000000000000000000002
-expected: 2 : 2
+values: 
+0x0000000000000000000000000000000000000000000000000000000000000002
+
+expected: --2--?
+result:   --2--? 1
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.019 test_19                          ==> 
+	000.020 test_20                          ==> 
 line: decode|decoding int96 |function baz(int96) |0x0000000000000000000000000000000000000000000000000000000000000002|2
 testType: decode
 testName: decoding int96
 signature: function baz(int96) : function baz(int96)
-values: 0x0000000000000000000000000000000000000000000000000000000000000002
-expected: 2 : 2
+values: 
+0x0000000000000000000000000000000000000000000000000000000000000002
+
+expected: --2--?
+result:   --2--? 1
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.020 test_20                          ==> 
+	000.021 test_21                          ==> 
 line: decode|decoding int104|function baz(int104)|0x0000000000000000000000000000000000000000000000000000000000000002|2
 testType: decode
 testName: decoding int104
 signature: function baz(int104) : function baz(int104)
-values: 0x0000000000000000000000000000000000000000000000000000000000000002
-expected: 2 : 2
+values: 
+0x0000000000000000000000000000000000000000000000000000000000000002
+
+expected: --2--?
+result:   --2--? 1
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.021 test_21                          ==> 
+	000.022 test_22                          ==> 
 line: decode|decoding int112|function baz(int112)|0x0000000000000000000000000000000000000000000000000000000000000002|2
 testType: decode
 testName: decoding int112
 signature: function baz(int112) : function baz(int112)
-values: 0x0000000000000000000000000000000000000000000000000000000000000002
-expected: 2 : 2
+values: 
+0x0000000000000000000000000000000000000000000000000000000000000002
+
+expected: --2--?
+result:   --2--? 1
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.022 test_22                          ==> 
+	000.023 test_23                          ==> 
 line: decode|decoding int120|function baz(int120)|0x0000000000000000000000000000000000000000000000000000000000000002|2
 testType: decode
 testName: decoding int120
 signature: function baz(int120) : function baz(int120)
-values: 0x0000000000000000000000000000000000000000000000000000000000000002
-expected: 2 : 2
+values: 
+0x0000000000000000000000000000000000000000000000000000000000000002
+
+expected: --2--?
+result:   --2--? 1
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.023 test_23                          ==> 
+	000.024 test_24                          ==> 
 line: decode|decoding uint8  |function baz(uint8)  |0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe|254
 testType: decode
 testName: decoding uint8
 signature: function baz(uint8) : function baz(uint8)
-values: 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe
-expected: 254 : 254
+values: 
+0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe
+
+expected: --254--?
+result:   --254--? 1
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.024 test_24                          ==> 
+	000.025 test_25                          ==> 
 line: decode|decoding uint16 |function baz(uint16) |0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe|65534
 testType: decode
 testName: decoding uint16
 signature: function baz(uint16) : function baz(uint16)
-values: 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe
-expected: 65534 : 65534
+values: 
+0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe
+
+expected: --65534--?
+result:   --65534--? 1
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.025 test_25                          ==> 
+	000.026 test_26                          ==> 
 line: decode|decoding uint32 |function baz(uint32) |0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe|4294967294
 testType: decode
 testName: decoding uint32
 signature: function baz(uint32) : function baz(uint32)
-values: 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe
-expected: 4294967294 : 4294967294
+values: 
+0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe
+
+expected: --4294967294--?
+result:   --4294967294--? 1
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.026 test_26                          ==> 
+	000.027 test_27                          ==> 
 line: decode|decoding uint40 |function baz(uint40) |0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe|1099511627774
 testType: decode
 testName: decoding uint40
 signature: function baz(uint40) : function baz(uint40)
-values: 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe
-expected: 1099511627774 : 1099511627774
+values: 
+0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe
+
+expected: --1099511627774--?
+result:   --1099511627774--? 1
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.027 test_27                          ==> 
+	000.028 test_28                          ==> 
 line: decode|decoding uint48 |function baz(uint48) |0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe|281474976710654
 testType: decode
 testName: decoding uint48
 signature: function baz(uint48) : function baz(uint48)
-values: 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe
-expected: 281474976710654 : 281474976710654
+values: 
+0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe
+
+expected: --281474976710654--?
+result:   --281474976710654--? 1
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.028 test_28                          ==> 
+	000.029 test_29                          ==> 
 line: decode|decoding uint56 |function baz(uint56) |0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe|72057594037927934
 testType: decode
 testName: decoding uint56
 signature: function baz(uint56) : function baz(uint56)
-values: 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe
-expected: 72057594037927934 : 72057594037927934
+values: 
+0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe
+
+expected: --72057594037927934--?
+result:   --72057594037927934--? 1
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.029 test_29                          ==> 
+	000.030 test_30                          ==> 
 line: decode|decoding uint64 |function baz(uint64) |0xffffffffffffffffffffffffffffffffffffffffffffffffffffb29c26f344fe|18446658982470960382
 testType: decode
 testName: decoding uint64
 signature: function baz(uint64) : function baz(uint64)
-values: 0xffffffffffffffffffffffffffffffffffffffffffffffffffffb29c26f344fe
-expected: 18446658982470960382 : 18446658982470960382
+values: 
+0xffffffffffffffffffffffffffffffffffffffffffffffffffffb29c26f344fe
+
+expected: --18446658982470960382--?
+result:   --18446658982470960382--? 1
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.030 test_30                          ==> 
+	000.031 test_31                          ==> 
 line: decode|decoding uint8  |function baz(uint8)  |0x0000000000000000000000000000000000000000000000000000000000000002|2
 testType: decode
 testName: decoding uint8
 signature: function baz(uint8) : function baz(uint8)
-values: 0x0000000000000000000000000000000000000000000000000000000000000002
-expected: 2 : 2
+values: 
+0x0000000000000000000000000000000000000000000000000000000000000002
+
+expected: --2--?
+result:   --2--? 1
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.031 test_31                          ==> 
+	000.032 test_32                          ==> 
 line: decode|decoding uint16 |function baz(uint16) |0x0000000000000000000000000000000000000000000000000000000000000002|2
 testType: decode
 testName: decoding uint16
 signature: function baz(uint16) : function baz(uint16)
-values: 0x0000000000000000000000000000000000000000000000000000000000000002
-expected: 2 : 2
+values: 
+0x0000000000000000000000000000000000000000000000000000000000000002
+
+expected: --2--?
+result:   --2--? 1
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.032 test_32                          ==> 
+	000.033 test_33                          ==> 
 line: decode|decoding uint32 |function baz(uint32) |0x0000000000000000000000000000000000000000000000000000000000000002|2
 testType: decode
 testName: decoding uint32
 signature: function baz(uint32) : function baz(uint32)
-values: 0x0000000000000000000000000000000000000000000000000000000000000002
-expected: 2 : 2
+values: 
+0x0000000000000000000000000000000000000000000000000000000000000002
+
+expected: --2--?
+result:   --2--? 1
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.033 test_33                          ==> 
+	000.034 test_34                          ==> 
 line: decode|decoding uint40 |function baz(uint40) |0x0000000000000000000000000000000000000000000000000000000000000002|2
 testType: decode
 testName: decoding uint40
 signature: function baz(uint40) : function baz(uint40)
-values: 0x0000000000000000000000000000000000000000000000000000000000000002
-expected: 2 : 2
+values: 
+0x0000000000000000000000000000000000000000000000000000000000000002
+
+expected: --2--?
+result:   --2--? 1
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.034 test_34                          ==> 
+	000.035 test_35                          ==> 
 line: decode|decoding uint48 |function baz(uint48) |0x0000000000000000000000000000000000000000000000000000000000000002|2
 testType: decode
 testName: decoding uint48
 signature: function baz(uint48) : function baz(uint48)
-values: 0x0000000000000000000000000000000000000000000000000000000000000002
-expected: 2 : 2
+values: 
+0x0000000000000000000000000000000000000000000000000000000000000002
+
+expected: --2--?
+result:   --2--? 1
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.035 test_35                          ==> 
+	000.036 test_36                          ==> 
 line: decode|decoding uint56 |function baz(uint56) |0x0000000000000000000000000000000000000000000000000000000000000002|2
 testType: decode
 testName: decoding uint56
 signature: function baz(uint56) : function baz(uint56)
-values: 0x0000000000000000000000000000000000000000000000000000000000000002
-expected: 2 : 2
+values: 
+0x0000000000000000000000000000000000000000000000000000000000000002
+
+expected: --2--?
+result:   --2--? 1
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.036 test_36                          ==> 
+	000.037 test_37                          ==> 
 line: decode|decoding uint64 |function baz(uint64) |0x0000000000000000000000000000000000000000000000000000000000000002|2
 testType: decode
 testName: decoding uint64
 signature: function baz(uint64) : function baz(uint64)
-values: 0x0000000000000000000000000000000000000000000000000000000000000002
-expected: 2 : 2
+values: 
+0x0000000000000000000000000000000000000000000000000000000000000002
+
+expected: --2--?
+result:   --2--? 1
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.037 test_37                          ==> 
+	000.038 test_38                          ==> 
 line: decode|decoding uint72 |function baz(uint72) |0x0000000000000000000000000000000000000000000000000000000000000002|2
 testType: decode
 testName: decoding uint72
 signature: function baz(uint72) : function baz(uint72)
-values: 0x0000000000000000000000000000000000000000000000000000000000000002
-expected: 2 : 2
+values: 
+0x0000000000000000000000000000000000000000000000000000000000000002
+
+expected: --2--?
+result:   --2--? 1
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.038 test_38                          ==> 
+	000.039 test_39                          ==> 
 line: decode|decoding uint80 |function baz(uint80) |0x0000000000000000000000000000000000000000000000000000b29c26f344fe|196383738119422
 testType: decode
 testName: decoding uint80
 signature: function baz(uint80) : function baz(uint80)
-values: 0x0000000000000000000000000000000000000000000000000000b29c26f344fe
-expected: 196383738119422 : 196383738119422
+values: 
+0x0000000000000000000000000000000000000000000000000000b29c26f344fe
+
+expected: --196383738119422--?
+result:   --196383738119422--? 1
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.039 test_39                          ==> 
+	000.040 test_40                          ==> 
 line: decode|decoding uint88 |function baz(uint88) |0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe|309485009821345068724781054
 testType: decode
 testName: decoding uint88
 signature: function baz(uint88) : function baz(uint88)
-values: 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe
-expected: 309485009821345068724781054 : 309485009821345068724781054
+values: 
+0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe
+
+expected: --309485009821345068724781054--?
+result:   --309485009821345068724781054--? 1
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.040 test_40                          ==> 
+	000.041 test_41                          ==> 
 line: decode|decoding uint96 |function baz(uint96) |0x0000000000000000000000000000000000000000000000000000000000000002|2
 testType: decode
 testName: decoding uint96
 signature: function baz(uint96) : function baz(uint96)
-values: 0x0000000000000000000000000000000000000000000000000000000000000002
-expected: 2 : 2
+values: 
+0x0000000000000000000000000000000000000000000000000000000000000002
+
+expected: --2--?
+result:   --2--? 1
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.041 test_41                          ==> 
+	000.042 test_42                          ==> 
 line: decode|decoding uint104|function baz(uint104)|0x0000000000000000000000000000000000000000000000000000000000000002|2
 testType: decode
 testName: decoding uint104
 signature: function baz(uint104) : function baz(uint104)
-values: 0x0000000000000000000000000000000000000000000000000000000000000002
-expected: 2 : 2
+values: 
+0x0000000000000000000000000000000000000000000000000000000000000002
+
+expected: --2--?
+result:   --2--? 1
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.042 test_42                          ==> 
+	000.043 test_43                          ==> 
 line: decode|decoding uint112|function baz(uint112)|0x0000000000000000000000000000000000000000000000000000000000000002|2
 testType: decode
 testName: decoding uint112
 signature: function baz(uint112) : function baz(uint112)
-values: 0x0000000000000000000000000000000000000000000000000000000000000002
-expected: 2 : 2
+values: 
+0x0000000000000000000000000000000000000000000000000000000000000002
+
+expected: --2--?
+result:   --2--? 1
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.043 test_43                          ==> 
+	000.044 test_44                          ==> 
 line: decode|decoding uint120|function baz(uint120)|0x0000000000000000000000000000000000000000000000000000000000000002|2
 testType: decode
 testName: decoding uint120
 signature: function baz(uint120) : function baz(uint120)
-values: 0x0000000000000000000000000000000000000000000000000000000000000002
-expected: 2 : 2
+values: 
+0x0000000000000000000000000000000000000000000000000000000000000002
+
+expected: --2--?
+result:   --2--? 1
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.044 test_44                          ==> 
+	000.045 test_45                          ==> 
 line: decode|decoding uint32|function baz(uint32)|0x000000000000000000000000000000000000000000000000000000000000002a|42
 testType: decode
 testName: decoding uint32
 signature: function baz(uint32) : function baz(uint32)
-values: 0x000000000000000000000000000000000000000000000000000000000000002a
-expected: 42 : 42
+values: 
+0x000000000000000000000000000000000000000000000000000000000000002a
+
+expected: --42--?
+result:   --42--? 1
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.045 test_45                          ==> 
+	000.046 test_46                          ==> 
 line: decode|decoding string|function baz(string)|0x0000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000000b68656c6c6f20776f726c64000000000000000000000000000000000000000000|hello world
 testType: decode
 testName: decoding string
 signature: function baz(string) : function baz(string)
-values: 0x0000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000000b68656c6c6f20776f726c64000000000000000000000000000000000000000000
-expected: hello world : hello world
+values: 
+0x0000000000000000000000000000000000000000000000000000000000000020
+  000000000000000000000000000000000000000000000000000000000000000b
+  68656c6c6f20776f726c64000000000000000000000000000000000000000000
+
+expected: --hello world--?
+result:   --hello world--? 1
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.046 test_46                          ==> 
+	000.047 test_47                          ==> 
 line: decode|decoding bool,uint32|function baz(bool,uint32)|0x0000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000002a|true, 42
 testType: decode
 testName: decoding bool,uint32
 signature: function baz(bool,uint32) : function baz(bool,uint32)
-values: 0x0000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000002a
-expected: true, 42 : true, 42
+values: 
+0x0000000000000000000000000000000000000000000000000000000000000001
+  000000000000000000000000000000000000000000000000000000000000002a
+
+expected: --true, 42--?
+result:   --true, 42--? 1
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.047 test_47                          ==> 
+	000.048 test_48                          ==> 
 line: decode|decoding bytes|function baz(bytes)|0x0000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000000b68656c6c6f20776f726c64000000000000000000000000000000000000000000|0x68656c6c6f20776f726c64
 testType: decode
 testName: decoding bytes
 signature: function baz(bytes) : function baz(bytes)
-values: 0x0000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000000b68656c6c6f20776f726c64000000000000000000000000000000000000000000
-expected: 0x68656c6c6f20776f726c64 : 0x68656c6c6f20776f726c64
+values: 
+0x0000000000000000000000000000000000000000000000000000000000000020
+  000000000000000000000000000000000000000000000000000000000000000b
+  68656c6c6f20776f726c64000000000000000000000000000000000000000000
+
+expected: --0x68656c6c6f20776f726c64--?
+result:   --0x68656c6c6f20776f726c64--? 1
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.048 test_48                          ==> 
+	000.049 test_49                          ==> 
 line: decode|decode bytes[] and bytes32|function baz(bytes[] a, bytes32 b)|0x0000000000000000000000000000000000000000000000000000000000000040cb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb898110000000000000000000000000000000000000000000000000000000000000003000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573|[0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c, 0x0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc, 0x00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573], 0xcb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811
 testType: decode
 testName: decode bytes[] and bytes32
 signature: function baz(bytes[] a, bytes32 b) : function baz(bytes[],bytes32)
-values: 0x0000000000000000000000000000000000000000000000000000000000000040cb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb898110000000000000000000000000000000000000000000000000000000000000003000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573
-expected: [0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c, 0x0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc, 0x00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573], 0xcb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811 : [0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c, 0x0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc, 0x00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573], 0xcb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811
+values: 
+0x0000000000000000000000000000000000000000000000000000000000000040
+  cb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811
+  0000000000000000000000000000000000000000000000000000000000000003
+  000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c
+  0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc
+  00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573
+
+expected: --[0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c, 0x0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc, 0x00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573], 0xcb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811--?
+result:   --[0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c, 0x0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc, 0x00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573], 0xcb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811--? 1
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.049 test_49                          ==> 
+	000.050 test_50                          ==> 
 line: decode|decoding bool, uint256[]|function bz(bool, uint256[])|0x000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000002a|true, [42]
 testType: decode
 testName: decoding bool, uint256[]
 signature: function bz(bool, uint256[]) : function bz(bool,uint256[])
-values: 0x000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000002a
-expected: true, [42] : true, [42]
+values: 
+0x0000000000000000000000000000000000000000000000000000000000000001
+  0000000000000000000000000000000000000000000000000000000000000040
+  0000000000000000000000000000000000000000000000000000000000000001
+  000000000000000000000000000000000000000000000000000000000000002a
+
+expected: --true, [42]--?
+result:   --true, [42]--? 1
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.050 test_50                          ==> 
+	000.051 test_51                          ==> 
 line: decode|decoding uint256[], bool|function baz(uint256[], bool)|0x000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000002a|[42], true
 testType: decode
 testName: decoding uint256[], bool
 signature: function baz(uint256[], bool) : function baz(uint256[],bool)
-values: 0x000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000002a
-expected: [42], true : [42], true
+values: 
+0x0000000000000000000000000000000000000000000000000000000000000040
+  0000000000000000000000000000000000000000000000000000000000000001
+  0000000000000000000000000000000000000000000000000000000000000001
+  000000000000000000000000000000000000000000000000000000000000002a
+
+expected: --[42], true--?
+result:   --[42], true--? 1
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.051 test_51                          ==> 
+	000.052 test_52                          ==> 
 line: decode|decoding uint256[]|function baz(uint256[])|0x00000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000003000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000003|[1, 2, 3]
 testType: decode
 testName: decoding uint256[]
 signature: function baz(uint256[]) : function baz(uint256[])
-values: 0x00000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000003000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000003
-expected: [1, 2, 3] : [1, 2, 3]
+values: 
+0x0000000000000000000000000000000000000000000000000000000000000020
+  0000000000000000000000000000000000000000000000000000000000000003
+  0000000000000000000000000000000000000000000000000000000000000001
+  0000000000000000000000000000000000000000000000000000000000000002
+  0000000000000000000000000000000000000000000000000000000000000003
+
+expected: --[1, 2, 3]--?
+result:   --[1, 2, 3]--? 1
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.052 test_52                          ==> 
+	000.053 test_53                          ==> 
 line: decode|decoding uint32 array|function baz(uint32[3])|0x000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000003|[1, 2, 3]
 testType: decode
 testName: decoding uint32 array
 signature: function baz(uint32[3]) : function baz(uint32[3])
-values: 0x000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000003
-expected: [1, 2, 3] : [1, 2, 3]
+values: 
+0x0000000000000000000000000000000000000000000000000000000000000001
+  0000000000000000000000000000000000000000000000000000000000000002
+  0000000000000000000000000000000000000000000000000000000000000003
+
+expected: --[1, 2, 3]--?
+result:   --[1, 2, 3]--? 1
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.053 test_53                          ==> 
+	000.054 test_54                          ==> 
 line: decode|decoding uint array|function baz(uint[3])|0x000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000003|[1, 2, 3]
 testType: decode
 testName: decoding uint array
 signature: function baz(uint[3]) : function baz(uint256[3])
-values: 0x000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000003
-expected: [1, 2, 3] : [1, 2, 3]
+values: 
+0x0000000000000000000000000000000000000000000000000000000000000001
+  0000000000000000000000000000000000000000000000000000000000000002
+  0000000000000000000000000000000000000000000000000000000000000003
+
+expected: --[1, 2, 3]--?
+result:   --[1, 2, 3]--? 1
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.054 test_54                          ==> 
+	000.055 test_55                          ==> 
 line: decode|decoding int32 array|function baz(int32[3])|0x000000000000000000000000000000000000000000000000000000000000002a00000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000003|[42, 2, 3]
 testType: decode
 testName: decoding int32 array
 signature: function baz(int32[3]) : function baz(int32[3])
-values: 0x000000000000000000000000000000000000000000000000000000000000002a00000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000003
-expected: [42, 2, 3] : [42, 2, 3]
+values: 
+0x000000000000000000000000000000000000000000000000000000000000002a
+  0000000000000000000000000000000000000000000000000000000000000002
+  0000000000000000000000000000000000000000000000000000000000000003
+
+expected: --[42, 2, 3]--?
+result:   --[42, 2, 3]--? 1
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.055 test_55                          ==> 
+	000.056 test_56                          ==> 
 line: decode|decode int[3]|function baz(int[3])|0x000000000000000000000000000000000000000000000000000000000000002afffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffdfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffb|[42, -3, -5]
 testType: decode
 testName: decode int[3]
 signature: function baz(int[3]) : function baz(int256[3])
-values: 0x000000000000000000000000000000000000000000000000000000000000002afffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffdfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffb
-expected: [42, -3, -5] : [42, -3, -5]
+values: 
+0x000000000000000000000000000000000000000000000000000000000000002a
+  fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffd
+  fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffb
+
+expected: --[42, -3, -5]--?
+result:   --[42, -3, -5]--? 1
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.056 test_56                          ==> 
+	000.057 test_57                          ==> 
 line: decode|decoding (uint[2], uint)|function baz(uint[2],       uint)|0x0000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000005c0000000000000000000000000000000000000000000000000000000000000003|[1, 92], 3
 testType: decode
 testName: decoding (uint[2], uint)
 signature: function baz(uint[2],       uint) : function baz(uint256[2],uint256)
-values: 0x0000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000005c0000000000000000000000000000000000000000000000000000000000000003
-expected: [1, 92], 3 : [1, 92], 3
+values: 
+0x0000000000000000000000000000000000000000000000000000000000000001
+  000000000000000000000000000000000000000000000000000000000000005c
+  0000000000000000000000000000000000000000000000000000000000000003
+
+expected: --[1, 92], 3--?
+result:   --[1, 92], 3--? 1
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.057 test_57                          ==> 
+	000.058 test_58                          ==> 
 line: decode|should decode latin and extensions|function baz(string)|0x00000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000017657468657265756d20737ac3a16dc3ad74c3b367c3a970000000000000000000|ethereum számítógép
 testType: decode
 testName: should decode latin and extensions
 signature: function baz(string) : function baz(string)
-values: 0x00000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000017657468657265756d20737ac3a16dc3ad74c3b367c3a970000000000000000000
-expected: ethereum számítógép : ethereum számítógép
+values: 
+0x0000000000000000000000000000000000000000000000000000000000000020
+  0000000000000000000000000000000000000000000000000000000000000017
+  657468657265756d20737ac3a16dc3ad74c3b367c3a970000000000000000000
+
+expected: --ethereum számítógép--?
+result:   --ethereum számítógép--? 1
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.058 test_58                          ==> 
+	000.059 test_59                          ==> 
 line: decode|should decode non-latin characters|function baz(string)|0x00000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000018e4b8bae4bb80e4b988e982a3e4b988e8aea4e79c9fefbc9f0000000000000000|为什么那么认真？
 testType: decode
 testName: should decode non-latin characters
 signature: function baz(string) : function baz(string)
-values: 0x00000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000018e4b8bae4bb80e4b988e982a3e4b988e8aea4e79c9fefbc9f0000000000000000
-expected: 为什么那么认真？ : 为什么那么认真？
+values: 
+0x0000000000000000000000000000000000000000000000000000000000000020
+  0000000000000000000000000000000000000000000000000000000000000018
+  e4b8bae4bb80e4b988e982a3e4b988e8aea4e79c9fefbc9f0000000000000000
+
+expected: --为什么那么认真？--?
+result:   --为什么那么认真？--? 1
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.059 test_59                          ==> 
+	000.060 test_60                          ==> 
 line: decode|decoding (uint[2][2])|function baz(uint[2][2])|0x0000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000000000008|[[1, 2], [4, 8]]
 testType: decode
 testName: decoding (uint[2][2])
 signature: function baz(uint[2][2]) : function baz(uint256[2][2])
-values: 0x0000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000000000008
-expected: [[1, 2], [4, 8]] : [[1, 2], [4, 8]]
+values: 
+0x0000000000000000000000000000000000000000000000000000000000000001
+  0000000000000000000000000000000000000000000000000000000000000002
+  0000000000000000000000000000000000000000000000000000000000000004
+  0000000000000000000000000000000000000000000000000000000000000008
+
+expected: --[[1, 2], [4, 8]]--?
+result:   --[[1, 2], [4, 8]]--? 1
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.060 test_60                          ==> 
+	000.061 test_61                          ==> 
 line: decode|decoding (uint128[2]      [3 ], uint)|function baz(uint128[2  ]       [3],uint)|0x000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000003000000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000050000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000a|[[1, 2, 3], [4, 5, 6]], 10
 testType: decode
 testName: decoding (uint128[2]      [3 ], uint)
 signature: function baz(uint128[2  ]       [3],uint) : function baz(uint128[2][3],uint256)
-values: 0x000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000003000000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000050000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000a
-expected: [[1, 2, 3], [4, 5, 6]], 10 : [[1, 2, 3], [4, 5, 6]], 10
+values: 
+0x0000000000000000000000000000000000000000000000000000000000000001
+  0000000000000000000000000000000000000000000000000000000000000002
+  0000000000000000000000000000000000000000000000000000000000000003
+  0000000000000000000000000000000000000000000000000000000000000004
+  0000000000000000000000000000000000000000000000000000000000000005
+  0000000000000000000000000000000000000000000000000000000000000006
+  000000000000000000000000000000000000000000000000000000000000000a
+
+expected: --[[1, 2, 3], [4, 5, 6]], 10--?
+result:   --[[1, 2, 3], [4, 5, 6]], 10--? 1
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.061 test_61                          ==> 
+	000.062 test_62                          ==> 
 line: decode|decoding (uint128[2][3][2], uint)|function baz(uint128[2]  [3][2], uint)|0x000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000003000000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000050000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000003000000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000050000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000a|[[[1, 2], [3, 4], [5, 6]], [[1, 2], [3, 4], [5, 6]]], 10
 testType: decode
 testName: decoding (uint128[2][3][2], uint)
 signature: function baz(uint128[2]  [3][2], uint) : function baz(uint128[2][3][2],uint256)
-values: 0x000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000003000000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000050000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000003000000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000050000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000a
-expected: [[[1, 2], [3, 4], [5, 6]], [[1, 2], [3, 4], [5, 6]]], 10 : [[[1, 2], [3, 4], [5, 6]], [[1, 2], [3, 4], [5, 6]]], 10
+values: 
+0x0000000000000000000000000000000000000000000000000000000000000001
+  0000000000000000000000000000000000000000000000000000000000000002
+  0000000000000000000000000000000000000000000000000000000000000003
+  0000000000000000000000000000000000000000000000000000000000000004
+  0000000000000000000000000000000000000000000000000000000000000005
+  0000000000000000000000000000000000000000000000000000000000000006
+  0000000000000000000000000000000000000000000000000000000000000001
+  0000000000000000000000000000000000000000000000000000000000000002
+  0000000000000000000000000000000000000000000000000000000000000003
+  0000000000000000000000000000000000000000000000000000000000000004
+  0000000000000000000000000000000000000000000000000000000000000005
+  0000000000000000000000000000000000000000000000000000000000000006
+  000000000000000000000000000000000000000000000000000000000000000a
+
+expected: --[[[1, 2], [3, 4], [5, 6]], [[1, 2], [3, 4], [5, 6]]], 10--?
+result:   --[[[1, 2], [3, 4], [5, 6]], [[1, 2], [3, 4], [5, 6]]], 10--? 1
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.062 test_62                          ==> 
+	000.063 test_63                          ==> 
 line: decode|decoding uint[2] with [1,2,3]|function baz(uint[2]     )|0x000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000003|[1, 2]
 testType: decode
 testName: decoding uint[2] with [1,2,3]
 signature: function baz(uint[2]     ) : function baz(uint256[2])
-values: 0x000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000003
-expected: [1, 2] : [1, 2]
+values: 
+0x0000000000000000000000000000000000000000000000000000000000000001
+  0000000000000000000000000000000000000000000000000000000000000002
+  0000000000000000000000000000000000000000000000000000000000000003
+
+expected: --[1, 2]--?
+result:   --[1, 2]--? 1
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.063 test_63                          ==> 
+	000.064 test_64                          ==> 
 line: decode|decoding address|function baz(address)|0x000000000000000000000000bb9bc244d798123fde783fcc1c72d3bb8c189413|0xbb9bc244d798123fde783fcc1c72d3bb8c189413
 testType: decode
 testName: decoding address
 signature: function baz(address) : function baz(address)
-values: 0x000000000000000000000000bb9bc244d798123fde783fcc1c72d3bb8c189413
-expected: 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 : 0xbb9bc244d798123fde783fcc1c72d3bb8c189413
+values: 
+0x000000000000000000000000bb9bc244d798123fde783fcc1c72d3bb8c189413
+
+expected: --0xbb9bc244d798123fde783fcc1c72d3bb8c189413--?
+result:   --0xbb9bc244d798123fde783fcc1c72d3bb8c189413--? 1
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.064 test_64                          ==> 
+	000.065 test_65                          ==> 
 line: decode|decoding address,address|function baz(  address,address )|0x000000000000000000000000bb9bc244d798123fde783fcc1c72d3bb8c189413000000000000000000000000b9e7f8568e08d5659f5d29c4997173d84cdf2607|0xbb9bc244d798123fde783fcc1c72d3bb8c189413, 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607
 testType: decode
 testName: decoding address,address
 signature: function baz(  address,address ) : function baz(address,address)
-values: 0x000000000000000000000000bb9bc244d798123fde783fcc1c72d3bb8c189413000000000000000000000000b9e7f8568e08d5659f5d29c4997173d84cdf2607
-expected: 0xbb9bc244d798123fde783fcc1c72d3bb8c189413, 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 : 0xbb9bc244d798123fde783fcc1c72d3bb8c189413, 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607
+values: 
+0x000000000000000000000000bb9bc244d798123fde783fcc1c72d3bb8c189413
+  000000000000000000000000b9e7f8568e08d5659f5d29c4997173d84cdf2607
+
+expected: --0xbb9bc244d798123fde783fcc1c72d3bb8c189413, 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607--?
+result:   --0xbb9bc244d798123fde783fcc1c72d3bb8c189413, 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607--? 1
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.065 test_65                          ==> 
+	000.066 test_66                          ==> 
 line: decode|decoding address[]|function baz(address[])|0x00000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000002000000000000000000000000bb9bc244d798123fde783fcc1c72d3bb8c189413000000000000000000000000b9e7f8568e08d5659f5d29c4997173d84cdf2607|[0xbb9bc244d798123fde783fcc1c72d3bb8c189413, 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607]
 testType: decode
 testName: decoding address[]
 signature: function baz(address[]) : function baz(address[])
-values: 0x00000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000002000000000000000000000000bb9bc244d798123fde783fcc1c72d3bb8c189413000000000000000000000000b9e7f8568e08d5659f5d29c4997173d84cdf2607
-expected: [0xbb9bc244d798123fde783fcc1c72d3bb8c189413, 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607] : [0xbb9bc244d798123fde783fcc1c72d3bb8c189413, 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607]
+values: 
+0x0000000000000000000000000000000000000000000000000000000000000020
+  0000000000000000000000000000000000000000000000000000000000000002
+  000000000000000000000000bb9bc244d798123fde783fcc1c72d3bb8c189413
+  000000000000000000000000b9e7f8568e08d5659f5d29c4997173d84cdf2607
+
+expected: --[0xbb9bc244d798123fde783fcc1c72d3bb8c189413, 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607]--?
+result:   --[0xbb9bc244d798123fde783fcc1c72d3bb8c189413, 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607]--? 1
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.066 test_66                          ==> 
+	000.067 test_67                          ==> 
 line: decode|decoding address[2]|function baz(address[2])|0x000000000000000000000000bb9bc244d798123fde783fcc1c72d3bb8c189413000000000000000000000000b9e7f8568e08d5659f5d29c4997173d84cdf2607|[0xbb9bc244d798123fde783fcc1c72d3bb8c189413, 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607]
 testType: decode
 testName: decoding address[2]
 signature: function baz(address[2]) : function baz(address[2])
-values: 0x000000000000000000000000bb9bc244d798123fde783fcc1c72d3bb8c189413000000000000000000000000b9e7f8568e08d5659f5d29c4997173d84cdf2607
-expected: [0xbb9bc244d798123fde783fcc1c72d3bb8c189413, 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607] : [0xbb9bc244d798123fde783fcc1c72d3bb8c189413, 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607]
+values: 
+0x000000000000000000000000bb9bc244d798123fde783fcc1c72d3bb8c189413
+  000000000000000000000000b9e7f8568e08d5659f5d29c4997173d84cdf2607
+
+expected: --[0xbb9bc244d798123fde783fcc1c72d3bb8c189413, 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607]--?
+result:   --[0xbb9bc244d798123fde783fcc1c72d3bb8c189413, 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607]--? 1
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.067 test_67                          ==> 
+	000.068 test_68                          ==> 
 line: decode|Testing bogus data (used to core dump)|function baz(address _from, address _to, uint256 _value, string _transferData)|0x000000000000000000000000f3c9c5719eb4f26a3ab45cb86771827629f9a99900000000000000000000000071d402ac181de4a8739a15f5a56141f64fc522f80000000000000000000000000000000000000000000000190b89b8381678000000000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000025486920426f6220476c617365722d2d20486572652061726520796f757220746f6b656e7321|0xf3c9c5719eb4f26a3ab45cb86771827629f9a999, 0x71d402ac181de4a8739a15f5a56141f64fc522f8, 462000000000000000000,
 testType: decode
 testName: Testing bogus data (used to core dump)
 signature: function baz(address _from, address _to, uint256 _value, string _transferData) : function baz(address,address,uint256,string)
-values: 0x000000000000000000000000f3c9c5719eb4f26a3ab45cb86771827629f9a99900000000000000000000000071d402ac181de4a8739a15f5a56141f64fc522f80000000000000000000000000000000000000000000000190b89b8381678000000000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000025486920426f6220476c617365722d2d20486572652061726520796f757220746f6b656e7321
-expected: 0xf3c9c5719eb4f26a3ab45cb86771827629f9a999, 0x71d402ac181de4a8739a15f5a56141f64fc522f8, 462000000000000000000, : 0xf3c9c5719eb4f26a3ab45cb86771827629f9a999, 0x71d402ac181de4a8739a15f5a56141f64fc522f8, 462000000000000000000, 
+values: 
+0x000000000000000000000000f3c9c5719eb4f26a3ab45cb86771827629f9a999
+  00000000000000000000000071d402ac181de4a8739a15f5a56141f64fc522f8
+  0000000000000000000000000000000000000000000000190b89b83816780000
+  0000000000000000000000000000000000000000000000000000000000000040
+  0000000000000000000000000000000000000000000000000000000000000025
+  486920426f6220476c617365722d2d20486572652061726520796f757220746f
+  6b656e7321
+
+expected: --0xf3c9c5719eb4f26a3ab45cb86771827629f9a999, 0x71d402ac181de4a8739a15f5a56141f64fc522f8, 462000000000000000000,--?
+result:   --0xf3c9c5719eb4f26a3ab45cb86771827629f9a999, 0x71d402ac181de4a8739a15f5a56141f64fc522f8, 462000000000000000000,--? 1
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.068 test_68                          ==> 
+	000.069 test_69                          ==> 
 line: decode|Real test case from smart contract|function baz(address _from, address _to, uint256 _value, string _transferData)|0x000000000000000000000000f3c9c5719eb4f26a3ab45cb86771827629f9a99900000000000000000000000071d402ac181de4a8739a15f5a56141f64fc522f80000000000000000000000000000000000000000000000190b89b8381678000000000000000000000000000000000000000000000000000000000000000000800000000000000000000000000000000000000000000000000000000000000025486920426f6220476c617365722d2d20486572652061726520796f757220746f6b656e7321|0xf3c9c5719eb4f26a3ab45cb86771827629f9a999, 0x71d402ac181de4a8739a15f5a56141f64fc522f8, 462000000000000000000, Hi Bob Glaser-- Here are your tokens!
 testType: decode
 testName: Real test case from smart contract
 signature: function baz(address _from, address _to, uint256 _value, string _transferData) : function baz(address,address,uint256,string)
-values: 0x000000000000000000000000f3c9c5719eb4f26a3ab45cb86771827629f9a99900000000000000000000000071d402ac181de4a8739a15f5a56141f64fc522f80000000000000000000000000000000000000000000000190b89b8381678000000000000000000000000000000000000000000000000000000000000000000800000000000000000000000000000000000000000000000000000000000000025486920426f6220476c617365722d2d20486572652061726520796f757220746f6b656e7321
-expected: 0xf3c9c5719eb4f26a3ab45cb86771827629f9a999, 0x71d402ac181de4a8739a15f5a56141f64fc522f8, 462000000000000000000, Hi Bob Glaser-- Here are your tokens! : 0xf3c9c5719eb4f26a3ab45cb86771827629f9a999, 0x71d402ac181de4a8739a15f5a56141f64fc522f8, 462000000000000000000, Hi Bob Glaser-- Here are your tokens!
+values: 
+0x000000000000000000000000f3c9c5719eb4f26a3ab45cb86771827629f9a999
+  00000000000000000000000071d402ac181de4a8739a15f5a56141f64fc522f8
+  0000000000000000000000000000000000000000000000190b89b83816780000
+  0000000000000000000000000000000000000000000000000000000000000080
+  0000000000000000000000000000000000000000000000000000000000000025
+  486920426f6220476c617365722d2d20486572652061726520796f757220746f
+  6b656e7321
+
+expected: --0xf3c9c5719eb4f26a3ab45cb86771827629f9a999, 0x71d402ac181de4a8739a15f5a56141f64fc522f8, 462000000000000000000, Hi Bob Glaser-- Here are your tokens!--?
+result:   --0xf3c9c5719eb4f26a3ab45cb86771827629f9a999, 0x71d402ac181de4a8739a15f5a56141f64fc522f8, 462000000000000000000, Hi Bob Glaser-- Here are your tokens!--? 1
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.069 test_69                          ==> 
+	000.070 test_70                          ==> 
 line: decode|decoding uint256[], uint[], uint256[]|function baz(uint256[] a,uint[] b,uint256[] c)|0x000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000c0000000000000000000000000000000000000000000000000000000000000012000000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000500000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000015af1d78b58c400000000000000000000000000000000000000000000000000015af1d78b58c4000000000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000001bc16d674ec800000000000000000000000000000000000000000000000000001bc16d674ec80000|[6, 5], [25000000000000000000, 25000000000000000000], [2000000000000000000, 2000000000000000000]
 testType: decode
 testName: decoding uint256[], uint[], uint256[]
 signature: function baz(uint256[] a,uint[] b,uint256[] c) : function baz(uint256[],uint256[],uint256[])
-values: 0x000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000c0000000000000000000000000000000000000000000000000000000000000012000000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000500000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000015af1d78b58c400000000000000000000000000000000000000000000000000015af1d78b58c4000000000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000001bc16d674ec800000000000000000000000000000000000000000000000000001bc16d674ec80000
-expected: [6, 5], [25000000000000000000, 25000000000000000000], [2000000000000000000, 2000000000000000000] : [6, 5], [25000000000000000000, 25000000000000000000], [2000000000000000000, 2000000000000000000]
+values: 
+0x0000000000000000000000000000000000000000000000000000000000000060
+  00000000000000000000000000000000000000000000000000000000000000c0
+  0000000000000000000000000000000000000000000000000000000000000120
+  0000000000000000000000000000000000000000000000000000000000000002
+  0000000000000000000000000000000000000000000000000000000000000006
+  0000000000000000000000000000000000000000000000000000000000000005
+  0000000000000000000000000000000000000000000000000000000000000002
+  0000000000000000000000000000000000000000000000015af1d78b58c40000
+  0000000000000000000000000000000000000000000000015af1d78b58c40000
+  0000000000000000000000000000000000000000000000000000000000000002
+  0000000000000000000000000000000000000000000000001bc16d674ec80000
+  0000000000000000000000000000000000000000000000001bc16d674ec80000
+
+expected: --[6, 5], [25000000000000000000, 25000000000000000000], [2000000000000000000, 2000000000000000000]--?
+result:   --[6, 5], [25000000000000000000, 25000000000000000000], [2000000000000000000, 2000000000000000000]--? 1
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.070 test_70                          ==> 
+	000.071 test_71                          ==> 
 line: decode|decoding bool[]|function baz(bool[])|0x0000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001|[false, true]
 testType: decode
 testName: decoding bool[]
 signature: function baz(bool[]) : function baz(bool[])
-values: 0x0000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001
-expected: [false, true] : [false, true]
+values: 
+0x0000000000000000000000000000000000000000000000000000000000000020
+  0000000000000000000000000000000000000000000000000000000000000002
+  0000000000000000000000000000000000000000000000000000000000000000
+  0000000000000000000000000000000000000000000000000000000000000001
+
+expected: --[false, true]--?
+result:   --[false, true]--? 1
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.071 test_71                          ==> 
+	000.072 test_72                          ==> 
 line: decode|decoding bool[], address[]|function baz(bool[], address[])|0x000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000a00000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000003000000000000000000000000bb9bc244d798123fde783fcc1c72d3bb8c189413000000000000000000000000b9e7f8568e08d5659f5d29c4997173d84cdf2607000000000000000000000000bb9bc244d798123fde783fcc1c72d3bb8c189413|[false, true], [0xbb9bc244d798123fde783fcc1c72d3bb8c189413, 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607, 0xbb9bc244d798123fde783fcc1c72d3bb8c189413]
 testType: decode
 testName: decoding bool[], address[]
 signature: function baz(bool[], address[]) : function baz(bool[],address[])
-values: 0x000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000a00000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000003000000000000000000000000bb9bc244d798123fde783fcc1c72d3bb8c189413000000000000000000000000b9e7f8568e08d5659f5d29c4997173d84cdf2607000000000000000000000000bb9bc244d798123fde783fcc1c72d3bb8c189413
-expected: [false, true], [0xbb9bc244d798123fde783fcc1c72d3bb8c189413, 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607, 0xbb9bc244d798123fde783fcc1c72d3bb8c189413] : [false, true], [0xbb9bc244d798123fde783fcc1c72d3bb8c189413, 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607, 0xbb9bc244d798123fde783fcc1c72d3bb8c189413]
+values: 
+0x0000000000000000000000000000000000000000000000000000000000000040
+  00000000000000000000000000000000000000000000000000000000000000a0
+  0000000000000000000000000000000000000000000000000000000000000002
+  0000000000000000000000000000000000000000000000000000000000000000
+  0000000000000000000000000000000000000000000000000000000000000001
+  0000000000000000000000000000000000000000000000000000000000000003
+  000000000000000000000000bb9bc244d798123fde783fcc1c72d3bb8c189413
+  000000000000000000000000b9e7f8568e08d5659f5d29c4997173d84cdf2607
+  000000000000000000000000bb9bc244d798123fde783fcc1c72d3bb8c189413
+
+expected: --[false, true], [0xbb9bc244d798123fde783fcc1c72d3bb8c189413, 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607, 0xbb9bc244d798123fde783fcc1c72d3bb8c189413]--?
+result:   --[false, true], [0xbb9bc244d798123fde783fcc1c72d3bb8c189413, 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607, 0xbb9bc244d798123fde783fcc1c72d3bb8c189413]--? 1
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.072 test_72                          ==> 
+	000.073 test_73                          ==> 
 line: decode|decoding address,address,uint256,string (see issue #1013)|function baz(address,address,uint256,string)|0x000000000000000000000000f3c9c5719eb4f26a3ab45cb86771827629f9a99900000000000000000000000071d402ac181de4a8739a15f5a56141f64fc522f80000000000000000000000000000000000000000000000190b89b838167800000000000000000000000000000000000000000000000000000000000000000080000000000000000000000000000000000000000000000000000000000000001f486920426f62202d2d20486572652061726520796f757220746f6b656e732100|0xf3c9c5719eb4f26a3ab45cb86771827629f9a999, 0x71d402ac181de4a8739a15f5a56141f64fc522f8, 462000000000000000000, Hi Bob -- Here are your tokens!
 testType: decode
 testName: decoding address,address,uint256,string (see issue #1013)
 signature: function baz(address,address,uint256,string) : function baz(address,address,uint256,string)
-values: 0x000000000000000000000000f3c9c5719eb4f26a3ab45cb86771827629f9a99900000000000000000000000071d402ac181de4a8739a15f5a56141f64fc522f80000000000000000000000000000000000000000000000190b89b838167800000000000000000000000000000000000000000000000000000000000000000080000000000000000000000000000000000000000000000000000000000000001f486920426f62202d2d20486572652061726520796f757220746f6b656e732100
-expected: 0xf3c9c5719eb4f26a3ab45cb86771827629f9a999, 0x71d402ac181de4a8739a15f5a56141f64fc522f8, 462000000000000000000, Hi Bob -- Here are your tokens! : 0xf3c9c5719eb4f26a3ab45cb86771827629f9a999, 0x71d402ac181de4a8739a15f5a56141f64fc522f8, 462000000000000000000, Hi Bob -- Here are your tokens!
+values: 
+0x000000000000000000000000f3c9c5719eb4f26a3ab45cb86771827629f9a999
+  00000000000000000000000071d402ac181de4a8739a15f5a56141f64fc522f8
+  0000000000000000000000000000000000000000000000190b89b83816780000
+  0000000000000000000000000000000000000000000000000000000000000080
+  000000000000000000000000000000000000000000000000000000000000001f
+  486920426f62202d2d20486572652061726520796f757220746f6b656e732100
+
+expected: --0xf3c9c5719eb4f26a3ab45cb86771827629f9a999, 0x71d402ac181de4a8739a15f5a56141f64fc522f8, 462000000000000000000, Hi Bob -- Here are your tokens!--?
+result:   --0xf3c9c5719eb4f26a3ab45cb86771827629f9a999, 0x71d402ac181de4a8739a15f5a56141f64fc522f8, 462000000000000000000, Hi Bob -- Here are your tokens!--? 1
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.073 test_73                          ==> 
+	000.074 test_74                          ==> 
 line: decode|decode uint8, uint32, uin64, uint128|function baz(uint8, uint32, uint64, uint128)|0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe|254, 4294967294, 18446744073709551614, 340282366920938463463374607431768211454
 testType: decode
 testName: decode uint8, uint32, uin64, uint128
 signature: function baz(uint8, uint32, uint64, uint128) : function baz(uint8,uint32,uint64,uint128)
-values: 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe
-expected: 254, 4294967294, 18446744073709551614, 340282366920938463463374607431768211454 : 254, 4294967294, 18446744073709551614, 340282366920938463463374607431768211454
+values: 
+0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe
+  fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe
+  fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe
+  fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe
+
+expected: --254, 4294967294, 18446744073709551614, 340282366920938463463374607431768211454--?
+result:   --254, 4294967294, 18446744073709551614, 340282366920938463463374607431768211454--? 1
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.074 test_74                          ==> 
+	000.075 test_75                          ==> 
 line: decode|decode int8, int32, int64, int128, int256|function baz(int8, int32, int64, int128, int256)|0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe|-2, -2, -2, -2, -2
 testType: decode
 testName: decode int8, int32, int64, int128, int256
 signature: function baz(int8, int32, int64, int128, int256) : function baz(int8,int32,int64,int128,int256)
-values: 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe
-expected: -2, -2, -2, -2, -2 : -2, -2, -2, -2, -2
+values: 
+0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe
+  fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe
+  fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe
+  fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe
+  fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe
+
+expected: ---2, -2, -2, -2, -2--?
+result:   ---2, -2, -2, -2, -2--? 1
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.075 test_75                          ==> 
+	000.076 test_76                          ==> 
 line: decode|decode uint128[2][3], uint|function baz(uint128[2][3], uint)|0x000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000003000000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000050000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000a|[[1, 2, 3], [4, 5, 6]], 10
 testType: decode
 testName: decode uint128[2][3], uint
 signature: function baz(uint128[2][3], uint) : function baz(uint128[2][3],uint256)
-values: 0x000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000003000000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000050000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000a
-expected: [[1, 2, 3], [4, 5, 6]], 10 : [[1, 2, 3], [4, 5, 6]], 10
+values: 
+0x0000000000000000000000000000000000000000000000000000000000000001
+  0000000000000000000000000000000000000000000000000000000000000002
+  0000000000000000000000000000000000000000000000000000000000000003
+  0000000000000000000000000000000000000000000000000000000000000004
+  0000000000000000000000000000000000000000000000000000000000000005
+  0000000000000000000000000000000000000000000000000000000000000006
+  000000000000000000000000000000000000000000000000000000000000000a
+
+expected: --[[1, 2, 3], [4, 5, 6]], 10--?
+result:   --[[1, 2, 3], [4, 5, 6]], 10--? 1
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
-	000.076 test_76                          ==> 
+	000.077 test_77                          ==> 
 line: decode|decode uint128[2][3][2], uint|function baz(uint128[2][3][2], uint)|0x000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000003000000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000050000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000003000000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000050000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000a|[[[1, 2], [3, 4], [5, 6]], [[1, 2], [3, 4], [5, 6]]], 10
 testType: decode
 testName: decode uint128[2][3][2], uint
 signature: function baz(uint128[2][3][2], uint) : function baz(uint128[2][3][2],uint256)
-values: 0x000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000003000000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000050000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000003000000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000050000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000a
-expected: [[[1, 2], [3, 4], [5, 6]], [[1, 2], [3, 4], [5, 6]]], 10 : [[[1, 2], [3, 4], [5, 6]], [[1, 2], [3, 4], [5, 6]]], 10
+values: 
+0x0000000000000000000000000000000000000000000000000000000000000001
+  0000000000000000000000000000000000000000000000000000000000000002
+  0000000000000000000000000000000000000000000000000000000000000003
+  0000000000000000000000000000000000000000000000000000000000000004
+  0000000000000000000000000000000000000000000000000000000000000005
+  0000000000000000000000000000000000000000000000000000000000000006
+  0000000000000000000000000000000000000000000000000000000000000001
+  0000000000000000000000000000000000000000000000000000000000000002
+  0000000000000000000000000000000000000000000000000000000000000003
+  0000000000000000000000000000000000000000000000000000000000000004
+  0000000000000000000000000000000000000000000000000000000000000005
+  0000000000000000000000000000000000000000000000000000000000000006
+  000000000000000000000000000000000000000000000000000000000000000a
+
+expected: --[[[1, 2], [3, 4], [5, 6]], [[1, 2], [3, 4], [5, 6]]], 10--?
+result:   --[[[1, 2], [3, 4], [5, 6]], [[1, 2], [3, 4], [5, 6]]], 10--? 1
 passed 'func.doTest(line)' is true
 ...passed
 

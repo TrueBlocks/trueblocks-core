@@ -9,6 +9,7 @@ project (test-etherlib)
 
 # Compile the libraries in this order
 add_subdirectory(abiTest)
+add_subdirectory(abiTest2)
 add_subdirectory(binaryPathTest)
 add_subdirectory(blockTest)
 add_subdirectory(dataUpgradeTest)

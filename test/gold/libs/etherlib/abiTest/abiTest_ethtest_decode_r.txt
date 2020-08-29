@@ -7,8 +7,11 @@ line: ;raw_decode|decoding ufixed128x128|function baz(ufixed128x128)|0x000000000
 testType: ;raw_decode
 testName: decoding ufixed128x128
 signature: function baz(ufixed128x128) : function baz(ufixed128x128)
-values: 0x0000000000000000000000000000000100000000000000000000000000000000
-expected: 1 : 1
+values: 
+0x0000000000000000000000000000000100000000000000000000000000000000
+
+expected: --1--?
+result:   --1--? 1
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
 	000.001 test_1                           ==> 
@@ -16,8 +19,11 @@ line: ;raw_decode|decoding fixed128x128|function baz(fixed128x128)|0xfffffffffff
 testType: ;raw_decode
 testName: decoding fixed128x128
 signature: function baz(fixed128x128) : function baz(fixed128x128)
-values: 0xffffffffffffffffffffffffffffffff00000000000000000000000000000000
-expected: -1 : -1
+values: 
+0xffffffffffffffffffffffffffffffff00000000000000000000000000000000
+
+expected: ---1--?
+result:   ---1--? 1
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
 	000.002 test_2                           ==> 
@@ -25,8 +31,11 @@ line: ;raw_decode|decimals should fail|function baz(ufixed128x128)|0x00000000000
 testType: ;raw_decode
 testName: decimals should fail
 signature: function baz(ufixed128x128) : function baz(ufixed128x128)
-values: 0x0000000000000000000000000000000100000000000000000000000000000001
-expected: fail : fail
+values: 
+0x0000000000000000000000000000000100000000000000000000000000000001
+
+expected: --fail--?
+result:   --fail--? 1
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
 	000.003 test_3                           ==> 
@@ -34,8 +43,11 @@ line: ;raw_decode|decimals should fail|function baz(ufixed128x128)|0xfffffffffff
 testType: ;raw_decode
 testName: decimals should fail
 signature: function baz(ufixed128x128) : function baz(ufixed128x128)
-values: 0xffffffffffffffffffffffffffffffff00000000000000000000000000000001
-expected: fail : fail
+values: 
+0xffffffffffffffffffffffffffffffff00000000000000000000000000000001
+
+expected: --fail--?
+result:   --fail--? 1
 passed 'func.doTest(line)' is true
 ...passed
 

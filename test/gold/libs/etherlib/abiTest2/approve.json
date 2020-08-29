@@ -1,0 +1,52 @@
+[
+  {
+    "name": "approve",
+    "type": "function",
+    "signature": "approve(address,uint256)",
+    "encoding": "0x095ea7b3",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_spender",
+        "internalType": "address",
+        "components": []
+      },
+      {
+        "type": "uint256",
+        "name": "_amount",
+        "internalType": "uint256",
+        "components": []
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "success",
+        "internalType": "bool",
+        "components": []
+      }
+    ]
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "name": "_owner",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "name": "_spender",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "name": "_value",
+        "type": "uint256"
+      }
+    ],
+    "name": "Approval",
+    "type": "event"
+  }
+]
