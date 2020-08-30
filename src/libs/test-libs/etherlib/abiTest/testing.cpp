@@ -358,7 +358,7 @@ class CFunctionTester : public CFunction {
     bool doTest(const string_q& line1) {
 #if 0
         string_q line;
-        line = "decode|decoding int80 |function baz(int80) |0x0000000000000000000000000000000000000000000000000000b29c26f344fe|196383738119422";
+        line = "";
 #else
         string_q line = line1;
 #endif

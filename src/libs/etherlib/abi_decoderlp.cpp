@@ -19,132 +19,171 @@ namespace qblocks {
 
 extern bool toPrintable(const string_q& inHex, string_q& result);
 //-----------------------------------------------------------------------------------------
-string_q params_2_Str(CParameterArray& interfaces) {
+string_q params_2_Str(CParameterArray& params) {
     string_q ret;
-    for (auto p : interfaces) {
+    for (auto param : params) {
         if (!ret.empty())
             ret += ", ";
-        ret += p.value;
+        ret += param.value;
     }
     return trim(ret);
 }
 
+static size_t level = 0;
 //------------------------------------------------------------------------------------------------
-size_t decodeTheData(CParameterArray& interfaces, const CStringArray& dataArray, size_t& readIndex) {
+static void prettyPrint(CParameterArray& params, const CStringArray& dataArray, const size_t& readIndex,
+                        size_t dStart) {
+    string_q indent = substitute(string_q(level - 1, '\t'), "\t", "  ") + "--";
+    cerr << indent << params.size() << " : " << dataArray.size() << " : " << readIndex;
+    if (dStart != NOPOS)
+        cerr << " : " << dStart;
+    cerr << endl;
+    uint64_t cnt = 0;
+    for (auto param : params) {
+        cerr << indent << padNum3T(cnt) << ": " << param.name << " -- ";
+        cerr << param.type << (param.internalType.empty() ? "" : "(" + param.internalType + ")");
+        cerr << (param.value.empty() ? "" : " -- " + param.value);
+        cerr << endl;
+        cnt++;
+    }
+    cnt = 0;
+    for (auto data : dataArray) {
+        cerr << indent << padNum3T(cnt) << ": " << data
+             << (cnt == readIndex ? " <---" : (dStart != NOPOS && cnt == dStart ? " <===" : "")) << endl;
+        cnt++;
+    }
+}
+
+//------------------------------------------------------------------------------------------------
+size_t decodeTheData(CParameterArray& params, const CStringArray& dataArray, size_t& readIndex, size_t dStart) {
+    level++;
+
     uint64_t nDataItems = dataArray.size();
-    if (interfaces.size() > nDataItems) {
-        cerr << "{ \"error\": \"Error encountered in decodeTheData: more interfaces than data items. Ignoring...\" },"
+    if (params.size() > nDataItems) {
+        cerr << "{ \"error\": \"Error encountered in decodeTheData: more params than data items. Ignoring...\" },"
              << endl;
+        level--;
         return 1;
     }
 
-    uint64_t startOfDynamicData = NOPOS;
-    for (size_t q = 0; q < interfaces.size(); q++) {
-        CParameter* pPtr = &interfaces[q];
-        string_q type = pPtr->type;
-
-        bool isBaseType = !contains(type, "[");
+    for (auto& param : params) {
+        prettyPrint(params, dataArray, readIndex, dStart);
+        bool isBaseType = !contains(param.type, "[");
         if (isBaseType) {
-            if (contains(type, "bool")) {
-                size_t bits = 128;
-                pPtr->value = bnu_2_Str(str_2_BigUint("0x" + dataArray[readIndex++], bits));
-                pPtr->value = (pPtr->value == "1" ? "true" : "false");
+            if (contains(param.type, "bool")) {
+                size_t bits = 256;
+                param.value = bnu_2_Str(str_2_BigUint("0x" + dataArray[readIndex++], bits));
+                param.value = (param.value == "1" ? "true" : "false");
 
-            } else if (contains(type, "address")) {
+            } else if (contains(param.type, "address")) {
                 size_t bits = 160;
-                pPtr->value =
+                param.value =
                     "0x" + padLeft(toLower(bnu_2_Hex(str_2_BigUint("0x" + dataArray[readIndex++], bits))), 40, '0');
 
-            } else if (contains(type, "uint")) {
-                size_t bits = str_2_Uint(substitute(type, "uint", ""));
-                pPtr->value = bnu_2_Str(str_2_BigUint("0x" + dataArray[readIndex++], bits));
+            } else if (contains(param.type, "uint")) {
+                size_t bits = str_2_Uint(substitute(param.type, "uint", ""));
+                param.value = bnu_2_Str(str_2_BigUint("0x" + dataArray[readIndex++], bits));
 
-            } else if (contains(type, "int")) {
-                size_t bits = str_2_Uint(substitute(type, "int", ""));
-                pPtr->value = bni_2_Str(str_2_BigInt("0x" + dataArray[readIndex++], bits));
+            } else if (contains(param.type, "int")) {
+                size_t bits = str_2_Uint(substitute(param.type, "int", ""));
+                param.value = bni_2_Str(str_2_BigInt("0x" + dataArray[readIndex++], bits));
 
-            } else if (type == "string" || type == "bytes") {
+            } else if (param.type == "string" || param.type == "bytes") {
                 // Strings and bytes are dynamic sized. The fixed size part resides at readIndex and points to
                 // start of string. Start of string is length of string. Start of string + 1 is the string
                 string_q result;
                 uint64_t dataStart = (str_2_Uint("0x" + dataArray[readIndex++]) / 32);
-                if (startOfDynamicData == NOPOS)
-                    startOfDynamicData = dataStart;
-                if (readIndex > startOfDynamicData) {
-                    pPtr->value = "";  // we've run out of bytes -- protect ourselves from bad data
-                } else {
-                    uint64_t nBytes = str_2_Uint("0x" + dataArray[dataStart]);
-                    size_t nWords = (nBytes / 32) + 1;
-                    if (nWords <= dataArray.size()) {  // some of the data sent in may be bogus, so we protext ourselves
-                        for (size_t w = 0; w < nWords; w++) {
-                            size_t pos = dataStart + 1 + w;
-                            if (pos < dataArray.size())
-                                result += dataArray[pos].substr(0, nBytes * 2);  // at most 64
-                            if (nBytes >= 32)
-                                nBytes -= 32;
-                            else
-                                nBytes = 0;
-                        }
-                        pPtr->value = (type == "string" ? hex_2_Str("0x" + result) : "0x" + result);
-                    } else {
-                        pPtr->value = "";  // we've run out of bytes -- protect ourselves from bad data
+                uint64_t nBytes = str_2_Uint("0x" + dataArray[dataStart]);
+                size_t nWords = (nBytes / 32) + 1;
+                if (nWords <= dataArray.size()) {  // some of the data sent in may be bogus, so we protext ourselves
+                    for (size_t w = 0; w < nWords; w++) {
+                        size_t pos = dataStart + 1 + w;
+                        if (pos < dataArray.size())
+                            result += dataArray[pos].substr(0, nBytes * 2);  // at most 64
+                        if (nBytes >= 32)
+                            nBytes -= 32;
+                        else
+                            nBytes = 0;
                     }
+                    param.value = (param.type == "string" ? hex_2_Str("0x" + result) : "0x" + result);
+                } else {
+                    param.value = "";  // we've run out of bytes -- protect ourselves from bad data
                 }
 
-            } else if (contains(type, "bytes")) {
-                // bytes1 through bytes32 are fixed length
-                pPtr->value = "0x" + dataArray[readIndex++];
+            } else if (contains(param.type, "bytes")) {
+                // this is a bytes<M> (fixed length)
+                param.value = "0x" + dataArray[readIndex++];
 
             } else {
-                LOG_WARN("Unknown type: ", type, " in decodeTheData");
+                LOG_WARN("Unknown type: ", param.type, " in decodeTheData");
             }
 
         } else {
-            ASSERT(!isBaseType);
-            if (type.find("[") == type.find("[]")) {  // the first bracket is a dynamic array
-
-                size_t found = type.find('[');
-                string baseType = type.substr(0, found);
-                if (baseType == "bytes")
-                    baseType = "bytes32";
-                if (found + 2 != type.size())
-                    baseType += type.substr(found + 2);
-
-                if (readIndex < dataArray.size()) {
-                    uint64_t dataStart = (str_2_Uint("0x" + dataArray[readIndex++]) / 32);
-                    if (dataStart < dataArray.size()) {
-                        uint64_t nItems = str_2_Uint("0x" + dataArray[dataStart]);
-                        CParameterArray tmp;
-                        for (size_t i = 0; i < nItems; i++) {
-                            CParameter p;
-                            p.type = baseType;
-                            tmp.push_back(p);
-                        }
-                        size_t tPtr = dataStart + 1;
-                        decodeTheData(tmp, dataArray, tPtr);
-                        pPtr->value = "[" + params_2_Str(tmp) + "]";
-                    }
-                }
-
-            } else if (contains(type, "]")) {
-                size_t found1 = type.find('[');
-                size_t found2 = type.find(']');
-                string subType = type.substr(0, found1);
-                if (found2 + 1 != type.size())
-                    subType += type.substr(found2 + 1);
-
-                int nBytes = stoi(type.substr(type.find('[') + 1, type.find(']')));
+            if (contains(param.type, "[]")) {
+                size_t dataStart = (str_2_Uint("0x" + dataArray[readIndex++]) / 32);
+                uint64_t nItems = str_2_Uint("0x" + dataArray[dataStart]);
                 CParameterArray tmp;
-                for (int i = 0; i < nBytes; i++) {
-                    CParameter p;
-                    p.type = subType;
-                    tmp.push_back(p);
+                CParameter p;
+                p.type = param.type;
+                replaceReverse(p.type, "[]", "[" + uint_2_Str(nItems) + "]");
+                replace(p.type, "bytes[", "bytes32[");
+                tmp.push_back(p);
+                dataStart++;
+                decodeTheData(tmp, dataArray, dataStart, dataStart - 1);
+                param.value = tmp[0].value;
+                // cerr << param << endl;
+                printf("");
+
+            } else {
+                bool firstDynamic = param.type.find("[") == param.type.find("[]");
+                if (firstDynamic) {
+                    cerr << "array of type[]..." << endl;
+                    size_t found = param.type.find('[');
+                    string subType = param.type.substr(0, found) +
+                                     ((found + 2 != param.type.size()) ? param.type.substr(found + 2) : "");
+                    if (subType == "bytes")
+                        subType = "bytes32";
+
+                    uint64_t dataStart = (str_2_Uint("0x" + dataArray[readIndex++]) / 32);
+                    uint64_t nItems = str_2_Uint("0x" + dataArray[dataStart]);
+                    // cerr << "nItems: " << nItems << " subType: " << subType << endl;
+
+                    CParameterArray tmp;
+                    for (size_t i = 0; i < nItems; i++) {
+                        CParameter p;
+                        p.type = subType;
+                        tmp.push_back(p);
+                    }
+                    size_t tPtr = dataStart + 1;
+                    decodeTheData(tmp, dataArray, tPtr, dataStart);
+                    param.value = "[" + params_2_Str(tmp) + "]";
+
+                } else {
+                    cerr << "array of type[M]..." << endl;
+                    ASSERT(contains(param.type, "["));
+                    ASSERT(contains(param.type, "]"));
+
+                    size_t found1 = param.type.find('[');
+                    size_t found2 = param.type.find(']');
+                    string subType = param.type.substr(0, found1) +
+                                     ((found2 + 1 != param.type.size()) ? param.type.substr(found2 + 1) : "");
+                    int nItems = stoi(param.type.substr(param.type.find('[') + 1, param.type.find(']')));
+                    cerr << "nItems: " << nItems << " subType: " << subType << endl;
+
+                    CParameterArray tmp;
+                    for (int i = 0; i < nItems; i++) {
+                        CParameter p;
+                        p.type = subType;
+                        tmp.push_back(p);
+                    }
+                    decodeTheData(tmp, dataArray, readIndex, NOPOS);
+                    param.value = "[" + params_2_Str(tmp) + "]";
                 }
-                decodeTheData(tmp, dataArray, readIndex);
-                pPtr->value = "[" + params_2_Str(tmp) + "]";
             }
         }
     }
+
+    level--;
     return 1;
 }
 
@@ -401,13 +440,13 @@ void loadParseMap(void) {
 }
 
 //---------------------------------------------------------------------------
-bool decodeRLP(CParameterArray& interfaces, const string_q& desc, const string_q& inputStrIn) {
+bool decodeRLP(CParameterArray& params, const string_q& desc, const string_q& inputStrIn) {
     string_q inputStr = (inputStrIn == "0x" ? "" : inputStrIn);
     string_q built;
     // we use fast, simple routines for common patters if we can. This is purely for performance reasons
     NEXTCHUNKFUNC func = parseMap[desc];
     if (!func) {
-        for (auto i : interfaces)
+        for (auto i : params)
             built += (i.type + ",");
         built = trim(built, ',');
         func = parseMap[built];
@@ -415,17 +454,17 @@ bool decodeRLP(CParameterArray& interfaces, const string_q& desc, const string_q
     if (func) {
         if (!inputStr.empty()) {
             string_q result = (*func)(substitute(inputStr, "0x", ""), NULL);
-            for (auto& item : interfaces)
+            for (auto& item : params)
                 item.value = nextTokenClear(result, ',');
             return true;
         }
     }
 
-    // Clean up the input to work with the provided interfaces - one input row per 32 bytes
+    // Clean up the input to work with the provided params - one input row per 32 bytes
     CStringArray inputs;
     if (inputStr.empty() || inputStr == "0x") {
         // In the case where the input is empty, we fill up all the fixed sized slots with zero bytes
-        for (auto i : interfaces)
+        for (auto i : params)
             inputs.push_back(string_q(64, '0'));
     } else {
         // Put each 32-byte segment into it's own string in the array
@@ -440,7 +479,7 @@ bool decodeRLP(CParameterArray& interfaces, const string_q& desc, const string_q
     }
 
     size_t offset = 0;
-    return decodeTheData(interfaces, inputs, offset);
+    return decodeTheData(params, inputs, offset, NOPOS);
 }
 
 }  // namespace qblocks
