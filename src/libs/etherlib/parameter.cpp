@@ -571,13 +571,11 @@ static string_q elementaryName(const string_q& in) {
 bool CParameter::fromDefinition(const string_q& strIn) {
     string_q str = strIn;
     indexed = contains(str, "indexed");
-    str = substitute(str, "indexed ", "");
-    // str = substitute(str, "%", ",");
-    str = trim(str);  // should be of form 'type name'
-    type = elementaryName(nextTokenClear(str, ' '));
+    str = trim(substitute(str, "indexed", ""));
+    type = trim(elementaryName(nextTokenClear(str, ' ')));
     if (contains(type, '['))
         is_flags |= IS_ARRAY;
-    name = str;
+    name = trim(str);
     return true;
 }
 
@@ -586,7 +584,7 @@ bool CParameter::isValid(void) const {
     // TODO(tjayrush): not exhaustive
     if (!(startsWith(type, "address") || startsWith(type, "bool") || startsWith(type, "string") ||
           startsWith(type, "bytes") || startsWith(type, "fixed") || startsWith(type, "uint") ||
-          startsWith(type, "int")))
+          startsWith(type, "int") || startsWith(type, "tuple")))
         return false;
     if (startsWith(type, "bytes") && type != "bytes") {
         uint64_t n = str_2_Uint(substitute(type, "bytes", ""));

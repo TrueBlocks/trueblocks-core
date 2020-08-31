@@ -89,4 +89,5335 @@ TIME ~ CLOCK - <WARNG> : Unknown type: tuple in decodeTheData
   }
 }
 
+][{
+  "name": "baz",
+  "inputs": [
+    {
+      "name": "val_0",
+      "is_array": true
+    },
+    {
+      "name": "val_1"
+    }
+  ]
+}
+
+, {
+  "payable": true,
+  "inputs": []
+}
+
+, {
+  "name": "donate",
+  "inputs": [
+    {
+      "name": "token"
+    },
+    {
+      "name": "amt"
+    },
+    {
+      "name": "recip)[]"
+    }
+  ]
+}
+
+, {
+  "name": "ABI",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "node"
+    },
+    {
+      "name": "contentTypes"
+    }
+  ]
+}
+
+, {
+  "name": "G",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "v",
+      "is_array": true
+    },
+    {
+      "name": "a"
+    },
+    {
+      "name": "b"
+    },
+    {
+      "name": "c"
+    },
+    {
+      "name": "d"
+    },
+    {
+      "name": "x"
+    },
+    {
+      "name": "y"
+    }
+  ]
+}
+
+, {
+  "name": "ReverseRegistrar",
+  "inputs": [
+    {
+      "name": "ensAddr"
+    },
+    {
+      "name": "node"
+    }
+  ]
+}
+
+, {
+  "name": "_addCapper",
+  "inputs": [
+    {
+      "name": "account"
+    }
+  ]
+}
+
+, {
+  "name": "_addTokenToAllTokensEnumeration",
+  "inputs": [
+    {
+      "name": "tokenId"
+    }
+  ]
+}
+
+, {
+  "name": "_appendTagged",
+  "inputs": [
+    {
+      "name": "tagged0"
+    },
+    {
+      "name": "tagged1"
+    },
+    {
+      "name": "str"
+    }
+  ]
+}
+
+, {
+  "name": "_approve",
+  "inputs": [
+    {
+      "name": "to"
+    },
+    {
+      "name": "tokenId"
+    }
+  ]
+}
+
+, {
+  "name": "_asyncTransfer",
+  "inputs": [
+    {
+      "name": "dest"
+    },
+    {
+      "name": "amount"
+    }
+  ]
+}
+
+, {
+  "name": "_beforeTokenTransfer",
+  "inputs": [
+    {
+      "name": "from"
+    },
+    {
+      "name": "to"
+    },
+    {
+      "name": "amount"
+    }
+  ]
+}
+
+, {
+  "name": "_burn",
+  "inputs": [
+    {
+      "name": "_owner"
+    },
+    {
+      "name": "_tokenId"
+    }
+  ]
+}
+
+, {
+  "name": "_burn",
+  "inputs": [
+    {
+      "name": "account"
+    },
+    {
+      "name": "value"
+    }
+  ]
+}
+
+, {
+  "name": "_burnFrom",
+  "inputs": [
+    {
+      "name": "account"
+    },
+    {
+      "name": "amount"
+    }
+  ]
+}
+
+, {
+  "name": "_callTokensToSend",
+  "inputs": [
+    {
+      "name": "operator"
+    },
+    {
+      "name": "from"
+    },
+    {
+      "name": "to"
+    },
+    {
+      "name": "amount"
+    },
+    {
+      "name": "userData"
+    },
+    {
+      "name": "operatorData"
+    }
+  ]
+}
+
+, {
+  "name": "_contains",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "storage set"
+    },
+    {
+      "name": "value"
+    }
+  ]
+}
+
+, {
+  "name": "_extendTime",
+  "inputs": [
+    {
+      "name": "newClosingTime"
+    }
+  ]
+}
+
+, {
+  "name": "_getAccountInfo",
+  "constant": true,
+  "inputs": []
+}
+
+, {
+  "name": "_getTokenAmount",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "weiAmount"
+    }
+  ]
+}
+
+, {
+  "name": "_getUniswapExchange",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "tokenAddress"
+    }
+  ]
+}
+
+, {
+  "name": "_length",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "storage map"
+    }
+  ]
+}
+
+, {
+  "name": "_mint",
+  "inputs": [
+    {
+      "name": "account"
+    },
+    {
+      "name": "amount"
+    }
+  ]
+}
+
+, {
+  "name": "_mint",
+  "inputs": [
+    {
+      "name": "to"
+    },
+    {
+      "name": "tokenId"
+    }
+  ]
+}
+
+, {
+  "name": "_msgData",
+  "constant": true,
+  "inputs": []
+}
+
+, {
+  "name": "_msgSender",
+  "constant": true,
+  "inputs": []
+}
+
+, {
+  "name": "_pause",
+  "inputs": []
+}
+
+, {
+  "name": "_postRelayedCall",
+  "inputs": [
+    {
+      "name": "val_0"
+    },
+    {
+      "name": "val_1"
+    },
+    {
+      "name": "val_2"
+    },
+    {
+      "name": "val_3"
+    }
+  ]
+}
+
+, {
+  "name": "_preRelayedCall",
+  "inputs": [
+    {
+      "name": "val_0"
+    }
+  ]
+}
+
+, {
+  "name": "_preValidatePurchase",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "beneficiary"
+    },
+    {
+      "name": "weiAmount"
+    }
+  ]
+}
+
+, {
+  "name": "_registerInterface",
+  "inputs": [
+    {
+      "name": "interfaceId"
+    }
+  ]
+}
+
+, {
+  "name": "_remove",
+  "inputs": [
+    {
+      "name": "storage map"
+    },
+    {
+      "name": "key"
+    }
+  ]
+}
+
+, {
+  "name": "_removeSigner",
+  "inputs": [
+    {
+      "name": "account"
+    }
+  ]
+}
+
+, {
+  "name": "_report",
+  "inputs": [
+    {
+      "name": "result"
+    },
+    {
+      "name": "message"
+    }
+  ]
+}
+
+, {
+  "name": "_safeMint",
+  "inputs": [
+    {
+      "name": "to"
+    },
+    {
+      "name": "tokenId"
+    },
+    {
+      "name": "_data"
+    }
+  ]
+}
+
+, {
+  "name": "_sendLogPayload",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "payload"
+    }
+  ]
+}
+
+, {
+  "name": "_setTokenURI",
+  "inputs": [
+    {
+      "name": "tokenURI_"
+    }
+  ]
+}
+
+, {
+  "name": "_setupRole",
+  "inputs": [
+    {
+      "name": "role"
+    },
+    {
+      "name": "account"
+    }
+  ]
+}
+
+, {
+  "name": "_supportsERC165Interface",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "account"
+    },
+    {
+      "name": "interfaceId"
+    }
+  ]
+}
+
+, {
+  "name": "_swapEthToTokenInputV2",
+  "inputs": [
+    {
+      "name": "tokenAddress"
+    },
+    {
+      "name": "ethAmount"
+    }
+  ]
+}
+
+, {
+  "name": "_swapTokenToTokenInputV2",
+  "inputs": [
+    {
+      "name": "from"
+    },
+    {
+      "name": "to"
+    },
+    {
+      "name": "sellAmount"
+    }
+  ]
+}
+
+, {
+  "name": "_tag",
+  "inputs": [
+    {
+      "name": "value"
+    },
+    {
+      "name": "tag"
+    }
+  ]
+}
+
+, {
+  "name": "_transfer",
+  "inputs": [
+    {
+      "name": "from"
+    },
+    {
+      "name": "to"
+    },
+    {
+      "name": "value"
+    }
+  ]
+}
+
+, {
+  "name": "_transferOwnership",
+  "inputs": [
+    {
+      "name": "_newOwner"
+    }
+  ]
+}
+
+, {
+  "name": "_updateSnapshot",
+  "inputs": [
+    {
+      "name": "storage snapshots"
+    },
+    {
+      "name": "currentValue"
+    }
+  ]
+}
+
+, {
+  "name": "_utoa",
+  "inputs": [
+    {
+      "name": "u"
+    }
+  ]
+}
+
+, {
+  "name": "_withdrawBalance",
+  "inputs": [
+    {
+      "name": "token"
+    },
+    {
+      "name": "amount"
+    }
+  ]
+}
+
+, {
+  "name": "acceptRelayedCall",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "val_0"
+    },
+    {
+      "name": "val_1"
+    },
+    {
+      "name": "val_2"
+    },
+    {
+      "name": "val_3"
+    },
+    {
+      "name": "val_4"
+    },
+    {
+      "name": "val_5"
+    },
+    {
+      "name": "val_6"
+    },
+    {
+      "name": "val_7"
+    },
+    {
+      "name": "val_8"
+    }
+  ]
+}
+
+, {
+  "name": "activate",
+  "inputs": [
+    {
+      "name": "initialTokens"
+    },
+    {
+      "name": "initialPoolShares"
+    }
+  ]
+}
+
+, {
+  "name": "add",
+  "inputs": [
+    {
+      "name": "value"
+    }
+  ]
+}
+
+, {
+  "name": "add",
+  "inputs": [
+    {
+      "name": "a"
+    },
+    {
+      "name": "b"
+    }
+  ]
+}
+
+, {
+  "name": "add",
+  "inputs": [
+    {
+      "name": "a"
+    },
+    {
+      "name": "b"
+    }
+  ]
+}
+
+, {
+  "name": "addBytes",
+  "inputs": [
+    {
+      "name": "_key"
+    },
+    {
+      "name": "_value"
+    }
+  ]
+}
+
+, {
+  "name": "addInt",
+  "inputs": [
+    {
+      "name": "_key"
+    },
+    {
+      "name": "_value"
+    }
+  ]
+}
+
+, {
+  "name": "addOne",
+  "inputs": [
+    {
+      "name": "n"
+    }
+  ]
+}
+
+, {
+  "name": "addStringArray",
+  "inputs": [
+    {
+      "name": "_key"
+    },
+    {
+      "name": "_values",
+      "is_array": true
+    }
+  ]
+}
+
+, {
+  "name": "addTwo",
+  "inputs": []
+}
+
+, {
+  "name": "addWhitelisted",
+  "inputs": [
+    {
+      "name": "account"
+    }
+  ]
+}
+
+, {
+  "name": "allowance",
+  "constant": true,
+  "inputs": []
+}
+
+, {
+  "name": "allowance",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "owner"
+    },
+    {
+      "name": "spender"
+    }
+  ]
+}
+
+, {
+  "name": "append",
+  "inputs": [
+    {
+      "name": "buf"
+    },
+    {
+      "name": "data"
+    }
+  ]
+}
+
+, {
+  "name": "appendUint8",
+  "inputs": [
+    {
+      "name": "buf"
+    },
+    {
+      "name": "data"
+    }
+  ]
+}
+
+, {
+  "name": "approve",
+  "inputs": [
+    {
+      "name": "_spender"
+    },
+    {
+      "name": "_value"
+    }
+  ]
+}
+
+, {
+  "name": "approve",
+  "inputs": [
+    {
+      "name": "spender"
+    },
+    {
+      "name": "value"
+    }
+  ]
+}
+
+, {
+  "name": "approve",
+  "inputs": [
+    {
+      "name": "val_0"
+    },
+    {
+      "name": "val_1"
+    }
+  ]
+}
+
+, {
+  "name": "assertFail",
+  "inputs": [
+    {
+      "name": "val_0"
+    },
+    {
+      "name": "val_1"
+    }
+  ]
+}
+
+, {
+  "name": "at",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "index"
+    }
+  ]
+}
+
+, {
+  "name": "authorizeOperator",
+  "inputs": [
+    {
+      "name": "operator"
+    }
+  ]
+}
+
+, {
+  "name": "balanceEqual",
+  "inputs": [
+    {
+      "name": "a"
+    },
+    {
+      "name": "b"
+    },
+    {
+      "name": "message"
+    }
+  ]
+}
+
+, {
+  "name": "balanceNotEqual",
+  "inputs": [
+    {
+      "name": "a"
+    },
+    {
+      "name": "b"
+    },
+    {
+      "name": "message"
+    }
+  ]
+}
+
+, {
+  "name": "balanceOf",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "account"
+    }
+  ]
+}
+
+, {
+  "name": "balanceOf",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "tokenHolder"
+    }
+  ]
+}
+
+, {
+  "name": "baseURI",
+  "constant": true,
+  "inputs": []
+}
+
+, {
+  "name": "beginMigration",
+  "inputs": [
+    {
+      "name": "newToken_"
+    }
+  ]
+}
+
+, {
+  "name": "bop",
+  "inputs": []
+}
+
+, {
+  "name": "burn",
+  "inputs": [
+    {
+      "name": "_value"
+    }
+  ]
+}
+
+, {
+  "name": "burn",
+  "inputs": [
+    {
+      "name": "tokenId"
+    }
+  ]
+}
+
+, {
+  "name": "burnTokens",
+  "inputs": [
+    {
+      "name": "_amount"
+    }
+  ]
+}
+
+, {
+  "name": "bytes32ToString",
+  "inputs": [
+    {
+      "name": "x"
+    }
+  ]
+}
+
+, {
+  "name": "callOptionalReturn",
+  "inputs": [
+    {
+      "name": "token"
+    },
+    {
+      "name": "data"
+    }
+  ]
+}
+
+, {
+  "name": "canImplementInterfaceForAddress",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "interfaceHash"
+    },
+    {
+      "name": "account"
+    }
+  ]
+}
+
+, {
+  "name": "cancelOracleRequest",
+  "inputs": [
+    {
+      "name": "val_0"
+    },
+    {
+      "name": "val_1"
+    },
+    {
+      "name": "val_2"
+    },
+    {
+      "name": "val_3"
+    }
+  ]
+}
+
+, {
+  "name": "cap",
+  "constant": true,
+  "inputs": []
+}
+
+, {
+  "name": "changeId",
+  "inputs": [
+    {
+      "name": "domain"
+    },
+    {
+      "name": "name"
+    },
+    {
+      "name": "value"
+    }
+  ]
+}
+
+, {
+  "name": "changeProposalDeposit",
+  "inputs": [
+    {
+      "name": "_proposalDeposit"
+    }
+  ]
+}
+
+, {
+  "name": "checkProposalCode",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "_proposalID"
+    },
+    {
+      "name": "_recipient"
+    },
+    {
+      "name": "_amount"
+    },
+    {
+      "name": "_transactionData"
+    }
+  ]
+}
+
+, {
+  "name": "claimHeirOwnership",
+  "inputs": []
+}
+
+, {
+  "name": "clearApproval",
+  "inputs": [
+    {
+      "name": "_owner"
+    },
+    {
+      "name": "_tokenId"
+    }
+  ]
+}
+
+, {
+  "name": "close",
+  "inputs": []
+}
+
+, {
+  "name": "codeAt",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "_addr"
+    }
+  ]
+}
+
+, {
+  "name": "computeAddress",
+  "inputs": [
+    {
+      "name": "salt"
+    },
+    {
+      "name": "bytecodeHash"
+    },
+    {
+      "name": "deployer"
+    }
+  ]
+}
+
+, {
+  "name": "consumesGas",
+  "inputs": []
+}
+
+, {
+  "name": "contains",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "key"
+    }
+  ]
+}
+
+, {
+  "name": "countThisRecursive",
+  "inputs": [
+    {
+      "name": "n"
+    }
+  ]
+}
+
+, {
+  "name": "createAndException",
+  "inputs": [
+    {
+      "name": "newBalance"
+    }
+  ]
+}
+
+, {
+  "name": "createEIP20",
+  "inputs": [
+    {
+      "name": "_initialAmount"
+    },
+    {
+      "name": "_name"
+    },
+    {
+      "name": "_decimals"
+    },
+    {
+      "name": "_symbol"
+    }
+  ]
+}
+
+, {
+  "name": "createTokenProxy",
+  "inputs": [
+    {
+      "name": "_tokenHolder"
+    }
+  ]
+}
+
+, {
+  "name": "decimals",
+  "inputs": []
+}
+
+, {
+  "name": "decreaseAllowance",
+  "inputs": [
+    {
+      "name": "amount"
+    }
+  ]
+}
+
+, {
+  "name": "defaultOperators",
+  "constant": true,
+  "inputs": []
+}
+
+, {
+  "name": "deploy",
+  "inputs": [
+    {
+      "name": "val_0"
+    },
+    {
+      "name": "val_1"
+    },
+    {
+      "name": "val_2"
+    },
+    {
+      "name": "val_3"
+    }
+  ]
+}
+
+, {
+  "name": "deposit",
+  "payable": true,
+  "inputs": [
+    {
+      "name": "_payee"
+    }
+  ]
+}
+
+, {
+  "name": "deposit",
+  "payable": true,
+  "inputs": [
+    {
+      "name": "refundee"
+    }
+  ]
+}
+
+, {
+  "name": "depositsOf",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "payee"
+    }
+  ]
+}
+
+, {
+  "name": "destroy",
+  "inputs": []
+}
+
+, {
+  "name": "diamondCut",
+  "inputs": [
+    {
+      "name": "_diamondCut",
+      "is_array": true
+    },
+    {
+      "name": "_init"
+    },
+    {
+      "name": "_"
+    }
+  ]
+}
+
+, {
+  "name": "div",
+  "inputs": [
+    {
+      "name": "a"
+    },
+    {
+      "name": "b"
+    }
+  ]
+}
+
+, {
+  "name": "div",
+  "inputs": [
+    {
+      "name": "a"
+    },
+    {
+      "name": "b"
+    }
+  ]
+}
+
+, {
+  "name": "divisor",
+  "constant": true,
+  "inputs": []
+}
+
+, {
+  "name": "doWithdraw",
+  "inputs": [
+    {
+      "name": "participant"
+    },
+    {
+      "name": "amount"
+    }
+  ]
+}
+
+, {
+  "name": "donate",
+  "payable": true,
+  "inputs": [
+    {
+      "name": "_donations",
+      "is_array": true
+    }
+  ]
+}
+
+, {
+  "name": "enableRefunds",
+  "inputs": []
+}
+
+, {
+  "name": "encodeIndefiniteLengthType",
+  "inputs": [
+    {
+      "name": "buf"
+    },
+    {
+      "name": "major"
+    }
+  ]
+}
+
+, {
+  "name": "encodeUInt",
+  "inputs": [
+    {
+      "name": "buf"
+    },
+    {
+      "name": "value"
+    }
+  ]
+}
+
+, {
+  "name": "equal",
+  "inputs": [
+    {
+      "name": "a"
+    },
+    {
+      "name": "b"
+    },
+    {
+      "name": "message"
+    }
+  ]
+}
+
+, {
+  "name": "equal",
+  "inputs": [
+    {
+      "name": "a"
+    },
+    {
+      "name": "b"
+    },
+    {
+      "name": "message"
+    }
+  ]
+}
+
+, {
+  "name": "equal",
+  "inputs": [
+    {
+      "name": "a"
+    },
+    {
+      "name": "b"
+    },
+    {
+      "name": "message"
+    }
+  ]
+}
+
+, {
+  "name": "equal",
+  "inputs": [
+    {
+      "name": "a"
+    },
+    {
+      "name": "b"
+    },
+    {
+      "name": "message"
+    }
+  ]
+}
+
+, {
+  "name": "ethJoin_join",
+  "payable": true,
+  "inputs": [
+    {
+      "name": "apt"
+    },
+    {
+      "name": "urn"
+    }
+  ]
+}
+
+, {
+  "name": "execute",
+  "inputs": [
+    {
+      "name": "_to"
+    },
+    {
+      "name": "_value"
+    },
+    {
+      "name": "_data"
+    }
+  ]
+}
+
+, {
+  "name": "executeProposal",
+  "inputs": [
+    {
+      "name": "_proposalID"
+    },
+    {
+      "name": "_transactionData"
+    }
+  ]
+}
+
+, {
+  "name": "externalCut",
+  "inputs": [
+    {
+      "name": "_diamondCut",
+      "is_array": true
+    }
+  ]
+}
+
+, {
+  "name": "f",
+  "inputs": []
+}
+
+, {
+  "name": "f",
+  "constant": true,
+  "inputs": []
+}
+
+, {
+  "name": "f_public",
+  "inputs": []
+}
+
+, {
+  "name": "facetFunctionSelectors",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "_facet"
+    }
+  ]
+}
+
+, {
+  "name": "fail",
+  "inputs": []
+}
+
+, {
+  "name": "fail",
+  "inputs": [
+    {
+      "name": "d"
+    }
+  ]
+}
+
+, {
+  "name": "fail2",
+  "inputs": [
+    {
+      "name": "i"
+    }
+  ]
+}
+
+, {
+  "name": "finalize",
+  "inputs": []
+}
+
+, {
+  "name": "finishMinting",
+  "inputs": []
+}
+
+, {
+  "name": "fireEventLog2",
+  "inputs": []
+}
+
+, {
+  "name": "fireEventLog4Anonym",
+  "inputs": []
+}
+
+, {
+  "name": "foo",
+  "payable": true,
+  "inputs": []
+}
+
+, {
+  "name": "fromSharkToken",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "amount"
+    }
+  ]
+}
+
+, {
+  "name": "fun",
+  "inputs": []
+}
+
+, {
+  "name": "fun",
+  "inputs": [
+    {
+      "name": "a"
+    }
+  ]
+}
+
+, {
+  "name": "functionName",
+  "inputs": [
+    {
+      "name": "input"
+    }
+  ]
+}
+
+, {
+  "name": "get",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "key"
+    }
+  ]
+}
+
+, {
+  "name": "getAdmins",
+  "constant": true,
+  "inputs": []
+}
+
+, {
+  "name": "getAssetsPrices",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "_assets",
+      "is_array": true
+    }
+  ]
+}
+
+, {
+  "name": "getBool",
+  "inputs": []
+}
+
+, {
+  "name": "getCount",
+  "constant": true,
+  "inputs": []
+}
+
+, {
+  "name": "getHubAddr",
+  "constant": true,
+  "inputs": []
+}
+
+, {
+  "name": "getMolochCount",
+  "constant": true,
+  "inputs": []
+}
+
+, {
+  "name": "getOracles",
+  "constant": true,
+  "inputs": []
+}
+
+, {
+  "name": "getRoleMember",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "role"
+    },
+    {
+      "name": "index"
+    }
+  ]
+}
+
+, {
+  "name": "getUint256",
+  "inputs": []
+}
+
+, {
+  "name": "getValuePlus",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "toAdd"
+    }
+  ]
+}
+
+, {
+  "name": "grantRole",
+  "inputs": [
+    {
+      "name": "role"
+    },
+    {
+      "name": "account"
+    }
+  ]
+}
+
+, {
+  "name": "halfWad",
+  "inputs": []
+}
+
+, {
+  "name": "hasConfirmed",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "_operation"
+    },
+    {
+      "name": "_owner"
+    }
+  ]
+}
+
+, {
+  "name": "heir",
+  "constant": true,
+  "inputs": []
+}
+
+, {
+  "name": "increaseAllowance",
+  "inputs": [
+    {
+      "name": "spender"
+    },
+    {
+      "name": "addedValue"
+    }
+  ]
+}
+
+, {
+  "name": "init",
+  "inputs": [
+    {
+      "name": "buf"
+    },
+    {
+      "name": "capacity"
+    }
+  ]
+}
+
+, {
+  "name": "isAbove",
+  "inputs": [
+    {
+      "name": "a"
+    },
+    {
+      "name": "b"
+    },
+    {
+      "name": "message"
+    }
+  ]
+}
+
+, {
+  "name": "isApprovedForAll",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "owner"
+    },
+    {
+      "name": "operator"
+    }
+  ]
+}
+
+, {
+  "name": "isAtMost",
+  "inputs": [
+    {
+      "name": "a"
+    },
+    {
+      "name": "b"
+    },
+    {
+      "name": "message"
+    }
+  ]
+}
+
+, {
+  "name": "isAuthorized",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "src"
+    },
+    {
+      "name": "sig"
+    }
+  ]
+}
+
+, {
+  "name": "isBlocked",
+  "inputs": [
+    {
+      "name": "_account"
+    }
+  ]
+}
+
+, {
+  "name": "isDeployed",
+  "constant": true,
+  "inputs": []
+}
+
+, {
+  "name": "isExpensive",
+  "inputs": [
+    {
+      "name": "val"
+    }
+  ]
+}
+
+, {
+  "name": "isNotEmpty",
+  "inputs": [
+    {
+      "name": "str"
+    },
+    {
+      "name": "message"
+    }
+  ]
+}
+
+, {
+  "name": "isNotZero",
+  "inputs": [
+    {
+      "name": "bts"
+    },
+    {
+      "name": "message"
+    }
+  ]
+}
+
+, {
+  "name": "isOpen",
+  "constant": true,
+  "inputs": []
+}
+
+, {
+  "name": "isPauser",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "account"
+    }
+  ]
+}
+
+, {
+  "name": "isSigner",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "account"
+    }
+  ]
+}
+
+, {
+  "name": "isZero",
+  "inputs": [
+    {
+      "name": "addr"
+    },
+    {
+      "name": "message"
+    }
+  ]
+}
+
+, {
+  "name": "isZero",
+  "inputs": [
+    {
+      "name": "number"
+    },
+    {
+      "name": "message"
+    }
+  ]
+}
+
+, {
+  "name": "killBounty",
+  "inputs": [
+    {
+      "name": "_bountyID"
+    }
+  ]
+}
+
+, {
+  "name": "length",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "storage set"
+    }
+  ]
+}
+
+, {
+  "name": "lengthEqual",
+  "inputs": [
+    {
+      "name": "arr",
+      "is_array": true
+    },
+    {
+      "name": "length"
+    },
+    {
+      "name": "message"
+    }
+  ]
+}
+
+, {
+  "name": "lengthEqual",
+  "inputs": [
+    {
+      "name": "arr",
+      "is_array": true
+    },
+    {
+      "name": "length"
+    },
+    {
+      "name": "message"
+    }
+  ]
+}
+
+, {
+  "name": "lengthNotEqual",
+  "inputs": [
+    {
+      "name": "arr",
+      "is_array": true
+    },
+    {
+      "name": "length"
+    },
+    {
+      "name": "message"
+    }
+  ]
+}
+
+, {
+  "name": "log",
+  "constant": true,
+  "inputs": []
+}
+
+, {
+  "name": "log",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "p0"
+    },
+    {
+      "name": "p1"
+    },
+    {
+      "name": "p2"
+    },
+    {
+      "name": "p3"
+    }
+  ]
+}
+
+, {
+  "name": "log",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "p0"
+    },
+    {
+      "name": "p1"
+    },
+    {
+      "name": "p2"
+    },
+    {
+      "name": "p3"
+    }
+  ]
+}
+
+, {
+  "name": "log",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "p0"
+    },
+    {
+      "name": "p1"
+    },
+    {
+      "name": "p2"
+    },
+    {
+      "name": "p3"
+    }
+  ]
+}
+
+, {
+  "name": "log",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "p0"
+    },
+    {
+      "name": "p1"
+    },
+    {
+      "name": "p2"
+    },
+    {
+      "name": "p3"
+    }
+  ]
+}
+
+, {
+  "name": "log",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "p0"
+    },
+    {
+      "name": "p1"
+    },
+    {
+      "name": "p2"
+    }
+  ]
+}
+
+, {
+  "name": "log",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "p0"
+    },
+    {
+      "name": "p1"
+    },
+    {
+      "name": "p2"
+    }
+  ]
+}
+
+, {
+  "name": "log",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "p0"
+    },
+    {
+      "name": "p1"
+    },
+    {
+      "name": "p2"
+    }
+  ]
+}
+
+, {
+  "name": "log",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "p0"
+    },
+    {
+      "name": "p1"
+    },
+    {
+      "name": "p2"
+    }
+  ]
+}
+
+, {
+  "name": "log",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "p0"
+    },
+    {
+      "name": "p1"
+    }
+  ]
+}
+
+, {
+  "name": "log",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "p0"
+    },
+    {
+      "name": "p1"
+    },
+    {
+      "name": "p2"
+    },
+    {
+      "name": "p3"
+    }
+  ]
+}
+
+, {
+  "name": "log",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "p0"
+    },
+    {
+      "name": "p1"
+    },
+    {
+      "name": "p2"
+    },
+    {
+      "name": "p3"
+    }
+  ]
+}
+
+, {
+  "name": "log",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "p0"
+    },
+    {
+      "name": "p1"
+    },
+    {
+      "name": "p2"
+    },
+    {
+      "name": "p3"
+    }
+  ]
+}
+
+, {
+  "name": "log",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "p0"
+    },
+    {
+      "name": "p1"
+    },
+    {
+      "name": "p2"
+    },
+    {
+      "name": "p3"
+    }
+  ]
+}
+
+, {
+  "name": "log",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "p0"
+    },
+    {
+      "name": "p1"
+    },
+    {
+      "name": "p2"
+    },
+    {
+      "name": "p3"
+    }
+  ]
+}
+
+, {
+  "name": "log",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "p0"
+    },
+    {
+      "name": "p1"
+    },
+    {
+      "name": "p2"
+    },
+    {
+      "name": "p3"
+    }
+  ]
+}
+
+, {
+  "name": "log",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "p0"
+    },
+    {
+      "name": "p1"
+    },
+    {
+      "name": "p2"
+    },
+    {
+      "name": "p3"
+    }
+  ]
+}
+
+, {
+  "name": "log",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "p0"
+    },
+    {
+      "name": "p1"
+    },
+    {
+      "name": "p2"
+    },
+    {
+      "name": "p3"
+    }
+  ]
+}
+
+, {
+  "name": "log",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "p0"
+    },
+    {
+      "name": "p1"
+    },
+    {
+      "name": "p2"
+    },
+    {
+      "name": "p3"
+    }
+  ]
+}
+
+, {
+  "name": "log",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "p0"
+    },
+    {
+      "name": "p1"
+    },
+    {
+      "name": "p2"
+    },
+    {
+      "name": "p3"
+    }
+  ]
+}
+
+, {
+  "name": "log",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "p0"
+    },
+    {
+      "name": "p1"
+    },
+    {
+      "name": "p2"
+    },
+    {
+      "name": "p3"
+    }
+  ]
+}
+
+, {
+  "name": "log",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "p0"
+    },
+    {
+      "name": "p1"
+    },
+    {
+      "name": "p2"
+    },
+    {
+      "name": "p3"
+    }
+  ]
+}
+
+, {
+  "name": "log",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "p0"
+    },
+    {
+      "name": "p1"
+    },
+    {
+      "name": "p2"
+    }
+  ]
+}
+
+, {
+  "name": "log",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "p0"
+    },
+    {
+      "name": "p1"
+    },
+    {
+      "name": "p2"
+    }
+  ]
+}
+
+, {
+  "name": "log",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "p0"
+    },
+    {
+      "name": "p1"
+    },
+    {
+      "name": "p2"
+    }
+  ]
+}
+
+, {
+  "name": "log",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "p0"
+    },
+    {
+      "name": "p1"
+    },
+    {
+      "name": "p2"
+    }
+  ]
+}
+
+, {
+  "name": "log",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "p0"
+    },
+    {
+      "name": "p1"
+    }
+  ]
+}
+
+, {
+  "name": "log",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "p0"
+    },
+    {
+      "name": "p1"
+    },
+    {
+      "name": "p2"
+    },
+    {
+      "name": "p3"
+    }
+  ]
+}
+
+, {
+  "name": "log",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "p0"
+    },
+    {
+      "name": "p1"
+    },
+    {
+      "name": "p2"
+    },
+    {
+      "name": "p3"
+    }
+  ]
+}
+
+, {
+  "name": "log",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "p0"
+    },
+    {
+      "name": "p1"
+    },
+    {
+      "name": "p2"
+    },
+    {
+      "name": "p3"
+    }
+  ]
+}
+
+, {
+  "name": "log",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "p0"
+    },
+    {
+      "name": "p1"
+    },
+    {
+      "name": "p2"
+    },
+    {
+      "name": "p3"
+    }
+  ]
+}
+
+, {
+  "name": "log",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "p0"
+    },
+    {
+      "name": "p1"
+    },
+    {
+      "name": "p2"
+    },
+    {
+      "name": "p3"
+    }
+  ]
+}
+
+, {
+  "name": "log",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "p0"
+    },
+    {
+      "name": "p1"
+    },
+    {
+      "name": "p2"
+    },
+    {
+      "name": "p3"
+    }
+  ]
+}
+
+, {
+  "name": "log",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "p0"
+    },
+    {
+      "name": "p1"
+    },
+    {
+      "name": "p2"
+    },
+    {
+      "name": "p3"
+    }
+  ]
+}
+
+, {
+  "name": "log",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "p0"
+    },
+    {
+      "name": "p1"
+    },
+    {
+      "name": "p2"
+    },
+    {
+      "name": "p3"
+    }
+  ]
+}
+
+, {
+  "name": "log",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "p0"
+    },
+    {
+      "name": "p1"
+    },
+    {
+      "name": "p2"
+    },
+    {
+      "name": "p3"
+    }
+  ]
+}
+
+, {
+  "name": "log",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "p0"
+    },
+    {
+      "name": "p1"
+    },
+    {
+      "name": "p2"
+    },
+    {
+      "name": "p3"
+    }
+  ]
+}
+
+, {
+  "name": "log",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "p0"
+    },
+    {
+      "name": "p1"
+    },
+    {
+      "name": "p2"
+    },
+    {
+      "name": "p3"
+    }
+  ]
+}
+
+, {
+  "name": "log",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "p0"
+    },
+    {
+      "name": "p1"
+    },
+    {
+      "name": "p2"
+    },
+    {
+      "name": "p3"
+    }
+  ]
+}
+
+, {
+  "name": "log",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "p0"
+    },
+    {
+      "name": "p1"
+    },
+    {
+      "name": "p2"
+    }
+  ]
+}
+
+, {
+  "name": "log",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "p0"
+    },
+    {
+      "name": "p1"
+    },
+    {
+      "name": "p2"
+    }
+  ]
+}
+
+, {
+  "name": "log",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "p0"
+    },
+    {
+      "name": "p1"
+    },
+    {
+      "name": "p2"
+    }
+  ]
+}
+
+, {
+  "name": "log",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "p0"
+    },
+    {
+      "name": "p1"
+    },
+    {
+      "name": "p2"
+    }
+  ]
+}
+
+, {
+  "name": "log",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "p0"
+    },
+    {
+      "name": "p1"
+    }
+  ]
+}
+
+, {
+  "name": "log",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "p0"
+    },
+    {
+      "name": "p1"
+    },
+    {
+      "name": "p2"
+    },
+    {
+      "name": "p3"
+    }
+  ]
+}
+
+, {
+  "name": "log",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "p0"
+    },
+    {
+      "name": "p1"
+    },
+    {
+      "name": "p2"
+    },
+    {
+      "name": "p3"
+    }
+  ]
+}
+
+, {
+  "name": "log",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "p0"
+    },
+    {
+      "name": "p1"
+    },
+    {
+      "name": "p2"
+    },
+    {
+      "name": "p3"
+    }
+  ]
+}
+
+, {
+  "name": "log",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "p0"
+    },
+    {
+      "name": "p1"
+    },
+    {
+      "name": "p2"
+    },
+    {
+      "name": "p3"
+    }
+  ]
+}
+
+, {
+  "name": "log",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "p0"
+    },
+    {
+      "name": "p1"
+    },
+    {
+      "name": "p2"
+    },
+    {
+      "name": "p3"
+    }
+  ]
+}
+
+, {
+  "name": "log",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "p0"
+    },
+    {
+      "name": "p1"
+    },
+    {
+      "name": "p2"
+    },
+    {
+      "name": "p3"
+    }
+  ]
+}
+
+, {
+  "name": "log",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "p0"
+    },
+    {
+      "name": "p1"
+    },
+    {
+      "name": "p2"
+    },
+    {
+      "name": "p3"
+    }
+  ]
+}
+
+, {
+  "name": "log",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "p0"
+    },
+    {
+      "name": "p1"
+    },
+    {
+      "name": "p2"
+    },
+    {
+      "name": "p3"
+    }
+  ]
+}
+
+, {
+  "name": "log",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "p0"
+    },
+    {
+      "name": "p1"
+    },
+    {
+      "name": "p2"
+    },
+    {
+      "name": "p3"
+    }
+  ]
+}
+
+, {
+  "name": "log",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "p0"
+    },
+    {
+      "name": "p1"
+    },
+    {
+      "name": "p2"
+    },
+    {
+      "name": "p3"
+    }
+  ]
+}
+
+, {
+  "name": "log",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "p0"
+    },
+    {
+      "name": "p1"
+    },
+    {
+      "name": "p2"
+    },
+    {
+      "name": "p3"
+    }
+  ]
+}
+
+, {
+  "name": "log",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "p0"
+    },
+    {
+      "name": "p1"
+    },
+    {
+      "name": "p2"
+    },
+    {
+      "name": "p3"
+    }
+  ]
+}
+
+, {
+  "name": "log",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "p0"
+    },
+    {
+      "name": "p1"
+    },
+    {
+      "name": "p2"
+    }
+  ]
+}
+
+, {
+  "name": "log",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "p0"
+    },
+    {
+      "name": "p1"
+    },
+    {
+      "name": "p2"
+    }
+  ]
+}
+
+, {
+  "name": "log",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "p0"
+    },
+    {
+      "name": "p1"
+    },
+    {
+      "name": "p2"
+    }
+  ]
+}
+
+, {
+  "name": "log",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "p0"
+    },
+    {
+      "name": "p1"
+    },
+    {
+      "name": "p2"
+    }
+  ]
+}
+
+, {
+  "name": "log",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "p0"
+    },
+    {
+      "name": "p1"
+    }
+  ]
+}
+
+, {
+  "name": "log",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "p0"
+    },
+    {
+      "name": "p1"
+    },
+    {
+      "name": "p2"
+    },
+    {
+      "name": "p3"
+    }
+  ]
+}
+
+, {
+  "name": "log",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "p0"
+    },
+    {
+      "name": "p1"
+    },
+    {
+      "name": "p2"
+    },
+    {
+      "name": "p3"
+    }
+  ]
+}
+
+, {
+  "name": "log",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "p0"
+    },
+    {
+      "name": "p1"
+    },
+    {
+      "name": "p2"
+    },
+    {
+      "name": "p3"
+    }
+  ]
+}
+
+, {
+  "name": "log",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "p0"
+    },
+    {
+      "name": "p1"
+    },
+    {
+      "name": "p2"
+    },
+    {
+      "name": "p3"
+    }
+  ]
+}
+
+, {
+  "name": "log",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "p0"
+    },
+    {
+      "name": "p1"
+    },
+    {
+      "name": "p2"
+    },
+    {
+      "name": "p3"
+    }
+  ]
+}
+
+, {
+  "name": "log",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "p0"
+    },
+    {
+      "name": "p1"
+    },
+    {
+      "name": "p2"
+    },
+    {
+      "name": "p3"
+    }
+  ]
+}
+
+, {
+  "name": "log",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "p0"
+    },
+    {
+      "name": "p1"
+    },
+    {
+      "name": "p2"
+    },
+    {
+      "name": "p3"
+    }
+  ]
+}
+
+, {
+  "name": "log",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "p0"
+    },
+    {
+      "name": "p1"
+    },
+    {
+      "name": "p2"
+    },
+    {
+      "name": "p3"
+    }
+  ]
+}
+
+, {
+  "name": "logBytes",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "p0"
+    }
+  ]
+}
+
+, {
+  "name": "logBytes13",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "p0"
+    }
+  ]
+}
+
+, {
+  "name": "logBytes18",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "p0"
+    }
+  ]
+}
+
+, {
+  "name": "logBytes22",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "p0"
+    }
+  ]
+}
+
+, {
+  "name": "logBytes27",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "p0"
+    }
+  ]
+}
+
+, {
+  "name": "logBytes31",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "p0"
+    }
+  ]
+}
+
+, {
+  "name": "logBytes7",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "p0"
+    }
+  ]
+}
+
+, {
+  "name": "logUint",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "p0"
+    }
+  ]
+}
+
+, {
+  "name": "maliciousPrice",
+  "inputs": [
+    {
+      "name": "_id"
+    }
+  ]
+}
+
+, {
+  "name": "max",
+  "inputs": [
+    {
+      "name": "a"
+    },
+    {
+      "name": "b"
+    }
+  ]
+}
+
+, {
+  "name": "max64",
+  "inputs": [
+    {
+      "name": "_a"
+    },
+    {
+      "name": "_b"
+    }
+  ]
+}
+
+, {
+  "name": "min",
+  "inputs": [
+    {
+      "name": "a"
+    },
+    {
+      "name": "b"
+    }
+  ]
+}
+
+, {
+  "name": "mint",
+  "inputs": [
+    {
+      "name": "account"
+    },
+    {
+      "name": "amount"
+    }
+  ]
+}
+
+, {
+  "name": "mint",
+  "inputs": [
+    {
+      "name": "to"
+    }
+  ]
+}
+
+, {
+  "name": "mintBatchFrozenTokens",
+  "inputs": [
+    {
+      "name": "accounts",
+      "is_array": true
+    },
+    {
+      "name": "amounts",
+      "is_array": true
+    }
+  ]
+}
+
+, {
+  "name": "mintTokens",
+  "inputs": [
+    {
+      "name": "_amount"
+    }
+  ]
+}
+
+, {
+  "name": "mockFunction",
+  "inputs": []
+}
+
+, {
+  "name": "mod",
+  "inputs": [
+    {
+      "name": "a"
+    },
+    {
+      "name": "b"
+    }
+  ]
+}
+
+, {
+  "name": "mul",
+  "inputs": [
+    {
+      "name": "a"
+    },
+    {
+      "name": "b"
+    }
+  ]
+}
+
+, {
+  "name": "mul",
+  "inputs": [
+    {
+      "name": "a"
+    },
+    {
+      "name": "b"
+    }
+  ]
+}
+
+, {
+  "name": "multiGenerate",
+  "inputs": [
+    {
+      "name": "_merkleMineContract"
+    },
+    {
+      "name": "_recipients",
+      "is_array": true
+    },
+    {
+      "name": "_merkleProofs"
+    }
+  ]
+}
+
+, {
+  "name": "multisend",
+  "inputs": [
+    {
+      "name": "_holders",
+      "is_array": true
+    },
+    {
+      "name": "_amts",
+      "is_array": true
+    }
+  ]
+}
+
+, {
+  "name": "name",
+  "constant": true,
+  "inputs": []
+}
+
+, {
+  "name": "newToken",
+  "constant": true,
+  "inputs": []
+}
+
+, {
+  "name": "notEqual",
+  "inputs": [
+    {
+      "name": "a"
+    },
+    {
+      "name": "b"
+    },
+    {
+      "name": "message"
+    }
+  ]
+}
+
+, {
+  "name": "notEqual",
+  "inputs": [
+    {
+      "name": "a"
+    },
+    {
+      "name": "b"
+    },
+    {
+      "name": "message"
+    }
+  ]
+}
+
+, {
+  "name": "notEqual",
+  "inputs": [
+    {
+      "name": "a"
+    },
+    {
+      "name": "b"
+    },
+    {
+      "name": "message"
+    }
+  ]
+}
+
+, {
+  "name": "notEqual",
+  "inputs": [
+    {
+      "name": "a"
+    },
+    {
+      "name": "b"
+    },
+    {
+      "name": "message"
+    }
+  ]
+}
+
+, {
+  "name": "numOfAdmins",
+  "constant": true,
+  "inputs": []
+}
+
+, {
+  "name": "onTokenTransfer",
+  "inputs": [
+    {
+      "name": "val_0"
+    },
+    {
+      "name": "val_1"
+    },
+    {
+      "name": "val_2"
+    }
+  ]
+}
+
+, {
+  "name": "operatorSend",
+  "inputs": [
+    {
+      "name": "sender"
+    },
+    {
+      "name": "recipient"
+    },
+    {
+      "name": "amount"
+    },
+    {
+      "name": "data"
+    },
+    {
+      "name": "operatorData"
+    }
+  ]
+}
+
+, {
+  "name": "overloadedSet",
+  "inputs": [
+    {
+      "name": "h"
+    },
+    {
+      "name": "val"
+    }
+  ]
+}
+
+, {
+  "name": "ownerLives",
+  "constant": true,
+  "inputs": []
+}
+
+, {
+  "name": "pause",
+  "inputs": []
+}
+
+, {
+  "name": "paused",
+  "constant": true,
+  "inputs": []
+}
+
+, {
+  "name": "payableFn",
+  "inputs": []
+}
+
+, {
+  "name": "plusTen",
+  "inputs": [
+    {
+      "name": "_value"
+    }
+  ]
+}
+
+, {
+  "name": "power",
+  "inputs": [
+    {
+      "name": "val_0"
+    },
+    {
+      "name": "val_1"
+    }
+  ]
+}
+
+, {
+  "name": "presentto",
+  "inputs": []
+}
+
+, {
+  "name": "processProposal",
+  "inputs": [
+    {
+      "name": "proposalIndex"
+    }
+  ]
+}
+
+, {
+  "name": "proxyRuntimeCode",
+  "inputs": []
+}
+
+, {
+  "name": "publicOracleAddress",
+  "constant": true,
+  "inputs": []
+}
+
+, {
+  "name": "ragequit",
+  "inputs": [
+    {
+      "name": "sharesToBurn"
+    }
+  ]
+}
+
+, {
+  "name": "rayDiv",
+  "inputs": [
+    {
+      "name": "a"
+    },
+    {
+      "name": "b"
+    }
+  ]
+}
+
+, {
+  "name": "receive",
+  "payable": true,
+  "inputs": []
+}
+
+, {
+  "name": "reclaimContract",
+  "inputs": [
+    {
+      "name": "_contractAddr"
+    }
+  ]
+}
+
+, {
+  "name": "recover",
+  "inputs": [
+    {
+      "name": "hash"
+    },
+    {
+      "name": "signature"
+    }
+  ]
+}
+
+, {
+  "name": "registerInterface",
+  "inputs": [
+    {
+      "name": "interfaceId"
+    }
+  ]
+}
+
+, {
+  "name": "relayHubVersion",
+  "constant": true,
+  "inputs": []
+}
+
+, {
+  "name": "release",
+  "inputs": [
+    {
+      "name": "token"
+    }
+  ]
+}
+
+, {
+  "name": "released",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "account"
+    }
+  ]
+}
+
+, {
+  "name": "remove",
+  "inputs": [
+    {
+      "name": "storage role"
+    },
+    {
+      "name": "account"
+    }
+  ]
+}
+
+, {
+  "name": "removeAndException",
+  "inputs": []
+}
+
+, {
+  "name": "removeMinter",
+  "inputs": [
+    {
+      "name": "_minter"
+    }
+  ]
+}
+
+, {
+  "name": "renounceCapper",
+  "inputs": []
+}
+
+, {
+  "name": "renounceRole",
+  "inputs": [
+    {
+      "name": "role"
+    },
+    {
+      "name": "account"
+    }
+  ]
+}
+
+, {
+  "name": "request",
+  "inputs": []
+}
+
+, {
+  "name": "requestEthereumPrice",
+  "inputs": [
+    {
+      "name": "_currency"
+    }
+  ]
+}
+
+, {
+  "name": "requestedBytes",
+  "inputs": [
+    {
+      "name": "_requestId"
+    },
+    {
+      "name": "_value"
+    }
+  ]
+}
+
+, {
+  "name": "resolver",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "node"
+    }
+  ]
+}
+
+, {
+  "name": "|Int",
+  "constant": true,
+  "inputs": []
+}
+
+, {
+  "name": "revoke",
+  "inputs": [
+    {
+      "name": "_operation"
+    }
+  ]
+}
+
+, {
+  "name": "rng",
+  "inputs": []
+}
+
+, {
+  "name": "safeDecreaseAllowance",
+  "inputs": [
+    {
+      "name": "token"
+    },
+    {
+      "name": "spender"
+    },
+    {
+      "name": "value"
+    }
+  ]
+}
+
+, {
+  "name": "safeMint",
+  "inputs": [
+    {
+      "name": "to"
+    },
+    {
+      "name": "tokenId"
+    },
+    {
+      "name": "_data"
+    }
+  ]
+}
+
+, {
+  "name": "safeTransferFrom",
+  "inputs": [
+    {
+      "name": "from"
+    },
+    {
+      "name": "to"
+    },
+    {
+      "name": "tokenId"
+    }
+  ]
+}
+
+, {
+  "name": "send",
+  "inputs": [
+    {
+      "name": "recipient"
+    },
+    {
+      "name": "amount"
+    },
+    {
+      "name": "data"
+    }
+  ]
+}
+
+, {
+  "name": "sendHalf",
+  "payable": true,
+  "inputs": [
+    {
+      "name": "addr"
+    }
+  ]
+}
+
+, {
+  "name": "senderFor",
+  "inputs": [
+    {
+      "name": "account"
+    }
+  ]
+}
+
+, {
+  "name": "setAcceptEther",
+  "inputs": [
+    {
+      "name": "acceptEther"
+    }
+  ]
+}
+
+, {
+  "name": "setAdminAddress",
+  "inputs": [
+    {
+      "name": "_address"
+    }
+  ]
+}
+
+, {
+  "name": "setApprovalForAll",
+  "inputs": [
+    {
+      "name": "to"
+    },
+    {
+      "name": "approved"
+    }
+  ]
+}
+
+, {
+  "name": "setBuffer",
+  "inputs": [
+    {
+      "name": "data"
+    }
+  ]
+}
+
+, {
+  "name": "setCap",
+  "inputs": [
+    {
+      "name": "beneficiary"
+    },
+    {
+      "name": "cap"
+    }
+  ]
+}
+
+, {
+  "name": "setCompleted",
+  "inputs": [
+    {
+      "name": "completed"
+    }
+  ]
+}
+
+, {
+  "name": "setDailyCosts",
+  "inputs": [
+    {
+      "name": "_dailyCosts"
+    }
+  ]
+}
+
+, {
+  "name": "setFulfillmentPermission",
+  "inputs": [
+    {
+      "name": "val_0"
+    },
+    {
+      "name": "val_1"
+    }
+  ]
+}
+
+, {
+  "name": "setLimitOfParticipants",
+  "inputs": [
+    {
+      "name": "_limitOfParticipants"
+    }
+  ]
+}
+
+, {
+  "name": "setName",
+  "inputs": [
+    {
+      "name": "node"
+    },
+    {
+      "name": "name"
+    }
+  ]
+}
+
+, {
+  "name": "setOwner",
+  "inputs": [
+    {
+      "name": "node"
+    },
+    {
+      "name": "owner"
+    }
+  ]
+}
+
+, {
+  "name": "setResolver",
+  "inputs": [
+    {
+      "name": "node"
+    },
+    {
+      "name": "resolver"
+    }
+  ]
+}
+
+, {
+  "name": "setShouldRevertSend",
+  "inputs": [
+    {
+      "name": "shouldRevert"
+    }
+  ]
+}
+
+, {
+  "name": "setTokenURI",
+  "inputs": [
+    {
+      "name": "tokenId"
+    },
+    {
+      "name": "uri"
+    }
+  ]
+}
+
+, {
+  "name": "setValue",
+  "inputs": [
+    {
+      "name": "val"
+    }
+  ]
+}
+
+, {
+  "name": "sign",
+  "inputs": []
+}
+
+, {
+  "name": "splitDAO",
+  "inputs": [
+    {
+      "name": "_proposalID"
+    },
+    {
+      "name": "_newCurator"
+    }
+  ]
+}
+
+, {
+  "name": "sponsorProposal",
+  "inputs": [
+    {
+      "name": "proposalId"
+    }
+  ]
+}
+
+, {
+  "name": "startSplit",
+  "inputs": []
+}
+
+, {
+  "name": "store",
+  "inputs": []
+}
+
+, {
+  "name": "sub",
+  "inputs": [
+    {
+      "name": "_a"
+    },
+    {
+      "name": "_b"
+    }
+  ]
+}
+
+, {
+  "name": "sub",
+  "inputs": [
+    {
+      "name": "x"
+    },
+    {
+      "name": "y"
+    }
+  ]
+}
+
+, {
+  "name": "submitProposal",
+  "inputs": [
+    {
+      "name": "applicant"
+    },
+    {
+      "name": "sharesRequested"
+    },
+    {
+      "name": "lootRequested"
+    },
+    {
+      "name": "tributeOffered"
+    },
+    {
+      "name": "tributeToken"
+    },
+    {
+      "name": "paymentRequested"
+    },
+    {
+      "name": "paymentToken"
+    },
+    {
+      "name": "details"
+    }
+  ]
+}
+
+, {
+  "name": "submitWhitelistProposal",
+  "inputs": [
+    {
+      "name": "tokenToWhitelist"
+    },
+    {
+      "name": "details"
+    }
+  ]
+}
+
+, {
+  "name": "supportsERC165",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "account"
+    }
+  ]
+}
+
+, {
+  "name": "supportsInterface",
+  "inputs": [
+    {
+      "name": "interfaceID"
+    }
+  ]
+}
+
+, {
+  "name": "symbol",
+  "constant": true,
+  "inputs": []
+}
+
+, {
+  "name": "test",
+  "inputs": []
+}
+
+, {
+  "name": "test",
+  "inputs": []
+}
+
+, {
+  "name": "test",
+  "inputs": []
+}
+
+, {
+  "name": "test",
+  "inputs": [
+    {
+      "name": "b"
+    }
+  ]
+}
+
+, {
+  "name": "test",
+  "inputs": [
+    {
+      "name": "i"
+    }
+  ]
+}
+
+, {
+  "name": "test1Func11",
+  "inputs": []
+}
+
+, {
+  "name": "test1Func16",
+  "inputs": []
+}
+
+, {
+  "name": "test1Func20",
+  "inputs": []
+}
+
+, {
+  "name": "test1Func7",
+  "inputs": []
+}
+
+, {
+  "name": "test2Func1",
+  "inputs": []
+}
+
+, {
+  "name": "test2Func14",
+  "inputs": []
+}
+
+, {
+  "name": "test2Func19",
+  "inputs": []
+}
+
+, {
+  "name": "test2Func5",
+  "inputs": []
+}
+
+, {
+  "name": "test3",
+  "inputs": []
+}
+
+, {
+  "name": "testFunction",
+  "inputs": []
+}
+
+, {
+  "name": "testV2",
+  "inputs": [
+    {
+      "name": "p0"
+    }
+  ]
+}
+
+, {
+  "name": "thrash",
+  "inputs": []
+}
+
+, {
+  "name": "toInt256",
+  "inputs": [
+    {
+      "name": "a"
+    }
+  ]
+}
+
+, {
+  "name": "toString",
+  "inputs": [
+    {
+      "name": "value"
+    }
+  ]
+}
+
+, {
+  "name": "toUint256",
+  "inputs": [
+    {
+      "name": "a"
+    }
+  ]
+}
+
+, {
+  "name": "toUint64",
+  "inputs": [
+    {
+      "name": "value"
+    }
+  ]
+}
+
+, {
+  "name": "toggleTrustedVerifier",
+  "inputs": [
+    {
+      "name": "_verifier"
+    }
+  ]
+}
+
+, {
+  "name": "tokenByIndex",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "index"
+    }
+  ]
+}
+
+, {
+  "name": "tokenURI",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "_tokenId"
+    }
+  ]
+}
+
+, {
+  "name": "tokensToSend",
+  "inputs": [
+    {
+      "name": "operator"
+    },
+    {
+      "name": "from"
+    },
+    {
+      "name": "to"
+    },
+    {
+      "name": "amount"
+    },
+    {
+      "name": "userData"
+    },
+    {
+      "name": "operatorData"
+    }
+  ]
+}
+
+, {
+  "name": "totalSupply",
+  "constant": true,
+  "inputs": []
+}
+
+, {
+  "name": "trade",
+  "inputs": [
+    {
+      "name": "tokenGet"
+    },
+    {
+      "name": "amountGet"
+    },
+    {
+      "name": "tokenGive"
+    },
+    {
+      "name": "amountGive"
+    },
+    {
+      "name": "expires"
+    },
+    {
+      "name": "nonce"
+    },
+    {
+      "name": "user"
+    },
+    {
+      "name": "v"
+    },
+    {
+      "name": "r"
+    },
+    {
+      "name": "s"
+    },
+    {
+      "name": "amount"
+    }
+  ]
+}
+
+, {
+  "name": "transfer",
+  "inputs": [
+    {
+      "name": "_to"
+    },
+    {
+      "name": "_value"
+    }
+  ]
+}
+
+, {
+  "name": "transfer",
+  "inputs": [
+    {
+      "name": "recipient"
+    },
+    {
+      "name": "amount"
+    }
+  ]
+}
+
+, {
+  "name": "transfer",
+  "inputs": [
+    {
+      "name": "val_0"
+    },
+    {
+      "name": "val_1"
+    }
+  ]
+}
+
+, {
+  "name": "transferFrom",
+  "inputs": [
+    {
+      "name": "_from"
+    },
+    {
+      "name": "_to"
+    },
+    {
+      "name": "_amount"
+    }
+  ]
+}
+
+, {
+  "name": "transferFrom",
+  "inputs": [
+    {
+      "name": "from"
+    },
+    {
+      "name": "to"
+    },
+    {
+      "name": "tokenId"
+    }
+  ]
+}
+
+, {
+  "name": "transferFrom",
+  "inputs": [
+    {
+      "name": "sender"
+    },
+    {
+      "name": "recipient"
+    },
+    {
+      "name": "amount"
+    }
+  ]
+}
+
+, {
+  "name": "transferFromWithoutReward",
+  "inputs": [
+    {
+      "name": "_from"
+    },
+    {
+      "name": "_to"
+    },
+    {
+      "name": "_value"
+    }
+  ]
+}
+
+, {
+  "name": "transferOwnership",
+  "inputs": [
+    {
+      "name": "newOwner"
+    }
+  ]
+}
+
+, {
+  "name": "transferPrimary",
+  "inputs": [
+    {
+      "name": "recipient"
+    }
+  ]
+}
+
+, {
+  "name": "triggerContractAddressEvent",
+  "inputs": []
+}
+
+, {
+  "name": "triggerRequireError",
+  "inputs": []
+}
+
+, {
+  "name": "ttl",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "node"
+    }
+  ]
+}
+
+, {
+  "name": "unpause",
+  "inputs": []
+}
+
+, {
+  "name": "unsafeAddToBalance",
+  "inputs": [
+    {
+      "name": "user"
+    },
+    {
+      "name": "token"
+    },
+    {
+      "name": "amount"
+    }
+  ]
+}
+
+, {
+  "name": "updateAndRevert",
+  "inputs": [
+    {
+      "name": "newBalance"
+    }
+  ]
+}
+
+, {
+  "name": "updateOwner",
+  "inputs": [
+    {
+      "name": "newOwner"
+    }
+  ]
+}
+
+, {
+  "name": "upgradeRelayHub",
+  "inputs": [
+    {
+      "name": "newRelayHub"
+    }
+  ]
+}
+
+, {
+  "name": "verify",
+  "inputs": [
+    {
+      "name": "proof",
+      "is_array": true
+    },
+    {
+      "name": "root"
+    },
+    {
+      "name": "leaf"
+    }
+  ]
+}
+
+, {
+  "name": "vote",
+  "inputs": [
+    {
+      "name": "videoID"
+    }
+  ]
+}
+
+, {
+  "name": "wallet",
+  "constant": true,
+  "inputs": []
+}
+
+, {
+  "name": "withdraw",
+  "inputs": [
+    {
+      "name": "_payee"
+    }
+  ]
+}
+
+, {
+  "name": "withdraw",
+  "inputs": [
+    {
+      "name": "payee"
+    }
+  ]
+}
+
+, {
+  "name": "withdrawBalance",
+  "inputs": [
+    {
+      "name": "token"
+    },
+    {
+      "name": "amount"
+    }
+  ]
+}
+
+, {
+  "name": "withdrawEth",
+  "inputs": []
+}
+
+, {
+  "name": "withdrawLink",
+  "inputs": []
+}
+
+, {
+  "name": "withdrawPaymentsWithGas",
+  "inputs": [
+    {
+      "name": "payee"
+    }
+  ]
+}
+
+, {
+  "name": "withdrawTokens",
+  "inputs": [
+    {
+      "name": "beneficiary"
+    }
+  ]
+}
+
+, {
+  "name": "withdrawalAllowed",
+  "constant": true,
+  "inputs": [
+    {
+      "name": "payee"
+    }
+  ]
+}
+
+, {
+  "name": "writeBytes20",
+  "inputs": [
+    {
+      "name": "buf"
+    },
+    {
+      "name": "off"
+    },
+    {
+      "name": "data"
+    }
+  ]
+}
+
+, {
+  "name": "zqHash",
+  "inputs": [
+    {
+      "name": "q"
+    },
+    {
+      "name": "x"
+    }
+  ]
+}
+
+, {
+  "inputs": []
+}
+
+, {
+  "name": "AffirmStatus",
+  "inputs": [
+    {
+      "name": "_sender"
+    },
+    {
+      "name": "_account"
+    },
+    {
+      "name": "_affirmDate"
+    },
+    {
+      "name": "_value"
+    }
+  ]
+}
+
+, {
+  "name": "MakeRequest",
+  "inputs": [
+    {
+      "name": "_key"
+    },
+    {
+      "name": "_date"
+    },
+    {
+      "name": "_tokenAmount"
+    },
+    {
+      "name": "_dollarPrice"
+    },
+    {
+      "name": "_requestType"
+    },
+    {
+      "name": "_requester"
+    }
+  ]
+}
+
+, {
+  "name": "SettingChange",
+  "inputs": [
+    {
+      "name": "_admin"
+    },
+    {
+      "name": "_setting"
+    },
+    {
+      "name": "_value"
+    }
+  ]
+}
+
+, {
+  "name": "Transfer",
+  "inputs": [
+    {
+      "name": "from"
+    },
+    {
+      "name": "to"
+    },
+    {
+      "name": "tokens"
+    }
+  ]
+}
+
+, {
+  "name": "AddedOwner",
+  "inputs": [
+    {
+      "name": "owner"
+    }
+  ]
+}
+
+, {
+  "name": "Approval",
+  "inputs": [
+    {
+      "name": "owner"
+    },
+    {
+      "name": "approved"
+    },
+    {
+      "name": "tokenId"
+    }
+  ]
+}
+
+, {
+  "name": "CanRelayFailed",
+  "inputs": [
+    {
+      "name": "relay"
+    },
+    {
+      "name": "from"
+    },
+    {
+      "name": "to"
+    },
+    {
+      "name": "selector"
+    },
+    {
+      "name": "reason"
+    }
+  ]
+}
+
+, {
+  "name": "CapperRemoved",
+  "inputs": [
+    {
+      "name": "account"
+    }
+  ]
+}
+
+, {
+  "name": "Data",
+  "inputs": [
+    {
+      "name": "data"
+    },
+    {
+      "name": "integerValue"
+    },
+    {
+      "name": "stringValue"
+    }
+  ]
+}
+
+, {
+  "name": "Deposited",
+  "inputs": [
+    {
+      "name": "recipient"
+    },
+    {
+      "name": "from"
+    },
+    {
+      "name": "amount"
+    }
+  ]
+}
+
+, {
+  "name": "FinalizeEvent",
+  "inputs": [
+    {
+      "name": "maps",
+      "is_array": true
+    },
+    {
+      "name": "payout"
+    },
+    {
+      "name": "endedAt"
+    }
+  ]
+}
+
+, {
+  "name": "Log0Anonym",
+  "inputs": [
+    {
+      "name": "value"
+    }
+  ]
+}
+
+, {
+  "name": "Log3",
+  "inputs": [
+    {
+      "name": "aBool"
+    },
+    {
+      "name": "aAddress"
+    },
+    {
+      "name": "aBytes32"
+    },
+    {
+      "name": "value"
+    }
+  ]
+}
+
+, {
+  "name": "LogSetOwner",
+  "inputs": [
+    {
+      "name": "owner"
+    }
+  ]
+}
+
+, {
+  "name": "MinterRemoved",
+  "inputs": [
+    {
+      "name": "account"
+    }
+  ]
+}
+
+, {
+  "name": "NewCheckpointVote",
+  "inputs": [
+    {
+      "name": "index"
+    },
+    {
+      "name": "checkpointHash"
+    },
+    {
+      "name": "v"
+    },
+    {
+      "name": "r"
+    },
+    {
+      "name": "s"
+    }
+  ]
+}
+
+, {
+  "name": "OwnerChanged",
+  "inputs": [
+    {
+      "name": "oldOwner"
+    },
+    {
+      "name": "newOwner"
+    }
+  ]
+}
+
+, {
+  "name": "PayeeAdded",
+  "inputs": [
+    {
+      "name": "account"
+    },
+    {
+      "name": "shares"
+    }
+  ]
+}
+
+, {
+  "name": "ProcessProposal",
+  "inputs": [
+    {
+      "name": "proposalIndex"
+    },
+    {
+      "name": "applicant"
+    },
+    {
+      "name": "memberAddress"
+    },
+    {
+      "name": "tokenTribute"
+    },
+    {
+      "name": "sharesRequested"
+    },
+    {
+      "name": "didPass"
+    }
+  ]
+}
+
+, {
+  "name": "Ragequit",
+  "inputs": [
+    {
+      "name": "memberAddress"
+    },
+    {
+      "name": "sharesToBurn"
+    }
+  ]
+}
+
+, {
+  "name": "RegisterEvent",
+  "inputs": [
+    {
+      "name": "addr"
+    },
+    {
+      "name": "index"
+    }
+  ]
+}
+
+, {
+  "name": "RevokedOperator",
+  "inputs": [
+    {
+      "name": "operator"
+    },
+    {
+      "name": "tokenHolder"
+    }
+  ]
+}
+
+, {
+  "name": "Sent",
+  "inputs": [
+    {
+      "name": "operator"
+    },
+    {
+      "name": "from"
+    },
+    {
+      "name": "to"
+    },
+    {
+      "name": "amount"
+    },
+    {
+      "name": "data"
+    },
+    {
+      "name": "operatorData"
+    }
+  ]
+}
+
+, {
+  "name": "Staked",
+  "inputs": [
+    {
+      "name": "relay"
+    },
+    {
+      "name": "stake"
+    },
+    {
+      "name": "unstakeDelay"
+    }
+  ]
+}
+
+, {
+  "name": "SubmitVote",
+  "inputs": [
+    {
+      "name": "proposalId"
+    },
+    {
+      "name": "proposalIndex"
+    },
+    {
+      "name": "delegateKey"
+    },
+    {
+      "name": "memberAddress"
+    },
+    {
+      "name": "uintVote"
+    }
+  ]
+}
+
+, {
+  "name": "TestAnon",
+  "inputs": [
+    {
+      "name": "p0"
+    },
+    {
+      "name": "p2"
+    }
+  ]
+}
+
+, {
+  "name": "TestIndexedString",
+  "inputs": [
+    {
+      "name": "p2"
+    },
+    {
+      "name": "p1"
+    }
+  ]
+}
+
+, {
+  "name": "TestV2DynamicArray",
+  "inputs": [
+    {
+      "name": "p0[]"
+    },
+    {
+      "name": "p1[]"
+    }
+  ]
+}
+
+, {
+  "name": "TokenVestingRevoked",
+  "inputs": [
+    {
+      "name": "token"
+    }
+  ]
+}
+
+, {
+  "name": "TokensToSendCalled",
+  "inputs": [
+    {
+      "name": "operator"
+    },
+    {
+      "name": "from"
+    },
+    {
+      "name": "to"
+    },
+    {
+      "name": "amount"
+    },
+    {
+      "name": "data"
+    },
+    {
+      "name": "operatorData"
+    },
+    {
+      "name": "token"
+    },
+    {
+      "name": "fromBalance"
+    },
+    {
+      "name": "toBalance"
+    }
+  ]
+}
+
+, {
+  "name": "Transfer",
+  "inputs": [
+    {
+      "name": "node"
+    },
+    {
+      "name": "owner"
+    }
+  ]
+}
+
+, {
+  "name": "UpdatedCount",
+  "inputs": [
+    {
+      "name": "count"
+    }
+  ]
+}
+
+, {
+  "name": "Withdraw",
+  "inputs": [
+    {
+      "name": "memberAddress"
+    },
+    {
+      "name": "token"
+    },
+    {
+      "name": "amount"
+    }
+  ]
+}
+
+, {
+  "name": "Withdrawn",
+  "inputs": [
+    {
+      "name": "payee"
+    },
+    {
+      "name": "weiAmount"
+    }
+  ]
+}
+
+, {
+  "name": "e",
+  "inputs": [
+    {
+      "name": "a",
+      "is_array": true
+    },
+    {
+      "name": "b",
+      "is_array": true
+    },
+    {
+      "name": "x",
+      "is_array": true
+    }
+  ]
+}
+
+, {
+  "name": "Approval",
+  "inputs": [
+    {
+      "name": "owner"
+    },
+    {
+      "name": "spender"
+    },
+    {
+      "name": "value"
+    }
+  ]
+}
+
+, {
+  "name": "ChainlinkFulfilled",
+  "inputs": [
+    {
+      "name": "id"
+    }
+  ]
+}
+
+, {
+  "name": "Deposited",
+  "inputs": [
+    {
+      "name": "payee"
+    },
+    {
+      "name": "weiAmount"
+    }
+  ]
+}
+
+, {
+  "name": "InitiatedJob",
+  "inputs": [
+    {
+      "name": "said"
+    }
+  ]
+}
+
+, {
+  "name": "MintFinished",
+  "inputs": []
+}
+
+, {
+  "name": "NewRound",
+  "inputs": [
+    {
+      "name": "roundId"
+    },
+    {
+      "name": "startedBy"
+    }
+  ]
+}
+
+, {
+  "name": "OracleAdded",
+  "inputs": [
+    {
+      "name": "oracle"
+    }
+  ]
+}
+
+, {
+  "name": "OwnershipTransferred",
+  "inputs": [
+    {
+      "name": "previousOwner"
+    },
+    {
+      "name": "newOwner"
+    }
+  ]
+}
+
+, {
+  "name": "Released",
+  "inputs": [
+    {
+      "name": "amount"
+    }
+  ]
+}
+
+, {
+  "name": "RoleAdded",
+  "inputs": [
+    {
+      "name": "operator"
+    },
+    {
+      "name": "role"
+    }
+  ]
+}
+
+, {
+  "name": "ServiceAgreementResponseReceived",
+  "inputs": [
+    {
+      "name": "saId"
+    },
+    {
+      "name": "requestId"
+    },
+    {
+      "name": "oracle"
+    },
+    {
+      "name": "answer"
+    }
+  ]
+}
+
+, {
+  "name": "Submit",
+  "inputs": [
+    {
+      "name": "proposalId"
+    }
+  ]
+}
+
+, {
+  "name": "Transfer",
+  "inputs": [
+    {
+      "name": "from"
+    },
+    {
+      "name": "to"
+    },
+    {
+      "name": "value"
+    }
+  ]
+}
+
+, {
+  "name": "UserAdded",
+  "inputs": [
+    {
+      "name": "addr"
+    },
+    {
+      "name": "user"
+    }
+  ]
+}
+
+, {
+  "name": "Confirmation",
+  "inputs": [
+    {
+      "name": "owner"
+    },
+    {
+      "name": "operation"
+    }
+  ]
+}
+
+, {
+  "name": "FuelingToDate",
+  "inputs": [
+    {
+      "name": "value"
+    }
+  ]
+}
+
+, {
+  "name": "OwnerRemoved",
+  "inputs": [
+    {
+      "name": "oldOwner"
+    }
+  ]
+}
+
+, {
+  "name": "RequirementChanged",
+  "inputs": [
+    {
+      "name": "newRequirement"
+    }
+  ]
+}
+
 ]

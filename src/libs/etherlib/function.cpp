@@ -588,111 +588,96 @@ string_q CFunction::encodeItem(void) const {
     return (type == "event" ? ret : extract(ret, 0, 10));
 }
 
-//-----------------------------------------------------------------------
-bool CFunction::fromDefinition(const string_q& lineIn) {
-    if (lineIn.empty())
-        return false;
-
-#define OLD_CODE
-#ifdef OLD_CODE
-    string_q line = lineIn;
-#else
-    size_t scopeCount = 0;
-    ostringstream os;
-    ParseState state = OUT;
-    for (auto ch : lineIn) {
-        switch (state) {
-            case IN:
-                if (ch == '(') {
-                    scopeCount++;
-                    os << "+";
-                } else if (ch == ')') {
-                    if (scopeCount == 0) {
-                        state = OUT;
-                        os << ch;
-                    } else {
-                        scopeCount--;
-                        os << "`";
-                    }
-                } else {
-                    os << ch;
+//--------------------------------------------------------------
+string_q findEndingParens(string_q& in) {
+    string_q ret;
+    int cnt = 0;
+    for (auto ch : in) {
+        switch (ch) {
+            case ')':
+                cnt--;
+                if (cnt < 1) {
+                    replace(in, "(" + ret + ")", "");
+                    return trim(ret);
                 }
+                ret += ch;
                 break;
-            case OUT:
-                if (ch == '(') {
-                    os << ch;
-                    state = IN;
-                } else {
-                    os << ch;
-                }
+            case '(':
+                if (cnt)
+                    ret += ch;
+                cnt++;
                 break;
             default:
+                ret += ch;
                 break;
         }
     }
-    string_q line = os.str();
-#endif
-    line = substitute(line, "(", "|");  // clean up
-    line = substitute(line, ")", "|");  // clean up
-#ifdef OLD_CODE
-#else
-    if (contains(line, '+')) {
-        replaceAll(line, "+", "-&");
-        replaceAll(line, "`", "*-");
-        CStringArray parts;
-        explode(parts, line, '-');
-        string_q str;
-        for (auto part : parts) {
-            if (contains(part, "&")) {
-                replaceAll(part, ",", "%");
-            }
-            str += substitute(substitute(part, "&", "tuple("), "*", ")");
-        }
-        line = str;
-    }
-#endif
+    replace(in, "(" + ret + ")", "");
+    return trim(ret);
+}
+
+//-----------------------------------------------------------------------
+bool CFunction::fromDefinition(const string_q& lineIn) {
+    string_q line = lineIn;
     line = substitute(line, ", ", ",");  // clean up
     line = substitute(line, "\t", "");   // clean up
     while (contains(line, " ["))
         replace(line, " [", "[");  // clean up
     while (contains(line, " ]"))
         replace(line, " ]", "]");  // clean up
-    this->constant = (contains(line, "constant") || contains(line, "view"));
-    this->type = trim(nextTokenClear(line, ' '));
-    this->name = trim(nextTokenClear(line, '|'));
+    string_q outStr = substitute(substitute(substitute(nextTokenClear(line, '{'), "\n", ""), ";", ""), "returns", "|");
+    replace(outStr, "function(", "function (");
+    replace(outStr, "event(", "event (");
 
-    uint64_t iCnt = 0;
-    string_q inputStr = trim(nextTokenClear(line, '|'));
+    type = trim(nextTokenClear(outStr, ' '));
+    name = trim(nextTokenClear(outStr, '('));
+    outStr = "(" + outStr;
+
+    string_q inStr = trim(findEndingParens(outStr));
+    string_q intern = trim(nextTokenClear(outStr, '|'));
+    outStr = trim(outStr);
+
+    anonymous = contains(intern, "anonymous");
+    constant = contains(intern, "constant") || contains(intern, "view");
+    payable = contains(intern, "payable");
+    // internals:
+    //  external
+    //  internal
+    //  override
+    //  private
+    //  public
+    //  pure
+    //  restricted
+    //  virtual
+    CStringArray ts = {"memory", "payable", "calldata"};
+    for (auto t : ts) {
+        inStr = substitute(inStr, t, "");
+        outStr = substitute(outStr, t, "");
+    }
+
+    uint64_t cnt = 0;
     CStringArray inputArray;
-    explode(inputArray, inputStr, ',');
+    explode(inputArray, inStr, ',');
     for (auto input : inputArray) {
         CParameter param;
         param.fromDefinition(input);
         if (param.name.empty())
-            param.name = "val_" + uint_2_Str(iCnt++);
-        // if (isTestMode())
-        //    cout << param << endl;
-        this->inputs.push_back(param);
+            param.name = "val_" + uint_2_Str(cnt++);
+        inputs.push_back(param);
     }
 
-    uint64_t oCnt = 0;
-    CStringArray parts;
-    explode(parts, line, '|');
-    if (parts.size() > 1 && contains(parts[0], "returns")) {
-        string_q outputStr = trim(nextTokenClear(parts[1], '|'));
-        CStringArray outputArray;
-        explode(outputArray, outputStr, ',');
-        for (auto output : outputArray) {
-            CParameter param;
-            param.fromDefinition(output);
-            if (param.name.empty())
-                param.name = "ret_" + uint_2_Str(oCnt++);
-            outputs.push_back(param);
-        }
+    outStr = substitute(substitute(substitute(substitute(outStr, "(", ""), ")", ""), "memory", ""), "calldata", "");
+    cnt = 0;
+    CStringArray outputArray;
+    explode(outputArray, outStr, ',');
+    for (auto output : outputArray) {
+        CParameter param;
+        param.fromDefinition(output);
+        if (param.name.empty())
+            param.name = "ret_" + uint_2_Str(cnt++);
+        outputs.push_back(param);
     }
     finishParse();
-    // if (isTestMode())
-    //    cout << *this << endl;
     return true;
 }
 

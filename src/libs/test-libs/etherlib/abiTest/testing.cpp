@@ -385,6 +385,7 @@ class CFunctionTester : public CFunction {
             cout << (expected == result ? bGreen : bRed);
             cout << "expected: --" << parts[4] << "--?" << endl;
             cout << "result:   --" << parts[4] << "--? " << (parts[4] == parts[4]) << endl;
+            cout << "testName: " << parts[1] << endl;
             cout << cOff;
             return true;  // report on commented lines, but don't do the test
         }
@@ -412,6 +413,7 @@ class CFunctionTester : public CFunction {
             cout << (expected == result ? bGreen : bRed);
             cout << "expected: --" << expected << "--?" << endl;
             cout << "result:   --" << result << "--? " << (expected == result) << endl;
+            cout << "testName: " << parts[1] << endl;
             cout << cOff;
             return true;  // debugging
 
@@ -422,6 +424,7 @@ class CFunctionTester : public CFunction {
         cout << (expected == result ? bGreen : bRed);
         cout << "expected: --" << expected << "--?" << endl;
         cout << "result:   --" << result << "--? " << (expected == result) << endl;
+        cout << "testName: " << parts[1] << endl;
         cout << cOff;
         return true;  // debugging
     }

@@ -9,6 +9,7 @@ testName: encoding negative int32
 signature: function baz(int32) : function baz(int32)
 expected: --0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe--?
 result:   --0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe--? 1
+testName: encoding negative int32
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
 	000.001 test_1                           ==> 
@@ -18,6 +19,7 @@ testName: encoding negative int256
 signature: function baz(int256) : function baz(int256)
 expected: --0xfffffffffffff38dd0f10627f5529bdb2c52d4846810af0ac000000000000001--?
 result:   --0xfffffffffffff38dd0f10627f5529bdb2c52d4846810af0ac000000000000001--? 1
+testName: encoding negative int256
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
 	000.002 test_2                           ==> 
@@ -27,6 +29,7 @@ testName: encoding string >32bytes
 signature: function baz(string) : function baz(string)
 expected: --0x000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000c22068656c6c6f20776f726c642068656c6c6f20776f726c642068656c6c6f20776f726c642068656c6c6f20776f726c64202068656c6c6f20776f726c642068656c6c6f20776f726c642068656c6c6f20776f726c642068656c6c6f20776f726c64202068656c6c6f20776f726c642068656c6c6f20776f726c642068656c6c6f20776f726c642068656c6c6f20776f726c642068656c6c6f20776f726c642068656c6c6f20776f726c642068656c6c6f20776f726c642068656c6c6f20776f726c64000000000000000000000000000000000000000000000000000000000000--?
 result:   --0x000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000c22068656c6c6f20776f726c642068656c6c6f20776f726c642068656c6c6f20776f726c642068656c6c6f20776f726c64202068656c6c6f20776f726c642068656c6c6f20776f726c642068656c6c6f20776f726c642068656c6c6f20776f726c64202068656c6c6f20776f726c642068656c6c6f20776f726c642068656c6c6f20776f726c642068656c6c6f20776f726c642068656c6c6f20776f726c642068656c6c6f20776f726c642068656c6c6f20776f726c642068656c6c6f20776f726c64000000000000000000000000000000000000000000000000000000000000--? 1
+testName: encoding string >32bytes
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
 	000.003 test_3                           ==> 
@@ -36,6 +39,7 @@ testName: encoding uint32 response
 signature: function baz(uint32) : function baz(uint32)
 expected: --0x000000000000000000000000000000000000000000000000000000000000002a--?
 result:   --0x000000000000000000000000000000000000000000000000000000000000002a--? 1
+testName: encoding uint32 response
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
 	000.004 test_4                           ==> 
@@ -45,6 +49,7 @@ testName: encoding string response (unsupported)
 signature: function baz(string) : function baz(string)
 expected: --0x0000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000001f6120726573706f6e736520737472696e672028756e737570706f727465642900--?
 result:   --0x0000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000001f6120726573706f6e736520737472696e672028756e737570706f727465642900--? 1
+testName: encoding string response (unsupported)
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
 	000.005 test_5                           ==> 
@@ -54,6 +59,7 @@ testName: encoding 1
 signature: function baz(uint256) : function baz(uint256)
 expected: --0x0000000000000000000000000000000000000000000000000000000000000001--?
 result:   --0x0000000000000000000000000000000000000000000000000000000000000001--? 1
+testName: encoding 1
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
 	000.006 test_6                           ==> 
@@ -63,6 +69,7 @@ testName: encoding 2
 signature: function baz(uint) : function baz(uint256)
 expected: --0x0000000000000000000000000000000000000000000000000000000000000001--?
 result:   --0x0000000000000000000000000000000000000000000000000000000000000001--? 1
+testName: encoding 2
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
 	000.007 test_7                           ==> 
@@ -72,6 +79,7 @@ testName: encoding 3
 signature: function baz(int256) : function baz(int256)
 expected: --0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff--?
 result:   --0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff--? 1
+testName: encoding 3
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
 	000.008 test_8                           ==> 
@@ -81,6 +89,7 @@ testName: encoding 3
 signature: function baz(string,uint256[2]) : function baz(string,uint256[2])
 expected: --0x0000000000000000000000000000000000000000000000000000000000000060000000000000000000000000000000000000000000000000000000000000000500000000000000000000000000000000000000000000000000000000000000060000000000000000000000000000000000000000000000000000000000000003666f6f0000000000000000000000000000000000000000000000000000000000--?
 result:   --0x0000000000000000000000000000000000000000000000000000000000000060000000000000000000000000000000000000000000000000000000000000000500000000000000000000000000000000000000000000000000000000000000060000000000000000000000000000000000000000000000000000000000000003666f6f0000000000000000000000000000000000000000000000000000000000--? 1
+testName: encoding 3
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
 	000.009 test_9                           ==> 
@@ -90,6 +99,7 @@ testName: decoding address with leading 0
 signature: function baz(address) : function baz(address)
 expected: --0x0005b7d915458ef540ade6068dfe2f44e8fa733c--?
 result:   --0x0005b7d915458ef540ade6068dfe2f44e8fa733c--? 1
+testName: decoding address with leading 0
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
 	000.010 test_10                          ==> 
@@ -99,6 +109,7 @@ testName: encoding ufixed128x128
 signature: function baz(ufixed128x128) : function baz(ufixed128x128)
 expected: --0x0000000000000000000000000000000100000000000000000000000000000000--?
 result:   --0x0000000000000000000000000000000100000000000000000000000000000000--? 1
+testName: encoding ufixed128x128
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
 	000.011 test_11                          ==> 
@@ -108,6 +119,7 @@ testName: encoding fixed128x128
 signature: function baz(fixed128x128 : function baz(fixed128x128)
 expected: --0xffffffffffffffffffffffffffffffff00000000000000000000000000000000--?
 result:   --0xffffffffffffffffffffffffffffffff00000000000000000000000000000000--? 1
+testName: encoding fixed128x128
 passed 'func.doTest(line)' is true
 ...passed
 

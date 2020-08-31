@@ -9,6 +9,7 @@ testName: test 1
 signature: function vote(uint256,bool) : function vote(uint256,bool)
 expected: --0xc9d27afe--?
 result:   --0xc9d27afe--? 1
+testName: test 1
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
 	000.001 test_1                           ==> 
@@ -18,6 +19,7 @@ testName: test 2
 signature: event AllowedRecipientChanged(address,bool) : event AllowedRecipientChanged(address,bool)
 expected: --0x73ad2a153c8b67991df9459024950b318a609782cee8c7eeda47b905f9baa91f--?
 result:   --0x73ad2a153c8b67991df9459024950b318a609782cee8c7eeda47b905f9baa91f--? 1
+testName: test 2
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
 	000.002 test_2                           ==> 
@@ -27,6 +29,7 @@ testName: method signature 1
 signature: function test() : function test()
 expected: --0xf8a8fd6d--?
 result:   --0xf8a8fd6d--? 1
+testName: method signature 1
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
 	000.003 test_3                           ==> 
@@ -36,6 +39,7 @@ testName: method signature 2
 signature: function test(uint) : function test(uint256)
 expected: --0x29e99f07--?
 result:   --0x29e99f07--? 1
+testName: method signature 2
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
 	000.004 test_4                           ==> 
@@ -45,6 +49,7 @@ testName: method signature 3
 signature: function test(uint256) : function test(uint256)
 expected: --0x29e99f07--?
 result:   --0x29e99f07--? 1
+testName: method signature 3
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
 	000.005 test_5                           ==> 
@@ -54,6 +59,7 @@ testName: method signature 4
 signature: function test(uint, uint) : function test(uint256,uint256)
 expected: --0xeb8ac921--?
 result:   --0xeb8ac921--? 1
+testName: method signature 4
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
 	000.006 test_6                           ==> 
@@ -63,6 +69,7 @@ testName: event signature 1
 signature: event test() : event test()
 expected: --0xf8a8fd6dd9544ca87214e80c840685bd13ff4682cacb0c90821ed74b1d248926--?
 result:   --0xf8a8fd6dd9544ca87214e80c840685bd13ff4682cacb0c90821ed74b1d248926--? 1
+testName: event signature 1
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
 	000.007 test_7                           ==> 
@@ -72,6 +79,7 @@ testName: event signature 2
 signature: event test(uint) : event test(uint256)
 expected: --0x29e99f07d14aa8d30a12fa0b0789b43183ba1bf6b4a72b95459a3e397cca10d7--?
 result:   --0x29e99f07d14aa8d30a12fa0b0789b43183ba1bf6b4a72b95459a3e397cca10d7--? 1
+testName: event signature 2
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
 	000.008 test_8                           ==> 
@@ -81,6 +89,7 @@ testName: event signature 3
 signature: event test(uint256) : event test(uint256)
 expected: --0x29e99f07d14aa8d30a12fa0b0789b43183ba1bf6b4a72b95459a3e397cca10d7--?
 result:   --0x29e99f07d14aa8d30a12fa0b0789b43183ba1bf6b4a72b95459a3e397cca10d7--? 1
+testName: event signature 3
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
 	000.009 test_9                           ==> 
@@ -90,6 +99,7 @@ testName: event signature 4
 signature: event test(uint, uint) : event test(uint256,uint256)
 expected: --0xeb8ac9210327650aab0044de896b150391af3be06f43d0f74c01f05633b97a70--?
 result:   --0xeb8ac9210327650aab0044de896b150391af3be06f43d0f74c01f05633b97a70--? 1
+testName: event signature 4
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
 	000.010 test_10                          ==> 
@@ -99,6 +109,7 @@ testName: encoding bytes33 (should fail)
 signature: function baz(bytes33) : function baz(bytes33)
 expected: --fail--?
 result:   --fail--? 1
+testName: encoding bytes33 (should fail)
 passed 'func.doTest(line)' is true
 ...passed
 

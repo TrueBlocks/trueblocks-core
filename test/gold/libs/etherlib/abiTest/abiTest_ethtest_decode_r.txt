@@ -9,6 +9,7 @@ testName: decoding ufixed128x128
 signature: function baz(ufixed128x128) : function baz(ufixed128x128)
 expected: --1--?
 result:   --1--? 1
+testName: decoding ufixed128x128
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
 	000.001 test_1                           ==> 
@@ -18,6 +19,7 @@ testName: decoding fixed128x128
 signature: function baz(fixed128x128) : function baz(fixed128x128)
 expected: ---1--?
 result:   ---1--? 1
+testName: decoding fixed128x128
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
 	000.002 test_2                           ==> 
@@ -27,6 +29,7 @@ testName: decimals should fail
 signature: function baz(ufixed128x128) : function baz(ufixed128x128)
 expected: --fail--?
 result:   --fail--? 1
+testName: decimals should fail
 passed 'func.doTest(line)' is true
 --------------------------------------------------------------------------------
 	000.003 test_3                           ==> 
@@ -36,6 +39,7 @@ testName: decimals should fail
 signature: function baz(ufixed128x128) : function baz(ufixed128x128)
 expected: --fail--?
 result:   --fail--? 1
+testName: decimals should fail
 passed 'func.doTest(line)' is true
 ...passed
 

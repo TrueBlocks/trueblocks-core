@@ -1,0 +1,450 @@
+function baz(uint128[2  ]       [3],uint) public {}
+function () payable external {}
+function donate ((address token, uint amt, address recip)[]) public returns (bool) {}
+function ABI(bytes32 node, uint256 contentTypes) public view returns (uint256 contentType, bytes data) {}
+function G(uint64[16] v, uint a, uint b, uint c, uint d, uint64 x, uint64 y) constant internal {}
+function ReverseRegistrar(address ensAddr, bytes32 node) {}
+function _addCapper(address account) internal {}
+function _addTokenToAllTokensEnumeration(uint256 tokenId) private {}
+function _appendTagged(string memory tagged0, string memory tagged1, string memory str) internal pure returns (string memory) {}
+function _approve(address to, uint256 tokenId) private {}
+function _asyncTransfer(address dest, uint256 amount) internal virtual {}
+function _beforeTokenTransfer(address from, address to, uint256 amount) internal virtual override {}
+function _burn(address _owner, uint256 _tokenId) internal {}
+function _burn(address account, uint256 value) internal virtual override {}
+function _burnFrom(address account, uint256 amount) internal {}
+function _callTokensToSend(address operator,address from,address to,uint256 amount,bytes memory userData,bytes memory operatorData) private {}
+function _contains(Set storage set, bytes32 value) private view returns (bool) {}
+function _extendTime(uint256 newClosingTime) internal {}
+function _getAccountInfo() internal view returns (Account.Info memory) {}
+function _getTokenAmount(uint256 weiAmount) internal view returns (uint256) {}
+function _getUniswapExchange(address tokenAddress) internal view returns (IUniswapExchange) {}
+function _length(Map storage map) private view returns (uint256) {}
+function _mint(address account, uint256 amount) internal virtual {}
+function _mint(address to, uint256 tokenId) internal virtual {}
+function _msgData() internal view returns (bytes memory) {}
+function _msgSender() internal view override(Context, GSNRecipient) returns (address payable) {}
+function _pause() internal virtual whenNotPaused {}
+function _postRelayedCall(bytes memory, bool, uint256, bytes32) internal virtual override {}
+function _preRelayedCall(bytes memory) internal returns (bytes32) {}
+function _preValidatePurchase(address beneficiary, uint256 weiAmount) internal view {}
+function _registerInterface(bytes4 interfaceId) internal virtual {}
+function _remove(Map storage map, bytes32 key) private returns (bool) {}
+function _removeSigner(address account) internal {}
+function _report(bool result, string memory message) internal {}
+function _safeMint(address to, uint256 tokenId, bytes memory _data) internal {}
+function _sendLogPayload(bytes memory payload) private view {}
+function _setTokenURI(string memory tokenURI_) internal {}
+function _setupRole(bytes32 role, address account) internal virtual {}
+function _supportsERC165Interface(address account, bytes4 interfaceId) private view returns (bool) {}
+function _swapEthToTokenInputV2(address tokenAddress, uint256 ethAmount) internal returns (uint256[] memory) {}
+function _swapTokenToTokenInputV2(address from, address to, uint256 sellAmount) internal returns (uint256[] memory) {}
+function _tag(uint value, string memory tag) internal pure returns (string memory) {}
+function _transfer(address from, address to, uint256 value) internal virtual override {}
+function _transferOwnership(address _newOwner) internal {}
+function _updateSnapshot(Snapshots storage snapshots, uint256 currentValue) private {}
+function _utoa(uint8 u) internal pure returns (byte) {}
+function _withdrawBalance(address token, uint256 amount) internal {}
+function acceptRelayedCall(address, address, bytes calldata, uint256, uint256, uint256, uint256, bytes calldata, uint256) external view override returns (uint256, bytes memory) {}
+function activate(uint256 initialTokens, uint256 initialPoolShares) public noReentrancy {}
+function add(address value) public {}
+function add(uint a, uint b) internal pure returns (uint c) {}
+function add(uint256 a, uint256 b) public pure returns (uint256) {}
+function addBytes(string _key, bytes _value) public {}
+function addInt(string memory _key, int256 _value) public {}
+function addOne(uint256 n) public pure returns (uint256) {}
+function addStringArray(string _key, bytes32[] memory _values) public {}
+function addTwo() public {}
+function addWhitelisted(address account) public onlyWhitelistAdmin {}
+function allowance() public view returns (uint256) {}
+function allowance(address owner, address spender) public view returns (uint256) {}
+function append(buffer memory buf, bytes memory data) internal pure returns (buffer memory) {}
+function appendUint8(buffer memory buf, uint8 data) internal pure returns(buffer memory) {}
+function approve(address _spender, uint256 _value) returns (bool) {}
+function approve(address spender, uint256 value) public returns (bool) {}
+function approve(address, uint256) public {}
+function assertFail(bytes32, bytes32) public pure {}
+function at(uint256 index) public view returns (address) {}
+function authorizeOperator(address operator) public {}
+function balanceEqual(address a, uint b, string memory message) public returns (bool result) {}
+function balanceNotEqual(address a, uint b, string memory message) internal returns (bool result) {}
+function balanceOf(address account) public view override returns (uint256) {}
+function balanceOf(address tokenHolder) public view returns (uint256) {}
+function baseURI() external view returns (string memory) {}
+function beginMigration(ERC20Mintable newToken_) public {}
+function bop() {}
+function burn(uint256 _value) public {}
+function burn(uint256 tokenId) public {}
+function burnTokens(uint _amount) external onlyAdmin returns (bool success) {}
+function bytes32ToString(bytes32 x) private pure returns (string) {}
+function callOptionalReturn(IERC20 token, bytes memory data) private {}
+function canImplementInterfaceForAddress(bytes32 interfaceHash, address account) external view returns (bytes32) {}
+function cancelOracleRequest(bytes32, uint256, bytes4, uint256) external {}
+function cap() public view returns (uint256) {}
+function changeId( uint domain, uint name, uint value ) {}
+function changeProposalDeposit(uint _proposalDeposit) noEther external {}
+function checkProposalCode(uint _proposalID, address _recipient, uint _amount, bytes _transactionData) noEther constant returns (bool _codeChecksOut) {}
+function claimHeirOwnership() public onlyHeir {}
+function clearApproval(address _owner, uint256 _tokenId) internal {}
+function close() public onlyOwner virtual {}
+function codeAt(address _addr) internal view returns (bytes o_code) {}
+function computeAddress(bytes32 salt, bytes32 bytecodeHash, address deployer) internal pure returns (address) {}
+function consumesGas() public {}
+function contains(uint256 key) public view returns (bool) {}
+function countThisRecursive(uint256 n) public nonReentrant {}
+function createAndException(uint newBalance) public {}
+function createEIP20(uint256 _initialAmount, string _name, uint8 _decimals, string _symbol) public returns (address) {}
+function createTokenProxy(address _tokenHolder) returns (bool success) {}
+function decimals() public pure returns (uint8) {}
+function decreaseAllowance(uint256 amount) public {}
+function defaultOperators() public view returns (address[] memory) {}
+function deploy(string,uint256,uint256,uint256) {}
+function deposit(address _payee) public onlyOwner payable {}
+function deposit(address refundee) public payable virtual override {}
+function depositsOf(address payee) public view returns (uint256) {}
+function destroy() virtual public {}
+function diamondCut(bytes[] calldata _diamondCut, address _init, bytes calldata _calldata) external override {}
+function div(int256 a, int256 b) public pure returns (int256) {}
+function div(uint256 a, uint256 b) public pure returns (uint256) {}
+function divisor() constant returns (uint divisor) {}
+function doWithdraw(address payable participant, uint256 amount) internal {}
+function donate(Donation[] calldata _donations) external payable nonReentrant whenNotPaused {}
+function enableRefunds() public onlyOwner {}
+function encodeIndefiniteLengthType(Buffer.buffer memory buf, uint8 major) private pure {}
+function encodeUInt(Buffer.buffer memory buf, uint value) internal pure {}
+function equal(address a, address b, string memory message) public returns (bool result) {}
+function equal(bool a, bool b, string memory message) public returns (bool result) {}
+function equal(int a, int b, string memory message) internal returns (bool result) {}
+function equal(string memory a, string memory b, string memory message) public returns (bool result) {}
+function ethJoin_join(address apt, address urn) public payable {}
+function execute(address _to, uint _value, bytes _data) external onlyowner returns (bytes32 _r) {}
+function executeProposal(uint _proposalID, bytes _transactionData) noEther returns (bool _success) {}
+function externalCut(bytes[] calldata _diamondCut) internal {}
+function f() public {}
+function f() view {}
+function f_public() public {}
+function facetFunctionSelectors(address _facet) external view override returns(bytes memory) {}
+function fail() mod internal {}
+function fail(D d) public {}
+function fail2(I i) public {}
+function finalize() public onlyOwner {}
+function finishMinting() public onlyOwner canMint returns (bool) {}
+function fireEventLog2() {}
+function fireEventLog4Anonym() {}
+function foo() public payable {}
+function fromSharkToken(uint256 amount) public view returns (uint256) {}
+function fun() {}
+function fun(uint256 a) {}
+function functionName(bytes32 input) returns (bytes32 out) {}
+function get(uint256 key) public view returns (address) {}
+function getAdmins() public view returns(address[] memory) {}
+function getAssetsPrices(address[] calldata _assets) external view override returns(uint256[] memory) {}
+function getBool() returns (bool ret) {}
+function getCount() public view returns (uint256) {}
+function getHubAddr() public view override returns (address) {}
+function getMolochCount() public view returns (uint256 MolochCount) {}
+function getOracles() external view returns (address[] memory) {}
+function getRoleMember(bytes32 role, uint256 index) public view returns (address) {}
+function getUint256() returns (uint256 ret) {}
+function getValuePlus(uint toAdd) public view returns(uint) {}
+function grantRole(bytes32 role, address account) public virtual {}
+function halfWad() internal pure returns (uint256) {}
+function hasConfirmed(bytes32 _operation, address _owner) constant returns (bool) {}
+function heir() public view returns(address) {}
+function increaseAllowance(address spender, uint256 addedValue) public whenNotPaused returns (bool) {}
+function init(buffer memory buf, uint capacity) internal pure returns(buffer memory) {}
+function isAbove(int a, int b, string memory message) public returns (bool result) {}
+function isApprovedForAll(address owner, address operator) public view returns (bool) {}
+function isAtMost(int a, int b, string memory message) internal returns (bool result) {}
+function isAuthorized(address src, bytes4 sig) internal view returns (bool) {}
+function isBlocked(address _account) internal returns (bool) {}
+function isDeployed() public view returns (address) {}
+function isExpensive(uint val) public {}
+function isNotEmpty(string memory str, string memory message) internal returns (bool result) {}
+function isNotZero(bytes32 bts, string memory message) public returns (bool result) {}
+function isOpen() public view returns (bool) {}
+function isPauser(address account) public view returns (bool) {}
+function isSigner(address account) public view returns (bool) {}
+function isZero(address addr, string memory message) internal returns (bool result) {}
+function isZero(int number, string memory message) public returns (bool result) {}
+function killBounty(uint256 _bountyID) {}
+function length(UintSet storage set) internal view returns (uint256) {}
+function lengthEqual(bytes32[] memory arr, uint length, string memory message) internal returns (bool result) {}
+function lengthEqual(uint[] memory arr, uint length, string memory message) public returns (bool result) {}
+function lengthNotEqual(bytes32[] memory arr, uint length, string memory message) public returns (bool result) {}
+function log() internal view {}
+function log(address p0, address p1, address p2, address p3) internal view {}
+function log(address p0, address p1, bool p2, address p3) internal view {}
+function log(address p0, address p1, string memory p2, address p3) internal view {}
+function log(address p0, address p1, uint p2, address p3) internal view {}
+function log(address p0, bool p1, address p2) internal view {}
+function log(address p0, bool p1, bool p2) internal view {}
+function log(address p0, bool p1, string memory p2) internal view {}
+function log(address p0, bool p1, uint p2) internal view {}
+function log(address p0, string memory p1) internal view {}
+function log(address p0, string memory p1, address p2, uint p3) internal view {}
+function log(address p0, string memory p1, bool p2, uint p3) internal view {}
+function log(address p0, string memory p1, string memory p2, uint p3) internal view {}
+function log(address p0, string memory p1, uint p2, uint p3) internal view {}
+function log(address p0, uint p1, address p2, string memory p3) internal view {}
+function log(address p0, uint p1, bool p2, string memory p3) internal view {}
+function log(address p0, uint p1, string memory p2, string memory p3) internal view {}
+function log(address p0, uint p1, uint p2, string memory p3) internal view {}
+function log(bool p0, address p1, address p2, address p3) internal view {}
+function log(bool p0, address p1, bool p2, address p3) internal view {}
+function log(bool p0, address p1, string memory p2, address p3) internal view {}
+function log(bool p0, address p1, uint p2, address p3) internal view {}
+function log(bool p0, bool p1, address p2) internal view {}
+function log(bool p0, bool p1, bool p2) internal view {}
+function log(bool p0, bool p1, string memory p2) internal view {}
+function log(bool p0, bool p1, uint p2) internal view {}
+function log(bool p0, string memory p1) internal view {}
+function log(bool p0, string memory p1, address p2, uint p3) internal view {}
+function log(bool p0, string memory p1, bool p2, uint p3) internal view {}
+function log(bool p0, string memory p1, string memory p2, uint p3) internal view {}
+function log(bool p0, string memory p1, uint p2, uint p3) internal view {}
+function log(bool p0, uint p1, address p2, string memory p3) internal view {}
+function log(bool p0, uint p1, bool p2, string memory p3) internal view {}
+function log(bool p0, uint p1, string memory p2, string memory p3) internal view {}
+function log(bool p0, uint p1, uint p2, string memory p3) internal view {}
+function log(string memory p0, address p1, address p2, address p3) internal view {}
+function log(string memory p0, address p1, bool p2, address p3) internal view {}
+function log(string memory p0, address p1, string memory p2, address p3) internal view {}
+function log(string memory p0, address p1, uint p2, address p3) internal view {}
+function log(string memory p0, bool p1, address p2) internal view {}
+function log(string memory p0, bool p1, bool p2) internal view {}
+function log(string memory p0, bool p1, string memory p2) internal view {}
+function log(string memory p0, bool p1, uint p2) internal view {}
+function log(string memory p0, string memory p1) internal view {}
+function log(string memory p0, string memory p1, address p2, uint p3) internal view {}
+function log(string memory p0, string memory p1, bool p2, uint p3) internal view {}
+function log(string memory p0, string memory p1, string memory p2, uint p3) internal view {}
+function log(string memory p0, string memory p1, uint p2, uint p3) internal view {}
+function log(string memory p0, uint p1, address p2, string memory p3) internal view {}
+function log(string memory p0, uint p1, bool p2, string memory p3) internal view {}
+function log(string memory p0, uint p1, string memory p2, string memory p3) internal view {}
+function log(string memory p0, uint p1, uint p2, string memory p3) internal view {}
+function log(uint p0, address p1, address p2, address p3) internal view {}
+function log(uint p0, address p1, bool p2, address p3) internal view {}
+function log(uint p0, address p1, string memory p2, address p3) internal view {}
+function log(uint p0, address p1, uint p2, address p3) internal view {}
+function log(uint p0, bool p1, address p2) internal view {}
+function log(uint p0, bool p1, bool p2) internal view {}
+function log(uint p0, bool p1, string memory p2) internal view {}
+function log(uint p0, bool p1, uint p2) internal view {}
+function log(uint p0, string memory p1) internal view {}
+function log(uint p0, string memory p1, address p2, uint p3) internal view {}
+function log(uint p0, string memory p1, bool p2, uint p3) internal view {}
+function log(uint p0, string memory p1, string memory p2, uint p3) internal view {}
+function log(uint p0, string memory p1, uint p2, uint p3) internal view {}
+function log(uint p0, uint p1, address p2, string memory p3) internal view {}
+function log(uint p0, uint p1, bool p2, string memory p3) internal view {}
+function log(uint p0, uint p1, string memory p2, string memory p3) internal view {}
+function log(uint p0, uint p1, uint p2, string memory p3) internal view {}
+function logBytes(bytes memory p0) internal view {}
+function logBytes13(bytes13 p0) internal view {}
+function logBytes18(bytes18 p0) internal view {}
+function logBytes22(bytes22 p0) internal view {}
+function logBytes27(bytes27 p0) internal view {}
+function logBytes31(bytes31 p0) internal view {}
+function logBytes7(bytes7 p0) internal view {}
+function logUint(uint p0) internal view {}
+function maliciousPrice(bytes32 _id) public returns (bytes32 requestId) {}
+function max(uint a, uint b) private pure returns(uint) {}
+function max64(uint64 _a, uint64 _b) internal pure returns (uint64) {}
+function min(uint256 a, uint256 b) public pure returns (uint256) {}
+function mint(address account, uint256 amount) public {}
+function mint(address to) public {}
+function mintBatchFrozenTokens(address[] accounts, uint256[] amounts) {}
+function mintTokens(uint _amount) external onlyAdmin returns (bool success) {}
+function mockFunction() public {}
+function mod(uint32 a, uint32 b) internal pure returns (uint32) {}
+function mul(int256 a, int256 b) public pure returns (int256) {}
+function mul(uint256 a, uint256 b) public pure returns (uint256) {}
+function multiGenerate(address _merkleMineContract, address[] _recipients, bytes _merkleProofs) {}
+function multisend(address[] _holders, uint256[] _amts) {}
+function name() public view override returns (string memory) {}
+function newToken() public view returns (IERC20) {}
+function notEqual(address a, address b, string memory message) public returns (bool result) {}
+function notEqual(bool a, bool b, string memory message) public returns (bool result) {}
+function notEqual(int a, int b, string memory message) internal returns (bool result) {}
+function notEqual(string memory a, string memory b, string memory message) public returns (bool result) {}
+function numOfAdmins() public view returns(uint) {}
+function onTokenTransfer(address, uint256, bytes memory) public {}
+function operatorSend(address sender,address recipient,uint256 amount,bytes memory data,bytes memory operatorData) public override {}
+function overloadedSet(bytes32 h, uint val) public {}
+function ownerLives() internal view returns (bool) {}
+function pause() external {}
+function paused() public view returns (bool) {}
+function payableFn() public pure {}
+function plusTen(uint _value) public pure returns (uint) {}
+function power(base, exponent) -> result {}
+function presentto( ) {}
+function processProposal(uint256 proposalIndex) public nonReentrant {}
+function proxyRuntimeCode() public pure returns (bytes memory) {}
+function publicOracleAddress() public view returns (address) {}
+function ragequit(uint256 sharesToBurn) public onlyMember {}
+function rayDiv(uint256 a, uint256 b) internal pure returns (uint256) {}
+function receive () external payable {}
+function reclaimContract(address _contractAddr) external onlyOwner {}
+function recover(bytes32 hash, bytes memory signature) public pure returns (address) {}
+function registerInterface(bytes4 interfaceId) public {}
+function relayHubVersion() public view returns (string memory) {}
+function release(IERC20 token) public {}
+function released(address account) public view returns (uint256) {}
+function remove(Role storage role, address account) internal {}
+function removeAndException() public {}
+function removeMinter(address _minter) public onlyOwner {}
+function renounceCapper() public {}
+function renounceRole(bytes32 role, address account) public virtual {}
+function request() {}
+function requestEthereumPrice(string _currency) public {}
+function requestedBytes(bytes32 _requestId, bytes memory _value) public {}
+function resolver(bytes32 node) constant returns (address) {}
+function returnsInt() public view returns (int) {}
+function revoke(bytes32 _operation) external {}
+function rng() {}
+function safeDecreaseAllowance(IERC20 token, address spender, uint256 value) internal {}
+function safeMint(address to, uint256 tokenId, bytes memory _data) public onlyMinter returns (bool) {}
+function safeTransferFrom(address from, address to, uint256 tokenId) public virtual override {}
+function send(address recipient, uint256 amount, bytes memory data) public {}
+function sendHalf(address payable addr) public payable returns (uint balance) {}
+function senderFor(address account) public {}
+function setAcceptEther(bool acceptEther) public {}
+function setAdminAddress(address _address) external returns (bool success) {}
+function setApprovalForAll(address to, bool approved) public {}
+function setBuffer(bytes memory data) public {}
+function setCap(address beneficiary, uint256 cap) external onlyCapper {}
+function setCompleted(uint completed) restricted public {}
+function setDailyCosts(uint _dailyCosts) onlyClient {}
+function setFulfillmentPermission(address, bool) external {}
+function setLimitOfParticipants(uint256 _limitOfParticipants) external onlyAdmin onlyActive {}
+function setName(bytes32 node, string name) only_owner(node) {}
+function setOwner(bytes32 node, address owner) public only_owner(node) {}
+function setResolver(bytes32 node, address resolver) only_owner(node) {}
+function setShouldRevertSend(bool shouldRevert) public {}
+function setTokenURI(uint256 tokenId, string memory uri) public {}
+function setValue(uint val) public {}
+function sign() {}
+function splitDAO(uint _proposalID, address _newCurator) noEther onlyTokenholders returns (bool _success) {}
+function sponsorProposal(uint256 proposalId) public onlyDelegate {}
+function startSplit() onlySplitter {}
+function store() public {}
+function sub(uint256 _a, uint256 _b) internal pure returns (uint256) {}
+function sub(uint256 x, uint256 y) internal pure returns (uint256 z) {}
+function submitProposal(address applicant, uint256 sharesRequested, uint256 lootRequested, uint256 tributeOffered, address tributeToken, uint256 paymentRequested, address paymentToken, string details) {}
+function submitWhitelistProposal(address tokenToWhitelist, string memory details) public nonReentrant returns (uint256 proposalId) {}
+function supportsERC165(address account) public view returns (bool) {}
+function supportsInterface(bytes4 interfaceID) public pure returns (bool) {}
+function symbol() public view override returns (string memory) {}
+function test() external {}
+function test() public {}
+function test() public virtual {}
+function test(bool b) m1(b) m2 public {}
+function test(uint i) public {}
+function test1Func11() external {}
+function test1Func16() external {}
+function test1Func20() external {}
+function test1Func7() external {}
+function test2Func1() external {}
+function test2Func14() external {}
+function test2Func19() external {}
+function test2Func5() external {}
+function test3() public {}
+function testFunction() {}
+function testV2(TestStructParent p0) public pure returns (TestStructParent result) {}
+function thrash() {}
+function toInt256(uint a) public pure returns (int256) {}
+function toString(uint256 value) internal pure returns (string memory) {}
+function toUint256(int a) public pure returns (uint256) {}
+function toUint64(uint256 value) internal pure returns (uint64) {}
+function toggleTrustedVerifier(address _verifier) external onlyAdmin returns (bool success) {}
+function tokenByIndex(uint256 index) public view returns (uint256) {}
+function tokenURI(uint256 _tokenId) public view returns (string) {}
+function tokensToSend(address operator,address from,address to,uint256 amount,bytes calldata userData,bytes calldata operatorData) external override {}
+function totalSupply() public view override returns (uint256) {}
+function trade(address tokenGet, uint256 amountGet, address tokenGive, uint256 amountGive, uint256 expires, uint256 nonce, address user, uint8 v, bytes32 r, bytes32 s, uint256 amount) {}
+function transfer(address _to, uint256 _value) public returns (bool success) {}
+function transfer(address recipient, uint256 amount) public override returns (bool) {}
+function transfer(address, uint256) public {}
+function transferFrom(address _from, address _to, uint256 _amount) noEther returns (bool success) {}
+function transferFrom(address from, address to, uint256 tokenId) public virtual override {}
+function transferFrom(address sender, address recipient, uint256 amount) public override returns (bool) {}
+function transferFromWithoutReward(address _from, address _to, uint256 _value) returns (bool success) {}
+function transferOwnership(address newOwner) public onlyOwner {}
+function transferPrimary(address recipient) public onlyPrimary {}
+function triggerContractAddressEvent() public {}
+function triggerRequireError() public {}
+function ttl(bytes32 node) public view returns (uint64) {}
+function unpause() external {}
+function unsafeAddToBalance(address user, address token, uint256 amount) internal {}
+function updateAndRevert(uint newBalance) public {}
+function updateOwner(address newOwner) public {}
+function upgradeRelayHub(address newRelayHub) public {}
+function verify(bytes32[] memory proof, bytes32 root, bytes32 leaf) public pure returns (bool) {}
+function vote(uint256 videoID) {}
+function wallet() public view returns (address payable) {}
+function withdraw(address _payee) public {}
+function withdraw(address payable payee) public virtual override {}
+function withdrawBalance(address token, uint256 amount) public nonReentrant {}
+function withdrawEth() onlySplitter {}
+function withdrawLink() public onlyOwner {}
+function withdrawPaymentsWithGas(address payable payee) external {}
+function withdrawTokens(address beneficiary) public {}
+function withdrawalAllowed(address payee) public view override returns (bool) {}
+function writeBytes20(buffer memory buf, uint off, bytes20 data) internal pure returns (buffer memory) {}
+function zqHash(uint256 q, uint256 x) public pure returns (uint256 x_) {}
+function() {}
+event AffirmStatus(address indexed _sender, address indexed _account, uint _affirmDate, uint _value);
+event MakeRequest(uint _key, uint _date, uint _tokenAmount, uint _dollarPrice, RequestType _requestType, address indexed _requester);
+event SettingChange(address _admin, NthRound.Settings _setting, uint _value);
+event Transfer(address indexed from, address indexed to, uint tokens);
+event AddedOwner(address owner);
+event Approval(address indexed owner, address indexed approved, uint256 indexed tokenId);
+event CanRelayFailed(address indexed relay, address indexed from, address indexed to, bytes4 selector, uint256 reason);
+event CapperRemoved(address indexed account);
+event Data(bytes data, uint256 integerValue, string stringValue);
+event Deposited(address indexed recipient, address indexed from, uint256 amount);
+event FinalizeEvent(uint256[] maps, uint256 payout, uint256 endedAt);
+event Log0Anonym (uint value) anonymous;
+event Log3(bool indexed aBool, address indexed aAddress, bytes32 indexed aBytes32, uint value);
+event LogSetOwner     (address indexed owner);
+event MinterRemoved(address indexed account);
+event NewCheckpointVote(uint64 indexed index, bytes32 checkpointHash, uint8 v, bytes32 r, bytes32 s);
+event OwnerChanged(address oldOwner, address newOwner);
+event PayeeAdded(address account, uint256 shares);
+event ProcessProposal(uint256 indexed proposalIndex, address indexed applicant, address indexed memberAddress, uint256 tokenTribute, uint256 sharesRequested, bool didPass);
+event Ragequit(address indexed memberAddress, uint256 sharesToBurn);
+event RegisterEvent(address addr, uint256 index);
+event RevokedOperator(address indexed operator, address indexed tokenHolder);
+event Sent(address indexed operator,address indexed from,address indexed to,uint256 amount,bytes data,bytes operatorData);
+event Staked(address indexed relay, uint256 stake, uint256 unstakeDelay);
+event SubmitVote(uint256 proposalId, uint256 indexed proposalIndex, address indexed delegateKey, address indexed memberAddress, uint8 uintVote);
+event TestAnon(address p0, uint256 p2) anonymous;
+event TestIndexedString(string indexed p2, uint256 p1);
+event TestV2DynamicArray(TestStruct indexed p0[], TestStruct p1[]);
+event TokenVestingRevoked(address token);
+event TokensToSendCalled(address operator,address from,address to,uint256 amount,bytes data,bytes operatorData,address token,uint256 fromBalance,uint256 toBalance);
+event Transfer(bytes32 indexed node, address owner);
+event UpdatedCount(uint256 count);
+event Withdraw(address indexed memberAddress, address token, uint256 amount);
+event Withdrawn(address indexed payee, uint256 weiAmount);
+event e(uint[10] a, bytes7[8] indexed b, c[3] x);
+event Approval(address indexed owner, address indexed spender, uint256 value);
+event ChainlinkFulfilled(bytes32 indexed id);
+event Deposited(address indexed payee, uint256 weiAmount);
+event InitiatedJob(bytes32 said);
+event MintFinished();
+event NewRound(uint256 indexed roundId, address indexed startedBy);
+event OracleAdded(address indexed oracle);
+event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
+event Released(uint256 amount);
+event RoleAdded(address indexed operator, string role);
+event ServiceAgreementResponseReceived(bytes32 indexed saId, bytes32 indexed requestId, address indexed oracle, int256 answer);
+event Submit(uint256 proposalId);
+event Transfer(address indexed from, address indexed to, uint256 value);
+event UserAdded(address indexed addr, User user);
+event Confirmation(address owner, bytes32 operation);
+event FuelingToDate(uint value);
+event OwnerRemoved(address oldOwner);
+event RequirementChanged(uint newRequirement);

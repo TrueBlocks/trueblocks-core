@@ -144,6 +144,7 @@ void decodeTest(void) {
     explode(tests, contents, '\n');
     for (auto testcase : tests) {
         if (!startsWith(testcase, '#') && !startsWith(testcase, ';')) {
+            cout << string_q(80, '-') << endl;
             if (verbose > 1)
                 cout << endl << testcase.substr(0, 200) << endl;
             CStringArray parts;

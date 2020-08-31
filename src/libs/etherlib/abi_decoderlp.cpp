@@ -33,6 +33,8 @@ static size_t level = 0;
 //------------------------------------------------------------------------------------------------
 static void prettyPrint(CParameterArray& params, const CStringArray& dataArray, const size_t& readIndex,
                         size_t dStart) {
+    if (!isTestMode())
+        return;
     string_q indent = substitute(string_q(level - 1, '\t'), "\t", "  ") + "--";
     cerr << indent << params.size() << " : " << dataArray.size() << " : " << readIndex;
     if (dStart != NOPOS)
@@ -114,14 +116,26 @@ size_t decodeTheData(CParameterArray& params, const CStringArray& dataArray, siz
                 // this is a bytes<M> (fixed length)
                 param.value = "0x" + dataArray[readIndex++];
 
+            } else if (param.type == "tuple") {
+                LOG_WARN("Unknown type: ", param.type, " in decodeTheData");
+                //                CParameterArray tmp;
+                //                for (auto component : param.components) {
+                //                    CParameter p;
+                //                    p.type = param.internalType;
+                //                    tmp.push_back(p);
+                //                }
+                //                return decodeTheData(tmp, dataArray, readIndex, dStart);
+
             } else {
                 LOG_WARN("Unknown type: ", param.type, " in decodeTheData");
             }
 
         } else {
-            if (contains(param.type, "[]")) {
-                size_t dataStart = (str_2_Uint("0x" + dataArray[readIndex++]) / 32);
-                uint64_t nItems = str_2_Uint("0x" + dataArray[dataStart]);
+            if (endsWith(param.type, "[]")) {
+                // ends with type...[]. We need to pick up the size from the data
+                cerr << "array of type...[]" << endl;
+                size_t dataStart = str_2_Uint("0x" + dataArray[readIndex]) / 32;
+                size_t nItems = str_2_Uint("0x" + dataArray[dataStart]);
                 CParameterArray tmp;
                 CParameter p;
                 p.type = param.type;
@@ -131,54 +145,28 @@ size_t decodeTheData(CParameterArray& params, const CStringArray& dataArray, siz
                 dataStart++;
                 decodeTheData(tmp, dataArray, dataStart, dataStart - 1);
                 param.value = tmp[0].value;
-                // cerr << param << endl;
-                printf("");
+                readIndex++;
 
             } else {
-                bool firstDynamic = param.type.find("[") == param.type.find("[]");
-                if (firstDynamic) {
-                    cerr << "array of type[]..." << endl;
-                    size_t found = param.type.find('[');
-                    string subType = param.type.substr(0, found) +
-                                     ((found + 2 != param.type.size()) ? param.type.substr(found + 2) : "");
-                    if (subType == "bytes")
-                        subType = "bytes32";
-
-                    uint64_t dataStart = (str_2_Uint("0x" + dataArray[readIndex++]) / 32);
-                    uint64_t nItems = str_2_Uint("0x" + dataArray[dataStart]);
-                    // cerr << "nItems: " << nItems << " subType: " << subType << endl;
-
-                    CParameterArray tmp;
-                    for (size_t i = 0; i < nItems; i++) {
-                        CParameter p;
-                        p.type = subType;
-                        tmp.push_back(p);
-                    }
-                    size_t tPtr = dataStart + 1;
-                    decodeTheData(tmp, dataArray, tPtr, dataStart);
-                    param.value = "[" + params_2_Str(tmp) + "]";
-
-                } else {
-                    cerr << "array of type[M]..." << endl;
-                    ASSERT(contains(param.type, "["));
-                    ASSERT(contains(param.type, "]"));
-
-                    size_t found1 = param.type.find('[');
-                    size_t found2 = param.type.find(']');
-                    string subType = param.type.substr(0, found1) +
-                                     ((found2 + 1 != param.type.size()) ? param.type.substr(found2 + 1) : "");
-                    int nItems = stoi(param.type.substr(param.type.find('[') + 1, param.type.find(']')));
-                    cerr << "nItems: " << nItems << " subType: " << subType << endl;
-
-                    CParameterArray tmp;
-                    for (int i = 0; i < nItems; i++) {
-                        CParameter p;
-                        p.type = subType;
-                        tmp.push_back(p);
-                    }
-                    decodeTheData(tmp, dataArray, readIndex, NOPOS);
-                    param.value = "[" + params_2_Str(tmp) + "]";
+                cerr << "array of type...[M]" << endl;
+                ASSERT(contains(param.type, "["));
+                ASSERT(contains(param.type, "]"));
+                string_q type = param.type;
+                replaceReverse(type, "[", "|");
+                replaceReverse(type, "]", "|");
+                CStringArray parts;
+                explode(parts, type, '|');
+                size_t nItems = str_2_Uint(parts[1]);
+                string_q subType = parts[0];
+                cerr << "nItems: " << nItems << " subType: " << subType << endl;
+                CParameterArray tmp;
+                for (size_t i = 0; i < nItems; i++) {
+                    CParameter p;
+                    p.type = subType;
+                    tmp.push_back(p);
                 }
+                decodeTheData(tmp, dataArray, readIndex, dStart);
+                param.value = "[" + params_2_Str(tmp) + "]";
             }
         }
     }
