@@ -10,6 +10,8 @@ Get `100` traces from `1000th` trace in block range `[3068100-3068200]` (inclusi
 curl --data '{"method":"trace_filter","params":[{"fromBlock":"0x2ed0c4","toBlock":"0x2ed128","toAddress":["0x8bbb73bcb5d553b5a556358d27625323fd781d37"],"after":1000,"count":100}],"id":1,"jsonrpc":"2.0"}' -H "Content-Type: application/json" -X POST localhost:36963
 ```
 
+[View Result File](./result1.json)
+
 Because there are only two traces for that address between those blocks, the result is empty:
 
 ```[json]
@@ -21,6 +23,8 @@ Because there are only two traces for that address between those blocks, the res
 ```[bash]
 curl --data '{"method":"trace_filter","params":[{"fromBlock":"0x2ed0c4","toBlock":"0x2ed128","toAddress":["0x8bbb73bcb5d553b5a556358d27625323fd781d37"]}],"id":2,"jsonrpc":"2.0"}' -H "Content-Type: application/json" -X POST localhost:36963
 ```
+
+[View Result File](./result2.json)
 
 Shows two traces. Note that block range is inclusive:
 
@@ -34,6 +38,8 @@ Shows two traces. Note that block range is inclusive:
 curl --data '{"method":"trace_filter","params":[{"fromBlock":"0x2ed0c4","toBlock":"0x2ed128","toAddress":["0x8bbb73bcb5d553b5a556358d27625323fd781d37"],"count":1}],"id":2,"jsonrpc":"2.0"}' -H "Content-Type: application/json" -X POST localhost:36963
 ```
 
+[View Result File](./result3.json)
+
 Shows only the first trace:
 
 ```[json]
@@ -41,6 +47,8 @@ Shows only the first trace:
 ```
 
 #### 4. Same as previous with `after` set to `1`:
+
+[View Result File](./result4.json)
 
 ```[bash]
 curl --data '{"method":"trace_filter","params":[{"fromBlock":"0x2ed0c4","toBlock":"0x2ed128","toAddress":["0x8bbb73bcb5d553b5a556358d27625323fd781d37"],"after":1,"count":1}],"id":2,"jsonrpc":"2.0"}' -H "Content-Type: application/json" -X POST localhost:36963
@@ -54,13 +62,15 @@ Shows only the second trace:
 
 #### 5. All traces for block `10700000`:
 
+[View Result File](./result5.json)
+
 **IMPORTANT NOTE:** Be careful. If you remove the `toBlock` parameter, Parity hangs until the OS kills it trying to extract every trace from the `fromBlock` to `latest`. Even if you kill the `curl` command, Parity stops responding and eventually gets killed...
 
 ```[bash]
 curl --data '{"method":"trace_filter","params":[{"fromBlock":"0xa344e0","toBlock":"0xa344e0"}],"id":3,"jsonrpc":"2.0"}' -H "Content-Type: application/json" -X POST localhost:36963
 ```
 
-Results in `794` traces
+Results in `794` traces.
 
 #### 6. Same as previous limited to `toAddress` of `0xc02aa....`:
 
@@ -68,11 +78,17 @@ Results in `794` traces
 curl --data '{"method":"trace_filter","params":[{"fromBlock":"0xa344e0","toBlock":"0xa344e0","toAddress":["0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"]}],"id":3,"jsonrpc":"2.0"}' -H "Content-Type: application/json" -X POST localhost:36963
 ```
 
+[View Result File](./result6.json)
+
+Results in XXX traces.
+
 #### 7. Same as twice previous limited to `fromAddress` of `0xc3c....`:
 
 ```[bash]
 curl --data '{"method":"trace_filter","params":[{"fromBlock":"0xa344e0","toBlock":"0xa344e0","fromAddress":["0xc3ca90684fd7b8c7e4be88c329269fc32111c4bd"]}],"id":3,"jsonrpc":"2.0"}' -H "Content-Type: application/json" -X POST localhost:36963
 ```
+
+[View Result File](./result7.json)
 
 Results in `16` traces
 
@@ -81,6 +97,8 @@ Results in `16` traces
 ```[bash]
 curl --data '{"method":"trace_filter","params":[{"fromBlock":"0xa344e0","toBlock":"0xa344e0","fromAddress":["0xc3ca90684fd7b8c7e4be88c329269fc32111c4bd"],"toAddress":["0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"]}],"id":3,"jsonrpc":"2.0"}' -H "Content-Type: application/json" -X POST localhost:36963
 ```
+
+[View Result File](./result8.json)
 
 Results in `4` traces
 
