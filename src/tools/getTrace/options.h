@@ -28,8 +28,10 @@ class COptions : public COptionsBase {
     bool count_only;
     bool skip_ddos;
     uint64_t max_traces;
+    string_q filter;
     // END_CODE_DECLARE
 
+    CTraceFilterArray filters;
     COptionsTransList transList;
     CAbi abi_spec;
     bool first;

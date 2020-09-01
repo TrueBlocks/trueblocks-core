@@ -1,0 +1,9 @@
+[settings]
+class = CTraceFilter
+fields = blknum fromBlock|\
+        blknum toBlock|\
+        CAddressArray fromAddress|\
+        CAddressArray toAddress|\
+        uint64 after|\
+        uint64 count
+includes = utillib.h

@@ -16,6 +16,7 @@ getTrace -th
 #### Hidden options (shown during testing only)
 | -s | --skip_ddos | toggle skipping over 2018 ddos transactions during export ('on' by default) |
 | -m | --max_traces <num> | if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250) |
+| -f | --filter <str> | Call trace_filter with the comma seperated string of the filter (see docs) |
 #### Hidden options (shown during testing only)
 
 | -x | --fmt <val> | export format, one of [none&#124;json*&#124;txt&#124;csv&#124;api] |

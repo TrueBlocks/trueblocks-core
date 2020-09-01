@@ -25,6 +25,7 @@ static const COption params[] = {
     COption("count_only", "c", "", OPT_SWITCH, "show the number of traces for the transaction only (fast)"),
     COption("skip_ddos", "s", "", OPT_HIDDEN | OPT_TOGGLE, "toggle skipping over 2018 ddos transactions during export ('on' by default)"),  // NOLINT
     COption("max_traces", "m", "<uint64>", OPT_HIDDEN | OPT_FLAG, "if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250)"),  // NOLINT
+    COption("filter", "f", "<string>", OPT_HIDDEN | OPT_FLAG, "Call trace_filter with the comma seperated string of the filter (see docs)"),  // NOLINT
     COption("", "", "", OPT_DESCRIPTION, "Retrieve a transaction's traces from the local cache or a running node."),
     // clang-format on
     // END_CODE_OPTIONS
@@ -58,6 +59,9 @@ bool COptions::parseArguments(string_q& command) {
             if (!confirmUint("max_traces", max_traces, arg))
                 return false;
 
+        } else if (startsWith(arg, "-f:") || startsWith(arg, "--filter:")) {
+            filter = substitute(substitute(arg, "-f:", ""), "--filter:", "");
+
         } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
@@ -70,6 +74,17 @@ bool COptions::parseArguments(string_q& command) {
 
             // END_CODE_AUTO
         }
+    }
+
+    if (!filter.empty()) {
+        string_q headerLine = "fromBlock,toBlock,fromAddress,toAddress,after,count";
+        CStringArray headers;
+        explode(headers, headerLine, ',');
+        CTraceFilter f;
+        string_q line = substitute(filter, "!", ",");
+        f.parseCSV(headers, line);
+        filters.push_back(f);
+        return true;
     }
 
     // Data wrangling
@@ -134,6 +149,7 @@ void COptions::Init(void) {
     count_only = false;
     skip_ddos = getGlobalConfig("getTrace")->getConfigBool("settings", "skip_ddos", true);
     max_traces = getGlobalConfig("getTrace")->getConfigInt("settings", "max_traces", 250);
+    filter = "";
     // END_CODE_INIT
 
     transList.Init();

@@ -72,6 +72,13 @@ on, cmd,  fast, traces, tools/getTrace, by_filebad,         n, bad & file:cmd_fi
 on, cmd,  fast, traces, tools/getTrace, by_file,            n, file:cmd_file
 on, cmd,  fast, traces, tools/getTrace, by_file_long_v,     y, file:cmd_file & verbose & parity & fmt = api
 
+on, both,  fast, traces, tools/getTrace, by_filter1,         y, fmt = json & filter = 3068100!3068200!!0x8bbB73BCB5d553B5A556358d27625323Fd781D37!1000!100
+on, both,  fast, traces, tools/getTrace, by_filter2,         y, fmt = json & filter = 3068100!3068200!!0x8bbB73BCB5d553B5A556358d27625323Fd781D37!!
+on, both,  fast, traces, tools/getTrace, by_filter3,         y, fmt = json & filter = 10700000!10700001!0x7c66550c9c730b6fdd4c03bc2e73c5462c5f7acc!0xbfd3b2330b55a149de2440701948e6194fb8df2c!!
+on, both,  fast, traces, tools/getTrace, by_filter4,         y, fmt = json & filter = 1000000!1000002
+on, both,  fast, traces, tools/getTrace, by_filter5,         y, fmt = json & filter = 10700000!10700001!!!!3
+on, both,  fast, traces, tools/getTrace, by_filter6,         y, fmt = json & filter = 10700000!10700001!!!1!2
+
 # ./tools/getTrace/options.cpp:    COption("", "", "", OPT_DESCRIPTION, "Retrieve a transaction's traces from the local cache or a running node."),
 # ./tools/getTrace/options.cpp:    COption("articulate", "a", "", OPT_SWITCH, "articulate the transactions if an ABI is found for the 'to' address"),
 # ./tools/getTrace/options.cpp:    COption("count_only", "c", "", OPT_SWITCH, "show the number of traces for the transaction only (fast)"),
