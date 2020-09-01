@@ -5,12 +5,20 @@
       "type": "CTrace",
       "fields": [
         {
+          "name": "action",
+          "type": "object"
+        },
+        {
           "name": "blockHash",
           "type": "hash"
         },
         {
           "name": "blockNumber",
           "type": "blocknum"
+        },
+        {
+          "name": "result",
+          "type": "object"
         },
         {
           "name": "subtraces",
@@ -31,18 +39,6 @@
         {
           "name": "type",
           "type": "text"
-        },
-        {
-          "name": "error",
-          "type": "text"
-        },
-        {
-          "name": "action",
-          "type": "object"
-        },
-        {
-          "name": "result",
-          "type": "object"
         }
       ]
     }

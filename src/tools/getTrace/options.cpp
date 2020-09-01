@@ -84,6 +84,12 @@ bool COptions::parseArguments(string_q& command) {
         string_q line = substitute(filter, "!", ",");
         f.parseCSV(headers, line);
         filters.push_back(f);
+        manageFields("CTraceAction:balance,init,refundAddress,selfDestructed", false);  // hide
+        manageFields("CTraceResult:code,newContract", false);
+        manageFields("CTrace:error", false);
+        GETRUNTIME_CLASS(CTrace)->sortFieldList();
+        GETRUNTIME_CLASS(CTraceAction)->sortFieldList();
+        GETRUNTIME_CLASS(CTraceResult)->sortFieldList();
         return true;
     }
 
