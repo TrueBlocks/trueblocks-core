@@ -42,8 +42,8 @@ extern void doTupleTest(void) {
     manageFields("CReceipt:contractAddress,gasUsed,status", false);
 
     cout << "[";
-    // doOne("approve");
-    // cout << ",";
+    doOne("approve");
+    cout << ",";
     doOne("donate");
     cout << "]";
 }

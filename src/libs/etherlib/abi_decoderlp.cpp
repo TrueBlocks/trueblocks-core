@@ -117,14 +117,13 @@ size_t decodeTheData(CParameterArray& params, const CStringArray& dataArray, siz
                 param.value = "0x" + dataArray[readIndex++];
 
             } else if (param.type == "tuple") {
-                LOG_WARN("Unknown type: ", param.type, " in decodeTheData");
-                //                CParameterArray tmp;
-                //                for (auto component : param.components) {
-                //                    CParameter p;
-                //                    p.type = param.internalType;
-                //                    tmp.push_back(p);
-                //                }
-                //                return decodeTheData(tmp, dataArray, readIndex, dStart);
+                decodeTheData(param.components, dataArray, readIndex, dStart);
+                param.value = "{";
+                for (auto p : param.components) {
+                    param.value += (param.value != "{" ? ", " : "");
+                    param.value += ("\"" + p.name + "\":\"" + p.value + "\"");
+                }
+                param.value += "}";
 
             } else {
                 LOG_WARN("Unknown type: ", param.type, " in decodeTheData");
@@ -139,6 +138,8 @@ size_t decodeTheData(CParameterArray& params, const CStringArray& dataArray, siz
                 CParameterArray tmp;
                 CParameter p;
                 p.type = param.type;
+                p.internalType = param.internalType;
+                p.components = param.components;
                 replaceReverse(p.type, "[]", "[" + uint_2_Str(nItems) + "]");
                 replace(p.type, "bytes[", "bytes32[");
                 tmp.push_back(p);
@@ -163,6 +164,8 @@ size_t decodeTheData(CParameterArray& params, const CStringArray& dataArray, siz
                 for (size_t i = 0; i < nItems; i++) {
                     CParameter p;
                     p.type = subType;
+                    p.internalType = param.internalType;
+                    p.components = param.components;
                     tmp.push_back(p);
                 }
                 decodeTheData(tmp, dataArray, readIndex, dStart);
