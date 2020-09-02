@@ -16,41 +16,41 @@
 
 #include "util.h"
 
-#include <boost/endian/conversion.hpp>
+//#include <boost/endian/conversion.hpp>
 #include <cassert>
 #include <cstdlib>
 #include <cstring>
-#include <intx/int128.hpp>
-#include <silkworm/common/util.hpp>
-#include <silkworm/rlp/encode.hpp>
+//#include <intx/int128.hpp>
+#include "common/util.hpp"
+//#include <silkworm/rlp/encode.hpp>
 
 namespace silkworm::db {
 
 Bytes storage_prefix(const evmc::address& address, uint64_t incarnation) {
   Bytes res(kAddressLength + kIncarnationLength, '\0');
   std::memcpy(&res[0], address.bytes, kAddressLength);
-  boost::endian::store_big_u64(&res[kAddressLength], incarnation);
+  //boost::endian::store_big_u64(&res[kAddressLength], incarnation);
   return res;
 }
 
 Bytes storage_key(const evmc::address& address, uint64_t incarnation, const evmc::bytes32& key) {
   Bytes res(kAddressLength + kIncarnationLength + kHashLength, '\0');
   std::memcpy(&res[0], address.bytes, kAddressLength);
-  boost::endian::store_big_u64(&res[kAddressLength], incarnation);
+  //boost::endian::store_big_u64(&res[kAddressLength], incarnation);
   std::memcpy(&res[kAddressLength + kIncarnationLength], key.bytes, kHashLength);
   return res;
 }
 
 Bytes header_hash_key(uint64_t block_number) {
   Bytes key(8 + 1, '\0');
-  boost::endian::store_big_u64(&key[0], block_number);
+  //boost::endian::store_big_u64(&key[0], block_number);
   key[8] = 'n';
   return key;
 }
 
 Bytes block_key(uint64_t block_number, const evmc::bytes32& hash) {
   Bytes key(8 + kHashLength, '\0');
-  boost::endian::store_big_u64(&key[0], block_number);
+  //boost::endian::store_big_u64(&key[0], block_number);
   std::memcpy(&key[8], hash.bytes, kHashLength);
   return key;
 }
@@ -60,13 +60,13 @@ Bytes history_index_key(ByteView key, uint64_t block_number) {
   if (key.length() == kAddressLength) {  // accounts
     res = key;
     res.resize(kAddressLength + 8);
-    boost::endian::store_big_u64(&res[kAddressLength], block_number);
+    //boost::endian::store_big_u64(&res[kAddressLength], block_number);
   } else if (key.length() == kAddressLength + kHashLength + kIncarnationLength) {  // storage
     // remove incarnation and add block number
     res.resize(kAddressLength + kHashLength + 8);
     std::memcpy(&res[0], &key[0], kAddressLength);
     std::memcpy(&res[kAddressLength], &key[kAddressLength + kIncarnationLength], kHashLength);
-    boost::endian::store_big_u64(&res[kAddressLength + kHashLength], block_number);
+    //boost::endian::store_big_u64(&res[kAddressLength + kHashLength], block_number);
   } else {
     throw std::invalid_argument{"unexpected key length"};
   }
@@ -75,11 +75,13 @@ Bytes history_index_key(ByteView key, uint64_t block_number) {
 
 Bytes encode_timestamp(uint64_t block_number) {
   constexpr size_t byte_count_bits{3};
-  size_t zero_bits{intx::clz(block_number)};
+  size_t zero_bits;
+    //{intx::clz(block_number)};
   assert(zero_bits >= byte_count_bits);
   size_t byte_count{8 - (zero_bits - byte_count_bits) / 8};
   Bytes encoded(byte_count, '\0');
-  ByteView be{rlp::big_endian(block_number)};
+  ByteView be;
+    //{rlp::big_endian(block_number)};
   std::memcpy(&encoded[byte_count - be.length()], &be[0], be.length());
   encoded[0] |= byte_count << (8 - byte_count_bits);
   return encoded;

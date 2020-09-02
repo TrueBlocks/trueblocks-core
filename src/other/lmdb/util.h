@@ -22,7 +22,7 @@ Part of the compatibility layer with the Turbo-Geth DB format;
 see its package dbutils.
 */
 
-#include <silkworm/common/base.hpp>
+#include "common/base.hpp"
 #include <string>
 
 namespace silkworm::db {

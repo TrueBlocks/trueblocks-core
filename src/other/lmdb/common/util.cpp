@@ -17,7 +17,7 @@
 #include "util.hpp"
 
 #include <algorithm>
-#include <boost/algorithm/hex.hpp>
+//#include <boost/algorithm/hex.hpp>
 #include <cassert>
 #include <cstring>
 #include <iterator>
@@ -88,7 +88,7 @@ std::string to_hex(const evmc::bytes32& hash) { return to_hex(full_view(hash)); 
 std::string to_hex(ByteView bytes) {
   std::string out{};
   out.reserve(2 * bytes.length());
-  boost::algorithm::hex_lower(bytes.begin(), bytes.end(), std::back_inserter(out));
+//  boost::algorithm::hex_lower(bytes.begin(), bytes.end(), std::back_inserter(out));
   return out;
 }
 
@@ -98,7 +98,7 @@ Bytes from_hex(std::string_view hex) {
   }
   Bytes out{};
   out.reserve(hex.length() / 2);
-  boost::algorithm::unhex(hex.begin(), hex.end(), std::back_inserter(out));
+//  boost::algorithm::unhex(hex.begin(), hex.end(), std::back_inserter(out));
   return out;
 }
 

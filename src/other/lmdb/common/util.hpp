@@ -1,19 +1,3 @@
-/*
-   Copyright 2020 The Silkworm Authors
-
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
-*/
-
 #ifndef SILKWORM_COMMON_UTIL_H_
 #define SILKWORM_COMMON_UTIL_H_
 
@@ -22,9 +6,49 @@
 #include <intrin.h>
 #endif
 
-namespace silkworm {
+#include <stddef.h>
+#include <stdint.h>
+#include <string>
+#include "util.hpp"
 
-using uint256be = bytes32;
+typedef struct evmc_bytes32 {
+    uint8_t bytes[32];
+} evmc_bytes32;
+
+typedef struct evmc_address {
+    uint8_t bytes[20];
+} evmc_address;
+
+namespace evmc {
+    struct address : evmc_address {
+        constexpr address(evmc_address init = {}) noexcept : evmc_address{init} {}
+        constexpr explicit address(uint64_t v) noexcept
+        : evmc_address{{0,0,0,0,0,0,0,0,0,0,0,0,
+            static_cast<uint8_t>(v >> 56),static_cast<uint8_t>(v >> 48),
+            static_cast<uint8_t>(v >> 40),static_cast<uint8_t>(v >> 32),
+            static_cast<uint8_t>(v >> 24),static_cast<uint8_t>(v >> 16),
+            static_cast<uint8_t>(v >> 8),static_cast<uint8_t>(v >> 0)}} {}
+        constexpr inline explicit operator bool() const noexcept;
+    };
+    struct bytes32 : evmc_bytes32 {
+        constexpr bytes32(evmc_bytes32 init = {}) noexcept : evmc_bytes32{init} {}
+        constexpr explicit bytes32(uint64_t v) noexcept
+        : evmc_bytes32{{0,0,0,0,0,0,0,0,0,0,0,0,
+                        0,0,0,0,0,0,0,0,0,0,0,0,
+            static_cast<uint8_t>(v >> 56),static_cast<uint8_t>(v >> 48),
+            static_cast<uint8_t>(v >> 40),static_cast<uint8_t>(v >> 32),
+            static_cast<uint8_t>(v >> 24),static_cast<uint8_t>(v >> 16),
+            static_cast<uint8_t>(v >> 8),static_cast<uint8_t>(v >> 0)}} {}
+        constexpr inline explicit operator bool() const noexcept;
+    };
+}
+
+namespace silkworm {
+    using uint256be = evmc::bytes32;
+    using Bytes = std::basic_string<uint8_t>;
+    using ByteView = std::basic_string_view<uint8_t>;
+    constexpr size_t kAddressLength{20};
+    constexpr size_t kHashLength{32};
 
 // If a given view is shorter than min_size,
 // pads it to the left with 0s up to min_size.
