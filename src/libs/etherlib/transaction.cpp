@@ -668,7 +668,8 @@ string_q nextTransactionChunk_custom(const string_q& fieldIn, const void* dataPt
                 if (fieldIn % "compressedTx") {
                     if (!tra->articulatedTx.message.empty())
                         return "message:" + tra->articulatedTx.message;
-                    string_q ret = tra->articulatedTx.compressed();
+                    string_q ret = substitute(tra->articulatedTx.compressed(), "\"", "\\\"");
+                    ;
                     if (ret.empty()) {
                         extern string_q compressInput(const string_q& input);
                         ret = compressInput(tra->input);

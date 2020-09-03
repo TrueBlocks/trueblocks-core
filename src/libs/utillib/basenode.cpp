@@ -528,10 +528,12 @@ void CBaseNode::toJsonFromFields(ostream& os, const CFieldDataArray& fields) con
                 os << val;
 
             } else {
-                if ((startsWith(val, "[") && endsWith(val, "]")) || (startsWith(val, "{") && endsWith(val, "}")))
+                if (startsWith(val, "[{\"")) { //contains(val, "-tuple-")) {
+                    //replaceAll(val, "-tuple-", "");
                     os << val;
-                else
+                } else {
                     os << "\"" << val << "\"";
+                }
             }
         }
         decIndent();

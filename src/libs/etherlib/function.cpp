@@ -566,7 +566,6 @@ string_q CFunction::getSignature(uint64_t parts) const {
 
     string_q ret = os.str().c_str();
     replaceAll(ret, " )", ")");
-    // replaceAll(ret, "tuple(", "(");
     return trim(ret);
 }
 

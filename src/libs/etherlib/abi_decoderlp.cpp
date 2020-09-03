@@ -124,6 +124,7 @@ size_t decodeTheData(CParameterArray& params, const CStringArray& dataArray, siz
                     param.value += ("\"" + p.name + "\":\"" + p.value + "\"");
                 }
                 param.value += "}";
+//                param.value = "-tuple-" + param.value;
 
             } else {
                 LOG_WARN("Unknown type: ", param.type, " in decodeTheData");
