@@ -22,7 +22,7 @@ static const COption params[] = {
     // clang-format off
     COption("transactions", "", "list<tx_id>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)"),  // NOLINT
     COption("articulate", "a", "", OPT_SWITCH, "articulate the transactions if an ABI is found for the 'to' address"),
-    COption("count_only", "c", "", OPT_SWITCH, "show the number of traces for the transaction only (fast)"),
+    COption("count", "c", "", OPT_SWITCH, "show the number of traces for the transaction only (fast)"),
     COption("skip_ddos", "s", "", OPT_HIDDEN | OPT_TOGGLE, "toggle skipping over 2018 ddos transactions during export ('on' by default)"),  // NOLINT
     COption("max_traces", "m", "<uint64>", OPT_HIDDEN | OPT_FLAG, "if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250)"),  // NOLINT
     COption("filter", "f", "<string>", OPT_HIDDEN | OPT_FLAG, "Call trace_filter with the comma seperated string of the filter (see docs)"),  // NOLINT
@@ -49,8 +49,8 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-a" || arg == "--articulate") {
             articulate = true;
 
-        } else if (arg == "-c" || arg == "--count_only") {
-            count_only = true;
+        } else if (arg == "-c" || arg == "--count") {
+            count = true;
 
         } else if (arg == "-s" || arg == "--skip_ddos") {
             skip_ddos = !skip_ddos;
@@ -139,7 +139,7 @@ bool COptions::parseArguments(string_q& command) {
     expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(format);
     if (isNoHeader)
         expContext().fmtMap["header"] = "";
-    if (count_only)
+    if (count)
         expContext().fmtMap["format"] = expContext().fmtMap["header"] = "[{HASH}]\t[{TRACESCNT}]";
 
     return true;
@@ -152,7 +152,7 @@ void COptions::Init(void) {
 
     // BEG_CODE_INIT
     articulate = false;
-    count_only = false;
+    count = false;
     skip_ddos = getGlobalConfig("getTrace")->getConfigBool("settings", "skip_ddos", true);
     max_traces = getGlobalConfig("getTrace")->getConfigInt("settings", "max_traces", 250);
     filter = "";

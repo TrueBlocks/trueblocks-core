@@ -16,7 +16,7 @@ The `getBlock` tool retrieves Ethereum block data from a running node or, if pre
 | -a | --addrs | display all addresses included in the block |
 | -u | --uniq | display only uniq addresses found per block |
 | -n | --uniq_tx | display only uniq addresses found per transaction |
-| -c | --count_only | display counts of appearances (for --addrs, --uniq, or --uniq_tx only) |
+| -c | --count | display counts of appearances (for --addrs, --uniq, or --uniq_tx only) |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 

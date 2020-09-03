@@ -152,7 +152,7 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 12540,tools,blocks,getBlock,addrs,a,,false,false,true,true,local,switch,<boolean>,display all addresses included in the block
 12560,tools,blocks,getBlock,uniq,u,,false,false,true,true,local,switch,<boolean>,display only uniq addresses found per block
 12580,tools,blocks,getBlock,uniq_tx,n,,false,false,true,true,local,switch,<boolean>,display only uniq addresses found per transaction
-12600,tools,blocks,getBlock,count_only,c,,false,false,true,true,header,switch,<boolean>,display counts of appearances (for --addrs&#44; --uniq&#44; or --uniq_tx only)
+12600,tools,blocks,getBlock,count,c,,false,false,true,true,header,switch,<boolean>,display counts of appearances (for --addrs&#44; --uniq&#44; or --uniq_tx) or transactions
 12610,tools,blocks,getBlock,uncles,U,,false,false,true,true,header,switch,<boolean>,display uncle blocks (if any) instead of the requested block
 12620,tools,blocks,getBlock,force,o,,false,false,false,false,header,switch,<boolean>,force a re-write of the block to the cache
 12640,tools,blocks,getBlock,,,,false,false,true,true,--,description,,Returns block(s) from local cache or directly from a running node.
@@ -202,7 +202,7 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 
 13400,tools,traces,getTrace,transactions,,,true,false,true,true,local,positional,list<tx_id>,a space-separated list of one or more transaction identifiers (tx_hash&#44; bn.txID&#44; blk_hash.txID)
 13420,tools,traces,getTrace,articulate,a,,false,false,true,true,header,switch,<boolean>,articulate the transactions if an ABI is found for the 'to' address
-13440,tools,traces,getTrace,count_only,c,,false,false,true,true,header,switch,<boolean>,show the number of traces for the transaction only (fast)
+13440,tools,traces,getTrace,count,c,,false,false,true,true,header,switch,<boolean>,show the number of traces for the transaction only (fast)
 13460,tools,traces,getTrace,skip_ddos,s,true,false,true,false,false,header,toggle,<boolean>,toggle skipping over 2018 ddos transactions during export ([{DEF}] by default)
 13480,tools,traces,getTrace,max_traces,m,250,false,true,false,false,header,flag,<uint64>,if --skip_ddos is on&#44; this many traces defines what a ddos transaction is (default = [{DEF}])
 13490,tools,traces,getTrace,filter,f,,false,false,false,false,header,flag,<string>,Call trace_filter with the comma seperated string of the filter (see docs)

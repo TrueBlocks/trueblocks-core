@@ -133,7 +133,7 @@ bool visitAddrs(const CAppearance& item, void* data) {
         return !shouldQuit();
 
     COptions* opt = reinterpret_cast<COptions*>(data);
-    if (opt->count_only) {
+    if (opt->count) {
         opt->addrCounter++;
 
     } else {
@@ -185,7 +185,7 @@ bool visitBlock(uint64_t num, void* data) {
         else
             block.forEveryAppearanceInBlock(visitAddrs, transFilter, opt);
 
-        if (opt->count_only) {
+        if (opt->count) {
             string_q fmt = expContext().fmtMap["format"];
             fmt = substitute(fmt, "[{ADDR_COUNT}]", uint_2_Str(opt->addrCounter));
             fmt = substitute(fmt, "[{FILTER_TYPE}]", opt->filterType);

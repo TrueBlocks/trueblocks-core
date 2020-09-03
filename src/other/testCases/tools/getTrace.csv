@@ -28,6 +28,7 @@ on, both, fast, traces, tools/getTrace, verbose_blk_idx2,   y, transactions = 0x
 on, both, fast, traces, tools/getTrace, verbose_blk_idx3,   n, transactions = 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.3 & fmt = txt
 on, both, slow, traces, tools/getTrace, by_txhash,          y, transactions = 0x66e49e99a984cd88e097782a001afaac8c6ff786c936651895475dd88ec360f6 & fmt = api
 on, both, medi, traces, tools/getTrace, by_bnun_and_txid,   y, transactions = 4348290.92 & fmt = api
+on, both, medi, traces, tools/getTrace, by_bnun_and_txid_c, y, transactions = 4348290.92 & fmt = api & count
 on, both, medi, traces, tools/getTrace, by_bhash_and_txid,  y, transactions = 0x96a09b25c3748974bb7e08780074482a164ab5a21e2ffc6c7115ec73c84e7f73.92 & parity & fmt = api
 on, both, fast, traces, tools/getTrace, by_blk_hash_good,   y, transactions = 0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f.55 & verbose
 on, both, fast, traces, tools/getTrace, by_blk_hash_bad,    y, transactions = 0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f.155 & verbose
@@ -83,7 +84,7 @@ on, both,  fast, traces, tools/getTrace, by_filter8,         y, fmt = json & fil
 
 # ./tools/getTrace/options.cpp:    COption("", "", "", OPT_DESCRIPTION, "Retrieve a transaction's traces from the local cache or a running node."),
 # ./tools/getTrace/options.cpp:    COption("articulate", "a", "", OPT_SWITCH, "articulate the transactions if an ABI is found for the 'to' address"),
-# ./tools/getTrace/options.cpp:    COption("count_only", "c", "", OPT_SWITCH, "show the number of traces for the transaction only (fast)"),
+# ./tools/getTrace/options.cpp:    COption("count", "c", "", OPT_SWITCH, "show the number of traces for the transaction only (fast)"),
 # ./tools/getTrace/options.cpp:    COption("max_traces", "m", "<uint64>", OPT_HIDDEN | OPT_FLAG, "if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250)"),
 # ./tools/getTrace/options.cpp:    COption("skip_ddos", "s", "", OPT_HIDDEN | OPT_TOGGLE, "toggle skipping over 2018 ddos transactions during export ('on' by default)"),
 # ./tools/getTrace/options.cpp:    COption("transactions", "", "list<tx_id>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)"),

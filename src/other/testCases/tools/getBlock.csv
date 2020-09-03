@@ -40,12 +40,12 @@ on, both, slow, blocks, tools/getBlock, byzantium_1,        y, blocks = 4369999 
 on, both, fast, blocks, tools/getBlock, blockByHash,        y, blocks = 0xd19bc98080cd70951fad3951cef2d512e6334aa3c7e64a38985c955d4d2e273b
 on, both, fast, blocks, tools/getBlock, miner,              y, blocks = 1 & uniq_tx & fmt json
 
-on, both, medi, blocks, tools/getBlock, addrsCnt1,          n, blocks = 3982128 & addrs & count_only & fmt csv
-on, both, medi, blocks, tools/getBlock, uniqCnt1,           n, blocks = 3982128 & uniq & count_only & fmt txt
-on, both, medi, blocks, tools/getBlock, uniqTxCnt1,         y, blocks = 3982128 & uniq_tx & count_only & fmt json
-on, both, fast, blocks, tools/getBlock, addrCntFail,        y, blocks = 3982128 & count_only
+on, both, medi, blocks, tools/getBlock, addrsCnt1,          n, blocks = 3982128 & addrs & count & fmt csv
+on, both, medi, blocks, tools/getBlock, uniqCnt1,           n, blocks = 3982128 & uniq & count & fmt txt
+on, both, medi, blocks, tools/getBlock, uniqTxCnt1,         y, blocks = 3982128 & uniq_tx & count & fmt json
+on, both, fast, blocks, tools/getBlock, addrCntFail,        y, blocks = 3982128 & count
 
-on, both, medi, blocks, tools/getBlock, uniqTxCnt2,         y, blocks = 1301011-1312011:313 & uniq_tx & count_only & fmt json
+on, both, medi, blocks, tools/getBlock, uniqTxCnt2,         y, blocks = 1301011-1312011:313 & uniq_tx & count & fmt json
 
 on, cmd,  fast, blocks, tools/getBlock, cmd_file1,          n, file:cmd_file1 & force
 on, cmd,  fast, blocks, tools/getBlock, cmd_file2,          n, file:cmd_file2 & force
@@ -60,7 +60,7 @@ on, both, fast, blocks, tools/getBlock, fmt_junk,           y, blocks = 2222222 
 # COption("", "", "", OPT_DESCRIPTION, "Returns block(s) from local cache or directly from a running node."),
 # COption("addrs", "a", "", OPT_SWITCH, "display all addresses included in the block"),
 # COption("blocks", "", "list<blknum>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more blocks to retrieve"),
-# COption("count_only", "o", "", OPT_SWITCH, "display counts of appearances (for --addrs, --uniq, or --uniq_tx only)"),
+# COption("count", "o", "", OPT_SWITCH, "display counts of appearances (for --addrs, --uniq, or --uniq_tx only)"),
 # COption("force", "e", "", OPT_HIDDEN | OPT_SWITCH, "force a re-write of the block to the cache"),
 # COption("hashes_only", "s", "", OPT_SWITCH, "display only transaction hashes, default is to display full transaction detail"),
 # COption("uniq", "u", "", OPT_SWITCH, "display only uniq addresses found per block"),

@@ -25,7 +25,7 @@ static const COption params[] = {
     COption("addrs", "a", "", OPT_SWITCH, "display all addresses included in the block"),
     COption("uniq", "u", "", OPT_SWITCH, "display only uniq addresses found per block"),
     COption("uniq_tx", "n", "", OPT_SWITCH, "display only uniq addresses found per transaction"),
-    COption("count_only", "c", "", OPT_SWITCH, "display counts of appearances (for --addrs, --uniq, or --uniq_tx only)"),  // NOLINT
+    COption("count", "c", "", OPT_SWITCH, "display counts of appearances (for --addrs, --uniq, or --uniq_tx) or transactions"),  // NOLINT
     COption("uncles", "U", "", OPT_SWITCH, "display uncle blocks (if any) instead of the requested block"),
     COption("force", "o", "", OPT_HIDDEN | OPT_SWITCH, "force a re-write of the block to the cache"),
     COption("", "", "", OPT_DESCRIPTION, "Returns block(s) from local cache or directly from a running node."),
@@ -72,8 +72,8 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-n" || arg == "--uniq_tx") {
             uniq_tx = true;
 
-        } else if (arg == "-c" || arg == "--count_only") {
-            count_only = true;
+        } else if (arg == "-c" || arg == "--count") {
+            count = true;
 
         } else if (arg == "-U" || arg == "--uncles") {
             uncles = true;
@@ -134,9 +134,6 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     filterType = (uniq_tx ? "uniq_tx" : (uniq ? "uniq" : (addrs ? "addrs" : "")));
-    if (filterType.empty() && count_only)
-        return usage("--count_only option is only available with either --addrs, --uniq, or --uniq_tx. Quitting...");
-
     if (!filterType.empty() && force)
         return usage("The --force option is not available when using one of the address options. Quitting...");
 
@@ -153,10 +150,14 @@ bool COptions::parseArguments(string_q& command) {
         expContext().exportFmt = (isApiMode() ? API1 : (filterType.empty() ? JSON1 : TXT1));
 
     // Display formatting
-    if (count_only) {
+    if (count) {
         string_q ff = verbose ? STR_FORMAT_COUNT_TXT_VERBOSE : STR_FORMAT_COUNT_TXT;
         if (verbose <= 2)
             ff = substitute(ff, "\t[{TRACE_COUNT}]", "");
+        if (filterType.empty()) {
+            replace(ff, "\"[{FILTER_TYPE}]\": [{ADDR_COUNT}]", "");
+            replace(ff, "\t[{ADDR_COUNT}]", "");
+        }
         configureDisplay("", "CBlock", ff);
     } else if (!filterType.empty()) {
         configureDisplay("", "CBlock", STR_FORMAT_FILTER_TXT);
@@ -165,9 +166,14 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     if (expContext().exportFmt == API1 || expContext().exportFmt == JSON1) {
-        if (count_only)
-            expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(STR_FORMAT_COUNT_JSON);
-        else if (!filterType.empty())
+        if (count) {
+            string_q ff = STR_FORMAT_COUNT_JSON;
+            if (filterType.empty()) {
+                replace(ff, ",\n \"[{FILTER_TYPE}]\": [{ADDR_COUNT}]", "");
+                replace(ff, "\t[{ADDR_COUNT}]", "");
+            }
+            expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(ff);
+        } else if (!filterType.empty())
             expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(STR_FORMAT_FILTER_JSON);
     }
     if (isNoHeader)
@@ -183,7 +189,7 @@ void COptions::Init(void) {
 
     // BEG_CODE_INIT
     hashes_only = false;
-    count_only = false;
+    count = false;
     uncles = false;
     force = false;
     // END_CODE_INIT

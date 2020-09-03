@@ -14,7 +14,7 @@ getBlock -th
 | -a | --addrs | display all addresses included in the block |
 | -u | --uniq | display only uniq addresses found per block |
 | -n | --uniq_tx | display only uniq addresses found per transaction |
-| -c | --count_only | display counts of appearances (for --addrs, --uniq, or --uniq_tx only) |
+| -c | --count | display counts of appearances (for --addrs, --uniq, or --uniq_tx) or transactions |
 | -U | --uncles | display uncle blocks (if any) instead of the requested block |
 
 #### Hidden options (shown during testing only)

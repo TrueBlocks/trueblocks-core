@@ -528,8 +528,8 @@ void CBaseNode::toJsonFromFields(ostream& os, const CFieldDataArray& fields) con
                 os << val;
 
             } else {
-                if (startsWith(val, "[{\"")) { //contains(val, "-tuple-")) {
-                    //replaceAll(val, "-tuple-", "");
+                if (startsWith(val, "[{\"")) {  // contains(val, "-tuple-")) {
+                    // replaceAll(val, "-tuple-", "");
                     os << val;
                 } else {
                     os << "\"" << val << "\"";

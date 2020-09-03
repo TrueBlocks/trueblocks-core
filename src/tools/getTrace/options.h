@@ -25,7 +25,7 @@ class COptions : public COptionsBase {
   public:
     // BEG_CODE_DECLARE
     bool articulate;
-    bool count_only;
+    bool count;
     bool skip_ddos;
     uint64_t max_traces;
     string_q filter;

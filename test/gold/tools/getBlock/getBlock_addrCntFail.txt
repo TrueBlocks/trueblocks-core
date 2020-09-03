@@ -1,26 +1,6 @@
-getBlock argc: 3 [1:3982128] [2:--count_only] 
-getBlock 3982128 --count_only 
-
-  --count_only option is only available with either --addrs, --uniq, or --uniq_tx. Quitting...
-
-  Usage:    getBlock [-e|-a|-u|-n|-c|-U|-v|-h] <block> [block...]  
-  Purpose:  Returns block(s) from local cache or directly from a running node.
-
-  Where:  
-	blocks                a space-separated list of one or more blocks to retrieve (required)
-	-e  (--hashes_only)   display only transaction hashes, default is to display full transaction detail
-	-a  (--addrs)         display all addresses included in the block
-	-u  (--uniq)          display only uniq addresses found per block
-	-n  (--uniq_tx)       display only uniq addresses found per transaction
-	-c  (--count_only)    display counts of appearances (for --addrs, --uniq, or --uniq_tx only)
-	-U  (--uncles)        display uncle blocks (if any) instead of the requested block
-
-#### Hidden options (shown during testing only)
-	-o  (--force)         force a re-write of the block to the cache
-#### Hidden options (shown during testing only)
-
-	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
-	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
-	-h  (--help)          display this help screen
-
-  Powered by QBlocks
+getBlock argc: 3 [1:3982128] [2:--count] 
+getBlock 3982128 --count 
+{ "data": [
+{ "blockNumber": 3982128, "transactionsCnt": 91}], "types": [
+{ "type": "CBlock", "fields": [{ "name": "gasLimit", "type": "gas" }, { "name": "gasUsed", "type": "gas" }, { "name": "hash", "type": "hash" }, { "name": "blockNumber", "type": "blocknum" }, { "name": "parentHash", "type": "hash" }, { "name": "miner", "type": "address" }, { "name": "difficulty", "type": "unumber" }, { "name": "price", "type": "double" }, { "name": "finalized", "type": "bool" }, { "name": "timestamp", "type": "timestamp" }, { "name": "transactions", "type": "object|ts_array" }] }
+] }
