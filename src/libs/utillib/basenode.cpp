@@ -528,7 +528,7 @@ void CBaseNode::toJsonFromFields(ostream& os, const CFieldDataArray& fields) con
                 os << val;
 
             } else {
-                if (val == "null")
+                if ((startsWith(val, "[") && endsWith(val, "]")) || (startsWith(val, "{") && endsWith(val, "}")))
                     os << val;
                 else
                     os << "\"" << val << "\"";

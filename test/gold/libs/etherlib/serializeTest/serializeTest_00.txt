@@ -52,46 +52,46 @@ Show the leader
 {
   "name": "Leader",
   "age": 100,
-  "next": "{
+  "next": {
     "name": "Person 0",
     "age": 0,
-    "next": "{
+    "next": {
       "name": "Person 1",
       "age": 2,
-      "next": "{
+      "next": {
         "name": "Person 2",
         "age": 4,
-        "next": "{
+        "next": {
           "name": "Person 3",
           "age": 6,
-          "next": "{
+          "next": {
             "name": "Person 4",
             "age": 8,
-            "next": "{
+            "next": {
               "name": "Person 5",
               "age": 10,
-              "next": "{
+              "next": {
                 "name": "Person 6",
                 "age": 12,
-                "next": "{
+                "next": {
                   "name": "Person 7",
                   "age": 14,
-                  "next": "{
+                  "next": {
                     "name": "Person 8",
                     "age": 16,
-                    "next": "{
+                    "next": {
                       "name": "Person 9",
                       "age": 18
-                    }"
-                  }"
-                }"
-              }"
-            }"
-          }"
-        }"
-      }"
-    }"
-  }"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }
 
 
@@ -100,46 +100,46 @@ Show the copy
 {
   "name": "Leader",
   "age": 100,
-  "next": "{
+  "next": {
     "name": "Person 0",
     "age": 0,
-    "next": "{
+    "next": {
       "name": "Person 1",
       "age": 2,
-      "next": "{
+      "next": {
         "name": "Person 2",
         "age": 4,
-        "next": "{
+        "next": {
           "name": "Person 3",
           "age": 6,
-          "next": "{
+          "next": {
             "name": "Person 4",
             "age": 8,
-            "next": "{
+            "next": {
               "name": "Person 5",
               "age": 10,
-              "next": "{
+              "next": {
                 "name": "Person 6",
                 "age": 12,
-                "next": "{
+                "next": {
                   "name": "Person 7",
                   "age": 14,
-                  "next": "{
+                  "next": {
                     "name": "Person 8",
                     "age": 16,
-                    "next": "{
+                    "next": {
                       "name": "Person 9",
                       "age": 18
-                    }"
-                  }"
-                }"
-              }"
-            }"
-          }"
-        }"
-      }"
-    }"
-  }"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }
 
 

@@ -16,7 +16,7 @@ on, cmd,  slow, null, etherlib/abiTest,         03,               n, val = gener
 on, cmd,  slow, null, etherlib/abiTest,         04,               n, val = generation encoding bad
 on, cmd,  slow, null, etherlib/abiTest,         05_old_bug,       n, val = old_bug
 
-#on, cmd,  fast, null, etherlib/abiTest2,        articulate,       n,
+on, cmd,  fast, null, etherlib/abiTest2,        articulate,       n,
 
 on, cmd,  fast, null, etherlib/binaryPathTest,  00,               n,
 

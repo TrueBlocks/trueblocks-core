@@ -19,10 +19,10 @@
 
 #include <memory>
 #include <optional>
-#include <silkworm/common/base.hpp>
-#include <silkworm/db/change.hpp>
-#include <silkworm/types/account.hpp>
-#include <silkworm/types/block.hpp>
+#include "common/base.hpp"
+#include "db/change.hpp"
+#include "types/account.hpp"
+#include "types/block.hpp"
 #include <vector>
 
 namespace silkworm::db {

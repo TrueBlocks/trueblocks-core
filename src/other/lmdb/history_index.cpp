@@ -16,9 +16,9 @@
 
 #include "history_index.h"
 
-#include <boost/endian/conversion.hpp>
-#include <boost/iterator/counting_iterator.hpp>
-#include <silkworm/common/util.hpp>
+//#include <boost/endian/conversion.hpp>
+//#include <boost/iterator/counting_iterator.hpp>
+#include "./common/util.hpp"
 
 namespace silkworm::db::history_index {
 
@@ -43,7 +43,8 @@ std::optional<SearchResult> find(ByteView hi, uint64_t v) {
   using boost::endian::load_big_u64;
 
   size_t n{(hi.length() - 8) / item_len};
-  uint64_t min_element{load_big_u64(hi.data())};
+  uint64_t min_element;
+    //{load_big_u64(hi.data())};
   ByteView elements{hi.substr(8)};
 
   uint32_t i{*std::lower_bound(boost::counting_iterator<uint32_t>(0),
