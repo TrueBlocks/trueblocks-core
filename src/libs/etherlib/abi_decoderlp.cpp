@@ -42,10 +42,17 @@ static void prettyPrint(CParameterArray& params, const CStringArray& dataArray, 
     cerr << endl;
     uint64_t cnt = 0;
     for (auto param : params) {
-        cerr << indent << padNum3T(cnt) << ": " << param.name << " -- ";
-        cerr << param.type << (param.internalType.empty() ? "" : "(" + param.internalType + ")");
-        cerr << (param.value.empty() ? "" : " -- " + param.value);
+        cerr << indent << padNum3T(cnt) << ": " << param.name << " (" << param.type << ")";
+        if (!param.value.empty())
+            cerr << " = " << param.value;
         cerr << endl;
+        if (!param.internalType.empty() && (param.internalType != param.type)) {
+            cerr << indent << string_q(6, ' ') << param.internalType << "[";
+            for (auto component : param.components) {
+                cerr << component.name << "(" << component.type << ") ";
+            }
+            cerr << "]" << endl;
+        }
         cnt++;
     }
     cnt = 0;
@@ -95,19 +102,21 @@ size_t decodeTheData(CParameterArray& params, const CStringArray& dataArray, siz
                 // start of string. Start of string is length of string. Start of string + 1 is the string
                 string_q result;
                 uint64_t dataStart = (str_2_Uint("0x" + dataArray[readIndex++]) / 32);
-                uint64_t nBytes = str_2_Uint("0x" + dataArray[dataStart]);
-                size_t nWords = (nBytes / 32) + 1;
-                if (nWords <= dataArray.size()) {  // some of the data sent in may be bogus, so we protext ourselves
-                    for (size_t w = 0; w < nWords; w++) {
-                        size_t pos = dataStart + 1 + w;
-                        if (pos < dataArray.size())
-                            result += dataArray[pos].substr(0, nBytes * 2);  // at most 64
-                        if (nBytes >= 32)
-                            nBytes -= 32;
-                        else
-                            nBytes = 0;
+                if (dataStart < dataArray.size()) {
+                    uint64_t nBytes = str_2_Uint("0x" + dataArray[dataStart]);
+                    size_t nWords = (nBytes / 32) + 1;
+                    if (nWords <= dataArray.size()) {  // some of the data sent in may be bogus, so we protext ourselves
+                        for (size_t w = 0; w < nWords; w++) {
+                            size_t pos = dataStart + 1 + w;
+                            if (pos < dataArray.size())
+                                result += dataArray[pos].substr(0, nBytes * 2);  // at most 64
+                            if (nBytes >= 32)
+                                nBytes -= 32;
+                            else
+                                nBytes = 0;
+                        }
+                        param.value = (param.type == "string" ? hex_2_Str("0x" + result) : "0x" + result);
                     }
-                    param.value = (param.type == "string" ? hex_2_Str("0x" + result) : "0x" + result);
                 } else {
                     param.value = "";  // we've run out of bytes -- protect ourselves from bad data
                 }
@@ -134,18 +143,20 @@ size_t decodeTheData(CParameterArray& params, const CStringArray& dataArray, siz
                 // ends with type...[]. We need to pick up the size from the data
                 cerr << "array of type...[]" << endl;
                 size_t dataStart = str_2_Uint("0x" + dataArray[readIndex]) / 32;
-                size_t nItems = str_2_Uint("0x" + dataArray[dataStart]);
-                CParameterArray tmp;
-                CParameter p;
-                p.type = param.type;
-                p.internalType = param.internalType;
-                p.components = param.components;
-                replaceReverse(p.type, "[]", "[" + uint_2_Str(nItems) + "]");
-                replace(p.type, "bytes[", "bytes32[");
-                tmp.push_back(p);
-                dataStart++;
-                decodeTheData(tmp, dataArray, dataStart, dataStart - 1);
-                param.value = tmp[0].value;
+                if (dataStart < dataArray.size()) {
+                    size_t nItems = str_2_Uint("0x" + dataArray[dataStart]);
+                    CParameterArray tmp;
+                    CParameter p;
+                    p.type = param.type;
+                    p.internalType = param.internalType;
+                    p.components = param.components;
+                    replaceReverse(p.type, "[]", "[" + uint_2_Str(nItems) + "]");
+                    replace(p.type, "bytes[", "bytes32[");
+                    tmp.push_back(p);
+                    dataStart++;
+                    decodeTheData(tmp, dataArray, dataStart, dataStart - 1);
+                    param.value = tmp[0].value;
+                }
                 readIndex++;
 
             } else {

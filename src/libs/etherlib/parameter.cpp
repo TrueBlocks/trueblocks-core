@@ -338,6 +338,13 @@ string_q nextParameterChunk_custom(const string_q& fieldIn, const void* dataPtr)
                 if (fieldIn % "is_minimal") return bool_2_Str_t(par->is_flags & IS_MINIMAL);
                 if (fieldIn % "is_enabled") return bool_2_Str_t(par->is_flags & IS_ENABLED);
                 break;
+            case 'v':
+                if (fieldIn % "value") {
+                    if (contains(par->type, "tuple")) {
+                        return par->value + "--tuple--";
+                    }
+                }
+                break;
             // clang-format off
             // EXISTING_CODE
             case 'p':
@@ -576,6 +583,23 @@ bool CParameter::fromDefinition(const string_q& strIn) {
     if (contains(type, '['))
         is_flags |= IS_ARRAY;
     name = trim(str);
+    if (contains(type, "+")) {
+        while (contains(type, "(")) {
+            replaceAll(type, "(", "<tuple>");
+            replaceAll(type, ")", "</tuple>");
+            string_q tuple = snagFieldClear(type, "tuple");
+            CStringArray parts;
+            explode(parts, tuple, '+');
+            size_t cnt = 1;
+            for (auto part : parts) {
+                CParameter p;
+                p.type = nextTokenClear(part, ' ');
+                p.name = (part.empty() ? ("val_" + uint_2_Str(cnt++)) : part);
+                components.push_back(p);
+            }
+            type = "tuple" + type;
+        }
+    }
     return true;
 }
 

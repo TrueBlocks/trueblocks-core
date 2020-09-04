@@ -358,7 +358,23 @@ class CFunctionTester : public CFunction {
     bool doTest(const string_q& line1) {
 #if 0
         string_q line;
-        line = "";
+        line = ""\
+        "decode|decode donation tuple array (address token, uint256 amount, address recipient)[]|function donate((address+uint256+address)[])|"\
+        "0x"\
+        "0000000000000000000000000000000000000000000000000000000000000020"\
+        "0000000000000000000000000000000000000000000000000000000000000002"\
+        "0000000000000000000000006b175474e89094c44da98b954eedeac495271d0f"\
+        "000000000000000000000000000000000000000000000000869d529b714a0000"\
+        "000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b"\
+        "0000000000000000000000006b175474e89094c44da98b954eedeac495271d0f"\
+        "00000000000000000000000000000000000000000000000003782dace9d90000"\
+        "00000000000000000000000000de4b13153673bcae2616b67bf822500d325fc3"\
+        "|[{\"val_1\":\"0x6b175474e89094c44da98b954eedeac495271d0f\","\
+        "\"val_2\":\"9700000000000000000\","\
+        "\"val_3\":\"0xf503017d7baf7fbc0fff7492b751025c6a78179b\"},"\
+        "{\"val_1\":\"0x6b175474e89094c44da98b954eedeac495271d0f\","\
+        "\"val_2\":\"250000000000000000\","\
+        "\"val_3\":\"0x00de4b13153673bcae2616b67bf822500d325fc3\"}]]";
 #else
         string_q line = line1;
 #endif

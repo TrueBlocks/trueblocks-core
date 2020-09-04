@@ -48,7 +48,8 @@ abiTest2
 }
 
 ,--1 : 8 : 0
---  0: donations -- tuple[](struct BulkCheckout.Donation[])
+--  0: donations (tuple[])
+--      struct BulkCheckout.Donation[][token(address) amount(uint256) recipient(address) ]
 --  0: 0000000000000000000000000000000000000000000000000000000000000020 <---
 --  1: 0000000000000000000000000000000000000000000000000000000000000002
 --  2: 0000000000000000000000006b175474e89094c44da98b954eedeac495271d0e
@@ -59,7 +60,8 @@ abiTest2
 --  7: 0000000000000000000000001719c7dc8216ce67f96171e1a817195ae075d78d
 array of type...[]
   --1 : 8 : 2 : 1
-  --  0:  -- tuple[2](struct BulkCheckout.Donation[])
+  --  0:  (tuple[2])
+  --      struct BulkCheckout.Donation[][token(address) amount(uint256) recipient(address) ]
   --  0: 0000000000000000000000000000000000000000000000000000000000000020
   --  1: 0000000000000000000000000000000000000000000000000000000000000002 <===
   --  2: 0000000000000000000000006b175474e89094c44da98b954eedeac495271d0e <---
@@ -71,8 +73,10 @@ array of type...[]
 array of type...[M]
 nItems: 2 subType: tuple
     --2 : 8 : 2 : 1
-    --  0:  -- tuple(struct BulkCheckout.Donation[])
-    --  1:  -- tuple(struct BulkCheckout.Donation[])
+    --  0:  (tuple)
+    --      struct BulkCheckout.Donation[][token(address) amount(uint256) recipient(address) ]
+    --  1:  (tuple)
+    --      struct BulkCheckout.Donation[][token(address) amount(uint256) recipient(address) ]
     --  0: 0000000000000000000000000000000000000000000000000000000000000020
     --  1: 0000000000000000000000000000000000000000000000000000000000000002 <===
     --  2: 0000000000000000000000006b175474e89094c44da98b954eedeac495271d0e <---
@@ -82,9 +86,10 @@ nItems: 2 subType: tuple
     --  6: 00000000000000000000000000000000000000000000001f711def073e900000
     --  7: 0000000000000000000000001719c7dc8216ce67f96171e1a817195ae075d78d
       --3 : 8 : 2 : 1
-      --  0: token -- address(address)
-      --  1: amount -- uint256(uint256)
-      --  2: recipient -- address(address payable)
+      --  0: token (address)
+      --  1: amount (uint256)
+      --  2: recipient (address)
+      --      address payable[]
       --  0: 0000000000000000000000000000000000000000000000000000000000000020
       --  1: 0000000000000000000000000000000000000000000000000000000000000002 <===
       --  2: 0000000000000000000000006b175474e89094c44da98b954eedeac495271d0e <---
@@ -94,9 +99,10 @@ nItems: 2 subType: tuple
       --  6: 00000000000000000000000000000000000000000000001f711def073e900000
       --  7: 0000000000000000000000001719c7dc8216ce67f96171e1a817195ae075d78d
       --3 : 8 : 3 : 1
-      --  0: token -- address(address) -- 0x6b175474e89094c44da98b954eedeac495271d0e
-      --  1: amount -- uint256(uint256)
-      --  2: recipient -- address(address payable)
+      --  0: token (address) = 0x6b175474e89094c44da98b954eedeac495271d0e
+      --  1: amount (uint256)
+      --  2: recipient (address)
+      --      address payable[]
       --  0: 0000000000000000000000000000000000000000000000000000000000000020
       --  1: 0000000000000000000000000000000000000000000000000000000000000002 <===
       --  2: 0000000000000000000000006b175474e89094c44da98b954eedeac495271d0e
@@ -106,9 +112,10 @@ nItems: 2 subType: tuple
       --  6: 00000000000000000000000000000000000000000000001f711def073e900000
       --  7: 0000000000000000000000001719c7dc8216ce67f96171e1a817195ae075d78d
       --3 : 8 : 4 : 1
-      --  0: token -- address(address) -- 0x6b175474e89094c44da98b954eedeac495271d0e
-      --  1: amount -- uint256(uint256) -- 580000000000000000001
-      --  2: recipient -- address(address payable)
+      --  0: token (address) = 0x6b175474e89094c44da98b954eedeac495271d0e
+      --  1: amount (uint256) = 580000000000000000001
+      --  2: recipient (address)
+      --      address payable[]
       --  0: 0000000000000000000000000000000000000000000000000000000000000020
       --  1: 0000000000000000000000000000000000000000000000000000000000000002 <===
       --  2: 0000000000000000000000006b175474e89094c44da98b954eedeac495271d0e
@@ -118,8 +125,10 @@ nItems: 2 subType: tuple
       --  6: 00000000000000000000000000000000000000000000001f711def073e900000
       --  7: 0000000000000000000000001719c7dc8216ce67f96171e1a817195ae075d78d
     --2 : 8 : 5 : 1
-    --  0:  -- tuple(struct BulkCheckout.Donation[]) -- {"token":"0x6b175474e89094c44da98b954eedeac495271d0e", "amount":"580000000000000000001", "recipient":"0x1719c7dc8216ce67f96171e1a817195ae075d78e"}
-    --  1:  -- tuple(struct BulkCheckout.Donation[])
+    --  0:  (tuple) = {"token":"0x6b175474e89094c44da98b954eedeac495271d0e", "amount":"580000000000000000001", "recipient":"0x1719c7dc8216ce67f96171e1a817195ae075d78e"}
+    --      struct BulkCheckout.Donation[][token(address) amount(uint256) recipient(address) ]
+    --  1:  (tuple)
+    --      struct BulkCheckout.Donation[][token(address) amount(uint256) recipient(address) ]
     --  0: 0000000000000000000000000000000000000000000000000000000000000020
     --  1: 0000000000000000000000000000000000000000000000000000000000000002 <===
     --  2: 0000000000000000000000006b175474e89094c44da98b954eedeac495271d0e
@@ -129,9 +138,10 @@ nItems: 2 subType: tuple
     --  6: 00000000000000000000000000000000000000000000001f711def073e900000
     --  7: 0000000000000000000000001719c7dc8216ce67f96171e1a817195ae075d78d
       --3 : 8 : 5 : 1
-      --  0: token -- address(address)
-      --  1: amount -- uint256(uint256)
-      --  2: recipient -- address(address payable)
+      --  0: token (address)
+      --  1: amount (uint256)
+      --  2: recipient (address)
+      --      address payable[]
       --  0: 0000000000000000000000000000000000000000000000000000000000000020
       --  1: 0000000000000000000000000000000000000000000000000000000000000002 <===
       --  2: 0000000000000000000000006b175474e89094c44da98b954eedeac495271d0e
@@ -141,9 +151,10 @@ nItems: 2 subType: tuple
       --  6: 00000000000000000000000000000000000000000000001f711def073e900000
       --  7: 0000000000000000000000001719c7dc8216ce67f96171e1a817195ae075d78d
       --3 : 8 : 6 : 1
-      --  0: token -- address(address) -- 0x6b175474e89094c44da98b954eedeac495271d0f
-      --  1: amount -- uint256(uint256)
-      --  2: recipient -- address(address payable)
+      --  0: token (address) = 0x6b175474e89094c44da98b954eedeac495271d0f
+      --  1: amount (uint256)
+      --  2: recipient (address)
+      --      address payable[]
       --  0: 0000000000000000000000000000000000000000000000000000000000000020
       --  1: 0000000000000000000000000000000000000000000000000000000000000002 <===
       --  2: 0000000000000000000000006b175474e89094c44da98b954eedeac495271d0e
@@ -153,9 +164,10 @@ nItems: 2 subType: tuple
       --  6: 00000000000000000000000000000000000000000000001f711def073e900000 <---
       --  7: 0000000000000000000000001719c7dc8216ce67f96171e1a817195ae075d78d
       --3 : 8 : 7 : 1
-      --  0: token -- address(address) -- 0x6b175474e89094c44da98b954eedeac495271d0f
-      --  1: amount -- uint256(uint256) -- 580000000000000000000
-      --  2: recipient -- address(address payable)
+      --  0: token (address) = 0x6b175474e89094c44da98b954eedeac495271d0f
+      --  1: amount (uint256) = 580000000000000000000
+      --  2: recipient (address)
+      --      address payable[]
       --  0: 0000000000000000000000000000000000000000000000000000000000000020
       --  1: 0000000000000000000000000000000000000000000000000000000000000002 <===
       --  2: 0000000000000000000000006b175474e89094c44da98b954eedeac495271d0e

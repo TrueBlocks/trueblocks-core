@@ -480,8 +480,9 @@ void CBaseNode::toJson(ostream& os) const {
 void CBaseNode::toJsonFromFields(ostream& os, const CFieldDataArray& fields) const {
     bool first = true;
     for (auto field : fields) {
-        incIndent();
+        incIndent();  // order matters
         string_q val = getValueByName(field.m_fieldName);
+        bool isTuple = contains(val, "--tuple--");
 
         if (!field.isHidden() && (isApiMode() || !val.empty() || field.isArray())) {
             if (!first)
@@ -493,7 +494,12 @@ void CBaseNode::toJsonFromFields(ostream& os, const CFieldDataArray& fields) con
             os << indent() << doKey(field.m_fieldName);
 
             // the value...
-            if (field.isArray()) {
+            if (isTuple) {
+                replaceReverse(val, "--tuple--", "");
+                val = trim(val, '\"');
+                os << val;
+
+            } else if (field.isArray()) {
                 incIndent();
                 val = getValueByName(field.m_fieldName);
                 if (val.empty()) {
@@ -506,7 +512,7 @@ void CBaseNode::toJsonFromFields(ostream& os, const CFieldDataArray& fields) con
                     os << indent() << "]";
                 }
 
-            } else if (field.isObject()) {
+            } else if (field.isObject() || val == "null") {
                 os << val;
 
             } else if (field.m_fieldType == T_BLOOM) {
@@ -524,16 +530,8 @@ void CBaseNode::toJsonFromFields(ostream& os, const CFieldDataArray& fields) con
                 if (quote)
                     os << "\"";
 
-            } else if (val == "null") {
-                os << val;
-
             } else {
-                if (startsWith(val, "[{\"")) {  // contains(val, "-tuple-")) {
-                    // replaceAll(val, "-tuple-", "");
-                    os << val;
-                } else {
-                    os << "\"" << val << "\"";
-                }
+                os << "\"" << val << "\"";
             }
         }
         decIndent();

@@ -151,20 +151,13 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --ether --sta
     "name": "donate",
     "inputs": [
       {
-        "name": "val_0",
-        "value": "0x0000000000000000000000000000000000000020"
-      },
-      {
-        "name": "val_1",
-        "value": "2"
-      },
-      {
-        "name": "val_2"
+        "name": "_donations",
+        "value": [{"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"9700000000000000000", "dest":"0xf503017d7baf7fbc0fff7492b751025c6a78179b"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"250000000000000000", "dest":"0x00de4b13153673bcae2616b67bf822500d325fc3"}]
       }
     ],
     "outputs": []
   },
-  "compressedTx": "donate ( val_0: 0x0000000000000000000000000000000000000020, val_1: 2, val_2:  )",
+  "compressedTx": "donate ( _donations: [{\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"9700000000000000000\", \"dest\":\"0xf503017d7baf7fbc0fff7492b751025c6a78179b\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"250000000000000000\", \"dest\":\"0x00de4b13153673bcae2616b67bf822500d325fc3\"}] )",
   "statements": [
     {
       "blockNumber": 10277780,
@@ -240,17 +233,17 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --ether --sta
         "value": "0x7d655c57f71464b6f83811c55d84009cd9f5221c"
       },
       {
-        "name": "_value",
+        "name": "_amount",
         "value": "5000000000000000000"
       }
     ],
     "outputs": [
       {
-        "name": "out"
+        "name": "success"
       }
     ]
   },
-  "compressedTx": "approve ( _spender: 0x7d655c57f71464b6f83811c55d84009cd9f5221c, _value: 5000000000000000000 )",
+  "compressedTx": "approve ( _spender: 0x7d655c57f71464b6f83811c55d84009cd9f5221c, _amount: 5000000000000000000 )",
   "statements": [
     {
       "blockNumber": 10279295,
@@ -420,20 +413,13 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --ether --sta
     "name": "donate",
     "inputs": [
       {
-        "name": "val_0",
-        "value": "0x0000000000000000000000000000000000000020"
-      },
-      {
-        "name": "val_1",
-        "value": "2"
-      },
-      {
-        "name": "val_2"
+        "name": "_donations",
+        "value": [{"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"4750000000000000000", "dest":"0xa735cf11ed1228feb7c7bb18673a868455ffb16f"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"250000000000000000", "dest":"0x00de4b13153673bcae2616b67bf822500d325fc3"}]
       }
     ],
     "outputs": []
   },
-  "compressedTx": "donate ( val_0: 0x0000000000000000000000000000000000000020, val_1: 2, val_2:  )",
+  "compressedTx": "donate ( _donations: [{\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"4750000000000000000\", \"dest\":\"0xa735cf11ed1228feb7c7bb18673a868455ffb16f\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"250000000000000000\", \"dest\":\"0x00de4b13153673bcae2616b67bf822500d325fc3\"}] )",
   "statements": [
     {
       "blockNumber": 10279310,
@@ -603,20 +589,13 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --ether --sta
     "name": "donate",
     "inputs": [
       {
-        "name": "val_0",
-        "value": "0x0000000000000000000000000000000000000020"
-      },
-      {
-        "name": "val_1",
-        "value": "2"
-      },
-      {
-        "name": "val_2"
+        "name": "_donations",
+        "value": [{"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"4750000000000000000", "dest":"0xf503017d7baf7fbc0fff7492b751025c6a78179b"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"250000000000000000", "dest":"0x00de4b13153673bcae2616b67bf822500d325fc3"}]
       }
     ],
     "outputs": []
   },
-  "compressedTx": "donate ( val_0: 0x0000000000000000000000000000000000000020, val_1: 2, val_2:  )",
+  "compressedTx": "donate ( _donations: [{\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"4750000000000000000\", \"dest\":\"0xf503017d7baf7fbc0fff7492b751025c6a78179b\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"250000000000000000\", \"dest\":\"0x00de4b13153673bcae2616b67bf822500d325fc3\"}] )",
   "statements": [
     {
       "blockNumber": 10279650,
@@ -744,20 +723,13 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --ether --sta
         "name": "donate",
         "inputs": [
           {
-            "name": "val_0",
-            "value": "0x0000000000000000000000000000000000000020"
-          },
-          {
-            "name": "val_1",
-            "value": "2"
-          },
-          {
-            "name": "val_2"
+            "name": "_donations",
+            "value": [{"token":"0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", "amount":"38000000000000000", "dest":"0xf503017d7baf7fbc0fff7492b751025c6a78179b"}, {"token":"0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", "amount":"2000000000000000", "dest":"0x00de4b13153673bcae2616b67bf822500d325fc3"}]
           }
         ],
         "outputs": []
       },
-      "compressedTrace": "donate ( val_0: 0x0000000000000000000000000000000000000020, val_1: 2, val_2:  )"
+      "compressedTrace": "donate ( _donations: [{\"token\":\"0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee\", \"amount\":\"38000000000000000\", \"dest\":\"0xf503017d7baf7fbc0fff7492b751025c6a78179b\"}, {\"token\":\"0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee\", \"amount\":\"2000000000000000\", \"dest\":\"0x00de4b13153673bcae2616b67bf822500d325fc3\"}] )"
     },
     {
       "type": "call",
@@ -804,20 +776,13 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --ether --sta
     "name": "donate",
     "inputs": [
       {
-        "name": "val_0",
-        "value": "0x0000000000000000000000000000000000000020"
-      },
-      {
-        "name": "val_1",
-        "value": "2"
-      },
-      {
-        "name": "val_2"
+        "name": "_donations",
+        "value": [{"token":"0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", "amount":"38000000000000000", "dest":"0xf503017d7baf7fbc0fff7492b751025c6a78179b"}, {"token":"0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", "amount":"2000000000000000", "dest":"0x00de4b13153673bcae2616b67bf822500d325fc3"}]
       }
     ],
     "outputs": []
   },
-  "compressedTx": "donate ( val_0: 0x0000000000000000000000000000000000000020, val_1: 2, val_2:  )",
+  "compressedTx": "donate ( _donations: [{\"token\":\"0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee\", \"amount\":\"38000000000000000\", \"dest\":\"0xf503017d7baf7fbc0fff7492b751025c6a78179b\"}, {\"token\":\"0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee\", \"amount\":\"2000000000000000\", \"dest\":\"0x00de4b13153673bcae2616b67bf822500d325fc3\"}] )",
   "statements": [
     {
       "blockNumber": 10279931,
@@ -2247,20 +2212,13 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --ether --sta
     "name": "donate",
     "inputs": [
       {
-        "name": "val_0",
-        "value": "0x0000000000000000000000000000000000000020"
-      },
-      {
-        "name": "val_1",
-        "value": "22"
-      },
-      {
-        "name": "val_2"
+        "name": "_donations",
+        "value": [{"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"47500000000000000000", "dest":"0x8df168a41c3a3c6be0e9208d5027ea80f2c5ba25"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"950000000000000000", "dest":"0xf503017d7baf7fbc0fff7492b751025c6a78179b"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"950000000000000000", "dest":"0xb631e8650fb4befdae74ab9f86a9cb65bc134706"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"4750000000000000000", "dest":"0xbbbfc46566e5f0302cef913af8c8f423070ce6a1"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"950000000000000000", "dest":"0xf8049c8425f9eab4e2ae9e1d950f9d3f71481882"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"950000000000000000", "dest":"0x322d58b9e75a6918f7e7849aee0ff09369977e08"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"950000000000000000", "dest":"0xd3e9d60e4e4de615124d5239219f32946d10151d"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"950000000000000000", "dest":"0xd25185f8c3b9e38c3f014378ce58b362db568352"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"950000000000000000", "dest":"0xd25185f8c3b9e38c3f014378ce58b362db568352"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"950000000000000000", "dest":"0x7058decc644317062f90525f4c1489aaf456e6b3"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"4750000000000000000", "dest":"0xa735cf11ed1228feb7c7bb18673a868455ffb16f"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"950000000000000000", "dest":"0x0efe994201e2b0136dd40d5033b5f437e4c5f958"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"4750000000000000000", "dest":"0xfdaae0c5a7a56c8265b9f86cf8cd934a494e3733"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"950000000000000000", "dest":"0xbf2935f259b375ea6714cbd97be767baaa26294c"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"950000000000000000", "dest":"0x2f71129b240080c638ac8d993bff52169e3551c3"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"950000000000000000", "dest":"0x4f2350bc303ca6f01e2777d8c674ac561fdad1de"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"950000000000000000", "dest":"0xd0aee284d4b8ee835c3c4a9e78dc72d360ed453a"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"4750000000000000000", "dest":"0x694c7ca85584d550b36c044e10d3a7b30d85e7f7"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"950000000000000000", "dest":"0x54becc7560a7be76d72ed76a1f5fee6c5a2a7ab6"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"4750000000000000000", "dest":"0x865c2f85c9fea1c6ac7f53de07554d68cb92ed88"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"4750000000000000000", "dest":"0x0115f5ce3f986a35b1edb6f2c3815cebb2461e70"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"4699999999999997500", "dest":"0x00de4b13153673bcae2616b67bf822500d325fc3"}]
       }
     ],
     "outputs": []
   },
-  "compressedTx": "donate ( val_0: 0x0000000000000000000000000000000000000020, val_1: 22, val_2:  )",
+  "compressedTx": "donate ( _donations: [{\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"47500000000000000000\", \"dest\":\"0x8df168a41c3a3c6be0e9208d5027ea80f2c5ba25\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"950000000000000000\", \"dest\":\"0xf503017d7baf7fbc0fff7492b751025c6a78179b\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"950000000000000000\", \"dest\":\"0xb631e8650fb4befdae74ab9f86a9cb65bc134706\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"4750000000000000000\", \"dest\":\"0xbbbfc46566e5f0302cef913af8c8f423070ce6a1\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"950000000000000000\", \"dest\":\"0xf8049c8425f9eab4e2ae9e1d950f9d3f71481882\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"950000000000000000\", \"dest\":\"0x322d58b9e75a6918f7e7849aee0ff09369977e08\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"950000000000000000\", \"dest\":\"0xd3e9d60e4e4de615124d5239219f32946d10151d\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"950000000000000000\", \"dest\":\"0xd25185f8c3b9e38c3f014378ce58b362db568352\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"950000000000000000\", \"dest\":\"0xd25185f8c3b9e38c3f014378ce58b362db568352\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"950000000000000000\", \"dest\":\"0x7058decc644317062f90525f4c1489aaf456e6b3\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"4750000000000000000\", \"dest\":\"0xa735cf11ed1228feb7c7bb18673a868455ffb16f\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"950000000000000000\", \"dest\":\"0x0efe994201e2b0136dd40d5033b5f437e4c5f958\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"4750000000000000000\", \"dest\":\"0xfdaae0c5a7a56c8265b9f86cf8cd934a494e3733\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"950000000000000000\", \"dest\":\"0xbf2935f259b375ea6714cbd97be767baaa26294c\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"950000000000000000\", \"dest\":\"0x2f71129b240080c638ac8d993bff52169e3551c3\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"950000000000000000\", \"dest\":\"0x4f2350bc303ca6f01e2777d8c674ac561fdad1de\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"950000000000000000\", \"dest\":\"0xd0aee284d4b8ee835c3c4a9e78dc72d360ed453a\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"4750000000000000000\", \"dest\":\"0x694c7ca85584d550b36c044e10d3a7b30d85e7f7\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"950000000000000000\", \"dest\":\"0x54becc7560a7be76d72ed76a1f5fee6c5a2a7ab6\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"4750000000000000000\", \"dest\":\"0x865c2f85c9fea1c6ac7f53de07554d68cb92ed88\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"4750000000000000000\", \"dest\":\"0x0115f5ce3f986a35b1edb6f2c3815cebb2461e70\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"4699999999999997500\", \"dest\":\"0x00de4b13153673bcae2616b67bf822500d325fc3\"}] )",
   "statements": [
     {
       "blockNumber": 10280558,
@@ -3310,20 +3268,13 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --ether --sta
     "name": "donate",
     "inputs": [
       {
-        "name": "val_0",
-        "value": "0x0000000000000000000000000000000000000020"
-      },
-      {
-        "name": "val_1",
-        "value": "16"
-      },
-      {
-        "name": "val_2"
+        "name": "_donations",
+        "value": [{"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"285000000000000000000", "dest":"0xc9a872868afa68ba937f65a1c5b4b252dab15d85"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"380000000000000000000", "dest":"0x3e947a271a37ae7b59921c57be0a3246ee0d887c"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"104500000000000000000", "dest":"0x663d3947f03ef5b387992b880ac85940057c13e3"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"285000000000000000000", "dest":"0x00de4b13153673bcae2616b67bf822500d325fc3"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"95000000000000000000", "dest":"0xbcd768c566143714309afe87feb901da7543f470"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"47500000000000000000", "dest":"0xd1933df1c223ad7cb5716b066ca26bc24569e622"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"95000000000000000000", "dest":"0x60e18f4971077412af2bd0297999093642f28e15"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"456000000000000000000", "dest":"0x9b984d5a03980d8dc0a24506c968465424c81dbe"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"380000000000000000000", "dest":"0x8ba1f109551bd432803012645ac136ddd64dba72"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"28500000000000000000", "dest":"0xc95c558daa63b1a79331b2ab4a2a7af375384d3b"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"47500000000000000000", "dest":"0xa19fcdad77c1f0fd184689aca88babcf68010347"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"95000000000000000000", "dest":"0xbcede714283f348ebb3e5cbaf8a947cab3c8be8d"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"19000000000000000000", "dest":"0x3efcf2ddd54d841f253a95d8f30d97123568cd7b"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"28500000000000000000", "dest":"0x7056e70a5ca249ba88e9550eb22caec4c985bb8e"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"28500000000000000000", "dest":"0xf503017d7baf7fbc0fff7492b751025c6a78179b"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"125000000000000000000", "dest":"0x00de4b13153673bcae2616b67bf822500d325fc3"}]
       }
     ],
     "outputs": []
   },
-  "compressedTx": "donate ( val_0: 0x0000000000000000000000000000000000000020, val_1: 16, val_2:  )",
+  "compressedTx": "donate ( _donations: [{\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"285000000000000000000\", \"dest\":\"0xc9a872868afa68ba937f65a1c5b4b252dab15d85\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"380000000000000000000\", \"dest\":\"0x3e947a271a37ae7b59921c57be0a3246ee0d887c\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"104500000000000000000\", \"dest\":\"0x663d3947f03ef5b387992b880ac85940057c13e3\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"285000000000000000000\", \"dest\":\"0x00de4b13153673bcae2616b67bf822500d325fc3\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"95000000000000000000\", \"dest\":\"0xbcd768c566143714309afe87feb901da7543f470\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"47500000000000000000\", \"dest\":\"0xd1933df1c223ad7cb5716b066ca26bc24569e622\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"95000000000000000000\", \"dest\":\"0x60e18f4971077412af2bd0297999093642f28e15\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"456000000000000000000\", \"dest\":\"0x9b984d5a03980d8dc0a24506c968465424c81dbe\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"380000000000000000000\", \"dest\":\"0x8ba1f109551bd432803012645ac136ddd64dba72\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"28500000000000000000\", \"dest\":\"0xc95c558daa63b1a79331b2ab4a2a7af375384d3b\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"47500000000000000000\", \"dest\":\"0xa19fcdad77c1f0fd184689aca88babcf68010347\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"95000000000000000000\", \"dest\":\"0xbcede714283f348ebb3e5cbaf8a947cab3c8be8d\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"19000000000000000000\", \"dest\":\"0x3efcf2ddd54d841f253a95d8f30d97123568cd7b\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"28500000000000000000\", \"dest\":\"0x7056e70a5ca249ba88e9550eb22caec4c985bb8e\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"28500000000000000000\", \"dest\":\"0xf503017d7baf7fbc0fff7492b751025c6a78179b\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"125000000000000000000\", \"dest\":\"0x00de4b13153673bcae2616b67bf822500d325fc3\"}] )",
   "statements": [
     {
       "blockNumber": 10280872,
@@ -3491,20 +3442,13 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --ether --sta
     "name": "donate",
     "inputs": [
       {
-        "name": "val_0",
-        "value": "0x0000000000000000000000000000000000000020"
-      },
-      {
-        "name": "val_1",
-        "value": "2"
-      },
-      {
-        "name": "val_2"
+        "name": "_donations",
+        "value": [{"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"4750000000000000000", "dest":"0xf503017d7baf7fbc0fff7492b751025c6a78179b"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"250000000000000000", "dest":"0x00de4b13153673bcae2616b67bf822500d325fc3"}]
       }
     ],
     "outputs": []
   },
-  "compressedTx": "donate ( val_0: 0x0000000000000000000000000000000000000020, val_1: 2, val_2:  )",
+  "compressedTx": "donate ( _donations: [{\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"4750000000000000000\", \"dest\":\"0xf503017d7baf7fbc0fff7492b751025c6a78179b\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"250000000000000000\", \"dest\":\"0x00de4b13153673bcae2616b67bf822500d325fc3\"}] )",
   "statements": [
     {
       "blockNumber": 10283648,
@@ -4554,20 +4498,13 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --ether --sta
     "name": "donate",
     "inputs": [
       {
-        "name": "val_0",
-        "value": "0x0000000000000000000000000000000000000020"
-      },
-      {
-        "name": "val_1",
-        "value": "16"
-      },
-      {
-        "name": "val_2"
+        "name": "_donations",
+        "value": [{"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"5000000000000000000", "dest":"0x8ba1f109551bd432803012645ac136ddd64dba72"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"5000000000000000000", "dest":"0x00cf36853aa4024fb5bf5cc377dfd85844b411a0"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"5000000000000000000", "dest":"0x00de4b13153673bcae2616b67bf822500d325fc3"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"5000000000000000000", "dest":"0xf503017d7baf7fbc0fff7492b751025c6a78179b"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"5000000000000000000", "dest":"0xe6ec16383e225ae9166ccf1381e25491701f65d5"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"1000000000000000000", "dest":"0x4d37f28d2db99e8d35a6c725a5f1749a085850a3"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"3000000000000000000", "dest":"0x70e47c843e0f6ab0991a3189c28f2957eb6d3842"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"3000000000000000000", "dest":"0x32cefb2dc869bbfe636f7547cda43f561bf88d5a"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"5000000000000000000", "dest":"0xdd4c48c0b24039969fc16d1cdf626eab821d3384"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"1000000000000000000", "dest":"0x9492510bbcb93b6992d8b7bb67888558e12dcac4"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"5000000000000000000", "dest":"0x8bfbb529a9e85fdc4b70a4fcdc0d68bb298b8816"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"1000000000000000000", "dest":"0x396e0dcd35a534975bff6bf044ac0e373a29d231"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"5000000000000000000", "dest":"0x322d58b9e75a6918f7e7849aee0ff09369977e08"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"1000000000000000000", "dest":"0xbcd768c566143714309afe87feb901da7543f470"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"1000000000000000000", "dest":"0x86c91ab19e7a15577b4931ceb3e7de31ba27f844"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"1000000000000000000", "dest":"0x4bf66e52f3009cd138e48f142d47661037160001"}]
       }
     ],
     "outputs": []
   },
-  "compressedTx": "donate ( val_0: 0x0000000000000000000000000000000000000020, val_1: 16, val_2:  )",
+  "compressedTx": "donate ( _donations: [{\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"5000000000000000000\", \"dest\":\"0x8ba1f109551bd432803012645ac136ddd64dba72\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"5000000000000000000\", \"dest\":\"0x00cf36853aa4024fb5bf5cc377dfd85844b411a0\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"5000000000000000000\", \"dest\":\"0x00de4b13153673bcae2616b67bf822500d325fc3\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"5000000000000000000\", \"dest\":\"0xf503017d7baf7fbc0fff7492b751025c6a78179b\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"5000000000000000000\", \"dest\":\"0xe6ec16383e225ae9166ccf1381e25491701f65d5\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"1000000000000000000\", \"dest\":\"0x4d37f28d2db99e8d35a6c725a5f1749a085850a3\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"3000000000000000000\", \"dest\":\"0x70e47c843e0f6ab0991a3189c28f2957eb6d3842\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"3000000000000000000\", \"dest\":\"0x32cefb2dc869bbfe636f7547cda43f561bf88d5a\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"5000000000000000000\", \"dest\":\"0xdd4c48c0b24039969fc16d1cdf626eab821d3384\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"1000000000000000000\", \"dest\":\"0x9492510bbcb93b6992d8b7bb67888558e12dcac4\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"5000000000000000000\", \"dest\":\"0x8bfbb529a9e85fdc4b70a4fcdc0d68bb298b8816\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"1000000000000000000\", \"dest\":\"0x396e0dcd35a534975bff6bf044ac0e373a29d231\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"5000000000000000000\", \"dest\":\"0x322d58b9e75a6918f7e7849aee0ff09369977e08\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"1000000000000000000\", \"dest\":\"0xbcd768c566143714309afe87feb901da7543f470\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"1000000000000000000\", \"dest\":\"0x86c91ab19e7a15577b4931ceb3e7de31ba27f844\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"1000000000000000000\", \"dest\":\"0x4bf66e52f3009cd138e48f142d47661037160001\"}] )",
   "statements": [
     {
       "blockNumber": 10283749,
@@ -6058,20 +5995,13 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --ether --sta
     "name": "donate",
     "inputs": [
       {
-        "name": "val_0",
-        "value": "0x0000000000000000000000000000000000000020"
-      },
-      {
-        "name": "val_1",
-        "value": "23"
-      },
-      {
-        "name": "val_2"
+        "name": "_donations",
+        "value": [{"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"2850000000000000000", "dest":"0xa19fcdad77c1f0fd184689aca88babcf68010347"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"1900000000000000000", "dest":"0x6b3999bb710e92701421c63ae4952301bef0ec98"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"1900000000000000000", "dest":"0x663d3947f03ef5b387992b880ac85940057c13e3"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"2850000000000000000", "dest":"0xcbec15583a21c3ddad5fab658be5b4fe85df730b"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"950000000000000000", "dest":"0x396e0dcd35a534975bff6bf044ac0e373a29d231"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"4750000000000000000", "dest":"0x39e419ba25196794b595b2a595ea8e527ddc9856"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"2850000000000000000", "dest":"0x4bf66e52f3009cd138e48f142d47661037160001"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"2850000000000000000", "dest":"0x8110d1d04ac316fdcace8f24fd60c86b810ab15a"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"2850000000000000000", "dest":"0x8b3765eda5207fb21690874b722ae276b96260e0"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"950000000000000000", "dest":"0x9ac9c636404c8d46d9eb966d7179983ba5a3941a"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"2850000000000000000", "dest":"0xf3047b2b495e31c1e39f198448ae5f382739264a"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"2850000000000000000", "dest":"0x20a5814b73ef3537c6e099a0d45c798f4bd6e1d6"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"2850000000000000000", "dest":"0xc5cdcd5470aef35fc33bddff3f8ecec027f95b1d"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"2850000000000000000", "dest":"0xbbbfc46566e5f0302cef913af8c8f423070ce6a1"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"1900000000000000000", "dest":"0xf503017d7baf7fbc0fff7492b751025c6a78179b"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"1900000000000000000", "dest":"0x66268791b55e1f5fa585d990326519f101407257"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"1900000000000000000", "dest":"0x2c82e14352e98c931852d9bb5f0760e36942cc3c"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"950000000000000000", "dest":"0x7058decc644317062f90525f4c1489aaf456e6b3"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"950000000000000000", "dest":"0x818ff73a5d881c27a945be944973156c01141232"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"1900000000000000000", "dest":"0xb28abfe2c14e2b36f8964ccc7c4dca17cfb95bde"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"950000000000000000", "dest":"0xafdd1eb2511cd891acf2bff82dabf47e0c914d24"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"950000000000000000", "dest":"0x5d7d257d97d8a81f51187a77c6dd226fb8424d90"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"2499999999999999600", "dest":"0x00de4b13153673bcae2616b67bf822500d325fc3"}]
       }
     ],
     "outputs": []
   },
-  "compressedTx": "donate ( val_0: 0x0000000000000000000000000000000000000020, val_1: 23, val_2:  )",
+  "compressedTx": "donate ( _donations: [{\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"2850000000000000000\", \"dest\":\"0xa19fcdad77c1f0fd184689aca88babcf68010347\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"1900000000000000000\", \"dest\":\"0x6b3999bb710e92701421c63ae4952301bef0ec98\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"1900000000000000000\", \"dest\":\"0x663d3947f03ef5b387992b880ac85940057c13e3\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"2850000000000000000\", \"dest\":\"0xcbec15583a21c3ddad5fab658be5b4fe85df730b\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"950000000000000000\", \"dest\":\"0x396e0dcd35a534975bff6bf044ac0e373a29d231\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"4750000000000000000\", \"dest\":\"0x39e419ba25196794b595b2a595ea8e527ddc9856\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"2850000000000000000\", \"dest\":\"0x4bf66e52f3009cd138e48f142d47661037160001\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"2850000000000000000\", \"dest\":\"0x8110d1d04ac316fdcace8f24fd60c86b810ab15a\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"2850000000000000000\", \"dest\":\"0x8b3765eda5207fb21690874b722ae276b96260e0\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"950000000000000000\", \"dest\":\"0x9ac9c636404c8d46d9eb966d7179983ba5a3941a\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"2850000000000000000\", \"dest\":\"0xf3047b2b495e31c1e39f198448ae5f382739264a\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"2850000000000000000\", \"dest\":\"0x20a5814b73ef3537c6e099a0d45c798f4bd6e1d6\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"2850000000000000000\", \"dest\":\"0xc5cdcd5470aef35fc33bddff3f8ecec027f95b1d\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"2850000000000000000\", \"dest\":\"0xbbbfc46566e5f0302cef913af8c8f423070ce6a1\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"1900000000000000000\", \"dest\":\"0xf503017d7baf7fbc0fff7492b751025c6a78179b\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"1900000000000000000\", \"dest\":\"0x66268791b55e1f5fa585d990326519f101407257\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"1900000000000000000\", \"dest\":\"0x2c82e14352e98c931852d9bb5f0760e36942cc3c\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"950000000000000000\", \"dest\":\"0x7058decc644317062f90525f4c1489aaf456e6b3\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"950000000000000000\", \"dest\":\"0x818ff73a5d881c27a945be944973156c01141232\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"1900000000000000000\", \"dest\":\"0xb28abfe2c14e2b36f8964ccc7c4dca17cfb95bde\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"950000000000000000\", \"dest\":\"0xafdd1eb2511cd891acf2bff82dabf47e0c914d24\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"950000000000000000\", \"dest\":\"0x5d7d257d97d8a81f51187a77c6dd226fb8424d90\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"2499999999999999600\", \"dest\":\"0x00de4b13153673bcae2616b67bf822500d325fc3\"}] )",
   "statements": [
     {
       "blockNumber": 10289986,
@@ -6995,20 +6925,13 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --ether --sta
     "name": "donate",
     "inputs": [
       {
-        "name": "val_0",
-        "value": "0x0000000000000000000000000000000000000020"
-      },
-      {
-        "name": "val_1",
-        "value": "14"
-      },
-      {
-        "name": "val_2"
+        "name": "_donations",
+        "value": [{"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"4950000000000000000", "dest":"0x78f3c73f5500335aac51e4c2a79555d176b279da"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"4950000000000000000", "dest":"0xa1b02d8c67b0fdcf4e379855868deb470e169cfb"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"1980000000000000000", "dest":"0x8110d1d04ac316fdcace8f24fd60c86b810ab15a"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"1980000000000000000", "dest":"0x865c2f85c9fea1c6ac7f53de07554d68cb92ed88"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"1980000000000000000", "dest":"0x396e0dcd35a534975bff6bf044ac0e373a29d231"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"1980000000000000000", "dest":"0xf503017d7baf7fbc0fff7492b751025c6a78179b"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"1980000000000000000", "dest":"0x20d08e58952bb70ff0ec1271085ca969c14be2a3"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"1980000000000000000", "dest":"0x70ccbe10f980d80b7ebaab7d2e3a73e87d67b775"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"1980000000000000000", "dest":"0x4bf66e52f3009cd138e48f142d47661037160001"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"1980000000000000000", "dest":"0xb64850fe701fb64667b6cc762aa2c12f2e02193c"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"1980000000000000000", "dest":"0x8296df9a01299ee0a1ae9e5939f1a71998ea26fa"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"1980000000000000000", "dest":"0x90dfc35e747ffcf9631ce75348f99632528e1704"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"1980000000000000000", "dest":"0xc30a7cf3b1a09813f8b843c68b829fffba729c95"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"320000000000000000", "dest":"0x00de4b13153673bcae2616b67bf822500d325fc3"}]
       }
     ],
     "outputs": []
   },
-  "compressedTx": "donate ( val_0: 0x0000000000000000000000000000000000000020, val_1: 14, val_2:  )",
+  "compressedTx": "donate ( _donations: [{\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"4950000000000000000\", \"dest\":\"0x78f3c73f5500335aac51e4c2a79555d176b279da\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"4950000000000000000\", \"dest\":\"0xa1b02d8c67b0fdcf4e379855868deb470e169cfb\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"1980000000000000000\", \"dest\":\"0x8110d1d04ac316fdcace8f24fd60c86b810ab15a\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"1980000000000000000\", \"dest\":\"0x865c2f85c9fea1c6ac7f53de07554d68cb92ed88\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"1980000000000000000\", \"dest\":\"0x396e0dcd35a534975bff6bf044ac0e373a29d231\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"1980000000000000000\", \"dest\":\"0xf503017d7baf7fbc0fff7492b751025c6a78179b\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"1980000000000000000\", \"dest\":\"0x20d08e58952bb70ff0ec1271085ca969c14be2a3\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"1980000000000000000\", \"dest\":\"0x70ccbe10f980d80b7ebaab7d2e3a73e87d67b775\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"1980000000000000000\", \"dest\":\"0x4bf66e52f3009cd138e48f142d47661037160001\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"1980000000000000000\", \"dest\":\"0xb64850fe701fb64667b6cc762aa2c12f2e02193c\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"1980000000000000000\", \"dest\":\"0x8296df9a01299ee0a1ae9e5939f1a71998ea26fa\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"1980000000000000000\", \"dest\":\"0x90dfc35e747ffcf9631ce75348f99632528e1704\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"1980000000000000000\", \"dest\":\"0xc30a7cf3b1a09813f8b843c68b829fffba729c95\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"320000000000000000\", \"dest\":\"0x00de4b13153673bcae2616b67bf822500d325fc3\"}] )",
   "statements": [
     {
       "blockNumber": 10290103,
@@ -7063,13 +6986,13 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --ether --sta
               "value": "0x7d655c57f71464b6f83811c55d84009cd9f5221c"
             },
             {
-              "name": "_value",
+              "name": "_amount",
               "value": "5000000000000000000"
             }
           ],
           "outputs": []
         },
-        "compressedLog": "Approval ( _owner: 0xf503017d7baf7fbc0fff7492b751025c6a78179b, _spender: 0x7d655c57f71464b6f83811c55d84009cd9f5221c, _value: 5000000000000000000 )"
+        "compressedLog": "Approval ( _owner: 0xf503017d7baf7fbc0fff7492b751025c6a78179b, _spender: 0x7d655c57f71464b6f83811c55d84009cd9f5221c, _amount: 5000000000000000000 )"
       }
     ],
     "status": 1
@@ -7083,17 +7006,17 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --ether --sta
         "value": "0x7d655c57f71464b6f83811c55d84009cd9f5221c"
       },
       {
-        "name": "_value",
+        "name": "_amount",
         "value": "5000000000000000000"
       }
     ],
     "outputs": [
       {
-        "name": "out"
+        "name": "success"
       }
     ]
   },
-  "compressedTx": "approve ( _spender: 0x7d655c57f71464b6f83811c55d84009cd9f5221c, _value: 5000000000000000000 )",
+  "compressedTx": "approve ( _spender: 0x7d655c57f71464b6f83811c55d84009cd9f5221c, _amount: 5000000000000000000 )",
   "statements": [
     {
       "blockNumber": 10290317,
@@ -7201,20 +7124,13 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --ether --sta
     "name": "donate",
     "inputs": [
       {
-        "name": "val_0",
-        "value": "0x0000000000000000000000000000000000000020"
-      },
-      {
-        "name": "val_1",
-        "value": "1"
-      },
-      {
-        "name": "val_2"
+        "name": "_donations",
+        "value": [{"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"5000000000000000000", "dest":"0x39e419ba25196794b595b2a595ea8e527ddc9856"}]
       }
     ],
     "outputs": []
   },
-  "compressedTx": "donate ( val_0: 0x0000000000000000000000000000000000000020, val_1: 1, val_2:  )",
+  "compressedTx": "donate ( _donations: [{\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"5000000000000000000\", \"dest\":\"0x39e419ba25196794b595b2a595ea8e527ddc9856\"}] )",
   "statements": [
     {
       "blockNumber": 10290317,
@@ -7570,8 +7486,17 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --ether --sta
     "status": 1
   },
   "traces": [],
-  "articulatedTx": {},
-  "compressedTx": "0x9120491c ( stub: 000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000050000000000000000000000006b175474e89094c44da98b954eedeac495271d0f0000000000000000000000000000000000000000000000000d2f13f7789f0000000000000000000000000000d1a8dd23e356b9fae27df5def9ea025a602ec81e0000000000000000000000006b175474e89094c44da9, stub: 8b954eedeac495271d0f0000000000000000000000000000000000000000000000000d2f13f7789f00000000000000000000000000003b067af83f540cb827825a6ee5480441a4237e770000000000000000000000006b175474e89094c44da98b954eedeac495271d0f0000000000000000000000000000000000000000000000000d2f13f7789f0000000000000000000000000000ed628e601012cc6fd57dc0cede2a527cdc86a221000000000000000000000000, stub: 6b175474e89094c44da98b954eedeac495271d0f0000000000000000000000000000000000000000000000000d2f13f7789f0000000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b0000000000000000000000006b175474e89094c44da98b954eedeac495271d0f00000000000000000000000000000000000000000000000002c68af0bb14000000000000000000000000000000de4b13153673bcae2616b67bf822500d325fc3 )",
+  "articulatedTx": {
+    "name": "donate",
+    "inputs": [
+      {
+        "name": "_donations",
+        "value": [{"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"950000000000000000", "dest":"0xd1a8dd23e356b9fae27df5def9ea025a602ec81e"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"950000000000000000", "dest":"0x3b067af83f540cb827825a6ee5480441a4237e77"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"950000000000000000", "dest":"0xed628e601012cc6fd57dc0cede2a527cdc86a221"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"950000000000000000", "dest":"0xf503017d7baf7fbc0fff7492b751025c6a78179b"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"200000000000000000", "dest":"0x00de4b13153673bcae2616b67bf822500d325fc3"}]
+      }
+    ],
+    "outputs": []
+  },
+  "compressedTx": "donate ( _donations: [{\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"950000000000000000\", \"dest\":\"0xd1a8dd23e356b9fae27df5def9ea025a602ec81e\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"950000000000000000\", \"dest\":\"0x3b067af83f540cb827825a6ee5480441a4237e77\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"950000000000000000\", \"dest\":\"0xed628e601012cc6fd57dc0cede2a527cdc86a221\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"950000000000000000\", \"dest\":\"0xf503017d7baf7fbc0fff7492b751025c6a78179b\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"200000000000000000\", \"dest\":\"0x00de4b13153673bcae2616b67bf822500d325fc3\"}] )",
   "statements": [
     {
       "blockNumber": 10291739,
@@ -7823,8 +7748,17 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --ether --sta
     "status": 1
   },
   "traces": [],
-  "articulatedTx": {},
-  "compressedTx": "0x9120491c ( stub: 000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000020000000000000000000000006b175474e89094c44da98b954eedeac495271d0f00000000000000000000000000000000000000000000000041eb63d55b1b00000000000000000000000000009531c059098e3d194ff87febb587ab07b30b13060000000000000000000000006b175474e89094c44da9, stub: 8b954eedeac495271d0f00000000000000000000000000000000000000000000000003782dace9d9000000000000000000000000000000de4b13153673bcae2616b67bf822500d325fc3 )",
+  "articulatedTx": {
+    "name": "donate",
+    "inputs": [
+      {
+        "name": "_donations",
+        "value": [{"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"4750000000000000000", "dest":"0x9531c059098e3d194ff87febb587ab07b30b1306"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"250000000000000000", "dest":"0x00de4b13153673bcae2616b67bf822500d325fc3"}]
+      }
+    ],
+    "outputs": []
+  },
+  "compressedTx": "donate ( _donations: [{\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"4750000000000000000\", \"dest\":\"0x9531c059098e3d194ff87febb587ab07b30b1306\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"250000000000000000\", \"dest\":\"0x00de4b13153673bcae2616b67bf822500d325fc3\"}] )",
   "statements": [
     {
       "blockNumber": 10292014,
@@ -7951,7 +7885,17 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --ether --sta
         "gasUsed": 35466,
         "output": "0x"
       },
-      "articulatedTrace": {}
+      "articulatedTrace": {
+        "name": "donate",
+        "inputs": [
+          {
+            "name": "_donations",
+            "value": [{"token":"0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", "amount":"190000000000000000", "dest":"0xf503017d7baf7fbc0fff7492b751025c6a78179b"}, {"token":"0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", "amount":"10000000000000002", "dest":"0x00de4b13153673bcae2616b67bf822500d325fc3"}]
+          }
+        ],
+        "outputs": []
+      },
+      "compressedTrace": "donate ( _donations: [{\"token\":\"0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee\", \"amount\":\"190000000000000000\", \"dest\":\"0xf503017d7baf7fbc0fff7492b751025c6a78179b\"}, {\"token\":\"0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee\", \"amount\":\"10000000000000002\", \"dest\":\"0x00de4b13153673bcae2616b67bf822500d325fc3\"}] )"
     },
     {
       "type": "call",
@@ -7994,8 +7938,17 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --ether --sta
       "articulatedTrace": {}
     }
   ],
-  "articulatedTx": {},
-  "compressedTx": "0x9120491c ( stub: 00000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000002000000000000000000000000eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee00000000000000000000000000000000000000000000000002a303fe4b530000000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b000000000000000000000000eeeeeeeeeeeeeeeeeeee, stub: eeeeeeeeeeeeeeeeeeee000000000000000000000000000000000000000000000000002386f26fc1000200000000000000000000000000de4b13153673bcae2616b67bf822500d325fc3 )",
+  "articulatedTx": {
+    "name": "donate",
+    "inputs": [
+      {
+        "name": "_donations",
+        "value": [{"token":"0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", "amount":"190000000000000000", "dest":"0xf503017d7baf7fbc0fff7492b751025c6a78179b"}, {"token":"0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", "amount":"10000000000000002", "dest":"0x00de4b13153673bcae2616b67bf822500d325fc3"}]
+      }
+    ],
+    "outputs": []
+  },
+  "compressedTx": "donate ( _donations: [{\"token\":\"0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee\", \"amount\":\"190000000000000000\", \"dest\":\"0xf503017d7baf7fbc0fff7492b751025c6a78179b\"}, {\"token\":\"0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee\", \"amount\":\"10000000000000002\", \"dest\":\"0x00de4b13153673bcae2616b67bf822500d325fc3\"}] )",
   "statements": [
     {
       "blockNumber": 10292070,
@@ -8161,8 +8114,17 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --ether --sta
     "status": 1
   },
   "traces": [],
-  "articulatedTx": {},
-  "compressedTx": "0x9120491c ( stub: 000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000020000000000000000000000006b175474e89094c44da98b954eedeac495271d0f0000000000000000000000000000000000000000000000029331e6558f0e0000000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b0000000000000000000000006b175474e89094c44da9, stub: 8b954eedeac495271d0f00000000000000000000000000000000000000000000000022b1c8c1227a000000000000000000000000000000de4b13153673bcae2616b67bf822500d325fc3 )",
+  "articulatedTx": {
+    "name": "donate",
+    "inputs": [
+      {
+        "name": "_donations",
+        "value": [{"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"47500000000000000000", "dest":"0xf503017d7baf7fbc0fff7492b751025c6a78179b"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"2500000000000000000", "dest":"0x00de4b13153673bcae2616b67bf822500d325fc3"}]
+      }
+    ],
+    "outputs": []
+  },
+  "compressedTx": "donate ( _donations: [{\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"47500000000000000000\", \"dest\":\"0xf503017d7baf7fbc0fff7492b751025c6a78179b\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"2500000000000000000\", \"dest\":\"0x00de4b13153673bcae2616b67bf822500d325fc3\"}] )",
   "statements": [
     {
       "blockNumber": 10292120,
@@ -8414,8 +8376,17 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --ether --sta
     "status": 1
   },
   "traces": [],
-  "articulatedTx": {},
-  "compressedTx": "0x9120491c ( stub: 000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000020000000000000000000000006b175474e89094c44da98b954eedeac495271d0f00000000000000000000000000000000000000000000000041eb63d55b1b0000000000000000000000000000bc11295936aa79d594139de1b2e12629414f3bdb0000000000000000000000006b175474e89094c44da9, stub: 8b954eedeac495271d0f00000000000000000000000000000000000000000000000003782dace9d9000000000000000000000000000000de4b13153673bcae2616b67bf822500d325fc3 )",
+  "articulatedTx": {
+    "name": "donate",
+    "inputs": [
+      {
+        "name": "_donations",
+        "value": [{"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"4750000000000000000", "dest":"0xbc11295936aa79d594139de1b2e12629414f3bdb"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"250000000000000000", "dest":"0x00de4b13153673bcae2616b67bf822500d325fc3"}]
+      }
+    ],
+    "outputs": []
+  },
+  "compressedTx": "donate ( _donations: [{\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"4750000000000000000\", \"dest\":\"0xbc11295936aa79d594139de1b2e12629414f3bdb\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"250000000000000000\", \"dest\":\"0x00de4b13153673bcae2616b67bf822500d325fc3\"}] )",
   "statements": [
     {
       "blockNumber": 10293554,
@@ -10603,8 +10574,17 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --ether --sta
     "status": 1
   },
   "traces": [],
-  "articulatedTx": {},
-  "compressedTx": "0x9120491c ( stub: 000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000230000000000000000000000006b175474e89094c44da98b954eedeac495271d0f00000000000000000000000000000000000000000000000107ad8f556c6c0000000000000000000000000000663d3947f03ef5b387992b880ac85940057c13e30000000000000000000000006b175474e89094c44da9, stub: 8b954eedeac495271d0f00000000000000000000000000000000000000000000000107ad8f556c6c0000000000000000000000000000a19fcdad77c1f0fd184689aca88babcf680103470000000000000000000000006b175474e89094c44da98b954eedeac495271d0f00000000000000000000000000000000000000000000000083d6c7aab63600000000000000000000000000008df168a41c3a3c6be0e9208d5027ea80f2c5ba25000000000000000000000000, stub: 6b175474e89094c44da98b954eedeac495271d0f00000000000000000000000000000000000000000000000083d6c7aab63600000000000000000000000000006b3999bb710e92701421c63ae4952301bef0ec980000000000000000000000006b175474e89094c44da98b954eedeac495271d0f00000000000000000000000000000000000000000000000083d6c7aab63600000000000000000000000000002f71129b240080c638ac8d993bff52169e3551c30000, stub: 000000000000000000006b175474e89094c44da98b954eedeac495271d0f00000000000000000000000000000000000000000000000107ad8f556c6c0000000000000000000000000000c9a872868afa68ba937f65a1c5b4b252dab15d850000000000000000000000006b175474e89094c44da98b954eedeac495271d0f0000000000000000000000000000000000000000000000029331e6558f0e000000000000000000000000000000de4b13153673bcae2616b6, stub: 7bf822500d325fc30000000000000000000000006b175474e89094c44da98b954eedeac495271d0f00000000000000000000000000000000000000000000000107ad8f556c6c00000000000000000000000000009b984d5a03980d8dc0a24506c968465424c81dbe0000000000000000000000006b175474e89094c44da98b954eedeac495271d0f00000000000000000000000000000000000000000000000083d6c7aab63600000000000000000000000000008ba1, stub: f109551bd432803012645ac136ddd64dba720000000000000000000000006b175474e89094c44da98b954eedeac495271d0f00000000000000000000000000000000000000000000000083d6c7aab6360000000000000000000000000000d1933df1c223ad7cb5716b066ca26bc24569e6220000000000000000000000006b175474e89094c44da98b954eedeac495271d0f00000000000000000000000000000000000000000000000107ad8f556c6c000000000000, stub: 000000000000000000cf36853aa4024fb5bf5cc377dfd85844b411a00000000000000000000000006b175474e89094c44da98b954eedeac495271d0f00000000000000000000000000000000000000000000000083d6c7aab6360000000000000000000000000000322d58b9e75a6918f7e7849aee0ff09369977e080000000000000000000000006b175474e89094c44da98b954eedeac495271d0f00000000000000000000000000000000000000000000000107ad, stub: 8f556c6c0000000000000000000000000000bcede714283f348ebb3e5cbaf8a947cab3c8be8d0000000000000000000000006b175474e89094c44da98b954eedeac495271d0f00000000000000000000000000000000000000000000000083d6c7aab6360000000000000000000000000000cbec15583a21c3ddad5fab658be5b4fe85df730b0000000000000000000000006b175474e89094c44da98b954eedeac495271d0f00000000000000000000000000000000, stub: 000000000000000083d6c7aab6360000000000000000000000000000bc11295936aa79d594139de1b2e12629414f3bdb0000000000000000000000006b175474e89094c44da98b954eedeac495271d0f00000000000000000000000000000000000000000000000083d6c7aab63600000000000000000000000000004f2350bc303ca6f01e2777d8c674ac561fdad1de0000000000000000000000006b175474e89094c44da98b954eedeac495271d0f000000000000, stub: 00000000000000000000000000000000000083d6c7aab6360000000000000000000000000000dd4c48c0b24039969fc16d1cdf626eab821d33840000000000000000000000006b175474e89094c44da98b954eedeac495271d0f00000000000000000000000000000000000000000000000083d6c7aab63600000000000000000000000000004d37f28d2db99e8d35a6c725a5f1749a085850a30000000000000000000000006b175474e89094c44da98b954eedeac4, stub: 95271d0f00000000000000000000000000000000000000000000000083d6c7aab63600000000000000000000000000003e947a271a37ae7b59921c57be0a3246ee0d887c0000000000000000000000006b175474e89094c44da98b954eedeac495271d0f000000000000000000000000000000000000000000000000c5c22b8011510000000000000000000000000000c95c558daa63b1a79331b2ab4a2a7af375384d3b0000000000000000000000006b175474e890, stub: 94c44da98b954eedeac495271d0f00000000000000000000000000000000000000000000000083d6c7aab636000000000000000000000000000003c2bc72a3e007179e54ffb4563cc235bec8151a0000000000000000000000006b175474e89094c44da98b954eedeac495271d0f00000000000000000000000000000000000000000000000041eb63d55b1b000000000000000000000000000043a5c1331375f1f34bd774ecaee51501e9ca2db50000000000000000, stub: 000000006b175474e89094c44da98b954eedeac495271d0f000000000000000000000000000000000000000000000000c5c22b8011510000000000000000000000000000fdaae0c5a7a56c8265b9f86cf8cd934a494e37330000000000000000000000006b175474e89094c44da98b954eedeac495271d0f00000000000000000000000000000000000000000000000083d6c7aab6360000000000000000000000000000865c2f85c9fea1c6ac7f53de07554d68cb92, stub: ed880000000000000000000000006b175474e89094c44da98b954eedeac495271d0f00000000000000000000000000000000000000000000000083d6c7aab636000000000000000000000000000020d08e58952bb70ff0ec1271085ca969c14be2a30000000000000000000000006b175474e89094c44da98b954eedeac495271d0f00000000000000000000000000000000000000000000000041eb63d55b1b0000000000000000000000000000133d705a96968822, stub: 28f6bb7fe008745aef7cdc930000000000000000000000006b175474e89094c44da98b954eedeac495271d0f00000000000000000000000000000000000000000000000083d6c7aab6360000000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b0000000000000000000000006b175474e89094c44da98b954eedeac495271d0f00000000000000000000000000000000000000000000000083d6c7aab636000000000000000000000000, stub: 0000ac2a01c551401340e403dca79fb8b3e3f8d6d94a0000000000000000000000006b175474e89094c44da98b954eedeac495271d0f00000000000000000000000000000000000000000000000107ad8f556c6c000000000000000000000000000070e47c843e0f6ab0991a3189c28f2957eb6d38420000000000000000000000006b175474e89094c44da98b954eedeac495271d0f00000000000000000000000000000000000000000000000041eb63d55b1b0000, stub: 000000000000000000000000a8a4912938549d50ef3e7c698c890e18d73408ee0000000000000000000000006b175474e89094c44da98b954eedeac495271d0f00000000000000000000000000000000000000000000000083d6c7aab636000000000000000000000000000070ccbe10f980d80b7ebaab7d2e3a73e87d67b7750000000000000000000000006b175474e89094c44da98b954eedeac495271d0f00000000000000000000000000000000000000000000, stub: 000083d6c7aab636000000000000000000000000000066268791b55e1f5fa585d990326519f101407257000000000000000000000000eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee000000000000000000000000000000000000000000000000015181ff25a9800000000000000000000000000008497b07916280da27b43d28a0d3dfa7d6676b580000000000000000000000006b175474e89094c44da98b954eedeac495271d0f000000000000000000000000, stub: 00000000000000000000000126e72a69a50d000000000000000000000000000000de4b13153673bcae2616b67bf822500d325fc3000000000000000000000000eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee0000000000000000000000000000000000000000000000000011c37937e0800100000000000000000000000000de4b13153673bcae2616b67bf822500d325fc3 )",
+  "articulatedTx": {
+    "name": "donate",
+    "inputs": [
+      {
+        "name": "_donations",
+        "value": [{"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"19000000000000000000", "dest":"0x663d3947f03ef5b387992b880ac85940057c13e3"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"19000000000000000000", "dest":"0xa19fcdad77c1f0fd184689aca88babcf68010347"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"9500000000000000000", "dest":"0x8df168a41c3a3c6be0e9208d5027ea80f2c5ba25"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"9500000000000000000", "dest":"0x6b3999bb710e92701421c63ae4952301bef0ec98"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"9500000000000000000", "dest":"0x2f71129b240080c638ac8d993bff52169e3551c3"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"19000000000000000000", "dest":"0xc9a872868afa68ba937f65a1c5b4b252dab15d85"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"47500000000000000000", "dest":"0x00de4b13153673bcae2616b67bf822500d325fc3"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"19000000000000000000", "dest":"0x9b984d5a03980d8dc0a24506c968465424c81dbe"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"9500000000000000000", "dest":"0x8ba1f109551bd432803012645ac136ddd64dba72"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"9500000000000000000", "dest":"0xd1933df1c223ad7cb5716b066ca26bc24569e622"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"19000000000000000000", "dest":"0x00cf36853aa4024fb5bf5cc377dfd85844b411a0"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"9500000000000000000", "dest":"0x322d58b9e75a6918f7e7849aee0ff09369977e08"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"19000000000000000000", "dest":"0xbcede714283f348ebb3e5cbaf8a947cab3c8be8d"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"9500000000000000000", "dest":"0xcbec15583a21c3ddad5fab658be5b4fe85df730b"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"9500000000000000000", "dest":"0xbc11295936aa79d594139de1b2e12629414f3bdb"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"9500000000000000000", "dest":"0x4f2350bc303ca6f01e2777d8c674ac561fdad1de"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"9500000000000000000", "dest":"0xdd4c48c0b24039969fc16d1cdf626eab821d3384"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"9500000000000000000", "dest":"0x4d37f28d2db99e8d35a6c725a5f1749a085850a3"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"9500000000000000000", "dest":"0x3e947a271a37ae7b59921c57be0a3246ee0d887c"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"14250000000000000000", "dest":"0xc95c558daa63b1a79331b2ab4a2a7af375384d3b"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"9500000000000000000", "dest":"0x03c2bc72a3e007179e54ffb4563cc235bec8151a"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"4750000000000000000", "dest":"0x43a5c1331375f1f34bd774ecaee51501e9ca2db5"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"14250000000000000000", "dest":"0xfdaae0c5a7a56c8265b9f86cf8cd934a494e3733"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"9500000000000000000", "dest":"0x865c2f85c9fea1c6ac7f53de07554d68cb92ed88"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"9500000000000000000", "dest":"0x20d08e58952bb70ff0ec1271085ca969c14be2a3"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"4750000000000000000", "dest":"0x133d705a9696882228f6bb7fe008745aef7cdc93"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"9500000000000000000", "dest":"0xf503017d7baf7fbc0fff7492b751025c6a78179b"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"9500000000000000000", "dest":"0xac2a01c551401340e403dca79fb8b3e3f8d6d94a"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"19000000000000000000", "dest":"0x70e47c843e0f6ab0991a3189c28f2957eb6d3842"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"4750000000000000000", "dest":"0xa8a4912938549d50ef3e7c698c890e18d73408ee"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"9500000000000000000", "dest":"0x70ccbe10f980d80b7ebaab7d2e3a73e87d67b775"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"9500000000000000000", "dest":"0x66268791b55e1f5fa585d990326519f101407257"}, {"token":"0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", "amount":"95000000000000000", "dest":"0x08497b07916280da27b43d28a0d3dfa7d6676b58"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"21250000000000000000", "dest":"0x00de4b13153673bcae2616b67bf822500d325fc3"}, {"token":"0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", "amount":"5000000000000001", "dest":"0x00de4b13153673bcae2616b67bf822500d325fc3"}]
+      }
+    ],
+    "outputs": []
+  },
+  "compressedTx": "donate ( _donations: [{\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"19000000000000000000\", \"dest\":\"0x663d3947f03ef5b387992b880ac85940057c13e3\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"19000000000000000000\", \"dest\":\"0xa19fcdad77c1f0fd184689aca88babcf68010347\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"9500000000000000000\", \"dest\":\"0x8df168a41c3a3c6be0e9208d5027ea80f2c5ba25\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"9500000000000000000\", \"dest\":\"0x6b3999bb710e92701421c63ae4952301bef0ec98\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"9500000000000000000\", \"dest\":\"0x2f71129b240080c638ac8d993bff52169e3551c3\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"19000000000000000000\", \"dest\":\"0xc9a872868afa68ba937f65a1c5b4b252dab15d85\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"47500000000000000000\", \"dest\":\"0x00de4b13153673bcae2616b67bf822500d325fc3\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"19000000000000000000\", \"dest\":\"0x9b984d5a03980d8dc0a24506c968465424c81dbe\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"9500000000000000000\", \"dest\":\"0x8ba1f109551bd432803012645ac136ddd64dba72\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"9500000000000000000\", \"dest\":\"0xd1933df1c223ad7cb5716b066ca26bc24569e622\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"19000000000000000000\", \"dest\":\"0x00cf36853aa4024fb5bf5cc377dfd85844b411a0\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"9500000000000000000\", \"dest\":\"0x322d58b9e75a6918f7e7849aee0ff09369977e08\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"19000000000000000000\", \"dest\":\"0xbcede714283f348ebb3e5cbaf8a947cab3c8be8d\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"9500000000000000000\", \"dest\":\"0xcbec15583a21c3ddad5fab658be5b4fe85df730b\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"9500000000000000000\", \"dest\":\"0xbc11295936aa79d594139de1b2e12629414f3bdb\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"9500000000000000000\", \"dest\":\"0x4f2350bc303ca6f01e2777d8c674ac561fdad1de\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"9500000000000000000\", \"dest\":\"0xdd4c48c0b24039969fc16d1cdf626eab821d3384\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"9500000000000000000\", \"dest\":\"0x4d37f28d2db99e8d35a6c725a5f1749a085850a3\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"9500000000000000000\", \"dest\":\"0x3e947a271a37ae7b59921c57be0a3246ee0d887c\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"14250000000000000000\", \"dest\":\"0xc95c558daa63b1a79331b2ab4a2a7af375384d3b\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"9500000000000000000\", \"dest\":\"0x03c2bc72a3e007179e54ffb4563cc235bec8151a\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"4750000000000000000\", \"dest\":\"0x43a5c1331375f1f34bd774ecaee51501e9ca2db5\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"14250000000000000000\", \"dest\":\"0xfdaae0c5a7a56c8265b9f86cf8cd934a494e3733\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"9500000000000000000\", \"dest\":\"0x865c2f85c9fea1c6ac7f53de07554d68cb92ed88\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"9500000000000000000\", \"dest\":\"0x20d08e58952bb70ff0ec1271085ca969c14be2a3\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"4750000000000000000\", \"dest\":\"0x133d705a9696882228f6bb7fe008745aef7cdc93\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"9500000000000000000\", \"dest\":\"0xf503017d7baf7fbc0fff7492b751025c6a78179b\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"9500000000000000000\", \"dest\":\"0xac2a01c551401340e403dca79fb8b3e3f8d6d94a\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"19000000000000000000\", \"dest\":\"0x70e47c843e0f6ab0991a3189c28f2957eb6d3842\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"4750000000000000000\", \"dest\":\"0xa8a4912938549d50ef3e7c698c890e18d73408ee\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"9500000000000000000\", \"dest\":\"0x70ccbe10f980d80b7ebaab7d2e3a73e87d67b775\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"9500000000000000000\", \"dest\":\"0x66268791b55e1f5fa585d990326519f101407257\"}, {\"token\":\"0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee\", \"amount\":\"95000000000000000\", \"dest\":\"0x08497b07916280da27b43d28a0d3dfa7d6676b58\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"21250000000000000000\", \"dest\":\"0x00de4b13153673bcae2616b67bf822500d325fc3\"}, {\"token\":\"0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee\", \"amount\":\"5000000000000001\", \"dest\":\"0x00de4b13153673bcae2616b67bf822500d325fc3\"}] )",
   "statements": [
     {
       "blockNumber": 10296720,
@@ -10622,7 +10602,7 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --ether --sta
   "date": "2020-06-19 14:30:01 UTC",
   "ether": 0.100000000000000001
 }
-TIME ~ CLOCK - <INFO>  : Reported 21 of 324 transactions for address 0xf503017d7baf7fbc0fff7492b751025c6a78179b], "types": [
+TIME ~ CLOCK - <INFO>  : Reported 21 of 325 transactions for address 0xf503017d7baf7fbc0fff7492b751025c6a78179b], "types": [
 { "type": "CTransaction", "fields": [{ "name": "hash", "type": "hash" }, { "name": "blockHash", "type": "hash" }, { "name": "blockNumber", "type": "blocknum" }, { "name": "transactionIndex", "type": "blocknum" }, { "name": "timestamp", "type": "timestamp" }, { "name": "from", "type": "address" }, { "name": "to", "type": "address" }, { "name": "value", "type": "wei" }, { "name": "gas", "type": "gas" }, { "name": "gasPrice", "type": "gas" }, { "name": "isError", "type": "unumber" }, { "name": "receipt", "type": "object" }, { "name": "traces", "type": "object|ts_array" }, { "name": "articulatedTx", "type": "object" }, { "name": "compressedTx", "type": "text" }, { "name": "statements", "type": "object|ts_array" }, { "name": "gasCost", "type": "wei" }, { "name": "gasUsed", "type": "gas" }, { "name": "date", "type": "date" }, { "name": "ether", "type": "ether" }] }
 ], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef", "namedFrom": {"0x00de4b13153673bcae2616b67bf822500d325fc3": { "tags": "31-Gitcoin Grants:Grant", "name": "Grant 012 Grant 086 Gitcoin Sustainability Fund", "count": 1 },"0x054993ab0f2b1acc0fdc65405ee203b4271bebe6": { "tags": "00-Active", "name": "Name 0x054993ab", "count": 1 },"0x0b16f058257f43db6ec84a7b3c77766cb808face": { "tags": "31-Gitcoin Grants:Friends", "name": "Name 0x0b16f058", "count": 1 },"0x3564e17d5f6b7c9a3c6bd6248bf7b3eeb4927e50": { "tags": "31-Gitcoin Grants:Friends", "name": "Name 0x3564e17d", "count": 1 },"0x3a051cff039d0ea6964c0f9f01db6e61cc521748": { "tags": "31-Gitcoin Grants:Friends", "name": "Name 0x3a051cff", "count": 1 },"0x4535c6045343de2a1f307b00cae54ba1b42d904c": { "tags": "31-Gitcoin Grants:Friends", "name": "Name 0x4535c604", "count": 1 },"0x4f1b01b761fc9347d5844c49abed5a235d34569e": { "tags": "31-Gitcoin Grants:Friends", "name": "Name 0x4f1b01b7", "count": 1 },"0x5b93ff82faaf241c15997ea3975419dddd8362c5": { "tags": "31-Gitcoin Grants:Friends", "name": "Name 0x5b93ff82", "count": 1 },"0x5ca323d77930c84524e9b06b20c5027ec4e54480": { "tags": "31-Gitcoin Grants:Friends", "name": "Name 0x5ca323d7", "count": 1 },"0x62051bfd3a4f7039a849142e6e5ea172cbda5949": { "tags": "31-Gitcoin Grants:Friends", "name": "Name 0x62051bfd", "count": 1 },"0x6f620ba7907a3d9a6dda9821eeb4e59b3f69c367": { "tags": "31-Gitcoin Grants:Grant", "name": "Grant 864 Dutch Swap Digital Dutch Auctions for Everyone", "count": 1 },"0x89c65d0759a25ca4b4ae0fd1b4827d00018dc931": { "tags": "31-Gitcoin Grants:Friends", "name": "Name 0x89c65d07", "count": 1 },"0xc8d61e23839794b162da78a5c927fd7b2cd92055": { "tags": "31-Gitcoin Grants:Friends", "name": "Name 0xc8d61e23", "count": 1 }}
 , "unNamedFrom": {}, "namedTo": {"0x7d655c57f71464b6f83811c55d84009cd9f5221c": { "tags": "31-Gitcoin Grants:Core", "name": "Gitcoin Round 6", "count": 17 },"0x6b175474e89094c44da98b954eedeac495271d0f": { "tags": "30-Contracts", "name": "Dai Stablecoin", "count": 4 }}
