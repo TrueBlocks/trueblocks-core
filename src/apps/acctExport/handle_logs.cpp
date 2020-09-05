@@ -13,6 +13,8 @@ bool COptions::handle_logs(void) {
 
     ASSERT(!traces && !receipts && !appearances);
     ASSERT(nodeHasBalances(false));
+    SHOW_FIELD(CLogEntry, "blockNumber");
+    SHOW_FIELD(CLogEntry, "transactionIndex");
 
     bool shouldDisplay = !freshen;
 
