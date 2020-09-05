@@ -258,6 +258,17 @@ string_q getReservedCommands(void) {
            "mockData|api_mode|to_file|file";
 }
 
+//---------------------------------------------------------------------------------------
+static const char* CHR_VALID_NAME = "\t\n\r()<>[]{}`\\|;'!$^*~@?&#+%,:=\"";
+//---------------------------------------------------------------------------------------
+bool isValidName(const string_q& fn) {
+    if (fn.empty() || isdigit(fn[0]))
+        return false;
+    string_q test = fn;
+    replaceAny(test, CHR_VALID_NAME, "");
+    return test == fn;
+}
+
 //--------------------------------------------------------------------------------
 bool COptionsBase::standardOptions(string_q& cmdLine) {
     // Note: check each item individual in case more than one appears on the command line
@@ -329,6 +340,8 @@ bool COptionsBase::standardOptions(string_q& cmdLine) {
         temp = nextTokenClear(temp, ' ');
         if (temp.empty())
             return usage("Please provide a filename for the --output option. Quitting...");
+        if (!isValidName(temp))
+            return usage("Please provide a valid filename (" + temp + ") for the --output option. Quitting...");
         zipOnClose = endsWith(temp, ".gz");
         replace(temp, ".gz", "");
         CFilename fn(temp);

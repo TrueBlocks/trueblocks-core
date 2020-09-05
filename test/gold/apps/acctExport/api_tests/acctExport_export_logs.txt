@@ -9,6 +9,10 @@
           "type": "address"
         },
         {
+          "name": "blockNumber",
+          "type": "blocknum"
+        },
+        {
           "name": "logIndex",
           "type": "blocknum"
         },
@@ -27,6 +31,10 @@
         {
           "name": "compressedLog",
           "type": "text"
+        },
+        {
+          "name": "transactionIndex",
+          "type": "blocknum"
         }
       ]
     }
