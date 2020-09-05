@@ -557,7 +557,7 @@ string_q CFunction::getSignature(uint64_t parts) const {
     if (verbose && parts != SIG_CANONICAL) {
         os << (anonymous ? " anonymous" : "");
         os << (constant ? " constant" : "");
-        os << (contains(stateMutability, "payable") ? " payable" : "");
+        os << (contains(substitute(stateMutability, "nonpayable", ""), "payable") ? " payable" : "");
     }
 
     string_q ret = os.str().c_str();
@@ -634,7 +634,9 @@ bool CFunction::fromDefinition(const string_q& lineIn) {
 
     anonymous = contains(intern, "anonymous");
     constant = contains(intern, "constant") || contains(intern, "view");
-    stateMutability = (contains(intern, "payable") ? "payable" : contains(intern, "view") ? "view" : "");
+    stateMutability =
+        (contains(substitute(intern, "nonpayable", ""), "payable") ? "payable"
+                                                                   : contains(intern, "view") ? "view" : "");
     // internals:
     //  external
     //  internal
