@@ -68,14 +68,11 @@ on, cmd,  fast, transactions, tools/getTrans, by_file_1,           n, file:cmd_f
 on, cmd,  fast, transactions, tools/getTrans, by_file_v,           n, file:cmd_file & fmt = json
 on, cmd,  fast, transactions, tools/getTrans, by_file_long_v,      n, file:cmd_file & fmt = json & parity
 
-# 13540,tools,transactions,getTrans,transactions,,,TRUE,FALSE,TRUE,TRUE,local,positional,list<tx_id>,a space-separated list of one or more transaction identifiers (tx_hash&#44; bn.txID&#44; blk_hash.txID)
-# 13560,tools,transactions,getTrans,articulate,a,,FALSE,FALSE,TRUE,TRUE,y es,switch,<boolean>,articulate the transactions if an ABI is found for the 'to' address
-# 13580,tools,transactions,getTrans,trace,t,,FALSE,FALSE,TRUE,TRUE,y es,switch,<boolean>,display the transaction's trace
-# 13600,tools,transactions,getTrans,force,o,,FALSE,FALSE,FALSE,FALSE,y es,switch,<boolean>,force the results into the tx cache
-# 13620,tools,transactions,getTrans,,,,FALSE,FALSE,TRUE,TRUE,na,description,,Retrieve an Ethereum transaction from the local cache or a running node.
+on, both, fast, transactions, tools/getTrans, old_hang_bug,        y, transactions = 6409270.108 & articulate & fmt = json
 
-# COption("transactions", "", "list<tx_id>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)"),
-# COption("articulate", "a", "", OPT_SWITCH, "articulate the transactions if an ABI is found for the 'to' address"),
-# COption("trace", "t", "", OPT_SWITCH, "display the transaction's trace"),
-# COption("force", "o", "", OPT_HIDDEN | OPT_SWITCH, "force the results into the tx cache"),
-# COption("", "", "", OPT_DESCRIPTION, "Retrieve an Ethereum transaction from the local cache or a running node."),
+#COption("transactions", "",  "list<tx_id>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)"),  // NOLINT
+#COption("articulate",   "a", "",            OPT_SWITCH, "articulate the transactions if an ABI is found for the 'to' address"),
+#COption("trace",        "t", "",            OPT_SWITCH, "display the transaction's trace"),
+#COption("force",        "o", "",            OPT_HIDDEN | OPT_SWITCH, "force the results into the tx cache"),
+#COption("uniq",         "u", "",            OPT_SWITCH, "display a list of uniq addresses found in this transaction"),
+#COption("",             "",  "",            OPT_DESCRIPTION, "Retrieve an Ethereum transaction from the local cache or a running node."),

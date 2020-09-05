@@ -69,10 +69,10 @@ size_t decodeTheData(CParameterArray& params, const CStringArray& dataArray, siz
 
     uint64_t nDataItems = dataArray.size();
     if (params.size() > nDataItems) {
-        cerr << "{ \"error\": \"Error encountered in decodeTheData: more params than data items. Ignoring...\" },"
-             << endl;
+        cerr << "{ \"error\": \"decodeTheData: nParams(" << params.size() << ") > nDataItems(" << nDataItems
+             << "). Ignoring...\" }," << endl;
         level--;
-        return 1;
+        return false;
     }
 
     for (auto& param : params) {
@@ -102,13 +102,13 @@ size_t decodeTheData(CParameterArray& params, const CStringArray& dataArray, siz
                 // start of string. Start of string is length of string. Start of string + 1 is the string
                 string_q result;
                 uint64_t dataStart = (str_2_Uint("0x" + dataArray[readIndex++]) / 32);
-                if (dataStart < dataArray.size()) {
+                if (dataStart < nDataItems) {
                     uint64_t nBytes = str_2_Uint("0x" + dataArray[dataStart]);
                     size_t nWords = (nBytes / 32) + 1;
-                    if (nWords <= dataArray.size()) {  // some of the data sent in may be bogus, so we protext ourselves
+                    if (nWords <= nDataItems) {  // some of the data sent in may be bogus, so we protext ourselves
                         for (size_t w = 0; w < nWords; w++) {
                             size_t pos = dataStart + 1 + w;
-                            if (pos < dataArray.size())
+                            if (pos < nDataItems)
                                 result += dataArray[pos].substr(0, nBytes * 2);  // at most 64
                             if (nBytes >= 32)
                                 nBytes -= 32;
@@ -136,28 +136,32 @@ size_t decodeTheData(CParameterArray& params, const CStringArray& dataArray, siz
 
             } else {
                 LOG_WARN("Unknown type: ", param.type, " in decodeTheData");
+                return true;  // we can just skip this
             }
 
         } else {
             if (endsWith(param.type, "[]")) {
                 // ends with type...[]. We need to pick up the size from the data
                 LOG4("array of type...[]");
-                size_t dataStart = str_2_Uint("0x" + dataArray[readIndex]) / 32;
-                if (dataStart < dataArray.size()) {
-                    size_t nItems = str_2_Uint("0x" + dataArray[dataStart]);
+                size_t dataStart = str_2_Uint("0x" + dataArray[readIndex++]) / 32;
+                if (dataStart <= nDataItems) {
                     CParameterArray tmp;
                     CParameter p;
                     p.type = param.type;
                     p.internalType = param.internalType;
                     p.components = param.components;
+                    size_t nItems = str_2_Uint("0x" + dataArray[dataStart]);
                     replaceReverse(p.type, "[]", "[" + uint_2_Str(nItems) + "]");
                     replace(p.type, "bytes[", "bytes32[");
                     tmp.push_back(p);
                     dataStart++;
                     decodeTheData(tmp, dataArray, dataStart, dataStart - 1);
                     param.value = tmp[0].value;
+
+                } else {
+                    LOG_WARN("dataStart(", dataStart, ") larger than nDataItems(", nDataItems, "). Ignoring...");
+                    return false;
                 }
-                readIndex++;
 
             } else {
                 LOG4("array of type...[M]");
@@ -168,25 +172,31 @@ size_t decodeTheData(CParameterArray& params, const CStringArray& dataArray, siz
                 replaceReverse(type, "]", "|");
                 CStringArray parts;
                 explode(parts, type, '|');
-                size_t nItems = str_2_Uint(parts[1]);
                 string_q subType = parts[0];
-                LOG4("nItems: ", nItems, " subType: ", subType);
+
                 CParameterArray tmp;
-                for (size_t i = 0; i < nItems; i++) {
-                    CParameter p;
-                    p.type = subType;
-                    p.internalType = contains(param.internalType, "struct") ? param.internalType : subType;
-                    p.components = param.components;
-                    tmp.push_back(p);
+                size_t nItems = str_2_Uint(parts[1]);
+                if (nItems <= nDataItems) {
+                    for (size_t i = 0; i < nItems; i++) {
+                        CParameter p;
+                        p.type = subType;
+                        p.internalType = contains(param.internalType, "struct") ? param.internalType : subType;
+                        p.components = param.components;
+                        tmp.push_back(p);
+                    }
+                    decodeTheData(tmp, dataArray, readIndex, dStart);
+                    param.value = "[" + params_2_Str(tmp) + "]";
+
+                } else {
+                    LOG_WARN("dataStart(", nItems, ") larger than nDataItems(", nDataItems, "). Ignoring...");
+                    return false;
                 }
-                decodeTheData(tmp, dataArray, readIndex, dStart);
-                param.value = "[" + params_2_Str(tmp) + "]";
             }
         }
     }
 
     level--;
-    return 1;
+    return true;
 }
 
 #define SPEEDY1
