@@ -141,7 +141,7 @@ size_t decodeTheData(CParameterArray& params, const CStringArray& dataArray, siz
         } else {
             if (endsWith(param.type, "[]")) {
                 // ends with type...[]. We need to pick up the size from the data
-                cerr << "array of type...[]" << endl;
+                LOG4("array of type...[]");
                 size_t dataStart = str_2_Uint("0x" + dataArray[readIndex]) / 32;
                 if (dataStart < dataArray.size()) {
                     size_t nItems = str_2_Uint("0x" + dataArray[dataStart]);
@@ -160,7 +160,7 @@ size_t decodeTheData(CParameterArray& params, const CStringArray& dataArray, siz
                 readIndex++;
 
             } else {
-                cerr << "array of type...[M]" << endl;
+                LOG4("array of type...[M]");
                 ASSERT(contains(param.type, "["));
                 ASSERT(contains(param.type, "]"));
                 string_q type = param.type;
@@ -170,12 +170,12 @@ size_t decodeTheData(CParameterArray& params, const CStringArray& dataArray, siz
                 explode(parts, type, '|');
                 size_t nItems = str_2_Uint(parts[1]);
                 string_q subType = parts[0];
-                cerr << "nItems: " << nItems << " subType: " << subType << endl;
+                LOG4("nItems: ", nItems, " subType: ", subType);
                 CParameterArray tmp;
                 for (size_t i = 0; i < nItems; i++) {
                     CParameter p;
                     p.type = subType;
-                    p.internalType = param.internalType;
+                    p.internalType = contains(param.internalType, "struct") ? param.internalType : subType;
                     p.components = param.components;
                     tmp.push_back(p);
                 }

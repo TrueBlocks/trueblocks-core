@@ -97,11 +97,6 @@ bool test_encodings(void) {
     return ret;
 }
 
-//---------------------------------------------------------------------------
-bool sortByFunctionName(const CFunction& f1, const CFunction& f2) {
-    return f1.name < f2.name;
-}
-
 //--------------------------------------------------------------
 bool test_generation(void) {
     CFunction::registerClass();

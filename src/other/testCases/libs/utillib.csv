@@ -39,6 +39,8 @@ on, cmd,  fast, null, utillib/jsonTest,     test_random,    n, val = random & pa
 on, cmd,  fast, null, utillib/jsonTest,     test_spaces,    n, val = spaces
 on, cmd,  fast, null, utillib/jsonTest,     test_traces,    n, val = traces
 
+on, cmd,  fast, null, utillib/loggingTest,  test_logging,   n,
+
 on, cmd,  fast, null, utillib/parsingTest,  README,         n, @th
 on, cmd,  fast, null, utillib/parsingTest,  00,             n, val = 0
 on, cmd,  fast, null, utillib/parsingTest,  01,             n, val = 1

@@ -300,7 +300,7 @@
     {
       "name": "AddedBlackList",
       "type": "event",
-      "stateMutability": "",
+      "stateMutability": "nonpayable",
       "signature": "AddedBlackList(address)",
       "encoding": "0x42e160154868087d6bfdc0ca23d96a1c1cfa32f1b72ba9ba27b69b98a0d819dc",
       "input_names": "_user,",
@@ -309,7 +309,7 @@
     {
       "name": "Approval",
       "type": "event",
-      "stateMutability": "",
+      "stateMutability": "nonpayable",
       "signature": "Approval(address,address,uint256)",
       "encoding": "0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925",
       "input_names": "owner,spender,value,",
@@ -318,7 +318,7 @@
     {
       "name": "Deprecate",
       "type": "event",
-      "stateMutability": "",
+      "stateMutability": "nonpayable",
       "signature": "Deprecate(address)",
       "encoding": "0xcc358699805e9a8b7f77b522628c7cb9abd07d9efb86b6fb616af1609036a99e",
       "input_names": "newAddress,",
@@ -327,7 +327,7 @@
     {
       "name": "DestroyedBlackFunds",
       "type": "event",
-      "stateMutability": "",
+      "stateMutability": "nonpayable",
       "signature": "DestroyedBlackFunds(address,uint256)",
       "encoding": "0x61e6e66b0d6339b2980aecc6ccc0039736791f0ccde9ed512e789a7fbdd698c6",
       "input_names": "_blackListedUser,_balance,",
@@ -336,7 +336,7 @@
     {
       "name": "Issue",
       "type": "event",
-      "stateMutability": "",
+      "stateMutability": "nonpayable",
       "signature": "Issue(uint256)",
       "encoding": "0xcb8241adb0c3fdb35b70c24ce35c5eb0c17af7431c99f827d44a445ca624176a",
       "input_names": "amount,",
@@ -345,7 +345,7 @@
     {
       "name": "Params",
       "type": "event",
-      "stateMutability": "",
+      "stateMutability": "nonpayable",
       "signature": "Params(uint256,uint256)",
       "encoding": "0xb044a1e409eac5c48e5af22d4af52670dd1a99059537a78b31b48c6500a6354e",
       "input_names": "feeBasisPoints,maxFee,",
@@ -354,7 +354,7 @@
     {
       "name": "Pause",
       "type": "event",
-      "stateMutability": "",
+      "stateMutability": "nonpayable",
       "signature": "Pause()",
       "encoding": "0x6985a02210a168e66602d3235cb6db0e70f92b3ba4d376a33c0f3d9434bff625",
       "input_names": "",
@@ -363,7 +363,7 @@
     {
       "name": "Redeem",
       "type": "event",
-      "stateMutability": "",
+      "stateMutability": "nonpayable",
       "signature": "Redeem(uint256)",
       "encoding": "0x702d5967f45f6513a38ffc42d6ba9bf230bd40e8f53b16363c7eb4fd2deb9a44",
       "input_names": "amount,",
@@ -372,7 +372,7 @@
     {
       "name": "RemovedBlackList",
       "type": "event",
-      "stateMutability": "",
+      "stateMutability": "nonpayable",
       "signature": "RemovedBlackList(address)",
       "encoding": "0xd7e9ec6e6ecd65492dce6bf513cd6867560d49544421d0783ddf06e76c24470c",
       "input_names": "_user,",
@@ -381,7 +381,7 @@
     {
       "name": "Transfer",
       "type": "event",
-      "stateMutability": "",
+      "stateMutability": "nonpayable",
       "signature": "Transfer(address,address,uint256)",
       "encoding": "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
       "input_names": "from,to,value,",
@@ -390,7 +390,7 @@
     {
       "name": "Unpause",
       "type": "event",
-      "stateMutability": "",
+      "stateMutability": "nonpayable",
       "signature": "Unpause()",
       "encoding": "0x7805862f689e2f13df9f062ff482ad3ad112aca9e0847911ed832e158c525b33",
       "input_names": "",

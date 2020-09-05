@@ -12,26 +12,17 @@
  *-------------------------------------------------------------------------------------------*/
 #include "etherlib.h"
 
-//----------------------------------------------------------------
-bool visitFile2(const string_q& path, void* data) {
-    if (endsWith(path, '/')) {
-        forEveryFileInFolder(path + "*", visitFile2, data);
-    } else {
-	CStringArray *f = (CStringArray*)data;
-	cout << "adding: " << path << endl;
-	f->push_back(path);
-	}
-	return true;
-}
-
+extern bool visitFile2(const string_q& path, void* data);
 //----------------------------------------------------------------
 int main(int argc, const char* argv[]) {
     etherlib_init(quickQuitHandler);
-	CStringArray files;
+
+    CStringArray files;
 	string_q x = substitute(indexFolder_blooms, "scraper.new", "scraper");
-cout << x << endl;
+    cout << x << endl;
     forEveryFileInFolder(x, visitFile2, &files);
     forEveryFileInFolder(indexFolder_blooms, visitFile, &files);
+
     etherlib_cleanup();
     return 1;
 }
@@ -41,14 +32,14 @@ size_t cnt = 0;
 bool visitFile(const string_q& path, void* data) {
     if (endsWith(path, '/')) {
         forEveryFileInFolder(path + "*", visitFile, data);
-    } else {
-        CBloomArray blooms1;
-        readBloomFromBinary(path, blooms1);
 
-	string_q p = ((CStringArray*)data)->operator[](cnt++);
+    } else {
+        string_q p = ((CStringArray*)data)->operator[](cnt++);
         cout << path << endl;
         cout << p << endl;
 
+        CBloomArray blooms1;
+        readBloomFromBinary(path, blooms1);
         for (auto bloom : blooms1) {
             if (!bloom.isBitLit(0)) {
                 cout << "\tzero nlit: " << bloom.nInserted << "\t\t" << bloom.nBitsHit() << string_q(80, ' ') << endl;
@@ -67,17 +58,28 @@ bool visitFile(const string_q& path, void* data) {
             }
         }
 
-	cout << "\tsize 1: " << blooms1.size() << endl;
-	cout << "\tsize 2: " << blooms2.size() << endl;
-/*
-	for (size_t i = 0 ; i < blooms1.size() ; i++) {
-		if (blooms1[i] != blooms2[i])
-			cout << "differ" << endl;
-		else
-			cout << "same" << endl;
-	}
-*/
+        cout << "\tsize 1: " << blooms1.size() << endl;
+        cout << "\tsize 2: " << blooms2.size() << endl;
+
+        // for (size_t i = 0 ; i < blooms1.size() ; i++) {
+        //     if (blooms1[i] != blooms2[i])
+        //         cout << "differ" << endl;
+        //     else
+        //         cout << "same" << endl;
+        // }
     }
 	cout << endl;
+    return true;
+}
+
+//----------------------------------------------------------------
+bool visitFile2(const string_q& path, void* data) {
+    if (endsWith(path, '/')) {
+        forEveryFileInFolder(path + "*", visitFile2, data);
+    } else {
+    CStringArray *f = (CStringArray*)data;
+    cout << "adding: " << path << endl;
+    f->push_back(path);
+    }
     return true;
 }

@@ -10,7 +10,6 @@ getTrans 3648669.24 --articulate --verbose --trace --fmt json
 --  3: 000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c
 --  4: 0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc
 --  5: 00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573
-array of type...[]
   --1 : 6 : 3 : 2
   --  0:  (bytes32[3])
   --      bytes32[][]
@@ -20,15 +19,10 @@ array of type...[]
   --  3: 000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c <---
   --  4: 0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc
   --  5: 00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573
-array of type...[M]
-nItems: 3 subType: bytes32
     --3 : 6 : 3 : 2
     --  0:  (bytes32)
-    --      bytes32[][]
     --  1:  (bytes32)
-    --      bytes32[][]
     --  2:  (bytes32)
-    --      bytes32[][]
     --  0: 0000000000000000000000000000000000000000000000000000000000000040
     --  1: cb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811
     --  2: 0000000000000000000000000000000000000000000000000000000000000003 <===
@@ -37,11 +31,8 @@ nItems: 3 subType: bytes32
     --  5: 00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573
     --3 : 6 : 4 : 2
     --  0:  (bytes32) = 0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c
-    --      bytes32[][]
     --  1:  (bytes32)
-    --      bytes32[][]
     --  2:  (bytes32)
-    --      bytes32[][]
     --  0: 0000000000000000000000000000000000000000000000000000000000000040
     --  1: cb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811
     --  2: 0000000000000000000000000000000000000000000000000000000000000003 <===
@@ -50,11 +41,8 @@ nItems: 3 subType: bytes32
     --  5: 00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573
     --3 : 6 : 5 : 2
     --  0:  (bytes32) = 0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c
-    --      bytes32[][]
     --  1:  (bytes32) = 0x0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc
-    --      bytes32[][]
     --  2:  (bytes32)
-    --      bytes32[][]
     --  0: 0000000000000000000000000000000000000000000000000000000000000040
     --  1: cb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811
     --  2: 0000000000000000000000000000000000000000000000000000000000000003 <===
@@ -79,7 +67,6 @@ nItems: 3 subType: bytes32
 --  3: 000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c
 --  4: 0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc
 --  5: 00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573
-array of type...[]
   --1 : 6 : 3 : 2
   --  0:  (bytes32[3])
   --      bytes32[][]
@@ -89,15 +76,10 @@ array of type...[]
   --  3: 000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c <---
   --  4: 0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc
   --  5: 00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573
-array of type...[M]
-nItems: 3 subType: bytes32
     --3 : 6 : 3 : 2
     --  0:  (bytes32)
-    --      bytes32[][]
     --  1:  (bytes32)
-    --      bytes32[][]
     --  2:  (bytes32)
-    --      bytes32[][]
     --  0: 0000000000000000000000000000000000000000000000000000000000000040
     --  1: cb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811
     --  2: 0000000000000000000000000000000000000000000000000000000000000003 <===
@@ -106,11 +88,8 @@ nItems: 3 subType: bytes32
     --  5: 00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573
     --3 : 6 : 4 : 2
     --  0:  (bytes32) = 0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c
-    --      bytes32[][]
     --  1:  (bytes32)
-    --      bytes32[][]
     --  2:  (bytes32)
-    --      bytes32[][]
     --  0: 0000000000000000000000000000000000000000000000000000000000000040
     --  1: cb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811
     --  2: 0000000000000000000000000000000000000000000000000000000000000003 <===
@@ -119,11 +98,8 @@ nItems: 3 subType: bytes32
     --  5: 00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573
     --3 : 6 : 5 : 2
     --  0:  (bytes32) = 0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c
-    --      bytes32[][]
     --  1:  (bytes32) = 0x0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc
-    --      bytes32[][]
     --  2:  (bytes32)
-    --      bytes32[][]
     --  0: 0000000000000000000000000000000000000000000000000000000000000040
     --  1: cb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811
     --  2: 0000000000000000000000000000000000000000000000000000000000000003 <===
@@ -166,7 +142,7 @@ nItems: 3 subType: bytes32
           "data": "0x000000000000000000000000000000000000000000000000000000005911a79a",
           "articulatedLog": {
             "name": "AuctionStarted",
-            "stateMutability": "",
+            "stateMutability": "nonpayable",
             "inputs": [
               {
                 "name": "hash",
@@ -194,7 +170,7 @@ nItems: 3 subType: bytes32
           "data": "0x000000000000000000000000000000000000000000000000000000005911a79a",
           "articulatedLog": {
             "name": "AuctionStarted",
-            "stateMutability": "",
+            "stateMutability": "nonpayable",
             "inputs": [
               {
                 "name": "hash",
@@ -222,7 +198,7 @@ nItems: 3 subType: bytes32
           "data": "0x000000000000000000000000000000000000000000000000000000005911a79a",
           "articulatedLog": {
             "name": "AuctionStarted",
-            "stateMutability": "",
+            "stateMutability": "nonpayable",
             "inputs": [
               {
                 "name": "hash",
@@ -251,7 +227,7 @@ nItems: 3 subType: bytes32
           "data": "0x000000000000000000000000000000000000000000000000002386f26fc10000",
           "articulatedLog": {
             "name": "NewBid",
-            "stateMutability": "",
+            "stateMutability": "nonpayable",
             "inputs": [
               {
                 "name": "hash",
@@ -300,7 +276,7 @@ nItems: 3 subType: bytes32
         },
         "articulatedTrace": {
           "name": "startAuctionsAndBid",
-          "stateMutability": "",
+          "stateMutability": "payable",
           "inputs": [
             {
               "name": "hashes",
@@ -339,7 +315,7 @@ nItems: 3 subType: bytes32
         },
         "articulatedTrace": {
           "name": "owner",
-          "stateMutability": "",
+          "stateMutability": "payable",
           "inputs": [
             {
               "name": "node",
@@ -380,7 +356,7 @@ nItems: 3 subType: bytes32
         },
         "articulatedTrace": {
           "name": "owner",
-          "stateMutability": "",
+          "stateMutability": "payable",
           "inputs": [
             {
               "name": "node",
@@ -403,7 +379,7 @@ nItems: 3 subType: bytes32
     ],
     "articulatedTx": {
       "name": "startAuctionsAndBid",
-      "stateMutability": "",
+      "stateMutability": "payable",
       "inputs": [
         {
           "name": "hashes",

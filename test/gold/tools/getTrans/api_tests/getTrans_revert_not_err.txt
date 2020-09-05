@@ -225,7 +225,7 @@
           },
           "articulatedTrace": {
             "name": "balanceOf",
-            "stateMutability": "",
+            "stateMutability": "nonpayable",
             "inputs": [
               {
                 "name": "_owner",
@@ -266,7 +266,7 @@
           },
           "articulatedTrace": {
             "name": "balanceOf",
-            "stateMutability": "",
+            "stateMutability": "nonpayable",
             "inputs": [
               {
                 "name": "_owner",
@@ -307,7 +307,7 @@
           },
           "articulatedTrace": {
             "name": "balanceOf",
-            "stateMutability": "",
+            "stateMutability": "nonpayable",
             "inputs": [
               {
                 "name": "_owner",
@@ -348,7 +348,7 @@
           },
           "articulatedTrace": {
             "name": "balanceOf",
-            "stateMutability": "",
+            "stateMutability": "nonpayable",
             "inputs": [
               {
                 "name": "_owner",
@@ -389,7 +389,7 @@
           },
           "articulatedTrace": {
             "name": "balanceOf",
-            "stateMutability": "",
+            "stateMutability": "nonpayable",
             "inputs": [
               {
                 "name": "_owner",

@@ -540,8 +540,12 @@ void removeDuplicateEncodings(CAbiArray& abis) {
     abis[j++] = abis[n - 1];
 }
 
-CStringArray removes = {"internal", "virtual", "memory", "private", "external", "pure", "calldata"};
+static const CStringArray removes = {"internal", "virtual", "memory", "private", "external", "pure", "calldata"};
 
+static bool ofInterest(const string_q& line) {
+    return (contains(line, "contract") || contains(line, "interface") || contains(line, "library") ||
+            contains(line, "struct") || contains(line, "function") || contains(line, "event"));
+}
 /*
 public
 private
@@ -754,10 +758,14 @@ bool sol_2_Abi(CAbi& abi, const string_q& addr) {
     CStringArray lines;
     explode(lines, contents, '\n');
     for (auto line : lines) {
-        if (contains(line, "function ") || contains(line, "event ")) {
-            CFunction func;
-            func.fromDefinition(line);
-            abi.interfaces.push_back(func);
+        if (ofInterest(line)) {
+            if (isTestMode())
+                cerr << line << endl;
+            if (contains(line, "function ") || contains(line, "event ")) {
+                CFunction func;
+                func.fromDefinition(line);
+                abi.interfaces.push_back(func);
+            }
         }
     }
 

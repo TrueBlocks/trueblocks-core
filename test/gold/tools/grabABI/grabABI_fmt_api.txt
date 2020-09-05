@@ -3,12 +3,14 @@ grabABI 0xe94327d07fc17907b4db788e5adf2ed424addff6 --fmt api
 {"data": [
 {
   "type": "constructor",
+  "stateMutability": "payable",
   "signature": "(address,uint256,address)",
   "input_names": "_legacyRepContract,_amountUsedToFreeze,_accountToSendFrozenRepTo,"
 },
 {
   "name": "allowance",
   "type": "function",
+  "stateMutability": "payable",
   "signature": "allowance(address,address)",
   "encoding": "0xdd62ed3e",
   "input_names": "_owner,_spender,",
@@ -17,6 +19,7 @@ grabABI 0xe94327d07fc17907b4db788e5adf2ed424addff6 --fmt api
 {
   "name": "approve",
   "type": "function",
+  "stateMutability": "payable",
   "signature": "approve(address,uint256)",
   "encoding": "0x095ea7b3",
   "input_names": "_spender,_value,",
@@ -25,6 +28,7 @@ grabABI 0xe94327d07fc17907b4db788e5adf2ed424addff6 --fmt api
 {
   "name": "balanceOf",
   "type": "function",
+  "stateMutability": "payable",
   "signature": "balanceOf(address)",
   "encoding": "0x70a08231",
   "input_names": "_owner,",
@@ -33,6 +37,7 @@ grabABI 0xe94327d07fc17907b4db788e5adf2ed424addff6 --fmt api
 {
   "name": "decimals",
   "type": "function",
+  "stateMutability": "payable",
   "signature": "decimals()",
   "encoding": "0x313ce567",
   "output_names": "val_0,"
@@ -40,6 +45,7 @@ grabABI 0xe94327d07fc17907b4db788e5adf2ed424addff6 --fmt api
 {
   "name": "initialized",
   "type": "function",
+  "stateMutability": "payable",
   "signature": "initialized()",
   "encoding": "0x158ef93e",
   "output_names": "val_0,"
@@ -47,6 +53,7 @@ grabABI 0xe94327d07fc17907b4db788e5adf2ed424addff6 --fmt api
 {
   "name": "legacyRepContract",
   "type": "function",
+  "stateMutability": "payable",
   "signature": "legacyRepContract()",
   "encoding": "0xb85e0aca",
   "output_names": "val_0,"
@@ -54,6 +61,7 @@ grabABI 0xe94327d07fc17907b4db788e5adf2ed424addff6 --fmt api
 {
   "name": "migrateBalance",
   "type": "function",
+  "stateMutability": "payable",
   "signature": "migrateBalance(address)",
   "encoding": "0x2988e36b",
   "input_names": "_holder,",
@@ -62,6 +70,7 @@ grabABI 0xe94327d07fc17907b4db788e5adf2ed424addff6 --fmt api
 {
   "name": "migrateBalances",
   "type": "function",
+  "stateMutability": "payable",
   "signature": "migrateBalances(address[])",
   "encoding": "0x4b92738e",
   "input_names": "_holders,",
@@ -70,6 +79,7 @@ grabABI 0xe94327d07fc17907b4db788e5adf2ed424addff6 --fmt api
 {
   "name": "name",
   "type": "function",
+  "stateMutability": "payable",
   "signature": "name()",
   "encoding": "0x06fdde03",
   "output_names": "val_0,"
@@ -77,6 +87,7 @@ grabABI 0xe94327d07fc17907b4db788e5adf2ed424addff6 --fmt api
 {
   "name": "owner",
   "type": "function",
+  "stateMutability": "payable",
   "signature": "owner()",
   "encoding": "0x8da5cb5b",
   "output_names": "val_0,"
@@ -84,6 +95,7 @@ grabABI 0xe94327d07fc17907b4db788e5adf2ed424addff6 --fmt api
 {
   "name": "pause",
   "type": "function",
+  "stateMutability": "payable",
   "signature": "pause()",
   "encoding": "0x8456cb59",
   "output_names": "val_0,"
@@ -91,6 +103,7 @@ grabABI 0xe94327d07fc17907b4db788e5adf2ed424addff6 --fmt api
 {
   "name": "paused",
   "type": "function",
+  "stateMutability": "payable",
   "signature": "paused()",
   "encoding": "0x5c975abb",
   "output_names": "val_0,"
@@ -98,6 +111,7 @@ grabABI 0xe94327d07fc17907b4db788e5adf2ed424addff6 --fmt api
 {
   "name": "symbol",
   "type": "function",
+  "stateMutability": "payable",
   "signature": "symbol()",
   "encoding": "0x95d89b41",
   "output_names": "val_0,"
@@ -105,6 +119,7 @@ grabABI 0xe94327d07fc17907b4db788e5adf2ed424addff6 --fmt api
 {
   "name": "targetSupply",
   "type": "function",
+  "stateMutability": "payable",
   "signature": "targetSupply()",
   "encoding": "0x2a1eafd9",
   "output_names": "val_0,"
@@ -112,6 +127,7 @@ grabABI 0xe94327d07fc17907b4db788e5adf2ed424addff6 --fmt api
 {
   "name": "totalSupply",
   "type": "function",
+  "stateMutability": "payable",
   "signature": "totalSupply()",
   "encoding": "0x18160ddd",
   "output_names": "val_0,"
@@ -119,6 +135,7 @@ grabABI 0xe94327d07fc17907b4db788e5adf2ed424addff6 --fmt api
 {
   "name": "transfer",
   "type": "function",
+  "stateMutability": "payable",
   "signature": "transfer(address,uint256)",
   "encoding": "0xa9059cbb",
   "input_names": "_to,_value,",
@@ -127,6 +144,7 @@ grabABI 0xe94327d07fc17907b4db788e5adf2ed424addff6 --fmt api
 {
   "name": "transferFrom",
   "type": "function",
+  "stateMutability": "payable",
   "signature": "transferFrom(address,address,uint256)",
   "encoding": "0x23b872dd",
   "input_names": "_from,_to,_value,",
@@ -135,6 +153,7 @@ grabABI 0xe94327d07fc17907b4db788e5adf2ed424addff6 --fmt api
 {
   "name": "transferOwnership",
   "type": "function",
+  "stateMutability": "payable",
   "signature": "transferOwnership(address)",
   "encoding": "0xf2fde38b",
   "input_names": "newOwner,"
@@ -142,6 +161,7 @@ grabABI 0xe94327d07fc17907b4db788e5adf2ed424addff6 --fmt api
 {
   "name": "unpause",
   "type": "function",
+  "stateMutability": "payable",
   "signature": "unpause()",
   "encoding": "0x3f4ba83a",
   "output_names": "val_0,"
@@ -149,6 +169,7 @@ grabABI 0xe94327d07fc17907b4db788e5adf2ed424addff6 --fmt api
 {
   "name": "Approval",
   "type": "event",
+  "stateMutability": "nonpayable",
   "signature": "Approval(address,address,uint256)",
   "encoding": "0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925",
   "input_names": "owner,spender,value,"
@@ -156,6 +177,7 @@ grabABI 0xe94327d07fc17907b4db788e5adf2ed424addff6 --fmt api
 {
   "name": "Migrated",
   "type": "event",
+  "stateMutability": "nonpayable",
   "signature": "Migrated(address,uint256)",
   "encoding": "0x8b80bd19aea7b735bc6d75db8d6adbe18b28c30d62b3555245eb67b2340caedc",
   "input_names": "holder,amount,"
@@ -163,12 +185,14 @@ grabABI 0xe94327d07fc17907b4db788e5adf2ed424addff6 --fmt api
 {
   "name": "Pause",
   "type": "event",
+  "stateMutability": "nonpayable",
   "signature": "Pause()",
   "encoding": "0x6985a02210a168e66602d3235cb6db0e70f92b3ba4d376a33c0f3d9434bff625"
 },
 {
   "name": "Transfer",
   "type": "event",
+  "stateMutability": "nonpayable",
   "signature": "Transfer(address,address,uint256)",
   "encoding": "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
   "input_names": "from,to,value,"
@@ -176,6 +200,7 @@ grabABI 0xe94327d07fc17907b4db788e5adf2ed424addff6 --fmt api
 {
   "name": "Unpause",
   "type": "event",
+  "stateMutability": "nonpayable",
   "signature": "Unpause()",
   "encoding": "0x7805862f689e2f13df9f062ff482ad3ad112aca9e0847911ed832e158c525b33"
 }], "types": [

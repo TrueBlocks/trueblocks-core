@@ -228,7 +228,7 @@
     {
       "name": "Approval",
       "type": "event",
-      "stateMutability": "",
+      "stateMutability": "nonpayable",
       "signature": "Approval(address,address,uint256)",
       "encoding": "0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925",
       "input_names": "owner,spender,value,",
@@ -237,7 +237,7 @@
     {
       "name": "Mint",
       "type": "event",
-      "stateMutability": "",
+      "stateMutability": "nonpayable",
       "signature": "Mint(address,uint256)",
       "encoding": "0x0f6798a560793a54c3bcfe86a93cde1e73087d944c0ea20544137d4121396885",
       "input_names": "to,amount,",
@@ -246,7 +246,7 @@
     {
       "name": "MintFinished",
       "type": "event",
-      "stateMutability": "",
+      "stateMutability": "nonpayable",
       "signature": "MintFinished()",
       "encoding": "0xae5184fba832cb2b1f702aca6117b8d265eaf03ad33eb133f19dde0f5920fa08",
       "input_names": "",
@@ -255,7 +255,7 @@
     {
       "name": "OwnershipTransferred",
       "type": "event",
-      "stateMutability": "",
+      "stateMutability": "nonpayable",
       "signature": "OwnershipTransferred(address,address)",
       "encoding": "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0",
       "input_names": "previousOwner,newOwner,",
@@ -264,7 +264,7 @@
     {
       "name": "Transfer",
       "type": "event",
-      "stateMutability": "",
+      "stateMutability": "nonpayable",
       "signature": "Transfer(address,address,uint256)",
       "encoding": "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
       "input_names": "from,to,value,",

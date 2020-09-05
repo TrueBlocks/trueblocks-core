@@ -30,7 +30,6 @@ class CFunction : public CBaseNode {
     string_q type;
     bool anonymous;
     bool constant;
-    bool payable;
     string_q stateMutability;
     string_q signature;
     string_q encoding;
@@ -54,7 +53,7 @@ class CFunction : public CBaseNode {
     bool showOutput;
     bool isBuiltIn;
     string_q origName;
-    explicit CFunction(const string_q& n) : name(n), anonymous(false), constant(false), payable(false) {
+    explicit CFunction(const string_q& n) : name(n), anonymous(false), constant(false) {
     }
     string_q getSignature(uint64_t parts) const;
     string_q encodeItem(void) const;
@@ -122,7 +121,6 @@ inline void CFunction::initialize(void) {
     type = "";
     anonymous = false;
     constant = false;
-    payable = false;
     stateMutability = "";
     signature = "";
     encoding = "";
@@ -147,7 +145,6 @@ inline void CFunction::duplicate(const CFunction& fu) {
     type = fu.type;
     anonymous = fu.anonymous;
     constant = fu.constant;
-    payable = fu.payable;
     stateMutability = fu.stateMutability;
     signature = fu.signature;
     encoding = fu.encoding;
@@ -201,5 +198,9 @@ extern const char* STR_DISPLAY_FUNCTION;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
+//---------------------------------------------------------------------------
+inline bool sortByFunctionName(const CFunction& f1, const CFunction& f2) {
+    return f1.name < f2.name;
+}
 // EXISTING_CODE
 }  // namespace qblocks

@@ -48,7 +48,7 @@ getTrans 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f8
         },
         "articulatedTrace": {
           "name": "transferFrom",
-          "stateMutability": "",
+          "stateMutability": "nonpayable",
           "inputs": [
             {
               "name": "_from",
@@ -83,7 +83,7 @@ getTrans 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f8
     ],
     "articulatedTx": {
       "name": "transferFrom",
-      "stateMutability": "",
+      "stateMutability": "nonpayable",
       "inputs": [
         {
           "name": "_from",
@@ -145,7 +145,7 @@ getTrans 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f8
           "data": "0x000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000004432e910757d1000000000000000000000000000000000000000000000000015af1d78b58c40000",
           "articulatedLog": {
             "name": "CancelRequest",
-            "stateMutability": "",
+            "stateMutability": "nonpayable",
             "inputs": [
               {
                 "name": "_key",
@@ -200,7 +200,7 @@ getTrans 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f8
         },
         "articulatedTrace": {
           "name": "cancelExistingRequest",
-          "stateMutability": "",
+          "stateMutability": "nonpayable",
           "inputs": [
             {
               "name": "_key",
@@ -215,7 +215,7 @@ getTrans 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f8
     ],
     "articulatedTx": {
       "name": "cancelExistingRequest",
-      "stateMutability": "",
+      "stateMutability": "nonpayable",
       "inputs": [
         {
           "name": "_key",
@@ -271,7 +271,7 @@ getTrans 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f8
         },
         "articulatedTrace": {
           "name": "split",
-          "stateMutability": "",
+          "stateMutability": "nonpayable",
           "inputs": [
             {
               "name": "targetFork",
@@ -292,7 +292,7 @@ getTrans 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f8
     ],
     "articulatedTx": {
       "name": "split",
-      "stateMutability": "",
+      "stateMutability": "nonpayable",
       "inputs": [
         {
           "name": "targetFork",

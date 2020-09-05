@@ -4,7 +4,6 @@ fields = string name|\
         string type|\
         sbool anonymous|\
         sbool constant|\
-        sbool payable|\
         string stateMutability|\
         string signature|\
         string encoding|\

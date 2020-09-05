@@ -128,11 +128,6 @@ string_q CFunction::getValueByName(const string_q& fieldName) const {
                 return retS;
             }
             break;
-        case 'p':
-            if (fieldName % "payable") {
-                return bool_2_Str_t(payable);
-            }
-            break;
         case 's':
             if (fieldName % "stateMutability") {
                 return stateMutability;
@@ -191,6 +186,8 @@ bool CFunction::setValueByName(const string_q& fieldNameIn, const string_q& fiel
             item = CParameter();  // reset
         }
         return true;
+    } else if (fieldName % "payable") {
+        stateMutability += "payable";
     }
     // EXISTING_CODE
 
@@ -251,12 +248,6 @@ bool CFunction::setValueByName(const string_q& fieldNameIn, const string_q& fiel
                 return true;
             }
             break;
-        case 'p':
-            if (fieldName % "payable") {
-                payable = str_2_Bool(fieldValue);
-                return true;
-            }
-            break;
         case 's':
             if (fieldName % "stateMutability") {
                 stateMutability = fieldValue;
@@ -284,11 +275,20 @@ void CFunction::finishParse() {
     // EXISTING_CODE
     signature = getSignature(SIG_CANONICAL);
     encoding = encodeItem();
-    // The input parameters need to have a name. If not, we provide one
+    if (stateMutability.empty())
+        stateMutability = "nonpayable";
+    // The parameters need to have a name. If not, we provide one
     int cnt = 0;
-    for (size_t i = 0; i < inputs.size(); i++) {
-        if (inputs[i].name.empty())
-            inputs.at(i).name = "val_" + int_2_Str(cnt++);  // the non-const reference already exists
+    for (auto& input : inputs) {
+        if (input.name.empty())
+            input.name = "val_" + int_2_Str(cnt++);
+        input.finishParse();
+    }
+    cnt = 0;
+    for (auto& output : outputs) {
+        if (output.name.empty())
+            output.name = "out_" + int_2_Str(cnt++);
+        output.finishParse();
     }
     // EXISTING_CODE
 }
@@ -310,7 +310,6 @@ bool CFunction::Serialize(CArchive& archive) {
     archive >> type;
     archive >> anonymous;
     archive >> constant;
-    archive >> payable;
     archive >> stateMutability;
     archive >> signature;
     archive >> encoding;
@@ -333,7 +332,6 @@ bool CFunction::SerializeC(CArchive& archive) const {
     archive << type;
     archive << anonymous;
     archive << constant;
-    archive << payable;
     archive << stateMutability;
     archive << signature;
     archive << encoding;
@@ -381,7 +379,6 @@ void CFunction::registerClass(void) {
     ADD_FIELD(CFunction, "type", T_TEXT, ++fieldNum);
     ADD_FIELD(CFunction, "anonymous", T_BOOL, ++fieldNum);
     ADD_FIELD(CFunction, "constant", T_BOOL, ++fieldNum);
-    ADD_FIELD(CFunction, "payable", T_BOOL, ++fieldNum);
     ADD_FIELD(CFunction, "stateMutability", T_TEXT, ++fieldNum);
     ADD_FIELD(CFunction, "signature", T_TEXT, ++fieldNum);
     ADD_FIELD(CFunction, "encoding", T_TEXT, ++fieldNum);
@@ -449,7 +446,6 @@ string_q nextFunctionChunk_custom(const string_q& fieldIn, const void* dataPtr) 
                     return ret;
                 }
                 break;
-
             case 'o':
                 if (fieldIn % "origName") {
                     return fun->origName;
@@ -561,7 +557,7 @@ string_q CFunction::getSignature(uint64_t parts) const {
     if (verbose && parts != SIG_CANONICAL) {
         os << (anonymous ? " anonymous" : "");
         os << (constant ? " constant" : "");
-        os << (payable ? " payable" : "");
+        os << (contains(stateMutability, "payable") ? " payable" : "");
     }
 
     string_q ret = os.str().c_str();
@@ -638,7 +634,7 @@ bool CFunction::fromDefinition(const string_q& lineIn) {
 
     anonymous = contains(intern, "anonymous");
     constant = contains(intern, "constant") || contains(intern, "view");
-    payable = contains(intern, "payable");
+    stateMutability = (contains(intern, "payable") ? "payable" : contains(intern, "view") ? "view" : "");
     // internals:
     //  external
     //  internal
@@ -665,7 +661,7 @@ bool CFunction::fromDefinition(const string_q& lineIn) {
         inputs.push_back(param);
     }
 
-    outStr = substitute(substitute(substitute(substitute(outStr, "(", ""), ")", ""), "memory", ""), "calldata", "");
+    outStr = substitute(substitute(outStr, "(", ""), ")", "");
     cnt = 0;
     CStringArray outputArray;
     explode(outputArray, outStr, ',');
@@ -676,6 +672,7 @@ bool CFunction::fromDefinition(const string_q& lineIn) {
             param.name = "ret_" + uint_2_Str(cnt++);
         outputs.push_back(param);
     }
+
     finishParse();
     return true;
 }

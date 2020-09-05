@@ -58,7 +58,6 @@ abiTest2
 --  5: 0000000000000000000000006b175474e89094c44da98b954eedeac495271d0f
 --  6: 00000000000000000000000000000000000000000000001f711def073e900000
 --  7: 0000000000000000000000001719c7dc8216ce67f96171e1a817195ae075d78d
-array of type...[]
   --1 : 8 : 2 : 1
   --  0:  (tuple[2])
   --      struct BulkCheckout.Donation[][token(address) amount(uint256) recipient(address) ]
@@ -70,8 +69,6 @@ array of type...[]
   --  5: 0000000000000000000000006b175474e89094c44da98b954eedeac495271d0f
   --  6: 00000000000000000000000000000000000000000000001f711def073e900000
   --  7: 0000000000000000000000001719c7dc8216ce67f96171e1a817195ae075d78d
-array of type...[M]
-nItems: 2 subType: tuple
     --2 : 8 : 2 : 1
     --  0:  (tuple)
     --      struct BulkCheckout.Donation[][token(address) amount(uint256) recipient(address) ]
@@ -257,7 +254,6 @@ nItems: 2 subType: tuple
 }
 
 , {
-  "payable": true,
   "inputs": []
 }
 
@@ -1392,7 +1388,6 @@ nItems: 2 subType: tuple
 
 , {
   "name": "deposit",
-  "payable": true,
   "inputs": [
     {
       "name": "_payee"
@@ -1402,7 +1397,6 @@ nItems: 2 subType: tuple
 
 , {
   "name": "deposit",
-  "payable": true,
   "inputs": [
     {
       "name": "refundee"
@@ -1485,7 +1479,6 @@ nItems: 2 subType: tuple
 
 , {
   "name": "donate",
-  "payable": true,
   "inputs": [
     {
       "name": "_donations",
@@ -1585,7 +1578,6 @@ nItems: 2 subType: tuple
 
 , {
   "name": "ethJoin_join",
-  "payable": true,
   "inputs": [
     {
       "name": "apt"
@@ -1704,7 +1696,6 @@ nItems: 2 subType: tuple
 
 , {
   "name": "foo",
-  "payable": true,
   "inputs": []
 }
 
@@ -3789,7 +3780,6 @@ nItems: 2 subType: tuple
 
 , {
   "name": "receive",
-  "payable": true,
   "inputs": []
 }
 
@@ -4009,7 +3999,6 @@ nItems: 2 subType: tuple
 
 , {
   "name": "sendHalf",
-  "payable": true,
   "inputs": [
     {
       "name": "addr"

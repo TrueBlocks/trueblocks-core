@@ -259,20 +259,22 @@ bool sortByFuncName(const CFunction& f1, const CFunction& f2) {
 void COptions::convertFromSol(const address_t& a) {
     CAbi abi;
     sol_2_Abi(abi, a);
-    bool first1 = true;
+    sort(abi.interfaces.begin(), abi.interfaces.end(), sortByFunctionName);
+    GETRUNTIME_CLASS(CFunction)->sortFieldList();
+    GETRUNTIME_CLASS(CParameter)->sortFieldList();
+    if (isTestMode()) {
+        HIDE_FIELD(CParameter, "is_array");
+        HIDE_FIELD(CParameter, "is_builtin");
+        HIDE_FIELD(CParameter, "is_minimal");
+        HIDE_FIELD(CParameter, "is_object");
+        HIDE_FIELD(CParameter, "is_pointer");
+        HIDE_FIELD(CParameter, "no_write");
+        HIDE_FIELD(CParameter, "str_default");
+        HIDE_FIELD(CParameter, "value");
+    }
     expContext().spcs = 2;
     ostringstream os;
-    os << "[" << endl;
-    incIndent();
-    for (auto func : abi.interfaces) {
-        if (!first1)
-            os << ",";
-        os << endl;
-        os << "\n    " << func;
-        first1 = false;
-    }
-    decIndent();
-    os << endl << "]" << endl;
+    abi.doExport(os);
     ::remove((a + ".json").c_str());
     stringToAsciiFile(a + ".json", os.str());
     isRaw = false;
