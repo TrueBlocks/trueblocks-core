@@ -777,7 +777,7 @@
     {
       "name": "ethToTokenTransferOutput",
       "type": "function",
-      "stateMutability": "nonpayable",
+      "stateMutability": "payable",
       "signature": "ethToTokenTransferOutput(uint256,uint256,address)",
       "encoding": "0x0b573638",
       "input_names": "tokens_bought,deadline,recipient,",
@@ -3981,7 +3981,7 @@
     {
       "name": "addLiquidity",
       "type": "function",
-      "stateMutability": "nonpayable",
+      "stateMutability": "payable",
       "signature": "addLiquidity(uint256,uint256,uint256)",
       "encoding": "0x422f1043",
       "input_names": "min_liquidity,max_tokens,deadline,",
@@ -6456,7 +6456,7 @@
     {
       "name": "ethToTokenSwapOutput",
       "type": "function",
-      "stateMutability": "nonpayable",
+      "stateMutability": "payable",
       "signature": "ethToTokenSwapOutput(uint256,uint256)",
       "encoding": "0x6b1d4db7",
       "input_names": "tokens_bought,deadline,",
@@ -7914,7 +7914,7 @@
     {
       "name": "__default__",
       "type": "function",
-      "stateMutability": "nonpayable",
+      "stateMutability": "payable",
       "signature": "__default__()",
       "encoding": "0x89402a72",
       "input_names": "",
@@ -10020,7 +10020,7 @@
     {
       "name": "ethToTokenTransferInput",
       "type": "function",
-      "stateMutability": "nonpayable",
+      "stateMutability": "payable",
       "signature": "ethToTokenTransferInput(uint256,uint256,address)",
       "encoding": "0xad65d76d",
       "input_names": "min_tokens,deadline,recipient,",
@@ -11892,7 +11892,7 @@
     {
       "name": "newBid",
       "type": "function",
-      "stateMutability": "nonpayable",
+      "stateMutability": "payable",
       "signature": "newBid(bytes32)",
       "encoding": "0xce92dced",
       "input_names": "sealedBid,",
@@ -13809,7 +13809,7 @@
     {
       "name": "ethToTokenSwapInput",
       "type": "function",
-      "stateMutability": "nonpayable",
+      "stateMutability": "payable",
       "signature": "ethToTokenSwapInput(uint256,uint256)",
       "encoding": "0xf39b5b9b",
       "input_names": "min_tokens,deadline,",
@@ -14538,7 +14538,7 @@
     {
       "name": "startAuctionsAndBid",
       "type": "function",
-      "stateMutability": "nonpayable",
+      "stateMutability": "payable",
       "signature": "startAuctionsAndBid(bytes32[],bytes32)",
       "encoding": "0xfebefd61",
       "input_names": "hashes,sealedBid,",

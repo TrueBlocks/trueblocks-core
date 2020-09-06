@@ -186,7 +186,7 @@ bool CFunction::setValueByName(const string_q& fieldNameIn, const string_q& fiel
             item = CParameter();  // reset
         }
         return true;
-    } else if (fieldName % "payable") {
+    } else if (fieldName % "payable" && fieldValue == "true") {
         stateMutability += "payable";
     }
     // EXISTING_CODE
