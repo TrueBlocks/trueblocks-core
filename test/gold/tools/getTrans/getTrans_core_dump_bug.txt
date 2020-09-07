@@ -144,7 +144,7 @@ getTrans 0xa5c9c1a65f998be86dc2131d57d0de0c418bb534d8d2b37b46c99888ccef8d10 -avt
         },
         "articulatedTrace": {
           "name": "postData",
-          "stateMutability": "payable",
+          "stateMutability": "nonpayable",
           "inputs": [
             {
               "name": "recipient",
@@ -171,7 +171,7 @@ getTrans 0xa5c9c1a65f998be86dc2131d57d0de0c418bb534d8d2b37b46c99888ccef8d10 -avt
     ],
     "articulatedTx": {
       "name": "postData",
-      "stateMutability": "payable",
+      "stateMutability": "nonpayable",
       "inputs": [
         {
           "name": "recipient",

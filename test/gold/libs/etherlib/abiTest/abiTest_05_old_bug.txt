@@ -1464,7 +1464,7 @@ ABI of test2.json
 ------------------------------------------------------------------------------------------------------------------------
 {
   "type": "constructor",
-  "stateMutability": "payable",
+  "stateMutability": "nonpayable",
   "signature": "(address,bytes32,uint256)",
   "inputs": [
     {
@@ -1774,7 +1774,7 @@ ABI of test2.json
 {
   "name": "cancelBid",
   "type": "function",
-  "stateMutability": "payable",
+  "stateMutability": "nonpayable",
   "signature": "cancelBid(address,bytes32)",
   "encoding": "0x2525f5c1",
   "inputs": [
@@ -1797,7 +1797,7 @@ ABI of test2.json
   "name": "ens",
   "type": "function",
   "constant": true,
-  "stateMutability": "payable",
+  "stateMutability": "nonpayable",
   "signature": "ens()",
   "encoding": "0x3f15457f",
   "inputs": [],
@@ -1814,7 +1814,7 @@ ABI of test2.json
   "name": "entries",
   "type": "function",
   "constant": true,
-  "stateMutability": "payable",
+  "stateMutability": "nonpayable",
   "signature": "entries(bytes32)",
   "encoding": "0x267b6922",
   "inputs": [
@@ -1861,7 +1861,7 @@ ABI of test2.json
 {
   "name": "finalizeAuction",
   "type": "function",
-  "stateMutability": "payable",
+  "stateMutability": "nonpayable",
   "signature": "finalizeAuction(bytes32)",
   "encoding": "0x983b94fb",
   "inputs": [
@@ -1877,7 +1877,7 @@ ABI of test2.json
 {
   "name": "invalidateName",
   "type": "function",
-  "stateMutability": "payable",
+  "stateMutability": "nonpayable",
   "signature": "invalidateName(string)",
   "encoding": "0x15f73331",
   "inputs": [
@@ -1910,7 +1910,7 @@ ABI of test2.json
   "name": "owner",
   "type": "function",
   "constant": true,
-  "stateMutability": "payable",
+  "stateMutability": "nonpayable",
   "signature": "owner(bytes32)",
   "encoding": "0x02571be3",
   "inputs": [
@@ -1934,7 +1934,7 @@ ABI of test2.json
   "name": "registryStarted",
   "type": "function",
   "constant": true,
-  "stateMutability": "payable",
+  "stateMutability": "nonpayable",
   "signature": "registryStarted()",
   "encoding": "0x9c67f06f",
   "inputs": [],
@@ -1950,7 +1950,7 @@ ABI of test2.json
 {
   "name": "releaseDeed",
   "type": "function",
-  "stateMutability": "payable",
+  "stateMutability": "nonpayable",
   "signature": "releaseDeed(bytes32)",
   "encoding": "0x0230a07c",
   "inputs": [
@@ -1967,7 +1967,7 @@ ABI of test2.json
   "name": "resolver",
   "type": "function",
   "constant": true,
-  "stateMutability": "payable",
+  "stateMutability": "nonpayable",
   "signature": "resolver(bytes32)",
   "encoding": "0x0178b8bf",
   "inputs": [
@@ -1991,7 +1991,7 @@ ABI of test2.json
   "name": "rootNode",
   "type": "function",
   "constant": true,
-  "stateMutability": "payable",
+  "stateMutability": "nonpayable",
   "signature": "rootNode()",
   "encoding": "0xfaff50a8",
   "inputs": [],
@@ -2008,7 +2008,7 @@ ABI of test2.json
   "name": "sealedBids",
   "type": "function",
   "constant": true,
-  "stateMutability": "payable",
+  "stateMutability": "nonpayable",
   "signature": "sealedBids(address,bytes32)",
   "encoding": "0x5e431709",
   "inputs": [
@@ -2037,7 +2037,7 @@ ABI of test2.json
 {
   "name": "setOwner",
   "type": "function",
-  "stateMutability": "payable",
+  "stateMutability": "nonpayable",
   "signature": "setOwner(bytes32,address)",
   "encoding": "0x5b0fc9c3",
   "inputs": [
@@ -2059,7 +2059,7 @@ ABI of test2.json
 {
   "name": "setResolver",
   "type": "function",
-  "stateMutability": "payable",
+  "stateMutability": "nonpayable",
   "signature": "setResolver(bytes32,address)",
   "encoding": "0x1896f70a",
   "inputs": [
@@ -2081,7 +2081,7 @@ ABI of test2.json
 {
   "name": "setSubnodeOwner",
   "type": "function",
-  "stateMutability": "payable",
+  "stateMutability": "nonpayable",
   "signature": "setSubnodeOwner(bytes32,bytes32,address)",
   "encoding": "0x06ab5923",
   "inputs": [
@@ -2109,7 +2109,7 @@ ABI of test2.json
 {
   "name": "setTTL",
   "type": "function",
-  "stateMutability": "payable",
+  "stateMutability": "nonpayable",
   "signature": "setTTL(bytes32,uint64)",
   "encoding": "0x14ab9038",
   "inputs": [
@@ -2132,7 +2132,7 @@ ABI of test2.json
   "name": "shaBid",
   "type": "function",
   "constant": true,
-  "stateMutability": "payable",
+  "stateMutability": "nonpayable",
   "signature": "shaBid(bytes32,address,uint256,bytes32)",
   "encoding": "0x22ec1244",
   "inputs": [
@@ -2173,7 +2173,7 @@ ABI of test2.json
 {
   "name": "startAuction",
   "type": "function",
-  "stateMutability": "payable",
+  "stateMutability": "nonpayable",
   "signature": "startAuction(bytes32)",
   "encoding": "0xede8acdb",
   "inputs": [
@@ -2189,7 +2189,7 @@ ABI of test2.json
 {
   "name": "startAuctions",
   "type": "function",
-  "stateMutability": "payable",
+  "stateMutability": "nonpayable",
   "signature": "startAuctions(bytes32[])",
   "encoding": "0xe27fe50f",
   "inputs": [
@@ -2206,7 +2206,7 @@ ABI of test2.json
   "name": "state",
   "type": "function",
   "constant": true,
-  "stateMutability": "payable",
+  "stateMutability": "nonpayable",
   "signature": "state(bytes32)",
   "encoding": "0x61d585da",
   "inputs": [
@@ -2229,7 +2229,7 @@ ABI of test2.json
 {
   "name": "transfer",
   "type": "function",
-  "stateMutability": "payable",
+  "stateMutability": "nonpayable",
   "signature": "transfer(bytes32,address)",
   "encoding": "0x79ce9fac",
   "inputs": [
@@ -2251,7 +2251,7 @@ ABI of test2.json
 {
   "name": "transferRegistrars",
   "type": "function",
-  "stateMutability": "payable",
+  "stateMutability": "nonpayable",
   "signature": "transferRegistrars(bytes32)",
   "encoding": "0x5ddae283",
   "inputs": [
@@ -2268,7 +2268,7 @@ ABI of test2.json
   "name": "ttl",
   "type": "function",
   "constant": true,
-  "stateMutability": "payable",
+  "stateMutability": "nonpayable",
   "signature": "ttl(bytes32)",
   "encoding": "0x16a25cbd",
   "inputs": [
@@ -2291,7 +2291,7 @@ ABI of test2.json
 {
   "name": "unsealBid",
   "type": "function",
-  "stateMutability": "payable",
+  "stateMutability": "nonpayable",
   "signature": "unsealBid(bytes32,address,uint256,bytes32)",
   "encoding": "0xaefc8c72",
   "inputs": [

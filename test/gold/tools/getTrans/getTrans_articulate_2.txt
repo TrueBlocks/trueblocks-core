@@ -315,7 +315,7 @@ getTrans 3648669.24 --articulate --verbose --trace --fmt json
         },
         "articulatedTrace": {
           "name": "owner",
-          "stateMutability": "payable",
+          "stateMutability": "nonpayable",
           "inputs": [
             {
               "name": "node",
@@ -356,7 +356,7 @@ getTrans 3648669.24 --articulate --verbose --trace --fmt json
         },
         "articulatedTrace": {
           "name": "owner",
-          "stateMutability": "payable",
+          "stateMutability": "nonpayable",
           "inputs": [
             {
               "name": "node",

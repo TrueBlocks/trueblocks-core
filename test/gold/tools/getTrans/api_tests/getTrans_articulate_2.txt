@@ -205,7 +205,7 @@
           },
           "articulatedTrace": {
             "name": "owner",
-            "stateMutability": "payable",
+            "stateMutability": "nonpayable",
             "inputs": [
               {
                 "name": "node",
@@ -246,7 +246,7 @@
           },
           "articulatedTrace": {
             "name": "owner",
-            "stateMutability": "payable",
+            "stateMutability": "nonpayable",
             "inputs": [
               {
                 "name": "node",
