@@ -11,7 +11,6 @@
 bool COptions::handle_accounting(void) {
     ENTER("handle_accounting");
 
-    ASSERT(!traces && !receipts && !appearances);
     ASSERT(nodeHasBalances(false));
 
     bool shouldDisplay = !freshen;

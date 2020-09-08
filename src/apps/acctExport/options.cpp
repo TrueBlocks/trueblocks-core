@@ -348,6 +348,11 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
+    if (logs) {
+        SHOW_FIELD(CLogEntry, "blockNumber");
+        SHOW_FIELD(CLogEntry, "transactionIndex");
+    }
+
     EXIT_NOMSG(true);
 }
 
