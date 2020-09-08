@@ -52,22 +52,29 @@ string_q CCurlContext::getCurlID(void) {
 #ifdef DEBUG_RPC
 #define PRINT(msg)                                                                                                     \
     if (debugging) {                                                                                                   \
-        cerr << string_q(120, '-') << "\n"                                                                             \
-             << "." << msg << "\n";                                                                                    \
-        cerr << cGreen << "\tresult: " << cOff << "\t[" << substitute(result, "\n", " ") << "]\n";                     \
-        cerr << cGreen << "\tearlyAbort: " << cOff << "\t" << earlyAbort << "\n";                                      \
-        cerr << cGreen << "\tcurlID: " << cOff << "\t" << getCurlID() << "\n";                                         \
+        cout.flush();                                                                                                  \
+        cerr.flush();                                                                                                  \
+        string_q res = substitute(result, "\n", " ");                                                                  \
+        cerr << string_q(50, '-') << endl;                                                                             \
+        cerr << msg << endl;                                                                                           \
+        cerr << cGreen << "\tresult: " << cOff << "\t[" << res << "]" << endl;                                         \
+        cerr << cGreen << "\tearlyAbort: " << cOff << "\t" << earlyAbort << endl;                                      \
+        cerr << cGreen << "\tcurlID: " << cOff << "\t" << getCurlID() << endl;                                         \
     }
 
 #define PRINTQ(msg)                                                                                                    \
     if (data->debugging) {                                                                                             \
-        cerr << string_q(120, '-') << "\n"                                                                             \
-             << "." << msg << "\n";                                                                                    \
+        cout.flush();                                                                                                  \
+        cerr.flush();                                                                                                  \
+        cerr << string_q(50, '-') << endl;                                                                             \
+        cerr << "." << msg << endl;                                                                                    \
     }
 
 #define PRINTL(msg)                                                                                                    \
     if (debugging) {                                                                                                   \
-        cerr << string_q(120, '-') << "\n";                                                                            \
+        cout.flush();                                                                                                  \
+        cerr.flush();                                                                                                  \
+        cerr << string_q(50, '-') << endl;                                                                             \
         PRINT(msg);                                                                                                    \
     }
 #else  // DEBUG_RPC
@@ -271,7 +278,7 @@ size_t writeCallback(char* ptr, size_t size, size_t nmemb, void* userdata) {
     CCurlContext* data = (CCurlContext*)userdata;  // NOLINT
     data->result += s;
 
-    PRINTQ("data->result ==> " + string_q(s));
+    // PRINTQ("data->result ==> " + string_q(s));
 
     if (data && data->curlNoteFunc)
         if (!(*data->curlNoteFunc)(ptr, size, nmemb, userdata))  // returns zero if it wants us to stop
