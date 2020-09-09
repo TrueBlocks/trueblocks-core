@@ -180,8 +180,9 @@ bool COptions::handle_logs(void) {
         }
     }
 
-    LOG_PROGRESS1("Reported", (first_record + nExported), nTransactions,
-                  " transactions for address " + monitors[0].address + "\r");
+    if (!isTestMode())
+        LOG_PROGRESS1("Reported", (first_record + nExported), nTransactions,
+                      " transactions for address " + monitors[0].address + "\r");
 
     for (auto monitor : monitors)
         if (items.size() > 0)

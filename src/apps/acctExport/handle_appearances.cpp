@@ -32,8 +32,9 @@ bool COptions::hanlde_appearances(void) {
         }
     }
 
-    LOG_PROGRESS1("Reported", (first_record + nExported), nTransactions,
-                  " appearances for address " + monitors[0].address + "\r");
+    if (!isTestMode())
+        LOG_PROGRESS1("Reported", (first_record + nExported), nTransactions,
+                      " appearances for address " + monitors[0].address + "\r");
 
     EXIT_NOMSG(true);
 }

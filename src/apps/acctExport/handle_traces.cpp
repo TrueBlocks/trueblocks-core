@@ -138,8 +138,9 @@ bool COptions::handle_traces(void) {
         }
     }
 
-    LOG_PROGRESS1("Reported", (first_record + nExported), nTransactions,
-                  " traces for address " + monitors[0].address + "\r");
+    if (!isTestMode())
+        LOG_PROGRESS1("Reported", (first_record + nExported), nTransactions,
+                      " traces for address " + monitors[0].address + "\r");
 
     for (auto monitor : monitors)
         if (items.size() > 0)
