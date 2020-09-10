@@ -55,9 +55,21 @@ string_q CCurlContext::getCurlID(void) {
         cout.flush();                                                                                                  \
         cerr.flush();                                                                                                  \
         string_q res = substitute(result, "\n", " ");                                                                  \
+        replaceAll(res, "{", "\n{\n");                                                                                 \
+        replaceAll(res, "}", "\n}\n");                                                                                 \
+        replaceAll(res, "[", "\n[\n");                                                                                 \
+        replaceAll(res, "]", "\n]\n");                                                                                 \
+        replaceAll(res, ",", "\n");                                                                                    \
         cerr << string_q(50, '-') << endl;                                                                             \
         cerr << msg << endl;                                                                                           \
-        cerr << cGreen << "\tresult: " << cOff << "\t[" << res << "]" << endl;                                         \
+        CStringArray lines;                                                                                            \
+        explode(lines, res, '\n');                                                                                     \
+        sort(lines.begin(), lines.end());                                                                              \
+        cerr << cGreen << "\tresult:\n" << cOff;                                                                       \
+        for (auto line : lines) {                                                                                      \
+            if (!line.empty())                                                                                         \
+                cerr << "\t  " << line << endl;                                                                        \
+        }                                                                                                              \
         cerr << cGreen << "\tearlyAbort: " << cOff << "\t" << earlyAbort << endl;                                      \
         cerr << cGreen << "\tcurlID: " << cOff << "\t" << getCurlID() << endl;                                         \
     }
@@ -222,9 +234,7 @@ string_q CCurlContext::perform(const string_q& method, const string_q& params, b
         return result;
     }
 
-    PRINTL("Received: " + result);
-#ifdef DEBUG_RPC
-#endif
+    // PRINTL("Received: " + result);
     if (raw)
         return result;
     CRPCResult generic;

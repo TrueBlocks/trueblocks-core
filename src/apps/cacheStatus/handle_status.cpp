@@ -283,9 +283,9 @@ bool noteMonitor_light(const string_q& path, void* data) {
             if (ptr->addrs.size() < 2)
                 ptr->addrs.push_back("--address--");
         } else {
-            ptr->addrs.push_back(substitute(
-                substitute(substitute(substitute(path, counter->cachePtr->path, ""), ".acct", ""), ".bin", ""), ".json",
-                ""));
+            string_q addr = substitute(path, "/0x", "|");
+            nextTokenClear(addr, '|');
+            ptr->addrs.push_back("0x" + nextTokenClear(addr, '.'));
         }
     }
     return !shouldQuit();
@@ -331,10 +331,9 @@ bool noteMonitor(const string_q& path, void* data) {
         CMonitorCacheItem mdi;
         mdi.type = mdi.getRuntimeClass()->m_ClassName;
         expContext().types[mdi.type] = mdi.getRuntimeClass();
-        mdi.address =
-            substitute(substitute(substitute(substitute(path, counter->cachePtr->path, ""), ".acct", ""), ".bin", ""),
-                       ".json", "");
-
+        string_q addr = substitute(path, "/0x", "|");
+        nextTokenClear(addr, '|');
+        mdi.address = "0x" + nextTokenClear(addr, '.');
         counter->options->getNamedAccount(mdi, mdi.address);
 
         if (!isTestMode() && endsWith(path, ".acct.bin")) {
@@ -457,9 +456,9 @@ bool noteABI(const string_q& path, void* data) {
         CAbiCacheItem abii;
         abii.type = abii.getRuntimeClass()->m_ClassName;
         expContext().types[abii.type] = abii.getRuntimeClass();
-        abii.address =
-            substitute(substitute(substitute(substitute(path, counter->cachePtr->path, ""), ".acct", ""), ".bin", ""),
-                       ".json", "");
+        string_q addr = substitute(path, "/0x", "|");
+        nextTokenClear(addr, '|');
+        abii.address = "0x" + nextTokenClear(addr, '.');
         if (isTestMode())
             abii.address = "---address---";
         CAccountName n;
@@ -500,9 +499,9 @@ bool notePrice(const string_q& path, void* data) {
             pri.sizeInBytes = 1010202;
             pri.nAppearances = 2020101;
         } else {
-            pri.pair = substitute(
-                substitute(substitute(substitute(path, counter->cachePtr->path, ""), ".acct", ""), ".bin", ""), ".json",
-                "");
+            string_q pair = substitute(path, "/0x", "|");
+            nextTokenClear(pair, '|');
+            pri.pair = substitute(substitute(path, counter->cachePtr->path, ""), ".bin", "");
             pri.sizeInBytes = fileSize(path);
             pri.nAppearances = fileSize(path) / sizeof(CPriceQuote);
         }
