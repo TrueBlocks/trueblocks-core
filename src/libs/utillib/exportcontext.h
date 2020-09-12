@@ -33,7 +33,7 @@ class CExportContext {
     bool asEther;
     bool asDollars;
     bool asWei;
-    bool isParity;
+    bool asParity;
     format_t exportFmt;
     CNameValueMap fmtMap;
     address_t accountedFor;

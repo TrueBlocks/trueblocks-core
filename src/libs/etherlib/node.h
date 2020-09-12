@@ -107,8 +107,12 @@ extern bool readNodeFromBinary(CBaseNode& item, const string_q& fileName);
 
 //-------------------------------------------------------------------------
 extern string_q getVersionFromClient(void);
+inline bool isTurboGeth(void) {
+    return contains(toLower(getVersionFromClient()), "turbogeth");
+}
 inline bool isGeth(void) {
-    return contains(toLower(getVersionFromClient()), "geth");
+    string_q vers = toLower(getVersionFromClient());
+    return contains(vers, "geth") && !contains(vers, "turbogeth");
 }  // NOLINT
 inline bool isParity(void) {
     return contains(toLower(getVersionFromClient()), "parity");

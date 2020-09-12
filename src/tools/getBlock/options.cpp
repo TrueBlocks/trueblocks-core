@@ -98,7 +98,7 @@ bool COptions::parseArguments(string_q& command) {
     if (force)
         etherlib_init(defaultQuitHandler);
 
-    if (expContext().isParity) {
+    if (expContext().asParity) {
         HIDE_FIELD(CTransaction, "cumulativeGasUsed");
         HIDE_FIELD(CTransaction, "gasUsed");
         HIDE_FIELD(CTransaction, "timestamp");

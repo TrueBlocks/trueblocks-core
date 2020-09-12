@@ -420,7 +420,7 @@ CExportContext::CExportContext(void) {
     asEther = false;
     asDollars = false;
     asWei = true;
-    isParity = false;
+    asParity = false;
     exportFmt = (isApiMode() ? API1 : TXT1);
 }
 

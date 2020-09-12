@@ -175,7 +175,7 @@ bool COptions::parseArguments(string_q& command) {
     if (expContext().asDollars) {
         tool_flags += " --dollars";
     }
-    if (expContext().isParity) {
+    if (expContext().asParity) {
         tool_flags += " --parity";
     }
     if (!editCmd.empty()) {

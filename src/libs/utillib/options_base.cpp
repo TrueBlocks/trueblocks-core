@@ -377,7 +377,7 @@ bool COptionsBase::standardOptions(string_q& cmdLine) {
         expContext().spcs = 2;
         expContext().hexNums = true;
         expContext().quoteNums = true;
-        expContext().isParity = true;
+        expContext().asParity = true;
         for (int i = 0; i < 5; i++)
             if (sorts[i])
                 sorts[i]->sortFieldList();

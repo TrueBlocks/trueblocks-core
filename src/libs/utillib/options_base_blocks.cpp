@@ -143,15 +143,13 @@ string_q COptionsBlockList::parseBlockList(const string_q& argIn, blknum_t lastB
             if (!msg.empty())
                 return msg;
             numList.push_back(num);
-
-            //            CTimeArray times;
-            //            extern bool expandHourly(CTimeArray& ta, const time_q& start, size_t n, bool fallback = true);
-            //            extern bool expandDaily(CTimeArray& ta, const time_q& start, size_t n, bool fallback = true);
-            //            extern bool expandWeekly(CTimeArray& ta, const time_q& start, size_t n, bool fallback = true);
-            //            extern bool expandMonthly(CTimeArray& ta, const time_q& start, size_t n, bool fallback =
-            //            true); extern bool expandQuarterly(CTimeArray& ta, const time_q& start, size_t n, bool
-            //            fallback = true); extern bool expandAnnually(CTimeArray& ta, const time_q& start, size_t n,
-            //            bool fallback = true);
+            // CTimeArray times;
+            // extern bool expandHourly(CTimeArray& ta, const time_q& start, size_t n, bool fallback = true);
+            // extern bool expandDaily(CTimeArray& ta, const time_q& start, size_t n, bool fallback = true);
+            // extern bool expandWeekly(CTimeArray& ta, const time_q& start, size_t n, bool fallback = true);
+            // extern bool expandMonthly(CTimeArray& ta, const time_q& start, size_t n, bool fallback = true);
+            // extern bool expandQuarterly(CTimeArray& ta, const time_q& start, size_t n, bool fallback = true);
+            // extern bool expandAnnually(CTimeArray& ta, const time_q& start, size_t n, bool fallback = true);
         }
     }
 
