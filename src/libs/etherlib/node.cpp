@@ -604,6 +604,9 @@ blknum_t getLatestBlock_cache_unripe(void) {
 
 //-------------------------------------------------------------------------
 blknum_t getLatestBlock_client(void) {
+#if 0
+    return str_2_Uint("0xa57be0");  // 1500000L;
+#else
     string_q ret = callRPC("eth_blockNumber", "[]", false);
     uint64_t retN = str_2_Uint(ret);
     if (retN == 0) {
@@ -617,6 +620,7 @@ blknum_t getLatestBlock_client(void) {
         retN = str_2_Uint(str);
     }
     return retN;
+#endif
 }
 
 //--------------------------------------------------------------------------

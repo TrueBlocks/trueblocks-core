@@ -50,28 +50,41 @@ string_q CCurlContext::getCurlID(void) {
 //-------------------------------------------------------------------------
 #define DEBUG_RPC
 #ifdef DEBUG_RPC
+
+//-------------------------------------------------------------------------
+string_q showResult(const string_q& result, const string_q& msg) {
+    if (result.empty())
+        return "";
+    string_q res = result;
+    cleanString(res, false);
+    replaceAny(res, "{}[]", "");
+    replaceAll(res, ",", "\n");
+    replaceAll(res, "\"result\":", "");
+    ostringstream os;
+    os << string_q(50, '-') << endl;
+    os << msg << endl;
+    CStringArray lines;
+    explode(lines, res, '\n');
+    sort(lines.begin(), lines.end());
+    os << cGreen << "result:\n" << cOff;
+    for (auto line : lines) {
+        replaceAny(line, "\n", "");
+        if (!line.empty() && !contains(line, "\"id\":") && !contains(line, "\"chainId\":") &&
+            !contains(line, "\"condition\":") && !contains(line, "\"creates\":") && !contains(line, "\"publicKey\":") &&
+            !contains(line, "\"jsonrpc\":") && !contains(line, "\"raw\":") && !contains(line, "\"standardV\":") &&
+            !contains(line, "\"transactionLogIndex\":") && !contains(line, "\"type\":") &&
+            !contains(line, "\"author\":") && !contains(line, "\"sealFields\":"))
+            os << "--[" << line << "]--" << endl;
+    }
+    return os.str();
+}
 #define PRINT(msg)                                                                                                     \
     if (debugging) {                                                                                                   \
         cout.flush();                                                                                                  \
         cerr.flush();                                                                                                  \
-        string_q res = substitute(result, "\n", " ");                                                                  \
-        replaceAll(res, "{", "\n{\n");                                                                                 \
-        replaceAll(res, "}", "\n}\n");                                                                                 \
-        replaceAll(res, "[", "\n[\n");                                                                                 \
-        replaceAll(res, "]", "\n]\n");                                                                                 \
-        replaceAll(res, ",", "\n");                                                                                    \
-        cerr << string_q(50, '-') << endl;                                                                             \
-        cerr << msg << endl;                                                                                           \
-        CStringArray lines;                                                                                            \
-        explode(lines, res, '\n');                                                                                     \
-        sort(lines.begin(), lines.end());                                                                              \
-        cerr << cGreen << "\tresult:\n" << cOff;                                                                       \
-        for (auto line : lines) {                                                                                      \
-            if (!line.empty())                                                                                         \
-                cerr << "\t  " << line << endl;                                                                        \
-        }                                                                                                              \
-        cerr << cGreen << "\tearlyAbort: " << cOff << "\t" << earlyAbort << endl;                                      \
-        cerr << cGreen << "\tcurlID: " << cOff << "\t" << getCurlID() << endl;                                         \
+        cerr << showResult(result, msg);                                                                               \
+        cerr << cGreen << "earlyAbort: " << cOff << earlyAbort << endl;                                                \
+        cerr << cGreen << "curlID: " << cOff << getCurlID() << endl;                                                   \
     }
 
 #define PRINTQ(msg)                                                                                                    \
@@ -210,7 +223,7 @@ string_q callRPC(const string_q& method, const string_q& params, bool raw) {
 
 //-------------------------------------------------------------------------
 string_q CCurlContext::perform(const string_q& method, const string_q& params, bool raw) {
-    PRINTL("perform:\n\tmethod:\t\t" + method + "\n\tparams:\t\t" + params);
+    PRINTL("perform:\nmethod: " + method + "\nparams: " + params);
     //        getCurlContext()->methodMap[method]++;
     getCurlContext()->methodCnt++;
     getCurlContext()->setPostData(method, params);
