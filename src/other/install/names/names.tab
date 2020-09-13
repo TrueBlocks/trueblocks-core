@@ -525,6 +525,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x1245ef80f4d9e02ed9425375e8f649b9221b31d8	ArbitrageCT	ARCT	On Chain	8	Trading crypto-currency terminal for two exchanges simultaneously.	false	false	false
 50-Tokens:ERC20	0x12480e24eb5bec1a9d4369cab6a80cad3c0a377a	Substratum	SUB	On Chain	2		false	false	false
 80-Malicious	0x1248d79bdebd516156930a5c8ee232d4ed80ead4	Possibly Malicious 0x124		TrueBlocks.io			false	false	false
+80-Malicious	0x124f58b41fd43a498fe7041bc2d9d5813c4f80d7	HammerBot14		https://blog.blocknative.com/blog/mempool-forensics			false	false	false
 31-Gitcoin Grants:Friends	0x1256e7992564ab22e332532472c916bd8d1e1ca7	vandigital		Gitcoin Website			false	false	false
 31-Gitcoin Grants:Grant	0x1266f928b7964173434d3feb6da2554b141920b8	Grant 723 EtherDNA		https://gitcoin.co/grants/723/etherdna		https://etherdna.github.io/app/	false	false	false
 90-DevCon2:Individual	0x1267895780369b48a02781eb08d353e426e5f256	nagydani		DevCon2 Token Contract			false	false	false
@@ -1163,6 +1164,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 90-DevCon2:Individual	0x2a66ea8f8c426c9bc4854e4ed202fef887a2f165	Fred		DevCon2 Token Contract			false	false	false
 90-DevCon2:Individual	0x2a687dc70f3c9d0a124c81d0bfe93314d92b0e24	alexklho		DevCon2 Token Contract			false	false	false
 31-Gitcoin Grants:Friends	0x2a6a282bb6acbd0c277d822aa0346c9bf0026847	latagoudel9		Gitcoin Website			false	false	false
+80-Malicious	0x2a7139e98f47c2fc65aec0de9a3adb8ffd46206a	HammerBot04		https://blog.blocknative.com/blog/mempool-forensics			false	false	false
 34-Humanity DAO	0x2a88f06375e1597aa09f6289aa5879c0f9464046	zx54854		https://www.humanitydao.org/humans			false	false	false
 60-Airdrops	0x2aa3645dd23acf7c3056c8d7b5c4d0904976dd1d	FGP Airdrop		TrueBlocks.io			false	false	false
 81-Other	0x2aa90eb11337d37c667d884f5709c690b79e8439	owned_id327_cnt1_22da		Ether Camp			false	false	false
@@ -1294,6 +1296,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 81-Other	0x3039d0a94d51c67a4f35e742b571874e53467804	Vote_Carbonvote-Yes		Etherscan.io			false	false	false
 31-Gitcoin Grants:Friends	0x303b0678f141b882a2f26eb76a6b15777a67c10c	chloethedev		Gitcoin Website			false	false	false
 81-Other:DAO Whales	0x303e33b483b5df3148cb2eaa1c17c486531ddf31	LargeDAOInteractor_507		WhaleWatch.io			false	false	false
+80-Malicious	0x3046a9743a1b8d967f2ddb014e341b0eca41c191	HammerBot19		https://blog.blocknative.com/blog/mempool-forensics			false	false	false
 81-Other	0x30475463369f8f18ec9724ed53f1b71f24ec48b2	Early_Partners_034		Ether Camp			false	false	false
 74-DaoDrain	0x304a554a310c7e546dfe434669c62820b7d83490	Dao Drain 067 (DarkDAO)		GethSource SlackNation OnChain Ether Camp			false	false	false
 81-Other	0x305559fad8e637876e0a142bd65e609e42589387	Wallet_id303_cnt11_1mo		Ether Camp			false	false	false
@@ -1519,6 +1522,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 31-Gitcoin Grants:Friends	0x3a560f6979fe2fb0d72f313091a00ac436c662ef	archerindigo		Gitcoin Website			false	false	false
 34-Humanity DAO	0x3a5986ce1aa0f9a000e6920faa12ace72fede5bd	Abet_ZA		https://www.humanitydao.org/humans			false	false	false
 32-Kickback:Friends	0x3a67f81cda0a0be2915a42282927eb0b983c16e0	havokzz		https://kickback.events/			false	false	false
+80-Malicious	0x3a711e39640b802d201391d14d5f2d3159f07957	HammerBot16		https://blog.blocknative.com/blog/mempool-forensics			false	false	false
 50-Tokens:ERC20	0x3a92bd396aef82af98ebc0aa9030d25a23b11c6b	Tokenbox	TBX	On Chain	18	TBX is an utility token that providing an access to the platform‚Äö√Ñ√¥s services.	false	false	false
 32-Kickback:Friends	0x3a9bca3065b263046cef072210cdb5845b05f1a3	blinky3713		https://kickback.events/			false	false	false
 81-Other	0x3aaaf1c542b365e47f13ab62497f020eee45f747	ChineseCookies		Etherscan.io			false	false	false
@@ -1820,6 +1824,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 31-Gitcoin Grants:Friends	0x47592cdcaf950eaf74a38d18d9bc376a1cfec2ed	wisper156		Gitcoin Website			false	false	false
 32-Kickback:Friends	0x475ded3e48d0182fd684e3f78a1ee17659482c3b	hackdom		https://kickback.events/			false	false	false
 31-Gitcoin Grants:Friends	0x476547d8472407cb05acc4b3b8a5431871d0d072	vrortvedt		Gitcoin Website			false	false	false
+80-Malicious	0x4769ad67bce2779d1374675069a3b78b8dafbea6	HammerBot11		https://blog.blocknative.com/blog/mempool-forensics			false	false	false
 31-Gitcoin Grants:Friends	0x476e2651bf97de8a26e4a05a9c8e00a6efa1390c	bertux		Gitcoin Website			false	false	false
 34-Humanity DAO	0x477188442d8fa8d63e09822f6b18e3401fa6dc8c	azathoth_cult		https://www.humanitydao.org/humans			false	false	false
 31-Gitcoin Grants:Friends	0x4772a23ff99ec159f97e458b445da48b8a4d3ab5	sergio350		Gitcoin Website			false	false	false
@@ -1903,6 +1908,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 34-Humanity DAO	0x49f649b25b371ba1f5a89b72de8e85410b6af211	cjremus		https://www.humanitydao.org/humans			false	false	false
 31-Gitcoin Grants:Friends	0x49f763b618e347b10789229715799770dd4665a9	chengfulun		Gitcoin Website			false	false	false
 60-Airdrops	0x4a03e4de92a4fa7b4fbf20cb79ca12b81915fc90	TRX Airdrop Sender		TrueBlocks.io			false	false	false
+80-Malicious	0x4a1351523071ed88d20afd1d10cda75d1b34f4e7	HammerBot03		https://blog.blocknative.com/blog/mempool-forensics			false	false	false
 31-Gitcoin Grants:Friends	0x4a18b6219f29b3cbfdf980fc2ef1a644a2ddbcef	jacobwillemsma		Gitcoin Website			false	false	false
 50-Tokens:ERC20	0x4a220e6096b25eadb88358cb44068a3248254675	Quant	QNT	On Chain	18	Blockchain operating system that connects the world‚Äö√Ñ√¥s networks and facilitates the development of multi-chain applications.	false	false	false
 31-Gitcoin Grants:Friends	0x4a3343a2a36eebe0ca9160f0974f3cf0a2b36ec5	cleanappio		Gitcoin Website			false	false	false
@@ -2243,6 +2249,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 34-Humanity DAO	0x56d037d72acdbf7c43b5addb6e5c8327f9ac00cc	franjoespejo		https://www.humanitydao.org/humans			false	false	false
 50-Tokens:ERC20	0x56d1ae30c97288da4b58bc39f026091778e4e316	DAGT Crypto Platform	DAGT	On Chain	18	Decentralized platform which allows holders of blockchain assets to leverage their holdings as collateral for assets guarantee.	false	false	false
 32-Kickback:Friends	0x56d76411919ab8f86d0972b24a9986943193b306	cybourgeoisie		https://kickback.events/			false	false	false
+80-Malicious	0x56f0bdbdf48556ed41248021fbc8027f69c41f27	HammerBot02		https://blog.blocknative.com/blog/mempool-forensics			false	false	false
 34-Humanity DAO	0x56f248c36642b58251d44e3328e735c01cba875d	bitcoinworkss		https://www.humanitydao.org/humans			false	false	false
 32-Kickback:Friends	0x56f5eaca1fd1445fca465529d3b9b34e89342360	yousong		https://kickback.events/			false	false	false
 60-Airdrops	0x56fe2aae20b3d3c8d7b961cd2337965d03763e77	Time-Honored Airdrop Sender	THBC	TrueBlocks.io			false	false	false
@@ -2273,6 +2280,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 34-Humanity DAO	0x58309aa38e91a58e8cce19063d39b8e9ef9c7233	ariannasimpson		https://www.humanitydao.org/humans			false	false	false
 31-Gitcoin Grants:Friends	0x58315fb2b6e94371679ffb4b3322ab32f3dc7311	rlholmes38		Gitcoin Website			false	false	false
 50-Tokens:ERC20	0x584b44853680ee34a0f337b712a8f66d816df151	AI Doctor	AIDOC	On Chain	18		false	false	false
+80-Malicious	0x58500f55ac86a3022703806a7415cac321cce2a1	HammerBot07		https://blog.blocknative.com/blog/mempool-forensics			false	false	false
 32-Kickback:Friends	0x586b0e631a2d0c7803a375cef67aec6e8139d437	cspannos		https://kickback.events/			false	false	false
 50-Tokens:ERC20	0x5874548c51822da642661b235e101d6d636b6feb	MESSE Coin	MESSE	On Chain	18		false	false	false
 90-DevCon2:Individual	0x587777871be1204a746a540fb935d832c51c79c5	Stefan George		DevCon2 Token Contract			false	false	false
@@ -2389,6 +2397,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 31-Gitcoin Grants:Friends	0x5cd364df460c40588b865d6985f530767263cf84	btcsnacky		Gitcoin Website			false	false	false
 30-Contracts	0x5ceb19e1890f677c3676d5ecdf7c501eba01a054	CallsScript CS		TrueBlocks.io			false	false	false
 50-Tokens:ERC20	0x5cf04716ba20127f1e2297addcf4b5035000c9eb	NKN	NKN	On Chain	18	NKN is the new kind of P2P network connectivity protocol ecosystem powered by a novel public blockchain.	false	false	false
+80-Malicious	0x5cf2fa4e0c84e71fd2e4fa86d2fa64b7a50a6fc0	HammerBot09		https://blog.blocknative.com/blog/mempool-forensics			false	false	false
 30-Contracts	0x5d154c145db2ca90b8ab5e8fe3e716afa4ab7ff0	Kyber Uniswap Reserve		0xTracker			false	false	false
 31-Gitcoin Grants:Friends	0x5d28fe1e9f895464aab52287d85ebff32b351674	danibelle		Gitcoin Website			false	false	false
 74-DaoDrain	0x5d2b2e6fcbe3b11d26b525e085ff818dae332479	Dao Drain 063		GethSource Ether Camp			false	false	false
@@ -2427,6 +2436,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x5e3346444010135322268a4630d2ed5f8d09446c	LockChain	LOC	On Chain	18	Hotel Booking Vacation Rental Marketplace With 0% Commissions.	false	false	false
 34-Humanity DAO	0x5e349eca2dc61abcd9dd99ce94d04136151a09ee	ljxie		https://www.humanitydao.org/humans			false	false	false
 50-Tokens:ERC20	0x5e4abe6419650ca839ce5bb7db422b881a6064bb	Wi Coin	WiC	On Chain	18		false	false	false
+80-Malicious	0x5e4f7ce2607c39f4ec08355e2ea48e50f6f77bff	HammerBot18		https://blog.blocknative.com/blog/mempool-forensics			false	false	false
 30-Contracts	0x5e569e1ecd56fe30dd97ee233ec1675b60fb6680	HackerGold Kudos Contract		TrueBlocks.io			false	false	false
 60-Airdrops	0x5e58caeb958e67c89adc9e5e6bcaa79795e8d3f1	BasicCoin Airdrop Sender		Etherscan			false	false	false
 34-Humanity DAO	0x5e5925cf292807736f509197603f11db001696d8	FigoFinozeros		https://www.humanitydao.org/humans			false	false	false
@@ -2467,6 +2477,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 31-Gitcoin Grants:Friends	0x60206c1f2b51ac470cb0f71323474f7f9e4772e1	vs77bb		Gitcoin Website			false	false	false
 90-DevCon2:Individual	0x60256530d074465406df460b6f38424ab5df6bed	ericfish		DevCon2 Token Contract			false	false	false
 50-Tokens:ERC20	0x6025f65f6b2f93d8ed1efedc752acfd4bdbcec3e	eGold	EGOLD	On Chain	18		false	false	false
+80-Malicious	0x602bf7ba827a61d708614eb35284e79654c7e58f	HammerBot05		https://blog.blocknative.com/blog/mempool-forensics			false	false	false
 32-Kickback:Contracts	0x60328ec1775dd570bf066c5253f6fbc69eb8074d	B Locked in Defi What is Next		https://kickback.events/event/[{ADDRESS}]			false	false	false
 34-Humanity DAO	0x603a2abcbb0414a5c13a8bb22c20daf2f9388ad8	leom68854239		https://www.humanitydao.org/humans			false	false	false
 81-Other	0x603e6a38f51850cb467f37e06d7eab7a97bf3bf4	EthlanceViews		http://ethlance.com/#/about			false	false	false
@@ -2687,6 +2698,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 34-Humanity DAO	0x6854dc5c9e3d3ce0b9dd7250d866908515465dc6	thomascmost		https://www.humanitydao.org/humans			false	false	false
 34-Twitter: Friends	0x6858c3ed70e40279e60592f55c680243434b75d6	Oseni		Twitter		hamzat	false	false	false
 90-DevCon2:Individual	0x686099ad71fa6ed89b080e1220d18f8f2210cf71	Ying Yan		DevCon2 Token Contract			false	false	false
+80-Malicious	0x6861d397f7ff510a1ab4bb60434d8a9c4dd01240	HammerBot08		https://blog.blocknative.com/blog/mempool-forensics			false	false	false
 50-Tokens:ERC20	0x6863be0e7cf7ce860a574760e9020d519a8bdc47	On.Live	ONL	On Chain	18	The marketplace for paid advice live broadcast and computing power	false	false	false
 90-DevCon2:Individual	0x68680de955781f6792ee7d1a36b14b48e97e82c8	XavierLava		DevCon2 Token Contract			false	false	false
 50-Tokens:ERC20	0x687174f8c49ceb7729d925c3a961507ea4ac7b28	GAT Token	GAT	On Chain	18	GATCOIN aims to transform traditional discount coupons, loyalty points and shopping vouchers into liquid, tradable digital tokens.	false	false	false
@@ -2868,6 +2880,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x7025bab2ec90410de37f488d1298204cd4d6b29d	MasterXriba	XRA	On Chain	18		false	false	false
 31-Gitcoin Grants:Grant	0x7030b43e821ba34124915ba65b90dbda7a9e7d09	Grant 347 CryptoScamDB		https://gitcoin.co/grants/347/cryptoscamdb		https://cryptoscamdb.org	false	false	false
 31-Gitcoin Grants:Friends	0x703b8962a92985ece174bbf87c69d0272f39df0b	prebenhesvik		Gitcoin Website			false	false	false
+80-Malicious	0x704bf43e578b2b912584495467c3a2210deaec11	HammerBot01		https://blog.blocknative.com/blog/mempool-forensics			false	false	false
 50-Tokens:ERC20	0x705051bbfd9f287869a412cba8bc7d112de48e69	SAKECOIN	SAKE	On Chain	8		false	false	false
 34-Humanity DAO	0x70564145fa8e8a15348ef0190e6b7c07a2120462	chrishobcroft		https://www.humanitydao.org/humans			false	false	false
 31-Gitcoin Grants:Grant	0x7056e70a5ca249ba88e9550eb22caec4c985bb8e	Grant 022 Fuzz Geth And Parity For Evm Consensus Bugs		https://gitcoin.co/grants/22/fuzz-geth-and-parity-for-evm-consensus-bugs-2			false	false	false
@@ -3321,6 +3334,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 34-Humanity DAO	0x82aa7f697b9bc19f286d286d130405c0850a2e7b	N831Y		https://www.humanitydao.org/humans			false	false	false
 81-Other:DAO Curators	0x82aeb1d8939f514318449fa8ec704a94dc16e01d	Gian Bochsler		DAO_Curator			false	false	false
 50-Tokens:ERC20	0x82b0e50478eeafde392d45d1259ed1071b6fda81	DNA Token	DNA	On Chain	18	Genomic Data Encryption.	false	false	false
+80-Malicious	0x82b1e33c6465a9bedefd4af8a2c1cfc1c874bfbe	HammerBot15		https://blog.blocknative.com/blog/mempool-forensics			false	false	false
 34-Twitter: Friends	0x82bc7bfa003e93dcf0a474c6093c0cb3e22022cb	Memestar		Twitter		@hoodgangst4	false	false	false
 32-Kickback:Friends	0x82c7fb41b46224c59e4571e5f7c4d09e98186a3f	wei		https://kickback.events/			false	false	false
 50-Tokens	0x82c8139ce6911d15e5aa3d14a25568084c09e9fb	gnidanTok		TrueBlocks.io			false	false	false
@@ -3782,6 +3796,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 34-Humanity DAO	0x94f67d5032464609f04fbfce2ec297712a4a2c67	caiyi699		https://www.humanitydao.org/humans			false	false	false
 75-Early Actors	0x950f41ea60d4f48cc7bc67a96555ffb2661a081c	Miner_0030_236		OnChain			false	false	false
 60-Airdrops	0x952105a1fb1521bbff42ca7275304418d1bcbd1b	Yidabi Airdrop Sender		TrueBlocks.io			false	false	false
+80-Malicious	0x95227df275141c9bbf679f695668a838a31459fc	HammerBot17		https://blog.blocknative.com/blog/mempool-forensics			false	false	false
 34-Humanity DAO	0x952c23f8f067a5e7e165ff0e42491f51d87dbc95	pokl888		https://www.humanitydao.org/humans			false	false	false
 31-Gitcoin Grants:Grant	0x9531c059098e3d194ff87febb587ab07b30b1306	Grant 149 Rotki		https://gitcoin.co/grants/149/rotki			false	false	false
 81-Other:DAO Related	0x95323107e47313f72dd8d713e5f1419b382840c9	DAOTrust_id191_cnt1_3mo		Ether Camp			false	false	false
@@ -3843,6 +3858,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 81-Other	0x97afa00f26e66bf96a7338e67ee945d1f3080b78	GeometricPonzi_id154_cnt75_4mo		Ether Camp			false	false	false
 50-Tokens:ERC20	0x97cb5cc1b2e10cc56dc16ab9179f06dfedbe41a2	MobilinkToken	MOLK	On Chain	18		false	false	false
 30-Contracts	0x97e46522e754da786487ec752a1f1c495b9665c1	Crypto Kittie Related		TrueBlocks.io			false	false	false
+80-Malicious	0x97e7ba1f2db224dac7e0a812a071474e7c60819a	HammerBot12		https://blog.blocknative.com/blog/mempool-forensics			false	false	false
 74-DaoDrain	0x97f43a37f595ab5dd318fb46e7a155eae057317a	Dao Drain 060		GethSource			false	false	false
 34-Humanity DAO	0x97f504cb64a495e5810fb0e04cca68aaf68b4181	jarryalf		https://www.humanitydao.org/humans			false	false	false
 50-Tokens:ERC20	0x97fb6fc2ad532033af97043b563131c5204f8a35	PlusCoin	NPLC	On Chain	18	PlusCoin has been developed to connect cryptocurrency and the real economy. PlusCoin also serves as exchange token of Korean exchange UpXide.	false	false	false
@@ -4456,6 +4472,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 34-Humanity DAO	0xb1038ed65cc501c69cecd2ac04bc0e788c2b8a85	NdabezithaIT		https://www.humanitydao.org/humans			false	false	false
 50-Tokens:ERC20	0xb110ec7b1dcb8fab8dedbf28f53bc63ea5bedd84	Sphre AIR	XID	On Chain	8		false	false	false
 81-Other:DAO Whales	0xb1179589e19db9d41557bbec1cb24ccc2dec1c7f	DAO_WHALE_15 (Prefund_6101)		WhaleWatch.io			false	false	false
+80-Malicious	0xb123a59c4e3ff44e57b3113234fa6ebe804e996d	HammerBot20		https://blog.blocknative.com/blog/mempool-forensics			false	false	false
 31-Gitcoin Grants:Friends	0xb12d314ef27f7e7b928c9d6c715acfe7613d18ac	hwwhww		Gitcoin Website			false	false	false
 74-DaoDrain	0xb136707642a4ea12fb4bae820f03d2562ebff487	Dao Drain 099 DAO Hell 004 WhiteHat1		GethSource The DAO			false	false	false
 34-Humanity DAO	0xb138cf648a69913bb2bfe3a488032b6b741c2545	derek_518		https://www.humanitydao.org/humans			false	false	false
@@ -4892,6 +4909,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 31-Gitcoin Grants:Friends	0xc170f77189f00a1c09619b22bec62174519dc703	sukhadajoshi		Gitcoin Website			false	false	false
 81-Other	0xc18a451d4ef2a85e7bf8404131c5f994a98bdb15	SafeInvestments_id52_cnt4_5mo		Ether Camp			false	false	false
 34-Humanity DAO	0xc19be75b8b9152d884987e1b58b3f18a94875396	ksintmelody		https://www.humanitydao.org/humans			false	false	false
+80-Malicious	0xc1bfbc44536200b02f92aec4dee08ea390fa0535	HammerBot21		https://blog.blocknative.com/blog/mempool-forensics			false	false	false
 81-Other	0xc1c340e5a25d62a0dc1222c7664a2492e95e8095	@dailyfeed		Steem			false	false	false
 81-Other	0xc1caec30b787711108957660a3f9306a5d967f66	BranchWallet_id312_cnt2_1mo		Ether Camp			false	false	false
 34-Humanity DAO	0xc1cd31c394edc5c648dc376a51d43e4f9ad2465c	MickaelSalabi		https://www.humanitydao.org/humans			false	false	false
@@ -5531,6 +5549,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 75-Early Actors	0xdd2f1e6e498202e86d8f5442af596580a4f03c2c	Miner_0044_163		OnChain			false	false	false
 34-Humanity DAO	0xdd3186779bc65798a09c3dc5d98e6b80b32b38df	tb7vEm4EvqxIRXa		https://www.humanitydao.org/humans			false	false	false
 34-Humanity DAO	0xdd3a8d23636ea43ccf065f25024ac4bad381b041	steven_phelps		https://www.humanitydao.org/humans			false	false	false
+80-Malicious	0xdd3b6ae71ff420375fefaa2448046a37beeed800	HammerBot00		https://blog.blocknative.com/blog/mempool-forensics			false	false	false
 90-DevCon2:Individual	0xdd431f8a0f2b956a1a6e7633a8665b945066881b	Roman		DevCon2 Token Contract			false	false	false
 31-Gitcoin Grants:Grant	0xdd4c48c0b24039969fc16d1cdf626eab821d3384	Grant 198 Tornadocash		https://gitcoin.co/grants/198/tornadocash			false	false	false
 34-Humanity DAO	0xdd53204e587f8165f9bcd20347195082bb18f9d4	xanderzhao5		https://www.humanitydao.org/humans			false	false	false
@@ -5755,6 +5774,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 34-Humanity DAO	0xe66c9094dfee1bf685abf241819e2b57315e9b69	josebrey		https://www.humanitydao.org/humans			false	false	false
 32-Kickback:Friends	0xe66f8c6ab127ecdfd5cbf031f74a584ad2fc494b	will		https://kickback.events/			false	false	false
 50-Tokens:ERC20	0xe689a257e070b13a08104aeb995c95fee1d87673	DarexTravel	DART	On Chain	18		false	false	false
+80-Malicious	0xe6919901cef07c15373feac6871046848efd4212	HammerBot06		https://blog.blocknative.com/blog/mempool-forensics			false	false	false
 50-Tokens:ERC20	0xe6923e9b56db1eed1c9f430ea761da7565e260fe	FaceCoin	FC	On Chain	2		false	false	false
 34-Humanity DAO	0xe6925f5cd1eb3f8d7f203708d64ee10216ad2e4a	garnettfan2		https://www.humanitydao.org/humans			false	false	false
 50-Tokens:ERC20	0xe69a353b3152dd7b706ff7dd40fe1d18b7802d31	AdHive Token	ADH	On Chain	18		false	false	false

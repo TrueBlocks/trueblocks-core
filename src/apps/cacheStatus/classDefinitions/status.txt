@@ -1,6 +1,7 @@
 [settings]
 class = CStatus
 fields = string client_version|\
+        string client_ids|\
         string trueblocks_version|\
         string rpc_provider|\
         string balance_provider|\

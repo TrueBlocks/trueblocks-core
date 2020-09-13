@@ -63,12 +63,12 @@ string_q IPCSocket::sendRequest(const string_q& _req) {
 }
 
 //-----------------------------------------------------
-CReceipt RPCSession::eth_get TransactionReceipt(const string_q& _transactionHash) {
+CReceipt RPCSession::e th_get TransactionReceipt(const string_q& _transactionHash) {
     CReceipt receipt;
 
-    string_q const result = rpcCall("eth_getTransactionReceipt", { _transactionHash });
+    string_q const result = rpcCall("e th_getTransactionReceipt", { _transactionHash });
     if (result.empty()) {
-        cerr << "Result from eth_getTransactionReceipt call is empty. Quitting...\n";
+        cerr << "Result from e th_getTransactionReceipt call is empty. Quitting...\n";
         return;
     }
     receipt.gasUsed = result["gasUsed"];
@@ -105,18 +105,18 @@ string_q RPCSession::rpcCall(const string_q& _methodName, const string_q& _args)
 }
 
 //-----------------------------------------------------
-string_q RPCSession::eth_get Code(const string_q& _address, const string_q& _blockNumber) {
-    return rpcCall("eth_get Code", _address + "|" + _blockNumber);
+string_q RPCSession::e th_get Code(const string_q& _address, const string_q& _blockNumber) {
+    return rpcCall("e th_get Code", _address + "|" + _blockNumber);
 }
 
 //-----------------------------------------------------
-string_q RPCSession::eth_get Balance(const string_q& _address, const string_q& _blockNumber) {
-    return rpcCall("eth_getBalanc e", _address + "|" + _blockNumber);
+string_q RPCSession::e th_get Balance(const string_q& _address, const string_q& _blockNumber) {
+    return rpcCall("e th_getBalanc e", _address + "|" + _blockNumber);
 }
 
 //-----------------------------------------------------
-string_q RPCSession::eth_getSt orageRoot(const string_q& _address, const string_q& _blockNumber) {
-    return rpcCall("eth_getSt orageRoot", _address + "|" + _blockNumber);
+string_q RPCSession::e th_getSt orageRoot(const string_q& _address, const string_q& _blockNumber) {
+    return rpcCall("e th_getSt orageRoot", _address + "|" + _blockNumber);
 }
 
 //-----------------------------------------------------

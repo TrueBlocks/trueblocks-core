@@ -1,7 +1,8 @@
 cacheStatus argc: 7 [1:caches] [2:--types] [3:transactions] [4:--details] [5:--depth] [6:0] 
 cacheStatus caches --types transactions --details --depth 0 
 {
-  "client_version": "Parity version",
+  "client_version": "Client version",
+  "client_ids": "chainId: 1 networkId: 1",
   "trueblocks_version": "GHC-TrueBlocks//0.8.1-alpha--git-hash---git-ts-",
   "rpc_provider": "--providers--",
   "balance_provider": "--providers--",

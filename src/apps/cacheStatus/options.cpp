@@ -209,8 +209,12 @@ void COptions::Init(void) {
     }
     if (!isNodeRunning()) {
         status.client_version = "Not running";
+        status.client_ids = "Not running";
     } else {
-        status.client_version = (isTestMode() ? "Parity version" : getVersionFromClient());
+        status.client_version = (isTestMode() ? "Client version" : getVersionFromClient());
+        uint64_t ids[2];
+        getNodeIds(ids[0], ids[1]);
+        status.client_ids = "chainId: " + uint_2_Str(ids[0]) + " networkId: " + uint_2_Str(ids[1]);
     }
     status.trueblocks_version = getVersionStr();
     status.is_scraping = isTestMode() ? false : isRunning("chifra scrape");

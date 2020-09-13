@@ -116,6 +116,13 @@ bool getBlock_light(CBlock& block, const string_q& val) {
 }
 
 //--------------------------------------------------------------------------------
+bool getNodeIds(uint64_t& clientId, uint64_t& networkId) {
+    clientId = str_2_Uint(callRPC("eth_chainId", "[]", false));
+    networkId = str_2_Uint(callRPC("net_version", "[]", false));
+    return true;
+}
+
+//--------------------------------------------------------------------------------
 bool getBlock_light(CBlock& block, blknum_t num) {
     if (fileSize(getBinaryCacheFilename(CT_BLOCKS, num)) > 0)
         return readBlockFromBinary(block, getBinaryCacheFilename(CT_BLOCKS, num));

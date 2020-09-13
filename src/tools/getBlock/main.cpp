@@ -97,15 +97,22 @@ string_q doOneBlock(blknum_t num, COptions& opt) {
                 }
             }
         }
+        opt.first = false;
 
     } else if (opt.uncles) {
         uint64_t nUncles = getUncleCount(num);
-        for (size_t i = 0; i < nUncles; i++) {
-            result += doOneUncle(num, i, opt);
-            if (i != (nUncles - 1)) {
-                if (!isText)
-                    result += ",";
-                result += "\n";
+        if (nUncles == 0) {
+            // If we don't do this, we get extra commas
+            opt.first = true;
+        } else {
+            for (size_t i = 0; i < nUncles; i++) {
+                result += doOneUncle(num, i, opt);
+                if (i != (nUncles - 1)) {
+                    if (!isText)
+                        result += ",";
+                    result += "\n";
+                }
+                opt.first = false;
             }
             opt.first = false;
         }
@@ -120,6 +127,7 @@ string_q doOneBlock(blknum_t num, COptions& opt) {
                 writeBlockToBinary(gold, fileName);
             }
         }
+        opt.first = false;
     }
 
     return result;
@@ -200,12 +208,11 @@ bool visitBlock(uint64_t num, void* data) {
             }
             cout << block.Format(fmt);
         }
+        opt->first = false;
 
     } else {
         cout << doOneBlock(num, *opt);
     }
-
-    opt->first = false;
 
     return !shouldQuit();
 }

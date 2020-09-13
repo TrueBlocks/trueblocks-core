@@ -28,6 +28,7 @@ namespace qblocks {
 class CStatus : public CBaseNode {
   public:
     string_q client_version;
+    string_q client_ids;
     string_q trueblocks_version;
     string_q rpc_provider;
     string_q balance_provider;
@@ -106,6 +107,7 @@ inline void CStatus::initialize(void) {
     CBaseNode::initialize();
 
     client_version = "";
+    client_ids = "";
     trueblocks_version = "";
     rpc_provider = "";
     balance_provider = "";
@@ -135,6 +137,7 @@ inline void CStatus::duplicate(const CStatus& st) {
     CBaseNode::duplicate(st);
 
     client_version = st.client_version;
+    client_ids = st.client_ids;
     trueblocks_version = st.trueblocks_version;
     rpc_provider = st.rpc_provider;
     balance_provider = st.balance_provider;

@@ -388,6 +388,15 @@
       "description": ""
     },
     {
+      "tags": "80-Malicious",
+      "address": "0x124f58b41fd43a498fe7041bc2d9d5813c4f80d7",
+      "name": "HammerBot14",
+      "symbol": "",
+      "source": "https://blog.blocknative.com/blog/mempool-forensics",
+      "decimals": "0",
+      "description": ""
+    },
+    {
       "tags": "31-Gitcoin Grants:Friends",
       "address": "0x1256e7992564ab22e332532472c916bd8d1e1ca7",
       "name": "Name 0x1256e799",
@@ -1797,15 +1806,6 @@
       "name": "Name 0x1c0aa8cc",
       "symbol": "",
       "source": "Gitcoin Website",
-      "decimals": "0",
-      "description": ""
-    },
-    {
-      "tags": "60-Airdrops",
-      "address": "0x1c19839c88c0cdb4d0b10208833101d75454d7c1",
-      "name": "EMO Airdrop Sender",
-      "symbol": "",
-      "source": "TrueBlocks.io",
       "decimals": "0",
       "description": ""
     }

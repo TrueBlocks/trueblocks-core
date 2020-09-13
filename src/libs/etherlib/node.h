@@ -119,6 +119,7 @@ inline bool isParity(void) {
 }  // NOLINT
 extern bool getAccounts(CAddressArray& addrs);
 extern bool getChainHead(void);
+extern bool getNodeIds(uint64_t& clientId, uint64_t& networkId);
 
 //-------------------------------------------------------------------------
 uint64_t addFilter(address_t addr, const CTopicArray& topics, blknum_t block);
