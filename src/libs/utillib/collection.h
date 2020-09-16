@@ -27,7 +27,7 @@ namespace qblocks {
 //--------------------------------------------------------------------------
 class CCollection : public CBaseNode {
   public:
-    string_q id;
+    string_q cid;
     string_q tags;
     string_q name;
     string_q client;
@@ -100,7 +100,7 @@ inline void CCollection::clear(void) {
 inline void CCollection::initialize(void) {
     CBaseNode::initialize();
 
-    id = "";
+    cid = "";
     tags = "";
     name = "";
     client = "";
@@ -119,7 +119,7 @@ inline void CCollection::duplicate(const CCollection& co) {
     clear();
     CBaseNode::duplicate(co);
 
-    id = co.id;
+    cid = co.cid;
     tags = co.tags;
     name = co.name;
     client = co.client;

@@ -9,7 +9,7 @@ getLogs 1428993.* --fmt api
     ],
     "data": "0x0000000000000000000000006dfaa8ab22d36af0377c6565548a8895c661d18d00000000000000000000000000000000000000000000000000071afd498d0000",
     "compressedLog": "",
-    "type": "mined"
+    "type": ""
   },  {
     "address": "0xf80ae7bfe8a3ab43e8b2c7aece33f5fbed4927df",
     "logIndex": 1,
@@ -20,7 +20,7 @@ getLogs 1428993.* --fmt api
     ],
     "data": "0x0000000000000000000000000000000000000000000000001462698eade5e400",
     "compressedLog": "",
-    "type": "mined"
+    "type": ""
   }], "types": [
 { "type": "CLogEntry", "fields": [{ "name": "address", "type": "address" }, { "name": "logIndex", "type": "blocknum" }, { "name": "topics", "type": "object|ts_array" }, { "name": "data", "type": "text" }, { "name": "compressedLog", "type": "text" }, { "name": "type", "type": "text" }] }
 ], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }

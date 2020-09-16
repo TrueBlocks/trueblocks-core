@@ -169,9 +169,12 @@ bool COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, cons
                 cmd << " >" << test.workPath + test.fileName;
             }
 
-            string_q theCmd = "cd " + substitute(test.goldPath, "/api_tests", "") + " ; " + cmd.str();
+            // To run the test, we cd into the gold path (so we find the test files), but we send results to working
+            // folder
+            string_q goldApiPath = substitute(test.goldPath, "/api_tests", "");
+            string_q theCmd = "cd " + goldApiPath + " ; " + cmd.str();
             if (test.builtin)
-                theCmd = "cd " + substitute(test.goldPath, "/api_tests", "") + " ; " + test.options;
+                theCmd = "cd " + goldApiPath + " ; " + test.options;
             LOG4(theCmd);
 
             string_q customized =
@@ -207,6 +210,38 @@ bool COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, cons
 
             string_q oldFn = test.workPath + test.fileName;
             string_q oldText = asciiFileToString(oldFn);
+            if (contains(oldText, "\"id\":")) {
+                // This crazy shit is because we want to pass tests when running against different nodes (Parity,
+                // TurboGeth, etc.) so we have to remove some stuff and then sort the data (after deliniating it) soit
+                // matches more easily
+                while (contains(oldText, "sealFields")) {
+                    replaceAll(oldText, "\"sealFields\":", "|");
+                    string_q pre = nextTokenClear(oldText, '|');
+                    nextTokenClear(oldText, ']');
+                    oldText = pre + oldText;
+                }
+                replaceAny(oldText, ",{}[]", "\n");
+                CStringArray lines;
+                explode(lines, oldText, '\n');
+                sort(lines.begin(), lines.end());
+                ostringstream os;
+                string_q last;
+                for (auto line : lines) {
+                    if (last != line) {
+                        bool has = false;
+                        CStringArray removes = {"author",    "chainId", "creates",   "condition",
+                                                "publicKey", "raw",     "standardV", "transactionLogIndex",
+                                                "root",      "mined"};
+                        for (auto r : removes)
+                            has = (has || contains(line, r));
+                        if (!has && startsWith(line, "\"") && !startsWith(line, "\"0x"))
+                            os << line << endl;
+                    }
+                    last = line;
+                }
+                stringToAsciiFile(oldFn, os.str());
+                oldText = os.str();
+            }
 
             string_q result = greenCheck;
             if (!newText.empty() && newText == oldText) {

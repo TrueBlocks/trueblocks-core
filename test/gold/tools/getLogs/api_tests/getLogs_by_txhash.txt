@@ -8,7 +8,7 @@
       ],
       "data": "0x00000000000000000000000032be343b94f860124dc4fee278fdcbd38c102d88",
       "compressedLog": "",
-      "type": "mined"
+      "type": ""
     },
     {
       "address": "0x11b1f00bccf07754e6f1996864531fa162145cde",
@@ -18,7 +18,7 @@
       ],
       "data": "0x000000000000000000000000209c4784ab1e8183cf58ca33cb740efbf3fc18ef",
       "compressedLog": "",
-      "type": "mined"
+      "type": ""
     }
   ],
   "types": [

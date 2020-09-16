@@ -11,7 +11,7 @@ getLogs 4000000.5 --fmt api
     ],
     "data": "0x000000000000000000000000000000000000000000000000000000000a21fe80",
     "compressedLog": "",
-    "type": "mined"
+    "type": ""
   }], "types": [
 { "type": "CLogEntry", "fields": [{ "name": "address", "type": "address" }, { "name": "logIndex", "type": "blocknum" }, { "name": "topics", "type": "object|ts_array" }, { "name": "data", "type": "text" }, { "name": "compressedLog", "type": "text" }, { "name": "type", "type": "text" }] }
 ], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }

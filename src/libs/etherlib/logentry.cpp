@@ -172,6 +172,9 @@ bool CLogEntry::setValueByName(const string_q& fieldNameIn, const string_q& fiel
             // LOG4("not set in transaction");
         }
     }
+    if (fieldName == "type" && fieldValue == "mined") {
+        fieldValue = "";
+    }
     // EXISTING_CODE
 
     switch (tolower(fieldName[0])) {
@@ -379,6 +382,9 @@ string_q nextLogentryChunk_custom(const string_q& fieldIn, const void* dataPtr) 
                 }
                 if (fieldIn % "topic3") {
                     return ((log->topics.size() > 3) ? topic_2_Str(log->topics[3]) : "");
+                }
+                if (fieldIn % "type" && contains(log->type, "mined")) {
+                    return "";
                 }
                 break;
             // EXISTING_CODE

@@ -16,7 +16,7 @@
         "outputs": []
       },
       "compressedLog": "",
-      "type": "mined"
+      "type": ""
     }
   ],
   "types": [

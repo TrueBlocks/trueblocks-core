@@ -334,7 +334,7 @@ bool loadTraces(CTransaction& trans, blknum_t bn, blknum_t txid, bool useCache, 
 //-------------------------------------------------------------------------
 bool getFullReceipt(CTransaction* trans, bool needsTrace) {
     getReceipt(trans->receipt, trans->hash);
-    if (trans->blockNumber >= byzantiumBlock) {
+    if (trans->blockNumber >= byzantiumBlock || isTurboGeth()) {
         trans->isError = (trans->receipt.status == 0);
 
     } else if (needsTrace && trans->gas == trans->receipt.gasUsed) {

@@ -1,5 +1,26 @@
-getTrace argc: 3 [1:0xf9d426284bd20415a53991a004122b3a3a619b295ea98d1d88a5fd3a4125408b] [2:--very_raw] 
-getTrace 0xf9d426284bd20415a53991a004122b3a3a619b295ea98d1d88a5fd3a4125408b --very_raw 
-{ "data": [
-{"jsonrpc":"2.0","result":[{"action":{"callType":"call","from":"0x00a3819199113fc6a6e6ba1298afde7377e2009b","gas":"0x31ac","input":"0xd8963b9100000000000000000000000000a3819199113fc6a6e6ba1298afde7377e2009b","to":"0x204882bcba3e6d804e5f7d6e483bb18dd2b3d678","value":"0x0"},"blockHash":"0x9ffade8b2d130070ce1d45ffe06bdab963993d597b8a7851320c1789c579b857","blockNumber":3191290,"result":{"gasUsed":"0x1ab6","output":"0x"},"subtraces":1,"traceAddress":[],"transactionHash":"0xf9d426284bd20415a53991a004122b3a3a619b295ea98d1d88a5fd3a4125408b","transactionPosition":11,"type":"call"},{"action":{"address":"0x204882bcba3e6d804e5f7d6e483bb18dd2b3d678","balance":"0x2c68af0bb140000","refundAddress":"0x00a3819199113fc6a6e6ba1298afde7377e2009b"},"blockHash":"0x9ffade8b2d130070ce1d45ffe06bdab963993d597b8a7851320c1789c579b857","blockNumber":3191290,"result":null,"subtraces":0,"traceAddress":[0],"transactionHash":"0xf9d426284bd20415a53991a004122b3a3a619b295ea98d1d88a5fd3a4125408b","transactionPosition":11,"type":"suicide"}],"id":"1"}
-] }
+"action":
+"address":"0x204882bcba3e6d804e5f7d6e483bb18dd2b3d678"
+"balance":"0x2c68af0bb140000"
+"blockHash":"0x9ffade8b2d130070ce1d45ffe06bdab963993d597b8a7851320c1789c579b857"
+"blockNumber":3191290
+"callType":"call"
+"data":
+"from":"0x00a3819199113fc6a6e6ba1298afde7377e2009b"
+"gas":"0x31ac"
+"gasUsed":"0x1ab6"
+"id":"1"
+"input":"0xd8963b9100000000000000000000000000a3819199113fc6a6e6ba1298afde7377e2009b"
+"jsonrpc":"2.0"
+"output":"0x"
+"refundAddress":"0x00a3819199113fc6a6e6ba1298afde7377e2009b"
+"result":
+"result":null
+"subtraces":0
+"subtraces":1
+"to":"0x204882bcba3e6d804e5f7d6e483bb18dd2b3d678"
+"traceAddress":
+"transactionHash":"0xf9d426284bd20415a53991a004122b3a3a619b295ea98d1d88a5fd3a4125408b"
+"transactionPosition":11
+"type":"call"
+"type":"suicide"
+"value":"0x0"

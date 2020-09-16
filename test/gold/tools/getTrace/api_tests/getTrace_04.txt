@@ -1,3 +1,19 @@
-{ "data": [
-{"jsonrpc":"2.0","result":[{"action":{"callType":"call","from":"0x5335e5d8069fc2326354b97802bfde48d56ca2e2","gas":"0x37bb8","input":"0x62a02fe30000000000000000000000000000000000000000000000000000b5e620f48000","to":"0x19ad2660ca7c239df82d2cb24b1cb9a8717ffc35","value":"0x0"},"blockHash":"0x759de0be90043e350377c7d1be2f639ead0953b06a16c32552265659bd134f2d","blockNumber":2229051,"error":"Bad jump destination","subtraces":0,"traceAddress":[],"transactionHash":"0x3d762e5f4c2a5c4ed3f4678d81f9078ff68e9d236d87dbcf3eee024dbb11f497","transactionPosition":4,"type":"call"}],"id":"1"}
-] }
+"action":
+"blockHash":"0x759de0be90043e350377c7d1be2f639ead0953b06a16c32552265659bd134f2d"
+"blockNumber":2229051
+"callType":"call"
+"data":
+"error":"Bad jump destination"
+"from":"0x5335e5d8069fc2326354b97802bfde48d56ca2e2"
+"gas":"0x37bb8"
+"id":"1"
+"input":"0x62a02fe30000000000000000000000000000000000000000000000000000b5e620f48000"
+"jsonrpc":"2.0"
+"result":
+"subtraces":0
+"to":"0x19ad2660ca7c239df82d2cb24b1cb9a8717ffc35"
+"traceAddress":
+"transactionHash":"0x3d762e5f4c2a5c4ed3f4678d81f9078ff68e9d236d87dbcf3eee024dbb11f497"
+"transactionPosition":4
+"type":"call"
+"value":"0x0"

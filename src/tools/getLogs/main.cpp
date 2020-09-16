@@ -51,7 +51,7 @@ bool visitTransaction(CTransaction& trans, void* data) {
         queryRawLogs(result, trans.blockNumber, trans.blockNumber);
         if (!isText && !opt->first)
             cout << ",";
-        cout << result;
+        cout << substitute(result, "mined", "");
         opt->first = false;
         return true;
     }

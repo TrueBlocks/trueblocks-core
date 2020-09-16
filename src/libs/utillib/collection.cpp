@@ -90,6 +90,9 @@ string_q CCollection::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 'c':
+            if (fieldName % "cid") {
+                return cid;
+            }
             if (fieldName % "client") {
                 return client;
             }
@@ -97,11 +100,6 @@ string_q CCollection::getValueByName(const string_q& fieldName) const {
         case 'd':
             if (fieldName % "deleted") {
                 return bool_2_Str(deleted);
-            }
-            break;
-        case 'i':
-            if (fieldName % "id") {
-                return id;
             }
             break;
         case 'm':
@@ -158,6 +156,10 @@ bool CCollection::setValueByName(const string_q& fieldNameIn, const string_q& fi
             }
             break;
         case 'c':
+            if (fieldName % "cid") {
+                cid = fieldValue;
+                return true;
+            }
             if (fieldName % "client") {
                 client = fieldValue;
                 return true;
@@ -166,12 +168,6 @@ bool CCollection::setValueByName(const string_q& fieldNameIn, const string_q& fi
         case 'd':
             if (fieldName % "deleted") {
                 deleted = str_2_Bool(fieldValue);
-                return true;
-            }
-            break;
-        case 'i':
-            if (fieldName % "id") {
-                id = fieldValue;
                 return true;
             }
             break;
@@ -224,7 +220,7 @@ bool CCollection::Serialize(CArchive& archive) {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive >> id;
+    archive >> cid;
     archive >> tags;
     archive >> name;
     archive >> client;
@@ -244,7 +240,7 @@ bool CCollection::SerializeC(CArchive& archive) const {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive << id;
+    archive << cid;
     archive << tags;
     archive << name;
     archive << client;
@@ -289,7 +285,7 @@ void CCollection::registerClass(void) {
     ADD_FIELD(CCollection, "deleted", T_BOOL, ++fieldNum);
     ADD_FIELD(CCollection, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CCollection, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CCollection, "id", T_TEXT, ++fieldNum);
+    ADD_FIELD(CCollection, "cid", T_TEXT, ++fieldNum);
     ADD_FIELD(CCollection, "tags", T_TEXT, ++fieldNum);
     ADD_FIELD(CCollection, "name", T_TEXT, ++fieldNum);
     ADD_FIELD(CCollection, "client", T_TEXT, ++fieldNum);
@@ -319,7 +315,7 @@ string_q nextCollectionChunk_custom(const string_q& fieldIn, const void* dataPtr
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             case 'i':
-                if (fieldIn % "id" && col->id.empty()) {
+                if (fieldIn % "id" && col->cid.empty()) {
                     string_q seed = col->name;
                     for (auto addr : col->addresses)
                         seed += addr;
@@ -370,7 +366,7 @@ const string_q CCollection::getStringAt(const string_q& fieldName, size_t i) con
 
 //---------------------------------------------------------------------------
 const char* STR_DISPLAY_COLLECTION =
-    "[{ID}]\t"
+    "[{CID}]\t"
     "[{TAGS}]\t"
     "[{NAME}]\t"
     "[{CLIENT}]\t"

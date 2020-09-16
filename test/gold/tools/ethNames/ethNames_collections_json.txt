@@ -3,7 +3,7 @@ ethNames --collections --fmt json
 { "data": [
   {
     "deleted": true,
-    "id": "0xa6d5021b08",
+    "cid": "",
     "tags": "Samples",
     "name": "Set Protocol",
     "client": "Anthony",
@@ -30,7 +30,7 @@ ethNames --collections --fmt json
   },
   {
     "deleted": false,
-    "id": "0x52742586c2",
+    "cid": "",
     "tags": "Samples",
     "name": "Giveth",
     "client": "Green",
@@ -51,7 +51,7 @@ ethNames --collections --fmt json
   },
   {
     "deleted": false,
-    "id": "0x97283b3a44",
+    "cid": "",
     "tags": "Clients",
     "name": "May Construction",
     "client": "John May",
@@ -67,7 +67,7 @@ ethNames --collections --fmt json
   },
   {
     "deleted": true,
-    "id": "0x47894ddb79",
+    "cid": "",
     "tags": "Clients",
     "name": "The Poetry Shop",
     "client": "Andy Tudhope",
@@ -80,7 +80,7 @@ ethNames --collections --fmt json
   },
   {
     "deleted": true,
-    "id": "0xf285fffac0",
+    "cid": "",
     "tags": "Clients",
     "name": "Uncle Joe",
     "client": "Prince Ton",
@@ -96,5 +96,5 @@ ethNames --collections --fmt json
       "0xf285bde0bce33e55225c6ee156bfb64b0be9ec9e"
     ]
   }], "types": [
-{ "type": "CCollection", "fields": [{ "name": "deleted", "type": "bool" }, { "name": "id", "type": "text" }, { "name": "tags", "type": "text" }, { "name": "name", "type": "text" }, { "name": "client", "type": "text" }, { "name": "monitored", "type": "bool" }, { "name": "sizeInBytes", "type": "unumber" }, { "name": "addresses", "type": "address|ts_array" }] }
+{ "type": "CCollection", "fields": [{ "name": "deleted", "type": "bool" }, { "name": "cid", "type": "text" }, { "name": "tags", "type": "text" }, { "name": "name", "type": "text" }, { "name": "client", "type": "text" }, { "name": "monitored", "type": "bool" }, { "name": "sizeInBytes", "type": "unumber" }, { "name": "addresses", "type": "address|ts_array" }] }
 ] }
