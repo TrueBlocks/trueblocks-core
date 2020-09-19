@@ -155,6 +155,7 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 12600,tools,blocks,getBlock,count,c,,false,false,true,true,header,switch,<boolean>,display counts of appearances (for --addrs&#44; --uniq&#44; or --uniq_tx) or transactions
 12610,tools,blocks,getBlock,uncles,U,,false,false,true,true,header,switch,<boolean>,display uncle blocks (if any) instead of the requested block
 12620,tools,blocks,getBlock,force,o,,false,false,false,false,header,switch,<boolean>,force a re-write of the block to the cache
+12625,tools,blocks,getBlock,trace,t,,false,false,false,false,header,switch,<boolean>,export the traces from the block as opposed to the block data
 12640,tools,blocks,getBlock,,,,false,false,true,true,--,description,,Returns block(s) from local cache or directly from a running node.
 12882,tools,blocks,getBlock,,,,false,false,false,false,--,note,,`blocks` is a space-separated list of values&#44; a start-end range&#44; a `special`&#44; or any combination.
 12886,tools,blocks,getBlock,,,,false,false,false,false,--,note,,`special` blocks are detailed under `whenBlock --list`.

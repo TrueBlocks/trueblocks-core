@@ -210,7 +210,7 @@ bool COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, cons
 
             string_q oldFn = test.workPath + test.fileName;
             string_q oldText = asciiFileToString(oldFn);
-            if (contains(oldText, "\"id\":")) {
+            if (contains(oldText, "\"id\":") && contains(oldFn, "/tools/")) {
                 // This crazy shit is because we want to pass tests when running against different nodes (Parity,
                 // TurboGeth, etc.) so we have to remove some stuff and then sort the data (after deliniating it) soit
                 // matches more easily
@@ -229,9 +229,9 @@ bool COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, cons
                 for (auto line : lines) {
                     if (last != line) {
                         bool has = false;
-                        CStringArray removes = {"author",    "chainId", "creates",   "condition",
-                                                "publicKey", "raw",     "standardV", "transactionLogIndex",
-                                                "root",      "mined"};
+                        CStringArray removes = {"author",    "chainId", "creates",      "condition",
+                                                "publicKey", "raw",     "standardV",    "transactionLogIndex",
+                                                "root",      "mined",   "\"type\":\"\""};
                         for (auto r : removes)
                             has = (has || contains(line, r));
                         if (!has && startsWith(line, "\"") && !startsWith(line, "\"0x"))
