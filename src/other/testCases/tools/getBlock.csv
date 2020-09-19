@@ -59,6 +59,8 @@ on, both, fast, blocks, tools/getBlock, fmt_api,            y, blocks = 2222222 
 on, both, fast, blocks, tools/getBlock, fmt_json,           y, blocks = 2222222 2332332 & fmt = json
 on, both, fast, blocks, tools/getBlock, fmt_junk,           y, blocks = 2222222 2332332 & fmt = junk
 
+on, both, fast, blocks, tools/getBlock, fmt_trace,          y, blocks = 2222222 & trace & fmt = json
+
 # COption("", "", "", OPT_DESCRIPTION, "Returns block(s) from local cache or directly from a running node."),
 # COption("addrs", "a", "", OPT_SWITCH, "display all addresses included in the block"),
 # COption("blocks", "", "list<blknum>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more blocks to retrieve"),
