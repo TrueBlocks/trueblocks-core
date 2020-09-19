@@ -47,4 +47,5 @@ class COptions : public CBlockOptions {
 
 //-----------------------------------------------------------------------------
 extern bool visitBlock(uint64_t num, void* data);
+extern bool traceBlock(uint64_t num, void* data);
 extern void interumReport(ostream& os, blknum_t i);

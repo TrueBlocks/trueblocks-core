@@ -165,6 +165,8 @@ bool COptions::parseArguments(string_q& command) {
         configureDisplay("", "CBlock", ff);
     } else if (!filterType.empty()) {
         configureDisplay("", "CBlock", STR_FORMAT_FILTER_TXT);
+    } else if (trace) {
+        configureDisplay("getBlock", "CTrace", STR_DISPLAY_TRACE);
     } else {
         configureDisplay("getBlock", "CBlock", STR_DISPLAY_BLOCK);
     }
@@ -177,11 +179,21 @@ bool COptions::parseArguments(string_q& command) {
                 replace(ff, "\t[{ADDR_COUNT}]", "");
             }
             expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(ff);
-        } else if (!filterType.empty())
+        } else if (!filterType.empty()) {
             expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(STR_FORMAT_FILTER_JSON);
+        }
     }
     if (isNoHeader)
         expContext().fmtMap["header"] = "";
+
+    if (trace) {
+        if (!nodeHasTraces())
+            return usage("The --trace option requires a node that enables tracing. Quitting...");
+        if (!filterType.empty())
+            return usage("--uniq* options and --trace options are exclusive. Quitting...");
+        if (hashes_only)
+            return usage("--hashes_only options and --trace options are exclusive. Quitting...");
+    }
 
     return true;
 }
