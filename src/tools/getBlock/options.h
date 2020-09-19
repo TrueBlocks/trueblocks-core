@@ -28,6 +28,7 @@ class COptions : public CBlockOptions {
     bool count;
     bool uncles;
     bool force;
+    bool trace;
     // END_CODE_DECLARE
 
     CBlock latestBlock;

@@ -19,6 +19,7 @@ getBlock -th
 
 #### Hidden options (shown during testing only)
 | -o | --force | force a re-write of the block to the cache |
+| -t | --trace | export the traces from the block as opposed to the block data |
 #### Hidden options (shown during testing only)
 
 | -x | --fmt <val> | export format, one of [none&#124;json*&#124;txt&#124;csv&#124;api] |

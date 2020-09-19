@@ -28,6 +28,7 @@ static const COption params[] = {
     COption("count", "c", "", OPT_SWITCH, "display counts of appearances (for --addrs, --uniq, or --uniq_tx) or transactions"),  // NOLINT
     COption("uncles", "U", "", OPT_SWITCH, "display uncle blocks (if any) instead of the requested block"),
     COption("force", "o", "", OPT_HIDDEN | OPT_SWITCH, "force a re-write of the block to the cache"),
+    COption("trace", "t", "", OPT_HIDDEN | OPT_SWITCH, "export the traces from the block as opposed to the block data"),
     COption("", "", "", OPT_DESCRIPTION, "Returns block(s) from local cache or directly from a running node."),
     // clang-format on
     // END_CODE_OPTIONS
@@ -80,6 +81,9 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-o" || arg == "--force") {
             force = true;
+
+        } else if (arg == "-t" || arg == "--trace") {
+            trace = true;
 
         } else if (startsWith(arg, '-')) {  // do not collapse
 
@@ -192,6 +196,7 @@ void COptions::Init(void) {
     count = false;
     uncles = false;
     force = false;
+    trace = false;
     // END_CODE_INIT
 
     filterType = "";

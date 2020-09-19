@@ -173,4 +173,3 @@
 "transactionIndex":"0x5"
 "transactionIndex":"0x7"
 "transactionIndex":"0xc"
-"type":""

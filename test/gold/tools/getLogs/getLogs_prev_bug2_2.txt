@@ -416,4 +416,3 @@
 "transactionIndex":"0x9"
 "transactionIndex":"0xb"
 "transactionIndex":"0xc"
-"type":""

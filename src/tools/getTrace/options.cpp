@@ -76,6 +76,9 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
+    if (!nodeHasTraces())
+        return usage("Tracing is required for this program to work properly. Quitting...");
+
     if (!filter.empty()) {
         string_q headerLine = "fromBlock,toBlock,fromAddress,toAddress,after,count";
         CStringArray headers;
