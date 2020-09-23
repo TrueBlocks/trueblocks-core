@@ -180,7 +180,7 @@ getTrace 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f8
     },
     "articulatedTrace": {
       "name": "",
-      "stateMutability": "nonpayable",
+      "stateMutability": "",
       "inputs": [],
       "outputs": []
     },
