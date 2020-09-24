@@ -36,10 +36,13 @@ class CTest {
     string_q cmd;
     string_q name;
     string_q params;
+    bool turbo;
     CTest(string_q& str) {
         replaceAll(str, "\t", " ");
         replaceAll(str, "  ", " ");
         num = nextTokenClear(str, ' ');
+        turbo = contains(num, "_turbo");
+        replace(num, "_turbo", "");
         cmd = nextTokenClear(str, ' ');
         name = nextTokenClear(str, ' ');
         params = str;
@@ -70,6 +73,7 @@ int main(int argc, const char* argv[]) {
         }
     }
 
+    uint32_t passed = 0;
     for (auto node : nodes) {
         cout << node.name << "\t" << node.URL << endl;
         for (auto test : tests) {
@@ -93,11 +97,17 @@ int main(int argc, const char* argv[]) {
                 }
 
                 if (node.name == "TurboGeth") {
-                    string_q parity =
-                        asciiFileToString("./parity/" + test.cmd + "_" + test.num + "_" + test.name + ".txt");
                     string_q turbo =
                         asciiFileToString("./turbogeth/" + test.cmd + "_" + test.num + "_" + test.name + ".txt");
+                    string_q parity;
+                    if (test.turbo) {
+                        parity = turbo;
+                        stringToAsciiFile("./parity/" + test.cmd + "_" + test.num + "_" + test.name + ".txt", parity);
+                    } else {
+                        parity = asciiFileToString("./parity/" + test.cmd + "_" + test.num + "_" + test.name + ".txt");
+                    }
                     cout << ((turbo == parity) ? greenCheck : redX);
+                    passed += (turbo == parity);
                 }
 
                 cout << endl;
@@ -105,6 +115,7 @@ int main(int argc, const char* argv[]) {
         }
         cout << endl;
     }
+    cout << passed << " tests passed " << greenCheck << " " << (tests.size() - passed) << " tests failed " << redX << endl << endl;
 
     return 0;
 }
