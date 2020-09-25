@@ -23,9 +23,9 @@ class CNode {
     string_q URL;
     string_q APIKey;
     CNode(string_q& str) {
-        name = nextTokenClear(str, ',');
-        URL = nextTokenClear(str, ',');
-        APIKey = str;
+        name = trim(nextTokenClear(str, ','));
+        URL = trim(nextTokenClear(str, ','));
+        APIKey = trim(str);
     }
 };
 typedef vector<CNode> CNodeArray;
@@ -40,12 +40,12 @@ class CTest {
     CTest(string_q& str) {
         replaceAll(str, "\t", " ");
         replaceAll(str, "  ", " ");
-        num = nextTokenClear(str, ' ');
+        num = trim(nextTokenClear(str, ' '));
         turbo = contains(num, "_turbo");
         replace(num, "_turbo", "");
-        cmd = nextTokenClear(str, ' ');
-        name = nextTokenClear(str, ' ');
-        params = str;
+        cmd = trim(nextTokenClear(str, ' '));
+        name = trim(nextTokenClear(str, ' '));
+        params = trim(str);
     }
 };
 typedef vector<CTest> CTestArray;
@@ -62,18 +62,18 @@ int main(int argc, const char* argv[]) {
         }
     }
 
+    size_t passed{0}, failed{0};
     string_q testStr = asciiFileToString("./trace_tests");
     cout << "TESTS: " << getCWD() << "\t" << testStr << endl;
     CTestArray tests;
     while (!testStr.empty()) {
-        string_q line = nextTokenClear(testStr, '\n');
+        string_q line = trim(nextTokenClear(testStr, '\n'));
         if (!startsWith(line, "#")) {
             CTest test(line);
             tests.push_back(test);
         }
     }
 
-    uint32_t passed = 0;
     for (auto node : nodes) {
         cout << node.name << "\t" << node.URL << endl;
         for (auto test : tests) {
@@ -87,7 +87,7 @@ int main(int argc, const char* argv[]) {
                     os << "-H \"x-api-key: " << node.APIKey << "\" ";
                 os << "-X POST " << node.URL;
                 os << " | sed -f sed_file";
-                os << " | jq | grep -v \"\\\"time\\\":\"";
+                os << " | jq -S | grep -v \"\\\"time\\\":\"";
                 os << " >" << toLower(node.name) << "/" << test.cmd << "_" << test.num << "_" << test.name << ".txt";
                 string_q t = (test.num + "." + test.name + ":").substr(0, 12);
                 cout << padRight(t, 12) << " " << padRight(test.cmd, 20) << test.params << " ";
@@ -108,6 +108,7 @@ int main(int argc, const char* argv[]) {
                     }
                     cout << ((turbo == parity) ? greenCheck : redX);
                     passed += (turbo == parity);
+                    failed += (turbo != parity);
                 }
 
                 cout << endl;
@@ -115,7 +116,9 @@ int main(int argc, const char* argv[]) {
         }
         cout << endl;
     }
-    cout << passed << " tests passed " << greenCheck << " " << (tests.size() - passed) << " tests failed " << redX << endl << endl;
+
+    cout << passed << " tests passed " << (passed ? greenCheck : "") << " ";
+    cout << failed << " tests failed " << (failed ? redX : "") << endl << endl;
 
     return 0;
 }

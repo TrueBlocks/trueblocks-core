@@ -78,6 +78,15 @@ string_q showResult(const string_q& result, const string_q& msg) {
     }
     return os.str();
 }
+string_q showCommand(const string_q& method, const string_q& params, const string_q& url) {
+    ostringstream os;
+    os << "curl -s ";
+    os << "--data '{\"method\":\"" << method;
+    os << "\",\"params\":" << params << ",\"id\":\"1\",\"jsonrpc\":\"2.0\"}' ";
+    os << "-H \"Content-Type: application/json\" ";
+    os << "-X POST " << url;
+    return os.str();
+}
 #define PRINT(msg)                                                                                                     \
     if (debugging) {                                                                                                   \
         cout.flush();                                                                                                  \
@@ -103,6 +112,7 @@ string_q showResult(const string_q& result, const string_q& msg) {
         PRINT(msg);                                                                                                    \
     }
 #else  // DEBUG_RPC
+#define showCommand(a, b, c) string_q("")
 #define PRINTQ(msg)
 #define PRINT(msg)
 #define PRINTL(msg)
@@ -224,6 +234,7 @@ string_q callRPC(const string_q& method, const string_q& params, bool raw) {
 //-------------------------------------------------------------------------
 string_q CCurlContext::perform(const string_q& method, const string_q& params, bool raw) {
     PRINTL("perform:\nmethod: " + method + "\nparams: " + params);
+    PRINTL(showCommand(method, params, getCurlContext()->baseURL))
     //        getCurlContext()->methodMap[method]++;
     getCurlContext()->methodCnt++;
     getCurlContext()->setPostData(method, params);
