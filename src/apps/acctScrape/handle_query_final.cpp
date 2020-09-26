@@ -148,7 +148,7 @@ bool COptions::visitBinaryFile(const string_q& path, void* data) {
             if (found) {
                 indexHit = true;
                 options->stats.nPositive++;
-                hits += (monitor->address.substr(0, 6) + "..");
+                hits += (monitor->address.substr(0, 6) + "...");
                 CAddressRecord_base* addrsOnFile =
                     reinterpret_cast<CAddressRecord_base*>(rawData + sizeof(CHeaderRecord_base));
                 CAppearance_base* blocksOnFile = reinterpret_cast<CAppearance_base*>(&addrsOnFile[nAddrs]);
