@@ -334,7 +334,7 @@ bool loadTraces(CTransaction& trans, blknum_t bn, blknum_t txid, bool useCache, 
 //-------------------------------------------------------------------------
 bool getFullReceipt(CTransaction* trans, bool needsTrace) {
     getReceipt(trans->receipt, trans->hash);
-    if (trans->blockNumber >= byzantiumBlock || isTurboGeth()) {
+    if (trans->blockNumber >= byzantiumBlock) {
         trans->isError = (trans->receipt.status == 0);
 
     } else if (needsTrace && trans->gas == trans->receipt.gasUsed) {
@@ -681,9 +681,6 @@ bool nodeHasTraces(void) {
     // 0x6df0b4a0d15ae3b925b9819646a0cff4d1bc0a53b294c0d84d884865302d13a5) we know there were exactly 23 traces as per
     // Parity. We check that here to see if the node is running with --tracing enabled. Not sure how this works with
     // Geth
-    // TODO(tjayrush): Remove this special case for TurboGeth when they support traces fully
-    if (isTurboGeth())
-        return true;
     size_t count = getTraceCount("0x6df0b4a0d15ae3b925b9819646a0cff4d1bc0a53b294c0d84d884865302d13a5");
     return (count == 23);
 }

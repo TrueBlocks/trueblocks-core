@@ -229,9 +229,19 @@ bool COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, cons
                 for (auto line : lines) {
                     if (last != line) {
                         bool has = false;
-                        CStringArray removes = {"author",    "chainId", "creates",       "condition",
-                                                "publicKey", "raw",     "standardV",     "transactionLogIndex",
-                                                "root",      "mined",   "\"type\":\"\"", "\"status\":\"0x1\""};
+                        CStringArray removes = {"author",
+                                                "chainId",
+                                                "creates",
+                                                "condition",
+                                                "publicKey",
+                                                "raw",
+                                                "standardV",
+                                                "transactionLogIndex",
+                                                "root",
+                                                "mined",
+                                                "\"type\":\"\"",
+                                                "\"status\":\"0x1\"",
+                                                "\"status\": \"0x1\""};
                         for (auto r : removes)
                             has = (has || contains(line, r));
                         if (!has && startsWith(line, "\"") && !startsWith(line, "\"0x"))

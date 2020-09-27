@@ -415,6 +415,12 @@ string_q nextTraceChunk_custom(const string_q& fieldIn, const void* dataPtr) {
                     }
                 }
                 break;
+            case 'r':
+                if (fieldIn % "result") {
+                    if (isTurboGeth() && !tra->error.empty()) {
+                        return "{}";
+                    }
+                }
             case 't':
                 // Normally, we don't have to do this, but traceAddress is a weird case. It's an array, but we don't
                 // really want to present it that way.
