@@ -1,0 +1,38 @@
+{
+  "data": [],
+  "types": [
+    {
+      "type": "CTrace",
+      "fields": [
+        {
+          "name": "traceAddress",
+          "type": "text"
+        },
+        {
+          "name": "type",
+          "type": "text"
+        },
+        {
+          "name": "error",
+          "type": "text"
+        },
+        {
+          "name": "action",
+          "type": "object"
+        },
+        {
+          "name": "result",
+          "type": "object"
+        },
+        {
+          "name": "articulatedTrace",
+          "type": "object"
+        },
+        {
+          "name": "compressedTrace",
+          "type": "text"
+        }
+      ]
+    }
+  ]
+}

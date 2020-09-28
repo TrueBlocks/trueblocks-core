@@ -44,8 +44,8 @@ int main(int argc, const char* argv[]) {
         ostringstream data;
         data << options.stats.Format(STR_DISPLAY_ACCTSCRAPESTATS);
 
-        LOG_INFO(header.str());
-        LOG_INFO(data.str());
+        LOG4(header.str());
+        LOG4(data.str());
 
         header << endl;
         data << endl;

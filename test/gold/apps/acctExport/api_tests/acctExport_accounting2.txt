@@ -405,8 +405,6 @@
       "0xBlockReward": 3,
       "0xUncleReward": 2
     },
-    "namedTo": {},
-    "unNamedTo": {},
     "start": "0xdeadbeef",
     "end": "0xdeadbeef",
     "accountedFor": {

@@ -55,14 +55,7 @@ bool COptions::handle_logs(void) {
                     lastStatement = nums;
                 }
 
-                addNeighbor(fromAddrMap, trans.from);
-                addNeighbor(toAddrMap, trans.to);
-                for (auto log : trans.receipt.logs)
-                    addNeighbor(emitterAddrMap, log.address);
-                for (auto trace : trans.traces) {
-                    addNeighbor(fromTraceAddrMap, trace.action.from);
-                    addNeighbor(toTraceAddrMap, trace.action.to);
-                }
+                markNeighbors(trans);
 
                 HIDE_FIELD(CFunction, "message");
                 if (!isTestMode() && !(nExported % FREQ)) {
@@ -114,14 +107,7 @@ bool COptions::handle_logs(void) {
                     lastStatement = nums;
                 }
 
-                addNeighbor(fromAddrMap, trans.from);
-                addNeighbor(toAddrMap, trans.to);
-                for (auto log : trans.receipt.logs)
-                    addNeighbor(emitterAddrMap, log.address);
-                for (auto trace : trans.traces) {
-                    addNeighbor(fromTraceAddrMap, trace.action.from);
-                    addNeighbor(toTraceAddrMap, trace.action.to);
-                }
+                markNeighbors(trans);
 
                 if (articulate) {
                     abiMap[trans.to]++;

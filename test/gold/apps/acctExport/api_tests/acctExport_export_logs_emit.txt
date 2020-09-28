@@ -1,0 +1,42 @@
+{
+  "data": [],
+  "types": [
+    {
+      "type": "CLogEntry",
+      "fields": [
+        {
+          "name": "address",
+          "type": "address"
+        },
+        {
+          "name": "blockNumber",
+          "type": "blocknum"
+        },
+        {
+          "name": "logIndex",
+          "type": "blocknum"
+        },
+        {
+          "name": "topics",
+          "type": "object|ts_array"
+        },
+        {
+          "name": "data",
+          "type": "text"
+        },
+        {
+          "name": "articulatedLog",
+          "type": "object"
+        },
+        {
+          "name": "compressedLog",
+          "type": "text"
+        },
+        {
+          "name": "transactionIndex",
+          "type": "blocknum"
+        }
+      ]
+    }
+  ]
+}

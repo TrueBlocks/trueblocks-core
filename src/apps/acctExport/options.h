@@ -40,6 +40,7 @@ class COptions : public COptionsBase {
     uint64_t max_traces;
     bool freshen;
     blknum_t freshen_max;
+    bool factory;
     bool emitter;
     bool count;
     blknum_t first_record;
@@ -61,6 +62,7 @@ class COptions : public COptionsBase {
     addr_count_map_t toAddrMap;
     addr_count_map_t fromAddrMap;
     addr_count_map_t emitterAddrMap;
+    addr_count_map_t creationMap;
     addr_count_map_t toTraceAddrMap;
     addr_count_map_t fromTraceAddrMap;
     addr_count_map_t abiMap;
@@ -94,6 +96,7 @@ class COptions : public COptionsBase {
     bool handle_traces(void);
 
     void addNeighbor(addr_count_map_t& map, const address_t& addr);
+    void markNeighbors(const CTransaction& trans);
     bool reportNeighbors(void);
 };
 

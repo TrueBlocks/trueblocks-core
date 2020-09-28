@@ -11,9 +11,25 @@
 
 //-----------------------------------------------------------------------
 void COptions::addNeighbor(addr_count_map_t& map, const address_t& addr) {
-    if (addr == expContext().accountedFor || isZeroAddr(addr))
+    if ((addr == expContext().accountedFor || isZeroAddr(addr)))
         return;
     map[addr]++;
+}
+
+//-----------------------------------------------------------------------
+void COptions::markNeighbors(const CTransaction& trans) {
+    addNeighbor(fromAddrMap, trans.from);
+    addNeighbor(toAddrMap, trans.to);
+    for (auto log : trans.receipt.logs) {
+        if (emitter)
+            emitterAddrMap[log.address]++;
+    }
+    for (auto trace : trans.traces) {
+        fromTraceAddrMap[trace.action.from]++;
+        toTraceAddrMap[trace.action.to]++;
+        if (factory)
+            creationMap[trace.result.newContract]++;
+    }
 }
 
 //-----------------------------------------------------------------------
@@ -43,31 +59,34 @@ inline bool operator<(const CNameStats& v1, const CNameStats& v2) {
     return v1.address < v2.address;
 }
 
-//-----------------------------------------------------------------------
-bool COptions::reportNeighbors(void) {
+//-------------------------------------------------------------------------
+bool doOne(COptions* options, const addr_count_map_t& theMap, const string_q& type) {
+    if (theMap.size() == 0)
+        return false;
+
     bool testMode = isTestMode() || getEnvStr("HIDE_NAMES") == "true";
 
-    CNameStatsArray fromUnnamed;
-    CNameStatsArray fromNamed;
-    for (auto addr : fromAddrMap) {
+    CNameStatsArray unnamed;
+    CNameStatsArray named;
+    for (auto addr : theMap) {
         CAccountName acct;
         acct.address = addr.first;
-        getNamedAccount(acct, addr.first);
+        options->getNamedAccount(acct, addr.first);
         if (acct.name.empty()) {
             CNameStats stats(acct.address, acct.tags, acct.name, addr.second);
-            fromUnnamed.push_back(stats);
+            unnamed.push_back(stats);
         } else {
             CNameStats stats(acct.address, acct.tags, acct.name, addr.second);
-            fromNamed.push_back(stats);
+            named.push_back(stats);
         }
     }
 
     {
-        sort(fromNamed.begin(), fromNamed.end());
+        sort(named.begin(), named.end());
         ostringstream os;
         bool frst = true;
-        os << ", \"namedFrom\": {";
-        for (auto stats : fromNamed) {
+        os << ", \"named" << type << "\": {";
+        for (auto stats : named) {
             if (testMode && contains(stats.tags, "Friends"))
                 stats.name = "Name " + stats.address.substr(0, 10);
             if (!frst)
@@ -81,11 +100,11 @@ bool COptions::reportNeighbors(void) {
     }
 
     {
-        sort(fromUnnamed.begin(), fromUnnamed.end());
+        sort(unnamed.begin(), unnamed.end());
         ostringstream os;
-        os << ", \"unNamedFrom\": {";
+        os << ", \"unNamed" << type << "\": {";
         bool frst = true;
-        for (auto stats : fromUnnamed) {
+        for (auto stats : unnamed) {
             if (!frst)
                 os << ",";
             os << "\"" << stats.address << "\": " << stats.count;
@@ -94,59 +113,20 @@ bool COptions::reportNeighbors(void) {
         os << "}";
         expContext().fmtMap["meta"] += os.str();
     }
+    return true;
+}
 
-    CNameStatsArray toUnnamed;
-    CNameStatsArray toNamed;
-    for (auto addr : toAddrMap) {
-        CAccountName acct;
-        acct.address = addr.first;
-        getNamedAccount(acct, addr.first);
-        if (isZeroAddr(acct.address)) {
-            acct.tags = "Contract Creation";
-            acct.name = "Contract Creation";
-        }
-        if (acct.name.empty()) {
-            CNameStats stats(acct.address, acct.tags, acct.name, addr.second);
-            toUnnamed.push_back(stats);
-        } else {
-            CNameStats stats(acct.address, acct.tags, acct.name, addr.second);
-            toNamed.push_back(stats);
-        }
+//-----------------------------------------------------------------------
+bool COptions::reportNeighbors(void) {
+    doOne(this, fromAddrMap, "From");
+    doOne(this, toAddrMap, "To");
+    if (emitter)
+        doOne(this, emitterAddrMap, "Emitters");
+    if (factory)
+        doOne(this, creationMap, "Creations");
+    if (traces) {
+        doOne(this, fromTraceAddrMap, "TraceFrom");
+        doOne(this, toTraceAddrMap, "TraceTo");
     }
-
-    {
-        sort(toNamed.begin(), toNamed.end());
-        ostringstream os;
-        bool frst = true;
-        os << ", \"namedTo\": {";
-        for (auto stats : toNamed) {
-            if (testMode && contains(stats.tags, "Friends"))
-                stats.name = "Name " + stats.address.substr(0, 10);
-            if (!frst)
-                os << ",";
-            os << "\"" << stats.address << "\": { \"tags\": \"" << stats.tags << "\", \"name\": \"" << stats.name
-               << "\", \"count\": " << stats.count << " }";
-            frst = false;
-        }
-        os << "}\n";
-        expContext().fmtMap["meta"] += os.str();
-    }
-
-    {
-        sort(toUnnamed.begin(), toUnnamed.end());
-        ostringstream os;
-        os << ", \"unNamedTo\": {";
-        bool frst = true;
-        for (auto stats : toUnnamed) {
-            if (!frst)
-                os << ",";
-            os << "\"" << stats.address << "\": " << stats.count;
-            frst = false;
-        }
-        os << "}";
-
-        expContext().fmtMap["meta"] += os.str();
-    }
-
     return true;
 }

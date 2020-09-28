@@ -148,7 +148,7 @@ bool COptions::handle_scrape(void) {
                         if (monitor.cntBefore != monitor.cntAfter) {
                             ostringstream os1;
                             os1 << "acctExport " << monitor.address << " --freshen";  // << " >/dev/null";
-                            LOG_INFO("Calling: ", os1.str());
+                            LOG_INFO("Calling: ", os1.str(), string_q(40, ' '));
                             // clang-format off
                             if (system(os1.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings
                             // clang-format on
@@ -157,7 +157,7 @@ bool COptions::handle_scrape(void) {
                                 continue;
                         }
                     }
-                    cerr << "\t  freshening: " << cYellow << "    finished." << cOff
+                    cerr << "\t  freshening: " << cYellow << "    finished." << string_q(50, ' ') << cOff
                          << "                                                           " << endl;
                 }
                 usleep(scrapeSleep == 0 ? 500000 : scrapeSleep * 1000000);  // stay responsive to cntrl+C

@@ -28,6 +28,7 @@ static const COption params[] = {
     COption("all_abis", "A", "", OPT_HIDDEN | OPT_SWITCH, "load all previously cached abi files"),
     COption("freshen", "f", "", OPT_HIDDEN | OPT_SWITCH, "freshen but do not print the exported data"),
     COption("freshen_max", "F", "<blknum>", OPT_HIDDEN | OPT_FLAG, "maximum number of records to process for --freshen option"),  // NOLINT
+    COption("factory", "y", "", OPT_HIDDEN | OPT_SWITCH, "scan for contract creations from the given address(es) and report address of those contracts"),  // NOLINT
     COption("emitter", "M", "", OPT_HIDDEN | OPT_SWITCH, "available for --logs option only, export will only export if the address emitted the event"),  // NOLINT
     COption("count", "U", "", OPT_SWITCH, "only available for --appearances mode, if present return only the number of records"),  // NOLINT
     COption("start", "S", "<blknum>", OPT_HIDDEN | OPT_SKIP, "first block to process (inclusive)"),
@@ -114,6 +115,9 @@ bool COptions::parseArguments(string_q& command) {
         } else if (startsWith(arg, "-F:") || startsWith(arg, "--freshen_max:")) {
             if (!confirmBlockNum("freshen_max", freshen_max, arg, latest))
                 return false;
+
+        } else if (arg == "-y" || arg == "--factory") {
+            factory = true;
 
         } else if (arg == "-M" || arg == "--emitter") {
             emitter = true;
@@ -221,11 +225,14 @@ bool COptions::parseArguments(string_q& command) {
     if (emitter && monitors.size() > 1)
         EXIT_USAGE("The emitter option is only available when exporting logs from a single address. Quitting...");
 
+    if (factory && !traces)
+        EXIT_USAGE("The facotry option is only available when exporting traces. Quitting...");
+
     if (monitors.size() == 0)
         EXIT_USAGE("You must provide at least one Ethereum address. Quitting...");
 
     if (count) {
-        if (receipts || logs || traces || emitter)
+        if (receipts || logs || traces || emitter || factory)
             EXIT_USAGE("--count option is only available with --appearances option. Quitting...");
         bool isText = expContext().exportFmt != JSON1 && expContext().exportFmt != API1;
         string_q format =
@@ -376,6 +383,7 @@ void COptions::Init(void) {
     max_traces = getGlobalConfig("acctExport")->getConfigInt("settings", "max_traces", 250);
     freshen = false;
     freshen_max = 5000;
+    factory = false;
     emitter = false;
     count = false;
     first_record = 0;
