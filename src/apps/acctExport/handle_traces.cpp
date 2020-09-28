@@ -83,7 +83,7 @@ bool COptions::handle_traces(void) {
                     if (articulate)
                         abis.articulateTrace(&trace);
                     nExported++;
-                    if (shouldDisplay) {
+                    if (shouldDisplay && !factory) {
                         cout << ((isJson() && !first) ? ", " : "");
                         cout << trace.Format() << endl;
                         first = false;
@@ -100,7 +100,7 @@ bool COptions::handle_traces(void) {
                     copy.transactionHash = uint_2_Hex(trace.blockNumber * 100000 + trace.transactionIndex);
                     copy.action.input = "0x";
                     nExported++;
-                    if (shouldDisplay) {
+                    if (shouldDisplay && !factory) {
                         cout << ((isJson() && !first) ? ", " : "");
                         cout << copy.Format() << endl;
                         first = false;
@@ -119,10 +119,13 @@ bool COptions::handle_traces(void) {
                     copy.transactionHash = uint_2_Hex(trace.blockNumber * 100000 + trace.transactionIndex);
                     copy.action.input = trace.action.input;
                     nExported++;
-                    if (shouldDisplay) {
+                    if (shouldDisplay && !factory) {
                         cout << ((isJson() && !first) ? ", " : "");
                         cout << copy.Format() << endl;
                         first = false;
+                    } else if (factory) {
+                        cout << ((isJson() && !first) ? ", " : "");
+                        cout << copy.Format() << endl;
                     }
                 }
             }
