@@ -16,6 +16,9 @@ bool COptions::handle_traces(void) {
 
     bool shouldDisplay = !freshen;
 
+    blknum_t firstBlock = items.size() ? items[0].blk : 0;
+    blknum_t lastBlock = items.size() ? items[items.size() - 1].blk : latestBlock;
+
     bool first = true;
     for (size_t i = 0; i < items.size() && (!freshen || (nExported < freshen_max)); i++) {
         const CAppearance_base* item = &items[i];
@@ -133,9 +136,13 @@ bool COptions::handle_traces(void) {
             HIDE_FIELD(CFunction, "message");
             if (!isTestMode() && (isApiMode() || !(i % 3))) {
                 ostringstream os;
-                os << "Exporting " << nExported << " ";
-                os << plural(className) << "of ";
-                os << nTransactions << " (max " << nProcessing << ") txs for address " << monitors[0].address;
+                os << "Exported " << nExported << " ";
+                os << plural(className) << " from ";
+                os << nProcessing << " txs (blocks: ";
+                os << firstBlock << "-[" << cGreen;
+                os << item->blk << cOff << "]-";
+                os << lastBlock << " ";
+                os << "for address " << monitors[0].address;
                 LOG_INFO(os.str() + "\r");
             }
         }

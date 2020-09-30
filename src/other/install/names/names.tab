@@ -2376,6 +2376,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens	0x5c543e7ae0a1104f78406c340e9c64fd9fce5170	vSlice	VSL	Etherscan.io		An Ethereum Gaming Platform Token	false	false	false
 34-Humanity DAO	0x5c628e4a2320a0f2c0cc749102f4f99b48626166	WaitfortheHumanityDAOtovoteyouin		https://www.humanitydao.org/humans			false	false	false
 50-Tokens:ERC20	0x5c64031c62061865e5fd0f53d3cdaef80f72e99d	HASHGARD	GARD	On Chain	18	The protocol of distributed and trusted asset management.	false	false	false
+30-Contracts	0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f	UniSwap Factory		EtherScan			false	false	false
 74-DaoDrain	0x5c6e67ccd5849c0d29219c4f95f1a7a93b3f5dc5	Dao Drain 013		GethSource Ether Camp			false	false	false
 34-Humanity DAO	0x5c739ede82ac34fd9956c7ba8ecd1726abfbbccb	paulith		https://www.humanitydao.org/humans			false	false	false
 50-Tokens:ERC20	0x5c743a35e903f6c584514ec617acee0611cf44f3	Experty Token	EXY	On Chain	18	emocratizing the digital consultations market	false	false	false

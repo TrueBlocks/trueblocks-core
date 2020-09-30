@@ -2079,6 +2079,18 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
+    "tags": "30-Contracts",
+    "address": "0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f",
+    "name": "UniSwap Factory",
+    "symbol": "",
+    "source": "EtherScan",
+    "decimals": 0,
+    "description": "",
+    "is_custom": false,
+    "is_prefund": false
+  },
+  {
+    "deleted": false,
     "tags": "74-DaoDrain",
     "address": "0x5c6e67ccd5849c0d29219c4f95f1a7a93b3f5dc5",
     "name": "Dao Drain 013",
@@ -2394,18 +2406,6 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "30-Contracts",
     "address": "0x6c5dc1dcda3d309a6e919e6d0965f197e0fc1913",
     "name": "GU: Legendary Pack Two",
-    "symbol": "",
-    "source": "Etherscan",
-    "decimals": 0,
-    "description": "",
-    "is_custom": false,
-    "is_prefund": false
-  },
-  {
-    "deleted": false,
-    "tags": "36-Compound",
-    "address": "0x6c8c6b02e7b2be14d4fa6022dfd6d75921d90e4e",
-    "name": "Compound: cBAT",
     "symbol": "",
     "source": "Etherscan",
     "decimals": 0,

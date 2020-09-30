@@ -82,7 +82,7 @@ bool COptions::handle_receipts(void) {
             if (!isTestMode() && (isApiMode() || !(i % 3))) {
                 ostringstream os;
                 os << "Exporting " << nExported << " ";
-                os << plural(className) << "of ";
+                os << plural(className) << " of ";
                 os << nTransactions << " (max " << nProcessing << ") txs for address " << monitors[0].address;
                 LOG_INFO(os.str() + "\r");
             }
