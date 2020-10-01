@@ -2081,7 +2081,7 @@ ethNames Ether --expand --verbose --fmt json
     "deleted": false,
     "tags": "30-Contracts",
     "address": "0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f",
-    "name": "UniSwap Factory",
+    "name": "Uniswap V2: Factory Contract",
     "symbol": "",
     "source": "EtherScan",
     "decimals": 0,

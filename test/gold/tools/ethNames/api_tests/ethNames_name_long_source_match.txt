@@ -172,7 +172,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 31-Gitcoin Grants:Grant	0x5b92bd6c37a1958f95ea1e56b6121a89314cfb66	Grant 337 CREAM: Confidential Reliable Ethereum Anonymous Mixer		https://gitcoin.co/grants/337/cream-confidential-reliable-ethereum-anonymous-mix		https://github.com/couger-inc/cream	false	false	false
 30-Contracts	0x5c1749bc5734b8f9ea7cda7e38b47432c6cffb66	GU: Board		Etherscan			false	false	false
 50-Tokens	0x5c543e7ae0a1104f78406c340e9c64fd9fce5170	vSlice	VSL	Etherscan.io		An Ethereum Gaming Platform Token	false	false	false
-30-Contracts	0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f	UniSwap Factory		EtherScan			false	false	false
+30-Contracts	0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f	Uniswap V2: Factory Contract		EtherScan			false	false	false
 74-DaoDrain	0x5c6e67ccd5849c0d29219c4f95f1a7a93b3f5dc5	Dao Drain 013		GethSource Ether Camp			false	false	false
 74-DaoDrain	0x5c8536898fbb74fc7445814902fd08422eac56d0	Dao Drain 009		GethSource Ether Camp			false	false	false
 74-DaoDrain	0x5d2b2e6fcbe3b11d26b525e085ff818dae332479	Dao Drain 063		GethSource Ether Camp			false	false	false
