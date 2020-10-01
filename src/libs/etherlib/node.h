@@ -107,16 +107,9 @@ extern bool readNodeFromBinary(CBaseNode& item, const string_q& fileName);
 
 //-------------------------------------------------------------------------
 extern string_q getVersionFromClient(void);
-inline bool isTurboGeth(void) {
-    return contains(toLower(getVersionFromClient()), "turbogeth");
-}
-inline bool isGeth(void) {
-    string_q vers = toLower(getVersionFromClient());
-    return contains(vers, "geth") && !contains(vers, "turbogeth");
-}  // NOLINT
-inline bool isParity(void) {
-    return contains(toLower(getVersionFromClient()), "parity");
-}  // NOLINT
+extern bool isTurboGeth(void);
+extern bool isGeth(void);
+extern bool isParity(void);
 extern bool getAccounts(CAddressArray& addrs);
 extern bool getChainHead(void);
 extern bool getNodeIds(uint64_t& clientId, uint64_t& networkId);

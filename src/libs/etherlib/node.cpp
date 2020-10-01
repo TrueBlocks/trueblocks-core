@@ -334,7 +334,7 @@ bool loadTraces(CTransaction& trans, blknum_t bn, blknum_t txid, bool useCache, 
 //-------------------------------------------------------------------------
 bool getFullReceipt(CTransaction* trans, bool needsTrace) {
     getReceipt(trans->receipt, trans->hash);
-    if (trans->blockNumber >= byzantiumBlock) {
+    if (trans->blockNumber >= byzantiumBlock || isTurboGeth()) {
         trans->isError = (trans->receipt.status == 0);
 
     } else if (needsTrace && trans->gas == trans->receipt.gasUsed) {
@@ -546,9 +546,27 @@ bool queryRawLogs(string_q& results, uint64_t fromBlock, uint64_t toBlock, const
     return true;
 }
 
+static string_q clientVersion;
 //-------------------------------------------------------------------------
 string_q getVersionFromClient(void) {
-    return callRPC("web3_clientVersion", "[]", false);
+    if (clientVersion.empty())
+        clientVersion = callRPC("web3_clientVersion", "[]", false);
+    return clientVersion;
+}
+
+//-------------------------------------------------------------------------
+bool isTurboGeth(void) {
+    return contains(toLower(getVersionFromClient()), "turbogeth");
+}
+
+//-------------------------------------------------------------------------
+bool isGeth(void) {
+    return contains(toLower(getVersionFromClient()), "geth") && !isTurboGeth();
+}
+
+//-------------------------------------------------------------------------
+bool isParity(void) {
+    return contains(toLower(getVersionFromClient()), "parity");
 }
 
 //-------------------------------------------------------------------------
