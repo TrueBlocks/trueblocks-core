@@ -152,9 +152,7 @@ void manageFields(const string_q& listIn, bool show) {
 
 //-----------------------------------------------------------------------
 void manageFields(const string_q& formatIn) {
-
-    if (countOf(formatIn, '[') != countOf(formatIn, ']') ||
-        countOf(formatIn, '{') != countOf(formatIn, '}')) {
+    if (countOf(formatIn, '[') != countOf(formatIn, ']') || countOf(formatIn, '{') != countOf(formatIn, '}')) {
         LOG_ERR("Mismatched brackets in format string: ", formatIn);
         return;
     }
@@ -165,14 +163,14 @@ void manageFields(const string_q& formatIn) {
     string_q fields;
     CStringArray p1;
     explode(p1, format, '[');
-    for (size_t i = 0 ; i < p1.size() ; i++) {
+    for (size_t i = 0; i < p1.size(); i++) {
         CStringArray p2;
         explode(p2, p1[i], '{');
-        for (size_t j = 0 ; j < p2.size() ; j++) {
+        for (size_t j = 0; j < p2.size(); j++) {
             string_q field = toLower(nextTokenClear(p2[j], '}') + ",");
             CStringArray p3;
             explode(p3, field, ':');
-            fields += p3[p3.size()-1];
+            fields += p3[p3.size() - 1];
         }
     }
 

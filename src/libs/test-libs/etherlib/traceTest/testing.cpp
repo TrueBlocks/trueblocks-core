@@ -87,7 +87,11 @@ int main(int argc, const char* argv[]) {
                     os << "-H \"x-api-key: " << node.APIKey << "\" ";
                 os << "-X POST " << node.URL;
                 os << " | sed -f sed_file";
-                os << " | jq -S | grep -v \"\\\"time\\\":\"";
+                os << " | jq -S ";
+                if (!contains(test.cmd, "trace_"))
+                    os << "-r 'del(.result[\"sealFields\",\"author\"]) | "
+                          "del(.result[\"chainId\",\"condition\",\"creates\",\"publicKey\",\"raw\",\"standardV\","
+                          "\"time\",\"transactionLogIndex\",\"type\"])' ";
                 os << " >" << toLower(node.name) << "/" << test.cmd << "_" << test.num << "_" << test.name << ".txt";
                 string_q t = (test.num + "." + test.name + ":").substr(0, 12);
                 cout << padRight(t, 12) << " " << padRight(test.cmd, 20) << test.params << " ";

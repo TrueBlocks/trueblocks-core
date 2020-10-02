@@ -58,7 +58,7 @@ bool COptions::handle_logs(void) {
                 markNeighbors(trans);
 
                 HIDE_FIELD(CFunction, "message");
-                if (!isTestMode() && !(nProcessed % FREQ)) {
+                if (!isTestMode() && !(i % FREQ)) {
                     blknum_t current = first_record + nProcessed;
                     blknum_t goal = min(first_record + max_records, nTransactions);
                     ostringstream post;
@@ -144,7 +144,7 @@ bool COptions::handle_logs(void) {
                     writeTransToBinary(trans, txFilename);
 
                 HIDE_FIELD(CFunction, "message");
-                if (!isTestMode() && !(nProcessed % FREQ)) {
+                if (!isTestMode() && !(i % FREQ)) {
                     blknum_t current = first_record + nProcessed;
                     blknum_t goal = min(first_record + max_records, nTransactions);
                     ostringstream post;

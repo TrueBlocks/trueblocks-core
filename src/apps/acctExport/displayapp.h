@@ -41,12 +41,12 @@ class CDisplayApp : public CBaseNode {
     CDisplayApp(address_t a, blknum_t b, blknum_t t) : address(a), blockNumber(b), transactionIndex(t) {
     }
     // EXISTING_CODE
-    bool operator==(const CDisplayApp& app) const;
-    bool operator!=(const CDisplayApp& app) const {
-        return !operator==(app);
+    bool operator==(const CDisplayApp& item) const;
+    bool operator!=(const CDisplayApp& item) const {
+        return !operator==(item);
     }
     friend bool operator<(const CDisplayApp& v1, const CDisplayApp& v2);
-    friend ostream& operator<<(ostream& os, const CDisplayApp& app);
+    friend ostream& operator<<(ostream& os, const CDisplayApp& item);
 
   protected:
     void clear(void);
@@ -122,7 +122,7 @@ inline CDisplayApp& CDisplayApp::operator=(const CDisplayApp& di) {
 }
 
 //-------------------------------------------------------------------------
-inline bool CDisplayApp::operator==(const CDisplayApp& app) const {
+inline bool CDisplayApp::operator==(const CDisplayApp& item) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)

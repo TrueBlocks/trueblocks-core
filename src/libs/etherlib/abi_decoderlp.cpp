@@ -310,6 +310,9 @@ string_q parse_u32__u32_(const string_q& input, const void* data) {
 string_q parse_u64__u64_(const string_q& input, const void* data) {
     return parse_u64_(middle(input, 0, 64)) + "," + parse_u64_(middle(input, 64, 64));
 }
+string_q parse_u112_u112(const string_q& input, const void* data) {
+    return parse_u256(middle(input, 0, 64)) + "," + parse_u256(middle(input, 64, 64));
+}
 string_q parse_u256_addr(const string_q& input, const void* data) {
     return parse_u256(middle(input, 0, 64)) + "," + parse_addr(middle(input, 64, 64));
 }
@@ -362,6 +365,10 @@ string_q parse_u256_u256_u256(const string_q& input, const void* data) {
 string_q parse_addr_addr_addr_u256(const string_q& input, const void* data) {
     return parse_addr(middle(input, 0, 64)) + "," + parse_addr(middle(input, 64, 64)) + "," +
            parse_addr(middle(input, 128, 64)) + "," + parse_u256(middle(input, 192, 64));
+}
+string_q parse_addr_addr_u256_u256(const string_q& input, const void* data) {
+    return parse_addr(middle(input, 0, 64)) + "," + parse_addr(middle(input, 64, 64)) + "," +
+           parse_u256(middle(input, 128, 64)) + "," + parse_u256(middle(input, 192, 64));
 }
 string_q parse_addr_u256_u256_u256(const string_q& input, const void* data) {
     return parse_addr(middle(input, 0, 64)) + "," + parse_u256(middle(input, 64, 64)) + "," +
@@ -426,6 +433,7 @@ void loadParseMap(void) {
     parseMap["uint16,uint16"] = parse_u16__u16_;
     parseMap["uint32,uint32"] = parse_u32__u32_;
     parseMap["uint64,uint64"] = parse_u64__u64_;
+    parseMap["uint112,uint112"] = parse_u112_u112;
     parseMap["uint256,address"] = parse_u256_addr;
     parseMap["uint256,bool"] = parse_u256_bool;
     parseMap["uint256,uint8"] = parse_u256_u8__;
@@ -441,6 +449,7 @@ void loadParseMap(void) {
     parseMap["uint256,address,uint256"] = parse_u256_addr_u256;
     parseMap["uint256,uint256,uint256"] = parse_u256_u256_u256;
     parseMap["address,address,address,uint256"] = parse_addr_addr_addr_u256;
+    parseMap["address,address,uint256,uint256"] = parse_addr_addr_u256_u256;
     parseMap["address,uint256,uint256,uint256"] = parse_addr_u256_u256_u256;
     parseMap["uint256,uint256,uint256,uint256"] = parse_u256_u256_u256_u256;
     parseMap["uint256,uint256,uint256,uint256,uint256"] = parse_u256_u256_u256_u256_u256;
@@ -454,14 +463,16 @@ void loadParseMap(void) {
 //---------------------------------------------------------------------------
 bool decodeRLP(CParameterArray& params, const string_q& desc, const string_q& inputStrIn) {
     string_q inputStr = (inputStrIn == "0x" ? "" : inputStrIn);
-    string_q built;
+    string_q typeList = desc;
+
     // we use fast, simple routines for common patters if we can. This is purely for performance reasons
-    NEXTCHUNKFUNC func = parseMap[desc];
+    NEXTCHUNKFUNC func = parseMap[typeList];
     if (!func) {
+        typeList = "";
         for (auto i : params)
-            built += (i.type + ",");
-        built = trim(built, ',');
-        func = parseMap[built];
+            typeList += (i.type + ",");
+        typeList = trim(typeList, ',');
+        func = parseMap[typeList];
     }
     if (func) {
         if (!inputStr.empty()) {

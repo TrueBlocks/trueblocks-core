@@ -249,11 +249,11 @@ bool CDisplayApp::readBackLevel(CArchive& archive) {
 }
 
 //-------------------------------------------------------------------------
-ostream& operator<<(ostream& os, const CDisplayApp& app) {
+ostream& operator<<(ostream& os, const CDisplayApp& item) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    app.Format(os, "", nullptr);
+    item.Format(os, "", nullptr);
     os << "\n";
     return os;
 }

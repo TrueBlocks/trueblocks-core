@@ -448,7 +448,7 @@ COptions::~COptions(void) {
 }
 
 //-----------------------------------------------------------------------
-bool COptions::loadOneAddress(CAppearanceArray_base& apps, const address_t& addr) {
+bool COptions::loadOneAddress(CAppearanceArray_base& appsOut, const address_t& addr) {
     ENTER("loadOneAddress");
 
     if (hackAppAddr.empty())
@@ -473,13 +473,13 @@ bool COptions::loadOneAddress(CAppearanceArray_base& apps, const address_t& addr
         }
 
         // Add to the apps which may be non-empty
-        apps.reserve(apps.size() + nRecords);
+        appsOut.reserve(appsOut.size() + nRecords);
         for (size_t i = first_record; i < min(((blknum_t)nRecords), (first_record + max_records)); i++) {
             if (buffer[i].blk == 0)
                 prefundAddrMap[buffer[i].txid] = toLower(addr);
             if (buffer[i].txid == 99997 || buffer[i].txid == 99998 || buffer[i].txid == 99999)
                 blkRewardMap[buffer[i].blk] = addr;
-            apps.push_back(buffer[i]);
+            appsOut.push_back(buffer[i]);
         }
 
         delete[] buffer;
