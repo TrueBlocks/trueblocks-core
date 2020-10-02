@@ -17,31 +17,31 @@ bool COptions::handle_statements(void) {
     bool shouldDisplay = !freshen;
 
     CReconciliation lastStatement;
-    if (items.size() > 0 && first_record != 0)
-        lastStatement.endBal = getBalanceAt(expContext().accountedFor, items[0].blk - 1);
+    if (apps.size() > 0 && first_record != 0)
+        lastStatement.endBal = getBalanceAt(expContext().accountedFor, apps[0].blk - 1);
 
     bool first = true;
-    for (size_t i = 0; i < items.size() && (!freshen || (nExported < freshen_max)); i++) {
-        const CAppearance_base* item = &items[i];
-        if (shouldQuit() || item->blk >= ts_cnt)
+    for (size_t i = 0; i < apps.size() && (!freshen || (nProcessed < freshen_max)); i++) {
+        const CAppearance_base* app = &apps[i];
+        if (shouldQuit() || app->blk >= ts_cnt)
             break;
-        if (inRange((blknum_t)item->blk, scanRange.first, scanRange.second)) {
+        if (inRange((blknum_t)app->blk, scanRange.first, scanRange.second)) {
             CBlock block;  // do not move this from this scope
-            block.blockNumber = item->blk;
+            block.blockNumber = app->blk;
             CTransaction trans;
             trans.pBlock = &block;
 
-            string_q txFilename = getBinaryCacheFilename(CT_TXS, item->blk, item->txid);
-            if (item->blk != 0 && fileExists(txFilename)) {
+            string_q txFilename = getBinaryCacheFilename(CT_TXS, app->blk, app->txid);
+            if (app->blk != 0 && fileExists(txFilename)) {
                 // we read the data, if we find it, but....
                 readTransFromBinary(trans, txFilename);
                 trans.finishParse();
                 trans.pBlock = &block;
-                block.timestamp = trans.timestamp = (timestamp_t)ts_array[(item->blk * 2) + 1];
+                block.timestamp = trans.timestamp = (timestamp_t)ts_array[(app->blk * 2) + 1];
 
                 // This data isn't stored, so we need to recreate it
                 if (accounting || statements) {
-                    blknum_t next = i < items.size() - 1 ? items[i + 1].blk : NOPOS;
+                    blknum_t next = i < apps.size() - 1 ? apps[i + 1].blk : NOPOS;
                     CReconciliation nums;
                     nums.blockNumber = trans.blockNumber;
                     nums.transactionIndex = trans.transactionIndex;
@@ -59,8 +59,8 @@ bool COptions::handle_statements(void) {
                 markNeighbors(trans);
 
                 HIDE_FIELD(CFunction, "message");
-                if (!isTestMode() && !(nExported % FREQ)) {
-                    blknum_t current = first_record + nExported;
+                if (!isTestMode() && !(nProcessed % FREQ)) {
+                    blknum_t current = first_record + nProcessed;
                     blknum_t goal = min(first_record + max_records, nTransactions);
                     ostringstream post;
                     post << " txs (max " << goal << ") for address " << monitors[0].address << "\r";
@@ -68,33 +68,33 @@ bool COptions::handle_statements(void) {
                 }
 
             } else {
-                if (item->blk == 0) {
-                    address_t addr = prefundAddrMap[item->txid];
-                    trans.loadTransAsPrefund(item->blk, item->txid, addr, prefundWeiMap[addr]);
+                if (app->blk == 0) {
+                    address_t addr = prefundAddrMap[app->txid];
+                    trans.loadTransAsPrefund(app->blk, app->txid, addr, prefundWeiMap[addr]);
 
-                } else if (item->txid == 99997 || item->txid == 99999) {
-                    trans.loadTransAsBlockReward(item->blk, item->txid, blkRewardMap[item->blk]);
+                } else if (app->txid == 99997 || app->txid == 99999) {
+                    trans.loadTransAsBlockReward(app->blk, app->txid, blkRewardMap[app->blk]);
 
-                } else if (item->txid == 99998) {
-                    uint64_t nUncles = getUncleCount(item->blk);
+                } else if (app->txid == 99998) {
+                    uint64_t nUncles = getUncleCount(app->blk);
                     for (size_t u = 0; u < nUncles; u++) {
                         CBlock uncle;
-                        getUncle(uncle, item->blk, u);
-                        if (uncle.miner == blkRewardMap[item->blk]) {
-                            trans.loadTransAsUncleReward(item->blk, uncle.blockNumber, uncle.miner);
+                        getUncle(uncle, app->blk, u);
+                        if (uncle.miner == blkRewardMap[app->blk]) {
+                            trans.loadTransAsUncleReward(app->blk, uncle.blockNumber, uncle.miner);
                         }
                     }
 
                 } else {
-                    getTransaction(trans, item->blk, item->txid);
+                    getTransaction(trans, app->blk, app->txid);
                     getFullReceipt(&trans, true);
                 }
 
                 trans.pBlock = &block;
-                trans.timestamp = block.timestamp = (timestamp_t)ts_array[(item->blk * 2) + 1];
+                trans.timestamp = block.timestamp = (timestamp_t)ts_array[(app->blk * 2) + 1];
 
                 if (accounting || statements) {
-                    blknum_t next = i < items.size() - 1 ? items[i + 1].blk : NOPOS;
+                    blknum_t next = i < apps.size() - 1 ? apps[i + 1].blk : NOPOS;
                     CReconciliation nums;
                     nums.blockNumber = trans.blockNumber;
                     nums.transactionIndex = trans.transactionIndex;
@@ -145,8 +145,8 @@ bool COptions::handle_statements(void) {
                     writeTransToBinary(trans, txFilename);
 
                 HIDE_FIELD(CFunction, "message");
-                if (!isTestMode() && !(nExported % FREQ)) {
-                    blknum_t current = first_record + nExported;
+                if (!isTestMode() && !(nProcessed % FREQ)) {
+                    blknum_t current = first_record + nProcessed;
                     blknum_t goal = min(first_record + max_records, nTransactions);
                     ostringstream post;
                     post << " txs (max " << goal << ") for address " << monitors[0].address << "\r";
@@ -155,7 +155,7 @@ bool COptions::handle_statements(void) {
             }
 
             for (auto statement : trans.statements) {
-                nExported++;
+                nProcessed++;
                 if (shouldDisplay) {
                     cout << ((isJson() && !first) ? ", " : "");
                     cout << statement.Format() << endl;
@@ -166,12 +166,12 @@ bool COptions::handle_statements(void) {
     }
 
     if (!isTestMode())
-        LOG_PROGRESS1("Reported", (first_record + nExported), nTransactions,
+        LOG_PROGRESS1("Reported", (first_record + nProcessed), nTransactions,
                       " transactions for address " + monitors[0].address + "\r");
 
     for (auto monitor : monitors)
-        if (items.size() > 0)
-            monitor.writeLastExport(items[items.size() - 1].blk);
+        if (apps.size() > 0)
+            monitor.writeLastExport(apps[apps.size() - 1].blk);
 
     reportNeighbors();
 

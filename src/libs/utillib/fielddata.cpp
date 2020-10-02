@@ -152,22 +152,30 @@ void manageFields(const string_q& listIn, bool show) {
 
 //-----------------------------------------------------------------------
 void manageFields(const string_q& formatIn) {
-    // TODO(tjayrush): This can be removed when shipped
-    string_q check = formatIn;
-    replaceAll(check, " {", "{");
-    replaceAll(check, "\t{", "{");
-    check = substitute(check, "[{", "`");
-    size_t cntOn = countOf(check, '`');
-    check = substitute(substitute(check, "`", ""), "}]", "`");
-    if (countOf(check, '`') != cntOn) {
+
+    if (countOf(formatIn, '[') != countOf(formatIn, ']') ||
+        countOf(formatIn, '{') != countOf(formatIn, '}')) {
         LOG_ERR("Mismatched brackets in format string: ", formatIn);
         return;
     }
-    string_q fields;
-    string_q format = substitute(substitute(formatIn, "{", "<field>"), "}", "</field>");
+
+    string_q format = formatIn;
     string_q cl = nextTokenClear(format, ':');
-    while (contains(format, "<field>"))
-        fields += toLower(snagFieldClear(format, "field") + ",");
+
+    string_q fields;
+    CStringArray p1;
+    explode(p1, format, '[');
+    for (size_t i = 0 ; i < p1.size() ; i++) {
+        CStringArray p2;
+        explode(p2, p1[i], '{');
+        for (size_t j = 0 ; j < p2.size() ; j++) {
+            string_q field = toLower(nextTokenClear(p2[j], '}') + ",");
+            CStringArray p3;
+            explode(p3, field, ':');
+            fields += p3[p3.size()-1];
+        }
+    }
+
     manageFields(cl + ":all", false);
     manageFields(cl + ":" + fields, true);
 }

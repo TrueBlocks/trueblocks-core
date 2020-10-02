@@ -249,11 +249,11 @@ bool CMonitorCount::readBackLevel(CArchive& archive) {
 }
 
 //-------------------------------------------------------------------------
-ostream& operator<<(ostream& os, const CMonitorCount& item) {
+ostream& operator<<(ostream& os, const CMonitorCount& app) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    item.Format(os, "", nullptr);
+    app.Format(os, "", nullptr);
     os << "\n";
     return os;
 }

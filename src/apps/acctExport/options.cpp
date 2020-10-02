@@ -161,7 +161,7 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    // Once we know how many exported items there will be (see loadAllAppearances), we will decide
+    // Once we know how many exported appearances there will be (see loadAllAppearances), we will decide
     // what to cache. If the user has either told us via the command line or the config file, we will
     // use those settings. By default, user and config cache settins are off (0), so if they are
     // not zero, we know the user has made their desires known.
@@ -186,7 +186,7 @@ bool COptions::parseArguments(string_q& command) {
         cerr << "";
 
     // ... but may not be done. In loadAllAppearances, if write_opt is not set by user, we set it to cache transactions
-    // or traces if there are less than 1,000 exported items
+    // or traces if there are less than 1,000 exported appearances
 
     for (auto addr : addrs) {
         CMonitor monitor;
@@ -278,6 +278,7 @@ bool COptions::parseArguments(string_q& command) {
 
             format = getGlobalConfig("acctExport")->getConfigStr("display", "format", STR_DISPLAY_TRANSACTION);
             expContext().fmtMap["transaction_fmt"] = cleanFmt(format);
+            manageFields("CTransaction:" + format);
 
             if (format.empty())
                 EXIT_USAGE("For non-json export a 'trans_fmt' string is required. Check your config file. Quitting...");
@@ -286,20 +287,25 @@ bool COptions::parseArguments(string_q& command) {
 
             format = getGlobalConfig("acctExport")->getConfigStr("display", "receipt", STR_DISPLAY_RECEIPT);
             expContext().fmtMap["receipt_fmt"] = cleanFmt(format);
+            manageFields("CReceipt:" + format);
 
             format = getGlobalConfig("acctExport")->getConfigStr("display", "log", STR_DISPLAY_LOGENTRY);
             expContext().fmtMap["logentry_fmt"] = cleanFmt(format);
+            manageFields("CLogEntry:" + format);
 
             format = getGlobalConfig("acctExport")->getConfigStr("display", "statement", STR_DISPLAY_RECONCILIATION);
             expContext().fmtMap["reconciliation_fmt"] = cleanFmt(format);
+            manageFields("CReconciliation:" + format);
 
             format = getGlobalConfig("acctExport")->getConfigStr("display", "trace", STR_DISPLAY_TRACE);
             expContext().fmtMap["trace_fmt"] = cleanFmt(format);
+            manageFields("CTrace:" + format);
 
             // This doesn't really work because CAppearance_base is not a subclass of CBaseNode. We phony it here for
             // future reference.
             format = getGlobalConfig("acctExport")->getConfigStr("display", "appearances", STR_DISPLAY_DISPLAYAPP);
             expContext().fmtMap["displayapp_fmt"] = cleanFmt(format);
+            manageFields("CDisplayApp:" + format);
         }
         HIDE_FIELD(CFunction, "stateMutability");
         HIDE_FIELD(CParameter, "str_default");
@@ -390,7 +396,7 @@ void COptions::Init(void) {
     max_records = NOPOS;
     // END_CODE_INIT
 
-    nExported = 0;
+    nProcessed = 0;
     nProcessing = 0;
     nTransactions = 0;
     nCacheItemsRead = 0;
@@ -399,7 +405,7 @@ void COptions::Init(void) {
 
     monitors.clear();
     counts.clear();
-    items.clear();
+    apps.clear();
 
     expContext().accountedFor = "";
     bytesOnly = "";
@@ -515,34 +521,34 @@ bool COptions::loadAllAppearances(void) {
     // Should be sorted already, so it can't hurt
     sort(tmp.begin(), tmp.end());
 
-    items.push_back(tmp[0]);
-    for (auto item : tmp) {
-        CAppearance_base* prev = &items[items.size() - 1];
+    apps.push_back(tmp[0]);
+    for (auto app : tmp) {
+        CAppearance_base* prev = &apps[apps.size() - 1];
         // TODO(tjayrush): I think this removes dups. Is it really necessary?
-        if (item.blk != prev->blk || item.txid != prev->txid) {
-            if (item.blk > latestBlock) {
+        if (app.blk != prev->blk || app.txid != prev->txid) {
+            if (app.blk > latestBlock) {
                 static bool hasFuture = false;
                 if (!hasFuture) {
-                    LOG_WARN("Cache file contains blocks ahead of the chain. Some items will not be exported.");
+                    LOG_WARN("Cache file contains blocks ahead of the chain. Some apps will not be exported.");
                     hasFuture = true;
                 }
             } else {
-                items.push_back(item);
+                apps.push_back(app);
             }
         }
     }
-    nProcessing = items.size();
+    nProcessing = apps.size();
 
     // Make sure the timestamps column is at least as up to date as this monitor
-    if (items.size()) {
+    if (apps.size()) {
         freshenTimestamps(
-            items[items.size() - 1].blk);  // it's okay to not be able to freshen this. We'll just report less txs
+            apps[apps.size() - 1].blk);  // it's okay to not be able to freshen this. We'll just report less txs
         if (!loadTimestampFile(&ts_array, ts_cnt))
             EXIT_FAIL("Could not open timestamp file.");
 
         // If the user has not told us what to cache via the config file or the command line, we
         // cache transactions and traces if there are less than 1,000 of them...
-        if (!write_opt && items.size() <= 1000)
+        if (!write_opt && apps.size() <= 1000)
             write_opt = (CACHE_TXS | CACHE_TRACES | CACHE_BYDEFAULT);
     }
 

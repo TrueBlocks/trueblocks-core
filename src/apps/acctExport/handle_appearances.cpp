@@ -17,23 +17,23 @@ bool COptions::hanlde_appearances(void) {
     bool shouldDisplay = !freshen;
 
     bool first = true;
-    for (size_t i = 0; i < items.size(); i++) {
-        const CAppearance_base* item = &items[i];
-        if (shouldQuit() || item->blk >= ts_cnt)
+    for (size_t i = 0; i < apps.size(); i++) {
+        const CAppearance_base* app = &apps[i];
+        if (shouldQuit() || app->blk >= ts_cnt)
             break;
-        if (inRange((blknum_t)item->blk, scanRange.first, scanRange.second)) {
-            nExported++;
+        if (inRange((blknum_t)app->blk, scanRange.first, scanRange.second)) {
+            nProcessed++;
             if (shouldDisplay) {
-                CDisplayApp app(hackAppAddr, item->blk, item->txid);
+                CDisplayApp dapp(hackAppAddr, app->blk, app->txid);
                 cout << ((isJson() && !first) ? ", " : "");
-                cout << app.Format() << endl;
+                cout << dapp.Format() << endl;
                 first = false;
             }
         }
     }
 
     if (!isTestMode())
-        LOG_PROGRESS1("Reported", (first_record + nExported), nTransactions,
+        LOG_PROGRESS1("Reported", (first_record + nProcessed), nTransactions,
                       " appearances for address " + monitors[0].address + "\r");
 
     EXIT_NOMSG(true);

@@ -52,8 +52,8 @@ class COptions : public COptionsBase {
     CAbi abis;
     CMonitorArray monitors;
     CMonitorCountArray counts;
-    CAppearanceArray_base items;
-    uint64_t nExported;
+    CAppearanceArray_base apps;
+    uint64_t nProcessed;
     string_q className;
     address_t hackAppAddr;
     blk_addr_map_t prefundAddrMap;
