@@ -75,6 +75,13 @@ size_t decodeTheData(CParameterArray& params, const CStringArray& dataArray, siz
         return false;
     }
 
+    if (readIndex > nDataItems) {
+        cerr << "{ \"error\": \"decodeTheData: readIndex(" << readIndex << ") > nDataItems(" << nDataItems
+        << "). Ignoring...\" }," << endl;
+        level--;
+        return false;
+    }
+
     for (auto& param : params) {
         prettyPrint(params, dataArray, readIndex, dStart);
         bool isBaseType = !contains(param.type, "[");
