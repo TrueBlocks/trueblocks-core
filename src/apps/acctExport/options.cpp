@@ -14,6 +14,7 @@ static const COption params[] = {
     // BEG_CODE_OPTIONS
     // clang-format off
     COption("addrs", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "one or more addresses (0x...) to export"),
+    COption("topics", "", "list<topic>", OPT_POSITIONAL, "filter by one or more logs topics (only for --logs option)"),
     COption("appearances", "p", "", OPT_SWITCH, "export a list of appearances"),
     COption("receipts", "r", "", OPT_SWITCH, "export receipts instead of transaction list"),
     COption("logs", "l", "", OPT_SWITCH, "export logs instead of transaction list"),
@@ -53,6 +54,7 @@ bool COptions::parseArguments(string_q& command) {
 
     // BEG_CODE_LOCAL_INIT
     CAddressArray addrs;
+    CTopicArray topics;
     bool write_txs = false;
     bool write_traces = false;
     bool all_abis = false;
@@ -153,8 +155,12 @@ bool COptions::parseArguments(string_q& command) {
                 return usage("Invalid option: " + arg);
             }
 
-        } else {
+        } else if (isAddress(arg)) {
             if (!parseAddressList2(this, addrs, arg))
+                return false;
+
+        } else {
+            if (!parseTopicList2(this, topics, arg))
                 return false;
 
             // END_CODE_AUTO

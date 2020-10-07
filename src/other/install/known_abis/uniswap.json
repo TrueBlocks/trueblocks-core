@@ -1001,9 +1001,7 @@
     "payable": false,
     "type": "function",
     "gas": 1713
-  }
-]
-[
+  },
   {
     "inputs": [
       {

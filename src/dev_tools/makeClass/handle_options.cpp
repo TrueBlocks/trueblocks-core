@@ -24,6 +24,7 @@ extern const char* STR_CHECK_BUILTIN;
 extern const char* STR_BLOCK_PROCESSOR;
 extern const char* STR_TX_PROCESSOR;
 extern const char* STR_ADDR_PROCESSOR;
+extern const char* STR_TOPIC_PROCESSOR;
 extern const char* STR_STRING_PROCESSOR;
 extern const char* STR_ENUM_PROCESSOR;
 extern const char* STR_CUSTOM_INIT;
@@ -140,6 +141,9 @@ bool COptions::handle_options(void) {
                                     << substitute(option.Format("    CAddressArray [{COMMAND}];"), "addrs2", "addrs")
                                     << endl;
                                 pos_stream << option.Format(STR_ADDR_PROCESSOR) << endl;
+                            } else if (option.data_type == "list<topic>") {
+                                local_stream << option.Format("    CTopicArray [{COMMAND}];") << endl;
+                                pos_stream << option.Format(STR_TOPIC_PROCESSOR) << endl;
                             } else if (startsWith(option.data_type, "list<enum[")) {
                                 local_stream << option.Format("    CStringArray [{COMMAND}];") << endl;
                                 pos_stream << option.Format(STR_ENUM_PROCESSOR) << endl;
@@ -211,6 +215,9 @@ bool COptions::handle_options(void) {
                                     << substitute(option.Format("    CAddressArray [{COMMAND}];"), "addrs2", "addrs")
                                     << endl;
                                 pos_stream << option.Format(STR_ADDR_PROCESSOR) << endl;
+                            } else if (option.data_type == "list<topic>") {
+                                declare_stream << option.Format("    CTopicArray [{COMMAND}];") << endl;
+                                pos_stream << option.Format(STR_TOPIC_PROCESSOR) << endl;
                             } else if (startsWith(option.data_type, "list<enum[")) {
                                 declare_stream << option.Format("    CStringArray [{COMMAND}];") << endl;
                                 pos_stream << option.Format(STR_ENUM_PROCESSOR) << endl;
@@ -551,6 +558,11 @@ const char* STR_TX_PROCESSOR =
 //---------------------------------------------------------------------------------------------------
 const char* STR_ADDR_PROCESSOR =
     "            } else if (!parseAddressList2(this, [{COMMAND}], arg))\n"
+    "                return false;\n";
+
+//---------------------------------------------------------------------------------------------------
+const char* STR_TOPIC_PROCESSOR =
+    "            } else if (!parseTopicList2(this, [{COMMAND}], arg))\n"
     "                return false;\n";
 
 //---------------------------------------------------------------------------------------------------

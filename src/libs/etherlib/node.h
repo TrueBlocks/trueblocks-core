@@ -15,6 +15,7 @@
 #include "node_curl.h"
 #include "cacheentry.h"
 #include "rewards.h"
+#include "logquery.h"
 
 namespace qblocks {
 
@@ -58,28 +59,7 @@ extern bool queryRawUncle(string_q& results, const string_q& blockNum, uint64_t 
 extern bool queryRawTransaction(string_q& results, const hash_t& txHash);
 extern bool queryRawReceipt(string_q& results, const hash_t& txHash);
 extern bool queryRawTrace(string_q& results, const hash_t& hashIn);
-extern bool queryRawLogs(string_q& results, uint64_t fromBlock, uint64_t toBlock, const address_t& addr,
-                         const CTopicArray& topics);  // NOLINT
-inline bool queryRawLogs(string_q& results, uint64_t fromBlock, uint64_t toBlock, const address_t& addr) {
-    CTopicArray unused2;
-    return queryRawLogs(results, fromBlock, toBlock, addr, unused2);
-}  // NOLINT
-inline bool queryRawLogs(string_q& results, uint64_t fromBlock, uint64_t toBlock) {
-    address_t unused1;
-    CTopicArray unused2;
-    return queryRawLogs(results, fromBlock, toBlock, unused1, unused2);
-}  // NOLINT
-extern bool queryRawLogs(string_q& results, const hash_t& hash, const address_t& addr,
-                         const CTopicArray& topics);  // NOLINT
-inline bool queryRawLogs(string_q& results, const hash_t& hash, const address_t& addr) {
-    CTopicArray unused2;
-    return queryRawLogs(results, hash, addr, unused2);
-}  // NOLINT
-inline bool queryRawLogs(string_q& results, const hash_t& hash) {
-    address_t unused1;
-    CTopicArray unused2;
-    return queryRawLogs(results, hash, unused1, unused2);
-}  // NOLINT
+extern bool queryRawLogs(string_q& results, const CLogQuery& query);
 
 //-----------------------------------------------------------------------
 extern string_q getRawBlock(blknum_t bn);

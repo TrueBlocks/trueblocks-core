@@ -13,6 +13,7 @@
 #include <string>
 #include "node.h"
 #include "filenames.h"
+#include "logquery.h"
 
 namespace qblocks {
 
@@ -473,6 +474,12 @@ bool queryRawTrace(string_q& trace, const string_q& hashIn) {
     return true;
 }
 
+//-------------------------------------------------------------------------
+bool queryRawLogs(string_q& results, const CLogQuery& query) {
+    results = callRPC("eth_getLogs", query.toRPC(), true);
+    return true;
+}
+
 //-----------------------------------------------------------------------
 void getTracesByFilter(CTraceArray& traces, const CTraceFilter& filter) {
     if (filter.Format() == CTraceFilter().Format())
@@ -518,32 +525,6 @@ void getTracesByFilter(CTraceArray& traces, const CTraceFilter& filter) {
         traces.push_back(trace);
         trace = CTrace();  // reset
     }
-}
-
-//-------------------------------------------------------------------------
-bool queryRawLogs(string_q& results, hash_t hash, const address_t& addr, const CTopicArray& topics) {
-    string_q data = "[{\"blockHash\":\"[HASH]\",\"address\":\"[ADDR]\"}]";
-    replace(data, "[HASH]", hash);
-    if (addr.empty())
-        replace(data, ",\"address\":\"[ADDR]\"", "");
-    else
-        replace(data, "[ADDR]", addr_2_Str(addr));
-    results = callRPC("eth_getLogs", data, true);
-    return true;
-}
-
-//-------------------------------------------------------------------------
-bool queryRawLogs(string_q& results, uint64_t fromBlock, uint64_t toBlock, const address_t& addr,
-                  const CTopicArray& topics) {
-    string_q data = "[{\"fromBlock\":\"[START]\",\"toBlock\":\"[STOP]\",\"address\":\"[ADDR]\"}]";
-    replace(data, "[START]", uint_2_Hex(fromBlock));
-    replace(data, "[STOP]", uint_2_Hex(toBlock));
-    if (addr.empty())
-        replace(data, ",\"address\":\"[ADDR]\"", "");
-    else
-        replace(data, "[ADDR]", addr_2_Str(addr));
-    results = callRPC("eth_getLogs", data, true);
-    return true;
 }
 
 static string_q clientVersion;

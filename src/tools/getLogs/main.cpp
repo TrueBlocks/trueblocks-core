@@ -35,51 +35,6 @@ int main(int argc, const char* argv[]) {
     return 0;
 }
 
-#if 0
-//-------------------------------------------------------------------------
-bool queryRawLogs1(string_q& results, hash_t hash, const address_t& addr, const CTopicArray& topics) {
-    string_q data = "[{\"blockHash\":\"[HASH]\",\"address\":\"[ADDR]\"}]";
-    replace(data, "[HASH]", hash);
-    if (addr.empty())
-        replace(data, ",\"address\":\"[ADDR]\"", "");
-    else
-        replace(data, "[ADDR]", addr_2_Str(addr));
-    results = callRPC("eth_getLogs", data, true);
-    return true;
-}
-bool queryRawLogs1(string_q& results, const hash_t& hash, const address_t& addr) {
-    CTopicArray unused2;
-    return queryRawLogs1(results, hash, addr, unused2);
-}
-bool queryRawLogs1(string_q& results, const hash_t& hash) {
-    address_t unused1;
-    CTopicArray unused2;
-    return queryRawLogs1(results, hash, unused1, unused2);
-}
-//-------------------------------------------------------------------------
-bool queryRawLogs1(string_q& results, uint64_t fromBlock, uint64_t toBlock, const address_t& addr,
-                   const CTopicArray& topics) {
-    string_q data = "[{\"fromBlock\":\"[START]\",\"toBlock\":\"[STOP]\",\"address\":\"[ADDR]\"}]";
-    replace(data, "[START]", uint_2_Hex(fromBlock));
-    replace(data, "[STOP]", uint_2_Hex(toBlock));
-    if (addr.empty())
-        replace(data, ",\"address\":\"[ADDR]\"", "");
-    else
-        replace(data, "[ADDR]", addr_2_Str(addr));
-    results = callRPC("eth_getLogs", data, true);
-    return true;
-}
-bool queryRawLogs1(string_q& results, uint64_t fromBlock, uint64_t toBlock, const address_t& addr) {
-    CTopicArray unused2;
-    return queryRawLogs1(results, fromBlock, toBlock, addr, unused2);
-}
-bool queryRawLogs1(string_q& results, uint64_t fromBlock, uint64_t toBlock) {
-    address_t unused1;
-    CTopicArray unused2;
-    return queryRawLogs1(results, fromBlock, toBlock, unused1, unused2);
-}
-#endif
-
 //--------------------------------------------------------------
 bool visitTransaction(CTransaction& trans, void* data) {
     COptions* opt = reinterpret_cast<COptions*>(data);
@@ -93,7 +48,9 @@ bool visitTransaction(CTransaction& trans, void* data) {
 
     if (opt->isRaw || opt->isVeryRaw) {
         string_q result;
-        queryRawLogs(result, trans.blockNumber, trans.blockNumber);
+        CLogQuery query;
+        query.blockHash = trans.blockHash;
+        queryRawLogs(result, query);
         if (!isText && !opt->first)
             cout << ",";
         cout << substitute(result, "mined", "");

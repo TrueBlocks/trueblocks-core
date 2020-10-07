@@ -206,6 +206,15 @@ bool parseAddressList2(COptionsBase* opt, CAddressArray& addrs, const string_q& 
 }
 
 //--------------------------------------------------------------------------------
+bool parseTopicList2(COptionsBase* opt, CTopicArray& topics, const string_q& argIn) {
+    if (!isHash(argIn))
+        return opt->usage("Invalid topic '" + argIn + "'. Length (" + uint_2_Str(argIn.length()) +
+                          ") is not equal to 64 characters (32 bytes).");
+    topics.push_back(toLower(str_2_Topic(argIn)));
+    return true;
+}
+
+//--------------------------------------------------------------------------------
 bool parseStringList2(COptionsBase* opt, CStringArray& strings, const string& argIn) {
     strings.push_back(argIn);
     return true;

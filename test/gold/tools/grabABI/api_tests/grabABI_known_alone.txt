@@ -145,6 +145,15 @@
       "output_names": "ret_0,"
     },
     {
+      "name": "feeTo",
+      "type": "function",
+      "stateMutability": "view",
+      "signature": "feeTo()",
+      "encoding": "0x017e7e58",
+      "input_names": "",
+      "output_names": "val_0,"
+    },
+    {
       "name": "_updateTotalSupplySnapshot",
       "type": "function",
       "stateMutability": "nonpayable",
@@ -224,6 +233,15 @@
       "encoding": "0x025e7c27",
       "input_names": "val_0,",
       "output_names": "val_0,"
+    },
+    {
+      "name": "removeLiquidityETH",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "removeLiquidityETH(address,uint256,uint256,uint256,address,uint256)",
+      "encoding": "0x02751cec",
+      "input_names": "token,liquidity,amountTokenMin,amountETHMin,to,deadline,",
+      "output_names": "amountToken,amountETH,"
     },
     {
       "name": "getUnits",
@@ -377,6 +395,15 @@
       "encoding": "0x0519ce79",
       "input_names": "",
       "output_names": "val_0,"
+    },
+    {
+      "name": "getAmountOut",
+      "type": "function",
+      "stateMutability": "pure",
+      "signature": "getAmountOut(uint256,uint256,uint256)",
+      "encoding": "0x054d50d4",
+      "input_names": "amountIn,reserveIn,reserveOut,",
+      "output_names": "amountOut,"
     },
     {
       "name": "tokenMetadata",
@@ -649,6 +676,15 @@
       "output_names": ""
     },
     {
+      "name": "feeToSetter",
+      "type": "function",
+      "stateMutability": "view",
+      "signature": "feeToSetter()",
+      "encoding": "0x094b7415",
+      "input_names": "",
+      "output_names": "val_0,"
+    },
+    {
       "name": "approve",
       "type": "function",
       "stateMutability": "nonpayable",
@@ -844,6 +880,15 @@
       "signature": "AddShare(address,uint256,uint256)",
       "encoding": "0x0d0d4d1bc5a254e66ec692f9d1a4452fed4b59a3a1ba48b1a991838e5c7c4b8a",
       "input_names": "who,addedShares,newTotalShares,",
+      "output_names": ""
+    },
+    {
+      "name": "PairCreated",
+      "type": "event",
+      "stateMutability": "nonpayable",
+      "signature": "PairCreated(address,address,address,uint256)",
+      "encoding": "0x0d3648bd0f6ba80134a33ba9275ac585d9d315f0ad8355cddefde31afa28d0e9",
+      "input_names": "token0,token1,pair,val_0,",
       "output_names": ""
     },
     {
@@ -1648,6 +1693,15 @@
       "output_names": "ret_0,"
     },
     {
+      "name": "swapExactTokensForETH",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "swapExactTokensForETH(uint256,uint256,address[],address,uint256)",
+      "encoding": "0x18cbafe5",
+      "input_names": "amountIn,amountOutMin,path,to,deadline,",
+      "output_names": "amounts,"
+    },
+    {
       "name": "domainOwner",
       "type": "function",
       "stateMutability": "view",
@@ -1945,6 +1999,15 @@
       "output_names": ""
     },
     {
+      "name": "allPairs",
+      "type": "function",
+      "stateMutability": "view",
+      "signature": "allPairs(uint256)",
+      "encoding": "0x1e3dd18b",
+      "input_names": "val_0,",
+      "output_names": "val_0,"
+    },
+    {
       "name": "setRoleAdmin",
       "type": "function",
       "stateMutability": "nonpayable",
@@ -1988,6 +2051,15 @@
       "encoding": "0x1ef90f08",
       "input_names": "_a,_op,_b,",
       "output_names": "ret_0,"
+    },
+    {
+      "name": "getAmountsIn",
+      "type": "function",
+      "stateMutability": "view",
+      "signature": "getAmountsIn(uint256,address[])",
+      "encoding": "0x1f00ca74",
+      "input_names": "amountOut,path,",
+      "output_names": "amounts,"
     },
     {
       "name": "setPriceFeed",
@@ -2168,6 +2240,15 @@
       "encoding": "0x21717ebf",
       "input_names": "",
       "output_names": "val_0,"
+    },
+    {
+      "name": "removeLiquidityWithPermit",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "removeLiquidityWithPermit(address,address,uint256,uint256,uint256,address,uint256,bool,uint8,bytes32,bytes32)",
+      "encoding": "0x2195995c",
+      "input_names": "tokenA,tokenB,liquidity,amountAMin,amountBMin,to,deadline,approveMax,v,r,s,",
+      "output_names": "amountA,amountB,"
     },
     {
       "name": "assignVested",
@@ -3502,6 +3583,15 @@
       "output_names": ""
     },
     {
+      "name": "swapExactTokensForTokens",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "swapExactTokensForTokens(uint256,uint256,address[],address,uint256)",
+      "encoding": "0x38ed1739",
+      "input_names": "amountIn,amountOutMin,path,to,deadline,",
+      "output_names": "amounts,"
+    },
+    {
       "name": "penalizeIllegalTransaction",
       "type": "function",
       "stateMutability": "nonpayable",
@@ -4366,6 +4456,15 @@
       "output_names": "ret_0,"
     },
     {
+      "name": "swapTokensForExactETH",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "swapTokensForExactETH(uint256,uint256,address[],address,uint256)",
+      "encoding": "0x4a25d94a",
+      "input_names": "amountOut,amountInMax,path,to,deadline,",
+      "output_names": "amounts,"
+    },
+    {
       "name": "onTransfer",
       "type": "function",
       "stateMutability": "nonpayable",
@@ -5212,6 +5311,15 @@
       "output_names": "ret_0,"
     },
     {
+      "name": "allPairsLength",
+      "type": "function",
+      "stateMutability": "view",
+      "signature": "allPairsLength()",
+      "encoding": "0x574f2ba3",
+      "input_names": "",
+      "output_names": "val_0,"
+    },
+    {
       "name": "removeProtectedToken",
       "type": "function",
       "stateMutability": "nonpayable",
@@ -5581,6 +5689,15 @@
       "output_names": ""
     },
     {
+      "name": "removeLiquidityETHWithPermitSupportingFeeOnTransferTokens",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "removeLiquidityETHWithPermitSupportingFeeOnTransferTokens(address,uint256,uint256,uint256,address,uint256,bool,uint8,bytes32,bytes32)",
+      "encoding": "0x5b0d5984",
+      "input_names": "token,liquidity,amountTokenMin,amountETHMin,to,deadline,approveMax,v,r,s,",
+      "output_names": "amountETH,"
+    },
+    {
       "name": "setOwner",
       "type": "function",
       "stateMutability": "nonpayable",
@@ -5623,6 +5740,15 @@
       "signature": "validateRebalanceStateIsNot(RebalancingLibrary.State)",
       "encoding": "0x5c0cde52",
       "input_names": "_requiredState,",
+      "output_names": ""
+    },
+    {
+      "name": "swapExactTokensForTokensSupportingFeeOnTransferTokens",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "swapExactTokensForTokensSupportingFeeOnTransferTokens(uint256,uint256,address[],address,uint256)",
+      "encoding": "0x5c11d795",
+      "input_names": "amountIn,amountOutMin,path,to,deadline,",
       "output_names": ""
     },
     {
@@ -7147,6 +7273,15 @@
       "output_names": ""
     },
     {
+      "name": "swapExactTokensForETHSupportingFeeOnTransferTokens",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "swapExactTokensForETHSupportingFeeOnTransferTokens(uint256,uint256,address[],address,uint256)",
+      "encoding": "0x791ac947",
+      "input_names": "amountIn,amountOutMin,path,to,deadline,",
+      "output_names": ""
+    },
+    {
       "name": "length",
       "type": "function",
       "stateMutability": "nonpayable",
@@ -7433,6 +7568,15 @@
       "encoding": "0x7f4091b46c33e918a0f3aa42307641d17bb67029427a5369e54b353984238705",
       "input_names": "buyer,tokens_sold,eth_bought,",
       "output_names": ""
+    },
+    {
+      "name": "swapExactETHForTokens",
+      "type": "function",
+      "stateMutability": "payable",
+      "signature": "swapExactETHForTokens(uint256,address[],address,uint256)",
+      "encoding": "0x7ff36ab5",
+      "input_names": "amountOutMin,path,to,deadline,",
+      "output_names": "amounts,"
     },
     {
       "name": "OwnerRemoval",
@@ -7786,6 +7930,15 @@
       "output_names": ""
     },
     {
+      "name": "getAmountIn",
+      "type": "function",
+      "stateMutability": "pure",
+      "signature": "getAmountIn(uint256,uint256,uint256)",
+      "encoding": "0x85f8c259",
+      "input_names": "amountOut,reserveIn,reserveOut,",
+      "output_names": "amountIn,"
+    },
+    {
       "name": "getCombinedTokenArray",
       "type": "function",
       "stateMutability": "nonpayable",
@@ -7874,6 +8027,15 @@
       "encoding": "0x87e97e825a1d1fa0c54e1d36c7506c1dea8b1efd451fe68b000cf96f7cf40003",
       "input_names": "hash,registrationDate,",
       "output_names": ""
+    },
+    {
+      "name": "swapTokensForExactTokens",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "swapTokensForExactTokens(uint256,uint256,address[],address,uint256)",
+      "encoding": "0x8803dbee",
+      "input_names": "amountOut,amountInMax,path,to,deadline,",
+      "output_names": "amounts,"
     },
     {
       "name": "safeMint",
@@ -9379,6 +9541,15 @@
       "output_names": "memory,"
     },
     {
+      "name": "setFeeToSetter",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "setFeeToSetter(address)",
+      "encoding": "0xa2e74af6",
+      "input_names": "_feeToSetter,",
+      "output_names": ""
+    },
+    {
       "name": "ChangePeriodDuration",
       "type": "event",
       "stateMutability": "nonpayable",
@@ -10009,6 +10180,24 @@
       "output_names": ""
     },
     {
+      "name": "WETH",
+      "type": "function",
+      "stateMutability": "view",
+      "signature": "WETH()",
+      "encoding": "0xad5c4648",
+      "input_names": "",
+      "output_names": "val_0,"
+    },
+    {
+      "name": "quote",
+      "type": "function",
+      "stateMutability": "pure",
+      "signature": "quote(uint256,uint256,uint256)",
+      "encoding": "0xad615dec",
+      "input_names": "amountA,reserveA,reserveB,",
+      "output_names": "amountB,"
+    },
+    {
       "name": "relayHubVersion",
       "type": "function",
       "stateMutability": "nonpayable",
@@ -10169,6 +10358,15 @@
       "encoding": "0xaf235354a0a47c91ee171961326335cb2d1a8e55b8a89859b0e61eb049e50ea0",
       "input_names": "data,integerValue,stringValue,",
       "output_names": ""
+    },
+    {
+      "name": "removeLiquidityETHSupportingFeeOnTransferTokens",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "removeLiquidityETHSupportingFeeOnTransferTokens(address,uint256,uint256,uint256,address,uint256)",
+      "encoding": "0xaf2979eb",
+      "input_names": "token,liquidity,amountTokenMin,amountETHMin,to,deadline,",
+      "output_names": "amountETH,"
     },
     {
       "name": "_fallback",
@@ -10504,6 +10702,15 @@
       "output_names": ""
     },
     {
+      "name": "swapExactETHForTokensSupportingFeeOnTransferTokens",
+      "type": "function",
+      "stateMutability": "payable",
+      "signature": "swapExactETHForTokensSupportingFeeOnTransferTokens(uint256,address[],address,uint256)",
+      "encoding": "0xb6f9de95",
+      "input_names": "amountOutMin,path,to,deadline,",
+      "output_names": ""
+    },
+    {
       "name": "implementsERC165InterfaceNoCache",
       "type": "function",
       "stateMutability": "nonpayable",
@@ -10700,6 +10907,15 @@
       "encoding": "0xba9316b7",
       "input_names": "num,denom,",
       "output_names": "ret_0,memory,"
+    },
+    {
+      "name": "removeLiquidity",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "removeLiquidity(address,address,uint256,uint256,uint256,address,uint256)",
+      "encoding": "0xbaa2abde",
+      "input_names": "tokenA,tokenB,liquidity,amountAMin,amountBMin,to,deadline,",
+      "output_names": "amountA,amountB,"
     },
     {
       "name": "incrementTokenOwner",
@@ -11314,6 +11530,15 @@
       "output_names": "ret_0,"
     },
     {
+      "name": "factory",
+      "type": "function",
+      "stateMutability": "view",
+      "signature": "factory()",
+      "encoding": "0xc45a0155",
+      "input_names": "",
+      "output_names": "val_0,"
+    },
+    {
       "name": "renew",
       "type": "function",
       "stateMutability": "nonpayable",
@@ -11528,6 +11753,15 @@
       "encoding": "0xc9943dac607a408ce079996205c3b771a7e464a5cf3859bc3315813f965e9240",
       "input_names": "summoner,tokens,summoningTime,periodDuration,votingPeriodLength,gracePeriodLength,proposalDeposit,dilutionBound,processingReward,",
       "output_names": ""
+    },
+    {
+      "name": "createPair",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "createPair(address,address)",
+      "encoding": "0xc9c65396",
+      "input_names": "tokenA,tokenB,",
+      "output_names": "pair,"
     },
     {
       "name": "validateCallerIsModule",
@@ -11942,6 +12176,15 @@
       "encoding": "0xcff606a0",
       "input_names": "_executorId,",
       "output_names": ""
+    },
+    {
+      "name": "getAmountsOut",
+      "type": "function",
+      "stateMutability": "view",
+      "signature": "getAmountsOut(uint256,address[])",
+      "encoding": "0xd06ca61f",
+      "input_names": "amountIn,path,",
+      "output_names": "amounts,"
     },
     {
       "name": "increment",
@@ -12727,6 +12970,15 @@
       "output_names": ""
     },
     {
+      "name": "removeLiquidityETHWithPermit",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "removeLiquidityETHWithPermit(address,uint256,uint256,uint256,address,uint256,bool,uint8,bytes32,bytes32)",
+      "encoding": "0xded9382a",
+      "input_names": "token,liquidity,amountTokenMin,amountETHMin,to,deadline,approveMax,v,r,s,",
+      "output_names": "amountToken,amountETH,"
+    },
+    {
       "name": "PROMO_CREATION_LIMIT",
       "type": "function",
       "stateMutability": "view",
@@ -13177,6 +13429,15 @@
       "output_names": ""
     },
     {
+      "name": "getPair",
+      "type": "function",
+      "stateMutability": "view",
+      "signature": "getPair(address,address)",
+      "encoding": "0xe6a43905",
+      "input_names": "val_0,val_1,",
+      "output_names": "val_0,"
+    },
+    {
       "name": "saleAuction",
       "type": "function",
       "stateMutability": "view",
@@ -13283,6 +13544,15 @@
       "encoding": "0xe8dcdc07",
       "input_names": "newRelayHub,",
       "output_names": ""
+    },
+    {
+      "name": "addLiquidity",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "addLiquidity(address,address,uint256,uint256,uint256,uint256,address,uint256)",
+      "encoding": "0xe8e33700",
+      "input_names": "tokenA,tokenB,amountADesired,amountBDesired,amountAMin,amountBMin,to,deadline,",
+      "output_names": "amountA,amountB,liquidity,"
     },
     {
       "name": "canMakePayment",
@@ -13798,6 +14068,15 @@
       "output_names": "ret_0,"
     },
     {
+      "name": "addLiquidityETH",
+      "type": "function",
+      "stateMutability": "payable",
+      "signature": "addLiquidityETH(address,uint256,uint256,uint256,address,uint256)",
+      "encoding": "0xf305d719",
+      "input_names": "token,amountTokenDesired,amountTokenMin,amountETHMin,to,deadline,",
+      "output_names": "amountToken,amountETH,liquidity,"
+    },
+    {
       "name": "deposit",
       "type": "function",
       "stateMutability": "nonpayable",
@@ -13903,6 +14182,15 @@
       "signature": "_terminateEmployee(uint256,uint64)",
       "encoding": "0xf4491c0a",
       "input_names": "_employeeId,_endDate,",
+      "output_names": ""
+    },
+    {
+      "name": "setFeeTo",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "setFeeTo(address)",
+      "encoding": "0xf46901ed",
+      "input_names": "_feeTo,",
       "output_names": ""
     },
     {
@@ -14354,6 +14642,15 @@
       "encoding": "0xfaff50a8",
       "input_names": "",
       "output_names": "val_0,"
+    },
+    {
+      "name": "swapETHForExactTokens",
+      "type": "function",
+      "stateMutability": "payable",
+      "signature": "swapETHForExactTokens(uint256,address[],address,uint256)",
+      "encoding": "0xfb3bdb41",
+      "input_names": "amountOut,path,to,deadline,",
+      "output_names": "amounts,"
     },
     {
       "name": "vault",
