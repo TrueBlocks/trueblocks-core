@@ -36,16 +36,24 @@ class CTest {
     string_q cmd;
     string_q name;
     string_q params;
-    bool turbo;
+    bool turbo{false};
     CTest(string_q& str) {
+        static uint64_t cnt = 0;
         replaceAll(str, "\t", " ");
         replaceAll(str, "  ", " ");
-        num = trim(nextTokenClear(str, ' '));
-        turbo = contains(num, "_turbo");
-        replace(num, "_turbo", "");
-        cmd = trim(nextTokenClear(str, ' '));
-        name = trim(nextTokenClear(str, ' '));
-        params = trim(str);
+        if (countOf(str, ' ') == 1) {
+            cmd = trim(nextTokenClear(str, ' '));
+            params = trim(nextTokenClear(str, ' '));
+        } else {
+            num = trim(nextTokenClear(str, ' ')); // overwritten
+            turbo = contains(num, "_turbo");
+            replace(num, "_turbo", "");
+            cmd = trim(nextTokenClear(str, ' '));
+            name = trim(nextTokenClear(str, ' ')); // overwritten
+            params = trim(str);
+        }
+        num = uint_2_Str(cnt++);
+        name = cmd + "_" + num;
     }
 };
 typedef vector<CTest> CTestArray;
@@ -64,7 +72,7 @@ int main(int argc, const char* argv[]) {
 
     size_t passed{0}, failed{0};
     string_q testStr = asciiFileToString("./trace_tests");
-    cout << "TESTS: " << getCWD() << "\t" << testStr << endl;
+    //cout << "TESTS: " << getCWD() << "\t" << testStr << endl;
     CTestArray tests;
     while (!testStr.empty()) {
         string_q line = trim(nextTokenClear(testStr, '\n'));
@@ -88,34 +96,41 @@ int main(int argc, const char* argv[]) {
                 os << "-X POST " << node.URL;
                 os << " | sed -f sed_file";
                 os << " | jq -S ";
-                if (!contains(test.cmd, "trace_"))
-                    os << "-r 'del(.result[\"sealFields\",\"author\"]) | "
-                          "del(.result[\"chainId\",\"condition\",\"creates\",\"publicKey\",\"raw\",\"standardV\","
-                          "\"time\",\"transactionLogIndex\",\"type\"])' ";
-                os << " >" << toLower(node.name) << "/" << test.cmd << "_" << test.num << "_" << test.name << ".txt";
-                string_q t = (test.num + "." + test.name + ":").substr(0, 12);
-                cout << padRight(t, 12) << " " << padRight(test.cmd, 20) << test.params << " ";
-                cout.flush();
+//                if (!contains(test.cmd, "trace_"))
+//                    os << "-r 'del(.result[\"sealFields\",\"author\"]) | "
+//                          "del(.result[\"chainId\",\"condition\",\"creates\",\"publicKey\",\"raw\",\"standardV\","
+//                          "\"time\",\"transactionLogIndex\",\"type\"])' ";
+                string_q testFile = toLower(node.name) + "/" + test.name + ".txt";
+                os << " >" << testFile;
+                //cout << os.str() << endl;
+                string_q t = (test.num + "." + test.name).substr(0, 20);
+                if (node.name == "TurboGeth") {
+                    cout << padRight(t, 20) << ": " << padRight(test.cmd, 20) << test.params << " ";
+                    cout.flush();
+                } else {
+                    cerr << os.str() << "\r";
+                    cerr.flush();
+                }
                 if (system(os.str().c_str())) {
                     return 0;
                 }
 
                 if (node.name == "TurboGeth") {
-                    string_q turbo =
-                        asciiFileToString("./turbogeth/" + test.cmd + "_" + test.num + "_" + test.name + ".txt");
+                    string_q turboFile = "./turbogeth/" + test.name + ".txt";
+                    string_q parityFile = "./parity/" + test.name + ".txt";
+                    string_q turbo = asciiFileToString(turboFile);
                     string_q parity;
                     if (test.turbo) {
                         parity = turbo;
-                        stringToAsciiFile("./parity/" + test.cmd + "_" + test.num + "_" + test.name + ".txt", parity);
+                        stringToAsciiFile(parityFile, parity);
                     } else {
-                        parity = asciiFileToString("./parity/" + test.cmd + "_" + test.num + "_" + test.name + ".txt");
+                        parity = asciiFileToString(parityFile);
                     }
-                    cout << ((turbo == parity) ? greenCheck : redX);
+                    cout << ((!turbo.empty() && turbo == parity) ? greenCheck : redX);
                     passed += (turbo == parity);
                     failed += (turbo != parity);
+                    cout << endl;
                 }
-
-                cout << endl;
             }
         }
         cout << endl;
