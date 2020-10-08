@@ -33,7 +33,7 @@ bool freshen_internal(freshen_e mode, CMonitorArray& fa, const string_q& tool_fl
         // clang-format off
         uint64_t n = countOf(thisFive, ' ');
         if (fa.size() > 1)
-            LOG_INFO("Scraping addresses ", cur, "-", (cur+n-1), " of ", fa.size(), string_q(80, ' '));
+            LOG_INFO(cTeal, "Scraping addresses ", cur, "-", (cur+n-1), " of ", fa.size(), string_q(80, ' '), cOff);
         cur += n;
         if (system(cmd.c_str())) {}  // Don't remove cruft. Silences compiler warnings
         // clang-format on
