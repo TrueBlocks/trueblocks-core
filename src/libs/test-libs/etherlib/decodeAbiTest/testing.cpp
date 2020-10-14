@@ -27,8 +27,8 @@ int main(int argc, const char* argv[]) {
     if (!verbose && options.commandLines.size() && !options.commandLines[0].empty()) {
         speedTest();
     } else {
-//        padTest();
-//        hexUtilTest();
+        padTest();
+        hexUtilTest();
         decodeTest();
     }
 

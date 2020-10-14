@@ -18,7 +18,8 @@
 namespace qblocks {
 
 //--------------------------------------------------------------------------------
-blknum_t COptionsBlockList::parseBlockOption(string_q& msg, blknum_t lastBlock, direction_t offset) const {
+blknum_t COptionsBlockList::parseBlockOption(string_q& msg, blknum_t lastBlock, direction_t offset,
+                                             bool& hasZero) const {
     blknum_t ret = NOPOS;
 
     string_q arg = msg;
@@ -27,6 +28,8 @@ blknum_t COptionsBlockList::parseBlockOption(string_q& msg, blknum_t lastBlock, 
     // if it's a number, return it
     if (isNumeral(arg) || isHexStr(arg)) {
         ret = str_2_Uint(arg);
+        if (!ret)
+            hasZero = true;
 
     } else {
         // if it's not a number, it better be a special value, and we better be able to find it
@@ -35,6 +38,8 @@ blknum_t COptionsBlockList::parseBlockOption(string_q& msg, blknum_t lastBlock, 
             if (spec.first == "latest")
                 spec.second = uint_2_Str(lastBlock);
             ret = str_2_Uint(spec.second);
+            if (!ret)
+                hasZero = true;
 
         } else {
             msg =
@@ -53,6 +58,9 @@ blknum_t COptionsBlockList::parseBlockOption(string_q& msg, blknum_t lastBlock, 
         ret--;
     else if (offset == NEXT && ret < lastBlock)
         ret++;
+
+    if (!ret)
+        hasZero = true;
     return ret;
 }
 
@@ -108,11 +116,11 @@ string_q COptionsBlockList::parseBlockList(const string_q& argIn, blknum_t lastB
 
         if (contains(arg, "+")) {
             string_q n = nextTokenClear(arg, '+');
-            blknum_t s1 = parseBlockOption(n, lastBlock, NODIR);
+            blknum_t s1 = parseBlockOption(n, lastBlock, NODIR, hasZeroBlock);
             if (!n.empty())
                 return n;
             n = arg;
-            blknum_t s2 = parseBlockOption(n, lastBlock, NODIR);
+            blknum_t s2 = parseBlockOption(n, lastBlock, NODIR, hasZeroBlock);
             if (!n.empty())
                 return n;
             s2 = s1 + s2;
@@ -122,11 +130,11 @@ string_q COptionsBlockList::parseBlockList(const string_q& argIn, blknum_t lastB
         string_q stp = arg;
         string_q strt = nextTokenClear(stp, '-');
         string_q msg = strt;
-        start = parseBlockOption(msg, lastBlock, offset);
+        start = parseBlockOption(msg, lastBlock, offset, hasZeroBlock);
         if (!msg.empty())
             return msg;
         msg = stp;
-        stop = parseBlockOption(msg, lastBlock, offset);
+        stop = parseBlockOption(msg, lastBlock, offset, hasZeroBlock);
         if (!msg.empty())
             return msg;
 
@@ -139,7 +147,7 @@ string_q COptionsBlockList::parseBlockList(const string_q& argIn, blknum_t lastB
 
         } else {
             string_q msg = arg;
-            blknum_t num = parseBlockOption(msg, lastBlock, offset);
+            blknum_t num = parseBlockOption(msg, lastBlock, offset, hasZeroBlock);
             if (!msg.empty())
                 return msg;
             numList.push_back(num);

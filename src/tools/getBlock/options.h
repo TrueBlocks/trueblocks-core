@@ -31,6 +31,7 @@ class COptions : public CBlockOptions {
     bool trace;
     // END_CODE_DECLARE
 
+    uint64_t nProcessed{0};
     CBlock latestBlock;
     uint64_t addrCounter;
     string_q filterType;

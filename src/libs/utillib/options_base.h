@@ -202,6 +202,8 @@ class COptionsBlockList {
     blknum_t stop;
     blknum_t skip;
     blknum_t latest;
+    bool hasZeroBlock{false};
+
     void Init(void);
     string_q parseBlockList(const string_q& arg, blknum_t latest);
     COptionsBlockList(void);
@@ -210,7 +212,7 @@ class COptionsBlockList {
         return (hashList.size() || numList.size() || (start != stop));
     }
     bool isInRange(blknum_t bn) const;
-    blknum_t parseBlockOption(string_q& msg, blknum_t lastBlock, direction_t offset) const;
+    blknum_t parseBlockOption(string_q& msg, blknum_t lastBlock, direction_t offset, bool& hasZero) const;
 };
 
 class COptionsTransList {

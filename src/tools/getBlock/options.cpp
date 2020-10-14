@@ -165,6 +165,10 @@ bool COptions::parseArguments(string_q& command) {
         configureDisplay("", "CBlock", ff);
     } else if (!filterType.empty()) {
         configureDisplay("", "CBlock", STR_FORMAT_FILTER_TXT);
+        if (blocks.hasZeroBlock) {
+            optionOn(OPT_PREFUND);
+            loadNames();
+        }
     } else if (trace) {
         configureDisplay("getBlock", "CTrace", STR_DISPLAY_TRACE);
     } else {

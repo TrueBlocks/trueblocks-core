@@ -1123,6 +1123,7 @@ const char* STR_DEFAULT_WHENBLOCKS =
     "[ "
     "{ name: \"first\", value: 0 },"
     "{ name: \"firstTrans\", value: 46147 },"
+    "{ name: \"firstContract\", value: 50111 },"
     "{ name: \"iceage\", value: 200000 },"
     "{ name: \"devcon1\", value: 543626 },"
     "{ name: \"homestead\", value: 1150000 },"

@@ -14,6 +14,7 @@
 #include "options.h"
 
 extern bool isBlockFinal(timestamp_t ts_block, timestamp_t ts_chain, timestamp_t distance);
+extern void oneAppearance(const CAppearance& item, void* data);
 //------------------------------------------------------------
 int main(int argc, const char* argv[]) {
     etherlib_init(quickQuitHandler);
@@ -139,6 +140,23 @@ string_q doOneBlock(blknum_t num, COptions& opt) {
 }
 
 //----------------------------------------------------------------
+void oneAppearance(const CAppearance& item, void* data) {
+    COptions* opt = reinterpret_cast<COptions*>(data);
+    bool isText = (expContext().exportFmt & (TXT1 | CSV1));
+    if (isText) {
+        cout << trim(item.Format(expContext().fmtMap["format"]), '\t') << endl;
+    } else {
+        if (!opt->first)
+            cout << ",";
+        cout << "  ";
+        incIndent();
+        item.doExport(cout);
+        decIndent();
+        opt->first = false;
+    }
+}
+
+//----------------------------------------------------------------
 bool visitAddrs(const CAppearance& item, void* data) {
     // We do not account for zero addresses or the addresses found in the zeroth trace since
     // it's identical to the transaction itself
@@ -146,22 +164,12 @@ bool visitAddrs(const CAppearance& item, void* data) {
         return !shouldQuit();
 
     COptions* opt = reinterpret_cast<COptions*>(data);
+    opt->nProcessed++;
     if (opt->count) {
         opt->addrCounter++;
 
     } else {
-        bool isText = (expContext().exportFmt & (TXT1 | CSV1));
-        if (isText) {
-            cout << trim(item.Format(expContext().fmtMap["format"]), '\t') << endl;
-        } else {
-            if (!opt->first)
-                cout << ",";
-            cout << "  ";
-            incIndent();
-            item.doExport(cout);
-            decIndent();
-            opt->first = false;
-        }
+        oneAppearance(item, data);
     }
 
     return !shouldQuit();
@@ -212,6 +220,26 @@ bool visitBlock(uint64_t num, void* data) {
                 }
             }
             cout << block.Format(fmt);
+        } else if (!opt->nProcessed) {
+            if (num == 0) {
+                uint64_t cnt = 0;
+                for (auto prefund : opt->prefundWeiMap) {
+                    CAppearance item;
+                    item.bn = num;
+                    item.tx = cnt++;
+                    item.addr = prefund.first;
+                    item.reason = "genesis";
+                    oneAppearance(item, data);
+                }
+            } else {
+                // found no addresses -- i.e. early node software allowed misconfiguration of zero address miner
+                CAppearance item;
+                item.bn = num;
+                item.tx = 99999;
+                item.addr = "0x0000000000000000000000000000000000000000";
+                item.reason = "miner";
+                oneAppearance(item, data);
+            }
         }
         opt->first = false;
 

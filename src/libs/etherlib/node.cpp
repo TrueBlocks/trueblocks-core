@@ -547,7 +547,8 @@ bool isGeth(void) {
 
 //-------------------------------------------------------------------------
 bool isParity(void) {
-    return contains(toLower(getVersionFromClient()), "parity") || contains(toLower(getVersionFromClient()), "openetherum");
+    return contains(toLower(getVersionFromClient()), "parity") ||
+           contains(toLower(getVersionFromClient()), "openetherum");
 }
 
 //-------------------------------------------------------------------------

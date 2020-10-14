@@ -45,11 +45,11 @@ class CTest {
             cmd = trim(nextTokenClear(str, ' '));
             params = trim(nextTokenClear(str, ' '));
         } else {
-            num = trim(nextTokenClear(str, ' ')); // overwritten
+            num = trim(nextTokenClear(str, ' '));  // overwritten
             turbo = contains(num, "_turbo");
             replace(num, "_turbo", "");
             cmd = trim(nextTokenClear(str, ' '));
-            name = trim(nextTokenClear(str, ' ')); // overwritten
+            name = trim(nextTokenClear(str, ' '));  // overwritten
             params = trim(str);
         }
         num = uint_2_Str(cnt++);
@@ -72,7 +72,7 @@ int main(int argc, const char* argv[]) {
 
     size_t passed{0}, failed{0};
     string_q testStr = asciiFileToString("./trace_tests");
-    //cout << "TESTS: " << getCWD() << "\t" << testStr << endl;
+    // cout << "TESTS: " << getCWD() << "\t" << testStr << endl;
     CTestArray tests;
     while (!testStr.empty()) {
         string_q line = trim(nextTokenClear(testStr, '\n'));
@@ -96,13 +96,13 @@ int main(int argc, const char* argv[]) {
                 os << "-X POST " << node.URL;
                 os << " | sed -f sed_file";
                 os << " | jq -S ";
-//                if (!contains(test.cmd, "trace_"))
-//                    os << "-r 'del(.result[\"sealFields\",\"author\"]) | "
-//                          "del(.result[\"chainId\",\"condition\",\"creates\",\"publicKey\",\"raw\",\"standardV\","
-//                          "\"time\",\"transactionLogIndex\",\"type\"])' ";
+                //                if (!contains(test.cmd, "trace_"))
+                //                    os << "-r 'del(.result[\"sealFields\",\"author\"]) | "
+                //                          "del(.result[\"chainId\",\"condition\",\"creates\",\"publicKey\",\"raw\",\"standardV\","
+                //                          "\"time\",\"transactionLogIndex\",\"type\"])' ";
                 string_q testFile = toLower(node.name) + "/" + test.name + ".txt";
                 os << " >" << testFile;
-                //cout << os.str() << endl;
+                // cout << os.str() << endl;
                 string_q t = (test.num + "." + test.name).substr(0, 20);
                 if (node.name == "TurboGeth") {
                     cout << padRight(t, 20) << ": " << padRight(test.cmd, 20) << test.params << " ";

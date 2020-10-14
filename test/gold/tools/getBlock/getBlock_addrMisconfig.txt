@@ -1,0 +1,4 @@
+getBlock argc: 3 [1:32279] [2:--uniq_tx] 
+getBlock 32279 --uniq_tx 
+bn	tx	tc	addr	reason
+32279	99999		0x0000000000000000000000000000000000000000	miner

@@ -77,7 +77,7 @@ size_t decodeTheData(CParameterArray& params, const CStringArray& dataArray, siz
 
     if (readIndex > nDataItems) {
         cerr << "{ \"error\": \"decodeTheData: readIndex(" << readIndex << ") > nDataItems(" << nDataItems
-        << "). Ignoring...\" }," << endl;
+             << "). Ignoring...\" }," << endl;
         level--;
         return false;
     }

@@ -46,7 +46,8 @@ on, both, medi, blocks, tools/getBlock, addrsCnt1,          n, blocks = 3982128 
 on, both, medi, blocks, tools/getBlock, uniqCnt1,           n, blocks = 3982128 & uniq & count & fmt txt
 on, both, medi, blocks, tools/getBlock, uniqTxCnt1,         y, blocks = 3982128 & uniq_tx & count & fmt json
 on, both, fast, blocks, tools/getBlock, addrCntFail,        y, blocks = 3982128 & count
-
+on, both, fast, blocks, tools/getBlock, addrMisconfig,      y, blocks = 32279 & uniq_tx
+on, both, fast, blocks, tools/getBlock, addrBlockZero,      y, blocks = 0 & uniq_tx
 on, both, medi, blocks, tools/getBlock, uniqTxCnt2,         y, blocks = 1301011-1312011:313 & uniq_tx & count & fmt json
 
 on, cmd,  fast, blocks, tools/getBlock, cmd_file1,          n, file:cmd_file1 & force
