@@ -160,7 +160,8 @@ bool COptions::handle_scrape(void) {
                                 continue;
                         }
                     }
-                    LOG_INFO(cYellow, "Finished freshening ", monitors.size(), " monitored addresses. Sleeping for ", (userSleep/1000000), " seconds", string_q(40, ' '), cOff);
+                    LOG_INFO(cYellow, "Finished freshening ", monitors.size(), " monitored addresses. Sleeping for ",
+                             (userSleep / 1000000), " seconds", string_q(40, ' '), cOff);
                 }
                 usleep(userSleep);  // stay responsive to cntrl+C
             }
@@ -235,7 +236,8 @@ bool freshen_internal_for_scrape(freshen_e mode, CMonitorArray& fa, const string
                 cnt = 0;
             }
         } else {
-            LOG_INFO(cTeal, "Scraping addresses ", f.address, " ", cnt2, " of ", fa.size(), string_q(80, ' '), cOff, "\r");
+            LOG_INFO(cTeal, "Scraping addresses ", f.address, " ", cnt2, " of ", fa.size(), string_q(80, ' '), cOff,
+                     "\r");
         }
         cnt2++;
     }
