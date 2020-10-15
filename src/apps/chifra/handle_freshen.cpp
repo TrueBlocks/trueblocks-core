@@ -17,7 +17,7 @@ bool freshen_internal(freshen_e mode, CMonitorArray& fa, const string_q& tool_fl
     size_t cnt = 0;
     string_q tenAddresses;
     for (auto f : fa) {
-        fiveAddresses += (f.address + " ");
+        tenAddresses += (f.address + " ");
         if (!(++cnt % 10)) {  // we don't want to do too many addrs at a time
             tenAddresses += "|";
             cnt = 0;
