@@ -27,7 +27,8 @@ bool COptions::handle_list(void) {
     for (auto a : addrs) {
         CMonitor m;
         m.address = a;
-        m.cntAfter = m.cntBefore = m.getRecordCount();
+        m.cntBefore = m.getRecordCount();
+        m.needsRefresh = false;
         fa.push_back(m);
     }
     if (!freshen_internal(FM_PRODUCTION, fa, "", freshen_flags))

@@ -7,6 +7,7 @@
 
 extern bool visitMonitor(const string_q& path, void* data);
 extern bool isScraperRunning(const string_q& unsearch);
+extern bool freshen_internal_for_scrape(freshen_e mode, CMonitorArray& fa, const string_q& tool_flags, const string_q& freshen_flags);
 //------------------------------------------------------------------------------------------------
 bool COptions::handle_scrape(void) {
     ENTER("handle_" + mode);
@@ -143,9 +144,9 @@ bool COptions::handle_scrape(void) {
                     CMonitorArray monitors;
                     forEveryFileInFolder(getMonitorPath("") + "*", visitMonitor, &monitors);
 
-                    freshen_internal(FM_PRODUCTION, monitors, "", freshen_flags);
+                    freshen_internal_for_scrape(FM_PRODUCTION, monitors, "", freshen_flags);
                     for (auto monitor : monitors) {
-                        if (monitor.cntBefore != monitor.cntAfter) {
+                        if (monitor.needsRefresh) {
                             ostringstream os1;
                             os1 << "acctExport " << monitor.address << " --freshen";  // << " >/dev/null";
                             LOG_INFO("Calling: ", os1.str(), string_q(40, ' '));
@@ -184,7 +185,8 @@ bool visitMonitor(const string_q& path, void* data) {
     CMonitor m;
     m.address = substitute(substitute(path, getMonitorPath(""), ""), ".acct.bin", "");
     if (isAddress(m.address)) {
-        m.cntBefore = m.cntAfter = m.getRecordCount();
+        m.cntBefore = m.getRecordCount();
+        m.needsRefresh = false;
         CMonitorArray* array = (CMonitorArray*)data;  // NOLINT
         array->push_back(m);
     }
@@ -198,4 +200,66 @@ bool isScraperRunning(const string_q& unsearch) {
     replace(pList, "  ", " ");
     replace(pList, "chifra scrape " + unsearch, "");
     return contains(pList, "chifra scrape");
+}
+
+/*-------------------------------------------------------------------------
+ * This source code is confidential proprietary information which is
+ * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * All Rights Reserved
+ *------------------------------------------------------------------------*/
+#include "options.h"
+
+//------------------------------------------------------------------------------------------------
+blknum_t lastExported(const address_t& addr) {
+    string_q filename = getMonitorExpt(addr, FM_PRODUCTION);
+    blknum_t second;
+    timestamp_t unused;
+    bnFromPath(getMonitorExpt(addr, FM_PRODUCTION), second, unused);
+    return second;
+}
+
+//------------------------------------------------------------------------------------------------
+bool freshen_internal_for_scrape(freshen_e mode, CMonitorArray& fa, const string_q& tool_flags, const string_q& freshen_flags) {
+    ENTER("freshen_internal_for_scrape");
+
+    ostringstream base;
+    base << "acctScrape " << tool_flags << " " << freshen_flags << " [ADDRS] ;";
+
+    blknum_t latestCache = getLatestBlock_cache_final();
+    size_t cnt = 0;
+    string_q tenAddresses;
+    for (auto f : fa) {
+        bool needsUpdate = true;
+        if (!contains(freshen_flags, "staging") && !contains(freshen_flags, "unripe"))
+            needsUpdate = lastExported(f.address) < latestCache;
+        if (needsUpdate) {
+            tenAddresses += (f.address + " ");
+            if (!(++cnt % 10)) {  // we don't want to do too many addrs at a time
+                tenAddresses += "|";
+                cnt = 0;
+            }
+        }
+    }
+
+    // Process them until we're done
+    uint64_t cur = 0;
+    while (!tenAddresses.empty()) {
+        string_q thisFive = nextTokenClear(tenAddresses, '|');
+        string_q cmd = substitute(base.str(), "[ADDRS]", thisFive);
+        LOG_CALL(cmd);
+        // clang-format off
+        uint64_t n = countOf(thisFive, ' ');
+        if (fa.size() > 1)
+            LOG_INFO(cTeal, "Scraping addresses ", cur, "-", (cur+n-1), " of ", fa.size(), string_q(80, ' '), cOff);
+        cur += n;
+        // Don't remove cruft. Silences compiler warnings
+        if (system(cmd.c_str())) {}  // clang-format on
+        if (!tenAddresses.empty())
+            usleep(500000);  // this sleep is here so that chifra remains responsive to Cntl+C. Do not remove
+    }
+
+    for (CMonitor& f : fa)
+        f.needsRefresh = (f.cntBefore != f.getRecordCount());
+
+    EXIT_NOMSG(true);
 }

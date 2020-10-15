@@ -42,7 +42,7 @@ bool freshen_internal(freshen_e mode, CMonitorArray& fa, const string_q& tool_fl
     }
 
     for (CMonitor& f : fa)
-        f.cntAfter = f.getRecordCount();
+        f.needsRefresh = (f.cntBefore != f.getRecordCount());
 
     EXIT_NOMSG(true);
 }

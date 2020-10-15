@@ -50,7 +50,7 @@ class CMonitor : public CAccountName {
     bloom_t bloom;
     bloom_t getBloom(void);
     uint64_t cntBefore;
-    uint64_t cntAfter;
+    bool needsRefresh;
     CMonitor(const string_q& _addr, const string_q& _name, blknum_t fB, blknum_t lB);
     CMonitor(const address_t& _addr, const string_q& _name);
     bool inBlock;
@@ -142,7 +142,7 @@ inline void CMonitor::clear(void) {
     }
     tx_cache = NULL;
     cntBefore = 0;
-    cntAfter = 0;
+    needsRefresh = false;
     // EXISTING_CODE
 }
 
@@ -163,7 +163,7 @@ inline void CMonitor::initialize(void) {
     inBlock = false;
     tx_cache = NULL;
     cntBefore = 0;
-    cntAfter = 0;
+    needsRefresh = false;
     // EXISTING_CODE
 }
 
@@ -185,7 +185,7 @@ inline void CMonitor::duplicate(const CMonitor& mo) {
     inBlock = mo.inBlock;
     tx_cache = NULL;  // we do not copy the tx_cache
     cntBefore = mo.cntBefore;
-    cntAfter = mo.cntAfter;
+    needsRefresh = mo.needsRefresh;
     // EXISTING_CODE
 }
 
