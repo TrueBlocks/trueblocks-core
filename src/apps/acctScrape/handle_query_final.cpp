@@ -161,14 +161,18 @@ bool COptions::visitBinaryFile(const string_q& path, void* data) {
                 if (items.size()) {
                     lockSection(true);
                     monitor->writeAnArray(items);
-                    monitor->writeLastBlock(fileRange.second + 1);
                     lockSection(false);
                 }
             } else {
                 options->stats.nFalsePositive++;
-                monitor->writeLastBlock(fileRange.second + 1);
             }
         }
+    }
+
+    for (auto monitor : monitors) {
+        string_q filename = getMonitorPath(monitor.address);
+        monitor.fm_mode = (fileExists(filename) ? FM_PRODUCTION : FM_STAGING);
+        monitor.writeLastBlock(fileRange.second + 1);
     }
 
     if (chunk) {

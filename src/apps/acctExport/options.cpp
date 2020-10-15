@@ -606,7 +606,7 @@ string_q report_cache(int opt) {
 // TODO: What does blkRewardMap do? Needs testing
 // TODO: Reconciliation loads traces -- plus it reduplicates the isSuicide, isGeneration, isUncle shit (I think)
 // TODO: Used to use toAddrMap[trans.to] to see it we've already loaded the abi to avoid loading it more than once
-// TODO: writeLastExport is really weird
+// TODO: updateLastExport is really weird
 // TODO: writeLastBlock is really weird
 // TODO: We used to write traces sometimes
 // TODO: We used to cache the monitored txs - I think it was pretty fast (we used the monitor staging folder)

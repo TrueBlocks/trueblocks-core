@@ -31,7 +31,7 @@ string_q params_2_Str(CParameterArray& params) {
 
 static size_t level = 0;
 //------------------------------------------------------------------------------------------------
-static void prettyPrint(CParameterArray& params, const CStringArray& dataArray, const size_t& readIndex,
+void prettyPrint(CParameterArray& params, const CStringArray& dataArray, const size_t& readIndex,
                         size_t dStart) {
     if (!isTestMode())
         return;
@@ -68,7 +68,7 @@ size_t decodeTheData(CParameterArray& params, const CStringArray& dataArray, siz
     level++;
 
     uint64_t nDataItems = dataArray.size();
-    if (params.size() > nDataItems) {
+    if (params.size() >= nDataItems) {
         cerr << "{ \"error\": \"decodeTheData: nParams(" << params.size() << ") > nDataItems(" << nDataItems
              << "). Ignoring...\" }," << endl;
         level--;
@@ -84,6 +84,13 @@ size_t decodeTheData(CParameterArray& params, const CStringArray& dataArray, siz
 
     for (auto& param : params) {
         prettyPrint(params, dataArray, readIndex, dStart);
+        if (readIndex >= nDataItems) {
+            cerr << "{ \"error\": \"decodeTheData: readIndex(" << readIndex << ") > nDataItems(" << nDataItems
+                << "). Ignoring...\" }," << endl;
+            level--;
+            return false;
+        }
+
         bool isBaseType = !contains(param.type, "[");
         if (isBaseType) {
             if (contains(param.type, "bool")) {

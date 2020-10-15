@@ -44,7 +44,7 @@ string_q logger<log_policy_i>::get_logline_header(void) {
         } else {
             static clock_t last_clock = 0;
             header.fill('0');
-            header.width(7);
+            header.width(8);
             clock_t now = clock();
             header << now << " (" << padNum7T(uint64_t(now - last_clock)) << ")- ";
             last_clock = now;

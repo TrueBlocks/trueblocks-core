@@ -153,8 +153,7 @@ bool COptions::handle_traces(void) {
                       " traces for address " + monitors[0].address + "\r");
 
     for (auto monitor : monitors)
-        if (apps.size() > 0)
-            monitor.writeLastExport(apps[apps.size() - 1].blk);
+        monitor.updateLastExport();
 
     reportNeighbors();
 

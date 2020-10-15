@@ -388,8 +388,8 @@ void CMonitor::writeLastBlock(blknum_t bn) {
 }
 
 //-------------------------------------------------------------------------
-void CMonitor::writeLastExport(blknum_t bn) {
-    stringToAsciiFile(getMonitorExpt(address, fm_mode), uint_2_Str(bn) + "\n");
+void CMonitor::updateLastExport(void) {
+    copyFile(getMonitorLast(address, fm_mode), getMonitorExpt(address, fm_mode));
 }
 
 //-------------------------------------------------------------------------
