@@ -7,7 +7,8 @@
 
 extern bool visitMonitor(const string_q& path, void* data);
 extern bool isScraperRunning(const string_q& unsearch);
-extern bool freshen_internal_for_scrape(freshen_e mode, CMonitorArray& fa, const string_q& tool_flags, const string_q& freshen_flags);
+extern bool freshen_internal_for_scrape(freshen_e mode, CMonitorArray& fa, const string_q& tool_flags,
+                                        const string_q& freshen_flags);
 //------------------------------------------------------------------------------------------------
 bool COptions::handle_scrape(void) {
     ENTER("handle_" + mode);
@@ -202,13 +203,6 @@ bool isScraperRunning(const string_q& unsearch) {
     return contains(pList, "chifra scrape");
 }
 
-/*-------------------------------------------------------------------------
- * This source code is confidential proprietary information which is
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
- * All Rights Reserved
- *------------------------------------------------------------------------*/
-#include "options.h"
-
 //------------------------------------------------------------------------------------------------
 blknum_t lastExported(const address_t& addr) {
     string_q filename = getMonitorExpt(addr, FM_PRODUCTION);
@@ -219,7 +213,8 @@ blknum_t lastExported(const address_t& addr) {
 }
 
 //------------------------------------------------------------------------------------------------
-bool freshen_internal_for_scrape(freshen_e mode, CMonitorArray& fa, const string_q& tool_flags, const string_q& freshen_flags) {
+bool freshen_internal_for_scrape(freshen_e mode, CMonitorArray& fa, const string_q& tool_flags,
+                                 const string_q& freshen_flags) {
     ENTER("freshen_internal_for_scrape");
 
     ostringstream base;

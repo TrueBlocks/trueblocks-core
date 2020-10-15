@@ -15,19 +15,19 @@ bool freshen_internal(freshen_e mode, CMonitorArray& fa, const string_q& tool_fl
 
     // Build collections of five addresses at a time
     size_t cnt = 0;
-    string_q fiveAddresses;
+    string_q tenAddresses;
     for (auto f : fa) {
         fiveAddresses += (f.address + " ");
-        if (!(++cnt % 20)) {  // we don't want to do too many addrs at a time
-            fiveAddresses += "|";
+        if (!(++cnt % 10)) {  // we don't want to do too many addrs at a time
+            tenAddresses += "|";
             cnt = 0;
         }
     }
 
     // Process them until we're done
     uint64_t cur = 0;
-    while (!fiveAddresses.empty()) {
-        string_q thisFive = nextTokenClear(fiveAddresses, '|');
+    while (!tenAddresses.empty()) {
+        string_q thisFive = nextTokenClear(tenAddresses, '|');
         string_q cmd = substitute(base.str(), "[ADDRS]", thisFive);
         LOG_CALL(cmd);
         // clang-format off
@@ -37,7 +37,7 @@ bool freshen_internal(freshen_e mode, CMonitorArray& fa, const string_q& tool_fl
         cur += n;
         if (system(cmd.c_str())) {}  // Don't remove cruft. Silences compiler warnings
         // clang-format on
-        if (!fiveAddresses.empty())
+        if (!tenAddresses.empty())
             usleep(500000);  // this sleep is here so that chifra remains responsive to Cntl+C. Do not remove
     }
 
