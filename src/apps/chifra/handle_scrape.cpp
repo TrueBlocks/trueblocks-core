@@ -114,6 +114,7 @@ bool COptions::handle_scrape(void) {
         cerr << cYellow << "Scraper is starting with " << tool_flags << "..." << cOff << endl;
     }
 
+    useconds_t userSleep = (scrapeSleep == 0 ? 500000 : scrapeSleep * 1000000);
     // Run forever...unless told to pause or stop (shouldQuit is true if control+C was hit.
     bool waitFileExists = fileExists(waitFile);
     size_t nRuns = 0;
@@ -159,10 +160,9 @@ bool COptions::handle_scrape(void) {
                                 continue;
                         }
                     }
-                    cerr << "\t  freshening: " << cYellow << "    finished." << string_q(50, ' ') << cOff
-                         << "                                                           " << endl;
+                    LOG_INFO(cYellow, "Finished freshening ", monitors.size(), " monitored addresses. Sleeping for ", (userSleep/1000000), " seconds", string_q(40, ' '), cOff);
                 }
-                usleep(scrapeSleep == 0 ? 500000 : scrapeSleep * 1000000);  // stay responsive to cntrl+C
+                usleep(userSleep);  // stay responsive to cntrl+C
             }
         }
 
@@ -190,6 +190,7 @@ bool visitMonitor(const string_q& path, void* data) {
         m.needsRefresh = false;
         CMonitorArray* array = (CMonitorArray*)data;  // NOLINT
         array->push_back(m);
+        LOG_INFO(cTeal, "Loading addresses ", m.address, " ", array->size(), string_q(80, ' '), cOff, "\r");
     }
 
     return true;
@@ -221,7 +222,7 @@ bool freshen_internal_for_scrape(freshen_e mode, CMonitorArray& fa, const string
     base << "acctScrape " << tool_flags << " " << freshen_flags << " [ADDRS] ;";
 
     blknum_t latestCache = getLatestBlock_cache_final();
-    size_t cnt = 0;
+    size_t cnt = 0, cnt2 = 0;
     string_q tenAddresses;
     for (auto f : fa) {
         bool needsUpdate = true;
@@ -233,7 +234,10 @@ bool freshen_internal_for_scrape(freshen_e mode, CMonitorArray& fa, const string
                 tenAddresses += "|";
                 cnt = 0;
             }
+        } else {
+            LOG_INFO(cTeal, "Scraping addresses ", f.address, " ", cnt2, " of ", fa.size(), string_q(80, ' '), cOff, "\r");
         }
+        cnt2++;
     }
 
     // Process them until we're done
@@ -250,7 +254,7 @@ bool freshen_internal_for_scrape(freshen_e mode, CMonitorArray& fa, const string
         // Don't remove cruft. Silences compiler warnings
         if (system(cmd.c_str())) {}  // clang-format on
         if (!tenAddresses.empty())
-            usleep(500000);  // this sleep is here so that chifra remains responsive to Cntl+C. Do not remove
+            usleep(250000);  // this sleep is here so that chifra remains responsive to Cntl+C. Do not remove
     }
 
     for (CMonitor& f : fa)
