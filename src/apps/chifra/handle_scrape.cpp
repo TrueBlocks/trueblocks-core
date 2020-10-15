@@ -114,7 +114,7 @@ bool COptions::handle_scrape(void) {
         cerr << cYellow << "Scraper is starting with " << tool_flags << "..." << cOff << endl;
     }
 
-    useconds_t userSleep = (scrapeSleep == 0 ? 500000 : scrapeSleep * 1000000);
+    timestamp_t userSleep = (scrapeSleep == 0 ? 500000 : scrapeSleep * 1000000);
     // Run forever...unless told to pause or stop (shouldQuit is true if control+C was hit.
     bool waitFileExists = fileExists(waitFile);
     size_t nRuns = 0;
@@ -127,6 +127,7 @@ bool COptions::handle_scrape(void) {
             usleep(max(useconds_t(5), scrapeSleep) * 1000000);  // sleep for at least five seconds
 
         } else {
+            timestamp_t startTs = date_2_Ts(Now());
             if (wasPaused)
                 cerr << cYellow << "\tScraper restarted..." << cOff << endl;
             wasPaused = false;
@@ -141,9 +142,9 @@ bool COptions::handle_scrape(void) {
                 // Do nothing related in --daemon mode while testing
 
             } else {
+                CMonitorArray monitors;
                 if (daemonMode) {
                     // Catch the monitors addresses up to the scraper if in --deamon mode
-                    CMonitorArray monitors;
                     forEveryFileInFolder(getMonitorPath("") + "*", visitMonitor, &monitors);
 
                     freshen_internal_for_scrape(FM_PRODUCTION, monitors, "", freshen_flags);
@@ -160,10 +161,13 @@ bool COptions::handle_scrape(void) {
                                 continue;
                         }
                     }
-                    LOG_INFO(cYellow, "Finished freshening ", monitors.size(), " monitored addresses. Sleeping for ",
-                             (userSleep / 1000000), " seconds", string_q(40, ' '), cOff);
                 }
-                usleep(userSleep);  // stay responsive to cntrl+C
+                timestamp_t now = max(startTs, date_2_Ts(Now())); // not less than
+                timestamp_t sleepSecs = min(userSleep, (now - startTs));
+                if (daemonMode)
+                    LOG_INFO(cYellow, "Finished freshening ", monitors.size(), " monitored addresses. Sleeping for ",
+                             (sleepSecs / 1000000), " seconds", string_q(40, ' '), cOff);
+                usleep(useconds_t(sleepSecs));  // stay responsive to cntrl+C
             }
         }
 
