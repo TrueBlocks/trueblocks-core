@@ -229,7 +229,7 @@ bool freshen_internal_for_scrape(freshen_e mode, CMonitorArray& fa, const string
     ostringstream base;
     base << "acctScrape " << tool_flags << " " << freshen_flags << " [ADDRS] ;";
 
-    blknum_t latestCache = getLatestBlock_cache_final();
+    //blknum_t latestCache = getLatestBlock_cache_final();
     size_t cnt = 0, cnt2 = 0;
     string_q tenAddresses;
     for (auto f : fa) {
