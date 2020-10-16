@@ -20,10 +20,16 @@ bool COptions::handle_accounting(void) {
         lastStatement.endBal = getBalanceAt(expContext().accountedFor, apps[0].blk - 1);
 
     bool first = true;
+    blknum_t lastExported = scanRange.second;
+    //LOG_INFO("lastExported: ", lastExported, " scan.start: " , scanRange.first, " scan.end: ", scanRange.second);
+    //getchar();
+    uint64_t nApps = apps.size();
     for (size_t i = 0; i < apps.size() && (!freshen || (nProcessed < freshen_max)); i++) {
         const CAppearance_base* app = &apps[i];
-        if (shouldQuit() || app->blk >= ts_cnt)
+        if (shouldQuit() || app->blk >= ts_cnt) {
+            lastExported = app->blk-1;
             break;
+        }
         if (inRange((blknum_t)app->blk, scanRange.first, scanRange.second)) {
             CBlock block;  // do not move this from this scope
             block.blockNumber = app->blk;
@@ -60,10 +66,11 @@ bool COptions::handle_accounting(void) {
                 HIDE_FIELD(CFunction, "message");
                 if (!isTestMode() && !(nProcessed % FREQ)) {
                     blknum_t current = first_record + nProcessed;
-                    blknum_t goal = min(first_record + max_records, nTransactions);
+                    // blknum_t goal = min(first_record + max_records, nApps);
                     ostringstream post;
-                    post << " txs (max " << goal << ") for address " << monitors[0].address << "\r";
-                    LOG_PROGRESS1("Reading", current, nTransactions, post.str());
+                    post << " txs for address " << monitors[0].address;
+                    post << " " << first_record << " " << nProcessed << " " << i << " " << nApps << "\r";
+                    LOG_PROGRESS1("Reading ", current, nApps, post.str());
                 }
 
             } else {
@@ -146,10 +153,11 @@ bool COptions::handle_accounting(void) {
                 HIDE_FIELD(CFunction, "message");
                 if (!isTestMode() && !(nProcessed % FREQ)) {
                     blknum_t current = first_record + nProcessed;
-                    blknum_t goal = min(first_record + max_records, nTransactions);
+                    // blknum_t goal = min(first_record + max_records, nApp);
                     ostringstream post;
-                    post << " txs (max " << goal << ") for address " << monitors[0].address << "\r";
-                    LOG_PROGRESS1("Extracting", current, nTransactions, post.str());
+                    post << " txs for address " << monitors[0].address;
+                    post << " " << first_record << " " << nProcessed << " " << i << " " << nApps << "\r";
+                    LOG_PROGRESS1("Extract ", current, nApps, post.str());
                 }
             }
 
@@ -162,12 +170,15 @@ bool COptions::handle_accounting(void) {
         }
     }
 
-    if (!isTestMode())
-        LOG_PROGRESS1("Reported", (first_record + nProcessed), nTransactions,
-                      " transactions for address " + monitors[0].address + "\r");
+    if (!isTestMode()) {
+        LOG_PROGRESS1("Reported", (first_record + nProcessed), nApps,
+                      " txs for address " + monitors[0].address);
+    }
 
+    //LOG_INFO("n: ", monitors.size(), " lastExported: ", lastExported);
+    //getchar();
     for (auto monitor : monitors)
-        monitor.updateLastExport();
+        monitor.updateLastExport(lastExported);
 
     reportNeighbors();
 

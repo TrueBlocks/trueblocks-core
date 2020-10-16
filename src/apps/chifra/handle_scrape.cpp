@@ -115,6 +115,7 @@ bool COptions::handle_scrape(void) {
     }
 
     timestamp_t userSleep = (scrapeSleep == 0 ? 500000 : scrapeSleep * 1000000);
+
     // Run forever...unless told to pause or stop (shouldQuit is true if control+C was hit.
     bool waitFileExists = fileExists(waitFile);
     size_t nRuns = 0;
@@ -152,7 +153,7 @@ bool COptions::handle_scrape(void) {
                         if (monitor.needsRefresh) {
                             ostringstream os1;
                             os1 << "acctExport " << monitor.address << " --freshen";  // << " >/dev/null";
-                            LOG_INFO("Calling: ", os1.str(), string_q(40, ' '));
+                            LOG_INFO("Calling: ", os1.str(), string_q(40, ' '), "\r");
                             // clang-format off
                             if (system(os1.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings
                             // clang-format on
@@ -163,7 +164,9 @@ bool COptions::handle_scrape(void) {
                     }
                 }
                 timestamp_t now = max(startTs, date_2_Ts(Now())); // not less than
-                timestamp_t sleepSecs = min(userSleep, (now - startTs));
+                timestamp_t timeSpent = (now - startTs) * 1000000;
+                timestamp_t sleepSecs = timeSpent > userSleep ? 0 : userSleep - timeSpent;
+                //LOG_INFO("startTs: ", startTs, " now: ", now, " timeSpent: ", timeSpent, " userSleep: ", userSleep, " sleepSecs: ", sleepSecs, string_q(60, ' '));
                 if (daemonMode)
                     LOG_INFO(cYellow, "Finished freshening ", monitors.size(), " monitored addresses. Sleeping for ",
                              (sleepSecs / 1000000), " seconds", string_q(40, ' '), cOff);
@@ -195,7 +198,7 @@ bool visitMonitor(const string_q& path, void* data) {
         m.needsRefresh = false;
         CMonitorArray* array = (CMonitorArray*)data;  // NOLINT
         array->push_back(m);
-        LOG_INFO(cTeal, "Loading addresses ", m.address, " ", array->size(), string_q(80, ' '), cOff, "\r");
+//        LOG_INFO(cTeal, "Loading addresses ", m.address, " ", array->size(), string_q(80, ' '), cOff, "\r");
     }
 
     return true;
@@ -215,7 +218,7 @@ blknum_t lastExported(const address_t& addr) {
     blknum_t second;
     timestamp_t unused;
     bnFromPath(getMonitorExpt(addr, FM_PRODUCTION), second, unused);
-    return second;
+    return second == NOPOS ? 0 : second;
 }
 
 //------------------------------------------------------------------------------------------------
@@ -231,17 +234,20 @@ bool freshen_internal_for_scrape(freshen_e mode, CMonitorArray& fa, const string
     string_q tenAddresses;
     for (auto f : fa) {
         bool needsUpdate = true;
-        if (!contains(freshen_flags, "staging") && !contains(freshen_flags, "unripe"))
-            needsUpdate = lastExported(f.address) < latestCache;
+//        if (!contains(freshen_flags, "staging") && !contains(freshen_flags, "unripe")) {
+//            needsUpdate = lastExported(f.address) < latestCache;
+//            LOG_INFO("lastExport: ", lastExported(f.address), " latestCache: ", latestCache, " needsUpdate: ", needsUpdate);
+////            getchar();
+//        }
         if (needsUpdate) {
+            LOG_INFO(cTeal, "Needs update ", f.address, string_q(80, ' '), cOff);
             tenAddresses += (f.address + " ");
             if (!(++cnt % 10)) {  // we don't want to do too many addrs at a time
                 tenAddresses += "|";
                 cnt = 0;
             }
         } else {
-            LOG_INFO(cTeal, "Scraping addresses ", f.address, " ", cnt2, " of ", fa.size(), string_q(80, ' '), cOff,
-                     "\r");
+            LOG_INFO(cTeal, "Scraping addresses ", f.address, " ", cnt2, " of ", fa.size(), string_q(80, ' '), cOff, "\r");
         }
         cnt2++;
     }

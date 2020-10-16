@@ -21,10 +21,13 @@ bool COptions::handle_statements(void) {
         lastStatement.endBal = getBalanceAt(expContext().accountedFor, apps[0].blk - 1);
 
     bool first = true;
+    blknum_t lastExported = scanRange.second;
     for (size_t i = 0; i < apps.size() && (!freshen || (nProcessed < freshen_max)); i++) {
         const CAppearance_base* app = &apps[i];
-        if (shouldQuit() || app->blk >= ts_cnt)
+        if (shouldQuit() || app->blk >= ts_cnt) {
+            lastExported = app->blk;
             break;
+        }
         if (inRange((blknum_t)app->blk, scanRange.first, scanRange.second)) {
             CBlock block;  // do not move this from this scope
             block.blockNumber = app->blk;
@@ -170,7 +173,7 @@ bool COptions::handle_statements(void) {
                       " transactions for address " + monitors[0].address + "\r");
 
     for (auto monitor : monitors)
-        monitor.updateLastExport();
+        monitor.updateLastExport(lastExported);
 
     reportNeighbors();
 

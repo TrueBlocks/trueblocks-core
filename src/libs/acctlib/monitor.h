@@ -56,7 +56,7 @@ class CMonitor : public CAccountName {
     bool inBlock;
     CArchive* tx_cache;
     void writeLastBlock(blknum_t bn);
-    void updateLastExport(void);
+    void updateLastExport(blknum_t bn);
     void writeAnArray(const CAppearanceArray_base& array);
     void writeARecord(blknum_t bn, blknum_t tx_id);
     bool openCacheFile1(void);

@@ -19,11 +19,15 @@ bool COptions::handle_receipts(void) {
     SHOW_FIELD(CReceipt, "blockNumber");
     SHOW_FIELD(CReceipt, "transactionIndex");
     SHOW_FIELD(CReceipt, "isError");
+
     bool first = true;
+    blknum_t lastExported = scanRange.second;
     for (size_t i = 0; i < apps.size() && (!freshen || (nProcessed < freshen_max)); i++) {
         const CAppearance_base* app = &apps[i];
-        if (shouldQuit() || app->blk >= ts_cnt)
+        if (shouldQuit() || app->blk >= ts_cnt) {
+            lastExported = app->blk-1;
             break;
+        }
         if (inRange((blknum_t)app->blk, scanRange.first, scanRange.second)) {
             CBlock block;  // do not move this from this scope
             block.blockNumber = app->blk;
@@ -94,7 +98,7 @@ bool COptions::handle_receipts(void) {
                       " receipts for address " + monitors[0].address + "\r");
 
     for (auto monitor : monitors)
-        monitor.updateLastExport();
+        monitor.updateLastExport(lastExported);
 
     reportNeighbors();
 
