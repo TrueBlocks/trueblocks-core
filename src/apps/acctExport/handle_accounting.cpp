@@ -21,9 +21,8 @@ bool COptions::handle_accounting(void) {
 
     bool first = true;
     blknum_t lastExported = scanRange.second;
-    //LOG_INFO("lastExported: ", lastExported, " scan.start: " , scanRange.first, " scan.end: ", scanRange.second);
-    //getchar();
     uint64_t nApps = apps.size();
+    LOG_INFO(cRed, "lastExported: ", lastExported, " scan.start: " , scanRange.first, " scan.end: ", scanRange.second, " nApps: ", nApps, string_q(20, ' '), cOff);
     for (size_t i = 0; i < apps.size() && (!freshen || (nProcessed < freshen_max)); i++) {
         const CAppearance_base* app = &apps[i];
         if (shouldQuit() || app->blk >= ts_cnt) {
@@ -172,7 +171,7 @@ bool COptions::handle_accounting(void) {
 
     if (!isTestMode()) {
         LOG_PROGRESS1("Reported", (first_record + nProcessed), nApps,
-                      " txs for address " + monitors[0].address);
+                      " txs for address " + monitors[0].address + "\n");
     }
 
     //LOG_INFO("n: ", monitors.size(), " lastExported: ", lastExported);

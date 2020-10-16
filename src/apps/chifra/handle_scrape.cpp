@@ -150,16 +150,18 @@ bool COptions::handle_scrape(void) {
 
                     freshen_internal_for_scrape(FM_PRODUCTION, monitors, "", freshen_flags);
                     for (auto monitor : monitors) {
-                        if (monitor.needsRefresh) {
+                        if (true) { //monitor.needsRefresh) {
+                            static size_t nThings = 0;
                             ostringstream os1;
                             os1 << "acctExport " << monitor.address << " --freshen";  // << " >/dev/null";
                             LOG_INFO("Calling: ", os1.str(), string_q(40, ' '), "\r");
                             // clang-format off
                             if (system(os1.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings
                             // clang-format on
-                            usleep(250000);  // stay responsive to cntrl+C
                             if (shouldQuit())
                                 continue;
+                            if (!(nThings % 10))
+                                usleep(125000);  // stay responsive to cntrl+C
                         }
                     }
                 }
@@ -233,7 +235,7 @@ bool freshen_internal_for_scrape(freshen_e mode, CMonitorArray& fa, const string
     size_t cnt = 0, cnt2 = 0;
     string_q tenAddresses;
     for (auto f : fa) {
-        bool needsUpdate = true;
+        bool needsUpdate = false; //true;
 //        if (!contains(freshen_flags, "staging") && !contains(freshen_flags, "unripe")) {
 //            needsUpdate = lastExported(f.address) < latestCache;
 //            LOG_INFO("lastExport: ", lastExported(f.address), " latestCache: ", latestCache, " needsUpdate: ", needsUpdate);
