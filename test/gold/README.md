@@ -10,4 +10,4 @@ The remainder of the list are useful for testing, experimentation, and to teach 
 
 9. [sha3](sha3) - A simple demonstration of using the node to perform sha3 calculations.
 
-10. [bytesUsed](bytesUsed) - A very simple tool to keep track of how much disk space the TrueBlocks system is consuming.
+10. [bytesUsed](bytesUsed) - A very simple tool to keep track of how much disk space the QBlocks system is consuming.

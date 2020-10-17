@@ -22,4 +22,4 @@ grabABI --sol 0x2234567812345678123456781234567812345678
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
 	-h  (--help)          display this help screen
 
-  Powered by QBlocks
+  Powered by TrueBlocks

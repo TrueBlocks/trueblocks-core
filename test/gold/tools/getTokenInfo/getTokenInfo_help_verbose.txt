@@ -20,4 +20,4 @@ getTokenInfo --help --verbose
 	- If the queried node does not store historical state, the results are undefined.
 	- special blocks are detailed under whenBlock --list.
 
-  Powered by QBlocks
+  Powered by TrueBlocks

@@ -20,4 +20,4 @@ getTrans 1301011.0 1301672.0 1301324.0 --uniq_tx --fmt json
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
 	-h  (--help)          display this help screen
 
-  Powered by QBlocks
+  Powered by TrueBlocks

@@ -37,4 +37,4 @@ ethNames --editCmd invalid TAGS!0x0000000000000000000000000000000010101010!NAME!
 	- For editCmd add or update, use terms TAGS!ADDRESS!NAME!SYMBOL!SOURCE!DESCRIPTION.
 	- Name file: ~/.quickBlocks/names/names.tab (867477)
 
-  Powered by QBlocks
+  Powered by TrueBlocks

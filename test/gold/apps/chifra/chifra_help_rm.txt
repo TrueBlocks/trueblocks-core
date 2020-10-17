@@ -5,7 +5,7 @@ chifra rm --help
   Purpose:  Main TrueBlocks command line controls.
 
   Where:  
-	commands              which command to run, one or more of [list|export|slurp|collections|names|abi|state|tokens|when|data|blocks|transactions|receipts|logs|traces|quotes|scrape|status|settings|rm|message] (required)
+	commands              which command to run, one or more of [list|export|slurp|collections|names|abi|state|tokens|when|data|blocks|transactions|receipts|logs|traces|quotes|scrape|status|settings|rm|message|leech|seed] (required)
 	-s  (--sleep <num>)   for the 'scrape' and 'daemon' commands, the number of seconds chifra should sleep between runs (default 14)
 
 #### Hidden options (shown during testing only)
@@ -18,4 +18,4 @@ chifra rm --help
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
 	-h  (--help)          display this help screen
 
-  Powered by QBlocks
+  Powered by TrueBlocks

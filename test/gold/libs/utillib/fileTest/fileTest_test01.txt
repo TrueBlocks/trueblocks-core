@@ -1,7 +1,7 @@
 fileTest argc: 2 [1:recurse] 
 fileTest recurse 
 Recursive from ../
-Found 124 (124) files
+Found 126 (126) files
 ../arrayTest/arrayTest_Insertion.txt
 ../arrayTest/arrayTest_README.txt
 ../bigIntTest/bigIntTest_00.txt
@@ -101,6 +101,7 @@ Found 124 (124) files
 ../tomlTest2/tests/acctExport.toml
 ../tomlTest2/tests/acctScrape.toml
 ../tomlTest2/tests/blockScrape.toml
+../tomlTest2/tests/cacheMan.toml
 ../tomlTest2/tests/chifra.toml
 ../tomlTest2/tests/ethNames.toml
 ../tomlTest2/tests/ethslurp.toml
@@ -113,6 +114,7 @@ Found 124 (124) files
 ../tomlTest2/tomlTest2_acctExport.txt
 ../tomlTest2/tomlTest2_acctScrape.txt
 ../tomlTest2/tomlTest2_blockScrape.txt
+../tomlTest2/tomlTest2_cacheMan.txt
 ../tomlTest2/tomlTest2_chifra.txt
 ../tomlTest2/tomlTest2_ethNames.txt
 ../tomlTest2/tomlTest2_ethslurp.txt

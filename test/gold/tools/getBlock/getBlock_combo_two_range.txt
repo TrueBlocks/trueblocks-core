@@ -24,4 +24,4 @@ getBlock 1590000 4000001-4000002 1001001-1001100 1234567
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
 	-h  (--help)          display this help screen
 
-  Powered by QBlocks
+  Powered by TrueBlocks

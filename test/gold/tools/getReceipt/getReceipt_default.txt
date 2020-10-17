@@ -14,4 +14,4 @@ getReceipt --address 0xbb9bc244d798123fde783fcc1c72d3bb8c189413
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
 	-h  (--help)          display this help screen
 
-  Powered by QBlocks
+  Powered by TrueBlocks

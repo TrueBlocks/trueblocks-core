@@ -25,4 +25,4 @@ grabABI 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 -vne
   Notes:
 	- Solidity files found in the local folder with the name '<address>.sol' are converted to an ABI prior to processing (and then removed).
 
-  Powered by QBlocks
+  Powered by TrueBlocks

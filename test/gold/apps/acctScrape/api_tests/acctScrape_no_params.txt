@@ -1,1 +1,1 @@
-{ "errors": [ "chifra - This function requires an address." ] }
+{ "errors": [ "chifra - 'chifra list' requires an Ethereum address." ] }
