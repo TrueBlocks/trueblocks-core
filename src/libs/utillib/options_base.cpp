@@ -631,7 +631,7 @@ string_q COptionsBase::usageStr(const string_q& errMsg) const {
     os << descriptions() << "\n";
     os << get_notes();
     if (!isReadme) {
-        os << bBlue << "  Powered by QBlocks";
+        os << bBlue << "  Powered by TrueBlocks";
         os << (isTestMode() ? "" : " (" + getVersionStr() + ")") << "\n" << cOff;
     }
 

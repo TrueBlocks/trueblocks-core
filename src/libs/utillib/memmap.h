@@ -16,7 +16,7 @@
 //     appreciated but is not required.
 // o - Altered source versions must be plainly marked as such, and must not be misrepresented as being
 //     the original software.
-// Notice: This code has been modified to conform to QBlocks formatting preferences as well as other minor changes
+// Notice: This code has been modified to conform to TrueBlocks formatting preferences as well as other minor changes
 //
 #include <string>
 #include <stdexcept>

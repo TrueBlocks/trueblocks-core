@@ -14,7 +14,7 @@
 
 /*-------------------------------------------------------------------------
  * Name:    Simple
- * Purpose: To provide the easiest introduction to the QBlocks library.
+ * Purpose: To provide the easiest introduction to the TrueBlocks library.
  *          Simply request a block from Infura and print it to the screen.
  *------------------------------------------------------------------------*/
 int main(int argc, const char* argv[]) {
