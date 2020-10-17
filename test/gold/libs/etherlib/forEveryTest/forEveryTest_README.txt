@@ -3,7 +3,7 @@ forEveryTest -th
 #### Usage
 
 `Usage:`    forEveryTest [-v|-h] mode  
-`Purpose:`  Test 'c' library strings against QBlocks strings.
+`Purpose:`  Test 'c' library strings against TrueBlocks strings.
         
 `Where:`  
 

@@ -2,8 +2,6 @@ chifra argc: 7 [1:list] [2:0x001d14804b399c6ef80e64576f657660804fec0b] [3:--star
 chifra list 0x001d14804b399c6ef80e64576f657660804fec0b --start 100000 --end 2000000 
 acctScrape argc: 6 [1:--start] [2:100000] [3:--end] [4:2000000] [5:0x001d14804b399c6ef80e64576f657660804fec0b] 
 acctScrape --start 100000 --end 2000000 0x001d14804b399c6ef80e64576f657660804fec0b 
-cacheMan argc: 2 [1:0x001d14804b399c6ef80e64576f657660804fec0b] 
-cacheMan 0x001d14804b399c6ef80e64576f657660804fec0b 
 acctExport argc: 7 [1:--appearances] [2:--start] [3:100000] [4:--end] [5:2000000] [6:0x001d14804b399c6ef80e64576f657660804fec0b] 
 acctExport --appearances --start 100000 --end 2000000 0x001d14804b399c6ef80e64576f657660804fec0b 
 address	blocknumber	transactionindex

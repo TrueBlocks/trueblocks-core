@@ -1,5 +1,5 @@
 {
   "errors": [
-    "chifra - 'chifra slurp' requires an Ethereum address."
+    "ethSlurp - Block 0x63c8c29af409bd31ec7ddeea58f is later than the last valid block --."
   ]
 }

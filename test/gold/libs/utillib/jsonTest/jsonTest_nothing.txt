@@ -4,7 +4,7 @@ jsonTest
   You must supply a filename to test. Quitting...
 
   Usage:    jsonTest [-v|-h] <file> [file...]  
-  Purpose:  Test the json parsing facility in QBlocks.
+  Purpose:  Test the json parsing facility in TrueBlocks.
         
   Where:  
 	files                 One or more files to parse (required)

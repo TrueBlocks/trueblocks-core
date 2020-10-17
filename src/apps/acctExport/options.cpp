@@ -311,7 +311,7 @@ bool COptions::parseArguments(string_q& command) {
             // future reference.
             format =
                 getGlobalConfig("acctExport")->getConfigStr("display", "appearances", STR_DISPLAY_APPEARANCEDISPLAY);
-            expContext().fmtMap["displayapp_fmt"] = cleanFmt(format);
+            expContext().fmtMap["appearancedisplay_fmt"] = cleanFmt(format);
             manageFields("CAppearanceDisplay:" + format);
         }
         HIDE_FIELD(CFunction, "stateMutability");
@@ -331,7 +331,7 @@ bool COptions::parseArguments(string_q& command) {
             } else if (logs) {
                 expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["logentry_fmt"]);
             } else if (appearances) {
-                expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["displayapp_fmt"]);
+                expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["appearancedisplay_fmt"]);
             } else if (statements) {
                 expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["reconciliation_fmt"]);
             } else {

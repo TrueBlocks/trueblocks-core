@@ -1,5 +1,5 @@
 {
   "errors": [
-    "ethslurp - Invalid option '0x1324e7b922b30b49ab8ea81086341cc41c249346' for 'types'. One or more of [ext|int|token|nfts|miner|all] required. Quitting..."
+    "ethSlurp - Invalid option '0x1324e7b922b30b49ab8ea81086341cc41c249346' for 'types'. One or more of [ext|int|token|nfts|miner|all] required. Quitting..."
   ]
 }

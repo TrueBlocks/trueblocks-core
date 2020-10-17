@@ -1,5 +1,5 @@
 {
   "errors": [
-    "chifra - 'chifra slurp' requires an Ethereum address."
+    "ethSlurp - Invalid option: --pink"
   ]
 }

@@ -48,6 +48,9 @@ int main(int argc, const char* argv[]) {
             map<string, string> cmdMap;
             cmdMap["where"] = "whereBlock";
             cmdMap["tokens"] = "getTokenInfo";
+            cmdMap["status"] = "cacheStatus";
+            cmdMap["slurp"] = "ethSlurp";
+            cmdMap["quotes"] = "ethQuote";
             if (cmdMap[options.mode] != "") {
                 ostringstream os;
                 os << cmdMap[options.mode] << " " << options.tool_flags;
@@ -73,7 +76,7 @@ int main(int argc, const char* argv[]) {
                 LOG_CALL(os.str());
                 // clang-format off
                 if (system(os.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings
-                                                  // clang-format on
+                // clang-format on
             } else {
                 cerr << "Should not happen.";
             }
