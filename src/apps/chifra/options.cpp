@@ -13,9 +13,8 @@
 static const COption params[] = {
     // BEG_CODE_OPTIONS
     // clang-format off
-    COption("commands", "", "list<enum[list|export|slurp|collections|names|abi|state|tokens|when|data|blocks|transactions|receipts|logs|traces|quotes|scrape|status|settings|rm|message]>", OPT_REQUIRED | OPT_POSITIONAL, "which command to run"),  // NOLINT
+    COption("commands", "", "list<enum[list|export|slurp|collections|names|abi|state|tokens|when|data|blocks|transactions|receipts|logs|traces|quotes|scrape|status|rm]>", OPT_REQUIRED | OPT_POSITIONAL, "which command to run"),  // NOLINT
     COption("sleep", "s", "<uint32>", OPT_FLAG, "for the 'scrape' and 'daemon' commands, the number of seconds chifra should sleep between runs (default 14)"),  // NOLINT
-    COption("set", "e", "", OPT_HIDDEN | OPT_SWITCH, "for 'settings' only, indicates that this is a --set"),
     COption("start", "S", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to process (inclusive)"),
     COption("end", "E", "<blknum>", OPT_HIDDEN | OPT_FLAG, "last block to process (inclusive)"),
     COption("", "", "", OPT_DESCRIPTION, "Main TrueBlocks command line controls."),
@@ -146,8 +145,7 @@ bool COptions::parseArguments(string_q& command) {
 
     string_q origMode = mode;
     if (mode == "blocks" || mode == "transactions" || mode == "receipts" || mode == "names" || mode == "logs" ||
-        mode == "traces" || mode == "state" || mode == "tokens" || mode == "message" || mode == "abi" ||
-        mode == "when") {
+        mode == "traces" || mode == "state" || mode == "tokens" || mode == "abi" || mode == "when") {
         tool_flags += (" --" + mode);
         mode = "data";
     }
@@ -302,7 +300,6 @@ COptions::COptions(void) {
                 "  tokens        query the blockchain for the state of an ERC20 address.|"
                 "OTHER|"
                 "  status        query for various status reports about the system.|"
-                "  settings      get and set various system settings (API only).|"
     );
     // clang-format on
 

@@ -57,18 +57,11 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 10840,apps,status,cacheStatus,end,E,,false,false,false,false,header,flag,<blknum>,last block to process (inclusive)
 10860,apps,status,cacheStatus,,,,false,false,true,true,--,description,,Report on status of one or more TrueBlocks caches.
 
-10940,apps,settings,settings,get,,,false,false,false,false,--,switch,<boolean>,retrieve current configuration values
-10960,apps,settings,settings,set,,,false,false,false,false,--,flag,<string>,set new configuration values
-
 11000,apps,rm,rm,addrs,,,true,false,true,true,--,positional,list<addr>,remove one or more monitors
 11020,apps,rm,rm,header,,,false,false,true,true,--,switch,<boolean>,must be present for remove to occur
 
-11060,apps,message,,bytes,b,,false,false,true,true,--,positional,list<string>,convert the given bytes into an ascii string
-11080,apps,message,,chars,c,,false,false,true,true,--,positional,list<string>,convert the given string into bytes
-
-11200,apps,,chifra,commands,,,true,false,true,true,--weird,positional,list<enum[list|export|slurp|collections|names|abi|state|tokens|when|data|blocks|transactions|receipts|logs|traces|quotes|scrape|status|settings|rm|message]>,which command to run
+11200,apps,,chifra,commands,,,true,false,true,true,--weird,positional,list<enum[list|export|slurp|collections|names|abi|state|tokens|when|data|blocks|transactions|receipts|logs|traces|quotes|scrape|status|rm]>,which command to run
 11220,apps,,chifra,sleep,s,14,false,false,true,false,header,flag,<uint32>,for the 'scrape' and 'daemon' commands&#44; the number of seconds chifra should sleep between runs (default [{DEF}])
-11240,apps,,chifra,set,e,,false,false,false,false,--weird,switch,<boolean>,for 'settings' only&#44; indicates that this is a --set
 11280,apps,,chifra,start,S,0,false,false,false,false,local,flag,<blknum>,first block to process (inclusive)
 11300,apps,,chifra,end,E,,false,false,false,false,local,flag,<blknum>,last block to process (inclusive)
 11320,apps,,chifra,,,,false,false,true,true,--,description,,Main TrueBlocks command line controls.

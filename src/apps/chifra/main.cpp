@@ -40,8 +40,6 @@ int main(int argc, const char* argv[]) {
             RETURN(options.handle_data())
         } else if (options.mode == "tokens") {
             RETURN(options.handle_data())
-        } else if (options.mode == "settings") {
-            RETURN(options.handle_settings())  //
         } else if (options.mode == "rm") {
             RETURN(options.handle_rm())  //
         } else if (isTestMode()) {

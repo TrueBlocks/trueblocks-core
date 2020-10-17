@@ -12,7 +12,6 @@ TIME ~ CLOCK - <ERROR> : Exit(chifra,parseArguments):
 	-s  (--sleep <num>)   for the 'scrape' and 'daemon' commands, the number of seconds chifra should sleep between runs (default 14)
 
 #### Hidden options (shown during testing only)
-	-e  (--set)           for 'settings' only, indicates that this is a --set
 	-S  (--start <num>)   first block to process (inclusive)
 	-E  (--end <num>)     last block to process (inclusive)
 #### Hidden options (shown during testing only)

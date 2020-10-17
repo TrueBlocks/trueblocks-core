@@ -38,7 +38,6 @@ class COptions : public COptionsBase {
     bool handle_scrape(void);
     bool handle_rm(void);
     bool handle_data(void);
-    bool handle_settings(void);
 };
 
 extern bool freshen_internal(freshen_e mode, CMonitorArray& list, const string_q& tool_flags,

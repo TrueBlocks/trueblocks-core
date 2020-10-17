@@ -76,15 +76,6 @@ bool COptions::handle_data(void) {
         replaceAll(tool_flags, "--traces", "");
         os << "getTrace " << (isApiMode() ? substitute(tool_flags, ",", " ") : tool_flags);
 
-    } else if (contains(tool_flags, "--message")) {
-        tool_flags =
-            trim(substitute(substitute(substitute(tool_flags, "--message", ""), "--chars", ""), "--bytes", ""));
-        if (contains(tool_flags, "0x"))
-            cout << "message: " << toPrintable_force(tool_flags);
-        else
-            cout << "message: " << chr_2_HexStr(tool_flags);
-        return true;
-
     } else {
         EXIT_FAIL("Invalid option: data " + tool_flags + " " + addrList);
     }

@@ -1,3 +1,0 @@
-chifra argc: 3 [1:message] [2:--help] 
-chifra message --help 
-message: 0x2d2d68656c70

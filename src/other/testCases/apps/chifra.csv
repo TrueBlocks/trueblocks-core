@@ -22,9 +22,7 @@ on      ,cmd  ,fast  ,null     ,apps/chifra ,help_traces       ,n    ,modes = tr
 on      ,cmd  ,fast  ,null     ,apps/chifra ,help_quotes       ,n    ,modes = quotes & help
 on      ,cmd  ,fast  ,null     ,apps/chifra ,help_scrape       ,n    ,modes = scrape & help
 on      ,cmd  ,fast  ,null     ,apps/chifra ,help_status       ,n    ,modes = status & help
-on      ,cmd  ,fast  ,null     ,apps/chifra ,help_config       ,n    ,modes = settings & help
 on      ,cmd  ,fast  ,null     ,apps/chifra ,help_rm           ,n    ,modes = rm & help
-on      ,cmd  ,fast  ,null     ,apps/chifra ,help_message      ,n    ,modes = message & help
 
 on      ,cmd  ,fast  ,null     ,apps/chifra ,no_params         ,n    ,
 on      ,cmd  ,fast  ,null     ,apps/chifra ,invalid_option    ,n    ,modes = not_a_mode
@@ -50,23 +48,9 @@ on      ,both ,fast  ,when     ,apps/chifra ,when              ,y    ,modes = wh
 on      ,both ,fast  ,status   ,apps/chifra ,status            ,y    ,modes = status all
 on      ,both ,fast  ,status   ,apps/chifra ,status_details    ,y    ,modes = status all & details & start = 1400000 & end = 2000000
 
-on      ,both ,fast  ,settings ,apps/chifra ,config_noparms    ,y    ,modes = settings
-on      ,both ,fast  ,settings ,apps/chifra ,config_badparms   ,y    ,modes = settings & bad-param
-on      ,both ,fast  ,settings ,apps/chifra ,config_get        ,n    ,modes = settings & get
-on      ,both ,fast  ,settings ,apps/chifra ,config_set        ,n    ,modes = settings & set
-
 on      ,both ,slow  ,export   ,apps/chifra ,export            ,y    ,modes = export & addrs = 0xfdecc82ddfc56192e26f563c3d68cb544a96bfed & end = 10
 
 # on    ,both ,fast  ,null     ,apps/chifra ,daemon_noparms    ,n    ,modes = scrape & daemon
 # on    ,both ,fast  ,null     ,apps/chifra ,daemon_badparms   ,n    ,modes = scrape & daemon & not_an_option
 # on    ,both ,fast  ,null     ,apps/chifra ,daemon            ,n    ,modes = scrape & daemon & sleep 10 & filter 0x1 0x2
 # on    ,both ,fast  ,null     ,apps/chifra ,scrape            ,n    ,modes = scrape
-
-#
-#       ,     ,      ,         ,            ,                  ,     ,These tests used to work against the ability to customize the exporter per address. This feature has been lost.
-#
-# off   ,both ,fast  ,null     ,apps/chifra ,cfg_show_noaddr   ,n    ,settings show
-# off   ,both ,fast  ,null     ,apps/chifra ,cfg_show_badaddr  ,n    ,settings show & addrs = 0x1234567812345678123456781234567812345678
-# off   ,both ,fast  ,null     ,apps/chifra ,cfg_show_tip      ,n    ,settings show & addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359
-# off   ,both ,fast  ,null     ,apps/chifra ,cfg_edit          ,n    ,settings edit & addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359
-# off   ,both ,fast  ,null     ,apps/chifra ,cfg_show_tip_v    ,n    ,settings show & addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & verbose:3
