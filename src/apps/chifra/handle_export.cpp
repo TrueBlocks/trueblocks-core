@@ -32,7 +32,7 @@ bool COptions::handle_export(void) {
         fa.push_back(m);
     }
     if (!freshen_internal(FM_PRODUCTION, fa, "", freshen_flags))
-        EXIT_FAIL("'chifra " + mode + "' freshen_internal returned false");
+        EXIT_FAIL("'chifra " + mode + "' returns false");
 
     if (contains(tool_flags, "--count") || contains(tool_flags, "-U")) {
         ostringstream os;

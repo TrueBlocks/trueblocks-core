@@ -6,22 +6,30 @@
 #include "options.h"
 
 //------------------------------------------------------------------------------------------------
-bool freshen_internal(freshen_e mode, CMonitorArray& fa, const string_q& tool_flags, const string_q& freshen_flags) {
+bool freshen_internal(freshen_e mode, CMonitorArray& fa, const string_q& tool_flags,
+                                 const string_q& freshen_flags) {
     ENTER("freshen_internal");
     nodeNotRequired();
 
     ostringstream base;
     base << "acctScrape " << tool_flags << " " << freshen_flags << " [ADDRS] ;";
 
-    // Build collections of five addresses at a time
-    size_t cnt = 0;
+    size_t cnt = 0, cnt2 = 0;
     string_q tenAddresses;
     for (auto f : fa) {
-        tenAddresses += (f.address + " ");
-        if (!(++cnt % 10)) {  // we don't want to do too many addrs at a time
-            tenAddresses += "|";
-            cnt = 0;
+        bool needsUpdate = true;
+        if (needsUpdate) {
+            LOG_INFO(cTeal, "Needs update ", f.address, string_q(80, ' '), cOff);
+            tenAddresses += (f.address + " ");
+            if (!(++cnt % 10)) {  // we don't want to do too many addrs at a time
+                tenAddresses += "|";
+                cnt = 0;
+            }
+        } else {
+            LOG_INFO(cTeal, "Scraping addresses ", f.address, " ", cnt2, " of ", fa.size(), string_q(80, ' '), cOff,
+                     "\r");
         }
+        cnt2++;
     }
 
     // Process them until we're done
@@ -38,7 +46,7 @@ bool freshen_internal(freshen_e mode, CMonitorArray& fa, const string_q& tool_fl
         if (system(cmd.c_str())) {}  // Don't remove cruft. Silences compiler warnings
         // clang-format on
         if (!tenAddresses.empty())
-            usleep(500000);  // this sleep is here so that chifra remains responsive to Cntl+C. Do not remove
+            usleep(250000);  // this sleep is here so that chifra remains responsive to Cntl+C. Do not remove
     }
 
     for (CMonitor& f : fa)

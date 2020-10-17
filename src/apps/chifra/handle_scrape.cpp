@@ -7,8 +7,6 @@
 
 extern bool visitMonitor(const string_q& path, void* data);
 extern bool isScraperRunning(const string_q& unsearch);
-extern bool freshen_internal_for_scrape(freshen_e mode, CMonitorArray& fa, const string_q& tool_flags,
-                                        const string_q& freshen_flags);
 //------------------------------------------------------------------------------------------------
 bool COptions::handle_scrape(void) {
     ENTER("handle_" + mode);
@@ -148,7 +146,9 @@ bool COptions::handle_scrape(void) {
                     // Catch the monitors addresses up to the scraper if in --deamon mode
                     forEveryFileInFolder(getMonitorPath("") + "*", visitMonitor, &monitors);
 
-                    freshen_internal_for_scrape(FM_PRODUCTION, monitors, "", freshen_flags);
+                    if (!freshen_internal(FM_PRODUCTION, monitors, "", freshen_flags))
+                        EXIT_FAIL("'chifra " + mode + "' returns false");
+
                     for (auto monitor : monitors) {
                         //#error
                         if (true) {  // monitor.needsRefresh) {
@@ -223,61 +223,4 @@ blknum_t lastExported(const address_t& addr) {
     timestamp_t unused;
     bnFromPath(getMonitorExpt(addr, FM_PRODUCTION), second, unused);
     return second == NOPOS ? 0 : second;
-}
-
-//------------------------------------------------------------------------------------------------
-bool freshen_internal_for_scrape(freshen_e mode, CMonitorArray& fa, const string_q& tool_flags,
-                                 const string_q& freshen_flags) {
-    ENTER("freshen_internal_for_scrape");
-
-    ostringstream base;
-    base << "acctScrape " << tool_flags << " " << freshen_flags << " [ADDRS] ;";
-
-    // blknum_t latestCache = getLatestBlock_cache_final();
-    size_t cnt = 0, cnt2 = 0;
-    string_q tenAddresses;
-    for (auto f : fa) {
-        bool needsUpdate = false;  // true;
-        //#error
-        //        if (!contains(freshen_flags, "staging") && !contains(freshen_flags, "unripe")) {
-        //            needsUpdate = lastExported(f.address) < latestCache;
-        //            LOG_INFO("lastExport: ", lastExported(f.address), " latestCache: ", latestCache, " needsUpdate: ",
-        //            needsUpdate);
-        ////            getchar();
-        //        }
-        if (needsUpdate) {
-            LOG_INFO(cTeal, "Needs update ", f.address, string_q(80, ' '), cOff);
-            tenAddresses += (f.address + " ");
-            if (!(++cnt % 10)) {  // we don't want to do too many addrs at a time
-                tenAddresses += "|";
-                cnt = 0;
-            }
-        } else {
-            LOG_INFO(cTeal, "Scraping addresses ", f.address, " ", cnt2, " of ", fa.size(), string_q(80, ' '), cOff,
-                     "\r");
-        }
-        cnt2++;
-    }
-
-    // Process them until we're done
-    uint64_t cur = 0;
-    while (!tenAddresses.empty()) {
-        string_q thisFive = nextTokenClear(tenAddresses, '|');
-        string_q cmd = substitute(base.str(), "[ADDRS]", thisFive);
-        LOG_CALL(cmd);
-        // clang-format off
-        uint64_t n = countOf(thisFive, ' ');
-        if (fa.size() > 1)
-            LOG_INFO(cTeal, "Scraping addresses ", cur, "-", (cur+n-1), " of ", fa.size(), string_q(80, ' '), cOff);
-        cur += n;
-        // Don't remove cruft. Silences compiler warnings
-        if (system(cmd.c_str())) {}  // clang-format on
-        if (!tenAddresses.empty())
-            usleep(250000);  // this sleep is here so that chifra remains responsive to Cntl+C. Do not remove
-    }
-
-    for (CMonitor& f : fa)
-        f.needsRefresh = (f.cntBefore != f.getRecordCount());
-
-    EXIT_NOMSG(true);
 }
