@@ -1,5 +1,0 @@
-cacheMan argc: 3 [1:-c] [2:0x9876543210987654321098765432109876543210] 
-cacheMan -c 0x9876543210987654321098765432109876543210 
-TIME ~ CLOCK - <INFO>  : Checking cache: ${CACHE}/monitors/0x9876543210987654321098765432109876543210.acct.bin
-	Reversal at record 7013, current 1428757	0, previous 1444289	13
-	The cache has 1 reversals.

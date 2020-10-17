@@ -10,8 +10,6 @@
  */
 #include "etherlib.h"
 #include "acctlib.h"
-#include "displayapp.h"
-#include "monitorcount.h"
 
 // BEG_ERROR_DEFINES
 // END_ERROR_DEFINES

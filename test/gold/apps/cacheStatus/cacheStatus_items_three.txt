@@ -24,7 +24,7 @@ cacheStatus --details abis caches monitors --types slurps
           "sizeInBytes2": 0,
           "tags": "80-Prefund",
           "address": "---address---",
-          "name": "Prefund_0002",
+          "name": "Prefund_0000",
           "symbol": "",
           "source": "Genesis",
           "decimals": 0,

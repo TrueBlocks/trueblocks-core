@@ -309,9 +309,10 @@ bool COptions::parseArguments(string_q& command) {
 
             // This doesn't really work because CAppearance_base is not a subclass of CBaseNode. We phony it here for
             // future reference.
-            format = getGlobalConfig("acctExport")->getConfigStr("display", "appearances", STR_DISPLAY_DISPLAYAPP);
+            format =
+                getGlobalConfig("acctExport")->getConfigStr("display", "appearances", STR_DISPLAY_APPEARANCEDISPLAY);
             expContext().fmtMap["displayapp_fmt"] = cleanFmt(format);
-            manageFields("CDisplayApp:" + format);
+            manageFields("CAppearanceDisplay:" + format);
         }
         HIDE_FIELD(CFunction, "stateMutability");
         HIDE_FIELD(CParameter, "str_default");
@@ -436,7 +437,7 @@ COptions::COptions(void) {
     Init();
 
     CMonitorCount::registerClass();
-    CDisplayApp::registerClass();
+    CAppearanceDisplay::registerClass();
 
     // BEG_CODE_NOTES
     // clang-format off
@@ -451,114 +452,6 @@ COptions::COptions(void) {
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
-}
-
-//-----------------------------------------------------------------------
-bool COptions::loadOneAddress(CAppearanceArray_base& appsOut, const address_t& addr) {
-    ENTER("loadOneAddress");
-
-    if (hackAppAddr.empty())
-        hackAppAddr = addr;
-
-    string_q fn = getMonitorPath(addr);
-
-    size_t nRecords = (fileSize(fn) / sizeof(CAppearance_base));
-    ASSERT(nRecords);
-    nTransactions += nRecords;
-
-    CAppearance_base* buffer = new CAppearance_base[nRecords];
-    if (buffer) {
-        bzero((void*)buffer, nRecords * sizeof(CAppearance_base));
-
-        CArchive txCache(READING_ARCHIVE);
-        if (txCache.Lock(fn, modeReadOnly, LOCK_NOWAIT)) {
-            txCache.Read(buffer, sizeof(CAppearance_base), nRecords);
-            txCache.Release();
-        } else {
-            EXIT_FAIL("Could not open cache file.");
-        }
-
-        // Add to the apps which may be non-empty
-        appsOut.reserve(appsOut.size() + nRecords);
-        for (size_t i = first_record; i < min(((blknum_t)nRecords), (first_record + max_records)); i++) {
-            if (buffer[i].blk == 0)
-                prefundAddrMap[buffer[i].txid] = toLower(addr);
-            if (buffer[i].txid == 99997 || buffer[i].txid == 99998 || buffer[i].txid == 99999)
-                blkRewardMap[buffer[i].blk] = addr;
-            appsOut.push_back(buffer[i]);
-        }
-
-        delete[] buffer;
-
-    } else {
-        EXIT_FAIL("Could not allocate memory for address " + addr);
-    }
-
-    EXIT_NOMSG(true);
-}
-
-//-----------------------------------------------------------------------
-bool COptions::loadAllAppearances(void) {
-    ENTER("loadAllAppearances");
-
-    if (count)
-        return true;
-
-    CAppearanceArray_base tmp;
-    for (auto monitor : monitors) {
-        if (!loadOneAddress(tmp, monitor.address))
-            EXIT_FAIL("Could not load data.");
-        if (freshen) {
-            // If we're freshening...
-            blknum_t lastExport = monitor.getLastExportedBlock();
-            if (scanRange.first == 0)  // we can start where the last export happened on any address...
-                scanRange.first = lastExport;
-            if (lastExport < scanRange.first)  // ...but the eariest of the last exports is where we start
-                scanRange.first = lastExport;
-        }
-    }
-
-    if (tmp.size() == 0) {
-        if (!freshen)
-            LOG_INFO("Nothing to export" + (monitors.size() ? (" from " + monitors[0].address) : "") + ".");
-        return false;
-    }
-
-    // Should be sorted already, so it can't hurt
-    sort(tmp.begin(), tmp.end());
-
-    apps.push_back(tmp[0]);
-    for (auto app : tmp) {
-        CAppearance_base* prev = &apps[apps.size() - 1];
-        // TODO(tjayrush): I think this removes dups. Is it really necessary?
-        if (app.blk != prev->blk || app.txid != prev->txid) {
-            if (app.blk > latestBlock) {
-                static bool hasFuture = false;
-                if (!hasFuture) {
-                    LOG_WARN("Cache file contains blocks ahead of the chain. Some apps will not be exported.");
-                    hasFuture = true;
-                }
-            } else {
-                apps.push_back(app);
-            }
-        }
-    }
-    nProcessing = apps.size();
-
-    // Make sure the timestamps column is at least as up to date as this monitor
-    if (apps.size()) {
-        freshenTimestamps(
-            apps[apps.size() - 1].blk);  // it's okay to not be able to freshen this. We'll just report less txs
-        if (!loadTimestampFile(&ts_array, ts_cnt))
-            EXIT_FAIL("Could not open timestamp file.");
-
-        // If the user has not told us what to cache via the config file or the command line, we
-        // cache transactions and traces if there are less than 1,000 of them...
-        if (!write_opt && apps.size() <= 1000)
-            write_opt = (CACHE_TXS | CACHE_TRACES | CACHE_BYDEFAULT);
-    }
-
-    EXIT_NOMSG(true);
 }
 
 //------------------------------------------------------------------------

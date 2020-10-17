@@ -23,35 +23,35 @@ namespace qblocks {
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class CDisplayApp : public CBaseNode {
+class CAppearanceDisplay : public CBaseNode {
   public:
     address_t address;
     blknum_t blockNumber;
     blknum_t transactionIndex;
 
   public:
-    CDisplayApp(void);
-    CDisplayApp(const CDisplayApp& di);
-    virtual ~CDisplayApp(void);
-    CDisplayApp& operator=(const CDisplayApp& di);
+    CAppearanceDisplay(void);
+    CAppearanceDisplay(const CAppearanceDisplay& ap);
+    virtual ~CAppearanceDisplay(void);
+    CAppearanceDisplay& operator=(const CAppearanceDisplay& ap);
 
-    DECLARE_NODE(CDisplayApp);
+    DECLARE_NODE(CAppearanceDisplay);
 
     // EXISTING_CODE
-    CDisplayApp(address_t a, blknum_t b, blknum_t t) : address(a), blockNumber(b), transactionIndex(t) {
+    CAppearanceDisplay(address_t a, blknum_t b, blknum_t t) : address(a), blockNumber(b), transactionIndex(t) {
     }
     // EXISTING_CODE
-    bool operator==(const CDisplayApp& item) const;
-    bool operator!=(const CDisplayApp& item) const {
+    bool operator==(const CAppearanceDisplay& item) const;
+    bool operator!=(const CAppearanceDisplay& item) const {
         return !operator==(item);
     }
-    friend bool operator<(const CDisplayApp& v1, const CDisplayApp& v2);
-    friend ostream& operator<<(ostream& os, const CDisplayApp& item);
+    friend bool operator<(const CAppearanceDisplay& v1, const CAppearanceDisplay& v2);
+    friend ostream& operator<<(ostream& os, const CAppearanceDisplay& item);
 
   protected:
     void clear(void);
     void initialize(void);
-    void duplicate(const CDisplayApp& di);
+    void duplicate(const CAppearanceDisplay& ap);
     bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
@@ -59,37 +59,37 @@ class CDisplayApp : public CBaseNode {
 };
 
 //--------------------------------------------------------------------------
-inline CDisplayApp::CDisplayApp(void) {
+inline CAppearanceDisplay::CAppearanceDisplay(void) {
     initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CDisplayApp::CDisplayApp(const CDisplayApp& di) {
+inline CAppearanceDisplay::CAppearanceDisplay(const CAppearanceDisplay& ap) {
     // EXISTING_CODE
     // EXISTING_CODE
-    duplicate(di);
+    duplicate(ap);
 }
 
 // EXISTING_CODE
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline CDisplayApp::~CDisplayApp(void) {
+inline CAppearanceDisplay::~CAppearanceDisplay(void) {
     clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CDisplayApp::clear(void) {
+inline void CAppearanceDisplay::clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CDisplayApp::initialize(void) {
+inline void CAppearanceDisplay::initialize(void) {
     CBaseNode::initialize();
 
     address = "";
@@ -101,28 +101,28 @@ inline void CDisplayApp::initialize(void) {
 }
 
 //--------------------------------------------------------------------------
-inline void CDisplayApp::duplicate(const CDisplayApp& di) {
+inline void CAppearanceDisplay::duplicate(const CAppearanceDisplay& ap) {
     clear();
-    CBaseNode::duplicate(di);
+    CBaseNode::duplicate(ap);
 
-    address = di.address;
-    blockNumber = di.blockNumber;
-    transactionIndex = di.transactionIndex;
+    address = ap.address;
+    blockNumber = ap.blockNumber;
+    transactionIndex = ap.transactionIndex;
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CDisplayApp& CDisplayApp::operator=(const CDisplayApp& di) {
-    duplicate(di);
+inline CAppearanceDisplay& CAppearanceDisplay::operator=(const CAppearanceDisplay& ap) {
+    duplicate(ap);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
 //-------------------------------------------------------------------------
-inline bool CDisplayApp::operator==(const CDisplayApp& item) const {
+inline bool CAppearanceDisplay::operator==(const CAppearanceDisplay& item) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)
@@ -130,7 +130,7 @@ inline bool CDisplayApp::operator==(const CDisplayApp& item) const {
 }
 
 //-------------------------------------------------------------------------
-inline bool operator<(const CDisplayApp& v1, const CDisplayApp& v2) {
+inline bool operator<(const CAppearanceDisplay& v1, const CAppearanceDisplay& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default sort defined in class definition, assume already sorted, preserve ordering
@@ -138,12 +138,12 @@ inline bool operator<(const CDisplayApp& v1, const CDisplayApp& v2) {
 }
 
 //---------------------------------------------------------------------------
-typedef vector<CDisplayApp> CDisplayAppArray;
-extern CArchive& operator>>(CArchive& archive, CDisplayAppArray& array);
-extern CArchive& operator<<(CArchive& archive, const CDisplayAppArray& array);
+typedef vector<CAppearanceDisplay> CAppearanceDisplayArray;
+extern CArchive& operator>>(CArchive& archive, CAppearanceDisplayArray& array);
+extern CArchive& operator<<(CArchive& archive, const CAppearanceDisplayArray& array);
 
 //---------------------------------------------------------------------------
-extern const char* STR_DISPLAY_DISPLAYAPP;
+extern const char* STR_DISPLAY_APPEARANCEDISPLAY;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

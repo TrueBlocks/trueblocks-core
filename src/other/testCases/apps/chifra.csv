@@ -25,11 +25,9 @@ on      ,cmd  ,fast  ,null     ,apps/chifra ,help_status       ,n    ,modes = st
 on      ,cmd  ,fast  ,null     ,apps/chifra ,help_config       ,n    ,modes = settings & help
 on      ,cmd  ,fast  ,null     ,apps/chifra ,help_rm           ,n    ,modes = rm & help
 on      ,cmd  ,fast  ,null     ,apps/chifra ,help_message      ,n    ,modes = message & help
-on      ,cmd  ,fast  ,null     ,apps/chifra ,help_leech        ,n    ,modes = leech & help
-on      ,cmd  ,fast  ,null     ,apps/chifra ,help_seed         ,n    ,modes = seed & help
 
-on      ,cmd  ,fast  ,seed     ,apps/chifra ,no_params         ,n    ,
-on      ,cmd  ,fast  ,leech    ,apps/chifra ,invalid_option    ,n    ,modes = not_a_mode
+on      ,cmd  ,fast  ,null     ,apps/chifra ,no_params         ,n    ,
+on      ,cmd  ,fast  ,null     ,apps/chifra ,invalid_option    ,n    ,modes = not_a_mode
 
 on      ,both ,fast  ,list     ,apps/chifra ,list              ,y    ,modes = list & addrs = 0xfb744b951d094b310262c8f986c860df9ab1de65 & end = 10000
 on      ,both ,fast  ,rm       ,apps/chifra ,rm                ,y    ,modes = rm & addrs = 0xfb744b951d094b310262c8f986c860df9ab1de65 & editCmd = remove & verbose = 10
@@ -58,8 +56,6 @@ on      ,both ,fast  ,settings ,apps/chifra ,config_get        ,n    ,modes = se
 on      ,both ,fast  ,settings ,apps/chifra ,config_set        ,n    ,modes = settings & set
 
 on      ,both ,slow  ,export   ,apps/chifra ,export            ,y    ,modes = export & addrs = 0xfdecc82ddfc56192e26f563c3d68cb544a96bfed & end = 10
-on      ,both ,fast  ,null     ,apps/chifra ,seed              ,y    ,modes = seed & verbose
-on      ,both ,fast  ,null     ,apps/chifra ,leech             ,y    ,modes = leech & verbose
 
 # on    ,both ,fast  ,null     ,apps/chifra ,daemon_noparms    ,n    ,modes = scrape & daemon
 # on    ,both ,fast  ,null     ,apps/chifra ,daemon_badparms   ,n    ,modes = scrape & daemon & not_an_option

@@ -25,7 +25,7 @@ bool COptions::handle_receipts(void) {
     for (size_t i = 0; i < apps.size() && (!freshen || (nProcessed < freshen_max)); i++) {
         const CAppearance_base* app = &apps[i];
         if (shouldQuit() || app->blk >= ts_cnt) {
-            lastExported = app->blk-1;
+            lastExported = app->blk - 1;
             break;
         }
         if (inRange((blknum_t)app->blk, scanRange.first, scanRange.second)) {

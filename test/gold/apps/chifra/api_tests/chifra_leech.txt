@@ -1,5 +1,0 @@
-{
-  "errors": [
-    "JS API: Route null is not available."
-  ]
-}

@@ -30,20 +30,10 @@ int main(int argc, const char* argv[]) {
             RETURN(1);
         }
 
-        if (options.mode == "list") {
-            RETURN(options.handle_list())  //
-        } else if (options.mode == "export") {
+        if (options.mode == "list" || options.mode == "export") {
             RETURN(options.handle_export())  //
-        } else if (options.mode == "leech") {
-            RETURN(options.handle_leech())
         } else if (options.mode == "scrape") {
             RETURN(options.handle_scrape())  //
-        } else if (options.mode == "slurp") {
-            RETURN(options.handle_slurp())  //
-        } else if (options.mode == "quotes") {
-            RETURN(options.handle_quotes())
-        } else if (options.mode == "status") {
-            RETURN(options.handle_status())
         } else if (options.mode == "data") {
             RETURN(options.handle_data())
         } else if (options.mode == "state") {
@@ -67,6 +57,23 @@ int main(int argc, const char* argv[]) {
                 // clang-format off
                 if (system(os.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings
                 // clang-format on
+            } else {
+                cerr << "Should not happen.";
+            }
+        } else {
+            map<string, string> cmdMap;
+            cmdMap["status"] = "cacheStatus";
+            cmdMap["slurp"] = "ethSlurp";
+            cmdMap["quotes"] = "ethQuote";
+            if (cmdMap[options.mode] != "") {
+                ostringstream os;
+                os << cmdMap[options.mode] << " " << options.tool_flags;
+                for (auto addr : options.addrs)
+                    os << " " << addr;
+                LOG_CALL(os.str());
+                // clang-format off
+                if (system(os.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings
+                                                  // clang-format on
             } else {
                 cerr << "Should not happen.";
             }

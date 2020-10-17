@@ -1,5 +1,5 @@
 [settings]
-class = CDisplayApp
+class = CAppearanceDisplay
 fields = address address|blknum blockNumber|blknum transactionIndex
 includes = etherlib.h
 display_str = address, blockNumber, transactionIndex

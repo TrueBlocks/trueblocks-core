@@ -66,19 +66,12 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 11060,apps,message,,bytes,b,,false,false,true,true,--,positional,list<string>,convert the given bytes into an ascii string
 11080,apps,message,,chars,c,,false,false,true,true,--,positional,list<string>,convert the given string into bytes
 
-11120,apps,leech,leech,,,,false,false,true,true,--,flag,<string>,leech the address index from IPFS
-
-11160,apps,seed,seed,,,,false,false,true,true,--,flag,<string>,seed the address index to IPFS
-
-11200,apps,,chifra,commands,,,true,false,true,true,--weird,positional,list<enum[list|export|slurp|collections|names|abi|state|tokens|when|data|blocks|transactions|receipts|logs|traces|quotes|scrape|status|settings|rm|message|leech|seed]>,which command to run
+11200,apps,,chifra,commands,,,true,false,true,true,--weird,positional,list<enum[list|export|slurp|collections|names|abi|state|tokens|when|data|blocks|transactions|receipts|logs|traces|quotes|scrape|status|settings|rm|message]>,which command to run
 11220,apps,,chifra,sleep,s,14,false,false,true,false,header,flag,<uint32>,for the 'scrape' and 'daemon' commands&#44; the number of seconds chifra should sleep between runs (default [{DEF}])
 11240,apps,,chifra,set,e,,false,false,false,false,--weird,switch,<boolean>,for 'settings' only&#44; indicates that this is a --set
 11280,apps,,chifra,start,S,0,false,false,false,false,local,flag,<blknum>,first block to process (inclusive)
 11300,apps,,chifra,end,E,,false,false,false,false,local,flag,<blknum>,last block to process (inclusive)
 11320,apps,,chifra,,,,false,false,true,true,--,description,,Main TrueBlocks command line controls.
-
-11360,apps,,cacheMan,addrs,,,true,false,true,true,header,positional,list<addr>,one or more addresses to process
-11620,apps,,cacheMan,,,,false,false,true,false,--,description,,Show the contents of an account cache and/or fix it by removing duplicate records.
 
 11660,dev_tools,,makeClass,files,,,true,false,true,false,local,positional,list<path>,one or more class definition files
 11700,dev_tools,,makeClass,run,r,,false,false,true,false,local,switch,<boolean>,run the class maker on associated <class_name(s)>

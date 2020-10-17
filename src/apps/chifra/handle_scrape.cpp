@@ -150,7 +150,8 @@ bool COptions::handle_scrape(void) {
 
                     freshen_internal_for_scrape(FM_PRODUCTION, monitors, "", freshen_flags);
                     for (auto monitor : monitors) {
-                        if (true) { //monitor.needsRefresh) {
+                        //#error
+                        if (true) {  // monitor.needsRefresh) {
                             static size_t nThings = 0;
                             ostringstream os1;
                             os1 << "acctExport " << monitor.address << " --freshen";  // << " >/dev/null";
@@ -165,10 +166,11 @@ bool COptions::handle_scrape(void) {
                         }
                     }
                 }
-                timestamp_t now = max(startTs, date_2_Ts(Now())); // not less than
+                timestamp_t now = max(startTs, date_2_Ts(Now()));  // not less than
                 timestamp_t timeSpent = (now - startTs) * 1000000;
                 timestamp_t sleepSecs = timeSpent > userSleep ? 0 : userSleep - timeSpent;
-                //LOG_INFO("startTs: ", startTs, " now: ", now, " timeSpent: ", timeSpent, " userSleep: ", userSleep, " sleepSecs: ", sleepSecs, string_q(60, ' '));
+                // LOG_INFO("startTs: ", startTs, " now: ", now, " timeSpent: ", timeSpent, " userSleep: ", userSleep, "
+                // sleepSecs: ", sleepSecs, string_q(60, ' '));
                 if (daemonMode)
                     LOG_INFO(cYellow, "Finished freshening ", monitors.size(), " monitored addresses. Sleeping for ",
                              (sleepSecs / 1000000), " seconds", string_q(40, ' '), cOff);
@@ -200,7 +202,7 @@ bool visitMonitor(const string_q& path, void* data) {
         m.needsRefresh = false;
         CMonitorArray* array = (CMonitorArray*)data;  // NOLINT
         array->push_back(m);
-//        LOG_INFO(cTeal, "Loading addresses ", m.address, " ", array->size(), string_q(80, ' '), cOff, "\r");
+        //        LOG_INFO(cTeal, "Loading addresses ", m.address, " ", array->size(), string_q(80, ' '), cOff, "\r");
     }
 
     return true;
@@ -231,16 +233,18 @@ bool freshen_internal_for_scrape(freshen_e mode, CMonitorArray& fa, const string
     ostringstream base;
     base << "acctScrape " << tool_flags << " " << freshen_flags << " [ADDRS] ;";
 
-    //blknum_t latestCache = getLatestBlock_cache_final();
+    // blknum_t latestCache = getLatestBlock_cache_final();
     size_t cnt = 0, cnt2 = 0;
     string_q tenAddresses;
     for (auto f : fa) {
-        bool needsUpdate = false; //true;
-//        if (!contains(freshen_flags, "staging") && !contains(freshen_flags, "unripe")) {
-//            needsUpdate = lastExported(f.address) < latestCache;
-//            LOG_INFO("lastExport: ", lastExported(f.address), " latestCache: ", latestCache, " needsUpdate: ", needsUpdate);
-////            getchar();
-//        }
+        bool needsUpdate = false;  // true;
+        //#error
+        //        if (!contains(freshen_flags, "staging") && !contains(freshen_flags, "unripe")) {
+        //            needsUpdate = lastExported(f.address) < latestCache;
+        //            LOG_INFO("lastExport: ", lastExported(f.address), " latestCache: ", latestCache, " needsUpdate: ",
+        //            needsUpdate);
+        ////            getchar();
+        //        }
         if (needsUpdate) {
             LOG_INFO(cTeal, "Needs update ", f.address, string_q(80, ' '), cOff);
             tenAddresses += (f.address + " ");
@@ -249,7 +253,8 @@ bool freshen_internal_for_scrape(freshen_e mode, CMonitorArray& fa, const string
                 cnt = 0;
             }
         } else {
-            LOG_INFO(cTeal, "Scraping addresses ", f.address, " ", cnt2, " of ", fa.size(), string_q(80, ' '), cOff, "\r");
+            LOG_INFO(cTeal, "Scraping addresses ", f.address, " ", cnt2, " of ", fa.size(), string_q(80, ' '), cOff,
+                     "\r");
         }
         cnt2++;
     }

@@ -15,26 +15,26 @@
  * of 'EXISTING_CODE' tags.
  */
 #include <algorithm>
-#include "displayapp.h"
+#include "appearancedisplay.h"
 
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CDisplayApp, CBaseNode);
+IMPLEMENT_NODE(CAppearanceDisplay, CBaseNode);
 
 //---------------------------------------------------------------------------
-static string_q nextDisplayappChunk(const string_q& fieldIn, const void* dataPtr);
-static string_q nextDisplayappChunk_custom(const string_q& fieldIn, const void* dataPtr);
+static string_q nextAppearancedisplayChunk(const string_q& fieldIn, const void* dataPtr);
+static string_q nextAppearancedisplayChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
-void CDisplayApp::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
+void CAppearanceDisplay::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
     if (!m_showing)
         return;
 
     // EXISTING_CODE
     // EXISTING_CODE
 
-    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["displayapp_fmt"] : fmtIn);
+    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["appearancedisplay_fmt"] : fmtIn);
     if (fmt.empty()) {
         toJson(ctx);
         return;
@@ -44,13 +44,13 @@ void CDisplayApp::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) con
     // EXISTING_CODE
 
     while (!fmt.empty())
-        ctx << getNextChunk(fmt, nextDisplayappChunk, this);
+        ctx << getNextChunk(fmt, nextAppearancedisplayChunk, this);
 }
 
 //---------------------------------------------------------------------------
-string_q nextDisplayappChunk(const string_q& fieldIn, const void* dataPtr) {
+string_q nextAppearancedisplayChunk(const string_q& fieldIn, const void* dataPtr) {
     if (dataPtr)
-        return reinterpret_cast<const CDisplayApp*>(dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CAppearanceDisplay*>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -59,9 +59,9 @@ string_q nextDisplayappChunk(const string_q& fieldIn, const void* dataPtr) {
 }
 
 //---------------------------------------------------------------------------
-string_q CDisplayApp::getValueByName(const string_q& fieldName) const {
+string_q CAppearanceDisplay::getValueByName(const string_q& fieldName) const {
     // Give customized code a chance to override first
-    string_q ret = nextDisplayappChunk_custom(fieldName, this);
+    string_q ret = nextAppearancedisplayChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
@@ -97,7 +97,7 @@ string_q CDisplayApp::getValueByName(const string_q& fieldName) const {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CDisplayApp::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
+bool CAppearanceDisplay::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
     string_q fieldName = fieldNameIn;
     string_q fieldValue = fieldValueIn;
 
@@ -130,13 +130,13 @@ bool CDisplayApp::setValueByName(const string_q& fieldNameIn, const string_q& fi
 }
 
 //---------------------------------------------------------------------------------------------------
-void CDisplayApp::finishParse() {
+void CAppearanceDisplay::finishParse() {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CDisplayApp::Serialize(CArchive& archive) {
+bool CAppearanceDisplay::Serialize(CArchive& archive) {
     if (archive.isWriting())
         return SerializeC(archive);
 
@@ -156,7 +156,7 @@ bool CDisplayApp::Serialize(CArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CDisplayApp::SerializeC(CArchive& archive) const {
+bool CAppearanceDisplay::SerializeC(CArchive& archive) const {
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
 
@@ -170,7 +170,7 @@ bool CDisplayApp::SerializeC(CArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, CDisplayAppArray& array) {
+CArchive& operator>>(CArchive& archive, CAppearanceDisplayArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -182,7 +182,7 @@ CArchive& operator>>(CArchive& archive, CDisplayAppArray& array) {
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator<<(CArchive& archive, const CDisplayAppArray& array) {
+CArchive& operator<<(CArchive& archive, const CAppearanceDisplayArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0; i < array.size(); i++)
@@ -191,43 +191,43 @@ CArchive& operator<<(CArchive& archive, const CDisplayAppArray& array) {
 }
 
 //---------------------------------------------------------------------------
-void CDisplayApp::registerClass(void) {
+void CAppearanceDisplay::registerClass(void) {
     // only do this once
-    if (HAS_FIELD(CDisplayApp, "schema"))
+    if (HAS_FIELD(CAppearanceDisplay, "schema"))
         return;
 
     size_t fieldNum = 1000;
-    ADD_FIELD(CDisplayApp, "schema", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CDisplayApp, "deleted", T_BOOL, ++fieldNum);
-    ADD_FIELD(CDisplayApp, "showing", T_BOOL, ++fieldNum);
-    ADD_FIELD(CDisplayApp, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CDisplayApp, "address", T_ADDRESS, ++fieldNum);
-    ADD_FIELD(CDisplayApp, "blockNumber", T_BLOCKNUM, ++fieldNum);
-    ADD_FIELD(CDisplayApp, "transactionIndex", T_BLOCKNUM, ++fieldNum);
+    ADD_FIELD(CAppearanceDisplay, "schema", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CAppearanceDisplay, "deleted", T_BOOL, ++fieldNum);
+    ADD_FIELD(CAppearanceDisplay, "showing", T_BOOL, ++fieldNum);
+    ADD_FIELD(CAppearanceDisplay, "cname", T_TEXT, ++fieldNum);
+    ADD_FIELD(CAppearanceDisplay, "address", T_ADDRESS, ++fieldNum);
+    ADD_FIELD(CAppearanceDisplay, "blockNumber", T_BLOCKNUM, ++fieldNum);
+    ADD_FIELD(CAppearanceDisplay, "transactionIndex", T_BLOCKNUM, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
-    HIDE_FIELD(CDisplayApp, "schema");
-    HIDE_FIELD(CDisplayApp, "deleted");
-    HIDE_FIELD(CDisplayApp, "showing");
-    HIDE_FIELD(CDisplayApp, "cname");
+    HIDE_FIELD(CAppearanceDisplay, "schema");
+    HIDE_FIELD(CAppearanceDisplay, "deleted");
+    HIDE_FIELD(CAppearanceDisplay, "showing");
+    HIDE_FIELD(CAppearanceDisplay, "cname");
 
-    builtIns.push_back(_biCDisplayApp);
+    builtIns.push_back(_biCAppearanceDisplay);
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------
-string_q nextDisplayappChunk_custom(const string_q& fieldIn, const void* dataPtr) {
-    const CDisplayApp* dis = reinterpret_cast<const CDisplayApp*>(dataPtr);
-    if (dis) {
+string_q nextAppearancedisplayChunk_custom(const string_q& fieldIn, const void* dataPtr) {
+    const CAppearanceDisplay* app = reinterpret_cast<const CAppearanceDisplay*>(dataPtr);
+    if (app) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if (fieldIn % "parsed")
-                    return nextBasenodeChunk(fieldIn, dis);
+                    return nextBasenodeChunk(fieldIn, app);
                 // EXISTING_CODE
                 // EXISTING_CODE
                 break;
@@ -241,7 +241,7 @@ string_q nextDisplayappChunk_custom(const string_q& fieldIn, const void* dataPtr
 }
 
 //---------------------------------------------------------------------------
-bool CDisplayApp::readBackLevel(CArchive& archive) {
+bool CAppearanceDisplay::readBackLevel(CArchive& archive) {
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -249,7 +249,7 @@ bool CDisplayApp::readBackLevel(CArchive& archive) {
 }
 
 //-------------------------------------------------------------------------
-ostream& operator<<(ostream& os, const CDisplayApp& item) {
+ostream& operator<<(ostream& os, const CAppearanceDisplay& item) {
     // EXISTING_CODE
     // EXISTING_CODE
 
@@ -259,7 +259,7 @@ ostream& operator<<(ostream& os, const CDisplayApp& item) {
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_DISPLAYAPP =
+const char* STR_DISPLAY_APPEARANCEDISPLAY =
     "[{ADDRESS}]\t"
     "[{BLOCKNUMBER}]\t"
     "[{TRANSACTIONINDEX}]";

@@ -1,8 +1,10 @@
 ## chifra
 
-***
+---
+
 **Note:** This tool is available through [our website](http://quickblocks.io). Contact us at [sales@greathill.com](mailto:sales@greathill.com) for more information.
-***
+
+---
 
 `chifra` is an command line tool that builds [QBlocks account monitors](../../monitors/README.md) through a series of interactive questions.
 
@@ -22,17 +24,17 @@ Here is a screen shot of an interaction with Chifra building a smart contract mo
 
 #### Usage
 
-`Usage:`    chifra [-s|-v|-h] commands  
-`Purpose:`  Main TrueBlocks command line controls.
+`Usage:` chifra [-s|-v|-h] commands  
+`Purpose:` Main TrueBlocks command line controls.
 
-`Where:`  
+`Where:`
 
-| Short Cut | Option | Description |
-| -------: | :------- | :------- |
-|  | commands | which command to run, one or more of [list&#124;export&#124;slurp&#124;names&#124;abi&#124;state&#124;tokens&#124;when&#124;data&#124;blocks&#124;transactions&#124;receipts&#124;logs&#124;traces&#124;quotes&#124;scrape&#124;status&#124;settings&#124;rm&#124;message&#124;leech&#124;seed] (required) |
-| -s | --sleep <num> | for the 'scrape' and 'daemon' commands, the number of seconds chifra should sleep between runs (default 14) |
-| -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
-| -h | --help | display this help screen |
+| Short Cut | Option        | Description                                                                                                                                                                                                                                                                           |
+| --------: | :------------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+|           | commands      | which command to run, one or more of [list&#124;export&#124;slurp&#124;names&#124;abi&#124;state&#124;tokens&#124;when&#124;data&#124;blocks&#124;transactions&#124;receipts&#124;logs&#124;traces&#124;quotes&#124;scrape&#124;status&#124;settings&#124;rm&#124;message] (required) |
+|        -s | --sleep <num> | for the 'scrape' and 'daemon' commands, the number of seconds chifra should sleep between runs (default 14)                                                                                                                                                                           |
+|        -v | --verbose     | set verbose level. Either -v, --verbose or -v:n where 'n' is level                                                                                                                                                                                                                    |
+|        -h | --help        | display this help screen                                                                                                                                                                                                                                                              |
 
 #### Other Options
 
@@ -47,8 +49,6 @@ All **QBlocks** command-line tools support the following commands (although in s
     --dollars   |   specify value in US dollars
     --file:fn   |   specify multiple sets of command line options in a file.
 
-<small>*For the `--file:fn` option, place a series of valid command lines in a file and use the above options. In some cases, this option may significantly improve performance. A semi-colon at the start of a line makes that line a comment.*</small>
+<small>_For the `--file:fn` option, place a series of valid command lines in a file and use the above options. In some cases, this option may significantly improve performance. A semi-colon at the start of a line makes that line a comment._</small>
 
 **Powered by Qblocks<sup>&trade;</sup>**
-
-

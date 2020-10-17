@@ -25,6 +25,7 @@
 #include "node.h"
 #include "blockoptions.h"
 #include "appearance.h"
+#include "appearancedisplay.h"
 #include "bloom.h"
 #include "cacheentry.h"
 #include "reconciliation.h"

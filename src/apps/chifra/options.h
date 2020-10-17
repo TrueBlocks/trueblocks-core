@@ -34,13 +34,8 @@ class COptions : public COptionsBase {
     void Init(void);
     bool createConfigFile(const address_t& addr);
 
-    bool handle_list(void);
     bool handle_export(void);
-    bool handle_leech(void);
     bool handle_scrape(void);
-    bool handle_slurp(void);
-    bool handle_quotes(void);
-    bool handle_status(void);
     bool handle_rm(void);
     bool handle_data(void);
     bool handle_settings(void);

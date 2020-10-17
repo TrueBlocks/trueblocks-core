@@ -24,7 +24,7 @@ bool COptions::hanlde_appearances(void) {
         if (inRange((blknum_t)app->blk, scanRange.first, scanRange.second)) {
             nProcessed++;
             if (shouldDisplay) {
-                CDisplayApp dapp(hackAppAddr, app->blk, app->txid);
+                CAppearanceDisplay dapp(hackAppAddr, app->blk, app->txid);
                 cout << ((isJson() && !first) ? ", " : "");
                 cout << dapp.Format() << endl;
                 first = false;

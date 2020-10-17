@@ -1,9 +1,0 @@
-tomlTest2 argc: 2 [1:cacheMan.toml] 
-tomlTest2 cacheMan.toml 
-tests/cacheMan.toml
-[version]
-current = "0.7.0-alpha"
-
-[display]
-# terse = "<not_set>"
-# format = "<not_set>"

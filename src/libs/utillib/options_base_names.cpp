@@ -136,7 +136,6 @@ void addToMap(name_map_t& theMap, CAccountName& account, const string_q& tabFile
                 : contains(account.name, "(Prefund_") ? account.name : account.name + " (" + prefundName + ")";
         account.source = account.source.empty() ? "Genesis" : account.source;
         theMap[account.address] = account;
-        cnt++;
 
     } else {
         // From the regular file - store the values found in the file
