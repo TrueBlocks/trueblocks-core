@@ -60,7 +60,7 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 11000,apps,rm,rm,addrs,,,true,false,true,true,--,positional,list<addr>,remove one or more monitors
 11020,apps,rm,rm,header,,,false,false,true,true,--,switch,<boolean>,must be present for remove to occur
 
-11200,apps,,chifra,commands,,,true,false,true,true,--weird,positional,list<enum[list|export|slurp|collections|names|abi|state|tokens|when|data|blocks|transactions|receipts|logs|traces|quotes|scrape|status|rm]>,which command to run
+11200,apps,,chifra,commands,,,true,false,true,true,--weird,positional,opt_string,which command to run
 11220,apps,,chifra,sleep,s,14,false,false,true,false,header,flag,<uint32>,for the 'scrape' and 'daemon' commands&#44; the number of seconds chifra should sleep between runs (default [{DEF}])
 11280,apps,,chifra,start,S,0,false,false,false,false,local,flag,<blknum>,first block to process (inclusive)
 11300,apps,,chifra,end,E,,false,false,false,false,local,flag,<blknum>,last block to process (inclusive)
@@ -210,15 +210,16 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 13624,tools,transactions,getTrans,,,,false,false,false,false,--,note,,This tool checks for valid input syntax&#44; but does not check that the transaction requested exists.
 13629,tools,transactions,getTrans,,,,false,false,false,false,--,note,,If the queried node does not store historical state&#44; the results are undefined.
 
-13660,tools,abi,grabABI,addrs,,,true,false,true,true,header,positional,list<addr>,list of one or more smart contracts whose ABI to grab from EtherScan
-13680,tools,abi,grabABI,canonical,c,,false,false,true,true,local,switch,<boolean>,convert all types to their canonical represenation and remove all spaces from display
-13700,tools,abi,grabABI,generate,g,,false,false,true,true,header,switch,<boolean>,generate C++ code into the current folder for all functions and events found in the ABI
-13840,tools,abi,grabABI,monitored,m,,false,false,true,false,local,switch,<boolean>,load ABIs from monitored addresses
-13850,tools,abi,grabABI,known,k,,false,false,true,false,local,switch,<boolean>,load common 'known' ABIs from cache
-13855,tools,abi,grabABI,addr,a,,false,false,true,false,local,switch,<boolean>,include address of smart contract for the abi in output
-13860,tools,abi,grabABI,sol,s,,false,false,false,false,local,flag,<string>,file name of .sol file from which to create a new known abi (without .sol)
-13880,tools,abi,grabABI,,,,false,false,true,true,--,description,,Fetches the ABI for a smart contract. Optionally generates C++ source code representing that ABI.
-13885,tools,abi,grabABI,,,,false,false,false,false,--,note,,Solidity files found in the local folder with the name '<address>.sol' are converted to an ABI prior to processing (and then removed).
+13660,tools,abis,grabABI,addrs,,,true,false,true,true,header,positional,list<addr>,list of one or more smart contracts whose ABI to grab from EtherScan
+13680,tools,abis,grabABI,canonical,c,,false,false,true,true,local,switch,<boolean>,convert all types to their canonical represenation and remove all spaces from display
+13700,tools,abis,grabABI,generate,g,,false,false,true,true,header,switch,<boolean>,generate C++ code into the current folder for all functions and events found in the ABI
+13840,tools,abis,grabABI,monitored,m,,false,false,true,false,local,switch,<boolean>,load ABIs from monitored addresses
+13850,tools,abis,grabABI,known,k,,false,false,true,false,local,switch,<boolean>,load common 'known' ABIs from cache
+13855,tools,abis,grabABI,addr,a,,false,false,true,false,local,switch,<boolean>,include address of smart contract for the abi in output
+13860,tools,abis,grabABI,sol,s,,false,false,false,false,local,flag,<string>,file name of .sol file from which to create a new known abi (without .sol)
+13865,tools,abis,grabABI,find,f,,false,false,true,false,local,flag,<string>,try to search for a function declaration given a four byte code
+13880,tools,abis,grabABI,,,,false,false,true,true,--,description,,Fetches the ABI for a smart contract. Optionally generates C++ source code representing that ABI.
+13885,tools,abis,grabABI,,,,false,false,false,false,--,note,,Solidity files found in the local folder with the name '<address>.sol' are converted to an ABI prior to processing (and then removed).
 
 13940,tools,when,whenBlock,block_list,,,false,false,true,false,local,positional,list<string>,one or more dates&#44; block numbers&#44; hashes&#44; or special named blocks (see notes)
 13960,tools,when,whenBlock,list,l,,false,false,true,false,header,switch,<boolean>,export a list of the 'special' blocks

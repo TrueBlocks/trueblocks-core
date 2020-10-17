@@ -9,11 +9,18 @@
  */
 #include "options.h"
 
+const string_q opt_string =
+    "list<enum["
+    "list|export|slurp|"
+    "collections|names|abis|state|tokens|when|where|"
+    "blocks|transactions|receipts|logs|traces|quotes|"
+    "scrape|status|rm]"
+    ">";
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
     // BEG_CODE_OPTIONS
     // clang-format off
-    COption("commands", "", "list<enum[list|export|slurp|collections|names|abi|state|tokens|when|data|blocks|transactions|receipts|logs|traces|quotes|scrape|status|rm]>", OPT_REQUIRED | OPT_POSITIONAL, "which command to run"),  // NOLINT
+    COption("commands", "", opt_string, OPT_REQUIRED | OPT_POSITIONAL, "which command to run"),  // NOLINT
     COption("sleep", "s", "<uint32>", OPT_FLAG, "for the 'scrape' and 'daemon' commands, the number of seconds chifra should sleep between runs (default 14)"),  // NOLINT
     COption("start", "S", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to process (inclusive)"),
     COption("end", "E", "<blknum>", OPT_HIDDEN | OPT_FLAG, "last block to process (inclusive)"),
@@ -83,11 +90,8 @@ bool COptions::parseArguments(string_q& command) {
             }
 
             string descr = substitute(substitute(params[0].description, "[", "|"), "]", "|");
-            if (isTestMode())
-                descr += "where|";
-
-            bool isStatus =
-                (mode == "status" && (arg == "blocks" || arg == "transactions" || arg == "traces" || arg == "names"));
+            bool isStatus = (mode == "status" && (arg == "blocks" || arg == "transactions" || arg == "traces" ||
+                                                  arg == "names" || arg == "abis"));
             if (!isStatus && contains(descr, "|" + arg + "|")) {
                 if (!mode.empty())
                     EXIT_USAGE("Please specify " + params[0].description + ". " + mode + ":" + arg);
@@ -144,12 +148,6 @@ bool COptions::parseArguments(string_q& command) {
     scrapeSleep = (useconds_t)sleep;
 
     string_q origMode = mode;
-    if (mode == "blocks" || mode == "transactions" || mode == "receipts" || mode == "names" || mode == "logs" ||
-        mode == "traces" || mode == "state" || mode == "tokens" || mode == "abi" || mode == "when") {
-        tool_flags += (" --" + mode);
-        mode = "data";
-    }
-
     if (mode.empty()) {
         optionOn(OPT_HELP);
         COption* option = (COption*)&params[0];
@@ -289,7 +287,7 @@ COptions::COptions(void) {
                 "SHARED DATA|"
                 "  scrape        scrape the blockchain and build the TrueBlocks address index (i.e. the digests).|"
                 "  names         list all names known by TrueBlocks.|"
-                "  abi           list all abi signatures known by TrueBlocks.|"
+                "  abis          list all abi signatures known by TrueBlocks.|"
                 "BLOCKCHAIN DATA|"
                 "  blocks        query the blockchain for block data|"
                 "  transactions  query the blockchain for transaction data|"
@@ -300,6 +298,8 @@ COptions::COptions(void) {
                 "  tokens        query the blockchain for the state of an ERC20 address.|"
                 "OTHER|"
                 "  status        query for various status reports about the system.|"
+                "  when          return date given blocknum or blocknum given date.|"
+                "  where         determine closest location of block (local or remote cache).|"
     );
     // clang-format on
 

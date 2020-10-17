@@ -10,7 +10,7 @@ on      ,cmd  ,fast  ,null     ,apps/chifra ,help_list         ,n    ,modes = li
 on      ,cmd  ,fast  ,null     ,apps/chifra ,help_export       ,n    ,modes = export & help
 on      ,cmd  ,fast  ,null     ,apps/chifra ,help_slurp        ,n    ,modes = slurp & help
 on      ,cmd  ,fast  ,null     ,apps/chifra ,help_names        ,n    ,modes = names & help
-on      ,cmd  ,fast  ,null     ,apps/chifra ,help_abi          ,n    ,modes = abi & help
+on      ,cmd  ,fast  ,null     ,apps/chifra ,help_abi          ,n    ,modes = abis & help
 on      ,cmd  ,fast  ,null     ,apps/chifra ,help_state        ,n    ,modes = state & help
 on      ,cmd  ,fast  ,null     ,apps/chifra ,help_tokens       ,n    ,modes = tokens & help
 on      ,cmd  ,fast  ,null     ,apps/chifra ,help_data         ,n    ,modes = data & help
@@ -33,6 +33,8 @@ on      ,both ,fast  ,rm       ,apps/chifra ,rm                ,y    ,modes = rm
 on      ,both ,fast  ,names    ,apps/chifra ,names             ,y    ,modes = names & names = 50-Tokens & expand
 on      ,both ,fast  ,names    ,apps/chifra ,names_noparams    ,n    ,modes = names & names = 50-Tokens & fmt = txt
 on      ,both ,fast  ,names    ,apps/chifra ,names_badparams   ,y    ,modes = names & not_an_option
+on      ,both ,fast  ,names    ,apps/chifra ,names_tags        ,y    ,modes = names & tags
+on      ,both ,fast  ,names    ,apps/chifra ,names_collections ,y    ,modes = names & collections
 
 on      ,both ,fast  ,quotes   ,apps/chifra ,prices            ,y    ,modes = quotes @ p 1440
 #on     ,both ,fast  ,slurp    ,apps/chifra ,slurp             ,y    ,modes = slurp & addrs = 0x1234567812345678123456781234567812345678
@@ -42,7 +44,7 @@ on      ,both ,fast  ,blocks   ,apps/chifra ,blocks_badparams  ,y    ,modes = bl
 on      ,both ,fast  ,blocks   ,apps/chifra ,blocks            ,y    ,modes = blocks & blocks = 12
 on      ,both ,fast  ,blocks   ,apps/chifra ,blocks2           ,n    ,modes = blocks & blocks = 12 & fmt = csv & no_header
 
-#on     ,both ,fast  ,abi      ,apps/chifra ,abi               ,y    ,modes = abi & addrs = 0x1234567812345678123456781234567812345678
+#on     ,both ,fast  ,abi      ,apps/chifra ,abi               ,y    ,modes = abis & addrs = 0x1234567812345678123456781234567812345678
 on      ,both ,fast  ,when     ,apps/chifra ,when              ,y    ,modes = when & list
 
 on      ,both ,fast  ,status   ,apps/chifra ,status            ,y    ,modes = status all

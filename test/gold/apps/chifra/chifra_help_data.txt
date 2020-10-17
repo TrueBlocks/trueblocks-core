@@ -1,4 +1,20 @@
 chifra argc: 3 [1:data] [2:--help] 
 chifra data --help 
-TIME ~ CLOCK - <WARNG> : Exit(chifra,handle_data): 
-Invalid option: data --help 
+
+  Usage:    chifra [-s|-v|-h] commands  
+  Purpose:  Main TrueBlocks command line controls.
+
+  Where:  
+	commands              which command to run, one or more of [list|export|slurp|collections|names|abis|state|tokens|when|where|blocks|transactions|receipts|logs|traces|quotes|scrape|status|rm] (required)
+	-s  (--sleep <num>)   for the 'scrape' and 'daemon' commands, the number of seconds chifra should sleep between runs (default 14)
+
+#### Hidden options (shown during testing only)
+	-S  (--start <num>)   first block to process (inclusive)
+	-E  (--end <num>)     last block to process (inclusive)
+#### Hidden options (shown during testing only)
+
+	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
+	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
+	-h  (--help)          display this help screen
+
+  Powered by TrueBlocks

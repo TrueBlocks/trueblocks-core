@@ -44,7 +44,7 @@ on, both, fast, status, apps/cacheStatus, items_slurps,    y, details & modes = 
 on, both, fast, status, apps/cacheStatus, items_prices,    y, details & modes = caches & types = prices
 on, both, fast, status, apps/cacheStatus, items_some,      y, details & modes = some & start = 3000000 & end = 3100000
 on, both, fast, status, apps/cacheStatus, items_scrap_mon, y, details & modes = index & start = 1000000 & end = 2200000
-on, both, fast, status, apps/cacheStatus, items_three,     y, details & modes = abis caches monitors --types slurps
+on, both, fast, status, apps/cacheStatus, items_three,     y, details & modes = abis caches monitors & types = slurps
 
 on, both, fast, status, apps/cacheStatus, config_get,      n, get_config
 

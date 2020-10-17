@@ -1,0 +1,47 @@
+chifra argc: 3 [1:names] [2:--tags] 
+chifra names --tags 
+ethNames argc: 2 [1:--tags] 
+ethNames --tags 
+tags
+
+20-Friends
+30-Contract
+30-Contracts
+30-Contracts:Giveth
+30-Contracts:Moloch
+30-Contracts:dAppNode
+31-Gitcoin Grants:Contracts
+31-Gitcoin Grants:Core
+31-Gitcoin Grants:Friends
+31-Gitcoin Grants:Grant
+31-Pasta
+33-Set Protocol
+33-Set Protocol:Core
+33-Set Protocol:Core Caller
+33-Set Protocol:Factories
+33-Set Protocol:Libraries
+33-Set Protocol:Modules
+33-Set Protocol:Other
+33-Set Protocol:Wrapers
+33-Set Protocol:Wrappers
+33-Set Prototcol
+34-ENS
+34-Kyber Network
+34-Twitter: Friends
+35-Pool Together
+36-Chainlink
+36-Compound
+37-Sablier
+40-Exchanges
+50-Tokens
+50-Tokens:ERC20
+50-Tokens:ERC721
+60-Airdrops
+70-Vendors
+74-DaoDrain
+75-Early Actors
+80-Malicious
+80-Prefund
+81-Custom
+90-DevCon2:Individual
+91-Friends

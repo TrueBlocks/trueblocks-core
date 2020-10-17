@@ -27,6 +27,7 @@ static const COption params[] = {
     COption("known", "k", "", OPT_SWITCH, "load common 'known' ABIs from cache"),
     COption("addr", "a", "", OPT_SWITCH, "include address of smart contract for the abi in output"),
     COption("sol", "s", "<string>", OPT_HIDDEN | OPT_FLAG, "file name of .sol file from which to create a new known abi (without .sol)"),  // NOLINT
+    COption("find", "f", "<string>", OPT_FLAG, "try to search for a function declaration given a four byte code"),
     COption("", "", "", OPT_DESCRIPTION, "Fetches the ABI for a smart contract. Optionally generates C++ source code representing that ABI."),  // NOLINT
     // clang-format on
     // END_CODE_OPTIONS
@@ -36,6 +37,7 @@ static const size_t nParams = sizeof(params) / sizeof(COption);
 extern bool sortByFuncName(const CFunction& f1, const CFunction& f2);
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
+    ENTER("parseArguments: " + command);
     if (!standardOptions(command))
         return false;
 
@@ -45,6 +47,7 @@ bool COptions::parseArguments(string_q& command) {
     bool known = false;
     bool addr = false;
     string_q sol = "";
+    string_q find = "";
     // END_CODE_LOCAL_INIT
 
     Init();
@@ -72,6 +75,9 @@ bool COptions::parseArguments(string_q& command) {
         } else if (startsWith(arg, "-s:") || startsWith(arg, "--sol:")) {
             sol = substitute(substitute(arg, "-s:", ""), "--sol:", "");
 
+        } else if (startsWith(arg, "-f:") || startsWith(arg, "--find:")) {
+            find = substitute(substitute(arg, "-f:", ""), "--find:", "");
+
         } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
@@ -84,6 +90,16 @@ bool COptions::parseArguments(string_q& command) {
 
             // END_CODE_AUTO
         }
+    }
+
+    if (!find.empty()) {
+        ostringstream os;
+        os << "findSig " << find;
+        LOG_CALL(os.str());
+        // clang-format off
+        if (system(os.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings
+        // clang-format on
+        return false;
     }
 
     if (!sol.empty()) {

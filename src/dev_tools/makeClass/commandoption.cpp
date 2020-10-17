@@ -368,8 +368,11 @@ string_q nextCommandoptionChunk_custom(const string_q& fieldIn, const void* data
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             case 'd':
-                if (fieldIn % "datatype")
-                    return ((com->option_kind == "switch" || com->option_kind == "toggle") ? "" : com->data_type);
+                if (fieldIn % "datatype") {
+                    if (com->option_kind == "switch" || com->option_kind == "toggle")
+                        return "";
+                    return (startsWith(com->data_type, "opt_") ? "\"+" + com->data_type + "+\"" : com->data_type);
+                }
                 break;
             case 'o':
                 if (fieldIn % "opts") {

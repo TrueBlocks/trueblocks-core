@@ -9,7 +9,7 @@ chifra -th
 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
-|  | commands | which command to run, one or more of [list&#124;export&#124;slurp&#124;collections&#124;names&#124;abi&#124;state&#124;tokens&#124;when&#124;data&#124;blocks&#124;transactions&#124;receipts&#124;logs&#124;traces&#124;quotes&#124;scrape&#124;status&#124;rm] (required) |
+|  | commands | which command to run, one or more of [list&#124;export&#124;slurp&#124;collections&#124;names&#124;abis&#124;state&#124;tokens&#124;when&#124;where&#124;blocks&#124;transactions&#124;receipts&#124;logs&#124;traces&#124;quotes&#124;scrape&#124;status&#124;rm] (required) |
 | -s | --sleep <num> | for the 'scrape' and 'daemon' commands, the number of seconds chifra should sleep between runs (default 14) |
 
 #### Hidden options (shown during testing only)
@@ -32,7 +32,7 @@ chifra -th
  SHARED DATA
    scrape        scrape the blockchain and build the TrueBlocks address index (i.e. the digests).
    names         list all names known by TrueBlocks.
-   abi           list all abi signatures known by TrueBlocks.
+   abis          list all abi signatures known by TrueBlocks.
  BLOCKCHAIN DATA
    blocks        query the blockchain for block data
    transactions  query the blockchain for transaction data
@@ -43,5 +43,7 @@ chifra -th
    tokens        query the blockchain for the state of an ERC20 address.
  OTHER
    status        query for various status reports about the system.
+   when          return date given blocknum or blocknum given date.
+   where         determine closest location of block (local or remote cache).
  
 

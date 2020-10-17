@@ -6,8 +6,7 @@
 #include "options.h"
 
 //------------------------------------------------------------------------------------------------
-bool freshen_internal(freshen_e mode, CMonitorArray& fa, const string_q& tool_flags,
-                                 const string_q& freshen_flags) {
+bool freshen_internal(freshen_e mode, CMonitorArray& fa, const string_q& tool_flags, const string_q& freshen_flags) {
     ENTER("freshen_internal");
     nodeNotRequired();
 
@@ -19,15 +18,14 @@ bool freshen_internal(freshen_e mode, CMonitorArray& fa, const string_q& tool_fl
     for (auto f : fa) {
         bool needsUpdate = true;
         if (needsUpdate) {
-            LOG_INFO(cTeal, "Needs update ", f.address, string_q(80, ' '), cOff);
+            LOG4(cTeal, "Needs update ", f.address, string_q(80, ' '), cOff);
             tenAddresses += (f.address + " ");
             if (!(++cnt % 10)) {  // we don't want to do too many addrs at a time
                 tenAddresses += "|";
                 cnt = 0;
             }
         } else {
-            LOG_INFO(cTeal, "Scraping addresses ", f.address, " ", cnt2, " of ", fa.size(), string_q(80, ' '), cOff,
-                     "\r");
+            LOG4(cTeal, "Scraping addresses ", f.address, " ", cnt2, " of ", fa.size(), string_q(80, ' '), cOff, "\r");
         }
         cnt2++;
     }

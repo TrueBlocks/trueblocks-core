@@ -1,9 +1,9 @@
-chifra argc: 3 [1:abi] [2:--help] 
-chifra abi --help 
-chifra abi argc: 2 [1:--help] 
-chifra abi --help 
+chifra argc: 3 [1:abis] [2:--help] 
+chifra abis --help 
+chifra abis argc: 2 [1:--help] 
+chifra abis --help 
 
-  Usage:    chifra abi [-c|-g|-m|-k|-a|-v|-h] <address> [address...]  
+  Usage:    chifra abis [-c|-g|-m|-k|-a|-f|-v|-h] <address> [address...]  
   Purpose:  Fetches the ABI for a smart contract. Optionally generates C++ source code representing that ABI.
 
   Where:  
@@ -13,6 +13,7 @@ chifra abi --help
 	-m  (--monitored)     load ABIs from monitored addresses
 	-k  (--known)         load common 'known' ABIs from cache
 	-a  (--addr)          include address of smart contract for the abi in output
+	-f  (--find <str>)    try to search for a function declaration given a four byte code
 
 #### Hidden options (shown during testing only)
 	-s  (--sol <str>)     file name of .sol file from which to create a new known abi (without .sol)

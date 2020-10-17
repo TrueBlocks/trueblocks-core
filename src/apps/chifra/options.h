@@ -47,5 +47,3 @@ extern bool freshen_internal(freshen_e mode, CMonitorArray& list, const string_q
 extern string_q colors[];
 extern uint64_t nColors;
 #define indexFolder_sorted (getIndexPath("sorted/"))
-#define LOG_CALL(a)                                                                                                    \
-    { LOG4(bWhite, l_funcName, " ----> ", (isTestMode() ? substitute((a), getCachePath(""), "$CACHE/") : (a)), cOff); }

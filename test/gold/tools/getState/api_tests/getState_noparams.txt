@@ -1,5 +1,5 @@
 {
   "errors": [
-    "chifra - Input does not include a valid Ethereum address. Quitting..."
+    "getState - Not enough arguments presented."
   ]
 }

@@ -1,0 +1,149 @@
+{
+  "data": [
+    {
+      "tags": ""
+    },
+    {
+      "tags": "20-Friends"
+    },
+    {
+      "tags": "30-Contract"
+    },
+    {
+      "tags": "30-Contracts"
+    },
+    {
+      "tags": "30-Contracts:Giveth"
+    },
+    {
+      "tags": "30-Contracts:Moloch"
+    },
+    {
+      "tags": "30-Contracts:dAppNode"
+    },
+    {
+      "tags": "31-Gitcoin Grants:Contracts"
+    },
+    {
+      "tags": "31-Gitcoin Grants:Core"
+    },
+    {
+      "tags": "31-Gitcoin Grants:Friends"
+    },
+    {
+      "tags": "31-Gitcoin Grants:Grant"
+    },
+    {
+      "tags": "31-Pasta"
+    },
+    {
+      "tags": "33-Set Protocol"
+    },
+    {
+      "tags": "33-Set Protocol:Core"
+    },
+    {
+      "tags": "33-Set Protocol:Core Caller"
+    },
+    {
+      "tags": "33-Set Protocol:Factories"
+    },
+    {
+      "tags": "33-Set Protocol:Libraries"
+    },
+    {
+      "tags": "33-Set Protocol:Modules"
+    },
+    {
+      "tags": "33-Set Protocol:Other"
+    },
+    {
+      "tags": "33-Set Protocol:Wrapers"
+    },
+    {
+      "tags": "33-Set Protocol:Wrappers"
+    },
+    {
+      "tags": "33-Set Prototcol"
+    },
+    {
+      "tags": "34-ENS"
+    },
+    {
+      "tags": "34-Kyber Network"
+    },
+    {
+      "tags": "34-Twitter: Friends"
+    },
+    {
+      "tags": "35-Pool Together"
+    },
+    {
+      "tags": "36-Chainlink"
+    },
+    {
+      "tags": "36-Compound"
+    },
+    {
+      "tags": "37-Sablier"
+    },
+    {
+      "tags": "40-Exchanges"
+    },
+    {
+      "tags": "50-Tokens"
+    },
+    {
+      "tags": "50-Tokens:ERC20"
+    },
+    {
+      "tags": "50-Tokens:ERC721"
+    },
+    {
+      "tags": "60-Airdrops"
+    },
+    {
+      "tags": "70-Vendors"
+    },
+    {
+      "tags": "74-DaoDrain"
+    },
+    {
+      "tags": "75-Early Actors"
+    },
+    {
+      "tags": "80-Malicious"
+    },
+    {
+      "tags": "80-Prefund"
+    },
+    {
+      "tags": "81-Custom"
+    },
+    {
+      "tags": "90-DevCon2:Individual"
+    },
+    {
+      "tags": "91-Friends"
+    }
+  ],
+  "types": [
+    {
+      "type": "CAccountName",
+      "fields": [
+        {
+          "name": "tags",
+          "type": "text"
+        }
+      ]
+    }
+  ],
+  "meta": {
+    "unripe": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "client": "0xdeadbeef",
+    "namePath": "--"
+  }
+}

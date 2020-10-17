@@ -34,41 +34,27 @@ int main(int argc, const char* argv[]) {
             RETURN(options.handle_export())  //
         } else if (options.mode == "scrape") {
             RETURN(options.handle_scrape())  //
-        } else if (options.mode == "data") {
-            RETURN(options.handle_data())
-        } else if (options.mode == "state") {
-            RETURN(options.handle_data())
-        } else if (options.mode == "tokens") {
-            RETURN(options.handle_data())
         } else if (options.mode == "rm") {
             RETURN(options.handle_rm())  //
-        } else if (isTestMode()) {
-            map<string, string> cmdMap;
-            cmdMap["where"] = "whereBlock";
-            cmdMap["tokens"] = "getTokenInfo";
-            cmdMap["status"] = "cacheStatus";
-            cmdMap["slurp"] = "ethSlurp";
-            cmdMap["quotes"] = "ethQuote";
-            if (cmdMap[options.mode] != "") {
-                ostringstream os;
-                os << cmdMap[options.mode] << " " << options.tool_flags;
-                for (auto addr : options.addrs)
-                    os << " " << addr;
-                LOG_CALL(os.str());
-                // clang-format off
-                if (system(os.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings
-                // clang-format on
-            } else {
-                cerr << "Should not happen.";
-            }
         } else {
             map<string, string> cmdMap;
             cmdMap["status"] = "cacheStatus";
+            cmdMap["names"] = "ethNames";
+            cmdMap["abis"] = "grabABI";
             cmdMap["slurp"] = "ethSlurp";
+            cmdMap["state"] = "getState";
+            cmdMap["tokens"] = "getTokenInfo";
+            cmdMap["blocks"] = "getBlock";
+            cmdMap["transactions"] = "getTrans";
+            cmdMap["receipts"] = "getReceipt";
+            cmdMap["logs"] = "getLogs";
+            cmdMap["traces"] = "getTrace";
             cmdMap["quotes"] = "ethQuote";
+            cmdMap["when"] = "whenBlock";
+            cmdMap["where"] = "whereBlock";
             if (cmdMap[options.mode] != "") {
                 ostringstream os;
-                os << cmdMap[options.mode] << " " << options.tool_flags;
+                os << cmdMap[options.mode] << " " << substitute(options.tool_flags, "--names", "");
                 for (auto addr : options.addrs)
                     os << " " << addr;
                 LOG_CALL(os.str());

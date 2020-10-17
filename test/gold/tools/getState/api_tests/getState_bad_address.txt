@@ -1,5 +1,5 @@
 {
   "errors": [
-    "chifra - Input (--0x12) does not include a valid Ethereum address. Quitting..."
+    "getState - Invalid option: --0x12"
   ]
 }

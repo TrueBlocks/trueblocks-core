@@ -1,1 +1,3 @@
+grabABI argc: 3 [1:--find] [2:0xa6f9dae1] 
+grabABI --find 0xa6f9dae1 
 { "encoding": "0xa6f9dae1", "signature": "changeOwner(address)" }
