@@ -37,7 +37,7 @@ The above command should return this help screen.
         -v  (--verbose)       set verbose level
         -h  (--help)          display this help screen
 
-    Powered by QBlocks (GHC-TrueBlocks//0.7.0-alpha-c2cc73914-20200811)
+    Powered by TrueBlocks (GHC-TrueBlocks//0.7.0-alpha-c2cc73914-20200811)
 
 ## Creating the Data
 

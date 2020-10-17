@@ -1,6 +1,6 @@
 ## Papers
 
-Here we present a few white papers we've written about QBlocks:
+Here we present a few white papers we've written about TrueBlocks:
 
 - [Faster, Richer, Fully Customizable Data from Programmable Blockchains](./2017%20-%20Rush%20-%20Faster,%20Richer,%20Fully%20Customizable%20Data%20from%20Programmable%20Blockchains.pdf)
 <br>*Copyright © Thomas Jay Rush*

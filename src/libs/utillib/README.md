@@ -1,6 +1,6 @@
 ## utillib
 
-`utillib` provides various functionality in support of other libraries and applications that comprise QBlocks. This includes:
+`utillib` provides various functionality in support of other libraries and applications that comprise TrueBlocks. This includes:
 
 - support for data types such as signed and unsigned integers, floating point numbers, doubles, big numbers, time and date types
 - methods for manipulating, searching, and processing strings
@@ -29,4 +29,4 @@ This feature allows for fast, binary storage and retrieval of the class data. Th
 
 ## Display strings
 
-This feature allows QBlocks to export the state of a particular instance of a class in any desired format given an appropriately constructed formatting string including tab-delimited text, comma-separated values, JSON, or any other desired format including the ability to inject the data into an arbitrary database.
+This feature allows TrueBlocks to export the state of a particular instance of a class in any desired format given an appropriately constructed formatting string including tab-delimited text, comma-separated values, JSON, or any other desired format including the ability to inject the data into an arbitrary database.

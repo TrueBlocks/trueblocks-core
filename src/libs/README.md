@@ -1,6 +1,6 @@
 ## Libs
 
-QBlocks is primarily a software library that gives quick access to better articulated data pulled from an Ethereum node. There are two fundamental libraries and three support libraries that build upon these fundamentals to provide all the capabilities one needs to build amazing applications using the Ethereum data.
+TrueBlocks is primarily a software library that gives quick access to better articulated data pulled from an Ethereum node. There are two fundamental libraries and three support libraries that build upon these fundamentals to provide all the capabilities one needs to build amazing applications using the Ethereum data.
 
 #### Fundamentals
 
@@ -10,7 +10,7 @@ QBlocks is primarily a software library that gives quick access to better articu
 
 #### Supporting
 
-In addition to the above core libraries, QBlocks provides three more libraries, built upon the code, that work in support of QBlocks [monitors](../monitors/README.md):
+In addition to the above core libraries, TrueBlocks provides three more libraries, built upon the code, that work in support of TrueBlocks [monitors](../monitors/README.md):
 
 - [**The acctlib library.**](acctlib/README.md) A library that allows for the building and manipulation of k-ary trees of Ethereum account data.
 

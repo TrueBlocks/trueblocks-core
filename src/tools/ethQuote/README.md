@@ -1,6 +1,6 @@
 ## ethQuote
 
-The `ethQuote` tool provides Ethereum price data to various tools or for other purposes. Currently, `ethQuote` retrieves data using the Poloniex API. In future versions, we intend to add other sources of pricing data and provide a mechanism to specify an averaging calculate given multiple price sources. Ultimately, we hope Ethereum/fiat price data appears under consensus, but until that time, **QBlocks** uses `ethQuote`. Powered, in part, by Poloniex<sup>&reg;<sup>
+The `ethQuote` tool provides Ethereum price data to various tools or for other purposes. Currently, `ethQuote` retrieves data using the Poloniex API. In future versions, we intend to add other sources of pricing data and provide a mechanism to specify an averaging calculate given multiple price sources. Ultimately, we hope Ethereum/fiat price data appears under consensus, but until that time, **TrueBlocks** uses `ethQuote`. Powered, in part, by Poloniex<sup>&reg;<sup>
 #### Usage
 
 `Usage:`    ethQuote [-f|-p|-a|-e|-v|-h]  
@@ -26,7 +26,7 @@ The `ethQuote` tool provides Ethereum price data to various tools or for other p
 
 #### Other Options
 
-All **QBlocks** command-line tools support the following commands (although in some case, they have no meaning):
+All **TrueBlocks** command-line tools support the following commands (although in some case, they have no meaning):
 
     Command     |     Description
     -----------------------------------------------------------------------------
@@ -44,6 +44,6 @@ All **QBlocks** command-line tools support the following commands (although in s
 
 <small>*For the `--file:fn` option, place a series of valid command lines in a file and use the above options. In some cases, this option may significantly improve performance. A semi-colon at the start of a line makes that line a comment.*</small>
 
-**Powered by Qblocks<sup>&trade;</sup>**
+**Powered by TrueBlocks<sup>&trade;</sup>**
 
 

@@ -1,6 +1,6 @@
 ## Intro
 
-TrueBlock is a collection of software libraries, applications, and command-line tools designed to give you quick access to the data provided by an Ethereum node.
+TrueBlocks is a collection of software libraries, applications, and command-line tools designed to give you quick access to the data provided by an Ethereum node.
 
 #### Architecture
 
@@ -14,7 +14,7 @@ Our source code is laid out in the following folders:
 
 - [**The apps folder**](./apps/README.md): This folder contains source code for the primary applications that comprise the system. Some of this source code is open source and some is not.
 
-- [**The tools folder**](./tools/README.md): This folder contains open source code for a collection of simple command line tools. These tools, while useful, serve primarily as sample code for the libraries to help you understand how to use QBlocks.
+- [**The tools folder**](./tools/README.md): This folder contains open source code for a collection of simple command line tools. These tools, while useful, serve primarily as sample code for the libraries to help you understand how to use TrueBlocks.
 
 - [**The samples folder**](./samples/README.md): This folder contains other open source sample source code for the system. You can get a lot of ideas here, but many of these samples are partial or incomplete. Please add to the list and/or feel free to expand any of these samples.
 

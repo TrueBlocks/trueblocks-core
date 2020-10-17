@@ -1,4 +1,4 @@
-We've published a number of medium articles using data we've collected with QBlocks. Here's a list:
+We've published a number of medium articles using data we've collected with TrueBlocks. Here's a list:
 
 | Title | Date Published |
 |-------|----------------|

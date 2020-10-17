@@ -1,6 +1,6 @@
 ## Installation Instructions
 
-The only dependencies for QBlocks are (1) a locally-running Ethereum node (or a remote Ethereum node such as [Infura](http://infura.io) or [QuikNode](http://quiknode.io)), (2) the `curl` libraries, and (3) build tools such as `git`, `cmake`, `python`, and `go`.  Below we give specific instructions for your operating sytem. Following that are instructions for how to build and install QBlocks and further steps.
+The only dependencies for TrueBlocks are (1) a locally-running Ethereum node (or a remote Ethereum node such as [Infura](http://infura.io) or [QuikNode](http://quiknode.io)), (2) the `curl` libraries, and (3) build tools such as `git`, `cmake`, `python`, and `go`.  Below we give specific instructions for your operating sytem. Following that are instructions for how to build and install TrueBlocks and further steps.
 
 The [ethslurp tool](../../apps/ethslurp/README.md) will not run without an API key from [EtherScan.io](http://etherscan.io/apis) (registration is required). The tool will request a key from that site before running.
 
@@ -23,7 +23,7 @@ sudo yum install cmake python python-devel libcurl-devel
 
 Additionally, please [install Go](https://golang.org/doc/install).
 
-[Continue below](#finish) to build and install QBlocks
+[Continue below](#finish) to build and install TrueBlocks
 
 ***
 
@@ -37,7 +37,7 @@ yum -y install qt-devel cmake
 
 Additionally, please [install Go](https://golang.org/doc/install).
 
-[Continue below](#finish) to build and install QBlocks
+[Continue below](#finish) to build and install TrueBlocks
 
 ***
 
@@ -53,7 +53,7 @@ export LIBRARY_PATH=/usr/local/lib/:${LIBRARY_PATH}
 
 Additionally, please [install Go](https://golang.org/doc/install).
 
-[Continue below](#finish) to build and install QBlocks
+[Continue below](#finish) to build and install TrueBlocks
 
 ***
 
@@ -65,7 +65,7 @@ sudo apt install build-essential git cmake python python-dev libcurl3-dev
 
 Additionally, please [install Go](https://golang.org/doc/install).
 
-[Continue below](#finish) to build and install QBlocks
+[Continue below](#finish) to build and install TrueBlocks
 
 ***
 
@@ -77,11 +77,11 @@ Additionally, please [install Go](https://golang.org/doc/install).
 
 Additionally, please [install Go](https://golang.org/doc/install).
 
-[Continue below](#finish) to build and install QBlocks
+[Continue below](#finish) to build and install TrueBlocks
 
 <a name="finish" href=""></a>
 ***
-## To Build QBlocks and Finish Installation (all platforms)
+## To Build TrueBlocks and Finish Installation (all platforms)
 
 Open a terminal and change to whatever folder you normally store GitHub repos. Then:
 
@@ -94,10 +94,10 @@ cmake ../src
 make
 ```
 
-The installation installs the QBlocks command line tools in the folder /usr/local/qblocks/bin. You may wish to add this path to your ${PATH} environment variable.
+The installation installs the TrueBlocks command line tools in the folder /usr/local/qblocks/bin. You may wish to add this path to your ${PATH} environment variable.
 
 ***
 ## After building, on to the samples
 
-After you're done building and installing the library and tools, you may wish to try your hand at building some QBlocks applications or tools. We've provided a 
+After you're done building and installing the library and tools, you may wish to try your hand at building some TrueBlocks applications or tools. We've provided a 
 number of simple samples to help you get started. Please follow [this link](/src/examples).

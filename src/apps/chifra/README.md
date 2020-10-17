@@ -6,7 +6,7 @@
 
 ---
 
-`chifra` is an command line tool that builds [QBlocks account monitors](../../monitors/README.md) through a series of interactive questions.
+`chifra` is an command line tool that builds [TrueBlocks account monitors](../../monitors/README.md) through a series of interactive questions.
 
 Given your answers to those questions (such as which Ethereum addresses to monitor, what to name those addresses, where to find ABI files for those addresses), `chifra` generates the C++ code for both the parsing library needed to monitor the addresses and the code to build an interactive transactional debugging/auditing program.
 
@@ -38,7 +38,7 @@ Here is a screen shot of an interaction with Chifra building a smart contract mo
 
 #### Other Options
 
-All **QBlocks** command-line tools support the following commands (although in some case, they have no meaning):
+All **TrueBlocks** command-line tools support the following commands (although in some case, they have no meaning):
 
     Command     |     Description
     -----------------------------------------------------------------------------
@@ -51,4 +51,4 @@ All **QBlocks** command-line tools support the following commands (although in s
 
 <small>_For the `--file:fn` option, place a series of valid command lines in a file and use the above options. In some cases, this option may significantly improve performance. A semi-colon at the start of a line makes that line a comment._</small>
 
-**Powered by Qblocks<sup>&trade;</sup>**
+**Powered by TrueBlocks<sup>&trade;</sup>**

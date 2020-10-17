@@ -20,4 +20,4 @@ This folder contains various tools and python scripts that provide simple, helpf
 
 `Purpose:` We use this source code linter to insure consistent code style. If you add code to the repository, please use this tool before submitting your changes.
 
-**Powered by Qblocks<sup>&trade;</sup>**
+**Powered by TrueBlocks<sup>&trade;</sup>**

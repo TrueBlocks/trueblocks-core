@@ -1,8 +1,8 @@
 ## acctExport
 
-This folder contains a QBlocks monitor. QBlocks monitors pull transactions from the Ethereum blockchain for a given (or a series of) Ethereum addresses.
+This folder contains a TrueBlocks monitor. TrueBlocks monitors pull transactions from the Ethereum blockchain for a given (or a series of) Ethereum addresses.
 
-Below we present the command line interface to this tool, although the tool itself is not available under open source. While the tool is in active development, QBlocks monitors already produce very useful results. For example, we use QBlocks monitors to account for and analyze all transactions on a given smart contract. We present [this example](http://dao.quickblocks.io).
+Below we present the command line interface to this tool, although the tool itself is not available under open source. While the tool is in active development, TrueBlocks monitors already produce very useful results. For example, we use TrueBlocks monitors to account for and analyze all transactions on a given smart contract. We present [this example](http://dao.quickblocks.io).
 
 Please contact us at [sales@greathill.com](mailto:sales@greathill.com) for more information.
 
@@ -36,7 +36,7 @@ Please contact us at [sales@greathill.com](mailto:sales@greathill.com) for more 
 
 #### Other Options
 
-All **QBlocks** command-line tools support the following commands (although in some case, they have no meaning):
+All **TrueBlocks** command-line tools support the following commands (although in some case, they have no meaning):
 
     Command     |     Description
     -----------------------------------------------------------------------------
@@ -54,4 +54,4 @@ All **QBlocks** command-line tools support the following commands (although in s
 
 <small>*For the `--file:fn` option, place a series of valid command lines in a file and use the above options. In some cases, this option may significantly improve performance. A semi-colon at the start of a line makes that line a comment.*</small>
 
-**Powered by Qblocks<sup>&trade;</sup>**
+**Powered by TrueBlocks<sup>&trade;</sup>**
