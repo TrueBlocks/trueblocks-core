@@ -31,11 +31,10 @@ int main(int argc, const char* argv[]) {
         }
 
         if (options.mode == "list" || options.mode == "export") {
+            options.tool_flags = substitute(options.tool_flags, "--addrs", "");
             RETURN(options.handle_export())  //
         } else if (options.mode == "scrape") {
             RETURN(options.handle_scrape())  //
-        } else if (options.mode == "rm") {
-            RETURN(options.handle_rm())  //
         } else {
             map<string, string> cmdMap;
             cmdMap["slurp"] = "ethSlurp";
@@ -54,10 +53,15 @@ int main(int argc, const char* argv[]) {
             cmdMap["when"] = "whenBlock";
             cmdMap["where"] = "whereBlock";
             cmdMap["status"] = "cacheStatus";
-
+            cmdMap["rm"] = "acctScrape --rm";
             if (cmdMap[options.mode] != "") {
                 ostringstream os;
-                os << cmdMap[options.mode] << " " << substitute(options.tool_flags, "--names", "");
+                if (options.mode == "names")
+                    options.tool_flags = substitute(substitute(options.tool_flags, "--names", ""), "--terms", "");
+                if (options.mode == "rm") {
+                    options.tool_flags = substitute(options.tool_flags, "--addrs", "");
+                }
+                os << cmdMap[options.mode] << " " << options.tool_flags;
                 for (auto addr : options.addrs)
                     os << " " << addr;
                 LOG_CALL(os.str());

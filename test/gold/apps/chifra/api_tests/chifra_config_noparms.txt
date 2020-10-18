@@ -1,5 +1,0 @@
-{
-  "errors": [
-    "chifra - chifra config 'mode' must be either '--get' or '--set'."
-  ]
-}

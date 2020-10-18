@@ -429,6 +429,8 @@ bool COptions::check_option(const CCommandOption& option) {
         (option.option_kind == "description" || option.option_kind == "note" || option.option_kind == "error") &&
         option.data_type.empty())
         valid_type = true;
+    if (!valid_type && startsWith(option.data_type, "opt_"))
+        valid_type = true;
 
     if (!valid_type)
         warnings << "Unknown type '" << cRed << option.data_type << cOff << "' for option '" << cRed << option.command

@@ -6,29 +6,33 @@ on      ,cmd  ,fast  ,null     ,apps/chifra ,README            ,n    ,@th
 on      ,cmd  ,fast  ,null     ,apps/chifra ,help              ,n    ,@h
 on      ,cmd  ,fast  ,null     ,apps/chifra ,help_long         ,n    ,help
 on      ,cmd  ,fast  ,null     ,apps/chifra ,chifra_help       ,n    ,help
-on      ,cmd  ,fast  ,null     ,apps/chifra ,help_list         ,n    ,modes = list & help
-on      ,cmd  ,fast  ,null     ,apps/chifra ,help_export       ,n    ,modes = export & help
-on      ,cmd  ,fast  ,null     ,apps/chifra ,help_slurp        ,n    ,modes = slurp & help
-on      ,cmd  ,fast  ,null     ,apps/chifra ,help_names        ,n    ,modes = names & help
-on      ,cmd  ,fast  ,null     ,apps/chifra ,help_abi          ,n    ,modes = abis & help
-on      ,cmd  ,fast  ,null     ,apps/chifra ,help_state        ,n    ,modes = state & help
-on      ,cmd  ,fast  ,null     ,apps/chifra ,help_tokens       ,n    ,modes = tokens & help
-on      ,cmd  ,fast  ,null     ,apps/chifra ,help_data         ,n    ,modes = data & help
-on      ,cmd  ,fast  ,null     ,apps/chifra ,help_blocks       ,n    ,modes = blocks & help
-on      ,cmd  ,fast  ,null     ,apps/chifra ,help_transactions ,n    ,modes = transactions & help
-on      ,cmd  ,fast  ,null     ,apps/chifra ,help_receipts     ,n    ,modes = receipts & help
-on      ,cmd  ,fast  ,null     ,apps/chifra ,help_logs         ,n    ,modes = logs & help
-on      ,cmd  ,fast  ,null     ,apps/chifra ,help_traces       ,n    ,modes = traces & help
-on      ,cmd  ,fast  ,null     ,apps/chifra ,help_quotes       ,n    ,modes = quotes & help
-on      ,cmd  ,fast  ,null     ,apps/chifra ,help_scrape       ,n    ,modes = scrape & help
-on      ,cmd  ,fast  ,null     ,apps/chifra ,help_status       ,n    ,modes = status & help
-on      ,cmd  ,fast  ,null     ,apps/chifra ,help_rm           ,n    ,modes = rm & help
+
+on      ,cmd  ,fast  ,null     ,apps/chifra ,help_list          ,n    ,modes = list & help
+on      ,cmd  ,fast  ,null     ,apps/chifra ,help_export        ,n    ,modes = export & help
+on      ,cmd  ,fast  ,null     ,apps/chifra ,help_slurp         ,n    ,modes = slurp & help
+on      ,cmd  ,fast  ,null     ,apps/chifra ,help_rm            ,n    ,modes = rm & help
+on      ,cmd  ,fast  ,null     ,apps/chifra ,help_collections   ,n    ,modes = collections & help
+on      ,cmd  ,fast  ,null     ,apps/chifra ,help_names         ,n    ,modes = names & help
+on      ,cmd  ,fast  ,null     ,apps/chifra ,help_tags          ,n    ,modes = tags & help
+on      ,cmd  ,fast  ,null     ,apps/chifra ,help_abis          ,n    ,modes = abis & help
+on      ,cmd  ,fast  ,null     ,apps/chifra ,help_blocks        ,n    ,modes = blocks & help
+on      ,cmd  ,fast  ,null     ,apps/chifra ,help_transactions  ,n    ,modes = transactions & help
+on      ,cmd  ,fast  ,null     ,apps/chifra ,help_receipts      ,n    ,modes = receipts & help
+on      ,cmd  ,fast  ,null     ,apps/chifra ,help_logs          ,n    ,modes = logs & help
+on      ,cmd  ,fast  ,null     ,apps/chifra ,help_traces        ,n    ,modes = traces & help
+on      ,cmd  ,fast  ,null     ,apps/chifra ,help_state         ,n    ,modes = state & help
+on      ,cmd  ,fast  ,null     ,apps/chifra ,help_tokens        ,n    ,modes = tokens & help
+on      ,cmd  ,fast  ,null     ,apps/chifra ,help_scrape        ,n    ,modes = scrape & help
+on      ,cmd  ,fast  ,null     ,apps/chifra ,help_status        ,n    ,modes = status & help
+on      ,cmd  ,fast  ,null     ,apps/chifra ,help_quotes        ,n    ,modes = quotes & help
+on      ,cmd  ,fast  ,null     ,apps/chifra ,help_when          ,n    ,modes = when & help
+on      ,cmd  ,fast  ,null     ,apps/chifra ,help_where         ,n    ,modes = where & help
 
 on      ,cmd  ,fast  ,null     ,apps/chifra ,no_params         ,n    ,
 on      ,cmd  ,fast  ,null     ,apps/chifra ,invalid_option    ,n    ,modes = not_a_mode
 
 on      ,both ,fast  ,list     ,apps/chifra ,list              ,y    ,modes = list & addrs = 0xfb744b951d094b310262c8f986c860df9ab1de65 & end = 10000
-on      ,both ,fast  ,rm       ,apps/chifra ,rm                ,y    ,modes = rm & addrs = 0xfb744b951d094b310262c8f986c860df9ab1de65 & editCmd = remove & verbose = 10
+on      ,both ,fast  ,rm       ,apps/chifra ,rm                ,y    ,modes = rm & addrs = 0xfb744b951d094b310262c8f986c860df9ab1de65 & verbose = 10
 
 on      ,both ,fast  ,names    ,apps/chifra ,names             ,y    ,modes = names & names = 50-Tokens & expand
 on      ,both ,fast  ,names    ,apps/chifra ,names_noparams    ,n    ,modes = names & names = 50-Tokens & fmt = txt
@@ -37,7 +41,7 @@ on      ,both ,fast  ,names    ,apps/chifra ,names_tags        ,y    ,modes = na
 on      ,both ,fast  ,names    ,apps/chifra ,names_collections ,y    ,modes = names & collections
 
 on      ,both ,fast  ,quotes   ,apps/chifra ,prices            ,y    ,modes = quotes @ p 1440
-#on     ,both ,fast  ,slurp    ,apps/chifra ,slurp             ,y    ,modes = slurp & addrs = 0x1234567812345678123456781234567812345678
+on      ,both ,fast  ,slurp    ,apps/chifra ,slurp             ,y    ,modes = slurp & addrs = 0x1234567812345678123456781234567812345678
 
 on      ,both ,fast  ,blocks   ,apps/chifra ,blocks_noparams   ,y    ,modes = blocks
 on      ,both ,fast  ,blocks   ,apps/chifra ,blocks_badparams  ,y    ,modes = blocks & not_an_option

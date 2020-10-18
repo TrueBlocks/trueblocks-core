@@ -1,0 +1,19 @@
+chifra argc: 3 [1:when] [2:--help] 
+chifra when --help 
+chifra when argc: 2 [1:--help] 
+chifra when --help 
+
+  Usage:    chifra when [-l|-t|-s|-v|-h] < block | date > [ block... | date... ]  
+  Purpose:  Finds the nearest block prior to a date, or the nearest date prior to a block.
+            Alternatively, search for one of 'special' blocks.
+
+  Where:  
+	block_list            one or more dates, block numbers, hashes, or special named blocks (see notes)
+	-l  (--list)          export a list of the 'special' blocks
+	-t  (--timestamps)    ignore other options and generate timestamps only
+	-s  (--skip <num>)    only applicable if --timestamps is on, the step between block numbers in the export
+	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
+	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
+	-h  (--help)          display this help screen
+
+  Powered by TrueBlocks

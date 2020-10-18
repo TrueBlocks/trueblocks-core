@@ -1,0 +1,15 @@
+chifra argc: 3 [1:where] [2:--help] 
+chifra where --help 
+chifra where argc: 2 [1:--help] 
+chifra where --help 
+
+  Usage:    chifra where [-v|-h] <block> [block...]  
+  Purpose:  Reports if a block was found in the cache, at a local, or at a remote node.
+
+  Where:  
+	blocks                a space-separated list of one or more blocks to search for (required)
+	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
+	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
+	-h  (--help)          display this help screen
+
+  Powered by TrueBlocks

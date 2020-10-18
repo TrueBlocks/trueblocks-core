@@ -215,12 +215,3 @@ bool isScraperRunning(const string_q& unsearch) {
     replace(pList, "chifra scrape " + unsearch, "");
     return contains(pList, "chifra scrape");
 }
-
-//------------------------------------------------------------------------------------------------
-blknum_t lastExported(const address_t& addr) {
-    string_q filename = getMonitorExpt(addr, FM_PRODUCTION);
-    blknum_t second;
-    timestamp_t unused;
-    bnFromPath(getMonitorExpt(addr, FM_PRODUCTION), second, unused);
-    return second == NOPOS ? 0 : second;
-}

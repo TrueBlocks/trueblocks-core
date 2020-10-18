@@ -77,7 +77,7 @@ on, both,  fast, traces, tools/getTrace, by_filter1,         y, fmt = json & fil
 on, both,  fast, traces, tools/getTrace, by_filter2,         y, fmt = json & filter = 0x2ed0c4!0x2ed128!!0x8bbb73bcb5d553b5a556358d27625323fd781d37!!
 on, both,  fast, traces, tools/getTrace, by_filter3,         y, fmt = json & filter = 0x2ed0c4!0x2ed128!!0x8bbb73bcb5d553b5a556358d27625323fd781d37!!1
 on, both,  fast, traces, tools/getTrace, by_filter4,         y, fmt = json & filter = 0x2ed0c4!0x2ed128!!0x8bbb73bcb5d553b5a556358d27625323fd781d37!1!
-#on, both,  fast, traces, tools/getTrace, by_filter5,         y, fmt = json & filter = 0xa344e0!0xa344e0!!!!
+on, both,  fast, traces, tools/getTrace, by_filter5,         y, fmt = json & filter = 0xa344e0!0xa344e0!!!!
 on, both,  fast, traces, tools/getTrace, by_filter6,         y, fmt = json & filter = 0xa344e0!0xa344e0!!0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2!!
 on, both,  fast, traces, tools/getTrace, by_filter7,         y, fmt = json & filter = 0xa344e0!0xa344e0!0xc3ca90684fd7b8c7e4be88c329269fc32111c4bd!!!
 on, both,  fast, traces, tools/getTrace, by_filter8,         y, fmt = json & filter = 0xa344e0!0xa344e0!0xc3ca90684fd7b8c7e4be88c329269fc32111c4bd!0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2!!

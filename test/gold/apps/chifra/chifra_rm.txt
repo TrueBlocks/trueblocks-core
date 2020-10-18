@@ -1,2 +1,7 @@
-chifra argc: 7 [1:rm] [2:0xfb744b951d094b310262c8f986c860df9ab1de65] [3:--editCmd] [4:remove] [5:--verbose] [6:10] 
-chifra rm 0xfb744b951d094b310262c8f986c860df9ab1de65 --editCmd remove --verbose 10 
+chifra argc: 5 [1:rm] [2:0xfb744b951d094b310262c8f986c860df9ab1de65] [3:--verbose] [4:10] 
+chifra rm 0xfb744b951d094b310262c8f986c860df9ab1de65 --verbose 10 
+TIME ~ CLOCK - : 4-----chifra ----> acctScrape --rm -v:10  -v:10 0xfb744b951d094b310262c8f986c860df9ab1de65
+acctScrape argc: 5 [1:--rm] [2:-v:10] [3:-v:10] [4:0xfb744b951d094b310262c8f986c860df9ab1de65] 
+acctScrape --rm -v:10 -v:10 0xfb744b951d094b310262c8f986c860df9ab1de65 
+{"data": [	{"removed":"0xfb744b951d094b310262c8f986c860df9ab1de65"}
+]}

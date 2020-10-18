@@ -23,30 +23,30 @@ chifra -th
 
 `Notes:`
 
-- Valid commands for chifa are noted here. Get additional help with `'chifra <cmd> --help'`.
+- Get more detailed help with `'chifra <cmd> --help'`.
  MONITORS
-   list          list all appearances of an address anywhere on the chain.
-   export        export every appearance (as a transaciton, receipt, log, balance, etc.)
-   slurp         query EtherScan for a list of transactions (note: will be smaller than --list)
-   rm            remove or pause a monitored address.
+   list          list all appearances of address(es) on the chain, also adds monitor(s)
+   export        export details for each appearance (as transacitons, logs, traces, balances, etc.)
+   slurp         export details by querying EtherScan (note: will not return as many appearances as --list)
+   rm            remove previously monitored address(es).
  SHARED DATA
-   collections   list all collections known by TrueBlocks.
-   names         list all names known by TrueBlocks.
-   tags          list all tags known by TrueBlocks.
-   abis          list all abi signatures known by TrueBlocks.
+   collections   list and/or share collections (groups of addresses)
+   names         list and/or share named addresses
+   tags          list and/or share tags (subgroups of addresses)
+   abis          list and/or share abi signatures
  BLOCKCHAIN DATA
-   blocks        query the blockchain for block data
-   transactions  query the blockchain for transaction data
-   receipts      query the blockchain for receipt data
-   logs          query the blockchain for log data
-   traces        query the blockchain for trace data
-   state         query the blockchain for the state of an address.
-   tokens        query the blockchain for the state of an ERC20 address.
-   when          return date given blocknum or blocknum given date.
+   blocks        export block-related data
+   transactions  export transaction-related data
+   receipts      export receipt-related data
+   logs          export log-related data
+   traces        export trace-related data
+   state         export parts of the state for given address(es)
+   tokens        export data related to ERC20 and/or ERC721 token(s)
  OTHER
-   scrape        scrape the blockchain and build the TrueBlocks address index (i.e. the digests).
-   status        query for various status reports about the system.
-   quotes        return prices collected from remote server.
-   where         determine closest location of block (local or remote cache).
+   scrape        scrape the chain and build an index of address appearances (aka digests).
+   status        query the status of the system
+   quotes        return prices collected from configured remote API
+   when          return a date given a block number or a block number given a date
+   where         determine the location of block(s), either local or remote cache
  
 

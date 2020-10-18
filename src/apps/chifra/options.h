@@ -36,7 +36,6 @@ class COptions : public COptionsBase {
 
     bool handle_export(void);
     bool handle_scrape(void);
-    bool handle_rm(void);
     bool handle_data(void);
 };
 
