@@ -38,20 +38,23 @@ int main(int argc, const char* argv[]) {
             RETURN(options.handle_rm())  //
         } else {
             map<string, string> cmdMap;
-            cmdMap["status"] = "cacheStatus";
-            cmdMap["names"] = "ethNames";
-            cmdMap["abis"] = "grabABI";
             cmdMap["slurp"] = "ethSlurp";
-            cmdMap["state"] = "getState";
-            cmdMap["tokens"] = "getTokenInfo";
+            cmdMap["collections"] = "ethNames --collections";
+            cmdMap["names"] = "ethNames";
+            cmdMap["tags"] = "ethNames --tags";
+            cmdMap["abis"] = "grabABI";
             cmdMap["blocks"] = "getBlock";
             cmdMap["transactions"] = "getTrans";
             cmdMap["receipts"] = "getReceipt";
             cmdMap["logs"] = "getLogs";
             cmdMap["traces"] = "getTrace";
             cmdMap["quotes"] = "ethQuote";
+            cmdMap["state"] = "getState";
+            cmdMap["tokens"] = "getTokenInfo";
             cmdMap["when"] = "whenBlock";
             cmdMap["where"] = "whereBlock";
+            cmdMap["status"] = "cacheStatus";
+
             if (cmdMap[options.mode] != "") {
                 ostringstream os;
                 os << cmdMap[options.mode] << " " << substitute(options.tool_flags, "--names", "");

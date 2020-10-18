@@ -5,7 +5,7 @@ chifra --help
   Purpose:  Main TrueBlocks command line controls.
 
   Where:  
-	commands              which command to run, one or more of [list|export|slurp|collections|names|abis|state|tokens|when|where|blocks|transactions|receipts|logs|traces|quotes|scrape|status|rm] (required)
+	commands              which command to run, one or more of [list|export|slurp|collections|names|tags|abis|blocks|transactions|receipts|logs|traces|quotes|state|tokens|when|where|scrape|status|rm] (required)
 	-s  (--sleep <num>)   for the 'scrape' and 'daemon' commands, the number of seconds chifra should sleep between runs (default 14)
 
 #### Hidden options (shown during testing only)

@@ -12,8 +12,9 @@
 const string_q opt_string =
     "list<enum["
     "list|export|slurp|"
-    "collections|names|abis|state|tokens|when|where|"
+    "collections|names|tags|abis|"
     "blocks|transactions|receipts|logs|traces|quotes|"
+    "state|tokens|when|where|"
     "scrape|status|rm]"
     ">";
 //---------------------------------------------------------------------------------------------------
@@ -44,7 +45,6 @@ bool COptions::parseArguments(string_q& command) {
     // END_CODE_LOCAL_INIT
 
     bool tool_help = false;
-    bool copy_to_tool = false;
     blknum_t latest = NOPOS;  // getLatestBlock_client();
 
     Init();
@@ -67,10 +67,6 @@ bool COptions::parseArguments(string_q& command) {
 
             // END_CODE_AUTO
 
-        } else if (arg == "--set") {
-            tool_flags += (arg + " ");
-            copy_to_tool = true;
-
         } else if (arg == "-h" || arg == "--help") {
             if (mode.empty()) {
                 optionOn(OPT_HELP);
@@ -84,14 +80,8 @@ bool COptions::parseArguments(string_q& command) {
                 EXIT_USAGE("Missing mode: " + arg);
 
         } else {
-            if (copy_to_tool) {
-                tool_flags += (arg + '~');
-                continue;
-            }
-
             string descr = substitute(substitute(params[0].description, "[", "|"), "]", "|");
-            bool isStatus = (mode == "status" && (arg == "blocks" || arg == "transactions" || arg == "traces" ||
-                                                  arg == "names" || arg == "abis"));
+            bool isStatus = (mode == "status" && (arg == "names" || arg == "abis"));
             if (!isStatus && contains(descr, "|" + arg + "|")) {
                 if (!mode.empty())
                     EXIT_USAGE("Please specify " + params[0].description + ". " + mode + ":" + arg);
@@ -282,23 +272,26 @@ COptions::COptions(void) {
                 "MONITORS|"
                 "  list          list all appearances of an address anywhere on the chain.|"
                 "  export        export every appearance (as a transaciton, receipt, log, balance, etc.)|"
-                "  rm            remove or pause a monitored address.|"
                 "  slurp         query EtherScan for a list of transactions (note: will be smaller than --list)|"
+                "  rm            remove or pause a monitored address.|"
                 "SHARED DATA|"
-                "  scrape        scrape the blockchain and build the TrueBlocks address index (i.e. the digests).|"
+                "  collections   list all collections known by TrueBlocks.|"
                 "  names         list all names known by TrueBlocks.|"
+                "  tags          list all tags known by TrueBlocks.|"
                 "  abis          list all abi signatures known by TrueBlocks.|"
                 "BLOCKCHAIN DATA|"
                 "  blocks        query the blockchain for block data|"
                 "  transactions  query the blockchain for transaction data|"
-                "  logs          query the blockchain for log data|"
                 "  receipts      query the blockchain for receipt data|"
+                "  logs          query the blockchain for log data|"
                 "  traces        query the blockchain for trace data|"
                 "  state         query the blockchain for the state of an address.|"
                 "  tokens        query the blockchain for the state of an ERC20 address.|"
-                "OTHER|"
-                "  status        query for various status reports about the system.|"
                 "  when          return date given blocknum or blocknum given date.|"
+                "OTHER|"
+                "  scrape        scrape the blockchain and build the TrueBlocks address index (i.e. the digests).|"
+                "  status        query for various status reports about the system.|"
+                "  quotes        return prices collected from remote server.|"
                 "  where         determine closest location of block (local or remote cache).|"
     );
     // clang-format on
