@@ -31,7 +31,7 @@ bool COptions::handle_export(void) {
         m.needsRefresh = false;
         fa.push_back(m);
     }
-    if (!freshen_internal(FM_PRODUCTION, fa, "", freshen_flags))
+    if (!freshen_internal(FM_PRODUCTION, fa, freshen_flags))
         EXIT_FAIL("'chifra " + mode + "' returns false");
 
     if (contains(tool_flags, "--count") || contains(tool_flags, "-U")) {

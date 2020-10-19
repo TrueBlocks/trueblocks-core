@@ -146,7 +146,7 @@ bool COptions::handle_scrape(void) {
                     // Catch the monitors addresses up to the scraper if in --deamon mode
                     forEveryFileInFolder(getMonitorPath("") + "*", visitMonitor, &monitors);
 
-                    if (!freshen_internal(FM_PRODUCTION, monitors, "", freshen_flags))
+                    if (!freshen_internal(FM_PRODUCTION, monitors, freshen_flags))
                         EXIT_FAIL("'chifra " + mode + "' returns false");
 
                     for (auto monitor : monitors) {

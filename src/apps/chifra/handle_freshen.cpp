@@ -6,12 +6,12 @@
 #include "options.h"
 
 //------------------------------------------------------------------------------------------------
-bool freshen_internal(freshen_e mode, CMonitorArray& fa, const string_q& tool_flags, const string_q& freshen_flags) {
+bool freshen_internal(freshen_e mode, CMonitorArray& fa, const string_q& freshen_flags) {
     ENTER("freshen_internal");
     nodeNotRequired();
 
     ostringstream base;
-    base << "acctScrape " << tool_flags << " " << freshen_flags << " [ADDRS] ;";
+    base << "acctScrape " << freshen_flags << " [ADDRS] ;";
 
     size_t cnt = 0, cnt2 = 0;
     string_q tenAddresses;

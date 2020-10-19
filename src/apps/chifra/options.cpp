@@ -40,12 +40,13 @@ bool COptions::parseArguments(string_q& command) {
         EXIT_NOMSG(false);
 
     // BEG_CODE_LOCAL_INIT
+    uint32_t sleep = 14;
     blknum_t start = 0;
     blknum_t end = NOPOS;
     // END_CODE_LOCAL_INIT
 
     bool tool_help = false;
-    blknum_t latest = NOPOS;  // getLatestBlock_client();
+    blknum_t latest = NOPOS;
 
     Init();
     explode(arguments, command, ' ');
@@ -149,44 +150,43 @@ bool COptions::parseArguments(string_q& command) {
     if (mode != "scrape")
         establishMonitorFolders();
 
-    if (tool_help) {
+    // Handle base layer options
+    if (tool_help)
         tool_flags += " --help";
-    }
-    if (isNoHeader) {
+
+    if (isNoHeader)
         tool_flags += " --no_header";
-    }
-    if (expContext().asEther) {
+
+    if (expContext().asEther)
         tool_flags += " --ether";
-    }
-    if (expContext().asDollars) {
+
+    if (expContext().asDollars)
         tool_flags += " --dollars";
-    }
-    if (expContext().asParity) {
+
+    if (expContext().asParity)
         tool_flags += " --parity";
-    }
-    if (verbose) {
-        tool_flags += " -v:" + uint_2_Str(verbose);
+
+    if (verbose && !contains(tool_flags, "-v"))
+        tool_flags += (" -v:" + uint_2_Str(verbose));
+
+    if (verbose && !contains(freshen_flags, "-v"))
         freshen_flags += (" -v:" + uint_2_Str(verbose));
-    }
-    if (contains(command, "--start") && start != NOPOS) {
+
+    if (start != 0) {
         tool_flags += " --start " + uint_2_Str(start);
         freshen_flags += " --start " + uint_2_Str(start);
     }
-    if (contains(command, "--end") && end != NOPOS) {
+
+    if (end != NOPOS) {
         tool_flags += " --end " + uint_2_Str(end);
         freshen_flags += " --end " + uint_2_Str(end);
     }
-    if (true) {
-        tool_flags += addExportMode(expContext().exportFmt);
-        freshen_flags += addExportMode(expContext().exportFmt);
-    }
-    if (true) {
-        tool_flags = trim(tool_flags, ' ');
-        freshen_flags = trim(freshen_flags, ' ');
-    }
 
-    if (mode == "scrape" && !isTestMode())
-        LOG_INFO("Sleeping every ", scrapeSleep, " seconds.");
+    tool_flags += addExportMode(expContext().exportFmt);
+    tool_flags = trim(tool_flags, ' ');
+
+    freshen_flags += addExportMode(expContext().exportFmt);
+    freshen_flags = trim(freshen_flags, ' ');
 
     if (mockData) {
         string_q which = origMode;
@@ -242,7 +242,6 @@ void COptions::Init(void) {
     optionOff(OPT_HELP);
 
     // BEG_CODE_INIT
-    sleep = 14;
     // END_CODE_INIT
 
     addrs.clear();

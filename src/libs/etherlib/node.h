@@ -90,8 +90,6 @@ extern string_q getVersionFromClient(void);
 extern bool isTurboGeth(void);
 extern bool isGeth(void);
 extern bool isParity(void);
-extern bool isEditCommand(void);
-extern string_q getEditCommand(void);
 extern bool getAccounts(CAddressArray& addrs);
 extern bool getChainHead(void);
 extern bool getNodeIds(uint64_t& clientId, uint64_t& networkId);
