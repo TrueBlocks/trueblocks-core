@@ -34,6 +34,7 @@ class COptions : public COptionsBase {
     void Init(void);
 
     bool visitBinaryFile(const string_q& path, void* data);
+    bool handle_rm(const CAddressArray& addrs);
 };
 
 #define VIS_FINAL (1 << 1)

@@ -164,9 +164,6 @@ bool COptions::parseArguments(string_q& command) {
     if (expContext().asParity) {
         tool_flags += " --parity";
     }
-    if (!editCmd.empty()) {
-        tool_flags += " --editCmd " + editCmd;
-    }
     if (verbose) {
         tool_flags += " -v:" + uint_2_Str(verbose);
         freshen_flags += (" -v:" + uint_2_Str(verbose));
@@ -243,7 +240,6 @@ bool COptions::parseArguments(string_q& command) {
 void COptions::Init(void) {
     registerOptions(nParams, params);
     optionOff(OPT_HELP);
-    optionOn(OPT_EDITCMD);
 
     // BEG_CODE_INIT
     sleep = 14;

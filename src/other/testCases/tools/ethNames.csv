@@ -136,20 +136,19 @@ on, both, fast, names, tools/ethNames, collections_csv,                  n, coll
 on, both, fast, names, tools/ethNames, collections_json,                 y, collections & fmt = json
 on, both, fast, names, tools/ethNames, collections_terms,                y, collections & terms = May
 
-on, both, fast, names, tools/ethNames, edit_invalid,                     y, editCmd = invalid & terms = TAGS!0x0000000000000000000000000000000010101010!NAME!SYMBOL!SOURCE!DESCRIPTION!no!false & expand & verbose = 10
-on, both, fast, names, tools/ethNames, edit_add,                         y, editCmd = add & terms = TAGS!0x0000000000000000000000000000000010101010!NAME!SYMBOL!SOURCE!DESCRIPTION!11!false & expand & verbose = 10
-on, both, fast, names, tools/ethNames, show_add,                         n, terms = 0x0000000000000000000000000000000010101010 & fmt = txt & expand & verbose = 10
-on, both, fast, names, tools/ethNames, edit_edit,                        y, editCmd = update & terms = TAGS_CHANGED!0x0000000000000000000000000000000010101010!NAME_CHANGED!SYMBOL_CHANGED!SOURCE_CHANGED!DESCRIPTION_CHANGED!13!false & expand & verbose = 10
-on, both, fast, names, tools/ethNames, show_edit,                        y, terms = 0x0000000000000000000000000000000010101010 & expand & verbose = 10
-on, both, fast, names, tools/ethNames, edit_delete,                      y, editCmd = delete & terms = 0x0000000000000000000000000000000010101010 & expand & verbose = 10
-on, both, fast, names, tools/ethNames, show_delete,                      n, terms = 0x0000000000000000000000000000000010101010 & fmt = txt & expand & verbose = 10
-on, both, fast, names, tools/ethNames, edit_undelete,                    y, editCmd = undelete & terms = 0x0000000000000000000000000000000010101010 & expand & verbose = 10
-on, both, fast, names, tools/ethNames, show_undelete,                    n, terms = 0x0000000000000000000000000000000010101010 & fmt = txt & expand & verbose = 10
-on, both, fast, names, tools/ethNames, edit_remove,                      y, editCmd = remove & terms = 0x0000000000000000000000000000000010101010 & expand & verbose = 10
-on, both, fast, names, tools/ethNames, show_remove,                      n, terms = 0x0000000000000000000000000000000010101010 & fmt = txt & expand & verbose = 10
-
-on, both, fast, names, tools/ethNames, edit_custom_delete,               y, editCmd = delete & terms = 0xde58d6a070c7490f10a9aac1b7bc6e3583383958 & expand & verbose = 10 & to_custom & all
-on, both, fast, names, tools/ethNames, edit_custom_undelete,             y, editCmd = undelete & terms = 0xde58d6a070c7490f10a9aac1b7bc6e3583383958 & expand & verbose = 10 & to_custom & all
+#on, both, fast, names, tools/ethNames, edit_invalid,                     y, e ditCmd = invalid & terms = TAGS!0x0000000000000000000000000000000010101010!NAME!SYMBOL!SOURCE!DESCRIPTION!no!false & expand & verbose = 10
+#on, both, fast, names, tools/ethNames, edit_add,                         y, e ditCmd = add & terms = TAGS!0x0000000000000000000000000000000010101010!NAME!SYMBOL!SOURCE!DESCRIPTION!11!false & expand & verbose = 10
+#on, both, fast, names, tools/ethNames, show_add,                         n, terms = 0x0000000000000000000000000000000010101010 & fmt = txt & expand & verbose = 10
+#on, both, fast, names, tools/ethNames, edit_edit,                        y, e ditCmd = update & terms = TAGS_CHANGED!0x0000000000000000000000000000000010101010!NAME_CHANGED!SYMBOL_CHANGED!SOURCE_CHANGED!DESCRIPTION_CHANGED!13!false & expand & verbose = 10
+#on, both, fast, names, tools/ethNames, show_edit,                        y, terms = 0x0000000000000000000000000000000010101010 & expand & verbose = 10
+#on, both, fast, names, tools/ethNames, edit_delete,                      y, e ditCmd = delete & terms = 0x0000000000000000000000000000000010101010 & expand & verbose = 10
+#on, both, fast, names, tools/ethNames, show_delete,                      n, terms = 0x0000000000000000000000000000000010101010 & fmt = txt & expand & verbose = 10
+#on, both, fast, names, tools/ethNames, edit_undelete,                    y, e ditCmd = undelete & terms = 0x0000000000000000000000000000000010101010 & expand & verbose = 10
+#on, both, fast, names, tools/ethNames, show_undelete,                    n, terms = 0x0000000000000000000000000000000010101010 & fmt = txt & expand & verbose = 10
+#on, both, fast, names, tools/ethNames, edit_remove,                      y, e ditCmd = remove & terms = 0x0000000000000000000000000000000010101010 & expand & verbose = 10
+#on, both, fast, names, tools/ethNames, show_remove,                      n, terms = 0x0000000000000000000000000000000010101010 & fmt = txt & expand & verbose = 10
+#on, both, fast, names, tools/ethNames, edit_custom_delete,               y, e ditCmd = delete & terms = 0xde58d6a070c7490f10a9aac1b7bc6e3583383958 & expand & verbose = 10 & to_custom & all
+#on, both, fast, names, tools/ethNames, edit_custom_undelete,             y, e ditCmd = undelete & terms = 0xde58d6a070c7490f10a9aac1b7bc6e3583383958 & expand & verbose = 10 & to_custom & all
 
 # ./tools/ethNames/options.cpp:    COption("", "", "", OPT_DESCRIPTION, "Query addresses and/or names of well known accounts."),
 # ./tools/ethNames/options.cpp:    COption("add", "d", "<string>", OPT_HIDDEN | OPT_FLAG, "add a new record to the name database (format: grp+subgrp+addr+name+sym+src+desc)"),

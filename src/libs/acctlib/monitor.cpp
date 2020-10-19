@@ -662,6 +662,11 @@ void CMonitor::deleteMonitor(void) {
 }
 
 //-----------------------------------------------------------------------
+void CMonitor::removeMonitor(void) {
+    cleanMonitor(address);
+}
+
+//-----------------------------------------------------------------------
 bloom_t CMonitor::getBloom(void) {
     bloom_t not_set;
     if (bloom == not_set) {

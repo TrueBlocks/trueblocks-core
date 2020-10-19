@@ -254,7 +254,7 @@ bool COptionsBase::prepareArguments(int argCountIn, const char* argvIn[]) {
 
 //--------------------------------------------------------------------------------
 string_q getReservedCommands(void) {
-    return "help|verbose|fmt|output|noop|version|nocolor|no_header|very_raw|raw|wei|ether|dollars|parity|cmd|editCmd|"
+    return "help|verbose|fmt|output|noop|version|nocolor|no_header|very_raw|raw|wei|ether|dollars|parity|cmd|"
            "mockData|api_mode|to_file|file";
 }
 
@@ -274,7 +274,6 @@ bool COptionsBase::standardOptions(string_q& cmdLine) {
     // Note: check each item individual in case more than one appears on the command line
     cmdLine += " ";
     replace(cmdLine, "--output ", "--output:");
-    replace(cmdLine, "--editCmd ", "--editCmd:");
 
     if (contains(cmdLine, "--noop ")) {
         // do nothing
@@ -324,13 +323,6 @@ bool COptionsBase::standardOptions(string_q& cmdLine) {
     if (isEnabled(OPT_MOCKDATA) && contains(cmdLine, "--mockData ")) {
         replaceAll(cmdLine, "--mockData ", "");
         mockData = true;
-    }
-
-    if (isEnabled(OPT_EDITCMD) && contains(cmdLine, "--editCmd:")) {
-        replaceAll(cmdLine, "--editCmd:", "|");
-        string_q pre = nextTokenClear(cmdLine, '|');
-        editCmd = nextTokenClear(cmdLine, ' ');
-        cmdLine = pre + " " + cmdLine;
     }
 
     if (isEnabled(OPT_OUTPUT) && contains(cmdLine, "--output:")) {

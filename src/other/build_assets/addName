@@ -20,9 +20,9 @@ echo "SOURCE: " $SOURCE
 echo "DECIMALS: " $DECIMALS
 echo "SYMBOL: " $SYMBOL
 echo "DESCR: " $DESCR
-echo 'calling chifra names --editCmd add '$TAG!$ADDRESS!$NAME!$SYMBOL!$SOURCE!$DESCR!$DECIMALS
+echo 'calling chifra names --add '$TAG!$ADDRESS!$NAME!$SYMBOL!$SOURCE!$DESCR!$DECIMALS
 
 # tags\taddress\tname\tsymbol\tsource\tdescription\tdecimals\tdeleted\tis_custom\tis_prefund
-chifra names --editCmd add "$TAG!$ADDRESS!$NAME!$SYMBOL!$SOURCE!$DESCR!$DECIMALS" >/dev/null
+chifra names --e ditCmd add "$TAG!$ADDRESS!$NAME!$SYMBOL!$SOURCE!$DESCR!$DECIMALS" >/dev/null
 cp -pf /Users/jrush/.quickBlocks/names/names.tab /Users/jrush/Development/trueblocks-core/src/other/install/names/names.tab
 chifra names --all --expand $1

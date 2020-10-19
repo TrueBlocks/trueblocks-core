@@ -3,12 +3,11 @@ acctScrape --list
 
   Invalid option: --list
 
-  Usage:    acctScrape [-r|-v|-h] <address> [address...]  
+  Usage:    acctScrape [-v|-h] <address> [address...]  
   Purpose:  Add or remove monitors for a given Ethereum address (or collection of addresses).
 
   Where:  
 	addrs                 one or more Ethereum addresses (required)
-	-r  (--rm)            remove monitor(s) from monitored list
 
 #### Hidden options (shown during testing only)
 	-s  (--staging)       enable search of staging (not yet finalized) folder

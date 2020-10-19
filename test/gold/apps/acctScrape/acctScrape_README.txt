@@ -2,7 +2,7 @@ acctScrape argc: 2 [1:-th]
 acctScrape -th 
 #### Usage
 
-`Usage:`    acctScrape [-r|-v|-h] &lt;address&gt; [address...]  
+`Usage:`    acctScrape [-v|-h] &lt;address&gt; [address...]  
 `Purpose:`  Add or remove monitors for a given Ethereum address (or collection of addresses).
 
 `Where:`  
@@ -10,7 +10,6 @@ acctScrape -th
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
 |  | addrs | one or more Ethereum addresses (required) |
-| -r | --rm | remove monitor(s) from monitored list |
 
 #### Hidden options (shown during testing only)
 | -s | --staging | enable search of staging (not yet finalized) folder |

@@ -59,7 +59,11 @@ int main(int argc, const char* argv[]) {
                 if (options.mode == "names")
                     options.tool_flags = substitute(substitute(options.tool_flags, "--names", ""), "--terms", "");
                 if (options.mode == "rm") {
-                    options.tool_flags = substitute(options.tool_flags, "--addrs", "");
+                    if (contains(options.tool_flags, "--remove")) {
+                        setenv("TB_EDITCMD", "remove", true);
+                        options.tool_flags = substitute(options.tool_flags, "--remove", "");
+                    }
+                    options.tool_flags = substitute(substitute(options.tool_flags, "--addrs", ""), "--terms", "");
                 }
                 os << cmdMap[options.mode] << " " << options.tool_flags;
                 for (auto addr : options.addrs)

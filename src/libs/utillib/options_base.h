@@ -29,7 +29,6 @@
 #define OPT_RAW (1 << 11)
 #define OPT_PREFUND (1 << 12)
 #define OPT_OUTPUT (1 << 13)
-#define OPT_EDITCMD (1 << 20)
 #define OPT_MOCKDATA (1 << 21)
 #define OPT_DENOM (OPT_DOLLARS | OPT_WEI | OPT_ETHER)
 #define OPT_DEFAULT (OPT_HELP | OPT_VERBOSE | OPT_FMT | OPT_DENOM | OPT_PARITY | OPT_MOCKDATA)
@@ -66,7 +65,6 @@ class COptionsBase {
     bool isRaw;
     bool isVeryRaw;
     bool mockData;
-    string_q editCmd;
     bool isNoHeader;
     blkrange_t scanRange;
     CStringArray notes;

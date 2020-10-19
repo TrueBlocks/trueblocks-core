@@ -1,7 +1,5 @@
 {
   "data": [
-    {
-      "removed": "0xfb744b951d094b310262c8f986c860df9ab1de65"
-    }
+    "Monitor 0xfb744b951d094b310262c8f986c860df9ab1de65 was deleted but not removed"
   ]
 }

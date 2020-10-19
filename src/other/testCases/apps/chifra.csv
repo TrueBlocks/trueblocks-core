@@ -32,7 +32,7 @@ on      ,cmd  ,fast  ,null     ,apps/chifra ,no_params         ,n    ,
 on      ,cmd  ,fast  ,null     ,apps/chifra ,invalid_option    ,n    ,modes = not_a_mode
 
 on      ,both ,fast  ,list     ,apps/chifra ,list              ,y    ,modes = list & addrs = 0xfb744b951d094b310262c8f986c860df9ab1de65 & end = 10000
-on      ,both ,fast  ,rm       ,apps/chifra ,rm                ,y    ,modes = rm & addrs = 0xfb744b951d094b310262c8f986c860df9ab1de65 & verbose = 10
+on      ,both ,fast  ,rm       ,apps/chifra ,rm                ,y    ,modes = rm & addrs = 0xfb744b951d094b310262c8f986c860df9ab1de65
 
 on      ,both ,fast  ,names    ,apps/chifra ,names             ,y    ,modes = names & names = 50-Tokens & expand
 on      ,both ,fast  ,names    ,apps/chifra ,names_noparams    ,n    ,modes = names & names = 50-Tokens & fmt = txt

@@ -31,7 +31,6 @@ static const COption params[] = {
     COption("other", "t", "", OPT_HIDDEN | OPT_SWITCH, "export other addresses if found"),
     COption("addr", "a", "", OPT_SWITCH, "display only addresses in the results (useful for scripting)"),
     COption("collections", "s", "", OPT_SWITCH, "display collections data"),
-    COption("to_custom", "u", "", OPT_HIDDEN | OPT_SWITCH, "for editCmd only, is the edited name a custom name or not"),
     COption("tags", "g", "", OPT_SWITCH, "export the list of tags and subtags only"),
     COption("", "", "", OPT_DESCRIPTION, "Query addresses and/or names of well known accounts."),
     // clang-format on
@@ -56,7 +55,6 @@ bool COptions::parseArguments(string_q& command) {
     bool named = false;
     bool other = false;
     bool addr = false;
-    bool to_custom = false;
     // END_CODE_LOCAL_INIT
 
     string_q format;
@@ -99,9 +97,6 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-s" || arg == "--collections") {
             collections = true;
 
-        } else if (arg == "-u" || arg == "--to_custom") {
-            to_custom = true;
-
         } else if (arg == "-g" || arg == "--tags") {
             tags = true;
 
@@ -124,7 +119,8 @@ bool COptions::parseArguments(string_q& command) {
         return false;
     }
 
-    if (!editCmd.empty()) {
+    bool to_custom = false;
+    if (isEditCommand()) {
         if (!processEditCommand(terms, to_custom))
             return false;
     }
@@ -237,7 +233,7 @@ bool COptions::parseArguments(string_q& command) {
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
     registerOptions(nParams, params);
-    optionOn(OPT_PREFUND | OPT_OUTPUT | OPT_EDITCMD);
+    optionOn(OPT_PREFUND | OPT_OUTPUT);
 
     // BEG_CODE_INIT
     match_case = false;
@@ -267,7 +263,6 @@ COptions::COptions(void) {
     notes.push_back("When there are two search terms, both must match.");
     notes.push_back("The `--match_case` option requires case sensitive matching. It works with all other options.");
     notes.push_back("To customize the list of names add a `custom` section to the config file (see documentation).");
-    notes.push_back("For `editCmd` add or update, use `terms` TAGS!ADDRESS!NAME!SYMBOL!SOURCE!DESCRIPTION.");
     // clang-format on
     // END_CODE_NOTES
     notes.push_back("Name file: `" + configPathRelative("names/names.tab") + "` (" +
@@ -286,7 +281,7 @@ bool COptions::addIfUnique(const CAccountName& item) {
     if (isZeroAddr(item.address))
         return false;
 
-    if (isTestMode() && editCmd.empty()) {
+    if (isTestMode() && !isEditCommand()) {
         if (items.size() > 200)
             return true;
         if ((contains(item.tags, "Kickback") || contains(item.tags, "Humanity")))  // don't expose people during testing
@@ -369,7 +364,7 @@ void COptions::applyFilter() {
 
     //------------------------
     if (types & CUSTOM) {
-        if (isTestMode() && editCmd.empty()) {
+        if (isTestMode() && !isEditCommand()) {
             for (uint32_t i = 1; i < 5; i++) {
                 CAccountName item;
                 item.tags = "81-Custom";
@@ -450,10 +445,11 @@ void pushToOutput(CAccountNameArray& out, const CAccountName& name, bool to_cust
 
 //-----------------------------------------------------------------------
 bool COptions::processEditCommand(CStringArray& terms, bool to_custom) {
-    if (!contains("add|update|delete|undelete|remove", editCmd))
-        return usage("Invalid edit command '" + editCmd + "'. Quitting...");
+    string_q cmd = getEditCommand();
+    if (!contains("add|update|delete|undelete|remove", cmd))
+        return usage("Invalid edit command '" + cmd + "'. Quitting...");
 
-    bool isEdit = editCmd == "add" || editCmd == "update";
+    bool isEdit = cmd == "add" || cmd == "update";
     string_q fmt = isEdit ? "tags\taddress\tname\tsymbol\tsource\tdescription\tdecimals\tdeleted\tis_custom\tis_prefund"
                           : "address";
     CStringArray fields;
@@ -473,14 +469,14 @@ bool COptions::processEditCommand(CStringArray& terms, bool to_custom) {
     bool edited = false;
     for (auto name : namedAccounts) {
         if (name.address == target.address) {
-            if (editCmd == "remove") {
+            if (cmd == "remove") {
                 // do nothing
                 LOG4("Removing ", name.address);
-            } else if (editCmd == "delete") {
+            } else if (cmd == "delete") {
                 name.m_deleted = true;
                 pushToOutput(outArray, name, to_custom);
                 LOG4("Deleting ", name.address);
-            } else if (editCmd == "undelete") {
+            } else if (cmd == "undelete") {
                 name.m_deleted = false;
                 pushToOutput(outArray, name, to_custom);
                 LOG4("Undeleting ", name.address);
@@ -497,7 +493,7 @@ bool COptions::processEditCommand(CStringArray& terms, bool to_custom) {
         }
     }
 
-    if (editCmd == "add" && !edited) {
+    if (cmd == "add" && !edited) {
         pushToOutput(outArray, target, to_custom);
         LOG4("Adding ", target.address);
         terms.clear();

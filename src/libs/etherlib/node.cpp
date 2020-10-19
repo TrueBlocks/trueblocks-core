@@ -551,6 +551,17 @@ bool isParity(void) {
            contains(toLower(getVersionFromClient()), "openetherum");
 }
 
+static string_q editCommand;
+//-------------------------------------------------------------------------
+string_q getEditCommand(void) {
+    if (editCommand.empty())
+        editCommand = getEnvStr("TB_EDITCMD");
+    return editCommand;
+}
+bool isEditCommand(void) {
+    return !getEditCommand().empty();
+}
+
 //-------------------------------------------------------------------------
 bool getAccounts(CAddressArray& addrs) {
     string_q results = callRPC("eth_accounts", "[]", false);
