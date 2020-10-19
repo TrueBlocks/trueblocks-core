@@ -24,7 +24,7 @@ cacheStatus --details monitors
           "sizeInBytes2": 0,
           "tags": "80-Prefund",
           "address": "---address---",
-          "name": "Prefund_0000",
+          "name": "Prefund_0002",
           "symbol": "",
           "source": "Genesis",
           "decimals": 0,

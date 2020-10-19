@@ -6,7 +6,6 @@
 #include "options.h"
 
 //------------------------------------------------------------------------------------------------
-extern map<string, string> cmdMap;
 bool COptions::handle_commands(void) {
     ENTER("handle_" + mode);
     nodeRequired();
@@ -19,6 +18,7 @@ bool COptions::handle_commands(void) {
     if (mode == "rm" && contains(tool_flags, "--remove"))  // order matters
         setenv("TB_EDITCMD", "remove", true);
 
+    // URLs require key/value pairs, command lines don't so we remove unneeded keys
     CStringArray removes = {"--names", "--terms", "--addrs", "--remove"};
     for (auto remove : removes)
         if (remove != "--addrs" || mode != "blocks")
@@ -36,14 +36,13 @@ bool COptions::handle_commands(void) {
 }
 
 //------------------------------------------------------------------------------------------------
-map<string, string> cmdMap = {
-    {"slurp", "ethSlurp"},        {"collections", "ethNames --collections"},
-    {"names", "ethNames"},        {"tags", "ethNames --tags"},
-    {"abis", "grabABI"},          {"blocks", "getBlock"},
-    {"transactions", "getTrans"}, {"receipts", "getReceipt"},
-    {"logs", "getLogs"},          {"traces", "getTrace"},
-    {"quotes", "ethQuote"},       {"state", "getState"},
-    {"tokens", "getTokenInfo"},   {"when", "whenBlock"},
-    {"where", "whereBlock"},      {"status", "cacheStatus"},
-    {"rm", "acctScrape --rm"},
-};
+map<string, string> cmdMap = {{"slurp", "ethSlurp"},        {"collections", "ethNames --collections"},
+                              {"names", "ethNames"},        {"tags", "ethNames --tags"},
+                              {"abis", "grabABI"},          {"blocks", "getBlock"},
+                              {"transactions", "getTrans"}, {"receipts", "getReceipt"},
+                              {"logs", "getLogs"},          {"traces", "getTrace"},
+                              {"quotes", "ethQuote"},       {"state", "getState"},
+                              {"tokens", "getTokenInfo"},   {"when", "whenBlock"},
+                              {"where", "whereBlock"},      {"status", "cacheStatus"},
+                              {"rm", "acctScrape --rm"},    {"list", "acctScrape"},
+                              {"export", "acctExport"},     {"scrape", "blockScrape"}};

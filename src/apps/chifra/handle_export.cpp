@@ -10,16 +10,6 @@ bool COptions::handle_export(void) {
     ENTER("handle_" + mode);
     nodeRequired();
 
-    if (contains(tool_flags, "help")) {
-        ostringstream os;
-        os << (mode == "list" ? "acctScrape" : "acctExport") << " --help";
-        LOG_CALL(os.str());
-        // clang-format off
-        if (system(os.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings
-        // clang-format on
-        EXIT_NOMSG(true);
-    }
-
     if (addrs.empty())
         EXIT_USAGE("This function requires an address.");
 
@@ -31,7 +21,7 @@ bool COptions::handle_export(void) {
         m.needsRefresh = false;
         fa.push_back(m);
     }
-    if (!freshen_internal(FM_PRODUCTION, fa, freshen_flags))
+    if (!freshen_internal(fa, freshen_flags))
         EXIT_FAIL("'chifra " + mode + "' returns false");
 
     if (contains(tool_flags, "--count") || contains(tool_flags, "-U")) {

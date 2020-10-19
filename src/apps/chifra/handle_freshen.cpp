@@ -6,7 +6,7 @@
 #include "options.h"
 
 //------------------------------------------------------------------------------------------------
-bool freshen_internal(freshen_e mode, CMonitorArray& fa, const string_q& freshen_flags) {
+bool freshen_internal(CMonitorArray& fa, const string_q& freshen_flags) {
     ENTER("freshen_internal");
     nodeNotRequired();
 

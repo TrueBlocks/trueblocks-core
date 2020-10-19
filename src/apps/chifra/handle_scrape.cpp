@@ -10,22 +10,8 @@ extern bool isScraperRunning(const string_q& unsearch);
 //------------------------------------------------------------------------------------------------
 bool COptions::handle_scrape(void) {
     ENTER("handle_" + mode);
-
-    // scrape mode requires a running node
     nodeRequired();
 
-    if (contains(tool_flags, "help")) {
-        ostringstream os;
-        os << "blockScrape --help";
-        LOG_CALL(os.str());
-        // clang-format off
-        if (system(os.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings
-        // clang-format on
-        EXIT_NOMSG(true);
-    }
-
-    // syntactic sugar
-    tool_flags = substitute(substitute(" " + tool_flags, "--start", " start"), " start", "");
     bool daemonMode = false;
 
     // The presence of 'waitFile' will either pause or kill the scraper. If 'waitFile'
@@ -92,21 +78,25 @@ bool COptions::handle_scrape(void) {
             EXIT_NOMSG(false);
         }
 
-        // Extract options from the command line that we do not pass on to blockScrape...
         CStringArray optList;
         explode(optList, tool_flags, ' ');
+
+        // Clean up the tool flags and pass them on to the blockScrape program
         tool_flags = "";  // reset tool_flag
         for (auto opt : optList) {
             if (opt == "--daemon") {
-                opt = "";
                 daemonMode = true;
 
-            } else if (!opt.empty() && !startsWith(opt, "-") && !isNumeral(opt)) {
-                cerr << "Invalid command " << cYellow << opt << cOff << " to chifra scrape." << endl;
-                EXIT_NOMSG(false);
+            } else if (!opt.empty()) {
+                if (!startsWith(opt, "-") && !isNumeral(opt)) {
+                    cerr << "Invalid options '" << opt << "' to chifra scrape." << endl;
+                    EXIT_NOMSG(false);
+                }
+
+                if (!contains(opt, "start") && !contains(opt, "end")) {
+                    tool_flags += (opt + " ");
+                }
             }
-            if (!opt.empty())
-                tool_flags += (opt + " ");
         }
 
         cerr << cYellow << "Scraper is starting with " << tool_flags << "..." << cOff << endl;
@@ -146,7 +136,7 @@ bool COptions::handle_scrape(void) {
                     // Catch the monitors addresses up to the scraper if in --deamon mode
                     forEveryFileInFolder(getMonitorPath("") + "*", visitMonitor, &monitors);
 
-                    if (!freshen_internal(FM_PRODUCTION, monitors, freshen_flags))
+                    if (!freshen_internal(monitors, freshen_flags))
                         EXIT_FAIL("'chifra " + mode + "' returns false");
 
                     for (auto monitor : monitors) {

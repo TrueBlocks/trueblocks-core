@@ -1,6 +1,5 @@
 chifra argc: 1 
 chifra 
-TIME ~ CLOCK - <ERROR> : Exit(chifra,parseArguments): 
 
   Please specify which command to run. 'chifra -v' for more information...
 

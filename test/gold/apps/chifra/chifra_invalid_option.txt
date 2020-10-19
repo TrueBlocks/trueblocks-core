@@ -1,6 +1,5 @@
 chifra argc: 2 [1:not_a_mode] 
 chifra not_a_mode 
-TIME ~ CLOCK - <ERROR> : Exit(chifra,parseArguments): 
 
   Please specify which command to run. 'chifra -v' for more information...
 

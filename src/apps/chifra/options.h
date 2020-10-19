@@ -20,11 +20,10 @@ class COptions : public COptionsBase {
     // END_CODE_DECLARE
 
     string_q mode;
-    useconds_t scrapeSleep;
-
+    CAddressArray addrs;
     string_q freshen_flags;
     string_q tool_flags;
-    CAddressArray addrs;
+    useconds_t scrapeSleep;
 
     COptions(void);
     ~COptions(void);
@@ -38,12 +37,9 @@ class COptions : public COptionsBase {
     bool handle_commands(void);
 };
 
-extern bool freshen_internal(freshen_e mode, CMonitorArray& list, const string_q& freshen_flags);
-
 //--------------------------------------------------------------------------------
-extern string_q colors[];
-extern uint64_t nColors;
-#define indexFolder_sorted (getIndexPath("sorted/"))
+extern bool freshen_internal(CMonitorArray& list, const string_q& freshen_flags);
+extern map<string, string> cmdMap;
 
 //--------------------------------------------------------------------------------
 #define RETURN(a)                                                                                                      \

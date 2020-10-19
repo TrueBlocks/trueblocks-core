@@ -35,9 +35,8 @@ extern bool visitIndexFiles(const string_q& path, void* data);
 extern string_q addExportMode(format_t fmt);
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
-    ENTER("parseArguments");
     if (!standardOptions(command))
-        EXIT_NOMSG(false);
+        return false;
 
     // BEG_CODE_LOCAL_INIT
     uint32_t sleep = 14;
@@ -78,14 +77,14 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (mode.empty() && startsWith(arg, '-')) {
             if (!builtInCmd(arg))
-                EXIT_USAGE("Missing mode: " + arg);
+                return usage("Missing mode: " + arg);
 
         } else {
             string descr = substitute(substitute(params[0].description, "[", "|"), "]", "|");
             bool isStatus = (mode == "status");
             if (!isStatus && contains(descr, "|" + arg + "|")) {
                 if (!mode.empty())
-                    EXIT_USAGE("Please specify " + params[0].description + ". " + mode + ":" + arg);
+                    return usage("Please specify " + params[0].description + ". " + mode + ":" + arg);
                 mode = arg;
 
             } else if (contains(arg, ",")) {
@@ -97,7 +96,7 @@ bool COptions::parseArguments(string_q& command) {
                         freshen_flags = substitute(parts[1], "=", ":");
 
                     } else if (!isAddress(arg)) {
-                        EXIT_USAGE("Invalid address: " + arg);
+                        return usage("Invalid address: " + arg);
                     }
                     addrs.push_back(toLower(arg));
                 } else {
@@ -144,7 +143,7 @@ bool COptions::parseArguments(string_q& command) {
         COption* option = (COption*)&params[0];
         option->description =
             string_q("which command to run.") + (!verbose ? " 'chifra -v' for more information..." : "");
-        EXIT_USAGE("Please specify " + params[0].description);
+        return usage("Please specify " + params[0].description);
     }
 
     if (mode != "scrape")
@@ -187,6 +186,17 @@ bool COptions::parseArguments(string_q& command) {
 
     freshen_flags += addExportMode(expContext().exportFmt);
     freshen_flags = trim(freshen_flags, ' ');
+
+    if (contains(tool_flags, "help")) {
+        if (cmdMap[mode].empty())
+            return usage("Incorrect mode: " + mode + ". Quitting...");
+        ostringstream cmd;
+        cmd << cmdMap[mode] << " --help";
+        // clang-format off
+        if (system(cmd.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings
+        // clang-format on
+        return false;
+    }
 
     if (mockData) {
         string_q which = origMode;
@@ -233,7 +243,7 @@ bool COptions::parseArguments(string_q& command) {
         freshen_flags += " --mockData ";
     }
 
-    EXIT_NOMSG(true);
+    return true;
 }
 
 //---------------------------------------------------------------------------------------------------
