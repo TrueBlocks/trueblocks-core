@@ -11921,7 +11921,7 @@
       },
       "0x054993ab0f2b1acc0fdc65405ee203b4271bebe6": {
         "tags": "00-Active",
-        "name": "Name 0x054993ab",
+        "name": "Meriam's Wallet 0x5499",
         "count": 1
       },
       "0x0b16f058257f43db6ec84a7b3c77766cb808face": {
