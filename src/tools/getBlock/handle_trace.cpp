@@ -15,10 +15,25 @@
 // extern string_q traceOneBlock(blknum_t num, COptions& opt);
 //---------------------------------------------------------------------------------------------------
 bool traceBlock(uint64_t num, void* data) {
-    CBlock block;
-    queryBlock(block, uint_2_Str(num), true);
-    forEveryTraceInBlock(visitTrace, data, block);
-    return !shouldQuit();
+    COptions* opt = (COptions*)data;
+    if (opt->isRaw) {
+        string_q results;
+        queryRawBlockTrace(results, num);
+        bool isText = (expContext().exportFmt & (TXT1 | CSV1));
+        if (!opt->first) {
+            if (!isText)
+                cout << ",";
+            cout << endl;
+        }
+        cout << results;
+        opt->first = false;
+        return !shouldQuit();
+    } else {
+        CBlock block;
+        queryBlock(block, uint_2_Str(num), true);
+        forEveryTraceInBlock(visitTrace, data, block);
+        return !shouldQuit();
+    }
 }
 
 //------------------------------------------------------------

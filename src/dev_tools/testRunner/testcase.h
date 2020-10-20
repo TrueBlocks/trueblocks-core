@@ -36,6 +36,7 @@ class CTestCase : public CBaseNode {
     string_q post;
     string_q options;
     string_q extra;
+    bool env;
     string_q path;
     string_q goldPath;
     string_q workPath;
@@ -116,6 +117,7 @@ inline void CTestCase::initialize(void) {
     post = "";
     options = "";
     extra = "";
+    env = false;
     path = "";
     goldPath = "";
     workPath = "";
@@ -142,6 +144,7 @@ inline void CTestCase::duplicate(const CTestCase& te) {
     post = te.post;
     options = te.options;
     extra = te.extra;
+    env = te.env;
     path = te.path;
     goldPath = te.goldPath;
     workPath = te.workPath;

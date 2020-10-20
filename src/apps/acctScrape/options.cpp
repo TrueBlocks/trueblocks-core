@@ -152,6 +152,7 @@ bool COptions::parseArguments(string_q& command) {
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
     registerOptions(nParams, params);
+    optionOn(OPT_CRUD);
 
     // BEG_CODE_INIT
     blooms = false;
@@ -195,7 +196,7 @@ bool COptions::handle_rm(const CAddressArray& addrs) {
             results.push_back(monitor.Format(STR_NOTFOUND));
             LOG_WARN(monitor.Format(STR_NOTFOUND));
         } else {
-            if (getEditCommand() == "remove") {
+            if (crudCommand == "remove") {
                 if (monitor.isDeleted()) {
                     monitor.removeMonitor();
                     results.push_back(monitor.Format(STR_REMOVED));

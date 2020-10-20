@@ -124,6 +124,7 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 12420,tools,names,ethNames,addr,a,,false,false,true,true,local,switch,<boolean>,display only addresses in the results (useful for scripting)
 12430,tools,collections,ethNames,collections,s,,false,false,true,true,header,switch,<boolean>,display collections data
 12445,tools,tags,ethNames,tags,g,,false,false,true,true,header,switch,<boolean>,export the list of tags and subtags only
+12450,tools,names,ethNames,to_custom,u,,false,false,false,false,local,switch,<boolean>,for editCmd only&#44; is the edited name a custom name or not
 12460,tools,names,ethNames,,,,false,false,true,true,--,description,,Query addresses and/or names of well known accounts.
 12462,tools,names,ethNames,,,,false,false,false,false,--,note,,With a single search term&#44; the tool searches both `name` and `address`.
 12464,tools,names,ethNames,,,,false,false,false,false,--,note,,With two search terms&#44; the first term must match the `address` field&#44; and the second term must match the `name` field.

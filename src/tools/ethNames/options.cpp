@@ -32,6 +32,7 @@ static const COption params[] = {
     COption("addr", "a", "", OPT_SWITCH, "display only addresses in the results (useful for scripting)"),
     COption("collections", "s", "", OPT_SWITCH, "display collections data"),
     COption("tags", "g", "", OPT_SWITCH, "export the list of tags and subtags only"),
+    COption("to_custom", "u", "", OPT_HIDDEN | OPT_SWITCH, "for editCmd only, is the edited name a custom name or not"),
     COption("", "", "", OPT_DESCRIPTION, "Query addresses and/or names of well known accounts."),
     // clang-format on
     // END_CODE_OPTIONS
@@ -55,6 +56,7 @@ bool COptions::parseArguments(string_q& command) {
     bool named = false;
     bool other = false;
     bool addr = false;
+    bool to_custom = false;
     // END_CODE_LOCAL_INIT
 
     string_q format;
@@ -100,6 +102,9 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-g" || arg == "--tags") {
             tags = true;
 
+        } else if (arg == "-u" || arg == "--to_custom") {
+            to_custom = true;
+
         } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
@@ -119,8 +124,7 @@ bool COptions::parseArguments(string_q& command) {
         return false;
     }
 
-    bool to_custom = false;
-    if (isEditCommand()) {
+    if (isCrudCommand()) {
         if (!processEditCommand(terms, to_custom))
             return false;
     }
@@ -233,7 +237,7 @@ bool COptions::parseArguments(string_q& command) {
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
     registerOptions(nParams, params);
-    optionOn(OPT_PREFUND | OPT_OUTPUT);
+    optionOn(OPT_PREFUND | OPT_OUTPUT | OPT_CRUD);
 
     // BEG_CODE_INIT
     match_case = false;
@@ -281,7 +285,7 @@ bool COptions::addIfUnique(const CAccountName& item) {
     if (isZeroAddr(item.address))
         return false;
 
-    if (isTestMode() && !isEditCommand()) {
+    if (isTestMode() && !isCrudCommand()) {
         if (items.size() > 200)
             return true;
         if ((contains(item.tags, "Kickback") || contains(item.tags, "Humanity")))  // don't expose people during testing
@@ -364,7 +368,7 @@ void COptions::applyFilter() {
 
     //------------------------
     if (types & CUSTOM) {
-        if (isTestMode() && !isEditCommand()) {
+        if (isTestMode() && !isCrudCommand()) {
             for (uint32_t i = 1; i < 5; i++) {
                 CAccountName item;
                 item.tags = "81-Custom";
@@ -445,23 +449,33 @@ void pushToOutput(CAccountNameArray& out, const CAccountName& name, bool to_cust
 
 //-----------------------------------------------------------------------
 bool COptions::processEditCommand(CStringArray& terms, bool to_custom) {
-    string_q cmd = getEditCommand();
-    if (!contains("add|update|delete|undelete|remove", cmd))
-        return usage("Invalid edit command '" + cmd + "'. Quitting...");
+    if (!contains("create|update|delete|undelete|remove", crudCommand))
+        return usage("Invalid edit command '" + crudCommand + "'. Quitting...");
 
-    bool isEdit = cmd == "add" || cmd == "update";
+    CAccountName target;
+    target.address = getEnvStr("TB_NAME_ADDRESS");
+    if (target.address.empty()) {
+        target.address = terms[0];
+    }
+    target.name = getEnvStr("TB_NAME_NAME");
+    target.tags = getEnvStr("TB_NAME_TAG");
+    target.source = getEnvStr("TB_NAME_SOURCE");
+    target.symbol = getEnvStr("TB_NAME_SYMBOL");
+    target.decimals = str_2_Uint(getEnvStr("TB_NAME_DECIMALS"));
+    target.description = getEnvStr("TB_NAME_DESCR");
+    target.is_custom = str_2_Bool(getEnvStr("TB_NAME_CUSTOM")) || to_custom;
+
+    if (!isApiMode() && isTestMode()) {
+        cout << string_q(45, '-') << endl;
+        cout << target << endl;
+        cout << string_q(45, '-') << endl;
+    }
+
+    bool isEdit = crudCommand == "create" || crudCommand == "update";
     string_q fmt = isEdit ? "tags\taddress\tname\tsymbol\tsource\tdescription\tdecimals\tdeleted\tis_custom\tis_prefund"
                           : "address";
     CStringArray fields;
     explode(fields, fmt, '\t');
-
-    ostringstream dataStream;
-    for (auto term : terms)
-        dataStream << term << " ";
-    string_q data = trim(trim(substitute(dataStream.str(), "!", "\t"), ' '), '\t');
-
-    CAccountName target;
-    target.parseText(fields, data);
 
     CAccountNameArray outArray;
     outArray.reserve(namedAccounts.size() + 2);
@@ -469,14 +483,14 @@ bool COptions::processEditCommand(CStringArray& terms, bool to_custom) {
     bool edited = false;
     for (auto name : namedAccounts) {
         if (name.address == target.address) {
-            if (cmd == "remove") {
+            if (crudCommand == "remove") {
                 // do nothing
                 LOG4("Removing ", name.address);
-            } else if (cmd == "delete") {
+            } else if (crudCommand == "delete") {
                 name.m_deleted = true;
                 pushToOutput(outArray, name, to_custom);
                 LOG4("Deleting ", name.address);
-            } else if (cmd == "undelete") {
+            } else if (crudCommand == "undelete") {
                 name.m_deleted = false;
                 pushToOutput(outArray, name, to_custom);
                 LOG4("Undeleting ", name.address);
@@ -493,9 +507,9 @@ bool COptions::processEditCommand(CStringArray& terms, bool to_custom) {
         }
     }
 
-    if (cmd == "add" && !edited) {
+    if (crudCommand == "create" && !edited) {
         pushToOutput(outArray, target, to_custom);
-        LOG4("Adding ", target.address);
+        LOG4("Creating ", target.address);
         terms.clear();
         terms.push_back(target.address);  // we only need the address for the search
     }

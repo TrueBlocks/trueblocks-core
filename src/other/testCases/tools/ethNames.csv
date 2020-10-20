@@ -1,4 +1,4 @@
-enabled, mode, speed, route, path/tool, filename, post, options, opt_cmd
+enabled, mode, speed, route, path/tool, filename, post, options, opt_cmd, has_env
 on, cmd,  slow, names, tools/ethNames, README,                           n, @th
 on, cmd,  fast, names, tools/ethNames, help,                             n, @h
 on, cmd,  fast, names, tools/ethNames, help_long,                        n, help
@@ -136,28 +136,16 @@ on, both, fast, names, tools/ethNames, collections_csv,                  n, coll
 on, both, fast, names, tools/ethNames, collections_json,                 y, collections & fmt = json
 on, both, fast, names, tools/ethNames, collections_terms,                y, collections & terms = May
 
-#on, both, fast, names, tools/ethNames, edit_invalid,                     y, e ditCmd = invalid & terms = TAGS!0x0000000000000000000000000000000010101010!NAME!SYMBOL!SOURCE!DESCRIPTION!no!false & expand & verbose = 10
-#on, both, fast, names, tools/ethNames, edit_add,                         y, e ditCmd = add & terms = TAGS!0x0000000000000000000000000000000010101010!NAME!SYMBOL!SOURCE!DESCRIPTION!11!false & expand & verbose = 10
-#on, both, fast, names, tools/ethNames, show_add,                         n, terms = 0x0000000000000000000000000000000010101010 & fmt = txt & expand & verbose = 10
-#on, both, fast, names, tools/ethNames, edit_edit,                        y, e ditCmd = update & terms = TAGS_CHANGED!0x0000000000000000000000000000000010101010!NAME_CHANGED!SYMBOL_CHANGED!SOURCE_CHANGED!DESCRIPTION_CHANGED!13!false & expand & verbose = 10
-#on, both, fast, names, tools/ethNames, show_edit,                        y, terms = 0x0000000000000000000000000000000010101010 & expand & verbose = 10
-#on, both, fast, names, tools/ethNames, edit_delete,                      y, e ditCmd = delete & terms = 0x0000000000000000000000000000000010101010 & expand & verbose = 10
-#on, both, fast, names, tools/ethNames, show_delete,                      n, terms = 0x0000000000000000000000000000000010101010 & fmt = txt & expand & verbose = 10
-#on, both, fast, names, tools/ethNames, edit_undelete,                    y, e ditCmd = undelete & terms = 0x0000000000000000000000000000000010101010 & expand & verbose = 10
-#on, both, fast, names, tools/ethNames, show_undelete,                    n, terms = 0x0000000000000000000000000000000010101010 & fmt = txt & expand & verbose = 10
-#on, both, fast, names, tools/ethNames, edit_remove,                      y, e ditCmd = remove & terms = 0x0000000000000000000000000000000010101010 & expand & verbose = 10
-#on, both, fast, names, tools/ethNames, show_remove,                      n, terms = 0x0000000000000000000000000000000010101010 & fmt = txt & expand & verbose = 10
-#on, both, fast, names, tools/ethNames, edit_custom_delete,               y, e ditCmd = delete & terms = 0xde58d6a070c7490f10a9aac1b7bc6e3583383958 & expand & verbose = 10 & to_custom & all
-#on, both, fast, names, tools/ethNames, edit_custom_undelete,             y, e ditCmd = undelete & terms = 0xde58d6a070c7490f10a9aac1b7bc6e3583383958 & expand & verbose = 10 & to_custom & all
-
-# ./tools/ethNames/options.cpp:    COption("", "", "", OPT_DESCRIPTION, "Query addresses and/or names of well known accounts."),
-# ./tools/ethNames/options.cpp:    COption("add", "d", "<string>", OPT_HIDDEN | OPT_FLAG, "add a new record to the name database (format: grp+subgrp+addr+name+sym+src+desc)"),
-# ./tools/ethNames/options.cpp:    COption("addr", "a", "", OPT_SWITCH, "display only addresses in the results (useful for scripting)"),
-# ./tools/ethNames/options.cpp:    COption("custom", "c", "", OPT_SWITCH, "include your custom named accounts"),
-# ./tools/ethNames/options.cpp:    COption("expand", "e", "", OPT_SWITCH, "expand search to include all fields (default searches name, address, and symbol only)"),
-# ./tools/ethNames/options.cpp:    COption("match_case", "m", "", OPT_SWITCH, "do case-sensitive search"),
-# ./tools/ethNames/options.cpp:    COption("named", "n", "", OPT_SWITCH, "include well know token and airdrop addresses in the search"),
-# ./tools/ethNames/options.cpp:    COption("other", "t", "", OPT_HIDDEN | OPT_SWITCH, "export other addresses if found"),
-# ./tools/ethNames/options.cpp:    COption("owned", "o", "", OPT_SWITCH, "include personal accounts in the search"),
-# ./tools/ethNames/options.cpp:    COption("prefund", "p", "", OPT_SWITCH, "include prefund accounts"),
-# ./tools/ethNames/options.cpp:    COption("terms", "", "list<string>", OPT_REQUIRED | OPT_POSITIONAL, "a space separated list of one or more search terms"),
+on, cmd,  fast, names, tools/ethNames, edit_invalid,                     y, invalid & expand & verbose = 10
+on, cmd,  fast, names, tools/ethNames, edit_add,                         y, create & expand & verbose = 10,,true
+on, cmd,  fast, names, tools/ethNames, show_add,                         n, terms = 0x0000000000000000000000000000000010101010 & fmt = txt & expand & verbose = 10
+on, cmd,  fast, names, tools/ethNames, edit_edit,                        y, update & expand & verbose = 10,,true
+on, cmd,  fast, names, tools/ethNames, show_edit,                        y, terms = 0x0000000000000000000000000000000010101010 & expand & verbose = 10
+on, cmd,  fast, names, tools/ethNames, edit_delete,                      y, delete & terms = 0x0000000000000000000000000000000010101010 & expand & verbose = 10
+on, cmd,  fast, names, tools/ethNames, show_delete,                      n, terms = 0x0000000000000000000000000000000010101010 & fmt = txt & expand & verbose = 10
+on, cmd,  fast, names, tools/ethNames, edit_undelete,                    y, undelete & terms = 0x0000000000000000000000000000000010101010 & expand & verbose = 10
+on, cmd,  fast, names, tools/ethNames, show_undelete,                    n, terms = 0x0000000000000000000000000000000010101010 & fmt = txt & expand & verbose = 10
+on, cmd,  fast, names, tools/ethNames, edit_remove,                      y, remove & terms = 0x0000000000000000000000000000000010101010 & expand & verbose = 10
+on, cmd,  fast, names, tools/ethNames, show_remove,                      n, terms = 0x0000000000000000000000000000000010101010 & fmt = txt & expand & verbose = 10
+on, cmd,  fast, names, tools/ethNames, edit_custom_delete,               y, delete & terms = 0xde58d6a070c7490f10a9aac1b7bc6e3583383958 & expand & verbose = 10 & to_custom & all
+on, cmd,  fast, names, tools/ethNames, edit_custom_undelete,             y, undelete & terms = 0xde58d6a070c7490f10a9aac1b7bc6e3583383958 & expand & verbose = 10 & to_custom & all

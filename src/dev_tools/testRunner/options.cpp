@@ -138,6 +138,13 @@ bool COptions::parseArguments(string_q& command) {
     else if (filter == "all")
         filter = "";
 
+#if 0
+    mode = "cmd";
+    filter = "all";
+    tests.clear();
+    tests.push_back("tools/ethNames");
+    no_quit = true;
+#endif
     if (tests.empty()) {
         full_test = true;
         tests.push_back("libs/utillib");

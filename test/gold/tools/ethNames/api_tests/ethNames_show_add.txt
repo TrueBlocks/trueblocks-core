@@ -1,2 +1,0 @@
-tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefund
-TAGS	0x0000000000000000000000000000000010101010	NAME	SYMBOL	SOURCE	11	DESCRIPTION	false	false	false

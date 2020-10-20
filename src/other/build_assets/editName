@@ -4,25 +4,15 @@ defTag="81 Other"
 defSource="Etherscan"
 defDecimals=""
 
-ADDRESS=$1
-NAME=$2
-TAG=${3:-$defTag}
-SOURCE=${4:-$defSource}
-SYMBOL=$5
-DECIMALS=${6:-$defDecimals}
-DESCR=$7
+export TB_NAME_ADDRESS=$1
+export TB_NAME_NAME=$2
+export TB_NAME_TAG=${3:-$defTag}
+export TB_NAME_SOURCE=${4:-$defSource}
+export TB_NAME_SYMBOL=$5
+export TB_NAME_DECIMALS=${6:-$defDecimals}
+export TB_NAME_DESCR=$7
+export TB_NAME_CUSTOM=false
 
-echo "---------------------- Adding -----------------------"
-echo "Address: " $ADDRESS
-echo "Name: " $NAME
-echo "TAG: " $TAG
-echo "SOURCE: " $SOURCE
-echo "DECIMALS: " $DECIMALS
-echo "SYMBOL: " $SYMBOL
-echo "DESCR: " $DESCR
-echo 'calling chifra names --e ditCmd update '$TAG!$ADDRESS!$NAME!$SYMBOL!$SOURCE!$DESCR!$DECIMALS
-
-# tags\taddress\tname\tsymbol\tsource\tdescription\tdecimals\tdeleted\tis_custom\tis_prefund
-chifra names --e ditCmd update "$TAG!$ADDRESS!$NAME!$SYMBOL!$SOURCE!$DESCR!$DECIMALS" >/dev/null
+chifra names --update >/dev/null
 cp -pf /Users/jrush/.quickBlocks/names/names.tab /Users/jrush/Development/trueblocks-core/src/other/install/names/names.tab
-chifra names --expand --all $1
+chifra names --all --expand $1

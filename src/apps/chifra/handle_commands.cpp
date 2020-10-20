@@ -15,11 +15,8 @@ bool COptions::handle_commands(void) {
         return EXIT_FAILURE;
     }
 
-    if (mode == "rm" && contains(tool_flags, "--remove"))  // order matters
-        setenv("TB_EDITCMD", "remove", true);
-
     // URLs require key/value pairs, command lines don't so we remove unneeded keys
-    CStringArray removes = {"--names", "--terms", "--addrs", "--remove"};
+    CStringArray removes = {"--names", "--terms", "--addrs"};
     for (auto remove : removes)
         if (remove != "--addrs" || mode != "blocks")
             tool_flags = substitute(tool_flags, remove, "");

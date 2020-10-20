@@ -33,10 +33,11 @@ int main(int argc, const char* argv[]) {
             (options.trace ? GETRUNTIME_CLASS(CTrace)->m_ClassName : GETRUNTIME_CLASS(CBlock)->m_ClassName);
         if (once)
             cout << exportPreamble(expContext().fmtMap["header"], className);
-        if (options.trace)
+        if (options.trace) {
             options.blocks.forEveryBlockNumber(traceBlock, &options);
-        else
+        } else {
             options.blocks.forEveryBlockNumber(visitBlock, &options);
+        }
         once = false;
     }
     cout << exportPostamble(options.errors, expContext().fmtMap["meta"]);

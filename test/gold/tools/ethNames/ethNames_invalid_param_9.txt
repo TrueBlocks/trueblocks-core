@@ -21,6 +21,7 @@ ethNames 0xb6 torj --other --VERBOSE --fmt txt
 
 #### Hidden options (shown during testing only)
 	-t  (--other)         export other addresses if found
+	-u  (--to_custom)     for editCmd only, is the edited name a custom name or not
 #### Hidden options (shown during testing only)
 
 	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]

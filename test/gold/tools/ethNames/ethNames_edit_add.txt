@@ -1,6 +1,20 @@
-ethNames argc: 7 [1:--editCmd] [2:add] [3:TAGS!0x0000000000000000000000000000000010101010!NAME!SYMBOL!SOURCE!DESCRIPTION!11!false] [4:--expand] [5:--verbose] [6:10] 
-ethNames --editCmd add TAGS!0x0000000000000000000000000000000010101010!NAME!SYMBOL!SOURCE!DESCRIPTION!11!false --expand --verbose 10 
-TIME ~ CLOCK - : 4-----Adding 0x0000000000000000000000000000000010101010
+ethNames argc: 5 [1:--create] [2:--expand] [3:--verbose] [4:10] 
+ethNames --create --expand --verbose 10 
+---------------------------------------------
+{
+  "tags": "TAGS",
+  "address": "0x0000000000000000000000000000000010101010",
+  "name": "NAME",
+  "symbol": "SYMBOL",
+  "source": "SOURCE",
+  "decimals": 11,
+  "description": "DESCRIPTION",
+  "is_custom": false,
+  "is_prefund": false
+}
+
+---------------------------------------------
+TIME ~ CLOCK - : 4-----Creating 0x0000000000000000000000000000000010101010
 TIME ~ CLOCK - : 4-----Finished sorting...
 TIME ~ CLOCK - : 4-----Finished writing...
 TIME ~ CLOCK - : 8------Entering loadNames...

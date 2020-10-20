@@ -320,6 +320,22 @@ bool COptionsBase::standardOptions(string_q& cmdLine) {
         isRaw = true;
     }
 
+    if (isEnabled(OPT_CRUD)) {
+        CStringArray crud;
+        crud.push_back("--create ");
+        crud.push_back("--update ");
+        crud.push_back("--delete ");
+        crud.push_back("--undelete ");
+        crud.push_back("--remove ");
+        for (const string_q& cmd : crud) {
+            // last in wins
+            if (contains(cmdLine, cmd)) {
+                replaceAll(cmdLine, cmd, "");
+                crudCommand = trim(substitute(cmd, "--", ""));
+            }
+        }
+    }
+
     if (isEnabled(OPT_MOCKDATA) && contains(cmdLine, "--mockData ")) {
         replaceAll(cmdLine, "--mockData ", "");
         mockData = true;

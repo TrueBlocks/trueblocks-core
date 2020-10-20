@@ -154,19 +154,47 @@ bool COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, cons
             return usage("Folder " + test.workPath + " not found. Quitting...");
 
         } else {
+            CStringArray envLines;
             ostringstream cmd;
             if (cmdTests) {
+                if (test.env) {
+                    string_q envFile = substitute(test.goldPath, "/api_tests", "") + test.name + ".env";
+                    if (!fileExists(envFile)) {
+                        return usage("Could not find the environment file: '" + envFile + "'. Quitting...");
+                    }
+                    asciiFileToLines(envFile, envLines);
+                    for (auto line : envLines) {
+                        CStringArray parts;
+                        explode(parts, line, '=');
+                        setenv(trim(parts[0]).c_str(), trim(parts[1]).c_str(), true);
+                    }
+                }
                 string_q c = test.tool + test.options + " >" + test.workPath + test.fileName + " 2>&1";
                 string_q e = "env " + test.extra + " TEST_MODE=true NO_COLOR=true REDIR_CERR=true ";
                 cmd << e << c;
             } else {
-                cmd << "curl -s \"" << apiProvider << test.route;
-                if (!test.builtin && !test.options.empty())
-                    cmd << "?" << test.options;
-                cmd << "\"";
-                if (!no_post && !test.post.empty())
-                    cmd << " | " << test.post << " ";
-                cmd << " >" << test.workPath + test.fileName;
+                if (test.env) {
+                    // TODO(tjayrush): handle the case of using curl to edit names
+                    // string_q envFile = substitute(test.goldPath, "/api_tests", "") + test.name + ".env";
+                    // if (!fileExists(envFile)) {
+                    //     return usage("Could not find the environment file: '" + envFile + "'. Quitting...");
+                    // }
+                    // CStringArray lines;
+                    // asciiFileToLines(envFile, lines);
+                    // for (auto line : lines) {
+                    //     CStringArray parts;
+                    //     explode(parts, line, '=');
+                    //     setenv(trim(parts[0]).c_str(), trim(parts[1]).c_str(), true);
+                    // }
+                } else {
+                    cmd << "curl -s \"" << apiProvider << test.route;
+                    if (!test.builtin && !test.options.empty())
+                        cmd << "?" << test.options;
+                    cmd << "\"";
+                    if (!no_post && !test.post.empty())
+                        cmd << " | " << test.post << " ";
+                    cmd << " >" << test.workPath + test.fileName;
+                }
             }
 
             // To run the test, we cd into the gold path (so we find the test files), but we send results to working
@@ -212,8 +240,8 @@ bool COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, cons
             string_q oldText = asciiFileToString(oldFn);
             if (contains(oldText, "\"id\":") && contains(oldFn, "/tools/")) {
                 // This crazy shit is because we want to pass tests when running against different nodes (Parity,
-                // TurboGeth, etc.) so we have to remove some stuff and then sort the data (after deliniating it) soit
-                // matches more easily
+                // TurboGeth, etc.) so we have to remove some stuff and then sort the data (after deliniating it)
+                // soit matches more easily
                 while (contains(oldText, "sealFields")) {
                     replaceAll(oldText, "\"sealFields\":", "|");
                     string_q pre = nextTokenClear(oldText, '|');
@@ -267,10 +295,12 @@ bool COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, cons
                 //                if (ret)                os << " system call returned non-zero ";
                 //                if (newText != oldText) {
                 //                    os << " files differ " << endl;
-                //                    os << "newFile: " << newFn << ": " << fileExists(newFn) << ": " << newText.size()
+                //                    os << "newFile: " << newFn << ": " << fileExists(newFn) << ": " <<
+                //                    newText.size()
                 //                    << endl;
                 ////                    os << cYellow << newText << endl;
-                //                    os << "oldFile: " << oldFn << ": " << fileExists(oldFn) << ": " << oldText.size()
+                //                    os << "oldFile: " << oldFn << ": " << fileExists(oldFn) << ": " <<
+                //                    oldText.size()
                 //                    << endl;
                 ////                    os << cBlue << oldText;
                 //                }
@@ -301,6 +331,13 @@ bool COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, cons
             if (shouldQuit()) {
                 LOG4("Quitting because of shouldQuit");
                 break;
+            }
+
+            // unset the variables
+            for (auto line : envLines) {
+                CStringArray parts;
+                explode(parts, line, '=');
+                setenv(trim(parts[0]).c_str(), "", true);
             }
         }
     }
@@ -343,5 +380,6 @@ double fastEnough = .2;
 
 //-----------------------------------------------------------------------
 const char* STR_SCREEN_REPORT =
-    "   [{CMD}] ([{TYPE}][,{FILTER}]): [{NTESTS}] tests [{NPASSED}] passed [{CHECK}] [{FAILED} failed] in [{TOTSECS}] "
+    "   [{CMD}] ([{TYPE}][,{FILTER}]): [{NTESTS}] tests [{NPASSED}] passed [{CHECK}] [{FAILED} failed] in "
+    "[{TOTSECS}] "
     "seconds [{AVGSECS}] avg.";

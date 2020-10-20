@@ -23,6 +23,7 @@ ethNames -th
 
 #### Hidden options (shown during testing only)
 | -t | --other | export other addresses if found |
+| -u | --to_custom | for editCmd only, is the edited name a custom name or not |
 #### Hidden options (shown during testing only)
 
 | -x | --fmt <val> | export format, one of [none&#124;json*&#124;txt&#124;csv&#124;api] |

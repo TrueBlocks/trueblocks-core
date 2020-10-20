@@ -111,17 +111,4 @@ inline bool isApiMode(void) {
     return api_mode;
 }
 
-//-------------------------------------------------------------------------
-inline string_q getEditCommand(void) {
-    static string_q editCommand;
-    if (editCommand.empty())
-        editCommand = getEnvStr("TB_EDITCMD");
-    return editCommand;
-}
-
-//-------------------------------------------------------------------------
-inline bool isEditCommand(void) {
-    return !getEditCommand().empty();
-}
-
 }  // namespace qblocks
