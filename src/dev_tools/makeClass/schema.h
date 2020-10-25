@@ -57,12 +57,12 @@ class CSchema : public CBaseNode {
     // EXISTING_CODE
     bool showEmptyField(const string_q& fn) const override;
     // EXISTING_CODE
-    bool operator==(const CSchema& item) const;
-    bool operator!=(const CSchema& item) const {
-        return !operator==(item);
+    bool operator==(const CSchema& it) const;
+    bool operator!=(const CSchema& it) const {
+        return !operator==(it);
     }
     friend bool operator<(const CSchema& v1, const CSchema& v2);
-    friend ostream& operator<<(ostream& os, const CSchema& item);
+    friend ostream& operator<<(ostream& os, const CSchema& it);
 
   protected:
     void clear(void);
@@ -172,7 +172,7 @@ inline CSchema& CSchema::operator=(const CSchema& sc) {
 }
 
 //-------------------------------------------------------------------------
-inline bool CSchema::operator==(const CSchema& item) const {
+inline bool CSchema::operator==(const CSchema& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)

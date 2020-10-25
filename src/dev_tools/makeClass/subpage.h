@@ -44,12 +44,12 @@ class CSubpage : public CBaseNode {
     // EXISTING_CODE
     bool isSeparator;
     // EXISTING_CODE
-    bool operator==(const CSubpage& item) const;
-    bool operator!=(const CSubpage& item) const {
-        return !operator==(item);
+    bool operator==(const CSubpage& it) const;
+    bool operator!=(const CSubpage& it) const {
+        return !operator==(it);
     }
     friend bool operator<(const CSubpage& v1, const CSubpage& v2);
-    friend ostream& operator<<(ostream& os, const CSubpage& item);
+    friend ostream& operator<<(ostream& os, const CSubpage& it);
 
   protected:
     void clear(void);
@@ -135,7 +135,7 @@ inline CSubpage& CSubpage::operator=(const CSubpage& su) {
 }
 
 //-------------------------------------------------------------------------
-inline bool CSubpage::operator==(const CSubpage& item) const {
+inline bool CSubpage::operator==(const CSubpage& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)

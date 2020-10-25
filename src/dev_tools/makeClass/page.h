@@ -57,12 +57,12 @@ class CPage : public CBaseNode {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    bool operator==(const CPage& item) const;
-    bool operator!=(const CPage& item) const {
-        return !operator==(item);
+    bool operator==(const CPage& it) const;
+    bool operator!=(const CPage& it) const {
+        return !operator==(it);
     }
     friend bool operator<(const CPage& v1, const CPage& v2);
-    friend ostream& operator<<(ostream& os, const CPage& item);
+    friend ostream& operator<<(ostream& os, const CPage& it);
 
   protected:
     void clear(void);
@@ -168,7 +168,7 @@ inline CPage& CPage::operator=(const CPage& pa) {
 }
 
 //-------------------------------------------------------------------------
-inline bool CPage::operator==(const CPage& item) const {
+inline bool CPage::operator==(const CPage& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)

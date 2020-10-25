@@ -63,12 +63,12 @@ class CTreeRoot : public CBaseNode {
     void remove(const string_q& _key);
     bool visitItems(ACCTVISITOR func, void* data) const;
     // EXISTING_CODE
-    bool operator==(const CTreeRoot& item) const;
-    bool operator!=(const CTreeRoot& item) const {
-        return !operator==(item);
+    bool operator==(const CTreeRoot& it) const;
+    bool operator!=(const CTreeRoot& it) const {
+        return !operator==(it);
     }
     friend bool operator<(const CTreeRoot& v1, const CTreeRoot& v2);
-    friend ostream& operator<<(ostream& os, const CTreeRoot& item);
+    friend ostream& operator<<(ostream& os, const CTreeRoot& it);
 
   protected:
     void clear(void);
@@ -146,7 +146,7 @@ inline CTreeRoot& CTreeRoot::operator=(const CTreeRoot& tr) {
 }
 
 //-------------------------------------------------------------------------
-inline bool CTreeRoot::operator==(const CTreeRoot& item) const {
+inline bool CTreeRoot::operator==(const CTreeRoot& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)

@@ -39,12 +39,12 @@ class QFromTransferFrom : public QTransferFrom {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    bool operator==(const QFromTransferFrom& item) const;
-    bool operator!=(const QFromTransferFrom& item) const {
-        return !operator==(item);
+    bool operator==(const QFromTransferFrom& it) const;
+    bool operator!=(const QFromTransferFrom& it) const {
+        return !operator==(it);
     }
     friend bool operator<(const QFromTransferFrom& v1, const QFromTransferFrom& v2);
-    friend ostream& operator<<(ostream& os, const QFromTransferFrom& item);
+    friend ostream& operator<<(ostream& os, const QFromTransferFrom& it);
 
   protected:
     void clear(void);
@@ -118,7 +118,7 @@ inline QFromTransferFrom& QFromTransferFrom::operator=(const QFromTransferFrom& 
 }
 
 //-------------------------------------------------------------------------
-inline bool QFromTransferFrom::operator==(const QFromTransferFrom& item) const {
+inline bool QFromTransferFrom::operator==(const QFromTransferFrom& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)

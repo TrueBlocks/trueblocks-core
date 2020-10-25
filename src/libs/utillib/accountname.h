@@ -53,12 +53,12 @@ class CAccountName : public CBaseNode {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    bool operator==(const CAccountName& item) const;
-    bool operator!=(const CAccountName& item) const {
-        return !operator==(item);
+    bool operator==(const CAccountName& it) const;
+    bool operator!=(const CAccountName& it) const {
+        return !operator==(it);
     }
     friend bool operator<(const CAccountName& v1, const CAccountName& v2);
-    friend ostream& operator<<(ostream& os, const CAccountName& item);
+    friend ostream& operator<<(ostream& os, const CAccountName& it);
 
   protected:
     void clear(void);
@@ -158,11 +158,11 @@ inline CAccountName& CAccountName::operator=(const CAccountName& ac) {
 }
 
 //-------------------------------------------------------------------------
-inline bool CAccountName::operator==(const CAccountName& item) const {
+inline bool CAccountName::operator==(const CAccountName& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // Equality operator as defined in class definition
-    return address % item.address;
+    return address % it.address;
 }
 
 //-------------------------------------------------------------------------

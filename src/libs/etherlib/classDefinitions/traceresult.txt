@@ -7,4 +7,4 @@ fields = address newContract|\
 includes = abilib.h
 cpp_includes = trace.h
 serializable = true
-equals = ((newContract == item.newContract) && (code == item.code) && (gasUsed == item.gasUsed) &&|(output == item.output))
+equals = ((newContract == it.newContract) && (code == it.code) && (gasUsed == it.gasUsed) && (output == it.output))

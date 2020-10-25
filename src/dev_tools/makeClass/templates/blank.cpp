@@ -202,11 +202,11 @@ bool [{CLASS_NAME}]::readBackLevel(CArchive& archive) {
 }
 
 [OPERATORS_IMPL]//-------------------------------------------------------------------------
-ostream& operator<<(ostream& os, const [{CLASS_NAME}]& item) {
+ostream& operator<<(ostream& os, const [{CLASS_NAME}]& it) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    item.Format(os, "", nullptr);
+    it.Format(os, "", nullptr);
     os << "\n";
     return os;
 }

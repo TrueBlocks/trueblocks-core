@@ -74,12 +74,12 @@ class CAbi : public CBaseNode {
         return interfaces.size() - nFunctions() - nEvents();
     }
     // EXISTING_CODE
-    bool operator==(const CAbi& item) const;
-    bool operator!=(const CAbi& item) const {
-        return !operator==(item);
+    bool operator==(const CAbi& it) const;
+    bool operator!=(const CAbi& it) const {
+        return !operator==(it);
     }
     friend bool operator<(const CAbi& v1, const CAbi& v2);
-    friend ostream& operator<<(ostream& os, const CAbi& item);
+    friend ostream& operator<<(ostream& os, const CAbi& it);
 
   protected:
     void clear(void);
@@ -155,11 +155,11 @@ inline CAbi& CAbi::operator=(const CAbi& ab) {
 }
 
 //-------------------------------------------------------------------------
-inline bool CAbi::operator==(const CAbi& item) const {
+inline bool CAbi::operator==(const CAbi& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // Equality operator as defined in class definition
-    return (address == item.address);
+    return (address == it.address);
 }
 
 //-------------------------------------------------------------------------

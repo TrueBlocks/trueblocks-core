@@ -41,12 +41,12 @@ class CApiRoute : public CBaseNode {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    bool operator==(const CApiRoute& item) const;
-    bool operator!=(const CApiRoute& item) const {
-        return !operator==(item);
+    bool operator==(const CApiRoute& it) const;
+    bool operator!=(const CApiRoute& it) const {
+        return !operator==(it);
     }
     friend bool operator<(const CApiRoute& v1, const CApiRoute& v2);
-    friend ostream& operator<<(ostream& os, const CApiRoute& item);
+    friend ostream& operator<<(ostream& os, const CApiRoute& it);
 
   protected:
     void clear(void);
@@ -120,7 +120,7 @@ inline CApiRoute& CApiRoute::operator=(const CApiRoute& ap) {
 }
 
 //-------------------------------------------------------------------------
-inline bool CApiRoute::operator==(const CApiRoute& item) const {
+inline bool CApiRoute::operator==(const CApiRoute& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)

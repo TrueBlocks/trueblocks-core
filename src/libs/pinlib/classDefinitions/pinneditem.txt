@@ -7,6 +7,6 @@ fields = string fileName|\
 includes = utillib.h
 cpp_includes =
 sort = v1.fileName < v2.fileName
-equals = fileName == item.fileName
+equals = fileName == it.fileName
 serializable = true
 display_str = fileName, bloomHash, indexHash

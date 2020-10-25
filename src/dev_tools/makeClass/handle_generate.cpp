@@ -563,11 +563,11 @@ string_q getCaseSetCode(const CParameterArray& fieldsIn) {
 
                 } else if (contains(p.type, "Array")) {
                     const char* STR_CASE_SET_CODE_ARRAY =
-                        "[{TYPE}] item;\n"
+                        "[{TYPE}] obj;\n"
                         "string_q str = fieldValue;\n"
-                        "while (item.parseJson3(str)) {\n"
-                        "`[{NAME}].push_back(item);\n"
-                        "`item = [{TYPE}]();  // reset\n"
+                        "while (obj.parseJson3(str)) {\n"
+                        "`[{NAME}].push_back(obj);\n"
+                        "`obj = [{TYPE}]();  // reset\n"
                         "}\n"
                         "return true;";
                     string_q str = substitute(STR_CASE_SET_CODE_ARRAY, "\n", "\n````");

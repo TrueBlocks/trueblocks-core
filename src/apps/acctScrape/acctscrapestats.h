@@ -44,12 +44,12 @@ class CAcctScrapeStats : public CBaseNode {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    bool operator==(const CAcctScrapeStats& item) const;
-    bool operator!=(const CAcctScrapeStats& item) const {
-        return !operator==(item);
+    bool operator==(const CAcctScrapeStats& it) const;
+    bool operator!=(const CAcctScrapeStats& it) const {
+        return !operator==(it);
     }
     friend bool operator<(const CAcctScrapeStats& v1, const CAcctScrapeStats& v2);
-    friend ostream& operator<<(ostream& os, const CAcctScrapeStats& item);
+    friend ostream& operator<<(ostream& os, const CAcctScrapeStats& it);
 
   protected:
     void clear(void);
@@ -135,7 +135,7 @@ inline CAcctScrapeStats& CAcctScrapeStats::operator=(const CAcctScrapeStats& ac)
 }
 
 //-------------------------------------------------------------------------
-inline bool CAcctScrapeStats::operator==(const CAcctScrapeStats& item) const {
+inline bool CAcctScrapeStats::operator==(const CAcctScrapeStats& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)

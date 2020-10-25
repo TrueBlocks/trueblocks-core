@@ -55,12 +55,12 @@ class CStatus : public CBaseNode {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    bool operator==(const CStatus& item) const;
-    bool operator!=(const CStatus& item) const {
-        return !operator==(item);
+    bool operator==(const CStatus& it) const;
+    bool operator!=(const CStatus& it) const {
+        return !operator==(it);
     }
     friend bool operator<(const CStatus& v1, const CStatus& v2);
-    friend ostream& operator<<(ostream& os, const CStatus& item);
+    friend ostream& operator<<(ostream& os, const CStatus& it);
 
   protected:
     void clear(void);
@@ -165,7 +165,7 @@ inline CStatus& CStatus::operator=(const CStatus& st) {
 }
 
 //-------------------------------------------------------------------------
-inline bool CStatus::operator==(const CStatus& item) const {
+inline bool CStatus::operator==(const CStatus& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)

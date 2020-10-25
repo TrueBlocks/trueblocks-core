@@ -252,11 +252,11 @@ bool CPage::setValueByName(const string_q& fieldNameIn, const string_q& fieldVal
                 return true;
             }
             if (fieldName % "subpages") {
-                CSubpage item;
+                CSubpage obj;
                 string_q str = fieldValue;
-                while (item.parseJson3(str)) {
-                    subpages.push_back(item);
-                    item = CSubpage();  // reset
+                while (obj.parseJson3(str)) {
+                    subpages.push_back(obj);
+                    obj = CSubpage();  // reset
                 }
                 return true;
             }
@@ -438,11 +438,11 @@ bool CPage::readBackLevel(CArchive& archive) {
 }
 
 //-------------------------------------------------------------------------
-ostream& operator<<(ostream& os, const CPage& item) {
+ostream& operator<<(ostream& os, const CPage& it) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    item.Format(os, "", nullptr);
+    it.Format(os, "", nullptr);
     os << "\n";
     return os;
 }

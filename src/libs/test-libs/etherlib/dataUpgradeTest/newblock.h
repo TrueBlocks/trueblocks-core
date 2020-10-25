@@ -51,12 +51,12 @@ class CNewBlock : public CBaseNode {
     // EXISTING_CODE
     explicit CNewBlock(const CBlock& block);
     // EXISTING_CODE
-    bool operator==(const CNewBlock& item) const;
-    bool operator!=(const CNewBlock& item) const {
-        return !operator==(item);
+    bool operator==(const CNewBlock& it) const;
+    bool operator!=(const CNewBlock& it) const {
+        return !operator==(it);
     }
     friend bool operator<(const CNewBlock& v1, const CNewBlock& v2);
-    friend ostream& operator<<(ostream& os, const CNewBlock& item);
+    friend ostream& operator<<(ostream& os, const CNewBlock& it);
 
   protected:
     void clear(void);
@@ -148,7 +148,7 @@ inline CNewBlock& CNewBlock::operator=(const CNewBlock& newb) {
 }
 
 //-------------------------------------------------------------------------
-inline bool CNewBlock::operator==(const CNewBlock& item) const {
+inline bool CNewBlock::operator==(const CNewBlock& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)

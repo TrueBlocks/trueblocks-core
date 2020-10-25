@@ -66,12 +66,12 @@ class CFunction : public CBaseNode {
     bool fromDefinition(const string_q& lineIn);
     string_q compressed(void) const;
     // EXISTING_CODE
-    bool operator==(const CFunction& item) const;
-    bool operator!=(const CFunction& item) const {
-        return !operator==(item);
+    bool operator==(const CFunction& it) const;
+    bool operator!=(const CFunction& it) const {
+        return !operator==(it);
     }
     friend bool operator<(const CFunction& v1, const CFunction& v2);
-    friend ostream& operator<<(ostream& os, const CFunction& item);
+    friend ostream& operator<<(ostream& os, const CFunction& it);
 
   protected:
     void clear(void);
@@ -169,11 +169,11 @@ inline CFunction& CFunction::operator=(const CFunction& fu) {
 }
 
 //-------------------------------------------------------------------------
-inline bool CFunction::operator==(const CFunction& item) const {
+inline bool CFunction::operator==(const CFunction& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // Equality operator as defined in class definition
-    return encoding % item.encoding;
+    return encoding % it.encoding;
 }
 
 //-------------------------------------------------------------------------

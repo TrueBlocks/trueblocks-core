@@ -47,12 +47,12 @@ class CSkin : public CBaseNode {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    bool operator==(const CSkin& item) const;
-    bool operator!=(const CSkin& item) const {
-        return !operator==(item);
+    bool operator==(const CSkin& it) const;
+    bool operator!=(const CSkin& it) const {
+        return !operator==(it);
     }
     friend bool operator<(const CSkin& v1, const CSkin& v2);
-    friend ostream& operator<<(ostream& os, const CSkin& item);
+    friend ostream& operator<<(ostream& os, const CSkin& it);
 
   protected:
     void clear(void);
@@ -144,7 +144,7 @@ inline CSkin& CSkin::operator=(const CSkin& sk) {
 }
 
 //-------------------------------------------------------------------------
-inline bool CSkin::operator==(const CSkin& item) const {
+inline bool CSkin::operator==(const CSkin& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)

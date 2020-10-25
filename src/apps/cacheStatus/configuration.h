@@ -40,12 +40,12 @@ class CConfiguration : public CBaseNode {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    bool operator==(const CConfiguration& item) const;
-    bool operator!=(const CConfiguration& item) const {
-        return !operator==(item);
+    bool operator==(const CConfiguration& it) const;
+    bool operator!=(const CConfiguration& it) const {
+        return !operator==(it);
     }
     friend bool operator<(const CConfiguration& v1, const CConfiguration& v2);
-    friend ostream& operator<<(ostream& os, const CConfiguration& item);
+    friend ostream& operator<<(ostream& os, const CConfiguration& it);
 
   protected:
     void clear(void);
@@ -117,7 +117,7 @@ inline CConfiguration& CConfiguration::operator=(const CConfiguration& co) {
 }
 
 //-------------------------------------------------------------------------
-inline bool CConfiguration::operator==(const CConfiguration& item) const {
+inline bool CConfiguration::operator==(const CConfiguration& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)

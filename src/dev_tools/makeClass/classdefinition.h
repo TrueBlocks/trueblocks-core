@@ -63,12 +63,12 @@ class CClassDefinition : public CBaseNode {
     }
     explicit CClassDefinition(const CToml& toml);
     // EXISTING_CODE
-    bool operator==(const CClassDefinition& item) const;
-    bool operator!=(const CClassDefinition& item) const {
-        return !operator==(item);
+    bool operator==(const CClassDefinition& it) const;
+    bool operator!=(const CClassDefinition& it) const {
+        return !operator==(it);
     }
     friend bool operator<(const CClassDefinition& v1, const CClassDefinition& v2);
-    friend ostream& operator<<(ostream& os, const CClassDefinition& item);
+    friend ostream& operator<<(ostream& os, const CClassDefinition& it);
 
   protected:
     void clear(void);
@@ -180,7 +180,7 @@ inline CClassDefinition& CClassDefinition::operator=(const CClassDefinition& cl)
 }
 
 //-------------------------------------------------------------------------
-inline bool CClassDefinition::operator==(const CClassDefinition& item) const {
+inline bool CClassDefinition::operator==(const CClassDefinition& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)

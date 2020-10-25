@@ -44,12 +44,12 @@ class CLogQuery : public CBaseNode {
     // EXISTING_CODE
     string_q toRPC(void) const;
     // EXISTING_CODE
-    bool operator==(const CLogQuery& item) const;
-    bool operator!=(const CLogQuery& item) const {
-        return !operator==(item);
+    bool operator==(const CLogQuery& it) const;
+    bool operator!=(const CLogQuery& it) const {
+        return !operator==(it);
     }
     friend bool operator<(const CLogQuery& v1, const CLogQuery& v2);
-    friend ostream& operator<<(ostream& os, const CLogQuery& item);
+    friend ostream& operator<<(ostream& os, const CLogQuery& it);
 
   protected:
     void clear(void);
@@ -129,7 +129,7 @@ inline CLogQuery& CLogQuery::operator=(const CLogQuery& lo) {
 }
 
 //-------------------------------------------------------------------------
-inline bool CLogQuery::operator==(const CLogQuery& item) const {
+inline bool CLogQuery::operator==(const CLogQuery& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)

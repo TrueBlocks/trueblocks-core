@@ -49,12 +49,12 @@ class CTraceAction : public CBaseNode {
     wei_t extraValue1;
     wei_t extraValue2;
     // EXISTING_CODE
-    bool operator==(const CTraceAction& item) const;
-    bool operator!=(const CTraceAction& item) const {
-        return !operator==(item);
+    bool operator==(const CTraceAction& it) const;
+    bool operator!=(const CTraceAction& it) const {
+        return !operator==(it);
     }
     friend bool operator<(const CTraceAction& v1, const CTraceAction& v2);
-    friend ostream& operator<<(ostream& os, const CTraceAction& item);
+    friend ostream& operator<<(ostream& os, const CTraceAction& it);
 
   protected:
     void clear(void);
@@ -148,13 +148,13 @@ inline CTraceAction& CTraceAction::operator=(const CTraceAction& tr) {
 }
 
 //-------------------------------------------------------------------------
-inline bool CTraceAction::operator==(const CTraceAction& item) const {
+inline bool CTraceAction::operator==(const CTraceAction& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // Equality operator as defined in class definition
-    return ((selfDestructed == item.selfDestructed) && (balance == item.balance) && (callType == item.callType) &&
-            (from == item.from) && (gas == item.gas) && (init == item.init) && (input == item.input) &&
-            (refundAddress == item.refundAddress) && (to == item.to) && (value == item.value));
+    return ((selfDestructed == it.selfDestructed) && (balance == it.balance) && (callType == it.callType) &&
+            (from == it.from) && (gas == it.gas) && (init == it.init) && (input == it.input) &&
+            (refundAddress == it.refundAddress) && (to == it.to) && (value == it.value));
 }
 
 //-------------------------------------------------------------------------

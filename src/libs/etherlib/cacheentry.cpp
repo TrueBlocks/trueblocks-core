@@ -267,11 +267,11 @@ bool CCacheEntry::readBackLevel(CArchive& archive) {
 }
 
 //-------------------------------------------------------------------------
-ostream& operator<<(ostream& os, const CCacheEntry& item) {
+ostream& operator<<(ostream& os, const CCacheEntry& it) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    item.Format(os, "", nullptr);
+    it.Format(os, "", nullptr);
     os << "\n";
     return os;
 }

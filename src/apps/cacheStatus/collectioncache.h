@@ -40,12 +40,12 @@ class CCollectionCache : public CCache {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    bool operator==(const CCollectionCache& item) const;
-    bool operator!=(const CCollectionCache& item) const {
-        return !operator==(item);
+    bool operator==(const CCollectionCache& it) const;
+    bool operator!=(const CCollectionCache& it) const {
+        return !operator==(it);
     }
     friend bool operator<(const CCollectionCache& v1, const CCollectionCache& v2);
-    friend ostream& operator<<(ostream& os, const CCollectionCache& item);
+    friend ostream& operator<<(ostream& os, const CCollectionCache& it);
 
   protected:
     void clear(void);
@@ -117,7 +117,7 @@ inline CCollectionCache& CCollectionCache::operator=(const CCollectionCache& co)
 }
 
 //-------------------------------------------------------------------------
-inline bool CCollectionCache::operator==(const CCollectionCache& item) const {
+inline bool CCollectionCache::operator==(const CCollectionCache& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)

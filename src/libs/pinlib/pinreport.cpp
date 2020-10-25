@@ -168,11 +168,11 @@ bool CPinReport::setValueByName(const string_q& fieldNameIn, const string_q& fie
                 return true;
             }
             if (fieldName % "newPins") {
-                CPinnedItem item;
+                CPinnedItem obj;
                 string_q str = fieldValue;
-                while (item.parseJson3(str)) {
-                    newPins.push_back(item);
-                    item = CPinnedItem();  // reset
+                while (obj.parseJson3(str)) {
+                    newPins.push_back(obj);
+                    obj = CPinnedItem();  // reset
                 }
                 return true;
             }
@@ -187,11 +187,11 @@ bool CPinReport::setValueByName(const string_q& fieldNameIn, const string_q& fie
                 return true;
             }
             if (fieldName % "prevPins") {
-                CPinnedItem item;
+                CPinnedItem obj;
                 string_q str = fieldValue;
-                while (item.parseJson3(str)) {
-                    prevPins.push_back(item);
-                    item = CPinnedItem();  // reset
+                while (obj.parseJson3(str)) {
+                    prevPins.push_back(obj);
+                    obj = CPinnedItem();  // reset
                 }
                 return true;
             }
@@ -349,11 +349,11 @@ CArchive& operator>>(CArchive& archive, CPinReport& pin) {
 }
 
 //-------------------------------------------------------------------------
-ostream& operator<<(ostream& os, const CPinReport& item) {
+ostream& operator<<(ostream& os, const CPinReport& it) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    item.Format(os, "", nullptr);
+    it.Format(os, "", nullptr);
     os << "\n";
     return os;
 }

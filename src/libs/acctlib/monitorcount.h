@@ -39,12 +39,12 @@ class CMonitorCount : public CBaseNode {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    bool operator==(const CMonitorCount& item) const;
-    bool operator!=(const CMonitorCount& item) const {
-        return !operator==(item);
+    bool operator==(const CMonitorCount& it) const;
+    bool operator!=(const CMonitorCount& it) const {
+        return !operator==(it);
     }
     friend bool operator<(const CMonitorCount& v1, const CMonitorCount& v2);
-    friend ostream& operator<<(ostream& os, const CMonitorCount& item);
+    friend ostream& operator<<(ostream& os, const CMonitorCount& it);
 
   protected:
     void clear(void);
@@ -120,7 +120,7 @@ inline CMonitorCount& CMonitorCount::operator=(const CMonitorCount& mo) {
 }
 
 //-------------------------------------------------------------------------
-inline bool CMonitorCount::operator==(const CMonitorCount& item) const {
+inline bool CMonitorCount::operator==(const CMonitorCount& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)

@@ -253,11 +253,11 @@ bool CBlock::setValueByName(const string_q& fieldNameIn, const string_q& fieldVa
                 return true;
             }
             if (fieldName % "transactions") {
-                CTransaction item;
+                CTransaction obj;
                 string_q str = fieldValue;
-                while (item.parseJson3(str)) {
-                    transactions.push_back(item);
-                    item = CTransaction();  // reset
+                while (obj.parseJson3(str)) {
+                    transactions.push_back(obj);
+                    obj = CTransaction();  // reset
                 }
                 return true;
             }
@@ -522,11 +522,11 @@ CArchive& operator>>(CArchive& archive, CBlock& blo) {
 }
 
 //-------------------------------------------------------------------------
-ostream& operator<<(ostream& os, const CBlock& item) {
+ostream& operator<<(ostream& os, const CBlock& it) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    item.Format(os, "", nullptr);
+    it.Format(os, "", nullptr);
     os << "\n";
     return os;
 }

@@ -11,5 +11,5 @@ fields = blknum blockNumber|\
 includes = abilib.h
 cpp_includes = etherlib.h
 sort = v1.blockNumber < v2.blockNumber
-equals = blockNumber == item.blockNumber
+equals = blockNumber == it.blockNumber
 display_str = blockNumber, address, balance, nonce, code, storage, deployed, acctType

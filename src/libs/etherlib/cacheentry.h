@@ -50,12 +50,12 @@ class CCacheEntry : public CBaseNode {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    bool operator==(const CCacheEntry& item) const;
-    bool operator!=(const CCacheEntry& item) const {
-        return !operator==(item);
+    bool operator==(const CCacheEntry& it) const;
+    bool operator!=(const CCacheEntry& it) const {
+        return !operator==(it);
     }
     friend bool operator<(const CCacheEntry& v1, const CCacheEntry& v2);
-    friend ostream& operator<<(ostream& os, const CCacheEntry& item);
+    friend ostream& operator<<(ostream& os, const CCacheEntry& it);
 
   protected:
     void clear(void);
@@ -133,7 +133,7 @@ inline CCacheEntry& CCacheEntry::operator=(const CCacheEntry& ca) {
 }
 
 //-------------------------------------------------------------------------
-inline bool CCacheEntry::operator==(const CCacheEntry& item) const {
+inline bool CCacheEntry::operator==(const CCacheEntry& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)

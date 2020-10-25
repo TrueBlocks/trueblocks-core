@@ -55,12 +55,12 @@ class CTestCase : public CBaseNode {
     explicit CTestCase(const string_q& line, uint32_t id);
     void prepareTest(bool cmdLine);
     // EXISTING_CODE
-    bool operator==(const CTestCase& item) const;
-    bool operator!=(const CTestCase& item) const {
-        return !operator==(item);
+    bool operator==(const CTestCase& it) const;
+    bool operator!=(const CTestCase& it) const {
+        return !operator==(it);
     }
     friend bool operator<(const CTestCase& v1, const CTestCase& v2);
-    friend ostream& operator<<(ostream& os, const CTestCase& item);
+    friend ostream& operator<<(ostream& os, const CTestCase& it);
 
   protected:
     void clear(void);
@@ -164,11 +164,11 @@ inline CTestCase& CTestCase::operator=(const CTestCase& te) {
 }
 
 //-------------------------------------------------------------------------
-inline bool CTestCase::operator==(const CTestCase& item) const {
+inline bool CTestCase::operator==(const CTestCase& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // Equality operator as defined in class definition
-    return (route % item.route && tool % item.tool && name % item.name);
+    return (route % it.route && tool % it.tool && name % it.name);
 }
 
 //-------------------------------------------------------------------------

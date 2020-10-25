@@ -63,12 +63,12 @@ class CReconciliationOutput : public CBaseNode {
     explicit CReconciliationOutput(const CReconciliation& nums);
     CReconciliation nums;
     // EXISTING_CODE
-    bool operator==(const CReconciliationOutput& item) const;
-    bool operator!=(const CReconciliationOutput& item) const {
-        return !operator==(item);
+    bool operator==(const CReconciliationOutput& it) const;
+    bool operator!=(const CReconciliationOutput& it) const {
+        return !operator==(it);
     }
     friend bool operator<(const CReconciliationOutput& v1, const CReconciliationOutput& v2);
-    friend ostream& operator<<(ostream& os, const CReconciliationOutput& item);
+    friend ostream& operator<<(ostream& os, const CReconciliationOutput& it);
 
   protected:
     void clear(void);
@@ -188,7 +188,7 @@ inline CReconciliationOutput& CReconciliationOutput::operator=(const CReconcilia
 }
 
 //-------------------------------------------------------------------------
-inline bool CReconciliationOutput::operator==(const CReconciliationOutput& item) const {
+inline bool CReconciliationOutput::operator==(const CReconciliationOutput& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)

@@ -112,11 +112,11 @@ bool CApiRoute::setValueByName(const string_q& fieldNameIn, const string_q& fiel
     switch (tolower(fieldName[0])) {
         case 'c':
             if (fieldName % "commands") {
-                CCommandOption item;
+                CCommandOption obj;
                 string_q str = fieldValue;
-                while (item.parseJson3(str)) {
-                    commands.push_back(item);
-                    item = CCommandOption();  // reset
+                while (obj.parseJson3(str)) {
+                    commands.push_back(obj);
+                    obj = CCommandOption();  // reset
                 }
                 return true;
             }
@@ -250,11 +250,11 @@ bool CApiRoute::readBackLevel(CArchive& archive) {
 }
 
 //-------------------------------------------------------------------------
-ostream& operator<<(ostream& os, const CApiRoute& item) {
+ostream& operator<<(ostream& os, const CApiRoute& it) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    item.Format(os, "", nullptr);
+    it.Format(os, "", nullptr);
     os << "\n";
     return os;
 }

@@ -174,11 +174,11 @@ bool CPinataPin::setValueByName(const string_q& fieldNameIn, const string_q& fie
             break;
         case 'r':
             if (fieldName % "regions") {
-                CPinataRegion item;
+                CPinataRegion obj;
                 string_q str = fieldValue;
-                while (item.parseJson3(str)) {
-                    regions.push_back(item);
-                    item = CPinataRegion();  // reset
+                while (obj.parseJson3(str)) {
+                    regions.push_back(obj);
+                    obj = CPinataRegion();  // reset
                 }
                 return true;
             }
@@ -348,11 +348,11 @@ CArchive& operator>>(CArchive& archive, CPinataPin& pin) {
 }
 
 //-------------------------------------------------------------------------
-ostream& operator<<(ostream& os, const CPinataPin& item) {
+ostream& operator<<(ostream& os, const CPinataPin& it) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    item.Format(os, "", nullptr);
+    it.Format(os, "", nullptr);
     os << "\n";
     return os;
 }

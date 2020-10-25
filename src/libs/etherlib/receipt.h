@@ -51,12 +51,12 @@ class CReceipt : public CBaseNode {
     const CTransaction* pTrans;
     friend class CTransaction;
     // EXISTING_CODE
-    bool operator==(const CReceipt& item) const;
-    bool operator!=(const CReceipt& item) const {
-        return !operator==(item);
+    bool operator==(const CReceipt& it) const;
+    bool operator!=(const CReceipt& it) const {
+        return !operator==(it);
     }
     friend bool operator<(const CReceipt& v1, const CReceipt& v2);
-    friend ostream& operator<<(ostream& os, const CReceipt& item);
+    friend ostream& operator<<(ostream& os, const CReceipt& it);
 
   protected:
     void clear(void);
@@ -141,11 +141,11 @@ inline CReceipt& CReceipt::operator=(const CReceipt& re) {
 }
 
 //-------------------------------------------------------------------------
-inline bool CReceipt::operator==(const CReceipt& item) const {
+inline bool CReceipt::operator==(const CReceipt& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // Equality operator as defined in class definition
-    return (getValueByName("transactionHash") == item.getValueByName("transactionHash"));
+    return (getValueByName("transactionHash") == it.getValueByName("transactionHash"));
 }
 
 //-------------------------------------------------------------------------

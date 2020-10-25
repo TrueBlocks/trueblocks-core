@@ -134,11 +134,11 @@ bool CNameCache::setValueByName(const string_q& fieldNameIn, const string_q& fie
             break;
         case 'i':
             if (fieldName % "items") {
-                CNameCacheItem item;
+                CNameCacheItem obj;
                 string_q str = fieldValue;
-                while (item.parseJson3(str)) {
-                    items.push_back(item);
-                    item = CNameCacheItem();  // reset
+                while (obj.parseJson3(str)) {
+                    items.push_back(obj);
+                    obj = CNameCacheItem();  // reset
                 }
                 return true;
             }
@@ -268,11 +268,11 @@ bool CNameCache::readBackLevel(CArchive& archive) {
 }
 
 //-------------------------------------------------------------------------
-ostream& operator<<(ostream& os, const CNameCache& item) {
+ostream& operator<<(ostream& os, const CNameCache& it) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    item.Format(os, "", nullptr);
+    it.Format(os, "", nullptr);
     os << "\n";
     return os;
 }

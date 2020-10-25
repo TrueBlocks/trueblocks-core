@@ -13,6 +13,6 @@ fields = string name|\
         address address (nowrite)
 includes = utillib.h|parameter.h
 sort = v1.encoding < v2.encoding
-equals = encoding % item.encoding
+equals = encoding % it.encoding
 serializable = true
 display_str = name, type, stateMutability, signature, encoding, inputs, outputs

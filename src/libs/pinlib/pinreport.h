@@ -47,12 +47,12 @@ class CPinReport : public CBaseNode {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    bool operator==(const CPinReport& item) const;
-    bool operator!=(const CPinReport& item) const {
-        return !operator==(item);
+    bool operator==(const CPinReport& it) const;
+    bool operator!=(const CPinReport& it) const {
+        return !operator==(it);
     }
     friend bool operator<(const CPinReport& v1, const CPinReport& v2);
-    friend ostream& operator<<(ostream& os, const CPinReport& item);
+    friend ostream& operator<<(ostream& os, const CPinReport& it);
 
   protected:
     void clear(void);
@@ -138,7 +138,7 @@ inline CPinReport& CPinReport::operator=(const CPinReport& pi) {
 }
 
 //-------------------------------------------------------------------------
-inline bool CPinReport::operator==(const CPinReport& item) const {
+inline bool CPinReport::operator==(const CPinReport& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)

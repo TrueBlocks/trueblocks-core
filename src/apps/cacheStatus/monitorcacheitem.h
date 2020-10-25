@@ -41,12 +41,12 @@ class CMonitorCacheItem : public CAccountName {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    bool operator==(const CMonitorCacheItem& item) const;
-    bool operator!=(const CMonitorCacheItem& item) const {
-        return !operator==(item);
+    bool operator==(const CMonitorCacheItem& it) const;
+    bool operator!=(const CMonitorCacheItem& it) const {
+        return !operator==(it);
     }
     friend bool operator<(const CMonitorCacheItem& v1, const CMonitorCacheItem& v2);
-    friend ostream& operator<<(ostream& os, const CMonitorCacheItem& item);
+    friend ostream& operator<<(ostream& os, const CMonitorCacheItem& it);
 
   protected:
     void clear(void);
@@ -122,7 +122,7 @@ inline CMonitorCacheItem& CMonitorCacheItem::operator=(const CMonitorCacheItem& 
 }
 
 //-------------------------------------------------------------------------
-inline bool CMonitorCacheItem::operator==(const CMonitorCacheItem& item) const {
+inline bool CMonitorCacheItem::operator==(const CMonitorCacheItem& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)

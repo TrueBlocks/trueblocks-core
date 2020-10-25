@@ -118,11 +118,11 @@ bool CPinataList::setValueByName(const string_q& fieldNameIn, const string_q& fi
             break;
         case 'r':
             if (fieldName % "rows") {
-                CPinataPin item;
+                CPinataPin obj;
                 string_q str = fieldValue;
-                while (item.parseJson3(str)) {
-                    rows.push_back(item);
-                    item = CPinataPin();  // reset
+                while (obj.parseJson3(str)) {
+                    rows.push_back(obj);
+                    obj = CPinataPin();  // reset
                 }
                 return true;
             }
@@ -262,11 +262,11 @@ CArchive& operator>>(CArchive& archive, CPinataList& pin) {
 }
 
 //-------------------------------------------------------------------------
-ostream& operator<<(ostream& os, const CPinataList& item) {
+ostream& operator<<(ostream& os, const CPinataList& it) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    item.Format(os, "", nullptr);
+    it.Format(os, "", nullptr);
     os << "\n";
     return os;
 }

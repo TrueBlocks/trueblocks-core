@@ -119,11 +119,11 @@ bool CAbi::setValueByName(const string_q& fieldNameIn, const string_q& fieldValu
             break;
         case 'i':
             if (fieldName % "interfaces") {
-                CFunction item;
+                CFunction obj;
                 string_q str = fieldValue;
-                while (item.parseJson3(str)) {
-                    interfaces.push_back(item);
-                    item = CFunction();  // reset
+                while (obj.parseJson3(str)) {
+                    interfaces.push_back(obj);
+                    obj = CFunction();  // reset
                 }
                 return true;
             }
@@ -263,17 +263,17 @@ CArchive& operator>>(CArchive& archive, CAbi& abi) {
 }
 
 //-------------------------------------------------------------------------
-ostream& operator<<(ostream& os, const CAbi& item) {
+ostream& operator<<(ostream& os, const CAbi& it) {
     // EXISTING_CODE
-    if (sizeof(item) != 0) {  // always true, but we do this to avoid a warning
-        for (auto interface : item.interfaces) {
+    if (sizeof(it) != 0) {  // always true, but we do this to avoid a warning
+        for (auto interface : it.interfaces) {
             os << interface.Format() << "\n";
         }
         return os;
     }
     // EXISTING_CODE
 
-    item.Format(os, "", nullptr);
+    it.Format(os, "", nullptr);
     os << "\n";
     return os;
 }

@@ -5,4 +5,4 @@ fields = string name|\
 includes = utillib.h
 cpp_includes =
 serializable = true
-equals = (name == item.name)
+equals = (name == it.name)

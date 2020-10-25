@@ -375,22 +375,22 @@ bool CTransaction::setValueByName(const string_q& fieldNameIn, const string_q& f
                 return receipt.parseJson3(fieldValue);
             }
             if (fieldName % "reconciliations") {
-                CReconciliation item;
+                CReconciliation obj;
                 string_q str = fieldValue;
-                while (item.parseJson3(str)) {
-                    reconciliations.push_back(item);
-                    item = CReconciliation();  // reset
+                while (obj.parseJson3(str)) {
+                    reconciliations.push_back(obj);
+                    obj = CReconciliation();  // reset
                 }
                 return true;
             }
             break;
         case 's':
             if (fieldName % "statements") {
-                CReconciliationOutput item;
+                CReconciliationOutput obj;
                 string_q str = fieldValue;
-                while (item.parseJson3(str)) {
-                    statements.push_back(item);
-                    item = CReconciliationOutput();  // reset
+                while (obj.parseJson3(str)) {
+                    statements.push_back(obj);
+                    obj = CReconciliationOutput();  // reset
                 }
                 return true;
             }
@@ -409,11 +409,11 @@ bool CTransaction::setValueByName(const string_q& fieldNameIn, const string_q& f
                 return true;
             }
             if (fieldName % "traces") {
-                CTrace item;
+                CTrace obj;
                 string_q str = fieldValue;
-                while (item.parseJson3(str)) {
-                    traces.push_back(item);
-                    item = CTrace();  // reset
+                while (obj.parseJson3(str)) {
+                    traces.push_back(obj);
+                    obj = CTrace();  // reset
                 }
                 return true;
             }
@@ -856,11 +856,11 @@ CArchive& operator>>(CArchive& archive, CTransaction& tra) {
 }
 
 //-------------------------------------------------------------------------
-ostream& operator<<(ostream& os, const CTransaction& item) {
+ostream& operator<<(ostream& os, const CTransaction& it) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    item.Format(os, "", nullptr);
+    it.Format(os, "", nullptr);
     os << "\n";
     return os;
 }

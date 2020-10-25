@@ -45,12 +45,12 @@ class CNewReceipt : public CBaseNode {
     // EXISTING_CODE
     friend class CTransaction;
     // EXISTING_CODE
-    bool operator==(const CNewReceipt& item) const;
-    bool operator!=(const CNewReceipt& item) const {
-        return !operator==(item);
+    bool operator==(const CNewReceipt& it) const;
+    bool operator!=(const CNewReceipt& it) const {
+        return !operator==(it);
     }
     friend bool operator<(const CNewReceipt& v1, const CNewReceipt& v2);
-    friend ostream& operator<<(ostream& os, const CNewReceipt& item);
+    friend ostream& operator<<(ostream& os, const CNewReceipt& it);
 
   protected:
     void clear(void);
@@ -130,7 +130,7 @@ inline CNewReceipt& CNewReceipt::operator=(const CNewReceipt& newr) {
 }
 
 //-------------------------------------------------------------------------
-inline bool CNewReceipt::operator==(const CNewReceipt& item) const {
+inline bool CNewReceipt::operator==(const CNewReceipt& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)

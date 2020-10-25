@@ -150,11 +150,11 @@ bool CParameter::setValueByName(const string_q& fieldNameIn, const string_q& fie
     switch (tolower(fieldName[0])) {
         case 'c':
             if (fieldName % "components") {
-                CParameter item;
+                CParameter obj;
                 string_q str = fieldValue;
-                while (item.parseJson3(str)) {
-                    components.push_back(item);
-                    item = CParameter();  // reset
+                while (obj.parseJson3(str)) {
+                    components.push_back(obj);
+                    obj = CParameter();  // reset
                 }
                 return true;
             }
@@ -372,11 +372,11 @@ bool CParameter::readBackLevel(CArchive& archive) {
 }
 
 //-------------------------------------------------------------------------
-ostream& operator<<(ostream& os, const CParameter& item) {
+ostream& operator<<(ostream& os, const CParameter& it) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    item.Format(os, "", nullptr);
+    it.Format(os, "", nullptr);
     os << "\n";
     return os;
 }

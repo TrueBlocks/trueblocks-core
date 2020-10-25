@@ -13,4 +13,4 @@ fields = address selfDestructed|\
 includes = abilib.h
 cpp_includes = trace.h
 serializable = true
-equals = ((selfDestructed == item.selfDestructed) && (balance == item.balance) && (callType == item.callType) &&|(from == item.from) && (gas == item.gas) && (init == item.init) && (input == item.input) &&|(refundAddress == item.refundAddress) && (to == item.to) && (value == item.value))
+equals = ((selfDestructed == it.selfDestructed) && (balance == it.balance) && (callType == it.callType) &&|(from == it.from) && (gas == it.gas) && (init == it.init) && (input == it.input) &&|(refundAddress == it.refundAddress) && (to == it.to) && (value == it.value))

@@ -276,11 +276,11 @@ CArchive& operator>>(CArchive& archive, CPinnedItem& pin) {
 }
 
 //-------------------------------------------------------------------------
-ostream& operator<<(ostream& os, const CPinnedItem& item) {
+ostream& operator<<(ostream& os, const CPinnedItem& it) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    item.Format(os, "", nullptr);
+    it.Format(os, "", nullptr);
     os << "\n";
     return os;
 }

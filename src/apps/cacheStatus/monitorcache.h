@@ -42,12 +42,12 @@ class CMonitorCache : public CCache {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    bool operator==(const CMonitorCache& item) const;
-    bool operator!=(const CMonitorCache& item) const {
-        return !operator==(item);
+    bool operator==(const CMonitorCache& it) const;
+    bool operator!=(const CMonitorCache& it) const {
+        return !operator==(it);
     }
     friend bool operator<(const CMonitorCache& v1, const CMonitorCache& v2);
-    friend ostream& operator<<(ostream& os, const CMonitorCache& item);
+    friend ostream& operator<<(ostream& os, const CMonitorCache& it);
 
   protected:
     void clear(void);
@@ -121,7 +121,7 @@ inline CMonitorCache& CMonitorCache::operator=(const CMonitorCache& mo) {
 }
 
 //-------------------------------------------------------------------------
-inline bool CMonitorCache::operator==(const CMonitorCache& item) const {
+inline bool CMonitorCache::operator==(const CMonitorCache& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)

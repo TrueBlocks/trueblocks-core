@@ -56,12 +56,12 @@ class CBlock : public CBaseNode {
     bool forEveryUniqueAppearanceInBlock(APPEARANCEFUNC func, TRANSFUNC filt = NULL, void* data = NULL);
     bool forEveryUniqueAppearanceInBlockPerTx(APPEARANCEFUNC func, TRANSFUNC filt = NULL, void* data = NULL);
     // EXISTING_CODE
-    bool operator==(const CBlock& item) const;
-    bool operator!=(const CBlock& item) const {
-        return !operator==(item);
+    bool operator==(const CBlock& it) const;
+    bool operator!=(const CBlock& it) const {
+        return !operator==(it);
     }
     friend bool operator<(const CBlock& v1, const CBlock& v2);
-    friend ostream& operator<<(ostream& os, const CBlock& item);
+    friend ostream& operator<<(ostream& os, const CBlock& it);
 
   protected:
     void clear(void);
@@ -158,7 +158,7 @@ inline CBlock& CBlock::operator=(const CBlock& bl) {
 }
 
 //-------------------------------------------------------------------------
-inline bool CBlock::operator==(const CBlock& item) const {
+inline bool CBlock::operator==(const CBlock& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)

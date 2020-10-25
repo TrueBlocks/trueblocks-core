@@ -117,11 +117,11 @@ bool CConfigSection::setValueByName(const string_q& fieldNameIn, const string_q&
     switch (tolower(fieldName[0])) {
         case 'k':
             if (fieldName % "keys") {
-                CConfigItem item;
+                CConfigItem obj;
                 string_q str = fieldValue;
-                while (item.parseJson3(str)) {
-                    keys.push_back(item);
-                    item = CConfigItem();  // reset
+                while (obj.parseJson3(str)) {
+                    keys.push_back(obj);
+                    obj = CConfigItem();  // reset
                 }
                 return true;
             }
@@ -277,11 +277,11 @@ bool CConfigSection::readBackLevel(CArchive& archive) {
 }
 
 //-------------------------------------------------------------------------
-ostream& operator<<(ostream& os, const CConfigSection& item) {
+ostream& operator<<(ostream& os, const CConfigSection& it) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    item.Format(os, "", nullptr);
+    it.Format(os, "", nullptr);
     os << "\n";
     return os;
 }

@@ -110,11 +110,11 @@ bool CCollectionCache::setValueByName(const string_q& fieldNameIn, const string_
     switch (tolower(fieldName[0])) {
         case 'i':
             if (fieldName % "items") {
-                CCollectionCacheItem item;
+                CCollectionCacheItem obj;
                 string_q str = fieldValue;
-                while (item.parseJson3(str)) {
-                    items.push_back(item);
-                    item = CCollectionCacheItem();  // reset
+                while (obj.parseJson3(str)) {
+                    items.push_back(obj);
+                    obj = CCollectionCacheItem();  // reset
                 }
                 return true;
             }
@@ -241,11 +241,11 @@ bool CCollectionCache::readBackLevel(CArchive& archive) {
 }
 
 //-------------------------------------------------------------------------
-ostream& operator<<(ostream& os, const CCollectionCache& item) {
+ostream& operator<<(ostream& os, const CCollectionCache& it) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    item.Format(os, "", nullptr);
+    it.Format(os, "", nullptr);
     os << "\n";
     return os;
 }

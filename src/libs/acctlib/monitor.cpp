@@ -188,11 +188,11 @@ bool CMonitor::setValueByName(const string_q& fieldNameIn, const string_q& field
                 return summaryStatement.parseJson3(fieldValue);
             }
             if (fieldName % "stateHistory") {
-                CEthState item;
+                CEthState obj;
                 string_q str = fieldValue;
-                while (item.parseJson3(str)) {
-                    stateHistory.push_back(item);
-                    item = CEthState();  // reset
+                while (obj.parseJson3(str)) {
+                    stateHistory.push_back(obj);
+                    obj = CEthState();  // reset
                 }
                 return true;
             }
@@ -347,11 +347,11 @@ bool CMonitor::readBackLevel(CArchive& archive) {
 }
 
 //-------------------------------------------------------------------------
-ostream& operator<<(ostream& os, const CMonitor& item) {
+ostream& operator<<(ostream& os, const CMonitor& it) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    item.Format(os, "", nullptr);
+    it.Format(os, "", nullptr);
     os << "\n";
     return os;
 }

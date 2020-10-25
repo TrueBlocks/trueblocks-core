@@ -36,12 +36,12 @@ class [{CLASS_NAME}] : public [{BASE_CLASS}] {
 
 [{GET_OBJ}][{GET_STR}]    // EXISTING_CODE
     // EXISTING_CODE
-    bool operator==(const [{CLASS_NAME}]& item) const;
-    bool operator!=(const [{CLASS_NAME}]& item) const {
-        return !operator==(item);
+    bool operator==(const [{CLASS_NAME}]& it) const;
+    bool operator!=(const [{CLASS_NAME}]& it) const {
+        return !operator==(it);
     }
     friend bool operator<(const [{CLASS_NAME}]& v1, const [{CLASS_NAME}]& v2);
-    friend ostream& operator<<(ostream& os, const [{CLASS_NAME}]& item);
+    friend ostream& operator<<(ostream& os, const [{CLASS_NAME}]& it);
 
   protected:
     void clear(void);
@@ -111,7 +111,7 @@ inline [{CLASS_NAME}]& [{CLASS_NAME}]::operator=(const [{CLASS_NAME}]& [{SHORT}]
 }
 
 //-------------------------------------------------------------------------
-inline bool [{CLASS_NAME}]::operator==(const [{CLASS_NAME}]& item) const {
+inline bool [{CLASS_NAME}]::operator==(const [{CLASS_NAME}]& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // [{EQUAL_COMMENT}]

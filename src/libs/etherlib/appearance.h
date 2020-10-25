@@ -46,12 +46,12 @@ class CAppearance : public CBaseNode {
     }
     // string_q Format(const string_q& fmt) const;
     // EXISTING_CODE
-    bool operator==(const CAppearance& item) const;
-    bool operator!=(const CAppearance& item) const {
-        return !operator==(item);
+    bool operator==(const CAppearance& it) const;
+    bool operator!=(const CAppearance& it) const {
+        return !operator==(it);
     }
     friend bool operator<(const CAppearance& v1, const CAppearance& v2);
-    friend ostream& operator<<(ostream& os, const CAppearance& item);
+    friend ostream& operator<<(ostream& os, const CAppearance& it);
 
   protected:
     void clear(void);
@@ -131,7 +131,7 @@ inline CAppearance& CAppearance::operator=(const CAppearance& ap) {
 }
 
 //-------------------------------------------------------------------------
-inline bool CAppearance::operator==(const CAppearance& item) const {
+inline bool CAppearance::operator==(const CAppearance& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)

@@ -143,11 +143,11 @@ bool CNewReceipt::setValueByName(const string_q& fieldNameIn, const string_q& fi
             break;
         case 'l':
             if (fieldName % "logs") {
-                CLogEntry item;
+                CLogEntry obj;
                 string_q str = fieldValue;
-                while (item.parseJson3(str)) {
-                    logs.push_back(item);
-                    item = CLogEntry();  // reset
+                while (obj.parseJson3(str)) {
+                    logs.push_back(obj);
+                    obj = CLogEntry();  // reset
                 }
                 return true;
             }
@@ -289,11 +289,11 @@ bool CNewReceipt::readBackLevel(CArchive& archive) {
 }
 
 //-------------------------------------------------------------------------
-ostream& operator<<(ostream& os, const CNewReceipt& item) {
+ostream& operator<<(ostream& os, const CNewReceipt& it) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    item.Format(os, "", nullptr);
+    it.Format(os, "", nullptr);
     os << "\n";
     return os;
 }

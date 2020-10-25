@@ -55,12 +55,12 @@ class CEthState : public CBaseNode {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    bool operator==(const CEthState& item) const;
-    bool operator!=(const CEthState& item) const {
-        return !operator==(item);
+    bool operator==(const CEthState& it) const;
+    bool operator!=(const CEthState& it) const {
+        return !operator==(it);
     }
     friend bool operator<(const CEthState& v1, const CEthState& v2);
-    friend ostream& operator<<(ostream& os, const CEthState& item);
+    friend ostream& operator<<(ostream& os, const CEthState& it);
 
   protected:
     void clear(void);
@@ -146,11 +146,11 @@ inline CEthState& CEthState::operator=(const CEthState& et) {
 }
 
 //-------------------------------------------------------------------------
-inline bool CEthState::operator==(const CEthState& item) const {
+inline bool CEthState::operator==(const CEthState& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // Equality operator as defined in class definition
-    return blockNumber == item.blockNumber;
+    return blockNumber == it.blockNumber;
 }
 
 //-------------------------------------------------------------------------

@@ -55,12 +55,12 @@ class CCache : public CBaseNode {
     virtual bool writeBinaryCache(const string_q& cacheType, bool details);
     virtual bool needsRefresh(const string_q& cacheType, bool details);
     // EXISTING_CODE
-    bool operator==(const CCache& item) const;
-    bool operator!=(const CCache& item) const {
-        return !operator==(item);
+    bool operator==(const CCache& it) const;
+    bool operator!=(const CCache& it) const {
+        return !operator==(it);
     }
     friend bool operator<(const CCache& v1, const CCache& v2);
-    friend ostream& operator<<(ostream& os, const CCache& item);
+    friend ostream& operator<<(ostream& os, const CCache& it);
 
   protected:
     void clear(void);
@@ -142,7 +142,7 @@ inline CCache& CCache::operator=(const CCache& ca) {
 }
 
 //-------------------------------------------------------------------------
-inline bool CCache::operator==(const CCache& item) const {
+inline bool CCache::operator==(const CCache& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)

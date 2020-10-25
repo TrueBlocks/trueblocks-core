@@ -19,5 +19,5 @@ fields = \
     string fileName|\
     uint32 test_id (nowrite)
 includes = acctlib.h
-equals = (route % item.route && tool % item.tool && name % item.name)
+equals = (route % it.route && tool % it.tool && name % it.name)
 sort = v1.test_id < v2.test_id

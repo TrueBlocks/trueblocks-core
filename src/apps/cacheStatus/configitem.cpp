@@ -143,11 +143,11 @@ bool CConfigItem::setValueByName(const string_q& fieldNameIn, const string_q& fi
                 return true;
             }
             if (fieldName % "named") {
-                CAccountName item;
+                CAccountName obj;
                 string_q str = fieldValue;
-                while (item.parseJson3(str)) {
-                    named.push_back(item);
-                    item = CAccountName();  // reset
+                while (obj.parseJson3(str)) {
+                    named.push_back(obj);
+                    obj = CAccountName();  // reset
                 }
                 return true;
             }
@@ -331,11 +331,11 @@ bool CConfigItem::readBackLevel(CArchive& archive) {
 }
 
 //-------------------------------------------------------------------------
-ostream& operator<<(ostream& os, const CConfigItem& item) {
+ostream& operator<<(ostream& os, const CConfigItem& it) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    item.Format(os, "", nullptr);
+    it.Format(os, "", nullptr);
     os << "\n";
     return os;
 }

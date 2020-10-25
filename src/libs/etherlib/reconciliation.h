@@ -63,12 +63,12 @@ class CReconciliation : public CBaseNode {
                    const CTransaction* trans);
     bool reconcileUsingTraces(const CReconciliation& lastStatement, blknum_t nextBlock, const CTransaction* trans);
     // EXISTING_CODE
-    bool operator==(const CReconciliation& item) const;
-    bool operator!=(const CReconciliation& item) const {
-        return !operator==(item);
+    bool operator==(const CReconciliation& it) const;
+    bool operator!=(const CReconciliation& it) const {
+        return !operator==(it);
     }
     friend bool operator<(const CReconciliation& v1, const CReconciliation& v2);
-    friend ostream& operator<<(ostream& os, const CReconciliation& item);
+    friend ostream& operator<<(ostream& os, const CReconciliation& it);
 
   protected:
     void clear(void);
@@ -186,11 +186,11 @@ inline CReconciliation& CReconciliation::operator=(const CReconciliation& re) {
 }
 
 //-------------------------------------------------------------------------
-inline bool CReconciliation::operator==(const CReconciliation& item) const {
+inline bool CReconciliation::operator==(const CReconciliation& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // Equality operator as defined in class definition
-    return ((blockNumber == item.blockNumber) && (asset == item.asset));
+    return ((blockNumber == it.blockNumber) && (asset == it.asset));
 }
 
 //-------------------------------------------------------------------------

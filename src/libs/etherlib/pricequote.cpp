@@ -266,11 +266,11 @@ bool CPriceQuote::readBackLevel(CArchive& archive) {
 }
 
 //-------------------------------------------------------------------------
-ostream& operator<<(ostream& os, const CPriceQuote& item) {
+ostream& operator<<(ostream& os, const CPriceQuote& it) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    item.Format(os, "", nullptr);
+    it.Format(os, "", nullptr);
     os << "\n";
     return os;
 }

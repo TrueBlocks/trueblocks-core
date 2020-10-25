@@ -42,12 +42,12 @@ class CSlurpCache : public CCache {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    bool operator==(const CSlurpCache& item) const;
-    bool operator!=(const CSlurpCache& item) const {
-        return !operator==(item);
+    bool operator==(const CSlurpCache& it) const;
+    bool operator!=(const CSlurpCache& it) const {
+        return !operator==(it);
     }
     friend bool operator<(const CSlurpCache& v1, const CSlurpCache& v2);
-    friend ostream& operator<<(ostream& os, const CSlurpCache& item);
+    friend ostream& operator<<(ostream& os, const CSlurpCache& it);
 
   protected:
     void clear(void);
@@ -121,7 +121,7 @@ inline CSlurpCache& CSlurpCache::operator=(const CSlurpCache& sl) {
 }
 
 //-------------------------------------------------------------------------
-inline bool CSlurpCache::operator==(const CSlurpCache& item) const {
+inline bool CSlurpCache::operator==(const CSlurpCache& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)

@@ -134,11 +134,11 @@ bool CMonitorCache::setValueByName(const string_q& fieldNameIn, const string_q& 
             break;
         case 'i':
             if (fieldName % "items") {
-                CMonitorCacheItem item;
+                CMonitorCacheItem obj;
                 string_q str = fieldValue;
-                while (item.parseJson3(str)) {
-                    items.push_back(item);
-                    item = CMonitorCacheItem();  // reset
+                while (obj.parseJson3(str)) {
+                    items.push_back(obj);
+                    obj = CMonitorCacheItem();  // reset
                 }
                 return true;
             }
@@ -268,11 +268,11 @@ bool CMonitorCache::readBackLevel(CArchive& archive) {
 }
 
 //-------------------------------------------------------------------------
-ostream& operator<<(ostream& os, const CMonitorCache& item) {
+ostream& operator<<(ostream& os, const CMonitorCache& it) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    item.Format(os, "", nullptr);
+    it.Format(os, "", nullptr);
     os << "\n";
     return os;
 }

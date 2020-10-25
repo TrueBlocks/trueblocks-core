@@ -216,11 +216,11 @@ bool CFunction::setValueByName(const string_q& fieldNameIn, const string_q& fiel
             break;
         case 'i':
             if (fieldName % "inputs") {
-                CParameter item;
+                CParameter obj;
                 string_q str = fieldValue;
-                while (item.parseJson3(str)) {
-                    inputs.push_back(item);
-                    item = CParameter();  // reset
+                while (obj.parseJson3(str)) {
+                    inputs.push_back(obj);
+                    obj = CParameter();  // reset
                 }
                 return true;
             }
@@ -239,11 +239,11 @@ bool CFunction::setValueByName(const string_q& fieldNameIn, const string_q& fiel
             break;
         case 'o':
             if (fieldName % "outputs") {
-                CParameter item;
+                CParameter obj;
                 string_q str = fieldValue;
-                while (item.parseJson3(str)) {
-                    outputs.push_back(item);
-                    item = CParameter();  // reset
+                while (obj.parseJson3(str)) {
+                    outputs.push_back(obj);
+                    obj = CParameter();  // reset
                 }
                 return true;
             }
@@ -497,11 +497,11 @@ CArchive& operator>>(CArchive& archive, CFunction& fun) {
 }
 
 //-------------------------------------------------------------------------
-ostream& operator<<(ostream& os, const CFunction& item) {
+ostream& operator<<(ostream& os, const CFunction& it) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    item.Format(os, "", nullptr);
+    it.Format(os, "", nullptr);
     os << "\n";
     return os;
 }

@@ -43,12 +43,12 @@ class CPerson : public CBaseNode {
     CPerson(const string_q& n, uint64_t a) : name(n), age(a), next(NULL) {
     }
     // EXISTING_CODE
-    bool operator==(const CPerson& item) const;
-    bool operator!=(const CPerson& item) const {
-        return !operator==(item);
+    bool operator==(const CPerson& it) const;
+    bool operator!=(const CPerson& it) const {
+        return !operator==(it);
     }
     friend bool operator<(const CPerson& v1, const CPerson& v2);
-    friend ostream& operator<<(ostream& os, const CPerson& item);
+    friend ostream& operator<<(ostream& os, const CPerson& it);
 
   protected:
     void clear(void);
@@ -130,7 +130,7 @@ inline CPerson& CPerson::operator=(const CPerson& pe) {
 }
 
 //-------------------------------------------------------------------------
-inline bool CPerson::operator==(const CPerson& item) const {
+inline bool CPerson::operator==(const CPerson& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)

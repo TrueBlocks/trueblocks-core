@@ -52,12 +52,12 @@ class CCommandOption : public CBaseNode {
     // EXISTING_CODE
     explicit CCommandOption(const string_q& line);
     // EXISTING_CODE
-    bool operator==(const CCommandOption& item) const;
-    bool operator!=(const CCommandOption& item) const {
-        return !operator==(item);
+    bool operator==(const CCommandOption& it) const;
+    bool operator!=(const CCommandOption& it) const {
+        return !operator==(it);
     }
     friend bool operator<(const CCommandOption& v1, const CCommandOption& v2);
-    friend ostream& operator<<(ostream& os, const CCommandOption& item);
+    friend ostream& operator<<(ostream& os, const CCommandOption& it);
 
   protected:
     void clear(void);
@@ -157,7 +157,7 @@ inline CCommandOption& CCommandOption::operator=(const CCommandOption& co) {
 }
 
 //-------------------------------------------------------------------------
-inline bool CCommandOption::operator==(const CCommandOption& item) const {
+inline bool CCommandOption::operator==(const CCommandOption& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)

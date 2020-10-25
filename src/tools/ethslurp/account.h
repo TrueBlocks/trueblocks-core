@@ -46,12 +46,12 @@ class CAccount : public CBaseNode {
     bool handleCustomFormat(ostream& ctx, const string_q& fmtIn, void* data = NULL) const;
     void markLatest(const CTransaction& trans);
     // EXISTING_CODE
-    bool operator==(const CAccount& item) const;
-    bool operator!=(const CAccount& item) const {
-        return !operator==(item);
+    bool operator==(const CAccount& it) const;
+    bool operator!=(const CAccount& it) const {
+        return !operator==(it);
     }
     friend bool operator<(const CAccount& v1, const CAccount& v2);
-    friend ostream& operator<<(ostream& os, const CAccount& item);
+    friend ostream& operator<<(ostream& os, const CAccount& it);
 
   protected:
     void clear(void);
@@ -129,7 +129,7 @@ inline CAccount& CAccount::operator=(const CAccount& ac) {
 }
 
 //-------------------------------------------------------------------------
-inline bool CAccount::operator==(const CAccount& item) const {
+inline bool CAccount::operator==(const CAccount& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)

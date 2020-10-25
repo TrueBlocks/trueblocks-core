@@ -110,11 +110,11 @@ bool CIndexCache::setValueByName(const string_q& fieldNameIn, const string_q& fi
     switch (tolower(fieldName[0])) {
         case 'i':
             if (fieldName % "items") {
-                CIndexCacheItem item;
+                CIndexCacheItem obj;
                 string_q str = fieldValue;
-                while (item.parseJson3(str)) {
-                    items.push_back(item);
-                    item = CIndexCacheItem();  // reset
+                while (obj.parseJson3(str)) {
+                    items.push_back(obj);
+                    obj = CIndexCacheItem();  // reset
                 }
                 return true;
             }
@@ -247,11 +247,11 @@ bool CIndexCache::readBackLevel(CArchive& archive) {
 }
 
 //-------------------------------------------------------------------------
-ostream& operator<<(ostream& os, const CIndexCache& item) {
+ostream& operator<<(ostream& os, const CIndexCache& it) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    item.Format(os, "", nullptr);
+    it.Format(os, "", nullptr);
     os << "\n";
     return os;
 }

@@ -41,12 +41,12 @@ class CTraceResult : public CBaseNode {
     // EXISTING_CODE
     friend class CTrace;
     // EXISTING_CODE
-    bool operator==(const CTraceResult& item) const;
-    bool operator!=(const CTraceResult& item) const {
-        return !operator==(item);
+    bool operator==(const CTraceResult& it) const;
+    bool operator!=(const CTraceResult& it) const {
+        return !operator==(it);
     }
     friend bool operator<(const CTraceResult& v1, const CTraceResult& v2);
-    friend ostream& operator<<(ostream& os, const CTraceResult& item);
+    friend ostream& operator<<(ostream& os, const CTraceResult& it);
 
   protected:
     void clear(void);
@@ -124,12 +124,11 @@ inline CTraceResult& CTraceResult::operator=(const CTraceResult& tr) {
 }
 
 //-------------------------------------------------------------------------
-inline bool CTraceResult::operator==(const CTraceResult& item) const {
+inline bool CTraceResult::operator==(const CTraceResult& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // Equality operator as defined in class definition
-    return ((newContract == item.newContract) && (code == item.code) && (gasUsed == item.gasUsed) &&
-            (output == item.output));
+    return ((newContract == it.newContract) && (code == it.code) && (gasUsed == it.gasUsed) && (output == it.output));
 }
 
 //-------------------------------------------------------------------------

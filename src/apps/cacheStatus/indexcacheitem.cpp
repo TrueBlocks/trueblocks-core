@@ -351,11 +351,11 @@ bool CIndexCacheItem::readBackLevel(CArchive& archive) {
 }
 
 //-------------------------------------------------------------------------
-ostream& operator<<(ostream& os, const CIndexCacheItem& item) {
+ostream& operator<<(ostream& os, const CIndexCacheItem& it) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    item.Format(os, "", nullptr);
+    it.Format(os, "", nullptr);
     os << "\n";
     return os;
 }

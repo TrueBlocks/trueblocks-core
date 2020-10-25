@@ -49,12 +49,12 @@ class CCollection : public CBaseNode {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    bool operator==(const CCollection& item) const;
-    bool operator!=(const CCollection& item) const {
-        return !operator==(item);
+    bool operator==(const CCollection& it) const;
+    bool operator!=(const CCollection& it) const {
+        return !operator==(it);
     }
     friend bool operator<(const CCollection& v1, const CCollection& v2);
-    friend ostream& operator<<(ostream& os, const CCollection& item);
+    friend ostream& operator<<(ostream& os, const CCollection& it);
 
   protected:
     void clear(void);
@@ -142,11 +142,11 @@ inline CCollection& CCollection::operator=(const CCollection& co) {
 }
 
 //-------------------------------------------------------------------------
-inline bool CCollection::operator==(const CCollection& item) const {
+inline bool CCollection::operator==(const CCollection& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // Equality operator as defined in class definition
-    return addressList % item.addressList;
+    return addressList % it.addressList;
 }
 
 //-------------------------------------------------------------------------

@@ -39,12 +39,12 @@ class CESResult : public CBaseNode {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    bool operator==(const CESResult& item) const;
-    bool operator!=(const CESResult& item) const {
-        return !operator==(item);
+    bool operator==(const CESResult& it) const;
+    bool operator!=(const CESResult& it) const {
+        return !operator==(it);
     }
     friend bool operator<(const CESResult& v1, const CESResult& v2);
-    friend ostream& operator<<(ostream& os, const CESResult& item);
+    friend ostream& operator<<(ostream& os, const CESResult& it);
 
   protected:
     void clear(void);
@@ -120,7 +120,7 @@ inline CESResult& CESResult::operator=(const CESResult& es) {
 }
 
 //-------------------------------------------------------------------------
-inline bool CESResult::operator==(const CESResult& item) const {
+inline bool CESResult::operator==(const CESResult& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)

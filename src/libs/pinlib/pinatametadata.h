@@ -40,12 +40,12 @@ class CPinataMetadata : public CBaseNode {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    bool operator==(const CPinataMetadata& item) const;
-    bool operator!=(const CPinataMetadata& item) const {
-        return !operator==(item);
+    bool operator==(const CPinataMetadata& it) const;
+    bool operator!=(const CPinataMetadata& it) const {
+        return !operator==(it);
     }
     friend bool operator<(const CPinataMetadata& v1, const CPinataMetadata& v2);
-    friend ostream& operator<<(ostream& os, const CPinataMetadata& item);
+    friend ostream& operator<<(ostream& os, const CPinataMetadata& it);
 
   protected:
     void clear(void);
@@ -119,11 +119,11 @@ inline CPinataMetadata& CPinataMetadata::operator=(const CPinataMetadata& pi) {
 }
 
 //-------------------------------------------------------------------------
-inline bool CPinataMetadata::operator==(const CPinataMetadata& item) const {
+inline bool CPinataMetadata::operator==(const CPinataMetadata& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // Equality operator as defined in class definition
-    return (name == item.name);
+    return (name == it.name);
 }
 
 //-------------------------------------------------------------------------

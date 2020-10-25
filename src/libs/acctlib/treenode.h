@@ -53,12 +53,12 @@ class CTreeNode : public CBaseNode {
     }
     CTreeNode* newBranch(const string_q& _k1, const string_q& _v1, const string_q& _k2, const string_q& _v2);
     // EXISTING_CODE
-    bool operator==(const CTreeNode& item) const;
-    bool operator!=(const CTreeNode& item) const {
-        return !operator==(item);
+    bool operator==(const CTreeNode& it) const;
+    bool operator!=(const CTreeNode& it) const {
+        return !operator==(it);
     }
     friend bool operator<(const CTreeNode& v1, const CTreeNode& v2);
-    friend ostream& operator<<(ostream& os, const CTreeNode& item);
+    friend ostream& operator<<(ostream& os, const CTreeNode& it);
 
   protected:
     void clear(void);
@@ -132,7 +132,7 @@ inline CTreeNode& CTreeNode::operator=(const CTreeNode& tr) {
 }
 
 //-------------------------------------------------------------------------
-inline bool CTreeNode::operator==(const CTreeNode& item) const {
+inline bool CTreeNode::operator==(const CTreeNode& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)

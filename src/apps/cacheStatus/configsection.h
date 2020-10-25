@@ -44,12 +44,12 @@ class CConfigSection : public CBaseNode {
     explicit CConfigSection(const string_q& s, const string_q& n) : section(s), name(n) {
     }
     // EXISTING_CODE
-    bool operator==(const CConfigSection& item) const;
-    bool operator!=(const CConfigSection& item) const {
-        return !operator==(item);
+    bool operator==(const CConfigSection& it) const;
+    bool operator!=(const CConfigSection& it) const {
+        return !operator==(it);
     }
     friend bool operator<(const CConfigSection& v1, const CConfigSection& v2);
-    friend ostream& operator<<(ostream& os, const CConfigSection& item);
+    friend ostream& operator<<(ostream& os, const CConfigSection& it);
 
   protected:
     void clear(void);
@@ -125,7 +125,7 @@ inline CConfigSection& CConfigSection::operator=(const CConfigSection& co) {
 }
 
 //-------------------------------------------------------------------------
-inline bool CConfigSection::operator==(const CConfigSection& item) const {
+inline bool CConfigSection::operator==(const CConfigSection& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)

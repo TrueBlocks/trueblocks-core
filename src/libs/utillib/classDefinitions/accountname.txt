@@ -20,4 +20,4 @@ includes = basetypes.h|basenode.h|sfarchive.h
 cpp_includes = options_base.h
 display_str = tags, address, name, symbol, source, decimals, description, deleted, is_custom, is_prefund
 sort = v1.address < v2.address
-equals = address % item.address
+equals = address % it.address

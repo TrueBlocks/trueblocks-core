@@ -261,11 +261,11 @@ CArchive& operator>>(CArchive& archive, CApiSpec& api) {
 }
 
 //-------------------------------------------------------------------------
-ostream& operator<<(ostream& os, const CApiSpec& item) {
+ostream& operator<<(ostream& os, const CApiSpec& it) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    item.Format(os, "", nullptr);
+    it.Format(os, "", nullptr);
     os << "\n";
     return os;
 }

@@ -178,11 +178,11 @@ bool CReceipt::setValueByName(const string_q& fieldNameIn, const string_q& field
             break;
         case 'l':
             if (fieldName % "logs") {
-                CLogEntry item;
+                CLogEntry obj;
                 string_q str = fieldValue;
-                while (item.parseJson3(str)) {
-                    logs.push_back(item);
-                    item = CLogEntry();  // reset
+                while (obj.parseJson3(str)) {
+                    logs.push_back(obj);
+                    obj = CLogEntry();  // reset
                 }
                 return true;
             }
@@ -401,11 +401,11 @@ CArchive& operator>>(CArchive& archive, CReceipt& rec) {
 }
 
 //-------------------------------------------------------------------------
-ostream& operator<<(ostream& os, const CReceipt& item) {
+ostream& operator<<(ostream& os, const CReceipt& it) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    item.Format(os, "", nullptr);
+    it.Format(os, "", nullptr);
     os << "\n";
     return os;
 }

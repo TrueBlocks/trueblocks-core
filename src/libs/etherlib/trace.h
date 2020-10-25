@@ -69,12 +69,12 @@ class CTrace : public CBaseNode {
     void loadTraceAsTransFee(const CTransaction& trans, blknum_t bn, blknum_t txid);
     void loadTraceAsDdos(const CTransaction& trans, blknum_t bn, blknum_t txid);
     // EXISTING_CODE
-    bool operator==(const CTrace& item) const;
-    bool operator!=(const CTrace& item) const {
-        return !operator==(item);
+    bool operator==(const CTrace& it) const;
+    bool operator!=(const CTrace& it) const {
+        return !operator==(it);
     }
     friend bool operator<(const CTrace& v1, const CTrace& v2);
-    friend ostream& operator<<(ostream& os, const CTrace& item);
+    friend ostream& operator<<(ostream& os, const CTrace& it);
 
   protected:
     void clear(void);
@@ -170,7 +170,7 @@ inline CTrace& CTrace::operator=(const CTrace& tr) {
 }
 
 //-------------------------------------------------------------------------
-inline bool CTrace::operator==(const CTrace& item) const {
+inline bool CTrace::operator==(const CTrace& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)

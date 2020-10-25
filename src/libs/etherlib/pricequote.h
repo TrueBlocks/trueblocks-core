@@ -39,12 +39,12 @@ class CPriceQuote : public CBaseNode {
     // EXISTING_CODE
     time_q date;
     // EXISTING_CODE
-    bool operator==(const CPriceQuote& item) const;
-    bool operator!=(const CPriceQuote& item) const {
-        return !operator==(item);
+    bool operator==(const CPriceQuote& it) const;
+    bool operator!=(const CPriceQuote& it) const {
+        return !operator==(it);
     }
     friend bool operator<(const CPriceQuote& v1, const CPriceQuote& v2);
-    friend ostream& operator<<(ostream& os, const CPriceQuote& item);
+    friend ostream& operator<<(ostream& os, const CPriceQuote& it);
 
   protected:
     void clear(void);
@@ -121,7 +121,7 @@ inline CPriceQuote& CPriceQuote::operator=(const CPriceQuote& pr) {
 }
 
 //-------------------------------------------------------------------------
-inline bool CPriceQuote::operator==(const CPriceQuote& item) const {
+inline bool CPriceQuote::operator==(const CPriceQuote& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)

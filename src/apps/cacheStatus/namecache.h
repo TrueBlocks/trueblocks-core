@@ -42,12 +42,12 @@ class CNameCache : public CCache {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    bool operator==(const CNameCache& item) const;
-    bool operator!=(const CNameCache& item) const {
-        return !operator==(item);
+    bool operator==(const CNameCache& it) const;
+    bool operator!=(const CNameCache& it) const {
+        return !operator==(it);
     }
     friend bool operator<(const CNameCache& v1, const CNameCache& v2);
-    friend ostream& operator<<(ostream& os, const CNameCache& item);
+    friend ostream& operator<<(ostream& os, const CNameCache& it);
 
   protected:
     void clear(void);
@@ -121,7 +121,7 @@ inline CNameCache& CNameCache::operator=(const CNameCache& na) {
 }
 
 //-------------------------------------------------------------------------
-inline bool CNameCache::operator==(const CNameCache& item) const {
+inline bool CNameCache::operator==(const CNameCache& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)

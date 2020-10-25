@@ -261,11 +261,11 @@ CArchive& operator>>(CArchive& archive, CPinataRegion& pin) {
 }
 
 //-------------------------------------------------------------------------
-ostream& operator<<(ostream& os, const CPinataRegion& item) {
+ostream& operator<<(ostream& os, const CPinataRegion& it) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    item.Format(os, "", nullptr);
+    it.Format(os, "", nullptr);
     os << "\n";
     return os;
 }

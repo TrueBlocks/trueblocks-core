@@ -77,12 +77,12 @@ class CTransaction : public CBaseNode {
     bool loadTransAsBlockReward(blknum_t bn, blknum_t txid, const address_t& addr);
     bool loadTransAsUncleReward(blknum_t bn, blknum_t uncleBn, const address_t& addr);
     // EXISTING_CODE
-    bool operator==(const CTransaction& item) const;
-    bool operator!=(const CTransaction& item) const {
-        return !operator==(item);
+    bool operator==(const CTransaction& it) const;
+    bool operator!=(const CTransaction& it) const {
+        return !operator==(it);
     }
     friend bool operator<(const CTransaction& v1, const CTransaction& v2);
-    friend ostream& operator<<(ostream& os, const CTransaction& item);
+    friend ostream& operator<<(ostream& os, const CTransaction& it);
 
   protected:
     void clear(void);
@@ -202,11 +202,11 @@ inline CTransaction& CTransaction::operator=(const CTransaction& tr) {
 }
 
 //-------------------------------------------------------------------------
-inline bool CTransaction::operator==(const CTransaction& item) const {
+inline bool CTransaction::operator==(const CTransaction& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // Equality operator as defined in class definition
-    return (hash == item.hash);
+    return (hash == it.hash);
 }
 
 //-------------------------------------------------------------------------

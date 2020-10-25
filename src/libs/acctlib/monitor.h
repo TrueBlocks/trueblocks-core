@@ -74,12 +74,12 @@ class CMonitor : public CAccountName {
     void deleteMonitor(void);
     void removeMonitor(void);
     // EXISTING_CODE
-    bool operator==(const CMonitor& item) const;
-    bool operator!=(const CMonitor& item) const {
-        return !operator==(item);
+    bool operator==(const CMonitor& it) const;
+    bool operator!=(const CMonitor& it) const {
+        return !operator==(it);
     }
     friend bool operator<(const CMonitor& v1, const CMonitor& v2);
-    friend ostream& operator<<(ostream& os, const CMonitor& item);
+    friend ostream& operator<<(ostream& os, const CMonitor& it);
 
   protected:
     void clear(void);
@@ -198,7 +198,7 @@ inline CMonitor& CMonitor::operator=(const CMonitor& mo) {
 }
 
 //-------------------------------------------------------------------------
-inline bool CMonitor::operator==(const CMonitor& item) const {
+inline bool CMonitor::operator==(const CMonitor& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)

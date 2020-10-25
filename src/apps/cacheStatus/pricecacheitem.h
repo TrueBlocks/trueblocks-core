@@ -38,12 +38,12 @@ class CPriceCacheItem : public CAccountName {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    bool operator==(const CPriceCacheItem& item) const;
-    bool operator!=(const CPriceCacheItem& item) const {
-        return !operator==(item);
+    bool operator==(const CPriceCacheItem& it) const;
+    bool operator!=(const CPriceCacheItem& it) const {
+        return !operator==(it);
     }
     friend bool operator<(const CPriceCacheItem& v1, const CPriceCacheItem& v2);
-    friend ostream& operator<<(ostream& os, const CPriceCacheItem& item);
+    friend ostream& operator<<(ostream& os, const CPriceCacheItem& it);
 
   protected:
     void clear(void);
@@ -117,7 +117,7 @@ inline CPriceCacheItem& CPriceCacheItem::operator=(const CPriceCacheItem& pr) {
 }
 
 //-------------------------------------------------------------------------
-inline bool CPriceCacheItem::operator==(const CPriceCacheItem& item) const {
+inline bool CPriceCacheItem::operator==(const CPriceCacheItem& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)

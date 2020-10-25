@@ -63,12 +63,12 @@ class CMeasure : public CBaseNode {
         return *this;
     }
     // EXISTING_CODE
-    bool operator==(const CMeasure& item) const;
-    bool operator!=(const CMeasure& item) const {
-        return !operator==(item);
+    bool operator==(const CMeasure& it) const;
+    bool operator!=(const CMeasure& it) const {
+        return !operator==(it);
     }
     friend bool operator<(const CMeasure& v1, const CMeasure& v2);
-    friend ostream& operator<<(ostream& os, const CMeasure& item);
+    friend ostream& operator<<(ostream& os, const CMeasure& it);
 
   protected:
     void clear(void);
@@ -156,7 +156,7 @@ inline CMeasure& CMeasure::operator=(const CMeasure& me) {
 }
 
 //-------------------------------------------------------------------------
-inline bool CMeasure::operator==(const CMeasure& item) const {
+inline bool CMeasure::operator==(const CMeasure& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)

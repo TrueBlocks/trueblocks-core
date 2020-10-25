@@ -49,12 +49,12 @@ class CLeaf : public CTreeNode {
   private:
     bool contains(const string_q& _key) const;
     // EXISTING_CODE
-    bool operator==(const CLeaf& item) const;
-    bool operator!=(const CLeaf& item) const {
-        return !operator==(item);
+    bool operator==(const CLeaf& it) const;
+    bool operator!=(const CLeaf& it) const {
+        return !operator==(it);
     }
     friend bool operator<(const CLeaf& v1, const CLeaf& v2);
-    friend ostream& operator<<(ostream& os, const CLeaf& item);
+    friend ostream& operator<<(ostream& os, const CLeaf& it);
 
   protected:
     void clear(void);
@@ -128,7 +128,7 @@ inline CLeaf& CLeaf::operator=(const CLeaf& le) {
 }
 
 //-------------------------------------------------------------------------
-inline bool CLeaf::operator==(const CLeaf& item) const {
+inline bool CLeaf::operator==(const CLeaf& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)

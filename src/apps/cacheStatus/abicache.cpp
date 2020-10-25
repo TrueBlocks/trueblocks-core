@@ -110,11 +110,11 @@ bool CAbiCache::setValueByName(const string_q& fieldNameIn, const string_q& fiel
     switch (tolower(fieldName[0])) {
         case 'i':
             if (fieldName % "items") {
-                CAbiCacheItem item;
+                CAbiCacheItem obj;
                 string_q str = fieldValue;
-                while (item.parseJson3(str)) {
-                    items.push_back(item);
-                    item = CAbiCacheItem();  // reset
+                while (obj.parseJson3(str)) {
+                    items.push_back(obj);
+                    obj = CAbiCacheItem();  // reset
                 }
                 return true;
             }
@@ -241,11 +241,11 @@ bool CAbiCache::readBackLevel(CArchive& archive) {
 }
 
 //-------------------------------------------------------------------------
-ostream& operator<<(ostream& os, const CAbiCache& item) {
+ostream& operator<<(ostream& os, const CAbiCache& it) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    item.Format(os, "", nullptr);
+    it.Format(os, "", nullptr);
     os << "\n";
     return os;
 }

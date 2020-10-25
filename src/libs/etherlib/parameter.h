@@ -84,12 +84,12 @@ class CParameter : public CBaseNode {
     bool fromDefinition(const string_q& input);
     bool isValid(void) const;
     // EXISTING_CODE
-    bool operator==(const CParameter& item) const;
-    bool operator!=(const CParameter& item) const {
-        return !operator==(item);
+    bool operator==(const CParameter& it) const;
+    bool operator!=(const CParameter& it) const {
+        return !operator==(it);
     }
     friend bool operator<(const CParameter& v1, const CParameter& v2);
-    friend ostream& operator<<(ostream& os, const CParameter& item);
+    friend ostream& operator<<(ostream& os, const CParameter& it);
 
   protected:
     void clear(void);
@@ -177,7 +177,7 @@ inline CParameter& CParameter::operator=(const CParameter& pa) {
 }
 
 //-------------------------------------------------------------------------
-inline bool CParameter::operator==(const CParameter& item) const {
+inline bool CParameter::operator==(const CParameter& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)

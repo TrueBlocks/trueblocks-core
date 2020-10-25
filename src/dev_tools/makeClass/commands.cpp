@@ -107,11 +107,11 @@ bool CCommands::setValueByName(const string_q& fieldNameIn, const string_q& fiel
     switch (tolower(fieldName[0])) {
         case 'r':
             if (fieldName % "routes") {
-                CApiRoute item;
+                CApiRoute obj;
                 string_q str = fieldValue;
-                while (item.parseJson3(str)) {
-                    routes.push_back(item);
-                    item = CApiRoute();  // reset
+                while (obj.parseJson3(str)) {
+                    routes.push_back(obj);
+                    obj = CApiRoute();  // reset
                 }
                 return true;
             }
@@ -236,11 +236,11 @@ bool CCommands::readBackLevel(CArchive& archive) {
 }
 
 //-------------------------------------------------------------------------
-ostream& operator<<(ostream& os, const CCommands& item) {
+ostream& operator<<(ostream& os, const CCommands& it) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    item.Format(os, "", nullptr);
+    it.Format(os, "", nullptr);
     os << "\n";
     return os;
 }

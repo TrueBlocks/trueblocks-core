@@ -44,12 +44,12 @@ class CTraceFilter : public CBaseNode {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    bool operator==(const CTraceFilter& item) const;
-    bool operator!=(const CTraceFilter& item) const {
-        return !operator==(item);
+    bool operator==(const CTraceFilter& it) const;
+    bool operator!=(const CTraceFilter& it) const {
+        return !operator==(it);
     }
     friend bool operator<(const CTraceFilter& v1, const CTraceFilter& v2);
-    friend ostream& operator<<(ostream& os, const CTraceFilter& item);
+    friend ostream& operator<<(ostream& os, const CTraceFilter& it);
 
   protected:
     void clear(void);
@@ -131,7 +131,7 @@ inline CTraceFilter& CTraceFilter::operator=(const CTraceFilter& tr) {
 }
 
 //-------------------------------------------------------------------------
-inline bool CTraceFilter::operator==(const CTraceFilter& item) const {
+inline bool CTraceFilter::operator==(const CTraceFilter& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)

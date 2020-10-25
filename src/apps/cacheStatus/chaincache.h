@@ -40,12 +40,12 @@ class CChainCache : public CCache {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    bool operator==(const CChainCache& item) const;
-    bool operator!=(const CChainCache& item) const {
-        return !operator==(item);
+    bool operator==(const CChainCache& it) const;
+    bool operator!=(const CChainCache& it) const {
+        return !operator==(it);
     }
     friend bool operator<(const CChainCache& v1, const CChainCache& v2);
-    friend ostream& operator<<(ostream& os, const CChainCache& item);
+    friend ostream& operator<<(ostream& os, const CChainCache& it);
 
   protected:
     void clear(void);
@@ -119,7 +119,7 @@ inline CChainCache& CChainCache::operator=(const CChainCache& ch) {
 }
 
 //-------------------------------------------------------------------------
-inline bool CChainCache::operator==(const CChainCache& item) const {
+inline bool CChainCache::operator==(const CChainCache& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)

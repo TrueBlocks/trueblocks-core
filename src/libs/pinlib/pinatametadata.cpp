@@ -112,11 +112,11 @@ bool CPinataMetadata::setValueByName(const string_q& fieldNameIn, const string_q
     switch (tolower(fieldName[0])) {
         case 'k':
             if (fieldName % "keyvalues") {
-                CKeyValue item;
+                CKeyValue obj;
                 string_q str = fieldValue;
-                while (item.parseJson3(str)) {
-                    keyvalues.push_back(item);
-                    item = CKeyValue();  // reset
+                while (obj.parseJson3(str)) {
+                    keyvalues.push_back(obj);
+                    obj = CKeyValue();  // reset
                 }
                 return true;
             }
@@ -262,11 +262,11 @@ CArchive& operator>>(CArchive& archive, CPinataMetadata& pin) {
 }
 
 //-------------------------------------------------------------------------
-ostream& operator<<(ostream& os, const CPinataMetadata& item) {
+ostream& operator<<(ostream& os, const CPinataMetadata& it) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    item.Format(os, "", nullptr);
+    it.Format(os, "", nullptr);
     os << "\n";
     return os;
 }

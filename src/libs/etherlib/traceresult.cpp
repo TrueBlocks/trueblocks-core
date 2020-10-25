@@ -278,11 +278,11 @@ CArchive& operator>>(CArchive& archive, CTraceResult& tra) {
 }
 
 //-------------------------------------------------------------------------
-ostream& operator<<(ostream& os, const CTraceResult& item) {
+ostream& operator<<(ostream& os, const CTraceResult& it) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    item.Format(os, "", nullptr);
+    it.Format(os, "", nullptr);
     os << "\n";
     return os;
 }

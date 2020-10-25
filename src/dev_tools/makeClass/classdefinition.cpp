@@ -239,11 +239,11 @@ bool CClassDefinition::setValueByName(const string_q& fieldNameIn, const string_
                 return true;
             }
             if (fieldName % "fieldArray") {
-                CParameter item;
+                CParameter obj;
                 string_q str = fieldValue;
-                while (item.parseJson3(str)) {
-                    fieldArray.push_back(item);
-                    item = CParameter();  // reset
+                while (obj.parseJson3(str)) {
+                    fieldArray.push_back(obj);
+                    obj = CParameter();  // reset
                 }
                 return true;
             }
@@ -469,11 +469,11 @@ bool CClassDefinition::readBackLevel(CArchive& archive) {
 }
 
 //-------------------------------------------------------------------------
-ostream& operator<<(ostream& os, const CClassDefinition& item) {
+ostream& operator<<(ostream& os, const CClassDefinition& it) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    item.Format(os, "", nullptr);
+    it.Format(os, "", nullptr);
     os << "\n";
     return os;
 }

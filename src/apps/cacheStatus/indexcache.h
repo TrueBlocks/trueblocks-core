@@ -42,12 +42,12 @@ class CIndexCache : public CCache {
     bool readBinaryCache(const string_q& cacheType, bool details, bool ignore = false) override;
     bool writeBinaryCache(const string_q& cacheType, bool details) override;
     // EXISTING_CODE
-    bool operator==(const CIndexCache& item) const;
-    bool operator!=(const CIndexCache& item) const {
-        return !operator==(item);
+    bool operator==(const CIndexCache& it) const;
+    bool operator!=(const CIndexCache& it) const {
+        return !operator==(it);
     }
     friend bool operator<(const CIndexCache& v1, const CIndexCache& v2);
-    friend ostream& operator<<(ostream& os, const CIndexCache& item);
+    friend ostream& operator<<(ostream& os, const CIndexCache& it);
 
   protected:
     void clear(void);
@@ -119,7 +119,7 @@ inline CIndexCache& CIndexCache::operator=(const CIndexCache& in) {
 }
 
 //-------------------------------------------------------------------------
-inline bool CIndexCache::operator==(const CIndexCache& item) const {
+inline bool CIndexCache::operator==(const CIndexCache& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)

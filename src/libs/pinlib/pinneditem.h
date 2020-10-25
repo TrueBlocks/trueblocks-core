@@ -40,12 +40,12 @@ class CPinnedItem : public CBaseNode {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    bool operator==(const CPinnedItem& item) const;
-    bool operator!=(const CPinnedItem& item) const {
-        return !operator==(item);
+    bool operator==(const CPinnedItem& it) const;
+    bool operator!=(const CPinnedItem& it) const {
+        return !operator==(it);
     }
     friend bool operator<(const CPinnedItem& v1, const CPinnedItem& v2);
-    friend ostream& operator<<(ostream& os, const CPinnedItem& item);
+    friend ostream& operator<<(ostream& os, const CPinnedItem& it);
 
   protected:
     void clear(void);
@@ -123,11 +123,11 @@ inline CPinnedItem& CPinnedItem::operator=(const CPinnedItem& pi) {
 }
 
 //-------------------------------------------------------------------------
-inline bool CPinnedItem::operator==(const CPinnedItem& item) const {
+inline bool CPinnedItem::operator==(const CPinnedItem& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // Equality operator as defined in class definition
-    return fileName == item.fileName;
+    return fileName == it.fileName;
 }
 
 //-------------------------------------------------------------------------

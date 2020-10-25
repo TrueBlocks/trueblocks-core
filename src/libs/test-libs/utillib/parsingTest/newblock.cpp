@@ -205,11 +205,11 @@ bool CNewBlock::setValueByName(const string_q& fieldNameIn, const string_q& fiel
                 return true;
             }
             if (fieldName % "transactions") {
-                CTransaction item;
+                CTransaction obj;
                 string_q str = fieldValue;
-                while (item.parseJson3(str)) {
-                    transactions.push_back(item);
-                    item = CTransaction();  // reset
+                while (obj.parseJson3(str)) {
+                    transactions.push_back(obj);
+                    obj = CTransaction();  // reset
                 }
                 return true;
             }
@@ -365,11 +365,11 @@ bool CNewBlock::readBackLevel(CArchive& archive) {
 }
 
 //-------------------------------------------------------------------------
-ostream& operator<<(ostream& os, const CNewBlock& item) {
+ostream& operator<<(ostream& os, const CNewBlock& it) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    item.Format(os, "", nullptr);
+    it.Format(os, "", nullptr);
     os << "\n";
     return os;
 }

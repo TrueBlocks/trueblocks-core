@@ -548,11 +548,11 @@ CArchive& operator>>(CArchive& archive, CReconciliationOutput& rec) {
 }
 
 //-------------------------------------------------------------------------
-ostream& operator<<(ostream& os, const CReconciliationOutput& item) {
+ostream& operator<<(ostream& os, const CReconciliationOutput& it) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    item.Format(os, "", nullptr);
+    it.Format(os, "", nullptr);
     os << "\n";
     return os;
 }

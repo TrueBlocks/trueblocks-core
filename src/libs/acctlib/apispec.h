@@ -41,12 +41,12 @@ class CApiSpec : public CBaseNode {
     bool sendData(const string_q& data);
     string_q getData(const string_q& params);
     // EXISTING_CODE
-    bool operator==(const CApiSpec& item) const;
-    bool operator!=(const CApiSpec& item) const {
-        return !operator==(item);
+    bool operator==(const CApiSpec& it) const;
+    bool operator!=(const CApiSpec& it) const {
+        return !operator==(it);
     }
     friend bool operator<(const CApiSpec& v1, const CApiSpec& v2);
-    friend ostream& operator<<(ostream& os, const CApiSpec& item);
+    friend ostream& operator<<(ostream& os, const CApiSpec& it);
 
   protected:
     void clear(void);
@@ -122,7 +122,7 @@ inline CApiSpec& CApiSpec::operator=(const CApiSpec& ap) {
 }
 
 //-------------------------------------------------------------------------
-inline bool CApiSpec::operator==(const CApiSpec& item) const {
+inline bool CApiSpec::operator==(const CApiSpec& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)

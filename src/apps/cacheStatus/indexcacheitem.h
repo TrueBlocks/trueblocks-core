@@ -49,12 +49,12 @@ class CIndexCacheItem : public CBaseNode {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    bool operator==(const CIndexCacheItem& item) const;
-    bool operator!=(const CIndexCacheItem& item) const {
-        return !operator==(item);
+    bool operator==(const CIndexCacheItem& it) const;
+    bool operator!=(const CIndexCacheItem& it) const {
+        return !operator==(it);
     }
     friend bool operator<(const CIndexCacheItem& v1, const CIndexCacheItem& v2);
-    friend ostream& operator<<(ostream& os, const CIndexCacheItem& item);
+    friend ostream& operator<<(ostream& os, const CIndexCacheItem& it);
 
   protected:
     void clear(void);
@@ -148,7 +148,7 @@ inline CIndexCacheItem& CIndexCacheItem::operator=(const CIndexCacheItem& in) {
 }
 
 //-------------------------------------------------------------------------
-inline bool CIndexCacheItem::operator==(const CIndexCacheItem& item) const {
+inline bool CIndexCacheItem::operator==(const CIndexCacheItem& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)

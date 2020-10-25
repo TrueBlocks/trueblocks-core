@@ -48,12 +48,12 @@ class CInfix : public CTreeNode {
     bool visitItems(ACCTVISITOR func, void* data) const override;
     bool contains(const string_q& _key) const;
     // EXISTING_CODE
-    bool operator==(const CInfix& item) const;
-    bool operator!=(const CInfix& item) const {
-        return !operator==(item);
+    bool operator==(const CInfix& it) const;
+    bool operator!=(const CInfix& it) const {
+        return !operator==(it);
     }
     friend bool operator<(const CInfix& v1, const CInfix& v2);
-    friend ostream& operator<<(ostream& os, const CInfix& item);
+    friend ostream& operator<<(ostream& os, const CInfix& it);
 
   protected:
     void clear(void);
@@ -131,7 +131,7 @@ inline CInfix& CInfix::operator=(const CInfix& in) {
 }
 
 //-------------------------------------------------------------------------
-inline bool CInfix::operator==(const CInfix& item) const {
+inline bool CInfix::operator==(const CInfix& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)

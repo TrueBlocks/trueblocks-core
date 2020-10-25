@@ -40,12 +40,12 @@ class CAbiCache : public CCache {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    bool operator==(const CAbiCache& item) const;
-    bool operator!=(const CAbiCache& item) const {
-        return !operator==(item);
+    bool operator==(const CAbiCache& it) const;
+    bool operator!=(const CAbiCache& it) const {
+        return !operator==(it);
     }
     friend bool operator<(const CAbiCache& v1, const CAbiCache& v2);
-    friend ostream& operator<<(ostream& os, const CAbiCache& item);
+    friend ostream& operator<<(ostream& os, const CAbiCache& it);
 
   protected:
     void clear(void);
@@ -117,7 +117,7 @@ inline CAbiCache& CAbiCache::operator=(const CAbiCache& ab) {
 }
 
 //-------------------------------------------------------------------------
-inline bool CAbiCache::operator==(const CAbiCache& item) const {
+inline bool CAbiCache::operator==(const CAbiCache& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)

@@ -309,11 +309,11 @@ bool CTraceFilter::readBackLevel(CArchive& archive) {
 }
 
 //-------------------------------------------------------------------------
-ostream& operator<<(ostream& os, const CTraceFilter& item) {
+ostream& operator<<(ostream& os, const CTraceFilter& it) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    item.Format(os, "", nullptr);
+    it.Format(os, "", nullptr);
     os << "\n";
     return os;
 }

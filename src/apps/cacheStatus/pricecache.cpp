@@ -110,11 +110,11 @@ bool CPriceCache::setValueByName(const string_q& fieldNameIn, const string_q& fi
     switch (tolower(fieldName[0])) {
         case 'i':
             if (fieldName % "items") {
-                CPriceCacheItem item;
+                CPriceCacheItem obj;
                 string_q str = fieldValue;
-                while (item.parseJson3(str)) {
-                    items.push_back(item);
-                    item = CPriceCacheItem();  // reset
+                while (obj.parseJson3(str)) {
+                    items.push_back(obj);
+                    obj = CPriceCacheItem();  // reset
                 }
                 return true;
             }
@@ -241,11 +241,11 @@ bool CPriceCache::readBackLevel(CArchive& archive) {
 }
 
 //-------------------------------------------------------------------------
-ostream& operator<<(ostream& os, const CPriceCache& item) {
+ostream& operator<<(ostream& os, const CPriceCache& it) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    item.Format(os, "", nullptr);
+    it.Format(os, "", nullptr);
     os << "\n";
     return os;
 }

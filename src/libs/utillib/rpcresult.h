@@ -42,12 +42,12 @@ class CRPCResult : public CBaseNode {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    bool operator==(const CRPCResult& item) const;
-    bool operator!=(const CRPCResult& item) const {
-        return !operator==(item);
+    bool operator==(const CRPCResult& it) const;
+    bool operator!=(const CRPCResult& it) const {
+        return !operator==(it);
     }
     friend bool operator<(const CRPCResult& v1, const CRPCResult& v2);
-    friend ostream& operator<<(ostream& os, const CRPCResult& item);
+    friend ostream& operator<<(ostream& os, const CRPCResult& it);
 
   protected:
     void clear(void);
@@ -123,7 +123,7 @@ inline CRPCResult& CRPCResult::operator=(const CRPCResult& rp) {
 }
 
 //-------------------------------------------------------------------------
-inline bool CRPCResult::operator==(const CRPCResult& item) const {
+inline bool CRPCResult::operator==(const CRPCResult& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)
