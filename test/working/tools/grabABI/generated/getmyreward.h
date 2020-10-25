@@ -33,12 +33,12 @@ class  : public CBaseNode {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    bool operator==(const & item) const;
-    bool operator!=(const & item) const {
-        return !operator==(item);
+    bool operator==(const & it) const;
+    bool operator!=(const & it) const {
+        return !operator==(it);
     }
     friend bool operator<(const & v1, const & v2);
-    friend ostream& operator<<(ostream& os, const & item);
+    friend ostream& operator<<(ostream& os, const & it);
 
   protected:
     void clear(void);
@@ -106,7 +106,7 @@ inline & ::operator=(const & ) {
 }
 
 //-------------------------------------------------------------------------
-inline bool ::operator==(const & item) const {
+inline bool ::operator==(const & it) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)
