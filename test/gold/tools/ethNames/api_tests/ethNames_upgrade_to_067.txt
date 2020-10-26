@@ -6,7 +6,7 @@
       "name": "ENS: Burn Address",
       "symbol": "",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -15,7 +15,7 @@
       "name": "Homework",
       "symbol": "",
       "source": "TrueBlocks.io",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -24,7 +24,7 @@
       "name": "TrueUSD",
       "symbol": "",
       "source": "Etherscan.io",
-      "decimals": "0",
+      "decimals": 0,
       "description": "The only regulated, exchange-independent stablecoin backed 1-for-1 with US Dollars"
     },
     {
@@ -33,7 +33,7 @@
       "name": "ENS: Registry with Fallback",
       "symbol": "",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -42,7 +42,7 @@
       "name": "Arbitrage Bot",
       "symbol": "",
       "source": "0xTracker",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -51,7 +51,7 @@
       "name": "1inch Exchange",
       "symbol": "",
       "source": "0xTracker",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -69,7 +69,7 @@
       "name": "1inch Exchange",
       "symbol": "",
       "source": "0xTracker",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -78,7 +78,7 @@
       "name": "Arbitrage Bot",
       "symbol": "",
       "source": "0xTracker",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -87,7 +87,7 @@
       "name": "Arbitrage Bot",
       "symbol": "",
       "source": "0xTracker",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -96,7 +96,7 @@
       "name": "1inch Exchange",
       "symbol": "",
       "source": "0xTracker",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -114,7 +114,7 @@
       "name": "BokkyPooBah",
       "symbol": "",
       "source": "DevCon2 Token Contract",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -123,7 +123,7 @@
       "name": "1inch Exchange",
       "symbol": "",
       "source": "0xTracker",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -132,7 +132,7 @@
       "name": "Name 0x00000b46",
       "symbol": "",
       "source": "Gitcoin Website",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -159,7 +159,7 @@
       "name": "GU: Shiny Legendary Pack",
       "symbol": "",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -168,7 +168,7 @@
       "name": "Name 0x00158a74",
       "symbol": "",
       "source": "Gitcoin Website",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -177,7 +177,7 @@
       "name": "Hacker Gold Sender",
       "symbol": "",
       "source": "TrueBlocks.io",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -195,7 +195,7 @@
       "name": "Name 0x0029dc8d",
       "symbol": "",
       "source": "Gitcoin Website",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -204,7 +204,7 @@
       "name": "Name 0x002c83eb",
       "symbol": "",
       "source": "Gitcoin Website",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -213,7 +213,7 @@
       "name": "Democracy Earth",
       "symbol": "HOUR",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -222,7 +222,7 @@
       "name": "Pool Usdc MCDAwarePool v0.2.12",
       "symbol": "",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -231,7 +231,7 @@
       "name": "Name 0x0035fc52",
       "symbol": "",
       "source": "Gitcoin Website",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -240,7 +240,7 @@
       "name": "Miner_0027_260",
       "symbol": "",
       "source": "OnChain",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -249,7 +249,7 @@
       "name": "Name 0x003f6b20",
       "symbol": "",
       "source": "Gitcoin Website",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -258,7 +258,7 @@
       "name": "HEALP Airdrop Sender",
       "symbol": "",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -267,7 +267,7 @@
       "name": "Name 0x004efb23",
       "symbol": "",
       "source": "Gitcoin Website",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -276,7 +276,7 @@
       "name": "BrightID Agent",
       "symbol": "",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -285,7 +285,7 @@
       "name": "Dao Drain 086",
       "symbol": "",
       "source": "GethSource",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -303,7 +303,7 @@
       "name": "Grant 845 Remote Developer Bootcamp",
       "symbol": "",
       "source": "https://gitcoin.co/grants/845/remote-developer-bootcamp",
-      "decimals": "0",
+      "decimals": 0,
       "description": "https://github.com/blockvigil/bootcamp"
     },
     {
@@ -312,7 +312,7 @@
       "name": "Grant 779 DeFi LATAM",
       "symbol": "",
       "source": "https://gitcoin.co/grants/779/defi-latam",
-      "decimals": "0",
+      "decimals": 0,
       "description": "http://defilatam.com/"
     },
     {
@@ -321,7 +321,7 @@
       "name": "Name 0x008b1ffe",
       "symbol": "",
       "source": "Gitcoin Website",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -339,7 +339,7 @@
       "name": "Name 0x00bbb330",
       "symbol": "",
       "source": "OnChain",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -348,7 +348,7 @@
       "name": "will",
       "symbol": "",
       "source": "DevCon2 Token Contract",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -366,7 +366,7 @@
       "name": "Name 0x00c50c2f",
       "symbol": "",
       "source": "Gitcoin Website",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -375,7 +375,7 @@
       "name": "Grant 143 Dappnode",
       "symbol": "",
       "source": "https://gitcoin.co/grants/143/dappnode",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -384,7 +384,7 @@
       "name": "Amber Airdrop Token",
       "symbol": "",
       "source": "TrueBlocks.io",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -393,7 +393,7 @@
       "name": "Name 0x00dc74ce",
       "symbol": "",
       "source": "Twitter",
-      "decimals": "0",
+      "decimals": 0,
       "description": "@Aezakmi_Steemit"
     },
     {
@@ -402,7 +402,7 @@
       "name": "Grant 012 Grant 086 Gitcoin Sustainability Fund",
       "symbol": "",
       "source": "https://gitcoin.co/grants/12/gitcoin-open-source-support-fund",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -411,7 +411,7 @@
       "name": "VOS.AI Airdrop Sender",
       "symbol": "",
       "source": "TrueBlocks.io",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -420,7 +420,7 @@
       "name": "XNN Airdrop Sender",
       "symbol": "",
       "source": "TrueBlocks.io",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -429,7 +429,7 @@
       "name": "Grant 624 Nescience Software Portfolio Rebalancing Direct Indexing",
       "symbol": "",
       "source": "https://gitcoin.co/grants/624/nescience-software-portfolio-rebalancing-direct-in",
-      "decimals": "0",
+      "decimals": 0,
       "description": "https://nescience.io"
     },
     {
@@ -438,7 +438,7 @@
       "name": "Dao Drain 075",
       "symbol": "",
       "source": "GethSource Ether Camp",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -447,7 +447,7 @@
       "name": "Name 0x010afb85",
       "symbol": "",
       "source": "Gitcoin Website",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -456,7 +456,7 @@
       "name": "Grant 790 Loft Radio",
       "symbol": "",
       "source": "https://gitcoin.co/grants/790/loft-radio",
-      "decimals": "0",
+      "decimals": 0,
       "description": "https://loft.radio/"
     },
     {
@@ -465,7 +465,7 @@
       "name": "Grant 491 Tokamak Network: Decentralized Scalable Turing Complete Layer 2 Plasma",
       "symbol": "",
       "source": "https://gitcoin.co/grants/491/tokamak-network-decentralized-scalable-turing-comp",
-      "decimals": "0",
+      "decimals": 0,
       "description": "https://tokamak.network/"
     },
     {
@@ -474,7 +474,7 @@
       "name": "Old ENS Registrar",
       "symbol": "",
       "source": "Trueblocks.io",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -483,7 +483,7 @@
       "name": "dYdX 0x Wrapper",
       "symbol": "",
       "source": "0xTracker",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -492,7 +492,7 @@
       "name": "Chainlink BTC-ETH Aggregator",
       "symbol": "",
       "source": "EtherScan",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -519,7 +519,7 @@
       "name": "GU: Rare Pack",
       "symbol": "",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -528,7 +528,7 @@
       "name": "Grant 627 Veridex",
       "symbol": "",
       "source": "https://gitcoin.co/grants/627/veridex",
-      "decimals": "0",
+      "decimals": 0,
       "description": "https://dex.verisafe.io/"
     },
     {
@@ -537,7 +537,7 @@
       "name": "Name 0x015f9e50",
       "symbol": "",
       "source": "Gitcoin Website",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -564,7 +564,7 @@
       "name": "Grant 190 Groundhog",
       "symbol": "",
       "source": "https://gitcoin.co/grants/190/groundhog",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -573,7 +573,7 @@
       "name": "Miner_0015_427",
       "symbol": "",
       "source": "OnChain",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -591,7 +591,7 @@
       "name": "Name 0x01a24c6a",
       "symbol": "",
       "source": "Gitcoin Website",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -600,7 +600,7 @@
       "name": "Arbitrage Bot",
       "symbol": "",
       "source": "0xTracker",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -609,7 +609,7 @@
       "name": "Name 0x01e6fd0a",
       "symbol": "",
       "source": "Gitcoin Website",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -618,7 +618,7 @@
       "name": "Grant 602 RealityLearn: Teaching the world about blockchain",
       "symbol": "",
       "source": "https://gitcoin.co/grants/602/realitylearn",
-      "decimals": "0",
+      "decimals": 0,
       "description": "https://www.tks.life/profile/rishab.chakraborty"
     },
     {
@@ -627,7 +627,7 @@
       "name": "Name 0x01f7700c",
       "symbol": "",
       "source": "Gitcoin Website",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -636,7 +636,7 @@
       "name": "Name 0x01feb500",
       "symbol": "",
       "source": "Gitcoin Website",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -654,7 +654,7 @@
       "name": "Miner_0022_294",
       "symbol": "",
       "source": "OnChain",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -672,7 +672,7 @@
       "name": "Name 0x0230c6dd",
       "symbol": "",
       "source": "Gitcoin Website",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -699,7 +699,7 @@
       "name": "Name 0x02bbea93",
       "symbol": "",
       "source": "Twitter",
-      "decimals": "0",
+      "decimals": 0,
       "description": "Sodunke"
     },
     {
@@ -717,7 +717,7 @@
       "name": "Grant 782 Ethereum Cat Herders Community Fund",
       "symbol": "",
       "source": "https://gitcoin.co/grants/782/ethereum-cat-herders-community-fund",
-      "decimals": "0",
+      "decimals": 0,
       "description": "https://twitter.com/EthCatHerders"
     },
     {
@@ -726,7 +726,7 @@
       "name": "Chainlink CHF-USD Aggregator",
       "symbol": "",
       "source": "EtherScan",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -735,7 +735,7 @@
       "name": "Name 0x02d9cc72",
       "symbol": "",
       "source": "Gitcoin Website",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -744,7 +744,7 @@
       "name": "Name 0x02dbd1aa",
       "symbol": "",
       "source": "Gitcoin Website",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -762,7 +762,7 @@
       "name": "Grant 031 Grantops",
       "symbol": "",
       "source": "https://gitcoin.co/grants/31/grantops",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -798,7 +798,7 @@
       "name": "Arbitrage Bot",
       "symbol": "",
       "source": "0xTracker",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -825,7 +825,7 @@
       "name": "Chainlink DAI-ETH Aggregator",
       "symbol": "",
       "source": "EtherScan",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -834,7 +834,7 @@
       "name": "Grant 284 My DAO Dashboard",
       "symbol": "",
       "source": "https://gitcoin.co/grants/284/my-dao-dashboard",
-      "decimals": "0",
+      "decimals": 0,
       "description": "http://mydaodashboard.com/"
     },
     {
@@ -852,7 +852,7 @@
       "name": "Maker: Oasis",
       "symbol": "",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -861,7 +861,7 @@
       "name": "Arbitrage Bot",
       "symbol": "",
       "source": "0xTracker",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -870,7 +870,7 @@
       "name": "Name 0x03b45f0f",
       "symbol": "",
       "source": "Gitcoin Website",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -879,7 +879,7 @@
       "name": "Name 0x03b85b33",
       "symbol": "",
       "source": "Gitcoin Website",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -888,7 +888,7 @@
       "name": "Possibly Malicious 0x03b",
       "symbol": "",
       "source": "TrueBlocks.io",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -897,7 +897,7 @@
       "name": "Grant 600 Synthereum: synthetic assets with liquidity pools to bridge traditional and digital finance",
       "symbol": "",
       "source": "https://gitcoin.co/grants/600/synthereum-synthetic-assets-with-liquidity-pools-t",
-      "decimals": "0",
+      "decimals": 0,
       "description": "https://jarvis.network"
     },
     {
@@ -906,7 +906,7 @@
       "name": "BTRN",
       "symbol": "BTRN",
       "source": "Etherscan.io",
-      "decimals": "0",
+      "decimals": 0,
       "description": "Biotron is a fully transparent personal data analytics platform on blockchain."
     },
     {
@@ -915,7 +915,7 @@
       "name": "Name 0x03ea9f51",
       "symbol": "",
       "source": "Gitcoin Website",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -924,7 +924,7 @@
       "name": "Name 0x04373aac",
       "symbol": "",
       "source": "Gitcoin Website",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -933,7 +933,7 @@
       "name": "Name 0x04498150",
       "symbol": "",
       "source": "Twitter",
-      "decimals": "0",
+      "decimals": 0,
       "description": "okoro"
     },
     {
@@ -942,7 +942,7 @@
       "name": "Grant 608 Signatory Client",
       "symbol": "",
       "source": "https://gitcoin.co/grants/608/signatory-client",
-      "decimals": "0",
+      "decimals": 0,
       "description": "https://vbstreetz.github.io/signatory-client/"
     },
     {
@@ -951,7 +951,7 @@
       "name": "Grant 900 1Hive Gardens",
       "symbol": "",
       "source": "https://gitcoin.co/grants/900/1hive-gardens-2",
-      "decimals": "0",
+      "decimals": 0,
       "description": "https://1hive.org"
     },
     {
@@ -960,7 +960,7 @@
       "name": "OCN Airdrop Sender",
       "symbol": "",
       "source": "TrueBlocks.io",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -969,7 +969,7 @@
       "name": "Totle Bancor Wrapper",
       "symbol": "",
       "source": "0xTracker",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -978,7 +978,7 @@
       "name": "Kung Chen-Yalie",
       "symbol": "",
       "source": "DevCon2 Token Contract",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -987,7 +987,7 @@
       "name": "Name 0x0492b917",
       "symbol": "",
       "source": "Gitcoin Website",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1014,7 +1014,7 @@
       "name": "Kyber Oasis Reserve",
       "symbol": "",
       "source": "0xTracker",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1023,7 +1023,7 @@
       "name": "Grant 650 KodaDot: Claim Tokens feature",
       "symbol": "",
       "source": "https://gitcoin.co/grants/650/kodadot-claim-tokens-feature",
-      "decimals": "0",
+      "decimals": 0,
       "description": "https://vue-polkadot.js.org"
     },
     {
@@ -1032,7 +1032,7 @@
       "name": "Grant 104 Walletsreview",
       "symbol": "",
       "source": "https://gitcoin.co/grants/104/walletsreview",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1041,7 +1041,7 @@
       "name": "MiniMeToken CS",
       "symbol": "",
       "source": "TrueBlocks.io",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1059,7 +1059,7 @@
       "name": "Name 0x051ac9d0",
       "symbol": "",
       "source": "Gitcoin Website",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1068,7 +1068,7 @@
       "name": "dAddNode Package 001",
       "symbol": "",
       "source": "TrueBlocks.io",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1086,7 +1086,7 @@
       "name": "Name 0x0559a413",
       "symbol": "",
       "source": "Twitter",
-      "decimals": "0",
+      "decimals": 0,
       "description": "@LUKACACIC"
     },
     {
@@ -1095,7 +1095,7 @@
       "name": "Name 0x056fa250",
       "symbol": "",
       "source": "Gitcoin Website",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1113,7 +1113,7 @@
       "name": "FIFAMini Airdrop Sender",
       "symbol": "",
       "source": "TrueBlocks.io",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1122,7 +1122,7 @@
       "name": "Grant 292 Will Brealey Ethereum Writer",
       "symbol": "",
       "source": "https://gitcoin.co/grants/292/will-brealey-ethereum-writer",
-      "decimals": "0",
+      "decimals": 0,
       "description": "https://medium.com/@w_brealey"
     },
     {
@@ -1131,7 +1131,7 @@
       "name": "Dao Drain 065",
       "symbol": "",
       "source": "GethSource",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1140,7 +1140,7 @@
       "name": "kelvin",
       "symbol": "",
       "source": "DevCon2 Token Contract",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1158,7 +1158,7 @@
       "name": "Name 0x058bdde9",
       "symbol": "",
       "source": "Gitcoin Website",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1167,7 +1167,7 @@
       "name": "Sascha Jafari",
       "symbol": "",
       "source": "DevCon2 Token Contract",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1185,7 +1185,7 @@
       "name": "Name 0x05a1ff0a",
       "symbol": "",
       "source": "Gitcoin Website",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1212,7 +1212,7 @@
       "name": "pete",
       "symbol": "",
       "source": "DevCon2 Token Contract",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1221,7 +1221,7 @@
       "name": "Chainlink AUD-USD Aggregator",
       "symbol": "",
       "source": "EtherScan",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1230,7 +1230,7 @@
       "name": "LPT Airdrop Sender",
       "symbol": "",
       "source": "TrueBlocks.io",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1257,7 +1257,7 @@
       "name": "CryptoKitties: Core",
       "symbol": "",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1266,7 +1266,7 @@
       "name": "Grant 336 dHack A decentralized hackathon model",
       "symbol": "",
       "source": "https://gitcoin.co/grants/336/dhack-a-decentralized-hackathon-model",
-      "decimals": "0",
+      "decimals": 0,
       "description": "https://dhack.io"
     },
     {
@@ -1275,7 +1275,7 @@
       "name": "Name 0x060a24a6",
       "symbol": "",
       "source": "Gitcoin Website",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1284,7 +1284,7 @@
       "name": "bernard lin",
       "symbol": "",
       "source": "DevCon2 Token Contract",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1293,7 +1293,7 @@
       "name": "ACE Token",
       "symbol": "ACE",
       "source": "On Chain",
-      "decimals": "0",
+      "decimals": 0,
       "description": "ACE is a utility token, that serves as a form of access to the TokenStars platform and its internal currency. TokenStars is the first talent management platform on the blockchain, that will connect talents celebrities with fans and advertisers."
     },
     {
@@ -1302,7 +1302,7 @@
       "name": "Grant 194 Reach Platform",
       "symbol": "",
       "source": "https://gitcoin.co/grants/194/reach-platform",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1311,7 +1311,7 @@
       "name": "Name 0x064d3230",
       "symbol": "",
       "source": "Gitcoin Website",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1320,7 +1320,7 @@
       "name": "Name 0x0667ad4c",
       "symbol": "",
       "source": "Twitter",
-      "decimals": "0",
+      "decimals": 0,
       "description": "@okbabyqn88"
     },
     {
@@ -1329,7 +1329,7 @@
       "name": "Dao Drain 008",
       "symbol": "",
       "source": "GethSource",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1338,7 +1338,7 @@
       "name": "Binance 4",
       "symbol": "",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1347,7 +1347,7 @@
       "name": "StarbitEx",
       "symbol": "",
       "source": "0xTracker",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1356,7 +1356,7 @@
       "name": "Grant 075 Ethereum Dev Fund Working Group",
       "symbol": "",
       "source": "https://gitcoin.co/grants/75/ethereum-dev-fund-working-group",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1365,7 +1365,7 @@
       "name": "SingularDTV Sender 2",
       "symbol": "",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1374,7 +1374,7 @@
       "name": "Name 0x06aeae3d",
       "symbol": "",
       "source": "Gitcoin Website",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1383,7 +1383,7 @@
       "name": "Name 0x06b1bf28",
       "symbol": "",
       "source": "Gitcoin Website",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1392,7 +1392,7 @@
       "name": "HEALP Airdrop",
       "symbol": "HEALP",
       "source": "TrueBlocks.io",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1401,7 +1401,7 @@
       "name": "Name 0x06c04508",
       "symbol": "",
       "source": "Gitcoin Website",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1410,7 +1410,7 @@
       "name": "Miner_0067_90",
       "symbol": "",
       "source": "OnChain",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1419,7 +1419,7 @@
       "name": "Name 0x06dbfdbf",
       "symbol": "",
       "source": "Gitcoin Website",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1428,7 +1428,7 @@
       "name": "Zerion: Adapter Registry",
       "symbol": "",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1446,7 +1446,7 @@
       "name": "RZM Airdrop Sender",
       "symbol": "",
       "source": "TrueBlocks.io",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1455,7 +1455,7 @@
       "name": "Grant 141 Metamoneymarket jacobshiach",
       "symbol": "",
       "source": "https://gitcoin.co/grants/141/metamoneymarket",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1464,7 +1464,7 @@
       "name": "Dao Drain 059",
       "symbol": "",
       "source": "GethSource Ether Camp",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1473,7 +1473,7 @@
       "name": "Grant 268 Simpleaswater",
       "symbol": "",
       "source": "https://gitcoin.co/grants/268/simpleaswater",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1482,7 +1482,7 @@
       "name": "Name 0x073c841e",
       "symbol": "",
       "source": "Gitcoin Website",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1545,7 +1545,7 @@
       "name": "dAddNode Package 003",
       "symbol": "",
       "source": "TrueBlocks.io",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1554,7 +1554,7 @@
       "name": "Uniswap: ANT",
       "symbol": "ANT",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1572,7 +1572,7 @@
       "name": "Gavin Wood VouchFor",
       "symbol": "",
       "source": "TrueBlocks.io",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1608,7 +1608,7 @@
       "name": "Name 0x07e405e6",
       "symbol": "",
       "source": "Gitcoin Website",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1626,7 +1626,7 @@
       "name": "Dao Drain 070",
       "symbol": "",
       "source": "GethSource",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1635,7 +1635,7 @@
       "name": "Name 0x07f66cde",
       "symbol": "",
       "source": "Gitcoin Website",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1644,7 +1644,7 @@
       "name": "Darius",
       "symbol": "",
       "source": "DevCon2 Token Contract",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1653,7 +1653,7 @@
       "name": "0x Exchange V2.1",
       "symbol": "",
       "source": "0xTracker",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1662,7 +1662,7 @@
       "name": "Name 0x083fc10c",
       "symbol": "",
       "source": "Gitcoin Website",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1671,7 +1671,7 @@
       "name": "Grant 122 Austin Griffith Ethereum Rampd",
       "symbol": "",
       "source": "https://gitcoin.co/grants/122/austin-griffith-ethereum-rampd",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1680,7 +1680,7 @@
       "name": "Edgeless",
       "symbol": "EDG",
       "source": "On Chain",
-      "decimals": "0",
+      "decimals": 0,
       "description": "The Ethereum smart contract-based that offers a 0% house edge and solves the transparency question once and for all."
     },
     {
@@ -1689,7 +1689,7 @@
       "name": "LiteCoinGold",
       "symbol": "LTG",
       "source": "On Chain",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1698,7 +1698,7 @@
       "name": "Name 0x087b33c9",
       "symbol": "",
       "source": "Gitcoin Website",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1707,7 +1707,7 @@
       "name": "Name 0x08808da2",
       "symbol": "",
       "source": "Twitter",
-      "decimals": "0",
+      "decimals": 0,
       "description": "A"
     },
     {
@@ -1716,7 +1716,7 @@
       "name": "Name 0x088b1147",
       "symbol": "",
       "source": "Gitcoin Website",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1734,7 +1734,7 @@
       "name": "Pasta V1 Token",
       "symbol": "",
       "source": "EtherScan",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1743,7 +1743,7 @@
       "name": "Grant 425 Turkish Cryptocurrency YouTuber and Researcher",
       "symbol": "",
       "source": "https://gitcoin.co/grants/425/turkish-cryptocurrency-youtuber-and-researcher",
-      "decimals": "0",
+      "decimals": 0,
       "description": "https://www.youtube.com/bitcoinkralicesi"
     },
     {
@@ -1752,7 +1752,7 @@
       "name": "Grant 759 DeFi Arts Intelligencer",
       "symbol": "",
       "source": "https://gitcoin.co/grants/759/defi-arts-intelligencer",
-      "decimals": "0",
+      "decimals": 0,
       "description": "https://artsdefi.substack.com/"
     },
     {
@@ -1761,7 +1761,7 @@
       "name": "Dentacoin",
       "symbol": "DENT",
       "source": "Etherscan.io",
-      "decimals": "0",
+      "decimals": 0,
       "description": "Aims to be the blockchain solution for the global dental industry."
     },
     {
@@ -1770,7 +1770,7 @@
       "name": "GU: Rare Pack Three",
       "symbol": "",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1788,7 +1788,7 @@
       "name": "Name 0x08fdc2ee",
       "symbol": "",
       "source": "Gitcoin Website",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1797,7 +1797,7 @@
       "name": "ENS: Wallet 1 nickdjohnson",
       "symbol": "",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1806,7 +1806,7 @@
       "name": "Name 0x09328efb",
       "symbol": "",
       "source": "Gitcoin Website",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     }
   ],

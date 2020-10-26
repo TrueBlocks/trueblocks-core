@@ -7,7 +7,7 @@
       "name": "ENS: Burn Address",
       "symbol": "",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -19,7 +19,7 @@
       "name": "TrueUSD",
       "symbol": "",
       "source": "Etherscan.io",
-      "decimals": "0",
+      "decimals": 0,
       "description": "The only regulated, exchange-independent stablecoin backed 1-for-1 with US Dollars",
       "is_custom": false,
       "is_prefund": false
@@ -31,7 +31,7 @@
       "name": "ENS: Registry with Fallback",
       "symbol": "",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -43,7 +43,7 @@
       "name": "GU: Shiny Legendary Pack",
       "symbol": "",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -55,7 +55,7 @@
       "name": "Democracy Earth",
       "symbol": "HOUR",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -67,7 +67,7 @@
       "name": "Pool Usdc MCDAwarePool v0.2.12",
       "symbol": "",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -79,7 +79,7 @@
       "name": "HEALP Airdrop Sender",
       "symbol": "",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -91,7 +91,7 @@
       "name": "BrightID Agent",
       "symbol": "",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -103,7 +103,7 @@
       "name": "Dao Drain 075",
       "symbol": "",
       "source": "GethSource Ether Camp",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -115,7 +115,7 @@
       "name": "Chainlink BTC-ETH Aggregator",
       "symbol": "",
       "source": "EtherScan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -127,7 +127,7 @@
       "name": "GU: Rare Pack",
       "symbol": "",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -139,7 +139,7 @@
       "name": "Grant 782 Ethereum Cat Herders Community Fund",
       "symbol": "",
       "source": "https://gitcoin.co/grants/782/ethereum-cat-herders-community-fund",
-      "decimals": "0",
+      "decimals": 0,
       "description": "https://twitter.com/EthCatHerders",
       "is_custom": false,
       "is_prefund": false
@@ -151,7 +151,7 @@
       "name": "Chainlink CHF-USD Aggregator",
       "symbol": "",
       "source": "EtherScan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -163,7 +163,7 @@
       "name": "Chainlink DAI-ETH Aggregator",
       "symbol": "",
       "source": "EtherScan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -175,7 +175,7 @@
       "name": "Maker: Oasis",
       "symbol": "",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -187,7 +187,7 @@
       "name": "BTRN",
       "symbol": "BTRN",
       "source": "Etherscan.io",
-      "decimals": "0",
+      "decimals": 0,
       "description": "Biotron is a fully transparent personal data analytics platform on blockchain.",
       "is_custom": false,
       "is_prefund": false
@@ -211,7 +211,7 @@
       "name": "Grant 292 Will Brealey Ethereum Writer",
       "symbol": "",
       "source": "https://gitcoin.co/grants/292/will-brealey-ethereum-writer",
-      "decimals": "0",
+      "decimals": 0,
       "description": "https://medium.com/@w_brealey",
       "is_custom": false,
       "is_prefund": false
@@ -223,7 +223,7 @@
       "name": "Chainlink AUD-USD Aggregator",
       "symbol": "",
       "source": "EtherScan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -235,7 +235,7 @@
       "name": "CryptoKitties: Core",
       "symbol": "",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -247,7 +247,7 @@
       "name": "Binance 4",
       "symbol": "",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -259,7 +259,7 @@
       "name": "Grant 075 Ethereum Dev Fund Working Group",
       "symbol": "",
       "source": "https://gitcoin.co/grants/75/ethereum-dev-fund-working-group",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -271,7 +271,7 @@
       "name": "SingularDTV Sender 2",
       "symbol": "",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -283,7 +283,7 @@
       "name": "Zerion: Adapter Registry",
       "symbol": "",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -295,7 +295,7 @@
       "name": "Dao Drain 059",
       "symbol": "",
       "source": "GethSource Ether Camp",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -307,7 +307,7 @@
       "name": "Uniswap: ANT",
       "symbol": "ANT",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -343,7 +343,7 @@
       "name": "Grant 122 Austin Griffith Ethereum Rampd",
       "symbol": "",
       "source": "https://gitcoin.co/grants/122/austin-griffith-ethereum-rampd",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -355,7 +355,7 @@
       "name": "Edgeless",
       "symbol": "EDG",
       "source": "On Chain",
-      "decimals": "0",
+      "decimals": 0,
       "description": "The Ethereum smart contract-based that offers a 0% house edge and solves the transparency question once and for all.",
       "is_custom": false,
       "is_prefund": false
@@ -367,7 +367,7 @@
       "name": "Pasta V1 Token",
       "symbol": "",
       "source": "EtherScan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -379,7 +379,7 @@
       "name": "Dentacoin",
       "symbol": "DENT",
       "source": "Etherscan.io",
-      "decimals": "0",
+      "decimals": 0,
       "description": "Aims to be the blockchain solution for the global dental industry.",
       "is_custom": false,
       "is_prefund": false
@@ -391,7 +391,7 @@
       "name": "GU: Rare Pack Three",
       "symbol": "",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -403,7 +403,7 @@
       "name": "ENS: Wallet 1 nickdjohnson",
       "symbol": "",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -451,7 +451,7 @@
       "name": "HEX Airdrop Sender",
       "symbol": "HEX",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -463,7 +463,7 @@
       "name": "Name 0x0c3239e2",
       "symbol": "",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -475,7 +475,7 @@
       "name": "Compound: 200bps_Slope1000bps",
       "symbol": "",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -487,7 +487,7 @@
       "name": "Axie Egg Coin",
       "symbol": "AEC",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -499,7 +499,7 @@
       "name": "AVT",
       "symbol": "AVT",
       "source": "Etherscan.io",
-      "decimals": "0",
+      "decimals": 0,
       "description": "An open-source protocol that delivers the global standard for ticketing.",
       "is_custom": false,
       "is_prefund": false
@@ -511,7 +511,7 @@
       "name": "Grant 576 BlockScout.com for Ethereum Mainnet hosting",
       "symbol": "",
       "source": "https://gitcoin.co/grants/576/blockscoutcom-for-ethereum-mainnet-hosting",
-      "decimals": "0",
+      "decimals": 0,
       "description": "https://blockscout.com/eth/mainnet",
       "is_custom": false,
       "is_prefund": false
@@ -523,7 +523,7 @@
       "name": "Dao Drain 087",
       "symbol": "",
       "source": "GethSource Ether Camp",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -559,7 +559,7 @@
       "name": "BitClave Airdrop",
       "symbol": "",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -571,7 +571,7 @@
       "name": "Grant 723 EtherDNA",
       "symbol": "",
       "source": "https://gitcoin.co/grants/723/etherdna",
-      "decimals": "0",
+      "decimals": 0,
       "description": "https://etherdna.github.io/app/",
       "is_custom": false,
       "is_prefund": false
@@ -583,7 +583,7 @@
       "name": "Grid+ Token",
       "symbol": "GRID",
       "source": "Etherscan.io",
-      "decimals": "0",
+      "decimals": 0,
       "description": "Grid+ creates products that enable mainstream use of digital assets and cryptocurrencies. Grid+ strives to be the hardware, software, and cryptocurrency experts building the foundation for a more efficient and inclusive financial future.",
       "is_custom": false,
       "is_prefund": false
@@ -595,7 +595,7 @@
       "name": "Tornado.Cash: 0.1 ETH",
       "symbol": "",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -607,7 +607,7 @@
       "name": "MCH: Hero Gateway 1",
       "symbol": "",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -619,7 +619,7 @@
       "name": "Pool Together Sender",
       "symbol": "",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -643,7 +643,7 @@
       "name": "Chainlink GBP-USD Aggregator",
       "symbol": "",
       "source": "EtherScan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -655,7 +655,7 @@
       "name": "Compound: cREP",
       "symbol": "",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -667,7 +667,7 @@
       "name": "Grant 709 Adoption and dissemination of Ethereum Technology",
       "symbol": "",
       "source": "https://gitcoin.co/grants/709/adoption-and-dissemination-of-ethereum-technology",
-      "decimals": "0",
+      "decimals": 0,
       "description": "https://blockchaincounselor.blogspot.com/",
       "is_custom": false,
       "is_prefund": false
@@ -679,7 +679,7 @@
       "name": "Chainlink FTSE-GBP Aggregator",
       "symbol": "",
       "source": "EtherScan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -691,7 +691,7 @@
       "name": "Dao Issued Cert Airdrop",
       "symbol": "DIC",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -703,7 +703,7 @@
       "name": "1820 Registry",
       "symbol": "REG",
       "source": "TrueBlocks.io",
-      "decimals": "0",
+      "decimals": 0,
       "description": "Registration smart contract as described in this EIP: https://eips.ethereum.org/EIPS/eip-1820",
       "is_custom": false,
       "is_prefund": false
@@ -727,7 +727,7 @@
       "name": "Name 0x19116738",
       "symbol": "",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -751,7 +751,7 @@
       "name": "Dao Drain 005",
       "symbol": "",
       "source": "GethSource Ether Camp",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -763,7 +763,7 @@
       "name": "Augur Token",
       "symbol": "REP",
       "source": "Etherscan.io",
-      "decimals": "0",
+      "decimals": 0,
       "description": "Augur combines the magic of prediction markets with the power of a decentralized network to create a stunningly accurate forecasting tool",
       "is_custom": false,
       "is_prefund": false
@@ -775,7 +775,7 @@
       "name": "Grant 150 Ethereum Egift Cards",
       "symbol": "",
       "source": "https://gitcoin.co/grants/150/ethereum-egift-cards",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -811,7 +811,7 @@
       "name": "ENS: Old Public Resolver 1",
       "symbol": "",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -823,7 +823,7 @@
       "name": "Chainlink LEND-ETH Aggregator",
       "symbol": "",
       "source": "EtherScan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -847,7 +847,7 @@
       "name": "Moloch DAO",
       "symbol": "",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -859,7 +859,7 @@
       "name": "Dao Drain 015",
       "symbol": "",
       "source": "GethSource Ether Camp",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -871,7 +871,7 @@
       "name": "DEW Token",
       "symbol": "DEW",
       "source": "Etherscan.io",
-      "decimals": "0",
+      "decimals": 0,
       "description": "DEW is a Decentralized Exchange and also a gateway to the global blockchain securities market, through an almighty account, you can trade Blockchain Assets, Stocks, Futures, Forex, ETF, Bet Contract etc.",
       "is_custom": false,
       "is_prefund": false
@@ -895,7 +895,7 @@
       "name": "GU: Tournament Pass",
       "symbol": "",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -907,7 +907,7 @@
       "name": "ENS: Old Public Resolver 2",
       "symbol": "",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -931,7 +931,7 @@
       "name": "Uniswap: ORB 2",
       "symbol": "",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -955,7 +955,7 @@
       "name": "Grant 348 EtherLoans undercollateralized loans unstoppable DeFi",
       "symbol": "",
       "source": "https://gitcoin.co/grants/348/etherloans-undercollateralized-loans-unstoppable-d",
-      "decimals": "0",
+      "decimals": 0,
       "description": "https://www.etherloans.io/",
       "is_custom": false,
       "is_prefund": false
@@ -967,7 +967,7 @@
       "name": "Dao Drain 097",
       "symbol": "",
       "source": "GethSource Ether Camp",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -991,7 +991,7 @@
       "name": "Chainlink EUR-USD Aggregator",
       "symbol": "",
       "source": "EtherScan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -1015,7 +1015,7 @@
       "name": "MCH: Hero",
       "symbol": "",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -1027,7 +1027,7 @@
       "name": "Pool Together Pool 1",
       "symbol": "",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -1063,7 +1063,7 @@
       "name": "ENS: ETH Registrar Controller",
       "symbol": "",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -1075,7 +1075,7 @@
       "name": "NapoleonX",
       "symbol": "NPX",
       "source": "Etherscan.io",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -1087,7 +1087,7 @@
       "name": "Ethereum Gold",
       "symbol": "ETG",
       "source": "Etherscan.io",
-      "decimals": "0",
+      "decimals": 0,
       "description": "Ethereumgold is a nonprofit that aims to connects people to low-cost financial services to fight poverty and develop individual potential.",
       "is_custom": false,
       "is_prefund": false
@@ -1099,7 +1099,7 @@
       "name": "Pool Dai MCDAwarePool v0.2.12",
       "symbol": "",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -1123,7 +1123,7 @@
       "name": "Uniswap: DAI",
       "symbol": "",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -1135,7 +1135,7 @@
       "name": "Bounties Network",
       "symbol": "",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -1147,7 +1147,7 @@
       "name": "YOO Airdrop Sender",
       "symbol": "",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -1159,7 +1159,7 @@
       "name": "BasicCoin Airdrop",
       "symbol": "",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -1171,7 +1171,7 @@
       "name": "Grant 381 Animated charts of DeFi/Ethereum by James Todaro",
       "symbol": "",
       "source": "https://gitcoin.co/grants/381/animated-charts-of-defiethereum-by-james-todaro",
-      "decimals": "0",
+      "decimals": 0,
       "description": "https://twitter.com/JamesTodaroMD",
       "is_custom": false,
       "is_prefund": false
@@ -1183,7 +1183,7 @@
       "name": "Dao Drain 003",
       "symbol": "",
       "source": "GethSource Ether Camp",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -1207,7 +1207,7 @@
       "name": "KickAirdropSender",
       "symbol": "",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -1219,7 +1219,7 @@
       "name": "Dao Drain 067 (DarkDAO)",
       "symbol": "",
       "source": "GethSource SlackNation OnChain Ether Camp",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -1231,7 +1231,7 @@
       "name": "ENS: Eth Name Service",
       "symbol": "",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -1243,7 +1243,7 @@
       "name": "GU: Shiny Legendary Pack Three",
       "symbol": "",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -1255,7 +1255,7 @@
       "name": "Dao Drain 007",
       "symbol": "",
       "source": "GethSource Ether Camp",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -1279,7 +1279,7 @@
       "name": "Traxia Membership Token",
       "symbol": "TMT",
       "source": "Etherscan.io",
-      "decimals": "0",
+      "decimals": 0,
       "description": "A decentralized global trade finance ecosystem.",
       "is_custom": false,
       "is_prefund": false
@@ -1291,7 +1291,7 @@
       "name": "Name 0x32be343b",
       "symbol": "",
       "source": "TrueBlocks.io CarbonVote WhaleWatch.io SEPT_DDOS http://www.reddit.com/r/ethereum/",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -1303,7 +1303,7 @@
       "name": "Grant 152 Ethereum For Farsi Speaking Population",
       "symbol": "",
       "source": "",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -1315,7 +1315,7 @@
       "name": "Chainlink LINK-USD Aggregator",
       "symbol": "",
       "source": "EtherScan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -1339,7 +1339,7 @@
       "name": "Grant 126 Humans of Ethereum",
       "symbol": "",
       "source": "https://gitcoin.co/grants/126/humansofethereum",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -1351,7 +1351,7 @@
       "name": "Genesis Protocol",
       "symbol": "",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -1363,7 +1363,7 @@
       "name": "Grant 085 Tennagraph Minimum Bias Ethereum Signal Aggregat",
       "symbol": "",
       "source": "https://gitcoin.co/grants/85/tennagraph-minimum-bias-ethereum-signal-aggregat-2",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -1375,7 +1375,7 @@
       "name": "HPBCoin",
       "symbol": "HPB",
       "source": "Etherscan.io",
-      "decimals": "0",
+      "decimals": 0,
       "description": "HPB High-Performance Blockchain is a new kind of block chain hardware and software architecture, which includes a chip acceleration engine and the blockchain platform, aiming to realize the performance extension of distributed applications",
       "is_custom": false,
       "is_prefund": false
@@ -1399,7 +1399,7 @@
       "name": "Grant 548 togeDAO A forum and social media community built on the Ethereum blockchain to incentivize content creators.",
       "symbol": "",
       "source": "https://gitcoin.co/grants/548/togedao-a-forum-and-social-media-community-built-o",
-      "decimals": "0",
+      "decimals": 0,
       "description": "http://togedao.ml/",
       "is_custom": false,
       "is_prefund": false
@@ -1411,7 +1411,7 @@
       "name": "Compound: cUSDC",
       "symbol": "",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -1435,7 +1435,7 @@
       "name": "EMANTokenSender",
       "symbol": "",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -1447,7 +1447,7 @@
       "name": "Compound: Comptroller",
       "symbol": "",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -1459,7 +1459,7 @@
       "name": "Coinbase 1",
       "symbol": "",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -1471,7 +1471,7 @@
       "name": "Chainlink N225-JPY Aggregator",
       "symbol": "",
       "source": "EtherScan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -1483,7 +1483,7 @@
       "name": "Compound",
       "symbol": "",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -1507,7 +1507,7 @@
       "name": "Grant 412 Ethereum Commons: Testnets for ETC ETH",
       "symbol": "",
       "source": "https://gitcoin.co/grants/412/ethereumcore-public-goods-faucets-gas-estimator-st",
-      "decimals": "0",
+      "decimals": 0,
       "description": "https://EthereumCore.org",
       "is_custom": false,
       "is_prefund": false
@@ -1519,7 +1519,7 @@
       "name": "Grant 551 The Ethereum 2.0 Annotated Specification",
       "symbol": "",
       "source": "https://gitcoin.co/grants/551/the-ethereum-20-annotated-specification",
-      "decimals": "0",
+      "decimals": 0,
       "description": "https://benjaminion.xyz/eth2-annotated-spec/",
       "is_custom": false,
       "is_prefund": false
@@ -1531,7 +1531,7 @@
       "name": "AltEstate token",
       "symbol": "",
       "source": "Etherscan.io",
-      "decimals": "0",
+      "decimals": 0,
       "description": "ALT is a utility token for Alt.Estate ‚Äö√Ñ√Æ the IT company offering a new solution for real estate tokenization",
       "is_custom": false,
       "is_prefund": false
@@ -1555,7 +1555,7 @@
       "name": "Grant 562 Learning Data Science on the Ethereum Blockchain with @omnianalytics",
       "symbol": "",
       "source": "https://gitcoin.co/grants/562/learning-data-science-on-the-ethereum-blockchain-w",
-      "decimals": "0",
+      "decimals": 0,
       "description": "https://github.com/Omni-Analytics-Group/eth-data-science-course",
       "is_custom": false,
       "is_prefund": false
@@ -1567,7 +1567,7 @@
       "name": "CryptoVoxels",
       "symbol": "",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -1579,7 +1579,7 @@
       "name": "Minereum Airdrop",
       "symbol": "MNE",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -1627,7 +1627,7 @@
       "name": "BZ Token",
       "symbol": "BZ",
       "source": "Etherscan.io",
-      "decimals": "0",
+      "decimals": 0,
       "description": "Digital asset trading exchanges, providing professional digital asset trading and OTC Over The Counter services.",
       "is_custom": false,
       "is_prefund": false
@@ -1639,7 +1639,7 @@
       "name": "Dao Drain 041",
       "symbol": "",
       "source": "GethSource Ether Camp",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -1663,7 +1663,7 @@
       "name": "XMED Chain Token",
       "symbol": "XMCT",
       "source": "Etherscan.io",
-      "decimals": "0",
+      "decimals": 0,
       "description": "Connecting global medical data and find your ideal cross-border medical solution",
       "is_custom": false,
       "is_prefund": false
@@ -1687,7 +1687,7 @@
       "name": "Dao Drain 109 DAO_Hell_007",
       "symbol": "",
       "source": "GethSource Ether Camp",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -1711,7 +1711,7 @@
       "name": "Tornado.Cash 1 ETH",
       "symbol": "",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -1723,7 +1723,7 @@
       "name": "Sonder Token",
       "symbol": "SNR",
       "source": "Etherscan.io",
-      "decimals": "0",
+      "decimals": 0,
       "description": "Overcome the barriers to integration of blockchain-technologies into e-commerce market.",
       "is_custom": false,
       "is_prefund": false
@@ -1747,7 +1747,7 @@
       "name": "Katerium Airdrop",
       "symbol": "",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -1759,7 +1759,7 @@
       "name": "ENS: Public Resolver 2",
       "symbol": "",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -1783,7 +1783,7 @@
       "name": "Uniswap: KNC",
       "symbol": "KNC",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -1795,7 +1795,7 @@
       "name": "Pool Dai Token plDai RecipientWhitelistPoolToken v0.2.12",
       "symbol": "",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -1807,7 +1807,7 @@
       "name": "MCH: Gum Gateway 1",
       "symbol": "",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -1819,7 +1819,7 @@
       "name": "Grant 590 Gwei.cz CZ/SK DeFi/Ethereum Community",
       "symbol": "",
       "source": "https://gitcoin.co/grants/590/gweicz-czsk-defiethereum-community",
-      "decimals": "0",
+      "decimals": 0,
       "description": "https://gwei.cz",
       "is_custom": false,
       "is_prefund": false
@@ -1831,7 +1831,7 @@
       "name": "Compound: cETH",
       "symbol": "",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -1843,7 +1843,7 @@
       "name": "NEXT.exchange",
       "symbol": "NEXT",
       "source": "Etherscan.io",
-      "decimals": "0",
+      "decimals": 0,
       "description": "A hybrid exchange registered as an N. V. Public company in the Netherlands and provides fiat pairs to all altcoins on its platform",
       "is_custom": false,
       "is_prefund": false
@@ -1855,7 +1855,7 @@
       "name": "Set: Rebalancing Set Exchange Issuance Module V2",
       "symbol": "",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -1867,7 +1867,7 @@
       "name": "Pool Together Pool 2",
       "symbol": "",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -1891,7 +1891,7 @@
       "name": "MinerBlk3",
       "symbol": "",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -1903,7 +1903,7 @@
       "name": "dxDAO",
       "symbol": "",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -1915,7 +1915,7 @@
       "name": "Dao Drain 021",
       "symbol": "",
       "source": "GethSource Ether Camp",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -1927,7 +1927,7 @@
       "name": "Clovers Network Related",
       "symbol": "",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -1939,7 +1939,7 @@
       "name": "Dao Drain 061",
       "symbol": "",
       "source": "GethSource Ether Camp",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -1963,7 +1963,7 @@
       "name": "Dao Drain 093",
       "symbol": "",
       "source": "GethSource Ether Camp",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -1987,7 +1987,7 @@
       "name": "BerryXToken Airdrop Sender",
       "symbol": "BRX",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -1999,7 +1999,7 @@
       "name": "GU: Legendary Pack",
       "symbol": "",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -2011,7 +2011,7 @@
       "name": "Synth sUSD",
       "symbol": "sUSD",
       "source": "Etherscan.io",
-      "decimals": "0",
+      "decimals": 0,
       "description": "sUSD is part of the Synethix network.",
       "is_custom": false,
       "is_prefund": false
@@ -2023,7 +2023,7 @@
       "name": "BrightID Aragon Org",
       "symbol": "",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -2047,7 +2047,7 @@
       "name": "Grant 337 CREAM: Confidential Reliable Ethereum Anonymous Mixer",
       "symbol": "",
       "source": "https://gitcoin.co/grants/337/cream-confidential-reliable-ethereum-anonymous-mix",
-      "decimals": "0",
+      "decimals": 0,
       "description": "https://github.com/couger-inc/cream",
       "is_custom": false,
       "is_prefund": false
@@ -2059,7 +2059,7 @@
       "name": "GU: Board",
       "symbol": "",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -2071,7 +2071,7 @@
       "name": "vSlice",
       "symbol": "VSL",
       "source": "Etherscan.io",
-      "decimals": "0",
+      "decimals": 0,
       "description": "An Ethereum Gaming Platform Token",
       "is_custom": false,
       "is_prefund": false
@@ -2083,7 +2083,7 @@
       "name": "Uniswap V2: Factory Contract",
       "symbol": "",
       "source": "EtherScan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -2095,7 +2095,7 @@
       "name": "Dao Drain 013",
       "symbol": "",
       "source": "GethSource Ether Camp",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -2107,7 +2107,7 @@
       "name": "Dao Drain 009",
       "symbol": "",
       "source": "GethSource Ether Camp",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -2119,7 +2119,7 @@
       "name": "Dao Drain 063",
       "symbol": "",
       "source": "GethSource Ether Camp",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -2131,7 +2131,7 @@
       "name": "Compound: cDAI",
       "symbol": "",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -2143,7 +2143,7 @@
       "name": "Chainlink BUSD-ETH Aggregator",
       "symbol": "",
       "source": "EtherScan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -2155,7 +2155,7 @@
       "name": "BasicCoin Airdrop Sender",
       "symbol": "",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -2179,7 +2179,7 @@
       "name": "ENS: Old Registrar",
       "symbol": "",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -2191,7 +2191,7 @@
       "name": "ENS: Registrar Migration",
       "symbol": "",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -2203,7 +2203,7 @@
       "name": "Dao Drain 049",
       "symbol": "",
       "source": "GethSource Ether Camp",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -2215,7 +2215,7 @@
       "name": "Kudos Sender",
       "symbol": "",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -2227,7 +2227,7 @@
       "name": "Uniswap: UMA",
       "symbol": "UMA",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -2239,7 +2239,7 @@
       "name": "Uniswap: ANJ Aragon Network Juror",
       "symbol": "ANJ",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -2251,7 +2251,7 @@
       "name": "AGLD Airdrop Sender",
       "symbol": "",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -2275,7 +2275,7 @@
       "name": "Name 0x663d3947",
       "symbol": "",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -2287,7 +2287,7 @@
       "name": "Genesis ContributionReward",
       "symbol": "",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -2323,7 +2323,7 @@
       "name": "Grant 030 Grant 082 Official Progpow Technical Audit Funding",
       "symbol": "",
       "source": "https://gitcoin.co/grants/30/ethereum-all-core-devs-community-project-managem-2",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -2347,7 +2347,7 @@
       "name": "Grant 390 Wallet Notify A standardized way of sending push notifications to Ethereum wallets",
       "symbol": "",
       "source": "https://gitcoin.co/grants/390/wallet-notify-a-standardized-way-of-sending-push-n",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -2359,7 +2359,7 @@
       "name": "GU: Hyperion White Star",
       "symbol": "",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -2371,7 +2371,7 @@
       "name": "Dragonglass",
       "symbol": "DGS",
       "source": "Etherscan.io",
-      "decimals": "0",
+      "decimals": 0,
       "description": "Dragonglass provides a seamless solution for cryptocurrency mining",
       "is_custom": false,
       "is_prefund": false
@@ -2383,7 +2383,7 @@
       "name": "Dao Drain 017 Other DAO",
       "symbol": "",
       "source": "GethSource TrueBlocks.io Ether Camp",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -2395,7 +2395,7 @@
       "name": "Dai Stablecoin",
       "symbol": "",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -2407,7 +2407,7 @@
       "name": "GU: Legendary Pack Two",
       "symbol": "",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false

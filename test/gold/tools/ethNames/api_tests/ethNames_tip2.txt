@@ -1,19 +1,19 @@
 {"data": [
   {
     "address": "0x133d705a9696882228f6bb7fe008745aef7cdc93",
-    "decimals": "0"
+    "decimals": 0
   },
   {
     "address": "0x7cb57b5a97eabe94205c07890be4c1ad31e486a8",
-    "decimals": "0"
+    "decimals": 0
   },
   {
     "address": "0xbc2138f76db98af69c8c9d5c365263dca32f5e63",
-    "decimals": "0"
+    "decimals": 0
   },
   {
     "address": "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359",
-    "decimals": "0"
+    "decimals": 0
   }], "types": [
 { "type": "CAccountName", "fields": [{ "name": "address", "type": "address" }, { "name": "decimals", "type": "unumber" }] }
 ], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef", "namePath": "--" } }

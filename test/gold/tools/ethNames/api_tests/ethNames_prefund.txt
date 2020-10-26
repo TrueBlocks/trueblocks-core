@@ -6,7 +6,7 @@
       "name": "Prefund_0000",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -15,7 +15,7 @@
       "name": "Prefund_0001",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -24,7 +24,7 @@
       "name": "Prefund_0002",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -33,7 +33,7 @@
       "name": "Prefund_0003",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -42,7 +42,7 @@
       "name": "Prefund_0004",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -51,7 +51,7 @@
       "name": "Prefund_0005",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -60,7 +60,7 @@
       "name": "Prefund_0006",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -69,7 +69,7 @@
       "name": "Prefund_0007",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -78,7 +78,7 @@
       "name": "Prefund_0008",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -87,7 +87,7 @@
       "name": "Prefund_0009",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -96,7 +96,7 @@
       "name": "Prefund_0010",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -105,7 +105,7 @@
       "name": "Prefund_0011",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -114,7 +114,7 @@
       "name": "Prefund_0012",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -123,7 +123,7 @@
       "name": "Prefund_0013",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -132,7 +132,7 @@
       "name": "Prefund_0014",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -141,7 +141,7 @@
       "name": "Prefund_0015",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -150,7 +150,7 @@
       "name": "Prefund_0016",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -159,7 +159,7 @@
       "name": "Prefund_0017",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -168,7 +168,7 @@
       "name": "Prefund_0018",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -177,7 +177,7 @@
       "name": "Prefund_0019",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -186,7 +186,7 @@
       "name": "Prefund_0020",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -195,7 +195,7 @@
       "name": "Prefund_0021",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -204,7 +204,7 @@
       "name": "Prefund_0022",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -213,7 +213,7 @@
       "name": "Prefund_0023",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -222,7 +222,7 @@
       "name": "Prefund_0024",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -231,7 +231,7 @@
       "name": "Prefund_0025",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -240,7 +240,7 @@
       "name": "Prefund_0026",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -249,7 +249,7 @@
       "name": "Prefund_0027",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -258,7 +258,7 @@
       "name": "Prefund_0028",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -267,7 +267,7 @@
       "name": "Prefund_0029",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -276,7 +276,7 @@
       "name": "Prefund_0030",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -285,7 +285,7 @@
       "name": "Prefund_0031",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -294,7 +294,7 @@
       "name": "Prefund_0032",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -303,7 +303,7 @@
       "name": "Prefund_0033",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -312,7 +312,7 @@
       "name": "Prefund_0034",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -321,7 +321,7 @@
       "name": "Prefund_0035",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -330,7 +330,7 @@
       "name": "Prefund_0036",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -339,7 +339,7 @@
       "name": "Prefund_0037",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -348,7 +348,7 @@
       "name": "Prefund_0038",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -357,7 +357,7 @@
       "name": "Prefund_0039",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -366,7 +366,7 @@
       "name": "Prefund_0040",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -375,7 +375,7 @@
       "name": "Prefund_0041",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -384,7 +384,7 @@
       "name": "Prefund_0042",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -393,7 +393,7 @@
       "name": "Prefund_0043",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -402,7 +402,7 @@
       "name": "Prefund_0044",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -411,7 +411,7 @@
       "name": "Prefund_0045",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -420,7 +420,7 @@
       "name": "Prefund_0046",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -429,7 +429,7 @@
       "name": "Prefund_0047",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -438,7 +438,7 @@
       "name": "Prefund_0048",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -447,7 +447,7 @@
       "name": "Prefund_0049",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -456,7 +456,7 @@
       "name": "Prefund_0050",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -465,7 +465,7 @@
       "name": "Prefund_0051",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -474,7 +474,7 @@
       "name": "Prefund_0052",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -483,7 +483,7 @@
       "name": "Prefund_0053",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -492,7 +492,7 @@
       "name": "Prefund_0054",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -501,7 +501,7 @@
       "name": "Prefund_0055",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -510,7 +510,7 @@
       "name": "Prefund_0056",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -519,7 +519,7 @@
       "name": "Prefund_0057",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -528,7 +528,7 @@
       "name": "Prefund_0058",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -537,7 +537,7 @@
       "name": "Prefund_0059",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -546,7 +546,7 @@
       "name": "Prefund_0060",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -555,7 +555,7 @@
       "name": "Prefund_0061",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -564,7 +564,7 @@
       "name": "Prefund_0062",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -573,7 +573,7 @@
       "name": "Prefund_0063",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -582,7 +582,7 @@
       "name": "Prefund_0064",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -591,7 +591,7 @@
       "name": "Prefund_0065",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -600,7 +600,7 @@
       "name": "Prefund_0066",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -609,7 +609,7 @@
       "name": "Prefund_0067",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -618,7 +618,7 @@
       "name": "Prefund_0068",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -627,7 +627,7 @@
       "name": "Prefund_0069",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -636,7 +636,7 @@
       "name": "Prefund_0070",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -645,7 +645,7 @@
       "name": "Prefund_0071",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -654,7 +654,7 @@
       "name": "Prefund_0072",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -663,7 +663,7 @@
       "name": "Prefund_0073",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -672,7 +672,7 @@
       "name": "Prefund_0074",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -681,7 +681,7 @@
       "name": "Prefund_0075",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -690,7 +690,7 @@
       "name": "Prefund_0076",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -699,7 +699,7 @@
       "name": "Prefund_0077",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -708,7 +708,7 @@
       "name": "Prefund_0078",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -717,7 +717,7 @@
       "name": "Prefund_0079",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -726,7 +726,7 @@
       "name": "Prefund_0080",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -735,7 +735,7 @@
       "name": "Prefund_0081",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -744,7 +744,7 @@
       "name": "Prefund_0082",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -753,7 +753,7 @@
       "name": "Prefund_0083",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -762,7 +762,7 @@
       "name": "Prefund_0084",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -771,7 +771,7 @@
       "name": "Prefund_0085",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -780,7 +780,7 @@
       "name": "Prefund_0086",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -789,7 +789,7 @@
       "name": "Prefund_0087",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -798,7 +798,7 @@
       "name": "Prefund_0088",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -807,7 +807,7 @@
       "name": "Prefund_0089",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -816,7 +816,7 @@
       "name": "Prefund_0090",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -825,7 +825,7 @@
       "name": "Prefund_0091",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -834,7 +834,7 @@
       "name": "Prefund_0092",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -843,7 +843,7 @@
       "name": "Prefund_0093",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -852,7 +852,7 @@
       "name": "Prefund_0094",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -861,7 +861,7 @@
       "name": "Prefund_0095",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -870,7 +870,7 @@
       "name": "Prefund_0096",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -879,7 +879,7 @@
       "name": "Prefund_0097",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -888,7 +888,7 @@
       "name": "Prefund_0098",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -897,7 +897,7 @@
       "name": "Prefund_0099",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -906,7 +906,7 @@
       "name": "Prefund_0100",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -915,7 +915,7 @@
       "name": "Prefund_0101",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -924,7 +924,7 @@
       "name": "Prefund_0102",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -933,7 +933,7 @@
       "name": "Prefund_0103",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -942,7 +942,7 @@
       "name": "Prefund_0104",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -951,7 +951,7 @@
       "name": "Prefund_0105",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -960,7 +960,7 @@
       "name": "Prefund_0106",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -969,7 +969,7 @@
       "name": "Prefund_0107",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -978,7 +978,7 @@
       "name": "Prefund_0108",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -987,7 +987,7 @@
       "name": "Prefund_0109",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -996,7 +996,7 @@
       "name": "Prefund_0110",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1005,7 +1005,7 @@
       "name": "Prefund_0111",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1014,7 +1014,7 @@
       "name": "Prefund_0112",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1023,7 +1023,7 @@
       "name": "Prefund_0113",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1032,7 +1032,7 @@
       "name": "Prefund_0114",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1041,7 +1041,7 @@
       "name": "Prefund_0115",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1050,7 +1050,7 @@
       "name": "Prefund_0116",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1059,7 +1059,7 @@
       "name": "Prefund_0117",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1068,7 +1068,7 @@
       "name": "Prefund_0118",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1077,7 +1077,7 @@
       "name": "Prefund_0119",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1086,7 +1086,7 @@
       "name": "Prefund_0120",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1095,7 +1095,7 @@
       "name": "Prefund_0121",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1104,7 +1104,7 @@
       "name": "Prefund_0122",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1113,7 +1113,7 @@
       "name": "Prefund_0123",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1122,7 +1122,7 @@
       "name": "Prefund_0124",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1131,7 +1131,7 @@
       "name": "Prefund_0125",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1140,7 +1140,7 @@
       "name": "Prefund_0126",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1149,7 +1149,7 @@
       "name": "Prefund_0127",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1158,7 +1158,7 @@
       "name": "Prefund_0128",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1167,7 +1167,7 @@
       "name": "Prefund_0129",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1176,7 +1176,7 @@
       "name": "Prefund_0130",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1185,7 +1185,7 @@
       "name": "Prefund_0131",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1194,7 +1194,7 @@
       "name": "Prefund_0132",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1203,7 +1203,7 @@
       "name": "Prefund_0133",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1212,7 +1212,7 @@
       "name": "Prefund_0134",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1221,7 +1221,7 @@
       "name": "Prefund_0135",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1230,7 +1230,7 @@
       "name": "Prefund_0136",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1239,7 +1239,7 @@
       "name": "Prefund_0137",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1248,7 +1248,7 @@
       "name": "Prefund_0138",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1257,7 +1257,7 @@
       "name": "Prefund_0139",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1266,7 +1266,7 @@
       "name": "Prefund_0140",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1275,7 +1275,7 @@
       "name": "Prefund_0141",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1284,7 +1284,7 @@
       "name": "Prefund_0142",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1293,7 +1293,7 @@
       "name": "Prefund_0143",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1302,7 +1302,7 @@
       "name": "Prefund_0144",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1311,7 +1311,7 @@
       "name": "Prefund_0145",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1320,7 +1320,7 @@
       "name": "Prefund_0146",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1329,7 +1329,7 @@
       "name": "Prefund_0147",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1338,7 +1338,7 @@
       "name": "Prefund_0148",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1347,7 +1347,7 @@
       "name": "Prefund_0149",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1356,7 +1356,7 @@
       "name": "Prefund_0150",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1365,7 +1365,7 @@
       "name": "Prefund_0151",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1374,7 +1374,7 @@
       "name": "Prefund_0152",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1383,7 +1383,7 @@
       "name": "Prefund_0153",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1392,7 +1392,7 @@
       "name": "Prefund_0154",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1401,7 +1401,7 @@
       "name": "Prefund_0155",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1410,7 +1410,7 @@
       "name": "Prefund_0156",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1419,7 +1419,7 @@
       "name": "Prefund_0157",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1428,7 +1428,7 @@
       "name": "Prefund_0158",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1437,7 +1437,7 @@
       "name": "Prefund_0159",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1446,7 +1446,7 @@
       "name": "Prefund_0160",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1455,7 +1455,7 @@
       "name": "Prefund_0161",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1464,7 +1464,7 @@
       "name": "Prefund_0162",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1473,7 +1473,7 @@
       "name": "Prefund_0163",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1482,7 +1482,7 @@
       "name": "Prefund_0164",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1491,7 +1491,7 @@
       "name": "Prefund_0165",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1500,7 +1500,7 @@
       "name": "Prefund_0166",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1509,7 +1509,7 @@
       "name": "Prefund_0167",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1518,7 +1518,7 @@
       "name": "Prefund_0168",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1527,7 +1527,7 @@
       "name": "Prefund_0169",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1536,7 +1536,7 @@
       "name": "Prefund_0170",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1545,7 +1545,7 @@
       "name": "Prefund_0171",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1554,7 +1554,7 @@
       "name": "Prefund_0172",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1563,7 +1563,7 @@
       "name": "Prefund_0173",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1572,7 +1572,7 @@
       "name": "Prefund_0174",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1581,7 +1581,7 @@
       "name": "Prefund_0175",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1590,7 +1590,7 @@
       "name": "Prefund_0176",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1599,7 +1599,7 @@
       "name": "Prefund_0177",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1608,7 +1608,7 @@
       "name": "Prefund_0178",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1617,7 +1617,7 @@
       "name": "Prefund_0179",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1626,7 +1626,7 @@
       "name": "Prefund_0180",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1635,7 +1635,7 @@
       "name": "Prefund_0181",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1644,7 +1644,7 @@
       "name": "Prefund_0182",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1653,7 +1653,7 @@
       "name": "Prefund_0183",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1662,7 +1662,7 @@
       "name": "Prefund_0184",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1671,7 +1671,7 @@
       "name": "Prefund_0185",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1680,7 +1680,7 @@
       "name": "Prefund_0186",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1689,7 +1689,7 @@
       "name": "Prefund_0187",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1698,7 +1698,7 @@
       "name": "Prefund_0188",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1707,7 +1707,7 @@
       "name": "Prefund_0189",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1716,7 +1716,7 @@
       "name": "Prefund_0190",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1725,7 +1725,7 @@
       "name": "Prefund_0191",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1734,7 +1734,7 @@
       "name": "Prefund_0192",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1743,7 +1743,7 @@
       "name": "Prefund_0193",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1752,7 +1752,7 @@
       "name": "Prefund_0194",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1761,7 +1761,7 @@
       "name": "Prefund_0195",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1770,7 +1770,7 @@
       "name": "Prefund_0196",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1779,7 +1779,7 @@
       "name": "Prefund_0197",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1788,7 +1788,7 @@
       "name": "Prefund_0198",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1797,7 +1797,7 @@
       "name": "Prefund_0199",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1806,7 +1806,7 @@
       "name": "Prefund_0200",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     }
   ],

@@ -7,7 +7,7 @@
       "name": "Grant 160 Antiprosynth Twitter Account Activity",
       "symbol": "",
       "source": "",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -43,7 +43,7 @@
       "name": "Grant 853 Launching a web wallet for our 24 000+Kenyan local community currency economy",
       "symbol": "",
       "source": "https://gitcoin.co/grants/853/launching-a-web-wallet-for-our-24000-kenyan-local",
-      "decimals": "0",
+      "decimals": 0,
       "description": "https://multiply.charity",
       "is_custom": false,
       "is_prefund": false
@@ -55,7 +55,7 @@
       "name": "Name 0x24029403",
       "symbol": "",
       "source": "Twitter",
-      "decimals": "0",
+      "decimals": 0,
       "description": "@antiprosynth",
       "is_custom": false,
       "is_prefund": false
@@ -103,7 +103,7 @@
       "name": "My Ethereum Wallet Tip Jar Taylor Van Orden",
       "symbol": "",
       "source": "Slack DevCon2 Token Contract",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -115,7 +115,7 @@
       "name": "Unicorns",
       "symbol": "🦄",
       "source": "Ethereum.org",
-      "decimals": "0",
+      "decimals": 0,
       "description": "Ethereum tip jar unicorn tokens",
       "is_custom": false,
       "is_prefund": false
@@ -151,7 +151,7 @@
       "name": "Grant 379 AntiPhishing Browser Plugin PhishFort Protect",
       "symbol": "",
       "source": "https://gitcoin.co/grants/379/anti-phishing-browser-plugin-phishfort-protect",
-      "decimals": "0",
+      "decimals": 0,
       "description": "https://phishfort.com/protect",
       "is_custom": false,
       "is_prefund": false
@@ -187,7 +187,7 @@
       "name": "Etherum Tip Jar",
       "symbol": "TIP",
       "source": "TrueBlocks.io",
-      "decimals": "0",
+      "decimals": 0,
       "description": "The ethereum tip jar",
       "is_custom": false,
       "is_prefund": false

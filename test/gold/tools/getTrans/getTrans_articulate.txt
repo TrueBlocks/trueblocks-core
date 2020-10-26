@@ -171,7 +171,8 @@ getTrans 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f8
                 "internalType": "uint256",
                 "components": []
               }
-            ]
+            ],
+            "outputs": []
           },
           "compressedLog": "CancelRequest ( _key: 1, _sender: 0x752c71a68e4e0ea308c6e4209b7802d135c49292, _deposit: 307140400019656960, _amount: 25000000000000000000 )"
         }
@@ -208,7 +209,8 @@ getTrans 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f8
               "internalType": "uint256",
               "components": []
             }
-          ]
+          ],
+          "outputs": []
         },
         "compressedTrace": "cancelExistingRequest ( _key: 1 )"
       }
@@ -223,7 +225,8 @@ getTrans 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f8
           "internalType": "uint256",
           "components": []
         }
-      ]
+      ],
+      "outputs": []
     },
     "compressedTx": "cancelExistingRequest ( _key: 1 )",
     "gasCost": 3925900000000000,
@@ -285,7 +288,8 @@ getTrans 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f8
               "internalType": "address",
               "components": []
             }
-          ]
+          ],
+          "outputs": []
         },
         "compressedTrace": "split ( targetFork: 0x167a9333bf582556f35bd4d16a7e80e191aa6476, targetNoFork: 0x571b7b69829ce2568b9bc3d32eaf7405dab76b21 )"
       }
@@ -306,7 +310,8 @@ getTrans 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f8
           "internalType": "address",
           "components": []
         }
-      ]
+      ],
+      "outputs": []
     },
     "compressedTx": "split ( targetFork: 0x167a9333bf582556f35bd4d16a7e80e191aa6476, targetNoFork: 0x571b7b69829ce2568b9bc3d32eaf7405dab76b21 )",
     "gasCost": 3156100000000000,

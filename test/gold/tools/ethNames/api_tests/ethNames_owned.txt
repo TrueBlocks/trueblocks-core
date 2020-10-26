@@ -6,7 +6,7 @@
       "name": "",
       "symbol": "",
       "source": "",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -15,7 +15,7 @@
       "name": "",
       "symbol": "",
       "source": "",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -24,7 +24,7 @@
       "name": "",
       "symbol": "",
       "source": "",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -33,7 +33,7 @@
       "name": "",
       "symbol": "",
       "source": "",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     }
   ],

@@ -426,7 +426,8 @@ getTrans 0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f --tr
                 "internalType": "address",
                 "components": []
               }
-            ]
+            ],
+            "outputs": []
           },
           "compressedLog": "AcceptRequest ( _key: 6, _etherAmount: 236159796400000000, _tokenAmount: 25000000000000000000, _dollarPrice: 2000000000000000000, _acceptor: 0xd503d263de9092232d28492d60c5a956ad754a83 )"
         },
@@ -472,7 +473,8 @@ getTrans 0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f --tr
                 "internalType": "address",
                 "components": []
               }
-            ]
+            ],
+            "outputs": []
           },
           "compressedLog": "AcceptRequest ( _key: 5, _etherAmount: 236159796400000000, _tokenAmount: 25000000000000000000, _dollarPrice: 2000000000000000000, _acceptor: 0xd503d263de9092232d28492d60c5a956ad754a83 )"
         }
@@ -521,7 +523,8 @@ getTrans 0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f --tr
               "internalType": "uint256[]",
               "components": []
             }
-          ]
+          ],
+          "outputs": []
         },
         "compressedTrace": "acceptTheseAskRequestsAndBUY ( _keys: [6, 5], _tokenAmounts: [25000000000000000000, 25000000000000000000], _dollarPrices: [2000000000000000000, 2000000000000000000] )"
       }
@@ -548,7 +551,8 @@ getTrans 0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f --tr
           "internalType": "uint256[]",
           "components": []
         }
-      ]
+      ],
+      "outputs": []
     },
     "compressedTx": "acceptTheseAskRequestsAndBUY ( _keys: [6, 5], _tokenAmounts: [25000000000000000000, 25000000000000000000], _dollarPrices: [2000000000000000000, 2000000000000000000] )",
     "gasCost": 10470350000000000,

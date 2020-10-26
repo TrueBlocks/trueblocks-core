@@ -27,13 +27,13 @@
               "name": "",
               "symbol": "",
               "source": "",
-              "decimals": "0",
+              "decimals": 0,
               "description": "",
               "is_custom": false,
               "is_prefund": false,
-              "nAppearances": "0",
-              "firstAppearance": "0",
-              "latestAppearance": "0",
+              "nAppearances": 0,
+              "firstAppearance": 0,
+              "latestAppearance": 0,
               "sizeInBytes": 36963
             }
           ],

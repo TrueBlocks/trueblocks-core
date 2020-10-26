@@ -59,7 +59,8 @@ getLogs --file:cmd_file --verbose --parity --fmt json
           "internalType": "uint256",
           "components": []
         }
-      ]
+      ],
+      "outputs": []
     },
     "compressedLog": "ProfitWithdrawn ( tokenHolder: 0x63585740143301cf0163f6448fd8a63c3b376fd3, amountPaidOut: 87810925078238973 )"
   }], "types": [

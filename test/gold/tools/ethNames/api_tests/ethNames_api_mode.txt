@@ -6,7 +6,7 @@
       "name": "Grant 160 Antiprosynth Twitter Account Activity",
       "symbol": "",
       "source": "",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -15,7 +15,7 @@
       "name": "My Ethereum Wallet Tip Jar Taylor Van Orden",
       "symbol": "",
       "source": "Slack DevCon2 Token Contract",
-      "decimals": "0",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -24,7 +24,7 @@
       "name": "Grant 379 AntiPhishing Browser Plugin PhishFort Protect",
       "symbol": "",
       "source": "https://gitcoin.co/grants/379/anti-phishing-browser-plugin-phishfort-protect",
-      "decimals": "0",
+      "decimals": 0,
       "description": "https://phishfort.com/protect"
     },
     {
@@ -33,7 +33,7 @@
       "name": "Etherum Tip Jar",
       "symbol": "TIP",
       "source": "TrueBlocks.io",
-      "decimals": "0",
+      "decimals": 0,
       "description": "The ethereum tip jar"
     }
   ],

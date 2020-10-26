@@ -7,7 +7,7 @@
       "name": "TrueUSD",
       "symbol": "",
       "source": "Etherscan.io",
-      "decimals": "0",
+      "decimals": 0,
       "description": "The only regulated, exchange-independent stablecoin backed 1-for-1 with US Dollars",
       "is_custom": false,
       "is_prefund": false
@@ -319,7 +319,7 @@
       "name": "BTRN",
       "symbol": "BTRN",
       "source": "Etherscan.io",
-      "decimals": "0",
+      "decimals": 0,
       "description": "Biotron is a fully transparent personal data analytics platform on blockchain.",
       "is_custom": false,
       "is_prefund": false
@@ -463,7 +463,7 @@
       "name": "ACE Token",
       "symbol": "ACE",
       "source": "On Chain",
-      "decimals": "0",
+      "decimals": 0,
       "description": "ACE is a utility token, that serves as a form of access to the TokenStars platform and its internal currency. TokenStars is the first talent management platform on the blockchain, that will connect talents celebrities with fans and advertisers.",
       "is_custom": false,
       "is_prefund": false
@@ -475,7 +475,7 @@
       "name": "SingularDTV Sender 2",
       "symbol": "",
       "source": "Etherscan",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -631,7 +631,7 @@
       "name": "Edgeless",
       "symbol": "EDG",
       "source": "On Chain",
-      "decimals": "0",
+      "decimals": 0,
       "description": "The Ethereum smart contract-based that offers a 0% house edge and solves the transparency question once and for all.",
       "is_custom": false,
       "is_prefund": false
@@ -643,7 +643,7 @@
       "name": "LiteCoinGold",
       "symbol": "LTG",
       "source": "On Chain",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -667,7 +667,7 @@
       "name": "Dentacoin",
       "symbol": "DENT",
       "source": "Etherscan.io",
-      "decimals": "0",
+      "decimals": 0,
       "description": "Aims to be the blockchain solution for the global dental industry.",
       "is_custom": false,
       "is_prefund": false
@@ -907,7 +907,7 @@
       "name": "AVT",
       "symbol": "AVT",
       "source": "Etherscan.io",
-      "decimals": "0",
+      "decimals": 0,
       "description": "An open-source protocol that delivers the global standard for ticketing.",
       "is_custom": false,
       "is_prefund": false
@@ -991,7 +991,7 @@
       "name": "CPAY Token",
       "symbol": "CPAY",
       "source": "On Chain",
-      "decimals": "0",
+      "decimals": 0,
       "description": "Cryptopay aims to provide the ability to spend, save, and transact digital currencies.",
       "is_custom": false,
       "is_prefund": false
@@ -1231,7 +1231,7 @@
       "name": "Grid+ Token",
       "symbol": "GRID",
       "source": "Etherscan.io",
-      "decimals": "0",
+      "decimals": 0,
       "description": "Grid+ creates products that enable mainstream use of digital assets and cryptocurrencies. Grid+ strives to be the hardware, software, and cryptocurrency experts building the foundation for a more efficient and inclusive financial future.",
       "is_custom": false,
       "is_prefund": false
@@ -1699,7 +1699,7 @@
       "name": "Augur Token",
       "symbol": "REP",
       "source": "Etherscan.io",
-      "decimals": "0",
+      "decimals": 0,
       "description": "Augur combines the magic of prediction markets with the power of a decentralized network to create a stunningly accurate forecasting tool",
       "is_custom": false,
       "is_prefund": false
@@ -1711,7 +1711,7 @@
       "name": "Hacker Gold",
       "symbol": "HKG",
       "source": "TrueBlocks.io",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -2131,7 +2131,7 @@
       "name": "DEW Token",
       "symbol": "DEW",
       "source": "Etherscan.io",
-      "decimals": "0",
+      "decimals": 0,
       "description": "DEW is a Decentralized Exchange and also a gateway to the global blockchain securities market, through an almighty account, you can trade Blockchain Assets, Stocks, Futures, Forex, ETF, Bet Contract etc.",
       "is_custom": false,
       "is_prefund": false
@@ -2167,7 +2167,7 @@
       "name": "BTCETH",
       "symbol": "BTCETH",
       "source": "TrueBlocks.io",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false
@@ -2239,7 +2239,7 @@
       "name": "The Proof of Attendance",
       "symbol": "POAP",
       "source": "TrueBlocks.io",
-      "decimals": "0",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": false

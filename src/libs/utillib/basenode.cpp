@@ -573,73 +573,70 @@ void CBaseNode::doExport(ostream& os) const {
     os << "{";
     incIndent();
     for (auto field : fields) {
-        string_q name = field.getName();
-        if (!field.isHidden()) {
-            if (field.isArray()) {
-                uint64_t cnt = str_2_Uint(getValueByName(name + "Cnt"));
-                if (field.getName() != fields[0].getName())
-                    os << ",";
+        if (field.isArray()) {
+            uint64_t cnt = str_2_Uint(getValueByName(field.getName() + "Cnt"));
+            if (field.getName() != fields[0].getName())
+                os << ",";
+            os << endl;
+            os << indent() << doKey(field.getName());
+
+            os << "[";
+            if (cnt) {
+                incIndent();
                 os << endl;
-                os << indent() << doKey(name);
-                os << "[";
-                if (cnt) {
-                    incIndent();
-                    os << endl;
-                    for (size_t i = 0; i < cnt; i++) {
-                        os << indent();
-                        const CBaseNode* node = getObjectAt(name, i);
-                        if (node) {
-                            node->doExport(os);
-                        } else {
-                            os << "\"" << getStringAt(name, i) << "\"";
-                        }
-                        if (expContext().endingCommas || i < cnt - 1)
-                            os << ",";
-                        os << endl;
-                    }
-                    decIndent();
+                for (size_t i = 0; i < cnt; i++) {
                     os << indent();
+                    const CBaseNode* node = getObjectAt(field.getName(), i);
+                    if (node) {
+                        node->doExport(os);
+                    } else {
+                        os << "\"" << getStringAt(field.getName(), i) << "\"";
+                    }
+                    if (expContext().endingCommas || i < cnt - 1)
+                        os << ",";
+                    os << endl;
                 }
-                os << "]";
-
-            } else if (field.isObject()) {
-                if (field.getName() != fields[0].getName())
-                    os << ",";
-                os << endl;
-                os << indent() << doKey(name);
-                const CBaseNode* node = getObjectAt(name, 0);
-                if (node) {
-                    node->doExport(os);
-                } else {
-                    os << getValueByName(name);
-                }
-
-            } else {
-                string_q val = getValueByName(name);
-                bool isNum = (field.m_fieldType & TS_NUMERAL);
-                if (field.getName() != fields[0].getName())
-                    os << ",";
-                os << endl;
-                os << indent() << doKey(name);
-                if (isNum && expContext().hexNums && !startsWith(val, "0x") && !contains(val, ".") && !val.empty() &&
-                    (field.m_fieldType != T_BOOL))
-                    val = str_2_Hex(val);
-                bool quote = (!isNum || expContext().quoteNums) && val != "null";
-                if (isApiMode() && val.empty())
-                    quote = true;
-                if (isNum && val.empty())
-                    val = uint_2_Str(0);
-                if (quote)
-                    os << "\"";
-                os << val;
-                if (quote)
-                    os << "\"";
+                decIndent();
+                os << indent();
             }
+            os << "]";
+
+        } else if (field.isObject()) {
+            if (field.getName() != fields[0].getName())
+                os << ",";
+            os << endl << indent() << doKey(field.getName());
+
+            const CBaseNode* node = getObjectAt(field.getName(), 0);
+            if (!node) {
+                LOG_WARN("Object ", field.getName(), " not found in class ", pClass->m_ClassName);
+                return;
+            }
+            node->doExport(os);
+
+        } else {
+            if (field.getName() != fields[0].getName())
+                os << ",";
+            os << endl << indent() << doKey(field.getName());
+
+            bool isNum = (field.m_fieldType & TS_NUMERAL);
+            string_q val = getValueByName(field.getName());
+            if (isNum && expContext().hexNums && !startsWith(val, "0x") && !contains(val, ".") && !val.empty() &&
+                (field.m_fieldType != T_BOOL))
+                val = str_2_Hex(val);
+            if (isNum && val.empty())
+                val = uint_2_Str(0);
+
+            bool quote = ((!isNum || expContext().quoteNums) && val != "null") | (isApiMode() && val.empty());
+            if (quote)
+                os << "\"";
+            os << val;
+            if (quote)
+                os << "\"";
         }
     }
     decIndent();
-    os << (expContext().endingCommas ? "," : "") << endl << indent();
-    os << "}";
+    os << (expContext().endingCommas ? "," : "") << endl;
+    os << indent() << "}";
 }
 
 //--------------------------------------------------------------------------------
