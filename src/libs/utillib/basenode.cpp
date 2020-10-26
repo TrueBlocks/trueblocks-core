@@ -261,7 +261,8 @@ char* CBaseNode::parseJson1(char* s, size_t& nFields) {
                     state = IN_VAL;
                     *s = '\0';
 #ifdef DEBUG_PARSER
-//                      printf("fn: %-10.10s fv: %-40.40s ---> %-60.60s\n" , fieldName, fieldVal, (s+1));
+                    //                      printf("fn: %-10.10s fv: %-40.40s ---> %-60.60s\n" , fieldName, fieldVal,
+                    //                      (s+1));
 #endif
                 }
                 s++;
@@ -541,6 +542,11 @@ void CBaseNode::toJsonFromFields(ostream& os, const CFieldDataArray& fields) con
 
 //--------------------------------------------------------------------------------
 void CBaseNode::doExport(ostream& os) const {
+    if (!m_showing) {
+        os << "{}";
+        return;
+    }
+
     CRuntimeClass* pClass = getRuntimeClass();
     if (!pClass)
         return;
@@ -550,14 +556,11 @@ void CBaseNode::doExport(ostream& os) const {
         return;
     }
 
-    string_q firstShowing;
     CFieldDataArray fields;
     map<string_q, bool> fieldMap;
     while (pClass != GETRUNTIME_CLASS(CBaseNode)) {
         for (auto field : pClass->fieldList) {
             if (!field.isHidden()) {
-                if (firstShowing.empty())
-                    firstShowing = field.getName();
                 if (!fieldMap[field.m_fieldName]) {
                     fields.push_back(field);
                     fieldMap[field.m_fieldName] = true;
@@ -568,82 +571,74 @@ void CBaseNode::doExport(ostream& os) const {
     }
 
     os << "{";
-    if (m_showing) {
-        incIndent();
-        for (auto field : fields) {
-            string_q name = field.getName();
-            if (!field.isHidden()) {
-                if (field.isArray()) {
-                    uint64_t cnt = str_2_Uint(getValueByName(name + "Cnt"));
-                    if (cnt || isApiMode() || showEmptyField(name)) {
-                        if (field.getName() != firstShowing)
-                            os << ",";
-                        os << endl;
-                        os << indent() << doKey(name);
-                        os << "[";
-                        if (cnt) {
-                            incIndent();
-                            os << endl;
-                            for (size_t i = 0; i < cnt; i++) {
-                                os << indent();
-                                const CBaseNode* node = getObjectAt(name, i);
-                                if (node) {
-                                    node->doExport(os);
-                                } else {
-                                    os << "\"" << getStringAt(name, i) << "\"";
-                                }
-                                if (expContext().endingCommas || i < cnt - 1)
-                                    os << ",";
-                                os << endl;
-                            }
-                            decIndent();
-                            os << indent();
-                        }
-                        os << "]";
-                    }
-
-                } else if (field.isObject()) {
-                    if (showEmptyField(field.getName())) {
-                        if (field.getName() != firstShowing)
-                            os << ",";
-                        os << endl;
-                        os << indent() << doKey(name);
-                        const CBaseNode* node = getObjectAt(name, 0);
+    incIndent();
+    for (auto field : fields) {
+        string_q name = field.getName();
+        if (!field.isHidden()) {
+            if (field.isArray()) {
+                uint64_t cnt = str_2_Uint(getValueByName(name + "Cnt"));
+                if (field.getName() != fields[0].getName())
+                    os << ",";
+                os << endl;
+                os << indent() << doKey(name);
+                os << "[";
+                if (cnt) {
+                    incIndent();
+                    os << endl;
+                    for (size_t i = 0; i < cnt; i++) {
+                        os << indent();
+                        const CBaseNode* node = getObjectAt(name, i);
                         if (node) {
                             node->doExport(os);
                         } else {
-                            os << getValueByName(name);
+                            os << "\"" << getStringAt(name, i) << "\"";
                         }
-                    }
-
-                } else {
-                    if (showEmptyField(field.getName())) {
-                        string_q val = getValueByName(name);
-                        bool isNum = (field.m_fieldType & TS_NUMERAL);
-                        if (field.getName() != firstShowing)
+                        if (expContext().endingCommas || i < cnt - 1)
                             os << ",";
                         os << endl;
-                        os << indent() << doKey(name);
-                        if (isNum && expContext().hexNums && !startsWith(val, "0x") && !contains(val, ".") &&
-                            !val.empty() && (field.m_fieldType != T_BOOL))
-                            val = str_2_Hex(val);
-                        bool quote = (!isNum || expContext().quoteNums) && val != "null";
-                        if (isApiMode() && val.empty())
-                            quote = true;
-                        if (isNum && val.empty())
-                            val = uint_2_Str(0);
-                        if (quote)
-                            os << "\"";
-                        os << val;
-                        if (quote)
-                            os << "\"";
                     }
+                    decIndent();
+                    os << indent();
                 }
+                os << "]";
+
+            } else if (field.isObject()) {
+                if (field.getName() != fields[0].getName())
+                    os << ",";
+                os << endl;
+                os << indent() << doKey(name);
+                const CBaseNode* node = getObjectAt(name, 0);
+                if (node) {
+                    node->doExport(os);
+                } else {
+                    os << getValueByName(name);
+                }
+
+            } else {
+                string_q val = getValueByName(name);
+                bool isNum = (field.m_fieldType & TS_NUMERAL);
+                if (field.getName() != fields[0].getName())
+                    os << ",";
+                os << endl;
+                os << indent() << doKey(name);
+                if (isNum && expContext().hexNums && !startsWith(val, "0x") && !contains(val, ".") && !val.empty() &&
+                    (field.m_fieldType != T_BOOL))
+                    val = str_2_Hex(val);
+                bool quote = (!isNum || expContext().quoteNums) && val != "null";
+                if (isApiMode() && val.empty())
+                    quote = true;
+                if (isNum && val.empty())
+                    val = uint_2_Str(0);
+                if (quote)
+                    os << "\"";
+                os << val;
+                if (quote)
+                    os << "\"";
             }
         }
-        decIndent();
-        os << (expContext().endingCommas ? "," : "") << endl << indent();
     }
+    decIndent();
+    os << (expContext().endingCommas ? "," : "") << endl << indent();
     os << "}";
 }
 

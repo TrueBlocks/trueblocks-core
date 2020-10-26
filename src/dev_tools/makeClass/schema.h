@@ -55,7 +55,6 @@ class CSchema : public CBaseNode {
     DECLARE_NODE(CSchema);
 
     // EXISTING_CODE
-    bool showEmptyField(const string_q& fn) const override;
     // EXISTING_CODE
     bool operator==(const CSchema& it) const;
     bool operator!=(const CSchema& it) const {

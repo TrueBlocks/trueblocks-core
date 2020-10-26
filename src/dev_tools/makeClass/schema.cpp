@@ -466,11 +466,5 @@ const char* STR_DISPLAY_SCHEMA = "";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-bool CSchema::showEmptyField(const string_q& fn) const {
-    if (fn == "name")
-        return true;
-    string_q val = getValueByName(fn);
-    return val != "false" && val != "0" && val != "null" && !val.empty();
-}
 // EXISTING_CODE
 }  // namespace qblocks

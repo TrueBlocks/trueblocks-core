@@ -67,10 +67,6 @@ class CBaseNode {
     virtual const string_q getStringAt(const string_q& fieldName, size_t i) const {
         return "";
     }
-    virtual bool showEmptyField(const string_q& fn) const {
-        return true;
-    }
-
     void doExport(ostream& os) const;
 
   protected:

@@ -60,9 +60,6 @@ class CFunction : public CBaseNode {
     friend class CTransaction;
     friend class CLogEntry;
     friend class CTrace;
-    bool showEmptyField(const string_q& fn) const override {
-        return (showOutput || fn != "outputs");
-    }
     bool fromDefinition(const string_q& lineIn);
     string_q compressed(void) const;
     // EXISTING_CODE
