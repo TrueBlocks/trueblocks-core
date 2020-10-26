@@ -34,23 +34,19 @@ getTrans 0x3551dac5e91df7f27c78118daa0da81211ad38acc527c08c74c5a7724397d49c --ar
               {
                 "name": "_from",
                 "value": "0xe81a6c6b733d52df5d6aa863d75aab78147a0f28",
-                "internalType": "",
-                "components": []
+                "internalType": ""
               },
               {
                 "name": "_to",
                 "value": "0x8ca1fec705f7060aaa3d8c6757e34d1e7cc61021",
-                "internalType": "",
-                "components": []
+                "internalType": ""
               },
               {
                 "name": "_amount",
                 "value": "100000000",
-                "internalType": "",
-                "components": []
+                "internalType": ""
               }
-            ],
-            "outputs": []
+            ]
           },
           "compressedLog": "Transfer ( _from: 0xe81a6c6b733d52df5d6aa863d75aab78147a0f28, _to: 0x8ca1fec705f7060aaa3d8c6757e34d1e7cc61021, _amount: 100000000 )"
         },
@@ -63,9 +59,7 @@ getTrans 0x3551dac5e91df7f27c78118daa0da81211ad38acc527c08c74c5a7724397d49c --ar
           "data": "0x3235303066393565366139643833643938000000000000000000000000000000000000000000000000000000e81a6c6b733d52df5d6aa863d75aab78147a0f280000000000000000000000008ca1fec705f7060aaa3d8c6757e34d1e7cc610216d3666666e574245453978595178726d320000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002",
           "articulatedLog": {
             "name": "",
-            "stateMutability": "",
-            "inputs": [],
-            "outputs": []
+            "stateMutability": ""
           },
           "compressedLog": ""
         }
@@ -231,16 +225,14 @@ getTrans 0x3551dac5e91df7f27c78118daa0da81211ad38acc527c08c74c5a7724397d49c --ar
             {
               "name": "_owner",
               "value": "0xc14830e53aa344e8c14603a91229a0b925b0b262",
-              "internalType": "address",
-              "components": []
+              "internalType": "address"
             }
           ],
           "outputs": [
             {
               "name": "balance",
               "value": "0",
-              "internalType": "uint256",
-              "components": []
+              "internalType": "uint256"
             }
           ]
         },
@@ -272,16 +264,14 @@ getTrans 0x3551dac5e91df7f27c78118daa0da81211ad38acc527c08c74c5a7724397d49c --ar
             {
               "name": "_owner",
               "value": "0xe81a6c6b733d52df5d6aa863d75aab78147a0f28",
-              "internalType": "address",
-              "components": []
+              "internalType": "address"
             }
           ],
           "outputs": [
             {
               "name": "balance",
               "value": "0",
-              "internalType": "uint256",
-              "components": []
+              "internalType": "uint256"
             }
           ]
         },
@@ -313,16 +303,14 @@ getTrans 0x3551dac5e91df7f27c78118daa0da81211ad38acc527c08c74c5a7724397d49c --ar
             {
               "name": "_owner",
               "value": "0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a",
-              "internalType": "address",
-              "components": []
+              "internalType": "address"
             }
           ],
           "outputs": [
             {
               "name": "balance",
               "value": "100000000",
-              "internalType": "uint256",
-              "components": []
+              "internalType": "uint256"
             }
           ]
         },
@@ -354,16 +342,14 @@ getTrans 0x3551dac5e91df7f27c78118daa0da81211ad38acc527c08c74c5a7724397d49c --ar
             {
               "name": "_owner",
               "value": "0xe81a6c6b733d52df5d6aa863d75aab78147a0f28",
-              "internalType": "address",
-              "components": []
+              "internalType": "address"
             }
           ],
           "outputs": [
             {
               "name": "balance",
               "value": "100000000",
-              "internalType": "uint256",
-              "components": []
+              "internalType": "uint256"
             }
           ]
         },
@@ -395,16 +381,14 @@ getTrans 0x3551dac5e91df7f27c78118daa0da81211ad38acc527c08c74c5a7724397d49c --ar
             {
               "name": "_owner",
               "value": "0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a",
-              "internalType": "address",
-              "components": []
+              "internalType": "address"
             }
           ],
           "outputs": [
             {
               "name": "balance",
               "value": "100000000",
-              "internalType": "uint256",
-              "components": []
+              "internalType": "uint256"
             }
           ]
         },
@@ -413,9 +397,7 @@ getTrans 0x3551dac5e91df7f27c78118daa0da81211ad38acc527c08c74c5a7724397d49c --ar
     ],
     "articulatedTx": {
       "name": "",
-      "stateMutability": "",
-      "inputs": [],
-      "outputs": []
+      "stateMutability": ""
     },
     "compressedTx": "0xa78caf19 ( stub: 000000000000000000000000cd565ca18f06e2e4d251b55dc49a4fe456c7205232353030663935653661396438336439380000000000000000000000000000006d3666666e574245453978595178726d32000000000000000000000000000000 )",
     "gasCost": 19899285000000000,

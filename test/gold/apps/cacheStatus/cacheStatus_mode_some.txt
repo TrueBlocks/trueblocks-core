@@ -16,7 +16,6 @@ cacheStatus some
   "has_eskey": true,
   "caches": [
     {
-      "items": [],
       "type": "CIndexCache",
       "path": "indexPath",
       "nFiles": 0,
@@ -41,7 +40,6 @@ cacheStatus some
         "--address--",
         "--address--"
       ],
-      "items": [],
       "type": "CNameCache",
       "path": "namesPath",
       "nFiles": 0,

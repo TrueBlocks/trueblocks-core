@@ -4,7 +4,6 @@ getReceipt 2222222.0 2332332.0 --fmt api
   {
     "contractAddress": "0x0",
     "gasUsed": 1000000,
-    "logs": [],
     "status": null
   },  {
     "contractAddress": "0x0",
@@ -22,12 +21,10 @@ getReceipt 2222222.0 2332332.0 --fmt api
         "articulatedLog": {
           "name": "",
           "type": "",
-          "constant": 0,
+          "constant": false,
           "stateMutability": "",
           "signature": "",
-          "encoding": "",
-          "inputs": [],
-          "outputs": []
+          "encoding": ""
         }
       }
     ],

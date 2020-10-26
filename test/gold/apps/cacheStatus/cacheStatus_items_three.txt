@@ -16,7 +16,6 @@ cacheStatus --details abis caches monitors --types slurps
   "has_eskey": true,
   "caches": [
     {
-      "addrs": [],
       "items": [
         {
           "type": "CMonitorCacheItem",
@@ -74,8 +73,6 @@ cacheStatus --details abis caches monitors --types slurps
       "is_valid": true
     },
     {
-      "addrs": [],
-      "items": [],
       "type": "CSlurpCache",
       "path": "slurpsPath",
       "nFiles": 0,

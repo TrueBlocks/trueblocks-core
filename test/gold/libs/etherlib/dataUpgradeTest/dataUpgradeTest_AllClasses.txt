@@ -66,6 +66,7 @@ input_names         	1016	1	131122	T_TEXT TS_STRING
 output_names        	1017	1	131122	T_TEXT TS_STRING
 declaration         	1018	1	131122	T_TEXT TS_STRING
 {
+  "constant": false,
   "inputs": [],
   "outputs": []
 }
@@ -120,6 +121,8 @@ declaration         	1018	0	131122	T_TEXT TS_STRING
   "deleted": false,
   "showing": true,
   "cname": "Function",
+  "anonymous": false,
+  "constant": false,
   "inputs": [],
   "outputs": [],
   "address": "0x0",

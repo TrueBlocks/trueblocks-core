@@ -399,35 +399,29 @@ getTrans 0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f --tr
               {
                 "name": "_key",
                 "value": "6",
-                "internalType": "uint256",
-                "components": []
+                "internalType": "uint256"
               },
               {
                 "name": "_etherAmount",
                 "value": "236159796400000000",
-                "internalType": "uint256",
-                "components": []
+                "internalType": "uint256"
               },
               {
                 "name": "_tokenAmount",
                 "value": "25000000000000000000",
-                "internalType": "uint256",
-                "components": []
+                "internalType": "uint256"
               },
               {
                 "name": "_dollarPrice",
                 "value": "2000000000000000000",
-                "internalType": "uint256",
-                "components": []
+                "internalType": "uint256"
               },
               {
                 "name": "_acceptor",
                 "value": "0xd503d263de9092232d28492d60c5a956ad754a83",
-                "internalType": "address",
-                "components": []
+                "internalType": "address"
               }
-            ],
-            "outputs": []
+            ]
           },
           "compressedLog": "AcceptRequest ( _key: 6, _etherAmount: 236159796400000000, _tokenAmount: 25000000000000000000, _dollarPrice: 2000000000000000000, _acceptor: 0xd503d263de9092232d28492d60c5a956ad754a83 )"
         },
@@ -446,35 +440,29 @@ getTrans 0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f --tr
               {
                 "name": "_key",
                 "value": "5",
-                "internalType": "uint256",
-                "components": []
+                "internalType": "uint256"
               },
               {
                 "name": "_etherAmount",
                 "value": "236159796400000000",
-                "internalType": "uint256",
-                "components": []
+                "internalType": "uint256"
               },
               {
                 "name": "_tokenAmount",
                 "value": "25000000000000000000",
-                "internalType": "uint256",
-                "components": []
+                "internalType": "uint256"
               },
               {
                 "name": "_dollarPrice",
                 "value": "2000000000000000000",
-                "internalType": "uint256",
-                "components": []
+                "internalType": "uint256"
               },
               {
                 "name": "_acceptor",
                 "value": "0xd503d263de9092232d28492d60c5a956ad754a83",
-                "internalType": "address",
-                "components": []
+                "internalType": "address"
               }
-            ],
-            "outputs": []
+            ]
           },
           "compressedLog": "AcceptRequest ( _key: 5, _etherAmount: 236159796400000000, _tokenAmount: 25000000000000000000, _dollarPrice: 2000000000000000000, _acceptor: 0xd503d263de9092232d28492d60c5a956ad754a83 )"
         }
@@ -508,23 +496,19 @@ getTrans 0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f --tr
             {
               "name": "_keys",
               "value": "[6, 5]",
-              "internalType": "uint256[]",
-              "components": []
+              "internalType": "uint256[]"
             },
             {
               "name": "_tokenAmounts",
               "value": "[25000000000000000000, 25000000000000000000]",
-              "internalType": "uint256[]",
-              "components": []
+              "internalType": "uint256[]"
             },
             {
               "name": "_dollarPrices",
               "value": "[2000000000000000000, 2000000000000000000]",
-              "internalType": "uint256[]",
-              "components": []
+              "internalType": "uint256[]"
             }
-          ],
-          "outputs": []
+          ]
         },
         "compressedTrace": "acceptTheseAskRequestsAndBUY ( _keys: [6, 5], _tokenAmounts: [25000000000000000000, 25000000000000000000], _dollarPrices: [2000000000000000000, 2000000000000000000] )"
       }
@@ -536,23 +520,19 @@ getTrans 0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f --tr
         {
           "name": "_keys",
           "value": "[6, 5]",
-          "internalType": "uint256[]",
-          "components": []
+          "internalType": "uint256[]"
         },
         {
           "name": "_tokenAmounts",
           "value": "[25000000000000000000, 25000000000000000000]",
-          "internalType": "uint256[]",
-          "components": []
+          "internalType": "uint256[]"
         },
         {
           "name": "_dollarPrices",
           "value": "[2000000000000000000, 2000000000000000000]",
-          "internalType": "uint256[]",
-          "components": []
+          "internalType": "uint256[]"
         }
-      ],
-      "outputs": []
+      ]
     },
     "compressedTx": "acceptTheseAskRequestsAndBUY ( _keys: [6, 5], _tokenAmounts: [25000000000000000000, 25000000000000000000], _dollarPrices: [2000000000000000000, 2000000000000000000] )",
     "gasCost": 10470350000000000,

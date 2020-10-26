@@ -7,6 +7,7 @@ Testing of already sorted JSON
   "interfaces": [
     {
       "name": "a",
+      "constant": false,
       "stateMutability": "nonpayable",
       "signature": "a()",
       "encoding": "0x0dbe671f",
@@ -15,6 +16,7 @@ Testing of already sorted JSON
     },
     {
       "name": "c",
+      "constant": false,
       "stateMutability": "nonpayable",
       "signature": "c()",
       "encoding": "0xc3da42b8",
@@ -23,6 +25,7 @@ Testing of already sorted JSON
     },
     {
       "name": "d",
+      "constant": false,
       "stateMutability": "nonpayable",
       "signature": "d()",
       "encoding": "0x8a054ac2",
@@ -31,6 +34,7 @@ Testing of already sorted JSON
     },
     {
       "name": "e",
+      "constant": false,
       "stateMutability": "nonpayable",
       "signature": "e()",
       "encoding": "0xffae15ba",
@@ -39,6 +43,7 @@ Testing of already sorted JSON
     },
     {
       "name": "m",
+      "constant": false,
       "stateMutability": "nonpayable",
       "signature": "m()",
       "encoding": "0x5a2ee019",
@@ -53,6 +58,7 @@ Testing of already sorted JSON
   "interfaces": [
     {
       "name": "a",
+      "constant": false,
       "stateMutability": "nonpayable",
       "signature": "a()",
       "encoding": "0x0dbe671f",
@@ -61,6 +67,7 @@ Testing of already sorted JSON
     },
     {
       "name": "m",
+      "constant": false,
       "stateMutability": "nonpayable",
       "signature": "m()",
       "encoding": "0x5a2ee019",
@@ -69,6 +76,7 @@ Testing of already sorted JSON
     },
     {
       "name": "d",
+      "constant": false,
       "stateMutability": "nonpayable",
       "signature": "d()",
       "encoding": "0x8a054ac2",
@@ -77,6 +85,7 @@ Testing of already sorted JSON
     },
     {
       "name": "c",
+      "constant": false,
       "stateMutability": "nonpayable",
       "signature": "c()",
       "encoding": "0xc3da42b8",
@@ -85,6 +94,7 @@ Testing of already sorted JSON
     },
     {
       "name": "e",
+      "constant": false,
       "stateMutability": "nonpayable",
       "signature": "e()",
       "encoding": "0xffae15ba",
@@ -100,6 +110,7 @@ Testing of not sorted JSON
   "interfaces": [
     {
       "name": "a",
+      "constant": false,
       "stateMutability": "nonpayable",
       "signature": "a()",
       "encoding": "0x0dbe671f",
@@ -108,6 +119,7 @@ Testing of not sorted JSON
     },
     {
       "name": "aa1",
+      "constant": false,
       "stateMutability": "nonpayable",
       "signature": "aa1()",
       "encoding": "0x74d0d855",
@@ -116,6 +128,7 @@ Testing of not sorted JSON
     },
     {
       "name": "az",
+      "constant": false,
       "stateMutability": "nonpayable",
       "signature": "az()",
       "encoding": "0x73fc24ec",
@@ -124,6 +137,7 @@ Testing of not sorted JSON
     },
     {
       "name": "b",
+      "constant": false,
       "stateMutability": "nonpayable",
       "signature": "b()",
       "encoding": "0x4df7e3d0",
@@ -132,6 +146,7 @@ Testing of not sorted JSON
     },
     {
       "name": "ba1",
+      "constant": false,
       "stateMutability": "nonpayable",
       "signature": "ba1()",
       "encoding": "0x53241b65",
@@ -140,6 +155,7 @@ Testing of not sorted JSON
     },
     {
       "name": "bz",
+      "constant": false,
       "stateMutability": "nonpayable",
       "signature": "bz()",
       "encoding": "0x3c7df70c",
@@ -148,6 +164,7 @@ Testing of not sorted JSON
     },
     {
       "name": "z",
+      "constant": false,
       "stateMutability": "nonpayable",
       "signature": "z()",
       "encoding": "0xc5d7802e",
@@ -156,6 +173,7 @@ Testing of not sorted JSON
     },
     {
       "name": "za1",
+      "constant": false,
       "stateMutability": "nonpayable",
       "signature": "za1()",
       "encoding": "0xb7938cb5",
@@ -164,6 +182,7 @@ Testing of not sorted JSON
     },
     {
       "name": "zz",
+      "constant": false,
       "stateMutability": "nonpayable",
       "signature": "zz()",
       "encoding": "0xfa14c2df",
@@ -178,6 +197,7 @@ Testing of not sorted JSON
   "interfaces": [
     {
       "name": "a",
+      "constant": false,
       "stateMutability": "nonpayable",
       "signature": "a()",
       "encoding": "0x0dbe671f",
@@ -186,6 +206,7 @@ Testing of not sorted JSON
     },
     {
       "name": "bz",
+      "constant": false,
       "stateMutability": "nonpayable",
       "signature": "bz()",
       "encoding": "0x3c7df70c",
@@ -194,6 +215,7 @@ Testing of not sorted JSON
     },
     {
       "name": "b",
+      "constant": false,
       "stateMutability": "nonpayable",
       "signature": "b()",
       "encoding": "0x4df7e3d0",
@@ -202,6 +224,7 @@ Testing of not sorted JSON
     },
     {
       "name": "ba1",
+      "constant": false,
       "stateMutability": "nonpayable",
       "signature": "ba1()",
       "encoding": "0x53241b65",
@@ -210,6 +233,7 @@ Testing of not sorted JSON
     },
     {
       "name": "az",
+      "constant": false,
       "stateMutability": "nonpayable",
       "signature": "az()",
       "encoding": "0x73fc24ec",
@@ -218,6 +242,7 @@ Testing of not sorted JSON
     },
     {
       "name": "aa1",
+      "constant": false,
       "stateMutability": "nonpayable",
       "signature": "aa1()",
       "encoding": "0x74d0d855",
@@ -226,6 +251,7 @@ Testing of not sorted JSON
     },
     {
       "name": "za1",
+      "constant": false,
       "stateMutability": "nonpayable",
       "signature": "za1()",
       "encoding": "0xb7938cb5",
@@ -234,6 +260,7 @@ Testing of not sorted JSON
     },
     {
       "name": "z",
+      "constant": false,
       "stateMutability": "nonpayable",
       "signature": "z()",
       "encoding": "0xc5d7802e",
@@ -242,6 +269,7 @@ Testing of not sorted JSON
     },
     {
       "name": "zz",
+      "constant": false,
       "stateMutability": "nonpayable",
       "signature": "zz()",
       "encoding": "0xfa14c2df",

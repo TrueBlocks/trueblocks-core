@@ -14,7 +14,7 @@
           "articulatedLog": {
             "name": "",
             "type": "",
-            "constant": "false",
+            "constant": false,
             "stateMutability": "",
             "signature": "",
             "encoding": "",

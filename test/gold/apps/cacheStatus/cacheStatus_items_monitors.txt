@@ -16,7 +16,6 @@ cacheStatus --details monitors
   "has_eskey": true,
   "caches": [
     {
-      "addrs": [],
       "items": [
         {
           "type": "CMonitorCacheItem",

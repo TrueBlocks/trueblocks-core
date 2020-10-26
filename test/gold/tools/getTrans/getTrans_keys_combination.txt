@@ -29,12 +29,10 @@ getTrans 0x6afbe0f0ea3613edd6b84b71260836c03bddce81604f05c81a070cd671d3d765 4000
           "articulatedLog": {
             "name": "",
             "type": "",
-            "constant": 0,
+            "constant": false,
             "stateMutability": "",
             "signature": "",
-            "encoding": "",
-            "inputs": [],
-            "outputs": []
+            "encoding": ""
           }
         },
         {
@@ -47,12 +45,10 @@ getTrans 0x6afbe0f0ea3613edd6b84b71260836c03bddce81604f05c81a070cd671d3d765 4000
           "articulatedLog": {
             "name": "",
             "type": "",
-            "constant": 0,
+            "constant": false,
             "stateMutability": "",
             "signature": "",
-            "encoding": "",
-            "inputs": [],
-            "outputs": []
+            "encoding": ""
           }
         }
       ],
@@ -89,12 +85,10 @@ getTrans 0x6afbe0f0ea3613edd6b84b71260836c03bddce81604f05c81a070cd671d3d765 4000
           "articulatedLog": {
             "name": "",
             "type": "",
-            "constant": 0,
+            "constant": false,
             "stateMutability": "",
             "signature": "",
-            "encoding": "",
-            "inputs": [],
-            "outputs": []
+            "encoding": ""
           }
         }
       ],
@@ -129,12 +123,10 @@ getTrans 0x6afbe0f0ea3613edd6b84b71260836c03bddce81604f05c81a070cd671d3d765 4000
           "articulatedLog": {
             "name": "",
             "type": "",
-            "constant": 0,
+            "constant": false,
             "stateMutability": "",
             "signature": "",
-            "encoding": "",
-            "inputs": [],
-            "outputs": []
+            "encoding": ""
           }
         }
       ],

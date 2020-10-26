@@ -16,8 +16,6 @@ cacheStatus --details caches --types slurps
   "has_eskey": true,
   "caches": [
     {
-      "addrs": [],
-      "items": [],
       "type": "CSlurpCache",
       "path": "slurpsPath",
       "nFiles": 0,

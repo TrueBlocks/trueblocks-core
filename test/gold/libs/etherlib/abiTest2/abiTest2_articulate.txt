@@ -14,6 +14,7 @@ abiTest2
         "address": "0x6b175474e89094c44da98b954eedeac495271d0f",
         "articulatedLog": {
           "name": "Approval",
+          "constant": false,
           "inputs": [
             {
               "name": "_owner",
@@ -34,6 +35,7 @@ abiTest2
   },
   "articulatedTx": {
     "name": "approve",
+    "constant": false,
     "inputs": [
       {
         "name": "_spender",
@@ -187,6 +189,7 @@ abiTest2
         "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
         "articulatedLog": {
           "name": "DonationSent",
+          "constant": false,
           "inputs": [
             {
               "name": "token",
@@ -211,6 +214,7 @@ abiTest2
         "address": "0x6b175474e89094c44da98b954eedeac495271d0f",
         "articulatedLog": {
           "name": "Transfer",
+          "constant": false,
           "inputs": [
             {
               "name": "_from",
@@ -231,6 +235,7 @@ abiTest2
   },
   "articulatedTx": {
     "name": "donate",
+    "constant": false,
     "inputs": [
       {
         "name": "donations",
@@ -242,6 +247,7 @@ abiTest2
 
 ][{
   "name": "baz",
+  "constant": false,
   "inputs": [
     {
       "name": "val_0",
@@ -254,11 +260,13 @@ abiTest2
 }
 
 , {
+  "constant": false,
   "inputs": []
 }
 
 , {
   "name": "donate",
+  "constant": false,
   "inputs": [
     {
       "name": "token"
@@ -316,6 +324,7 @@ abiTest2
 
 , {
   "name": "ReverseRegistrar",
+  "constant": false,
   "inputs": [
     {
       "name": "ensAddr"
@@ -328,6 +337,7 @@ abiTest2
 
 , {
   "name": "_addCapper",
+  "constant": false,
   "inputs": [
     {
       "name": "account"
@@ -337,6 +347,7 @@ abiTest2
 
 , {
   "name": "_addTokenToAllTokensEnumeration",
+  "constant": false,
   "inputs": [
     {
       "name": "tokenId"
@@ -346,6 +357,7 @@ abiTest2
 
 , {
   "name": "_appendTagged",
+  "constant": false,
   "inputs": [
     {
       "name": "tagged0"
@@ -361,6 +373,7 @@ abiTest2
 
 , {
   "name": "_approve",
+  "constant": false,
   "inputs": [
     {
       "name": "to"
@@ -373,6 +386,7 @@ abiTest2
 
 , {
   "name": "_asyncTransfer",
+  "constant": false,
   "inputs": [
     {
       "name": "dest"
@@ -385,6 +399,7 @@ abiTest2
 
 , {
   "name": "_beforeTokenTransfer",
+  "constant": false,
   "inputs": [
     {
       "name": "from"
@@ -400,6 +415,7 @@ abiTest2
 
 , {
   "name": "_burn",
+  "constant": false,
   "inputs": [
     {
       "name": "_owner"
@@ -412,6 +428,7 @@ abiTest2
 
 , {
   "name": "_burn",
+  "constant": false,
   "inputs": [
     {
       "name": "account"
@@ -424,6 +441,7 @@ abiTest2
 
 , {
   "name": "_burnFrom",
+  "constant": false,
   "inputs": [
     {
       "name": "account"
@@ -436,6 +454,7 @@ abiTest2
 
 , {
   "name": "_callTokensToSend",
+  "constant": false,
   "inputs": [
     {
       "name": "operator"
@@ -473,6 +492,7 @@ abiTest2
 
 , {
   "name": "_extendTime",
+  "constant": false,
   "inputs": [
     {
       "name": "newClosingTime"
@@ -518,6 +538,7 @@ abiTest2
 
 , {
   "name": "_mint",
+  "constant": false,
   "inputs": [
     {
       "name": "account"
@@ -530,6 +551,7 @@ abiTest2
 
 , {
   "name": "_mint",
+  "constant": false,
   "inputs": [
     {
       "name": "to"
@@ -554,11 +576,13 @@ abiTest2
 
 , {
   "name": "_pause",
+  "constant": false,
   "inputs": []
 }
 
 , {
   "name": "_postRelayedCall",
+  "constant": false,
   "inputs": [
     {
       "name": "val_0"
@@ -577,6 +601,7 @@ abiTest2
 
 , {
   "name": "_preRelayedCall",
+  "constant": false,
   "inputs": [
     {
       "name": "val_0"
@@ -599,6 +624,7 @@ abiTest2
 
 , {
   "name": "_registerInterface",
+  "constant": false,
   "inputs": [
     {
       "name": "interfaceId"
@@ -608,6 +634,7 @@ abiTest2
 
 , {
   "name": "_remove",
+  "constant": false,
   "inputs": [
     {
       "name": "storage map"
@@ -620,6 +647,7 @@ abiTest2
 
 , {
   "name": "_removeSigner",
+  "constant": false,
   "inputs": [
     {
       "name": "account"
@@ -629,6 +657,7 @@ abiTest2
 
 , {
   "name": "_report",
+  "constant": false,
   "inputs": [
     {
       "name": "result"
@@ -641,6 +670,7 @@ abiTest2
 
 , {
   "name": "_safeMint",
+  "constant": false,
   "inputs": [
     {
       "name": "to"
@@ -666,6 +696,7 @@ abiTest2
 
 , {
   "name": "_setTokenURI",
+  "constant": false,
   "inputs": [
     {
       "name": "tokenURI_"
@@ -675,6 +706,7 @@ abiTest2
 
 , {
   "name": "_setupRole",
+  "constant": false,
   "inputs": [
     {
       "name": "role"
@@ -700,6 +732,7 @@ abiTest2
 
 , {
   "name": "_swapEthToTokenInputV2",
+  "constant": false,
   "inputs": [
     {
       "name": "tokenAddress"
@@ -712,6 +745,7 @@ abiTest2
 
 , {
   "name": "_swapTokenToTokenInputV2",
+  "constant": false,
   "inputs": [
     {
       "name": "from"
@@ -727,6 +761,7 @@ abiTest2
 
 , {
   "name": "_tag",
+  "constant": false,
   "inputs": [
     {
       "name": "value"
@@ -739,6 +774,7 @@ abiTest2
 
 , {
   "name": "_transfer",
+  "constant": false,
   "inputs": [
     {
       "name": "from"
@@ -754,6 +790,7 @@ abiTest2
 
 , {
   "name": "_transferOwnership",
+  "constant": false,
   "inputs": [
     {
       "name": "_newOwner"
@@ -763,6 +800,7 @@ abiTest2
 
 , {
   "name": "_updateSnapshot",
+  "constant": false,
   "inputs": [
     {
       "name": "storage snapshots"
@@ -775,6 +813,7 @@ abiTest2
 
 , {
   "name": "_utoa",
+  "constant": false,
   "inputs": [
     {
       "name": "u"
@@ -784,6 +823,7 @@ abiTest2
 
 , {
   "name": "_withdrawBalance",
+  "constant": false,
   "inputs": [
     {
       "name": "token"
@@ -830,6 +870,7 @@ abiTest2
 
 , {
   "name": "activate",
+  "constant": false,
   "inputs": [
     {
       "name": "initialTokens"
@@ -842,6 +883,7 @@ abiTest2
 
 , {
   "name": "add",
+  "constant": false,
   "inputs": [
     {
       "name": "value"
@@ -851,6 +893,7 @@ abiTest2
 
 , {
   "name": "add",
+  "constant": false,
   "inputs": [
     {
       "name": "a"
@@ -863,6 +906,7 @@ abiTest2
 
 , {
   "name": "add",
+  "constant": false,
   "inputs": [
     {
       "name": "a"
@@ -875,6 +919,7 @@ abiTest2
 
 , {
   "name": "addBytes",
+  "constant": false,
   "inputs": [
     {
       "name": "_key"
@@ -887,6 +932,7 @@ abiTest2
 
 , {
   "name": "addInt",
+  "constant": false,
   "inputs": [
     {
       "name": "_key"
@@ -899,6 +945,7 @@ abiTest2
 
 , {
   "name": "addOne",
+  "constant": false,
   "inputs": [
     {
       "name": "n"
@@ -908,6 +955,7 @@ abiTest2
 
 , {
   "name": "addStringArray",
+  "constant": false,
   "inputs": [
     {
       "name": "_key"
@@ -921,11 +969,13 @@ abiTest2
 
 , {
   "name": "addTwo",
+  "constant": false,
   "inputs": []
 }
 
 , {
   "name": "addWhitelisted",
+  "constant": false,
   "inputs": [
     {
       "name": "account"
@@ -954,6 +1004,7 @@ abiTest2
 
 , {
   "name": "append",
+  "constant": false,
   "inputs": [
     {
       "name": "buf"
@@ -966,6 +1017,7 @@ abiTest2
 
 , {
   "name": "appendUint8",
+  "constant": false,
   "inputs": [
     {
       "name": "buf"
@@ -978,6 +1030,7 @@ abiTest2
 
 , {
   "name": "approve",
+  "constant": false,
   "inputs": [
     {
       "name": "_spender"
@@ -990,6 +1043,7 @@ abiTest2
 
 , {
   "name": "approve",
+  "constant": false,
   "inputs": [
     {
       "name": "spender"
@@ -1002,6 +1056,7 @@ abiTest2
 
 , {
   "name": "approve",
+  "constant": false,
   "inputs": [
     {
       "name": "val_0"
@@ -1014,6 +1069,7 @@ abiTest2
 
 , {
   "name": "assertFail",
+  "constant": false,
   "inputs": [
     {
       "name": "val_0"
@@ -1036,6 +1092,7 @@ abiTest2
 
 , {
   "name": "authorizeOperator",
+  "constant": false,
   "inputs": [
     {
       "name": "operator"
@@ -1045,6 +1102,7 @@ abiTest2
 
 , {
   "name": "balanceEqual",
+  "constant": false,
   "inputs": [
     {
       "name": "a"
@@ -1060,6 +1118,7 @@ abiTest2
 
 , {
   "name": "balanceNotEqual",
+  "constant": false,
   "inputs": [
     {
       "name": "a"
@@ -1101,6 +1160,7 @@ abiTest2
 
 , {
   "name": "beginMigration",
+  "constant": false,
   "inputs": [
     {
       "name": "newToken_"
@@ -1110,11 +1170,13 @@ abiTest2
 
 , {
   "name": "bop",
+  "constant": false,
   "inputs": []
 }
 
 , {
   "name": "burn",
+  "constant": false,
   "inputs": [
     {
       "name": "_value"
@@ -1124,6 +1186,7 @@ abiTest2
 
 , {
   "name": "burn",
+  "constant": false,
   "inputs": [
     {
       "name": "tokenId"
@@ -1133,6 +1196,7 @@ abiTest2
 
 , {
   "name": "burnTokens",
+  "constant": false,
   "inputs": [
     {
       "name": "_amount"
@@ -1142,6 +1206,7 @@ abiTest2
 
 , {
   "name": "bytes32ToString",
+  "constant": false,
   "inputs": [
     {
       "name": "x"
@@ -1151,6 +1216,7 @@ abiTest2
 
 , {
   "name": "callOptionalReturn",
+  "constant": false,
   "inputs": [
     {
       "name": "token"
@@ -1176,6 +1242,7 @@ abiTest2
 
 , {
   "name": "cancelOracleRequest",
+  "constant": false,
   "inputs": [
     {
       "name": "val_0"
@@ -1200,6 +1267,7 @@ abiTest2
 
 , {
   "name": "changeId",
+  "constant": false,
   "inputs": [
     {
       "name": "domain"
@@ -1215,6 +1283,7 @@ abiTest2
 
 , {
   "name": "changeProposalDeposit",
+  "constant": false,
   "inputs": [
     {
       "name": "_proposalDeposit"
@@ -1243,11 +1312,13 @@ abiTest2
 
 , {
   "name": "claimHeirOwnership",
+  "constant": false,
   "inputs": []
 }
 
 , {
   "name": "clearApproval",
+  "constant": false,
   "inputs": [
     {
       "name": "_owner"
@@ -1260,6 +1331,7 @@ abiTest2
 
 , {
   "name": "close",
+  "constant": false,
   "inputs": []
 }
 
@@ -1275,6 +1347,7 @@ abiTest2
 
 , {
   "name": "computeAddress",
+  "constant": false,
   "inputs": [
     {
       "name": "salt"
@@ -1290,6 +1363,7 @@ abiTest2
 
 , {
   "name": "consumesGas",
+  "constant": false,
   "inputs": []
 }
 
@@ -1305,6 +1379,7 @@ abiTest2
 
 , {
   "name": "countThisRecursive",
+  "constant": false,
   "inputs": [
     {
       "name": "n"
@@ -1314,6 +1389,7 @@ abiTest2
 
 , {
   "name": "createAndException",
+  "constant": false,
   "inputs": [
     {
       "name": "newBalance"
@@ -1323,6 +1399,7 @@ abiTest2
 
 , {
   "name": "createEIP20",
+  "constant": false,
   "inputs": [
     {
       "name": "_initialAmount"
@@ -1341,6 +1418,7 @@ abiTest2
 
 , {
   "name": "createTokenProxy",
+  "constant": false,
   "inputs": [
     {
       "name": "_tokenHolder"
@@ -1350,11 +1428,13 @@ abiTest2
 
 , {
   "name": "decimals",
+  "constant": false,
   "inputs": []
 }
 
 , {
   "name": "decreaseAllowance",
+  "constant": false,
   "inputs": [
     {
       "name": "amount"
@@ -1370,6 +1450,7 @@ abiTest2
 
 , {
   "name": "deploy",
+  "constant": false,
   "inputs": [
     {
       "name": "val_0"
@@ -1388,6 +1469,7 @@ abiTest2
 
 , {
   "name": "deposit",
+  "constant": false,
   "inputs": [
     {
       "name": "_payee"
@@ -1397,6 +1479,7 @@ abiTest2
 
 , {
   "name": "deposit",
+  "constant": false,
   "inputs": [
     {
       "name": "refundee"
@@ -1416,11 +1499,13 @@ abiTest2
 
 , {
   "name": "destroy",
+  "constant": false,
   "inputs": []
 }
 
 , {
   "name": "diamondCut",
+  "constant": false,
   "inputs": [
     {
       "name": "_diamondCut",
@@ -1437,6 +1522,7 @@ abiTest2
 
 , {
   "name": "div",
+  "constant": false,
   "inputs": [
     {
       "name": "a"
@@ -1449,6 +1535,7 @@ abiTest2
 
 , {
   "name": "div",
+  "constant": false,
   "inputs": [
     {
       "name": "a"
@@ -1467,6 +1554,7 @@ abiTest2
 
 , {
   "name": "doWithdraw",
+  "constant": false,
   "inputs": [
     {
       "name": "participant"
@@ -1479,6 +1567,7 @@ abiTest2
 
 , {
   "name": "donate",
+  "constant": false,
   "inputs": [
     {
       "name": "_donations",
@@ -1489,11 +1578,13 @@ abiTest2
 
 , {
   "name": "enableRefunds",
+  "constant": false,
   "inputs": []
 }
 
 , {
   "name": "encodeIndefiniteLengthType",
+  "constant": false,
   "inputs": [
     {
       "name": "buf"
@@ -1506,6 +1597,7 @@ abiTest2
 
 , {
   "name": "encodeUInt",
+  "constant": false,
   "inputs": [
     {
       "name": "buf"
@@ -1518,6 +1610,7 @@ abiTest2
 
 , {
   "name": "equal",
+  "constant": false,
   "inputs": [
     {
       "name": "a"
@@ -1533,6 +1626,7 @@ abiTest2
 
 , {
   "name": "equal",
+  "constant": false,
   "inputs": [
     {
       "name": "a"
@@ -1548,6 +1642,7 @@ abiTest2
 
 , {
   "name": "equal",
+  "constant": false,
   "inputs": [
     {
       "name": "a"
@@ -1563,6 +1658,7 @@ abiTest2
 
 , {
   "name": "equal",
+  "constant": false,
   "inputs": [
     {
       "name": "a"
@@ -1578,6 +1674,7 @@ abiTest2
 
 , {
   "name": "ethJoin_join",
+  "constant": false,
   "inputs": [
     {
       "name": "apt"
@@ -1590,6 +1687,7 @@ abiTest2
 
 , {
   "name": "execute",
+  "constant": false,
   "inputs": [
     {
       "name": "_to"
@@ -1605,6 +1703,7 @@ abiTest2
 
 , {
   "name": "executeProposal",
+  "constant": false,
   "inputs": [
     {
       "name": "_proposalID"
@@ -1617,6 +1716,7 @@ abiTest2
 
 , {
   "name": "externalCut",
+  "constant": false,
   "inputs": [
     {
       "name": "_diamondCut",
@@ -1627,6 +1727,7 @@ abiTest2
 
 , {
   "name": "f",
+  "constant": false,
   "inputs": []
 }
 
@@ -1638,6 +1739,7 @@ abiTest2
 
 , {
   "name": "f_public",
+  "constant": false,
   "inputs": []
 }
 
@@ -1653,11 +1755,13 @@ abiTest2
 
 , {
   "name": "fail",
+  "constant": false,
   "inputs": []
 }
 
 , {
   "name": "fail",
+  "constant": false,
   "inputs": [
     {
       "name": "d"
@@ -1667,6 +1771,7 @@ abiTest2
 
 , {
   "name": "fail2",
+  "constant": false,
   "inputs": [
     {
       "name": "i"
@@ -1676,26 +1781,31 @@ abiTest2
 
 , {
   "name": "finalize",
+  "constant": false,
   "inputs": []
 }
 
 , {
   "name": "finishMinting",
+  "constant": false,
   "inputs": []
 }
 
 , {
   "name": "fireEventLog2",
+  "constant": false,
   "inputs": []
 }
 
 , {
   "name": "fireEventLog4Anonym",
+  "constant": false,
   "inputs": []
 }
 
 , {
   "name": "foo",
+  "constant": false,
   "inputs": []
 }
 
@@ -1711,11 +1821,13 @@ abiTest2
 
 , {
   "name": "fun",
+  "constant": false,
   "inputs": []
 }
 
 , {
   "name": "fun",
+  "constant": false,
   "inputs": [
     {
       "name": "a"
@@ -1725,6 +1837,7 @@ abiTest2
 
 , {
   "name": "functionName",
+  "constant": false,
   "inputs": [
     {
       "name": "input"
@@ -1761,6 +1874,7 @@ abiTest2
 
 , {
   "name": "getBool",
+  "constant": false,
   "inputs": []
 }
 
@@ -1803,6 +1917,7 @@ abiTest2
 
 , {
   "name": "getUint256",
+  "constant": false,
   "inputs": []
 }
 
@@ -1818,6 +1933,7 @@ abiTest2
 
 , {
   "name": "grantRole",
+  "constant": false,
   "inputs": [
     {
       "name": "role"
@@ -1830,6 +1946,7 @@ abiTest2
 
 , {
   "name": "halfWad",
+  "constant": false,
   "inputs": []
 }
 
@@ -1854,6 +1971,7 @@ abiTest2
 
 , {
   "name": "increaseAllowance",
+  "constant": false,
   "inputs": [
     {
       "name": "spender"
@@ -1866,6 +1984,7 @@ abiTest2
 
 , {
   "name": "init",
+  "constant": false,
   "inputs": [
     {
       "name": "buf"
@@ -1878,6 +1997,7 @@ abiTest2
 
 , {
   "name": "isAbove",
+  "constant": false,
   "inputs": [
     {
       "name": "a"
@@ -1906,6 +2026,7 @@ abiTest2
 
 , {
   "name": "isAtMost",
+  "constant": false,
   "inputs": [
     {
       "name": "a"
@@ -1934,6 +2055,7 @@ abiTest2
 
 , {
   "name": "isBlocked",
+  "constant": false,
   "inputs": [
     {
       "name": "_account"
@@ -1949,6 +2071,7 @@ abiTest2
 
 , {
   "name": "isExpensive",
+  "constant": false,
   "inputs": [
     {
       "name": "val"
@@ -1958,6 +2081,7 @@ abiTest2
 
 , {
   "name": "isNotEmpty",
+  "constant": false,
   "inputs": [
     {
       "name": "str"
@@ -1970,6 +2094,7 @@ abiTest2
 
 , {
   "name": "isNotZero",
+  "constant": false,
   "inputs": [
     {
       "name": "bts"
@@ -2008,6 +2133,7 @@ abiTest2
 
 , {
   "name": "isZero",
+  "constant": false,
   "inputs": [
     {
       "name": "addr"
@@ -2020,6 +2146,7 @@ abiTest2
 
 , {
   "name": "isZero",
+  "constant": false,
   "inputs": [
     {
       "name": "number"
@@ -2032,6 +2159,7 @@ abiTest2
 
 , {
   "name": "killBounty",
+  "constant": false,
   "inputs": [
     {
       "name": "_bountyID"
@@ -2051,6 +2179,7 @@ abiTest2
 
 , {
   "name": "lengthEqual",
+  "constant": false,
   "inputs": [
     {
       "name": "arr",
@@ -2067,6 +2196,7 @@ abiTest2
 
 , {
   "name": "lengthEqual",
+  "constant": false,
   "inputs": [
     {
       "name": "arr",
@@ -2083,6 +2213,7 @@ abiTest2
 
 , {
   "name": "lengthNotEqual",
+  "constant": false,
   "inputs": [
     {
       "name": "arr",
@@ -3405,6 +3536,7 @@ abiTest2
 
 , {
   "name": "maliciousPrice",
+  "constant": false,
   "inputs": [
     {
       "name": "_id"
@@ -3414,6 +3546,7 @@ abiTest2
 
 , {
   "name": "max",
+  "constant": false,
   "inputs": [
     {
       "name": "a"
@@ -3426,6 +3559,7 @@ abiTest2
 
 , {
   "name": "max64",
+  "constant": false,
   "inputs": [
     {
       "name": "_a"
@@ -3438,6 +3572,7 @@ abiTest2
 
 , {
   "name": "min",
+  "constant": false,
   "inputs": [
     {
       "name": "a"
@@ -3450,6 +3585,7 @@ abiTest2
 
 , {
   "name": "mint",
+  "constant": false,
   "inputs": [
     {
       "name": "account"
@@ -3462,6 +3598,7 @@ abiTest2
 
 , {
   "name": "mint",
+  "constant": false,
   "inputs": [
     {
       "name": "to"
@@ -3471,6 +3608,7 @@ abiTest2
 
 , {
   "name": "mintBatchFrozenTokens",
+  "constant": false,
   "inputs": [
     {
       "name": "accounts",
@@ -3485,6 +3623,7 @@ abiTest2
 
 , {
   "name": "mintTokens",
+  "constant": false,
   "inputs": [
     {
       "name": "_amount"
@@ -3494,11 +3633,13 @@ abiTest2
 
 , {
   "name": "mockFunction",
+  "constant": false,
   "inputs": []
 }
 
 , {
   "name": "mod",
+  "constant": false,
   "inputs": [
     {
       "name": "a"
@@ -3511,6 +3652,7 @@ abiTest2
 
 , {
   "name": "mul",
+  "constant": false,
   "inputs": [
     {
       "name": "a"
@@ -3523,6 +3665,7 @@ abiTest2
 
 , {
   "name": "mul",
+  "constant": false,
   "inputs": [
     {
       "name": "a"
@@ -3535,6 +3678,7 @@ abiTest2
 
 , {
   "name": "multiGenerate",
+  "constant": false,
   "inputs": [
     {
       "name": "_merkleMineContract"
@@ -3551,6 +3695,7 @@ abiTest2
 
 , {
   "name": "multisend",
+  "constant": false,
   "inputs": [
     {
       "name": "_holders",
@@ -3577,6 +3722,7 @@ abiTest2
 
 , {
   "name": "notEqual",
+  "constant": false,
   "inputs": [
     {
       "name": "a"
@@ -3592,6 +3738,7 @@ abiTest2
 
 , {
   "name": "notEqual",
+  "constant": false,
   "inputs": [
     {
       "name": "a"
@@ -3607,6 +3754,7 @@ abiTest2
 
 , {
   "name": "notEqual",
+  "constant": false,
   "inputs": [
     {
       "name": "a"
@@ -3622,6 +3770,7 @@ abiTest2
 
 , {
   "name": "notEqual",
+  "constant": false,
   "inputs": [
     {
       "name": "a"
@@ -3643,6 +3792,7 @@ abiTest2
 
 , {
   "name": "onTokenTransfer",
+  "constant": false,
   "inputs": [
     {
       "name": "val_0"
@@ -3658,6 +3808,7 @@ abiTest2
 
 , {
   "name": "operatorSend",
+  "constant": false,
   "inputs": [
     {
       "name": "sender"
@@ -3679,6 +3830,7 @@ abiTest2
 
 , {
   "name": "overloadedSet",
+  "constant": false,
   "inputs": [
     {
       "name": "h"
@@ -3697,6 +3849,7 @@ abiTest2
 
 , {
   "name": "pause",
+  "constant": false,
   "inputs": []
 }
 
@@ -3708,11 +3861,13 @@ abiTest2
 
 , {
   "name": "payableFn",
+  "constant": false,
   "inputs": []
 }
 
 , {
   "name": "plusTen",
+  "constant": false,
   "inputs": [
     {
       "name": "_value"
@@ -3722,6 +3877,7 @@ abiTest2
 
 , {
   "name": "power",
+  "constant": false,
   "inputs": [
     {
       "name": "val_0"
@@ -3734,11 +3890,13 @@ abiTest2
 
 , {
   "name": "presentto",
+  "constant": false,
   "inputs": []
 }
 
 , {
   "name": "processProposal",
+  "constant": false,
   "inputs": [
     {
       "name": "proposalIndex"
@@ -3748,6 +3906,7 @@ abiTest2
 
 , {
   "name": "proxyRuntimeCode",
+  "constant": false,
   "inputs": []
 }
 
@@ -3759,6 +3918,7 @@ abiTest2
 
 , {
   "name": "ragequit",
+  "constant": false,
   "inputs": [
     {
       "name": "sharesToBurn"
@@ -3768,6 +3928,7 @@ abiTest2
 
 , {
   "name": "rayDiv",
+  "constant": false,
   "inputs": [
     {
       "name": "a"
@@ -3780,11 +3941,13 @@ abiTest2
 
 , {
   "name": "receive",
+  "constant": false,
   "inputs": []
 }
 
 , {
   "name": "reclaimContract",
+  "constant": false,
   "inputs": [
     {
       "name": "_contractAddr"
@@ -3794,6 +3957,7 @@ abiTest2
 
 , {
   "name": "recover",
+  "constant": false,
   "inputs": [
     {
       "name": "hash"
@@ -3806,6 +3970,7 @@ abiTest2
 
 , {
   "name": "registerInterface",
+  "constant": false,
   "inputs": [
     {
       "name": "interfaceId"
@@ -3821,6 +3986,7 @@ abiTest2
 
 , {
   "name": "release",
+  "constant": false,
   "inputs": [
     {
       "name": "token"
@@ -3840,6 +4006,7 @@ abiTest2
 
 , {
   "name": "remove",
+  "constant": false,
   "inputs": [
     {
       "name": "storage role"
@@ -3852,11 +4019,13 @@ abiTest2
 
 , {
   "name": "removeAndException",
+  "constant": false,
   "inputs": []
 }
 
 , {
   "name": "removeMinter",
+  "constant": false,
   "inputs": [
     {
       "name": "_minter"
@@ -3866,11 +4035,13 @@ abiTest2
 
 , {
   "name": "renounceCapper",
+  "constant": false,
   "inputs": []
 }
 
 , {
   "name": "renounceRole",
+  "constant": false,
   "inputs": [
     {
       "name": "role"
@@ -3883,11 +4054,13 @@ abiTest2
 
 , {
   "name": "request",
+  "constant": false,
   "inputs": []
 }
 
 , {
   "name": "requestEthereumPrice",
+  "constant": false,
   "inputs": [
     {
       "name": "_currency"
@@ -3897,6 +4070,7 @@ abiTest2
 
 , {
   "name": "requestedBytes",
+  "constant": false,
   "inputs": [
     {
       "name": "_requestId"
@@ -3925,6 +4099,7 @@ abiTest2
 
 , {
   "name": "revoke",
+  "constant": false,
   "inputs": [
     {
       "name": "_operation"
@@ -3934,11 +4109,13 @@ abiTest2
 
 , {
   "name": "rng",
+  "constant": false,
   "inputs": []
 }
 
 , {
   "name": "safeDecreaseAllowance",
+  "constant": false,
   "inputs": [
     {
       "name": "token"
@@ -3954,6 +4131,7 @@ abiTest2
 
 , {
   "name": "safeMint",
+  "constant": false,
   "inputs": [
     {
       "name": "to"
@@ -3969,6 +4147,7 @@ abiTest2
 
 , {
   "name": "safeTransferFrom",
+  "constant": false,
   "inputs": [
     {
       "name": "from"
@@ -3984,6 +4163,7 @@ abiTest2
 
 , {
   "name": "send",
+  "constant": false,
   "inputs": [
     {
       "name": "recipient"
@@ -3999,6 +4179,7 @@ abiTest2
 
 , {
   "name": "sendHalf",
+  "constant": false,
   "inputs": [
     {
       "name": "addr"
@@ -4008,6 +4189,7 @@ abiTest2
 
 , {
   "name": "senderFor",
+  "constant": false,
   "inputs": [
     {
       "name": "account"
@@ -4017,6 +4199,7 @@ abiTest2
 
 , {
   "name": "setAcceptEther",
+  "constant": false,
   "inputs": [
     {
       "name": "acceptEther"
@@ -4026,6 +4209,7 @@ abiTest2
 
 , {
   "name": "setAdminAddress",
+  "constant": false,
   "inputs": [
     {
       "name": "_address"
@@ -4035,6 +4219,7 @@ abiTest2
 
 , {
   "name": "setApprovalForAll",
+  "constant": false,
   "inputs": [
     {
       "name": "to"
@@ -4047,6 +4232,7 @@ abiTest2
 
 , {
   "name": "setBuffer",
+  "constant": false,
   "inputs": [
     {
       "name": "data"
@@ -4056,6 +4242,7 @@ abiTest2
 
 , {
   "name": "setCap",
+  "constant": false,
   "inputs": [
     {
       "name": "beneficiary"
@@ -4068,6 +4255,7 @@ abiTest2
 
 , {
   "name": "setCompleted",
+  "constant": false,
   "inputs": [
     {
       "name": "completed"
@@ -4077,6 +4265,7 @@ abiTest2
 
 , {
   "name": "setDailyCosts",
+  "constant": false,
   "inputs": [
     {
       "name": "_dailyCosts"
@@ -4086,6 +4275,7 @@ abiTest2
 
 , {
   "name": "setFulfillmentPermission",
+  "constant": false,
   "inputs": [
     {
       "name": "val_0"
@@ -4098,6 +4288,7 @@ abiTest2
 
 , {
   "name": "setLimitOfParticipants",
+  "constant": false,
   "inputs": [
     {
       "name": "_limitOfParticipants"
@@ -4107,6 +4298,7 @@ abiTest2
 
 , {
   "name": "setName",
+  "constant": false,
   "inputs": [
     {
       "name": "node"
@@ -4119,6 +4311,7 @@ abiTest2
 
 , {
   "name": "setOwner",
+  "constant": false,
   "inputs": [
     {
       "name": "node"
@@ -4131,6 +4324,7 @@ abiTest2
 
 , {
   "name": "setResolver",
+  "constant": false,
   "inputs": [
     {
       "name": "node"
@@ -4143,6 +4337,7 @@ abiTest2
 
 , {
   "name": "setShouldRevertSend",
+  "constant": false,
   "inputs": [
     {
       "name": "shouldRevert"
@@ -4152,6 +4347,7 @@ abiTest2
 
 , {
   "name": "setTokenURI",
+  "constant": false,
   "inputs": [
     {
       "name": "tokenId"
@@ -4164,6 +4360,7 @@ abiTest2
 
 , {
   "name": "setValue",
+  "constant": false,
   "inputs": [
     {
       "name": "val"
@@ -4173,11 +4370,13 @@ abiTest2
 
 , {
   "name": "sign",
+  "constant": false,
   "inputs": []
 }
 
 , {
   "name": "splitDAO",
+  "constant": false,
   "inputs": [
     {
       "name": "_proposalID"
@@ -4190,6 +4389,7 @@ abiTest2
 
 , {
   "name": "sponsorProposal",
+  "constant": false,
   "inputs": [
     {
       "name": "proposalId"
@@ -4199,16 +4399,19 @@ abiTest2
 
 , {
   "name": "startSplit",
+  "constant": false,
   "inputs": []
 }
 
 , {
   "name": "store",
+  "constant": false,
   "inputs": []
 }
 
 , {
   "name": "sub",
+  "constant": false,
   "inputs": [
     {
       "name": "_a"
@@ -4221,6 +4424,7 @@ abiTest2
 
 , {
   "name": "sub",
+  "constant": false,
   "inputs": [
     {
       "name": "x"
@@ -4233,6 +4437,7 @@ abiTest2
 
 , {
   "name": "submitProposal",
+  "constant": false,
   "inputs": [
     {
       "name": "applicant"
@@ -4263,6 +4468,7 @@ abiTest2
 
 , {
   "name": "submitWhitelistProposal",
+  "constant": false,
   "inputs": [
     {
       "name": "tokenToWhitelist"
@@ -4285,6 +4491,7 @@ abiTest2
 
 , {
   "name": "supportsInterface",
+  "constant": false,
   "inputs": [
     {
       "name": "interfaceID"
@@ -4300,21 +4507,25 @@ abiTest2
 
 , {
   "name": "test",
+  "constant": false,
   "inputs": []
 }
 
 , {
   "name": "test",
+  "constant": false,
   "inputs": []
 }
 
 , {
   "name": "test",
+  "constant": false,
   "inputs": []
 }
 
 , {
   "name": "test",
+  "constant": false,
   "inputs": [
     {
       "name": "b"
@@ -4324,6 +4535,7 @@ abiTest2
 
 , {
   "name": "test",
+  "constant": false,
   "inputs": [
     {
       "name": "i"
@@ -4333,56 +4545,67 @@ abiTest2
 
 , {
   "name": "test1Func11",
+  "constant": false,
   "inputs": []
 }
 
 , {
   "name": "test1Func16",
+  "constant": false,
   "inputs": []
 }
 
 , {
   "name": "test1Func20",
+  "constant": false,
   "inputs": []
 }
 
 , {
   "name": "test1Func7",
+  "constant": false,
   "inputs": []
 }
 
 , {
   "name": "test2Func1",
+  "constant": false,
   "inputs": []
 }
 
 , {
   "name": "test2Func14",
+  "constant": false,
   "inputs": []
 }
 
 , {
   "name": "test2Func19",
+  "constant": false,
   "inputs": []
 }
 
 , {
   "name": "test2Func5",
+  "constant": false,
   "inputs": []
 }
 
 , {
   "name": "test3",
+  "constant": false,
   "inputs": []
 }
 
 , {
   "name": "testFunction",
+  "constant": false,
   "inputs": []
 }
 
 , {
   "name": "testV2",
+  "constant": false,
   "inputs": [
     {
       "name": "p0"
@@ -4392,11 +4615,13 @@ abiTest2
 
 , {
   "name": "thrash",
+  "constant": false,
   "inputs": []
 }
 
 , {
   "name": "toInt256",
+  "constant": false,
   "inputs": [
     {
       "name": "a"
@@ -4406,6 +4631,7 @@ abiTest2
 
 , {
   "name": "toString",
+  "constant": false,
   "inputs": [
     {
       "name": "value"
@@ -4415,6 +4641,7 @@ abiTest2
 
 , {
   "name": "toUint256",
+  "constant": false,
   "inputs": [
     {
       "name": "a"
@@ -4424,6 +4651,7 @@ abiTest2
 
 , {
   "name": "toUint64",
+  "constant": false,
   "inputs": [
     {
       "name": "value"
@@ -4433,6 +4661,7 @@ abiTest2
 
 , {
   "name": "toggleTrustedVerifier",
+  "constant": false,
   "inputs": [
     {
       "name": "_verifier"
@@ -4462,6 +4691,7 @@ abiTest2
 
 , {
   "name": "tokensToSend",
+  "constant": false,
   "inputs": [
     {
       "name": "operator"
@@ -4492,6 +4722,7 @@ abiTest2
 
 , {
   "name": "trade",
+  "constant": false,
   "inputs": [
     {
       "name": "tokenGet"
@@ -4531,6 +4762,7 @@ abiTest2
 
 , {
   "name": "transfer",
+  "constant": false,
   "inputs": [
     {
       "name": "_to"
@@ -4543,6 +4775,7 @@ abiTest2
 
 , {
   "name": "transfer",
+  "constant": false,
   "inputs": [
     {
       "name": "recipient"
@@ -4555,6 +4788,7 @@ abiTest2
 
 , {
   "name": "transfer",
+  "constant": false,
   "inputs": [
     {
       "name": "val_0"
@@ -4567,6 +4801,7 @@ abiTest2
 
 , {
   "name": "transferFrom",
+  "constant": false,
   "inputs": [
     {
       "name": "_from"
@@ -4582,6 +4817,7 @@ abiTest2
 
 , {
   "name": "transferFrom",
+  "constant": false,
   "inputs": [
     {
       "name": "from"
@@ -4597,6 +4833,7 @@ abiTest2
 
 , {
   "name": "transferFrom",
+  "constant": false,
   "inputs": [
     {
       "name": "sender"
@@ -4612,6 +4849,7 @@ abiTest2
 
 , {
   "name": "transferFromWithoutReward",
+  "constant": false,
   "inputs": [
     {
       "name": "_from"
@@ -4627,6 +4865,7 @@ abiTest2
 
 , {
   "name": "transferOwnership",
+  "constant": false,
   "inputs": [
     {
       "name": "newOwner"
@@ -4636,6 +4875,7 @@ abiTest2
 
 , {
   "name": "transferPrimary",
+  "constant": false,
   "inputs": [
     {
       "name": "recipient"
@@ -4645,11 +4885,13 @@ abiTest2
 
 , {
   "name": "triggerContractAddressEvent",
+  "constant": false,
   "inputs": []
 }
 
 , {
   "name": "triggerRequireError",
+  "constant": false,
   "inputs": []
 }
 
@@ -4665,11 +4907,13 @@ abiTest2
 
 , {
   "name": "unpause",
+  "constant": false,
   "inputs": []
 }
 
 , {
   "name": "unsafeAddToBalance",
+  "constant": false,
   "inputs": [
     {
       "name": "user"
@@ -4685,6 +4929,7 @@ abiTest2
 
 , {
   "name": "updateAndRevert",
+  "constant": false,
   "inputs": [
     {
       "name": "newBalance"
@@ -4694,6 +4939,7 @@ abiTest2
 
 , {
   "name": "updateOwner",
+  "constant": false,
   "inputs": [
     {
       "name": "newOwner"
@@ -4703,6 +4949,7 @@ abiTest2
 
 , {
   "name": "upgradeRelayHub",
+  "constant": false,
   "inputs": [
     {
       "name": "newRelayHub"
@@ -4712,6 +4959,7 @@ abiTest2
 
 , {
   "name": "verify",
+  "constant": false,
   "inputs": [
     {
       "name": "proof",
@@ -4728,6 +4976,7 @@ abiTest2
 
 , {
   "name": "vote",
+  "constant": false,
   "inputs": [
     {
       "name": "videoID"
@@ -4743,6 +4992,7 @@ abiTest2
 
 , {
   "name": "withdraw",
+  "constant": false,
   "inputs": [
     {
       "name": "_payee"
@@ -4752,6 +5002,7 @@ abiTest2
 
 , {
   "name": "withdraw",
+  "constant": false,
   "inputs": [
     {
       "name": "payee"
@@ -4761,6 +5012,7 @@ abiTest2
 
 , {
   "name": "withdrawBalance",
+  "constant": false,
   "inputs": [
     {
       "name": "token"
@@ -4773,16 +5025,19 @@ abiTest2
 
 , {
   "name": "withdrawEth",
+  "constant": false,
   "inputs": []
 }
 
 , {
   "name": "withdrawLink",
+  "constant": false,
   "inputs": []
 }
 
 , {
   "name": "withdrawPaymentsWithGas",
+  "constant": false,
   "inputs": [
     {
       "name": "payee"
@@ -4792,6 +5047,7 @@ abiTest2
 
 , {
   "name": "withdrawTokens",
+  "constant": false,
   "inputs": [
     {
       "name": "beneficiary"
@@ -4811,6 +5067,7 @@ abiTest2
 
 , {
   "name": "writeBytes20",
+  "constant": false,
   "inputs": [
     {
       "name": "buf"
@@ -4826,6 +5083,7 @@ abiTest2
 
 , {
   "name": "zqHash",
+  "constant": false,
   "inputs": [
     {
       "name": "q"
@@ -4837,11 +5095,13 @@ abiTest2
 }
 
 , {
+  "constant": false,
   "inputs": []
 }
 
 , {
   "name": "AffirmStatus",
+  "constant": false,
   "inputs": [
     {
       "name": "_sender"
@@ -4860,6 +5120,7 @@ abiTest2
 
 , {
   "name": "MakeRequest",
+  "constant": false,
   "inputs": [
     {
       "name": "_key"
@@ -4884,6 +5145,7 @@ abiTest2
 
 , {
   "name": "SettingChange",
+  "constant": false,
   "inputs": [
     {
       "name": "_admin"
@@ -4899,6 +5161,7 @@ abiTest2
 
 , {
   "name": "Transfer",
+  "constant": false,
   "inputs": [
     {
       "name": "from"
@@ -4914,6 +5177,7 @@ abiTest2
 
 , {
   "name": "AddedOwner",
+  "constant": false,
   "inputs": [
     {
       "name": "owner"
@@ -4923,6 +5187,7 @@ abiTest2
 
 , {
   "name": "Approval",
+  "constant": false,
   "inputs": [
     {
       "name": "owner"
@@ -4938,6 +5203,7 @@ abiTest2
 
 , {
   "name": "CanRelayFailed",
+  "constant": false,
   "inputs": [
     {
       "name": "relay"
@@ -4959,6 +5225,7 @@ abiTest2
 
 , {
   "name": "CapperRemoved",
+  "constant": false,
   "inputs": [
     {
       "name": "account"
@@ -4968,6 +5235,7 @@ abiTest2
 
 , {
   "name": "Data",
+  "constant": false,
   "inputs": [
     {
       "name": "data"
@@ -4983,6 +5251,7 @@ abiTest2
 
 , {
   "name": "Deposited",
+  "constant": false,
   "inputs": [
     {
       "name": "recipient"
@@ -4998,6 +5267,7 @@ abiTest2
 
 , {
   "name": "FinalizeEvent",
+  "constant": false,
   "inputs": [
     {
       "name": "maps",
@@ -5014,6 +5284,7 @@ abiTest2
 
 , {
   "name": "Log0Anonym",
+  "constant": false,
   "inputs": [
     {
       "name": "value"
@@ -5023,6 +5294,7 @@ abiTest2
 
 , {
   "name": "Log3",
+  "constant": false,
   "inputs": [
     {
       "name": "aBool"
@@ -5041,6 +5313,7 @@ abiTest2
 
 , {
   "name": "LogSetOwner",
+  "constant": false,
   "inputs": [
     {
       "name": "owner"
@@ -5050,6 +5323,7 @@ abiTest2
 
 , {
   "name": "MinterRemoved",
+  "constant": false,
   "inputs": [
     {
       "name": "account"
@@ -5059,6 +5333,7 @@ abiTest2
 
 , {
   "name": "NewCheckpointVote",
+  "constant": false,
   "inputs": [
     {
       "name": "index"
@@ -5080,6 +5355,7 @@ abiTest2
 
 , {
   "name": "OwnerChanged",
+  "constant": false,
   "inputs": [
     {
       "name": "oldOwner"
@@ -5092,6 +5368,7 @@ abiTest2
 
 , {
   "name": "PayeeAdded",
+  "constant": false,
   "inputs": [
     {
       "name": "account"
@@ -5104,6 +5381,7 @@ abiTest2
 
 , {
   "name": "ProcessProposal",
+  "constant": false,
   "inputs": [
     {
       "name": "proposalIndex"
@@ -5128,6 +5406,7 @@ abiTest2
 
 , {
   "name": "Ragequit",
+  "constant": false,
   "inputs": [
     {
       "name": "memberAddress"
@@ -5140,6 +5419,7 @@ abiTest2
 
 , {
   "name": "RegisterEvent",
+  "constant": false,
   "inputs": [
     {
       "name": "addr"
@@ -5152,6 +5432,7 @@ abiTest2
 
 , {
   "name": "RevokedOperator",
+  "constant": false,
   "inputs": [
     {
       "name": "operator"
@@ -5164,6 +5445,7 @@ abiTest2
 
 , {
   "name": "Sent",
+  "constant": false,
   "inputs": [
     {
       "name": "operator"
@@ -5188,6 +5470,7 @@ abiTest2
 
 , {
   "name": "Staked",
+  "constant": false,
   "inputs": [
     {
       "name": "relay"
@@ -5203,6 +5486,7 @@ abiTest2
 
 , {
   "name": "SubmitVote",
+  "constant": false,
   "inputs": [
     {
       "name": "proposalId"
@@ -5224,6 +5508,7 @@ abiTest2
 
 , {
   "name": "TestAnon",
+  "constant": false,
   "inputs": [
     {
       "name": "p0"
@@ -5236,6 +5521,7 @@ abiTest2
 
 , {
   "name": "TestIndexedString",
+  "constant": false,
   "inputs": [
     {
       "name": "p2"
@@ -5248,6 +5534,7 @@ abiTest2
 
 , {
   "name": "TestV2DynamicArray",
+  "constant": false,
   "inputs": [
     {
       "name": "p0[]"
@@ -5260,6 +5547,7 @@ abiTest2
 
 , {
   "name": "TokenVestingRevoked",
+  "constant": false,
   "inputs": [
     {
       "name": "token"
@@ -5269,6 +5557,7 @@ abiTest2
 
 , {
   "name": "TokensToSendCalled",
+  "constant": false,
   "inputs": [
     {
       "name": "operator"
@@ -5302,6 +5591,7 @@ abiTest2
 
 , {
   "name": "Transfer",
+  "constant": false,
   "inputs": [
     {
       "name": "node"
@@ -5314,6 +5604,7 @@ abiTest2
 
 , {
   "name": "UpdatedCount",
+  "constant": false,
   "inputs": [
     {
       "name": "count"
@@ -5323,6 +5614,7 @@ abiTest2
 
 , {
   "name": "Withdraw",
+  "constant": false,
   "inputs": [
     {
       "name": "memberAddress"
@@ -5338,6 +5630,7 @@ abiTest2
 
 , {
   "name": "Withdrawn",
+  "constant": false,
   "inputs": [
     {
       "name": "payee"
@@ -5350,6 +5643,7 @@ abiTest2
 
 , {
   "name": "e",
+  "constant": false,
   "inputs": [
     {
       "name": "a",
@@ -5368,6 +5662,7 @@ abiTest2
 
 , {
   "name": "Approval",
+  "constant": false,
   "inputs": [
     {
       "name": "owner"
@@ -5383,6 +5678,7 @@ abiTest2
 
 , {
   "name": "ChainlinkFulfilled",
+  "constant": false,
   "inputs": [
     {
       "name": "id"
@@ -5392,6 +5688,7 @@ abiTest2
 
 , {
   "name": "Deposited",
+  "constant": false,
   "inputs": [
     {
       "name": "payee"
@@ -5404,6 +5701,7 @@ abiTest2
 
 , {
   "name": "InitiatedJob",
+  "constant": false,
   "inputs": [
     {
       "name": "said"
@@ -5413,11 +5711,13 @@ abiTest2
 
 , {
   "name": "MintFinished",
+  "constant": false,
   "inputs": []
 }
 
 , {
   "name": "NewRound",
+  "constant": false,
   "inputs": [
     {
       "name": "roundId"
@@ -5430,6 +5730,7 @@ abiTest2
 
 , {
   "name": "OracleAdded",
+  "constant": false,
   "inputs": [
     {
       "name": "oracle"
@@ -5439,6 +5740,7 @@ abiTest2
 
 , {
   "name": "OwnershipTransferred",
+  "constant": false,
   "inputs": [
     {
       "name": "previousOwner"
@@ -5451,6 +5753,7 @@ abiTest2
 
 , {
   "name": "Released",
+  "constant": false,
   "inputs": [
     {
       "name": "amount"
@@ -5460,6 +5763,7 @@ abiTest2
 
 , {
   "name": "RoleAdded",
+  "constant": false,
   "inputs": [
     {
       "name": "operator"
@@ -5472,6 +5776,7 @@ abiTest2
 
 , {
   "name": "ServiceAgreementResponseReceived",
+  "constant": false,
   "inputs": [
     {
       "name": "saId"
@@ -5490,6 +5795,7 @@ abiTest2
 
 , {
   "name": "Submit",
+  "constant": false,
   "inputs": [
     {
       "name": "proposalId"
@@ -5499,6 +5805,7 @@ abiTest2
 
 , {
   "name": "Transfer",
+  "constant": false,
   "inputs": [
     {
       "name": "from"
@@ -5514,6 +5821,7 @@ abiTest2
 
 , {
   "name": "UserAdded",
+  "constant": false,
   "inputs": [
     {
       "name": "addr"
@@ -5526,6 +5834,7 @@ abiTest2
 
 , {
   "name": "Confirmation",
+  "constant": false,
   "inputs": [
     {
       "name": "owner"
@@ -5538,6 +5847,7 @@ abiTest2
 
 , {
   "name": "FuelingToDate",
+  "constant": false,
   "inputs": [
     {
       "name": "value"
@@ -5547,6 +5857,7 @@ abiTest2
 
 , {
   "name": "OwnerRemoved",
+  "constant": false,
   "inputs": [
     {
       "name": "oldOwner"
@@ -5556,6 +5867,7 @@ abiTest2
 
 , {
   "name": "RequirementChanged",
+  "constant": false,
   "inputs": [
     {
       "name": "newRequirement"

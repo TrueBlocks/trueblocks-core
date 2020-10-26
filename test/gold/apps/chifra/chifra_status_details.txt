@@ -182,7 +182,6 @@ cacheStatus all --details --start 1400000 --end 2000000
       "is_valid": true
     },
     {
-      "addrs": [],
       "items": [
         {
           "type": "CMonitorCacheItem",
@@ -211,7 +210,6 @@ cacheStatus all --details --start 1400000 --end 2000000
       "is_valid": true
     },
     {
-      "addrs": [],
       "items": [
         {
           "type": "CMonitorCacheItem",
@@ -305,8 +303,6 @@ cacheStatus all --details --start 1400000 --end 2000000
       "is_valid": false
     },
     {
-      "addrs": [],
-      "items": [],
       "type": "CSlurpCache",
       "path": "slurpsPath",
       "nFiles": 0,

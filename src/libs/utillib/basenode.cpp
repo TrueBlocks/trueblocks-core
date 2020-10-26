@@ -560,7 +560,9 @@ void CBaseNode::doExport(ostream& os) const {
     map<string_q, bool> fieldMap;
     while (pClass != GETRUNTIME_CLASS(CBaseNode)) {
         for (auto field : pClass->fieldList) {
-            if (!field.isHidden()) {
+            bool hidden = field.isHidden();
+            bool empty = (field.isArray() && str_2_Uint(getValueByName(field.getName() + "Cnt")) == 0) && !isApiMode();
+            if (!hidden && !empty) {
                 if (!fieldMap[field.m_fieldName]) {
                     fields.push_back(field);
                     fieldMap[field.m_fieldName] = true;
@@ -573,65 +575,60 @@ void CBaseNode::doExport(ostream& os) const {
     os << "{";
     incIndent();
     for (auto field : fields) {
-        if (field.isArray()) {
-            uint64_t cnt = str_2_Uint(getValueByName(field.getName() + "Cnt"));
-            if (field.getName() != fields[0].getName())
-                os << ",";
-            os << endl;
-            os << indent() << doKey(field.getName());
+        if (field.getName() != fields[0].getName())
+            os << ",";
+        os << endl << indent() << doKey(field.getName());
 
+        if (field.isArray()) {
             os << "[";
-            if (cnt) {
-                incIndent();
-                os << endl;
-                for (size_t i = 0; i < cnt; i++) {
-                    os << indent();
-                    const CBaseNode* node = getObjectAt(field.getName(), i);
-                    if (node) {
-                        node->doExport(os);
-                    } else {
-                        os << "\"" << getStringAt(field.getName(), i) << "\"";
-                    }
-                    if (expContext().endingCommas || i < cnt - 1)
-                        os << ",";
-                    os << endl;
-                }
-                decIndent();
+            incIndent();
+            os << endl;
+            uint64_t cnt = str_2_Uint(getValueByName(field.getName() + "Cnt"));
+            for (size_t i = 0; i < cnt; i++) {
                 os << indent();
+                const CBaseNode* node = getObjectAt(field.getName(), i);
+                if (node) {
+                    node->doExport(os);
+                } else {
+                    os << "\"" << getStringAt(field.getName(), i) << "\"";
+                }
+                if (expContext().endingCommas || i < cnt - 1)
+                    os << ",";
+                os << endl;
             }
+            decIndent();
+            os << indent();
             os << "]";
 
         } else if (field.isObject()) {
-            if (field.getName() != fields[0].getName())
-                os << ",";
-            os << endl << indent() << doKey(field.getName());
-
             const CBaseNode* node = getObjectAt(field.getName(), 0);
             if (!node) {
+                // should never happen
                 LOG_WARN("Object ", field.getName(), " not found in class ", pClass->m_ClassName);
                 return;
             }
             node->doExport(os);
 
         } else {
-            if (field.getName() != fields[0].getName())
-                os << ",";
-            os << endl << indent() << doKey(field.getName());
-
-            bool isNum = (field.m_fieldType & TS_NUMERAL);
             string_q val = getValueByName(field.getName());
-            if (isNum && expContext().hexNums && !startsWith(val, "0x") && !contains(val, ".") && !val.empty() &&
-                (field.m_fieldType != T_BOOL))
-                val = str_2_Hex(val);
-            if (isNum && val.empty())
-                val = uint_2_Str(0);
+            bool isNum = (field.m_fieldType & TS_NUMERAL);
 
-            bool quote = ((!isNum || expContext().quoteNums) && val != "null") | (isApiMode() && val.empty());
-            if (quote)
-                os << "\"";
-            os << val;
-            if (quote)
-                os << "\"";
+            if (val == "null" || field.m_fieldType == T_BOOL || (isNum && contains(val, "."))) {
+                os << val;
+
+            } else if (!isNum) {
+                os << "\"" << val << "\"";
+
+            } else {
+                if (isNum) {
+                    if (expContext().hexNums && !startsWith(val, "0x") && !val.empty())
+                        val = str_2_Hex(val);
+                    if (val.empty())
+                        val = uint_2_Str(0);
+                }
+                bool quote = expContext().quoteNums || (isApiMode() && val.empty());
+                os << (quote ? "\"" : "") << val << (quote ? "\"" : "");
+            }
         }
     }
     decIndent();

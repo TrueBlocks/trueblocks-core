@@ -15,12 +15,10 @@ getReceipt 0xb8a3f7f5cfc1748f91a684f20fe89031202cbadcd15078c49b85ec2a57f43853.4 
         "articulatedLog": {
           "name": "",
           "type": "",
-          "constant": "0",
+          "constant": false,
           "stateMutability": "",
           "signature": "",
-          "encoding": "",
-          "inputs": [],
-          "outputs": []
+          "encoding": ""
         }
       }
     ],

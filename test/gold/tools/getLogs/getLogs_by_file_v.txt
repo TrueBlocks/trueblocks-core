@@ -17,23 +17,19 @@ getLogs --file:cmd_file --verbose --fmt json
         {
           "name": "_from",
           "value": "0x306b79fc32fb1561480102e032844bb36ea97102",
-          "internalType": "",
-          "components": []
+          "internalType": ""
         },
         {
           "name": "_to",
           "value": "0xdf21fa922215b1a56f5a6d6294e6e36c85a0acfb",
-          "internalType": "",
-          "components": []
+          "internalType": ""
         },
         {
           "name": "_amount",
           "value": "666666666600000000",
-          "internalType": "",
-          "components": []
+          "internalType": ""
         }
-      ],
-      "outputs": []
+      ]
     },
     "compressedLog": "Transfer ( _from: 0x306b79fc32fb1561480102e032844bb36ea97102, _to: 0xdf21fa922215b1a56f5a6d6294e6e36c85a0acfb, _amount: 666666666600000000 )"
   },  {
@@ -50,17 +46,14 @@ getLogs --file:cmd_file --verbose --fmt json
         {
           "name": "tokenHolder",
           "value": "0x63585740143301cf0163f6448fd8a63c3b376fd3",
-          "internalType": "address",
-          "components": []
+          "internalType": "address"
         },
         {
           "name": "amountPaidOut",
           "value": "87810925078238973",
-          "internalType": "uint256",
-          "components": []
+          "internalType": "uint256"
         }
-      ],
-      "outputs": []
+      ]
     },
     "compressedLog": "ProfitWithdrawn ( tokenHolder: 0x63585740143301cf0163f6448fd8a63c3b376fd3, amountPaidOut: 87810925078238973 )"
   }], "types": [

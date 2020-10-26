@@ -14,7 +14,8 @@
   "has_eskey": true,
   "caches": [
     {
-      "items": [],
+      "items": [
+      ],
       "type": "CIndexCache",
       "path": "indexPath",
       "nFiles": 0,
@@ -39,7 +40,8 @@
         "--address--",
         "--address--"
       ],
-      "items": [],
+      "items": [
+      ],
       "type": "CNameCache",
       "path": "namesPath",
       "nFiles": 0,

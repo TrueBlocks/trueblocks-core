@@ -15,7 +15,6 @@ getTrans --file:cmd_file --fmt json --parity
     "receipt": {
       "contractAddress": "0x0",
       "gasUsed": "0x5208",
-      "logs": [],
       "status": null
     },
     "timestamp": "0x590d1c3b",
@@ -36,7 +35,6 @@ getTrans --file:cmd_file --fmt json --parity
     "receipt": {
       "contractAddress": "0x0",
       "gasUsed": "0x5208",
-      "logs": [],
       "status": null
     },
     "timestamp": "0x590d1c3b",
@@ -57,7 +55,6 @@ getTrans --file:cmd_file --fmt json --parity
     "receipt": {
       "contractAddress": "0x0",
       "gasUsed": "0x5208",
-      "logs": [],
       "status": null
     },
     "timestamp": "0x590d1c3b",

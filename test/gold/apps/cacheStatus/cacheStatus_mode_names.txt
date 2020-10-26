@@ -20,7 +20,6 @@ cacheStatus names
         "--address--",
         "--address--"
       ],
-      "items": [],
       "type": "CNameCache",
       "path": "namesPath",
       "nFiles": 0,

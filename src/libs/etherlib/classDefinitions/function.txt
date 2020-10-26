@@ -2,8 +2,8 @@
 class = CFunction
 fields = string name|\
         string type|\
-        sbool anonymous|\
-        sbool constant|\
+        bool anonymous|\
+        bool constant|\
         string stateMutability|\
         string signature|\
         string encoding|\

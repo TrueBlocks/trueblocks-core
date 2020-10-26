@@ -25,7 +25,6 @@ TIME ~ CLOCK - <WARNG> : dataStart(418973819366999115) larger than nDataItems(4)
     "receipt": {
       "contractAddress": "0x0",
       "gasUsed": 60000,
-      "logs": [],
       "status": 0
     },
     "articulatedTx": {
@@ -35,22 +34,19 @@ TIME ~ CLOCK - <WARNG> : dataStart(418973819366999115) larger than nDataItems(4)
         {
           "name": "destinations",
           "value": "",
-          "internalType": "address[]",
-          "components": []
+          "internalType": "address[]"
         },
         {
           "name": "tokens",
           "value": "",
-          "internalType": "uint256[]",
-          "components": []
+          "internalType": "uint256[]"
         }
       ],
       "outputs": [
         {
           "name": "success",
           "value": "",
-          "internalType": "bool",
-          "components": []
+          "internalType": "bool"
         }
       ]
     },

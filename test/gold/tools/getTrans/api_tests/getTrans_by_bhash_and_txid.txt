@@ -6,7 +6,7 @@
       "blockNumber": "0x3d0900",
       "date": "2017-07-09 20:52:47 UTC",
       "datesh": "2017-07-09",
-      "ether": "0.998174500000000000",
+      "ether": 0.9981745,
       "from": "0x4786d4f77ee23405ef7352796d0ee4f7f4a95c91",
       "gas": "0x9c40",
       "gasPrice": "0xb96ddd6a4",
@@ -29,7 +29,7 @@
             "articulatedLog": {
               "name": "",
               "type": "",
-              "constant": "false",
+              "constant": false,
               "stateMutability": "",
               "signature": "",
               "encoding": "",

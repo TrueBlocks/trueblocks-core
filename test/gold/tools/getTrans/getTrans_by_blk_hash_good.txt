@@ -29,12 +29,10 @@ getTrans 0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f.55 -
           "articulatedLog": {
             "name": "",
             "type": "",
-            "constant": 0,
+            "constant": false,
             "stateMutability": "",
             "signature": "",
-            "encoding": "",
-            "inputs": [],
-            "outputs": []
+            "encoding": ""
           }
         }
       ],

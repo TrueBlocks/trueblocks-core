@@ -4,17 +4,14 @@ getReceipt --file:cmd_file --fmt api --verbose
   {
     "contractAddress": "0x0",
     "gasUsed": 21000,
-    "logs": [],
     "status": null
   },  {
     "contractAddress": "0x0",
     "gasUsed": 21000,
-    "logs": [],
     "status": null
   },  {
     "contractAddress": "0x0",
     "gasUsed": "0x5208",
-    "logs": [],
     "status": null
   }], "types": [
 { "type": "CTransaction", "fields": [{ "name": "blockHash", "type": "hash" }, { "name": "blockNumber", "type": "blocknum" }, { "name": "from", "type": "address" }, { "name": "gas", "type": "gas" }, { "name": "gasPrice", "type": "gas" }, { "name": "gasUsed", "type": "gas" }, { "name": "hash", "type": "hash" }, { "name": "input", "type": "text" }, { "name": "isError", "type": "unumber" }, { "name": "nonce", "type": "unumber" }, { "name": "receipt", "type": "object" }, { "name": "timestamp", "type": "timestamp" }, { "name": "to", "type": "address" }, { "name": "transactionIndex", "type": "blocknum" }, { "name": "value", "type": "wei" }] }

@@ -210,23 +210,19 @@ getTrace 0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f --ar
         {
           "name": "_keys",
           "value": "[6, 5]",
-          "internalType": "uint256[]",
-          "components": []
+          "internalType": "uint256[]"
         },
         {
           "name": "_tokenAmounts",
           "value": "[25000000000000000000, 25000000000000000000]",
-          "internalType": "uint256[]",
-          "components": []
+          "internalType": "uint256[]"
         },
         {
           "name": "_dollarPrices",
           "value": "[2000000000000000000, 2000000000000000000]",
-          "internalType": "uint256[]",
-          "components": []
+          "internalType": "uint256[]"
         }
-      ],
-      "outputs": []
+      ]
     },
     "compressedTrace": "acceptTheseAskRequestsAndBUY ( _keys: [6, 5], _tokenAmounts: [25000000000000000000, 25000000000000000000], _dollarPrices: [2000000000000000000, 2000000000000000000] )"
   },  {
@@ -255,16 +251,14 @@ getTrace 0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f --ar
         {
           "name": "_id",
           "value": "0",
-          "internalType": "uint256",
-          "components": []
+          "internalType": "uint256"
         }
       ],
       "outputs": [
         {
           "name": "ret_0",
           "value": "47231959280000",
-          "internalType": "uint256",
-          "components": []
+          "internalType": "uint256"
         }
       ]
     },
@@ -295,16 +289,14 @@ getTrace 0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f --ar
         {
           "name": "_id",
           "value": "0",
-          "internalType": "uint256",
-          "components": []
+          "internalType": "uint256"
         }
       ],
       "outputs": [
         {
           "name": "ret_0",
           "value": "47231959280000",
-          "internalType": "uint256",
-          "components": []
+          "internalType": "uint256"
         }
       ]
     },

@@ -18,7 +18,6 @@ getTrans --file:cmd_file --fmt json
     "receipt": {
       "contractAddress": "0x0",
       "gasUsed": 21000,
-      "logs": [],
       "status": null
     },
     "gasUsed": 21000
@@ -39,7 +38,6 @@ getTrans --file:cmd_file --fmt json
     "receipt": {
       "contractAddress": "0x0",
       "gasUsed": 21000,
-      "logs": [],
       "status": null
     },
     "gasUsed": 21000
@@ -57,7 +55,6 @@ getTrans --file:cmd_file --fmt json
     "receipt": {
       "contractAddress": "0x0",
       "gasUsed": "0x5208",
-      "logs": [],
       "status": null
     },
     "timestamp": "0x590d1c3b",

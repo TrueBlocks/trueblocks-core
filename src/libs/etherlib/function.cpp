@@ -72,7 +72,7 @@ string_q CFunction::getValueByName(const string_q& fieldName) const {
     switch (tolower(fieldName[0])) {
         case 'a':
             if (fieldName % "anonymous") {
-                return bool_2_Str_t(anonymous);
+                return bool_2_Str(anonymous);
             }
             if (fieldName % "address") {
                 return addr_2_Str(address);
@@ -80,7 +80,7 @@ string_q CFunction::getValueByName(const string_q& fieldName) const {
             break;
         case 'c':
             if (fieldName % "constant") {
-                return bool_2_Str_t(constant);
+                return bool_2_Str(constant);
             }
             break;
         case 'e':

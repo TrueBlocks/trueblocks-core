@@ -4,7 +4,6 @@ getReceipt 1428993.* --fmt api
   {
     "contractAddress": "0x0",
     "gasUsed": 21000,
-    "logs": [],
     "status": null
   },  {
     "contractAddress": "0x0",
@@ -20,12 +19,10 @@ getReceipt 1428993.* --fmt api
         "articulatedLog": {
           "name": "",
           "type": "",
-          "constant": 0,
+          "constant": false,
           "stateMutability": "",
           "signature": "",
-          "encoding": "",
-          "inputs": [],
-          "outputs": []
+          "encoding": ""
         }
       }
     ],
@@ -33,7 +30,6 @@ getReceipt 1428993.* --fmt api
   },  {
     "contractAddress": "0x0",
     "gasUsed": 76035,
-    "logs": [],
     "status": null
   },  {
     "contractAddress": "0x0",
@@ -51,12 +47,10 @@ getReceipt 1428993.* --fmt api
         "articulatedLog": {
           "name": "",
           "type": "",
-          "constant": 0,
+          "constant": false,
           "stateMutability": "",
           "signature": "",
-          "encoding": "",
-          "inputs": [],
-          "outputs": []
+          "encoding": ""
         }
       }
     ],

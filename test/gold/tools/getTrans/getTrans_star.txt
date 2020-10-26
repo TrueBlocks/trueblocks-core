@@ -18,7 +18,6 @@ getTrans 2222221.* --fmt api
     "receipt": {
       "contractAddress": "0x0",
       "gasUsed": 21000,
-      "logs": [],
       "status": null
     },
     "gasUsed": 21000
@@ -39,7 +38,6 @@ getTrans 2222221.* --fmt api
     "receipt": {
       "contractAddress": "0x0",
       "gasUsed": 21000,
-      "logs": [],
       "status": null
     },
     "gasUsed": 21000
@@ -60,7 +58,6 @@ getTrans 2222221.* --fmt api
     "receipt": {
       "contractAddress": "0x0",
       "gasUsed": 21000,
-      "logs": [],
       "status": null
     },
     "gasUsed": 21000
@@ -81,7 +78,6 @@ getTrans 2222221.* --fmt api
     "receipt": {
       "contractAddress": "0x0",
       "gasUsed": 21000,
-      "logs": [],
       "status": null
     },
     "gasUsed": 21000
