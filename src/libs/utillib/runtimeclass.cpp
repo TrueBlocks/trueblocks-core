@@ -74,6 +74,12 @@ void CRuntimeClass::addField(const string_q& fieldName, size_t dataType, size_t 
 }
 
 //-------------------------------------------------------------------------
+void CRuntimeClass::addObject(const string_q& fieldName, size_t dataType, size_t fieldID, const CRuntimeClass* pClass) {
+    CFieldData field(fieldName, fieldID, dataType, pClass);
+    fieldList.push_back(field);
+}
+
+//-------------------------------------------------------------------------
 void CRuntimeClass::sortFieldList(void) {
     sort(fieldList.begin(), fieldList.end());
     return;

@@ -384,8 +384,8 @@ void CFunction::registerClass(void) {
     ADD_FIELD(CFunction, "encoding", T_TEXT, ++fieldNum);
     ADD_FIELD(CFunction, "message", T_TEXT, ++fieldNum);
     HIDE_FIELD(CFunction, "message");
-    ADD_FIELD(CFunction, "inputs", T_OBJECT | TS_ARRAY, ++fieldNum);
-    ADD_FIELD(CFunction, "outputs", T_OBJECT | TS_ARRAY, ++fieldNum);
+    ADD_FIELD(CFunction, "inputs", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CFunction, "outputs", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CFunction, "address", T_ADDRESS, ++fieldNum);
     HIDE_FIELD(CFunction, "address");
 

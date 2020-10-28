@@ -270,7 +270,7 @@ void CConfigItem::registerClass(void) {
     ADD_FIELD(CConfigItem, "tip", T_TEXT, ++fieldNum);
     ADD_FIELD(CConfigItem, "required", T_BOOL, ++fieldNum);
     ADD_FIELD(CConfigItem, "read_only", T_BOOL, ++fieldNum);
-    ADD_FIELD(CConfigItem, "named", T_OBJECT | TS_ARRAY, ++fieldNum);
+    ADD_FIELD(CConfigItem, "named", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CConfigItem, "named");
 
     // Hide our internal fields, user can turn them on if they like

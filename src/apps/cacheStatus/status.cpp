@@ -368,7 +368,7 @@ void CStatus::registerClass(void) {
     ADD_FIELD(CStatus, "has_eskey", T_BOOL, ++fieldNum);
     ADD_FIELD(CStatus, "ts", T_TIMESTAMP, ++fieldNum);
     HIDE_FIELD(CStatus, "ts");
-    ADD_FIELD(CStatus, "caches", T_OBJECT | TS_ARRAY, ++fieldNum);
+    ADD_FIELD(CStatus, "caches", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CStatus, "schema");

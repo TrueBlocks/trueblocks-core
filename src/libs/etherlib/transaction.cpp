@@ -560,13 +560,13 @@ void CTransaction::registerClass(void) {
     ADD_FIELD(CTransaction, "isError", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CTransaction, "isInternal", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CTransaction, "receipt", T_OBJECT, ++fieldNum);
-    ADD_FIELD(CTransaction, "traces", T_OBJECT | TS_ARRAY, ++fieldNum);
+    ADD_FIELD(CTransaction, "traces", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CTransaction, "articulatedTx", T_OBJECT, ++fieldNum);
-    ADD_FIELD(CTransaction, "reconciliations", T_OBJECT | TS_ARRAY, ++fieldNum);
+    ADD_FIELD(CTransaction, "reconciliations", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CTransaction, "reconciliations");
     ADD_FIELD(CTransaction, "compressedTx", T_TEXT, ++fieldNum);
     HIDE_FIELD(CTransaction, "compressedTx");
-    ADD_FIELD(CTransaction, "statements", T_OBJECT | TS_ARRAY, ++fieldNum);
+    ADD_FIELD(CTransaction, "statements", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CTransaction, "statements");
     ADD_FIELD(CTransaction, "finalized", T_BOOL, ++fieldNum);
     HIDE_FIELD(CTransaction, "finalized");

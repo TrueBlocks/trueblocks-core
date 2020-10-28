@@ -299,7 +299,7 @@ void CParameter::registerClass(void) {
     ADD_FIELD(CParameter, "value", T_TEXT, ++fieldNum);
     ADD_FIELD(CParameter, "indexed", T_BOOL, ++fieldNum);
     ADD_FIELD(CParameter, "internalType", T_TEXT, ++fieldNum);
-    ADD_FIELD(CParameter, "components", T_OBJECT | TS_ARRAY, ++fieldNum);
+    ADD_FIELD(CParameter, "components", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CParameter, "no_write", T_BOOL, ++fieldNum);
     ADD_FIELD(CParameter, "is_flags", T_UNUMBER, ++fieldNum);
 

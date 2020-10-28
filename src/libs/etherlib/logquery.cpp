@@ -253,7 +253,7 @@ void CLogQuery::registerClass(void) {
     ADD_FIELD(CLogQuery, "toBlock", T_BLOCKNUM, ++fieldNum);
     ADD_FIELD(CLogQuery, "blockHash", T_HASH, ++fieldNum);
     ADD_FIELD(CLogQuery, "addresses", T_ADDRESS | TS_ARRAY, ++fieldNum);
-    ADD_FIELD(CLogQuery, "topics", T_OBJECT | TS_ARRAY, ++fieldNum);
+    ADD_FIELD(CLogQuery, "topics", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CLogQuery, "schema");

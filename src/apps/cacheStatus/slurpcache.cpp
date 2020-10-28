@@ -221,8 +221,8 @@ void CSlurpCache::registerClass(void) {
     ADD_FIELD(CSlurpCache, "deleted", T_BOOL, ++fieldNum);
     ADD_FIELD(CSlurpCache, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CSlurpCache, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CSlurpCache, "addrs", T_ADDRESS | TS_ARRAY, ++fieldNum);
-    ADD_FIELD(CSlurpCache, "items", T_OBJECT | TS_ARRAY, ++fieldNum);
+    ADD_FIELD(CSlurpCache, "addrs", T_ADDRESS | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CSlurpCache, "items", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CSlurpCache, "schema");

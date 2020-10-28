@@ -382,7 +382,7 @@ void CBlock::registerClass(void) {
     ADD_FIELD(CBlock, "price", T_DOUBLE, ++fieldNum);
     ADD_FIELD(CBlock, "finalized", T_BOOL, ++fieldNum);
     ADD_FIELD(CBlock, "timestamp", T_TIMESTAMP, ++fieldNum);
-    ADD_FIELD(CBlock, "transactions", T_OBJECT | TS_ARRAY, ++fieldNum);
+    ADD_FIELD(CBlock, "transactions", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CBlock, "name", T_TEXT, ++fieldNum);
     HIDE_FIELD(CBlock, "name");
     ADD_FIELD(CBlock, "light", T_BOOL, ++fieldNum);

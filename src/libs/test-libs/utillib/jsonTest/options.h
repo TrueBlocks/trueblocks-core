@@ -17,12 +17,16 @@
 class COptions : public COptionsBase {
   public:
     string_q fileName;
+    uint64_t which;
 
     COptions(void);
     ~COptions(void);
 
     bool parseArguments(string_q& command);
     void Init(void);
+
+    void doTestZero(void);
+    void doTestOne(void);
 };
 
 //-----------------------------------------------------------------------------

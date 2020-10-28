@@ -37,11 +37,14 @@ string_q baseTypeName(uint64_t type) {
         ret += (" TS_POINTER ");
     if (type & TS_BIGNUM)
         ret += (" TS_BIGNUM ");
+    if (type & TS_OMITEMPTY)
+        ret += (" TS_OMITEMPTY ");
     return trim(substitute(ret, "  ", " "));
 }
 
 //--------------------------------------------------------------
 string_q fieldTypeName(uint64_t type) {
+    type &= uint64_t(~TS_OMITEMPTY);
     switch (type) {
         case T_DATE:
             return "T_DATE";

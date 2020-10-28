@@ -198,16 +198,16 @@ extern logger<log_policy_i>* eLogger;
 
 #define LOGGING_LEVEL
 #ifdef LOGGING_LEVEL
-#define LOG0 qblocks::dLogger->print<sev_debug0>
-#define LOG1 qblocks::dLogger->print<sev_debug1>
-#define LOG2 qblocks::dLogger->print<sev_debug2>
-#define LOG3 qblocks::dLogger->print<sev_debug3>
-#define LOG4 qblocks::dLogger->print<sev_debug4>
-#define LOG8 qblocks::dLogger->print<sev_debug8>
-#define LOG_INFO qblocks::eLogger->print<sev_info>
-#define LOG_WARN qblocks::eLogger->print<sev_warning>
-#define LOG_ERR qblocks::eLogger->print<sev_error>
-#define LOG_FATAL qblocks::eLogger->print<sev_fatal>
+#define LOG0 dLogger->print<sev_debug0>
+#define LOG1 dLogger->print<sev_debug1>
+#define LOG2 dLogger->print<sev_debug2>
+#define LOG3 dLogger->print<sev_debug3>
+#define LOG4 dLogger->print<sev_debug4>
+#define LOG8 dLogger->print<sev_debug8>
+#define LOG_INFO eLogger->print<sev_info>
+#define LOG_WARN eLogger->print<sev_warning>
+#define LOG_ERR eLogger->print<sev_error>
+#define LOG_FATAL eLogger->print<sev_fatal>
 #define SEP1(a) LOG1(cWhite + string_q(10, '-') + (a) + string_q(10, '-') + cOff)
 #define SEP2(a) LOG2(cGreen + string_q(10, '-') + (a) + string_q(10, '-') + cOff)
 #define SEP3(a) LOG3(cYellow + string_q(10, '-') + (a) + string_q(10, '-') + cOff)

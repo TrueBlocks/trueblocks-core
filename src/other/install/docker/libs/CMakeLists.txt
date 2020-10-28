@@ -12,9 +12,7 @@ add_subdirectory(utillib)
 add_subdirectory(etherlib)
 add_subdirectory(acctlib)
 add_subdirectory(pinlib)
-#add_subdirectory(sqlite3lib)
 
 # Headers installation steps
 file(GLOB HEADER_FILES "utillib/*.h" "etherlib/*.h" "acctlib/*.h" "pinlib/*.h")
-# file(GLOB HEADER_FILES "utillib/*.h" "etherlib/*.h" "acctlib/*.h" "pinlib/*.h" "sqlite3lib/*.h")
 install (FILES ${HEADER_FILES} DESTINATION include)

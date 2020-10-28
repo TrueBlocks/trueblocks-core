@@ -38,7 +38,9 @@ int main(int argc, const char* argv[]) {
 
             } else {
                 ASSERT(options.mode & RUN);
-                if (verbose)
+                if (verbose > 3)
+                    cout << "Running class definition file '" << classDef.input_path << "'" << endl;
+                else if (verbose)
                     cout << "Running class definition file '" << classDef.short_fn << "'" << endl;
                 options.handle_generate(toml, classDef, options.nspace, false);
             }

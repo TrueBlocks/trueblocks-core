@@ -221,8 +221,8 @@ void CNameCache::registerClass(void) {
     ADD_FIELD(CNameCache, "deleted", T_BOOL, ++fieldNum);
     ADD_FIELD(CNameCache, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CNameCache, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CNameCache, "addrs", T_ADDRESS | TS_ARRAY, ++fieldNum);
-    ADD_FIELD(CNameCache, "items", T_OBJECT | TS_ARRAY, ++fieldNum);
+    ADD_FIELD(CNameCache, "addrs", T_ADDRESS | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CNameCache, "items", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CNameCache, "schema");

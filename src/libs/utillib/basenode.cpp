@@ -19,6 +19,7 @@
 #include "version.h"
 #include "testing.h"
 #include "logging.h"
+#include "runtimeclass.h"
 
 namespace qblocks {
 
@@ -561,8 +562,38 @@ void CBaseNode::doExport(ostream& os) const {
     while (pClass != GETRUNTIME_CLASS(CBaseNode)) {
         for (auto field : pClass->fieldList) {
             bool hidden = field.isHidden();
-            bool empty = (field.isArray() && str_2_Uint(getValueByName(field.getName() + "Cnt")) == 0) && !isApiMode();
-            if (!hidden && !empty) {
+            bool one = field.m_fieldType & TS_OMITEMPTY;
+            bool two = !isApiMode();
+            bool three = !hidden;
+            if (one && two && three) {
+                if (field.isArray()) {
+                    // avoid generating the value for arrays
+                    hidden = str_2_Uint(getValueByName(field.getName() + "Cnt")) == 0;
+                } else {
+                    string_q val = getValueByName(field.getName());
+                    if (field.m_fieldType & T_BOOL && val == "false")
+                        hidden = true;
+                    else if (field.m_fieldType & T_TEXT && val.empty())
+                        hidden = true;
+                    else if (field.m_fieldType & T_OBJECT) {
+                        const CRuntimeClass* objClass = field.getObjType();
+                        if (objClass) {
+                            CBaseNode* item = createObjectOfType(field.getObjType()->m_ClassName);
+                            if (item) {
+                                ostringstream objStream;
+                                item->doExport(objStream);
+                                string_q defVal = objStream.str();
+                                hidden = val == defVal;
+                                delete item;
+                            }
+                        }
+                        // replaceAny(val, "\n\t\r ", "");
+                        // hidden = val == "{}";
+                    }
+                }
+            }
+
+            if (!field.isHidden() && !hidden) {
                 if (!fieldMap[field.m_fieldName]) {
                     fields.push_back(field);
                     fieldMap[field.m_fieldName] = true;

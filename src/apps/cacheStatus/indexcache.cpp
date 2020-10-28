@@ -195,7 +195,7 @@ void CIndexCache::registerClass(void) {
     ADD_FIELD(CIndexCache, "deleted", T_BOOL, ++fieldNum);
     ADD_FIELD(CIndexCache, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CIndexCache, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CIndexCache, "items", T_OBJECT | TS_ARRAY, ++fieldNum);
+    ADD_FIELD(CIndexCache, "items", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CIndexCache, "schema");

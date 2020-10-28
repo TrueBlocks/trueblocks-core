@@ -26,7 +26,7 @@ ostream& operator<<(ostream& os, const CTraceArray& array) {
     return os;
 }
 
-//--------------------------------------------------------------
+//-------------------------------------------------------------------------
 int main(int argc, const char* argv[]) {
     etherlib_init(quickQuitHandler);
 
@@ -39,50 +39,64 @@ int main(int argc, const char* argv[]) {
         if (!options.parseArguments(command))
             return 0;
 
-        string_q fn = "tests/" + options.fileName + ".json";
-        cout << fn << "\n";
-
-        string contents;
-        asciiFileToString(fn, contents);
-        if (options.fileName == "blocks") {
-            CBlock block;
-            while (block.parseJson3(contents))  // returns 'true' if anyting was parsed
-                cout << block << "\n";
-
-        } else if (options.fileName == "traces") {
-            CTrace trace;
-            while (trace.parseJson3(contents))
-                cout << trace << "\n";
-
-        } else if (options.fileName == "spaces") {
-            CTrace trace;
-            while (trace.parseJson3(contents))
-                cout << trace << "\n";
-
-        } else if (options.fileName == "escaped") {
-            CTrace trace;
-            while (trace.parseJson3(contents))
-                cout << trace << "\n";
-
-        } else if (options.fileName == "big") {
-            CRPCResult generic;
-            while (generic.parseJson3(contents)) {
-                CTrace trace;
-                while (trace.parseJson3(generic.result))
-                    cout << trace << "\n";
-            }
-
-        } else {
-            GETRUNTIME_CLASS(CTrace)->sortFieldList();
-            CTraceArray array;
-            CTrace trace;
-            while (trace.parseJson3(contents)) {
-                array.push_back(trace);
-                trace = CTrace();  // reset
-            }
-            cout << array << "\n";
-        }
+        if (options.which == 0)
+            options.doTestZero();
+        else if (options.which == 1)
+            options.doTestOne();
+        else
+            cerr << "Invalid test: " << options.which << endl;
     }
 
     return 0;
+}
+
+//-------------------------------------------------------------------------
+void COptions::doTestZero(void) {
+    string_q fn = "tests/" + fileName + ".json";
+    cout << fn << "\n";
+
+    string contents;
+    asciiFileToString(fn, contents);
+    if (fileName == "blocks") {
+        CBlock block;
+        while (block.parseJson3(contents))  // returns 'true' if anyting was parsed
+            cout << block << "\n";
+
+    } else if (fileName == "traces") {
+        CTrace trace;
+        while (trace.parseJson3(contents))
+            cout << trace << "\n";
+
+    } else if (fileName == "spaces") {
+        CTrace trace;
+        while (trace.parseJson3(contents))
+            cout << trace << "\n";
+
+    } else if (fileName == "escaped") {
+        CTrace trace;
+        while (trace.parseJson3(contents))
+            cout << trace << "\n";
+
+    } else if (fileName == "big") {
+        CRPCResult generic;
+        while (generic.parseJson3(contents)) {
+            CTrace trace;
+            while (trace.parseJson3(generic.result))
+                cout << trace << "\n";
+        }
+
+    } else {
+        GETRUNTIME_CLASS(CTrace)->sortFieldList();
+        CTraceArray array;
+        CTrace trace;
+        while (trace.parseJson3(contents)) {
+            array.push_back(trace);
+            trace = CTrace();  // reset
+        }
+        cout << array << "\n";
+    }
+}
+
+//-------------------------------------------------------------------------
+void COptions::doTestOne(void) {
 }

@@ -373,9 +373,7 @@ void CTrace::registerClass(void) {
     ADD_FIELD(CTrace, "date", T_DATE, ++fieldNum);
     HIDE_FIELD(CTrace, "date");
     HIDE_FIELD(CTrace, "articulatedTrace");
-    CFieldData* f = GETRUNTIME_CLASS(CTrace)->findField("traceAddress");
-    if (f)
-        f->setType(T_TEXT);
+    SET_TYPE(CTrace, "traceAddress", T_TEXT);
     // EXISTING_CODE
 }
 

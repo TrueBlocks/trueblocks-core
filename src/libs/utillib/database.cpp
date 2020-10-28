@@ -454,9 +454,9 @@ size_t quitCount(size_t s) {
 //-----------------------------------------------------------------------
 bool shouldQuit(void) {
     if (quitCount() == 0) {
-        //            qblocks::eLogger->setEndline('\r');
+        //            eLogger->setEndline('\r');
         //            LOG_INFO("\t\t\t\t", COptionsBase::g_progName, ": shouldQuit: ", sectionLocks, ": ", quitCount());
-        //            qblocks::eLogger->setEndline('\n');
+        //            eLogger->setEndline('\n');
         return false;
     }
     //        LOG_INFO(bGreen, COptionsBase::g_progName, ": shouldQuit - Quitting: ", quitCount(), cOff);

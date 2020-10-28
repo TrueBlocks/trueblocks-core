@@ -55,6 +55,7 @@ class CRuntimeClass {
     CBaseNode* createObject(void);
 
     void addField(const string_q& fieldName, size_t dataType, size_t fieldID);
+    void addObject(const string_q& fieldName, size_t dataType, size_t fieldID, const CRuntimeClass* pClass);
     void hideAllFields(void);
     void showAllFields(void);
     void sortFieldList(void);
@@ -112,6 +113,10 @@ extern string_q nextBasenodeChunk(const string_q& fieldIn, const CBaseNode* node
     GETRUNTIME_CLASS(CLASS_NAME)->addField(FIELD_NAME, FIELD_TYPE, FIELD_ID);
 
 //------------------------------------------------------------
+#define ADD_OBJECT(CLASS_NAME, FIELD_NAME, FIELD_TYPE, FIELD_ID, CLASS_PTR)                                            \
+    GETRUNTIME_CLASS(CLASS_NAME)->addObject(FIELD_NAME, FIELD_TYPE, FIELD_ID, CLASS_PTR);
+
+//------------------------------------------------------------
 #define SUBFIELD_FMT(a, sf, b)                                                                                         \
     string_q("[\"") + string_q(sf) + string_q("\": \"{") + toUpper(string_q(a)) + "::" + toUpper(string_q(sf)) +       \
         "}\"" + (b ? ", ]" : "]")
@@ -125,6 +130,14 @@ extern string_q nextBasenodeChunk(const string_q& fieldIn, const CBaseNode* node
         CFieldData* f = GETRUNTIME_CLASS(CLASS_NAME)->findField(FIELD_NAME);                                           \
         if (f)                                                                                                         \
             f->setHidden(true);                                                                                        \
+    }
+
+//------------------------------------------------------------
+#define SET_TYPE(CLASS_NAME, FIELD_NAME, NEW_TYPE)                                                                     \
+    {                                                                                                                  \
+        CFieldData* f = GETRUNTIME_CLASS(CLASS_NAME)->findField(FIELD_NAME);                                           \
+        if (f)                                                                                                         \
+            f->setType(NEW_TYPE);                                                                                      \
     }
 
 //------------------------------------------------------------

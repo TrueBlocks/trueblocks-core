@@ -190,7 +190,7 @@ void CConfiguration::registerClass(void) {
     ADD_FIELD(CConfiguration, "deleted", T_BOOL, ++fieldNum);
     ADD_FIELD(CConfiguration, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CConfiguration, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CConfiguration, "files", T_OBJECT | TS_ARRAY, ++fieldNum);
+    ADD_FIELD(CConfiguration, "files", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CConfiguration, "schema");

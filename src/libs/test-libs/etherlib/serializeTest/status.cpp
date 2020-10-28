@@ -271,7 +271,7 @@ void CStatus::registerClass(void) {
     ADD_FIELD(CStatus, "balance_provider", T_TEXT, ++fieldNum);
     ADD_FIELD(CStatus, "host", T_TEXT, ++fieldNum);
     ADD_FIELD(CStatus, "is_scraping", T_BOOL, ++fieldNum);
-    ADD_FIELD(CStatus, "caches", T_OBJECT | TS_ARRAY, ++fieldNum);
+    ADD_FIELD(CStatus, "caches", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CStatus, "caches");
 
     // Hide our internal fields, user can turn them on if they like
