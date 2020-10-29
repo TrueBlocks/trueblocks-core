@@ -294,14 +294,14 @@ void CIndexCacheItem::registerClass(void) {
     ADD_FIELD(CIndexCacheItem, "deleted", T_BOOL, ++fieldNum);
     ADD_FIELD(CIndexCacheItem, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CIndexCacheItem, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CIndexCacheItem, "type", T_TEXT, ++fieldNum);
+    ADD_FIELD(CIndexCacheItem, "type", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CIndexCacheItem, "nAddresses", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CIndexCacheItem, "nAppearances", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CIndexCacheItem, "firstAppearance", T_BLOCKNUM, ++fieldNum);
     ADD_FIELD(CIndexCacheItem, "latestAppearance", T_BLOCKNUM, ++fieldNum);
     ADD_FIELD(CIndexCacheItem, "firstTs", T_TIMESTAMP, ++fieldNum);
     ADD_FIELD(CIndexCacheItem, "latestTs", T_TIMESTAMP, ++fieldNum);
-    ADD_FIELD(CIndexCacheItem, "filename", T_TEXT, ++fieldNum);
+    ADD_FIELD(CIndexCacheItem, "filename", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CIndexCacheItem, "indexSizeBytes", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CIndexCacheItem, "index_hash", T_IPFSHASH, ++fieldNum);
     ADD_FIELD(CIndexCacheItem, "bloomSizeBytes", T_UNUMBER, ++fieldNum);

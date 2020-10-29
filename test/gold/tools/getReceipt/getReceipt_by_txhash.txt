@@ -13,12 +13,7 @@ getReceipt 0x6afbe0f0ea3613edd6b84b71260836c03bddce81604f05c81a070cd671d3d765 --
         ],
         "data": "0x00000000000000000000000032be343b94f860124dc4fee278fdcbd38c102d88",
         "articulatedLog": {
-          "name": "",
-          "type": "",
-          "constant": false,
-          "stateMutability": "",
-          "signature": "",
-          "encoding": ""
+          "constant": false
         }
       },
       {
@@ -29,12 +24,7 @@ getReceipt 0x6afbe0f0ea3613edd6b84b71260836c03bddce81604f05c81a070cd671d3d765 --
         ],
         "data": "0x000000000000000000000000209c4784ab1e8183cf58ca33cb740efbf3fc18ef",
         "articulatedLog": {
-          "name": "",
-          "type": "",
-          "constant": false,
-          "stateMutability": "",
-          "signature": "",
-          "encoding": ""
+          "constant": false
         }
       }
     ],

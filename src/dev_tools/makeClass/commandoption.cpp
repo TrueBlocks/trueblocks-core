@@ -333,21 +333,21 @@ void CCommandOption::registerClass(void) {
     ADD_FIELD(CCommandOption, "deleted", T_BOOL, ++fieldNum);
     ADD_FIELD(CCommandOption, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CCommandOption, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CCommandOption, "num", T_TEXT, ++fieldNum);
-    ADD_FIELD(CCommandOption, "group", T_TEXT, ++fieldNum);
-    ADD_FIELD(CCommandOption, "api_route", T_TEXT, ++fieldNum);
-    ADD_FIELD(CCommandOption, "tool", T_TEXT, ++fieldNum);
-    ADD_FIELD(CCommandOption, "command", T_TEXT, ++fieldNum);
-    ADD_FIELD(CCommandOption, "hotkey", T_TEXT, ++fieldNum);
-    ADD_FIELD(CCommandOption, "def_val", T_TEXT, ++fieldNum);
-    ADD_FIELD(CCommandOption, "is_required", T_TEXT, ++fieldNum);
-    ADD_FIELD(CCommandOption, "is_customizable", T_TEXT, ++fieldNum);
-    ADD_FIELD(CCommandOption, "core_visible", T_TEXT, ++fieldNum);
-    ADD_FIELD(CCommandOption, "docs_visible", T_TEXT, ++fieldNum);
-    ADD_FIELD(CCommandOption, "generate", T_TEXT, ++fieldNum);
-    ADD_FIELD(CCommandOption, "option_kind", T_TEXT, ++fieldNum);
-    ADD_FIELD(CCommandOption, "data_type", T_TEXT, ++fieldNum);
-    ADD_FIELD(CCommandOption, "description", T_TEXT, ++fieldNum);
+    ADD_FIELD(CCommandOption, "num", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CCommandOption, "group", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CCommandOption, "api_route", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CCommandOption, "tool", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CCommandOption, "command", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CCommandOption, "hotkey", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CCommandOption, "def_val", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CCommandOption, "is_required", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CCommandOption, "is_customizable", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CCommandOption, "core_visible", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CCommandOption, "docs_visible", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CCommandOption, "generate", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CCommandOption, "option_kind", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CCommandOption, "data_type", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CCommandOption, "description", T_TEXT | TS_OMITEMPTY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CCommandOption, "schema");

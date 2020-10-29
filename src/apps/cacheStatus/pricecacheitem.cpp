@@ -195,8 +195,8 @@ void CPriceCacheItem::registerClass(void) {
     ADD_FIELD(CPriceCacheItem, "deleted", T_BOOL, ++fieldNum);
     ADD_FIELD(CPriceCacheItem, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CPriceCacheItem, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CPriceCacheItem, "type", T_TEXT, ++fieldNum);
-    ADD_FIELD(CPriceCacheItem, "pair", T_TEXT, ++fieldNum);
+    ADD_FIELD(CPriceCacheItem, "type", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CPriceCacheItem, "pair", T_TEXT | TS_OMITEMPTY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CPriceCacheItem, "schema");

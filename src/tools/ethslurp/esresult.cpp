@@ -201,9 +201,9 @@ void CESResult::registerClass(void) {
     ADD_FIELD(CESResult, "deleted", T_BOOL, ++fieldNum);
     ADD_FIELD(CESResult, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CESResult, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CESResult, "status", T_TEXT, ++fieldNum);
-    ADD_FIELD(CESResult, "message", T_TEXT, ++fieldNum);
-    ADD_FIELD(CESResult, "result", T_TEXT, ++fieldNum);
+    ADD_FIELD(CESResult, "status", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CESResult, "message", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CESResult, "result", T_TEXT | TS_OMITEMPTY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CESResult, "schema");

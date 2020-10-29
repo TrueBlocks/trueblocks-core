@@ -285,15 +285,15 @@ void CCollection::registerClass(void) {
     ADD_FIELD(CCollection, "deleted", T_BOOL, ++fieldNum);
     ADD_FIELD(CCollection, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CCollection, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CCollection, "cid", T_TEXT, ++fieldNum);
-    ADD_FIELD(CCollection, "tags", T_TEXT, ++fieldNum);
-    ADD_FIELD(CCollection, "name", T_TEXT, ++fieldNum);
-    ADD_FIELD(CCollection, "client", T_TEXT, ++fieldNum);
-    ADD_FIELD(CCollection, "monitored", T_BOOL, ++fieldNum);
-    ADD_FIELD(CCollection, "deleted", T_BOOL, ++fieldNum);
+    ADD_FIELD(CCollection, "cid", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CCollection, "tags", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CCollection, "name", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CCollection, "client", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CCollection, "monitored", T_BOOL | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CCollection, "deleted", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CCollection, "sizeInBytes", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CCollection, "addresses", T_ADDRESS | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CCollection, "addressList", T_TEXT, ++fieldNum);
+    ADD_FIELD(CCollection, "addressList", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CCollection, "addressList");
 
     // Hide our internal fields, user can turn them on if they like

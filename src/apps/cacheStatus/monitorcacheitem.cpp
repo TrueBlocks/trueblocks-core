@@ -206,8 +206,8 @@ void CMonitorCacheItem::registerClass(void) {
     ADD_FIELD(CMonitorCacheItem, "deleted", T_BOOL, ++fieldNum);
     ADD_FIELD(CMonitorCacheItem, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CMonitorCacheItem, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CMonitorCacheItem, "type", T_TEXT, ++fieldNum);
-    ADD_FIELD(CMonitorCacheItem, "deleted", T_BOOL, ++fieldNum);
+    ADD_FIELD(CMonitorCacheItem, "type", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CMonitorCacheItem, "deleted", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CMonitorCacheItem, "sizeInBytes2", T_UNUMBER, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like

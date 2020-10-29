@@ -265,12 +265,12 @@ void CStatus::registerClass(void) {
     ADD_FIELD(CStatus, "deleted", T_BOOL, ++fieldNum);
     ADD_FIELD(CStatus, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CStatus, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CStatus, "client_version", T_TEXT, ++fieldNum);
-    ADD_FIELD(CStatus, "trueblocks_version", T_TEXT, ++fieldNum);
-    ADD_FIELD(CStatus, "rpc_provider", T_TEXT, ++fieldNum);
-    ADD_FIELD(CStatus, "balance_provider", T_TEXT, ++fieldNum);
-    ADD_FIELD(CStatus, "host", T_TEXT, ++fieldNum);
-    ADD_FIELD(CStatus, "is_scraping", T_BOOL, ++fieldNum);
+    ADD_FIELD(CStatus, "client_version", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CStatus, "trueblocks_version", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CStatus, "rpc_provider", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CStatus, "balance_provider", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CStatus, "host", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CStatus, "is_scraping", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CStatus, "caches", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CStatus, "caches");
 

@@ -273,17 +273,17 @@ void CSkin::registerClass(void) {
     ADD_FIELD(CSkin, "deleted", T_BOOL, ++fieldNum);
     ADD_FIELD(CSkin, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CSkin, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CSkin, "name", T_TEXT, ++fieldNum);
-    ADD_FIELD(CSkin, "bgPrimary", T_TEXT, ++fieldNum);
-    ADD_FIELD(CSkin, "bgSecondary", T_TEXT, ++fieldNum);
-    ADD_FIELD(CSkin, "textPrimary", T_TEXT, ++fieldNum);
-    ADD_FIELD(CSkin, "borderPrimary", T_TEXT, ++fieldNum);
-    ADD_FIELD(CSkin, "bgHover", T_TEXT, ++fieldNum);
-    ADD_FIELD(CSkin, "textHover", T_TEXT, ++fieldNum);
-    ADD_FIELD(CSkin, "tableBgPrimary", T_TEXT, ++fieldNum);
-    ADD_FIELD(CSkin, "tableBgSecondary", T_TEXT, ++fieldNum);
-    ADD_FIELD(CSkin, "tableTextPrimary", T_TEXT, ++fieldNum);
-    ADD_FIELD(CSkin, "tableBorderPrimary", T_TEXT, ++fieldNum);
+    ADD_FIELD(CSkin, "name", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CSkin, "bgPrimary", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CSkin, "bgSecondary", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CSkin, "textPrimary", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CSkin, "borderPrimary", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CSkin, "bgHover", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CSkin, "textHover", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CSkin, "tableBgPrimary", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CSkin, "tableBgSecondary", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CSkin, "tableTextPrimary", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CSkin, "tableBorderPrimary", T_TEXT | TS_OMITEMPTY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CSkin, "schema");

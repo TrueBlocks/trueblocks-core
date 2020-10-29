@@ -77,7 +77,7 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
         } else if (fld.type == "gas")            { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_GAS";
         } else if (fld.type == "timestamp")      { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_TIMESTAMP";
         } else if (fld.type == "blknum")         { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_BLOCKNUM";
-        } else if (fld.type == "string")         { setFmt = "`[{NAME}] = [{DEFS}];\n";   regType = "T_TEXT";
+        } else if (fld.type == "string")         { setFmt = "`[{NAME}] = [{DEFS}];\n";   regType = "T_TEXT | TS_OMITEMPTY";
         } else if (fld.type == "addr")           { setFmt = "`[{NAME}] = [{DEFS}];\n";   regType = "T_ADDRESS";
         } else if (fld.type == "address")        { setFmt = "`[{NAME}] = [{DEFS}];\n";   regType = "T_ADDRESS";
         } else if (fld.type == "hash")           { setFmt = "`[{NAME}] = [{DEFS}];\n";   regType = "T_HASH";
@@ -92,14 +92,14 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
         } else if (fld.type == "uint32")         { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_UNUMBER";
         } else if (fld.type == "uint64")         { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_UNUMBER";
         } else if (fld.type == "uint256")        { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_UINT256";
-        } else if (fld.type == "bool")           { setFmt = "`[{NAME}] = [{DEFB}];\n";   regType = "T_BOOL";
-        } else if (fld.type == "sbool")          { setFmt = "`[{NAME}] = [{DEFB}];\n";   regType = "T_BOOL";
+        } else if (fld.type == "bool")           { setFmt = "`[{NAME}] = [{DEFB}];\n";   regType = "T_BOOL | TS_OMITEMPTY";
+        } else if (fld.type == "sbool")          { setFmt = "`[{NAME}] = [{DEFB}];\n";   regType = "T_BOOL | TS_OMITEMPTY";
         } else if (fld.type == "double")         { setFmt = "`[{NAME}] = [{DEFF}];\n";   regType = "T_DOUBLE";
-        } else if (startsWith(fld.type, "bytes")) { setFmt = "`[{NAME}] = [{DEFS}];\n";  regType = "T_TEXT";
+        } else if (startsWith(fld.type, "bytes")) { setFmt = "`[{NAME}] = [{DEFS}];\n";  regType = "T_TEXT | TS_OMITEMPTY";
         } else if (endsWith(fld.type, "_e"))     { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_NUMBER";
         } else if ((fld.is_flags & IS_POINTER))  { setFmt = "`[{NAME}] = [{DEFP}];\n";   regType = "T_POINTER";
         } else if ((fld.is_flags & IS_OBJECT))   { setFmt = "`[{NAME}] = [{TYPE}]();\n"; regType = "T_OBJECT | TS_OMITEMPTY";
-        } else                                   { setFmt = STR_UNKOWNTYPE;              regType = "T_TEXT"; }
+        } else                                   { setFmt = STR_UNKOWNTYPE;              regType = "T_TEXT | TS_OMITEMPTY"; }
         // clang-format on
 
         if ((fld.is_flags & IS_ARRAY)) {
@@ -112,6 +112,8 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
                 regType = "T_OBJECT | TS_ARRAY | TS_OMITEMPTY";
             }
         }
+        if (fld.show_empty)
+            replace(regType, " | TS_OMITEMPTY", "");
 
         if (fld.is_flags & IS_BUILTIN) {
             fieldGetStr += STR_GETSTR_CODE_FIELD;

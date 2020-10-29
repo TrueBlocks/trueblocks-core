@@ -3,7 +3,7 @@ cacheStatus --details monitors
 {
   "client_version": "Client version",
   "client_ids": "chainId: 1 networkId: 1",
-  "trueblocks_version": "GHC-TrueBlocks//0.8.1-alpha--git-hash---git-ts-",
+  "trueblocks_version": "GHC-TrueBlocks//0.8.3-alpha--git-hash---git-ts-",
   "rpc_provider": "--providers--",
   "balance_provider": "--providers--",
   "cache_path": "--paths--",
@@ -19,16 +19,12 @@ cacheStatus --details monitors
       "items": [
         {
           "type": "CMonitorCacheItem",
-          "deleted": false,
           "sizeInBytes2": 0,
           "tags": "80-Prefund",
           "address": "---address---",
           "name": "Prefund_0002",
-          "symbol": "",
           "source": "Genesis",
           "decimals": 0,
-          "description": "",
-          "is_custom": false,
           "is_prefund": true,
           "nAppearances": 18446744073709551615,
           "firstAppearance": 18446744073709551615,

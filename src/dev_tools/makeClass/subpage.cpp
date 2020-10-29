@@ -259,13 +259,13 @@ void CSubpage::registerClass(void) {
     ADD_FIELD(CSubpage, "deleted", T_BOOL, ++fieldNum);
     ADD_FIELD(CSubpage, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CSubpage, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CSubpage, "page", T_TEXT, ++fieldNum);
-    ADD_FIELD(CSubpage, "subpage", T_TEXT, ++fieldNum);
-    ADD_FIELD(CSubpage, "route", T_TEXT, ++fieldNum);
-    ADD_FIELD(CSubpage, "options", T_TEXT, ++fieldNum);
-    ADD_FIELD(CSubpage, "component", T_TEXT, ++fieldNum);
-    ADD_FIELD(CSubpage, "extract", T_TEXT, ++fieldNum);
-    ADD_FIELD(CSubpage, "icon", T_TEXT, ++fieldNum);
+    ADD_FIELD(CSubpage, "page", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CSubpage, "subpage", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CSubpage, "route", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CSubpage, "options", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CSubpage, "component", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CSubpage, "extract", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CSubpage, "icon", T_TEXT | TS_OMITEMPTY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CSubpage, "schema");

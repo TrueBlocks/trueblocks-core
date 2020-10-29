@@ -325,9 +325,9 @@ void CLogEntry::registerClass(void) {
     HIDE_FIELD(CLogEntry, "blockNumber");
     ADD_FIELD(CLogEntry, "logIndex", T_BLOCKNUM, ++fieldNum);
     ADD_FIELD(CLogEntry, "topics", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CLogEntry, "data", T_TEXT, ++fieldNum);
+    ADD_FIELD(CLogEntry, "data", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CLogEntry, "articulatedLog", T_OBJECT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CLogEntry, "compressedLog", T_TEXT, ++fieldNum);
+    ADD_FIELD(CLogEntry, "compressedLog", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CLogEntry, "compressedLog");
     ADD_FIELD(CLogEntry, "transactionHash", T_HASH, ++fieldNum);
     HIDE_FIELD(CLogEntry, "transactionHash");
@@ -335,9 +335,9 @@ void CLogEntry::registerClass(void) {
     HIDE_FIELD(CLogEntry, "transactionIndex");
     ADD_FIELD(CLogEntry, "transactionLogIndex", T_BLOCKNUM, ++fieldNum);
     HIDE_FIELD(CLogEntry, "transactionLogIndex");
-    ADD_FIELD(CLogEntry, "type", T_TEXT, ++fieldNum);
+    ADD_FIELD(CLogEntry, "type", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CLogEntry, "type");
-    ADD_FIELD(CLogEntry, "removed", T_BOOL, ++fieldNum);
+    ADD_FIELD(CLogEntry, "removed", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CLogEntry, "removed");
 
     // Hide our internal fields, user can turn them on if they like

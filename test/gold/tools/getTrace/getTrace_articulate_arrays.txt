@@ -186,7 +186,6 @@ getTrace 0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f --ar
     -- 11: 0000000000000000000000000000000000000000000000001bc16d674ec80000 <---
   {
     "type": "call",
-    "error": "",
     "action": {
       "selfDestructed": "0x0",
       "balance": 0,
@@ -227,7 +226,6 @@ getTrace 0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f --ar
     "compressedTrace": "acceptTheseAskRequestsAndBUY ( _keys: [6, 5], _tokenAmounts: [25000000000000000000, 25000000000000000000], _dollarPrices: [2000000000000000000, 2000000000000000000] )"
   },  {
     "type": "call",
-    "error": "",
     "action": {
       "selfDestructed": "0x0",
       "balance": 0,
@@ -265,7 +263,6 @@ getTrace 0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f --ar
     "compressedTrace": "USD ( _id: 0 )"
   },  {
     "type": "call",
-    "error": "",
     "action": {
       "selfDestructed": "0x0",
       "balance": 0,

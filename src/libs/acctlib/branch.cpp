@@ -206,7 +206,7 @@ void CBranch::registerClass(void) {
     ADD_FIELD(CBranch, "deleted", T_BOOL, ++fieldNum);
     ADD_FIELD(CBranch, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CBranch, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CBranch, "branchValue", T_TEXT, ++fieldNum);
+    ADD_FIELD(CBranch, "branchValue", T_TEXT | TS_OMITEMPTY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CBranch, "schema");

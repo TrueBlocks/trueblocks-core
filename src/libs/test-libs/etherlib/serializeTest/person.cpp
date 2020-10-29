@@ -219,7 +219,7 @@ void CPerson::registerClass(void) {
     ADD_FIELD(CPerson, "deleted", T_BOOL, ++fieldNum);
     ADD_FIELD(CPerson, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CPerson, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CPerson, "name", T_TEXT, ++fieldNum);
+    ADD_FIELD(CPerson, "name", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CPerson, "age", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CPerson, "next", T_POINTER, ++fieldNum);
 

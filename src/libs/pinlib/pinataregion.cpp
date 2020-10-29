@@ -201,9 +201,9 @@ void CPinataRegion::registerClass(void) {
     ADD_FIELD(CPinataRegion, "deleted", T_BOOL, ++fieldNum);
     ADD_FIELD(CPinataRegion, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CPinataRegion, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CPinataRegion, "regionId", T_TEXT, ++fieldNum);
-    ADD_FIELD(CPinataRegion, "currentReplicationCount", T_TEXT, ++fieldNum);
-    ADD_FIELD(CPinataRegion, "desiredReplicationCount", T_TEXT, ++fieldNum);
+    ADD_FIELD(CPinataRegion, "regionId", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CPinataRegion, "currentReplicationCount", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CPinataRegion, "desiredReplicationCount", T_TEXT | TS_OMITEMPTY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CPinataRegion, "schema");

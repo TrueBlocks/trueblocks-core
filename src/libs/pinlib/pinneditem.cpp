@@ -214,10 +214,10 @@ void CPinnedItem::registerClass(void) {
     ADD_FIELD(CPinnedItem, "deleted", T_BOOL, ++fieldNum);
     ADD_FIELD(CPinnedItem, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CPinnedItem, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CPinnedItem, "fileName", T_TEXT, ++fieldNum);
-    ADD_FIELD(CPinnedItem, "bloomHash", T_TEXT, ++fieldNum);
-    ADD_FIELD(CPinnedItem, "indexHash", T_TEXT, ++fieldNum);
-    ADD_FIELD(CPinnedItem, "onDisc", T_BOOL, ++fieldNum);
+    ADD_FIELD(CPinnedItem, "fileName", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CPinnedItem, "bloomHash", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CPinnedItem, "indexHash", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CPinnedItem, "onDisc", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CPinnedItem, "onDisc");
 
     // Hide our internal fields, user can turn them on if they like

@@ -180,7 +180,7 @@ void CCollectionCacheItem::registerClass(void) {
     ADD_FIELD(CCollectionCacheItem, "deleted", T_BOOL, ++fieldNum);
     ADD_FIELD(CCollectionCacheItem, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CCollectionCacheItem, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CCollectionCacheItem, "type", T_TEXT, ++fieldNum);
+    ADD_FIELD(CCollectionCacheItem, "type", T_TEXT | TS_OMITEMPTY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CCollectionCacheItem, "schema");

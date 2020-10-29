@@ -201,9 +201,9 @@ void CApiSpec::registerClass(void) {
     ADD_FIELD(CApiSpec, "deleted", T_BOOL, ++fieldNum);
     ADD_FIELD(CApiSpec, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CApiSpec, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CApiSpec, "method", T_TEXT, ++fieldNum);
-    ADD_FIELD(CApiSpec, "uri", T_TEXT, ++fieldNum);
-    ADD_FIELD(CApiSpec, "headers", T_TEXT, ++fieldNum);
+    ADD_FIELD(CApiSpec, "method", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CApiSpec, "uri", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CApiSpec, "headers", T_TEXT | TS_OMITEMPTY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CApiSpec, "schema");

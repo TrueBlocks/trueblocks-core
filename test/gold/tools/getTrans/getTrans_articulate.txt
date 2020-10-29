@@ -42,8 +42,7 @@ getTrans 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f8
         },
         "result": {
           "newContract": "0x0",
-          "gasUsed": 0,
-          "output": ""
+          "gasUsed": 0
         },
         "articulatedTrace": {
           "name": "transferFrom",
@@ -68,7 +67,6 @@ getTrans 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f8
           "outputs": [
             {
               "name": "success",
-              "value": "false",
               "internalType": "bool"
             }
           ]
@@ -99,7 +97,6 @@ getTrans 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f8
       "outputs": [
         {
           "name": "success",
-          "value": "false",
           "internalType": "bool"
         }
       ]
@@ -168,7 +165,6 @@ getTrans 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f8
     "traces": [
       {
         "type": "call",
-        "error": "",
         "action": {
           "selfDestructed": "0x0",
           "balance": 0,
@@ -236,7 +232,6 @@ getTrans 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f8
     "traces": [
       {
         "type": "call",
-        "error": "",
         "action": {
           "selfDestructed": "0x0",
           "balance": 0,

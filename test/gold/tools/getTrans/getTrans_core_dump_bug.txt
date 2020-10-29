@@ -122,7 +122,6 @@ getTrans 0xa5c9c1a65f998be86dc2131d57d0de0c418bb534d8d2b37b46c99888ccef8d10 -avt
     "traces": [
       {
         "type": "call",
-        "error": "",
         "action": {
           "selfDestructed": "0x0",
           "balance": 0,

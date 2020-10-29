@@ -264,12 +264,12 @@ void CConfigItem::registerClass(void) {
     ADD_FIELD(CConfigItem, "deleted", T_BOOL, ++fieldNum);
     ADD_FIELD(CConfigItem, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CConfigItem, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CConfigItem, "name", T_TEXT, ++fieldNum);
-    ADD_FIELD(CConfigItem, "value", T_TEXT, ++fieldNum);
-    ADD_FIELD(CConfigItem, "type", T_TEXT, ++fieldNum);
-    ADD_FIELD(CConfigItem, "tip", T_TEXT, ++fieldNum);
-    ADD_FIELD(CConfigItem, "required", T_BOOL, ++fieldNum);
-    ADD_FIELD(CConfigItem, "read_only", T_BOOL, ++fieldNum);
+    ADD_FIELD(CConfigItem, "name", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CConfigItem, "value", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CConfigItem, "type", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CConfigItem, "tip", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CConfigItem, "required", T_BOOL | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CConfigItem, "read_only", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CConfigItem, "named", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CConfigItem, "named");
 

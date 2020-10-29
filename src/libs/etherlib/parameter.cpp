@@ -108,6 +108,9 @@ string_q CParameter::getValueByName(const string_q& fieldName) const {
             if (fieldName % "str_default") {
                 return str_default;
             }
+            if (fieldName % "show_empty") {
+                return bool_2_Str_t(show_empty);
+            }
             break;
         case 't':
             if (fieldName % "type") {
@@ -188,6 +191,10 @@ bool CParameter::setValueByName(const string_q& fieldNameIn, const string_q& fie
                 str_default = fieldValue;
                 return true;
             }
+            if (fieldName % "show_empty") {
+                show_empty = str_2_Bool(fieldValue);
+                return true;
+            }
             break;
         case 't':
             if (fieldName % "type") {
@@ -236,6 +243,7 @@ bool CParameter::Serialize(CArchive& archive) {
     archive >> internalType;
     archive >> components;
     archive >> no_write;
+    archive >> show_empty;
     archive >> is_flags;
     finishParse();
     return true;
@@ -256,6 +264,7 @@ bool CParameter::SerializeC(CArchive& archive) const {
     archive << internalType;
     archive << components;
     archive << no_write;
+    archive << show_empty;
     archive << is_flags;
 
     return true;
@@ -293,14 +302,15 @@ void CParameter::registerClass(void) {
     ADD_FIELD(CParameter, "deleted", T_BOOL, ++fieldNum);
     ADD_FIELD(CParameter, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CParameter, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CParameter, "type", T_TEXT, ++fieldNum);
-    ADD_FIELD(CParameter, "name", T_TEXT, ++fieldNum);
-    ADD_FIELD(CParameter, "str_default", T_TEXT, ++fieldNum);
-    ADD_FIELD(CParameter, "value", T_TEXT, ++fieldNum);
-    ADD_FIELD(CParameter, "indexed", T_BOOL, ++fieldNum);
-    ADD_FIELD(CParameter, "internalType", T_TEXT, ++fieldNum);
+    ADD_FIELD(CParameter, "type", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CParameter, "name", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CParameter, "str_default", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CParameter, "value", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CParameter, "indexed", T_BOOL | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CParameter, "internalType", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CParameter, "components", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CParameter, "no_write", T_BOOL, ++fieldNum);
+    ADD_FIELD(CParameter, "no_write", T_BOOL | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CParameter, "show_empty", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CParameter, "is_flags", T_UNUMBER, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
@@ -367,6 +377,20 @@ string_q nextParameterChunk_custom(const string_q& fieldIn, const void* dataPtr)
 bool CParameter::readBackLevel(CArchive& archive) {
     bool done = false;
     // EXISTING_CODE
+    if (m_schema <= getVersionNum(0, 8, 2)) {
+        archive >> type;
+        archive >> name;
+        archive >> str_default;
+        archive >> value;
+        archive >> indexed;
+        archive >> internalType;
+        archive >> components;
+        archive >> no_write;
+        // archive >> show_empty; new for version 0.8.3
+        archive >> is_flags;
+        finishParse();
+        done = true;
+    }
     // EXISTING_CODE
     return done;
 }
@@ -401,6 +425,7 @@ const char* STR_DISPLAY_PARAMETER =
     "[{IS_OBJECT}]\t"
     "[{IS_BUILTIN}]\t"
     "[{NO_WRITE}]\t"
+    "[{SHOW_EMPTY}]\t"
     "[{IS_MINIMAL}]";
 
 //---------------------------------------------------------------------------
@@ -418,6 +443,11 @@ CParameter::CParameter(string_q& textIn) {
             is_flags |= IS_MINIMAL;
         replace(textIn, " (nowrite)", "");
         replace(textIn, " (nowrite-min)", "");
+    }
+
+    if (contains(textIn, "showEmpty")) {
+        show_empty = true;
+        replace(textIn, " (showEmpty)", "");
     }
 
     if (contains(textIn, "=")) {

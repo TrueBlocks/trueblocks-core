@@ -8,6 +8,7 @@ fields = string type|\
         string internalType|\
         CParameterArray components|\
         sbool no_write|\
+        sbool show_empty|\
         uint64 is_flags=IS_ENABLED
 includes = utillib.h
-display_str = type, name, str_default, value, internalType, indexed, is_pointer, is_array, is_object, is_builtin, no_write, is_minimal
+display_str = type, name, str_default, value, internalType, indexed, is_pointer, is_array, is_object, is_builtin, no_write, show_empty, is_minimal

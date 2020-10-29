@@ -5,10 +5,8 @@ ethNames 0x1 --fmt api
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x10017ca37b1257ac0771e24652aa28c758e378eb",
     "name": "Name 0x10017ca3",
-    "symbol": "",
     "source": "Gitcoin Website",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -16,26 +14,21 @@ ethNames 0x1 --fmt api
     "name": "The Midas Touch Gold",
     "symbol": "TMTG",
     "source": "On Chain",
-    "decimals": 18,
-    "description": ""
+    "decimals": 18
   },
   {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x100d88d9ca05b8159b2ecc6aeaad93c3742fa193",
     "name": "Name 0x100d88d9",
-    "symbol": "",
     "source": "Gitcoin Website",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x1013b52a256dd531554fdd13178ea489ce0d691d",
     "name": "Name 0x1013b52a",
-    "symbol": "",
     "source": "Gitcoin Website",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -43,17 +36,14 @@ ethNames 0x1 --fmt api
     "name": "BitCapitalVendorToken",
     "symbol": "BCV",
     "source": "On Chain",
-    "decimals": 8,
-    "description": ""
+    "decimals": 8
   },
   {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x1015f376319b48c16078339534fb9d83f75bf15c",
     "name": "Name 0x1015f376",
-    "symbol": "",
     "source": "Gitcoin Website",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -79,17 +69,14 @@ ethNames 0x1 --fmt api
     "name": "Rock Token",
     "symbol": "RKT",
     "source": "On Chain",
-    "decimals": 18,
-    "description": ""
+    "decimals": 18
   },
   {
     "tags": "31-Gitcoin Grants:Grant",
     "address": "0x1074f62d7019c3184a2f7ea8c6a8acd6780beb48",
     "name": "Grant 083 Poa Network Community Management Grant For Adj",
-    "symbol": "",
     "source": "https://gitcoin.co/grants/83/poa-network-community-management-grant-for-adj-2",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -104,73 +91,57 @@ ethNames 0x1 --fmt api
     "tags": "75-Early Actors",
     "address": "0x108b54b7e3c09f8127cb8b28ffa3ad4001b32998",
     "name": "Miner_0086_64",
-    "symbol": "",
     "source": "OnChain",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x10d1e0c359411f1f7af55a17add2891eacfbcd16",
     "name": "Name 0x10d1e0c3",
-    "symbol": "",
     "source": "Gitcoin Website",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x10f5d45854e038071485ac9e402308cf80d2d2fe",
     "name": "Name 0x10f5d458",
-    "symbol": "",
     "source": "Gitcoin Website",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "80-Malicious",
     "address": "0x10fa9f37f646bb353945fe90d41a44e1c60745fb",
     "name": "Possibly Malicious 0x10f",
-    "symbol": "",
     "source": "TrueBlocks.io",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x110211c254e5c8098ffad524312b1dd4bc6aa616",
     "name": "Name 0x110211c2",
-    "symbol": "",
     "source": "Gitcoin Website",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "30-Contracts",
     "address": "0x111111254b08ceeee8ad6ca827de9952d2a46781",
     "name": "1inch Exchange",
-    "symbol": "",
     "source": "0xTracker",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "30-Contracts",
     "address": "0x11111254369792b2ca5d084ab5eea397ca8fa48b",
     "name": "1inch Exchange",
-    "symbol": "",
     "source": "0xTracker",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "30-Contracts",
     "address": "0x111112549cfedf7822eb11fbd8fd485d8a10f93f",
     "name": "1inch Exchange",
-    "symbol": "",
     "source": "0xTracker",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -185,10 +156,8 @@ ethNames 0x1 --fmt api
     "tags": "90-DevCon2:Individual",
     "address": "0x11378851299a15a849ad0057a834c23ef1b3d381",
     "name": "tandava",
-    "symbol": "",
     "source": "DevCon2 Token Contract",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -203,7 +172,6 @@ ethNames 0x1 --fmt api
     "tags": "34-Twitter: Friends",
     "address": "0x1187d6bff168fe8f17252396701147343adb8ddc",
     "name": "Name 0x1187d6bf",
-    "symbol": "",
     "source": "Twitter",
     "decimals": 0,
     "description": "Rao"
@@ -212,52 +180,41 @@ ethNames 0x1 --fmt api
     "tags": "90-DevCon2:Individual",
     "address": "0x1191be4dbfac983c9ce87e3411542d69d382f7d6",
     "name": "durandal",
-    "symbol": "",
     "source": "DevCon2 Token Contract",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x11a11bcf63c332ab909608c7db245b553a194e9c",
     "name": "Name 0x11a11bcf",
-    "symbol": "",
     "source": "Gitcoin Website",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x11b6a5fe2906f3354145613db0d99ceb51f604c9",
     "name": "Name 0x11b6a5fe",
-    "symbol": "",
     "source": "Gitcoin Website",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x11d0395f8e04a02b113d5598e27c14731dbab48e",
     "name": "Name 0x11d0395f",
-    "symbol": "",
     "source": "Gitcoin Website",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "31-Gitcoin Grants:Grant",
     "address": "0x11e4857bb9993a50c685a79afad4e6f65d518dda",
     "name": "Grant 048 Uniswap",
-    "symbol": "",
     "source": "https://gitcoin.co/grants/48/uniswap",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "31-Gitcoin Grants:Grant",
     "address": "0x11e52c75998fe2e7928b191bfc5b25937ca16741",
     "name": "Grant 678 EthAddress Stats Utility Dashboard",
-    "symbol": "",
     "source": "https://gitcoin.co/grants/678/ethaddress-stats-utility-dashboard",
     "decimals": 0,
     "description": "https://ethstats.info"
@@ -266,55 +223,43 @@ ethNames 0x1 --fmt api
     "tags": "30-Contracts",
     "address": "0x1200563cfaeb481e1f0542a246f0cefcde4c4753",
     "name": "Arbitrage Bot",
-    "symbol": "",
     "source": "0xTracker",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x1206ec7abf2c3d22051f6ebb249f065fc6436149",
     "name": "Name 0x1206ec7a",
-    "symbol": "",
     "source": "Gitcoin Website",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x1216bc366cfd938d24f89e2a079539f4d66062fb",
     "name": "Name 0x1216bc36",
-    "symbol": "",
     "source": "Gitcoin Website",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "75-Early Actors",
     "address": "0x1217627fe41a00f0b828317f43e6d58f47dbfc43",
     "name": "Miner_0028_253",
-    "symbol": "",
     "source": "OnChain",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x121851911b1d17b133c77801ab26fccd7e7c5053",
     "name": "Name 0x12185191",
-    "symbol": "",
     "source": "Gitcoin Website",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "31-Gitcoin Grants:Grant",
     "address": "0x1222d0ded67a533b3163397fd917bc8ac6f96b7a",
     "name": "Grant 655 Alternative income for poor families in Brazil",
-    "symbol": "",
     "source": "https://gitcoin.co/grants/655/alternative-income-for-poor-families-in-brazil",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -322,35 +267,28 @@ ethNames 0x1 --fmt api
     "name": "ITL Italian Lira",
     "symbol": "ITL",
     "source": "On Chain",
-    "decimals": 8,
-    "description": ""
+    "decimals": 8
   },
   {
     "tags": "60-Airdrops",
     "address": "0x1234567461d3f8db7496581774bd869c83d51c93",
     "name": "BitClave Airdrop",
-    "symbol": "",
     "source": "Etherscan",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x1236203510b93409ae6a0f26d0f97798c9398e1b",
     "name": "Name 0x12362035",
-    "symbol": "",
     "source": "Gitcoin Website",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "75-Early Actors",
     "address": "0x123843545fb525c8e134c9a5f15ada6865cc3848",
     "name": "Miner_0033_208",
-    "symbol": "",
     "source": "OnChain",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -376,41 +314,33 @@ ethNames 0x1 --fmt api
     "name": "Substratum",
     "symbol": "SUB",
     "source": "On Chain",
-    "decimals": 2,
-    "description": ""
+    "decimals": 2
   },
   {
     "tags": "80-Malicious",
     "address": "0x1248d79bdebd516156930a5c8ee232d4ed80ead4",
     "name": "Possibly Malicious 0x124",
-    "symbol": "",
     "source": "TrueBlocks.io",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "80-Malicious",
     "address": "0x124f58b41fd43a498fe7041bc2d9d5813c4f80d7",
     "name": "HammerBot14",
-    "symbol": "",
     "source": "https://blog.blocknative.com/blog/mempool-forensics",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x1256e7992564ab22e332532472c916bd8d1e1ca7",
     "name": "Name 0x1256e799",
-    "symbol": "",
     "source": "Gitcoin Website",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "31-Gitcoin Grants:Grant",
     "address": "0x1266f928b7964173434d3feb6da2554b141920b8",
     "name": "Grant 723 EtherDNA",
-    "symbol": "",
     "source": "https://gitcoin.co/grants/723/etherdna",
     "decimals": 0,
     "description": "https://etherdna.github.io/app/"
@@ -419,10 +349,8 @@ ethNames 0x1 --fmt api
     "tags": "90-DevCon2:Individual",
     "address": "0x1267895780369b48a02781eb08d353e426e5f256",
     "name": "nagydani",
-    "symbol": "",
     "source": "DevCon2 Token Contract",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -437,7 +365,6 @@ ethNames 0x1 --fmt api
     "tags": "31-Gitcoin Grants:Grant",
     "address": "0x127c6839dee7c737767c9f62d13996e27854505d",
     "name": "Grant 419 Project Maple Cryptographic Currency Redefined.",
-    "symbol": "",
     "source": "https://gitcoin.co/grants/419/project-maple-cryptographic-currency-redefined",
     "decimals": 0,
     "description": "https://github.com/alialiwa2005/Maple"
@@ -446,37 +373,29 @@ ethNames 0x1 --fmt api
     "tags": "33-Set Protocol:Wrapers",
     "address": "0x12951b9eaa200237f9080c95ad93cc74c9d9bd45",
     "name": "Zero Ex Exchange Wrapper",
-    "symbol": "",
     "source": "https://github.com/SetProtocol/set-protocol-contracts",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x12a0e25e62c1dbd32e505446062b26aecb65f028",
     "name": "Name 0x12a0e25e",
-    "symbol": "",
     "source": "Gitcoin Website",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "90-DevCon2:Individual",
     "address": "0x12add8f3b37fe5fbecdb1208233c0e56dfecf200",
     "name": "Stefan George",
-    "symbol": "",
     "source": "DevCon2 Token Contract",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "90-DevCon2:Individual",
     "address": "0x12aef9585197d02106045de55f01c9c30301d70a",
     "name": "Jirat",
-    "symbol": "",
     "source": "DevCon2 Token Contract",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "50-Tokens",
@@ -500,46 +419,36 @@ ethNames 0x1 --fmt api
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x12d062b19a2df1920eb9fc28bd6e9a7e936de4c2",
     "name": "Name 0x12d062b1",
-    "symbol": "",
     "source": "Gitcoin Website",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "30-Contracts",
     "address": "0x12d66f87a04a9e220743712ce6d9bb1b5616b8fc",
     "name": "Tornado.Cash: 0.1 ETH",
-    "symbol": "",
     "source": "Etherscan",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "30-Contracts",
     "address": "0x12dfc577544d002c57fbb02c389511a37bc4490c",
     "name": "Set Kyber Wrapper",
-    "symbol": "",
     "source": "0xTracker",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x12e41855befd2fafe1b3fb15381fdf2c89f726a2",
     "name": "Name 0x12e41855",
-    "symbol": "",
     "source": "Gitcoin Website",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "74-DaoDrain",
     "address": "0x12e626b0eebfe86a56d633b9864e389b45dcb260",
     "name": "Dao Drain 078",
-    "symbol": "",
     "source": "GethSource",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -554,10 +463,8 @@ ethNames 0x1 --fmt api
     "tags": "30-Contracts",
     "address": "0x13032deb2d37556cf49301f713e9d7e1d1a8b169",
     "name": "Kyber Uniswap Reserve",
-    "symbol": "",
     "source": "0xTracker",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -572,25 +479,19 @@ ethNames 0x1 --fmt api
     "tags": "31-Gitcoin Grants:Grant",
     "address": "0x133d705a9696882228f6bb7fe008745aef7cdc93",
     "name": "Grant 160 Antiprosynth Twitter Account Activity",
-    "symbol": "",
-    "source": "",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "31-Gitcoin Grants:Grant",
     "address": "0x1352400bf96d73d41e033f5a14416357a5e0b6bf",
     "name": "Grant 120 Nori",
-    "symbol": "",
     "source": "https://gitcoin.co/grants/120/nori",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "31-Gitcoin Grants:Grant",
     "address": "0x1388961fbc1df252749b91a2a73c4b0d7377841f",
     "name": "Grant 530 0xEarth",
-    "symbol": "",
     "source": "https://gitcoin.co/grants/530/0xearth",
     "decimals": 0,
     "description": "https://0xearth.github.io/"
@@ -599,10 +500,8 @@ ethNames 0x1 --fmt api
     "tags": "30-Contracts",
     "address": "0x138a35ee20e40f019e7e7c00386ab2ef42d66d1e",
     "name": "MCH: Hero Gateway 1",
-    "symbol": "",
     "source": "Etherscan",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -610,8 +509,7 @@ ethNames 0x1 --fmt api
     "name": "Musiconomi",
     "symbol": "MCI",
     "source": "On Chain",
-    "decimals": 18,
-    "description": ""
+    "decimals": 18
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -626,7 +524,6 @@ ethNames 0x1 --fmt api
     "tags": "31-Gitcoin Grants:Grant",
     "address": "0x139e7746745fbf42ca485845881697f9621b4b27",
     "name": "Grant 575 GetLogin.Eth",
-    "symbol": "",
     "source": "https://gitcoin.co/grants/575/getlogineth",
     "decimals": 0,
     "description": "https://github.com/GetLoginEth/"
@@ -635,19 +532,15 @@ ethNames 0x1 --fmt api
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x13a634d9a418d6db35f7ede7a59f909cd17f1c4d",
     "name": "Name 0x13a634d9",
-    "symbol": "",
     "source": "Gitcoin Website",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x13ae506eadf0a43488ad3463270b4cf804e97bfd",
     "name": "Name 0x13ae506e",
-    "symbol": "",
     "source": "Gitcoin Website",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -664,17 +557,14 @@ ethNames 0x1 --fmt api
     "name": "TKT",
     "symbol": "TKT",
     "source": "On Chain",
-    "decimals": 18,
-    "description": ""
+    "decimals": 18
   },
   {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x13ebd3443fa5575f0eb173e323d8419f7452cfb1",
     "name": "Name 0x13ebd344",
-    "symbol": "",
     "source": "Gitcoin Website",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -700,8 +590,7 @@ ethNames 0x1 --fmt api
     "name": "realchain token",
     "symbol": "RCT",
     "source": "On Chain",
-    "decimals": 18,
-    "description": ""
+    "decimals": 18
   },
   {
     "tags": "50-Tokens",
@@ -709,17 +598,14 @@ ethNames 0x1 --fmt api
     "name": "Fulcrum iSAI",
     "symbol": "ISAI",
     "source": "defipulse.com",
-    "decimals": 18,
-    "description": ""
+    "decimals": 18
   },
   {
     "tags": "31-Gitcoin Grants:Grant",
     "address": "0x140e7364ee4e29a677a9d6ccf26ac945e7e80b65",
     "name": "Grant 212 Thx Open Protocol For Online Rewards",
-    "symbol": "",
     "source": "https://gitcoin.co/grants/212/thx-open-protocol-for-online-rewards",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -734,19 +620,15 @@ ethNames 0x1 --fmt api
     "tags": "35-Pool Together",
     "address": "0x14300cd613d6a719ac19de68c2f1042b3217cbff",
     "name": "Pool Together Sender",
-    "symbol": "",
     "source": "Etherscan",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x144c4e5027b69f7798b2b162d924bcae5c149f15",
     "name": "Name 0x144c4e50",
-    "symbol": "",
     "source": "Gitcoin Website",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -761,10 +643,8 @@ ethNames 0x1 --fmt api
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x1464d4e3c815de3028572b850c6c34dfc57e9320",
     "name": "Name 0x1464d4e3",
-    "symbol": "",
     "source": "Gitcoin Website",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -779,16 +659,13 @@ ethNames 0x1 --fmt api
     "tags": "90-DevCon2:Individual",
     "address": "0x147454510acc3856bc5d1727715c2efff526de5d",
     "name": "scofield",
-    "symbol": "",
     "source": "DevCon2 Token Contract",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "31-Gitcoin Grants:Grant",
     "address": "0x147c06f559f742cc9ef2ea5e628f381bccdce2ba",
     "name": "Grant 364 React Native support for IPFS",
-    "symbol": "",
     "source": "https://gitcoin.co/grants/364/react-native-support-for-ipfs",
     "decimals": 0,
     "description": "https://github.com/openworklabs/react-native-ipfs-http-client/"
@@ -797,19 +674,15 @@ ethNames 0x1 --fmt api
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x14869c6bf40bbc73e45821f7c28fd792151b3f9a",
     "name": "Name 0x14869c6b",
-    "symbol": "",
     "source": "Gitcoin Website",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "91-Friends",
     "address": "0x1492004547ff0efd778cc2c14e794b26b4701105",
     "name": "Name 0x14920045",
-    "symbol": "",
     "source": "TrueBlocks.io",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -824,28 +697,22 @@ ethNames 0x1 --fmt api
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x14d5c73c8b0044e0fa29f5a755eb75aa2471d414",
     "name": "Name 0x14d5c73c",
-    "symbol": "",
     "source": "Gitcoin Website",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "60-Airdrops",
     "address": "0x14e25eea7034c4dfc909bacac866e930a0576c75",
     "name": "TRX Airdrop",
-    "symbol": "",
     "source": "TrueBlocks.io",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "33-Set Protocol:Factories",
     "address": "0x14f0321be5e581abf9d5bc76260bf015dc04c53d",
     "name": "Set Token Factory",
-    "symbol": "",
     "source": "https://github.com/SetProtocol/set-protocol-contracts",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -853,17 +720,14 @@ ethNames 0x1 --fmt api
     "name": "HackerGold",
     "symbol": "HKG",
     "source": "On Chain",
-    "decimals": 3,
-    "description": ""
+    "decimals": 3
   },
   {
     "tags": "90-DevCon2:Individual",
     "address": "0x150eeb84541af87fc80f15f740e4ee4e7a8da573",
     "name": "Stephen King",
-    "symbol": "",
     "source": "DevCon2 Token Contract",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -871,26 +735,21 @@ ethNames 0x1 --fmt api
     "name": "DEBITUM",
     "symbol": "DEB",
     "source": "On Chain",
-    "decimals": 18,
-    "description": ""
+    "decimals": 18
   },
   {
     "tags": "36-Chainlink",
     "address": "0x151445852b0cfdf6a4cc81440f2af99176e8ad08",
     "name": "Chainlink GBP-USD Aggregator",
-    "symbol": "",
     "source": "EtherScan",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "90-DevCon2:Individual",
     "address": "0x153195e211e1f751f8adef169d281b3ccf6b968a",
     "name": "d2friend",
-    "symbol": "",
     "source": "DevCon2 Token Contract",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -907,50 +766,40 @@ ethNames 0x1 --fmt api
     "name": "VisionX",
     "symbol": "VNX",
     "source": "On Chain",
-    "decimals": 18,
-    "description": ""
+    "decimals": 18
   },
   {
     "tags": "80-Malicious",
     "address": "0x157ddd802ab7831a2e1966baf2cc804bc7f95bd8",
     "name": "Possibly Malicious 0x157",
-    "symbol": "",
     "source": "TrueBlocks.io",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "36-Compound",
     "address": "0x158079ee67fce2f58472a96584a73c7ab9ac95c1",
     "name": "Compound: cREP",
-    "symbol": "",
     "source": "Etherscan",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x1584225583e707e2b1d61270a6aa249d57db9f9a",
     "name": "Name 0x15842255",
-    "symbol": "",
     "source": "Gitcoin Website",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "30-Contracts",
     "address": "0x15847a5a44aa0551f655d28d716d247df84d002b",
     "name": "Arbitrage Bot",
-    "symbol": "",
     "source": "0xTracker",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "31-Gitcoin Grants:Grant",
     "address": "0x158d6727b17aaba726d7318ac7dca5edf8faf6f8",
     "name": "Grant 475 CryptoGift",
-    "symbol": "",
     "source": "https://gitcoin.co/grants/475/cryptogift",
     "decimals": 0,
     "description": "https://vittominacori.github.io/cryptogift/"
@@ -959,28 +808,21 @@ ethNames 0x1 --fmt api
     "tags": "31-Gitcoin Grants:Grant",
     "address": "0x1591b9056822c273252fcea32963223650db18e1",
     "name": "Grant 220 Cryptorado",
-    "symbol": "",
-    "source": "",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "74-DaoDrain",
     "address": "0x1591fc0f688c81fbeb17f5426a162a7024d430c2",
     "name": "Dao Drain 050",
-    "symbol": "",
     "source": "GethSource",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x15ad5da7af3ed5f3c356d4681365deb9e34d81f0",
     "name": "Name 0x15ad5da7",
-    "symbol": "",
     "source": "Gitcoin Website",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -995,28 +837,21 @@ ethNames 0x1 --fmt api
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x15c9fcba332848781fe82ef1f8d3768672a32a72",
     "name": "Name 0x15c9fcba",
-    "symbol": "",
     "source": "Gitcoin Website",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "60-Airdrops",
     "address": "0x15e4cf1950ffa338ce5bc59456b3e579ed1bead3",
     "name": "anTok Airdrop",
-    "symbol": "",
     "source": "TrueBlocks.io",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "31-Gitcoin Grants:Grant",
     "address": "0x15ef9189a8282e4e1e985eb8ed767e7426b4bfd5",
     "name": "Grant 211 Trust Graphic Novel anneconnelly",
-    "symbol": "",
-    "source": "",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -1024,8 +859,7 @@ ethNames 0x1 --fmt api
     "name": "eREAL",
     "symbol": "eREAL",
     "source": "On Chain",
-    "decimals": 18,
-    "description": ""
+    "decimals": 18
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -1040,25 +874,20 @@ ethNames 0x1 --fmt api
     "tags": "80-Malicious",
     "address": "0x16035d97f70e8bd620f32ce831ea8bc7d0338ef3",
     "name": "Possibly Malicious 0x160",
-    "symbol": "",
     "source": "TrueBlocks.io",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "60-Airdrops",
     "address": "0x160e529055d084add9634fe1c2059109c8ce044e",
     "name": "Jury.Online Airdrop Sender",
-    "symbol": "",
     "source": "TrueBlocks.io",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "31-Gitcoin Grants:Grant",
     "address": "0x16385dfcc9139ffb357746780b64a605b4cb46f0",
     "name": "Grant 377 NEWFORKDELTA",
-    "symbol": "",
     "source": "https://gitcoin.co/grants/377/newforkdelta-2",
     "decimals": 0,
     "description": "https://newforkdelta.github.io/"
@@ -1067,7 +896,6 @@ ethNames 0x1 --fmt api
     "tags": "31-Gitcoin Grants:Grant",
     "address": "0x163cc449cdf9d1ba22e9b81f0f9c9f01c2ab76a1",
     "name": "Grant 895 Help with studies",
-    "symbol": "",
     "source": "https://gitcoin.co/grants/895/help-with-studies",
     "decimals": 0,
     "description": "https://www.udemy.com/"
@@ -1076,16 +904,13 @@ ethNames 0x1 --fmt api
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x164f867d49e5cffe24b7ba6e2acc4a81504bd4c9",
     "name": "Name 0x164f867d",
-    "symbol": "",
     "source": "Gitcoin Website",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "31-Gitcoin Grants:Grant",
     "address": "0x165107ce980edff38065261326354c3d6cd809e6",
     "name": "Grant 709 Adoption and dissemination of Ethereum Technology",
-    "symbol": "",
     "source": "https://gitcoin.co/grants/709/adoption-and-dissemination-of-ethereum-technology",
     "decimals": 0,
     "description": "https://blockchaincounselor.blogspot.com/"
@@ -1094,10 +919,8 @@ ethNames 0x1 --fmt api
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x165cc5f47cdb55bad3282b6543cbbf6542e06cdc",
     "name": "Name 0x165cc5f4",
-    "symbol": "",
     "source": "Gitcoin Website",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -1112,34 +935,27 @@ ethNames 0x1 --fmt api
     "tags": "90-DevCon2:Individual",
     "address": "0x16893e10b99a59afd2c60331e0b49241d4d4d7cc",
     "name": "Simon de la Rouviere",
-    "symbol": "",
     "source": "DevCon2 Token Contract",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "36-Chainlink",
     "address": "0x16924ae9c2ac6cdbc9d6bb16fafcd38bed560936",
     "name": "Chainlink FTSE-GBP Aggregator",
-    "symbol": "",
     "source": "EtherScan",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x16990619b3ee302d82a0f6f8b9c6bd204b058be5",
     "name": "Name 0x16990619",
-    "symbol": "",
     "source": "Gitcoin Website",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "31-Gitcoin Grants:Grant",
     "address": "0x16a59020e5054da726a4d6d0d465758eb0b49e7c",
     "name": "Grant 862 The Movement DAO",
-    "symbol": "",
     "source": "https://gitcoin.co/grants/862/the-movement-dao",
     "decimals": 0,
     "description": "https://movementdao.io/"
@@ -1148,10 +964,8 @@ ethNames 0x1 --fmt api
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x16b942c119d3e34ff8f801cf68ec6aa26f1dc494",
     "name": "Name 0x16b942c1",
-    "symbol": "",
     "source": "Gitcoin Website",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -1159,8 +973,7 @@ ethNames 0x1 --fmt api
     "name": "APOT",
     "symbol": "APOT",
     "source": "On Chain",
-    "decimals": 18,
-    "description": ""
+    "decimals": 18
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -1184,16 +997,13 @@ ethNames 0x1 --fmt api
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x1715fe4beb202cfb8a76a91c6c0677dc3fbefcb4",
     "name": "Name 0x1715fe4b",
-    "symbol": "",
     "source": "Gitcoin Website",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "31-Gitcoin Grants:Grant",
     "address": "0x1719c7dc8216ce67f96171e1a817195ae075d78d",
     "name": "Grant 428 Solexplorer Gitcoin Community Manager",
-    "symbol": "",
     "source": "https://gitcoin.co/grants/428/solexplorer-gitcoin-community-manager",
     "decimals": 0,
     "description": "https://gitcoin.co/solexplorer"
@@ -1213,8 +1023,7 @@ ethNames 0x1 --fmt api
     "name": "Dao Issued Cert Airdrop",
     "symbol": "DIC",
     "source": "Etherscan",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -1238,19 +1047,15 @@ ethNames 0x1 --fmt api
     "tags": "74-DaoDrain",
     "address": "0x17802f43a0137c506ba92291391a8a8f207f487d",
     "name": "Dao Drain 096",
-    "symbol": "",
     "source": "GethSource",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "60-Airdrops",
     "address": "0x17a7ad6a2850f58f7344ae27e53eb44f81f9655c",
     "name": "RZM Airdrop Sender",
-    "symbol": "",
     "source": "TrueBlocks.io",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -1276,8 +1081,7 @@ ethNames 0x1 --fmt api
     "name": "Nebula AI Token",
     "symbol": "NBAI",
     "source": "On Chain",
-    "decimals": 18,
-    "description": ""
+    "decimals": 18
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -1285,17 +1089,14 @@ ethNames 0x1 --fmt api
     "name": "FLiK",
     "symbol": "FLIK",
     "source": "On Chain",
-    "decimals": 14,
-    "description": ""
+    "decimals": 14
   },
   {
     "tags": "30-Contracts",
     "address": "0x1814222fa8c8c1c1bf380e3bbfbd9de8657da476",
     "name": "1inch Exchange",
-    "symbol": "",
     "source": "0xTracker",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "30-Contracts",
@@ -1321,17 +1122,14 @@ ethNames 0x1 --fmt api
     "name": "LPT Airdrop",
     "symbol": "LPT",
     "source": "TrueBlocks.io",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x18393570148df516f664ef624d6ed9e808f109fb",
     "name": "Name 0x18393570",
-    "symbol": "",
     "source": "Gitcoin Website",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -1346,28 +1144,21 @@ ethNames 0x1 --fmt api
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x185196c8c5dd5729f22315203e09e33c3f7d7680",
     "name": "Name 0x185196c8",
-    "symbol": "",
     "source": "Gitcoin Website",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "31-Gitcoin Grants:Grant",
     "address": "0x1852ce0c68657ed51b4bf6ef02cfc7a4f32298a9",
     "name": "Grant 133 Abridged",
-    "symbol": "",
-    "source": "",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "30-Contracts",
     "address": "0x1857ae37ba3005113f9809b0e19a2a6563ee0d3b",
     "name": "Arbitrage Bot",
-    "symbol": "",
     "source": "0xTracker",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -1375,23 +1166,19 @@ ethNames 0x1 --fmt api
     "name": "ICOCalendar.Today",
     "symbol": "ICT",
     "source": "On Chain",
-    "decimals": 18,
-    "description": ""
+    "decimals": 18
   },
   {
     "tags": "60-Airdrops",
     "address": "0x18a54a69986f8a6e408243d1ea0cf5c3c596c327",
     "name": "SNGX Airdrop Sender",
-    "symbol": "",
     "source": "TrueBlocks.io",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "31-Gitcoin Grants:Grant",
     "address": "0x18ac920241e0f5699448379e63069724d9d8a603",
     "name": "Grant 544 CultureStake",
-    "symbol": "",
     "source": "https://gitcoin.co/grants/544/culturestake",
     "decimals": 0,
     "description": "https://www.furtherfield.org/culturestake-2/"
@@ -1400,64 +1187,50 @@ ethNames 0x1 --fmt api
     "tags": "33-Set Protocol:Other",
     "address": "0x18b739aabc019d9ef160d44ba8a9dd6a717372af",
     "name": "Payable Exchange Issue",
-    "symbol": "",
     "source": "https://github.com/SetProtocol/set-protocol-contracts",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x18d7e5bb768c41b6f2f012082767ba0643c4cd6f",
     "name": "Name 0x18d7e5bb",
-    "symbol": "",
     "source": "Gitcoin Website",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x190473b3071946df65306989972706a4c006a561",
     "name": "Name 0x190473b3",
-    "symbol": "",
     "source": "Gitcoin Website",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "30-Contracts",
     "address": "0x19076bd01e86fa3d76334e27d4b8e6789688a42d",
     "name": "Gnosis Auction",
-    "symbol": "",
     "source": "TrueBlocks.io",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x190a2409fc6434483d4c2cab804e75e3bc5ebfa6",
     "name": "Name 0x190a2409",
-    "symbol": "",
     "source": "Gitcoin Website",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "91-Friends",
     "address": "0x191167380d430036ca2cb067ab86b527e3d584ee",
     "name": "Name 0x19116738",
-    "symbol": "",
     "source": "Etherscan",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x1955c2b76b1cf245795950e75eb176080879da50",
     "name": "Name 0x1955c2b7",
-    "symbol": "",
     "source": "Gitcoin Website",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -1481,7 +1254,6 @@ ethNames 0x1 --fmt api
     "tags": "31-Gitcoin Grants:Grant",
     "address": "0x197553ddfdb7b9c3c4216e2914456788bfd59c86",
     "name": "Grant 844 Solidity Visualizer Extension",
-    "symbol": "",
     "source": "https://gitcoin.co/grants/844/solidity-visualizer-extension",
     "decimals": 0,
     "description": "https://marketplace.visualstudio.com/items?itemName=tintinweb.solidity-visual-auditor"
@@ -1490,10 +1262,8 @@ ethNames 0x1 --fmt api
     "tags": "74-DaoDrain",
     "address": "0x1975bd06d486162d5dc297798dfc41edd5d160a7",
     "name": "Dao Drain 005",
-    "symbol": "",
     "source": "GethSource Ether Camp",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "50-Tokens",
@@ -1508,19 +1278,15 @@ ethNames 0x1 --fmt api
     "tags": "80-Malicious",
     "address": "0x1992764a6fd30ad0ad6ec665b3483838acb02fba",
     "name": "Possibly Malicious 0x199",
-    "symbol": "",
     "source": "TrueBlocks.io",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "60-Airdrops",
     "address": "0x19a2f57f30206f7343ee5928c32bae3f2bfacbcd",
     "name": "CGCX Airdrop Sender",
-    "symbol": "",
     "source": "TrueBlocks.io",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "50-Tokens",
@@ -1528,17 +1294,14 @@ ethNames 0x1 --fmt api
     "name": "Hacker Gold",
     "symbol": "HKG",
     "source": "TrueBlocks.io",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "75-Early Actors",
     "address": "0x19dafe19f11e960e4ccfc6a5aa8890ebd748ca1e",
     "name": "Miner_0064_93",
-    "symbol": "",
     "source": "OnChain",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -1546,14 +1309,12 @@ ethNames 0x1 --fmt api
     "name": "Carats Token",
     "symbol": "CARAT",
     "source": "On Chain",
-    "decimals": 18,
-    "description": ""
+    "decimals": 18
   },
   {
     "tags": "31-Gitcoin Grants:Grant",
     "address": "0x19fa61309158e138b685646247f58a3ce9f18145",
     "name": "Grant 311 echonomics",
-    "symbol": "",
     "source": "https://gitcoin.co/grants/311/echonomics",
     "decimals": 0,
     "description": "https://twitter.com/Maverickal_"
@@ -1571,10 +1332,8 @@ ethNames 0x1 --fmt api
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x1a207beefc754735871ceeb4c506686f044b1c41",
     "name": "Name 0x1a207bee",
-    "symbol": "",
     "source": "Gitcoin Website",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -1582,17 +1341,14 @@ ethNames 0x1 --fmt api
     "name": "ECHAT TOKEN",
     "symbol": "ECHT",
     "source": "On Chain",
-    "decimals": 18,
-    "description": ""
+    "decimals": 18
   },
   {
     "tags": "80-Malicious",
     "address": "0x1a2a44a10624bea74988d877e770d56a14a258b4",
     "name": "Possibly Malicious 0x1a2",
-    "symbol": "",
     "source": "TrueBlocks.io",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -1607,10 +1363,8 @@ ethNames 0x1 --fmt api
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x1a6e64a15cb07639eb27471e422a947085c2f4fc",
     "name": "Name 0x1a6e64a1",
-    "symbol": "",
     "source": "Gitcoin Website",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -1625,10 +1379,8 @@ ethNames 0x1 --fmt api
     "tags": "60-Airdrops",
     "address": "0x1a808e137ca97712b97b0c50a046e53b7e58bedc",
     "name": "LPT Airdrop Sender",
-    "symbol": "",
     "source": "TrueBlocks.io",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -1643,34 +1395,27 @@ ethNames 0x1 --fmt api
     "tags": "31-Gitcoin Grants:Grant",
     "address": "0x1aa587c2288750173cc6af7c92bad7209904e496",
     "name": "Grant 150 Ethereum Egift Cards",
-    "symbol": "",
     "source": "https://gitcoin.co/grants/150/ethereum-egift-cards",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x1ab1cc4a40c1a609c18342c5ae0b91c2e0720e98",
     "name": "Name 0x1ab1cc4a",
-    "symbol": "",
     "source": "Gitcoin Website",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "30-Contracts:dAppNode",
     "address": "0x1abf8d63ac29be2a8c3411901b3bee6fadca2dc4",
     "name": "dAddNode Package 005",
-    "symbol": "",
     "source": "TrueBlocks.io",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "34-Twitter: Friends",
     "address": "0x1aee9f4dbcbfc2337f616e61f7e2da2efef194f8",
     "name": "Name 0x1aee9f4d",
-    "symbol": "",
     "source": "Twitter",
     "decimals": 0,
     "description": "@Khongxa199"
@@ -1688,28 +1433,22 @@ ethNames 0x1 --fmt api
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x1b5b127f535103f079fef9fd51b6a63da7efda67",
     "name": "Name 0x1b5b127f",
-    "symbol": "",
     "source": "Gitcoin Website",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "90-DevCon2:Individual",
     "address": "0x1b5c6e1e7981a186fc54bfa343bab295027ac351",
     "name": "Simon Janin",
-    "symbol": "",
     "source": "DevCon2 Token Contract",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "90-DevCon2:Individual",
     "address": "0x1b63142628311395ceafeea5667e7c9026c862ca",
     "name": "Taylor Gerring",
-    "symbol": "",
     "source": "DevCon2 Token Contract",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -1717,35 +1456,28 @@ ethNames 0x1 --fmt api
     "name": "TopChainCoin",
     "symbol": "TOPC",
     "source": "On Chain",
-    "decimals": 6,
-    "description": ""
+    "decimals": 6
   },
   {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x1b6eed8f16a4f3e84c91e058be7c10c4585014b8",
     "name": "Name 0x1b6eed8f",
-    "symbol": "",
     "source": "Gitcoin Website",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "75-Early Actors",
     "address": "0x1b7047b4338acf65be94c1a3e8c5c9338ad7d67c",
     "name": "Miner_0006_1133",
-    "symbol": "",
     "source": "OnChain",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x1b713927312669f4891215a7b252e5674cf50796",
     "name": "Name 0x1b713927",
-    "symbol": "",
     "source": "Gitcoin Website",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -1762,8 +1494,7 @@ ethNames 0x1 --fmt api
     "name": "HOQU Token",
     "symbol": "HQX",
     "source": "On Chain",
-    "decimals": 18,
-    "description": ""
+    "decimals": 18
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -1778,19 +1509,15 @@ ethNames 0x1 --fmt api
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x1bb48a26b8f39eb58ca90375ce78b3d50fc9a3fd",
     "name": "Name 0x1bb48a26",
-    "symbol": "",
     "source": "Gitcoin Website",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x1bc4230d996286ffd1dd4dc649aad47fa08cadc4",
     "name": "Name 0x1bc4230d",
-    "symbol": "",
     "source": "Gitcoin Website",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -1798,17 +1525,14 @@ ethNames 0x1 --fmt api
     "name": "ROC",
     "symbol": "ROC",
     "source": "On Chain",
-    "decimals": 10,
-    "description": ""
+    "decimals": 10
   },
   {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x1c0aa8ccd568d90d61659f060d1bfb1e6f855a20",
     "name": "Name 0x1c0aa8cc",
-    "symbol": "",
     "source": "Gitcoin Website",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   }], "types": [
 { "type": "CAccountName", "fields": [{ "name": "tags", "type": "text" }, { "name": "address", "type": "address" }, { "name": "name", "type": "text" }, { "name": "symbol", "type": "text" }, { "name": "source", "type": "text" }, { "name": "decimals", "type": "unumber" }, { "name": "description", "type": "text" }] }
 ], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef", "namePath": "--" } }

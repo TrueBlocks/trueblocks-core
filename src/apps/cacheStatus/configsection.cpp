@@ -216,8 +216,8 @@ void CConfigSection::registerClass(void) {
     ADD_FIELD(CConfigSection, "deleted", T_BOOL, ++fieldNum);
     ADD_FIELD(CConfigSection, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CConfigSection, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CConfigSection, "section", T_TEXT, ++fieldNum);
-    ADD_FIELD(CConfigSection, "name", T_TEXT, ++fieldNum);
+    ADD_FIELD(CConfigSection, "section", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CConfigSection, "name", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CConfigSection, "keys", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like

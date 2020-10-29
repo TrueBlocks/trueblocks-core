@@ -19,12 +19,7 @@ getReceipt 2222222.0 2332332.0 --fmt api
         ],
         "data": "0x000000000000000000000000000000000000000000000000031d958f80134000",
         "articulatedLog": {
-          "name": "",
-          "type": "",
-          "constant": false,
-          "stateMutability": "",
-          "signature": "",
-          "encoding": ""
+          "constant": false
         }
       }
     ],

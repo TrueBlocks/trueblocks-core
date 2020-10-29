@@ -9,11 +9,11 @@ showing             	1003	1	8388628	T_BOOL TS_NUMERAL
 cname               	1004	1	16777266	T_TEXT TS_STRING
 selfDestructed      	1005	0	16777271	T_ADDRESS TS_STRING
 balance             	1006	0	545259555	T_WEI TS_NUMERAL TS_BIGNUM
-callType            	1007	0	16777266	T_TEXT TS_STRING
+callType            	1007	0	20971570	T_TEXT TS_STRING TS_OMITEMPTY
 from                	1008	0	16777271	T_ADDRESS TS_STRING
 gas                 	1009	0	545259560	T_GAS TS_NUMERAL TS_BIGNUM
-init                	1010	0	16777266	T_TEXT TS_STRING
-input               	1011	0	16777266	T_TEXT TS_STRING
+init                	1010	0	20971570	T_TEXT TS_STRING TS_OMITEMPTY
+input               	1011	0	20971570	T_TEXT TS_STRING TS_OMITEMPTY
 refundAddress       	1012	0	16777271	T_ADDRESS TS_STRING
 to                  	1013	0	16777271	T_ADDRESS TS_STRING
 value               	1014	0	545259555	T_WEI TS_NUMERAL TS_BIGNUM
@@ -37,11 +37,11 @@ showing             	1003	1	8388628	T_BOOL TS_NUMERAL
 cname               	1004	1	16777266	T_TEXT TS_STRING
 selfDestructed      	1005	1	16777271	T_ADDRESS TS_STRING
 balance             	1006	1	545259555	T_WEI TS_NUMERAL TS_BIGNUM
-callType            	1007	1	16777266	T_TEXT TS_STRING
+callType            	1007	1	20971570	T_TEXT TS_STRING TS_OMITEMPTY
 from                	1008	1	16777271	T_ADDRESS TS_STRING
 gas                 	1009	1	545259560	T_GAS TS_NUMERAL TS_BIGNUM
-init                	1010	1	16777266	T_TEXT TS_STRING
-input               	1011	1	16777266	T_TEXT TS_STRING
+init                	1010	1	20971570	T_TEXT TS_STRING TS_OMITEMPTY
+input               	1011	1	20971570	T_TEXT TS_STRING TS_OMITEMPTY
 refundAddress       	1012	1	16777271	T_ADDRESS TS_STRING
 to                  	1013	1	16777271	T_ADDRESS TS_STRING
 value               	1014	1	545259555	T_WEI TS_NUMERAL TS_BIGNUM
@@ -58,17 +58,17 @@ showing             	1003	0	8388628	T_BOOL TS_NUMERAL
 cname               	1004	0	16777266	T_TEXT TS_STRING
 selfDestructed      	1005	0	16777271	T_ADDRESS TS_STRING
 balance             	1006	0	545259555	T_WEI TS_NUMERAL TS_BIGNUM
-callType            	1007	0	16777266	T_TEXT TS_STRING
+callType            	1007	0	20971570	T_TEXT TS_STRING TS_OMITEMPTY
 from                	1008	0	16777271	T_ADDRESS TS_STRING
 gas                 	1009	0	545259560	T_GAS TS_NUMERAL TS_BIGNUM
-init                	1010	0	16777266	T_TEXT TS_STRING
-input               	1011	0	16777266	T_TEXT TS_STRING
+init                	1010	0	20971570	T_TEXT TS_STRING TS_OMITEMPTY
+input               	1011	0	20971570	T_TEXT TS_STRING TS_OMITEMPTY
 refundAddress       	1012	0	16777271	T_ADDRESS TS_STRING
 to                  	1013	0	16777271	T_ADDRESS TS_STRING
 value               	1014	0	545259555	T_WEI TS_NUMERAL TS_BIGNUM
 ether               	1015	0	545259565	T_ETHER TS_NUMERAL TS_BIGNUM
 {
-  "schema": 8001,
+  "schema": 8003,
   "deleted": false,
   "showing": true,
   "cname": "TraceAction",

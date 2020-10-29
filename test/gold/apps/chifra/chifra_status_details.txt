@@ -5,7 +5,7 @@ cacheStatus all --details --start 1400000 --end 2000000
 {
   "client_version": "Client version",
   "client_ids": "chainId: 1 networkId: 1",
-  "trueblocks_version": "GHC-TrueBlocks//0.8.1-alpha--git-hash---git-ts-",
+  "trueblocks_version": "GHC-TrueBlocks//0.8.3-alpha--git-hash---git-ts-",
   "rpc_provider": "--providers--",
   "balance_provider": "--providers--",
   "cache_path": "--paths--",
@@ -185,16 +185,12 @@ cacheStatus all --details --start 1400000 --end 2000000
       "items": [
         {
           "type": "CMonitorCacheItem",
-          "deleted": false,
           "sizeInBytes2": 0,
           "tags": "80-Prefund",
           "address": "---address---",
           "name": "Prefund_0002",
-          "symbol": "",
           "source": "Genesis",
           "decimals": 0,
-          "description": "",
-          "is_custom": false,
           "is_prefund": true,
           "nAppearances": 18446744073709551615,
           "firstAppearance": 18446744073709551615,
@@ -213,16 +209,12 @@ cacheStatus all --details --start 1400000 --end 2000000
       "items": [
         {
           "type": "CMonitorCacheItem",
-          "deleted": false,
           "sizeInBytes2": 0,
           "tags": "80-Prefund",
           "address": "---address---",
           "name": "Prefund_0002",
-          "symbol": "",
           "source": "Genesis",
           "decimals": 0,
-          "description": "",
-          "is_custom": false,
           "is_prefund": true,
           "nAppearances": 18446744073709551615,
           "firstAppearance": 18446744073709551615,
@@ -244,15 +236,8 @@ cacheStatus all --details --start 1400000 --end 2000000
           "nFunctions": 36963,
           "nEvents": 36963,
           "nOther": 36963,
-          "tags": "",
           "address": "---address---",
-          "name": "",
-          "symbol": "",
-          "source": "",
           "decimals": 0,
-          "description": "",
-          "is_custom": false,
-          "is_prefund": false,
           "nAppearances": 0,
           "firstAppearance": 0,
           "latestAppearance": 0,
@@ -275,8 +260,7 @@ cacheStatus all --details --start 1400000 --end 2000000
       "path": "blocksPath",
       "nFiles": 0,
       "nFolders": 0,
-      "sizeInBytes": 0,
-      "is_valid": false
+      "sizeInBytes": 0
     },
     {
       "items": [
@@ -287,8 +271,7 @@ cacheStatus all --details --start 1400000 --end 2000000
       "path": "txsPath",
       "nFiles": 0,
       "nFolders": 0,
-      "sizeInBytes": 0,
-      "is_valid": false
+      "sizeInBytes": 0
     },
     {
       "items": [
@@ -299,8 +282,7 @@ cacheStatus all --details --start 1400000 --end 2000000
       "path": "tracesPath",
       "nFiles": 0,
       "nFolders": 0,
-      "sizeInBytes": 0,
-      "is_valid": false
+      "sizeInBytes": 0
     },
     {
       "type": "CSlurpCache",
@@ -315,15 +297,8 @@ cacheStatus all --details --start 1400000 --end 2000000
         {
           "type": "CPriceCacheItem",
           "pair": "---pair---",
-          "tags": "",
           "address": "0x0",
-          "name": "",
-          "symbol": "",
-          "source": "",
           "decimals": 0,
-          "description": "",
-          "is_custom": false,
-          "is_prefund": false,
           "nAppearances": 2020101,
           "firstAppearance": 0,
           "latestAppearance": 0,

@@ -218,9 +218,9 @@ void CTraceResult::registerClass(void) {
     ADD_FIELD(CTraceResult, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CTraceResult, "cname", T_TEXT, ++fieldNum);
     ADD_FIELD(CTraceResult, "newContract", T_ADDRESS, ++fieldNum);
-    ADD_FIELD(CTraceResult, "code", T_TEXT, ++fieldNum);
+    ADD_FIELD(CTraceResult, "code", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CTraceResult, "gasUsed", T_GAS, ++fieldNum);
-    ADD_FIELD(CTraceResult, "output", T_TEXT, ++fieldNum);
+    ADD_FIELD(CTraceResult, "output", T_TEXT | TS_OMITEMPTY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CTraceResult, "schema");

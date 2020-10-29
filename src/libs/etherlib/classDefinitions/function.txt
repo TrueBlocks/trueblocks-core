@@ -3,7 +3,7 @@ class = CFunction
 fields = string name|\
         string type|\
         bool anonymous|\
-        bool constant|\
+        bool constant (showEmpty)|\
         string stateMutability|\
         string signature|\
         string encoding|\

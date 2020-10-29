@@ -284,13 +284,13 @@ void CPinReport::registerClass(void) {
     ADD_FIELD(CPinReport, "deleted", T_BOOL, ++fieldNum);
     ADD_FIELD(CPinReport, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CPinReport, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CPinReport, "fileName", T_TEXT, ++fieldNum);
-    ADD_FIELD(CPinReport, "indexFormat", T_TEXT, ++fieldNum);
-    ADD_FIELD(CPinReport, "bloomFormat", T_TEXT, ++fieldNum);
+    ADD_FIELD(CPinReport, "fileName", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CPinReport, "indexFormat", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CPinReport, "bloomFormat", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CPinReport, "prevHash", T_HASH, ++fieldNum);
-    ADD_FIELD(CPinReport, "newBlockRange", T_TEXT, ++fieldNum);
+    ADD_FIELD(CPinReport, "newBlockRange", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CPinReport, "newPins", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CPinReport, "prevBlockRange", T_TEXT, ++fieldNum);
+    ADD_FIELD(CPinReport, "prevBlockRange", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CPinReport, "prevPins", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like

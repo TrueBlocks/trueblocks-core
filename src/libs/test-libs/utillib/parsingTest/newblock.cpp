@@ -317,7 +317,7 @@ void CNewBlock::registerClass(void) {
     ADD_FIELD(CNewBlock, "miner", T_ADDRESS, ++fieldNum);
     ADD_FIELD(CNewBlock, "difficulty", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CNewBlock, "price", T_DOUBLE, ++fieldNum);
-    ADD_FIELD(CNewBlock, "finalized", T_BOOL, ++fieldNum);
+    ADD_FIELD(CNewBlock, "finalized", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CNewBlock, "timestamp", T_TIMESTAMP, ++fieldNum);
     ADD_FIELD(CNewBlock, "transactions", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
 

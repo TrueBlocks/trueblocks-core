@@ -237,12 +237,12 @@ void CCache::registerClass(void) {
     ADD_FIELD(CCache, "deleted", T_BOOL, ++fieldNum);
     ADD_FIELD(CCache, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CCache, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CCache, "type", T_TEXT, ++fieldNum);
-    ADD_FIELD(CCache, "path", T_TEXT, ++fieldNum);
+    ADD_FIELD(CCache, "type", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CCache, "path", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CCache, "nFiles", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CCache, "nFolders", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CCache, "sizeInBytes", T_UNUMBER, ++fieldNum);
-    ADD_FIELD(CCache, "is_valid", T_BOOL, ++fieldNum);
+    ADD_FIELD(CCache, "is_valid", T_BOOL | TS_OMITEMPTY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CCache, "schema");

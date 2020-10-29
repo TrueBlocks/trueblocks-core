@@ -7,9 +7,9 @@ schema              	1001	1	8388633	T_NUMBER TS_NUMERAL
 deleted             	1002	1	8388628	T_BOOL TS_NUMERAL
 showing             	1003	1	8388628	T_BOOL TS_NUMERAL
 cname               	1004	1	16777266	T_TEXT TS_STRING
-jsonrpc             	1005	0	16777266	T_TEXT TS_STRING
-result              	1006	0	16777266	T_TEXT TS_STRING
-id                  	1007	0	16777266	T_TEXT TS_STRING
+jsonrpc             	1005	0	20971570	T_TEXT TS_STRING TS_OMITEMPTY
+result              	1006	0	20971570	T_TEXT TS_STRING TS_OMITEMPTY
+id                  	1007	0	20971570	T_TEXT TS_STRING TS_OMITEMPTY
 {
 }
 
@@ -20,9 +20,9 @@ schema              	1001	1	8388633	T_NUMBER TS_NUMERAL
 deleted             	1002	1	8388628	T_BOOL TS_NUMERAL
 showing             	1003	1	8388628	T_BOOL TS_NUMERAL
 cname               	1004	1	16777266	T_TEXT TS_STRING
-jsonrpc             	1005	1	16777266	T_TEXT TS_STRING
-result              	1006	1	16777266	T_TEXT TS_STRING
-id                  	1007	1	16777266	T_TEXT TS_STRING
+jsonrpc             	1005	1	20971570	T_TEXT TS_STRING TS_OMITEMPTY
+result              	1006	1	20971570	T_TEXT TS_STRING TS_OMITEMPTY
+id                  	1007	1	20971570	T_TEXT TS_STRING TS_OMITEMPTY
 {
 }
 
@@ -33,11 +33,11 @@ schema              	1001	0	8388633	T_NUMBER TS_NUMERAL
 deleted             	1002	0	8388628	T_BOOL TS_NUMERAL
 showing             	1003	0	8388628	T_BOOL TS_NUMERAL
 cname               	1004	0	16777266	T_TEXT TS_STRING
-jsonrpc             	1005	0	16777266	T_TEXT TS_STRING
-result              	1006	0	16777266	T_TEXT TS_STRING
-id                  	1007	0	16777266	T_TEXT TS_STRING
+jsonrpc             	1005	0	20971570	T_TEXT TS_STRING TS_OMITEMPTY
+result              	1006	0	20971570	T_TEXT TS_STRING TS_OMITEMPTY
+id                  	1007	0	20971570	T_TEXT TS_STRING TS_OMITEMPTY
 {
-  "schema": 8001,
+  "schema": 8003,
   "deleted": false,
   "showing": true,
   "cname": "RPCResult"

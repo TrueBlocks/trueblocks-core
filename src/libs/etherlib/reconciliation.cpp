@@ -422,7 +422,7 @@ void CReconciliation::registerClass(void) {
     ADD_FIELD(CReconciliation, "blockNumber", T_BLOCKNUM, ++fieldNum);
     ADD_FIELD(CReconciliation, "transactionIndex", T_BLOCKNUM, ++fieldNum);
     ADD_FIELD(CReconciliation, "timestamp", T_TIMESTAMP, ++fieldNum);
-    ADD_FIELD(CReconciliation, "asset", T_TEXT, ++fieldNum);
+    ADD_FIELD(CReconciliation, "asset", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CReconciliation, "begBal", T_INT256, ++fieldNum);
     ADD_FIELD(CReconciliation, "begBalDiff", T_INT256, ++fieldNum);
     ADD_FIELD(CReconciliation, "amountIn", T_INT256, ++fieldNum);
@@ -441,8 +441,8 @@ void CReconciliation::registerClass(void) {
     ADD_FIELD(CReconciliation, "endBalCalc", T_INT256, ++fieldNum);
     ADD_FIELD(CReconciliation, "endBalDiff", T_INT256, ++fieldNum);
     ADD_FIELD(CReconciliation, "amountNet", T_INT256, ++fieldNum);
-    ADD_FIELD(CReconciliation, "reconciliationType", T_TEXT, ++fieldNum);
-    ADD_FIELD(CReconciliation, "reconciled", T_BOOL, ++fieldNum);
+    ADD_FIELD(CReconciliation, "reconciliationType", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CReconciliation, "reconciled", T_BOOL | TS_OMITEMPTY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CReconciliation, "schema");

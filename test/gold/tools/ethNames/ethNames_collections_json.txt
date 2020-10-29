@@ -3,11 +3,9 @@ ethNames --collections --fmt json
 { "data": [
   {
     "deleted": true,
-    "cid": "",
     "tags": "Samples",
     "name": "Set Protocol",
     "client": "Anthony",
-    "monitored": false,
     "sizeInBytes": 1201001,
     "addresses": [
       "0x12951b9eaa200237f9080c95ad93cc74c9d9bd45",
@@ -30,11 +28,9 @@ ethNames --collections --fmt json
   },
   {
     "deleted": false,
-    "cid": "",
     "tags": "Samples",
     "name": "Giveth",
     "client": "Green",
-    "monitored": false,
     "sizeInBytes": 899100,
     "addresses": [
       "0x1dba1131000664b884a1ba238464159892252d3a",
@@ -51,7 +47,6 @@ ethNames --collections --fmt json
   },
   {
     "deleted": false,
-    "cid": "",
     "tags": "Clients",
     "name": "May Construction",
     "client": "John May",
@@ -67,11 +62,9 @@ ethNames --collections --fmt json
   },
   {
     "deleted": true,
-    "cid": "",
     "tags": "Clients",
     "name": "The Poetry Shop",
     "client": "Andy Tudhope",
-    "monitored": false,
     "sizeInBytes": 100009102910291,
     "addresses": [
       "0xfdecc82ddfc56192e26f563c3d68cb544a96bfed",
@@ -80,7 +73,6 @@ ethNames --collections --fmt json
   },
   {
     "deleted": true,
-    "cid": "",
     "tags": "Clients",
     "name": "Uncle Joe",
     "client": "Prince Ton",

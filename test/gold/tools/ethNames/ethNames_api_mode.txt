@@ -5,25 +5,19 @@ ethNames tip --fmt api
     "tags": "31-Gitcoin Grants:Grant",
     "address": "0x133d705a9696882228f6bb7fe008745aef7cdc93",
     "name": "Grant 160 Antiprosynth Twitter Account Activity",
-    "symbol": "",
-    "source": "",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "90-DevCon2:Individual",
     "address": "0x7cb57b5a97eabe94205c07890be4c1ad31e486a8",
     "name": "My Ethereum Wallet Tip Jar Taylor Van Orden",
-    "symbol": "",
     "source": "Slack DevCon2 Token Contract",
-    "decimals": 0,
-    "description": ""
+    "decimals": 0
   },
   {
     "tags": "31-Gitcoin Grants:Grant",
     "address": "0xbc2138f76db98af69c8c9d5c365263dca32f5e63",
     "name": "Grant 379 AntiPhishing Browser Plugin PhishFort Protect",
-    "symbol": "",
     "source": "https://gitcoin.co/grants/379/anti-phishing-browser-plugin-phishfort-protect",
     "decimals": 0,
     "description": "https://phishfort.com/protect"

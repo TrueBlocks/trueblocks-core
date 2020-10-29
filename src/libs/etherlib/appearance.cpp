@@ -232,7 +232,7 @@ void CAppearance::registerClass(void) {
     ADD_FIELD(CAppearance, "tx", T_BLOCKNUM, ++fieldNum);
     ADD_FIELD(CAppearance, "tc", T_BLOCKNUM, ++fieldNum);
     ADD_FIELD(CAppearance, "addr", T_ADDRESS, ++fieldNum);
-    ADD_FIELD(CAppearance, "reason", T_TEXT, ++fieldNum);
+    ADD_FIELD(CAppearance, "reason", T_TEXT | TS_OMITEMPTY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CAppearance, "schema");

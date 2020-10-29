@@ -472,7 +472,6 @@ getTrans 0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f --tr
     "traces": [
       {
         "type": "call",
-        "error": "",
         "action": {
           "selfDestructed": "0x0",
           "balance": 0,

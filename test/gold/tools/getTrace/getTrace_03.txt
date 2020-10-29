@@ -9,14 +9,12 @@ getTrace 0x17104ac9d3312d8c136b7f44d4b8b47852618065ebfa534bd2d3b5ef218ca1f3 --fm
     "transactionHash": "0x17104ac9d3312d8c136b7f44d4b8b47852618065ebfa534bd2d3b5ef218ca1f3",
     "transactionIndex": 2,
     "type": "call",
-    "error": "",
     "action": {
       "selfDestructed": "0x0",
       "balance": 0,
       "callType": "call",
       "from": "0x83806d539d4ea1c140489a06660319c9a303f874",
       "gas": 107000,
-      "init": "",
       "input": "0x",
       "refundAddress": "0x0",
       "to": "0x1c39ba39e4735cb65978d4db400ddd70a72dc750",
@@ -24,7 +22,6 @@ getTrace 0x17104ac9d3312d8c136b7f44d4b8b47852618065ebfa534bd2d3b5ef218ca1f3 --fm
     },
     "result": {
       "newContract": "0x0",
-      "code": "",
       "gasUsed": 10626,
       "output": "0x"
     }
@@ -36,14 +33,12 @@ getTrace 0x17104ac9d3312d8c136b7f44d4b8b47852618065ebfa534bd2d3b5ef218ca1f3 --fm
     "transactionHash": "0x17104ac9d3312d8c136b7f44d4b8b47852618065ebfa534bd2d3b5ef218ca1f3",
     "transactionIndex": 2,
     "type": "call",
-    "error": "",
     "action": {
       "selfDestructed": "0x0",
       "balance": 0,
       "callType": "call",
       "from": "0x1c39ba39e4735cb65978d4db400ddd70a72dc750",
       "gas": 81561,
-      "init": "",
       "input": "0x16c72721",
       "refundAddress": "0x0",
       "to": "0x2bd2326c993dfaef84f696526064ff22eba5b362",
@@ -51,7 +46,6 @@ getTrace 0x17104ac9d3312d8c136b7f44d4b8b47852618065ebfa534bd2d3b5ef218ca1f3 --fm
     },
     "result": {
       "newContract": "0x0",
-      "code": "",
       "gasUsed": 387,
       "output": "0x0000000000000000000000000000000000000000000000000000000000000001"
     }
@@ -63,14 +57,12 @@ getTrace 0x17104ac9d3312d8c136b7f44d4b8b47852618065ebfa534bd2d3b5ef218ca1f3 --fm
     "transactionHash": "0x17104ac9d3312d8c136b7f44d4b8b47852618065ebfa534bd2d3b5ef218ca1f3",
     "transactionIndex": 2,
     "type": "call",
-    "error": "",
     "action": {
       "selfDestructed": "0x0",
       "balance": 0,
       "callType": "call",
       "from": "0x1c39ba39e4735cb65978d4db400ddd70a72dc750",
       "gas": 2300,
-      "init": "",
       "input": "0x",
       "refundAddress": "0x0",
       "to": "0x70faa28a6b8d6829a4b1e649d26ec9a2a39ba413",
@@ -78,7 +70,6 @@ getTrace 0x17104ac9d3312d8c136b7f44d4b8b47852618065ebfa534bd2d3b5ef218ca1f3 --fm
     },
     "result": {
       "newContract": "0x0",
-      "code": "",
       "gasUsed": 0,
       "output": "0x"
     }

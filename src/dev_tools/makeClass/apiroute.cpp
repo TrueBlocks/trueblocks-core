@@ -203,7 +203,7 @@ void CApiRoute::registerClass(void) {
     ADD_FIELD(CApiRoute, "deleted", T_BOOL, ++fieldNum);
     ADD_FIELD(CApiRoute, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CApiRoute, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CApiRoute, "route", T_TEXT, ++fieldNum);
+    ADD_FIELD(CApiRoute, "route", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CApiRoute, "commands", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like

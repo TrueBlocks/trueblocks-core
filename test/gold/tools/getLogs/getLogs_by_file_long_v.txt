@@ -12,22 +12,18 @@ getLogs --file:cmd_file --verbose --parity --fmt json
     "data": "0x000000000000000000000000000000000000000000000000094079cd16496a00",
     "articulatedLog": {
       "name": "Transfer",
-      "stateMutability": "",
       "inputs": [
         {
           "name": "_from",
-          "value": "0x306b79fc32fb1561480102e032844bb36ea97102",
-          "internalType": ""
+          "value": "0x306b79fc32fb1561480102e032844bb36ea97102"
         },
         {
           "name": "_to",
-          "value": "0xdf21fa922215b1a56f5a6d6294e6e36c85a0acfb",
-          "internalType": ""
+          "value": "0xdf21fa922215b1a56f5a6d6294e6e36c85a0acfb"
         },
         {
           "name": "_amount",
-          "value": "666666666600000000",
-          "internalType": ""
+          "value": "666666666600000000"
         }
       ]
     },

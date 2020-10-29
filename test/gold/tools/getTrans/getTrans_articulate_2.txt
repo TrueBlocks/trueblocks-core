@@ -248,7 +248,6 @@ getTrans 3648669.24 --articulate --verbose --trace --fmt json
     "traces": [
       {
         "type": "call",
-        "error": "",
         "action": {
           "selfDestructed": "0x0",
           "balance": 0,
@@ -285,7 +284,6 @@ getTrans 3648669.24 --articulate --verbose --trace --fmt json
       },
       {
         "type": "call",
-        "error": "",
         "action": {
           "selfDestructed": "0x0",
           "balance": 0,
@@ -324,7 +322,6 @@ getTrans 3648669.24 --articulate --verbose --trace --fmt json
       },
       {
         "type": "call",
-        "error": "",
         "action": {
           "selfDestructed": "0x0",
           "balance": 0,

@@ -17,12 +17,7 @@ getReceipt 1428993.* --fmt api
         ],
         "data": "0x0000000000000000000000006dfaa8ab22d36af0377c6565548a8895c661d18d00000000000000000000000000000000000000000000000000071afd498d0000",
         "articulatedLog": {
-          "name": "",
-          "type": "",
-          "constant": false,
-          "stateMutability": "",
-          "signature": "",
-          "encoding": ""
+          "constant": false
         }
       }
     ],
@@ -45,12 +40,7 @@ getReceipt 1428993.* --fmt api
         ],
         "data": "0x0000000000000000000000000000000000000000000000001462698eade5e400",
         "articulatedLog": {
-          "name": "",
-          "type": "",
-          "constant": false,
-          "stateMutability": "",
-          "signature": "",
-          "encoding": ""
+          "constant": false
         }
       }
     ],

@@ -267,12 +267,12 @@ void CMeasure::registerClass(void) {
     ADD_FIELD(CMeasure, "deleted", T_BOOL, ++fieldNum);
     ADD_FIELD(CMeasure, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CMeasure, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CMeasure, "git_hash", T_TEXT, ++fieldNum);
-    ADD_FIELD(CMeasure, "date", T_TEXT, ++fieldNum);
+    ADD_FIELD(CMeasure, "git_hash", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CMeasure, "date", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CMeasure, "epoch", T_UNUMBER, ++fieldNum);
-    ADD_FIELD(CMeasure, "group", T_TEXT, ++fieldNum);
-    ADD_FIELD(CMeasure, "cmd", T_TEXT, ++fieldNum);
-    ADD_FIELD(CMeasure, "type", T_TEXT, ++fieldNum);
+    ADD_FIELD(CMeasure, "group", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CMeasure, "cmd", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CMeasure, "type", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CMeasure, "nTests", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CMeasure, "nPassed", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CMeasure, "totSecs", T_DOUBLE, ++fieldNum);

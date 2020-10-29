@@ -267,15 +267,15 @@ void CEthState::registerClass(void) {
     ADD_FIELD(CEthState, "balance", T_WEI, ++fieldNum);
     ADD_FIELD(CEthState, "nonce", T_UNUMBER, ++fieldNum);
     HIDE_FIELD(CEthState, "nonce");
-    ADD_FIELD(CEthState, "code", T_TEXT, ++fieldNum);
+    ADD_FIELD(CEthState, "code", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CEthState, "code");
-    ADD_FIELD(CEthState, "storage", T_TEXT, ++fieldNum);
+    ADD_FIELD(CEthState, "storage", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CEthState, "storage");
     ADD_FIELD(CEthState, "address", T_ADDRESS, ++fieldNum);
     HIDE_FIELD(CEthState, "address");
     ADD_FIELD(CEthState, "deployed", T_BLOCKNUM, ++fieldNum);
     HIDE_FIELD(CEthState, "deployed");
-    ADD_FIELD(CEthState, "accttype", T_TEXT, ++fieldNum);
+    ADD_FIELD(CEthState, "accttype", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CEthState, "accttype");
 
     // Hide our internal fields, user can turn them on if they like

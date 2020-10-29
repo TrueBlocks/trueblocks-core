@@ -297,7 +297,7 @@ void CReceipt::registerClass(void) {
     HIDE_FIELD(CReceipt, "from");
     ADD_FIELD(CReceipt, "gasUsed", T_GAS, ++fieldNum);
     ADD_FIELD(CReceipt, "logs", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CReceipt, "root", T_TEXT, ++fieldNum);
+    ADD_FIELD(CReceipt, "root", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CReceipt, "root");
     ADD_FIELD(CReceipt, "status", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CReceipt, "to", T_ADDRESS, ++fieldNum);

@@ -353,12 +353,12 @@ void CTrace::registerClass(void) {
     ADD_FIELD(CTrace, "traceAddress", T_TEXT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CTrace, "transactionHash", T_HASH, ++fieldNum);
     ADD_FIELD(CTrace, "transactionIndex", T_BLOCKNUM, ++fieldNum);
-    ADD_FIELD(CTrace, "type", T_TEXT, ++fieldNum);
-    ADD_FIELD(CTrace, "error", T_TEXT, ++fieldNum);
+    ADD_FIELD(CTrace, "type", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CTrace, "error", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CTrace, "action", T_OBJECT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CTrace, "result", T_OBJECT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CTrace, "articulatedTrace", T_OBJECT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CTrace, "compressedTrace", T_TEXT, ++fieldNum);
+    ADD_FIELD(CTrace, "compressedTrace", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CTrace, "compressedTrace");
 
     // Hide our internal fields, user can turn them on if they like

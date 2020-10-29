@@ -33,19 +33,16 @@ TIME ~ CLOCK - <WARNG> : dataStart(418973819366999115) larger than nDataItems(4)
       "inputs": [
         {
           "name": "destinations",
-          "value": "",
           "internalType": "address[]"
         },
         {
           "name": "tokens",
-          "value": "",
           "internalType": "uint256[]"
         }
       ],
       "outputs": [
         {
           "name": "success",
-          "value": "",
           "internalType": "bool"
         }
       ]
