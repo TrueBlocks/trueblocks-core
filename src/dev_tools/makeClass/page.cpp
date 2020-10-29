@@ -392,7 +392,7 @@ void CPage::registerClass(void) {
     ADD_FIELD(CPage, "dataQuery", T_TEXT, ++fieldNum);
     ADD_FIELD(CPage, "cmdUrl", T_TEXT, ++fieldNum);
     ADD_FIELD(CPage, "schema", T_TEXT, ++fieldNum);
-    ADD_FIELD(CPage, "subpages", T_OBJECT | TS_ARRAY, ++fieldNum);
+    ADD_FIELD(CPage, "subpages", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CPage, "schema");

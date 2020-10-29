@@ -283,9 +283,9 @@ void CMonitor::registerClass(void) {
     ADD_FIELD(CMonitor, "deleted", T_BOOL, ++fieldNum);
     ADD_FIELD(CMonitor, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CMonitor, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CMonitor, "abi_spec", T_OBJECT, ++fieldNum);
-    ADD_FIELD(CMonitor, "summaryStatement", T_OBJECT, ++fieldNum);
-    ADD_FIELD(CMonitor, "stateHistory", T_OBJECT | TS_ARRAY, ++fieldNum);
+    ADD_FIELD(CMonitor, "abi_spec", T_OBJECT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CMonitor, "summaryStatement", T_OBJECT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CMonitor, "stateHistory", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CMonitor, "curBalance", T_WEI, ++fieldNum);
     ADD_FIELD(CMonitor, "enabled", T_BOOL, ++fieldNum);
     ADD_FIELD(CMonitor, "fm_mode", T_NUMBER, ++fieldNum);

@@ -3,12 +3,12 @@ dataUpgradeTest --file:cmd_file2
 --------------------------------------------------------------------------------
 className: CAbi
 baseClass: CBaseNode
-schema              	1001	1	65561	T_NUMBER TS_NUMERAL
-deleted             	1002	1	65556	T_BOOL TS_NUMERAL
-showing             	1003	1	65556	T_BOOL TS_NUMERAL
-cname               	1004	1	131122	T_TEXT TS_STRING
-address             	1005	0	131127	T_ADDRESS TS_STRING
-interfaces          	1006	0	1605707	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
+schema              	1001	1	8388633	T_NUMBER TS_NUMERAL
+deleted             	1002	1	8388628	T_BOOL TS_NUMERAL
+showing             	1003	1	8388628	T_BOOL TS_NUMERAL
+cname               	1004	1	16777266	T_TEXT TS_STRING
+address             	1005	0	16777271	T_ADDRESS TS_STRING
+interfaces          	1006	0	205520971	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
 {
   "address": "0x0",
   "interfaces": []
@@ -17,24 +17,24 @@ interfaces          	1006	0	1605707	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMIT
 --------------------------------------------------------------------------------
 className: CAbi
 baseClass: CBaseNode
-schema              	1001	1	65561	T_NUMBER TS_NUMERAL
-deleted             	1002	1	65556	T_BOOL TS_NUMERAL
-showing             	1003	1	65556	T_BOOL TS_NUMERAL
-cname               	1004	1	131122	T_TEXT TS_STRING
-address             	1005	1	131127	T_ADDRESS TS_STRING
-interfaces          	1006	1	1605707	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
+schema              	1001	1	8388633	T_NUMBER TS_NUMERAL
+deleted             	1002	1	8388628	T_BOOL TS_NUMERAL
+showing             	1003	1	8388628	T_BOOL TS_NUMERAL
+cname               	1004	1	16777266	T_TEXT TS_STRING
+address             	1005	1	16777271	T_ADDRESS TS_STRING
+interfaces          	1006	1	205520971	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
 {
 }
 
 --------------------------------------------------------------------------------
 className: CAbi
 baseClass: CBaseNode
-schema              	1001	0	65561	T_NUMBER TS_NUMERAL
-deleted             	1002	0	65556	T_BOOL TS_NUMERAL
-showing             	1003	0	65556	T_BOOL TS_NUMERAL
-cname               	1004	0	131122	T_TEXT TS_STRING
-address             	1005	0	131127	T_ADDRESS TS_STRING
-interfaces          	1006	0	1605707	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
+schema              	1001	0	8388633	T_NUMBER TS_NUMERAL
+deleted             	1002	0	8388628	T_BOOL TS_NUMERAL
+showing             	1003	0	8388628	T_BOOL TS_NUMERAL
+cname               	1004	0	16777266	T_TEXT TS_STRING
+address             	1005	0	16777271	T_ADDRESS TS_STRING
+interfaces          	1006	0	205520971	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
 {
   "schema": 8001,
   "deleted": false,
@@ -47,24 +47,24 @@ interfaces          	1006	0	1605707	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMIT
 --------------------------------------------------------------------------------
 className: CFunction
 baseClass: CBaseNode
-schema              	1001	1	65561	T_NUMBER TS_NUMERAL
-deleted             	1002	1	65556	T_BOOL TS_NUMERAL
-showing             	1003	1	65556	T_BOOL TS_NUMERAL
-cname               	1004	1	131122	T_TEXT TS_STRING
-name                	1005	0	131122	T_TEXT TS_STRING
-type                	1006	0	131122	T_TEXT TS_STRING
-anonymous           	1007	1	65556	T_BOOL TS_NUMERAL
-constant            	1008	0	65556	T_BOOL TS_NUMERAL
-stateMutability     	1009	0	131122	T_TEXT TS_STRING
-signature           	1010	0	131122	T_TEXT TS_STRING
-encoding            	1011	0	131122	T_TEXT TS_STRING
-message             	1012	1	131122	T_TEXT TS_STRING
-inputs              	1013	0	1605707	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
-outputs             	1014	0	1605707	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
-address             	1015	1	131127	T_ADDRESS TS_STRING
-input_names         	1016	1	131122	T_TEXT TS_STRING
-output_names        	1017	1	131122	T_TEXT TS_STRING
-declaration         	1018	1	131122	T_TEXT TS_STRING
+schema              	1001	1	8388633	T_NUMBER TS_NUMERAL
+deleted             	1002	1	8388628	T_BOOL TS_NUMERAL
+showing             	1003	1	8388628	T_BOOL TS_NUMERAL
+cname               	1004	1	16777266	T_TEXT TS_STRING
+name                	1005	0	16777266	T_TEXT TS_STRING
+type                	1006	0	16777266	T_TEXT TS_STRING
+anonymous           	1007	1	8388628	T_BOOL TS_NUMERAL
+constant            	1008	0	8388628	T_BOOL TS_NUMERAL
+stateMutability     	1009	0	16777266	T_TEXT TS_STRING
+signature           	1010	0	16777266	T_TEXT TS_STRING
+encoding            	1011	0	16777266	T_TEXT TS_STRING
+message             	1012	1	16777266	T_TEXT TS_STRING
+inputs              	1013	0	205520971	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
+outputs             	1014	0	205520971	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
+address             	1015	1	16777271	T_ADDRESS TS_STRING
+input_names         	1016	1	16777266	T_TEXT TS_STRING
+output_names        	1017	1	16777266	T_TEXT TS_STRING
+declaration         	1018	1	16777266	T_TEXT TS_STRING
 {
   "constant": false,
   "inputs": [],
@@ -74,48 +74,48 @@ declaration         	1018	1	131122	T_TEXT TS_STRING
 --------------------------------------------------------------------------------
 className: CFunction
 baseClass: CBaseNode
-schema              	1001	1	65561	T_NUMBER TS_NUMERAL
-deleted             	1002	1	65556	T_BOOL TS_NUMERAL
-showing             	1003	1	65556	T_BOOL TS_NUMERAL
-cname               	1004	1	131122	T_TEXT TS_STRING
-name                	1005	1	131122	T_TEXT TS_STRING
-type                	1006	1	131122	T_TEXT TS_STRING
-anonymous           	1007	1	65556	T_BOOL TS_NUMERAL
-constant            	1008	1	65556	T_BOOL TS_NUMERAL
-stateMutability     	1009	1	131122	T_TEXT TS_STRING
-signature           	1010	1	131122	T_TEXT TS_STRING
-encoding            	1011	1	131122	T_TEXT TS_STRING
-message             	1012	1	131122	T_TEXT TS_STRING
-inputs              	1013	1	1605707	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
-outputs             	1014	1	1605707	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
-address             	1015	1	131127	T_ADDRESS TS_STRING
-input_names         	1016	1	131122	T_TEXT TS_STRING
-output_names        	1017	1	131122	T_TEXT TS_STRING
-declaration         	1018	1	131122	T_TEXT TS_STRING
+schema              	1001	1	8388633	T_NUMBER TS_NUMERAL
+deleted             	1002	1	8388628	T_BOOL TS_NUMERAL
+showing             	1003	1	8388628	T_BOOL TS_NUMERAL
+cname               	1004	1	16777266	T_TEXT TS_STRING
+name                	1005	1	16777266	T_TEXT TS_STRING
+type                	1006	1	16777266	T_TEXT TS_STRING
+anonymous           	1007	1	8388628	T_BOOL TS_NUMERAL
+constant            	1008	1	8388628	T_BOOL TS_NUMERAL
+stateMutability     	1009	1	16777266	T_TEXT TS_STRING
+signature           	1010	1	16777266	T_TEXT TS_STRING
+encoding            	1011	1	16777266	T_TEXT TS_STRING
+message             	1012	1	16777266	T_TEXT TS_STRING
+inputs              	1013	1	205520971	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
+outputs             	1014	1	205520971	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
+address             	1015	1	16777271	T_ADDRESS TS_STRING
+input_names         	1016	1	16777266	T_TEXT TS_STRING
+output_names        	1017	1	16777266	T_TEXT TS_STRING
+declaration         	1018	1	16777266	T_TEXT TS_STRING
 {
 }
 
 --------------------------------------------------------------------------------
 className: CFunction
 baseClass: CBaseNode
-schema              	1001	0	65561	T_NUMBER TS_NUMERAL
-deleted             	1002	0	65556	T_BOOL TS_NUMERAL
-showing             	1003	0	65556	T_BOOL TS_NUMERAL
-cname               	1004	0	131122	T_TEXT TS_STRING
-name                	1005	0	131122	T_TEXT TS_STRING
-type                	1006	0	131122	T_TEXT TS_STRING
-anonymous           	1007	0	65556	T_BOOL TS_NUMERAL
-constant            	1008	0	65556	T_BOOL TS_NUMERAL
-stateMutability     	1009	0	131122	T_TEXT TS_STRING
-signature           	1010	0	131122	T_TEXT TS_STRING
-encoding            	1011	0	131122	T_TEXT TS_STRING
-message             	1012	0	131122	T_TEXT TS_STRING
-inputs              	1013	0	1605707	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
-outputs             	1014	0	1605707	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
-address             	1015	0	131127	T_ADDRESS TS_STRING
-input_names         	1016	0	131122	T_TEXT TS_STRING
-output_names        	1017	0	131122	T_TEXT TS_STRING
-declaration         	1018	0	131122	T_TEXT TS_STRING
+schema              	1001	0	8388633	T_NUMBER TS_NUMERAL
+deleted             	1002	0	8388628	T_BOOL TS_NUMERAL
+showing             	1003	0	8388628	T_BOOL TS_NUMERAL
+cname               	1004	0	16777266	T_TEXT TS_STRING
+name                	1005	0	16777266	T_TEXT TS_STRING
+type                	1006	0	16777266	T_TEXT TS_STRING
+anonymous           	1007	0	8388628	T_BOOL TS_NUMERAL
+constant            	1008	0	8388628	T_BOOL TS_NUMERAL
+stateMutability     	1009	0	16777266	T_TEXT TS_STRING
+signature           	1010	0	16777266	T_TEXT TS_STRING
+encoding            	1011	0	16777266	T_TEXT TS_STRING
+message             	1012	0	16777266	T_TEXT TS_STRING
+inputs              	1013	0	205520971	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
+outputs             	1014	0	205520971	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
+address             	1015	0	16777271	T_ADDRESS TS_STRING
+input_names         	1016	0	16777266	T_TEXT TS_STRING
+output_names        	1017	0	16777266	T_TEXT TS_STRING
+declaration         	1018	0	16777266	T_TEXT TS_STRING
 {
   "schema": 8001,
   "deleted": false,
@@ -132,25 +132,25 @@ declaration         	1018	0	131122	T_TEXT TS_STRING
 --------------------------------------------------------------------------------
 className: CParameter
 baseClass: CBaseNode
-schema              	1001	1	65561	T_NUMBER TS_NUMERAL
-deleted             	1002	1	65556	T_BOOL TS_NUMERAL
-showing             	1003	1	65556	T_BOOL TS_NUMERAL
-cname               	1004	1	131122	T_TEXT TS_STRING
-type                	1005	0	131122	T_TEXT TS_STRING
-name                	1006	0	131122	T_TEXT TS_STRING
-str_default         	1007	0	131122	T_TEXT TS_STRING
-value               	1008	0	131122	T_TEXT TS_STRING
-indexed             	1009	0	65556	T_BOOL TS_NUMERAL
-internalType        	1010	0	131122	T_TEXT TS_STRING
-components          	1011	0	1605707	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
-no_write            	1012	0	65556	T_BOOL TS_NUMERAL
-is_flags            	1013	1	65563	T_UNUMBER TS_NUMERAL
-is_pointer          	1014	0	65556	T_BOOL TS_NUMERAL
-is_array            	1015	0	65556	T_BOOL TS_NUMERAL
-is_object           	1016	0	65556	T_BOOL TS_NUMERAL
-is_builtin          	1017	0	65556	T_BOOL TS_NUMERAL
-is_minimal          	1018	0	65556	T_BOOL TS_NUMERAL
-is_enabled          	1019	1	65556	T_BOOL TS_NUMERAL
+schema              	1001	1	8388633	T_NUMBER TS_NUMERAL
+deleted             	1002	1	8388628	T_BOOL TS_NUMERAL
+showing             	1003	1	8388628	T_BOOL TS_NUMERAL
+cname               	1004	1	16777266	T_TEXT TS_STRING
+type                	1005	0	16777266	T_TEXT TS_STRING
+name                	1006	0	16777266	T_TEXT TS_STRING
+str_default         	1007	0	16777266	T_TEXT TS_STRING
+value               	1008	0	16777266	T_TEXT TS_STRING
+indexed             	1009	0	8388628	T_BOOL TS_NUMERAL
+internalType        	1010	0	16777266	T_TEXT TS_STRING
+components          	1011	0	205520971	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
+no_write            	1012	0	8388628	T_BOOL TS_NUMERAL
+is_flags            	1013	1	8388635	T_UNUMBER TS_NUMERAL
+is_pointer          	1014	0	8388628	T_BOOL TS_NUMERAL
+is_array            	1015	0	8388628	T_BOOL TS_NUMERAL
+is_object           	1016	0	8388628	T_BOOL TS_NUMERAL
+is_builtin          	1017	0	8388628	T_BOOL TS_NUMERAL
+is_minimal          	1018	0	8388628	T_BOOL TS_NUMERAL
+is_enabled          	1019	1	8388628	T_BOOL TS_NUMERAL
 {
   "components": []
 }
@@ -158,50 +158,50 @@ is_enabled          	1019	1	65556	T_BOOL TS_NUMERAL
 --------------------------------------------------------------------------------
 className: CParameter
 baseClass: CBaseNode
-schema              	1001	1	65561	T_NUMBER TS_NUMERAL
-deleted             	1002	1	65556	T_BOOL TS_NUMERAL
-showing             	1003	1	65556	T_BOOL TS_NUMERAL
-cname               	1004	1	131122	T_TEXT TS_STRING
-type                	1005	1	131122	T_TEXT TS_STRING
-name                	1006	1	131122	T_TEXT TS_STRING
-str_default         	1007	1	131122	T_TEXT TS_STRING
-value               	1008	1	131122	T_TEXT TS_STRING
-indexed             	1009	1	65556	T_BOOL TS_NUMERAL
-internalType        	1010	1	131122	T_TEXT TS_STRING
-components          	1011	1	1605707	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
-no_write            	1012	1	65556	T_BOOL TS_NUMERAL
-is_flags            	1013	1	65563	T_UNUMBER TS_NUMERAL
-is_pointer          	1014	1	65556	T_BOOL TS_NUMERAL
-is_array            	1015	1	65556	T_BOOL TS_NUMERAL
-is_object           	1016	1	65556	T_BOOL TS_NUMERAL
-is_builtin          	1017	1	65556	T_BOOL TS_NUMERAL
-is_minimal          	1018	1	65556	T_BOOL TS_NUMERAL
-is_enabled          	1019	1	65556	T_BOOL TS_NUMERAL
+schema              	1001	1	8388633	T_NUMBER TS_NUMERAL
+deleted             	1002	1	8388628	T_BOOL TS_NUMERAL
+showing             	1003	1	8388628	T_BOOL TS_NUMERAL
+cname               	1004	1	16777266	T_TEXT TS_STRING
+type                	1005	1	16777266	T_TEXT TS_STRING
+name                	1006	1	16777266	T_TEXT TS_STRING
+str_default         	1007	1	16777266	T_TEXT TS_STRING
+value               	1008	1	16777266	T_TEXT TS_STRING
+indexed             	1009	1	8388628	T_BOOL TS_NUMERAL
+internalType        	1010	1	16777266	T_TEXT TS_STRING
+components          	1011	1	205520971	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
+no_write            	1012	1	8388628	T_BOOL TS_NUMERAL
+is_flags            	1013	1	8388635	T_UNUMBER TS_NUMERAL
+is_pointer          	1014	1	8388628	T_BOOL TS_NUMERAL
+is_array            	1015	1	8388628	T_BOOL TS_NUMERAL
+is_object           	1016	1	8388628	T_BOOL TS_NUMERAL
+is_builtin          	1017	1	8388628	T_BOOL TS_NUMERAL
+is_minimal          	1018	1	8388628	T_BOOL TS_NUMERAL
+is_enabled          	1019	1	8388628	T_BOOL TS_NUMERAL
 {
 }
 
 --------------------------------------------------------------------------------
 className: CParameter
 baseClass: CBaseNode
-schema              	1001	0	65561	T_NUMBER TS_NUMERAL
-deleted             	1002	0	65556	T_BOOL TS_NUMERAL
-showing             	1003	0	65556	T_BOOL TS_NUMERAL
-cname               	1004	0	131122	T_TEXT TS_STRING
-type                	1005	0	131122	T_TEXT TS_STRING
-name                	1006	0	131122	T_TEXT TS_STRING
-str_default         	1007	0	131122	T_TEXT TS_STRING
-value               	1008	0	131122	T_TEXT TS_STRING
-indexed             	1009	0	65556	T_BOOL TS_NUMERAL
-internalType        	1010	0	131122	T_TEXT TS_STRING
-components          	1011	0	1605707	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
-no_write            	1012	0	65556	T_BOOL TS_NUMERAL
-is_flags            	1013	0	65563	T_UNUMBER TS_NUMERAL
-is_pointer          	1014	0	65556	T_BOOL TS_NUMERAL
-is_array            	1015	0	65556	T_BOOL TS_NUMERAL
-is_object           	1016	0	65556	T_BOOL TS_NUMERAL
-is_builtin          	1017	0	65556	T_BOOL TS_NUMERAL
-is_minimal          	1018	0	65556	T_BOOL TS_NUMERAL
-is_enabled          	1019	0	65556	T_BOOL TS_NUMERAL
+schema              	1001	0	8388633	T_NUMBER TS_NUMERAL
+deleted             	1002	0	8388628	T_BOOL TS_NUMERAL
+showing             	1003	0	8388628	T_BOOL TS_NUMERAL
+cname               	1004	0	16777266	T_TEXT TS_STRING
+type                	1005	0	16777266	T_TEXT TS_STRING
+name                	1006	0	16777266	T_TEXT TS_STRING
+str_default         	1007	0	16777266	T_TEXT TS_STRING
+value               	1008	0	16777266	T_TEXT TS_STRING
+indexed             	1009	0	8388628	T_BOOL TS_NUMERAL
+internalType        	1010	0	16777266	T_TEXT TS_STRING
+components          	1011	0	205520971	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
+no_write            	1012	0	8388628	T_BOOL TS_NUMERAL
+is_flags            	1013	0	8388635	T_UNUMBER TS_NUMERAL
+is_pointer          	1014	0	8388628	T_BOOL TS_NUMERAL
+is_array            	1015	0	8388628	T_BOOL TS_NUMERAL
+is_object           	1016	0	8388628	T_BOOL TS_NUMERAL
+is_builtin          	1017	0	8388628	T_BOOL TS_NUMERAL
+is_minimal          	1018	0	8388628	T_BOOL TS_NUMERAL
+is_enabled          	1019	0	8388628	T_BOOL TS_NUMERAL
 {
   "schema": 8001,
   "deleted": false,
@@ -216,18 +216,18 @@ Unknown node of type CAccount not created.
 --------------------------------------------------------------------------------
 className: CMonitor
 baseClass: CAccountName
-schema              	1001	1	65561	T_NUMBER TS_NUMERAL
-deleted             	1002	1	65556	T_BOOL TS_NUMERAL
-showing             	1003	1	65556	T_BOOL TS_NUMERAL
-cname               	1004	1	131122	T_TEXT TS_STRING
-abi_spec            	1005	0	1048651	T_OBJECT TS_OBJECT
-summaryStatement    	1006	0	1048651	T_OBJECT TS_OBJECT
-stateHistory        	1007	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
-curBalance          	1008	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
-enabled             	1009	0	65556	T_BOOL TS_NUMERAL
-fm_mode             	1010	1	65561	T_NUMBER TS_NUMERAL
-curEther            	1011	1	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
-curDollars          	1012	1	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
+schema              	1001	1	8388633	T_NUMBER TS_NUMERAL
+deleted             	1002	1	8388628	T_BOOL TS_NUMERAL
+showing             	1003	1	8388628	T_BOOL TS_NUMERAL
+cname               	1004	1	16777266	T_TEXT TS_STRING
+abi_spec            	1005	0	138412107	T_OBJECT TS_OBJECT TS_OMITEMPTY
+summaryStatement    	1006	0	138412107	T_OBJECT TS_OBJECT TS_OMITEMPTY
+stateHistory        	1007	0	205520971	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
+curBalance          	1008	0	545259555	T_WEI TS_NUMERAL TS_BIGNUM
+enabled             	1009	0	8388628	T_BOOL TS_NUMERAL
+fm_mode             	1010	1	8388633	T_NUMBER TS_NUMERAL
+curEther            	1011	1	545259565	T_ETHER TS_NUMERAL TS_BIGNUM
+curDollars          	1012	1	545259565	T_ETHER TS_NUMERAL TS_BIGNUM
 {
   "abi_spec": {},
   "summaryStatement": {},
@@ -242,18 +242,18 @@ curDollars          	1012	1	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
 --------------------------------------------------------------------------------
 className: CMonitor
 baseClass: CAccountName
-schema              	1001	1	65561	T_NUMBER TS_NUMERAL
-deleted             	1002	1	65556	T_BOOL TS_NUMERAL
-showing             	1003	1	65556	T_BOOL TS_NUMERAL
-cname               	1004	1	131122	T_TEXT TS_STRING
-abi_spec            	1005	1	1048651	T_OBJECT TS_OBJECT
-summaryStatement    	1006	1	1048651	T_OBJECT TS_OBJECT
-stateHistory        	1007	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
-curBalance          	1008	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
-enabled             	1009	1	65556	T_BOOL TS_NUMERAL
-fm_mode             	1010	1	65561	T_NUMBER TS_NUMERAL
-curEther            	1011	1	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
-curDollars          	1012	1	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
+schema              	1001	1	8388633	T_NUMBER TS_NUMERAL
+deleted             	1002	1	8388628	T_BOOL TS_NUMERAL
+showing             	1003	1	8388628	T_BOOL TS_NUMERAL
+cname               	1004	1	16777266	T_TEXT TS_STRING
+abi_spec            	1005	1	138412107	T_OBJECT TS_OBJECT TS_OMITEMPTY
+summaryStatement    	1006	1	138412107	T_OBJECT TS_OBJECT TS_OMITEMPTY
+stateHistory        	1007	1	205520971	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
+curBalance          	1008	1	545259555	T_WEI TS_NUMERAL TS_BIGNUM
+enabled             	1009	1	8388628	T_BOOL TS_NUMERAL
+fm_mode             	1010	1	8388633	T_NUMBER TS_NUMERAL
+curEther            	1011	1	545259565	T_ETHER TS_NUMERAL TS_BIGNUM
+curDollars          	1012	1	545259565	T_ETHER TS_NUMERAL TS_BIGNUM
 {
   "address": "0x0",
   "is_custom": false,
@@ -263,18 +263,18 @@ curDollars          	1012	1	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
 --------------------------------------------------------------------------------
 className: CMonitor
 baseClass: CAccountName
-schema              	1001	0	65561	T_NUMBER TS_NUMERAL
-deleted             	1002	0	65556	T_BOOL TS_NUMERAL
-showing             	1003	0	65556	T_BOOL TS_NUMERAL
-cname               	1004	0	131122	T_TEXT TS_STRING
-abi_spec            	1005	0	1048651	T_OBJECT TS_OBJECT
-summaryStatement    	1006	0	1048651	T_OBJECT TS_OBJECT
-stateHistory        	1007	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
-curBalance          	1008	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
-enabled             	1009	0	65556	T_BOOL TS_NUMERAL
-fm_mode             	1010	0	65561	T_NUMBER TS_NUMERAL
-curEther            	1011	0	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
-curDollars          	1012	0	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
+schema              	1001	0	8388633	T_NUMBER TS_NUMERAL
+deleted             	1002	0	8388628	T_BOOL TS_NUMERAL
+showing             	1003	0	8388628	T_BOOL TS_NUMERAL
+cname               	1004	0	16777266	T_TEXT TS_STRING
+abi_spec            	1005	0	138412107	T_OBJECT TS_OBJECT TS_OMITEMPTY
+summaryStatement    	1006	0	138412107	T_OBJECT TS_OBJECT TS_OMITEMPTY
+stateHistory        	1007	0	205520971	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
+curBalance          	1008	0	545259555	T_WEI TS_NUMERAL TS_BIGNUM
+enabled             	1009	0	8388628	T_BOOL TS_NUMERAL
+fm_mode             	1010	0	8388633	T_NUMBER TS_NUMERAL
+curEther            	1011	0	545259565	T_ETHER TS_NUMERAL TS_BIGNUM
+curDollars          	1012	0	545259565	T_ETHER TS_NUMERAL TS_BIGNUM
 {
   "schema": 8001,
   "deleted": false,
@@ -296,25 +296,25 @@ curDollars          	1012	0	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
 --------------------------------------------------------------------------------
 className: CBlock
 baseClass: CBaseNode
-schema              	1001	1	65561	T_NUMBER TS_NUMERAL
-deleted             	1002	1	65556	T_BOOL TS_NUMERAL
-showing             	1003	1	65556	T_BOOL TS_NUMERAL
-cname               	1004	1	131122	T_TEXT TS_STRING
-gasLimit            	1005	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
-gasUsed             	1006	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
-hash                	1007	0	131132	T_HASH TS_STRING
-blockNumber         	1008	0	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
-parentHash          	1009	0	131132	T_HASH TS_STRING
-miner               	1010	0	131127	T_ADDRESS TS_STRING
-difficulty          	1011	0	65563	T_UNUMBER TS_NUMERAL
-price               	1012	0	65566	T_DOUBLE TS_NUMERAL
-finalized           	1013	0	65556	T_BOOL TS_NUMERAL
-timestamp           	1014	0	8454159	T_TIMESTAMP TS_NUMERAL TS_INTEGER
-transactions        	1015	0	1605707	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
-name                	1016	1	131122	T_TEXT TS_STRING
-light               	1017	1	65556	T_BOOL TS_NUMERAL
-date                	1018	1	262149	T_DATE TS_DATE
-age                 	1019	1	262149	T_DATE TS_DATE
+schema              	1001	1	8388633	T_NUMBER TS_NUMERAL
+deleted             	1002	1	8388628	T_BOOL TS_NUMERAL
+showing             	1003	1	8388628	T_BOOL TS_NUMERAL
+cname               	1004	1	16777266	T_TEXT TS_STRING
+gasLimit            	1005	0	545259560	T_GAS TS_NUMERAL TS_BIGNUM
+gasUsed             	1006	0	545259560	T_GAS TS_NUMERAL TS_BIGNUM
+hash                	1007	0	16777276	T_HASH TS_STRING
+blockNumber         	1008	0	1082130460	T_BLOCKNUM TS_NUMERAL TS_INTEGER
+parentHash          	1009	0	16777276	T_HASH TS_STRING
+miner               	1010	0	16777271	T_ADDRESS TS_STRING
+difficulty          	1011	0	8388635	T_UNUMBER TS_NUMERAL
+price               	1012	0	8388638	T_DOUBLE TS_NUMERAL
+finalized           	1013	0	8388628	T_BOOL TS_NUMERAL
+timestamp           	1014	0	1082130447	T_TIMESTAMP TS_NUMERAL TS_INTEGER
+transactions        	1015	0	205520971	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
+name                	1016	1	16777266	T_TEXT TS_STRING
+light               	1017	1	8388628	T_BOOL TS_NUMERAL
+date                	1018	1	33554437	T_DATE TS_DATE
+age                 	1019	1	33554437	T_DATE TS_DATE
 {
   "gasLimit": 0,
   "gasUsed": 0,
@@ -332,50 +332,50 @@ age                 	1019	1	262149	T_DATE TS_DATE
 --------------------------------------------------------------------------------
 className: CBlock
 baseClass: CBaseNode
-schema              	1001	1	65561	T_NUMBER TS_NUMERAL
-deleted             	1002	1	65556	T_BOOL TS_NUMERAL
-showing             	1003	1	65556	T_BOOL TS_NUMERAL
-cname               	1004	1	131122	T_TEXT TS_STRING
-gasLimit            	1005	1	4259880	T_GAS TS_NUMERAL TS_BIGNUM
-gasUsed             	1006	1	4259880	T_GAS TS_NUMERAL TS_BIGNUM
-hash                	1007	1	131132	T_HASH TS_STRING
-blockNumber         	1008	1	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
-parentHash          	1009	1	131132	T_HASH TS_STRING
-miner               	1010	1	131127	T_ADDRESS TS_STRING
-difficulty          	1011	1	65563	T_UNUMBER TS_NUMERAL
-price               	1012	1	65566	T_DOUBLE TS_NUMERAL
-finalized           	1013	1	65556	T_BOOL TS_NUMERAL
-timestamp           	1014	1	8454159	T_TIMESTAMP TS_NUMERAL TS_INTEGER
-transactions        	1015	1	1605707	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
-name                	1016	1	131122	T_TEXT TS_STRING
-light               	1017	1	65556	T_BOOL TS_NUMERAL
-date                	1018	1	262149	T_DATE TS_DATE
-age                 	1019	1	262149	T_DATE TS_DATE
+schema              	1001	1	8388633	T_NUMBER TS_NUMERAL
+deleted             	1002	1	8388628	T_BOOL TS_NUMERAL
+showing             	1003	1	8388628	T_BOOL TS_NUMERAL
+cname               	1004	1	16777266	T_TEXT TS_STRING
+gasLimit            	1005	1	545259560	T_GAS TS_NUMERAL TS_BIGNUM
+gasUsed             	1006	1	545259560	T_GAS TS_NUMERAL TS_BIGNUM
+hash                	1007	1	16777276	T_HASH TS_STRING
+blockNumber         	1008	1	1082130460	T_BLOCKNUM TS_NUMERAL TS_INTEGER
+parentHash          	1009	1	16777276	T_HASH TS_STRING
+miner               	1010	1	16777271	T_ADDRESS TS_STRING
+difficulty          	1011	1	8388635	T_UNUMBER TS_NUMERAL
+price               	1012	1	8388638	T_DOUBLE TS_NUMERAL
+finalized           	1013	1	8388628	T_BOOL TS_NUMERAL
+timestamp           	1014	1	1082130447	T_TIMESTAMP TS_NUMERAL TS_INTEGER
+transactions        	1015	1	205520971	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
+name                	1016	1	16777266	T_TEXT TS_STRING
+light               	1017	1	8388628	T_BOOL TS_NUMERAL
+date                	1018	1	33554437	T_DATE TS_DATE
+age                 	1019	1	33554437	T_DATE TS_DATE
 {
 }
 
 --------------------------------------------------------------------------------
 className: CBlock
 baseClass: CBaseNode
-schema              	1001	0	65561	T_NUMBER TS_NUMERAL
-deleted             	1002	0	65556	T_BOOL TS_NUMERAL
-showing             	1003	0	65556	T_BOOL TS_NUMERAL
-cname               	1004	0	131122	T_TEXT TS_STRING
-gasLimit            	1005	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
-gasUsed             	1006	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
-hash                	1007	0	131132	T_HASH TS_STRING
-blockNumber         	1008	0	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
-parentHash          	1009	0	131132	T_HASH TS_STRING
-miner               	1010	0	131127	T_ADDRESS TS_STRING
-difficulty          	1011	0	65563	T_UNUMBER TS_NUMERAL
-price               	1012	0	65566	T_DOUBLE TS_NUMERAL
-finalized           	1013	0	65556	T_BOOL TS_NUMERAL
-timestamp           	1014	0	8454159	T_TIMESTAMP TS_NUMERAL TS_INTEGER
-transactions        	1015	0	1605707	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
-name                	1016	0	131122	T_TEXT TS_STRING
-light               	1017	0	65556	T_BOOL TS_NUMERAL
-date                	1018	0	262149	T_DATE TS_DATE
-age                 	1019	0	262149	T_DATE TS_DATE
+schema              	1001	0	8388633	T_NUMBER TS_NUMERAL
+deleted             	1002	0	8388628	T_BOOL TS_NUMERAL
+showing             	1003	0	8388628	T_BOOL TS_NUMERAL
+cname               	1004	0	16777266	T_TEXT TS_STRING
+gasLimit            	1005	0	545259560	T_GAS TS_NUMERAL TS_BIGNUM
+gasUsed             	1006	0	545259560	T_GAS TS_NUMERAL TS_BIGNUM
+hash                	1007	0	16777276	T_HASH TS_STRING
+blockNumber         	1008	0	1082130460	T_BLOCKNUM TS_NUMERAL TS_INTEGER
+parentHash          	1009	0	16777276	T_HASH TS_STRING
+miner               	1010	0	16777271	T_ADDRESS TS_STRING
+difficulty          	1011	0	8388635	T_UNUMBER TS_NUMERAL
+price               	1012	0	8388638	T_DOUBLE TS_NUMERAL
+finalized           	1013	0	8388628	T_BOOL TS_NUMERAL
+timestamp           	1014	0	1082130447	T_TIMESTAMP TS_NUMERAL TS_INTEGER
+transactions        	1015	0	205520971	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
+name                	1016	0	16777266	T_TEXT TS_STRING
+light               	1017	0	8388628	T_BOOL TS_NUMERAL
+date                	1018	0	33554437	T_DATE TS_DATE
+age                 	1019	0	33554437	T_DATE TS_DATE
 {
   "schema": 8001,
   "deleted": false,
@@ -400,27 +400,27 @@ Unknown node of type CReconcilationOutput not created.
 --------------------------------------------------------------------------------
 className: CLogEntry
 baseClass: CBaseNode
-schema              	1001	1	65561	T_NUMBER TS_NUMERAL
-deleted             	1002	1	65556	T_BOOL TS_NUMERAL
-showing             	1003	1	65556	T_BOOL TS_NUMERAL
-cname               	1004	1	131122	T_TEXT TS_STRING
-address             	1005	0	131127	T_ADDRESS TS_STRING
-blockHash           	1006	1	131132	T_HASH TS_STRING
-blockNumber         	1007	1	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
-logIndex            	1008	0	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
-topics              	1009	0	1605707	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
-data                	1010	0	131122	T_TEXT TS_STRING
-articulatedLog      	1011	0	1048651	T_OBJECT TS_OBJECT
-compressedLog       	1012	1	131122	T_TEXT TS_STRING
-transactionHash     	1013	1	131132	T_HASH TS_STRING
-transactionIndex    	1014	1	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
-transactionLogIndex 	1015	1	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
-type                	1016	1	131122	T_TEXT TS_STRING
-removed             	1017	1	65556	T_BOOL TS_NUMERAL
-topic0              	1018	1	131132	T_HASH TS_STRING
-topic1              	1019	1	131132	T_HASH TS_STRING
-topic2              	1020	1	131132	T_HASH TS_STRING
-topic3              	1021	1	131132	T_HASH TS_STRING
+schema              	1001	1	8388633	T_NUMBER TS_NUMERAL
+deleted             	1002	1	8388628	T_BOOL TS_NUMERAL
+showing             	1003	1	8388628	T_BOOL TS_NUMERAL
+cname               	1004	1	16777266	T_TEXT TS_STRING
+address             	1005	0	16777271	T_ADDRESS TS_STRING
+blockHash           	1006	1	16777276	T_HASH TS_STRING
+blockNumber         	1007	1	1082130460	T_BLOCKNUM TS_NUMERAL TS_INTEGER
+logIndex            	1008	0	1082130460	T_BLOCKNUM TS_NUMERAL TS_INTEGER
+topics              	1009	0	205520971	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
+data                	1010	0	16777266	T_TEXT TS_STRING
+articulatedLog      	1011	0	138412107	T_OBJECT TS_OBJECT TS_OMITEMPTY
+compressedLog       	1012	1	16777266	T_TEXT TS_STRING
+transactionHash     	1013	1	16777276	T_HASH TS_STRING
+transactionIndex    	1014	1	1082130460	T_BLOCKNUM TS_NUMERAL TS_INTEGER
+transactionLogIndex 	1015	1	1082130460	T_BLOCKNUM TS_NUMERAL TS_INTEGER
+type                	1016	1	16777266	T_TEXT TS_STRING
+removed             	1017	1	8388628	T_BOOL TS_NUMERAL
+topic0              	1018	1	16777276	T_HASH TS_STRING
+topic1              	1019	1	16777276	T_HASH TS_STRING
+topic2              	1020	1	16777276	T_HASH TS_STRING
+topic3              	1021	1	16777276	T_HASH TS_STRING
 {
   "address": "0x0",
   "logIndex": 0,
@@ -431,54 +431,54 @@ topic3              	1021	1	131132	T_HASH TS_STRING
 --------------------------------------------------------------------------------
 className: CLogEntry
 baseClass: CBaseNode
-schema              	1001	1	65561	T_NUMBER TS_NUMERAL
-deleted             	1002	1	65556	T_BOOL TS_NUMERAL
-showing             	1003	1	65556	T_BOOL TS_NUMERAL
-cname               	1004	1	131122	T_TEXT TS_STRING
-address             	1005	1	131127	T_ADDRESS TS_STRING
-blockHash           	1006	1	131132	T_HASH TS_STRING
-blockNumber         	1007	1	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
-logIndex            	1008	1	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
-topics              	1009	1	1605707	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
-data                	1010	1	131122	T_TEXT TS_STRING
-articulatedLog      	1011	1	1048651	T_OBJECT TS_OBJECT
-compressedLog       	1012	1	131122	T_TEXT TS_STRING
-transactionHash     	1013	1	131132	T_HASH TS_STRING
-transactionIndex    	1014	1	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
-transactionLogIndex 	1015	1	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
-type                	1016	1	131122	T_TEXT TS_STRING
-removed             	1017	1	65556	T_BOOL TS_NUMERAL
-topic0              	1018	1	131132	T_HASH TS_STRING
-topic1              	1019	1	131132	T_HASH TS_STRING
-topic2              	1020	1	131132	T_HASH TS_STRING
-topic3              	1021	1	131132	T_HASH TS_STRING
+schema              	1001	1	8388633	T_NUMBER TS_NUMERAL
+deleted             	1002	1	8388628	T_BOOL TS_NUMERAL
+showing             	1003	1	8388628	T_BOOL TS_NUMERAL
+cname               	1004	1	16777266	T_TEXT TS_STRING
+address             	1005	1	16777271	T_ADDRESS TS_STRING
+blockHash           	1006	1	16777276	T_HASH TS_STRING
+blockNumber         	1007	1	1082130460	T_BLOCKNUM TS_NUMERAL TS_INTEGER
+logIndex            	1008	1	1082130460	T_BLOCKNUM TS_NUMERAL TS_INTEGER
+topics              	1009	1	205520971	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
+data                	1010	1	16777266	T_TEXT TS_STRING
+articulatedLog      	1011	1	138412107	T_OBJECT TS_OBJECT TS_OMITEMPTY
+compressedLog       	1012	1	16777266	T_TEXT TS_STRING
+transactionHash     	1013	1	16777276	T_HASH TS_STRING
+transactionIndex    	1014	1	1082130460	T_BLOCKNUM TS_NUMERAL TS_INTEGER
+transactionLogIndex 	1015	1	1082130460	T_BLOCKNUM TS_NUMERAL TS_INTEGER
+type                	1016	1	16777266	T_TEXT TS_STRING
+removed             	1017	1	8388628	T_BOOL TS_NUMERAL
+topic0              	1018	1	16777276	T_HASH TS_STRING
+topic1              	1019	1	16777276	T_HASH TS_STRING
+topic2              	1020	1	16777276	T_HASH TS_STRING
+topic3              	1021	1	16777276	T_HASH TS_STRING
 {
 }
 
 --------------------------------------------------------------------------------
 className: CLogEntry
 baseClass: CBaseNode
-schema              	1001	0	65561	T_NUMBER TS_NUMERAL
-deleted             	1002	0	65556	T_BOOL TS_NUMERAL
-showing             	1003	0	65556	T_BOOL TS_NUMERAL
-cname               	1004	0	131122	T_TEXT TS_STRING
-address             	1005	0	131127	T_ADDRESS TS_STRING
-blockHash           	1006	0	131132	T_HASH TS_STRING
-blockNumber         	1007	0	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
-logIndex            	1008	0	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
-topics              	1009	0	1605707	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
-data                	1010	0	131122	T_TEXT TS_STRING
-articulatedLog      	1011	0	1048651	T_OBJECT TS_OBJECT
-compressedLog       	1012	0	131122	T_TEXT TS_STRING
-transactionHash     	1013	0	131132	T_HASH TS_STRING
-transactionIndex    	1014	0	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
-transactionLogIndex 	1015	0	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
-type                	1016	0	131122	T_TEXT TS_STRING
-removed             	1017	0	65556	T_BOOL TS_NUMERAL
-topic0              	1018	0	131132	T_HASH TS_STRING
-topic1              	1019	0	131132	T_HASH TS_STRING
-topic2              	1020	0	131132	T_HASH TS_STRING
-topic3              	1021	0	131132	T_HASH TS_STRING
+schema              	1001	0	8388633	T_NUMBER TS_NUMERAL
+deleted             	1002	0	8388628	T_BOOL TS_NUMERAL
+showing             	1003	0	8388628	T_BOOL TS_NUMERAL
+cname               	1004	0	16777266	T_TEXT TS_STRING
+address             	1005	0	16777271	T_ADDRESS TS_STRING
+blockHash           	1006	0	16777276	T_HASH TS_STRING
+blockNumber         	1007	0	1082130460	T_BLOCKNUM TS_NUMERAL TS_INTEGER
+logIndex            	1008	0	1082130460	T_BLOCKNUM TS_NUMERAL TS_INTEGER
+topics              	1009	0	205520971	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
+data                	1010	0	16777266	T_TEXT TS_STRING
+articulatedLog      	1011	0	138412107	T_OBJECT TS_OBJECT TS_OMITEMPTY
+compressedLog       	1012	0	16777266	T_TEXT TS_STRING
+transactionHash     	1013	0	16777276	T_HASH TS_STRING
+transactionIndex    	1014	0	1082130460	T_BLOCKNUM TS_NUMERAL TS_INTEGER
+transactionLogIndex 	1015	0	1082130460	T_BLOCKNUM TS_NUMERAL TS_INTEGER
+type                	1016	0	16777266	T_TEXT TS_STRING
+removed             	1017	0	8388628	T_BOOL TS_NUMERAL
+topic0              	1018	0	16777276	T_HASH TS_STRING
+topic1              	1019	0	16777276	T_HASH TS_STRING
+topic2              	1020	0	16777276	T_HASH TS_STRING
+topic3              	1021	0	16777276	T_HASH TS_STRING
 {
   "schema": 8001,
   "deleted": false,
@@ -494,13 +494,13 @@ topic3              	1021	0	131132	T_HASH TS_STRING
 --------------------------------------------------------------------------------
 className: CPriceQuote
 baseClass: CBaseNode
-schema              	1001	1	65561	T_NUMBER TS_NUMERAL
-deleted             	1002	1	65556	T_BOOL TS_NUMERAL
-showing             	1003	1	65556	T_BOOL TS_NUMERAL
-cname               	1004	1	131122	T_TEXT TS_STRING
-timestamp           	1005	0	8454159	T_TIMESTAMP TS_NUMERAL TS_INTEGER
-close               	1006	0	65566	T_DOUBLE TS_NUMERAL
-date                	1007	0	262149	T_DATE TS_DATE
+schema              	1001	1	8388633	T_NUMBER TS_NUMERAL
+deleted             	1002	1	8388628	T_BOOL TS_NUMERAL
+showing             	1003	1	8388628	T_BOOL TS_NUMERAL
+cname               	1004	1	16777266	T_TEXT TS_STRING
+timestamp           	1005	0	1082130447	T_TIMESTAMP TS_NUMERAL TS_INTEGER
+close               	1006	0	8388638	T_DOUBLE TS_NUMERAL
+date                	1007	0	33554437	T_DATE TS_DATE
 {
   "timestamp": 0,
   "close": 0.00000,
@@ -510,26 +510,26 @@ date                	1007	0	262149	T_DATE TS_DATE
 --------------------------------------------------------------------------------
 className: CPriceQuote
 baseClass: CBaseNode
-schema              	1001	1	65561	T_NUMBER TS_NUMERAL
-deleted             	1002	1	65556	T_BOOL TS_NUMERAL
-showing             	1003	1	65556	T_BOOL TS_NUMERAL
-cname               	1004	1	131122	T_TEXT TS_STRING
-timestamp           	1005	1	8454159	T_TIMESTAMP TS_NUMERAL TS_INTEGER
-close               	1006	1	65566	T_DOUBLE TS_NUMERAL
-date                	1007	1	262149	T_DATE TS_DATE
+schema              	1001	1	8388633	T_NUMBER TS_NUMERAL
+deleted             	1002	1	8388628	T_BOOL TS_NUMERAL
+showing             	1003	1	8388628	T_BOOL TS_NUMERAL
+cname               	1004	1	16777266	T_TEXT TS_STRING
+timestamp           	1005	1	1082130447	T_TIMESTAMP TS_NUMERAL TS_INTEGER
+close               	1006	1	8388638	T_DOUBLE TS_NUMERAL
+date                	1007	1	33554437	T_DATE TS_DATE
 {
 }
 
 --------------------------------------------------------------------------------
 className: CPriceQuote
 baseClass: CBaseNode
-schema              	1001	0	65561	T_NUMBER TS_NUMERAL
-deleted             	1002	0	65556	T_BOOL TS_NUMERAL
-showing             	1003	0	65556	T_BOOL TS_NUMERAL
-cname               	1004	0	131122	T_TEXT TS_STRING
-timestamp           	1005	0	8454159	T_TIMESTAMP TS_NUMERAL TS_INTEGER
-close               	1006	0	65566	T_DOUBLE TS_NUMERAL
-date                	1007	0	262149	T_DATE TS_DATE
+schema              	1001	0	8388633	T_NUMBER TS_NUMERAL
+deleted             	1002	0	8388628	T_BOOL TS_NUMERAL
+showing             	1003	0	8388628	T_BOOL TS_NUMERAL
+cname               	1004	0	16777266	T_TEXT TS_STRING
+timestamp           	1005	0	1082130447	T_TIMESTAMP TS_NUMERAL TS_INTEGER
+close               	1006	0	8388638	T_DOUBLE TS_NUMERAL
+date                	1007	0	33554437	T_DATE TS_DATE
 {
   "schema": 8001,
   "deleted": false,
@@ -543,22 +543,22 @@ date                	1007	0	262149	T_DATE TS_DATE
 --------------------------------------------------------------------------------
 className: CReceipt
 baseClass: CBaseNode
-schema              	1001	1	65561	T_NUMBER TS_NUMERAL
-deleted             	1002	1	65556	T_BOOL TS_NUMERAL
-showing             	1003	1	65556	T_BOOL TS_NUMERAL
-cname               	1004	1	131122	T_TEXT TS_STRING
-blockHash           	1005	1	131132	T_HASH TS_STRING
-blockNumber         	1006	1	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
-contractAddress     	1007	0	131127	T_ADDRESS TS_STRING
-cumulativeGasUsed   	1008	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
-from                	1009	1	131127	T_ADDRESS TS_STRING
-gasUsed             	1010	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
-logs                	1011	0	1605707	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
-root                	1012	1	131122	T_TEXT TS_STRING
-status              	1013	0	65563	T_UNUMBER TS_NUMERAL
-to                  	1014	1	131127	T_ADDRESS TS_STRING
-transactionHash     	1015	1	131132	T_HASH TS_STRING
-transactionIndex    	1016	1	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
+schema              	1001	1	8388633	T_NUMBER TS_NUMERAL
+deleted             	1002	1	8388628	T_BOOL TS_NUMERAL
+showing             	1003	1	8388628	T_BOOL TS_NUMERAL
+cname               	1004	1	16777266	T_TEXT TS_STRING
+blockHash           	1005	1	16777276	T_HASH TS_STRING
+blockNumber         	1006	1	1082130460	T_BLOCKNUM TS_NUMERAL TS_INTEGER
+contractAddress     	1007	0	16777271	T_ADDRESS TS_STRING
+cumulativeGasUsed   	1008	1	545259555	T_WEI TS_NUMERAL TS_BIGNUM
+from                	1009	1	16777271	T_ADDRESS TS_STRING
+gasUsed             	1010	0	545259560	T_GAS TS_NUMERAL TS_BIGNUM
+logs                	1011	0	205520971	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
+root                	1012	1	16777266	T_TEXT TS_STRING
+status              	1013	0	8388635	T_UNUMBER TS_NUMERAL
+to                  	1014	1	16777271	T_ADDRESS TS_STRING
+transactionHash     	1015	1	16777276	T_HASH TS_STRING
+transactionIndex    	1016	1	1082130460	T_BLOCKNUM TS_NUMERAL TS_INTEGER
 {
   "contractAddress": "0x0",
   "gasUsed": 0,
@@ -569,44 +569,44 @@ transactionIndex    	1016	1	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
 --------------------------------------------------------------------------------
 className: CReceipt
 baseClass: CBaseNode
-schema              	1001	1	65561	T_NUMBER TS_NUMERAL
-deleted             	1002	1	65556	T_BOOL TS_NUMERAL
-showing             	1003	1	65556	T_BOOL TS_NUMERAL
-cname               	1004	1	131122	T_TEXT TS_STRING
-blockHash           	1005	1	131132	T_HASH TS_STRING
-blockNumber         	1006	1	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
-contractAddress     	1007	1	131127	T_ADDRESS TS_STRING
-cumulativeGasUsed   	1008	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
-from                	1009	1	131127	T_ADDRESS TS_STRING
-gasUsed             	1010	1	4259880	T_GAS TS_NUMERAL TS_BIGNUM
-logs                	1011	1	1605707	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
-root                	1012	1	131122	T_TEXT TS_STRING
-status              	1013	1	65563	T_UNUMBER TS_NUMERAL
-to                  	1014	1	131127	T_ADDRESS TS_STRING
-transactionHash     	1015	1	131132	T_HASH TS_STRING
-transactionIndex    	1016	1	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
+schema              	1001	1	8388633	T_NUMBER TS_NUMERAL
+deleted             	1002	1	8388628	T_BOOL TS_NUMERAL
+showing             	1003	1	8388628	T_BOOL TS_NUMERAL
+cname               	1004	1	16777266	T_TEXT TS_STRING
+blockHash           	1005	1	16777276	T_HASH TS_STRING
+blockNumber         	1006	1	1082130460	T_BLOCKNUM TS_NUMERAL TS_INTEGER
+contractAddress     	1007	1	16777271	T_ADDRESS TS_STRING
+cumulativeGasUsed   	1008	1	545259555	T_WEI TS_NUMERAL TS_BIGNUM
+from                	1009	1	16777271	T_ADDRESS TS_STRING
+gasUsed             	1010	1	545259560	T_GAS TS_NUMERAL TS_BIGNUM
+logs                	1011	1	205520971	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
+root                	1012	1	16777266	T_TEXT TS_STRING
+status              	1013	1	8388635	T_UNUMBER TS_NUMERAL
+to                  	1014	1	16777271	T_ADDRESS TS_STRING
+transactionHash     	1015	1	16777276	T_HASH TS_STRING
+transactionIndex    	1016	1	1082130460	T_BLOCKNUM TS_NUMERAL TS_INTEGER
 {
 }
 
 --------------------------------------------------------------------------------
 className: CReceipt
 baseClass: CBaseNode
-schema              	1001	0	65561	T_NUMBER TS_NUMERAL
-deleted             	1002	0	65556	T_BOOL TS_NUMERAL
-showing             	1003	0	65556	T_BOOL TS_NUMERAL
-cname               	1004	0	131122	T_TEXT TS_STRING
-blockHash           	1005	0	131132	T_HASH TS_STRING
-blockNumber         	1006	0	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
-contractAddress     	1007	0	131127	T_ADDRESS TS_STRING
-cumulativeGasUsed   	1008	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
-from                	1009	0	131127	T_ADDRESS TS_STRING
-gasUsed             	1010	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
-logs                	1011	0	1605707	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
-root                	1012	0	131122	T_TEXT TS_STRING
-status              	1013	0	65563	T_UNUMBER TS_NUMERAL
-to                  	1014	0	131127	T_ADDRESS TS_STRING
-transactionHash     	1015	0	131132	T_HASH TS_STRING
-transactionIndex    	1016	0	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
+schema              	1001	0	8388633	T_NUMBER TS_NUMERAL
+deleted             	1002	0	8388628	T_BOOL TS_NUMERAL
+showing             	1003	0	8388628	T_BOOL TS_NUMERAL
+cname               	1004	0	16777266	T_TEXT TS_STRING
+blockHash           	1005	0	16777276	T_HASH TS_STRING
+blockNumber         	1006	0	1082130460	T_BLOCKNUM TS_NUMERAL TS_INTEGER
+contractAddress     	1007	0	16777271	T_ADDRESS TS_STRING
+cumulativeGasUsed   	1008	0	545259555	T_WEI TS_NUMERAL TS_BIGNUM
+from                	1009	0	16777271	T_ADDRESS TS_STRING
+gasUsed             	1010	0	545259560	T_GAS TS_NUMERAL TS_BIGNUM
+logs                	1011	0	205520971	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
+root                	1012	0	16777266	T_TEXT TS_STRING
+status              	1013	0	8388635	T_UNUMBER TS_NUMERAL
+to                  	1014	0	16777271	T_ADDRESS TS_STRING
+transactionHash     	1015	0	16777276	T_HASH TS_STRING
+transactionIndex    	1016	0	1082130460	T_BLOCKNUM TS_NUMERAL TS_INTEGER
 {
   "schema": 8001,
   "deleted": false,
@@ -622,39 +622,39 @@ transactionIndex    	1016	0	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
 --------------------------------------------------------------------------------
 className: CRPCResult
 baseClass: CBaseNode
-schema              	1001	1	65561	T_NUMBER TS_NUMERAL
-deleted             	1002	1	65556	T_BOOL TS_NUMERAL
-showing             	1003	1	65556	T_BOOL TS_NUMERAL
-cname               	1004	1	131122	T_TEXT TS_STRING
-jsonrpc             	1005	0	131122	T_TEXT TS_STRING
-result              	1006	0	131122	T_TEXT TS_STRING
-id                  	1007	0	131122	T_TEXT TS_STRING
+schema              	1001	1	8388633	T_NUMBER TS_NUMERAL
+deleted             	1002	1	8388628	T_BOOL TS_NUMERAL
+showing             	1003	1	8388628	T_BOOL TS_NUMERAL
+cname               	1004	1	16777266	T_TEXT TS_STRING
+jsonrpc             	1005	0	16777266	T_TEXT TS_STRING
+result              	1006	0	16777266	T_TEXT TS_STRING
+id                  	1007	0	16777266	T_TEXT TS_STRING
 {
 }
 
 --------------------------------------------------------------------------------
 className: CRPCResult
 baseClass: CBaseNode
-schema              	1001	1	65561	T_NUMBER TS_NUMERAL
-deleted             	1002	1	65556	T_BOOL TS_NUMERAL
-showing             	1003	1	65556	T_BOOL TS_NUMERAL
-cname               	1004	1	131122	T_TEXT TS_STRING
-jsonrpc             	1005	1	131122	T_TEXT TS_STRING
-result              	1006	1	131122	T_TEXT TS_STRING
-id                  	1007	1	131122	T_TEXT TS_STRING
+schema              	1001	1	8388633	T_NUMBER TS_NUMERAL
+deleted             	1002	1	8388628	T_BOOL TS_NUMERAL
+showing             	1003	1	8388628	T_BOOL TS_NUMERAL
+cname               	1004	1	16777266	T_TEXT TS_STRING
+jsonrpc             	1005	1	16777266	T_TEXT TS_STRING
+result              	1006	1	16777266	T_TEXT TS_STRING
+id                  	1007	1	16777266	T_TEXT TS_STRING
 {
 }
 
 --------------------------------------------------------------------------------
 className: CRPCResult
 baseClass: CBaseNode
-schema              	1001	0	65561	T_NUMBER TS_NUMERAL
-deleted             	1002	0	65556	T_BOOL TS_NUMERAL
-showing             	1003	0	65556	T_BOOL TS_NUMERAL
-cname               	1004	0	131122	T_TEXT TS_STRING
-jsonrpc             	1005	0	131122	T_TEXT TS_STRING
-result              	1006	0	131122	T_TEXT TS_STRING
-id                  	1007	0	131122	T_TEXT TS_STRING
+schema              	1001	0	8388633	T_NUMBER TS_NUMERAL
+deleted             	1002	0	8388628	T_BOOL TS_NUMERAL
+showing             	1003	0	8388628	T_BOOL TS_NUMERAL
+cname               	1004	0	16777266	T_TEXT TS_STRING
+jsonrpc             	1005	0	16777266	T_TEXT TS_STRING
+result              	1006	0	16777266	T_TEXT TS_STRING
+id                  	1007	0	16777266	T_TEXT TS_STRING
 {
   "schema": 8001,
   "deleted": false,
@@ -665,23 +665,23 @@ id                  	1007	0	131122	T_TEXT TS_STRING
 --------------------------------------------------------------------------------
 className: CTrace
 baseClass: CBaseNode
-schema              	1001	1	65561	T_NUMBER TS_NUMERAL
-deleted             	1002	1	65556	T_BOOL TS_NUMERAL
-showing             	1003	1	65556	T_BOOL TS_NUMERAL
-cname               	1004	1	131122	T_TEXT TS_STRING
-blockHash           	1005	0	131132	T_HASH TS_STRING
-blockNumber         	1006	0	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
-subtraces           	1007	0	65563	T_UNUMBER TS_NUMERAL
-traceAddress        	1008	0	131122	T_TEXT TS_STRING
-transactionHash     	1009	0	131132	T_HASH TS_STRING
-transactionIndex    	1010	0	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
-type                	1011	0	131122	T_TEXT TS_STRING
-error               	1012	0	131122	T_TEXT TS_STRING
-action              	1013	0	1048651	T_OBJECT TS_OBJECT
-result              	1014	0	1048651	T_OBJECT TS_OBJECT
-articulatedTrace    	1015	1	1048651	T_OBJECT TS_OBJECT
-compressedTrace     	1016	1	131122	T_TEXT TS_STRING
-date                	1017	1	262149	T_DATE TS_DATE
+schema              	1001	1	8388633	T_NUMBER TS_NUMERAL
+deleted             	1002	1	8388628	T_BOOL TS_NUMERAL
+showing             	1003	1	8388628	T_BOOL TS_NUMERAL
+cname               	1004	1	16777266	T_TEXT TS_STRING
+blockHash           	1005	0	16777276	T_HASH TS_STRING
+blockNumber         	1006	0	1082130460	T_BLOCKNUM TS_NUMERAL TS_INTEGER
+subtraces           	1007	0	8388635	T_UNUMBER TS_NUMERAL
+traceAddress        	1008	0	16777266	T_TEXT TS_STRING
+transactionHash     	1009	0	16777276	T_HASH TS_STRING
+transactionIndex    	1010	0	1082130460	T_BLOCKNUM TS_NUMERAL TS_INTEGER
+type                	1011	0	16777266	T_TEXT TS_STRING
+error               	1012	0	16777266	T_TEXT TS_STRING
+action              	1013	0	138412107	T_OBJECT TS_OBJECT TS_OMITEMPTY
+result              	1014	0	138412107	T_OBJECT TS_OBJECT TS_OMITEMPTY
+articulatedTrace    	1015	1	138412107	T_OBJECT TS_OBJECT TS_OMITEMPTY
+compressedTrace     	1016	1	16777266	T_TEXT TS_STRING
+date                	1017	1	33554437	T_DATE TS_DATE
 {
   "blockHash": "0x0",
   "blockNumber": 0,
@@ -696,46 +696,46 @@ date                	1017	1	262149	T_DATE TS_DATE
 --------------------------------------------------------------------------------
 className: CTrace
 baseClass: CBaseNode
-schema              	1001	1	65561	T_NUMBER TS_NUMERAL
-deleted             	1002	1	65556	T_BOOL TS_NUMERAL
-showing             	1003	1	65556	T_BOOL TS_NUMERAL
-cname               	1004	1	131122	T_TEXT TS_STRING
-blockHash           	1005	1	131132	T_HASH TS_STRING
-blockNumber         	1006	1	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
-subtraces           	1007	1	65563	T_UNUMBER TS_NUMERAL
-traceAddress        	1008	1	131122	T_TEXT TS_STRING
-transactionHash     	1009	1	131132	T_HASH TS_STRING
-transactionIndex    	1010	1	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
-type                	1011	1	131122	T_TEXT TS_STRING
-error               	1012	1	131122	T_TEXT TS_STRING
-action              	1013	1	1048651	T_OBJECT TS_OBJECT
-result              	1014	1	1048651	T_OBJECT TS_OBJECT
-articulatedTrace    	1015	1	1048651	T_OBJECT TS_OBJECT
-compressedTrace     	1016	1	131122	T_TEXT TS_STRING
-date                	1017	1	262149	T_DATE TS_DATE
+schema              	1001	1	8388633	T_NUMBER TS_NUMERAL
+deleted             	1002	1	8388628	T_BOOL TS_NUMERAL
+showing             	1003	1	8388628	T_BOOL TS_NUMERAL
+cname               	1004	1	16777266	T_TEXT TS_STRING
+blockHash           	1005	1	16777276	T_HASH TS_STRING
+blockNumber         	1006	1	1082130460	T_BLOCKNUM TS_NUMERAL TS_INTEGER
+subtraces           	1007	1	8388635	T_UNUMBER TS_NUMERAL
+traceAddress        	1008	1	16777266	T_TEXT TS_STRING
+transactionHash     	1009	1	16777276	T_HASH TS_STRING
+transactionIndex    	1010	1	1082130460	T_BLOCKNUM TS_NUMERAL TS_INTEGER
+type                	1011	1	16777266	T_TEXT TS_STRING
+error               	1012	1	16777266	T_TEXT TS_STRING
+action              	1013	1	138412107	T_OBJECT TS_OBJECT TS_OMITEMPTY
+result              	1014	1	138412107	T_OBJECT TS_OBJECT TS_OMITEMPTY
+articulatedTrace    	1015	1	138412107	T_OBJECT TS_OBJECT TS_OMITEMPTY
+compressedTrace     	1016	1	16777266	T_TEXT TS_STRING
+date                	1017	1	33554437	T_DATE TS_DATE
 {
 }
 
 --------------------------------------------------------------------------------
 className: CTrace
 baseClass: CBaseNode
-schema              	1001	0	65561	T_NUMBER TS_NUMERAL
-deleted             	1002	0	65556	T_BOOL TS_NUMERAL
-showing             	1003	0	65556	T_BOOL TS_NUMERAL
-cname               	1004	0	131122	T_TEXT TS_STRING
-blockHash           	1005	0	131132	T_HASH TS_STRING
-blockNumber         	1006	0	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
-subtraces           	1007	0	65563	T_UNUMBER TS_NUMERAL
-traceAddress        	1008	0	131122	T_TEXT TS_STRING
-transactionHash     	1009	0	131132	T_HASH TS_STRING
-transactionIndex    	1010	0	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
-type                	1011	0	131122	T_TEXT TS_STRING
-error               	1012	0	131122	T_TEXT TS_STRING
-action              	1013	0	1048651	T_OBJECT TS_OBJECT
-result              	1014	0	1048651	T_OBJECT TS_OBJECT
-articulatedTrace    	1015	0	1048651	T_OBJECT TS_OBJECT
-compressedTrace     	1016	0	131122	T_TEXT TS_STRING
-date                	1017	0	262149	T_DATE TS_DATE
+schema              	1001	0	8388633	T_NUMBER TS_NUMERAL
+deleted             	1002	0	8388628	T_BOOL TS_NUMERAL
+showing             	1003	0	8388628	T_BOOL TS_NUMERAL
+cname               	1004	0	16777266	T_TEXT TS_STRING
+blockHash           	1005	0	16777276	T_HASH TS_STRING
+blockNumber         	1006	0	1082130460	T_BLOCKNUM TS_NUMERAL TS_INTEGER
+subtraces           	1007	0	8388635	T_UNUMBER TS_NUMERAL
+traceAddress        	1008	0	16777266	T_TEXT TS_STRING
+transactionHash     	1009	0	16777276	T_HASH TS_STRING
+transactionIndex    	1010	0	1082130460	T_BLOCKNUM TS_NUMERAL TS_INTEGER
+type                	1011	0	16777266	T_TEXT TS_STRING
+error               	1012	0	16777266	T_TEXT TS_STRING
+action              	1013	0	138412107	T_OBJECT TS_OBJECT TS_OMITEMPTY
+result              	1014	0	138412107	T_OBJECT TS_OBJECT TS_OMITEMPTY
+articulatedTrace    	1015	0	138412107	T_OBJECT TS_OBJECT TS_OMITEMPTY
+compressedTrace     	1016	0	16777266	T_TEXT TS_STRING
+date                	1017	0	33554437	T_DATE TS_DATE
 {
   "schema": 8001,
   "deleted": false,
@@ -755,21 +755,21 @@ date                	1017	0	262149	T_DATE TS_DATE
 --------------------------------------------------------------------------------
 className: CTraceAction
 baseClass: CBaseNode
-schema              	1001	1	65561	T_NUMBER TS_NUMERAL
-deleted             	1002	1	65556	T_BOOL TS_NUMERAL
-showing             	1003	1	65556	T_BOOL TS_NUMERAL
-cname               	1004	1	131122	T_TEXT TS_STRING
-selfDestructed      	1005	0	131127	T_ADDRESS TS_STRING
-balance             	1006	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
-callType            	1007	0	131122	T_TEXT TS_STRING
-from                	1008	0	131127	T_ADDRESS TS_STRING
-gas                 	1009	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
-init                	1010	0	131122	T_TEXT TS_STRING
-input               	1011	0	131122	T_TEXT TS_STRING
-refundAddress       	1012	0	131127	T_ADDRESS TS_STRING
-to                  	1013	0	131127	T_ADDRESS TS_STRING
-value               	1014	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
-ether               	1015	1	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
+schema              	1001	1	8388633	T_NUMBER TS_NUMERAL
+deleted             	1002	1	8388628	T_BOOL TS_NUMERAL
+showing             	1003	1	8388628	T_BOOL TS_NUMERAL
+cname               	1004	1	16777266	T_TEXT TS_STRING
+selfDestructed      	1005	0	16777271	T_ADDRESS TS_STRING
+balance             	1006	0	545259555	T_WEI TS_NUMERAL TS_BIGNUM
+callType            	1007	0	16777266	T_TEXT TS_STRING
+from                	1008	0	16777271	T_ADDRESS TS_STRING
+gas                 	1009	0	545259560	T_GAS TS_NUMERAL TS_BIGNUM
+init                	1010	0	16777266	T_TEXT TS_STRING
+input               	1011	0	16777266	T_TEXT TS_STRING
+refundAddress       	1012	0	16777271	T_ADDRESS TS_STRING
+to                  	1013	0	16777271	T_ADDRESS TS_STRING
+value               	1014	0	545259555	T_WEI TS_NUMERAL TS_BIGNUM
+ether               	1015	1	545259565	T_ETHER TS_NUMERAL TS_BIGNUM
 {
   "selfDestructed": "0x0",
   "balance": 0,
@@ -783,42 +783,42 @@ ether               	1015	1	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
 --------------------------------------------------------------------------------
 className: CTraceAction
 baseClass: CBaseNode
-schema              	1001	1	65561	T_NUMBER TS_NUMERAL
-deleted             	1002	1	65556	T_BOOL TS_NUMERAL
-showing             	1003	1	65556	T_BOOL TS_NUMERAL
-cname               	1004	1	131122	T_TEXT TS_STRING
-selfDestructed      	1005	1	131127	T_ADDRESS TS_STRING
-balance             	1006	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
-callType            	1007	1	131122	T_TEXT TS_STRING
-from                	1008	1	131127	T_ADDRESS TS_STRING
-gas                 	1009	1	4259880	T_GAS TS_NUMERAL TS_BIGNUM
-init                	1010	1	131122	T_TEXT TS_STRING
-input               	1011	1	131122	T_TEXT TS_STRING
-refundAddress       	1012	1	131127	T_ADDRESS TS_STRING
-to                  	1013	1	131127	T_ADDRESS TS_STRING
-value               	1014	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
-ether               	1015	1	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
+schema              	1001	1	8388633	T_NUMBER TS_NUMERAL
+deleted             	1002	1	8388628	T_BOOL TS_NUMERAL
+showing             	1003	1	8388628	T_BOOL TS_NUMERAL
+cname               	1004	1	16777266	T_TEXT TS_STRING
+selfDestructed      	1005	1	16777271	T_ADDRESS TS_STRING
+balance             	1006	1	545259555	T_WEI TS_NUMERAL TS_BIGNUM
+callType            	1007	1	16777266	T_TEXT TS_STRING
+from                	1008	1	16777271	T_ADDRESS TS_STRING
+gas                 	1009	1	545259560	T_GAS TS_NUMERAL TS_BIGNUM
+init                	1010	1	16777266	T_TEXT TS_STRING
+input               	1011	1	16777266	T_TEXT TS_STRING
+refundAddress       	1012	1	16777271	T_ADDRESS TS_STRING
+to                  	1013	1	16777271	T_ADDRESS TS_STRING
+value               	1014	1	545259555	T_WEI TS_NUMERAL TS_BIGNUM
+ether               	1015	1	545259565	T_ETHER TS_NUMERAL TS_BIGNUM
 {
 }
 
 --------------------------------------------------------------------------------
 className: CTraceAction
 baseClass: CBaseNode
-schema              	1001	0	65561	T_NUMBER TS_NUMERAL
-deleted             	1002	0	65556	T_BOOL TS_NUMERAL
-showing             	1003	0	65556	T_BOOL TS_NUMERAL
-cname               	1004	0	131122	T_TEXT TS_STRING
-selfDestructed      	1005	0	131127	T_ADDRESS TS_STRING
-balance             	1006	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
-callType            	1007	0	131122	T_TEXT TS_STRING
-from                	1008	0	131127	T_ADDRESS TS_STRING
-gas                 	1009	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
-init                	1010	0	131122	T_TEXT TS_STRING
-input               	1011	0	131122	T_TEXT TS_STRING
-refundAddress       	1012	0	131127	T_ADDRESS TS_STRING
-to                  	1013	0	131127	T_ADDRESS TS_STRING
-value               	1014	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
-ether               	1015	0	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
+schema              	1001	0	8388633	T_NUMBER TS_NUMERAL
+deleted             	1002	0	8388628	T_BOOL TS_NUMERAL
+showing             	1003	0	8388628	T_BOOL TS_NUMERAL
+cname               	1004	0	16777266	T_TEXT TS_STRING
+selfDestructed      	1005	0	16777271	T_ADDRESS TS_STRING
+balance             	1006	0	545259555	T_WEI TS_NUMERAL TS_BIGNUM
+callType            	1007	0	16777266	T_TEXT TS_STRING
+from                	1008	0	16777271	T_ADDRESS TS_STRING
+gas                 	1009	0	545259560	T_GAS TS_NUMERAL TS_BIGNUM
+init                	1010	0	16777266	T_TEXT TS_STRING
+input               	1011	0	16777266	T_TEXT TS_STRING
+refundAddress       	1012	0	16777271	T_ADDRESS TS_STRING
+to                  	1013	0	16777271	T_ADDRESS TS_STRING
+value               	1014	0	545259555	T_WEI TS_NUMERAL TS_BIGNUM
+ether               	1015	0	545259565	T_ETHER TS_NUMERAL TS_BIGNUM
 {
   "schema": 8001,
   "deleted": false,
@@ -837,14 +837,14 @@ ether               	1015	0	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
 --------------------------------------------------------------------------------
 className: CTraceResult
 baseClass: CBaseNode
-schema              	1001	1	65561	T_NUMBER TS_NUMERAL
-deleted             	1002	1	65556	T_BOOL TS_NUMERAL
-showing             	1003	1	65556	T_BOOL TS_NUMERAL
-cname               	1004	1	131122	T_TEXT TS_STRING
-newContract         	1005	0	131127	T_ADDRESS TS_STRING
-code                	1006	0	131122	T_TEXT TS_STRING
-gasUsed             	1007	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
-output              	1008	0	131122	T_TEXT TS_STRING
+schema              	1001	1	8388633	T_NUMBER TS_NUMERAL
+deleted             	1002	1	8388628	T_BOOL TS_NUMERAL
+showing             	1003	1	8388628	T_BOOL TS_NUMERAL
+cname               	1004	1	16777266	T_TEXT TS_STRING
+newContract         	1005	0	16777271	T_ADDRESS TS_STRING
+code                	1006	0	16777266	T_TEXT TS_STRING
+gasUsed             	1007	0	545259560	T_GAS TS_NUMERAL TS_BIGNUM
+output              	1008	0	16777266	T_TEXT TS_STRING
 {
   "newContract": "0x0",
   "gasUsed": 0
@@ -853,28 +853,28 @@ output              	1008	0	131122	T_TEXT TS_STRING
 --------------------------------------------------------------------------------
 className: CTraceResult
 baseClass: CBaseNode
-schema              	1001	1	65561	T_NUMBER TS_NUMERAL
-deleted             	1002	1	65556	T_BOOL TS_NUMERAL
-showing             	1003	1	65556	T_BOOL TS_NUMERAL
-cname               	1004	1	131122	T_TEXT TS_STRING
-newContract         	1005	1	131127	T_ADDRESS TS_STRING
-code                	1006	1	131122	T_TEXT TS_STRING
-gasUsed             	1007	1	4259880	T_GAS TS_NUMERAL TS_BIGNUM
-output              	1008	1	131122	T_TEXT TS_STRING
+schema              	1001	1	8388633	T_NUMBER TS_NUMERAL
+deleted             	1002	1	8388628	T_BOOL TS_NUMERAL
+showing             	1003	1	8388628	T_BOOL TS_NUMERAL
+cname               	1004	1	16777266	T_TEXT TS_STRING
+newContract         	1005	1	16777271	T_ADDRESS TS_STRING
+code                	1006	1	16777266	T_TEXT TS_STRING
+gasUsed             	1007	1	545259560	T_GAS TS_NUMERAL TS_BIGNUM
+output              	1008	1	16777266	T_TEXT TS_STRING
 {
 }
 
 --------------------------------------------------------------------------------
 className: CTraceResult
 baseClass: CBaseNode
-schema              	1001	0	65561	T_NUMBER TS_NUMERAL
-deleted             	1002	0	65556	T_BOOL TS_NUMERAL
-showing             	1003	0	65556	T_BOOL TS_NUMERAL
-cname               	1004	0	131122	T_TEXT TS_STRING
-newContract         	1005	0	131127	T_ADDRESS TS_STRING
-code                	1006	0	131122	T_TEXT TS_STRING
-gasUsed             	1007	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
-output              	1008	0	131122	T_TEXT TS_STRING
+schema              	1001	0	8388633	T_NUMBER TS_NUMERAL
+deleted             	1002	0	8388628	T_BOOL TS_NUMERAL
+showing             	1003	0	8388628	T_BOOL TS_NUMERAL
+cname               	1004	0	16777266	T_TEXT TS_STRING
+newContract         	1005	0	16777271	T_ADDRESS TS_STRING
+code                	1006	0	16777266	T_TEXT TS_STRING
+gasUsed             	1007	0	545259560	T_GAS TS_NUMERAL TS_BIGNUM
+output              	1008	0	16777266	T_TEXT TS_STRING
 {
   "schema": 8001,
   "deleted": false,
@@ -887,48 +887,48 @@ output              	1008	0	131122	T_TEXT TS_STRING
 --------------------------------------------------------------------------------
 className: CTransaction
 baseClass: CBaseNode
-schema              	1001	1	65561	T_NUMBER TS_NUMERAL
-deleted             	1002	1	65556	T_BOOL TS_NUMERAL
-showing             	1003	1	65556	T_BOOL TS_NUMERAL
-cname               	1004	1	131122	T_TEXT TS_STRING
-hash                	1005	0	131132	T_HASH TS_STRING
-blockHash           	1006	0	131132	T_HASH TS_STRING
-blockNumber         	1007	0	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
-transactionIndex    	1008	0	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
-nonce               	1009	0	65563	T_UNUMBER TS_NUMERAL
-timestamp           	1010	0	8454159	T_TIMESTAMP TS_NUMERAL TS_INTEGER
-from                	1011	0	131127	T_ADDRESS TS_STRING
-to                  	1012	0	131127	T_ADDRESS TS_STRING
-value               	1013	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
-extraValue1         	1014	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
-extraValue2         	1015	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
-gas                 	1016	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
-gasPrice            	1017	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
-input               	1018	0	131122	T_TEXT TS_STRING
-isError             	1019	0	65563	T_UNUMBER TS_NUMERAL
-isInternal          	1020	1	65563	T_UNUMBER TS_NUMERAL
-receipt             	1021	0	1048651	T_OBJECT TS_OBJECT
-traces              	1022	1	1605707	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
-articulatedTx       	1023	1	1048651	T_OBJECT TS_OBJECT
-reconciliations     	1024	1	1605707	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
-compressedTx        	1025	1	131122	T_TEXT TS_STRING
-statements          	1026	1	1605707	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
-finalized           	1027	1	65556	T_BOOL TS_NUMERAL
-confirmations       	1028	1	65561	T_NUMBER TS_NUMERAL
-classification1     	1029	1	131122	T_TEXT TS_STRING
-classification2     	1030	1	131122	T_TEXT TS_STRING
-gasCost             	1031	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
-etherGasCost        	1032	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
-function            	1033	1	131122	T_TEXT TS_STRING
-events              	1034	1	131122	T_TEXT TS_STRING
-price               	1035	1	131122	T_TEXT TS_STRING
-gasUsed             	1036	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
-date                	1037	1	262149	T_DATE TS_DATE
-datesh              	1038	1	262149	T_DATE TS_DATE
-time                	1039	1	262149	T_DATE TS_DATE
-age                 	1040	1	262149	T_DATE TS_DATE
-ether               	1041	1	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
-encoding            	1042	1	131122	T_TEXT TS_STRING
+schema              	1001	1	8388633	T_NUMBER TS_NUMERAL
+deleted             	1002	1	8388628	T_BOOL TS_NUMERAL
+showing             	1003	1	8388628	T_BOOL TS_NUMERAL
+cname               	1004	1	16777266	T_TEXT TS_STRING
+hash                	1005	0	16777276	T_HASH TS_STRING
+blockHash           	1006	0	16777276	T_HASH TS_STRING
+blockNumber         	1007	0	1082130460	T_BLOCKNUM TS_NUMERAL TS_INTEGER
+transactionIndex    	1008	0	1082130460	T_BLOCKNUM TS_NUMERAL TS_INTEGER
+nonce               	1009	0	8388635	T_UNUMBER TS_NUMERAL
+timestamp           	1010	0	1082130447	T_TIMESTAMP TS_NUMERAL TS_INTEGER
+from                	1011	0	16777271	T_ADDRESS TS_STRING
+to                  	1012	0	16777271	T_ADDRESS TS_STRING
+value               	1013	0	545259555	T_WEI TS_NUMERAL TS_BIGNUM
+extraValue1         	1014	1	545259555	T_WEI TS_NUMERAL TS_BIGNUM
+extraValue2         	1015	1	545259555	T_WEI TS_NUMERAL TS_BIGNUM
+gas                 	1016	0	545259560	T_GAS TS_NUMERAL TS_BIGNUM
+gasPrice            	1017	0	545259560	T_GAS TS_NUMERAL TS_BIGNUM
+input               	1018	0	16777266	T_TEXT TS_STRING
+isError             	1019	0	8388635	T_UNUMBER TS_NUMERAL
+isInternal          	1020	1	8388635	T_UNUMBER TS_NUMERAL
+receipt             	1021	0	138412107	T_OBJECT TS_OBJECT TS_OMITEMPTY
+traces              	1022	1	205520971	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
+articulatedTx       	1023	1	138412107	T_OBJECT TS_OBJECT TS_OMITEMPTY
+reconciliations     	1024	1	205520971	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
+compressedTx        	1025	1	16777266	T_TEXT TS_STRING
+statements          	1026	1	205520971	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
+finalized           	1027	1	8388628	T_BOOL TS_NUMERAL
+confirmations       	1028	1	8388633	T_NUMBER TS_NUMERAL
+classification1     	1029	1	16777266	T_TEXT TS_STRING
+classification2     	1030	1	16777266	T_TEXT TS_STRING
+gasCost             	1031	1	545259555	T_WEI TS_NUMERAL TS_BIGNUM
+etherGasCost        	1032	1	545259555	T_WEI TS_NUMERAL TS_BIGNUM
+function            	1033	1	16777266	T_TEXT TS_STRING
+events              	1034	1	16777266	T_TEXT TS_STRING
+price               	1035	1	16777266	T_TEXT TS_STRING
+gasUsed             	1036	0	545259560	T_GAS TS_NUMERAL TS_BIGNUM
+date                	1037	1	33554437	T_DATE TS_DATE
+datesh              	1038	1	33554437	T_DATE TS_DATE
+time                	1039	1	33554437	T_DATE TS_DATE
+age                 	1040	1	33554437	T_DATE TS_DATE
+ether               	1041	1	545259565	T_ETHER TS_NUMERAL TS_BIGNUM
+encoding            	1042	1	16777266	T_TEXT TS_STRING
 {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -949,96 +949,96 @@ encoding            	1042	1	131122	T_TEXT TS_STRING
 --------------------------------------------------------------------------------
 className: CTransaction
 baseClass: CBaseNode
-schema              	1001	1	65561	T_NUMBER TS_NUMERAL
-deleted             	1002	1	65556	T_BOOL TS_NUMERAL
-showing             	1003	1	65556	T_BOOL TS_NUMERAL
-cname               	1004	1	131122	T_TEXT TS_STRING
-hash                	1005	1	131132	T_HASH TS_STRING
-blockHash           	1006	1	131132	T_HASH TS_STRING
-blockNumber         	1007	1	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
-transactionIndex    	1008	1	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
-nonce               	1009	1	65563	T_UNUMBER TS_NUMERAL
-timestamp           	1010	1	8454159	T_TIMESTAMP TS_NUMERAL TS_INTEGER
-from                	1011	1	131127	T_ADDRESS TS_STRING
-to                  	1012	1	131127	T_ADDRESS TS_STRING
-value               	1013	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
-extraValue1         	1014	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
-extraValue2         	1015	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
-gas                 	1016	1	4259880	T_GAS TS_NUMERAL TS_BIGNUM
-gasPrice            	1017	1	4259880	T_GAS TS_NUMERAL TS_BIGNUM
-input               	1018	1	131122	T_TEXT TS_STRING
-isError             	1019	1	65563	T_UNUMBER TS_NUMERAL
-isInternal          	1020	1	65563	T_UNUMBER TS_NUMERAL
-receipt             	1021	1	1048651	T_OBJECT TS_OBJECT
-traces              	1022	1	1605707	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
-articulatedTx       	1023	1	1048651	T_OBJECT TS_OBJECT
-reconciliations     	1024	1	1605707	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
-compressedTx        	1025	1	131122	T_TEXT TS_STRING
-statements          	1026	1	1605707	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
-finalized           	1027	1	65556	T_BOOL TS_NUMERAL
-confirmations       	1028	1	65561	T_NUMBER TS_NUMERAL
-classification1     	1029	1	131122	T_TEXT TS_STRING
-classification2     	1030	1	131122	T_TEXT TS_STRING
-gasCost             	1031	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
-etherGasCost        	1032	1	4259875	T_WEI TS_NUMERAL TS_BIGNUM
-function            	1033	1	131122	T_TEXT TS_STRING
-events              	1034	1	131122	T_TEXT TS_STRING
-price               	1035	1	131122	T_TEXT TS_STRING
-gasUsed             	1036	1	4259880	T_GAS TS_NUMERAL TS_BIGNUM
-date                	1037	1	262149	T_DATE TS_DATE
-datesh              	1038	1	262149	T_DATE TS_DATE
-time                	1039	1	262149	T_DATE TS_DATE
-age                 	1040	1	262149	T_DATE TS_DATE
-ether               	1041	1	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
-encoding            	1042	1	131122	T_TEXT TS_STRING
+schema              	1001	1	8388633	T_NUMBER TS_NUMERAL
+deleted             	1002	1	8388628	T_BOOL TS_NUMERAL
+showing             	1003	1	8388628	T_BOOL TS_NUMERAL
+cname               	1004	1	16777266	T_TEXT TS_STRING
+hash                	1005	1	16777276	T_HASH TS_STRING
+blockHash           	1006	1	16777276	T_HASH TS_STRING
+blockNumber         	1007	1	1082130460	T_BLOCKNUM TS_NUMERAL TS_INTEGER
+transactionIndex    	1008	1	1082130460	T_BLOCKNUM TS_NUMERAL TS_INTEGER
+nonce               	1009	1	8388635	T_UNUMBER TS_NUMERAL
+timestamp           	1010	1	1082130447	T_TIMESTAMP TS_NUMERAL TS_INTEGER
+from                	1011	1	16777271	T_ADDRESS TS_STRING
+to                  	1012	1	16777271	T_ADDRESS TS_STRING
+value               	1013	1	545259555	T_WEI TS_NUMERAL TS_BIGNUM
+extraValue1         	1014	1	545259555	T_WEI TS_NUMERAL TS_BIGNUM
+extraValue2         	1015	1	545259555	T_WEI TS_NUMERAL TS_BIGNUM
+gas                 	1016	1	545259560	T_GAS TS_NUMERAL TS_BIGNUM
+gasPrice            	1017	1	545259560	T_GAS TS_NUMERAL TS_BIGNUM
+input               	1018	1	16777266	T_TEXT TS_STRING
+isError             	1019	1	8388635	T_UNUMBER TS_NUMERAL
+isInternal          	1020	1	8388635	T_UNUMBER TS_NUMERAL
+receipt             	1021	1	138412107	T_OBJECT TS_OBJECT TS_OMITEMPTY
+traces              	1022	1	205520971	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
+articulatedTx       	1023	1	138412107	T_OBJECT TS_OBJECT TS_OMITEMPTY
+reconciliations     	1024	1	205520971	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
+compressedTx        	1025	1	16777266	T_TEXT TS_STRING
+statements          	1026	1	205520971	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
+finalized           	1027	1	8388628	T_BOOL TS_NUMERAL
+confirmations       	1028	1	8388633	T_NUMBER TS_NUMERAL
+classification1     	1029	1	16777266	T_TEXT TS_STRING
+classification2     	1030	1	16777266	T_TEXT TS_STRING
+gasCost             	1031	1	545259555	T_WEI TS_NUMERAL TS_BIGNUM
+etherGasCost        	1032	1	545259555	T_WEI TS_NUMERAL TS_BIGNUM
+function            	1033	1	16777266	T_TEXT TS_STRING
+events              	1034	1	16777266	T_TEXT TS_STRING
+price               	1035	1	16777266	T_TEXT TS_STRING
+gasUsed             	1036	1	545259560	T_GAS TS_NUMERAL TS_BIGNUM
+date                	1037	1	33554437	T_DATE TS_DATE
+datesh              	1038	1	33554437	T_DATE TS_DATE
+time                	1039	1	33554437	T_DATE TS_DATE
+age                 	1040	1	33554437	T_DATE TS_DATE
+ether               	1041	1	545259565	T_ETHER TS_NUMERAL TS_BIGNUM
+encoding            	1042	1	16777266	T_TEXT TS_STRING
 {
 }
 
 --------------------------------------------------------------------------------
 className: CTransaction
 baseClass: CBaseNode
-schema              	1001	0	65561	T_NUMBER TS_NUMERAL
-deleted             	1002	0	65556	T_BOOL TS_NUMERAL
-showing             	1003	0	65556	T_BOOL TS_NUMERAL
-cname               	1004	0	131122	T_TEXT TS_STRING
-hash                	1005	0	131132	T_HASH TS_STRING
-blockHash           	1006	0	131132	T_HASH TS_STRING
-blockNumber         	1007	0	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
-transactionIndex    	1008	0	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
-nonce               	1009	0	65563	T_UNUMBER TS_NUMERAL
-timestamp           	1010	0	8454159	T_TIMESTAMP TS_NUMERAL TS_INTEGER
-from                	1011	0	131127	T_ADDRESS TS_STRING
-to                  	1012	0	131127	T_ADDRESS TS_STRING
-value               	1013	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
-extraValue1         	1014	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
-extraValue2         	1015	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
-gas                 	1016	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
-gasPrice            	1017	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
-input               	1018	0	131122	T_TEXT TS_STRING
-isError             	1019	0	65563	T_UNUMBER TS_NUMERAL
-isInternal          	1020	0	65563	T_UNUMBER TS_NUMERAL
-receipt             	1021	0	1048651	T_OBJECT TS_OBJECT
-traces              	1022	0	1605707	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
-articulatedTx       	1023	0	1048651	T_OBJECT TS_OBJECT
-reconciliations     	1024	0	1605707	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
-compressedTx        	1025	0	131122	T_TEXT TS_STRING
-statements          	1026	0	1605707	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
-finalized           	1027	0	65556	T_BOOL TS_NUMERAL
-confirmations       	1028	0	65561	T_NUMBER TS_NUMERAL
-classification1     	1029	0	131122	T_TEXT TS_STRING
-classification2     	1030	0	131122	T_TEXT TS_STRING
-gasCost             	1031	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
-etherGasCost        	1032	0	4259875	T_WEI TS_NUMERAL TS_BIGNUM
-function            	1033	0	131122	T_TEXT TS_STRING
-events              	1034	0	131122	T_TEXT TS_STRING
-price               	1035	0	131122	T_TEXT TS_STRING
-gasUsed             	1036	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
-date                	1037	0	262149	T_DATE TS_DATE
-datesh              	1038	0	262149	T_DATE TS_DATE
-time                	1039	0	262149	T_DATE TS_DATE
-age                 	1040	0	262149	T_DATE TS_DATE
-ether               	1041	0	4259885	T_ETHER TS_NUMERAL TS_BIGNUM
-encoding            	1042	0	131122	T_TEXT TS_STRING
+schema              	1001	0	8388633	T_NUMBER TS_NUMERAL
+deleted             	1002	0	8388628	T_BOOL TS_NUMERAL
+showing             	1003	0	8388628	T_BOOL TS_NUMERAL
+cname               	1004	0	16777266	T_TEXT TS_STRING
+hash                	1005	0	16777276	T_HASH TS_STRING
+blockHash           	1006	0	16777276	T_HASH TS_STRING
+blockNumber         	1007	0	1082130460	T_BLOCKNUM TS_NUMERAL TS_INTEGER
+transactionIndex    	1008	0	1082130460	T_BLOCKNUM TS_NUMERAL TS_INTEGER
+nonce               	1009	0	8388635	T_UNUMBER TS_NUMERAL
+timestamp           	1010	0	1082130447	T_TIMESTAMP TS_NUMERAL TS_INTEGER
+from                	1011	0	16777271	T_ADDRESS TS_STRING
+to                  	1012	0	16777271	T_ADDRESS TS_STRING
+value               	1013	0	545259555	T_WEI TS_NUMERAL TS_BIGNUM
+extraValue1         	1014	0	545259555	T_WEI TS_NUMERAL TS_BIGNUM
+extraValue2         	1015	0	545259555	T_WEI TS_NUMERAL TS_BIGNUM
+gas                 	1016	0	545259560	T_GAS TS_NUMERAL TS_BIGNUM
+gasPrice            	1017	0	545259560	T_GAS TS_NUMERAL TS_BIGNUM
+input               	1018	0	16777266	T_TEXT TS_STRING
+isError             	1019	0	8388635	T_UNUMBER TS_NUMERAL
+isInternal          	1020	0	8388635	T_UNUMBER TS_NUMERAL
+receipt             	1021	0	138412107	T_OBJECT TS_OBJECT TS_OMITEMPTY
+traces              	1022	0	205520971	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
+articulatedTx       	1023	0	138412107	T_OBJECT TS_OBJECT TS_OMITEMPTY
+reconciliations     	1024	0	205520971	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
+compressedTx        	1025	0	16777266	T_TEXT TS_STRING
+statements          	1026	0	205520971	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
+finalized           	1027	0	8388628	T_BOOL TS_NUMERAL
+confirmations       	1028	0	8388633	T_NUMBER TS_NUMERAL
+classification1     	1029	0	16777266	T_TEXT TS_STRING
+classification2     	1030	0	16777266	T_TEXT TS_STRING
+gasCost             	1031	0	545259555	T_WEI TS_NUMERAL TS_BIGNUM
+etherGasCost        	1032	0	545259555	T_WEI TS_NUMERAL TS_BIGNUM
+function            	1033	0	16777266	T_TEXT TS_STRING
+events              	1034	0	16777266	T_TEXT TS_STRING
+price               	1035	0	16777266	T_TEXT TS_STRING
+gasUsed             	1036	0	545259560	T_GAS TS_NUMERAL TS_BIGNUM
+date                	1037	0	33554437	T_DATE TS_DATE
+datesh              	1038	0	33554437	T_DATE TS_DATE
+time                	1039	0	33554437	T_DATE TS_DATE
+age                 	1040	0	33554437	T_DATE TS_DATE
+ether               	1041	0	545259565	T_ETHER TS_NUMERAL TS_BIGNUM
+encoding            	1042	0	16777266	T_TEXT TS_STRING
 {
   "schema": 8001,
   "deleted": false,
@@ -1079,21 +1079,21 @@ encoding            	1042	0	131122	T_TEXT TS_STRING
 --------------------------------------------------------------------------------
 className: CNewBlock
 baseClass: CBaseNode
-schema              	1001	1	65561	T_NUMBER TS_NUMERAL
-deleted             	1002	1	65556	T_BOOL TS_NUMERAL
-showing             	1003	1	65556	T_BOOL TS_NUMERAL
-cname               	1004	1	131122	T_TEXT TS_STRING
-gasLimit            	1005	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
-gasUsed             	1006	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
-hash                	1007	0	131132	T_HASH TS_STRING
-blockNumber         	1008	0	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
-parentHash          	1009	0	131132	T_HASH TS_STRING
-miner               	1010	0	131127	T_ADDRESS TS_STRING
-difficulty          	1011	0	65563	T_UNUMBER TS_NUMERAL
-price               	1012	0	65566	T_DOUBLE TS_NUMERAL
-finalized           	1013	0	65556	T_BOOL TS_NUMERAL
-timestamp           	1014	0	8454159	T_TIMESTAMP TS_NUMERAL TS_INTEGER
-transactions        	1015	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+schema              	1001	1	8388633	T_NUMBER TS_NUMERAL
+deleted             	1002	1	8388628	T_BOOL TS_NUMERAL
+showing             	1003	1	8388628	T_BOOL TS_NUMERAL
+cname               	1004	1	16777266	T_TEXT TS_STRING
+gasLimit            	1005	0	545259560	T_GAS TS_NUMERAL TS_BIGNUM
+gasUsed             	1006	0	545259560	T_GAS TS_NUMERAL TS_BIGNUM
+hash                	1007	0	16777276	T_HASH TS_STRING
+blockNumber         	1008	0	1082130460	T_BLOCKNUM TS_NUMERAL TS_INTEGER
+parentHash          	1009	0	16777276	T_HASH TS_STRING
+miner               	1010	0	16777271	T_ADDRESS TS_STRING
+difficulty          	1011	0	8388635	T_UNUMBER TS_NUMERAL
+price               	1012	0	8388638	T_DOUBLE TS_NUMERAL
+finalized           	1013	0	8388628	T_BOOL TS_NUMERAL
+timestamp           	1014	0	1082130447	T_TIMESTAMP TS_NUMERAL TS_INTEGER
+transactions        	1015	0	205520971	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
 {
   "gasLimit": 0,
   "gasUsed": 0,
@@ -1110,42 +1110,42 @@ transactions        	1015	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 --------------------------------------------------------------------------------
 className: CNewBlock
 baseClass: CBaseNode
-schema              	1001	1	65561	T_NUMBER TS_NUMERAL
-deleted             	1002	1	65556	T_BOOL TS_NUMERAL
-showing             	1003	1	65556	T_BOOL TS_NUMERAL
-cname               	1004	1	131122	T_TEXT TS_STRING
-gasLimit            	1005	1	4259880	T_GAS TS_NUMERAL TS_BIGNUM
-gasUsed             	1006	1	4259880	T_GAS TS_NUMERAL TS_BIGNUM
-hash                	1007	1	131132	T_HASH TS_STRING
-blockNumber         	1008	1	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
-parentHash          	1009	1	131132	T_HASH TS_STRING
-miner               	1010	1	131127	T_ADDRESS TS_STRING
-difficulty          	1011	1	65563	T_UNUMBER TS_NUMERAL
-price               	1012	1	65566	T_DOUBLE TS_NUMERAL
-finalized           	1013	1	65556	T_BOOL TS_NUMERAL
-timestamp           	1014	1	8454159	T_TIMESTAMP TS_NUMERAL TS_INTEGER
-transactions        	1015	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+schema              	1001	1	8388633	T_NUMBER TS_NUMERAL
+deleted             	1002	1	8388628	T_BOOL TS_NUMERAL
+showing             	1003	1	8388628	T_BOOL TS_NUMERAL
+cname               	1004	1	16777266	T_TEXT TS_STRING
+gasLimit            	1005	1	545259560	T_GAS TS_NUMERAL TS_BIGNUM
+gasUsed             	1006	1	545259560	T_GAS TS_NUMERAL TS_BIGNUM
+hash                	1007	1	16777276	T_HASH TS_STRING
+blockNumber         	1008	1	1082130460	T_BLOCKNUM TS_NUMERAL TS_INTEGER
+parentHash          	1009	1	16777276	T_HASH TS_STRING
+miner               	1010	1	16777271	T_ADDRESS TS_STRING
+difficulty          	1011	1	8388635	T_UNUMBER TS_NUMERAL
+price               	1012	1	8388638	T_DOUBLE TS_NUMERAL
+finalized           	1013	1	8388628	T_BOOL TS_NUMERAL
+timestamp           	1014	1	1082130447	T_TIMESTAMP TS_NUMERAL TS_INTEGER
+transactions        	1015	1	205520971	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
 {
 }
 
 --------------------------------------------------------------------------------
 className: CNewBlock
 baseClass: CBaseNode
-schema              	1001	0	65561	T_NUMBER TS_NUMERAL
-deleted             	1002	0	65556	T_BOOL TS_NUMERAL
-showing             	1003	0	65556	T_BOOL TS_NUMERAL
-cname               	1004	0	131122	T_TEXT TS_STRING
-gasLimit            	1005	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
-gasUsed             	1006	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
-hash                	1007	0	131132	T_HASH TS_STRING
-blockNumber         	1008	0	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
-parentHash          	1009	0	131132	T_HASH TS_STRING
-miner               	1010	0	131127	T_ADDRESS TS_STRING
-difficulty          	1011	0	65563	T_UNUMBER TS_NUMERAL
-price               	1012	0	65566	T_DOUBLE TS_NUMERAL
-finalized           	1013	0	65556	T_BOOL TS_NUMERAL
-timestamp           	1014	0	8454159	T_TIMESTAMP TS_NUMERAL TS_INTEGER
-transactions        	1015	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+schema              	1001	0	8388633	T_NUMBER TS_NUMERAL
+deleted             	1002	0	8388628	T_BOOL TS_NUMERAL
+showing             	1003	0	8388628	T_BOOL TS_NUMERAL
+cname               	1004	0	16777266	T_TEXT TS_STRING
+gasLimit            	1005	0	545259560	T_GAS TS_NUMERAL TS_BIGNUM
+gasUsed             	1006	0	545259560	T_GAS TS_NUMERAL TS_BIGNUM
+hash                	1007	0	16777276	T_HASH TS_STRING
+blockNumber         	1008	0	1082130460	T_BLOCKNUM TS_NUMERAL TS_INTEGER
+parentHash          	1009	0	16777276	T_HASH TS_STRING
+miner               	1010	0	16777271	T_ADDRESS TS_STRING
+difficulty          	1011	0	8388635	T_UNUMBER TS_NUMERAL
+price               	1012	0	8388638	T_DOUBLE TS_NUMERAL
+finalized           	1013	0	8388628	T_BOOL TS_NUMERAL
+timestamp           	1014	0	1082130447	T_TIMESTAMP TS_NUMERAL TS_INTEGER
+transactions        	1015	0	205520971	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
 {
   "schema": 8001,
   "deleted": false,
@@ -1166,15 +1166,15 @@ transactions        	1015	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 --------------------------------------------------------------------------------
 className: CNewReceipt
 baseClass: CBaseNode
-schema              	1001	1	65561	T_NUMBER TS_NUMERAL
-deleted             	1002	1	65556	T_BOOL TS_NUMERAL
-showing             	1003	1	65556	T_BOOL TS_NUMERAL
-cname               	1004	1	131122	T_TEXT TS_STRING
-contractAddress     	1005	0	131127	T_ADDRESS TS_STRING
-gasUsed             	1006	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
-logs                	1007	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
-logsBloom           	1008	0	131122	T_TEXT TS_STRING
-isError             	1009	0	65556	T_BOOL TS_NUMERAL
+schema              	1001	1	8388633	T_NUMBER TS_NUMERAL
+deleted             	1002	1	8388628	T_BOOL TS_NUMERAL
+showing             	1003	1	8388628	T_BOOL TS_NUMERAL
+cname               	1004	1	16777266	T_TEXT TS_STRING
+contractAddress     	1005	0	16777271	T_ADDRESS TS_STRING
+gasUsed             	1006	0	545259560	T_GAS TS_NUMERAL TS_BIGNUM
+logs                	1007	0	205520971	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
+logsBloom           	1008	0	16777266	T_TEXT TS_STRING
+isError             	1009	0	8388628	T_BOOL TS_NUMERAL
 {
   "contractAddress": "0x0",
   "gasUsed": 0,
@@ -1184,30 +1184,30 @@ isError             	1009	0	65556	T_BOOL TS_NUMERAL
 --------------------------------------------------------------------------------
 className: CNewReceipt
 baseClass: CBaseNode
-schema              	1001	1	65561	T_NUMBER TS_NUMERAL
-deleted             	1002	1	65556	T_BOOL TS_NUMERAL
-showing             	1003	1	65556	T_BOOL TS_NUMERAL
-cname               	1004	1	131122	T_TEXT TS_STRING
-contractAddress     	1005	1	131127	T_ADDRESS TS_STRING
-gasUsed             	1006	1	4259880	T_GAS TS_NUMERAL TS_BIGNUM
-logs                	1007	1	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
-logsBloom           	1008	1	131122	T_TEXT TS_STRING
-isError             	1009	1	65556	T_BOOL TS_NUMERAL
+schema              	1001	1	8388633	T_NUMBER TS_NUMERAL
+deleted             	1002	1	8388628	T_BOOL TS_NUMERAL
+showing             	1003	1	8388628	T_BOOL TS_NUMERAL
+cname               	1004	1	16777266	T_TEXT TS_STRING
+contractAddress     	1005	1	16777271	T_ADDRESS TS_STRING
+gasUsed             	1006	1	545259560	T_GAS TS_NUMERAL TS_BIGNUM
+logs                	1007	1	205520971	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
+logsBloom           	1008	1	16777266	T_TEXT TS_STRING
+isError             	1009	1	8388628	T_BOOL TS_NUMERAL
 {
 }
 
 --------------------------------------------------------------------------------
 className: CNewReceipt
 baseClass: CBaseNode
-schema              	1001	0	65561	T_NUMBER TS_NUMERAL
-deleted             	1002	0	65556	T_BOOL TS_NUMERAL
-showing             	1003	0	65556	T_BOOL TS_NUMERAL
-cname               	1004	0	131122	T_TEXT TS_STRING
-contractAddress     	1005	0	131127	T_ADDRESS TS_STRING
-gasUsed             	1006	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
-logs                	1007	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
-logsBloom           	1008	0	131122	T_TEXT TS_STRING
-isError             	1009	0	65556	T_BOOL TS_NUMERAL
+schema              	1001	0	8388633	T_NUMBER TS_NUMERAL
+deleted             	1002	0	8388628	T_BOOL TS_NUMERAL
+showing             	1003	0	8388628	T_BOOL TS_NUMERAL
+cname               	1004	0	16777266	T_TEXT TS_STRING
+contractAddress     	1005	0	16777271	T_ADDRESS TS_STRING
+gasUsed             	1006	0	545259560	T_GAS TS_NUMERAL TS_BIGNUM
+logs                	1007	0	205520971	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
+logsBloom           	1008	0	16777266	T_TEXT TS_STRING
+isError             	1009	0	8388628	T_BOOL TS_NUMERAL
 {
   "schema": 8001,
   "deleted": false,

@@ -17,15 +17,15 @@ namespace qblocks {
 
 //-------------------------------------------------------------------------
 // Attributes
-#define TS_OMITEMPTY (1 << 15)
-#define TS_NUMERAL (1 << 16)
-#define TS_STRING (1 << 17)
-#define TS_DATE (1 << 18)
-#define TS_ARRAY (1 << 19)
-#define TS_OBJECT (1 << 20)
-#define TS_POINTER (1 << 21)
-#define TS_BIGNUM (1 << 22)
-#define TS_INTEGER (1 << 23)
+#define TS_OMITEMPTY (1 << 22)
+#define TS_NUMERAL (1 << 23)
+#define TS_STRING (1 << 24)
+#define TS_DATE (1 << 25)
+#define TS_ARRAY (1 << 26)
+#define TS_OBJECT (1 << 27)
+#define TS_POINTER (1 << 28)
+#define TS_BIGNUM (1 << 29)
+#define TS_INTEGER (1 << 30)
 
 // Concrete types
 #define T_DATE (5 | TS_DATE)

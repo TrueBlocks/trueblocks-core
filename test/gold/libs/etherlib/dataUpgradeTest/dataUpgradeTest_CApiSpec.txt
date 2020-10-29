@@ -3,39 +3,39 @@ dataUpgradeTest CApiSpec
 --------------------------------------------------------------------------------
 className: CApiSpec
 baseClass: CBaseNode
-schema              	1001	1	65561	T_NUMBER TS_NUMERAL
-deleted             	1002	1	65556	T_BOOL TS_NUMERAL
-showing             	1003	1	65556	T_BOOL TS_NUMERAL
-cname               	1004	1	131122	T_TEXT TS_STRING
-method              	1005	0	131122	T_TEXT TS_STRING
-uri                 	1006	0	131122	T_TEXT TS_STRING
-headers             	1007	0	131122	T_TEXT TS_STRING
+schema              	1001	1	8388633	T_NUMBER TS_NUMERAL
+deleted             	1002	1	8388628	T_BOOL TS_NUMERAL
+showing             	1003	1	8388628	T_BOOL TS_NUMERAL
+cname               	1004	1	16777266	T_TEXT TS_STRING
+method              	1005	0	16777266	T_TEXT TS_STRING
+uri                 	1006	0	16777266	T_TEXT TS_STRING
+headers             	1007	0	16777266	T_TEXT TS_STRING
 {
 }
 
 --------------------------------------------------------------------------------
 className: CApiSpec
 baseClass: CBaseNode
-schema              	1001	1	65561	T_NUMBER TS_NUMERAL
-deleted             	1002	1	65556	T_BOOL TS_NUMERAL
-showing             	1003	1	65556	T_BOOL TS_NUMERAL
-cname               	1004	1	131122	T_TEXT TS_STRING
-method              	1005	1	131122	T_TEXT TS_STRING
-uri                 	1006	1	131122	T_TEXT TS_STRING
-headers             	1007	1	131122	T_TEXT TS_STRING
+schema              	1001	1	8388633	T_NUMBER TS_NUMERAL
+deleted             	1002	1	8388628	T_BOOL TS_NUMERAL
+showing             	1003	1	8388628	T_BOOL TS_NUMERAL
+cname               	1004	1	16777266	T_TEXT TS_STRING
+method              	1005	1	16777266	T_TEXT TS_STRING
+uri                 	1006	1	16777266	T_TEXT TS_STRING
+headers             	1007	1	16777266	T_TEXT TS_STRING
 {
 }
 
 --------------------------------------------------------------------------------
 className: CApiSpec
 baseClass: CBaseNode
-schema              	1001	0	65561	T_NUMBER TS_NUMERAL
-deleted             	1002	0	65556	T_BOOL TS_NUMERAL
-showing             	1003	0	65556	T_BOOL TS_NUMERAL
-cname               	1004	0	131122	T_TEXT TS_STRING
-method              	1005	0	131122	T_TEXT TS_STRING
-uri                 	1006	0	131122	T_TEXT TS_STRING
-headers             	1007	0	131122	T_TEXT TS_STRING
+schema              	1001	0	8388633	T_NUMBER TS_NUMERAL
+deleted             	1002	0	8388628	T_BOOL TS_NUMERAL
+showing             	1003	0	8388628	T_BOOL TS_NUMERAL
+cname               	1004	0	16777266	T_TEXT TS_STRING
+method              	1005	0	16777266	T_TEXT TS_STRING
+uri                 	1006	0	16777266	T_TEXT TS_STRING
+headers             	1007	0	16777266	T_TEXT TS_STRING
 {
   "schema": 8001,
   "deleted": false,

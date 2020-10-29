@@ -260,8 +260,8 @@ void CTraceFilter::registerClass(void) {
     ADD_FIELD(CTraceFilter, "cname", T_TEXT, ++fieldNum);
     ADD_FIELD(CTraceFilter, "fromBlock", T_BLOCKNUM, ++fieldNum);
     ADD_FIELD(CTraceFilter, "toBlock", T_BLOCKNUM, ++fieldNum);
-    ADD_FIELD(CTraceFilter, "fromAddress", T_ADDRESS | TS_ARRAY, ++fieldNum);
-    ADD_FIELD(CTraceFilter, "toAddress", T_ADDRESS | TS_ARRAY, ++fieldNum);
+    ADD_FIELD(CTraceFilter, "fromAddress", T_ADDRESS | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CTraceFilter, "toAddress", T_ADDRESS | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CTraceFilter, "after", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CTraceFilter, "count", T_UNUMBER, ++fieldNum);
 

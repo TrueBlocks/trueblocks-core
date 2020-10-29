@@ -559,9 +559,9 @@ void CTransaction::registerClass(void) {
     ADD_FIELD(CTransaction, "input", T_TEXT, ++fieldNum);
     ADD_FIELD(CTransaction, "isError", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CTransaction, "isInternal", T_UNUMBER, ++fieldNum);
-    ADD_FIELD(CTransaction, "receipt", T_OBJECT, ++fieldNum);
+    ADD_FIELD(CTransaction, "receipt", T_OBJECT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CTransaction, "traces", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CTransaction, "articulatedTx", T_OBJECT, ++fieldNum);
+    ADD_FIELD(CTransaction, "articulatedTx", T_OBJECT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CTransaction, "reconciliations", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CTransaction, "reconciliations");
     ADD_FIELD(CTransaction, "compressedTx", T_TEXT, ++fieldNum);

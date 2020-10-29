@@ -338,7 +338,7 @@ void CNewBlock::registerClass(void) {
     ADD_FIELD(CNewBlock, "price", T_DOUBLE, ++fieldNum);
     ADD_FIELD(CNewBlock, "finalized", T_BOOL, ++fieldNum);
     ADD_FIELD(CNewBlock, "timestamp", T_TIMESTAMP, ++fieldNum);
-    ADD_FIELD(CNewBlock, "transactions", T_OBJECT | TS_ARRAY, ++fieldNum);
+    ADD_FIELD(CNewBlock, "transactions", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CNewBlock, "schema");

@@ -207,7 +207,7 @@ void CChainCache::registerClass(void) {
     ADD_FIELD(CChainCache, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CChainCache, "cname", T_TEXT, ++fieldNum);
     ADD_FIELD(CChainCache, "max_depth", T_UNUMBER, ++fieldNum);
-    ADD_FIELD(CChainCache, "items", T_TEXT | TS_ARRAY, ++fieldNum);
+    ADD_FIELD(CChainCache, "items", T_TEXT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CChainCache, "schema");

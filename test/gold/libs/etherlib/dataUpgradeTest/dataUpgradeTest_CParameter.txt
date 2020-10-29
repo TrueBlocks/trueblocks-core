@@ -3,25 +3,25 @@ dataUpgradeTest CParameter
 --------------------------------------------------------------------------------
 className: CParameter
 baseClass: CBaseNode
-schema              	1001	1	65561	T_NUMBER TS_NUMERAL
-deleted             	1002	1	65556	T_BOOL TS_NUMERAL
-showing             	1003	1	65556	T_BOOL TS_NUMERAL
-cname               	1004	1	131122	T_TEXT TS_STRING
-type                	1005	0	131122	T_TEXT TS_STRING
-name                	1006	0	131122	T_TEXT TS_STRING
-str_default         	1007	0	131122	T_TEXT TS_STRING
-value               	1008	0	131122	T_TEXT TS_STRING
-indexed             	1009	0	65556	T_BOOL TS_NUMERAL
-internalType        	1010	0	131122	T_TEXT TS_STRING
-components          	1011	0	1605707	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
-no_write            	1012	0	65556	T_BOOL TS_NUMERAL
-is_flags            	1013	1	65563	T_UNUMBER TS_NUMERAL
-is_pointer          	1014	0	65556	T_BOOL TS_NUMERAL
-is_array            	1015	0	65556	T_BOOL TS_NUMERAL
-is_object           	1016	0	65556	T_BOOL TS_NUMERAL
-is_builtin          	1017	0	65556	T_BOOL TS_NUMERAL
-is_minimal          	1018	0	65556	T_BOOL TS_NUMERAL
-is_enabled          	1019	1	65556	T_BOOL TS_NUMERAL
+schema              	1001	1	8388633	T_NUMBER TS_NUMERAL
+deleted             	1002	1	8388628	T_BOOL TS_NUMERAL
+showing             	1003	1	8388628	T_BOOL TS_NUMERAL
+cname               	1004	1	16777266	T_TEXT TS_STRING
+type                	1005	0	16777266	T_TEXT TS_STRING
+name                	1006	0	16777266	T_TEXT TS_STRING
+str_default         	1007	0	16777266	T_TEXT TS_STRING
+value               	1008	0	16777266	T_TEXT TS_STRING
+indexed             	1009	0	8388628	T_BOOL TS_NUMERAL
+internalType        	1010	0	16777266	T_TEXT TS_STRING
+components          	1011	0	205520971	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
+no_write            	1012	0	8388628	T_BOOL TS_NUMERAL
+is_flags            	1013	1	8388635	T_UNUMBER TS_NUMERAL
+is_pointer          	1014	0	8388628	T_BOOL TS_NUMERAL
+is_array            	1015	0	8388628	T_BOOL TS_NUMERAL
+is_object           	1016	0	8388628	T_BOOL TS_NUMERAL
+is_builtin          	1017	0	8388628	T_BOOL TS_NUMERAL
+is_minimal          	1018	0	8388628	T_BOOL TS_NUMERAL
+is_enabled          	1019	1	8388628	T_BOOL TS_NUMERAL
 {
   "components": []
 }
@@ -29,50 +29,50 @@ is_enabled          	1019	1	65556	T_BOOL TS_NUMERAL
 --------------------------------------------------------------------------------
 className: CParameter
 baseClass: CBaseNode
-schema              	1001	1	65561	T_NUMBER TS_NUMERAL
-deleted             	1002	1	65556	T_BOOL TS_NUMERAL
-showing             	1003	1	65556	T_BOOL TS_NUMERAL
-cname               	1004	1	131122	T_TEXT TS_STRING
-type                	1005	1	131122	T_TEXT TS_STRING
-name                	1006	1	131122	T_TEXT TS_STRING
-str_default         	1007	1	131122	T_TEXT TS_STRING
-value               	1008	1	131122	T_TEXT TS_STRING
-indexed             	1009	1	65556	T_BOOL TS_NUMERAL
-internalType        	1010	1	131122	T_TEXT TS_STRING
-components          	1011	1	1605707	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
-no_write            	1012	1	65556	T_BOOL TS_NUMERAL
-is_flags            	1013	1	65563	T_UNUMBER TS_NUMERAL
-is_pointer          	1014	1	65556	T_BOOL TS_NUMERAL
-is_array            	1015	1	65556	T_BOOL TS_NUMERAL
-is_object           	1016	1	65556	T_BOOL TS_NUMERAL
-is_builtin          	1017	1	65556	T_BOOL TS_NUMERAL
-is_minimal          	1018	1	65556	T_BOOL TS_NUMERAL
-is_enabled          	1019	1	65556	T_BOOL TS_NUMERAL
+schema              	1001	1	8388633	T_NUMBER TS_NUMERAL
+deleted             	1002	1	8388628	T_BOOL TS_NUMERAL
+showing             	1003	1	8388628	T_BOOL TS_NUMERAL
+cname               	1004	1	16777266	T_TEXT TS_STRING
+type                	1005	1	16777266	T_TEXT TS_STRING
+name                	1006	1	16777266	T_TEXT TS_STRING
+str_default         	1007	1	16777266	T_TEXT TS_STRING
+value               	1008	1	16777266	T_TEXT TS_STRING
+indexed             	1009	1	8388628	T_BOOL TS_NUMERAL
+internalType        	1010	1	16777266	T_TEXT TS_STRING
+components          	1011	1	205520971	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
+no_write            	1012	1	8388628	T_BOOL TS_NUMERAL
+is_flags            	1013	1	8388635	T_UNUMBER TS_NUMERAL
+is_pointer          	1014	1	8388628	T_BOOL TS_NUMERAL
+is_array            	1015	1	8388628	T_BOOL TS_NUMERAL
+is_object           	1016	1	8388628	T_BOOL TS_NUMERAL
+is_builtin          	1017	1	8388628	T_BOOL TS_NUMERAL
+is_minimal          	1018	1	8388628	T_BOOL TS_NUMERAL
+is_enabled          	1019	1	8388628	T_BOOL TS_NUMERAL
 {
 }
 
 --------------------------------------------------------------------------------
 className: CParameter
 baseClass: CBaseNode
-schema              	1001	0	65561	T_NUMBER TS_NUMERAL
-deleted             	1002	0	65556	T_BOOL TS_NUMERAL
-showing             	1003	0	65556	T_BOOL TS_NUMERAL
-cname               	1004	0	131122	T_TEXT TS_STRING
-type                	1005	0	131122	T_TEXT TS_STRING
-name                	1006	0	131122	T_TEXT TS_STRING
-str_default         	1007	0	131122	T_TEXT TS_STRING
-value               	1008	0	131122	T_TEXT TS_STRING
-indexed             	1009	0	65556	T_BOOL TS_NUMERAL
-internalType        	1010	0	131122	T_TEXT TS_STRING
-components          	1011	0	1605707	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
-no_write            	1012	0	65556	T_BOOL TS_NUMERAL
-is_flags            	1013	0	65563	T_UNUMBER TS_NUMERAL
-is_pointer          	1014	0	65556	T_BOOL TS_NUMERAL
-is_array            	1015	0	65556	T_BOOL TS_NUMERAL
-is_object           	1016	0	65556	T_BOOL TS_NUMERAL
-is_builtin          	1017	0	65556	T_BOOL TS_NUMERAL
-is_minimal          	1018	0	65556	T_BOOL TS_NUMERAL
-is_enabled          	1019	0	65556	T_BOOL TS_NUMERAL
+schema              	1001	0	8388633	T_NUMBER TS_NUMERAL
+deleted             	1002	0	8388628	T_BOOL TS_NUMERAL
+showing             	1003	0	8388628	T_BOOL TS_NUMERAL
+cname               	1004	0	16777266	T_TEXT TS_STRING
+type                	1005	0	16777266	T_TEXT TS_STRING
+name                	1006	0	16777266	T_TEXT TS_STRING
+str_default         	1007	0	16777266	T_TEXT TS_STRING
+value               	1008	0	16777266	T_TEXT TS_STRING
+indexed             	1009	0	8388628	T_BOOL TS_NUMERAL
+internalType        	1010	0	16777266	T_TEXT TS_STRING
+components          	1011	0	205520971	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
+no_write            	1012	0	8388628	T_BOOL TS_NUMERAL
+is_flags            	1013	0	8388635	T_UNUMBER TS_NUMERAL
+is_pointer          	1014	0	8388628	T_BOOL TS_NUMERAL
+is_array            	1015	0	8388628	T_BOOL TS_NUMERAL
+is_object           	1016	0	8388628	T_BOOL TS_NUMERAL
+is_builtin          	1017	0	8388628	T_BOOL TS_NUMERAL
+is_minimal          	1018	0	8388628	T_BOOL TS_NUMERAL
+is_enabled          	1019	0	8388628	T_BOOL TS_NUMERAL
 {
   "schema": 8001,
   "deleted": false,

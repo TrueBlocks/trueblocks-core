@@ -98,18 +98,18 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
         } else if (startsWith(fld.type, "bytes")) { setFmt = "`[{NAME}] = [{DEFS}];\n";  regType = "T_TEXT";
         } else if (endsWith(fld.type, "_e"))     { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_NUMBER";
         } else if ((fld.is_flags & IS_POINTER))  { setFmt = "`[{NAME}] = [{DEFP}];\n";   regType = "T_POINTER";
-        } else if ((fld.is_flags & IS_OBJECT))   { setFmt = "`[{NAME}] = [{TYPE}]();\n"; regType = "T_OBJECT";
+        } else if ((fld.is_flags & IS_OBJECT))   { setFmt = "`[{NAME}] = [{TYPE}]();\n"; regType = "T_OBJECT | TS_OMITEMPTY";
         } else                                   { setFmt = STR_UNKOWNTYPE;              regType = "T_TEXT"; }
         // clang-format on
 
         if ((fld.is_flags & IS_ARRAY)) {
             setFmt = "\t[{NAME}].clear();\n";
             if (contains(fld.type, "Address")) {
-                regType = "T_ADDRESS | TS_ARRAY";
+                regType = "T_ADDRESS | TS_ARRAY | TS_OMITEMPTY";
             } else if (contains(fld.type, "String")) {
-                regType = "T_TEXT | TS_ARRAY";
+                regType = "T_TEXT | TS_ARRAY | TS_OMITEMPTY";
             } else {
-                regType = "T_OBJECT | TS_ARRAY";
+                regType = "T_OBJECT | TS_ARRAY | TS_OMITEMPTY";
             }
         }
 

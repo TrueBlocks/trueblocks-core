@@ -289,9 +289,9 @@ void CPinReport::registerClass(void) {
     ADD_FIELD(CPinReport, "bloomFormat", T_TEXT, ++fieldNum);
     ADD_FIELD(CPinReport, "prevHash", T_HASH, ++fieldNum);
     ADD_FIELD(CPinReport, "newBlockRange", T_TEXT, ++fieldNum);
-    ADD_FIELD(CPinReport, "newPins", T_OBJECT | TS_ARRAY, ++fieldNum);
+    ADD_FIELD(CPinReport, "newPins", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CPinReport, "prevBlockRange", T_TEXT, ++fieldNum);
-    ADD_FIELD(CPinReport, "prevPins", T_OBJECT | TS_ARRAY, ++fieldNum);
+    ADD_FIELD(CPinReport, "prevPins", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CPinReport, "schema");

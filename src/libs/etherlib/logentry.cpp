@@ -326,7 +326,7 @@ void CLogEntry::registerClass(void) {
     ADD_FIELD(CLogEntry, "logIndex", T_BLOCKNUM, ++fieldNum);
     ADD_FIELD(CLogEntry, "topics", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CLogEntry, "data", T_TEXT, ++fieldNum);
-    ADD_FIELD(CLogEntry, "articulatedLog", T_OBJECT, ++fieldNum);
+    ADD_FIELD(CLogEntry, "articulatedLog", T_OBJECT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CLogEntry, "compressedLog", T_TEXT, ++fieldNum);
     HIDE_FIELD(CLogEntry, "compressedLog");
     ADD_FIELD(CLogEntry, "transactionHash", T_HASH, ++fieldNum);

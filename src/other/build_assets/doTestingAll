@@ -10,7 +10,7 @@ export DOCKER_FOLDER=$QUICKBLOCKS/../trueblocks-explorer/
 cd $BUILD_FOLDER/
 cmake ../src
 #make readme
-#make generate finish
+make generate finish
 make
 
 doTestingApi --filter all --mode both --clean --report $@

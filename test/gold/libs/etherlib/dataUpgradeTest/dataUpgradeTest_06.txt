@@ -4,25 +4,25 @@ dataUpgradeTest --file:cmd_file1
 --------------------------------------------------------------------------------
 className: CBlock
 baseClass: CBaseNode
-schema              	1001	1	65561	T_NUMBER TS_NUMERAL
-deleted             	1002	1	65556	T_BOOL TS_NUMERAL
-showing             	1003	1	65556	T_BOOL TS_NUMERAL
-cname               	1004	1	131122	T_TEXT TS_STRING
-gasLimit            	1005	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
-gasUsed             	1006	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
-hash                	1007	0	131132	T_HASH TS_STRING
-blockNumber         	1008	0	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
-parentHash          	1009	0	131132	T_HASH TS_STRING
-miner               	1010	0	131127	T_ADDRESS TS_STRING
-difficulty          	1011	0	65563	T_UNUMBER TS_NUMERAL
-price               	1012	0	65566	T_DOUBLE TS_NUMERAL
-finalized           	1013	0	65556	T_BOOL TS_NUMERAL
-timestamp           	1014	0	8454159	T_TIMESTAMP TS_NUMERAL TS_INTEGER
-transactions        	1015	0	1605707	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
-name                	1016	1	131122	T_TEXT TS_STRING
-light               	1017	1	65556	T_BOOL TS_NUMERAL
-date                	1018	1	262149	T_DATE TS_DATE
-age                 	1019	1	262149	T_DATE TS_DATE
+schema              	1001	1	8388633	T_NUMBER TS_NUMERAL
+deleted             	1002	1	8388628	T_BOOL TS_NUMERAL
+showing             	1003	1	8388628	T_BOOL TS_NUMERAL
+cname               	1004	1	16777266	T_TEXT TS_STRING
+gasLimit            	1005	0	545259560	T_GAS TS_NUMERAL TS_BIGNUM
+gasUsed             	1006	0	545259560	T_GAS TS_NUMERAL TS_BIGNUM
+hash                	1007	0	16777276	T_HASH TS_STRING
+blockNumber         	1008	0	1082130460	T_BLOCKNUM TS_NUMERAL TS_INTEGER
+parentHash          	1009	0	16777276	T_HASH TS_STRING
+miner               	1010	0	16777271	T_ADDRESS TS_STRING
+difficulty          	1011	0	8388635	T_UNUMBER TS_NUMERAL
+price               	1012	0	8388638	T_DOUBLE TS_NUMERAL
+finalized           	1013	0	8388628	T_BOOL TS_NUMERAL
+timestamp           	1014	0	1082130447	T_TIMESTAMP TS_NUMERAL TS_INTEGER
+transactions        	1015	0	205520971	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
+name                	1016	1	16777266	T_TEXT TS_STRING
+light               	1017	1	8388628	T_BOOL TS_NUMERAL
+date                	1018	1	33554437	T_DATE TS_DATE
+age                 	1019	1	33554437	T_DATE TS_DATE
 {
   "gasLimit": 3141592,
   "gasUsed": 21000,
@@ -64,25 +64,25 @@ age                 	1019	1	262149	T_DATE TS_DATE
 --------------------------------------------------------------------------------
 className: CBlock
 baseClass: CBaseNode
-schema              	1001	1	65561	T_NUMBER TS_NUMERAL
-deleted             	1002	1	65556	T_BOOL TS_NUMERAL
-showing             	1003	1	65556	T_BOOL TS_NUMERAL
-cname               	1004	1	131122	T_TEXT TS_STRING
-gasLimit            	1005	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
-gasUsed             	1006	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
-hash                	1007	0	131132	T_HASH TS_STRING
-blockNumber         	1008	0	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
-parentHash          	1009	0	131132	T_HASH TS_STRING
-miner               	1010	0	131127	T_ADDRESS TS_STRING
-difficulty          	1011	0	65563	T_UNUMBER TS_NUMERAL
-price               	1012	0	65566	T_DOUBLE TS_NUMERAL
-finalized           	1013	0	65556	T_BOOL TS_NUMERAL
-timestamp           	1014	0	8454159	T_TIMESTAMP TS_NUMERAL TS_INTEGER
-transactions        	1015	0	1605707	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
-name                	1016	1	131122	T_TEXT TS_STRING
-light               	1017	1	65556	T_BOOL TS_NUMERAL
-date                	1018	1	262149	T_DATE TS_DATE
-age                 	1019	1	262149	T_DATE TS_DATE
+schema              	1001	1	8388633	T_NUMBER TS_NUMERAL
+deleted             	1002	1	8388628	T_BOOL TS_NUMERAL
+showing             	1003	1	8388628	T_BOOL TS_NUMERAL
+cname               	1004	1	16777266	T_TEXT TS_STRING
+gasLimit            	1005	0	545259560	T_GAS TS_NUMERAL TS_BIGNUM
+gasUsed             	1006	0	545259560	T_GAS TS_NUMERAL TS_BIGNUM
+hash                	1007	0	16777276	T_HASH TS_STRING
+blockNumber         	1008	0	1082130460	T_BLOCKNUM TS_NUMERAL TS_INTEGER
+parentHash          	1009	0	16777276	T_HASH TS_STRING
+miner               	1010	0	16777271	T_ADDRESS TS_STRING
+difficulty          	1011	0	8388635	T_UNUMBER TS_NUMERAL
+price               	1012	0	8388638	T_DOUBLE TS_NUMERAL
+finalized           	1013	0	8388628	T_BOOL TS_NUMERAL
+timestamp           	1014	0	1082130447	T_TIMESTAMP TS_NUMERAL TS_INTEGER
+transactions        	1015	0	205520971	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
+name                	1016	1	16777266	T_TEXT TS_STRING
+light               	1017	1	8388628	T_BOOL TS_NUMERAL
+date                	1018	1	33554437	T_DATE TS_DATE
+age                 	1019	1	33554437	T_DATE TS_DATE
 {
   "gasLimit": 3141592,
   "gasUsed": 21000,
@@ -161,25 +161,25 @@ age                 	1019	1	262149	T_DATE TS_DATE
 --------------------------------------------------------------------------------
 className: CBlock
 baseClass: CBaseNode
-schema              	1001	1	65561	T_NUMBER TS_NUMERAL
-deleted             	1002	1	65556	T_BOOL TS_NUMERAL
-showing             	1003	1	65556	T_BOOL TS_NUMERAL
-cname               	1004	1	131122	T_TEXT TS_STRING
-gasLimit            	1005	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
-gasUsed             	1006	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
-hash                	1007	0	131132	T_HASH TS_STRING
-blockNumber         	1008	0	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
-parentHash          	1009	0	131132	T_HASH TS_STRING
-miner               	1010	0	131127	T_ADDRESS TS_STRING
-difficulty          	1011	0	65563	T_UNUMBER TS_NUMERAL
-price               	1012	0	65566	T_DOUBLE TS_NUMERAL
-finalized           	1013	0	65556	T_BOOL TS_NUMERAL
-timestamp           	1014	0	8454159	T_TIMESTAMP TS_NUMERAL TS_INTEGER
-transactions        	1015	0	1605707	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
-name                	1016	1	131122	T_TEXT TS_STRING
-light               	1017	1	65556	T_BOOL TS_NUMERAL
-date                	1018	1	262149	T_DATE TS_DATE
-age                 	1019	1	262149	T_DATE TS_DATE
+schema              	1001	1	8388633	T_NUMBER TS_NUMERAL
+deleted             	1002	1	8388628	T_BOOL TS_NUMERAL
+showing             	1003	1	8388628	T_BOOL TS_NUMERAL
+cname               	1004	1	16777266	T_TEXT TS_STRING
+gasLimit            	1005	0	545259560	T_GAS TS_NUMERAL TS_BIGNUM
+gasUsed             	1006	0	545259560	T_GAS TS_NUMERAL TS_BIGNUM
+hash                	1007	0	16777276	T_HASH TS_STRING
+blockNumber         	1008	0	1082130460	T_BLOCKNUM TS_NUMERAL TS_INTEGER
+parentHash          	1009	0	16777276	T_HASH TS_STRING
+miner               	1010	0	16777271	T_ADDRESS TS_STRING
+difficulty          	1011	0	8388635	T_UNUMBER TS_NUMERAL
+price               	1012	0	8388638	T_DOUBLE TS_NUMERAL
+finalized           	1013	0	8388628	T_BOOL TS_NUMERAL
+timestamp           	1014	0	1082130447	T_TIMESTAMP TS_NUMERAL TS_INTEGER
+transactions        	1015	0	205520971	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
+name                	1016	1	16777266	T_TEXT TS_STRING
+light               	1017	1	8388628	T_BOOL TS_NUMERAL
+date                	1018	1	33554437	T_DATE TS_DATE
+age                 	1019	1	33554437	T_DATE TS_DATE
 {
   "gasLimit": 3141592,
   "gasUsed": 21000,
@@ -220,21 +220,21 @@ age                 	1019	1	262149	T_DATE TS_DATE
 --------------------------------------------------------------------------------
 className: CNewBlock
 baseClass: CBaseNode
-schema              	1001	1	65561	T_NUMBER TS_NUMERAL
-deleted             	1002	1	65556	T_BOOL TS_NUMERAL
-showing             	1003	1	65556	T_BOOL TS_NUMERAL
-cname               	1004	1	131122	T_TEXT TS_STRING
-gasLimit            	1005	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
-gasUsed             	1006	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
-hash                	1007	0	131132	T_HASH TS_STRING
-blockNumber         	1008	0	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
-parentHash          	1009	0	131132	T_HASH TS_STRING
-miner               	1010	0	131127	T_ADDRESS TS_STRING
-difficulty          	1011	0	65563	T_UNUMBER TS_NUMERAL
-price               	1012	0	65566	T_DOUBLE TS_NUMERAL
-finalized           	1013	0	65556	T_BOOL TS_NUMERAL
-timestamp           	1014	0	8454159	T_TIMESTAMP TS_NUMERAL TS_INTEGER
-transactions        	1015	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+schema              	1001	1	8388633	T_NUMBER TS_NUMERAL
+deleted             	1002	1	8388628	T_BOOL TS_NUMERAL
+showing             	1003	1	8388628	T_BOOL TS_NUMERAL
+cname               	1004	1	16777266	T_TEXT TS_STRING
+gasLimit            	1005	0	545259560	T_GAS TS_NUMERAL TS_BIGNUM
+gasUsed             	1006	0	545259560	T_GAS TS_NUMERAL TS_BIGNUM
+hash                	1007	0	16777276	T_HASH TS_STRING
+blockNumber         	1008	0	1082130460	T_BLOCKNUM TS_NUMERAL TS_INTEGER
+parentHash          	1009	0	16777276	T_HASH TS_STRING
+miner               	1010	0	16777271	T_ADDRESS TS_STRING
+difficulty          	1011	0	8388635	T_UNUMBER TS_NUMERAL
+price               	1012	0	8388638	T_DOUBLE TS_NUMERAL
+finalized           	1013	0	8388628	T_BOOL TS_NUMERAL
+timestamp           	1014	0	1082130447	T_TIMESTAMP TS_NUMERAL TS_INTEGER
+transactions        	1015	0	205520971	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
 {
   "gasLimit": 3141592,
   "gasUsed": 21000,
@@ -276,21 +276,21 @@ transactions        	1015	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 --------------------------------------------------------------------------------
 className: CNewBlock
 baseClass: CBaseNode
-schema              	1001	1	65561	T_NUMBER TS_NUMERAL
-deleted             	1002	1	65556	T_BOOL TS_NUMERAL
-showing             	1003	1	65556	T_BOOL TS_NUMERAL
-cname               	1004	1	131122	T_TEXT TS_STRING
-gasLimit            	1005	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
-gasUsed             	1006	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
-hash                	1007	0	131132	T_HASH TS_STRING
-blockNumber         	1008	0	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
-parentHash          	1009	0	131132	T_HASH TS_STRING
-miner               	1010	0	131127	T_ADDRESS TS_STRING
-difficulty          	1011	0	65563	T_UNUMBER TS_NUMERAL
-price               	1012	0	65566	T_DOUBLE TS_NUMERAL
-finalized           	1013	0	65556	T_BOOL TS_NUMERAL
-timestamp           	1014	0	8454159	T_TIMESTAMP TS_NUMERAL TS_INTEGER
-transactions        	1015	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+schema              	1001	1	8388633	T_NUMBER TS_NUMERAL
+deleted             	1002	1	8388628	T_BOOL TS_NUMERAL
+showing             	1003	1	8388628	T_BOOL TS_NUMERAL
+cname               	1004	1	16777266	T_TEXT TS_STRING
+gasLimit            	1005	0	545259560	T_GAS TS_NUMERAL TS_BIGNUM
+gasUsed             	1006	0	545259560	T_GAS TS_NUMERAL TS_BIGNUM
+hash                	1007	0	16777276	T_HASH TS_STRING
+blockNumber         	1008	0	1082130460	T_BLOCKNUM TS_NUMERAL TS_INTEGER
+parentHash          	1009	0	16777276	T_HASH TS_STRING
+miner               	1010	0	16777271	T_ADDRESS TS_STRING
+difficulty          	1011	0	8388635	T_UNUMBER TS_NUMERAL
+price               	1012	0	8388638	T_DOUBLE TS_NUMERAL
+finalized           	1013	0	8388628	T_BOOL TS_NUMERAL
+timestamp           	1014	0	1082130447	T_TIMESTAMP TS_NUMERAL TS_INTEGER
+transactions        	1015	0	205520971	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
 {
   "gasLimit": 3141592,
   "gasUsed": 21000,
@@ -369,21 +369,21 @@ transactions        	1015	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 --------------------------------------------------------------------------------
 className: CNewBlock
 baseClass: CBaseNode
-schema              	1001	1	65561	T_NUMBER TS_NUMERAL
-deleted             	1002	1	65556	T_BOOL TS_NUMERAL
-showing             	1003	1	65556	T_BOOL TS_NUMERAL
-cname               	1004	1	131122	T_TEXT TS_STRING
-gasLimit            	1005	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
-gasUsed             	1006	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
-hash                	1007	0	131132	T_HASH TS_STRING
-blockNumber         	1008	0	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
-parentHash          	1009	0	131132	T_HASH TS_STRING
-miner               	1010	0	131127	T_ADDRESS TS_STRING
-difficulty          	1011	0	65563	T_UNUMBER TS_NUMERAL
-price               	1012	0	65566	T_DOUBLE TS_NUMERAL
-finalized           	1013	0	65556	T_BOOL TS_NUMERAL
-timestamp           	1014	0	8454159	T_TIMESTAMP TS_NUMERAL TS_INTEGER
-transactions        	1015	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+schema              	1001	1	8388633	T_NUMBER TS_NUMERAL
+deleted             	1002	1	8388628	T_BOOL TS_NUMERAL
+showing             	1003	1	8388628	T_BOOL TS_NUMERAL
+cname               	1004	1	16777266	T_TEXT TS_STRING
+gasLimit            	1005	0	545259560	T_GAS TS_NUMERAL TS_BIGNUM
+gasUsed             	1006	0	545259560	T_GAS TS_NUMERAL TS_BIGNUM
+hash                	1007	0	16777276	T_HASH TS_STRING
+blockNumber         	1008	0	1082130460	T_BLOCKNUM TS_NUMERAL TS_INTEGER
+parentHash          	1009	0	16777276	T_HASH TS_STRING
+miner               	1010	0	16777271	T_ADDRESS TS_STRING
+difficulty          	1011	0	8388635	T_UNUMBER TS_NUMERAL
+price               	1012	0	8388638	T_DOUBLE TS_NUMERAL
+finalized           	1013	0	8388628	T_BOOL TS_NUMERAL
+timestamp           	1014	0	1082130447	T_TIMESTAMP TS_NUMERAL TS_INTEGER
+transactions        	1015	0	205520971	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
 {
   "gasLimit": 3141592,
   "gasUsed": 21000,
@@ -425,21 +425,21 @@ transactions        	1015	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
 --------------------------------------------------------------------------------
 className: CNewBlock
 baseClass: CBaseNode
-schema              	1001	1	65561	T_NUMBER TS_NUMERAL
-deleted             	1002	1	65556	T_BOOL TS_NUMERAL
-showing             	1003	1	65556	T_BOOL TS_NUMERAL
-cname               	1004	1	131122	T_TEXT TS_STRING
-gasLimit            	1005	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
-gasUsed             	1006	0	4259880	T_GAS TS_NUMERAL TS_BIGNUM
-hash                	1007	0	131132	T_HASH TS_STRING
-blockNumber         	1008	0	8454172	T_BLOCKNUM TS_NUMERAL TS_INTEGER
-parentHash          	1009	0	131132	T_HASH TS_STRING
-miner               	1010	0	131127	T_ADDRESS TS_STRING
-difficulty          	1011	0	65563	T_UNUMBER TS_NUMERAL
-price               	1012	0	65566	T_DOUBLE TS_NUMERAL
-finalized           	1013	0	65556	T_BOOL TS_NUMERAL
-timestamp           	1014	0	8454159	T_TIMESTAMP TS_NUMERAL TS_INTEGER
-transactions        	1015	0	1572939	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT
+schema              	1001	1	8388633	T_NUMBER TS_NUMERAL
+deleted             	1002	1	8388628	T_BOOL TS_NUMERAL
+showing             	1003	1	8388628	T_BOOL TS_NUMERAL
+cname               	1004	1	16777266	T_TEXT TS_STRING
+gasLimit            	1005	0	545259560	T_GAS TS_NUMERAL TS_BIGNUM
+gasUsed             	1006	0	545259560	T_GAS TS_NUMERAL TS_BIGNUM
+hash                	1007	0	16777276	T_HASH TS_STRING
+blockNumber         	1008	0	1082130460	T_BLOCKNUM TS_NUMERAL TS_INTEGER
+parentHash          	1009	0	16777276	T_HASH TS_STRING
+miner               	1010	0	16777271	T_ADDRESS TS_STRING
+difficulty          	1011	0	8388635	T_UNUMBER TS_NUMERAL
+price               	1012	0	8388638	T_DOUBLE TS_NUMERAL
+finalized           	1013	0	8388628	T_BOOL TS_NUMERAL
+timestamp           	1014	0	1082130447	T_TIMESTAMP TS_NUMERAL TS_INTEGER
+transactions        	1015	0	205520971	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
 {
   "gasLimit": 3141592,
   "gasUsed": 21000,

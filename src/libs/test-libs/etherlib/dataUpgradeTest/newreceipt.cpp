@@ -241,7 +241,7 @@ void CNewReceipt::registerClass(void) {
     ADD_FIELD(CNewReceipt, "cname", T_TEXT, ++fieldNum);
     ADD_FIELD(CNewReceipt, "contractAddress", T_ADDRESS, ++fieldNum);
     ADD_FIELD(CNewReceipt, "gasUsed", T_GAS, ++fieldNum);
-    ADD_FIELD(CNewReceipt, "logs", T_OBJECT | TS_ARRAY, ++fieldNum);
+    ADD_FIELD(CNewReceipt, "logs", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CNewReceipt, "logsBloom", T_TEXT, ++fieldNum);
     ADD_FIELD(CNewReceipt, "isError", T_BOOL, ++fieldNum);
 

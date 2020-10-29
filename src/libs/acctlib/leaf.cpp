@@ -207,7 +207,7 @@ void CLeaf::registerClass(void) {
     ADD_FIELD(CLeaf, "deleted", T_BOOL, ++fieldNum);
     ADD_FIELD(CLeaf, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CLeaf, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CLeaf, "blocks", T_OBJECT | TS_ARRAY, ++fieldNum);
+    ADD_FIELD(CLeaf, "blocks", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CLeaf, "counter", T_UNUMBER, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like

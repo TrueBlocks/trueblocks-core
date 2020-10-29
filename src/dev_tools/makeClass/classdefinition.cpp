@@ -422,7 +422,7 @@ void CClassDefinition::registerClass(void) {
     ADD_FIELD(CClassDefinition, "scope_str", T_TEXT, ++fieldNum);
     ADD_FIELD(CClassDefinition, "serializable", T_BOOL, ++fieldNum);
     ADD_FIELD(CClassDefinition, "use_export", T_BOOL, ++fieldNum);
-    ADD_FIELD(CClassDefinition, "fieldArray", T_OBJECT | TS_ARRAY, ++fieldNum);
+    ADD_FIELD(CClassDefinition, "fieldArray", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CClassDefinition, "fieldArray");
 
     // Hide our internal fields, user can turn them on if they like

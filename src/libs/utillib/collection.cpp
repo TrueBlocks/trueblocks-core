@@ -292,7 +292,7 @@ void CCollection::registerClass(void) {
     ADD_FIELD(CCollection, "monitored", T_BOOL, ++fieldNum);
     ADD_FIELD(CCollection, "deleted", T_BOOL, ++fieldNum);
     ADD_FIELD(CCollection, "sizeInBytes", T_UNUMBER, ++fieldNum);
-    ADD_FIELD(CCollection, "addresses", T_ADDRESS | TS_ARRAY, ++fieldNum);
+    ADD_FIELD(CCollection, "addresses", T_ADDRESS | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CCollection, "addressList", T_TEXT, ++fieldNum);
     HIDE_FIELD(CCollection, "addressList");
 

@@ -204,7 +204,7 @@ void CPinataList::registerClass(void) {
     ADD_FIELD(CPinataList, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CPinataList, "cname", T_TEXT, ++fieldNum);
     ADD_FIELD(CPinataList, "count", T_TEXT, ++fieldNum);
-    ADD_FIELD(CPinataList, "rows", T_OBJECT | TS_ARRAY, ++fieldNum);
+    ADD_FIELD(CPinataList, "rows", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CPinataList, "schema");
