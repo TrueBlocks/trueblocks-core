@@ -44,7 +44,6 @@ string_q baseTypeName(uint64_t type) {
 
 //--------------------------------------------------------------
 string_q fieldTypeName(uint64_t type) {
-    // bool omitEmpty = type & TS_OMITEMPTY;
     type &= uint64_t(~TS_OMITEMPTY);
     switch (type) {
         case T_DATE:

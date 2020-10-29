@@ -88,7 +88,7 @@ bool COptions::handle_scrape(void) {
 
     // Report to the screen...
     string_q tmp = "cmd: " + substitute(os.str(), "/Users/jrush/Development/trueblocks-core/bin/", "");
-    LOG_INFO(cGreen, tmp, cOff, " (ending at: ", (startBlock + n_blocks - 1), ")");
+    LOG_INFO(cGreen, tmp, cOff, " (", (client - startBlock), " blocks from head)");
 
     // ...and make the call to blaze.
     os << " --ripeBlock " << ripeBlock;
