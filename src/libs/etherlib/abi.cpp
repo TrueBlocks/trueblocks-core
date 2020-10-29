@@ -204,7 +204,7 @@ void CAbi::registerClass(void) {
     ADD_FIELD(CAbi, "deleted", T_BOOL, ++fieldNum);
     ADD_FIELD(CAbi, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CAbi, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CAbi, "address", T_ADDRESS, ++fieldNum);
+    ADD_FIELD(CAbi, "address", T_ADDRESS | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CAbi, "interfaces", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like

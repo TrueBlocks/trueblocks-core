@@ -271,7 +271,7 @@ void CEthState::registerClass(void) {
     HIDE_FIELD(CEthState, "code");
     ADD_FIELD(CEthState, "storage", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CEthState, "storage");
-    ADD_FIELD(CEthState, "address", T_ADDRESS, ++fieldNum);
+    ADD_FIELD(CEthState, "address", T_ADDRESS | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CEthState, "address");
     ADD_FIELD(CEthState, "deployed", T_BLOCKNUM, ++fieldNum);
     HIDE_FIELD(CEthState, "deployed");

@@ -251,7 +251,7 @@ void CLogQuery::registerClass(void) {
     ADD_FIELD(CLogQuery, "cname", T_TEXT, ++fieldNum);
     ADD_FIELD(CLogQuery, "fromBlock", T_BLOCKNUM, ++fieldNum);
     ADD_FIELD(CLogQuery, "toBlock", T_BLOCKNUM, ++fieldNum);
-    ADD_FIELD(CLogQuery, "blockHash", T_HASH, ++fieldNum);
+    ADD_FIELD(CLogQuery, "blockHash", T_HASH | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CLogQuery, "addresses", T_ADDRESS | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CLogQuery, "topics", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
 

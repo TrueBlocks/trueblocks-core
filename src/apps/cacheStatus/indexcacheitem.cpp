@@ -303,9 +303,9 @@ void CIndexCacheItem::registerClass(void) {
     ADD_FIELD(CIndexCacheItem, "latestTs", T_TIMESTAMP, ++fieldNum);
     ADD_FIELD(CIndexCacheItem, "filename", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CIndexCacheItem, "indexSizeBytes", T_UNUMBER, ++fieldNum);
-    ADD_FIELD(CIndexCacheItem, "index_hash", T_IPFSHASH, ++fieldNum);
+    ADD_FIELD(CIndexCacheItem, "index_hash", T_IPFSHASH | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CIndexCacheItem, "bloomSizeBytes", T_UNUMBER, ++fieldNum);
-    ADD_FIELD(CIndexCacheItem, "bloom_hash", T_IPFSHASH, ++fieldNum);
+    ADD_FIELD(CIndexCacheItem, "bloom_hash", T_IPFSHASH | TS_OMITEMPTY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CIndexCacheItem, "schema");

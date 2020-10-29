@@ -291,15 +291,15 @@ void CTraceAction::registerClass(void) {
     ADD_FIELD(CTraceAction, "deleted", T_BOOL, ++fieldNum);
     ADD_FIELD(CTraceAction, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CTraceAction, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CTraceAction, "selfDestructed", T_ADDRESS, ++fieldNum);
+    ADD_FIELD(CTraceAction, "selfDestructed", T_ADDRESS | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CTraceAction, "balance", T_WEI, ++fieldNum);
     ADD_FIELD(CTraceAction, "callType", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CTraceAction, "from", T_ADDRESS, ++fieldNum);
+    ADD_FIELD(CTraceAction, "from", T_ADDRESS | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CTraceAction, "gas", T_GAS, ++fieldNum);
     ADD_FIELD(CTraceAction, "init", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CTraceAction, "input", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CTraceAction, "refundAddress", T_ADDRESS, ++fieldNum);
-    ADD_FIELD(CTraceAction, "to", T_ADDRESS, ++fieldNum);
+    ADD_FIELD(CTraceAction, "refundAddress", T_ADDRESS | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CTraceAction, "to", T_ADDRESS | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CTraceAction, "value", T_WEI, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like

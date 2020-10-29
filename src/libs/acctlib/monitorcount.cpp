@@ -201,7 +201,7 @@ void CMonitorCount::registerClass(void) {
     ADD_FIELD(CMonitorCount, "deleted", T_BOOL, ++fieldNum);
     ADD_FIELD(CMonitorCount, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CMonitorCount, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CMonitorCount, "address", T_ADDRESS, ++fieldNum);
+    ADD_FIELD(CMonitorCount, "address", T_ADDRESS | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CMonitorCount, "nRecords", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CMonitorCount, "fileSize", T_UNUMBER, ++fieldNum);
 

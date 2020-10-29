@@ -576,19 +576,32 @@ void CBaseNode::doExport(ostream& os) const {
                     else if (field.m_fieldType & T_TEXT && val.empty())
                         hidden = true;
                     else if (field.m_fieldType & T_OBJECT) {
-                        const CRuntimeClass* objClass = field.getObjType();
-                        if (objClass) {
-                            CBaseNode* item = createObjectOfType(field.getObjType()->m_ClassName);
-                            if (item) {
-                                ostringstream objStream;
-                                item->doExport(objStream);
-                                string_q defVal = objStream.str();
-                                hidden = val == defVal;
-                                delete item;
+                        string_q defValue;
+                        static bool locked = false;
+                        if (!locked) {
+                            const CRuntimeClass* objClass = field.getObjType();
+                            if (objClass) {  // do we have an object?
+                                CBaseNode* defObject = NULL;
+                                static map<string_q, CBaseNode*> defObjects;
+                                if (defObjects[objClass->m_ClassName]) {  // have we already created the default object
+                                                                          // of this type?
+                                    defObject = defObjects[objClass->m_ClassName];
+                                } else {  // we need to create the default object of this type - do this only once
+                                    defObject = createObjectOfType(
+                                        objClass->m_ClassName);  // this drops memory, but it's stored statically so
+                                                                 // will be cleaned up on exit
+                                    defObjects[objClass->m_ClassName] = defObject;  // store it for next time
+                                }
+                                if (defObject) {
+                                    ostringstream defOs;
+                                    locked = true;
+                                    defObject->doExport(defOs);
+                                    locked = false;
+                                    defValue = defOs.str();
+                                }
                             }
                         }
-                        // replaceAny(val, "\n\t\r ", "");
-                        // hidden = val == "{}";
+                        hidden = val == defValue;
                     }
                 }
             }

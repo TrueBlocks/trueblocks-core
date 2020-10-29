@@ -78,10 +78,10 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
         } else if (fld.type == "timestamp")      { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_TIMESTAMP";
         } else if (fld.type == "blknum")         { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_BLOCKNUM";
         } else if (fld.type == "string")         { setFmt = "`[{NAME}] = [{DEFS}];\n";   regType = "T_TEXT | TS_OMITEMPTY";
-        } else if (fld.type == "addr")           { setFmt = "`[{NAME}] = [{DEFS}];\n";   regType = "T_ADDRESS";
-        } else if (fld.type == "address")        { setFmt = "`[{NAME}] = [{DEFS}];\n";   regType = "T_ADDRESS";
-        } else if (fld.type == "hash")           { setFmt = "`[{NAME}] = [{DEFS}];\n";   regType = "T_HASH";
-        } else if (fld.type == "ipfshash")       { setFmt = "`[{NAME}] = [{DEFS}];\n";   regType = "T_IPFSHASH";
+        } else if (fld.type == "addr")           { setFmt = "`[{NAME}] = [{DEFS}];\n";   regType = "T_ADDRESS | TS_OMITEMPTY";
+        } else if (fld.type == "address")        { setFmt = "`[{NAME}] = [{DEFS}];\n";   regType = "T_ADDRESS | TS_OMITEMPTY";
+        } else if (fld.type == "hash")           { setFmt = "`[{NAME}] = [{DEFS}];\n";   regType = "T_HASH | TS_OMITEMPTY";
+        } else if (fld.type == "ipfshash")       { setFmt = "`[{NAME}] = [{DEFS}];\n";   regType = "T_IPFSHASH | TS_OMITEMPTY";
         } else if (fld.type == "int8")           { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_NUMBER";
         } else if (fld.type == "int16")          { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_NUMBER";
         } else if (fld.type == "int32")          { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_NUMBER";
@@ -153,7 +153,15 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
         if (!(fld.is_flags & IS_POINTER) || (fld.is_flags & IS_ARRAY))
             replace(declareFmt, "*", "");
 
-        add_field_stream << substitute(substitute(fld.Format(regAddFmt), "T_TEXT", regType), "CL_NM", "[{CLASS_NAME}]");
+        string_q fieldAddLine = fld.Format(regAddFmt);
+        replaceAll(fieldAddLine, "T_TEXT", regType);
+        replaceAll(fieldAddLine, "CL_NM", "[{CLASS_NAME}]");
+        if ((fld.is_flags & IS_OBJECT) && !(fld.is_flags & IS_ARRAY) && !(fld.is_flags & IS_POINTER)) {
+            replaceAll(fieldAddLine, "ADD_FIELD", "ADD_OBJECT");
+            replaceAll(fieldAddLine, "++fieldNum);\n", "++fieldNum, GETRUNTIME_CLASS([{CLASS_NAME}]));\n");
+        }
+
+        add_field_stream << fieldAddLine;
         if (fld.no_write)
             add_field_stream << substitute(fld.Format(regHideFmt), "CL_NM", "[{CLASS_NAME}]");
 

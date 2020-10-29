@@ -341,7 +341,7 @@ void CAccountName::registerClass(void) {
     ADD_FIELD(CAccountName, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CAccountName, "cname", T_TEXT, ++fieldNum);
     ADD_FIELD(CAccountName, "tags", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CAccountName, "address", T_ADDRESS, ++fieldNum);
+    ADD_FIELD(CAccountName, "address", T_ADDRESS | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CAccountName, "name", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CAccountName, "symbol", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CAccountName, "source", T_TEXT | TS_OMITEMPTY, ++fieldNum);

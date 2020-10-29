@@ -201,7 +201,7 @@ void CAppearanceDisplay::registerClass(void) {
     ADD_FIELD(CAppearanceDisplay, "deleted", T_BOOL, ++fieldNum);
     ADD_FIELD(CAppearanceDisplay, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CAppearanceDisplay, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CAppearanceDisplay, "address", T_ADDRESS, ++fieldNum);
+    ADD_FIELD(CAppearanceDisplay, "address", T_ADDRESS | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CAppearanceDisplay, "blockNumber", T_BLOCKNUM, ++fieldNum);
     ADD_FIELD(CAppearanceDisplay, "transactionIndex", T_BLOCKNUM, ++fieldNum);
 

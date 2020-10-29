@@ -386,7 +386,7 @@ void CFunction::registerClass(void) {
     HIDE_FIELD(CFunction, "message");
     ADD_FIELD(CFunction, "inputs", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CFunction, "outputs", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CFunction, "address", T_ADDRESS, ++fieldNum);
+    ADD_FIELD(CFunction, "address", T_ADDRESS | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CFunction, "address");
 
     // Hide our internal fields, user can turn them on if they like
