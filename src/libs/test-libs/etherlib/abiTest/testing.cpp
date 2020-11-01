@@ -146,7 +146,7 @@ bool test_old_bug(void) {
     return true;
 }
 
-string_q data =
+string_q data12 =
     "CEthStateArray|CBlockNumArray|CFunctionArray|CReconciliationOutput|CLogEntryArray|CParameterArray|"
     "CPerson|CReceipt|CNewReceipt|CNewTransactionArray|CBigUintArray|CTopicArray|address[]|bytes4|time|"
     // note - we leave 'CTreeNode *' here to show it gets fixed - should use 'CTreeNode* ' instead
@@ -155,7 +155,7 @@ string_q data =
     "uint64|wei";
 //--------------------------------------------------------------
 bool test_func_assign(void) {
-    string_q types = data;
+    string_q types = data12;
     while (!types.empty()) {
         string_q type = nextTokenClear(types, '|');
         type += ((contains(type, "*") ? "" : " ") + string_q("_val"));
@@ -168,7 +168,7 @@ bool test_func_assign(void) {
 
 //--------------------------------------------------------------
 bool test_evt_assign(void) {
-    string_q types = data;
+    string_q types = data12;
     while (!types.empty()) {
         string_q type = nextTokenClear(types, '|');
         type += ((contains(type, "*") ? "" : " ") + string_q("_val"));
