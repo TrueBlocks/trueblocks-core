@@ -1,0 +1,13 @@
+[settings]
+class = CTableEntry
+fields = uint64 id|\
+        uint32 silky|\
+        string name|\
+        string longName|\
+        string description|\
+        uint64 freelist|\
+        CLmdbStat stat
+includes = utillib.h|mdbstat.h
+cpp_includes =
+serializable = true
+display_str = id, name, longName, freelist, stat::psize, stat::depth, stat::branch_pages, stat::leaf_pages, stat::overflow_pages, stat::entries, stat::total, stat::avg

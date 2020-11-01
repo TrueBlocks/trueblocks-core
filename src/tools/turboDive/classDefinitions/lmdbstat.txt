@@ -1,0 +1,13 @@
+[settings]
+class = CLmdbStat
+fields = uint64 psize|\
+        uint64 depth|\
+        uint64 branch_pages|\
+        uint64 leaf_pages|\
+        uint64 overflow_pages|\
+        uint64 entries
+includes = utillib.h
+cpp_includes =
+scope = extern
+serializable = true
+display_str = psize, depth, branch_pages, leaf_pages, overflow_pages, entries

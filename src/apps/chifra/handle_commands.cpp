@@ -42,4 +42,5 @@ map<string, string> cmdMap = {{"slurp", "ethSlurp"},        {"collections", "eth
                               {"tokens", "getTokenInfo"},   {"when", "whenBlock"},
                               {"where", "whereBlock"},      {"status", "cacheStatus"},
                               {"rm", "acctScrape --rm"},    {"list", "acctScrape"},
-                              {"export", "acctExport"},     {"scrape", "blockScrape"}};
+                              {"export", "acctExport"},     {"scrape", "blockScrape"},
+                              {"dive", "turboDive"}};

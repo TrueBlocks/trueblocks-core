@@ -14,7 +14,7 @@ const string_q opt_string =
     "list|export|slurp|"
     "collections|names|tags|abis|"
     "blocks|transactions|receipts|logs|traces|quotes|"
-    "state|tokens|when|where|"
+    "state|tokens|when|where|dive|"
     "scrape|status|rm]"
     ">";
 //---------------------------------------------------------------------------------------------------

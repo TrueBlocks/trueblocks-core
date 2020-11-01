@@ -232,6 +232,11 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 14040,tools,where,whereBlock,,,,false,false,true,false,--,description,,Reports if a block was found in the cache&#44; at a local&#44; or at a remote node.
 14050,tools,where,whereBlock,,,,false,false,false,false,--,note,,Customize the location of the cache in the configuration file [{CONFIG}]quickBlocks.toml.
 
+14010,tools,dive,turboDive,mode,m,,false,false,true,false,header,flag,enum[tables*|dump],the command to run
+14020,tools,dive,turboDive,datadir,d,,false,false,true,true,header,flag,<string>,folder containing TurboGeth data file (data.mdb)
+14030,tools,dive,turboDive,name,n,,false,false,true,true,header,flag,<string>,for 'dump' command only&#44; the name of the table to dump
+14040,tools,dive,turboDive,,,,false,false,true,false,--,description,,Dive deeply into the turboGeth database.
+
 14400,all,all,all,version,,,false,false,true,false,--,switch,<boolean>,display the current version of the tool
 14420,all,all,all,nocolor,,,false,false,true,false,--,switch,<boolean>,turn off colored display
 14430,all,all,all,mockData,,,false,false,true,false,--,switch,<boolean>,useful for testing&#44; instead of generating real data simulate the data
