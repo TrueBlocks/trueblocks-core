@@ -670,12 +670,7 @@ bool JsonReader::parseString(const string_q& jsonStr, Value& root) {
     }
     bool successful = readValue();
     nodes_.pop();
-    Token token;
     if (!root.isArray() && !root.isObject()) {
-        // Set error location to start of doc, ideally should be first token found in doc
-        token.type_ = tokenError;
-        token.start_ = jsonStr.c_str();
-        token.end_ = jsonStr.c_str() + jsonStr.length();
         LOG_ERR("A valid JSON document must be either an array or an object value.");  //, token);
         return false;
     }

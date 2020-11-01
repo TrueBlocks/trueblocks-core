@@ -54,9 +54,9 @@ endif (CURL_FOUND)
 
 # ----------------------------------------------------------------------------------------
 # Globally available C++ settings
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1z -Wc++1z-extensions -Werror -Wall -O2 -fPIC")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1z -Werror -Wall -O2 -fPIC")
 if(APPLE)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1z -Wc++1z-extensions -Werror -Wconversion -Wall -O2 -fPIC")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1z -Werror -Wconversion -Wall -O2 -fPIC")
 endif()
 # ----------------------------------------------------------------------------------------
 # Linkable libraries

@@ -12,6 +12,7 @@
 #include <stack>
 #include <cmath>
 #include <set>
+#include <assert.h>
 
 #include "basetypes.h"
 
