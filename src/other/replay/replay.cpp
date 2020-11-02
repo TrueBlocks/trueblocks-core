@@ -21,10 +21,10 @@ public:
     CCounter(void) {}
 };
 
-blknum_t start = 0;
+blknum_t start = 45000;
 blknum_t n = getLatestBlock_client() - start;
 blknum_t step = 1;
-blknum_t progress = 1000;
+blknum_t progress = 100;
 blknum_t report = 50000;
 
 //----------------------------------------------------------------
@@ -45,8 +45,11 @@ bool visitBlock(CBlock& block, void* data) {
         if (!(block.blockNumber % progress)) {
             cerr << block.blockNumber << "\t" << block.transactions[tr].transactionIndex << "\r";
         }
-        if (block.transactions[tr].isError)
+        if (block.transactions[tr].isError) {
             counter->errorsSeen++;
+            cout << block.transactions[tr] << endl;
+            return false;
+        }
     }
     if (!(block.blockNumber % report)) {
         cout << block.blockNumber << "," << counter->txsSeen << "," << counter->errorsSeen << string_q(50,' ') << endl;
