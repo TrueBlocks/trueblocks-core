@@ -287,12 +287,12 @@ string_q nextLmdbstatChunk_custom(const string_q& fieldIn, const void* dataPtr) 
             case 'b':
                 if (fieldIn % "branch_bytes") {
                     if (lmd->branch_pages == 0)
-                        return "";
+                        return "0";
                     return uint_2_Str(lmd->psize * lmd->branch_pages);
                 }
                 if (fieldIn % "branch_pct") {
                     if (lmd->branch_pages == 0)
-                        return "";
+                        return "0.0";
                     double total = double(lmd->branch_pages + lmd->leaf_pages + lmd->overflow_pages);
                     return double_2_Str((((double)lmd->branch_pages) / total) * 100, 1);
                 }
@@ -300,12 +300,12 @@ string_q nextLmdbstatChunk_custom(const string_q& fieldIn, const void* dataPtr) 
             case 'l':
                 if (fieldIn % "leaf_bytes") {
                     if (lmd->leaf_pages == 0)
-                        return "";
+                        return "0";
                     return uint_2_Str(lmd->psize * lmd->leaf_pages);
                 }
                 if (fieldIn % "leaf_pct") {
                     if (lmd->leaf_pages == 0)
-                        return "";
+                        return "0.0";
                     double total = double(lmd->branch_pages + lmd->leaf_pages + lmd->overflow_pages);
                     return double_2_Str((((double)lmd->leaf_pages) / total) * 100, 1);
                 }
@@ -313,12 +313,12 @@ string_q nextLmdbstatChunk_custom(const string_q& fieldIn, const void* dataPtr) 
             case 'o':
                 if (fieldIn % "overflow_bytes") {
                     if (lmd->overflow_pages == 0)
-                        return "";
+                        return "0";
                     return uint_2_Str(lmd->psize * lmd->overflow_pages);
                 }
                 if (fieldIn % "overflow_pct") {
                     if (lmd->overflow_pages == 0)
-                        return "";
+                        return "0.0";
                     double total = double(lmd->branch_pages + lmd->leaf_pages + lmd->overflow_pages);
                     return double_2_Str((((double)lmd->overflow_pages) / total) * 100, 1);
                 }
@@ -331,13 +331,13 @@ string_q nextLmdbstatChunk_custom(const string_q& fieldIn, const void* dataPtr) 
                 if (fieldIn % "total_bytes") {
                     uint64_t total = lmd->psize * (lmd->branch_pages + lmd->leaf_pages + lmd->overflow_pages);
                     if (total == 0)
-                        return "";
+                        return "0";
                     return uint_2_Str(total);
                 }
                 if (fieldIn % "total_pct") {
                     uint64_t total = (lmd->branch_pages + lmd->leaf_pages + lmd->overflow_pages);
                     if (total == 0)
-                        return "";
+                        return "0.0";
                     return double_2_Str(100, 1);
                 }
                 break;

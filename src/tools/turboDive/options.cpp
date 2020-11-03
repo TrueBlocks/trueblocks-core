@@ -47,9 +47,9 @@ bool COptions::parseArguments(string_q& command) {
     // BEG_CODE_LOCAL_INIT
     // END_CODE_LOCAL_INIT
 
-    blknum_t latest = getLatestBlock_client();
-    if (!isNodeRunning())  // it's okay if it's not
-        latest = NOPOS;
+//    blknum_t latest = getLatestBlock_client();
+//    if (!isNodeRunning())  // it's okay if it's not
+//        latest = NOPOS;
 
     Init();
     explode(arguments, command, ' ');
@@ -104,7 +104,7 @@ bool COptions::parseArguments(string_q& command) {
     // Display formatting
     configureDisplay("turboDive", "CTableEntry", STR_DISPLAY_TURBO);
     if (expContext().exportFmt != NONE1)
-        configureDisplay("turboDive", "CTableEntry", STR_DISPLAY_TABLEENTRY);
+        configureDisplay("turboDive", "CTableEntry", substitute(STR_DISPLAY_TABLEENTRY, "[{DESCRIPTION}]\t", ""));
     else
         expContext().exportFmt = TXT1;
 

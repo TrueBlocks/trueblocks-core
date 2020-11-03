@@ -15,17 +15,17 @@ set(TOOL_NAME "turboDive")
 set(PROJ_NAME "tools")
 add_executable(${TOOL_NAME} ${SOURCE_FILES})
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1z -Werror -Wall -Wno-sign-conversion -O2 -fPIC")
-if(APPLE)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1z -Werror -Wconversion -Wall -Wno-sign-conversion -O2 -fPIC")
-endif()
-
-set(LOCAL_LIBS libs/evmc-instructions libs/evmc-loader libs/ff libs/lmdb libs/silkworm)
-
 # Add the project static libs at linking
 set(SILKWORM ${CMAKE_CURRENT_SOURCE_DIR}/libs/libsilkworm.a)
 set(LMDB ${CMAKE_CURRENT_SOURCE_DIR}/libs/liblmdb.a)
-target_link_libraries (${TOOL_NAME} ${BASE_LIBS} ${SILKWORM} ${LMDB})
+
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1z -Werror -Wall -Wno-sign-conversion -O2 -fPIC")
+if(APPLE)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1z -Werror -Wconversion -Wall -Wno-sign-conversion -O2 -fPIC")
+    target_link_libraries (${TOOL_NAME} ${BASE_LIBS} ${SILKWORM} ${LMDB})
+else()
+    target_link_libraries (${TOOL_NAME} ${BASE_LIBS} ${SILKWORM} ${LMDB} -lpthread)
+endif()
 
 include_directories(${BASE_INCLUDE} ${CMAKE_CURRENT_SOURCE_DIR})
 
