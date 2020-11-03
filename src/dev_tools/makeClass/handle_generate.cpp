@@ -760,6 +760,6 @@ const char* STR_CASE_CODE_STRINGARRAY =
     "string_q retS;\n"
     "for (size_t i = 0; i < cnt; i++) {\n"
     "`retS += (\"\\\"\" + [{PTR}][{FIELD}][i] + \"\\\"\");\n"
-    "`retS += ((i < cnt - 1) ? \",\\n\" + indent() : \"\\n\");\n"
+    "`retS += ((i < cnt - 1) ? \",\\n\" + indentStr() : \"\\n\");\n"
     "}\n"
     "return retS;";

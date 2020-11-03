@@ -427,17 +427,17 @@ CExportContext::CExportContext(void) {
 }
 
 //---------------------------------------------------------------------------
-void incIndent(void) {
+void indent(void) {
     expC.lev++;
 }
 
 //---------------------------------------------------------------------------
-void decIndent(void) {
+void unindent(void) {
     expC.lev--;
 }
 
 //---------------------------------------------------------------------------
-string_q indent(void) {
+string_q indentStr(void) {
     return string_q(expC.spcs * expC.lev, expC.tab);
 }
 
@@ -475,14 +475,14 @@ void CBaseNode::toJson(ostream& os) const {
 
     os << "{";
     toJsonFromFields(os, fields);
-    os << (expContext().endingCommas ? "," : "") << endl << indent() << "}";
+    os << (expContext().endingCommas ? "," : "") << endl << indentStr() << "}";
 }
 
 //--------------------------------------------------------------------------------
 void CBaseNode::toJsonFromFields(ostream& os, const CFieldDataArray& fields) const {
     bool first = true;
     for (auto field : fields) {
-        incIndent();  // order matters
+        indent();  // order matters
         string_q val = getValueByName(field.m_fieldName);
         bool isTuple = contains(val, "--tuple--");
 
@@ -493,7 +493,7 @@ void CBaseNode::toJsonFromFields(ostream& os, const CFieldDataArray& fields) con
             first = false;
 
             // the key...
-            os << indent() << doKey(field.m_fieldName);
+            os << indentStr() << doKey(field.m_fieldName);
 
             // the value...
             if (isTuple) {
@@ -502,16 +502,16 @@ void CBaseNode::toJsonFromFields(ostream& os, const CFieldDataArray& fields) con
                 os << val;
 
             } else if (field.isArray()) {
-                incIndent();
+                indent();
                 val = getValueByName(field.m_fieldName);
                 if (val.empty()) {
                     os << "[]";
-                    decIndent();
+                    unindent();
                 } else {
-                    val = substitute(val, "\n{", "\n" + indent() + "{");
-                    os << "[\n" << indent() << val << (expContext().endingCommas ? "," : "");
-                    decIndent();
-                    os << indent() << "]";
+                    val = substitute(val, "\n{", "\n" + indentStr() + "{");
+                    os << "[\n" << indentStr() << val << (expContext().endingCommas ? "," : "");
+                    unindent();
+                    os << indentStr() << "]";
                 }
 
             } else if (field.isObject() || val == "null") {
@@ -536,7 +536,7 @@ void CBaseNode::toJsonFromFields(ostream& os, const CFieldDataArray& fields) con
                 os << "\"" << val << "\"";
             }
         }
-        decIndent();
+        unindent();
     }
     return;
 }
@@ -617,19 +617,19 @@ void CBaseNode::doExport(ostream& os) const {
     }
 
     os << "{";
-    incIndent();
+    indent();
     for (auto field : fields) {
         if (field.getName() != fields[0].getName())
             os << ",";
-        os << endl << indent() << doKey(field.getName());
+        os << endl << indentStr() << doKey(field.getName());
 
         if (field.isArray()) {
             os << "[";
-            incIndent();
+            indent();
             os << endl;
             uint64_t cnt = str_2_Uint(getValueByName(field.getName() + "Cnt"));
             for (size_t i = 0; i < cnt; i++) {
-                os << indent();
+                os << indentStr();
                 const CBaseNode* node = getObjectAt(field.getName(), i);
                 if (node) {
                     node->doExport(os);
@@ -640,8 +640,8 @@ void CBaseNode::doExport(ostream& os) const {
                     os << ",";
                 os << endl;
             }
-            decIndent();
-            os << indent();
+            unindent();
+            os << indentStr();
             os << "]";
 
         } else if (field.isObject()) {
@@ -675,9 +675,9 @@ void CBaseNode::doExport(ostream& os) const {
             }
         }
     }
-    decIndent();
+    unindent();
     os << (expContext().endingCommas ? "," : "") << endl;
-    os << indent() << "}";
+    os << indentStr() << "}";
 }
 
 //--------------------------------------------------------------------------------

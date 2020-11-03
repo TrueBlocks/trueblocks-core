@@ -1437,17 +1437,6 @@ ptrdiff_t Value::getOffsetLimit() const {
 }
 
 //--------------------------------------------------------------------------------
-string_q Value::toStyledString() const {
-    StreamWriterBuilder builder;
-
-    string_q out;
-    out += writeString(builder, *this);
-    out += '\n';
-
-    return out;
-}
-
-//--------------------------------------------------------------------------------
 Value::const_iterator Value::begin() const {
     switch (type()) {
         case arrayValue:

@@ -78,9 +78,9 @@ bool visitTransaction(CTransaction& trans, void* data) {
             if (!opt->first)
                 cout << ",";
             cout << "  ";
-            incIndent();
+            indent();
             log.doExport(cout);
-            decIndent();
+            unindent();
             opt->first = false;
         }
     }

@@ -61,9 +61,9 @@ void COptions::exportCollections(const CStringArray& terms) {
                 if (!first)
                     cout << "," << endl;
                 cout << "  ";
-                incIndent();
+                indent();
                 collection.doExport(cout);
-                decIndent();
+                unindent();
             }
             first = false;
         }

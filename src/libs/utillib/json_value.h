@@ -15,6 +15,7 @@
 #include <assert.h>
 
 #include "basetypes.h"
+#include "exportcontext.h"
 
 namespace qblocks {
 
@@ -357,8 +358,6 @@ class Value {
     /// \pre type() is objectValue or nullValue
     /// \post if type() was nullValue, it remains nullValue
     Members getMemberNames() const;
-
-    std::string toStyledString() const;
 
     const_iterator begin() const;
     const_iterator end() const;

@@ -82,9 +82,9 @@ bool processPair(uint64_t blockNum, void* data) {
         if (!first)
             cout << "," << endl;
         cout << "  ";
-        incIndent();
+        indent();
         opt->curToken.doExport(cout);
-        decIndent();
+        unindent();
         first = false;
     }
 

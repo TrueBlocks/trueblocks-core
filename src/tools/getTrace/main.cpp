@@ -169,9 +169,9 @@ bool displayAsTrace(COptions* opt, const CTrace& trace) {
         if (!opt->first)
             cout << ",";
         cout << "  ";
-        incIndent();
+        indent();
         trace.doExport(cout);
-        decIndent();
+        unindent();
         opt->first = false;
     }
     return true;

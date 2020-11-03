@@ -67,9 +67,9 @@ bool visitPrice(CPriceQuote& quote, void* data) {
             if (!opt->first)
                 cout << ",";
             cout << "  ";
-            incIndent();
+            indent();
             quote.doExport(cout);
-            decIndent();
+            unindent();
             opt->first = false;
         }
     }

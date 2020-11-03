@@ -41,7 +41,7 @@ class CExportContext {
     CExportContext(void);
 };
 extern CExportContext& expContext(void);
-extern void incIndent(void);
-extern void decIndent(void);
-extern string_q indent(void);
+extern void indent(void);
+extern void unindent(void);
+extern string_q indentStr(void);
 }  // namespace qblocks

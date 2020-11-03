@@ -111,7 +111,7 @@ string_q CLogEntry::getValueByName(const string_q& fieldName) const {
                 string_q retS;
                 for (size_t i = 0; i < cnt; i++) {
                     retS += ("\"" + topic_2_Str(topics[i]) + "\"");
-                    retS += ((i < cnt - 1) ? ",\n" + indent() : "\n");
+                    retS += ((i < cnt - 1) ? ",\n" + indentStr() : "\n");
                 }
                 return retS;
             }

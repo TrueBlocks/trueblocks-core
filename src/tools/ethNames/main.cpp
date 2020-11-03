@@ -43,9 +43,9 @@ int main(int argc, const char* argv[]) {
                     if (!first)
                         cout << "," << endl;
                     cout << "  ";
-                    incIndent();
+                    indent();
                     item.second.doExport(cout);
-                    decIndent();
+                    unindent();
                 }
                 first = false;
             }

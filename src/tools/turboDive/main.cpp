@@ -63,8 +63,8 @@ const char* STR_DISPLAY_MDBSTAT_VERBOSE =
     "  Description:     [{DESCRIPTION}]\n"
     "  Page Size:       [{STAT::PSIZE}]\n"
     "  Depth:           [{STAT::DEPTH}]\n"
-    "  Branches:        [{STAT::BRANCH_PAGES} pages][, {STAT::BRANCH_BYTES} bytes][, {STAT::BRANCH_PCT}%]\n"
-    "  Leaves:          [{STAT::LEAF_PAGES} pages][, {STAT::LEAF_BYTES} bytes][, {STAT::LEAF_PCT}%]\n"
+    "  Branch Pages:    [{STAT::BRANCH_PAGES} pages][, {STAT::BRANCH_BYTES} bytes][, {STAT::BRANCH_PCT}%]\n"
+    "  Leaf Pages:      [{STAT::LEAF_PAGES} pages][, {STAT::LEAF_BYTES} bytes][, {STAT::LEAF_PCT}%]\n"
     "  Overflow Pages:  [{STAT::OVERFLOW_PAGES} pages][, {STAT::OVERFLOW_BYTES} bytes][, {STAT::OVERFLOW_PCT}%]\n"
     "  Total:           [{STAT::TOTAL_PAGES} pages][, {STAT::TOTAL_BYTES} bytes][, {STAT::TOTAL_PCT}%]\n"
     "  nRecords:        [{STAT::ENTRIES}]\n"
@@ -87,9 +87,9 @@ bool COptions::handle_tables(void) {
                 if (!first)
                     cout << "," << endl;
                 cout << "  ";
-                incIndent();
+                indent();
                 table.doExport(cout);
-                decIndent();
+                unindent();
                 first = false;
             }
         }
@@ -133,9 +133,9 @@ bool COptions::handle_dump(void) {
                 if (!first)
                     cout << "," << endl;
                 cout << "  ";
-                incIndent();
+                indent();
                 record.doExport(cout);
-                decIndent();
+                unindent();
                 first = false;
             }
             rc = named->get_next(&key, &value);

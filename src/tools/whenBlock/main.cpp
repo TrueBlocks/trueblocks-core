@@ -59,9 +59,9 @@ bool visitBlock(CBlock& block, void* data) {
         if (!opt->first)
             cout << "," << endl;
         cout << "  ";
-        incIndent();
+        indent();
         block.doExport(cout);
-        decIndent();
+        unindent();
     }
     opt->first = false;
     if (isTestMode() && opt->timestamps)

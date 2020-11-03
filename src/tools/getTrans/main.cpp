@@ -49,9 +49,9 @@ bool visitAddrs(const CAppearance& item, void* data) {
         if (!opt->first)
             cout << ",";
         cout << "  ";
-        incIndent();
+        indent();
         item.doExport(cout);
-        decIndent();
+        unindent();
         opt->first = false;
     }
     return !shouldQuit();
@@ -111,9 +111,9 @@ bool visitTransaction(CTransaction& trans, void* data) {
             if (!opt->first)
                 cout << ",";
             cout << "  ";
-            incIndent();
+            indent();
             trans.doExport(cout);
-            decIndent();
+            unindent();
             opt->first = false;
         }
     }

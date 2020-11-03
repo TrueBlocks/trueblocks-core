@@ -93,9 +93,9 @@ bool visitBlock(uint64_t blockNum, void* data) {
             if (!opt->first)
                 cout << "," << endl;
             cout << "  ";
-            incIndent();
+            indent();
             state.doExport(cout);
-            decIndent();
+            unindent();
             opt->first = false;
         }
     }

@@ -9,24 +9,6 @@
 namespace qblocks {
 
 //--------------------------------------------------------------------------------
-using StreamWriterPtr = unique_ptr<StreamWriter>;
-
-//--------------------------------------------------------------------------------
-enum { uintToStringBufferSize = 3 * sizeof(uint64_t) + 1 };
-using UIntToStringBuffer = char[uintToStringBufferSize];
-
-//--------------------------------------------------------------------------------
-template <typename Iter>
-Iter fixNumericLocale(Iter begin, Iter end) {
-    for (; begin != end; ++begin) {
-        if (*begin == ',') {
-            *begin = '.';
-        }
-    }
-    return begin;
-}
-
-//--------------------------------------------------------------------------------
 static bool doesAnyCharRequireEscaping(char const* s, size_t n) {
     assert(s || !n);
     return any_of(s, s + n, [](unsigned char c) { return c == '\\' || c == '"' || c < 0x20 || c > 0x7F; });
@@ -113,11 +95,6 @@ static string_q toHex16Bit(unsigned int x) {
 }
 
 //--------------------------------------------------------------------------------
-static void appendRaw(string_q& result, unsigned ch) {
-    result += static_cast<char>(ch);
-}
-
-//--------------------------------------------------------------------------------
 static void appendHex(string_q& result, unsigned ch) {
     result.append("\\u").append(toHex16Bit(ch));
 }
@@ -129,6 +106,7 @@ static string_q valueToQuotedStringN(const char* value, unsigned length) {
 
     if (!doesAnyCharRequireEscaping(value, length))
         return string_q("\"") + value + "\"";
+
     // We have to walk value and escape any special characters.
     // Appending to string is not efficient, but this should be rare.
     // (Note: forward slashes are *not* rare, but I am not escaping them.)
@@ -173,7 +151,7 @@ static string_q valueToQuotedStringN(const char* value, unsigned length) {
                 if (codepoint < 0x20) {
                     appendHex(result, codepoint);
                 } else if (codepoint < 0x80) {
-                    appendRaw(result, codepoint);
+                    result += static_cast<char>(codepoint);
                 } else if (codepoint < 0x10000) {
                     // Basic Multilingual Plane
                     appendHex(result, codepoint);
@@ -191,68 +169,29 @@ static string_q valueToQuotedStringN(const char* value, unsigned length) {
 }
 
 //--------------------------------------------------------------------------------
-string_q valueToQuotedString(const char* value) {
-    return valueToQuotedStringN(value, static_cast<unsigned int>(strlen(value)));
-}
-
-//--------------------------------------------------------------------------------
-struct BuiltStyledStreamWriter : public StreamWriter {
-    BuiltStyledStreamWriter(string_q indentation);
-    int write(Value const& root, ostream* sout) override;
-
-  private:
-    void writeValue(Value const& value);
-    void writeArrayValue(Value const& value);
-    bool isMultilineArray(Value const& value);
-    void pushValue(string_q const& value);
-    void writeIndent();
-    void writeWithIndent(string_q const& value);
-    void indent();
-    void unindent();
-
-    using ChildValues = vector<string_q>;
-
-    ChildValues childValues_;
-    string_q indentString_;
-    unsigned int rightMargin_;
-    string_q indentation_;
-    bool addChildValues_ : 1;
-    bool indented_ : 1;
-};
-
-//--------------------------------------------------------------------------------
-BuiltStyledStreamWriter::BuiltStyledStreamWriter(string_q indentation)
-    : rightMargin_(74), indentation_(move(indentation)), addChildValues_(false), indented_(false) {
-}
-
-//--------------------------------------------------------------------------------
-int BuiltStyledStreamWriter::write(Value const& root, ostream* sout) {
-    sout_ = sout;
-    addChildValues_ = false;
-    indented_ = true;
-    indentString_.clear();
-    if (!indented_)
-        writeIndent();
-    indented_ = true;
-    writeValue(root);
-    sout_ = nullptr;
+int StreamWriter::write(ostream& sout, const Value& root) {
+    sout << '\n' << indentStr();
+    writeValue(sout, root);
     return 0;
 }
 
 //--------------------------------------------------------------------------------
-void BuiltStyledStreamWriter::writeValue(Value const& value) {
+void StreamWriter::writeValue(ostream& sout, const Value& value) {
     switch (value.type()) {
         case nullValue:
-            pushValue("null");
+            sout << "null";
             break;
         case intValue:
-            pushValue(int_2_Str(value.asInt64()));
+            sout << int_2_Str(value.asInt64());
             break;
         case uintValue:
-            pushValue(uint_2_Str(value.asUInt64()));
+            sout << uint_2_Str(value.asUInt64());
             break;
         case realValue:
-            pushValue(double_2_Str(value.asDouble()));
+            sout << double_2_Str(value.asDouble());
+            break;
+        case booleanValue:
+            sout << bool_2_Str(value.asBool());
             break;
         case stringValue: {
             // Is NULL is possible for value.string_? No.
@@ -260,217 +199,61 @@ void BuiltStyledStreamWriter::writeValue(Value const& value) {
             char const* end;
             bool ok = value.getString(&str, &end);
             if (ok)
-                pushValue(valueToQuotedStringN(str, static_cast<unsigned>(end - str)));
+                sout << valueToQuotedStringN(str, static_cast<unsigned>(end - str));
             else
-                pushValue("");
+                sout << "";
             break;
         }
-        case booleanValue:
-            pushValue(bool_2_Str(value.asBool()));
-            break;
         case arrayValue:
-            writeArrayValue(value);
+            if (value.size() == 0) {
+                sout << "[]";
+            } else {
+                sout << '\n' << indentStr() << "[";
+                indent();
+                bool hasChildValue = !childValues_.empty();
+                unsigned index = 0;
+                for (;;) {
+                    Value const& childValue = value[index];
+                    if (hasChildValue) {
+                        sout << '\n' << indentStr();
+                        sout << childValues_[index];
+                    } else {
+                        sout << '\n' << indentStr();
+                        writeValue(sout, childValue);
+                    }
+                    if (++index == value.size()) {
+                        break;
+                    }
+                    sout << ",";
+                }
+                unindent();
+                sout << '\n' << indentStr() << "]";
+            }
             break;
         case objectValue: {
             Value::Members members(value.getMemberNames());
             if (members.empty())
-                pushValue("{}");
+                sout << "{}";
             else {
-                writeWithIndent("{");
+                sout << '\n' << indentStr() << "{";
                 indent();
                 auto it = members.begin();
                 for (;;) {
                     string_q const& name = *it;
                     Value const& childValue = value[name];
                     auto valStr = valueToQuotedStringN(name.data(), static_cast<unsigned>(name.length()));
-                    writeWithIndent(valStr);
-                    *sout_ << ": ";
-                    writeValue(childValue);
+                    sout << '\n' << indentStr() << valStr << ": ";
+                    writeValue(sout, childValue);
                     if (++it == members.end()) {
                         break;
                     }
-                    *sout_ << ",";
+                    sout << ",";
                 }
                 unindent();
-                writeWithIndent("}");
+                sout << '\n' << indentStr() << "}";
             }
         } break;
     }
-}
-
-//--------------------------------------------------------------------------------
-void BuiltStyledStreamWriter::writeArrayValue(Value const& value) {
-    unsigned size = value.size();
-    if (size == 0)
-        pushValue("[]");
-    else {
-        bool isMultiLine = isMultilineArray(value);
-        if (isMultiLine) {
-            writeWithIndent("[");
-            indent();
-            bool hasChildValue = !childValues_.empty();
-            unsigned index = 0;
-            for (;;) {
-                Value const& childValue = value[index];
-                if (hasChildValue)
-                    writeWithIndent(childValues_[index]);
-                else {
-                    if (!indented_)
-                        writeIndent();
-                    indented_ = true;
-                    writeValue(childValue);
-                    indented_ = false;
-                }
-                if (++index == size) {
-                    break;
-                }
-                *sout_ << ",";
-            }
-            unindent();
-            writeWithIndent("]");
-        } else  // output on a single line
-        {
-            assert(childValues_.size() == size);
-            *sout_ << "[";
-            if (!indentation_.empty())
-                *sout_ << " ";
-            for (unsigned index = 0; index < size; ++index) {
-                if (index > 0)
-                    *sout_ << ((!indentation_.empty()) ? ", " : ",");
-                *sout_ << childValues_[index];
-            }
-            if (!indentation_.empty())
-                *sout_ << " ";
-            *sout_ << "]";
-        }
-    }
-}
-
-//--------------------------------------------------------------------------------
-bool BuiltStyledStreamWriter::isMultilineArray(Value const& value) {
-    unsigned int const size = value.size();
-    bool isMultiLine = size * 3 >= rightMargin_;
-    childValues_.clear();
-    for (unsigned int index = 0; index < size && !isMultiLine; ++index) {
-        Value const& childValue = value[index];
-        isMultiLine = ((childValue.isArray() || childValue.isObject()) && !childValue.empty());
-    }
-    if (!isMultiLine)  // check if line length > max line length
-    {
-        childValues_.reserve(size);
-        addChildValues_ = true;
-        unsigned int lineLength = 4 + (size - 1) * 2;  // '[ ' + ', '*n + ' ]'
-        for (unsigned int index = 0; index < size; ++index) {
-            writeValue(value[index]);
-            lineLength += static_cast<unsigned int>(childValues_[index].length());
-        }
-        addChildValues_ = false;
-        isMultiLine = isMultiLine || lineLength >= rightMargin_;
-    }
-    return isMultiLine;
-}
-
-//--------------------------------------------------------------------------------
-void BuiltStyledStreamWriter::pushValue(string_q const& value) {
-    if (addChildValues_)
-        childValues_.push_back(value);
-    else
-        *sout_ << value;
-}
-
-//--------------------------------------------------------------------------------
-void BuiltStyledStreamWriter::writeIndent() {
-    if (!indentation_.empty()) {
-        *sout_ << '\n' << indentString_;
-    }
-}
-
-//--------------------------------------------------------------------------------
-void BuiltStyledStreamWriter::writeWithIndent(string_q const& value) {
-    if (!indented_)
-        writeIndent();
-    *sout_ << value;
-    indented_ = false;
-}
-
-//--------------------------------------------------------------------------------
-void BuiltStyledStreamWriter::indent() {
-    indentString_ += indentation_;
-}
-
-//--------------------------------------------------------------------------------
-void BuiltStyledStreamWriter::unindent() {
-    assert(indentString_.size() >= indentation_.size());
-    indentString_.resize(indentString_.size() - indentation_.size());
-}
-
-//--------------------------------------------------------------------------------
-StreamWriter::StreamWriter() : sout_(nullptr) {
-}
-
-//--------------------------------------------------------------------------------
-StreamWriter::~StreamWriter() = default;
-
-//--------------------------------------------------------------------------------
-StreamWriter::Factory::~Factory() = default;
-
-//--------------------------------------------------------------------------------
-StreamWriterBuilder::StreamWriterBuilder() {
-    setDefaults(&settings_);
-}
-
-//--------------------------------------------------------------------------------
-StreamWriterBuilder::~StreamWriterBuilder() = default;
-
-//--------------------------------------------------------------------------------
-StreamWriter* StreamWriterBuilder::newStreamWriter() const {
-    const string_q indentation = settings_["indentation"].asString();
-    return new BuiltStyledStreamWriter(indentation);
-}
-
-//--------------------------------------------------------------------------------
-bool StreamWriterBuilder::validate(Value* invalid) const {
-    static const auto& valid_keys = *new set<string_q>{
-        "indentation",
-    };
-    for (auto si = settings_.begin(); si != settings_.end(); ++si) {
-        auto key = si.name();
-        if (valid_keys.count(key))
-            continue;
-        if (invalid)
-            (*invalid)[move(key)] = *si;
-        else
-            return false;
-    }
-    return invalid ? invalid->empty() : true;
-}
-
-//--------------------------------------------------------------------------------
-Value& StreamWriterBuilder::operator[](const string_q& key) {
-    return settings_[key];
-}
-
-//--------------------------------------------------------------------------------
-void StreamWriterBuilder::setDefaults(Value* settings) {
-    //! [StreamWriterBuilderDefaults]
-    (*settings)["indentation"] = "  ";
-    //! [StreamWriterBuilderDefaults]
-}
-
-//--------------------------------------------------------------------------------
-string_q writeString(StreamWriter::Factory const& factory, Value const& root) {
-    ostringstream sout;
-    StreamWriterPtr const writer(factory.newStreamWriter());
-    writer->write(root, &sout);
-    return sout.str();
-}
-
-//--------------------------------------------------------------------------------
-ostream& operator<<(ostream& sout, Value const& root) {
-    StreamWriterBuilder builder;
-    StreamWriterPtr const writer(builder.newStreamWriter());
-    writer->write(root, &sout);
-    return sout;
 }
 
 }  // namespace qblocks

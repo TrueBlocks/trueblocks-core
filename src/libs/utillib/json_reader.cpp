@@ -677,16 +677,4 @@ bool JsonReader::parseString(const string_q& jsonStr, Value& root) {
     return successful;
 }
 
-//--------------------------------------------------------------------------------
-istream& operator>>(istream& sin, Value& root) {
-    ostringstream ssin;
-    ssin << sin.rdbuf();
-    string_q doc = ssin.str();
-
-    JsonReader reader;
-    reader.parseString(doc, root);
-
-    return sin;
-}
-
 }  // namespace qblocks

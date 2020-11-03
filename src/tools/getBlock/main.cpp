@@ -150,9 +150,9 @@ void oneAppearance(const CAppearance& item, void* data) {
         if (!opt->first)
             cout << ",";
         cout << "  ";
-        incIndent();
+        indent();
         item.doExport(cout);
-        decIndent();
+        unindent();
         opt->first = false;
     }
 }

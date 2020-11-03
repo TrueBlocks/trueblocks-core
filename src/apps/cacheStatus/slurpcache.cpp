@@ -80,7 +80,7 @@ string_q CSlurpCache::getValueByName(const string_q& fieldName) const {
                 string_q retS;
                 for (size_t i = 0; i < cnt; i++) {
                     retS += ("\"" + addrs[i] + "\"");
-                    retS += ((i < cnt - 1) ? ",\n" + indent() : "\n");
+                    retS += ((i < cnt - 1) ? ",\n" + indentStr() : "\n");
                 }
                 return retS;
             }

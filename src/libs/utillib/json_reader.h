@@ -87,7 +87,4 @@ class JsonReader {
     Value* lastValue_ = nullptr;
 };
 
-//--------------------------------------------------------------------------------
-istream& operator>>(istream&, Value&);
-
 }  // namespace qblocks
