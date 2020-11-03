@@ -31,6 +31,8 @@ class COptions : public CBlockOptions {
     string_q mode;
     string_q datadir;
     string_q name;
+    bool goerli;
+    bool no_zero;
     // END_CODE_DECLARE
 
     shared_ptr<lmdb::Environment> lmdb_env{nullptr};

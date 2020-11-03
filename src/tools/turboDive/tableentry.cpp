@@ -342,16 +342,26 @@ const CBaseNode* CTableEntry::getObjectAt(const string_q& fieldName, size_t inde
 //---------------------------------------------------------------------------
 const char* STR_DISPLAY_TABLEENTRY =
     "[{ID}]\t"
+    "[{SILKY}]\t"
     "[{NAME}]\t"
     "[{LONGNAME}]\t"
+    "[{DESCRIPTION}]\t"
     "[{FREELIST}]\t"
     "[{STAT::PSIZE}]\t"
     "[{STAT::DEPTH}]\t"
-    "[{STAT::BRANCH_PAGES}]\t"
-    "[{STAT::LEAF_PAGES}]\t"
-    "[{STAT::OVERFLOW_PAGES}]\t"
     "[{STAT::ENTRIES}]\t"
-    "[{STAT::TOTAL}]\t"
+    "[{STAT::BRANCH_PAGES}]\t"
+    "[{STAT::BRANCH_BYTES}]\t"
+    "[{STAT::BRANCH_PCT}]\t"
+    "[{STAT::LEAF_PAGES}]\t"
+    "[{STAT::LEAF_BYTES}]\t"
+    "[{STAT::LEAF_PCT}]\t"
+    "[{STAT::OVERFLOW_PAGES}]\t"
+    "[{STAT::OVERFLOW_BYTES}]\t"
+    "[{STAT::OVERFLOW_PCT}]\t"
+    "[{STAT::TOTAL_PAGES}]\t"
+    "[{STAT::TOTAL_BYTES}]\t"
+    "[{STAT::TOTAL_PCT}]\t"
     "[{STAT::AVG}]";
 
 //---------------------------------------------------------------------------

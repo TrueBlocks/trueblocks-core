@@ -31,6 +31,8 @@ static const COption params[] = {
     COption("mode", "m", "enum[tables*|dump]", OPT_FLAG, "the command to run"),
     COption("datadir", "d", "<string>", OPT_FLAG, "folder containing TurboGeth data file (data.mdb)"),
     COption("name", "n", "<string>", OPT_FLAG, "for 'dump' command only, the name of the table to dump"),
+    COption("goerli", "g", "", OPT_SWITCH, "run against the goerli testnet"),
+    COption("no_zero", "z", "", OPT_SWITCH, "suppress the display of tables with zero records"),
     COption("", "", "", OPT_DESCRIPTION, "Dive deeply into the turboGeth database."),
     // clang-format on
     // END_CODE_OPTIONS
@@ -66,6 +68,12 @@ bool COptions::parseArguments(string_q& command) {
         } else if (startsWith(arg, "-n:") || startsWith(arg, "--name:")) {
             name = substitute(substitute(arg, "-n:", ""), "--name:", "");
 
+        } else if (arg == "-g" || arg == "--goerli") {
+            goerli = true;
+
+        } else if (arg == "-z" || arg == "--no_zero") {
+            no_zero = true;
+
         } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
@@ -77,6 +85,10 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     // Data verification
+    if (goerli) {
+        datadir = substitute(datadir, "/TurboGeth/tg/chaindata/", "/TurboGeth/goerli/tg/chaindata/");
+    }
+
     if (mode.empty())
         return usage("You must provide a mode of operation. Quitting...");
 
@@ -91,6 +103,10 @@ bool COptions::parseArguments(string_q& command) {
 
     // Display formatting
     configureDisplay("turboDive", "CTableEntry", STR_DISPLAY_TURBO);
+    if (expContext().exportFmt != NONE1)
+        configureDisplay("turboDive", "CTableEntry", STR_DISPLAY_TABLEENTRY);
+    else
+        expContext().exportFmt = TXT1;
 
     if (mode == "dump") {
         CTableEntry table = tableMap[name];
@@ -110,9 +126,10 @@ void COptions::Init(void) {
     mode = "";
     datadir = "";
     name = "";
+    goerli = false;
+    no_zero = false;
     // END_CODE_INIT
-    datadir = "/Volumes/Samsung_T4/turbo_geth/tg/chaindata/";  // silkworm::db::default_path();
-
+    datadir = "/Users/jrush/Library/TurboGeth/tg/chaindata/";
     blocks.Init();
 }
 
@@ -127,6 +144,8 @@ COptions::COptions(void) {
 
     // BEG_ERROR_MSG
     // END_ERROR_MSG
+
+    expContext().exportFmt = NONE1;
 
     CTableEntry::registerClass();
     CLmdbStat::registerClass();
@@ -194,7 +213,7 @@ bool COptions::loadTables(void) {
     tableMap[e.name] = e;
 
     if (!stat.ms_entries)
-        return usage("No tables found in " + datadir + "dta.mdb. Quitting...");
+        return usage("No tables found in " + datadir + "data.mdb. Quitting...");
 
     MDB_val key, value;
     int rc = unnamed->get_first(&key, &value);
@@ -213,20 +232,22 @@ bool COptions::loadTables(void) {
         auto named = lmdb_txn->open({(const char*)key.mv_data});
         named->get_stat(&stat);
 
-        e = CTableEntry();
-        e.id = named->get_dbi();
-        e.name = named->get_name();
-        e.description = nameMap[e.name];
-        e.longName = nextTokenClear(e.description, '|');
-        e.silky = silkyMap[e.name];
-        e.stat.psize = stat.ms_psize;
-        e.stat.depth = stat.ms_depth;
-        e.stat.branch_pages = stat.ms_branch_pages;
-        e.stat.leaf_pages = stat.ms_leaf_pages;
-        e.stat.overflow_pages = stat.ms_overflow_pages;
-        e.stat.entries = stat.ms_entries;
-        tables12.push_back(e);
-        tableMap[e.name] = e;
+        if (!no_zero || stat.ms_entries) {
+            e = CTableEntry();
+            e.id = named->get_dbi();
+            e.name = named->get_name();
+            e.description = nameMap[e.name];
+            e.longName = nextTokenClear(e.description, '|');
+            e.silky = silkyMap[e.name];
+            e.stat.psize = stat.ms_psize;
+            e.stat.depth = stat.ms_depth;
+            e.stat.branch_pages = stat.ms_branch_pages;
+            e.stat.leaf_pages = stat.ms_leaf_pages;
+            e.stat.overflow_pages = stat.ms_overflow_pages;
+            e.stat.entries = stat.ms_entries;
+            tables12.push_back(e);
+            tableMap[e.name] = e;
+        }
 
         rc = unnamed->get_next(&key, &value);
         if (rc != MDB_NOTFOUND)
@@ -415,7 +436,7 @@ const char* STR_DISPLAY_TURBO =
     "[{ID}]-[{SILKY}]\t"
     "[{w:25:LONGNAME}]\t"
     "[{w:20:NAME}]\t"
-    "[{w:5:STAT::DEPTH}]\t"
-    "[{w:15:STAT::ENTRIES}]\t"
-    "[{w:15:STAT::TOTAL}]\t"
-    "[{w:15:STAT::AVG}]";
+    "[{r:5:STAT::DEPTH}]\t"
+    "[{r:15:STAT::ENTRIES}]\t"
+    "[{r:15:STAT::TOTAL}]\t"
+    "[{r:15:STAT::AVG}]";

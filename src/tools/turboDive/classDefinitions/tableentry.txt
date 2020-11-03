@@ -10,4 +10,4 @@ fields = uint64 id|\
 includes = utillib.h|mdbstat.h
 cpp_includes =
 serializable = true
-display_str = id, name, longName, freelist, stat::psize, stat::depth, stat::branch_pages, stat::leaf_pages, stat::overflow_pages, stat::entries, stat::total, stat::avg
+display_str = id, silky, name, longName, description, freelist, stat::psize, stat::depth, stat::entries, stat::branch_pages, stat::branch_bytes, stat::branch_pct, stat::leaf_pages, stat::leaf_bytes, stat::leaf_pct, stat::overflow_pages, stat::overflow_bytes, stat::overflow_pct, stat::total_pages, stat::total_bytes, stat::total_pct, stat::avg
