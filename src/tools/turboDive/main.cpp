@@ -80,7 +80,11 @@ bool COptions::handle_tables(void) {
                     cout << bBlue << table.Format(STR_DISPLAY_MDBSTAT_VERBOSE);
 
                 } else {
-                    cout << bBlue << table.Format(expContext().fmtMap["format"]) << endl;
+                    ostringstream os;
+                    os << "[" << Now().Format(FMT_EXPORT) << "{TRUE}]\t";
+                    os << "[" << uint_2_Str(getLatestBlock_client()) << "{TRUE}]\t";
+                    os << expContext().fmtMap["format"];
+                    cout << bBlue << table.Format(os.str()) << endl;
                 }
 
             } else {

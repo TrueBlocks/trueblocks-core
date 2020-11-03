@@ -15,9 +15,9 @@ set(TOOL_NAME "turboDive")
 set(PROJ_NAME "tools")
 add_executable(${TOOL_NAME} ${SOURCE_FILES})
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1z -Wc++1z-extensions -Werror -Wall -Wno-sign-conversion -O2 -fPIC")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1z -Werror -Wall -Wno-sign-conversion -O2 -fPIC")
 if(APPLE)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1z -Wc++1z-extensions -Werror -Wconversion -Wall -Wno-sign-conversion -O2 -fPIC")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1z -Werror -Wconversion -Wall -Wno-sign-conversion -O2 -fPIC")
 endif()
 
 set(LOCAL_LIBS libs/evmc-instructions libs/evmc-loader libs/ff libs/lmdb libs/silkworm)
