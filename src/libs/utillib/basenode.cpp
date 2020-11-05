@@ -20,6 +20,8 @@
 #include "testing.h"
 #include "logging.h"
 #include "runtimeclass.h"
+#include "json_reader.h"
+#include "json_value.h"
 
 namespace qblocks {
 
@@ -222,6 +224,13 @@ bool CBaseNode::parseJson4(string_q& str) {
     if (p)
         str = p;
     return (nFields);
+}
+
+//--------------------------------------------------------------------------------
+bool CBaseNode::parseJson5(string_q& str) {
+    Value root;
+    JsonReader reader;
+    return reader.parseJson(str, root, this);
 }
 
 // #define DEBUG_PARSER
@@ -542,7 +551,7 @@ void CBaseNode::toJsonFromFields(ostream& os, const CFieldDataArray& fields) con
 }
 
 //--------------------------------------------------------------------------------
-void CBaseNode::doExport(ostream& os) const {
+void CBaseNode::writeJson(ostream& os) const {
     if (!m_showing) {
         os << "{}";
         return;
@@ -595,7 +604,7 @@ void CBaseNode::doExport(ostream& os) const {
                                 if (defObject) {
                                     ostringstream defOs;
                                     locked = true;
-                                    defObject->doExport(defOs);
+                                    defObject->writeJson(defOs);
                                     locked = false;
                                     defValue = defOs.str();
                                 }
@@ -632,7 +641,7 @@ void CBaseNode::doExport(ostream& os) const {
                 os << indentStr();
                 const CBaseNode* node = getObjectAt(field.getName(), i);
                 if (node) {
-                    node->doExport(os);
+                    node->writeJson(os);
                 } else {
                     os << "\"" << getStringAt(field.getName(), i) << "\"";
                 }
@@ -651,7 +660,7 @@ void CBaseNode::doExport(ostream& os) const {
                 LOG_WARN("Object ", field.getName(), " not found in class ", pClass->m_ClassName);
                 return;
             }
-            node->doExport(os);
+            node->writeJson(os);
 
         } else {
             string_q val = getValueByName(field.getName());

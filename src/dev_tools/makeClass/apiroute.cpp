@@ -261,8 +261,16 @@ ostream& operator<<(ostream& os, const CApiRoute& it) {
 
 //---------------------------------------------------------------------------
 const CBaseNode* CApiRoute::getObjectAt(const string_q& fieldName, size_t index) const {
-    if (fieldName % "commands" && index < commands.size())
-        return &commands[index];
+    if (fieldName % "commands") {
+        if (index == NOPOS) {
+            CCommandOption empty;
+            ((CApiRoute*)this)->commands.push_back(empty);
+            index = commands.size() - 1;
+        }
+        if (index < commands.size())
+            return &commands[index];
+    }
+
     return NULL;
 }
 

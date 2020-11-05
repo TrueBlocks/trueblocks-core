@@ -170,7 +170,7 @@ bool displayAsTrace(COptions* opt, const CTrace& trace) {
             cout << ",";
         cout << "  ";
         indent();
-        trace.doExport(cout);
+        trace.writeJson(cout);
         unindent();
         opt->first = false;
     }

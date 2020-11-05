@@ -476,10 +476,13 @@ ostream& operator<<(ostream& os, const CTrace& it) {
 const CBaseNode* CTrace::getObjectAt(const string_q& fieldName, size_t index) const {
     if (fieldName % "action")
         return &action;
+
     if (fieldName % "result")
         return &result;
+
     if (fieldName % "articulatedTrace")
         return &articulatedTrace;
+
     return NULL;
 }
 

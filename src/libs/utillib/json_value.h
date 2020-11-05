@@ -16,6 +16,7 @@
 
 #include "basetypes.h"
 #include "exportcontext.h"
+#include "json_token.h"
 
 namespace qblocks {
 
@@ -23,15 +24,21 @@ namespace qblocks {
 void throwRuntimeError(std::string const& msg);
 
 //--------------------------------------------------------------------------------
-void throwLogicError(std::string const& msg);
-
-//--------------------------------------------------------------------------------
-enum ValueType { nullValue = 0, intValue, uintValue, realValue, stringValue, booleanValue, arrayValue, objectValue };
+enum ValueType {
+    nullValType = 0,
+    intValType,
+    uintValType,
+    realValType,
+    strValType,
+    boolValType,
+    arrayValType,
+    objValType
+};
 
 //--------------------------------------------------------------------------------
 /** \brief Lightweight wrapper to tag static string.
  *
- * Value constructor and objectValue member assignment takes advantage of the
+ * Value constructor and objValType member assignment takes advantage of the
  * StaticString and avoid the cost of string duplication when storing the
  * string or the member name.
  *
@@ -61,6 +68,36 @@ class StaticString {
 };
 
 //--------------------------------------------------------------------------------
+class CZString {
+  public:
+    enum DuplicationPolicy { noDuplication = 0, duplicate, duplicateOnCopy };
+    CZString(unsigned int index);
+    CZString(char const* str, unsigned length, DuplicationPolicy allocate);
+    CZString(CZString const& other);
+    CZString(CZString&& other);
+    ~CZString();
+    CZString& operator=(const CZString& other);
+    CZString& operator=(CZString&& other);
+    bool operator<(CZString const& other) const;
+    bool operator==(CZString const& other) const;
+    unsigned int index() const;
+    char const* data() const;
+    unsigned length() const;
+    bool isStaticString() const;
+
+  private:
+    struct StringStorage {
+        unsigned policy_ : 2;
+        unsigned length_ : 30;  // 1GB max
+    };
+    char const* cstr_;  // actually, a prefixed string, unless policy is noDup
+    union {
+        unsigned int index_;
+        StringStorage storage_;
+    };
+};
+
+//--------------------------------------------------------------------------------
 class ValueIterator;
 
 //--------------------------------------------------------------------------------
@@ -71,7 +108,6 @@ class Value {
     friend class ValueIteratorBase;
 
   public:
-    using Members = std::vector<std::string>;
     using iterator = ValueIterator;
     using const_iterator = ValueConstIterator;
 
@@ -102,47 +138,7 @@ class Value {
     static constexpr double maxUInt64AsDouble = 18446744073709551615.0;
 
   public:
-#ifndef JSONCPP_DOC_EXCLUDE_IMPLEMENTATION
-    class CZString {
-      public:
-        enum DuplicationPolicy { noDuplication = 0, duplicate, duplicateOnCopy };
-        CZString(unsigned int index);
-        CZString(char const* str, unsigned length, DuplicationPolicy allocate);
-        CZString(CZString const& other);
-        CZString(CZString&& other);
-        ~CZString();
-        CZString& operator=(const CZString& other);
-        CZString& operator=(CZString&& other);
-
-        bool operator<(CZString const& other) const;
-        bool operator==(CZString const& other) const;
-        unsigned int index() const;
-        // const char* c_str() const; ///< \deprecated
-        char const* data() const;
-        unsigned length() const;
-        bool isStaticString() const;
-
-      private:
-        void swap(CZString& other);
-
-        struct StringStorage {
-            unsigned policy_ : 2;
-            unsigned length_ : 30;  // 1GB max
-        };
-
-        char const* cstr_;  // actually, a prefixed string, unless policy is noDup
-        union {
-            unsigned int index_;
-            StringStorage storage_;
-        };
-    };
-
-  public:
-    typedef std::map<CZString, Value> ObjectValues;
-#endif  // ifndef JSONCPP_DOC_EXCLUDE_IMPLEMENTATION
-
-  public:
-    Value(ValueType type = nullValue);
+    Value(ValueType type = nullValType);
     Value(int value);
     Value(unsigned int value);
     Value(int64_t value);
@@ -164,7 +160,6 @@ class Value {
     /// Swap everything.
     void swap(Value& other);
     /// Swap values but leave comments and source offsets in place.
-    void swapPayload(Value& other);
 
     /// copy everything.
     void copy(const Value& other);
@@ -173,17 +168,7 @@ class Value {
 
     ValueType type() const;
 
-    /// Compare payload only, not comments etc.
-    bool operator<(const Value& other) const;
-    bool operator<=(const Value& other) const;
-    bool operator>=(const Value& other) const;
-    bool operator>(const Value& other) const;
-    bool operator==(const Value& other) const;
-    bool operator!=(const Value& other) const;
-    int compare(const Value& other) const;
-
-    const char* asCString() const;  ///< Embedded zeroes could cause you trouble!
-    std::string asString() const;   ///< Embedded zeroes are possible.
+    std::string asString() const;  ///< Embedded zeroes are possible.
     /** Get raw char* of string-value.
      *  \return false if !string. (Seg-fault if str or end are NULL.)
      */
@@ -197,8 +182,6 @@ class Value {
     double asDouble() const;
     bool asBool() const;
 
-    bool isNull() const;
-    bool isBool() const;
     bool isInt() const;
     bool isInt64() const;
     bool isUInt() const;
@@ -219,158 +202,36 @@ class Value {
 
     bool isConvertibleTo(ValueType other) const;
 
-    /// Number of values in array or object
     unsigned int size() const;
-
-    /// \brief Return true if empty array, empty object, or null;
-    /// otherwise, false.
     bool empty() const;
 
-    /// Return !isNull()
     explicit operator bool() const;
 
-    /// Remove all object members and array elements.
-    /// \pre type() is arrayValue, objectValue, or nullValue
-    /// \post type() is unchanged
     void clear();
 
-    /// Resize the array to newSize elements.
-    /// New elements are initialized to null.
-    /// May only be called on nullValue or arrayValue.
-    /// \pre type() is arrayValue or nullValue
-    /// \post type() is arrayValue
     void resize(unsigned int newSize);
 
-    //@{
-    /// Access an array element (zero based index). If the array contains less
-    /// than index element, then null value are inserted in the array so that
-    /// its size is index+1.
-    /// (You may need to say 'value[0u]' to get your compiler to distinguish
-    /// this from the operator[] which takes a string.)
-    Value& operator[](unsigned int index);
-    Value& operator[](int index);
-    //@}
-
-    //@{
-    /// Access an array element (zero based index).
-    /// (You may need to say 'value[0u]' to get your compiler to distinguish
-    /// this from the operator[] which takes a string.)
     const Value& operator[](unsigned int index) const;
     const Value& operator[](int index) const;
-    //@}
-
-    /// If the array contains at least index+1 elements, returns the element
-    /// value, otherwise returns defaultValue.
-    Value get(unsigned int index, const Value& defaultValue) const;
-    /// Return true if index < size().
-    bool isValidIndex(unsigned int index) const;
-    /// \brief Append value to array at the end.
-    ///
-    /// Equivalent to jsonvalue[jsonvalue.size()] = value;
-    Value& append(const Value& value);
-    Value& append(Value&& value);
-
-    /// \brief Insert value in array at specific index
-    bool insert(unsigned int index, const Value& newValue);
-    bool insert(unsigned int index, Value&& newValue);
-
-    /// Access an object value by name, create a null member if it does not exist.
-    /// \note Because of our implementation, keys are limited to 2^30 -1 chars.
-    /// Exceeding that will cause an exception.
-    Value& operator[](const char* key);
-    /// Access an object value by name, returns null if there is no member with
-    /// that name.
     const Value& operator[](const char* key) const;
-    /// Access an object value by name, create a null member if it does not exist.
-    /// \param key may contain embedded nulls.
-    Value& operator[](const std::string& key);
-    /// Access an object value by name, returns null if there is no member with
-    /// that name.
-    /// \param key may contain embedded nulls.
     const Value& operator[](const std::string& key) const;
-    /** \brief Access an object value by name, create a null member if it does not
-     * exist.
-     *
-     * If the object has no entry for that name, then the member name used to
-     * store the new entry is not duplicated.
-     * Example of use:
-     *   \code
-     *   Json::Value object;
-     *   static const StaticString code("code");
-     *   object[code] = 1234;
-     *   \endcode
-     */
+
+    Value& operator[](unsigned int index);
+    Value& operator[](int index);
+    Value& operator[](const char* key);
+    Value& operator[](const std::string& key);
     Value& operator[](const StaticString& key);
-    /// Return the member named key if it exist, defaultValue otherwise.
-    /// \note deep copy
-    Value get(const char* key, const Value& defaultValue) const;
-    /// Return the member named key if it exist, defaultValue otherwise.
-    /// \note deep copy
-    /// \note key may contain embedded nulls.
-    Value get(const char* begin, const char* end, const Value& defaultValue) const;
-    /// Return the member named key if it exist, defaultValue otherwise.
-    /// \note deep copy
-    /// \param key may contain embedded nulls.
-    Value get(const std::string& key, const Value& defaultValue) const;
+
     Value const* find(char const* begin, char const* end) const;
-    Value* demand(char const* begin, char const* end);
-    /// \brief Remove and return the named member.
-    ///
-    /// Do nothing if it did not exist.
-    /// \pre type() is objectValue or nullValue
-    /// \post type() is unchanged
-    void removeMember(const char* key);
-    /// Same as removeMember(const char*)
-    /// \param key may contain embedded nulls.
-    void removeMember(const std::string& key);
-    /// Same as removeMember(const char* begin, const char* end, Value* removed),
-    /// but 'key' is null-terminated.
-    bool removeMember(const char* key, Value* removed);
-    /** \brief Remove the named map member.
-     *
-     *  Update 'removed' iff removed.
-     *  \param key may contain embedded nulls.
-     *  \return true iff removed (no exceptions)
-     */
-    bool removeMember(std::string const& key, Value* removed);
-    /// Same as removeMember(std::string const& key, Value* removed)
-    bool removeMember(const char* begin, const char* end, Value* removed);
-    /** \brief Remove the indexed array element.
-     *
-     *  O(n) expensive operations.
-     *  Update 'removed' iff removed.
-     *  \return true if removed (no exceptions)
-     */
-    bool removeIndex(unsigned int index, Value* removed);
-
-    /// Return true if the object has a member named key.
-    /// \note 'key' must be null-terminated.
-    bool isMember(const char* key) const;
-    /// Return true if the object has a member named key.
-    /// \param key may contain embedded nulls.
     bool isMember(const std::string& key) const;
-    /// Same as isMember(std::string const& key)const
-    bool isMember(const char* begin, const char* end) const;
 
-    /// \brief Return a list of the member names.
-    ///
-    /// If null, return an empty list.
-    /// \pre type() is objectValue or nullValue
-    /// \post if type() was nullValue, it remains nullValue
-    Members getMemberNames() const;
+    CStringArray getMemberNames() const;
 
     const_iterator begin() const;
     const_iterator end() const;
 
     iterator begin();
     iterator end();
-
-    // Accessors for the [start, limit) range of bytes within the JSON text from
-    // which this value was parsed, if any.
-    void setOffsetStart(ptrdiff_t start);
-    void setOffsetLimit(ptrdiff_t limit);
-    ptrdiff_t getOffsetStart() const;
-    ptrdiff_t getOffsetLimit() const;
 
   private:
     void setType(ValueType v) {
@@ -388,7 +249,6 @@ class Value {
     void initBasic(ValueType type, bool allocated = false);
     void dupPayload(const Value& other);
     void releasePayload();
-    void dupMeta(const Value& other);
 
     Value& resolveReference(const char* key);
     Value& resolveReference(const char* key, const char* end);
@@ -399,7 +259,7 @@ class Value {
         double real_;
         bool bool_;
         char* string_;  // if allocated_, ptr to { unsigned, char[] }.
-        ObjectValues* map_;
+        std::map<CZString, Value>* map_;
     } value_;
 
     struct {
@@ -413,6 +273,8 @@ class Value {
     // was extracted.
     ptrdiff_t start_;
     ptrdiff_t limit_;
+
+    friend class JsonReader;
 };
 
 //--------------------------------------------------------------------------------
@@ -423,7 +285,7 @@ inline bool Value::as<bool>() const {
 
 template <>
 inline bool Value::is<bool>() const {
-    return isBool();
+    return type() == boolValType;
 }
 
 //--------------------------------------------------------------------------------
@@ -498,11 +360,6 @@ inline float Value::as<float>() const {
     return asFloat();
 }
 
-template <>
-inline const char* Value::as<const char*>() const {
-    return asCString();
-}
-
 //--------------------------------------------------------------------------------
 class ValueIteratorBase {
   public:
@@ -527,12 +384,10 @@ class ValueIteratorBase {
     /// Value.
     Value key() const;
 
-    /// Return the index of the referenced Value, or -1 if it is not an
-    /// arrayValue.
+    /// Return the index of the referenced Value, or -1 if it is not an arrayValType.
     unsigned int index() const;
 
-    /// Return the member name of the referenced Value, or "" if it is not an
-    /// objectValue.
+    /// Return the member name of the referenced Value, or "" if it is not an objValType.
     /// \note Avoid `c_str()` on result, as embedded zeroes are possible.
     std::string name() const;
 
@@ -553,12 +408,12 @@ class ValueIteratorBase {
     void copy(const SelfType& other);
 
   private:
-    Value::ObjectValues::iterator current_;
+    std::map<CZString, Value>::iterator current_;
     bool isNull_{true};
 
   public:
     ValueIteratorBase();
-    explicit ValueIteratorBase(const Value::ObjectValues::iterator& current);
+    explicit ValueIteratorBase(const std::map<CZString, Value>::iterator& current);
 };
 
 //--------------------------------------------------------------------------------
@@ -576,7 +431,7 @@ class ValueConstIterator : public ValueIteratorBase {
   private:
     /*! \internal Use by Value to create an iterator.
      */
-    explicit ValueConstIterator(const Value::ObjectValues::iterator& current);
+    explicit ValueConstIterator(const std::map<CZString, Value>::iterator& current);
 
   public:
     SelfType& operator=(const ValueIteratorBase& other);
@@ -628,7 +483,7 @@ class ValueIterator : public ValueIteratorBase {
     ValueIterator(const ValueIterator& other);
 
   private:
-    explicit ValueIterator(const Value::ObjectValues::iterator& current);
+    explicit ValueIterator(const std::map<CZString, Value>::iterator& current);
 
   public:
     SelfType& operator=(const SelfType& other);
@@ -669,9 +524,9 @@ class ValueIterator : public ValueIteratorBase {
 };
 
 //--------------------------------------------------------------------------------
-inline void swap(Value& a, Value& b) {
-    a.swap(b);
-}
+extern bool decodeString_4(Token& token, Value& decoded);
+extern bool decodeNumber_4(Token& token, Value& decoded);
+extern bool decodeToken_4(Token& token, Value& decoded);
 
 }  // namespace qblocks
 

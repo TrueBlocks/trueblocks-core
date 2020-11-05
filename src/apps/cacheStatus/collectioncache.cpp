@@ -252,8 +252,16 @@ ostream& operator<<(ostream& os, const CCollectionCache& it) {
 
 //---------------------------------------------------------------------------
 const CBaseNode* CCollectionCache::getObjectAt(const string_q& fieldName, size_t index) const {
-    if (fieldName % "items" && index < items.size())
-        return &items[index];
+    if (fieldName % "items") {
+        if (index == NOPOS) {
+            CCollectionCacheItem empty;
+            ((CCollectionCache*)this)->items.push_back(empty);
+            index = items.size() - 1;
+        }
+        if (index < items.size())
+            return &items[index];
+    }
+
     return NULL;
 }
 

@@ -330,8 +330,16 @@ ostream& operator<<(ostream& os, const CStatus& it) {
 
 //---------------------------------------------------------------------------
 const CBaseNode* CStatus::getObjectAt(const string_q& fieldName, size_t index) const {
-    if (fieldName % "caches" && index < caches.size())
-        return caches[index];
+    if (fieldName % "caches") {
+        if (index == NOPOS) {
+            CCache* empty;
+            ((CStatus*)this)->caches.push_back(empty);
+            index = caches.size() - 1;
+        }
+        if (index < caches.size())
+            return caches[index];
+    }
+
     return NULL;
 }
 

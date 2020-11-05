@@ -533,8 +533,16 @@ ostream& operator<<(ostream& os, const CBlock& it) {
 
 //---------------------------------------------------------------------------
 const CBaseNode* CBlock::getObjectAt(const string_q& fieldName, size_t index) const {
-    if (fieldName % "transactions" && index < transactions.size())
-        return &transactions[index];
+    if (fieldName % "transactions") {
+        if (index == NOPOS) {
+            CTransaction empty;
+            ((CBlock*)this)->transactions.push_back(empty);
+            index = transactions.size() - 1;
+        }
+        if (index < transactions.size())
+            return &transactions[index];
+    }
+
     return NULL;
 }
 

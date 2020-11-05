@@ -36,7 +36,7 @@ void CIndexCache::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) con
 
     string_q fmt = (fmtIn.empty() ? expContext().fmtMap["indexcache_fmt"] : fmtIn);
     if (fmt.empty()) {
-        doExport(ctx);
+        writeJson(ctx);
         return;
     }
 
@@ -258,8 +258,16 @@ ostream& operator<<(ostream& os, const CIndexCache& it) {
 
 //---------------------------------------------------------------------------
 const CBaseNode* CIndexCache::getObjectAt(const string_q& fieldName, size_t index) const {
-    if (fieldName % "items" && index < items.size())
-        return &items[index];
+    if (fieldName % "items") {
+        if (index == NOPOS) {
+            CIndexCacheItem empty;
+            ((CIndexCache*)this)->items.push_back(empty);
+            index = items.size() - 1;
+        }
+        if (index < items.size())
+            return &items[index];
+    }
+
     return NULL;
 }
 

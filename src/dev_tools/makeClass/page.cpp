@@ -449,8 +449,16 @@ ostream& operator<<(ostream& os, const CPage& it) {
 
 //---------------------------------------------------------------------------
 const CBaseNode* CPage::getObjectAt(const string_q& fieldName, size_t index) const {
-    if (fieldName % "subpages" && index < subpages.size())
-        return &subpages[index];
+    if (fieldName % "subpages") {
+        if (index == NOPOS) {
+            CSubpage empty;
+            ((CPage*)this)->subpages.push_back(empty);
+            index = subpages.size() - 1;
+        }
+        if (index < subpages.size())
+            return &subpages[index];
+    }
+
     return NULL;
 }
 

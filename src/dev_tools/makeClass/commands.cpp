@@ -247,8 +247,16 @@ ostream& operator<<(ostream& os, const CCommands& it) {
 
 //---------------------------------------------------------------------------
 const CBaseNode* CCommands::getObjectAt(const string_q& fieldName, size_t index) const {
-    if (fieldName % "routes" && index < routes.size())
-        return &routes[index];
+    if (fieldName % "routes") {
+        if (index == NOPOS) {
+            CApiRoute empty;
+            ((CCommands*)this)->routes.push_back(empty);
+            index = routes.size() - 1;
+        }
+        if (index < routes.size())
+            return &routes[index];
+    }
+
     return NULL;
 }
 

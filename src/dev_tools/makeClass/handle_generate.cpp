@@ -130,11 +130,11 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
 
         } else if ((fld.is_flags & IS_OBJECT)) {
             string_q str = STR_GETOBJ_CODE_FIELD;
-            if (!(fld.is_flags & IS_ARRAY)) {
-                replace(str, " && index < [{FIELD}].size()", "");
-                replace(str, "[index]", "");
-            }
+            if (!(fld.is_flags & IS_ARRAY))
+                str = STR_GETOBJ_CODE_FIELD_OBJ;
             replace(str, "[PTR]", ((fld.is_flags & IS_POINTER) ? "" : "&"));
+            replaceAll(str, "[{TYPE}]",
+                       substitute(substitute(substitute(fld.type, "Array2", ""), "Array", ""), "Ptr", "*"));
             replaceAll(str, "[{FIELD}]", fld.name);
             fieldGetObj += str;
         }
@@ -273,7 +273,7 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
     replace(srcSource, "// clang-format off\n", "");
     replace(srcSource, "// clang-format on\n", "");
     if (classDef.use_export)
-        replace(srcSource, "toJson(ctx);", "doExport(ctx);");
+        replace(srcSource, "toJson(ctx);", "writeJson(ctx);");
     if ((startsWith(classDef.class_name, "CNew") || classDef.class_name == "CPriceQuote") &&
         !contains(getCWD(), "parse"))
         replace(srcSource, "version of the data\n", STR_UPGRADE_CODE);
@@ -685,8 +685,20 @@ const char* STR_GETOBJ_HEAD =
 
 //------------------------------------------------------------------------------------------------------------
 const char* STR_GETOBJ_CODE_FIELD =
-    "`if (fieldName % \"[{FIELD}]\" && index < [{FIELD}].size())\n"
-    "``return [PTR][{FIELD}][index];\n";
+    "`if (fieldName % \"[{FIELD}]\") {\n"
+    "``if (index == NOPOS) {\n"
+    "```[{TYPE}] empty;\n"
+    "```(([{CLASS_NAME}]*)this)->[{FIELD}].push_back(empty);\n"
+    "```index = [{FIELD}].size() - 1;\n"
+    "``}\n"
+    "``if (index < [{FIELD}].size())\n"
+    "```return [PTR][{FIELD}][index];\n"
+    "`}\n\n";
+
+//------------------------------------------------------------------------------------------------------------
+const char* STR_GETOBJ_CODE_FIELD_OBJ =
+    "`if (fieldName % \"[{FIELD}]\")\n"
+    "``return [PTR][{FIELD}];\n\n";
 
 //------------------------------------------------------------------------------------------------------------
 const char* STR_GETOBJ_CODE =

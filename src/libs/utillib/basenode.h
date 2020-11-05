@@ -39,6 +39,7 @@ class CBaseNode {
     virtual bool isKindOf(const CRuntimeClass* pClass) const;
     virtual bool parseJson3(string_q& str);
     virtual bool parseJson4(string_q& str);
+    virtual bool parseJson5(string_q& str);
     virtual bool parseCSV(const CStringArray& fields, string_q& str);
     virtual bool parseText(const CStringArray& fields, string_q& str);
     virtual void toJson(ostream& os) const;
@@ -67,7 +68,7 @@ class CBaseNode {
     virtual const string_q getStringAt(const string_q& fieldName, size_t i) const {
         return "";
     }
-    void doExport(ostream& os) const;
+    void writeJson(ostream& os) const;
 
   protected:
     void initialize(void);

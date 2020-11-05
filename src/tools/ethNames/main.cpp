@@ -44,7 +44,7 @@ int main(int argc, const char* argv[]) {
                         cout << "," << endl;
                     cout << "  ";
                     indent();
-                    item.second.doExport(cout);
+                    item.second.writeJson(cout);
                     unindent();
                 }
                 first = false;

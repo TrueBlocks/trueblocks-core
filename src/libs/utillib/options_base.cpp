@@ -49,7 +49,7 @@ bool COptionsBase::prepareArguments(int argCountIn, const char* argvIn[]) {
         COptionsBase::g_progName = CFilename(argvIn[0]).getFilename();
     if (!getEnvStr("PROG_NAME").empty())
         COptionsBase::g_progName = getEnvStr("PROG_NAME");
-    if (getEnvStr("NO_COLOR") == "true" || !isatty(STDOUT_FILENO))
+    if (getEnvStr("NO_COLOR") == "true" || (getProgName() != "testRunner" && !isatty(STDOUT_FILENO)))
         colorsOff();
     if (getEnvStr("REDIR_CERR") == "true")
         cerr.rdbuf(cout.rdbuf());

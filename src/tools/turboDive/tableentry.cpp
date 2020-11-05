@@ -336,6 +336,7 @@ ostream& operator<<(ostream& os, const CTableEntry& it) {
 const CBaseNode* CTableEntry::getObjectAt(const string_q& fieldName, size_t index) const {
     if (fieldName % "stat")
         return &stat;
+
     return NULL;
 }
 

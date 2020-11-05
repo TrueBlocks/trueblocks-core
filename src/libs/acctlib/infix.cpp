@@ -262,6 +262,7 @@ ostream& operator<<(ostream& os, const CInfix& it) {
 const CBaseNode* CInfix::getObjectAt(const string_q& fieldName, size_t index) const {
     if (fieldName % "next")
         return next;
+
     return NULL;
 }
 

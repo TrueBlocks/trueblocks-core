@@ -311,8 +311,17 @@ ostream& operator<<(ostream& os, const CAccount& it) {
 const CBaseNode* CAccount::getObjectAt(const string_q& fieldName, size_t index) const {
     if (fieldName % "latestTx")
         return &latestTx;
-    if (fieldName % "transactions" && index < transactions.size())
-        return &transactions[index];
+
+    if (fieldName % "transactions") {
+        if (index == NOPOS) {
+            CTransaction empty;
+            ((CAccount*)this)->transactions.push_back(empty);
+            index = transactions.size() - 1;
+        }
+        if (index < transactions.size())
+            return &transactions[index];
+    }
+
     return NULL;
 }
 

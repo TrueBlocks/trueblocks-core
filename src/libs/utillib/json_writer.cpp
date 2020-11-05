@@ -100,7 +100,7 @@ static void appendHex(string_q& result, unsigned ch) {
 }
 
 //--------------------------------------------------------------------------------
-static string_q valueToQuotedStringN(const char* value, unsigned length) {
+string_q valueToQuotedStringN(const char* value, unsigned length) {
     if (value == nullptr)
         return "";
 
@@ -169,31 +169,31 @@ static string_q valueToQuotedStringN(const char* value, unsigned length) {
 }
 
 //--------------------------------------------------------------------------------
-int StreamWriter::write(ostream& sout, const Value& root) {
+int JsonWriter::writeJson(ostream& sout, const Value& root) {
     sout << '\n' << indentStr();
     writeValue(sout, root);
     return 0;
 }
 
 //--------------------------------------------------------------------------------
-void StreamWriter::writeValue(ostream& sout, const Value& value) {
+void JsonWriter::writeValue(ostream& sout, const Value& value) {
     switch (value.type()) {
-        case nullValue:
+        case nullValType:
             sout << "null";
             break;
-        case intValue:
-            sout << int_2_Str(value.asInt64());
+        case intValType:
+            sout << value.asString();
             break;
-        case uintValue:
-            sout << uint_2_Str(value.asUInt64());
+        case uintValType:
+            sout << value.asString();
             break;
-        case realValue:
-            sout << double_2_Str(value.asDouble());
+        case realValType:
+            sout << value.asString();
             break;
-        case booleanValue:
-            sout << bool_2_Str(value.asBool());
+        case boolValType:
+            sout << value.asString();
             break;
-        case stringValue: {
+        case strValType: {
             // Is NULL is possible for value.string_? No.
             char const* str;
             char const* end;
@@ -204,7 +204,7 @@ void StreamWriter::writeValue(ostream& sout, const Value& value) {
                 sout << "";
             break;
         }
-        case arrayValue:
+        case arrayValType:
             if (value.size() == 0) {
                 sout << "[]";
             } else {
@@ -230,8 +230,8 @@ void StreamWriter::writeValue(ostream& sout, const Value& value) {
                 sout << '\n' << indentStr() << "]";
             }
             break;
-        case objectValue: {
-            Value::Members members(value.getMemberNames());
+        case objValType: {
+            CStringArray members(value.getMemberNames());
             if (members.empty())
                 sout << "{}";
             else {

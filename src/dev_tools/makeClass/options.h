@@ -130,6 +130,7 @@ extern const char* STR_GETVALUE1;
 extern const char* STR_GETVALUE2;
 extern const char* STR_GETOBJ_CODE;
 extern const char* STR_GETOBJ_CODE_FIELD;
+extern const char* STR_GETOBJ_CODE_FIELD_OBJ;
 extern const char* STR_GETSTR_CODE;
 extern const char* STR_GETSTR_CODE_FIELD;
 extern const char* STR_GETOBJ_HEAD;

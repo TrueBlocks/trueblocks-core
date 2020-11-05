@@ -412,8 +412,16 @@ ostream& operator<<(ostream& os, const CReceipt& it) {
 
 //---------------------------------------------------------------------------
 const CBaseNode* CReceipt::getObjectAt(const string_q& fieldName, size_t index) const {
-    if (fieldName % "logs" && index < logs.size())
-        return &logs[index];
+    if (fieldName % "logs") {
+        if (index == NOPOS) {
+            CLogEntry empty;
+            ((CReceipt*)this)->logs.push_back(empty);
+            index = logs.size() - 1;
+        }
+        if (index < logs.size())
+            return &logs[index];
+    }
+
     return NULL;
 }
 

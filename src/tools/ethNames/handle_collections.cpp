@@ -62,7 +62,7 @@ void COptions::exportCollections(const CStringArray& terms) {
                     cout << "," << endl;
                 cout << "  ";
                 indent();
-                collection.doExport(cout);
+                collection.writeJson(cout);
                 unindent();
             }
             first = false;

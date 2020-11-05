@@ -280,6 +280,7 @@ ostream& operator<<(ostream& os, const CPerson& it) {
 const CBaseNode* CPerson::getObjectAt(const string_q& fieldName, size_t index) const {
     if (fieldName % "next")
         return next;
+
     return NULL;
 }
 

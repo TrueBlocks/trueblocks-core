@@ -36,7 +36,7 @@ void CIndexCacheItem::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr)
 
     string_q fmt = (fmtIn.empty() ? expContext().fmtMap["indexcacheitem_fmt"] : fmtIn);
     if (fmt.empty()) {
-        doExport(ctx);
+        writeJson(ctx);
         return;
     }
 
