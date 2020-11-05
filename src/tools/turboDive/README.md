@@ -1,27 +1,23 @@
-## whereBlock
+## turboDive
 
-`whereBlock` reports on the location of a block (or blocks) in the cache. It reports on one of four situations: `cache`, `node` or `none` depending on where the block is found.
-
-If `whereBlock` finds the block in the TrueBlocks cache, it reports the path to that block's file. If the block is not in the cache, but there is a locally running node, `whereBlock` returns `node` plus the name and version info from the running node. Otherwise, `whereBlock` returns `none`.
-
-This tool is intended mostly as an aid in developing and debugging TrueBlocks tools.
+`turboDive` is a simple tool that dives into the details of the TurboGeth database. It is not really ready for prime time, so use with caution
 
 #### Usage
 
-`Usage:`    whereBlock [-v|-h] &lt;block&gt; [block...]  
-`Purpose:`  Reports if a block was found in the cache, at a local, or at a remote node.
+`Usage:`    turboDive [-m|-d|-n|-g|-z|-v|-h]  
+`Purpose:`  Dive deeply into the turboGeth database.
 
 `Where:`  
 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
-|  | blocks | a space-separated list of one or more blocks to search for (required) |
+| -m | --mode <val> | the command to run, one of [tables*&#124;dump] |
+| -d | --datadir <str> | folder containing TurboGeth data file (data.mdb) |
+| -n | --name <str> | for 'dump' command only, the name of the table to dump |
+| -g | --goerli | run against the goerli testnet |
+| -z | --no_zero | suppress the display of tables with zero records |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
-
-`Notes:`
-
-- Customize the location of the cache in the configuration file ~/.quickBlocks/quickBlocks.toml.
 
 #### Other Options
 

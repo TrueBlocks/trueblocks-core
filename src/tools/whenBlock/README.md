@@ -31,14 +31,15 @@ You may name your own blocks (for example, to denote the start of an ICO perhaps
 - Dates must be formatted in JSON format: YYYY-MM-DD[THH[:MM[:SS]]].
 - You may customize the list of named blocks by editing ~/.quickBlocks/whenBlock.toml.
 - The following `named` blocks are currently configured:
-  - first (`0`), firstTrans (`46147`), iceage (`200000`), devcon1 (`543626`)
-  - homestead (`1150000`), daofund (`1428756`), daohack (`1718497`), daofork (`1920000`)
-  - devcon2 (`2286910`), tangerine (`2463000`), spurious (`2675000`), stateclear (`2717576`)
-  - eea (`3265360`), ens2 (`3327417`), parityhack1 (`4041179`), byzantium (`4370000`)
-  - devcon3 (`4469339`), parityhack2 (`4501969`), kitties (`4605167`), makerdao (`4620855`)
-  - devcon4 (`6610517`), uniswap (`6627917`), constantinople (`7280000`), devcon5 (`8700401`)
-  - mcdai (`8928158`), istanbul (`9069000`), muirglacier (`9200000`), latest (`9440052`)
-  
+  - first (`0`), firstTrans (`46147`), firstContract (`50111`), iceage (`200000`)
+  - devcon1 (`543626`), homestead (`1150000`), daofund (`1428756`), daohack (`1718497`)
+  - daofork (`1920000`), devcon2 (`2286910`), tangerine (`2463000`), spurious (`2675000`)
+  - stateclear (`2717576`), eea (`3265360`), ens2 (`3327417`), parityhack1 (`4041179`)
+  - byzantium (`4370000`), devcon3 (`4469339`), parityhack2 (`4501969`), kitties (`4605167`)
+  - makerdao (`4620855`), devcon4 (`6610517`), uniswap (`6627917`), constantinople (`7280000`)
+  - devcon5 (`8700401`), mcdai (`8928158`), istanbul (`9069000`), muirglacier (`9200000`)
+  - latest (``)
+
 #### Other Options
 
 All **TrueBlocks** command-line tools support the following commands (although in some case, they have no meaning):
@@ -60,3 +61,5 @@ All **TrueBlocks** command-line tools support the following commands (although i
 <small>*For the `--file:fn` option, place a series of valid command lines in a file and use the above options. In some cases, this option may significantly improve performance. A semi-colon at the start of a line makes that line a comment.*</small>
 
 **Powered by TrueBlocks<sup>&trade;</sup>**
+
+

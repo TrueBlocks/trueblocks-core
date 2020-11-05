@@ -97,6 +97,11 @@ bool CLmdbVal::setValueByName(const string_q& fieldNameIn, const string_q& field
     string_q fieldValue = fieldValueIn;
 
     // EXISTING_CODE
+    return false;
+}
+//---------------------------------------------------------------------------------------------------
+void CLmdbVal::finishParse() {
+#if 0
     // EXISTING_CODE
 
     switch (tolower(fieldName[0])) {
@@ -121,6 +126,7 @@ bool CLmdbVal::setValueByName(const string_q& fieldNameIn, const string_q& field
 //---------------------------------------------------------------------------------------------------
 void CLmdbVal::finishParse() {
     // EXISTING_CODE
+#endif
     // EXISTING_CODE
 }
 

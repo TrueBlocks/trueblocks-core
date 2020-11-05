@@ -7,7 +7,7 @@
 #### Usage
 
 `Usage:`    acctScrape [-v|-h] &lt;address&gt; [address...]  
-`Purpose:`  Index transactions for a given Ethereum address (or collection of addresses).
+`Purpose:`  Add or remove monitors for a given Ethereum address (or collection of addresses).
 
 `Where:`  
 

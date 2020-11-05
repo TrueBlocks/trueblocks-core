@@ -47,17 +47,25 @@ toolName = sys.argv[3]
 templateFile = toolFolder + "/docs/README.tmpl.md"
 footerFile = srcFolder + "/other/docs/README.footer.md"
 usageFile = "help.txt"
-outputFile = "README.md"
+outputFile = toolFolder + "/README.md"
 
-# printe(templateFile)
-# printe(footerFile)
-# printe(toolName)
-# printe(usageFile)
-# printe(outputFile)
+#printe('templateFile: ', templateFile)
+#printe('footerFile: ', footerFile)
+#printe('toolName: ', toolName)
+#printe('usageFile: ', usageFile)
+#printe('outputFile: ', outputFile)
+#printe('toolName: ', toolName)
+#printe('srcFolder: ', srcFolder)
+#printe('toolFolder: ', toolFolder)
 
 # Check that input file is present
 if os.path.isfile(templateFile) == False:
     printe("ERROR: Could not find input file %s" % templateFile)
+    exit(1)
+
+# Check that footer file is present
+if os.path.isfile(footerFile) == False:
+    printe("ERROR: Could not find input file %s" % footerFile)
     exit(1)
 
 # Check that content file is present
@@ -67,8 +75,11 @@ if os.path.isfile(usageFile) == False:
 
 # Check that output file is NOT present, remove it otherwise
 if os.path.isfile(outputFile) == True:
-    #   printe("WARNING: Output file already present %s (removed)" % outputFile)
+    #printe("WARNING: Output file already present %s (removed)" % outputFile)
     os.remove(outputFile)
+
+if os.path.isfile(outputFile) == True:
+    printe("Weird")
 
 # Get some data to use
 with open(templateFile, 'r') as file:
@@ -83,6 +94,8 @@ with open(usageFile, 'r') as file:
 # Do the replacements
 outputData = templateData.replace("[{USAGE_TABLE}]", usageData).replace(
     "[{FOOTER}]", footerData).replace("[{NAME}]", toolName)
+
+#printe('outputData: ', outputData)
 
 # Generate output file
 with open(outputFile, 'w') as file:

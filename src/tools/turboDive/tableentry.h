@@ -16,7 +16,9 @@
  * of 'EXISTING_CODE' tags.
  */
 #include "utillib.h"
-#include "mdbstat.h"
+#include "lmdbstat.h"
+#include "lmdbrecord.h"
+#include "lmdbval.h"
 
 namespace qblocks {
 

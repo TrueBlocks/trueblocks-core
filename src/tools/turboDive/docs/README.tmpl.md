@@ -1,5 +1,5 @@
 ## [{NAME}]
 
-`grabABI` retrieves an ABI file either from a local cache, from the Ethereum Name Service (ENS), or from [Etherscan](http://etherscan.io). Once retrieved, `grabABI` generates the classDefinition files needed by [makeClass](../makeClass/README.md) to generate a parselib for each [Ethereum address monitor](../../monitors/README.md).
+`turboDive` is a simple tool that dives into the details of the TurboGeth database. It is not really ready for prime time, so use with caution
 
 [{USAGE_TABLE}][{FOOTER}]

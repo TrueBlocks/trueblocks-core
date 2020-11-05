@@ -6,7 +6,7 @@ Using operating system tools such as Linux's `cron` you can easily maintain a  c
 
 #### Usage
 
-`Usage:`    blockScrape [-n|-v|-h]  
+`Usage:`    blockScrape [-n|-p|-u|-v|-h]  
 `Purpose:`  Decentralized blockchain scraper and block cache.
 
 `Where:`  
@@ -14,6 +14,8 @@ Using operating system tools such as Linux's `cron` you can easily maintain a  c
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
 | -n | --n_blocks <num> | maximum number of blocks to process (defaults to 5000) |
+| -p | --pin | pin new chunks (and blooms) to IPFS (requires Pinata key) |
+| -u | --publish | publish the hash of the pin manifest to the UnchainedIndex smart contract |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 
