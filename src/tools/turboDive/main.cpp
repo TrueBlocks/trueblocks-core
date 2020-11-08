@@ -16,7 +16,7 @@
 #include "silkworm/db/tables.hpp"
 #include "silkworm/db/util.hpp"
 #include "silkworm/types/block.hpp"
-#include "tableentry.h"
+#include "classes/tableentry.h"
 
 using namespace silkworm;
 using namespace silkworm::db::table;

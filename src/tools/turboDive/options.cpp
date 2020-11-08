@@ -17,7 +17,7 @@
 #include "options.h"
 #include "silkworm/db/chaindb.hpp"
 #include "silkworm/db/tables.hpp"
-#include "tableentry.h"
+#include "classes/tableentry.h"
 
 using namespace silkworm;
 using namespace silkworm::db::table;

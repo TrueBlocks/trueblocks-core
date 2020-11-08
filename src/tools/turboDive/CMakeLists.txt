@@ -5,7 +5,7 @@ cmake_minimum_required (VERSION 3.0)
 project (turboDive)
 
 # The sources to be used
-file(GLOB SOURCE_FILES "*.cpp")
+file(GLOB SOURCE_FILES "*.cpp" "classes/*.cpp")
 
 # Output
 set(EXECUTABLE_OUTPUT_PATH "${CMAKE_SOURCE_DIR}/../bin")
