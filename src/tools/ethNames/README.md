@@ -26,7 +26,7 @@ Using ethName to find Singular's address, list tokens held by other token accoun
 
 #### Usage
 
-`Usage:`    ethNames [-e|-m|-o|-c|-p|-n|-a|-v|-h] &lt;term&gt; [term...]  
+`Usage:`    ethNames [-e|-m|-l|-o|-c|-p|-n|-a|-s|-g|-v|-h] &lt;term&gt; [term...]  
 `Purpose:`  Query addresses and/or names of well known accounts.
 
 `Where:`  
@@ -36,11 +36,14 @@ Using ethName to find Singular's address, list tokens held by other token accoun
 |  | terms | a space separated list of one or more search terms (required) |
 | -e | --expand | expand search to include all fields (default searches name, address, and symbol only) |
 | -m | --match_case | do case-sensitive search |
+| -l | --all | include all accounts in the search |
 | -o | --owned | include personal accounts in the search |
 | -c | --custom | include your custom named accounts |
 | -p | --prefund | include prefund accounts |
 | -n | --named | include well know token and airdrop addresses in the search |
 | -a | --addr | display only addresses in the results (useful for scripting) |
+| -s | --collections | display collections data |
+| -g | --tags | export the list of tags and subtags only |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 
@@ -51,7 +54,7 @@ Using ethName to find Singular's address, list tokens held by other token accoun
 - When there are two search terms, both must match.
 - The `--match_case` option requires case sensitive matching. It works with all other options.
 - To customize the list of names add a `custom` section to the config file (see documentation).
-- Name file: `~/.quickBlocks/names/names.tab` (488678)
+- Name file: `~/.quickBlocks/names/names.tab` (857696)
 
 #### Other Options
 

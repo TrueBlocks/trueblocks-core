@@ -2,7 +2,7 @@ acctExport argc: 9 [1:0x05a56e2d52c817161883f50c441c3228cfe54d9f] [2:--logs] [3:
 acctExport 0x05a56e2d52c817161883f50c441c3228cfe54d9f --logs --fmt json --end 006500000 --emitter 0x6b92d76c9d0d40e53019ffa51b6f0c9b6bc657c9 
 TIME ~ CLOCK - <ERROR> : Exit(acctExport,parseArguments): 
 
-  Monitor file for address 0x6b92d76c9d0d40e53019ffa51b6f0c9b6bc657c9 not found. Quitting...
+  The emitter option is only available when exporting logs from a single address. Quitting...
 
   Usage:    acctExport [-p|-r|-l|-t|-T|-C|-a|-i|-R|-U|-v|-h] <address> [address...] topics  
   Purpose:  Export full detail of transactions for one or more Ethereum addresses.

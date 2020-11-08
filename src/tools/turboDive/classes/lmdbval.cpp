@@ -71,14 +71,9 @@ string_q CLmdbVal::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'd':
-//            if (fieldName % "data") {
-//                string_q ret;
-//                for (size_t i{0}; i<size; i++) {
-//                    ret += chr_2_
-//
-//                }
-//                return chr_2_Hex(data);
-//            }
+            if (fieldName % "data") {
+                return data;
+            }
             break;
         case 's':
             if (fieldName % "size") {
@@ -102,12 +97,17 @@ bool CLmdbVal::setValueByName(const string_q& fieldNameIn, const string_q& field
     string_q fieldValue = fieldValueIn;
 
     // EXISTING_CODE
+    return false;
+}
+//---------------------------------------------------------------------------------------------------
+void CLmdbVal::finishParse() {
+#if 0
     // EXISTING_CODE
 
     switch (tolower(fieldName[0])) {
         case 'd':
             if (fieldName % "data") {
-                data = (char*)fieldValue.c_str();
+                data = fieldValue;
                 return true;
             }
             break;
@@ -126,6 +126,7 @@ bool CLmdbVal::setValueByName(const string_q& fieldNameIn, const string_q& field
 //---------------------------------------------------------------------------------------------------
 void CLmdbVal::finishParse() {
     // EXISTING_CODE
+#endif
     // EXISTING_CODE
 }
 

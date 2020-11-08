@@ -273,8 +273,16 @@ ostream& operator<<(ostream& os, const CPinataMetadata& it) {
 
 //---------------------------------------------------------------------------
 const CBaseNode* CPinataMetadata::getObjectAt(const string_q& fieldName, size_t index) const {
-    if (fieldName % "keyvalues" && index < keyvalues.size())
-        return &keyvalues[index];
+    if (fieldName % "keyvalues") {
+        if (index == NOPOS) {
+            CKeyValue empty;
+            ((CPinataMetadata*)this)->keyvalues.push_back(empty);
+            index = keyvalues.size() - 1;
+        }
+        if (index < keyvalues.size())
+            return &keyvalues[index];
+    }
+
     return NULL;
 }
 

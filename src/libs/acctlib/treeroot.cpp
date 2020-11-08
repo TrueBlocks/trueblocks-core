@@ -256,6 +256,7 @@ ostream& operator<<(ostream& os, const CTreeRoot& it) {
 const CBaseNode* CTreeRoot::getObjectAt(const string_q& fieldName, size_t index) const {
     if (fieldName % "root")
         return root;
+
     return NULL;
 }
 

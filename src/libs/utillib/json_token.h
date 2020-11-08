@@ -3,25 +3,37 @@
 // Distributed under MIT license, or public domain if desired and
 // recognized in your jurisdiction.
 // See file LICENSE for detail or copy at http://jsoncpp.sourceforge.net/LICENSE
-#include "json_value.h"
+#include "basetypes.h"
+#include "basenode.h"
 
 namespace qblocks {
 
 //--------------------------------------------------------------------------------
-class Value;
+enum TokenType {
+    tokEOS = 0,
+    tokObjBegin,
+    tokObjEnd,
+    tokArrayBegin,
+    tokArrayEnd,
+    tokString,
+    tokNumber,
+    tokTrue,
+    tokFalse,
+    tokNull,
+    tokNaN,
+    tokPosInf,
+    tokNegInf,
+    tokArraySep,
+    tokMemberSep,
+    tokError
+};
 
 //--------------------------------------------------------------------------------
-class JsonWriter {
+class Token {
   public:
-    JsonWriter(void) {
-    }
-    ~JsonWriter() = default;
-
-    int writeJson(ostream& sout, const Value& root);
-
-  private:
-    void writeValue(ostream& sout, const Value& value);
-    vector<string_q> childValues_;
+    TokenType type_;
+    const char* start_;
+    const char* end_;
 };
 
 }  // namespace qblocks

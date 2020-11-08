@@ -279,8 +279,16 @@ ostream& operator<<(ostream& os, const CMonitorCache& it) {
 
 //---------------------------------------------------------------------------
 const CBaseNode* CMonitorCache::getObjectAt(const string_q& fieldName, size_t index) const {
-    if (fieldName % "items" && index < items.size())
-        return &items[index];
+    if (fieldName % "items") {
+        if (index == NOPOS) {
+            CMonitorCacheItem empty;
+            ((CMonitorCache*)this)->items.push_back(empty);
+            index = items.size() - 1;
+        }
+        if (index < items.size())
+            return &items[index];
+    }
+
     return NULL;
 }
 

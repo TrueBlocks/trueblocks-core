@@ -508,10 +508,26 @@ ostream& operator<<(ostream& os, const CFunction& it) {
 
 //---------------------------------------------------------------------------
 const CBaseNode* CFunction::getObjectAt(const string_q& fieldName, size_t index) const {
-    if (fieldName % "inputs" && index < inputs.size())
-        return &inputs[index];
-    if (fieldName % "outputs" && index < outputs.size())
-        return &outputs[index];
+    if (fieldName % "inputs") {
+        if (index == NOPOS) {
+            CParameter empty;
+            ((CFunction*)this)->inputs.push_back(empty);
+            index = inputs.size() - 1;
+        }
+        if (index < inputs.size())
+            return &inputs[index];
+    }
+
+    if (fieldName % "outputs") {
+        if (index == NOPOS) {
+            CParameter empty;
+            ((CFunction*)this)->outputs.push_back(empty);
+            index = outputs.size() - 1;
+        }
+        if (index < outputs.size())
+            return &outputs[index];
+    }
+
     return NULL;
 }
 

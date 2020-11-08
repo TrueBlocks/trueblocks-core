@@ -252,8 +252,16 @@ ostream& operator<<(ostream& os, const CPriceCache& it) {
 
 //---------------------------------------------------------------------------
 const CBaseNode* CPriceCache::getObjectAt(const string_q& fieldName, size_t index) const {
-    if (fieldName % "items" && index < items.size())
-        return &items[index];
+    if (fieldName % "items") {
+        if (index == NOPOS) {
+            CPriceCacheItem empty;
+            ((CPriceCache*)this)->items.push_back(empty);
+            index = items.size() - 1;
+        }
+        if (index < items.size())
+            return &items[index];
+    }
+
     return NULL;
 }
 

@@ -288,8 +288,16 @@ ostream& operator<<(ostream& os, const CConfigSection& it) {
 
 //---------------------------------------------------------------------------
 const CBaseNode* CConfigSection::getObjectAt(const string_q& fieldName, size_t index) const {
-    if (fieldName % "keys" && index < keys.size())
-        return &keys[index];
+    if (fieldName % "keys") {
+        if (index == NOPOS) {
+            CConfigItem empty;
+            ((CConfigSection*)this)->keys.push_back(empty);
+            index = keys.size() - 1;
+        }
+        if (index < keys.size())
+            return &keys[index];
+    }
+
     return NULL;
 }
 

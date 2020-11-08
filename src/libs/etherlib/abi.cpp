@@ -280,8 +280,16 @@ ostream& operator<<(ostream& os, const CAbi& it) {
 
 //---------------------------------------------------------------------------
 const CBaseNode* CAbi::getObjectAt(const string_q& fieldName, size_t index) const {
-    if (fieldName % "interfaces" && index < interfaces.size())
-        return &interfaces[index];
+    if (fieldName % "interfaces") {
+        if (index == NOPOS) {
+            CFunction empty;
+            ((CAbi*)this)->interfaces.push_back(empty);
+            index = interfaces.size() - 1;
+        }
+        if (index < interfaces.size())
+            return &interfaces[index];
+    }
+
     return NULL;
 }
 

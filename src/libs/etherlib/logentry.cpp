@@ -452,6 +452,7 @@ ostream& operator<<(ostream& os, const CLogEntry& it) {
 const CBaseNode* CLogEntry::getObjectAt(const string_q& fieldName, size_t index) const {
     if (fieldName % "articulatedLog")
         return &articulatedLog;
+
     return NULL;
 }
 

@@ -360,10 +360,20 @@ ostream& operator<<(ostream& os, const CMonitor& it) {
 const CBaseNode* CMonitor::getObjectAt(const string_q& fieldName, size_t index) const {
     if (fieldName % "abi_spec")
         return &abi_spec;
+
     if (fieldName % "summaryStatement")
         return &summaryStatement;
-    if (fieldName % "stateHistory" && index < stateHistory.size())
-        return &stateHistory[index];
+
+    if (fieldName % "stateHistory") {
+        if (index == NOPOS) {
+            CEthState empty;
+            ((CMonitor*)this)->stateHistory.push_back(empty);
+            index = stateHistory.size() - 1;
+        }
+        if (index < stateHistory.size())
+            return &stateHistory[index];
+    }
+
     return NULL;
 }
 

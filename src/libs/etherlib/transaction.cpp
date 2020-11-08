@@ -869,14 +869,40 @@ ostream& operator<<(ostream& os, const CTransaction& it) {
 const CBaseNode* CTransaction::getObjectAt(const string_q& fieldName, size_t index) const {
     if (fieldName % "receipt")
         return &receipt;
-    if (fieldName % "traces" && index < traces.size())
-        return &traces[index];
+
+    if (fieldName % "traces") {
+        if (index == NOPOS) {
+            CTrace empty;
+            ((CTransaction*)this)->traces.push_back(empty);
+            index = traces.size() - 1;
+        }
+        if (index < traces.size())
+            return &traces[index];
+    }
+
     if (fieldName % "articulatedTx")
         return &articulatedTx;
-    if (fieldName % "reconciliations" && index < reconciliations.size())
-        return &reconciliations[index];
-    if (fieldName % "statements" && index < statements.size())
-        return &statements[index];
+
+    if (fieldName % "reconciliations") {
+        if (index == NOPOS) {
+            CReconciliation empty;
+            ((CTransaction*)this)->reconciliations.push_back(empty);
+            index = reconciliations.size() - 1;
+        }
+        if (index < reconciliations.size())
+            return &reconciliations[index];
+    }
+
+    if (fieldName % "statements") {
+        if (index == NOPOS) {
+            CReconciliationOutput empty;
+            ((CTransaction*)this)->statements.push_back(empty);
+            index = statements.size() - 1;
+        }
+        if (index < statements.size())
+            return &statements[index];
+    }
+
     return NULL;
 }
 

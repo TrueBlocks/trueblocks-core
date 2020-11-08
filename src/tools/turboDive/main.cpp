@@ -60,7 +60,7 @@ const char* STR_DISPLAY_MDBSTAT_VERBOSE =
     "  Id:              [{ID}]\n"
     "  Name:            [{NAME}]\n"
     "  Long Name:       [{LONGNAME}]\n"
-//    "  Description:     [{DESCRIPTION}]\n"
+    // "  Description:     [{DESCRIPTION}]\n"
     "  Page Size:       [{STAT::PSIZE}]\n"
     "  Depth:           [{STAT::DEPTH}]\n"
     "  Branch Pages:    [{STAT::BRANCH_PAGES} pages][, {STAT::BRANCH_BYTES} bytes][, {STAT::BRANCH_PCT}%]\n"
@@ -81,8 +81,10 @@ bool COptions::handle_tables(void) {
 
                 } else {
                     ostringstream os;
-                    os << "\"" << Now().Format(FMT_EXPORT) << "\",\""; // "[" << Now().Format(FMT_EXPORT) << "{TRUE}]\t";
-                    os << getLatestBlock_client() << "\",\""; //"[" << uint_2_Str(getLatestBlock_client()) << "{TRUE}]\t";
+                    os << "\"" << Now().Format(FMT_EXPORT)
+                       << "\",\"";  // "[" << Now().Format(FMT_EXPORT) << "{TRUE}]\t";
+                    os << getLatestBlock_client()
+                       << "\",\"";  //"[" << uint_2_Str(getLatestBlock_client()) << "{TRUE}]\t";
                     os << expContext().fmtMap["format"];
                     cout << bBlue << table.Format(os.str()) << endl;
                 }
@@ -92,7 +94,7 @@ bool COptions::handle_tables(void) {
                     cout << "," << endl;
                 cout << "  ";
                 indent();
-                table.doExport(cout);
+                table.writeJson(cout);
                 unindent();
                 first = false;
             }
@@ -138,7 +140,7 @@ bool COptions::handle_dump(void) {
                     cout << "," << endl;
                 cout << "  ";
                 indent();
-                record.doExport(cout);
+                record.writeJson(cout);
                 unindent();
                 first = false;
             }

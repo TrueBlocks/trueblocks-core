@@ -2,9 +2,11 @@
 
 The `getBlock` tool retrieves Ethereum block data from a running node or, if previously retrieved, the TrueBlocks cache. It optionally retrieves the hashes that denote the transactions in the block or the full transactional data as a default.
 
+The tool may also be used to double check that the results produced from the TrueBlocks cache and the results as retrieved directly from the running node are identical (modulo the fact that TrueBlocks does not store every data field from the node). You may accomplish this `check` with the --check option.
+
 #### Usage
 
-`Usage:`    getBlock [-e|-a|-u|-n|-c|-v|-h] &lt;block&gt; [block...]  
+`Usage:`    getBlock [-e|-a|-u|-n|-c|-U|-v|-h] &lt;block&gt; [block...]  
 `Purpose:`  Returns block(s) from local cache or directly from a running node.
 
 `Where:`  
@@ -16,7 +18,8 @@ The `getBlock` tool retrieves Ethereum block data from a running node or, if pre
 | -a | --addrs | display all addresses included in the block |
 | -u | --uniq | display only uniq addresses found per block |
 | -n | --uniq_tx | display only uniq addresses found per transaction |
-| -c | --count | display counts of appearances (for --addrs, --uniq, or --uniq_tx only) |
+| -c | --count | display counts of appearances (for --addrs, --uniq, or --uniq_tx) or transactions |
+| -U | --uncles | display uncle blocks (if any) instead of the requested block |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 

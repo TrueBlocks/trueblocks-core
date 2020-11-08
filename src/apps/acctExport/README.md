@@ -8,30 +8,33 @@ Please contact us at [sales@greathill.com](mailto:sales@greathill.com) for more 
 
 #### Usage
 
-`Usage:` acctExport [-p|-r|-l|-t|-b|-e|-c|-a|-w|-i|-R|-v|-h] &lt;address&gt; [address...]  
-`Purpose:` Export full detail of transactions for one or more Ethereum addresses.
+`Usage:`    acctExport [-p|-r|-l|-t|-T|-C|-a|-i|-R|-U|-v|-h] &lt;address&gt; [address...] topics  
+`Purpose:`  Export full detail of transactions for one or more Ethereum addresses.
 
-`Where:`
+`Where:`  
 
-| Short Cut | Option         | Description                                                        |
-| --------: | :------------- | :----------------------------------------------------------------- |
-|           | addrs          | one or more addresses (0x...) to export (required)                 |
-|        -p | --appearances  | export a list of appearances                                       |
-|        -r | --receipts     | export receipts instead of transaction list                        |
-|        -l | --logs         | export logs instead of transaction list                            |
-|        -t | --traces       | export traces instead of transaction list                          |
-|        -b | --balances     | export balance history instead of transaction list                 |
-|        -a | --articulate   | articulate transactions, traces, logs, and outputs                 |
-|        -i | --write_txs    | write transactions to the cache (see notes)                        |
-|        -R | --write_traces | write traces to the cache (see notes)                              |
-|        -v | --verbose      | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
-|        -h | --help         | display this help screen                                           |
+| Short Cut | Option | Description |
+| -------: | :------- | :------- |
+|  | addrs | one or more addresses (0x...) to export (required) |
+|  | topics | filter by one or more logs topics (only for --logs option) |
+| -p | --appearances | export a list of appearances |
+| -r | --receipts | export receipts instead of transaction list |
+| -l | --logs | export logs instead of transaction list |
+| -t | --traces | export traces instead of transaction list |
+| -T | --statements | export reconcilations instead of transaction list |
+| -C | --accounting | export accounting records instead of transaction list |
+| -a | --articulate | articulate transactions, traces, logs, and outputs |
+| -i | --write_txs | write transactions to the cache (see notes) |
+| -R | --write_traces | write traces to the cache (see notes) |
+| -U | --count | only available for --appearances mode, if present return only the number of records |
+| -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
+| -h | --help | display this help screen |
 
 `Notes:`
 
 - `addresses` must start with '0x' and be forty two characters long.
-- By default, transactions and traces are cached if the number of exported
-  appearances is <= to 1,000 appearances. Otherwise, if you specify any `write_*` options,
+- By default, transactions and traces are cached if the number of exported 
+  items is <= to 1,000 items. Otherwise, if you specify any `write_*` options, 
   your preference predominates.
 
 #### Other Options
@@ -55,3 +58,5 @@ All **TrueBlocks** command-line tools support the following commands (although i
 <small>*For the `--file:fn` option, place a series of valid command lines in a file and use the above options. In some cases, this option may significantly improve performance. A semi-colon at the start of a line makes that line a comment.*</small>
 
 **Powered by TrueBlocks<sup>&trade;</sup>**
+
+

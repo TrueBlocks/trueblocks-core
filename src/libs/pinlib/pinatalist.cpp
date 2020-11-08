@@ -273,8 +273,16 @@ ostream& operator<<(ostream& os, const CPinataList& it) {
 
 //---------------------------------------------------------------------------
 const CBaseNode* CPinataList::getObjectAt(const string_q& fieldName, size_t index) const {
-    if (fieldName % "rows" && index < rows.size())
-        return &rows[index];
+    if (fieldName % "rows") {
+        if (index == NOPOS) {
+            CPinataPin empty;
+            ((CPinataList*)this)->rows.push_back(empty);
+            index = rows.size() - 1;
+        }
+        if (index < rows.size())
+            return &rows[index];
+    }
+
     return NULL;
 }
 

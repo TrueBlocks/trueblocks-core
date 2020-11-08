@@ -68,7 +68,7 @@ bool visitPrice(CPriceQuote& quote, void* data) {
                 cout << ",";
             cout << "  ";
             indent();
-            quote.doExport(cout);
+            quote.writeJson(cout);
             unindent();
             opt->first = false;
         }

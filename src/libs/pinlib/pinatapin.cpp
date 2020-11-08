@@ -361,8 +361,17 @@ ostream& operator<<(ostream& os, const CPinataPin& it) {
 const CBaseNode* CPinataPin::getObjectAt(const string_q& fieldName, size_t index) const {
     if (fieldName % "metadata")
         return &metadata;
-    if (fieldName % "regions" && index < regions.size())
-        return &regions[index];
+
+    if (fieldName % "regions") {
+        if (index == NOPOS) {
+            CPinataRegion empty;
+            ((CPinataPin*)this)->regions.push_back(empty);
+            index = regions.size() - 1;
+        }
+        if (index < regions.size())
+            return &regions[index];
+    }
+
     return NULL;
 }
 

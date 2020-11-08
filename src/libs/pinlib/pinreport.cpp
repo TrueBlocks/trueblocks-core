@@ -360,10 +360,26 @@ ostream& operator<<(ostream& os, const CPinReport& it) {
 
 //---------------------------------------------------------------------------
 const CBaseNode* CPinReport::getObjectAt(const string_q& fieldName, size_t index) const {
-    if (fieldName % "newPins" && index < newPins.size())
-        return &newPins[index];
-    if (fieldName % "prevPins" && index < prevPins.size())
-        return &prevPins[index];
+    if (fieldName % "newPins") {
+        if (index == NOPOS) {
+            CPinnedItem empty;
+            ((CPinReport*)this)->newPins.push_back(empty);
+            index = newPins.size() - 1;
+        }
+        if (index < newPins.size())
+            return &newPins[index];
+    }
+
+    if (fieldName % "prevPins") {
+        if (index == NOPOS) {
+            CPinnedItem empty;
+            ((CPinReport*)this)->prevPins.push_back(empty);
+            index = prevPins.size() - 1;
+        }
+        if (index < prevPins.size())
+            return &prevPins[index];
+    }
+
     return NULL;
 }
 

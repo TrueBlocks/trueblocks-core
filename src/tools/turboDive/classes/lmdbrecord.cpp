@@ -279,8 +279,10 @@ ostream& operator<<(ostream& os, const CLmdbRecord& it) {
 const CBaseNode* CLmdbRecord::getObjectAt(const string_q& fieldName, size_t index) const {
     if (fieldName % "key")
         return &key;
+
     if (fieldName % "value")
         return &value;
+
     return NULL;
 }
 

@@ -132,7 +132,7 @@ bool publishManifest(ostream& os) {
 
     forEveryPin(addNewPin, &pinReport);
 
-    // pinReport.doExport(os);
+    // pinReport.writeJson(os);
     LOG_INFO(bRed, "  Pinned manifest and posted it to Ethereum address: ", unchainedIndex, cOff);
 
     return true;
