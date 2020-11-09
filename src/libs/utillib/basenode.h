@@ -44,6 +44,7 @@ class CBaseNode {
     virtual bool parseText(const CStringArray& fields, string_q& str);
     virtual void toJson(ostream& os) const;
     virtual void toJsonFromFields(ostream& os, const CFieldDataArray& array) const;
+    virtual bool getVisibleFields(CFieldDataArray& visibleFields) const;
 
   public:
     // TODO(tjayrush): global data

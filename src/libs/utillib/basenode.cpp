@@ -551,22 +551,16 @@ void CBaseNode::toJsonFromFields(ostream& os, const CFieldDataArray& fields) con
 }
 
 //--------------------------------------------------------------------------------
-void CBaseNode::writeJson(ostream& os) const {
-    if (!m_showing) {
-        os << "{}";
-        return;
-    }
-
+bool CBaseNode::getVisibleFields(CFieldDataArray& visibleFields) const {
     CRuntimeClass* pClass = getRuntimeClass();
     if (!pClass)
-        return;
+        return false;
 
     if (pClass->fieldList.size() == 0) {
         LOG_WARN("Class '", pClass->m_ClassName, "' has no fields. Is it registered?");
-        return;
+        return false;
     }
 
-    CFieldDataArray fields;
     map<string_q, bool> fieldMap;
     while (pClass != GETRUNTIME_CLASS(CBaseNode)) {
         for (auto field : pClass->fieldList) {
@@ -617,18 +611,31 @@ void CBaseNode::writeJson(ostream& os) const {
 
             if (!field.isHidden() && !hidden) {
                 if (!fieldMap[field.m_fieldName]) {
-                    fields.push_back(field);
+                    visibleFields.push_back(field);
                     fieldMap[field.m_fieldName] = true;
                 }
             }
         }
         pClass = pClass->m_BaseClass;
     }
+    return true;
+}
+
+//--------------------------------------------------------------------------------
+void CBaseNode::writeJson(ostream& os) const {
+    if (!m_showing) {
+        os << "{}";
+        return;
+    }
+
+    CFieldDataArray visibleFields;
+    if (!getVisibleFields(visibleFields))
+        return;
 
     os << "{";
     indent();
-    for (auto field : fields) {
-        if (field.getName() != fields[0].getName())
+    for (auto field : visibleFields) {
+        if (field.getName() != visibleFields[0].getName())
             os << ",";
         os << endl << indentStr() << doKey(field.getName());
 
@@ -657,7 +664,7 @@ void CBaseNode::writeJson(ostream& os) const {
             const CBaseNode* node = getObjectAt(field.getName(), 0);
             if (!node) {
                 // should never happen
-                LOG_WARN("Object ", field.getName(), " not found in class ", pClass->m_ClassName);
+                LOG_WARN("Object ", field.getName(), " not found in class ", getRuntimeClass()->m_ClassName);
                 return;
             }
             node->writeJson(os);
