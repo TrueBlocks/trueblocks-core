@@ -355,9 +355,9 @@ void CTrace::registerClass(void) {
     ADD_FIELD(CTrace, "transactionIndex", T_BLOCKNUM, ++fieldNum);
     ADD_FIELD(CTrace, "type", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CTrace, "error", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_OBJECT(CTrace, "action", T_OBJECT | TS_OMITEMPTY, ++fieldNum, GETRUNTIME_CLASS(CTrace));
-    ADD_OBJECT(CTrace, "result", T_OBJECT | TS_OMITEMPTY, ++fieldNum, GETRUNTIME_CLASS(CTrace));
-    ADD_OBJECT(CTrace, "articulatedTrace", T_OBJECT | TS_OMITEMPTY, ++fieldNum, GETRUNTIME_CLASS(CTrace));
+    ADD_OBJECT(CTrace, "action", T_OBJECT | TS_OMITEMPTY, ++fieldNum, GETRUNTIME_CLASS(CTraceAction));
+    ADD_OBJECT(CTrace, "result", T_OBJECT | TS_OMITEMPTY, ++fieldNum, GETRUNTIME_CLASS(CTraceResult));
+    ADD_OBJECT(CTrace, "articulatedTrace", T_OBJECT | TS_OMITEMPTY, ++fieldNum, GETRUNTIME_CLASS(CFunction));
     ADD_FIELD(CTrace, "compressedTrace", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CTrace, "compressedTrace");
 

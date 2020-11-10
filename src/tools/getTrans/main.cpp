@@ -50,7 +50,7 @@ bool visitAddrs(const CAppearance& item, void* data) {
             cout << ",";
         cout << "  ";
         indent();
-        item.writeJson(cout);
+        item.toJson(cout);
         unindent();
         opt->first = false;
     }
@@ -112,7 +112,7 @@ bool visitTransaction(CTransaction& trans, void* data) {
                 cout << ",";
             cout << "  ";
             indent();
-            trans.writeJson(cout);
+            trans.toJson(cout);
             unindent();
             opt->first = false;
         }

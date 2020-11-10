@@ -3,7 +3,7 @@ blockTest 3
 ------------------------------------------------------------------------------------------------------------------------
 Testing JSON export of a block
 ------------------------------------------------------------------------------------------------------------------------
-Using writeJson
+Using toJson
 ------------------------------------------------------------------------------------------------------------------------
 {
   "gasLimit": 5000,
@@ -27,9 +27,7 @@ Using operator<<
   "miner": "0x24339341f29d2aad7d3c591c0f9931e7d4bfed6e",
   "difficulty": 1010564536890,
   "price": 0.00000,
-  "finalized": false,
-  "timestamp": 1438521506,
-  "transactions": []
+  "timestamp": 1438521506
 }
 ------------------------------------------------------------------------------------------------------------------------
 Using Format
@@ -43,18 +41,43 @@ Using Format
   "miner": "0x24339341f29d2aad7d3c591c0f9931e7d4bfed6e",
   "difficulty": 1010564536890,
   "price": 0.00000,
-  "finalized": false,
-  "timestamp": 1438521506,
-  "transactions": []
+  "timestamp": 1438521506
 }
 ------------------------------------------------------------------------------------------------------------------------
 Using Format(fmt) - TODO(tjayrush): should report missing field, does not.
 ------------------------------------------------------------------------------------------------------------------------
-{  "gasLimit": 5000,  "gasUsed": 0,  "hash": "0xc3c2c9855c9f939d283666fcd2e3ed228b43cebcd4413af6cd09082230e1c775",  "blockNumber": 22000,  "parentHash": "0xdef41ed6a4120cfe32d55a0217a685989d1f5b99b5836e85c84f53a710ca4780",  "miner": "0x24339341f29d2aad7d3c591c0f9931e7d4bfed6e",  "difficulty": 1010564536890,  "price": 0.00000,  "finalized": false,  "timestamp": 1438521506,  "transactions": []}	22000	0xc3c2c9855c9f939d283666fcd2e3ed228b43cebcd4413af6cd09082230e1c775	0x24339341f29d2aad7d3c591c0f9931e7d4bfed6e	
+{
+  "gasLimit": 5000,
+  "gasUsed": 0,
+  "hash": "0xc3c2c9855c9f939d283666fcd2e3ed228b43cebcd4413af6cd09082230e1c775",
+  "blockNumber": 22000,
+  "parentHash": "0xdef41ed6a4120cfe32d55a0217a685989d1f5b99b5836e85c84f53a710ca4780",
+  "miner": "0x24339341f29d2aad7d3c591c0f9931e7d4bfed6e",
+  "difficulty": 1010564536890,
+  "price": 0.00000,
+  "timestamp": 1438521506
+}	22000	0xc3c2c9855c9f939d283666fcd2e3ed228b43cebcd4413af6cd09082230e1c775	0x24339341f29d2aad7d3c591c0f9931e7d4bfed6e	
 ------------------------------------------------------------------------------------------------------------------------
 Using Format(fmt) on a derived class QTransferFrom.
 ------------------------------------------------------------------------------------------------------------------------
-{  "_from": "0xTransferFromFrom",  "_to": "0xTransferFromTo",  "_value": 1001010100}	0xTransferFromFrom	0xTransferFromTo	1002	
+{
+  "_from": "0xTransferFromFrom",
+  "_to": "0xTransferFromTo",
+  "_value": 1001010100,
+  "hash": "0x0",
+  "blockHash": "0x0",
+  "blockNumber": 0,
+  "transactionIndex": 1002,
+  "nonce": 0,
+  "timestamp": 0,
+  "from": "0x0",
+  "to": "0x0",
+  "value": 0,
+  "gas": 0,
+  "gasPrice": 0,
+  "isError": 0,
+  "gasUsed": 0
+}	0xTransferFromFrom	0xTransferFromTo	1002	
 ------------------------------------------------------------------------------------------------------------------------
 Not registered, should error out
 ------------------------------------------------------------------------------------------------------------------------
@@ -65,4 +88,23 @@ TIME ~ CLOCK - <WARNG> : No fieldList in QFromTransferFrom. Did you register the
 ------------------------------------------------------------------------------------------------------------------------
 Using Format(fmt) on a derived class derived from QTransferFrom.
 ------------------------------------------------------------------------------------------------------------------------
-{  "whop": "John",  "werp": "Jim"}	0xFromTransferFromFrom	0xFromTransferFromTo	1212	
+{
+  "whop": "John",
+  "werp": "Jim",
+  "_from": "0xFromTransferFromFrom",
+  "_to": "0xFromTransferFromTo",
+  "_value": 121212121,
+  "hash": "0x0",
+  "blockHash": "0x0",
+  "blockNumber": 0,
+  "transactionIndex": 1212,
+  "nonce": 0,
+  "timestamp": 0,
+  "from": "0x0",
+  "to": "0x0",
+  "value": 0,
+  "gas": 0,
+  "gasPrice": 0,
+  "isError": 0,
+  "gasUsed": 0
+}	0xFromTransferFromFrom	0xFromTransferFromTo	1212	

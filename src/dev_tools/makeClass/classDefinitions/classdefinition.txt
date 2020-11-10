@@ -19,6 +19,5 @@ fields = string short_fn|\
         string eq_str|\
         string scope_str|\
         sbool serializable|\
-        sbool use_export|\
         CParameterArray fieldArray (nowrite)
 includes = etherlib.h

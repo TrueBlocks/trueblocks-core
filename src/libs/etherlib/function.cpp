@@ -378,7 +378,7 @@ void CFunction::registerClass(void) {
     ADD_FIELD(CFunction, "name", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CFunction, "type", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CFunction, "anonymous", T_BOOL | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CFunction, "constant", T_BOOL, ++fieldNum);
+    ADD_FIELD(CFunction, "constant", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CFunction, "stateMutability", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CFunction, "signature", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CFunction, "encoding", T_TEXT | TS_OMITEMPTY, ++fieldNum);
@@ -398,11 +398,11 @@ void CFunction::registerClass(void) {
     builtIns.push_back(_biCFunction);
 
     // EXISTING_CODE
-    ADD_FIELD(CFunction, "input_names", T_TEXT, ++fieldNum);
+    ADD_FIELD(CFunction, "input_names", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CFunction, "input_names");
-    ADD_FIELD(CFunction, "output_names", T_TEXT, ++fieldNum);
+    ADD_FIELD(CFunction, "output_names", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CFunction, "output_names");
-    ADD_FIELD(CFunction, "declaration", T_TEXT, ++fieldNum);
+    ADD_FIELD(CFunction, "declaration", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CFunction, "declaration");
     HIDE_FIELD(CFunction, "anonymous");
     // EXISTING_CODE
@@ -705,6 +705,11 @@ string_q CFunction::compressed(void) const {
     ret = trim(trim(ret, ' '), ',');
     ret += " )";
     return ret;
+}
+
+//-----------------------------------------------------------------------
+bool CFunction::isDefault(const CBaseNode* obj) const {
+    return operator==(*(const CFunction*)obj);
 }
 // EXISTING_CODE
 }  // namespace qblocks

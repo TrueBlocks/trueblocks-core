@@ -30,7 +30,6 @@ getBlock daofork --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -52,7 +51,6 @@ getBlock daofork --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -74,7 +72,6 @@ getBlock daofork --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -96,7 +93,6 @@ getBlock daofork --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000

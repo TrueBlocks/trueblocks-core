@@ -5,7 +5,6 @@ acctExport 0x001d14804b399c6ef80e64576f657660804fec0b --receipts --fmt json --ma
   "blockNumber": 0,
   "contractAddress": "0x0",
   "gasUsed": 0,
-  "logs": [],
   "status": null,
   "transactionIndex": 2
 }
@@ -13,7 +12,6 @@ acctExport 0x001d14804b399c6ef80e64576f657660804fec0b --receipts --fmt json --ma
   "blockNumber": 202249,
   "contractAddress": "0x0",
   "gasUsed": 21612,
-  "logs": [],
   "status": null,
   "transactionIndex": 0
 }
@@ -21,7 +19,6 @@ acctExport 0x001d14804b399c6ef80e64576f657660804fec0b --receipts --fmt json --ma
   "blockNumber": 1501459,
   "contractAddress": "0x0",
   "gasUsed": 21000,
-  "logs": [],
   "status": null,
   "transactionIndex": 2
 }

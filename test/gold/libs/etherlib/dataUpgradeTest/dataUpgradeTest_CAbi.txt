@@ -10,8 +10,7 @@ cname               	1004	1	16777266	T_TEXT TS_STRING
 address             	1005	0	20971575	T_ADDRESS TS_STRING TS_OMITEMPTY
 interfaces          	1006	0	205520971	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
 {
-  "address": "0x0",
-  "interfaces": []
+  "address": "0x0"
 }
 
 --------------------------------------------------------------------------------
@@ -40,7 +39,6 @@ interfaces          	1006	0	205520971	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OM
   "deleted": false,
   "showing": true,
   "cname": "Abi",
-  "address": "0x0",
-  "interfaces": []
+  "address": "0x0"
 }
 

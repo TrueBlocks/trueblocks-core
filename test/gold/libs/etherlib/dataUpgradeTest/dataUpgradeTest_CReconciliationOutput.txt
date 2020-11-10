@@ -34,8 +34,7 @@ reconciled          	1028	0	12582932	T_BOOL TS_NUMERAL TS_OMITEMPTY
 {
   "blockNumber": 0,
   "transactionIndex": 0,
-  "timestamp": 0,
-  "reconciled": false
+  "timestamp": 0
 }
 
 --------------------------------------------------------------------------------
@@ -110,7 +109,6 @@ reconciled          	1028	0	12582932	T_BOOL TS_NUMERAL TS_OMITEMPTY
   "cname": "ReconciliationOutput",
   "blockNumber": 0,
   "transactionIndex": 0,
-  "timestamp": 0,
-  "reconciled": false
+  "timestamp": 0
 }
 

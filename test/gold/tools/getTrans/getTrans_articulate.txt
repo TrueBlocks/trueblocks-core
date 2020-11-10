@@ -40,10 +40,6 @@ getTrans 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f8
           "to": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
           "value": 0
         },
-        "result": {
-          "newContract": "0x0",
-          "gasUsed": 0
-        },
         "articulatedTrace": {
           "name": "transferFrom",
           "stateMutability": "nonpayable",
@@ -265,6 +261,56 @@ getTrans 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f8
           ]
         },
         "compressedTrace": "split ( targetFork: 0x167a9333bf582556f35bd4d16a7e80e191aa6476, targetNoFork: 0x571b7b69829ce2568b9bc3d32eaf7405dab76b21 )"
+      },
+      {
+        "type": "call",
+        "action": {
+          "selfDestructed": "0x0",
+          "balance": 0,
+          "callType": "call",
+          "from": "0xebf2bf80c3ddb0b6ac2f88be8dceec7bf12dff22",
+          "gas": 50598,
+          "input": "0x16c72721",
+          "refundAddress": "0x0",
+          "to": "0x2bd2326c993dfaef84f696526064ff22eba5b362",
+          "value": 0
+        },
+        "result": {
+          "newContract": "0x0",
+          "gasUsed": 197,
+          "output": "0x0000000000000000000000000000000000000000000000000000000000000001"
+        },
+        "articulatedTrace": {
+          "name": "forked",
+          "stateMutability": "nonpayable",
+          "outputs": [
+            {
+              "name": "val_0",
+              "value": "true",
+              "internalType": "bool"
+            }
+          ]
+        },
+        "compressedTrace": "forked ( )"
+      },
+      {
+        "type": "call",
+        "action": {
+          "selfDestructed": "0x0",
+          "balance": 0,
+          "callType": "call",
+          "from": "0xebf2bf80c3ddb0b6ac2f88be8dceec7bf12dff22",
+          "gas": 2300,
+          "input": "0x",
+          "refundAddress": "0x0",
+          "to": "0x167a9333bf582556f35bd4d16a7e80e191aa6476",
+          "value": 4569662960000000000
+        },
+        "result": {
+          "newContract": "0x0",
+          "gasUsed": 0,
+          "output": "0x"
+        }
       }
     ],
     "articulatedTx": {

@@ -62,6 +62,7 @@ class CFunction : public CBaseNode {
     friend class CTrace;
     bool fromDefinition(const string_q& lineIn);
     string_q compressed(void) const;
+    bool isDefault(const CBaseNode* obj) const override;
     // EXISTING_CODE
     bool operator==(const CFunction& it) const;
     bool operator!=(const CFunction& it) const {
@@ -170,7 +171,7 @@ inline bool CFunction::operator==(const CFunction& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // Equality operator as defined in class definition
-    return encoding % it.encoding;
+    return encoding % it.encoding && message % it.message;
 }
 
 //-------------------------------------------------------------------------

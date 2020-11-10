@@ -208,7 +208,7 @@ bool COptions::handle_status(ostream& os) {
         status.caches.push_back(&prices);
     }
 
-    status.writeJson(os);
+    status.toJson(os);
 
     EXIT_NOMSG(true);
 }

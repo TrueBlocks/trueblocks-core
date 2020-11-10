@@ -97,7 +97,7 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
         } else if (fld.type == "double")         { setFmt = "`[{NAME}] = [{DEFF}];\n";   regType = "T_DOUBLE";
         } else if (startsWith(fld.type, "bytes")) { setFmt = "`[{NAME}] = [{DEFS}];\n";  regType = "T_TEXT | TS_OMITEMPTY";
         } else if (endsWith(fld.type, "_e"))     { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_NUMBER";
-        } else if ((fld.is_flags & IS_POINTER))  { setFmt = "`[{NAME}] = [{DEFP}];\n";   regType = "T_POINTER";
+        } else if ((fld.is_flags & IS_POINTER))  { setFmt = "`[{NAME}] = [{DEFP}];\n";   regType = "T_POINTER | TS_OMITEMPTY";
         } else if ((fld.is_flags & IS_OBJECT))   { setFmt = "`[{NAME}] = [{TYPE}]();\n"; regType = "T_OBJECT | TS_OMITEMPTY";
         } else                                   { setFmt = STR_UNKOWNTYPE;              regType = "T_TEXT | TS_OMITEMPTY"; }
         // clang-format on
@@ -112,8 +112,6 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
                 regType = "T_OBJECT | TS_ARRAY | TS_OMITEMPTY";
             }
         }
-        if (fld.show_empty)
-            replace(regType, " | TS_OMITEMPTY", "");
 
         if (fld.is_flags & IS_BUILTIN) {
             fieldGetStr += STR_GETSTR_CODE_FIELD;
@@ -158,7 +156,7 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
         replaceAll(fieldAddLine, "CL_NM", "[{CLASS_NAME}]");
         if ((fld.is_flags & IS_OBJECT) && !(fld.is_flags & IS_ARRAY) && !(fld.is_flags & IS_POINTER)) {
             replaceAll(fieldAddLine, "ADD_FIELD", "ADD_OBJECT");
-            replaceAll(fieldAddLine, "++fieldNum);\n", "++fieldNum, GETRUNTIME_CLASS([{CLASS_NAME}]));\n");
+            replaceAll(fieldAddLine, "++fieldNum);\n", "++fieldNum, GETRUNTIME_CLASS(" + fld.type + "));\n");
         }
 
         add_field_stream << fieldAddLine;
@@ -272,8 +270,6 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
     string_q srcSource = asciiFileToString(configPath("makeClass/blank.cpp"));
     replace(srcSource, "// clang-format off\n", "");
     replace(srcSource, "// clang-format on\n", "");
-    if (classDef.use_export)
-        replace(srcSource, "toJson(ctx);", "writeJson(ctx);");
     if ((startsWith(classDef.class_name, "CNew") || classDef.class_name == "CPriceQuote") &&
         !contains(getCWD(), "parse"))
         replace(srcSource, "version of the data\n", STR_UPGRADE_CODE);

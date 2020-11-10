@@ -83,7 +83,7 @@ bool processPair(uint64_t blockNum, void* data) {
             cout << "," << endl;
         cout << "  ";
         indent();
-        opt->curToken.writeJson(cout);
+        opt->curToken.toJson(cout);
         unindent();
         first = false;
     }

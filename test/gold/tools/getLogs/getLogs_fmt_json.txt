@@ -9,9 +9,7 @@ getLogs 2222222.0 2332332.0 --fmt json
       "0x000000000000000000000000db89587bb407b576134ff297d1848ea6d9066812",
       "0x0000000000000000000000007d19317cc81c3ef06039ae5514679f8b12fd28e2"
     ],
-    "data": "0x000000000000000000000000000000000000000000000000031d958f80134000",
-    "articulatedLog": {
-    }
+    "data": "0x000000000000000000000000000000000000000000000000031d958f80134000"
   }], "types": [
 { "type": "CLogEntry", "fields": [{ "name": "address", "type": "address" }, { "name": "logIndex", "type": "blocknum" }, { "name": "topics", "type": "object|ts_array" }, { "name": "data", "type": "text" }, { "name": "articulatedLog", "type": "object" }, { "name": "compressedLog", "type": "text" }] }
 ] }

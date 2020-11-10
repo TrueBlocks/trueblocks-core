@@ -30,7 +30,6 @@ getBlock 2222222 2332332 --fmt json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 1000000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 1000000
@@ -52,7 +51,6 @@ getBlock 2222222 2332332 --fmt json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -74,7 +72,6 @@ getBlock 2222222 2332332 --fmt json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -96,7 +93,6 @@ getBlock 2222222 2332332 --fmt json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -118,7 +114,6 @@ getBlock 2222222 2332332 --fmt json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -140,7 +135,6 @@ getBlock 2222222 2332332 --fmt json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -162,7 +156,6 @@ getBlock 2222222 2332332 --fmt json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -184,7 +177,6 @@ getBlock 2222222 2332332 --fmt json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -206,7 +198,6 @@ getBlock 2222222 2332332 --fmt json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -228,7 +219,6 @@ getBlock 2222222 2332332 --fmt json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -250,7 +240,6 @@ getBlock 2222222 2332332 --fmt json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 24055,
-        "logs": [],
         "status": null
       },
       "gasUsed": 24055
@@ -272,7 +261,6 @@ getBlock 2222222 2332332 --fmt json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -294,7 +282,6 @@ getBlock 2222222 2332332 --fmt json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 24119,
-        "logs": [],
         "status": null
       },
       "gasUsed": 24119
@@ -316,7 +303,6 @@ getBlock 2222222 2332332 --fmt json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 24119,
-        "logs": [],
         "status": null
       },
       "gasUsed": 24119
@@ -338,7 +324,6 @@ getBlock 2222222 2332332 --fmt json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 24119,
-        "logs": [],
         "status": null
       },
       "gasUsed": 24119
@@ -383,8 +368,7 @@ getBlock 2222222 2332332 --fmt json
               "0x000000000000000000000000db89587bb407b576134ff297d1848ea6d9066812",
               "0x0000000000000000000000007d19317cc81c3ef06039ae5514679f8b12fd28e2"
             ],
-            "data": "0x000000000000000000000000000000000000000000000000031d958f80134000",
-            "articulatedLog": {}
+            "data": "0x000000000000000000000000000000000000000000000000031d958f80134000"
           }
         ],
         "status": null
@@ -408,7 +392,6 @@ getBlock 2222222 2332332 --fmt json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -430,7 +413,6 @@ getBlock 2222222 2332332 --fmt json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 56561,
-        "logs": [],
         "status": null
       },
       "gasUsed": 56561
@@ -452,7 +434,6 @@ getBlock 2222222 2332332 --fmt json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -474,7 +455,6 @@ getBlock 2222222 2332332 --fmt json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 31561,
-        "logs": [],
         "status": null
       },
       "gasUsed": 31561
@@ -503,8 +483,7 @@ getBlock 2222222 2332332 --fmt json
             "topics": [
               "0x23919512b2162ddc59b67a65e3b03c419d4105366f7d4a632f5d3c3bee9b1cff"
             ],
-            "data": "0x00000000000000000000000032be343b94f860124dc4fee278fdcbd38c102d88",
-            "articulatedLog": {}
+            "data": "0x00000000000000000000000032be343b94f860124dc4fee278fdcbd38c102d88"
           }
         ],
         "status": null
@@ -535,8 +514,7 @@ getBlock 2222222 2332332 --fmt json
             "topics": [
               "0x23919512b2162ddc59b67a65e3b03c419d4105366f7d4a632f5d3c3bee9b1cff"
             ],
-            "data": "0x00000000000000000000000032be343b94f860124dc4fee278fdcbd38c102d88",
-            "articulatedLog": {}
+            "data": "0x00000000000000000000000032be343b94f860124dc4fee278fdcbd38c102d88"
           }
         ],
         "status": null
@@ -567,8 +545,7 @@ getBlock 2222222 2332332 --fmt json
             "topics": [
               "0x23919512b2162ddc59b67a65e3b03c419d4105366f7d4a632f5d3c3bee9b1cff"
             ],
-            "data": "0x00000000000000000000000032be343b94f860124dc4fee278fdcbd38c102d88",
-            "articulatedLog": {}
+            "data": "0x00000000000000000000000032be343b94f860124dc4fee278fdcbd38c102d88"
           }
         ],
         "status": null
@@ -599,8 +576,7 @@ getBlock 2222222 2332332 --fmt json
             "topics": [
               "0x23919512b2162ddc59b67a65e3b03c419d4105366f7d4a632f5d3c3bee9b1cff"
             ],
-            "data": "0x00000000000000000000000032be343b94f860124dc4fee278fdcbd38c102d88",
-            "articulatedLog": {}
+            "data": "0x00000000000000000000000032be343b94f860124dc4fee278fdcbd38c102d88"
           }
         ],
         "status": null
@@ -631,8 +607,7 @@ getBlock 2222222 2332332 --fmt json
             "topics": [
               "0x23919512b2162ddc59b67a65e3b03c419d4105366f7d4a632f5d3c3bee9b1cff"
             ],
-            "data": "0x00000000000000000000000032be343b94f860124dc4fee278fdcbd38c102d88",
-            "articulatedLog": {}
+            "data": "0x00000000000000000000000032be343b94f860124dc4fee278fdcbd38c102d88"
           }
         ],
         "status": null
@@ -663,8 +638,7 @@ getBlock 2222222 2332332 --fmt json
             "topics": [
               "0x23919512b2162ddc59b67a65e3b03c419d4105366f7d4a632f5d3c3bee9b1cff"
             ],
-            "data": "0x00000000000000000000000032be343b94f860124dc4fee278fdcbd38c102d88",
-            "articulatedLog": {}
+            "data": "0x00000000000000000000000032be343b94f860124dc4fee278fdcbd38c102d88"
           }
         ],
         "status": null
@@ -688,7 +662,6 @@ getBlock 2222222 2332332 --fmt json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -710,7 +683,6 @@ getBlock 2222222 2332332 --fmt json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000

@@ -20,10 +20,6 @@ getTrace 2222222.0 2332332.0 --fmt api
       "refundAddress": "0x0",
       "to": "0x37a9679c41e99db270bda88de8ff50c0cd23f326",
       "value": 0
-    },
-    "result": {
-      "newContract": "0x0",
-      "gasUsed": 0
     }
   },  {
     "blockHash": "0x6881c5043f6f6beed5ca31023e3a3518bede50a13be5c521fa6e21577314fa04",

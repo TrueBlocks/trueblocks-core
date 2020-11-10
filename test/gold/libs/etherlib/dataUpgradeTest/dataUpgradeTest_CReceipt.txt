@@ -22,7 +22,6 @@ transactionIndex    	1016	1	1082130460	T_BLOCKNUM TS_NUMERAL TS_INTEGER
 {
   "contractAddress": "0x0",
   "gasUsed": 0,
-  "logs": [],
   "status": null
 }
 
@@ -72,10 +71,11 @@ transactionIndex    	1016	0	1082130460	T_BLOCKNUM TS_NUMERAL TS_INTEGER
   "deleted": false,
   "showing": true,
   "cname": "Receipt",
+  "blockNumber": 0,
   "contractAddress": "0x0",
   "cumulativeGasUsed": 0,
   "gasUsed": 0,
-  "logs": [],
-  "status": null
+  "status": null,
+  "transactionIndex": 0
 }
 

@@ -79,7 +79,7 @@ bool visitTransaction(CTransaction& trans, void* data) {
                 cout << ",";
             cout << "  ";
             indent();
-            log.writeJson(cout);
+            log.toJson(cout);
             unindent();
             opt->first = false;
         }

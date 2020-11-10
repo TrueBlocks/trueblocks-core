@@ -16,14 +16,10 @@ fm_mode             	1010	1	8388633	T_NUMBER TS_NUMERAL
 curEther            	1011	1	545259565	T_ETHER TS_NUMERAL TS_BIGNUM
 curDollars          	1012	1	545259565	T_ETHER TS_NUMERAL TS_BIGNUM
 {
-  "abi_spec": {},
-  "summaryStatement": {},
-  "stateHistory": [],
   "curBalance": 0,
   "enabled": true,
   "address": "0x0",
-  "is_custom": false,
-  "is_prefund": false
+  "decimals": 0
 }
 
 --------------------------------------------------------------------------------
@@ -43,8 +39,7 @@ curEther            	1011	1	545259565	T_ETHER TS_NUMERAL TS_BIGNUM
 curDollars          	1012	1	545259565	T_ETHER TS_NUMERAL TS_BIGNUM
 {
   "address": "0x0",
-  "is_custom": false,
-  "is_prefund": false
+  "decimals": 0
 }
 
 --------------------------------------------------------------------------------
@@ -67,16 +62,12 @@ curDollars          	1012	0	545259565	T_ETHER TS_NUMERAL TS_BIGNUM
   "deleted": false,
   "showing": true,
   "cname": "Monitor",
-  "abi_spec": {},
-  "summaryStatement": {},
-  "stateHistory": [],
   "curBalance": 0,
   "enabled": true,
   "fm_mode": 0,
   "curEther": "0.000000000000000000",
   "curDollars": not-implemented,
   "address": "0x0",
-  "is_custom": false,
-  "is_prefund": false
+  "decimals": 0
 }
 

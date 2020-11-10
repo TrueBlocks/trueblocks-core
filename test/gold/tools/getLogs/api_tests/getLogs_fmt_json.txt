@@ -9,12 +9,6 @@
         "0x0000000000000000000000007d19317cc81c3ef06039ae5514679f8b12fd28e2"
       ],
       "data": "0x000000000000000000000000000000000000000000000000031d958f80134000",
-      "articulatedLog": {
-        "name": "",
-        "stateMutability": "",
-        "inputs": [],
-        "outputs": []
-      },
       "compressedLog": "",
       "type": ""
     }

@@ -326,7 +326,7 @@ void CLogEntry::registerClass(void) {
     ADD_FIELD(CLogEntry, "logIndex", T_BLOCKNUM, ++fieldNum);
     ADD_FIELD(CLogEntry, "topics", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CLogEntry, "data", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_OBJECT(CLogEntry, "articulatedLog", T_OBJECT | TS_OMITEMPTY, ++fieldNum, GETRUNTIME_CLASS(CLogEntry));
+    ADD_OBJECT(CLogEntry, "articulatedLog", T_OBJECT | TS_OMITEMPTY, ++fieldNum, GETRUNTIME_CLASS(CFunction));
     ADD_FIELD(CLogEntry, "compressedLog", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CLogEntry, "compressedLog");
     ADD_FIELD(CLogEntry, "transactionHash", T_HASH | TS_OMITEMPTY, ++fieldNum);
@@ -349,10 +349,10 @@ void CLogEntry::registerClass(void) {
     builtIns.push_back(_biCLogEntry);
 
     // EXISTING_CODE
-    ADD_FIELD(CLogEntry, "topic0", T_HASH, ++fieldNum);
-    ADD_FIELD(CLogEntry, "topic1", T_HASH, ++fieldNum);
-    ADD_FIELD(CLogEntry, "topic2", T_HASH, ++fieldNum);
-    ADD_FIELD(CLogEntry, "topic3", T_HASH, ++fieldNum);
+    ADD_FIELD(CLogEntry, "topic0", T_HASH | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CLogEntry, "topic1", T_HASH | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CLogEntry, "topic2", T_HASH | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CLogEntry, "topic3", T_HASH | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CLogEntry, "topic0");
     HIDE_FIELD(CLogEntry, "topic1");
     HIDE_FIELD(CLogEntry, "topic2");

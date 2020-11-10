@@ -14,43 +14,35 @@ makeClass --dump -a -i CStatus --verbose
   "fieldArray": [
     {
       "type": "string",
-      "name": "client_version",
-      "components": []
+      "name": "client_version"
     },
     {
       "type": "string",
-      "name": "trueblocks_version",
-      "components": []
+      "name": "trueblocks_version"
     },
     {
       "type": "string",
-      "name": "rpc_provider",
-      "components": []
+      "name": "rpc_provider"
     },
     {
       "type": "string",
-      "name": "api_provider",
-      "components": []
+      "name": "api_provider"
     },
     {
       "type": "string",
-      "name": "balance_provider",
-      "components": []
+      "name": "balance_provider"
     },
     {
       "type": "string",
-      "name": "host",
-      "components": []
+      "name": "host"
     },
     {
       "type": "sbool",
-      "name": "is_scraping",
-      "components": []
+      "name": "is_scraping"
     },
     {
       "type": "CCachePtrArray",
       "name": "caches",
-      "components": [],
       "is_pointer": true,
       "is_array": true,
       "is_object": true

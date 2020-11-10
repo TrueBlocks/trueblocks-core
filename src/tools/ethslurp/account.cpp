@@ -243,7 +243,7 @@ void CAccount::registerClass(void) {
     ADD_FIELD(CAccount, "cname", T_TEXT, ++fieldNum);
     ADD_FIELD(CAccount, "addr", T_ADDRESS | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CAccount, "latestPage", T_UNUMBER, ++fieldNum);
-    ADD_OBJECT(CAccount, "latestTx", T_OBJECT | TS_OMITEMPTY, ++fieldNum, GETRUNTIME_CLASS(CAccount));
+    ADD_OBJECT(CAccount, "latestTx", T_OBJECT | TS_OMITEMPTY, ++fieldNum, GETRUNTIME_CLASS(CTransaction));
     ADD_FIELD(CAccount, "transactions", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like

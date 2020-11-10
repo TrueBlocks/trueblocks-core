@@ -94,7 +94,7 @@ bool COptions::handle_tables(void) {
                     cout << "," << endl;
                 cout << "  ";
                 indent();
-                table.writeJson(cout);
+                table.toJson(cout);
                 unindent();
                 first = false;
             }
@@ -140,7 +140,7 @@ bool COptions::handle_dump(void) {
                     cout << "," << endl;
                 cout << "  ";
                 indent();
-                record.writeJson(cout);
+                record.toJson(cout);
                 unindent();
                 first = false;
             }

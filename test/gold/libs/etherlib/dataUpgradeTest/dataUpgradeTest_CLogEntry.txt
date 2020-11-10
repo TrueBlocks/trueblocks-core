@@ -20,15 +20,13 @@ transactionIndex    	1014	1	1082130460	T_BLOCKNUM TS_NUMERAL TS_INTEGER
 transactionLogIndex 	1015	1	1082130460	T_BLOCKNUM TS_NUMERAL TS_INTEGER
 type                	1016	1	20971570	T_TEXT TS_STRING TS_OMITEMPTY
 removed             	1017	1	12582932	T_BOOL TS_NUMERAL TS_OMITEMPTY
-topic0              	1018	1	16777276	T_HASH TS_STRING
-topic1              	1019	1	16777276	T_HASH TS_STRING
-topic2              	1020	1	16777276	T_HASH TS_STRING
-topic3              	1021	1	16777276	T_HASH TS_STRING
+topic0              	1018	1	20971580	T_HASH TS_STRING TS_OMITEMPTY
+topic1              	1019	1	20971580	T_HASH TS_STRING TS_OMITEMPTY
+topic2              	1020	1	20971580	T_HASH TS_STRING TS_OMITEMPTY
+topic3              	1021	1	20971580	T_HASH TS_STRING TS_OMITEMPTY
 {
   "address": "0x0",
-  "logIndex": 0,
-  "topics": [],
-  "articulatedLog": {}
+  "logIndex": 0
 }
 
 --------------------------------------------------------------------------------
@@ -51,10 +49,10 @@ transactionIndex    	1014	1	1082130460	T_BLOCKNUM TS_NUMERAL TS_INTEGER
 transactionLogIndex 	1015	1	1082130460	T_BLOCKNUM TS_NUMERAL TS_INTEGER
 type                	1016	1	20971570	T_TEXT TS_STRING TS_OMITEMPTY
 removed             	1017	1	12582932	T_BOOL TS_NUMERAL TS_OMITEMPTY
-topic0              	1018	1	16777276	T_HASH TS_STRING
-topic1              	1019	1	16777276	T_HASH TS_STRING
-topic2              	1020	1	16777276	T_HASH TS_STRING
-topic3              	1021	1	16777276	T_HASH TS_STRING
+topic0              	1018	1	20971580	T_HASH TS_STRING TS_OMITEMPTY
+topic1              	1019	1	20971580	T_HASH TS_STRING TS_OMITEMPTY
+topic2              	1020	1	20971580	T_HASH TS_STRING TS_OMITEMPTY
+topic3              	1021	1	20971580	T_HASH TS_STRING TS_OMITEMPTY
 {
 }
 
@@ -78,19 +76,19 @@ transactionIndex    	1014	0	1082130460	T_BLOCKNUM TS_NUMERAL TS_INTEGER
 transactionLogIndex 	1015	0	1082130460	T_BLOCKNUM TS_NUMERAL TS_INTEGER
 type                	1016	0	20971570	T_TEXT TS_STRING TS_OMITEMPTY
 removed             	1017	0	12582932	T_BOOL TS_NUMERAL TS_OMITEMPTY
-topic0              	1018	0	16777276	T_HASH TS_STRING
-topic1              	1019	0	16777276	T_HASH TS_STRING
-topic2              	1020	0	16777276	T_HASH TS_STRING
-topic3              	1021	0	16777276	T_HASH TS_STRING
+topic0              	1018	0	20971580	T_HASH TS_STRING TS_OMITEMPTY
+topic1              	1019	0	20971580	T_HASH TS_STRING TS_OMITEMPTY
+topic2              	1020	0	20971580	T_HASH TS_STRING TS_OMITEMPTY
+topic3              	1021	0	20971580	T_HASH TS_STRING TS_OMITEMPTY
 {
   "schema": 8003,
   "deleted": false,
   "showing": true,
   "cname": "LogEntry",
   "address": "0x0",
+  "blockNumber": 0,
   "logIndex": 0,
-  "topics": [],
-  "articulatedLog": {},
+  "transactionIndex": 0,
   "transactionLogIndex": 0
 }
 

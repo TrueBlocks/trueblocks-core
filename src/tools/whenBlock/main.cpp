@@ -60,7 +60,7 @@ bool visitBlock(CBlock& block, void* data) {
             cout << "," << endl;
         cout << "  ";
         indent();
-        block.writeJson(cout);
+        block.toJson(cout);
         unindent();
     }
     opt->first = false;

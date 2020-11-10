@@ -207,8 +207,8 @@ void CLmdbRecord::registerClass(void) {
     ADD_FIELD(CLmdbRecord, "deleted", T_BOOL, ++fieldNum);
     ADD_FIELD(CLmdbRecord, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CLmdbRecord, "cname", T_TEXT, ++fieldNum);
-    ADD_OBJECT(CLmdbRecord, "key", T_OBJECT | TS_OMITEMPTY, ++fieldNum, GETRUNTIME_CLASS(CLmdbRecord));
-    ADD_OBJECT(CLmdbRecord, "value", T_OBJECT | TS_OMITEMPTY, ++fieldNum, GETRUNTIME_CLASS(CLmdbRecord));
+    ADD_OBJECT(CLmdbRecord, "key", T_OBJECT | TS_OMITEMPTY, ++fieldNum, GETRUNTIME_CLASS(CLmdbVal));
+    ADD_OBJECT(CLmdbRecord, "value", T_OBJECT | TS_OMITEMPTY, ++fieldNum, GETRUNTIME_CLASS(CLmdbVal));
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CLmdbRecord, "schema");

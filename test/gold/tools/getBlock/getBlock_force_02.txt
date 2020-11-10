@@ -30,7 +30,6 @@ getBlock 2769609 2799895 2872831 3076260 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -52,7 +51,6 @@ getBlock 2769609 2799895 2872831 3076260 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -83,8 +81,7 @@ getBlock 2769609 2799895 2872831 3076260 --force
               "0x0000000000000000000000009e0b9ddba97dd4f7addab0b5f67036eebe687606",
               "0x000000000000000000000000b6907884085f2e1710b95c15c8da4552fd517222"
             ],
-            "data": "0x00000000000000000000000000000000000000000000000003d9e0c79d2bc000",
-            "articulatedLog": {}
+            "data": "0x00000000000000000000000000000000000000000000000003d9e0c79d2bc000"
           }
         ],
         "status": null
@@ -108,7 +105,6 @@ getBlock 2769609 2799895 2872831 3076260 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -130,7 +126,6 @@ getBlock 2769609 2799895 2872831 3076260 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -152,7 +147,6 @@ getBlock 2769609 2799895 2872831 3076260 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -183,8 +177,7 @@ getBlock 2769609 2799895 2872831 3076260 --force
               "0x0000000000000000000000001e9939daaad6924ad004c2560e90804164900341",
               "0x0000000000000000000000000000000000000000000000000000000000000058"
             ],
-            "data": "0x0000000000000000000000000000000000000000000000000deac214732f9558",
-            "articulatedLog": {}
+            "data": "0x0000000000000000000000000000000000000000000000000deac214732f9558"
           }
         ],
         "status": null
@@ -203,8 +196,7 @@ getBlock 2769609 2799895 2872831 3076260 --force
   "difficulty": 81881924985250,
   "price": 0.00000,
   "finalized": true,
-  "timestamp": 1481621074,
-  "transactions": []
+  "timestamp": 1481621074
 },
 {
   "gasLimit": 4011803,
@@ -216,8 +208,7 @@ getBlock 2769609 2799895 2872831 3076260 --force
   "difficulty": 77217903307043,
   "price": 0.00000,
   "finalized": true,
-  "timestamp": 1482663926,
-  "transactions": []
+  "timestamp": 1482663926
 },
 {
   "gasLimit": 3996806,
@@ -229,8 +220,7 @@ getBlock 2769609 2799895 2872831 3076260 --force
   "difficulty": 112182607379608,
   "price": 0.00000,
   "finalized": true,
-  "timestamp": 1485564456,
-  "transactions": []
+  "timestamp": 1485564456
 }], "types": [
 { "type": "CBlock", "fields": [{ "name": "gasLimit", "type": "gas" }, { "name": "gasUsed", "type": "gas" }, { "name": "hash", "type": "hash" }, { "name": "blockNumber", "type": "blocknum" }, { "name": "parentHash", "type": "hash" }, { "name": "miner", "type": "address" }, { "name": "difficulty", "type": "unumber" }, { "name": "price", "type": "double" }, { "name": "finalized", "type": "bool" }, { "name": "timestamp", "type": "timestamp" }, { "name": "transactions", "type": "object|ts_array" }] }
 ] }

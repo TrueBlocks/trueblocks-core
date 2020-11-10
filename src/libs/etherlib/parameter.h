@@ -58,7 +58,6 @@ class CParameter : public CBaseNode {
     string_q internalType;
     CParameterArray components;
     bool no_write;
-    bool show_empty;
     uint64_t is_flags;
 
   public:
@@ -144,7 +143,6 @@ inline void CParameter::initialize(void) {
     internalType = "";
     components.clear();
     no_write = false;
-    show_empty = false;
     is_flags = IS_ENABLED;
 
     // EXISTING_CODE
@@ -164,7 +162,6 @@ inline void CParameter::duplicate(const CParameter& pa) {
     internalType = pa.internalType;
     components = pa.components;
     no_write = pa.no_write;
-    show_empty = pa.show_empty;
     is_flags = pa.is_flags;
 
     // EXISTING_CODE

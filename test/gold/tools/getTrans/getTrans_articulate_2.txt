@@ -357,6 +357,60 @@ getTrans 3648669.24 --articulate --verbose --trace --fmt json
           ]
         },
         "compressedTrace": "owner ( node: 0x93cdeb708b7545dc668eb9280176169d1c33cfd8ed6f04690a0bcc88a93fc4ae )"
+      },
+      {
+        "type": "call",
+        "action": {
+          "selfDestructed": "0x0",
+          "balance": 0,
+          "callType": "call",
+          "from": "0x6090a6e47849629b7245dfa1ca21d94cd15878ef",
+          "gas": 782021,
+          "input": "0x02571be393cdeb708b7545dc668eb9280176169d1c33cfd8ed6f04690a0bcc88a93fc4ae",
+          "refundAddress": "0x0",
+          "to": "0x314159265dd8dbb310642f98f50c066173c1259b",
+          "value": 0
+        },
+        "result": {
+          "newContract": "0x0",
+          "gasUsed": 432,
+          "output": "0x0000000000000000000000006090a6e47849629b7245dfa1ca21d94cd15878ef"
+        },
+        "articulatedTrace": {
+          "name": "owner",
+          "stateMutability": "nonpayable",
+          "inputs": [
+            {
+              "name": "node",
+              "value": "0x93cdeb708b7545dc668eb9280176169d1c33cfd8ed6f04690a0bcc88a93fc4ae",
+              "internalType": "bytes32"
+            }
+          ],
+          "outputs": [
+            {
+              "name": "val_0",
+              "value": "0x6090a6e47849629b7245dfa1ca21d94cd15878ef",
+              "internalType": "address"
+            }
+          ]
+        },
+        "compressedTrace": "owner ( node: 0x93cdeb708b7545dc668eb9280176169d1c33cfd8ed6f04690a0bcc88a93fc4ae )"
+      },
+      {
+        "type": "create",
+        "action": {
+          "selfDestructed": "0x0",
+          "balance": 0,
+          "from": "0x6090a6e47849629b7245dfa1ca21d94cd15878ef",
+          "gas": 716881,
+          "refundAddress": "0x0",
+          "to": "0x0",
+          "value": 10000000000000000
+        },
+        "result": {
+          "newContract": "0x9b810944879c013244192f0f94df08d324f7c994",
+          "gasUsed": 339168
+        }
       }
     ],
     "articulatedTx": {

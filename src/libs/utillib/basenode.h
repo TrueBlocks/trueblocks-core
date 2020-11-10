@@ -43,13 +43,15 @@ class CBaseNode {
     virtual bool parseCSV(const CStringArray& fields, string_q& str);
     virtual bool parseText(const CStringArray& fields, string_q& str);
     virtual void toJson(ostream& os) const;
-    virtual void toJsonFromFields(ostream& os, const CFieldDataArray& array) const;
     virtual bool getVisibleFields(CFieldDataArray& visibleFields) const;
 
   public:
     // TODO(tjayrush): global data
     static CRuntimeClass classCBaseNode;
     static CBaseNode* createObject(void);
+    virtual bool isDefault(const CBaseNode* test) const {
+        return false;
+    };
     virtual CRuntimeClass* getRuntimeClass(void) const;
     virtual string_q getValueByName(const string_q& fieldName) const;
     virtual bool setValueByName(const string_q& fieldName, const string_q& fieldValue);
@@ -69,7 +71,6 @@ class CBaseNode {
     virtual const string_q getStringAt(const string_q& fieldName, size_t i) const {
         return "";
     }
-    void writeJson(ostream& os) const;
 
   protected:
     void initialize(void);

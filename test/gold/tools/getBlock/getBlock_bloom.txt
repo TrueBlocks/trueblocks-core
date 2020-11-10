@@ -30,7 +30,6 @@ getBlock 4000001
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -52,7 +51,6 @@ getBlock 4000001
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -74,7 +72,6 @@ getBlock 4000001
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -96,7 +93,6 @@ getBlock 4000001
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -118,7 +114,6 @@ getBlock 4000001
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -140,7 +135,6 @@ getBlock 4000001
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -162,7 +156,6 @@ getBlock 4000001
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -184,7 +177,6 @@ getBlock 4000001
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -206,7 +198,6 @@ getBlock 4000001
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -228,7 +219,6 @@ getBlock 4000001
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -259,8 +249,7 @@ getBlock 4000001
               "0x000000000000000000000000ea674fdde714fd979de3edf0f56aa9716b898ec8",
               "0x0000000000000000000000000000000000000000000000000000000000000058"
             ],
-            "data": "0x00000000000000000000000000000000000000000000000000b7c59b8fd3edff",
-            "articulatedLog": {}
+            "data": "0x00000000000000000000000000000000000000000000000000b7c59b8fd3edff"
           }
         ],
         "status": null
@@ -284,7 +273,6 @@ getBlock 4000001
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -306,7 +294,6 @@ getBlock 4000001
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -328,7 +315,6 @@ getBlock 4000001
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -350,7 +336,6 @@ getBlock 4000001
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -372,7 +357,6 @@ getBlock 4000001
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000

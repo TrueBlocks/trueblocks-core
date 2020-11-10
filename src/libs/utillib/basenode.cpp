@@ -458,96 +458,46 @@ inline string_q doKey(const string_q& key) {
 }
 
 //--------------------------------------------------------------------------------
-void CBaseNode::toJson(ostream& os) const {
-    CRuntimeClass* pClass = getRuntimeClass();
-    if (!pClass)
-        return;
-
-    CFieldDataArray fields;
-
-    // Pick up the fields from this class
-    for (auto field : pClass->fieldList)
-        fields.push_back(field);
-
-    // Pick up the fields from parents classes (if any)
-    CRuntimeClass* pParent = pClass->m_BaseClass;
-    while (pParent != GETRUNTIME_CLASS(CBaseNode)) {
-        for (auto pField : pParent->fieldList)
-            fields.push_back(pField);
-        pParent = pParent->m_BaseClass;
+bool isEmptyObj(const string_q& str) {
+    bool startToken = false;
+    bool endToken = false;
+    char* s = (char*)str.c_str();
+    while (*s) {
+        switch (*s) {
+            case '{':
+                startToken = true;
+                break;
+            case '}':
+                endToken = true;
+                break;
+            default:
+                if (!isWhiteSpace(*s))
+                    return false;
+        }
+        s++;
     }
-
-    if (fields.size() == 0) {
-        LOG_WARN("No fieldList in ", pClass->m_ClassName, ". Did you register the class?");
-        return;
-    }
-
-    os << "{";
-    toJsonFromFields(os, fields);
-    os << (expContext().endingCommas ? "," : "") << endl << indentStr() << "}";
+    return startToken && endToken;
 }
 
 //--------------------------------------------------------------------------------
-void CBaseNode::toJsonFromFields(ostream& os, const CFieldDataArray& fields) const {
-    bool first = true;
-    for (auto field : fields) {
-        indent();  // order matters
-        string_q val = getValueByName(field.m_fieldName);
-        bool isTuple = contains(val, "--tuple--");
+CBaseNode* getDefaultObject(const CFieldData& field) {
+    // A map of default object types that persists between calls
+    static map<string_q, CBaseNode*> defObjects;
+    const CRuntimeClass* pClass = field.getObjType();
+    CBaseNode* defObject = NULL;
+    if (pClass) {
+        if (defObjects[pClass->m_ClassName]) {
+            // if we already have an object of this type, use it
+            defObject = defObjects[pClass->m_ClassName];
 
-        if (!field.isHidden() && (isApiMode() || !val.empty() || field.isArray())) {
-            if (!first)
-                os << ",";
-            os << endl;
-            first = false;
-
-            // the key...
-            os << indentStr() << doKey(field.m_fieldName);
-
-            // the value...
-            if (isTuple) {
-                replaceReverse(val, "--tuple--", "");
-                val = trim(val, '\"');
-                os << val;
-
-            } else if (field.isArray()) {
-                indent();
-                val = getValueByName(field.m_fieldName);
-                if (val.empty()) {
-                    os << "[]";
-                    unindent();
-                } else {
-                    val = substitute(val, "\n{", "\n" + indentStr() + "{");
-                    os << "[\n" << indentStr() << val << (expContext().endingCommas ? "," : "");
-                    unindent();
-                    os << indentStr() << "]";
-                }
-
-            } else if (field.isObject() || val == "null") {
-                os << val;
-
-            } else if (field.m_fieldType == T_BLOOM) {
-                os << "\"" << val << "\"";
-
-            } else if (field.m_fieldType & TS_NUMERAL) {
-                bool quote = expContext().quoteNums;
-                if (isApiMode() && val.empty())
-                    quote = true;
-                if (quote)
-                    os << "\"";
-                os << (expContext().hexNums && ((isNumeral(val) || isHexStr(val)) && !contains(val, "."))
-                           ? str_2_Hex(val)
-                           : val);
-                if (quote)
-                    os << "\"";
-
-            } else {
-                os << "\"" << val << "\"";
-            }
+        } else {
+            // Create a default object of this type - do this only once
+            // It's stored statically so will be cleaned up on exit
+            defObject = createObjectOfType(pClass->m_ClassName);
+            defObjects[pClass->m_ClassName] = defObject;  // store it for next time
         }
-        unindent();
     }
-    return;
+    return defObject;
 }
 
 //--------------------------------------------------------------------------------
@@ -565,52 +515,58 @@ bool CBaseNode::getVisibleFields(CFieldDataArray& visibleFields) const {
     while (pClass != GETRUNTIME_CLASS(CBaseNode)) {
         for (auto field : pClass->fieldList) {
             bool hidden = field.isHidden();
-            bool one = field.m_fieldType & TS_OMITEMPTY;
-            bool two = !isApiMode();
-            bool three = !hidden;
-            if (one && two && three) {
+            if (field.m_fieldType & TS_OMITEMPTY && !hidden) {
                 if (field.isArray()) {
-                    // avoid generating the value for arrays
-                    hidden = str_2_Uint(getValueByName(field.getName() + "Cnt")) == 0;
+                    // we want to produce the array even if it's empty in api mode
+                    if (!isApiMode()) {
+                        // avoid generating the value for empty arrays
+                        hidden = str_2_Uint(getValueByName(field.getName() + "Cnt")) == 0;
+                    }
+
                 } else {
-                    string_q val = getValueByName(field.getName());
-                    if (field.m_fieldType & T_BOOL && val == "false")
-                        hidden = true;
-                    else if (field.m_fieldType & T_TEXT && val.empty())
-                        hidden = true;
-                    else if (field.m_fieldType & T_OBJECT) {
-                        string_q defValue;
-                        static bool locked = false;
-                        if (!locked) {
-                            const CRuntimeClass* objClass = field.getObjType();
-                            if (objClass) {  // do we have an object?
-                                CBaseNode* defObject = NULL;
-                                static map<string_q, CBaseNode*> defObjects;
-                                if (defObjects[objClass->m_ClassName]) {  // have we already created the default object
-                                                                          // of this type?
-                                    defObject = defObjects[objClass->m_ClassName];
-                                } else {  // we need to create the default object of this type - do this only once
-                                    defObject = createObjectOfType(
-                                        objClass->m_ClassName);  // this drops memory, but it's stored statically so
-                                                                 // will be cleaned up on exit
-                                    defObjects[objClass->m_ClassName] = defObject;  // store it for next time
-                                }
-                                if (defObject) {
-                                    ostringstream defOs;
-                                    locked = true;
-                                    defObject->writeJson(defOs);
-                                    locked = false;
-                                    defValue = defOs.str();
-                                }
+                    CBaseNode* defObject = getDefaultObject(field);
+                    if (isApiMode()) {
+                        // only hidden fields matter when prodcuing API returns (faster too)
+                        if (defObject) {
+                            const CBaseNode* fieldObj = getObjectAt(field.getName(), NOPOS);
+                            if (fieldObj) {
+                                hidden = fieldObj->isDefault(defObject);
                             }
                         }
-                        hidden = val == defValue;
+
+                    } else {
+                        string_q val = getValueByName(field.getName());
+                        if (field.m_fieldType & T_BOOL && val == "false")
+                            hidden = true;
+                        else if (field.m_fieldType & T_TEXT && val.empty())
+                            hidden = true;
+                        else if (field.m_fieldType & T_POINTER && (val.empty() || val % "null"))
+                            hidden = true;
+                        else if (field.m_fieldType & T_OBJECT) {
+                            if (isEmptyObj(val) || val.empty()) {
+                                hidden = true;
+                            } else {
+                                string_q defValue;
+                                if (defObject) {
+                                    static bool locked = false;
+                                    if (!locked) {
+                                        ostringstream defOs;
+                                        locked = true;
+                                        defObject->toJson(defOs);
+                                        locked = false;
+                                        defValue = defOs.str();
+                                    }
+                                }
+                                hidden = (val == defValue);
+                            }
+                        }
                     }
                 }
             }
 
             if (!field.isHidden() && !hidden) {
                 if (!fieldMap[field.m_fieldName]) {
+                    field.m_fieldType &= uint64_t(~(TS_OMITEMPTY));
                     visibleFields.push_back(field);
                     fieldMap[field.m_fieldName] = true;
                 }
@@ -618,19 +574,21 @@ bool CBaseNode::getVisibleFields(CFieldDataArray& visibleFields) const {
         }
         pClass = pClass->m_BaseClass;
     }
+
     return true;
 }
 
 //--------------------------------------------------------------------------------
-void CBaseNode::writeJson(ostream& os) const {
+void CBaseNode::toJson(ostream& os) const {
     if (!m_showing) {
         os << "{}";
         return;
     }
 
     CFieldDataArray visibleFields;
-    if (!getVisibleFields(visibleFields))
+    if (!getVisibleFields(visibleFields)) {
         return;
+    }
 
     os << "{";
     indent();
@@ -640,25 +598,30 @@ void CBaseNode::writeJson(ostream& os) const {
         os << endl << indentStr() << doKey(field.getName());
 
         if (field.isArray()) {
-            os << "[";
-            indent();
-            os << endl;
             uint64_t cnt = str_2_Uint(getValueByName(field.getName() + "Cnt"));
-            for (size_t i = 0; i < cnt; i++) {
-                os << indentStr();
-                const CBaseNode* node = getObjectAt(field.getName(), i);
-                if (node) {
-                    node->writeJson(os);
-                } else {
-                    os << "\"" << getStringAt(field.getName(), i) << "\"";
-                }
-                if (expContext().endingCommas || i < cnt - 1)
-                    os << ",";
+            if (cnt == 0) {
+                os << "[]";
+
+            } else {
+                os << "[";
+                indent();
                 os << endl;
+                for (size_t i = 0; i < cnt; i++) {
+                    os << indentStr();
+                    const CBaseNode* node = getObjectAt(field.getName(), i);
+                    if (node) {
+                        node->toJson(os);
+                    } else {
+                        os << "\"" << getStringAt(field.getName(), i) << "\"";
+                    }
+                    if (expContext().endingCommas || i < cnt - 1)
+                        os << ",";
+                    os << endl;
+                }
+                unindent();
+                os << indentStr();
+                os << "]";
             }
-            unindent();
-            os << indentStr();
-            os << "]";
 
         } else if (field.isObject()) {
             const CBaseNode* node = getObjectAt(field.getName(), 0);
@@ -667,13 +630,18 @@ void CBaseNode::writeJson(ostream& os) const {
                 LOG_WARN("Object ", field.getName(), " not found in class ", getRuntimeClass()->m_ClassName);
                 return;
             }
-            node->writeJson(os);
+            node->toJson(os);
 
         } else {
             string_q val = getValueByName(field.getName());
+            bool isTuple = contains(val, "--tuple--");
+            if (isTuple) {
+                replaceReverse(val, "--tuple--", "");  // hacky
+                val = trim(val, '\"');
+            }
             bool isNum = (field.m_fieldType & TS_NUMERAL);
 
-            if (val == "null" || field.m_fieldType == T_BOOL || (isNum && contains(val, "."))) {
+            if (isTuple || val == "null" || field.m_fieldType == T_BOOL || (isNum && contains(val, "."))) {
                 os << val;
 
             } else if (!isNum) {
@@ -718,8 +686,8 @@ string_q nextBasenodeChunk(const string_q& fieldIn, const CBaseNode* node) {
                         return "";
                     }
                     ostringstream os;
-                    node->toJsonFromFields(os, pClass->fieldList);
-                    return "{" + substitute(os.str(), "\n", "") + "}";
+                    node->toJson(os);
+                    return os.str();
                 }
                 break;
             case 's':
@@ -867,22 +835,11 @@ string_q getNextChunk(string_q& fmtOut, NEXTCHUNKFUNC func, const void* data) {
 
 //---------------------------------------------------------------------------------------------------
 CBaseNode* createObjectOfType(const string_q& className) {
-    // TODO(tjayrush): global data
-    {  // keep the frame
-        mutex aMutex;
-        lock_guard<mutex> lock(aMutex);
-        static bool isSorted = false;
-        if (!isSorted) {
-            sort(builtIns.begin(), builtIns.end());
-            isSorted = true;
-        }
+    for (auto builtIn : builtIns) {
+        if (builtIn.m_pClass && builtIn.m_pClass->m_ClassName == className)
+            if (builtIn.m_pClass->m_CreateFunc)
+                return (*builtIn.m_pClass->m_CreateFunc)();
     }
-
-    CRuntimeClass* pClass = &CBaseNode::classCBaseNode;
-    CBuiltIn search(pClass, className, sizeof(CBaseNode), NULL, NULL);
-    const vector<CBuiltIn>::iterator it = find(builtIns.begin(), builtIns.end(), search);
-    if (it != builtIns.end() && it->m_pClass && it->m_pClass->m_CreateFunc)
-        return (*it->m_pClass->m_CreateFunc)();
     return NULL;
 }
 

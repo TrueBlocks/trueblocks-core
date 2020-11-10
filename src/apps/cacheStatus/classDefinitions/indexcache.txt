@@ -4,4 +4,3 @@ base_class = CCache
 fields = CIndexCacheItemArray items
 includes = cache.h|indexcacheitem.h
 serialize = true
-use_export = true

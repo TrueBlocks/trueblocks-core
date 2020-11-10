@@ -290,7 +290,7 @@ void COptions::convertFromSol(const address_t& a) {
     }
     expContext().spcs = 2;
     ostringstream os;
-    abi.writeJson(os);
+    abi.toJson(os);
     ::remove((a + ".json").c_str());
     stringToAsciiFile(a + ".json", os.str());
     isRaw = false;

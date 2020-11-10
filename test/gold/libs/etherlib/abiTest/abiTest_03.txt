@@ -7,48 +7,33 @@ Testing of already sorted JSON
   "interfaces": [
     {
       "name": "a",
-      "constant": false,
       "stateMutability": "nonpayable",
       "signature": "a()",
-      "encoding": "0x0dbe671f",
-      "inputs": [],
-      "outputs": []
+      "encoding": "0x0dbe671f"
     },
     {
       "name": "c",
-      "constant": false,
       "stateMutability": "nonpayable",
       "signature": "c()",
-      "encoding": "0xc3da42b8",
-      "inputs": [],
-      "outputs": []
+      "encoding": "0xc3da42b8"
     },
     {
       "name": "d",
-      "constant": false,
       "stateMutability": "nonpayable",
       "signature": "d()",
-      "encoding": "0x8a054ac2",
-      "inputs": [],
-      "outputs": []
+      "encoding": "0x8a054ac2"
     },
     {
       "name": "e",
-      "constant": false,
       "stateMutability": "nonpayable",
       "signature": "e()",
-      "encoding": "0xffae15ba",
-      "inputs": [],
-      "outputs": []
+      "encoding": "0xffae15ba"
     },
     {
       "name": "m",
-      "constant": false,
       "stateMutability": "nonpayable",
       "signature": "m()",
-      "encoding": "0x5a2ee019",
-      "inputs": [],
-      "outputs": []
+      "encoding": "0x5a2ee019"
     }
   ]
 }
@@ -58,48 +43,33 @@ Testing of already sorted JSON
   "interfaces": [
     {
       "name": "a",
-      "constant": false,
       "stateMutability": "nonpayable",
       "signature": "a()",
-      "encoding": "0x0dbe671f",
-      "inputs": [],
-      "outputs": []
+      "encoding": "0x0dbe671f"
     },
     {
       "name": "m",
-      "constant": false,
       "stateMutability": "nonpayable",
       "signature": "m()",
-      "encoding": "0x5a2ee019",
-      "inputs": [],
-      "outputs": []
+      "encoding": "0x5a2ee019"
     },
     {
       "name": "d",
-      "constant": false,
       "stateMutability": "nonpayable",
       "signature": "d()",
-      "encoding": "0x8a054ac2",
-      "inputs": [],
-      "outputs": []
+      "encoding": "0x8a054ac2"
     },
     {
       "name": "c",
-      "constant": false,
       "stateMutability": "nonpayable",
       "signature": "c()",
-      "encoding": "0xc3da42b8",
-      "inputs": [],
-      "outputs": []
+      "encoding": "0xc3da42b8"
     },
     {
       "name": "e",
-      "constant": false,
       "stateMutability": "nonpayable",
       "signature": "e()",
-      "encoding": "0xffae15ba",
-      "inputs": [],
-      "outputs": []
+      "encoding": "0xffae15ba"
     }
   ]
 }
@@ -110,84 +80,57 @@ Testing of not sorted JSON
   "interfaces": [
     {
       "name": "a",
-      "constant": false,
       "stateMutability": "nonpayable",
       "signature": "a()",
-      "encoding": "0x0dbe671f",
-      "inputs": [],
-      "outputs": []
+      "encoding": "0x0dbe671f"
     },
     {
       "name": "aa1",
-      "constant": false,
       "stateMutability": "nonpayable",
       "signature": "aa1()",
-      "encoding": "0x74d0d855",
-      "inputs": [],
-      "outputs": []
+      "encoding": "0x74d0d855"
     },
     {
       "name": "az",
-      "constant": false,
       "stateMutability": "nonpayable",
       "signature": "az()",
-      "encoding": "0x73fc24ec",
-      "inputs": [],
-      "outputs": []
+      "encoding": "0x73fc24ec"
     },
     {
       "name": "b",
-      "constant": false,
       "stateMutability": "nonpayable",
       "signature": "b()",
-      "encoding": "0x4df7e3d0",
-      "inputs": [],
-      "outputs": []
+      "encoding": "0x4df7e3d0"
     },
     {
       "name": "ba1",
-      "constant": false,
       "stateMutability": "nonpayable",
       "signature": "ba1()",
-      "encoding": "0x53241b65",
-      "inputs": [],
-      "outputs": []
+      "encoding": "0x53241b65"
     },
     {
       "name": "bz",
-      "constant": false,
       "stateMutability": "nonpayable",
       "signature": "bz()",
-      "encoding": "0x3c7df70c",
-      "inputs": [],
-      "outputs": []
+      "encoding": "0x3c7df70c"
     },
     {
       "name": "z",
-      "constant": false,
       "stateMutability": "nonpayable",
       "signature": "z()",
-      "encoding": "0xc5d7802e",
-      "inputs": [],
-      "outputs": []
+      "encoding": "0xc5d7802e"
     },
     {
       "name": "za1",
-      "constant": false,
       "stateMutability": "nonpayable",
       "signature": "za1()",
-      "encoding": "0xb7938cb5",
-      "inputs": [],
-      "outputs": []
+      "encoding": "0xb7938cb5"
     },
     {
       "name": "zz",
-      "constant": false,
       "stateMutability": "nonpayable",
       "signature": "zz()",
-      "encoding": "0xfa14c2df",
-      "inputs": [],
-      "outputs": []
+      "encoding": "0xfa14c2df"
     }
   ]
 }
@@ -197,84 +140,57 @@ Testing of not sorted JSON
   "interfaces": [
     {
       "name": "a",
-      "constant": false,
       "stateMutability": "nonpayable",
       "signature": "a()",
-      "encoding": "0x0dbe671f",
-      "inputs": [],
-      "outputs": []
+      "encoding": "0x0dbe671f"
     },
     {
       "name": "bz",
-      "constant": false,
       "stateMutability": "nonpayable",
       "signature": "bz()",
-      "encoding": "0x3c7df70c",
-      "inputs": [],
-      "outputs": []
+      "encoding": "0x3c7df70c"
     },
     {
       "name": "b",
-      "constant": false,
       "stateMutability": "nonpayable",
       "signature": "b()",
-      "encoding": "0x4df7e3d0",
-      "inputs": [],
-      "outputs": []
+      "encoding": "0x4df7e3d0"
     },
     {
       "name": "ba1",
-      "constant": false,
       "stateMutability": "nonpayable",
       "signature": "ba1()",
-      "encoding": "0x53241b65",
-      "inputs": [],
-      "outputs": []
+      "encoding": "0x53241b65"
     },
     {
       "name": "az",
-      "constant": false,
       "stateMutability": "nonpayable",
       "signature": "az()",
-      "encoding": "0x73fc24ec",
-      "inputs": [],
-      "outputs": []
+      "encoding": "0x73fc24ec"
     },
     {
       "name": "aa1",
-      "constant": false,
       "stateMutability": "nonpayable",
       "signature": "aa1()",
-      "encoding": "0x74d0d855",
-      "inputs": [],
-      "outputs": []
+      "encoding": "0x74d0d855"
     },
     {
       "name": "za1",
-      "constant": false,
       "stateMutability": "nonpayable",
       "signature": "za1()",
-      "encoding": "0xb7938cb5",
-      "inputs": [],
-      "outputs": []
+      "encoding": "0xb7938cb5"
     },
     {
       "name": "z",
-      "constant": false,
       "stateMutability": "nonpayable",
       "signature": "z()",
-      "encoding": "0xc5d7802e",
-      "inputs": [],
-      "outputs": []
+      "encoding": "0xc5d7802e"
     },
     {
       "name": "zz",
-      "constant": false,
       "stateMutability": "nonpayable",
       "signature": "zz()",
-      "encoding": "0xfa14c2df",
-      "inputs": [],
-      "outputs": []
+      "encoding": "0xfa14c2df"
     }
   ]
 }

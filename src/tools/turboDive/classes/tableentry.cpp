@@ -265,7 +265,7 @@ void CTableEntry::registerClass(void) {
     ADD_FIELD(CTableEntry, "longName", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CTableEntry, "description", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CTableEntry, "freelist", T_UNUMBER, ++fieldNum);
-    ADD_OBJECT(CTableEntry, "stat", T_OBJECT | TS_OMITEMPTY, ++fieldNum, GETRUNTIME_CLASS(CTableEntry));
+    ADD_OBJECT(CTableEntry, "stat", T_OBJECT | TS_OMITEMPTY, ++fieldNum, GETRUNTIME_CLASS(CLmdbStat));
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CTableEntry, "schema");

@@ -11,7 +11,6 @@ parsingTest 3
   "difficulty": 17179844608,
   "price": 0.00000,
   "finalized": true,
-  "timestamp": 1438270144,
-  "transactions": []
+  "timestamp": 1438270144
 }
 

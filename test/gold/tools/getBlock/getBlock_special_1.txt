@@ -30,7 +30,6 @@ getBlock stateclear --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -52,7 +51,6 @@ getBlock stateclear --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -74,7 +72,6 @@ getBlock stateclear --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -96,7 +93,6 @@ getBlock stateclear --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 1079267,
-        "logs": [],
         "status": null
       },
       "gasUsed": 1079267
@@ -118,7 +114,6 @@ getBlock stateclear --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -140,7 +135,6 @@ getBlock stateclear --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -162,7 +156,6 @@ getBlock stateclear --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -184,7 +177,6 @@ getBlock stateclear --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000

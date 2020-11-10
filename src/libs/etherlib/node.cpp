@@ -1345,7 +1345,7 @@ const string_q defHide =
     "|CTraceAction: init"
     "|CTraceResult: code"
     "|CFunction: constant, payable, signature, encoding, type, articulate_str"
-    "|CParameter: type, indexed, is_pointer, is_array, is_object, is_builtin, no_write, show_empty, is_minimal, "
+    "|CParameter: type, indexed, is_pointer, is_array, is_object, is_builtin, no_write, is_minimal, "
     "is_enabled, "
     "is_flags";
 

@@ -14,4 +14,3 @@ fields = string type|\
         ipfshash bloom_hash
 includes = etherlib.h
 serialize = true
-use_export = true

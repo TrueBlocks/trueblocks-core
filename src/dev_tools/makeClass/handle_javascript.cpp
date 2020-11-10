@@ -204,7 +204,7 @@ bool COptions::handle_generate_js_pages(void) {
                     expContext().endingCommas = true;
                     ostringstream os;
                     expContext().lev++;
-                    schema.writeJson(os);
+                    schema.toJson(os);
                     expContext().lev--;
                     string_q str = os.str();
                     replaceAll(str, "\"", "'");

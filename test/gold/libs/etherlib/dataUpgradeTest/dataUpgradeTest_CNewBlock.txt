@@ -27,8 +27,7 @@ transactions        	1015	0	205520971	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OM
   "miner": "0x0",
   "difficulty": 0,
   "price": 0.00000,
-  "timestamp": 0,
-  "transactions": []
+  "timestamp": 0
 }
 
 --------------------------------------------------------------------------------
@@ -83,7 +82,6 @@ transactions        	1015	0	205520971	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OM
   "miner": "0x0",
   "difficulty": 0,
   "price": 0.00000,
-  "timestamp": 0,
-  "transactions": []
+  "timestamp": 0
 }
 

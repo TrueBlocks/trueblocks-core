@@ -21,7 +21,12 @@
         "to": "0x37a9679c41e99db270bda88de8ff50c0cd23f326",
         "value": 0
       },
-      "result": {}
+      "result": {
+        "newContract": "0x0",
+        "code": "",
+        "gasUsed": 0,
+        "output": ""
+      }
     },
     {
       "blockHash": "0xc65ac7164218ff90ca8101c360f717c465da10bd63007b071c26dd7dedd41324",

@@ -26,9 +26,7 @@ date                	1017	1	33554437	T_DATE TS_DATE
   "subtraces": 0,
   "traceAddress": null,
   "transactionHash": "0x0",
-  "transactionIndex": 0,
-  "action": {},
-  "result": {}
+  "transactionIndex": 0
 }
 
 --------------------------------------------------------------------------------
@@ -85,8 +83,6 @@ date                	1017	0	33554437	T_DATE TS_DATE
   "traceAddress": null,
   "transactionHash": "0x0",
   "transactionIndex": 0,
-  "action": {},
-  "result": {},
-  "articulatedTrace": {}
+  "date": ""
 }
 

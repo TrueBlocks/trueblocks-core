@@ -20,7 +20,6 @@
         "gasUsed": 0,
         "output": "0x"
       },
-      "articulatedTrace": {},
       "compressedTrace": ""
     },
     {
@@ -43,7 +42,6 @@
         "gasUsed": 0,
         "output": "0x"
       },
-      "articulatedTrace": {},
       "compressedTrace": ""
     }
   ],
@@ -99,7 +97,7 @@
       "name": "Prefund_0002",
       "symbol": "",
       "source": "Genesis",
-      "decimals": "",
+      "decimals": 0,
       "description": "",
       "is_custom": false,
       "is_prefund": true

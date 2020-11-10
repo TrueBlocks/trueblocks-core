@@ -32,7 +32,6 @@ age                 	1019	1	33554437	T_DATE TS_DATE
   "miner": "0xbb7b8287f3f0a933474a79eae42cbca977791171",
   "difficulty": 6143022084827,
   "price": 0.00000,
-  "finalized": false,
   "timestamp": 1442749586,
   "transactions": [
     {
@@ -52,7 +51,6 @@ age                 	1019	1	33554437	T_DATE TS_DATE
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000

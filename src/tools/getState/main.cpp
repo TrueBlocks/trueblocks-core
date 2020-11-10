@@ -94,7 +94,7 @@ bool visitBlock(uint64_t blockNum, void* data) {
                 cout << "," << endl;
             cout << "  ";
             indent();
-            state.writeJson(cout);
+            state.toJson(cout);
             unindent();
             opt->first = false;
         }

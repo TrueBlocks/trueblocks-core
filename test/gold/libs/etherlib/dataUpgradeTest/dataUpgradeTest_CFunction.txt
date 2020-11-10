@@ -10,7 +10,7 @@ cname               	1004	1	16777266	T_TEXT TS_STRING
 name                	1005	0	20971570	T_TEXT TS_STRING TS_OMITEMPTY
 type                	1006	0	20971570	T_TEXT TS_STRING TS_OMITEMPTY
 anonymous           	1007	1	12582932	T_BOOL TS_NUMERAL TS_OMITEMPTY
-constant            	1008	0	8388628	T_BOOL TS_NUMERAL
+constant            	1008	0	12582932	T_BOOL TS_NUMERAL TS_OMITEMPTY
 stateMutability     	1009	0	20971570	T_TEXT TS_STRING TS_OMITEMPTY
 signature           	1010	0	20971570	T_TEXT TS_STRING TS_OMITEMPTY
 encoding            	1011	0	20971570	T_TEXT TS_STRING TS_OMITEMPTY
@@ -18,13 +18,10 @@ message             	1012	1	20971570	T_TEXT TS_STRING TS_OMITEMPTY
 inputs              	1013	0	205520971	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
 outputs             	1014	0	205520971	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
 address             	1015	1	20971575	T_ADDRESS TS_STRING TS_OMITEMPTY
-input_names         	1016	1	16777266	T_TEXT TS_STRING
-output_names        	1017	1	16777266	T_TEXT TS_STRING
-declaration         	1018	1	16777266	T_TEXT TS_STRING
+input_names         	1016	1	20971570	T_TEXT TS_STRING TS_OMITEMPTY
+output_names        	1017	1	20971570	T_TEXT TS_STRING TS_OMITEMPTY
+declaration         	1018	1	20971570	T_TEXT TS_STRING TS_OMITEMPTY
 {
-  "constant": false,
-  "inputs": [],
-  "outputs": []
 }
 
 --------------------------------------------------------------------------------
@@ -37,7 +34,7 @@ cname               	1004	1	16777266	T_TEXT TS_STRING
 name                	1005	1	20971570	T_TEXT TS_STRING TS_OMITEMPTY
 type                	1006	1	20971570	T_TEXT TS_STRING TS_OMITEMPTY
 anonymous           	1007	1	12582932	T_BOOL TS_NUMERAL TS_OMITEMPTY
-constant            	1008	1	8388628	T_BOOL TS_NUMERAL
+constant            	1008	1	12582932	T_BOOL TS_NUMERAL TS_OMITEMPTY
 stateMutability     	1009	1	20971570	T_TEXT TS_STRING TS_OMITEMPTY
 signature           	1010	1	20971570	T_TEXT TS_STRING TS_OMITEMPTY
 encoding            	1011	1	20971570	T_TEXT TS_STRING TS_OMITEMPTY
@@ -45,9 +42,9 @@ message             	1012	1	20971570	T_TEXT TS_STRING TS_OMITEMPTY
 inputs              	1013	1	205520971	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
 outputs             	1014	1	205520971	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
 address             	1015	1	20971575	T_ADDRESS TS_STRING TS_OMITEMPTY
-input_names         	1016	1	16777266	T_TEXT TS_STRING
-output_names        	1017	1	16777266	T_TEXT TS_STRING
-declaration         	1018	1	16777266	T_TEXT TS_STRING
+input_names         	1016	1	20971570	T_TEXT TS_STRING TS_OMITEMPTY
+output_names        	1017	1	20971570	T_TEXT TS_STRING TS_OMITEMPTY
+declaration         	1018	1	20971570	T_TEXT TS_STRING TS_OMITEMPTY
 {
 }
 
@@ -61,7 +58,7 @@ cname               	1004	0	16777266	T_TEXT TS_STRING
 name                	1005	0	20971570	T_TEXT TS_STRING TS_OMITEMPTY
 type                	1006	0	20971570	T_TEXT TS_STRING TS_OMITEMPTY
 anonymous           	1007	0	12582932	T_BOOL TS_NUMERAL TS_OMITEMPTY
-constant            	1008	0	8388628	T_BOOL TS_NUMERAL
+constant            	1008	0	12582932	T_BOOL TS_NUMERAL TS_OMITEMPTY
 stateMutability     	1009	0	20971570	T_TEXT TS_STRING TS_OMITEMPTY
 signature           	1010	0	20971570	T_TEXT TS_STRING TS_OMITEMPTY
 encoding            	1011	0	20971570	T_TEXT TS_STRING TS_OMITEMPTY
@@ -69,18 +66,14 @@ message             	1012	0	20971570	T_TEXT TS_STRING TS_OMITEMPTY
 inputs              	1013	0	205520971	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
 outputs             	1014	0	205520971	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
 address             	1015	0	20971575	T_ADDRESS TS_STRING TS_OMITEMPTY
-input_names         	1016	0	16777266	T_TEXT TS_STRING
-output_names        	1017	0	16777266	T_TEXT TS_STRING
-declaration         	1018	0	16777266	T_TEXT TS_STRING
+input_names         	1016	0	20971570	T_TEXT TS_STRING TS_OMITEMPTY
+output_names        	1017	0	20971570	T_TEXT TS_STRING TS_OMITEMPTY
+declaration         	1018	0	20971570	T_TEXT TS_STRING TS_OMITEMPTY
 {
   "schema": 8003,
   "deleted": false,
   "showing": true,
   "cname": "Function",
-  "anonymous": false,
-  "constant": false,
-  "inputs": [],
-  "outputs": [],
   "address": "0x0",
   "declaration": "	 ()"
 }

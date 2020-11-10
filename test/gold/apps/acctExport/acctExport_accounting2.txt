@@ -13,14 +13,6 @@ acctExport 0x05a56e2d52c817161883f50c441c3228cfe54d9f --accounting --fmt api --m
   "gas": 0,
   "gasPrice": 0,
   "isError": 0,
-  "receipt": {
-    "contractAddress": "0x0",
-    "gasUsed": 0,
-    "logs": [],
-    "status": null
-  },
-  "traces": [],
-  "articulatedTx": {},
   "compressedTx": "0x ( )",
   "statements": [
     {
@@ -66,14 +58,6 @@ acctExport 0x05a56e2d52c817161883f50c441c3228cfe54d9f --accounting --fmt api --m
   "gas": 0,
   "gasPrice": 0,
   "isError": 0,
-  "receipt": {
-    "contractAddress": "0x0",
-    "gasUsed": 0,
-    "logs": [],
-    "status": null
-  },
-  "traces": [],
-  "articulatedTx": {},
   "compressedTx": "0x ( )",
   "statements": [
     {
@@ -119,14 +103,6 @@ acctExport 0x05a56e2d52c817161883f50c441c3228cfe54d9f --accounting --fmt api --m
   "gas": 0,
   "gasPrice": 0,
   "isError": 0,
-  "receipt": {
-    "contractAddress": "0x0",
-    "gasUsed": 0,
-    "logs": [],
-    "status": null
-  },
-  "traces": [],
-  "articulatedTx": {},
   "compressedTx": "0x ( )",
   "statements": [
     {
@@ -172,14 +148,6 @@ acctExport 0x05a56e2d52c817161883f50c441c3228cfe54d9f --accounting --fmt api --m
   "gas": 0,
   "gasPrice": 0,
   "isError": 0,
-  "receipt": {
-    "contractAddress": "0x0",
-    "gasUsed": 0,
-    "logs": [],
-    "status": null
-  },
-  "traces": [],
-  "articulatedTx": {},
   "compressedTx": "0x ( )",
   "statements": [
     {
@@ -225,14 +193,6 @@ acctExport 0x05a56e2d52c817161883f50c441c3228cfe54d9f --accounting --fmt api --m
   "gas": 0,
   "gasPrice": 0,
   "isError": 0,
-  "receipt": {
-    "contractAddress": "0x0",
-    "gasUsed": 0,
-    "logs": [],
-    "status": null
-  },
-  "traces": [],
-  "articulatedTx": {},
   "compressedTx": "0x ( )",
   "statements": [
     {
@@ -272,13 +232,11 @@ acctExport 0x05a56e2d52c817161883f50c441c3228cfe54d9f --accounting --fmt api --m
 , "unNamedFrom": {"0xBlockReward": 3,"0xUncleReward": 2}, "start": "0xdeadbeef"
 , "end": "0xdeadbeef"
 , "accountedFor": {
-  "stateHistory": [],
   "curBalance": 0,
   "enabled": true,
   "address": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
   "name": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
-  "is_custom": false,
-  "is_prefund": false
+  "decimals": 0
 }
 
  } }

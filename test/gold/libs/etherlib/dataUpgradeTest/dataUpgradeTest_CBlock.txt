@@ -31,9 +31,7 @@ age                 	1019	1	33554437	T_DATE TS_DATE
   "miner": "0x0",
   "difficulty": 0,
   "price": 0.00000,
-  "finalized": false,
-  "timestamp": 0,
-  "transactions": []
+  "timestamp": 0
 }
 
 --------------------------------------------------------------------------------
@@ -96,9 +94,7 @@ age                 	1019	0	33554437	T_DATE TS_DATE
   "miner": "0x0",
   "difficulty": 0,
   "price": 0.00000,
-  "finalized": false,
   "timestamp": 0,
-  "transactions": [],
   "date": "1970-01-01 00:00:00 UTC",
   "age": "100"
 }

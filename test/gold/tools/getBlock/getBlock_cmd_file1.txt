@@ -30,7 +30,6 @@ getBlock --file:cmd_file1 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -52,7 +51,6 @@ getBlock --file:cmd_file1 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -88,7 +86,6 @@ getBlock --file:cmd_file1 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -110,7 +107,6 @@ getBlock --file:cmd_file1 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -132,7 +128,6 @@ getBlock --file:cmd_file1 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -154,7 +149,6 @@ getBlock --file:cmd_file1 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -176,7 +170,6 @@ getBlock --file:cmd_file1 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -198,7 +191,6 @@ getBlock --file:cmd_file1 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -220,7 +212,6 @@ getBlock --file:cmd_file1 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -242,7 +233,6 @@ getBlock --file:cmd_file1 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -264,7 +254,6 @@ getBlock --file:cmd_file1 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -286,7 +275,6 @@ getBlock --file:cmd_file1 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -308,7 +296,6 @@ getBlock --file:cmd_file1 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -330,7 +317,6 @@ getBlock --file:cmd_file1 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -352,7 +338,6 @@ getBlock --file:cmd_file1 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -374,7 +359,6 @@ getBlock --file:cmd_file1 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -396,7 +380,6 @@ getBlock --file:cmd_file1 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -418,7 +401,6 @@ getBlock --file:cmd_file1 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -440,7 +422,6 @@ getBlock --file:cmd_file1 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -462,7 +443,6 @@ getBlock --file:cmd_file1 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -484,7 +464,6 @@ getBlock --file:cmd_file1 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -506,7 +485,6 @@ getBlock --file:cmd_file1 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -528,7 +506,6 @@ getBlock --file:cmd_file1 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -550,7 +527,6 @@ getBlock --file:cmd_file1 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -572,7 +548,6 @@ getBlock --file:cmd_file1 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -594,7 +569,6 @@ getBlock --file:cmd_file1 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -616,7 +590,6 @@ getBlock --file:cmd_file1 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -638,7 +611,6 @@ getBlock --file:cmd_file1 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -660,7 +632,6 @@ getBlock --file:cmd_file1 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -696,7 +667,6 @@ getBlock --file:cmd_file1 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 241566,
-        "logs": [],
         "status": null
       },
       "gasUsed": 241566
@@ -713,8 +683,7 @@ getBlock --file:cmd_file1 --force
   "difficulty": 30027571242885,
   "price": 0.00000,
   "finalized": true,
-  "timestamp": 1461564158,
-  "transactions": []
+  "timestamp": 1461564158
 },
 {
   "gasLimit": 4712388,
@@ -745,7 +714,6 @@ getBlock --file:cmd_file1 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -767,7 +735,6 @@ getBlock --file:cmd_file1 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -796,8 +763,7 @@ getBlock --file:cmd_file1 --force
             "topics": [
               "0xe1fffcc4923d04b559f4d29a8bfc6cda04eb5b0d3c460751c2402c5c5cc9109c"
             ],
-            "data": "0x000000000000000000000000ea674fdde714fd979de3edf0f56aa9716b898ec800000000000000000000000000000000000000000000000006debc1b51882efe",
-            "articulatedLog": {}
+            "data": "0x000000000000000000000000ea674fdde714fd979de3edf0f56aa9716b898ec800000000000000000000000000000000000000000000000006debc1b51882efe"
           }
         ],
         "status": null
@@ -821,7 +787,6 @@ getBlock --file:cmd_file1 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -843,7 +808,6 @@ getBlock --file:cmd_file1 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -865,7 +829,6 @@ getBlock --file:cmd_file1 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -894,8 +857,7 @@ getBlock --file:cmd_file1 --force
             "topics": [
               "0x92ca3a80853e6663fa31fa10b99225f18d4902939b4c53a9caae9043f6efd004"
             ],
-            "data": "0x0000000000000000000000007ccc8839aa7d71162ad6d3cb11666d52d123c9d700000000000000000000000000000000000000000000003c9fabfaeefe7e20000000000000000000000000000f5e92ff89ea8ab86e8e2529267a9b1c7aa4e4d000000000000000000000000000000000000000000000000000000000000000800000000000000000000000000000000000000000000000000000000000000000",
-            "articulatedLog": {}
+            "data": "0x0000000000000000000000007ccc8839aa7d71162ad6d3cb11666d52d123c9d700000000000000000000000000000000000000000000003c9fabfaeefe7e20000000000000000000000000000f5e92ff89ea8ab86e8e2529267a9b1c7aa4e4d000000000000000000000000000000000000000000000000000000000000000800000000000000000000000000000000000000000000000000000000000000000"
           }
         ],
         "status": null
@@ -919,7 +881,6 @@ getBlock --file:cmd_file1 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -941,7 +902,6 @@ getBlock --file:cmd_file1 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -963,7 +923,6 @@ getBlock --file:cmd_file1 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -994,8 +953,7 @@ getBlock --file:cmd_file1 --force
               "0x000000000000000000000000509dd6fc710c8a66bc3290d665b58be96e4ac1d4",
               "0x0000000000000000000000001c5f2fa648b7f60380741224ea4a6c0f72cef99a"
             ],
-            "data": "0x000000000000000000000000000000000000000000000000000e35fa931a0000",
-            "articulatedLog": {}
+            "data": "0x000000000000000000000000000000000000000000000000000e35fa931a0000"
           }
         ],
         "status": null
@@ -1019,7 +977,6 @@ getBlock --file:cmd_file1 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -1041,7 +998,6 @@ getBlock --file:cmd_file1 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -1063,7 +1019,6 @@ getBlock --file:cmd_file1 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -1080,8 +1035,7 @@ getBlock --file:cmd_file1 --force
   "difficulty": 59717402562065,
   "price": 0.00000,
   "finalized": true,
-  "timestamp": 1468865843,
-  "transactions": []
+  "timestamp": 1468865843
 },
 {
   "gasLimit": 4700000,
@@ -1093,8 +1047,7 @@ getBlock --file:cmd_file1 --force
   "difficulty": 53448351719689,
   "price": 0.00000,
   "finalized": true,
-  "timestamp": 1470422063,
-  "transactions": []
+  "timestamp": 1470422063
 },
 {
   "gasLimit": 4712388,
@@ -1125,7 +1078,6 @@ getBlock --file:cmd_file1 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -1156,8 +1108,7 @@ getBlock --file:cmd_file1 --force
               "0x0000000000000000000000000275a4bf995e532ca261f7bc1bb8aaeab0208760",
               "0x000000000000000000000000267be1c1d684f78cb4f6a176c4911b741e4ffdc0"
             ],
-            "data": "0x00000000000000000000000000000000000000000000000006f9bc32d8c9a000",
-            "articulatedLog": {}
+            "data": "0x00000000000000000000000000000000000000000000000006f9bc32d8c9a000"
           }
         ],
         "status": null
@@ -1181,7 +1132,6 @@ getBlock --file:cmd_file1 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -1203,7 +1153,6 @@ getBlock --file:cmd_file1 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 56561,
-        "logs": [],
         "status": null
       },
       "gasUsed": 56561
@@ -1225,7 +1174,6 @@ getBlock --file:cmd_file1 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -1247,7 +1195,6 @@ getBlock --file:cmd_file1 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -1269,7 +1216,6 @@ getBlock --file:cmd_file1 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -1301,8 +1247,7 @@ getBlock --file:cmd_file1 --force
               "0x0000000000000000000000001c47549161338ac260b48d9d0a06b7173468abdc",
               "0x0000000000000000000000000000000000000000000000000000000000000000"
             ],
-            "data": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001d97ef8",
-            "articulatedLog": {}
+            "data": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001d97ef8"
           },
           {
             "address": "0x276c5c6ca8507ed7bac085fc9b9521f4f54b58d3",
@@ -1313,8 +1258,7 @@ getBlock --file:cmd_file1 --force
               "0x0000000000000000000000000000000000000000000000000000000000000000",
               "0x000000000000000000000000f8d69eb2112b5abf8b51a27c536e28e0de76c64a"
             ],
-            "data": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001d905c1",
-            "articulatedLog": {}
+            "data": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001d905c1"
           },
           {
             "address": "0x57d90b64a1a57749b0f932f1a3395792e12e7055",
@@ -1324,8 +1268,7 @@ getBlock --file:cmd_file1 --force
               "0x0000000000000000000000001c47549161338ac260b48d9d0a06b7173468abdc",
               "0x000000000000000000000000f8d69eb2112b5abf8b51a27c536e28e0de76c64a"
             ],
-            "data": "0x0000000000000000000000000000000000000000000000000000000001d97ef8",
-            "articulatedLog": {}
+            "data": "0x0000000000000000000000000000000000000000000000000000000001d97ef8"
           },
           {
             "address": "0x276c5c6ca8507ed7bac085fc9b9521f4f54b58d3",
@@ -1336,8 +1279,7 @@ getBlock --file:cmd_file1 --force
               "0x0000000000000000000000000000000000000000000000000000000000000000",
               "0x000000000000000000000000c29b27f6e930693e36b257ced113e5d4b9877a0b"
             ],
-            "data": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000007937",
-            "articulatedLog": {}
+            "data": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000007937"
           }
         ],
         "status": null
@@ -1361,7 +1303,6 @@ getBlock --file:cmd_file1 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -1383,7 +1324,6 @@ getBlock --file:cmd_file1 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -1405,7 +1345,6 @@ getBlock --file:cmd_file1 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -1427,7 +1366,6 @@ getBlock --file:cmd_file1 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -1449,7 +1387,6 @@ getBlock --file:cmd_file1 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -1471,7 +1408,6 @@ getBlock --file:cmd_file1 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -1493,7 +1429,6 @@ getBlock --file:cmd_file1 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -1515,7 +1450,6 @@ getBlock --file:cmd_file1 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -1537,7 +1471,6 @@ getBlock --file:cmd_file1 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -1559,7 +1492,6 @@ getBlock --file:cmd_file1 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -1581,7 +1513,6 @@ getBlock --file:cmd_file1 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -1603,7 +1534,6 @@ getBlock --file:cmd_file1 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -1625,7 +1555,6 @@ getBlock --file:cmd_file1 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -1647,7 +1576,6 @@ getBlock --file:cmd_file1 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -1669,7 +1597,6 @@ getBlock --file:cmd_file1 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -1705,7 +1632,6 @@ getBlock --file:cmd_file1 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -1741,7 +1667,6 @@ getBlock --file:cmd_file1 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -1777,7 +1702,6 @@ getBlock --file:cmd_file1 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -1799,7 +1723,6 @@ getBlock --file:cmd_file1 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -1821,7 +1744,6 @@ getBlock --file:cmd_file1 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -1843,7 +1765,6 @@ getBlock --file:cmd_file1 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -1865,7 +1786,6 @@ getBlock --file:cmd_file1 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -1887,7 +1807,6 @@ getBlock --file:cmd_file1 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -1904,8 +1823,7 @@ getBlock --file:cmd_file1 --force
   "difficulty": 106947037494033,
   "price": 0.00000,
   "finalized": true,
-  "timestamp": 1477523292,
-  "transactions": []
+  "timestamp": 1477523292
 },
 {
   "gasLimit": 2001952,
@@ -1936,7 +1854,6 @@ getBlock --file:cmd_file1 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -1953,8 +1870,7 @@ getBlock --file:cmd_file1 --force
   "difficulty": 70209084255676,
   "price": 0.00000,
   "finalized": true,
-  "timestamp": 1480604456,
-  "transactions": []
+  "timestamp": 1480604456
 }], "types": [
 { "type": "CBlock", "fields": [{ "name": "gasLimit", "type": "gas" }, { "name": "gasUsed", "type": "gas" }, { "name": "hash", "type": "hash" }, { "name": "blockNumber", "type": "blocknum" }, { "name": "parentHash", "type": "hash" }, { "name": "miner", "type": "address" }, { "name": "difficulty", "type": "unumber" }, { "name": "price", "type": "double" }, { "name": "finalized", "type": "bool" }, { "name": "timestamp", "type": "timestamp" }, { "name": "transactions", "type": "object|ts_array" }] }
 ] }

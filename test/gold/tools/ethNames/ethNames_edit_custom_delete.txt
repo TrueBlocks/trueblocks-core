@@ -4,8 +4,8 @@ ethNames --delete 0xde58d6a070c7490f10a9aac1b7bc6e3583383958 --expand --verbose 
 {
   "address": "0xde58d6a070c7490f10a9aac1b7bc6e3583383958",
   "name": "Name 0xde58d6a0",
-  "is_custom": true,
-  "is_prefund": false
+  "decimals": 0,
+  "is_custom": true
 }
 
 ---------------------------------------------

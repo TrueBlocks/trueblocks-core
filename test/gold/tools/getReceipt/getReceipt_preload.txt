@@ -30,7 +30,6 @@ getBlock 3657480 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -52,7 +51,6 @@ getBlock 3657480 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -74,7 +72,6 @@ getBlock 3657480 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -96,7 +93,6 @@ getBlock 3657480 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -118,7 +114,6 @@ getBlock 3657480 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 150000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 150000
@@ -147,8 +142,7 @@ getBlock 3657480 --force
             "topics": [
               "0x1e0b760c386003e9cb9bcf4fcf3997886042859d9b6ed6320e804597fcdb28b0"
             ],
-            "data": "0x0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002cbf47faa1a670000000000000000000000000000d8912c10681d8b21fd3742244f44658dba12264e00000000000000000000000000000000000000000000004be4e7267b6ae0000000000000000000000000000000000000000000000000000000000000003913e30000000000000000000000000000000000000000000000000000000085ed34c9000000000000000000000000834d1e21a8a11a87174fbbca30337034b3fdc299000000000000000000000000000000000000000000000000000000000000001cf84d0de8df233a3fe75196e01d73d08c397959ff5b30951a3dc4cd5137351ce90be537e08c0d5feb390e64cdb06f47655e4c2b882a6f749bf4a431f4694d072a",
-            "articulatedLog": {}
+            "data": "0x0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002cbf47faa1a670000000000000000000000000000d8912c10681d8b21fd3742244f44658dba12264e00000000000000000000000000000000000000000000004be4e7267b6ae0000000000000000000000000000000000000000000000000000000000000003913e30000000000000000000000000000000000000000000000000000000085ed34c9000000000000000000000000834d1e21a8a11a87174fbbca30337034b3fdc299000000000000000000000000000000000000000000000000000000000000001cf84d0de8df233a3fe75196e01d73d08c397959ff5b30951a3dc4cd5137351ce90be537e08c0d5feb390e64cdb06f47655e4c2b882a6f749bf4a431f4694d072a"
           }
         ],
         "status": null
@@ -179,8 +173,7 @@ getBlock 3657480 --force
             "topics": [
               "0x38a332eb3aa0f3c1f4139e60234dbd0ad329da0a423413df4ca5936f2f733d81"
             ],
-            "data": "0x000000000000000000000000924a35a29055cbbefb564aebcd83b19e9f6cf77a000000000000000000000000000000000000000000000000000000000000001f00000000000000000000000000000000000000000000000000000000000029dc",
-            "articulatedLog": {}
+            "data": "0x000000000000000000000000924a35a29055cbbefb564aebcd83b19e9f6cf77a000000000000000000000000000000000000000000000000000000000000001f00000000000000000000000000000000000000000000000000000000000029dc"
           }
         ],
         "status": null
@@ -204,7 +197,6 @@ getBlock 3657480 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -226,7 +218,6 @@ getBlock 3657480 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -255,8 +246,7 @@ getBlock 3657480 --force
             "topics": [
               "0x23919512b2162ddc59b67a65e3b03c419d4105366f7d4a632f5d3c3bee9b1cff"
             ],
-            "data": "0x00000000000000000000000032be343b94f860124dc4fee278fdcbd38c102d88",
-            "articulatedLog": {}
+            "data": "0x00000000000000000000000032be343b94f860124dc4fee278fdcbd38c102d88"
           }
         ],
         "status": null
@@ -280,7 +270,6 @@ getBlock 3657480 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -310,8 +299,7 @@ getBlock 3657480 --force
               "0x87e97e825a1d1fa0c54e1d36c7506c1dea8b1efd451fe68b000cf96f7cf40003",
               "0x029282ab4c531aabc76a999081896ad454437f33169f077b69003a6e5524e8b7"
             ],
-            "data": "0x000000000000000000000000000000000000000000000000000000005913b3bb",
-            "articulatedLog": {}
+            "data": "0x000000000000000000000000000000000000000000000000000000005913b3bb"
           },
           {
             "address": "0x6090a6e47849629b7245dfa1ca21d94cd15878ef",
@@ -320,8 +308,7 @@ getBlock 3657480 --force
               "0x87e97e825a1d1fa0c54e1d36c7506c1dea8b1efd451fe68b000cf96f7cf40003",
               "0x03406ef81ea53ea92e3adc28af1635562856f4d0bd1f1790b554a215f7757b23"
             ],
-            "data": "0x000000000000000000000000000000000000000000000000000000005913b3bb",
-            "articulatedLog": {}
+            "data": "0x000000000000000000000000000000000000000000000000000000005913b3bb"
           },
           {
             "address": "0x6090a6e47849629b7245dfa1ca21d94cd15878ef",
@@ -330,8 +317,7 @@ getBlock 3657480 --force
               "0x87e97e825a1d1fa0c54e1d36c7506c1dea8b1efd451fe68b000cf96f7cf40003",
               "0x03c029bc03638d44a8d5503d34d77113d973199fad541e62fc90a39980b1f176"
             ],
-            "data": "0x000000000000000000000000000000000000000000000000000000005913b3bb",
-            "articulatedLog": {}
+            "data": "0x000000000000000000000000000000000000000000000000000000005913b3bb"
           },
           {
             "address": "0x6090a6e47849629b7245dfa1ca21d94cd15878ef",
@@ -341,8 +327,7 @@ getBlock 3657480 --force
               "0xc0fb860650546303b5e8ecdbe9cf4e1580b6725d27a192cf8e86fb8794092a28",
               "0x000000000000000000000000d144d064a7e573e8c77c0d0d2049a243c740882f"
             ],
-            "data": "0x0000000000000000000000000000000000000000000000001c2c023e9e0b00c8",
-            "articulatedLog": {}
+            "data": "0x0000000000000000000000000000000000000000000000001c2c023e9e0b00c8"
           }
         ],
         "status": null
@@ -375,8 +360,7 @@ getBlock 3657480 --force
               "0x000000000000000000000000d9bd20efca7b0e6606b969548b1516c08d37374b",
               "0x000000000000000000000000733c82c24e0b00219cd3f448e1ca8ae08d381694"
             ],
-            "data": "0x00000000000000000000000000000000000000000000002b10d76857b3e61000",
-            "articulatedLog": {}
+            "data": "0x00000000000000000000000000000000000000000000002b10d76857b3e61000"
           }
         ],
         "status": null
@@ -407,8 +391,7 @@ getBlock 3657480 --force
             "topics": [
               "0xef4c8685c12779a52dae7549eb7defa8523f67a054ad425b877a6b2da469a331"
             ],
-            "data": "0x000000000000000000000000fced5dcbc841f9aafde9e18a7fb0d928df06f7ac",
-            "articulatedLog": {}
+            "data": "0x000000000000000000000000fced5dcbc841f9aafde9e18a7fb0d928df06f7ac"
           }
         ],
         "status": null
@@ -439,8 +422,7 @@ getBlock 3657480 --force
             "topics": [
               "0x23919512b2162ddc59b67a65e3b03c419d4105366f7d4a632f5d3c3bee9b1cff"
             ],
-            "data": "0x00000000000000000000000032be343b94f860124dc4fee278fdcbd38c102d88",
-            "articulatedLog": {}
+            "data": "0x00000000000000000000000032be343b94f860124dc4fee278fdcbd38c102d88"
           }
         ],
         "status": null
@@ -464,7 +446,6 @@ getBlock 3657480 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -495,8 +476,7 @@ getBlock 3657480 --force
               "0x00000000000000000000000073b8865eda227d6fffabc83c78124dea8c347fea",
               "0x0000000000000000000000000000000000000000000000000000000000000058"
             ],
-            "data": "0x00000000000000000000000000000000000000000000000019e861e88ebb0a00",
-            "articulatedLog": {}
+            "data": "0x00000000000000000000000000000000000000000000000019e861e88ebb0a00"
           }
         ],
         "status": null
@@ -520,7 +500,6 @@ getBlock 3657480 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -550,8 +529,7 @@ getBlock 3657480 --force
               "0x87e97e825a1d1fa0c54e1d36c7506c1dea8b1efd451fe68b000cf96f7cf40003",
               "0x071098eb2b532385851cffcb98692a7ccd4921049181fd9ce794106685818fe4"
             ],
-            "data": "0x000000000000000000000000000000000000000000000000000000005913b3bb",
-            "articulatedLog": {}
+            "data": "0x000000000000000000000000000000000000000000000000000000005913b3bb"
           }
         ],
         "status": null
@@ -575,7 +553,6 @@ getBlock 3657480 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -597,7 +574,6 @@ getBlock 3657480 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -619,7 +595,6 @@ getBlock 3657480 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -650,8 +625,7 @@ getBlock 3657480 --force
               "0x0000000000000000000000009435d50503aee35c8757ae4933f7a0ab56597805",
               "0x0000000000000000000000000000000000000000000000000000000000000058"
             ],
-            "data": "0x0000000000000000000000000000000000000000000000000455a374bfb59600",
-            "articulatedLog": {}
+            "data": "0x0000000000000000000000000000000000000000000000000455a374bfb59600"
           }
         ],
         "status": null
@@ -675,7 +649,6 @@ getBlock 3657480 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -697,7 +670,6 @@ getBlock 3657480 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -726,8 +698,7 @@ getBlock 3657480 --force
             "topics": [
               "0x23919512b2162ddc59b67a65e3b03c419d4105366f7d4a632f5d3c3bee9b1cff"
             ],
-            "data": "0x00000000000000000000000032be343b94f860124dc4fee278fdcbd38c102d88",
-            "articulatedLog": {}
+            "data": "0x00000000000000000000000032be343b94f860124dc4fee278fdcbd38c102d88"
           }
         ],
         "status": null
@@ -759,8 +730,7 @@ getBlock 3657480 --force
               "0x163aa6d2d8e5248ce93dbd22509af93e5f27f8e0edc15c9e26f2867c593e0870",
               "0x000000000000000000000000ea57ca24a223f4075163334c0379c3ec7317c0ad"
             ],
-            "data": "0x0000000000000000000000000000000000000000000000008bc41559450b7432",
-            "articulatedLog": {}
+            "data": "0x0000000000000000000000000000000000000000000000008bc41559450b7432"
           },
           {
             "address": "0xaae65d15e74729e6072b388c2e34f67d6e327b66",
@@ -769,8 +739,7 @@ getBlock 3657480 --force
               "0x163aa6d2d8e5248ce93dbd22509af93e5f27f8e0edc15c9e26f2867c593e0870",
               "0x000000000000000000000000ea57ca24a223f4075163334c0379c3ec7317c0ad"
             ],
-            "data": "0x0000000000000000000000000000000000000000000000008bc41559450b7432",
-            "articulatedLog": {}
+            "data": "0x0000000000000000000000000000000000000000000000008bc41559450b7432"
           },
           {
             "address": "0xc66ea802717bfb9833400264dd12c2bceaa34a6d",
@@ -780,8 +749,7 @@ getBlock 3657480 --force
               "0x000000000000000000000000ea57ca24a223f4075163334c0379c3ec7317c0ad",
               "0x000000000000000000000000ea57ca24a223f4075163334c0379c3ec7317c0ad"
             ],
-            "data": "0x0000000000000000000000000000000000000000000000008ac7230489e80000",
-            "articulatedLog": {}
+            "data": "0x0000000000000000000000000000000000000000000000008ac7230489e80000"
           }
         ],
         "status": null
@@ -813,8 +781,7 @@ getBlock 3657480 --force
               "0x7d19c7776f05049226f581a23a4df896c65115763d8ec30490658efc4e8649cd",
               "0x000000000000000000000000924a35a29055cbbefb564aebcd83b19e9f6cf77a"
             ],
-            "data": "0x000000000000000000000000000000000000000000000000000000009502f900000000000000000000000000000000000000000000000000016345785d8a0000000000000000000000000000000000000000000000000000000000000000003200000000000000000000000000000000000000000000000000000002540be40000000000000000000000000000000000000000000000000000071afd498d0000",
-            "articulatedLog": {}
+            "data": "0x000000000000000000000000000000000000000000000000000000009502f900000000000000000000000000000000000000000000000000016345785d8a0000000000000000000000000000000000000000000000000000000000000000003200000000000000000000000000000000000000000000000000000002540be40000000000000000000000000000000000000000000000000000071afd498d0000"
           },
           {
             "address": "0xdfc328c19c8de45ac0117f836646378c10e0cda3",
@@ -822,8 +789,7 @@ getBlock 3657480 --force
             "topics": [
               "0x8a0f1e52443beebd562effb53b94f903320af76cbdca2deb2d2bf01cf119d6dc"
             ],
-            "data": "0x00000000000000000000000000000000000000000000000000000000000029dd000000000000000000000000000000000000000000000000000000009502f900",
-            "articulatedLog": {}
+            "data": "0x00000000000000000000000000000000000000000000000000000000000029dd000000000000000000000000000000000000000000000000000000009502f900"
           }
         ],
         "status": null
@@ -847,7 +813,6 @@ getBlock 3657480 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -878,8 +843,7 @@ getBlock 3657480 --force
               "0x4d0eb7d2210b2cf89ed0b297d53f42a8ff2c3bbefe51bc7e27aba01d9d4c402a",
               "0x0000000000000000000000004811e6996291cd78b9f9272ead30da18774db174"
             ],
-            "data": "0x000000000000000000000000000000000000000000000000002aa1efb94e0000",
-            "articulatedLog": {}
+            "data": "0x000000000000000000000000000000000000000000000000002aa1efb94e0000"
           }
         ],
         "status": null
@@ -903,7 +867,6 @@ getBlock 3657480 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -933,8 +896,7 @@ getBlock 3657480 --force
               "0x87e97e825a1d1fa0c54e1d36c7506c1dea8b1efd451fe68b000cf96f7cf40003",
               "0x04e39aecdcb3d99ee05a8020ecfbb3fe80451f0cebc5583732282f48727c1007"
             ],
-            "data": "0x000000000000000000000000000000000000000000000000000000005913b3bb",
-            "articulatedLog": {}
+            "data": "0x000000000000000000000000000000000000000000000000000000005913b3bb"
           }
         ],
         "status": null
@@ -958,7 +920,6 @@ getBlock 3657480 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -980,7 +941,6 @@ getBlock 3657480 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -1002,7 +962,6 @@ getBlock 3657480 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -1024,7 +983,6 @@ getBlock 3657480 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -1055,8 +1013,7 @@ getBlock 3657480 --force
               "0xb2c16e803407972d90eeec38de7937a77320f329f450a3e61c4b5bc1dbf6b55a",
               "0x0000000000000000000000004811e6996291cd78b9f9272ead30da18774db174"
             ],
-            "data": "0x000000000000000000000000000000000000000000000000002aa1efb94e0000",
-            "articulatedLog": {}
+            "data": "0x000000000000000000000000000000000000000000000000002aa1efb94e0000"
           }
         ],
         "status": null
@@ -1080,7 +1037,6 @@ getBlock 3657480 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -1102,7 +1058,6 @@ getBlock 3657480 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -1124,7 +1079,6 @@ getBlock 3657480 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -1146,7 +1100,6 @@ getBlock 3657480 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -1168,7 +1121,6 @@ getBlock 3657480 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -1190,7 +1142,6 @@ getBlock 3657480 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -1212,7 +1163,6 @@ getBlock 3657480 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -1234,7 +1184,6 @@ getBlock 3657480 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -1256,7 +1205,6 @@ getBlock 3657480 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -1278,7 +1226,6 @@ getBlock 3657480 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -1300,7 +1247,6 @@ getBlock 3657480 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -1322,7 +1268,6 @@ getBlock 3657480 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -1344,7 +1289,6 @@ getBlock 3657480 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -1366,7 +1310,6 @@ getBlock 3657480 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -1388,7 +1331,6 @@ getBlock 3657480 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -1410,7 +1352,6 @@ getBlock 3657480 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -1432,7 +1373,6 @@ getBlock 3657480 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -1454,7 +1394,6 @@ getBlock 3657480 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -1476,7 +1415,6 @@ getBlock 3657480 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -1498,7 +1436,6 @@ getBlock 3657480 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -1520,7 +1457,6 @@ getBlock 3657480 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -1542,7 +1478,6 @@ getBlock 3657480 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -1564,7 +1499,6 @@ getBlock 3657480 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -1586,7 +1520,6 @@ getBlock 3657480 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -1608,7 +1541,6 @@ getBlock 3657480 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -1630,7 +1562,6 @@ getBlock 3657480 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -1652,7 +1583,6 @@ getBlock 3657480 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -1674,7 +1604,6 @@ getBlock 3657480 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -1696,7 +1625,6 @@ getBlock 3657480 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -1718,7 +1646,6 @@ getBlock 3657480 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -1740,7 +1667,6 @@ getBlock 3657480 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -1762,7 +1688,6 @@ getBlock 3657480 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -1784,7 +1709,6 @@ getBlock 3657480 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -1806,7 +1730,6 @@ getBlock 3657480 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -1828,7 +1751,6 @@ getBlock 3657480 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -1850,7 +1772,6 @@ getBlock 3657480 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -1872,7 +1793,6 @@ getBlock 3657480 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -1894,7 +1814,6 @@ getBlock 3657480 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -1916,7 +1835,6 @@ getBlock 3657480 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -1938,7 +1856,6 @@ getBlock 3657480 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -1960,7 +1877,6 @@ getBlock 3657480 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -1982,7 +1898,6 @@ getBlock 3657480 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -2004,7 +1919,6 @@ getBlock 3657480 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000
@@ -2026,7 +1940,6 @@ getBlock 3657480 --force
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
-        "logs": [],
         "status": null
       },
       "gasUsed": 21000

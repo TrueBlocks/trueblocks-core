@@ -144,8 +144,8 @@ void testFormatting(CBlock& block) {
     CBlock block1;
     getBlock(block1, 22000);
 
-    cout << sep << endl << "Using writeJson" << endl << sep << endl;
-    block1.writeJson(cout);
+    cout << sep << endl << "Using toJson" << endl << sep << endl;
+    block1.toJson(cout);
 
     cout << sep << endl << "Using operator<<" << endl << sep << endl;
     cout << block1;

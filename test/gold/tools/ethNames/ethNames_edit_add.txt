@@ -8,9 +8,7 @@ ethNames --create --expand --verbose 10
   "symbol": "SYMBOL",
   "source": "SOURCE",
   "decimals": 11,
-  "description": "DESCRIPTION",
-  "is_custom": false,
-  "is_prefund": false
+  "description": "DESCRIPTION"
 }
 
 ---------------------------------------------

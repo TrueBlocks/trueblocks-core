@@ -156,11 +156,6 @@ string_q CClassDefinition::getValueByName(const string_q& fieldName) const {
                 return bool_2_Str_t(serializable);
             }
             break;
-        case 'u':
-            if (fieldName % "use_export") {
-                return bool_2_Str_t(use_export);
-            }
-            break;
         default:
             break;
     }
@@ -282,12 +277,6 @@ bool CClassDefinition::setValueByName(const string_q& fieldNameIn, const string_
                 return true;
             }
             break;
-        case 'u':
-            if (fieldName % "use_export") {
-                use_export = str_2_Bool(fieldValue);
-                return true;
-            }
-            break;
         default:
             break;
     }
@@ -332,7 +321,6 @@ bool CClassDefinition::Serialize(CArchive& archive) {
     archive >> eq_str;
     archive >> scope_str;
     archive >> serializable;
-    archive >> use_export;
     // archive >> fieldArray;
     finishParse();
     return true;
@@ -364,7 +352,6 @@ bool CClassDefinition::SerializeC(CArchive& archive) const {
     archive << eq_str;
     archive << scope_str;
     archive << serializable;
-    archive << use_export;
     // archive << fieldArray;
 
     return true;
@@ -421,7 +408,6 @@ void CClassDefinition::registerClass(void) {
     ADD_FIELD(CClassDefinition, "eq_str", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "scope_str", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "serializable", T_BOOL | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CClassDefinition, "use_export", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "fieldArray", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CClassDefinition, "fieldArray");
 
@@ -510,7 +496,6 @@ CClassDefinition::CClassDefinition(const CToml& toml) {
     eq_str = toml.getConfigStr("settings", "equals", "");
     scope_str = toml.getConfigStr("settings", "scope", "static");  // TODO(tjayrush): global data
     serializable = toml.getConfigBool("settings", "serializable", false);
-    use_export = toml.getConfigBool("settings", "use_export", false);
 
     //------------------------------------------------------------------------------------------------
     class_base = toProper(extract(class_name, 1));

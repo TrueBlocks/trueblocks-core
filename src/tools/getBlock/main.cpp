@@ -151,7 +151,7 @@ void oneAppearance(const CAppearance& item, void* data) {
             cout << ",";
         cout << "  ";
         indent();
-        item.writeJson(cout);
+        item.toJson(cout);
         unindent();
         opt->first = false;
     }

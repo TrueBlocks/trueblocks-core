@@ -221,7 +221,7 @@ void CPerson::registerClass(void) {
     ADD_FIELD(CPerson, "cname", T_TEXT, ++fieldNum);
     ADD_FIELD(CPerson, "name", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CPerson, "age", T_UNUMBER, ++fieldNum);
-    ADD_FIELD(CPerson, "next", T_POINTER, ++fieldNum);
+    ADD_FIELD(CPerson, "next", T_POINTER | TS_OMITEMPTY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CPerson, "schema");

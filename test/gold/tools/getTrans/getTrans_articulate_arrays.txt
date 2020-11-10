@@ -510,6 +510,82 @@ getTrans 0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f --tr
           ]
         },
         "compressedTrace": "acceptTheseAskRequestsAndBUY ( _keys: [6, 5], _tokenAmounts: [25000000000000000000, 25000000000000000000], _dollarPrices: [2000000000000000000, 2000000000000000000] )"
+      },
+      {
+        "type": "call",
+        "action": {
+          "selfDestructed": "0x0",
+          "balance": 0,
+          "callType": "call",
+          "from": "0x159cf1e9ae58211b588f5e3bf1d7e423952d959b",
+          "gas": 950586,
+          "input": "0x0c560c640000000000000000000000000000000000000000000000000000000000000000",
+          "refundAddress": "0x0",
+          "to": "0x8055d0504666e2b6942beb8d6014c964658ca591",
+          "value": 0
+        },
+        "result": {
+          "newContract": "0x0",
+          "gasUsed": 537,
+          "output": "0x00000000000000000000000000000000000000000000000000002af50c27a980"
+        },
+        "articulatedTrace": {
+          "name": "USD",
+          "stateMutability": "nonpayable",
+          "inputs": [
+            {
+              "name": "_id",
+              "value": "0",
+              "internalType": "uint256"
+            }
+          ],
+          "outputs": [
+            {
+              "name": "ret_0",
+              "value": "47231959280000",
+              "internalType": "uint256"
+            }
+          ]
+        },
+        "compressedTrace": "USD ( _id: 0 )"
+      },
+      {
+        "type": "call",
+        "action": {
+          "selfDestructed": "0x0",
+          "balance": 0,
+          "callType": "call",
+          "from": "0x159cf1e9ae58211b588f5e3bf1d7e423952d959b",
+          "gas": 824054,
+          "input": "0x0c560c640000000000000000000000000000000000000000000000000000000000000000",
+          "refundAddress": "0x0",
+          "to": "0x8055d0504666e2b6942beb8d6014c964658ca591",
+          "value": 0
+        },
+        "result": {
+          "newContract": "0x0",
+          "gasUsed": 537,
+          "output": "0x00000000000000000000000000000000000000000000000000002af50c27a980"
+        },
+        "articulatedTrace": {
+          "name": "USD",
+          "stateMutability": "nonpayable",
+          "inputs": [
+            {
+              "name": "_id",
+              "value": "0",
+              "internalType": "uint256"
+            }
+          ],
+          "outputs": [
+            {
+              "name": "ret_0",
+              "value": "47231959280000",
+              "internalType": "uint256"
+            }
+          ]
+        },
+        "compressedTrace": "USD ( _id: 0 )"
       }
     ],
     "articulatedTx": {

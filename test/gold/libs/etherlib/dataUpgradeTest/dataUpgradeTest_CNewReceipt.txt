@@ -14,8 +14,7 @@ logsBloom           	1008	0	20971570	T_TEXT TS_STRING TS_OMITEMPTY
 isError             	1009	0	12582932	T_BOOL TS_NUMERAL TS_OMITEMPTY
 {
   "contractAddress": "0x0",
-  "gasUsed": 0,
-  "logs": []
+  "gasUsed": 0
 }
 
 --------------------------------------------------------------------------------
@@ -51,7 +50,6 @@ isError             	1009	0	12582932	T_BOOL TS_NUMERAL TS_OMITEMPTY
   "showing": true,
   "cname": "NewReceipt",
   "contractAddress": "0x0",
-  "gasUsed": 0,
-  "logs": []
+  "gasUsed": 0
 }
 

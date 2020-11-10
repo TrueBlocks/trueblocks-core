@@ -108,9 +108,6 @@ string_q CParameter::getValueByName(const string_q& fieldName) const {
             if (fieldName % "str_default") {
                 return str_default;
             }
-            if (fieldName % "show_empty") {
-                return bool_2_Str_t(show_empty);
-            }
             break;
         case 't':
             if (fieldName % "type") {
@@ -191,10 +188,6 @@ bool CParameter::setValueByName(const string_q& fieldNameIn, const string_q& fie
                 str_default = fieldValue;
                 return true;
             }
-            if (fieldName % "show_empty") {
-                show_empty = str_2_Bool(fieldValue);
-                return true;
-            }
             break;
         case 't':
             if (fieldName % "type") {
@@ -243,7 +236,6 @@ bool CParameter::Serialize(CArchive& archive) {
     archive >> internalType;
     archive >> components;
     archive >> no_write;
-    archive >> show_empty;
     archive >> is_flags;
     finishParse();
     return true;
@@ -264,7 +256,6 @@ bool CParameter::SerializeC(CArchive& archive) const {
     archive << internalType;
     archive << components;
     archive << no_write;
-    archive << show_empty;
     archive << is_flags;
 
     return true;
@@ -310,7 +301,6 @@ void CParameter::registerClass(void) {
     ADD_FIELD(CParameter, "internalType", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CParameter, "components", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CParameter, "no_write", T_BOOL | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CParameter, "show_empty", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CParameter, "is_flags", T_UNUMBER, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
@@ -322,12 +312,12 @@ void CParameter::registerClass(void) {
     builtIns.push_back(_biCParameter);
 
     // EXISTING_CODE
-    ADD_FIELD(CParameter, "is_pointer", T_BOOL, ++fieldNum);
-    ADD_FIELD(CParameter, "is_array", T_BOOL, ++fieldNum);
-    ADD_FIELD(CParameter, "is_object", T_BOOL, ++fieldNum);
-    ADD_FIELD(CParameter, "is_builtin", T_BOOL, ++fieldNum);
-    ADD_FIELD(CParameter, "is_minimal", T_BOOL, ++fieldNum);
-    ADD_FIELD(CParameter, "is_enabled", T_BOOL, ++fieldNum);
+    ADD_FIELD(CParameter, "is_pointer", T_BOOL | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CParameter, "is_array", T_BOOL | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CParameter, "is_object", T_BOOL | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CParameter, "is_builtin", T_BOOL | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CParameter, "is_minimal", T_BOOL | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CParameter, "is_enabled", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CParameter, "is_enabled");
     HIDE_FIELD(CParameter, "is_flags");
     // EXISTING_CODE
@@ -386,7 +376,6 @@ bool CParameter::readBackLevel(CArchive& archive) {
         archive >> internalType;
         archive >> components;
         archive >> no_write;
-        // archive >> show_empty; new for version 0.8.3
         archive >> is_flags;
         finishParse();
         done = true;
@@ -433,7 +422,6 @@ const char* STR_DISPLAY_PARAMETER =
     "[{IS_OBJECT}]\t"
     "[{IS_BUILTIN}]\t"
     "[{NO_WRITE}]\t"
-    "[{SHOW_EMPTY}]\t"
     "[{IS_MINIMAL}]";
 
 //---------------------------------------------------------------------------
@@ -453,11 +441,6 @@ CParameter::CParameter(string_q& textIn) {
         replace(textIn, " (nowrite-min)", "");
     }
 
-    if (contains(textIn, "showEmpty")) {
-        show_empty = true;
-        replace(textIn, " (showEmpty)", "");
-    }
-
     if (contains(textIn, "=")) {
         str_default = textIn;
         textIn = nextTokenClear(str_default, '=');
@@ -470,10 +453,10 @@ CParameter::CParameter(string_q& textIn) {
         is_flags |= IS_ARRAY;
     if (startsWith(type, 'C'))
         is_flags |= IS_OBJECT;
-    CStringArray builtins = {
+    CStringArray builtinTypes = {
         "CStringArray", "CBlockNumArray", "CAddressArray", "CBigUintArray", "CTopicArray",
     };
-    for (auto b : builtins) {
+    for (auto b : builtinTypes) {
         if (type == b) {
             is_flags |= IS_BUILTIN;
         }

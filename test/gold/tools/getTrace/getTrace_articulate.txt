@@ -18,10 +18,6 @@ getTrace 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f8
       "to": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
       "value": 0
     },
-    "result": {
-      "newContract": "0x0",
-      "gasUsed": 0
-    },
     "articulatedTrace": {
       "name": "transferFrom",
       "stateMutability": "nonpayable",
@@ -162,9 +158,6 @@ getTrace 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f8
       "newContract": "0x0",
       "gasUsed": 0,
       "output": "0x"
-    },
-    "articulatedTrace": {
-      "stateMutability": "nonpayable"
     }
   }], "types": [
 { "type": "CTrace", "fields": [{ "name": "type", "type": "text" }, { "name": "error", "type": "text" }, { "name": "action", "type": "object" }, { "name": "result", "type": "object" }, { "name": "articulatedTrace", "type": "object" }, { "name": "compressedTrace", "type": "text" }] }

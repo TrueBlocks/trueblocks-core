@@ -15,8 +15,11 @@ bool JsonReader::readOneObject(Token& token) {
 
     Token nameTok;
     while (readNextToken(nameTok)) {
-        if (nameTok.type_ == tokObjEnd && curName.empty())  // empty object or trailing comma
+        if (nameTok.type_ == tokObjEnd && curName.empty()) {  // empty object or trailing comma
+            if (tbTop)
+                tbTop->finishParse();
             return true;
+        }
         curName.clear();
         if (nameTok.type_ == tokString) {
             Value nameValue;
@@ -68,8 +71,11 @@ bool JsonReader::readOneObject(Token& token) {
             LOG_ERR("Missing ',' or '}' in object declaration");
             return tryToRecover(tokObjEnd);
         }
-        if (commaTok.type_ == tokObjEnd)
+        if (commaTok.type_ == tokObjEnd) {
+            if (tbTop)
+                tbTop->finishParse();
             return true;
+        }
     }
     LOG_ERR("Missing '}' or object member name");
     return tryToRecover(tokObjEnd);

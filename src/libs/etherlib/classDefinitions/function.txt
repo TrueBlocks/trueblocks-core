@@ -3,7 +3,7 @@ class = CFunction
 fields = string name|\
         string type|\
         bool anonymous|\
-        bool constant (showEmpty)|\
+        bool constant|\
         string stateMutability|\
         string signature|\
         string encoding|\
@@ -13,6 +13,6 @@ fields = string name|\
         address address (nowrite)
 includes = utillib.h|parameter.h
 sort = v1.encoding < v2.encoding
-equals = encoding % it.encoding
+equals = encoding % it.encoding && message % it.message
 serializable = true
 display_str = name, type, stateMutability, signature, encoding, inputs, outputs

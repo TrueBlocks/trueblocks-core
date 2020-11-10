@@ -283,8 +283,8 @@ void CMonitor::registerClass(void) {
     ADD_FIELD(CMonitor, "deleted", T_BOOL, ++fieldNum);
     ADD_FIELD(CMonitor, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CMonitor, "cname", T_TEXT, ++fieldNum);
-    ADD_OBJECT(CMonitor, "abi_spec", T_OBJECT | TS_OMITEMPTY, ++fieldNum, GETRUNTIME_CLASS(CMonitor));
-    ADD_OBJECT(CMonitor, "summaryStatement", T_OBJECT | TS_OMITEMPTY, ++fieldNum, GETRUNTIME_CLASS(CMonitor));
+    ADD_OBJECT(CMonitor, "abi_spec", T_OBJECT | TS_OMITEMPTY, ++fieldNum, GETRUNTIME_CLASS(CAbi));
+    ADD_OBJECT(CMonitor, "summaryStatement", T_OBJECT | TS_OMITEMPTY, ++fieldNum, GETRUNTIME_CLASS(CReconciliation));
     ADD_FIELD(CMonitor, "stateHistory", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CMonitor, "curBalance", T_WEI, ++fieldNum);
     ADD_FIELD(CMonitor, "enabled", T_BOOL | TS_OMITEMPTY, ++fieldNum);

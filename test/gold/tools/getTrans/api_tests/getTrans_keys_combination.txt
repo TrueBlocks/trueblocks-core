@@ -24,17 +24,7 @@
             "topics": [
               "0x23919512b2162ddc59b67a65e3b03c419d4105366f7d4a632f5d3c3bee9b1cff"
             ],
-            "data": "0x00000000000000000000000032be343b94f860124dc4fee278fdcbd38c102d88",
-            "articulatedLog": {
-              "name": "",
-              "type": "",
-              "constant": false,
-              "stateMutability": "",
-              "signature": "",
-              "encoding": "",
-              "inputs": [],
-              "outputs": []
-            }
+            "data": "0x00000000000000000000000032be343b94f860124dc4fee278fdcbd38c102d88"
           },
           {
             "address": "0x11b1f00bccf07754e6f1996864531fa162145cde",
@@ -42,17 +32,7 @@
             "topics": [
               "0x23919512b2162ddc59b67a65e3b03c419d4105366f7d4a632f5d3c3bee9b1cff"
             ],
-            "data": "0x000000000000000000000000209c4784ab1e8183cf58ca33cb740efbf3fc18ef",
-            "articulatedLog": {
-              "name": "",
-              "type": "",
-              "constant": false,
-              "stateMutability": "",
-              "signature": "",
-              "encoding": "",
-              "inputs": [],
-              "outputs": []
-            }
+            "data": "0x000000000000000000000000209c4784ab1e8183cf58ca33cb740efbf3fc18ef"
           }
         ],
         "status": null
@@ -90,17 +70,7 @@
               "0x00000000000000000000000040584168524a928ae43b4e83893f963e467e9d73",
               "0x00000000000000000000000043a4210390998945dc7658a20b43c6c4189ac7d4"
             ],
-            "data": "0x000000000000000000000000000000000000000000000000000000000a21fe80",
-            "articulatedLog": {
-              "name": "",
-              "type": "",
-              "constant": false,
-              "stateMutability": "",
-              "signature": "",
-              "encoding": "",
-              "inputs": [],
-              "outputs": []
-            }
+            "data": "0x000000000000000000000000000000000000000000000000000000000a21fe80"
           }
         ],
         "status": null
@@ -136,17 +106,7 @@
             "topics": [
               "0x23919512b2162ddc59b67a65e3b03c419d4105366f7d4a632f5d3c3bee9b1cff"
             ],
-            "data": "0x00000000000000000000000032be343b94f860124dc4fee278fdcbd38c102d88",
-            "articulatedLog": {
-              "name": "",
-              "type": "",
-              "constant": false,
-              "stateMutability": "",
-              "signature": "",
-              "encoding": "",
-              "inputs": [],
-              "outputs": []
-            }
+            "data": "0x00000000000000000000000032be343b94f860124dc4fee278fdcbd38c102d88"
           }
         ],
         "status": null

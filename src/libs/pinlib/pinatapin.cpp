@@ -289,7 +289,7 @@ void CPinataPin::registerClass(void) {
     ADD_FIELD(CPinataPin, "user_id", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CPinataPin, "date_pinned", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CPinataPin, "date_unpinned", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_OBJECT(CPinataPin, "metadata", T_OBJECT | TS_OMITEMPTY, ++fieldNum, GETRUNTIME_CLASS(CPinataPin));
+    ADD_OBJECT(CPinataPin, "metadata", T_OBJECT | TS_OMITEMPTY, ++fieldNum, GETRUNTIME_CLASS(CPinataMetadata));
     ADD_FIELD(CPinataPin, "regions", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like

@@ -197,7 +197,7 @@ void CTreeRoot::registerClass(void) {
     ADD_FIELD(CTreeRoot, "deleted", T_BOOL, ++fieldNum);
     ADD_FIELD(CTreeRoot, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CTreeRoot, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CTreeRoot, "root", T_POINTER, ++fieldNum);
+    ADD_FIELD(CTreeRoot, "root", T_POINTER | TS_OMITEMPTY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CTreeRoot, "schema");

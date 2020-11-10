@@ -559,9 +559,9 @@ void CTransaction::registerClass(void) {
     ADD_FIELD(CTransaction, "input", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CTransaction, "isError", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CTransaction, "isInternal", T_UNUMBER, ++fieldNum);
-    ADD_OBJECT(CTransaction, "receipt", T_OBJECT | TS_OMITEMPTY, ++fieldNum, GETRUNTIME_CLASS(CTransaction));
+    ADD_OBJECT(CTransaction, "receipt", T_OBJECT | TS_OMITEMPTY, ++fieldNum, GETRUNTIME_CLASS(CReceipt));
     ADD_FIELD(CTransaction, "traces", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
-    ADD_OBJECT(CTransaction, "articulatedTx", T_OBJECT | TS_OMITEMPTY, ++fieldNum, GETRUNTIME_CLASS(CTransaction));
+    ADD_OBJECT(CTransaction, "articulatedTx", T_OBJECT | TS_OMITEMPTY, ++fieldNum, GETRUNTIME_CLASS(CFunction));
     ADD_FIELD(CTransaction, "reconciliations", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CTransaction, "reconciliations");
     ADD_FIELD(CTransaction, "compressedTx", T_TEXT | TS_OMITEMPTY, ++fieldNum);
@@ -589,20 +589,20 @@ void CTransaction::registerClass(void) {
     SHOW_FIELD(CTransaction, "reconciliations");
 
     // Add custom fields
-    ADD_FIELD(CTransaction, "classification1", T_TEXT, ++fieldNum);
-    ADD_FIELD(CTransaction, "classification2", T_TEXT, ++fieldNum);
+    ADD_FIELD(CTransaction, "classification1", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CTransaction, "classification2", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CTransaction, "gasCost", T_WEI, ++fieldNum);
     ADD_FIELD(CTransaction, "etherGasCost", T_WEI, ++fieldNum);
-    ADD_FIELD(CTransaction, "function", T_TEXT, ++fieldNum);
-    ADD_FIELD(CTransaction, "events", T_TEXT, ++fieldNum);
-    ADD_FIELD(CTransaction, "price", T_TEXT, ++fieldNum);
+    ADD_FIELD(CTransaction, "function", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CTransaction, "events", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CTransaction, "price", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CTransaction, "gasUsed", T_GAS, ++fieldNum);
-    ADD_FIELD(CTransaction, "date", T_DATE, ++fieldNum);
-    ADD_FIELD(CTransaction, "datesh", T_DATE, ++fieldNum);
-    ADD_FIELD(CTransaction, "time", T_DATE, ++fieldNum);
-    ADD_FIELD(CTransaction, "age", T_DATE, ++fieldNum);
+    ADD_FIELD(CTransaction, "date", T_DATE | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CTransaction, "datesh", T_DATE | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CTransaction, "time", T_DATE | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CTransaction, "age", T_DATE | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CTransaction, "ether", T_ETHER, ++fieldNum);
-    ADD_FIELD(CTransaction, "encoding", T_TEXT, ++fieldNum);
+    ADD_FIELD(CTransaction, "encoding", T_TEXT | TS_OMITEMPTY, ++fieldNum);
 
     // Hide fields we don't want to show by default
     HIDE_FIELD(CTransaction, "function");
@@ -757,8 +757,6 @@ string_q nextTransactionChunk_custom(const string_q& fieldIn, const void* dataPt
                 }
                 break;
             case 't':
-                if (fieldIn % "tracescnt")
-                    return uint_2_Str(getTraceCount(tra->hash));
                 if (fieldIn % "timestamp" && tra->pBlock)
                     return int_2_Str(tra->pBlock->timestamp);
                 if (fieldIn % "time") {
