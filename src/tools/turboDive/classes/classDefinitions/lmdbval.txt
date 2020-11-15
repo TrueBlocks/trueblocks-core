@@ -6,3 +6,4 @@ includes = utillib.h|silkworm/db/chaindb.hpp
 cpp_includes =
 serializable = true
 display_str = size, data
+disabled = true
