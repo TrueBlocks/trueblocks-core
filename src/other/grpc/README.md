@@ -14,6 +14,10 @@ https://developers.google.com/protocol-buffers/docs/proto3
   - Installation is a pain (see below)
   - Open Question: how to handle big numbers (as a string??)
 
+# Possible Architecture
+
+https://docs.google.com/presentation/d/16KtLZOYZOLWxYq_vzVAAsfkjPFEElEFZjxDYeLy1vjQ/edit#slide=id.gac3749bb04_0_0
+
 # Installing and enabling grpc-gateway
 
 https://github.com/grpc-ecosystem/grpc-gateway
