@@ -16,7 +16,7 @@ https://developers.google.com/protocol-buffers/docs/proto3
 
 # Possible Architecture
 
-https://docs.google.com/presentation/d/16KtLZOYZOLWxYq_vzVAAsfkjPFEElEFZjxDYeLy1vjQ/edit#slide=id.gac3749bb04_0_0
+https://docs.google.com/presentation/d/16KtLZOYZOLWxYq_vzVAAsfkjPFEElEFZjxDYeLy1vjQ/edit#slide=id.ga21f6c9af8_0_11
 
 # Installing and enabling grpc-gateway
 
