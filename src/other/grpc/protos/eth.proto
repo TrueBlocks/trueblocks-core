@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+// option java_multiple_files = true;
+// option java_package = "io.grpc.examples.rpcdaemon";
+// option java_outer_classname = "EthProto";
+// option objc_class_prefix = "ETH";
+
+package rpcdaemon;
+
+service EthService {
+  rpc GetBlock(BlockRequest) returns(BlockReply) {
+  }
+}
+
+message BlockRequest {
+  uint64 first = 1;
+  uint64 last = 2;
+  uint64 step = 3;
+  string hash = 4;
+  bool hashesOnly = 5;
+  bool includeReceipts = 6;
+}
+
+message BlockReply {
+  string message = 1;
+}
