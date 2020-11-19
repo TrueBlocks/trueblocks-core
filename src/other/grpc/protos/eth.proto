@@ -1,5 +1,7 @@
 syntax = "proto3";
 
+import "google/api/annotations.proto";
+
 // option java_multiple_files = true;
 // option java_package = "io.grpc.examples.rpcdaemon";
 // option java_outer_classname = "EthProto";
@@ -7,9 +9,16 @@ syntax = "proto3";
 
 package rpcdaemon;
 
+//  rpc Echo(StringMessage) returns (StringMessage) {
+// }
+
 service EthService {
-  rpc GetBlock(BlockRequest) returns(BlockReply) {
-  }
+    rpc GetBlock(BlockRequest) returns(BlockReply) {
+        option (google.api.http) = {
+            post: "/v1/example/echo"
+            body: "*"
+        };
+    }
 }
 
 message BlockRequest {
@@ -21,6 +30,4 @@ message BlockRequest {
   bool includeReceipts = 6;
 }
 
-message BlockReply {
-  string message = 1;
-}
+message BlockReply { string message = 1; }

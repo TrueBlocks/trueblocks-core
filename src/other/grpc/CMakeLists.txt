@@ -122,25 +122,24 @@ else()
 endif()
 
 # Proto file
-get_filename_component(hw_proto "./protos/eth.proto" ABSOLUTE)
-get_filename_component(hw_proto_path "${hw_proto}" PATH)
+get_filename_component(eth_proto "./protos/eth.proto" ABSOLUTE)
+get_filename_component(eth_proto_path "${eth_proto}" PATH)
 
 # Generated sources
-set(hw_proto_srcs "${CMAKE_CURRENT_BINARY_DIR}/eth.pb.cc")
-set(hw_proto_hdrs "${CMAKE_CURRENT_BINARY_DIR}/eth.pb.h")
-set(hw_grpc_srcs "${CMAKE_CURRENT_BINARY_DIR}/eth.grpc.pb.cc")
-set(hw_grpc_hdrs "${CMAKE_CURRENT_BINARY_DIR}/eth.grpc.pb.h")
-add_custom_command(OUTPUT "${hw_proto_srcs}" "${hw_proto_hdrs}" "${hw_grpc_srcs}" "${hw_grpc_hdrs}" COMMAND ${_PROTOBUF_PROTOC} ARGS --grpc_out "${CMAKE_CURRENT_BINARY_DIR}" --cpp_out "${CMAKE_CURRENT_BINARY_DIR}" -I "${hw_proto_path}" --plugin=protoc-gen-grpc="${_GRPC_CPP_PLUGIN_EXECUTABLE}" "${hw_proto}" DEPENDS "${hw_proto}")
+set(eth_proto_srcs "${CMAKE_CURRENT_BINARY_DIR}/eth.pb.cc")
+set(eth_proto_hdrs "${CMAKE_CURRENT_BINARY_DIR}/eth.pb.h")
+set(eth_grpc_srcs "${CMAKE_CURRENT_BINARY_DIR}/eth.grpc.pb.cc")
+set(eth_grpc_hdrs "${CMAKE_CURRENT_BINARY_DIR}/eth.grpc.pb.h")
+add_custom_command(OUTPUT "${eth_proto_srcs}" "${eth_proto_hdrs}" "${eth_grpc_srcs}" "${eth_grpc_hdrs}" COMMAND ${_PROTOBUF_PROTOC} ARGS --grpc_out "${CMAKE_CURRENT_BINARY_DIR}" --cpp_out "${CMAKE_CURRENT_BINARY_DIR}" -I "${eth_proto_path}" --plugin=protoc-gen-grpc="${_GRPC_CPP_PLUGIN_EXECUTABLE}" "${eth_proto}" DEPENDS "${eth_proto}")
 
 # Include generated *.pb.h files
 include_directories("${CMAKE_CURRENT_BINARY_DIR}")
 
-foreach(_target client server)
-  add_executable(${_target} "${_target}.cc"
-    ${hw_proto_srcs}
-    ${hw_grpc_srcs})
-  target_link_libraries(${_target}
-    ${_REFLECTION}
-    ${_GRPC_GRPCPP}
-    ${_PROTOBUF_LIBPROTOBUF})
-endforeach()
+# build the testing client
+add_executable(client client.cc ${eth_proto_srcs} ${eth_grpc_srcs})
+target_link_libraries(client ${_REFLECTION} ${_GRPC_GRPCPP} ${_PROTOBUF_LIBPROTOBUF})
+
+# build the server
+add_executable(rpcdaemon main.cc ${eth_proto_srcs} ${eth_grpc_srcs})
+target_link_libraries(rpcdaemon ${_REFLECTION} ${_GRPC_GRPCPP} ${_PROTOBUF_LIBPROTOBUF})
+

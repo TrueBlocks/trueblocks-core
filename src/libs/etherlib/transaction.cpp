@@ -603,6 +603,12 @@ void CTransaction::registerClass(void) {
     ADD_FIELD(CTransaction, "age", T_DATE | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CTransaction, "ether", T_ETHER, ++fieldNum);
     ADD_FIELD(CTransaction, "encoding", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CTransaction, "year", T_NUMBER | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CTransaction, "month", T_NUMBER | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CTransaction, "day", T_NUMBER | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CTransaction, "hour", T_NUMBER | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CTransaction, "minute", T_NUMBER | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CTransaction, "second", T_NUMBER | TS_OMITEMPTY, ++fieldNum);
 
     // Hide fields we don't want to show by default
     HIDE_FIELD(CTransaction, "function");
@@ -626,6 +632,12 @@ void CTransaction::registerClass(void) {
     HIDE_FIELD(CTransaction, "reconciliations");
     HIDE_FIELD(CTransaction, "extraValue1");
     HIDE_FIELD(CTransaction, "extraValue2");
+    HIDE_FIELD(CTransaction, "year");
+    HIDE_FIELD(CTransaction, "month");
+    HIDE_FIELD(CTransaction, "day");
+    HIDE_FIELD(CTransaction, "hour");
+    HIDE_FIELD(CTransaction, "minute");
+    HIDE_FIELD(CTransaction, "second");
     if (isTestMode()) {
         UNHIDE_FIELD(CTransaction, "isError");
     }
@@ -694,7 +706,31 @@ string_q nextTransactionChunk_custom(const string_q& fieldIn, const void* dataPt
                         return extract(ret, 0, 10);
                     return ret;
                 }
+                if (fieldIn % "day") {
+                    timestamp_t ts = (tra->pBlock ? tra->pBlock->timestamp : tra->timestamp);
+                    string_q ret = ts_2_Date(ts).Format(FMT_PARTS);
+                    CStringArray parts;
+                    explode(parts, ret, '|');
+                    return parts[2];
+                }
                 break;
+            case 'h':
+                if (fieldIn % "hour") {
+                    timestamp_t ts = (tra->pBlock ? tra->pBlock->timestamp : tra->timestamp);
+                    string_q ret = ts_2_Date(ts).Format(FMT_PARTS);
+                    CStringArray parts;
+                    explode(parts, ret, '|');
+                    return parts[3];
+                }
+                break;
+            case 's':
+                if (fieldIn % "second") {
+                    timestamp_t ts = (tra->pBlock ? tra->pBlock->timestamp : tra->timestamp);
+                    string_q ret = ts_2_Date(ts).Format(FMT_PARTS);
+                    CStringArray parts;
+                    explode(parts, ret, '|');
+                    return parts[5];
+                }
             case 'e':
                 if (fieldIn % "ether")
                     return wei_2_Ether(bnu_2_Str(tra->value));
@@ -762,6 +798,27 @@ string_q nextTransactionChunk_custom(const string_q& fieldIn, const void* dataPt
                 if (fieldIn % "time") {
                     timestamp_t ts = (tra->pBlock ? tra->pBlock->timestamp : tra->timestamp);
                     return extract(ts_2_Date(ts).Format(FMT_JSON), 12);
+                }
+                break;
+            case 'm':
+                if (fieldIn % "month") {
+                    timestamp_t ts = (tra->pBlock ? tra->pBlock->timestamp : tra->timestamp);
+                    string_q ret = ts_2_Date(ts).Format(FMT_PARTS);
+                    CStringArray parts;
+                    explode(parts, ret, '|');
+                    return parts[1];
+                }
+                if (fieldIn % "minute") {
+                    timestamp_t ts = (tra->pBlock ? tra->pBlock->timestamp : tra->timestamp);
+                    string_q ret = ts_2_Date(ts).Format(FMT_PARTS);
+                    CStringArray parts;
+                    explode(parts, ret, '|');
+                    return parts[4];
+                }
+                break;
+            case 'y':
+                if (fieldIn % "year") {
+                    HIDE_FIELD(CTransaction, "year");
                 }
                 break;
             // EXISTING_CODE

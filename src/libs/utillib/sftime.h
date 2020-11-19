@@ -158,6 +158,7 @@ extern const time_q earliestDate;
 
 #define FMT_JSON string_q("%Y-%m-%d %H:%M:%S UTC")
 #define FMT_EXPORT string_q("%Y-%m-%dT%H:%M:%S")
+#define FMT_PARTS string_q("%Y|%m|%d|%H|%M|%S")
 #define FMT_SHORT string_q("%Y%m%d")
 
 //---------------------------------------------------------------------------------------------
