@@ -20,12 +20,8 @@ cacheStatus --details abis caches monitors --types slurps
         {
           "type": "CMonitorCacheItem",
           "sizeInBytes2": 0,
-          "tags": "80-Prefund",
           "address": "---address---",
-          "name": "Prefund_0002",
-          "source": "Genesis",
           "decimals": 0,
-          "is_prefund": true,
           "nAppearances": 18446744073709551615,
           "firstAppearance": 18446744073709551615,
           "latestAppearance": 18446744073709551615,

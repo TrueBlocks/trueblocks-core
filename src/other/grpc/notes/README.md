@@ -18,7 +18,24 @@ https://developers.google.com/protocol-buffers/docs/proto3
 
 https://docs.buf.build/
 
-A nice looking tool to build, lint, test and manage protobuffer builds including the ability to add linting of protobufs to CI
+A nice looking tool to build, lint, test and manage protobuffer builds including the ability to add linting of protobufs to CI.
+
+This is very nice. Easy to install:
+
+```
+env GO111MODULE=on go get \
+  github.com/bufbuild/buf/cmd/buf \
+  github.com/bufbuild/buf/cmd/protoc-gen-buf-check-breaking \
+  github.com/bufbuild/buf/cmd/protoc-gen-buf-check-lint
+```
+
+Installs into your `$GOPATH/bin` path.
+
+```
+buf check lint <proto-folder>
+```
+
+runs linting
 
 # Possible Architecture
 
@@ -60,20 +77,24 @@ relies on parameters in the .proto file to set custom HTTP mappings
 - Build as part of cmake (intrusive)
 - Bazel?
 
-# CMake
+## CMake
 
 - It's easy to add gRPC to a CMake build
 - The 'first build' time is takes a while, but not thereafter
 - Can we use a submodule? (I don't know what this means.)
 
-# Bazel
+## Hunter
+
+https://hunter.readthedocs.io/en/latest/index.html
+
+## Bazel
 
 https://docs.bazel.build/versions/master/install.html
 
 - A lot of the gRPC stuff uses the Bazel build system
 - Easy to use and install, but Mac users have to download using curl
 
-# vcpkg
+## vcpkg
 
 ```
 // install vcpkg package manager on your system
