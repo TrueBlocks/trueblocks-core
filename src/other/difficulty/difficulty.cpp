@@ -25,7 +25,7 @@ bool oneLine(const char* str, void* data) {
 #if 1
 int main(int argc, const char* argv[]) {
     etherlib_init(quickQuitHandler);
-    for (size_t i = 9000000; i < 10000000; i++) {
+    for (size_t i = 11000000; i < 12000000; i++) {
         CBlock block;
         getBlock_light(block, i);
         cout << block.blockNumber << "\t" << block.timestamp << "\t" << block.difficulty << endl;
