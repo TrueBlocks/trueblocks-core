@@ -2,7 +2,7 @@
 class = CLmdbRecord
 fields = CLmdbVal key|\
         CLmdbVal value
-includes = utillib.h|lmdbval.h
+includes = utillib.h|silkworm/db/lmdbval.h
 cpp_includes =
 serializable = true
 display_str = key, value

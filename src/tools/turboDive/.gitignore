@@ -1,3 +1,10 @@
+cbor-cpp
+copy_silkworm.sh
+cpp-lru-cache
+evmone
+libff
+secp256k1
+tg_api
 libs
 tests
 intx

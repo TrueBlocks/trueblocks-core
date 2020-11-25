@@ -16,9 +16,9 @@
  * of 'EXISTING_CODE' tags.
  */
 #include "utillib.h"
-#include "lmdbstat.h"
-#include "lmdbrecord.h"
-#include "lmdbval.h"
+#include "silkworm/db/lmdbstat.h"
+#include "silkworm/db/lmdbrecord.h"
+#include "silkworm/db/lmdbval.h"
 
 namespace qblocks {
 
