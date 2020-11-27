@@ -1,0 +1,4 @@
+*.pb.h
+*.pb.cc
+third_party
+google
