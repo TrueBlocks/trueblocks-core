@@ -8,7 +8,7 @@ import (
     "flag"
 
     "github.com/golang/glog"
-    "github.com/trueblocks-core/src/go-apps/grpc-gateway"
+    "github.com/Great-Hill-Corporation/trueblocks-core/src/go-apps/grpc-gateway"
 )
 
 type server struct {
