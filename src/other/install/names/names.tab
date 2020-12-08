@@ -5,6 +5,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 34-ENS	0x00000000000c2e074ec69a0dfb2997ba6c7d2e1e	ENS: Registry with Fallback		Etherscan			false	false	false
 30-Contracts	0x0000000000c90bc353314b6911180ed7e06019a9	Arbitrage Bot		0xTracker			false	false	false
 30-Contracts	0x0000000006adbd7c01bc0738cdbfc3932600ad63	1inch Exchange		0xTracker			false	false	false
+30-Contracts	0x00000000219ab540356cBB839Cbe05303d7705Fa	Eth2 Deposit Contract		Etherscan			false	false	false
 50-Tokens	0x00000000441378008ea67f4284a57932b1c000a5	TrueGBP	TGBP	defipulse.com	18		false	false	false
 30-Contracts	0x0000000053d411becdb4a82d8603edc6d8b8b3bc	1inch Exchange		0xTracker			false	false	false
 30-Contracts	0x00000000af5a61acaf76190794e3fdf1289288a1	Arbitrage Bot		0xTracker			false	false	false
