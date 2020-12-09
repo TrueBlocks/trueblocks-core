@@ -5,6 +5,7 @@ tags	address	name	symbol	decimals
 34-ENS	0x00000000000c2e074ec69a0dfb2997ba6c7d2e1e	ENS: Registry with Fallback
 30-Contracts	0x0000000000c90bc353314b6911180ed7e06019a9	Arbitrage Bot
 30-Contracts	0x0000000006adbd7c01bc0738cdbfc3932600ad63	1inch Exchange
+30-Contracts	0x00000000219ab540356cbb839cbe05303d7705fa	Eth2 Deposit Contract
 50-Tokens	0x00000000441378008ea67f4284a57932b1c000a5	TrueGBP	TGBP		18
 30-Contracts	0x0000000053d411becdb4a82d8603edc6d8b8b3bc	1inch Exchange
 30-Contracts	0x00000000af5a61acaf76190794e3fdf1289288a1	Arbitrage Bot
@@ -199,4 +200,3 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0x08f5a9235b08173b7569f83645d2c7fb55e8ccd8	Tierion Network Token	TNT		8
 31-Gitcoin Grants:Friends	0x08fdc2ee954b3ce261b8cc7f65fdb02df168802e	Name 0x08fdc2ee
 34-ENS	0x0904dac3347ea47d208f3fd67402d039a3b99859	ENS: Wallet 1 nickdjohnson
-31-Gitcoin Grants:Friends	0x09328efb1093120b9d07c005f201cd743cb01708	Name 0x09328efb

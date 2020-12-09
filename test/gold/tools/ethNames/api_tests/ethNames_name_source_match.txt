@@ -39,6 +39,18 @@
     {
       "deleted": false,
       "tags": "30-Contracts",
+      "address": "0x00000000219ab540356cbb839cbe05303d7705fa",
+      "name": "Eth2 Deposit Contract",
+      "symbol": "",
+      "source": "Etherscan",
+      "decimals": 0,
+      "description": "",
+      "is_custom": false,
+      "is_prefund": false
+    },
+    {
+      "deleted": false,
+      "tags": "30-Contracts",
       "address": "0x000983ba1a675327f0940b56c2d49cd9c042dfbf",
       "name": "GU: Shiny Legendary Pack",
       "symbol": "",
@@ -2393,18 +2405,6 @@
       "tags": "30-Contracts",
       "address": "0x6b175474e89094c44da98b954eedeac495271d0f",
       "name": "Dai Stablecoin",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": 0,
-      "description": "",
-      "is_custom": false,
-      "is_prefund": false
-    },
-    {
-      "deleted": false,
-      "tags": "30-Contracts",
-      "address": "0x6c5dc1dcda3d309a6e919e6d0965f197e0fc1913",
-      "name": "GU: Legendary Pack Two",
       "symbol": "",
       "source": "Etherscan",
       "decimals": 0,

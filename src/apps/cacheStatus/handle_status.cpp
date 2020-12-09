@@ -362,6 +362,9 @@ bool noteMonitor(const string_q& path, void* data) {
             mdi.nAppearances = NOPOS;
             mdi.sizeInBytes = NOPOS;
             mdi.address = "---address---";
+            mdi.name = "--name--";
+            mdi.tags = "--tags--";
+            mdi.source = "--source--";
         }
 
         CMonitor m;

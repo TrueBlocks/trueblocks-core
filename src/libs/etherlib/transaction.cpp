@@ -818,7 +818,11 @@ string_q nextTransactionChunk_custom(const string_q& fieldIn, const void* dataPt
                 break;
             case 'y':
                 if (fieldIn % "year") {
-                    HIDE_FIELD(CTransaction, "year");
+                    timestamp_t ts = (tra->pBlock ? tra->pBlock->timestamp : tra->timestamp);
+                    string_q ret = ts_2_Date(ts).Format(FMT_PARTS);
+                    CStringArray parts;
+                    explode(parts, ret, '|');
+                    return parts[0];
                 }
                 break;
             // EXISTING_CODE

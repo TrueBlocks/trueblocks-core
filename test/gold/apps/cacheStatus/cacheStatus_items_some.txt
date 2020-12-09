@@ -72,7 +72,10 @@ cacheStatus --details some --start 3000000 --end 3100000
         {
           "type": "CMonitorCacheItem",
           "sizeInBytes2": 0,
+          "tags": "--tags--",
           "address": "---address---",
+          "name": "--name--",
+          "source": "--source--",
           "decimals": 0,
           "nAppearances": 18446744073709551615,
           "firstAppearance": 18446744073709551615,
@@ -92,7 +95,10 @@ cacheStatus --details some --start 3000000 --end 3100000
         {
           "type": "CMonitorCacheItem",
           "sizeInBytes2": 0,
+          "tags": "--tags--",
           "address": "---address---",
+          "name": "--name--",
+          "source": "--source--",
           "decimals": 0,
           "nAppearances": 18446744073709551615,
           "firstAppearance": 18446744073709551615,

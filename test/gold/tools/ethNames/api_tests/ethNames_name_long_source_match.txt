@@ -2,6 +2,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 34-ENS	0x000000000000000000000000000000000000dead	ENS: Burn Address		Etherscan			false	false	false
 50-Tokens	0x0000000000085d4780b73119b644ae5ecd22b376	TrueUSD		Etherscan.io		The only regulated, exchange-independent stablecoin backed 1-for-1 with US Dollars	false	false	false
 34-ENS	0x00000000000c2e074ec69a0dfb2997ba6c7d2e1e	ENS: Registry with Fallback		Etherscan			false	false	false
+30-Contracts	0x00000000219ab540356cbb839cbe05303d7705fa	Eth2 Deposit Contract		Etherscan			false	false	false
 30-Contracts	0x000983ba1a675327f0940b56c2d49cd9c042dfbf	GU: Shiny Legendary Pack		Etherscan			false	false	false
 30-Contracts	0x00319f722bd546182cb2c701ca254146d3f084fc	Democracy Earth	HOUR	Etherscan			false	false	false
 35-Pool Together	0x0034ea9808e620a0ef79261c51af20614b742b24	Pool Usdc MCDAwarePool v0.2.12		Etherscan			false	false	false
@@ -199,4 +200,3 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens	0x6aedbf8dff31437220df351950ba2a3362168d1b	Dragonglass	DGS	Etherscan.io		Dragonglass provides a seamless solution for cryptocurrency mining	false	false	false
 74-DaoDrain	0x6b0c4d41ba9ab8d8cfb5d379c69a612f2ced8ecb	Dao Drain 017 Other DAO		GethSource TrueBlocks.io Ether Camp			false	false	false
 30-Contracts	0x6b175474e89094c44da98b954eedeac495271d0f	Dai Stablecoin		Etherscan			false	false	false
-30-Contracts	0x6c5dc1dcda3d309a6e919e6d0965f197e0fc1913	GU: Legendary Pack Two		Etherscan			false	false	false

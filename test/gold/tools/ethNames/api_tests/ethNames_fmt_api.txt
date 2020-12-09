@@ -91,6 +91,15 @@
       "description": ""
     },
     {
+      "tags": "30-Contracts",
+      "address": "0x00000000219ab540356cbb839cbe05303d7705fa",
+      "name": "Eth2 Deposit Contract",
+      "symbol": "",
+      "source": "Etherscan",
+      "decimals": 0,
+      "description": ""
+    },
+    {
       "tags": "50-Tokens",
       "address": "0x00000000441378008ea67f4284a57932b1c000a5",
       "name": "TrueGBP",
@@ -1799,15 +1808,6 @@
       "source": "Etherscan.io",
       "decimals": 0,
       "description": "Aims to be the blockchain solution for the global dental industry."
-    },
-    {
-      "tags": "30-Contracts",
-      "address": "0x08dbf4f942ba8cd7871c13addefdffef3e5a8035",
-      "name": "GU: Rare Pack Three",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": 0,
-      "description": ""
     }
   ],
   "types": [

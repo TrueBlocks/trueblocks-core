@@ -11,6 +11,7 @@ ethNames --named --custom --fmt csv
 "34-ENS","0x00000000000c2e074ec69a0dfb2997ba6c7d2e1e","ENS: Registry with Fallback","","",""
 "30-Contracts","0x0000000000c90bc353314b6911180ed7e06019a9","Arbitrage Bot","","",""
 "30-Contracts","0x0000000006adbd7c01bc0738cdbfc3932600ad63","1inch Exchange","","",""
+"30-Contracts","0x00000000219ab540356cbb839cbe05303d7705fa","Eth2 Deposit Contract","","",""
 "50-Tokens","0x00000000441378008ea67f4284a57932b1c000a5","TrueGBP","TGBP","","18"
 "30-Contracts","0x0000000053d411becdb4a82d8603edc6d8b8b3bc","1inch Exchange","","",""
 "30-Contracts","0x00000000af5a61acaf76190794e3fdf1289288a1","Arbitrage Bot","","",""
@@ -201,4 +202,3 @@ ethNames --named --custom --fmt csv
 "31-Gitcoin Grants:Grant","0x08b440dd2b2dd0b0de112d5f6eb6d9028eb86b70","Grant 425 Turkish Cryptocurrency YouTuber and Researcher","","",""
 "31-Gitcoin Grants:Grant","0x08ceb8bba685ee708c9c4c65576837cbe19b9dea","Grant 759 DeFi Arts Intelligencer","","",""
 "50-Tokens","0x08d32b0da63e2c3bcf8019c9c5d849d7a9d791e6","Dentacoin","DENT","",""
-"30-Contracts","0x08dbf4f942ba8cd7871c13addefdffef3e5a8035","GU: Rare Pack Three","","",""

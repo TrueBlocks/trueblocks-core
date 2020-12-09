@@ -55,6 +55,15 @@
       "description": ""
     },
     {
+      "tags": "30-Contracts",
+      "address": "0x00000000219ab540356cbb839cbe05303d7705fa",
+      "name": "Eth2 Deposit Contract",
+      "symbol": "",
+      "source": "Etherscan",
+      "decimals": 0,
+      "description": ""
+    },
+    {
       "tags": "50-Tokens",
       "address": "0x00000000441378008ea67f4284a57932b1c000a5",
       "name": "TrueGBP",
@@ -1797,15 +1806,6 @@
       "name": "ENS: Wallet 1 nickdjohnson",
       "symbol": "",
       "source": "Etherscan",
-      "decimals": 0,
-      "description": ""
-    },
-    {
-      "tags": "31-Gitcoin Grants:Friends",
-      "address": "0x09328efb1093120b9d07c005f201cd743cb01708",
-      "name": "Name 0x09328efb",
-      "symbol": "",
-      "source": "Gitcoin Website",
       "decimals": 0,
       "description": ""
     }
