@@ -1,0 +1,1 @@
+curl --location --request POST --header 'Content-Type: application/json' --data-raw '{"jsonrpc": "2.0","method": "trace_block","params": ["0x1a38e1"],"id": "1"}' $1

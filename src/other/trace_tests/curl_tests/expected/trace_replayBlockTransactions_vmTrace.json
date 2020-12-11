@@ -1,0 +1,16 @@
+{
+  "id": "1",
+  "jsonrpc": "2.0",
+  "result": [
+    {
+      "output": "0x",
+      "stateDiff": null,
+      "trace": [],
+      "transactionHash": "0xc55e2b90168af6972193c1f86fa4d7d7b31a29c156665d15b9cd48618b5177ef",
+      "vmTrace": {
+        "code": "0x",
+        "ops": []
+      }
+    }
+  ]
+}

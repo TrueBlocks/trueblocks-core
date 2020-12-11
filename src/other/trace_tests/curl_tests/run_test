@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+source tests/$1.json http://localhost:23456 | jq -S | tee expected/$1.json

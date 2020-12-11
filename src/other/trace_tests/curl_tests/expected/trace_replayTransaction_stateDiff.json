@@ -1,0 +1,49 @@
+{
+  "id": "1",
+  "jsonrpc": "2.0",
+  "result": {
+    "output": "0x",
+    "stateDiff": {
+      "0x00a63d34051602b2cb268ea344d4b8bc4767f2d4": {
+        "balance": {
+          "*": {
+            "from": "0x52b7cb1385ccf49b2b",
+            "to": "0x5236bafcfeb4e73b2b"
+          }
+        },
+        "code": "=",
+        "nonce": {
+          "*": {
+            "from": "0xc6f",
+            "to": "0xc70"
+          }
+        },
+        "storage": {}
+      },
+      "0x1a060b0604883a99809eb3f798df71bef6c358f1": {
+        "balance": {
+          "*": {
+            "from": "0x6f9b59db405cf2c70",
+            "to": "0x6f9b71bb0e49d6c70"
+          }
+        },
+        "code": "=",
+        "nonce": "=",
+        "storage": {}
+      },
+      "0x87cc0d78ee64a9f11b5affdd9ea523872eae14e4": {
+        "balance": {
+          "*": {
+            "from": "0x3afccb788fcd0e00",
+            "to": "0xbc0b6402c90c2e00"
+          }
+        },
+        "code": "=",
+        "nonce": "=",
+        "storage": {}
+      }
+    },
+    "trace": [],
+    "vmTrace": null
+  }
+}
