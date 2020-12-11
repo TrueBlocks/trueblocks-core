@@ -6440,3 +6440,18 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 91-Friends	0xffe34e7adbd7ac2569aed16db908e7dda9828b7d	Wild Inflow 1		TrueBlocks.io			false	false	false
 50-Tokens:ERC20	0xffe8196bc259e8dedc544d935786aa4709ec3e64	Hedge	HDG	On Chain	18	An investment portal for the ICO and Staking platforms.	false	false	false
 30-Contracts	0xfff66732389866aeaf8f7305da53f442c29e1b8f	Arbitrage Bot Sender		OnChain			false	false	false
+40-Exchanges	0x3f5CE5FBFe3E9af3971dD833D26bA9b5C936f0bE	Binance Exchange Wallet 1		https://medium.com/@moneytoken/bnb-as-a-collateral-moneytoken-listing-7c98272b57ef		false	false	false
+40-Exchanges	0x564286362092D8e7936f0549571a803B203aAceD	Binance Exchange Wallet 3		https://medium.com/@moneytoken/bnb-as-a-collateral-moneytoken-listing-7c98272b57ef		false	false	false
+40-Exchanges	0xD551234Ae421e3BCBA99A0Da6d736074f22192FF	Binance Exchange Wallet 4		https://medium.com/@moneytoken/bnb-as-a-collateral-moneytoken-listing-7c98272b57ef		false	false	false
+40-Exchanges	0x6690819Cb98c1211A8e38790d6cD48316Ed518Db	Bancor Exchange Wallet 2		https://medium.com/@moneytoken/bnb-as-a-collateral-moneytoken-listing-7c98272b57ef		false	false	false
+40-Exchanges	0xF20b9e713A33F61fA38792d2aFaF1cD30339126A	Bancor Exchange Wallet 3		https://medium.com/@moneytoken/bnb-as-a-collateral-moneytoken-listing-7c98272b57ef		false	false	false
+81-Other	0x99eBD396Ce7AA095412a4Cd1A0C959D6Fd67B340	OMG Smart Token Relay		https://medium.com/@moneytoken/bnb-as-a-collateral-moneytoken-listing-7c98272b57ef		false	false	false
+81-Other	0x51CA21eD46a9DF3Cb6F34624CBd482d312996730	Crypto.com Cluster		https://medium.com/@moneytoken/bnb-as-a-collateral-moneytoken-listing-7c98272b57ef		false	false	false
+40-Exchanges	0x43B9F9eAF7259CdFBD3158d8B5D6576245946a9C	Exchange Service Cluster		https://medium.com/@moneytoken/bnb-as-a-collateral-moneytoken-listing-7c98272b57ef		false	false	false
+81-Other	0x6ACe7E0abCF0dA3097Fa7155149dccd51E20EF82	Central Binance Wallet		https://medium.com/@moneytoken/bnb-as-a-collateral-moneytoken-listing-7c98272b57ef		false	false	false
+40-Exchanges	0x59a5208B32e627891C389EbafC644145224006E8	HitBTC Wallet		https://medium.com/@moneytoken/bnb-as-a-collateral-moneytoken-listing-7c98272b57ef		false	false	false
+40-Exchanges	0xbDbF7f7135218fc78BEa7E0EbBd6769a31af2976	Arbitrage Doorway Between Hitbtc and Binance		https://medium.com/@moneytoken/bnb-as-a-collateral-moneytoken-listing-7c98272b57ef		false	false	false
+81-Other	0x5c1d3596928ca09c2b73c119361249be5812bfb9	Airdrop Wallets 1		https://medium.com/@moneytoken/bnb-as-a-collateral-moneytoken-listing-7c98272b57ef		false	false	false
+81-Other	0x0a2311594059B468c9897338b027C8782398b481	Unknown Doorway Wallet		https://medium.com/@moneytoken/bnb-as-a-collateral-moneytoken-listing-7c98272b57ef		false	false	false
+80-Malicious	0xC90cB458441ece1caA52B4Be9056159552dF16F3	Self-Sending Wallet		https://medium.com/@moneytoken/bnb-as-a-collateral-moneytoken-listing-7c98272b57ef		false	false	false
+80-Malicious	0x5B7934cdBb5cD076bd486e0f017AeB777bf0D04c	Dirty Coins Wallet		https://medium.com/@moneytoken/bnb-as-a-collateral-moneytoken-listing-7c98272b57ef		false	false	false

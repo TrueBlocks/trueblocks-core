@@ -1,4 +1,5 @@
 contract A {
+  function splitTransfer(address,address,uint256,uint256,address)
   function mint(address recipient, uint256 amount) { }
   function changeMembership(address member,uint256 amt,bool,string name) { }
   function doit() { }
