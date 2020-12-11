@@ -16,9 +16,9 @@
 ./run_test trace_call_trace
 ./run_test trace_call_vmTrace
 ./run_test trace_filter
-./run_test trace_rawTransaction_all
+#./run_test trace_rawTransaction_all
 ./run_test trace_rawTransaction_none
-./run_test trace_rawTransaction_stateDiff
+#./run_test trace_rawTransaction_stateDiff
 ./run_test trace_rawTransaction_trace
 ./run_test trace_rawTransaction_vmTrace
 ./run_test trace_replayBlockTransactions_all
