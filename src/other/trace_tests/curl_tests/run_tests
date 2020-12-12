@@ -1,34 +1,42 @@
 #!/usr/bin/env bash
 
-./run_test trace_block
-./run_test trace_callMany_all
-./run_test trace_callMany_none
-./run_test trace_callMany_stateDiff
-./run_test trace_callMany_trace
-./run_test trace_callMany_vmTrace
-./run_test trace_call_all
+#./run_test trace_call_all
 ./run_test trace_call_none
-./run_test trace_call_stateDiff
-./run_test trace_call_trace
-./run_test trace_call_vmTrace
-./run_test trace_get_0
-./run_test trace_get_3
-./run_test trace_get_5
-./run_test trace_get_10
-./run_test trace_filter
-#./run_test trace_rawTransaction_all
-./run_test trace_rawTransaction_none
-#./run_test trace_rawTransaction_stateDiff
-./run_test trace_rawTransaction_trace
-./run_test trace_rawTransaction_vmTrace
-./run_test trace_replayBlockTransactions_all
-./run_test trace_replayBlockTransactions_none
-./run_test trace_replayBlockTransactions_stateDiff
-./run_test trace_replayBlockTransactions_trace
-./run_test trace_replayBlockTransactions_vmTrace
-./run_test trace_replayTransaction_all
-./run_test trace_replayTransaction_none
-./run_test trace_replayTransaction_stateDiff
-./run_test trace_replayTransaction_trace
-./run_test trace_replayTransaction_vmTrace
-./run_test trace_transaction
+#./run_test trace_call_trace
+#./run_test trace_call_vmTrace
+#./run_test trace_call_stateDiff
+
+#./run_test trace_callMany_all
+#./run_test trace_callMany_none
+#./run_test trace_callMany_trace
+#./run_test trace_callMany_vmTrace
+#./run_test trace_callMany_stateDiff
+
+#./run_test trace_replayTransaction_all
+#./run_test trace_replayTransaction_none
+#./run_test trace_replayTransaction_trace
+#./run_test trace_replayTransaction_vmTrace
+#./run_test trace_replayTransaction_stateDiff
+
+#./run_test trace_replayBlockTransactions_all
+#./run_test trace_replayBlockTransactions_none
+#./run_test trace_replayBlockTransactions_trace
+#./run_test trace_replayBlockTransactions_vmTrace
+#./run_test trace_replayBlockTransactions_stateDiff
+
+##./run_test trace_rawTransaction_all
+#./run_test trace_rawTransaction_none
+#./run_test trace_rawTransaction_trace
+#./run_test trace_rawTransaction_vmTrace
+##./run_test trace_rawTransaction_stateDiff
+
+#./run_test trace_get_0
+#./run_test trace_get_3
+#./run_test trace_get_5
+#./run_test trace_get_10
+
+#./run_test trace_transaction
+
+#./run_test trace_block
+
+#./run_test trace_filter
