@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
 
-source tests/$1.json $RPC_ENDPOINT | jq -S | tee produced/$1.json
+echo "Running test: $1"
+source tests/$1.json $RPC_ENDPOINT | jq -S >produced/$1.json
 diff expected/$1.json produced/$1.json
