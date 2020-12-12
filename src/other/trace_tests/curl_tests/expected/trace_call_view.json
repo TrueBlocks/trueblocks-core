@@ -1,0 +1,28 @@
+{
+  "jsonrpc": "2.0",
+  "result": {
+    "output": "0x000000000000000000000000000000000000000000005c1d65b2473949e00000",
+    "stateDiff": null,
+    "trace": [
+      {
+        "action": {
+          "callType": "call",
+          "from": "0x0000000000000000000000000000000000000000",
+          "gas": "0x1dcd0c68",
+          "input": "0x70a08231000000000000000000000000a25d04fa348f107428708ba19c95d1c79b3744bf",
+          "to": "0xb9e7f8568e08d5659f5d29c4997173d84cdf2607",
+          "value": "0x0"
+        },
+        "result": {
+          "gasUsed": "0xe46",
+          "output": "0x000000000000000000000000000000000000000000005c1d65b2473949e00000"
+        },
+        "subtraces": 0,
+        "traceAddress": [],
+        "type": "call"
+      }
+    ],
+    "vmTrace": null
+  },
+  "id": "1"
+}
