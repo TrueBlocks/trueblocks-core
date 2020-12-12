@@ -1,4 +1,3 @@
 #!/usr/bin/env bash
 
-echo "XXXX" $RPC_ENDPOINT
 source tests/$1.json $RPC_ENDPOINT | jq -S | tee expected/$1.json
