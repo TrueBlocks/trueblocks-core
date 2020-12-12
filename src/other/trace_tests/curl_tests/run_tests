@@ -7,25 +7,25 @@
 #./run_test trace_call_stateDiff
 
 #./run_test trace_callMany_all
-#./run_test trace_callMany_none
+./run_test trace_callMany_none
 #./run_test trace_callMany_trace
 #./run_test trace_callMany_vmTrace
 #./run_test trace_callMany_stateDiff
 
 #./run_test trace_replayTransaction_all
-#./run_test trace_replayTransaction_none
+./run_test trace_replayTransaction_none
 #./run_test trace_replayTransaction_trace
 #./run_test trace_replayTransaction_vmTrace
 #./run_test trace_replayTransaction_stateDiff
 
 #./run_test trace_replayBlockTransactions_all
-#./run_test trace_replayBlockTransactions_none
+./run_test trace_replayBlockTransactions_none
 #./run_test trace_replayBlockTransactions_trace
 #./run_test trace_replayBlockTransactions_vmTrace
 #./run_test trace_replayBlockTransactions_stateDiff
 
 ##./run_test trace_rawTransaction_all
-#./run_test trace_rawTransaction_none
+./run_test trace_rawTransaction_none
 #./run_test trace_rawTransaction_trace
 #./run_test trace_rawTransaction_vmTrace
 ##./run_test trace_rawTransaction_stateDiff
