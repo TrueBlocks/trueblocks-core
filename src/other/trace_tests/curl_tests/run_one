@@ -8,8 +8,8 @@ export RPC_ENDPOINT="http://localhost:8545"
 #./run_test trace_call_vmTrace   # 0xa94f5
 #./run_test trace_call_stateDiff # 0xa94f5
 ./run_test trace_call_view      # 0xb9e7
-#./run_test trace_call_view_none # 0xb9e7
-#./run_test trace_call_error     # 0xb9e7
+./run_test trace_call_view_none # 0xb9e7
+./run_test trace_call_error     # 0xb9e7
 
 #./run_test trace_callMany_all
 #./run_test trace_callMany_none
