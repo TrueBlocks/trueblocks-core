@@ -1,1 +1,1 @@
-curl --location --request POST --header 'Content-Type: application/json' --data-raw '{"jsonrpc": "2.0","method": "trace_replayTransaction","params": ["0x02d4a872e096445e80d05276ee756cefef7f3b376bcec14246469c0cd97dad8f", []],"id": "1"}' $1
+curl -s --location --request POST --header 'Content-Type:  application/json' --data-raw '{"jsonrpc":  "2.0","method":  "trace_replayTransaction","params":  ["0x02d4a872e096445e80d05276ee756cefef7f3b376bcec14246469c0cd97dad8f", []],"id":  "1"}' $1

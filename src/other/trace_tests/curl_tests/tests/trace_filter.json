@@ -1,1 +1,1 @@
-curl --location --request POST --header 'Content-Type: application/json' --data-raw '{"jsonrpc": "2.0","method": "trace_filter","params": [{"fromBlock": "0x3","toBlock": "0x3"}],"id": "1"}' $1
+curl -s --location --request POST --header 'Content-Type:  application/json' --data-raw '{"jsonrpc":  "2.0","method":  "trace_filter","params":  [{"fromBlock":  "0x3","toBlock":  "0x3"}],"id":  "1"}' $1
