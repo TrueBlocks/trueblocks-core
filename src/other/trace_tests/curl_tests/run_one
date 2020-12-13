@@ -1,15 +1,18 @@
 #!/usr/bin/env bash
 
+# Local
 export RPC_ENDPOINT="http://localhost:8545"
+# Nethermind
+#export RPC_ENDPOINT="http://archive02.archivenode.io:8545"
 
 #./run_test trace_call_all       # 0xa94f5
 #./run_test trace_call_none      # 0xa94f5
 #./run_test trace_call_trace     # 0xa94f5
 #./run_test trace_call_vmTrace   # 0xa94f5
 #./run_test trace_call_stateDiff # 0xa94f5
-./run_test trace_call_view      # 0xb9e7
-./run_test trace_call_view_none # 0xb9e7
-./run_test trace_call_error     # 0xb9e7
+#./run_test trace_call_view      # 0xb9e7
+#./run_test trace_call_view_none # 0xb9e7
+#./run_test trace_call_error     # 0xb9e7
 
 #./run_test trace_callMany_all
 #./run_test trace_callMany_none
@@ -40,7 +43,7 @@ export RPC_ENDPOINT="http://localhost:8545"
 #./run_test trace_get_5
 #./run_test trace_get_10
 
-#./run_test trace_transaction
+./run_test trace_transaction
 
 #./run_test trace_block
 
