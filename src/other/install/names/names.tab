@@ -443,6 +443,8 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 31-Gitcoin Grants:Friends	0x0f5bd2404ebb70410462c22cacb062cd285bfc52	le-dawg		Gitcoin Website			false	false	false
 50-Tokens:ERC20	0x0f5d2fb29fb7d3cfee444a200298f468908cc942	Decentraland MANA	MANA	On Chain	18	Decentraland is a virtual reality platform powered by the Ethereum blockchain. Users can create, experience, and monetize content and applications	false	false	false
 80-Malicious	0x0f600992da5dbbe0aebf01ba1da0daef1c912bbf	Possibly Malicious 0x0f6		TrueBlocks.io			false	false	false
+80-Malicious	0x2b0b02ce19c322b4dd55a3949b4fb6e9377f7913	Pickle Thief Contract		Twitter			false	false	false
+80-Malicious	0xbaC8a476B95eC741E56561a66231F92bc88bB3a8	Pickle Thief (Deployer)		Twitter			false	false	false
 50-Tokens:ERC20	0x0f612a09ead55bb81b6534e80ed5a21bf0a27b16	EUNOMIA	ENTS	On Chain	8		false	false	false
 30-Contracts	0x0f780de58182bfbfe1cdc4c80e94d178ef2a3d2b	Arbitrage Bot		0xTracker			false	false	false
 34-Humanity DAO	0x0f7e9f461e84cc1c089bf9953af5893015d483c1	LochnessCrypto ronnieBoise		https://www.humanitydao.org/humans			false	false	false
