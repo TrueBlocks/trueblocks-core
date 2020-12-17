@@ -556,7 +556,7 @@
                 "components": []
               },
               {
-                "name": "_value",
+                "name": "_amount",
                 "value": "100000000",
                 "internalType": "uint256",
                 "components": []
@@ -571,7 +571,7 @@
               }
             ]
           },
-          "compressedTrace": "transfer ( _to: 0x8ca1fec705f7060aaa3d8c6757e34d1e7cc61021, _value: 100000000 )"
+          "compressedTrace": "transfer ( _to: 0x8ca1fec705f7060aaa3d8c6757e34d1e7cc61021, _amount: 100000000 )"
         },
         {
           "type": "call",
