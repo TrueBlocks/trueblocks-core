@@ -1,3 +1,3 @@
 ethNames argc: 5 [1:0xCB] [2:--match_case] [3:--fmt] [4:txt] 
 ethNames 0xCB --match_case --fmt txt 
-No results
+No results for 0xCB --match_case

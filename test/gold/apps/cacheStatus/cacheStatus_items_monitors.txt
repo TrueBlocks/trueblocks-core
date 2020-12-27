@@ -25,6 +25,7 @@ cacheStatus --details monitors
           "name": "--name--",
           "source": "--source--",
           "decimals": 0,
+          "is_prefund": true,
           "nAppearances": 18446744073709551615,
           "firstAppearance": 18446744073709551615,
           "latestAppearance": 18446744073709551615,

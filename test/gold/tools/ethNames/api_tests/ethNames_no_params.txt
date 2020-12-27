@@ -172,6 +172,15 @@
       "description": ""
     },
     {
+      "tags": "60-Airdrops",
+      "address": "0x000ee67d5bec37ad37292da18516cc96d81e0242",
+      "name": "RZM Airdrop Sender 2",
+      "symbol": "",
+      "source": "TrueBlocks.io",
+      "decimals": 0,
+      "description": ""
+    },
+    {
       "tags": "31-Gitcoin Grants:Friends",
       "address": "0x00158a74921620b39e5c3afe4dca79feb2c2c143",
       "name": "Name 0x00158a74",
@@ -289,7 +298,7 @@
       "description": ""
     },
     {
-      "tags": "74-DaoDrain",
+      "tags": "80-Malicious:DaoDrain",
       "address": "0x005f5cee7a43331d5a3d3eec71305925a62f34b6",
       "name": "Dao Drain 086",
       "symbol": "",
@@ -305,6 +314,15 @@
       "source": "On Chain",
       "decimals": 18,
       "description": "Blockchain Prediction Markets Platform."
+    },
+    {
+      "tags": "80-Malicious:Shanghai",
+      "address": "0x006e61aa7e7ce25b8dad331d5181f2fbe5c23a54",
+      "name": "Shanghai Cleaner Contract",
+      "symbol": "",
+      "source": "TrueBlocks.io",
+      "decimals": 0,
+      "description": ""
     },
     {
       "tags": "31-Gitcoin Grants:Grant",
@@ -442,7 +460,7 @@
       "description": "https://nescience.io"
     },
     {
-      "tags": "74-DaoDrain",
+      "tags": "80-Malicious:DaoDrain",
       "address": "0x0101f3be8ebb4bbd39a2e3b9a3639d4259832fd9",
       "name": "Dao Drain 075",
       "symbol": "",
@@ -892,7 +910,7 @@
       "description": ""
     },
     {
-      "tags": "80-Malicious",
+      "tags": "80-Malicious:Shanghai",
       "address": "0x03b904c8b912194464ae97eaa0381e5518446d25",
       "name": "Possibly Malicious 0x03b",
       "symbol": "",
@@ -1135,7 +1153,7 @@
       "description": "https://medium.com/@w_brealey"
     },
     {
-      "tags": "74-DaoDrain",
+      "tags": "80-Malicious:DaoDrain",
       "address": "0x057b56736d32b86616a10f619859c6cd6f59092a",
       "name": "Dao Drain 065",
       "symbol": "",
@@ -1333,7 +1351,7 @@
       "description": "@okbabyqn88"
     },
     {
-      "tags": "74-DaoDrain",
+      "tags": "80-Malicious:DaoDrain",
       "address": "0x06706dd3f2c9abf0a21ddcc6941d9b86f0596936",
       "name": "Dao Drain 008",
       "symbol": "",
@@ -1432,7 +1450,7 @@
       "description": ""
     },
     {
-      "tags": "30-Contract",
+      "tags": "30-Contracts",
       "address": "0x06fe76b2f432fdfecaef1a7d4f6c3d41b5861672",
       "name": "Zerion: Adapter Registry",
       "symbol": "",
@@ -1468,7 +1486,7 @@
       "description": ""
     },
     {
-      "tags": "74-DaoDrain",
+      "tags": "80-Malicious:DaoDrain",
       "address": "0x0737a6b837f97f46ebade41b9bc3e1c509c85c53",
       "name": "Dao Drain 059",
       "symbol": "",
@@ -1630,7 +1648,7 @@
       "description": ""
     },
     {
-      "tags": "74-DaoDrain",
+      "tags": "80-Malicious:DaoDrain",
       "address": "0x07f5c1e1bc2c93e0402f23341973a0e043f7bf8a",
       "name": "Dao Drain 070",
       "symbol": "",
@@ -1738,7 +1756,7 @@
       "description": ""
     },
     {
-      "tags": "31-Pasta",
+      "tags": "30-Contracts:Pasta",
       "address": "0x08a2e41fb99a7599725190b9c970ad3893fa33cf",
       "name": "Pasta V1 Token",
       "symbol": "",
@@ -1790,24 +1808,6 @@
       "source": "On Chain",
       "decimals": 8,
       "description": "Tierion creates software to reduce the cost and complexity of trust. Anchoring data to the blockchain and generating a timestamp proof."
-    },
-    {
-      "tags": "31-Gitcoin Grants:Friends",
-      "address": "0x08fdc2ee954b3ce261b8cc7f65fdb02df168802e",
-      "name": "Name 0x08fdc2ee",
-      "symbol": "",
-      "source": "Gitcoin Website",
-      "decimals": 0,
-      "description": ""
-    },
-    {
-      "tags": "34-ENS",
-      "address": "0x0904dac3347ea47d208f3fd67402d039a3b99859",
-      "name": "ENS: Wallet 1 nickdjohnson",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": 0,
-      "description": ""
     }
   ],
   "types": [

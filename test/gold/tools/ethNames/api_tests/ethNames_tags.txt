@@ -7,19 +7,55 @@
       "tags": "20-Friends"
     },
     {
-      "tags": "30-Contract"
-    },
-    {
       "tags": "30-Contracts"
     },
     {
       "tags": "30-Contracts:Giveth"
     },
     {
+      "tags": "30-Contracts:Kyber Network"
+    },
+    {
       "tags": "30-Contracts:Moloch"
     },
     {
+      "tags": "30-Contracts:Pasta"
+    },
+    {
+      "tags": "30-Contracts:Set Protocol"
+    },
+    {
+      "tags": "30-Contracts:Set Protocol Core"
+    },
+    {
+      "tags": "30-Contracts:Set Protocol Core Caller"
+    },
+    {
+      "tags": "30-Contracts:Set Protocol Factories"
+    },
+    {
+      "tags": "30-Contracts:Set Protocol Libraries"
+    },
+    {
+      "tags": "30-Contracts:Set Protocol Modules"
+    },
+    {
+      "tags": "30-Contracts:Set Protocol Other"
+    },
+    {
+      "tags": "30-Contracts:Set Protocol Wrapers"
+    },
+    {
+      "tags": "30-Contracts:Set Protocol Wrappers"
+    },
+    {
+      "tags": "30-Contracts:Set Prototcol"
+    },
+    {
       "tags": "30-Contracts:dAppNode"
+    },
+    {
+      "tags": "31-Gitcoin Grants:Admin"
     },
     {
       "tags": "31-Gitcoin Grants:Contracts"
@@ -34,43 +70,7 @@
       "tags": "31-Gitcoin Grants:Grant"
     },
     {
-      "tags": "31-Pasta"
-    },
-    {
-      "tags": "33-Set Protocol"
-    },
-    {
-      "tags": "33-Set Protocol:Core"
-    },
-    {
-      "tags": "33-Set Protocol:Core Caller"
-    },
-    {
-      "tags": "33-Set Protocol:Factories"
-    },
-    {
-      "tags": "33-Set Protocol:Libraries"
-    },
-    {
-      "tags": "33-Set Protocol:Modules"
-    },
-    {
-      "tags": "33-Set Protocol:Other"
-    },
-    {
-      "tags": "33-Set Protocol:Wrapers"
-    },
-    {
-      "tags": "33-Set Protocol:Wrappers"
-    },
-    {
-      "tags": "33-Set Prototcol"
-    },
-    {
       "tags": "34-ENS"
-    },
-    {
-      "tags": "34-Kyber Network"
     },
     {
       "tags": "34-Twitter: Friends"
@@ -106,13 +106,16 @@
       "tags": "70-Vendors"
     },
     {
-      "tags": "74-DaoDrain"
-    },
-    {
       "tags": "75-Early Actors"
     },
     {
       "tags": "80-Malicious"
+    },
+    {
+      "tags": "80-Malicious:DaoDrain"
+    },
+    {
+      "tags": "80-Malicious:Shanghai"
     },
     {
       "tags": "80-Prefund"
@@ -124,7 +127,7 @@
       "tags": "90-DevCon2:Individual"
     },
     {
-      "tags": "91-Friends"
+      "tags": "91-Known"
     }
   ],
   "types": [

@@ -127,7 +127,7 @@
       "description": ""
     },
     {
-      "tags": "80-Malicious",
+      "tags": "80-Malicious:Shanghai",
       "address": "0x10fa9f37f646bb353945fe90d41a44e1c60745fb",
       "name": "Possibly Malicious 0x10f",
       "symbol": "",
@@ -379,7 +379,7 @@
       "description": ""
     },
     {
-      "tags": "80-Malicious",
+      "tags": "80-Malicious:Shanghai",
       "address": "0x1248d79bdebd516156930a5c8ee232d4ed80ead4",
       "name": "Possibly Malicious 0x124",
       "symbol": "",
@@ -442,7 +442,7 @@
       "description": "https://github.com/alialiwa2005/Maple"
     },
     {
-      "tags": "33-Set Protocol:Wrapers",
+      "tags": "30-Contracts:Set Protocol Wrapers",
       "address": "0x12951b9eaa200237f9080c95ad93cc74c9d9bd45",
       "name": "Zero Ex Exchange Wrapper",
       "symbol": "",
@@ -532,7 +532,7 @@
       "description": ""
     },
     {
-      "tags": "74-DaoDrain",
+      "tags": "80-Malicious:DaoDrain",
       "address": "0x12e626b0eebfe86a56d633b9864e389b45dcb260",
       "name": "Dao Drain 078",
       "symbol": "",
@@ -802,9 +802,9 @@
       "description": ""
     },
     {
-      "tags": "91-Friends",
+      "tags": "91-Known",
       "address": "0x1492004547ff0efd778cc2c14e794b26b4701105",
-      "name": "Name 0x14920045",
+      "name": "Jin's Wallet",
       "symbol": "",
       "source": "TrueBlocks.io",
       "decimals": 0,
@@ -838,7 +838,7 @@
       "description": ""
     },
     {
-      "tags": "33-Set Protocol:Factories",
+      "tags": "30-Contracts:Set Protocol Factories",
       "address": "0x14f0321be5e581abf9d5bc76260bf015dc04c53d",
       "name": "Set Token Factory",
       "symbol": "",
@@ -910,7 +910,7 @@
       "description": ""
     },
     {
-      "tags": "80-Malicious",
+      "tags": "80-Malicious:Shanghai",
       "address": "0x157ddd802ab7831a2e1966baf2cc804bc7f95bd8",
       "name": "Possibly Malicious 0x157",
       "symbol": "",
@@ -964,7 +964,7 @@
       "description": ""
     },
     {
-      "tags": "74-DaoDrain",
+      "tags": "80-Malicious:DaoDrain",
       "address": "0x1591fc0f688c81fbeb17f5426a162a7024d430c2",
       "name": "Dao Drain 050",
       "symbol": "",
@@ -1036,7 +1036,7 @@
       "description": "A distributed blockchain enterprise."
     },
     {
-      "tags": "80-Malicious",
+      "tags": "80-Malicious:Shanghai",
       "address": "0x16035d97f70e8bd620f32ce831ea8bc7d0338ef3",
       "name": "Possibly Malicious 0x160",
       "symbol": "",
@@ -1234,7 +1234,7 @@
       "description": "Get insight about your crypto portfolio. Benchmark it against the market and other traders. Follow the best performing investors and invest exactly like them with the copy trade feature. Discover new opportunities, and new tools."
     },
     {
-      "tags": "74-DaoDrain",
+      "tags": "80-Malicious:DaoDrain",
       "address": "0x17802f43a0137c506ba92291391a8a8f207f487d",
       "name": "Dao Drain 096",
       "symbol": "",
@@ -1396,7 +1396,7 @@
       "description": "https://www.furtherfield.org/culturestake-2/"
     },
     {
-      "tags": "33-Set Protocol:Other",
+      "tags": "30-Contracts:Set Protocol Other",
       "address": "0x18b739aabc019d9ef160d44ba8a9dd6a717372af",
       "name": "Payable Exchange Issue",
       "symbol": "",
@@ -1441,9 +1441,9 @@
       "description": ""
     },
     {
-      "tags": "91-Friends",
+      "tags": "91-Known",
       "address": "0x191167380d430036ca2cb067ab86b527e3d584ee",
-      "name": "Name 0x19116738",
+      "name": "POAP Token Sender",
       "symbol": "",
       "source": "Etherscan",
       "decimals": 0,
@@ -1486,7 +1486,7 @@
       "description": "https://marketplace.visualstudio.com/items?itemName=tintinweb.solidity-visual-auditor"
     },
     {
-      "tags": "74-DaoDrain",
+      "tags": "80-Malicious:DaoDrain",
       "address": "0x1975bd06d486162d5dc297798dfc41edd5d160a7",
       "name": "Dao Drain 005",
       "symbol": "",
@@ -1504,7 +1504,7 @@
       "description": "Augur combines the magic of prediction markets with the power of a decentralized network to create a stunningly accurate forecasting tool"
     },
     {
-      "tags": "80-Malicious",
+      "tags": "80-Malicious:Shanghai",
       "address": "0x1992764a6fd30ad0ad6ec665b3483838acb02fba",
       "name": "Possibly Malicious 0x199",
       "symbol": "",
@@ -1585,7 +1585,7 @@
       "description": ""
     },
     {
-      "tags": "80-Malicious",
+      "tags": "80-Malicious:Shanghai",
       "address": "0x1a2a44a10624bea74988d877e770d56a14a258b4",
       "name": "Possibly Malicious 0x1a2",
       "symbol": "",

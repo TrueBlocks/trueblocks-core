@@ -10,14 +10,14 @@ tags	address	name	symbol	decimals
 31-Gitcoin Grants:Friends	0xcb5c0d33d92e4910daa24825db8af9b64e17c33c	Name 0xcb5c0d33
 50-Tokens:ERC20	0xcb5ea3c190d8f82deadf7ce5af855ddbf33e3962	Qubitica	QBIT		6
 31-Gitcoin Grants:Friends	0xcb5fba4419abc4d7c11af0c24ba0f2e555407f5b	Name 0xcb5fba44
-91-Friends	0xcb75f1f9cc69e3b1a27b8d9c08bb73a58ede24be	Name 0xcb75f1f9
+91-Known	0xcb75f1f9cc69e3b1a27b8d9c08bb73a58ede24be	Simon Sender
 90-DevCon2:Individual	0xcb860eb2eda14f37e5c046b154786048e2062138	mperklin
 31-Gitcoin Grants:Grant	0xcb9327bd57680a9cb9eed1246f8f439a630b3696	Grant 803 ALEF
 50-Tokens:ERC20	0xcb94be6f13a1182e4a4b6140cb7bf2025d28e41b	Trustcoin	TRST		6
 50-Tokens:ERC20	0xcb97e65f07da24d46bcdd078ebebd7c6e6e3d750	Bytom	BTM		8
 31-Gitcoin Grants:Friends	0xcba69d3fd92dc945284d007acd5f96be6b8dc4ab	Name 0xcba69d3f
 90-DevCon2:Individual	0xcbb0ea707202861471450acc55fca2b62c45899a	Toby Wise
-74-DaoDrain	0xcbb9d3703e651b0d496cdefb8b92c25aeb2171f7	Dao Drain 104
+80-Malicious:DaoDrain	0xcbb9d3703e651b0d496cdefb8b92c25aeb2171f7	Dao Drain 104
 90-DevCon2:Individual	0xcbbf6758a9e032d68628a5294c6b340160410eb6	Hillmer Reyes
 50-Tokens:ERC20	0xcbcc0f036ed4788f63fc0fee32873d6a7487b908	Humaniq	HMQ		8
 50-Tokens:ERC20	0xcbeaec699431857fdb4d37addbbdc20e132d4903	YOYOW Token	YOYOW		18

@@ -10,6 +10,24 @@
       "description": ""
     },
     {
+      "tags": "91-Known",
+      "address": "0x51188342dca5acd1cd2de783fa9bc59c2e441fb0",
+      "name": "TrueBlocks Tip Jar Doner",
+      "symbol": "",
+      "source": "TrueBlocks.io",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "91-Known",
+      "address": "0x68821f2943a218f7dfa9c4b1c788f007940fc2f3",
+      "name": "psdev tip jar",
+      "symbol": "",
+      "source": "TrueBlocks.io",
+      "decimals": 0,
+      "description": ""
+    },
+    {
       "tags": "90-DevCon2:Individual",
       "address": "0x7cb57b5a97eabe94205c07890be4c1ad31e486a8",
       "name": "My Ethereum Wallet Tip Jar Taylor Van Orden",
@@ -30,7 +48,7 @@
     {
       "tags": "30-Contracts",
       "address": "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359",
-      "name": "Etherum Tip Jar",
+      "name": "Ethereum Tip Jar",
       "symbol": "TIP",
       "source": "TrueBlocks.io",
       "decimals": 0,

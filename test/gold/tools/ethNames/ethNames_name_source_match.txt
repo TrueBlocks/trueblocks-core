@@ -77,7 +77,7 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
-    "tags": "74-DaoDrain",
+    "tags": "80-Malicious:DaoDrain",
     "address": "0x0101f3be8ebb4bbd39a2e3b9a3639d4259832fd9",
     "name": "Dao Drain 075",
     "source": "GethSource Ether Camp",
@@ -203,7 +203,7 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
-    "tags": "30-Contract",
+    "tags": "30-Contracts",
     "address": "0x06fe76b2f432fdfecaef1a7d4f6c3d41b5861672",
     "name": "Zerion: Adapter Registry",
     "source": "Etherscan",
@@ -211,7 +211,7 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
-    "tags": "74-DaoDrain",
+    "tags": "80-Malicious:DaoDrain",
     "address": "0x0737a6b837f97f46ebade41b9bc3e1c509c85c53",
     "name": "Dao Drain 059",
     "source": "GethSource Ether Camp",
@@ -266,7 +266,7 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
-    "tags": "31-Pasta",
+    "tags": "30-Contracts:Pasta",
     "address": "0x08a2e41fb99a7599725190b9c970ad3893fa33cf",
     "name": "Pasta V1 Token",
     "source": "EtherScan",
@@ -338,9 +338,9 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
-    "tags": "91-Friends",
+    "tags": "91-Known",
     "address": "0x0c3239e2e841242db989a61518c22247e8c55208",
-    "name": "Name 0x0c3239e2",
+    "name": "BitCoinAcctnt3 (Prefund_0419)",
     "source": "Etherscan",
     "decimals": 0
   },
@@ -382,7 +382,7 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
-    "tags": "74-DaoDrain",
+    "tags": "80-Malicious:DaoDrain",
     "address": "0x0e0da70933f4c7849fc0d203f5d1d43b9ae4532d",
     "name": "Dao Drain 087",
     "source": "GethSource Ether Camp",
@@ -533,9 +533,9 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
-    "tags": "91-Friends",
+    "tags": "91-Known",
     "address": "0x191167380d430036ca2cb067ab86b527e3d584ee",
-    "name": "Name 0x19116738",
+    "name": "POAP Token Sender",
     "source": "Etherscan",
     "decimals": 0
   },
@@ -551,7 +551,7 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
-    "tags": "74-DaoDrain",
+    "tags": "80-Malicious:DaoDrain",
     "address": "0x1975bd06d486162d5dc297798dfc41edd5d160a7",
     "name": "Dao Drain 005",
     "source": "GethSource Ether Camp",
@@ -630,7 +630,7 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
-    "tags": "74-DaoDrain",
+    "tags": "80-Malicious:DaoDrain",
     "address": "0x200450f06520bdd6c527622a273333384d870efb",
     "name": "Dao Drain 015",
     "source": "GethSource Ether Camp",
@@ -711,7 +711,7 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
-    "tags": "74-DaoDrain",
+    "tags": "80-Malicious:DaoDrain",
     "address": "0x253488078a4edf4d6f42f113d1e62836a942cf1a",
     "name": "Dao Drain 097",
     "source": "GethSource Ether Camp",
@@ -869,7 +869,7 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
-    "tags": "74-DaoDrain",
+    "tags": "80-Malicious:DaoDrain",
     "address": "0x2c19c7f9ae8b751e37aeb2d93a699722395ae18f",
     "name": "Dao Drain 003",
     "source": "GethSource Ether Camp",
@@ -895,7 +895,7 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
-    "tags": "74-DaoDrain",
+    "tags": "80-Malicious:DaoDrain",
     "address": "0x304a554a310c7e546dfe434669c62820b7d83490",
     "name": "Dao Drain 067 (DarkDAO)",
     "source": "GethSource SlackNation OnChain Ether Camp",
@@ -919,7 +919,7 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
-    "tags": "74-DaoDrain",
+    "tags": "80-Malicious:DaoDrain",
     "address": "0x319f70bab6845585f412ec7724b744fec6095c85",
     "name": "Dao Drain 007",
     "source": "GethSource Ether Camp",
@@ -947,9 +947,9 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
-    "tags": "91-Friends",
+    "tags": "91-Known",
     "address": "0x32be343b94f860124dc4fee278fdcbd38c102d88",
-    "name": "Name 0x32be343b",
+    "name": "Poliniex Exchange, DAO Whale 4 Vlad Zamphir 0x127 Sender 1 Sept_DDOS_ACCOUNT_1",
     "source": "TrueBlocks.io CarbonVote WhaleWatch.io SEPT_DDOS http://www.reddit.com/r/ethereum/",
     "decimals": 0
   },
@@ -1204,7 +1204,7 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
-    "tags": "74-DaoDrain",
+    "tags": "80-Malicious:DaoDrain",
     "address": "0x440c59b325d2997a134c2c7c60a8c61611212bad",
     "name": "Dao Drain 041",
     "source": "GethSource Ether Camp",
@@ -1242,7 +1242,7 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
-    "tags": "74-DaoDrain",
+    "tags": "80-Malicious:DaoDrain",
     "address": "0x4613f3bca5c44ea06337a9e439fbc6d42e501d0a",
     "name": "Dao Drain 109 DAO_Hell_007",
     "source": "GethSource Ether Camp",
@@ -1366,7 +1366,7 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
-    "tags": "33-Set Prototcol",
+    "tags": "30-Contracts:Set Prototcol",
     "address": "0x4f57e1f2020c35cd2fb45cf53cfeb6ff2e796180",
     "name": "Set: Rebalancing Set Exchange Issuance Module V2",
     "source": "Etherscan",
@@ -1408,10 +1408,18 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
-    "tags": "74-DaoDrain",
+    "tags": "80-Malicious:DaoDrain",
     "address": "0x51e0ddd9998364a2eb38588679f0d2c42653e4a6",
     "name": "Dao Drain 021",
     "source": "GethSource Ether Camp",
+    "decimals": 0
+  },
+  {
+    "deleted": false,
+    "tags": "60-Airdrops",
+    "address": "0x52140ae1c6abbcdbefd566c346d2cd751c162921",
+    "name": "AGLD Airdrop Sender 2",
+    "source": "Etherscan",
     "decimals": 0
   },
   {
@@ -1424,7 +1432,7 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
-    "tags": "74-DaoDrain",
+    "tags": "80-Malicious:DaoDrain",
     "address": "0x52c5317c848ba20c7504cb2c8052abd1fde29d03",
     "name": "Dao Drain 061",
     "source": "GethSource Ether Camp",
@@ -1442,7 +1450,7 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
-    "tags": "74-DaoDrain",
+    "tags": "80-Malicious:DaoDrain",
     "address": "0x5524c55fb03cf21f549444ccbecb664d0acad706",
     "name": "Dao Drain 093",
     "source": "GethSource Ether Camp",
@@ -1540,7 +1548,7 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
-    "tags": "74-DaoDrain",
+    "tags": "80-Malicious:DaoDrain",
     "address": "0x5c6e67ccd5849c0d29219c4f95f1a7a93b3f5dc5",
     "name": "Dao Drain 013",
     "source": "GethSource Ether Camp",
@@ -1548,7 +1556,7 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
-    "tags": "74-DaoDrain",
+    "tags": "80-Malicious:DaoDrain",
     "address": "0x5c8536898fbb74fc7445814902fd08422eac56d0",
     "name": "Dao Drain 009",
     "source": "GethSource Ether Camp",
@@ -1556,7 +1564,7 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
-    "tags": "74-DaoDrain",
+    "tags": "80-Malicious:DaoDrain",
     "address": "0x5d2b2e6fcbe3b11d26b525e085ff818dae332479",
     "name": "Dao Drain 063",
     "source": "GethSource Ether Camp",
@@ -1614,7 +1622,7 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
-    "tags": "74-DaoDrain",
+    "tags": "80-Malicious:DaoDrain",
     "address": "0x6131c42fa982e56929107413a9d526fd99405560",
     "name": "Dao Drain 049",
     "source": "GethSource Ether Camp",
@@ -1634,6 +1642,14 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x6264c8d158f32bd8c01b8a0102b57dfcfcfb8561",
     "name": "Uniswap: UMA",
     "symbol": "UMA",
+    "source": "Etherscan",
+    "decimals": 0
+  },
+  {
+    "deleted": false,
+    "tags": "60-Airdrops",
+    "address": "0x630d5d181d64a8cc97fd993d422795e2a704cffb",
+    "name": "LPT Airdrop Sender 2",
     "source": "Etherscan",
     "decimals": 0
   },
@@ -1666,9 +1682,9 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
-    "tags": "91-Friends",
+    "tags": "91-Known",
     "address": "0x663d3947f03ef5b387992b880ac85940057c13e3",
-    "name": "Name 0x663d3947",
+    "name": "evan.ethereum.eth",
     "source": "Etherscan",
     "decimals": 0
   },
@@ -1743,22 +1759,6 @@ ethNames Ether --expand --verbose --fmt json
     "source": "Etherscan.io",
     "decimals": 0,
     "description": "Dragonglass provides a seamless solution for cryptocurrency mining"
-  },
-  {
-    "deleted": false,
-    "tags": "74-DaoDrain",
-    "address": "0x6b0c4d41ba9ab8d8cfb5d379c69a612f2ced8ecb",
-    "name": "Dao Drain 017 Other DAO",
-    "source": "GethSource TrueBlocks.io Ether Camp",
-    "decimals": 0
-  },
-  {
-    "deleted": false,
-    "tags": "30-Contracts",
-    "address": "0x6b175474e89094c44da98b954eedeac495271d0f",
-    "name": "Dai Stablecoin",
-    "source": "Etherscan",
-    "decimals": 0
   }], "types": [
 { "type": "CAccountName", "fields": [{ "name": "deleted", "type": "bool" }, { "name": "tags", "type": "text" }, { "name": "address", "type": "address" }, { "name": "name", "type": "text" }, { "name": "symbol", "type": "text" }, { "name": "source", "type": "text" }, { "name": "decimals", "type": "unumber" }, { "name": "description", "type": "text" }, { "name": "is_custom", "type": "bool" }, { "name": "is_prefund", "type": "bool" }] }
 ] }

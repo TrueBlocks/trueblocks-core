@@ -77,7 +77,12 @@
         "status": null
       },
       "traces": [],
-      "compressedTx": "0x454e3456 ( stub: 3147544238 )",
+      "articulatedTx": {
+        "name": "",
+        "inputs": [],
+        "outputs": []
+      },
+      "compressedTx": "message:EN4V1GTB8",
       "statements": [
         {
           "blockNumber": 202249,

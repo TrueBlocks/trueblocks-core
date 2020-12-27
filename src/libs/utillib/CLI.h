@@ -2656,8 +2656,9 @@ std::string generate_set(const T& set) {
     using element_t = typename detail::element_type<T>::type;
     using iteration_type_t = typename detail::pair_adaptor<element_t>::value_type;  // the type of the object pair
     std::string out(1, '{');
-    out.append(detail::join(detail::smart_deref(set),
-                            [](const iteration_type_t& v) { return detail::pair_adaptor<element_t>::first(v); }, ","));
+    out.append(detail::join(
+        detail::smart_deref(set), [](const iteration_type_t& v) { return detail::pair_adaptor<element_t>::first(v); },
+        ","));
     out.push_back('}');
     return out;
 }
@@ -2668,17 +2669,18 @@ std::string generate_map(const T& map, bool key_only = false) {
     using element_t = typename detail::element_type<T>::type;
     using iteration_type_t = typename detail::pair_adaptor<element_t>::value_type;  // the type of the object pair
     std::string out(1, '{');
-    out.append(detail::join(detail::smart_deref(map),
-                            [key_only](const iteration_type_t& v) {
-                                std::string res{detail::to_string(detail::pair_adaptor<element_t>::first(v))};
+    out.append(detail::join(
+        detail::smart_deref(map),
+        [key_only](const iteration_type_t& v) {
+            std::string res{detail::to_string(detail::pair_adaptor<element_t>::first(v))};
 
-                                if (!key_only) {
-                                    res.append("->");
-                                    res += detail::to_string(detail::pair_adaptor<element_t>::second(v));
-                                }
-                                return res;
-                            },
-                            ","));
+            if (!key_only) {
+                res.append("->");
+                res += detail::to_string(detail::pair_adaptor<element_t>::second(v));
+            }
+            return res;
+        },
+        ","));
     out.push_back('}');
     return out;
 }
@@ -2845,8 +2847,9 @@ class IsMember : public Validator {
     /// You can pass in as many filter functions as you like, they nest (string only currently)
     template <typename T, typename... Args>
     IsMember(T&& set, filter_fn_t filter_fn_1, filter_fn_t filter_fn_2, Args&&... other)
-        : IsMember(std::forward<T>(set),
-                   [filter_fn_1, filter_fn_2](std::string a) { return filter_fn_2(filter_fn_1(a)); }, other...) {
+        : IsMember(
+              std::forward<T>(set), [filter_fn_1, filter_fn_2](std::string a) { return filter_fn_2(filter_fn_1(a)); },
+              other...) {
     }
 };
 
@@ -2909,8 +2912,9 @@ class Transformer : public Validator {
     /// You can pass in as many filter functions as you like, they nest
     template <typename T, typename... Args>
     Transformer(T&& mapping, filter_fn_t filter_fn_1, filter_fn_t filter_fn_2, Args&&... other)
-        : Transformer(std::forward<T>(mapping),
-                      [filter_fn_1, filter_fn_2](std::string a) { return filter_fn_2(filter_fn_1(a)); }, other...) {
+        : Transformer(
+              std::forward<T>(mapping),
+              [filter_fn_1, filter_fn_2](std::string a) { return filter_fn_2(filter_fn_1(a)); }, other...) {
     }
 };
 
@@ -2987,9 +2991,9 @@ class CheckedTransformer : public Validator {
     /// You can pass in as many filter functions as you like, they nest
     template <typename T, typename... Args>
     CheckedTransformer(T&& mapping, filter_fn_t filter_fn_1, filter_fn_t filter_fn_2, Args&&... other)
-        : CheckedTransformer(std::forward<T>(mapping),
-                             [filter_fn_1, filter_fn_2](std::string a) { return filter_fn_2(filter_fn_1(a)); },
-                             other...) {
+        : CheckedTransformer(
+              std::forward<T>(mapping),
+              [filter_fn_1, filter_fn_2](std::string a) { return filter_fn_2(filter_fn_1(a)); }, other...) {
     }
 };
 
@@ -4196,7 +4200,7 @@ class Option : public OptionBase<Option> {
     /// Use `get_name(true)` to get the positional name (replaces `get_pname`)
     std::string get_name(bool positional = false,  ///< Show the positional name
                          bool all_options = false  ///< Show every option
-                         ) const {
+    ) const {
         if (get_group().empty())
             return {};  // Hidden
 

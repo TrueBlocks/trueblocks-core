@@ -30,7 +30,7 @@
               "decimals": 0,
               "description": "",
               "is_custom": false,
-              "is_prefund": false,
+              "is_prefund": true,
               "nAppearances": 18446744073709552000,
               "firstAppearance": 18446744073709552000,
               "latestAppearance": 18446744073709552000,

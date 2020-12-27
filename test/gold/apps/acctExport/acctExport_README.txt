@@ -24,6 +24,7 @@ acctExport -th
 
 #### Hidden options (shown during testing only)
 | -d | --skip_ddos | toggle skipping over 2016 dDos transactions ('on' by default) |
+| -g | --ignore_malicious | toggle skipping over transactions againt malicious addresses ('on' by default) |
 | -m | --max_traces <num> | if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250) |
 | -A | --all_abis | load all previously cached abi files |
 | -f | --freshen | freshen but do not print the exported data |
