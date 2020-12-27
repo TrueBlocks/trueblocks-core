@@ -89,7 +89,7 @@ bool COptions::visitBinaryFile(const string_q& path, void* data) {
         EXIT_FAIL("Could not download index chunk " + indexPath + ". Quitting...");
 
     options->stats.nBloomHits++;
-    LOG_PROGRESS1("Scanning", options->fileRange.first, options->scanRange.second, " bloom hit\r");
+    LOG_PROGRESS1("Scanning", options->fileRange.first, options->scanRange.second, " bloom hit \r");
 
     CArchive* chunk = NULL;
     char* rawData = NULL;

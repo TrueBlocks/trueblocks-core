@@ -21,8 +21,6 @@
 #define CACHE_BYUSER (1 << 5)
 #define CACHE_BYDEFAULT (1 << 6)
 
-using blk_addr_map_t = map<uint32_t, address_t>;
-using addr_count_map_t = map<address_t, uint64_t>;
 //-----------------------------------------------------------------------
 class COptions : public COptionsBase {
   public:
@@ -35,6 +33,7 @@ class COptions : public COptionsBase {
     bool accounting;
     bool articulate;
     bool skip_ddos;
+    bool ignore_malicious;
     uint64_t max_traces;
     bool freshen;
     blknum_t freshen_max;

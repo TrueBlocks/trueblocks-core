@@ -239,6 +239,10 @@ bool COptionsBase::loadNames(void) {
         CArchive nameCache(READING_ARCHIVE);
         if (nameCache.Lock(binFile, modeReadOnly, LOCK_NOWAIT)) {
             nameCache >> namedAccounts;
+            for (auto item : namedAccounts) {
+                if (contains(item.tags, "Malicious"))
+                    maliciousMap[item.address] = true;
+            }
             nameCache.Release();
             EXIT_NOMSG8(true);
         }
@@ -258,8 +262,11 @@ bool COptionsBase::loadNames(void) {
     LOG8("Finished adding names from prefunds database...");
 
     // theMap is already sorted by address, so simply copy it into the array
-    for (auto item : theMap)
+    for (auto item : theMap) {
         namedAccounts.push_back(item.second);
+        if (contains(item.second.tags, "Malicious"))
+            maliciousMap[item.second.address] = true;
+    }
 
     LOG8("Writing binary cache");
     CArchive nameCache(WRITING_ARCHIVE);
