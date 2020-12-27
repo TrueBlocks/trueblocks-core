@@ -94,6 +94,7 @@ class COptions : public COptionsBase {
 
     void addNeighbor(addr_count_map_t& map, const address_t& addr);
     void markNeighbors(const CTransaction& trans);
+    void articulateAll(CTransaction& trans);
     bool reportNeighbors(void);
 };
 

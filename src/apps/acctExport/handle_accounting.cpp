@@ -64,6 +64,7 @@ bool COptions::handle_accounting(void) {
                 }
 
                 markNeighbors(trans);
+                articulateAll(trans);
 
                 HIDE_FIELD(CFunction, "message");
                 if (!isTestMode() && !(nProcessed % FREQ)) {
@@ -120,38 +121,8 @@ bool COptions::handle_accounting(void) {
                 }
 
                 markNeighbors(trans);
+                articulateAll(trans);
 
-                if (articulate) {
-                    abiMap[trans.to]++;
-                    if (abiMap[trans.to] == 1 || fileExists(getAbiPath(trans.to))) {
-                        CStringArray unused;
-                        loadAbiAndCache(abis, trans.to, false, unused);
-                    }
-                    abis.articulateTransaction(&trans);
-
-                    for (size_t j = 0; j < trans.receipt.logs.size(); j++) {
-                        CLogEntry* log = (CLogEntry*)&trans.receipt.logs[j];
-                        string_q str = log->Format();
-                        if (contains(str, bytesOnly)) {
-                            abiMap[log->address]++;
-                            if (abiMap[log->address] == 1 || fileExists(getAbiPath(log->address))) {
-                                CStringArray unused;
-                                loadAbiAndCache(abis, log->address, false, unused);
-                            }
-                            abis.articulateLog(log);
-                        }
-                    }
-
-                    for (size_t j = 0; j < trans.traces.size(); j++) {
-                        CTrace* trace = (CTrace*)&trans.traces[j];
-                        abiMap[trace->action.to]++;
-                        if (abiMap[trace->action.to] == 1 || fileExists(getAbiPath(trace->action.to))) {
-                            CStringArray unused;
-                            loadAbiAndCache(abis, trace->action.to, false, unused);
-                        }
-                        abis.articulateTrace(trace);
-                    }
-                }
                 if ((write_opt & CACHE_TXS))
                     writeTransToBinary(trans, txFilename);
 
@@ -187,4 +158,38 @@ bool COptions::handle_accounting(void) {
     reportNeighbors();
 
     EXIT_NOMSG(true);
+}
+
+void COptions::articulateAll(CTransaction& trans) {
+    if (articulate) {
+        abiMap[trans.to]++;
+        if (abiMap[trans.to] == 1 || fileExists(getAbiPath(trans.to))) {
+            CStringArray unused;
+            loadAbiAndCache(abis, trans.to, false, unused);
+        }
+        abis.articulateTransaction(&trans);
+
+        for (size_t j = 0; j < trans.receipt.logs.size(); j++) {
+            CLogEntry* log = (CLogEntry*)&trans.receipt.logs[j];
+            string_q str = log->Format();
+            if (contains(str, bytesOnly)) {
+                abiMap[log->address]++;
+                if (abiMap[log->address] == 1 || fileExists(getAbiPath(log->address))) {
+                    CStringArray unused;
+                    loadAbiAndCache(abis, log->address, false, unused);
+                }
+                abis.articulateLog(log);
+            }
+        }
+
+        for (size_t j = 0; j < trans.traces.size(); j++) {
+            CTrace* trace = (CTrace*)&trans.traces[j];
+            abiMap[trace->action.to]++;
+            if (abiMap[trace->action.to] == 1 || fileExists(getAbiPath(trace->action.to))) {
+                CStringArray unused;
+                loadAbiAndCache(abis, trace->action.to, false, unused);
+            }
+            abis.articulateTrace(trace);
+        }
+    }
 }
