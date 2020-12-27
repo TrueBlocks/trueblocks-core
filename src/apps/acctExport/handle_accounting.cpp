@@ -21,7 +21,6 @@ bool COptions::handle_accounting(void) {
 
     bool first = true;
     blknum_t lastExported = scanRange.second;
-    uint64_t nApps = apps.size();
     //    LOG_INFO(cRed, "lastExported: ", lastExported, " scan.start: ", scanRange.first, " scan.end: ",
     //    scanRange.second,
     //             " nApps: ", nApps, string_q(20, ' '), cOff);
@@ -68,12 +67,12 @@ bool COptions::handle_accounting(void) {
 
                 HIDE_FIELD(CFunction, "message");
                 if (!isTestMode() && !(nProcessed % FREQ)) {
-                    blknum_t current = first_record + nProcessed;
+                    blknum_t current = first_record + i;
                     // blknum_t goal = min(first_record + max_records, nApps);
                     ostringstream post;
                     post << " txs for address " << monitors[0].address;
-                    post << " " << first_record << " " << nProcessed << " " << i << " " << nApps << "\r";
-                    LOG_PROGRESS1("Reading ", current, nApps, post.str());
+                    post << " " << first_record << " " << nProcessed << " " << i << " " << nTransactions << "\r";
+                    LOG_PROGRESS1("Reading ", current, nTransactions, post.str());
                 }
 
             } else {
@@ -158,12 +157,12 @@ bool COptions::handle_accounting(void) {
 
                 HIDE_FIELD(CFunction, "message");
                 if (!isTestMode() && !(nProcessed % FREQ)) {
-                    blknum_t current = first_record + nProcessed;
+                    blknum_t current = first_record + i;
                     // blknum_t goal = min(first_record + max_records, nApp);
                     ostringstream post;
                     post << " txs for address " << monitors[0].address;
-                    post << " " << first_record << " " << nProcessed << " " << i << " " << nApps << "\r";
-                    LOG_PROGRESS1("Extract ", current, nApps, post.str());
+                    post << " " << first_record << " " << nProcessed << " " << i << " " << nTransactions << "\r";
+                    LOG_PROGRESS1("Extract ", current, nTransactions, post.str());
                 }
             }
 
@@ -177,7 +176,7 @@ bool COptions::handle_accounting(void) {
     }
 
     if (!isTestMode()) {
-        LOG_PROGRESS1("Reported", (first_record + nProcessed), nApps, " txs for address " + monitors[0].address + "\n");
+        LOG_PROGRESS1("Reported", (first_record + nProcessed), nTransactions, " txs for address " + monitors[0].address + "\n");
     }
 
     // LOG_INFO("n: ", monitors.size(), " lastExported: ", lastExported);
