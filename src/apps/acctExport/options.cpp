@@ -25,7 +25,7 @@ static const COption params[] = {
     COption("write_txs", "i", "", OPT_SWITCH, "write transactions to the cache (see notes)"),
     COption("write_traces", "R", "", OPT_SWITCH, "write traces to the cache (see notes)"),
     COption("skip_ddos", "d", "", OPT_HIDDEN | OPT_TOGGLE, "toggle skipping over 2016 dDos transactions ('on' by default)"),  // NOLINT
-    COption("ignore_malicious", "g", "", OPT_HIDDEN | OPT_TOGGLE, "toggle skipping over transactions againt malicious addresses ('on' by default)"),  // NOLINT
+    COption("ignore_malicious", "g", "", OPT_HIDDEN | OPT_TOGGLE, "toggle skipping over transactions againt malicious addresses ('off' by default)"),  // NOLINT
     COption("max_traces", "m", "<uint64>", OPT_HIDDEN | OPT_FLAG, "if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250)"),  // NOLINT
     COption("all_abis", "A", "", OPT_HIDDEN | OPT_SWITCH, "load all previously cached abi files"),
     COption("freshen", "f", "", OPT_HIDDEN | OPT_SWITCH, "freshen but do not print the exported data"),
@@ -397,7 +397,7 @@ void COptions::Init(void) {
     accounting = false;
     articulate = false;
     skip_ddos = getGlobalConfig("acctExport")->getConfigBool("settings", "skip_ddos", true);
-    ignore_malicious = getGlobalConfig("acctExport")->getConfigBool("settings", "ignore_malicious", true);
+    ignore_malicious = getGlobalConfig("acctExport")->getConfigBool("settings", "ignore_malicious", false);
     max_traces = getGlobalConfig("acctExport")->getConfigInt("settings", "max_traces", 250);
     freshen = false;
     freshen_max = 5000;

@@ -973,7 +973,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 30-Contracts:Humanity DAO	0x22c3534a948c1504fa765e67f1aaf3d2a2494116	chrisdotn		https://www.humanitydao.org/humans			false	false	false
 90-DevCon2:Individual	0x22dc622df269e140a85ab8268b49f82f84713558	Jeff Lau		DevCon2 Token Contract			false	false	false
 90-DevCon2:Individual	0x22e0b23e78d9647ab3d83f5958cdd8726b26de40	Lee Kuo Chuen		DevCon2 Token Contract			false	false	false
-20-Friends	0x22e7e43e1b8bb4d2ed82073a40b5cde63c3da8e1	CreamKitty Sender		Kittie Website			false	false	false
+20-Friends	0x22e7e43e1b8bb4d2ed82073a40b5cde63c3da8e1	Chris Cream Sender		Kittie Website			false	false	false
 81-Other	0x22f83d39a2148dd389ed4c7a9280f57d5c8679da	Emailer		Etherscan.io			false	false	false
 90-DevCon2:Individual	0x2306df931a940d58c01665fa4d0800802c02edfe	wuehler (Prefund_1171)		DevCon2 Token Contract			false	false	false
 30-Contracts	0x230dc92857948821f88a4e81b67a593fad2ae8cd	Arbitrage Bot		0xTracker			false	false	false
@@ -5082,7 +5082,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 31-Gitcoin Grants:Grant	0xc8b186ed4780143ba9116387611063a0e96d7b8f	Grant 125 Kickback		https://gitcoin.co/grants/125/kickback			false	false	false
 50-Tokens:ERC20	0xc8c6a31a4a806d3710a7b38b7b296d2fabccdba8	elixir	ELIX	On Chain	18		false	false	false
 31-Gitcoin Grants:Friends	0xc8d61e23839794b162da78a5c927fd7b2cd92055	frdra		OnChain			false	false	false
-20-Friends	0xc8d6e529bde393fc4e596480d3348ceaeab08dcd	CreamKitty Sender 2		Kittie Website			false	false	false
+20-Friends	0xc8d6e529bde393fc4e596480d3348ceaeab08dcd	Chris Cream Sender 2		Kittie Website			false	false	false
 81-Other	0xc8da125b61fe356239321309ca07465d28887778	Dice		Etherscan.io			false	false	false
 31-Gitcoin Grants:Friends	0xc8fe2da6d80ee2b418fa6684819986819df5f179	yangwao		Gitcoin Website			false	false	false
 30-Contracts:Humanity DAO	0xc9017f1f18dc2abd372128599e7c961bd20f7772	fan_y1		https://www.humanitydao.org/humans			false	false	false
@@ -5518,7 +5518,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 31-Gitcoin Grants:Grant	0xdb7fc5e20fe4567ececba1df82a234781aa37f8c	Grant 089 Hopr Decentralized Privacy Preserving Messaging		https://gitcoin.co/grants/89/hopr-decentralized-privacy-preserving-messaging-2			false	false	false
 50-Tokens:ERC20	0xdb8646f5b487b5dd979fac618350e85018f557d4	BitcoinToken	BTK	On Chain	18	Bitcoin Token BTK is a digital currency. It uses peer-to-peer technology to operate with no central authority or banks managing transactions are carried out collectively by the network.	false	false	false
 32-Kickback:Friends	0xdb878d5945c05cd31b5b78fa632b9d4946fe497c	marsbeard		https://kickback.events/			false	false	false
-20-Friends	0xdb8ea30109be8de1567a0c6ad2ee8cc55cdab02b	CreamKitty		Kittie Website			false	false	false
+20-Friends	0xdb8ea30109be8de1567a0c6ad2ee8cc55cdab02b	Chris Cream		Kittie Website			false	false	false
 81-Other	0xdb9b3f9c12e710517ac572378c6199bc3624b1ed	Matching_Finneys		Etherscan.io			false	false	false
 31-Gitcoin Grants:Grant	0xdb9bc8b6770e179b2f1f6cd0562bbcdb99784f39	Grant 328 Ether Data Science		https://gitcoin.co/grants/328/ether-data-science		https://etherdatascience.com	false	false	false
 31-Gitcoin Grants:Grant	0xdba411d32793e057cb69658cf0d16b55dffb652a	Grant 065 Urllib3		https://gitcoin.co/grants/65/urllib3			false	false	false
