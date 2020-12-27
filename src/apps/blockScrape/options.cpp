@@ -163,7 +163,7 @@ bool COptions::parseArguments(string_q& command) {
 
     bool needsParity = config->getConfigBool("requires", "parity", true);
     if (needsParity && !isParity())
-        return usage("This tool requires Parity. Quitting...");
+        return usage("This tool requires Parity. Add [requires]\\nparity=false to ~/.quickBlocks/blockScrape.toml turn this test off. Quitting...");
 
     bool needsTracing = config->getConfigBool("requires", "tracing", true);
     if (needsTracing && !nodeHasTraces()) {
