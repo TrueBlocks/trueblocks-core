@@ -143,8 +143,9 @@ bool COptions::parseArguments(string_q& command) {
         parts |= SIG_DETAILS;
 
     for (auto a : addrs) {
-        bool testing = isTestMode() && a == "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee";
-        if (!testing && !isContractAt(a, latest)) {
+        bool testing = isTestMode() && a == "0xeeeeeeeeddddddddeeeeeeeeddddddddeeeeeeee";
+        string_q fileName = getCachePath("abis/" + a + ".json");
+        if (!testing && !isContractAt(a, latest) && !fileExists(fileName)) {
             cerr << "Address " << a << " is not a smart contract. Skipping..." << endl;
         } else {
             CAbi abi;
