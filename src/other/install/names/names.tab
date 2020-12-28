@@ -2013,6 +2013,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x4d807509aece24c0fa5a102b6a3b059ec6e14392	Menlo One	ONE	On Chain	18	Menlo One is a framework for making decentralized applications as fast and easy to use as their centralized predecessors. Users earn tokens for serving blockchain data from lightening Content Nodes.	false	false	false
 31-Gitcoin Grants:Friends	0x4d864b0ddec2a861506c8baa676e2d99a4c30a84	momowell		Gitcoin Website			false	false	false
 50-Tokens:ERC20	0x4d8fc1453a0f359e99c9675954e656d80d996fbf	Bee Token	BEE	On Chain	18	Beenest is a home sharing platform for hosts to list their homes and for guests to find accommodations.	false	false	false
+30-Contracts	0x4d953115678b15ce0b0396bcf95db68003f86fb5	Gnosis Safe: Relay service - Transactions		EtherScan.io			false	false	false
 31-Gitcoin Grants:Friends	0x4d99d767477fbb2b47efeb17e2a78970ad22ccc1	haythem96		Gitcoin Website			false	false	false
 50-Tokens:ERC20	0x4d9e23a3842fe7eb7682b9725cf6c507c424a41b	CarBlock.io	CAR	On Chain	18		false	false	false
 81-Other	0x4da1c88424520e479405824d624d8969e0f07c21	@stellabelle		Steem			false	false	false
@@ -2282,6 +2283,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x57c75eccc8557136d32619a191fbcdc88560d711	VeriDocGlobal	VDG	On Chain			false	false	false
 81-Other	0x57d90b64a1a57749b0f932f1a3395792e12e7055	Elcoin		Etherscan.io			false	false	false
 50-Tokens:ERC20	0x57e299ee8f1c5a92a9ed54f934acc7ff5f159699	RECORD	RCD	On Chain	18		false	false	false
+34-ENS	0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85	ENS: Base Registrar Implementation		Etherscan			false	false	false
 30-Contracts:Kyber Network	0x57f8160e1c59d16c01bbe181fd94db4e56b60495	Kyber Weth Reserve		TrueBlocks.io			false	false	false
 32-Kickback:Friends	0x57f9ef887d17985357db615f3736d697391ae68e	greg		https://kickback.events/			false	false	false
 81-Other	0x580114cbeb41c62f55ff55ca9e6f028ceb92ae91	dEthereumlotteryNet_id218_cnt9_2mo		Ether Camp			false	false	false
