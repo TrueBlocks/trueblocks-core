@@ -1054,6 +1054,15 @@
       "description": ""
     },
     {
+      "tags": "30-Contracts",
+      "address": "0x16274044dab9635df2b5aeaf7cecb5f381c71680",
+      "name": "Primitive",
+      "symbol": "",
+      "source": "EtherScan.io",
+      "decimals": 0,
+      "description": ""
+    },
+    {
       "tags": "31-Gitcoin Grants:Grant",
       "address": "0x16385dfcc9139ffb357746780b64a605b4cb46f0",
       "name": "Grant 377 NEWFORKDELTA",
@@ -1798,15 +1807,6 @@
       "symbol": "ROC",
       "source": "On Chain",
       "decimals": 10,
-      "description": ""
-    },
-    {
-      "tags": "31-Gitcoin Grants:Friends",
-      "address": "0x1c0aa8ccd568d90d61659f060d1bfb1e6f855a20",
-      "name": "Name 0x1c0aa8cc",
-      "symbol": "",
-      "source": "Gitcoin Website",
-      "decimals": 0,
       "description": ""
     }
   ],

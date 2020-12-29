@@ -22,7 +22,6 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 10320,apps,export,acctExport,write_txs,i,false,false,true,true,false,local,switch,<boolean>,write transactions to the cache (see notes)
 10330,apps,export,acctExport,write_traces,R,false,false,true,true,false,local,switch,<boolean>,write traces to the cache (see notes)
 10340,apps,export,acctExport,skip_ddos,d,true,false,true,false,false,header,toggle,<boolean>,toggle skipping over 2016 dDos transactions ([{DEF}] by default)
-10345,apps,export,acctExport,ignore_malicious,g,false,false,true,false,false,header,toggle,<boolean>,toggle skipping over transactions againt malicious addresses ([{DEF}] by default)
 10350,apps,export,acctExport,max_traces,m,250,false,true,false,false,header,flag,<uint64>,if --skip_ddos is on&#44; this many traces defines what a ddos transaction is (default = [{DEF}])
 10360,apps,export,acctExport,all_abis,A,,false,false,false,false,local,switch,<boolean>,load all previously cached abi files
 10380,apps,export,acctExport,freshen,f,,false,false,false,false,header,switch,<boolean>,freshen but do not print the exported data

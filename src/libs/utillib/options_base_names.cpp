@@ -242,6 +242,8 @@ bool COptionsBase::loadNames(void) {
             for (auto item : namedAccounts) {
                 if (contains(item.tags, "Malicious"))
                     maliciousMap[item.address] = true;
+                if (contains(item.tags, "Airdrop"))
+                    airdropMap[item.address] = true;
             }
             nameCache.Release();
             EXIT_NOMSG8(true);
@@ -266,6 +268,8 @@ bool COptionsBase::loadNames(void) {
         namedAccounts.push_back(item.second);
         if (contains(item.second.tags, "Malicious"))
             maliciousMap[item.second.address] = true;
+        if (contains(item.second.tags, "Airdrop"))
+            airdropMap[item.second.address] = true;
     }
 
     LOG8("Writing binary cache");

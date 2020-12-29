@@ -33,7 +33,6 @@ class COptions : public COptionsBase {
     bool accounting;
     bool articulate;
     bool skip_ddos;
-    bool ignore_malicious;
     uint64_t max_traces;
     bool freshen;
     blknum_t freshen_max;

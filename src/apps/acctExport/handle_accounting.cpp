@@ -40,8 +40,6 @@ bool COptions::handle_accounting(void) {
             if (app->blk != 0 && fileExists(txFilename)) {
                 // we read the data, if we find it, but....
                 readTransFromBinary(trans, txFilename);
-                if (ignore_malicious && (maliciousMap[trans.from] || maliciousMap[trans.to]))
-                    continue;
                 trans.finishParse();
                 trans.pBlock = &block;
                 block.timestamp = trans.timestamp = (timestamp_t)ts_array[(app->blk * 2) + 1];
@@ -98,9 +96,6 @@ bool COptions::handle_accounting(void) {
                     getTransaction(trans, app->blk, app->txid);
                     getFullReceipt(&trans, true);
                 }
-
-                if (ignore_malicious && (maliciousMap[trans.from] || maliciousMap[trans.to]))
-                    continue;
 
                 trans.pBlock = &block;
                 trans.timestamp = block.timestamp = (timestamp_t)ts_array[(app->blk * 2) + 1];

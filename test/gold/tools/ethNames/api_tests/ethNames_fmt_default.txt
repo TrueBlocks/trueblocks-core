@@ -38,6 +38,18 @@
     },
     {
       "deleted": false,
+      "tags": "50-Tokens",
+      "address": "0x1f75047233517dcf67970d9e3c3bb385cb647f30",
+      "name": "Unicorns (defunct 1)",
+      "symbol": "🦄",
+      "source": "TrueBlocks.io",
+      "decimals": 0,
+      "description": "Ethereum tip jar unicorn tokens",
+      "is_custom": false,
+      "is_prefund": false
+    },
+    {
+      "deleted": false,
       "tags": "31-Gitcoin Grants:Grant",
       "address": "0x224cf0b963c59b95623b3dd6ce07b4ce40f7b134",
       "name": "Grant 853 Launching a web wallet for our 24 000+Kenyan local community currency economy",
@@ -81,6 +93,18 @@
       "source": "On Chain",
       "decimals": 6,
       "description": "SkinCoin is a multipurpose cryptocurrency for gaming industry.",
+      "is_custom": false,
+      "is_prefund": false
+    },
+    {
+      "deleted": false,
+      "tags": "50-Tokens",
+      "address": "0x41a7820c86f4bea29e6c9239aeb0fbdba12dd790",
+      "name": "Unicorns (defunct 2)",
+      "symbol": "🦄",
+      "source": "TrueBlocks.io",
+      "decimals": 0,
+      "description": "Ethereum tip jar unicorn tokens",
       "is_custom": false,
       "is_prefund": false
     },
@@ -153,6 +177,18 @@
       "source": "On Chain",
       "decimals": 18,
       "description": "A blockchain powered trading platform that integrates crypto assets from multiple exchanges.",
+      "is_custom": false,
+      "is_prefund": false
+    },
+    {
+      "deleted": false,
+      "tags": "40-Exchanges",
+      "address": "0x9e6316f44baeeee5d41a1070516cc5fa47baf227",
+      "name": "Shapeshift 2",
+      "symbol": "",
+      "source": "CarbonVote",
+      "decimals": 0,
+      "description": "Also BigTipper at Ethereum Tip Jar and Known Exchanges_001 at Ether Camp",
       "is_custom": false,
       "is_prefund": false
     },

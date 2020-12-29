@@ -63,6 +63,7 @@ class COptionsBase {
     CErrorStringMap errStrs;
     addr_wei_mp prefundWeiMap;
     addr_exists_map_t maliciousMap;
+    addr_exists_map_t airdropMap;
 
     CStringArray arguments;
     CStringArray errors;
