@@ -1,8 +1,9 @@
 ethNames argc: 4 [1:--verbose] [2:--fmt] [3:txt] 
 ethNames --verbose --fmt txt 
 tags	address	name	symbol	decimals	source
-34-ENS	0x000000000000000000000000000000000000dead	ENS: Burn Address				Etherscan
+55-Defi	0x000000000000000000000000000000000000dead	ENS: Burn Address				Etherscan
 30-Contracts	0x0000000000001b84b1cb32787b0d64758d019317	Homework				TrueBlocks.io
+30-Contracts	0x0000000000004946c0e9f43f4dee607b0ef1fa1c	1inch Exchange: CHI Token				EtherScan
 50-Tokens	0x0000000000085d4780b73119b644ae5ecd22b376	TrueUSD				Etherscan.io
 34-ENS	0x00000000000c2e074ec69a0dfb2997ba6c7d2e1e	ENS: Registry with Fallback				Etherscan
 30-Contracts	0x0000000000c90bc353314b6911180ed7e06019a9	Arbitrage Bot				0xTracker
@@ -71,6 +72,7 @@ tags	address	name	symbol	decimals	source
 50-Tokens:ERC20	0x0198f46f520f33cd4329bd4be380a25a90536cd5	PlayChip	PLA		18	On Chain
 31-Gitcoin Grants:Friends	0x01a24c6a87ee7a19d54c98ffae76755f24fdf637	Name 0x01a24c6a				Gitcoin Website
 30-Contracts	0x01da73c4ec1355f953ad0aaca3ef20e342aea92a	Arbitrage Bot				0xTracker
+55-Defi	0x01da76dea59703578040012357b81ffe62015c2d	Cream.Finance: crYETH Token				Etherscan
 31-Gitcoin Grants:Friends	0x01e6fd0ae73d9194b19f9b376065577927a0d5f5	Name 0x01e6fd0a				Gitcoin Website
 31-Gitcoin Grants:Grant	0x01f1e9319982ab828203c0276727cf48065434d3	Grant 602 RealityLearn: Teaching the world about blockchain				https://gitcoin.co/grants/602/realitylearn
 31-Gitcoin Grants:Friends	0x01f7700c13707eee8349f9800e70a940168812e3	Name 0x01f7700c				Gitcoin Website
@@ -200,5 +202,3 @@ tags	address	name	symbol	decimals	source
 31-Gitcoin Grants:Grant	0x08b440dd2b2dd0b0de112d5f6eb6d9028eb86b70	Grant 425 Turkish Cryptocurrency YouTuber and Researcher				https://gitcoin.co/grants/425/turkish-cryptocurrency-youtuber-and-researcher
 31-Gitcoin Grants:Grant	0x08ceb8bba685ee708c9c4c65576837cbe19b9dea	Grant 759 DeFi Arts Intelligencer				https://gitcoin.co/grants/759/defi-arts-intelligencer
 50-Tokens	0x08d32b0da63e2c3bcf8019c9c5d849d7a9d791e6	Dentacoin	DENT			Etherscan.io
-30-Contracts	0x08dbf4f942ba8cd7871c13addefdffef3e5a8035	GU: Rare Pack Three				Etherscan
-50-Tokens:ERC20	0x08f5a9235b08173b7569f83645d2c7fb55e8ccd8	Tierion Network Token	TNT		8	On Chain

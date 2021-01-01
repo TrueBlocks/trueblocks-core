@@ -33,6 +33,7 @@ static const COption params[] = {
     COption("collections", "s", "", OPT_SWITCH, "display collections data"),
     COption("tags", "g", "", OPT_SWITCH, "export the list of tags and subtags only"),
     COption("to_custom", "u", "", OPT_HIDDEN | OPT_SWITCH, "for editCmd only, is the edited name a custom name or not"),
+    COption("clean", "C", "", OPT_HIDDEN | OPT_SWITCH, "clean the data (addrs to lower case, sort by addr)"),
     COption("", "", "", OPT_DESCRIPTION, "Query addresses and/or names of well known accounts."),
     // clang-format on
     // END_CODE_OPTIONS
@@ -57,6 +58,7 @@ bool COptions::parseArguments(string_q& command) {
     bool other = false;
     bool addr = false;
     bool to_custom = false;
+    bool clean = false;
     // END_CODE_LOCAL_INIT
 
     string_q format;
@@ -105,6 +107,9 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-u" || arg == "--to_custom") {
             to_custom = true;
 
+        } else if (arg == "-C" || arg == "--clean") {
+            clean = true;
+
         } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
@@ -118,6 +123,9 @@ bool COptions::parseArguments(string_q& command) {
             // END_CODE_AUTO
         }
     }
+
+    if (clean)
+        return handle_clean();
 
     if (collections) {
         exportCollections(terms);

@@ -3,10 +3,18 @@ ethNames Ether --expand --verbose --fmt json
 { "data": [
   {
     "deleted": false,
-    "tags": "34-ENS",
+    "tags": "55-Defi",
     "address": "0x000000000000000000000000000000000000dead",
     "name": "ENS: Burn Address",
     "source": "Etherscan",
+    "decimals": 0
+  },
+  {
+    "deleted": false,
+    "tags": "30-Contracts",
+    "address": "0x0000000000004946c0e9f43f4dee607b0ef1fa1c",
+    "name": "1inch Exchange: CHI Token",
+    "source": "EtherScan",
     "decimals": 0
   },
   {
@@ -96,6 +104,14 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "30-Contracts",
     "address": "0x015531a044bae03bf4dab1ceabfc232a969b7175",
     "name": "GU: Rare Pack",
+    "source": "Etherscan",
+    "decimals": 0
+  },
+  {
+    "deleted": false,
+    "tags": "55-Defi",
+    "address": "0x01da76dea59703578040012357b81ffe62015c2d",
+    "name": "Cream.Finance: crYETH Token",
     "source": "Etherscan",
     "decimals": 0
   },
@@ -300,6 +316,14 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
+    "tags": "40-Exchanges",
+    "address": "0x090d4613473dee047c3f2706764f49e0821d256e",
+    "name": "Uniswap: Token Distributor",
+    "source": "Etherscan",
+    "decimals": 0
+  },
+  {
+    "deleted": false,
     "tags": "50-Tokens:ERC20",
     "address": "0x0a76aad21948ea1ef447d26dee91a54370e151e0",
     "name": "Ethereum Lite",
@@ -333,6 +357,22 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x0b795e585ec0436e4572cc9b24fc5da1faf9cfc6",
     "name": "HEX Airdrop Sender",
     "symbol": "HEX",
+    "source": "Etherscan",
+    "decimals": 0
+  },
+  {
+    "deleted": false,
+    "tags": "50-Tokens",
+    "address": "0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5",
+    "name": "Tellor: TRB Token",
+    "source": "Etherscan.io",
+    "decimals": 0
+  },
+  {
+    "deleted": false,
+    "tags": "55-Defi",
+    "address": "0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e",
+    "name": "Ygov.finance: YFI Token",
     "source": "Etherscan",
     "decimals": 0
   },
@@ -504,10 +544,26 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
+    "tags": "55-Defi",
+    "address": "0x1676fc274b65966ed0c6438a26d34c6c92a5981c",
+    "name": "Cream.Finance: CREAM/USDC Pool",
+    "source": "Etherscan",
+    "decimals": 0
+  },
+  {
+    "deleted": false,
     "tags": "36-Chainlink",
     "address": "0x16924ae9c2ac6cdbc9d6bb16fafcd38bed560936",
     "name": "Chainlink FTSE-GBP Aggregator",
     "source": "EtherScan",
+    "decimals": 0
+  },
+  {
+    "deleted": false,
+    "tags": "55-Defi",
+    "address": "0x17107f40d70f4470d20cb3f138a052cae8ebd4be",
+    "name": "Cream.Finance: crRENBTC Token",
+    "source": "Etherscan",
     "decimals": 0
   },
   {
@@ -637,6 +693,14 @@ ethNames Ether --expand --verbose --fmt json
     "source": "TrueBlocks.io",
     "decimals": 0,
     "description": "Ethereum tip jar unicorn tokens"
+  },
+  {
+    "deleted": false,
+    "tags": "40-Exchanges",
+    "address": "0x1f9840a85d5af5bf1d1762f925bdaddc4201f984",
+    "name": "Uniswap Protocol: UNI token",
+    "source": "Etherscan",
+    "decimals": 0
   },
   {
     "deleted": false,
@@ -854,6 +918,14 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
+    "tags": "55-Defi",
+    "address": "0x2ab765c2b4a4e197fbae769f86870f2310a04d61",
+    "name": "Cream.Finance: YFI/USDC",
+    "source": "Etherscan",
+    "decimals": 0
+  },
+  {
+    "deleted": false,
     "tags": "30-Contracts",
     "address": "0x2af47a65da8cd66729b4209c22017d6a5c2d2400",
     "name": "Bounties Network",
@@ -908,6 +980,14 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "60-Airdrops",
     "address": "0x2e12a5a98afd8407d8fcd5bbdb39f964b74f231d",
     "name": "KickAirdropSender",
+    "source": "Etherscan",
+    "decimals": 0
+  },
+  {
+    "deleted": false,
+    "tags": "30-Contracts",
+    "address": "0x2e3b10abf091cdc53cc892a50dabdb432e220398",
+    "name": "GeneralizedTCR",
     "source": "Etherscan",
     "decimals": 0
   },
@@ -1051,6 +1131,14 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
+    "tags": "55-Defi",
+    "address": "0x398ec7346dcd622edc5ae82352f02be94c62d119",
+    "name": "Aave: Lending Pool V1",
+    "source": "Etherscan",
+    "decimals": 0
+  },
+  {
+    "deleted": false,
     "tags": "36-Compound",
     "address": "0x39aa39c021dfbae8fac545936693ac917d5e7563",
     "name": "Compound: cUSDC",
@@ -1072,6 +1160,22 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "60-Airdrops",
     "address": "0x3af17600662d3a22c4ba91046fd5eb8a6f840afe",
     "name": "EMANTokenSender",
+    "source": "Etherscan",
+    "decimals": 0
+  },
+  {
+    "deleted": false,
+    "tags": "30-Contracts",
+    "address": "0x3c2c10e5ecd073d9ee238493d338ec6e3d7281c6",
+    "name": "Bithereum",
+    "source": "EtherScan.io",
+    "decimals": 0
+  },
+  {
+    "deleted": false,
+    "tags": "55-Defi",
+    "address": "0x3d5bc3c8d13dcb8bf317092d84783c2697ae9258",
+    "name": "Cream.Finance: Comptroller",
     "source": "Etherscan",
     "decimals": 0
   },
@@ -1125,6 +1229,14 @@ ethNames Ether --expand --verbose --fmt json
     "source": "https://gitcoin.co/grants/412/ethereumcore-public-goods-faucets-gas-estimator-st",
     "decimals": 0,
     "description": "https://EthereumCore.org"
+  },
+  {
+    "deleted": false,
+    "tags": "55-Defi",
+    "address": "0x4161fa43eaa1ac3882aeed12c5fc05249e533e67",
+    "name": "Uniswap V2: USDC-fUSDC",
+    "source": "Etherscan",
+    "decimals": 0
   },
   {
     "deleted": false,
@@ -1232,6 +1344,14 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
+    "tags": "55-Defi",
+    "address": "0x43a8ece49718e22d21077000768aff91849bceff",
+    "name": "Cream.Finance: CREAM/WETH Pool",
+    "source": "Etherscan",
+    "decimals": 0
+  },
+  {
+    "deleted": false,
     "tags": "80-Malicious:DaoDrain",
     "address": "0x440c59b325d2997a134c2c7c60a8c61611212bad",
     "name": "Dao Drain 041",
@@ -1257,6 +1377,22 @@ ethNames Ether --expand --verbose --fmt json
     "source": "Etherscan.io",
     "decimals": 0,
     "description": "Connecting global medical data and find your ideal cross-border medical solution"
+  },
+  {
+    "deleted": false,
+    "tags": "30-Contracts",
+    "address": "0x445b774c012c5418d6d885f6cbfeb049a7fe6558",
+    "name": "Everest",
+    "source": "EtherScan.io",
+    "decimals": 0
+  },
+  {
+    "deleted": false,
+    "tags": "55-Defi",
+    "address": "0x44fbebd2f576670a6c33f6fc0b00aa8c5753b322",
+    "name": "Cream.Finance: crUSDC Token",
+    "source": "Etherscan",
+    "decimals": 0
   },
   {
     "deleted": false,
@@ -1332,6 +1468,14 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
+    "tags": "55-Defi",
+    "address": "0x49849c98ae39fff122806c06791fa73784fb3675",
+    "name": "Curve.fi: renCrv Token",
+    "source": "Etherscan",
+    "decimals": 0
+  },
+  {
+    "deleted": false,
     "tags": "50-Tokens:ERC20",
     "address": "0x499a6b77bc25c26bcf8265e2102b1b3dd1617024",
     "name": "Bitether",
@@ -1355,6 +1499,14 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x49d716dfe60b37379010a75329ae09428f17118d",
     "name": "Pool Dai Token plDai RecipientWhitelistPoolToken v0.2.12",
     "source": "Etherscan",
+    "decimals": 0
+  },
+  {
+    "deleted": false,
+    "tags": "30-Contracts",
+    "address": "0x4aa42145aa6ebf72e164c9bbc74fbd3788045016",
+    "name": "POA Network: DAI-XDAI Bridge",
+    "source": "Etherscan.io",
     "decimals": 0
   },
   {
@@ -1402,6 +1554,14 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
+    "tags": "55-Defi",
+    "address": "0x4ee15f44c6f0d8d1136c83efd2e8e4ac768954c6",
+    "name": "Cream.Finance: crYUSD Token",
+    "source": "Etherscan",
+    "decimals": 0
+  },
+  {
+    "deleted": false,
     "tags": "30-Contracts:Set Prototcol",
     "address": "0x4f57e1f2020c35cd2fb45cf53cfeb6ff2e796180",
     "name": "Set: Rebalancing Set Exchange Issuance Module V2",
@@ -1413,6 +1573,14 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "35-Pool Together",
     "address": "0x4fc604536134dc64718800361ecbca0df6cbfe08",
     "name": "Pool Together Pool 2",
+    "source": "Etherscan",
+    "decimals": 0
+  },
+  {
+    "deleted": false,
+    "tags": "55-Defi",
+    "address": "0x4fd2d9d6ef05e13bf0b167509151a4ec3d4d4b93",
+    "name": "Cream.Finance: CREAM/USDC",
     "source": "Etherscan",
     "decimals": 0
   },
@@ -1431,6 +1599,14 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "75-Early Actors",
     "address": "0x5088d623ba0fcf0131e0897a91734a4d83596aa0",
     "name": "MinerBlk3",
+    "source": "Etherscan",
+    "decimals": 0
+  },
+  {
+    "deleted": false,
+    "tags": "55-Defi",
+    "address": "0x514906fc121c7878424a5c928cad1852cc545892",
+    "name": "Uniswap V2: FARM-USDC",
     "source": "Etherscan",
     "decimals": 0
   },
@@ -1472,6 +1648,14 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x52c5317c848ba20c7504cb2c8052abd1fde29d03",
     "name": "Dao Drain 061",
     "source": "GethSource Ether Camp",
+    "decimals": 0
+  },
+  {
+    "deleted": false,
+    "tags": "30-Contracts",
+    "address": "0x5346d0f80e2816fad329f2c140c870ffc3c3e2ef",
+    "name": "EtherRouter: Colony Network",
+    "source": "EtherScan.io",
     "decimals": 0
   },
   {
@@ -1563,202 +1747,6 @@ ethNames Ether --expand --verbose --fmt json
     "source": "https://gitcoin.co/grants/337/cream-confidential-reliable-ethereum-anonymous-mix",
     "decimals": 0,
     "description": "https://github.com/couger-inc/cream"
-  },
-  {
-    "deleted": false,
-    "tags": "30-Contracts",
-    "address": "0x5c1749bc5734b8f9ea7cda7e38b47432c6cffb66",
-    "name": "GU: Board",
-    "source": "Etherscan",
-    "decimals": 0
-  },
-  {
-    "deleted": false,
-    "tags": "50-Tokens",
-    "address": "0x5c543e7ae0a1104f78406c340e9c64fd9fce5170",
-    "name": "vSlice",
-    "symbol": "VSL",
-    "source": "Etherscan.io",
-    "decimals": 0,
-    "description": "An Ethereum Gaming Platform Token"
-  },
-  {
-    "deleted": false,
-    "tags": "30-Contracts",
-    "address": "0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f",
-    "name": "Uniswap V2: Factory Contract",
-    "source": "EtherScan",
-    "decimals": 0
-  },
-  {
-    "deleted": false,
-    "tags": "80-Malicious:DaoDrain",
-    "address": "0x5c6e67ccd5849c0d29219c4f95f1a7a93b3f5dc5",
-    "name": "Dao Drain 013",
-    "source": "GethSource Ether Camp",
-    "decimals": 0
-  },
-  {
-    "deleted": false,
-    "tags": "80-Malicious:DaoDrain",
-    "address": "0x5c8536898fbb74fc7445814902fd08422eac56d0",
-    "name": "Dao Drain 009",
-    "source": "GethSource Ether Camp",
-    "decimals": 0
-  },
-  {
-    "deleted": false,
-    "tags": "80-Malicious:DaoDrain",
-    "address": "0x5d2b2e6fcbe3b11d26b525e085ff818dae332479",
-    "name": "Dao Drain 063",
-    "source": "GethSource Ether Camp",
-    "decimals": 0
-  },
-  {
-    "deleted": false,
-    "tags": "36-Compound",
-    "address": "0x5d3a536e4d6dbd6114cc1ead35777bab948e3643",
-    "name": "Compound: cDAI",
-    "source": "Etherscan",
-    "decimals": 0
-  },
-  {
-    "deleted": false,
-    "tags": "36-Chainlink",
-    "address": "0x5d4bb541eed49d0290730b4ab332aa46bd27d888",
-    "name": "Chainlink BUSD-ETH Aggregator",
-    "source": "EtherScan",
-    "decimals": 0
-  },
-  {
-    "deleted": false,
-    "tags": "60-Airdrops",
-    "address": "0x5e58caeb958e67c89adc9e5e6bcaa79795e8d3f1",
-    "name": "BasicCoin Airdrop Sender",
-    "source": "Etherscan",
-    "decimals": 0
-  },
-  {
-    "deleted": false,
-    "tags": "50-Tokens:ERC20",
-    "address": "0x5f53f7a8075614b699baad0bc2c899f4bad8fbbf",
-    "name": "Rebellious",
-    "symbol": "REBL",
-    "source": "On Chain",
-    "decimals": 18,
-    "description": "Rebellious is a company based in the Netherlands. Using their unique approach, they aim to build a strong currency powered by an even stronger community that‚Äö√Ñ√¥s motivated by growth rather than greed."
-  },
-  {
-    "deleted": false,
-    "tags": "34-ENS",
-    "address": "0x6090a6e47849629b7245dfa1ca21d94cd15878ef",
-    "name": "ENS: Old Registrar",
-    "source": "Etherscan",
-    "decimals": 0
-  },
-  {
-    "deleted": false,
-    "tags": "34-ENS",
-    "address": "0x6109dd117aa5486605fc85e040ab00163a75c662",
-    "name": "ENS: Registrar Migration",
-    "source": "Etherscan",
-    "decimals": 0
-  },
-  {
-    "deleted": false,
-    "tags": "80-Malicious:DaoDrain",
-    "address": "0x6131c42fa982e56929107413a9d526fd99405560",
-    "name": "Dao Drain 049",
-    "source": "GethSource Ether Camp",
-    "decimals": 0
-  },
-  {
-    "deleted": false,
-    "tags": "31-Gitcoin Grants:Core",
-    "address": "0x6239ff1040e412491557a7a02b2cbcc5ae85dc8f",
-    "name": "Kudos Sender",
-    "source": "Etherscan",
-    "decimals": 0
-  },
-  {
-    "deleted": false,
-    "tags": "40-Exchanges",
-    "address": "0x6264c8d158f32bd8c01b8a0102b57dfcfcfb8561",
-    "name": "Uniswap: UMA",
-    "symbol": "UMA",
-    "source": "Etherscan",
-    "decimals": 0
-  },
-  {
-    "deleted": false,
-    "tags": "60-Airdrops",
-    "address": "0x630d5d181d64a8cc97fd993d422795e2a704cffb",
-    "name": "LPT Airdrop Sender 2",
-    "source": "Etherscan",
-    "decimals": 0
-  },
-  {
-    "deleted": false,
-    "tags": "40-Exchanges",
-    "address": "0x64a9edd3f5fce0252cd708e26c8dd11205742826",
-    "name": "Uniswap: ANJ Aragon Network Juror",
-    "symbol": "ANJ",
-    "source": "Etherscan",
-    "decimals": 0
-  },
-  {
-    "deleted": false,
-    "tags": "60-Airdrops",
-    "address": "0x65d2c9da791d412d97874a879d427416502f2cd0",
-    "name": "AGLD Airdrop Sender",
-    "source": "Etherscan",
-    "decimals": 0
-  },
-  {
-    "deleted": false,
-    "tags": "50-Tokens:ERC20",
-    "address": "0x662abcad0b7f345ab7ffb1b1fbb9df7894f18e66",
-    "name": "CarTaxi",
-    "symbol": "CTX",
-    "source": "On Chain",
-    "decimals": 18,
-    "description": "A blockchain platform based on Ethereum for automated service for car towing."
-  },
-  {
-    "deleted": false,
-    "tags": "91-Known",
-    "address": "0x663d3947f03ef5b387992b880ac85940057c13e3",
-    "name": "evan.ethereum.eth",
-    "source": "Etherscan",
-    "decimals": 0
-  },
-  {
-    "deleted": false,
-    "tags": "30-Contracts",
-    "address": "0x6646d0a32d6b9c1d1a7389a6b8da7e5fd780f316",
-    "name": "Genesis ContributionReward",
-    "source": "Etherscan",
-    "decimals": 0
-  },
-  {
-    "deleted": false,
-    "tags": "50-Tokens:ERC20",
-    "address": "0x672a1ad4f667fb18a333af13667aa0af1f5b5bdd",
-    "name": "Verify Token",
-    "symbol": "CRED",
-    "source": "On Chain",
-    "decimals": 18,
-    "description": "A distributed reputation protocol built on the Ethereum blockchain."
-  },
-  {
-    "deleted": false,
-    "tags": "50-Tokens:ERC20",
-    "address": "0x6758b7d441a9739b98552b373703d8d3d14f9e62",
-    "name": "POA ERC20 on Foundation",
-    "symbol": "POA20",
-    "source": "On Chain",
-    "decimals": 18,
-    "description": "POA Network is an Ethereum-based platform that offers an open-source framework for smart contracts."
   }], "types": [
 { "type": "CAccountName", "fields": [{ "name": "deleted", "type": "bool" }, { "name": "tags", "type": "text" }, { "name": "address", "type": "address" }, { "name": "name", "type": "text" }, { "name": "symbol", "type": "text" }, { "name": "source", "type": "text" }, { "name": "decimals", "type": "unumber" }, { "name": "description", "type": "text" }, { "name": "is_custom", "type": "bool" }, { "name": "is_prefund", "type": "bool" }] }
 ] }

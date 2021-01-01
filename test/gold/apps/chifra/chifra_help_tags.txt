@@ -22,6 +22,7 @@ chifra tags --tags --help
 #### Hidden options (shown during testing only)
 	-t  (--other)         export other addresses if found
 	-u  (--to_custom)     for editCmd only, is the edited name a custom name or not
+	-C  (--clean)         clean the data (addrs to lower case, sort by addr)
 #### Hidden options (shown during testing only)
 
 	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]

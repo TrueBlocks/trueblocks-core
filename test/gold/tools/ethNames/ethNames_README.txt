@@ -24,6 +24,7 @@ ethNames -th
 #### Hidden options (shown during testing only)
 | -t | --other | export other addresses if found |
 | -u | --to_custom | for editCmd only, is the edited name a custom name or not |
+| -C | --clean | clean the data (addrs to lower case, sort by addr) |
 #### Hidden options (shown during testing only)
 
 | -x | --fmt <val> | export format, one of [none&#124;json*&#124;txt&#124;csv&#124;api] |
@@ -37,5 +38,5 @@ ethNames -th
 - When there are two search terms, both must match.
 - The `--match_case` option requires case sensitive matching. It works with all other options.
 - To customize the list of names add a `custom` section to the config file (see documentation).
-- Name file: `~/.quickBlocks/names/names.tab` (875367)
+- Name file: `~/.quickBlocks/names/names.tab` (881094)
 

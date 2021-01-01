@@ -100,6 +100,9 @@
       "tags": "50-Tokens:ERC721"
     },
     {
+      "tags": "55-Defi"
+    },
+    {
       "tags": "60-Airdrops"
     },
     {

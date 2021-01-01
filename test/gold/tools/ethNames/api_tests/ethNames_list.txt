@@ -1,7 +1,7 @@
 {
   "data": [
     {
-      "tags": "34-ENS",
+      "tags": "55-Defi",
       "address": "0x000000000000000000000000000000000000dead",
       "name": "ENS: Burn Address",
       "symbol": "",
@@ -15,6 +15,15 @@
       "name": "Homework",
       "symbol": "",
       "source": "TrueBlocks.io",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "30-Contracts",
+      "address": "0x0000000000004946c0e9f43f4dee607b0ef1fa1c",
+      "name": "1inch Exchange: CHI Token",
+      "symbol": "",
+      "source": "EtherScan",
       "decimals": 0,
       "description": ""
     },
@@ -627,6 +636,15 @@
       "name": "Arbitrage Bot",
       "symbol": "",
       "source": "0xTracker",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "55-Defi",
+      "address": "0x01da76dea59703578040012357b81ffe62015c2d",
+      "name": "Cream.Finance: crYETH Token",
+      "symbol": "",
+      "source": "Etherscan",
       "decimals": 0,
       "description": ""
     },
@@ -1790,24 +1808,6 @@
       "source": "Etherscan.io",
       "decimals": 0,
       "description": "Aims to be the blockchain solution for the global dental industry."
-    },
-    {
-      "tags": "30-Contracts",
-      "address": "0x08dbf4f942ba8cd7871c13addefdffef3e5a8035",
-      "name": "GU: Rare Pack Three",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": 0,
-      "description": ""
-    },
-    {
-      "tags": "50-Tokens:ERC20",
-      "address": "0x08f5a9235b08173b7569f83645d2c7fb55e8ccd8",
-      "name": "Tierion Network Token",
-      "symbol": "TNT",
-      "source": "On Chain",
-      "decimals": 8,
-      "description": "Tierion creates software to reduce the cost and complexity of trust. Anchoring data to the blockchain and generating a timestamp proof."
     }
   ],
   "types": [

@@ -71,6 +71,7 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0x0b1724cc9fda0186911ef6a75949e9c0d3f0f2f3	Etheriya	RIYA		8
 50-Tokens:ERC20	0x0b4bdc478791897274652dc15ef5c135cae61e60	DAEX Token	DAX		18
 50-Tokens:ERC20	0x0b76544f6c413a555f309bf76260d1e02377c02a	Internet Node Token	INT		6
+50-Tokens	0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5	Tellor: TRB Token
 50-Tokens:ERC20	0x0bb217e40f8a5cb79adf04e1aab60e5abd0dfc1e	SwftCoin	SWFTC		8
 50-Tokens:ERC20	0x0bc61dded5f6710c637cf8288eb6058766ce1921	CEN	CEN		18
 50-Tokens:ERC20	0x0bef619cf38cf0c22967289b8419720fbd1db9f7	AEN.	AEN		8
@@ -203,4 +204,3 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0x24ddff6d8b8a42d835af3b440de91f3386554aa4	IUNGO token	ING		18
 50-Tokens:ERC20	0x255aa6df07540cb5d3d297f0d0d4d84cb52bc8e6	Raiden Token	RDN		18
 50-Tokens:ERC20	0x2567c677473d110d75a8360c35309e63b1d52429	ShareX	SEXC		8
-50-Tokens:ERC20	0x25b6325f5bb1c1e03cfbc3e53f470e1f1ca022e3	LML	LML		18

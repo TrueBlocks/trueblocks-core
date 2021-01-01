@@ -1108,6 +1108,15 @@
       "description": ""
     },
     {
+      "tags": "55-Defi",
+      "address": "0x1676fc274b65966ed0c6438a26d34c6c92a5981c",
+      "name": "Cream.Finance: CREAM/USDC Pool",
+      "symbol": "",
+      "source": "Etherscan",
+      "decimals": 0,
+      "description": ""
+    },
+    {
       "tags": "50-Tokens:ERC20",
       "address": "0x168296bb09e24a88805cb9c33356536b980d3fc5",
       "name": "RHOC",
@@ -1187,6 +1196,15 @@
       "source": "On Chain",
       "decimals": 8,
       "description": "Owndata is a crypto marketplace for data sellers and buyers."
+    },
+    {
+      "tags": "55-Defi",
+      "address": "0x17107f40d70f4470d20cb3f138a052cae8ebd4be",
+      "name": "Cream.Finance: crRENBTC Token",
+      "symbol": "",
+      "source": "Etherscan",
+      "decimals": 0,
+      "description": ""
     },
     {
       "tags": "31-Gitcoin Grants:Friends",
@@ -1789,24 +1807,6 @@
       "symbol": "",
       "source": "Gitcoin Website",
       "decimals": 0,
-      "description": ""
-    },
-    {
-      "tags": "31-Gitcoin Grants:Friends",
-      "address": "0x1bc4230d996286ffd1dd4dc649aad47fa08cadc4",
-      "name": "Name 0x1bc4230d",
-      "symbol": "",
-      "source": "Gitcoin Website",
-      "decimals": 0,
-      "description": ""
-    },
-    {
-      "tags": "50-Tokens:ERC20",
-      "address": "0x1bcbc54166f6ba149934870b60506199b6c9db6d",
-      "name": "ROC",
-      "symbol": "ROC",
-      "source": "On Chain",
-      "decimals": 10,
       "description": ""
     }
   ],

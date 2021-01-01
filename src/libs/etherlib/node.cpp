@@ -1293,13 +1293,15 @@ bool freshenTimestamps(blknum_t minBlock) {
         getBlock_header(block, bn);
         file << ((uint32_t)block.blockNumber) << ((uint32_t)block.timestamp);
         file.flush();
-        LOG_INFO(padNum9(block.blockNumber), "\t", block.timestamp, "\t", ts_2_Date(block.timestamp).Format(FMT_EXPORT),
-                 "          \r");
+        ostringstream post;
+        post << " (" << block.timestamp << " - " << ts_2_Date(block.timestamp).Format(FMT_EXPORT) << ")";
+        LOG_PROGRESS1("Update timestamps ", block.blockNumber, minBlock, post.str());
     }
     file.Release();
 
-    LOG_INFO(cTeal, "  Updated timestamps to block ", block.blockNumber, " (", block.timestamp, " - ",
-             ts_2_Date(block.timestamp).Format(FMT_EXPORT), ")", cOff);
+    ostringstream post;
+    post << " (" << block.timestamp << " - " << ts_2_Date(block.timestamp).Format(FMT_EXPORT) << ")";
+    LOG_PROGRESS1("Update timestamps ", block.blockNumber, minBlock, post.str());
     return true;
 }
 

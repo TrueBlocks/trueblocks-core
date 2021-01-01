@@ -37,7 +37,7 @@
       "description": ""
     },
     {
-      "tags": "34-ENS",
+      "tags": "55-Defi",
       "address": "0x000000000000000000000000000000000000dead",
       "name": "ENS: Burn Address",
       "symbol": "",
@@ -51,6 +51,15 @@
       "name": "Homework",
       "symbol": "",
       "source": "TrueBlocks.io",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "30-Contracts",
+      "address": "0x0000000000004946c0e9f43f4dee607b0ef1fa1c",
+      "name": "1inch Exchange: CHI Token",
+      "symbol": "",
+      "source": "EtherScan",
       "decimals": 0,
       "description": ""
     },
@@ -663,6 +672,15 @@
       "name": "Arbitrage Bot",
       "symbol": "",
       "source": "0xTracker",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "55-Defi",
+      "address": "0x01da76dea59703578040012357b81ffe62015c2d",
+      "name": "Cream.Finance: crYETH Token",
+      "symbol": "",
+      "source": "Etherscan",
       "decimals": 0,
       "description": ""
     },
@@ -1790,24 +1808,6 @@
       "source": "On Chain",
       "decimals": 18,
       "description": ""
-    },
-    {
-      "tags": "30-Contracts:Pasta",
-      "address": "0x08a2e41fb99a7599725190b9c970ad3893fa33cf",
-      "name": "Pasta V1 Token",
-      "symbol": "",
-      "source": "EtherScan",
-      "decimals": 0,
-      "description": ""
-    },
-    {
-      "tags": "31-Gitcoin Grants:Grant",
-      "address": "0x08b440dd2b2dd0b0de112d5f6eb6d9028eb86b70",
-      "name": "Grant 425 Turkish Cryptocurrency YouTuber and Researcher",
-      "symbol": "",
-      "source": "https://gitcoin.co/grants/425/turkish-cryptocurrency-youtuber-and-researcher",
-      "decimals": 0,
-      "description": "https://www.youtube.com/bitcoinkralicesi"
     }
   ],
   "types": [

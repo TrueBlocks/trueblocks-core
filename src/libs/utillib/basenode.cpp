@@ -140,9 +140,9 @@ bool CBaseNode::parseCSV(const CStringArray& fields, string_q& line) {
 }
 
 //--------------------------------------------------------------------------------
-bool CBaseNode::parseText(const CStringArray& fields, string_q& line) {
+bool CBaseNode::parseText(const CStringArray& fields, string_q& lineInOut) {
+    string_q line = nextTokenClear(lineInOut, '\n');  // pop off the first line
     replaceAll(line, "\r", "");
-    line = nextTokenClear(line, '\n');  // pop off the first line
     CStringArray values;
     explode(values, line, '\t');
     size_t cnt = 0;
