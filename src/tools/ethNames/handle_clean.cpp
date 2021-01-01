@@ -59,7 +59,7 @@ bool COptions::handle_clean(void) {
         EXIT_USAGE("Primary names file (" + mainSource + ") not found. Quitting...");
 
     string_q customSource = getGlobalConfig("ethNames")->getConfigStr("settings", "custom", "<UNSET>");
-    string_q customDest = configPath("names/names.tab");
+    string_q customDest = configPath("names/names_custom.tab");
     if (!cleanNames(customSource, customDest))
         EXIT_USAGE("Custom names file (" + customSource + ") not found. Quitting...");
 
