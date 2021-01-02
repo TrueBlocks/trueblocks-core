@@ -141,6 +141,9 @@ string_q CAccountName::getValueByName(const string_q& fieldName) const {
             if (fieldName % "tags") {
                 return tags;
             }
+            if (fieldName % "type") {
+                return type;
+            }
             break;
         default:
             break;
@@ -251,6 +254,10 @@ bool CAccountName::setValueByName(const string_q& fieldNameIn, const string_q& f
                 tags = fieldValue;
                 return true;
             }
+            if (fieldName % "type") {
+                type = fieldValue;
+                return true;
+            }
             break;
         default:
             break;
@@ -288,6 +295,7 @@ bool CAccountName::Serialize(CArchive& archive) {
     archive >> is_prefund;
     archive >> is_erc20;
     archive >> is_erc721;
+    archive >> type;
     // archive >> nAppearances;
     // archive >> lastExport;
     // archive >> firstAppearance;
@@ -316,6 +324,7 @@ bool CAccountName::SerializeC(CArchive& archive) const {
     archive << is_prefund;
     archive << is_erc20;
     archive << is_erc721;
+    archive << type;
     // archive << nAppearances;
     // archive << lastExport;
     // archive << firstAppearance;
@@ -369,6 +378,7 @@ void CAccountName::registerClass(void) {
     ADD_FIELD(CAccountName, "is_prefund", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CAccountName, "is_erc20", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CAccountName, "is_erc721", T_BOOL | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CAccountName, "type", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CAccountName, "nAppearances", T_BLOCKNUM, ++fieldNum);
     HIDE_FIELD(CAccountName, "nAppearances");
     ADD_FIELD(CAccountName, "lastExport", T_BLOCKNUM, ++fieldNum);
@@ -485,9 +495,18 @@ const char* STR_DISPLAY_ACCOUNTNAME =
     "[{DESCRIPTION}]\t"
     "[{DELETED}]\t"
     "[{IS_CUSTOM}]\t"
-    "[{IS_PREFUND}]";
+    "[{IS_PREFUND}]\t"
+    "[{IS_ERC20}]\t"
+    "[{IS_ERC721}]\t"
+    "[{TYPE}]";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
+void CAccountName::finishClean(void) {
+    is_prefund = false;
+    is_erc20 = false;
+    is_erc721 = false;
+    type = false;
+}
 // EXISTING_CODE
 }  // namespace qblocks

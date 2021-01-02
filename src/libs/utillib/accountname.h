@@ -38,6 +38,7 @@ class CAccountName : public CBaseNode {
     bool is_prefund;
     bool is_erc20;
     bool is_erc721;
+    string_q type;
     blknum_t nAppearances;
     blknum_t lastExport;
     blknum_t firstAppearance;
@@ -54,6 +55,7 @@ class CAccountName : public CBaseNode {
     DECLARE_NODE(CAccountName);
 
     // EXISTING_CODE
+    void finishClean(void);
     // EXISTING_CODE
     bool operator==(const CAccountName& it) const;
     bool operator!=(const CAccountName& it) const {
@@ -117,6 +119,7 @@ inline void CAccountName::initialize(void) {
     is_prefund = false;
     is_erc20 = false;
     is_erc721 = false;
+    type = "";
     nAppearances = 0;
     lastExport = 0;
     firstAppearance = 0;
@@ -144,6 +147,7 @@ inline void CAccountName::duplicate(const CAccountName& ac) {
     is_prefund = ac.is_prefund;
     is_erc20 = ac.is_erc20;
     is_erc721 = ac.is_erc721;
+    type = ac.type;
     nAppearances = ac.nAppearances;
     lastExport = ac.lastExport;
     firstAppearance = ac.firstAppearance;

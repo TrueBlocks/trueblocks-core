@@ -221,6 +221,9 @@ bool COptions::parseArguments(string_q& command) {
         HIDE_FIELD(CAccountName, "deleted");
         HIDE_FIELD(CAccountName, "is_custom");
         HIDE_FIELD(CAccountName, "is_prefund");
+        HIDE_FIELD(CAccountName, "is_erc20");
+        HIDE_FIELD(CAccountName, "is_erc721");
+        HIDE_FIELD(CAccountName, "type");
     }
 
     // Collect results for later display
@@ -237,6 +240,9 @@ bool COptions::parseArguments(string_q& command) {
         HIDE_FIELD(CAccountName, "decimal");
         HIDE_FIELD(CAccountName, "is_custom");
         HIDE_FIELD(CAccountName, "is_prefund");
+        HIDE_FIELD(CAccountName, "is_erc20");
+        HIDE_FIELD(CAccountName, "is_erc721");
+        HIDE_FIELD(CAccountName, "type");
     }
 
     return true;
@@ -431,6 +437,9 @@ string_q shortenFormat(const string_q& fmtIn) {
     replace(ret, "[{DELETED}]", "");
     replace(ret, "[{IS_CUSTOM}]", "");
     replace(ret, "[{IS_PREFUND}]", "");
+    replace(ret, "[{IS_ERC20}]", "");
+    replace(ret, "[{IS_ERC721}]", "");
+    replace(ret, "[{TYPE}]", "");
     return trim(ret, '\t');
 }
 
@@ -443,6 +452,9 @@ string_q getSearchFields(const string_q& fmtIn) {
     replace(ret, "[{DELETED}]", "");
     replace(ret, "[{IS_CUSTOM}]", "");
     replace(ret, "[{IS_PREFUND}]", "");
+    replace(ret, "[{IS_ERC20}]", "");
+    replace(ret, "[{IS_ERC721}]", "");
+    replace(ret, "[{TYPE}]", "");
     return trim(ret, '\t');
 }
 
@@ -472,6 +484,7 @@ bool COptions::processEditCommand(CStringArray& terms, bool to_custom) {
     target.decimals = str_2_Uint(trim(getEnvStr("TB_NAME_DECIMALS"), '\"'));
     target.description = trim(getEnvStr("TB_NAME_DESCR"), '\"');
     target.is_custom = str_2_Bool(trim(getEnvStr("TB_NAME_CUSTOM"), '\"')) || to_custom;
+    target.finishClean();
 
     if (!isApiMode() && isTestMode()) {
         cout << string_q(45, '-') << endl;
@@ -480,7 +493,8 @@ bool COptions::processEditCommand(CStringArray& terms, bool to_custom) {
     }
 
     bool isEdit = crudCommand == "create" || crudCommand == "update";
-    string_q fmt = isEdit ? "tags\taddress\tname\tsymbol\tsource\tdescription\tdecimals\tdeleted\tis_custom\tis_prefund"
+    string_q fmt = isEdit ? "tags\taddress\tname\tsymbol\tsource\tdescription\tdecimals\tdeleted\tis_custom\tis_"
+                            "prefund\tis_erc20\tis_erc721\ttype"
                           : "address";
     CStringArray fields;
     explode(fields, fmt, '\t');

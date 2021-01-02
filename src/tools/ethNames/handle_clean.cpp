@@ -35,6 +35,7 @@ bool cleanNames(const string_q& sourceIn, const string_q& destIn) {
     CAccountName name;
     CAccountNameArray names;
     while (name.parseText(fields, contents)) {
+        name.finishClean();
         names.push_back(name);
     }
     sort(names.begin(), names.end());
