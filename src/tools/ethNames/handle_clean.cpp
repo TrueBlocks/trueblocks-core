@@ -47,6 +47,8 @@ bool cleanNames(const string_q& sourceIn, const string_q& destIn) {
     }
     stringToAsciiFile(dest, os.str());
 
+    ::remove(getCachePath("names/names.bin").c_str());
+
     return true;
 }
 
