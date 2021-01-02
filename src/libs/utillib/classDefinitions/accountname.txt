@@ -10,6 +10,8 @@ fields = \
   string description|\
   bool is_custom|\
   bool is_prefund|\
+  bool is_erc20|\
+  bool is_erc721|\
   blknum nAppearances (nowrite)|\
   blknum lastExport (nowrite)|\
   blknum firstAppearance (nowrite)|\
