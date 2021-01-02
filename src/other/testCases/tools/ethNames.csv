@@ -137,15 +137,21 @@ on, both, fast, names, tools/ethNames, collections_json,                 y, coll
 on, both, fast, names, tools/ethNames, collections_terms,                y, collections & terms = May
 
 on, cmd,  fast, names, tools/ethNames, edit_invalid,                     y, invalid & expand & verbose = 10
+
 on, cmd,  fast, names, tools/ethNames, edit_add,                         y, create & expand & verbose = 10,,true
 on, cmd,  fast, names, tools/ethNames, show_add,                         n, terms = 0x0000000000000000000000000000000010101010 & fmt = txt & expand & verbose = 10
+
 on, cmd,  fast, names, tools/ethNames, edit_edit,                        y, update & expand & verbose = 10,,true
 on, cmd,  fast, names, tools/ethNames, show_edit,                        y, terms = 0x0000000000000000000000000000000010101010 & expand & verbose = 10
+
 on, cmd,  fast, names, tools/ethNames, edit_delete,                      y, delete & terms = 0x0000000000000000000000000000000010101010 & expand & verbose = 10
 on, cmd,  fast, names, tools/ethNames, show_delete,                      n, terms = 0x0000000000000000000000000000000010101010 & fmt = txt & expand & verbose = 10
+
 on, cmd,  fast, names, tools/ethNames, edit_undelete,                    y, undelete & terms = 0x0000000000000000000000000000000010101010 & expand & verbose = 10
 on, cmd,  fast, names, tools/ethNames, show_undelete,                    n, terms = 0x0000000000000000000000000000000010101010 & fmt = txt & expand & verbose = 10
+
 on, cmd,  fast, names, tools/ethNames, edit_remove,                      y, remove & terms = 0x0000000000000000000000000000000010101010 & expand & verbose = 10
 on, cmd,  fast, names, tools/ethNames, show_remove,                      n, terms = 0x0000000000000000000000000000000010101010 & fmt = txt & expand & verbose = 10
+
 on, cmd,  fast, names, tools/ethNames, edit_custom_delete,               y, delete & terms = 0xde58d6a070c7490f10a9aac1b7bc6e3583383958 & expand & verbose = 10 & to_custom & all
 on, cmd,  fast, names, tools/ethNames, edit_custom_undelete,             y, undelete & terms = 0xde58d6a070c7490f10a9aac1b7bc6e3583383958 & expand & verbose = 10 & to_custom & all

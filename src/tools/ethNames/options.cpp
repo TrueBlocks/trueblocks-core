@@ -492,7 +492,7 @@ bool COptions::processEditCommand(CStringArray& terms, bool to_custom) {
     for (auto name : namedAccounts) {
         if (name.address == target.address) {
             if (crudCommand == "remove") {
-                // do nothing
+                // do nothing (i.e. skip this name)
                 LOG4("Removing ", name.address);
             } else if (crudCommand == "delete") {
                 name.m_deleted = true;

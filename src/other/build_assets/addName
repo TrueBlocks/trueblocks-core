@@ -1,18 +1,47 @@
 #!/usr/bin/env bash
 
-defTag="81 Other"
 defSource="Etherscan"
 defDecimals=""
 
-export TB_NAME_ADDRESS=$1
-export TB_NAME_NAME=$2
-export TB_NAME_TAG=${3:-$defTag}
-export TB_NAME_SOURCE=${4:-$defSource}
-export TB_NAME_SYMBOL=$5
-export TB_NAME_DECIMALS=${6:-$defDecimals}
-export TB_NAME_DESCR=$7
-export TB_NAME_CUSTOM=false
+ADDRESS=$1
+if [[ -z ${ADDRESS} ]]
+then
+    echo -n "Enter an address: "
+    read ADDRESS    
+fi
 
-chifra names --create >/dev/null
-cp -pf /Users/jrush/.quickBlocks/names/names.tab /Users/jrush/Development/trueblocks-core/src/other/install/names/names.tab
-chifra names --all --expand $1
+NAME=$2
+if [[ -z ${NAME} ]]
+then
+    echo -n "Enter a name: "
+    read NAME
+fi
+
+TAG=$3
+if [[ -z ${TAG} ]]
+then
+    echo -n "Enter a tag: "
+    read TAG
+fi
+
+SOURCE=${4:-$defSource}
+SYMBOL=$5
+DECIMALS=${6:-$defDecimals}
+DESCR=$7
+
+echo "---------------------- Adding -----------------------"
+echo "Address: " $ADDRESS
+echo "Name: " $NAME
+echo "TAG: " $TAG
+echo "SOURCE: " $SOURCE
+echo "DECIMALS: " $DECIMALS
+echo "SYMBOL: " $SYMBOL
+echo "DESCR: " $DESCR
+echo 'calling chifra names --editCmd add '$TAG!$ADDRESS!$NAME!$SYMBOL!$SOURCE!$DESCR!$DECIMALS
+
+# tags\taddress\tname\tsymbol\tsource\tdescription\tdecimals\tdeleted\tis_custom\tis_prefund
+chifra names --editCmd add "$TAG!$ADDRESS!$NAME!$SYMBOL!$SOURCE!$DESCR!$DECIMALS" >/dev/null
+chifra names --clean
+chifra names --all --expand $ADDRESS
+#cp -pf /Users/jrush/.quickBlocks/names/names.tab /Users/jrush/Development/trueblocks-core/src/other/install/names/names.tab
+#chifra names --all --expand $1
