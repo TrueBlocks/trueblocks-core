@@ -461,17 +461,17 @@ bool COptions::processEditCommand(CStringArray& terms, bool to_custom) {
         return usage("Invalid edit command '" + crudCommand + "'. Quitting...");
 
     CAccountName target;
-    target.address = getEnvStr("TB_NAME_ADDRESS");
+    target.address = trim(getEnvStr("TB_NAME_ADDRESS"), '\"');
     if (target.address.empty()) {
         target.address = terms[0];
     }
-    target.name = getEnvStr("TB_NAME_NAME");
-    target.tags = getEnvStr("TB_NAME_TAG");
-    target.source = getEnvStr("TB_NAME_SOURCE");
-    target.symbol = getEnvStr("TB_NAME_SYMBOL");
-    target.decimals = str_2_Uint(getEnvStr("TB_NAME_DECIMALS"));
-    target.description = getEnvStr("TB_NAME_DESCR");
-    target.is_custom = str_2_Bool(getEnvStr("TB_NAME_CUSTOM")) || to_custom;
+    target.name = trim(getEnvStr("TB_NAME_NAME"), '\"');
+    target.tags = trim(getEnvStr("TB_NAME_TAG"), '\"');
+    target.source = trim(getEnvStr("TB_NAME_SOURCE"), '\"');
+    target.symbol = trim(getEnvStr("TB_NAME_SYMBOL"), '\"');
+    target.decimals = str_2_Uint(trim(getEnvStr("TB_NAME_DECIMALS"), '\"'));
+    target.description = trim(getEnvStr("TB_NAME_DESCR"), '\"');
+    target.is_custom = str_2_Bool(trim(getEnvStr("TB_NAME_CUSTOM"), '\"')) || to_custom;
 
     if (!isApiMode() && isTestMode()) {
         cout << string_q(45, '-') << endl;

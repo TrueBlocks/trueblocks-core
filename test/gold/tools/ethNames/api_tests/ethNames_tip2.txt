@@ -4,10 +4,6 @@
     "decimals": 0
   },
   {
-    "address": "0x51188342dca5acd1cd2de783fa9bc59c2e441fb0",
-    "decimals": 0
-  },
-  {
     "address": "0x68821f2943a218f7dfa9c4b1c788f007940fc2f3",
     "decimals": 0
   },

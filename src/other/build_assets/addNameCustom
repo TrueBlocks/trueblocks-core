@@ -51,6 +51,7 @@ export TB_NAME_SOURCE=$SOURCE
 export TB_NAME_SYMBOL=$SYMBOL
 export TB_NAME_DECIMALS=$DECIMALS
 export TB_NAME_DESCR=$DESCR
+export TB_NAME_CUSTOM=true
 chifra names --create
-cp -pf /Users/jrush/.quickBlocks/names/names.tab /Users/jrush/Development/trueblocks-core/src/other/install/names/names.tab
+cp -pf /Users/jrush/.quickBlocks/names/names_custom.tab /Users/jrush/Desktop/names_custom.tab
 chifra names --all --expand $ADDRESS

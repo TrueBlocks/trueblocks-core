@@ -11,7 +11,6 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x2bdc0d42996017fce214b21607a515da41a9e0c5	SkinCoin	SKIN	On Chain	6	SkinCoin is a multipurpose cryptocurrency for gaming industry.	false	false	false
 50-Tokens	0x41a7820c86f4bea29e6c9239aeb0fbdba12dd790	Unicorns (defunct 2)	🦄	TrueBlocks.io		Ethereum tip jar unicorn tokens	false	false	false
 50-Tokens:ERC20	0x47dd62d4d075dead71d0e00299fc56a2d747bebb	EQUAL	EQL	On Chain	18	A Self-deflationary, Fairly Distributed, Multiplatform Utility Token.	false	false	false
-91-Known	0x51188342dca5acd1cd2de783fa9bc59c2e441fb0	TrueBlocks Tip Jar Doner		TrueBlocks.io			false	false	false
 91-Known	0x68821f2943a218f7dfa9c4b1c788f007940fc2f3	psdev tip jar		TrueBlocks.io			false	false	false
 90-DevCon2:Individual	0x7cb57b5a97eabe94205c07890be4c1ad31e486a8	My Ethereum Wallet Tip Jar Taylor Van Orden		Slack DevCon2 Token Contract			false	false	false
 50-Tokens	0x89205a3a3b2a69de6dbf7f01ed13b2108b2c43e7	Unicorns	🦄	Ethereum.org		Ethereum tip jar unicorn tokens	false	false	false

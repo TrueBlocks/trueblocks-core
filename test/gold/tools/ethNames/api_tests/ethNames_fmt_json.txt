@@ -1702,6 +1702,15 @@
       "description": ""
     },
     {
+      "tags": "30-Contracts",
+      "address": "0x07f455f30e862e13e3e3d960762cb11c4f744d52",
+      "name": "Gnosis Safe: Replay Service Deployment",
+      "symbol": "",
+      "source": "Etherscan",
+      "decimals": 0,
+      "description": ""
+    },
+    {
       "tags": "80-Malicious:DaoDrain",
       "address": "0x07f5c1e1bc2c93e0402f23341973a0e043f7bf8a",
       "name": "Dao Drain 070",
@@ -1798,15 +1807,6 @@
       "symbol": "",
       "source": "Gitcoin Website",
       "decimals": 0,
-      "description": ""
-    },
-    {
-      "tags": "50-Tokens:ERC20",
-      "address": "0x089a6d83282fb8988a656189f1e7a73fa6c1cac2",
-      "name": "Prospectors Gold",
-      "symbol": "PGL",
-      "source": "On Chain",
-      "decimals": 18,
       "description": ""
     }
   ],

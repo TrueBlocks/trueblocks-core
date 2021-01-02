@@ -30,6 +30,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 40-Exchanges	0x077d52b047735976dfda76fef74d4d988ac25196	Uniswap: ANT	ANT	Etherscan			false	false	false
 50-Tokens:ERC20	0x0784dbabb6c6834bddfb7cfee116ba049e5dafab	IBTC	IBTC	On Chain	18	IBTC is a tokenized version of Bitcoin build on Ethereum blockchain.	false	false	false
 50-Tokens:ERC20	0x07d9e49ea402194bf48a8276dafb16e4ed633317	DALECOIN	DALC	On Chain	8	DaleCoin is an ERC20 token based on the Ethereum blockchain which shall serve as a payment token for goods and services to whoever wishes to accept it.	false	false	false
+30-Contracts	0x07f455f30e862e13e3e3d960762cb11c4f744d52	Gnosis Safe: Replay Service Deployment		Etherscan			false	false	false
 31-Gitcoin Grants:Grant	0x08497b07916280da27b43d28a0d3dfa7d6676b58	Grant 122 Austin Griffith Ethereum Rampd		https://gitcoin.co/grants/122/austin-griffith-ethereum-rampd			false	false	false
 50-Tokens:ERC20	0x08711d3b02c8758f2fb3ab4e80228418a7f8e39c	Edgeless	EDG	On Chain		The Ethereum smart contract-based that offers a 0% house edge and solves the transparency question once and for all.	false	false	false
 30-Contracts:Pasta	0x08a2e41fb99a7599725190b9c970ad3893fa33cf	Pasta V1 Token		EtherScan			false	false	false
@@ -199,4 +200,3 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 34-ENS	0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85	ENS: Base Registrar Implementation		Etherscan			false	false	false
 30-Contracts	0x5aad137d8f7d2dc6e1b2548c059b1483360bcc6a	BrightID Aragon Org		Etherscan			false	false	false
 50-Tokens:ERC20	0x5adc961d6ac3f7062d2ea45fefb8d8167d44b190	Dether	DTH	On Chain	18	A peer-to-peer ecosystem of crypto buyers, sellers and physical shops.	false	false	false
-31-Gitcoin Grants:Grant	0x5b92bd6c37a1958f95ea1e56b6121a89314cfb66	Grant 337 CREAM: Confidential Reliable Ethereum Anonymous Mixer		https://gitcoin.co/grants/337/cream-confidential-reliable-ethereum-anonymous-mix		https://github.com/couger-inc/cream	false	false	false

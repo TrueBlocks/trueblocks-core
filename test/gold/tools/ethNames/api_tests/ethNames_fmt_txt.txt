@@ -188,6 +188,7 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0x07e3c70653548b04f0a75970c1f81b4cbbfb606f	Delta	DLT		18
 31-Gitcoin Grants:Friends	0x07e405e6ec64b85206ad5aaf490a534394d7a65b	Name 0x07e405e6
 50-Tokens:ERC20	0x07ef9e82721ac16809d24dafbe1792ce01654db4	Chimpion	BNANA		18
+30-Contracts	0x07f455f30e862e13e3e3d960762cb11c4f744d52	Gnosis Safe: Replay Service Deployment
 80-Malicious:DaoDrain	0x07f5c1e1bc2c93e0402f23341973a0e043f7bf8a	Dao Drain 070
 31-Gitcoin Grants:Friends	0x07f66cde25828ddb3578b30c52a491db08c92d77	Name 0x07f66cde
 90-DevCon2:Individual	0x080a14c02ceb515e3854818071b3480b49311839	Darius
@@ -199,4 +200,3 @@ tags	address	name	symbol	decimals
 31-Gitcoin Grants:Friends	0x087b33c9a4bdb2fa55a742c51ab44ec66f35bc95	Name 0x087b33c9
 34-Twitter: Friends	0x08808da244d4cdcc56a38748ccebec9985141fd2	Name 0x08808da2
 31-Gitcoin Grants:Friends	0x088b1147aceaf35cc9be639f4e702268411c7405	Name 0x088b1147
-50-Tokens:ERC20	0x089a6d83282fb8988a656189f1e7a73fa6c1cac2	Prospectors Gold	PGL		18

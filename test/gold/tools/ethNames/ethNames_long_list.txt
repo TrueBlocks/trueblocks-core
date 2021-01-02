@@ -186,6 +186,7 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0x07e3c70653548b04f0a75970c1f81b4cbbfb606f	Delta	DLT		18
 31-Gitcoin Grants:Friends	0x07e405e6ec64b85206ad5aaf490a534394d7a65b	Name 0x07e405e6
 50-Tokens:ERC20	0x07ef9e82721ac16809d24dafbe1792ce01654db4	Chimpion	BNANA		18
+30-Contracts	0x07f455f30e862e13e3e3d960762cb11c4f744d52	Gnosis Safe: Replay Service Deployment
 80-Malicious:DaoDrain	0x07f5c1e1bc2c93e0402f23341973a0e043f7bf8a	Dao Drain 070
 31-Gitcoin Grants:Friends	0x07f66cde25828ddb3578b30c52a491db08c92d77	Name 0x07f66cde
 90-DevCon2:Individual	0x080a14c02ceb515e3854818071b3480b49311839	Darius
@@ -201,4 +202,3 @@ tags	address	name	symbol	decimals
 30-Contracts:Pasta	0x08a2e41fb99a7599725190b9c970ad3893fa33cf	Pasta V1 Token
 31-Gitcoin Grants:Grant	0x08b440dd2b2dd0b0de112d5f6eb6d9028eb86b70	Grant 425 Turkish Cryptocurrency YouTuber and Researcher
 31-Gitcoin Grants:Grant	0x08ceb8bba685ee708c9c4c65576837cbe19b9dea	Grant 759 DeFi Arts Intelligencer
-50-Tokens	0x08d32b0da63e2c3bcf8019c9c5d849d7a9d791e6	Dentacoin	DENT

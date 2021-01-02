@@ -1,18 +1,56 @@
 #!/usr/bin/env bash
 
-defTag="81 Other"
 defSource="Etherscan"
 defDecimals=""
 
-export TB_NAME_ADDRESS=$1
-export TB_NAME_NAME=$2
-export TB_NAME_TAG=${3:-$defTag}
-export TB_NAME_SOURCE=${4:-$defSource}
-export TB_NAME_SYMBOL=$5
-export TB_NAME_DECIMALS=${6:-$defDecimals}
-export TB_NAME_DESCR=$7
-export TB_NAME_CUSTOM=false
+ADDRESS=$1
+echo -n "Enter an address: "
+if [[ -z ${ADDRESS} ]]
+then
+    read ADDRESS    
+else
+    echo $ADDRESS
+fi
 
-chifra names --update >/dev/null
+NAME=$2
+echo -n "Enter a name: "
+if [[ -z ${NAME} ]]
+then
+    read NAME
+else
+    echo $NAME
+fi
+
+TAG=$3
+echo -n "Enter a tag: "
+if [[ -z ${TAG} ]]
+then
+    read TAG
+else
+    echo $TAG
+fi
+
+SOURCE=${4:-$defSource}
+SYMBOL=$5
+DECIMALS=${6:-$defDecimals}
+DESCR=$7
+
+echo "---------------------- Adding -----------------------"
+echo "Address: " $ADDRESS
+echo "Name: " $NAME
+echo "TAG: " $TAG
+echo "SOURCE: " $SOURCE
+echo "DECIMALS: " $DECIMALS
+echo "SYMBOL: " $SYMBOL
+echo "DESCR: " $DESCR
+
+export TB_NAME_ADDRESS=$ADDRESS
+export TB_NAME_NAME=$NAME
+export TB_NAME_TAG=$TAG
+export TB_NAME_SOURCE=$SOURCE
+export TB_NAME_SYMBOL=$SYMBOL
+export TB_NAME_DECIMALS=$DECIMALS
+export TB_NAME_DESCR=$DESCR
+chifra names --update
 cp -pf /Users/jrush/.quickBlocks/names/names.tab /Users/jrush/Development/trueblocks-core/src/other/install/names/names.tab
-chifra names --all --expand $1
+chifra names --all --expand $ADDRESS

@@ -1666,6 +1666,15 @@
       "description": ""
     },
     {
+      "tags": "30-Contracts",
+      "address": "0x07f455f30e862e13e3e3d960762cb11c4f744d52",
+      "name": "Gnosis Safe: Replay Service Deployment",
+      "symbol": "",
+      "source": "Etherscan",
+      "decimals": 0,
+      "description": ""
+    },
+    {
       "tags": "80-Malicious:DaoDrain",
       "address": "0x07f5c1e1bc2c93e0402f23341973a0e043f7bf8a",
       "name": "Dao Drain 070",
@@ -1799,15 +1808,6 @@
       "source": "https://gitcoin.co/grants/759/defi-arts-intelligencer",
       "decimals": 0,
       "description": "https://artsdefi.substack.com/"
-    },
-    {
-      "tags": "50-Tokens",
-      "address": "0x08d32b0da63e2c3bcf8019c9c5d849d7a9d791e6",
-      "name": "Dentacoin",
-      "symbol": "DENT",
-      "source": "Etherscan.io",
-      "decimals": 0,
-      "description": "Aims to be the blockchain solution for the global dental industry."
     }
   ],
   "types": [

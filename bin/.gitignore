@@ -7,8 +7,8 @@ fromES
 findSig
 findAbi
 addFunc
-addName
-editName
+addName*
+editName*
 scanner
 testRunner
 startServers

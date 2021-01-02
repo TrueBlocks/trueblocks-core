@@ -374,6 +374,18 @@
     },
     {
       "deleted": false,
+      "tags": "30-Contracts",
+      "address": "0x07f455f30e862e13e3e3d960762cb11c4f744d52",
+      "name": "Gnosis Safe: Replay Service Deployment",
+      "symbol": "",
+      "source": "Etherscan",
+      "decimals": 0,
+      "description": "",
+      "is_custom": false,
+      "is_prefund": false
+    },
+    {
+      "deleted": false,
       "tags": "31-Gitcoin Grants:Grant",
       "address": "0x08497b07916280da27b43d28a0d3dfa7d6676b58",
       "name": "Grant 122 Austin Griffith Ethereum Rampd",
@@ -2397,18 +2409,6 @@
       "source": "On Chain",
       "decimals": 18,
       "description": "A peer-to-peer ecosystem of crypto buyers, sellers and physical shops.",
-      "is_custom": false,
-      "is_prefund": false
-    },
-    {
-      "deleted": false,
-      "tags": "31-Gitcoin Grants:Grant",
-      "address": "0x5b92bd6c37a1958f95ea1e56b6121a89314cfb66",
-      "name": "Grant 337 CREAM: Confidential Reliable Ethereum Anonymous Mixer",
-      "symbol": "",
-      "source": "https://gitcoin.co/grants/337/cream-confidential-reliable-ethereum-anonymous-mix",
-      "decimals": 0,
-      "description": "https://github.com/couger-inc/cream",
       "is_custom": false,
       "is_prefund": false
     }
