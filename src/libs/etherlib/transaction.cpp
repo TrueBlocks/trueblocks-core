@@ -119,6 +119,9 @@ string_q CTransaction::getValueByName(const string_q& fieldName) const {
             if (fieldName % "hash") {
                 return hash_2_Str(hash);
             }
+            if (fieldName % "hasToken") {
+                return uint_2_Str(hasToken);
+            }
             break;
         case 'i':
             if (fieldName % "input") {
@@ -126,9 +129,6 @@ string_q CTransaction::getValueByName(const string_q& fieldName) const {
             }
             if (fieldName % "isError") {
                 return uint_2_Str(isError);
-            }
-            if (fieldName % "isInternal") {
-                return uint_2_Str(isInternal);
             }
             break;
         case 'n':
@@ -349,6 +349,10 @@ bool CTransaction::setValueByName(const string_q& fieldNameIn, const string_q& f
                 hash = str_2_Hash(fieldValue);
                 return true;
             }
+            if (fieldName % "hasToken") {
+                hasToken = str_2_Uint(fieldValue);
+                return true;
+            }
             break;
         case 'i':
             if (fieldName % "input") {
@@ -357,10 +361,6 @@ bool CTransaction::setValueByName(const string_q& fieldNameIn, const string_q& f
             }
             if (fieldName % "isError") {
                 isError = str_2_Uint(fieldValue);
-                return true;
-            }
-            if (fieldName % "isInternal") {
-                isInternal = str_2_Uint(fieldValue);
                 return true;
             }
             break;
@@ -465,7 +465,7 @@ bool CTransaction::Serialize(CArchive& archive) {
     archive >> gasPrice;
     archive >> input;
     archive >> isError;
-    archive >> isInternal;
+    archive >> hasToken;
     archive >> receipt;
     archive >> traces;
     archive >> articulatedTx;
@@ -499,7 +499,7 @@ bool CTransaction::SerializeC(CArchive& archive) const {
     archive << gasPrice;
     archive << input;
     archive << isError;
-    archive << isInternal;
+    archive << hasToken;
     archive << receipt;
     archive << traces;
     archive << articulatedTx;
@@ -558,7 +558,7 @@ void CTransaction::registerClass(void) {
     ADD_FIELD(CTransaction, "gasPrice", T_GAS, ++fieldNum);
     ADD_FIELD(CTransaction, "input", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CTransaction, "isError", T_UNUMBER, ++fieldNum);
-    ADD_FIELD(CTransaction, "isInternal", T_UNUMBER, ++fieldNum);
+    ADD_FIELD(CTransaction, "hasToken", T_UNUMBER, ++fieldNum);
     ADD_OBJECT(CTransaction, "receipt", T_OBJECT | TS_OMITEMPTY, ++fieldNum, GETRUNTIME_CLASS(CReceipt));
     ADD_FIELD(CTransaction, "traces", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
     ADD_OBJECT(CTransaction, "articulatedTx", T_OBJECT | TS_OMITEMPTY, ++fieldNum, GETRUNTIME_CLASS(CFunction));
@@ -620,7 +620,7 @@ void CTransaction::registerClass(void) {
     HIDE_FIELD(CTransaction, "gasCost");
     HIDE_FIELD(CTransaction, "etherGasCost");
     HIDE_FIELD(CTransaction, "isError");
-    HIDE_FIELD(CTransaction, "isInternal");
+    HIDE_FIELD(CTransaction, "hasTokens");
     HIDE_FIELD(CTransaction, "date");
     HIDE_FIELD(CTransaction, "datesh");
     HIDE_FIELD(CTransaction, "time");
@@ -853,8 +853,9 @@ string_q nextTransactionChunk_custom(const string_q& fieldIn, const void* dataPt
 bool CTransaction::readBackLevel(CArchive& archive) {
     bool done = false;
     // EXISTING_CODE
+    uint64_t removedInt;  // used to be isInternal
     if (m_schema <= getVersionNum(0, 4, 0)) {
-        wei_t removed;  // used to be cumulativeGasUsed
+        wei_t removedWei;  // used to be cumulativeGasUsed
         archive >> hash;
         archive >> blockHash;
         archive >> blockNumber;
@@ -866,11 +867,12 @@ bool CTransaction::readBackLevel(CArchive& archive) {
         archive >> value;
         archive >> gas;
         archive >> gasPrice;
-        archive >> removed;
+        archive >> removedWei;
         archive >> input;
         archive >> isError;
-        archive >> isInternal;
+        archive >> removedInt;
         archive >> receipt;
+        hasToken = 0;
         finishParse();
         done = true;
     } else if (m_schema <= getVersionNum(0, 7, 9)) {
@@ -887,7 +889,7 @@ bool CTransaction::readBackLevel(CArchive& archive) {
         archive >> gasPrice;
         archive >> input;
         archive >> isError;
-        archive >> isInternal;
+        archive >> removedInt;
         archive >> receipt;
         archive >> traces;
         archive >> articulatedTx;
@@ -895,6 +897,7 @@ bool CTransaction::readBackLevel(CArchive& archive) {
         // archive >> compressedTx;
         // archive >> statements;
         // archive >> finalized;
+        hasToken = 0;
         finishParse();
         done = true;
     }

@@ -139,6 +139,7 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --ether --sta
   "gas": 200000,
   "gasPrice": 40000000000,
   "isError": 0,
+  "hasToken": 1,
   "receipt": {
     "contractAddress": "0x0",
     "gasUsed": 68590,
@@ -307,6 +308,7 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --ether --sta
   "gas": 66051,
   "gasPrice": 27000000000,
   "isError": 0,
+  "hasToken": 1,
   "receipt": {
     "contractAddress": "0x0",
     "gasUsed": 44034,
@@ -518,6 +520,7 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --ether --sta
   "gas": 200000,
   "gasPrice": 23000000000,
   "isError": 0,
+  "hasToken": 1,
   "receipt": {
     "contractAddress": "0x0",
     "gasUsed": 83590,
@@ -814,6 +817,7 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --ether --sta
   "gas": 200000,
   "gasPrice": 22000000000,
   "isError": 0,
+  "hasToken": 1,
   "receipt": {
     "contractAddress": "0x0",
     "gasUsed": 64390,
@@ -1360,6 +1364,7 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --ether --sta
   "gas": 100000,
   "gasPrice": 21600000000,
   "isError": 0,
+  "hasToken": 0,
   "receipt": {
     "contractAddress": "0x0",
     "gasUsed": 54434,
@@ -8989,6 +8994,7 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --ether --sta
   "gas": 2300000,
   "gasPrice": 24100000000,
   "isError": 0,
+  "hasToken": 1,
   "receipt": {
     "contractAddress": "0x0",
     "gasUsed": 559718,
@@ -14451,6 +14457,7 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --ether --sta
   "gas": 1600000,
   "gasPrice": 35000000000,
   "isError": 0,
+  "hasToken": 1,
   "receipt": {
     "contractAddress": "0x0",
     "gasUsed": 385743,
@@ -15599,6 +15606,7 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --ether --sta
   "gas": 200000,
   "gasPrice": 47000000000,
   "isError": 0,
+  "hasToken": 1,
   "receipt": {
     "contractAddress": "0x0",
     "gasUsed": 68590,
@@ -19841,6 +19849,7 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --ether --sta
   "gas": 1700000,
   "gasPrice": 41800000000,
   "isError": 0,
+  "hasToken": 1,
   "receipt": {
     "contractAddress": "0x0",
     "gasUsed": 404763,
@@ -28969,6 +28978,7 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --ether --sta
   "gas": 2300000,
   "gasPrice": 38500000000,
   "isError": 0,
+  "hasToken": 1,
   "receipt": {
     "contractAddress": "0x0",
     "gasUsed": 587911,
@@ -33592,6 +33602,7 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --ether --sta
   "gas": 1400000,
   "gasPrice": 40000000000,
   "isError": 0,
+  "hasToken": 1,
   "receipt": {
     "contractAddress": "0x0",
     "gasUsed": 371729,
@@ -34492,6 +34503,7 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --ether --sta
   "gas": 66051,
   "gasPrice": 39500000000,
   "isError": 0,
+  "hasToken": 1,
   "receipt": {
     "contractAddress": "0x0",
     "gasUsed": 44034,
@@ -34632,6 +34644,7 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --ether --sta
   "gas": 200000,
   "gasPrice": 39500000000,
   "isError": 0,
+  "hasToken": 1,
   "receipt": {
     "contractAddress": "0x0",
     "gasUsed": 44589,
@@ -35252,6 +35265,7 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --ether --sta
   "gas": 500000,
   "gasPrice": 32000000000,
   "isError": 0,
+  "hasToken": 1,
   "receipt": {
     "contractAddress": "0x0",
     "gasUsed": 155631,
@@ -35603,6 +35617,7 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --ether --sta
   "gas": 66051,
   "gasPrice": 28000000000,
   "isError": 0,
+  "hasToken": 1,
   "receipt": {
     "contractAddress": "0x0",
     "gasUsed": 44034,
@@ -35815,6 +35830,7 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --ether --sta
   "gas": 200000,
   "gasPrice": 28000000000,
   "isError": 0,
+  "hasToken": 1,
   "receipt": {
     "contractAddress": "0x0",
     "gasUsed": 68590,
@@ -36364,6 +36380,7 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --ether --sta
   "gas": 100000,
   "gasPrice": 26000001235,
   "isError": 0,
+  "hasToken": 0,
   "receipt": {
     "contractAddress": "0x0",
     "gasUsed": 54470,
@@ -36673,6 +36690,7 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --ether --sta
   "gas": 200000,
   "gasPrice": 27000000000,
   "isError": 0,
+  "hasToken": 1,
   "receipt": {
     "contractAddress": "0x0",
     "gasUsed": 68602,
@@ -36841,6 +36859,7 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --ether --sta
   "gas": 66051,
   "gasPrice": 30010000000,
   "isError": 0,
+  "hasToken": 1,
   "receipt": {
     "contractAddress": "0x0",
     "gasUsed": 44034,
@@ -37053,6 +37072,7 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --ether --sta
   "gas": 200000,
   "gasPrice": 30010000000,
   "isError": 0,
+  "hasToken": 1,
   "receipt": {
     "contractAddress": "0x0",
     "gasUsed": 68590,
@@ -55434,6 +55454,7 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --ether --sta
   "gas": 3400000,
   "gasPrice": 32000000000,
   "isError": 0,
+  "hasToken": 1,
   "receipt": {
     "contractAddress": "0x0",
     "gasUsed": 821286,
@@ -57548,7 +57569,7 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --ether --sta
   "ether": 0.100000000000000001
 }
 ], "types": [
-{ "type": "CTransaction", "fields": [{ "name": "hash", "type": "hash" }, { "name": "blockHash", "type": "hash" }, { "name": "blockNumber", "type": "blocknum" }, { "name": "transactionIndex", "type": "blocknum" }, { "name": "timestamp", "type": "timestamp" }, { "name": "from", "type": "address" }, { "name": "to", "type": "address" }, { "name": "value", "type": "wei" }, { "name": "gas", "type": "gas" }, { "name": "gasPrice", "type": "gas" }, { "name": "isError", "type": "unumber" }, { "name": "receipt", "type": "object" }, { "name": "traces", "type": "object|ts_array" }, { "name": "articulatedTx", "type": "object" }, { "name": "compressedTx", "type": "text" }, { "name": "statements", "type": "object|ts_array" }, { "name": "gasCost", "type": "wei" }, { "name": "gasUsed", "type": "gas" }, { "name": "date", "type": "date" }, { "name": "ether", "type": "ether" }] }
+{ "type": "CTransaction", "fields": [{ "name": "hash", "type": "hash" }, { "name": "blockHash", "type": "hash" }, { "name": "blockNumber", "type": "blocknum" }, { "name": "transactionIndex", "type": "blocknum" }, { "name": "timestamp", "type": "timestamp" }, { "name": "from", "type": "address" }, { "name": "to", "type": "address" }, { "name": "value", "type": "wei" }, { "name": "gas", "type": "gas" }, { "name": "gasPrice", "type": "gas" }, { "name": "isError", "type": "unumber" }, { "name": "hasToken", "type": "unumber" }, { "name": "receipt", "type": "object" }, { "name": "traces", "type": "object|ts_array" }, { "name": "articulatedTx", "type": "object" }, { "name": "compressedTx", "type": "text" }, { "name": "statements", "type": "object|ts_array" }, { "name": "gasCost", "type": "wei" }, { "name": "gasUsed", "type": "gas" }, { "name": "date", "type": "date" }, { "name": "ether", "type": "ether" }] }
 ], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef", "namedFrom": {"0x00de4b13153673bcae2616b67bf822500d325fc3": { "tags": "31-Gitcoin Grants:Grant", "name": "Grant 012 Grant 086 Gitcoin Sustainability Fund", "count": 1 },"0x054993ab0f2b1acc0fdc65405ee203b4271bebe6": { "tags": "00-Active", "name": "Name 0x054993ab", "count": 1 },"0x0b16f058257f43db6ec84a7b3c77766cb808face": { "tags": "31-Gitcoin Grants:Friends", "name": "Name 0x0b16f058", "count": 1 },"0x3564e17d5f6b7c9a3c6bd6248bf7b3eeb4927e50": { "tags": "31-Gitcoin Grants:Friends", "name": "Name 0x3564e17d", "count": 1 },"0x3a051cff039d0ea6964c0f9f01db6e61cc521748": { "tags": "31-Gitcoin Grants:Friends", "name": "Name 0x3a051cff", "count": 1 },"0x4535c6045343de2a1f307b00cae54ba1b42d904c": { "tags": "31-Gitcoin Grants:Friends", "name": "Name 0x4535c604", "count": 1 },"0x4f1b01b761fc9347d5844c49abed5a235d34569e": { "tags": "31-Gitcoin Grants:Friends", "name": "Name 0x4f1b01b7", "count": 1 },"0x5b93ff82faaf241c15997ea3975419dddd8362c5": { "tags": "31-Gitcoin Grants:Friends", "name": "Name 0x5b93ff82", "count": 1 },"0x5ca323d77930c84524e9b06b20c5027ec4e54480": { "tags": "31-Gitcoin Grants:Friends", "name": "Name 0x5ca323d7", "count": 1 },"0x62051bfd3a4f7039a849142e6e5ea172cbda5949": { "tags": "31-Gitcoin Grants:Friends", "name": "Name 0x62051bfd", "count": 1 },"0x6f620ba7907a3d9a6dda9821eeb4e59b3f69c367": { "tags": "31-Gitcoin Grants:Grant", "name": "Grant 864 Dutch Swap Digital Dutch Auctions for Everyone", "count": 1 },"0x89c65d0759a25ca4b4ae0fd1b4827d00018dc931": { "tags": "31-Gitcoin Grants:Friends", "name": "Name 0x89c65d07", "count": 1 },"0xc8d61e23839794b162da78a5c927fd7b2cd92055": { "tags": "31-Gitcoin Grants:Friends", "name": "Name 0xc8d61e23", "count": 1 }}
 , "unNamedFrom": {}, "namedTo": {"0x7d655c57f71464b6f83811c55d84009cd9f5221c": { "tags": "31-Gitcoin Grants:Core", "name": "Gitcoin Round 6", "is_contract": true, "count": 17 },"0x6b175474e89094c44da98b954eedeac495271d0f": { "tags": "30-Contracts", "name": "Dai Stablecoin", "is_contract": true, "is_erc20": true, "count": 4 }}
 , "unNamedTo": {}, "start": "0xdeadbeef"

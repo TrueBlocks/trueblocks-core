@@ -60,6 +60,9 @@ bool CAbi::articulateTransaction(CTransaction* p) const {
 
 // Significant speed improvement if we handle these items without regular processing
 static const topic_t transferTopic = str_2_Topic("0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef");
+static const topic_t ensTransferTopic =
+    str_2_Topic("0xd4735d920b0f87494915f556dd9b54c8f309026070caea5c737245152564d266");
+static const topic_t approvalTopic = str_2_Topic("0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925");
 //-----------------------------------------------------------------------
 bool parseTransferEvent(CLogEntry* p) {
     static CFunction* evt = NULL;
@@ -70,6 +73,40 @@ bool parseTransferEvent(CLogEntry* p) {
         evt->encoding = transferTopic;
         evt->inputs.push_back(CParameter("_from", "address"));
         evt->inputs.push_back(CParameter("_to", "address"));
+        evt->inputs.push_back(CParameter("_amount", "uint256"));
+    }
+    p->articulatedLog = *evt;
+    p->articulatedLog.inputs[0].value = str_2_Addr(topic_2_Str(p->topics[1]));
+    p->articulatedLog.inputs[1].value = str_2_Addr(topic_2_Str(p->topics[2]));
+    p->articulatedLog.inputs[2].value = bnu_2_Str(str_2_BigUint(p->data));
+    return true;
+}
+//-----------------------------------------------------------------------
+bool parseENSTransferEvent(CLogEntry* p) {
+    static CFunction* evt = NULL;
+    if (evt == NULL) {
+        evt = new CFunction;
+        evt->name = "Transfer";
+        evt->type = "event";
+        evt->encoding = ensTransferTopic;
+        evt->inputs.push_back(CParameter("_node", "bytes32"));
+        evt->inputs.push_back(CParameter("_owner", "address"));
+    }
+    p->articulatedLog = *evt;
+    p->articulatedLog.inputs[0].value = topic_2_Str(p->topics[1]);
+    p->articulatedLog.inputs[1].value = str_2_Addr(topic_2_Str(p->data));
+    return true;
+}
+//-----------------------------------------------------------------------
+bool parseApprovalEvent(CLogEntry* p) {
+    static CFunction* evt = NULL;
+    if (evt == NULL) {
+        evt = new CFunction;
+        evt->name = "Approval";
+        evt->type = "event";
+        evt->encoding = approvalTopic;
+        evt->inputs.push_back(CParameter("_owner", "address"));
+        evt->inputs.push_back(CParameter("_spender", "address"));
         evt->inputs.push_back(CParameter("_amount", "uint256"));
     }
     p->articulatedLog = *evt;
@@ -89,6 +126,10 @@ bool CAbi::articulateLog(CLogEntry* p) const {
     // Hacky shortcuts are way faster since these three events are about 90% of all events
     if (p->topics[0] == transferTopic && p->topics.size() > 1)
         return parseTransferEvent(p);
+    if (p->topics[0] == ensTransferTopic && p->topics.size() > 1)
+        return parseENSTransferEvent(p);
+    if (p->topics[0] == approvalTopic && p->topics.size() > 1)
+        return parseApprovalEvent(p);
 
     // First, we spin looking for our event. When we find it, we copy it so we can fill it in. The topics are
     // all fixed length, so we can process them in place as we go. While we're spinning, we accumulate the

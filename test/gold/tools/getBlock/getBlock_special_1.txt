@@ -27,6 +27,7 @@ getBlock stateclear --force
       "gasPrice": 27000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -48,6 +49,7 @@ getBlock stateclear --force
       "gasPrice": 26000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -69,6 +71,7 @@ getBlock stateclear --force
       "gasPrice": 26000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -90,6 +93,7 @@ getBlock stateclear --force
       "gasPrice": 26000000000,
       "input": "0x53f11cb36ab5f0fb212fb51469d42af732ca3f6cd10b2f9b8fd4fb7606a60290f45938da0000000000000000000000000000000000000000000000000000000000000550",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 1079267,
@@ -111,6 +115,7 @@ getBlock stateclear --force
       "gasPrice": 25322210837,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -132,6 +137,7 @@ getBlock stateclear --force
       "gasPrice": 20000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -153,6 +159,7 @@ getBlock stateclear --force
       "gasPrice": 26000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -174,6 +181,7 @@ getBlock stateclear --force
       "gasPrice": 26000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,

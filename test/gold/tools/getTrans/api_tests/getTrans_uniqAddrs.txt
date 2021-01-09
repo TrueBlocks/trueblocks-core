@@ -89,6 +89,10 @@
           "type": "unumber"
         },
         {
+          "name": "hasToken",
+          "type": "unumber"
+        },
+        {
           "name": "receipt",
           "type": "object"
         },

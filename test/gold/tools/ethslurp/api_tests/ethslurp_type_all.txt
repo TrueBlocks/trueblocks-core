@@ -13,7 +13,7 @@
     "gasPrice": "0",
     "input": "",
     "isError": "0",
-    "isInternal": "1",
+    "hasToken": "0",
     "gasUsed": "0",
     "date": "2017-05-30 03:00:06 UTC",
     "datesh": "2017-05-30",

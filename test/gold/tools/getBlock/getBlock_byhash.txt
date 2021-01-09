@@ -27,6 +27,7 @@ getBlock 0x79990fd526c4751139a7a3afc7420cde1a1141b1920d2afd411858ecb4926a39
       "gasPrice": 24150000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -48,6 +49,7 @@ getBlock 0x79990fd526c4751139a7a3afc7420cde1a1141b1920d2afd411858ecb4926a39
       "gasPrice": 21000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -69,6 +71,7 @@ getBlock 0x79990fd526c4751139a7a3afc7420cde1a1141b1920d2afd411858ecb4926a39
       "gasPrice": 4000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -90,6 +93,7 @@ getBlock 0x79990fd526c4751139a7a3afc7420cde1a1141b1920d2afd411858ecb4926a39
       "gasPrice": 21000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -111,6 +115,7 @@ getBlock 0x79990fd526c4751139a7a3afc7420cde1a1141b1920d2afd411858ecb4926a39
       "gasPrice": 21000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -132,6 +137,7 @@ getBlock 0x79990fd526c4751139a7a3afc7420cde1a1141b1920d2afd411858ecb4926a39
       "gasPrice": 21000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -153,6 +159,7 @@ getBlock 0x79990fd526c4751139a7a3afc7420cde1a1141b1920d2afd411858ecb4926a39
       "gasPrice": 21000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -174,6 +181,7 @@ getBlock 0x79990fd526c4751139a7a3afc7420cde1a1141b1920d2afd411858ecb4926a39
       "gasPrice": 21000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -195,6 +203,7 @@ getBlock 0x79990fd526c4751139a7a3afc7420cde1a1141b1920d2afd411858ecb4926a39
       "gasPrice": 21000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -216,6 +225,7 @@ getBlock 0x79990fd526c4751139a7a3afc7420cde1a1141b1920d2afd411858ecb4926a39
       "gasPrice": 21000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -237,6 +247,7 @@ getBlock 0x79990fd526c4751139a7a3afc7420cde1a1141b1920d2afd411858ecb4926a39
       "gasPrice": 21000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 22966,
@@ -270,6 +281,7 @@ getBlock 0x79990fd526c4751139a7a3afc7420cde1a1141b1920d2afd411858ecb4926a39
       "gasPrice": 21000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -291,6 +303,7 @@ getBlock 0x79990fd526c4751139a7a3afc7420cde1a1141b1920d2afd411858ecb4926a39
       "gasPrice": 21000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -312,6 +325,7 @@ getBlock 0x79990fd526c4751139a7a3afc7420cde1a1141b1920d2afd411858ecb4926a39
       "gasPrice": 21000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -333,6 +347,7 @@ getBlock 0x79990fd526c4751139a7a3afc7420cde1a1141b1920d2afd411858ecb4926a39
       "gasPrice": 21000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -354,6 +369,7 @@ getBlock 0x79990fd526c4751139a7a3afc7420cde1a1141b1920d2afd411858ecb4926a39
       "gasPrice": 21000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,

@@ -26,6 +26,7 @@
           "gasPrice": 50000000000,
           "input": "0x",
           "isError": 0,
+          "hasToken": 0,
           "receipt": {
             "contractAddress": "0x0",
             "gasUsed": 21000,
@@ -53,6 +54,7 @@
           "gasPrice": 50000000000,
           "input": "0x",
           "isError": 0,
+          "hasToken": 0,
           "receipt": {
             "contractAddress": "0x0",
             "gasUsed": 21000,

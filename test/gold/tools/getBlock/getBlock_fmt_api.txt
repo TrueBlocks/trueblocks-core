@@ -27,6 +27,7 @@ getBlock 2222222 2332332 --fmt api
       "gasPrice": 20000000000,
       "input": "0xa9059cbb0000000000000000000000009e9d1613f966936f74534ba71614350d1d87c4b100000000000000000000000000000000000000000000002d9614d1e3f1f00000",
       "isError": 1,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 1000000,
@@ -48,6 +49,7 @@ getBlock 2222222 2332332 --fmt api
       "gasPrice": 20000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -69,6 +71,7 @@ getBlock 2222222 2332332 --fmt api
       "gasPrice": 20000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -90,6 +93,7 @@ getBlock 2222222 2332332 --fmt api
       "gasPrice": 20000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -111,6 +115,7 @@ getBlock 2222222 2332332 --fmt api
       "gasPrice": 20000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -132,6 +137,7 @@ getBlock 2222222 2332332 --fmt api
       "gasPrice": 20000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -153,6 +159,7 @@ getBlock 2222222 2332332 --fmt api
       "gasPrice": 20000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -174,6 +181,7 @@ getBlock 2222222 2332332 --fmt api
       "gasPrice": 20000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -195,6 +203,7 @@ getBlock 2222222 2332332 --fmt api
       "gasPrice": 20000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -216,6 +225,7 @@ getBlock 2222222 2332332 --fmt api
       "gasPrice": 20000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -237,6 +247,7 @@ getBlock 2222222 2332332 --fmt api
       "gasPrice": 20000000000,
       "input": "0x14078d3e0000000000000000000000000000000000000000000000000000000000000000dc21c0e85a1c8fd3f5a1d1b6d735e59929b317d4b44dd1c2d1e110d0cbf4fc56",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 24055,
@@ -258,6 +269,7 @@ getBlock 2222222 2332332 --fmt api
       "gasPrice": 20000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -279,6 +291,7 @@ getBlock 2222222 2332332 --fmt api
       "gasPrice": 20000000000,
       "input": "0x14078d3e0000000000000000000000000000000000000000000000000000000000000001dc21c0e85a1c8fd3f5a1d1b6d735e59929b317d4b44dd1c2d1e110d0cbf4fc56",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 24119,
@@ -300,6 +313,7 @@ getBlock 2222222 2332332 --fmt api
       "gasPrice": 20000000000,
       "input": "0x14078d3e0000000000000000000000000000000000000000000000000000000000000002dc21c0e85a1c8fd3f5a1d1b6d735e59929b317d4b44dd1c2d1e110d0cbf4fc56",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 24119,
@@ -321,6 +335,7 @@ getBlock 2222222 2332332 --fmt api
       "gasPrice": 20000000000,
       "input": "0x14078d3e0000000000000000000000000000000000000000000000000000000000000003dc21c0e85a1c8fd3f5a1d1b6d735e59929b317d4b44dd1c2d1e110d0cbf4fc56",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 24119,
@@ -356,6 +371,7 @@ getBlock 2222222 2332332 --fmt api
       "gasPrice": 53316245930,
       "input": "0xa9059cbb0000000000000000000000007d19317cc81c3ef06039ae5514679f8b12fd28e2000000000000000000000000000000000000000000000000031d958f80134000",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21298,
@@ -389,6 +405,7 @@ getBlock 2222222 2332332 --fmt api
       "gasPrice": 45325035454,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -410,6 +427,7 @@ getBlock 2222222 2332332 --fmt api
       "gasPrice": 42734205443,
       "input": "0x0f2c93290000000000000000000000002e11e38b2ed2bcd5e7475a57566b897f9ca7be53000000000000000000000000919d4b8e5209e3b86328f2fee280be9aaf86fcb3",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 56561,
@@ -431,6 +449,7 @@ getBlock 2222222 2332332 --fmt api
       "gasPrice": 42734205443,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -452,6 +471,7 @@ getBlock 2222222 2332332 --fmt api
       "gasPrice": 42734205443,
       "input": "0x0f2c93290000000000000000000000002e11e38b2ed2bcd5e7475a57566b897f9ca7be53000000000000000000000000897a02b195c11289b25f4c0d530355513156d0c6",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 31561,
@@ -473,6 +493,7 @@ getBlock 2222222 2332332 --fmt api
       "gasPrice": 30000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 29130,
@@ -504,6 +525,7 @@ getBlock 2222222 2332332 --fmt api
       "gasPrice": 30000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 29130,
@@ -535,6 +557,7 @@ getBlock 2222222 2332332 --fmt api
       "gasPrice": 30000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 29130,
@@ -566,6 +589,7 @@ getBlock 2222222 2332332 --fmt api
       "gasPrice": 30000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 29130,
@@ -597,6 +621,7 @@ getBlock 2222222 2332332 --fmt api
       "gasPrice": 30000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 29130,
@@ -628,6 +653,7 @@ getBlock 2222222 2332332 --fmt api
       "gasPrice": 30000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 29130,
@@ -659,6 +685,7 @@ getBlock 2222222 2332332 --fmt api
       "gasPrice": 20000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -680,6 +707,7 @@ getBlock 2222222 2332332 --fmt api
       "gasPrice": 20000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,

@@ -61,6 +61,10 @@
           "type": "gas"
         },
         {
+          "name": "hasToken",
+          "type": "unumber"
+        },
+        {
           "name": "hash",
           "type": "hash"
         },

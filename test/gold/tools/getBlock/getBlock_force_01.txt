@@ -27,6 +27,7 @@ getBlock 2768801 1995314 1958017 --force
       "gasPrice": 25000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -48,6 +49,7 @@ getBlock 2768801 1995314 1958017 --force
       "gasPrice": 20000000000,
       "input": "0xa9059cbb000000000000000000000000856a27476cbb2117ef51b2c047361e492bf1365e000000000000000000000000000000000000000000000000006a94d74f430000",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 37230,
@@ -95,6 +97,7 @@ getBlock 2768801 1995314 1958017 --force
       "gasPrice": 20000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -116,6 +119,7 @@ getBlock 2768801 1995314 1958017 --force
       "gasPrice": 20000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -137,6 +141,7 @@ getBlock 2768801 1995314 1958017 --force
       "gasPrice": 20000000000,
       "input": "0x54a380060000000000000000000000000000000000000000000000000000000000000040000000000000000000000000ebfaa805cf814c060cfac25adf75485fa528cb9a000000000000000000000000000000000000000000000000000000000000001c44657374726f7920476f6c6420536d61727420436f6e74726163747300000000",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 114078,
@@ -172,6 +177,7 @@ getBlock 2768801 1995314 1958017 --force
       "gasPrice": 20000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -193,6 +199,7 @@ getBlock 2768801 1995314 1958017 --force
       "gasPrice": 20000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,

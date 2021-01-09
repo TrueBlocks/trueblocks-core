@@ -15,7 +15,7 @@ fields = hash hash|\
         gas gasPrice|\
         string input|\
         uint64 isError|\
-        uint64 isInternal|\
+        uint64 hasToken|\
         CReceipt receipt|\
         CTraceArray traces|\
         CFunction articulatedTx|\

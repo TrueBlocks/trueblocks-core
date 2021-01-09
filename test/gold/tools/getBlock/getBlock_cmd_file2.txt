@@ -123,6 +123,7 @@ getBlock --file:cmd_file2 --force
       "gasPrice": 50000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -158,6 +159,7 @@ getBlock --file:cmd_file2 --force
       "gasPrice": 50000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -217,6 +219,7 @@ getBlock --file:cmd_file2 --force
       "gasPrice": 50000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -252,6 +255,7 @@ getBlock --file:cmd_file2 --force
       "gasPrice": 50000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -287,6 +291,7 @@ getBlock --file:cmd_file2 --force
       "gasPrice": 50000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -308,6 +313,7 @@ getBlock --file:cmd_file2 --force
       "gasPrice": 50000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -343,6 +349,7 @@ getBlock --file:cmd_file2 --force
       "gasPrice": 60000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -364,6 +371,7 @@ getBlock --file:cmd_file2 --force
       "gasPrice": 60000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -385,6 +393,7 @@ getBlock --file:cmd_file2 --force
       "gasPrice": 60000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -406,6 +415,7 @@ getBlock --file:cmd_file2 --force
       "gasPrice": 60000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -427,6 +437,7 @@ getBlock --file:cmd_file2 --force
       "gasPrice": 60000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -448,6 +459,7 @@ getBlock --file:cmd_file2 --force
       "gasPrice": 60000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -469,6 +481,7 @@ getBlock --file:cmd_file2 --force
       "gasPrice": 60000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -490,6 +503,7 @@ getBlock --file:cmd_file2 --force
       "gasPrice": 60000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -511,6 +525,7 @@ getBlock --file:cmd_file2 --force
       "gasPrice": 52000000000,
       "input": "0x3ed48679000000000000000000000000e73d305a231ab10a7e6c0f6faa3f8bdc1aa1246c0000000000000000000000000000000000000000000000000000000056c6d86b00000000000000000000000000000000000000000000000000000000000000c000000000000000000000000000000000000000000000000000000000000001a000000000000000000000000002e433afd75df65fbf4e263d84238f5628453d700000000000000000000000000000000000000000000000000000000002faf0800000000000000000000000000000000000000000000000000000000000000006c5769c0d4ff941ff7fbbc8218b2eb69939dd565a10dcbab53847aa5aea92b2075114b0930ae0f72775084df65ece28bc24f37d34c0030f96c8c68b9c26facdd9b45898983ede41887f90850c4b4b037a3908d7fcb6ab673fff0d2fb434adc5686ef72c42d329a337fc7caa1336a1f04293b9b3a5e8d32a9391444f2dc00a63895f2026457858175cde28bd9d64db09ecd172029fdea012be7598940f86567bc212808c13718e2de7fafd1cf4f05610cfc954fc1213202e866913aacc94b827c80000000000000000000000000000000000000000000000000000000000000003000000000000000000000000000000000000000000000000000000000000001b000000000000000000000000000000000000000000000000000000000000001c000000000000000000000000000000000000000000000000000000000000001b",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 165222,
@@ -589,6 +604,7 @@ getBlock --file:cmd_file2 --force
       "gasPrice": 50000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -610,6 +626,7 @@ getBlock --file:cmd_file2 --force
       "gasPrice": 50000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 29244,
@@ -641,6 +658,7 @@ getBlock --file:cmd_file2 --force
       "gasPrice": 50000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -662,6 +680,7 @@ getBlock --file:cmd_file2 --force
       "gasPrice": 50000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -683,6 +702,7 @@ getBlock --file:cmd_file2 --force
       "gasPrice": 50000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -718,6 +738,7 @@ getBlock --file:cmd_file2 --force
       "gasPrice": 20000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -739,6 +760,7 @@ getBlock --file:cmd_file2 --force
       "gasPrice": 20000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -774,6 +796,7 @@ getBlock --file:cmd_file2 --force
       "gasPrice": 80525500000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 29244,
@@ -805,6 +828,7 @@ getBlock --file:cmd_file2 --force
       "gasPrice": 60000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -852,6 +876,7 @@ getBlock --file:cmd_file2 --force
       "gasPrice": 60000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -873,6 +898,7 @@ getBlock --file:cmd_file2 --force
       "gasPrice": 50000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -908,6 +934,7 @@ getBlock --file:cmd_file2 --force
       "gasPrice": 50000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -929,6 +956,7 @@ getBlock --file:cmd_file2 --force
       "gasPrice": 50000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -950,6 +978,7 @@ getBlock --file:cmd_file2 --force
       "gasPrice": 50000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -971,6 +1000,7 @@ getBlock --file:cmd_file2 --force
       "gasPrice": 50000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -1006,6 +1036,7 @@ getBlock --file:cmd_file2 --force
       "gasPrice": 500000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -1027,6 +1058,7 @@ getBlock --file:cmd_file2 --force
       "gasPrice": 50000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -1074,6 +1106,7 @@ getBlock --file:cmd_file2 --force
       "gasPrice": 50000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -1095,6 +1128,7 @@ getBlock --file:cmd_file2 --force
       "gasPrice": 50000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -1116,6 +1150,7 @@ getBlock --file:cmd_file2 --force
       "gasPrice": 50000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -1137,6 +1172,7 @@ getBlock --file:cmd_file2 --force
       "gasPrice": 50000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -1158,6 +1194,7 @@ getBlock --file:cmd_file2 --force
       "gasPrice": 50000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -1193,6 +1230,7 @@ getBlock --file:cmd_file2 --force
       "gasPrice": 50000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -1240,6 +1278,7 @@ getBlock --file:cmd_file2 --force
       "gasPrice": 50000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,

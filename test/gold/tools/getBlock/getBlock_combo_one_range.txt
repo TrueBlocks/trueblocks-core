@@ -27,6 +27,7 @@ getBlock 1590000 4000001-4000002 1001001 1234567 --force
       "gasPrice": 24150000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -48,6 +49,7 @@ getBlock 1590000 4000001-4000002 1001001 1234567 --force
       "gasPrice": 21000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -69,6 +71,7 @@ getBlock 1590000 4000001-4000002 1001001 1234567 --force
       "gasPrice": 4000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -90,6 +93,7 @@ getBlock 1590000 4000001-4000002 1001001 1234567 --force
       "gasPrice": 21000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -111,6 +115,7 @@ getBlock 1590000 4000001-4000002 1001001 1234567 --force
       "gasPrice": 21000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -132,6 +137,7 @@ getBlock 1590000 4000001-4000002 1001001 1234567 --force
       "gasPrice": 21000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -153,6 +159,7 @@ getBlock 1590000 4000001-4000002 1001001 1234567 --force
       "gasPrice": 21000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -174,6 +181,7 @@ getBlock 1590000 4000001-4000002 1001001 1234567 --force
       "gasPrice": 21000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -195,6 +203,7 @@ getBlock 1590000 4000001-4000002 1001001 1234567 --force
       "gasPrice": 21000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -216,6 +225,7 @@ getBlock 1590000 4000001-4000002 1001001 1234567 --force
       "gasPrice": 21000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -237,6 +247,7 @@ getBlock 1590000 4000001-4000002 1001001 1234567 --force
       "gasPrice": 21000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 22966,
@@ -270,6 +281,7 @@ getBlock 1590000 4000001-4000002 1001001 1234567 --force
       "gasPrice": 21000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -291,6 +303,7 @@ getBlock 1590000 4000001-4000002 1001001 1234567 --force
       "gasPrice": 21000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -312,6 +325,7 @@ getBlock 1590000 4000001-4000002 1001001 1234567 --force
       "gasPrice": 21000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -333,6 +347,7 @@ getBlock 1590000 4000001-4000002 1001001 1234567 --force
       "gasPrice": 21000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -354,6 +369,7 @@ getBlock 1590000 4000001-4000002 1001001 1234567 --force
       "gasPrice": 21000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -389,6 +405,7 @@ getBlock 1590000 4000001-4000002 1001001 1234567 --force
       "gasPrice": 20000000000,
       "input": "0xe637a44b00000000000000000000000000000000000000000000000000033d1310f46c4700000000000000000000000000000000000000000000000000032928b364fc5b",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 43260,
@@ -420,6 +437,7 @@ getBlock 1590000 4000001-4000002 1001001 1234567 --force
       "gasPrice": 20000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -455,6 +473,7 @@ getBlock 1590000 4000001-4000002 1001001 1234567 --force
       "gasPrice": 50000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -476,6 +495,7 @@ getBlock 1590000 4000001-4000002 1001001 1234567 --force
       "gasPrice": 50000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -497,6 +517,7 @@ getBlock 1590000 4000001-4000002 1001001 1234567 --force
       "gasPrice": 50000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -518,6 +539,7 @@ getBlock 1590000 4000001-4000002 1001001 1234567 --force
       "gasPrice": 50000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,

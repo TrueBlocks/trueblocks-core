@@ -150,7 +150,7 @@ COptions::COptions(void) {
     Init();
 
     UNHIDE_FIELD(CTransaction, "isError");
-    UNHIDE_FIELD(CTransaction, "isInternal");
+    UNHIDE_FIELD(CTransaction, "hasToken");
     UNHIDE_FIELD(CTransaction, "date");
     UNHIDE_FIELD(CTransaction, "ether");
 

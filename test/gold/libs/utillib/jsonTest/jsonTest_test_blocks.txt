@@ -26,6 +26,7 @@ tests/blocks.json
       "gasPrice": 71000000000,
       "input": "0x5bc91b2f000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000480000000000000000000000000000000000000000000000000000000059b99c500000000000000000000000000000000000000000000000000000000059d54bd0",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 113122,
@@ -59,6 +60,7 @@ tests/blocks.json
       "gasPrice": 60000000000,
       "input": "0xa9059cbb000000000000000000000000b0225383ef79f2b0cc3f33eb613338cd1258371e00000000000000000000000000000000000000000000003635c9adc5dea00000",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 40843,
@@ -103,6 +105,7 @@ tests/blocks.json
       "gasPrice": 60000000000,
       "input": "0xa9059cbb000000000000000000000000f838abf2362057e4bc954dd15307cb283946190b00000000000000000000000000000000000000000000010f0cf064dd59200000",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 52170,
@@ -136,6 +139,7 @@ tests/blocks.json
       "gasPrice": 60000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 85015,
@@ -168,6 +172,7 @@ tests/blocks.json
       "gasPrice": 60000000000,
       "input": "0xa9059cbb00000000000000000000000006af66ef7d70432635bc215cafb62593243a2723000000000000000000000000000000000000000000000018efc84ad0c7b00000",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 55843,
@@ -212,6 +217,7 @@ tests/blocks.json
       "gasPrice": 55000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21051,
@@ -233,6 +239,7 @@ tests/blocks.json
       "gasPrice": 53250000000,
       "input": "0xa9059cbb000000000000000000000000cfafa399f8014b91fe9d976bcc3fc863fa96d141000000000000000000000000000000000000000000000000000000003e13b8ab",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 37336,
@@ -266,6 +273,7 @@ tests/blocks.json
       "gasPrice": 50000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -287,6 +295,7 @@ tests/blocks.json
       "gasPrice": 50000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -308,6 +317,7 @@ tests/blocks.json
       "gasPrice": 45108525448,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -329,6 +339,7 @@ tests/blocks.json
       "gasPrice": 42022057445,
       "input": "0xa9059cbb0000000000000000000000008da06780f2914061e356044268edbf16473bf7420000000000000000000000000000000000000000000000000000000001312d00",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 37472,
@@ -362,6 +373,7 @@ tests/blocks.json
       "gasPrice": 42022057445,
       "input": "0xa9059cbb000000000000000000000000d9d9464e501ae1e233928885c40921df333a81b1000000000000000000000000000000000000000000000000000000000002254c",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 37472,
@@ -395,6 +407,7 @@ tests/blocks.json
       "gasPrice": 41179380667,
       "input": "0xa9059cbb0000000000000000000000005e575279bf9f4acf0a130c186861454247394c060000000000000000000000000000000000000000000000000000000af4af3475",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 22117,
@@ -428,6 +441,7 @@ tests/blocks.json
       "gasPrice": 40825000000,
       "input": "0xa9059cbb000000000000000000000000a05a6ca0ed1651f6aae26a2e3e524b8fbcec9e6d0000000000000000000000000000000000000000000000420d127278c91ca000",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 40907,
@@ -472,6 +486,7 @@ tests/blocks.json
       "gasPrice": 40000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 39512,
@@ -511,6 +526,7 @@ tests/blocks.json
       "gasPrice": 39050000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -532,6 +548,7 @@ tests/blocks.json
       "gasPrice": 37275000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -553,6 +570,7 @@ tests/blocks.json
       "gasPrice": 36000000000,
       "input": "0xa9059cbb0000000000000000000000006e99772b063506a72758f6a03994f15861d674950000000000000000000000000000000000000000000000090d8e42dac8234800",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 51916,
@@ -586,6 +604,7 @@ tests/blocks.json
       "gasPrice": 36000000000,
       "input": "0xa9059cbb0000000000000000000000006e99772b063506a72758f6a03994f15861d6749500000000000000000000000000000000000000000000000016af8d7fd9031400",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 52249,
@@ -619,6 +638,7 @@ tests/blocks.json
       "gasPrice": 36000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -640,6 +660,7 @@ tests/blocks.json
       "gasPrice": 36000000000,
       "input": "0xa9059cbb0000000000000000000000008546598f9d695d32117498a09d71d303c106b1c7000000000000000000000000000000000000000000000000ae81e1839dd3bc00",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 36539,
@@ -673,6 +694,7 @@ tests/blocks.json
       "gasPrice": 35500000000,
       "input": "0xa9059cbb000000000000000000000000178fb8ae51652c2d93daf554fdafccee034000c4000000000000000000000000000000000000000000000001085bc8f430350000",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 55779,
@@ -717,6 +739,7 @@ tests/blocks.json
       "gasPrice": 35500000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -738,6 +761,7 @@ tests/blocks.json
       "gasPrice": 35500000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -759,6 +783,7 @@ tests/blocks.json
       "gasPrice": 35500000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -780,6 +805,7 @@ tests/blocks.json
       "gasPrice": 35500000000,
       "input": "0x4246585f524546494c4c5f5357454550",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 22088,
@@ -801,6 +827,7 @@ tests/blocks.json
       "gasPrice": 35500000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 22966,
@@ -834,6 +861,7 @@ tests/blocks.json
       "gasPrice": 35500000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -855,6 +883,7 @@ tests/blocks.json
       "gasPrice": 35500000000,
       "input": "0xa9059cbb0000000000000000000000000d1faf9cbea4b2422c0c7ae8668b519df359ed63000000000000000000000000000000000000000000000007bc257026864f0000",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 37507,
@@ -888,6 +917,7 @@ tests/blocks.json
       "gasPrice": 35500000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -909,6 +939,7 @@ tests/blocks.json
       "gasPrice": 35500000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -930,6 +961,7 @@ tests/blocks.json
       "gasPrice": 35500000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -951,6 +983,7 @@ tests/blocks.json
       "gasPrice": 35500000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -972,6 +1005,7 @@ tests/blocks.json
       "gasPrice": 35500000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -993,6 +1027,7 @@ tests/blocks.json
       "gasPrice": 35500000000,
       "input": "0xa9059cbb00000000000000000000000069ea6b31ef305d6b99bb2d4c9d99456fa108b02a00000000000000000000000000000000000000000000001b4486fafde57c0000",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 22158,
@@ -1026,6 +1061,7 @@ tests/blocks.json
       "gasPrice": 35500000000,
       "input": "0xa9059cbb000000000000000000000000c8d0f92356edc766c5d8671f37d2b9b90de1c91f000000000000000000000000000000000000000000000000000000003b8b87c0",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 36748,
@@ -1059,6 +1095,7 @@ tests/blocks.json
       "gasPrice": 35500000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -1080,6 +1117,7 @@ tests/blocks.json
       "gasPrice": 35500000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -1101,6 +1139,7 @@ tests/blocks.json
       "gasPrice": 35500000000,
       "input": "0xf7654176",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 30981,
@@ -1134,6 +1173,7 @@ tests/blocks.json
       "gasPrice": 35500000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -1155,6 +1195,7 @@ tests/blocks.json
       "gasPrice": 35500000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -1176,6 +1217,7 @@ tests/blocks.json
       "gasPrice": 35500000000,
       "input": "0xdc6dd152000000000000000000000000000000000000000000000000000000000000002f",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 209608,
@@ -1218,6 +1260,7 @@ tests/blocks.json
       "gasPrice": 35500000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -1239,6 +1282,7 @@ tests/blocks.json
       "gasPrice": 35500000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -1260,6 +1304,7 @@ tests/blocks.json
       "gasPrice": 35500000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21051,
@@ -1281,6 +1326,7 @@ tests/blocks.json
       "gasPrice": 35500000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -1302,6 +1348,7 @@ tests/blocks.json
       "gasPrice": 35500000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 104961,
@@ -1365,6 +1412,7 @@ tests/blocks.json
       "gasPrice": 35500000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -1386,6 +1434,7 @@ tests/blocks.json
       "gasPrice": 35500000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -1407,6 +1456,7 @@ tests/blocks.json
       "gasPrice": 35500000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -1428,6 +1478,7 @@ tests/blocks.json
       "gasPrice": 35500000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -1449,6 +1500,7 @@ tests/blocks.json
       "gasPrice": 35500000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -1470,6 +1522,7 @@ tests/blocks.json
       "gasPrice": 35500000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -1491,6 +1544,7 @@ tests/blocks.json
       "gasPrice": 35500000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -1512,6 +1566,7 @@ tests/blocks.json
       "gasPrice": 35500000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -1533,6 +1588,7 @@ tests/blocks.json
       "gasPrice": 35500000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -1554,6 +1610,7 @@ tests/blocks.json
       "gasPrice": 35500000000,
       "input": "0xf55ecf0600000000000000000000000000000000000000000000000000000000000083710000000000000000000000000000000000000000000000000000000059b04dd8",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 36010,
@@ -1585,6 +1642,7 @@ tests/blocks.json
       "gasPrice": 35500000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -1606,6 +1664,7 @@ tests/blocks.json
       "gasPrice": 35500000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -1627,6 +1686,7 @@ tests/blocks.json
       "gasPrice": 35500000000,
       "input": "0x40e58ee50000000000000000000000000000000000000000000000000000000000000ed7",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 49263,
@@ -1690,6 +1750,7 @@ tests/blocks.json
       "gasPrice": 35500000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -1711,6 +1772,7 @@ tests/blocks.json
       "gasPrice": 35500000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21051,
@@ -1732,6 +1794,7 @@ tests/blocks.json
       "gasPrice": 35500000000,
       "input": "0xa9059cbb000000000000000000000000761e71dff26a1dd0b5a1d3e6e0c3c0ef3c640ea900000000000000000000000000000000000000000000000000000002245cdc00",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 51984,
@@ -1765,6 +1828,7 @@ tests/blocks.json
       "gasPrice": 35500000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -1786,6 +1850,7 @@ tests/blocks.json
       "gasPrice": 35500000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -1807,6 +1872,7 @@ tests/blocks.json
       "gasPrice": 35500000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -1828,6 +1894,7 @@ tests/blocks.json
       "gasPrice": 35500000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -1849,6 +1916,7 @@ tests/blocks.json
       "gasPrice": 35500000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -1870,6 +1938,7 @@ tests/blocks.json
       "gasPrice": 35500000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -1891,6 +1960,7 @@ tests/blocks.json
       "gasPrice": 35500000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -1912,6 +1982,7 @@ tests/blocks.json
       "gasPrice": 35500000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -1933,6 +2004,7 @@ tests/blocks.json
       "gasPrice": 35500000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -1954,6 +2026,7 @@ tests/blocks.json
       "gasPrice": 35500000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -1975,6 +2048,7 @@ tests/blocks.json
       "gasPrice": 35500000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -1996,6 +2070,7 @@ tests/blocks.json
       "gasPrice": 35500000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -2017,6 +2092,7 @@ tests/blocks.json
       "gasPrice": 35500000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -2038,6 +2114,7 @@ tests/blocks.json
       "gasPrice": 35500000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -2059,6 +2136,7 @@ tests/blocks.json
       "gasPrice": 35500000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -2080,6 +2158,7 @@ tests/blocks.json
       "gasPrice": 35500000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -2101,6 +2180,7 @@ tests/blocks.json
       "gasPrice": 35500000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -2122,6 +2202,7 @@ tests/blocks.json
       "gasPrice": 35500000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -2143,6 +2224,7 @@ tests/blocks.json
       "gasPrice": 35500000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -2164,6 +2246,7 @@ tests/blocks.json
       "gasPrice": 35500000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -2185,6 +2268,7 @@ tests/blocks.json
       "gasPrice": 35500000000,
       "input": "0xa9059cbb000000000000000000000000b8ed71c17f6cb381c140226e1edcd712678fc29b00000000000000000000000000000000000000000000001043561a8829300000",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 52158,
@@ -2218,6 +2302,7 @@ tests/blocks.json
       "gasPrice": 35500000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -2239,6 +2324,7 @@ tests/blocks.json
       "gasPrice": 35500000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -2260,6 +2346,7 @@ tests/blocks.json
       "gasPrice": 35500000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -2281,6 +2368,7 @@ tests/blocks.json
       "gasPrice": 35500000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -2302,6 +2390,7 @@ tests/blocks.json
       "gasPrice": 35500000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -2323,6 +2412,7 @@ tests/blocks.json
       "gasPrice": 35500000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -2344,6 +2434,7 @@ tests/blocks.json
       "gasPrice": 35000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -2365,6 +2456,7 @@ tests/blocks.json
       "gasPrice": 35000000000,
       "input": "0x0f2c9329000000000000000000000000167a9333bf582556f35bd4d16a7e80e191aa6476000000000000000000000000571b7b69829ce2568b9bc3d32eaf7405dab76b21",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 33571,
@@ -2386,6 +2478,7 @@ tests/blocks.json
       "gasPrice": 35000000000,
       "input": "0x0f2c9329000000000000000000000000167a9333bf582556f35bd4d16a7e80e191aa6476000000000000000000000000571b7b69829ce2568b9bc3d32eaf7405dab76b21",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 33571,
@@ -2407,6 +2500,7 @@ tests/blocks.json
       "gasPrice": 35000000000,
       "input": "0x0f2c9329000000000000000000000000167a9333bf582556f35bd4d16a7e80e191aa6476000000000000000000000000571b7b69829ce2568b9bc3d32eaf7405dab76b21",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 33571,
@@ -2428,6 +2522,7 @@ tests/blocks.json
       "gasPrice": 35000000000,
       "input": "0x0f2c9329000000000000000000000000167a9333bf582556f35bd4d16a7e80e191aa6476000000000000000000000000571b7b69829ce2568b9bc3d32eaf7405dab76b21",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 33571,
@@ -2449,6 +2544,7 @@ tests/blocks.json
       "gasPrice": 35000000000,
       "input": "0x0f2c9329000000000000000000000000167a9333bf582556f35bd4d16a7e80e191aa6476000000000000000000000000571b7b69829ce2568b9bc3d32eaf7405dab76b21",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 33571,
@@ -2470,6 +2566,7 @@ tests/blocks.json
       "gasPrice": 35000000000,
       "input": "0x0f2c9329000000000000000000000000167a9333bf582556f35bd4d16a7e80e191aa6476000000000000000000000000571b7b69829ce2568b9bc3d32eaf7405dab76b21",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 33571,
@@ -2491,6 +2588,7 @@ tests/blocks.json
       "gasPrice": 35000000000,
       "input": "0x0f2c9329000000000000000000000000167a9333bf582556f35bd4d16a7e80e191aa6476000000000000000000000000571b7b69829ce2568b9bc3d32eaf7405dab76b21",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 33571,
@@ -2512,6 +2610,7 @@ tests/blocks.json
       "gasPrice": 35000000000,
       "input": "0x0f2c9329000000000000000000000000167a9333bf582556f35bd4d16a7e80e191aa6476000000000000000000000000571b7b69829ce2568b9bc3d32eaf7405dab76b21",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 33571,
@@ -2533,6 +2632,7 @@ tests/blocks.json
       "gasPrice": 35000000000,
       "input": "0x0f2c9329000000000000000000000000167a9333bf582556f35bd4d16a7e80e191aa6476000000000000000000000000571b7b69829ce2568b9bc3d32eaf7405dab76b21",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 33571,
@@ -2554,6 +2654,7 @@ tests/blocks.json
       "gasPrice": 35000000000,
       "input": "0x0f2c9329000000000000000000000000167a9333bf582556f35bd4d16a7e80e191aa6476000000000000000000000000571b7b69829ce2568b9bc3d32eaf7405dab76b21",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 33571,
@@ -2575,6 +2676,7 @@ tests/blocks.json
       "gasPrice": 35000000000,
       "input": "0x0f2c9329000000000000000000000000167a9333bf582556f35bd4d16a7e80e191aa6476000000000000000000000000571b7b69829ce2568b9bc3d32eaf7405dab76b21",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 33571,
@@ -2596,6 +2698,7 @@ tests/blocks.json
       "gasPrice": 35000000000,
       "input": "0x0f2c9329000000000000000000000000167a9333bf582556f35bd4d16a7e80e191aa6476000000000000000000000000571b7b69829ce2568b9bc3d32eaf7405dab76b21",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 33571,
@@ -2617,6 +2720,7 @@ tests/blocks.json
       "gasPrice": 34694115112,
       "input": "0xa9059cbb0000000000000000000000003394ec2e4241ecd3f9be33fb1c33168264a807e3000000000000000000000000000000000000000000000000000000306a19b5a0",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 36812,
@@ -2650,6 +2754,7 @@ tests/blocks.json
       "gasPrice": 34000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -2671,6 +2776,7 @@ tests/blocks.json
       "gasPrice": 32000000000,
       "input": "0xfebefd610000000000000000000000000000000000000000000000000000000000000040376e71ed0cfcf805b5938821a08cf54dd447d18250d2fefb2153c6078c9c94970000000000000000000000000000000000000000000000000000000000000001b39cb0dc392eaf60383de5bf45852b50dc6ea1bc13bc59fa87848a5dda10ddc5",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 457319,
@@ -2713,6 +2819,7 @@ tests/blocks.json
       "gasPrice": 31000000000,
       "input": "0xd0e30db0",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 29493,
@@ -2744,6 +2851,7 @@ tests/blocks.json
       "gasPrice": 31000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 51870,
@@ -2786,6 +2894,7 @@ tests/blocks.json
       "gasPrice": 30000000000,
       "input": "0x3fedcc31000000000000000000000000000000005db8ac4632b04d34a6a433753ab8b49b000000000000000000000000a36ae0f959046a18d109dc5b1fb8df655cf0aa81000000000000000000000000ad66ece9bf8c71870aecdaf01b06dcf4b3c2f579000000000000000000000000055e403bc7bf8357c3b73791716e89d85821180b000000000000000000000000000000000000000000000000002fb6838b55600000000000000000000000000000000000000000000000000000000000000000e000000000000000000000000000000000000000000000000000000000000001600000000000000000000000000000000000000000000000000000000000000041b077feded7632ee83d1d9c0d5f48933f923490e1f96e1f1c54a2d72025be81726b3269e9ad783f481b625a0b024867545db5ed55c5f5358b4f80342653f861be1b0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 74180,
@@ -2817,6 +2926,7 @@ tests/blocks.json
       "gasPrice": 30000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -2838,6 +2948,7 @@ tests/blocks.json
       "gasPrice": 30000000000,
       "input": "0xa9059cbb000000000000000000000000a73e4bce20d7385f80a1ae4c5de50a3dd3e8827d000000000000000000000000000000000000000000000000136dcc951d8c0000",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 52579,
@@ -2871,6 +2982,7 @@ tests/blocks.json
       "gasPrice": 30000000000,
       "input": "0x9e281a980000000000000000000000000e0989b1f9b8a38983c2ba8053269ca62ec9b1950000000000000000000000000000000000000000000000000000048c27395000",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 48104,
@@ -2912,6 +3024,7 @@ tests/blocks.json
       "gasPrice": 30000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -2933,6 +3046,7 @@ tests/blocks.json
       "gasPrice": 30000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -2954,6 +3068,7 @@ tests/blocks.json
       "gasPrice": 30000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -2975,6 +3090,7 @@ tests/blocks.json
       "gasPrice": 28000000000,
       "input": "0x39125215000000000000000000000000402f27d635c57ac1d5f0931b04d1bd1516a979e10000000000000000000000000000000000000000000000000be716ab8725f80000000000000000000000000000000000000000000000000000000000000000c00000000000000000000000000000000000000000000000000000000059b972e1000000000000000000000000000000000000000000000000000000000000236800000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000411386d16721744e3aaa32089e2d66afd74e22176d97a00ecf2b9f1a05d9e6bf13648df128f2f5d593f29d1bcd8f8b75762805fdd5cd6dbf24d6f5b0d6c7b449fa1b00000000000000000000000000000000000000000000000000000000000000",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 67656,
@@ -3006,6 +3122,7 @@ tests/blocks.json
       "gasPrice": 25000000000,
       "input": "0xa9059cbb000000000000000000000000176b84653ad4816e93dfddfbf95b0762f66ebe4b0000000000000000000000000000000000000000000000006ee0c185f2963000",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 37158,
@@ -3039,6 +3156,7 @@ tests/blocks.json
       "gasPrice": 25000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -3060,6 +3178,7 @@ tests/blocks.json
       "gasPrice": 25000000000,
       "input": "0x0a19b14a0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000334746ec4d118000000000000000000000000000e41d2489571d322189246dafa5ebde1f4699f49800000000000000000000000000000000000000000000010f0cf064dd59200000000000000000000000000000000000000000000000000000000000000040eb39000000000000000000000000000000000000000000000000000000003477ca86000000000000000000000000ba918113878613b7c0590b4e2d4dba57f3869cdb000000000000000000000000000000000000000000000000000000000000001c5b669018933e80ae6247c6993f77ff9c0dd8df826621e2b69c4dce70837a11684f7f6628f9b88e62ebdd1df6ac6aaa8770e704eb58a670789a729ec40ed3e456000000000000000000000000000000000000000000000000016ef1673d7b586f",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 93306,
@@ -3091,6 +3210,7 @@ tests/blocks.json
       "gasPrice": 24000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 215396,
@@ -3186,6 +3306,7 @@ tests/blocks.json
       "gasPrice": 24000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21051,
@@ -3207,6 +3328,7 @@ tests/blocks.json
       "gasPrice": 22000001337,
       "input": "0x57202bfd000000000000000000000000f09335e20895a8f3247fade84339f189477a8ad00000000000000000000000008b02579c2c6a033140dccb46dc2eeaa08f134b0a0000000000000000000000000000000000000000000000000000000000000001",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 71601,
@@ -3255,6 +3377,7 @@ tests/blocks.json
       "gasPrice": 21000000000,
       "input": "0xc8fea2fb000000000000000000000000e03c23519e18d64f144d2800e30e81b0065c48b5000000000000000000000000af4dce16da2877f8c9e00544c93b62ac40631f1600000000000000000000000000000000000000000000000000000000231b6d40",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 25663,
@@ -3288,6 +3411,7 @@ tests/blocks.json
       "gasPrice": 21000000000,
       "input": "0xa9059cbb000000000000000000000000304cc179719bc5b05418d6f7f6783abe45d8309000000000000000000000000000000000000000000000000000000000b498e900",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21728,
@@ -3321,6 +3445,7 @@ tests/blocks.json
       "gasPrice": 21000000000,
       "input": "0xa9059cbb000000000000000000000000304cc179719bc5b05418d6f7f6783abe45d83090000000000000000000000000000000000000000000000000000000746a528800",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21792,
@@ -3354,6 +3479,7 @@ tests/blocks.json
       "gasPrice": 21000000000,
       "input": "0xa9059cbb000000000000000000000000304cc179719bc5b05418d6f7f6783abe45d8309000000000000000000000000000000000000000000000000000000029f3b4b1e0",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21856,
@@ -3387,6 +3513,7 @@ tests/blocks.json
       "gasPrice": 21000000000,
       "input": "0xa9059cbb000000000000000000000000304cc179719bc5b05418d6f7f6783abe45d8309000000000000000000000000000000000000000000000000000000000ee02f884",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21792,
@@ -3420,6 +3547,7 @@ tests/blocks.json
       "gasPrice": 21000000000,
       "input": "0xa9059cbb000000000000000000000000304cc179719bc5b05418d6f7f6783abe45d83090000000000000000000000000000000000000000000000000000000067283e410",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21856,
@@ -3453,6 +3581,7 @@ tests/blocks.json
       "gasPrice": 21000000000,
       "input": "0xa9059cbb000000000000000000000000304cc179719bc5b05418d6f7f6783abe45d83090000000000000000000000000000000000000000000000000000000024abdb040",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21856,
@@ -3486,6 +3615,7 @@ tests/blocks.json
       "gasPrice": 21000000000,
       "input": "0xa9059cbb000000000000000000000000304cc179719bc5b05418d6f7f6783abe45d830900000000000000000000000000000000000000000000000000000000032c17820",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21792,
@@ -3519,6 +3649,7 @@ tests/blocks.json
       "gasPrice": 21000000000,
       "input": "0xa9059cbb000000000000000000000000304cc179719bc5b05418d6f7f6783abe45d830900000000000000000000000000000000000000000000000000000000b90574a40",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21856,
@@ -3552,6 +3683,7 @@ tests/blocks.json
       "gasPrice": 21000000000,
       "input": "0xa9059cbb000000000000000000000000304cc179719bc5b05418d6f7f6783abe45d830900000000000000000000000000000000000000000000000000000003c980481f0",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21856,
@@ -3585,6 +3717,7 @@ tests/blocks.json
       "gasPrice": 21000000000,
       "input": "0xa9059cbb000000000000000000000000304cc179719bc5b05418d6f7f6783abe45d83090000000000000000000000000000000000000000000000000000001ae45623000",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21856,
@@ -3618,6 +3751,7 @@ tests/blocks.json
       "gasPrice": 21000000000,
       "input": "0xa9059cbb000000000000000000000000304cc179719bc5b05418d6f7f6783abe45d8309000000000000000000000000000000000000000000000000000000002530aa0a0",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21856,
@@ -3651,6 +3785,7 @@ tests/blocks.json
       "gasPrice": 21000000000,
       "input": "0xa9059cbb000000000000000000000000304cc179719bc5b05418d6f7f6783abe45d83090000000000000000000000000000000000000000000000000000000483ef8fb70",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21856,
@@ -3684,6 +3819,7 @@ tests/blocks.json
       "gasPrice": 21000000000,
       "input": "0xa9059cbb000000000000000000000000304cc179719bc5b05418d6f7f6783abe45d8309000000000000000000000000000000000000000000000000000000003d7852890",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21856,
@@ -3717,6 +3853,7 @@ tests/blocks.json
       "gasPrice": 21000000000,
       "input": "0xa9059cbb000000000000000000000000304cc179719bc5b05418d6f7f6783abe45d830900000000000000000000000000000000000000000000000000000000c94058fbf",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21856,
@@ -3750,6 +3887,7 @@ tests/blocks.json
       "gasPrice": 21000000000,
       "input": "0xa9059cbb000000000000000000000000304cc179719bc5b05418d6f7f6783abe45d8309000000000000000000000000000000000000000000000000000000000c36e847f",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21792,
@@ -3783,6 +3921,7 @@ tests/blocks.json
       "gasPrice": 21000000000,
       "input": "0xa9059cbb000000000000000000000000304cc179719bc5b05418d6f7f6783abe45d8309000000000000000000000000000000000000000000000000000000010bd01ab80",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21856,
@@ -3816,6 +3955,7 @@ tests/blocks.json
       "gasPrice": 21000000000,
       "input": "0xa9059cbb000000000000000000000000304cc179719bc5b05418d6f7f6783abe45d8309000000000000000000000000000000000000000000000000000000000d5d02cef",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21792,
@@ -3849,6 +3989,7 @@ tests/blocks.json
       "gasPrice": 21000000000,
       "input": "0xa9059cbb000000000000000000000000304cc179719bc5b05418d6f7f6783abe45d830900000000000000000000000000000000000000000000000000000000dcb7e1b9c",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21856,
@@ -3882,6 +4023,7 @@ tests/blocks.json
       "gasPrice": 21000000000,
       "input": "0xa9059cbb000000000000000000000000304cc179719bc5b05418d6f7f6783abe45d83090000000000000000000000000000000000000000000000000000000001e162dd0",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21792,
@@ -3915,6 +4057,7 @@ tests/blocks.json
       "gasPrice": 21000000000,
       "input": "0xa9059cbb000000000000000000000000304cc179719bc5b05418d6f7f6783abe45d830900000000000000000000000000000000000000000000000000000001647e43a60",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21856,
@@ -3948,6 +4091,7 @@ tests/blocks.json
       "gasPrice": 21000000000,
       "input": "0xa9059cbb000000000000000000000000304cc179719bc5b05418d6f7f6783abe45d8309000000000000000000000000000000000000000000000000000000001841f2180",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21856,
@@ -3981,6 +4125,7 @@ tests/blocks.json
       "gasPrice": 21000000000,
       "input": "0xa9059cbb0000000000000000000000009541ad61818263f542f16fd794abf942d1f6ec9a0000000000000000000000000000000000000000000000000000000077359400",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 51728,
@@ -4014,6 +4159,7 @@ tests/blocks.json
       "gasPrice": 21000000000,
       "input": "0xa9059cbb000000000000000000000000304cc179719bc5b05418d6f7f6783abe45d83090000000000000000000000000000000000000000000000000000000010f7fefd0",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21856,
@@ -4047,6 +4193,7 @@ tests/blocks.json
       "gasPrice": 21000000000,
       "input": "0xa9059cbb000000000000000000000000304cc179719bc5b05418d6f7f6783abe45d830900000000000000000000000000000000000000000000000000000006f2189acd4",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21856,
@@ -4080,6 +4227,7 @@ tests/blocks.json
       "gasPrice": 21000000000,
       "input": "0xa9059cbb000000000000000000000000304cc179719bc5b05418d6f7f6783abe45d8309000000000000000000000000000000000000000000000000000000012ecbe8440",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21856,
@@ -4113,6 +4261,7 @@ tests/blocks.json
       "gasPrice": 21000000000,
       "input": "0xa9059cbb000000000000000000000000304cc179719bc5b05418d6f7f6783abe45d8309000000000000000000000000000000000000000000000000000000006159d63c0",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21856,
@@ -4146,6 +4295,7 @@ tests/blocks.json
       "gasPrice": 21000000000,
       "input": "0xa9059cbb000000000000000000000000304cc179719bc5b05418d6f7f6783abe45d83090000000000000000000000000000000000000000000000000000000004fcd61e0",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21792,
@@ -4179,6 +4329,7 @@ tests/blocks.json
       "gasPrice": 21000000000,
       "input": "0xa9059cbb000000000000000000000000304cc179719bc5b05418d6f7f6783abe45d830900000000000000000000000000000000000000000000000000000000ad44bcb50",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21856,
@@ -4212,6 +4363,7 @@ tests/blocks.json
       "gasPrice": 21000000000,
       "input": "0xa9059cbb000000000000000000000000304cc179719bc5b05418d6f7f6783abe45d83090000000000000000000000000000000000000000000000000000000001d62e360",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21792,
@@ -4245,6 +4397,7 @@ tests/blocks.json
       "gasPrice": 21000000000,
       "input": "0xa9059cbb000000000000000000000000304cc179719bc5b05418d6f7f6783abe45d83090000000000000000000000000000000000000000000000000000000056a25f930",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21856,
@@ -4278,6 +4431,7 @@ tests/blocks.json
       "gasPrice": 21000000000,
       "input": "0x0000000000000000000000000000000000000000000000000000000000000000046933a6",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 73457,
@@ -4311,6 +4465,7 @@ tests/blocks.json
       "gasPrice": 21000000000,
       "input": "0xa9059cbb000000000000000000000000304cc179719bc5b05418d6f7f6783abe45d830900000000000000000000000000000000000000000000000000000000007c326f0",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21792,
@@ -4344,6 +4499,7 @@ tests/blocks.json
       "gasPrice": 21000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 95748,
@@ -4386,6 +4542,7 @@ tests/blocks.json
       "gasPrice": 21000000000,
       "input": "0xa9059cbb000000000000000000000000304cc179719bc5b05418d6f7f6783abe45d8309000000000000000000000000000000000000000000000000000000001153ac3a0",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21856,
@@ -4419,6 +4576,7 @@ tests/blocks.json
       "gasPrice": 21000000000,
       "input": "0xa9059cbb000000000000000000000000304cc179719bc5b05418d6f7f6783abe45d830900000000000000000000000000000000000000000000000000000000669781080",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21856,
@@ -4452,6 +4610,7 @@ tests/blocks.json
       "gasPrice": 21000000000,
       "input": "0xa9059cbb0000000000000000000000007183d74a0e064783bd7facb7d05d71a996cd5cc8000000000000000000000000000000000000000000000046791fc84e07d00000",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 52292,
@@ -4485,6 +4644,7 @@ tests/blocks.json
       "gasPrice": 21000000000,
       "input": "0xa9059cbb000000000000000000000000304cc179719bc5b05418d6f7f6783abe45d830900000000000000000000000000000000000000000000000000000000549531c60",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21856,
@@ -4518,6 +4678,7 @@ tests/blocks.json
       "gasPrice": 21000000000,
       "input": "0xa9059cbb000000000000000000000000304cc179719bc5b05418d6f7f6783abe45d83090000000000000000000000000000000000000000000000000000000051a9949d0",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21856,
@@ -4551,6 +4712,7 @@ tests/blocks.json
       "gasPrice": 21000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 137126,
@@ -4602,6 +4764,7 @@ tests/blocks.json
       "gasPrice": 21000000000,
       "input": "0xa9059cbb000000000000000000000000304cc179719bc5b05418d6f7f6783abe45d830900000000000000000000000000000000000000000000000000000000155207dc0",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21856,
@@ -4635,6 +4798,7 @@ tests/blocks.json
       "gasPrice": 21000000000,
       "input": "0xa9059cbb000000000000000000000000304cc179719bc5b05418d6f7f6783abe45d8309000000000000000000000000000000000000000000000000000000000941a6dc0",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21792,
@@ -4668,6 +4832,7 @@ tests/blocks.json
       "gasPrice": 21000000000,
       "input": "0xa9059cbb000000000000000000000000304cc179719bc5b05418d6f7f6783abe45d83090000000000000000000000000000000000000000000000000000000746c47e4ad",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21856,
@@ -4701,6 +4866,7 @@ tests/blocks.json
       "gasPrice": 21000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -4722,6 +4888,7 @@ tests/blocks.json
       "gasPrice": 21000000000,
       "input": "0xa9059cbb000000000000000000000000304cc179719bc5b05418d6f7f6783abe45d830900000000000000000000000000000000000000000000000000000000162bada20",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21856,
@@ -4755,6 +4922,7 @@ tests/blocks.json
       "gasPrice": 21000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -4776,6 +4944,7 @@ tests/blocks.json
       "gasPrice": 21000000000,
       "input": "0xa9059cbb000000000000000000000000304cc179719bc5b05418d6f7f6783abe45d830900000000000000000000000000000000000000000000000000000000120457470",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21856,
@@ -4809,6 +4978,7 @@ tests/blocks.json
       "gasPrice": 21000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -4830,6 +5000,7 @@ tests/blocks.json
       "gasPrice": 21000000000,
       "input": "0xa9059cbb000000000000000000000000304cc179719bc5b05418d6f7f6783abe45d830900000000000000000000000000000000000000000000000000000000088238830",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21792,
@@ -4863,6 +5034,7 @@ tests/blocks.json
       "gasPrice": 21000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -4884,6 +5056,7 @@ tests/blocks.json
       "gasPrice": 21000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -4905,6 +5078,7 @@ tests/blocks.json
       "gasPrice": 21000000000,
       "input": "0xa9059cbb000000000000000000000000304cc179719bc5b05418d6f7f6783abe45d8309000000000000000000000000000000000000000000000000000000025a0b47150",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21856,
@@ -4938,6 +5112,7 @@ tests/blocks.json
       "gasPrice": 21000000000,
       "input": "0xa9059cbb000000000000000000000000304cc179719bc5b05418d6f7f6783abe45d8309000000000000000000000000000000000000000000000000000000006fc23ac00",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21792,
@@ -4971,6 +5146,7 @@ tests/blocks.json
       "gasPrice": 21000000000,
       "input": "0xa9059cbb000000000000000000000000304cc179719bc5b05418d6f7f6783abe45d830900000000000000000000000000000000000000000000000000000002accab3a00",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21792,
@@ -5004,6 +5180,7 @@ tests/blocks.json
       "gasPrice": 21000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -5025,6 +5202,7 @@ tests/blocks.json
       "gasPrice": 21000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -5046,6 +5224,7 @@ tests/blocks.json
       "gasPrice": 21000000000,
       "input": "0xa9059cbb0000000000000000000000000c14a1d724b35360ef9ad85594578891e282c1ad00000000000000000000000000000000000000000000000054a78dae49e20000",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 36737,
@@ -5079,6 +5258,7 @@ tests/blocks.json
       "gasPrice": 21000000000,
       "input": "0xa9059cbb000000000000000000000000304cc179719bc5b05418d6f7f6783abe45d8309000000000000000000000000000000000000000000000000000000001d74a5460",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21856,
@@ -5112,6 +5292,7 @@ tests/blocks.json
       "gasPrice": 21000000000,
       "input": "0xa9059cbb000000000000000000000000304cc179719bc5b05418d6f7f6783abe45d830900000000000000000000000000000000000000000000000000000000340a86680",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21856,
@@ -5145,6 +5326,7 @@ tests/blocks.json
       "gasPrice": 21000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -5166,6 +5348,7 @@ tests/blocks.json
       "gasPrice": 21000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -5187,6 +5370,7 @@ tests/blocks.json
       "gasPrice": 21000000000,
       "input": "0xa9059cbb000000000000000000000000304cc179719bc5b05418d6f7f6783abe45d830900000000000000000000000000000000000000000000000000000000083529f30",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21792,
@@ -5220,6 +5404,7 @@ tests/blocks.json
       "gasPrice": 21000000000,
       "input": "0xa9059cbb000000000000000000000000304cc179719bc5b05418d6f7f6783abe45d8309000000000000000000000000000000000000000000000000000000005d21dba00",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21792,
@@ -5253,6 +5438,7 @@ tests/blocks.json
       "gasPrice": 21000000000,
       "input": "0xa9059cbb000000000000000000000000304cc179719bc5b05418d6f7f6783abe45d830900000000000000000000000000000000000000000000000000000000f293700e0",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21792,
@@ -5286,6 +5472,7 @@ tests/blocks.json
       "gasPrice": 21000000000,
       "input": "0xa9059cbb000000000000000000000000304cc179719bc5b05418d6f7f6783abe45d830900000000000000000000000000000000000000000000000000000000dab3126e0",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21856,
@@ -5319,6 +5506,7 @@ tests/blocks.json
       "gasPrice": 21000000000,
       "input": "0xa9059cbb000000000000000000000000304cc179719bc5b05418d6f7f6783abe45d830900000000000000000000000000000000000000000000000000000000059fcf4f0",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21792,
@@ -5352,6 +5540,7 @@ tests/blocks.json
       "gasPrice": 21000000000,
       "input": "0xa9059cbb000000000000000000000000304cc179719bc5b05418d6f7f6783abe45d8309000000000000000000000000000000000000000000000000000000031a95c8390",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21856,
@@ -5385,6 +5574,7 @@ tests/blocks.json
       "gasPrice": 21000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -5406,6 +5596,7 @@ tests/blocks.json
       "gasPrice": 21000000000,
       "input": "0xa9059cbb000000000000000000000000304cc179719bc5b05418d6f7f6783abe45d830900000000000000000000000000000000000000000000000000000001b58665b20",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21856,
@@ -5439,6 +5630,7 @@ tests/blocks.json
       "gasPrice": 21000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -5460,6 +5652,7 @@ tests/blocks.json
       "gasPrice": 21000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -5481,6 +5674,7 @@ tests/blocks.json
       "gasPrice": 21000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -5502,6 +5696,7 @@ tests/blocks.json
       "gasPrice": 21000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -5523,6 +5718,7 @@ tests/blocks.json
       "gasPrice": 21000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -5544,6 +5740,7 @@ tests/blocks.json
       "gasPrice": 21000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
@@ -5565,6 +5762,7 @@ tests/blocks.json
       "gasPrice": 21000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 162202,
@@ -5616,6 +5814,7 @@ tests/blocks.json
       "gasPrice": 21000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 39512,

@@ -111,6 +111,8 @@ bool Slurp(CAccount& theAccount, COptions& options) {
                 while (trans.parseJson3(response.result)) {
                     if (type == "int")
                         findInternalTxIndex(trans);
+                    if (type == "token" || type == "nfts")
+                        trans.hasToken = 1;
                     theAccount.transactions.push_back(trans);
                     theAccount.markLatest(trans);
                     trans = CTransaction();  // reset
@@ -153,5 +155,5 @@ void findInternalTxIndex(CTransaction& trans) {
     CTransaction thing;
     getTransaction(thing, trans.hash);
     trans.transactionIndex = thing.transactionIndex;
-    trans.isInternal = true;
+    trans.hasToken = trans.hasToken;
 }

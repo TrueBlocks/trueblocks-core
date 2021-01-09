@@ -14,6 +14,7 @@
       "gasPrice": 4000000000,
       "input": "0xd0e30db0",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 44493,
@@ -91,6 +92,10 @@
         },
         {
           "name": "isError",
+          "type": "unumber"
+        },
+        {
+          "name": "hasToken",
           "type": "unumber"
         },
         {

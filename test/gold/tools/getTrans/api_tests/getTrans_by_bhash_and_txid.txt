@@ -11,6 +11,7 @@
       "gas": "0x9c40",
       "gasPrice": "0xb96ddd6a4",
       "gasUsed": "0x76d0",
+      "hasToken": "0x0",
       "hash": "0xf1e398af74afe7dff17573ab30ae0b5bdbbcfc65a5d22d69b096cf620363a3c0",
       "input": "0x",
       "isError": "0x0",
@@ -80,6 +81,10 @@
         {
           "name": "gasUsed",
           "type": "gas"
+        },
+        {
+          "name": "hasToken",
+          "type": "unumber"
         },
         {
           "name": "hash",

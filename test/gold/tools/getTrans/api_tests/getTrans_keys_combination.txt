@@ -14,6 +14,7 @@
       "gasPrice": 4000000000,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 39512,
@@ -58,6 +59,7 @@
       "gasPrice": 25000000000,
       "input": "0xa9059cbb00000000000000000000000043a4210390998945dc7658a20b43c6c4189ac7d4000000000000000000000000000000000000000000000000000000000a21fe80",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 52616,
@@ -96,6 +98,7 @@
       "gasPrice": 49775761060,
       "input": "0x",
       "isError": 0,
+      "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 30416,
@@ -173,6 +176,10 @@
         },
         {
           "name": "isError",
+          "type": "unumber"
+        },
+        {
+          "name": "hasToken",
           "type": "unumber"
         },
         {

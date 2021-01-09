@@ -123,6 +123,7 @@ bool COptions::parseArguments(string_q& command) {
         HIDE_FIELD(CTransaction, "gasPrice");
         HIDE_FIELD(CTransaction, "input");
         HIDE_FIELD(CTransaction, "isError");
+        HIDE_FIELD(CTransaction, "hasToken");
         HIDE_FIELD(CTransaction, "receipt");
         HIDE_FIELD(CTransaction, "gasUsed");
         HIDE_FIELD(CReceipt, "contractAddress");

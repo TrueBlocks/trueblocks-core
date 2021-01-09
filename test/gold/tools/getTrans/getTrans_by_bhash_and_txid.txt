@@ -8,6 +8,7 @@ getTrans 0xb8a3f7f5cfc1748f91a684f20fe89031202cbadcd15078c49b85ec2a57f43853.4 --
     "gas": "0x9c40",
     "gasPrice": "0xb96ddd6a4",
     "gasUsed": "0x76d0",
+    "hasToken": "0x0",
     "hash": "0xf1e398af74afe7dff17573ab30ae0b5bdbbcfc65a5d22d69b096cf620363a3c0",
     "input": "0x",
     "isError": "0x0",
@@ -32,5 +33,5 @@ getTrans 0xb8a3f7f5cfc1748f91a684f20fe89031202cbadcd15078c49b85ec2a57f43853.4 --
     "transactionIndex": "0x4",
     "value": "0xdda3a6b505a6800"
   }], "types": [
-{ "type": "CTransaction", "fields": [{ "name": "blockHash", "type": "hash" }, { "name": "blockNumber", "type": "blocknum" }, { "name": "from", "type": "address" }, { "name": "gas", "type": "gas" }, { "name": "gasPrice", "type": "gas" }, { "name": "gasUsed", "type": "gas" }, { "name": "hash", "type": "hash" }, { "name": "input", "type": "text" }, { "name": "isError", "type": "unumber" }, { "name": "nonce", "type": "unumber" }, { "name": "receipt", "type": "object" }, { "name": "timestamp", "type": "timestamp" }, { "name": "to", "type": "address" }, { "name": "transactionIndex", "type": "blocknum" }, { "name": "value", "type": "wei" }] }
+{ "type": "CTransaction", "fields": [{ "name": "blockHash", "type": "hash" }, { "name": "blockNumber", "type": "blocknum" }, { "name": "from", "type": "address" }, { "name": "gas", "type": "gas" }, { "name": "gasPrice", "type": "gas" }, { "name": "gasUsed", "type": "gas" }, { "name": "hasToken", "type": "unumber" }, { "name": "hash", "type": "hash" }, { "name": "input", "type": "text" }, { "name": "isError", "type": "unumber" }, { "name": "nonce", "type": "unumber" }, { "name": "receipt", "type": "object" }, { "name": "timestamp", "type": "timestamp" }, { "name": "to", "type": "address" }, { "name": "transactionIndex", "type": "blocknum" }, { "name": "value", "type": "wei" }] }
 ] }

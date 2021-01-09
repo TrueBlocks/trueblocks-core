@@ -15,6 +15,7 @@ getTrans --file:cmd_file --fmt json
     "gasPrice": 20000000000,
     "input": "0x",
     "isError": 0,
+    "hasToken": 0,
     "receipt": {
       "contractAddress": "0x0",
       "gasUsed": 21000,
@@ -35,6 +36,7 @@ getTrans --file:cmd_file --fmt json
     "gasPrice": 20000000000,
     "input": "0x",
     "isError": 0,
+    "hasToken": 0,
     "receipt": {
       "contractAddress": "0x0",
       "gasUsed": 21000,
@@ -48,6 +50,7 @@ getTrans --file:cmd_file --fmt json
     "gas": "0xc350",
     "gasPrice": "0x4a817c800",
     "gasUsed": "0x5208",
+    "hasToken": "0x0",
     "hash": "0xda2f27fffb36c90c74fc53bd8b721074e87203c727640c95c4c802296e3bf8ad",
     "input": "0x",
     "isError": "0x0",
@@ -62,5 +65,5 @@ getTrans --file:cmd_file --fmt json
     "transactionIndex": "0x4f",
     "value": "0x2e056847f291e60"
   }], "types": [
-{ "type": "CTransaction", "fields": [{ "name": "blockHash", "type": "hash" }, { "name": "blockNumber", "type": "blocknum" }, { "name": "from", "type": "address" }, { "name": "gas", "type": "gas" }, { "name": "gasPrice", "type": "gas" }, { "name": "gasUsed", "type": "gas" }, { "name": "hash", "type": "hash" }, { "name": "input", "type": "text" }, { "name": "isError", "type": "unumber" }, { "name": "nonce", "type": "unumber" }, { "name": "receipt", "type": "object" }, { "name": "timestamp", "type": "timestamp" }, { "name": "to", "type": "address" }, { "name": "transactionIndex", "type": "blocknum" }, { "name": "value", "type": "wei" }] }
+{ "type": "CTransaction", "fields": [{ "name": "blockHash", "type": "hash" }, { "name": "blockNumber", "type": "blocknum" }, { "name": "from", "type": "address" }, { "name": "gas", "type": "gas" }, { "name": "gasPrice", "type": "gas" }, { "name": "gasUsed", "type": "gas" }, { "name": "hasToken", "type": "unumber" }, { "name": "hash", "type": "hash" }, { "name": "input", "type": "text" }, { "name": "isError", "type": "unumber" }, { "name": "nonce", "type": "unumber" }, { "name": "receipt", "type": "object" }, { "name": "timestamp", "type": "timestamp" }, { "name": "to", "type": "address" }, { "name": "transactionIndex", "type": "blocknum" }, { "name": "value", "type": "wei" }] }
 ] }
