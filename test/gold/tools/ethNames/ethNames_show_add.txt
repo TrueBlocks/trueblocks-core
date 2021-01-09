@@ -1,4 +1,4 @@
 ethNames argc: 7 [1:0x0000000000000000000000000000000010101010] [2:--fmt] [3:txt] [4:--expand] [5:--verbose] [6:10] 
 ethNames 0x0000000000000000000000000000000010101010 --fmt txt --expand --verbose 10 
-tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefund
-TAGS	0x0000000000000000000000000000000010101010	NAME	SYMBOL	SOURCE	11	DESCRIPTION	false	false	false
+tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefund	is_contract	is_erc20	is_erc721
+TAGS	0x0000000000000000000000000000000010101010	NAME	SYMBOL	SOURCE	11	DESCRIPTION	false	false	false	false	false	false

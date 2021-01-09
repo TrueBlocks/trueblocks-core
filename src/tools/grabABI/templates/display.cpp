@@ -124,7 +124,6 @@ void COptions::displayTrans(ostream& os, const CTransaction* theTrans) const {
 //-----------------------------------------------------------------------
 void COptions::displayTrace(ostream& os, const CTransaction* theTrans) const {
     const CTraceArray& traces = theTrans->traces;
-    //    bool err = theTrans->isError;
 
     string_q fmt = traceFmt;
     if (fmt.empty())

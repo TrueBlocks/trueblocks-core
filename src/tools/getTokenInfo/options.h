@@ -35,6 +35,7 @@ class COptions : public CHistoryOptions {
     CAddressArray holders;
 
     CTokenBalanceRecord curToken;
+    CMonitor standards;
 
     tokstate_t modeBits;
     blknum_t latestBlock;
@@ -44,4 +45,5 @@ class COptions : public CHistoryOptions {
 
     bool parseArguments(string_q& command) override;
     void Init(void) override;
+    void loadTokenAbis(void);
 };

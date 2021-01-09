@@ -1,30 +1,30 @@
 ethNames argc: 5 [1:0xb6] [2:--verbose] [3:--fmt] [4:txt] 
 ethNames 0xb6 --verbose --fmt txt 
 tags	address	name	symbol	decimals	source
-50-Tokens:ERC20	0xb62132e35a6c13ee1ee0f84dc5d40bad8d815206	Nexo	NEXO		18	On Chain
-50-Tokens:ERC20	0xb6259685685235c1ef4b8529e7105f00bd42b9f8	RRChain	RRC		2	On Chain
+50-Tokens:ERC20	0xb62132e35a6c13ee1ee0f84dc5d40bad8d815206	Nexo	NEXO		18	On chain
+50-Tokens:ERC20	0xb6259685685235c1ef4b8529e7105f00bd42b9f8	RRChain	RRC		2	On chain
 31-Gitcoin Grants:Friends	0xb6277cb5a2abd2b296c1d7f61a8f24c2d4942f9f	Name 0xb6277cb5				Gitcoin Website
-50-Tokens:ERC20	0xb62d18dea74045e822352ce4b3ee77319dc5ff2f	EventChain	EVC		18	On Chain
+50-Tokens:ERC20	0xb62d18dea74045e822352ce4b3ee77319dc5ff2f	EventChain	EVC		18	On chain
 31-Gitcoin Grants:Grant	0xb631e8650fb4befdae74ab9f86a9cb65bc134706	Grant 228 Buidhub Eventflow mdcoon				https://gitcoin.co/grants/228/buidhub-eventflow
 31-Gitcoin Grants:Grant	0xb632c8e5f87a47a0caeb613cbdf0f748217d2840	Grant 618 Arboreum				https://gitcoin.co/grants/618/arboreum
-50-Tokens:ERC20	0xb63b606ac810a52cca15e44bb630fd42d8d1d83d	Monaco	MCO		8	On Chain
+50-Tokens:ERC20	0xb63b606ac810a52cca15e44bb630fd42d8d1d83d	Monaco	MCO		8	On chain
 31-Gitcoin Grants:Friends	0xb63bb45b2ef614ce087dc01c98013d87fd757896	Name 0xb63bb45b				Gitcoin Website
 31-Gitcoin Grants:Grant	0xb64850fe701fb64667b6cc762aa2c12f2e02193c	Grant 742 Crypto community ventures network				https://gitcoin.co/grants/742/crypto-community-ventures-network
-50-Tokens:ERC20	0xb64ef51c888972c908cfacf59b47c1afbc0ab8ac	StorjToken	STORJ		8	On Chain
+50-Tokens:ERC20	0xb64ef51c888972c908cfacf59b47c1afbc0ab8ac	StorjToken	STORJ		8	On chain
 31-Gitcoin Grants:Grant	0xb6568dc090302196ec8edf56d99c3484cee94e6a	Grant 207 Stablepay				https://gitcoin.co/grants/207/stablepay
 31-Gitcoin Grants:Friends	0xb66db713a90e5afdd22c5830f2141eaa05134661	Name 0xb66db713				Gitcoin Website
 31-Gitcoin Grants:Grant	0xb676efa42a0a85f0a9b0c539f47687a824569a2c	Grant 605 StakeWise: ETH 2.0 staking platform				https://gitcoin.co/grants/605/stakewise-eth-20-staking-platform
-60-Airdrops	0xb679afd97bcbc7448c1b327795c3ef226b39f0e9	WLM Airdrop				TrueBlocks.io
+60-Airdrops	0xb679afd97bcbc7448c1b327795c3ef226b39f0e9	Win Last Mile Airdrop	WLM		6	On chain
 31-Gitcoin Grants:Friends	0xb682fd6a16c409594bc49c7874e4ca383033d7a5	Name 0xb682fd6a				Gitcoin Website
-50-Tokens:ERC20	0xb683d83a532e2cb7dfa5275eed3698436371cc9f	BTU Protocol	BTU		18	On Chain
+50-Tokens:ERC20	0xb683d83a532e2cb7dfa5275eed3698436371cc9f	BTU Protocol	BTU		18	On chain
 30-Contracts:dAppNode	0xb68e4ddcf00f93a89430ab2e4f878724ac7c23d4	dAddNode Package 016				TrueBlocks.io
 31-Gitcoin Grants:Friends	0xb69fa0ba7f4cf765c94a9ced37310327191ac949	Name 0xb69fa0ba				Gitcoin Website
 31-Gitcoin Grants:Friends	0xb6a312b525de98cbd6c73a63e46a1e9acb835c64	Name 0xb6a312b5				Gitcoin Website
 60-Airdrops	0xb6a398d36381a2370d9522de023b5bce5000ae9d	EtherCash Airdrop				TrueBlocks.io
 34-ENS	0xb6e040c9ecaae172a89bd561c5f73e1c48d28cd9	ENS: Wallet 2				Etherscan
 31-Gitcoin Grants:Friends	0xb6e32c75a2083a38f6cce6e65756c0bf86d84200	Name 0xb6e32c75				Gitcoin Website
-50-Tokens:ERC20	0xb6ed7644c69416d67b522e20bc294a9a9b405b31	0xBitcoin Token	0xBTC		8	On Chain
-50-Tokens:ERC20	0xb6ee9668771a79be7967ee29a63d4184f8097143	CargoX Token	CXO		18	On Chain
-50-Tokens:ERC20	0xb6f43025b29196af2dddd69b0a58afba079cd600	智投链	IIC		18	On Chain
+50-Tokens:ERC20	0xb6ed7644c69416d67b522e20bc294a9a9b405b31	0xBitcoin Token	0xBTC		8	On chain
+50-Tokens:ERC20	0xb6ee9668771a79be7967ee29a63d4184f8097143	CargoX Token	CXO		18	On chain
+50-Tokens:ERC20	0xb6f43025b29196af2dddd69b0a58afba079cd600	智投链	IIC		18	On chain
 60-Airdrops	0xb6fab2c9e391ad3af57567e22bf3eb792079f55c	HEALP Airdrop Sender				TrueBlocks.io
 34-Twitter: Friends	0xb6fee4df663addc0081b51385a6195d52d1c2001	Name 0xb6fee4df				Twitter

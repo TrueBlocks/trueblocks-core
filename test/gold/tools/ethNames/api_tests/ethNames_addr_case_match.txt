@@ -16,7 +16,7 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0xcb94be6f13a1182e4a4b6140cb7bf2025d28e41b	Trustcoin	TRST		6
 50-Tokens:ERC20	0xcb97e65f07da24d46bcdd078ebebd7c6e6e3d750	Bytom	BTM		8
 31-Gitcoin Grants:Friends	0xcba69d3fd92dc945284d007acd5f96be6b8dc4ab	Name 0xcba69d3f
-55-Defi	0xcbae0a83f4f9926997c8339545fb8ee32edc6b76	Cream.Finance: crYFI Token
+55-Defi	0xcbae0a83f4f9926997c8339545fb8ee32edc6b76	Cream YFI	crYFI		8
 90-DevCon2:Individual	0xcbb0ea707202861471450acc55fca2b62c45899a	Toby Wise
 80-Malicious:DaoDrain	0xcbb9d3703e651b0d496cdefb8b92c25aeb2171f7	Dao Drain 104
 90-DevCon2:Individual	0xcbbf6758a9e032d68628a5294c6b340160410eb6	Hillmer Reyes

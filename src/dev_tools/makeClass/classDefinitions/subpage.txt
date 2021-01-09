@@ -1,4 +1,10 @@
 [settings]
 class = CSubpage
-fields = string page|string subpage|string route|string options|string component|string extract|string icon
+fields = string page|\
+        string subpage|\
+        string route|\
+        string options|\
+        string component|\
+        string extract|\
+        string icon
 includes = etherlib.h

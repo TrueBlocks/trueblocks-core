@@ -6,21 +6,21 @@ fields = \
   string name|\
   string symbol|\
   string source|\
-  uint64 decimals|\
+  suint64 decimals|\
   string description|\
   bool is_custom|\
   bool is_prefund|\
+  bool is_contract|\
   bool is_erc20|\
   bool is_erc721|\
-  string type|\
   blknum nAppearances (nowrite)|\
   blknum lastExport (nowrite)|\
   blknum firstAppearance (nowrite)|\
   blknum latestAppearance (nowrite)|\
   string path (nowrite)|\
-  uint64 sizeInBytes (nowrite)
+  suint64 sizeInBytes (nowrite)
 includes = basetypes.h|basenode.h|sfarchive.h
 cpp_includes = options_base.h
-display_str = tags, address, name, symbol, source, decimals, description, deleted, is_custom, is_prefund, is_erc20, is_erc721, type
+display_str = tags, address, name, symbol, source, decimals, description, deleted, is_custom, is_prefund, is_contract, is_erc20, is_erc721
 sort = v1.address < v2.address
 equals = address % it.address

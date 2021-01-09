@@ -21,7 +21,6 @@ cacheStatus --details caches --types prices
           "type": "CPriceCacheItem",
           "pair": "---pair---",
           "address": "0x0",
-          "decimals": 0,
           "nAppearances": 2020101,
           "firstAppearance": 0,
           "latestAppearance": 0,

@@ -2,7 +2,10 @@
   "data": [
     {
       "address": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07",
-      "symbol": "OMG"
+      "symbol": "OMG",
+      "is_contract": true,
+      "is_erc20": true,
+      "is_erc721": false
     }
   ],
   "types": [
@@ -16,6 +19,18 @@
         {
           "name": "symbol",
           "type": "text"
+        },
+        {
+          "name": "is_contract",
+          "type": "bool"
+        },
+        {
+          "name": "is_erc20",
+          "type": "bool"
+        },
+        {
+          "name": "is_erc721",
+          "type": "bool"
         }
       ]
     }

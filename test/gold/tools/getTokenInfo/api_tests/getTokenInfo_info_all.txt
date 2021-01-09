@@ -5,7 +5,10 @@
       "address": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07",
       "name": "OMGToken",
       "symbol": "OMG",
-      "decimals": 18
+      "decimals": 18,
+      "is_contract": false,
+      "is_erc20": false,
+      "is_erc721": false
     }
   ],
   "types": [
@@ -31,6 +34,18 @@
         {
           "name": "decimals",
           "type": "unumber"
+        },
+        {
+          "name": "is_contract",
+          "type": "bool"
+        },
+        {
+          "name": "is_erc20",
+          "type": "bool"
+        },
+        {
+          "name": "is_erc721",
+          "type": "bool"
         }
       ]
     }

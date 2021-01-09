@@ -1,10 +1,9 @@
 ethNames argc: 8 [1:--delete] [2:0xde58d6a070c7490f10a9aac1b7bc6e3583383958] [3:--expand] [4:--verbose] [5:10] [6:--to_custom] [7:--all] 
 ethNames --delete 0xde58d6a070c7490f10a9aac1b7bc6e3583383958 --expand --verbose 10 --to_custom --all 
----------------------------------------------
+TIME ~ CLOCK - <INFO>  : Cleaning 0xde58d6a070c7490f10a9aac1b7bc6e3583383958                                  ---------------------------------------------
 {
   "address": "0xde58d6a070c7490f10a9aac1b7bc6e3583383958",
   "name": "Name 0xde58d6a0",
-  "decimals": 0,
   "is_custom": true
 }
 

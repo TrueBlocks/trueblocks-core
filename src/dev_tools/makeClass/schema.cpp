@@ -85,13 +85,13 @@ string_q CSchema::getValueByName(const string_q& fieldName) const {
             break;
         case 'd':
             if (fieldName % "decimals") {
-                return uint_2_Str(decimals);
+                return decimals == 0 ? "" : uint_2_Str(decimals);
             }
             if (fieldName % "download") {
                 return bool_2_Str(download);
             }
             if (fieldName % "detail") {
-                return uint_2_Str(detail);
+                return detail == 0 ? "" : uint_2_Str(detail);
             }
             break;
         case 'e':
@@ -101,7 +101,7 @@ string_q CSchema::getValueByName(const string_q& fieldName) const {
             break;
         case 'i':
             if (fieldName % "id") {
-                return uint_2_Str(id);
+                return id == 0 ? "" : uint_2_Str(id);
             }
             if (fieldName % "isPill") {
                 return bool_2_Str(isPill);
@@ -146,7 +146,7 @@ string_q CSchema::getValueByName(const string_q& fieldName) const {
             break;
         case 'w':
             if (fieldName % "width") {
-                return uint_2_Str(width);
+                return width == 0 ? "" : uint_2_Str(width);
             }
             if (fieldName % "wide") {
                 return bool_2_Str(wide);
@@ -391,17 +391,17 @@ void CSchema::registerClass(void) {
     ADD_FIELD(CSchema, "type", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CSchema, "unused", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CSchema, "unused");
-    ADD_FIELD(CSchema, "width", T_UNUMBER, ++fieldNum);
+    ADD_FIELD(CSchema, "width", T_UNUMBER | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CSchema, "editable", T_BOOL | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CSchema, "id", T_UNUMBER, ++fieldNum);
-    ADD_FIELD(CSchema, "decimals", T_UNUMBER, ++fieldNum);
+    ADD_FIELD(CSchema, "id", T_UNUMBER | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CSchema, "decimals", T_UNUMBER | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CSchema, "isPill", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CSchema, "align", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CSchema, "cn", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CSchema, "download", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CSchema, "chart", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CSchema, "searchable", T_BOOL | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CSchema, "detail", T_UNUMBER, ++fieldNum);
+    ADD_FIELD(CSchema, "detail", T_UNUMBER | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CSchema, "wide", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CSchema, "underField", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CSchema, "onDisplay", T_TEXT | TS_OMITEMPTY, ++fieldNum);

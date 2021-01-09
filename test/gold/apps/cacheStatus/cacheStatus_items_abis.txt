@@ -23,7 +23,6 @@ cacheStatus --details abis
           "nEvents": 36963,
           "nOther": 36963,
           "address": "---address---",
-          "decimals": 0,
           "nAppearances": 0,
           "firstAppearance": 0,
           "latestAppearance": 0,

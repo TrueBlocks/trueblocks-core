@@ -44,9 +44,15 @@ class COptions : public CBlockOptions {
     bool parseArguments(string_q& command) override;
     void Init(void) override;
     bool isMulti(void) const;
+    void handle_appearances(blknum_t num, void* data);
 };
 
 //-----------------------------------------------------------------------------
 extern bool visitBlock(uint64_t num, void* data);
 extern bool traceBlock(uint64_t num, void* data);
 extern void interumReport(ostream& os, blknum_t i);
+
+//----------------------------------------------------------------
+extern void oneAppearance(const CAppearance& item, void* data);
+extern bool visitAddrs(const CAppearance& item, void* data);
+extern bool transFilter(const CTransaction* trans, void* data);

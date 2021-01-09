@@ -1,9 +1,8 @@
 ethNames argc: 6 [1:--undelete] [2:0x0000000000000000000000000000000010101010] [3:--expand] [4:--verbose] [5:10] 
 ethNames --undelete 0x0000000000000000000000000000000010101010 --expand --verbose 10 
----------------------------------------------
+TIME ~ CLOCK - <INFO>  : Cleaning 0x0000000000000000000000000000000010101010                                  ---------------------------------------------
 {
-  "address": "0x0000000000000000000000000000000010101010",
-  "decimals": 0
+  "address": "0x0000000000000000000000000000000010101010"
 }
 
 ---------------------------------------------
@@ -17,5 +16,5 @@ TIME ~ CLOCK - : 4-----Reading prefund names from binary cache
 TIME ~ CLOCK - : 8------Finished adding names from prefunds database...
 TIME ~ CLOCK - : 8------Writing binary cache
 TIME ~ CLOCK - : 8------Finished writing binary cache...
-tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefund
-TAGS_CHANGED	0x0000000000000000000000000000000010101010	NAME_CHANGED	SYMBOL_CHANGED	SOURCE_CHANGED	13	DESCRIPTION_CHANGED	false	false	false
+tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefund	is_contract	is_erc20	is_erc721
+TAGS_CHANGED	0x0000000000000000000000000000000010101010	NAME_CHANGED	SYMBOL_CHANGED	SOURCE_CHANGED	13	DESCRIPTION_CHANGED	false	false	false	false	false	false

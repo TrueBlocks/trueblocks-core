@@ -14,7 +14,7 @@
       "address": "0x10086399dd8c1e3de736724af52587a2044c9fa2",
       "name": "The Midas Touch Gold",
       "symbol": "TMTG",
-      "source": "On Chain",
+      "source": "On chain",
       "decimals": 18,
       "description": ""
     },
@@ -41,7 +41,7 @@
       "address": "0x1014613e2b3cbc4d575054d4982e580d9b99d7b1",
       "name": "BitCapitalVendorToken",
       "symbol": "BCV",
-      "source": "On Chain",
+      "source": "On chain",
       "decimals": 8,
       "description": ""
     },
@@ -59,7 +59,7 @@
       "address": "0x103c3a209da59d3e7c4a89307e66521e081cfdf0",
       "name": "Genesis Vision Token",
       "symbol": "GVT",
-      "source": "On Chain",
+      "source": "On chain",
       "decimals": 18,
       "description": "A platform for the private trust management market, built on Blockchain technology and Smart Contracts."
     },
@@ -68,7 +68,7 @@
       "address": "0x1063ce524265d5a3a624f4914acd573dd89ce988",
       "name": "Aigang",
       "symbol": "AIX",
-      "source": "On Chain",
+      "source": "On chain",
       "decimals": 18,
       "description": "Aigang is DAO Insurance Protocol Crowd-sourced insurance pools discovery."
     },
@@ -77,7 +77,7 @@
       "address": "0x106aa49295b525fcf959aa75ec3f7dcbf5352f1c",
       "name": "Rock Token",
       "symbol": "RKT",
-      "source": "On Chain",
+      "source": "On chain",
       "decimals": 18,
       "description": ""
     },
@@ -95,7 +95,7 @@
       "address": "0x107c4504cd79c5d2696ea0030a8dd4e92601b82e",
       "name": "Bloom Token",
       "symbol": "BLT",
-      "source": "On Chain",
+      "source": "On chain",
       "decimals": 18,
       "description": "Decentralized credit scoring powered by Ethereum and IPFS."
     },
@@ -105,6 +105,15 @@
       "name": "Miner_0086_64",
       "symbol": "",
       "source": "OnChain",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "30-Contracts",
+      "address": "0x10a0847c2d170008ddca7c3a688124f493630032",
+      "name": "RelayerManager",
+      "symbol": "",
+      "source": "Etherscan",
       "decimals": 0,
       "description": ""
     },
@@ -176,9 +185,18 @@
       "address": "0x1122b6a0e00dce0563082b6e2953f3a943855c1f",
       "name": "Centrality Token",
       "symbol": "CENNZ",
-      "source": "On Chain",
+      "source": "On chain",
       "decimals": 18,
       "description": "Centrality is a graph theory term ‚Äö√Ñ√¨ a point in a decentralised system that unites to other points."
+    },
+    {
+      "tags": "55-Defi",
+      "address": "0x112570655b32a8c747845e0215ad139661e66e7f",
+      "name": "Yearn: StrategyCurveBUSDVoterProxy",
+      "symbol": "",
+      "source": "Etherscan",
+      "decimals": 0,
+      "description": ""
     },
     {
       "tags": "90-DevCon2:Individual",
@@ -194,7 +212,7 @@
       "address": "0x1183f92a5624d68e85ffb9170f16bf0443b4c242",
       "name": "QVT",
       "symbol": "QVT",
-      "source": "On Chain",
+      "source": "On chain",
       "decimals": 18,
       "description": "Sell and buy crypto assets around the world for local payment methods."
     },
@@ -318,9 +336,9 @@
     {
       "tags": "50-Tokens:ERC20",
       "address": "0x122a86b5dff2d085afb49600b4cd7375d0d94a5f",
-      "name": "ITL Italian Lira",
+      "name": "ITL (Italian Lira)",
       "symbol": "ITL",
-      "source": "On Chain",
+      "source": "On chain",
       "decimals": 8,
       "description": ""
     },
@@ -328,9 +346,9 @@
       "tags": "60-Airdrops",
       "address": "0x1234567461d3f8db7496581774bd869c83d51c93",
       "name": "BitClave Airdrop",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": 0,
+      "symbol": "CAT",
+      "source": "On chain",
+      "decimals": 18,
       "description": ""
     },
     {
@@ -356,16 +374,25 @@
       "address": "0x123ab195dd38b1b40510d467a6a359b201af056f",
       "name": "LGO Token",
       "symbol": "LGO",
-      "source": "On Chain",
+      "source": "On chain",
       "decimals": 8,
       "description": "Exchange with decentralized ledgers"
+    },
+    {
+      "tags": "30-Contracts",
+      "address": "0x12459c951127e0c374ff9105dda097662a027093",
+      "name": "0x: Exchange v1",
+      "symbol": "",
+      "source": "",
+      "decimals": 0,
+      "description": ""
     },
     {
       "tags": "50-Tokens:ERC20",
       "address": "0x1245ef80f4d9e02ed9425375e8f649b9221b31d8",
       "name": "ArbitrageCT",
       "symbol": "ARCT",
-      "source": "On Chain",
+      "source": "On chain",
       "decimals": 8,
       "description": "Trading crypto-currency terminal for two exchanges simultaneously."
     },
@@ -374,7 +401,7 @@
       "address": "0x12480e24eb5bec1a9d4369cab6a80cad3c0a377a",
       "name": "Substratum",
       "symbol": "SUB",
-      "source": "On Chain",
+      "source": "On chain",
       "decimals": 2,
       "description": ""
     },
@@ -428,7 +455,7 @@
       "address": "0x12759512d326303b45f1cec8f7b6fd96f387778e",
       "name": "TrakInvest Token",
       "symbol": "TRAK",
-      "source": "On Chain",
+      "source": "On chain",
       "decimals": 18,
       "description": "Virtual social trading platform for equities and cryptocurrencies powered by proprietary AI engine"
     },
@@ -480,10 +507,10 @@
     {
       "tags": "50-Tokens",
       "address": "0x12b19d3e2ccc14da04fae33e63652ce469b3f2fd",
-      "name": "Grid+ Token",
+      "name": "GRID Token",
       "symbol": "GRID",
-      "source": "Etherscan.io",
-      "decimals": 0,
+      "source": "On chain",
+      "decimals": 12,
       "description": "Grid+ creates products that enable mainstream use of digital assets and cryptocurrencies. Grid+ strives to be the hardware, software, and cryptocurrency experts building the foundation for a more efficient and inclusive financial future."
     },
     {
@@ -491,7 +518,7 @@
       "address": "0x12b306fa98f4cbb8d4457fdff3a0a0a56f07ccdf",
       "name": "Spectre.ai D-Token",
       "symbol": "SXDT",
-      "source": "On Chain",
+      "source": "On chain",
       "decimals": 18,
       "description": "Broker-less financial trading platform."
     },
@@ -545,7 +572,7 @@
       "address": "0x12fef5e57bf45873cd9b62e9dbd7bfb99e32d73e",
       "name": "Cofoundit",
       "symbol": "CFI",
-      "source": "On Chain",
+      "source": "On chain",
       "decimals": 18,
       "description": "Cofound.it is a platform that connects you to teams that have trained to become serious blockchain businesses"
     },
@@ -563,7 +590,7 @@
       "address": "0x13119e34e140097a507b07a5564bde1bc375d9e6",
       "name": "MoneyToken",
       "symbol": "IMT",
-      "source": "On Chain",
+      "source": "On chain",
       "decimals": 18,
       "description": "MoneyToken provides crypto-backed loans, stablecoin MTC and decentralized exchange service"
     },
@@ -608,7 +635,7 @@
       "address": "0x138a8752093f4f9a79aaedf48d4b9248fab93c9c",
       "name": "Musiconomi",
       "symbol": "MCI",
-      "source": "On Chain",
+      "source": "On chain",
       "decimals": 18,
       "description": ""
     },
@@ -617,7 +644,7 @@
       "address": "0x139d9397274bb9e2c29a9aa8aa0b5874d30d62e3",
       "name": "BoutsPro",
       "symbol": "BOUTS",
-      "source": "On Chain",
+      "source": "On chain",
       "decimals": 18,
       "description": "Professional Karate Sports Organization"
     },
@@ -653,7 +680,7 @@
       "address": "0x13c2fab6354d3790d8ece4f0f1a3280b4a25ad96",
       "name": "PHI Token",
       "symbol": "PHI",
-      "source": "On Chain",
+      "source": "On chain",
       "decimals": 18,
       "description": "PHI = Platform for Hybrid Investments, a marketplace for financial services and products both for traditional than crypto assets."
     },
@@ -662,7 +689,7 @@
       "address": "0x13e9ec660d872f55405d70e5c52d872136f0970c",
       "name": "TKT",
       "symbol": "TKT",
-      "source": "On Chain",
+      "source": "On chain",
       "decimals": 18,
       "description": ""
     },
@@ -680,7 +707,7 @@
       "address": "0x13f11c9905a08ca76e3e853be63d4f0944326c72",
       "name": "Divi Exchange Token",
       "symbol": "DIVX",
-      "source": "On Chain",
+      "source": "On chain",
       "decimals": 18,
       "description": "Digital Currency"
     },
@@ -689,7 +716,7 @@
       "address": "0x13f1b7fdfbe1fc66676d56483e21b1ecb40b58e2",
       "name": "Accelerator",
       "symbol": "ACC",
-      "source": "On Chain",
+      "source": "On chain",
       "decimals": 18,
       "description": "A proof-of-stake smart contract backed by a physical mining facility."
     },
@@ -698,16 +725,16 @@
       "address": "0x13f25cd52b21650caa8225c9942337d914c9b030",
       "name": "realchain token",
       "symbol": "RCT",
-      "source": "On Chain",
+      "source": "On chain",
       "decimals": 18,
       "description": ""
     },
     {
       "tags": "50-Tokens",
       "address": "0x14094949152eddbfcd073717200da82fed8dc960",
-      "name": "Fulcrum iSAI",
-      "symbol": "ISAI",
-      "source": "defipulse.com",
+      "name": "Fulcrum SAI iToken",
+      "symbol": "iSAI",
+      "source": "On chain",
       "decimals": 18,
       "description": ""
     },
@@ -725,7 +752,7 @@
       "address": "0x1410434b0346f5be678d0fb554e5c7ab620f8f4a",
       "name": "KAN",
       "symbol": "KAN",
-      "source": "On Chain",
+      "source": "On chain",
       "decimals": 18,
       "description": "A decentralized cryptocurrency-concentrated content payment community."
     },
@@ -752,7 +779,7 @@
       "address": "0x1460a58096d80a50a2f1f956dda497611fa4f165",
       "name": "Chainium",
       "symbol": "CHX",
-      "source": "On Chain",
+      "source": "On chain",
       "decimals": 18,
       "description": "Own formerly Chainium is a security token blockchain project focused on revolutionising equity markets."
     },
@@ -770,7 +797,7 @@
       "address": "0x146d8d942048ad517479c9bab1788712af180fde",
       "name": "Mobile Integrated Blockchain",
       "symbol": "MIB",
-      "source": "On Chain",
+      "source": "On chain",
       "decimals": 18,
       "description": "MIB coin is a Mobile Mining based Blockchain that has constructed an ecosystem that minimizes the maintenance of Blockchain Network."
     },
@@ -815,7 +842,7 @@
       "address": "0x14c926f2290044b647e1bf2072e67b495eff1905",
       "name": "Bethereum",
       "symbol": "BETHER",
-      "source": "On Chain",
+      "source": "On chain",
       "decimals": 18,
       "description": "Bethereum is a decentralised, social-betting platform based on Ethereum technology and Smart Contracts. Bether is the digital ERC-223 token powering the Bethereum solution."
     },
@@ -851,7 +878,7 @@
       "address": "0x14f37b574242d366558db61f3335289a5035c506",
       "name": "HackerGold",
       "symbol": "HKG",
-      "source": "On Chain",
+      "source": "On chain",
       "decimals": 3,
       "description": ""
     },
@@ -869,7 +896,7 @@
       "address": "0x151202c9c18e495656f372281f493eb7698961d5",
       "name": "DEBITUM",
       "symbol": "DEB",
-      "source": "On Chain",
+      "source": "On chain",
       "decimals": 18,
       "description": ""
     },
@@ -878,7 +905,7 @@
       "address": "0x151445852b0cfdf6a4cc81440f2af99176e8ad08",
       "name": "Chainlink GBP-USD Aggregator",
       "symbol": "",
-      "source": "EtherScan",
+      "source": "EtherScan.io",
       "decimals": 0,
       "description": ""
     },
@@ -896,7 +923,7 @@
       "address": "0x153ed9cc1b792979d2bde0bbf45cc2a7e436a5f9",
       "name": "XOVBank",
       "symbol": "XOV",
-      "source": "On Chain",
+      "source": "On chain",
       "decimals": 18,
       "description": "XOV is researching and building a Global Decentralised Bank using blockchain technology."
     },
@@ -905,7 +932,7 @@
       "address": "0x1563d521ba309e2ad9f4affd6f4de9759e8d4f21",
       "name": "VisionX",
       "symbol": "VNX",
-      "source": "On Chain",
+      "source": "On chain",
       "decimals": 18,
       "description": ""
     },
@@ -921,10 +948,10 @@
     {
       "tags": "36-Compound",
       "address": "0x158079ee67fce2f58472a96584a73c7ab9ac95c1",
-      "name": "Compound: cREP",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": 0,
+      "name": "Compound Augur",
+      "symbol": "cREP",
+      "source": "On chain",
+      "decimals": 8,
       "description": ""
     },
     {
@@ -986,7 +1013,7 @@
       "address": "0x15bda08c3afbf5955d6e9b235fd55a1fd0dbc829",
       "name": "Alpha Coin",
       "symbol": "APC",
-      "source": "On Chain",
+      "source": "On chain",
       "decimals": 6,
       "description": "Alpha coin is based for the basis of first-class mining, experts were appointed to develop the mining farm"
     },
@@ -1002,10 +1029,10 @@
     {
       "tags": "60-Airdrops",
       "address": "0x15e4cf1950ffa338ce5bc59456b3e579ed1bead3",
-      "name": "anTok Airdrop",
-      "symbol": "",
-      "source": "TrueBlocks.io",
-      "decimals": 0,
+      "name": "ALFA NTOK Airdrop",
+      "symbol": "аNTOK",
+      "source": "On chain",
+      "decimals": 18,
       "description": ""
     },
     {
@@ -1022,7 +1049,7 @@
       "address": "0x15f173b7aca7cd4a01d6f8360e65fb4491d270c1",
       "name": "eREAL",
       "symbol": "eREAL",
-      "source": "On Chain",
+      "source": "On chain",
       "decimals": 18,
       "description": ""
     },
@@ -1031,7 +1058,7 @@
       "address": "0x1602af2c782cc03f9241992e243290fccf73bb13",
       "name": "Qubitica",
       "symbol": "QBIT",
-      "source": "On Chain",
+      "source": "On chain",
       "decimals": 18,
       "description": "A distributed blockchain enterprise."
     },
@@ -1121,7 +1148,7 @@
       "address": "0x168296bb09e24a88805cb9c33356536b980d3fc5",
       "name": "RHOC",
       "symbol": "RHOC",
-      "source": "On Chain",
+      "source": "On chain",
       "decimals": 8,
       "description": "The RChain Platform aims to be a decentralized, economically sustainable public compute infrastructure."
     },
@@ -1139,7 +1166,7 @@
       "address": "0x16924ae9c2ac6cdbc9d6bb16fafcd38bed560936",
       "name": "Chainlink FTSE-GBP Aggregator",
       "symbol": "",
-      "source": "EtherScan",
+      "source": "EtherScan.io",
       "decimals": 0,
       "description": ""
     },
@@ -1175,7 +1202,7 @@
       "address": "0x16c1e5baf21b9fa4bc9f2c374e4dc19fab5ac5dc",
       "name": "APOT",
       "symbol": "APOT",
-      "source": "On Chain",
+      "source": "On chain",
       "decimals": 18,
       "description": ""
     },
@@ -1184,7 +1211,7 @@
       "address": "0x16f812be7fff02caf662b85d5d58a5da6572d4df",
       "name": "United Traders Token",
       "symbol": "UTT",
-      "source": "On Chain",
+      "source": "On chain",
       "decimals": 8,
       "description": "TTC Protocol is a decentralized and token-incentivized protocol for social network services and online communities"
     },
@@ -1193,17 +1220,17 @@
       "address": "0x170b275ced089fffaebfe927f445a350ed9160dc",
       "name": "OwnData",
       "symbol": "OWN",
-      "source": "On Chain",
+      "source": "On chain",
       "decimals": 8,
       "description": "Owndata is a crypto marketplace for data sellers and buyers."
     },
     {
       "tags": "55-Defi",
       "address": "0x17107f40d70f4470d20cb3f138a052cae8ebd4be",
-      "name": "Cream.Finance: crRENBTC Token",
-      "symbol": "",
-      "source": "Etherscan",
-      "decimals": 0,
+      "name": "Cream renBTC",
+      "symbol": "crRENBTC",
+      "source": "On chain",
+      "decimals": 8,
       "description": ""
     },
     {
@@ -1229,7 +1256,7 @@
       "address": "0x171d750d42d661b62c277a6b486adb82348c3eca",
       "name": "Omnitude Token",
       "symbol": "ECOM",
-      "source": "On Chain",
+      "source": "On chain",
       "decimals": 18,
       "description": "Omnitude is a middleware layer allowing eCommerce businesses to adopt blockchain quickly and efficiently, without needing to replace current systems."
     },
@@ -1247,7 +1274,7 @@
       "address": "0x1776e1f26f98b1a5df9cd347953a26dd3cb46671",
       "name": "Numeraire",
       "symbol": "NMR",
-      "source": "On Chain",
+      "source": "On chain",
       "decimals": 18,
       "description": "The stock market is inefficient with respect to new developments in machine learning ‚Äö√Ñ√Æ only a fraction of the world's data scientists have access to its data. Numerai is changing this."
     },
@@ -1256,7 +1283,7 @@
       "address": "0x177d39ac676ed1c67a2b268ad7f1e58826e5b0af",
       "name": "CoinDash Token",
       "symbol": "CDT",
-      "source": "On Chain",
+      "source": "On chain",
       "decimals": 18,
       "description": "Get insight about your crypto portfolio. Benchmark it against the market and other traders. Follow the best performing investors and invest exactly like them with the copy trade feature. Discover new opportunities, and new tools."
     },
@@ -1283,7 +1310,7 @@
       "address": "0x17aa18a4b64a55abed7fa543f2ba4e91f2dce482",
       "name": "Insight Chain",
       "symbol": "INB",
-      "source": "On Chain",
+      "source": "On chain",
       "decimals": 18,
       "description": "Insight Chain is an EOS-based data ecosystem on the blockchain, works on building Wall Street-like financial order in the blockchain domain."
     },
@@ -1292,7 +1319,7 @@
       "address": "0x17e67d1cb4e349b9ca4bc3e17c7df2a397a7bb64",
       "name": "Freyr Coin",
       "symbol": "FREC",
-      "source": "On Chain",
+      "source": "On chain",
       "decimals": 18,
       "description": "Blockchain-based collectibles data authentication platform"
     },
@@ -1301,7 +1328,7 @@
       "address": "0x17f8afb63dfcdcc90ebe6e84f060cc306a98257d",
       "name": "Nebula AI Token",
       "symbol": "NBAI",
-      "source": "On Chain",
+      "source": "On chain",
       "decimals": 18,
       "description": ""
     },
@@ -1310,7 +1337,7 @@
       "address": "0x17fd666fa0784885fa1afec8ac624d9b7e72b752",
       "name": "FLiK",
       "symbol": "FLIK",
-      "source": "On Chain",
+      "source": "On chain",
       "decimals": 14,
       "description": ""
     },
@@ -1337,7 +1364,7 @@
       "address": "0x1829aa045e21e0d59580024a951db48096e01782",
       "name": "FuzeX Token",
       "symbol": "FXT",
-      "source": "On Chain",
+      "source": "On chain",
       "decimals": 18,
       "description": "Cryptocurrency, credit, debit and reward payments at your fingertips"
     },
@@ -1364,7 +1391,7 @@
       "address": "0x1844b21593262668b7248d0f57a220caaba46ab9",
       "name": "Oyster Pearl",
       "symbol": "PRL",
-      "source": "On Chain",
+      "source": "On chain",
       "decimals": 18,
       "description": "Platform for website monetization and distributed storage, built on IOTA Tangle and Ethereum"
     },
@@ -1400,7 +1427,7 @@
       "address": "0x187c4b0e3819017a5cf07af81a4e2b16166aabc6",
       "name": "ICOCalendar.Today",
       "symbol": "ICT",
-      "source": "On Chain",
+      "source": "On chain",
       "decimals": 18,
       "description": ""
     },
@@ -1490,7 +1517,7 @@
       "address": "0x1961b3331969ed52770751fc718ef530838b6dee",
       "name": "BitDegree Token",
       "symbol": "BDG",
-      "source": "On Chain",
+      "source": "On chain",
       "decimals": 18,
       "description": "The BitDegree platform will offer students the best online courses with a clear and transparent blockchain based reward system and achievement tracking."
     },
@@ -1499,7 +1526,7 @@
       "address": "0x1966d718a565566e8e202792658d7b5ff4ece469",
       "name": "nDEX",
       "symbol": "NDX",
-      "source": "On Chain",
+      "source": "On chain",
       "decimals": 18,
       "description": "nDEX Network is a next generation decentralized ethereum token exchange. Our primary goal is to provide a clean, fast and secure trading environment with lowest service charge."
     },
@@ -1524,10 +1551,10 @@
     {
       "tags": "50-Tokens",
       "address": "0x1985365e9f78359a9b6ad760e32412f4a445e862",
-      "name": "Augur Token",
+      "name": "Reputation",
       "symbol": "REP",
-      "source": "Etherscan.io",
-      "decimals": 0,
+      "source": "On chain",
+      "decimals": 18,
       "description": "Augur combines the magic of prediction markets with the power of a decentralized network to create a stunningly accurate forecasting tool"
     },
     {
@@ -1551,10 +1578,10 @@
     {
       "tags": "50-Tokens",
       "address": "0x19b67f79f8c5d49e950a8754f95aaea93309dcae",
-      "name": "Hacker Gold",
+      "name": "HackerGold",
       "symbol": "HKG",
-      "source": "TrueBlocks.io",
-      "decimals": 0,
+      "source": "On chain",
+      "decimals": 3,
       "description": ""
     },
     {
@@ -1571,7 +1598,7 @@
       "address": "0x19ea630bcbc1a511a16e65b6ecd447c92e1c087c",
       "name": "Carats Token",
       "symbol": "CARAT",
-      "source": "On Chain",
+      "source": "On chain",
       "decimals": 18,
       "description": ""
     },
@@ -1589,7 +1616,7 @@
       "address": "0x1a0f2ab46ec630f9fd638029027b552afa64b94c",
       "name": "Aston X",
       "symbol": "ATX",
-      "source": "On Chain",
+      "source": "On chain",
       "decimals": 18,
       "description": "Document Distribution Platform"
     },
@@ -1607,7 +1634,7 @@
       "address": "0x1a2277c83930b7a64c3e3d5544eaa8c4f946b1b7",
       "name": "ECHAT TOKEN",
       "symbol": "ECHT",
-      "source": "On Chain",
+      "source": "On chain",
       "decimals": 18,
       "description": ""
     },
@@ -1625,7 +1652,7 @@
       "address": "0x1a66e09f7dccc10eae46e27cfa6b8d44a50df1e7",
       "name": "PRASM",
       "symbol": "PSM",
-      "source": "On Chain",
+      "source": "On chain",
       "decimals": 18,
       "description": "AI-Based Decentralized Bioinformatic Network"
     },
@@ -1643,7 +1670,7 @@
       "address": "0x1a7a8bd9106f2b8d977e08582dc7d24c723ab0db",
       "name": "AppCoins",
       "symbol": "APPC",
-      "source": "On Chain",
+      "source": "On chain",
       "decimals": 18,
       "description": "AppCoins is meant for use in the AppCoins blockchain platform to perform transactions in the app store ecosystem."
     },
@@ -1661,7 +1688,7 @@
       "address": "0x1a95b271b0535d15fa49932daba31ba612b52946",
       "name": "minereum",
       "symbol": "MNE",
-      "source": "On Chain",
+      "source": "On chain",
       "decimals": 8,
       "description": "Self-mining smart contract."
     },
@@ -1705,8 +1732,8 @@
       "tags": "50-Tokens:ERC20",
       "address": "0x1b22c32cd936cb97c28c5690a0695a82abf688e6",
       "name": "MyWish Token",
-      "symbol": "WISH",
-      "source": "On Chain",
+      "symbol": "",
+      "source": "On chain",
       "decimals": 18,
       "description": "Aims to provide a service for funds management in case of different life events, in safe and convenient way."
     },
@@ -1742,7 +1769,7 @@
       "address": "0x1b6c5864375b34af3ff5bd2e5f40bc425b4a8d79",
       "name": "TopChainCoin",
       "symbol": "TOPC",
-      "source": "On Chain",
+      "source": "On chain",
       "decimals": 6,
       "description": ""
     },
@@ -1778,36 +1805,9 @@
       "address": "0x1b793e49237758dbd8b752afc9eb4b329d5da016",
       "name": "ViteToken",
       "symbol": "VITE",
-      "source": "On Chain",
+      "source": "On chain",
       "decimals": 18,
       "description": "High-performance Decentralized Application Platform"
-    },
-    {
-      "tags": "50-Tokens:ERC20",
-      "address": "0x1b957dc4aefeed3b4a2351a6a6d5cbfbba0cecfa",
-      "name": "HOQU Token",
-      "symbol": "HQX",
-      "source": "On Chain",
-      "decimals": 18,
-      "description": ""
-    },
-    {
-      "tags": "50-Tokens:ERC20",
-      "address": "0x1b9743f556d65e757c4c650b4555baf354cb8bd3",
-      "name": "EthBits ETBS Token",
-      "symbol": "ETBS",
-      "source": "On Chain",
-      "decimals": 12,
-      "description": "ETHBITS iTrade aims to provide new users with all the information needed to decide whom to follow, including a full profile outlining profit and loss in different time frames and historical graphs of performance."
-    },
-    {
-      "tags": "31-Gitcoin Grants:Friends",
-      "address": "0x1bb48a26b8f39eb58ca90375ce78b3d50fc9a3fd",
-      "name": "Name 0x1bb48a26",
-      "symbol": "",
-      "source": "Gitcoin Website",
-      "decimals": 0,
-      "description": ""
     }
   ],
   "types": [

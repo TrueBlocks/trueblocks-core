@@ -6,25 +6,7 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "55-Defi",
     "address": "0x000000000000000000000000000000000000dead",
     "name": "ENS: Burn Address",
-    "source": "Etherscan",
-    "decimals": 0
-  },
-  {
-    "deleted": false,
-    "tags": "30-Contracts",
-    "address": "0x0000000000004946c0e9f43f4dee607b0ef1fa1c",
-    "name": "1inch Exchange: CHI Token",
-    "source": "EtherScan",
-    "decimals": 0
-  },
-  {
-    "deleted": false,
-    "tags": "50-Tokens",
-    "address": "0x0000000000085d4780b73119b644ae5ecd22b376",
-    "name": "TrueUSD",
-    "source": "Etherscan.io",
-    "decimals": 0,
-    "description": "The only regulated, exchange-independent stablecoin backed 1-for-1 with US Dollars"
+    "source": "Etherscan"
   },
   {
     "deleted": false,
@@ -32,7 +14,7 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x00000000000c2e074ec69a0dfb2997ba6c7d2e1e",
     "name": "ENS: Registry with Fallback",
     "source": "Etherscan",
-    "decimals": 0
+    "is_contract": true
   },
   {
     "deleted": false,
@@ -40,7 +22,7 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x00000000219ab540356cbb839cbe05303d7705fa",
     "name": "Eth2 Deposit Contract",
     "source": "Etherscan",
-    "decimals": 0
+    "is_contract": true
   },
   {
     "deleted": false,
@@ -48,16 +30,7 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x000983ba1a675327f0940b56c2d49cd9c042dfbf",
     "name": "GU: Shiny Legendary Pack",
     "source": "Etherscan",
-    "decimals": 0
-  },
-  {
-    "deleted": false,
-    "tags": "30-Contracts",
-    "address": "0x00319f722bd546182cb2c701ca254146d3f084fc",
-    "name": "Democracy Earth",
-    "symbol": "HOUR",
-    "source": "Etherscan",
-    "decimals": 0
+    "is_contract": true
   },
   {
     "deleted": false,
@@ -65,15 +38,14 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x0034ea9808e620a0ef79261c51af20614b742b24",
     "name": "Pool Usdc MCDAwarePool v0.2.12",
     "source": "Etherscan",
-    "decimals": 0
+    "is_contract": true
   },
   {
     "deleted": false,
     "tags": "60-Airdrops",
     "address": "0x00476aecb24edfed50aaf2e2361badbd8d3efdc2",
     "name": "HEALP Airdrop Sender",
-    "source": "Etherscan",
-    "decimals": 0
+    "source": "Etherscan"
   },
   {
     "deleted": false,
@@ -81,23 +53,22 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x005ca4f1493f451c1588186c570a434ec38e718d",
     "name": "BrightID Agent",
     "source": "Etherscan",
-    "decimals": 0
+    "is_contract": true
   },
   {
     "deleted": false,
     "tags": "80-Malicious:DaoDrain",
     "address": "0x0101f3be8ebb4bbd39a2e3b9a3639d4259832fd9",
     "name": "Dao Drain 075",
-    "source": "GethSource Ether Camp",
-    "decimals": 0
+    "source": "GethSource Ether Camp"
   },
   {
     "deleted": false,
     "tags": "36-Chainlink",
     "address": "0x0133aa47b6197d0ba090bf2cd96626eb71ffd13c",
     "name": "Chainlink BTC-ETH Aggregator",
-    "source": "EtherScan",
-    "decimals": 0
+    "source": "EtherScan.io",
+    "is_contract": true
   },
   {
     "deleted": false,
@@ -105,15 +76,7 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x015531a044bae03bf4dab1ceabfc232a969b7175",
     "name": "GU: Rare Pack",
     "source": "Etherscan",
-    "decimals": 0
-  },
-  {
-    "deleted": false,
-    "tags": "55-Defi",
-    "address": "0x01da76dea59703578040012357b81ffe62015c2d",
-    "name": "Cream.Finance: crYETH Token",
-    "source": "Etherscan",
-    "decimals": 0
+    "is_contract": true
   },
   {
     "deleted": false,
@@ -121,24 +84,31 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x02cb3c150bedca124d0ae8cccb72fefbe705c953",
     "name": "Grant 782 Ethereum Cat Herders Community Fund",
     "source": "https://gitcoin.co/grants/782/ethereum-cat-herders-community-fund",
-    "decimals": 0,
-    "description": "https://twitter.com/EthCatHerders"
+    "description": "https://twitter.com/EthCatHerders",
+    "is_contract": true
   },
   {
     "deleted": false,
     "tags": "36-Chainlink",
     "address": "0x02d5c618dbc591544b19d0bf13543c0728a3c4ec",
     "name": "Chainlink CHF-USD Aggregator",
-    "source": "EtherScan",
-    "decimals": 0
+    "source": "EtherScan.io",
+    "is_contract": true
   },
   {
     "deleted": false,
     "tags": "36-Chainlink",
     "address": "0x037e8f2125bf532f3e228991e051c8a7253b642c",
     "name": "Chainlink DAI-ETH Aggregator",
-    "source": "EtherScan",
-    "decimals": 0
+    "source": "EtherScan.io",
+    "is_contract": true
+  },
+  {
+    "deleted": false,
+    "tags": "30-Contracts",
+    "address": "0x0385b3f162a0e001b60ecb84d3cb06199d78f666",
+    "name": "Argent: Relayer 2",
+    "source": "Etherscan"
   },
   {
     "deleted": false,
@@ -146,17 +116,7 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x039b739a1e7353878bfb2f2a4ec23502f4885baa",
     "name": "Maker: Oasis",
     "source": "Etherscan",
-    "decimals": 0
-  },
-  {
-    "deleted": false,
-    "tags": "50-Tokens",
-    "address": "0x03c780cd554598592b97b7256ddaad759945b125",
-    "name": "BTRN",
-    "symbol": "BTRN",
-    "source": "Etherscan.io",
-    "decimals": 0,
-    "description": "Biotron is a fully transparent personal data analytics platform on blockchain."
+    "is_contract": true
   },
   {
     "deleted": false,
@@ -164,9 +124,11 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x049399a6b048d52971f7d122ae21a1532722285f",
     "name": "Fire Lotto",
     "symbol": "FLOT",
-    "source": "On Chain",
+    "source": "On chain",
     "decimals": 18,
-    "description": "Decentralized lottery platform based on the Ethereum blockchain and managed by smart contracts without any human intervention."
+    "description": "Decentralized lottery platform based on the Ethereum blockchain and managed by smart contracts without any human intervention.",
+    "is_contract": true,
+    "is_erc20": true
   },
   {
     "deleted": false,
@@ -174,7 +136,6 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x057a3d5383fd9277f3ab4f98e319d7d9a9a9e198",
     "name": "Grant 292 Will Brealey Ethereum Writer",
     "source": "https://gitcoin.co/grants/292/will-brealey-ethereum-writer",
-    "decimals": 0,
     "description": "https://medium.com/@w_brealey"
   },
   {
@@ -182,40 +143,29 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "36-Chainlink",
     "address": "0x05cf62c4ba0ccea3da680f9a8744ac51116d6231",
     "name": "Chainlink AUD-USD Aggregator",
-    "source": "EtherScan",
-    "decimals": 0
-  },
-  {
-    "deleted": false,
-    "tags": "30-Contracts",
-    "address": "0x06012c8cf97bead5deae237070f9587f8e7a266d",
-    "name": "CryptoKitties: Core",
-    "source": "Etherscan",
-    "decimals": 0
+    "source": "EtherScan.io",
+    "is_contract": true
   },
   {
     "deleted": false,
     "tags": "40-Exchanges",
     "address": "0x0681d8db095565fe8a346fa0277bffde9c0edbbf",
     "name": "Binance 4",
-    "source": "Etherscan",
-    "decimals": 0
+    "source": "Etherscan"
   },
   {
     "deleted": false,
     "tags": "31-Gitcoin Grants:Grant",
     "address": "0x068792edecad424d42f0f45de7f693ca33526cf1",
     "name": "Grant 075 Ethereum Dev Fund Working Group",
-    "source": "https://gitcoin.co/grants/75/ethereum-dev-fund-working-group",
-    "decimals": 0
+    "source": "https://gitcoin.co/grants/75/ethereum-dev-fund-working-group"
   },
   {
     "deleted": false,
     "tags": "50-Tokens:ERC20",
     "address": "0x06a2cf3f024d8871baedd0f7bd9340001aada574",
     "name": "SingularDTV Sender 2",
-    "source": "Etherscan",
-    "decimals": 0
+    "source": "Etherscan"
   },
   {
     "deleted": false,
@@ -223,15 +173,14 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x06fe76b2f432fdfecaef1a7d4f6c3d41b5861672",
     "name": "Zerion: Adapter Registry",
     "source": "Etherscan",
-    "decimals": 0
+    "is_contract": true
   },
   {
     "deleted": false,
     "tags": "80-Malicious:DaoDrain",
     "address": "0x0737a6b837f97f46ebade41b9bc3e1c509c85c53",
     "name": "Dao Drain 059",
-    "source": "GethSource Ether Camp",
-    "decimals": 0
+    "source": "GethSource Ether Camp"
   },
   {
     "deleted": false,
@@ -240,7 +189,7 @@ ethNames Ether --expand --verbose --fmt json
     "name": "Uniswap: ANT",
     "symbol": "ANT",
     "source": "Etherscan",
-    "decimals": 0
+    "is_contract": true
   },
   {
     "deleted": false,
@@ -248,9 +197,11 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x0784dbabb6c6834bddfb7cfee116ba049e5dafab",
     "name": "IBTC",
     "symbol": "IBTC",
-    "source": "On Chain",
+    "source": "On chain",
     "decimals": 18,
-    "description": "IBTC is a tokenized version of Bitcoin build on Ethereum blockchain."
+    "description": "IBTC is a tokenized version of Bitcoin build on Ethereum blockchain.",
+    "is_contract": true,
+    "is_erc20": true
   },
   {
     "deleted": false,
@@ -258,25 +209,33 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x07d9e49ea402194bf48a8276dafb16e4ed633317",
     "name": "DALECOIN",
     "symbol": "DALC",
-    "source": "On Chain",
+    "source": "On chain",
     "decimals": 8,
-    "description": "DaleCoin is an ERC20 token based on the Ethereum blockchain which shall serve as a payment token for goods and services to whoever wishes to accept it."
+    "description": "DaleCoin is an ERC20 token based on the Ethereum blockchain which shall serve as a payment token for goods and services to whoever wishes to accept it.",
+    "is_contract": true,
+    "is_erc20": true
+  },
+  {
+    "deleted": false,
+    "tags": "55-Defi",
+    "address": "0x07db4b9b3951094b9e278d336adf46a036295de7",
+    "name": "Yearn: StrategyCurveYVoterProxy",
+    "source": "Etherscan",
+    "is_contract": true
   },
   {
     "deleted": false,
     "tags": "30-Contracts",
     "address": "0x07f455f30e862e13e3e3d960762cb11c4f744d52",
     "name": "Gnosis Safe: Replay Service Deployment",
-    "source": "Etherscan",
-    "decimals": 0
+    "source": "Etherscan"
   },
   {
     "deleted": false,
     "tags": "31-Gitcoin Grants:Grant",
     "address": "0x08497b07916280da27b43d28a0d3dfa7d6676b58",
     "name": "Grant 122 Austin Griffith Ethereum Rampd",
-    "source": "https://gitcoin.co/grants/122/austin-griffith-ethereum-rampd",
-    "decimals": 0
+    "source": "https://gitcoin.co/grants/122/austin-griffith-ethereum-rampd"
   },
   {
     "deleted": false,
@@ -284,27 +243,18 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x08711d3b02c8758f2fb3ab4e80228418a7f8e39c",
     "name": "Edgeless",
     "symbol": "EDG",
-    "source": "On Chain",
-    "decimals": 0,
-    "description": "The Ethereum smart contract-based that offers a 0% house edge and solves the transparency question once and for all."
+    "source": "On chain",
+    "description": "The Ethereum smart contract-based that offers a 0% house edge and solves the transparency question once and for all.",
+    "is_contract": true,
+    "is_erc20": true
   },
   {
     "deleted": false,
     "tags": "30-Contracts:Pasta",
     "address": "0x08a2e41fb99a7599725190b9c970ad3893fa33cf",
     "name": "Pasta V1 Token",
-    "source": "EtherScan",
-    "decimals": 0
-  },
-  {
-    "deleted": false,
-    "tags": "50-Tokens",
-    "address": "0x08d32b0da63e2c3bcf8019c9c5d849d7a9d791e6",
-    "name": "Dentacoin",
-    "symbol": "DENT",
-    "source": "Etherscan.io",
-    "decimals": 0,
-    "description": "Aims to be the blockchain solution for the global dental industry."
+    "source": "EtherScan.io",
+    "is_contract": true
   },
   {
     "deleted": false,
@@ -312,15 +262,14 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x08dbf4f942ba8cd7871c13addefdffef3e5a8035",
     "name": "GU: Rare Pack Three",
     "source": "Etherscan",
-    "decimals": 0
+    "is_contract": true
   },
   {
     "deleted": false,
     "tags": "34-ENS",
     "address": "0x0904dac3347ea47d208f3fd67402d039a3b99859",
     "name": "ENS: Wallet 1 nickdjohnson",
-    "source": "Etherscan",
-    "decimals": 0
+    "source": "Etherscan"
   },
   {
     "deleted": false,
@@ -328,7 +277,7 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x090d4613473dee047c3f2706764f49e0821d256e",
     "name": "Uniswap: Token Distributor",
     "source": "Etherscan",
-    "decimals": 0
+    "is_contract": true
   },
   {
     "deleted": false,
@@ -336,8 +285,10 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x0a76aad21948ea1ef447d26dee91a54370e151e0",
     "name": "Ethereum Lite",
     "symbol": "ELITE",
-    "source": "On Chain",
-    "decimals": 18
+    "source": "On chain",
+    "decimals": 18,
+    "is_contract": true,
+    "is_erc20": true
   },
   {
     "deleted": false,
@@ -345,9 +296,11 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x0abdace70d3790235af448c88547603b945604ea",
     "name": "district0x Network Token",
     "symbol": "DNT",
-    "source": "On Chain",
+    "source": "On chain",
     "decimals": 18,
-    "description": "A network of decentralized markets and communities. Create, operate, and govern. Powered by Ethereum, Aragon, and IPFS."
+    "description": "A network of decentralized markets and communities. Create, operate, and govern. Powered by Ethereum, Aragon, and IPFS.",
+    "is_contract": true,
+    "is_erc20": true
   },
   {
     "deleted": false,
@@ -355,9 +308,11 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x0b1724cc9fda0186911ef6a75949e9c0d3f0f2f3",
     "name": "Etheriya",
     "symbol": "RIYA",
-    "source": "On Chain",
+    "source": "On chain",
     "decimals": 8,
-    "description": "AN Ethereum Token Backed Micro Macro Freelance Marketplace."
+    "description": "AN Ethereum Token Backed Micro Macro Freelance Marketplace.",
+    "is_contract": true,
+    "is_erc20": true
   },
   {
     "deleted": false,
@@ -365,32 +320,14 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x0b795e585ec0436e4572cc9b24fc5da1faf9cfc6",
     "name": "HEX Airdrop Sender",
     "symbol": "HEX",
-    "source": "Etherscan",
-    "decimals": 0
-  },
-  {
-    "deleted": false,
-    "tags": "50-Tokens",
-    "address": "0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5",
-    "name": "Tellor: TRB Token",
-    "source": "Etherscan.io",
-    "decimals": 0
-  },
-  {
-    "deleted": false,
-    "tags": "55-Defi",
-    "address": "0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e",
-    "name": "Ygov.finance: YFI Token",
-    "source": "Etherscan",
-    "decimals": 0
+    "source": "Etherscan"
   },
   {
     "deleted": false,
     "tags": "91-Known",
     "address": "0x0c3239e2e841242db989a61518c22247e8c55208",
     "name": "BitCoinAcctnt3 (Prefund_0419)",
-    "source": "Etherscan",
-    "decimals": 0
+    "source": "Etherscan"
   },
   {
     "deleted": false,
@@ -398,16 +335,14 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x0c3f8df27e1a00b47653fde878d68d35f00714c0",
     "name": "Compound: 200bps_Slope1000bps",
     "source": "Etherscan",
-    "decimals": 0
+    "is_contract": true
   },
   {
     "deleted": false,
-    "tags": "30-Contracts",
-    "address": "0x0c7cf86188632e16af00415214155950684466a8",
-    "name": "Axie Egg Coin",
-    "symbol": "AEC",
-    "source": "Etherscan",
-    "decimals": 0
+    "tags": "55-Defi",
+    "address": "0x0cec743b8ce4ef8802cac0e5df18a180ed8402a7",
+    "name": "Yearn: Signer Milkyklim",
+    "source": "Etherscan"
   },
   {
     "deleted": false,
@@ -416,8 +351,8 @@ ethNames Ether --expand --verbose --fmt json
     "name": "AVT",
     "symbol": "AVT",
     "source": "Etherscan.io",
-    "decimals": 0,
-    "description": "An open-source protocol that delivers the global standard for ticketing."
+    "description": "An open-source protocol that delivers the global standard for ticketing.",
+    "is_contract": true
   },
   {
     "deleted": false,
@@ -425,16 +360,15 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x0df05adac0159e215111696339ad4998e5871b3d",
     "name": "Grant 576 BlockScout.com for Ethereum Mainnet hosting",
     "source": "https://gitcoin.co/grants/576/blockscoutcom-for-ethereum-mainnet-hosting",
-    "decimals": 0,
-    "description": "https://blockscout.com/eth/mainnet"
+    "description": "https://blockscout.com/eth/mainnet",
+    "is_contract": true
   },
   {
     "deleted": false,
     "tags": "80-Malicious:DaoDrain",
     "address": "0x0e0da70933f4c7849fc0d203f5d1d43b9ae4532d",
     "name": "Dao Drain 087",
-    "source": "GethSource Ether Camp",
-    "decimals": 0
+    "source": "GethSource Ether Camp"
   },
   {
     "deleted": false,
@@ -442,9 +376,11 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x0f5d2fb29fb7d3cfee444a200298f468908cc942",
     "name": "Decentraland MANA",
     "symbol": "MANA",
-    "source": "On Chain",
+    "source": "On chain",
     "decimals": 18,
-    "description": "Decentraland is a virtual reality platform powered by the Ethereum blockchain. Users can create, experience, and monetize content and applications"
+    "description": "Decentraland is a virtual reality platform powered by the Ethereum blockchain. Users can create, experience, and monetize content and applications",
+    "is_contract": true,
+    "is_erc20": true
   },
   {
     "deleted": false,
@@ -452,17 +388,27 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x107c4504cd79c5d2696ea0030a8dd4e92601b82e",
     "name": "Bloom Token",
     "symbol": "BLT",
-    "source": "On Chain",
+    "source": "On chain",
     "decimals": 18,
-    "description": "Decentralized credit scoring powered by Ethereum and IPFS."
+    "description": "Decentralized credit scoring powered by Ethereum and IPFS.",
+    "is_contract": true,
+    "is_erc20": true
   },
   {
     "deleted": false,
-    "tags": "60-Airdrops",
-    "address": "0x1234567461d3f8db7496581774bd869c83d51c93",
-    "name": "BitClave Airdrop",
+    "tags": "30-Contracts",
+    "address": "0x10a0847c2d170008ddca7c3a688124f493630032",
+    "name": "RelayerManager",
     "source": "Etherscan",
-    "decimals": 0
+    "is_contract": true
+  },
+  {
+    "deleted": false,
+    "tags": "55-Defi",
+    "address": "0x112570655b32a8c747845e0215ad139661e66e7f",
+    "name": "Yearn: StrategyCurveBUSDVoterProxy",
+    "source": "Etherscan",
+    "is_contract": true
   },
   {
     "deleted": false,
@@ -470,18 +416,7 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x1266f928b7964173434d3feb6da2554b141920b8",
     "name": "Grant 723 EtherDNA",
     "source": "https://gitcoin.co/grants/723/etherdna",
-    "decimals": 0,
     "description": "https://etherdna.github.io/app/"
-  },
-  {
-    "deleted": false,
-    "tags": "50-Tokens",
-    "address": "0x12b19d3e2ccc14da04fae33e63652ce469b3f2fd",
-    "name": "Grid+ Token",
-    "symbol": "GRID",
-    "source": "Etherscan.io",
-    "decimals": 0,
-    "description": "Grid+ creates products that enable mainstream use of digital assets and cryptocurrencies. Grid+ strives to be the hardware, software, and cryptocurrency experts building the foundation for a more efficient and inclusive financial future."
   },
   {
     "deleted": false,
@@ -489,7 +424,7 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x12d66f87a04a9e220743712ce6d9bb1b5616b8fc",
     "name": "Tornado.Cash: 0.1 ETH",
     "source": "Etherscan",
-    "decimals": 0
+    "is_contract": true
   },
   {
     "deleted": false,
@@ -497,15 +432,14 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x138a35ee20e40f019e7e7c00386ab2ef42d66d1e",
     "name": "MCH: Hero Gateway 1",
     "source": "Etherscan",
-    "decimals": 0
+    "is_contract": true
   },
   {
     "deleted": false,
     "tags": "35-Pool Together",
     "address": "0x14300cd613d6a719ac19de68c2f1042b3217cbff",
     "name": "Pool Together Sender",
-    "source": "Etherscan",
-    "decimals": 0
+    "source": "Etherscan"
   },
   {
     "deleted": false,
@@ -513,25 +447,19 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x14c926f2290044b647e1bf2072e67b495eff1905",
     "name": "Bethereum",
     "symbol": "BETHER",
-    "source": "On Chain",
+    "source": "On chain",
     "decimals": 18,
-    "description": "Bethereum is a decentralised, social-betting platform based on Ethereum technology and Smart Contracts. Bether is the digital ERC-223 token powering the Bethereum solution."
+    "description": "Bethereum is a decentralised, social-betting platform based on Ethereum technology and Smart Contracts. Bether is the digital ERC-223 token powering the Bethereum solution.",
+    "is_contract": true,
+    "is_erc20": true
   },
   {
     "deleted": false,
     "tags": "36-Chainlink",
     "address": "0x151445852b0cfdf6a4cc81440f2af99176e8ad08",
     "name": "Chainlink GBP-USD Aggregator",
-    "source": "EtherScan",
-    "decimals": 0
-  },
-  {
-    "deleted": false,
-    "tags": "36-Compound",
-    "address": "0x158079ee67fce2f58472a96584a73c7ab9ac95c1",
-    "name": "Compound: cREP",
-    "source": "Etherscan",
-    "decimals": 0
+    "source": "EtherScan.io",
+    "is_contract": true
   },
   {
     "deleted": false,
@@ -539,7 +467,7 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x16274044dab9635df2b5aeaf7cecb5f381c71680",
     "name": "Primitive",
     "source": "EtherScan.io",
-    "decimals": 0
+    "is_contract": true
   },
   {
     "deleted": false,
@@ -547,7 +475,6 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x165107ce980edff38065261326354c3d6cd809e6",
     "name": "Grant 709 Adoption and dissemination of Ethereum Technology",
     "source": "https://gitcoin.co/grants/709/adoption-and-dissemination-of-ethereum-technology",
-    "decimals": 0,
     "description": "https://blockchaincounselor.blogspot.com/"
   },
   {
@@ -556,23 +483,15 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x1676fc274b65966ed0c6438a26d34c6c92a5981c",
     "name": "Cream.Finance: CREAM/USDC Pool",
     "source": "Etherscan",
-    "decimals": 0
+    "is_contract": true
   },
   {
     "deleted": false,
     "tags": "36-Chainlink",
     "address": "0x16924ae9c2ac6cdbc9d6bb16fafcd38bed560936",
     "name": "Chainlink FTSE-GBP Aggregator",
-    "source": "EtherScan",
-    "decimals": 0
-  },
-  {
-    "deleted": false,
-    "tags": "55-Defi",
-    "address": "0x17107f40d70f4470d20cb3f138a052cae8ebd4be",
-    "name": "Cream.Finance: crRENBTC Token",
-    "source": "Etherscan",
-    "decimals": 0
+    "source": "EtherScan.io",
+    "is_contract": true
   },
   {
     "deleted": false,
@@ -581,7 +500,7 @@ ethNames Ether --expand --verbose --fmt json
     "name": "Dao Issued Cert Airdrop",
     "symbol": "DIC",
     "source": "Etherscan",
-    "decimals": 0
+    "is_contract": true
   },
   {
     "deleted": false,
@@ -590,8 +509,8 @@ ethNames Ether --expand --verbose --fmt json
     "name": "1820 Registry",
     "symbol": "REG",
     "source": "TrueBlocks.io",
-    "decimals": 0,
-    "description": "Registration smart contract as described in this EIP: https://eips.ethereum.org/EIPS/eip-1820"
+    "description": "Registration smart contract as described in this EIP: https://eips.ethereum.org/EIPS/eip-1820",
+    "is_contract": true
   },
   {
     "deleted": false,
@@ -599,17 +518,18 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x1844b21593262668b7248d0f57a220caaba46ab9",
     "name": "Oyster Pearl",
     "symbol": "PRL",
-    "source": "On Chain",
+    "source": "On chain",
     "decimals": 18,
-    "description": "Platform for website monetization and distributed storage, built on IOTA Tangle and Ethereum"
+    "description": "Platform for website monetization and distributed storage, built on IOTA Tangle and Ethereum",
+    "is_contract": true,
+    "is_erc20": true
   },
   {
     "deleted": false,
     "tags": "91-Known",
     "address": "0x191167380d430036ca2cb067ab86b527e3d584ee",
     "name": "POAP Token Sender",
-    "source": "Etherscan",
-    "decimals": 0
+    "source": "Etherscan"
   },
   {
     "deleted": false,
@@ -617,35 +537,25 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x1966d718a565566e8e202792658d7b5ff4ece469",
     "name": "nDEX",
     "symbol": "NDX",
-    "source": "On Chain",
+    "source": "On chain",
     "decimals": 18,
-    "description": "nDEX Network is a next generation decentralized ethereum token exchange. Our primary goal is to provide a clean, fast and secure trading environment with lowest service charge."
+    "description": "nDEX Network is a next generation decentralized ethereum token exchange. Our primary goal is to provide a clean, fast and secure trading environment with lowest service charge.",
+    "is_contract": true,
+    "is_erc20": true
   },
   {
     "deleted": false,
     "tags": "80-Malicious:DaoDrain",
     "address": "0x1975bd06d486162d5dc297798dfc41edd5d160a7",
     "name": "Dao Drain 005",
-    "source": "GethSource Ether Camp",
-    "decimals": 0
-  },
-  {
-    "deleted": false,
-    "tags": "50-Tokens",
-    "address": "0x1985365e9f78359a9b6ad760e32412f4a445e862",
-    "name": "Augur Token",
-    "symbol": "REP",
-    "source": "Etherscan.io",
-    "decimals": 0,
-    "description": "Augur combines the magic of prediction markets with the power of a decentralized network to create a stunningly accurate forecasting tool"
+    "source": "GethSource Ether Camp"
   },
   {
     "deleted": false,
     "tags": "31-Gitcoin Grants:Grant",
     "address": "0x1aa587c2288750173cc6af7c92bad7209904e496",
     "name": "Grant 150 Ethereum Egift Cards",
-    "source": "https://gitcoin.co/grants/150/ethereum-egift-cards",
-    "decimals": 0
+    "source": "https://gitcoin.co/grants/150/ethereum-egift-cards"
   },
   {
     "deleted": false,
@@ -653,9 +563,11 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x1c83501478f1320977047008496dacbd60bb15ef",
     "name": "DigitexFutures",
     "symbol": "DGTX",
-    "source": "On Chain",
+    "source": "On chain",
     "decimals": 18,
-    "description": "The DGTX Token is a protocol token that has real world utility and value. Its value derives directly from its utility as a vehicle for the commission-free trading of liquid futures contracts on the price of Bitcoin, Ethereum and Litecoin against the US Dollar."
+    "description": "The DGTX Token is a protocol token that has real world utility and value. Its value derives directly from its utility as a vehicle for the commission-free trading of liquid futures contracts on the price of Bitcoin, Ethereum and Litecoin against the US Dollar.",
+    "is_contract": true,
+    "is_erc20": true
   },
   {
     "deleted": false,
@@ -663,9 +575,19 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x1d4ccc31dab6ea20f461d329a0562c1c58412515",
     "name": "Talao",
     "symbol": "TALAO",
-    "source": "On Chain",
+    "source": "On chain",
     "decimals": 18,
-    "description": "Reputation Protocol and Decentralized Marketplace based on Ethereum blockchain"
+    "description": "Reputation Protocol and Decentralized Marketplace based on Ethereum blockchain",
+    "is_contract": true,
+    "is_erc20": true
+  },
+  {
+    "deleted": false,
+    "tags": "55-Defi",
+    "address": "0x1d91e3f77271ed069618b4ba06d19821bc2ed8b0",
+    "name": "Yearn: StrategyTUSDCurve",
+    "source": "Etherscan",
+    "is_contract": true
   },
   {
     "deleted": false,
@@ -673,42 +595,26 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x1da022710df5002339274aadee8d58218e9d6ab5",
     "name": "ENS: Old Public Resolver 1",
     "source": "Etherscan",
-    "decimals": 0
+    "is_contract": true
   },
   {
     "deleted": false,
     "tags": "36-Chainlink",
     "address": "0x1eeaf25f2ecbcaf204ecadc8db7b0db9da845327",
     "name": "Chainlink LEND-ETH Aggregator",
-    "source": "EtherScan",
-    "decimals": 0
-  },
-  {
-    "deleted": false,
-    "tags": "50-Tokens:ERC20",
-    "address": "0x1f58af89d12d4a60647f99a9fc71dd0367b56df4",
-    "name": "Burnup Tiles",
-    "symbol": "BURN",
-    "source": "Etherscan",
-    "decimals": 18
+    "source": "EtherScan.io",
+    "is_contract": true
   },
   {
     "deleted": false,
     "tags": "50-Tokens",
     "address": "0x1f75047233517dcf67970d9e3c3bb385cb647f30",
-    "name": "Unicorns (defunct 1)",
+    "name": "Unicorns",
     "symbol": "🦄",
-    "source": "TrueBlocks.io",
-    "decimals": 0,
-    "description": "Ethereum tip jar unicorn tokens"
-  },
-  {
-    "deleted": false,
-    "tags": "40-Exchanges",
-    "address": "0x1f9840a85d5af5bf1d1762f925bdaddc4201f984",
-    "name": "Uniswap Protocol: UNI token",
-    "source": "Etherscan",
-    "decimals": 0
+    "source": "On chain",
+    "description": "Ethereum tip jar unicorn tokens",
+    "is_contract": true,
+    "is_erc20": true
   },
   {
     "deleted": false,
@@ -716,25 +622,14 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x1fd169a4f5c59acf79d0fd5d91d1201ef1bce9f1",
     "name": "Moloch DAO",
     "source": "Etherscan",
-    "decimals": 0
+    "is_contract": true
   },
   {
     "deleted": false,
     "tags": "80-Malicious:DaoDrain",
     "address": "0x200450f06520bdd6c527622a273333384d870efb",
     "name": "Dao Drain 015",
-    "source": "GethSource Ether Camp",
-    "decimals": 0
-  },
-  {
-    "deleted": false,
-    "tags": "50-Tokens",
-    "address": "0x20e94867794dba030ee287f1406e100d03c84cd3",
-    "name": "DEW Token",
-    "symbol": "DEW",
-    "source": "Etherscan.io",
-    "decimals": 0,
-    "description": "DEW is a Decentralized Exchange and also a gateway to the global blockchain securities market, through an almighty account, you can trade Blockchain Assets, Stocks, Futures, Forex, ETF, Bet Contract etc."
+    "source": "GethSource Ether Camp"
   },
   {
     "deleted": false,
@@ -742,17 +637,11 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x2167fb82309cf76513e83b25123f8b0559d6b48f",
     "name": "LION",
     "symbol": "LION",
-    "source": "On Chain",
+    "source": "On chain",
     "decimals": 18,
-    "description": "LION token is an ERC20 token powered by the Ethereum Blockchain. It is a utility token designed to operate inside of the CoinLion trading platform and research portal."
-  },
-  {
-    "deleted": false,
-    "tags": "30-Contracts",
-    "address": "0x22365168c8705e95b2d08876c23a8c13e3ad72e2",
-    "name": "GU: Tournament Pass",
-    "source": "Etherscan",
-    "decimals": 0
+    "description": "LION token is an ERC20 token powered by the Ethereum Blockchain. It is a utility token designed to operate inside of the CoinLion trading platform and research portal.",
+    "is_contract": true,
+    "is_erc20": true
   },
   {
     "deleted": false,
@@ -760,7 +649,7 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x226159d592e2b063810a10ebf6dcbada94ed68b8",
     "name": "ENS: Old Public Resolver 2",
     "source": "Etherscan",
-    "decimals": 0
+    "is_contract": true
   },
   {
     "deleted": false,
@@ -768,9 +657,11 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x2344871f523cbb28a4f60045531184cf1f03ad24",
     "name": "RoBET - Truly Decentralized Sportsbetting",
     "symbol": "ROBET",
-    "source": "On Chain",
+    "source": "On chain",
     "decimals": 18,
-    "description": "RoBet is an Ethereum based sportsbook platform regulated by smart contracts."
+    "description": "RoBet is an Ethereum based sportsbook platform regulated by smart contracts.",
+    "is_contract": true,
+    "is_erc20": true
   },
   {
     "deleted": false,
@@ -778,7 +669,7 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x23850f3e6f760b92491892a5a3772e7fc000adf1",
     "name": "Uniswap: ORB 2",
     "source": "Etherscan",
-    "decimals": 0
+    "is_contract": true
   },
   {
     "deleted": false,
@@ -786,9 +677,11 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x24692791bc444c5cd0b81e3cbcaba4b04acd1f3b",
     "name": "UnikoinGold",
     "symbol": "UKG",
-    "source": "On Chain",
+    "source": "On chain",
     "decimals": 18,
-    "description": "UnikoinGold is an ethereum-based, decentralized crypto token designed for high-volume, high security, inexpensive gaming and esports related transactions on the Unikrn platform."
+    "description": "UnikoinGold is an ethereum-based, decentralized crypto token designed for high-volume, high security, inexpensive gaming and esports related transactions on the Unikrn platform.",
+    "is_contract": true,
+    "is_erc20": true
   },
   {
     "deleted": false,
@@ -796,7 +689,6 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x24e8bb6a37774d8a0187e196beb29601ed5920bf",
     "name": "Grant 348 EtherLoans undercollateralized loans unstoppable DeFi",
     "source": "https://gitcoin.co/grants/348/etherloans-undercollateralized-loans-unstoppable-d",
-    "decimals": 0,
     "description": "https://www.etherloans.io/"
   },
   {
@@ -804,8 +696,7 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "80-Malicious:DaoDrain",
     "address": "0x253488078a4edf4d6f42f113d1e62836a942cf1a",
     "name": "Dao Drain 097",
-    "source": "GethSource Ether Camp",
-    "decimals": 0
+    "source": "GethSource Ether Camp"
   },
   {
     "deleted": false,
@@ -813,17 +704,27 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x255aa6df07540cb5d3d297f0d0d4d84cb52bc8e6",
     "name": "Raiden Token",
     "symbol": "RDN",
-    "source": "On Chain",
+    "source": "On chain",
     "decimals": 18,
-    "description": "The Raiden Network is an off-chain scaling solution, enabling near-instant, low-fee and scalable payments. It‚Äö√Ñ√¥s complementary to the Ethereum blockchain and works with any ERC20 compatible token."
+    "description": "The Raiden Network is an off-chain scaling solution, enabling near-instant, low-fee and scalable payments. It‚Äö√Ñ√¥s complementary to the Ethereum blockchain and works with any ERC20 compatible token.",
+    "is_contract": true,
+    "is_erc20": true
   },
   {
     "deleted": false,
     "tags": "36-Chainlink",
     "address": "0x25fa978ea1a7dc9bdc33a2959b9053eae57169b5",
     "name": "Chainlink EUR-USD Aggregator",
-    "source": "EtherScan",
-    "decimals": 0
+    "source": "EtherScan.io",
+    "is_contract": true
+  },
+  {
+    "deleted": false,
+    "tags": "55-Defi",
+    "address": "0x25faca21dd2ad7edb3a027d543e617496820d8d6",
+    "name": "Yearn: StrategyVaultUSDC",
+    "source": "Etherscan",
+    "is_contract": true
   },
   {
     "deleted": false,
@@ -831,17 +732,11 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x27054b13b1b798b345b591a4d22e6562d47ea75a",
     "name": "AirSwap Token",
     "symbol": "AST",
-    "source": "On Chain",
+    "source": "On chain",
     "decimals": 4,
-    "description": "AirSwap is based on the Swap protocol, a peer-to-peer protocol for trading Ethereum tokens"
-  },
-  {
-    "deleted": false,
-    "tags": "30-Contracts",
-    "address": "0x273f7f8e6489682df756151f5525576e322d51a3",
-    "name": "MCH: Hero",
-    "source": "Etherscan",
-    "decimals": 0
+    "description": "AirSwap is based on the Swap protocol, a peer-to-peer protocol for trading Ethereum tokens",
+    "is_contract": true,
+    "is_erc20": true
   },
   {
     "deleted": false,
@@ -849,7 +744,7 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x275ff8a50bc5841b09ec9a34c955898cd9eb43c6",
     "name": "Pool Together Pool 1",
     "source": "Etherscan",
-    "decimals": 0
+    "is_contract": true
   },
   {
     "deleted": false,
@@ -857,9 +752,11 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x27dce1ec4d3f72c3e457cc50354f1f975ddef488",
     "name": "AirToken",
     "symbol": "AIR",
-    "source": "On Chain",
+    "source": "On chain",
     "decimals": 8,
-    "description": "AirToken is an Ethereum-based ERC-20 digital utility token that facilitates the transfer of mobile airtime, data and currency, as well as payments for goods and services, with minimal friction and fees."
+    "description": "AirToken is an Ethereum-based ERC-20 digital utility token that facilitates the transfer of mobile airtime, data and currency, as well as payments for goods and services, with minimal friction and fees.",
+    "is_contract": true,
+    "is_erc20": true
   },
   {
     "deleted": false,
@@ -867,9 +764,11 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x27f706edde3ad952ef647dd67e24e38cd0803dd6",
     "name": "Useless Ethereum Token",
     "symbol": "UET",
-    "source": "On Chain",
+    "source": "On chain",
     "decimals": 18,
-    "description": "The world's first 100% honest Ethereum ICO."
+    "description": "The world's first 100% honest Ethereum ICO.",
+    "is_contract": true,
+    "is_erc20": true
   },
   {
     "deleted": false,
@@ -877,16 +776,7 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x283af0b28c62c092c9727f1ee09c02ca627eb7f5",
     "name": "ENS: ETH Registrar Controller",
     "source": "Etherscan",
-    "decimals": 0
-  },
-  {
-    "deleted": false,
-    "tags": "50-Tokens",
-    "address": "0x28b5e12cce51f15594b0b91d5b5adaa70f684a02",
-    "name": "NapoleonX",
-    "symbol": "NPX",
-    "source": "Etherscan.io",
-    "decimals": 0
+    "is_contract": true
   },
   {
     "deleted": false,
@@ -895,8 +785,19 @@ ethNames Ether --expand --verbose --fmt json
     "name": "Ethereum Gold",
     "symbol": "ETG",
     "source": "Etherscan.io",
-    "decimals": 0,
-    "description": "Ethereumgold is a nonprofit that aims to connects people to low-cost financial services to fight poverty and develop individual potential."
+    "description": "Ethereumgold is a nonprofit that aims to connects people to low-cost financial services to fight poverty and develop individual potential.",
+    "is_contract": true
+  },
+  {
+    "deleted": false,
+    "tags": "50-Tokens:ERC20",
+    "address": "0x2956356cd2a2bf3202f771f50d3d14a367b48070",
+    "name": "Ether Token",
+    "symbol": "WETH",
+    "source": "On chain",
+    "decimals": 18,
+    "is_contract": true,
+    "is_erc20": true
   },
   {
     "deleted": false,
@@ -904,7 +805,7 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x29fe7d60ddf151e5b52e5fab4f1325da6b2bd958",
     "name": "Pool Dai MCDAwarePool v0.2.12",
     "source": "Etherscan",
-    "decimals": 0
+    "is_contract": true
   },
   {
     "deleted": false,
@@ -912,9 +813,11 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x2a05d22db079bc40c2f77a1d1ff703a56e631cc1",
     "name": "BitAsean",
     "symbol": "BAS",
-    "source": "On Chain",
+    "source": "On chain",
     "decimals": 8,
-    "description": "BitAsean is Ethereum-based Token. Their aim is for BitAsean to be the cryptocurrency of the ASEAN region."
+    "description": "BitAsean is Ethereum-based Token. Their aim is for BitAsean to be the cryptocurrency of the ASEAN region.",
+    "is_contract": true,
+    "is_erc20": true
   },
   {
     "deleted": false,
@@ -922,7 +825,7 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x2a1530c4c41db0b0b2bb646cb5eb1a67b7158667",
     "name": "Uniswap: DAI",
     "source": "Etherscan",
-    "decimals": 0
+    "is_contract": true
   },
   {
     "deleted": false,
@@ -930,7 +833,7 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x2ab765c2b4a4e197fbae769f86870f2310a04d61",
     "name": "Cream.Finance: YFI/USDC",
     "source": "Etherscan",
-    "decimals": 0
+    "is_contract": true
   },
   {
     "deleted": false,
@@ -938,15 +841,14 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x2af47a65da8cd66729b4209c22017d6a5c2d2400",
     "name": "Bounties Network",
     "source": "Etherscan",
-    "decimals": 0
+    "is_contract": true
   },
   {
     "deleted": false,
     "tags": "60-Airdrops",
     "address": "0x2afbc96be0ac57e9e2194506d5565c45b2481f88",
     "name": "YOO Airdrop Sender",
-    "source": "Etherscan",
-    "decimals": 0
+    "source": "Etherscan"
   },
   {
     "deleted": false,
@@ -954,7 +856,7 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x2b3e697c2b90e3ecde2416e106d61bd0b1deab0f",
     "name": "BasicCoin Airdrop",
     "source": "Etherscan",
-    "decimals": 0
+    "is_contract": true
   },
   {
     "deleted": false,
@@ -962,7 +864,6 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x2bb1b3510a1f609cbc74b98b3eb622cfcc3be16e",
     "name": "Grant 381 Animated charts of DeFi/Ethereum by James Todaro",
     "source": "https://gitcoin.co/grants/381/animated-charts-of-defiethereum-by-james-todaro",
-    "decimals": 0,
     "description": "https://twitter.com/JamesTodaroMD"
   },
   {
@@ -970,8 +871,15 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "80-Malicious:DaoDrain",
     "address": "0x2c19c7f9ae8b751e37aeb2d93a699722395ae18f",
     "name": "Dao Drain 003",
-    "source": "GethSource Ether Camp",
-    "decimals": 0
+    "source": "GethSource Ether Camp"
+  },
+  {
+    "deleted": false,
+    "tags": "55-Defi",
+    "address": "0x2de055fec2b826ed4a7478ceddbeff82c1edfa70",
+    "name": "Yearn: StrategyYfii",
+    "source": "Etherscan",
+    "is_contract": true
   },
   {
     "deleted": false,
@@ -979,17 +887,18 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x2e071d2966aa7d8decb1005885ba1977d6038a65",
     "name": "DICE",
     "symbol": "ROL",
-    "source": "On Chain",
+    "source": "On chain",
     "decimals": 16,
-    "description": "Provably fair online Ether gaming on the Ethereum Blockchain"
+    "description": "Provably fair online Ether gaming on the Ethereum Blockchain",
+    "is_contract": true,
+    "is_erc20": true
   },
   {
     "deleted": false,
     "tags": "60-Airdrops",
     "address": "0x2e12a5a98afd8407d8fcd5bbdb39f964b74f231d",
     "name": "KickAirdropSender",
-    "source": "Etherscan",
-    "decimals": 0
+    "source": "Etherscan"
   },
   {
     "deleted": false,
@@ -997,15 +906,41 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x2e3b10abf091cdc53cc892a50dabdb432e220398",
     "name": "GeneralizedTCR",
     "source": "Etherscan",
-    "decimals": 0
+    "is_contract": true
+  },
+  {
+    "deleted": false,
+    "tags": "55-Defi",
+    "address": "0x2ee856843bb65c244f527ad302d6d2853921727e",
+    "name": "Yearn: StrategyCurveYBUSDVoterProxy",
+    "source": "Etherscan",
+    "is_contract": true
+  },
+  {
+    "deleted": false,
+    "tags": "55-Defi",
+    "address": "0x2f08119c6f07c006695e079aafc638b8789faf18",
+    "name": "yearn Tether USD",
+    "symbol": "yUSDT",
+    "source": "On chain",
+    "decimals": 6,
+    "is_contract": true,
+    "is_erc20": true
   },
   {
     "deleted": false,
     "tags": "80-Malicious:DaoDrain",
     "address": "0x304a554a310c7e546dfe434669c62820b7d83490",
     "name": "Dao Drain 067 (DarkDAO)",
-    "source": "GethSource SlackNation OnChain Ether Camp",
-    "decimals": 0
+    "source": "GethSource SlackNation OnChain Ether Camp"
+  },
+  {
+    "deleted": false,
+    "tags": "55-Defi",
+    "address": "0x31317f9a5e4cc1d231bdf07755c994015a96a37c",
+    "name": "Yearn: Controller",
+    "source": "Etherscan",
+    "is_contract": true
   },
   {
     "deleted": false,
@@ -1013,7 +948,7 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x314159265dd8dbb310642f98f50c066173c1259b",
     "name": "ENS: Eth Name Service",
     "source": "Etherscan",
-    "decimals": 0
+    "is_contract": true
   },
   {
     "deleted": false,
@@ -1021,15 +956,14 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x314495517f380ceb7c498a35739e40864240adcf",
     "name": "GU: Shiny Legendary Pack Three",
     "source": "Etherscan",
-    "decimals": 0
+    "is_contract": true
   },
   {
     "deleted": false,
     "tags": "80-Malicious:DaoDrain",
     "address": "0x319f70bab6845585f412ec7724b744fec6095c85",
     "name": "Dao Drain 007",
-    "source": "GethSource Ether Camp",
-    "decimals": 0
+    "source": "GethSource Ether Camp"
   },
   {
     "deleted": false,
@@ -1037,42 +971,32 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x31f3d9d1bece0c033ff78fa6da60a6048f3e13c5",
     "name": "EBCoin",
     "symbol": "EBC",
-    "source": "On Chain",
+    "source": "On chain",
     "decimals": 18,
-    "description": "The universal cryptocurrency based on Ethereum for travelers in the world"
-  },
-  {
-    "deleted": false,
-    "tags": "50-Tokens",
-    "address": "0x3209f98bebf0149b769ce26d71f7aea8e435efea",
-    "name": "Traxia Membership Token",
-    "symbol": "TMT",
-    "source": "Etherscan.io",
-    "decimals": 0,
-    "description": "A decentralized global trade finance ecosystem."
+    "description": "The universal cryptocurrency based on Ethereum for travelers in the world",
+    "is_contract": true,
+    "is_erc20": true
   },
   {
     "deleted": false,
     "tags": "91-Known",
     "address": "0x32be343b94f860124dc4fee278fdcbd38c102d88",
     "name": "Poliniex Exchange, DAO Whale 4 Vlad Zamphir 0x127 Sender 1 Sept_DDOS_ACCOUNT_1",
-    "source": "TrueBlocks.io CarbonVote WhaleWatch.io SEPT_DDOS http://www.reddit.com/r/ethereum/",
-    "decimals": 0
+    "source": "TrueBlocks.io CarbonVote WhaleWatch.io SEPT_DDOS http://www.reddit.com/r/ethereum/"
   },
   {
     "deleted": false,
     "tags": "31-Gitcoin Grants:Grant",
     "address": "0x32cefb2dc869bbfe636f7547cda43f561bf88d5a",
-    "name": "Grant 152 Ethereum For Farsi Speaking Population",
-    "decimals": 0
+    "name": "Grant 152 Ethereum For Farsi Speaking Population"
   },
   {
     "deleted": false,
     "tags": "36-Chainlink",
     "address": "0x32dbd3214ac75223e27e575c53944307914f7a90",
     "name": "Chainlink LINK-USD Aggregator",
-    "source": "EtherScan",
-    "decimals": 0
+    "source": "EtherScan.io",
+    "is_contract": true
   },
   {
     "deleted": false,
@@ -1080,17 +1004,18 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x33c623a2baafeb8d15dfaf3ce44095efec83d72c",
     "name": "SGPay Token",
     "symbol": "SGP",
-    "source": "On Chain",
+    "source": "On chain",
     "decimals": 18,
-    "description": "SGPay is the payments system built for the mobile platform. It aims to combine new digital tokens, next generation innovators and modern e-payment systems together."
+    "description": "SGPay is the payments system built for the mobile platform. It aims to combine new digital tokens, next generation innovators and modern e-payment systems together.",
+    "is_contract": true,
+    "is_erc20": true
   },
   {
     "deleted": false,
     "tags": "31-Gitcoin Grants:Grant",
     "address": "0x35ca7ae854338dcbc154066f0ea00b636d38e431",
     "name": "Grant 126 Humans of Ethereum",
-    "source": "https://gitcoin.co/grants/126/humansofethereum",
-    "decimals": 0
+    "source": "https://gitcoin.co/grants/126/humansofethereum"
   },
   {
     "deleted": false,
@@ -1098,7 +1023,15 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x374026a48d777cb0ffdccdb9a919c0aa7ce8a0fc",
     "name": "Genesis Protocol",
     "source": "Etherscan",
-    "decimals": 0
+    "is_contract": true
+  },
+  {
+    "deleted": false,
+    "tags": "55-Defi",
+    "address": "0x382185f3ea9268e65bb16f81de6b4e725134ed72",
+    "name": "Yearn: StrategyYfii",
+    "source": "Etherscan",
+    "is_contract": true
   },
   {
     "deleted": false,
@@ -1106,7 +1039,7 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x38298ef8a8306579e21246d5227694b5560d9cb5",
     "name": "Grant 085 Tennagraph Minimum Bias Ethereum Signal Aggregat",
     "source": "https://gitcoin.co/grants/85/tennagraph-minimum-bias-ethereum-signal-aggregat-2",
-    "decimals": 0
+    "is_contract": true
   },
   {
     "deleted": false,
@@ -1115,8 +1048,8 @@ ethNames Ether --expand --verbose --fmt json
     "name": "HPBCoin",
     "symbol": "HPB",
     "source": "Etherscan.io",
-    "decimals": 0,
-    "description": "HPB High-Performance Blockchain is a new kind of block chain hardware and software architecture, which includes a chip acceleration engine and the blockchain platform, aiming to realize the performance extension of distributed applications"
+    "description": "HPB High-Performance Blockchain is a new kind of block chain hardware and software architecture, which includes a chip acceleration engine and the blockchain platform, aiming to realize the performance extension of distributed applications",
+    "is_contract": true
   },
   {
     "deleted": false,
@@ -1124,9 +1057,11 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x3918c42f14f2eb1168365f911f63e540e5a306b5",
     "name": "Neural Protocol",
     "symbol": "NRP",
-    "source": "On Chain",
+    "source": "On chain",
     "decimals": 8,
-    "description": "NEURAL PROTOCOL NRP is a decentralized blockchain-based payment instrument that aims to bring together buyers and sellers in a marketplace."
+    "description": "NEURAL PROTOCOL NRP is a decentralized blockchain-based payment instrument that aims to bring together buyers and sellers in a marketplace.",
+    "is_contract": true,
+    "is_erc20": true
   },
   {
     "deleted": false,
@@ -1134,8 +1069,15 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x3953017af23ab99a7d40f3d26f1595f27c91345f",
     "name": "Grant 548 togeDAO A forum and social media community built on the Ethereum blockchain to incentivize content creators.",
     "source": "https://gitcoin.co/grants/548/togedao-a-forum-and-social-media-community-built-o",
-    "decimals": 0,
     "description": "http://togedao.ml/"
+  },
+  {
+    "deleted": false,
+    "tags": "55-Defi",
+    "address": "0x395f93350d5102b6139abfc84a7d6ee70488797c",
+    "name": "Yearn: StrategyYFIGovernance",
+    "source": "Etherscan",
+    "is_contract": true
   },
   {
     "deleted": false,
@@ -1143,15 +1085,7 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x398ec7346dcd622edc5ae82352f02be94c62d119",
     "name": "Aave: Lending Pool V1",
     "source": "Etherscan",
-    "decimals": 0
-  },
-  {
-    "deleted": false,
-    "tags": "36-Compound",
-    "address": "0x39aa39c021dfbae8fac545936693ac917d5e7563",
-    "name": "Compound: cUSDC",
-    "source": "Etherscan",
-    "decimals": 0
+    "is_contract": true
   },
   {
     "deleted": false,
@@ -1159,17 +1093,26 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x3a1237d38d0fb94513f85d61679cad7f38507242",
     "name": "Mindexcoin",
     "symbol": "MIC",
-    "source": "On Chain",
+    "source": "On chain",
     "decimals": 18,
-    "description": "Mindexcoin MIC is a token that enables data operations in the Ethereum Decentralized Network."
+    "description": "Mindexcoin MIC is a token that enables data operations in the Ethereum Decentralized Network.",
+    "is_contract": true,
+    "is_erc20": true
+  },
+  {
+    "deleted": false,
+    "tags": "55-Defi",
+    "address": "0x3a22df48d84957f907e67f4313e3d43179040d6e",
+    "name": "Ygov.finance: Governance",
+    "source": "Etherscan",
+    "is_contract": true
   },
   {
     "deleted": false,
     "tags": "60-Airdrops",
     "address": "0x3af17600662d3a22c4ba91046fd5eb8a6f840afe",
     "name": "EMANTokenSender",
-    "source": "Etherscan",
-    "decimals": 0
+    "source": "Etherscan"
   },
   {
     "deleted": false,
@@ -1177,7 +1120,7 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x3c2c10e5ecd073d9ee238493d338ec6e3d7281c6",
     "name": "Bithereum",
     "source": "EtherScan.io",
-    "decimals": 0
+    "is_contract": true
   },
   {
     "deleted": false,
@@ -1185,7 +1128,7 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x3d5bc3c8d13dcb8bf317092d84783c2697ae9258",
     "name": "Cream.Finance: Comptroller",
     "source": "Etherscan",
-    "decimals": 0
+    "is_contract": true
   },
   {
     "deleted": false,
@@ -1193,23 +1136,22 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x3d9819210a31b4961b30ef54be2aed79b9c9cd3b",
     "name": "Compound: Comptroller",
     "source": "Etherscan",
-    "decimals": 0
+    "is_contract": true
   },
   {
     "deleted": false,
     "tags": "40-Exchanges",
     "address": "0x3f1c1e14fd919415010c03f9de29cbafd5866e81",
     "name": "Coinbase 1",
-    "source": "Etherscan",
-    "decimals": 0
+    "source": "Etherscan"
   },
   {
     "deleted": false,
     "tags": "36-Chainlink",
     "address": "0x3f6e09a4ec3811765f5b2ad15c0279910dbb2c04",
     "name": "Chainlink N225-JPY Aggregator",
-    "source": "EtherScan",
-    "decimals": 0
+    "source": "EtherScan.io",
+    "is_contract": true
   },
   {
     "deleted": false,
@@ -1217,7 +1159,7 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x3fda67f7583380e67ef93072294a7fac882fd7e7",
     "name": "Compound",
     "source": "Etherscan",
-    "decimals": 0
+    "is_contract": true
   },
   {
     "deleted": false,
@@ -1225,9 +1167,19 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x408e41876cccdc0f92210600ef50372656052a38",
     "name": "Republic Token",
     "symbol": "REN",
-    "source": "On Chain",
+    "source": "On chain",
     "decimals": 18,
-    "description": "A decentralized dark pool for trustless cross-chain atomic trading of Ether, ERC20 tokens and Bitcoin pairs."
+    "description": "A decentralized dark pool for trustless cross-chain atomic trading of Ether, ERC20 tokens and Bitcoin pairs.",
+    "is_contract": true,
+    "is_erc20": true
+  },
+  {
+    "deleted": false,
+    "tags": "55-Defi",
+    "address": "0x40bd98e3cce4f34c087a73dd3d05558733549afb",
+    "name": "Yearn: StrategyCreamYFI",
+    "source": "Etherscan",
+    "is_contract": true
   },
   {
     "deleted": false,
@@ -1235,16 +1187,7 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x40e3780e5bec58629ac4c5dc3bca3df2d7fd0c35",
     "name": "Grant 412 Ethereum Commons: Testnets for ETC ETH",
     "source": "https://gitcoin.co/grants/412/ethereumcore-public-goods-faucets-gas-estimator-st",
-    "decimals": 0,
     "description": "https://EthereumCore.org"
-  },
-  {
-    "deleted": false,
-    "tags": "55-Defi",
-    "address": "0x4161fa43eaa1ac3882aeed12c5fc05249e533e67",
-    "name": "Uniswap V2: USDC-fUSDC",
-    "source": "Etherscan",
-    "decimals": 0
   },
   {
     "deleted": false,
@@ -1252,17 +1195,7 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x41997060113af630a591e6cb23e1bc15fc90dc73",
     "name": "Grant 551 The Ethereum 2.0 Annotated Specification",
     "source": "https://gitcoin.co/grants/551/the-ethereum-20-annotated-specification",
-    "decimals": 0,
     "description": "https://benjaminion.xyz/eth2-annotated-spec/"
-  },
-  {
-    "deleted": false,
-    "tags": "50-Tokens",
-    "address": "0x419b8ed155180a8c9c64145e76dad49c0a4efb97",
-    "name": "AltEstate token",
-    "source": "Etherscan.io",
-    "decimals": 0,
-    "description": "ALT is a utility token for Alt.Estate ‚Äö√Ñ√Æ the IT company offering a new solution for real estate tokenization"
   },
   {
     "deleted": false,
@@ -1270,19 +1203,22 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x419d0d8bdd9af5e606ae2232ed285aff190e711b",
     "name": "FunFair",
     "symbol": "FUN",
-    "source": "On Chain",
+    "source": "On chain",
     "decimals": 8,
-    "description": "FunFair is a decentralised gaming platform powered by Ethereum smart contracts"
+    "description": "FunFair is a decentralised gaming platform powered by Ethereum smart contracts",
+    "is_contract": true,
+    "is_erc20": true
   },
   {
     "deleted": false,
     "tags": "50-Tokens",
     "address": "0x41a7820c86f4bea29e6c9239aeb0fbdba12dd790",
-    "name": "Unicorns (defunct 2)",
+    "name": "Unicorns",
     "symbol": "🦄",
-    "source": "TrueBlocks.io",
-    "decimals": 0,
-    "description": "Ethereum tip jar unicorn tokens"
+    "source": "On chain",
+    "description": "Ethereum tip jar unicorn tokens",
+    "is_contract": true,
+    "is_erc20": true
   },
   {
     "deleted": false,
@@ -1290,25 +1226,7 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x41d2a18e1ddacdabfddadb62e9aee67c63070b76",
     "name": "Grant 562 Learning Data Science on the Ethereum Blockchain with @omnianalytics",
     "source": "https://gitcoin.co/grants/562/learning-data-science-on-the-ethereum-blockchain-w",
-    "decimals": 0,
     "description": "https://github.com/Omni-Analytics-Group/eth-data-science-course"
-  },
-  {
-    "deleted": false,
-    "tags": "30-Contracts",
-    "address": "0x4243a8413a77eb559c6f8eaffa63f46019056d08",
-    "name": "CryptoVoxels",
-    "source": "Etherscan",
-    "decimals": 0
-  },
-  {
-    "deleted": false,
-    "tags": "60-Airdrops",
-    "address": "0x426ca1ea2406c07d75db9585f22781c096e3d0e0",
-    "name": "Minereum Airdrop",
-    "symbol": "MNE",
-    "source": "Etherscan",
-    "decimals": 0
   },
   {
     "deleted": false,
@@ -1316,9 +1234,11 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x42d6622dece394b54999fbd73d108123806f6a18",
     "name": "SPANK",
     "symbol": "SPANK",
-    "source": "On Chain",
+    "source": "On chain",
     "decimals": 18,
-    "description": "A cryptoeconomic powered adult entertainment ecosystem built on the Ethereum network."
+    "description": "A cryptoeconomic powered adult entertainment ecosystem built on the Ethereum network.",
+    "is_contract": true,
+    "is_erc20": true
   },
   {
     "deleted": false,
@@ -1326,9 +1246,11 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x4355fc160f74328f9b383df2ec589bb3dfd82ba0",
     "name": "Opus Token",
     "symbol": "OPT",
-    "source": "On Chain",
+    "source": "On chain",
     "decimals": 18,
-    "description": "Decentralised music platform built on Ethereum and IPFS."
+    "description": "Decentralised music platform built on Ethereum and IPFS.",
+    "is_contract": true,
+    "is_erc20": true
   },
   {
     "deleted": false,
@@ -1336,19 +1258,11 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x436f0f3a982074c4a05084485d421466a994fe53",
     "name": "Rate3",
     "symbol": "RTE",
-    "source": "On Chain",
+    "source": "On chain",
     "decimals": 18,
-    "description": "Payment Without Borders - A decentralised protocol for cross border payments and credit scoring. Empowered by Stellar and Ethereum."
-  },
-  {
-    "deleted": false,
-    "tags": "50-Tokens",
-    "address": "0x4375e7ad8a01b8ec3ed041399f62d9cd120e0063",
-    "name": "BZ Token",
-    "symbol": "BZ",
-    "source": "Etherscan.io",
-    "decimals": 0,
-    "description": "Digital asset trading exchanges, providing professional digital asset trading and OTC Over The Counter services."
+    "description": "Payment Without Borders - A decentralised protocol for cross border payments and credit scoring. Empowered by Stellar and Ethereum.",
+    "is_contract": true,
+    "is_erc20": true
   },
   {
     "deleted": false,
@@ -1356,15 +1270,14 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x43a8ece49718e22d21077000768aff91849bceff",
     "name": "Cream.Finance: CREAM/WETH Pool",
     "source": "Etherscan",
-    "decimals": 0
+    "is_contract": true
   },
   {
     "deleted": false,
     "tags": "80-Malicious:DaoDrain",
     "address": "0x440c59b325d2997a134c2c7c60a8c61611212bad",
     "name": "Dao Drain 041",
-    "source": "GethSource Ether Camp",
-    "decimals": 0
+    "source": "GethSource Ether Camp"
   },
   {
     "deleted": false,
@@ -1372,19 +1285,11 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x44197a4c44d6a059297caf6be4f7e172bd56caaf",
     "name": "ELTCOIN",
     "symbol": "ELTCOIN",
-    "source": "On Chain",
+    "source": "On chain",
     "decimals": 8,
-    "description": "Ethereum Limited Total Coin"
-  },
-  {
-    "deleted": false,
-    "tags": "50-Tokens",
-    "address": "0x44449fa4d607f807d1ed4a69ad942971728391c8",
-    "name": "XMED Chain Token",
-    "symbol": "XMCT",
-    "source": "Etherscan.io",
-    "decimals": 0,
-    "description": "Connecting global medical data and find your ideal cross-border medical solution"
+    "description": "Ethereum Limited Total Coin",
+    "is_contract": true,
+    "is_erc20": true
   },
   {
     "deleted": false,
@@ -1392,15 +1297,7 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x445b774c012c5418d6d885f6cbfeb049a7fe6558",
     "name": "Everest",
     "source": "EtherScan.io",
-    "decimals": 0
-  },
-  {
-    "deleted": false,
-    "tags": "55-Defi",
-    "address": "0x44fbebd2f576670a6c33f6fc0b00aa8c5753b322",
-    "name": "Cream.Finance: crUSDC Token",
-    "source": "Etherscan",
-    "decimals": 0
+    "is_contract": true
   },
   {
     "deleted": false,
@@ -1408,17 +1305,18 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x45e42d659d9f9466cd5df622506033145a9b89bc",
     "name": "Nexium",
     "symbol": "NxC",
-    "source": "On Chain",
+    "source": "On chain",
     "decimals": 3,
-    "description": "The Economy of Beyond The Void is based on the Ethereum Blockchain, which can be used with tokens called Nexium."
+    "description": "The Economy of Beyond The Void is based on the Ethereum Blockchain, which can be used with tokens called Nexium.",
+    "is_contract": true,
+    "is_erc20": true
   },
   {
     "deleted": false,
     "tags": "80-Malicious:DaoDrain",
     "address": "0x4613f3bca5c44ea06337a9e439fbc6d42e501d0a",
     "name": "Dao Drain 109 DAO_Hell_007",
-    "source": "GethSource Ether Camp",
-    "decimals": 0
+    "source": "GethSource Ether Camp"
   },
   {
     "deleted": false,
@@ -1428,7 +1326,16 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "ATN",
     "source": "On Chain",
     "decimals": 18,
-    "description": "ATN is a global artificial intelligence API marketplace where developers, technology suppliers and buyers come together to access and develop new and innovative forms of A.I. technology."
+    "description": "ATN is a global artificial intelligence API marketplace where developers, technology suppliers and buyers come together to access and develop new and innovative forms of A.I. technology.",
+    "is_contract": true
+  },
+  {
+    "deleted": false,
+    "tags": "55-Defi",
+    "address": "0x4720515963a9d40ca10b1ade806c1291e6c9a86d",
+    "name": "StrategyUSDC3pool",
+    "source": "Etherscan",
+    "is_contract": true
   },
   {
     "deleted": false,
@@ -1436,17 +1343,14 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x47ce0c6ed5b0ce3d3a51fdb1c52dc66a7c3c2936",
     "name": "Tornado.Cash 1 ETH",
     "source": "Etherscan",
-    "decimals": 0
+    "is_contract": true
   },
   {
     "deleted": false,
-    "tags": "50-Tokens",
-    "address": "0x47d1a59cbdd19aee060c859c0009277e245328ae",
-    "name": "Sonder Token",
-    "symbol": "SNR",
-    "source": "Etherscan.io",
-    "decimals": 0,
-    "description": "Overcome the barriers to integration of blockchain-technologies into e-commerce market."
+    "tags": "55-Defi",
+    "address": "0x48f2bd7513da5bb9f7bfd54ea37c41650fd5f3a3",
+    "name": "Yearn: Signer Devops199fan",
+    "source": "Etherscan"
   },
   {
     "deleted": false,
@@ -1454,9 +1358,11 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x48ff53777f747cfb694101222a944de070c15d36",
     "name": "Ether Kingdoms Token",
     "symbol": "IMP",
-    "source": "On Chain",
+    "source": "On chain",
     "decimals": 7,
-    "description": "Ether Kingdoms is a new crypto-game with own ERC20 token, IMP. Key features: up to 365% annual POS reward, no ICO, fair Airdrop distribution only, already tradable on several exchanges."
+    "description": "Ether Kingdoms is a new crypto-game with own ERC20 token, IMP. Key features: up to 365% annual POS reward, no ICO, fair Airdrop distribution only, already tradable on several exchanges.",
+    "is_contract": true,
+    "is_erc20": true
   },
   {
     "deleted": false,
@@ -1464,7 +1370,7 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x4936790a58f5ae1c06210cba4eb1024fd7d535ac",
     "name": "Katerium Airdrop",
     "source": "Etherscan",
-    "decimals": 0
+    "is_contract": true
   },
   {
     "deleted": false,
@@ -1472,15 +1378,7 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x4976fb03c32e5b8cfe2b6ccb31c09ba78ebaba41",
     "name": "ENS: Public Resolver 2",
     "source": "Etherscan",
-    "decimals": 0
-  },
-  {
-    "deleted": false,
-    "tags": "55-Defi",
-    "address": "0x49849c98ae39fff122806c06791fa73784fb3675",
-    "name": "Curve.fi: renCrv Token",
-    "source": "Etherscan",
-    "decimals": 0
+    "is_contract": true
   },
   {
     "deleted": false,
@@ -1488,9 +1386,11 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x499a6b77bc25c26bcf8265e2102b1b3dd1617024",
     "name": "Bitether",
     "symbol": "BTR",
-    "source": "On Chain",
+    "source": "On chain",
     "decimals": 18,
-    "description": "Project based on online and offline shopping market all across the globe."
+    "description": "Project based on online and offline shopping market all across the globe.",
+    "is_contract": true,
+    "is_erc20": true
   },
   {
     "deleted": false,
@@ -1499,15 +1399,18 @@ ethNames Ether --expand --verbose --fmt json
     "name": "Uniswap: KNC",
     "symbol": "KNC",
     "source": "Etherscan",
-    "decimals": 0
+    "is_contract": true
   },
   {
     "deleted": false,
     "tags": "35-Pool Together",
     "address": "0x49d716dfe60b37379010a75329ae09428f17118d",
-    "name": "Pool Dai Token plDai RecipientWhitelistPoolToken v0.2.12",
-    "source": "Etherscan",
-    "decimals": 0
+    "name": "Pool Dai",
+    "symbol": "plDai",
+    "source": "On chain",
+    "decimals": 18,
+    "is_contract": true,
+    "is_erc20": true
   },
   {
     "deleted": false,
@@ -1515,7 +1418,7 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x4aa42145aa6ebf72e164c9bbc74fbd3788045016",
     "name": "POA Network: DAI-XDAI Bridge",
     "source": "Etherscan.io",
-    "decimals": 0
+    "is_contract": true
   },
   {
     "deleted": false,
@@ -1523,7 +1426,7 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x4ae0ede482f825fb9cccce8f0fe089f0379eaa2a",
     "name": "MCH: Gum Gateway 1",
     "source": "Etherscan",
-    "decimals": 0
+    "is_contract": true
   },
   {
     "deleted": false,
@@ -1531,24 +1434,26 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x4d07af703c163540c59763ff404710204334af81",
     "name": "Grant 590 Gwei.cz CZ/SK DeFi/Ethereum Community",
     "source": "https://gitcoin.co/grants/590/gweicz-czsk-defiethereum-community",
-    "decimals": 0,
-    "description": "https://gwei.cz"
+    "description": "https://gwei.cz",
+    "is_contract": true
   },
   {
     "deleted": false,
     "tags": "30-Contracts",
     "address": "0x4d953115678b15ce0b0396bcf95db68003f86fb5",
     "name": "Gnosis Safe: Relay service - Transactions",
-    "source": "EtherScan.io",
-    "decimals": 0
+    "source": "EtherScan.io"
   },
   {
     "deleted": false,
     "tags": "36-Compound",
     "address": "0x4ddc2d193948926d02f9b1fe9e1daa0718270ed5",
-    "name": "Compound: cETH",
-    "source": "Etherscan",
-    "decimals": 0
+    "name": "Compound Ether",
+    "symbol": "cETH",
+    "source": "On chain",
+    "decimals": 8,
+    "is_contract": true,
+    "is_erc20": true
   },
   {
     "deleted": false,
@@ -1556,17 +1461,11 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x4e005a760e00e17c4912a8070eec047cfecbabbb",
     "name": "NEXT.exchange",
     "symbol": "NEXT",
-    "source": "Etherscan.io",
-    "decimals": 0,
-    "description": "A hybrid exchange registered as an N. V. Public company in the Netherlands and provides fiat pairs to all altcoins on its platform"
-  },
-  {
-    "deleted": false,
-    "tags": "55-Defi",
-    "address": "0x4ee15f44c6f0d8d1136c83efd2e8e4ac768954c6",
-    "name": "Cream.Finance: crYUSD Token",
-    "source": "Etherscan",
-    "decimals": 0
+    "source": "On chain",
+    "decimals": 18,
+    "description": "A hybrid exchange registered as an N. V. Public company in the Netherlands and provides fiat pairs to all altcoins on its platform",
+    "is_contract": true,
+    "is_erc20": true
   },
   {
     "deleted": false,
@@ -1574,7 +1473,7 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x4f57e1f2020c35cd2fb45cf53cfeb6ff2e796180",
     "name": "Set: Rebalancing Set Exchange Issuance Module V2",
     "source": "Etherscan",
-    "decimals": 0
+    "is_contract": true
   },
   {
     "deleted": false,
@@ -1582,15 +1481,15 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x4fc604536134dc64718800361ecbca0df6cbfe08",
     "name": "Pool Together Pool 2",
     "source": "Etherscan",
-    "decimals": 0
+    "is_contract": true
   },
   {
     "deleted": false,
     "tags": "55-Defi",
-    "address": "0x4fd2d9d6ef05e13bf0b167509151a4ec3d4d4b93",
-    "name": "Cream.Finance: CREAM/USDC",
+    "address": "0x4feeaeced575239b46d70b50e13532ecb62e4ea8",
+    "name": "Yearn: StrategyCurveSBTC",
     "source": "Etherscan",
-    "decimals": 0
+    "is_contract": true
   },
   {
     "deleted": false,
@@ -1598,25 +1497,18 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x501262281b2ba043e2fbf14904980689cddb0c78",
     "name": "Mithril Ore",
     "symbol": "MORE",
-    "source": "On Chain",
+    "source": "On chain",
     "decimals": 2,
-    "description": "Mithril Ore is a Casper Ethereum Staking Pool. Participation in Casper may be limited due to complexity, network-congestion, and/or lack of funds. This token allows participation by resolving these variables."
+    "description": "Mithril Ore is a Casper Ethereum Staking Pool. Participation in Casper may be limited due to complexity, network-congestion, and/or lack of funds. This token allows participation by resolving these variables.",
+    "is_contract": true,
+    "is_erc20": true
   },
   {
     "deleted": false,
     "tags": "75-Early Actors",
     "address": "0x5088d623ba0fcf0131e0897a91734a4d83596aa0",
     "name": "MinerBlk3",
-    "source": "Etherscan",
-    "decimals": 0
-  },
-  {
-    "deleted": false,
-    "tags": "55-Defi",
-    "address": "0x514906fc121c7878424a5c928cad1852cc545892",
-    "name": "Uniswap V2: FARM-USDC",
-    "source": "Etherscan",
-    "decimals": 0
+    "source": "Etherscan"
   },
   {
     "deleted": false,
@@ -1624,23 +1516,21 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x519b70055af55a007110b4ff99b0ea33071c720a",
     "name": "dxDAO",
     "source": "Etherscan",
-    "decimals": 0
+    "is_contract": true
   },
   {
     "deleted": false,
     "tags": "80-Malicious:DaoDrain",
     "address": "0x51e0ddd9998364a2eb38588679f0d2c42653e4a6",
     "name": "Dao Drain 021",
-    "source": "GethSource Ether Camp",
-    "decimals": 0
+    "source": "GethSource Ether Camp"
   },
   {
     "deleted": false,
     "tags": "60-Airdrops",
     "address": "0x52140ae1c6abbcdbefd566c346d2cd751c162921",
     "name": "AGLD Airdrop Sender 2",
-    "source": "Etherscan",
-    "decimals": 0
+    "source": "Etherscan"
   },
   {
     "deleted": false,
@@ -1648,15 +1538,22 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x521d32f3d23f1fc82b1dbe306edc3ef668e5d973",
     "name": "Clovers Network Related",
     "source": "Etherscan",
-    "decimals": 0
+    "is_contract": true
   },
   {
     "deleted": false,
     "tags": "80-Malicious:DaoDrain",
     "address": "0x52c5317c848ba20c7504cb2c8052abd1fde29d03",
     "name": "Dao Drain 061",
-    "source": "GethSource Ether Camp",
-    "decimals": 0
+    "source": "GethSource Ether Camp"
+  },
+  {
+    "deleted": false,
+    "tags": "55-Defi",
+    "address": "0x530da5aef3c8f9ccbc75c97c182d6ee2284b643f",
+    "name": "Yearn: StrategyCurveCompoundVoterProxy",
+    "source": "Etherscan",
+    "is_contract": true
   },
   {
     "deleted": false,
@@ -1664,7 +1561,7 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x5346d0f80e2816fad329f2c140c870ffc3c3e2ef",
     "name": "EtherRouter: Colony Network",
     "source": "EtherScan.io",
-    "decimals": 0
+    "is_contract": true
   },
   {
     "deleted": false,
@@ -1672,17 +1569,18 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x539efe69bcdd21a83efd9122571a64cc25e0282b",
     "name": "Ethereum Blue",
     "symbol": "BLUE",
-    "source": "On Chain",
+    "source": "On chain",
     "decimals": 8,
-    "description": "BLUE is anERC20 token built from the ground-up to facilitate payments and transfers without sacrificing your security."
+    "description": "BLUE is anERC20 token built from the ground-up to facilitate payments and transfers without sacrificing your security.",
+    "is_contract": true,
+    "is_erc20": true
   },
   {
     "deleted": false,
     "tags": "80-Malicious:DaoDrain",
     "address": "0x5524c55fb03cf21f549444ccbecb664d0acad706",
     "name": "Dao Drain 093",
-    "source": "GethSource Ether Camp",
-    "decimals": 0
+    "source": "GethSource Ether Camp"
   },
   {
     "deleted": false,
@@ -1690,9 +1588,11 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x56b6431f45d08eed55f34371386326c739eacbcc",
     "name": "Ethereum Meta",
     "symbol": "ETHM",
-    "source": "On Chain",
+    "source": "On chain",
     "decimals": 18,
-    "description": "Ethereum Meta addresses the lack of privacy in Ethereum."
+    "description": "Ethereum Meta addresses the lack of privacy in Ethereum.",
+    "is_contract": true,
+    "is_erc20": true
   },
   {
     "deleted": false,
@@ -1700,8 +1600,7 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x5717d19616fab9079cf2bfce7d94126bca3ae536",
     "name": "BerryXToken Airdrop Sender",
     "symbol": "BRX",
-    "source": "Etherscan",
-    "decimals": 0
+    "source": "Etherscan"
   },
   {
     "deleted": false,
@@ -1709,7 +1608,7 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x5789e2b5460cae9329d93a78511e2ac49f98a1f6",
     "name": "GU: Legendary Pack",
     "source": "Etherscan",
-    "decimals": 0
+    "is_contract": true
   },
   {
     "deleted": false,
@@ -1718,8 +1617,8 @@ ethNames Ether --expand --verbose --fmt json
     "name": "Synth sUSD",
     "symbol": "sUSD",
     "source": "Etherscan.io",
-    "decimals": 0,
-    "description": "sUSD is part of the Synethix network."
+    "description": "sUSD is part of the Synethix network.",
+    "is_contract": true
   },
   {
     "deleted": false,
@@ -1727,7 +1626,7 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85",
     "name": "ENS: Base Registrar Implementation",
     "source": "Etherscan",
-    "decimals": 0
+    "is_contract": true
   },
   {
     "deleted": false,
@@ -1735,7 +1634,7 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x5aad137d8f7d2dc6e1b2548c059b1483360bcc6a",
     "name": "BrightID Aragon Org",
     "source": "Etherscan",
-    "decimals": 0
+    "is_contract": true
   },
   {
     "deleted": false,
@@ -1743,9 +1642,131 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x5adc961d6ac3f7062d2ea45fefb8d8167d44b190",
     "name": "Dether",
     "symbol": "DTH",
-    "source": "On Chain",
+    "source": "On chain",
     "decimals": 18,
-    "description": "A peer-to-peer ecosystem of crypto buyers, sellers and physical shops."
+    "description": "A peer-to-peer ecosystem of crypto buyers, sellers and physical shops.",
+    "is_contract": true,
+    "is_erc20": true
+  },
+  {
+    "deleted": false,
+    "tags": "31-Gitcoin Grants:Grant",
+    "address": "0x5b92bd6c37a1958f95ea1e56b6121a89314cfb66",
+    "name": "Grant 337 CREAM: Confidential Reliable Ethereum Anonymous Mixer",
+    "source": "https://gitcoin.co/grants/337/cream-confidential-reliable-ethereum-anonymous-mix",
+    "description": "https://github.com/couger-inc/cream"
+  },
+  {
+    "deleted": false,
+    "tags": "50-Tokens",
+    "address": "0x5c543e7ae0a1104f78406c340e9c64fd9fce5170",
+    "name": "vSlice",
+    "symbol": "VSL",
+    "source": "Etherscan.io",
+    "description": "An Ethereum Gaming Platform Token",
+    "is_contract": true
+  },
+  {
+    "deleted": false,
+    "tags": "30-Contracts",
+    "address": "0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f",
+    "name": "Uniswap V2: Factory Contract",
+    "source": "EtherScan.io",
+    "is_contract": true
+  },
+  {
+    "deleted": false,
+    "tags": "80-Malicious:DaoDrain",
+    "address": "0x5c6e67ccd5849c0d29219c4f95f1a7a93b3f5dc5",
+    "name": "Dao Drain 013",
+    "source": "GethSource Ether Camp"
+  },
+  {
+    "deleted": false,
+    "tags": "80-Malicious:DaoDrain",
+    "address": "0x5c8536898fbb74fc7445814902fd08422eac56d0",
+    "name": "Dao Drain 009",
+    "source": "GethSource Ether Camp"
+  },
+  {
+    "deleted": false,
+    "tags": "80-Malicious:DaoDrain",
+    "address": "0x5d2b2e6fcbe3b11d26b525e085ff818dae332479",
+    "name": "Dao Drain 063",
+    "source": "GethSource Ether Camp"
+  },
+  {
+    "deleted": false,
+    "tags": "36-Chainlink",
+    "address": "0x5d4bb541eed49d0290730b4ab332aa46bd27d888",
+    "name": "Chainlink BUSD-ETH Aggregator",
+    "source": "EtherScan.io",
+    "is_contract": true
+  },
+  {
+    "deleted": false,
+    "tags": "60-Airdrops",
+    "address": "0x5e58caeb958e67c89adc9e5e6bcaa79795e8d3f1",
+    "name": "BasicCoin Airdrop Sender",
+    "source": "Etherscan"
+  },
+  {
+    "deleted": false,
+    "tags": "50-Tokens:ERC20",
+    "address": "0x5f53f7a8075614b699baad0bc2c899f4bad8fbbf",
+    "name": "Rebellious",
+    "symbol": "REBL",
+    "source": "On chain",
+    "decimals": 18,
+    "description": "Rebellious is a company based in the Netherlands. Using their unique approach, they aim to build a strong currency powered by an even stronger community that‚Äö√Ñ√¥s motivated by growth rather than greed.",
+    "is_contract": true,
+    "is_erc20": true
+  },
+  {
+    "deleted": false,
+    "tags": "34-ENS",
+    "address": "0x6090a6e47849629b7245dfa1ca21d94cd15878ef",
+    "name": "ENS: Old Registrar",
+    "source": "Etherscan",
+    "is_contract": true
+  },
+  {
+    "deleted": false,
+    "tags": "34-ENS",
+    "address": "0x6109dd117aa5486605fc85e040ab00163a75c662",
+    "name": "ENS: Registrar Migration",
+    "source": "Etherscan",
+    "is_contract": true
+  },
+  {
+    "deleted": false,
+    "tags": "80-Malicious:DaoDrain",
+    "address": "0x6131c42fa982e56929107413a9d526fd99405560",
+    "name": "Dao Drain 049",
+    "source": "GethSource Ether Camp"
+  },
+  {
+    "deleted": false,
+    "tags": "31-Gitcoin Grants:Core",
+    "address": "0x6239ff1040e412491557a7a02b2cbcc5ae85dc8f",
+    "name": "Kudos Sender",
+    "source": "Etherscan"
+  },
+  {
+    "deleted": false,
+    "tags": "40-Exchanges",
+    "address": "0x6264c8d158f32bd8c01b8a0102b57dfcfcfb8561",
+    "name": "Uniswap: UMA",
+    "symbol": "UMA",
+    "source": "Etherscan",
+    "is_contract": true
+  },
+  {
+    "deleted": false,
+    "tags": "60-Airdrops",
+    "address": "0x630d5d181d64a8cc97fd993d422795e2a704cffb",
+    "name": "LPT Airdrop Sender 2",
+    "source": "Etherscan"
   }], "types": [
-{ "type": "CAccountName", "fields": [{ "name": "deleted", "type": "bool" }, { "name": "tags", "type": "text" }, { "name": "address", "type": "address" }, { "name": "name", "type": "text" }, { "name": "symbol", "type": "text" }, { "name": "source", "type": "text" }, { "name": "decimals", "type": "unumber" }, { "name": "description", "type": "text" }, { "name": "is_custom", "type": "bool" }, { "name": "is_prefund", "type": "bool" }] }
+{ "type": "CAccountName", "fields": [{ "name": "deleted", "type": "bool" }, { "name": "tags", "type": "text" }, { "name": "address", "type": "address" }, { "name": "name", "type": "text" }, { "name": "symbol", "type": "text" }, { "name": "source", "type": "text" }, { "name": "decimals", "type": "unumber" }, { "name": "description", "type": "text" }, { "name": "is_custom", "type": "bool" }, { "name": "is_prefund", "type": "bool" }, { "name": "is_contract", "type": "bool" }, { "name": "is_erc20", "type": "bool" }, { "name": "is_erc721", "type": "bool" }] }
 ] }

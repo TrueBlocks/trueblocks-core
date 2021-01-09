@@ -37,5 +37,5 @@ getTokenInfo 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29
     "symbol": "SWT",
     "decimals": 18
   }], "types": [
-{ "type": "CTokenBalanceRecord", "fields": [{ "name": "blockNumber", "type": "blocknum" }, { "name": "totalSupply", "type": "wei" }, { "name": "address", "type": "address" }, { "name": "name", "type": "text" }, { "name": "symbol", "type": "text" }, { "name": "decimals", "type": "unumber" }] }
+{ "type": "CTokenBalanceRecord", "fields": [{ "name": "blockNumber", "type": "blocknum" }, { "name": "totalSupply", "type": "wei" }, { "name": "address", "type": "address" }, { "name": "name", "type": "text" }, { "name": "symbol", "type": "text" }, { "name": "decimals", "type": "unumber" }, { "name": "is_contract", "type": "bool" }, { "name": "is_erc20", "type": "bool" }, { "name": "is_erc721", "type": "bool" }] }
 ] }

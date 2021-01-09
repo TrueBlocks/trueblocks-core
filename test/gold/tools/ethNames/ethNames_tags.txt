@@ -2,7 +2,6 @@ ethNames argc: 2 [1:--tags]
 ethNames --tags 
 tags
 
-20-Friends
 30-Contracts
 30-Contracts:Giveth
 30-Contracts:Kyber Network

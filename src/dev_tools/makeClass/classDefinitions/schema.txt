@@ -4,17 +4,17 @@ fields = string name|\
         string selector|\
         string type|\
         string unused (nowrite)|\
-        uint64 width|\
+        suint64 width|\
         bool editable|\
-        uint64 id|\
-        uint64 decimals|\
+        suint64 id|\
+        suint64 decimals|\
         bool isPill|\
         string align|\
         string cn|\
         bool download|\
         string chart|\
         bool searchable|\
-        uint64 detail|\
+        suint64 detail|\
         bool wide|\
         string underField|\
         string onDisplay|\

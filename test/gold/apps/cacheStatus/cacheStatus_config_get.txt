@@ -189,7 +189,7 @@ cacheStatus --get_config
           "keys": [
             {
               "name": "list",
-              "value": "[{\n                \"address\": \"0x0000100001000010000100001000010000100001\",\n                \"decimals\": 0,\n                \"name\": \"TestWallet1\",\n                \"tags\": \"81-Custom\"\n              }\n\n, {\n                \"address\": \"0x0000200002000020000200002000020000200002\",\n                \"decimals\": 0,\n                \"name\": \"TestWallet2\",\n                \"tags\": \"81-Custom\"\n              }\n\n]",
+              "value": "[{\n                \"address\": \"0x0000100001000010000100001000010000100001\",\n                \"name\": \"TestWallet1\",\n                \"tags\": \"81-Custom\"\n              }\n\n, {\n                \"address\": \"0x0000200002000020000200002000020000200002\",\n                \"name\": \"TestWallet2\",\n                \"tags\": \"81-Custom\"\n              }\n\n]",
               "type": "json array",
               "tip": "user specific list of names for addresses -- private data -- not shared"
             }

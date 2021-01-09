@@ -80,7 +80,7 @@ string_q CAccountName::getValueByName(const string_q& fieldName) const {
             break;
         case 'd':
             if (fieldName % "decimals") {
-                return uint_2_Str(decimals);
+                return decimals == 0 ? "" : uint_2_Str(decimals);
             }
             if (fieldName % "description") {
                 return description;
@@ -97,6 +97,9 @@ string_q CAccountName::getValueByName(const string_q& fieldName) const {
             }
             if (fieldName % "is_prefund") {
                 return bool_2_Str(is_prefund);
+            }
+            if (fieldName % "is_contract") {
+                return bool_2_Str(is_contract);
             }
             if (fieldName % "is_erc20") {
                 return bool_2_Str(is_erc20);
@@ -134,15 +137,12 @@ string_q CAccountName::getValueByName(const string_q& fieldName) const {
                 return source;
             }
             if (fieldName % "sizeInBytes") {
-                return uint_2_Str(sizeInBytes);
+                return sizeInBytes == 0 ? "" : uint_2_Str(sizeInBytes);
             }
             break;
         case 't':
             if (fieldName % "tags") {
                 return tags;
-            }
-            if (fieldName % "type") {
-                return type;
             }
             break;
         default:
@@ -200,6 +200,10 @@ bool CAccountName::setValueByName(const string_q& fieldNameIn, const string_q& f
                 is_prefund = str_2_Bool(fieldValue);
                 return true;
             }
+            if (fieldName % "is_contract") {
+                is_contract = str_2_Bool(fieldValue);
+                return true;
+            }
             if (fieldName % "is_erc20") {
                 is_erc20 = str_2_Bool(fieldValue);
                 return true;
@@ -254,10 +258,6 @@ bool CAccountName::setValueByName(const string_q& fieldNameIn, const string_q& f
                 tags = fieldValue;
                 return true;
             }
-            if (fieldName % "type") {
-                type = fieldValue;
-                return true;
-            }
             break;
         default:
             break;
@@ -293,9 +293,9 @@ bool CAccountName::Serialize(CArchive& archive) {
     archive >> description;
     archive >> is_custom;
     archive >> is_prefund;
+    archive >> is_contract;
     archive >> is_erc20;
     archive >> is_erc721;
-    archive >> type;
     // archive >> nAppearances;
     // archive >> lastExport;
     // archive >> firstAppearance;
@@ -322,9 +322,9 @@ bool CAccountName::SerializeC(CArchive& archive) const {
     archive << description;
     archive << is_custom;
     archive << is_prefund;
+    archive << is_contract;
     archive << is_erc20;
     archive << is_erc721;
-    archive << type;
     // archive << nAppearances;
     // archive << lastExport;
     // archive << firstAppearance;
@@ -372,13 +372,13 @@ void CAccountName::registerClass(void) {
     ADD_FIELD(CAccountName, "name", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CAccountName, "symbol", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CAccountName, "source", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CAccountName, "decimals", T_UNUMBER, ++fieldNum);
+    ADD_FIELD(CAccountName, "decimals", T_UNUMBER | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CAccountName, "description", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CAccountName, "is_custom", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CAccountName, "is_prefund", T_BOOL | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CAccountName, "is_contract", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CAccountName, "is_erc20", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CAccountName, "is_erc721", T_BOOL | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CAccountName, "type", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CAccountName, "nAppearances", T_BLOCKNUM, ++fieldNum);
     HIDE_FIELD(CAccountName, "nAppearances");
     ADD_FIELD(CAccountName, "lastExport", T_BLOCKNUM, ++fieldNum);
@@ -389,7 +389,7 @@ void CAccountName::registerClass(void) {
     HIDE_FIELD(CAccountName, "latestAppearance");
     ADD_FIELD(CAccountName, "path", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CAccountName, "path");
-    ADD_FIELD(CAccountName, "sizeInBytes", T_UNUMBER, ++fieldNum);
+    ADD_FIELD(CAccountName, "sizeInBytes", T_UNUMBER | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CAccountName, "sizeInBytes");
 
     // Hide our internal fields, user can turn them on if they like
@@ -496,17 +496,11 @@ const char* STR_DISPLAY_ACCOUNTNAME =
     "[{DELETED}]\t"
     "[{IS_CUSTOM}]\t"
     "[{IS_PREFUND}]\t"
+    "[{IS_CONTRACT}]\t"
     "[{IS_ERC20}]\t"
-    "[{IS_ERC721}]\t"
-    "[{TYPE}]";
+    "[{IS_ERC721}]";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-void CAccountName::finishClean(void) {
-    is_prefund = false;
-    is_erc20 = false;
-    is_erc721 = false;
-    type = false;
-}
 // EXISTING_CODE
 }  // namespace qblocks

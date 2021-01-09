@@ -54,7 +54,6 @@ class CTokenBalanceRecord : public CMonitor {
     DECLARE_NODE(CTokenBalanceRecord);
 
     // EXISTING_CODE
-    void loadAbiAndCache(const address_t& addr);
     // EXISTING_CODE
     bool operator==(const CTokenBalanceRecord& item) const;
     bool operator!=(const CTokenBalanceRecord& item) const {
@@ -174,8 +173,5 @@ extern const char* STR_DISPLAY_TOKENBALANCERECORD;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-extern const char* STR_DISPLAY_TOKENBALANCERECORD2;
-extern string_q getTokenBalanceOf(const CTokenBalanceRecord& token, const address_t& holder, blknum_t blockNum);
-extern string_q getTokenState(const string_q& what, const CTokenBalanceRecord& token, blknum_t blockNum);
 // EXISTING_CODE
 }  // namespace qblocks

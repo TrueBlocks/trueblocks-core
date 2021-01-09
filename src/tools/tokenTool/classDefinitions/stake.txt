@@ -1,0 +1,7 @@
+[settings]
+class     = CStake
+fields    = address address|uint64 lastPos = NOPOS|wei stake
+includes  = etherlib.h
+cIncs     =
+serialize = true
+disabled  = true

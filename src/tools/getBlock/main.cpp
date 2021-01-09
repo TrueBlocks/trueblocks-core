@@ -140,50 +140,6 @@ string_q doOneBlock(blknum_t num, COptions& opt) {
     return result;
 }
 
-//----------------------------------------------------------------
-void oneAppearance(const CAppearance& item, void* data) {
-    COptions* opt = reinterpret_cast<COptions*>(data);
-    bool isText = (expContext().exportFmt & (TXT1 | CSV1));
-    if (isText) {
-        cout << trim(item.Format(expContext().fmtMap["format"]), '\t') << endl;
-    } else {
-        if (!opt->first)
-            cout << ",";
-        cout << "  ";
-        indent();
-        item.toJson(cout);
-        unindent();
-        opt->first = false;
-    }
-}
-
-//----------------------------------------------------------------
-bool visitAddrs(const CAppearance& item, void* data) {
-    // We do not account for zero addresses or the addresses found in the zeroth trace since
-    // it's identical to the transaction itself
-    if (item.tc == 10 || isZeroAddr(item.addr))
-        return !shouldQuit();
-
-    COptions* opt = reinterpret_cast<COptions*>(data);
-    opt->nProcessed++;
-    if (opt->count) {
-        opt->addrCounter++;
-
-    } else {
-        oneAppearance(item, data);
-    }
-
-    return !shouldQuit();
-}
-
-//----------------------------------------------------------------
-// Return 'true' if we want the caller NOT to visit the traces of this transaction
-bool transFilter(const CTransaction* trans, void* data) {
-    if (!ddosRange(trans->blockNumber))
-        return false;
-    return (getTraceCount(trans->hash) > 250);
-}
-
 //------------------------------------------------------------
 bool visitBlock(uint64_t num, void* data) {
     COptions* opt = reinterpret_cast<COptions*>(data);
@@ -196,53 +152,7 @@ bool visitBlock(uint64_t num, void* data) {
     }
 
     if (!opt->filterType.empty()) {
-        CBlock block;
-        getBlock(block, num);
-
-        opt->addrCounter = 0;
-        if (opt->filterType == "uniq")
-            block.forEveryUniqueAppearanceInBlock(visitAddrs, transFilter, opt);
-        else if (opt->filterType == "uniq_tx")
-            block.forEveryUniqueAppearanceInBlockPerTx(visitAddrs, transFilter, opt);
-        else
-            block.forEveryAppearanceInBlock(visitAddrs, transFilter, opt);
-
-        if (opt->count) {
-            string_q fmt = expContext().fmtMap["format"];
-            fmt = substitute(fmt, "[{ADDR_COUNT}]", uint_2_Str(opt->addrCounter));
-            fmt = substitute(fmt, "[{FILTER_TYPE}]", opt->filterType);
-            if (verbose) {
-                fmt = substitute(fmt, "[{UNCLE_COUNT}]", uint_2_Str(getUncleCount(num)));
-                if (verbose > 2) {
-                    uint64_t cnt = 0;
-                    for (auto trans : block.transactions)
-                        cnt += getTraceCount(trans.hash);
-                    fmt = substitute(fmt, "[{TRACE_COUNT}]", uint_2_Str(cnt));
-                }
-            }
-            cout << block.Format(fmt);
-        } else if (!opt->nProcessed) {
-            if (num == 0) {
-                uint64_t cnt = 0;
-                for (auto prefund : opt->prefundWeiMap) {
-                    CAppearance item;
-                    item.bn = num;
-                    item.tx = cnt++;
-                    item.addr = prefund.first;
-                    item.reason = "genesis";
-                    oneAppearance(item, data);
-                }
-            } else {
-                // found no addresses -- i.e. early node software allowed misconfiguration of zero address miner
-                CAppearance item;
-                item.bn = num;
-                item.tx = 99999;
-                item.addr = "0x0000000000000000000000000000000000000000";
-                item.reason = "miner";
-                oneAppearance(item, data);
-            }
-        }
-        opt->first = false;
+        opt->handle_appearances(num, data);
 
     } else {
         cout << doOneBlock(num, *opt);

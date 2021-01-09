@@ -5,7 +5,7 @@
       "address": "0xcbcc0f036ed4788f63fc0fee32873d6a7487b908",
       "name": "Humaniq",
       "symbol": "HMQ",
-      "source": "On Chain",
+      "source": "On chain",
       "decimals": 8,
       "description": "Humaniq aims to be a simple and secure 4th generation mobile bank."
     }

@@ -15,7 +15,7 @@
  * Parts of this file were generated with makeClass. Edit only those parts of the code
  * outside of the BEG_CODE/END_CODE sections
  */
-#include "etherlib.h"
+#include "acctlib.h"
 
 // BEG_ERROR_DEFINES
 // END_ERROR_DEFINES
@@ -39,6 +39,9 @@ class COptions : public COptionsBase {
     bool tags;
     // END_CODE_DECLARE
 
+    blknum_t latestBlock;
+
+    CMonitor standards;
     CAccountNameMap items;
     CStringArray searches;
     string_q searchFields;
@@ -56,4 +59,6 @@ class COptions : public COptionsBase {
     void exportCollections(const CStringArray& terms);
     bool processEditCommand(CStringArray& terms, bool to_custom);
     bool handle_clean(void);
+    void finishClean(CAccountName& name);
+    bool cleanNames(const string_q& sourceIn, const string_q& destIn);
 };

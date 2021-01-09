@@ -4,7 +4,7 @@
     "address": "0xb64ef51c888972c908cfacf59b47c1afbc0ab8ac",
     "name": "StorjToken",
     "symbol": "STORJ",
-    "source": "On Chain",
+    "source": "On chain",
     "decimals": 8,
     "description": "Blockchain-based, end-to-end encrypted, distributed object storage, where only you have access to your data"
   }], "types": [

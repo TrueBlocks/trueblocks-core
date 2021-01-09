@@ -33,8 +33,6 @@ int main(int argc, const char* argv[]) {
             for (auto token : options.tokens) {
                 options.curToken.holder = holder;
                 options.curToken.address = token;
-                if (options.curToken.address != options.curToken.abi_spec.address)
-                    options.curToken.loadAbiAndCache(options.curToken.address);
                 options.blocks.forEveryBlockNumber(processPair, &options);
             }
         }
@@ -62,6 +60,7 @@ const vector<marker_t> bals = {{TOK_BALANCE, "balanceOf"}};
 bool processPair(uint64_t blockNum, void* data) {
     COptions* opt = reinterpret_cast<COptions*>(data);
     opt->curToken.blockNumber = blockNum;
+    opt->curToken.abi_spec = opt->standards.abi_spec;
     if ((opt->modeBits & TOK_TOTALSUPPLY) || !opt->getNamedAccount(opt->curToken, opt->curToken.address)) {
         for (auto marker : base)
             if (opt->modeBits & marker.bits)

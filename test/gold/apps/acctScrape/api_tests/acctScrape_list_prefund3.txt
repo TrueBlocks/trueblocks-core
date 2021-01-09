@@ -47,7 +47,10 @@
       "decimals": 0,
       "description": "",
       "is_custom": false,
-      "is_prefund": true
+      "is_prefund": true,
+      "is_contract": false,
+      "is_erc20": false,
+      "is_erc721": false
     }
   }
 }

@@ -7,7 +7,10 @@
       "address": "0xb9e7f8568e08d5659f5d29c4997173d84cdf2607",
       "name": "Swarm City Token",
       "symbol": "SWT",
-      "decimals": 18
+      "decimals": 18,
+      "is_contract": true,
+      "is_erc20": true,
+      "is_erc721": false
     }
   ],
   "types": [
@@ -41,6 +44,18 @@
         {
           "name": "decimals",
           "type": "unumber"
+        },
+        {
+          "name": "is_contract",
+          "type": "bool"
+        },
+        {
+          "name": "is_erc20",
+          "type": "bool"
+        },
+        {
+          "name": "is_erc721",
+          "type": "bool"
         }
       ]
     }

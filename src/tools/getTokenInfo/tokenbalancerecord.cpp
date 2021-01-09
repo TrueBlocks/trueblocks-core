@@ -339,36 +339,5 @@ const char* STR_DISPLAY_TOKENBALANCERECORD =
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-const char* STR_DISPLAY_TOKENBALANCERECORD2 =
-    "[{BLOCKNUMBER}]\t"
-    "[{HOLDER}]\t"
-    "[{ADDRESS}]\t"
-    "[{NAME}]\t"
-    "[{SYMBOL}]\t"
-    "[{DECIMALS}]\t"
-    "[{BALANCE}]";
-
-void CTokenBalanceRecord::loadAbiAndCache(const address_t& addr) {
-    CAbi unused;
-    CStringArray unused2;
-    ::loadAbiAndCache(unused, addr, false, unused2);
-    abi_spec.loadAbiByAddress(addr);
-}
-
-//-------------------------------------------------------------------------
-string_q getTokenBalanceOf(const CTokenBalanceRecord& token, const address_t& holder, blknum_t blockNum) {
-    return doEthCall(token.address, "0x70a08231", padLeft(extract(holder, 2), 64, '0'), blockNum, token.abi_spec);
-}
-
-//-------------------------------------------------------------------------
-string_q getTokenState(const string_q& what, const CTokenBalanceRecord& token, blknum_t blockNum) {
-    map<string_q, string_q> sigMap;
-    sigMap["totalSupply"] = "0x18160ddd";
-    sigMap["decimals"] = "0x313ce567";
-    sigMap["symbol"] = "0x95d89b41";
-    sigMap["name"] = "0x06fdde03";
-
-    return doEthCall(token.address, sigMap[what], "", blockNum, token.abi_spec);
-}
 // EXISTING_CODE
 }  // namespace qblocks

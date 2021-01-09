@@ -18,8 +18,7 @@ curDollars          	1012	1	545259565	T_ETHER TS_NUMERAL TS_BIGNUM
 {
   "curBalance": 0,
   "enabled": true,
-  "address": "0x0",
-  "decimals": 0
+  "address": "0x0"
 }
 
 --------------------------------------------------------------------------------
@@ -38,8 +37,7 @@ fm_mode             	1010	1	8388633	T_NUMBER TS_NUMERAL
 curEther            	1011	1	545259565	T_ETHER TS_NUMERAL TS_BIGNUM
 curDollars          	1012	1	545259565	T_ETHER TS_NUMERAL TS_BIGNUM
 {
-  "address": "0x0",
-  "decimals": 0
+  "address": "0x0"
 }
 
 --------------------------------------------------------------------------------
@@ -67,7 +65,6 @@ curDollars          	1012	0	545259565	T_ETHER TS_NUMERAL TS_BIGNUM
   "fm_mode": 0,
   "curEther": "0.000000000000000000",
   "curDollars": not-implemented,
-  "address": "0x0",
-  "decimals": 0
+  "address": "0x0"
 }
 

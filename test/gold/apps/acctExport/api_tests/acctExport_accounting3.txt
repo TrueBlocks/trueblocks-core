@@ -11981,11 +11981,14 @@
       "0x7d655c57f71464b6f83811c55d84009cd9f5221c": {
         "tags": "31-Gitcoin Grants:Core",
         "name": "Gitcoin Round 6",
+        "is_contract": true,
         "count": 17
       },
       "0x6b175474e89094c44da98b954eedeac495271d0f": {
         "tags": "30-Contracts",
         "name": "Dai Stablecoin",
+        "is_contract": true,
+        "is_erc20": true,
         "count": 4
       }
     },
@@ -12004,7 +12007,10 @@
       "decimals": 0,
       "description": "",
       "is_custom": true,
-      "is_prefund": false
+      "is_prefund": false,
+      "is_contract": false,
+      "is_erc20": false,
+      "is_erc721": false
     }
   }
 }

@@ -29,6 +29,9 @@
               "description": "",
               "is_custom": false,
               "is_prefund": false,
+              "is_contract": false,
+              "is_erc20": false,
+              "is_erc721": false,
               "nAppearances": 2020101,
               "firstAppearance": 0,
               "latestAppearance": 0,
@@ -125,6 +128,18 @@
         },
         {
           "name": "is_prefund",
+          "type": "bool"
+        },
+        {
+          "name": "is_contract",
+          "type": "bool"
+        },
+        {
+          "name": "is_erc20",
+          "type": "bool"
+        },
+        {
+          "name": "is_erc721",
           "type": "bool"
         },
         {

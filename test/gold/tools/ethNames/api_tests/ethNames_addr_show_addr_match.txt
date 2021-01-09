@@ -54,7 +54,7 @@
     },
     {
       "address": "0xb679afd97bcbc7448c1b327795c3ef226b39f0e9",
-      "decimals": 0
+      "decimals": 6
     },
     {
       "address": "0xb682fd6a16c409594bc49c7874e4ca383033d7a5",
