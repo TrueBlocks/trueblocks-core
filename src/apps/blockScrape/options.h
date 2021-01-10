@@ -57,5 +57,4 @@ class COptions : public COptionsBase {
 
 //-----------------------------------------------------------------------------
 extern bool visitCopyRipeToStage(const string_q& path, void* data);
-extern string_q handle_reporting(void);
 extern bool appendFile(const string_q& toFile, const string_q& fromFile);

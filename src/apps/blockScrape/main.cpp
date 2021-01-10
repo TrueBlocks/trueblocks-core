@@ -20,8 +20,6 @@ int main(int argc, const char* argv[]) {
             return 0;
     }
 
-    cerr << handle_reporting();
-
     // FIX_THIS_CODE
     freshenTimestamps(getLatestBlock_cache_ripe());
     LOG_INFO("Run complete.");
