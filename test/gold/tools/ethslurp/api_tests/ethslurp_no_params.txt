@@ -1,5 +1,5 @@
 {
   "errors": [
-    "ethSlurp - Not enough arguments presented."
+    "ethslurp - Not enough arguments presented."
   ]
 }

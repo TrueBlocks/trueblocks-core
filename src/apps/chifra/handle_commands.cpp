@@ -33,7 +33,7 @@ bool COptions::handle_commands(void) {
 }
 
 //------------------------------------------------------------------------------------------------
-map<string, string> cmdMap = {{"slurp", "ethSlurp"},        {"collections", "ethNames --collections"},
+map<string, string> cmdMap = {{"slurp", "ethslurp"},        {"collections", "ethNames --collections"},
                               {"names", "ethNames"},        {"tags", "ethNames --tags"},
                               {"abis", "grabABI"},          {"blocks", "getBlock"},
                               {"transactions", "getTrans"}, {"receipts", "getReceipt"},
