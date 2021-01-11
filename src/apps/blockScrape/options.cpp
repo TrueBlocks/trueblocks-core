@@ -266,14 +266,14 @@ COptions::~COptions(void) {
 //--------------------------------------------------------------------------------
 bool isAlreadyRunning(const string_q& progName) {
     string_q pList = listProcesses(progName);
-    cout << "pList: " << pList << endl;
-    replaceAll(pList, "`", "");        // remove separators if present
-    cout << "pList: " << pList << endl;
+    cout << "pList: " << pList << endl << string_q(80, '-') << endl;
+    replaceAll(pList, "`", "");  // remove separators if present
+    cout << "pList: " << pList << endl << string_q(80, '-') << endl;
     replaceAll(pList, progName, "`");  // change program name to separator
-    cout << "pList: " << pList << endl;
+    cout << "pList: " << pList << endl << string_q(80, '-') << endl;
     replace(pList, "`", "");  // remove ourselves
-    cout << "pList: " << pList << endl;
+    cout << "pList: " << pList << endl << string_q(80, '-') << endl;
     size_t count = countOf(pList, '`');
-    cout << "count: " << count << endl << endl;
+    cout << "count: " << count << endl << string_q(80, '-') << endl << endl;
     return count > 0;
 }

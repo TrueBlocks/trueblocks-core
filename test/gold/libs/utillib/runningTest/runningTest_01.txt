@@ -1,17 +1,74 @@
 runningTest argc: 2 [1:0] 
 runningTest 0 
-pgrep -i acctScrape: 
-pgrep -f acctScrape: 
-pgrep -l acctScrape: 
-pgrep -fl acctScrape: 
-pgrep -fl acctscrape: 
-pgrep -fil acctscrape: 
-ps -ef | grep -i acctscrape | grep -v grep: 
+pgrep -i notRunning: [
 
-pgrep -i runningTest: 
-pgrep -f runningTest: 
-pgrep -l runningTest: 
-pgrep -fl runningTest: 
-pgrep -fl runningtest: 
-pgrep -fil runningtest: 
-ps -ef | grep -i runningtest | grep -v grep:   501 49735 49734   0 10:13PM ttys010    0:00.02 runningTest 0
+]--------------------------------------------------------------------------------
+pgrep -f notRunning: [
+12541
+]--------------------------------------------------------------------------------
+pgrep -l notRunning: [
+
+]--------------------------------------------------------------------------------
+pgrep -fl notRunning: [
+12545 sh
+]--------------------------------------------------------------------------------
+pgrep -fl notrunning: [
+12547 sh
+]--------------------------------------------------------------------------------
+pgrep -fli notrunning: [
+12549 sh
+]--------------------------------------------------------------------------------
+pgrep -a notRunning: [
+
+]--------------------------------------------------------------------------------
+pgrep -fla notRunning: [
+12553 sh -c pgrep -fla notRunning >/tmp/qb_20210111174526
+]--------------------------------------------------------------------------------
+pgrep -fla notrunning: [
+12555 sh -c pgrep -fla notrunning >/tmp/qb_20210111174526
+]--------------------------------------------------------------------------------
+pgrep -flia notrunning: [
+12557 sh -c pgrep -flia notrunning >/tmp/qb_20210111174526
+]--------------------------------------------------------------------------------
+
+pgrep -i runningTest: [
+12537
+]--------------------------------------------------------------------------------
+pgrep -f runningTest: [
+12536
+12537
+12561
+]--------------------------------------------------------------------------------
+pgrep -l runningTest: [
+12537 runningTest
+]--------------------------------------------------------------------------------
+pgrep -fl runningTest: [
+12536 sh
+12537 runningTest
+12565 sh
+]--------------------------------------------------------------------------------
+pgrep -fl runningtest: [
+12567 sh
+]--------------------------------------------------------------------------------
+pgrep -fli runningtest: [
+12536 sh
+12537 runningTest
+12569 sh
+]--------------------------------------------------------------------------------
+pgrep -a runningTest: [
+12537 runningTest 0
+]--------------------------------------------------------------------------------
+pgrep -fla runningTest: [
+12536 sh -c cd /home/jrush/Development/trueblocks-core/test/gold/libs/utillib/runningTest/ ; env  TEST_MODE=true NO_COLOR=true REDIR_CERR=true runningTest 0 >/home/jrush/Development/trueblocks-core/test/working/libs/utillib/runningTest/runningTest_01.txt 2>&1
+12537 runningTest 0
+12573 sh -c pgrep -fla runningTest >/tmp/qb_20210111174526
+]--------------------------------------------------------------------------------
+pgrep -fla runningtest: [
+12575 sh -c pgrep -fla runningtest >/tmp/qb_20210111174526
+]--------------------------------------------------------------------------------
+pgrep -flia runningtest: [
+12536 sh -c cd /home/jrush/Development/trueblocks-core/test/gold/libs/utillib/runningTest/ ; env  TEST_MODE=true NO_COLOR=true REDIR_CERR=true runningTest 0 >/home/jrush/Development/trueblocks-core/test/working/libs/utillib/runningTest/runningTest_01.txt 2>&1
+12537 runningTest 0
+12577 sh -c pgrep -flia runningtest >/tmp/qb_20210111174526
+]--------------------------------------------------------------------------------
+

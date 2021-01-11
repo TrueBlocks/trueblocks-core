@@ -14,6 +14,37 @@
 #include "options.h"
 
 //--------------------------------------------------------------
+void doOneTest(const string_q& cmd, const string_q& prog) {
+    ostringstream os;
+    os << cmd << " " << prog;
+    cout << cmd << " " << prog << ": [" << endl
+         << doCommand(os.str().c_str()) << endl
+         << "]" << string_q(80, '-') << endl;
+}
+
+//--------------------------------------------------------------
+void doTest(const string_q& prog) {
+    doOneTest("pgrep -i", prog);
+    doOneTest("pgrep -f", prog);
+    doOneTest("pgrep -l", prog);
+    doOneTest("pgrep -fl", prog);
+    doOneTest("pgrep -fl", toLower(prog));
+    doOneTest("pgrep -fli", toLower(prog));
+    doOneTest("pgrep -a", prog);
+    doOneTest("pgrep -fla", prog);
+    doOneTest("pgrep -fla", toLower(prog));
+    doOneTest("pgrep -flia", toLower(prog));
+    //    cout << "pgrep -i " << prog << ": " << doCommand("pgrep -i " + prog) << endl;
+    //    cout << "pgrep -f " << prog << ": " << doCommand("pgrep -f " + prog) << endl;
+    //    cout << "pgrep -l " << prog << ": " << doCommand("pgrep -l " + prog) << endl;
+    //    cout << "pgrep -fl " << prog << ": " << doCommand("pgrep -fl " + prog) << endl;
+    //    cout << "pgrep -fl " << toLower(prog) << ": " << doCommand("pgrep -fl " + toLower(prog)) << endl;
+    //    cout << "pgrep -fil " << toLower(prog) << ": " << doCommand("pgrep -fli " + toLower(prog)) << endl;
+    //    cout << "ps -ef | grep -i " << toLower(prog) << " | grep -v grep: " << doCommand("ps -ef | grep -i " +
+    //    toLower(prog) + " | grep -v grep | grep -v 'sh -c'") << endl;
+}
+
+//--------------------------------------------------------------
 int main(int argc, const char* argv[]) {
     etherlib_init(quickQuitHandler);
 
@@ -26,26 +57,11 @@ int main(int argc, const char* argv[]) {
         if (!options.parseArguments(command))
             return 0;
 
-        string_q cmd = "acctScrape";
-        cout << "pgrep -i " << cmd << ": " << doCommand("pgrep -i " + cmd) << endl;
-        cout << "pgrep -f " << cmd << ": " << doCommand("pgrep -f " + cmd) << endl;
-        cout << "pgrep -l " << cmd << ": " << doCommand("pgrep -l " + cmd) << endl;
-        cout << "pgrep -fl " << cmd << ": " << doCommand("pgrep -fl " + cmd) << endl;
-        cout << "pgrep -fl " << toLower(cmd) << ": " << doCommand("pgrep -fl " + toLower(cmd)) << endl;
-        cout << "pgrep -fil " << toLower(cmd) << ": " << doCommand("pgrep -fli " + toLower(cmd)) << endl;
-        cout << "ps -ef | grep -i " << toLower(cmd) << " | grep -v grep: "
-             << doCommand("ps -ef | grep -i " + toLower(cmd) + " | grep -v grep | grep -v 'sh -c'") << endl;
+        doTest("notRunning");
         cout << endl;
 
-        cmd = "runningTest";
-        cout << "pgrep -i " << cmd << ": " << doCommand("pgrep -i " + cmd) << endl;
-        cout << "pgrep -f " << cmd << ": " << doCommand("pgrep -f " + cmd) << endl;
-        cout << "pgrep -l " << cmd << ": " << doCommand("pgrep -l " + cmd) << endl;
-        cout << "pgrep -fl " << cmd << ": " << doCommand("pgrep -fl " + cmd) << endl;
-        cout << "pgrep -fl " << toLower(cmd) << ": " << doCommand("pgrep -fl " + toLower(cmd)) << endl;
-        cout << "pgrep -fil " << toLower(cmd) << ": " << doCommand("pgrep -fli " + toLower(cmd)) << endl;
-        cout << "ps -ef | grep -i " << toLower(cmd) << " | grep -v grep: "
-             << doCommand("ps -ef | grep -i " + toLower(cmd) + " | grep -v grep | grep -v 'sh -c'") << endl;
+        doTest("runningTest");
+        cout << endl;
 
         //        cout << "isRunning(\"not running\"): " << isRunning("Not running") << endl;
         //        cout << "isRunning(\"runningTest\", true): " << isRunning("runningTest") << endl;
