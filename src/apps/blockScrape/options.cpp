@@ -13,6 +13,8 @@
 static const COption params[] = {
     // BEG_CODE_OPTIONS
     // clang-format off
+    COption("mode", "", "list<enum[run*|quit|pause|restart]>", OPT_POSITIONAL, "control the block and account scrapers"),  // NOLINT
+    COption("tool", "t", "list<enum[monitors|index*|none|both]>", OPT_FLAG, "process the index, monitors, or both (none means process timestamps only)"),  // NOLINT
     COption("n_blocks", "n", "<blknum>", OPT_FLAG, "maximum number of blocks to process (defaults to 5000)"),
     COption("n_block_procs", "b", "<uint64>", OPT_HIDDEN | OPT_FLAG, "number of block channels for blaze"),
     COption("n_addr_procs", "a", "<uint64>", OPT_HIDDEN | OPT_FLAG, "number of address channels for blaze"),
@@ -25,9 +27,6 @@ static const COption params[] = {
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
-extern const char* STR_ERROR_MSG;
-//--------------------------------------------------------------------------------
-extern bool isAlreadyRunning(const string_q& progName);
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
     ENTER("parseArguments");
@@ -39,13 +38,24 @@ bool COptions::parseArguments(string_q& command) {
     bool listpins = false;
     // END_CODE_LOCAL_INIT
 
-    Init();
     blknum_t latest = getLatestBlock_client();
+    CBlock block;
+    getBlock_light(block, latest);
+    latestBlockTs = block.timestamp;
+    latestBlockNum = block.blockNumber;
+
+    Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
         if (false) {
             // do nothing -- make auto code generation easier
             // BEG_CODE_AUTO
+        } else if (startsWith(arg, "-t:") || startsWith(arg, "--tool:")) {
+            string_q tool_tmp;
+            if (!confirmEnum("tool", tool_tmp, arg))
+                return false;
+            tool.push_back(tool_tmp);
+
         } else if (startsWith(arg, "-n:") || startsWith(arg, "--n_blocks:")) {
             if (!confirmBlockNum("n_blocks", n_blocks, arg, latest))
                 return false;
@@ -73,14 +83,18 @@ bool COptions::parseArguments(string_q& command) {
                 return usage("Invalid option: " + arg);
             }
 
-            // END_CODE_AUTO
-
         } else {
-            return usage("Invalid option: " + arg);
+            string_q mode_tmp;
+            if (!confirmEnum("mode", mode_tmp, arg))
+                return false;
+            mode.push_back(mode_tmp);
+
+            // END_CODE_AUTO
         }
     }
 
     // Establish the folders that hold the data...
+    establishMonitorFolders();
     establishFolder(indexFolder);
     establishFolder(indexFolder_finalized);
     establishFolder(indexFolder_blooms);
@@ -89,78 +103,92 @@ bool COptions::parseArguments(string_q& command) {
     establishFolder(indexFolder_ripe);
     establishFolder(configPath("cache/tmp/"));
 
-    if (isTestMode()) {
-        if (isApiMode()) {
-            string_q msg = STR_ERROR_MSG;
-            replace(msg, "[N_BLOCKS]", uint_2_Str(n_blocks));
-            replace(msg, "[N_BLOCK_PROCS]", uint_2_Str(n_block_procs));
-            replace(msg, "[N_ADDR_PROCS]", uint_2_Str(n_addr_procs));
-            cout << msg << endl;
-        } else {
-            cout << "Reporting for test mode only:" << endl;
-            cout << "\tn_blocks: " << n_blocks << endl;
-            cout << "\tn_block_procs: " << n_block_procs << endl;
-            cout << "\tn_addr_procs: " << n_addr_procs << endl;
+    if (mode.size() > 1)
+        return usage("You must specify only one of run, quit, pause, or restart. Quitting...");
+    if (mode.size() == 0)
+        mode.push_back("run");
+
+    if (tool.size() > 1)
+        return usage("You must specify only one of none, index, monitors, both. Quitting...");
+    if (tool.empty())
+        tool.push_back("index");
+    if (tool[0] == "none")
+        tools = TOOL_NONE;
+    else if (tool[0] == "index")
+        tools = TOOL_INDEX;
+    else if (tool[0] == "monitors")
+        tools = TOOL_MONITORS;
+    else
+        tools = TOOL_BOTH;
+
+    bool hasPinCmd = (listpins || pin || publish);
+    if (hasPinCmd) {
+        if (!isTestMode() && !hasPinataKeys()) {
+            return usage(
+                "In order to use the pin options, you must enter a Pinata key in ~/.quickBlocks/blockScrape.toml. "
+                "Quitting...");
+
+        } else if (listpins) {
+            return usage("The 'listpin' option is not yet implemented. Quitting...");
+
+        } else if (publish && !pin) {
+            return usage("The --publish option is only available with the --pin option. Quitting...");
         }
+    }
+
+    if (isTestMode()) {
+        cout << "{" << endl;
+        cout << "  \"message\": \"Testing only\""
+             << "," << endl;
+        cout << "  \"mode\": \"" << mode[0] << "\"," << endl;
+        cout << "  \"tool\": \"" << tool[0] << "\"," << endl;
+        cout << "  \"tools\": " << tools << "," << endl;
+        cout << "  \"n_blocks\": " << n_blocks << "," << endl;
+        cout << "  \"n_block_procs\": " << n_block_procs << "," << endl;
+        cout << "  \"n_addr_procs\": " << n_addr_procs << "," << endl;
+        cout << "  \"pin\": " << pin << "," << endl;
+        cout << "  \"publish\": " << publish << "," << endl;
+        cout << "  \"listpins\": " << listpins << ", " << endl;
+        cout << "}" << endl;
         return false;
     }
 
-    LOG4("indexPath: " + indexFolder);
-    LOG4("finalized: " + indexFolder_finalized);
-    LOG4("blooms: " + indexFolder_blooms);
-    LOG4("staging: " + indexFolder_staging);
-    LOG4("unripe: " + indexFolder_unripe);
-    LOG4("ripe: " + indexFolder_ripe);
-    LOG4("tmp: " + configPath("cache/tmp/"));
-
-    if (listpins) {
-        cout << "Not implemented: listpins" << endl;
-        return false;
-    }
-
-    if ((listpins || pin) && !hasPinataKeys()) {
-        return usage(
-            "In order to use the pin options, you must enter a Pinata key in ~/.quickBlocks/blockScrape.toml. "
-            "Quitting...");
-    }
-
-    CBlock latestBlock;
-    getBlock_light(latestBlock, "latest");
-    latestBlockTs = latestBlock.timestamp;
-    latestBlockNum = latestBlock.blockNumber;
+    LOG4("indexPath: ", indexFolder);
+    LOG4("finalized: ", indexFolder_finalized);
+    LOG4("blooms: ", indexFolder_blooms);
+    LOG4("staging: ", indexFolder_staging);
+    LOG4("unripe: ", indexFolder_unripe);
+    LOG4("ripe: ", indexFolder_ripe);
+    LOG4("tmp: ", configPath("cache/tmp/"));
 
     string_q zeroBloom = getIndexPath("blooms/" + padNum9(0) + "-" + padNum9(0) + ".bloom");
-    string_q zeroBin = getIndexPath("finalized/" + padNum9(0) + "-" + padNum9(0) + ".bin");
     if (!fileExists(zeroBloom)) {
         ASSERT(prefundWeiMap.size() == 8893);  // This is a known value
-
-        LOG_INFO("Index for block zero was not found. Building it from " + uint_2_Str(prefundWeiMap.size()) +
+        LOG_INFO("Index for block zero was not found. Building it from ", uint_2_Str(prefundWeiMap.size()),
                  " prefunds.");
+
         CStringArray appearances;
         for (auto prefund : prefundWeiMap) {
-            // The prefund transactions have a zero for thier block numbers and an index
-            // into thier location in the list of presale addresses. We need to do this so we
-            // can distringuish them when they are exported.
+            // The prefund transactions have 'zero' block numbers and an index into thier location
+            // in the list of presale addresses which is sorted by address. We need to do this in order to
+            // distinquish each transaction when it is exported.
             ostringstream os;
             os << prefund.first << "\t" << padNum9(0) << "\t" << padNum5((uint32_t)appearances.size()) << endl;
             appearances.push_back(os.str());
         }
 
+        string_q zeroBin = getIndexPath("finalized/" + padNum9(0) + "-" + padNum9(0) + ".bin");
         writeIndexAsBinary(zeroBin, appearances);  // also writes the bloom file
         if (pin) {
             CPinnedItem pinRecord;
             pinChunk(padNum9(0) + "-" + padNum9(0), pinRecord);
+            if (publish)
+                publishManifest(cout);
         }
-
-        if (publish) {
-            publishManifest(cout);
-        }
-
         LOG_INFO("Done...");
     }
 
     const CToml* config = getGlobalConfig("blockScrape");
-
     bool needsParity = config->getConfigBool("requires", "parity", true);
     if (needsParity && !isParity())
         return usage(
@@ -179,7 +207,7 @@ bool COptions::parseArguments(string_q& command) {
     if (needsBalances && !nodeHasBalances(true))
         return usage("This tool requires an --archive node with historical balances. Quitting...");
 
-    if (isAlreadyRunning("blockScrape")) {
+    if (isAlreadyRunning(g_progName)) {
         LOG_WARN("The " + getProgName() + " is already running. Quitting...");
         return false;
     }
@@ -207,6 +235,7 @@ void COptions::Init(void) {
     getNamedAccount(unused, "0x0");
 
     // BEG_CODE_INIT
+    tool.clear();
     n_blocks = NOPOS;
     n_block_procs = NOPOS;
     n_addr_procs = NOPOS;
@@ -237,26 +266,14 @@ COptions::~COptions(void) {
 //--------------------------------------------------------------------------------
 bool isAlreadyRunning(const string_q& progName) {
     string_q pList = listProcesses(progName);
+    cout << "pList: " << pList << endl;
     replaceAll(pList, "`", "");        // remove separators if present
+    cout << "pList: " << pList << endl;
     replaceAll(pList, progName, "`");  // change program name to separator
-    replace(pList, "`", "");           // remove ourselves
+    cout << "pList: " << pList << endl;
+    replace(pList, "`", "");  // remove ourselves
+    cout << "pList: " << pList << endl;
     size_t count = countOf(pList, '`');
+    cout << "count: " << count << endl << endl;
     return count > 0;
 }
-
-//--------------------------------------------------------------------------------
-bool COptions::hasPinataKeys(void) {
-    string_q unused1, unused2;
-    return getPinataKeys(unused1, unused2);
-}
-
-//--------------------------------------------------------------------------------
-const char* STR_ERROR_MSG =
-    "{\n"
-    "  \"message\": \"Reporting for test mode only\",\n"
-    "  \"errors\": [\n"
-    "    \"n_blocks [N_BLOCKS]\",\n"
-    "    \"n_block_procs [N_BLOCK_PROCS]\",\n"
-    "    \"n_addr_procs [N_ADDR_PROCS]\"\n"
-    "  ]\n"
-    "}\n";

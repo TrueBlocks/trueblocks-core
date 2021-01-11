@@ -1,10 +1,12 @@
 blockScrape argc: 2 [1:-h] 
 blockScrape -h 
 
-  Usage:    blockScrape [-n|-p|-u|-v|-h]  
+  Usage:    blockScrape [-t|-n|-p|-u|-v|-h] mode  
   Purpose:  Decentralized blockchain scraper and block cache.
 
   Where:  
+	mode                  control the block and account scrapers, one or more of [run*|quit|pause|restart]
+	-t  (--tool <val>)    process the index, monitors, or both (none means process timestamps only), one or more of [monitors|index*|none|both]
 	-n  (--n_blocks <num>)maximum number of blocks to process (defaults to 5000)
 	-p  (--pin)           pin new chunks (and blooms) to IPFS (requires Pinata key)
 	-u  (--publish)       publish the hash of the pin manifest to the UnchainedIndex smart contract

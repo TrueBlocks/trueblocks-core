@@ -22,7 +22,7 @@ static const COption params[] = {
     // BEG_CODE_OPTIONS
     // clang-format off
     COption("commands", "", ""+opt_string+"", OPT_REQUIRED | OPT_POSITIONAL, "which command to run"),
-    COption("sleep", "s", "<uint32>", OPT_FLAG, "for the 'scrape' and 'daemon' commands, the number of seconds chifra should sleep between runs (default 14)"),  // NOLINT
+    COption("sleep", "s", "<uint32>", OPT_FLAG, "for the 'scrape' command, the number of seconds to sleep between runs (default 14)"),  // NOLINT
     COption("start", "S", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to process (inclusive)"),
     COption("end", "E", "<blknum>", OPT_HIDDEN | OPT_FLAG, "last block to process (inclusive)"),
     COption("", "", "", OPT_DESCRIPTION, "Main TrueBlocks command line controls."),
@@ -146,8 +146,7 @@ bool COptions::parseArguments(string_q& command) {
         return usage("Please specify " + params[0].description);
     }
 
-    if (mode != "scrape")
-        establishMonitorFolders();
+    establishMonitorFolders();
 
     // Handle base layer options
     if (tool_help)

@@ -40,7 +40,10 @@ extern bool getFileByHash(const hash_t& hash, const string_q& outFilename);
 extern string_q getFileContentsByHash(const hash_t& hash);
 
 extern bool getPinataKeys(string_q& apiKey, string_q& secret);
-
+inline bool hasPinataKeys(void) {
+    string_q unused1, unused2;
+    return getPinataKeys(unused1, unused2);
+}
 typedef bool (*PINFUNC)(CPinnedItem& pin, void* data);
 extern bool forEveryPin(PINFUNC func, void* data);
 

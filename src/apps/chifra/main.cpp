@@ -24,9 +24,6 @@ int main(int argc, const char* argv[]) {
             options.tool_flags = substitute(options.tool_flags, "--addrs", "");
             RETURN(options.handle_export())
 
-        } else if (options.mode == "scrape") {
-            RETURN(options.handle_scrape())
-
         } else {
             RETURN(options.handle_commands());
         }

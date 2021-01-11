@@ -33,7 +33,6 @@ class COptions : public COptionsBase {
     bool createConfigFile(const address_t& addr);
 
     bool handle_export(void);
-    bool handle_scrape(void);
     bool handle_commands(void);
 };
 

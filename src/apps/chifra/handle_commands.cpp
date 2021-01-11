@@ -33,16 +33,14 @@ bool COptions::handle_commands(void) {
 }
 
 //------------------------------------------------------------------------------------------------
-map<string, string> cmdMap = {
-    {"slurp", "ethslurp"},        {"collections", "ethNames --collections"},
-    {"names", "ethNames"},        {"tags", "ethNames --tags"},
-    {"abis", "grabABI"},          {"blocks", "getBlock"},
-    {"transactions", "getTrans"}, {"receipts", "getReceipt"},
-    {"logs", "getLogs"},          {"traces", "getTrace"},
-    {"quotes", "ethQuote"},       {"state", "getState"},
-    {"tokens", "getTokenInfo"},   {"when", "whenBlock"},
-    {"where", "whereBlock"},      {"status", "cacheStatus"},
-    {"rm", "acctScrape --rm"},    {"list", "acctScrape"},
-    {"export", "acctExport"},     {"scrape", "blockScrape"},
-    {"dive", "turboDive"},        {"test", ""}
-};
+map<string, string> cmdMap = {{"slurp", "ethslurp"},        {"collections", "ethNames --collections"},
+                              {"names", "ethNames"},        {"tags", "ethNames --tags"},
+                              {"abis", "grabABI"},          {"blocks", "getBlock"},
+                              {"transactions", "getTrans"}, {"receipts", "getReceipt"},
+                              {"logs", "getLogs"},          {"traces", "getTrace"},
+                              {"quotes", "ethQuote"},       {"state", "getState"},
+                              {"tokens", "getTokenInfo"},   {"when", "whenBlock"},
+                              {"where", "whereBlock"},      {"status", "cacheStatus"},
+                              {"rm", "acctScrape --rm"},    {"list", "acctScrape"},
+                              {"export", "acctExport"},     {"scrape", "blockScrape"},
+                              {"dive", "turboDive"}};

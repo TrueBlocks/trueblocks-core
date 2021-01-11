@@ -28,10 +28,14 @@ class CConsolidator {
     }
 };
 
+enum { TOOL_NONE = 0, TOOL_MONITORS = (1 << 0), TOOL_INDEX = (1 << 1), TOOL_BOTH = (TOOL_MONITORS | TOOL_INDEX) };
+
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
   public:
     // BEG_CODE_DECLARE
+    CStringArray mode;
+    CStringArray tool;
     blknum_t n_blocks;
     uint64_t n_block_procs;
     uint64_t n_addr_procs;
@@ -39,6 +43,7 @@ class COptions : public COptionsBase {
     bool publish;
     // END_CODE_DECLARE
 
+    uint32_t tools = TOOL_NONE;
     timestamp_t latestBlockTs;
     blknum_t latestBlockNum;
     blknum_t maxIndexRows;
@@ -49,12 +54,14 @@ class COptions : public COptionsBase {
     bool parseArguments(string_q& command);
     void Init(void);
 
-    bool handle_scrape(void);
+    bool scrape_once(void);
+    bool start_scraper(void);
     bool finalize_chunks(CConsolidator* cons);
-
-    bool hasPinataKeys(void);
 };
 
 //-----------------------------------------------------------------------------
 extern bool visitCopyRipeToStage(const string_q& path, void* data);
 extern bool appendFile(const string_q& toFile, const string_q& fromFile);
+extern bool visitMonitor(const string_q& path, void* data);
+extern bool isScraperRunning(const string_q& unsearch);
+extern bool isAlreadyRunning(const string_q& progName);

@@ -1,6 +1,14 @@
 blockScrape argc: 7 [1:--n_blocks] [2:12] [3:--n_block_procs] [4:12] [5:--n_addr_procs] [6:12] 
 blockScrape --n_blocks 12 --n_block_procs 12 --n_addr_procs 12 
-Reporting for test mode only:
-	n_blocks: 12
-	n_block_procs: 12
-	n_addr_procs: 12
+{
+  "message": "Testing only",
+  "mode": "run",
+  "tool": "index",
+  "tools": 2,
+  "n_blocks": 12,
+  "n_block_procs": 12,
+  "n_addr_procs": 12,
+  "pin": 0,
+  "publish": 0,
+  "listpins": 0, 
+}

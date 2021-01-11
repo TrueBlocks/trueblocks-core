@@ -460,13 +460,16 @@ bool prepareBuiltIn(string_q& options) {
     for (auto cmd : commands) {
         string_q match = nextTokenClear(cmd, '|');
         if (startsWith(options, match)) {
+            bool debug = false;
+            ostringstream os;
             if (match == "CLEANUP") {
                 cleanMonitors(testAddrs);
                 establishTestMonitors();
+                options = "";
+                if (debug)
+                    os << "Cleanup" << endl;
 
             } else {
-                ostringstream os;
-                bool debug = false;
                 if (debug)
                     os << "pwd ; echo \"" << substitute(options, "\"", "'")
                        << "\" ; find ./testing_data/ -exec ls -l {} ';'; ";
@@ -474,10 +477,10 @@ bool prepareBuiltIn(string_q& options) {
                 if (debug)
                     os << " ; find ./testing_data/ -exec ls -l {} ';' ; ";
                 options = substitute(os.str(), "$CONFIG/", configPath(""));
-                if (debug)
-                    cerr << os.str() << endl;
                 replaceAll(options, match, cmd);
             }
+            if (debug)
+                cerr << os.str() << endl;
             return true;
         }
     }

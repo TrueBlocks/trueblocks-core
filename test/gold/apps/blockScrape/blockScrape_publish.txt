@@ -1,7 +1,7 @@
-blockScrape argc: 3 [1:--n_blocks] [2:-12] 
-blockScrape --n_blocks -12 
+blockScrape argc: 2 [1:--publish] 
+blockScrape --publish 
 
-  Invalid option: -2
+  The --publish option is only available with the --pin option. Quitting...
 
   Usage:    blockScrape [-t|-n|-p|-u|-v|-h] mode  
   Purpose:  Decentralized blockchain scraper and block cache.

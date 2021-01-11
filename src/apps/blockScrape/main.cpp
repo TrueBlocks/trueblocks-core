@@ -13,16 +13,12 @@ int main(int argc, const char* argv[]) {
     if (!options.prepareArguments(argc, argv))
         return 0;
 
-    for (auto command : options.commandLines) {
-        if (!options.parseArguments(command))
+    // for (auto command : options.commandLines)
+    {
+        if (!options.parseArguments(options.commandLines[0]))
             return 0;
-        if (!options.handle_scrape())
-            return 0;
+        options.start_scraper();
     }
-
-    // FIX_THIS_CODE
-    freshenTimestamps(getLatestBlock_cache_ripe());
-    LOG_INFO("Run complete.");
 
     pinlib_cleanup();
 

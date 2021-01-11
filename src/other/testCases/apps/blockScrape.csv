@@ -1,30 +1,36 @@
-enabled, mode, speed, route, path/tool, filename, post, options, opt_cmd
-on, cmd,  fast, export, apps/blockScrape, CLEANUP,         n, CLEANUP
+enabled,mode,speed,route,path/tool,filename,post,options,opt_cmd
+on, cmd, fast, export, apps/blockScrape, CLEANUP,          n, CLEANUP
 
-on, cmd,  fast, scrape, apps/blockScrape, README,          n, @th
-on, cmd,  fast, scrape, apps/blockScrape, help,            n, @h
-on, cmd,  fast, scrape, apps/blockScrape, help_long,       n, help
+on, cmd, fast, scrape, apps/blockScrape, README,           n, @th
+on, cmd, fast, scrape, apps/blockScrape, help,             n, @h
+on, cmd, fast, scrape, apps/blockScrape, help_long,        n, help
 
+on, cmd, fast, scrape, apps/blockScrape, invalid,          n, junk
+on, cmd, fast, scrape, apps/blockScrape, nBlocks_invalid,  n, n_blocks = -12
+on, cmd, fast, scrape, apps/blockScrape, nBProcs_invalid,  n, n_block_procs = -12
+on, cmd, fast, scrape, apps/blockScrape, nAProcs_invalid,  n, n_addr_procs = -12
+
+#
 # Note: Be careful when making these test cases live under the API. The API calls into chifra
 # which has some live code (for example to update the timestamp file). Make sure you're not
 # damaging data in API mode before making these tests 'both'
 #
-on, cmd,  fast, scrape, apps/blockScrape, invalid,         n, junk
-on, cmd,  fast, scrape, apps/blockScrape, nBlocks_invalid, n, n_blocks = -12
-on, cmd,  fast, scrape, apps/blockScrape, nBProcs_invalid, n, n_block_procs = -12
-on, cmd,  fast, scrape, apps/blockScrape, nAProcs_invalid, n, n_addr_procs = -12
+on, cmd, fast, scrape, apps/blockScrape, nBlocks,          n, n_blocks = 12
+on, cmd, fast, scrape, apps/blockScrape, nBlockProcs,      n, n_block_procs = 12
+on, cmd, fast, scrape, apps/blockScrape, nAddrProcs,       n, n_addr_procs = 12
+on, cmd, fast, scrape, apps/blockScrape, all,              n, n_blocks = 12 & n_block_procs = 12 & n_addr_procs = 12
 
-on, cmd,  fast, scrape, apps/blockScrape, nBlocks,         n, n_blocks = 12
-on, cmd,  fast, scrape, apps/blockScrape, nBlockProcs,     n, n_block_procs = 12
-on, cmd,  fast, scrape, apps/blockScrape, nAddrProcs,      n, n_addr_procs = 12
-on, cmd,  fast, scrape, apps/blockScrape, all,             n, n_blocks = 12 & n_block_procs = 12 & n_addr_procs = 12
+on, cmd, fast, scrape, apps/blockScrape, listpins,         n, listpins
+on, cmd, fast, scrape, apps/blockScrape, pin,              n, pin
+on, cmd, fast, scrape, apps/blockScrape, publish,          n, publish
+on, cmd, fast, scrape, apps/blockScrape, pin_publish,      n, publish & pin
+on, cmd, fast, scrape, apps/blockScrape, pin_publish_list, n, publish & pin
 
-# 10600, apps, scrape, blockScrape, n_blocks,      n, , FALSE, FALSE, TRUE,  TRUE, ,   flag,        <blknum>, maximum number of blocks to process (defaults to 5000)
-# 10620, apps, scrape, blockScrape, n_block_procs, p, , FALSE, FALSE, FALSE, FALSE,,   flag,        <uint32>, number of block channels for blaze
-# 10640, apps, scrape, blockScrape, n_addr_procs,  a, , FALSE, FALSE, FALSE, FALSE,,   flag,        <uint32>, number of address channels for blaze
-# 10660, apps, scrape, blockScrape, ,              ,  , FALSE, FALSE, TRUE,  TRUE, na, description, ,         Decentralized blockchain scraper and block cache.
-
+# COption("mode", "", "list<enum[run*|quit|pause|restart]>", OPT_POSITIONAL, "control the block and account scrapers"),  // NOLINT
+# COption("tools", "t", "list<enum[monitors|index*|none|both]>", OPT_FLAG, "process the index, monitors, or both (none means process timestamps only)"),  // NOLINT
 # COption("n_blocks", "n", "<blknum>", OPT_FLAG, "maximum number of blocks to process (defaults to 5000)"),
-# COption("n_block_procs", "p", "<uint32>", OPT_HIDDEN | OPT_FLAG, "number of block channels for blaze"),
-# COption("n_addr_procs", "a", "<uint32>", OPT_HIDDEN | OPT_FLAG, "number of address channels for blaze"),
-# COption("", "", "", OPT_DESCRIPTION, "Decentralized blockchain scraper and block cache."),
+# COption("n_block_procs", "b", "<uint64>", OPT_HIDDEN | OPT_FLAG, "number of block channels for blaze"),
+# COption("n_addr_procs", "a", "<uint64>", OPT_HIDDEN | OPT_FLAG, "number of address channels for blaze"),
+# COption("pin", "p", "", OPT_SWITCH, "pin new chunks (and blooms) to IPFS (requires Pinata key)"),
+# COption("publish", "u", "", OPT_SWITCH, "publish the hash of the pin manifest (requires Pinata key, assumes --pin"),  // NOLINT
+# COption("listpins", "l", "", OPT_HIDDEN | OPT_SWITCH, "list pins (precludes other options, requires API key)"),

@@ -256,8 +256,10 @@ bool establishFolder(const string_q& path, string_q& created) {
 
 //----------------------------------------------------------------------------
 string_q listProcesses(const string_q& progName) {
-    string_q cmd = "pgrep -lf \"" + progName + "\"";
+    string_q cmd = "pgrep -lfi \"" + progName + "\"";
+    cout << "cmd: " << cmd << endl;
     string_q result = doCommand(cmd);
+    cout << "result: " << result << endl;
     if (isTestMode())
         LOG4("\n", cmd, "\n", result, " ", !result.empty());
     return result;

@@ -87,10 +87,13 @@ bool COptions::parseArguments(string_q& command) {
 
     // Make sure we have the folders we need (may be redundant, but harmless)...
     establishMonitorFolders();
+    establishFolder(indexFolder);
     establishFolder(indexFolder_finalized);
     establishFolder(indexFolder_blooms);
     establishFolder(indexFolder_staging);
+    establishFolder(indexFolder_unripe);
     establishFolder(indexFolder_ripe);
+    establishFolder(configPath("cache/tmp/"));
 
     // Are we visiting unripe and/or staging in our search?
     if (staging)
