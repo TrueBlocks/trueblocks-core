@@ -9,9 +9,12 @@
 bool COptions::start_scraper(void) {
     if (tools & TOOL_INDEX) {
         int cnt = 0;
-        while (++cnt < 1000) {
+        while (++cnt < 250) {
             usleep(1000000);
-            cout << "wake--sleep: " << cnt << "\r";
+            if (isRunning("acctScrape"))
+                cout << "Not running: " << cnt << "\r";
+            else
+                cout << "wake--sleep: " << cnt << "\r";
             cout.flush();
         }
     }

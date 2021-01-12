@@ -208,7 +208,7 @@ bool COptions::parseArguments(string_q& command) {
         return usage("This tool requires an --archive node with historical balances. Quitting...");
 
     if (amIRunning(g_progName)) {
-        LOG_WARN("The " + getProgName() + " is already running. Quitting...");
+        LOG_WARN("The " + getProgName() + " app is already running. Quitting...");
         return false;
     }
 
