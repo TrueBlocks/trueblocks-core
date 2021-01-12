@@ -437,7 +437,7 @@ bool COptions::start_scraper(void) {
     if (contains(tool_flags, "restart")) {
         //---------------------------------------------------------------------------------
         // If a seperate instance is not running, we can't restart it
-        if (!isScraperRunning("restart")) {
+        if (!amIRunning("chifra scrape")) {
             LOG_WARN("Scraper is not running. Cannot restart...");
             EXIT_NOMSG(true);
         }
@@ -456,7 +456,7 @@ bool COptions::start_scraper(void) {
     } else if (contains(tool_flags, "pause")) {
         //---------------------------------------------------------------------------------
         // If a seperate instance is not running, we can't pause it
-        if (!isScraperRunning("pause")) {
+        if (!amIRunning("chifra scrape")) {
             LOG_WARN("Scraper is not running. Cannot pause...");
             EXIT_NOMSG(true);
         }
@@ -473,7 +473,7 @@ bool COptions::start_scraper(void) {
         EXIT_NOMSG(true);
 
     } else if (contains(tool_flags, "quit")) {
-        if (!isScraperRunning("quit")) {
+        if (!amIRunning("chifra scrape")) {
             LOG_WARN("Scraper is not running. Cannot quit...");
             EXIT_NOMSG(true);
         }
@@ -486,7 +486,7 @@ bool COptions::start_scraper(void) {
     } else {
         //---------------------------------------------------------------------------------
         // If it's already running, don't start it again...
-        if (isScraperRunning("unused")) {
+        if (amIRunning("chifra scrape")) {
             LOG_WARN("Scraper is already running. Cannot start it again...");
             EXIT_NOMSG(false);
         }
@@ -658,12 +658,4 @@ bool visitMonitor(const string_q& path, void* data) {
     }
 
     return true;
-}
-
-//----------------------------------------------------------------------------
-bool isScraperRunning(const string_q& unsearch) {
-    string_q pList = listProcesses("chifra scrape");
-    replace(pList, "  ", " ");
-    replace(pList, "chifra scrape " + unsearch, "");
-    return contains(pList, "chifra scrape");
 }

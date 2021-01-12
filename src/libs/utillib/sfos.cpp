@@ -266,6 +266,27 @@ bool establishFolder(const string_q& path, string_q& created) {
 //#error
 #endif
 
+//----------------------------------------------------------------------------
+string_q listProcesses(const string_q& progName) {
+    string_q cmd = "pgrep -lfa \"" + progName + "\"";
+    string_q result = doCommand(cmd);
+    CStringArray lines;
+    explode(lines, result, '\n');
+    result = "";
+    for (auto line : lines) {
+        if (!contains(line, "sh -c")) {
+            // each line is of form: 'pid program options'. Skip over pid
+            nextTokenClear(line, ' ');
+            if (startsWith(line, progName)) {
+                result += line + "\n";
+            }
+        }
+    }
+    if (isTestMode())
+        LOG4("\n", cmd, "\n", result, " ", !result.empty());
+    return result;
+}
+
 //--------------------------------------------------------------------------------
 bool amIRunning(const string_q& progName) {
     string_q pList = listProcesses(progName);
@@ -278,20 +299,5 @@ bool amIRunning(const string_q& progName) {
 //----------------------------------------------------------------------------
 bool isRunning(const string_q& progName) {
     return contains(listProcesses(progName), progName);
-}
-
-//----------------------------------------------------------------------------
-string_q listProcesses(const string_q& progName) {
-    string_q cmd = "pgrep -lfa \"" + progName + "\"";
-    string_q result = doCommand(cmd);
-    CStringArray lines;
-    explode(lines, result, '\n');
-    result = "";
-    for (auto line : lines)
-        if (!contains(line, "sh -c"))
-            result += line + "\n";
-    if (isTestMode())
-        LOG4("\n", cmd, "\n", result, " ", !result.empty());
-    return result;
 }
 }  // namespace qblocks
