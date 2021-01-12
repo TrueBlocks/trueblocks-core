@@ -254,12 +254,41 @@ bool establishFolder(const string_q& path, string_q& created) {
     return folderExists(targetFolder);
 }
 
+#if defined(__linux) || defined(__linux__) || defined(linux)
+#define OPTIONS x
+#elif defined(__APPLE__)
+#define MACOS
+#elif defined(_WIN32) || defined(__WIN32__) || defined(WIN32) || defined(_WIN64)
+#define WINDOWS
+#endif
+
+#ifdef MACOS
+//#error
+#endif
+
+//--------------------------------------------------------------------------------
+bool amIRunning(const string_q& progName) {
+    string_q pList = listProcesses(progName);
+    replaceAll(pList, "`", "");        // We count how many occurences of the progName using a single character...
+    replaceAll(pList, progName, "`");  // remove any if they exist before replacing
+    return countOf(pList, '`') > 1;    // We ourselves are running, so there needs to be at least one more...
+}
+
+//----------------------------------------------------------------------------
+bool isRunning(const string_q& progName) {
+    return contains(listProcesses(progName), progName);
+}
+
 //----------------------------------------------------------------------------
 string_q listProcesses(const string_q& progName) {
-    string_q cmd = "pgrep -lfi \"" + progName + "\"";
-    cout << "cmd: " << cmd << endl;
+    string_q cmd = "pgrep -lfa \"" + progName + "\"";
     string_q result = doCommand(cmd);
-    cout << "result: " << result << endl;
+    CStringArray lines;
+    explode(lines, result, '\n');
+    result = "";
+    for (auto line : lines)
+        if (!contains(line, "sh -c"))
+            result += line + "\n";
     if (isTestMode())
         LOG4("\n", cmd, "\n", result, " ", !result.empty());
     return result;

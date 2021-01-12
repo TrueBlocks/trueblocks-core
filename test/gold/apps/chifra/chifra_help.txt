@@ -6,7 +6,7 @@ chifra -h
 
   Where:  
 	commands              which command to run, one or more of [list|export|slurp|collections|names|tags|abis|blocks|transactions|receipts|logs|traces|quotes|state|tokens|when|where|dive|scrape|status|rm] (required)
-	-s  (--sleep <num>)   for the 'scrape' and 'daemon' commands, the number of seconds chifra should sleep between runs (default 14)
+	-s  (--sleep <num>)   for the 'scrape' command, the number of seconds to sleep between runs (default 14)
 
 #### Hidden options (shown during testing only)
 	-S  (--start <num>)   first block to process (inclusive)

@@ -64,4 +64,3 @@ extern bool visitCopyRipeToStage(const string_q& path, void* data);
 extern bool appendFile(const string_q& toFile, const string_q& fromFile);
 extern bool visitMonitor(const string_q& path, void* data);
 extern bool isScraperRunning(const string_q& unsearch);
-extern bool isAlreadyRunning(const string_q& progName);

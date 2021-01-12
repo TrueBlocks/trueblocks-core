@@ -4,71 +4,90 @@ pgrep -i notRunning: [
 
 ]--------------------------------------------------------------------------------
 pgrep -f notRunning: [
-12541
+
 ]--------------------------------------------------------------------------------
 pgrep -l notRunning: [
 
 ]--------------------------------------------------------------------------------
 pgrep -fl notRunning: [
-12545 sh
-]--------------------------------------------------------------------------------
-pgrep -fl notrunning: [
-12547 sh
-]--------------------------------------------------------------------------------
-pgrep -fli notrunning: [
-12549 sh
+
 ]--------------------------------------------------------------------------------
 pgrep -a notRunning: [
 
 ]--------------------------------------------------------------------------------
 pgrep -fla notRunning: [
-12553 sh -c pgrep -fla notRunning >/tmp/qb_20210111174526
+ sh -c pgrep -fla notRunning >/tmp/qb_
 ]--------------------------------------------------------------------------------
-pgrep -fla notrunning: [
-12555 sh -c pgrep -fla notrunning >/tmp/qb_20210111174526
+pgrep -x notRunning: [
+
 ]--------------------------------------------------------------------------------
-pgrep -flia notrunning: [
-12557 sh -c pgrep -flia notrunning >/tmp/qb_20210111174526
+pgrep -flax notRunning: [
+
+]--------------------------------------------------------------------------------
+pgrep -x notRunning: [
+
+]--------------------------------------------------------------------------------
+pgrep -flx notRunning: [
+
+]--------------------------------------------------------------------------------
+pgrep -x notRunning: [
+
+]--------------------------------------------------------------------------------
+pgrep -fx notRunning: [
+
+]--------------------------------------------------------------------------------
+pgrep -x notRunning: [
+
+]--------------------------------------------------------------------------------
+pgrep -lx notRunning: [
+
 ]--------------------------------------------------------------------------------
 
 pgrep -i runningTest: [
-12537
+
 ]--------------------------------------------------------------------------------
 pgrep -f runningTest: [
-12536
-12537
-12561
+
 ]--------------------------------------------------------------------------------
 pgrep -l runningTest: [
-12537 runningTest
+
 ]--------------------------------------------------------------------------------
 pgrep -fl runningTest: [
-12536 sh
-12537 runningTest
-12565 sh
-]--------------------------------------------------------------------------------
-pgrep -fl runningtest: [
-12567 sh
-]--------------------------------------------------------------------------------
-pgrep -fli runningtest: [
-12536 sh
-12537 runningTest
-12569 sh
+
 ]--------------------------------------------------------------------------------
 pgrep -a runningTest: [
-12537 runningTest 0
+
 ]--------------------------------------------------------------------------------
 pgrep -fla runningTest: [
-12536 sh -c cd /home/jrush/Development/trueblocks-core/test/gold/libs/utillib/runningTest/ ; env  TEST_MODE=true NO_COLOR=true REDIR_CERR=true runningTest 0 >/home/jrush/Development/trueblocks-core/test/working/libs/utillib/runningTest/runningTest_01.txt 2>&1
-12537 runningTest 0
-12573 sh -c pgrep -fla runningTest >/tmp/qb_20210111174526
+ sh -c cd /Users/jrush/Development/trueblocks-core/test/gold/libs/utillib/runningTest/ ; env  TEST_MODE=true NO_COLOR=true REDIR_CERR=true runningTest  >/Users/jrush/Development/trueblocks-core/test/working/libs/utillib/runningTest/runningTest_.txt >&
+ runningTest 
+ sh -c pgrep -fla runningTest >/tmp/qb_
 ]--------------------------------------------------------------------------------
-pgrep -fla runningtest: [
-12575 sh -c pgrep -fla runningtest >/tmp/qb_20210111174526
+pgrep -x runningTest: [
+
 ]--------------------------------------------------------------------------------
-pgrep -flia runningtest: [
-12536 sh -c cd /home/jrush/Development/trueblocks-core/test/gold/libs/utillib/runningTest/ ; env  TEST_MODE=true NO_COLOR=true REDIR_CERR=true runningTest 0 >/home/jrush/Development/trueblocks-core/test/working/libs/utillib/runningTest/runningTest_01.txt 2>&1
-12537 runningTest 0
-12577 sh -c pgrep -flia runningtest >/tmp/qb_20210111174526
+pgrep -flax runningTest: [
+
+]--------------------------------------------------------------------------------
+pgrep -x runningTest: [
+
+]--------------------------------------------------------------------------------
+pgrep -flx runningTest: [
+
+]--------------------------------------------------------------------------------
+pgrep -x runningTest: [
+
+]--------------------------------------------------------------------------------
+pgrep -fx runningTest: [
+
+]--------------------------------------------------------------------------------
+pgrep -x runningTest: [
+
+]--------------------------------------------------------------------------------
+pgrep -lx runningTest: [
+
 ]--------------------------------------------------------------------------------
 
+isRunning(notRunning): 0
+isRunning(runningTest): 1
+isRunning(testRunner): 1

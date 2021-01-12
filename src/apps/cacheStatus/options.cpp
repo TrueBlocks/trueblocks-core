@@ -217,7 +217,7 @@ void COptions::Init(void) {
         status.client_ids = "chainId: " + uint_2_Str(ids[0]) + " networkId: " + uint_2_Str(ids[1]);
     }
     status.trueblocks_version = getVersionStr();
-    status.is_scraping = isTestMode() ? false : isRunning("chifra scrape");
+    status.is_scraping = isTestMode() ? false : (isRunning("chifra scrape") || isRunning("blockScrape"));
     status.is_testing = isTestMode();
     status.is_archive = isArchiveNode();
     status.is_tracing = isTracingNode();

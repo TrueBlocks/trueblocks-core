@@ -3,10 +3,12 @@ chifra scrape --help
 chifra scrape argc: 2 [1:--help] 
 chifra scrape --help 
 
-  Usage:    chifra scrape [-n|-p|-u|-v|-h]  
+  Usage:    chifra scrape [-t|-n|-p|-u|-v|-h] mode  
   Purpose:  Decentralized blockchain scraper and block cache.
 
   Where:  
+	mode                  control the block and account scrapers, one or more of [run*|quit|pause|restart]
+	-t  (--tool <val>)    process the index, monitors, or both (none means process timestamps only), one or more of [monitors|index*|none|both]
 	-n  (--n_blocks <num>)maximum number of blocks to process (defaults to 5000)
 	-p  (--pin)           pin new chunks (and blooms) to IPFS (requires Pinata key)
 	-u  (--publish)       publish the hash of the pin manifest to the UnchainedIndex smart contract

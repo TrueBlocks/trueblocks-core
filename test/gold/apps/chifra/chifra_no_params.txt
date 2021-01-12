@@ -8,7 +8,7 @@ chifra
 
   Where:  
 	commands              which command to run. 'chifra -v' for more information... (required)
-	-s  (--sleep <num>)   for the 'scrape' and 'daemon' commands, the number of seconds chifra should sleep between runs (default 14)
+	-s  (--sleep <num>)   for the 'scrape' command, the number of seconds to sleep between runs (default 14)
 
 #### Hidden options (shown during testing only)
 	-S  (--start <num>)   first block to process (inclusive)

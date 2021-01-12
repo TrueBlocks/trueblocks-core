@@ -9,7 +9,7 @@ export DOCKER_FOLDER=$QUICKBLOCKS/../trueblocks-explorer/
 #echo "Making..."
 cd $BUILD_FOLDER/
 cmake ../src
-make
+make -j
 doTestingApi --filter fast --mode cmd --no_quit $@
 
 cd $BUILD_FOLDER
