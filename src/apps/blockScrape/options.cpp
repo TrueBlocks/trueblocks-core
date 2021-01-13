@@ -293,7 +293,7 @@ ScrapeState COptions::getCurrentState(void) {
         state = STATE_STOPPED;
         stateStr = "stopped";
     }
-    LOG_INFO("The scraper was previously ", stateStr, ".");
+    LOG_INFO("The scraper was ", stateStr, ".");
     return state;
 }
 
@@ -357,38 +357,4 @@ bool COptions::changeState(void) {
     }
     cout << "{ \"status\": \"" << stateStr << "\" }" << endl;
     return true;
-    /*
-            //    } else {
-            //        //---------------------------------------------------------------------------------
-            //        // If it's already running, don't start it again...
-            //        if (alreadyRunning) {
-            //            LOG_WARN("Scraper is already running. Cannot start it again...");
-            //            EXIT_NOMSG(false);
-            //        }
-            //
-            //        CStringArray optList;
-            //        explode(optList, mode[0], ' ');
-            //
-            //        // Clean up the tool flags and pass them on to the blockScrape program
-            //        tool_flags = "";  // reset tool_flag
-            //        for (auto opt : optList) {
-            //            if (opt == "--daemon") {
-            //                daemonMode = true;
-            //
-            //            } else if (!opt.empty()) {
-            //                if (!startsWith(opt, "-") && !isNumeral(opt)) {
-            //                    cerr << "Invalid options '" << opt << "' to " << progName() << "." << endl;
-            //                    EXIT_NOMSG(false);
-            //                }
-            //
-            //                if (!contains(opt, "start") && !contains(opt, "end")) {
-            //                    tool_flags += (opt + " ");
-            //                }
-            //            }
-            //        }
-            //
-            //        cerr << cYellow << "Scraper is starting with " << tool_flags << "..." << cOff << endl;
-        }
-    */
-    return false;
 }

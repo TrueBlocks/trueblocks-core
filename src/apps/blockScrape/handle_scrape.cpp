@@ -5,28 +5,6 @@
  *------------------------------------------------------------------------*/
 #include "options.h"
 
-//--------------------------------------------------------------------------
-bool COptions::start_scraper(void) {
-    int cnt = 0;
-    state = getCurrentState();
-    while (state != STATE_STOPPED && !shouldQuit()) {
-        usleep(1000000);
-        cnt++;
-        if (isRunning("acctScrape")) {
-            cout << "Not running because of acctScrape: " << cnt << "\r";
-        } else if (state == STATE_PAUSED) {
-            cout << "Paused: " << cnt << "\r";
-        } else {
-            cout << "Processing: " << cnt << "\r";
-            if (!scrape_once())
-                return false;
-        }
-        cout.flush();
-        state = getCurrentState();
-    }
-    return false;
-}
-
 //#define MAX_ROWS 50
 //#define CLIENT 10480200
 //#define N_BLOCKS 100
