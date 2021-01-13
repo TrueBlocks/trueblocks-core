@@ -136,20 +136,35 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    if (isTestMode()) {
-        cout << "{" << endl;
-        cout << "  \"message\": \"Testing only\""
-             << "," << endl;
-        cout << "  \"mode\": \"" << mode[0] << "\"," << endl;
-        cout << "  \"tool\": \"" << tool[0] << "\"," << endl;
-        cout << "  \"tools\": " << tools << "," << endl;
-        cout << "  \"n_blocks\": " << n_blocks << "," << endl;
-        cout << "  \"n_block_procs\": " << n_block_procs << "," << endl;
-        cout << "  \"n_addr_procs\": " << n_addr_procs << "," << endl;
-        cout << "  \"pin\": " << pin << "," << endl;
-        cout << "  \"publish\": " << publish << "," << endl;
-        cout << "  \"listpins\": " << listpins << ", " << endl;
-        cout << "}" << endl;
+    // Control the state of the app (the state is stored in a temporary file). This only returns
+    // false if we moved from stopped state to running state. All other state changes end here.
+    bool result = changeState();
+    if (isTestMode() || result) {
+        if (isTestMode()) {
+            ostringstream os;
+            os << "{" << endl;
+            os << "  \"message\": \"Testing only\""
+               << "," << endl;
+            os << "  \"mode\": \"" << mode[0] << "\"," << endl;
+            os << "  \"tool\": \"" << tool[0] << "\"," << endl;
+            os << "  \"tools\": " << tools << "," << endl;
+            os << "  \"n_blocks\": " << n_blocks << "," << endl;
+            os << "  \"n_block_procs\": " << n_block_procs << "," << endl;
+            os << "  \"n_addr_procs\": " << n_addr_procs << "," << endl;
+            os << "  \"pin\": " << pin << "," << endl;
+            os << "  \"publish\": " << publish << "," << endl;
+            os << "  \"listpins\": " << listpins << ", " << endl;
+            os << "}" << endl;
+            if (isApiMode())
+                cout << os.str();
+            else
+                cerr << os.str();
+            if (!contains(command, "run") && !contains(command, "quit") && !contains(command, "restart") &&
+                !contains(command, "pause")) {
+                mode[0] = "quit";
+                changeState();
+            }
+        }
         return false;
     }
 
@@ -190,10 +205,11 @@ bool COptions::parseArguments(string_q& command) {
 
     const CToml* config = getGlobalConfig("blockScrape");
     bool needsParity = config->getConfigBool("requires", "parity", true);
-    if (needsParity && !isParity())
+    if (needsParity && !isParity()) {
         return usage(
             "This tool requires Parity. Add [requires]\\nparity=false to ~/.quickBlocks/blockScrape.toml turn this "
             "test off. Quitting...");
+    }
 
     bool needsTracing = config->getConfigBool("requires", "tracing", true);
     if (needsTracing && !nodeHasTraces()) {
@@ -204,11 +220,12 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     bool needsBalances = config->getConfigBool("requires", "balances", false);
-    if (needsBalances && !nodeHasBalances(true))
+    if (needsBalances && !nodeHasBalances(true)) {
         return usage("This tool requires an --archive node with historical balances. Quitting...");
+    }
 
-    if (amIRunning(g_progName)) {
-        LOG_WARN("The " + getProgName() + " app is already running. Quitting...");
+    if (amIRunning("blockScrape")) {
+        LOG_WARN("The blockScrape app is already running. Quitting...");
         return false;
     }
 
@@ -261,4 +278,117 @@ COptions::COptions(void) {
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
+}
+
+//--------------------------------------------------------------------------------
+ScrapeState COptions::getCurrentState(void) {
+    if (controlFile.empty())
+        controlFile = configPath("cache/tmp/scraper-state.txt");
+    stateStr = asciiFileToString(controlFile);
+    if (stateStr == "running")
+        state = STATE_RUNNING;
+    else if (stateStr == "paused")
+        state = STATE_PAUSED;
+    else {
+        state = STATE_STOPPED;
+        stateStr = "stopped";
+    }
+    LOG_INFO("The scraper was previously ", stateStr, ".");
+    return state;
+}
+
+//--------------------------------------------------------------------------------
+bool COptions::changeState(void) {
+    if (isTestMode())
+        verbose = 10;
+    state = getCurrentState();
+    switch (state) {
+        case STATE_STOPPED:
+            if (mode[0] == "run" || mode[0].empty()) {
+                manageRemoveList(controlFile);
+                stringToAsciiFile(controlFile, "running");
+                state = STATE_RUNNING;
+                cout << "{ \"status\": \"running\" }" << endl;
+                LOG4("changing state: stopped --> running");
+                return false;
+            } else {
+                LOG_ERR("blockScrape is ", stateStr, ". Cannot ", mode[0], ".");
+                // state = STATE_STOPPED; // redunant, but okay
+            }
+            break;
+        case STATE_RUNNING:
+            if (mode[0] == "pause") {
+                stringToAsciiFile(controlFile, "paused");
+                state = STATE_PAUSED;
+                stateStr = "paused";
+                LOG4("changing state: running --> paused");
+            } else if (mode[0] == "quit") {
+                ::remove(controlFile.c_str());
+                state = STATE_STOPPED;
+                stateStr = "stopped";
+                LOG4("changing state: running --> stopped");
+            } else if (mode[0] == "run") {
+                LOG_ERR("blockScrape is already ", stateStr, ". Cannot ", mode[0], ".");
+                // state = STATE_RUNNING; // redunant, but okay
+            } else if (mode[0] == "restart") {
+                LOG_ERR("blockScrape is ", stateStr, ". Cannot ", mode[0], ".");
+                // state = STATE_RUNNING; // redunant, but okay
+            }
+            break;
+        case STATE_PAUSED:
+            if (mode[0] == "restart" || mode[0] == "run") {
+                stringToAsciiFile(controlFile, "running");
+                state = STATE_RUNNING;
+                stateStr = "running";
+                LOG4("changing state: paused --> running");
+            } else if (mode[0] == "quit") {
+                ::remove(controlFile.c_str());
+                state = STATE_STOPPED;
+                stateStr = "stopped";
+                LOG4("changing state: paused --> stopped");
+            } else {
+                LOG_ERR("blockScrape is ", stateStr, ". Cannot ", mode[0], ".");
+                // state = STATE_PAUSED; // redunant, but okay
+            }
+            break;
+        default:
+            ASSERT("Never happens.");
+            break;
+    }
+    cout << "{ \"status\": \"" << stateStr << "\" }" << endl;
+    return true;
+    /*
+            //    } else {
+            //        //---------------------------------------------------------------------------------
+            //        // If it's already running, don't start it again...
+            //        if (alreadyRunning) {
+            //            LOG_WARN("Scraper is already running. Cannot start it again...");
+            //            EXIT_NOMSG(false);
+            //        }
+            //
+            //        CStringArray optList;
+            //        explode(optList, mode[0], ' ');
+            //
+            //        // Clean up the tool flags and pass them on to the blockScrape program
+            //        tool_flags = "";  // reset tool_flag
+            //        for (auto opt : optList) {
+            //            if (opt == "--daemon") {
+            //                daemonMode = true;
+            //
+            //            } else if (!opt.empty()) {
+            //                if (!startsWith(opt, "-") && !isNumeral(opt)) {
+            //                    cerr << "Invalid options '" << opt << "' to " << progName() << "." << endl;
+            //                    EXIT_NOMSG(false);
+            //                }
+            //
+            //                if (!contains(opt, "start") && !contains(opt, "end")) {
+            //                    tool_flags += (opt + " ");
+            //                }
+            //            }
+            //        }
+            //
+            //        cerr << cYellow << "Scraper is starting with " << tool_flags << "..." << cOff << endl;
+        }
+    */
+    return false;
 }

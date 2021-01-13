@@ -3,32 +3,31 @@
 //#define byzantiumBlock        4370000 - 3000000 = 1370000 --> period 13
 //#define constantinopleBlock   7280000 - 5000000 = 2280000 --> period 22
 //#define instanbulBlock        9069000 - 9000000 = 69000
-
-static blknum_t last = NOPOS;
-bool oneLine(const char* str, void* data) {
-    CStringArray parts;
-    explode(parts, substitute(str, "\n", ""), ',');
-    blknum_t bn = str_2_Uint(parts[0]);
-    uint64_t fake_block = bn;
-    if (bn > instanbulBlock)
-        fake_block = bn - 9000000;
-    else if (bn > constantinopleBlock)
-        fake_block = bn - 5000000;
-    else if (bn > byzantiumBlock)
-        fake_block = bn - 3000000;
-//    uint64_t period = (uint64_t)floor(fake_block / 100000);
-//    cout << bn << " ---- " << parts[1] << " ---- " << parts[2] << " --- " << fake_block << " --- " << period << endl;
-    last = bn;
-    return true;
-}
+//static blknum_t last = NOPOS;
+//bool oneLine(const char* str, void* data) {
+//    CStringArray parts;
+//    explode(parts, substitute(str, "\n", ""), ',');
+//    blknum_t bn = str_2_Uint(parts[0]);
+//    uint64_t fake_block = bn;
+//    if (bn > instanbulBlock)
+//        fake_block = bn - 9000000;
+//    else if (bn > constantinopleBlock)
+//        fake_block = bn - 5000000;
+//    else if (bn > byzantiumBlock)
+//        fake_block = bn - 3000000;
+////    uint64_t period = (uint64_t)floor(fake_block / 100000);
+////    cout << bn << " ---- " << parts[1] << " ---- " << parts[2] << " --- " << fake_block << " --- " << period << endl;
+//    last = bn;
+//    return true;
+//}
 
 #if 1
 int main(int argc, const char* argv[]) {
     etherlib_init(quickQuitHandler);
-    for (size_t i = 11301813; i < 11390800; i++) {
+    for (size_t i = 11390799; i < 11637800; i++) {
         CBlock block;
         getBlock_light(block, i);
-        cout << block.blockNumber << "\t" << block.timestamp << "\t" << block.difficulty << endl;
+        cout << block.blockNumber << "," << block.timestamp << "," << block.difficulty << endl;
         cerr << block.blockNumber << "\r"; cerr.flush();
     }
     return 0;

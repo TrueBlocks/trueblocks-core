@@ -16,19 +16,22 @@ int main(int argc, const char* argv[]) {
     if (!options.prepareArguments(argc, argv))
         RETURN(EXIT_FAILURE);
 
-    for (auto command : options.commandLines) {
-        if (!options.parseArguments(command))
+    // for (auto command : options.commandLines)
+    {
+        if (!options.parseArguments(options.commandLines[0])) {
+            acctlib_cleanup();
             RETURN(EXIT_FAILURE);
+        }
 
         if (options.mode == "list" || options.mode == "export") {
             options.tool_flags = substitute(options.tool_flags, "--addrs", "");
+            acctlib_cleanup();
             RETURN(options.handle_export())
 
         } else {
+            acctlib_cleanup();
             RETURN(options.handle_commands());
         }
     }
-
-    acctlib_cleanup();
     EXIT_NOMSG(EXIT_SUCCESS);
 }

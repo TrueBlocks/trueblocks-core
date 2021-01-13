@@ -1,36 +1,52 @@
-enabled,mode,speed,route,path/tool,filename,post,options,opt_cmd
-on, cmd, fast, export, apps/blockScrape, CLEANUP,          n, CLEANUP
+enabled ,mode ,speed ,route  ,path/tool        ,filename                     ,post ,options                                                ,opt_cmd
+on      ,cmd  ,fast  ,export ,apps/blockScrape ,CLEANUP                      ,n    ,CLEANUP
 
-on, cmd, fast, scrape, apps/blockScrape, README,           n, @th
-on, cmd, fast, scrape, apps/blockScrape, help,             n, @h
-on, cmd, fast, scrape, apps/blockScrape, help_long,        n, help
+on      ,cmd  ,fast  ,scrape ,apps/blockScrape ,README                       ,n    ,@th
+on      ,cmd  ,fast  ,scrape ,apps/blockScrape ,help                         ,n    ,@h
+on      ,cmd  ,fast  ,scrape ,apps/blockScrape ,help_long                    ,n    ,help
 
-on, cmd, fast, scrape, apps/blockScrape, invalid,          n, junk
-on, cmd, fast, scrape, apps/blockScrape, nBlocks_invalid,  n, n_blocks = -12
-on, cmd, fast, scrape, apps/blockScrape, nBProcs_invalid,  n, n_block_procs = -12
-on, cmd, fast, scrape, apps/blockScrape, nAProcs_invalid,  n, n_addr_procs = -12
-
-#
 # Note: Be careful when making these test cases live under the API. The API calls into chifra
 # which has some live code (for example to update the timestamp file). Make sure you're not
 # damaging data in API mode before making these tests 'both'
-#
-on, cmd, fast, scrape, apps/blockScrape, nBlocks,          n, n_blocks = 12
-on, cmd, fast, scrape, apps/blockScrape, nBlockProcs,      n, n_block_procs = 12
-on, cmd, fast, scrape, apps/blockScrape, nAddrProcs,       n, n_addr_procs = 12
-on, cmd, fast, scrape, apps/blockScrape, all,              n, n_blocks = 12 & n_block_procs = 12 & n_addr_procs = 12
+on      ,both ,fast  ,scrape ,apps/blockScrape ,invalid                      ,n    ,junk
+on      ,both ,fast  ,scrape ,apps/blockScrape ,nBlocks_invalid              ,n    ,n_blocks = -12
+on      ,both ,fast  ,scrape ,apps/blockScrape ,nBProcs_invalid              ,n    ,n_block_procs = -12
+on      ,both ,fast  ,scrape ,apps/blockScrape ,nAProcs_invalid              ,n    ,n_addr_procs = -12
 
-on, cmd, fast, scrape, apps/blockScrape, listpins,         n, listpins
-on, cmd, fast, scrape, apps/blockScrape, pin,              n, pin
-on, cmd, fast, scrape, apps/blockScrape, publish,          n, publish
-on, cmd, fast, scrape, apps/blockScrape, pin_publish,      n, publish & pin
-on, cmd, fast, scrape, apps/blockScrape, pin_publish_list, n, publish & pin
+on      ,both ,fast  ,scrape ,apps/blockScrape ,nBlocks                      ,n    ,n_blocks = 12
+on      ,both ,fast  ,scrape ,apps/blockScrape ,nBlockProcs                  ,n    ,n_block_procs = 12
+on      ,both ,fast  ,scrape ,apps/blockScrape ,nAddrProcs                   ,n    ,n_addr_procs = 12
+on      ,both ,fast  ,scrape ,apps/blockScrape ,all                          ,n    ,n_blocks = 12 & n_block_procs = 12 & n_addr_procs = 12
 
-# COption("mode", "", "list<enum[run*|quit|pause|restart]>", OPT_POSITIONAL, "control the block and account scrapers"),  // NOLINT
-# COption("tools", "t", "list<enum[monitors|index*|none|both]>", OPT_FLAG, "process the index, monitors, or both (none means process timestamps only)"),  // NOLINT
-# COption("n_blocks", "n", "<blknum>", OPT_FLAG, "maximum number of blocks to process (defaults to 5000)"),
-# COption("n_block_procs", "b", "<uint64>", OPT_HIDDEN | OPT_FLAG, "number of block channels for blaze"),
-# COption("n_addr_procs", "a", "<uint64>", OPT_HIDDEN | OPT_FLAG, "number of address channels for blaze"),
-# COption("pin", "p", "", OPT_SWITCH, "pin new chunks (and blooms) to IPFS (requires Pinata key)"),
-# COption("publish", "u", "", OPT_SWITCH, "publish the hash of the pin manifest (requires Pinata key, assumes --pin"),  // NOLINT
-# COption("listpins", "l", "", OPT_HIDDEN | OPT_SWITCH, "list pins (precludes other options, requires API key)"),
+on      ,both ,fast  ,scrape ,apps/blockScrape ,tool_fail                    ,n    ,tool = badtool
+on      ,both ,fast  ,scrape ,apps/blockScrape ,tool_fail2                   ,n    ,tool = monitors & tool = index
+on      ,both ,fast  ,scrape ,apps/blockScrape ,tool_monitors                ,n    ,tool = monitors
+on      ,both ,fast  ,scrape ,apps/blockScrape ,tool_index                   ,n    ,tool = index
+on      ,both ,fast  ,scrape ,apps/blockScrape ,tool_none                    ,n    ,tool = none
+on      ,both ,fast  ,scrape ,apps/blockScrape ,tool_both                    ,n    ,tool = both
+
+on      ,both ,fast  ,scrape ,apps/blockScrape ,listpins                     ,n    ,listpins
+on      ,both ,fast  ,scrape ,apps/blockScrape ,pin                          ,n    ,pin
+on      ,both ,fast  ,scrape ,apps/blockScrape ,publish                      ,n    ,publish
+on      ,both ,fast  ,scrape ,apps/blockScrape ,pin_publish                  ,n    ,publish & pin
+on      ,both ,fast  ,scrape ,apps/blockScrape ,pin_publish_list             ,n    ,publish & pin
+
+on      ,both ,fast  ,scrape ,apps/blockScrape ,mode_01_fail                 ,n    ,terms = badmode
+on      ,both ,fast  ,scrape ,apps/blockScrape ,mode_02_fail2                ,n    ,terms = run & terms = quit
+
+on      ,both ,fast  ,scrape ,apps/blockScrape ,mode_11_stopped_quit_fail    ,n    ,terms = quit
+on      ,both ,fast  ,scrape ,apps/blockScrape ,mode_12_stopped_restart_fail ,n    ,terms = restart
+on      ,both ,fast  ,scrape ,apps/blockScrape ,mode_13_stopped_pause_fail   ,n    ,terms = pause
+on      ,both ,fast  ,scrape ,apps/blockScrape ,mode_14_stopped_run_okay     ,n    ,terms = run
+
+on      ,both ,fast  ,scrape ,apps/blockScrape ,mode_21_running_run_fail     ,n    ,terms = run
+on      ,both ,fast  ,scrape ,apps/blockScrape ,mode_22_running_restart_fail ,n    ,terms = restart
+on      ,both ,fast  ,scrape ,apps/blockScrape ,mode_23_running_quit_okay    ,n    ,terms = quit
+on      ,both ,fast  ,scrape ,apps/blockScrape ,mode_24_stopped_run_2_okay   ,n    ,terms = run
+on      ,both ,fast  ,scrape ,apps/blockScrape ,mode_25_running_pause_okay   ,n    ,terms = pause
+
+on      ,both ,fast  ,scrape ,apps/blockScrape ,mode_31_paused_run_okay      ,n    ,terms = run
+on      ,both ,fast  ,scrape ,apps/blockScrape ,mode_32_running_pause_2_okay ,n    ,terms = pause
+on      ,both ,fast  ,scrape ,apps/blockScrape ,mode_33_paused_restart_okay  ,n    ,terms = restart
+on      ,both ,fast  ,scrape ,apps/blockScrape ,mode_34_running_pause_3_okay ,n    ,terms = pause
+on      ,both ,fast  ,scrape ,apps/blockScrape ,mode_35_paused_quit_okay     ,n    ,terms = quit

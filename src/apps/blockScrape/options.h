@@ -29,6 +29,7 @@ class CConsolidator {
 };
 
 enum { TOOL_NONE = 0, TOOL_MONITORS = (1 << 0), TOOL_INDEX = (1 << 1), TOOL_BOTH = (TOOL_MONITORS | TOOL_INDEX) };
+typedef enum { STATE_STOPPED, STATE_RUNNING, STATE_PAUSED } ScrapeState;
 
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
@@ -43,6 +44,9 @@ class COptions : public COptionsBase {
     bool publish;
     // END_CODE_DECLARE
 
+    ScrapeState state;
+    string_q controlFile;
+    string_q stateStr;
     uint32_t tools = TOOL_NONE;
     timestamp_t latestBlockTs;
     blknum_t latestBlockNum;
@@ -57,6 +61,8 @@ class COptions : public COptionsBase {
     bool scrape_once(void);
     bool start_scraper(void);
     bool finalize_chunks(CConsolidator* cons);
+    bool changeState(void);
+    ScrapeState getCurrentState(void);
 };
 
 //-----------------------------------------------------------------------------

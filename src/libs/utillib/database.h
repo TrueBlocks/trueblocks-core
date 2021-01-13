@@ -198,4 +198,5 @@ class CAsciiFile : public CSharedResource {
     }
 };
 
+extern string_q manageRemoveList(const string_q& filename = "");
 }  // namespace qblocks

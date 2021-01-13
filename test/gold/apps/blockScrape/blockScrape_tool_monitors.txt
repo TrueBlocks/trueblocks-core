@@ -1,0 +1,20 @@
+blockScrape argc: 3 [1:--tool] [2:monitors] 
+blockScrape --tool monitors 
+TIME ~ CLOCK - <INFO>  : The scraper was previously stopped.
+{ "status": "running" }
+TIME ~ CLOCK - : 4-----changing state: stopped --> running
+{
+  "message": "Testing only",
+  "mode": "run",
+  "tool": "monitors",
+  "tools": 1,
+  "n_blocks": 18446744073709551615,
+  "n_block_procs": 18446744073709551615,
+  "n_addr_procs": 18446744073709551615,
+  "pin": 0,
+  "publish": 0,
+  "listpins": 0, 
+}
+TIME ~ CLOCK - <INFO>  : The scraper was previously running.
+TIME ~ CLOCK - : 4-----changing state: running --> stopped
+{ "status": "stopped" }

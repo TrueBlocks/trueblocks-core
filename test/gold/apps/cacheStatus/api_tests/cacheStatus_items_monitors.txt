@@ -31,7 +31,7 @@
               "description": "",
               "is_custom": false,
               "is_prefund": false,
-              "is_contract": false,
+              "is_contract": true,
               "is_erc20": false,
               "is_erc721": false,
               "nAppearances": 18446744073709552000,

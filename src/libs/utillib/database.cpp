@@ -32,7 +32,6 @@ namespace qblocks {
 #define LK_NO_REMOVE_LOCK 4
 
 //----------------------------------------------------------------------
-extern string_q manageRemoveList(const string_q& filename = "");
 extern size_t quitCount(size_t s = 0);
 
 //----------------------------------------------------------------------

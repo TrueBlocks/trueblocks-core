@@ -7,18 +7,24 @@
 
 //--------------------------------------------------------------------------
 bool COptions::start_scraper(void) {
-    if (tools & TOOL_INDEX) {
-        int cnt = 0;
-        while (++cnt < 250) {
-            usleep(1000000);
-            if (isRunning("acctScrape"))
-                cout << "Not running: " << cnt << "\r";
-            else
-                cout << "wake--sleep: " << cnt << "\r";
-            cout.flush();
+    int cnt = 0;
+    state = getCurrentState();
+    while (state != STATE_STOPPED && !shouldQuit()) {
+        usleep(1000000);
+        cnt++;
+        if (isRunning("acctScrape")) {
+            cout << "Not running because of acctScrape: " << cnt << "\r";
+        } else if (state == STATE_PAUSED) {
+            cout << "Paused: " << cnt << "\r";
+        } else {
+            cout << "Processing: " << cnt << "\r";
+            if (!scrape_once())
+                return false;
         }
+        cout.flush();
+        state = getCurrentState();
     }
-    return scrape_once();
+    return false;
 }
 
 //#define MAX_ROWS 50
@@ -427,70 +433,10 @@ bool COptions::start_scraper(void) {
 
     bool daemonMode = false;
 
-    // The presence of 'waitFile' will either pause or kill the scraper. If 'waitFile'
-    // disappears and the scraper is paused, the scraper will resume
-    string_q waitFile = configPath("cache/tmp/scraper-off.txt");
-    bool wasPaused = fileExists(waitFile);
-    if (wasPaused)
-        LOG_INFO("The scraper is currently paused");
-
     if (contains(tool_flags, "restart")) {
-        //---------------------------------------------------------------------------------
-        // If a seperate instance is not running, we can't restart it
-        if (!amIRunning("chifra scrape")) {
-            LOG_WARN("Scraper is not running. Cannot restart...");
-            EXIT_NOMSG(true);
-        }
-
-        // If it's not paused, let the user know...
-        if (!wasPaused) {
-            LOG_WARN("Scraper is not paused. Cannot restart...");
-            EXIT_NOMSG(true);
-        }
-
-        // A seperate instance is running, removing the file will restart the scraper
-        ::remove(waitFile.c_str());
-        LOG_INFO("Scraper will restart shortly...");
-        EXIT_NOMSG(true);
-
     } else if (contains(tool_flags, "pause")) {
-        //---------------------------------------------------------------------------------
-        // If a seperate instance is not running, we can't pause it
-        if (!amIRunning("chifra scrape")) {
-            LOG_WARN("Scraper is not running. Cannot pause...");
-            EXIT_NOMSG(true);
-        }
-
-        // If it's already paused, let the user know...
-        if (wasPaused) {
-            LOG_WARN("Scraper is already paused...");
-            EXIT_NOMSG(true);
-        }
-
-        // It's running, so we can pause it
-        stringToAsciiFile(waitFile, Now().Format(FMT_EXPORT));
-        LOG_INFO("Scraper will pause shortly...");
-        EXIT_NOMSG(true);
-
     } else if (contains(tool_flags, "quit")) {
-        if (!amIRunning("chifra scrape")) {
-            LOG_WARN("Scraper is not running. Cannot quit...");
-            EXIT_NOMSG(true);
-        }
-
-        // Kill it whether it's currently paused or not
-        stringToAsciiFile(waitFile, "quit");
-        LOG_INFO("Scraper will quit shortly...");
-        EXIT_NOMSG(true);
-
     } else {
-        //---------------------------------------------------------------------------------
-        // If it's already running, don't start it again...
-        if (amIRunning("chifra scrape")) {
-            LOG_WARN("Scraper is already running. Cannot start it again...");
-            EXIT_NOMSG(false);
-        }
-
         CStringArray optList;
         explode(optList, tool_flags, ' ');
 
@@ -502,7 +448,7 @@ bool COptions::start_scraper(void) {
 
             } else if (!opt.empty()) {
                 if (!startsWith(opt, "-") && !isNumeral(opt)) {
-                    cerr << "Invalid options '" << opt << "' to chifra scrape." << endl;
+                    cerr << "Invalid options '" << opt << "' to blockScrape." << endl;
                     EXIT_NOMSG(false);
                 }
 

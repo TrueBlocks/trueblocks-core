@@ -1,5 +1,8 @@
 blockScrape argc: 3 [1:--publish] [2:--pin] 
 blockScrape --publish --pin 
+TIME ~ CLOCK - <INFO>  : The scraper was previously stopped.
+{ "status": "running" }
+TIME ~ CLOCK - : 4-----changing state: stopped --> running
 {
   "message": "Testing only",
   "mode": "run",
@@ -12,3 +15,6 @@ blockScrape --publish --pin
   "publish": 1,
   "listpins": 0, 
 }
+TIME ~ CLOCK - <INFO>  : The scraper was previously running.
+TIME ~ CLOCK - : 4-----changing state: running --> stopped
+{ "status": "stopped" }

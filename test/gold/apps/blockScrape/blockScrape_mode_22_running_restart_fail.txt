@@ -1,0 +1,17 @@
+blockScrape argc: 2 [1:restart] 
+blockScrape restart 
+TIME ~ CLOCK - <INFO>  : The scraper was previously running.
+TIME ~ CLOCK - <ERROR> : blockScrape is running. Cannot restart.
+{ "status": "running" }
+{
+  "message": "Testing only",
+  "mode": "restart",
+  "tool": "index",
+  "tools": 2,
+  "n_blocks": 18446744073709551615,
+  "n_block_procs": 18446744073709551615,
+  "n_addr_procs": 18446744073709551615,
+  "pin": 0,
+  "publish": 0,
+  "listpins": 0, 
+}

@@ -15,11 +15,23 @@ bool COptions::handle_commands(void) {
         return EXIT_FAILURE;
     }
 
+    if (isApiMode() && mode == "scrape" && contains(tool_flags, "run")) {
+        cout << "{ \"status\": \"cannot run\" }";
+        LOG_ERR(
+            "Use the API only to pause, restart, or quit the scraper -- to run, start in a new window with chifra "
+            "scrape run. Quitting...");
+        return EXIT_FAILURE;
+    }
+
     // URLs require key/value pairs, command lines don't so we remove unneeded keys
     CStringArray removes = {"--names", "--terms", "--addrs"};
     for (auto remove : removes)
         if (remove != "--addrs" || mode != "blocks")
             tool_flags = substitute(tool_flags, remove, "");
+
+    CStringArray scraper = {"--restart", "--pause", "--quit"};
+    for (auto cmd : scraper)
+        replace(tool_flags, cmd, substitute(cmd, "--", ""));
 
     ostringstream os;
     os << cmdMap[mode] << " " << tool_flags;
