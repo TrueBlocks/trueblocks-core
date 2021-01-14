@@ -65,12 +65,13 @@ class COptions : public COptionsBase {
     runmode_t mode;
     CClassDefinitionArray classDefs;
     CCommandOptionArray optionArray;
+    CStringArray positionals;
     CToml classFile;
     CCounter counter;
     timestamp_t lastFormat;
     timestamp_t lastLint;
     ostringstream option_stream, init_stream, local_stream, auto_stream;
-    ostringstream declare_stream, notes_stream, errors_stream;
+    ostringstream header_stream, notes_stream, errors_stream;
     void clearStreams(void) {
         auto_stream.str("");
         option_stream.str("");
@@ -78,7 +79,7 @@ class COptions : public COptionsBase {
         init_stream.str("");
         notes_stream.str("");
         errors_stream.str("");
-        declare_stream.str("");
+        header_stream.str("");
 
         auto_stream.clear();
         option_stream.clear();
@@ -86,7 +87,9 @@ class COptions : public COptionsBase {
         init_stream.clear();
         notes_stream.clear();
         errors_stream.clear();
-        declare_stream.clear();
+        header_stream.clear();
+
+        positionals.clear();
     }
 
     COptions(void);
@@ -110,6 +113,8 @@ class COptions : public COptionsBase {
     void generate_switch(const CCommandOption& option);
     void generate_toggle(const CCommandOption& option);
     void generate_flag(const CCommandOption& option);
+    void generate_positional(const CCommandOption& option);
+    void generate_deprecated(const CCommandOption& option);
 
     bool writeCode(const string_q& fn);
     void writeApiFile(void);

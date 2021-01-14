@@ -13,7 +13,7 @@
 static const COption params[] = {
     // BEG_CODE_OPTIONS
     // clang-format off
-    COption("mode", "", "list<enum[run*|quit|pause|restart]>", OPT_POSITIONAL, "control the block and account scrapers"),  // NOLINT
+    COption("mode", "", "enum[run*|quit|pause|restart]", OPT_POSITIONAL, "control the block and account scrapers"),
     COption("tool", "t", "list<enum[monitors|index*|none|both]>", OPT_FLAG, "process the index, monitors, or both (none means process timestamps only)"),  // NOLINT
     COption("n_blocks", "n", "<blknum>", OPT_FLAG, "maximum number of blocks to process (defaults to 5000)"),
     COption("n_block_procs", "b", "<uint64>", OPT_HIDDEN | OPT_FLAG, "number of block channels for blaze"),
@@ -89,10 +89,10 @@ bool COptions::parseArguments(string_q& command) {
             }
 
         } else {
-            string_q mode_tmp;
-            if (!confirmEnum("mode", mode_tmp, arg))
+            if (!mode.empty())
+                return usage("Please specify only one mode. Quitting...");
+            if (!confirmEnum("mode", mode, arg))
                 return false;
-            mode.push_back(mode_tmp);
 
             // END_CODE_AUTO
         }
@@ -108,10 +108,8 @@ bool COptions::parseArguments(string_q& command) {
     establishFolder(indexFolder_ripe);
     establishFolder(configPath("cache/tmp/"));
 
-    if (mode.size() > 1)
-        return usage("You must specify only one of run, quit, pause, or restart. Quitting...");
-    if (mode.size() == 0)
-        mode.push_back("run");
+    if (mode.empty())
+        mode = "run";
 
     if (tool.size() > 1)
         return usage("You must specify only one of none, index, monitors, both. Quitting...");
@@ -154,7 +152,7 @@ bool COptions::parseArguments(string_q& command) {
             os << "{" << endl;
             os << "  \"message\": \"Testing only\""
                << "," << endl;
-            os << "  \"mode\": \"" << mode[0] << "\"," << endl;
+            os << "  \"mode\": \"" << mode << "\"," << endl;
             os << "  \"tool\": \"" << tool[0] << "\"," << endl;
             os << "  \"tools\": " << tools << "," << endl;
             os << "  \"n_blocks\": " << n_blocks << "," << endl;
@@ -313,7 +311,7 @@ bool COptions::changeState(void) {
     state = getCurrentState();
     switch (state) {
         case STATE_STOPPED:
-            if (mode[0] == "run" || mode[0].empty()) {
+            if (mode == "run" || mode.empty()) {
                 manageRemoveList(controlFile);
                 stringToAsciiFile(controlFile, "running");
                 state = STATE_RUNNING;
@@ -321,42 +319,42 @@ bool COptions::changeState(void) {
                 LOG4("changing state: stopped --> running");
                 return false;
             } else {
-                LOG_ERR("blockScrape is ", stateStr, ". Cannot ", mode[0], ".");
+                LOG_ERR("blockScrape is ", stateStr, ". Cannot ", mode, ".");
                 // state = STATE_STOPPED; // redunant, but okay
             }
             break;
         case STATE_RUNNING:
-            if (mode[0] == "pause") {
+            if (mode == "pause") {
                 stringToAsciiFile(controlFile, "paused");
                 state = STATE_PAUSED;
                 stateStr = "paused";
                 LOG4("changing state: running --> paused");
-            } else if (mode[0] == "quit") {
+            } else if (mode == "quit") {
                 ::remove(controlFile.c_str());
                 state = STATE_STOPPED;
                 stateStr = "stopped";
                 LOG4("changing state: running --> stopped");
-            } else if (mode[0] == "run") {
-                LOG_ERR("blockScrape is already ", stateStr, ". Cannot ", mode[0], ".");
+            } else if (mode == "run") {
+                LOG_ERR("blockScrape is already ", stateStr, ". Cannot ", mode, ".");
                 // state = STATE_RUNNING; // redunant, but okay
-            } else if (mode[0] == "restart") {
-                LOG_ERR("blockScrape is ", stateStr, ". Cannot ", mode[0], ".");
+            } else if (mode == "restart") {
+                LOG_ERR("blockScrape is ", stateStr, ". Cannot ", mode, ".");
                 // state = STATE_RUNNING; // redunant, but okay
             }
             break;
         case STATE_PAUSED:
-            if (mode[0] == "restart" || mode[0] == "run") {
+            if (mode == "restart" || mode == "run") {
                 stringToAsciiFile(controlFile, "running");
                 state = STATE_RUNNING;
                 stateStr = "running";
                 LOG4("changing state: paused --> running");
-            } else if (mode[0] == "quit") {
+            } else if (mode == "quit") {
                 ::remove(controlFile.c_str());
                 state = STATE_STOPPED;
                 stateStr = "stopped";
                 LOG4("changing state: paused --> stopped");
             } else {
-                LOG_ERR("blockScrape is ", stateStr, ". Cannot ", mode[0], ".");
+                LOG_ERR("blockScrape is ", stateStr, ". Cannot ", mode, ".");
                 // state = STATE_PAUSED; // redunant, but okay
             }
             break;

@@ -1,1 +1,1 @@
-{ "errors": [ "blockScrape - Invalid option 'badmode' for 'mode'. One or more of [run|quit|pause|restart] required. Quitting..." ] }
+{ "errors": [ "blockScrape - Invalid option 'badmode' for 'mode'. One of [run|quit|pause|restart] required. Quitting..." ] }

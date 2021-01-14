@@ -26,11 +26,12 @@ extern const char* STR_AUTO_FLAG_BLOCKNUM;
 extern const char* STR_AUTO_FLAG_UINT;
 extern const char* STR_AUTO_FLAG_DOUBLE;
 extern const char* STR_CHECK_BUILTIN;
-extern const char* STR_BLOCK_PROCESSOR;
-extern const char* STR_TX_PROCESSOR;
-extern const char* STR_ADDR_PROCESSOR;
-extern const char* STR_TOPIC_PROCESSOR;
-extern const char* STR_STRING_PROCESSOR;
+extern const char* STR_BLOCKLIST_PROCESSOR;
+extern const char* STR_TXLIST_PROCESSOR;
+extern const char* STR_ADDRLIST_PROCESSOR;
+extern const char* STR_TOPICLIST_PROCESSOR;
+extern const char* STR_STRINGLIST_PROCESSOR;
+extern const char* STR_ENUMLIST_PROCESSOR;
 extern const char* STR_ENUM_PROCESSOR;
 extern const char* STR_CUSTOM_INIT;
 //---------------------------------------------------------------------------------------------------
@@ -53,7 +54,6 @@ bool COptions::handle_options(void) {
 
     // For each tool...
     for (auto tool : tools) {
-        CStringArray positionals;
         bool allAuto = true;
 
         option_stream << "    // clang-format off" << endl;
@@ -99,78 +99,12 @@ bool COptions::handle_options(void) {
 
                 } else if (option.option_kind == "flag") {
                     generate_flag(option);
-                }
 
-                if (option.generate == "local") {
-                    if (option.option_kind == "deprecated") {
-                        local_stream << option.Format(STR_DEFAULT_ASSIGNMENT) << endl;
-                        auto_stream << option.Format(STR_AUTO_FLAG_UINT) << endl;
+                } else if (option.option_kind == "deprecated") {
+                    generate_deprecated(option);
 
-                    } else if (option.option_kind == "positional") {
-                        ostringstream pos_stream;
-                        if (option.data_type == "list<addr>") {
-                            local_stream << substitute(option.Format("    CAddressArray [{COMMAND}];"), "addrs2",
-                                                       "addrs")
-                                         << endl;
-                            pos_stream << option.Format(STR_ADDR_PROCESSOR) << endl;
-                        } else if (option.data_type == "list<topic>") {
-                            local_stream << option.Format("    CTopicArray [{COMMAND}];") << endl;
-                            pos_stream << option.Format(STR_TOPIC_PROCESSOR) << endl;
-                        } else if (startsWith(option.data_type, "list<enum[")) {
-                            local_stream << option.Format("    CStringArray [{COMMAND}];") << endl;
-                            pos_stream << option.Format(STR_ENUM_PROCESSOR) << endl;
-                        } else if (option.data_type == "list<string>" || option.data_type == "list<path>") {
-                            local_stream << option.Format("    CStringArray [{COMMAND}];") << endl;
-                            pos_stream << option.Format(STR_STRING_PROCESSOR) << endl;
-
-                        } else if (option.data_type == "list<blknum>") {
-                            // local_stream << "    CStringArray strings;" << endl;
-                            pos_stream << STR_BLOCK_PROCESSOR << endl;
-                        } else if (option.data_type == "list<date>") {
-                            // local_stream << "    CStringArray strings;" << endl;
-                            pos_stream << STR_AUTO_FLAG_ENUM_LIST << endl;
-                        } else if (option.data_type == "list<tx_id>") {
-                            // local_stream << "    CStringArray strings;" << endl;
-                            pos_stream << STR_TX_PROCESSOR << endl;
-                        } else {
-                            // don't know type
-                        }
-                        if (!pos_stream.str().empty())
-                            positionals.push_back(pos_stream.str());
-                    }
-
-                } else if (option.generate == "header") {
-                    if (option.option_kind == "positional") {
-                        ostringstream pos_stream;
-                        if (option.data_type == "list<addr>") {
-                            declare_stream
-                                << substitute(option.Format("    CAddressArray [{COMMAND}];"), "addrs2", "addrs")
-                                << endl;
-                            pos_stream << option.Format(STR_ADDR_PROCESSOR) << endl;
-                        } else if (option.data_type == "list<topic>") {
-                            declare_stream << option.Format("    CTopicArray [{COMMAND}];") << endl;
-                            pos_stream << option.Format(STR_TOPIC_PROCESSOR) << endl;
-                        } else if (startsWith(option.data_type, "list<enum[")) {
-                            declare_stream << option.Format("    CStringArray [{COMMAND}];") << endl;
-                            pos_stream << option.Format(STR_ENUM_PROCESSOR) << endl;
-                        } else if (option.data_type == "list<string>" || option.data_type == "list<path>") {
-                            declare_stream << option.Format("    CStringArray [{COMMAND}];") << endl;
-                            pos_stream << option.Format(STR_STRING_PROCESSOR) << endl;
-
-                        } else if (option.data_type == "list<blknum>") {
-                            // declare_stream << "    CStringArray strings;" << endl;
-                            pos_stream << STR_BLOCK_PROCESSOR << endl;
-                        } else if (option.data_type == "list<date>") {
-                            // declare_stream << "    CStringArray strings;" << endl;
-                        } else if (option.data_type == "list<tx_id>") {
-                            // declare_stream << "    CStringArray strings;" << endl;
-                            pos_stream << STR_TX_PROCESSOR << endl;
-                        } else {
-                            // unknown type
-                        }
-                        if (!pos_stream.str().empty())
-                            positionals.push_back(pos_stream.str());
-                    }
+                } else if (option.option_kind == "positional") {
+                    generate_positional(option);
                 }
             }
         }
@@ -258,7 +192,7 @@ void COptions::generate_toggle(const CCommandOption& option) {
 
     } else if (option.generate == "header") {
         init_stream << option.Format(initFmt) << endl;
-        declare_stream << option.Format(STR_DECLARATION) << endl;
+        header_stream << option.Format(STR_DECLARATION) << endl;
         auto_stream << option.Format(STR_AUTO_TOGGLE) << endl;
     }
 }
@@ -276,7 +210,7 @@ void COptions::generate_switch(const CCommandOption& option) {
 
     } else if (option.generate == "header") {
         init_stream << option.Format(initFmt) << endl;
-        declare_stream << option.Format(STR_DECLARATION) << endl;
+        header_stream << option.Format(STR_DECLARATION) << endl;
         auto_stream << option.Format(STR_AUTO_SWITCH) << endl;
     }
 }
@@ -312,12 +246,12 @@ void COptions::generate_flag(const CCommandOption& option) {
     } else if (option.generate == "header") {
         if (option.isEnumList) {
             init_stream << option.Format("    [{COMMAND}].clear();") << endl;
-            declare_stream << option.Format("    CStringArray [{COMMAND}];") << endl;
+            header_stream << option.Format("    CStringArray [{COMMAND}];") << endl;
             auto_stream << option.Format(STR_AUTO_FLAG_ENUM_LIST) << endl;
 
         } else {
             init_stream << option.Format(initFmt) << endl;
-            declare_stream << option.Format(STR_DECLARATION) << endl;
+            header_stream << option.Format(STR_DECLARATION) << endl;
             if (option.isEnum)
                 auto_stream << option.Format(STR_AUTO_FLAG_ENUM) << endl;
             else if (option.isBlockNum)
@@ -335,6 +269,93 @@ void COptions::generate_flag(const CCommandOption& option) {
 }
 
 //---------------------------------------------------------------------------------------------------
+void COptions::generate_positional(const CCommandOption& option) {
+    ostringstream pos_stream;
+    if (option.generate == "local") {
+        if (option.data_type == "list<addr>") {
+            local_stream << substitute(option.Format("    CAddressArray [{COMMAND}];"), "addrs2", "addrs") << endl;
+            pos_stream << option.Format(STR_ADDRLIST_PROCESSOR) << endl;
+
+        } else if (option.data_type == "list<topic>") {
+            local_stream << option.Format("    CTopicArray [{COMMAND}];") << endl;
+            pos_stream << option.Format(STR_TOPICLIST_PROCESSOR) << endl;
+
+        } else if (startsWith(option.data_type, "list<enum[")) {
+            local_stream << option.Format("    CStringArray [{COMMAND}];") << endl;
+            pos_stream << option.Format(STR_ENUMLIST_PROCESSOR) << endl;
+
+        } else if (startsWith(option.data_type, "enum[")) {
+            header_stream << option.Format("    string_q [{COMMAND}];") << endl;
+            pos_stream << option.Format(STR_ENUM_PROCESSOR) << endl;
+
+        } else if (option.data_type == "list<string>" || option.data_type == "list<path>") {
+            local_stream << option.Format("    CStringArray [{COMMAND}];") << endl;
+            pos_stream << option.Format(STR_STRINGLIST_PROCESSOR) << endl;
+
+        } else if (option.data_type == "list<blknum>") {
+            // local_stream << "    CStringArray strings;" << endl;
+            pos_stream << STR_BLOCKLIST_PROCESSOR << endl;
+
+        } else if (option.data_type == "list<date>") {
+            // local_stream << "    CStringArray strings;" << endl;
+            pos_stream << STR_AUTO_FLAG_ENUM_LIST << endl;
+
+        } else if (option.data_type == "list<tx_id>") {
+            // local_stream << "    CStringArray strings;" << endl;
+            pos_stream << STR_TXLIST_PROCESSOR << endl;
+
+        } else {
+            // don't know type
+        }
+
+    } else if (option.generate == "header") {
+        if (option.data_type == "list<addr>") {
+            header_stream << substitute(option.Format("    CAddressArray [{COMMAND}];"), "addrs2", "addrs") << endl;
+            pos_stream << option.Format(STR_ADDRLIST_PROCESSOR) << endl;
+
+        } else if (option.data_type == "list<topic>") {
+            header_stream << option.Format("    CTopicArray [{COMMAND}];") << endl;
+            pos_stream << option.Format(STR_TOPICLIST_PROCESSOR) << endl;
+
+        } else if (startsWith(option.data_type, "list<enum[")) {
+            header_stream << option.Format("    CStringArray [{COMMAND}];") << endl;
+            pos_stream << option.Format(STR_ENUMLIST_PROCESSOR) << endl;
+
+        } else if (startsWith(option.data_type, "enum[")) {
+            header_stream << option.Format("    string_q [{COMMAND}];") << endl;
+            pos_stream << option.Format(STR_ENUM_PROCESSOR) << endl;
+
+        } else if (option.data_type == "list<string>" || option.data_type == "list<path>") {
+            header_stream << option.Format("    CStringArray [{COMMAND}];") << endl;
+            pos_stream << option.Format(STR_STRINGLIST_PROCESSOR) << endl;
+
+        } else if (option.data_type == "list<blknum>") {
+            // header_stream << "    CStringArray strings;" << endl;
+            pos_stream << STR_BLOCKLIST_PROCESSOR << endl;
+
+        } else if (option.data_type == "list<date>") {
+            // header_stream << "    CStringArray strings;" << endl;
+
+        } else if (option.data_type == "list<tx_id>") {
+            // header_stream << "    CStringArray strings;" << endl;
+            pos_stream << STR_TXLIST_PROCESSOR << endl;
+
+        } else {
+            // unknown type
+        }
+    }
+    if (!pos_stream.str().empty())
+        positionals.push_back(pos_stream.str());
+}
+
+//---------------------------------------------------------------------------------------------------
+void COptions::generate_deprecated(const CCommandOption& option) {
+    if (option.option_kind == "deprecated") {
+        local_stream << option.Format(STR_DEFAULT_ASSIGNMENT) << endl;
+        auto_stream << option.Format(STR_AUTO_FLAG_UINT) << endl;
+    }
+}
+//---------------------------------------------------------------------------------------------------
 bool COptions::writeCode(const string_q& fn) {
     string_q orig = asciiFileToString(fn);
     string_q converted = orig;
@@ -346,7 +367,7 @@ bool COptions::writeCode(const string_q& fn) {
         converted = replaceCode(converted, "CODE_NOTES", notes_stream.str());
         converted = replaceCode(converted, "CODE_ERROR_MSG", errors_stream.str());
     } else {
-        converted = replaceCode(converted, "CODE_DECLARE", declare_stream.str());
+        converted = replaceCode(converted, "CODE_DECLARE", header_stream.str());
     }
 
     cerr << bBlue << "Processing " << cOff << fn << " ";
@@ -492,36 +513,43 @@ const char* STR_CHECK_BUILTIN =
     "            }\n";
 
 //---------------------------------------------------------------------------------------------------
-const char* STR_BLOCK_PROCESSOR =
+const char* STR_BLOCKLIST_PROCESSOR =
     "            } else if (!parseBlockList2(this, blocks, arg, latest))\n"
     "                return false;\n";
 
 //---------------------------------------------------------------------------------------------------
-const char* STR_TX_PROCESSOR =
+const char* STR_TXLIST_PROCESSOR =
     "            } else if (!parseTransList2(this, transList, arg))\n"
     "                return false;\n";
 
 //---------------------------------------------------------------------------------------------------
-const char* STR_ADDR_PROCESSOR =
+const char* STR_ADDRLIST_PROCESSOR =
     "            } else if (!parseAddressList2(this, [{COMMAND}], arg))\n"
     "                return false;\n";
 
 //---------------------------------------------------------------------------------------------------
-const char* STR_TOPIC_PROCESSOR =
+const char* STR_TOPICLIST_PROCESSOR =
     "            } else if (!parseTopicList2(this, [{COMMAND}], arg))\n"
     "                return false;\n";
 
 //---------------------------------------------------------------------------------------------------
-const char* STR_STRING_PROCESSOR =
+const char* STR_STRINGLIST_PROCESSOR =
     "            } else if (!parseStringList2(this, [{COMMAND}], arg))\n"
     "                return false;\n";
 
 //---------------------------------------------------------------------------------------------------
-const char* STR_ENUM_PROCESSOR =
+const char* STR_ENUMLIST_PROCESSOR =
     "            string_q [{COMMAND}_tmp];\n"
     "            if (!confirmEnum(\"[{COMMAND}]\", [{COMMAND}]_tmp, arg))\n"
     "                return false;\n"
     "            [{COMMAND}].push_back([{COMMAND}]_tmp);\n";
+
+//---------------------------------------------------------------------------------------------------
+const char* STR_ENUM_PROCESSOR =
+    "            if (![{COMMAND}].empty())\n"
+    "                return usage(\"Please specify only one [{COMMAND}]. Quitting...\");\n"
+    "            if (!confirmEnum(\"[{COMMAND}]\", [{COMMAND}], arg))\n"
+    "                return false;\n";
 
 //---------------------------------------------------------------------------------------------------
 const char* STR_CUSTOM_INIT =

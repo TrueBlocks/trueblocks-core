@@ -35,7 +35,7 @@ typedef enum { STATE_STOPPED, STATE_RUNNING, STATE_PAUSED } ScrapeState;
 class COptions : public COptionsBase {
   public:
     // BEG_CODE_DECLARE
-    CStringArray mode;
+    string_q mode;
     CStringArray tool;
     blknum_t n_blocks;
     uint64_t n_block_procs;
@@ -67,7 +67,7 @@ class COptions : public COptionsBase {
     bool changeState(void);
     ScrapeState getCurrentState(void);
     void cleanup(void) {
-        mode[0] = "quit";
+        mode = "quit";
         changeState();
     }
 };
