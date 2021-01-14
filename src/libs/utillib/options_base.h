@@ -241,5 +241,10 @@ class COptionsTransList {
 extern bool prepareEnv(int argc, const char* argv[]);
 extern string_q cleanFmt(const string_q& str);
 extern void errorMessage(const string_q& msg);
-
+inline bool isReserved(const string_q& command) {
+    const char* STR_RESERVED =
+        "|help|verbose|fmt|output|noop|version|nocolor|no_header|very_raw|raw|"
+        "wei|ether|dollars|parity|cmd|mockData|api_mode|to_file|file|";
+    return contains(STR_RESERVED, "|" + command + "|");
+}
 }  // namespace qblocks

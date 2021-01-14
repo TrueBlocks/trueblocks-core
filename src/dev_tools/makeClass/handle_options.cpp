@@ -32,62 +32,48 @@ extern const char* STR_CUSTOM_INIT;
 //---------------------------------------------------------------------------------------------------
 bool COptions::handle_options(void) {
     LOG_INFO(cYellow, "handling options...", cOff);
-    CCommandOption::registerClass();
     counter = CCounter();  // reset
 
+    // read in and prepare the options for all tools
+    map<string, bool> tools;
     string_q contents = asciiFileToString("../src/cmd-line-options.csv");
-
     CStringArray lines;
     explode(lines, contents, '\n');
-
-    map<string, bool> tools;
-    CCommandOptionArray optionArray;
     for (auto line : lines) {
-        CCommandOption optDef(line);
-        if (!optDef.tool.empty() && optDef.tool != "all" && optDef.tool != "tool" && optDef.tool != "templates") {
-            optionArray.push_back(optDef);
-            tools[optDef.group + "/" + optDef.tool] = true;
+        CCommandOption opt(line);
+        if (!opt.tool.empty() && opt.tool != "all" && opt.tool != "tool" && opt.tool != "templates") {
+            optionArray.push_back(opt);
+            tools[opt.group + "/" + opt.tool] = true;
         }
     }
 
+    // For each tool...
     for (auto tool : tools) {
-        warnings.clear();
-        warnings.str("");
-
-        map<string, string> shortCmds;
-        ostringstream option_stream, init_stream, local_stream, auto_stream;
-        ostringstream declare_stream, notes_stream, errors_stream;
-        option_stream << "    // clang-format off" << endl;
-        notes_stream << "    // clang-format off" << endl;
         CStringArray positionals;
         bool allAuto = true;
-        for (auto option : optionArray) {
-            if ((option.group + "/" + option.tool) == tool.first) {
-                check_option(option);
 
+        option_stream << "    // clang-format off" << endl;
+        notes_stream << "    // clang-format off" << endl;
+        CStringArray warnings;
+        for (auto option : optionArray) {
+            option.verifyOptions(warnings);
+            option.verifyHotkey(warnings);
+            if ((option.group + "/" + option.tool) == tool.first) {
                 if (option.tool == "chifra")
                     allAuto = false;
 
-                bool isEnumList = contains(option.data_type, "list<enum");
-                bool isEnum = contains(option.data_type, "enum") && !isEnumList;
-                bool isBool = contains(option.data_type, "boolean");
-                bool isBlockNum = contains(option.data_type, "blknum");
-                bool isUint32 = contains(option.data_type, "uint32");
-                bool isUint64 = contains(option.data_type, "uint64");
-                bool isDouble = contains(option.data_type, "double");
-
-                bool isNote = option.option_kind == "note";
-                bool isError = option.option_kind == "error";
-                if (isNote) {
+                if (option.isNote) {
                     string_q note = option.Format("    notes.push_back(\"[{OPTS}]\");");
                     if (note.length() > 120)
                         note += "  // NOLINT";
                     notes_stream << note << endl;
-                } else if (isError) {
+
+                } else if (option.isError) {
                     string_q err = option.Format("    errorStrs[[{COMMAND]] = \"[{OPTS}]\";");
                     if (err.length() > 120)
                         err += "  // NOLINT";
                     errors_stream << err << endl;
+
                 } else {
                     string_q opt = option.Format(STR_OPTION_STR);
                     if (opt.length() > 120)
@@ -96,37 +82,32 @@ bool COptions::handle_options(void) {
                 }
 
                 if (!option.generate.empty()) {
-                    string_q type = substituteAny(substitute(option.data_type, "boolean", "bool"), "<>", "");
-                    if (contains(option.data_type, "enum"))
-                        type = "string";
-                    replace(type, "blknum", "blknum_t");
-                    replace(type, "string", "string_q");
-                    replace(type, "uint32", "uint32_t");
-                    replace(type, "uint64", "uint64_t");
-
                     if (option.generate == "local") {
                         if (option.option_kind == "switch") {
-                            local_stream << option.Format("    " + type + " [{COMMAND}] = [{DEF_VAL}];") << endl;
+                            local_stream << option.Format("    " + option.real_type + " [{COMMAND}] = [{DEF_VAL}];")
+                                         << endl;
                             auto_stream << option.Format(STR_AUTO_SWITCH) << endl;
 
                         } else if (option.option_kind == "toggle") {
-                            local_stream << option.Format("    " + type + " [{COMMAND}] = [{DEF_VAL}];") << endl;
+                            local_stream << option.Format("    " + option.real_type + " [{COMMAND}] = [{DEF_VAL}];")
+                                         << endl;
                             auto_stream << option.Format(STR_AUTO_TOGGLE) << endl;
 
                         } else if (option.option_kind == "flag") {
-                            if (isEnumList) {
+                            if (option.isEnumList) {
                                 local_stream << option.Format("    CStringArray [{COMMAND}];") << endl;
                                 auto_stream << option.Format(STR_AUTO_FLAG_ENUM_LIST) << endl;
 
                             } else {
-                                local_stream << option.Format("    " + type + " [{COMMAND}] = [{DEF_VAL}];") << endl;
-                                if (isEnum)
+                                local_stream << option.Format("    " + option.real_type + " [{COMMAND}] = [{DEF_VAL}];")
+                                             << endl;
+                                if (option.isEnum)
                                     auto_stream << option.Format(STR_AUTO_FLAG_ENUM) << endl;
-                                else if (isBlockNum)
+                                else if (option.isBlockNum)
                                     auto_stream << option.Format(STR_AUTO_FLAG_BLOCKNUM) << endl;
-                                else if (isUint32 || isUint64)
+                                else if (option.isUint32 || option.isUint64)
                                     auto_stream << option.Format(STR_AUTO_FLAG_UINT) << endl;
-                                else if (isDouble)
+                                else if (option.isDouble)
                                     auto_stream << option.Format(STR_AUTO_FLAG_DOUBLE) << endl;
                                 else
                                     auto_stream << substitute(option.Format(STR_AUTO_FLAG),
@@ -135,7 +116,8 @@ bool COptions::handle_options(void) {
                             }
 
                         } else if (option.option_kind == "skipN") {
-                            local_stream << option.Format("    " + type + " [{COMMAND}] = [{DEF_VAL}];") << endl;
+                            local_stream << option.Format("    " + option.real_type + " [{COMMAND}] = [{DEF_VAL}];")
+                                         << endl;
                             auto_stream << option.Format(STR_AUTO_FLAG_UINT) << endl;
 
                         } else if (option.option_kind == "positional") {
@@ -178,35 +160,36 @@ bool COptions::handle_options(void) {
                     } else if (option.generate == "header") {
                         string_q initFmt = "    [{COMMAND}] = [{DEF_VAL}];";
                         if (option.is_customizable % "true")
-                            initFmt = substitute(STR_CUSTOM_INIT, "[CTYPE]",
-                                                 ((isEnum || isEnumList) ? "String" : (isBool) ? "Bool" : "Int"));
+                            initFmt = substitute(
+                                STR_CUSTOM_INIT, "[CTYPE]",
+                                ((option.isEnum || option.isEnumList) ? "String" : (option.isBool) ? "Bool" : "Int"));
 
                         if (option.option_kind == "switch") {
                             init_stream << option.Format(initFmt) << endl;
-                            declare_stream << option.Format("    " + type + " [{COMMAND}];") << endl;
+                            declare_stream << option.Format("    " + option.real_type + " [{COMMAND}];") << endl;
                             auto_stream << option.Format(STR_AUTO_SWITCH) << endl;
 
                         } else if (option.option_kind == "toggle") {
                             init_stream << option.Format(initFmt) << endl;
-                            declare_stream << option.Format("    " + type + " [{COMMAND}];") << endl;
+                            declare_stream << option.Format("    " + option.real_type + " [{COMMAND}];") << endl;
                             auto_stream << option.Format(STR_AUTO_TOGGLE) << endl;
 
                         } else if (option.option_kind == "flag") {
-                            if (isEnumList) {
+                            if (option.isEnumList) {
                                 init_stream << option.Format("    [{COMMAND}].clear();") << endl;
                                 declare_stream << option.Format("    CStringArray [{COMMAND}];") << endl;
                                 auto_stream << option.Format(STR_AUTO_FLAG_ENUM_LIST) << endl;
 
                             } else {
                                 init_stream << option.Format(initFmt) << endl;
-                                declare_stream << option.Format("    " + type + " [{COMMAND}];") << endl;
-                                if (isEnum)
+                                declare_stream << option.Format("    " + option.real_type + " [{COMMAND}];") << endl;
+                                if (option.isEnum)
                                     auto_stream << option.Format(STR_AUTO_FLAG_ENUM) << endl;
-                                else if (isBlockNum)
+                                else if (option.isBlockNum)
                                     auto_stream << option.Format(STR_AUTO_FLAG_BLOCKNUM) << endl;
-                                else if (isUint32 || isUint64)
+                                else if (option.isUint32 || option.isUint64)
                                     auto_stream << option.Format(STR_AUTO_FLAG_UINT) << endl;
-                                else if (isDouble)
+                                else if (option.isDouble)
                                     auto_stream << option.Format(STR_AUTO_FLAG_DOUBLE) << endl;
                                 else
                                     auto_stream << substitute(option.Format(STR_AUTO_FLAG),
@@ -258,33 +241,6 @@ bool COptions::handle_options(void) {
                         option.option_kind == "flag")
                         allAuto = false;
                 }
-
-                if (!option.hotkey.empty() && !contains(option.option_kind, "positional") &&
-                    !contains(option.option_kind, "description") && !contains(option.option_kind, "note") &&
-                    !contains(option.option_kind, "error")) {
-                    if (option.hotkey == "v")
-                        warnings << option.tool << ":hotkey '" << cRed << option.command << "-" << option.hotkey << cOff
-                                 << "' conflicts with --verbose hotkey|";
-                    if (option.hotkey == "h")
-                        warnings << option.tool << ":hotkey '" << cRed << option.command << "-" << option.hotkey << cOff
-                                 << "' conflicts with --help hotkey|";
-                    if (option.hotkey == "x")
-                        warnings << option.tool << ":hotkey '" << cRed << option.command << "-" << option.hotkey << cOff
-                                 << "' conflicts with --fmt hotkey|";
-                    if (!shortCmds[option.hotkey].empty())
-                        warnings << "Hotkey '" << cRed << option.command << "-" << option.hotkey << cOff
-                                 << "' conflicts with existing '" << cRed << shortCmds[option.hotkey] << cOff << "'|";
-                    shortCmds[option.hotkey] = option.command + "-" + option.hotkey;
-                    bool isUpper = (toLower(option.hotkey) != option.hotkey);
-                    bool isFirst = option.hotkey == option.command.substr(0, 1);
-                    bool isSecond = option.hotkey == option.command.substr(1, 1);
-                    bool isContained = !verbose && contains(option.command, option.hotkey);
-                    if (!isFirst && !isSecond && !isUpper && !isContained) {
-                        warnings << "Hotkey '" << cRed << option.hotkey << "' " << cOff;
-                        warnings << "of command '" << cRed << option.command << cOff
-                                 << "' is not first or second character|";
-                    }
-                }
             }
         }
 
@@ -318,24 +274,21 @@ bool COptions::handle_options(void) {
                 }
             }
         }
-        option_stream << "    // clang-format on" << endl;
         notes_stream << "    // clang-format on" << endl;
+        option_stream << "    // clang-format on" << endl;
 
-        if (!warnings.str().empty()) {
-            CStringArray w;
-            explode(w, warnings.str(), '|');
-            for (auto warning : w)
+        if (warnings.size() > 0) {
+            for (auto warning : warnings)
                 LOG_WARN(warning);
         } else {
             string_q fn = "../src/" + tool.first + "/options.cpp";
             if (!test) {
-                writeCode(fn, auto_stream.str(), option_stream.str(), local_stream.str(), init_stream.str(),
-                          notes_stream.str(), errors_stream.str());
-                writeCode(substitute(fn, ".cpp", ".h"), declare_stream.str());
+                writeCode(substitute(fn, ".cpp", ".h"));
+                writeCode(fn);
             }
         }
+        clearStreams();
     }
-
     if (test) {
         counter.nProcessed = 0;
         LOG_WARN("Testing only - no files written");
@@ -343,120 +296,7 @@ bool COptions::handle_options(void) {
     LOG_INFO(cYellow, "makeClass --options", cOff, " processed ", counter.nVisited, " files (changed ",
              counter.nProcessed, ").", string_q(40, ' '));
 
-    if (api) {
-        CCommands commands;
-        CApiRoute curRoute;
-        for (auto option : optionArray) {
-            if (curRoute.route != option.api_route) {
-                if (!curRoute.route.empty())
-                    commands.routes.push_back(curRoute);
-                curRoute = CApiRoute();
-                curRoute.route = option.api_route;
-            }
-            curRoute.commands.push_back(option);
-        }
-        commands.routes.push_back(curRoute);
-
-        expContext().lev = 2;
-        HIDE_FIELD(CCommandOption, "is_customizable");
-
-        ostringstream out;
-        bool first2 = true;
-        out << "{" << endl;
-        for (auto route : commands.routes) {
-            if (!first2)
-                out << "," << endl;
-            out << "  \"" << route.route << "\": {" << endl;
-            bool first1 = true;
-            for (auto command : route.commands) {
-                if (command.option_kind != "note") {
-                    if (command.hotkey.empty())
-                        command.hotkey = "<not-set>";
-                    if (command.command.empty())
-                        command.command = "<not-set>";
-                    if (command.data_type.empty())
-                        command.data_type = "<not-set>";
-                    ostringstream ts;
-                    ts << command;
-                    string_q tss = ts.str();
-                    replaceReverse(tss, "\n", "");
-
-                    ostringstream os;
-                    if (!first1)
-                        os << "," << endl;
-                    os << "    "
-                       << "\"" << command.command << "\": " << tss;
-                    string_q s = os.str();
-                    replaceAll(s, "\"true\"", "true");
-                    replaceAll(s, "\"false\"", "false");
-                    replaceAll(s, "NOPOS", "");
-                    replaceAll(s, "\"def_val\": false,", "\"def_val\": \"\",");
-                    replaceAll(s, "\"def_val\": true,", "\"def_val\": \"true\",");
-                    replaceAll(s, "\"def_val\": \"\"\"\",", "\"def_val\": \"\",");
-                    replaceAll(s, "<not-set>", "");
-                    out << s;
-                    first1 = false;
-                }
-            }
-            out << endl << "  }";
-            first2 = false;
-        }
-        out << endl << "}" << endl;
-        stringToAsciiFile("../../trueblocks-explorer/api/api_options.json", out.str());
-    }
-
-    return true;
-}
-
-namespace qblocks {
-extern string_q getReservedCommands(void);
-}
-
-//---------------------------------------------------------------------------------------------------
-bool COptions::check_option(const CCommandOption& option) {
-    // Check valid data types
-    CStringArray validTypes = {
-        "<addr>",   "<blknum>", "<pair>",    "<path>", "<range>",  "<string>",
-        "<uint32>", "<uint64>", "<boolean>", "<path>", "<double>",
-    };
-
-    bool valid_type = false;
-    for (auto type : validTypes) {
-        if (type == option.data_type) {
-            valid_type = true;
-        }
-    }
-    if (!valid_type) {
-        if (startsWith(option.data_type, "enum"))
-            valid_type = true;
-        if (startsWith(option.data_type, "list"))
-            valid_type = true;
-    }
-    if (!valid_type &&
-        (option.option_kind == "description" || option.option_kind == "note" || option.option_kind == "error") &&
-        option.data_type.empty())
-        valid_type = true;
-    if (!valid_type && startsWith(option.data_type, "opt_"))
-        valid_type = true;
-
-    if (!valid_type)
-        warnings << "Unknown type '" << cRed << option.data_type << cOff << "' for option '" << cRed << option.command
-                 << cOff << "'|";
-
-    if (option.option_kind == "description" && !endsWith(option.description, ".") && !endsWith(option.description, ":"))
-        warnings << "Description '" << cRed << option.description << cOff << "' should end with a period or colon.|";
-    if (option.option_kind == "note" && !endsWith(option.description, ".") && !endsWith(option.description, ":"))
-        warnings << "Note '" << cRed << option.description << cOff << "' should end with a period or colon.|";
-    if (option.option_kind == "error" && !endsWith(option.description, ".") && !endsWith(option.description, ":"))
-        warnings << "Error string '" << cRed << option.description << cOff << "' should end with a period or colon.|";
-
-    if ((option.option_kind != "description" && option.option_kind != "note" && option.option_kind != "error") &&
-        endsWith(option.description, "."))
-        warnings << "Option '" << cRed << option.description << cOff << "' should not end with a period.|";
-
-    string_q reserved = "|" + getReservedCommands() + "|";
-    if (contains(reserved, "|" + option.command + "|"))
-        warnings << "Option '" << cRed << option.command << cOff << "' is a reserved word.|";
+    writeApiFile();
 
     return true;
 }
@@ -473,21 +313,22 @@ string_q replaceCode(const string_q& orig, const string_q& which, const string_q
     replaceAll(converted, "-//", "            //");
     return converted;
 }
+
 //---------------------------------------------------------------------------------------------------
-bool COptions::writeCode(const string_q& fn, const string_q& code, const string_q& opt, const string_q& local,
-                         const string_q& init, const string_q& notes, const string_q& errors) {
+bool COptions::writeCode(const string_q& fn) {
     string_q orig = asciiFileToString(fn);
     string_q converted = orig;
     if (endsWith(fn, ".cpp")) {
-        converted = replaceCode(converted, "CODE_AUTO", code);
-        converted = replaceCode(converted, "CODE_OPTIONS", opt);
-        converted = replaceCode(converted, "CODE_LOCAL_INIT", local);
-        converted = replaceCode(converted, "CODE_INIT", init);
-        converted = replaceCode(converted, "CODE_NOTES", notes);
-        converted = replaceCode(converted, "CODE_ERROR_MSG", errors);
+        converted = replaceCode(converted, "CODE_AUTO", auto_stream.str());
+        converted = replaceCode(converted, "CODE_OPTIONS", option_stream.str());
+        converted = replaceCode(converted, "CODE_LOCAL_INIT", local_stream.str());
+        converted = replaceCode(converted, "CODE_INIT", init_stream.str());
+        converted = replaceCode(converted, "CODE_NOTES", notes_stream.str());
+        converted = replaceCode(converted, "CODE_ERROR_MSG", errors_stream.str());
     } else {
-        converted = replaceCode(converted, "CODE_DECLARE", code);
+        converted = replaceCode(converted, "CODE_DECLARE", declare_stream.str());
     }
+
     cerr << bBlue << "Processing " << cOff << fn << " ";
     counter.nVisited++;
     if (converted != orig) {
@@ -499,6 +340,72 @@ bool COptions::writeCode(const string_q& fn, const string_q& code, const string_
     cerr << cTeal << "no changes..." << cOff << "\r";
     cerr.flush();
     return false;
+}
+
+//---------------------------------------------------------------------------------------------------
+void COptions::writeApiFile(void) {
+    if (!api)
+        return;
+
+    CCommands commands;
+    CApiRoute curRoute;
+    for (auto option : optionArray) {
+        if (curRoute.route != option.api_route) {
+            if (!curRoute.route.empty())
+                commands.routes.push_back(curRoute);
+            curRoute = CApiRoute();
+            curRoute.route = option.api_route;
+        }
+        curRoute.commands.push_back(option);
+    }
+    commands.routes.push_back(curRoute);
+
+    expContext().lev = 2;
+    HIDE_FIELD(CCommandOption, "is_customizable");
+
+    ostringstream out;
+    bool first2 = true;
+    out << "{" << endl;
+    for (auto route : commands.routes) {
+        if (!first2)
+            out << "," << endl;
+        out << "  \"" << route.route << "\": {" << endl;
+        bool first1 = true;
+        for (auto command : route.commands) {
+            if (command.option_kind != "note") {
+                if (command.hotkey.empty())
+                    command.hotkey = "<not-set>";
+                if (command.command.empty())
+                    command.command = "<not-set>";
+                if (command.data_type.empty())
+                    command.data_type = "<not-set>";
+                ostringstream ts;
+                ts << command;
+                string_q tss = ts.str();
+                replaceReverse(tss, "\n", "");
+
+                ostringstream os;
+                if (!first1)
+                    os << "," << endl;
+                os << "    "
+                   << "\"" << command.command << "\": " << tss;
+                string_q s = os.str();
+                replaceAll(s, "\"true\"", "true");
+                replaceAll(s, "\"false\"", "false");
+                replaceAll(s, "NOPOS", "");
+                replaceAll(s, "\"def_val\": false,", "\"def_val\": \"\",");
+                replaceAll(s, "\"def_val\": true,", "\"def_val\": \"true\",");
+                replaceAll(s, "\"def_val\": \"\"\"\",", "\"def_val\": \"\",");
+                replaceAll(s, "<not-set>", "");
+                out << s;
+                first1 = false;
+            }
+        }
+        out << endl << "  }";
+        first2 = false;
+    }
+    out << endl << "}" << endl;
+    stringToAsciiFile("../../trueblocks-explorer/api/api_options.json", out.str());
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -594,4 +501,5 @@ const char* STR_ENUM_PROCESSOR =
 
 //---------------------------------------------------------------------------------------------------
 const char* STR_CUSTOM_INIT =
-    "    [{COMMAND}] = getGlobalConfig(\"[{TOOL}]\")->getConfig[CTYPE](\"settings\", \"[{COMMAND}]\", [{DEF_VAL}]);";
+    "    [{COMMAND}] = getGlobalConfig(\"[{TOOL}]\")->getConfig[CTYPE](\"settings\", \"[{COMMAND}]\", "
+    "[{DEF_VAL}]);";

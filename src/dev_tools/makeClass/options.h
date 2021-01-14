@@ -64,11 +64,30 @@ class COptions : public COptionsBase {
     map<string_q, CPage> pageMap;
     runmode_t mode;
     CClassDefinitionArray classDefs;
+    CCommandOptionArray optionArray;
     CToml classFile;
-    ostringstream warnings;
     CCounter counter;
     timestamp_t lastFormat;
     timestamp_t lastLint;
+    ostringstream option_stream, init_stream, local_stream, auto_stream;
+    ostringstream declare_stream, notes_stream, errors_stream;
+    void clearStreams(void) {
+        auto_stream.str("");
+        option_stream.str("");
+        local_stream.str("");
+        init_stream.str("");
+        notes_stream.str("");
+        errors_stream.str("");
+        declare_stream.str("");
+
+        auto_stream.clear();
+        option_stream.clear();
+        local_stream.clear();
+        init_stream.clear();
+        notes_stream.clear();
+        errors_stream.clear();
+        declare_stream.clear();
+    }
 
     COptions(void);
     ~COptions(void);
@@ -88,9 +107,8 @@ class COptions : public COptionsBase {
     bool handle_generate_js_skins(void);
     bool handle_generate_js_pages(void);
 
-    bool check_option(const CCommandOption& option);
-    bool writeCode(const string_q& fn, const string_q& code, const string_q& opt = "", const string_q& local = "",
-                   const string_q& init = "", const string_q& notes = "", const string_q& errors = "");
+    bool writeCode(const string_q& fn);
+    void writeApiFile(void);
 };
 
 //-------------------------------------------------------------------

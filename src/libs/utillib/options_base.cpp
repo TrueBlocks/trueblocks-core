@@ -252,12 +252,6 @@ bool COptionsBase::prepareArguments(int argCountIn, const char* argvIn[]) {
     return true;
 }
 
-//--------------------------------------------------------------------------------
-string_q getReservedCommands(void) {
-    return "help|verbose|fmt|output|noop|version|nocolor|no_header|very_raw|raw|wei|ether|dollars|parity|cmd|"
-           "mockData|api_mode|to_file|file";
-}
-
 //---------------------------------------------------------------------------------------
 static const char* CHR_VALID_NAME = "\t\n\r()<>[]{}`\\|;'!$^*~@?&#+%,:=\"";
 //---------------------------------------------------------------------------------------

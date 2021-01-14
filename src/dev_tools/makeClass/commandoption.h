@@ -50,7 +50,19 @@ class CCommandOption : public CBaseNode {
     DECLARE_NODE(CCommandOption);
 
     // EXISTING_CODE
+    string_q real_type;
+    bool isEnumList;
+    bool isEnum;
+    bool isBool;
+    bool isBlockNum;
+    bool isUint32;
+    bool isUint64;
+    bool isDouble;
+    bool isNote;
+    bool isError;
     explicit CCommandOption(const string_q& line);
+    void verifyOptions(CStringArray& warnings);
+    void verifyHotkey(CStringArray& warnings);
     // EXISTING_CODE
     bool operator==(const CCommandOption& it) const;
     bool operator!=(const CCommandOption& it) const {
@@ -120,6 +132,16 @@ inline void CCommandOption::initialize(void) {
     description = "";
 
     // EXISTING_CODE
+    // real_type = "";
+    isEnumList = false;
+    isEnum = false;
+    isBool = false;
+    isBlockNum = false;
+    isUint32 = false;
+    isUint64 = false;
+    isDouble = false;
+    isNote = false;
+    isError = false;
     // EXISTING_CODE
 }
 
@@ -145,6 +167,16 @@ inline void CCommandOption::duplicate(const CCommandOption& co) {
     description = co.description;
 
     // EXISTING_CODE
+    real_type = co.real_type;
+    isEnumList = co.isEnumList;
+    isEnum = co.isEnum;
+    isBool = co.isBool;
+    isBlockNum = co.isBlockNum;
+    isUint32 = co.isUint32;
+    isUint64 = co.isUint64;
+    isDouble = co.isDouble;
+    isNote = co.isNote;
+    isError = co.isError;
     // EXISTING_CODE
 }
 

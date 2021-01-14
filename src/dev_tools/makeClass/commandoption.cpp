@@ -491,6 +491,100 @@ CCommandOption::CCommandOption(const string_q& line) {
             def_val = "NOPOS";
         }
     }
+
+    isEnumList = contains(data_type, "list<enum");
+    isEnum = contains(data_type, "enum") && !isEnumList;
+    isBool = contains(data_type, "boolean");
+    isBlockNum = contains(data_type, "blknum");
+    isUint32 = contains(data_type, "uint32");
+    isUint64 = contains(data_type, "uint64");
+    isDouble = contains(data_type, "double");
+    isNote = option_kind == "note";
+    isError = option_kind == "error";
+
+    real_type = substituteAny(substitute(data_type, "boolean", "bool"), "<>", "");
+    if (contains(data_type, "enum"))
+        real_type = "string";
+    replace(real_type, "blknum", "blknum_t");
+    replace(real_type, "string", "string_q");
+    replace(real_type, "uint32", "uint32_t");
+    replace(real_type, "uint64", "uint64_t");
+}
+
+//---------------------------------------------------------------------------------------------------
+void CCommandOption::verifyOptions(CStringArray& warnings) {
+    // Check valid data types
+    CStringArray validTypes = {
+        "<addr>",   "<blknum>", "<pair>",    "<path>", "<range>",  "<string>",
+        "<uint32>", "<uint64>", "<boolean>", "<path>", "<double>",
+    };
+
+    bool valid_type = false;
+    for (auto type : validTypes) {
+        if (type == data_type) {
+            valid_type = true;
+        }
+    }
+    if (!valid_type) {
+        if (startsWith(data_type, "enum"))
+            valid_type = true;
+        if (startsWith(data_type, "list"))
+            valid_type = true;
+    }
+    if (!valid_type && (option_kind == "description" || option_kind == "note" || option_kind == "error") &&
+        data_type.empty())
+        valid_type = true;
+    if (!valid_type && startsWith(data_type, "opt_"))
+        valid_type = true;
+
+    ostringstream warnstream;
+    if (!valid_type)
+        warnstream << "Unknown type '" << data_type << "' for option '" << command << "'|";
+    if (option_kind == "description" && !endsWith(description, ".") && !endsWith(description, ":"))
+        warnstream << "Description '" << description << "' should end with a period or colon.|";
+    if (option_kind == "note" && !endsWith(description, ".") && !endsWith(description, ":"))
+        warnstream << "Note '" << description << "' should end with a period or colon.|";
+    if (option_kind == "error" && !endsWith(description, ".") && !endsWith(description, ":"))
+        warnstream << "Error string '" << description << "' should end with a period or colon.|";
+    if ((option_kind != "description" && option_kind != "note" && option_kind != "error") && endsWith(description, "."))
+        warnstream << "Option '" << description << "' should not end with a period.|";
+    if (isReserved(command))
+        warnstream << "Option '" << command << "' is a reserved word.|";
+
+    explode(warnings, warnstream.str(), '|');
+}
+
+//---------------------------------------------------------------------------------------------------
+void CCommandOption::verifyHotkey(CStringArray& warnings) {
+    if (hotkey.empty() || contains(option_kind, "positional") || contains(option_kind, "description") ||
+        contains(option_kind, "note") || !contains(option_kind, "error")) {
+        return;
+    }
+
+    ostringstream warnstream;
+    if (hotkey == "v")
+        warnstream << tool << ":hotkey '" << command << "-" << hotkey << "' conflicts with --verbose hotkey|";
+    if (hotkey == "h")
+        warnstream << tool << ":hotkey '" << command << "-" << hotkey << "' conflicts with --help hotkey|";
+    if (hotkey == "x")
+        warnstream << tool << ":hotkey '" << command << "-" << hotkey << "' conflicts with --fmt hotkey|";
+
+    static map<string, string> shortCmds;
+    if (!shortCmds[hotkey].empty())
+        warnstream << "Hotkey '" << command << "-" << hotkey << "' conflicts with existing '" << shortCmds[hotkey]
+                   << "'|";
+    shortCmds[hotkey] = command + "-" + hotkey;  // store for later to find dups
+
+    bool isUpper = (toLower(hotkey) != hotkey);
+    bool isFirst = hotkey == command.substr(0, 1);
+    bool isSecond = hotkey == command.substr(1, 1);
+    bool isContained = contains(command, hotkey);
+    if (!isUpper && !isFirst && !isSecond && (!verbose && !isContained)) {
+        warnstream << "Hotkey '" << hotkey << "' ";
+        warnstream << "of command '" << command << "' is not first or second character|";
+    }
+
+    explode(warnings, warnstream.str(), '|');
 }
 // EXISTING_CODE
 }  // namespace qblocks
