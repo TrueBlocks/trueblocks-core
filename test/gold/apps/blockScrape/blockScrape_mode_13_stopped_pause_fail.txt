@@ -1,6 +1,6 @@
 blockScrape argc: 2 [1:pause] 
 blockScrape pause 
-TIME ~ CLOCK - <INFO>  : The scraper was previously stopped.
+TIME ~ CLOCK - : 4-----The scraper was stopped.
 TIME ~ CLOCK - <ERROR> : blockScrape is stopped. Cannot pause.
 { "status": "stopped" }
 {

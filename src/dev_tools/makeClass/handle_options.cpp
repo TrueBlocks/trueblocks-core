@@ -20,6 +20,7 @@ extern const char* STR_AUTO_FLAG_ENUM;
 extern const char* STR_AUTO_FLAG_ENUM_LIST;
 extern const char* STR_AUTO_FLAG_BLOCKNUM;
 extern const char* STR_AUTO_FLAG_UINT;
+extern const char* STR_AUTO_FLAG_DOUBLE;
 extern const char* STR_CHECK_BUILTIN;
 extern const char* STR_BLOCK_PROCESSOR;
 extern const char* STR_TX_PROCESSOR;
@@ -73,6 +74,7 @@ bool COptions::handle_options(void) {
                 bool isBlockNum = contains(option.data_type, "blknum");
                 bool isUint32 = contains(option.data_type, "uint32");
                 bool isUint64 = contains(option.data_type, "uint64");
+                bool isDouble = contains(option.data_type, "double");
 
                 bool isNote = option.option_kind == "note";
                 bool isError = option.option_kind == "error";
@@ -124,6 +126,8 @@ bool COptions::handle_options(void) {
                                     auto_stream << option.Format(STR_AUTO_FLAG_BLOCKNUM) << endl;
                                 else if (isUint32 || isUint64)
                                     auto_stream << option.Format(STR_AUTO_FLAG_UINT) << endl;
+                                else if (isDouble)
+                                    auto_stream << option.Format(STR_AUTO_FLAG_DOUBLE) << endl;
                                 else
                                     auto_stream << substitute(option.Format(STR_AUTO_FLAG),
                                                               "substitute(substitute(arg, \"-:\", )", "substitute(arg")
@@ -202,6 +206,8 @@ bool COptions::handle_options(void) {
                                     auto_stream << option.Format(STR_AUTO_FLAG_BLOCKNUM) << endl;
                                 else if (isUint32 || isUint64)
                                     auto_stream << option.Format(STR_AUTO_FLAG_UINT) << endl;
+                                else if (isDouble)
+                                    auto_stream << option.Format(STR_AUTO_FLAG_DOUBLE) << endl;
                                 else
                                     auto_stream << substitute(option.Format(STR_AUTO_FLAG),
                                                               "substitute(substitute(arg, \"-:\", )", "substitute(arg")
@@ -410,7 +416,8 @@ extern string_q getReservedCommands(void);
 bool COptions::check_option(const CCommandOption& option) {
     // Check valid data types
     CStringArray validTypes = {
-        "<addr>", "<blknum>", "<pair>", "<path>", "<range>", "<string>", "<uint32>", "<uint64>", "<boolean>", "<path>",
+        "<addr>",   "<blknum>", "<pair>",    "<path>", "<range>",  "<string>",
+        "<uint32>", "<uint64>", "<boolean>", "<path>", "<double>",
     };
 
     bool valid_type = false;
@@ -537,6 +544,12 @@ const char* STR_AUTO_FLAG_BLOCKNUM =
 const char* STR_AUTO_FLAG_UINT =
     "        } else if ([startsWith(arg, \"-{HOTKEY}:\") || ]startsWith(arg, \"--[{COMMAND}]:\")) {\n"
     "            if (!confirmUint(\"[{COMMAND}]\", [{COMMAND}], arg))\n"
+    "                return false;\n";
+
+//---------------------------------------------------------------------------------------------------
+const char* STR_AUTO_FLAG_DOUBLE =
+    "        } else if ([startsWith(arg, \"-{HOTKEY}:\") || ]startsWith(arg, \"--[{COMMAND}]:\")) {\n"
+    "            if (!confirmDouble(\"[{COMMAND}]\", [{COMMAND}], arg))\n"
     "                return false;\n";
 
 //---------------------------------------------------------------------------------------------------

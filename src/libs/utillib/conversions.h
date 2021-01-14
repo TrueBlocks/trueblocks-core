@@ -109,6 +109,7 @@ extern timestamp_t date_2_Ts(const string_q& str);
 extern bool isZeroHash(const hash_t& hash);
 extern bool isZeroAddr(const address_t& addr);
 extern bool isNumeral(const string_q& test);
+extern bool isDouble(const string_q& test);
 extern bool isHexStr(const string_q& str);
 extern bool isAddress(const string_q& addr);
 extern bool isDate(const string_q& date);

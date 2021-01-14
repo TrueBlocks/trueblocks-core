@@ -237,5 +237,6 @@ extern void cleanMonitorStage(void);
 extern const char* STR_DISPLAY_TOKENBALANCERECORD2;
 extern string_q getTokenBalanceOf(const CMonitor& token, const address_t& holder, blknum_t blockNum);
 extern string_q getTokenState(const string_q& what, const CMonitor& token, blknum_t blockNum);
+extern bool freshen_internal(CMonitorArray& list, const string_q& freshen_flags);
 // EXISTING_CODE
 }  // namespace qblocks

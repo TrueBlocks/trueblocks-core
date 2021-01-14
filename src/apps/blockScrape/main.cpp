@@ -19,28 +19,36 @@ int main(int argc, const char* argv[]) {
 
         options.state = options.getCurrentState();
         while (options.state != STATE_STOPPED && !shouldQuit()) {
-            usleep(1000000);
-            if (isRunning("acctScrape")) {
-                cout << "Not running because of acctScrape: " << Now().Format(FMT_EXPORT) << "\r";
-                cout.flush();
-            } else if (options.state == STATE_PAUSED) {
-                cout << "Paused: " << Now().Format(FMT_EXPORT) << "\r";
-                cout.flush();
+            if (isRunning("acctScrape") || options.state == STATE_PAUSED) {
+                cerr << "Block scraper is paused: " << Now().Format(FMT_EXPORT) << "\r";
+                cerr.flush();
             } else {
-                cerr << cYellow << "Scraper is starting..." << cOff << endl;
-                if (!options.scrape_once()) {
-                    options.mode[0] = "quit";
-                    options.changeState();
-                    pinlib_cleanup();
-                    return 0;
+                if (options.tools & TOOL_INDEX) {
+                    cerr << cYellow << "Block scraper is running...";
+                    cerr << (options.scrape_blocks() ? "completed..." : "did not complete...");
                 }
+                if (options.tools & TOOL_MONITORS) {
+                    cerr << cYellow << "Monitor scraper is running...";
+                    cerr << (options.scrape_monitors() ? "completed..." : "did not complete...");
+                }
+                cerr << "running again in " << options.sleep << " seconds... " << cOff << endl;
+                // FIX_THIS_CODE
+                freshenTimestamps(getLatestBlock_cache_ripe());
             }
-            options.state = options.getCurrentState();
+            // We need to sleep, but we want to wake up frequently enough to check if user has
+            // told us to quit, pause or restart. (The `sleep` value is in seconds.)
+            uint32_t nHalfSeconds = (uint32_t)(options.sleep * 2);
+            ScrapeState prevState = options.state;
+            for (size_t n = 0; n < nHalfSeconds && !shouldQuit() && options.state == prevState; n++) {
+                usleep((useconds_t)(500000));
+                options.state = options.getCurrentState();
+                cerr << ".";
+                cerr.flush();
+            }
         }
     }
 
-    options.mode[0] = "quit";
-    options.changeState();
+    options.cleanup();
     pinlib_cleanup();
     return 0;
 }

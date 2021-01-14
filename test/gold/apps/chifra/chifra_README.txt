@@ -2,7 +2,7 @@ chifra argc: 2 [1:-th]
 chifra -th 
 #### Usage
 
-`Usage:`    chifra [-s|-v|-h] commands  
+`Usage:`    chifra [-v|-h] commands  
 `Purpose:`  Main TrueBlocks command line controls.
 
 `Where:`  
@@ -10,7 +10,6 @@ chifra -th
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
 |  | commands | which command to run, one or more of [list&#124;export&#124;slurp&#124;collections&#124;names&#124;tags&#124;abis&#124;blocks&#124;transactions&#124;receipts&#124;logs&#124;traces&#124;quotes&#124;state&#124;tokens&#124;when&#124;where&#124;dive&#124;scrape&#124;status&#124;rm] (required) |
-| -s | --sleep <num> | for the 'scrape' command, the number of seconds to sleep between runs (default 14) |
 
 #### Hidden options (shown during testing only)
 | -S | --start <num> | first block to process (inclusive) |

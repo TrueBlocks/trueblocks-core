@@ -385,6 +385,14 @@ bool isNumeral(const string_q& test) {
 }
 
 //--------------------------------------------------------------------------------
+bool isDouble(const string_q& test) {
+    for (size_t i = 0; i < test.length(); i++)
+        if (!isdigit(test[i]) && test[i] != '.')
+            return false;
+    return true;
+}
+
+//--------------------------------------------------------------------------------
 bool isHexStr(const string_q& str) {
     if (!startsWith(str, "0x") || str.size() < 2)
         return false;

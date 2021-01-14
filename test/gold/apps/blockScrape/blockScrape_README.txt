@@ -2,7 +2,7 @@ blockScrape argc: 2 [1:-th]
 blockScrape -th 
 #### Usage
 
-`Usage:`    blockScrape [-t|-n|-p|-u|-v|-h] mode  
+`Usage:`    blockScrape [-t|-n|-p|-u|-s|-v|-h] mode  
 `Purpose:`  Decentralized blockchain scraper and block cache.
 
 `Where:`  
@@ -14,6 +14,7 @@ blockScrape -th
 | -n | --n_blocks <num> | maximum number of blocks to process (defaults to 5000) |
 | -p | --pin | pin new chunks (and blooms) to IPFS (requires Pinata key) |
 | -u | --publish | publish the hash of the pin manifest to the UnchainedIndex smart contract |
+| -s | --sleep <double> | the number of seconds to sleep between passes (default 14) |
 
 #### Hidden options (shown during testing only)
 | -b | --n_block_procs <num> | number of block channels for blaze |

@@ -1,12 +1,11 @@
 chifra argc: 2 [1:-h] 
 chifra -h 
 
-  Usage:    chifra [-s|-v|-h] commands  
+  Usage:    chifra [-v|-h] commands  
   Purpose:  Main TrueBlocks command line controls.
 
   Where:  
 	commands              which command to run, one or more of [list|export|slurp|collections|names|tags|abis|blocks|transactions|receipts|logs|traces|quotes|state|tokens|when|where|dive|scrape|status|rm] (required)
-	-s  (--sleep <num>)   for the 'scrape' command, the number of seconds to sleep between runs (default 14)
 
 #### Hidden options (shown during testing only)
 	-S  (--start <num>)   first block to process (inclusive)

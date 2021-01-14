@@ -21,6 +21,7 @@ static const COption params[] = {
     COption("pin", "p", "", OPT_SWITCH, "pin new chunks (and blooms) to IPFS (requires Pinata key)"),
     COption("publish", "u", "", OPT_SWITCH, "publish the hash of the pin manifest to the UnchainedIndex smart contract"),  // NOLINT
     COption("listpins", "l", "", OPT_HIDDEN | OPT_SWITCH, "list pins (precludes other options, requires API key)"),
+    COption("sleep", "s", "<double>", OPT_FLAG, "the number of seconds to sleep between passes (default 14)"),
     COption("", "", "", OPT_DESCRIPTION, "Decentralized blockchain scraper and block cache."),
     // clang-format on
     // END_CODE_OPTIONS
@@ -77,6 +78,10 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-l" || arg == "--listpins") {
             listpins = true;
 
+        } else if (startsWith(arg, "-s:") || startsWith(arg, "--sleep:")) {
+            if (!confirmDouble("sleep", sleep, arg))
+                return false;
+
         } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
@@ -121,6 +126,10 @@ bool COptions::parseArguments(string_q& command) {
     else
         tools = TOOL_BOTH;
 
+    // Min of 1/2 second
+    if (sleep < .5)
+        sleep = .5;
+
     bool hasPinCmd = (listpins || pin || publish);
     if (hasPinCmd) {
         if (!isTestMode() && !hasPinataKeys()) {
@@ -161,8 +170,7 @@ bool COptions::parseArguments(string_q& command) {
                 cerr << os.str();
             if (!contains(command, "run") && !contains(command, "quit") && !contains(command, "restart") &&
                 !contains(command, "pause")) {
-                mode[0] = "quit";
-                changeState();
+                cleanup();
             }
         }
         return false;
@@ -258,6 +266,7 @@ void COptions::Init(void) {
     n_addr_procs = NOPOS;
     pin = false;
     publish = false;
+    sleep = 14;
     // END_CODE_INIT
 
     minArgs = 0;
@@ -293,7 +302,7 @@ ScrapeState COptions::getCurrentState(void) {
         state = STATE_STOPPED;
         stateStr = "stopped";
     }
-    LOG_INFO("The scraper was ", stateStr, ".");
+    LOG4("The scraper was ", stateStr, ".");
     return state;
 }
 

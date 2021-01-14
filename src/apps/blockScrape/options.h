@@ -42,6 +42,7 @@ class COptions : public COptionsBase {
     uint64_t n_addr_procs;
     bool pin;
     bool publish;
+    double sleep;
     // END_CODE_DECLARE
 
     ScrapeState state;
@@ -58,14 +59,20 @@ class COptions : public COptionsBase {
     bool parseArguments(string_q& command);
     void Init(void);
 
-    bool scrape_once(void);
     bool start_scraper(void);
+    bool scrape_blocks(void);
+    bool scrape_monitors(void);
     bool finalize_chunks(CConsolidator* cons);
+
     bool changeState(void);
     ScrapeState getCurrentState(void);
+    void cleanup(void) {
+        mode[0] = "quit";
+        changeState();
+    }
 };
 
 //-----------------------------------------------------------------------------
 extern bool visitCopyRipeToStage(const string_q& path, void* data);
 extern bool appendFile(const string_q& toFile, const string_q& fromFile);
-extern bool visitMonitor(const string_q& path, void* data);
+extern bool prepareMonitors(const string_q& path, void* data);

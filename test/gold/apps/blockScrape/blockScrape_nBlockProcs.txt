@@ -1,6 +1,6 @@
 blockScrape argc: 3 [1:--n_block_procs] [2:12] 
 blockScrape --n_block_procs 12 
-TIME ~ CLOCK - <INFO>  : The scraper was previously stopped.
+TIME ~ CLOCK - : 4-----The scraper was stopped.
 { "status": "running" }
 TIME ~ CLOCK - : 4-----changing state: stopped --> running
 {
@@ -15,6 +15,6 @@ TIME ~ CLOCK - : 4-----changing state: stopped --> running
   "publish": 0,
   "listpins": 0, 
 }
-TIME ~ CLOCK - <INFO>  : The scraper was previously running.
+TIME ~ CLOCK - : 4-----The scraper was running.
 TIME ~ CLOCK - : 4-----changing state: running --> stopped
 { "status": "stopped" }

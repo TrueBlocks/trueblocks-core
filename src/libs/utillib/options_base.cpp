@@ -490,6 +490,27 @@ bool COptionsBase::confirmUint(const string_q& name, uint64_t& value, const stri
 }
 
 //---------------------------------------------------------------------------------------------------
+bool COptionsBase::confirmDouble(const string_q& name, double& value, const string_q& argIn) const {
+    value = NOPOS;
+
+    const COption* param = findParam(name);
+    if (!param)
+        return usage("Unknown parameter `" + name + "'. Quitting...");
+    if (!contains(param->type, "double"))
+        return true;
+
+    string_q arg = argIn;
+    replace(arg, param->shortName + ":", "");
+    replace(arg, name + ":", "");
+    replaceAll(arg, "-", "");
+
+    if (!isDouble(arg))
+        return usage("Value to --" + name + " parameter (" + arg + ") must be a valid double. Quitting...");
+    value = str_2_Double(arg);
+    return true;
+}
+
+//---------------------------------------------------------------------------------------------------
 bool COptionsBase::confirmBlockNum(const string_q& name, blknum_t& value, const string_q& argIn,
                                    blknum_t latest) const {
     value = NOPOS;

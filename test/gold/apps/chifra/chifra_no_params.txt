@@ -3,12 +3,11 @@ chifra
 
   Please specify which command to run. 'chifra -v' for more information...
 
-  Usage:    chifra [-s|-v|-h] commands  
+  Usage:    chifra [-v|-h] commands  
   Purpose:  Main TrueBlocks command line controls.
 
   Where:  
 	commands              which command to run. 'chifra -v' for more information... (required)
-	-s  (--sleep <num>)   for the 'scrape' command, the number of seconds to sleep between runs (default 14)
 
 #### Hidden options (shown during testing only)
 	-S  (--start <num>)   first block to process (inclusive)

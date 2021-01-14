@@ -22,7 +22,6 @@ static const COption params[] = {
     // BEG_CODE_OPTIONS
     // clang-format off
     COption("commands", "", ""+opt_string+"", OPT_REQUIRED | OPT_POSITIONAL, "which command to run"),
-    COption("sleep", "s", "<uint32>", OPT_FLAG, "for the 'scrape' command, the number of seconds to sleep between runs (default 14)"),  // NOLINT
     COption("start", "S", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to process (inclusive)"),
     COption("end", "E", "<blknum>", OPT_HIDDEN | OPT_FLAG, "last block to process (inclusive)"),
     COption("", "", "", OPT_DESCRIPTION, "Main TrueBlocks command line controls."),
@@ -39,7 +38,6 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
     // BEG_CODE_LOCAL_INIT
-    uint32_t sleep = 14;
     blknum_t start = 0;
     blknum_t end = NOPOS;
     // END_CODE_LOCAL_INIT
@@ -53,10 +51,6 @@ bool COptions::parseArguments(string_q& command) {
         if (false) {
             // do nothing -- make auto code generation easier
             // BEG_CODE_AUTO
-        } else if (startsWith(arg, "-s:") || startsWith(arg, "--sleep:")) {
-            if (!confirmUint("sleep", sleep, arg))
-                return false;
-
         } else if (startsWith(arg, "-S:") || startsWith(arg, "--start:")) {
             if (!confirmBlockNum("start", start, arg, latest))
                 return false;
@@ -134,8 +128,6 @@ bool COptions::parseArguments(string_q& command) {
             }
         }
     }
-
-    scrapeSleep = (useconds_t)sleep;
 
     string_q origMode = mode;
     if (mode.empty()) {
@@ -257,7 +249,6 @@ void COptions::Init(void) {
     tool_flags = "";
     freshen_flags = "";
     mode = "";
-    scrapeSleep = 14;
     minArgs = 0;
 }
 

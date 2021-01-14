@@ -23,7 +23,6 @@ class COptions : public COptionsBase {
     CAddressArray addrs;
     string_q freshen_flags;
     string_q tool_flags;
-    useconds_t scrapeSleep;
 
     COptions(void);
     ~COptions(void);
@@ -37,7 +36,6 @@ class COptions : public COptionsBase {
 };
 
 //--------------------------------------------------------------------------------
-extern bool freshen_internal(CMonitorArray& list, const string_q& freshen_flags);
 extern map<string, string> cmdMap;
 
 //--------------------------------------------------------------------------------

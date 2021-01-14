@@ -44,9 +44,10 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 10615,apps,scrape,blockScrape,n_blocks,n,,false,false,true,true,header,flag,<blknum>,maximum number of blocks to process (defaults to 5000)
 10620,apps,scrape,blockScrape,n_block_procs,b,,false,false,false,false,header,flag,<uint64>,number of block channels for blaze
 10640,apps,scrape,blockScrape,n_addr_procs,a,,false,false,false,false,header,flag,<uint64>,number of address channels for blaze
-10650,apps,scrape,blockScrape,pin,p,,false,false,true,true,header,switch,<boolean>,pin new chunks (and blooms) to IPFS (requires Pinata key)
-10650,apps,scrape,blockScrape,publish,u,,false,false,true,true,header,switch,<boolean>,publish the hash of the pin manifest to the UnchainedIndex smart contract
+10645,apps,scrape,blockScrape,pin,p,,false,false,true,true,header,switch,<boolean>,pin new chunks (and blooms) to IPFS (requires Pinata key)
+10648,apps,scrape,blockScrape,publish,u,,false,false,true,true,header,switch,<boolean>,publish the hash of the pin manifest to the UnchainedIndex smart contract
 10652,apps,scrape,blockScrape,listpins,l,,false,false,false,false,local,switch,<boolean>,list pins (precludes other options&#44; requires API key)
+10658,apps,scrape,blockScrape,sleep,s,14,false,false,true,false,header,flag,<double>,the number of seconds to sleep between passes (default [{DEF}])
 10660,apps,scrape,blockScrape,,,,false,false,true,true,--,description,,Decentralized blockchain scraper and block cache.
 
 10700,apps,status,cacheStatus,modes,,,false,false,true,true,local,positional,list<enum[index|monitors|collections|names|abis|caches|some*|all]>,the type of status info to retrieve
@@ -61,7 +62,6 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 10860,apps,status,cacheStatus,,,,false,false,true,true,--,description,,Report on status of one or more TrueBlocks caches.
 
 11200,apps,,chifra,commands,,,true,false,true,true,--weird,positional,opt_string,which command to run
-11220,apps,,chifra,sleep,s,14,false,false,true,false,local,flag,<uint32>,for the 'scrape' command&#44; the number of seconds to sleep between runs (default [{DEF}])
 11280,apps,,chifra,start,S,0,false,false,false,false,local,flag,<blknum>,first block to process (inclusive)
 11300,apps,,chifra,end,E,,false,false,false,false,local,flag,<blknum>,last block to process (inclusive)
 11320,apps,,chifra,,,,false,false,true,true,--,description,,Main TrueBlocks command line controls.

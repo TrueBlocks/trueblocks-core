@@ -138,6 +138,7 @@ class COptionsBase {
     bool confirmEnum(const string_q& name, string_q& value, const string_q& arg) const;
     bool confirmBlockNum(const string_q& name, blknum_t& value, const string_q& arg, blknum_t latest) const;
     bool confirmUint(const string_q& name, uint64_t& value, const string_q& arg) const;
+    bool confirmDouble(const string_q& name, double& value, const string_q& arg) const;
     inline bool confirmUint(const string_q& name, uint32_t& value, const string_q& arg) const {
         value = (uint32_t)NOPOS;
         uint64_t temp;
