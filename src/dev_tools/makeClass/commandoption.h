@@ -39,6 +39,7 @@ class CCommandOption : public CBaseNode {
     string_q generate;
     string_q option_kind;
     string_q data_type;
+    string_q real_type;
     string_q description;
 
   public:
@@ -50,7 +51,6 @@ class CCommandOption : public CBaseNode {
     DECLARE_NODE(CCommandOption);
 
     // EXISTING_CODE
-    string_q real_type;
     bool isEnumList;
     bool isEnum;
     bool isBool;
@@ -129,10 +129,10 @@ inline void CCommandOption::initialize(void) {
     generate = "";
     option_kind = "";
     data_type = "";
+    real_type = "";
     description = "";
 
     // EXISTING_CODE
-    // real_type = "";
     isEnumList = false;
     isEnum = false;
     isBool = false;
@@ -164,10 +164,10 @@ inline void CCommandOption::duplicate(const CCommandOption& co) {
     generate = co.generate;
     option_kind = co.option_kind;
     data_type = co.data_type;
+    real_type = co.real_type;
     description = co.description;
 
     // EXISTING_CODE
-    real_type = co.real_type;
     isEnumList = co.isEnumList;
     isEnum = co.isEnum;
     isBool = co.isBool;

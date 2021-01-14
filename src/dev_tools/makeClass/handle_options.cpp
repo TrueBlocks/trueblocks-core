@@ -12,6 +12,10 @@
  *-------------------------------------------------------------------------------------------*/
 #include "options.h"
 
+extern const char* STR_DECLARATION;
+extern const char* STR_DEFAULT_ASSIGNMENT;
+extern const char* STR_OPTION_ERRSTR;
+extern const char* STR_OPTION_NOTESTR;
 extern const char* STR_OPTION_STR;
 extern const char* STR_AUTO_SWITCH;
 extern const char* STR_AUTO_TOGGLE;
@@ -63,13 +67,13 @@ bool COptions::handle_options(void) {
                     allAuto = false;
 
                 if (option.isNote) {
-                    string_q note = option.Format("    notes.push_back(\"[{OPTS}]\");");
+                    string_q note = option.Format(STR_OPTION_NOTESTR);
                     if (note.length() > 120)
                         note += "  // NOLINT";
                     notes_stream << note << endl;
 
                 } else if (option.isError) {
-                    string_q err = option.Format("    errorStrs[[{COMMAND]] = \"[{OPTS}]\";");
+                    string_q err = option.Format(STR_OPTION_ERRSTR);
                     if (err.length() > 120)
                         err += "  // NOLINT";
                     errors_stream << err << endl;
@@ -81,165 +85,92 @@ bool COptions::handle_options(void) {
                     option_stream << opt << endl;
                 }
 
-                if (!option.generate.empty()) {
-                    if (option.generate == "local") {
-                        if (option.option_kind == "switch") {
-                            local_stream << option.Format("    " + option.real_type + " [{COMMAND}] = [{DEF_VAL}];")
+                string_q initFmt = "    [{COMMAND}] = [{DEF_VAL}];";
+                if (option.is_customizable % "true")
+                    initFmt = substitute(
+                        STR_CUSTOM_INIT, "[CTYPE]",
+                        ((option.isEnum || option.isEnumList) ? "String" : (option.isBool) ? "Bool" : "Int"));
+
+                if (option.option_kind == "switch") {
+                    generate_switch(option);
+
+                } else if (option.option_kind == "toggle") {
+                    generate_toggle(option);
+
+                } else if (option.option_kind == "flag") {
+                    generate_flag(option);
+                }
+
+                if (option.generate == "local") {
+                    if (option.option_kind == "deprecated") {
+                        local_stream << option.Format(STR_DEFAULT_ASSIGNMENT) << endl;
+                        auto_stream << option.Format(STR_AUTO_FLAG_UINT) << endl;
+
+                    } else if (option.option_kind == "positional") {
+                        ostringstream pos_stream;
+                        if (option.data_type == "list<addr>") {
+                            local_stream << substitute(option.Format("    CAddressArray [{COMMAND}];"), "addrs2",
+                                                       "addrs")
                                          << endl;
-                            auto_stream << option.Format(STR_AUTO_SWITCH) << endl;
+                            pos_stream << option.Format(STR_ADDR_PROCESSOR) << endl;
+                        } else if (option.data_type == "list<topic>") {
+                            local_stream << option.Format("    CTopicArray [{COMMAND}];") << endl;
+                            pos_stream << option.Format(STR_TOPIC_PROCESSOR) << endl;
+                        } else if (startsWith(option.data_type, "list<enum[")) {
+                            local_stream << option.Format("    CStringArray [{COMMAND}];") << endl;
+                            pos_stream << option.Format(STR_ENUM_PROCESSOR) << endl;
+                        } else if (option.data_type == "list<string>" || option.data_type == "list<path>") {
+                            local_stream << option.Format("    CStringArray [{COMMAND}];") << endl;
+                            pos_stream << option.Format(STR_STRING_PROCESSOR) << endl;
 
-                        } else if (option.option_kind == "toggle") {
-                            local_stream << option.Format("    " + option.real_type + " [{COMMAND}] = [{DEF_VAL}];")
-                                         << endl;
-                            auto_stream << option.Format(STR_AUTO_TOGGLE) << endl;
-
-                        } else if (option.option_kind == "flag") {
-                            if (option.isEnumList) {
-                                local_stream << option.Format("    CStringArray [{COMMAND}];") << endl;
-                                auto_stream << option.Format(STR_AUTO_FLAG_ENUM_LIST) << endl;
-
-                            } else {
-                                local_stream << option.Format("    " + option.real_type + " [{COMMAND}] = [{DEF_VAL}];")
-                                             << endl;
-                                if (option.isEnum)
-                                    auto_stream << option.Format(STR_AUTO_FLAG_ENUM) << endl;
-                                else if (option.isBlockNum)
-                                    auto_stream << option.Format(STR_AUTO_FLAG_BLOCKNUM) << endl;
-                                else if (option.isUint32 || option.isUint64)
-                                    auto_stream << option.Format(STR_AUTO_FLAG_UINT) << endl;
-                                else if (option.isDouble)
-                                    auto_stream << option.Format(STR_AUTO_FLAG_DOUBLE) << endl;
-                                else
-                                    auto_stream << substitute(option.Format(STR_AUTO_FLAG),
-                                                              "substitute(substitute(arg, \"-:\", )", "substitute(arg")
-                                                << endl;
-                            }
-
-                        } else if (option.option_kind == "skipN") {
-                            local_stream << option.Format("    " + option.real_type + " [{COMMAND}] = [{DEF_VAL}];")
-                                         << endl;
-                            auto_stream << option.Format(STR_AUTO_FLAG_UINT) << endl;
-
-                        } else if (option.option_kind == "positional") {
-                            ostringstream pos_stream;
-                            if (option.data_type == "list<addr>") {
-                                local_stream
-                                    << substitute(option.Format("    CAddressArray [{COMMAND}];"), "addrs2", "addrs")
-                                    << endl;
-                                pos_stream << option.Format(STR_ADDR_PROCESSOR) << endl;
-                            } else if (option.data_type == "list<topic>") {
-                                local_stream << option.Format("    CTopicArray [{COMMAND}];") << endl;
-                                pos_stream << option.Format(STR_TOPIC_PROCESSOR) << endl;
-                            } else if (startsWith(option.data_type, "list<enum[")) {
-                                local_stream << option.Format("    CStringArray [{COMMAND}];") << endl;
-                                pos_stream << option.Format(STR_ENUM_PROCESSOR) << endl;
-                            } else if (option.data_type == "list<string>" || option.data_type == "list<path>") {
-                                local_stream << option.Format("    CStringArray [{COMMAND}];") << endl;
-                                pos_stream << option.Format(STR_STRING_PROCESSOR) << endl;
-
-                            } else if (option.data_type == "list<blknum>") {
-                                // local_stream << "    CStringArray strings;" << endl;
-                                pos_stream << STR_BLOCK_PROCESSOR << endl;
-                            } else if (option.data_type == "list<date>") {
-                                // local_stream << "    CStringArray strings;" << endl;
-                                pos_stream << STR_AUTO_FLAG_ENUM_LIST << endl;
-                            } else if (option.data_type == "list<tx_id>") {
-                                // local_stream << "    CStringArray strings;" << endl;
-                                pos_stream << STR_TX_PROCESSOR << endl;
-                            } else {
-                                // don't know type
-                            }
-                            if (!pos_stream.str().empty())
-                                positionals.push_back(pos_stream.str());
-
+                        } else if (option.data_type == "list<blknum>") {
+                            // local_stream << "    CStringArray strings;" << endl;
+                            pos_stream << STR_BLOCK_PROCESSOR << endl;
+                        } else if (option.data_type == "list<date>") {
+                            // local_stream << "    CStringArray strings;" << endl;
+                            pos_stream << STR_AUTO_FLAG_ENUM_LIST << endl;
+                        } else if (option.data_type == "list<tx_id>") {
+                            // local_stream << "    CStringArray strings;" << endl;
+                            pos_stream << STR_TX_PROCESSOR << endl;
                         } else {
-                            cerr << cRed << "skipping option_kind " << option.option_kind << cOff << endl;
-                            exit(0);
+                            // don't know type
                         }
-
-                    } else if (option.generate == "header") {
-                        string_q initFmt = "    [{COMMAND}] = [{DEF_VAL}];";
-                        if (option.is_customizable % "true")
-                            initFmt = substitute(
-                                STR_CUSTOM_INIT, "[CTYPE]",
-                                ((option.isEnum || option.isEnumList) ? "String" : (option.isBool) ? "Bool" : "Int"));
-
-                        if (option.option_kind == "switch") {
-                            init_stream << option.Format(initFmt) << endl;
-                            declare_stream << option.Format("    " + option.real_type + " [{COMMAND}];") << endl;
-                            auto_stream << option.Format(STR_AUTO_SWITCH) << endl;
-
-                        } else if (option.option_kind == "toggle") {
-                            init_stream << option.Format(initFmt) << endl;
-                            declare_stream << option.Format("    " + option.real_type + " [{COMMAND}];") << endl;
-                            auto_stream << option.Format(STR_AUTO_TOGGLE) << endl;
-
-                        } else if (option.option_kind == "flag") {
-                            if (option.isEnumList) {
-                                init_stream << option.Format("    [{COMMAND}].clear();") << endl;
-                                declare_stream << option.Format("    CStringArray [{COMMAND}];") << endl;
-                                auto_stream << option.Format(STR_AUTO_FLAG_ENUM_LIST) << endl;
-
-                            } else {
-                                init_stream << option.Format(initFmt) << endl;
-                                declare_stream << option.Format("    " + option.real_type + " [{COMMAND}];") << endl;
-                                if (option.isEnum)
-                                    auto_stream << option.Format(STR_AUTO_FLAG_ENUM) << endl;
-                                else if (option.isBlockNum)
-                                    auto_stream << option.Format(STR_AUTO_FLAG_BLOCKNUM) << endl;
-                                else if (option.isUint32 || option.isUint64)
-                                    auto_stream << option.Format(STR_AUTO_FLAG_UINT) << endl;
-                                else if (option.isDouble)
-                                    auto_stream << option.Format(STR_AUTO_FLAG_DOUBLE) << endl;
-                                else
-                                    auto_stream << substitute(option.Format(STR_AUTO_FLAG),
-                                                              "substitute(substitute(arg, \"-:\", )", "substitute(arg")
-                                                << endl;
-                            }
-
-                        } else if (option.option_kind == "positional") {
-                            ostringstream pos_stream;
-                            if (option.data_type == "list<addr>") {
-                                declare_stream
-                                    << substitute(option.Format("    CAddressArray [{COMMAND}];"), "addrs2", "addrs")
-                                    << endl;
-                                pos_stream << option.Format(STR_ADDR_PROCESSOR) << endl;
-                            } else if (option.data_type == "list<topic>") {
-                                declare_stream << option.Format("    CTopicArray [{COMMAND}];") << endl;
-                                pos_stream << option.Format(STR_TOPIC_PROCESSOR) << endl;
-                            } else if (startsWith(option.data_type, "list<enum[")) {
-                                declare_stream << option.Format("    CStringArray [{COMMAND}];") << endl;
-                                pos_stream << option.Format(STR_ENUM_PROCESSOR) << endl;
-                            } else if (option.data_type == "list<string>" || option.data_type == "list<path>") {
-                                declare_stream << option.Format("    CStringArray [{COMMAND}];") << endl;
-                                pos_stream << option.Format(STR_STRING_PROCESSOR) << endl;
-
-                            } else if (option.data_type == "list<blknum>") {
-                                // declare_stream << "    CStringArray strings;" << endl;
-                                pos_stream << STR_BLOCK_PROCESSOR << endl;
-                            } else if (option.data_type == "list<date>") {
-                                // declare_stream << "    CStringArray strings;" << endl;
-                            } else if (option.data_type == "list<tx_id>") {
-                                // declare_stream << "    CStringArray strings;" << endl;
-                                pos_stream << STR_TX_PROCESSOR << endl;
-                            } else {
-                                // unknown type
-                            }
-                            if (!pos_stream.str().empty())
-                                positionals.push_back(pos_stream.str());
-
-                        } else {
-                            cerr << "skipping option_kind " << option.option_kind << endl;
-                        }
-
-                    } else {
-                        // do nothing (ignore 'na' for example)
+                        if (!pos_stream.str().empty())
+                            positionals.push_back(pos_stream.str());
                     }
 
-                } else {
-                    if (option.option_kind == "toggle" || option.option_kind == "switch" ||
-                        option.option_kind == "flag")
-                        allAuto = false;
+                } else if (option.generate == "header") {
+                    if (option.option_kind == "positional") {
+                        ostringstream pos_stream;
+                        if (option.data_type == "list<addr>") {
+                            declare_stream
+                                << substitute(option.Format("    CAddressArray [{COMMAND}];"), "addrs2", "addrs")
+                                << endl;
+                            pos_stream << option.Format(STR_ADDR_PROCESSOR) << endl;
+                        } else if (option.data_type == "list<topic>") {
+                            declare_stream << option.Format("    CTopicArray [{COMMAND}];") << endl;
+                            pos_stream << option.Format(STR_TOPIC_PROCESSOR) << endl;
+                        } else if (startsWith(option.data_type, "list<enum[")) {
+                            declare_stream << option.Format("    CStringArray [{COMMAND}];") << endl;
+                            pos_stream << option.Format(STR_ENUM_PROCESSOR) << endl;
+                        } else if (option.data_type == "list<string>" || option.data_type == "list<path>") {
+                            declare_stream << option.Format("    CStringArray [{COMMAND}];") << endl;
+                            pos_stream << option.Format(STR_STRING_PROCESSOR) << endl;
+
+                        } else if (option.data_type == "list<blknum>") {
+                            // declare_stream << "    CStringArray strings;" << endl;
+                            pos_stream << STR_BLOCK_PROCESSOR << endl;
+                        } else if (option.data_type == "list<date>") {
+                            // declare_stream << "    CStringArray strings;" << endl;
+                        } else if (option.data_type == "list<tx_id>") {
+                            // declare_stream << "    CStringArray strings;" << endl;
+                            pos_stream << STR_TX_PROCESSOR << endl;
+                        } else {
+                            // unknown type
+                        }
+                        if (!pos_stream.str().empty())
+                            positionals.push_back(pos_stream.str());
+                    }
                 }
             }
         }
@@ -312,6 +243,95 @@ string_q replaceCode(const string_q& orig, const string_q& which, const string_q
     replaceAll(converted, "+//", "    //");
     replaceAll(converted, "-//", "            //");
     return converted;
+}
+
+//---------------------------------------------------------------------------------------------------
+void COptions::generate_toggle(const CCommandOption& option) {
+    string_q initFmt = "    [{COMMAND}] = [{DEF_VAL}];";
+    if (option.is_customizable % "true")
+        initFmt = substitute(STR_CUSTOM_INIT, "[CTYPE]",
+                             ((option.isEnum || option.isEnumList) ? "String" : (option.isBool) ? "Bool" : "Int"));
+
+    if (option.generate == "local") {
+        local_stream << option.Format(STR_DEFAULT_ASSIGNMENT) << endl;
+        auto_stream << option.Format(STR_AUTO_TOGGLE) << endl;
+
+    } else if (option.generate == "header") {
+        init_stream << option.Format(initFmt) << endl;
+        declare_stream << option.Format(STR_DECLARATION) << endl;
+        auto_stream << option.Format(STR_AUTO_TOGGLE) << endl;
+    }
+}
+
+//---------------------------------------------------------------------------------------------------
+void COptions::generate_switch(const CCommandOption& option) {
+    string_q initFmt = "    [{COMMAND}] = [{DEF_VAL}];";
+    if (option.is_customizable % "true")
+        initFmt = substitute(STR_CUSTOM_INIT, "[CTYPE]",
+                             ((option.isEnum || option.isEnumList) ? "String" : (option.isBool) ? "Bool" : "Int"));
+
+    if (option.generate == "local") {
+        local_stream << option.Format(STR_DEFAULT_ASSIGNMENT) << endl;
+        auto_stream << option.Format(STR_AUTO_SWITCH) << endl;
+
+    } else if (option.generate == "header") {
+        init_stream << option.Format(initFmt) << endl;
+        declare_stream << option.Format(STR_DECLARATION) << endl;
+        auto_stream << option.Format(STR_AUTO_SWITCH) << endl;
+    }
+}
+
+//---------------------------------------------------------------------------------------------------
+void COptions::generate_flag(const CCommandOption& option) {
+    string_q initFmt = "    [{COMMAND}] = [{DEF_VAL}];";
+    if (option.is_customizable % "true")
+        initFmt = substitute(STR_CUSTOM_INIT, "[CTYPE]",
+                             ((option.isEnum || option.isEnumList) ? "String" : (option.isBool) ? "Bool" : "Int"));
+
+    if (option.generate == "local") {
+        if (option.isEnumList) {
+            local_stream << option.Format("    CStringArray [{COMMAND}];") << endl;
+            auto_stream << option.Format(STR_AUTO_FLAG_ENUM_LIST) << endl;
+
+        } else {
+            local_stream << option.Format(STR_DEFAULT_ASSIGNMENT) << endl;
+            if (option.isEnum)
+                auto_stream << option.Format(STR_AUTO_FLAG_ENUM) << endl;
+            else if (option.isBlockNum)
+                auto_stream << option.Format(STR_AUTO_FLAG_BLOCKNUM) << endl;
+            else if (option.isUint32 || option.isUint64)
+                auto_stream << option.Format(STR_AUTO_FLAG_UINT) << endl;
+            else if (option.isDouble)
+                auto_stream << option.Format(STR_AUTO_FLAG_DOUBLE) << endl;
+            else
+                auto_stream << substitute(option.Format(STR_AUTO_FLAG), "substitute(substitute(arg, \"-:\", )",
+                                          "substitute(arg")
+                            << endl;
+        }
+
+    } else if (option.generate == "header") {
+        if (option.isEnumList) {
+            init_stream << option.Format("    [{COMMAND}].clear();") << endl;
+            declare_stream << option.Format("    CStringArray [{COMMAND}];") << endl;
+            auto_stream << option.Format(STR_AUTO_FLAG_ENUM_LIST) << endl;
+
+        } else {
+            init_stream << option.Format(initFmt) << endl;
+            declare_stream << option.Format(STR_DECLARATION) << endl;
+            if (option.isEnum)
+                auto_stream << option.Format(STR_AUTO_FLAG_ENUM) << endl;
+            else if (option.isBlockNum)
+                auto_stream << option.Format(STR_AUTO_FLAG_BLOCKNUM) << endl;
+            else if (option.isUint32 || option.isUint64)
+                auto_stream << option.Format(STR_AUTO_FLAG_UINT) << endl;
+            else if (option.isDouble)
+                auto_stream << option.Format(STR_AUTO_FLAG_DOUBLE) << endl;
+            else
+                auto_stream << substitute(option.Format(STR_AUTO_FLAG), "substitute(substitute(arg, \"-:\", )",
+                                          "substitute(arg")
+                            << endl;
+        }
+    }
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -409,6 +429,10 @@ void COptions::writeApiFile(void) {
 }
 
 //---------------------------------------------------------------------------------------------------
+const char* STR_OPTION_ERRSTR = "    errorStrs[[{COMMAND]] = \"[{OPTS}]\";";
+const char* STR_OPTION_NOTESTR = "    notes.push_back(\"[{OPTS}]\");";
+
+//---------------------------------------------------------------------------------------------------
 const char* STR_OPTION_STR =
     "    COption(\"[{COMMAND}]\", \"[{HOTKEY}]\", \"[{DATATYPE}]\", [{OPTS}], \"[{DESCRIPTION}]\"),";
 
@@ -503,3 +527,9 @@ const char* STR_ENUM_PROCESSOR =
 const char* STR_CUSTOM_INIT =
     "    [{COMMAND}] = getGlobalConfig(\"[{TOOL}]\")->getConfig[CTYPE](\"settings\", \"[{COMMAND}]\", "
     "[{DEF_VAL}]);";
+
+//---------------------------------------------------------------------------------------------------
+const char* STR_DEFAULT_ASSIGNMENT = "    [{REAL_TYPE}] [{COMMAND}] = [{DEF_VAL}];";
+
+//---------------------------------------------------------------------------------------------------
+const char* STR_DECLARATION = "    [{REAL_TYPE}] [{COMMAND}];";

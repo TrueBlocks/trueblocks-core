@@ -29,8 +29,8 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 10395,apps,export,acctExport,factory,y,false,false,false,false,false,header,switch,<boolean>,scan for contract creations from the given address(es) and report address of those contracts
 10430,apps,export,acctExport,emitter,M,,false,false,false,true,header,switch,<boolean>,available for --logs option only&#44; export will only export if the address emitted the event
 10435,apps,export,acctExport,count,U,,false,false,true,true,header,switch,<boolean>,only available for --appearances mode&#44; if present return only the number of records
-10440,apps,export,acctExport,start,S,,false,false,false,false,local,skipN,<blknum>,first block to process (inclusive)
-10450,apps,export,acctExport,end,E,,false,false,false,false,local,skipN,<blknum>,last block to process (inclusive)
+10440,apps,export,acctExport,start,S,,false,false,false,false,local,deprecated,<blknum>,first block to process (inclusive)
+10450,apps,export,acctExport,end,E,,false,false,false,false,local,deprecated,<blknum>,last block to process (inclusive)
 10453,apps,export,acctExport,first_record,c,0,false,false,false,false,header,flag,<blknum>,the first record to process
 10457,apps,export,acctExport,max_records,e,,false,false,false,false,header,flag,<blknum>,the maximum number of records to process before reporting
 10060,apps,export,acctExport,staging,s,,false,false,false,false,local,switch,<boolean>,ignored (preserved for backwards compatibility)
@@ -39,7 +39,7 @@ num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_v
 10470,apps,export,acctExport,,,,false,false,false,false,--,note,,`addresses` must start with '0x' and be forty two characters long.
 10480,apps,export,acctExport,,,,false,false,false,false,--,note,,By default&#44; transactions and traces are cached if the number of exported|items is <= to 1&#44;000 items. Otherwise&#44; if you specify any `write_*` options&#44;|your preference predominates.
 
-10600,apps,scrape,blockScrape,mode,,,false,false,true,true,header,positional,list<enum[run*|quit|pause|restart]>,control the block and account scrapers
+10600,apps,scrape,blockScrape,mode,,,false,false,true,true,header,positional,enum[run*|quit|pause|restart],control the block and account scrapers
 10610,apps,scrape,blockScrape,tool,t,,false,false,true,true,header,flag,list<enum[monitors|index*|none|both]>,process the index&#44; monitors&#44; or both (none means process timestamps only)
 10615,apps,scrape,blockScrape,n_blocks,n,,false,false,true,true,header,flag,<blknum>,maximum number of blocks to process (defaults to 5000)
 10620,apps,scrape,blockScrape,n_block_procs,b,,false,false,false,false,header,flag,<uint64>,number of block channels for blaze

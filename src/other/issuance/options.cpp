@@ -20,9 +20,9 @@ static const COption params[] = {
     COption("by_date", "d", "enum[hour|day|week|month|year]", OPT_FLAG, "summarize by date"),
     COption("by_block", "b", "enum[1|10|100|1000|10000|100000|1000000]", OPT_FLAG, "summarize by block number"),
     COption("discrete", "i", "", OPT_SWITCH, "while accumulating, reset accumulator at each period"),
-    COption("thing", "t", "<val>", OPT_HIDDEN|OPT_FLAG, "option two"),
-    COption("start", "S", "<blknum>", OPT_HIDDEN | OPT_SKIP, "first block to process (inclusive)"),
-    COption("end", "E", "<blknum>", OPT_HIDDEN | OPT_SKIP, "last block to process (inclusive)"),
+    COption("thing", "t", "<val>", OPT_HIDDEN | OPT_FLAG, "option two"),
+    COption("start", "S", "<blknum>", OPT_HIDDEN | OPT_DEPRECATED, "first block to process (inclusive)"),
+    COption("end", "E", "<blknum>", OPT_HIDDEN | OPT_DEPRECATED, "last block to process (inclusive)"),
     COption("", "", "", OPT_DESCRIPTION, "Process various data related to Ethereum's issuance.\n"),
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);

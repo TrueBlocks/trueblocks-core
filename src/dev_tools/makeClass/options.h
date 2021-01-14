@@ -107,6 +107,10 @@ class COptions : public COptionsBase {
     bool handle_generate_js_skins(void);
     bool handle_generate_js_pages(void);
 
+    void generate_switch(const CCommandOption& option);
+    void generate_toggle(const CCommandOption& option);
+    void generate_flag(const CCommandOption& option);
+
     bool writeCode(const string_q& fn);
     void writeApiFile(void);
 };

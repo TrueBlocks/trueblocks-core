@@ -128,6 +128,11 @@ string_q CCommandOption::getValueByName(const string_q& fieldName) const {
                 return option_kind;
             }
             break;
+        case 'r':
+            if (fieldName % "real_type") {
+                return real_type;
+            }
+            break;
         case 't':
             if (fieldName % "tool") {
                 return tool;
@@ -225,6 +230,12 @@ bool CCommandOption::setValueByName(const string_q& fieldNameIn, const string_q&
                 return true;
             }
             break;
+        case 'r':
+            if (fieldName % "real_type") {
+                real_type = fieldValue;
+                return true;
+            }
+            break;
         case 't':
             if (fieldName % "tool") {
                 tool = fieldValue;
@@ -270,6 +281,7 @@ bool CCommandOption::Serialize(CArchive& archive) {
     archive >> generate;
     archive >> option_kind;
     archive >> data_type;
+    archive >> real_type;
     archive >> description;
     finishParse();
     return true;
@@ -296,6 +308,7 @@ bool CCommandOption::SerializeC(CArchive& archive) const {
     archive << generate;
     archive << option_kind;
     archive << data_type;
+    archive << real_type;
     archive << description;
 
     return true;
@@ -347,6 +360,7 @@ void CCommandOption::registerClass(void) {
     ADD_FIELD(CCommandOption, "generate", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CCommandOption, "option_kind", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CCommandOption, "data_type", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CCommandOption, "real_type", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CCommandOption, "description", T_TEXT | TS_OMITEMPTY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
@@ -389,8 +403,8 @@ string_q nextCommandoptionChunk_custom(const string_q& fieldIn, const void* data
                         ret += ("|OPT_TOGGLE");
                     else if (com->option_kind == "flag")
                         ret += ("|OPT_FLAG");
-                    else if (startsWith(com->option_kind, "skip"))
-                        ret += ("|OPT_SKIP");
+                    else if (startsWith(com->option_kind, "deprecated"))
+                        ret += ("|OPT_DEPRECATED");
                     else if (com->option_kind == "positional")
                         ret += ("|OPT_POSITIONAL");
                     else if (com->option_kind == "note")
@@ -513,6 +527,20 @@ CCommandOption::CCommandOption(const string_q& line) {
 
 //---------------------------------------------------------------------------------------------------
 void CCommandOption::verifyOptions(CStringArray& warnings) {
+    // Check valid option kinds
+    CStringArray validKinds = {
+        "switch", "toggle", "flag", "deprecated", "positional", "description", "error", "note",
+    };
+    bool valid_kind = false;
+    for (auto kind : validKinds) {
+        if (kind == option_kind) {
+            valid_kind = true;
+        }
+    }
+    ostringstream warnstream;
+    if (!valid_kind)
+        warnstream << "Skipping option kind '" << option_kind << "' for option '" << command << "'|";
+
     // Check valid data types
     CStringArray validTypes = {
         "<addr>",   "<blknum>", "<pair>",    "<path>", "<range>",  "<string>",
@@ -537,7 +565,6 @@ void CCommandOption::verifyOptions(CStringArray& warnings) {
     if (!valid_type && startsWith(data_type, "opt_"))
         valid_type = true;
 
-    ostringstream warnstream;
     if (!valid_type)
         warnstream << "Unknown type '" << data_type << "' for option '" << command << "'|";
     if (option_kind == "description" && !endsWith(description, ".") && !endsWith(description, ":"))
