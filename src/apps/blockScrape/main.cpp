@@ -42,8 +42,6 @@ int main(int argc, const char* argv[]) {
             for (size_t n = 0; n < nHalfSeconds && !shouldQuit() && options.state == prevState; n++) {
                 usleep((useconds_t)(500000));
                 options.state = options.getCurrentState();
-                // cerr << ".";
-                // cerr.flush();
             }
         }
     }
