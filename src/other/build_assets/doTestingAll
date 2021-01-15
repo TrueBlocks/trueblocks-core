@@ -11,7 +11,7 @@ cd $BUILD_FOLDER/
 cmake ../src
 #make readme
 make generate finish
-make -j
+make -j 8
 
 doTestingApi --filter all --mode both --clean --report $@
 

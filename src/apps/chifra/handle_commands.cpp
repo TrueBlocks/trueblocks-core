@@ -15,12 +15,15 @@ bool COptions::handle_commands(void) {
         return EXIT_FAILURE;
     }
 
-    if (isApiMode() && mode == "scrape" && contains(tool_flags, "run")) {
-        cout << "{ \"status\": \"cannot run\" }";
-        LOG_ERR(
-            "Use the API only to pause, restart, or quit the scraper -- to run, start in a new window with chifra "
-            "scrape run. Quitting...");
-        return EXIT_FAILURE;
+    if (mode == "scrape") {
+        setenv("FRESHEN_FLAGS", freshen_flags.c_str(), true);
+        if (isApiMode() && contains(tool_flags, "run")) {
+            cout << "{ \"status\": \"cannot run\" }";
+            LOG_ERR(
+                "Use the API only to pause, restart, or quit the scraper -- to run, start in a new window with chifra "
+                "scrape run. Quitting...");
+            return EXIT_FAILURE;
+        }
     }
 
     // URLs require key/value pairs, command lines don't so we remove unneeded keys

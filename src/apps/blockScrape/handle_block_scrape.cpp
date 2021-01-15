@@ -15,7 +15,6 @@
 #define THE_CMD "blaze scrape"
 //--------------------------------------------------------------------------
 bool COptions::scrape_blocks(void) {
-#if 0
     LOG_INFO(string_q(120, '-'));
 
     maxIndexRows = MAX_ROWS;  // not configurable really
@@ -165,8 +164,6 @@ bool COptions::scrape_blocks(void) {
         cleanFolder(indexFolder_ripe);
         ::remove(cons.tmp_fn.c_str());
     }
-#endif
-
     return true;
 }
 
@@ -397,40 +394,4 @@ CConsolidator::CConsolidator(blknum_t p) {
     prevBlock = p;
     tmp_fn = indexFolder_staging + "000000000-temp.txt";
     tmp_file.open(tmp_fn, ios::out | ios::trunc);
-}
-
-//------------------------------------------------------------------------------------------------
-bool COptions::scrape_monitors(void) {
-    // CMonitorArray monitors;
-    // // Catch the monitors addresses up to the scraper if in --deamon mode
-    // forEveryFileInFolder(getMonitorPath("") + "*", prepareMonitors, &monitors);
-    // if (!freshen_internal2(monitors, freshen_flags))
-    //     EXIT_FAIL("'chifra " + mode + "' returns false");
-    // for (auto monitor : monitors) {
-    //     static size_t nThings = 0;
-    //     ostringstream os1;
-    //     os1 << "acctExport " << monitor.address << " --freshen";
-    //     LOG_INFO("Calling: ", os1.str(), string_q(40, ' '), "\r");
-    //     // clang-format off
-    //     if (system(os1.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings
-    //     // clang-format on
-    // }
-    return true;
-}
-
-//---------------------------------------------------------------------------
-bool prepareMonitors(const string_q& path, void* data) {
-    if (!endsWith(path, ".acct.bin"))  // we only want to process monitor files
-        return true;
-
-    CMonitor m;
-    m.address = substitute(substitute(path, getMonitorPath(""), ""), ".acct.bin", "");
-    if (isAddress(m.address)) {
-        m.cntBefore = m.getRecordCount();
-        m.needsRefresh = false;
-        CMonitorArray* array = (CMonitorArray*)data;  // NOLINT
-        array->push_back(m);
-    }
-
-    return true;
 }

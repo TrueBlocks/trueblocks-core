@@ -477,21 +477,25 @@ void loadAbiAndCache(CAbi& abi, const address_t& addr, bool raw, CStringArray& e
             stringToAsciiFile(fileName, results);
 
         } else if (contains(toLower(results), "source code not verified")) {
-            ostringstream os;
-            os << "Could not get the ABI for " << addr << ". Etherscan returned: ";
-            os << substitute(substitute(results, "\"", "'"), "\n", " ") << ". ";
-            os << "Copy the ABI to " << addr << ".json in the current folder and re-run.";
-            errors.push_back(os.str());
+            if (verbose) {
+                ostringstream os;
+                os << "Could not get the ABI for " << addr << ". Etherscan returned: ";
+                os << substitute(substitute(results, "\"", "'"), "\n", " ") << ". ";
+                os << "Copy the ABI to " << addr << ".json in the current folder and re-run.";
+                errors.push_back(os.str());
+            }
             results = "";
 
         } else {
             // TODO(tjayrush): If we store the ABI here even if empty, we won't have to get it again, but then
             // what happens if user later posts the ABI? Need a 'refresh' option or clear cache option
 
-            ostringstream os;
-            os << "Etherscan returned: " << results << ". ";
-            os << "Could not grab ABI for " + addr + " from etherscan.io.";
-            errors.push_back(os.str());
+            if (verbose) {
+                ostringstream os;
+                os << "Etherscan returned: " << results << ". ";
+                os << "Could not grab ABI for " + addr + " from etherscan.io.";
+                errors.push_back(os.str());
+            }
 
             establishFolder(fileName);
             stringToAsciiFile(fileName, "[]");

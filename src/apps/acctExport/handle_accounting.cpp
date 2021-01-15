@@ -143,7 +143,7 @@ bool COptions::handle_accounting(void) {
 
     if (!isTestMode()) {
         LOG_PROGRESS1("Reported", (first_record + nProcessed), nTransactions,
-                      " txs for address " + monitors[0].address + "\n");
+                      " txs for address " + monitors[0].address);
     }
 
     // LOG_INFO("n: ", monitors.size(), " lastExported: ", lastExported);
