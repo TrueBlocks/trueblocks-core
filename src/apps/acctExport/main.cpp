@@ -19,18 +19,16 @@ int main(int argc, const char* argv[]) {
             return 0;
 
         options.className =
-            (options.count
-                 ? GETRUNTIME_CLASS(CMonitorCount)->m_ClassName
-                 : options.appearances
-                       ? GETRUNTIME_CLASS(CAppearance)->m_ClassName
-                       : (options.traces
-                              ? GETRUNTIME_CLASS(CTrace)->m_ClassName
-                              : (options.receipts
-                                     ? GETRUNTIME_CLASS(CReceipt)->m_ClassName
-                                     : (options.logs
-                                            ? GETRUNTIME_CLASS(CLogEntry)->m_ClassName
-                                            : (options.statements ? GETRUNTIME_CLASS(CReconciliation)->m_ClassName
-                                                                  : GETRUNTIME_CLASS(CTransaction)->m_ClassName)))));
+            (options.count ? GETRUNTIME_CLASS(CMonitorCount)->m_ClassName
+             : options.appearances
+                 ? GETRUNTIME_CLASS(CAppearance)->m_ClassName
+                 : (options.traces
+                        ? GETRUNTIME_CLASS(CTrace)->m_ClassName
+                        : (options.receipts
+                               ? GETRUNTIME_CLASS(CReceipt)->m_ClassName
+                               : (options.logs ? GETRUNTIME_CLASS(CLogEntry)->m_ClassName
+                                               : (options.statements ? GETRUNTIME_CLASS(CReconciliation)->m_ClassName
+                                                                     : GETRUNTIME_CLASS(CTransaction)->m_ClassName)))));
 
         if (once)
             cout << exportPreamble(expContext().fmtMap["header"], options.className);

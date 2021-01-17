@@ -59,7 +59,7 @@ pgrep -a runningTest: [
 
 ]--------------------------------------------------------------------------------
 pgrep -fla runningTest: [
- sh -c cd /Users/jrush/Development/trueblocks-core/test/gold/libs/utillib/runningTest/ ; env  TEST_MODE=true NO_COLOR=true REDIR_CERR=true runningTest  >/Users/jrush/Development/trueblocks-core/test/working/libs/utillib/runningTest/runningTest_.txt >&
+sh -c cd gold/libs/utillib/runningTest/ ; env  TEST_MODE=true NO_COLOR=true REDIR_CERR=true runningTest >working/libs/utillib/runningTest/runningTest_.txt >&
  runningTest 
  sh -c pgrep -fla runningTest >/tmp/qb_
 ]--------------------------------------------------------------------------------

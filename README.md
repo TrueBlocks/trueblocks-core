@@ -18,11 +18,11 @@ Local-first means your application is **private by default**, the client-side ca
 ## Prerequisites
 ---
 
-Before building TrueBlocks, you need to make sure you have `git`, `cmake` and `go` available.
+Before building TrueBlocks, you need to make sure you have `git`, `cmake`, `clang-format`, and `go` available.
 
 Follow [these instructions](https://golang.org/doc/install) for installing `golang` on your system.
 
-Complete these commands to install `git` and `cmake`:
+Complete these commands to install `git`, `cmake`, and `clang-format`:
 
 #### On Linux:
 
@@ -35,6 +35,7 @@ sudo apt install build-essential git cmake python python-dev libcurl3-dev
 ```[shell]
 brew install cmake
 brew install git
+brew install clang-format
 ```
 ## Building TrueBlocks
 

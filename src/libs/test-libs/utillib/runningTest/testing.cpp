@@ -19,6 +19,15 @@ void doOneTest(const string_q& cmd, const string_q& prog) {
     os << cmd << " " << prog;
     string_q result = doCommand(os.str().c_str());
     replaceAny(result, "0123456789", "");
+    if (contains(result, getHomeFolder())) {
+        replace(result, "cd ", "`cd `");
+        replace(result, " >", "` >`");
+        replaceAll(result, "/test/gold/", "/test/`gold/");
+        replaceAll(result, "/test/working/", "/test/`working/");
+        CStringArray splits;
+        explode(splits, result, '`');
+        result = splits[0] + " " + splits[1] + " " + splits[3] + " " + splits[4] + splits[6];
+    }
     cout << cmd << " " << prog << ": [" << endl << result << endl << "]" << string_q(80, '-') << endl;
 }
 

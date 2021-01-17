@@ -9,7 +9,6 @@ export DOCKER_FOLDER=$QUICKBLOCKS/../trueblocks-explorer/
 #echo "Making..."
 cd $BUILD_FOLDER/
 cmake ../src
-#make readme
 make generate finish
 make -j 8
 

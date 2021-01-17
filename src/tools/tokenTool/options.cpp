@@ -15,18 +15,17 @@
 //---------------------------------------------------------------------------------------------------
 static COption params[] = {
     COption("~token_address", "an ERC20 token addresses"),
-    COption("-reverse",       "present the cap table in reverse order by holding"),
-    COption("-start:<num>",   "block on which to start the analysis"),
-    COption("-bucket:<num>",  "number of block to process between cap table reports"),
-    COption("-nRows:<num>",   "show this many rows of the cap table (default = 30)"),
-    COption("-showErrors",    "in verbose mode, print out in-error transactions (never effects accounting)"),
-    COption("",               "Show ERC20 token cap tables with various options.\n"),
+    COption("-reverse", "present the cap table in reverse order by holding"),
+    COption("-start:<num>", "block on which to start the analysis"),
+    COption("-bucket:<num>", "number of block to process between cap table reports"),
+    COption("-nRows:<num>", "show this many rows of the cap table (default = 30)"),
+    COption("-showErrors", "in verbose mode, print out in-error transactions (never effects accounting)"),
+    COption("", "Show ERC20 token cap tables with various options.\n"),
 };
 static size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
-
     if (!standardOptions(command))
         return false;
 
@@ -59,7 +58,6 @@ bool COptions::parseArguments(string_q& command) {
             bucketSize = str_2_Uint(arg);
 
         } else if (startsWith(arg, "0x")) {
-
             if (!isAddress(arg))
                 return usage(arg + " does not appear to be a valid Ethereum address. Quitting...");
             token = toLower(arg);
@@ -95,9 +93,11 @@ bool COptions::parseArguments(string_q& command) {
 
     // We need to know the cache is not locked
     if (fileExists(cacheFile + ".lck"))
-        return usage("The cache lock file is present. The program is either already running or it did not end "
-                     "cleanly the\n\tlast time it ran. Quit the already running program or, if it is not running, "
-                     "remove the lock\n\tfile: " + cacheFile + ".lck'. Quitting...");
+        return usage(
+            "The cache lock file is present. The program is either already running or it did not end "
+            "cleanly the\n\tlast time it ran. Quit the already running program or, if it is not running, "
+            "remove the lock\n\tfile: " +
+            cacheFile + ".lck'. Quitting...");
 
     // We need an ABI (although we could run without it)
     if (!abi.loadAbiByAddress(token))

@@ -1,10 +1,13 @@
 #!/usr/bin/env bash
 
-cd $DOCKER_FOLDER
-touch api/testing
-touch api/server.js
+# echo $DOCKER_FOLDER
+if [ -d ${DOCKER_FOLDER} ]; then
+    cd $DOCKER_FOLDER
+    touch api/testing
+    touch api/server.js
+fi
 
-#echo "Testing..."
+# echo "Testing..."
 cd $TEST_FOLDER/gold/dev_tools/testRunner
 
 testRunner $@ | tee $BUILD_FOLDER/results.txt
@@ -13,8 +16,10 @@ cat $BUILD_FOLDER/results.txt | grep -v Skipping >x
 mv -f x $BUILD_FOLDER/results.txt
 
 #echo "Reseting docker repo..."
-cd $DOCKER_FOLDER
-rm -f api/testing
-touch api/server.js
+if [ -d ${DOCKER_FOLDER} ]; then
+    cd $DOCKER_FOLDER
+    rm -f api/testing
+    touch api/server.js
+fi
 
 cd $BUILD_FOLDER

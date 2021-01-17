@@ -19,14 +19,15 @@
 class COptions;
 //-----------------------------------------------------------------------------
 class CCapTable : public map<address_t, CStake> {
-public:
-    COptions *pOptions;
-    CCapTable() {}
+  public:
+    COptions* pOptions;
+    CCapTable() {
+    }
 };
 
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
-public:
+  public:
     blknum_t curBucket = NOPOS;
     string_q totSupply;
     timestamp_t ts;
