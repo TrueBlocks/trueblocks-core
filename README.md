@@ -1,90 +1,87 @@
-### Important Notes:
+# TrueBlocks Core
 
-1. TrueBlocks is alpha code. This means that we will be making breaking changes to the code and data as we move forward. Be forewarned.
-2. We have changed the name of our project to TrueBlocks. You may see reference to QuickBlocks here and there as we clean up the repo.
+![GitHub repo size](https://img.shields.io/github/repo-size/scottydocs/README-template.md)
+![GitHub contributors](https://img.shields.io/github/contributors/scottydocs/README-template.md)
+![GitHub stars](https://img.shields.io/github/stars/Great-Hill-Corporation/trueblocks-core?style%3Dsocial)
+![GitHub forks](https://img.shields.io/github/forks/Great-Hill-Corporation/trueblocks-core?style=social)
+![Twitter Follow](https://img.shields.io/twitter/follow/trueblocks?style=social)
 
------------------
+TrueBlocks allows you to build local-first, fully-decentralized applications using data directly from an Ethereum node. It does this through two mechanisms:
 
-### Contact Info
+1. A lightning-fast index of every appearance of every addresses on the chain, and
+2. A binary cache of only the data your application extracts. 
 
-Website: [http://trueblocks.io](http://trueblocks.io)  
+Local-first means your application is **private by default**, the client-side cache means your application is **fast**, and *extraction-on-demand* means your application will remain **minimal**.
 
-#### Installing QBlocks
+[How does TrueBlocks Work?](docs/FAQ.md#how-it-works)
 
-First things first. We start with the [installation instructions](src/other/install/INSTALL.md).
+## Prerequisites
 
-#### What is QBlocks?
+Before building TrueBlocks, complete these prerequisites:
 
-QBlocks is a collection of software [libraries](src/libs), [applications](src/apps), [tools](src/tools), and [examples](src/examples) that allow you to retrieve
-Ethereum blockchain data (a) more quickly, (b) with higher information content, (c) in an fully decentralized way, (d) in a fully automated way, and (e) in a highly 
-maintenance free way. The many potential use cases for QBlocks are described
-[here](https://quickblocks.io/docs/usecases.html).
+#### On Linux:
 
-#### More Quickly
+```[shell]
+sudo apt install build-essential git cmake python python-dev libcurl3-dev
+```
 
-QBlocks interacts with the Ethereum blockchain via the RPC interface to accumulate `blocks`, `transactions`, `receipts`, and event `logs`. Prior to storing the
-data, we optimize it for later retrieval. The primary goal of QBlocks is to return the data as quickly as possible while maintaining a fully decentralized
-stance. These optimizations include:
+#### On Mac:
 
-1. attaching `receipts` and `logs` directly to `transactions`,
-2. identifying in-error transactions using the node's trace functionality,
-3. pre-processing incoming internal transactions,
-4. storing the data optimized for quick, later retrieval.
+```[shell]
+brew install cmake
+brew install git
+```
+## Building TrueBlocks
 
-Depending on the use case, QBlocks is able to achieve more than 150 times speedup relative to the node's RPC interface.
+Currently, you must build TrueBlocks from source:
 
-#### Higher Information Content
+```[shell]
+git clone git@github.com:TrueBlocks/trueblocks-core.git
+cd trueblocks-core
+mkdir build && cd build
+cmake ../src
+make
+```
 
-An Ethereum node knows nothing about Solidity source code. It only deals with byte code and therefore can only return hexadecimal bytes. In order to make the data useful, each user must translate the data back into the language of the smart contract. For example, this data:
+This will create a series of executables in the `./bin` folder at the top of the repo. The following instructions assume you've added this folder to your `$PATH`.
 
-    {
-      "hash": "0xb9f174f61ef78661df519dba92f7a724593d1376e18edc8f2cc477684f089d13",
-      "blockNumber": 2243947,
-      "transactionIndex": 9,
-      "timestamp": 1473657968,
-      "from": "0x80f10e72de8a35d57efe477c1d1bd147be50307d",
-      "to": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
-      "value": 0,
-      "input": "0xc9d27afe00000000000000000000000000000000000000000000000000000000000001290000000000000000000000000000000000000000000000000000000000000001",
-    }
+[Does TrueBlocks Work on Windows?](docs/FAQ.md-windows)
 
-is simply vote on a DAO contract:
+## Using TrueBlocks
 
-    {
-      "from": "0x80f10e72de8a35d57efe477c1d1bd147be50307d",
-      "vote": {
-        "proposal": 297,
-        "supports": 1
-      }
-    }
+After building, test your configuration with this command:
 
-By default, QBlocks returns the raw hexadecimal data identical to the RPC, but with a simple switch, it can return what we call `articulated data` or data in the language of your smart contract.
+```[shell]
+chifra --version
+```
 
-QBlocks is able to articulate the data by using the smart contract's ABI file. If available, an ABI file contains all the information necessary to translate the
-RPC data back into the language of the smart contract. This functionality is implemented in the open source [grabABI](src/apps/grabABI)
-application. Instead of dealing with **hashes** and **merkel roots** and **sha3**, you deal with **votes** and **transfers** and **withdrawals**.
+To get a complete list of available commands, do this:
 
-#### Fully Decentralized
+```[shell]
+chifra --help --verbose
+```
 
-Unlike other block chain scrapers such as http://etherscan.io, QBlocks is, by default, fully decentralized. QBlocks interacts with only your local Ethereum
-node. (Although, it can, if you wish, interact with any node such as Infura). This aspect of our system distinguishes QBlocks from other options. If you
-understand and believe in the benefits of decentralization, you will understand why this is important. If you don't, you'll undervalue this aspect of our work.
+[Where to Go from Here](docs/FAQ.md#next-steps)
 
-#### Fully Automatic (Yet Customizable)
+## Contributing to TrueBlocks
 
-The source code for ***all of the functionality*** mentioned above is generated automatically (i.e. programmatically) using the [grabABI](src/apps/grabABI) and
-[makeClass](src/apps/makeClass) apps. This makes standing up a [monitor](src/monitors/README.md) for any smart contract (or system of smart contracts) trivial. With
-a one line command to [chifra](src/apps/chifra/README.md), a fully functional C++ static library is created. At the same time, because the generated code is fairly
-simple C++ code, it is fully customizable.
+1. Fork this repository.
+2. Create a branch: `git checkout -b <branch_name>`.
+3. Make changes and commit them: `git commit -m '<commit_message>'`
+4. Push to the original branch: `git push origin TrueBlocks/trueblocks-core`
+5. Create the pull request.
 
-#### Low Maintenance
+## Contributors
 
-Every smart contract, once deployed, is immutable. That means that the automatically generated C++ code is also immutable (if you want it to). You could literally
-automatically generate a data delivery layer for your smart contract that requires no further interaction. It can simply run forever, standing off-chain, but beside
-your smart contract, and deliver all your contact's data at high speed.
+Thanks to the following people who have contributed to this project:
 
-#### Structure of the Project
+* [@tjayrush](https://github.com/tjayrush) 📖
+* [@wildmolasses](https://github.com/wildmolasses) 📖
 
-1. [src](src) - source code for the QBlocks libraries, core applications, tools, and sample monitors.
-2. bin - location of primary executables generated by QBlocks
-3. docs - documentation
+## Contact
+
+If you have specific requests, contact us here <info@quickblocks.io>.
+
+## License
+
+This project licensed under the [Apache License Version 2.0](LICENSE.md).

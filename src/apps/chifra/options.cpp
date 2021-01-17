@@ -9,6 +9,7 @@
  */
 #include "options.h"
 
+//---------------------------------------------------------------------------------------------------
 const string_q opt_string =
     "list<enum["
     "list|export|slurp|"
@@ -17,6 +18,7 @@ const string_q opt_string =
     "state|tokens|when|where|dive|"
     "scrape|status|rm]"
     ">";
+
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
     // BEG_CODE_OPTIONS
@@ -287,7 +289,7 @@ COptions::COptions(void) {
                 "  status        query the status of the system|"
                 "  quotes        return prices collected from configured remote API|"
                 "  when          return a date given a block number or a block number given a date|"
-                "  where         determine the location of block(s), either local or remote cache|"
+                "  where         determine the location of block(s), either local or remote cache"
     );
     // clang-format on
 

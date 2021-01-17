@@ -25,12 +25,19 @@ build
 *.dll
 
 # Fortran module files
+*.mod
 *.smod
 
 # Compiled Static libraries
 *.lai
 *.la
+*.a
 *.lib
+
+# Executables
+*.exe
+*.out
+*.app
 
 # Hidden files
 .DS_Store

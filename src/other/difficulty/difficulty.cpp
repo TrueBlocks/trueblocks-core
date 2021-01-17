@@ -22,23 +22,13 @@
 //}
 
 #if 1
-#define START 11637800
-#define END 11663363
 int main(int argc, const char* argv[]) {
     etherlib_init(quickQuitHandler);
-    CBlock block;
-//    for (size_t i = START; i < END ; i++) {
-//        getBlock_light(block, i);
-//        cout << block.blockNumber << "," << block.timestamp << "," << block.difficulty << endl;
-//        cerr << block.blockNumber << "/" << END << "\r"; cerr.flush();
-//    }
-    getBlock_light(block, END-1);
-#define ENDEND 14000000
-    for (size_t i = END ; i < ENDEND ; i++) {
-        block.blockNumber = i;
-        block.timestamp += 14;
+    for (size_t i = 11390799; i < 11637800; i++) {
+        CBlock block;
+        getBlock_light(block, i);
         cout << block.blockNumber << "," << block.timestamp << "," << block.difficulty << endl;
-        cerr << block.blockNumber << "/" << ENDEND << "\r"; cerr.flush();
+        cerr << block.blockNumber << "\r"; cerr.flush();
     }
     return 0;
 }

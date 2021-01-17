@@ -1,7 +1,0 @@
-#bin/giveth_ff --nocolor | grep -v ^6 | cut -f1 -d',' | sort -un | tee tmp1 
-#cat tmp1 | sed 's/^/getBlock /' | sed 's/$/ --addrs --filter 0x5ADF43DD006c6C36506e2b2DFA352E60002d22Dc/' >file
-#chmod uog+x file
-#./file | tee file0
-cat file0 | cut -f1,2,5 | tee file1
-cat file1 | tr '\t' ',' | tee file2
-cat file2 | grep -v trace_0_to | grep -v trace_0_from | grep -v trace_0_input | tee txs.csv

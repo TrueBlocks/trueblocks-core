@@ -1,10 +1,26 @@
-## Bin folder
+# Bin folder
 
-When you first install QuickBlokcs, this folder contains no files other than this README.md. The systems builds its binaries into this folder.
+Initially empty, this folder will contain the built executables created by TrueBlocks.
 
-#### Notes:
+Add this folder to your $PATH.
+
+### Notes
 
 - Do not modify the files in this folder.
-- Add this folder to your $PATH before /usr/local/bin/qblocks, if you wish to run these programs from your command line.
-- When you do `(sudo) make install`, these files will be copied into /usr/local/qblocks/bin. Set your $PATH variable appropriately to make sure you're picking up the correct version.
-- For all tools built with QBlocks, you may enter the --version parameter to see which version you're running.
+- Add this folder to your $PATH if you wish to run these programs from your command line.
+
+### Getting Started
+
+To insure that you have your $PATH set correctly, you may enter this command:
+
+```[shell]
+chifra --version
+```
+
+Type
+
+```[shell]
+chifra --help --verbose
+```
+
+For more information.
