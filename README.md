@@ -16,8 +16,13 @@ Local-first means your application is **private by default**, the client-side ca
 [How does TrueBlocks Work?](docs/FAQ.md#how-it-works)
 
 ## Prerequisites
+---
 
-Before building TrueBlocks, complete these prerequisites:
+Before building TrueBlocks, you need to make sure you have `git`, `cmake` and `go` available.
+
+Follow [these instructions](https://golang.org/doc/install) for installing `golang` on your system.
+
+Complete these commands to install `git` and `cmake`:
 
 #### On Linux:
 
@@ -47,23 +52,39 @@ This will create a series of executables in the `./bin` folder at the top of the
 
 [Does TrueBlocks Work on Windows?](docs/FAQ.md-windows)
 
-## Using TrueBlocks
+## Testing Installation
+---
 
-After building, test your configuration with this command:
+After building TrueBlocks, you may test your configuration with this command:
 
 ```[shell]
 chifra --version
 ```
 
-To get a complete list of available commands, do this:
+For a complete list of available commands, run this command:
 
 ```[shell]
 chifra --help --verbose
 ```
 
-[Where to Go from Here](docs/FAQ.md#next-steps)
+## Using TrueBlocks
+---
+
+The `chifra` tool is the basis for everything related to TrueBlocks. (`chifra` is derived from the Arabic word for `chipher`.) It helps you decipher the chain data.
+
+[Running the API](x)
+
+[Using the Command Line](x)
+
+[Using the Libraries](x)
+
+[Where to Go from Here...](docs/FAQ.md#next-steps)
+
+[Full Documentation...](x)
 
 ## Contributing to TrueBlocks
+---
+Please see information about our [work flow](docs/BRANCHING.md) before proceeding.
 
 1. Fork this repository.
 2. Create a branch: `git checkout -b <branch_name>`.
@@ -72,16 +93,17 @@ chifra --help --verbose
 5. Create the pull request.
 
 ## Contributors
-
+---
 Thanks to the following people who have contributed to this project:
 
-* [@tjayrush](https://github.com/tjayrush) 📖
-* [@wildmolasses](https://github.com/wildmolasses) 📖
+* [@tjayrush](https://github.com/tjayrush)
+* [@crodnun](https://github.com/crodnun)
+* [@wildmolasses](https://github.com/wildmolasses)
 
 ## Contact
-
+---
 If you have specific requests, contact us here <info@quickblocks.io>.
 
 ## License
-
+---
 This project licensed under the [Apache License Version 2.0](LICENSE.md).
