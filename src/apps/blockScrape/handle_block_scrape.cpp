@@ -9,7 +9,7 @@
 //#define CLIENT 10480200
 //#define N_BLOCKS 100
 //#define THE_CMD "/Users/jrush/Development/trueblocks-core/bin/blaze scrape"
-#define MAX_ROWS 1000000
+#define MAX_ROWS 2000000
 #define CLIENT (client + 0)
 #define N_BLOCKS (n_blocks + 0)
 #define THE_CMD "blaze scrape"

@@ -74,11 +74,18 @@ bool visitTransaction(CTransaction& trans, void* data) {
     if (opt->count) {
         uint64_t cnt = getTraceCount(trans.hash);
         if (isText) {
-            cout << trans.hash << "\t" << cnt << endl;
+            cout << trans.blockNumber << "\t";
+            cout << trans.transactionIndex << "\t";
+            cout << trans.hash << "\t";
+            cout << cnt << endl;
         } else {
             if (!opt->first)
                 cout << ",";
-            cout << "{ \"hash\": \"" << trans.hash << "\", \"count\": \"" << cnt << "\" }";
+            cout << "{ ";
+            cout << "\"bn\": \"" << trans.blockNumber << "\", ";
+            cout << "\"tx_id\": \"" << trans.transactionIndex << "\", ";
+            cout << "\"hash\": \"" << trans.hash << "\", ";
+            cout << "\"count\": \"" << cnt << "\" }";
         }
         opt->first = false;
         return true;

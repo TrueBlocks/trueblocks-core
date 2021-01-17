@@ -143,7 +143,7 @@ bool COptions::handle_logs(void) {
     }
 
     if (!isTestMode())
-        LOG_PROGRESS1("Reported", (first_record + nProcessed), nTransactions,
+        LOG_PROGRESS1((freshen ? "Updated" : "Reported"), (first_record + nProcessed), nTransactions,
                       " transactions for address " + monitors[0].address + "\r");
 
     for (auto monitor : monitors)

@@ -70,8 +70,10 @@ bool processPair(uint64_t blockNum, void* data) {
     static bool first = true;
     if (opt->modeBits & TOK_BALANCE) {
         string_q val = getTokenBalanceOf(opt->curToken, opt->curToken.holder, blockNum);
-        if (val == "0" && opt->no_zero)
+        if (val == "0" && opt->no_zero) {
+            LOG_INFO("Skipping: ", opt->curToken.holder, " at ", blockNum, "\r");
             return !shouldQuit();
+        }
         opt->curToken.setValueByName("balance", val);
     }
     bool isText = expContext().exportFmt == TXT1 || expContext().exportFmt == CSV1;

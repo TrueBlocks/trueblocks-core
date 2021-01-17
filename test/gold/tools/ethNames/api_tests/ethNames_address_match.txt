@@ -1207,6 +1207,15 @@
       "description": ""
     },
     {
+      "tags": "60-Airdrops",
+      "address": "0x16eb52d84fb8085fb0c466c8f11f21e4efa6ed3d",
+      "name": "QunFaBa Airdrop",
+      "symbol": "",
+      "source": "",
+      "decimals": 0,
+      "description": ""
+    },
+    {
       "tags": "50-Tokens:ERC20",
       "address": "0x16f812be7fff02caf662b85d5d58a5da6572d4df",
       "name": "United Traders Token",
@@ -1799,15 +1808,6 @@
       "source": "Gitcoin Website",
       "decimals": 0,
       "description": ""
-    },
-    {
-      "tags": "50-Tokens:ERC20",
-      "address": "0x1b793e49237758dbd8b752afc9eb4b329d5da016",
-      "name": "ViteToken",
-      "symbol": "VITE",
-      "source": "On chain",
-      "decimals": 18,
-      "description": "High-performance Decentralized Application Platform"
     }
   ],
   "types": [

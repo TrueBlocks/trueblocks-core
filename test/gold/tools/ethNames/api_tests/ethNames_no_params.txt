@@ -1657,6 +1657,15 @@
       "description": ""
     },
     {
+      "tags": "60-Airdrops",
+      "address": "0x07b8a9e9d8729f162c9d04b4762446bc76346e60",
+      "name": "QunFaBa Airdrop Sender",
+      "symbol": "",
+      "source": "",
+      "decimals": 0,
+      "description": ""
+    },
+    {
       "tags": "50-Tokens:ERC20",
       "address": "0x07d9e49ea402194bf48a8276dafb16e4ed633317",
       "name": "DALECOIN",
@@ -1799,15 +1808,6 @@
       "source": "Twitter",
       "decimals": 0,
       "description": "A"
-    },
-    {
-      "tags": "31-Gitcoin Grants:Friends",
-      "address": "0x088b1147aceaf35cc9be639f4e702268411c7405",
-      "name": "Name 0x088b1147",
-      "symbol": "",
-      "source": "Gitcoin Website",
-      "decimals": 0,
-      "description": ""
     }
   ],
   "types": [

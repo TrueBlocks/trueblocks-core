@@ -184,6 +184,7 @@ ethNames --named --fmt txt --no_header
 50-Tokens:ERC20	0x0784dbabb6c6834bddfb7cfee116ba049e5dafab	IBTC	IBTC		18
 30-Contracts	0x07995e463f8957b70d683addd00a695ba83bb324	Gavin Wood VouchFor
 50-Tokens:ERC20	0x07a58629aaf3e1a0d07d8f43114b76bd5eee3b91	Guaranteed Ethurance Token Extra	GETX		18
+60-Airdrops	0x07b8a9e9d8729f162c9d04b4762446bc76346e60	QunFaBa Airdrop Sender
 50-Tokens:ERC20	0x07d9e49ea402194bf48a8276dafb16e4ed633317	DALECOIN	DALC		8
 55-Defi	0x07db4b9b3951094b9e278d336adf46a036295de7	Yearn: StrategyCurveYVoterProxy
 50-Tokens:ERC20	0x07e3c70653548b04f0a75970c1f81b4cbbfb606f	Delta	DLT		18
@@ -200,4 +201,3 @@ ethNames --named --fmt txt --no_header
 50-Tokens:ERC20	0x0879e0c9822b75f31f0b0ed2a30be9f484a57c2f	LiteCoinGold	LTG
 31-Gitcoin Grants:Friends	0x087b33c9a4bdb2fa55a742c51ab44ec66f35bc95	Name 0x087b33c9
 34-Twitter: Friends	0x08808da244d4cdcc56a38748ccebec9985141fd2	Name 0x08808da2
-31-Gitcoin Grants:Friends	0x088b1147aceaf35cc9be639f4e702268411c7405	Name 0x088b1147

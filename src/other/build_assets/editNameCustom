@@ -30,7 +30,20 @@ else
     echo $TAG
 fi
 
-SOURCE=${4:-$defSource}
+SOURCE=$4
+echo -n "Enter a source (def: EtherScan.io): "
+if [[ -z ${SOURCE} ]]
+then
+    read SOURCE
+    if [[ -z ${SOURCE} ]]
+    then
+        SOURE="EtherScan.io"
+    fi
+else
+    echo $SOURCE
+fi
+
+# These will be set by querying the chain
 SYMBOL=$5
 DECIMALS=${6:-$defDecimals}
 DESCR=$7

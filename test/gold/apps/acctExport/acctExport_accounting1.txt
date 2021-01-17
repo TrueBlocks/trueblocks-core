@@ -152,7 +152,7 @@ acctExport 0x001d14804b399c6ef80e64576f657660804fec0b --accounting --fmt api --m
 ], "types": [
 { "type": "CTransaction", "fields": [{ "name": "hash", "type": "hash" }, { "name": "blockHash", "type": "hash" }, { "name": "blockNumber", "type": "blocknum" }, { "name": "transactionIndex", "type": "blocknum" }, { "name": "timestamp", "type": "timestamp" }, { "name": "from", "type": "address" }, { "name": "to", "type": "address" }, { "name": "value", "type": "wei" }, { "name": "gas", "type": "gas" }, { "name": "gasPrice", "type": "gas" }, { "name": "isError", "type": "unumber" }, { "name": "hasToken", "type": "unumber" }, { "name": "receipt", "type": "object" }, { "name": "traces", "type": "object|ts_array" }, { "name": "articulatedTx", "type": "object" }, { "name": "compressedTx", "type": "text" }, { "name": "statements", "type": "object|ts_array" }, { "name": "gasCost", "type": "wei" }, { "name": "gasUsed", "type": "gas" }, { "name": "date", "type": "date" }, { "name": "ether", "type": "ether" }] }
 ], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef", "namedFrom": {}
-, "unNamedFrom": {"0xPrefund": 1}, "namedTo": {"0x2910543af39aba0cd09dbb2d50200b3e800a63d2": { "tags": "81-Other", "name": "Kraken Exchange", "count": 1 }}
+, "unNamedFrom": {"0xPrefund": 1}, "namedTo": {"0x2910543af39aba0cd09dbb2d50200b3e800a63d2": { "tags": "25-Exchanges", "name": "Name 0x2910543a", "count": 1 }}
 , "unNamedTo": {"0xcfab9ac2bb2e1dcfc2d50f01f4e61f2f72fb5902": 1}, "start": "0xdeadbeef"
 , "end": "0xdeadbeef"
 , "accountedFor": {

@@ -25,7 +25,7 @@ void COptions::finishClean(CAccountName& name) {
             name.decimals = str_2_Uint(decimals);
             name.symbol = symbol.empty() ? name.symbol : symbol;
             name.is_erc20 = true;
-            name.tags = "50-ERC20";
+            name.tags = name.tags.empty() ? "50-ERC20" : name.tags;
             if (!contains(name.source, "kickback")) {
                 name.source = "On chain";
                 name.name = nm.empty() ? name.name : (contains(name.name, "Airdrop") ? nm + " Airdrop" : nm);

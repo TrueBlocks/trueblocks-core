@@ -753,6 +753,10 @@
       "decimals": 18
     },
     {
+      "address": "0x07b8a9e9d8729f162c9d04b4762446bc76346e60",
+      "decimals": 0
+    },
+    {
       "address": "0x07d9e49ea402194bf48a8276dafb16e4ed633317",
       "decimals": 8
     },
@@ -798,10 +802,6 @@
     },
     {
       "address": "0x08497b07916280da27b43d28a0d3dfa7d6676b58",
-      "decimals": 0
-    },
-    {
-      "address": "0x08711d3b02c8758f2fb3ab4e80228418a7f8e39c",
       "decimals": 0
     }
   ],

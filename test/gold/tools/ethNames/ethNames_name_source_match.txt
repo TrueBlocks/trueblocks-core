@@ -1109,13 +1109,6 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
-    "tags": "60-Airdrops",
-    "address": "0x3af17600662d3a22c4ba91046fd5eb8a6f840afe",
-    "name": "EMANTokenSender",
-    "source": "Etherscan"
-  },
-  {
-    "deleted": false,
     "tags": "30-Contracts",
     "address": "0x3c2c10e5ecd073d9ee238493d338ec6e3d7281c6",
     "name": "Bithereum",
@@ -1137,13 +1130,6 @@ ethNames Ether --expand --verbose --fmt json
     "name": "Compound: Comptroller",
     "source": "Etherscan",
     "is_contract": true
-  },
-  {
-    "deleted": false,
-    "tags": "40-Exchanges",
-    "address": "0x3f1c1e14fd919415010c03f9de29cbafd5866e81",
-    "name": "Coinbase 1",
-    "source": "Etherscan"
   },
   {
     "deleted": false,
@@ -1766,6 +1752,22 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "60-Airdrops",
     "address": "0x630d5d181d64a8cc97fd993d422795e2a704cffb",
     "name": "LPT Airdrop Sender 2",
+    "source": "Etherscan"
+  },
+  {
+    "deleted": false,
+    "tags": "40-Exchanges",
+    "address": "0x64a9edd3f5fce0252cd708e26c8dd11205742826",
+    "name": "Uniswap: ANJ Aragon Network Juror",
+    "symbol": "ANJ",
+    "source": "Etherscan",
+    "is_contract": true
+  },
+  {
+    "deleted": false,
+    "tags": "60-Airdrops",
+    "address": "0x65d2c9da791d412d97874a879d427416502f2cd0",
+    "name": "AGLD Airdrop Sender",
     "source": "Etherscan"
   }], "types": [
 { "type": "CAccountName", "fields": [{ "name": "deleted", "type": "bool" }, { "name": "tags", "type": "text" }, { "name": "address", "type": "address" }, { "name": "name", "type": "text" }, { "name": "symbol", "type": "text" }, { "name": "source", "type": "text" }, { "name": "decimals", "type": "unumber" }, { "name": "description", "type": "text" }, { "name": "is_custom", "type": "bool" }, { "name": "is_prefund", "type": "bool" }, { "name": "is_contract", "type": "bool" }, { "name": "is_erc20", "type": "bool" }, { "name": "is_erc721", "type": "bool" }] }
