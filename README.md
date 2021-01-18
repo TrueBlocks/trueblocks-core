@@ -27,7 +27,7 @@ Complete these commands to install `git`, `cmake`, and `clang-format`:
 #### On Linux:
 
 ```[shell]
-sudo apt install build-essential git cmake python python-dev libcurl3-dev
+sudo apt install build-essential git cmake python python-dev libcurl3-dev clang-format jq
 ```
 
 #### On Mac:
@@ -36,6 +36,7 @@ sudo apt install build-essential git cmake python python-dev libcurl3-dev
 brew install cmake
 brew install git
 brew install clang-format
+brew install jq
 ```
 ## Building TrueBlocks
 
@@ -66,6 +67,30 @@ For a complete list of available commands, run this command:
 
 ```[shell]
 chifra --help --verbose
+```
+
+Next, let's see if you can get a block from your Ethereum node. Enter this command:
+
+```[shell]
+getBlock 100
+```
+
+This should return valid JSON data for block 100 (type `getBlock --help` for more options on this tool.) If you get an error, such as this:
+
+```[shell]
+Warning: The Ethereum RPC: 'http://localhost:8545' was not found. Quitting...
+```
+You need to edit the file `~/.quickBlocks/quickBlocks.toml` to provide the URL of an available Ethereum RPC provider. Add this text:
+
+```[toml]
+[settings]
+rpcProvider="<url-to-your-rpc-provider>
+```
+
+Once you get `getBlock` to return JSON data, you are ready to test your installtion. While optional, one of the tools (`ethslurp`) requires an Etherscan key. Get an EtherScan API key now, then run:
+
+```[shell]
+make tests
 ```
 
 ## Using TrueBlocks
