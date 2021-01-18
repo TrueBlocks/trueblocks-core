@@ -47,5 +47,4 @@ chifra -th
    quotes        return prices collected from configured remote API
    when          return a date given a block number or a block number given a date
    where         determine the location of block(s), either local or remote cache
- 
 
