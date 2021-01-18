@@ -13,7 +13,7 @@ TrueBlocks allows you to build local-first, fully-decentralized applications usi
 
 Local-first means your application is **private by default**, the client-side cache means your application is **fast**, and *extraction-on-demand* means your application will remain **minimal**.
 
-[How does TrueBlocks Work?](docs/FAQ.md#how-it-works)
+[How does TrueBlocks Work?](./docs/FAQ.md#how-it-works)
 
 ## Prerequisites
 ---
@@ -51,7 +51,7 @@ make
 
 This will create a series of executables in the `./bin` folder at the top of the repo. The following instructions assume you've added this folder to your `$PATH`.
 
-[Does TrueBlocks Work on Windows?](docs/FAQ.md-windows)
+[Does TrueBlocks Work on Windows?](./docs/FAQ.md-windows)
 
 ## Testing Installation
 ---
@@ -73,19 +73,19 @@ chifra --help --verbose
 
 The `chifra` tool is the basis for everything related to TrueBlocks. (`chifra` is derived from the Arabic word for `chipher`.) It helps you decipher the chain data.
 
-[Running the API](x)
+[Running the API](./docs/FAQ.md#running-the-api)
 
-[Using the Command Line](x)
+[Using the Command Line](./docs/FAQ.md#using-the-command-line)
 
-[Using the Libraries](x)
+[Using the Libraries](./docs/FAQ.md#using-the-library)
 
-[Where to Go from Here...](docs/FAQ.md#next-steps)
+[Where to Go from Here...](./docs/FAQ.md#where-to-go-from-here)
 
-[Full Documentation...](x)
+[Full Documentation...](./docs/FAQ.md#full-documentation)
 
 ## Contributing to TrueBlocks
 ---
-Please see information about our [work flow](docs/BRANCHING.md) before proceeding.
+Please see information about our [work flow](./docs/BRANCHING.md) before proceeding.
 
 1. Fork this repository.
 2. Create a branch: `git checkout -b <branch_name>`.
