@@ -1249,21 +1249,30 @@ bool excludeTrace(const CTransaction* trans, size_t maxTraces) {
 }
 
 //-----------------------------------------------------------------------
+bool establishTsFile(const string_q& fn) {
+    if (fileExists(fn))
+        return true;
+
+    string_q zipFile = configPath("ts.bin.gz");
+    if (fileExists(zipFile)) {  // first run since install? Let's try to get some timestamps
+        string_q cmd = "cd " + configPath("") + " ; gunzip " + zipFile;
+        string_q result = doCommand(cmd);
+        LOG_INFO(result);
+        ASSERT(!fileExists(zipFile));
+        ASSERT(fileExists(fn));
+        return !fileExists(zipFile) && fileExists(fn);
+    }
+    return false;
+}
+
+//-----------------------------------------------------------------------
 bool freshenTimestamps(blknum_t minBlock) {
     if (isTestMode())
         return true;
 
     string_q fn = configPath("ts.bin");
-    if (!fileExists(fn)) {
-        string_q zipFile = configPath("ts.bin.gz");
-        if (fileExists(zipFile)) {  // first run since install? Let's try to get some timestamps
-            string_q cmd = "cd " + configPath("") + " ; gunzip " + zipFile;
-            string_q result = doCommand(cmd);
-            LOG_INFO(result);
-            ASSERT(!fileExists(zipFile));
-            ASSERT(fileExists(fn));
-        }
-    }
+    if (!establishTsFile(fn))
+        return false;
 
     size_t nRecords = ((fileSize(fn) / sizeof(uint32_t)) / 2);
     if (nRecords >= minBlock)
@@ -1312,6 +1321,9 @@ bool loadTimestampFile(uint32_t** theArray, size_t& cnt) {
         file.close();
 
     string_q fn = configPath("ts.bin");
+    if (!establishTsFile(fn))
+        return false;
+
     cnt = ((fileSize(fn) / sizeof(uint32_t)) / 2);
     if (theArray == NULL)
         return false;
