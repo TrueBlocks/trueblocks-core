@@ -12010,7 +12010,7 @@
         "count": 17
       },
       "0x6b175474e89094c44da98b954eedeac495271d0f": {
-        "tags": "30-Contracts",
+        "tags": "50-Tokens:ERC20",
         "name": "Dai Stablecoin",
         "is_contract": true,
         "is_erc20": true,

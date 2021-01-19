@@ -104,6 +104,11 @@ int main(int argc, const char* argv[]) {
 
             if (shouldQuit())
                 break;
+
+            if (getEnvStr("WAIT_PER_TEST") == "true") {
+                cerr << "Press enter to continue" << endl;
+                getchar();
+            }
         }
     }
 

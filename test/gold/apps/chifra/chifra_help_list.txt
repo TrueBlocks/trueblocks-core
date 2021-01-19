@@ -2,6 +2,8 @@ chifra argc: 3 [1:list] [2:--help]
 chifra list --help 
 chifra list argc: 2 [1:--help] 
 chifra list --help 
+PROG_NAME = [chifra list]
+NO_NAMES = [true]
 
   Usage:    chifra list [-v|-h] <address> [address...]  
   Purpose:  Add or remove monitors for a given Ethereum address (or collection of addresses).

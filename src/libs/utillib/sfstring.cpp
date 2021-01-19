@@ -314,6 +314,11 @@ string_q trimWhitespace(const string_q& str, const string_q& add) {
     return ret.c_str();
 }
 
+//---------------------------------------------------------------------------
+string_q stripWhitespace(const string_q& str) {
+    return substitute(substitute(substitute(substitute(str, "\"", "\\\""), "\n", " "), "\r", " "), "\t", " ");
+}
+
 //--------------------------------------------------------------------
 string_q padRight(const string_q& str, size_t len, char p) {
     if (len > str.length())

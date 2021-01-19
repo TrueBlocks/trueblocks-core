@@ -680,12 +680,12 @@ string_q nextTransactionChunk_custom(const string_q& fieldIn, const void* dataPt
                 if (fieldIn % "compressedTx") {
                     if (!tra->articulatedTx.message.empty())
                         return "message:" + tra->articulatedTx.message;
-                    string_q ret = substitute(tra->articulatedTx.compressed(), "\"", "\\\"");
+                    string ret = tra->articulatedTx.compressed();
                     if (ret.empty()) {
                         extern string_q compressInput(const string_q& input);
-                        ret = compressInput(tra->input);
+                        return compressInput(tra->input);
                     }
-                    return ret;
+                    return stripWhitespace(ret);
                 }
                 if (fieldIn % "classification1") {
                     if (expContext().accountedFor.empty())

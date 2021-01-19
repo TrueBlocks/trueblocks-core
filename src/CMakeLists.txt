@@ -72,7 +72,7 @@ set (BASE_INCLUDE
 
 # ----------------------------------------------------------------------------------------
 # Enable testing
-enable_testing()
+# enable_testing()
 
 # ----------------------------------------------------------------------------------------
 # Builds the README.md file in the given folder
@@ -86,7 +86,7 @@ add_custom_target(format COMMAND "${CMAKE_SOURCE_DIR}/../bin/makeClass" "--forma
 add_custom_target(options COMMAND "${CMAKE_SOURCE_DIR}/../bin/makeClass" "--options --api" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
 add_custom_target(generate COMMAND "${CMAKE_SOURCE_DIR}/../bin/makeClass" "-aop" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
 add_custom_target(finish COMMAND "${CMAKE_SOURCE_DIR}/../bin/makeClass" "-lf" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
-add_custom_target(tests COMMAND "${CMAKE_SOURCE_DIR}/../bin/test/doTesting" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/../build")
+add_custom_target(test COMMAND "${CMAKE_SOURCE_DIR}/../bin/test/doTesting" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/../build")
 add_custom_target(test-all COMMAND "${CMAKE_SOURCE_DIR}/../bin/test/doTestingAll" "--no_quit" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/../build")
 
 # ----------------------------------------------------------------------------------------

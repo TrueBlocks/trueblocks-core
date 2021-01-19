@@ -3,8 +3,8 @@ ethNames --verbose --fmt txt
 tags	address	name	symbol	decimals	source
 55-Defi	0x000000000000000000000000000000000000dead	ENS: Burn Address				Etherscan
 30-Contracts	0x0000000000001b84b1cb32787b0d64758d019317	HomeWork 🏠🛠️	HWK			On chain
-30-Contracts	0x0000000000004946c0e9f43f4dee607b0ef1fa1c	Chi Gastoken by 1inch	CHI			On chain
-50-Tokens	0x0000000000085d4780b73119b644ae5ecd22b376	TrueUSD	TUSD		18	On chain
+50-Tokens:ERC20	0x0000000000004946c0e9f43f4dee607b0ef1fa1c	Chi Gastoken by 1inch	CHI			On chain
+50-Tokens:ERC20	0x0000000000085d4780b73119b644ae5ecd22b376	TrueUSD	TUSD		18	On chain
 34-ENS	0x00000000000c2e074ec69a0dfb2997ba6c7d2e1e	ENS: Registry with Fallback				Etherscan
 30-Contracts	0x0000000000c90bc353314b6911180ed7e06019a9	Arbitrage Bot				0xTracker
 30-Contracts	0x0000000006adbd7c01bc0738cdbfc3932600ad63	1inch Exchange				0xTracker
@@ -20,6 +20,7 @@ tags	address	name	symbol	decimals	source
 31-Gitcoin Grants:Friends	0x00000b46508882a135b4933b82a07df8f24a0068	Name 0x00000b46				Gitcoin Website
 50-Tokens	0x00006100f7090010005f1bd7ae6122c3c2cf0090	TrueAUD	TAUD		18	On chain
 50-Tokens	0x0000852600ceb001e08e00bc008be620d60031f2	TrueHKD	THKD		18	On chain
+55-Defi	0x0001fb050fe7312791bf6475b96569d83f695c9f	Ygov.finance: yearn				Etherscan.io
 30-Contracts	0x000983ba1a675327f0940b56c2d49cd9c042dfbf	GU: Shiny Legendary Pack				Etherscan
 60-Airdrops	0x000ee67d5bec37ad37292da18516cc96d81e0242	RZM Airdrop Sender 2				TrueBlocks.io
 31-Gitcoin Grants:Friends	0x00158a74921620b39e5c3afe4dca79feb2c2c143	Name 0x00158a74				Gitcoin Website
@@ -129,6 +130,7 @@ tags	address	name	symbol	decimals	source
 30-Contracts:dAppNode	0x0545c8d8537fd8b5d8b5cec24ca94103bd4b67d4	dAddNode Package 001				TrueBlocks.io
 50-Tokens:ERC20	0x054c64741dbafdc19784505494029823d89c3b13	ETERNAL TOKEN	XET		8	On chain
 34-Twitter: Friends	0x0559a413a3ab19508a144aeebc474eb14c5e76ce	Name 0x0559a413				Twitter
+30-Contracts	0x055cc48f7968fd8640ef140610dd4038e1b03926	Owned Upgradeability Proxy				Etherscan.io
 31-Gitcoin Grants:Friends	0x056fa2506578a8cd1b15aaf153d327c981140492	Name 0x056fa250				Gitcoin Website
 50-Tokens:ERC20	0x056fd409e1d7a124bd7017459dfea2f387b6d5cd	Gemini dollar	GUSD		2	On chain
 60-Airdrops	0x0571325cd46718cd9445f082332a4fd9a21b8498	FIFAMini Airdrop Sender				TrueBlocks.io
@@ -200,5 +202,3 @@ tags	address	name	symbol	decimals	source
 31-Gitcoin Grants:Grant	0x08497b07916280da27b43d28a0d3dfa7d6676b58	Grant 122 Austin Griffith Ethereum Rampd				https://gitcoin.co/grants/122/austin-griffith-ethereum-rampd
 50-Tokens:ERC20	0x08711d3b02c8758f2fb3ab4e80228418a7f8e39c	Edgeless	EDG			On chain
 50-Tokens:ERC20	0x0879e0c9822b75f31f0b0ed2a30be9f484a57c2f	LiteCoinGold	LTG			On chain
-31-Gitcoin Grants:Friends	0x087b33c9a4bdb2fa55a742c51ab44ec66f35bc95	Name 0x087b33c9				Gitcoin Website
-34-Twitter: Friends	0x08808da244d4cdcc56a38748ccebec9985141fd2	Name 0x08808da2				Twitter

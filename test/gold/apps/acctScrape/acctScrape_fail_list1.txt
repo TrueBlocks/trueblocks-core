@@ -1,5 +1,6 @@
 acctScrape argc: 2 [1:--list] 
 acctScrape --list 
+NO_NAMES = [true]
 
   Invalid option: --list
 

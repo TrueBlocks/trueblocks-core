@@ -1,5 +1,6 @@
 acctScrape argc: 1 
 acctScrape 
+NO_NAMES = [true]
 TIME ~ CLOCK - <ERROR> : Exit(acctScrape,parseArguments): 
 
   You must provide at least one Ethereum address. Quitting...

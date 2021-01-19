@@ -3,7 +3,8 @@ chifra names --names 50-Tokens --fmt txt
 ethNames argc: 2 [1:50-Tokens] 
 ethNames 50-Tokens 
 tags	address	name	symbol	decimals
-50-Tokens	0x0000000000085d4780b73119b644ae5ecd22b376	TrueUSD	TUSD		18
+50-Tokens:ERC20	0x0000000000004946c0e9f43f4dee607b0ef1fa1c	Chi Gastoken by 1inch	CHI
+50-Tokens:ERC20	0x0000000000085d4780b73119b644ae5ecd22b376	TrueUSD	TUSD		18
 50-Tokens	0x00000000441378008ea67f4284a57932b1c000a5	TrueGBP	TGBP		18
 50-Tokens	0x00000100f2a2bd000715001920eb70d229700085	TrueCAD	TCAD		18
 50-Tokens	0x00006100f7090010005f1bd7ae6122c3c2cf0090	TrueAUD	TAUD		18
@@ -60,6 +61,7 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0x089a6d83282fb8988a656189f1e7a73fa6c1cac2	Prospectors Gold	PGL		18
 50-Tokens	0x08d32b0da63e2c3bcf8019c9c5d849d7a9d791e6	Dentacoin	٨
 50-Tokens:ERC20	0x08f5a9235b08173b7569f83645d2c7fb55e8ccd8	Tierion Network Token	TNT		8
+50-Tokens:ERC20	0x090d4613473dee047c3f2706764f49e0821d256e	Uniswap: Token Distributor
 50-Tokens:ERC20	0x0947b0e6d821378805c9598291385ce7c791a6b2	Lendingblock	LND		18
 50-Tokens	0x09617f6fd6cf8a71278ec86e23bbab29c04353a7	Unblocked Ledger Token	ULT		18
 50-Tokens:ERC20	0x09fe5f0236f0ea5d930197dce254d77b04128075	Wrapped CryptoKitties	WCK		18
@@ -75,6 +77,7 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0x0bb217e40f8a5cb79adf04e1aab60e5abd0dfc1e	SwftCoin	SWFTC		8
 50-Tokens:ERC20	0x0bc61dded5f6710c637cf8288eb6058766ce1921	CEN	CEN		18
 50-Tokens:ERC20	0x0bef619cf38cf0c22967289b8419720fbd1db9f7	AEN.	AEN		8
+50-Tokens:ERC20	0x0c334506e0bcb7c17b583cb7c0ec2f5857bf9e6f	Public Goods	PUBG		18
 50-Tokens:ERC20	0x0c6e8a8358cbde54f8e4cd7f07d5ac38aec8c5a4	PlatonCoin	PLTC		18
 50-Tokens:ERC20	0x0cf0ee63788a0849fe5297f3407f701e122cc023	Streamr DATAcoin	DATA		18
 50-Tokens:ERC20	0x0d262e5dc4a06a0f1c90ce79c7a60c09dfc884e4	J8T Token	J8T		8
@@ -99,6 +102,9 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0x1063ce524265d5a3a624f4914acd573dd89ce988	Aigang	AIX		18
 50-Tokens:ERC20	0x106aa49295b525fcf959aa75ec3f7dcbf5352f1c	Rock Token	RKT		18
 50-Tokens:ERC20	0x107c4504cd79c5d2696ea0030a8dd4e92601b82e	Bloom Token	BLT		18
+50-Tokens:ERC20	0x111111111117dc0aa78b770fa6a738034120c302	1INCH Token	1INCH		18
+50-Tokens:ERC20	0x111111125434b319222cdbf8c261674adb56f3ae	1inch.exchange v2
+50-Tokens:ERC20	0x11111254369792b2ca5d084ab5eea397ca8fa48b	1inch.exchange
 50-Tokens:ERC20	0x1122b6a0e00dce0563082b6e2953f3a943855c1f	Centrality Token	CENNZ		18
 50-Tokens:ERC20	0x1183f92a5624d68e85ffb9170f16bf0443b4c242	QVT	QVT		18
 50-Tokens:ERC20	0x122a86b5dff2d085afb49600b4cd7375d0d94a5f	ITL (Italian Lira)	ITL		8
@@ -108,6 +114,7 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0x12759512d326303b45f1cec8f7b6fd96f387778e	TrakInvest Token	TRAK		18
 50-Tokens	0x12b19d3e2ccc14da04fae33e63652ce469b3f2fd	GRID Token	GRID		12
 50-Tokens:ERC20	0x12b306fa98f4cbb8d4457fdff3a0a0a56f07ccdf	Spectre.ai D-Token	SXDT		18
+50-Tokens:ERC20	0x12d66f87a04a9e220743712ce6d9bb1b5616b8fc	Tornado.Cash: 0.1 ETH
 50-Tokens:ERC20	0x12fef5e57bf45873cd9b62e9dbd7bfb99e32d73e	Cofoundit	CFI		18
 50-Tokens:ERC20	0x13119e34e140097a507b07a5564bde1bc375d9e6	MoneyToken	IMT		18
 50-Tokens:ERC20	0x138a8752093f4f9a79aaedf48d4b9248fab93c9c	Musiconomi	MCI		18
@@ -189,6 +196,7 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0x219218f117dc9348b358b8471c55a073e5e0da0b	Gold Reward Token	GRX		18
 50-Tokens:ERC20	0x21d5678a62dfe63a47062469ebb2fac2817d8832	YoloCash	YLC		8
 50-Tokens:ERC20	0x2233799ee2683d75dfefacbcd2a26c78d34b470d	Network Token	NTWK		18
+50-Tokens:ERC20	0x2260fac5e5542a773aa44fbcfedf7c193bc2c599	Wrapped BTC	WBTC		8
 50-Tokens:ERC20	0x226bb599a12c826476e3a771454697ea52e9e220	Propy	PRO		8
 50-Tokens:ERC20	0x228ba514309ffdf03a81a205a6d040e429d6e80c	Global Social Chain	GSC		18
 50-Tokens	0x22c1f6050e56d2876009903609a2cc3fef83b415	POAP	The Proof of Attendance Protocol
@@ -196,11 +204,3 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0x2344871f523cbb28a4f60045531184cf1f03ad24	RoBET - Truly Decentralized Sportsbetting	ROBET		18
 50-Tokens:ERC20	0x23b75bc7aaf28e2d6628c3f424b3882f8f072a3c	Vice	VIT		18
 50-Tokens:ERC20	0x23ccc43365d9dd3882eab88f43d515208f832430	MidasProtocol	MAS		18
-50-Tokens:ERC20	0x241ba672574a78a3a604cdd0a94429a73a84a324	4NEW	KWATT		18
-50-Tokens:ERC20	0x245ef47d4d0505ecf3ac463f4d81f41ade8f1fd1	Nuggets	NUG		18
-50-Tokens:ERC20	0x24692791bc444c5cd0b81e3cbcaba4b04acd1f3b	UnikoinGold	UKG		18
-50-Tokens:ERC20	0x24a77c1f17c547105e14813e517be06b0040aa76	Live Stars Token	LIVE		18
-50-Tokens:ERC20	0x24dcc881e7dd730546834452f21872d5cb4b5293	Data Transaction Token	XD		18
-50-Tokens:ERC20	0x24ddff6d8b8a42d835af3b440de91f3386554aa4	IUNGO token	ING		18
-50-Tokens:ERC20	0x255aa6df07540cb5d3d297f0d0d4d84cb52bc8e6	Raiden Token	RDN		18
-50-Tokens:ERC20	0x2567c677473d110d75a8360c35309e63b1d52429	ShareX	SEXC		8

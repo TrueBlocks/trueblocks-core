@@ -1385,6 +1385,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 30-Contracts:Humanity DAO	0x31ed202f38072c3c5c9f0b02b06418fdae30abed	joel_massimov		https://www.humanitydao.org/humans			false	false	false	false	false	false
 32-Kickback:Friends	0x31efd75bc0b5fbafc6015bd50590f4fdab6a3f22	daveapp		https://kickback.events/			false	false	false	false	false	false
 50-Tokens:ERC20	0x31f3d9d1bece0c033ff78fa6da60a6048f3e13c5	EBCoin	EBC	On chain	18	The universal cryptocurrency based on Ethereum for travelers in the world	false	false	false	true	true	false
+30-Contracts	0x31fdf78bd3b46925e185c814ed73c53295b42081	Dao.Casino	BET	On chain	18		false	false	false	true	true	false
 50-Tokens	0x3209f98bebf0149b769ce26d71f7aea8e435efea	Traxia Membership Token	TMT	On chain	18	A decentralized global trade finance ecosystem.	false	false	false	true	true	false
 31-Gitcoin Grants:Grant	0x322d58b9e75a6918f7e7849aee0ff09369977e08	Grant 296 DeFi Saver		https://gitcoin.co/grants/296/defi-saver		https://defisaver.com/	false	false	false	false	false	false
 75-Early Actors	0x322df8fd261820c36234f806b15f51a2203a8f88	Miner_0096_56		OnChain			false	false	false	false	false	false
@@ -3964,6 +3965,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 90-DevCon2:Individual	0x9672ba8202f839018edf24826b112adfbe81474a	Luca Zeug		DevCon2 Token Contract			false	false	false	false	false	false
 81-Other	0x9674e9123caf1f74d7f2b8c6823734891c0573d7	ReversibleDemo_id331_cnt5_20da		Ether Camp			false	false	false	true	false	false
 32-Kickback:Friends	0x9678ce0bc4838022538658ef6f39e9abf1df010c	user2		https://kickback.events/			false	false	false	false	false	false
+81-Other:Ethereum Tip Jar Signer	0x967bfaf76243cdb9403c67d2ceefdee90a3feb73	Ming Chan (Prefund_5136)		TrueBlocks.io			false	false	false	false	false	false
 31-Gitcoin Grants:Friends	0x967e65852b66302ac06d7a7bee6de7b9be1e9276	erikbrinkman		Gitcoin Website			false	false	false	false	false	false
 81-Other:DAO Related	0x969837498944ae1dc0dcac2d0c65634c88729b2d	Maybe DAO Hacker 1		Slack Nation The Dao			false	false	false	false	false	false
 50-Tokens:ERC20	0x96a65609a7b84e8842732deb08f56c3e21ac6f8a	Centra token	Centra	On chain	18	Centra PrePaid Cryptocurrency Card	false	false	false	true	true	false
@@ -3972,6 +3974,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 31-Gitcoin Grants:Friends	0x96cf99b61f805c5c8553aa276967d18c1dfa5c6e	peppermizzen		Gitcoin Website			false	false	false	false	false	false
 30-Contracts:Humanity DAO	0x96d4afea427d2d0df995fd3cb75b4c5961494b76	QingnanLee		https://www.humanitydao.org/humans			false	false	false	false	false	false
 81-Other	0x96d4f0e75ae86e4c46cd8e9d4ae2f2309bd6ec45	EvanvanNess		Various Places			false	false	false	false	false	false
+60-Airdrops	0x96e2ffddd5aab73def197df5fdc4653a72976837	Save Princess Leia Peach Rainbow Vomit Cat ICO Token	LEIA	On chain	18		false	false	false	true	true	false
 90-DevCon2:Individual	0x96e8737891530c89c3fa7b848ce35b54b400f6c3	Marco Giglio		DevCon2 Token Contract			false	false	false	false	false	false
 30-Contracts	0x96fe94c07ee88fc2a4b3e978d875202fd113e654	Arbitrage Bot		0xTracker			false	false	false	true	false	false
 31-Gitcoin Grants:Grant	0x96ff2a883de9bb8a6276e97443d46305adc12b40	Grant 836 The Bail Project		https://gitcoin.co/grants/836/the-bail-project		https://bailproject.org/	false	false	false	false	false	false
@@ -6630,6 +6633,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 90-DevCon2:Individual	0xfe71dbbbcb752e90378c2cb8875239119dc6f582	Daniel LIU		DevCon2 Token Contract			false	false	false	true	false	false
 50-Tokens:ERC20	0xfe76be9cec465ed3219a9972c21655d57d21aec6	PalletOneToken	PTN	On chain	18		false	false	false	true	true	false
 90-DevCon2:Individual	0xfe7ccac1c81498e20281916ca9dcc939f5f2462c	axic		DevCon2 Token Contract			false	false	false	false	false	false
+81-Other:Ethereum Tip Jar Signer	0xfe8ad7dd2f564a877cc23feea6c0a9cc2e783715	Jeffrey Wylcke		On chain			false	false	false	true	true	false
 81-Other	0xfe9ccd888dfcda8910fb47f492193664ca0ab237	FailGuyTax_id113_cnt127_5mo		Ether Camp			false	false	false	true	false	false
 32-Kickback:Friends	0xfea0631e252ab024f4e6cea9a3a909729a26d316	pierce		https://kickback.events/			false	false	false	false	false	false
 32-Kickback:Friends	0xfeaacdbbc318ebbf9bb5835d4173c1a7fc24b3b9	henri		https://kickback.events/			false	false	false	false	false	false

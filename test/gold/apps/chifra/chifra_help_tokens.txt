@@ -2,6 +2,7 @@ chifra argc: 3 [1:tokens] [2:--help]
 chifra tokens --help 
 chifra tokens argc: 2 [1:--help] 
 chifra tokens --help 
+PROG_NAME = [chifra tokens]
 
   Usage:    chifra tokens [-p|-b|-n|-v|-h] <address> <address> [address...] [block...]  
   Purpose:  Retrieve the token balance(s) for one or more addresses at the given (or latest) block(s).

@@ -22,10 +22,14 @@ else
 fi
 
 TAG=$3
-echo -n "Enter a tag: "
+echo -n "Enter a tag (def: 30-Contracts): "
 if [[ -z ${TAG} ]]
 then
     read TAG
+    if [[ -z ${TAG} ]]
+    then
+        TAG="30-Contracts"
+    fi
 else
     echo $TAG
 fi

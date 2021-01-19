@@ -154,6 +154,24 @@
       "description": ""
     },
     {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x111111111117dc0aa78b770fa6a738034120c302",
+      "name": "1INCH Token",
+      "symbol": "1INCH",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x111111125434b319222cdbf8c261674adb56f3ae",
+      "name": "1inch.exchange v2",
+      "symbol": "",
+      "source": "Etherscan.io",
+      "decimals": 0,
+      "description": ""
+    },
+    {
       "tags": "30-Contracts",
       "address": "0x111111254b08ceeee8ad6ca827de9952d2a46781",
       "name": "1inch Exchange",
@@ -163,11 +181,11 @@
       "description": ""
     },
     {
-      "tags": "30-Contracts",
+      "tags": "50-Tokens:ERC20",
       "address": "0x11111254369792b2ca5d084ab5eea397ca8fa48b",
-      "name": "1inch Exchange",
+      "name": "1inch.exchange",
       "symbol": "",
-      "source": "0xTracker",
+      "source": "Etherscan.io",
       "decimals": 0,
       "description": ""
     },
@@ -532,11 +550,11 @@
       "description": ""
     },
     {
-      "tags": "30-Contracts",
+      "tags": "50-Tokens:ERC20",
       "address": "0x12d66f87a04a9e220743712ce6d9bb1b5616b8fc",
       "name": "Tornado.Cash: 0.1 ETH",
       "symbol": "",
-      "source": "Etherscan",
+      "source": "Etherscan.io",
       "decimals": 0,
       "description": ""
     },
@@ -672,6 +690,15 @@
       "name": "Name 0x13ae506e",
       "symbol": "",
       "source": "Gitcoin Website",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "55-Defi",
+      "address": "0x13c1542a468319688b89e323fe9a3be3a90ebb27",
+      "name": "Synthetix: sBTC Curvepool Rewards",
+      "symbol": "",
+      "source": "Etherscan.io",
       "decimals": 0,
       "description": ""
     },
@@ -1204,6 +1231,15 @@
       "symbol": "APOT",
       "source": "On chain",
       "decimals": 18,
+      "description": ""
+    },
+    {
+      "tags": "55-Defi",
+      "address": "0x16e58463eb9792bc236d8860f5bc69a81e26e32b",
+      "name": "SushiSwap: Liquidity Migrator",
+      "symbol": "",
+      "source": "Etherscan.io",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1770,42 +1806,6 @@
       "name": "Taylor Gerring",
       "symbol": "",
       "source": "DevCon2 Token Contract",
-      "decimals": 0,
-      "description": ""
-    },
-    {
-      "tags": "50-Tokens:ERC20",
-      "address": "0x1b6c5864375b34af3ff5bd2e5f40bc425b4a8d79",
-      "name": "TopChainCoin",
-      "symbol": "TOPC",
-      "source": "On chain",
-      "decimals": 6,
-      "description": ""
-    },
-    {
-      "tags": "31-Gitcoin Grants:Friends",
-      "address": "0x1b6eed8f16a4f3e84c91e058be7c10c4585014b8",
-      "name": "Name 0x1b6eed8f",
-      "symbol": "",
-      "source": "Gitcoin Website",
-      "decimals": 0,
-      "description": ""
-    },
-    {
-      "tags": "75-Early Actors",
-      "address": "0x1b7047b4338acf65be94c1a3e8c5c9338ad7d67c",
-      "name": "Miner_0006_1133",
-      "symbol": "",
-      "source": "OnChain",
-      "decimals": 0,
-      "description": ""
-    },
-    {
-      "tags": "31-Gitcoin Grants:Friends",
-      "address": "0x1b713927312669f4891215a7b252e5674cf50796",
-      "name": "Name 0x1b713927",
-      "symbol": "",
-      "source": "Gitcoin Website",
       "decimals": 0,
       "description": ""
     }

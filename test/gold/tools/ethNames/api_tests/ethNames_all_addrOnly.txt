@@ -93,6 +93,10 @@
       "decimals": 18
     },
     {
+      "address": "0x0001fb050fe7312791bf6475b96569d83f695c9f",
+      "decimals": 0
+    },
+    {
       "address": "0x000983ba1a675327f0940b56c2d49cd9c042dfbf",
       "decimals": 0
     },
@@ -529,6 +533,10 @@
       "decimals": 0
     },
     {
+      "address": "0x055cc48f7968fd8640ef140610dd4038e1b03926",
+      "decimals": 0
+    },
+    {
       "address": "0x056fa2506578a8cd1b15aaf153d327c981140492",
       "decimals": 0
     },
@@ -794,14 +802,6 @@
     },
     {
       "address": "0x080bf510fcbf18b91105470639e9561022937712",
-      "decimals": 0
-    },
-    {
-      "address": "0x083fc10ce7e97cafbae0fe332a9c4384c5f54e45",
-      "decimals": 0
-    },
-    {
-      "address": "0x08497b07916280da27b43d28a0d3dfa7d6676b58",
       "decimals": 0
     }
   ],

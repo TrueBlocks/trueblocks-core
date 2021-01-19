@@ -340,9 +340,9 @@ string_q nextParameterChunk_custom(const string_q& fieldIn, const void* dataPtr)
                 break;
             case 'v':
                 if (fieldIn % "value") {
-                    if (contains(par->type, "tuple")) {
+                    if (contains(par->type, "tuple"))
                         return par->value + "--tuple--";
-                    }
+                    return stripWhitespace(par->value);
                 }
                 break;
             // clang-format off

@@ -2,6 +2,7 @@ chifra argc: 3 [1:status] [2:--help]
 chifra status --help 
 chifra status argc: 2 [1:--help] 
 chifra status --help 
+PROG_NAME = [chifra status]
 
   Usage:    chifra status [-d|-t|-r|-v|-h] <mode> [mode...]  
   Purpose:  Report on status of one or more TrueBlocks caches.

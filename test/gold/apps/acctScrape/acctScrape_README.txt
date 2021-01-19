@@ -1,5 +1,6 @@
 acctScrape argc: 2 [1:-th] 
 acctScrape -th 
+NO_NAMES = [true]
 #### Usage
 
 `Usage:`    acctScrape [-v|-h] &lt;address&gt; [address...]  

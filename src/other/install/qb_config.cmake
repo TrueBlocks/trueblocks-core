@@ -17,7 +17,6 @@ file(MAKE_DIRECTORY "${DEST_PATH}/cache/prices")
 file(MAKE_DIRECTORY "${DEST_PATH}/cache/tmp")
 file(MAKE_DIRECTORY "${DEST_PATH}/names")
 file(MAKE_DIRECTORY "${DEST_PATH}/makeClass")
-file(MAKE_DIRECTORY "${DEST_PATH}/grabABI")
 file(MAKE_DIRECTORY "${DEST_PATH}/chifra")
 file(MAKE_DIRECTORY "${DEST_PATH}/known_abis")
 file(MAKE_DIRECTORY "${DEST_PATH}/ipfs-hashes")
@@ -97,16 +96,6 @@ file(GLOB TARGET_FILES "${CMAKE_SOURCE_DIR}/../../../src/dev_tools/makeClass/tem
 foreach(FILE ${TARGET_FILES} )
 	#message(STATUS "  Copied file to ${DEST_PATH}/makeClass")
 	file(COPY "${FILE}" DESTINATION "${DEST_PATH}/makeClass")
-endforeach( FILE )
-
-#---------------------------------------------------------------
-# grabABI content
-#---------------------------------------------------------------
-message(STATUS "Copying grabABI templates to ${DEST_PATH}/grabABI")
-file(GLOB TARGET_FILES "${CMAKE_SOURCE_DIR}/../../../src/tools/grabABI/templates/*")
-foreach(FILE ${TARGET_FILES} )
-	# message(STATUS "  Copied file to ${DEST_PATH}/grabABI")
-	file(COPY "${FILE}" DESTINATION "${DEST_PATH}/grabABI")
 endforeach( FILE )
 
 #---------------------------------------------------------------

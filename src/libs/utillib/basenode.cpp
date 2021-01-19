@@ -639,7 +639,11 @@ void CBaseNode::toJson(ostream& os) const {
                 replaceReverse(val, "--tuple--", "");  // hacky
                 val = trim(val, '\"');
                 if (val.empty())
-                    val = "\"--unknown--\"";
+                    val = "\"--unparsable--\"";
+                if (contains(val, "\"{")) {
+                    replace(val, "\"{", "{");
+                    replace(val, "}\"", "}");
+                }
             }
             bool isNum = (field.m_fieldType & TS_NUMERAL);
 

@@ -19,7 +19,7 @@
       "description": ""
     },
     {
-      "tags": "30-Contracts",
+      "tags": "50-Tokens:ERC20",
       "address": "0x0000000000004946c0e9f43f4dee607b0ef1fa1c",
       "name": "Chi Gastoken by 1inch",
       "symbol": "CHI",
@@ -28,7 +28,7 @@
       "description": ""
     },
     {
-      "tags": "50-Tokens",
+      "tags": "50-Tokens:ERC20",
       "address": "0x0000000000085d4780b73119b644ae5ecd22b376",
       "name": "TrueUSD",
       "symbol": "TUSD",
@@ -169,6 +169,15 @@
       "symbol": "THKD",
       "source": "On chain",
       "decimals": 18,
+      "description": ""
+    },
+    {
+      "tags": "55-Defi",
+      "address": "0x0001fb050fe7312791bf6475b96569d83f695c9f",
+      "name": "Ygov.finance: yearn",
+      "symbol": "",
+      "source": "Etherscan.io",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -1153,6 +1162,15 @@
       "description": "@LUKACACIC"
     },
     {
+      "tags": "30-Contracts",
+      "address": "0x055cc48f7968fd8640ef140610dd4038e1b03926",
+      "name": "Owned Upgradeability Proxy",
+      "symbol": "",
+      "source": "Etherscan.io",
+      "decimals": 0,
+      "description": ""
+    },
+    {
       "tags": "31-Gitcoin Grants:Friends",
       "address": "0x056fa2506578a8cd1b15aaf153d327c981140492",
       "name": "Name 0x056fa250",
@@ -1790,24 +1808,6 @@
       "source": "On chain",
       "decimals": 0,
       "description": ""
-    },
-    {
-      "tags": "31-Gitcoin Grants:Friends",
-      "address": "0x087b33c9a4bdb2fa55a742c51ab44ec66f35bc95",
-      "name": "Name 0x087b33c9",
-      "symbol": "",
-      "source": "Gitcoin Website",
-      "decimals": 0,
-      "description": ""
-    },
-    {
-      "tags": "34-Twitter: Friends",
-      "address": "0x08808da244d4cdcc56a38748ccebec9985141fd2",
-      "name": "Name 0x08808da2",
-      "symbol": "",
-      "source": "Twitter",
-      "decimals": 0,
-      "description": "A"
     }
   ],
   "types": [

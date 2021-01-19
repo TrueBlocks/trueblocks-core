@@ -119,16 +119,30 @@ ethNames 0x1 --fmt api
     "source": "Gitcoin Website"
   },
   {
+    "tags": "50-Tokens:ERC20",
+    "address": "0x111111111117dc0aa78b770fa6a738034120c302",
+    "name": "1INCH Token",
+    "symbol": "1INCH",
+    "source": "On chain",
+    "decimals": 18
+  },
+  {
+    "tags": "50-Tokens:ERC20",
+    "address": "0x111111125434b319222cdbf8c261674adb56f3ae",
+    "name": "1inch.exchange v2",
+    "source": "Etherscan.io"
+  },
+  {
     "tags": "30-Contracts",
     "address": "0x111111254b08ceeee8ad6ca827de9952d2a46781",
     "name": "1inch Exchange",
     "source": "0xTracker"
   },
   {
-    "tags": "30-Contracts",
+    "tags": "50-Tokens:ERC20",
     "address": "0x11111254369792b2ca5d084ab5eea397ca8fa48b",
-    "name": "1inch Exchange",
-    "source": "0xTracker"
+    "name": "1inch.exchange",
+    "source": "Etherscan.io"
   },
   {
     "tags": "30-Contracts",
@@ -401,10 +415,10 @@ ethNames 0x1 --fmt api
     "source": "Gitcoin Website"
   },
   {
-    "tags": "30-Contracts",
+    "tags": "50-Tokens:ERC20",
     "address": "0x12d66f87a04a9e220743712ce6d9bb1b5616b8fc",
     "name": "Tornado.Cash: 0.1 ETH",
-    "source": "Etherscan"
+    "source": "Etherscan.io"
   },
   {
     "tags": "30-Contracts",
@@ -507,6 +521,12 @@ ethNames 0x1 --fmt api
     "address": "0x13ae506eadf0a43488ad3463270b4cf804e97bfd",
     "name": "Name 0x13ae506e",
     "source": "Gitcoin Website"
+  },
+  {
+    "tags": "55-Defi",
+    "address": "0x13c1542a468319688b89e323fe9a3be3a90ebb27",
+    "name": "Synthetix: sBTC Curvepool Rewards",
+    "source": "Etherscan.io"
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -918,6 +938,12 @@ ethNames 0x1 --fmt api
     "symbol": "APOT",
     "source": "On chain",
     "decimals": 18
+  },
+  {
+    "tags": "55-Defi",
+    "address": "0x16e58463eb9792bc236d8860f5bc69a81e26e32b",
+    "name": "SushiSwap: Liquidity Migrator",
+    "source": "Etherscan.io"
   },
   {
     "tags": "60-Airdrops",
@@ -1367,32 +1393,6 @@ ethNames 0x1 --fmt api
     "address": "0x1b63142628311395ceafeea5667e7c9026c862ca",
     "name": "Taylor Gerring",
     "source": "DevCon2 Token Contract"
-  },
-  {
-    "tags": "50-Tokens:ERC20",
-    "address": "0x1b6c5864375b34af3ff5bd2e5f40bc425b4a8d79",
-    "name": "TopChainCoin",
-    "symbol": "TOPC",
-    "source": "On chain",
-    "decimals": 6
-  },
-  {
-    "tags": "31-Gitcoin Grants:Friends",
-    "address": "0x1b6eed8f16a4f3e84c91e058be7c10c4585014b8",
-    "name": "Name 0x1b6eed8f",
-    "source": "Gitcoin Website"
-  },
-  {
-    "tags": "75-Early Actors",
-    "address": "0x1b7047b4338acf65be94c1a3e8c5c9338ad7d67c",
-    "name": "Miner_0006_1133",
-    "source": "OnChain"
-  },
-  {
-    "tags": "31-Gitcoin Grants:Friends",
-    "address": "0x1b713927312669f4891215a7b252e5674cf50796",
-    "name": "Name 0x1b713927",
-    "source": "Gitcoin Website"
   }], "types": [
 { "type": "CAccountName", "fields": [{ "name": "tags", "type": "text" }, { "name": "address", "type": "address" }, { "name": "name", "type": "text" }, { "name": "symbol", "type": "text" }, { "name": "source", "type": "text" }, { "name": "decimals", "type": "unumber" }, { "name": "description", "type": "text" }] }
 ], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef", "namePath": "--" } }

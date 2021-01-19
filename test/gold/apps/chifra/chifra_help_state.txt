@@ -2,6 +2,7 @@ chifra argc: 3 [1:state] [2:--help]
 chifra state --help 
 chifra state argc: 2 [1:--help] 
 chifra state --help 
+PROG_NAME = [chifra state]
 
   Usage:    chifra state [-p|-c|-n|-v|-h] <address> [address...] [block...]  
   Purpose:  Retrieve the balance (in wei) for one or more addresses at the given block(s).

@@ -2,6 +2,7 @@ chifra argc: 5 [1:list] [2:0xfb744b951d094b310262c8f986c860df9ab1de65] [3:--end]
 chifra list 0xfb744b951d094b310262c8f986c860df9ab1de65 --end 10000 
 acctScrape argc: 4 [1:--end] [2:10000] [3:0xfb744b951d094b310262c8f986c860df9ab1de65] 
 acctScrape --end 10000 0xfb744b951d094b310262c8f986c860df9ab1de65 
+NO_NAMES = [true]
 acctExport argc: 5 [1:--appearances] [2:--end] [3:10000] [4:0xfb744b951d094b310262c8f986c860df9ab1de65] 
 acctExport --appearances --end 10000 0xfb744b951d094b310262c8f986c860df9ab1de65 
 address	blocknumber	transactionindex

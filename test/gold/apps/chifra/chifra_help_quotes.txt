@@ -2,6 +2,7 @@ chifra argc: 3 [1:quotes] [2:--help]
 chifra quotes --help 
 chifra quotes argc: 2 [1:--help] 
 chifra quotes --help 
+PROG_NAME = [chifra quotes]
 
   Usage:    chifra quotes [-f|-p|-a|-e|-v|-h]  
   Purpose:  Freshen and/or display Ethereum price data.

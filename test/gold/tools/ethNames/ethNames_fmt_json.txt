@@ -31,14 +31,14 @@ ethNames --named --custom --owned --fmt json
     "source": "On chain"
   },
   {
-    "tags": "30-Contracts",
+    "tags": "50-Tokens:ERC20",
     "address": "0x0000000000004946c0e9f43f4dee607b0ef1fa1c",
     "name": "Chi Gastoken by 1inch",
     "symbol": "CHI",
     "source": "On chain"
   },
   {
-    "tags": "50-Tokens",
+    "tags": "50-Tokens:ERC20",
     "address": "0x0000000000085d4780b73119b644ae5ecd22b376",
     "name": "TrueUSD",
     "symbol": "TUSD",
@@ -143,6 +143,12 @@ ethNames --named --custom --owned --fmt json
     "symbol": "THKD",
     "source": "On chain",
     "decimals": 18
+  },
+  {
+    "tags": "55-Defi",
+    "address": "0x0001fb050fe7312791bf6475b96569d83f695c9f",
+    "name": "Ygov.finance: yearn",
+    "source": "Etherscan.io"
   },
   {
     "tags": "30-Contracts",
@@ -887,6 +893,12 @@ ethNames --named --custom --owned --fmt json
     "description": "@LUKACACIC"
   },
   {
+    "tags": "30-Contracts",
+    "address": "0x055cc48f7968fd8640ef140610dd4038e1b03926",
+    "name": "Owned Upgradeability Proxy",
+    "source": "Etherscan.io"
+  },
+  {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x056fa2506578a8cd1b15aaf153d327c981140492",
     "name": "Name 0x056fa250",
@@ -1347,18 +1359,6 @@ ethNames --named --custom --owned --fmt json
     "address": "0x080bf510fcbf18b91105470639e9561022937712",
     "name": "0x Exchange V2.1",
     "source": "0xTracker"
-  },
-  {
-    "tags": "31-Gitcoin Grants:Friends",
-    "address": "0x083fc10ce7e97cafbae0fe332a9c4384c5f54e45",
-    "name": "Name 0x083fc10c",
-    "source": "Gitcoin Website"
-  },
-  {
-    "tags": "31-Gitcoin Grants:Grant",
-    "address": "0x08497b07916280da27b43d28a0d3dfa7d6676b58",
-    "name": "Grant 122 Austin Griffith Ethereum Rampd",
-    "source": "https://gitcoin.co/grants/122/austin-griffith-ethereum-rampd"
   }], "types": [
 { "type": "CAccountName", "fields": [{ "name": "tags", "type": "text" }, { "name": "address", "type": "address" }, { "name": "name", "type": "text" }, { "name": "symbol", "type": "text" }, { "name": "source", "type": "text" }, { "name": "decimals", "type": "unumber" }, { "name": "description", "type": "text" }] }
 ] }

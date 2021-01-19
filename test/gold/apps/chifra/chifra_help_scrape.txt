@@ -2,6 +2,7 @@ chifra argc: 3 [1:scrape] [2:--help]
 chifra scrape --help 
 chifra scrape argc: 2 [1:--help] 
 chifra scrape --help 
+PROG_NAME = [chifra scrape]
 
   Usage:    chifra scrape [-t|-n|-p|-u|-s|-v|-h] mode  
   Purpose:  Decentralized blockchain scraper and block cache.

@@ -99,6 +99,7 @@ extern string_q trim(const string_q& str, char c = ' ');
 extern string_q trimTrailing(const string_q& str, char c = ' ');
 extern string_q trimLeading(const string_q& str, char c = ' ');
 extern string_q trimWhitespace(const string_q& str, const string_q& add = "");
+extern string_q stripWhitespace(const string_q& str);
 
 //--------------------------------------------------------------------
 extern string_q nextTokenClearReverse(string_q& str, char token);

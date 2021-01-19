@@ -2,4 +2,5 @@ chifra argc: 3 [1:rm] [2:0xfb744b951d094b310262c8f986c860df9ab1de65]
 chifra rm 0xfb744b951d094b310262c8f986c860df9ab1de65 
 acctScrape argc: 3 [1:--rm] [2:0xfb744b951d094b310262c8f986c860df9ab1de65] 
 acctScrape --rm 0xfb744b951d094b310262c8f986c860df9ab1de65 
+NO_NAMES = [true]
 TIME ~ CLOCK - <INFO>  : Monitor 0xfb744b951d094b310262c8f986c860df9ab1de65 was undeleted

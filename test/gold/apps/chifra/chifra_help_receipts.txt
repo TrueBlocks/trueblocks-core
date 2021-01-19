@@ -2,6 +2,7 @@ chifra argc: 3 [1:receipts] [2:--help]
 chifra receipts --help 
 chifra receipts argc: 2 [1:--help] 
 chifra receipts --help 
+PROG_NAME = [chifra receipts]
 
   Usage:    chifra receipts [-a|-l|-v|-h] <tx_id> [tx_id...]  
   Purpose:  Retrieve a transaction's receipt from the local cache or a running node.

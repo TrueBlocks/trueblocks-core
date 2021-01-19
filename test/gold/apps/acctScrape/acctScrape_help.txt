@@ -1,5 +1,6 @@
 acctScrape argc: 2 [1:-h] 
 acctScrape -h 
+NO_NAMES = [true]
 
   Usage:    acctScrape [-v|-h] <address> [address...]  
   Purpose:  Add or remove monitors for a given Ethereum address (or collection of addresses).

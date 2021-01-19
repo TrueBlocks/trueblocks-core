@@ -2,6 +2,7 @@ chifra argc: 3 [1:when] [2:--help]
 chifra when --help 
 chifra when argc: 2 [1:--help] 
 chifra when --help 
+PROG_NAME = [chifra when]
 
   Usage:    chifra when [-l|-t|-s|-v|-h] < block | date > [ block... | date... ]  
   Purpose:  Finds the nearest block prior to a date, or the nearest date prior to a block.
