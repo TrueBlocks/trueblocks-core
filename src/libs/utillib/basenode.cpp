@@ -638,6 +638,8 @@ void CBaseNode::toJson(ostream& os) const {
             if (isTuple) {
                 replaceReverse(val, "--tuple--", "");  // hacky
                 val = trim(val, '\"');
+                if (val.empty())
+                    val = "\"--unknown--\"";
             }
             bool isNum = (field.m_fieldType & TS_NUMERAL);
 
