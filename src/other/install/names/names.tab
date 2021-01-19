@@ -6239,6 +6239,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 31-Gitcoin Grants:Grant	0xef42cf85be6adf3081ada73af87e27996046fe63	Grant 188 Ethdevtools musnit		https://gitcoin.co/grants/188/ethdevtools			false	false	false	false	false	false
 32-Kickback:Friends	0xef4550439896ff1efb760027d1c81afe88f7138f	wiezzel		https://kickback.events/			false	false	false	false	false	false
 50-Tokens:ERC20	0xef51c9377feb29856e61625caf9390bd0b67ea18	Bionic	BNC	On chain	8	Bionic is an ethereum token created to facilitate the transaction between electronic companies	false	false	false	true	true	false
+30-Contracts	0xef536c805482feb3d838426ed48320f77fd5f82b	Gods Unchained Contract Deployer		Etherscan.io			false	false	false	false	false	false
 81-Other	0xef5ee58d50f36f2b34d87c35a9972ea4a73426f3	Dice		Etherscan.io			false	false	false	true	false	false
 31-Gitcoin Grants:Friends	0xef664857d35152300b3201ceb54a4ca03511fe42	sublime1		Gitcoin Website			false	false	false	false	false	false
 50-Tokens	0xef68e7c694f40c8202821edf525de3782458639f	Loopring Token	LRC	Etherscan.io		Loopring is not only a protocol but also a decentralized automated execution system that trades across the crypto-token exchanges.	false	false	false	true	false	false
