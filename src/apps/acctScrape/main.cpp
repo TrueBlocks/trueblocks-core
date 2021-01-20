@@ -39,10 +39,10 @@ int main(int argc, const char* argv[]) {
 
     if (options.stats.nFiles != options.stats.nSkipped) {
         ostringstream header;
-        header << options.stats.Format(substitute(STR_DISPLAY_ACCTSCRAPESTATS, "{", "{p:"));
+        header << options.stats.Format(substitute(substitute(STR_DISPLAY_ACCTSCRAPESTATS, "\t", ","), "{", "{p:"));
 
         ostringstream data;
-        data << options.stats.Format(STR_DISPLAY_ACCTSCRAPESTATS);
+        data << options.stats.Format(substitute(STR_DISPLAY_ACCTSCRAPESTATS, "\t", ","));
 
         LOG4(header.str());
         LOG4(data.str());
@@ -50,7 +50,7 @@ int main(int argc, const char* argv[]) {
         header << endl;
         data << endl;
 
-        string_q statsFile = configPath("performance_scraper.txt");
+        string_q statsFile = configPath("performance_scraper.csv");
         if (!fileExists(statsFile))
             stringToAsciiFile(statsFile, header.str());
         appendToAsciiFile(statsFile, data.str());
