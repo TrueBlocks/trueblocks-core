@@ -626,7 +626,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 30-Contracts:Humanity DAO	0x14a73c481a58bec89ce2313ad4eaff11e8fb4c55	longdengsama		https://www.humanitydao.org/humans			false	false	false	false	false	false
 30-Contracts:Humanity DAO	0x14bbc77b0c714da60e111644aa08fd0188814d2c	gulovsen		https://www.humanitydao.org/humans			false	false	false	false	false	false
 50-Tokens:ERC20	0x14c926f2290044b647e1bf2072e67b495eff1905	Bethereum	BETHER	On chain	18	Bethereum is a decentralised, social-betting platform based on Ethereum technology and Smart Contracts. Bether is the digital ERC-223 token powering the Bethereum solution.	false	false	false	true	true	false
-50-Token:ERC20	0x14cc8dfaf2258e1b8b2869300dba1b734dc0fe43	K-Tune Token	KTT	On chain	18		false	false	false	true	true	false
+50-Tokens:ERC20	0x14cc8dfaf2258e1b8b2869300dba1b734dc0fe43	K-Tune Token	KTT	On chain	18		false	false	false	true	true	false
 31-Gitcoin Grants:Friends	0x14d5c73c8b0044e0fa29f5a755eb75aa2471d414	birdeea		Gitcoin Website			false	false	false	false	false	false
 32-Kickback:Friends	0x14d8d5e882eb9c1773c00f87745e7ae7d9a48a62	moodysalem		https://kickback.events/			false	false	false	false	false	false
 30-Contracts:Humanity DAO	0x14d95b243f82222f2e84e89031c71564a06ad233	toktok729		https://www.humanitydao.org/humans			false	false	false	false	false	false

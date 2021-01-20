@@ -1,1 +1,2 @@
-No results for ETHER 1e16 -v:1
+tags	address	name	symbol	decimals	source
+40-Exchanges	0xfa52274dd61e1643d2205169732f29114bc240b3	Kraken 5				Etherscan.io

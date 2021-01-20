@@ -129,6 +129,7 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0x1460a58096d80a50a2f1f956dda497611fa4f165	Chainium	CHX		18
 50-Tokens:ERC20	0x146d8d942048ad517479c9bab1788712af180fde	Mobile Integrated Blockchain	MIB		18
 50-Tokens:ERC20	0x14c926f2290044b647e1bf2072e67b495eff1905	Bethereum	BETHER		18
+50-Tokens:ERC20	0x14cc8dfaf2258e1b8b2869300dba1b734dc0fe43	K-Tune Token	KTT		18
 50-Tokens:ERC20	0x14f37b574242d366558db61f3335289a5035c506	HackerGold	HKG		3
 50-Tokens:ERC20	0x151202c9c18e495656f372281f493eb7698961d5	DEBITUM	DEB		18
 50-Tokens:ERC20	0x153ed9cc1b792979d2bde0bbf45cc2a7e436a5f9	XOVBank	XOV		18
@@ -203,4 +204,3 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0x23352036e911a22cfc692b5e2e196692658aded9	Friendz Coin	FDZ		18
 50-Tokens:ERC20	0x2344871f523cbb28a4f60045531184cf1f03ad24	RoBET - Truly Decentralized Sportsbetting	ROBET		18
 50-Tokens:ERC20	0x23b75bc7aaf28e2d6628c3f424b3882f8f072a3c	Vice	VIT		18
-50-Tokens:ERC20	0x23ccc43365d9dd3882eab88f43d515208f832430	MidasProtocol	MAS		18

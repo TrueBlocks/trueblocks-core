@@ -874,6 +874,15 @@
       "description": "Bethereum is a decentralised, social-betting platform based on Ethereum technology and Smart Contracts. Bether is the digital ERC-223 token powering the Bethereum solution."
     },
     {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x14cc8dfaf2258e1b8b2869300dba1b734dc0fe43",
+      "name": "K-Tune Token",
+      "symbol": "KTT",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
       "tags": "31-Gitcoin Grants:Friends",
       "address": "0x14d5c73c8b0044e0fa29f5a755eb75aa2471d414",
       "name": "Name 0x14d5c73c",
@@ -1795,15 +1804,6 @@
       "tags": "90-DevCon2:Individual",
       "address": "0x1b5c6e1e7981a186fc54bfa343bab295027ac351",
       "name": "Simon Janin",
-      "symbol": "",
-      "source": "DevCon2 Token Contract",
-      "decimals": 0,
-      "description": ""
-    },
-    {
-      "tags": "90-DevCon2:Individual",
-      "address": "0x1b63142628311395ceafeea5667e7c9026c862ca",
-      "name": "Taylor Gerring",
       "symbol": "",
       "source": "DevCon2 Token Contract",
       "decimals": 0,
