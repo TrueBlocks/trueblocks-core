@@ -626,6 +626,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 30-Contracts:Humanity DAO	0x14a73c481a58bec89ce2313ad4eaff11e8fb4c55	longdengsama		https://www.humanitydao.org/humans			false	false	false	false	false	false
 30-Contracts:Humanity DAO	0x14bbc77b0c714da60e111644aa08fd0188814d2c	gulovsen		https://www.humanitydao.org/humans			false	false	false	false	false	false
 50-Tokens:ERC20	0x14c926f2290044b647e1bf2072e67b495eff1905	Bethereum	BETHER	On chain	18	Bethereum is a decentralised, social-betting platform based on Ethereum technology and Smart Contracts. Bether is the digital ERC-223 token powering the Bethereum solution.	false	false	false	true	true	false
+50-Token:ERC20	0x14cc8dfaf2258e1b8b2869300dba1b734dc0fe43	K-Tune Token	KTT	On chain	18		false	false	false	true	true	false
 31-Gitcoin Grants:Friends	0x14d5c73c8b0044e0fa29f5a755eb75aa2471d414	birdeea		Gitcoin Website			false	false	false	false	false	false
 32-Kickback:Friends	0x14d8d5e882eb9c1773c00f87745e7ae7d9a48a62	moodysalem		https://kickback.events/			false	false	false	false	false	false
 30-Contracts:Humanity DAO	0x14d95b243f82222f2e84e89031c71564a06ad233	toktok729		https://www.humanitydao.org/humans			false	false	false	false	false	false
@@ -6524,6 +6525,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 34-Twitter: Friends	0xfa3da07ec7165a7b6c0cb8f8a4d71ad2cb140040	Farhad_daman		Twitter		@DamanFarhad	false	false	false	false	false	false
 50-Tokens:ERC20	0xfa456cf55250a839088b27ee32a424d7dacb54ff	blocktrade.com	BTT	On chain	18	Blocktrade.com is a trading facility for Crypto Assets, Crypto Traded Indices, and other blockchain related Financial Instruments.	false	false	false	true	true	false
 30-Contracts:Humanity DAO	0xfa482a7da38d32a9e6cfdb262166af3e9b174f84	edouerd		https://www.humanitydao.org/humans			false	false	false	false	false	false
+40-Exchanges	0xfa52274dd61e1643d2205169732f29114bc240b3	Kraken 5		Etherscan.io			false	false	false	true	false	false
 34-Twitter: Friends	0xfa5de67ebb384e4303e5c941726326dd74006326	Love		Twitter		B.	false	false	false	false	false	false
 30-Contracts:dAppNode	0xfa6f0ee1ae473c13f0d8c84fa8712fe785e44aa4	dAddNode Package 021		TrueBlocks.io			false	false	false	true	false	false
 30-Contracts:Kyber Network	0xfa71b63935cf9878e009ba6595da08f6d75c4aa1	Kyber Pay Wrapper		Etherscan			false	false	false	true	false	false
