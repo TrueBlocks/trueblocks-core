@@ -10,13 +10,13 @@ cacheStatus -h
 	-t  (--types <val>)   for cache mode only, which type(s) of cache to report, one or more of [blocks|transactions|traces|slurps|prices|all*]
 	-r  (--report)        show a summary of the current status of the blockchain and TrueBlocks scrapers
 
-#### Hidden options (shown during testing only)
+	#### Hidden options
 	-p  (--depth <num>)   for cache mode only, number of levels deep to report
 	-g  (--get_config)    returns JSON data of the editable configuration file items
 	-s  (--set_config)    accepts JSON in an env variable and writes it to configuration files
 	-S  (--start <num>)   first block to process (inclusive)
 	-E  (--end <num>)     last block to process (inclusive)
-#### Hidden options (shown during testing only)
+	#### Hidden options
 
 	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level

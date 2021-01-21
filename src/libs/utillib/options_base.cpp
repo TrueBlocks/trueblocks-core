@@ -801,8 +801,13 @@ string_q COptionsBase::descriptions(void) const {
     }
 
     // For testing purposes, we show the hidden options
-    if (isTestMode() && nHidden) {
-        os << "\n#### Hidden options (shown during testing only)\n";
+    if (nHidden && (isTestMode() || (verbose > 1))) {
+        if (isReadme) {
+            os << "|####|Hidden options||" << endl;
+        } else {
+            os << endl;
+            os << cTeal << italic << "\t#### Hidden options" << cOff << endl;
+        }
         for (uint64_t i = 0; i < cntParams; i++) {
             string_q sName = pParams[i].shortName;
             string_q lName = pParams[i].longName;
@@ -816,7 +821,12 @@ string_q COptionsBase::descriptions(void) const {
                 os << oneDescription(sName, lName, descr, isPositional, isReq);
             }
         }
-        os << "#### Hidden options (shown during testing only)\n\n";
+        if (isReadme) {
+            os << "|####|Hidden options||" << endl;
+        } else {
+            os << cTeal << italic << "\t#### Hidden options" << cOff << endl;
+            os << endl;
+        }
     }
 
     if (isEnabled(OPT_FMT) && (verbose || isTestMode()))

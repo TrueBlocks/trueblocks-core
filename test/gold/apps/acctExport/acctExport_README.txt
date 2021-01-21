@@ -21,8 +21,7 @@ acctExport -th
 | -i | --write_txs | write transactions to the cache (see notes) |
 | -R | --write_traces | write traces to the cache (see notes) |
 | -U | --count | only available for --appearances mode, if present return only the number of records |
-
-#### Hidden options (shown during testing only)
+|####|Hidden options||
 | -d | --skip_ddos | toggle skipping over 2016 dDos transactions ('on' by default) |
 | -m | --max_traces <num> | if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250) |
 | -A | --all_abis | load all previously cached abi files |
@@ -34,8 +33,7 @@ acctExport -th
 | -e | --max_records <num> | the maximum number of records to process before reporting |
 | -s | --staging | ignored (preserved for backwards compatibility) |
 | -u | --unripe | ignored (preserved for backwards compatibility) |
-#### Hidden options (shown during testing only)
-
+|####|Hidden options||
 | -x | --fmt <val> | export format, one of [none&#124;json*&#124;txt&#124;csv&#124;api] |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |

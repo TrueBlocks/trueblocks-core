@@ -12,9 +12,9 @@ getTrans 1301011.0 1301672.0 1301324.0 --uniq_tx --fmt json
 	-t  (--trace)         display the transaction's trace
 	-u  (--uniq)          display a list of uniq addresses found in this transaction
 
-#### Hidden options (shown during testing only)
+	#### Hidden options
 	-o  (--force)         force the results into the tx cache
-#### Hidden options (shown during testing only)
+	#### Hidden options
 
 	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level

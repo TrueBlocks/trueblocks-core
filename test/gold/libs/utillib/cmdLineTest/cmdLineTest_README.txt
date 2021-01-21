@@ -17,11 +17,9 @@ cmdLineTest -th
 | -s | --string <str> | enter any value |
 | -r | --range <range> | enter a range of numeric values |
 | -l | --list <list> | enter a list of value separated by commas (no spaces or quoted) |
-
-#### Hidden options (shown during testing only)
+|####|Hidden options||
 | -d | --hiddenOption | a hidden option with an alternative hot key |
-#### Hidden options (shown during testing only)
-
+|####|Hidden options||
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 

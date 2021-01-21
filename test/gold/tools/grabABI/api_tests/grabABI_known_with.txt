@@ -514,6 +514,15 @@
       "output_names": ""
     },
     {
+      "name": "setTransferAgent",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "setTransferAgent(address,bool)",
+      "encoding": "0x02f652a3",
+      "input_names": "addr,state,",
+      "output_names": ""
+    },
+    {
       "name": "_getOwedPayrollPeriod",
       "type": "function",
       "stateMutability": "nonpayable",
@@ -638,6 +647,15 @@
       "encoding": "0x0560ff44",
       "input_names": "_tokenId,_preferredTransport,",
       "output_names": "infoUrl,"
+    },
+    {
+      "name": "mintingFinished",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "mintingFinished()",
+      "encoding": "0x05d2035b",
+      "input_names": "",
+      "output_names": "val_0,"
     },
     {
       "name": "promoCreatedCount",
@@ -2998,6 +3016,15 @@
       "output_names": ""
     },
     {
+      "name": "setReleaseAgent",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "setReleaseAgent(address)",
+      "encoding": "0x29ff4f53",
+      "input_names": "addr,",
+      "output_names": ""
+    },
+    {
       "name": "canPerform",
       "type": "function",
       "stateMutability": "nonpayable",
@@ -3400,6 +3427,15 @@
       "signature": "Minted(address,address,uint256,bytes,bytes)",
       "encoding": "0x2fe5be0146f74c5bce36c0b80911af6c7d86ff27e89d5cfa61fc681327954e5d",
       "input_names": "operator,to,amount,data,operatorData,",
+      "output_names": ""
+    },
+    {
+      "name": "Minted",
+      "type": "event",
+      "stateMutability": "nonpayable",
+      "signature": "Minted(address,uint256)",
+      "encoding": "0x30385c845b448a36257a6a1716e6ad2e1bc2cbe333cde1e69fe849ad6511adfe",
+      "input_names": "receiver,amount,",
       "output_names": ""
     },
     {
@@ -4339,6 +4375,15 @@
       "output_names": "ret_0,"
     },
     {
+      "name": "mintAgents",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "mintAgents(address)",
+      "encoding": "0x42c1867b",
+      "input_names": "val_0,",
+      "output_names": "val_0,"
+    },
+    {
       "name": "getBlockNumber",
       "type": "function",
       "stateMutability": "nonpayable",
@@ -4346,6 +4391,15 @@
       "encoding": "0x42cbb15c",
       "input_names": "",
       "output_names": "ret_0,"
+    },
+    {
+      "name": "setMintAgent",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "setMintAgent(address,bool)",
+      "encoding": "0x43214675",
+      "input_names": "addr,state,",
+      "output_names": ""
     },
     {
       "name": "_withdrawDeposits",
@@ -4472,6 +4526,15 @@
       "encoding": "0x4555d5c9",
       "input_names": "",
       "output_names": "proxyTypeId,"
+    },
+    {
+      "name": "upgrade",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "upgrade(uint256)",
+      "encoding": "0x45977d03",
+      "input_names": "value,",
+      "output_names": ""
     },
     {
       "name": "arr",
@@ -4751,6 +4814,15 @@
       "encoding": "0x4ae05da7",
       "input_names": "",
       "output_names": "val_0,"
+    },
+    {
+      "name": "MintingAgentChanged",
+      "type": "event",
+      "stateMutability": "nonpayable",
+      "signature": "MintingAgentChanged(address,bool)",
+      "encoding": "0x4b0adf6c802794c7dde28a08a4e07131abcff3bf9603cd71f14f90bec7865efa",
+      "input_names": "addr,state,",
+      "output_names": ""
     },
     {
       "name": "getVoterState",
@@ -5039,6 +5111,15 @@
       "encoding": "0x4ee2cd7e",
       "input_names": "_owner,_blockNumber,",
       "output_names": "ret_0,"
+    },
+    {
+      "name": "setTokenInformation",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "setTokenInformation(string,string)",
+      "encoding": "0x4eee966f",
+      "input_names": "_name,_symbol,",
+      "output_names": ""
     },
     {
       "name": "upgradeToAndCall",
@@ -6112,6 +6193,15 @@
       "output_names": ""
     },
     {
+      "name": "upgradeAgent",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "upgradeAgent()",
+      "encoding": "0x5de4ccb0",
+      "input_names": "",
+      "output_names": "val_0,"
+    },
+    {
       "name": "setManager",
       "type": "function",
       "stateMutability": "nonpayable",
@@ -6202,6 +6292,15 @@
       "output_names": ""
     },
     {
+      "name": "releaseTokenTransfer",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "releaseTokenTransfer()",
+      "encoding": "0x5f412d4f",
+      "input_names": "",
+      "output_names": ""
+    },
+    {
       "name": "withdrawBalance",
       "type": "function",
       "stateMutability": "nonpayable",
@@ -6209,6 +6308,15 @@
       "encoding": "0x5fd8c710",
       "input_names": "",
       "output_names": ""
+    },
+    {
+      "name": "upgradeMaster",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "upgradeMaster()",
+      "encoding": "0x600440cb",
+      "input_names": "",
+      "output_names": "val_0,"
     },
     {
       "name": "_unwrapPayrollSettings",
@@ -6722,6 +6830,15 @@
       "encoding": "0x691f3431",
       "input_names": "node,",
       "output_names": "ret,"
+    },
+    {
+      "name": "Burned",
+      "type": "event",
+      "stateMutability": "nonpayable",
+      "signature": "Burned(address,uint256)",
+      "encoding": "0x696de425f79f4a40bc6d2122ca50507f0efbeabbff86a84871b7196ab8ea8df7",
+      "input_names": "burner,burnedAmount,",
+      "output_names": ""
     },
     {
       "name": "divScalar",
@@ -7462,6 +7579,15 @@
       "output_names": "val_0,"
     },
     {
+      "name": "UpgradeAgentSet",
+      "type": "event",
+      "stateMutability": "nonpayable",
+      "signature": "UpgradeAgentSet(address)",
+      "encoding": "0x7845d5aa74cc410e35571258d954f23b82276e160fe8c188fa80566580f279cc",
+      "input_names": "agent,",
+      "output_names": ""
+    },
+    {
       "name": "_submitProposal",
       "type": "function",
       "stateMutability": "nonpayable",
@@ -7756,6 +7882,15 @@
       "signature": "setCommitmentAges(uint256,uint256)",
       "encoding": "0x7e324479",
       "input_names": "_minCommitmentAge,_maxCommitmentAge,",
+      "output_names": ""
+    },
+    {
+      "name": "Upgrade",
+      "type": "event",
+      "stateMutability": "nonpayable",
+      "signature": "Upgrade(address,address,uint256)",
+      "encoding": "0x7e5c344a8141a805725cb476f76c6953b842222b967edd1f78ddb6e8b3f397ac",
+      "input_names": "_from,_to,_value,",
       "output_names": ""
     },
     {
@@ -8083,6 +8218,15 @@
       "output_names": ""
     },
     {
+      "name": "getUpgradeState",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "getUpgradeState()",
+      "encoding": "0x8444b391",
+      "input_names": "",
+      "output_names": "val_0,"
+    },
+    {
       "name": "pause",
       "type": "function",
       "stateMutability": "nonpayable",
@@ -8180,6 +8324,15 @@
       "encoding": "0x867904b4",
       "input_names": "_set,_quantity,",
       "output_names": ""
+    },
+    {
+      "name": "transferAgents",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "transferAgents(address)",
+      "encoding": "0x867c2857",
+      "input_names": "val_0,",
+      "output_names": "val_0,"
     },
     {
       "name": "release",
@@ -8974,6 +9127,15 @@
       "output_names": "ret_0,"
     },
     {
+      "name": "released",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "released()",
+      "encoding": "0x96132521",
+      "input_names": "",
+      "output_names": "val_0,"
+    },
+    {
       "name": "auctionLibrary",
       "type": "function",
       "stateMutability": "nonpayable",
@@ -9071,6 +9233,15 @@
       "encoding": "0x973319ae5c915d7b31c697261193cb1acf72a6b9286dc987e24cbe0d2e784b5c",
       "input_names": "feeRecipient,feeQuantity,feePercentage,rebalanceIndex,issueQuantity,unitShares,",
       "output_names": ""
+    },
+    {
+      "name": "canUpgrade",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "canUpgrade()",
+      "encoding": "0x9738968c",
+      "input_names": "",
+      "output_names": "val_0,"
     },
     {
       "name": "sponsorProposal",
@@ -11881,6 +12052,15 @@
       "output_names": ""
     },
     {
+      "name": "totalUpgraded",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "totalUpgraded()",
+      "encoding": "0xc752ff62",
+      "input_names": "",
+      "output_names": "val_0,"
+    },
+    {
       "name": "TokensReleased",
       "type": "event",
       "stateMutability": "nonpayable",
@@ -12466,6 +12646,15 @@
       "output_names": "memory,"
     },
     {
+      "name": "UpdatedTokenInformation",
+      "type": "event",
+      "stateMutability": "nonpayable",
+      "signature": "UpdatedTokenInformation(string,string)",
+      "encoding": "0xd131ab1e6f279deea74e13a18477e13e2107deb6dc8ae955648948be5841fb46",
+      "input_names": "newName,newSymbol,",
+      "output_names": ""
+    },
+    {
       "name": "_setTrustedSigner",
       "type": "function",
       "stateMutability": "nonpayable",
@@ -12500,6 +12689,15 @@
       "encoding": "0xd1c689fc",
       "input_names": "token,to,amount,data,",
       "output_names": ""
+    },
+    {
+      "name": "releaseAgent",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "releaseAgent()",
+      "encoding": "0xd1f276d3",
+      "input_names": "",
+      "output_names": "val_0,"
     },
     {
       "name": "lessThanExp",
@@ -12842,6 +13040,15 @@
       "encoding": "0xd74f8edd",
       "input_names": "",
       "output_names": "val_0,"
+    },
+    {
+      "name": "setUpgradeAgent",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "setUpgradeAgent(address)",
+      "encoding": "0xd7e7088a",
+      "input_names": "agent,",
+      "output_names": ""
     },
     {
       "name": "setHash",
@@ -14068,6 +14275,15 @@
       "output_names": ""
     },
     {
+      "name": "isToken",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "isToken()",
+      "encoding": "0xeefa597b",
+      "input_names": "",
+      "output_names": "weAre,"
+    },
+    {
       "name": "_updateSnapshot",
       "type": "function",
       "stateMutability": "nonpayable",
@@ -14923,6 +15139,15 @@
       "output_names": "val_0,"
     },
     {
+      "name": "BURN_ADDRESS",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "BURN_ADDRESS()",
+      "encoding": "0xfccc2813",
+      "input_names": "",
+      "output_names": "val_0,"
+    },
+    {
       "name": "transferModule",
       "type": "function",
       "stateMutability": "nonpayable",
@@ -15100,6 +15325,15 @@
       "signature": "newSurvey(string,uint256)",
       "encoding": "0xffe2e9f2",
       "input_names": "_metadata,_options,",
+      "output_names": ""
+    },
+    {
+      "name": "setUpgradeMaster",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "setUpgradeMaster(address)",
+      "encoding": "0xffeb7d75",
+      "input_names": "master,",
       "output_names": ""
     }
   ],

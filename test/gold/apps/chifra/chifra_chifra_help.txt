@@ -7,10 +7,10 @@ chifra --help
   Where:  
 	commands              which command to run, one or more of [list|export|slurp|collections|names|tags|abis|blocks|transactions|receipts|logs|traces|quotes|state|tokens|when|where|dive|scrape|status|rm] (required)
 
-#### Hidden options (shown during testing only)
+	#### Hidden options
 	-S  (--start <num>)   first block to process (inclusive)
 	-E  (--end <num>)     last block to process (inclusive)
-#### Hidden options (shown during testing only)
+	#### Hidden options
 
 	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level

@@ -20,13 +20,11 @@ ethNames -th
 | -a | --addr | display only addresses in the results (useful for scripting) |
 | -s | --collections | display collections data |
 | -g | --tags | export the list of tags and subtags only |
-
-#### Hidden options (shown during testing only)
+|####|Hidden options||
 | -t | --other | export other addresses if found |
 | -u | --to_custom | for editCmd only, is the edited name a custom name or not |
 | -C | --clean | clean the data (addrs to lower case, sort by addr) |
-#### Hidden options (shown during testing only)
-
+|####|Hidden options||
 | -x | --fmt <val> | export format, one of [none&#124;json*&#124;txt&#124;csv&#124;api] |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |

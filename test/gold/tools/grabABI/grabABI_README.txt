@@ -16,11 +16,9 @@ grabABI -th
 | -k | --known | load common 'known' ABIs from cache |
 | -a | --addr | include address of smart contract for the abi in output |
 | -f | --find <str> | try to search for a function declaration given a four byte code |
-
-#### Hidden options (shown during testing only)
+|####|Hidden options||
 | -s | --sol <str> | file name of .sol file from which to create a new known abi (without .sol) |
-#### Hidden options (shown during testing only)
-
+|####|Hidden options||
 | -x | --fmt <val> | export format, one of [none&#124;json*&#124;txt&#124;csv&#124;api] |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
