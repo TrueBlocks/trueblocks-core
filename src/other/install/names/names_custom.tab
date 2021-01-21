@@ -2,3 +2,4 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 91-Friends	0x5ed8cee6b63b1c6afce3ad7c92f4fd7e1b8fad9f	Vitalik		WhaleWatch.io			false	true	false
 91-Friends	0xbc62985faabed27a8f174cbd5ea1ee7b1ed8fc12	Consensys Grant Sender		On chain			false	true	false
 91-Friends	0xde58d6a070c7490f10a9aac1b7bc6e3583383958	Vlad		https://kickback.events/			false	true	false
+00-Active	0x054993ab0f2b1acc0fdc65405ee203b4271bebe6	Name 0x054993ab		EtherScan.io			false	true	false
