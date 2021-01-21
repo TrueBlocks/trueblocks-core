@@ -85,11 +85,14 @@ bool COptions::handle_options(void) {
                     option_stream << opt << endl;
                 }
 
+                // clang-format off
                 string_q initFmt = "    [{COMMAND}] = [{DEF_VAL}];";
                 if (option.is_customizable % "true")
-                    initFmt = substitute(
-                        STR_CUSTOM_INIT, "[CTYPE]",
-                        ((option.isEnum || option.isEnumList) ? "String" : (option.isBool) ? "Bool" : "Int"));
+                    initFmt = substitute(STR_CUSTOM_INIT, "[CTYPE]",
+                                         ((option.isEnum || option.isEnumList) ? "String"
+                                          : (option.isBool)                    ? "Bool"
+                                                                               : "Int"));
+                // clang-format on
 
                 if (option.option_kind == "switch") {
                     generate_switch(option);
@@ -182,9 +185,13 @@ string_q replaceCode(const string_q& orig, const string_q& which, const string_q
 //---------------------------------------------------------------------------------------------------
 void COptions::generate_toggle(const CCommandOption& option) {
     string_q initFmt = "    [{COMMAND}] = [{DEF_VAL}];";
+    // clang-format off
     if (option.is_customizable % "true")
         initFmt = substitute(STR_CUSTOM_INIT, "[CTYPE]",
-                             ((option.isEnum || option.isEnumList) ? "String" : (option.isBool) ? "Bool" : "Int"));
+                             ((option.isEnum || option.isEnumList) ? "String"
+                              : (option.isBool)                    ? "Bool"
+                                                                   : "Int"));
+    // clang-format on
 
     if (option.generate == "local") {
         local_stream << option.Format(STR_DEFAULT_ASSIGNMENT) << endl;
@@ -200,9 +207,13 @@ void COptions::generate_toggle(const CCommandOption& option) {
 //---------------------------------------------------------------------------------------------------
 void COptions::generate_switch(const CCommandOption& option) {
     string_q initFmt = "    [{COMMAND}] = [{DEF_VAL}];";
+    // clang-format off
     if (option.is_customizable % "true")
         initFmt = substitute(STR_CUSTOM_INIT, "[CTYPE]",
-                             ((option.isEnum || option.isEnumList) ? "String" : (option.isBool) ? "Bool" : "Int"));
+                             ((option.isEnum || option.isEnumList) ? "String"
+                              : (option.isBool)                    ? "Bool"
+                                                                   : "Int"));
+    // clang-format on
 
     if (option.generate == "local") {
         local_stream << option.Format(STR_DEFAULT_ASSIGNMENT) << endl;
@@ -218,9 +229,13 @@ void COptions::generate_switch(const CCommandOption& option) {
 //---------------------------------------------------------------------------------------------------
 void COptions::generate_flag(const CCommandOption& option) {
     string_q initFmt = "    [{COMMAND}] = [{DEF_VAL}];";
+    // clang-format off
     if (option.is_customizable % "true")
         initFmt = substitute(STR_CUSTOM_INIT, "[CTYPE]",
-                             ((option.isEnum || option.isEnumList) ? "String" : (option.isBool) ? "Bool" : "Int"));
+                             ((option.isEnum || option.isEnumList) ? "String"
+                              : (option.isBool)                    ? "Bool"
+                                                                   : "Int"));
+    // clang-format on
 
     if (option.generate == "local") {
         if (option.isEnumList) {

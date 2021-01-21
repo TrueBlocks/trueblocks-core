@@ -127,8 +127,11 @@ bool COptions::parseArguments(string_q& command) {
         return handle_rm(addrs);
 
     // Last block depends on scrape type or user input --end (with appropriate check)
-    blknum_t lastBlockToVisit = max(
-        (blknum_t)1, (visitTypes & VIS_UNRIPE) ? unripeBlk : (visitTypes & VIS_STAGING) ? stagingBlk : finalizedBlk);
+    // clang-format off
+    blknum_t lastBlockToVisit = max((blknum_t)1, (visitTypes & VIS_UNRIPE)    ? unripeBlk
+                                                 : (visitTypes & VIS_STAGING) ? stagingBlk
+                                                                              : finalizedBlk);
+    // clang-format on
 
     // Mark the range...
     scanRange = make_pair(nextBlockToVisit, lastBlockToVisit);

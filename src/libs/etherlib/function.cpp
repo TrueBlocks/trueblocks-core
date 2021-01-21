@@ -650,9 +650,11 @@ bool CFunction::fromDefinition(const string_q& lineIn) {
 
     anonymous = contains(intern, "anonymous");
     constant = contains(intern, "constant") || contains(intern, "view");
-    stateMutability =
-        (contains(substitute(intern, "nonpayable", ""), "payable") ? "payable"
-                                                                   : contains(intern, "view") ? "view" : "");
+    // clang-format off
+    stateMutability = (contains(substitute(intern, "nonpayable", ""), "payable") ? "payable"
+                       : contains(intern, "view")                                ? "view"
+                                                                                 : "");
+    // clang-format on
     // internals:
     //  external
     //  internal
