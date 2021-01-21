@@ -272,10 +272,8 @@ bool COptions::handle_generate_js_help(void) {
     for (auto t : tomls) {
         CPage page = pageMap[t];
         for (auto sub : page.subpages) {
-            string_q route = page.longName + "/" +
-                             (sub.route.empty()  ? toLower(sub.subpage)
-                              : sub.route == "/" ? ""
-                                                 : sub.route);
+            string_q route =
+                page.longName + "/" + (sub.route.empty() ? toLower(sub.subpage) : sub.route == "/" ? "" : sub.route);
             if (endsWith(route, "/"))
                 replaceReverse(route, "/", "");
             if (!contains(str, "|" + route + "|") && !contains(route, "separator"))
@@ -502,9 +500,7 @@ bool COptions::handle_generate_js_menus(void) {
             for (auto sub : page.subpages) {
                 if (!sub.isSeparator && !page.noPage) {
                     pageStream << "  '" << page.longName << "/"
-                               << (sub.route.empty()  ? toLower(sub.subpage)
-                                   : sub.route == "/" ? ""
-                                                      : sub.route)
+                               << (sub.route.empty() ? toLower(sub.subpage) : sub.route == "/" ? "" : sub.route)
                                << "': { component: "
                                << (sub.component.empty() ? ("<" + page.properName + " />") : sub.component) << " },"
                                << endl;

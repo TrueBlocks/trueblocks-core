@@ -232,10 +232,8 @@ bool COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, cons
             double thisTime = str_2_Double(TIC());
             if (test.mode == "both" || contains(test.tool, "lib"))
                 measure.totSecs += thisTime;
-            string_q timeRep = (thisTime > tooSlow       ? cRed
-                                : thisTime <= fastEnough ? cGreen
-                                                         : "") +
-                               double_2_Str(thisTime, 5) + cOff;
+            string_q timeRep =
+                (thisTime > tooSlow ? cRed : thisTime <= fastEnough ? cGreen : "") + double_2_Str(thisTime, 5) + cOff;
 
             if (endsWith(test.path, "lib"))
                 replace(test.workPath, "../", "");
