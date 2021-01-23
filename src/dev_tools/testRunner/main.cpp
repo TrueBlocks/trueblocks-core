@@ -112,15 +112,26 @@ int main(int argc, const char* argv[]) {
         }
     }
 
-    if (total.nTests == total.nPassed) {
-        perf << total.Format(options.perf_format) << endl;
-        cerr << "    " << substitute(perf.str(), "\n", "\n    ") << endl;
-        if (options.full_test && options.report)
-            appendToAsciiFile(configPath("performance.csv"), perf.str());
-        appendToAsciiFile(configPath("performance_slow.csv"), slow.str());
-        if (folderExists("/Users/jrush/Desktop/files/")) {
-            copyFile(configPath("performance.csv"), "/Users/jrush/Desktop/files/performance.csv");
-            copyFile(configPath("performance_slow.csv"), "/Users/jrush/Desktop/files/performance_slow.csv");
+    bool allPassed = total.nTests == total.nPassed;
+    perf << total.Format(options.perf_format) << endl;
+    cerr << "    " << substitute(perf.str(), "\n", "\n    ") << endl;
+    if (options.full_test && options.report)
+        appendToAsciiFile(configPath(string_q("performance") + (allPassed ? "" : "_failed") + ".csv"), perf.str());
+    appendToAsciiFile(configPath("performance_slow.csv"), slow.str());
+    string_q copyPath = getGlobalConfig()->getConfigStr("settings", "copyPath", "<NOT_SET>");
+    if (folderExists(copyPath)) {
+        CStringArray files = {"performance.csv", "performance_failed.csv", "performance_slow.csv",
+                              "performance_scraper.csv"};
+        for (auto file : files) {
+            if (fileExists(configPath(file))) {
+                ostringstream copyCmd;
+                copyCmd << "cp -f \"";
+                copyCmd << configPath(file) << "\" \"" << copyPath << "\"";
+                // clang-format off
+                if (system(copyCmd.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings
+                // clang-format on
+                // cerr << copyCmd.str() << endl;
+            }
         }
     }
 

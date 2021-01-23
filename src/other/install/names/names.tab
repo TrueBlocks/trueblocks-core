@@ -1526,6 +1526,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 55-Defi	0x382185f3ea9268e65bb16f81de6b4e725134ed72	Yearn: StrategyYfii		Etherscan			false	false	false	true	false	false
 31-Gitcoin Grants:Grant	0x38298ef8a8306579e21246d5227694b5560d9cb5	Grant 085 Tennagraph Minimum Bias Ethereum Signal Aggregat		https://gitcoin.co/grants/85/tennagraph-minimum-bias-ethereum-signal-aggregat-2			false	false	false	true	false	false
 50-Tokens:ERC20	0x3833dda0aeb6947b98ce454d89366cba8cc55528	SPHTX	SPHTX	On chain	18	Integrating Blockchain with Enterprise Applications.	false	false	false	true	true	false
+30-Contracts	0x3839416bd0095d97be9b354cbfb0f6807d4d609e	Bancor: Converter #1					false	false	false	true	false	false
 31-Gitcoin Grants:Friends	0x3839acf1ee7699d1f46b1be840d8ad8317fdf757	0xlucas		Gitcoin Website			false	false	false	false	false	false
 50-Tokens:ERC20	0x3839d8ba312751aa0248fed6a8bacb84308e20ed	Bezop	Bez	On chain	18	Bezop is a complete solution for running a successful ecommerce business online for new and experienced users.	false	false	false	true	true	false
 30-Contracts:Humanity DAO	0x3848623ae239e9d372cdaede1c3a17d3c58fd934	excitabelsilva		https://www.humanitydao.org/humans			false	false	false	false	false	false
@@ -1785,6 +1786,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x42e7ecdd761c515e563bb2a2954681d6045fe8c2	Uniswap V2	UNI-V2	On chain	18		false	false	false	true	true	false
 31-Gitcoin Grants:Friends	0x4314aeeffc15b5958752d8a89c9e5283ce1ca0ee	halo3mic		Gitcoin Website			false	false	false	false	false	false
 31-Gitcoin Grants:Friends	0x432dcbda06e8b296ca29705572d7cb6315ed8bed	mbaril010		Gitcoin Website			false	false	false	false	false	false
+31-Gitcoin Grants:Contacts	0x4331b095bc38dc3bce0a269682b5ebaefa252929	Gitcoin Multisig Deployer					false	false	false	false	false	false
 31-Gitcoin Grants:Friends	0x433485b5951f250cefdcbf197cb0f60fdbe55513	benlls		Gitcoin Website			false	false	false	false	false	false
 34-Twitter: Friends	0x433643144de7ced3b785cbeaa5eb5bff66e193ec	DropShip		Twitter		IO	false	false	false	false	false	false
 50-Tokens:ERC20	0x433e077d4da9ffc4b353c1bf1ed69daac8f78aa5	HODL	HODL	On chain	18		false	false	false	true	true	false
@@ -5950,6 +5952,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 81-Other	0xe3e5741337a7be0fd8eae7df28705566980a577e	Early_Partners_040		Ether Camp			false	false	false	false	false	false
 50-Tokens:ERC20	0xe3f4b4a5d91e5cb9435b947f090a319737036312	POPCHAIN CASH	PCH	On chain	18	A brand new blockchain for K-Pop Asian content market	false	false	false	true	true	false
 31-Gitcoin Grants:Grant	0xe402823203e5714eec86f8959fc26688c1e42142	Grant 353 Lease		https://gitcoin.co/grants/353/lease		https://github.com/TamirTian/Lease	false	false	false	false	false	false
+31-Gitcoin:Contracts	0xe4101d014443af2b7f6f9f603e904adc9faf0de5	CLR7	CLR7	On chain	18		false	false	false	true	true	false
 32-Kickback:Friends	0xe419053e4cbcddc6c17d5806d58907289e446bd5	Vitaliy_Gataulin		https://kickback.events/			false	false	false	false	false	false
 50-Tokens:ERC20	0xe41d2489571d322189246dafa5ebde1f4699f498	0x Protocol Token	ZRX	On chain	18	Description: 0x is an open, permissionless protocol allowing for tokens to be traded on the Ethereum blockchain.	false	false	false	true	true	false
 31-Gitcoin Grants:Friends	0xe42f8e2c4b778fcd572c55e457ed77db4cb20a69	parrachia		Gitcoin Website			false	false	false	false	false	false
@@ -6205,6 +6208,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 60-Airdrops	0xed6ca9522fda3b9cd93025780a2939bd04a7ecd6	https://www.yidaibi.me/ 最佳一键发币解决方案 Create tokens easily Airdrop	www.yidaibi.me一键发币CreateTokens	On chain	18		false	false	false	true	true	false
 30-Contracts:Humanity DAO	0xed78465600d6d7020baa0e385d1002221bcc0723	swBroadcast		https://www.humanitydao.org/humans			false	false	false	false	false	false
 31-Gitcoin Grants:Friends	0xed7f50b4a658bec62dc4663b604a5b873615a676	kaddycoltt		Gitcoin Website			false	false	false	false	false	false
+31-Gitcoin:Contracts	0xed8306f10a5aa548d09c1d9c622f3f58dd9f2144	CLR6	CLR6	On chain	18		false	false	false	true	true	false
 30-Contracts:Humanity DAO	0xed832ef021d9c74ba4d2830d73ffb963607a0618	ars_ars87		https://www.humanitydao.org/humans			false	false	false	false	false	false
 30-Contracts	0xed897b658ca098028a4adb4be2240da47eae511d	Fantastic12		Etherscan			false	false	false	true	false	false
 31-Gitcoin Grants:Friends	0xed9b15ba4d0e3d8bb1825f1b994eb6406d8b3a92	abysms		Gitcoin Website			false	false	false	false	false	false

@@ -24,7 +24,7 @@
 #if 1
 int main(int argc, const char* argv[]) {
     etherlib_init(quickQuitHandler);
-    for (size_t i = 11390799; i < 11637800; i++) {
+    for (size_t i = 11663362; i < 11706702; i++) {
         CBlock block;
         getBlock_light(block, i);
         cout << block.blockNumber << "," << block.timestamp << "," << block.difficulty << endl;
