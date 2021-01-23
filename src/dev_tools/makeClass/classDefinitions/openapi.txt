@@ -1,0 +1,10 @@
+[settings]
+class = COpenApi
+fields = string openapi|\
+        COAInfo info|\
+        COAServerArray servers|\
+        string paths|\
+        COAComponentArray components|\
+        COATagArray tags
+serializable = true
+includes = utillib.h|oainfo.h|oaserver.h|oatag.h|oacomponent.h

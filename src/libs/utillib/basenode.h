@@ -43,6 +43,7 @@ class CBaseNode {
     virtual bool parseCSV(const CStringArray& fields, string_q& str);
     virtual bool parseText(const CStringArray& fields, string_q& str);
     virtual void toJson(ostream& os) const;
+    virtual void toYaml(ostream& os) const;
     virtual bool getVisibleFields(CFieldDataArray& visibleFields) const;
 
   public:

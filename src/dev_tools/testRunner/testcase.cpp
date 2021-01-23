@@ -36,7 +36,11 @@ void CTestCase::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const
 
     string_q fmt = (fmtIn.empty() ? expContext().fmtMap["testcase_fmt"] : fmtIn);
     if (fmt.empty()) {
-        toJson(ctx);
+        if (expContext().exportFmt == YAML1) {
+            toYaml(ctx);
+        } else {
+            toJson(ctx);
+        }
         return;
     }
 

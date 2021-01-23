@@ -35,6 +35,7 @@ static const COption params[] = {
     COption("test", "t", "", OPT_SWITCH, "for both code generation and options generation, process but do not write changes"),  // NOLINT
     COption("force", "c", "", OPT_SWITCH, "for both code generation and options generation, force writing of changes"),
     COption("api", "p", "", OPT_HIDDEN | OPT_SWITCH, "generate api options file in trueblocks-explorer repo"),
+    COption("openapi", "A", "", OPT_HIDDEN | OPT_SWITCH, "export openapi.yaml file for API documentation"),
     COption("", "", "", OPT_DESCRIPTION, "Automatically writes C++ for various purposes."),
     // clang-format on
     // END_CODE_OPTIONS
@@ -101,6 +102,9 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-p" || arg == "--api") {
             api = true;
+
+        } else if (arg == "-A" || arg == "--openapi") {
+            openapi = true;
 
         } else if (startsWith(arg, '-')) {  // do not collapse
 
@@ -220,6 +224,7 @@ void COptions::Init(void) {
     test = false;
     force = false;
     api = false;
+    openapi = false;
     // END_CODE_INIT
 
     mode = NONE;
@@ -266,6 +271,12 @@ COptions::COptions(void) : classFile("") {
     CSkin::registerClass();
     CSchema::registerClass();
     CCommandOption::registerClass();
+    COAComponent::registerClass();
+    COAInfo::registerClass();
+    COASchema::registerClass();
+    COAServer::registerClass();
+    COATag::registerClass();
+    COpenApi::registerClass();
 }
 
 //--------------------------------------------------------------------------------

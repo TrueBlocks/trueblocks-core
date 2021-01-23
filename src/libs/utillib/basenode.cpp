@@ -671,6 +671,103 @@ void CBaseNode::toJson(ostream& os) const {
 }
 
 //--------------------------------------------------------------------------------
+void CBaseNode::toYaml(ostream& os) const {
+    if (!m_showing) {
+        os << "";
+        return;
+    }
+
+    CFieldDataArray visibleFields;
+    if (!getVisibleFields(visibleFields)) {
+        return;
+    }
+
+    for (auto field : visibleFields) {
+        if (field.isObject()) {
+            os << field.getName() << ":" << endl;
+        } else {
+            os << field.getName() << ": "
+               << "X" << endl;
+        }
+        //        os << field.getName() << ":"
+        //        if (field.getName() != visibleFields[0].getName())
+        //            os << ",";
+        //        os << endl << indentStr() << doKey(field.getName());
+        //
+        //        if (field.isArray()) {
+        //            uint64_t cnt = str_2_Uint(getValueByName(field.getName() + "Cnt"));
+        //            if (cnt == 0) {
+        //                os << "[]";
+        //
+        //            } else {
+        //                os << "[";
+        //                indent();
+        //                os << endl;
+        //                for (size_t i = 0; i < cnt; i++) {
+        //                    os << indentStr();
+        //                    const CBaseNode* node = getObjectAt(field.getName(), i);
+        //                    if (node) {
+        //                        node->toJson(os);
+        //                    } else {
+        //                        os << "\"" << getStringAt(field.getName(), i) << "\"";
+        //                    }
+        //                    if (expContext().endingCommas || i < cnt - 1)
+        //                        os << ",";
+        //                    os << endl;
+        //                }
+        //                unindent();
+        //                os << indentStr();
+        //                os << "]";
+        //            }
+        //
+        //        } else if (field.isObject()) {
+        //            const CBaseNode* node = getObjectAt(field.getName(), 0);
+        //            if (!node) {
+        //                // should never happen
+        //                LOG_WARN("Object ", field.getName(), " not found in class ", getRuntimeClass()->m_ClassName);
+        //                return;
+        //            }
+        //            node->toJson(os);
+        //
+        //        } else {
+        //            string_q val = getValueByName(field.getName());
+        //            bool isTuple = contains(val, "--tuple--");
+        //            if (isTuple) {
+        //                replaceReverse(val, "--tuple--", "");  // hacky
+        //                val = trim(val, '\"');
+        //                if (val.empty())
+        //                    val = "\"--unparsable--\"";
+        //                if (contains(val, "\"{")) {
+        //                    replace(val, "\"{", "{");
+        //                    replace(val, "}\"", "}");
+        //                }
+        //            }
+        //            bool isNum = (field.m_fieldType & TS_NUMERAL);
+        //
+        //            if (isTuple || val == "null" || field.m_fieldType == T_BOOL || (isNum && contains(val, "."))) {
+        //                os << val;
+        //
+        //            } else if (!isNum) {
+        //                os << "\"" << val << "\"";
+        //
+        //            } else {
+        //                if (isNum) {
+        //                    if (expContext().hexNums && !startsWith(val, "0x") && !val.empty())
+        //                        val = str_2_Hex(val);
+        //                    if (val.empty())
+        //                        val = uint_2_Str(0);
+        //                }
+        //                bool quote = expContext().quoteNums || (isApiMode() && val.empty());
+        //                os << (quote ? "\"" : "") << val << (quote ? "\"" : "");
+        //            }
+        //        }
+    }
+    //    unindent();
+    //    os << (expContext().endingCommas ? "," : "") << endl;
+    //    os << indentStr() << "}";
+}
+
+//--------------------------------------------------------------------------------
 string_q nextBasenodeChunk(const string_q& fieldIn, const CBaseNode* node) {
     if (node) {
         string_q className = node->getRuntimeClass()->getClassNamePtr();

@@ -1,0 +1,5 @@
+[settings]
+class = COAServer
+fields = string url
+serializable = true
+includes = utillib.h

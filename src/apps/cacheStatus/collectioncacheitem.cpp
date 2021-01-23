@@ -36,7 +36,11 @@ void CCollectionCacheItem::Format(ostream& ctx, const string_q& fmtIn, void* dat
 
     string_q fmt = (fmtIn.empty() ? expContext().fmtMap["collectioncacheitem_fmt"] : fmtIn);
     if (fmt.empty()) {
-        toJson(ctx);
+        if (expContext().exportFmt == YAML1) {
+            toYaml(ctx);
+        } else {
+            toJson(ctx);
+        }
         return;
     }
 

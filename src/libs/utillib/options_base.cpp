@@ -195,6 +195,8 @@ bool COptionsBase::prepareArguments(int argCountIn, const char* argvIn[]) {
                 expContext().exportFmt = TXT1;
             } else if (arg == "csv") {
                 expContext().exportFmt = CSV1;
+            } else if (arg == "yaml") {
+                expContext().exportFmt = YAML1;
             } else if (arg == "json") {
                 expContext().exportFmt = JSON1;
             } else if (arg == "api") {
@@ -451,6 +453,7 @@ void COptionsBase::configureDisplay(const string_q& tool, const string_q& dataTy
             format = getGlobalConfig(tool)->getConfigStr("display", "format", format.empty() ? defFormat : format);
             manageFields(dataType + ":" + cleanFmt((format.empty() ? defFormat : format)));
             break;
+        case YAML1:
         case API1:
         case JSON1:
             format = "";

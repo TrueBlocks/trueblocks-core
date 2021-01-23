@@ -1,0 +1,5 @@
+[settings]
+class = COASchema
+fields = string noop
+serializable = true
+includes = utillib.h

@@ -36,7 +36,11 @@ void CTraceFilter::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) co
 
     string_q fmt = (fmtIn.empty() ? expContext().fmtMap["tracefilter_fmt"] : fmtIn);
     if (fmt.empty()) {
-        toJson(ctx);
+        if (expContext().exportFmt == YAML1) {
+            toYaml(ctx);
+        } else {
+            toJson(ctx);
+        }
         return;
     }
 

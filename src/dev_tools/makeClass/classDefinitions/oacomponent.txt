@@ -1,0 +1,5 @@
+[settings]
+class = COAComponent
+fields = COASchemaArray schemas
+serializable = true
+includes = utillib.h|oaschema.h

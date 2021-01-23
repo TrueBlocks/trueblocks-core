@@ -36,7 +36,11 @@ void CMonitorCount::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) c
 
     string_q fmt = (fmtIn.empty() ? expContext().fmtMap["monitorcount_fmt"] : fmtIn);
     if (fmt.empty()) {
-        toJson(ctx);
+        if (expContext().exportFmt == YAML1) {
+            toYaml(ctx);
+        } else {
+            toJson(ctx);
+        }
         return;
     }
 

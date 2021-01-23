@@ -36,7 +36,11 @@ void CTableEntry::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) con
 
     string_q fmt = (fmtIn.empty() ? expContext().fmtMap["tableentry_fmt"] : fmtIn);
     if (fmt.empty()) {
-        toJson(ctx);
+        if (expContext().exportFmt == YAML1) {
+            toYaml(ctx);
+        } else {
+            toJson(ctx);
+        }
         return;
     }
 

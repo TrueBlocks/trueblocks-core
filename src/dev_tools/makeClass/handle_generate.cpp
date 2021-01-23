@@ -31,7 +31,7 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
     classDef.input_path = classDefIn.input_path;
 
     //------------------------------------------------------------------------------------------------
-    ostringstream header_stream, clear_stream, copy_stream;
+    ostringstream lheader_stream, clear_stream, copy_stream;
     ostringstream ar_read_stream, ar_write_stream;
     ostringstream src_inc_stream, head_inc_stream;
     ostringstream child_obj_stream, add_field_stream, hide_field_stream;
@@ -168,7 +168,7 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
         // part of the 'class' proper -- i.e. it gets its value from its containing class (in this case the block it
         // belongs to).
         if (!(fld.is_flags & IS_MINIMAL)) {
-            header_stream << convertTypes(fld.Format(declareFmt)) << endl;
+            lheader_stream << convertTypes(fld.Format(declareFmt)) << endl;
             copy_stream << substitute(substitute(fld.Format(copyFmt), "++SHORT++", "[{SHORT}]"), "++CLASS++",
                                       "[{CLASS_NAME}]");
             defaults_stream << fld.Format(setFmt);
@@ -225,7 +225,7 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
     replaceAll(headSource, "[{GET_OBJ}]", (hasObjGetter ? string_q(STR_GETOBJ_HEAD) + (hasStrGetter ? "" : "\n") : ""));
     replaceAll(headSource, "[{GET_STR}]", (hasStrGetter ? string_q(STR_GETSTR_HEAD) + "\n" : ""));
     replaceAll(headSource, "[FIELD_COPY]", copy_stream.str());
-    replaceAll(headSource, "[FIELD_DEC]", header_stream.str());
+    replaceAll(headSource, "[FIELD_DEC]", lheader_stream.str());
     replaceAll(headSource, "[FIELD_CLEAR]", clear_stream.str());
     replaceAll(headSource, "[H_INCLUDES]", head_inc_stream.str());
     replaceAll(headSource, "[INIT_DEFAULTS]", defaults_stream.str());

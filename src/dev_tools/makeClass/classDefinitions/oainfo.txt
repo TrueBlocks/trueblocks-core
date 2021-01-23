@@ -1,0 +1,7 @@
+[settings]
+class = COAInfo
+fields = string description|\
+        string title|\
+        string version
+serializable = true
+includes = utillib.h

@@ -22,6 +22,7 @@
 #include "skin.h"
 #include "schema.h"
 #include "commands.h"
+#include "openapi.h"
 
 // BEG_ERROR_DEFINES
 #define ERR_CLASSDEFNOTEXIST 1
@@ -59,6 +60,7 @@ class COptions : public COptionsBase {
     bool test;
     bool force;
     bool api;
+    bool openapi;
     // END_CODE_DECLARE
 
     map<string_q, CPage> pageMap;
@@ -99,6 +101,7 @@ class COptions : public COptionsBase {
     void Init(void);
 
     bool handle_options(void);
+    bool handle_apifiles(void);
     bool handle_lint(void);
     bool handle_format(void);
     bool handle_generate(CToml& toml, const CClassDefinition& classDef, const string_q& namespc, bool asJs);
@@ -118,6 +121,7 @@ class COptions : public COptionsBase {
 
     bool writeCode(const string_q& fn);
     void writeApiFile(void);
+    void writeOpenApiFile(void);
 };
 
 //-------------------------------------------------------------------

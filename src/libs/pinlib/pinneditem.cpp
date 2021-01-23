@@ -36,7 +36,11 @@ void CPinnedItem::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) con
 
     string_q fmt = (fmtIn.empty() ? expContext().fmtMap["pinneditem_fmt"] : fmtIn);
     if (fmt.empty()) {
-        toJson(ctx);
+        if (expContext().exportFmt == YAML1) {
+            toYaml(ctx);
+        } else {
+            toJson(ctx);
+        }
         return;
     }
 
