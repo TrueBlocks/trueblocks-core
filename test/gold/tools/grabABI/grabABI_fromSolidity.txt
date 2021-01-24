@@ -4,7 +4,7 @@ grabABI --sol 0x2234567812345678123456781234567812345678
   Cannot find .sol file at '0x2234567812345678123456781234567812345678'. Quitting...
 
   Usage:    grabABI [-c|-g|-m|-k|-a|-f|-v|-h] <address> [address...]  
-  Purpose:  Fetches the ABI for a smart contract. Optionally generates C++ source code representing that ABI.
+  Purpose:  Fetches the ABI for a smart contract.
 
   Where:  
 	addrs                 list of one or more smart contracts whose ABI to grab from EtherScan (required)

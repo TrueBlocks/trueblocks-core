@@ -28,7 +28,7 @@ static const COption params[] = {
     COption("addr", "a", "", OPT_SWITCH, "include address of smart contract for the abi in output"),
     COption("sol", "s", "<string>", OPT_HIDDEN | OPT_FLAG, "file name of .sol file from which to create a new known abi (without .sol)"),  // NOLINT
     COption("find", "f", "<string>", OPT_FLAG, "try to search for a function declaration given a four byte code"),
-    COption("", "", "", OPT_DESCRIPTION, "Fetches the ABI for a smart contract. Optionally generates C++ source code representing that ABI."),  // NOLINT
+    COption("", "", "", OPT_DESCRIPTION, "Fetches the ABI for a smart contract."),
     // clang-format on
     // END_CODE_OPTIONS
 };

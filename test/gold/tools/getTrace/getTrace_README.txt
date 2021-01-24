@@ -3,7 +3,7 @@ getTrace -th
 #### Usage
 
 `Usage:`    getTrace [-a|-c|-v|-h] &lt;tx_id&gt; [tx_id...]  
-`Purpose:`  Retrieve a transaction's traces from the local cache or a running node.
+`Purpose:`  Retrieve a transaction's traces from the cache or the node.
 
 `Where:`  
 
@@ -13,7 +13,7 @@ getTrace -th
 | -a | --articulate | articulate the transactions if an ABI is found for the 'to' address |
 | -c | --count | show the number of traces for the transaction only (fast) |
 |####|Hidden options||
-| -s | --skip_ddos | toggle skipping over 2018 ddos transactions during export ('on' by default) |
+| -s | --skip_ddos | skip over 2018 ddos during export ('on' by default) |
 | -m | --max_traces <num> | if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250) |
 | -f | --filter <str> | Call trace_filter with the comma seperated string of the filter (see docs) |
 |####|Hidden options||

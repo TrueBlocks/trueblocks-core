@@ -25,7 +25,7 @@ static const COption params[] = {
     COption("list", "l", "", OPT_SWITCH, "export a list of the 'special' blocks"),
     COption("timestamps", "t", "", OPT_SWITCH, "ignore other options and generate timestamps only"),
     COption("skip", "s", "<uint64>", OPT_FLAG, "only applicable if --timestamps is on, the step between block numbers in the export"),  // NOLINT
-    COption("", "", "", OPT_DESCRIPTION, "Finds the nearest block prior to a date, or the nearest date prior to a block.\n    Alternatively, search for one of 'special' blocks."),  // NOLINT
+    COption("", "", "", OPT_DESCRIPTION, "Finds block based on date, blockNum, timestamp, or 'special'."),
     // clang-format on
     // END_CODE_OPTIONS
 };

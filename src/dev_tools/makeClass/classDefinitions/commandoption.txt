@@ -8,10 +8,10 @@ fields = string num|\
         string command|\
         string hotkey|\
         string def_val|\
-        string is_required|\
-        string is_customizable|\
-        string core_visible|\
-        string docs_visible|\
+        bool is_required|\
+        bool is_customizable|\
+        bool core_visible|\
+        bool docs_visible|\
         string generate|\
         string option_kind|\
         string data_type|\

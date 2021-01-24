@@ -33,10 +33,10 @@ class CCommandOption : public CBaseNode {
     string_q command;
     string_q hotkey;
     string_q def_val;
-    string_q is_required;
-    string_q is_customizable;
-    string_q core_visible;
-    string_q docs_visible;
+    bool is_required;
+    bool is_customizable;
+    bool core_visible;
+    bool docs_visible;
     string_q generate;
     string_q option_kind;
     string_q data_type;
@@ -64,6 +64,7 @@ class CCommandOption : public CBaseNode {
     explicit CCommandOption(const string_q& line);
     void verifyOptions(CStringArray& warnings);
     void verifyHotkey(CStringArray& warnings);
+    string_q swagger_descr;
     // EXISTING_CODE
     bool operator==(const CCommandOption& it) const;
     bool operator!=(const CCommandOption& it) const {
@@ -124,10 +125,10 @@ inline void CCommandOption::initialize(void) {
     command = "";
     hotkey = "";
     def_val = "";
-    is_required = "";
-    is_customizable = "";
-    core_visible = "";
-    docs_visible = "";
+    is_required = false;
+    is_customizable = false;
+    core_visible = false;
+    docs_visible = false;
     generate = "";
     option_kind = "";
     data_type = "";
@@ -144,6 +145,7 @@ inline void CCommandOption::initialize(void) {
     isDouble = false;
     isNote = false;
     isError = false;
+    swagger_descr = "";
     // EXISTING_CODE
 }
 
@@ -180,6 +182,7 @@ inline void CCommandOption::duplicate(const CCommandOption& co) {
     isDouble = co.isDouble;
     isNote = co.isNote;
     isError = co.isError;
+    swagger_descr = co.swagger_descr;
     // EXISTING_CODE
 }
 

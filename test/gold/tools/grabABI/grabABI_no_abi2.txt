@@ -4,7 +4,7 @@ grabABI 0x1728039ce0d18a799c081c5c7fa2090dd365a8d0 --raw
   ABI for '0x1728039ce0d18a799c081c5c7fa2090dd365a8d0' not found. Quitting...
 
   Usage:    grabABI [-c|-g|-m|-k|-a|-f|-v|-h] <address> [address...]  
-  Purpose:  Fetches the ABI for a smart contract. Optionally generates C++ source code representing that ABI.
+  Purpose:  Fetches the ABI for a smart contract.
 
   Where:  
 	addrs                 list of one or more smart contracts whose ABI to grab from EtherScan (required)

@@ -25,7 +25,7 @@ static const COption params[] = {
     COption("trace", "t", "", OPT_SWITCH, "display the transaction's trace"),
     COption("force", "o", "", OPT_HIDDEN | OPT_SWITCH, "force the results into the tx cache"),
     COption("uniq", "u", "", OPT_SWITCH, "display a list of uniq addresses found in this transaction"),
-    COption("", "", "", OPT_DESCRIPTION, "Retrieve an Ethereum transaction from the local cache or a running node."),
+    COption("", "", "", OPT_DESCRIPTION, "Retrieve a transaction from the cache or the node."),
     // clang-format on
     // END_CODE_OPTIONS
 };

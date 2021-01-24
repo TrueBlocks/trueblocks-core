@@ -3,7 +3,7 @@ getReceipt -th
 #### Usage
 
 `Usage:`    getReceipt [-a|-l|-v|-h] &lt;tx_id&gt; [tx_id...]  
-`Purpose:`  Retrieve a transaction's receipt from the local cache or a running node.
+`Purpose:`  Retrieve a transaction's receipt from the cache or the node.
 
 `Where:`  
 

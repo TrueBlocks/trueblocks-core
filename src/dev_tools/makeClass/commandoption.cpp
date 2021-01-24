@@ -84,7 +84,7 @@ string_q CCommandOption::getValueByName(const string_q& fieldName) const {
                 return command;
             }
             if (fieldName % "core_visible") {
-                return core_visible;
+                return bool_2_Str(core_visible);
             }
             break;
         case 'd':
@@ -92,7 +92,7 @@ string_q CCommandOption::getValueByName(const string_q& fieldName) const {
                 return def_val;
             }
             if (fieldName % "docs_visible") {
-                return docs_visible;
+                return bool_2_Str(docs_visible);
             }
             if (fieldName % "data_type") {
                 return data_type;
@@ -116,10 +116,10 @@ string_q CCommandOption::getValueByName(const string_q& fieldName) const {
             break;
         case 'i':
             if (fieldName % "is_required") {
-                return is_required;
+                return bool_2_Str(is_required);
             }
             if (fieldName % "is_customizable") {
-                return is_customizable;
+                return bool_2_Str(is_customizable);
             }
             break;
         case 'n':
@@ -177,7 +177,7 @@ bool CCommandOption::setValueByName(const string_q& fieldNameIn, const string_q&
                 return true;
             }
             if (fieldName % "core_visible") {
-                core_visible = fieldValue;
+                core_visible = str_2_Bool(fieldValue);
                 return true;
             }
             break;
@@ -187,7 +187,7 @@ bool CCommandOption::setValueByName(const string_q& fieldNameIn, const string_q&
                 return true;
             }
             if (fieldName % "docs_visible") {
-                docs_visible = fieldValue;
+                docs_visible = str_2_Bool(fieldValue);
                 return true;
             }
             if (fieldName % "data_type") {
@@ -217,11 +217,11 @@ bool CCommandOption::setValueByName(const string_q& fieldNameIn, const string_q&
             break;
         case 'i':
             if (fieldName % "is_required") {
-                is_required = fieldValue;
+                is_required = str_2_Bool(fieldValue);
                 return true;
             }
             if (fieldName % "is_customizable") {
-                is_customizable = fieldValue;
+                is_customizable = str_2_Bool(fieldValue);
                 return true;
             }
             break;
@@ -367,10 +367,10 @@ void CCommandOption::registerClass(void) {
     ADD_FIELD(CCommandOption, "command", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CCommandOption, "hotkey", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CCommandOption, "def_val", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CCommandOption, "is_required", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CCommandOption, "is_customizable", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CCommandOption, "core_visible", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CCommandOption, "docs_visible", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CCommandOption, "is_required", T_BOOL | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CCommandOption, "is_customizable", T_BOOL | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CCommandOption, "core_visible", T_BOOL | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CCommandOption, "docs_visible", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CCommandOption, "generate", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CCommandOption, "option_kind", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CCommandOption, "data_type", T_TEXT | TS_OMITEMPTY, ++fieldNum);
@@ -405,10 +405,10 @@ string_q nextCommandoptionChunk_custom(const string_q& fieldIn, const void* data
             case 'o':
                 if (fieldIn % "opts") {
                     string_q ret;
-                    if (com->is_required % "true")
+                    if (com->is_required)
                         ret += ("|OPT_REQUIRED");
 
-                    if (!(com->core_visible % "true"))
+                    if (!(com->core_visible))
                         ret += ("|OPT_HIDDEN");
 
                     if (com->option_kind == "switch")
@@ -491,13 +491,13 @@ CCommandOption::CCommandOption(const string_q& line) {
     if (parts.size() > 7)
         def_val = substitute(substitute(parts[7], "TRUE", "true"), "FALSE", "false");
     if (parts.size() > 8)
-        is_required = parts[8];
+        is_required = str_2_Bool(parts[8]);
     if (parts.size() > 9)
-        is_customizable = parts[9];
+        is_customizable = str_2_Bool(parts[9]);
     if (parts.size() > 10)
-        core_visible = parts[10];
+        core_visible = str_2_Bool(parts[10]);
     if (parts.size() > 11)
-        docs_visible = parts[11];
+        docs_visible = str_2_Bool(parts[11]);
     if (parts.size() > 12)
         generate = parts[12];
     if (parts.size() > 13)
@@ -520,6 +520,14 @@ CCommandOption::CCommandOption(const string_q& line) {
         } else {
             def_val = "NOPOS";
         }
+    }
+    if (option_kind == "description") {
+        swagger_descr = trim(substitute(description, "|", "\n        "));
+    } else if (option_kind != "note" && option_kind != "error") {
+        swagger_descr = trim(substitute(description, "|", "\n          "));
+    }
+    if (option_kind != "note" && option_kind != "error") {
+        description = trim(substitute(description, "|", " "));
     }
 
     isEnumList = contains(data_type, "list<enum");

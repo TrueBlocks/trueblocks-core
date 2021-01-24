@@ -23,7 +23,7 @@ static const COption params[] = {
     COption("transactions", "", "list<tx_id>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)"),  // NOLINT
     COption("articulate", "a", "", OPT_SWITCH, "articulate the transactions if an ABI is found for the 'to' address"),
     COption("logs", "l", "", OPT_SWITCH, "display the receipt's logs"),
-    COption("", "", "", OPT_DESCRIPTION, "Retrieve a transaction's receipt from the local cache or a running node."),
+    COption("", "", "", OPT_DESCRIPTION, "Retrieve a transaction's receipt from the cache or the node."),
     // clang-format on
     // END_CODE_OPTIONS
 };

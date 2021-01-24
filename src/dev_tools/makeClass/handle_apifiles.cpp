@@ -14,6 +14,7 @@
 
 extern const char* STR_PATH_ENTRY;
 extern const char* STR_PATH_PARAM;
+extern string_q getTypeStr(const CCommandOption& opt, const string_q& lead);
 //---------------------------------------------------------------------------------------------------
 void COptions::writeOpenApiFile(void) {
     if (!openapi)
@@ -44,32 +45,20 @@ void COptions::writeOpenApiFile(void) {
         CCommandOptionArray descr;
         select_commands(parts[1], params, notes, errors, descr);
         if (descr.size()) {
-            replace(entry, "[{SUMMARY}]", descr[0].description);
-            replace(entry, "[{DESCR}]", descr[0].description);
-        } else {
-            replace(entry, "[{SUMMARY}]", "");
-            replace(entry, "[{DESCR}]", "");
+            replace(entry, "[{SUMMARY}]", descr[0].swagger_descr);
+            replace(entry, "[{DESCR}]", descr[0].swagger_descr);
         }
+        replace(entry, "      summary: [{SUMMARY}]\n", "");
+        replace(entry, "      description: [{DESCR}]\n", "");
         replace(entry, "[{ID}]", toLower(parts[0] + "-" + parts[1]));
         ostringstream paramStream;
         for (auto param : params) {
             string_q p = STR_PATH_PARAM;
             replace(p, "[{NAME}]", param.command);
             replace(p, "[{IN}]", (param.option_kind == "positional" ? "query" : "query"));
-            replace(p, "[{DESCR}]", param.description);
-            replace(p, "[{REQ}]", param.is_required == "true" ? "true" : "false");
-            if (contains(param.data_type, "boolean")) {
-                const char* BOOL_STR =
-                    "type: string\n"
-                    "          enum:\n"
-                    "          - \"\"\n"
-                    "          - \"true\"";
-                replace(p, "type: string", BOOL_STR);
-            } else {
-                if (!contains(param.data_type, "list") &&
-                    (contains(param.data_type, "uint") || contains(param.data_type, "double")))
-                    replace(p, "type: string", "type: number");
-            }
+            replace(p, "[{DESCR}]", param.swagger_descr);
+            replace(p, "[{REQ}]", param.is_required ? "true" : "false");
+            replace(p, "[{TYPE}]", getTypeStr(param, "          "));
             counter.nVisited++;
             paramStream << p << endl;
         }
@@ -79,7 +68,7 @@ void COptions::writeOpenApiFile(void) {
     }
 
     string_q sourceFn = "../../trueblocks-explorer/yaml-resolved/swagger.yaml";
-    string_q templateFn = "../src/dev_tools/makeClass/templates/swagger.yaml";
+    string_q templateFn = configPath("makeClass/blank_swagger.yaml");
     if (!test && fileExists(sourceFn) && fileExists(templateFn)) {
         string_q orig = asciiFileToString(sourceFn);
         string_q str = asciiFileToString(templateFn);
@@ -196,14 +185,81 @@ void COptions::select_commands(const string_q& cmd, CCommandOptionArray& cmds, C
 }
 
 //---------------------------------------------------------------------------------------------------
+string_q getTypeStr(const CCommandOption& opt, const string& lead) {
+    string_q str_head = lead + "type: string";
+    string_q num_head = lead + "type: number";
+    string_q bool_head = lead + "type: boolean";
+    string_q enum_head = lead + "type: string\n" + lead + "enum:\n";
+
+    if (contains(opt.data_type, "list")) {
+        if (contains(opt.data_type, "enum")) {
+            /*
+             list<enum[blocks|transactions|traces|slurps|prices|all*]>
+             list<enum[ext*|int|token|nfts|miner|all]>
+             list<enum[index|monitors|collections|names|abis|caches|some*|all]>
+             list<enum[monitors|index*|none|both]>
+             list<enum[name|symbol|decimals|totalSupply|version|none|all*]>
+             list<enum[none|some*|all|balance|nonce|code|storage|deployed|accttype]>
+             */
+            string_q e = substitute(substitute(opt.data_type, "list<", ""), ">", "");
+            string_q str = substitute(substitute(substitute(e, "*", ""), "enum[", ""), "]", "");
+            CStringArray opts;
+            explode(opts, str, '|');
+            ostringstream os;
+            for (auto o : opts) {
+                if (isNumeral(o)) {
+                    os << substitute("            - \"[{VAL}]\"\n", "[{VAL}]", o);
+                } else {
+                    os << substitute("            - [{VAL}]\n", "[{VAL}]", o);
+                }
+            }
+            string_q str_array_enum =
+                "          type: array\n"
+                "          items:\n"
+                "            type: string\n"
+                "            enum:\n";
+            return str_array_enum + trim(os.str(), '\n');
+        } else {
+            string_q str_array =
+                "          type: array\n"
+                "          items:\n"
+                "            type: string";
+            return str_array;
+        }
+    }
+
+    if (contains(opt.data_type, "boolean")) {
+        return bool_head;
+
+    } else if (contains(opt.data_type, "uint") || contains(opt.data_type, "double")) {
+        return num_head;
+
+    } else if (contains(opt.data_type, "enum")) {
+        string_q str = substitute(substitute(substitute(opt.data_type, "*", ""), "enum[", ""), "]", "");
+        CStringArray opts;
+        explode(opts, str, '|');
+        ostringstream os;
+        for (auto o : opts) {
+            if (isNumeral(o)) {
+                os << substitute(lead + "- \"[{VAL}]\"\n", "[{VAL}]", o);
+            } else {
+                os << substitute(lead + "- [{VAL}]\n", "[{VAL}]", o);
+            }
+        }
+        return enum_head + trim(os.str(), '\n');
+    }
+    return str_head;
+}
+
+//---------------------------------------------------------------------------------------------------
 const char* STR_PATH_ENTRY =
     "  /[{PATH}]:\n"
     "    get:\n"
     "      tags:\n"
     "      - [{TAGS}]\n"
-    "      summary: \"[{SUMMARY}]\"\n"
-    "      description: \"[{DESCR}]\"\n"
-    "      operationId: \"[{ID}]\"\n"
+    "      summary: [{SUMMARY}]\n"
+    "      description: [{DESCR}]\n"
+    "      operationId: [{ID}]\n"
     "      parameters:\n"
     "[{PARAMS}]"
     "      responses:\n"
@@ -226,4 +282,4 @@ const char* STR_PATH_PARAM =
     "        style: form\n"
     "        explode: true\n"
     "        schema:\n"
-    "          type: string";
+    "[{TYPE}]";

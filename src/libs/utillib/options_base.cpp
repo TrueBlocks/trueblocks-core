@@ -57,7 +57,7 @@ bool COptionsBase::prepareArguments(int argCountIn, const char* argvIn[]) {
     CStringArray separatedArgs;
     for (int i = 1; i < argCountIn; i++) {  // skip argv[0]
         CStringArray parts;
-        string_q arg = substituteAny(argvIn[i], "\n\r\t", " ");
+        string_q arg = substitute(substituteAny(argvIn[i], "\n\r\t", " "), ",", " ");
         explode(parts, arg, ' ');
         for (auto part : parts) {
             if (!part.empty()) {

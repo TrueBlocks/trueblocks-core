@@ -4,7 +4,7 @@ getTrans 1301011.0 1301672.0 1301324.0 --uniq_tx --fmt json
   Invalid option: --uniq_tx
 
   Usage:    getTrans [-a|-t|-u|-v|-h] <tx_id> [tx_id...]  
-  Purpose:  Retrieve an Ethereum transaction from the local cache or a running node.
+  Purpose:  Retrieve a transaction from the cache or the node.
 
   Where:  
 	transactions          a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID) (required)

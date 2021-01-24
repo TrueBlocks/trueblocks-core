@@ -4,7 +4,7 @@ whereBlock 1001001 --fmt junk
   Export format (junk) must be one of [ json | txt | csv | api ]. Quitting...
 
   Usage:    whereBlock [-v|-h] <block> [block...]  
-  Purpose:  Reports if a block was found in the cache, at a local, or at a remote node.
+  Purpose:  Reports in which cache (if any) a block is found.
 
   Where:  
 	blocks                a space-separated list of one or more blocks to search for (required)

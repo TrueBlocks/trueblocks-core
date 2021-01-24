@@ -87,7 +87,7 @@ bool COptions::handle_options(void) {
 
                 // clang-format off
                 string_q initFmt = "    [{COMMAND}] = [{DEF_VAL}];";
-                if (option.is_customizable % "true")
+                if (option.is_customizable)
                     initFmt = substitute(STR_CUSTOM_INIT, "[CTYPE]",
                                          ((option.isEnum || option.isEnumList) ? "String"
                                           : (option.isBool)                    ? "Bool"
@@ -187,7 +187,7 @@ string_q replaceCode(const string_q& orig, const string_q& which, const string_q
 void COptions::generate_toggle(const CCommandOption& option) {
     string_q initFmt = "    [{COMMAND}] = [{DEF_VAL}];";
     // clang-format off
-    if (option.is_customizable % "true")
+    if (option.is_customizable)
         initFmt = substitute(STR_CUSTOM_INIT, "[CTYPE]",
                              ((option.isEnum || option.isEnumList) ? "String"
                               : (option.isBool)                    ? "Bool"
@@ -209,7 +209,7 @@ void COptions::generate_toggle(const CCommandOption& option) {
 void COptions::generate_switch(const CCommandOption& option) {
     string_q initFmt = "    [{COMMAND}] = [{DEF_VAL}];";
     // clang-format off
-    if (option.is_customizable % "true")
+    if (option.is_customizable)
         initFmt = substitute(STR_CUSTOM_INIT, "[CTYPE]",
                              ((option.isEnum || option.isEnumList) ? "String"
                               : (option.isBool)                    ? "Bool"
@@ -231,7 +231,7 @@ void COptions::generate_switch(const CCommandOption& option) {
 void COptions::generate_flag(const CCommandOption& option) {
     string_q initFmt = "    [{COMMAND}] = [{DEF_VAL}];";
     // clang-format off
-    if (option.is_customizable % "true")
+    if (option.is_customizable)
         initFmt = substitute(STR_CUSTOM_INIT, "[CTYPE]",
                              ((option.isEnum || option.isEnumList) ? "String"
                               : (option.isBool)                    ? "Bool"

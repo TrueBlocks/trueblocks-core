@@ -3,7 +3,7 @@ getTrans -th
 #### Usage
 
 `Usage:`    getTrans [-a|-t|-u|-v|-h] &lt;tx_id&gt; [tx_id...]  
-`Purpose:`  Retrieve an Ethereum transaction from the local cache or a running node.
+`Purpose:`  Retrieve a transaction from the cache or the node.
 
 `Where:`  
 

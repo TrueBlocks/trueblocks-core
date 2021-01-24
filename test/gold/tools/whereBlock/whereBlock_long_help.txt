@@ -2,7 +2,7 @@ whereBlock argc: 2 [1:--help]
 whereBlock --help 
 
   Usage:    whereBlock [-v|-h] <block> [block...]  
-  Purpose:  Reports if a block was found in the cache, at a local, or at a remote node.
+  Purpose:  Reports in which cache (if any) a block is found.
 
   Where:  
 	blocks                a space-separated list of one or more blocks to search for (required)

@@ -23,10 +23,10 @@ static const COption params[] = {
     COption("transactions", "", "list<tx_id>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)"),  // NOLINT
     COption("articulate", "a", "", OPT_SWITCH, "articulate the transactions if an ABI is found for the 'to' address"),
     COption("count", "c", "", OPT_SWITCH, "show the number of traces for the transaction only (fast)"),
-    COption("skip_ddos", "s", "", OPT_HIDDEN | OPT_TOGGLE, "toggle skipping over 2018 ddos transactions during export ('on' by default)"),  // NOLINT
+    COption("skip_ddos", "s", "", OPT_HIDDEN | OPT_TOGGLE, "skip over 2018 ddos during export ('on' by default)"),
     COption("max_traces", "m", "<uint64>", OPT_HIDDEN | OPT_FLAG, "if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250)"),  // NOLINT
     COption("filter", "f", "<string>", OPT_HIDDEN | OPT_FLAG, "Call trace_filter with the comma seperated string of the filter (see docs)"),  // NOLINT
-    COption("", "", "", OPT_DESCRIPTION, "Retrieve a transaction's traces from the local cache or a running node."),
+    COption("", "", "", OPT_DESCRIPTION, "Retrieve a transaction's traces from the cache or the node."),
     // clang-format on
     // END_CODE_OPTIONS
 };

@@ -5,7 +5,7 @@ chifra logs --help
 PROG_NAME = [chifra logs]
 
   Usage:    chifra logs [-a|-v|-h] <tx_id> [tx_id...]  
-  Purpose:  Retrieve a transaction's logs from the local cache or a running node.
+  Purpose:  Retrieve a transaction's logs from the cache or the node.
 
   Where:  
 	transactions          a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID) (required)

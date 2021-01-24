@@ -4,7 +4,7 @@ getReceipt 0x0012
   The argument '0x0012' is not properly formatted. Is it the right length?
 
   Usage:    getReceipt [-a|-l|-v|-h] <tx_id> [tx_id...]  
-  Purpose:  Retrieve a transaction's receipt from the local cache or a running node.
+  Purpose:  Retrieve a transaction's receipt from the cache or the node.
 
   Where:  
 	transactions          a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID) (required)
