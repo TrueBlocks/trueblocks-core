@@ -75,8 +75,18 @@ void COptions::writeOpenApiFile(void) {
         string_q ps = pathStream.str();
         replaceReverse(ps, "\n", "");
         replace(str, "[{PATHS}]", ps);
-        if (orig != str)
+        if (orig != str) {
             stringToAsciiFile(sourceFn, str);
+            string_q which = doCommand("which swag2html.py");
+            string_q destHTML = "../../trueblocks-explorer/public/api.html";
+            if (fileExists(which) && fileExists(destHTML)) {
+                ostringstream cmd;
+                cmd << "python " << which << " <" << sourceFn << " >" << destHTML << " ; date ; ls -l " << destHTML;
+                string_q c = cmd.str();
+                string_q result = doCommand(c);
+                LOG_INFO("result: ", result);
+            }
+        }
     }
     if (test) {
         counter.nProcessed = 0;

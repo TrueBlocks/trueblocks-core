@@ -22,7 +22,7 @@ makeClass -r --edit
 	#### Hidden options
 	-e  (--edit)          edit <class_name(s)> definition file in local folder
 	-d  (--dump)          dump any classDefinition config tomls to screen and quit
-	-p  (--api)           generate api options file in trueblocks-explorer repo
+	-p  (--api)           generate api options file in explorer repo
 	-A  (--openapi)       export openapi.yaml file for API documentation
 	#### Hidden options
 

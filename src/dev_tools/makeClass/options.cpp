@@ -34,7 +34,7 @@ static const COption params[] = {
     COption("filter", "i", "<string>", OPT_FLAG, "process only files whose filename or contents contain 'filter'"),
     COption("test", "t", "", OPT_SWITCH, "for both code generation and options generation, process but do not write changes"),  // NOLINT
     COption("force", "c", "", OPT_SWITCH, "for both code generation and options generation, force writing of changes"),
-    COption("api", "p", "", OPT_HIDDEN | OPT_SWITCH, "generate api options file in trueblocks-explorer repo"),
+    COption("api", "p", "", OPT_HIDDEN | OPT_SWITCH, "generate api options file in explorer repo"),
     COption("openapi", "A", "", OPT_HIDDEN | OPT_SWITCH, "export openapi.yaml file for API documentation"),
     COption("", "", "", OPT_DESCRIPTION, "Automatically writes C++ for various purposes."),
     // clang-format on
