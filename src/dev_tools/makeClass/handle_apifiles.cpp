@@ -12,6 +12,10 @@
  *-------------------------------------------------------------------------------------------*/
 #include "options.h"
 
+#define routeCount fileCount
+#define cmdCount nVisited
+#define nChanged nProcessed
+
 extern const char* STR_PATH_ENTRY;
 extern const char* STR_PATH_PARAM;
 extern string_q getTypeStr(const CCommandOption& opt, const string_q& lead);
@@ -59,12 +63,12 @@ void COptions::writeOpenApiFile(void) {
             replace(p, "[{DESCR}]", param.swagger_descr);
             replace(p, "[{REQ}]", param.is_required ? "true" : "false");
             replace(p, "[{TYPE}]", getTypeStr(param, "          "));
-            counter.nVisited++;
+            counter.cmdCount++;
             paramStream << p << endl;
         }
         replace(entry, "[{PARAMS}]", paramStream.str());
         pathStream << entry;
-        counter.nProcessed++;
+        counter.routeCount++;
     }
 
     string_q sourceFn = "../../trueblocks-explorer/yaml-resolved/swagger.yaml";
@@ -76,6 +80,7 @@ void COptions::writeOpenApiFile(void) {
         replaceReverse(ps, "\n", "");
         replace(str, "[{PATHS}]", ps);
         if (orig != str) {
+            counter.nChanged++;
             stringToAsciiFile(sourceFn, str);
             string_q which = doCommand("which swag2html.py");
             string_q destHTML = "../../trueblocks-explorer/public/api.html";
@@ -89,11 +94,11 @@ void COptions::writeOpenApiFile(void) {
         }
     }
     if (test) {
-        counter.nProcessed = 0;
+        counter.routeCount = 0;
         LOG_WARN("Testing only - openapi file not written");
     }
-    LOG_INFO(cYellow, "makeClass --options --openapi", cOff, " processed ", counter.nProcessed, " routes and ",
-             counter.nVisited, " commands.", string_q(40, ' '));
+    LOG_INFO(cYellow, "makeClass --openapi", cOff, " processed ", counter.routeCount, "/", counter.cmdCount,
+             " routes/cmds ", " (changed ", counter.nChanged, ").", string_q(40, ' '));
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -111,14 +116,14 @@ void COptions::writeApiFile(void) {
     bool firstRoute = true;
     routeStream << "{" << endl;
     for (auto route : commands.routes) {
-        counter.nProcessed++;
+        counter.routeCount++;
         if (!firstRoute)
             routeStream << "," << endl;
         routeStream << "  \"" << route.route << "\": {" << endl;
         bool firstCmd = true;
         for (auto command : route.commands) {
             if (command.option_kind != "note") {
-                counter.nVisited++;
+                counter.cmdCount++;
                 if (command.hotkey.empty())
                     command.hotkey = "<not-set>";
                 if (command.command.empty())
@@ -152,11 +157,11 @@ void COptions::writeApiFile(void) {
     if (!test && folderExists("../../trueblocks-explorer/api/"))
         stringToAsciiFile("../../trueblocks-explorer/api/api_options.json", routeStream.str());
     if (test) {
-        counter.nProcessed = 0;
+        counter.routeCount = 0;
         LOG_WARN("Testing only - api file not written");
     }
-    LOG_INFO(cYellow, "makeClass --options --api", cOff, " processed ", counter.nProcessed, " routes and ",
-             counter.nVisited, " commands.", string_q(40, ' '));
+    LOG_INFO(cYellow, "makeClass --api", cOff, " processed ", counter.routeCount, " routes and ", counter.cmdCount,
+             " commands.", string_q(40, ' '));
 }
 
 //---------------------------------------------------------------------------------------------------
