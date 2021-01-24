@@ -27,6 +27,7 @@ class CCommandOption : public CBaseNode {
   public:
     string_q num;
     string_q group;
+    string_q tags;
     string_q api_route;
     string_q tool;
     string_q command;
@@ -117,6 +118,7 @@ inline void CCommandOption::initialize(void) {
 
     num = "";
     group = "";
+    tags = "";
     api_route = "";
     tool = "";
     command = "";
@@ -152,6 +154,7 @@ inline void CCommandOption::duplicate(const CCommandOption& co) {
 
     num = co.num;
     group = co.group;
+    tags = co.tags;
     api_route = co.api_route;
     tool = co.tool;
     command = co.command;

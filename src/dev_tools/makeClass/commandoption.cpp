@@ -138,6 +138,9 @@ string_q CCommandOption::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 't':
+            if (fieldName % "tags") {
+                return tags;
+            }
             if (fieldName % "tool") {
                 return tool;
             }
@@ -241,6 +244,10 @@ bool CCommandOption::setValueByName(const string_q& fieldNameIn, const string_q&
             }
             break;
         case 't':
+            if (fieldName % "tags") {
+                tags = fieldValue;
+                return true;
+            }
             if (fieldName % "tool") {
                 tool = fieldValue;
                 return true;
@@ -273,6 +280,7 @@ bool CCommandOption::Serialize(CArchive& archive) {
     // EXISTING_CODE
     archive >> num;
     archive >> group;
+    archive >> tags;
     archive >> api_route;
     archive >> tool;
     archive >> command;
@@ -300,6 +308,7 @@ bool CCommandOption::SerializeC(CArchive& archive) const {
     // EXISTING_CODE
     archive << num;
     archive << group;
+    archive << tags;
     archive << api_route;
     archive << tool;
     archive << command;
@@ -352,6 +361,7 @@ void CCommandOption::registerClass(void) {
     ADD_FIELD(CCommandOption, "cname", T_TEXT, ++fieldNum);
     ADD_FIELD(CCommandOption, "num", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CCommandOption, "group", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CCommandOption, "tags", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CCommandOption, "api_route", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CCommandOption, "tool", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CCommandOption, "command", T_TEXT | TS_OMITEMPTY, ++fieldNum);
@@ -469,31 +479,33 @@ CCommandOption::CCommandOption(const string_q& line) {
     if (parts.size() > 1)
         group = parts[1];
     if (parts.size() > 2)
-        api_route = parts[2];
+        tags = parts[2];
     if (parts.size() > 3)
-        tool = parts[3];
+        api_route = parts[3];
     if (parts.size() > 4)
-        command = parts[4];
+        tool = parts[4];
     if (parts.size() > 5)
-        hotkey = parts[5];
+        command = parts[5];
     if (parts.size() > 6)
-        def_val = substitute(substitute(parts[6], "TRUE", "true"), "FALSE", "false");
+        hotkey = parts[6];
     if (parts.size() > 7)
-        is_required = parts[7];
+        def_val = substitute(substitute(parts[7], "TRUE", "true"), "FALSE", "false");
     if (parts.size() > 8)
-        is_customizable = parts[8];
+        is_required = parts[8];
     if (parts.size() > 9)
-        core_visible = parts[9];
+        is_customizable = parts[9];
     if (parts.size() > 10)
-        docs_visible = parts[10];
+        core_visible = parts[10];
     if (parts.size() > 11)
-        generate = parts[11];
+        docs_visible = parts[11];
     if (parts.size() > 12)
-        option_kind = parts[12];
+        generate = parts[12];
     if (parts.size() > 13)
-        data_type = parts[13];
+        option_kind = parts[13];
     if (parts.size() > 14)
-        description = substitute(parts[14], "&#44;", ",");
+        data_type = parts[14];
+    if (parts.size() > 15)
+        description = substitute(parts[15], "&#44;", ",");
 
     if (!def_val.empty() && (data_type == "<string>" || data_type == "<path>" || contains(data_type, "enum")))
         def_val = "\"" + def_val + "\"";

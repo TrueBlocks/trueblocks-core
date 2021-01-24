@@ -2,6 +2,7 @@
 class = CCommandOption
 fields = string num|\
         string group|\
+        string tags|\
         string api_route|\
         string tool|\
         string command|\

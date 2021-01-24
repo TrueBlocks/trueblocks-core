@@ -28,7 +28,7 @@ static const COption params[] = {
     COption("max_traces", "m", "<uint64>", OPT_HIDDEN | OPT_FLAG, "if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250)"),  // NOLINT
     COption("all_abis", "A", "", OPT_HIDDEN | OPT_SWITCH, "load all previously cached abi files"),
     COption("freshen", "f", "", OPT_HIDDEN | OPT_SWITCH, "freshen but do not print the exported data"),
-    COption("freshen_max", "F", "<blknum>", OPT_HIDDEN | OPT_FLAG, "maximum number of records to process for --freshen option"),  // NOLINT
+    COption("freshen_max", "F", "<uint64>", OPT_HIDDEN | OPT_FLAG, "maximum number of records to process for --freshen option"),  // NOLINT
     COption("factory", "y", "", OPT_HIDDEN | OPT_SWITCH, "scan for contract creations from the given address(es) and report address of those contracts"),  // NOLINT
     COption("emitter", "M", "", OPT_HIDDEN | OPT_SWITCH, "available for --logs option only, export will only export if the address emitted the event"),  // NOLINT
     COption("count", "U", "", OPT_SWITCH, "only available for --appearances mode, if present return only the number of records"),  // NOLINT
@@ -115,7 +115,7 @@ bool COptions::parseArguments(string_q& command) {
             freshen = true;
 
         } else if (startsWith(arg, "-F:") || startsWith(arg, "--freshen_max:")) {
-            if (!confirmBlockNum("freshen_max", freshen_max, arg, latest))
+            if (!confirmUint("freshen_max", freshen_max, arg))
                 return false;
 
         } else if (arg == "-y" || arg == "--factory") {

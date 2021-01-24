@@ -1,5 +1,0 @@
-[settings]
-class = COATag
-fields = string name
-serializable = true
-includes = utillib.h

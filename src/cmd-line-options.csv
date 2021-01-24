@@ -1,261 +1,262 @@
-num,group,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_visible,docs_visible,generate,option_kind,data_type,description
+num,group,tags,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_visible,docs_visible,generate,option_kind,data_type,description
 
-10020,apps,list,acctScrape,addrs,,,true,false,true,true,local,positional,list<addr>,one or more Ethereum addresses
-10030,apps,rm,acctScrape,rm,,,false,false,true,false,local,switch,<boolean>,process the request to delete&#44; undelete&#44; or remove monitors
-10060,apps,list,acctScrape,staging,s,false,false,false,false,false,local,switch,<boolean>,enable search of staging (not yet finalized) folder
-10080,apps,list,acctScrape,unripe,u,false,false,false,false,false,local,switch,<boolean>,enable search of unripe (neither staged nor finalized) folder (requires --staging)
-10083,apps,list,acctScrape,blooms,b,false,false,false,false,false,header,switch,<boolean>,process query by first using bloom filter and&#44; if hit&#44; downloading index chunk from remote
-10120,apps,list,acctScrape,start,S,,false,false,false,false,local,flag,<blknum>,this value is ignored but remains for backward compatibility
-10140,apps,list,acctScrape,end,E,,false,false,false,false,local,flag,<blknum>,this value is ignored but remains for backward compatibility
-10160,apps,list,acctScrape,,,,false,false,true,true,--,description,,Add or remove monitors for a given Ethereum address (or collection of addresses).
-10162,apps,list,acctScrape,,,,false,false,false,false,--,note,,`addresses` must start with '0x' and be forty two characters long.
+10110,apps,Accounts,list,acctScrape,addrs,,,true,false,true,true,local,positional,list<addr>,one or more Ethereum addresses
+10120,apps,Accounts,list,acctScrape,staging,s,false,false,false,false,false,local,switch,<boolean>,enable search of staging (not yet finalized) folder
+10130,apps,Accounts,list,acctScrape,unripe,u,false,false,false,false,false,local,switch,<boolean>,enable search of unripe (neither staged nor finalized) folder (requires --staging)
+10140,apps,Accounts,list,acctScrape,blooms,b,false,false,false,false,false,header,switch,<boolean>,process query by first using bloom filter and&#44; if hit&#44; downloading index chunk from remote
+10150,apps,Accounts,list,acctScrape,start,S,,false,false,false,false,local,flag,<blknum>,this value is ignored but remains for backward compatibility
+10160,apps,Accounts,list,acctScrape,end,E,,false,false,false,false,local,flag,<blknum>,this value is ignored but remains for backward compatibility
+10170,apps,Accounts,list,acctScrape,,,,false,false,true,true,--,description,,Add or remove monitors for a given Ethereum address (or collection of addresses).
+10180,apps,Accounts,list,acctScrape,,,,false,false,false,false,--,note,,`addresses` must start with '0x' and be forty two characters long.
 
-10200,apps,export,acctExport,addrs,,,true,false,true,true,local,positional,list<addr>,one or more addresses (0x...) to export
-10205,apps,export,acctExport,topics,,,false,false,true,true,local,positional,list<topic>,filter by one or more logs topics (only for --logs option)
-10210,apps,export,acctExport,appearances,p,,false,false,true,true,header,switch,<boolean>,export a list of appearances
-10220,apps,export,acctExport,receipts,r,,false,false,true,true,header,switch,<boolean>,export receipts instead of transaction list
-10230,apps,export,acctExport,logs,l,,false,false,true,true,header,switch,<boolean>,export logs instead of transaction list
-10240,apps,export,acctExport,traces,t,,false,false,true,true,header,switch,<boolean>,export traces instead of transaction list
-10250,apps,export,acctExport,statements,T,,false,false,true,true,header,switch,<boolean>,export reconcilations instead of transaction list
-10280,apps,export,acctExport,accounting,C,,false,false,true,true,header,switch,<boolean>,export accounting records instead of transaction list
-10310,apps,export,acctExport,articulate,a,,false,false,true,true,header,switch,<boolean>,articulate transactions&#44; traces&#44; logs&#44; and outputs
-10320,apps,export,acctExport,write_txs,i,false,false,true,true,false,local,switch,<boolean>,write transactions to the cache (see notes)
-10330,apps,export,acctExport,write_traces,R,false,false,true,true,false,local,switch,<boolean>,write traces to the cache (see notes)
-10340,apps,export,acctExport,skip_ddos,d,true,false,true,false,false,header,toggle,<boolean>,toggle skipping over 2016 dDos transactions ([{DEF}] by default)
-10350,apps,export,acctExport,max_traces,m,250,false,true,false,false,header,flag,<uint64>,if --skip_ddos is on&#44; this many traces defines what a ddos transaction is (default = [{DEF}])
-10360,apps,export,acctExport,all_abis,A,,false,false,false,false,local,switch,<boolean>,load all previously cached abi files
-10380,apps,export,acctExport,freshen,f,,false,false,false,false,header,switch,<boolean>,freshen but do not print the exported data
-10390,apps,export,acctExport,freshen_max,F,5000,false,false,false,false,header,flag,<blknum>,maximum number of records to process for --freshen option
-10395,apps,export,acctExport,factory,y,false,false,false,false,false,header,switch,<boolean>,scan for contract creations from the given address(es) and report address of those contracts
-10430,apps,export,acctExport,emitter,M,,false,false,false,true,header,switch,<boolean>,available for --logs option only&#44; export will only export if the address emitted the event
-10435,apps,export,acctExport,count,U,,false,false,true,true,header,switch,<boolean>,only available for --appearances mode&#44; if present return only the number of records
-10440,apps,export,acctExport,start,S,,false,false,false,false,local,deprecated,<blknum>,first block to process (inclusive)
-10450,apps,export,acctExport,end,E,,false,false,false,false,local,deprecated,<blknum>,last block to process (inclusive)
-10453,apps,export,acctExport,first_record,c,0,false,false,false,false,header,flag,<blknum>,the first record to process
-10457,apps,export,acctExport,max_records,e,,false,false,false,false,header,flag,<blknum>,the maximum number of records to process before reporting
-10060,apps,export,acctExport,staging,s,,false,false,false,false,local,switch,<boolean>,ignored (preserved for backwards compatibility)
-10080,apps,export,acctExport,unripe,u,,false,false,false,false,local,switch,<boolean>,ignored (preserved for backwards compatibility)
-10460,apps,export,acctExport,,,,false,false,true,true,--,description,,Export full detail of transactions for one or more Ethereum addresses.
-10470,apps,export,acctExport,,,,false,false,false,false,--,note,,`addresses` must start with '0x' and be forty two characters long.
-10480,apps,export,acctExport,,,,false,false,false,false,--,note,,By default&#44; transactions and traces are cached if the number of exported|items is <= to 1&#44;000 items. Otherwise&#44; if you specify any `write_*` options&#44;|your preference predominates.
+10200,apps,Accounts,export,acctExport,addrs,,,true,false,true,true,local,positional,list<addr>,one or more addresses (0x...) to export
+10205,apps,Accounts,export,acctExport,topics,,,false,false,true,true,local,positional,list<topic>,filter by one or more logs topics (only for --logs option)
+10210,apps,Accounts,export,acctExport,appearances,p,,false,false,true,true,header,switch,<boolean>,export a list of appearances
+10220,apps,Accounts,export,acctExport,receipts,r,,false,false,true,true,header,switch,<boolean>,export receipts instead of transaction list
+10230,apps,Accounts,export,acctExport,logs,l,,false,false,true,true,header,switch,<boolean>,export logs instead of transaction list
+10240,apps,Accounts,export,acctExport,traces,t,,false,false,true,true,header,switch,<boolean>,export traces instead of transaction list
+10250,apps,Accounts,export,acctExport,statements,T,,false,false,true,true,header,switch,<boolean>,export reconcilations instead of transaction list
+10280,apps,Accounts,export,acctExport,accounting,C,,false,false,true,true,header,switch,<boolean>,export accounting records instead of transaction list
+10310,apps,Accounts,export,acctExport,articulate,a,,false,false,true,true,header,switch,<boolean>,articulate transactions&#44; traces&#44; logs&#44; and outputs
+10320,apps,Accounts,export,acctExport,write_txs,i,false,false,true,true,false,local,switch,<boolean>,write transactions to the cache (see notes)
+10330,apps,Accounts,export,acctExport,write_traces,R,false,false,true,true,false,local,switch,<boolean>,write traces to the cache (see notes)
+10340,apps,Accounts,export,acctExport,skip_ddos,d,true,false,true,false,false,header,toggle,<boolean>,toggle skipping over 2016 dDos transactions ([{DEF}] by default)
+10350,apps,Accounts,export,acctExport,max_traces,m,250,false,true,false,false,header,flag,<uint64>,if --skip_ddos is on&#44; this many traces defines what a ddos transaction is (default = [{DEF}])
+10360,apps,Accounts,export,acctExport,all_abis,A,,false,false,false,false,local,switch,<boolean>,load all previously cached abi files
+10380,apps,Accounts,export,acctExport,freshen,f,,false,false,false,false,header,switch,<boolean>,freshen but do not print the exported data
+10390,apps,Accounts,export,acctExport,freshen_max,F,5000,false,false,false,false,header,flag,<uint64>,maximum number of records to process for --freshen option
+10395,apps,Accounts,export,acctExport,factory,y,false,false,false,false,false,header,switch,<boolean>,scan for contract creations from the given address(es) and report address of those contracts
+10430,apps,Accounts,export,acctExport,emitter,M,,false,false,false,true,header,switch,<boolean>,available for --logs option only&#44; export will only export if the address emitted the event
+10435,apps,Accounts,export,acctExport,count,U,,false,false,true,true,header,switch,<boolean>,only available for --appearances mode&#44; if present return only the number of records
+10440,apps,Accounts,export,acctExport,start,S,,false,false,false,false,local,deprecated,<blknum>,first block to process (inclusive)
+10450,apps,Accounts,export,acctExport,end,E,,false,false,false,false,local,deprecated,<blknum>,last block to process (inclusive)
+10453,apps,Accounts,export,acctExport,first_record,c,0,false,false,false,false,header,flag,<blknum>,the first record to process
+10457,apps,Accounts,export,acctExport,max_records,e,,false,false,false,false,header,flag,<blknum>,the maximum number of records to process before reporting
+10060,apps,Accounts,export,acctExport,staging,s,,false,false,false,false,local,switch,<boolean>,ignored (preserved for backwards compatibility)
+10080,apps,Accounts,export,acctExport,unripe,u,,false,false,false,false,local,switch,<boolean>,ignored (preserved for backwards compatibility)
+10460,apps,Accounts,export,acctExport,,,,false,false,true,true,--,description,,Export full detail of transactions for one or more Ethereum addresses.
+10470,apps,Accounts,export,acctExport,,,,false,false,false,false,--,note,,`addresses` must start with '0x' and be forty two characters long.
+10480,apps,Accounts,export,acctExport,,,,false,false,false,false,--,note,,By default&#44; transactions and traces are cached if the number of exported|items is <= to 1&#44;000 items. Otherwise&#44; if you specify any `write_*` options&#44;|your preference predominates.
 
-10600,apps,scrape,blockScrape,mode,,,false,false,true,true,header,positional,enum[run*|quit|pause|restart],control the block and account scrapers
-10610,apps,scrape,blockScrape,tool,t,,false,false,true,true,header,flag,list<enum[monitors|index*|none|both]>,process the index&#44; monitors&#44; or both (none means process timestamps only)
-10615,apps,scrape,blockScrape,n_blocks,n,,false,false,true,true,header,flag,<blknum>,maximum number of blocks to process (defaults to 5000)
-10620,apps,scrape,blockScrape,n_block_procs,b,,false,false,false,false,header,flag,<uint64>,number of block channels for blaze
-10640,apps,scrape,blockScrape,n_addr_procs,a,,false,false,false,false,header,flag,<uint64>,number of address channels for blaze
-10645,apps,scrape,blockScrape,pin,p,,false,false,true,true,header,switch,<boolean>,pin new chunks (and blooms) to IPFS (requires Pinata key)
-10648,apps,scrape,blockScrape,publish,u,,false,false,true,true,header,switch,<boolean>,publish the hash of the pin manifest to the UnchainedIndex smart contract
-10652,apps,scrape,blockScrape,listpins,l,,false,false,false,false,local,switch,<boolean>,list pins (precludes other options&#44; requires API key)
-10658,apps,scrape,blockScrape,sleep,s,14,false,false,true,false,header,flag,<double>,the number of seconds to sleep between passes (default [{DEF}])
-10660,apps,scrape,blockScrape,,,,false,false,true,true,--,description,,Decentralized blockchain scraper and block cache.
+10510,apps,Accounts,rm,acctScrape,rm,,,false,false,true,false,local,switch,<boolean>,process the request to delete&#44; undelete&#44; or remove monitors
 
-10700,apps,status,cacheStatus,modes,,,false,false,true,true,local,positional,list<enum[index|monitors|collections|names|abis|caches|some*|all]>,the type of status info to retrieve
-10720,apps,status,cacheStatus,details,d,,false,false,true,true,header,switch,<boolean>,include details about items found in monitors&#44; slurps&#44; abis&#44; or price caches
-10730,apps,status,cacheStatus,types,t,,false,false,true,false,local,flag,list<enum[blocks|transactions|traces|slurps|prices|all*]>,for cache mode only&#44; which type(s) of cache to report
-10735,apps,status,cacheStatus,depth,p,,false,false,false,false,header,flag,<uint64>,for cache mode only&#44; number of levels deep to report
-10760,apps,status,cacheStatus,report,r,,false,false,true,true,local,switch,<boolean>,show a summary of the current status of the blockchain and TrueBlocks scrapers
-10780,apps,status,cacheStatus,get_config,g,,false,false,false,false,local,switch,<boolean>,returns JSON data of the editable configuration file items
-10800,apps,status,cacheStatus,set_config,s,,false,false,false,false,local,switch,<boolean>,accepts JSON in an env variable and writes it to configuration files
-10820,apps,status,cacheStatus,start,S,,false,false,false,false,header,flag,<blknum>,first block to process (inclusive)
-10840,apps,status,cacheStatus,end,E,,false,false,false,false,header,flag,<blknum>,last block to process (inclusive)
-10860,apps,status,cacheStatus,,,,false,false,true,true,--,description,,Report on status of one or more TrueBlocks caches.
+10600,apps,Admin,scrape,blockScrape,mode,,,true,false,true,true,header,positional,enum[run*|quit|pause|restart],control the block and account scrapers
+10610,apps,Admin,scrape,blockScrape,tool,t,,false,false,true,true,header,flag,list<enum[monitors|index*|none|both]>,process the index&#44; monitors&#44; or both (none means process timestamps only)
+10615,apps,Admin,scrape,blockScrape,n_blocks,n,,false,false,true,true,header,flag,<uint64>,maximum number of blocks to process (defaults to 5000)
+10620,apps,Admin,scrape,blockScrape,n_block_procs,b,,false,false,false,false,header,flag,<uint64>,number of block channels for blaze
+10640,apps,Admin,scrape,blockScrape,n_addr_procs,a,,false,false,false,false,header,flag,<uint64>,number of address channels for blaze
+10645,apps,Admin,scrape,blockScrape,pin,p,,false,false,true,true,header,switch,<boolean>,pin new chunks (and blooms) to IPFS (requires Pinata key)
+10648,apps,Admin,scrape,blockScrape,publish,u,,false,false,true,true,header,switch,<boolean>,publish the hash of the pin manifest to the UnchainedIndex smart contract
+10652,apps,Admin,scrape,blockScrape,listpins,l,,false,false,false,false,local,switch,<boolean>,list pins (precludes other options&#44; requires API key)
+10658,apps,Admin,scrape,blockScrape,sleep,s,14,false,false,true,false,header,flag,<double>,the number of seconds to sleep between passes (default [{DEF}])
+10660,apps,Admin,scrape,blockScrape,,,,false,false,true,true,--,description,,Decentralized blockchain scraper and block cache.
 
-11200,apps,,chifra,commands,,,true,false,true,true,--weird,positional,opt_string,which command to run
-11280,apps,,chifra,start,S,0,false,false,false,false,local,flag,<blknum>,first block to process (inclusive)
-11300,apps,,chifra,end,E,,false,false,false,false,local,flag,<blknum>,last block to process (inclusive)
-11320,apps,,chifra,,,,false,false,true,true,--,description,,Main TrueBlocks command line controls.
+10700,apps,Admin,status,cacheStatus,modes,,,false,false,true,true,local,positional,list<enum[index|monitors|collections|names|abis|caches|some*|all]>,the type of status info to retrieve
+10720,apps,Admin,status,cacheStatus,details,d,,false,false,true,true,header,switch,<boolean>,include details about items found in monitors&#44; slurps&#44; abis&#44; or price caches
+10730,apps,Admin,status,cacheStatus,types,t,,false,false,true,false,local,flag,list<enum[blocks|transactions|traces|slurps|prices|all*]>,for cache mode only&#44; which type(s) of cache to report
+10735,apps,Admin,status,cacheStatus,depth,p,,false,false,false,false,header,flag,<uint64>,for cache mode only&#44; number of levels deep to report
+10760,apps,Admin,status,cacheStatus,report,r,,false,false,true,true,local,switch,<boolean>,show a summary of the current status of the blockchain and TrueBlocks scrapers
+10780,apps,Admin,status,cacheStatus,get_config,g,,false,false,false,false,local,switch,<boolean>,returns JSON data of the editable configuration file items
+10800,apps,Admin,status,cacheStatus,set_config,s,,false,false,false,false,local,switch,<boolean>,accepts JSON in an env variable and writes it to configuration files
+10820,apps,Admin,status,cacheStatus,start,S,,false,false,false,false,header,flag,<blknum>,first block to process (inclusive)
+10840,apps,Admin,status,cacheStatus,end,E,,false,false,false,false,header,flag,<blknum>,last block to process (inclusive)
+10860,apps,Admin,status,cacheStatus,,,,false,false,true,true,--,description,,Report on status of one or more TrueBlocks caches.
 
-11660,dev_tools,,makeClass,files,,,true,false,true,false,local,positional,list<path>,one or more class definition files
-11700,dev_tools,,makeClass,run,r,,false,false,true,false,local,switch,<boolean>,run the class maker on associated <class_name(s)>
-11720,dev_tools,,makeClass,edit,e,,false,false,false,false,local,switch,<boolean>,edit <class_name(s)> definition file in local folder
-11740,dev_tools,,makeClass,all,a,,false,false,true,false,header,switch,<boolean>,list&#44; or run all class definitions found in the local folder
-11760,dev_tools,,makeClass,js,j,,false,false,true,false,local,switch,<boolean>,export javaScript code from the class definition
-11780,dev_tools,,makeClass,options,o,,false,false,true,false,local,switch,<boolean>,export options code (check validity in the process)
-11782,dev_tools,,makeClass,format,f,,false,false,true,false,local,switch,<boolean>,format source code files (.cpp and .h) found in local folder and below
-11784,dev_tools,,makeClass,lint,l,,false,false,true,false,local,switch,<boolean>,lint source code files (.cpp and .h) found in local folder and below
-11784,dev_tools,,makeClass,dump,d,,false,false,false,false,local,switch,<boolean>,dump any classDefinition config tomls to screen and quit
-11800,dev_tools,,makeClass,nspace,n,qblocks,false,false,true,false,header,flag,<string>,surround generated c++ code with a namespace
-11820,dev_tools,,makeClass,filter,i,,false,false,true,false,header,flag,<string>,process only files whose filename or contents contain 'filter'
-11821,dev_tools,,makeClass,test,t,,false,false,true,false,header,switch,<boolean>,for both code generation and options generation&#44; process but do not write changes
-11822,dev_tools,,makeClass,force,c,false,false,false,true,false,header,switch,<boolean>,for both code generation and options generation&#44; force writing of changes
-11823,dev_tools,,makeClass,api,p,,false,false,false,false,header,switch,<boolean>,generate api options file in trueblocks-explorer repo
-11781,dev_tools,,makeClass,openapi,A,,false,false,false,false,header,switch,<boolean>,export openapi.yaml file for API documentation
-11824,dev_tools,,makeClass,,,,false,false,true,false,--,description,,Automatically writes C++ for various purposes.
-11826,dev_tools,,makeClass,,,,false,false,false,false,--,note,,The `--options` flag generates `COption` code for each of the various tools.
-11828,dev_tools,,makeClass,,,,false,false,false,false,--,note,,The `--class` flag generates c++ code for each definition found in the local folder.
-11830,dev_tools,,makeClass,,,,false,false,false,false,--,note,,More information on class definition files is found in the documentation.
-11832,dev_tools,,makeClass,ERR_CLASSDEFNOTEXIST,,,false,false,false,false,--,error,,./classDefinitions folder does not exist. Quitting...
-11834,dev_tools,,makeClass,ERR_CONFIGMISSING,,,false,false,false,false,--,error,,[{CONFIG_FOLDER}]makeClass/ folder does not exist. Quitting...
-11836,dev_tools,,makeClass,ERR_EMPTYJSFILE,,,false,false,false,false,--,error,,Cannot export javscript for an empty class. Quitting...
-11838,dev_tools,,makeClass,ERR_CHOOSEONE,,,false,false,false,false,--,error,,Please chose exactly one of --run&#44; --list&#44; or --edit. Quitting...
-11840,dev_tools,,makeClass,ERR_NOFILTERMATCH,,,false,false,false,false,--,error,,No definitions found that matched the filter: [{FILTER}]. Quitting...
-11842,dev_tools,,makeClass,ERR_NEEDONECLASS,,,false,false,false,false,--,error,,Please specify at least one className. Quitting...
+11200,apps,,,chifra,commands,,,true,false,true,true,--weird,positional,opt_string,which command to run
+11280,apps,,,chifra,start,S,0,false,false,false,false,local,flag,<blknum>,first block to process (inclusive)
+11300,apps,,,chifra,end,E,,false,false,false,false,local,flag,<blknum>,last block to process (inclusive)
+11320,apps,,,chifra,,,,false,false,true,true,--,description,,Main TrueBlocks command line controls.
 
-11880,dev_tools,,testRunner,mode,m,,false,false,true,false,local,flag,enum[cmd*|api|both],determine which set of tests to run
-11900,dev_tools,,testRunner,filter,f,,false,false,true,false,header,flag,enum[fast*|medi|slow|all],determine how long it takes to run tests
-11920,dev_tools,,testRunner,clean,c,,false,false,true,false,header,switch,<boolean>,clean working folder before running tests
-11940,dev_tools,,testRunner,no_quit,n,,false,false,true,false,header,switch,<boolean>,do not quit testing on first error
-11940,dev_tools,,testRunner,no_post,o,,false,false,true,false,header,switch,<boolean>,do not complete the post processing step
-11960,dev_tools,,testRunner,report,r,,false,false,true,false,header,switch,<boolean>,display performance report to screen
-11980,dev_tools,,testRunner,,,,false,false,true,false,--,description,,Run TrueBlocks' test cases with options.
+11660,dev_tools,,,makeClass,files,,,true,false,true,false,local,positional,list<path>,one or more class definition files
+11700,dev_tools,,,makeClass,run,r,,false,false,true,false,local,switch,<boolean>,run the class maker on associated <class_name(s)>
+11720,dev_tools,,,makeClass,edit,e,,false,false,false,false,local,switch,<boolean>,edit <class_name(s)> definition file in local folder
+11740,dev_tools,,,makeClass,all,a,,false,false,true,false,header,switch,<boolean>,list&#44; or run all class definitions found in the local folder
+11760,dev_tools,,,makeClass,js,j,,false,false,true,false,local,switch,<boolean>,export javaScript code from the class definition
+11780,dev_tools,,,makeClass,options,o,,false,false,true,false,local,switch,<boolean>,export options code (check validity in the process)
+11782,dev_tools,,,makeClass,format,f,,false,false,true,false,local,switch,<boolean>,format source code files (.cpp and .h) found in local folder and below
+11784,dev_tools,,,makeClass,lint,l,,false,false,true,false,local,switch,<boolean>,lint source code files (.cpp and .h) found in local folder and below
+11784,dev_tools,,,makeClass,dump,d,,false,false,false,false,local,switch,<boolean>,dump any classDefinition config tomls to screen and quit
+11800,dev_tools,,,makeClass,nspace,n,qblocks,false,false,true,false,header,flag,<string>,surround generated c++ code with a namespace
+11820,dev_tools,,,makeClass,filter,i,,false,false,true,false,header,flag,<string>,process only files whose filename or contents contain 'filter'
+11821,dev_tools,,,makeClass,test,t,,false,false,true,false,header,switch,<boolean>,for both code generation and options generation&#44; process but do not write changes
+11822,dev_tools,,,makeClass,force,c,false,false,false,true,false,header,switch,<boolean>,for both code generation and options generation&#44; force writing of changes
+11823,dev_tools,,,makeClass,api,p,,false,false,false,false,header,switch,<boolean>,generate api options file in trueblocks-explorer repo
+11781,dev_tools,,,makeClass,openapi,A,,false,false,false,false,header,switch,<boolean>,export openapi.yaml file for API documentation
+11824,dev_tools,,,makeClass,,,,false,false,true,false,--,description,,Automatically writes C++ for various purposes.
+11826,dev_tools,,,makeClass,,,,false,false,false,false,--,note,,The `--options` flag generates `COption` code for each of the various tools.
+11828,dev_tools,,,makeClass,,,,false,false,false,false,--,note,,The `--class` flag generates c++ code for each definition found in the local folder.
+11830,dev_tools,,,makeClass,,,,false,false,false,false,--,note,,More information on class definition files is found in the documentation.
+11832,dev_tools,,,makeClass,ERR_CLASSDEFNOTEXIST,,,false,false,false,false,--,error,,./classDefinitions folder does not exist. Quitting...
+11834,dev_tools,,,makeClass,ERR_CONFIGMISSING,,,false,false,false,false,--,error,,[{CONFIG_FOLDER}]makeClass/ folder does not exist. Quitting...
+11836,dev_tools,,,makeClass,ERR_EMPTYJSFILE,,,false,false,false,false,--,error,,Cannot export javscript for an empty class. Quitting...
+11838,dev_tools,,,makeClass,ERR_CHOOSEONE,,,false,false,false,false,--,error,,Please chose exactly one of --run&#44; --list&#44; or --edit. Quitting...
+11840,dev_tools,,,makeClass,ERR_NOFILTERMATCH,,,false,false,false,false,--,error,,No definitions found that matched the filter: [{FILTER}]. Quitting...
+11842,dev_tools,,,makeClass,ERR_NEEDONECLASS,,,false,false,false,false,--,error,,Please specify at least one className. Quitting...
 
-12020,tools,quotes,ethQuote,freshen,f,,false,false,true,true,header,switch,<boolean>,Freshen price database (append new data)
-12040,tools,quotes,ethQuote,period,p,,false,false,true,true,local,flag,enum[5|15|30|60|120*|240|1440|10080|hourly|daily|weekly],increment of display
-12060,tools,quotes,ethQuote,pair,a,,false,false,true,true,local,flag,<string>,which price pair to freshen or list (see Poloniex)
-12060,tools,quotes,ethQuote,feed,e,,false,false,true,true,header,flag,enum[poloniex*|maker|tellor],the feed for the price data
-12080,tools,quotes,ethQuote,,,,false,false,true,true,--,description,,Freshen and/or display Ethereum price data.
-12082,tools,quotes,ethQuote,,,,false,false,false,false,--,note,,Valid pairs include any pair from the public Poloniex's API here:|https://poloniex.com/public?command=returnCurrencies.
-12082,tools,quotes,ethQuote,,,,false,false,false,false,--,note,,`Note`: Due to restrictions from Poloniex&#44; this tool retrieves only 30 days of data|at a time. You must repeatedly run this command until the data is up-to-date.
+11880,dev_tools,,,testRunner,mode,m,,false,false,true,false,local,flag,enum[cmd*|api|both],determine which set of tests to run
+11900,dev_tools,,,testRunner,filter,f,,false,false,true,false,header,flag,enum[fast*|medi|slow|all],determine how long it takes to run tests
+11920,dev_tools,,,testRunner,clean,c,,false,false,true,false,header,switch,<boolean>,clean working folder before running tests
+11940,dev_tools,,,testRunner,no_quit,n,,false,false,true,false,header,switch,<boolean>,do not quit testing on first error
+11940,dev_tools,,,testRunner,no_post,o,,false,false,true,false,header,switch,<boolean>,do not complete the post processing step
+11960,dev_tools,,,testRunner,report,r,,false,false,true,false,header,switch,<boolean>,display performance report to screen
+11980,dev_tools,,,testRunner,,,,false,false,true,false,--,description,,Run TrueBlocks' test cases with options.
 
-12120,tools,slurp,ethslurp,addrs,,,true,false,true,true,header,positional,list<addr>,one or more addresses to slurp from Etherscan
-12140,tools,slurp,ethslurp,blocks,,,false,false,true,true,header,positional,list<blknum>,an optional range of blocks to slurp
-12160,tools,slurp,ethslurp,types,t,,false,false,true,true,local,flag,list<enum[ext*|int|token|nfts|miner|all]>,one or more types of transactions to request
-12180,tools,slurp,ethslurp,appearances,p,,false,false,true,true,header,switch,<boolean>,show only the blocknumer.tx_id appearances of the exported transactions
-12220,tools,slurp,ethslurp,,,,false,false,true,true,--,description,,Fetches data from EtherScan for an arbitrary address.
-12222,tools,slurp,ethslurp,,,,false,false,false,false,--,note,,Portions of this software are Powered by Etherscan.io APIs.
+12020,tools,Other,quotes,ethQuote,freshen,f,,false,false,true,true,header,switch,<boolean>,Freshen price database (append new data)
+12040,tools,Other,quotes,ethQuote,period,p,,false,false,true,true,local,flag,enum[5|15|30|60|120*|240|1440|10080|hourly|daily|weekly],increment of display
+12060,tools,Other,quotes,ethQuote,pair,a,,false,false,true,true,local,flag,<string>,which price pair to freshen or list (see Poloniex)
+12060,tools,Other,quotes,ethQuote,feed,e,,false,false,true,true,header,flag,enum[poloniex*|maker|tellor],the feed for the price data
+12080,tools,Other,quotes,ethQuote,,,,false,false,true,true,--,description,,Freshen and/or display Ethereum price data.
+12082,tools,Other,quotes,ethQuote,,,,false,false,false,false,--,note,,Valid pairs include any pair from the public Poloniex's API here:|https://poloniex.com/public?command=returnCurrencies.
+12082,tools,Other,quotes,ethQuote,,,,false,false,false,false,--,note,,`Note`: Due to restrictions from Poloniex&#44; this tool retrieves only 30 days of data|at a time. You must repeatedly run this command until the data is up-to-date.
 
-12260,tools,names,ethNames,terms,,,true,false,true,true,local,positional,list<string>,a space separated list of one or more search terms
-12280,tools,names,ethNames,expand,e,,false,false,true,true,local,switch,<boolean>,expand search to include all fields (default searches name&#44; address&#44; and symbol only)
-12300,tools,names,ethNames,match_case,m,,false,false,true,true,header,switch,<boolean>,do case-sensitive search
-12315,tools,names,ethNames,all,l,,false,false,true,true,local,switch,<boolean>,include all accounts in the search
-12320,tools,names,ethNames,owned,o,,false,false,true,true,local,switch,<boolean>,include personal accounts in the search
-12340,tools,names,ethNames,custom,c,,false,false,true,true,local,switch,<boolean>,include your custom named accounts
-12360,tools,names,ethNames,prefund,p,,false,false,true,true,local,switch,<boolean>,include prefund accounts
-12380,tools,names,ethNames,named,n,,false,false,true,true,local,switch,<boolean>,include well know token and airdrop addresses in the search
-12400,tools,names,ethNames,other,t,,false,false,false,false,local,switch,<boolean>,export other addresses if found
-12420,tools,names,ethNames,addr,a,,false,false,true,true,local,switch,<boolean>,display only addresses in the results (useful for scripting)
-12430,tools,collections,ethNames,collections,s,,false,false,true,true,header,switch,<boolean>,display collections data
-12445,tools,tags,ethNames,tags,g,,false,false,true,true,header,switch,<boolean>,export the list of tags and subtags only
-12450,tools,names,ethNames,to_custom,u,,false,false,false,false,local,switch,<boolean>,for editCmd only&#44; is the edited name a custom name or not
-12455,tools,names,ethNames,clean,C,,false,false,false,false,local,switch,<boolean>,clean the data (addrs to lower case&#44; sort by addr)
-12460,tools,names,ethNames,,,,false,false,true,true,--,description,,Query addresses and/or names of well known accounts.
-12462,tools,names,ethNames,,,,false,false,false,false,--,note,,With a single search term&#44; the tool searches both `name` and `address`.
-12464,tools,names,ethNames,,,,false,false,false,false,--,note,,With two search terms&#44; the first term must match the `address` field&#44; and the second term must match the `name` field.
-12466,tools,names,ethNames,,,,false,false,false,false,--,note,,When there are two search terms&#44; both must match.
-12468,tools,names,ethNames,,,,false,false,false,false,--,note,,The `--match_case` option requires case sensitive matching. It works with all other options.
-12470,tools,names,ethNames,,,,false,false,false,false,--,note,,To customize the list of names add a `custom` section to the config file (see documentation).
+12120,tools,Other,slurp,ethslurp,addrs,,,true,false,true,true,header,positional,list<addr>,one or more addresses to slurp from Etherscan
+12140,tools,Other,slurp,ethslurp,blocks,,,false,false,true,true,header,positional,list<blknum>,an optional range of blocks to slurp
+12160,tools,Other,slurp,ethslurp,types,t,,false,false,true,true,local,flag,list<enum[ext*|int|token|nfts|miner|all]>,one or more types of transactions to request
+12180,tools,Other,slurp,ethslurp,appearances,p,,false,false,true,true,header,switch,<boolean>,show only the blocknumer.tx_id appearances of the exported transactions
+12220,tools,Other,slurp,ethslurp,,,,false,false,true,true,--,description,,Fetches data from EtherScan for an arbitrary address.
+12222,tools,Other,slurp,ethslurp,,,,false,false,false,false,--,note,,Portions of this software are Powered by Etherscan.io APIs.
 
-12500,tools,blocks,getBlock,blocks,,,true,false,true,true,local,positional,list<blknum>,a space-separated list of one or more blocks to retrieve
-12520,tools,blocks,getBlock,hashes_only,e,,false,false,true,true,header,switch,<boolean>,display only transaction hashes&#44; default is to display full transaction detail
-12540,tools,blocks,getBlock,addrs,a,,false,false,true,true,local,switch,<boolean>,display all addresses included in the block
-12560,tools,blocks,getBlock,uniq,u,,false,false,true,true,local,switch,<boolean>,display only uniq addresses found per block
-12580,tools,blocks,getBlock,uniq_tx,n,,false,false,true,true,local,switch,<boolean>,display only uniq addresses found per transaction
-12600,tools,blocks,getBlock,count,c,,false,false,true,true,header,switch,<boolean>,display counts of appearances (for --addrs&#44; --uniq&#44; or --uniq_tx) or transactions
-12610,tools,blocks,getBlock,uncles,U,,false,false,true,true,header,switch,<boolean>,display uncle blocks (if any) instead of the requested block
-12620,tools,blocks,getBlock,force,o,,false,false,false,false,header,switch,<boolean>,force a re-write of the block to the cache
-12625,tools,blocks,getBlock,trace,t,,false,false,false,false,header,switch,<boolean>,export the traces from the block as opposed to the block data
-12640,tools,blocks,getBlock,,,,false,false,true,true,--,description,,Returns block(s) from local cache or directly from a running node.
-12882,tools,blocks,getBlock,,,,false,false,false,false,--,note,,`blocks` is a space-separated list of values&#44; a start-end range&#44; a `special`&#44; or any combination.
-12886,tools,blocks,getBlock,,,,false,false,false,false,--,note,,`special` blocks are detailed under `whenBlock --list`.
+12260,tools,Accounts,names,ethNames,terms,,,true,false,true,true,local,positional,list<string>,a space separated list of one or more search terms
+12280,tools,Accounts,names,ethNames,expand,e,,false,false,true,true,local,switch,<boolean>,expand search to include all fields (default searches name&#44; address&#44; and symbol only)
+12300,tools,Accounts,names,ethNames,match_case,m,,false,false,true,true,header,switch,<boolean>,do case-sensitive search
+12315,tools,Accounts,names,ethNames,all,l,,false,false,true,true,local,switch,<boolean>,include all accounts in the search
+12320,tools,Accounts,names,ethNames,owned,o,,false,false,true,true,local,switch,<boolean>,include personal accounts in the search
+12340,tools,Accounts,names,ethNames,custom,c,,false,false,true,true,local,switch,<boolean>,include your custom named accounts
+12360,tools,Accounts,names,ethNames,prefund,p,,false,false,true,true,local,switch,<boolean>,include prefund accounts
+12380,tools,Accounts,names,ethNames,named,n,,false,false,true,true,local,switch,<boolean>,include well know token and airdrop addresses in the search
+12400,tools,Accounts,names,ethNames,other,t,,false,false,false,false,local,switch,<boolean>,export other addresses if found
+12420,tools,Accounts,names,ethNames,addr,a,,false,false,true,true,local,switch,<boolean>,display only addresses in the results (useful for scripting)
+12430,tools,Accounts,collections,ethNames,collections,s,,false,false,true,true,header,switch,<boolean>,display collections data
+12445,tools,Accounts,tags,ethNames,tags,g,,false,false,true,true,header,switch,<boolean>,export the list of tags and subtags only
+12450,tools,Accounts,names,ethNames,to_custom,u,,false,false,false,false,local,switch,<boolean>,for editCmd only&#44; is the edited name a custom name or not
+12455,tools,Accounts,names,ethNames,clean,C,,false,false,false,false,local,switch,<boolean>,clean the data (addrs to lower case&#44; sort by addr)
+12460,tools,Accounts,names,ethNames,,,,false,false,true,true,--,description,,Query addresses and/or names of well known accounts.
+12462,tools,Accounts,names,ethNames,,,,false,false,false,false,--,note,,With a single search term&#44; the tool searches both `name` and `address`.
+12464,tools,Accounts,names,ethNames,,,,false,false,false,false,--,note,,With two search terms&#44; the first term must match the `address` field&#44; and the second term must match the `name` field.
+12466,tools,Accounts,names,ethNames,,,,false,false,false,false,--,note,,When there are two search terms&#44; both must match.
+12468,tools,Accounts,names,ethNames,,,,false,false,false,false,--,note,,The `--match_case` option requires case sensitive matching. It works with all other options.
+12470,tools,Accounts,names,ethNames,,,,false,false,false,false,--,note,,To customize the list of names add a `custom` section to the config file (see documentation).
 
-12920,tools,logs,getLogs,transactions,,,true,false,true,true,local,positional,list<tx_id>,a space-separated list of one or more transaction identifiers (tx_hash&#44; bn.txID&#44; blk_hash.txID)
-12940,tools,logs,getLogs,articulate,a,,false,false,true,true,header,switch,<boolean>,articulate the transactions if an ABI is found for the 'to' address
-12960,tools,logs,getLogs,,,,false,false,true,true,--,description,,Retrieve a transaction's logs from the local cache or a running node.
-12960,tools,logs,getLogs,,,,false,false,false,false,--,note,,`transactions` is one or more space-separated identifiers which may be either a transaction hash&#44;|a blockNumber.transactionID pair&#44; or a blockHash.transactionID pair&#44; or any combination.
-12964,tools,logs,getLogs,,,,false,false,false,false,--,note,,This tool checks for valid input syntax&#44; but does not check that the transaction requested exists.
-12968,tools,logs,getLogs,,,,false,false,false,false,--,note,,If the queried node does not store historical state&#44; the results may be undefined.
+12500,tools,Data,blocks,getBlock,blocks,,,true,false,true,true,local,positional,list<blknum>,a space-separated list of one or more blocks to retrieve
+12520,tools,Data,blocks,getBlock,hashes_only,e,,false,false,true,true,header,switch,<boolean>,display only transaction hashes&#44; default is to display full transaction detail
+12540,tools,Data,blocks,getBlock,addrs,a,,false,false,true,true,local,switch,<boolean>,display all addresses included in the block
+12560,tools,Data,blocks,getBlock,uniq,u,,false,false,true,true,local,switch,<boolean>,display only uniq addresses found per block
+12580,tools,Data,blocks,getBlock,uniq_tx,n,,false,false,true,true,local,switch,<boolean>,display only uniq addresses found per transaction
+12600,tools,Data,blocks,getBlock,count,c,,false,false,true,true,header,switch,<boolean>,display counts of appearances (for --addrs&#44; --uniq&#44; or --uniq_tx) or transactions
+12610,tools,Data,blocks,getBlock,uncles,U,,false,false,true,true,header,switch,<boolean>,display uncle blocks (if any) instead of the requested block
+12620,tools,Data,blocks,getBlock,force,o,,false,false,false,false,header,switch,<boolean>,force a re-write of the block to the cache
+12625,tools,Data,blocks,getBlock,trace,t,,false,false,false,false,header,switch,<boolean>,export the traces from the block as opposed to the block data
+12640,tools,Data,blocks,getBlock,,,,false,false,true,true,--,description,,Returns block(s) from local cache or directly from a running node.
+12882,tools,Data,blocks,getBlock,,,,false,false,false,false,--,note,,`blocks` is a space-separated list of values&#44; a start-end range&#44; a `special`&#44; or any combination.
+12886,tools,Data,blocks,getBlock,,,,false,false,false,false,--,note,,`special` blocks are detailed under `whenBlock --list`.
 
-13000,tools,receipts,getReceipt,transactions,,,true,false,true,true,local,positional,list<tx_id>,a space-separated list of one or more transaction identifiers (tx_hash&#44; bn.txID&#44; blk_hash.txID)
-13020,tools,receipts,getReceipt,articulate,a,,false,false,true,true,header,switch,<boolean>,articulate the transactions if an ABI is found for the 'to' address
-13040,tools,receipts,getReceipt,logs,l,,false,false,true,true,header,switch,<boolean>,display the receipt's logs
-13060,tools,receipts,getReceipt,,,,false,false,true,true,--,description,,Retrieve a transaction's receipt from the local cache or a running node.
-13062,tools,receipts,getReceipt,,,,false,false,false,false,--,note,,`transactions` is one or more space-separated identifiers which may be either a transaction hash&#44;|a blockNumber.transactionID pair&#44; or a blockHash.transactionID pair&#44; or any combination.
-13066,tools,receipts,getReceipt,,,,false,false,false,false,--,note,,This tool checks for valid input syntax&#44; but does not check that the transaction requested exists.
-13070,tools,receipts,getReceipt,,,,false,false,false,false,--,note,,If the queried node does not store historical state&#44; the results may be undefined.
+12920,tools,Data,logs,getLogs,transactions,,,true,false,true,true,local,positional,list<tx_id>,a space-separated list of one or more transaction identifiers (tx_hash&#44; bn.txID&#44; blk_hash.txID)
+12940,tools,Data,logs,getLogs,articulate,a,,false,false,true,true,header,switch,<boolean>,articulate the transactions if an ABI is found for the 'to' address
+12960,tools,Data,logs,getLogs,,,,false,false,true,true,--,description,,Retrieve a transaction's logs from the local cache or a running node.
+12960,tools,Data,logs,getLogs,,,,false,false,false,false,--,note,,`transactions` is one or more space-separated identifiers which may be either a transaction hash&#44;|a blockNumber.transactionID pair&#44; or a blockHash.transactionID pair&#44; or any combination.
+12964,tools,Data,logs,getLogs,,,,false,false,false,false,--,note,,This tool checks for valid input syntax&#44; but does not check that the transaction requested exists.
+12968,tools,Data,logs,getLogs,,,,false,false,false,false,--,note,,If the queried node does not store historical state&#44; the results may be undefined.
 
-13100,tools,state,getState,addrs,,,true,false,true,true,header,positional,list<addr>,one or more addresses (0x...) from which to retrieve balances
-13120,tools,state,getState,blocks,,,false,false,true,true,header,positional,list<blknum>,an optional list of one or more blocks at which to report balances&#44; defaults to 'latest'
-13140,tools,state,getState,parts,p,,false,false,true,true,local,flag,list<enum[none|some*|all|balance|nonce|code|storage|deployed|accttype]>,control which state to export
-13160,tools,state,getState,changes,c,,false,false,true,true,header,switch,<boolean>,only report a balance when it changes from one block to the next
-13180,tools,state,getState,no_zero,n,,false,false,true,true,header,switch,<boolean>,suppress the display of zero balance accounts
-13190,tools,state,getState,call,a,,false,false,false,true,header,flag,<string>,a comma-separated string of an address&#44; a 4-byte&#44; and required parameters for a call against a smart contract
-13220,tools,state,getState,,,,false,false,true,true,--,description,,Retrieve the balance (in wei) for one or more addresses at the given block(s).
-13222,tools,state,getState,,,,false,false,false,false,--,note,,`addresses` must start with '0x' and be forty two characters long.
-13224,tools,state,getState,,,,false,false,false,false,--,note,,`blocks` may be a space-separated list of values&#44; a start-end range&#44; a `special`&#44; or any combination.
-13228,tools,state,getState,,,,false,false,false,false,--,note,,If the queried node does not store historical state&#44; the results are undefined.
-13230,tools,state,getState,,,,false,false,false,false,--,note,,`special` blocks are detailed under `whenBlock --list`.
-13232,tools,state,getState,,,,false,false,false,false,--,note,,`balance` is the default mode. To select a single mode use `none` first&#44; followed by that mode.
-13234,tools,state,getState,,,,false,false,false,false,--,note,,You may specify multiple `modes` on a single line.
+13000,tools,Data,receipts,getReceipt,transactions,,,true,false,true,true,local,positional,list<tx_id>,a space-separated list of one or more transaction identifiers (tx_hash&#44; bn.txID&#44; blk_hash.txID)
+13020,tools,Data,receipts,getReceipt,articulate,a,,false,false,true,true,header,switch,<boolean>,articulate the transactions if an ABI is found for the 'to' address
+13040,tools,Data,receipts,getReceipt,logs,l,,false,false,true,true,header,switch,<boolean>,display the receipt's logs
+13060,tools,Data,receipts,getReceipt,,,,false,false,true,true,--,description,,Retrieve a transaction's receipt from the local cache or a running node.
+13062,tools,Data,receipts,getReceipt,,,,false,false,false,false,--,note,,`transactions` is one or more space-separated identifiers which may be either a transaction hash&#44;|a blockNumber.transactionID pair&#44; or a blockHash.transactionID pair&#44; or any combination.
+13066,tools,Data,receipts,getReceipt,,,,false,false,false,false,--,note,,This tool checks for valid input syntax&#44; but does not check that the transaction requested exists.
+13070,tools,Data,receipts,getReceipt,,,,false,false,false,false,--,note,,If the queried node does not store historical state&#44; the results may be undefined.
 
-13260,tools,tokens,getTokenInfo,addrs2,,,true,false,true,true,header,positional,list<addr>,two or more addresses (0x...)&#44; the first is an ERC20 token&#44; balances for the rest are reported
-13280,tools,tokens,getTokenInfo,blocks,,,false,false,true,true,header,positional,list<blknum>,an optional list of one or more blocks at which to report balances&#44; defaults to 'latest'
-13300,tools,tokens,getTokenInfo,parts,p,,false,false,true,true,local,flag,list<enum[name|symbol|decimals|totalSupply|version|none|all*]>,one or more parts of the token information to retreive
-13320,tools,tokens,getTokenInfo,by_acct,b,,false,false,true,true,header,switch,<boolean>,consider each address an ERC20 token except the last&#44; whose balance is reported for each token
-13340,tools,tokens,getTokenInfo,no_zero,n,,false,false,true,true,header,switch,<boolean>,suppress the display of zero balance accounts
-13360,tools,tokens,getTokenInfo,,,,false,false,true,true,--,description,,Retrieve the token balance(s) for one or more addresses at the given (or latest) block(s).
-13362,tools,tokens,getTokenInfo,,,,false,false,false,false,--,note,,`addresses` must start with '0x' and be forty two characters long.
-13364,tools,tokens,getTokenInfo,,,,false,false,false,false,--,note,,`blocks` may be a space-separated list of values&#44; a start-end range&#44; a `special`&#44; or any combination.
-13368,tools,tokens,getTokenInfo,,,,false,false,false,false,--,note,,If the token contract(s) from which you request balances are not ERC20 compliant&#44; the results are undefined.
-13370,tools,tokens,getTokenInfo,,,,false,false,false,false,--,note,,If the queried node does not store historical state&#44; the results are undefined.
-13372,tools,tokens,getTokenInfo,,,,false,false,false,false,--,note,,`special` blocks are detailed under `whenBlock --list`.
+13100,tools,State,state,getState,addrs,,,true,false,true,true,header,positional,list<addr>,one or more addresses (0x...) from which to retrieve balances
+13120,tools,State,state,getState,blocks,,,false,false,true,true,header,positional,list<blknum>,an optional list of one or more blocks at which to report balances&#44; defaults to 'latest'
+13140,tools,State,state,getState,parts,p,,false,false,true,true,local,flag,list<enum[none|some*|all|balance|nonce|code|storage|deployed|accttype]>,control which state to export
+13160,tools,State,state,getState,changes,c,,false,false,true,true,header,switch,<boolean>,only report a balance when it changes from one block to the next
+13180,tools,State,state,getState,no_zero,n,,false,false,true,true,header,switch,<boolean>,suppress the display of zero balance accounts
+13190,tools,State,state,getState,call,a,,false,false,false,true,header,flag,<string>,a comma-separated string of an address&#44; a 4-byte&#44; and required parameters for a call against a smart contract
+13220,tools,State,state,getState,,,,false,false,true,true,--,description,,Retrieve the balance (in wei) for one or more addresses at the given block(s).
+13222,tools,State,state,getState,,,,false,false,false,false,--,note,,`addresses` must start with '0x' and be forty two characters long.
+13224,tools,State,state,getState,,,,false,false,false,false,--,note,,`blocks` may be a space-separated list of values&#44; a start-end range&#44; a `special`&#44; or any combination.
+13228,tools,State,state,getState,,,,false,false,false,false,--,note,,If the queried node does not store historical state&#44; the results are undefined.
+13230,tools,State,state,getState,,,,false,false,false,false,--,note,,`special` blocks are detailed under `whenBlock --list`.
+13232,tools,State,state,getState,,,,false,false,false,false,--,note,,`balance` is the default mode. To select a single mode use `none` first&#44; followed by that mode.
+13234,tools,State,state,getState,,,,false,false,false,false,--,note,,You may specify multiple `modes` on a single line.
 
-13400,tools,traces,getTrace,transactions,,,true,false,true,true,local,positional,list<tx_id>,a space-separated list of one or more transaction identifiers (tx_hash&#44; bn.txID&#44; blk_hash.txID)
-13420,tools,traces,getTrace,articulate,a,,false,false,true,true,header,switch,<boolean>,articulate the transactions if an ABI is found for the 'to' address
-13440,tools,traces,getTrace,count,c,,false,false,true,true,header,switch,<boolean>,show the number of traces for the transaction only (fast)
-13460,tools,traces,getTrace,skip_ddos,s,true,false,true,false,false,header,toggle,<boolean>,toggle skipping over 2018 ddos transactions during export ([{DEF}] by default)
-13480,tools,traces,getTrace,max_traces,m,250,false,true,false,false,header,flag,<uint64>,if --skip_ddos is on&#44; this many traces defines what a ddos transaction is (default = [{DEF}])
-13490,tools,traces,getTrace,filter,f,,false,false,false,false,header,flag,<string>,Call trace_filter with the comma seperated string of the filter (see docs)
-13500,tools,traces,getTrace,,,,false,false,true,true,--,description,,Retrieve a transaction's traces from the local cache or a running node.
-13622,tools,traces,getTrace,,,,false,false,false,false,--,note,,`transactions` is one or more space-separated identifiers which may be either a transaction hash&#44;|a blockNumber.transactionID pair&#44; or a blockHash.transactionID pair&#44; or any combination.
-13624,tools,traces,getTrace,,,,false,false,false,false,--,note,,This tool checks for valid input syntax&#44; but does not check that the transaction requested exists.
-13629,tools,traces,getTrace,,,,false,false,false,false,--,note,,If the queried node does not store historical state&#44; the results are undefined.
+13260,tools,State,tokens,getTokenInfo,addrs2,,,true,false,true,true,header,positional,list<addr>,two or more addresses (0x...)&#44; the first is an ERC20 token&#44; balances for the rest are reported
+13280,tools,State,tokens,getTokenInfo,blocks,,,false,false,true,true,header,positional,list<blknum>,an optional list of one or more blocks at which to report balances&#44; defaults to 'latest'
+13300,tools,State,tokens,getTokenInfo,parts,p,,false,false,true,true,local,flag,list<enum[name|symbol|decimals|totalSupply|version|none|all*]>,one or more parts of the token information to retreive
+13320,tools,State,tokens,getTokenInfo,by_acct,b,,false,false,true,true,header,switch,<boolean>,consider each address an ERC20 token except the last&#44; whose balance is reported for each token
+13340,tools,State,tokens,getTokenInfo,no_zero,n,,false,false,true,true,header,switch,<boolean>,suppress the display of zero balance accounts
+13360,tools,State,tokens,getTokenInfo,,,,false,false,true,true,--,description,,Retrieve the token balance(s) for one or more addresses at the given (or latest) block(s).
+13362,tools,State,tokens,getTokenInfo,,,,false,false,false,false,--,note,,`addresses` must start with '0x' and be forty two characters long.
+13364,tools,State,tokens,getTokenInfo,,,,false,false,false,false,--,note,,`blocks` may be a space-separated list of values&#44; a start-end range&#44; a `special`&#44; or any combination.
+13368,tools,State,tokens,getTokenInfo,,,,false,false,false,false,--,note,,If the token contract(s) from which you request balances are not ERC20 compliant&#44; the results are undefined.
+13370,tools,State,tokens,getTokenInfo,,,,false,false,false,false,--,note,,If the queried node does not store historical state&#44; the results are undefined.
+13372,tools,State,tokens,getTokenInfo,,,,false,false,false,false,--,note,,`special` blocks are detailed under `whenBlock --list`.
 
-13540,tools,transactions,getTrans,transactions,,,true,false,true,true,local,positional,list<tx_id>,a space-separated list of one or more transaction identifiers (tx_hash&#44; bn.txID&#44; blk_hash.txID)
-13560,tools,transactions,getTrans,articulate,a,,false,false,true,true,header,switch,<boolean>,articulate the transactions if an ABI is found for the 'to' address
-13580,tools,transactions,getTrans,trace,t,,false,false,true,true,header,switch,<boolean>,display the transaction's trace
-13600,tools,transactions,getTrans,force,o,,false,false,false,false,header,switch,<boolean>,force the results into the tx cache
-13605,tools,transactions,getTrans,uniq,u,,false,false,true,true,header,switch,<boolean>,display a list of uniq addresses found in this transaction
-13620,tools,transactions,getTrans,,,,false,false,true,true,--,description,,Retrieve an Ethereum transaction from the local cache or a running node.
-13622,tools,transactions,getTrans,,,,false,false,false,false,--,note,,`transactions` is one or more space-separated identifiers which may be either a transaction hash&#44;|a blockNumber.transactionID pair&#44; or a blockHash.transactionID pair&#44; or any combination.
-13624,tools,transactions,getTrans,,,,false,false,false,false,--,note,,This tool checks for valid input syntax&#44; but does not check that the transaction requested exists.
-13629,tools,transactions,getTrans,,,,false,false,false,false,--,note,,If the queried node does not store historical state&#44; the results are undefined.
+13400,tools,Data,traces,getTrace,transactions,,,true,false,true,true,local,positional,list<tx_id>,a space-separated list of one or more transaction identifiers (tx_hash&#44; bn.txID&#44; blk_hash.txID)
+13420,tools,Data,traces,getTrace,articulate,a,,false,false,true,true,header,switch,<boolean>,articulate the transactions if an ABI is found for the 'to' address
+13440,tools,Data,traces,getTrace,count,c,,false,false,true,true,header,switch,<boolean>,show the number of traces for the transaction only (fast)
+13460,tools,Data,traces,getTrace,skip_ddos,s,true,false,true,false,false,header,toggle,<boolean>,toggle skipping over 2018 ddos transactions during export ([{DEF}] by default)
+13480,tools,Data,traces,getTrace,max_traces,m,250,false,true,false,false,header,flag,<uint64>,if --skip_ddos is on&#44; this many traces defines what a ddos transaction is (default = [{DEF}])
+13490,tools,Data,traces,getTrace,filter,f,,false,false,false,false,header,flag,<string>,Call trace_filter with the comma seperated string of the filter (see docs)
+13500,tools,Data,traces,getTrace,,,,false,false,true,true,--,description,,Retrieve a transaction's traces from the local cache or a running node.
+13622,tools,Data,traces,getTrace,,,,false,false,false,false,--,note,,`transactions` is one or more space-separated identifiers which may be either a transaction hash&#44;|a blockNumber.transactionID pair&#44; or a blockHash.transactionID pair&#44; or any combination.
+13624,tools,Data,traces,getTrace,,,,false,false,false,false,--,note,,This tool checks for valid input syntax&#44; but does not check that the transaction requested exists.
+13629,tools,Data,traces,getTrace,,,,false,false,false,false,--,note,,If the queried node does not store historical state&#44; the results are undefined.
 
-13660,tools,abis,grabABI,addrs,,,true,false,true,true,header,positional,list<addr>,list of one or more smart contracts whose ABI to grab from EtherScan
-13680,tools,abis,grabABI,canonical,c,,false,false,true,true,local,switch,<boolean>,convert all types to their canonical represenation and remove all spaces from display
-13700,tools,abis,grabABI,generate,g,,false,false,true,true,header,switch,<boolean>,generate C++ code into the current folder for all functions and events found in the ABI
-13840,tools,abis,grabABI,monitored,m,,false,false,true,false,local,switch,<boolean>,load ABIs from monitored addresses
-13850,tools,abis,grabABI,known,k,,false,false,true,false,local,switch,<boolean>,load common 'known' ABIs from cache
-13855,tools,abis,grabABI,addr,a,,false,false,true,false,local,switch,<boolean>,include address of smart contract for the abi in output
-13860,tools,abis,grabABI,sol,s,,false,false,false,false,local,flag,<string>,file name of .sol file from which to create a new known abi (without .sol)
-13865,tools,abis,grabABI,find,f,,false,false,true,false,local,flag,<string>,try to search for a function declaration given a four byte code
-13880,tools,abis,grabABI,,,,false,false,true,true,--,description,,Fetches the ABI for a smart contract. Optionally generates C++ source code representing that ABI.
-13885,tools,abis,grabABI,,,,false,false,false,false,--,note,,Solidity files found in the local folder with the name '<address>.sol' are converted to an ABI prior to processing (and then removed).
+13540,tools,Data,transactions,getTrans,transactions,,,true,false,true,true,local,positional,list<tx_id>,a space-separated list of one or more transaction identifiers (tx_hash&#44; bn.txID&#44; blk_hash.txID)
+13560,tools,Data,transactions,getTrans,articulate,a,,false,false,true,true,header,switch,<boolean>,articulate the transactions if an ABI is found for the 'to' address
+13580,tools,Data,transactions,getTrans,trace,t,,false,false,true,true,header,switch,<boolean>,display the transaction's trace
+13600,tools,Data,transactions,getTrans,force,o,,false,false,false,false,header,switch,<boolean>,force the results into the tx cache
+13605,tools,Data,transactions,getTrans,uniq,u,,false,false,true,true,header,switch,<boolean>,display a list of uniq addresses found in this transaction
+13620,tools,Data,transactions,getTrans,,,,false,false,true,true,--,description,,Retrieve an Ethereum transaction from the local cache or a running node.
+13622,tools,Data,transactions,getTrans,,,,false,false,false,false,--,note,,`transactions` is one or more space-separated identifiers which may be either a transaction hash&#44;|a blockNumber.transactionID pair&#44; or a blockHash.transactionID pair&#44; or any combination.
+13624,tools,Data,transactions,getTrans,,,,false,false,false,false,--,note,,This tool checks for valid input syntax&#44; but does not check that the transaction requested exists.
+13629,tools,Data,transactions,getTrans,,,,false,false,false,false,--,note,,If the queried node does not store historical state&#44; the results are undefined.
 
-13940,tools,when,whenBlock,block_list,,,false,false,true,false,local,positional,list<string>,one or more dates&#44; block numbers&#44; hashes&#44; or special named blocks (see notes)
-13960,tools,when,whenBlock,list,l,,false,false,true,false,header,switch,<boolean>,export a list of the 'special' blocks
-13962,tools,when,whenBlock,timestamps,t,,false,false,true,true,header,switch,<boolean>,ignore other options and generate timestamps only
-13962,tools,when,whenBlock,skip,s,,false,false,true,true,header,flag,<uint64>,only applicable if --timestamps is on&#44; the step between block numbers in the export
-13980,tools,when,whenBlock,,,,false,false,true,false,--,description,,Finds the nearest block prior to a date&#44; or the nearest date prior to a block.\n    Alternatively&#44; search for one of 'special' blocks.
-13982,tools,when,whenBlock,,,,false,false,false,false,--,note,,The block list may contain any combination of `number`&#44; `hash`&#44; `date`&#44; special `named` blocks.
-13982,tools,when,whenBlock,,,,false,false,false,false,--,note,,Dates must be formatted in JSON format: YYYY-MM-DD[THH[:MM[:SS]]].
-13982,tools,when,whenBlock,,,,false,false,false,false,--,note,,You may customize the list of named blocks by editing [{CONFIG}]whenBlock.toml.
-13982,tools,when,whenBlock,,,,false,false,false,false,--,note,,The following `named` blocks are currently configured:
+13660,tools,Accounts,abis,grabABI,addrs,,,true,false,true,true,header,positional,list<addr>,list of one or more smart contracts whose ABI to grab from EtherScan
+13680,tools,Accounts,abis,grabABI,canonical,c,,false,false,true,true,local,switch,<boolean>,convert all types to their canonical represenation and remove all spaces from display
+13700,tools,Accounts,abis,grabABI,generate,g,,false,false,true,true,header,switch,<boolean>,generate C++ code into the current folder for all functions and events found in the ABI
+13840,tools,Accounts,abis,grabABI,monitored,m,,false,false,true,false,local,switch,<boolean>,load ABIs from monitored addresses
+13850,tools,Accounts,abis,grabABI,known,k,,false,false,true,false,local,switch,<boolean>,load common 'known' ABIs from cache
+13855,tools,Accounts,abis,grabABI,addr,a,,false,false,true,false,local,switch,<boolean>,include address of smart contract for the abi in output
+13860,tools,Accounts,abis,grabABI,sol,s,,false,false,false,false,local,flag,<string>,file name of .sol file from which to create a new known abi (without .sol)
+13865,tools,Accounts,abis,grabABI,find,f,,false,false,true,false,local,flag,<string>,try to search for a function declaration given a four byte code
+13880,tools,Accounts,abis,grabABI,,,,false,false,true,true,--,description,,Fetches the ABI for a smart contract. Optionally generates C++ source code representing that ABI.
+13885,tools,Accounts,abis,grabABI,,,,false,false,false,false,--,note,,Solidity files found in the local folder with the name '<address>.sol' are converted to an ABI prior to processing (and then removed).
 
-14020,tools,where,whereBlock,blocks,,,true,false,true,false,local,positional,list<blknum>,a space-separated list of one or more blocks to search for
-14040,tools,where,whereBlock,,,,false,false,true,false,--,description,,Reports if a block was found in the cache&#44; at a local&#44; or at a remote node.
-14050,tools,where,whereBlock,,,,false,false,false,false,--,note,,Customize the location of the cache in the configuration file [{CONFIG}]quickBlocks.toml.
+13940,tools,Data,when,whenBlock,block_list,,,false,false,true,false,local,positional,list<string>,one or more dates&#44; block numbers&#44; hashes&#44; or special named blocks (see notes)
+13960,tools,Data,when,whenBlock,list,l,,false,false,true,false,header,switch,<boolean>,export a list of the 'special' blocks
+13962,tools,Data,when,whenBlock,timestamps,t,,false,false,true,true,header,switch,<boolean>,ignore other options and generate timestamps only
+13962,tools,Data,when,whenBlock,skip,s,,false,false,true,true,header,flag,<uint64>,only applicable if --timestamps is on&#44; the step between block numbers in the export
+13980,tools,Data,when,whenBlock,,,,false,false,true,false,--,description,,Finds the nearest block prior to a date&#44; or the nearest date prior to a block.\n    Alternatively&#44; search for one of 'special' blocks.
+13982,tools,Data,when,whenBlock,,,,false,false,false,false,--,note,,The block list may contain any combination of `number`&#44; `hash`&#44; `date`&#44; special `named` blocks.
+13982,tools,Data,when,whenBlock,,,,false,false,false,false,--,note,,Dates must be formatted in JSON format: YYYY-MM-DD[THH[:MM[:SS]]].
+13982,tools,Data,when,whenBlock,,,,false,false,false,false,--,note,,You may customize the list of named blocks by editing [{CONFIG}]whenBlock.toml.
+13982,tools,Data,when,whenBlock,,,,false,false,false,false,--,note,,The following `named` blocks are currently configured:
 
-14010,tools,dive,turboDive,mode,m,,false,false,true,false,header,flag,enum[tables*|dump],the command to run
-14020,tools,dive,turboDive,datadir,d,,false,false,true,true,header,flag,<string>,folder containing TurboGeth data file (data.mdb)
-14030,tools,dive,turboDive,name,n,,false,false,true,true,header,flag,<string>,for 'dump' command only&#44; the name of the table to dump
-14035,tools,dive,turboDive,goerli,g,,false,false,true,true,header,switch,<boolean>,run against the goerli testnet
-14040,tools,dive,turboDive,no_zero,z,,false,false,true,true,header,switch,<boolean>,suppress the display of tables with zero records
-14050,tools,dive,turboDive,,,,false,false,true,false,--,description,,Dive deeply into the turboGeth database.
+14020,tools,Other,where,whereBlock,blocks,,,true,false,true,false,local,positional,list<blknum>,a space-separated list of one or more blocks to search for
+14040,tools,Other,where,whereBlock,,,,false,false,true,false,--,description,,Reports if a block was found in the cache&#44; at a local&#44; or at a remote node.
+14050,tools,Other,where,whereBlock,,,,false,false,false,false,--,note,,Customize the location of the cache in the configuration file [{CONFIG}]quickBlocks.toml.
 
-14400,all,all,all,version,,,false,false,true,false,--,switch,<boolean>,display the current version of the tool
-14420,all,all,all,nocolor,,,false,false,true,false,--,switch,<boolean>,turn off colored display
-14430,all,all,all,mockData,,,false,false,true,false,--,switch,<boolean>,useful for testing&#44; instead of generating real data simulate the data
-14440,all,all,all,wei,,,false,false,true,false,--,switch,<boolean>,specify value in wei (the default)
-14460,all,all,all,ether,,,false,false,true,false,--,switch,<boolean>,specify value in ether
-14480,all,all,all,dollars,,,false,false,true,false,--,switch,<boolean>,specify value in US dollars
-14500,all,all,all,raw,,,false,false,true,false,--,switch,<boolean>,report JSON data from the node with minimal processing
-14520,all,all,all,very_raw,,,false,false,true,false,--,switch,<boolean>,report JSON data from node with zero processing
-14540,all,all,all,fmt,,,false,false,true,true,--,flag,enum[none|json*|txt|csv|api],export format (where appropriate)
-14560,all,all,all,api_mode,,,false,false,true,false,--,switch,<boolean>,simulate api_mode for testing
-14580,all,all,all,to_file,,,false,false,true,false,--,switch,<boolean>,write the results to a temporary file and return the filename
-14600,all,all,all,output,,,false,false,true,false,--,flag,<path>,write the results to file 'fn' and return the filename. (If the file exists&#44; it will be overwritten. If 'fn' ends with .gz&#44; the resulting file will be zipped )
-14620,all,all,all,file,,,false,false,true,false,--,flag,<path>,specify multiple sets of command line options in a file.
-14640,all,all,all,noop,,,false,false,true,false,--,switch,<boolean>,non operation (for testing for example)
-14660,all,all,all,help,h,,false,false,true,true,--,switch,<boolean>,get help on this command
-14680,all,all,all,parity,,,false,false,true,false,--,switch,<boolean>,mimic parity's output
+14010,tools,Other,dive,turboDive,mode,m,,false,false,true,false,header,flag,enum[tables*|dump],the command to run
+14020,tools,Other,dive,turboDive,datadir,d,,false,false,true,true,header,flag,<string>,folder containing TurboGeth data file (data.mdb)
+14030,tools,Other,dive,turboDive,name,n,,false,false,true,true,header,flag,<string>,for 'dump' command only&#44; the name of the table to dump
+14035,tools,Other,dive,turboDive,goerli,g,,false,false,true,true,header,switch,<boolean>,run against the goerli testnet
+14040,tools,Other,dive,turboDive,no_zero,z,,false,false,true,true,header,switch,<boolean>,suppress the display of tables with zero records
+14050,tools,Other,dive,turboDive,,,,false,false,true,false,--,description,,Dive deeply into the turboGeth database.
+
+14400,all,,all,all,version,,,false,false,true,false,--,switch,<boolean>,display the current version of the tool
+14420,all,,all,all,nocolor,,,false,false,true,false,--,switch,<boolean>,turn off colored display
+14430,all,,all,all,mockData,,,false,false,true,false,--,switch,<boolean>,useful for testing&#44; instead of generating real data simulate the data
+14440,all,,all,all,wei,,,false,false,true,false,--,switch,<boolean>,specify value in wei (the default)
+14460,all,,all,all,ether,,,false,false,true,false,--,switch,<boolean>,specify value in ether
+14480,all,,all,all,dollars,,,false,false,true,false,--,switch,<boolean>,specify value in US dollars
+14500,all,,all,all,raw,,,false,false,true,false,--,switch,<boolean>,report JSON data from the node with minimal processing
+14520,all,,all,all,very_raw,,,false,false,true,false,--,switch,<boolean>,report JSON data from node with zero processing
+14540,all,,all,all,fmt,,,false,false,true,true,--,flag,enum[none|json*|txt|csv|api],export format (where appropriate)
+14560,all,,all,all,api_mode,,,false,false,true,false,--,switch,<boolean>,simulate api_mode for testing
+14580,all,,all,all,to_file,,,false,false,true,false,--,switch,<boolean>,write the results to a temporary file and return the filename
+14600,all,,all,all,output,,,false,false,true,false,--,flag,<path>,write the results to file 'fn' and return the filename. (If the file exists&#44; it will be overwritten. If 'fn' ends with .gz&#44; the resulting file will be zipped )
+14620,all,,all,all,file,,,false,false,true,false,--,flag,<path>,specify multiple sets of command line options in a file.
+14640,all,,all,all,noop,,,false,false,true,false,--,switch,<boolean>,non operation (for testing for example)
+14660,all,,all,all,help,h,,false,false,true,true,--,switch,<boolean>,get help on this command
+14680,all,,all,all,parity,,,false,false,true,false,--,switch,<boolean>,mimic parity's output

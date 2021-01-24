@@ -12,8 +12,8 @@
  *-------------------------------------------------------------------------------------------*/
 #include "options.h"
 
-extern void options_2_Commands(const CCommandOptionArray& optionArray, CCommands& commands);
-extern const char* STR_DISPLAY_OPENAPI_YAML;
+extern const char* STR_PATH_ENTRY;
+extern const char* STR_PATH_PARAM;
 //---------------------------------------------------------------------------------------------------
 void COptions::writeOpenApiFile(void) {
     if (!openapi)
@@ -22,27 +22,73 @@ void COptions::writeOpenApiFile(void) {
     counter = CCounter();  // reset
 
     CCommands commands;
-    options_2_Commands(optionArray, commands);
+    options_2_Commands(commands);
 
-    COAInfo info;
-    info.description = "Whatever";
+    CStringArray endpoints{
+        "Accounts,export", "Accounts,list", "Accounts,tags", "Accounts,names", "Accounts,collections", "Accounts,abis",
+        "Accounts,rm",     "Admin,status",  "Admin,scrape",  "Data,blocks",    "Data,transactions",    "Data,receipts",
+        "Data,logs",       "Data,traces",   "Data,when",     "State,state",    "State,tokens",         "Other,quotes",
+        "Other,slurp",     "Other,where",   "Other,dive",
+    };
 
-    COAServer server;
-    server.url = "http://localhost:8081";
+    ostringstream pathStream;
+    for (auto ep : endpoints) {
+        string_q entry = STR_PATH_ENTRY;
+        CStringArray parts;
+        explode(parts, ep, ',');
+        replace(entry, "[{TAGS}]", parts[0]);
+        replace(entry, "[{PATH}]", parts[1]);
+        CCommandOptionArray params;
+        CCommandOptionArray notes;
+        CCommandOptionArray errors;
+        CCommandOptionArray descr;
+        select_commands(parts[1], params, notes, errors, descr);
+        if (descr.size()) {
+            replace(entry, "[{SUMMARY}]", descr[0].description);
+            replace(entry, "[{DESCR}]", descr[0].description);
+        } else {
+            replace(entry, "[{SUMMARY}]", "");
+            replace(entry, "[{DESCR}]", "");
+        }
+        replace(entry, "[{ID}]", toLower(parts[0] + "-" + parts[1]));
+        ostringstream paramStream;
+        for (auto param : params) {
+            string_q p = STR_PATH_PARAM;
+            replace(p, "[{NAME}]", param.command);
+            replace(p, "[{IN}]", (param.option_kind == "positional" ? "query" : "query"));
+            replace(p, "[{DESCR}]", param.description);
+            replace(p, "[{REQ}]", param.is_required == "true" ? "true" : "false");
+            if (contains(param.data_type, "boolean")) {
+                const char* BOOL_STR =
+                    "type: string\n"
+                    "          enum:\n"
+                    "          - \"\"\n"
+                    "          - \"true\"";
+                replace(p, "type: string", BOOL_STR);
+            } else {
+                if (!contains(param.data_type, "list") &&
+                    (contains(param.data_type, "uint") || contains(param.data_type, "double")))
+                    replace(p, "type: string", "type: number");
+            }
+            counter.nVisited++;
+            paramStream << p << endl;
+        }
+        replace(entry, "[{PARAMS}]", paramStream.str());
+        pathStream << entry;
+        counter.nProcessed++;
+    }
 
-    COpenApi apiObject;
-    apiObject.openapi = "3.0.0";
-    apiObject.info = info;
-    apiObject.servers.push_back(server);
-
-    //    for (auto route : commands.routes) {
-    //        oaStream << route;
-    //    }
-    expContext().exportFmt = YAML1;
-    ostringstream oaStream;
-    oaStream << apiObject << endl;
-    if (!test && folderExists("../../trueblocks-explorer/api/"))
-        stringToAsciiFile("../../trueblocks-explorer/api/openapi.yml", oaStream.str());
+    string_q sourceFn = "../../trueblocks-explorer/yaml-resolved/swagger.yaml";
+    string_q templateFn = "../src/dev_tools/makeClass/templates/swagger.yaml";
+    if (!test && fileExists(sourceFn) && fileExists(templateFn)) {
+        string_q orig = asciiFileToString(sourceFn);
+        string_q str = asciiFileToString(templateFn);
+        string_q ps = pathStream.str();
+        replaceReverse(ps, "\n", "");
+        replace(str, "[{PATHS}]", ps);
+        if (orig != str)
+            stringToAsciiFile(sourceFn, str);
+    }
     if (test) {
         counter.nProcessed = 0;
         LOG_WARN("Testing only - openapi file not written");
@@ -60,7 +106,7 @@ void COptions::writeApiFile(void) {
     counter = CCounter();  // reset
 
     CCommands commands;
-    options_2_Commands(optionArray, commands);
+    options_2_Commands(commands);
 
     ostringstream routeStream;
     bool firstRoute = true;
@@ -115,7 +161,7 @@ void COptions::writeApiFile(void) {
 }
 
 //---------------------------------------------------------------------------------------------------
-void options_2_Commands(const CCommandOptionArray& optionArray, CCommands& commands) {
+void COptions::options_2_Commands(CCommands& commands) {
     CApiRoute curRoute;
     for (auto option : optionArray) {
         if (curRoute.route != option.api_route) {
@@ -132,10 +178,52 @@ void options_2_Commands(const CCommandOptionArray& optionArray, CCommands& comma
 }
 
 //---------------------------------------------------------------------------------------------------
-const char* STR_DISPLAY_OPENAPI_YAML =
-    "openapi: [{OPENAPI}]\n"
-    "info:\n[{INFO}]:\n"
-    "servers:\n[{SERVERS}]:\n"
-    "paths:\n[{PATHS}]\n"
-    "components:\n[{COMPONENTS}]\n"
-    "tags:\n[{TAGS}]\n";
+void COptions::select_commands(const string_q& cmd, CCommandOptionArray& cmds, CCommandOptionArray& notes,
+                               CCommandOptionArray& errors, CCommandOptionArray& descr) {
+    for (auto option : optionArray) {
+        if (option.api_route == cmd) {
+            if (option.option_kind == "description") {
+                descr.push_back(option);
+            } else if (option.option_kind == "note") {
+                notes.push_back(option);
+            } else if (option.option_kind == "error") {
+                errors.push_back(option);
+            } else if (option.option_kind != "deprecated") {
+                cmds.push_back(option);
+            }
+        }
+    }
+}
+
+//---------------------------------------------------------------------------------------------------
+const char* STR_PATH_ENTRY =
+    "  /[{PATH}]:\n"
+    "    get:\n"
+    "      tags:\n"
+    "      - [{TAGS}]\n"
+    "      summary: \"[{SUMMARY}]\"\n"
+    "      description: \"[{DESCR}]\"\n"
+    "      operationId: \"[{ID}]\"\n"
+    "      parameters:\n"
+    "[{PARAMS}]"
+    "      responses:\n"
+    "        \"200\":\n"
+    "          description: status of the scraper\n"
+    "          content:\n"
+    "            application/json:\n"
+    "              schema:\n"
+    "                type: array\n"
+    "                items:\n"
+    "                  $ref: '#/components/schemas/response'\n"
+    "        \"400\":\n"
+    "          description: bad input parameter\n";
+
+const char* STR_PATH_PARAM =
+    "      - name: [{NAME}]\n"
+    "        in: [{IN}]\n"
+    "        description: [{DESCR}]\n"
+    "        required: [{REQ}]\n"
+    "        style: form\n"
+    "        explode: true\n"
+    "        schema:\n"
+    "          type: string";

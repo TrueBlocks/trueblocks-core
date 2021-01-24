@@ -1,0 +1,51 @@
+openapi: 3.0.0
+info:
+  title: TrueBlocks API
+  description: An API for accessing cached Ethereum blockchain data and accounts
+  contact:
+    email: jrush@quickblocks.io
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 0.8.04
+servers:
+- url: https://virtserver.swaggerhub.com/trueblocks/TrueBlocks/0.8.04
+  description: SwaggerHub API Auto Mocking
+tags:
+- name: Accounts
+  description: List, export, and cache address-based transactional data
+- name: Admin
+  description: Control the TrueBlocks scraper and build the index
+- name: Data
+  description: Access and cache blockchain-related data
+- name: State
+  description: Access to account and token state
+- name: Other
+  description: Access to other and external data
+paths:
+[{PATHS}]
+components:
+  schemas:
+    response:
+      required:
+      - result
+      type: object
+      properties:
+        data:
+          type: object
+          example:
+          - $ref: '#/components/schemas/scrape_response'
+          - $ref: '#/components/schemas/trans_response'
+        error:
+          type: array
+          example:
+          - error 1
+          - error 2
+          items:
+            type: string
+    scrape_response:
+      type: string
+      example: Scrape response
+    trans_response:
+      type: string
+      example: Trans response

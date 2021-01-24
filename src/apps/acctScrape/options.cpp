@@ -14,13 +14,13 @@ static const COption params[] = {
     // BEG_CODE_OPTIONS
     // clang-format off
     COption("addrs", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "one or more Ethereum addresses"),
-    COption("rm", "", "", OPT_SWITCH, "process the request to delete, undelete, or remove monitors"),
     COption("staging", "s", "", OPT_HIDDEN | OPT_SWITCH, "enable search of staging (not yet finalized) folder"),
     COption("unripe", "u", "", OPT_HIDDEN | OPT_SWITCH, "enable search of unripe (neither staged nor finalized) folder (requires --staging)"),  // NOLINT
     COption("blooms", "b", "", OPT_HIDDEN | OPT_SWITCH, "process query by first using bloom filter and, if hit, downloading index chunk from remote"),  // NOLINT
     COption("start", "S", "<blknum>", OPT_HIDDEN | OPT_FLAG, "this value is ignored but remains for backward compatibility"),  // NOLINT
     COption("end", "E", "<blknum>", OPT_HIDDEN | OPT_FLAG, "this value is ignored but remains for backward compatibility"),  // NOLINT
     COption("", "", "", OPT_DESCRIPTION, "Add or remove monitors for a given Ethereum address (or collection of addresses)."),  // NOLINT
+    COption("rm", "", "", OPT_SWITCH, "process the request to delete, undelete, or remove monitors"),
     // clang-format on
     // END_CODE_OPTIONS
 };
@@ -34,11 +34,11 @@ bool COptions::parseArguments(string_q& command) {
 
     // BEG_CODE_LOCAL_INIT
     CAddressArray addrs;
-    bool rm = false;
     bool staging = false;
     bool unripe = false;
     blknum_t start = NOPOS;
     blknum_t end = NOPOS;
+    bool rm = false;
     // END_CODE_LOCAL_INIT
 
     // How far does the system think it is?
@@ -51,9 +51,6 @@ bool COptions::parseArguments(string_q& command) {
         if (false) {
             // do nothing -- make auto code generation easier
             // BEG_CODE_AUTO
-        } else if (arg == "--rm") {
-            rm = true;
-
         } else if (arg == "-s" || arg == "--staging") {
             staging = true;
 
@@ -70,6 +67,9 @@ bool COptions::parseArguments(string_q& command) {
         } else if (startsWith(arg, "-E:") || startsWith(arg, "--end:")) {
             if (!confirmBlockNum("end", end, arg, latest))
                 return false;
+
+        } else if (arg == "--rm") {
+            rm = true;
 
         } else if (startsWith(arg, '-')) {  // do not collapse
 

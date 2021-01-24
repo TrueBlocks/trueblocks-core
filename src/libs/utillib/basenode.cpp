@@ -683,11 +683,18 @@ void CBaseNode::toYaml(ostream& os) const {
     }
 
     for (auto field : visibleFields) {
+        os << indentStr() << field.getName() << ":";
         if (field.isObject()) {
-            os << field.getName() << ":" << endl;
+            os << endl;
+            indent();
         } else {
-            os << field.getName() << ": "
-               << "X" << endl;
+            os << " ";
+        }
+        os << getValueByName(field.getName());
+        if (field.isObject()) {
+            unindent();
+        } else {
+            os << endl;
         }
         //        os << field.getName() << ":"
         //        if (field.getName() != visibleFields[0].getName())

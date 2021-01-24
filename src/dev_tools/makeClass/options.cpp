@@ -271,12 +271,6 @@ COptions::COptions(void) : classFile("") {
     CSkin::registerClass();
     CSchema::registerClass();
     CCommandOption::registerClass();
-    COAComponent::registerClass();
-    COAInfo::registerClass();
-    COASchema::registerClass();
-    COAServer::registerClass();
-    COATag::registerClass();
-    COpenApi::registerClass();
 }
 
 //--------------------------------------------------------------------------------

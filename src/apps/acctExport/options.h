@@ -35,7 +35,7 @@ class COptions : public COptionsBase {
     bool skip_ddos;
     uint64_t max_traces;
     bool freshen;
-    blknum_t freshen_max;
+    uint64_t freshen_max;
     bool factory;
     bool emitter;
     bool count;

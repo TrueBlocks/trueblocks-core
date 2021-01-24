@@ -37,7 +37,7 @@ class COptions : public COptionsBase {
     // BEG_CODE_DECLARE
     string_q mode;
     CStringArray tool;
-    blknum_t n_blocks;
+    uint64_t n_blocks;
     uint64_t n_block_procs;
     uint64_t n_addr_procs;
     bool pin;

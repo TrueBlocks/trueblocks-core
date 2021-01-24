@@ -22,7 +22,6 @@
 #include "skin.h"
 #include "schema.h"
 #include "commands.h"
-#include "openapi.h"
 
 // BEG_ERROR_DEFINES
 #define ERR_CLASSDEFNOTEXIST 1
@@ -122,6 +121,10 @@ class COptions : public COptionsBase {
     bool writeCode(const string_q& fn);
     void writeApiFile(void);
     void writeOpenApiFile(void);
+
+    void options_2_Commands(CCommands& commands);
+    void select_commands(const string_q& cmd, CCommandOptionArray& cmds, CCommandOptionArray& notes,
+                         CCommandOptionArray& errors, CCommandOptionArray& descr);
 };
 
 //-------------------------------------------------------------------
