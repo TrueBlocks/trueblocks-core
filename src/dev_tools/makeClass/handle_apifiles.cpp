@@ -16,6 +16,7 @@
 #define cmdCount nVisited
 #define nChanged nProcessed
 
+extern const char* STR_TAG_ENTRY;
 extern const char* STR_PATH_ENTRY;
 extern const char* STR_PATH_PARAM;
 extern string_q getTypeStr(const CCommandOption& opt, const string_q& lead);
@@ -29,46 +30,53 @@ void COptions::writeOpenApiFile(void) {
     CCommands commands;
     options_2_Commands(commands);
 
-    CStringArray endpoints{
-        "Accounts,export", "Accounts,list", "Accounts,tags", "Accounts,names", "Accounts,collections", "Accounts,abis",
-        "Accounts,rm",     "Admin,status",  "Admin,scrape",  "Data,blocks",    "Data,transactions",    "Data,receipts",
-        "Data,logs",       "Data,traces",   "Data,when",     "State,state",    "State,tokens",         "Other,quotes",
-        "Other,slurp",     "Other,where",   "Other,dive",
-    };
+    CStringArray endpoints = {
+        "Accounts|Access and cache transactional data|export,list,tags,names,collections,abis,rm",
+        "Admin|Control the scraper and build the index|status,scrape",
+        "Data|Access and cache blockchain-related data|blocks,transactions,receipts,logs,traces,when",
+        "State|Access to account and token state|state,tokens",
+        "Other|Access to other and external data|quotes,slurp,where,dive"};
 
+    ostringstream tagStream;
     ostringstream pathStream;
     for (auto ep : endpoints) {
-        string_q entry = STR_PATH_ENTRY;
         CStringArray parts;
-        explode(parts, ep, ',');
-        replace(entry, "[{TAGS}]", parts[0]);
-        replace(entry, "[{PATH}]", parts[1]);
-        CCommandOptionArray params;
-        CCommandOptionArray notes;
-        CCommandOptionArray errors;
-        CCommandOptionArray descr;
-        select_commands(parts[1], params, notes, errors, descr);
-        if (descr.size()) {
-            replace(entry, "[{SUMMARY}]", descr[0].swagger_descr);
-            replace(entry, "[{DESCR}]", descr[0].swagger_descr);
+        explode(parts, ep, '|');
+        tagStream << substitute(substitute(STR_TAG_ENTRY, "[{NAME}]", parts[0]), "[{DESCR}]", parts[1]);
+
+        CStringArray cmds;
+        explode(cmds, parts[2], ',');
+        for (auto cmd : cmds) {
+            string_q entry = STR_PATH_ENTRY;
+            replace(entry, "[{TAGS}]", parts[0]);
+            replace(entry, "[{PATH}]", cmd);
+            CCommandOptionArray params;
+            CCommandOptionArray notes;
+            CCommandOptionArray errors;
+            CCommandOptionArray descr;
+            select_commands(cmd, params, notes, errors, descr);
+            if (descr.size()) {
+                replace(entry, "[{SUMMARY}]", descr[0].swagger_descr);
+                replace(entry, "[{DESCR}]", descr[0].swagger_descr);
+            }
+            replace(entry, "      summary: [{SUMMARY}]\n", "");
+            replace(entry, "      description: [{DESCR}]\n", "");
+            replace(entry, "[{ID}]", toLower(parts[0] + "-" + cmd));
+            ostringstream paramStream;
+            for (auto param : params) {
+                string_q p = STR_PATH_PARAM;
+                replace(p, "[{NAME}]", param.command);
+                replace(p, "[{IN}]", (param.option_kind == "positional" ? "query" : "query"));
+                replace(p, "[{DESCR}]", param.swagger_descr);
+                replace(p, "[{REQ}]", param.is_required ? "true" : "false");
+                replace(p, "[{TYPE}]", getTypeStr(param, "          "));
+                counter.cmdCount++;
+                paramStream << p << endl;
+            }
+            replace(entry, "[{PARAMS}]", paramStream.str());
+            pathStream << entry;
+            counter.routeCount++;
         }
-        replace(entry, "      summary: [{SUMMARY}]\n", "");
-        replace(entry, "      description: [{DESCR}]\n", "");
-        replace(entry, "[{ID}]", toLower(parts[0] + "-" + parts[1]));
-        ostringstream paramStream;
-        for (auto param : params) {
-            string_q p = STR_PATH_PARAM;
-            replace(p, "[{NAME}]", param.command);
-            replace(p, "[{IN}]", (param.option_kind == "positional" ? "query" : "query"));
-            replace(p, "[{DESCR}]", param.swagger_descr);
-            replace(p, "[{REQ}]", param.is_required ? "true" : "false");
-            replace(p, "[{TYPE}]", getTypeStr(param, "          "));
-            counter.cmdCount++;
-            paramStream << p << endl;
-        }
-        replace(entry, "[{PARAMS}]", paramStream.str());
-        pathStream << entry;
-        counter.routeCount++;
     }
 
     string_q sourceFn = "../../trueblocks-explorer/yaml-resolved/swagger.yaml";
@@ -76,20 +84,19 @@ void COptions::writeOpenApiFile(void) {
     if (!test && fileExists(sourceFn) && fileExists(templateFn)) {
         string_q orig = asciiFileToString(sourceFn);
         string_q str = asciiFileToString(templateFn);
-        string_q ps = pathStream.str();
-        replaceReverse(ps, "\n", "");
-        replace(str, "[{PATHS}]", ps);
+        replace(str, "[{PATHS}]", pathStream.str());
+        replace(str, "[{TAGS}]", tagStream.str());
         if (orig != str) {
             counter.nChanged++;
             stringToAsciiFile(sourceFn, str);
             string_q which = doCommand("which swag2html.py");
-            string_q destHTML = "../../trueblocks-explorer/public/api.html";
+            string_q destHTML = "../../trueblocks-explorer/public/help/api.html";
             if (fileExists(which) && fileExists(destHTML)) {
                 ostringstream cmd;
                 cmd << "python " << which << " <" << sourceFn << " >" << destHTML << " ; date ; ls -l " << destHTML;
                 string_q c = cmd.str();
                 string_q result = doCommand(c);
-                LOG_INFO("result: ", result);
+                // LOG_INFO("result: ", result);
             }
         }
     }
@@ -267,6 +274,10 @@ string_q getTypeStr(const CCommandOption& opt, const string& lead) {
 }
 
 //---------------------------------------------------------------------------------------------------
+const char* STR_TAG_ENTRY =
+    "- name: [{NAME}]\n"
+    "  description: [{DESCR}]\n";
+
 const char* STR_PATH_ENTRY =
     "  /[{PATH}]:\n"
     "    get:\n"
