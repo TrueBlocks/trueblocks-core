@@ -50,9 +50,9 @@ on, both, medi, names, tools/ethNames, addr_no_hex_number,               n, term
 on, both, medi, names, tools/ethNames, address_match,                    y, terms = 0x1 & fmt = api
 on, both, medi, names, tools/ethNames, api_mode,                         y, terms = tip & fmt = api
 on, both, medi, names, tools/ethNames, duplicated_option_1,              n, terms = 0xb6 torj & addr & addr & addr & addr & fmt = txt
-on, both, medi, names, tools/ethNames, name_case_match,                  n, terms = \* torj & fmt = json & match_case
-on, both, medi, names, tools/ethNames, name_long_case_match,             n, terms = \* torj & fmt = json & match_case
-on, both, medi, names, tools/ethNames, name_long_show_addr_match,        n, terms = \* torj & addr & fmt = txt
+#on, both, medi, names, tools/ethNames, name_case_match,                  n, terms = \* torj & fmt = json & match_case
+#on, both, medi, names, tools/ethNames, name_long_case_match,             n, terms = \* torj & fmt = json & match_case
+#on, both, medi, names, tools/ethNames, name_long_show_addr_match,        n, terms = \* torj & addr & fmt = txt
 on, both, medi, names, tools/ethNames, name_long_source_match,           n, terms = Ether & expand & fmt = txt
 on, both, medi, names, tools/ethNames, name_long_verbose_match,          y, terms = torj & verbose
 on, both, medi, names, tools/ethNames, name_match,                       n, terms = torj & noop & fmt = txt
@@ -104,7 +104,7 @@ on, both, medi, names, tools/ethNames, name_long_show_addr_no_match,     n, term
 on, both, medi, names, tools/ethNames, name_long_source_no_match,        n, terms = no_ETHER & verbose & fmt = txt
 on, both, medi, names, tools/ethNames, name_long_verbose_no_match,       n, terms = no_torj & verbose & fmt = txt
 on, both, medi, names, tools/ethNames, name_no_match,                    n, terms = torj_no_found & fmt = txt
-on, both, medi, names, tools/ethNames, name_show_addr_match,             n, terms = \* torj & addr & fmt = txt
+#on, both, medi, names, tools/ethNames, name_show_addr_match,             n, terms = \* torj & addr & fmt = txt
 on, both, medi, names, tools/ethNames, name_show_addr_no_match,          n, terms = no_torj & addr & fmt = txt
 on, both, medi, names, tools/ethNames, name_source_no_match,             n, terms = no_Ether & verbose & fmt = txt
 on, both, medi, names, tools/ethNames, name_verbose_no_match,            n, terms = no_torj & verbose & fmt = txt

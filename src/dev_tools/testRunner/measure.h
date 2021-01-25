@@ -27,7 +27,7 @@ class CMeasure : public CBaseNode {
   public:
     string_q git_hash;
     string_q date;
-    uint64_t epoch;
+    string_q epoch;
     string_q group;
     string_q cmd;
     string_q type;
@@ -51,7 +51,7 @@ class CMeasure : public CBaseNode {
         initialize();
         git_hash = "git_" + string_q(GIT_COMMIT_HASH).substr(0, 10);
         date = Now().Format(FMT_EXPORT);
-        epoch = getGlobalConfig("testRunner")->getConfigInt("settings", "test_epoch", 6000);
+        epoch = getGlobalConfig("testRunner")->getConfigStr("settings", "test_epoch", "E-04");
         group = g;
         cmd = c;
         type = t;
@@ -116,7 +116,7 @@ inline void CMeasure::initialize(void) {
 
     git_hash = "";
     date = "";
-    epoch = 0;
+    epoch = "";
     group = "";
     cmd = "";
     type = "";

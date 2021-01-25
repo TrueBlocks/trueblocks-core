@@ -86,7 +86,7 @@ string_q CMeasure::getValueByName(const string_q& fieldName) const {
             break;
         case 'e':
             if (fieldName % "epoch") {
-                return uint_2_Str(epoch);
+                return epoch;
             }
             break;
         case 'g':
@@ -147,7 +147,7 @@ bool CMeasure::setValueByName(const string_q& fieldNameIn, const string_q& field
             break;
         case 'e':
             if (fieldName % "epoch") {
-                epoch = str_2_Uint(fieldValue);
+                epoch = fieldValue;
                 return true;
             }
             break;
@@ -273,7 +273,7 @@ void CMeasure::registerClass(void) {
     ADD_FIELD(CMeasure, "cname", T_TEXT, ++fieldNum);
     ADD_FIELD(CMeasure, "git_hash", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CMeasure, "date", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CMeasure, "epoch", T_UNUMBER, ++fieldNum);
+    ADD_FIELD(CMeasure, "epoch", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CMeasure, "group", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CMeasure, "cmd", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CMeasure, "type", T_TEXT | TS_OMITEMPTY, ++fieldNum);
