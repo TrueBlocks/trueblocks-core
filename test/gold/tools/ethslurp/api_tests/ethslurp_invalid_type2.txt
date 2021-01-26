@@ -1,5 +1,0 @@
-{
-  "errors": [
-    "ethslurp - Invalid option: --types"
-  ]
-}

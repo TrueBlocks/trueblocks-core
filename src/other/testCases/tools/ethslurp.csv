@@ -9,7 +9,7 @@ on, both, fast, slurp, tools/ethslurp, invalid_param_2,               y, pank
 on, both, fast, slurp, tools/ethslurp, invalid_address_1,             y, addrs = invalid
 on, both, fast, slurp, tools/ethslurp, invalid_address_2,             y, addrs = 0x63c8c29af409bd31ec7ddeea58f
 on, both, fast, slurp, tools/ethslurp, invalid_type1,                 y, addrs = 0x1324e7b922b30B49Ab8EA81086341cc41C249346 & types = junk
-on, both, fast, slurp, tools/ethslurp, invalid_type2,                 y, addrs = 0x1324e7b922b30B49Ab8EA81086341cc41C249346 & types =
+on, cmd,  fast, slurp, tools/ethslurp, invalid_type2,                 y, addrs = 0x1324e7b922b30B49Ab8EA81086341cc41C249346 & types =
 #on, cmd,  medi, slurp, tools/ethslurp, no_record_in_block_range,      n, addrs = 0x63c8c29af409bd31ec7ddeea58ff14f21e8980b0 & blocks = 0-1
 #on, cmd,  medi, slurp, tools/ethslurp, not_found_address,             n, addrs = 0x63c8c29af409bd31ec7ddeea58ff14f21e8980b5
 
