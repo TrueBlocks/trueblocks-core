@@ -29,9 +29,9 @@ int main(int argc, const char* argv[]) {
         bool isText = (expContext().exportFmt & (TXT1 | CSV1 | NONE1));
         if (isText && options.items.size() == 0) {
             if (isApiMode()) {
-                cout << "No results for ";
+                cout << "No results for";
                 for (auto s : options.searches)
-                    cout << s << " ";
+                    cout << " " << s;
                 cout << endl;
             } else {
                 cout << "No results for " << command << endl;

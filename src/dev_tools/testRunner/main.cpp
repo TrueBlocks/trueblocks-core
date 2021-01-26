@@ -325,7 +325,7 @@ bool COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, cons
                 ////                    os << cBlue << oldText;
                 //                }
                 os << cOff << endl;
-                fails.push_back(os.str());
+                fails.push_back(os.str());  // + "oldText:\n[" + oldText + "]\nnewText:\n[" + newText + "]");
                 result = redX;
             }
 
