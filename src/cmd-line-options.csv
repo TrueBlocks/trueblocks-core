@@ -139,10 +139,10 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,customizeable,c
 
 12500,tools,Data,blocks,getBlock,blocks,,,true,false,true,true,local,positional,list<blknum>,a space-separated list of one or more blocks to retrieve
 12520,tools,Data,blocks,getBlock,hashes_only,e,,false,false,true,true,header,switch,<boolean>,display only transaction hashes&#44; default is to display full transaction|detail
-12540,tools,Data,blocks,getBlock,addrs,a,,false,false,true,true,local,switch,<boolean>,display all addresses included in the block
+12540,tools,Data,blocks,getBlock,apps,a,,false,false,true,true,local,switch,<boolean>,display all address appearances included in the block
 12560,tools,Data,blocks,getBlock,uniq,u,,false,false,true,true,local,switch,<boolean>,display only uniq addresses found per block
 12580,tools,Data,blocks,getBlock,uniq_tx,n,,false,false,true,true,local,switch,<boolean>,display only uniq addresses found per transaction
-12600,tools,Data,blocks,getBlock,count,c,,false,false,true,true,header,switch,<boolean>,display counts of appearances (for --addrs&#44; --uniq&#44; or --uniq_tx)|or transactions
+12600,tools,Data,blocks,getBlock,count,c,,false,false,true,true,header,switch,<boolean>,display counts of appearances (for --apps&#44; --uniq&#44; or --uniq_tx)|or transactions
 12610,tools,Data,blocks,getBlock,uncles,U,,false,false,true,true,header,switch,<boolean>,display uncle blocks (if any) instead of the requested block
 12620,tools,Data,blocks,getBlock,force,o,,false,false,false,false,header,switch,<boolean>,force a re-write of the block to the cache
 12625,tools,Data,blocks,getBlock,trace,t,,false,false,false,false,header,switch,<boolean>,export the traces from the block as opposed to the block data

@@ -22,10 +22,10 @@ static const COption params[] = {
     // clang-format off
     COption("blocks", "", "list<blknum>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more blocks to retrieve"),  // NOLINT
     COption("hashes_only", "e", "", OPT_SWITCH, "display only transaction hashes, default is to display full transaction detail"),  // NOLINT
-    COption("addrs", "a", "", OPT_SWITCH, "display all addresses included in the block"),
+    COption("apps", "a", "", OPT_SWITCH, "display all address appearances included in the block"),
     COption("uniq", "u", "", OPT_SWITCH, "display only uniq addresses found per block"),
     COption("uniq_tx", "n", "", OPT_SWITCH, "display only uniq addresses found per transaction"),
-    COption("count", "c", "", OPT_SWITCH, "display counts of appearances (for --addrs, --uniq, or --uniq_tx) or transactions"),  // NOLINT
+    COption("count", "c", "", OPT_SWITCH, "display counts of appearances (for --apps, --uniq, or --uniq_tx) or transactions"),  // NOLINT
     COption("uncles", "U", "", OPT_SWITCH, "display uncle blocks (if any) instead of the requested block"),
     COption("force", "o", "", OPT_HIDDEN | OPT_SWITCH, "force a re-write of the block to the cache"),
     COption("trace", "t", "", OPT_HIDDEN | OPT_SWITCH, "export the traces from the block as opposed to the block data"),
@@ -46,7 +46,7 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
     // BEG_CODE_LOCAL_INIT
-    bool addrs = false;
+    bool apps = false;
     bool uniq = false;
     bool uniq_tx = false;
     // END_CODE_LOCAL_INIT
@@ -64,8 +64,8 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-e" || arg == "--hashes_only") {
             hashes_only = true;
 
-        } else if (arg == "-a" || arg == "--addrs") {
-            addrs = true;
+        } else if (arg == "-a" || arg == "--apps") {
+            apps = true;
 
         } else if (arg == "-u" || arg == "--uniq") {
             uniq = true;
@@ -138,7 +138,7 @@ bool COptions::parseArguments(string_q& command) {
         HIDE_FIELD(CBlock, "finalized");
     }
 
-    filterType = (uniq_tx ? "uniq_tx" : (uniq ? "uniq" : (addrs ? "addrs" : "")));
+    filterType = (uniq_tx ? "uniq_tx" : (uniq ? "uniq" : (apps ? "apps" : "")));
     if (!filterType.empty() && force)
         return usage("The --force option is not available when using one of the address options. Quitting...");
 

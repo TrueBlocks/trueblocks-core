@@ -67,7 +67,7 @@ on, both, fast, traces, tools/getTrace, fmt_default,        y, transactions = 22
 on, both, fast, traces, tools/getTrace, fmt_txt,            n, transactions = 2222222.0 2332332.0 & fmt = txt
 on, both, fast, traces, tools/getTrace, fmt_csv,            n, transactions = 2222222.0 2332332.0 & fmt = csv
 on, both, fast, traces, tools/getTrace, fmt_api,            y, transactions = 2222222.0 2332332.0 & fmt = api
-on, both, fast, traces, tools/getTrace, fmt_junk,           y, transactions = 2222222.0 2332332.0 & fmt = junk
+on, cmd,  fast, traces, tools/getTrace, fmt_junk,           y, transactions = 2222222.0 2332332.0 & fmt = junk
 
 on, cmd,  fast, traces, tools/getTrace, by_filebad,         n, bad & file:cmd_file
 on, cmd,  fast, traces, tools/getTrace, by_file,            n, file:cmd_file

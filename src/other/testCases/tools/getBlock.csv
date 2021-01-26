@@ -33,8 +33,8 @@ on, both, fast, blocks, tools/getBlock, multi2,             y, blocks = 2769609 
 on, both, slow, blocks, tools/getBlock, terse_no_raw,       y, blocks = 4001001-4001003 & hashes_only
 on, both, fast, blocks, tools/getBlock, terse_yes_raw,      y, blocks = 4001001 & hashes_only & raw
 on, both, medi, blocks, tools/getBlock, hashes_1,           y, blocks = 4001001 & hashes_only
-on, both, medi, blocks, tools/getBlock, address_addrs1,     n, blocks = 3982128 & addrs & fmt = csv
-on, both, medi, blocks, tools/getBlock, address_addrsv,     n, blocks = 3982128 & addrs & verbose = 1 & fmt = txt
+on, both, medi, blocks, tools/getBlock, address_addrs1,     n, blocks = 3982128 & apps & fmt = csv
+on, both, medi, blocks, tools/getBlock, address_addrsv,     n, blocks = 3982128 & apps & verbose = 1 & fmt = txt
 on, both, medi, blocks, tools/getBlock, address_uniq1,      n, blocks = 3982128 & uniq
 on, both, medi, blocks, tools/getBlock, address_uniq2,      n, blocks = 3 & uniq
 on, both, medi, blocks, tools/getBlock, address_uniqTx1,    n, blocks = 3982128 & uniq_tx
@@ -42,7 +42,7 @@ on, both, slow, blocks, tools/getBlock, byzantium_1,        y, blocks = 4369999 
 on, both, fast, blocks, tools/getBlock, blockByHash,        y, blocks = 0xd19bc98080cd70951fad3951cef2d512e6334aa3c7e64a38985c955d4d2e273b
 on, both, fast, blocks, tools/getBlock, miner,              y, blocks = 1 & uniq_tx & fmt json
 
-on, both, medi, blocks, tools/getBlock, addrsCnt1,          n, blocks = 3982128 & addrs & count & fmt csv
+on, both, medi, blocks, tools/getBlock, addrsCnt1,          n, blocks = 3982128 & apps & count & fmt csv
 on, both, medi, blocks, tools/getBlock, uniqCnt1,           n, blocks = 3982128 & uniq & count & fmt txt
 on, both, medi, blocks, tools/getBlock, uniqTxCnt1,         y, blocks = 3982128 & uniq_tx & count & fmt json
 on, both, fast, blocks, tools/getBlock, addrCntFail,        y, blocks = 3982128 & count
@@ -58,14 +58,14 @@ on, both, fast, blocks, tools/getBlock, fmt_txt,            n, blocks = 2222222 
 on, both, fast, blocks, tools/getBlock, fmt_csv,            n, blocks = 2222222 2332332 & fmt = csv & no_header
 on, both, fast, blocks, tools/getBlock, fmt_api,            y, blocks = 2222222 2332332 & fmt = api
 on, both, fast, blocks, tools/getBlock, fmt_json,           y, blocks = 2222222 2332332 & fmt = json
-on, both, fast, blocks, tools/getBlock, fmt_junk,           y, blocks = 2222222 2332332 & fmt = junk
+on, cmd,  fast, blocks, tools/getBlock, fmt_junk,           y, blocks = 2222222 2332332 & fmt = junk
 
 on, both, fast, blocks, tools/getBlock, fmt_trace,          y, blocks = 2222222 & trace & fmt = json
 
 # COption("", "", "", OPT_DESCRIPTION, "Returns block(s) from local cache or directly from a running node."),
-# COption("addrs", "a", "", OPT_SWITCH, "display all addresses included in the block"),
+# COption("apps", "a", "", OPT_SWITCH, "display all addresses included in the block"),
 # COption("blocks", "", "list<blknum>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more blocks to retrieve"),
-# COption("count", "o", "", OPT_SWITCH, "display counts of appearances (for --addrs, --uniq, or --uniq_tx only)"),
+# COption("count", "o", "", OPT_SWITCH, "display counts of appearances (for --apps, --uniq, or --uniq_tx only)"),
 # COption("force", "e", "", OPT_HIDDEN | OPT_SWITCH, "force a re-write of the block to the cache"),
 # COption("hashes_only", "s", "", OPT_SWITCH, "display only transaction hashes, default is to display full transaction detail"),
 # COption("uniq", "u", "", OPT_SWITCH, "display only uniq addresses found per block"),

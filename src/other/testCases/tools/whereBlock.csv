@@ -22,7 +22,7 @@ on, both, fast, where, tools/whereBlock, fmt_txt,          n, blocks = 1001001 &
 on, both, fast, where, tools/whereBlock, fmt_csv,          n, blocks = 1001001 & fmt = csv
 on, both, fast, where, tools/whereBlock, fmt_api,          y, blocks = 1001001 & fmt = api
 on, both, fast, where, tools/whereBlock, fmt_json,         y, blocks = 1001001 & fmt = json
-on, both, fast, where, tools/whereBlock, fmt_junk,         y, blocks = 1001001 & fmt = junk
+on, cmd,  fast, where, tools/whereBlock, fmt_junk,         y, blocks = 1001001 & fmt = junk
 
 # 14020,tools,where,whereBlock,blocks,,,TRUE,FALSE,TRUE,FALSE,local,positional,list<blknum>,a space-separated list of one or more blocks to search for
 # 14040,tools,where,whereBlock,,,,FALSE,FALSE,TRUE,FALSE,na,description,,Reports if a block was found in the cache&#44; at a local&#44; or at a remote node.

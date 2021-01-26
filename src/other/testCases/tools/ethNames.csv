@@ -120,7 +120,7 @@ on, both, medi, names, tools/ethNames, fmt_txt,                          n, name
 on, both, medi, names, tools/ethNames, fmt_csv,                          n, named & custom & owned & fmt = csv
 on, both, medi, names, tools/ethNames, fmt_api,                          y, named & custom & owned & fmt = api
 on, both, medi, names, tools/ethNames, fmt_json,                         y, named & custom & owned & fmt = json
-on, both, fast, names, tools/ethNames, fmt_junk,                         y, terms = tip & expand & fmt = junk
+on, cmd,  fast, names, tools/ethNames, fmt_junk,                         y, terms = tip & expand & fmt = junk
 
 on, cmd,  slow, names, tools/ethNames, fromFile,                         n, file:names.txt
 

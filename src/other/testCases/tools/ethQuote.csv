@@ -19,7 +19,7 @@ on, both, slow, quotes, tools/ethQuote, fmt_txt,           n, fmt = txt
 on, both, slow, quotes, tools/ethQuote, fmt_csv,           n, fmt = csv
 on, both, slow, quotes, tools/ethQuote, fmt_api,           y, fmt = api
 on, both, slow, quotes, tools/ethQuote, fmt_json,          y, fmt = json
-on, both, slow, quotes, tools/ethQuote, fmt_junk,          y, fmt = junk
+on, cmd,  slow, quotes, tools/ethQuote, fmt_junk,          y, fmt = junk
 
 off, cmd, unkn, quotes, tools/ethQuote, usd_bitcoin,       n, pair:USDT_BTC
 off, cmd, unkn, quotes, tools/ethQuote, custom_btc_eth,    n, pair:BTC_ETH
