@@ -41,6 +41,7 @@ on, both, fast, receipts, tools/getReceipt, fmt_csv,             n, transactions
 on, both, fast, receipts, tools/getReceipt, fmt_api,             y, transactions = 2222222.0 2332332.0 & fmt = api
 on, both, fast, receipts, tools/getReceipt, fmt_json,            y, transactions = 2222222.0 2332332.0 & fmt = json
 on, cmd,  fast, receipts, tools/getReceipt, fmt_junk,            y, transactions = 2222222.0 2332332.0 & fmt = junk
+on, both, fast, receipts, tools/getReceipt, to_file,             y, transactions = 2222222.0 2332332.0 & fmt = json & to_file
 
 on, cmd,  fast, receipts, tools/getReceipt, by_filebad,          n, file:cmd_file & bad
 on, cmd,  fast, receipts, tools/getReceipt, by_file,             n, file:cmd_file

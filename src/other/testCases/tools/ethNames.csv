@@ -121,6 +121,7 @@ on, both, medi, names, tools/ethNames, fmt_csv,                          n, name
 on, both, medi, names, tools/ethNames, fmt_api,                          y, named & custom & owned & fmt = api
 on, both, medi, names, tools/ethNames, fmt_json,                         y, named & custom & owned & fmt = json
 on, cmd,  fast, names, tools/ethNames, fmt_junk,                         y, terms = tip & expand & fmt = junk
+on, both, medi, names, tools/ethNames, to_file,                          n, named & custom & owned & fmt = json & to_file
 
 on, cmd,  slow, names, tools/ethNames, fromFile,                         n, file:names.txt
 

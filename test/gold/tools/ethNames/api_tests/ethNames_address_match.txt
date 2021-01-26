@@ -316,6 +316,15 @@
       "description": ""
     },
     {
+      "tags": "31-Gitcoin Grants:Grant",
+      "address": "0x1208a26faa0f4ac65b42098419eb4daa5e580ac6",
+      "name": "Tokenized Tweets",
+      "symbol": "",
+      "source": "",
+      "decimals": 0,
+      "description": ""
+    },
+    {
       "tags": "31-Gitcoin Grants:Friends",
       "address": "0x1216bc366cfd938d24f89e2a079539f4d66062fb",
       "name": "Name 0x1216bc36",
@@ -1797,15 +1806,6 @@
       "name": "Name 0x1b5b127f",
       "symbol": "",
       "source": "Gitcoin Website",
-      "decimals": 0,
-      "description": ""
-    },
-    {
-      "tags": "90-DevCon2:Individual",
-      "address": "0x1b5c6e1e7981a186fc54bfa343bab295027ac351",
-      "name": "Simon Janin",
-      "symbol": "",
-      "source": "DevCon2 Token Contract",
       "decimals": 0,
       "description": ""
     }

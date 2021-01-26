@@ -34,7 +34,8 @@ on, both, fast, abis, tools/grabABI, fmt_txt,               n, addrs = 0xe94327d
 on, both, fast, abis, tools/grabABI, fmt_csv,               n, addrs = 0xe94327d07fc17907b4db788e5adf2ed424addff6 & fmt = csv & no_header
 on, both, fast, abis, tools/grabABI, fmt_api,               y, addrs = 0xe94327d07fc17907b4db788e5adf2ed424addff6 & fmt = api
 on, both, fast, abis, tools/grabABI, fmt_json,              y, addrs = 0xe94327d07fc17907b4db788e5adf2ed424addff6 & fmt = json
-on, cmd, fast, abis, tools/grabABI, fmt_junk,              y, addrs = 0xe94327d07fc17907b4db788e5adf2ed424addff6 & fmt = junk
+on, cmd,  fast, abis, tools/grabABI, fmt_junk,              y, addrs = 0xe94327d07fc17907b4db788e5adf2ed424addff6 & fmt = junk
+on, both, fast, abis, tools/grabABI, to_file,               y, addrs = 0xe94327d07fc17907b4db788e5adf2ed424addff6 & fmt = json & to_file
 
 on, both, fast, abis, tools/grabABI, findSig,               y, find = 0xa6f9dae1
 #on, cmd,  fast, abis, tools/grabABI, rm_generation,        n, RMFILE -f generated/*

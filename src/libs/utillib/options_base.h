@@ -32,7 +32,7 @@
 #define OPT_CRUD (1 << 14)
 #define OPT_MOCKDATA (1 << 21)
 #define OPT_DENOM (OPT_DOLLARS | OPT_WEI | OPT_ETHER)
-#define OPT_DEFAULT (OPT_HELP | OPT_VERBOSE | OPT_FMT | OPT_DENOM | OPT_PARITY | OPT_MOCKDATA)
+#define OPT_DEFAULT (OPT_HELP | OPT_VERBOSE | OPT_FMT | OPT_DENOM | OPT_PARITY | OPT_MOCKDATA | OPT_OUTPUT)
 
 #define OPT_REQUIRED (1 << 14)
 #define OPT_POSITIONAL (1 << 15)
@@ -83,12 +83,16 @@ class COptionsBase {
 
     bool isRedirected(void) const;
 
+    string_q getOutputFn(void) const {
+        return rd_outputFilename;
+    }
+
   private:
     streambuf* coutSaved;   // saves original cout buffer
     ofstream outputStream;  // the redirected stream (if any)
-    string_q outputFilename;
     void closeRedirect(void);
-    bool zipOnClose;
+    string_q rd_outputFilename;
+    bool rd_zipOnClose;
 
   public:
     CStringArray commandLines;

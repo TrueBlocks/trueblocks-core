@@ -1,0 +1,63 @@
+{
+  "data": [
+    {
+      "blockNumber": 2000000,
+      "holder": "0xb9e7f8568e08d5659f5d29c4997173d84cdf2607",
+      "balance": 0,
+      "address": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07",
+      "name": "OMGToken Airdrop",
+      "symbol": "OMG",
+      "decimals": 18,
+      "is_contract": true,
+      "is_erc20": true,
+      "is_erc721": false
+    }
+  ],
+  "types": [
+    {
+      "type": "CTokenBalanceRecord",
+      "fields": [
+        {
+          "name": "blockNumber",
+          "type": "blocknum"
+        },
+        {
+          "name": "holder",
+          "type": "address"
+        },
+        {
+          "name": "balance",
+          "type": "wei"
+        },
+        {
+          "name": "address",
+          "type": "address"
+        },
+        {
+          "name": "name",
+          "type": "text"
+        },
+        {
+          "name": "symbol",
+          "type": "text"
+        },
+        {
+          "name": "decimals",
+          "type": "unumber"
+        },
+        {
+          "name": "is_contract",
+          "type": "bool"
+        },
+        {
+          "name": "is_erc20",
+          "type": "bool"
+        },
+        {
+          "name": "is_erc721",
+          "type": "bool"
+        }
+      ]
+    }
+  ]
+}

@@ -1,5 +1,0 @@
-{
-  "errors": [
-    "cacheStatus - Invalid option: --l"
-  ]
-}

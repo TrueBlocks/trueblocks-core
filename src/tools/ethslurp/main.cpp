@@ -28,7 +28,7 @@ int main(int argc, const char* argv[]) {
         if (!options.parseArguments(command))
             return 0;
 
-        cerr << "Processing: " << command << "\n";
+        cerr << "Processing: " << substitute(command, options.getOutputFn(), "--output_filename--") << "\n";
 
         if (!Slurp(theAccount, options)) {
             for (auto err : options.errors) {

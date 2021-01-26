@@ -258,7 +258,7 @@ bool COptions::parseArguments(string_q& command) {
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
     registerOptions(nParams, params);
-    optionOn(OPT_PREFUND | OPT_OUTPUT | OPT_CRUD);
+    optionOn(OPT_PREFUND | OPT_CRUD);
 
     // BEG_CODE_INIT
     match_case = false;

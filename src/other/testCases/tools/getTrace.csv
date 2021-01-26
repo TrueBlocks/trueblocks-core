@@ -50,6 +50,7 @@ on, both, medi, traces, tools/getTrace, prev_bug2_2,        n, transactions = 42
 on, both, fast, traces, tools/getTrace, fmt_json,           y, transactions = 2222222.0 2332332.0 & fmt = json
 on, both, fast, traces, tools/getTrace, from_node,          y, transactions = 4000000.5 & fmt = json
 on, cmd,  fast, traces, tools/getTrace, redir_output,       y, transactions = 3657480.79 & verbose & output = test_file
+on, both, fast, traces, tools/getTrace, to_file,            y, transactions = 2222222.0 2332332.0 & fmt = json & to_file
 
 #on, both, fast, traces, tools/getTrace, multi_articulate,   y, transactions = 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f & articulate & fmt = json
 

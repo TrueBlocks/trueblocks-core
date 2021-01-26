@@ -534,6 +534,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 31-Gitcoin Grants:Grant	0x11e52c75998fe2e7928b191bfc5b25937ca16741	Grant 678 EthAddress Stats Utility Dashboard		https://gitcoin.co/grants/678/ethaddress-stats-utility-dashboard		https://ethstats.info	false	false	false	false	false	false
 30-Contracts	0x1200563cfaeb481e1f0542a246f0cefcde4c4753	Arbitrage Bot		0xTracker			false	false	false	false	false	false
 31-Gitcoin Grants:Friends	0x1206ec7abf2c3d22051f6ebb249f065fc6436149	nikoline		Gitcoin Website			false	false	false	false	false	false
+31-Gitcoin Grants:Grant	0x1208a26faa0f4ac65b42098419eb4daa5e580ac6	Tokenized Tweets					false	false	false	false	false	false
 81-Other	0x120a270bbc009644e35f0bb6ab13f95b8199c4ad	Shapeshift 1		CarbonVote			false	false	false	false	false	false
 81-Other	0x1213c29b5e1a6f33e0d044f850a57b665e3cde21	Littlecactus		Etherscan.io			false	false	false	true	false	false
 31-Gitcoin Grants:Friends	0x1216bc366cfd938d24f89e2a079539f4d66062fb	phoebepoon		Gitcoin Website			false	false	false	false	false	false

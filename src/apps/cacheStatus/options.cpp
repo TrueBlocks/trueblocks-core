@@ -168,7 +168,7 @@ bool COptions::parseArguments(string_q& command) {
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
     registerOptions(nParams, params);
-    optionOn(OPT_PREFUND | OPT_OUTPUT);
+    optionOn(OPT_PREFUND);
     // Since we need prefunds, let's load the names library here
     CAccountName unused;
     getNamedAccount(unused, "0x0");
@@ -191,7 +191,7 @@ void COptions::Init(void) {
     gethostname(hostname, HOST_NAME_MAX);
     char username[LOGIN_NAME_MAX];
     getlogin_r(username, LOGIN_NAME_MAX);
-    if (!getEnvStr("DOCKER_MODE").empty()) {
+    if (isDockerMode()) {
         memset(username, 0, LOGIN_NAME_MAX);
         strncpy(username, "nobody", 7);
     }

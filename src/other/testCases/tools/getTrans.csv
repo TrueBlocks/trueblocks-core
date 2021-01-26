@@ -62,6 +62,7 @@ on, both, fast, transactions, tools/getTrans, fmt_csv,             n, transactio
 on, both, medi, transactions, tools/getTrans, fmt_api,             y, transactions = 2222222.0 2332332.0 & fmt = api
 on, both, fast, transactions, tools/getTrans, fmt_json,            y, transactions = 2222222.0 2332332.0 & fmt = json
 on, cmd,  fast, transactions, tools/getTrans, fmt_junk,            y, transactions = 2222222.0 2332332.0 & fmt = junk
+on, both, fast, transactions, tools/getTrans, to_file,             y, transactions = 2222222.0 2332332.0 & fmt = json & to_file
 
 on, cmd,  fast, transactions, tools/getTrans, by_file,             n, file:cmd_file & bad
 on, cmd,  fast, transactions, tools/getTrans, by_file_1,           n, file:cmd_file & fmt = csv

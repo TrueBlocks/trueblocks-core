@@ -110,14 +110,6 @@ bool COptions::parseArguments(string_q& command) {
                 if (arg == "csv") {
                     fmt = CSV1;
                     tool_flags += (arg + " ");
-                } else if (arg == "--to_file") {
-                    if (getEnvStr("DOCKER_MODE").empty()) {
-                        arg = "--output:" + configPath("cache/tmp/" + makeValidName(Now().Format(FMT_EXPORT)) +
-                                                       (fmt == CSV1 ? ".csv" : ".txt"));
-                        tool_flags += (arg + " ");
-                    } else {
-                        // ignore --to_file flag in docker mode
-                    }
 
                 } else {
                     if (arg == "--staging") {
@@ -242,7 +234,7 @@ bool COptions::parseArguments(string_q& command) {
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
     registerOptions(nParams, params);
-    optionOff(OPT_HELP | OPT_CRUD);
+    optionOff(OPT_HELP | OPT_CRUD | OPT_OUTPUT);
 
     // BEG_CODE_INIT
     // END_CODE_INIT

@@ -7,7 +7,7 @@ on, cmd,  fast, status, apps/cacheStatus, help_long,       n, help
 
 on, both, fast, status, apps/cacheStatus, no_params,       y,
 on, both, fast, status, apps/cacheStatus, invalid_param_1, y, junk
-on, both, fast, status, apps/cacheStatus, invalid_param_2, y, @l & junk
+on, cmd,  fast, status, apps/cacheStatus, invalid_param_2, y, @l & junk
 
 on, both, fast, status, apps/cacheStatus, mode_none,       y,
 on, both, fast, status, apps/cacheStatus, mode_scraper,    y, modes = index
@@ -50,3 +50,5 @@ on, both, fast, status, apps/cacheStatus, config_get,      n, get_config
 
 on, both, fast, status, apps/cacheStatus, report,          n, report & fmt = txt
 on, both, fast, status, apps/cacheStatus, report_json,     y, report & fmt = json
+
+on, both, slow, status, apps/cacheStatus, to_file,         y, modes = names & to_file

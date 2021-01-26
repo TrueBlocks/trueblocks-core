@@ -56,6 +56,7 @@ on, both, fast, state, tools/getState, fmt_csv,                        n, addrs 
 on, both, fast, state, tools/getState, fmt_api,                        y, addrs = 0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98 & fmt = api & blocks = 2000000
 on, both, fast, state, tools/getState, fmt_json,                       y, addrs = 0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98 & fmt = json & blocks = 2000000 & dollars
 on, cmd,  fast, state, tools/getState, fmt_junk,                       y, addrs = 0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98 & fmt = junk & blocks = 2000000
+on, both, fast, state, tools/getState, to_file,                        y, addrs = 0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98 & fmt = json & blocks = 2000000 & dollars & to_file
 
 on, cmd,  fast, state, tools/getState, from_file,                      y, file:cmd_file
 

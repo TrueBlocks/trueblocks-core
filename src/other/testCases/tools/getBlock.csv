@@ -59,6 +59,7 @@ on, both, fast, blocks, tools/getBlock, fmt_csv,            n, blocks = 2222222 
 on, both, fast, blocks, tools/getBlock, fmt_api,            y, blocks = 2222222 2332332 & fmt = api
 on, both, fast, blocks, tools/getBlock, fmt_json,           y, blocks = 2222222 2332332 & fmt = json
 on, cmd,  fast, blocks, tools/getBlock, fmt_junk,           y, blocks = 2222222 2332332 & fmt = junk
+on, both, fast, blocks, tools/getBlock, to_file,            y, blocks = 2222222 2332332 & fmt = json & to_file
 
 on, both, fast, blocks, tools/getBlock, fmt_trace,          y, blocks = 2222222 & trace & fmt = json
 

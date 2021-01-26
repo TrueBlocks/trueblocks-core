@@ -272,6 +272,16 @@ bool isValidName(const string_q& fn) {
 
 //--------------------------------------------------------------------------------
 bool COptionsBase::standardOptions(string_q& cmdLine) {
+    if (contains(cmdLine, "--to_file")) {
+        ostringstream rep;
+        rep << "--output:" << configPath("cache/tmp/" + makeValidName(Now().Format(FMT_EXPORT)));
+        rep << (expContext().exportFmt == CSV1    ? ".csv"
+                : expContext().exportFmt == TXT1  ? ".txt"
+                : expContext().exportFmt == YAML1 ? ".yaml"
+                                                  : ".json");
+        replaceAll(cmdLine, "--to_file", rep.str());
+    }
+
     // Note: check each item individual in case more than one appears on the command line
     cmdLine += " ";
     replace(cmdLine, "--output ", "--output:");
@@ -351,19 +361,19 @@ bool COptionsBase::standardOptions(string_q& cmdLine) {
             return usage("Please provide a filename for the --output option. Quitting...");
         if (!isValidName(temp))
             return usage("Please provide a valid filename (" + temp + ") for the --output option. Quitting...");
-        zipOnClose = endsWith(temp, ".gz");
+        rd_zipOnClose = endsWith(temp, ".gz");
         replace(temp, ".gz", "");
         CFilename fn(temp);
         establishFolder(fn.getPath());
         if (!folderExists(fn.getPath()))
             return usage("Output file path not found and could not be created: '" + fn.getPath() + "'. Quitting...");
-        outputFilename = fn.getFullPath();
-        outputStream.open(outputFilename.c_str());
+        rd_outputFilename = fn.getFullPath();
+        outputStream.open(rd_outputFilename.c_str());
         if (outputStream.is_open()) {
             coutSaved = cout.rdbuf();          // back up cout's streambuf
             cout.rdbuf(outputStream.rdbuf());  // assign streambuf to cout
         } else {
-            return usage("Could not open output stream at '" + outputFilename + ". Quitting...");
+            return usage("Could not open output stream at '" + rd_outputFilename + ". Quitting...");
         }
     }
 
@@ -1106,8 +1116,8 @@ COptionsBase::COptionsBase(void) {
     pParams = NULL;
     cntParams = 0;
     coutSaved = NULL;
-    outputFilename = "";
-    zipOnClose = false;
+    rd_outputFilename = "";
+    rd_zipOnClose = false;
     // outputStream
 }
 
@@ -1131,22 +1141,37 @@ bool COptionsBase::isRedirected(void) const {
 //--------------------------------------------------------------------------------
 void COptionsBase::closeRedirect(void) {
     if (coutSaved != NULL) {
-        cout.rdbuf(coutSaved);  // restore cout's original streambuf
+        // restore cout's original streambuf
+        cout.rdbuf(coutSaved);
         outputStream.flush();
         outputStream.close();
         coutSaved = NULL;
-        if (zipOnClose) {
+        // Let the call know where we put the data
+        string_q outFn = (isTestMode() ? "--output_filename--" : rd_outputFilename) + (rd_zipOnClose ? ".gz" : "");
+        switch (expContext().exportFmt) {
+            case TXT1:
+                cout << outFn << endl;
+                break;
+            case CSV1:
+            case YAML1:
+                cout << "-outputFilename: " << outFn << endl;
+                break;
+            default:
+                cout << "{ \"outputFilename\": \"" << outFn << "\" }";
+                break;
+        }
+
+        // Zip the file if we're told to do so
+        if (!isTestMode() && rd_zipOnClose) {
             ostringstream os;
-            os << "gzip -fv " << outputFilename;
+            os << "gzip -fv " << substitute(outFn, ".gz", "");
             // clang-format off
             if (system(os.str().c_str())) {}  // Don't remove. Silences warnings
             // clang-format on
-            zipOnClose = false;
-            cout << (isTestMode() ? "--output_filename--" : outputFilename + ".gz");
-        } else {
-            cout << (isTestMode() ? "--output_filename--" : outputFilename);
         }
-        outputFilename = "";
+
+        rd_zipOnClose = false;
+        rd_outputFilename = "";
     }
 }
 

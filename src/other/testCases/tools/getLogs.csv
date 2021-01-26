@@ -45,6 +45,7 @@ on, both, fast, logs, tools/getLogs, fmt_csv,             n, transactions = 2222
 on, both, fast, logs, tools/getLogs, fmt_json,            y, transactions = 2222222.0 2332332.0 & fmt = json
 on, both, fast, logs, tools/getLogs, fmt_api,             y, transactions = 2222222.0 2332332.0 & fmt = api
 on, cmd,  fast, logs, tools/getLogs, fmt_junk,            y, transactions = 2222222.0 2332332.0 & fmt = junk
+on, both, fast, logs, tools/getLogs, to_file,             y, transactions = 2222222.0 2332332.0 & fmt = json & to_file
 
 on, cmd,  fast, logs, tools/getLogs, by_filebad,          y, file:cmd_file & bad
 on, cmd,  slow, logs, tools/getLogs, by_file,             y, file:cmd_file
