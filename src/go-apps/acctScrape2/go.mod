@@ -3,6 +3,7 @@ module github.com/Great-Hill-Corporation/trueblocks-core/src/go-apps/acctScrape2
 go 1.13
 
 require (
+	github.com/gookit/color v1.3.6
 	github.com/spf13/pflag v1.0.5
 	github.com/spf13/viper v1.7.0
 	github.com/tushar2708/altcsv v0.0.0-20190930232535-20830d2e2c68

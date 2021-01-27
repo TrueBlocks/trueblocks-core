@@ -18,6 +18,7 @@ import (
 	"github.com/tushar2708/altcsv"
 	"gopkg.in/natefinch/lumberjack.v2"
 
+	"github.com/gookit/color"
 	flag "github.com/spf13/pflag"
 	"github.com/spf13/viper"
 )
@@ -115,11 +116,9 @@ func Execute() {
 	err := viper.ReadInConfig()
 
 	var wg sync.WaitGroup
-	var results []appearanceRecord
 	logging := flag.Bool("log", false, "enable logging")
 	format := flag.String("fmt", "json", "set output mode to : json, txt or csv")
 	flag.Int("max", 4, "maximum number of parallel threads")
-	streaming := flag.Bool("stream", false, "stream output from threads as received")
 	flag.Parse()
 	maxTasks := viper.GetInt("max")
 	if *logging {
@@ -131,19 +130,16 @@ func Execute() {
 		})
 		log.Println("New Scan")
 	}
-	flag.Usage = usage
 	*format = strings.ToLower(*format)
 	switch *format {
 	case "json":
-		if *streaming {
-			fmt.Print("[")
-		}
+		fmt.Print("[")
 	case "txt":
 		fmt.Println("address\tblockNumber\ttransactionIndex")
 	case "csv":
 		fmt.Println(`"address","blockNumber","transactionIndex"`)
 	default:
-		flag.Usage()
+		usage("What")
 		if *logging {
 			log.Println("invalid flag : fmt = ", format)
 		}
@@ -151,7 +147,7 @@ func Execute() {
 	}
 	args := flag.Args()
 	if len(args) != 1 {
-		flag.Usage()
+		usage("What")
 		if *logging {
 			log.Println("wrong number of arguments (should be 1) ", len(args))
 		}
@@ -181,11 +177,7 @@ func Execute() {
 		if count >= maxTasks {
 			// wait for one goroutine to finish
 			r := <-resultChannel
-			if *streaming {
-				streamOut(*format, r)
-			} else {
-				results = append(results, r...)
-			}
+			streamOut(*format, r)
 			count--
 		}
 		wg.Add(1)
@@ -195,41 +187,15 @@ func Execute() {
 	for j := 0; j < count; j++ {
 		select {
 		case r := <-resultChannel:
-			if *streaming {
-				streamOut(*format, r)
-			} else {
-				results = append(results, r...)
-			}
+			streamOut(*format, r)
 		}
 	}
 	wg.Wait()
 	close(resultChannel)
 	for r := range resultChannel {
-		if *streaming {
-			streamOut(*format, r)
-		} else {
-			results = append(results, r...)
-		}
+		streamOut(*format, r)
 	}
-	if !*streaming {
-		switch *format {
-		case "json":
-			if len(results) == 0 || results == nil {
-				fmt.Println("[]")
-				break
-			}
-			err = json.NewEncoder(os.Stdout).Encode(results)
-			if err != nil {
-				log.Fatal(err)
-			}
-		case "txt":
-			writeTextTabbedCSV(convertTo2DStringArray(results))
-		case "csv":
-			writeQuotedCSV(convertTo2DStringArray(results))
-		default:
-		}
-	}
-	if *streaming && *format == "json" {
+	if *format == "json" {
 		fmt.Println("]")
 	}
 	if *logging {
@@ -237,20 +203,29 @@ func Execute() {
 	}
 }
 
-func usage() {
-	fmt.Println("usage $ acctScrape2 directory address")
-	fmt.Println("option :")
-	fmt.Println(" --fmt    : set output mode to : json, txt or csv")
-	fmt.Println(" --max    : set maximum number of parallel threads*")
-	fmt.Println(" --log    : enable logging")
-	fmt.Println(" --stream : stream output from threads as received")
-	fmt.Println("examples : ")
-	fmt.Println("$ acctScrape2 data/ 0xff488fd296c38a24cccc60b43dd7254810dab64e")
-	fmt.Println("$ acctScrape2 --fmt json data/ 0xff488fd296c38a24cccc60b43dd7254810dab64e")
-	fmt.Println("$ acctScrape2 --fmt csv  data/ 0xff488fd296c38a24cccc60b43dd7254810dab64e")
-	fmt.Println("$ acctScrape2 --fmt txt  data/ 0xff488fd296c38a24cccc60b43dd7254810dab64e")
-	fmt.Println()
-	fmt.Println("* precedence : flag > config > default (4)")
+func colr(c, s string) string {
+	col := os.Getenv("NO_COLOR") != "true"
+	if col {
+		if c == "yellow" {
+			return color.FgYellow.Render(s)
+		} else {
+			return color.LightBlue.Render(s)
+		}
+	}
+	return s
+}
+func usage(s string) {
+	fmt.Println("")
+	fmt.Println(" ", colr("yellow", "Usage:"), "    acctScrape [-v|-h] <address> [address...]")
+	fmt.Println(" ", colr("yellow", "Purpose:"), "  Add or remove monitors for a given Ethereum address (or collection of addresses).")
+	fmt.Println("")
+	fmt.Println(" ", colr("yellow", "Where:"))
+	fmt.Println("        addrs                 one or more Ethereum addresses (required)")
+	fmt.Println("        -m  (--max)           set maximum number of parallel threads")
+	fmt.Println("        -v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level")
+	fmt.Println("        -h  (--help)          display this help screen")
+	fmt.Println("")
+	fmt.Println(" ", colr("blue", "Powered by TrueBlocks (GHC-TrueBlocks//0.8.3-alpha-8af508185-20210126)"))
 }
 
 var notFirst bool // defaults to false
