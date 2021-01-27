@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+export API_MODE=true
+cd ../src/go-apps/go-server
+go run main.go

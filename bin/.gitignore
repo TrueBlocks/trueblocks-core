@@ -25,6 +25,7 @@ getState
 getTokenInfo
 getTrace
 getTrans
+go-daemon
 grabABI
 makeClass
 whenBlock
