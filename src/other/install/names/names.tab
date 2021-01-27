@@ -4742,6 +4742,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 30-Contracts:Humanity DAO	0xb446783dbe268df10b5246d4c473dabcdbbd0581	Liupc270882400		https://www.humanitydao.org/humans			false	false	false	false	false	false
 50-Tokens:ERC20	0xb45a50545beeab73f38f31e5973768c421805e5e	TKRToken	TKR	On chain	18	CryptoInsight - Insight and Analytics Platform.	false	false	false	true	true	false
 32-Kickback:Friends	0xb4724184d67b207a4133d3672f4f0e7159edc5e1	momo		https://kickback.events/			false	false	false	false	false	false
+50-Tokens:ERC20	0xb47e3cd837ddf8e4c57f05d70ab865de6e193bbb	CRYPTOPUNKS	Ͼ	On chain			false	false	false	true	true	false
 30-Contracts	0xb485d89aba096fc9f117fa28b80dc8aac7971049	Crypto: Whitelisted Minter		Github			false	false	false	true	false	false
 31-Gitcoin Grants:Friends	0xb49715ff2beeec1e07bcf8d47cb973d3727fbd0b	199911		Gitcoin Website			false	false	false	false	false	false
 81-Other	0xb4abc1bfc403a7b82c777420c81269858a4b8aa4	GavCoin_id158_cnt2_4mo		Ether Camp			false	false	false	true	false	false
