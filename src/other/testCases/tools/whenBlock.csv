@@ -36,6 +36,10 @@ on, both, slow, when, tools/whenBlock, list_dates,                  n, list & fm
 on, both, slow, when, tools/whenBlock, list_dates_long,             y, list
 on, both, fast, when, tools/whenBlock, long_verbose_valid_block,    y, verbose & block_list = 1000
 on, both, slow, when, tools/whenBlock, mixed_block_and_date,        y, block_list = 2017-03-02 & block_list = 123123
+on, both, slow, when, tools/whenBlock, multiple_same,               y, block_list = 12345 & block_list = 54321 & block_list = 2016-12-01 & block_list = 2016-12-01-01
+on, both, slow, when, tools/whenBlock, multiple_same_ts_true,       y, block_list = 12345 & block_list = 54321 & block_list = 2016-12-01 & block_list = 2016-12-01-01 & timestamps = true
+on, both, slow, when, tools/whenBlock, multiple_same_ts_false,      y, block_list = 12345 & block_list = 54321 & block_list = 2016-12-01 & block_list = 2016-12-01-01 & timestamps = false
+
 on, cmd,  slow, when, tools/whenBlock, mixed_options,               y, @vl
 on, both, fast, when, tools/whenBlock, noparams,                    y,
 on, both, slow, when, tools/whenBlock, not_present_block,           y, block_list = 8000000

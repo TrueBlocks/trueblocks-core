@@ -1,0 +1,42 @@
+{
+  "data": [
+    {
+      "blockNumber": 12345,
+      "timestamp": 1438367030
+    },
+    {
+      "blockNumber": 54321,
+      "timestamp": 1439052185
+    },
+    {
+      "blockNumber": 2724708,
+      "timestamp": 1480550392
+    },
+    {
+      "blockNumber": 2724970,
+      "timestamp": 1480553990
+    }
+  ],
+  "types": [
+    {
+      "type": "CBlock",
+      "fields": [
+        {
+          "name": "blockNumber",
+          "type": "blocknum"
+        },
+        {
+          "name": "timestamp",
+          "type": "timestamp"
+        }
+      ]
+    }
+  ],
+  "meta": {
+    "unripe": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "client": "0xdeadbeef"
+  }
+}

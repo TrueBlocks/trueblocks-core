@@ -54,10 +54,27 @@ bool COptionsBase::prepareArguments(int argCountIn, const char* argvIn[]) {
     if (getEnvStr("REDIR_CERR") == "true")
         cerr.rdbuf(cout.rdbuf());
 
+    // We allow users to add 'true' or 'false' to boolean options, but the following code works by the
+    // presence or absense of the boolean key, so here we spin through, removing 'true' and 'false' and
+    // removing the key if we find 'false'
+    CStringArray cleaned;
+    for (int i = 1; i < argCountIn; i++) {
+        if (toLower(argvIn[i]) == "true") {
+            // don't put this in, but leave the key
+        } else if (toLower(argvIn[i]) == "false") {
+            // remove the key
+            if (cleaned.size())
+                cleaned.pop_back();
+        } else {
+            // add this arg
+            cleaned.push_back(argvIn[i]);
+        }
+    }
+
     CStringArray separatedArgs;
-    for (int i = 1; i < argCountIn; i++) {  // skip argv[0]
+    for (auto item : cleaned) {
         CStringArray parts;
-        string_q arg = substitute(substituteAny(argvIn[i], "\n\r\t", " "), ",", " ");
+        string_q arg = substitute(substituteAny(item, "\n\r\t", " "), ",", " ");
         explode(parts, arg, ' ');
         for (auto part : parts) {
             if (!part.empty()) {
