@@ -1361,7 +1361,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x30cecb5461a449a90081f5a5f55db4e048397bab	Tracto	TRCT	On chain	8	A technology for rapid and anonymous coin transaction organization.	false	false	false	true	true	false
 31-Gitcoin Grants:Friends	0x30cf4662af70b48244e2969458714f94949d664c	divguy		Gitcoin Website			false	false	false	false	false	false
 31-Gitcoin Grants:Friends	0x30dffb4d23355f93ba05c0f25be31c0cc640bd3c	eddy-fi		Gitcoin Website			false	false	false	false	false	false
-30-Contracts	0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7	Giveth Bridge to Kovan		TrueBlocks.io			false	false	false	true	false	false
+30-Contracts	0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7	Giveth Bridge		TrueBlocks.io			false	false	false	true	false	false
 31-Gitcoin Grants:Grant	0x3111327edd38890c3fe564afd96b4c73e8101747	Grant 510 Trustless Fund		https://gitcoin.co/grants/510/trustless-fund		https://trustless.fund/	false	false	false	false	false	false
 81-Other	0x3116d8622f80b0b7d607033ddc8fe643ecc518da	My Campaign		Weifund Website			false	false	false	false	false	false
 90-DevCon2:Individual	0x3118063f5897af24a05112fcceec284f0bf98eac	Santiago Rodreguez Pozo		DevCon2 Token Contract			false	false	false	false	false	false
@@ -2158,6 +2158,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 32-Kickback:Friends	0x5006f7474081ff16a407b4d1429b247dfefd0eff	auntrhonda		https://kickback.events/			false	false	false	false	false	false
 50-Tokens:ERC20	0x501262281b2ba043e2fbf14904980689cddb0c78	Mithril Ore	MORE	On chain	2	Mithril Ore is a Casper Ethereum Staking Pool. Participation in Casper may be limited due to complexity, network-congestion, and/or lack of funds. This token allows participation by resolving these variables.	false	false	false	true	true	false
 31-Gitcoin Grants:Friends	0x501d66e0b4254de6187443b9cdb744e2752f489e	nimbusnerd		Gitcoin Website			false	false	false	false	false	false
+30-Contracts	0x502bd2529df24a36dfee57335791be0ee62f8c74	Giveth Bridge Deployer		OnChain			false	false	false	false	false	false
 31-Gitcoin Grants:Friends	0x502e31fb699f1a0b547dc65f2f0c7ab36f3010e2	reverseacid		Gitcoin Website			false	false	false	false	false	false
 31-Gitcoin Grants:Friends	0x503b2edf3b04dc2dbe7f1e4844dccfa2da439a61	ontologymachine		Gitcoin Website			false	false	false	false	false	false
 50-Tokens:ERC20	0x5046e860ff274fb8c66106b0ffb8155849fb0787	JavaScript	JS	On chain	8		false	false	false	true	true	false
@@ -4275,6 +4276,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 81-Other	0xa259e6bcade86c770cb5214c789ee107662831a6	Crazyearning		Etherscan.io			false	false	false	true	false	false
 31-Gitcoin Grants:Friends	0xa26444426d01dda2d234024adc6897dbd1656412	marta-crypto		Gitcoin Website			false	false	false	false	false	false
 30-Contracts	0xa26d16a21805b14b2977555ffdea34e5e6fc43ba	dYdX 0x Wrapper		0xTracker			false	false	false	true	false	false
+30-Contracts	0xa27243046e16ee596d19ff3091719160527e469a	Giveth Bridge Spender 1					false	false	false	false	false	false
 90-DevCon2:Individual	0xa2a272cdf5de683833e7560541a3454dcc3b7e8f	Harry Pottash		DevCon2 Token Contract			false	false	false	false	false	false
 50-Tokens:ERC20	0xa2a54f1ec1f09316ef12c1770d32ed8f21b1fb6a	DFT	DFT	On chain	8		false	false	false	true	true	false
 30-Contracts:Humanity DAO	0xa2b0f6a1578fbe2934a1d1024c706400e81a3352	markobeslac		https://www.humanitydao.org/humans			false	false	false	false	false	false
