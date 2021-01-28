@@ -41,6 +41,7 @@ void COptions::finishClean(CAccountName& name) {
     if (contains(name.source, "EtherScan"))
         name.source = "EtherScan.io";
     name.name = trim(substitute(name.name, "  ", " "));
+    name.description = (name.description == "false" ? "" : name.description);
 }
 
 //--------------------------------------------------------------------

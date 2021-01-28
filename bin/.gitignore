@@ -25,7 +25,7 @@ getState
 getTokenInfo
 getTrace
 getTrans
-go-server
+goServer
 grabABI
 makeClass
 whenBlock

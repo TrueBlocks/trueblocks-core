@@ -23,6 +23,7 @@ on      ,cmd  ,fast  ,null     ,apps/chifra ,help_traces        ,n    ,modes = t
 on      ,cmd  ,fast  ,null     ,apps/chifra ,help_state         ,n    ,modes = state & help
 on      ,cmd  ,fast  ,null     ,apps/chifra ,help_tokens        ,n    ,modes = tokens & help
 on      ,cmd  ,fast  ,null     ,apps/chifra ,help_scrape        ,n    ,modes = scrape & help
+on      ,cmd  ,fast  ,null     ,apps/chifra ,help_server        ,n    ,modes = server & help
 on      ,cmd  ,fast  ,null     ,apps/chifra ,help_status        ,n    ,modes = status & help
 on      ,cmd  ,fast  ,null     ,apps/chifra ,help_quotes        ,n    ,modes = quotes & help
 on      ,cmd  ,fast  ,null     ,apps/chifra ,help_when          ,n    ,modes = when & help
@@ -60,3 +61,5 @@ on      ,both ,slow  ,export   ,apps/chifra ,export            ,y    ,modes = ex
 # on    ,both ,fast  ,null     ,apps/chifra ,daemon_badparms   ,n    ,modes = scrape & daemon & not_an_option
 # on    ,both ,fast  ,null     ,apps/chifra ,daemon            ,n    ,modes = scrape & daemon & sleep 10 & filter 0x1 0x2
 # on    ,both ,fast  ,null     ,apps/chifra ,scrape            ,n    ,modes = scrape
+
+# on    ,both ,fast  ,null     ,apps/chifra ,server            ,n    ,modes = server

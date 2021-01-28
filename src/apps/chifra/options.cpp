@@ -16,7 +16,7 @@ const string_q opt_string =
     "collections|names|tags|abis|"
     "blocks|transactions|receipts|logs|traces|quotes|"
     "state|tokens|when|where|dive|"
-    "scrape|status|rm]"
+    "init|scrape|server|status|rm]"
     ">";
 
 //---------------------------------------------------------------------------------------------------
@@ -262,7 +262,7 @@ COptions::COptions(void) {
                 "  list          list all appearances of address(es) on the chain, also adds monitor(s)|"
                 "  export        export details for each appearance (as transacitons, logs, traces, balances, etc.)|"
                 "  slurp         export details by querying EtherScan (note: will not return as many appearances as --list)|"
-                "  rm            remove previously monitored address(es).|"
+                "  rm            remove previously monitored address(es)|"
                 "SHARED DATA|"
                 "  collections   list and/or share collections (groups of addresses)|"
                 "  names         list and/or share named addresses|"
@@ -277,7 +277,9 @@ COptions::COptions(void) {
                 "  state         export parts of the state for given address(es)|"
                 "  tokens        export data related to ERC20 and/or ERC721 token(s)|"
                 "OTHER|"
-                "  scrape        scrape the chain and build an index of address appearances (aka digests).|"
+                "  init          initialize TrueBlocks databases|"
+                "  scrape        scrape the chain and build an index of address appearances (aka digests)|"
+                "  server        serve the TrueBlocks API via goServer|"
                 "  status        query the status of the system|"
                 "  quotes        return prices collected from configured remote API|"
                 "  when          return a date given a block number or a block number given a date|"

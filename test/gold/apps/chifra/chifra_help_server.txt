@@ -1,0 +1,4 @@
+chifra argc: 3 [1:server] [2:--help] 
+chifra server --help 
+/Users/jrush/Development/trueblocks-core/bin/goServer: line 4: cd: ../src/go-apps/go-server: No such file or directory
+stat main.go: no such file or directory

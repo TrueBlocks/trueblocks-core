@@ -76,6 +76,7 @@ bool loadPrefunds(const string_q& prefundFile, COptionsBase& options) {
     if (!fileExists(binFile)) {
         if (!fileExists(prefundFile))
             return false;
+        options.prefundWeiMap.clear();
         CStringArray lines;
         asciiFileToLines(prefundFile, lines);
         bool first = true;
