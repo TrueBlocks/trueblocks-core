@@ -1,22 +1,11 @@
 {
   "data": [
     {
-      "blockNumber": 4001001,
-      "totalSupply": 140245398245132780000000000,
-      "address": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07",
-      "name": "OMGToken",
-      "symbol": "OMG",
-      "decimals": 18,
-      "is_contract": false,
-      "is_erc20": true,
-      "is_erc721": false
-    },
-    {
-      "blockNumber": 4001001,
-      "totalSupply": 7367049360614191000000000,
-      "address": "0xb9e7f8568e08d5659f5d29c4997173d84cdf2607",
-      "name": "Swarm City Token",
-      "symbol": "SWT",
+      "blockNumber": 8000000,
+      "totalSupply": 1.08002089e+24,
+      "address": "0x00000000441378008ea67f4284a57932b1c000a5",
+      "name": "TrueGBP",
+      "symbol": "TGBP",
       "decimals": 18,
       "is_contract": false,
       "is_erc20": true,

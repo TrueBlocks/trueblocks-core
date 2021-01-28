@@ -72,6 +72,9 @@ on, both, slow, tokens, tools/getTokenInfo, fmt_api,                       y, ad
 on, both, cmd,  tokens, tools/getTokenInfo, fmt_junk,                      y, addrs2 = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 & fmt = junk & blocks = 2000000
 on, both, slow, tokens, tools/getTokenInfo, to_file,                       y, addrs2 = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 & fmt = json & blocks = 2000000 & to_file
 
+on, both, slow, tokens, tools/getTokenInfo, proxy_no,                      y, addrs2 = 0x00000000441378008ea67f4284a57932b1c000a5 & fmt = json & blocks = 7442048 & parts = all
+on, both, slow, tokens, tools/getTokenInfo, proxy_yes,                     y, addrs2 = 0x00000000441378008ea67f4284a57932b1c000a5 & fmt = json & blocks = 8000000 & parts = all
+
 # on, both, slow, tokens, tools/getTokenInfo, info_version,                  y, addrs2 = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 & parts = version
 # on, both, slow, tokens, tools/getTokenInfo, info_version2,                 n, addrs2 = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 & parts = version & fmt = csv
 # on, both, slow, tokens, tools/getTokenInfo, info_version3,                 y, addrs2 = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 & parts = version & blocks = 4001001-4001002 & fmt = json

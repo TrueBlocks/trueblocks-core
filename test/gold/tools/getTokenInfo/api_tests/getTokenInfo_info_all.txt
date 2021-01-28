@@ -7,7 +7,7 @@
       "symbol": "OMG",
       "decimals": 18,
       "is_contract": false,
-      "is_erc20": false,
+      "is_erc20": true,
       "is_erc721": false
     }
   ],

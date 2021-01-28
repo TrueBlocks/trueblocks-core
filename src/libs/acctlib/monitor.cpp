@@ -711,9 +711,20 @@ string_q getTokenState(const string_q& what, const CMonitor& token, blknum_t blo
     sigMap["decimals"] = "0x313ce567";
     sigMap["symbol"] = "0x95d89b41";
     sigMap["name"] = "0x06fdde03";
-    if (sigMap[what].empty())
+    if (sigMap[what].empty()) {
         return "";
-    return doEthCall(token.address, sigMap[what], "", blockNum, token.abi_spec);
+    }
+    string_q ret = doEthCall(token.address, sigMap[what], "", blockNum, token.abi_spec);
+    if (ret == "") {
+        // This may be a proxy contract, so we can try to get its implementation and call back in
+        CMonitor proxy = token;
+        // sigMap["implementation"] = "0x5c60da1b";
+        proxy.address = doEthCall(token.address, "0x5c60da1b", "", blockNum, token.abi_spec);
+        if (isZeroAddr(proxy.address))
+            return "";
+        return doEthCall(proxy.address, sigMap[what], "", blockNum, token.abi_spec);
+    }
+    return ret;
 }
 
 //------------------------------------------------------------------------------------------------

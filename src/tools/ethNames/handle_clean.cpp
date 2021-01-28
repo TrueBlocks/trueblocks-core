@@ -13,35 +13,51 @@
 #include "options.h"
 
 //--------------------------------------------------------------------
-void COptions::finishClean(CAccountName& name) {
-    LOG_INFO("Cleaning ", name.address, "                                  \r");
-    name.is_prefund = prefundWeiMap[name.address] > 0;
-    if (!maliciousMap[name.address] && isContractAt(name.address, latestBlock)) {
-        standards.address = name.address;
-        string_q nm = getTokenState("name", standards, latestBlock);
-        string_q decimals = getTokenState("decimals", standards, latestBlock);
-        string_q symbol = getTokenState("symbol", standards, latestBlock);
-        if (!nm.empty() || !decimals.empty()) {
-            name.decimals = str_2_Uint(decimals);
-            name.symbol = symbol.empty() ? name.symbol : symbol;
-            name.is_erc20 = true;
-            name.tags = name.tags.empty() ? "50-ERC20" : name.tags;
-            if (!contains(name.source, "kickback")) {
-                name.source = "On chain";
-                name.name = nm.empty() ? name.name : (contains(name.name, "Airdrop") ? nm + " Airdrop" : nm);
-            }
-            // name.is_erc721 = isERC721(name.address);
+void COptions::finishClean(CAccountName& account) {
+    LOG_INFO("Cleaning ", account.address, "                                  \r");
+    account.is_prefund = prefundWeiMap[account.address] > 0;
+    account.is_contract = isContractAt(account.address, latestBlock);
+    if (account.is_contract && isTokenContract(account)) {
+        account.decimals = standards.decimals;
+        account.symbol = standards.symbol;
+        account.is_erc20 = true;
+        account.is_erc721 = false;
+        account.tags = account.tags.empty() || contains(toLower(account.tags), "token")
+                           ? (account.is_erc721 ? "51-Tokens:ERC721" : "50-Tokens:ERC20")
+                           : account.tags;
+        if (account.source.empty() || contains(toLower(account.source), "etherscan") ||
+            contains(toLower(account.source), "trueblocks")) {
+            bool isAirdrop = contains(toLower(account.name), "airdrop") || contains(toLower(account.tags), "airdrop");
+            account.source = "On chain";
+            account.name =
+                standards.name + (isAirdrop && !contains(toLower(standards.name), "airdrop") ? " Airdrop" : "");
         }
-        name.is_contract = true;
     } else {
-        name.is_contract = false;
-        name.is_erc20 = false;
-        name.is_erc721 = false;
+        account.is_erc20 = false;
+        account.is_erc721 = false;
     }
-    if (contains(name.source, "EtherScan"))
-        name.source = "EtherScan.io";
-    name.name = trim(substitute(name.name, "  ", " "));
-    name.description = (name.description == "false" ? "" : name.description);
+    if (contains(toLower(account.source), "etherscan"))
+        account.source = "EtherScan.io";
+    if (contains(account.source, "trueblocks"))
+        account.source = "TrueBlocks";
+    account.name = trim(substitute(account.name, "  ", " "));
+    account.description = trim(substitute(account.description, "  ", " "));
+    if (account.description == "false")
+        account.description = "";
+}
+
+//--------------------------------------------------------------------
+bool COptions::isTokenContract(const CAccountName& account) {
+    if (maliciousMap[account.address] || !account.is_contract)
+        return false;
+    standards = CMonitor();  // reset
+    standards.address = account.address;
+    standards.name = getTokenState("name", standards, latestBlock);
+    standards.name = (standards.name.empty() ? account.name : standards.name);
+    standards.symbol = getTokenState("symbol", standards, latestBlock);
+    standards.symbol = (standards.symbol.empty() ? account.symbol : standards.symbol);
+    standards.decimals = str_2_Uint(getTokenState("decimals", standards, latestBlock));
+    return !standards.name.empty() || standards.decimals;
 }
 
 //--------------------------------------------------------------------

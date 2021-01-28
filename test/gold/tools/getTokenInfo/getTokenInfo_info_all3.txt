@@ -17,7 +17,8 @@ getTokenInfo 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29
     "address": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07",
     "name": "OMGToken",
     "symbol": "OMG",
-    "decimals": 18
+    "decimals": 18,
+    "is_erc20": true
   }--1 : 3 : 0
 --  0: val_0 (string)
 --  0: 0000000000000000000000000000000000000000000000000000000000000020 <---
@@ -35,7 +36,8 @@ getTokenInfo 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29
     "address": "0xb9e7f8568e08d5659f5d29c4997173d84cdf2607",
     "name": "Swarm City Token",
     "symbol": "SWT",
-    "decimals": 18
+    "decimals": 18,
+    "is_erc20": true
   }], "types": [
 { "type": "CTokenBalanceRecord", "fields": [{ "name": "blockNumber", "type": "blocknum" }, { "name": "totalSupply", "type": "wei" }, { "name": "address", "type": "address" }, { "name": "name", "type": "text" }, { "name": "symbol", "type": "text" }, { "name": "decimals", "type": "unumber" }, { "name": "is_contract", "type": "bool" }, { "name": "is_erc20", "type": "bool" }, { "name": "is_erc721", "type": "bool" }] }
 ] }
