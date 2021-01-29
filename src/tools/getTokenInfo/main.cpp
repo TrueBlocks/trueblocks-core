@@ -66,8 +66,9 @@ bool processPair(uint64_t blockNum, void* data) {
             if (opt->modeBits & marker.bits) {
                 string_q value = getTokenState(marker.field, opt->curToken, blockNum);
                 opt->curToken.setValueByName(marker.field, value);
-                if ((marker.field == "name" || marker.field == "symbol" || marker.field == "decimals") &&
-                    !value.empty())
+                if ((marker.field == "name" || marker.field == "symbol") && !value.empty())
+                    opt->curToken.is_erc20 = true;
+                if (marker.field == "decimals" && str_2_Uint(value) > 0)
                     opt->curToken.is_erc20 = true;
             }
         }

@@ -21,7 +21,7 @@ tags	address	name	symbol	decimals	source
 31-Gitcoin Grants:Friends	0xb69fa0ba7f4cf765c94a9ced37310327191ac949	Name 0xb69fa0ba				Gitcoin Website
 31-Gitcoin Grants:Friends	0xb6a312b525de98cbd6c73a63e46a1e9acb835c64	Name 0xb6a312b5				Gitcoin Website
 60-Airdrops	0xb6a398d36381a2370d9522de023b5bce5000ae9d	EtherCash Airdrop				TrueBlocks.io
-34-ENS	0xb6e040c9ecaae172a89bd561c5f73e1c48d28cd9	ENS: Wallet 2				Etherscan
+34-ENS	0xb6e040c9ecaae172a89bd561c5f73e1c48d28cd9	ENS: Wallet 2				EtherScan.io
 31-Gitcoin Grants:Friends	0xb6e32c75a2083a38f6cce6e65756c0bf86d84200	Name 0xb6e32c75				Gitcoin Website
 50-Tokens:ERC20	0xb6ed7644c69416d67b522e20bc294a9a9b405b31	0xBitcoin Token	0xBTC		8	On chain
 50-Tokens:ERC20	0xb6ee9668771a79be7967ee29a63d4184f8097143	CargoX Token	CXO		18	On chain

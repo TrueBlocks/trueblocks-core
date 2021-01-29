@@ -25,7 +25,7 @@ static const COption params[] = {
     COption("parts", "p", "list<enum[none|some*|all|balance|nonce|code|storage|deployed|accttype]>", OPT_FLAG, "control which state to export"),  // NOLINT
     COption("changes", "c", "", OPT_SWITCH, "only report a balance when it changes from one block to the next"),
     COption("no_zero", "n", "", OPT_SWITCH, "suppress the display of zero balance accounts"),
-    COption("call", "a", "<string>", OPT_HIDDEN | OPT_FLAG, "a comma-separated string of an address, a 4-byte, and required parameters for a call against a smart contract"),  // NOLINT
+    COption("call", "a", "<string>", OPT_HIDDEN | OPT_FLAG, "a bang-separated string consisting of address!4-byte!bytes"),  // NOLINT
     COption("", "", "", OPT_DESCRIPTION, "Retrieve the balance of one or more address at the given block(s)."),
     // clang-format on
     // END_CODE_OPTIONS
@@ -85,9 +85,9 @@ bool COptions::parseArguments(string_q& command) {
 
     if (!call.empty()) {
         CStringArray vars;
-        explode(vars, call, ',');
+        explode(vars, call, '!');
         if (!isAddress(vars[0]))
-            return usage("Invalid address " + vars[0] + ". Quitting...");
+            return usage("Invalid address (" + vars[0] + ") in call. Quitting...");
         CAbi abi;
         abi.loadAbiByAddress(vars[0]);
         blknum_t bn = vars.size() > 3 ? str_2_Uint(vars[3]) : getLatestBlock_client();

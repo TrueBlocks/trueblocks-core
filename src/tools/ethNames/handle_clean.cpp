@@ -17,24 +17,26 @@ void COptions::finishClean(CAccountName& account) {
     LOG_INFO("Cleaning ", account.address, "                                  \r");
     account.is_prefund = prefundWeiMap[account.address] > 0;
     account.is_contract = isContractAt(account.address, latestBlock);
-    if (account.is_contract && isTokenContract(account)) {
+    account.is_erc20 = isTokenContract(account);
+    if (account.is_contract && account.is_erc20) {
         account.decimals = standards.decimals;
         account.symbol = standards.symbol;
-        account.is_erc20 = true;
-        account.is_erc721 = false;
-        account.tags = account.tags.empty() || contains(toLower(account.tags), "token")
-                           ? (account.is_erc721 ? "51-Tokens:ERC721" : "50-Tokens:ERC20")
-                           : account.tags;
-        if (account.source.empty() || contains(toLower(account.source), "etherscan") ||
-            contains(toLower(account.source), "trueblocks")) {
+        bool isEtherscan = contains(toLower(account.source), "etherscan");
+        bool isTrueblocks = contains(toLower(account.source), "trueblocks");
+        if (account.source.empty() || isEtherscan || isTrueblocks) {
+            // if the data is from us or etherscan or doesn't exist, fix it if we can
             bool isAirdrop = contains(toLower(account.name), "airdrop") || contains(toLower(account.tags), "airdrop");
             account.source = "On chain";
             account.name =
                 standards.name + (isAirdrop && !contains(toLower(standards.name), "airdrop") ? " Airdrop" : "");
         }
-    } else {
-        account.is_erc20 = false;
-        account.is_erc721 = false;
+    }
+    if (account.decimals > 0 || !account.symbol.empty()) {
+        account.is_erc721 = contains(toLower(account.tags), "erc721");
+        account.is_erc20 = true;
+        account.tags = account.tags.empty() || contains(toLower(account.tags), "token")
+                           ? (account.is_erc721 ? "51-Tokens:ERC721" : "50-Tokens:ERC20")
+                           : account.tags;
     }
     if (contains(toLower(account.source), "etherscan"))
         account.source = "EtherScan.io";
@@ -52,12 +54,16 @@ bool COptions::isTokenContract(const CAccountName& account) {
         return false;
     standards = CMonitor();  // reset
     standards.address = account.address;
-    standards.name = getTokenState("name", standards, latestBlock);
-    standards.name = (standards.name.empty() ? account.name : standards.name);
-    standards.symbol = getTokenState("symbol", standards, latestBlock);
-    standards.symbol = (standards.symbol.empty() ? account.symbol : standards.symbol);
-    standards.decimals = str_2_Uint(getTokenState("decimals", standards, latestBlock));
-    return !standards.name.empty() || standards.decimals;
+
+    string_q name = getTokenState("name", standards, latestBlock);
+    string_q symbol = getTokenState("symbol", standards, latestBlock);
+    uint64_t decimals = str_2_Uint(getTokenState("decimals", standards, latestBlock));
+
+    standards.name = (name.empty() ? account.name : name);
+    standards.symbol = (symbol.empty() ? account.symbol : symbol);
+    standards.decimals = decimals;
+
+    return !name.empty() || decimals;
 }
 
 //--------------------------------------------------------------------

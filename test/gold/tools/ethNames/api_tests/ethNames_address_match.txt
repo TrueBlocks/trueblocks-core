@@ -113,7 +113,7 @@
       "address": "0x10a0847c2d170008ddca7c3a688124f493630032",
       "name": "RelayerManager",
       "symbol": "",
-      "source": "Etherscan",
+      "source": "EtherScan.io",
       "decimals": 0,
       "description": ""
     },
@@ -167,7 +167,7 @@
       "address": "0x111111125434b319222cdbf8c261674adb56f3ae",
       "name": "1inch.exchange v2",
       "symbol": "",
-      "source": "Etherscan.io",
+      "source": "EtherScan.io",
       "decimals": 0,
       "description": ""
     },
@@ -185,7 +185,7 @@
       "address": "0x11111254369792b2ca5d084ab5eea397ca8fa48b",
       "name": "1inch.exchange",
       "symbol": "",
-      "source": "Etherscan.io",
+      "source": "EtherScan.io",
       "decimals": 0,
       "description": ""
     },
@@ -212,7 +212,7 @@
       "address": "0x112570655b32a8c747845e0215ad139661e66e7f",
       "name": "Yearn: StrategyCurveBUSDVoterProxy",
       "symbol": "",
-      "source": "Etherscan",
+      "source": "EtherScan.io",
       "decimals": 0,
       "description": ""
     },
@@ -563,7 +563,7 @@
       "address": "0x12d66f87a04a9e220743712ce6d9bb1b5616b8fc",
       "name": "Tornado.Cash: 0.1 ETH",
       "symbol": "",
-      "source": "Etherscan.io",
+      "source": "EtherScan.io",
       "decimals": 0,
       "description": ""
     },
@@ -653,7 +653,7 @@
       "address": "0x138a35ee20e40f019e7e7c00386ab2ef42d66d1e",
       "name": "MCH: Hero Gateway 1",
       "symbol": "",
-      "source": "Etherscan",
+      "source": "EtherScan.io",
       "decimals": 0,
       "description": ""
     },
@@ -707,7 +707,7 @@
       "address": "0x13c1542a468319688b89e323fe9a3be3a90ebb27",
       "name": "Synthetix: sBTC Curvepool Rewards",
       "symbol": "",
-      "source": "Etherscan.io",
+      "source": "EtherScan.io",
       "decimals": 0,
       "description": ""
     },
@@ -797,7 +797,7 @@
       "address": "0x14300cd613d6a719ac19de68c2f1042b3217cbff",
       "name": "Pool Together Sender",
       "symbol": "",
-      "source": "Etherscan",
+      "source": "EtherScan.io",
       "decimals": 0,
       "description": ""
     },
@@ -1184,7 +1184,7 @@
       "address": "0x1676fc274b65966ed0c6438a26d34c6c92a5981c",
       "name": "Cream.Finance: CREAM/USDC Pool",
       "symbol": "",
-      "source": "Etherscan",
+      "source": "EtherScan.io",
       "decimals": 0,
       "description": ""
     },
@@ -1256,7 +1256,7 @@
       "address": "0x16e58463eb9792bc236d8860f5bc69a81e26e32b",
       "name": "SushiSwap: Liquidity Migrator",
       "symbol": "",
-      "source": "Etherscan.io",
+      "source": "EtherScan.io",
       "decimals": 0,
       "description": ""
     },
@@ -1328,7 +1328,7 @@
       "address": "0x17405148473e521b62cbcf8ebd929e8a30c4d3aa",
       "name": "Dao Issued Cert Airdrop",
       "symbol": "DIC",
-      "source": "Etherscan",
+      "source": "EtherScan.io",
       "decimals": 0,
       "description": ""
     },
@@ -1562,7 +1562,7 @@
       "address": "0x191167380d430036ca2cb067ab86b527e3d584ee",
       "name": "POAP Token Sender",
       "symbol": "",
-      "source": "Etherscan",
+      "source": "EtherScan.io",
       "decimals": 0,
       "description": ""
     },

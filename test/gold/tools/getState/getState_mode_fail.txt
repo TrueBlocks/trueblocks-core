@@ -14,7 +14,7 @@ getState 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 --parts junk 2500000
 	-n  (--no_zero)       suppress the display of zero balance accounts
 
 	#### Hidden options
-	-a  (--call <str>)    a comma-separated string of an address, a 4-byte, and required parameters for a call against a smart contract
+	-a  (--call <str>)    a bang-separated string consisting of address!4-byte!bytes
 	#### Hidden options
 
 	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]

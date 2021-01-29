@@ -6,24 +6,24 @@ tags	address	name	symbol	decimals	source
 50-Tokens:ERC20	0x1f573d6fb3f13d689ff844b4ce37794d79a7ff1c	Bancor Network Token	BNT		18	On chain
 50-Tokens:ERC20	0x20f7a3ddf244dc9299975b4da1c39f8d5d75f05a	Sapien Network	SPN		6	On chain
 50-Tokens:ERC20	0x2233799ee2683d75dfefacbcd2a26c78d34b470d	Network Token	NTWK		18	On chain
-30-Contracts	0x2af47a65da8cd66729b4209c22017d6a5c2d2400	Bounties Network				Etherscan
+30-Contracts	0x2af47a65da8cd66729b4209c22017d6a5c2d2400	Bounties Network				EtherScan.io
 31-Gitcoin Grants:Grant	0x30755d3e65c0cf46c35b72d11e52d941c5fc3a3e	Grant 026 Peepeth Social Network For A Better World				https://gitcoin.co/grants/26/peepeth-social-network-for-a-better-world
 50-Tokens:ERC20	0x3543638ed4a9006e4840b105944271bcea15605d	UNetworkToken	UUU		18	On chain
 30-Contracts:Set Protocol Wrapers	0x3700414bb6716fcd8b14344fb10ddd91fdea59ec	Kyber Network Wrapper				TrueBlocks.io
 50-Tokens:ERC20	0x4162178b78d6985480a308b2190ee5517460406d	Colu Local Network	CLN		18	On chain
-30-Contracts	0x4aa42145aa6ebf72e164c9bbc74fbd3788045016	POA Network: DAI-XDAI Bridge				Etherscan.io
+30-Contracts	0x4aa42145aa6ebf72e164c9bbc74fbd3788045016	POA Network: DAI-XDAI Bridge				EtherScan.io
 50-Tokens:ERC20	0x4bbbc57af270138ef2ff2c50dbfad684e9e0e604	WABnetwork	WAB		18	On chain
 31-Gitcoin Grants:Grant	0x4c63f570590b7e145d5af265497aa23fa2bc0b8c	Grant 653 Gas Stations Network				https://gitcoin.co/grants/653/gas-stations-network
 30-Contracts:Kyber Network	0x52166528fcc12681af996e409ee3a421a4e128a3	Kyber Fee Burner				TrueBlocks.io
-30-Contracts	0x521d32f3d23f1fc82b1dbe306edc3ef668e5d973	Clovers Network Related				Etherscan
+30-Contracts	0x521d32f3d23f1fc82b1dbe306edc3ef668e5d973	Clovers Network Related				EtherScan.io
 50-Tokens:ERC20	0x53066cddbc0099eb6c96785d9b3df2aaeede5da3	Penta Network Token	PNT		18	On chain
 30-Contracts	0x5346d0f80e2816fad329f2c140c870ffc3c3e2ef	EtherRouter: Colony Network				EtherScan.io
 30-Contracts:Kyber Network	0x57f8160e1c59d16c01bbe181fd94db4e56b60495	Kyber Weth Reserve				TrueBlocks.io
 50-Tokens:ERC20	0x5f3789907b35dce5605b00c0be0a7ecdbfa8a841	Content and Ad Network	CAN		18	On chain
 50-Tokens:ERC20	0x607f4c5bb672230e8672085532f7e901544a7375	iEx.ec Network Token	RLC		9	On chain
 30-Contracts:Kyber Network	0x63825c174ab367968ec60f061753d3bbd36a0d8f	Kyber Reserve				0xTracker
-40-Exchanges	0x64a9edd3f5fce0252cd708e26c8dd11205742826	Uniswap: ANJ Aragon Network Juror	ANJ			Etherscan
-55-Defi	0x6626593c237f530d15ae9980a95ef938ac15c35c	Gauntlet Network				Etherscan
+40-Exchanges	0x64a9edd3f5fce0252cd708e26c8dd11205742826	Uniswap: ANJ Aragon Network Juror	ANJ			EtherScan.io
+55-Defi	0x6626593c237f530d15ae9980a95ef938ac15c35c	Gauntlet Network				EtherScan.io
 31-Gitcoin Grants:Grant	0x66aa8bee5366b6b48811ae0dac9fe5e1eefe1621	Grant 049 Blockchain Education Network				https://gitcoin.co/grants/49/blockchain-education-network
 50-Tokens:ERC20	0x6fb3e0a217407efff7ca062d46c26e5d60a14d69	IoTeX Network	IOTX		18	On chain
 50-Tokens:ERC20	0x6fff3806bbac52a20e0d79bc538d527f6a22c96b	Network			18	On chain
@@ -49,7 +49,7 @@ tags	address	name	symbol	decimals	source
 50-Tokens:ERC20	0xb2135ab9695a7678dd590b1a996cb0f37bcb0718	Signals Network Token	SGN		9	On chain
 31-Gitcoin Grants:Grant	0xb422e46540153ddaaccd8f5e899893fc53ab77b8	Grant 338 2key Network Labs				https://gitcoin.co/grants/338/2key-network-labs
 31-Gitcoin Grants:Grant	0xb64850fe701fb64667b6cc762aa2c12f2e02193c	Grant 742 Crypto community ventures network				https://gitcoin.co/grants/742/crypto-community-ventures-network
-50-Tokens	0xc011a72400e58ecd99ee497cf89e3775d4bd732f	Synthetix Network Token	SNX			Etherscan.io
+50-Tokens	0xc011a72400e58ecd99ee497cf89e3775d4bd732f	Synthetix Network Token	SNX			EtherScan.io
 50-Tokens:ERC20	0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f	Synthetix Network Token	SNX		18	On chain
 30-Contracts:Kyber Network	0xc0d3e654676b117663143eac33b45b620171244b	Kyber Order List				TrueBlocks.io
 31-Gitcoin Grants:Grant	0xc37e165fcfa2cb5cca7329dd9daa8cd72907b983	Grant 037 Connext Network				https://gitcoin.co/grants/37/connext-network
@@ -70,7 +70,7 @@ tags	address	name	symbol	decimals	source
 50-Tokens:ERC20	0xea5f88e54d982cbb0c441cde4e79bc305e5b43bc	Pareto Network Token	PARETO		18	On chain
 31-Gitcoin Grants:Grant	0xec52a4336904f98adca74f87441fa966cf770db4	Grant 385 Locha Mesh: private txs censorshipresistant dApps and IPFS over a resilient longrange radio mesh network				https://gitcoin.co/grants/385/locha-mesh-private-txs-censorship-resistant-dapps
 50-Tokens:ERC20	0xf970b8e36e23f7fc3fd752eea86f8be8d83375a6	Ripio Credit Network Token	RCN		18	On chain
-30-Contracts:Kyber Network	0xfa71b63935cf9878e009ba6595da08f6d75c4aa1	Kyber Pay Wrapper				Etherscan
+30-Contracts:Kyber Network	0xfa71b63935cf9878e009ba6595da08f6d75c4aa1	Kyber Pay Wrapper				EtherScan.io
 31-Gitcoin Grants:Grant	0xfcd819c8a13de2d9e409fdf7d61161091f58dd63	Grant 044 Chainid Network				https://gitcoin.co/grants/44/chainid-network
 50-Tokens:ERC20	0xfedae5642668f8636a11987ff386bfd215f942ee	PolicyPal Network Token	PAL		18	On chain
 50-Tokens:ERC20	0xff19138b039d938db46bdda0067dc4ba132ec71c	Snetwork	SNET		8	On chain

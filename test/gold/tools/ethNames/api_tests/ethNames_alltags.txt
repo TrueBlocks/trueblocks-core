@@ -41,7 +41,7 @@
       "address": "0x000000000000000000000000000000000000dead",
       "name": "ENS: Burn Address",
       "symbol": "",
-      "source": "Etherscan",
+      "source": "EtherScan.io",
       "decimals": 0,
       "description": ""
     },
@@ -77,7 +77,7 @@
       "address": "0x00000000000c2e074ec69a0dfb2997ba6c7d2e1e",
       "name": "ENS: Registry with Fallback",
       "symbol": "",
-      "source": "Etherscan",
+      "source": "EtherScan.io",
       "decimals": 0,
       "description": ""
     },
@@ -104,7 +104,7 @@
       "address": "0x00000000219ab540356cbb839cbe05303d7705fa",
       "name": "Eth2 Deposit Contract",
       "symbol": "",
-      "source": "Etherscan",
+      "source": "EtherScan.io",
       "decimals": 0,
       "description": ""
     },
@@ -212,7 +212,7 @@
       "address": "0x0001fb050fe7312791bf6475b96569d83f695c9f",
       "name": "Ygov.finance: yearn",
       "symbol": "",
-      "source": "Etherscan.io",
+      "source": "EtherScan.io",
       "decimals": 0,
       "description": ""
     },
@@ -221,7 +221,7 @@
       "address": "0x000983ba1a675327f0940b56c2d49cd9c042dfbf",
       "name": "GU: Shiny Legendary Pack",
       "symbol": "",
-      "source": "Etherscan",
+      "source": "EtherScan.io",
       "decimals": 0,
       "description": ""
     },
@@ -311,7 +311,7 @@
       "address": "0x0034ea9808e620a0ef79261c51af20614b742b24",
       "name": "Pool Usdc MCDAwarePool v0.2.12",
       "symbol": "",
-      "source": "Etherscan",
+      "source": "EtherScan.io",
       "decimals": 0,
       "description": ""
     },
@@ -347,7 +347,7 @@
       "address": "0x00476aecb24edfed50aaf2e2361badbd8d3efdc2",
       "name": "HEALP Airdrop Sender",
       "symbol": "",
-      "source": "Etherscan",
+      "source": "EtherScan.io",
       "decimals": 0,
       "description": ""
     },
@@ -365,7 +365,7 @@
       "address": "0x005ca4f1493f451c1588186c570a434ec38e718d",
       "name": "BrightID Agent",
       "symbol": "",
-      "source": "Etherscan",
+      "source": "EtherScan.io",
       "decimals": 0,
       "description": ""
     },
@@ -608,7 +608,7 @@
       "address": "0x015531a044bae03bf4dab1ceabfc232a969b7175",
       "name": "GU: Rare Pack",
       "symbol": "",
-      "source": "Etherscan",
+      "source": "EtherScan.io",
       "decimals": 0,
       "description": ""
     },
@@ -932,7 +932,7 @@
       "address": "0x0385b3f162a0e001b60ecb84d3cb06199d78f666",
       "name": "Argent: Relayer 2",
       "symbol": "",
-      "source": "Etherscan",
+      "source": "EtherScan.io",
       "decimals": 0,
       "description": ""
     },
@@ -959,7 +959,7 @@
       "address": "0x039b739a1e7353878bfb2f2a4ec23502f4885baa",
       "name": "Maker: Oasis",
       "symbol": "",
-      "source": "Etherscan",
+      "source": "EtherScan.io",
       "decimals": 0,
       "description": ""
     },
@@ -1202,7 +1202,7 @@
       "address": "0x055cc48f7968fd8640ef140610dd4038e1b03926",
       "name": "Owned Upgradeability Proxy",
       "symbol": "",
-      "source": "Etherscan.io",
+      "source": "EtherScan.io",
       "decimals": 0,
       "description": ""
     },
@@ -1454,7 +1454,7 @@
       "address": "0x0681d8db095565fe8a346fa0277bffde9c0edbbf",
       "name": "Binance 4",
       "symbol": "",
-      "source": "Etherscan",
+      "source": "EtherScan.io",
       "decimals": 0,
       "description": ""
     },
@@ -1481,7 +1481,7 @@
       "address": "0x06a2cf3f024d8871baedd0f7bd9340001aada574",
       "name": "SingularDTV Sender 2",
       "symbol": "",
-      "source": "Etherscan",
+      "source": "EtherScan.io",
       "decimals": 0,
       "description": ""
     },
@@ -1544,7 +1544,7 @@
       "address": "0x06fe76b2f432fdfecaef1a7d4f6c3d41b5861672",
       "name": "Zerion: Adapter Registry",
       "symbol": "",
-      "source": "Etherscan",
+      "source": "EtherScan.io",
       "decimals": 0,
       "description": ""
     },
@@ -1679,7 +1679,7 @@
       "address": "0x077d52b047735976dfda76fef74d4d988ac25196",
       "name": "Uniswap: ANT",
       "symbol": "ANT",
-      "source": "Etherscan",
+      "source": "EtherScan.io",
       "decimals": 0,
       "description": ""
     },
@@ -1733,7 +1733,7 @@
       "address": "0x07db4b9b3951094b9e278d336adf46a036295de7",
       "name": "Yearn: StrategyCurveYVoterProxy",
       "symbol": "",
-      "source": "Etherscan",
+      "source": "EtherScan.io",
       "decimals": 0,
       "description": ""
     },
@@ -1769,7 +1769,7 @@
       "address": "0x07f455f30e862e13e3e3d960762cb11c4f744d52",
       "name": "Gnosis Safe: Replay Service Deployment",
       "symbol": "",
-      "source": "Etherscan",
+      "source": "EtherScan.io",
       "decimals": 0,
       "description": ""
     },

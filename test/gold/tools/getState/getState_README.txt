@@ -15,7 +15,7 @@ getState -th
 | -c | --changes | only report a balance when it changes from one block to the next |
 | -n | --no_zero | suppress the display of zero balance accounts |
 |####|Hidden options||
-| -a | --call <str> | a comma-separated string of an address, a 4-byte, and required parameters for a call against a smart contract |
+| -a | --call <str> | a bang-separated string consisting of address!4-byte!bytes |
 |####|Hidden options||
 | -x | --fmt <val> | export format, one of [none&#124;json*&#124;txt&#124;csv&#124;api] |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |

@@ -6,14 +6,14 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "55-Defi",
     "address": "0x000000000000000000000000000000000000dead",
     "name": "ENS: Burn Address",
-    "source": "Etherscan"
+    "source": "EtherScan.io"
   },
   {
     "deleted": false,
     "tags": "34-ENS",
     "address": "0x00000000000c2e074ec69a0dfb2997ba6c7d2e1e",
     "name": "ENS: Registry with Fallback",
-    "source": "Etherscan",
+    "source": "EtherScan.io",
     "is_contract": true
   },
   {
@@ -21,7 +21,7 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "30-Contracts",
     "address": "0x00000000219ab540356cbb839cbe05303d7705fa",
     "name": "Eth2 Deposit Contract",
-    "source": "Etherscan",
+    "source": "EtherScan.io",
     "is_contract": true
   },
   {
@@ -29,7 +29,7 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "55-Defi",
     "address": "0x0001fb050fe7312791bf6475b96569d83f695c9f",
     "name": "Ygov.finance: yearn",
-    "source": "Etherscan.io",
+    "source": "EtherScan.io",
     "is_contract": true
   },
   {
@@ -37,7 +37,7 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "30-Contracts",
     "address": "0x000983ba1a675327f0940b56c2d49cd9c042dfbf",
     "name": "GU: Shiny Legendary Pack",
-    "source": "Etherscan",
+    "source": "EtherScan.io",
     "is_contract": true
   },
   {
@@ -45,7 +45,7 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "35-Pool Together",
     "address": "0x0034ea9808e620a0ef79261c51af20614b742b24",
     "name": "Pool Usdc MCDAwarePool v0.2.12",
-    "source": "Etherscan",
+    "source": "EtherScan.io",
     "is_contract": true
   },
   {
@@ -53,14 +53,14 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "60-Airdrops",
     "address": "0x00476aecb24edfed50aaf2e2361badbd8d3efdc2",
     "name": "HEALP Airdrop Sender",
-    "source": "Etherscan"
+    "source": "EtherScan.io"
   },
   {
     "deleted": false,
     "tags": "30-Contracts",
     "address": "0x005ca4f1493f451c1588186c570a434ec38e718d",
     "name": "BrightID Agent",
-    "source": "Etherscan",
+    "source": "EtherScan.io",
     "is_contract": true
   },
   {
@@ -68,7 +68,8 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "80-Malicious:DaoDrain",
     "address": "0x0101f3be8ebb4bbd39a2e3b9a3639d4259832fd9",
     "name": "Dao Drain 075",
-    "source": "GethSource Ether Camp"
+    "source": "GethSource Ether Camp",
+    "is_contract": true
   },
   {
     "deleted": false,
@@ -83,7 +84,7 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "30-Contracts",
     "address": "0x015531a044bae03bf4dab1ceabfc232a969b7175",
     "name": "GU: Rare Pack",
-    "source": "Etherscan",
+    "source": "EtherScan.io",
     "is_contract": true
   },
   {
@@ -116,14 +117,14 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "30-Contracts",
     "address": "0x0385b3f162a0e001b60ecb84d3cb06199d78f666",
     "name": "Argent: Relayer 2",
-    "source": "Etherscan"
+    "source": "EtherScan.io"
   },
   {
     "deleted": false,
     "tags": "30-Contracts",
     "address": "0x039b739a1e7353878bfb2f2a4ec23502f4885baa",
     "name": "Maker: Oasis",
-    "source": "Etherscan",
+    "source": "EtherScan.io",
     "is_contract": true
   },
   {
@@ -143,7 +144,7 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "30-Contracts",
     "address": "0x055cc48f7968fd8640ef140610dd4038e1b03926",
     "name": "Owned Upgradeability Proxy",
-    "source": "Etherscan.io",
+    "source": "EtherScan.io",
     "is_contract": true
   },
   {
@@ -167,7 +168,7 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "40-Exchanges",
     "address": "0x0681d8db095565fe8a346fa0277bffde9c0edbbf",
     "name": "Binance 4",
-    "source": "Etherscan"
+    "source": "EtherScan.io"
   },
   {
     "deleted": false,
@@ -181,14 +182,14 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "50-Tokens:ERC20",
     "address": "0x06a2cf3f024d8871baedd0f7bd9340001aada574",
     "name": "SingularDTV Sender 2",
-    "source": "Etherscan"
+    "source": "EtherScan.io"
   },
   {
     "deleted": false,
     "tags": "30-Contracts",
     "address": "0x06fe76b2f432fdfecaef1a7d4f6c3d41b5861672",
     "name": "Zerion: Adapter Registry",
-    "source": "Etherscan",
+    "source": "EtherScan.io",
     "is_contract": true
   },
   {
@@ -196,7 +197,8 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "80-Malicious:DaoDrain",
     "address": "0x0737a6b837f97f46ebade41b9bc3e1c509c85c53",
     "name": "Dao Drain 059",
-    "source": "GethSource Ether Camp"
+    "source": "GethSource Ether Camp",
+    "is_contract": true
   },
   {
     "deleted": false,
@@ -204,7 +206,7 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x077d52b047735976dfda76fef74d4d988ac25196",
     "name": "Uniswap: ANT",
     "symbol": "ANT",
-    "source": "Etherscan",
+    "source": "EtherScan.io",
     "is_contract": true
   },
   {
@@ -236,7 +238,7 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "55-Defi",
     "address": "0x07db4b9b3951094b9e278d336adf46a036295de7",
     "name": "Yearn: StrategyCurveYVoterProxy",
-    "source": "Etherscan",
+    "source": "EtherScan.io",
     "is_contract": true
   },
   {
@@ -244,7 +246,7 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "30-Contracts",
     "address": "0x07f455f30e862e13e3e3d960762cb11c4f744d52",
     "name": "Gnosis Safe: Replay Service Deployment",
-    "source": "Etherscan"
+    "source": "EtherScan.io"
   },
   {
     "deleted": false,
@@ -277,7 +279,7 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "30-Contracts",
     "address": "0x08dbf4f942ba8cd7871c13addefdffef3e5a8035",
     "name": "GU: Rare Pack Three",
-    "source": "Etherscan",
+    "source": "EtherScan.io",
     "is_contract": true
   },
   {
@@ -285,14 +287,14 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "34-ENS",
     "address": "0x0904dac3347ea47d208f3fd67402d039a3b99859",
     "name": "ENS: Wallet 1 nickdjohnson",
-    "source": "Etherscan"
+    "source": "EtherScan.io"
   },
   {
     "deleted": false,
     "tags": "50-Tokens:ERC20",
     "address": "0x090d4613473dee047c3f2706764f49e0821d256e",
     "name": "Uniswap: Token Distributor",
-    "source": "Etherscan.io",
+    "source": "EtherScan.io",
     "is_contract": true
   },
   {
@@ -336,21 +338,21 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x0b795e585ec0436e4572cc9b24fc5da1faf9cfc6",
     "name": "HEX Airdrop Sender",
     "symbol": "HEX",
-    "source": "Etherscan"
+    "source": "EtherScan.io"
   },
   {
     "deleted": false,
     "tags": "91-Known",
     "address": "0x0c3239e2e841242db989a61518c22247e8c55208",
     "name": "BitCoinAcctnt3 (Prefund_0419)",
-    "source": "Etherscan"
+    "source": "EtherScan.io"
   },
   {
     "deleted": false,
     "tags": "36-Compound",
     "address": "0x0c3f8df27e1a00b47653fde878d68d35f00714c0",
     "name": "Compound: 200bps_Slope1000bps",
-    "source": "Etherscan",
+    "source": "EtherScan.io",
     "is_contract": true
   },
   {
@@ -358,7 +360,7 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "55-Defi",
     "address": "0x0cec743b8ce4ef8802cac0e5df18a180ed8402a7",
     "name": "Yearn: Signer Milkyklim",
-    "source": "Etherscan"
+    "source": "EtherScan.io"
   },
   {
     "deleted": false,
@@ -366,7 +368,7 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x0d88ed6e74bbfd96b831231638b66c05571e824f",
     "name": "AVT",
     "symbol": "AVT",
-    "source": "Etherscan.io",
+    "source": "EtherScan.io",
     "description": "An open-source protocol that delivers the global standard for ticketing.",
     "is_contract": true
   },
@@ -384,7 +386,8 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "80-Malicious:DaoDrain",
     "address": "0x0e0da70933f4c7849fc0d203f5d1d43b9ae4532d",
     "name": "Dao Drain 087",
-    "source": "GethSource Ether Camp"
+    "source": "GethSource Ether Camp",
+    "is_contract": true
   },
   {
     "deleted": false,
@@ -415,7 +418,7 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "30-Contracts",
     "address": "0x10a0847c2d170008ddca7c3a688124f493630032",
     "name": "RelayerManager",
-    "source": "Etherscan",
+    "source": "EtherScan.io",
     "is_contract": true
   },
   {
@@ -423,7 +426,7 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "50-Tokens:ERC20",
     "address": "0x111111125434b319222cdbf8c261674adb56f3ae",
     "name": "1inch.exchange v2",
-    "source": "Etherscan.io",
+    "source": "EtherScan.io",
     "is_contract": true
   },
   {
@@ -431,7 +434,7 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "50-Tokens:ERC20",
     "address": "0x11111254369792b2ca5d084ab5eea397ca8fa48b",
     "name": "1inch.exchange",
-    "source": "Etherscan.io",
+    "source": "EtherScan.io",
     "is_contract": true
   },
   {
@@ -439,7 +442,7 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "55-Defi",
     "address": "0x112570655b32a8c747845e0215ad139661e66e7f",
     "name": "Yearn: StrategyCurveBUSDVoterProxy",
-    "source": "Etherscan",
+    "source": "EtherScan.io",
     "is_contract": true
   },
   {
@@ -455,7 +458,7 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "50-Tokens:ERC20",
     "address": "0x12d66f87a04a9e220743712ce6d9bb1b5616b8fc",
     "name": "Tornado.Cash: 0.1 ETH",
-    "source": "Etherscan.io",
+    "source": "EtherScan.io",
     "is_contract": true
   },
   {
@@ -463,7 +466,7 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "30-Contracts",
     "address": "0x138a35ee20e40f019e7e7c00386ab2ef42d66d1e",
     "name": "MCH: Hero Gateway 1",
-    "source": "Etherscan",
+    "source": "EtherScan.io",
     "is_contract": true
   },
   {
@@ -471,7 +474,7 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "55-Defi",
     "address": "0x13c1542a468319688b89e323fe9a3be3a90ebb27",
     "name": "Synthetix: sBTC Curvepool Rewards",
-    "source": "Etherscan.io",
+    "source": "EtherScan.io",
     "is_contract": true
   },
   {
@@ -479,7 +482,7 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "35-Pool Together",
     "address": "0x14300cd613d6a719ac19de68c2f1042b3217cbff",
     "name": "Pool Together Sender",
-    "source": "Etherscan"
+    "source": "EtherScan.io"
   },
   {
     "deleted": false,
@@ -522,7 +525,7 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "55-Defi",
     "address": "0x1676fc274b65966ed0c6438a26d34c6c92a5981c",
     "name": "Cream.Finance: CREAM/USDC Pool",
-    "source": "Etherscan",
+    "source": "EtherScan.io",
     "is_contract": true
   },
   {
@@ -538,7 +541,7 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "55-Defi",
     "address": "0x16e58463eb9792bc236d8860f5bc69a81e26e32b",
     "name": "SushiSwap: Liquidity Migrator",
-    "source": "Etherscan.io",
+    "source": "EtherScan.io",
     "is_contract": true
   },
   {
@@ -547,7 +550,7 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x17405148473e521b62cbcf8ebd929e8a30c4d3aa",
     "name": "Dao Issued Cert Airdrop",
     "symbol": "DIC",
-    "source": "Etherscan",
+    "source": "EtherScan.io",
     "is_contract": true
   },
   {
@@ -577,7 +580,7 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "91-Known",
     "address": "0x191167380d430036ca2cb067ab86b527e3d584ee",
     "name": "POAP Token Sender",
-    "source": "Etherscan"
+    "source": "EtherScan.io"
   },
   {
     "deleted": false,
@@ -596,7 +599,8 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "80-Malicious:DaoDrain",
     "address": "0x1975bd06d486162d5dc297798dfc41edd5d160a7",
     "name": "Dao Drain 005",
-    "source": "GethSource Ether Camp"
+    "source": "GethSource Ether Camp",
+    "is_contract": true
   },
   {
     "deleted": false,
@@ -634,7 +638,7 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "55-Defi",
     "address": "0x1d91e3f77271ed069618b4ba06d19821bc2ed8b0",
     "name": "Yearn: StrategyTUSDCurve",
-    "source": "Etherscan",
+    "source": "EtherScan.io",
     "is_contract": true
   },
   {
@@ -642,7 +646,7 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "34-ENS",
     "address": "0x1da022710df5002339274aadee8d58218e9d6ab5",
     "name": "ENS: Old Public Resolver 1",
-    "source": "Etherscan",
+    "source": "EtherScan.io",
     "is_contract": true
   },
   {
@@ -669,7 +673,7 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "30-Contracts",
     "address": "0x1fd169a4f5c59acf79d0fd5d91d1201ef1bce9f1",
     "name": "Moloch DAO",
-    "source": "Etherscan",
+    "source": "EtherScan.io",
     "is_contract": true
   },
   {
@@ -677,7 +681,8 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "80-Malicious:DaoDrain",
     "address": "0x200450f06520bdd6c527622a273333384d870efb",
     "name": "Dao Drain 015",
-    "source": "GethSource Ether Camp"
+    "source": "GethSource Ether Camp",
+    "is_contract": true
   },
   {
     "deleted": false,
@@ -696,7 +701,7 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "30-Contracts",
     "address": "0x216aa06957cd8747a32c3c0683b1aaf912a1dc55",
     "name": "Synthetix: YFI Rewards",
-    "source": "Etherscan.io",
+    "source": "EtherScan.io",
     "is_contract": true
   },
   {
@@ -704,7 +709,7 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "34-ENS",
     "address": "0x226159d592e2b063810a10ebf6dcbada94ed68b8",
     "name": "ENS: Old Public Resolver 2",
-    "source": "Etherscan",
+    "source": "EtherScan.io",
     "is_contract": true
   },
   {
@@ -724,7 +729,7 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "30-Contracts",
     "address": "0x23850f3e6f760b92491892a5a3772e7fc000adf1",
     "name": "Uniswap: ORB 2",
-    "source": "Etherscan",
+    "source": "EtherScan.io",
     "is_contract": true
   },
   {
@@ -732,7 +737,7 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "30-Contracts",
     "address": "0x240f9f86b1465bf1b8eb29bc88cbf65573dfdd97",
     "name": "Polymath: Security Token Registry Proxy",
-    "source": "Etherscan.io",
+    "source": "EtherScan.io",
     "is_contract": true
   },
   {
@@ -760,7 +765,8 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "80-Malicious:DaoDrain",
     "address": "0x253488078a4edf4d6f42f113d1e62836a942cf1a",
     "name": "Dao Drain 097",
-    "source": "GethSource Ether Camp"
+    "source": "GethSource Ether Camp",
+    "is_contract": true
   },
   {
     "deleted": false,
@@ -787,7 +793,7 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "55-Defi",
     "address": "0x25faca21dd2ad7edb3a027d543e617496820d8d6",
     "name": "Yearn: StrategyVaultUSDC",
-    "source": "Etherscan",
+    "source": "EtherScan.io",
     "is_contract": true
   },
   {
@@ -807,7 +813,7 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "35-Pool Together",
     "address": "0x275ff8a50bc5841b09ec9a34c955898cd9eb43c6",
     "name": "Pool Together Pool 1",
-    "source": "Etherscan",
+    "source": "EtherScan.io",
     "is_contract": true
   },
   {
@@ -839,7 +845,7 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "34-ENS",
     "address": "0x283af0b28c62c092c9727f1ee09c02ca627eb7f5",
     "name": "ENS: ETH Registrar Controller",
-    "source": "Etherscan",
+    "source": "EtherScan.io",
     "is_contract": true
   },
   {
@@ -848,7 +854,7 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x28c8d01ff633ea9cd8fc6a451d7457889e698de6",
     "name": "Ethereum Gold",
     "symbol": "ETG",
-    "source": "Etherscan.io",
+    "source": "EtherScan.io",
     "description": "Ethereumgold is a nonprofit that aims to connects people to low-cost financial services to fight poverty and develop individual potential.",
     "is_contract": true
   },
@@ -868,7 +874,7 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "50-Tokens:ERC20",
     "address": "0x2971adfa57b20e5a416ae5a708a8655a9c74f723",
     "name": "InstaDApp: Index",
-    "source": "Etherscan.io",
+    "source": "EtherScan.io",
     "is_contract": true
   },
   {
@@ -876,7 +882,7 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "35-Pool Together",
     "address": "0x29fe7d60ddf151e5b52e5fab4f1325da6b2bd958",
     "name": "Pool Dai MCDAwarePool v0.2.12",
-    "source": "Etherscan",
+    "source": "EtherScan.io",
     "is_contract": true
   },
   {
@@ -896,7 +902,7 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "40-Exchanges",
     "address": "0x2a1530c4c41db0b0b2bb646cb5eb1a67b7158667",
     "name": "Uniswap: DAI",
-    "source": "Etherscan",
+    "source": "EtherScan.io",
     "is_contract": true
   },
   {
@@ -904,7 +910,7 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "55-Defi",
     "address": "0x2ab765c2b4a4e197fbae769f86870f2310a04d61",
     "name": "Cream.Finance: YFI/USDC",
-    "source": "Etherscan",
+    "source": "EtherScan.io",
     "is_contract": true
   },
   {
@@ -912,7 +918,7 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "30-Contracts",
     "address": "0x2af47a65da8cd66729b4209c22017d6a5c2d2400",
     "name": "Bounties Network",
-    "source": "Etherscan",
+    "source": "EtherScan.io",
     "is_contract": true
   },
   {
@@ -920,14 +926,14 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "60-Airdrops",
     "address": "0x2afbc96be0ac57e9e2194506d5565c45b2481f88",
     "name": "YOO Airdrop Sender",
-    "source": "Etherscan"
+    "source": "EtherScan.io"
   },
   {
     "deleted": false,
     "tags": "60-Airdrops",
     "address": "0x2b3e697c2b90e3ecde2416e106d61bd0b1deab0f",
     "name": "BasicCoin Airdrop",
-    "source": "Etherscan",
+    "source": "EtherScan.io",
     "is_contract": true
   },
   {
@@ -943,14 +949,15 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "80-Malicious:DaoDrain",
     "address": "0x2c19c7f9ae8b751e37aeb2d93a699722395ae18f",
     "name": "Dao Drain 003",
-    "source": "GethSource Ether Camp"
+    "source": "GethSource Ether Camp",
+    "is_contract": true
   },
   {
     "deleted": false,
     "tags": "55-Defi",
     "address": "0x2de055fec2b826ed4a7478ceddbeff82c1edfa70",
     "name": "Yearn: StrategyYfii",
-    "source": "Etherscan",
+    "source": "EtherScan.io",
     "is_contract": true
   },
   {
@@ -970,14 +977,14 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "60-Airdrops",
     "address": "0x2e12a5a98afd8407d8fcd5bbdb39f964b74f231d",
     "name": "KickAirdropSender",
-    "source": "Etherscan"
+    "source": "EtherScan.io"
   },
   {
     "deleted": false,
     "tags": "30-Contracts",
     "address": "0x2e3b10abf091cdc53cc892a50dabdb432e220398",
     "name": "GeneralizedTCR",
-    "source": "Etherscan",
+    "source": "EtherScan.io",
     "is_contract": true
   },
   {
@@ -985,7 +992,7 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "55-Defi",
     "address": "0x2ee856843bb65c244f527ad302d6d2853921727e",
     "name": "Yearn: StrategyCurveYBUSDVoterProxy",
-    "source": "Etherscan",
+    "source": "EtherScan.io",
     "is_contract": true
   },
   {
@@ -1004,14 +1011,15 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "80-Malicious:DaoDrain",
     "address": "0x304a554a310c7e546dfe434669c62820b7d83490",
     "name": "Dao Drain 067 (DarkDAO)",
-    "source": "GethSource SlackNation OnChain Ether Camp"
+    "source": "GethSource SlackNation OnChain Ether Camp",
+    "is_contract": true
   },
   {
     "deleted": false,
     "tags": "55-Defi",
     "address": "0x31317f9a5e4cc1d231bdf07755c994015a96a37c",
     "name": "Yearn: Controller",
-    "source": "Etherscan",
+    "source": "EtherScan.io",
     "is_contract": true
   },
   {
@@ -1019,7 +1027,7 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "34-ENS",
     "address": "0x314159265dd8dbb310642f98f50c066173c1259b",
     "name": "ENS: Eth Name Service",
-    "source": "Etherscan",
+    "source": "EtherScan.io",
     "is_contract": true
   },
   {
@@ -1027,7 +1035,7 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "30-Contracts",
     "address": "0x314495517f380ceb7c498a35739e40864240adcf",
     "name": "GU: Shiny Legendary Pack Three",
-    "source": "Etherscan",
+    "source": "EtherScan.io",
     "is_contract": true
   },
   {
@@ -1035,7 +1043,8 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "80-Malicious:DaoDrain",
     "address": "0x319f70bab6845585f412ec7724b744fec6095c85",
     "name": "Dao Drain 007",
-    "source": "GethSource Ether Camp"
+    "source": "GethSource Ether Camp",
+    "is_contract": true
   },
   {
     "deleted": false,
@@ -1094,7 +1103,7 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "30-Contracts",
     "address": "0x374026a48d777cb0ffdccdb9a919c0aa7ce8a0fc",
     "name": "Genesis Protocol",
-    "source": "Etherscan",
+    "source": "EtherScan.io",
     "is_contract": true
   },
   {
@@ -1102,7 +1111,7 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "55-Defi",
     "address": "0x382185f3ea9268e65bb16f81de6b4e725134ed72",
     "name": "Yearn: StrategyYfii",
-    "source": "Etherscan",
+    "source": "EtherScan.io",
     "is_contract": true
   },
   {
@@ -1119,7 +1128,7 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x38c6a68304cdefb9bec48bbfaaba5c5b47818bb2",
     "name": "HPBCoin",
     "symbol": "HPB",
-    "source": "Etherscan.io",
+    "source": "EtherScan.io",
     "description": "HPB High-Performance Blockchain is a new kind of block chain hardware and software architecture, which includes a chip acceleration engine and the blockchain platform, aiming to realize the performance extension of distributed applications",
     "is_contract": true
   },
@@ -1148,7 +1157,7 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "55-Defi",
     "address": "0x395f93350d5102b6139abfc84a7d6ee70488797c",
     "name": "Yearn: StrategyYFIGovernance",
-    "source": "Etherscan",
+    "source": "EtherScan.io",
     "is_contract": true
   },
   {
@@ -1156,7 +1165,7 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "50-Tokens:ERC20",
     "address": "0x398ec7346dcd622edc5ae82352f02be94c62d119",
     "name": "Aave: Lending Pool V1",
-    "source": "Etherscan.io",
+    "source": "EtherScan.io",
     "is_contract": true
   },
   {
@@ -1176,7 +1185,7 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "55-Defi",
     "address": "0x3a22df48d84957f907e67f4313e3d43179040d6e",
     "name": "Ygov.finance: Governance",
-    "source": "Etherscan",
+    "source": "EtherScan.io",
     "is_contract": true
   },
   {
@@ -1192,7 +1201,7 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "55-Defi",
     "address": "0x3d5bc3c8d13dcb8bf317092d84783c2697ae9258",
     "name": "Cream.Finance: Comptroller",
-    "source": "Etherscan",
+    "source": "EtherScan.io",
     "is_contract": true
   },
   {
@@ -1200,7 +1209,7 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "36-Compound",
     "address": "0x3d9819210a31b4961b30ef54be2aed79b9c9cd3b",
     "name": "Compound: Comptroller",
-    "source": "Etherscan",
+    "source": "EtherScan.io",
     "is_contract": true
   },
   {
@@ -1216,7 +1225,7 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "40-Exchanges",
     "address": "0x3fda67f7583380e67ef93072294a7fac882fd7e7",
     "name": "Compound",
-    "source": "Etherscan",
+    "source": "EtherScan.io",
     "is_contract": true
   },
   {
@@ -1236,7 +1245,7 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "55-Defi",
     "address": "0x40bd98e3cce4f34c087a73dd3d05558733549afb",
     "name": "Yearn: StrategyCreamYFI",
-    "source": "Etherscan",
+    "source": "EtherScan.io",
     "is_contract": true
   },
   {
@@ -1327,7 +1336,7 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "55-Defi",
     "address": "0x43a8ece49718e22d21077000768aff91849bceff",
     "name": "Cream.Finance: CREAM/WETH Pool",
-    "source": "Etherscan",
+    "source": "EtherScan.io",
     "is_contract": true
   },
   {
@@ -1335,7 +1344,8 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "80-Malicious:DaoDrain",
     "address": "0x440c59b325d2997a134c2c7c60a8c61611212bad",
     "name": "Dao Drain 041",
-    "source": "GethSource Ether Camp"
+    "source": "GethSource Ether Camp",
+    "is_contract": true
   },
   {
     "deleted": false,
@@ -1374,7 +1384,7 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "50-Tokens:ERC20",
     "address": "0x45f783cce6b7ff23b2ab2d70e416cdb7d6055f51",
     "name": "Curve.fi: y Swap",
-    "source": "Etherscan.io",
+    "source": "EtherScan.io",
     "is_contract": true
   },
   {
@@ -1382,7 +1392,8 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "80-Malicious:DaoDrain",
     "address": "0x4613f3bca5c44ea06337a9e439fbc6d42e501d0a",
     "name": "Dao Drain 109 DAO_Hell_007",
-    "source": "GethSource Ether Camp"
+    "source": "GethSource Ether Camp",
+    "is_contract": true
   },
   {
     "deleted": false,
@@ -1400,7 +1411,7 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "50-Tokens:ERC20",
     "address": "0x4678f0a6958e4d2bc4f1baf7bc52e8f3564f3fe4",
     "name": "Maker: Proxy Registry",
-    "source": "Etherscan.io",
+    "source": "EtherScan.io",
     "is_contract": true
   },
   {
@@ -1408,7 +1419,7 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "55-Defi",
     "address": "0x4720515963a9d40ca10b1ade806c1291e6c9a86d",
     "name": "StrategyUSDC3pool",
-    "source": "Etherscan",
+    "source": "EtherScan.io",
     "is_contract": true
   },
   {
@@ -1416,7 +1427,7 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "50-Tokens:ERC20",
     "address": "0x47ce0c6ed5b0ce3d3a51fdb1c52dc66a7c3c2936",
     "name": "Tornado.Cash: 1 ETH",
-    "source": "Etherscan.io",
+    "source": "EtherScan.io",
     "is_contract": true
   },
   {
@@ -1424,7 +1435,7 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "55-Defi",
     "address": "0x48f2bd7513da5bb9f7bfd54ea37c41650fd5f3a3",
     "name": "Yearn: Signer Devops199fan",
-    "source": "Etherscan"
+    "source": "EtherScan.io"
   },
   {
     "deleted": false,
@@ -1443,7 +1454,7 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "60-Airdrops",
     "address": "0x4936790a58f5ae1c06210cba4eb1024fd7d535ac",
     "name": "Katerium Airdrop",
-    "source": "Etherscan",
+    "source": "EtherScan.io",
     "is_contract": true
   },
   {
@@ -1451,7 +1462,7 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "34-ENS",
     "address": "0x4976fb03c32e5b8cfe2b6ccb31c09ba78ebaba41",
     "name": "ENS: Public Resolver 2",
-    "source": "Etherscan",
+    "source": "EtherScan.io",
     "is_contract": true
   },
   {
@@ -1472,7 +1483,7 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x49c4f9bc14884f6210f28342ced592a633801a8b",
     "name": "Uniswap: KNC",
     "symbol": "KNC",
-    "source": "Etherscan",
+    "source": "EtherScan.io",
     "is_contract": true
   },
   {
@@ -1491,7 +1502,7 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "30-Contracts",
     "address": "0x4a5c681ddc32acc6cca51ac17e9d461e6be87900",
     "name": "Nexus Mutual: Governance Proxy",
-    "source": "Etherscan.io",
+    "source": "EtherScan.io",
     "is_contract": true
   },
   {
@@ -1499,7 +1510,7 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "30-Contracts",
     "address": "0x4aa42145aa6ebf72e164c9bbc74fbd3788045016",
     "name": "POA Network: DAI-XDAI Bridge",
-    "source": "Etherscan.io",
+    "source": "EtherScan.io",
     "is_contract": true
   },
   {
@@ -1507,7 +1518,7 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "30-Contracts",
     "address": "0x4ae0ede482f825fb9cccce8f0fe089f0379eaa2a",
     "name": "MCH: Gum Gateway 1",
-    "source": "Etherscan",
+    "source": "EtherScan.io",
     "is_contract": true
   },
   {
@@ -1554,7 +1565,7 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "30-Contracts:Set Prototcol",
     "address": "0x4f57e1f2020c35cd2fb45cf53cfeb6ff2e796180",
     "name": "Set: Rebalancing Set Exchange Issuance Module V2",
-    "source": "Etherscan",
+    "source": "EtherScan.io",
     "is_contract": true
   },
   {
@@ -1562,7 +1573,7 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "35-Pool Together",
     "address": "0x4fc604536134dc64718800361ecbca0df6cbfe08",
     "name": "Pool Together Pool 2",
-    "source": "Etherscan",
+    "source": "EtherScan.io",
     "is_contract": true
   },
   {
@@ -1570,7 +1581,7 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "55-Defi",
     "address": "0x4feeaeced575239b46d70b50e13532ecb62e4ea8",
     "name": "Yearn: StrategyCurveSBTC",
-    "source": "Etherscan",
+    "source": "EtherScan.io",
     "is_contract": true
   },
   {
@@ -1590,14 +1601,14 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "75-Early Actors",
     "address": "0x5088d623ba0fcf0131e0897a91734a4d83596aa0",
     "name": "MinerBlk3",
-    "source": "Etherscan"
+    "source": "EtherScan.io"
   },
   {
     "deleted": false,
     "tags": "30-Contracts",
     "address": "0x519b70055af55a007110b4ff99b0ea33071c720a",
     "name": "dxDAO",
-    "source": "Etherscan",
+    "source": "EtherScan.io",
     "is_contract": true
   },
   {
@@ -1605,21 +1616,22 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "80-Malicious:DaoDrain",
     "address": "0x51e0ddd9998364a2eb38588679f0d2c42653e4a6",
     "name": "Dao Drain 021",
-    "source": "GethSource Ether Camp"
+    "source": "GethSource Ether Camp",
+    "is_contract": true
   },
   {
     "deleted": false,
     "tags": "60-Airdrops",
     "address": "0x52140ae1c6abbcdbefd566c346d2cd751c162921",
     "name": "AGLD Airdrop Sender 2",
-    "source": "Etherscan"
+    "source": "EtherScan.io"
   },
   {
     "deleted": false,
     "tags": "30-Contracts",
     "address": "0x521d32f3d23f1fc82b1dbe306edc3ef668e5d973",
     "name": "Clovers Network Related",
-    "source": "Etherscan",
+    "source": "EtherScan.io",
     "is_contract": true
   },
   {
@@ -1627,7 +1639,7 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "30-Contracts",
     "address": "0x526af336d614ade5cc252a407062b8861af998f5",
     "name": "Maker: Sai Proxy 2",
-    "source": "Etherscan.io",
+    "source": "EtherScan.io",
     "is_contract": true
   },
   {
@@ -1635,14 +1647,15 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "80-Malicious:DaoDrain",
     "address": "0x52c5317c848ba20c7504cb2c8052abd1fde29d03",
     "name": "Dao Drain 061",
-    "source": "GethSource Ether Camp"
+    "source": "GethSource Ether Camp",
+    "is_contract": true
   },
   {
     "deleted": false,
     "tags": "55-Defi",
     "address": "0x530da5aef3c8f9ccbc75c97c182d6ee2284b643f",
     "name": "Yearn: StrategyCurveCompoundVoterProxy",
-    "source": "Etherscan",
+    "source": "EtherScan.io",
     "is_contract": true
   },
   {
@@ -1670,7 +1683,7 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "30-Contracts",
     "address": "0x5407381b6c251cfd498ccd4a1d877739cb7960b8",
     "name": "Nexus Mutual: Token Controller Proxy",
-    "source": "Etherscan.io",
+    "source": "EtherScan.io",
     "is_contract": true
   },
   {
@@ -1678,7 +1691,8 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "80-Malicious:DaoDrain",
     "address": "0x5524c55fb03cf21f549444ccbecb664d0acad706",
     "name": "Dao Drain 093",
-    "source": "GethSource Ether Camp"
+    "source": "GethSource Ether Camp",
+    "is_contract": true
   },
   {
     "deleted": false,
@@ -1698,14 +1712,14 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x5717d19616fab9079cf2bfce7d94126bca3ae536",
     "name": "BerryXToken Airdrop Sender",
     "symbol": "BRX",
-    "source": "Etherscan"
+    "source": "EtherScan.io"
   },
   {
     "deleted": false,
     "tags": "30-Contracts",
     "address": "0x5789e2b5460cae9329d93a78511e2ac49f98a1f6",
     "name": "GU: Legendary Pack",
-    "source": "Etherscan",
+    "source": "EtherScan.io",
     "is_contract": true
   },
   {
@@ -1723,7 +1737,7 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "34-ENS",
     "address": "0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85",
     "name": "ENS: Base Registrar Implementation",
-    "source": "Etherscan",
+    "source": "EtherScan.io",
     "is_contract": true
   },
   {
@@ -1731,7 +1745,7 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "30-Contracts",
     "address": "0x5aad137d8f7d2dc6e1b2548c059b1483360bcc6a",
     "name": "BrightID Aragon Org",
-    "source": "Etherscan",
+    "source": "EtherScan.io",
     "is_contract": true
   },
   {
@@ -1759,7 +1773,7 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "50-Tokens:ERC20",
     "address": "0x5bb622ba7b2f09bf23f1a9b509cd210a818c53d7",
     "name": "Based.Money: Curve sUSD Pool",
-    "source": "Etherscan.io",
+    "source": "EtherScan.io",
     "is_contract": true
   },
   {
@@ -1768,7 +1782,7 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x5c543e7ae0a1104f78406c340e9c64fd9fce5170",
     "name": "vSlice",
     "symbol": "VSL",
-    "source": "Etherscan.io",
+    "source": "EtherScan.io",
     "description": "An Ethereum Gaming Platform Token",
     "is_contract": true
   }], "types": [

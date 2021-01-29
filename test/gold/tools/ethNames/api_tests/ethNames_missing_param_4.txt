@@ -1,12 +1,12 @@
 tags	address	name	symbol	decimals	source
-55-Defi	0x000000000000000000000000000000000000dead	ENS: Burn Address				Etherscan
+55-Defi	0x000000000000000000000000000000000000dead	ENS: Burn Address				EtherScan.io
 30-Contracts	0x0000000000001b84b1cb32787b0d64758d019317	HomeWork 🏠🛠️	HWK			On chain
 50-Tokens:ERC20	0x0000000000004946c0e9f43f4dee607b0ef1fa1c	Chi Gastoken by 1inch	CHI			On chain
 50-Tokens:ERC20	0x0000000000085d4780b73119b644ae5ecd22b376	TrueUSD	TUSD		18	On chain
-34-ENS	0x00000000000c2e074ec69a0dfb2997ba6c7d2e1e	ENS: Registry with Fallback				Etherscan
+34-ENS	0x00000000000c2e074ec69a0dfb2997ba6c7d2e1e	ENS: Registry with Fallback				EtherScan.io
 30-Contracts	0x0000000000c90bc353314b6911180ed7e06019a9	Arbitrage Bot				0xTracker
 30-Contracts	0x0000000006adbd7c01bc0738cdbfc3932600ad63	1inch Exchange				0xTracker
-30-Contracts	0x00000000219ab540356cbb839cbe05303d7705fa	Eth2 Deposit Contract				Etherscan
+30-Contracts	0x00000000219ab540356cbb839cbe05303d7705fa	Eth2 Deposit Contract				EtherScan.io
 50-Tokens	0x00000000441378008ea67f4284a57932b1c000a5	TrueGBP	TGBP		18	On chain
 30-Contracts	0x0000000053d411becdb4a82d8603edc6d8b8b3bc	1inch Exchange				0xTracker
 30-Contracts	0x00000000af5a61acaf76190794e3fdf1289288a1	Arbitrage Bot				0xTracker
@@ -18,8 +18,8 @@ tags	address	name	symbol	decimals	source
 31-Gitcoin Grants:Friends	0x00000b46508882a135b4933b82a07df8f24a0068	Name 0x00000b46				Gitcoin Website
 50-Tokens	0x00006100f7090010005f1bd7ae6122c3c2cf0090	TrueAUD	TAUD		18	On chain
 50-Tokens	0x0000852600ceb001e08e00bc008be620d60031f2	TrueHKD	THKD		18	On chain
-55-Defi	0x0001fb050fe7312791bf6475b96569d83f695c9f	Ygov.finance: yearn				Etherscan.io
-30-Contracts	0x000983ba1a675327f0940b56c2d49cd9c042dfbf	GU: Shiny Legendary Pack				Etherscan
+55-Defi	0x0001fb050fe7312791bf6475b96569d83f695c9f	Ygov.finance: yearn				EtherScan.io
+30-Contracts	0x000983ba1a675327f0940b56c2d49cd9c042dfbf	GU: Shiny Legendary Pack				EtherScan.io
 60-Airdrops	0x000ee67d5bec37ad37292da18516cc96d81e0242	RZM Airdrop Sender 2				TrueBlocks.io
 31-Gitcoin Grants:Friends	0x00158a74921620b39e5c3afe4dca79feb2c2c143	Name 0x00158a74				Gitcoin Website
 30-Contracts	0x0015f3c39221b20016cebdbf8b19eb5acedca901	Hacker Gold Sender				TrueBlocks.io
@@ -29,13 +29,13 @@ tags	address	name	symbol	decimals	source
 31-Gitcoin Grants:Friends	0x0029dc8d8ef8c287ad395732dbe5d5bf951da820	Name 0x0029dc8d				Gitcoin Website
 31-Gitcoin Grants:Friends	0x002c83ebc32d18ff4f74852565402cf7bde35ccc	Name 0x002c83eb				Gitcoin Website
 30-Contracts	0x00319f722bd546182cb2c701ca254146d3f084fc	Democracy Earth	HOUR		18	On chain
-35-Pool Together	0x0034ea9808e620a0ef79261c51af20614b742b24	Pool Usdc MCDAwarePool v0.2.12				Etherscan
+35-Pool Together	0x0034ea9808e620a0ef79261c51af20614b742b24	Pool Usdc MCDAwarePool v0.2.12				EtherScan.io
 31-Gitcoin Grants:Friends	0x0035fc5208ef989c28d47e552e92b0c507d2b318	Name 0x0035fc52				Gitcoin Website
 75-Early Actors	0x0037ce3d4b7f8729c8607d8d0248252be68202c0	Miner_0027_260				OnChain
 31-Gitcoin Grants:Friends	0x003f6b20bfa4b5cab701960ecf73859cb3c095fc	Name 0x003f6b20				Gitcoin Website
-60-Airdrops	0x00476aecb24edfed50aaf2e2361badbd8d3efdc2	HEALP Airdrop Sender				Etherscan
+60-Airdrops	0x00476aecb24edfed50aaf2e2361badbd8d3efdc2	HEALP Airdrop Sender				EtherScan.io
 31-Gitcoin Grants:Friends	0x004efb233c8d26ccc063061bee54f0be9302e6ed	Name 0x004efb23				Gitcoin Website
-30-Contracts	0x005ca4f1493f451c1588186c570a434ec38e718d	BrightID Agent				Etherscan
+30-Contracts	0x005ca4f1493f451c1588186c570a434ec38e718d	BrightID Agent				EtherScan.io
 80-Malicious:DaoDrain	0x005f5cee7a43331d5a3d3eec71305925a62f34b6	Dao Drain 086				GethSource
 50-Tokens:ERC20	0x006bea43baa3f7a6f765f14f10a1a1b08334ef45	Stox	STX		18	On chain
 80-Malicious:Shanghai	0x006e61aa7e7ce25b8dad331d5181f2fbe5c23a54	Shanghai Cleaner Contract				TrueBlocks.io
@@ -62,7 +62,7 @@ tags	address	name	symbol	decimals	source
 36-Chainlink	0x0133aa47b6197d0ba090bf2cd96626eb71ffd13c	Chainlink BTC-ETH Aggregator				EtherScan.io
 50-Tokens:ERC20	0x0142c3b2fc51819b5af5dfc4aa52df9722790851	Paycentos Token	PYN		18	On chain
 50-Tokens:ERC20	0x014b50466590340d41307cc54dcee990c8d58aa8	ICOS			6	On chain
-30-Contracts	0x015531a044bae03bf4dab1ceabfc232a969b7175	GU: Rare Pack				Etherscan
+30-Contracts	0x015531a044bae03bf4dab1ceabfc232a969b7175	GU: Rare Pack				EtherScan.io
 31-Gitcoin Grants:Grant	0x015bf68ef11bd55e43a119b5752c4b3becae7f24	Grant 627 Veridex				https://gitcoin.co/grants/627/veridex
 31-Gitcoin Grants:Friends	0x015f9e50dc7b2a41ab8cc0b2b58763287dd3dd81	Name 0x015f9e50				Gitcoin Website
 50-Tokens:ERC20	0x016396044709eb3edc69c44f4d5fa6996917e4e8	KingXChain	KXC		18	On chain
@@ -98,10 +98,10 @@ tags	address	name	symbol	decimals	source
 50-Tokens:ERC20	0x036407f23d5e1c1486f7488332cf54bf06e5f09f	Alphabit	ABC		18	On chain
 50-Tokens:ERC20	0x0371a82e4a9d0a4312f3ee2ac9c6958512891372	Student Coin	STU		18	On chain
 36-Chainlink	0x037e8f2125bf532f3e228991e051c8a7253b642c	Chainlink DAI-ETH Aggregator				EtherScan.io
-30-Contracts	0x0385b3f162a0e001b60ecb84d3cb06199d78f666	Argent: Relayer 2				Etherscan
+30-Contracts	0x0385b3f162a0e001b60ecb84d3cb06199d78f666	Argent: Relayer 2				EtherScan.io
 31-Gitcoin Grants:Grant	0x039ae2898d257f4c9d7e381d478ee1ed042fe2f4	Grant 284 My DAO Dashboard				https://gitcoin.co/grants/284/my-dao-dashboard
 50-Tokens:ERC20	0x039b5649a59967e3e936d7471f9c3700100ee1ab	Kucoin Shares	KCS		6	On chain
-30-Contracts	0x039b739a1e7353878bfb2f2a4ec23502f4885baa	Maker: Oasis				Etherscan
+30-Contracts	0x039b739a1e7353878bfb2f2a4ec23502f4885baa	Maker: Oasis				EtherScan.io
 30-Contracts	0x03a99d9235732d94a300bf7013acb11020484bf1	Arbitrage Bot				0xTracker
 31-Gitcoin Grants:Friends	0x03b45f0f660adcaa24fbacffd45e171464ec63a8	Name 0x03b45f0f				Gitcoin Website
 31-Gitcoin Grants:Friends	0x03b85b333c99ec60a6d540e4277d71d3a4c0975d	Name 0x03b85b33				Gitcoin Website
@@ -128,7 +128,7 @@ tags	address	name	symbol	decimals	source
 30-Contracts:dAppNode	0x0545c8d8537fd8b5d8b5cec24ca94103bd4b67d4	dAddNode Package 001				TrueBlocks.io
 50-Tokens:ERC20	0x054c64741dbafdc19784505494029823d89c3b13	ETERNAL TOKEN	XET		8	On chain
 34-Twitter: Friends	0x0559a413a3ab19508a144aeebc474eb14c5e76ce	Name 0x0559a413				Twitter
-30-Contracts	0x055cc48f7968fd8640ef140610dd4038e1b03926	Owned Upgradeability Proxy				Etherscan.io
+30-Contracts	0x055cc48f7968fd8640ef140610dd4038e1b03926	Owned Upgradeability Proxy				EtherScan.io
 31-Gitcoin Grants:Friends	0x056fa2506578a8cd1b15aaf153d327c981140492	Name 0x056fa250				Gitcoin Website
 50-Tokens:ERC20	0x056fd409e1d7a124bd7017459dfea2f387b6d5cd	Gemini dollar	GUSD		2	On chain
 60-Airdrops	0x0571325cd46718cd9445f082332a4fd9a21b8498	FIFAMini Airdrop Sender				TrueBlocks.io
@@ -156,17 +156,17 @@ tags	address	name	symbol	decimals	source
 31-Gitcoin Grants:Friends	0x064d3230f753d8c14e06cf491fe2f1a3d2ccd5dd	Name 0x064d3230				Gitcoin Website
 34-Twitter: Friends	0x0667ad4cf9d2fd571a6a94412dbb98c0f9cf704e	Name 0x0667ad4c				Twitter
 80-Malicious:DaoDrain	0x06706dd3f2c9abf0a21ddcc6941d9b86f0596936	Dao Drain 008				GethSource
-40-Exchanges	0x0681d8db095565fe8a346fa0277bffde9c0edbbf	Binance 4				Etherscan
+40-Exchanges	0x0681d8db095565fe8a346fa0277bffde9c0edbbf	Binance 4				EtherScan.io
 30-Contracts	0x0681e844593a051e2882ec897ecd5444efe19ff2	StarbitEx				0xTracker
 31-Gitcoin Grants:Grant	0x068792edecad424d42f0f45de7f693ca33526cf1	Grant 075 Ethereum Dev Fund Working Group				https://gitcoin.co/grants/75/ethereum-dev-fund-working-group
-50-Tokens:ERC20	0x06a2cf3f024d8871baedd0f7bd9340001aada574	SingularDTV Sender 2				Etherscan
+50-Tokens:ERC20	0x06a2cf3f024d8871baedd0f7bd9340001aada574	SingularDTV Sender 2				EtherScan.io
 31-Gitcoin Grants:Friends	0x06aeae3d12ced2ff04d0694ed50f940637a64196	Name 0x06aeae3d				Gitcoin Website
 31-Gitcoin Grants:Friends	0x06b1bf28c962363f212878bdf87417ebd0316220	Name 0x06b1bf28				Gitcoin Website
 60-Airdrops	0x06b2387c7f56ecb61009bb31375b84e4be7f80b3	HEALP Airdrop	HEALP			TrueBlocks.io
 31-Gitcoin Grants:Friends	0x06c04508075c125cd65daf686177fee2a945e2d8	Name 0x06c04508				Gitcoin Website
 75-Early Actors	0x06d138312754bdeb5c1175f47ce00620c480e9c9	Miner_0067_90				OnChain
 31-Gitcoin Grants:Friends	0x06dbfdbfda84eabaea177760092dc22ab1d8f372	Name 0x06dbfdbf				Gitcoin Website
-30-Contracts	0x06fe76b2f432fdfecaef1a7d4f6c3d41b5861672	Zerion: Adapter Registry				Etherscan
+30-Contracts	0x06fe76b2f432fdfecaef1a7d4f6c3d41b5861672	Zerion: Adapter Registry				EtherScan.io
 50-Tokens:ERC20	0x0707681f344deb24184037fc0228856f2137b02e	FNKOSToken	FNKOS		18	On chain
 60-Airdrops	0x070f9d09370fd7ae3a583fc22a4e9f50ae1bdc78	RZM Airdrop Sender				TrueBlocks.io
 31-Gitcoin Grants:Grant	0x0730fd7d15fa9a40a6c7b2bbb4b8ce9ee6e6d08b	Grant 141 Metamoneymarket jacobshiach				https://gitcoin.co/grants/141/metamoneymarket
@@ -181,17 +181,17 @@ tags	address	name	symbol	decimals	source
 50-Tokens:ERC20	0x076c97e1c869072ee22f8c91978c99b4bcb02591	CommerceBlock Token	CBT		18	On chain
 50-Tokens:ERC20	0x0775c81a273b355e6a5b76e240bf708701f00279	Bulleon	BUL		18	On chain
 30-Contracts:dAppNode	0x077d271a3e4c3b45358417142490bd21172c81b5	dAddNode Package 003				TrueBlocks.io
-40-Exchanges	0x077d52b047735976dfda76fef74d4d988ac25196	Uniswap: ANT	ANT			Etherscan
+40-Exchanges	0x077d52b047735976dfda76fef74d4d988ac25196	Uniswap: ANT	ANT			EtherScan.io
 50-Tokens:ERC20	0x0784dbabb6c6834bddfb7cfee116ba049e5dafab	IBTC	IBTC		18	On chain
 30-Contracts	0x07995e463f8957b70d683addd00a695ba83bb324	Gavin Wood VouchFor				TrueBlocks.io
 50-Tokens:ERC20	0x07a58629aaf3e1a0d07d8f43114b76bd5eee3b91	Guaranteed Ethurance Token Extra	GETX		18	On chain
 60-Airdrops	0x07b8a9e9d8729f162c9d04b4762446bc76346e60	QunFaBa Airdrop Sender
 50-Tokens:ERC20	0x07d9e49ea402194bf48a8276dafb16e4ed633317	DALECOIN	DALC		8	On chain
-55-Defi	0x07db4b9b3951094b9e278d336adf46a036295de7	Yearn: StrategyCurveYVoterProxy				Etherscan
+55-Defi	0x07db4b9b3951094b9e278d336adf46a036295de7	Yearn: StrategyCurveYVoterProxy				EtherScan.io
 50-Tokens:ERC20	0x07e3c70653548b04f0a75970c1f81b4cbbfb606f	Delta	DLT		18	On chain
 31-Gitcoin Grants:Friends	0x07e405e6ec64b85206ad5aaf490a534394d7a65b	Name 0x07e405e6				Gitcoin Website
 50-Tokens:ERC20	0x07ef9e82721ac16809d24dafbe1792ce01654db4	Chimpion	BNANA		18	On chain
-30-Contracts	0x07f455f30e862e13e3e3d960762cb11c4f744d52	Gnosis Safe: Replay Service Deployment				Etherscan
+30-Contracts	0x07f455f30e862e13e3e3d960762cb11c4f744d52	Gnosis Safe: Replay Service Deployment				EtherScan.io
 80-Malicious:DaoDrain	0x07f5c1e1bc2c93e0402f23341973a0e043f7bf8a	Dao Drain 070				GethSource
 31-Gitcoin Grants:Friends	0x07f66cde25828ddb3578b30c52a491db08c92d77	Name 0x07f66cde				Gitcoin Website
 90-DevCon2:Individual	0x080a14c02ceb515e3854818071b3480b49311839	Darius				DevCon2 Token Contract

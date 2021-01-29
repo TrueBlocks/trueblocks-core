@@ -21,7 +21,7 @@ ethNames --named --custom --owned --fmt json
     "tags": "55-Defi",
     "address": "0x000000000000000000000000000000000000dead",
     "name": "ENS: Burn Address",
-    "source": "Etherscan"
+    "source": "EtherScan.io"
   },
   {
     "tags": "30-Contracts",
@@ -50,7 +50,7 @@ ethNames --named --custom --owned --fmt json
     "tags": "34-ENS",
     "address": "0x00000000000c2e074ec69a0dfb2997ba6c7d2e1e",
     "name": "ENS: Registry with Fallback",
-    "source": "Etherscan"
+    "source": "EtherScan.io"
   },
   {
     "tags": "30-Contracts",
@@ -68,7 +68,7 @@ ethNames --named --custom --owned --fmt json
     "tags": "30-Contracts",
     "address": "0x00000000219ab540356cbb839cbe05303d7705fa",
     "name": "Eth2 Deposit Contract",
-    "source": "Etherscan"
+    "source": "EtherScan.io"
   },
   {
     "tags": "50-Tokens",
@@ -148,13 +148,13 @@ ethNames --named --custom --owned --fmt json
     "tags": "55-Defi",
     "address": "0x0001fb050fe7312791bf6475b96569d83f695c9f",
     "name": "Ygov.finance: yearn",
-    "source": "Etherscan.io"
+    "source": "EtherScan.io"
   },
   {
     "tags": "30-Contracts",
     "address": "0x000983ba1a675327f0940b56c2d49cd9c042dfbf",
     "name": "GU: Shiny Legendary Pack",
-    "source": "Etherscan"
+    "source": "EtherScan.io"
   },
   {
     "tags": "60-Airdrops",
@@ -219,7 +219,7 @@ ethNames --named --custom --owned --fmt json
     "tags": "35-Pool Together",
     "address": "0x0034ea9808e620a0ef79261c51af20614b742b24",
     "name": "Pool Usdc MCDAwarePool v0.2.12",
-    "source": "Etherscan"
+    "source": "EtherScan.io"
   },
   {
     "tags": "31-Gitcoin Grants:Friends",
@@ -243,7 +243,7 @@ ethNames --named --custom --owned --fmt json
     "tags": "60-Airdrops",
     "address": "0x00476aecb24edfed50aaf2e2361badbd8d3efdc2",
     "name": "HEALP Airdrop Sender",
-    "source": "Etherscan"
+    "source": "EtherScan.io"
   },
   {
     "tags": "31-Gitcoin Grants:Friends",
@@ -255,7 +255,7 @@ ethNames --named --custom --owned --fmt json
     "tags": "30-Contracts",
     "address": "0x005ca4f1493f451c1588186c570a434ec38e718d",
     "name": "BrightID Agent",
-    "source": "Etherscan"
+    "source": "EtherScan.io"
   },
   {
     "tags": "80-Malicious:DaoDrain",
@@ -436,7 +436,7 @@ ethNames --named --custom --owned --fmt json
     "tags": "30-Contracts",
     "address": "0x015531a044bae03bf4dab1ceabfc232a969b7175",
     "name": "GU: Rare Pack",
-    "source": "Etherscan"
+    "source": "EtherScan.io"
   },
   {
     "tags": "31-Gitcoin Grants:Grant",
@@ -692,7 +692,7 @@ ethNames --named --custom --owned --fmt json
     "tags": "30-Contracts",
     "address": "0x0385b3f162a0e001b60ecb84d3cb06199d78f666",
     "name": "Argent: Relayer 2",
-    "source": "Etherscan"
+    "source": "EtherScan.io"
   },
   {
     "tags": "31-Gitcoin Grants:Grant",
@@ -713,7 +713,7 @@ ethNames --named --custom --owned --fmt json
     "tags": "30-Contracts",
     "address": "0x039b739a1e7353878bfb2f2a4ec23502f4885baa",
     "name": "Maker: Oasis",
-    "source": "Etherscan"
+    "source": "EtherScan.io"
   },
   {
     "tags": "30-Contracts",
@@ -896,7 +896,7 @@ ethNames --named --custom --owned --fmt json
     "tags": "30-Contracts",
     "address": "0x055cc48f7968fd8640ef140610dd4038e1b03926",
     "name": "Owned Upgradeability Proxy",
-    "source": "Etherscan.io"
+    "source": "EtherScan.io"
   },
   {
     "tags": "31-Gitcoin Grants:Friends",
@@ -1089,7 +1089,7 @@ ethNames --named --custom --owned --fmt json
     "tags": "40-Exchanges",
     "address": "0x0681d8db095565fe8a346fa0277bffde9c0edbbf",
     "name": "Binance 4",
-    "source": "Etherscan"
+    "source": "EtherScan.io"
   },
   {
     "tags": "30-Contracts",
@@ -1107,7 +1107,7 @@ ethNames --named --custom --owned --fmt json
     "tags": "50-Tokens:ERC20",
     "address": "0x06a2cf3f024d8871baedd0f7bd9340001aada574",
     "name": "SingularDTV Sender 2",
-    "source": "Etherscan"
+    "source": "EtherScan.io"
   },
   {
     "tags": "31-Gitcoin Grants:Friends",
@@ -1150,7 +1150,7 @@ ethNames --named --custom --owned --fmt json
     "tags": "30-Contracts",
     "address": "0x06fe76b2f432fdfecaef1a7d4f6c3d41b5861672",
     "name": "Zerion: Adapter Registry",
-    "source": "Etherscan"
+    "source": "EtherScan.io"
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -1262,7 +1262,7 @@ ethNames --named --custom --owned --fmt json
     "address": "0x077d52b047735976dfda76fef74d4d988ac25196",
     "name": "Uniswap: ANT",
     "symbol": "ANT",
-    "source": "Etherscan"
+    "source": "EtherScan.io"
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -1305,7 +1305,7 @@ ethNames --named --custom --owned --fmt json
     "tags": "55-Defi",
     "address": "0x07db4b9b3951094b9e278d336adf46a036295de7",
     "name": "Yearn: StrategyCurveYVoterProxy",
-    "source": "Etherscan"
+    "source": "EtherScan.io"
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -1334,7 +1334,7 @@ ethNames --named --custom --owned --fmt json
     "tags": "30-Contracts",
     "address": "0x07f455f30e862e13e3e3d960762cb11c4f744d52",
     "name": "Gnosis Safe: Replay Service Deployment",
-    "source": "Etherscan"
+    "source": "EtherScan.io"
   },
   {
     "tags": "80-Malicious:DaoDrain",
