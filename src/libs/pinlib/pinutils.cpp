@@ -85,7 +85,10 @@ hash_t getCurrentManifest(void) {
     CAbi abi;
     abi.loadAbiFromFile(configPath("known_abis/unchained.json"), false);
     address_t contractAddr = unchainedIndex;
-    return doEthCall(contractAddr, manifestHash, "", getLatestBlock_client(), abi);
+    CFunction result;
+    if (doEthCall(contractAddr, manifestHash, "", getLatestBlock_client(), abi, result))
+        return result.outputs[0].value;
+    return "";
 }
 
 //----------------------------------------------------------------

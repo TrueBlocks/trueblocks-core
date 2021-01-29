@@ -701,7 +701,10 @@ const char* STR_DISPLAY_TOKENBALANCERECORD2 =
 
 //-------------------------------------------------------------------------
 string_q getTokenBalanceOf(const CMonitor& token, const address_t& holder, blknum_t blockNum) {
-    return doEthCall(token.address, "0x70a08231", padLeft(extract(holder, 2), 64, '0'), blockNum, token.abi_spec);
+    CFunction result;
+    if (doEthCall(token.address, "0x70a08231", padLeft(extract(holder, 2), 64, '0'), blockNum, token.abi_spec, result))
+        return result.outputs[0].value;
+    return "";
 }
 
 //-------------------------------------------------------------------------
@@ -714,17 +717,24 @@ string_q getTokenState(const string_q& what, const CMonitor& token, blknum_t blo
     if (sigMap[what].empty()) {
         return "";
     }
-    string_q ret = doEthCall(token.address, sigMap[what], "", blockNum, token.abi_spec);
-    if (ret == "") {
+
+    CFunction result;
+    if (!doEthCall(token.address, sigMap[what], "", blockNum, token.abi_spec, result)) {
         // This may be a proxy contract, so we can try to get its implementation and call back in
         CMonitor proxy = token;
         // sigMap["implementation"] = "0x5c60da1b";
-        proxy.address = doEthCall(token.address, "0x5c60da1b", "", blockNum, token.abi_spec);
-        if (isZeroAddr(proxy.address))
+        CFunction proxyResult;
+        if (doEthCall(token.address, "0x5c60da1b", "", blockNum, token.abi_spec, proxyResult)) {
+            address_t addr = proxyResult.outputs[0].value;
+            if (isZeroAddr(addr))
+                return "";
+            proxy.address = addr;
+            if (doEthCall(proxy.address, sigMap[what], "", blockNum, token.abi_spec, result))
+                return result.outputs[0].value;
             return "";
-        return doEthCall(proxy.address, sigMap[what], "", blockNum, token.abi_spec);
+        }
     }
-    return ret;
+    return result.outputs.size() ? result.outputs[0].value : "";
 }
 
 //------------------------------------------------------------------------------------------------

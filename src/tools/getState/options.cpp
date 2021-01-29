@@ -86,15 +86,27 @@ bool COptions::parseArguments(string_q& command) {
     if (!call.empty()) {
         CStringArray vars;
         explode(vars, call, '!');
-        if (!isAddress(vars[0]))
-            return usage("Invalid address (" + vars[0] + ") in call. Quitting...");
-        CAbi abi;
-        abi.loadAbiByAddress(vars[0]);
+        if (vars.size() == 0)
+            return usage("You must supply the address of a smart contract. Quitting...");
+        if (vars.size() == 1)
+            return usage("You must provide a four-byte code to the smart contract you're calling. Quitting...");
+        address_t addr = vars[0];
+        string_q fourByte = vars.size() > 1 ? vars[1] : "";
+        string_q bytes = vars.size() > 2 ? vars[2] : "";
         blknum_t bn = vars.size() > 3 ? str_2_Uint(vars[3]) : getLatestBlock_client();
-        string_q p = vars.size() > 2 ? vars[2] : "";
-        if (vars.size() < 2)
-            return usage("Need a 4-byte. Quitting...");
-        cout << doEthCall(vars[0], vars[1], p, bn, abi) << endl;
+        if (!isContractAt(addr, bn))
+            return usage("The address your provided (" + vars[0] + ") is not a smart contract at block " +
+                         uint_2_Str(bn) + ". Quitting...");
+
+        CAbi abi;
+        abi.loadAbiByAddress(addr);
+
+        CFunction result;
+        if (doEthCall(addr, fourByte, bytes, bn, abi, result))
+            cout << result << endl;
+        else
+            cout << "No result" << endl;
+
         return false;
     }
 

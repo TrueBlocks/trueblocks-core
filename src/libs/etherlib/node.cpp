@@ -1340,19 +1340,18 @@ bool loadTimestampFile(uint32_t** theArray, size_t& cnt) {
 }
 
 //-------------------------------------------------------------------------
-string_q doEthCall(const address_t& to, const string_q& encoding, const string_q& bytes, blknum_t blockNum,
-                   const CAbi& abi) {
+bool doEthCall(const address_t& to, const string_q& encoding, const string_q& bytes, blknum_t blockNum, const CAbi& abi,
+               CFunction& result) {
     ostringstream cmd;
     cmd << "[{";
     cmd << "\"to\": \"" << to << "\", ";
-    cmd << "\"data\": \"" << encoding << bytes << "\"";
+    cmd << "\"data\": \"" << encoding << substitute(bytes, "0x", "") << "\"";
     cmd << "}, \"" << uint_2_Hex(blockNum) << "\"]";
 
-    CFunction ret;
     string_q rpcRet = callRPC("eth_call", cmd.str(), false);
     if (startsWith(rpcRet, "0x"))
-        abi.articulateOutputs(encoding, rpcRet, ret);
-    return ret.outputs.size() ? ret.outputs[0].value : "";
+        abi.articulateOutputs(encoding, rpcRet, result);
+    return result.outputs.size();
 }
 
 //-----------------------------------------------------------------------
