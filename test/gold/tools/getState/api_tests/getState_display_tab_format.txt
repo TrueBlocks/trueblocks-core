@@ -1,5 +1,5 @@
 {
   "errors": [
-    "getState - Invalid option: --json"
+    "getState - Invalid option: --data"
   ]
 }

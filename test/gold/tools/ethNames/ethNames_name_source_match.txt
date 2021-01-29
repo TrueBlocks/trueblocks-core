@@ -207,7 +207,8 @@ ethNames Ether --expand --verbose --fmt json
     "name": "Uniswap: ANT",
     "symbol": "ANT",
     "source": "EtherScan.io",
-    "is_contract": true
+    "is_contract": true,
+    "is_erc20": true
   },
   {
     "deleted": false,
@@ -338,7 +339,8 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x0b795e585ec0436e4572cc9b24fc5da1faf9cfc6",
     "name": "HEX Airdrop Sender",
     "symbol": "HEX",
-    "source": "EtherScan.io"
+    "source": "EtherScan.io",
+    "is_erc20": true
   },
   {
     "deleted": false,
@@ -364,13 +366,14 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
-    "tags": "50-Tokens",
+    "tags": "50-Tokens:ERC20",
     "address": "0x0d88ed6e74bbfd96b831231638b66c05571e824f",
     "name": "AVT",
     "symbol": "AVT",
     "source": "EtherScan.io",
     "description": "An open-source protocol that delivers the global standard for ticketing.",
-    "is_contract": true
+    "is_contract": true,
+    "is_erc20": true
   },
   {
     "deleted": false,
@@ -551,7 +554,8 @@ ethNames Ether --expand --verbose --fmt json
     "name": "Dao Issued Cert Airdrop",
     "symbol": "DIC",
     "source": "EtherScan.io",
-    "is_contract": true
+    "is_contract": true,
+    "is_erc20": true
   },
   {
     "deleted": false,
@@ -561,7 +565,8 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "REG",
     "source": "TrueBlocks.io",
     "description": "Registration smart contract as described in this EIP: https://eips.ethereum.org/EIPS/eip-1820",
-    "is_contract": true
+    "is_contract": true,
+    "is_erc20": true
   },
   {
     "deleted": false,
@@ -659,7 +664,7 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
-    "tags": "50-Tokens",
+    "tags": "50-Tokens:ERC20",
     "address": "0x1f75047233517dcf67970d9e3c3bb385cb647f30",
     "name": "Unicorns",
     "symbol": "🦄",
@@ -850,13 +855,14 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
-    "tags": "50-Tokens",
+    "tags": "50-Tokens:ERC20",
     "address": "0x28c8d01ff633ea9cd8fc6a451d7457889e698de6",
     "name": "Ethereum Gold",
     "symbol": "ETG",
     "source": "EtherScan.io",
     "description": "Ethereumgold is a nonprofit that aims to connects people to low-cost financial services to fight poverty and develop individual potential.",
-    "is_contract": true
+    "is_contract": true,
+    "is_erc20": true
   },
   {
     "deleted": false,
@@ -1124,13 +1130,14 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
-    "tags": "50-Tokens",
+    "tags": "50-Tokens:ERC20",
     "address": "0x38c6a68304cdefb9bec48bbfaaba5c5b47818bb2",
     "name": "HPBCoin",
     "symbol": "HPB",
     "source": "EtherScan.io",
     "description": "HPB High-Performance Blockchain is a new kind of block chain hardware and software architecture, which includes a chip acceleration engine and the blockchain platform, aiming to realize the performance extension of distributed applications",
-    "is_contract": true
+    "is_contract": true,
+    "is_erc20": true
   },
   {
     "deleted": false,
@@ -1278,7 +1285,7 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
-    "tags": "50-Tokens",
+    "tags": "50-Tokens:ERC20",
     "address": "0x41a7820c86f4bea29e6c9239aeb0fbdba12dd790",
     "name": "Unicorns",
     "symbol": "🦄",
@@ -1404,7 +1411,8 @@ ethNames Ether --expand --verbose --fmt json
     "source": "On Chain",
     "decimals": 18,
     "description": "ATN is a global artificial intelligence API marketplace where developers, technology suppliers and buyers come together to access and develop new and innovative forms of A.I. technology.",
-    "is_contract": true
+    "is_contract": true,
+    "is_erc20": true
   },
   {
     "deleted": false,
@@ -1484,7 +1492,8 @@ ethNames Ether --expand --verbose --fmt json
     "name": "Uniswap: KNC",
     "symbol": "KNC",
     "source": "EtherScan.io",
-    "is_contract": true
+    "is_contract": true,
+    "is_erc20": true
   },
   {
     "deleted": false,
@@ -1550,7 +1559,7 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
-    "tags": "50-Tokens",
+    "tags": "50-Tokens:ERC20",
     "address": "0x4e005a760e00e17c4912a8070eec047cfecbabbb",
     "name": "NEXT.exchange",
     "symbol": "NEXT",
@@ -1712,7 +1721,8 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x5717d19616fab9079cf2bfce7d94126bca3ae536",
     "name": "BerryXToken Airdrop Sender",
     "symbol": "BRX",
-    "source": "EtherScan.io"
+    "source": "EtherScan.io",
+    "is_erc20": true
   },
   {
     "deleted": false,
@@ -1720,16 +1730,6 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x5789e2b5460cae9329d93a78511e2ac49f98a1f6",
     "name": "GU: Legendary Pack",
     "source": "EtherScan.io",
-    "is_contract": true
-  },
-  {
-    "deleted": false,
-    "tags": "50-Tokens",
-    "address": "0x57ab1e02fee23774580c119740129eac7081e9d3",
-    "name": "Synth sUSD",
-    "symbol": "sUSD",
-    "source": "Etherscan.io",
-    "description": "sUSD is part of the Synethix network.",
     "is_contract": true
   },
   {
@@ -1778,12 +1778,21 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
-    "tags": "50-Tokens",
+    "tags": "50-Tokens:ERC20",
     "address": "0x5c543e7ae0a1104f78406c340e9c64fd9fce5170",
     "name": "vSlice",
     "symbol": "VSL",
     "source": "EtherScan.io",
     "description": "An Ethereum Gaming Platform Token",
+    "is_contract": true,
+    "is_erc20": true
+  },
+  {
+    "deleted": false,
+    "tags": "30-Contracts",
+    "address": "0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f",
+    "name": "Uniswap V2: Factory Contract",
+    "source": "EtherScan.io",
     "is_contract": true
   }], "types": [
 { "type": "CAccountName", "fields": [{ "name": "deleted", "type": "bool" }, { "name": "tags", "type": "text" }, { "name": "address", "type": "address" }, { "name": "name", "type": "text" }, { "name": "symbol", "type": "text" }, { "name": "source", "type": "text" }, { "name": "decimals", "type": "unumber" }, { "name": "description", "type": "text" }, { "name": "is_custom", "type": "bool" }, { "name": "is_prefund", "type": "bool" }, { "name": "is_contract", "type": "bool" }, { "name": "is_erc20", "type": "bool" }, { "name": "is_erc721", "type": "bool" }] }

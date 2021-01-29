@@ -387,7 +387,7 @@
       "is_custom": false,
       "is_prefund": false,
       "is_contract": true,
-      "is_erc20": false,
+      "is_erc20": true,
       "is_erc721": false
     },
     {
@@ -597,7 +597,7 @@
       "is_custom": false,
       "is_prefund": false,
       "is_contract": false,
-      "is_erc20": false,
+      "is_erc20": true,
       "is_erc721": false
     },
     {
@@ -647,7 +647,7 @@
     },
     {
       "deleted": false,
-      "tags": "50-Tokens",
+      "tags": "50-Tokens:ERC20",
       "address": "0x0d88ed6e74bbfd96b831231638b66c05571e824f",
       "name": "AVT",
       "symbol": "AVT",
@@ -657,7 +657,7 @@
       "is_custom": false,
       "is_prefund": false,
       "is_contract": true,
-      "is_erc20": false,
+      "is_erc20": true,
       "is_erc721": false
     },
     {
@@ -972,7 +972,7 @@
       "is_custom": false,
       "is_prefund": false,
       "is_contract": true,
-      "is_erc20": false,
+      "is_erc20": true,
       "is_erc721": false
     },
     {
@@ -987,7 +987,7 @@
       "is_custom": false,
       "is_prefund": false,
       "is_contract": true,
-      "is_erc20": false,
+      "is_erc20": true,
       "is_erc721": false
     },
     {
@@ -1142,7 +1142,7 @@
     },
     {
       "deleted": false,
-      "tags": "50-Tokens",
+      "tags": "50-Tokens:ERC20",
       "address": "0x1f75047233517dcf67970d9e3c3bb385cb647f30",
       "name": "Unicorns",
       "symbol": "🦄",
@@ -1442,7 +1442,7 @@
     },
     {
       "deleted": false,
-      "tags": "50-Tokens",
+      "tags": "50-Tokens:ERC20",
       "address": "0x28c8d01ff633ea9cd8fc6a451d7457889e698de6",
       "name": "Ethereum Gold",
       "symbol": "ETG",
@@ -1452,7 +1452,7 @@
       "is_custom": false,
       "is_prefund": false,
       "is_contract": true,
-      "is_erc20": false,
+      "is_erc20": true,
       "is_erc721": false
     },
     {
@@ -1922,7 +1922,7 @@
     },
     {
       "deleted": false,
-      "tags": "50-Tokens",
+      "tags": "50-Tokens:ERC20",
       "address": "0x38c6a68304cdefb9bec48bbfaaba5c5b47818bb2",
       "name": "HPBCoin",
       "symbol": "HPB",
@@ -1932,7 +1932,7 @@
       "is_custom": false,
       "is_prefund": false,
       "is_contract": true,
-      "is_erc20": false,
+      "is_erc20": true,
       "is_erc721": false
     },
     {
@@ -2177,7 +2177,7 @@
     },
     {
       "deleted": false,
-      "tags": "50-Tokens",
+      "tags": "50-Tokens:ERC20",
       "address": "0x41a7820c86f4bea29e6c9239aeb0fbdba12dd790",
       "name": "Unicorns",
       "symbol": "🦄",
@@ -2367,7 +2367,7 @@
       "is_custom": false,
       "is_prefund": false,
       "is_contract": true,
-      "is_erc20": false,
+      "is_erc20": true,
       "is_erc721": false
     },
     {
@@ -2502,7 +2502,7 @@
       "is_custom": false,
       "is_prefund": false,
       "is_contract": true,
-      "is_erc20": false,
+      "is_erc20": true,
       "is_erc721": false
     },
     {
@@ -2612,7 +2612,7 @@
     },
     {
       "deleted": false,
-      "tags": "50-Tokens",
+      "tags": "50-Tokens:ERC20",
       "address": "0x4e005a760e00e17c4912a8070eec047cfecbabbb",
       "name": "NEXT.exchange",
       "symbol": "NEXT",
@@ -2892,7 +2892,7 @@
       "is_custom": false,
       "is_prefund": false,
       "is_contract": false,
-      "is_erc20": false,
+      "is_erc20": true,
       "is_erc721": false
     },
     {
@@ -2904,21 +2904,6 @@
       "source": "EtherScan.io",
       "decimals": 0,
       "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": false,
-      "is_erc721": false
-    },
-    {
-      "deleted": false,
-      "tags": "50-Tokens",
-      "address": "0x57ab1e02fee23774580c119740129eac7081e9d3",
-      "name": "Synth sUSD",
-      "symbol": "sUSD",
-      "source": "EtherScan.io",
-      "decimals": 0,
-      "description": "sUSD is part of the Synethix network.",
       "is_custom": false,
       "is_prefund": false,
       "is_contract": true,
@@ -3002,13 +2987,28 @@
     },
     {
       "deleted": false,
-      "tags": "50-Tokens",
+      "tags": "50-Tokens:ERC20",
       "address": "0x5c543e7ae0a1104f78406c340e9c64fd9fce5170",
       "name": "vSlice",
       "symbol": "VSL",
       "source": "EtherScan.io",
       "decimals": 0,
       "description": "An Ethereum Gaming Platform Token",
+      "is_custom": false,
+      "is_prefund": false,
+      "is_contract": true,
+      "is_erc20": true,
+      "is_erc721": false
+    },
+    {
+      "deleted": false,
+      "tags": "30-Contracts",
+      "address": "0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f",
+      "name": "Uniswap V2: Factory Contract",
+      "symbol": "",
+      "source": "EtherScan.io",
+      "decimals": 0,
+      "description": "",
       "is_custom": false,
       "is_prefund": false,
       "is_contract": true,

@@ -396,7 +396,7 @@ ethNames 0x1 --fmt api
     "source": "DevCon2 Token Contract"
   },
   {
-    "tags": "50-Tokens",
+    "tags": "50-Tokens:ERC20",
     "address": "0x12b19d3e2ccc14da04fae33e63652ce469b3f2fd",
     "name": "GRID Token",
     "symbol": "GRID",
@@ -583,7 +583,7 @@ ethNames 0x1 --fmt api
     "decimals": 18
   },
   {
-    "tags": "50-Tokens",
+    "tags": "50-Tokens:ERC20",
     "address": "0x14094949152eddbfcd073717200da82fed8dc960",
     "name": "Fulcrum SAI iToken",
     "symbol": "iSAI",
@@ -1239,7 +1239,7 @@ ethNames 0x1 --fmt api
     "source": "GethSource Ether Camp"
   },
   {
-    "tags": "50-Tokens",
+    "tags": "50-Tokens:ERC20",
     "address": "0x1985365e9f78359a9b6ad760e32412f4a445e862",
     "name": "Reputation",
     "symbol": "REP",
@@ -1260,7 +1260,7 @@ ethNames 0x1 --fmt api
     "source": "TrueBlocks.io"
   },
   {
-    "tags": "50-Tokens",
+    "tags": "50-Tokens:ERC20",
     "address": "0x19b67f79f8c5d49e950a8754f95aaea93309dcae",
     "name": "HackerGold",
     "symbol": "HKG",

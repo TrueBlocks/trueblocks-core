@@ -36,11 +36,11 @@ tags	address	name	symbol	decimals	source
 50-Tokens:ERC20	0x7b2df125567815ac9b57da04b620f50bc93b320c	Archetypal Network	ACTP		8	On chain
 50-Tokens:ERC20	0x7c5a0ce9267ed19b22f8cae653f198e3e8daf098	SANtiment network token	SAN		18	On chain
 50-Tokens:ERC20	0x7c5d5100b339fe7d995a893af6cb496b9474373c	Loon Network	LOON		18	On chain
-50-Tokens	0x7c6c3b4e91923f080d6cc847a68d7330400a95d7	Union Network Dollar Token	UNDT		18	On chain
+50-Tokens:ERC20	0x7c6c3b4e91923f080d6cc847a68d7330400a95d7	Union Network Dollar Token	UNDT		18	On chain
 30-Contracts:Set Protocol	0x818e6fecd516ecc3849daf6845e3ec868087b755	Kyber Network Proxy				https://github.com/SetProtocol/set-protocol-contracts
 50-Tokens:ERC20	0x881ef48211982d01e2cb7092c915e647cd40d85c	Open Trading Network	OTN		18	On chain
 31-Gitcoin Grants:Grant	0x904065ba663879deb7e5f902220e7db97cbf04af	Grant 681 FlowStake Activity Staking Blockchain Network				https://gitcoin.co/grants/681/flowstake-activity-staking-blockchain-network
-50-Tokens	0x9469d013805bffb7d3debe5e7839237e535ec483	Darwinia Network Token	RING		18	defipulse.com
+50-Tokens:ERC20	0x9469d013805bffb7d3debe5e7839237e535ec483	Darwinia Network Token	RING		18	defipulse.com
 50-Tokens:ERC20	0x960b236a07cf122663c4303350609a66a7b288c0	Aragon Network Token	ANT		18	On chain
 30-Contracts:Kyber Network	0x9ae49c0d7f8f9ef4b864e004fe86ac8294e20950	Kyber Network				0xTracker
 31-Gitcoin Grants:Grant	0xa1381b40e0a6b91814f77de19a7ad2cb21753184	Grant 334 Interstate Network EVM optimistic rollup				https://gitcoin.co/grants/334/interstate-network-evm-generic-optimistic-rollups
@@ -51,7 +51,7 @@ tags	address	name	symbol	decimals	source
 50-Tokens:ERC20	0xb2135ab9695a7678dd590b1a996cb0f37bcb0718	Signals Network Token	SGN		9	On chain
 31-Gitcoin Grants:Grant	0xb422e46540153ddaaccd8f5e899893fc53ab77b8	Grant 338 2key Network Labs				https://gitcoin.co/grants/338/2key-network-labs
 31-Gitcoin Grants:Grant	0xb64850fe701fb64667b6cc762aa2c12f2e02193c	Grant 742 Crypto community ventures network				https://gitcoin.co/grants/742/crypto-community-ventures-network
-50-Tokens	0xc011a72400e58ecd99ee497cf89e3775d4bd732f	Synthetix Network Token	SNX			EtherScan.io
+50-Tokens:ERC20	0xc011a72400e58ecd99ee497cf89e3775d4bd732f	Synthetix Network Token	SNX			EtherScan.io
 50-Tokens:ERC20	0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f	Synthetix Network Token	SNX		18	On chain
 30-Contracts:Kyber Network	0xc0d3e654676b117663143eac33b45b620171244b	Kyber Order List				TrueBlocks.io
 31-Gitcoin Grants:Grant	0xc37e165fcfa2cb5cca7329dd9daa8cd72907b983	Grant 037 Connext Network				https://gitcoin.co/grants/37/connext-network
