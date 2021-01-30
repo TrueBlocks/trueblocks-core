@@ -4,7 +4,7 @@
 # tree and opens them for editing in Atom
 #
 if [ "$(uname)" == "Darwin" ]; then
-    /usr/local/bin/code `find -E . -iregex ".*\.(h|hpp|cpp|cc|toml|ake|md|py|js|jsx|sql|csv|go|css|json|proto|yml)" -exec grep -Hs$2 "$1" '{}' ';' | cut -f1 -d: | sort -u | grep -v Binary | xargs`
+    /usr/bin/nano `find -E . -iregex ".*\.(h|hpp|cpp|cc|toml|ake|md|py|js|jsx|sql|csv|go|css|json|proto|yml)" -exec grep -Hs$2 "$1" '{}' ';' | cut -f1 -d: | sort -u | grep -v Binary | xargs`
 elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
     /usr/local/bin/nano -E -T 4 `find . -regextype posix-extended -iregex ".*\.(h|hpp|cpp|cc|toml|ake|md|py|js|jsx|sql|csv|go|css|json|proto|yml)" -exec grep -Hs$2 "$1" '{}' ';' | cut -f1 -d: | sort -u | grep -v Binary | xargs`
 fi

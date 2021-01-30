@@ -1,4 +1,19 @@
 chifra argc: 3 [1:server] [2:--help] 
 chifra server --help 
-/Users/jrush/Development/trueblocks-core/bin/goServer: line 4: cd: ../src/go-apps/go-server: No such file or directory
-stat main.go: no such file or directory
+
+  Usage:    chifra [-v|-h] commands  
+  Purpose:  Main TrueBlocks command line controls.
+
+  Where:  
+	commands              which command to run, one or more of [list|export|slurp|collections|names|tags|abis|blocks|transactions|receipts|logs|traces|quotes|state|tokens|when|where|dive|init|scrape|server|status|rm] (required)
+
+	#### Hidden options
+	-S  (--start <num>)   first block to process (inclusive)
+	-E  (--end <num>)     last block to process (inclusive)
+	#### Hidden options
+
+	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
+	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
+	-h  (--help)          display this help screen
+
+  Powered by TrueBlocks

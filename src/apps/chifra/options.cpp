@@ -67,6 +67,9 @@ bool COptions::parseArguments(string_q& command) {
             if (mode.empty()) {
                 optionOn(OPT_HELP);
                 return usage();
+            } else if (mode == "server") {
+                optionOn(OPT_HELP);
+                return usage();
             }
             setenv("PROG_NAME", ("chifra " + mode).c_str(), true);
             tool_help = true;

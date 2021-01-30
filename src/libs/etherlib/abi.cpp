@@ -112,6 +112,18 @@ bool CAbi::setValueByName(const string_q& fieldNameIn, const string_q& fieldValu
     string_q fieldValue = fieldValueIn;
 
     // EXISTING_CODE
+    if (fieldName % "interfaces") {
+        CFunction obj;
+        string_q str = fieldValue;
+        while (obj.parseJson3(str)) {
+            if (!interfaceMap[obj.encoding]) {
+                interfaces.push_back(obj);
+                interfaceMap[obj.encoding] = true;
+            }
+            obj = CFunction();  // reset
+        }
+        return true;
+    }
     // EXISTING_CODE
 
     switch (tolower(fieldName[0])) {
@@ -523,6 +535,9 @@ bool CAbi::addIfUnique(const string_q& addr, CFunction& func, bool decorateNames
     if (func.name.empty() && func.type != "constructor")
         return false;
 
+    if (interfaceMap[func.encoding])
+        return false;
+
     for (auto f : interfaces) {
         if (f.encoding == func.encoding)
             return false;
@@ -537,6 +552,7 @@ bool CAbi::addIfUnique(const string_q& addr, CFunction& func, bool decorateNames
     }
 
     interfaces.push_back(func);
+    interfaceMap[func.encoding] = true;
     return true;
 }
 
@@ -779,7 +795,10 @@ bool sol_2_Abi(CAbi& abi, const string_q& addr) {
             if (contains(line, "function ") || contains(line, "event ")) {
                 CFunction func;
                 func.fromDefinition(line);
-                abi.interfaces.push_back(func);
+                if (!abi.interfaceMap[func.encoding]) {
+                    abi.interfaces.push_back(func);
+                    abi.interfaceMap[func.encoding] = true;
+                }
             }
         }
     }

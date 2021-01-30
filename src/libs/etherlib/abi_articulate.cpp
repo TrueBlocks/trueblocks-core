@@ -44,7 +44,6 @@ bool CAbi::articulateTransaction(CTransaction* p) const {
         for (auto interface : interfaces) {
             if (encoding % interface.encoding) {
                 p->articulatedTx = CFunction(interface);
-                p->articulatedTx.showOutput = false;
                 bool ret1 = decodeRLP(p->articulatedTx.inputs, "", input);
                 bool ret2 = (hasTraces ? decodeRLP(p->articulatedTx.outputs, "", p->traces[0].result.output) : false);
                 EXIT_NOMSG8(ret1 || ret2);
@@ -151,7 +150,6 @@ bool CAbi::articulateLog(CLogEntry* p) const {
         if (topic_2_Str(p->topics[0]) % padded) {
             // We found the topic we're looking for...work on a copy...
             p->articulatedLog = CFunction(*funcPtr);
-            p->articulatedLog.showOutput = false;
 
             bool ret1 = true, ret2 = true;
             size_t which = 1;
@@ -188,7 +186,6 @@ bool CAbi::articulateLog(CLogEntry* p) const {
 
 #if 0
                 p->articulatedLog = CFunction(*intf);
-                p->articulatedLog.showOutput = false;
 
                 // separate out the topic params from the data params
                 string_q topicStr; size_t which = 1, pos = 0;
@@ -247,7 +244,6 @@ bool CAbi::articulateTrace(CTrace* p) const {
         for (auto interface : interfaces) {
             if (encoding % interface.encoding) {
                 p->articulatedTrace = CFunction(interface);
-                p->articulatedTrace.showOutput = false;
                 bool ret1 = decodeRLP(p->articulatedTrace.inputs, "", input);
                 bool ret2 = decodeRLP(p->articulatedTrace.outputs, "", p->result.output);
                 EXIT_NOMSG8(ret1 || ret2);
@@ -263,7 +259,6 @@ bool CAbi::articulateOutputs(const string_q& encoding, const string_q& output, C
     for (auto interface : interfaces) {
         if (encoding % interface.encoding) {
             ret = CFunction(interface);
-            ret.showOutput = false;
             bool bRet = decodeRLP(ret.outputs, "", output);
             EXIT_NOMSG8(bRet);
         }

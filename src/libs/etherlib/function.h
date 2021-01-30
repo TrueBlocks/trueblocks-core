@@ -50,7 +50,6 @@ class CFunction : public CBaseNode {
 
     // EXISTING_CODE
     bool checkTypes(void) const;
-    bool showOutput;
     bool isBuiltIn;
     string_q origName;
     explicit CFunction(const string_q& n) : name(n), anonymous(false), constant(false) {
@@ -128,7 +127,6 @@ inline void CFunction::initialize(void) {
     address = "";
 
     // EXISTING_CODE
-    showOutput = true;
     isBuiltIn = false;
     origName = "";
     // EXISTING_CODE
@@ -152,7 +150,6 @@ inline void CFunction::duplicate(const CFunction& fu) {
     address = fu.address;
 
     // EXISTING_CODE
-    showOutput = fu.showOutput;
     isBuiltIn = fu.isBuiltIn;
     origName = fu.origName;
     // EXISTING_CODE
