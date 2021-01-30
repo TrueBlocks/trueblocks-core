@@ -15,9 +15,14 @@
 
 //------------------------------------------------------------------------------------------------------------
 bool COptions::handle_format(void) {
+    CToml config(configPath("makeClass.toml"));
+
+    bool enabled = config.getConfigBool("settings", "enabled", false);
     string_q res = doCommand("which clang-format");
-    if (res.empty())
-        return usage("clang-format not found. Install it before running this command. Quitting");
+    if (!enabled || res.empty()) {
+        LOG_WARN("Skipping formatting...");
+        return true;
+    }
 
     LOG_INFO(cYellow, "handling formatting...", cOff);
     counter = CCounter();
@@ -28,7 +33,6 @@ bool COptions::handle_format(void) {
     LOG_INFO(cYellow, "makeClass --format", cOff, " processed ", counter.nVisited, " files (changed ",
              counter.nProcessed, ").", string_q(40, ' '));
 
-    CToml config(configPath("makeClass.toml"));
     config.setConfigStr("settings", "lastFormat", uint_2_Str(static_cast<uint64_t>(date_2_Ts(Now()))));
     config.writeFile();
     config.Release();
