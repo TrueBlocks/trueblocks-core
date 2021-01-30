@@ -51,6 +51,7 @@ void doTest(const string_q& prog) {
 
 //--------------------------------------------------------------
 int main(int argc, const char* argv[]) {
+#if 0
     etherlib_init(quickQuitHandler);
 
     // Parse command line, allowing for command files
@@ -72,5 +73,6 @@ int main(int argc, const char* argv[]) {
         cout << "isRunning(runningTest): " << isRunning("runningTest") << endl;
         cout << "isRunning(testRunner): " << isRunning("testRunner") << endl;
     }
+#endif
     return 0;
 }

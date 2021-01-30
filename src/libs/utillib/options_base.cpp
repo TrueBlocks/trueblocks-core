@@ -94,11 +94,10 @@ bool COptionsBase::prepareArguments(int argCountIn, const char* argvIn[]) {
         cerr << endl;
         cerr << getProgName() << " " << os.str() << endl;
         CStringArray envs = {
-            "API_MODE",     "DOCKER_MODE",     "PROG_NAME",      "FRESHEN_FLAGS",    "HIDE_NAMES",
+            "API_MODE", "DOCKER_MODE", "PROG_NAME", "FRESHEN_FLAGS", "HIDE_NAMES",
             //"IPFS_PATH",
-            "SILENCE",         "NO_CACHE",       "NO_NAMES",         "NO_PROGRESS",
-            "NO_SCHEMAS",   "TB_NAME_ADDRESS", "TB_NAME_CUSTOM", "TB_NAME_DECIMALS", "TB_NAME_DESCR",
-            "TB_NAME_NAME", "TB_NAME_SOURCE",  "TB_NAME_SYMBOL", "TB_NAME_TAG"
+            "SILENCE", "NO_CACHE", "NO_NAMES", "NO_PROGRESS", "NO_SCHEMAS", "TB_NAME_ADDRESS", "TB_NAME_CUSTOM",
+            "TB_NAME_DECIMALS", "TB_NAME_DESCR", "TB_NAME_NAME", "TB_NAME_SOURCE", "TB_NAME_SYMBOL", "TB_NAME_TAG"
             // "TEST_MODE", "NO_COLOR", "REDIR_CERR", "EDITOR",
         };
         for (auto key : envs) {

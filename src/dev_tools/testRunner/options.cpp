@@ -290,11 +290,13 @@ void establishTestData(void) {
     establishABI("0xbb9bc244d798123fde783fcc1c72d3bb8c189413");
     establishABI("0x8055d0504666e2b6942beb8d6014c964658ca591");
 
-    establishMonitor("0xfdecc82ddfc56192e26f563c3d68cb544a96bfed");
-    establishMonitor("0xd2f5852eb4b0c12c23a97914b2a9d954cf621781");
-    establishMonitor("0x001d14804b399c6ef80e64576f657660804fec0b");
-    establishMonitor("0xf503017d7baf7fbc0fff7492b751025c6a78179b");
-    establishMonitor("0x05a56e2d52c817161883f50c441c3228cfe54d9f");
-    establishMonitor("0x6b92d76c9d0d40e53019ffa51b6f0c9b6bc657c9");
-    establishMonitor("0xffe8196bc259e8dedc544d935786aa4709ec3e64");
+    if (!folderExists(getCachePath("monitors/"))) {
+        establishMonitor("0xfdecc82ddfc56192e26f563c3d68cb544a96bfed");
+        establishMonitor("0xd2f5852eb4b0c12c23a97914b2a9d954cf621781");
+        establishMonitor("0x001d14804b399c6ef80e64576f657660804fec0b");
+        establishMonitor("0xf503017d7baf7fbc0fff7492b751025c6a78179b");
+        establishMonitor("0x05a56e2d52c817161883f50c441c3228cfe54d9f");
+        establishMonitor("0x6b92d76c9d0d40e53019ffa51b6f0c9b6bc657c9");
+        establishMonitor("0xffe8196bc259e8dedc544d935786aa4709ec3e64");
+    }
 }
