@@ -461,10 +461,12 @@ CNewBlock::CNewBlock(const CBlock& block) {
     hash = block.hash;
     blockNumber = block.blockNumber;
     parentHash = block.parentHash;
+    miner = block.miner;
+    difficulty = block.difficulty;
+    price = block.price;
+    finalized = block.finalized;
     timestamp = block.timestamp;
     transactions = block.transactions;
-    miner = "0x0";
-    difficulty = 0;
 }
 
 //-----------------------------------------------------------------------
