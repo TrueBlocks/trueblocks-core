@@ -1,2 +1,2 @@
 # [settings]
-# json_pretty_print = jq
+# json_pretty_print = "jq ."

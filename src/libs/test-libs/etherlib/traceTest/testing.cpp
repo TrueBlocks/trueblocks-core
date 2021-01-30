@@ -95,11 +95,7 @@ int main(int argc, const char* argv[]) {
                     os << "-H \"x-api-key: " << node.APIKey << "\" ";
                 os << "-X POST " << node.URL;
                 os << " | sed -f sed_file";
-                os << " | jq -S ";
-                //                if (!contains(test.cmd, "trace_"))
-                //                    os << "-r 'del(.result[\"sealFields\",\"author\"]) | "
-                //                          "del(.result[\"chainId\",\"condition\",\"creates\",\"publicKey\",\"raw\",\"standardV\","
-                //                          "\"time\",\"transactionLogIndex\",\"type\"])' ";
+                os << " | jq -S . ";
                 string_q testFile = toLower(node.name) + "/" + test.name + ".txt";
                 os << " >" << testFile;
                 // cout << os.str() << endl;

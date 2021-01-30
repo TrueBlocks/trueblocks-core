@@ -516,7 +516,7 @@ CTestCase::CTestCase(const string_q& line, uint32_t id) {
     fileName = tool + "_" + name + ".txt";
 
     replaceAll(post, "n", "");
-    replaceAll(post, "y", getGlobalConfig("makeClass")->getConfigStr("settings", "json_pretty_print", "jq"));
+    replaceAll(post, "y", getGlobalConfig("makeClass")->getConfigStr("settings", "json_pretty_print", "jq ."));
 
     builtin = prepareBuiltIn(options);
     if (!builtin) {
