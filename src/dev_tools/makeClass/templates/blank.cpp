@@ -15,7 +15,6 @@
  * of 'EXISTING_CODE' tags.
  */
 // clang-format off
-#include <algorithm>
 #include "[{FN}].h"
 [OTHER_INCS]
 [{NAMESPACE1}]

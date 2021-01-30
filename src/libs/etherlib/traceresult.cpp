@@ -14,7 +14,6 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
-#include <algorithm>
 #include "traceresult.h"
 #include "trace.h"
 
