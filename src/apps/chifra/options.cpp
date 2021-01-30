@@ -177,6 +177,8 @@ bool COptions::parseArguments(string_q& command) {
             return usage("Incorrect mode: " + mode + ". Quitting...");
         ostringstream cmd;
         cmd << cmdMap[mode] << " --help";
+        if (verbose)
+            cmd << " --verbose " << verbose << endl;
         // clang-format off
         if (system(cmd.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings
         // clang-format on

@@ -17,7 +17,7 @@ on, both, fast, export, apps/acctExport, export_c_fail,         y, addrs = 0x001
 on, both, fast, export, apps/acctExport, export_receipts,       y, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & receipts & fmt = json & max_records = 5
 on, both, fast, export, apps/acctExport, export_logs,           y, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & logs & fmt = json & end = 001506480
 #on, both, fast, export, apps/acctExport, export_logs_art,       y, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & logs & fmt = json & end = 001506480 & articulate
-on, cmd,  fast, export, apps/acctExport, export_logs_emit,      y, addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & logs & fmt = json & end = 006500000 & emitter = 0x6b92d76c9d0d40e53019ffa51b6f0c9b6bc657c9
+on, cmd,  fast, export, apps/acctExport, export_logs_emit,      y, addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & logs & fmt = json & end = 006500000 & emitter
 on, both, fast, export, apps/acctExport, export_logs_factory,   y, addrs = 0xd2f5852eb4b0c12c23a97914b2a9d954cf621781 & traces & fmt = json & end = 1750000 & factory
 on, both, fast, export, apps/acctExport, export_traces,         y, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & traces & fmt = api & end = 001506480 & max_records = 5
 

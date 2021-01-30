@@ -70,13 +70,15 @@ string_q getCachePath(const string_q& _part) {
 
 //-----------------------------------------------------------------------
 bool loadPrefunds(const string_q& prefundFile, COptionsBase& options) {
+    // start with a clean slate
+    options.prefundWeiMap.clear();
+
     // Note: we don't need to check the dates to see if the prefunds.txt file has been updated
     // since it will never change. In that sense, the binary file is always right once it's created.
     string_q binFile = getCachePath("names/names_prefunds_bals.bin");
     if (!fileExists(binFile)) {
         if (!fileExists(prefundFile))
             return false;
-        options.prefundWeiMap.clear();
         CStringArray lines;
         asciiFileToLines(prefundFile, lines);
         bool first = true;
@@ -100,6 +102,7 @@ bool loadPrefunds(const string_q& prefundFile, COptionsBase& options) {
         archive.Release();
         return true;
     }
+
     CArchive archive(READING_ARCHIVE);
     if (!archive.Lock(binFile, modeReadOnly, LOCK_NOWAIT))
         return false;

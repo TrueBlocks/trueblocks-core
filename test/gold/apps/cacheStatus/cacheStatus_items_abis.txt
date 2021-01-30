@@ -23,6 +23,7 @@ cacheStatus --details abis
           "nEvents": 36963,
           "nOther": 36963,
           "address": "---address---",
+          "name": "1inch.exchange v2",
           "nAppearances": 0,
           "firstAppearance": 0,
           "latestAppearance": 0,

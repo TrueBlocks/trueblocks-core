@@ -24,7 +24,7 @@
               "nOther": 36963,
               "tags": "",
               "address": "---address---",
-              "name": "",
+              "name": "1inch.exchange v2",
               "symbol": "",
               "source": "",
               "decimals": 0,

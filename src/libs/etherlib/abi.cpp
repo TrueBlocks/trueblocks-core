@@ -341,7 +341,8 @@ bool CAbi::loadAndCacheAbiFolder(const string_q& sourcePath, const string_q& bin
         }
     }
 
-    LOG_INFO("Freshening abi cache for path: ", sourcePath);
+    if (!isTestMode())
+        LOG_INFO("Freshening abi cache for path: ", sourcePath);
     if (!forEveryFileInFolder(sourcePath + "*", visitABI, this))
         return false;
 
@@ -493,14 +494,12 @@ void loadAbiAndCache(CAbi& abi, const address_t& addr, bool raw, CStringArray& e
         } else {
             // TODO(tjayrush): If we store the ABI here even if empty, we won't have to get it again, but then
             // what happens if user later posts the ABI? Need a 'refresh' option or clear cache option
-
             if (verbose) {
                 ostringstream os;
                 os << "Etherscan returned: " << results << ". ";
                 os << "Could not grab ABI for " + addr + " from etherscan.io.";
                 errors.push_back(os.str());
             }
-
             establishFolder(fileName);
             stringToAsciiFile(fileName, "[]");
             results = "";

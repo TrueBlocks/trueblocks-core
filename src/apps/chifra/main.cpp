@@ -25,13 +25,16 @@ int main(int argc, const char* argv[]) {
 
         if (options.mode == "list" || options.mode == "export") {
             options.tool_flags = substitute(options.tool_flags, "--addrs", "");
+            int r = options.handle_export();
             acctlib_cleanup();
-            RETURN(options.handle_export())
+            RETURN(r);
 
         } else {
+            int r = options.handle_commands();
             acctlib_cleanup();
-            RETURN(options.handle_commands());
+            RETURN(r);
         }
     }
+
     EXIT_NOMSG(EXIT_SUCCESS);
 }

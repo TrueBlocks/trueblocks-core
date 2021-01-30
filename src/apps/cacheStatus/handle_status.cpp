@@ -462,10 +462,10 @@ bool noteABI(const string_q& path, void* data) {
         string_q addr = substitute(path, "/0x", "|");
         nextTokenClear(addr, '|');
         abii.address = "0x" + nextTokenClear(addr, '.');
-        if (isTestMode())
-            abii.address = "---address---";
         CAccountName n;
         counter->options->getNamedAccount(n, abii.address);
+        if (isTestMode())
+            abii.address = "---address---";
         abii.name = n.name;
         if (isTestMode()) {
             abii.nFunctions = abii.nEvents = abii.nOther = abii.sizeInBytes = 36963;

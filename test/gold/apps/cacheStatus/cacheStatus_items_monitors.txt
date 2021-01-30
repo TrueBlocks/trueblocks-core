@@ -24,7 +24,7 @@ cacheStatus --details monitors
           "address": "---address---",
           "name": "--name--",
           "source": "--source--",
-          "is_contract": true,
+          "is_prefund": true,
           "nAppearances": 18446744073709551615,
           "firstAppearance": 18446744073709551615,
           "latestAppearance": 18446744073709551615,

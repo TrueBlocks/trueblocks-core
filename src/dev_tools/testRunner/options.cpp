@@ -33,6 +33,7 @@ static const COption params[] = {
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
+extern void establishTestData(void);
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
@@ -189,6 +190,8 @@ bool COptions::parseArguments(string_q& command) {
     if (!endsWith(apiProvider, '/'))
         apiProvider += "/";
 
+    establishTestData();
+
     return true;
 }
 
@@ -243,4 +246,55 @@ bool COptions::cleanTest(const string_q& path, const string_q& testName) {
     if (system(os.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings
     // clang-format on
     return true;
+}
+
+//---------------------------------------------------------------------------------------------------
+void establishABI(const address_t& addr) {
+    cerr << "Loading ABI for " << addr;
+    if (!fileExists(getCachePath("abis/" + toLower(addr) + ".json"))) {
+        doCommand("grabABI " + addr);
+        usleep(250000);
+    }
+    cerr << "...done.\r";
+    cerr.flush();
+}
+
+//---------------------------------------------------------------------------------------------------
+void establishMonitor(const address_t& addr) {
+    cerr << "Loading monitor for " << addr;
+    if (!fileExists(getCachePath("monitors/" + toLower(addr) + ".acct.bin"))) {
+        doCommand("chifra list " + addr + " 2>&1 | tr '\n' '\r'");
+    }
+    cerr << "...done.\n";
+    cerr.flush();
+}
+
+//---------------------------------------------------------------------------------------------------
+void establishTestData(void) {
+    // TODO(tjayrush): This is a hack, really. We should fix the reason these tests fail
+    // when one removes the data in the cache. This code puts the data into the cache
+    // before running the tests. The tests fail if one removes this. The tests should not fail.
+    doCommand(" getBlock --uniq_tx 0");
+    doCommand("getBlock --force 4369999");
+
+    establishABI("0x111111125434b319222cdbf8c261674adb56f3ae");
+    establishABI("0x1e0447b19bb6ecfdae1e4ae1694b0c3659614e4e");
+    establishABI("0x45f783cce6b7ff23b2ab2d70e416cdb7d6055f51");
+    establishABI("0xee9a6009b926645d33e10ee5577e9c8d3c95c165");
+    establishABI("0x9ba00d6856a4edf4665bca2c2309936572473b7e");
+    establishABI("0x6b92d76c9d0d40e53019ffa51b6f0c9b6bc657c9");
+    establishABI("0x3da1313ae46132a397d90d95b1424a9a7e3e0fce");
+    establishABI("0x314159265dd8dbb310642f98f50c066173c1259b");
+    establishABI("0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a");
+    establishABI("0x159cf1e9ae58211b588f5e3bf1d7e423952d959b");
+    establishABI("0xbb9bc244d798123fde783fcc1c72d3bb8c189413");
+    establishABI("0x8055d0504666e2b6942beb8d6014c964658ca591");
+
+    establishMonitor("0xfdecc82ddfc56192e26f563c3d68cb544a96bfed");
+    establishMonitor("0xd2f5852eb4b0c12c23a97914b2a9d954cf621781");
+    establishMonitor("0x001d14804b399c6ef80e64576f657660804fec0b");
+    establishMonitor("0xf503017d7baf7fbc0fff7492b751025c6a78179b");
+    establishMonitor("0x05a56e2d52c817161883f50c441c3228cfe54d9f");
+    establishMonitor("0x6b92d76c9d0d40e53019ffa51b6f0c9b6bc657c9");
+    establishMonitor("0xffe8196bc259e8dedc544d935786aa4709ec3e64");
 }
