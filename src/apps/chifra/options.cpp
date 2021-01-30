@@ -106,18 +106,10 @@ bool COptions::parseArguments(string_q& command) {
                 addrs.push_back(toLower(arg));
 
             } else {
-                static format_t fmt = TXT1;
-                if (arg == "csv") {
-                    fmt = CSV1;
-                    tool_flags += (arg + " ");
-
+                if (arg == "--staging") {
+                    freshen_flags += (arg + " ");
                 } else {
-                    if (arg == "--staging") {
-                        freshen_flags += (arg + " ");
-
-                    } else {
-                        tool_flags += (arg + " ");
-                    }
+                    tool_flags += (arg + " ");
                 }
             }
         }
