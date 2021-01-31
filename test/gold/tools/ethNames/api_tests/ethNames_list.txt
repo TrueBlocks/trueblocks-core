@@ -21,7 +21,7 @@
     {
       "tags": "50-Tokens:ERC20",
       "address": "0x0000000000004946c0e9f43f4dee607b0ef1fa1c",
-      "name": "Chi Gastoken by 1inch",
+      "name": "1inch.exchange v2",
       "symbol": "CHI",
       "source": "On chain",
       "decimals": 0,
