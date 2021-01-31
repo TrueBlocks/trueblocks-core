@@ -114,11 +114,14 @@ int main(int argc, const char* argv[]) {
 
     bool allPassed = total.nTests == total.nPassed;
     perf << total.Format(options.perf_format) << endl;
-    cerr << "    " << substitute(perf.str(), "\n", "\n    ") << endl;
+    string_q perf_result = perf.str();
+    replaceAll(perf_result, ",E-", "," + toLower(getHostName()) + "," + (allPassed ? "E" : "F") + "-");
+    cerr << "    " << substitute(perf_result, "\n", "\n    ") << endl;
     if (options.full_test && options.report)
-        appendToAsciiFile(configPath(string_q("performance") + (allPassed ? "" : "_failed") + ".csv"), perf.str());
+        appendToAsciiFile(configPath(string_q("performance") + (allPassed ? "" : "_failed") + ".csv"), perf_result);
     appendToAsciiFile(configPath("performance_slow.csv"), slow.str());
     string_q copyPath = getGlobalConfig()->getConfigStr("settings", "copyPath", "<NOT_SET>");
+
     if (folderExists(copyPath)) {
         CStringArray files = {"performance.csv", "performance_failed.csv", "performance_slow.csv",
                               "performance_scraper.csv"};

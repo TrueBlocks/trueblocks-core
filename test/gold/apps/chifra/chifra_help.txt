@@ -5,7 +5,7 @@ chifra -h
   Purpose:  Main TrueBlocks command line controls.
 
   Where:  
-	commands              which command to run, one or more of [list|export|slurp|collections|names|tags|abis|blocks|transactions|receipts|logs|traces|quotes|state|tokens|when|where|dive|init|scrape|server|status|rm] (required)
+	commands              which command to run, one or more of [list|export|slurp|collections|names|tags|abis|blocks|transactions|receipts|logs|traces|quotes|state|tokens|when|where|dive|init|scrape|serve|status|rm] (required)
 
 	#### Hidden options
 	-S  (--start <num>)   first block to process (inclusive)

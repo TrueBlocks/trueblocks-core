@@ -12,10 +12,8 @@ cmake ../src
 cd dev_tools
 make -j 8
 cd ..
-make generate finish
 make -j 8
-
-doTestingApi --filter all --mode both --clean --report $@
+test-api.sh --filter fast --mode cmd --no_quit $@
 
 cd $BUILD_FOLDER
 echo "Done..."

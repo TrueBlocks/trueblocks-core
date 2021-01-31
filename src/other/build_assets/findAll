@@ -6,7 +6,7 @@
 # for 'search_term'. Prints results to screen
 #
 if [ "$(uname)" == "Darwin" ]; then
-    find -E . -iregex ".*\.(h|hpp|cpp|cc|toml|ake|md|py|js|jsx|sql|csv|go|css|json|proto|yml)" -exec grep -Hs$2 "$1" '{}' ';' | grep -v ^Binary
+    find -E . -iregex ".*\.(h|hpp|cpp|cc|toml|ake|md|py|js|jsx|sql|csv|go|css|json|proto|sh|yml)" -exec grep -Hs$2 "$1" '{}' ';' | grep -v ^Binary
 elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
-    find . -regextype posix-extended -iregex ".*\.(h|hpp|cpp|cc|toml|ake|md|py|js|jsx|sql|csv|go|css|json|proto|yml)" -exec grep -Hs$2 "$1" '{}' ';' | grep -v ^Binary
+    find . -regextype posix-extended -iregex ".*\.(h|hpp|cpp|cc|toml|ake|md|py|js|jsx|sql|csv|go|css|json|proto|sh|yml)" -exec grep -Hs$2 "$1" '{}' ';' | grep -v ^Binary
 fi

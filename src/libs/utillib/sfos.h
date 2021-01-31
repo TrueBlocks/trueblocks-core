@@ -36,4 +36,7 @@ extern string_q makeValidName(const string_q& inOut);
 extern bool isRunning(const string_q& prog);
 extern bool amIRunning(const string_q& progName);
 
+extern string_q getUserName(void);
+extern string_q getHostName(void);
+
 }  // namespace qblocks

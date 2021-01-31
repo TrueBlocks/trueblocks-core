@@ -300,4 +300,27 @@ bool amIRunning(const string_q& progName) {
 bool isRunning(const string_q& progName) {
     return contains(listProcesses(progName), progName);
 }
+
+#ifndef HOST_NAME_MAX
+#define HOST_NAME_MAX 64
+#define LOGIN_NAME_MAX 64
+#endif
+//----------------------------------------------------------------------------
+string_q getUserName(void) {
+    char username[LOGIN_NAME_MAX];
+    getlogin_r(username, LOGIN_NAME_MAX);
+    if (isDockerMode()) {
+        memset(username, 0, LOGIN_NAME_MAX);
+        strncpy(username, "nobody", 7);
+    }
+    return username;
+}
+
+//----------------------------------------------------------------------------
+string_q getHostName(void) {
+    char hostname[HOST_NAME_MAX];
+    gethostname(hostname, HOST_NAME_MAX);
+    return hostname;
+}
+
 }  // namespace qblocks

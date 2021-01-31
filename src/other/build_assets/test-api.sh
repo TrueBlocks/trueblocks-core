@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
-# echo $DOCKER_FOLDER
+# touch a file letting the servers (js and go) know that we're running in test mode
+touch /tmp/test-api
 if [ -d ${DOCKER_FOLDER} ]; then
-    cd $DOCKER_FOLDER
-    touch api/testing
-    touch api/server.js
+    # restart the javascript server
+    touch $DOCKER_FOLDER/api/server.js
 fi
 
 # echo "Testing..."
@@ -15,11 +15,11 @@ testRunner $@ | tee $BUILD_FOLDER/results.txt
 cat $BUILD_FOLDER/results.txt | grep -v Skipping >x
 mv -f x $BUILD_FOLDER/results.txt
 
-#echo "Reseting docker repo..."
+# echo "Clean up..."
+rm -f /tmp/test-api
 if [ -d ${DOCKER_FOLDER} ]; then
-    cd $DOCKER_FOLDER
-    rm -f api/testing
-    touch api/server.js
+    # restart the javascript server
+    touch $DOCKER_FOLDER/api/server.js
 fi
 
 cd $BUILD_FOLDER

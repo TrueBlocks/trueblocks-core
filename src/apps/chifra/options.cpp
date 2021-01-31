@@ -16,7 +16,7 @@ const string_q opt_string =
     "collections|names|tags|abis|"
     "blocks|transactions|receipts|logs|traces|quotes|"
     "state|tokens|when|where|dive|"
-    "init|scrape|server|status|rm]"
+    "init|scrape|serve|status|rm]"
     ">";
 
 //---------------------------------------------------------------------------------------------------
@@ -67,7 +67,7 @@ bool COptions::parseArguments(string_q& command) {
             if (mode.empty()) {
                 optionOn(OPT_HELP);
                 return usage();
-            } else if (mode == "server") {
+            } else if (mode == "serve") {
                 optionOn(OPT_HELP);
                 return usage();
             }
@@ -276,7 +276,7 @@ COptions::COptions(void) {
                 "OTHER|"
                 "  init          initialize TrueBlocks databases|"
                 "  scrape        scrape the chain and build an index of address appearances (aka digests)|"
-                "  server        serve the TrueBlocks API via goServer|"
+                "  serve         serve the TrueBlocks API via goServer|"
                 "  status        query the status of the system|"
                 "  quotes        return prices collected from configured remote API|"
                 "  when          return a date given a block number or a block number given a date|"
