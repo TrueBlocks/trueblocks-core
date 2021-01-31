@@ -1,4 +1,4 @@
-module github.com/Great-Hill-Corporation/trueblocks-core/src/go-apps/blaze
+module github.com/Great-Hill-Corporation/trueblocks-core/src/go-apps/findSig
 
 require (
 	github.com/ethereum/go-ethereum v1.9.19
