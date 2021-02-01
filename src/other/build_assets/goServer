@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-
-echo $QUICKBLOCKS
-export API_MODE=true
-cd $QUICKBLOCKS/src/go-apps/go-server
-go run main.go

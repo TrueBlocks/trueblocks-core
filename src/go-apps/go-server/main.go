@@ -13,7 +13,6 @@ package main
 import (
 	"log"
 	"net/http"
-	"os"
 
 	// WARNING!
 	// Change this to a fully-qualified import path
@@ -26,9 +25,6 @@ import (
 )
 
 func main() {
-	if os.Getenv("TEST_MODE") == "true" || tb.FileExists("/tmp/test-api") {
-		log.Print("Running in testing mode")
-	}
 	port := "8080"
 	log.Printf("Server started at port " + port)
 	router := tb.NewRouter()

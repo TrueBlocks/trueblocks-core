@@ -206,7 +206,7 @@ bool COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, cons
                     //     setenv(trim(parts[0]).c_str(), trim(parts[1]).c_str(), true);
                     // }
                 } else {
-                    cmd << "curl -s \"" << apiProvider << test.route;
+                    cmd << "curl -s -H \"User-Agent: testRunner\" \"" << apiProvider << test.route;
                     if (!test.builtin && !test.options.empty())
                         cmd << "?" << test.options;
                     cmd << "\"";

@@ -9,6 +9,8 @@ fields = string client_version|\
         string index_path|\
         string host|\
         bool is_testing|\
+        bool is_api|\
+        bool is_docker|\
         bool is_scraping|\
         bool is_archive|\
         bool is_tracing|\

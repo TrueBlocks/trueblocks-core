@@ -35,7 +35,11 @@ void CStatus::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
 
     string_q fmt = (fmtIn.empty() ? expContext().fmtMap["status_fmt"] : fmtIn);
     if (fmt.empty()) {
-        toJson(ctx);
+        if (expContext().exportFmt == YAML1) {
+            toYaml(ctx);
+        } else {
+            toJson(ctx);
+        }
         return;
     }
 
@@ -112,6 +116,12 @@ string_q CStatus::getValueByName(const string_q& fieldName) const {
             }
             if (fieldName % "is_testing") {
                 return bool_2_Str(is_testing);
+            }
+            if (fieldName % "is_api") {
+                return bool_2_Str(is_api);
+            }
+            if (fieldName % "is_docker") {
+                return bool_2_Str(is_docker);
             }
             if (fieldName % "is_scraping") {
                 return bool_2_Str(is_scraping);
@@ -205,6 +215,14 @@ bool CStatus::setValueByName(const string_q& fieldNameIn, const string_q& fieldV
                 is_testing = str_2_Bool(fieldValue);
                 return true;
             }
+            if (fieldName % "is_api") {
+                is_api = str_2_Bool(fieldValue);
+                return true;
+            }
+            if (fieldName % "is_docker") {
+                is_docker = str_2_Bool(fieldValue);
+                return true;
+            }
             if (fieldName % "is_scraping") {
                 is_scraping = str_2_Bool(fieldValue);
                 return true;
@@ -268,6 +286,8 @@ bool CStatus::Serialize(CArchive& archive) {
     archive >> index_path;
     archive >> host;
     archive >> is_testing;
+    archive >> is_api;
+    archive >> is_docker;
     archive >> is_scraping;
     archive >> is_archive;
     archive >> is_tracing;
@@ -306,6 +326,8 @@ bool CStatus::SerializeC(CArchive& archive) const {
     archive << index_path;
     archive << host;
     archive << is_testing;
+    archive << is_api;
+    archive << is_docker;
     archive << is_scraping;
     archive << is_archive;
     archive << is_tracing;
@@ -352,19 +374,21 @@ void CStatus::registerClass(void) {
     ADD_FIELD(CStatus, "deleted", T_BOOL, ++fieldNum);
     ADD_FIELD(CStatus, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CStatus, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CStatus, "client_version", T_TEXT, ++fieldNum);
-    ADD_FIELD(CStatus, "client_ids", T_TEXT, ++fieldNum);
-    ADD_FIELD(CStatus, "trueblocks_version", T_TEXT, ++fieldNum);
-    ADD_FIELD(CStatus, "rpc_provider", T_TEXT, ++fieldNum);
-    ADD_FIELD(CStatus, "balance_provider", T_TEXT, ++fieldNum);
-    ADD_FIELD(CStatus, "cache_path", T_TEXT, ++fieldNum);
-    ADD_FIELD(CStatus, "index_path", T_TEXT, ++fieldNum);
-    ADD_FIELD(CStatus, "host", T_TEXT, ++fieldNum);
-    ADD_FIELD(CStatus, "is_testing", T_BOOL, ++fieldNum);
-    ADD_FIELD(CStatus, "is_scraping", T_BOOL, ++fieldNum);
-    ADD_FIELD(CStatus, "is_archive", T_BOOL, ++fieldNum);
-    ADD_FIELD(CStatus, "is_tracing", T_BOOL, ++fieldNum);
-    ADD_FIELD(CStatus, "has_eskey", T_BOOL, ++fieldNum);
+    ADD_FIELD(CStatus, "client_version", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CStatus, "client_ids", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CStatus, "trueblocks_version", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CStatus, "rpc_provider", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CStatus, "balance_provider", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CStatus, "cache_path", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CStatus, "index_path", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CStatus, "host", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CStatus, "is_testing", T_BOOL | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CStatus, "is_api", T_BOOL | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CStatus, "is_docker", T_BOOL | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CStatus, "is_scraping", T_BOOL | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CStatus, "is_archive", T_BOOL | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CStatus, "is_tracing", T_BOOL | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CStatus, "has_eskey", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CStatus, "ts", T_TIMESTAMP, ++fieldNum);
     HIDE_FIELD(CStatus, "ts");
     ADD_FIELD(CStatus, "caches", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
