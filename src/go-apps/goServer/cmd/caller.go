@@ -168,3 +168,7 @@ func initConfig() {
 
 	Options.signaturesPath = home + "/.quickBlocks/known_abis/"
 }
+
+fund Show() {
+	fmt.Println("I am here")
+}

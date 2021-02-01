@@ -1,5 +1,5 @@
 module github.com/Great-Hill-Corporation/trueblocks-core/src/go-apps/findSig
-
+go 1.15
 require (
 	github.com/ethereum/go-ethereum v1.9.19
 	github.com/fatih/color v1.7.0
@@ -11,5 +11,3 @@ require (
 	github.com/spf13/viper v1.4.0
 	github.com/vladimirvivien/automi v0.1.0-alpha.0
 )
-
-go 1.13

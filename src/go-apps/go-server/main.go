@@ -15,8 +15,6 @@ import (
 )
 
 func main() {
-	port := "8080"
-	log.Printf("Server started at port " + port)
-	router := tb.NewRouter()
-	log.Fatal(http.ListenAndServe(":"+port, router))
+	log.Printf("Server started at port 8080")
+	log.Fatal(http.ListenAndServe(":8080", tb.NewRouter()))
 }

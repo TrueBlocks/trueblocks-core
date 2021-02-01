@@ -15,4 +15,5 @@ add_subdirectory(blaze)
 add_subdirectory(acctScrape2)
 add_subdirectory(unchained)
 add_subdirectory(findSig)
-add_subdirectory(goServer)
+#add_subdirectory(goServer)
+
