@@ -1,13 +1,14 @@
-ethNames argc: 8 [1:--undelete] [2:0xde58d6a070c7490f10a9aac1b7bc6e3583383958] [3:--expand] [4:--verbose] [5:10] [6:--to_custom] [7:--all] 
-ethNames --undelete 0xde58d6a070c7490f10a9aac1b7bc6e3583383958 --expand --verbose 10 --to_custom --all 
-TIME ~ CLOCK - <INFO>  : Cleaning 0xde58d6a070c7490f10a9aac1b7bc6e3583383958                                  ---------------------------------------------
+ethNames argc: 8 [1:--undelete] [2:0xbc62985faabed27a8f174cbd5ea1ee7b1ed8fc12] [3:--expand] [4:--verbose] [5:10] [6:--to_custom] [7:--all] 
+ethNames --undelete 0xbc62985faabed27a8f174cbd5ea1ee7b1ed8fc12 --expand --verbose 10 --to_custom --all 
+TIME ~ CLOCK - <INFO>  : Cleaning 0xbc62985faabed27a8f174cbd5ea1ee7b1ed8fc12                                  ---------------------------------------------
 {
-  "address": "0xde58d6a070c7490f10a9aac1b7bc6e3583383958",
-  "name": "Name 0xde58d6a0",
+  "address": "0xbc62985faabed27a8f174cbd5ea1ee7b1ed8fc12",
+  "name": "Name 0xbc62985f",
   "is_custom": true
 }
 
 ---------------------------------------------
+TIME ~ CLOCK - : 4-----Undeleting 0xbc62985faabed27a8f174cbd5ea1ee7b1ed8fc12
 TIME ~ CLOCK - : 4-----Finished sorting...
 TIME ~ CLOCK - : 4-----Finished writing...
 TIME ~ CLOCK - : 8------Entering loadNames...
@@ -17,4 +18,5 @@ TIME ~ CLOCK - : 4-----Reading prefund names from binary cache
 TIME ~ CLOCK - : 8------Finished adding names from prefunds database...
 TIME ~ CLOCK - : 8------Writing binary cache
 TIME ~ CLOCK - : 8------Finished writing binary cache...
-No results for 0xde58d6a070c7490f10a9aac1b7bc6e3583383958 --expand -v:10 --to_custom --all
+tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefund	is_contract	is_erc20	is_erc721
+20-Friends	0xbc62985faabed27a8f174cbd5ea1ee7b1ed8fc12	Name 0xbc62985f					false	true	false	false	false	false
