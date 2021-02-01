@@ -6,11 +6,6 @@ project (goServer)
 
 function(ADD_GO_INSTALLABLE_PROGRAM NAME MAIN_SRC)
   get_filename_component(MAIN_SRC_ABS ${MAIN_SRC} ABSOLUTE)
-  message("MAIN_SRC_ABS: " ${MAIN_SRC_ABS})
-  message("NAME: " ${NAME})
-  message("CMAKE_GO_FLAGS: " ${CMAKE_GO_FLAGS})
-  message("MAIN_SRC: " ${MAIN_SRC})
-  message("CMAKE_CURRENT_LIST_DIR: " ${CMAKE_CURRENT_LIST_DIR})
   add_custom_target(${NAME})
   add_custom_command(TARGET ${NAME}
                     COMMAND go build
