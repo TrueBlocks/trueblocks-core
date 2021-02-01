@@ -15,7 +15,7 @@ getTrace -th
 |####|Hidden options||
 | -s | --skip_ddos | skip over 2018 ddos during export ('on' by default) |
 | -m | --max_traces <num> | if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250) |
-| -f | --filter <str> | Call trace_filter with the comma seperated string of the filter (see docs) |
+| -f | --filter <str> | Call trace_filter with bang-seperated string fromBlk!toBlk[!fromAddr[!toAddr[!after[!count]]]] |
 |####|Hidden options||
 | -x | --fmt <val> | export format, one of [none&#124;json*&#124;txt&#124;csv&#124;api] |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |

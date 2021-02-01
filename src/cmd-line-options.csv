@@ -196,7 +196,7 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,customizeable,c
 13440,tools,Data,traces,getTrace,count,c,,false,false,true,true,header,switch,<boolean>,show the number of traces for the transaction only (fast)
 13460,tools,Data,traces,getTrace,skip_ddos,s,true,false,true,false,false,header,toggle,<boolean>,skip over 2018 ddos during export ([{DEF}] by default)
 13480,tools,Data,traces,getTrace,max_traces,m,250,false,true,false,false,header,flag,<uint64>,if --skip_ddos is on&#44; this many traces defines what a ddos transaction|is (default = [{DEF}])
-13490,tools,Data,traces,getTrace,filter,f,,false,false,false,false,header,flag,<string>,Call trace_filter with the comma seperated string of the filter|(see docs)
+13490,tools,Data,traces,getTrace,filter,f,,false,false,false,false,header,flag,<string>,Call trace_filter with bang-seperated string fromBlk!toBlk[!fromAddr[!toAddr[!after[!count]]]]
 13500,tools,Data,traces,getTrace,,,,false,false,true,true,--,description,,Retrieve a transaction's traces from the cache or the node.
 13622,tools,Data,traces,getTrace,,,,false,false,false,false,--,note,,`transactions` is one or more space-separated identifiers which may be either a transaction hash&#44;|a blockNumber.transactionID pair&#44; or a blockHash.transactionID pair&#44; or any combination.
 13624,tools,Data,traces,getTrace,,,,false,false,false,false,--,note,,This tool checks for valid input syntax&#44; but does not check that the transaction requested exists.

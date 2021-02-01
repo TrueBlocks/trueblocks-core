@@ -25,7 +25,7 @@ static const COption params[] = {
     COption("count", "c", "", OPT_SWITCH, "show the number of traces for the transaction only (fast)"),
     COption("skip_ddos", "s", "", OPT_HIDDEN | OPT_TOGGLE, "skip over 2018 ddos during export ('on' by default)"),
     COption("max_traces", "m", "<uint64>", OPT_HIDDEN | OPT_FLAG, "if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250)"),  // NOLINT
-    COption("filter", "f", "<string>", OPT_HIDDEN | OPT_FLAG, "Call trace_filter with the comma seperated string of the filter (see docs)"),  // NOLINT
+    COption("filter", "f", "<string>", OPT_HIDDEN | OPT_FLAG, "Call trace_filter with bang-seperated string fromBlk!toBlk[!fromAddr[!toAddr[!after[!count]]]]"),  // NOLINT
     COption("", "", "", OPT_DESCRIPTION, "Retrieve a transaction's traces from the cache or the node."),
     // clang-format on
     // END_CODE_OPTIONS
@@ -86,6 +86,15 @@ bool COptions::parseArguments(string_q& command) {
         CTraceFilter f;
         string_q line = substitute(filter, "!", ",");
         f.parseCSV(headers, line);
+        // block numbers may be hex, number or special, so handle them now
+        CStringArray parts;
+        explode(parts, filter, '!');
+        if (parts.size() > 1)
+            extractBlocksFromFilter(f.fromBlock, parts[0], f.toBlock, parts[1]);
+        if (f.fromBlock > f.toBlock)
+            return usage("filter.fromBlock must be less or equal to filter.toBlock. Quitting...");
+        if (f.fromBlock + 100 < f.toBlock)
+            return usage("filter.fromBlock must be no more than 100 blocks before filter.toBlock. Quitting...");
         filters.push_back(f);
         manageFields("CTraceAction:balance,init,refundAddress,selfDestructed", false);  // hide
         manageFields("CTraceResult:code,newContract", false);
@@ -93,6 +102,13 @@ bool COptions::parseArguments(string_q& command) {
         GETRUNTIME_CLASS(CTrace)->sortFieldList();
         GETRUNTIME_CLASS(CTraceAction)->sortFieldList();
         GETRUNTIME_CLASS(CTraceResult)->sortFieldList();
+        if (isTestMode() && !isApiMode()) {
+            ostringstream os;
+            for (auto ff: filters) {
+                os << ff << endl;
+            }
+            LOG_INFO(os.str());
+        }
         return true;
     }
 
@@ -184,4 +200,30 @@ COptions::COptions(void) {
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
+}
+
+//--------------------------------------------------------------------------------
+bool COptions::extractBlocksFromFilter(blknum_t& b1, const string_q& p1, blknum_t& b2, const string_q& p2) {
+    blknum_t latest = getLatestBlock_client();
+    COptionsBlockList blocks;
+
+    // if p1 is empty, the user provided nothing so just return
+    if (p1.empty())
+        return true;
+    // parse p1 into b1
+    if (!parseBlockList2(this, blocks, p1, latest))
+        return usage("Could not parse invalid block " + p1 + ". Quitting...");
+    b1 = blocks.numList.size() ? blocks.numList[0] : latest;
+
+    // if p2 is empty, set b2 to b1 and return
+    if (p2.empty()) {
+        b2 = b1;
+        return true;
+    }
+
+    if (!parseBlockList2(this, blocks, p2, latest))
+        return usage("Could not parse invalid block " + p2 + ". Quitting...");
+    b2 = blocks.numList.size() > 1 ? blocks.numList[1] : b1;
+
+    return true;
 }
