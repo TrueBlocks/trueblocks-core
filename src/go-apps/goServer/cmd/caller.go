@@ -1,6 +1,7 @@
 package cmd
 
 import (
+    "log"
 	"bufio"
 	"bytes"
 	"encoding/hex"
@@ -169,6 +170,6 @@ func initConfig() {
 	Options.signaturesPath = home + "/.quickBlocks/known_abis/"
 }
 
-fund Show() {
-	fmt.Println("I am here")
+func Show() {
+	log.Println("I am here")
 }

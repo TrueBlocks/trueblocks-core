@@ -25,8 +25,7 @@ func (h *countHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	log.Println("Serving on port 8080...")
-	http.Handle("/count", new(countHandler))
-//	thing.Thing()
-	log.Fatal(http.ListenAndServe(":8080", nil))
 	cmd.Show()
+	http.Handle("/count", new(countHandler))
+	log.Fatal(http.ListenAndServe(":8080", nil))
 }
