@@ -1,175 +1,363 @@
-package cmd
+/*-------------------------------------------------------------------------
+ * This source code is confidential proprietary information which is
+ * copyright (c) 2018, 2021 TrueBlocks, LLC (http://trueblocks.io)
+ * All Rights Reserved
+ *------------------------------------------------------------------------*/
+package trueblocks
 
 import (
-    "log"
-	"bufio"
-	"bytes"
-	"encoding/hex"
 	"fmt"
+	"log"
+	"net/http"
 	"os"
-	"runtime"
-	"strings"
-	"sync"
+	"os/exec"
+	"time"
 
-	"github.com/ethereum/go-ethereum/crypto"
-	"github.com/panjf2000/ants/v2"
-	"github.com/spf13/cobra"
-
-	homedir "github.com/mitchellh/go-homedir"
-	"github.com/spf13/viper"
+	"github.com/gorilla/mux"
 )
 
-// globalOptionsT Structure to carry command line and config file options
-type globalOptionsT struct {
-	fmt            string
-	signaturesPath string
-	unused         bool
+func callOne(w http.ResponseWriter, r *http.Request, tbCmd string) {
+	callOneExtra(w, r, tbCmd, "")
 }
 
-// Options Carries the configuration options (from both command line and config file)
-var Options globalOptionsT
+func callOneExtra(w http.ResponseWriter, r *http.Request, tbCmd, extra string) {
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
+	w.Header().Set("Access-Control-Allow-Methods", "PUT, POST, GET, DELETE, OPTIONS")
+	w.WriteHeader(http.StatusOK)
 
-func prettyPrint(encoding string, signature interface{}) {
-	if Options.fmt == "json" {
-		fmt.Printf("{ \"encoding\": \"0x%s\", \"signature\": \"%s\" }\n", encoding, signature)
-	} else if Options.fmt == "txt" {
-		fmt.Printf("0x%s\t%s\n", encoding, signature)
+	allDogs := []string{}
+	if extra != "" {
+		allDogs = append(allDogs, extra)
+	}
+	for key, value := range r.URL.Query() {
+		if key != "addrs" &&
+			key != "terms" &&
+			key != "modes" &&
+			key != "blocks" &&
+			key != "transactions" &&
+			key != "block_list" &&
+			key != "mode" &&
+			key != "names" &&
+			key != "addrs2" {
+			allDogs = append(allDogs, "--"+key)
+		}
+		allDogs = append(allDogs, value...)
+	}
+	cmd := exec.Command(tbCmd, allDogs...)
+
+	if r.Header.Get("User-Agent") == "testRunner" {
+		cmd.Env = append(append(os.Environ(), "TEST_MODE=true"), "API_MODE=true") 
 	} else {
-		fmt.Printf("\"0x%s\",\"%s\"\n", encoding, signature)
+        cmd.Env = append(os.Environ(), "API_MODE=true")
+    }
+	out, err := cmd.Output()
+	if err != nil {
+		fmt.Printf("%s", err)
 	}
+	output := string(out[:])
+	fmt.Fprint(w, output)
 }
 
-func findEncoding() {
-	apimode := (os.Getenv("API_MODE") == "true")
-	testmode := (os.Getenv("TEST_MODE") == "true")
-	if apimode {
-		Options.fmt = "json"
+// FileExists
+func FileExists(filename string) bool {
+	info, err := os.Stat(filename)
+	if os.IsNotExist(err) {
+		return false
 	}
-	// if !apimode {
-	// 	fmt.Printf("API_MODE: %s %s\n", os.Getenv("API_MODE"), apimode)
-	//  fmt.Printf("sigsFolder: %s\n", Options.signaturesPath)
-	//  fmt.Printf("fmt: %s\n", Options.fmt)
-	// }
+	return !info.IsDir()
+}
 
-	var search [][]byte
-	for _, i := range os.Args[1:] {
-		// fmt.Println("A: ", i, i[:2])
-		if i[:2] == "0x" {
-			decoded, err := hex.DecodeString(i[2:])
-			if err != nil {
-				fmt.Printf("Couldn't parse argument %s\n", i)
-			} else {
-				search = append(search, decoded)
-			}
-		}
-	}
+func AccountsAbis(w http.ResponseWriter, r *http.Request) {
+	callOne(w, r, "grabABI")
+}
 
-	// Create thread pool with number of concurrent threads equal to 'runtime.NumCPU()'
-	var wait sync.WaitGroup
-	checkOne, _ := ants.NewPoolWithFunc(runtime.NumCPU(), func(canonical interface{}) {
-		// Calculate 4-byte form
-		res := crypto.Keccak256([]byte(canonical.(string)))[:4]
-		// Go through queries and compare
-		for i := 0; i < len(search); i++ {
-			cur := search[i]
-			if bytes.Equal(res, cur) {
-				if !testmode {
-					fmt.Fprintf(os.Stderr, "                                                                        \r")
-				}
-				prettyPrint(hex.EncodeToString(res), canonical)
-				os.Exit(0)
-			}
-			if !testmode {
-				fmt.Fprintf(os.Stderr, "\033[2KScanning: %s\r", canonical)
-			}
-		}
-		wait.Done()
+func AccountsCollections(w http.ResponseWriter, r *http.Request) {
+	callOne(w, r, "ethNames")
+}
+
+func AccountsExport(w http.ResponseWriter, r *http.Request) {
+	callOneExtra(w, r, "chifra", "export")
+}
+
+func AccountsList(w http.ResponseWriter, r *http.Request) {
+	callOneExtra(w, r, "chifra", "list")
+}
+
+func AccountsNames(w http.ResponseWriter, r *http.Request) {
+	callOne(w, r, "ethNames")
+}
+
+func AccountsRm(w http.ResponseWriter, r *http.Request) {
+	callOneExtra(w, r, "chifra", "rm")
+}
+
+func AccountsTags(w http.ResponseWriter, r *http.Request) {
+	callOne(w, r, "ethNames")
+}
+
+func AdminScrape(w http.ResponseWriter, r *http.Request) {
+	callOneExtra(w, r, "chifra", "scrape")
+}
+
+func AdminStatus(w http.ResponseWriter, r *http.Request) {
+	callOne(w, r, "cacheStatus")
+}
+
+func DataBlocks(w http.ResponseWriter, r *http.Request) {
+	callOne(w, r, "getBlock")
+}
+
+func DataLogs(w http.ResponseWriter, r *http.Request) {
+	callOne(w, r, "getLogs")
+}
+
+func DataReceipts(w http.ResponseWriter, r *http.Request) {
+	callOne(w, r, "getReceipt")
+}
+
+func DataTraces(w http.ResponseWriter, r *http.Request) {
+	callOne(w, r, "getTrace")
+}
+
+func DataTransactions(w http.ResponseWriter, r *http.Request) {
+	callOne(w, r, "getTrans")
+}
+
+func DataWhen(w http.ResponseWriter, r *http.Request) {
+	callOne(w, r, "whenBlock")
+}
+
+func OtherDive(w http.ResponseWriter, r *http.Request) {
+	callOne(w, r, "turboDive")
+}
+
+func OtherQuotes(w http.ResponseWriter, r *http.Request) {
+	callOne(w, r, "ethQuote")
+}
+
+func OtherSlurp(w http.ResponseWriter, r *http.Request) {
+	callOne(w, r, "ethslurp")
+}
+
+func OtherWhere(w http.ResponseWriter, r *http.Request) {
+	callOne(w, r, "whereBlock")
+}
+
+func StateState(w http.ResponseWriter, r *http.Request) {
+	callOne(w, r, "getState")
+}
+
+func StateTokens(w http.ResponseWriter, r *http.Request) {
+	callOne(w, r, "getTokenInfo")
+}
+
+var nProcessed int
+func Logger(inner http.Handler, name string) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		start := time.Now()
+		inner.ServeHTTP(w, r)
+		log.Printf(
+			"%d %s %s %s %s",
+			nProcessed,
+			r.Method,
+			r.RequestURI,
+			name,
+			time.Since(start),
+		)
+		nProcessed++
 	})
-
-	// Load files
-	fTemp2, _ := os.Open(Options.signaturesPath + "uniq_funcs.tab")
-	defer fTemp2.Close()
-	sTemp2 := bufio.NewScanner(fTemp2)
-	sTemp2.Split(bufio.ScanLines)
-
-	fTemp1, _ := os.Open(Options.signaturesPath + "uniq_sigs.tab")
-	defer fTemp1.Close()
-	sTemp1 := bufio.NewScanner(fTemp1)
-	sTemp1.Split(bufio.ScanLines)
-
-	temp2s := []string{""}
-	for sTemp2.Scan() {
-		temp2s = append(temp2s, sTemp2.Text())
-	}
-
-	for sTemp1.Scan() {
-		for _, temp2 := range temp2s {
-			wait.Add(1)
-			_ = checkOne.Invoke(string(fmt.Sprintf("%s(%s)", temp2, sTemp1.Text())))
-		}
-	}
-	// Wait till all threads finished at the end of program
-	defer checkOne.Release()
-	defer wait.Wait()
 }
 
-// rootCmd represents the base command when called without any subcommands
-var rootCmd = &cobra.Command{
-	Use:   "findSig",
-	Short: "Do a brute force search for 4byte and event topics on cross product of names and signatures",
-	Long: `
-Description:
-  This internal-use-only component searches the cross product of
-  function and event names with likely signatures looking to match
-  previously unmatched four bytes and event topics.`,
-	Version: "GHC-TrueBlocks, LLC//0.8.1-alpha",
-	Run: func(cmd *cobra.Command, args []string) {
-		findEncoding()
+type Response struct {
+	Data *interface{} `json:"data,omitempty"`
+
+	Error_ []string `json:"error,omitempty"`
+}
+
+type Route struct {
+	Name        string
+	Method      string
+	Pattern     string
+	HandlerFunc http.HandlerFunc
+}
+
+type Routes []Route
+
+func NewRouter() *mux.Router {
+	router := mux.NewRouter().StrictSlash(true)
+	for _, route := range routes {
+		var handler http.Handler
+		handler = route.HandlerFunc
+		handler = Logger(handler, route.Name)
+
+		router.
+			Methods(route.Method).
+			Path(route.Pattern).
+			Name(route.Name).
+			Handler(handler)
+	}
+
+	return router
+}
+
+func Index(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, "Users Manual")
+}
+
+var routes = Routes{
+	Route{
+		"Index",
+		"GET",
+		"/",
+		Index,
 	},
-}
 
-// Execute adds all child commands to the root command and sets flags appropriately.
-// This is called by main.main(). It only needs to happen once to the rootCmd.
-func Execute() {
-	err := rootCmd.Execute()
-	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
-	}
-}
+	Route{
+		"AccountsAbis",
+		"GET",
+		"/abis",
+		AccountsAbis,
+	},
 
-// init Initalize options
-func init() {
-	cobra.OnInitialize(initConfig)
-	rootCmd.PersistentFlags().BoolVarP(&Options.unused, "find", "i", true, "find the value")
-	rootCmd.PersistentFlags().StringVarP(&Options.fmt, "fmt", "f", "json", "format of the output (one of 'json', 'txt', or 'csv')")
-}
+	Route{
+		"AccountsCollections",
+		"GET",
+		"/collections",
+		AccountsCollections,
+	},
 
-// initConfig reads in config file and ENV variables if set.
-func initConfig() {
-	// Find home directory.
-	home, err := homedir.Dir()
-	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
-	}
+	Route{
+		"AccountsExport",
+		"GET",
+		"/export",
+		AccountsExport,
+	},
 
-	viper.AddConfigPath(home + "/.quickBlocks")
-	viper.SetConfigName("quickBlocks")
-	viper.SetConfigType("toml")
-	err = viper.ReadInConfig()
-	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
-	}
+	Route{
+		"AccountsList",
+		"GET",
+		"/list",
+		AccountsList,
+	},
 
-	viper.SetEnvPrefix("TB")
-	viper.SetEnvKeyReplacer(strings.NewReplacer("SETTINGS.", ""))
-	viper.AutomaticEnv()
+	Route{
+		"AccountsNames",
+		"GET",
+		"/names",
+		AccountsNames,
+	},
 
-	Options.signaturesPath = home + "/.quickBlocks/known_abis/"
-}
+	Route{
+		"AccountsRm",
+		"GET",
+		"/rm",
+		AccountsRm,
+	},
 
-func Show() {
-	log.Println("I am here")
+	Route{
+		"AccountsTags",
+		"GET",
+		"/tags",
+		AccountsTags,
+	},
+
+	Route{
+		"AdminScrape",
+		"GET",
+		"/scrape",
+		AdminScrape,
+	},
+
+	Route{
+		"AdminStatus",
+		"GET",
+		"/status",
+		AdminStatus,
+	},
+
+	Route{
+		"DataBlocks",
+		"GET",
+		"/blocks",
+		DataBlocks,
+	},
+
+	Route{
+		"DataLogs",
+		"GET",
+		"/logs",
+		DataLogs,
+	},
+
+	Route{
+		"DataReceipts",
+		"GET",
+		"/receipts",
+		DataReceipts,
+	},
+
+	Route{
+		"DataTraces",
+		"GET",
+		"/traces",
+		DataTraces,
+	},
+
+	Route{
+		"DataTransactions",
+		"GET",
+		"/transactions",
+		DataTransactions,
+	},
+
+	Route{
+		"DataWhen",
+		"GET",
+		"/when",
+		DataWhen,
+	},
+
+	Route{
+		"OtherDive",
+		"GET",
+		"/dive",
+		OtherDive,
+	},
+
+	Route{
+		"OtherQuotes",
+		"GET",
+		"/quotes",
+		OtherQuotes,
+	},
+
+	Route{
+		"OtherSlurp",
+		"GET",
+		"/slurp",
+		OtherSlurp,
+	},
+
+	Route{
+		"OtherWhere",
+		"GET",
+		"/where",
+		OtherWhere,
+	},
+
+	Route{
+		"StateState",
+		"GET",
+		"/state",
+		StateState,
+	},
+
+	Route{
+		"StateTokens",
+		"GET",
+		"/tokens",
+		StateTokens,
+	},
 }

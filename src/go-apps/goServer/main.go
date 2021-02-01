@@ -1,31 +1,13 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"net/http"
 
-	"sync"
-
-	"github.com/Great-Hill-Corporation/trueblocks-core/src/go-apps/goServer/cmd"
+	tb "github.com/Great-Hill-Corporation/trueblocks-core/src/go-apps/goServer/cmd"
 )
 
-type countHandler struct {
-	mu sync.Mutex // guards n
-	n  int
-}
-
-func (h *countHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	h.mu.Lock()
-	defer h.mu.Unlock()
-	h.n++
-	fmt.Fprintf(w, "count is %d\n", h.n)
-	log.Println("Done serving that one.")
-}
-
 func main() {
-	log.Println("Serving on port 8080...")
-	cmd.Show()
-	http.Handle("/count", new(countHandler))
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	log.Printf("Server started at port 8080")
+	log.Fatal(http.ListenAndServe(":8080", tb.NewRouter()))
 }

@@ -8,6 +8,7 @@ require (
 	github.com/cpuguy83/go-md2man v1.0.10 // indirect
 	github.com/ethereum/go-ethereum v1.9.25
 	github.com/fatih/color v1.10.0
+	github.com/gorilla/mux v1.8.0
 	github.com/mitchellh/go-homedir v1.1.0
 	github.com/panjf2000/ants/v2 v2.4.3
 	github.com/spf13/cobra v1.1.1

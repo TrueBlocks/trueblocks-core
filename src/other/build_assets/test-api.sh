@@ -1,9 +1,12 @@
 #!/usr/bin/env bash
 
+export EXPLORER_FOLDER=$QUICKBLOCKS/../trueblocks-explorer/
+
 # touch a file letting the servers (js and go) know that we're running in test mode
-if [ -d ${DOCKER_FOLDER} ]; then
+touch /tmp/test-api
+if [ -d ${EXPLORER_FOLDER} ]; then
     # restart the javascript server
-    touch $DOCKER_FOLDER/api/server.js
+    touch $EXPLORER_FOLDER/api/server.js
 fi
 
 # echo "Testing..."
@@ -15,9 +18,10 @@ cat $BUILD_FOLDER/results.txt | grep -v Skipping >x
 mv -f x $BUILD_FOLDER/results.txt
 
 # echo "Clean up..."
-if [ -d ${DOCKER_FOLDER} ]; then
+rm -f /tmp/test-api
+if [ -d ${EXPLORER_FOLDER} ]; then
     # restart the javascript server
-    touch $DOCKER_FOLDER/api/server.js
+    touch $EXPLORER_FOLDER/api/server.js
 fi
 
 cd $BUILD_FOLDER
