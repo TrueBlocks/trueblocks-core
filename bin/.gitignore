@@ -20,11 +20,11 @@ getState
 getTokenInfo
 getTrace
 getTrans
-goServer
 grabABI
 makeClass
 whenBlock
 whereBlock
+tbServer
 testRunner
 turboDive
 unchained

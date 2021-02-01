@@ -2,7 +2,7 @@
 cmake_minimum_required (VERSION 3.0)
 
 # application project
-project (goServer)
+project (tbServer)
 
 function(ADD_GO_INSTALLABLE_PROGRAM NAME MAIN_SRC)
   get_filename_component(MAIN_SRC_ABS ${MAIN_SRC} ABSOLUTE)
@@ -17,10 +17,10 @@ function(ADD_GO_INSTALLABLE_PROGRAM NAME MAIN_SRC)
   install(PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/${NAME} DESTINATION bin)
 endfunction(ADD_GO_INSTALLABLE_PROGRAM)
 
-ADD_GO_INSTALLABLE_PROGRAM(goServer *.go)
+ADD_GO_INSTALLABLE_PROGRAM(tbServer *.go)
 
 # Define the executable to be generated
-set(TOOL_NAME "goServer")
+set(TOOL_NAME "tbServer")
 set(PROJ_NAME "go-apps")
 
 # Testing

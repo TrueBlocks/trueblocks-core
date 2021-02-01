@@ -42,7 +42,7 @@ chifra -th
  OTHER
    init          initialize TrueBlocks databases
    scrape        scrape the chain and build an index of address appearances (aka digests)
-   serve         serve the TrueBlocks API via goServer
+   serve         serve the TrueBlocks API via tbServer
    status        query the status of the system
    quotes        return prices collected from configured remote API
    when          return a date given a block number or a block number given a date
