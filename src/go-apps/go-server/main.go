@@ -22,7 +22,7 @@ import (
 	//
 	//    sw "github.com/myname/myrepo/go"
 	//
-	tb "./go"
+	tb "./cmd"
 )
 
 func main() {
