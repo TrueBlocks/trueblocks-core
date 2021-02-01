@@ -1,6 +1,0 @@
-[settings]
-class = CTransfer
-base_class = CTransaction
-fields = address _to|uint256 _value|
-includes = transaction.h
-cpp_includes = #include "etherlib.h"

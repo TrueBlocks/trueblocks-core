@@ -1,6 +1,0 @@
-[settings]
-class = CFuelingToDateEvent
-base_class = CLogEntry
-fields = uint256 value|
-includes = logentry.h
-cpp_includes = #include "etherlib.h"

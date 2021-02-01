@@ -1,6 +1,0 @@
-[settings]
-class = CHalveMinQuorum
-base_class = CTransaction
-fields = 
-includes = transaction.h
-cpp_includes = #include "etherlib.h"

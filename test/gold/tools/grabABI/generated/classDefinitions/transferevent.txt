@@ -1,6 +1,0 @@
-[settings]
-class = CTransferEvent
-base_class = CLogEntry
-fields = address _from|address _to|uint256 _amount|
-includes = logentry.h
-cpp_includes = #include "etherlib.h"

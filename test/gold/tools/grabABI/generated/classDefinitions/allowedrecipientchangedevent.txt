@@ -1,6 +1,0 @@
-[settings]
-class = CAllowedRecipientChangedEvent
-base_class = CLogEntry
-fields = address _recipient|bool _allowed|
-includes = logentry.h
-cpp_includes = #include "etherlib.h"

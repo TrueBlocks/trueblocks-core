@@ -1,6 +1,0 @@
-[settings]
-class = CNewContract
-base_class = CTransaction
-fields = address _newContract|
-includes = transaction.h
-cpp_includes = #include "etherlib.h"
