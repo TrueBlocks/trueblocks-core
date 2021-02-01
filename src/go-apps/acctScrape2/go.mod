@@ -1,5 +1,7 @@
 module github.com/Great-Hill-Corporation/trueblocks-core/src/go-apps/acctScrape2
+
 go 1.15
+
 require (
 	github.com/gookit/color v1.3.6
 	github.com/spf13/pflag v1.0.5
