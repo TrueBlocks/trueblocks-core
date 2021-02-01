@@ -57577,10 +57577,8 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --ether --sta
 , "accountedFor": {
   "curBalance": 0,
   "enabled": true,
-  "tags": "00-Active",
   "address": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-  "name": "Name 0xf503017d",
-  "is_custom": true
+  "name": "0xf503017d7baf7fbc0fff7492b751025c6a78179b"
 }
 
  } }
