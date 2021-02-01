@@ -158,10 +158,15 @@ func Logger(inner http.Handler, name string) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		start := time.Now()
 		inner.ServeHTTP(w, r)
+        t := ""
+        if r.Header.Get("User-Agent") == "testRunner" {
+            t = "-test"
+        }
 		log.Printf(
-			"%d %s %s %s %s",
+			"%d %s%s %s %s %s",
 			nProcessed,
 			r.Method,
+            t,
 			r.RequestURI,
 			name,
 			time.Since(start),
