@@ -26,7 +26,7 @@ func callOneExtra(w http.ResponseWriter, r *http.Request, tbCmd, extra string) {
 	if extra != "" {
 		allDogs = append(allDogs, extra)
 	}
-	for key, values := range r.URL.Query() {
+	for key, value := range r.URL.Query() {
 		if key != "addrs" &&
 			key != "terms" &&
 			key != "modes" &&
@@ -38,9 +38,7 @@ func callOneExtra(w http.ResponseWriter, r *http.Request, tbCmd, extra string) {
 			key != "addrs2" {
 			allDogs = append(allDogs, "--"+key)
 		}
-		for _, value := range values {
-			allDogs = append(allDogs, value)
-		}
+		allDogs = append(allDogs, value...)
 	}
 	cmd := exec.Command(tbCmd, allDogs...)
 	if os.Getenv("TEST_MODE") == "true" || FileExists("/tmp/test-api") {
