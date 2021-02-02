@@ -1163,6 +1163,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 31-Gitcoin Grants:Grant	0x28f4a17f8a99ab90c1a401b85d694b2c0ea40c4b	Grant 119 Gitcoin Support Grant		https://gitcoin.co/grants/119/gitcoin-core-support-grant			false	false	false	false	false	false
 30-Contracts:Humanity DAO	0x28fe46db880072e129816ee2bce5bc5a9712a058	larimar_alex		https://www.humanitydao.org/humans			false	false	false	false	false	false
 90-DevCon2:Individual	0x290faeded3b4f64a0c0894d07d2f8a17cc0ffe81	Christian Lundkvist		DevCon2 Token Contract			false	false	false	false	false	false
+40-Exchanges	0x2910543af39aba0cd09dbb2d50200b3e800a63d2	Kraken Exchange		CarbonVote, Ether Camp			false	false	false	false	false	false
 31-Gitcoin Grants:Friends	0x2920620b47d51170319a531a2d6d5810610e8c2a	davidhq		Gitcoin Website			false	false	false	false	false	false
 81-Other	0x2935aa0a2d2fbb791622c29eb1c117b65b7a9085	MarketsContract		Ether Camp			false	false	false	false	false	false
 30-Contracts:Set Protocol Libraries	0x293dcc7c8350ce9f1283572ac89861f768158151	Standard Settle Rebalance Library		https://github.com/SetProtocol/set-protocol-contracts			false	false	false	true	false	false

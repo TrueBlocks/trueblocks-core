@@ -146,6 +146,7 @@ extern const char* STR_DISPLAY_PINATALICENSE;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
+extern bool pinataListOfPins(const CPinataLicense& lic, string_q& result);
 extern bool getPinataKeys(CPinataLicense& lic);
 inline bool hasPinataKeys(void) {
     CPinataLicense lic;

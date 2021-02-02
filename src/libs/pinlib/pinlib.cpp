@@ -17,7 +17,7 @@ void pinlib_init(QUITHANDLER qh) {
     acctlib_init(qh);
     CPinnedItem::registerClass();
     CPinataPin::registerClass();
-    CPinataList::registerClass();
+    CPinataPinlist::registerClass();
     CPinataLicense::registerClass();
     CPinataMetadata::registerClass();
     CPinataRegion::registerClass();

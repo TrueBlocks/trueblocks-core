@@ -32,7 +32,6 @@ extern hash_t getLastManifest(void);
 
 extern bool findChunk(const string_q& fileName, CPinnedItem& item);
 
-extern bool pinataListOfPins(string_q& result);
 extern void loadPinMaps(CIndexHashMap& bloomMap, CIndexHashMap& indexMap);
 
 extern bool unpinChunkByHash(const string_q& hash);

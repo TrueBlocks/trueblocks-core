@@ -24,34 +24,34 @@ namespace qblocks {
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class CPinataList : public CBaseNode {
+class CPinataPinlist : public CBaseNode {
   public:
     string_q count;
     CPinataPinArray rows;
 
   public:
-    CPinataList(void);
-    CPinataList(const CPinataList& pi);
-    virtual ~CPinataList(void);
-    CPinataList& operator=(const CPinataList& pi);
+    CPinataPinlist(void);
+    CPinataPinlist(const CPinataPinlist& pi);
+    virtual ~CPinataPinlist(void);
+    CPinataPinlist& operator=(const CPinataPinlist& pi);
 
-    DECLARE_NODE(CPinataList);
+    DECLARE_NODE(CPinataPinlist);
 
     const CBaseNode* getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
     // EXISTING_CODE
-    bool operator==(const CPinataList& it) const;
-    bool operator!=(const CPinataList& it) const {
+    bool operator==(const CPinataPinlist& it) const;
+    bool operator!=(const CPinataPinlist& it) const {
         return !operator==(it);
     }
-    friend bool operator<(const CPinataList& v1, const CPinataList& v2);
-    friend ostream& operator<<(ostream& os, const CPinataList& it);
+    friend bool operator<(const CPinataPinlist& v1, const CPinataPinlist& v2);
+    friend ostream& operator<<(ostream& os, const CPinataPinlist& it);
 
   protected:
     void clear(void);
     void initialize(void);
-    void duplicate(const CPinataList& pi);
+    void duplicate(const CPinataPinlist& pi);
     bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
@@ -59,14 +59,14 @@ class CPinataList : public CBaseNode {
 };
 
 //--------------------------------------------------------------------------
-inline CPinataList::CPinataList(void) {
+inline CPinataPinlist::CPinataPinlist(void) {
     initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CPinataList::CPinataList(const CPinataList& pi) {
+inline CPinataPinlist::CPinataPinlist(const CPinataPinlist& pi) {
     // EXISTING_CODE
     // EXISTING_CODE
     duplicate(pi);
@@ -76,20 +76,20 @@ inline CPinataList::CPinataList(const CPinataList& pi) {
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline CPinataList::~CPinataList(void) {
+inline CPinataPinlist::~CPinataPinlist(void) {
     clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CPinataList::clear(void) {
+inline void CPinataPinlist::clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CPinataList::initialize(void) {
+inline void CPinataPinlist::initialize(void) {
     CBaseNode::initialize();
 
     count = "";
@@ -100,7 +100,7 @@ inline void CPinataList::initialize(void) {
 }
 
 //--------------------------------------------------------------------------
-inline void CPinataList::duplicate(const CPinataList& pi) {
+inline void CPinataPinlist::duplicate(const CPinataPinlist& pi) {
     clear();
     CBaseNode::duplicate(pi);
 
@@ -112,7 +112,7 @@ inline void CPinataList::duplicate(const CPinataList& pi) {
 }
 
 //--------------------------------------------------------------------------
-inline CPinataList& CPinataList::operator=(const CPinataList& pi) {
+inline CPinataPinlist& CPinataPinlist::operator=(const CPinataPinlist& pi) {
     duplicate(pi);
     // EXISTING_CODE
     // EXISTING_CODE
@@ -120,7 +120,7 @@ inline CPinataList& CPinataList::operator=(const CPinataList& pi) {
 }
 
 //-------------------------------------------------------------------------
-inline bool CPinataList::operator==(const CPinataList& it) const {
+inline bool CPinataPinlist::operator==(const CPinataPinlist& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)
@@ -128,7 +128,7 @@ inline bool CPinataList::operator==(const CPinataList& it) const {
 }
 
 //-------------------------------------------------------------------------
-inline bool operator<(const CPinataList& v1, const CPinataList& v2) {
+inline bool operator<(const CPinataPinlist& v1, const CPinataPinlist& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default sort defined in class definition, assume already sorted, preserve ordering
@@ -136,16 +136,16 @@ inline bool operator<(const CPinataList& v1, const CPinataList& v2) {
 }
 
 //---------------------------------------------------------------------------
-typedef vector<CPinataList> CPinataListArray;
-extern CArchive& operator>>(CArchive& archive, CPinataListArray& array);
-extern CArchive& operator<<(CArchive& archive, const CPinataListArray& array);
+typedef vector<CPinataPinlist> CPinataPinlistArray;
+extern CArchive& operator>>(CArchive& archive, CPinataPinlistArray& array);
+extern CArchive& operator<<(CArchive& archive, const CPinataPinlistArray& array);
 
 //---------------------------------------------------------------------------
-extern CArchive& operator<<(CArchive& archive, const CPinataList& pin);
-extern CArchive& operator>>(CArchive& archive, CPinataList& pin);
+extern CArchive& operator<<(CArchive& archive, const CPinataPinlist& pin);
+extern CArchive& operator>>(CArchive& archive, CPinataPinlist& pin);
 
 //---------------------------------------------------------------------------
-extern const char* STR_DISPLAY_PINATALIST;
+extern const char* STR_DISPLAY_PINATAPINLIST;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

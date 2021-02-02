@@ -17,11 +17,15 @@
 class COptions : public COptionsBase {
   public:
     // BEG_CODE_DECLARE
-    bool list;
+    string_q mode;
+    bool hash;
+    string_q pin;
+    string_q unpin;
     bool license;
     // END_CODE_DECLARE
 
     CPinataLicense lic;
+    string_q provider;
 
     COptions(void);
     ~COptions(void);

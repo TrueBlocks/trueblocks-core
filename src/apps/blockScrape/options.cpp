@@ -20,7 +20,6 @@ static const COption params[] = {
     COption("n_addr_procs", "a", "<uint64>", OPT_HIDDEN | OPT_FLAG, "number of address channels for blaze"),
     COption("pin", "p", "", OPT_SWITCH, "pin new chunks (and blooms) to IPFS (requires Pinata key and running IPFS node)"),  // NOLINT
     COption("publish", "u", "", OPT_SWITCH, "publish the hash of the pin manifest to the UnchainedIndex smart contract"),  // NOLINT
-    COption("listpins", "l", "", OPT_HIDDEN | OPT_SWITCH, "list pins (precludes other options, requires API key)"),
     COption("sleep", "s", "<double>", OPT_FLAG, "the number of seconds to sleep between passes (default 14)"),
     COption("", "", "", OPT_DESCRIPTION, "Decentralized blockchain scraper and block cache."),
     // clang-format on
@@ -36,7 +35,6 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
     // BEG_CODE_LOCAL_INIT
-    bool listpins = false;
     // END_CODE_LOCAL_INIT
 
     blknum_t latest = getLatestBlock_client();
@@ -74,9 +72,6 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-u" || arg == "--publish") {
             publish = true;
-
-        } else if (arg == "-l" || arg == "--listpins") {
-            listpins = true;
 
         } else if (startsWith(arg, "-s:") || startsWith(arg, "--sleep:")) {
             if (!confirmDouble("sleep", sleep, arg))
@@ -128,15 +123,12 @@ bool COptions::parseArguments(string_q& command) {
     if (sleep < .5)
         sleep = .5;
 
-    bool hasPinCmd = (listpins || pin || publish);
+    bool hasPinCmd = (pin || publish);
     if (hasPinCmd) {
         if (!isTestMode() && !hasPinataKeys()) {
             return usage(
                 "In order to use the pin options, you must enter a Pinata key in ~/.quickBlocks/blockScrape.toml. "
                 "Quitting...");
-
-        } else if (listpins) {
-            return usage("The 'listpin' option is not yet implemented. Quitting...");
 
         } else if (publish && !pin) {
             return usage("The --publish option is only available with the --pin option. Quitting...");
@@ -160,7 +152,6 @@ bool COptions::parseArguments(string_q& command) {
             os << "  \"n_addr_procs\": " << n_addr_procs << "," << endl;
             os << "  \"pin\": " << pin << "," << endl;
             os << "  \"publish\": " << publish << "," << endl;
-            os << "  \"listpins\": " << listpins << ", " << endl;
             os << "}" << endl;
             if (isApiMode())
                 cout << os.str();

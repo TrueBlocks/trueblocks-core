@@ -28,6 +28,9 @@ int main(int argc, const char* argv[]) {
             }
 
         } else {
+            LOG_INFO("rpcProvider:\t", cGreen, options.provider, cOff);
+            LOG_INFO("latestBlock:\t", cGreen, getLatestBlock_client(), cOff);
+            LOG_INFO("unchainedIndexAddr:\t", cGreen, unchainedIndexAddr, cOff);
             options.handle_status();
         }
 
@@ -39,38 +42,34 @@ int main(int argc, const char* argv[]) {
     return 0;
 }
 
+//----------------------------------------------------------------
 void COptions::handle_status(void) {
-    string_q provider = getGlobalConfig()->getConfigStr("settings", "rpcProvider", "");
-    LOG_INFO("rpcProvider:\t", cGreen, provider, cOff);
-    LOG_INFO("latestBlock:\t", cGreen, getLatestBlock_client(), cOff);
-    LOG_INFO("unchainedIndexAddr:\t", cGreen, unchainedIndexAddr, cOff);
-
-    // forEveryPin(removeFromPinata, NULL);
     string_q pins;
-    pinataListOfPins(pins);
-    CPinataList pinList;
+    if (!pinataListOfPins(lic, pins)) {
+        usageStr(pins + ". Quitting...");
+        return;
+    }
+
+    CPinataPinlist pinList;
     pinList.parseJson3(pins);
     while (str_2_Uint(pinList.count) != 0) {
         cout << pinList.count << endl;
-        for (auto pin : pinList.rows) {
-            cout << "Unpinning " << pin.metadata.name << ": " << pin.ipfs_pin_hash << " ";
-            unpinChunkByHash(pin.ipfs_pin_hash);
+        for (auto thePin : pinList.rows) {
+            cout << "Unpinning " << thePin.metadata.name << ": " << thePin.ipfs_pin_hash << " ";
+            unpinChunkByHash(thePin.ipfs_pin_hash);
         }
         usleep(300000);
         pins = "";
         pins.clear();
-        pinataListOfPins(pins);
-        pinList = CPinataList();
+        pinataListOfPins(lic, pins);
+        pinList = CPinataPinlist();
         pinList.parseJson3(pins);
     }
-    //        pinataListOfPins(pins);
-    //    }
-    // freshenBloomFilters(true);
-    //    //publishManifest(cout); //, prevHash);
-    //    cout << getFileContentsByHash("QmcvjroTiE95LWeiP8HHq1YA3ysRchLuVx8HLQui8WcSBV")<< endl;
 }
+
 #if 0
-//----------------------------------------------------------------
+/*
+ //----------------------------------------------------------------
 int main(int argc, const char* argv[]) {
     pinlib_init(quickQuitHandler);
     verbose = 5;
@@ -135,4 +134,5 @@ int main(int argc, const char* argv[]) {
     pinlib_cleanup();
     return 1;
 }
+*/
 #endif

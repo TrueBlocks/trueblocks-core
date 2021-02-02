@@ -47,7 +47,6 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,customizeable,c
 10640,apps,Admin,scrape,blockScrape,n_addr_procs,a,,false,false,false,false,header,flag,<uint64>,number of address channels for blaze
 10645,apps,Admin,scrape,blockScrape,pin,p,,false,false,true,true,header,switch,<boolean>,pin new chunks (and blooms) to IPFS (requires Pinata key and running IPFS node)
 10648,apps,Admin,scrape,blockScrape,publish,u,,false,false,true,true,header,switch,<boolean>,publish the hash of the pin manifest to the UnchainedIndex smart|contract
-10652,apps,Admin,scrape,blockScrape,listpins,l,,false,false,false,false,local,switch,<boolean>,list pins (precludes other options&#44; requires API key)
 10658,apps,Admin,scrape,blockScrape,sleep,s,14,false,false,true,false,header,flag,<double>,the number of seconds to sleep between passes (default [{DEF}])
 10660,apps,Admin,scrape,blockScrape,,,,false,false,true,true,--,description,,Decentralized blockchain scraper and block cache.
 
@@ -62,9 +61,12 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,customizeable,c
 10840,apps,Admin,status,cacheStatus,end,E,,false,false,false,false,header,flag,<blknum>,last block to process (inclusive)
 10860,apps,Admin,status,cacheStatus,,,,false,false,true,true,--,description,,Report on status of one or more TrueBlocks caches.
 
-10900,apps,Admin,pins,pinStatus,list,l,,false,false,true,false,header,switch,<boolean>,export a list of all IPFS pins
-10900,apps,Admin,pins,pinStatus,license,i,,false,false,true,false,header,switch,<boolean>,show the current pinata license information if any
-10910,apps,Admin,pins,pinStatus,,,,false,false,true,true,--,description,,Report on status of pinned index and bloom filter chuncks.
+10900,apps,Admin,pins,pinStatus,mode,,,true,false,true,true,header,positional,enum[local*|remote|onchain],display local or remote manifest or its IPFS hash
+10900,apps,Admin,pins,pinStatus,hash,a,,false,false,true,true,header,switch,<boolean>,display the hash instead of contents of manifest ('on' for onchain mode)
+10900,apps,Admin,pins,pinStatus,pin,p,,false,false,true,true,header,flag,<string>,pin indexes and blooms&#44; add to manifest&#44; and return hash
+10900,apps,Admin,pins,pinStatus,unpin,u,,false,false,true,true,header,flag,<string>,unpin index(es) and blooms given a hash&#44; a filename&#44; or 'all'
+10900,apps,Admin,pins,pinStatus,license,i,,false,false,false,false,header,switch,<boolean>,show the current pinata license information&#44; if any
+10910,apps,Admin,pins,pinStatus,,,,false,false,true,true,--,description,,Report on and manage pinned appearance index and bloom chunks.
 
 11200,apps,,,chifra,commands,,,true,false,true,true,--weird,positional,opt_string,which command to run
 11280,apps,,,chifra,start,S,0,false,false,false,false,local,flag,<blknum>,first block to process (inclusive)

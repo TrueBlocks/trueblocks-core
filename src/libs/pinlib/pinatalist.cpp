@@ -19,21 +19,21 @@
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CPinataList, CBaseNode);
+IMPLEMENT_NODE(CPinataPinlist, CBaseNode);
 
 //---------------------------------------------------------------------------
-static string_q nextPinatalistChunk(const string_q& fieldIn, const void* dataPtr);
-static string_q nextPinatalistChunk_custom(const string_q& fieldIn, const void* dataPtr);
+static string_q nextPinatapinlistChunk(const string_q& fieldIn, const void* dataPtr);
+static string_q nextPinatapinlistChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
-void CPinataList::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
+void CPinataPinlist::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
     if (!m_showing)
         return;
 
     // EXISTING_CODE
     // EXISTING_CODE
 
-    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["pinatalist_fmt"] : fmtIn);
+    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["pinatapinlist_fmt"] : fmtIn);
     if (fmt.empty()) {
         if (expContext().exportFmt == YAML1) {
             toYaml(ctx);
@@ -47,13 +47,13 @@ void CPinataList::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) con
     // EXISTING_CODE
 
     while (!fmt.empty())
-        ctx << getNextChunk(fmt, nextPinatalistChunk, this);
+        ctx << getNextChunk(fmt, nextPinatapinlistChunk, this);
 }
 
 //---------------------------------------------------------------------------
-string_q nextPinatalistChunk(const string_q& fieldIn, const void* dataPtr) {
+string_q nextPinatapinlistChunk(const string_q& fieldIn, const void* dataPtr) {
     if (dataPtr)
-        return reinterpret_cast<const CPinataList*>(dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CPinataPinlist*>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -62,9 +62,9 @@ string_q nextPinatalistChunk(const string_q& fieldIn, const void* dataPtr) {
 }
 
 //---------------------------------------------------------------------------
-string_q CPinataList::getValueByName(const string_q& fieldName) const {
+string_q CPinataPinlist::getValueByName(const string_q& fieldName) const {
     // Give customized code a chance to override first
-    string_q ret = nextPinatalistChunk_custom(fieldName, this);
+    string_q ret = nextPinatapinlistChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
@@ -105,7 +105,7 @@ string_q CPinataList::getValueByName(const string_q& fieldName) const {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CPinataList::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
+bool CPinataPinlist::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
     string_q fieldName = fieldNameIn;
     string_q fieldValue = fieldValueIn;
 
@@ -137,13 +137,13 @@ bool CPinataList::setValueByName(const string_q& fieldNameIn, const string_q& fi
 }
 
 //---------------------------------------------------------------------------------------------------
-void CPinataList::finishParse() {
+void CPinataPinlist::finishParse() {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CPinataList::Serialize(CArchive& archive) {
+bool CPinataPinlist::Serialize(CArchive& archive) {
     if (archive.isWriting())
         return SerializeC(archive);
 
@@ -162,7 +162,7 @@ bool CPinataList::Serialize(CArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CPinataList::SerializeC(CArchive& archive) const {
+bool CPinataPinlist::SerializeC(CArchive& archive) const {
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
 
@@ -175,7 +175,7 @@ bool CPinataList::SerializeC(CArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, CPinataListArray& array) {
+CArchive& operator>>(CArchive& archive, CPinataPinlistArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -187,7 +187,7 @@ CArchive& operator>>(CArchive& archive, CPinataListArray& array) {
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator<<(CArchive& archive, const CPinataListArray& array) {
+CArchive& operator<<(CArchive& archive, const CPinataPinlistArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0; i < array.size(); i++)
@@ -196,34 +196,34 @@ CArchive& operator<<(CArchive& archive, const CPinataListArray& array) {
 }
 
 //---------------------------------------------------------------------------
-void CPinataList::registerClass(void) {
+void CPinataPinlist::registerClass(void) {
     // only do this once
-    if (HAS_FIELD(CPinataList, "schema"))
+    if (HAS_FIELD(CPinataPinlist, "schema"))
         return;
 
     size_t fieldNum = 1000;
-    ADD_FIELD(CPinataList, "schema", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CPinataList, "deleted", T_BOOL, ++fieldNum);
-    ADD_FIELD(CPinataList, "showing", T_BOOL, ++fieldNum);
-    ADD_FIELD(CPinataList, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CPinataList, "count", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CPinataList, "rows", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CPinataPinlist, "schema", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CPinataPinlist, "deleted", T_BOOL, ++fieldNum);
+    ADD_FIELD(CPinataPinlist, "showing", T_BOOL, ++fieldNum);
+    ADD_FIELD(CPinataPinlist, "cname", T_TEXT, ++fieldNum);
+    ADD_FIELD(CPinataPinlist, "count", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CPinataPinlist, "rows", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
-    HIDE_FIELD(CPinataList, "schema");
-    HIDE_FIELD(CPinataList, "deleted");
-    HIDE_FIELD(CPinataList, "showing");
-    HIDE_FIELD(CPinataList, "cname");
+    HIDE_FIELD(CPinataPinlist, "schema");
+    HIDE_FIELD(CPinataPinlist, "deleted");
+    HIDE_FIELD(CPinataPinlist, "showing");
+    HIDE_FIELD(CPinataPinlist, "cname");
 
-    builtIns.push_back(_biCPinataList);
+    builtIns.push_back(_biCPinataPinlist);
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------
-string_q nextPinatalistChunk_custom(const string_q& fieldIn, const void* dataPtr) {
-    const CPinataList* pin = reinterpret_cast<const CPinataList*>(dataPtr);
+string_q nextPinatapinlistChunk_custom(const string_q& fieldIn, const void* dataPtr) {
+    const CPinataPinlist* pin = reinterpret_cast<const CPinataPinlist*>(dataPtr);
     if (pin) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -245,7 +245,7 @@ string_q nextPinatalistChunk_custom(const string_q& fieldIn, const void* dataPtr
 }
 
 //---------------------------------------------------------------------------
-bool CPinataList::readBackLevel(CArchive& archive) {
+bool CPinataPinlist::readBackLevel(CArchive& archive) {
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -253,19 +253,19 @@ bool CPinataList::readBackLevel(CArchive& archive) {
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator<<(CArchive& archive, const CPinataList& pin) {
+CArchive& operator<<(CArchive& archive, const CPinataPinlist& pin) {
     pin.SerializeC(archive);
     return archive;
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, CPinataList& pin) {
+CArchive& operator>>(CArchive& archive, CPinataPinlist& pin) {
     pin.Serialize(archive);
     return archive;
 }
 
 //-------------------------------------------------------------------------
-ostream& operator<<(ostream& os, const CPinataList& it) {
+ostream& operator<<(ostream& os, const CPinataPinlist& it) {
     // EXISTING_CODE
     // EXISTING_CODE
 
@@ -275,11 +275,11 @@ ostream& operator<<(ostream& os, const CPinataList& it) {
 }
 
 //---------------------------------------------------------------------------
-const CBaseNode* CPinataList::getObjectAt(const string_q& fieldName, size_t index) const {
+const CBaseNode* CPinataPinlist::getObjectAt(const string_q& fieldName, size_t index) const {
     if (fieldName % "rows") {
         if (index == NOPOS) {
             CPinataPin empty;
-            ((CPinataList*)this)->rows.push_back(empty);
+            ((CPinataPinlist*)this)->rows.push_back(empty);
             index = rows.size() - 1;
         }
         if (index < rows.size())
@@ -290,7 +290,7 @@ const CBaseNode* CPinataList::getObjectAt(const string_q& fieldName, size_t inde
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_PINATALIST = "";
+const char* STR_DISPLAY_PINATAPINLIST = "";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

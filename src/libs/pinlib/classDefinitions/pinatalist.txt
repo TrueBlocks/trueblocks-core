@@ -1,5 +1,5 @@
 [settings]
-class = CPinataList
+class = CPinataPinlist
 fields = string count|\
         CPinataPinArray rows
 includes = utillib.h|pinatapin.h

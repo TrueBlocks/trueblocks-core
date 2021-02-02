@@ -39,6 +39,7 @@ class CNameStats {
     string_q tags;
     string_q name;
     uint64_t count;
+    bool is_custom;
     bool is_contract;
     bool is_erc20;
     bool is_erc721;
@@ -46,6 +47,7 @@ class CNameStats {
         address = acct.address;
         tags = acct.tags;
         name = acct.name;
+        is_custom = acct.is_custom;
         is_contract = acct.is_contract;
         is_erc20 = acct.is_erc20;
         is_erc721 = acct.is_erc721;
@@ -93,7 +95,7 @@ bool doOne(COptions* options, const addr_count_map_t& theMap, const string_q& ty
         bool frst = true;
         os << ", \"named" << type << "\": {";
         for (auto stats : named) {
-            if (testMode && contains(stats.tags, "Friends"))
+            if (testMode && (stats.is_custom || contains(stats.tags, "Friends")))
                 stats.name = "Name " + stats.address.substr(0, 10);
             if (!frst)
                 os << ",";
