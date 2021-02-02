@@ -15,6 +15,15 @@
 
 //------------------------------------------------------------------------------------------------------------
 bool COptions::handle_lint(void) {
+    CToml config(configPath("makeClass.toml"));
+
+    bool enabled = config.getConfigBool("enabled", "lint", false);
+    string_q res = doCommand("which pylint.py");
+    if (!enabled || res.empty()) {
+        LOG_WARN("Skipping linting...");
+        return true;
+    }
+
     LOG_INFO(cYellow, "handling linting...", cOff);
     counter = CCounter();
     counter.is_counting = true;
@@ -24,7 +33,6 @@ bool COptions::handle_lint(void) {
     LOG_INFO(cYellow, "makeClass --lint", cOff, " processed ", counter.nVisited, " files (", counter.nProcessed,
              " lints).", string_q(40, ' '));
 
-    CToml config(configPath("makeClass.toml"));
     config.setConfigStr("settings", "lastLint", uint_2_Str(static_cast<uint64_t>(date_2_Ts(Now()))));
     config.writeFile();
     config.Release();

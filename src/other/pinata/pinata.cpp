@@ -12,7 +12,7 @@ int main(int argc, const char* argv[]) {
 
     LOG_INFO("rpcProvider:\t", cGreen, provider, cOff);
     LOG_INFO("latestBlock:\t", cGreen, getLatestBlock_client(), cOff);
-    LOG_INFO("unchainedIndex:\t", cGreen, unchainedIndex, cOff);
+    LOG_INFO("unchainedIndexAddr:\t", cGreen, unchainedIndexAddr, cOff);
 
     //forEveryPin(removeFromPinata, NULL);
     string_q pins;

@@ -23,8 +23,15 @@ contract UnchainedIndex {
         return oldOwner;
     }
 
+    function () payable {
+        require(owner != 0x0, "msg.sender is not set");
+        emit DonationSent(owner, value, timestamp);
+        send(owner, balance);
+    }
+
     event HashPublished(string hash);
     event OwnerChanged(address oldOwner, address newOwner);
+    event DonationSent(address from, uint256 amount, uint256 ts);
 
     string public manifestHash;
     address public owner;

@@ -84,9 +84,9 @@ string_q getFileContentsByHash(const hash_t& hash) {  // also unzips if the file
 hash_t getCurrentManifest(void) {
     CAbi abi;
     abi.loadAbiFromFile(configPath("known_abis/unchained.json"), false);
-    address_t contractAddr = unchainedIndex;
+    address_t contractAddr = unchainedIndexAddr;
     CFunction result;
-    if (doEthCall(contractAddr, manifestHash, "", getLatestBlock_client(), abi, result))
+    if (doEthCall(contractAddr, manifestHashEncoding, "", getLatestBlock_client(), abi, result))
         return result.outputs[0].value;
     return "";
 }
@@ -129,14 +129,14 @@ bool freshenBloomFilters(bool download) {
 //----------------------------------------------------------------
 bool publishManifest(ostream& os) {
     pinReport.fileName = "pin-manifest.json";
-    pinReport.indexFormat = hashToIndexFile;
-    pinReport.bloomFormat = hashToBloomFilterFile;
+    pinReport.indexFormat = hashToIndexFormatFile;
+    pinReport.bloomFormat = hashToBloomFormatFile;
     pinReport.prevHash = "";  //(prevHash == "" ? hashToEmptyFile : prevHash);
 
     forEveryPin(addNewPin, &pinReport);
 
     // pinReport.toJson(os);
-    LOG_INFO(bRed, "  Pinned manifest and posted it to Ethereum address: ", unchainedIndex, cOff);
+    LOG_INFO(bRed, "  Pinned manifest and posted it to Ethereum address: ", unchainedIndexAddr, cOff);
 
     return true;
 }

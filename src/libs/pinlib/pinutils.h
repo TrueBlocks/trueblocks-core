@@ -44,14 +44,15 @@ inline bool hasPinataKeys(void) {
     string_q unused1, unused2;
     return getPinataKeys(unused1, unused2);
 }
+
 typedef bool (*PINFUNC)(CPinnedItem& pin, void* data);
 extern bool forEveryPin(PINFUNC func, void* data);
 
 //---------------------------------------------------------------------------
 #define hashToEmptyFile "QmP4i6ihnVrj8Tx7cTFw4aY6ungpaPYxDJEZ7Vg1RSNSdm"
-#define hashToIndexFile "Qmart6XP9XjL43p72PGR93QKytbK8jWWcMguhFgxATTya2"
-#define hashToBloomFilterFile "QmNhPk39DUFoEdhUmtGARqiFECUHeghyeryxZM9kyRxzHD"
-#define unchainedIndex "0xcfd7f3b24f3551741f922fd8c4381aa4e00fc8fd"
-#define manifestHash "0x337f3f32"
+#define hashToIndexFormatFile "Qmart6XP9XjL43p72PGR93QKytbK8jWWcMguhFgxATTya2"
+#define hashToBloomFormatFile "QmNhPk39DUFoEdhUmtGARqiFECUHeghyeryxZM9kyRxzHD"
+#define unchainedIndexAddr "0xcfd7f3b24f3551741f922fd8c4381aa4e00fc8fd"
+#define manifestHashEncoding "0x337f3f32"
 
 }  // namespace qblocks
