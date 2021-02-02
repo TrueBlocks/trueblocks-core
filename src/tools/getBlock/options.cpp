@@ -192,8 +192,8 @@ bool COptions::parseArguments(string_q& command) {
         expContext().fmtMap["header"] = "";
 
     if (trace) {
-        if (!nodeHasTraces())
-            return usage("The --trace option requires a node that enables tracing. Quitting...");
+        if (!isTracingNode())
+            return usage("Tracing is required for this program to work properly. Quitting...");
         if (!filterType.empty())
             return usage("--uniq* options and --trace options are exclusive. Quitting...");
         if (hashes_only)

@@ -208,11 +208,10 @@ bool COptions::parseArguments(string_q& command) {
             "test off. Quitting...");
     }
 
-    bool needsTracing = config->getConfigBool("requires", "tracing", true);
-    if (needsTracing && !nodeHasTraces()) {
-        string_q errMsg = "You must be running Parity with `--tracing on` for this tool to work properly.";
+    if (!isTracingNode()) {
+        string_q errMsg = "Tracing is required for this program to work properly. Quitting...";
         if (isDockerMode())
-            errMsg += " If you're running docker, enable remote RPC endpoints (see Parity help).";
+            errMsg += " If you're running docker, enable remote RPC endpoints (see your node's help).";
         return usage(errMsg);
     }
 

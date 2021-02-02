@@ -8,6 +8,6 @@ import (
 )
 
 func main() {
-	log.Printf("Server started at port 8080")
+	log.Printf("TrueBlocks API server started at port 8080")
 	log.Fatal(http.ListenAndServe(":8080", tb.NewRouter()))
 }
