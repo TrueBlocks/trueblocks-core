@@ -1,1 +1,1 @@
-{ "errors": [ "blockScrape - The 'listpin' option is not yet implemented. Quitting..." ] }
+{ "errors": [ "blockScrape - Invalid option: --listpins" ] }

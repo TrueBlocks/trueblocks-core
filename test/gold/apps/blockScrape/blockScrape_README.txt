@@ -18,7 +18,6 @@ blockScrape -th
 |####|Hidden options||
 | -b | --n_block_procs <num> | number of block channels for blaze |
 | -a | --n_addr_procs <num> | number of address channels for blaze |
-| -l | --listpins | list pins (precludes other options, requires API key) |
 |####|Hidden options||
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |

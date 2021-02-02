@@ -9,6 +9,5 @@
   "n_addr_procs": 12,
   "pin": 0,
   "publish": 0,
-  "listpins": 0, 
 }
 { "status": "stopped" }

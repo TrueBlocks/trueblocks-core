@@ -1457,6 +1457,21 @@
     },
     {
       "deleted": false,
+      "tags": "40-Exchanges",
+      "address": "0x2910543af39aba0cd09dbb2d50200b3e800a63d2",
+      "name": "Kraken Exchange",
+      "symbol": "",
+      "source": "CarbonVote, Ether Camp",
+      "decimals": 0,
+      "description": "",
+      "is_custom": false,
+      "is_prefund": false,
+      "is_contract": false,
+      "is_erc20": false,
+      "is_erc721": false
+    },
+    {
+      "deleted": false,
       "tags": "50-Tokens:ERC20",
       "address": "0x2956356cd2a2bf3202f771f50d3d14a367b48070",
       "name": "Ether Token",
@@ -2998,21 +3013,6 @@
       "is_prefund": false,
       "is_contract": true,
       "is_erc20": true,
-      "is_erc721": false
-    },
-    {
-      "deleted": false,
-      "tags": "30-Contracts",
-      "address": "0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f",
-      "name": "Uniswap V2: Factory Contract",
-      "symbol": "",
-      "source": "EtherScan.io",
-      "decimals": 0,
-      "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": false,
       "is_erc721": false
     }
   ],

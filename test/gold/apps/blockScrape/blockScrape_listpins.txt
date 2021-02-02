@@ -1,7 +1,7 @@
 blockScrape argc: 2 [1:--listpins] 
 blockScrape --listpins 
 
-  The 'listpin' option is not yet implemented. Quitting...
+  Invalid option: --listpins
 
   Usage:    blockScrape [-t|-n|-p|-u|-s|-v|-h] mode  
   Purpose:  Decentralized blockchain scraper and block cache.
@@ -17,7 +17,6 @@ blockScrape --listpins
 	#### Hidden options
 	-b  (--n_block_procs <num>)number of block channels for blaze
 	-a  (--n_addr_procs <num>)number of address channels for blaze
-	-l  (--listpins)      list pins (precludes other options, requires API key)
 	#### Hidden options
 
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level

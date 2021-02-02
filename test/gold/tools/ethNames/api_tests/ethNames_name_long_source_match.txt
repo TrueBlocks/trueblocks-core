@@ -96,6 +96,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x27f706edde3ad952ef647dd67e24e38cd0803dd6	Useless Ethereum Token	UET	On chain	18	The world's first 100% honest Ethereum ICO.	false	false	false	true	true	false
 34-ENS	0x283af0b28c62c092c9727f1ee09c02ca627eb7f5	ENS: ETH Registrar Controller		EtherScan.io			false	false	false	true	false	false
 50-Tokens:ERC20	0x28c8d01ff633ea9cd8fc6a451d7457889e698de6	Ethereum Gold	ETG	EtherScan.io		Ethereumgold is a nonprofit that aims to connects people to low-cost financial services to fight poverty and develop individual potential.	false	false	false	true	true	false
+40-Exchanges	0x2910543af39aba0cd09dbb2d50200b3e800a63d2	Kraken Exchange		CarbonVote, Ether Camp			false	false	false	false	false	false
 50-Tokens:ERC20	0x2956356cd2a2bf3202f771f50d3d14a367b48070	Ether Token	WETH	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x2971adfa57b20e5a416ae5a708a8655a9c74f723	InstaDApp: Index		EtherScan.io			false	false	false	true	false	false
 35-Pool Together	0x29fe7d60ddf151e5b52e5fab4f1325da6b2bd958	Pool Dai MCDAwarePool v0.2.12		EtherScan.io			false	false	false	true	false	false
@@ -199,4 +200,3 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 31-Gitcoin Grants:Grant	0x5b92bd6c37a1958f95ea1e56b6121a89314cfb66	Grant 337 CREAM: Confidential Reliable Ethereum Anonymous Mixer		https://gitcoin.co/grants/337/cream-confidential-reliable-ethereum-anonymous-mix		https://github.com/couger-inc/cream	false	false	false	false	false	false
 50-Tokens:ERC20	0x5bb622ba7b2f09bf23f1a9b509cd210a818c53d7	Based.Money: Curve sUSD Pool		EtherScan.io			false	false	false	true	false	false
 50-Tokens:ERC20	0x5c543e7ae0a1104f78406c340e9c64fd9fce5170	vSlice	VSL	EtherScan.io		An Ethereum Gaming Platform Token	false	false	false	true	true	false
-30-Contracts	0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f	Uniswap V2: Factory Contract		EtherScan.io			false	false	false	true	false	false

@@ -13,5 +13,4 @@ TIME ~ CLOCK - : 4-----changing state: paused --> stopped
   "n_addr_procs": 18446744073709551615,
   "pin": 0,
   "publish": 0,
-  "listpins": 0, 
 }

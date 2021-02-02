@@ -13,7 +13,6 @@ TIME ~ CLOCK - : 4-----changing state: stopped --> running
   "n_addr_procs": 12,
   "pin": 0,
   "publish": 0,
-  "listpins": 0, 
 }
 TIME ~ CLOCK - : 4-----The scraper was running.
 TIME ~ CLOCK - : 4-----changing state: running --> stopped
