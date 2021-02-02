@@ -368,7 +368,7 @@ bool noteMonitor(const string_q& path, void* data) {
         m.address = mdi.address;
         mdi.deleted = m.isDeleted();
         counter->monitorArray->push_back(mdi);
-        if (isTestMode() && counter->monitorArray->size() > 2)
+        if (isTestMode())
             return false;
     }
     return !shouldQuit();
