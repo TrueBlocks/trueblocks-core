@@ -325,7 +325,7 @@ bool noteMonitor(const string_q& path, void* data) {
     if (endsWith(path, '/')) {
         return forEveryFileInFolder(path + "*", noteMonitor, data);
 
-    } else if (endsWith(path, "acct.bin") || endsWith(path, ".json")) {
+    } else if (endsWith(path, "acct.bin")) {  // || endsWith(path, ".json")) {
         CItemCounter* counter = reinterpret_cast<CItemCounter*>(data);
         ASSERT(counter->options);
         CMonitorCacheItem mdi;
@@ -335,8 +335,7 @@ bool noteMonitor(const string_q& path, void* data) {
         nextTokenClear(addr, '|');
         mdi.address = "0x" + nextTokenClear(addr, '.');
         counter->options->getNamedAccount(mdi, mdi.address);
-
-        if (!isTestMode() && endsWith(path, ".acct.bin")) {
+        if (!isTestMode()) {
             CArchive archive(READING_ARCHIVE);
             if (archive.Lock(path, modeReadOnly, LOCK_NOWAIT)) {
                 uint32_t first = 0,
@@ -357,11 +356,8 @@ bool noteMonitor(const string_q& path, void* data) {
             string_q fn = substitute(path, ".acct.bin", ".txs.bin");
             mdi.sizeInBytes2 = fileSize(fn);
         } else {
-            mdi.firstAppearance = NOPOS;
-            mdi.latestAppearance = NOPOS;
-            mdi.nAppearances = NOPOS;
-            mdi.sizeInBytes = NOPOS;
-            mdi.address = mdi.address.substr(0, 8) + "---address---";
+            mdi = CMonitorCacheItem();
+            mdi.address = "---address---";
             mdi.name = "--name--";
             mdi.tags = "--tags--";
             mdi.source = "--source--";
@@ -372,7 +368,7 @@ bool noteMonitor(const string_q& path, void* data) {
         m.address = mdi.address;
         mdi.deleted = m.isDeleted();
         counter->monitorArray->push_back(mdi);
-        if (isTestMode())
+        if (isTestMode() && counter->monitorArray->size() > 2)
             return false;
     }
     return !shouldQuit();

@@ -101,19 +101,37 @@ cacheStatus all --details --start 1400000 --end 2000000
     {
       "items": [
         {
-          "type": "CMonitorCacheItem",
           "sizeInBytes2": 0,
           "tags": "--tags--",
-          "address": "0x000000---address---",
+          "address": "---address---",
           "name": "--name--",
           "symbol": "--symbol--",
           "source": "--source--",
-          "is_contract": true,
-          "is_erc20": true,
-          "nAppearances": 18446744073709551615,
-          "firstAppearance": 18446744073709551615,
-          "latestAppearance": 18446744073709551615,
-          "sizeInBytes": 18446744073709551615
+          "nAppearances": 0,
+          "firstAppearance": 0,
+          "latestAppearance": 0
+        },
+        {
+          "sizeInBytes2": 0,
+          "tags": "--tags--",
+          "address": "---address---",
+          "name": "--name--",
+          "symbol": "--symbol--",
+          "source": "--source--",
+          "nAppearances": 0,
+          "firstAppearance": 0,
+          "latestAppearance": 0
+        },
+        {
+          "sizeInBytes2": 0,
+          "tags": "--tags--",
+          "address": "---address---",
+          "name": "--name--",
+          "symbol": "--symbol--",
+          "source": "--source--",
+          "nAppearances": 0,
+          "firstAppearance": 0,
+          "latestAppearance": 0
         }
       ],
       "type": "CMonitorCache",
@@ -126,19 +144,37 @@ cacheStatus all --details --start 1400000 --end 2000000
     {
       "items": [
         {
-          "type": "CMonitorCacheItem",
           "sizeInBytes2": 0,
           "tags": "--tags--",
-          "address": "0x000000---address---",
+          "address": "---address---",
           "name": "--name--",
           "symbol": "--symbol--",
           "source": "--source--",
-          "is_contract": true,
-          "is_erc20": true,
-          "nAppearances": 18446744073709551615,
-          "firstAppearance": 18446744073709551615,
-          "latestAppearance": 18446744073709551615,
-          "sizeInBytes": 18446744073709551615
+          "nAppearances": 0,
+          "firstAppearance": 0,
+          "latestAppearance": 0
+        },
+        {
+          "sizeInBytes2": 0,
+          "tags": "--tags--",
+          "address": "---address---",
+          "name": "--name--",
+          "symbol": "--symbol--",
+          "source": "--source--",
+          "nAppearances": 0,
+          "firstAppearance": 0,
+          "latestAppearance": 0
+        },
+        {
+          "sizeInBytes2": 0,
+          "tags": "--tags--",
+          "address": "---address---",
+          "name": "--name--",
+          "symbol": "--symbol--",
+          "source": "--source--",
+          "nAppearances": 0,
+          "firstAppearance": 0,
+          "latestAppearance": 0
         }
       ],
       "type": "CNameCache",
