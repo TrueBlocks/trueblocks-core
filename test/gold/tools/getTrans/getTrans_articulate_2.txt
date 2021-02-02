@@ -306,20 +306,20 @@ getTrans 3648669.24 --articulate --verbose --trace --fmt json
           "stateMutability": "nonpayable",
           "inputs": [
             {
-              "name": "node",
+              "name": "_node",
               "value": "0x93cdeb708b7545dc668eb9280176169d1c33cfd8ed6f04690a0bcc88a93fc4ae",
               "internalType": "bytes32"
             }
           ],
           "outputs": [
             {
-              "name": "val_0",
+              "name": "ret_0",
               "value": "0x6090a6e47849629b7245dfa1ca21d94cd15878ef",
               "internalType": "address"
             }
           ]
         },
-        "compressedTrace": "owner ( node: 0x93cdeb708b7545dc668eb9280176169d1c33cfd8ed6f04690a0bcc88a93fc4ae )"
+        "compressedTrace": "owner ( _node: 0x93cdeb708b7545dc668eb9280176169d1c33cfd8ed6f04690a0bcc88a93fc4ae )"
       },
       {
         "type": "call",
@@ -344,20 +344,20 @@ getTrans 3648669.24 --articulate --verbose --trace --fmt json
           "stateMutability": "nonpayable",
           "inputs": [
             {
-              "name": "node",
+              "name": "_node",
               "value": "0x93cdeb708b7545dc668eb9280176169d1c33cfd8ed6f04690a0bcc88a93fc4ae",
               "internalType": "bytes32"
             }
           ],
           "outputs": [
             {
-              "name": "val_0",
+              "name": "ret_0",
               "value": "0x6090a6e47849629b7245dfa1ca21d94cd15878ef",
               "internalType": "address"
             }
           ]
         },
-        "compressedTrace": "owner ( node: 0x93cdeb708b7545dc668eb9280176169d1c33cfd8ed6f04690a0bcc88a93fc4ae )"
+        "compressedTrace": "owner ( _node: 0x93cdeb708b7545dc668eb9280176169d1c33cfd8ed6f04690a0bcc88a93fc4ae )"
       },
       {
         "type": "call",
@@ -382,20 +382,20 @@ getTrans 3648669.24 --articulate --verbose --trace --fmt json
           "stateMutability": "nonpayable",
           "inputs": [
             {
-              "name": "node",
+              "name": "_node",
               "value": "0x93cdeb708b7545dc668eb9280176169d1c33cfd8ed6f04690a0bcc88a93fc4ae",
               "internalType": "bytes32"
             }
           ],
           "outputs": [
             {
-              "name": "val_0",
+              "name": "ret_0",
               "value": "0x6090a6e47849629b7245dfa1ca21d94cd15878ef",
               "internalType": "address"
             }
           ]
         },
-        "compressedTrace": "owner ( node: 0x93cdeb708b7545dc668eb9280176169d1c33cfd8ed6f04690a0bcc88a93fc4ae )"
+        "compressedTrace": "owner ( _node: 0x93cdeb708b7545dc668eb9280176169d1c33cfd8ed6f04690a0bcc88a93fc4ae )"
       },
       {
         "type": "create",

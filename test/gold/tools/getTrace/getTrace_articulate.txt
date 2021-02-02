@@ -108,6 +108,13 @@ getTrace 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f8
           "value": "0x571b7b69829ce2568b9bc3d32eaf7405dab76b21",
           "internalType": "address"
         }
+      ],
+      "outputs": [
+        {
+          "name": "val_0",
+          "value": "true",
+          "internalType": "bool"
+        }
       ]
     },
     "compressedTrace": "split ( targetFork: 0x167a9333bf582556f35bd4d16a7e80e191aa6476, targetNoFork: 0x571b7b69829ce2568b9bc3d32eaf7405dab76b21 )"
