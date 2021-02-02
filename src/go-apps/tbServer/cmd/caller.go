@@ -101,6 +101,10 @@ func AdminScrape(w http.ResponseWriter, r *http.Request) {
 	callOneExtra(w, r, "chifra", "scrape")
 }
 
+func AdminPins(w http.ResponseWriter, r *http.Request) {
+    callOne(w, r, "pinStatus");
+}
+
 func AdminStatus(w http.ResponseWriter, r *http.Request) {
 	callOne(w, r, "cacheStatus")
 }
@@ -274,6 +278,13 @@ var routes = Routes{
 		"/scrape",
 		AdminScrape,
 	},
+
+    Route{
+        "AdminPins",
+        "GET",
+        "/pins",
+        AdminPins,
+    },
 
 	Route{
 		"AdminStatus",

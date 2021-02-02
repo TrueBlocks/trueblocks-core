@@ -1,0 +1,2 @@
+"apikey","secretkey"
+"--license_codes--","--license_codes--"

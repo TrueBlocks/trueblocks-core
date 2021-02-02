@@ -1,0 +1,18 @@
+enabled, mode, speed, route, path/tool, filename, post, options, opt_cmd
+on, cmd,  fast, pins, apps/pinStatus, README,          n, @th
+on, cmd,  fast, pins, apps/pinStatus, help,            n, @h
+on, cmd,  fast, pins, apps/pinStatus, help_long,       n, help
+
+on, both, fast, pins, apps/pinStatus, no_params,       y,
+on, both, fast, pins, apps/pinStatus, invalid_param_1, y, junk
+
+on, cmd,  fast, pins, apps/pinStatus, license,         y, license
+on, cmd,  fast, pins, apps/pinStatus, list,            y, list
+
+on, both, fast, pins, apps/pinStatus, fmt_default,         n, license
+on, both, slow, pins, apps/pinStatus, fmt_txt,             n, license & fmt = txt
+on, both, fast, pins, apps/pinStatus, fmt_csv,             n, license & fmt = csv
+on, both, fast, pins, apps/pinStatus, fmt_json,            y, license & fmt = json
+on, both, fast, pins, apps/pinStatus, fmt_api,             y, license & fmt = api
+on, cmd,  fast, pins, apps/pinStatus, fmt_junk,            y, license & fmt = junk
+on, both, fast, pins, apps/pinStatus, to_file,             y, license & fmt = json & to_file

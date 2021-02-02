@@ -1,0 +1,14 @@
+pinStatus argc: 2 [1:-h] 
+pinStatus -h 
+
+  Usage:    pinStatus [-l|-i|-v|-h]  
+  Purpose:  Report on status of pinned index and bloom filter chuncks.
+
+  Where:  
+	-l  (--list)          export a list of all IPFS pins
+	-i  (--license)       show the current pinata license information if any
+	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
+	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
+	-h  (--help)          display this help screen
+
+  Powered by TrueBlocks

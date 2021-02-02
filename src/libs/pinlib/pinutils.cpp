@@ -294,18 +294,13 @@ static size_t curlCallback(char* ptr, size_t size, size_t nmemb, void* userdata)
 }
 
 //----------------------------------------------------------------
-bool getPinataKeys(string_q& apiKey, string_q& secret) {
-    apiKey = getGlobalConfig("blockScrape")->getConfigStr("settings", "pinata_api_key", "<notset>");
-    LOG_INFO("pinata_api_key:\t", cGreen, apiKey, cOff);
-    if (apiKey == "<notset>")
-        return false;
-
-    secret = getGlobalConfig("blockScrape")->getConfigStr("settings", "pinata_secret_api_key", "<notset>");
-    LOG_INFO("pinata_secret_api_key:\t", cGreen, secret, cOff);
-    if (secret == "<notset>")
-        return false;
-
-    return true;
+bool getPinataKeys(CPinataLicense& lic) {
+    lic.apiKey = getGlobalConfig("blockScrape")->getConfigStr("settings", "pinata_api_key", "<notset>");
+    lic.secretKey = getGlobalConfig("blockScrape")->getConfigStr("settings", "pinata_secret_api_key", "<notset>");
+    if (isTestMode()) {
+        lic.apiKey = lic.secretKey = "--license_codes--";
+    }
+    return (lic.apiKey != "<notset>" && lic.secretKey != "<notset>");
 }
 
 //----------------------------------------------------------------
@@ -313,8 +308,8 @@ static string_q pinOneFile(const string_q& fileName, const string_q& type) {
 #if 0
     LOG4("Starting pin");
 
-    string_q apiKey, secret;
-    if (!getPinataKeys(apiKey, secret)) {
+    CPinataLicense lic;
+    if (!getPinataKeys(lic)) {
         cerr << "You need to put Pinata API keys in ~/.quickBlocks/blockScrape.toml" << endl;
         return "";
     }
@@ -375,8 +370,8 @@ static string_q pinOneFile(const string_q& fileName, const string_q& type) {
 static string_q unpinOneFile(const string_q& hash) {
     LOG4("Starting unpin");
 
-    string_q apiKey, secret;
-    if (!getPinataKeys(apiKey, secret)) {
+    CPinataLicense lic;
+    if (!getPinataKeys(lic)) {
         cerr << "You need to put Pinata API keys in ~/.quickBlocks/blockScrape.toml" << endl;
         return "";
     }
@@ -411,11 +406,11 @@ static string_q unpinOneFile(const string_q& hash) {
 }
 
 //---------------------------------------------------------------------------
-bool listPins(string& result) {
+bool pinataListOfPins(string& result) {
     LOG4("Starting list");
 
-    string_q apiKey, secret;
-    if (!getPinataKeys(apiKey, secret)) {
+    CPinataLicense lic;
+    if (!getPinataKeys(lic)) {
         cerr << "You need to put Pinata API keys in ~/.quickBlocks/blockScrape.toml" << endl;
         return false;
     }

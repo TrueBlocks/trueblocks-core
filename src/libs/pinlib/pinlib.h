@@ -13,6 +13,7 @@
  *-------------------------------------------------------------------------------------------*/
 #include "acctlib.h"
 
+#include "pinatalicense.h"
 #include "pinneditem.h"
 #include "pinatalist.h"
 #include "pinatapin.h"

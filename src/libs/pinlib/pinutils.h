@@ -16,6 +16,7 @@
  * of 'EXISTING_CODE' tags.
  */
 #include "pinlib.h"
+#include "pinatalicense.h"
 
 namespace qblocks {
 
@@ -31,7 +32,7 @@ extern hash_t getLastManifest(void);
 
 extern bool findChunk(const string_q& fileName, CPinnedItem& item);
 
-extern bool listPins(string_q& result);
+extern bool pinataListOfPins(string_q& result);
 extern void loadPinMaps(CIndexHashMap& bloomMap, CIndexHashMap& indexMap);
 
 extern bool unpinChunkByHash(const string_q& hash);
@@ -39,11 +40,7 @@ extern bool getChunkByHash(const string_q& fileName, CPinnedItem& item);
 extern bool getFileByHash(const hash_t& hash, const string_q& outFilename);
 extern string_q getFileContentsByHash(const hash_t& hash);
 
-extern bool getPinataKeys(string_q& apiKey, string_q& secret);
-inline bool hasPinataKeys(void) {
-    string_q unused1, unused2;
-    return getPinataKeys(unused1, unused2);
-}
+extern bool removeFromPinata(CPinnedItem& item, void* data);
 
 typedef bool (*PINFUNC)(CPinnedItem& pin, void* data);
 extern bool forEveryPin(PINFUNC func, void* data);

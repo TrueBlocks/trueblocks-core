@@ -1,0 +1,4 @@
+pinStatus argc: 2 [1:--license] 
+pinStatus --license 
+apikey	secretkey
+--license_codes--	--license_codes--

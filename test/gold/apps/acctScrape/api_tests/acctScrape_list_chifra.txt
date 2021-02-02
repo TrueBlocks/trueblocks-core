@@ -1,5 +1,5 @@
 {
   "errors": [
-    "chifra - Please specify which command to run, one or more of [list|export|slurp|collections|names|tags|abis|blocks|transactions|receipts|logs|traces|quotes|state|tokens|when|where|dive|init|scrape|serve|status|rm]. list:list"
+    "chifra - Please specify which command to run, one or more of [list|export|slurp|collections|names|tags|abis|blocks|transactions|receipts|logs|traces|quotes|state|tokens|when|where|dive|init|scrape|serve|pins|status|rm]. list:list"
   ]
 }

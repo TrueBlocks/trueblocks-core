@@ -1,22 +1,53 @@
 #include "pinlib.h"
+#include "options.h"
 
-extern bool addPinToArray(CPinnedItem& item, void* data);
-namespace qblocks {
-extern bool removeFromPinata(CPinnedItem& item, void* data);
-}
 //----------------------------------------------------------------
 int main(int argc, const char* argv[]) {
+    nodeNotRequired();
     pinlib_init(quickQuitHandler);
 
-    string_q provider = getGlobalConfig()->getConfigStr("settings", "rpcProvider", "");
+    COptions options;
+    if (!options.prepareArguments(argc, argv))
+        return 0;
 
+    bool once = true;
+    for (auto command : options.commandLines) {
+        if (!options.parseArguments(command))
+            break;
+
+        if (once)
+            cout << exportPreamble(expContext().fmtMap["header"], (options.license ? "CPinataLicense" : "CPinReport"));
+
+        if (options.license) {
+            if (expContext().exportFmt == TXT1 || expContext().exportFmt == CSV1) {
+                cout << trim(options.lic.Format(expContext().fmtMap["format"]), '\t') << endl;
+            } else {
+                indent();
+                options.lic.toJson(cout);
+                unindent();
+            }
+
+        } else {
+            options.handle_status();
+        }
+
+        once = false;
+    }
+    cout << exportPostamble(options.errors, expContext().fmtMap["meta"]);
+    pinlib_cleanup();
+
+    return 0;
+}
+
+void COptions::handle_status(void) {
+    string_q provider = getGlobalConfig()->getConfigStr("settings", "rpcProvider", "");
     LOG_INFO("rpcProvider:\t", cGreen, provider, cOff);
     LOG_INFO("latestBlock:\t", cGreen, getLatestBlock_client(), cOff);
     LOG_INFO("unchainedIndexAddr:\t", cGreen, unchainedIndexAddr, cOff);
 
     // forEveryPin(removeFromPinata, NULL);
     string_q pins;
-    listPins(pins);
+    pinataListOfPins(pins);
     CPinataList pinList;
     pinList.parseJson3(pins);
     while (str_2_Uint(pinList.count) != 0) {
@@ -28,21 +59,16 @@ int main(int argc, const char* argv[]) {
         usleep(300000);
         pins = "";
         pins.clear();
-        listPins(pins);
+        pinataListOfPins(pins);
         pinList = CPinataList();
         pinList.parseJson3(pins);
     }
-    //        listPins(pins);
+    //        pinataListOfPins(pins);
     //    }
     // freshenBloomFilters(true);
     //    //publishManifest(cout); //, prevHash);
     //    cout << getFileContentsByHash("QmcvjroTiE95LWeiP8HHq1YA3ysRchLuVx8HLQui8WcSBV")<< endl;
-
-    pinlib_cleanup();
-
-    return 1;
 }
-
 #if 0
 //----------------------------------------------------------------
 int main(int argc, const char* argv[]) {
@@ -109,46 +135,4 @@ int main(int argc, const char* argv[]) {
     pinlib_cleanup();
     return 1;
 }
-#endif
-
-#if 0
-/*-------------------------------------------------------------------------
- * This source code is confidential proprietary information which is
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
- * All Rights Reserved
- *------------------------------------------------------------------------*/
-#include "options.h"
-
-//-------------------------------------------------------------------------
-int main(int argc, const char* argv[]) {
-    nodeNotRequired();
-    acctlib_init(quickQuitHandler);
-
-    COptions options;
-    if (!options.prepareArguments(argc, argv))
-        return 0;
-
-    bool once = true;
-    for (auto command : options.commandLines) {
-        if (!options.parseArguments(command))
-            return 0;
-
-        if (options.isConfig) {
-            if (once)
-                cout << exportPreamble(expContext().fmtMap["header"], GETRUNTIME_CLASS(CConfiguration));
-            options.handle_config(cout);
-
-        } else {
-            if (once)
-                cout << exportPreamble(expContext().fmtMap["header"], "");
-            options.handle_status(cout);
-        }
-        once = false;
-    }
-    cout << exportPostamble(options.errors, expContext().fmtMap["meta"]);
-
-    acctlib_cleanup();
-    return 0;
-}
-
 #endif

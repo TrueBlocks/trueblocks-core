@@ -473,6 +473,7 @@ void COptionsBase::configureDisplay(const string_q& tool, const string_q& dataTy
         case TXT1:
         case CSV1:
             if (isTestMode()) {
+                // Just warning the user as if this is set it may break test cases
                 string test = getGlobalConfig(tool)->getConfigStr("display", "format", "<not-set>");
                 if (test != "<not-set>")
                     LOG_WARN("Custom [display]format field set to: ", test);
