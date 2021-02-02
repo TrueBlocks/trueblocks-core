@@ -283,7 +283,7 @@ bool noteMonitor_light(const string_q& path, void* data) {
         nextTokenClear(addr, '|');
         if (isTestMode()) {
             if (ptr->addrs.size() < 2)
-                ptr->addrs.push_back("0x" + addr.substr(0, 8) + "--address--");
+                ptr->addrs.push_back("---address---");
         } else {
             ptr->addrs.push_back("0x" + nextTokenClear(addr, '.'));
         }
@@ -462,7 +462,7 @@ bool noteABI(const string_q& path, void* data) {
         CAccountName n;
         counter->options->getNamedAccount(n, abii.address);
         if (isTestMode())
-            abii.address = abii.address.substr(0, 8) + "---address---";
+            abii.address = "---address---";
         abii.name = n.name;
         if (isTestMode()) {
             abii.nFunctions = abii.nEvents = abii.nOther = abii.sizeInBytes = 36963;

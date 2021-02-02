@@ -147,7 +147,7 @@ cacheStatus all --details --start 1400000 --end 2000000
           "nFunctions": 36963,
           "nEvents": 36963,
           "nOther": 36963,
-          "address": "0x000000---address---",
+          "address": "---address---",
           "name": "1inch.exchange v2",
           "nAppearances": 0,
           "firstAppearance": 0,
