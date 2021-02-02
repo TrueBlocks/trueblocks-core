@@ -124,6 +124,7 @@ bool COptions::parseArguments(string_q& command) {
                 tests.push_back("apps/acctScrape");
                 tests.push_back("apps/blockScrape");
                 tests.push_back("apps/cacheStatus");
+                tests.push_back("apps/pinStatus");
                 tests.push_back("apps/chifra");
 
             } else {
@@ -170,6 +171,7 @@ bool COptions::parseArguments(string_q& command) {
         tests.push_back("apps/acctScrape");
         tests.push_back("apps/blockScrape");
         tests.push_back("apps/cacheStatus");
+        tests.push_back("apps/pinStatus");
         tests.push_back("apps/chifra");
     }
 
