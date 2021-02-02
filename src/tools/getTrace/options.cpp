@@ -104,7 +104,7 @@ bool COptions::parseArguments(string_q& command) {
         GETRUNTIME_CLASS(CTraceResult)->sortFieldList();
         if (isTestMode() && !isApiMode()) {
             ostringstream os;
-            for (auto ff: filters) {
+            for (auto ff : filters) {
                 os << ff << endl;
             }
             LOG_INFO(os.str());

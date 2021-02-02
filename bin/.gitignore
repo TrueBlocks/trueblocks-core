@@ -22,11 +22,12 @@ getTrace
 getTrans
 grabABI
 makeClass
-whenBlock
-whereBlock
+pinStatus
 tbServer
 testRunner
 turboDive
+whenBlock
+whereBlock
 unchained
 
 # some visual studio stuff

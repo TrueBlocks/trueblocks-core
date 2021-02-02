@@ -299,7 +299,7 @@
     },
     "namedTo": {
       "0x2910543af39aba0cd09dbb2d50200b3e800a63d2": {
-        "tags": "40-Exchanges",
+        "tags": "25-Exchanges",
         "name": "Name 0x2910543a",
         "count": 1
       }

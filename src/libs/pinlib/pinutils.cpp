@@ -296,10 +296,12 @@ static size_t curlCallback(char* ptr, size_t size, size_t nmemb, void* userdata)
 //----------------------------------------------------------------
 bool getPinataKeys(string_q& apiKey, string_q& secret) {
     apiKey = getGlobalConfig("blockScrape")->getConfigStr("settings", "pinata_api_key", "<notset>");
+    LOG_INFO("pinata_api_key:\t", cGreen, apiKey, cOff);
     if (apiKey == "<notset>")
         return false;
 
     secret = getGlobalConfig("blockScrape")->getConfigStr("settings", "pinata_secret_api_key", "<notset>");
+    LOG_INFO("pinata_secret_api_key:\t", cGreen, secret, cOff);
     if (secret == "<notset>")
         return false;
 

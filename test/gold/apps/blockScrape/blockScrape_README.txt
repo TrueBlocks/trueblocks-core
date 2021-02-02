@@ -12,7 +12,7 @@ blockScrape -th
 |  | mode | control the block and account scrapers, one of [run*&#124;quit&#124;pause&#124;restart] (required) |
 | -t | --tool <val> | process the index, monitors, or both (none means process timestamps only), one or more of [monitors&#124;index*&#124;none&#124;both] |
 | -n | --n_blocks <num> | maximum number of blocks to process (defaults to 5000) |
-| -p | --pin | pin new chunks (and blooms) to IPFS (requires Pinata key) |
+| -p | --pin | pin new chunks (and blooms) to IPFS (requires Pinata key and running IPFS node) |
 | -u | --publish | publish the hash of the pin manifest to the UnchainedIndex smart contract |
 | -s | --sleep <double> | the number of seconds to sleep between passes (default 14) |
 |####|Hidden options||

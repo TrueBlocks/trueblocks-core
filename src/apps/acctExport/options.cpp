@@ -494,11 +494,14 @@ string_q report_cache(int opt) {
 // TODO(tjayrush): accounting must be exportFmt API1 - why?
 // TODO(tjayrush): accounting must be for one monitor address - why?
 // TODO(tjayrush): accounting requires node balances - why?
-// TODO(tjayrush): Used to ask if any ABI files were newer than monitors, noted it (knownIsStale) and then would re-articulate
+// TODO(tjayrush): Used to ask if any ABI files were newer than monitors, noted it (knownIsStale) and then would
+// re-articulate
 // TODO(tjayrush): What does prefundAddrMap and prefundWeiMap do? Needs testing
 // TODO(tjayrush): What does blkRewardMap do? Needs testing
-// TODO(tjayrush): Reconciliation loads traces -- plus it reduplicates the isSuicide, isGeneration, isUncle shit (I think)
-// TODO(tjayrush): Used to use toAddrMap[trans.to] to see it we've already loaded the abi to avoid loading it more than once
+// TODO(tjayrush): Reconciliation loads traces -- plus it reduplicates the isSuicide, isGeneration, isUncle shit (I
+// think)
+// TODO(tjayrush): Used to use toAddrMap[trans.to] to see it we've already loaded the abi to avoid loading it more than
+// once
 // TODO(tjayrush): updateLastExport is really weird
 // TODO(tjayrush): writeLastBlock is really weird
 // TODO(tjayrush): We used to write traces sometimes
