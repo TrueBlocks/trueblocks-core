@@ -279,12 +279,12 @@ bool noteMonitor_light(const string_q& path, void* data) {
         CItemCounter* counter = reinterpret_cast<CItemCounter*>(data);
         ASSERT(counter->options);
         CMonitorCache* ptr = (CMonitorCache*)counter->cachePtr;  // NOLINT
+        string_q addr = substitute(path, "/0x", "|");
+        nextTokenClear(addr, '|');
         if (isTestMode()) {
             if (ptr->addrs.size() < 2)
-                ptr->addrs.push_back("--address--");
+                ptr->addrs.push_back("0x" + addr.substr(0, 8) + "--address--");
         } else {
-            string_q addr = substitute(path, "/0x", "|");
-            nextTokenClear(addr, '|');
             ptr->addrs.push_back("0x" + nextTokenClear(addr, '.'));
         }
     }
@@ -361,10 +361,11 @@ bool noteMonitor(const string_q& path, void* data) {
             mdi.latestAppearance = NOPOS;
             mdi.nAppearances = NOPOS;
             mdi.sizeInBytes = NOPOS;
-            mdi.address = "---address---";
+            mdi.address = mdi.address.substr(0, 8) + "---address---";
             mdi.name = "--name--";
             mdi.tags = "--tags--";
             mdi.source = "--source--";
+            mdi.symbol = "--symbol--";
         }
 
         CMonitor m;
@@ -465,7 +466,7 @@ bool noteABI(const string_q& path, void* data) {
         CAccountName n;
         counter->options->getNamedAccount(n, abii.address);
         if (isTestMode())
-            abii.address = "---address---";
+            abii.address = abii.address.substr(0, 8) + "---address---";
         abii.name = n.name;
         if (isTestMode()) {
             abii.nFunctions = abii.nEvents = abii.nOther = abii.sizeInBytes = 36963;

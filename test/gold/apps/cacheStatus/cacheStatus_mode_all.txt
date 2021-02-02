@@ -24,8 +24,8 @@ cacheStatus all
     },
     {
       "addrs": [
-        "--address--",
-        "--address--"
+        "0x00000000--address--",
+        "0x001d1480--address--"
       ],
       "type": "CMonitorCache",
       "path": "monitorsPath",
@@ -36,8 +36,8 @@ cacheStatus all
     },
     {
       "addrs": [
-        "--address--",
-        "--address--"
+        "0x00000000--address--",
+        "0x001d1480--address--"
       ],
       "type": "CNameCache",
       "path": "namesPath",

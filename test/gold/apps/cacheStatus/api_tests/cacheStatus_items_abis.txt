@@ -25,7 +25,7 @@
               "nEvents": 36963,
               "nOther": 36963,
               "tags": "",
-              "address": "---address---",
+              "address": "0x000000---address---",
               "name": "1inch.exchange v2",
               "symbol": "",
               "source": "",
