@@ -514,38 +514,13 @@ void loadAbiAndCache(CAbi& abi, const address_t& addr, bool raw, CStringArray& e
     if (!results.empty()) {
         CFunction func;
         while (func.parseJson3(results)) {
-            abi.addIfUnique(addr, func, false);
+            abi.addInterface(func);
             func = CFunction();  // reset
         }
     }
 
     verbose = saveVerbose;
     return;
-}
-
-//-----------------------------------------------------------------------
-bool CAbi::addIfUnique(const string_q& addr, CFunction& func, bool decorateNames) {
-    if (func.name.empty() && func.type != "constructor")
-        return false;
-
-    if (interfaceMap[func.encoding])
-        return false;
-
-    for (auto f : interfaces) {
-        if (f.encoding == func.encoding)
-            return false;
-
-        // different encoding same name means a duplicate function name in the code. We won't build with
-        // duplicate function names, so we need to modify the incoming function. We do this by appending
-        // the first four characters of the contract's address.
-        if (decorateNames && f.name == func.name && !f.isBuiltIn) {
-            func.origName = func.name;
-            func.name += (startsWith(addr, "0x") ? extract(addr, 2, 4) : extract(addr, 0, 4));
-        }
-    }
-
-    addInterface(func);
-    return true;
 }
 
 //-----------------------------------------------------------------------
@@ -813,8 +788,21 @@ void CAbi::sortInterfaces(void) {
 
 //-----------------------------------------------------------------------
 void CAbi::addInterface(const CFunction& func) {
-    if (interfaceMap[func.encoding])
+    if (func.name.empty() && func.type != "constructor")
         return;
+
+    // if the encoding already exists, replace it.
+    if (interfaceMap[func.encoding]) {
+        // we should find it, but if we don't just add it below
+        for (uint32_t i = 0; i < interfaces.size(); i++) {
+            if (interfaces[i].encoding == func.encoding) {
+                interfaces[i] = func;
+                return;
+            }
+        }
+    }
+
+    // ...else, add it
     interfaces.push_back(func);
     interfaceMap[func.encoding] = true;
 }

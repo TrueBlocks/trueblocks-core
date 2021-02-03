@@ -254,7 +254,7 @@ getTrace 0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f --ar
       ],
       "outputs": [
         {
-          "name": "ret_0",
+          "name": "val_0",
           "value": "47231959280000",
           "internalType": "uint256"
         }
@@ -291,7 +291,7 @@ getTrace 0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f --ar
       ],
       "outputs": [
         {
-          "name": "ret_0",
+          "name": "val_0",
           "value": "47231959280000",
           "internalType": "uint256"
         }

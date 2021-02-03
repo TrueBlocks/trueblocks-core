@@ -33,7 +33,7 @@ getTrace 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f8
           "internalType": "address"
         },
         {
-          "name": "_amount",
+          "name": "_value",
           "value": "8263636363636363636",
           "internalType": "uint256"
         }
@@ -45,7 +45,7 @@ getTrace 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f8
         }
       ]
     },
-    "compressedTrace": "transferFrom ( _from: 0xbb9bc244d798123fde783fcc1c72d3bb8c189413, _to: 0x713fa27cb26b5902ea398b04d21e6018bba3a2f1, _amount: 8263636363636363636 )"
+    "compressedTrace": "transferFrom ( _from: 0xbb9bc244d798123fde783fcc1c72d3bb8c189413, _to: 0x713fa27cb26b5902ea398b04d21e6018bba3a2f1, _value: 8263636363636363636 )"
   },  {
     "type": "call",
     "action": {

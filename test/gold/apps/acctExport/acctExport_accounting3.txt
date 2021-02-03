@@ -348,21 +348,21 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --ether --sta
     "name": "approve",
     "inputs": [
       {
-        "name": "_spender",
+        "name": "usr",
         "value": "0x7d655c57f71464b6f83811c55d84009cd9f5221c"
       },
       {
-        "name": "_amount",
+        "name": "wad",
         "value": "5000000000000000000"
       }
     ],
     "outputs": [
       {
-        "name": "success"
+        "name": "val_0"
       }
     ]
   },
-  "compressedTx": "approve ( _spender: 0x7d655c57f71464b6f83811c55d84009cd9f5221c, _amount: 5000000000000000000 )",
+  "compressedTx": "approve ( usr: 0x7d655c57f71464b6f83811c55d84009cd9f5221c, wad: 5000000000000000000 )",
   "statements": [
     {
       "blockNumber": 10279295,
@@ -34543,21 +34543,21 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --ether --sta
     "name": "approve",
     "inputs": [
       {
-        "name": "_spender",
+        "name": "usr",
         "value": "0x7d655c57f71464b6f83811c55d84009cd9f5221c"
       },
       {
-        "name": "_amount",
+        "name": "wad",
         "value": "5000000000000000000"
       }
     ],
     "outputs": [
       {
-        "name": "success"
+        "name": "val_0"
       }
     ]
   },
-  "compressedTx": "approve ( _spender: 0x7d655c57f71464b6f83811c55d84009cd9f5221c, _amount: 5000000000000000000 )",
+  "compressedTx": "approve ( usr: 0x7d655c57f71464b6f83811c55d84009cd9f5221c, wad: 5000000000000000000 )",
   "statements": [
     {
       "blockNumber": 10290317,
@@ -35657,21 +35657,21 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --ether --sta
     "name": "approve",
     "inputs": [
       {
-        "name": "_spender",
+        "name": "usr",
         "value": "0x7d655c57f71464b6f83811c55d84009cd9f5221c"
       },
       {
-        "name": "_amount",
+        "name": "wad",
         "value": "5000000000000000000"
       }
     ],
     "outputs": [
       {
-        "name": "success"
+        "name": "val_0"
       }
     ]
   },
-  "compressedTx": "approve ( _spender: 0x7d655c57f71464b6f83811c55d84009cd9f5221c, _amount: 5000000000000000000 )",
+  "compressedTx": "approve ( usr: 0x7d655c57f71464b6f83811c55d84009cd9f5221c, wad: 5000000000000000000 )",
   "statements": [
     {
       "blockNumber": 10292014,
@@ -36899,21 +36899,21 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --accounting --ether --sta
     "name": "approve",
     "inputs": [
       {
-        "name": "_spender",
+        "name": "usr",
         "value": "0x7d655c57f71464b6f83811c55d84009cd9f5221c"
       },
       {
-        "name": "_amount",
+        "name": "wad",
         "value": "5000000000000000000"
       }
     ],
     "outputs": [
       {
-        "name": "success"
+        "name": "val_0"
       }
     ]
   },
-  "compressedTx": "approve ( _spender: 0x7d655c57f71464b6f83811c55d84009cd9f5221c, _amount: 5000000000000000000 )",
+  "compressedTx": "approve ( usr: 0x7d655c57f71464b6f83811c55d84009cd9f5221c, wad: 5000000000000000000 )",
   "statements": [
     {
       "blockNumber": 10293554,

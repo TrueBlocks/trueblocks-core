@@ -450,9 +450,7 @@ string_q nextFunctionChunk_custom(const string_q& fieldIn, const void* dataPtr) 
                 }
                 break;
             case 'o':
-                if (fieldIn % "origName") {
-                    return fun->origName;
-                } else if (fieldIn % "output_names") {
+                if (fieldIn % "output_names") {
                     string_q ret;
                     for (size_t i = 0; i < fun->outputs.size(); i++) {
                         ret += fun->outputs[i].name;
@@ -550,16 +548,14 @@ const char* STR_DISPLAY_FUNCTION =
 string_q CFunction::getSignature(uint64_t parts) const {
     size_t cnt = inputs.size();
 
-    string_q nm = (origName.empty() ? name : origName);
-
     size_t tl = type.length();
-    size_t nl = nm.length();
+    size_t nl = name.length();
     size_t v1 = 35 - tl;
     size_t ll = (nl > v1 ? 0 : v1 - nl);
 
     ostringstream os;
     os << (parts & SIG_FTYPE ? "\t" + type + " " : "");
-    os << (parts & SIG_FNAME ? nm : "");
+    os << (parts & SIG_FNAME ? name : "");
     os << (parts & SIG_FSPACE ? string_q(ll, ' ') : "");
     os << (parts & SIG_FTYPE || parts & SIG_FNAME ? "(" : "");
     for (size_t j = 0; j < cnt; j++) {

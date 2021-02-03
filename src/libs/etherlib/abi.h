@@ -45,7 +45,6 @@ class CAbi : public CBaseNode {
 
     // EXISTING_CODE
     CFunctionMap interfaceMap;
-    bool addIfUnique(const string_q& addr, CFunction& func, bool decorateNames);
     bool loadAndCacheAbiFolder(const string_q& sourcePath, const string_q& binPath);
     bool loadAbiKnown(void);
     bool loadAbisMonitors(void);
