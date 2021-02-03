@@ -469,7 +469,7 @@ bool noteABI(const string_q& path, void* data) {
         } else {
             CAbi abi;
             abi.loadAbiFromFile(path, false);
-            sort(abi.interfaces.begin(), abi.interfaces.end());
+            abi.sortInterfaces();
             abii.nFunctions = abi.nFunctions();
             abii.nEvents = abi.nEvents();
             abii.nOther = abi.nOther();

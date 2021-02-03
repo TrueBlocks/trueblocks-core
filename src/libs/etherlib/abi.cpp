@@ -347,6 +347,11 @@ bool CAbi::loadAndCacheAbiFolder(const string_q& sourcePath, const string_q& bin
         CArchive archive(READING_ARCHIVE);
         if (archive.Lock(binPath, modeReadOnly, LOCK_NOWAIT)) {
             archive >> *this;
+            if (isTestMode()) {
+                for (auto i : interfaces)
+                    cerr << "loadAndCacheAbiFolder: " << i.name << " " << i.inputs.size() << " " << i.outputs.size()
+                         << endl;
+            }
             archive.Release();
             return true;
         }
@@ -433,6 +438,9 @@ bool CAbi::loadAbiFromString(const string_q& in, bool builtIn) {
     while (func.parseJson3(contents)) {
         func.isBuiltIn = builtIn;
         if (!interfaceMap[func.encoding]) {
+            if (isTestMode())
+                cerr << "loadAbiFromString: " << func.name << " " << func.inputs.size() << " " << func.outputs.size()
+                     << endl;
             interfaces.push_back(func);
             interfaceMap[func.encoding] = true;
         }
@@ -803,6 +811,22 @@ bool sol_2_Abi(CAbi& abi, const string_q& addr) {
     }
 
     return true;
+}
+
+//-----------------------------------------------------------------------
+bool sortByFuncName(const CFunction& f1, const CFunction& f2) {
+    string_q s1 = (f1.type == "event" ? "zzzevent" : f1.type) + f1.name + f1.encoding;
+    for (auto f : f1.inputs)
+        s1 += f.name;
+    string_q s2 = (f2.type == "event" ? "zzzevent" : f2.type) + f2.name + f2.encoding;
+    for (auto f : f2.inputs)
+        s2 += f.name;
+    return s1 < s2;
+}
+
+//-----------------------------------------------------------------------
+void CAbi::sortInterfaces(void) {
+    sort(interfaces.begin(), interfaces.end(), sortByFuncName);
 }
 // EXISTING_CODE
 }  // namespace qblocks

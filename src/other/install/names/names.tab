@@ -2924,7 +2924,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 31-Gitcoin Grants:Friends	0x6c70e5fc4e4926cd836a6f8b0645aa1a077fa605	heyellieday		Gitcoin Website			false	false	false	false	false	false
 81-Other	0x6c878a4760fb1afe5751d9979b4fbeeec3072a30	PointlessCoin	$	On chain	3		false	false	false	true	true	false
 36-Compound	0x6c8c6b02e7b2be14d4fa6022dfd6d75921d90e4e	Compound Basic Attention Token	cBAT	On chain	8		false	false	false	true	true	false
-30-Contracts	0x6c8f2a135f6ed072de4503bd7c4999a1a17f824b	Piper Meriam's Alarm Clock		TrueBlocks.io			false	false	false	true	false	false
+30-Contracts	0x6c8f2a135f6ed072de4503bd7c4999a1a17f824b	Piper Merriam's Alarm Clock		TrueBlocks.io			false	false	false	true	false	false
 30-Contracts:Humanity DAO	0x6ca17318f54d206013e7a042bda16729ed9eb8e7	on_yavin		https://www.humanitydao.org/humans			false	false	false	false	false	false
 30-Contracts:Humanity DAO	0x6ca6c53a68dc6be149ea37d8c73ca4dca4164cce	jfloue		https://www.humanitydao.org/humans			false	false	false	false	false	false
 81-Other	0x6cafdc06177f6f4b4b4638c987397b07cd948aed	Jackpot		EtherScan.io			false	false	false	true	false	false

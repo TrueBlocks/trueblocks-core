@@ -73,6 +73,7 @@ class CAbi : public CBaseNode {
     size_t nOther(void) const {
         return interfaces.size() - nFunctions() - nEvents();
     }
+    void sortInterfaces(void);
     // EXISTING_CODE
     bool operator==(const CAbi& it) const;
     bool operator!=(const CAbi& it) const {

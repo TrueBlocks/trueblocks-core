@@ -34,7 +34,6 @@ static const COption params[] = {
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
-extern bool sortByFuncName(const CFunction& f1, const CFunction& f2);
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
     ENTER("parseArguments: " + command);
@@ -160,7 +159,7 @@ bool COptions::parseArguments(string_q& command) {
             abi.address = a;
             for (auto i = abi.interfaces.begin(); i != abi.interfaces.end(); i++)
                 i->address = a;
-            sort(abi.interfaces.begin(), abi.interfaces.end(), sortByFuncName);
+            abi.sortInterfaces();
             abiList.push_back(abi);
         }
     }
@@ -174,7 +173,7 @@ bool COptions::parseArguments(string_q& command) {
     if (monitored) {
         CAbi abi;
         abi.loadAbisMonitors();
-        sort(abi.interfaces.begin(), abi.interfaces.end(), sortByFuncName);
+        abi.sortInterfaces();
         abiList.push_back(abi);
     }
 
@@ -262,21 +261,10 @@ bool visitABIs(const string_q& path, void* dataPtr) {
 }
 
 //-----------------------------------------------------------------------
-bool sortByFuncName(const CFunction& f1, const CFunction& f2) {
-    string_q s1 = (f1.type == "event" ? "zzzevent" : f1.type) + f1.name + f1.encoding;
-    for (auto f : f1.inputs)
-        s1 += f.name;
-    string_q s2 = (f2.type == "event" ? "zzzevent" : f2.type) + f2.name + f2.encoding;
-    for (auto f : f2.inputs)
-        s2 += f.name;
-    return s1 < s2;
-}
-
-//-----------------------------------------------------------------------
 void COptions::convertFromSol(const address_t& a) {
     CAbi abi;
     sol_2_Abi(abi, a);
-    sort(abi.interfaces.begin(), abi.interfaces.end(), sortByFunctionName);
+    abi.sortInterfaces();
     GETRUNTIME_CLASS(CFunction)->sortFieldList();
     GETRUNTIME_CLASS(CParameter)->sortFieldList();
     if (isTestMode()) {
