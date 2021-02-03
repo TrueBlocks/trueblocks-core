@@ -115,10 +115,7 @@ bool CAbi::setValueByName(const string_q& fieldNameIn, const string_q& fieldValu
         CFunction obj;
         string_q str = fieldValue;
         while (obj.parseJson3(str)) {
-            if (!interfaceMap[obj.encoding]) {
-                interfaces.push_back(obj);
-                interfaceMap[obj.encoding] = true;
-            }
+            addInterface(obj);
             obj = CFunction();  // reset
         }
         return true;
@@ -347,11 +344,6 @@ bool CAbi::loadAndCacheAbiFolder(const string_q& sourcePath, const string_q& bin
         CArchive archive(READING_ARCHIVE);
         if (archive.Lock(binPath, modeReadOnly, LOCK_NOWAIT)) {
             archive >> *this;
-            if (isTestMode()) {
-                for (auto i : interfaces)
-                    cerr << "loadAndCacheAbiFolder: " << i.name << " " << i.inputs.size() << " " << i.outputs.size()
-                         << endl;
-            }
             archive.Release();
             return true;
         }
@@ -362,7 +354,7 @@ bool CAbi::loadAndCacheAbiFolder(const string_q& sourcePath, const string_q& bin
     if (!forEveryFileInFolder(sourcePath + "*", visitABI, this))
         return false;
 
-    sort(interfaces.begin(), interfaces.end());
+    sortInterfaces();
 
     CArchive archive(WRITING_ARCHIVE);
     if (archive.Lock(binPath, modeWriteCreate, LOCK_NOWAIT)) {
@@ -390,7 +382,7 @@ bool CAbi::loadAbiByAddress(const address_t& which) {
         return false;
     bool ret = visitABI(getCachePath("abis/" + toLower(which) + ".json"), this);
     if (ret)
-        sort(interfaces.begin(), interfaces.end());
+        sortInterfaces();
     return ret;
 }
 
@@ -419,7 +411,7 @@ bool CAbi::loadAbiFromFile(const string_q& fileName, bool builtIn) {
             substitute(substitute(fileName, configPath("known_abis/"), ""), getCachePath("abis/"), ""), ".json", "");
         for (auto i = interfaces.begin(); i != interfaces.end(); i++)
             i->address = addr;
-        sort(interfaces.begin(), interfaces.end());
+        sortInterfaces();
         //        CArchive archive(WRITING_ARCHIVE);
         //        if (archive.Lock(binFile, modeWriteCreate, LOCK_NOWAIT)) {
         //            archive << *this;
@@ -437,13 +429,7 @@ bool CAbi::loadAbiFromString(const string_q& in, bool builtIn) {
     CFunction func;
     while (func.parseJson3(contents)) {
         func.isBuiltIn = builtIn;
-        if (!interfaceMap[func.encoding]) {
-            if (isTestMode())
-                cerr << "loadAbiFromString: " << func.name << " " << func.inputs.size() << " " << func.outputs.size()
-                     << endl;
-            interfaces.push_back(func);
-            interfaceMap[func.encoding] = true;
-        }
+        addInterface(func);
         func = CFunction();  // reset
     }
     return interfaces.size();
@@ -558,8 +544,7 @@ bool CAbi::addIfUnique(const string_q& addr, CFunction& func, bool decorateNames
         }
     }
 
-    interfaces.push_back(func);
-    interfaceMap[func.encoding] = true;
+    addInterface(func);
     return true;
 }
 
@@ -802,10 +787,7 @@ bool sol_2_Abi(CAbi& abi, const string_q& addr) {
             if (contains(line, "function ") || contains(line, "event ")) {
                 CFunction func;
                 func.fromDefinition(line);
-                if (!abi.interfaceMap[func.encoding]) {
-                    abi.interfaces.push_back(func);
-                    abi.interfaceMap[func.encoding] = true;
-                }
+                abi.addInterface(func);
             }
         }
     }
@@ -827,6 +809,14 @@ bool sortByFuncName(const CFunction& f1, const CFunction& f2) {
 //-----------------------------------------------------------------------
 void CAbi::sortInterfaces(void) {
     sort(interfaces.begin(), interfaces.end(), sortByFuncName);
+}
+
+//-----------------------------------------------------------------------
+void CAbi::addInterface(const CFunction& func) {
+    if (interfaceMap[func.encoding])
+        return;
+    interfaces.push_back(func);
+    interfaceMap[func.encoding] = true;
 }
 // EXISTING_CODE
 }  // namespace qblocks

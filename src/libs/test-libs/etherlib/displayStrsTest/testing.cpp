@@ -51,7 +51,7 @@ bool testDisplayStr(COptions& options) {
 
         CAbi abi;
         abi.address = "0x1234567890123456789012345678901234567890";
-        abi.interfaces.push_back(func);
+        abi.addInterface(func);
         monitor.abi_spec = abi;
 
         CEthState es;
