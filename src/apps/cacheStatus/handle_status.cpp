@@ -325,7 +325,7 @@ bool noteMonitor(const string_q& path, void* data) {
     if (endsWith(path, '/')) {
         return forEveryFileInFolder(path + "*", noteMonitor, data);
 
-    } else if (endsWith(path, "acct.bin")) {  // || endsWith(path, ".json")) {
+    } else if (endsWith(path, "acct.bin")) {
         CItemCounter* counter = reinterpret_cast<CItemCounter*>(data);
         ASSERT(counter->options);
         CMonitorCacheItem mdi;

@@ -791,6 +791,9 @@ void CAbi::addInterface(const CFunction& func) {
     if (func.name.empty() && func.type != "constructor")
         return;
 
+    if (contains(func.name, " "))
+        return;
+
     // if the encoding already exists, replace it.
     if (interfaceMap[func.encoding]) {
         // we should find it, but if we don't just add it below

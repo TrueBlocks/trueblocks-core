@@ -225,7 +225,7 @@
             ],
             "outputs": [
               {
-                "name": "balance",
+                "name": "out",
                 "value": "0",
                 "internalType": "uint256",
                 "components": []
@@ -266,7 +266,7 @@
             ],
             "outputs": [
               {
-                "name": "balance",
+                "name": "out",
                 "value": "0",
                 "internalType": "uint256",
                 "components": []
@@ -307,7 +307,7 @@
             ],
             "outputs": [
               {
-                "name": "balance",
+                "name": "out",
                 "value": "100000000",
                 "internalType": "uint256",
                 "components": []
