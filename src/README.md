@@ -8,7 +8,7 @@ TrueBlocks is a collection of software libraries, applications, and command-line
 
 ## Source Code
 
-Our source code is laid out in the following folders:
+The source code is laid out in the following folders:
 
 - [**The libs folder**](./libs/README.md): This folder holds the C++ library code that helps us build out various applications and command-line tools. All of this code is open source.
 
