@@ -1,0 +1,1280 @@
+[
+  {
+    "name": "register",
+    "type": "function",
+    "signature": "register()",
+    "encoding": "0x1aa3a008",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "withdraw",
+    "type": "function",
+    "signature": "withdraw()",
+    "encoding": "0x3ccfd60b",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "totalBalance",
+    "type": "function",
+    "constant": true,
+    "signature": "totalBalance()",
+    "encoding": "0xad7a672f",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "ret_0"
+      }
+    ]
+  },
+  {
+    "name": "isRegistered",
+    "type": "function",
+    "constant": true,
+    "signature": "isRegistered(address)",
+    "encoding": "0xc3c5a547",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_addr"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "ret_0"
+      }
+    ]
+  },
+  {
+    "name": "isAttended",
+    "type": "function",
+    "constant": true,
+    "signature": "isAttended(address)",
+    "encoding": "0xa07f3a56",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_addr"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "ret_0"
+      }
+    ]
+  },
+  {
+    "name": "isPaid",
+    "type": "function",
+    "constant": true,
+    "signature": "isPaid(address)",
+    "encoding": "0x6ded82f8",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_addr"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "ret_0"
+      }
+    ]
+  },
+  {
+    "name": "cancel",
+    "type": "function",
+    "signature": "cancel()",
+    "encoding": "0xea8a1af0",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "clear",
+    "type": "function",
+    "signature": "clear()",
+    "encoding": "0x52efea6e",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "setLimitOfParticipants",
+    "type": "function",
+    "signature": "setLimitOfParticipants(uint256)",
+    "encoding": "0x9989a5ae",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_limitOfParticipants"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "changeName",
+    "type": "function",
+    "signature": "changeName(string)",
+    "encoding": "0x5353a2d8",
+    "inputs": [
+      {
+        "type": "string",
+        "name": "_name"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "changeDeposit",
+    "type": "function",
+    "signature": "changeDeposit(uint256)",
+    "encoding": "0xc2a2ce06",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_deposit"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "finalize",
+    "type": "function",
+    "signature": "finalize(uint256[])",
+    "encoding": "0xe17e082b",
+    "inputs": [
+      {
+        "type": "uint256[]",
+        "name": "_maps",
+        "is_array": true
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "doDeposit",
+    "type": "function",
+    "signature": "doDeposit(address,uint256)",
+    "encoding": "0x65a31545",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "val_0"
+      },
+      {
+        "type": "uint256",
+        "name": "val_1"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "doWithdraw",
+    "type": "function",
+    "signature": "doWithdraw(address,uint256)",
+    "encoding": "0x3381114b",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "payable"
+      },
+      {
+        "type": "uint256",
+        "name": "val_0"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "tokenAddress",
+    "type": "function",
+    "constant": true,
+    "signature": "tokenAddress()",
+    "encoding": "0x9d76ea58",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address",
+        "name": "ret_0"
+      }
+    ]
+  },
+  {
+    "name": "AdminGranted",
+    "type": "event",
+    "signature": "AdminGranted(address)",
+    "encoding": "0x1c4e23de8d72c94b22992bd4d7b6786b215ba876af214ff63e6a0ca38fc97af4",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "grantee",
+        "indexed": true
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "AdminRevoked",
+    "type": "event",
+    "signature": "AdminRevoked(address)",
+    "encoding": "0x631ff1c4e1a02c54b480a34b810e03bcee61fe38efcb243930a7f820914923e2",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "grantee",
+        "indexed": true
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "OwnershipTransferred",
+    "type": "event",
+    "signature": "OwnershipTransferred(address,address)",
+    "encoding": "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "previousOwner",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "newOwner",
+        "indexed": true
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "RegisterEvent",
+    "type": "event",
+    "signature": "RegisterEvent(address,uint256)",
+    "encoding": "0x4d509eaf411f241400f13f5abf136c29e58fc43af0f27f87a1c1c9767795d03f",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "addr"
+      },
+      {
+        "type": "uint256",
+        "name": "index"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "FinalizeEvent",
+    "type": "event",
+    "signature": "FinalizeEvent(uint256[],uint256,uint256)",
+    "encoding": "0x61ed07cde244eab019f88846ecbec7e89ca54396f1f2ee4d1a82785e4c8bbf1d",
+    "inputs": [
+      {
+        "type": "uint256[]",
+        "name": "maps",
+        "is_array": true
+      },
+      {
+        "type": "uint256",
+        "name": "payout"
+      },
+      {
+        "type": "uint256",
+        "name": "endedAt"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "WithdrawEvent",
+    "type": "event",
+    "signature": "WithdrawEvent(address,uint256)",
+    "encoding": "0x5dba113b49cfa7c90315e8e604e6b506f7abcb909b01dcb19ec39005086e68fc",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "addr"
+      },
+      {
+        "type": "uint256",
+        "name": "payout"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "CancelEvent",
+    "type": "event",
+    "signature": "CancelEvent(uint256)",
+    "encoding": "0xe933406ce445ea24d84ca4529e514adc8926e62cdc8b5a67c568c9fd578f1a8a",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "endedAt"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "ClearEvent",
+    "type": "event",
+    "signature": "ClearEvent(address,uint256)",
+    "encoding": "0x61355a34c3bc2e502a24eba7ad2fb0fd0d05c4f71de8cb041fbe39cd3649665e",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "addr"
+      },
+      {
+        "type": "uint256",
+        "name": "leftOver"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "UpdateParticipantLimit",
+    "type": "event",
+    "signature": "UpdateParticipantLimit(uint256)",
+    "encoding": "0xe7fc560b4d0182164d7320ccef844dcc3375441f095669f48dbd47915ebbde68",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "limit"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "owner",
+    "type": "function",
+    "constant": true,
+    "signature": "owner()",
+    "encoding": "0x8da5cb5b",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address",
+        "name": "ret_0"
+      }
+    ]
+  },
+  {
+    "name": "name",
+    "type": "function",
+    "constant": true,
+    "signature": "name()",
+    "encoding": "0x06fdde03",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "string",
+        "name": "memory"
+      }
+    ]
+  },
+  {
+    "name": "deposit",
+    "type": "function",
+    "constant": true,
+    "signature": "deposit()",
+    "encoding": "0xd0e30db0",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "ret_0"
+      }
+    ]
+  },
+  {
+    "name": "limitOfParticipants",
+    "type": "function",
+    "constant": true,
+    "signature": "limitOfParticipants()",
+    "encoding": "0x6d006ae8",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "ret_0"
+      }
+    ]
+  },
+  {
+    "name": "registered",
+    "type": "function",
+    "constant": true,
+    "signature": "registered()",
+    "encoding": "0x2de40ce3",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "ret_0"
+      }
+    ]
+  },
+  {
+    "name": "ended",
+    "type": "function",
+    "constant": true,
+    "signature": "ended()",
+    "encoding": "0x12fa6feb",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "ret_0"
+      }
+    ]
+  },
+  {
+    "name": "cancelled",
+    "type": "function",
+    "constant": true,
+    "signature": "cancelled()",
+    "encoding": "0x9a82a09a",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "ret_0"
+      }
+    ]
+  },
+  {
+    "name": "endedAt",
+    "type": "function",
+    "constant": true,
+    "signature": "endedAt()",
+    "encoding": "0x3d6a71e4",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "ret_0"
+      }
+    ]
+  },
+  {
+    "name": "totalAttended",
+    "type": "function",
+    "constant": true,
+    "signature": "totalAttended()",
+    "encoding": "0x7238f361",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "ret_0"
+      }
+    ]
+  },
+  {
+    "name": "coolingPeriod",
+    "type": "function",
+    "constant": true,
+    "signature": "coolingPeriod()",
+    "encoding": "0x9328beee",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "ret_0"
+      }
+    ]
+  },
+  {
+    "name": "payoutAmount",
+    "type": "function",
+    "constant": true,
+    "signature": "payoutAmount()",
+    "encoding": "0x6b46c8c3",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "ret_0"
+      }
+    ]
+  },
+  {
+    "name": "participants",
+    "type": "function",
+    "constant": true,
+    "signature": "participants(address)",
+    "encoding": "0x09e69ede",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "participant"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "index"
+      },
+      {
+        "type": "address",
+        "name": "payable addr"
+      },
+      {
+        "type": "bool",
+        "name": "paid"
+      }
+    ]
+  },
+  {
+    "name": "participantsIndex",
+    "type": "function",
+    "constant": true,
+    "signature": "participantsIndex(uint256)",
+    "encoding": "0x9b25cacb",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "val_0"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "address",
+        "name": "ret_0"
+      }
+    ]
+  },
+  {
+    "name": "transferOwnership",
+    "type": "function",
+    "signature": "transferOwnership(address)",
+    "encoding": "0xf2fde38b",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "payable newOwner"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "grant",
+    "type": "function",
+    "signature": "grant(address[])",
+    "encoding": "0x1e3c9352",
+    "inputs": [
+      {
+        "type": "address[]",
+        "name": "newAdmins",
+        "is_array": true
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "revoke",
+    "type": "function",
+    "signature": "revoke(address[])",
+    "encoding": "0x05f203d9",
+    "inputs": [
+      {
+        "type": "address[]",
+        "name": "oldAdmins",
+        "is_array": true
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "getAdmins",
+    "type": "function",
+    "constant": true,
+    "signature": "getAdmins()",
+    "encoding": "0x31ae450b",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address[]",
+        "name": "memory",
+        "is_array": true
+      }
+    ]
+  },
+  {
+    "name": "numOfAdmins",
+    "type": "function",
+    "constant": true,
+    "signature": "numOfAdmins()",
+    "encoding": "0x0191dc92",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "ret_0"
+      }
+    ]
+  },
+  {
+    "name": "isAdmin",
+    "type": "function",
+    "constant": true,
+    "signature": "isAdmin(address)",
+    "encoding": "0x24d7806c",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "admin"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "ret_0"
+      }
+    ]
+  },
+  {
+    "name": "register",
+    "type": "function",
+    "signature": "register()",
+    "encoding": "0x1aa3a008",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "withdraw",
+    "type": "function",
+    "signature": "withdraw()",
+    "encoding": "0x3ccfd60b",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "totalBalance",
+    "type": "function",
+    "constant": true,
+    "signature": "totalBalance()",
+    "encoding": "0xad7a672f",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "ret_0"
+      }
+    ]
+  },
+  {
+    "name": "isRegistered",
+    "type": "function",
+    "constant": true,
+    "signature": "isRegistered(address)",
+    "encoding": "0xc3c5a547",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_addr"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "ret_0"
+      }
+    ]
+  },
+  {
+    "name": "isAttended",
+    "type": "function",
+    "constant": true,
+    "signature": "isAttended(address)",
+    "encoding": "0xa07f3a56",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_addr"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "ret_0"
+      }
+    ]
+  },
+  {
+    "name": "isPaid",
+    "type": "function",
+    "constant": true,
+    "signature": "isPaid(address)",
+    "encoding": "0x6ded82f8",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "_addr"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "ret_0"
+      }
+    ]
+  },
+  {
+    "name": "cancel",
+    "type": "function",
+    "signature": "cancel()",
+    "encoding": "0xea8a1af0",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "clear",
+    "type": "function",
+    "signature": "clear()",
+    "encoding": "0x52efea6e",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "setLimitOfParticipants",
+    "type": "function",
+    "signature": "setLimitOfParticipants(uint256)",
+    "encoding": "0x9989a5ae",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_limitOfParticipants"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "changeName",
+    "type": "function",
+    "signature": "changeName(string)",
+    "encoding": "0x5353a2d8",
+    "inputs": [
+      {
+        "type": "string",
+        "name": "_name"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "changeDeposit",
+    "type": "function",
+    "signature": "changeDeposit(uint256)",
+    "encoding": "0xc2a2ce06",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "_deposit"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "finalize",
+    "type": "function",
+    "signature": "finalize(uint256[])",
+    "encoding": "0xe17e082b",
+    "inputs": [
+      {
+        "type": "uint256[]",
+        "name": "_maps",
+        "is_array": true
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "tokenAddress",
+    "type": "function",
+    "constant": true,
+    "signature": "tokenAddress()",
+    "encoding": "0x9d76ea58",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address",
+        "name": "ret_0"
+      }
+    ]
+  },
+  {
+    "name": "NewParty",
+    "type": "event",
+    "signature": "NewParty(address,address)",
+    "encoding": "0x57d380dbcddc47e0e592a9fd9ac9ab20c72572944143ef72b0e201536e0174f9",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "deployedAddress",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "deployer",
+        "indexed": true
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "deploy",
+    "type": "function",
+    "signature": "deploy(string,uint256,uint256,uint256,address)",
+    "encoding": "0x8acc1774",
+    "inputs": [
+      {
+        "type": "string",
+        "name": "_name"
+      },
+      {
+        "type": "uint256",
+        "name": "_deposit"
+      },
+      {
+        "type": "uint256",
+        "name": "_limitOfParticipants"
+      },
+      {
+        "type": "uint256",
+        "name": "_coolingPeriod"
+      },
+      {
+        "type": "address",
+        "name": "_tokenAddress"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "deploy",
+    "type": "function",
+    "signature": "deploy(string,uint256,uint256,uint256,address,address)",
+    "encoding": "0x2be72cd5",
+    "inputs": [
+      {
+        "type": "string",
+        "name": "_name"
+      },
+      {
+        "type": "uint256",
+        "name": "_deposit"
+      },
+      {
+        "type": "uint256",
+        "name": "_limitOfParticipants"
+      },
+      {
+        "type": "uint256",
+        "name": "_coolingPeriod"
+      },
+      {
+        "type": "address",
+        "name": "payable _ownerAddress"
+      },
+      {
+        "type": "address",
+        "name": "_tokenAddress"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "Conference",
+        "name": "c"
+      }
+    ]
+  },
+  {
+    "name": "destroy",
+    "type": "function",
+    "signature": "destroy()",
+    "encoding": "0x83197ef0",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "name": "destroyAndSend",
+    "type": "function",
+    "signature": "destroyAndSend(address)",
+    "encoding": "0xf5074f41",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "payable _recipient"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "totalBalance",
+    "type": "function",
+    "constant": true,
+    "signature": "totalBalance()",
+    "encoding": "0xad7a672f",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "ret_0"
+      }
+    ]
+  },
+  {
+    "name": "doWithdraw",
+    "type": "function",
+    "signature": "doWithdraw(address,uint256)",
+    "encoding": "0x3381114b",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "payable participant"
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "doDeposit",
+    "type": "function",
+    "signature": "doDeposit(address,uint256)",
+    "encoding": "0x65a31545",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "participant"
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "tokenAddress",
+    "type": "function",
+    "constant": true,
+    "signature": "tokenAddress()",
+    "encoding": "0x9d76ea58",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address",
+        "name": "ret_0"
+      }
+    ]
+  },
+  {
+    "name": "deploy",
+    "type": "function",
+    "signature": "deploy(string,uint256,uint256,uint256,address,address)",
+    "encoding": "0x2be72cd5",
+    "inputs": [
+      {
+        "type": "string",
+        "name": "_name"
+      },
+      {
+        "type": "uint256",
+        "name": "_deposit"
+      },
+      {
+        "type": "uint256",
+        "name": "_limitOfParticipants"
+      },
+      {
+        "type": "uint256",
+        "name": "_coolingPeriod"
+      },
+      {
+        "type": "address",
+        "name": "payable _ownerAddress"
+      },
+      {
+        "type": "address",
+        "name": "_tokenAddress"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "Conference",
+        "name": "c"
+      }
+    ]
+  },
+  {
+    "name": "totalBalance",
+    "type": "function",
+    "constant": true,
+    "signature": "totalBalance()",
+    "encoding": "0xad7a672f",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "ret_0"
+      }
+    ]
+  },
+  {
+    "name": "doWithdraw",
+    "type": "function",
+    "signature": "doWithdraw(address,uint256)",
+    "encoding": "0x3381114b",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "payable participant"
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "doDeposit",
+    "type": "function",
+    "signature": "doDeposit(address,uint256)",
+    "encoding": "0x65a31545",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "val_0"
+      },
+      {
+        "type": "uint256",
+        "name": "amount"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "tokenAddress",
+    "type": "function",
+    "constant": true,
+    "signature": "tokenAddress()",
+    "encoding": "0x9d76ea58",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address",
+        "name": "ret_0"
+      }
+    ]
+  },
+  {
+    "name": "deploy",
+    "type": "function",
+    "signature": "deploy(string,uint256,uint256,uint256,address,address)",
+    "encoding": "0x2be72cd5",
+    "inputs": [
+      {
+        "type": "string",
+        "name": "_name"
+      },
+      {
+        "type": "uint256",
+        "name": "_deposit"
+      },
+      {
+        "type": "uint256",
+        "name": "_limitOfParticipants"
+      },
+      {
+        "type": "uint256",
+        "name": "_coolingPeriod"
+      },
+      {
+        "type": "address",
+        "name": "payable _ownerAddress"
+      },
+      {
+        "type": "address",
+        "name": "val_0"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "Conference",
+        "name": "c"
+      }
+    ]
+  },
+  {
+    "name": "AdminGranted",
+    "type": "event",
+    "signature": "AdminGranted(address)",
+    "encoding": "0x1c4e23de8d72c94b22992bd4d7b6786b215ba876af214ff63e6a0ca38fc97af4",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "grantee",
+        "indexed": true
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "AdminRevoked",
+    "type": "event",
+    "signature": "AdminRevoked(address)",
+    "encoding": "0x631ff1c4e1a02c54b480a34b810e03bcee61fe38efcb243930a7f820914923e2",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "grantee",
+        "indexed": true
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "grant",
+    "type": "function",
+    "signature": "grant(address[])",
+    "encoding": "0x1e3c9352",
+    "inputs": [
+      {
+        "type": "address[]",
+        "name": "newAdmins",
+        "is_array": true
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "revoke",
+    "type": "function",
+    "signature": "revoke(address[])",
+    "encoding": "0x05f203d9",
+    "inputs": [
+      {
+        "type": "address[]",
+        "name": "oldAdmins",
+        "is_array": true
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "getAdmins",
+    "type": "function",
+    "constant": true,
+    "signature": "getAdmins()",
+    "encoding": "0x31ae450b",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address[]",
+        "name": "memory",
+        "is_array": true
+      }
+    ]
+  },
+  {
+    "name": "numOfAdmins",
+    "type": "function",
+    "constant": true,
+    "signature": "numOfAdmins()",
+    "encoding": "0x0191dc92",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "ret_0"
+      }
+    ]
+  },
+  {
+    "name": "isAdmin",
+    "type": "function",
+    "constant": true,
+    "signature": "isAdmin(address)",
+    "encoding": "0x24d7806c",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "admin"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "ret_0"
+      }
+    ]
+  },
+  {
+    "name": "setCompleted",
+    "type": "function",
+    "signature": "setCompleted(uint256)",
+    "encoding": "0xfdacd576",
+    "inputs": [
+      {
+        "type": "uint256",
+        "name": "completed"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "upgrade",
+    "type": "function",
+    "signature": "upgrade(address)",
+    "encoding": "0x0900f010",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "new_address"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "OwnershipTransferred",
+    "type": "event",
+    "signature": "OwnershipTransferred(address,address)",
+    "encoding": "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "previousOwner",
+        "indexed": true
+      },
+      {
+        "type": "address",
+        "name": "newOwner",
+        "indexed": true
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "transferOwnership",
+    "type": "function",
+    "signature": "transferOwnership(address)",
+    "encoding": "0xf2fde38b",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "payable newOwner"
+      }
+    ],
+    "outputs": []
+  }
+]

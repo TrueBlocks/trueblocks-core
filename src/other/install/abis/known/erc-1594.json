@@ -1,0 +1,249 @@
+[
+  {
+    "name": "transferWithData",
+    "type": "function",
+    "signature": "transferWithData(address,uint256,bytes)",
+    "encoding": "0x2535f762",
+    "inputs": [
+      {
+        "name": "_to",
+        "type": "address"
+      },
+      {
+        "name": "_value",
+        "type": "uint256"
+      },
+      {
+        "name": "_data",
+        "type": "bytes"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "transferFromWithData",
+    "type": "function",
+    "signature": "transferFromWithData(address,address,uint256,bytes)",
+    "encoding": "0xee532f31",
+    "inputs": [
+      {
+        "name": "_from",
+        "type": "address"
+      },
+      {
+        "name": "_to",
+        "type": "address"
+      },
+      {
+        "name": "_value",
+        "type": "uint256"
+      },
+      {
+        "name": "_data",
+        "type": "bytes"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "isIssuable",
+    "type": "function",
+    "constant": true,
+    "signature": "isIssuable()",
+    "encoding": "0x2f1cae85",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "issue",
+    "type": "function",
+    "signature": "issue(address,uint256,bytes)",
+    "encoding": "0xbb3acde9",
+    "inputs": [
+      {
+        "name": "_tokenHolder",
+        "type": "address"
+      },
+      {
+        "name": "_value",
+        "type": "uint256"
+      },
+      {
+        "name": "_data",
+        "type": "bytes"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "redeem",
+    "type": "function",
+    "signature": "redeem(uint256,bytes)",
+    "encoding": "0xe77c646d",
+    "inputs": [
+      {
+        "name": "_value",
+        "type": "uint256"
+      },
+      {
+        "name": "_data",
+        "type": "bytes"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "redeemFrom",
+    "type": "function",
+    "signature": "redeemFrom(address,uint256,bytes)",
+    "encoding": "0x9675193c",
+    "inputs": [
+      {
+        "name": "_tokenHolder",
+        "type": "address"
+      },
+      {
+        "name": "_value",
+        "type": "uint256"
+      },
+      {
+        "name": "_data",
+        "type": "bytes"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "canTransfer",
+    "type": "function",
+    "constant": true,
+    "signature": "canTransfer(address,uint256,bytes)",
+    "encoding": "0x1badb25c",
+    "inputs": [
+      {
+        "name": "_to",
+        "type": "address"
+      },
+      {
+        "name": "_value",
+        "type": "uint256"
+      },
+      {
+        "name": "_data",
+        "type": "bytes"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "bool"
+      },
+      {
+        "name": "ret_1",
+        "type": "byte"
+      },
+      {
+        "name": "ret_2",
+        "type": "bytes32"
+      }
+    ]
+  },
+  {
+    "name": "canTransferFrom",
+    "type": "function",
+    "constant": true,
+    "signature": "canTransferFrom(address,address,uint256,bytes)",
+    "encoding": "0x122eb575",
+    "inputs": [
+      {
+        "name": "_from",
+        "type": "address"
+      },
+      {
+        "name": "_to",
+        "type": "address"
+      },
+      {
+        "name": "_value",
+        "type": "uint256"
+      },
+      {
+        "name": "_data",
+        "type": "bytes"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "ret_0",
+        "type": "bool"
+      },
+      {
+        "name": "ret_1",
+        "type": "byte"
+      },
+      {
+        "name": "ret_2",
+        "type": "bytes32"
+      }
+    ]
+  },
+  {
+    "name": "Issued",
+    "type": "event",
+    "signature": "Issued(address,address,uint256,bytes)",
+    "encoding": "0x0e9905d62635f049c2f4e11678ebf9dc3d1f8c4a653e290759b772e47ba00d00",
+    "inputs": [
+      {
+        "indexed": true,
+        "name": "_operator",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "name": "_to",
+        "type": "address"
+      },
+      {
+        "name": "_value",
+        "type": "uint256"
+      },
+      {
+        "name": "_data",
+        "type": "bytes"
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "name": "Redeemed",
+    "type": "event",
+    "signature": "Redeemed(address,address,uint256,bytes)",
+    "encoding": "0xb7d0d6b60740753e9f16692a2f479472a1385aec2420fa43225b02f2ffa1afe7",
+    "inputs": [
+      {
+        "indexed": true,
+        "name": "_operator",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "name": "_from",
+        "type": "address"
+      },
+      {
+        "name": "_value",
+        "type": "uint256"
+      },
+      {
+        "name": "_data",
+        "type": "bytes"
+      }
+    ],
+    "outputs": []
+  }
+]
