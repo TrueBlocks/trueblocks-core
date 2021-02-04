@@ -265,9 +265,9 @@ bool COptions::parseArguments(string_q& command) {
 
         // Load as many ABI files as we have
         if (!appearances) {
-            abis.loadAbiKnown();
+            abis.loadAbisKnown(ABI_ALL);
             if (all_abis)
-                abis.loadAbisMonitors();
+                abis.loadAbisInCache();
         }
 
         // Try to articulate the monitored addresses
@@ -276,7 +276,7 @@ bool COptions::parseArguments(string_q& command) {
             // abis.loadAbiByAddress(monitor->address);
             if (isContractAt(monitor->address, latestBlock))
                 loadAbiAndCache(abis, monitor->address, false, errors);
-            // abis.loadAbiKnown();
+            // abis.loadAbisKnown(ABI_ALL);
         }
 
         if (expContext().exportFmt != JSON1 && expContext().exportFmt != API1) {

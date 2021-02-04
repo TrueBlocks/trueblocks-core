@@ -25,6 +25,10 @@ class CTransaction;
 class CLogEntry;
 class CTrace;
 typedef map<string, bool> CFunctionMap;
+#define ABI_KNOWN (1 << 1)
+#define ABI_TOKENS (1 << 2)
+#define ABI_STANDARDS (1 << 3)
+#define ABI_ALL (ABI_KNOWN | ABI_TOKENS | ABI_STANDARDS)
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
@@ -44,34 +48,17 @@ class CAbi : public CBaseNode {
     const CBaseNode* getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
-    CFunctionMap interfaceMap;
-    bool loadAndCacheAbiFolder(const string_q& sourcePath, const string_q& binPath);
-    bool loadAbiKnown(void);
-    bool loadAbisMonitors(void);
-    bool loadAbiByAddress(const address_t& addr);
-    bool loadAbiFromFile(const string_q& fileName, bool builtIn);
-    bool loadAbiFromString(const string_q& str, bool builtIn);
     bool articulateTransaction(CTransaction* p) const;
     bool articulateLog(CLogEntry* l) const;
     bool articulateTrace(CTrace* t) const;
     bool articulateOutputs(const string_q& encoding, const string_q& value, CFunction& ret) const;
-    size_t nFunctions(void) const {
-        size_t cnt = 0;
-        for (auto i : interfaces)
-            if (i.type == "function")
-                cnt++;
-        return cnt;
-    }
-    size_t nEvents(void) const {
-        size_t cnt = 0;
-        for (auto i : interfaces)
-            if (i.type == "event")
-                cnt++;
-        return cnt;
-    }
-    size_t nOther(void) const {
-        return interfaces.size() - nFunctions() - nEvents();
-    }
+    CFunctionMap interfaceMap;
+    bool loadAndCacheAbiFolder(const string_q& sourcePath, const string_q& binPath);
+    bool loadAbisKnown(int which);
+    bool loadAbisInCache(void);
+    bool loadAbiByAddress(const address_t& addr);
+    bool loadAbiFromFile(const string_q& fileName, bool builtIn);
+    bool loadAbiFromString(const string_q& str, bool builtIn);
     void sortInterfaces(void);
     void addInterface(const CFunction& func);
     // EXISTING_CODE

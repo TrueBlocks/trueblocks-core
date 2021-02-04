@@ -442,6 +442,29 @@ bool noteIndex(const string_q& path, void* data) {
 }
 
 //---------------------------------------------------------------------------
+static size_t nFunctions(const CFunctionArray& interfaces) {
+    size_t cnt = 0;
+    for (auto i : interfaces)
+        if (i.type == "function")
+            cnt++;
+    return cnt;
+}
+
+//---------------------------------------------------------------------------
+static size_t nEvents(const CFunctionArray& interfaces) {
+    size_t cnt = 0;
+    for (auto i : interfaces)
+        if (i.type == "event")
+            cnt++;
+    return cnt;
+}
+
+//---------------------------------------------------------------------------
+static size_t nOther(const CFunctionArray& interfaces) {
+    return interfaces.size() - nFunctions(interfaces) - nEvents(interfaces);
+}
+
+//---------------------------------------------------------------------------
 bool noteABI(const string_q& path, void* data) {
     if (contains(path, "/staging"))
         return !shouldQuit();
@@ -470,9 +493,9 @@ bool noteABI(const string_q& path, void* data) {
             CAbi abi;
             abi.loadAbiFromFile(path, false);
             abi.sortInterfaces();
-            abii.nFunctions = abi.nFunctions();
-            abii.nEvents = abi.nEvents();
-            abii.nOther = abi.nOther();
+            abii.nFunctions = nFunctions(abi.interfaces);
+            abii.nEvents = nEvents(abi.interfaces);
+            abii.nOther = nOther(abi.interfaces);
             abii.sizeInBytes = fileSize(path);
         }
         counter->abiArray->push_back(abii);

@@ -272,6 +272,6 @@ COptions::~COptions(void) {
 
 //--------------------------------------------------------------------------------
 void COptions::loadTokenAbis(void) {
-    standards.abi_spec.loadAbiFromFile(configPath("known_abis/token_abis.json"), true);
-    standards.abi_spec.loadAbiFromFile(configPath("known_abis/erc_721.json"), true);
+    standards.abi_spec.loadAbiFromFile(configPath("abis/known/token_abis.json"), true);
+    standards.abi_spec.loadAbiFromFile(configPath("abis/known/erc_721.json"), true);
 }

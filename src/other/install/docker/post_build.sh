@@ -19,7 +19,7 @@ mkdir /root/.quickBlocks/grabABI/docs
 mkdir /root/.quickBlocks/grabABI/parselib
 mkdir /root/.quickBlocks/ipfs-hashes
 mkdir /root/.quickBlocks/ipfs-hashes/data
-mkdir /root/.quickBlocks/known_abis
+mkdir /root/.quickBlocks/abis/known
 mkdir /root/.quickBlocks/makeClass
 mkdir /root/.quickBlocks/names
 

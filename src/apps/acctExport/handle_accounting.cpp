@@ -174,6 +174,7 @@ bool isTokenTopic(const topic_t& topic) {
         str_2_Topic("0xd4735d920b0f87494915f556dd9b54c8f309026070caea5c737245152564d266");
     return (topic == transferTopic || topic == ensTransferTopic || topic == approvalTopic);
 }
+
 void COptions::articulateAll(CTransaction& trans) {
     if (articulate) {
         abiMap[trans.to]++;

@@ -19,7 +19,10 @@ file(MAKE_DIRECTORY "${DEST_PATH}/names")
 file(MAKE_DIRECTORY "${DEST_PATH}/makeClass")
 file(MAKE_DIRECTORY "${DEST_PATH}/grabABI")
 file(MAKE_DIRECTORY "${DEST_PATH}/chifra")
-file(MAKE_DIRECTORY "${DEST_PATH}/known_abis")
+file(MAKE_DIRECTORY "${DEST_PATH}/abis")
+file(MAKE_DIRECTORY "${DEST_PATH}/abis/known")
+file(MAKE_DIRECTORY "${DEST_PATH}/abis/tokens")
+file(MAKE_DIRECTORY "${DEST_PATH}/abis/standards")
 file(MAKE_DIRECTORY "${DEST_PATH}/ipfs-hashes")
 
 #---------------------------------------------------------------
@@ -118,12 +121,22 @@ foreach(FILE ${TARGET_FILES} )
 endforeach( FILE )
 
 #---------------------------------------------------------------
-# known abis
+# abis
 #---------------------------------------------------------------
-message(STATUS "Copying known abis to ${DEST_PATH}/known_abis")
-file(GLOB TARGET_FILES "${SOURCE_PATH}/known_abis/*")
+message(STATUS "Copying known abis to ${DEST_PATH}/abis/known/")
+file(GLOB TARGET_FILES "${SOURCE_PATH}/abis/known/*")
 foreach(FILE ${TARGET_FILES} )
-	file(COPY "${FILE}" DESTINATION "${DEST_PATH}/known_abis")
+	file(COPY "${FILE}" DESTINATION "${DEST_PATH}/abis/known/")
+endforeach( FILE )
+message(STATUS "Copying token abis to ${DEST_PATH}/abis/tokens/")
+file(GLOB TARGET_FILES "${SOURCE_PATH}/abis/tokens/*")
+foreach(FILE ${TARGET_FILES} )
+	file(COPY "${FILE}" DESTINATION "${DEST_PATH}/abis/tokens")
+endforeach( FILE )
+message(STATUS "Copying standard abis to ${DEST_PATH}/abis/standards/")
+file(GLOB TARGET_FILES "${SOURCE_PATH}/abis/standards/*")
+foreach(FILE ${TARGET_FILES} )
+	file(COPY "${FILE}" DESTINATION "${DEST_PATH}/abis/standards")
 endforeach( FILE )
 
 #---------------------------------------------------------------

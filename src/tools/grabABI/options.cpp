@@ -166,13 +166,13 @@ bool COptions::parseArguments(string_q& command) {
 
     if (known) {
         CAbi abi;
-        abi.loadAbiKnown();
+        abi.loadAbisKnown(ABI_ALL);
         abiList.push_back(abi);
     }
 
     if (monitored) {
         CAbi abi;
-        abi.loadAbisMonitors();
+        abi.loadAbisInCache();
         abi.sortInterfaces();
         abiList.push_back(abi);
     }

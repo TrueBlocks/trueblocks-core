@@ -75,7 +75,7 @@ bool COptions::parseArguments(string_q& command) {
         manageFields("CFunction:outputs", true);        // show
         manageFields("CTransaction:input", true);       // show
         manageFields("CLogEntry:topics", true);         // show
-        abi_spec.loadAbiKnown();
+        abi_spec.loadAbisKnown(ABI_ALL);
     }
 
     // Not sure why this is here to be honest, perhaps only to make test cases pass. The test cases could be fixed...

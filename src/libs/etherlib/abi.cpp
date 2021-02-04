@@ -367,12 +367,12 @@ bool CAbi::loadAndCacheAbiFolder(const string_q& sourcePath, const string_q& bin
 }
 
 //---------------------------------------------------------------------------
-bool CAbi::loadAbiKnown(void) {
-    return loadAndCacheAbiFolder(configPath("known_abis/"), getAbiPath("known.bin"));
+bool CAbi::loadAbisKnown(int which) {
+    return loadAndCacheAbiFolder(configPath("abis/known/"), getAbiPath("known.bin"));
 }
 
 //---------------------------------------------------------------------------
-bool CAbi::loadAbisMonitors(void) {
+bool CAbi::loadAbisInCache(void) {
     return loadAndCacheAbiFolder(getCachePath("abis/"), getAbiPath("monitored.bin"));
 }
 
@@ -408,7 +408,7 @@ bool CAbi::loadAbiFromFile(const string_q& fileName, bool builtIn) {
     bool ret = loadAbiFromString(contents, builtIn);
     if (ret) {
         string_q addr = substitute(
-            substitute(substitute(fileName, configPath("known_abis/"), ""), getCachePath("abis/"), ""), ".json", "");
+            substitute(substitute(fileName, configPath("abis/known/"), ""), getCachePath("abis/"), ""), ".json", "");
         for (auto i = interfaces.begin(); i != interfaces.end(); i++)
             i->address = addr;
         sortInterfaces();
