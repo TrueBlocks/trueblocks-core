@@ -1,7 +1,5 @@
 [
-
-
-    {
+  {
     "name": "canImplementInterfaceForAddress",
     "type": "function",
     "constant": true,
@@ -24,8 +22,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "InterfaceImplementerSet",
     "type": "event",
     "signature": "InterfaceImplementerSet(address,bytes32,address)",
@@ -49,8 +46,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "ManagerChanged",
     "type": "event",
     "signature": "ManagerChanged(address,address)",
@@ -69,8 +65,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "getInterfaceImplementer",
     "type": "function",
     "constant": true,
@@ -93,8 +88,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "setInterfaceImplementer",
     "type": "function",
     "signature": "setInterfaceImplementer(address,bytes32,address)",
@@ -115,8 +109,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "setManager",
     "type": "function",
     "signature": "setManager(address,address)",
@@ -133,8 +126,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "getManager",
     "type": "function",
     "constant": true,
@@ -153,8 +145,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "interfaceHash",
     "type": "function",
     "signature": "interfaceHash(string)",
@@ -172,8 +163,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "updateERC165Cache",
     "type": "function",
     "signature": "updateERC165Cache(address,bytes4)",
@@ -190,8 +180,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "implementsERC165Interface",
     "type": "function",
     "constant": true,
@@ -214,8 +203,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "implementsERC165InterfaceNoCache",
     "type": "function",
     "constant": true,
@@ -238,8 +226,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "isERC165Interface",
     "type": "function",
     "signature": "isERC165Interface(bytes32)",
@@ -257,8 +244,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "noThrowCall",
     "type": "function",
     "constant": true,

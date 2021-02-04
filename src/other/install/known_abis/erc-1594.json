@@ -1,7 +1,5 @@
 [
-
-
-    {
+  {
     "name": "transferWithData",
     "type": "function",
     "signature": "transferWithData(address,uint256,bytes)",
@@ -22,8 +20,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "transferFromWithData",
     "type": "function",
     "signature": "transferFromWithData(address,address,uint256,bytes)",
@@ -48,8 +45,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "isIssuable",
     "type": "function",
     "constant": true,
@@ -63,8 +59,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "issue",
     "type": "function",
     "signature": "issue(address,uint256,bytes)",
@@ -85,8 +80,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "redeem",
     "type": "function",
     "signature": "redeem(uint256,bytes)",
@@ -103,8 +97,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "redeemFrom",
     "type": "function",
     "signature": "redeemFrom(address,uint256,bytes)",
@@ -125,8 +118,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "canTransfer",
     "type": "function",
     "constant": true,
@@ -161,8 +153,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "canTransferFrom",
     "type": "function",
     "constant": true,
@@ -201,8 +192,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "Issued",
     "type": "event",
     "signature": "Issued(address,address,uint256,bytes)",
@@ -229,8 +219,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "Redeemed",
     "type": "event",
     "signature": "Redeemed(address,address,uint256,bytes)",

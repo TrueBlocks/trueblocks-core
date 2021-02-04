@@ -1,7 +1,5 @@
 [
-
-
-    {
+  {
     "name": "supportsInterface",
     "type": "function",
     "constant": true,

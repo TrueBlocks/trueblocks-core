@@ -1,7 +1,5 @@
 [
-
-
-    {
+  {
     "name": "Transfer",
     "type": "event",
     "signature": "Transfer(address,address,uint256)",
@@ -25,8 +23,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "Approval",
     "type": "event",
     "signature": "Approval(address,address,uint256)",
@@ -50,8 +47,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "ApprovalForAll",
     "type": "event",
     "signature": "ApprovalForAll(address,address,bool)",
@@ -74,8 +70,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "balanceOf",
     "type": "function",
     "constant": true,
@@ -94,8 +89,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "ownerOf",
     "type": "function",
     "constant": true,
@@ -114,8 +108,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "safeTransferFrom",
     "type": "function",
     "signature": "safeTransferFrom(address,address,uint256,bytes)",
@@ -140,8 +133,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "safeTransferFrom",
     "type": "function",
     "signature": "safeTransferFrom(address,address,uint256)",
@@ -162,8 +154,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "transferFrom",
     "type": "function",
     "signature": "transferFrom(address,address,uint256)",
@@ -184,8 +175,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "approve",
     "type": "function",
     "signature": "approve(address,uint256)",
@@ -202,8 +192,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "setApprovalForAll",
     "type": "function",
     "signature": "setApprovalForAll(address,bool)",
@@ -220,8 +209,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "getApproved",
     "type": "function",
     "constant": true,
@@ -240,8 +228,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "isApprovedForAll",
     "type": "function",
     "constant": true,
@@ -264,8 +251,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "onERC721Received",
     "type": "function",
     "signature": "onERC721Received(address,address,uint256,bytes)",
@@ -295,8 +281,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "name",
     "type": "function",
     "constant": true,
@@ -310,8 +295,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "symbol",
     "type": "function",
     "constant": true,
@@ -325,8 +309,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "tokenURI",
     "type": "function",
     "constant": true,

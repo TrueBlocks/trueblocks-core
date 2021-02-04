@@ -1,7 +1,5 @@
 [
-
-
-    {
+  {
     "name": "name",
     "type": "function",
     "constant": true,
@@ -15,8 +13,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "symbol",
     "type": "function",
     "constant": true,
@@ -30,8 +27,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "totalSupply",
     "type": "function",
     "constant": true,
@@ -45,8 +41,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "balanceOf",
     "type": "function",
     "constant": true,
@@ -65,8 +60,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "granularity",
     "type": "function",
     "constant": true,
@@ -80,8 +74,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "defaultOperators",
     "type": "function",
     "constant": true,
@@ -96,8 +89,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "isOperatorFor",
     "type": "function",
     "constant": true,
@@ -120,8 +112,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "authorizeOperator",
     "type": "function",
     "signature": "authorizeOperator(address)",
@@ -134,8 +125,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "revokeOperator",
     "type": "function",
     "signature": "revokeOperator(address)",
@@ -148,8 +138,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "send",
     "type": "function",
     "signature": "send(address,uint256,bytes)",
@@ -170,8 +159,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "operatorSend",
     "type": "function",
     "signature": "operatorSend(address,address,uint256,bytes,bytes)",
@@ -200,8 +188,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "burn",
     "type": "function",
     "signature": "burn(uint256,bytes)",
@@ -218,8 +205,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "operatorBurn",
     "type": "function",
     "signature": "operatorBurn(address,uint256,bytes,bytes)",
@@ -244,8 +230,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "Sent",
     "type": "event",
     "signature": "Sent(address,address,address,uint256,bytes,bytes)",
@@ -281,8 +266,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "Minted",
     "type": "event",
     "signature": "Minted(address,address,uint256,bytes,bytes)",
@@ -313,8 +297,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "Burned",
     "type": "event",
     "signature": "Burned(address,address,uint256,bytes,bytes)",
@@ -345,8 +328,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "AuthorizedOperator",
     "type": "event",
     "signature": "AuthorizedOperator(address,address)",
@@ -365,8 +347,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "RevokedOperator",
     "type": "event",
     "signature": "RevokedOperator(address,address)",

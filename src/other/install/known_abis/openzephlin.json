@@ -1,7 +1,5 @@
 [
-
-
-    {
+  {
     "name": "mintInternal",
     "type": "function",
     "signature": "mintInternal(address,uint256,bytes,bytes)",
@@ -25,10 +23,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "approveInternal",
     "type": "function",
     "signature": "approveInternal(address,address,uint256)",
@@ -48,10 +44,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "mint",
     "type": "function",
     "signature": "mint(address,uint256)",
@@ -67,10 +61,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "isContract",
     "type": "function",
     "constant": true,
@@ -88,10 +80,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "sendValue",
     "type": "function",
     "signature": "sendValue(address,uint256)",
@@ -107,20 +97,16 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "receive",
     "type": "function",
     "signature": "receive()",
     "encoding": "0xa3e76c0f",
     "inputs": [],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "mul",
     "type": "function",
     "signature": "mul(uint256,uint256)",
@@ -141,10 +127,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "div",
     "type": "function",
     "signature": "div(uint256,uint256)",
@@ -165,10 +149,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "sub",
     "type": "function",
     "signature": "sub(uint256,uint256)",
@@ -189,10 +171,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "add",
     "type": "function",
     "signature": "add(uint256,uint256)",
@@ -213,10 +193,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "mod",
     "type": "function",
     "signature": "mod(uint256,uint256)",
@@ -237,30 +215,24 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "MockFunctionCalled",
     "type": "event",
     "signature": "MockFunctionCalled()",
     "encoding": "0x52c66ed6ec9ca819cba26fe2b2650059270d8981b295af300187a964f54a8c23",
     "inputs": [],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "mockFunction",
     "type": "function",
     "signature": "mockFunction()",
     "encoding": "0x3e6fec04",
     "inputs": [],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "callSender",
     "type": "function",
     "signature": "callSender(bytes4)",
@@ -272,10 +244,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "setAcceptEther",
     "type": "function",
     "signature": "setAcceptEther(bool)",
@@ -287,20 +257,16 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "receive",
     "type": "function",
     "signature": "receive()",
     "encoding": "0xa3e76c0f",
     "inputs": [],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "deploy",
     "type": "function",
     "signature": "deploy(uint256,bytes32,bytes)",
@@ -320,10 +286,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "deployERC1820Implementer",
     "type": "function",
     "signature": "deployERC1820Implementer(uint256,bytes32)",
@@ -339,10 +303,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "computeAddress",
     "type": "function",
     "constant": true,
@@ -364,10 +326,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "computeAddressWithDeployer",
     "type": "function",
     "signature": "computeAddressWithDeployer(bytes32,bytes32,address)",
@@ -392,40 +352,32 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "receive",
     "type": "function",
     "signature": "receive()",
     "encoding": "0xa3e76c0f",
     "inputs": [],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "pause",
     "type": "function",
     "signature": "pause()",
     "encoding": "0x8456cb59",
     "inputs": [],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "unpause",
     "type": "function",
     "signature": "unpause()",
     "encoding": "0x3f4ba83a",
     "inputs": [],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "mint",
     "type": "function",
     "signature": "mint(address,uint256)",
@@ -441,10 +393,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "burn",
     "type": "function",
     "signature": "burn(address,uint256)",
@@ -460,10 +410,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "findUpperBound",
     "type": "function",
     "constant": true,
@@ -481,10 +429,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "mul",
     "type": "function",
     "signature": "mul(int256,int256)",
@@ -505,10 +451,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "div",
     "type": "function",
     "signature": "div(int256,int256)",
@@ -529,10 +473,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "sub",
     "type": "function",
     "signature": "sub(int256,int256)",
@@ -553,10 +495,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "add",
     "type": "function",
     "signature": "add(int256,int256)",
@@ -577,10 +517,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "registerInterface",
     "type": "function",
     "signature": "registerInterface(bytes4)",
@@ -592,10 +530,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "recover",
     "type": "function",
     "signature": "recover(bytes32,bytes)",
@@ -616,10 +552,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "toEthSignedMessageHash",
     "type": "function",
     "signature": "toEthSignedMessageHash(bytes32)",
@@ -636,20 +570,16 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "snapshot",
     "type": "function",
     "signature": "snapshot()",
     "encoding": "0x9711715a",
     "inputs": [],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "mint",
     "type": "function",
     "signature": "mint(address,uint256)",
@@ -665,10 +595,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "burn",
     "type": "function",
     "signature": "burn(address,uint256)",
@@ -684,10 +612,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "current",
     "type": "function",
     "constant": true,
@@ -700,40 +626,32 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "increment",
     "type": "function",
     "signature": "increment()",
     "encoding": "0xd09de08a",
     "inputs": [],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "decrement",
     "type": "function",
     "signature": "decrement()",
     "encoding": "0x2baeceb7",
     "inputs": [],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "callback",
     "type": "function",
     "signature": "callback()",
     "encoding": "0x083b2732",
     "inputs": [],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "countLocalRecursive",
     "type": "function",
     "signature": "countLocalRecursive(uint256)",
@@ -745,10 +663,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "countThisRecursive",
     "type": "function",
     "signature": "countThisRecursive(uint256)",
@@ -760,10 +676,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "countAndCall",
     "type": "function",
     "signature": "countAndCall(ReentrancyAttack)",
@@ -775,20 +689,16 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "_count",
     "type": "function",
     "signature": "_count()",
     "encoding": "0x4e1b0ae9",
     "inputs": [],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "mint",
     "type": "function",
     "signature": "mint(address,uint256)",
@@ -804,10 +714,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "burn",
     "type": "function",
     "signature": "burn(address,uint256)",
@@ -823,10 +731,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "transferInternal",
     "type": "function",
     "signature": "transferInternal(address,address,uint256)",
@@ -846,10 +752,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "approveInternal",
     "type": "function",
     "signature": "approveInternal(address,address,uint256)",
@@ -869,10 +773,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "verify",
     "type": "function",
     "signature": "verify(bytes32[],bytes32,bytes32)",
@@ -898,10 +800,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "mint",
     "type": "function",
     "signature": "mint(address,uint256)",
@@ -917,10 +817,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "exists",
     "type": "function",
     "constant": true,
@@ -938,10 +836,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "setTokenURI",
     "type": "function",
     "signature": "setTokenURI(uint256,string)",
@@ -957,10 +853,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "setBaseURI",
     "type": "function",
     "signature": "setBaseURI(string)",
@@ -972,10 +866,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "mint",
     "type": "function",
     "signature": "mint(address,uint256)",
@@ -991,10 +883,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "safeMint",
     "type": "function",
     "signature": "safeMint(address,uint256)",
@@ -1010,10 +900,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "safeMint",
     "type": "function",
     "signature": "safeMint(address,uint256,bytes)",
@@ -1033,10 +921,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "burn",
     "type": "function",
     "signature": "burn(uint256)",
@@ -1048,10 +934,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "fromUint256",
     "type": "function",
     "signature": "fromUint256(uint256)",
@@ -1068,10 +952,8 @@
         "name": "memory"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "callTransfer",
     "type": "function",
     "signature": "callTransfer(address,uint256)",
@@ -1087,10 +969,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "OperationResult",
     "type": "event",
     "signature": "OperationResult(bool)",
@@ -1102,10 +982,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "contains",
     "type": "function",
     "constant": true,
@@ -1123,10 +1001,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "add",
     "type": "function",
     "signature": "add(address)",
@@ -1138,10 +1014,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "remove",
     "type": "function",
     "signature": "remove(address)",
@@ -1153,10 +1027,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "length",
     "type": "function",
     "constant": true,
@@ -1169,10 +1041,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "at",
     "type": "function",
     "constant": true,
@@ -1190,10 +1060,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "toUint256",
     "type": "function",
     "signature": "toUint256(int256)",
@@ -1210,10 +1078,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "toInt256",
     "type": "function",
     "signature": "toInt256(uint256)",
@@ -1230,10 +1096,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "toUint128",
     "type": "function",
     "signature": "toUint128(uint256)",
@@ -1250,10 +1114,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "toUint64",
     "type": "function",
     "signature": "toUint64(uint256)",
@@ -1270,10 +1132,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "toUint32",
     "type": "function",
     "signature": "toUint32(uint256)",
@@ -1290,10 +1150,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "toUint16",
     "type": "function",
     "signature": "toUint16(uint256)",
@@ -1310,10 +1168,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "toUint8",
     "type": "function",
     "signature": "toUint8(uint256)",
@@ -1330,10 +1186,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "mint",
     "type": "function",
     "signature": "mint(uint256)",
@@ -1345,10 +1199,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "_msgSender",
     "type": "function",
     "constant": true,
@@ -1356,10 +1208,8 @@
     "encoding": "0x119df25f",
     "inputs": [],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "_msgData",
     "type": "function",
     "constant": true,
@@ -1367,10 +1217,8 @@
     "encoding": "0x8b49d47e",
     "inputs": [],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "mint",
     "type": "function",
     "signature": "mint(address,uint256)",
@@ -1386,10 +1234,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "burn",
     "type": "function",
     "signature": "burn(uint256)",
@@ -1401,10 +1247,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "exists",
     "type": "function",
     "constant": true,
@@ -1422,30 +1266,24 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "pause",
     "type": "function",
     "signature": "pause()",
     "encoding": "0x8456cb59",
     "inputs": [],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "unpause",
     "type": "function",
     "signature": "unpause()",
     "encoding": "0x3f4ba83a",
     "inputs": [],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "setRoleAdmin",
     "type": "function",
     "signature": "setRoleAdmin(bytes32,bytes32)",
@@ -1461,10 +1299,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "supportsInterface",
     "type": "function",
     "constant": true,
@@ -1482,10 +1318,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "_registerInterface",
     "type": "function",
     "signature": "_registerInterface(bytes4)",
@@ -1497,10 +1331,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "OperationResult",
     "type": "event",
     "signature": "OperationResult(bool)",
@@ -1512,10 +1344,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "contains",
     "type": "function",
     "constant": true,
@@ -1533,10 +1363,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "set",
     "type": "function",
     "signature": "set(uint256,address)",
@@ -1552,10 +1380,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "remove",
     "type": "function",
     "signature": "remove(uint256)",
@@ -1567,10 +1393,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "length",
     "type": "function",
     "constant": true,
@@ -1583,10 +1407,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "at",
     "type": "function",
     "constant": true,
@@ -1608,10 +1430,8 @@
         "name": "value"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "get",
     "type": "function",
     "constant": true,
@@ -1629,10 +1449,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "Sender",
     "type": "event",
     "signature": "Sender(address)",
@@ -1644,20 +1462,16 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "msgSender",
     "type": "function",
     "signature": "msgSender()",
     "encoding": "0xd737d0c7",
     "inputs": [],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "Data",
     "type": "event",
     "signature": "Data(bytes,uint256,string)",
@@ -1677,10 +1491,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "msgData",
     "type": "function",
     "signature": "msgData(uint256,string)",
@@ -1696,10 +1508,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "callSender",
     "type": "function",
     "signature": "callSender(ContextMock)",
@@ -1711,10 +1521,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "callData",
     "type": "function",
     "signature": "callData(ContextMock,uint256,string)",
@@ -1734,10 +1542,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "TokensToSendCalled",
     "type": "event",
     "signature": "TokensToSendCalled(address,address,address,uint256,bytes,bytes,address,uint256,uint256)",
@@ -1781,10 +1587,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "TokensReceivedCalled",
     "type": "event",
     "signature": "TokensReceivedCalled(address,address,address,uint256,bytes,bytes,address,uint256,uint256)",
@@ -1828,10 +1632,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "tokensToSend",
     "type": "function",
     "signature": "tokensToSend(address,address,address,uint256,bytes,bytes)",
@@ -1863,10 +1665,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "tokensReceived",
     "type": "function",
     "signature": "tokensReceived(address,address,address,uint256,bytes,bytes)",
@@ -1898,10 +1698,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "senderFor",
     "type": "function",
     "signature": "senderFor(address)",
@@ -1913,10 +1711,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "registerSender",
     "type": "function",
     "signature": "registerSender(address)",
@@ -1928,10 +1724,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "recipientFor",
     "type": "function",
     "signature": "recipientFor(address)",
@@ -1943,10 +1737,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "registerRecipient",
     "type": "function",
     "signature": "registerRecipient(address)",
@@ -1958,10 +1750,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "setShouldRevertSend",
     "type": "function",
     "signature": "setShouldRevertSend(bool)",
@@ -1973,10 +1763,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "setShouldRevertReceive",
     "type": "function",
     "signature": "setShouldRevertReceive(bool)",
@@ -1988,10 +1776,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "send",
     "type": "function",
     "signature": "send(IERC777,address,uint256,bytes)",
@@ -2015,10 +1801,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "burn",
     "type": "function",
     "signature": "burn(IERC777,uint256,bytes)",
@@ -2038,10 +1822,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "withdrawDeposits",
     "type": "function",
     "signature": "withdrawDeposits(uint256,address)",
@@ -2057,10 +1839,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "acceptRelayedCall",
     "type": "function",
     "constant": true,
@@ -2114,10 +1894,8 @@
         "name": "memory"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "_preRelayedCall",
     "type": "function",
     "signature": "_preRelayedCall(bytes)",
@@ -2134,10 +1912,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "_postRelayedCall",
     "type": "function",
     "signature": "_postRelayedCall(bytes,bool,uint256,bytes32)",
@@ -2161,10 +1937,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "upgradeRelayHub",
     "type": "function",
     "signature": "upgradeRelayHub(address)",
@@ -2176,10 +1950,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "_msgSender",
     "type": "function",
     "constant": true,
@@ -2187,10 +1959,8 @@
     "encoding": "0x119df25f",
     "inputs": [],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "_msgData",
     "type": "function",
     "constant": true,
@@ -2198,10 +1968,8 @@
     "encoding": "0x8b49d47e",
     "inputs": [],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "setAllowed",
     "type": "function",
     "signature": "setAllowed(address,bool)",
@@ -2217,10 +1985,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "withdrawalAllowed",
     "type": "function",
     "constant": true,
@@ -2238,10 +2004,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "supportsERC165",
     "type": "function",
     "constant": true,
@@ -2259,10 +2023,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "supportsInterface",
     "type": "function",
     "constant": true,
@@ -2284,10 +2046,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "supportsAllInterfaces",
     "type": "function",
     "constant": true,
@@ -2310,10 +2070,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "registerInterfaceForAddress",
     "type": "function",
     "signature": "registerInterfaceForAddress(bytes32,address)",
@@ -2329,50 +2087,40 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "normalProcess",
     "type": "function",
     "signature": "normalProcess()",
     "encoding": "0xe7651d7a",
     "inputs": [],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "drasticMeasure",
     "type": "function",
     "signature": "drasticMeasure()",
     "encoding": "0x9958f045",
     "inputs": [],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "pause",
     "type": "function",
     "signature": "pause()",
     "encoding": "0x8456cb59",
     "inputs": [],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "unpause",
     "type": "function",
     "signature": "unpause()",
     "encoding": "0x3f4ba83a",
     "inputs": [],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "transfer",
     "type": "function",
     "signature": "transfer(address,uint256)",
@@ -2393,10 +2141,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "transferFrom",
     "type": "function",
     "signature": "transferFrom(address,address,uint256)",
@@ -2421,10 +2167,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "approve",
     "type": "function",
     "signature": "approve(address,uint256)",
@@ -2445,10 +2189,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "allowance",
     "type": "function",
     "constant": true,
@@ -2470,10 +2212,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "transfer",
     "type": "function",
     "signature": "transfer(address,uint256)",
@@ -2494,10 +2234,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "transferFrom",
     "type": "function",
     "signature": "transferFrom(address,address,uint256)",
@@ -2522,10 +2260,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "approve",
     "type": "function",
     "signature": "approve(address,uint256)",
@@ -2546,10 +2282,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "setAllowance",
     "type": "function",
     "signature": "setAllowance(uint256)",
@@ -2561,10 +2295,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "allowance",
     "type": "function",
     "constant": true,
@@ -2586,10 +2318,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "transfer",
     "type": "function",
     "signature": "transfer(address,uint256)",
@@ -2605,10 +2335,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "transferFrom",
     "type": "function",
     "signature": "transferFrom(address,address,uint256)",
@@ -2628,10 +2356,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "approve",
     "type": "function",
     "signature": "approve(address,uint256)",
@@ -2647,10 +2373,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "setAllowance",
     "type": "function",
     "signature": "setAllowance(uint256)",
@@ -2662,10 +2386,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "allowance",
     "type": "function",
     "constant": true,
@@ -2687,30 +2409,24 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "transfer",
     "type": "function",
     "signature": "transfer()",
     "encoding": "0x8a4068dd",
     "inputs": [],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "transferFrom",
     "type": "function",
     "signature": "transferFrom()",
     "encoding": "0x811c34d3",
     "inputs": [],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "approve",
     "type": "function",
     "signature": "approve(uint256)",
@@ -2722,10 +2438,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "increaseAllowance",
     "type": "function",
     "signature": "increaseAllowance(uint256)",
@@ -2737,10 +2451,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "decreaseAllowance",
     "type": "function",
     "signature": "decreaseAllowance(uint256)",
@@ -2752,10 +2464,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "setAllowance",
     "type": "function",
     "signature": "setAllowance(uint256)",
@@ -2767,10 +2477,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "allowance",
     "type": "function",
     "constant": true,
@@ -2783,10 +2491,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "Received",
     "type": "event",
     "signature": "Received(address,address,uint256,bytes,uint256)",
@@ -2814,10 +2520,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "onERC721Received",
     "type": "function",
     "signature": "onERC721Received(address,address,uint256,bytes)",
@@ -2846,10 +2550,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "max",
     "type": "function",
     "signature": "max(uint256,uint256)",
@@ -2870,10 +2572,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "min",
     "type": "function",
     "signature": "min(uint256,uint256)",
@@ -2894,10 +2594,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "average",
     "type": "function",
     "signature": "average(uint256,uint256)",
@@ -2918,10 +2616,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "mint",
     "type": "function",
     "signature": "mint(address,uint256)",
@@ -2937,10 +2633,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "MockFunctionCalled",
     "type": "event",
     "signature": "MockFunctionCalled(uint256)",
@@ -2952,20 +2646,16 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "mockFunction",
     "type": "function",
     "signature": "mockFunction()",
     "encoding": "0x3e6fec04",
     "inputs": [],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "totalSupply",
     "type": "function",
     "constant": true,
@@ -2978,10 +2668,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "balanceOf",
     "type": "function",
     "constant": true,
@@ -2999,10 +2687,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "transfer",
     "type": "function",
     "signature": "transfer(address,uint256)",
@@ -3023,10 +2709,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "allowance",
     "type": "function",
     "constant": true,
@@ -3048,10 +2732,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "approve",
     "type": "function",
     "signature": "approve(address,uint256)",
@@ -3072,10 +2754,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "transferFrom",
     "type": "function",
     "signature": "transferFrom(address,address,uint256)",
@@ -3100,10 +2780,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "Transfer",
     "type": "event",
     "signature": "Transfer(address,address,uint256)",
@@ -3125,10 +2803,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "Approval",
     "type": "event",
     "signature": "Approval(address,address,uint256)",
@@ -3150,10 +2826,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "token",
     "type": "function",
     "constant": true,
@@ -3166,10 +2840,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "beneficiary",
     "type": "function",
     "constant": true,
@@ -3182,10 +2854,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "releaseTime",
     "type": "function",
     "constant": true,
@@ -3198,20 +2868,16 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "release",
     "type": "function",
     "signature": "release()",
     "encoding": "0x86d1a69f",
     "inputs": [],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "name",
     "type": "function",
     "constant": true,
@@ -3224,10 +2890,8 @@
         "name": "memory"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "symbol",
     "type": "function",
     "constant": true,
@@ -3240,10 +2904,8 @@
         "name": "memory"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "decimals",
     "type": "function",
     "constant": true,
@@ -3256,10 +2918,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "totalSupply",
     "type": "function",
     "constant": true,
@@ -3272,10 +2932,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "balanceOf",
     "type": "function",
     "constant": true,
@@ -3293,10 +2951,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "transfer",
     "type": "function",
     "signature": "transfer(address,uint256)",
@@ -3317,10 +2973,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "allowance",
     "type": "function",
     "constant": true,
@@ -3342,10 +2996,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "approve",
     "type": "function",
     "signature": "approve(address,uint256)",
@@ -3366,10 +3018,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "transferFrom",
     "type": "function",
     "signature": "transferFrom(address,address,uint256)",
@@ -3394,10 +3044,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "increaseAllowance",
     "type": "function",
     "signature": "increaseAllowance(address,uint256)",
@@ -3418,10 +3066,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "decreaseAllowance",
     "type": "function",
     "signature": "decreaseAllowance(address,uint256)",
@@ -3442,10 +3088,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "_transfer",
     "type": "function",
     "signature": "_transfer(address,address,uint256)",
@@ -3465,10 +3109,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "_mint",
     "type": "function",
     "signature": "_mint(address,uint256)",
@@ -3484,10 +3126,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "_burn",
     "type": "function",
     "signature": "_burn(address,uint256)",
@@ -3503,10 +3143,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "_approve",
     "type": "function",
     "signature": "_approve(address,address,uint256)",
@@ -3526,10 +3164,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "_setupDecimals",
     "type": "function",
     "signature": "_setupDecimals(uint8)",
@@ -3541,10 +3177,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "_beforeTokenTransfer",
     "type": "function",
     "signature": "_beforeTokenTransfer(address,address,uint256)",
@@ -3564,10 +3198,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "burn",
     "type": "function",
     "signature": "burn(uint256)",
@@ -3579,10 +3211,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "burnFrom",
     "type": "function",
     "signature": "burnFrom(address,uint256)",
@@ -3598,10 +3228,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "safeTransfer",
     "type": "function",
     "signature": "safeTransfer(IERC20,address,uint256)",
@@ -3621,10 +3249,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "safeTransferFrom",
     "type": "function",
     "signature": "safeTransferFrom(IERC20,address,address,uint256)",
@@ -3648,10 +3274,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "safeApprove",
     "type": "function",
     "signature": "safeApprove(IERC20,address,uint256)",
@@ -3671,10 +3295,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "safeIncreaseAllowance",
     "type": "function",
     "signature": "safeIncreaseAllowance(IERC20,address,uint256)",
@@ -3694,10 +3316,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "safeDecreaseAllowance",
     "type": "function",
     "signature": "safeDecreaseAllowance(IERC20,address,uint256)",
@@ -3717,10 +3337,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "_callOptionalReturn",
     "type": "function",
     "signature": "_callOptionalReturn(IERC20,bytes)",
@@ -3736,10 +3354,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "_beforeTokenTransfer",
     "type": "function",
     "signature": "_beforeTokenTransfer(address,address,uint256)",
@@ -3759,10 +3375,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "Snapshot",
     "type": "event",
     "signature": "Snapshot(uint256)",
@@ -3774,10 +3388,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "_snapshot",
     "type": "function",
     "signature": "_snapshot()",
@@ -3789,10 +3401,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "balanceOfAt",
     "type": "function",
     "constant": true,
@@ -3814,10 +3424,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "totalSupplyAt",
     "type": "function",
     "constant": true,
@@ -3835,10 +3443,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "_transfer",
     "type": "function",
     "signature": "_transfer(address,address,uint256)",
@@ -3858,10 +3464,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "_mint",
     "type": "function",
     "signature": "_mint(address,uint256)",
@@ -3877,10 +3481,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "_burn",
     "type": "function",
     "signature": "_burn(address,uint256)",
@@ -3896,10 +3498,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "_valueAt",
     "type": "function",
     "constant": true,
@@ -3925,10 +3525,8 @@
         "name": "ret_1"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "_updateAccountSnapshot",
     "type": "function",
     "signature": "_updateAccountSnapshot(address)",
@@ -3940,20 +3538,16 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "_updateTotalSupplySnapshot",
     "type": "function",
     "signature": "_updateTotalSupplySnapshot()",
     "encoding": "0x01918c99",
     "inputs": [],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "_updateSnapshot",
     "type": "function",
     "signature": "_updateSnapshot(Snapshots,uint256)",
@@ -3969,10 +3563,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "_lastSnapshotId",
     "type": "function",
     "constant": true,
@@ -3991,10 +3583,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "cap",
     "type": "function",
     "constant": true,
@@ -4007,10 +3597,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "_beforeTokenTransfer",
     "type": "function",
     "signature": "_beforeTokenTransfer(address,address,uint256)",
@@ -4030,10 +3618,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "tokensReceived",
     "type": "function",
     "signature": "tokensReceived(address,address,address,uint256,bytes,bytes)",
@@ -4065,10 +3651,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "tokensToSend",
     "type": "function",
     "signature": "tokensToSend(address,address,address,uint256,bytes,bytes)",
@@ -4100,10 +3684,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "name",
     "type": "function",
     "constant": true,
@@ -4116,10 +3698,8 @@
         "name": "memory"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "symbol",
     "type": "function",
     "constant": true,
@@ -4132,10 +3712,8 @@
         "name": "memory"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "decimals",
     "type": "function",
     "signature": "decimals()",
@@ -4147,10 +3725,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "granularity",
     "type": "function",
     "constant": true,
@@ -4163,10 +3739,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "totalSupply",
     "type": "function",
     "constant": true,
@@ -4174,10 +3748,8 @@
     "encoding": "0x18160ddd",
     "inputs": [],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "balanceOf",
     "type": "function",
     "constant": true,
@@ -4190,10 +3762,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "send",
     "type": "function",
     "signature": "send(address,uint256,bytes)",
@@ -4213,10 +3783,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "transfer",
     "type": "function",
     "signature": "transfer(address,uint256)",
@@ -4237,10 +3805,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "burn",
     "type": "function",
     "signature": "burn(uint256,bytes)",
@@ -4256,10 +3822,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "isOperatorFor",
     "type": "function",
     "constant": true,
@@ -4281,10 +3845,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "authorizeOperator",
     "type": "function",
     "signature": "authorizeOperator(address)",
@@ -4296,10 +3858,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "revokeOperator",
     "type": "function",
     "signature": "revokeOperator(address)",
@@ -4311,10 +3871,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "defaultOperators",
     "type": "function",
     "constant": true,
@@ -4328,10 +3886,8 @@
         "is_array": true
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "operatorSend",
     "type": "function",
     "signature": "operatorSend(address,address,uint256,bytes,bytes)",
@@ -4359,10 +3915,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "operatorBurn",
     "type": "function",
     "signature": "operatorBurn(address,uint256,bytes,bytes)",
@@ -4386,10 +3940,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "allowance",
     "type": "function",
     "constant": true,
@@ -4411,10 +3963,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "approve",
     "type": "function",
     "signature": "approve(address,uint256)",
@@ -4435,10 +3985,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "transferFrom",
     "type": "function",
     "signature": "transferFrom(address,address,uint256)",
@@ -4463,10 +4011,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "_mint",
     "type": "function",
     "signature": "_mint(address,uint256,bytes,bytes)",
@@ -4490,10 +4036,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "_send",
     "type": "function",
     "signature": "_send(address,address,uint256,bytes,bytes,bool)",
@@ -4525,10 +4069,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "_burn",
     "type": "function",
     "signature": "_burn(address,uint256,bytes,bytes)",
@@ -4552,10 +4094,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "_move",
     "type": "function",
     "signature": "_move(address,address,address,uint256,bytes,bytes)",
@@ -4587,10 +4127,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "_approve",
     "type": "function",
     "signature": "_approve(address,address,uint256)",
@@ -4610,10 +4148,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "_callTokensToSend",
     "type": "function",
     "signature": "_callTokensToSend(address,address,address,uint256,bytes,bytes)",
@@ -4645,10 +4181,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "_callTokensReceived",
     "type": "function",
     "signature": "_callTokensReceived(address,address,address,uint256,bytes,bytes,bool)",
@@ -4684,10 +4218,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "_beforeTokenTransfer",
     "type": "function",
     "signature": "_beforeTokenTransfer(address,address,address,uint256)",
@@ -4711,10 +4243,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "name",
     "type": "function",
     "constant": true,
@@ -4727,10 +4257,8 @@
         "name": "memory"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "symbol",
     "type": "function",
     "constant": true,
@@ -4743,10 +4271,8 @@
         "name": "memory"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "granularity",
     "type": "function",
     "constant": true,
@@ -4759,10 +4285,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "totalSupply",
     "type": "function",
     "constant": true,
@@ -4775,10 +4299,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "balanceOf",
     "type": "function",
     "constant": true,
@@ -4796,10 +4318,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "send",
     "type": "function",
     "signature": "send(address,uint256,bytes)",
@@ -4819,10 +4339,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "burn",
     "type": "function",
     "signature": "burn(uint256,bytes)",
@@ -4838,10 +4356,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "isOperatorFor",
     "type": "function",
     "constant": true,
@@ -4863,10 +4379,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "authorizeOperator",
     "type": "function",
     "signature": "authorizeOperator(address)",
@@ -4878,10 +4392,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "revokeOperator",
     "type": "function",
     "signature": "revokeOperator(address)",
@@ -4893,10 +4405,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "defaultOperators",
     "type": "function",
     "constant": true,
@@ -4910,10 +4420,8 @@
         "is_array": true
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "operatorSend",
     "type": "function",
     "signature": "operatorSend(address,address,uint256,bytes,bytes)",
@@ -4941,10 +4449,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "operatorBurn",
     "type": "function",
     "signature": "operatorBurn(address,uint256,bytes,bytes)",
@@ -4968,10 +4474,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "Sent",
     "type": "event",
     "signature": "Sent(address,address,address,uint256,bytes,bytes)",
@@ -5006,10 +4510,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "Minted",
     "type": "event",
     "signature": "Minted(address,address,uint256,bytes,bytes)",
@@ -5039,10 +4541,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "Burned",
     "type": "event",
     "signature": "Burned(address,address,uint256,bytes,bytes)",
@@ -5072,10 +4572,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "AuthorizedOperator",
     "type": "event",
     "signature": "AuthorizedOperator(address,address)",
@@ -5093,10 +4591,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "RevokedOperator",
     "type": "event",
     "signature": "RevokedOperator(address,address)",
@@ -5114,10 +4610,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "totalSupply",
     "type": "function",
     "constant": true,
@@ -5130,10 +4624,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "tokenOfOwnerByIndex",
     "type": "function",
     "constant": true,
@@ -5155,10 +4647,8 @@
         "name": "tokenId"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "tokenByIndex",
     "type": "function",
     "constant": true,
@@ -5176,10 +4666,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "name",
     "type": "function",
     "constant": true,
@@ -5192,10 +4680,8 @@
         "name": "memory"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "symbol",
     "type": "function",
     "constant": true,
@@ -5208,10 +4694,8 @@
         "name": "memory"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "tokenURI",
     "type": "function",
     "constant": true,
@@ -5229,10 +4713,8 @@
         "name": "memory"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "onERC721Received",
     "type": "function",
     "signature": "onERC721Received(address,address,uint256,bytes)",
@@ -5256,10 +4738,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "_beforeTokenTransfer",
     "type": "function",
     "signature": "_beforeTokenTransfer(address,address,uint256)",
@@ -5279,10 +4759,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "balanceOf",
     "type": "function",
     "constant": true,
@@ -5300,10 +4778,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "ownerOf",
     "type": "function",
     "constant": true,
@@ -5321,10 +4797,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "name",
     "type": "function",
     "constant": true,
@@ -5337,10 +4811,8 @@
         "name": "memory"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "symbol",
     "type": "function",
     "constant": true,
@@ -5353,10 +4825,8 @@
         "name": "memory"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "tokenURI",
     "type": "function",
     "constant": true,
@@ -5374,10 +4844,8 @@
         "name": "memory"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "baseURI",
     "type": "function",
     "constant": true,
@@ -5390,10 +4858,8 @@
         "name": "memory"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "tokenOfOwnerByIndex",
     "type": "function",
     "constant": true,
@@ -5415,10 +4881,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "totalSupply",
     "type": "function",
     "constant": true,
@@ -5431,10 +4895,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "tokenByIndex",
     "type": "function",
     "constant": true,
@@ -5452,10 +4914,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "approve",
     "type": "function",
     "signature": "approve(address,uint256)",
@@ -5471,10 +4931,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "getApproved",
     "type": "function",
     "constant": true,
@@ -5492,10 +4950,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "setApprovalForAll",
     "type": "function",
     "signature": "setApprovalForAll(address,bool)",
@@ -5511,10 +4967,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "isApprovedForAll",
     "type": "function",
     "constant": true,
@@ -5536,10 +4990,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "transferFrom",
     "type": "function",
     "signature": "transferFrom(address,address,uint256)",
@@ -5559,10 +5011,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "safeTransferFrom",
     "type": "function",
     "signature": "safeTransferFrom(address,address,uint256)",
@@ -5582,10 +5032,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "safeTransferFrom",
     "type": "function",
     "signature": "safeTransferFrom(address,address,uint256,bytes)",
@@ -5609,10 +5057,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "_safeTransfer",
     "type": "function",
     "signature": "_safeTransfer(address,address,uint256,bytes)",
@@ -5636,10 +5082,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "_exists",
     "type": "function",
     "constant": true,
@@ -5657,10 +5101,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "_isApprovedOrOwner",
     "type": "function",
     "constant": true,
@@ -5682,10 +5124,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "_safeMint",
     "type": "function",
     "signature": "_safeMint(address,uint256)",
@@ -5701,10 +5141,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "_safeMint",
     "type": "function",
     "signature": "_safeMint(address,uint256,bytes)",
@@ -5724,10 +5162,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "_mint",
     "type": "function",
     "signature": "_mint(address,uint256)",
@@ -5743,10 +5179,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "_burn",
     "type": "function",
     "signature": "_burn(uint256)",
@@ -5758,10 +5192,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "_transfer",
     "type": "function",
     "signature": "_transfer(address,address,uint256)",
@@ -5781,10 +5213,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "_setTokenURI",
     "type": "function",
     "signature": "_setTokenURI(uint256,string)",
@@ -5800,10 +5230,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "_setBaseURI",
     "type": "function",
     "signature": "_setBaseURI(string)",
@@ -5815,10 +5243,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "_checkOnERC721Received",
     "type": "function",
     "signature": "_checkOnERC721Received(address,address,uint256,bytes)",
@@ -5847,10 +5273,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "_approve",
     "type": "function",
     "signature": "_approve(address,uint256)",
@@ -5866,10 +5290,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "_beforeTokenTransfer",
     "type": "function",
     "signature": "_beforeTokenTransfer(address,address,uint256)",
@@ -5889,10 +5311,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "Transfer",
     "type": "event",
     "signature": "Transfer(address,address,uint256)",
@@ -5915,10 +5335,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "Approval",
     "type": "event",
     "signature": "Approval(address,address,uint256)",
@@ -5941,10 +5359,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "ApprovalForAll",
     "type": "event",
     "signature": "ApprovalForAll(address,address,bool)",
@@ -5966,10 +5382,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "balanceOf",
     "type": "function",
     "constant": true,
@@ -5987,10 +5401,8 @@
         "name": "balance"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "ownerOf",
     "type": "function",
     "constant": true,
@@ -6008,10 +5420,8 @@
         "name": "owner"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "safeTransferFrom",
     "type": "function",
     "signature": "safeTransferFrom(address,address,uint256)",
@@ -6031,10 +5441,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "transferFrom",
     "type": "function",
     "signature": "transferFrom(address,address,uint256)",
@@ -6054,10 +5462,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "approve",
     "type": "function",
     "signature": "approve(address,uint256)",
@@ -6073,10 +5479,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "getApproved",
     "type": "function",
     "constant": true,
@@ -6094,10 +5498,8 @@
         "name": "operator"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "setApprovalForAll",
     "type": "function",
     "signature": "setApprovalForAll(address,bool)",
@@ -6113,10 +5515,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "isApprovedForAll",
     "type": "function",
     "constant": true,
@@ -6138,10 +5538,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "safeTransferFrom",
     "type": "function",
     "signature": "safeTransferFrom(address,address,uint256,bytes)",
@@ -6165,10 +5563,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "onERC721Received",
     "type": "function",
     "signature": "onERC721Received(address,address,uint256,bytes)",
@@ -6197,10 +5593,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "burn",
     "type": "function",
     "signature": "burn(uint256)",
@@ -6212,10 +5606,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "OwnershipTransferred",
     "type": "event",
     "signature": "OwnershipTransferred(address,address)",
@@ -6233,10 +5625,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "owner",
     "type": "function",
     "constant": true,
@@ -6249,20 +5639,16 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "renounceOwnership",
     "type": "function",
     "signature": "renounceOwnership()",
     "encoding": "0x715018a6",
     "inputs": [],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "transferOwnership",
     "type": "function",
     "signature": "transferOwnership(address)",
@@ -6274,10 +5660,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "RoleAdminChanged",
     "type": "event",
     "signature": "RoleAdminChanged(bytes32,bytes32,bytes32)",
@@ -6300,10 +5684,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "RoleGranted",
     "type": "event",
     "signature": "RoleGranted(bytes32,address,address)",
@@ -6326,10 +5708,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "RoleRevoked",
     "type": "event",
     "signature": "RoleRevoked(bytes32,address,address)",
@@ -6352,10 +5732,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "hasRole",
     "type": "function",
     "constant": true,
@@ -6377,10 +5755,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "getRoleMemberCount",
     "type": "function",
     "constant": true,
@@ -6398,10 +5774,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "getRoleMember",
     "type": "function",
     "constant": true,
@@ -6423,10 +5797,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "getRoleAdmin",
     "type": "function",
     "constant": true,
@@ -6444,10 +5816,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "grantRole",
     "type": "function",
     "signature": "grantRole(bytes32,address)",
@@ -6463,10 +5833,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "revokeRole",
     "type": "function",
     "signature": "revokeRole(bytes32,address)",
@@ -6482,10 +5850,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "renounceRole",
     "type": "function",
     "signature": "renounceRole(bytes32,address)",
@@ -6501,10 +5867,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "_setupRole",
     "type": "function",
     "signature": "_setupRole(bytes32,address)",
@@ -6520,10 +5884,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "_setRoleAdmin",
     "type": "function",
     "signature": "_setRoleAdmin(bytes32,bytes32)",
@@ -6539,10 +5901,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "_grantRole",
     "type": "function",
     "signature": "_grantRole(bytes32,address)",
@@ -6558,10 +5918,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "_revokeRole",
     "type": "function",
     "signature": "_revokeRole(bytes32,address)",
@@ -6577,10 +5935,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "acceptRelayedCall",
     "type": "function",
     "constant": true,
@@ -6634,10 +5990,8 @@
         "name": "memory"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "_preRelayedCall",
     "type": "function",
     "signature": "_preRelayedCall(bytes)",
@@ -6654,10 +6008,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "_postRelayedCall",
     "type": "function",
     "signature": "_postRelayedCall(bytes,bool,uint256,bytes32)",
@@ -6681,10 +6033,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "stake",
     "type": "function",
     "signature": "stake(address,uint256)",
@@ -6700,10 +6050,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "Staked",
     "type": "event",
     "signature": "Staked(address,uint256,uint256)",
@@ -6724,10 +6072,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "registerRelay",
     "type": "function",
     "signature": "registerRelay(uint256,string)",
@@ -6743,10 +6089,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "RelayAdded",
     "type": "event",
     "signature": "RelayAdded(address,address,uint256,uint256,uint256,string)",
@@ -6780,10 +6124,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "removeRelayByOwner",
     "type": "function",
     "signature": "removeRelayByOwner(address)",
@@ -6795,10 +6137,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "RelayRemoved",
     "type": "event",
     "signature": "RelayRemoved(address,uint256)",
@@ -6815,10 +6155,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "unstake",
     "type": "function",
     "signature": "unstake(address)",
@@ -6830,10 +6168,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "Unstaked",
     "type": "event",
     "signature": "Unstaked(address,uint256)",
@@ -6850,10 +6186,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "getRelay",
     "type": "function",
     "constant": true,
@@ -6887,10 +6221,8 @@
         "name": "state"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "depositFor",
     "type": "function",
     "signature": "depositFor(address)",
@@ -6902,10 +6234,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "Deposited",
     "type": "event",
     "signature": "Deposited(address,address,uint256)",
@@ -6927,10 +6257,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "balanceOf",
     "type": "function",
     "constant": true,
@@ -6948,10 +6276,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "withdraw",
     "type": "function",
     "signature": "withdraw(uint256,address)",
@@ -6967,10 +6293,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "Withdrawn",
     "type": "event",
     "signature": "Withdrawn(address,address,uint256)",
@@ -6992,10 +6316,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "canRelay",
     "type": "function",
     "constant": true,
@@ -7053,10 +6375,8 @@
         "name": "recipientContext"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "relayCall",
     "type": "function",
     "signature": "relayCall(address,address,bytes,uint256,uint256,uint256,uint256,bytes,bytes)",
@@ -7100,10 +6420,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "CanRelayFailed",
     "type": "event",
     "signature": "CanRelayFailed(address,address,address,bytes4,uint256)",
@@ -7134,10 +6452,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "TransactionRelayed",
     "type": "event",
     "signature": "TransactionRelayed(address,address,address,bytes4,RelayCallStatus,uint256)",
@@ -7172,10 +6488,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "requiredGas",
     "type": "function",
     "constant": true,
@@ -7193,10 +6507,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "maxPossibleCharge",
     "type": "function",
     "constant": true,
@@ -7222,10 +6534,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "penalizeRepeatedNonce",
     "type": "function",
     "signature": "penalizeRepeatedNonce(bytes,bytes,bytes,bytes)",
@@ -7249,10 +6559,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "penalizeIllegalTransaction",
     "type": "function",
     "signature": "penalizeIllegalTransaction(bytes,bytes)",
@@ -7268,10 +6576,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "Penalized",
     "type": "event",
     "signature": "Penalized(address,address,uint256)",
@@ -7292,10 +6598,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "getNonce",
     "type": "function",
     "constant": true,
@@ -7313,10 +6617,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "token",
     "type": "function",
     "constant": true,
@@ -7329,10 +6631,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "_mint",
     "type": "function",
     "signature": "_mint(address,uint256)",
@@ -7348,10 +6648,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "acceptRelayedCall",
     "type": "function",
     "constant": true,
@@ -7405,10 +6703,8 @@
         "name": "memory"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "_preRelayedCall",
     "type": "function",
     "signature": "_preRelayedCall(bytes)",
@@ -7425,10 +6721,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "_postRelayedCall",
     "type": "function",
     "signature": "_postRelayedCall(bytes,bool,uint256,bytes32)",
@@ -7452,10 +6746,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "mint",
     "type": "function",
     "signature": "mint(address,uint256)",
@@ -7471,10 +6763,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "allowance",
     "type": "function",
     "constant": true,
@@ -7496,10 +6786,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "_approve",
     "type": "function",
     "signature": "_approve(address,address,uint256)",
@@ -7519,10 +6807,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "transferFrom",
     "type": "function",
     "signature": "transferFrom(address,address,uint256)",
@@ -7547,10 +6833,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "getHubAddr",
     "type": "function",
     "constant": true,
@@ -7563,10 +6847,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "acceptRelayedCall",
     "type": "function",
     "constant": true,
@@ -7620,10 +6902,8 @@
         "name": "memory"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "preRelayedCall",
     "type": "function",
     "signature": "preRelayedCall(bytes)",
@@ -7640,10 +6920,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "postRelayedCall",
     "type": "function",
     "signature": "postRelayedCall(bytes,bool,uint256,bytes32)",
@@ -7667,10 +6945,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "RelayHubChanged",
     "type": "event",
     "signature": "RelayHubChanged(address,address)",
@@ -7688,10 +6964,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "getHubAddr",
     "type": "function",
     "constant": true,
@@ -7704,10 +6978,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "_upgradeRelayHub",
     "type": "function",
     "signature": "_upgradeRelayHub(address)",
@@ -7719,10 +6991,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "relayHubVersion",
     "type": "function",
     "constant": true,
@@ -7735,10 +7005,8 @@
         "name": "memory"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "_withdrawDeposits",
     "type": "function",
     "signature": "_withdrawDeposits(uint256,address)",
@@ -7754,10 +7022,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "_msgSender",
     "type": "function",
     "constant": true,
@@ -7770,10 +7036,8 @@
         "name": "payable"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "_msgData",
     "type": "function",
     "constant": true,
@@ -7786,10 +7050,8 @@
         "name": "memory"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "preRelayedCall",
     "type": "function",
     "signature": "preRelayedCall(bytes)",
@@ -7806,10 +7068,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "_preRelayedCall",
     "type": "function",
     "signature": "_preRelayedCall(bytes)",
@@ -7826,10 +7086,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "postRelayedCall",
     "type": "function",
     "signature": "postRelayedCall(bytes,bool,uint256,bytes32)",
@@ -7853,10 +7111,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "_postRelayedCall",
     "type": "function",
     "signature": "_postRelayedCall(bytes,bool,uint256,bytes32)",
@@ -7880,10 +7136,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "_approveRelayedCall",
     "type": "function",
     "signature": "_approveRelayedCall()",
@@ -7899,10 +7153,8 @@
         "name": "memory"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "_approveRelayedCall",
     "type": "function",
     "signature": "_approveRelayedCall(bytes)",
@@ -7923,10 +7175,8 @@
         "name": "memory"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "_rejectRelayedCall",
     "type": "function",
     "signature": "_rejectRelayedCall(uint256)",
@@ -7947,10 +7197,8 @@
         "name": "memory"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "_computeCharge",
     "type": "function",
     "signature": "_computeCharge(uint256,uint256,uint256)",
@@ -7975,10 +7223,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "_getRelayedCallSender",
     "type": "function",
     "signature": "_getRelayedCallSender()",
@@ -7990,10 +7236,8 @@
         "name": "payable result"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "_getRelayedCallData",
     "type": "function",
     "signature": "_getRelayedCallData()",
@@ -8005,10 +7249,8 @@
         "name": "memory"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "_msgSender",
     "type": "function",
     "constant": true,
@@ -8021,10 +7263,8 @@
         "name": "payable"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "_msgData",
     "type": "function",
     "constant": true,
@@ -8037,10 +7277,8 @@
         "name": "memory"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "recover",
     "type": "function",
     "signature": "recover(bytes32,bytes)",
@@ -8061,10 +7299,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "toEthSignedMessageHash",
     "type": "function",
     "signature": "toEthSignedMessageHash(bytes32)",
@@ -8081,10 +7317,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "verify",
     "type": "function",
     "signature": "verify(bytes32[],bytes32,bytes32)",
@@ -8110,10 +7344,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "PayeeAdded",
     "type": "event",
     "signature": "PayeeAdded(address,uint256)",
@@ -8129,10 +7361,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "PaymentReleased",
     "type": "event",
     "signature": "PaymentReleased(address,uint256)",
@@ -8148,10 +7378,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "PaymentReceived",
     "type": "event",
     "signature": "PaymentReceived(address,uint256)",
@@ -8167,20 +7395,16 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "receive",
     "type": "function",
     "signature": "receive()",
     "encoding": "0xa3e76c0f",
     "inputs": [],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "totalShares",
     "type": "function",
     "constant": true,
@@ -8193,10 +7417,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "totalReleased",
     "type": "function",
     "constant": true,
@@ -8209,10 +7431,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "shares",
     "type": "function",
     "constant": true,
@@ -8230,10 +7450,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "released",
     "type": "function",
     "constant": true,
@@ -8251,10 +7469,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "payee",
     "type": "function",
     "constant": true,
@@ -8272,10 +7488,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "release",
     "type": "function",
     "signature": "release(address)",
@@ -8287,10 +7501,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "_addPayee",
     "type": "function",
     "signature": "_addPayee(address,uint256)",
@@ -8306,10 +7518,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "withdrawPayments",
     "type": "function",
     "signature": "withdrawPayments(address)",
@@ -8321,10 +7531,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "payments",
     "type": "function",
     "constant": true,
@@ -8342,10 +7550,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "_asyncTransfer",
     "type": "function",
     "signature": "_asyncTransfer(address,uint256)",
@@ -8361,10 +7567,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "Deposited",
     "type": "event",
     "signature": "Deposited(address,uint256)",
@@ -8381,10 +7585,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "Withdrawn",
     "type": "event",
     "signature": "Withdrawn(address,uint256)",
@@ -8401,10 +7603,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "depositsOf",
     "type": "function",
     "constant": true,
@@ -8422,10 +7622,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "deposit",
     "type": "function",
     "signature": "deposit(address)",
@@ -8437,10 +7635,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "withdraw",
     "type": "function",
     "signature": "withdraw(address)",
@@ -8452,30 +7648,24 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "RefundsClosed",
     "type": "event",
     "signature": "RefundsClosed()",
     "encoding": "0x088672c3a6e342f7cd94a65ba63b79df24a8973927b4d05d803c44bbf787d12f",
     "inputs": [],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "RefundsEnabled",
     "type": "event",
     "signature": "RefundsEnabled()",
     "encoding": "0x599d8e5a83cffb867d051598c4d70e805d59802d8081c1c7d6dffc5b6aca2b89",
     "inputs": [],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "state",
     "type": "function",
     "constant": true,
@@ -8488,10 +7678,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "beneficiary",
     "type": "function",
     "constant": true,
@@ -8504,10 +7692,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "deposit",
     "type": "function",
     "signature": "deposit(address)",
@@ -8519,40 +7705,32 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "close",
     "type": "function",
     "signature": "close()",
     "encoding": "0x43d726d6",
     "inputs": [],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "enableRefunds",
     "type": "function",
     "signature": "enableRefunds()",
     "encoding": "0x8c52dc41",
     "inputs": [],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "beneficiaryWithdraw",
     "type": "function",
     "signature": "beneficiaryWithdraw()",
     "encoding": "0x9af6549a",
     "inputs": [],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "withdrawalAllowed",
     "type": "function",
     "constant": true,
@@ -8570,10 +7748,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "withdrawalAllowed",
     "type": "function",
     "constant": true,
@@ -8591,10 +7767,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "withdraw",
     "type": "function",
     "signature": "withdraw(address)",
@@ -8606,10 +7780,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "TokensReleased",
     "type": "event",
     "signature": "TokensReleased(address,uint256)",
@@ -8625,10 +7797,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "TokenVestingRevoked",
     "type": "event",
     "signature": "TokenVestingRevoked(address)",
@@ -8640,10 +7810,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "beneficiary",
     "type": "function",
     "constant": true,
@@ -8656,10 +7824,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "cliff",
     "type": "function",
     "constant": true,
@@ -8672,10 +7838,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "start",
     "type": "function",
     "constant": true,
@@ -8688,10 +7852,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "duration",
     "type": "function",
     "constant": true,
@@ -8704,10 +7866,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "revocable",
     "type": "function",
     "constant": true,
@@ -8720,10 +7880,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "released",
     "type": "function",
     "constant": true,
@@ -8741,10 +7899,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "revoked",
     "type": "function",
     "constant": true,
@@ -8762,10 +7918,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "release",
     "type": "function",
     "signature": "release(IERC20)",
@@ -8777,10 +7931,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "revoke",
     "type": "function",
     "signature": "revoke(IERC20)",
@@ -8792,10 +7944,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "_releasableAmount",
     "type": "function",
     "constant": true,
@@ -8813,10 +7963,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "_vestedAmount",
     "type": "function",
     "constant": true,
@@ -8834,10 +7982,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "Paused",
     "type": "event",
     "signature": "Paused(address)",
@@ -8849,10 +7995,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "Unpaused",
     "type": "event",
     "signature": "Unpaused(address)",
@@ -8864,10 +8008,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "paused",
     "type": "function",
     "constant": true,
@@ -8880,30 +8022,24 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "_pause",
     "type": "function",
     "signature": "_pause()",
     "encoding": "0x320b2ad9",
     "inputs": [],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "_unpause",
     "type": "function",
     "signature": "_unpause()",
     "encoding": "0xfc8234cb",
     "inputs": [],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "current",
     "type": "function",
     "constant": true,
@@ -8921,10 +8057,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "increment",
     "type": "function",
     "signature": "increment(Counter)",
@@ -8936,10 +8070,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "decrement",
     "type": "function",
     "signature": "decrement(Counter)",
@@ -8951,10 +8083,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "_set",
     "type": "function",
     "signature": "_set(Map,bytes32,bytes32)",
@@ -8979,10 +8109,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "_remove",
     "type": "function",
     "signature": "_remove(Map,bytes32)",
@@ -9003,10 +8131,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "_contains",
     "type": "function",
     "constant": true,
@@ -9028,10 +8154,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "_length",
     "type": "function",
     "constant": true,
@@ -9049,10 +8173,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "_at",
     "type": "function",
     "constant": true,
@@ -9078,10 +8200,8 @@
         "name": "ret_1"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "_get",
     "type": "function",
     "constant": true,
@@ -9103,10 +8223,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "_get",
     "type": "function",
     "constant": true,
@@ -9132,10 +8250,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "set",
     "type": "function",
     "signature": "set(UintToAddressMap,uint256,address)",
@@ -9160,10 +8276,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "remove",
     "type": "function",
     "signature": "remove(UintToAddressMap,uint256)",
@@ -9184,10 +8298,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "contains",
     "type": "function",
     "constant": true,
@@ -9209,10 +8321,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "length",
     "type": "function",
     "constant": true,
@@ -9230,10 +8340,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "at",
     "type": "function",
     "constant": true,
@@ -9259,10 +8367,8 @@
         "name": "ret_1"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "get",
     "type": "function",
     "constant": true,
@@ -9284,10 +8390,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "get",
     "type": "function",
     "constant": true,
@@ -9313,10 +8417,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "findUpperBound",
     "type": "function",
     "constant": true,
@@ -9339,10 +8441,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "isContract",
     "type": "function",
     "constant": true,
@@ -9360,10 +8460,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "sendValue",
     "type": "function",
     "signature": "sendValue(address,uint256)",
@@ -9379,10 +8477,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "_add",
     "type": "function",
     "signature": "_add(Set,bytes32)",
@@ -9403,10 +8499,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "_remove",
     "type": "function",
     "signature": "_remove(Set,bytes32)",
@@ -9427,10 +8521,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "_contains",
     "type": "function",
     "constant": true,
@@ -9452,10 +8544,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "_length",
     "type": "function",
     "constant": true,
@@ -9473,10 +8563,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "_at",
     "type": "function",
     "constant": true,
@@ -9498,10 +8586,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "add",
     "type": "function",
     "signature": "add(AddressSet,address)",
@@ -9522,10 +8608,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "remove",
     "type": "function",
     "signature": "remove(AddressSet,address)",
@@ -9546,10 +8630,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "contains",
     "type": "function",
     "constant": true,
@@ -9571,10 +8653,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "length",
     "type": "function",
     "constant": true,
@@ -9592,10 +8672,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "at",
     "type": "function",
     "constant": true,
@@ -9617,10 +8695,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "add",
     "type": "function",
     "signature": "add(UintSet,uint256)",
@@ -9641,10 +8717,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "remove",
     "type": "function",
     "signature": "remove(UintSet,uint256)",
@@ -9665,10 +8739,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "contains",
     "type": "function",
     "constant": true,
@@ -9690,10 +8762,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "length",
     "type": "function",
     "constant": true,
@@ -9711,10 +8781,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "at",
     "type": "function",
     "constant": true,
@@ -9736,10 +8804,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "deploy",
     "type": "function",
     "signature": "deploy(uint256,bytes32,bytes)",
@@ -9764,10 +8830,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "computeAddress",
     "type": "function",
     "constant": true,
@@ -9789,10 +8853,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "computeAddress",
     "type": "function",
     "signature": "computeAddress(bytes32,bytes32,address)",
@@ -9817,10 +8879,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "toString",
     "type": "function",
     "signature": "toString(uint256)",
@@ -9837,10 +8897,8 @@
         "name": "memory"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "toUint128",
     "type": "function",
     "signature": "toUint128(uint256)",
@@ -9857,10 +8915,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "toUint64",
     "type": "function",
     "signature": "toUint64(uint256)",
@@ -9877,10 +8933,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "toUint32",
     "type": "function",
     "signature": "toUint32(uint256)",
@@ -9897,10 +8951,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "toUint16",
     "type": "function",
     "signature": "toUint16(uint256)",
@@ -9917,10 +8969,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "toUint8",
     "type": "function",
     "signature": "toUint8(uint256)",
@@ -9937,10 +8987,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "toUint256",
     "type": "function",
     "signature": "toUint256(int256)",
@@ -9957,10 +9005,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "toInt256",
     "type": "function",
     "signature": "toInt256(uint256)",
@@ -9977,10 +9023,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "setManager",
     "type": "function",
     "signature": "setManager(address,address)",
@@ -9996,10 +9040,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "getManager",
     "type": "function",
     "constant": true,
@@ -10017,10 +9059,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "setInterfaceImplementer",
     "type": "function",
     "signature": "setInterfaceImplementer(address,bytes32,address)",
@@ -10040,10 +9080,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "getInterfaceImplementer",
     "type": "function",
     "constant": true,
@@ -10065,10 +9103,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "interfaceHash",
     "type": "function",
     "signature": "interfaceHash(string)",
@@ -10085,10 +9121,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "updateERC165Cache",
     "type": "function",
     "signature": "updateERC165Cache(address,bytes4)",
@@ -10104,10 +9138,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "implementsERC165Interface",
     "type": "function",
     "constant": true,
@@ -10129,10 +9161,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "implementsERC165InterfaceNoCache",
     "type": "function",
     "constant": true,
@@ -10154,10 +9184,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "InterfaceImplementerSet",
     "type": "event",
     "signature": "InterfaceImplementerSet(address,bytes32,address)",
@@ -10180,10 +9208,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "ManagerChanged",
     "type": "event",
     "signature": "ManagerChanged(address,address)",
@@ -10201,10 +9227,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "canImplementInterfaceForAddress",
     "type": "function",
     "constant": true,
@@ -10226,10 +9250,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "supportsERC165",
     "type": "function",
     "constant": true,
@@ -10247,10 +9269,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "supportsInterface",
     "type": "function",
     "constant": true,
@@ -10272,10 +9292,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "supportsAllInterfaces",
     "type": "function",
     "constant": true,
@@ -10298,10 +9316,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "_supportsERC165Interface",
     "type": "function",
     "constant": true,
@@ -10323,10 +9339,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "_callERC165SupportsInterface",
     "type": "function",
     "constant": true,
@@ -10352,10 +9366,8 @@
         "name": "ret_1"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "canImplementInterfaceForAddress",
     "type": "function",
     "constant": true,
@@ -10377,10 +9389,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "_registerInterfaceForAddress",
     "type": "function",
     "signature": "_registerInterfaceForAddress(bytes32,address)",
@@ -10396,10 +9406,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "supportsInterface",
     "type": "function",
     "constant": true,
@@ -10417,10 +9425,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "_registerInterface",
     "type": "function",
     "signature": "_registerInterface(bytes4)",
@@ -10432,10 +9438,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "supportsInterface",
     "type": "function",
     "constant": true,
@@ -10453,10 +9457,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "add",
     "type": "function",
     "signature": "add(uint256,uint256)",
@@ -10477,10 +9479,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "sub",
     "type": "function",
     "signature": "sub(uint256,uint256)",
@@ -10501,10 +9501,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "sub",
     "type": "function",
     "signature": "sub(uint256,uint256,string)",
@@ -10529,10 +9527,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "mul",
     "type": "function",
     "signature": "mul(uint256,uint256)",
@@ -10553,10 +9549,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "div",
     "type": "function",
     "signature": "div(uint256,uint256)",
@@ -10577,10 +9571,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "div",
     "type": "function",
     "signature": "div(uint256,uint256,string)",
@@ -10605,10 +9597,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "mod",
     "type": "function",
     "signature": "mod(uint256,uint256)",
@@ -10629,10 +9619,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "mod",
     "type": "function",
     "signature": "mod(uint256,uint256,string)",
@@ -10657,10 +9645,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "mul",
     "type": "function",
     "signature": "mul(int256,int256)",
@@ -10681,10 +9667,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "div",
     "type": "function",
     "signature": "div(int256,int256)",
@@ -10705,10 +9689,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "sub",
     "type": "function",
     "signature": "sub(int256,int256)",
@@ -10729,10 +9711,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "add",
     "type": "function",
     "signature": "add(int256,int256)",
@@ -10753,10 +9733,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "max",
     "type": "function",
     "signature": "max(uint256,uint256)",
@@ -10777,10 +9755,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "min",
     "type": "function",
     "signature": "min(uint256,uint256)",
@@ -10801,10 +9777,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "average",
     "type": "function",
     "signature": "average(uint256,uint256)",
@@ -10825,10 +9799,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "mint",
     "type": "function",
     "signature": "mint(address)",
@@ -10840,30 +9812,24 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "pause",
     "type": "function",
     "signature": "pause()",
     "encoding": "0x8456cb59",
     "inputs": [],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "unpause",
     "type": "function",
     "signature": "unpause()",
     "encoding": "0x3f4ba83a",
     "inputs": [],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "_beforeTokenTransfer",
     "type": "function",
     "signature": "_beforeTokenTransfer(address,address,uint256)",
@@ -10883,10 +9849,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "mint",
     "type": "function",
     "signature": "mint(address,uint256)",
@@ -10902,30 +9866,24 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "pause",
     "type": "function",
     "signature": "pause()",
     "encoding": "0x8456cb59",
     "inputs": [],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "unpause",
     "type": "function",
     "signature": "unpause()",
     "encoding": "0x3f4ba83a",
     "inputs": [],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "_beforeTokenTransfer",
     "type": "function",
     "signature": "_beforeTokenTransfer(address,address,uint256)",
@@ -10945,10 +9903,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "getImplementation",
     "type": "function",
     "constant": true,
@@ -10966,10 +9922,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "OwnershipTransferred",
     "type": "event",
     "signature": "OwnershipTransferred(address,address)",
@@ -10987,10 +9941,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "owner",
     "type": "function",
     "constant": true,
@@ -11003,10 +9955,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "isOwner",
     "type": "function",
     "constant": true,
@@ -11019,20 +9969,16 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "renounceOwnership",
     "type": "function",
     "signature": "renounceOwnership()",
     "encoding": "0x715018a6",
     "inputs": [],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "transferOwnership",
     "type": "function",
     "signature": "transferOwnership(address)",
@@ -11044,10 +9990,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "_transferOwnership",
     "type": "function",
     "signature": "_transferOwnership(address)",
@@ -11059,10 +10003,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "VersionAdded",
     "type": "event",
     "signature": "VersionAdded(uint64[3],address,bytes)",
@@ -11083,10 +10025,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "getVersion",
     "type": "function",
     "constant": true,
@@ -11109,10 +10049,8 @@
         "name": "contentURI"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "getContract",
     "type": "function",
     "constant": true,
@@ -11131,10 +10069,8 @@
         "name": "contractAddress"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "addVersion",
     "type": "function",
     "signature": "addVersion(uint64[3],address,bytes)",
@@ -11155,10 +10091,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "hasVersion",
     "type": "function",
     "constant": true,
@@ -11177,10 +10111,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "getLatest",
     "type": "function",
     "constant": true,
@@ -11202,10 +10134,8 @@
         "name": "contentURI"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "getLatestByMajor",
     "type": "function",
     "constant": true,
@@ -11232,10 +10162,8 @@
         "name": "contentURI"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "semanticVersionHash",
     "type": "function",
     "signature": "semanticVersionHash(uint64[3])",
@@ -11253,10 +10181,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "semanticVersionIsZero",
     "type": "function",
     "signature": "semanticVersionIsZero(uint64[3])",
@@ -11274,19 +10200,15 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "type": "function",
     "signature": "()",
     "encoding": "0x861731d5",
     "inputs": [],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "_implementation",
     "type": "function",
     "constant": true,
@@ -11299,10 +10221,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "_delegate",
     "type": "function",
     "signature": "_delegate(address)",
@@ -11314,30 +10234,24 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "_willFallback",
     "type": "function",
     "signature": "_willFallback()",
     "encoding": "0x2ce14d90",
     "inputs": [],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "_fallback",
     "type": "function",
     "signature": "_fallback()",
     "encoding": "0xaf8f35c4",
     "inputs": [],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "isContract",
     "type": "function",
     "constant": true,
@@ -11355,10 +10269,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "Upgraded",
     "type": "event",
     "signature": "Upgraded(address)",
@@ -11371,10 +10283,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "_implementation",
     "type": "function",
     "constant": true,
@@ -11387,10 +10297,8 @@
         "name": "impl"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "_upgradeTo",
     "type": "function",
     "signature": "_upgradeTo(address)",
@@ -11402,10 +10310,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "_setImplementation",
     "type": "function",
     "signature": "_setImplementation(address)",
@@ -11417,10 +10323,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "AdminChanged",
     "type": "event",
     "signature": "AdminChanged(address,address)",
@@ -11436,10 +10340,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "admin",
     "type": "function",
     "constant": true,
@@ -11452,10 +10354,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "implementation",
     "type": "function",
     "constant": true,
@@ -11468,10 +10368,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "changeAdmin",
     "type": "function",
     "signature": "changeAdmin(address)",
@@ -11483,10 +10381,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "upgradeTo",
     "type": "function",
     "signature": "upgradeTo(address)",
@@ -11498,10 +10394,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "upgradeToAndCall",
     "type": "function",
     "signature": "upgradeToAndCall(address,bytes)",
@@ -11517,10 +10411,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "_admin",
     "type": "function",
     "constant": true,
@@ -11533,10 +10425,8 @@
         "name": "adm"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "_setAdmin",
     "type": "function",
     "signature": "_setAdmin(address)",
@@ -11548,35 +10438,16 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "_willFallback",
     "type": "function",
     "signature": "_willFallback()",
     "encoding": "0x2ce14d90",
     "inputs": [],
     "outputs": []
-  }
-,
-
-    {
-    "name": "from the proxy admin"",
-    "type": "function",
-    "signature": "from the proxy admin"(;)",
-    "encoding": "0xe368f052",
-    "inputs": [
-      {
-        "type": ";",
-        "name": "val_0"
-      }
-    ],
-    "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "ProxyCreated",
     "type": "event",
     "signature": "ProxyCreated(address)",
@@ -11588,10 +10459,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "PackageChanged",
     "type": "event",
     "signature": "PackageChanged(string,address,uint64[3])",
@@ -11612,10 +10481,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "getProvider",
     "type": "function",
     "constant": true,
@@ -11633,10 +10500,8 @@
         "name": "provider"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "getPackage",
     "type": "function",
     "constant": true,
@@ -11659,10 +10524,8 @@
         "is_array": true
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "setPackage",
     "type": "function",
     "signature": "setPackage(string,Package,uint64[3])",
@@ -11683,10 +10546,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "unsetPackage",
     "type": "function",
     "signature": "unsetPackage(string)",
@@ -11698,10 +10559,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "getImplementation",
     "type": "function",
     "constant": true,
@@ -11723,10 +10582,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "create",
     "type": "function",
     "signature": "create(string,string,address,bytes)",
@@ -11756,5 +10613,4 @@
       }
     ]
   }
-
 ]

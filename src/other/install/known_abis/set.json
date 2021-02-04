@@ -1,7 +1,5 @@
 [
-
-
-    {
+  {
     "name": "mul",
     "type": "function",
     "signature": "mul(uint256,uint256)",
@@ -22,10 +20,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "div",
     "type": "function",
     "signature": "div(uint256,uint256)",
@@ -46,10 +42,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "sub",
     "type": "function",
     "signature": "sub(uint256,uint256)",
@@ -70,10 +64,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "add",
     "type": "function",
     "signature": "add(uint256,uint256)",
@@ -94,10 +86,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "mod",
     "type": "function",
     "signature": "mod(uint256,uint256)",
@@ -118,10 +108,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "transfer",
     "type": "function",
     "signature": "transfer(address,uint256)",
@@ -142,10 +130,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "approve",
     "type": "function",
     "signature": "approve(address,uint256)",
@@ -166,10 +152,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "transferFrom",
     "type": "function",
     "signature": "transferFrom(address,address,uint256)",
@@ -194,10 +178,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "totalSupply",
     "type": "function",
     "constant": true,
@@ -210,10 +192,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "balanceOf",
     "type": "function",
     "constant": true,
@@ -231,10 +211,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "allowance",
     "type": "function",
     "constant": true,
@@ -256,10 +234,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "Transfer",
     "type": "event",
     "signature": "Transfer(address,address,uint256)",
@@ -281,10 +257,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "Approval",
     "type": "event",
     "signature": "Approval(address,address,uint256)",
@@ -306,10 +280,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "totalSupply",
     "type": "function",
     "constant": true,
@@ -322,10 +294,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "balanceOf",
     "type": "function",
     "constant": true,
@@ -343,10 +313,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "allowance",
     "type": "function",
     "constant": true,
@@ -368,10 +336,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "transfer",
     "type": "function",
     "signature": "transfer(address,uint256)",
@@ -392,10 +358,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "approve",
     "type": "function",
     "signature": "approve(address,uint256)",
@@ -416,10 +380,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "transferFrom",
     "type": "function",
     "signature": "transferFrom(address,address,uint256)",
@@ -444,10 +406,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "increaseAllowance",
     "type": "function",
     "signature": "increaseAllowance(address,uint256)",
@@ -468,10 +428,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "decreaseAllowance",
     "type": "function",
     "signature": "decreaseAllowance(address,uint256)",
@@ -492,10 +450,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "_transfer",
     "type": "function",
     "signature": "_transfer(address,address,uint256)",
@@ -515,10 +471,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "_mint",
     "type": "function",
     "signature": "_mint(address,uint256)",
@@ -534,10 +488,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "_burn",
     "type": "function",
     "signature": "_burn(address,uint256)",
@@ -553,10 +505,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "_approve",
     "type": "function",
     "signature": "_approve(address,address,uint256)",
@@ -576,10 +526,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "_burnFrom",
     "type": "function",
     "signature": "_burnFrom(address,uint256)",
@@ -595,10 +543,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "scaleFactor",
     "type": "function",
     "signature": "scaleFactor()",
@@ -610,10 +556,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "maxUInt256",
     "type": "function",
     "signature": "maxUInt256()",
@@ -625,10 +569,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "scale",
     "type": "function",
     "signature": "scale(uint256)",
@@ -645,10 +587,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "deScale",
     "type": "function",
     "signature": "deScale(uint256)",
@@ -665,10 +605,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "safePower",
     "type": "function",
     "signature": "safePower(uint256,uint256)",
@@ -689,10 +627,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "divCeil",
     "type": "function",
     "signature": "divCeil(uint256,uint256)",
@@ -713,10 +649,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "getPartialAmount",
     "type": "function",
     "signature": "getPartialAmount(uint256,uint256,uint256)",
@@ -741,10 +675,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "ceilLog10",
     "type": "function",
     "signature": "ceilLog10(uint256)",
@@ -761,10 +693,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "transferProxy",
     "type": "function",
     "constant": true,
@@ -777,10 +707,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "vault",
     "type": "function",
     "constant": true,
@@ -793,10 +721,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "exchangeIds",
     "type": "function",
     "constant": true,
@@ -814,10 +740,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "validSets",
     "type": "function",
     "constant": true,
@@ -835,10 +759,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "validModules",
     "type": "function",
     "constant": true,
@@ -856,10 +778,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "validPriceLibraries",
     "type": "function",
     "constant": true,
@@ -877,10 +797,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "issue",
     "type": "function",
     "signature": "issue(address,uint256)",
@@ -896,10 +814,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "issueTo",
     "type": "function",
     "signature": "issueTo(address,address,uint256)",
@@ -919,10 +835,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "issueInVault",
     "type": "function",
     "signature": "issueInVault(address,uint256)",
@@ -938,10 +852,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "redeem",
     "type": "function",
     "signature": "redeem(address,uint256)",
@@ -957,10 +869,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "redeemTo",
     "type": "function",
     "signature": "redeemTo(address,address,uint256)",
@@ -980,10 +890,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "redeemInVault",
     "type": "function",
     "signature": "redeemInVault(address,uint256)",
@@ -999,10 +907,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "redeemAndWithdrawTo",
     "type": "function",
     "signature": "redeemAndWithdrawTo(address,address,uint256,uint256)",
@@ -1026,10 +932,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "batchDeposit",
     "type": "function",
     "signature": "batchDeposit(address[],uint256[])",
@@ -1047,10 +951,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "batchWithdraw",
     "type": "function",
     "signature": "batchWithdraw(address[],uint256[])",
@@ -1068,10 +970,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "deposit",
     "type": "function",
     "signature": "deposit(address,uint256)",
@@ -1087,10 +987,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "withdraw",
     "type": "function",
     "signature": "withdraw(address,uint256)",
@@ -1106,10 +1004,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "internalTransfer",
     "type": "function",
     "signature": "internalTransfer(address,address,uint256)",
@@ -1129,10 +1025,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "createSet",
     "type": "function",
     "signature": "createSet(address,address[],uint256[],uint256,bytes32,bytes32,bytes)",
@@ -1175,10 +1069,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "depositModule",
     "type": "function",
     "signature": "depositModule(address,address,address,uint256)",
@@ -1202,10 +1094,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "withdrawModule",
     "type": "function",
     "signature": "withdrawModule(address,address,address,uint256)",
@@ -1229,10 +1119,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "batchDepositModule",
     "type": "function",
     "signature": "batchDepositModule(address,address,address[],uint256[])",
@@ -1258,10 +1146,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "batchWithdrawModule",
     "type": "function",
     "signature": "batchWithdrawModule(address,address,address[],uint256[])",
@@ -1287,10 +1173,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "issueModule",
     "type": "function",
     "signature": "issueModule(address,address,address,uint256)",
@@ -1314,10 +1198,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "redeemModule",
     "type": "function",
     "signature": "redeemModule(address,address,address,uint256)",
@@ -1341,10 +1223,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "batchIncrementTokenOwnerModule",
     "type": "function",
     "signature": "batchIncrementTokenOwnerModule(address[],address,uint256[])",
@@ -1366,10 +1246,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "batchDecrementTokenOwnerModule",
     "type": "function",
     "signature": "batchDecrementTokenOwnerModule(address[],address,uint256[])",
@@ -1391,10 +1269,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "batchTransferBalanceModule",
     "type": "function",
     "signature": "batchTransferBalanceModule(address[],address,address,uint256[])",
@@ -1420,10 +1296,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "transferModule",
     "type": "function",
     "signature": "transferModule(address,uint256,address,address)",
@@ -1447,10 +1321,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "batchTransferModule",
     "type": "function",
     "signature": "batchTransferModule(address[],uint256[],address,address)",
@@ -1476,10 +1348,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "initialize",
     "type": "function",
     "signature": "initialize(bytes)",
@@ -1491,10 +1361,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "getFee",
     "type": "function",
     "constant": true,
@@ -1507,10 +1375,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "updateAndGetFee",
     "type": "function",
     "signature": "updateAndGetFee()",
@@ -1522,10 +1388,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "adjustFee",
     "type": "function",
     "signature": "adjustFee(bytes)",
@@ -1537,10 +1401,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "naturalUnit",
     "type": "function",
     "constant": true,
@@ -1553,10 +1415,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "getComponents",
     "type": "function",
     "constant": true,
@@ -1570,10 +1430,8 @@
         "is_array": true
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "getUnits",
     "type": "function",
     "constant": true,
@@ -1587,10 +1445,8 @@
         "is_array": true
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "tokenIsComponent",
     "type": "function",
     "constant": true,
@@ -1608,10 +1464,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "mint",
     "type": "function",
     "signature": "mint(address,uint256)",
@@ -1627,10 +1481,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "burn",
     "type": "function",
     "signature": "burn(address,uint256)",
@@ -1646,10 +1498,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "transfer",
     "type": "function",
     "signature": "transfer(address,uint256)",
@@ -1665,10 +1515,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "auctionLibrary",
     "type": "function",
     "constant": true,
@@ -1681,10 +1529,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "totalSupply",
     "type": "function",
     "constant": true,
@@ -1697,10 +1543,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "proposalStartTime",
     "type": "function",
     "constant": true,
@@ -1713,10 +1557,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "lastRebalanceTimestamp",
     "type": "function",
     "constant": true,
@@ -1729,10 +1571,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "rebalanceInterval",
     "type": "function",
     "constant": true,
@@ -1745,10 +1585,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "rebalanceState",
     "type": "function",
     "constant": true,
@@ -1761,10 +1599,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "startingCurrentSetAmount",
     "type": "function",
     "constant": true,
@@ -1777,10 +1613,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "balanceOf",
     "type": "function",
     "constant": true,
@@ -1798,10 +1632,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "propose",
     "type": "function",
     "signature": "propose(address,address,uint256,uint256,uint256)",
@@ -1829,10 +1661,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "naturalUnit",
     "type": "function",
     "constant": true,
@@ -1845,10 +1675,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "currentSet",
     "type": "function",
     "constant": true,
@@ -1861,10 +1689,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "nextSet",
     "type": "function",
     "constant": true,
@@ -1877,10 +1703,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "unitShares",
     "type": "function",
     "constant": true,
@@ -1893,10 +1717,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "burn",
     "type": "function",
     "signature": "burn(address,uint256)",
@@ -1912,10 +1734,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "placeBid",
     "type": "function",
     "signature": "placeBid(uint256)",
@@ -1943,10 +1763,8 @@
         "is_array": true
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "getCombinedTokenArrayLength",
     "type": "function",
     "constant": true,
@@ -1959,10 +1777,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "getCombinedTokenArray",
     "type": "function",
     "constant": true,
@@ -1976,10 +1792,8 @@
         "is_array": true
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "getFailedAuctionWithdrawComponents",
     "type": "function",
     "constant": true,
@@ -1993,10 +1807,8 @@
         "is_array": true
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "getAuctionPriceParameters",
     "type": "function",
     "constant": true,
@@ -2010,10 +1822,8 @@
         "is_array": true
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "getBiddingParameters",
     "type": "function",
     "constant": true,
@@ -2027,10 +1837,8 @@
         "is_array": true
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "getBidPrice",
     "type": "function",
     "constant": true,
@@ -2054,10 +1862,8 @@
         "is_array": true
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "composeTokenFlow",
     "type": "function",
     "signature": "composeTokenFlow(address[],uint256[],uint256[])",
@@ -2085,10 +1891,8 @@
         "name": "memory"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "decomposeTokenFlow",
     "type": "function",
     "signature": "decomposeTokenFlow(TokenFlow)",
@@ -2116,10 +1920,8 @@
         "is_array": true
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "decomposeTokenFlowToBidPrice",
     "type": "function",
     "signature": "decomposeTokenFlowToBidPrice(TokenFlow)",
@@ -2142,10 +1944,8 @@
         "is_array": true
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "getTokenFlows",
     "type": "function",
     "constant": true,
@@ -2178,10 +1978,8 @@
         "is_array": true
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "startRebalance",
     "type": "function",
     "signature": "startRebalance(ISetToken,ISetToken,uint256,bytes)",
@@ -2205,10 +2003,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "getBidPrice",
     "type": "function",
     "constant": true,
@@ -2230,10 +2026,8 @@
         "name": "memory"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "placeBid",
     "type": "function",
     "signature": "placeBid(uint256)",
@@ -2250,30 +2044,24 @@
         "name": "memory"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "settleRebalance",
     "type": "function",
     "signature": "settleRebalance()",
     "encoding": "0xfa2d8c90",
     "inputs": [],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "endFailedRebalance",
     "type": "function",
     "signature": "endFailedRebalance()",
     "encoding": "0x8a411b76",
     "inputs": [],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "auctionPriceParameters",
     "type": "function",
     "constant": true,
@@ -2291,10 +2079,8 @@
         "name": "memory"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "hasRebalanceFailed",
     "type": "function",
     "constant": true,
@@ -2312,10 +2098,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "minimumBid",
     "type": "function",
     "constant": true,
@@ -2333,10 +2117,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "startingCurrentSets",
     "type": "function",
     "constant": true,
@@ -2354,10 +2136,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "remainingCurrentSets",
     "type": "function",
     "constant": true,
@@ -2375,10 +2155,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "getCombinedCurrentSetUnits",
     "type": "function",
     "constant": true,
@@ -2397,10 +2175,8 @@
         "is_array": true
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "getCombinedNextSetUnits",
     "type": "function",
     "constant": true,
@@ -2419,10 +2195,8 @@
         "is_array": true
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "getCombinedTokenArray",
     "type": "function",
     "constant": true,
@@ -2441,10 +2215,8 @@
         "is_array": true
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "core",
     "type": "function",
     "signature": "core()",
@@ -2456,10 +2228,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "createSet",
     "type": "function",
     "signature": "createSet(address[],uint256[],uint256,bytes32,bytes32,bytes)",
@@ -2498,10 +2268,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "whiteList",
     "type": "function",
     "constant": true,
@@ -2519,10 +2287,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "areValidAddresses",
     "type": "function",
     "constant": true,
@@ -2541,10 +2307,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "minimumRebalanceInterval",
     "type": "function",
     "signature": "minimumRebalanceInterval()",
@@ -2556,10 +2320,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "minimumProposalPeriod",
     "type": "function",
     "signature": "minimumProposalPeriod()",
@@ -2571,10 +2333,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "minimumTimeToPivot",
     "type": "function",
     "signature": "minimumTimeToPivot()",
@@ -2586,10 +2346,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "maximumTimeToPivot",
     "type": "function",
     "signature": "maximumTimeToPivot()",
@@ -2601,10 +2359,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "minimumNaturalUnit",
     "type": "function",
     "signature": "minimumNaturalUnit()",
@@ -2616,10 +2372,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "maximumNaturalUnit",
     "type": "function",
     "signature": "maximumNaturalUnit()",
@@ -2631,10 +2385,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "rebalanceAuctionModule",
     "type": "function",
     "signature": "rebalanceAuctionModule()",
@@ -2646,10 +2398,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "withdrawTo",
     "type": "function",
     "signature": "withdrawTo(address,address,uint256)",
@@ -2669,10 +2419,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "incrementTokenOwner",
     "type": "function",
     "signature": "incrementTokenOwner(address,address,uint256)",
@@ -2692,10 +2440,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "decrementTokenOwner",
     "type": "function",
     "signature": "decrementTokenOwner(address,address,uint256)",
@@ -2715,10 +2461,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "transferBalance",
     "type": "function",
     "signature": "transferBalance(address,address,address,uint256)",
@@ -2742,10 +2486,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "batchWithdrawTo",
     "type": "function",
     "signature": "batchWithdrawTo(address[],address,uint256[])",
@@ -2767,10 +2509,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "batchIncrementTokenOwner",
     "type": "function",
     "signature": "batchIncrementTokenOwner(address[],address,uint256[])",
@@ -2792,10 +2532,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "batchDecrementTokenOwner",
     "type": "function",
     "signature": "batchDecrementTokenOwner(address[],address,uint256[])",
@@ -2817,10 +2555,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "batchTransferBalance",
     "type": "function",
     "signature": "batchTransferBalance(address[],address,address,uint256[])",
@@ -2846,10 +2582,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "getOwnerBalance",
     "type": "function",
     "constant": true,
@@ -2871,10 +2605,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "validateLessThanEqualOneHundredPercent",
     "type": "function",
     "constant": true,
@@ -2887,10 +2619,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "validateMultipleOfBasisPoint",
     "type": "function",
     "constant": true,
@@ -2903,10 +2633,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "NewManagerAdded",
     "type": "event",
     "signature": "NewManagerAdded(address,address)",
@@ -2922,10 +2650,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "NewLiquidatorAdded",
     "type": "event",
     "signature": "NewLiquidatorAdded(address,address)",
@@ -2941,10 +2667,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "NewEntryFee",
     "type": "event",
     "signature": "NewEntryFee(uint256,uint256)",
@@ -2960,10 +2684,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "NewFeeRecipient",
     "type": "event",
     "signature": "NewFeeRecipient(address,address)",
@@ -2979,10 +2701,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "EntryFeePaid",
     "type": "event",
     "signature": "EntryFeePaid(address,uint256)",
@@ -2999,10 +2719,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "RebalanceStarted",
     "type": "event",
     "signature": "RebalanceStarted(address,address,uint256,uint256)",
@@ -3026,10 +2744,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "RebalanceSettled",
     "type": "event",
     "signature": "RebalanceSettled(address,uint256,uint256,uint256,uint256,uint256)",
@@ -3062,10 +2778,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "setManager",
     "type": "function",
     "signature": "setManager(address)",
@@ -3077,10 +2791,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "setEntryFee",
     "type": "function",
     "signature": "setEntryFee(uint256)",
@@ -3092,10 +2804,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "setLiquidator",
     "type": "function",
     "signature": "setLiquidator(ILiquidator)",
@@ -3107,10 +2817,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "setFeeRecipient",
     "type": "function",
     "signature": "setFeeRecipient(address)",
@@ -3122,10 +2830,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "rebalanceFee",
     "type": "function",
     "constant": true,
@@ -3138,10 +2844,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "getComponents",
     "type": "function",
     "constant": true,
@@ -3155,10 +2859,8 @@
         "is_array": true
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "getUnits",
     "type": "function",
     "constant": true,
@@ -3172,10 +2874,8 @@
         "is_array": true
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "tokenIsComponent",
     "type": "function",
     "constant": true,
@@ -3193,10 +2893,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "validateManager",
     "type": "function",
     "constant": true,
@@ -3204,10 +2902,8 @@
     "encoding": "0x25700ba1",
     "inputs": [],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "validateCallerIsCore",
     "type": "function",
     "constant": true,
@@ -3215,10 +2911,8 @@
     "encoding": "0xf208b8b1",
     "inputs": [],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "validateCallerIsModule",
     "type": "function",
     "constant": true,
@@ -3226,10 +2920,8 @@
     "encoding": "0xc9ce376c",
     "inputs": [],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "validateRebalanceStateIs",
     "type": "function",
     "constant": true,
@@ -3242,10 +2934,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "validateRebalanceStateIsNot",
     "type": "function",
     "constant": true,
@@ -3258,10 +2948,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "IncentiveFeePaid",
     "type": "event",
     "signature": "IncentiveFeePaid(address,uint256,uint256,uint256)",
@@ -3286,10 +2974,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "handleFees",
     "type": "function",
     "signature": "handleFees()",
@@ -3305,10 +2991,8 @@
         "name": "ret_1"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "calculateIncentiveFeeInflation",
     "type": "function",
     "constant": true,
@@ -3326,10 +3010,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "validateFeeActualization",
     "type": "function",
     "constant": true,
@@ -3337,10 +3019,8 @@
     "encoding": "0x28000375",
     "inputs": [],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "calculateNewUnitShares",
     "type": "function",
     "constant": true,
@@ -3353,10 +3033,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "max",
     "type": "function",
     "signature": "max(uint256,uint256)",
@@ -3377,10 +3055,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "min",
     "type": "function",
     "signature": "min(uint256,uint256)",
@@ -3401,10 +3077,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "average",
     "type": "function",
     "signature": "average(uint256,uint256)",
@@ -3425,10 +3099,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "validateTokensAreComponents",
     "type": "function",
     "constant": true,
@@ -3446,10 +3118,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "isMultipleOfSetNaturalUnit",
     "type": "function",
     "constant": true,
@@ -3466,10 +3136,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "requireValidSet",
     "type": "function",
     "constant": true,
@@ -3486,10 +3154,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "getSetDetails",
     "type": "function",
     "constant": true,
@@ -3507,10 +3173,8 @@
         "name": "memory"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "validateRebalancingSettlement",
     "type": "function",
     "constant": true,
@@ -3518,10 +3182,8 @@
     "encoding": "0x2fb2b50b",
     "inputs": [],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "issueNextSet",
     "type": "function",
     "signature": "issueNextSet(uint256)",
@@ -3533,10 +3195,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "transitionToDefault",
     "type": "function",
     "signature": "transitionToDefault(uint256)",
@@ -3548,10 +3208,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "calculateSetIssueQuantity",
     "type": "function",
     "constant": true,
@@ -3569,10 +3227,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "handleFees",
     "type": "function",
     "signature": "handleFees()",
@@ -3588,10 +3244,8 @@
         "name": "ret_1"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "calculateRebalanceFeeInflation",
     "type": "function",
     "constant": true,
@@ -3609,10 +3263,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "calculateNextSetNewUnitShares",
     "type": "function",
     "constant": true,
@@ -3630,10 +3282,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "calculateMaxIssueAmount",
     "type": "function",
     "constant": true,
@@ -3651,10 +3301,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "name",
     "type": "function",
     "constant": true,
@@ -3667,10 +3315,8 @@
         "name": "memory"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "symbol",
     "type": "function",
     "constant": true,
@@ -3683,10 +3329,8 @@
         "name": "memory"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "decimals",
     "type": "function",
     "constant": true,
@@ -3699,10 +3343,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "isConstructor",
     "type": "function",
     "constant": true,
@@ -3715,10 +3357,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "getAuctionPriceParameters",
     "type": "function",
     "constant": true,
@@ -3732,10 +3372,8 @@
         "is_array": true
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "getCombinedCurrentUnits",
     "type": "function",
     "constant": true,
@@ -3749,10 +3387,8 @@
         "is_array": true
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "getCombinedNextSetUnits",
     "type": "function",
     "constant": true,
@@ -3766,10 +3402,8 @@
         "is_array": true
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "getCombinedTokenArray",
     "type": "function",
     "constant": true,
@@ -3783,10 +3417,8 @@
         "is_array": true
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "getCombinedTokenArrayLength",
     "type": "function",
     "constant": true,
@@ -3799,10 +3431,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "startingCurrentSetAmount",
     "type": "function",
     "constant": true,
@@ -3815,10 +3445,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "auctionPriceParameters",
     "type": "function",
     "constant": true,
@@ -3831,10 +3459,8 @@
         "name": "memory"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "getBiddingParameters",
     "type": "function",
     "constant": true,
@@ -3848,10 +3474,8 @@
         "is_array": true
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "biddingParameters",
     "type": "function",
     "constant": true,
@@ -3868,10 +3492,8 @@
         "name": "ret_1"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "getFailedAuctionWithdrawComponents",
     "type": "function",
     "constant": true,
@@ -3885,10 +3507,8 @@
         "is_array": true
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "indexOf",
     "type": "function",
     "signature": "indexOf(address[],address)",
@@ -3914,10 +3534,8 @@
         "name": "ret_1"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "contains",
     "type": "function",
     "signature": "contains(address[],address)",
@@ -3939,10 +3557,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "extend",
     "type": "function",
     "signature": "extend(address[],address[])",
@@ -3966,10 +3582,8 @@
         "is_array": true
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "append",
     "type": "function",
     "signature": "append(address[],address)",
@@ -3992,10 +3606,8 @@
         "is_array": true
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "intersect",
     "type": "function",
     "signature": "intersect(address[],address[])",
@@ -4019,10 +3631,8 @@
         "is_array": true
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "union",
     "type": "function",
     "signature": "union(address[],address[])",
@@ -4046,10 +3656,8 @@
         "is_array": true
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "difference",
     "type": "function",
     "signature": "difference(address[],address[])",
@@ -4073,10 +3681,8 @@
         "is_array": true
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "pop",
     "type": "function",
     "signature": "pop(address[],uint256)",
@@ -4103,10 +3709,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "remove",
     "type": "function",
     "signature": "remove(address[],address)",
@@ -4129,10 +3733,8 @@
         "is_array": true
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "hasDuplicate",
     "type": "function",
     "signature": "hasDuplicate(address[])",
@@ -4150,10 +3752,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "isEqual",
     "type": "function",
     "signature": "isEqual(address[],address[])",
@@ -4176,10 +3776,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "validateFailRebalance",
     "type": "function",
     "constant": true,
@@ -4187,10 +3785,8 @@
     "encoding": "0xbe41742d",
     "inputs": [],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "getNewRebalanceState",
     "type": "function",
     "constant": true,
@@ -4203,10 +3799,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "transitionToNewState",
     "type": "function",
     "signature": "transitionToNewState(RebalancingLibrary.State)",
@@ -4218,10 +3812,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "liquidatorBreached",
     "type": "function",
     "constant": true,
@@ -4234,10 +3826,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "failPeriodBreached",
     "type": "function",
     "constant": true,
@@ -4250,10 +3840,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "reissueSetIfRevertToDefault",
     "type": "function",
     "signature": "reissueSetIfRevertToDefault(RebalancingLibrary.State)",
@@ -4265,10 +3853,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "setWithdrawComponentsIfDrawdown",
     "type": "function",
     "signature": "setWithdrawComponentsIfDrawdown(RebalancingLibrary.State)",
@@ -4280,10 +3866,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "validateMint",
     "type": "function",
     "constant": true,
@@ -4291,10 +3875,8 @@
     "encoding": "0x8d4192dd",
     "inputs": [],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "validateBurn",
     "type": "function",
     "constant": true,
@@ -4302,10 +3884,8 @@
     "encoding": "0xbc3ab3c4",
     "inputs": [],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "handleEntryFees",
     "type": "function",
     "signature": "handleEntryFees(uint256)",
@@ -4322,10 +3902,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "validateGetBidPrice",
     "type": "function",
     "constant": true,
@@ -4338,10 +3916,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "validatePlaceBid",
     "type": "function",
     "constant": true,
@@ -4354,20 +3930,16 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "updateHasBiddedIfNecessary",
     "type": "function",
     "signature": "updateHasBiddedIfNecessary()",
     "encoding": "0xd56d6ed3",
     "inputs": [],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "validateStartRebalance",
     "type": "function",
     "constant": true,
@@ -4380,10 +3952,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "calculateStartingSetQuantity",
     "type": "function",
     "constant": true,
@@ -4396,10 +3966,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "liquidatorRebalancingStart",
     "type": "function",
     "signature": "liquidatorRebalancingStart(ISetToken,uint256,bytes)",
@@ -4419,10 +3987,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "transitionToRebalance",
     "type": "function",
     "signature": "transitionToRebalance(ISetToken)",
@@ -4434,10 +4000,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "naturalUnitsAreValid",
     "type": "function",
     "constant": true,
@@ -4459,10 +4023,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "initialize",
     "type": "function",
     "signature": "initialize(bytes)",
@@ -4474,10 +4036,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "startRebalance",
     "type": "function",
     "signature": "startRebalance(ISetToken,bytes)",
@@ -4493,10 +4053,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "getBidPrice",
     "type": "function",
     "constant": true,
@@ -4520,10 +4078,8 @@
         "is_array": true
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "placeBid",
     "type": "function",
     "signature": "placeBid(uint256)",
@@ -4551,30 +4107,24 @@
         "is_array": true
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "settleRebalance",
     "type": "function",
     "signature": "settleRebalance()",
     "encoding": "0xfa2d8c90",
     "inputs": [],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "endFailedRebalance",
     "type": "function",
     "signature": "endFailedRebalance()",
     "encoding": "0x8a411b76",
     "inputs": [],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "mint",
     "type": "function",
     "signature": "mint(address,uint256)",
@@ -4590,10 +4140,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "burn",
     "type": "function",
     "signature": "burn(address,uint256)",
@@ -4609,40 +4157,32 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "endFailedAuction",
     "type": "function",
     "signature": "endFailedAuction()",
     "encoding": "0x75aff3c1",
     "inputs": [],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "settleRebalance",
     "type": "function",
     "signature": "settleRebalance()",
     "encoding": "0xfa2d8c90",
     "inputs": [],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "actualizeFee",
     "type": "function",
     "signature": "actualizeFee()",
     "encoding": "0x231e004e",
     "inputs": [],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "adjustFee",
     "type": "function",
     "signature": "adjustFee(bytes)",
@@ -4654,10 +4194,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "validateUnitShares",
     "type": "function",
     "constant": true,
@@ -4671,5 +4209,4 @@
     ],
     "outputs": []
   }
-
 ]

@@ -1,7 +1,5 @@
 [
-
-
-    {
+  {
     "name": "transfer",
     "type": "function",
     "signature": "transfer(address,uint256)",
@@ -22,10 +20,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "approve",
     "type": "function",
     "signature": "approve(address,uint256)",
@@ -46,10 +42,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "transferFrom",
     "type": "function",
     "signature": "transferFrom(address,address,uint256)",
@@ -74,10 +68,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "totalSupply",
     "type": "function",
     "constant": true,
@@ -90,10 +82,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "balanceOf",
     "type": "function",
     "constant": true,
@@ -111,10 +101,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "allowance",
     "type": "function",
     "constant": true,
@@ -136,10 +124,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "Transfer",
     "type": "event",
     "signature": "Transfer(address,address,uint256)",
@@ -161,10 +147,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "Approval",
     "type": "event",
     "signature": "Approval(address,address,uint256)",
@@ -186,10 +170,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "totalSupply",
     "type": "function",
     "constant": true,
@@ -202,10 +184,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "balanceOf",
     "type": "function",
     "constant": true,
@@ -223,10 +203,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "allowance",
     "type": "function",
     "constant": true,
@@ -248,10 +226,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "transfer",
     "type": "function",
     "signature": "transfer(address,uint256)",
@@ -272,10 +248,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "approve",
     "type": "function",
     "signature": "approve(address,uint256)",
@@ -296,10 +270,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "transferFrom",
     "type": "function",
     "signature": "transferFrom(address,address,uint256)",
@@ -324,10 +296,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "increaseAllowance",
     "type": "function",
     "signature": "increaseAllowance(address,uint256)",
@@ -348,10 +318,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "decreaseAllowance",
     "type": "function",
     "signature": "decreaseAllowance(address,uint256)",
@@ -372,10 +340,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "_transfer",
     "type": "function",
     "signature": "_transfer(address,address,uint256)",
@@ -395,10 +361,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "_mint",
     "type": "function",
     "signature": "_mint(address,uint256)",
@@ -414,10 +378,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "_burn",
     "type": "function",
     "signature": "_burn(address,uint256)",
@@ -433,10 +395,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "_approve",
     "type": "function",
     "signature": "_approve(address,address,uint256)",
@@ -456,10 +416,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "_burnFrom",
     "type": "function",
     "signature": "_burnFrom(address,uint256)",
@@ -475,10 +433,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "mul",
     "type": "function",
     "signature": "mul(uint256,uint256)",
@@ -499,10 +455,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "div",
     "type": "function",
     "signature": "div(uint256,uint256)",
@@ -523,10 +477,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "sub",
     "type": "function",
     "signature": "sub(uint256,uint256)",
@@ -547,10 +499,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "add",
     "type": "function",
     "signature": "add(uint256,uint256)",
@@ -571,10 +521,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "SummonComplete",
     "type": "event",
     "signature": "SummonComplete(address,address[],uint256,uint256,uint256,uint256,uint256,uint256,uint256)",
@@ -620,10 +568,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "SubmitProposal",
     "type": "event",
     "signature": "SubmitProposal(address,uint256,uint256,uint256,address,uint256,address,string,bool[6],uint256,address,address)",
@@ -683,10 +629,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "SponsorProposal",
     "type": "event",
     "signature": "SponsorProposal(address,address,uint256,uint256,uint256)",
@@ -716,10 +660,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "SubmitVote",
     "type": "event",
     "signature": "SubmitVote(uint256,uint256,address,address,uint8)",
@@ -750,10 +692,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "ProcessProposal",
     "type": "event",
     "signature": "ProcessProposal(uint256,uint256,bool)",
@@ -775,10 +715,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "ProcessWhitelistProposal",
     "type": "event",
     "signature": "ProcessWhitelistProposal(uint256,uint256,bool)",
@@ -800,10 +738,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "ProcessGuildKickProposal",
     "type": "event",
     "signature": "ProcessGuildKickProposal(uint256,uint256,bool)",
@@ -825,10 +761,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "Ragequit",
     "type": "event",
     "signature": "Ragequit(address,uint256,uint256)",
@@ -849,10 +783,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "TokensCollected",
     "type": "event",
     "signature": "TokensCollected(address,uint256)",
@@ -869,10 +801,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "CancelProposal",
     "type": "event",
     "signature": "CancelProposal(uint256,address)",
@@ -889,10 +819,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "UpdateDelegateKey",
     "type": "event",
     "signature": "UpdateDelegateKey(address,address)",
@@ -909,10 +837,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "Withdraw",
     "type": "event",
     "signature": "Withdraw(address,address,uint256)",
@@ -933,10 +859,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "submitProposal",
     "type": "function",
     "signature": "submitProposal(address,uint256,uint256,uint256,address,uint256,address,string)",
@@ -981,10 +905,8 @@
         "name": "proposalId"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "submitWhitelistProposal",
     "type": "function",
     "signature": "submitWhitelistProposal(address,string)",
@@ -1005,10 +927,8 @@
         "name": "proposalId"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "submitGuildKickProposal",
     "type": "function",
     "signature": "submitGuildKickProposal(address,string)",
@@ -1029,10 +949,8 @@
         "name": "proposalId"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "_submitProposal",
     "type": "function",
     "signature": "_submitProposal(address,uint256,uint256,uint256,address,uint256,address,string,bool[6])",
@@ -1077,10 +995,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "sponsorProposal",
     "type": "function",
     "signature": "sponsorProposal(uint256)",
@@ -1092,10 +1008,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "submitVote",
     "type": "function",
     "signature": "submitVote(uint256,uint8)",
@@ -1111,10 +1025,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "processProposal",
     "type": "function",
     "signature": "processProposal(uint256)",
@@ -1126,10 +1038,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "processWhitelistProposal",
     "type": "function",
     "signature": "processWhitelistProposal(uint256)",
@@ -1141,10 +1051,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "processGuildKickProposal",
     "type": "function",
     "signature": "processGuildKickProposal(uint256)",
@@ -1156,10 +1064,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "_didPass",
     "type": "function",
     "signature": "_didPass(uint256)",
@@ -1176,10 +1082,8 @@
         "name": "didPass"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "_validateProposalForProcessing",
     "type": "function",
     "constant": true,
@@ -1192,10 +1096,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "_returnDeposit",
     "type": "function",
     "signature": "_returnDeposit(address)",
@@ -1207,10 +1109,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "ragequit",
     "type": "function",
     "signature": "ragequit(uint256,uint256)",
@@ -1226,10 +1126,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "_ragequit",
     "type": "function",
     "signature": "_ragequit(address,uint256,uint256)",
@@ -1249,10 +1147,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "ragekick",
     "type": "function",
     "signature": "ragekick(address)",
@@ -1264,10 +1160,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "withdrawBalance",
     "type": "function",
     "signature": "withdrawBalance(address,uint256)",
@@ -1283,10 +1177,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "withdrawBalances",
     "type": "function",
     "signature": "withdrawBalances(address[],uint256[],bool)",
@@ -1308,10 +1200,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "_withdrawBalance",
     "type": "function",
     "signature": "_withdrawBalance(address,uint256)",
@@ -1327,10 +1217,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "collectTokens",
     "type": "function",
     "signature": "collectTokens(address)",
@@ -1342,10 +1230,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "cancelProposal",
     "type": "function",
     "signature": "cancelProposal(uint256)",
@@ -1357,10 +1243,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "updateDelegateKey",
     "type": "function",
     "signature": "updateDelegateKey(address)",
@@ -1372,10 +1256,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "canRagequit",
     "type": "function",
     "constant": true,
@@ -1393,10 +1275,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "hasVotingPeriodExpired",
     "type": "function",
     "constant": true,
@@ -1414,10 +1294,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "max",
     "type": "function",
     "signature": "max(uint256,uint256)",
@@ -1438,10 +1316,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "getCurrentPeriod",
     "type": "function",
     "constant": true,
@@ -1454,10 +1330,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "getProposalQueueLength",
     "type": "function",
     "constant": true,
@@ -1470,10 +1344,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "getProposalFlags",
     "type": "function",
     "constant": true,
@@ -1492,10 +1364,8 @@
         "is_array": true
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "getUserTokenBalance",
     "type": "function",
     "constant": true,
@@ -1517,10 +1387,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "getMemberProposalVote",
     "type": "function",
     "constant": true,
@@ -1542,10 +1410,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "getTokenCount",
     "type": "function",
     "constant": true,
@@ -1558,10 +1424,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "unsafeAddToBalance",
     "type": "function",
     "signature": "unsafeAddToBalance(address,address,uint256)",
@@ -1581,10 +1445,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "unsafeSubtractFromBalance",
     "type": "function",
     "signature": "unsafeSubtractFromBalance(address,address,uint256)",
@@ -1604,10 +1466,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "unsafeInternalTransfer",
     "type": "function",
     "signature": "unsafeInternalTransfer(address,address,address,uint256)",
@@ -1631,10 +1491,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "fairShare",
     "type": "function",
     "signature": "fairShare(uint256,uint256,uint256)",
@@ -1659,10 +1517,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "Submit",
     "type": "event",
     "signature": "Submit(uint256)",
@@ -1674,10 +1530,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "submitProposal",
     "type": "function",
     "signature": "submitProposal(address,uint256,uint256,uint256,address,uint256,address,string)",
@@ -1717,10 +1571,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "submitWhitelistProposal",
     "type": "function",
     "signature": "submitWhitelistProposal(address,string)",
@@ -1736,10 +1588,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "submitGuildKickProposal",
     "type": "function",
     "signature": "submitGuildKickProposal(address,string)",
@@ -1755,10 +1605,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "Summoned",
     "type": "event",
     "signature": "Summoned(address,address)",
@@ -1776,10 +1624,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "summonMoloch",
     "type": "function",
     "signature": "summonMoloch(address,address[],uint256,uint256,uint256,uint256,uint256,uint256)",
@@ -1820,10 +1666,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "getMolochCount",
     "type": "function",
     "constant": true,
@@ -1837,5 +1681,4 @@
       }
     ]
   }
-
 ]

@@ -1,7 +1,5 @@
 [
-
-
-    {
+  {
     "name": "balanceOf",
     "type": "function",
     "constant": true,
@@ -19,10 +17,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "isCToken",
     "type": "function",
     "constant": true,
@@ -35,10 +31,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "approve",
     "type": "function",
     "signature": "approve(address,uint256)",
@@ -59,10 +53,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "balanceOfUnderlying",
     "type": "function",
     "signature": "balanceOfUnderlying(address)",
@@ -79,10 +71,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "exchangeRateCurrent",
     "type": "function",
     "signature": "exchangeRateCurrent()",
@@ -94,10 +84,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "mint",
     "type": "function",
     "signature": "mint(uint256)",
@@ -114,10 +102,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "redeem",
     "type": "function",
     "signature": "redeem(uint256)",
@@ -134,10 +120,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "redeemUnderlying",
     "type": "function",
     "signature": "redeemUnderlying(uint256)",
@@ -154,10 +138,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "transfer",
     "type": "function",
     "signature": "transfer(address,uint256)",
@@ -178,10 +160,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "transferFrom",
     "type": "function",
     "signature": "transferFrom(address,address,uint256)",
@@ -206,10 +186,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "_msgSender",
     "type": "function",
     "constant": true,
@@ -222,10 +200,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "_msgData",
     "type": "function",
     "constant": true,
@@ -238,10 +214,8 @@
         "name": "memory"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "isConstructor",
     "type": "function",
     "constant": true,
@@ -254,10 +228,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "OwnershipTransferred",
     "type": "event",
     "signature": "OwnershipTransferred(address,address)",
@@ -275,10 +247,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "initialize",
     "type": "function",
     "signature": "initialize(address)",
@@ -290,10 +260,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "owner",
     "type": "function",
     "constant": true,
@@ -306,10 +274,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "isOwner",
     "type": "function",
     "constant": true,
@@ -322,10 +288,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "transferOwnership",
     "type": "function",
     "signature": "transferOwnership(address)",
@@ -337,10 +301,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "_transferOwnership",
     "type": "function",
     "signature": "_transferOwnership(address)",
@@ -352,10 +314,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "DiscardCToken",
     "type": "event",
     "signature": "DiscardCToken(address)",
@@ -368,10 +328,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "WhitelistCToken",
     "type": "event",
     "signature": "WhitelistCToken(address)",
@@ -384,10 +342,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "whitelistCToken",
     "type": "function",
     "signature": "whitelistCToken(address)",
@@ -399,10 +355,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "discardCToken",
     "type": "function",
     "signature": "discardCToken(address)",
@@ -414,10 +368,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "isCToken",
     "type": "function",
     "constant": true,
@@ -435,10 +387,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "whitelistCToken",
     "type": "function",
     "signature": "whitelistCToken(address)",
@@ -450,10 +400,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "discardCToken",
     "type": "function",
     "signature": "discardCToken(address)",
@@ -465,10 +413,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "isCToken",
     "type": "function",
     "constant": true,
@@ -486,10 +432,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "isConstructor",
     "type": "function",
     "constant": true,
@@ -502,10 +446,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "getHubAddr",
     "type": "function",
     "constant": true,
@@ -518,10 +460,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "acceptRelayedCall",
     "type": "function",
     "constant": true,
@@ -575,10 +515,8 @@
         "name": "memory"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "preRelayedCall",
     "type": "function",
     "signature": "preRelayedCall(bytes)",
@@ -595,10 +533,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "postRelayedCall",
     "type": "function",
     "signature": "postRelayedCall(bytes,bool,uint256,bytes32)",
@@ -622,10 +558,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "preRelayedCall",
     "type": "function",
     "signature": "preRelayedCall(bytes)",
@@ -642,10 +576,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "postRelayedCall",
     "type": "function",
     "signature": "postRelayedCall(bytes,bool,uint256,bytes32)",
@@ -669,10 +601,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "_approveRelayedCall",
     "type": "function",
     "signature": "_approveRelayedCall()",
@@ -688,10 +618,8 @@
         "name": "memory"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "_approveRelayedCall",
     "type": "function",
     "signature": "_approveRelayedCall(bytes)",
@@ -712,10 +640,8 @@
         "name": "memory"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "_rejectRelayedCall",
     "type": "function",
     "signature": "_rejectRelayedCall(uint256)",
@@ -736,10 +662,8 @@
         "name": "memory"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "_preRelayedCall",
     "type": "function",
     "signature": "_preRelayedCall(bytes)",
@@ -756,10 +680,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "_postRelayedCall",
     "type": "function",
     "signature": "_postRelayedCall(bytes,bool,uint256,bytes32)",
@@ -783,10 +705,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "_computeCharge",
     "type": "function",
     "signature": "_computeCharge(uint256,uint256,uint256)",
@@ -811,10 +731,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "recover",
     "type": "function",
     "signature": "recover(bytes32,bytes)",
@@ -835,10 +753,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "toEthSignedMessageHash",
     "type": "function",
     "signature": "toEthSignedMessageHash(bytes32)",
@@ -855,10 +771,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "initialize",
     "type": "function",
     "signature": "initialize(address)",
@@ -870,10 +784,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "acceptRelayedCall",
     "type": "function",
     "constant": true,
@@ -927,10 +839,8 @@
         "name": "memory"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "_getTrustedSigner",
     "type": "function",
     "constant": true,
@@ -943,10 +853,8 @@
         "name": "trustedSigner"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "_setTrustedSigner",
     "type": "function",
     "signature": "_setTrustedSigner(address)",
@@ -958,10 +866,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "_msgSender",
     "type": "function",
     "constant": true,
@@ -974,10 +880,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "_msgData",
     "type": "function",
     "constant": true,
@@ -990,10 +894,8 @@
         "name": "memory"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "RelayHubChanged",
     "type": "event",
     "signature": "RelayHubChanged(address,address)",
@@ -1011,20 +913,16 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "initialize",
     "type": "function",
     "signature": "initialize()",
     "encoding": "0x8129fc1c",
     "inputs": [],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "_getRelayHub",
     "type": "function",
     "constant": true,
@@ -1037,10 +935,8 @@
         "name": "relayHub"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "_upgradeRelayHub",
     "type": "function",
     "signature": "_upgradeRelayHub(address)",
@@ -1052,10 +948,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "_msgSender",
     "type": "function",
     "constant": true,
@@ -1068,10 +962,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "_msgData",
     "type": "function",
     "constant": true,
@@ -1084,10 +976,8 @@
         "name": "memory"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "_getRelayedCallSender",
     "type": "function",
     "signature": "_getRelayedCallSender()",
@@ -1099,10 +989,8 @@
         "name": "result"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "_getRelayedCallData",
     "type": "function",
     "signature": "_getRelayedCallData()",
@@ -1114,10 +1002,8 @@
         "name": "memory"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "stake",
     "type": "function",
     "signature": "stake(address,uint256)",
@@ -1133,10 +1019,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "Staked",
     "type": "event",
     "signature": "Staked(address,uint256,uint256)",
@@ -1157,10 +1041,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "registerRelay",
     "type": "function",
     "signature": "registerRelay(uint256,string)",
@@ -1176,10 +1058,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "RelayAdded",
     "type": "event",
     "signature": "RelayAdded(address,address,uint256,uint256,uint256,string)",
@@ -1213,10 +1093,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "removeRelayByOwner",
     "type": "function",
     "signature": "removeRelayByOwner(address)",
@@ -1228,10 +1106,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "RelayRemoved",
     "type": "event",
     "signature": "RelayRemoved(address,uint256)",
@@ -1248,10 +1124,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "unstake",
     "type": "function",
     "signature": "unstake(address)",
@@ -1263,10 +1137,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "Unstaked",
     "type": "event",
     "signature": "Unstaked(address,uint256)",
@@ -1283,10 +1155,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "getRelay",
     "type": "function",
     "constant": true,
@@ -1320,10 +1190,8 @@
         "name": "state"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "depositFor",
     "type": "function",
     "signature": "depositFor(address)",
@@ -1335,10 +1203,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "Deposited",
     "type": "event",
     "signature": "Deposited(address,address,uint256)",
@@ -1360,10 +1226,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "balanceOf",
     "type": "function",
     "constant": true,
@@ -1381,10 +1245,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "withdraw",
     "type": "function",
     "signature": "withdraw(uint256,address)",
@@ -1400,10 +1262,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "Withdrawn",
     "type": "event",
     "signature": "Withdrawn(address,address,uint256)",
@@ -1425,10 +1285,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "canRelay",
     "type": "function",
     "constant": true,
@@ -1486,10 +1344,8 @@
         "name": "recipientContext"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "relayCall",
     "type": "function",
     "signature": "relayCall(address,address,bytes,uint256,uint256,uint256,uint256,bytes,bytes)",
@@ -1533,10 +1389,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "CanRelayFailed",
     "type": "event",
     "signature": "CanRelayFailed(address,address,address,bytes4,uint256)",
@@ -1567,10 +1421,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "TransactionRelayed",
     "type": "event",
     "signature": "TransactionRelayed(address,address,address,bytes4,RelayCallStatus,uint256)",
@@ -1605,10 +1457,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "requiredGas",
     "type": "function",
     "constant": true,
@@ -1626,10 +1476,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "maxPossibleCharge",
     "type": "function",
     "constant": true,
@@ -1655,10 +1503,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "penalizeRepeatedNonce",
     "type": "function",
     "signature": "penalizeRepeatedNonce(bytes,bytes,bytes,bytes)",
@@ -1682,10 +1528,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "penalizeIllegalTransaction",
     "type": "function",
     "signature": "penalizeIllegalTransaction(bytes,bytes)",
@@ -1701,10 +1545,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "Penalized",
     "type": "event",
     "signature": "Penalized(address,address,uint256)",
@@ -1725,10 +1567,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "getNonce",
     "type": "function",
     "constant": true,
@@ -1746,20 +1586,16 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "initialize",
     "type": "function",
     "signature": "initialize()",
     "encoding": "0x8129fc1c",
     "inputs": [],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "getHubAddr",
     "type": "function",
     "constant": true,
@@ -1772,10 +1608,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "relayHubVersion",
     "type": "function",
     "constant": true,
@@ -1788,10 +1622,8 @@
         "name": "memory"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "_withdrawDeposits",
     "type": "function",
     "signature": "_withdrawDeposits(uint256,address)",
@@ -1807,10 +1639,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "transfer",
     "type": "function",
     "signature": "transfer(address,uint256)",
@@ -1831,10 +1661,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "approve",
     "type": "function",
     "signature": "approve(address,uint256)",
@@ -1855,10 +1683,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "transferFrom",
     "type": "function",
     "signature": "transferFrom(address,address,uint256)",
@@ -1883,10 +1709,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "totalSupply",
     "type": "function",
     "constant": true,
@@ -1899,10 +1723,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "balanceOf",
     "type": "function",
     "constant": true,
@@ -1920,10 +1742,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "allowance",
     "type": "function",
     "constant": true,
@@ -1945,10 +1765,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "Transfer",
     "type": "event",
     "signature": "Transfer(address,address,uint256)",
@@ -1970,10 +1788,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "Approval",
     "type": "event",
     "signature": "Approval(address,address,uint256)",
@@ -1995,20 +1811,16 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "initialize",
     "type": "function",
     "signature": "initialize()",
     "encoding": "0x8129fc1c",
     "inputs": [],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "mulUInt",
     "type": "function",
     "signature": "mulUInt(uint256,uint256)",
@@ -2033,10 +1845,8 @@
         "name": "ret_1"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "divUInt",
     "type": "function",
     "signature": "divUInt(uint256,uint256)",
@@ -2061,10 +1871,8 @@
         "name": "ret_1"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "subUInt",
     "type": "function",
     "signature": "subUInt(uint256,uint256)",
@@ -2089,10 +1897,8 @@
         "name": "ret_1"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "addUInt",
     "type": "function",
     "signature": "addUInt(uint256,uint256)",
@@ -2117,10 +1923,8 @@
         "name": "ret_1"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "addThenSubUInt",
     "type": "function",
     "signature": "addThenSubUInt(uint256,uint256,uint256)",
@@ -2149,10 +1953,8 @@
         "name": "ret_1"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "getExp",
     "type": "function",
     "signature": "getExp(uint256,uint256)",
@@ -2177,10 +1979,8 @@
         "name": "memory"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "addExp",
     "type": "function",
     "signature": "addExp(Exp,Exp)",
@@ -2205,10 +2005,8 @@
         "name": "memory"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "subExp",
     "type": "function",
     "signature": "subExp(Exp,Exp)",
@@ -2233,10 +2031,8 @@
         "name": "memory"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "mulScalar",
     "type": "function",
     "signature": "mulScalar(Exp,uint256)",
@@ -2261,10 +2057,8 @@
         "name": "memory"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "mulScalarTruncate",
     "type": "function",
     "signature": "mulScalarTruncate(Exp,uint256)",
@@ -2289,10 +2083,8 @@
         "name": "ret_1"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "mulScalarTruncateAddUInt",
     "type": "function",
     "signature": "mulScalarTruncateAddUInt(Exp,uint256,uint256)",
@@ -2321,10 +2113,8 @@
         "name": "ret_1"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "divScalar",
     "type": "function",
     "signature": "divScalar(Exp,uint256)",
@@ -2349,10 +2139,8 @@
         "name": "memory"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "divScalarByExp",
     "type": "function",
     "signature": "divScalarByExp(uint256,Exp)",
@@ -2377,10 +2165,8 @@
         "name": "memory"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "divScalarByExpTruncate",
     "type": "function",
     "signature": "divScalarByExpTruncate(uint256,Exp)",
@@ -2405,10 +2191,8 @@
         "name": "ret_1"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "mulExp",
     "type": "function",
     "signature": "mulExp(Exp,Exp)",
@@ -2433,10 +2217,8 @@
         "name": "memory"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "mulExp",
     "type": "function",
     "signature": "mulExp(uint256,uint256)",
@@ -2461,10 +2243,8 @@
         "name": "memory"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "mulExp3",
     "type": "function",
     "signature": "mulExp3(Exp,Exp,Exp)",
@@ -2493,10 +2273,8 @@
         "name": "memory"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "divExp",
     "type": "function",
     "signature": "divExp(Exp,Exp)",
@@ -2521,10 +2299,8 @@
         "name": "memory"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "truncate",
     "type": "function",
     "signature": "truncate(Exp)",
@@ -2541,10 +2317,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "lessThanExp",
     "type": "function",
     "signature": "lessThanExp(Exp,Exp)",
@@ -2565,10 +2339,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "lessThanOrEqualExp",
     "type": "function",
     "signature": "lessThanOrEqualExp(Exp,Exp)",
@@ -2589,10 +2361,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "greaterThanExp",
     "type": "function",
     "signature": "greaterThanExp(Exp,Exp)",
@@ -2613,10 +2383,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "isZeroExp",
     "type": "function",
     "signature": "isZeroExp(Exp)",
@@ -2633,10 +2401,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "balanceOf",
     "type": "function",
     "constant": true,
@@ -2654,10 +2420,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "isCToken",
     "type": "function",
     "constant": true,
@@ -2670,10 +2434,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "approve",
     "type": "function",
     "signature": "approve(address,uint256)",
@@ -2694,10 +2456,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "balanceOfUnderlying",
     "type": "function",
     "signature": "balanceOfUnderlying(address)",
@@ -2714,10 +2474,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "exchangeRateCurrent",
     "type": "function",
     "signature": "exchangeRateCurrent()",
@@ -2729,10 +2487,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "mint",
     "type": "function",
     "signature": "mint(uint256)",
@@ -2749,10 +2505,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "redeem",
     "type": "function",
     "signature": "redeem(uint256)",
@@ -2769,10 +2523,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "redeemUnderlying",
     "type": "function",
     "signature": "redeemUnderlying(uint256)",
@@ -2789,10 +2541,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "transfer",
     "type": "function",
     "signature": "transfer(address,uint256)",
@@ -2813,10 +2563,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "transferFrom",
     "type": "function",
     "signature": "transferFrom(address,address,uint256)",
@@ -2841,10 +2589,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "OwnershipTransferred",
     "type": "event",
     "signature": "OwnershipTransferred(address,address)",
@@ -2862,10 +2608,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "initialize",
     "type": "function",
     "signature": "initialize(address)",
@@ -2877,10 +2621,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "owner",
     "type": "function",
     "constant": true,
@@ -2893,10 +2635,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "isOwner",
     "type": "function",
     "constant": true,
@@ -2909,10 +2649,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "transferOwnership",
     "type": "function",
     "signature": "transferOwnership(address)",
@@ -2924,10 +2662,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "_transferOwnership",
     "type": "function",
     "signature": "_transferOwnership(address)",
@@ -2939,10 +2675,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "add",
     "type": "function",
     "signature": "add(Role,address)",
@@ -2958,10 +2692,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "remove",
     "type": "function",
     "signature": "remove(Role,address)",
@@ -2977,10 +2709,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "has",
     "type": "function",
     "constant": true,
@@ -3002,10 +2732,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "PauserAdded",
     "type": "event",
     "signature": "PauserAdded(address)",
@@ -3018,10 +2746,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "PauserRemoved",
     "type": "event",
     "signature": "PauserRemoved(address)",
@@ -3034,10 +2760,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "initialize",
     "type": "function",
     "signature": "initialize(address)",
@@ -3049,10 +2773,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "isPauser",
     "type": "function",
     "constant": true,
@@ -3070,10 +2792,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "addPauser",
     "type": "function",
     "signature": "addPauser(address)",
@@ -3085,10 +2805,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "_addPauser",
     "type": "function",
     "signature": "_addPauser(address)",
@@ -3100,10 +2818,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "_removePauser",
     "type": "function",
     "signature": "_removePauser(address)",
@@ -3115,10 +2831,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "Paused",
     "type": "event",
     "signature": "Paused(address)",
@@ -3130,10 +2844,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "Unpaused",
     "type": "event",
     "signature": "Unpaused(address)",
@@ -3145,10 +2857,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "initialize",
     "type": "function",
     "signature": "initialize(address)",
@@ -3160,10 +2870,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "paused",
     "type": "function",
     "constant": true,
@@ -3176,30 +2884,24 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "pause",
     "type": "function",
     "signature": "pause()",
     "encoding": "0x8456cb59",
     "inputs": [],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "unpause",
     "type": "function",
     "signature": "unpause()",
     "encoding": "0x3f4ba83a",
     "inputs": [],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "DiscardCToken",
     "type": "event",
     "signature": "DiscardCToken(address)",
@@ -3212,10 +2914,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "WhitelistCToken",
     "type": "event",
     "signature": "WhitelistCToken(address)",
@@ -3228,10 +2928,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "whitelistCToken",
     "type": "function",
     "signature": "whitelistCToken(address)",
@@ -3243,10 +2941,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "discardCToken",
     "type": "function",
     "signature": "discardCToken(address)",
@@ -3258,10 +2954,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "isCToken",
     "type": "function",
     "constant": true,
@@ -3279,10 +2973,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "CreateStream",
     "type": "event",
     "signature": "CreateStream(uint256,address,address,uint256,address,uint256,uint256)",
@@ -3321,10 +3013,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "WithdrawFromStream",
     "type": "event",
     "signature": "WithdrawFromStream(uint256,address,uint256)",
@@ -3346,10 +3036,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "CancelStream",
     "type": "event",
     "signature": "CancelStream(uint256,address,address,uint256,uint256)",
@@ -3380,10 +3068,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "balanceOf",
     "type": "function",
     "constant": true,
@@ -3405,10 +3091,8 @@
         "name": "balance"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "getStream",
     "type": "function",
     "constant": true,
@@ -3454,10 +3138,8 @@
         "name": "rate"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "createStream",
     "type": "function",
     "signature": "createStream(address,uint256,address,uint256,uint256)",
@@ -3490,10 +3172,8 @@
         "name": "streamId"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "withdrawFromStream",
     "type": "function",
     "signature": "withdrawFromStream(uint256,uint256)",
@@ -3514,10 +3194,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "cancelStream",
     "type": "function",
     "signature": "cancelStream(uint256)",
@@ -3534,10 +3212,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "CreateCompoundingStream",
     "type": "event",
     "signature": "CreateCompoundingStream(uint256,uint256,uint256,uint256)",
@@ -3562,10 +3238,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "PayInterest",
     "type": "event",
     "signature": "PayInterest(uint256,uint256,uint256,uint256)",
@@ -3590,10 +3264,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "TakeEarnings",
     "type": "event",
     "signature": "TakeEarnings(address,uint256)",
@@ -3611,10 +3283,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "UpdateFee",
     "type": "event",
     "signature": "UpdateFee(uint256)",
@@ -3627,10 +3297,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "updateFee",
     "type": "function",
     "signature": "updateFee(uint256)",
@@ -3642,10 +3310,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "takeEarnings",
     "type": "function",
     "signature": "takeEarnings(address,uint256)",
@@ -3661,10 +3327,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "getStream",
     "type": "function",
     "constant": true,
@@ -3677,10 +3341,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "deltaOf",
     "type": "function",
     "constant": true,
@@ -3693,10 +3355,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "balanceOf",
     "type": "function",
     "constant": true,
@@ -3713,10 +3373,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "isCompoundingStream",
     "type": "function",
     "constant": true,
@@ -3734,10 +3392,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "getCompoundingStream",
     "type": "function",
     "constant": true,
@@ -3750,10 +3406,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "interestOf",
     "type": "function",
     "signature": "interestOf(uint256,uint256)",
@@ -3769,10 +3423,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "getEarnings",
     "type": "function",
     "constant": true,
@@ -3790,10 +3442,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "createStream",
     "type": "function",
     "signature": "createStream(address,uint256,address,uint256,uint256)",
@@ -3826,10 +3476,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "createCompoundingStream",
     "type": "function",
     "signature": "createCompoundingStream(address,uint256,address,uint256,uint256,uint256,uint256)",
@@ -3870,10 +3518,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "withdrawFromStream",
     "type": "function",
     "signature": "withdrawFromStream(uint256,uint256)",
@@ -3889,10 +3535,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "cancelStream",
     "type": "function",
     "signature": "cancelStream(uint256)",
@@ -3904,10 +3548,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "withdrawFromStreamInternal",
     "type": "function",
     "signature": "withdrawFromStreamInternal(uint256,uint256)",
@@ -3923,10 +3565,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "withdrawFromCompoundingStreamInternal",
     "type": "function",
     "signature": "withdrawFromCompoundingStreamInternal(uint256,uint256)",
@@ -3942,10 +3582,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "cancelStreamInternal",
     "type": "function",
     "signature": "cancelStreamInternal(uint256)",
@@ -3957,10 +3595,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "cancelCompoundingStreamInternal",
     "type": "function",
     "signature": "cancelCompoundingStreamInternal(uint256)",
@@ -3972,10 +3608,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "CreateSalary",
     "type": "event",
     "signature": "CreateSalary(uint256,uint256,address)",
@@ -3998,10 +3632,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "WithdrawFromSalary",
     "type": "event",
     "signature": "WithdrawFromSalary(uint256,uint256,address)",
@@ -4024,10 +3656,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "CancelSalary",
     "type": "event",
     "signature": "CancelSalary(uint256,uint256,address)",
@@ -4050,10 +3680,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "initialize",
     "type": "function",
     "signature": "initialize(address,address,address)",
@@ -4073,10 +3701,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "whitelistRelayer",
     "type": "function",
     "signature": "whitelistRelayer(address,uint256)",
@@ -4092,10 +3718,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "discardRelayer",
     "type": "function",
     "signature": "discardRelayer(address,uint256)",
@@ -4111,10 +3735,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "acceptRelayedCall",
     "type": "function",
     "constant": true,
@@ -4168,10 +3790,8 @@
         "name": "memory"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "getSalary",
     "type": "function",
     "constant": true,
@@ -4184,10 +3804,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "createSalary",
     "type": "function",
     "signature": "createSalary(address,uint256,address,uint256,uint256)",
@@ -4220,10 +3838,8 @@
         "name": "salaryId"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "createCompoundingSalary",
     "type": "function",
     "signature": "createCompoundingSalary(address,uint256,address,uint256,uint256,uint256,uint256)",
@@ -4264,10 +3880,8 @@
         "name": "salaryId"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "withdrawFromSalary",
     "type": "function",
     "signature": "withdrawFromSalary(uint256,uint256)",
@@ -4283,10 +3897,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "cancelSalary",
     "type": "function",
     "signature": "cancelSalary(uint256)",
@@ -4298,10 +3910,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "transfer",
     "type": "function",
     "signature": "transfer(address,uint256)",
@@ -4322,10 +3932,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "approve",
     "type": "function",
     "signature": "approve(address,uint256)",
@@ -4346,10 +3954,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "transferFrom",
     "type": "function",
     "signature": "transferFrom(address,address,uint256)",
@@ -4374,10 +3980,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "totalSupply",
     "type": "function",
     "constant": true,
@@ -4390,10 +3994,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "balanceOf",
     "type": "function",
     "constant": true,
@@ -4411,10 +4013,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "allowance",
     "type": "function",
     "constant": true,
@@ -4436,10 +4036,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "Transfer",
     "type": "event",
     "signature": "Transfer(address,address,uint256)",
@@ -4461,10 +4059,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "Approval",
     "type": "event",
     "signature": "Approval(address,address,uint256)",
@@ -4486,10 +4082,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "isConstructor",
     "type": "function",
     "constant": true,
@@ -4502,20 +4096,16 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "initialize",
     "type": "function",
     "signature": "initialize()",
     "encoding": "0x8129fc1c",
     "inputs": [],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "mulUInt",
     "type": "function",
     "signature": "mulUInt(uint256,uint256)",
@@ -4540,10 +4130,8 @@
         "name": "ret_1"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "divUInt",
     "type": "function",
     "signature": "divUInt(uint256,uint256)",
@@ -4568,10 +4156,8 @@
         "name": "ret_1"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "subUInt",
     "type": "function",
     "signature": "subUInt(uint256,uint256)",
@@ -4596,10 +4182,8 @@
         "name": "ret_1"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "addUInt",
     "type": "function",
     "signature": "addUInt(uint256,uint256)",
@@ -4624,10 +4208,8 @@
         "name": "ret_1"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "addThenSubUInt",
     "type": "function",
     "signature": "addThenSubUInt(uint256,uint256,uint256)",
@@ -4656,10 +4238,8 @@
         "name": "ret_1"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "getExp",
     "type": "function",
     "signature": "getExp(uint256,uint256)",
@@ -4684,10 +4264,8 @@
         "name": "memory"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "addExp",
     "type": "function",
     "signature": "addExp(Exp,Exp)",
@@ -4712,10 +4290,8 @@
         "name": "memory"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "subExp",
     "type": "function",
     "signature": "subExp(Exp,Exp)",
@@ -4740,10 +4316,8 @@
         "name": "memory"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "mulScalar",
     "type": "function",
     "signature": "mulScalar(Exp,uint256)",
@@ -4768,10 +4342,8 @@
         "name": "memory"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "mulScalarTruncate",
     "type": "function",
     "signature": "mulScalarTruncate(Exp,uint256)",
@@ -4796,10 +4368,8 @@
         "name": "ret_1"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "mulScalarTruncateAddUInt",
     "type": "function",
     "signature": "mulScalarTruncateAddUInt(Exp,uint256,uint256)",
@@ -4828,10 +4398,8 @@
         "name": "ret_1"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "divScalar",
     "type": "function",
     "signature": "divScalar(Exp,uint256)",
@@ -4856,10 +4424,8 @@
         "name": "memory"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "divScalarByExp",
     "type": "function",
     "signature": "divScalarByExp(uint256,Exp)",
@@ -4884,10 +4450,8 @@
         "name": "memory"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "divScalarByExpTruncate",
     "type": "function",
     "signature": "divScalarByExpTruncate(uint256,Exp)",
@@ -4912,10 +4476,8 @@
         "name": "ret_1"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "mulExp",
     "type": "function",
     "signature": "mulExp(Exp,Exp)",
@@ -4940,10 +4502,8 @@
         "name": "memory"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "mulExp",
     "type": "function",
     "signature": "mulExp(uint256,uint256)",
@@ -4968,10 +4528,8 @@
         "name": "memory"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "mulExp3",
     "type": "function",
     "signature": "mulExp3(Exp,Exp,Exp)",
@@ -5000,10 +4558,8 @@
         "name": "memory"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "divExp",
     "type": "function",
     "signature": "divExp(Exp,Exp)",
@@ -5028,10 +4584,8 @@
         "name": "memory"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "truncate",
     "type": "function",
     "signature": "truncate(Exp)",
@@ -5048,10 +4602,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "lessThanExp",
     "type": "function",
     "signature": "lessThanExp(Exp,Exp)",
@@ -5072,10 +4624,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "lessThanOrEqualExp",
     "type": "function",
     "signature": "lessThanOrEqualExp(Exp,Exp)",
@@ -5096,10 +4646,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "greaterThanExp",
     "type": "function",
     "signature": "greaterThanExp(Exp,Exp)",
@@ -5120,10 +4668,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "isZeroExp",
     "type": "function",
     "signature": "isZeroExp(Exp)",
@@ -5140,10 +4686,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "balanceOf",
     "type": "function",
     "constant": true,
@@ -5161,10 +4705,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "isCToken",
     "type": "function",
     "constant": true,
@@ -5177,10 +4719,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "approve",
     "type": "function",
     "signature": "approve(address,uint256)",
@@ -5201,10 +4741,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "balanceOfUnderlying",
     "type": "function",
     "signature": "balanceOfUnderlying(address)",
@@ -5221,10 +4759,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "exchangeRateCurrent",
     "type": "function",
     "signature": "exchangeRateCurrent()",
@@ -5236,10 +4772,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "mint",
     "type": "function",
     "signature": "mint(uint256)",
@@ -5256,10 +4790,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "redeem",
     "type": "function",
     "signature": "redeem(uint256)",
@@ -5276,10 +4808,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "redeemUnderlying",
     "type": "function",
     "signature": "redeemUnderlying(uint256)",
@@ -5296,10 +4826,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "transfer",
     "type": "function",
     "signature": "transfer(address,uint256)",
@@ -5320,10 +4848,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "transferFrom",
     "type": "function",
     "signature": "transferFrom(address,address,uint256)",
@@ -5348,10 +4874,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "_msgSender",
     "type": "function",
     "constant": true,
@@ -5364,10 +4888,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "_msgData",
     "type": "function",
     "constant": true,
@@ -5380,10 +4902,8 @@
         "name": "memory"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "OwnershipTransferred",
     "type": "event",
     "signature": "OwnershipTransferred(address,address)",
@@ -5401,10 +4921,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "initialize",
     "type": "function",
     "signature": "initialize(address)",
@@ -5416,10 +4934,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "owner",
     "type": "function",
     "constant": true,
@@ -5432,10 +4948,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "isOwner",
     "type": "function",
     "constant": true,
@@ -5448,10 +4962,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "transferOwnership",
     "type": "function",
     "signature": "transferOwnership(address)",
@@ -5463,10 +4975,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "_transferOwnership",
     "type": "function",
     "signature": "_transferOwnership(address)",
@@ -5478,10 +4988,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "add",
     "type": "function",
     "signature": "add(Role,address)",
@@ -5497,10 +5005,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "remove",
     "type": "function",
     "signature": "remove(Role,address)",
@@ -5516,10 +5022,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "has",
     "type": "function",
     "constant": true,
@@ -5541,10 +5045,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "PauserAdded",
     "type": "event",
     "signature": "PauserAdded(address)",
@@ -5557,10 +5059,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "PauserRemoved",
     "type": "event",
     "signature": "PauserRemoved(address)",
@@ -5573,10 +5073,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "initialize",
     "type": "function",
     "signature": "initialize(address)",
@@ -5588,10 +5086,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "isPauser",
     "type": "function",
     "constant": true,
@@ -5609,10 +5105,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "addPauser",
     "type": "function",
     "signature": "addPauser(address)",
@@ -5624,10 +5118,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "_addPauser",
     "type": "function",
     "signature": "_addPauser(address)",
@@ -5639,10 +5131,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "_removePauser",
     "type": "function",
     "signature": "_removePauser(address)",
@@ -5654,10 +5144,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "Paused",
     "type": "event",
     "signature": "Paused(address)",
@@ -5669,10 +5157,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "Unpaused",
     "type": "event",
     "signature": "Unpaused(address)",
@@ -5684,10 +5170,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "initialize",
     "type": "function",
     "signature": "initialize(address)",
@@ -5699,10 +5183,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "paused",
     "type": "function",
     "constant": true,
@@ -5715,30 +5197,24 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "pause",
     "type": "function",
     "signature": "pause()",
     "encoding": "0x8456cb59",
     "inputs": [],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "unpause",
     "type": "function",
     "signature": "unpause()",
     "encoding": "0x3f4ba83a",
     "inputs": [],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "DiscardCToken",
     "type": "event",
     "signature": "DiscardCToken(address)",
@@ -5751,10 +5227,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "WhitelistCToken",
     "type": "event",
     "signature": "WhitelistCToken(address)",
@@ -5767,10 +5241,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "whitelistCToken",
     "type": "function",
     "signature": "whitelistCToken(address)",
@@ -5782,10 +5254,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "discardCToken",
     "type": "function",
     "signature": "discardCToken(address)",
@@ -5797,10 +5267,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "isCToken",
     "type": "function",
     "constant": true,
@@ -5818,10 +5286,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "CreateStream",
     "type": "event",
     "signature": "CreateStream(uint256,address,address,uint256,address,uint256,uint256)",
@@ -5860,10 +5326,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "WithdrawFromStream",
     "type": "event",
     "signature": "WithdrawFromStream(uint256,address,uint256)",
@@ -5885,10 +5349,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "CancelStream",
     "type": "event",
     "signature": "CancelStream(uint256,address,address,uint256,uint256)",
@@ -5919,10 +5381,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "balanceOf",
     "type": "function",
     "constant": true,
@@ -5944,10 +5404,8 @@
         "name": "balance"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "getStream",
     "type": "function",
     "constant": true,
@@ -5993,10 +5451,8 @@
         "name": "rate"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "createStream",
     "type": "function",
     "signature": "createStream(address,uint256,address,uint256,uint256)",
@@ -6029,10 +5485,8 @@
         "name": "streamId"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "withdrawFromStream",
     "type": "function",
     "signature": "withdrawFromStream(uint256,uint256)",
@@ -6053,10 +5507,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "cancelStream",
     "type": "function",
     "signature": "cancelStream(uint256)",
@@ -6073,10 +5525,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "CreateCompoundingStream",
     "type": "event",
     "signature": "CreateCompoundingStream(uint256,uint256,uint256,uint256)",
@@ -6101,10 +5551,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "PayInterest",
     "type": "event",
     "signature": "PayInterest(uint256,uint256,uint256,uint256)",
@@ -6129,10 +5577,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "TakeEarnings",
     "type": "event",
     "signature": "TakeEarnings(address,uint256)",
@@ -6150,10 +5596,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "UpdateFee",
     "type": "event",
     "signature": "UpdateFee(uint256)",
@@ -6166,10 +5610,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "updateFee",
     "type": "function",
     "signature": "updateFee(uint256)",
@@ -6181,10 +5623,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "takeEarnings",
     "type": "function",
     "signature": "takeEarnings(address,uint256)",
@@ -6200,10 +5640,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "getStream",
     "type": "function",
     "constant": true,
@@ -6216,10 +5654,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "deltaOf",
     "type": "function",
     "constant": true,
@@ -6232,10 +5668,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "balanceOf",
     "type": "function",
     "constant": true,
@@ -6252,10 +5686,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "isCompoundingStream",
     "type": "function",
     "constant": true,
@@ -6273,10 +5705,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "getCompoundingStream",
     "type": "function",
     "constant": true,
@@ -6289,10 +5719,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "interestOf",
     "type": "function",
     "signature": "interestOf(uint256,uint256)",
@@ -6308,10 +5736,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "getEarnings",
     "type": "function",
     "constant": true,
@@ -6329,10 +5755,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "createStream",
     "type": "function",
     "signature": "createStream(address,uint256,address,uint256,uint256)",
@@ -6365,10 +5789,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "createCompoundingStream",
     "type": "function",
     "signature": "createCompoundingStream(address,uint256,address,uint256,uint256,uint256,uint256)",
@@ -6409,10 +5831,8 @@
         "name": "ret_0"
       }
     ]
-  }
-,
-
-    {
+  },
+  {
     "name": "withdrawFromStream",
     "type": "function",
     "signature": "withdrawFromStream(uint256,uint256)",
@@ -6428,10 +5848,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "cancelStream",
     "type": "function",
     "signature": "cancelStream(uint256)",
@@ -6443,10 +5861,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "withdrawFromStreamInternal",
     "type": "function",
     "signature": "withdrawFromStreamInternal(uint256,uint256)",
@@ -6462,10 +5878,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "withdrawFromCompoundingStreamInternal",
     "type": "function",
     "signature": "withdrawFromCompoundingStreamInternal(uint256,uint256)",
@@ -6481,10 +5895,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "cancelStreamInternal",
     "type": "function",
     "signature": "cancelStreamInternal(uint256)",
@@ -6496,10 +5908,8 @@
       }
     ],
     "outputs": []
-  }
-,
-
-    {
+  },
+  {
     "name": "cancelCompoundingStreamInternal",
     "type": "function",
     "signature": "cancelCompoundingStreamInternal(uint256)",
@@ -6512,5 +5922,4 @@
     ],
     "outputs": []
   }
-
 ]

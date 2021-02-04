@@ -1,7 +1,5 @@
 [
-
-
-    {
+  {
     "name": "ReceivedChild",
     "type": "event",
     "signature": "ReceivedChild(address,uint256,address,uint256)",
@@ -29,8 +27,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "TransferChild",
     "type": "event",
     "signature": "TransferChild(uint256,address,address,uint256)",
@@ -58,8 +55,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "rootOwnerOf",
     "type": "function",
     "constant": true,
@@ -78,8 +74,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "rootOwnerOfChild",
     "type": "function",
     "constant": true,
@@ -102,8 +97,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "ownerOfChild",
     "type": "function",
     "constant": true,
@@ -130,8 +124,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "onERC721Received",
     "type": "function",
     "signature": "onERC721Received(address,address,uint256,bytes)",
@@ -161,8 +154,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "transferChild",
     "type": "function",
     "signature": "transferChild(uint256,address,address,uint256)",
@@ -187,8 +179,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "safeTransferChild",
     "type": "function",
     "signature": "safeTransferChild(uint256,address,address,uint256)",
@@ -213,8 +204,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "safeTransferChild",
     "type": "function",
     "signature": "safeTransferChild(uint256,address,address,uint256,bytes)",
@@ -243,8 +233,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "transferChildToParent",
     "type": "function",
     "signature": "transferChildToParent(uint256,address,uint256,address,uint256,bytes)",
@@ -277,8 +266,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "getChild",
     "type": "function",
     "signature": "getChild(address,uint256,address,uint256)",
@@ -303,8 +291,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "totalChildContracts",
     "type": "function",
     "constant": true,
@@ -323,8 +310,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "childContractByIndex",
     "type": "function",
     "constant": true,
@@ -347,8 +333,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "totalChildTokens",
     "type": "function",
     "constant": true,
@@ -371,8 +356,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "childTokenByIndex",
     "type": "function",
     "constant": true,
@@ -399,8 +383,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "ReceivedERC20",
     "type": "event",
     "signature": "ReceivedERC20(address,uint256,address,uint256)",
@@ -428,8 +411,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "TransferERC20",
     "type": "event",
     "signature": "TransferERC20(uint256,address,address,uint256)",
@@ -457,8 +439,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "tokenFallback",
     "type": "function",
     "signature": "tokenFallback(address,uint256,bytes)",
@@ -479,8 +460,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "balanceOfERC20",
     "type": "function",
     "constant": true,
@@ -503,8 +483,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "transferERC20",
     "type": "function",
     "signature": "transferERC20(uint256,address,address,uint256)",
@@ -529,8 +508,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "transferERC223",
     "type": "function",
     "signature": "transferERC223(uint256,address,address,uint256,bytes)",
@@ -559,8 +537,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "getERC20",
     "type": "function",
     "signature": "getERC20(address,uint256,address,uint256)",
@@ -585,8 +562,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "totalERC20Contracts",
     "type": "function",
     "constant": true,
@@ -605,8 +581,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "erc20ContractByIndex",
     "type": "function",
     "constant": true,
@@ -629,8 +604,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "transferFrom",
     "type": "function",
     "signature": "transferFrom(address,address,uint256)",
@@ -656,8 +630,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "transfer",
     "type": "function",
     "signature": "transfer(address,uint256)",
@@ -679,8 +652,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "transfer",
     "type": "function",
     "signature": "transfer(address,uint256,bytes)",
@@ -706,8 +678,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "allowance",
     "type": "function",
     "constant": true,
@@ -730,8 +701,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "transferToParent",
     "type": "function",
     "signature": "transferToParent(address,address,uint256,uint256,bytes)",
@@ -760,8 +730,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "mint",
     "type": "function",
     "signature": "mint(address)",
@@ -779,8 +748,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "isContract",
     "type": "function",
     "constant": true,
@@ -799,8 +767,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "rootOwnerOf",
     "type": "function",
     "constant": true,
@@ -819,8 +786,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "rootOwnerOfChild",
     "type": "function",
     "constant": true,
@@ -843,8 +809,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "ownerOf",
     "type": "function",
     "constant": true,
@@ -863,8 +828,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "balanceOf",
     "type": "function",
     "constant": true,
@@ -883,8 +847,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "approve",
     "type": "function",
     "signature": "approve(address,uint256)",
@@ -901,8 +864,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "getApproved",
     "type": "function",
     "constant": true,
@@ -921,8 +883,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "setApprovalForAll",
     "type": "function",
     "signature": "setApprovalForAll(address,bool)",
@@ -939,8 +900,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "isApprovedForAll",
     "type": "function",
     "constant": true,
@@ -963,8 +923,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "_transferFrom",
     "type": "function",
     "signature": "_transferFrom(address,address,uint256)",
@@ -985,8 +944,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "transferFrom",
     "type": "function",
     "signature": "transferFrom(address,address,uint256)",
@@ -1007,8 +965,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "safeTransferFrom",
     "type": "function",
     "signature": "safeTransferFrom(address,address,uint256)",
@@ -1029,8 +986,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "safeTransferFrom",
     "type": "function",
     "signature": "safeTransferFrom(address,address,uint256,bytes)",
@@ -1055,8 +1011,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "removeChild",
     "type": "function",
     "signature": "removeChild(uint256,address,uint256)",
@@ -1077,8 +1032,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "safeTransferChild",
     "type": "function",
     "signature": "safeTransferChild(uint256,address,address,uint256)",
@@ -1103,8 +1057,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "safeTransferChild",
     "type": "function",
     "signature": "safeTransferChild(uint256,address,address,uint256,bytes)",
@@ -1133,8 +1086,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "transferChild",
     "type": "function",
     "signature": "transferChild(uint256,address,address,uint256)",
@@ -1159,8 +1111,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "transferChildToParent",
     "type": "function",
     "signature": "transferChildToParent(uint256,address,uint256,address,uint256,bytes)",
@@ -1193,8 +1144,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "getChild",
     "type": "function",
     "signature": "getChild(address,uint256,address,uint256)",
@@ -1219,8 +1169,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "onERC721Received",
     "type": "function",
     "signature": "onERC721Received(address,uint256,bytes)",
@@ -1246,8 +1195,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "onERC721Received",
     "type": "function",
     "signature": "onERC721Received(address,address,uint256,bytes)",
@@ -1277,8 +1225,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "receiveChild",
     "type": "function",
     "signature": "receiveChild(address,uint256,address,uint256)",
@@ -1303,8 +1250,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "_ownerOfChild",
     "type": "function",
     "constant": true,
@@ -1331,8 +1277,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "ownerOfChild",
     "type": "function",
     "constant": true,
@@ -1359,8 +1304,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "childExists",
     "type": "function",
     "constant": true,
@@ -1383,8 +1327,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "totalChildContracts",
     "type": "function",
     "constant": true,
@@ -1403,8 +1346,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "childContractByIndex",
     "type": "function",
     "constant": true,
@@ -1427,8 +1369,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "totalChildTokens",
     "type": "function",
     "constant": true,
@@ -1451,8 +1392,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "childTokenByIndex",
     "type": "function",
     "constant": true,
@@ -1479,8 +1419,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "balanceOfERC20",
     "type": "function",
     "constant": true,
@@ -1503,8 +1442,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "removeERC20",
     "type": "function",
     "signature": "removeERC20(uint256,address,uint256)",
@@ -1525,8 +1463,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "transferERC20",
     "type": "function",
     "signature": "transferERC20(uint256,address,address,uint256)",
@@ -1551,8 +1488,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "transferERC223",
     "type": "function",
     "signature": "transferERC223(uint256,address,address,uint256,bytes)",
@@ -1581,8 +1517,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "getERC20",
     "type": "function",
     "signature": "getERC20(address,uint256,address,uint256)",
@@ -1607,8 +1542,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "erc20Received",
     "type": "function",
     "signature": "erc20Received(address,uint256,address,uint256)",
@@ -1633,8 +1567,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "tokenFallback",
     "type": "function",
     "signature": "tokenFallback(address,uint256,bytes)",
@@ -1655,8 +1588,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "erc20ContractByIndex",
     "type": "function",
     "constant": true,
@@ -1679,8 +1611,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "totalERC20Contracts",
     "type": "function",
     "constant": true,
@@ -1699,8 +1630,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "ReceivedChild",
     "type": "event",
     "signature": "ReceivedChild(address,uint256,address,uint256)",
@@ -1728,8 +1658,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "TransferChild",
     "type": "event",
     "signature": "TransferChild(uint256,address,address,uint256)",
@@ -1757,8 +1686,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "rootOwnerOf",
     "type": "function",
     "constant": true,
@@ -1777,8 +1705,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "rootOwnerOfChild",
     "type": "function",
     "constant": true,
@@ -1801,8 +1728,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "ownerOfChild",
     "type": "function",
     "constant": true,
@@ -1829,8 +1755,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "onERC721Received",
     "type": "function",
     "signature": "onERC721Received(address,address,uint256,bytes)",
@@ -1860,8 +1785,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "transferChild",
     "type": "function",
     "signature": "transferChild(uint256,address,address,uint256)",
@@ -1886,8 +1810,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "safeTransferChild",
     "type": "function",
     "signature": "safeTransferChild(uint256,address,address,uint256)",
@@ -1912,8 +1835,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "safeTransferChild",
     "type": "function",
     "signature": "safeTransferChild(uint256,address,address,uint256,bytes)",
@@ -1942,8 +1864,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "transferChildToParent",
     "type": "function",
     "signature": "transferChildToParent(uint256,address,uint256,address,uint256,bytes)",
@@ -1976,8 +1897,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "getChild",
     "type": "function",
     "signature": "getChild(address,uint256,address,uint256)",
@@ -2002,8 +1922,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "totalChildContracts",
     "type": "function",
     "constant": true,
@@ -2022,8 +1941,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "childContractByIndex",
     "type": "function",
     "constant": true,
@@ -2046,8 +1964,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "totalChildTokens",
     "type": "function",
     "constant": true,
@@ -2070,8 +1987,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "childTokenByIndex",
     "type": "function",
     "constant": true,
@@ -2098,8 +2014,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "ReceivedERC20",
     "type": "event",
     "signature": "ReceivedERC20(address,uint256,address,uint256)",
@@ -2127,8 +2042,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "TransferERC20",
     "type": "event",
     "signature": "TransferERC20(uint256,address,address,uint256)",
@@ -2156,8 +2070,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "tokenFallback",
     "type": "function",
     "signature": "tokenFallback(address,uint256,bytes)",
@@ -2178,8 +2091,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "balanceOfERC20",
     "type": "function",
     "constant": true,
@@ -2202,8 +2114,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "transferERC20",
     "type": "function",
     "signature": "transferERC20(uint256,address,address,uint256)",
@@ -2228,8 +2139,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "transferERC223",
     "type": "function",
     "signature": "transferERC223(uint256,address,address,uint256,bytes)",
@@ -2258,8 +2168,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "getERC20",
     "type": "function",
     "signature": "getERC20(address,uint256,address,uint256)",
@@ -2284,8 +2193,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "totalERC20Contracts",
     "type": "function",
     "constant": true,
@@ -2304,8 +2212,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "erc20ContractByIndex",
     "type": "function",
     "constant": true,
@@ -2328,8 +2235,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "transferFrom",
     "type": "function",
     "signature": "transferFrom(address,address,uint256)",
@@ -2355,8 +2261,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "transfer",
     "type": "function",
     "signature": "transfer(address,uint256)",
@@ -2378,8 +2283,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "transfer",
     "type": "function",
     "signature": "transfer(address,uint256,bytes)",
@@ -2405,8 +2309,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "allowance",
     "type": "function",
     "constant": true,
@@ -2429,8 +2332,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "transferToParent",
     "type": "function",
     "signature": "transferToParent(address,address,uint256,uint256,bytes)",
@@ -2459,8 +2361,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "mint",
     "type": "function",
     "signature": "mint(address)",
@@ -2478,8 +2379,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "isContract",
     "type": "function",
     "constant": true,
@@ -2498,8 +2398,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "rootOwnerOf",
     "type": "function",
     "constant": true,
@@ -2518,8 +2417,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "rootOwnerOfChild",
     "type": "function",
     "constant": true,
@@ -2542,8 +2440,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "ownerOf",
     "type": "function",
     "constant": true,
@@ -2562,8 +2459,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "balanceOf",
     "type": "function",
     "constant": true,
@@ -2582,8 +2478,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "approve",
     "type": "function",
     "signature": "approve(address,uint256)",
@@ -2600,8 +2495,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "getApproved",
     "type": "function",
     "constant": true,
@@ -2620,8 +2514,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "setApprovalForAll",
     "type": "function",
     "signature": "setApprovalForAll(address,bool)",
@@ -2638,8 +2531,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "isApprovedForAll",
     "type": "function",
     "constant": true,
@@ -2662,8 +2554,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "_transferFrom",
     "type": "function",
     "signature": "_transferFrom(address,address,uint256)",
@@ -2684,8 +2575,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "transferFrom",
     "type": "function",
     "signature": "transferFrom(address,address,uint256)",
@@ -2706,8 +2596,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "safeTransferFrom",
     "type": "function",
     "signature": "safeTransferFrom(address,address,uint256)",
@@ -2728,8 +2617,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "safeTransferFrom",
     "type": "function",
     "signature": "safeTransferFrom(address,address,uint256,bytes)",
@@ -2754,8 +2642,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "removeChild",
     "type": "function",
     "signature": "removeChild(uint256,address,uint256)",
@@ -2776,8 +2663,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "safeTransferChild",
     "type": "function",
     "signature": "safeTransferChild(uint256,address,address,uint256)",
@@ -2802,8 +2688,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "safeTransferChild",
     "type": "function",
     "signature": "safeTransferChild(uint256,address,address,uint256,bytes)",
@@ -2832,8 +2717,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "transferChild",
     "type": "function",
     "signature": "transferChild(uint256,address,address,uint256)",
@@ -2858,8 +2742,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "transferChildToParent",
     "type": "function",
     "signature": "transferChildToParent(uint256,address,uint256,address,uint256,bytes)",
@@ -2892,8 +2775,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "getChild",
     "type": "function",
     "signature": "getChild(address,uint256,address,uint256)",
@@ -2918,8 +2800,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "onERC721Received",
     "type": "function",
     "signature": "onERC721Received(address,uint256,bytes)",
@@ -2945,8 +2826,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "onERC721Received",
     "type": "function",
     "signature": "onERC721Received(address,address,uint256,bytes)",
@@ -2976,8 +2856,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "receiveChild",
     "type": "function",
     "signature": "receiveChild(address,uint256,address,uint256)",
@@ -3002,8 +2881,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "_ownerOfChild",
     "type": "function",
     "constant": true,
@@ -3030,8 +2908,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "ownerOfChild",
     "type": "function",
     "constant": true,
@@ -3058,8 +2935,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "childExists",
     "type": "function",
     "constant": true,
@@ -3082,8 +2958,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "totalChildContracts",
     "type": "function",
     "constant": true,
@@ -3102,8 +2977,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "childContractByIndex",
     "type": "function",
     "constant": true,
@@ -3126,8 +3000,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "totalChildTokens",
     "type": "function",
     "constant": true,
@@ -3150,8 +3023,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "childTokenByIndex",
     "type": "function",
     "constant": true,
@@ -3178,8 +3050,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "balanceOfERC20",
     "type": "function",
     "constant": true,
@@ -3202,8 +3073,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "removeERC20",
     "type": "function",
     "signature": "removeERC20(uint256,address,uint256)",
@@ -3224,8 +3094,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "transferERC20",
     "type": "function",
     "signature": "transferERC20(uint256,address,address,uint256)",
@@ -3250,8 +3119,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "transferERC223",
     "type": "function",
     "signature": "transferERC223(uint256,address,address,uint256,bytes)",
@@ -3280,8 +3148,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "getERC20",
     "type": "function",
     "signature": "getERC20(address,uint256,address,uint256)",
@@ -3306,8 +3173,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "erc20Received",
     "type": "function",
     "signature": "erc20Received(address,uint256,address,uint256)",
@@ -3332,8 +3198,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "tokenFallback",
     "type": "function",
     "signature": "tokenFallback(address,uint256,bytes)",
@@ -3354,8 +3219,7 @@
     ],
     "outputs": []
   },
-
-    {
+  {
     "name": "erc20ContractByIndex",
     "type": "function",
     "constant": true,
@@ -3378,8 +3242,7 @@
       }
     ]
   },
-
-    {
+  {
     "name": "totalERC20Contracts",
     "type": "function",
     "constant": true,
