@@ -48,7 +48,7 @@ on, cmd,  fast, logs, tools/getLogs, fmt_junk,            y, transactions = 2222
 on, both, fast, logs, tools/getLogs, to_file,             y, transactions = 2222222.0 2332332.0 & fmt = json & to_file
 
 on, cmd,  fast, logs, tools/getLogs, by_filebad,          y, file:cmd_file & bad
-on, cmd,  slow, logs, tools/getLogs, by_file,             y, file:cmd_file
+#on, cmd,  slow, logs, tools/getLogs, by_file,             y, file:cmd_file
 on, cmd,  fast, logs, tools/getLogs, by_file_v,           y, file:cmd_file & verbose & fmt = json
 on, cmd,  fast, logs, tools/getLogs, by_file_long_v,      y, file:cmd_file & verbose & parity & fmt = json
 
