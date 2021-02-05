@@ -265,18 +265,15 @@ bool COptions::parseArguments(string_q& command) {
 
         // Load as many ABI files as we have
         if (!appearances) {
-            abis.loadAbisKnown(ABI_ALL);
+            abis.loadAbisFromKnown(ABI_ALL);
             if (all_abis)
-                abis.loadAbisInCache();
+                abis.loadAbisFromCache();
         }
 
         // Try to articulate the monitored addresses
         for (size_t i = 0; i < monitors.size(); i++) {
             CMonitor* monitor = &monitors[i];
-            // abis.loadAbiByAddress(monitor->address);
-            if (isContractAt(monitor->address, latestBlock))
-                loadAbiAndCache(abis, monitor->address, false, errors);
-            // abis.loadAbisKnown(ABI_ALL);
+            abis.loadAbiFromEtherscan(monitor->address, false, errors);
         }
 
         if (expContext().exportFmt != JSON1 && expContext().exportFmt != API1) {

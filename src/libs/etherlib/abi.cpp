@@ -367,17 +367,17 @@ bool CAbi::loadAbisFolderAndCache(const string_q& sourcePath, const string_q& bi
 }
 
 //---------------------------------------------------------------------------
-bool CAbi::loadAbisKnown(int which) {
+bool CAbi::loadAbisFromKnown(int which) {
     return loadAbisFolderAndCache(configPath("abis/known/"), getAbiPath("known.bin"));
 }
 
 //---------------------------------------------------------------------------
-bool CAbi::loadAbisInCache(void) {
+bool CAbi::loadAbisFromCache(void) {
     return loadAbisFolderAndCache(getCachePath("abis/"), getAbiPath("monitored.bin"));
 }
 
 //---------------------------------------------------------------------------
-bool CAbi::loadAbiByAddress(const address_t& which) {
+bool CAbi::loadAbiFromAddress(const address_t& which) {
     if (isZeroAddr(which))
         return false;
     bool ret = visitABI(getCachePath("abis/" + toLower(which) + ".json"), this);
@@ -440,9 +440,9 @@ bool CAbi::loadAbiFromString(const string_q& in, bool builtIn) {
 }
 
 //-----------------------------------------------------------------------
-void loadAbiAndCache(CAbi& abi, const address_t& addr, bool raw, CStringArray& errors) {
+bool CAbi::loadAbiFromEtherscan(const address_t& addr, bool raw, CStringArray& errors) {
     if (isZeroAddr(addr))
-        return;
+        return true;
 
     uint64_t saveVerbose = verbose;
     if (getGlobalConfig()->getConfigBool("dev", "debug_ethscan", false))
@@ -457,14 +457,13 @@ void loadAbiAndCache(CAbi& abi, const address_t& addr, bool raw, CStringArray& e
         copyFile(localFile, fileName);
     }
 
-    string_q dispName = substitute(fileName, getCachePath(""), "$BLOCK_CACHE/");
     if (fileExists(fileName) && !raw) {
         asciiFileToString(fileName, results);
 
     } else {
         // If this isn't a smart contract, don't bother
         if (!isContractAt(addr, getLatestBlock_client()))
-            return;
+            return true;
 
         const char* STR_CONTRACT_API =
             "http://api.etherscan.io/api?module=contract&action=getabi&address=[{ADDRESS}]&apikey=[{KEY}]";
@@ -480,6 +479,7 @@ void loadAbiAndCache(CAbi& abi, const address_t& addr, bool raw, CStringArray& e
         results = substitute(fromES, "\\", "");
 
         if (!contains(results, "NOTOK")) {
+            string_q dispName = substitute(fileName, getCachePath(""), "$BLOCK_CACHE/");
             if (!isTestMode()) {
                 LOG4(results);
                 LOG4("Caching abi in ", dispName);
@@ -517,16 +517,16 @@ void loadAbiAndCache(CAbi& abi, const address_t& addr, bool raw, CStringArray& e
     }
 
     if (!results.empty()) {
-        LOG_TEST("loadAbiAndCache", "for address " + addr);
+        LOG_TEST("loadAbiFromEtherscan", "for address " + addr);
         CFunction func;
         while (func.parseJson3(results)) {
-            abi.addInterface(func);
+            addInterface(func);
             func = CFunction();  // reset
         }
     }
 
     verbose = saveVerbose;
-    return;
+    return true;
 }
 
 //-----------------------------------------------------------------------

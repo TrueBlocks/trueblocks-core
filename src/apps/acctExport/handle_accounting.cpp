@@ -180,7 +180,7 @@ void COptions::articulateAll(CTransaction& trans) {
         abiMap[trans.to]++;
         if (abiMap[trans.to] == 1 || fileExists(getAbiPath(trans.to))) {
             CStringArray unused;
-            loadAbiAndCache(abis, trans.to, false, unused);
+            abis.loadAbiFromEtherscan(trans.to, false, unused);
         }
         abis.articulateTransaction(&trans);
         trans.hasToken |= isTokenFunc(trans.input);
@@ -193,7 +193,7 @@ void COptions::articulateAll(CTransaction& trans) {
                 abiMap[log->address]++;
                 if (abiMap[log->address] == 1 || fileExists(getAbiPath(log->address))) {
                     CStringArray unused;
-                    loadAbiAndCache(abis, log->address, false, unused);
+                    abis.loadAbiFromEtherscan(log->address, false, unused);
                 }
                 abis.articulateLog(log);
             }
@@ -205,7 +205,7 @@ void COptions::articulateAll(CTransaction& trans) {
             abiMap[trace->action.to]++;
             if (abiMap[trace->action.to] == 1 || fileExists(getAbiPath(trace->action.to))) {
                 CStringArray unused;
-                loadAbiAndCache(abis, trace->action.to, false, unused);
+                abis.loadAbiFromEtherscan(trace->action.to, false, unused);
             }
             abis.articulateTrace(trace);
         }

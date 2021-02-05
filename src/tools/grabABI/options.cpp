@@ -148,7 +148,7 @@ bool COptions::parseArguments(string_q& command) {
             cerr << "Address " << a << " is not a smart contract. Skipping..." << endl;
         } else {
             CAbi abi;
-            loadAbiAndCache(abi, a, isRaw, errors);
+            abi.loadAbiFromEtherscan(a, isRaw, errors);
             if (errors.size() > 0) {
                 ostringstream os;
                 for (auto err : errors)
@@ -166,13 +166,13 @@ bool COptions::parseArguments(string_q& command) {
 
     if (known) {
         CAbi abi;
-        abi.loadAbisKnown(ABI_ALL);
+        abi.loadAbisFromKnown(ABI_ALL);
         abiList.push_back(abi);
     }
 
     if (monitored) {
         CAbi abi;
-        abi.loadAbisInCache();
+        abi.loadAbisFromCache();
         abi.sortInterfaces();
         abiList.push_back(abi);
     }

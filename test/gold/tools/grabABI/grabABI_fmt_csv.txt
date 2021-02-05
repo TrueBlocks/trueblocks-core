@@ -1,6 +1,6 @@
 grabABI argc: 5 [1:0xe94327d07fc17907b4db788e5adf2ed424addff6] [2:--fmt] [3:csv] [4:--no_header] 
 grabABI 0xe94327d07fc17907b4db788e5adf2ed424addff6 --fmt csv --no_header 
-TIME ~ CLOCK - <INFO>  : loadAbiAndCache: for address 0xe94327d07fc17907b4db788e5adf2ed424addff6
+TIME ~ CLOCK - <INFO>  : loadAbiFromEtherscan: for address 0xe94327d07fc17907b4db788e5adf2ed424addff6
 TIME ~ CLOCK - <INFO>  : Inserting: function-name()
 TIME ~ CLOCK - <INFO>  : Inserting: function-approve(address,uint256)
 TIME ~ CLOCK - <INFO>  : Inserting: function-initialized()

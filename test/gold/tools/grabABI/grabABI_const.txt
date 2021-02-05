@@ -1,6 +1,6 @@
 grabABI argc: 3 [1:0xbb9bc244d798123fde783fcc1c72d3bb8c189413] [2:--addr] 
 grabABI 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 --addr 
-TIME ~ CLOCK - <INFO>  : loadAbiAndCache: for address 0xbb9bc244d798123fde783fcc1c72d3bb8c189413
+TIME ~ CLOCK - <INFO>  : loadAbiFromEtherscan: for address 0xbb9bc244d798123fde783fcc1c72d3bb8c189413
 TIME ~ CLOCK - <INFO>  : Inserting: function-proposals(uint256)
 TIME ~ CLOCK - <INFO>  : Inserting: function-approve(address,uint256)
 TIME ~ CLOCK - <INFO>  : Inserting: function-minTokensToCreate()

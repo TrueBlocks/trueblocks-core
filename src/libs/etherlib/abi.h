@@ -54,11 +54,12 @@ class CAbi : public CBaseNode {
     bool articulateOutputs(const string_q& encoding, const string_q& value, CFunction& ret) const;
     CFunctionMap interfaceMap;
     bool loadAbisFolderAndCache(const string_q& sourcePath, const string_q& binPath);
-    bool loadAbisKnown(int which);
-    bool loadAbisInCache(void);
-    bool loadAbiByAddress(const address_t& addr);
+    bool loadAbisFromKnown(int which);
+    bool loadAbisFromCache(void);
+    bool loadAbiFromAddress(const address_t& addr);
     bool loadAbiFromFile(const string_q& fileName, bool builtIn);
     bool loadAbiFromString(const string_q& str, bool builtIn);
+    bool loadAbiFromEtherscan(const address_t& addr, bool raw, CStringArray& errors);
     void sortInterfaces(void);
     void addInterface(const CFunction& func);
     // EXISTING_CODE
@@ -173,7 +174,6 @@ extern const char* STR_DISPLAY_ABI;
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 extern bool decodeRLP(CParameterArray& interfaces, const string_q& desc, const string_q& input);
-extern void loadAbiAndCache(CAbi& abi, const address_t& addr, bool raw, CStringArray& errors);
 extern void removeDuplicateEncodings(CAbiArray& abis);
 extern bool sol_2_Abi(CAbi& abi, const string_q& addr);
 extern string_q getAbiPath(const address_t& addrOrName);

@@ -33,7 +33,7 @@ bool CAbi::articulateTransaction(CTransaction* p) const {
     for (auto& trace : p->traces) {
         hasTraces = true;
         trace.articulatedTrace.m_showing = false;
-        ((CAbi*)this)->loadAbiByAddress(trace.action.to);  // NOLINT
+        ((CAbi*)this)->loadAbiFromAddress(trace.action.to);  // NOLINT
         if (articulateTrace(&trace))
             trace.articulatedTrace.m_showing = true;
     }

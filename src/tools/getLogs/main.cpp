@@ -62,12 +62,12 @@ bool visitTransaction(CTransaction& trans, void* data) {
     //////////////////////////////////////////////////////
 
     if (opt->articulate) {
-        opt->abi_spec.loadAbiByAddress(trans.to);
+        opt->abi_spec.loadAbiFromAddress(trans.to);
         opt->abi_spec.articulateTransaction(&trans);
     }
     for (auto log : trans.receipt.logs) {
         if (opt->articulate) {
-            opt->abi_spec.loadAbiByAddress(log.address);
+            opt->abi_spec.loadAbiFromAddress(log.address);
             opt->abi_spec.articulateLog(&log);
         }
         manageFields("CFunction:message", !log.articulatedLog.message.empty());

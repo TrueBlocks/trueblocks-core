@@ -82,7 +82,7 @@ bool COptions::parseArguments(string_q& command) {
         manageFields("CFunction:outputs", true);        // show
         manageFields("CTransaction:input", true);       // show
         manageFields("CLogEntry:topics", true);         // show
-        abi_spec.loadAbisKnown(ABI_ALL);
+        abi_spec.loadAbisFromKnown(ABI_ALL);
     }
 
     // Display formatting

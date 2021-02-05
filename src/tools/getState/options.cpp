@@ -99,7 +99,7 @@ bool COptions::parseArguments(string_q& command) {
                          uint_2_Str(bn) + ". Quitting...");
 
         CAbi abi;
-        abi.loadAbiByAddress(addr);
+        abi.loadAbiFromAddress(addr);
 
         CFunction result;
         if (doEthCall(addr, fourByte, bytes, bn, abi, result))

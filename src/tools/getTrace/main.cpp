@@ -100,7 +100,7 @@ bool visitTransaction(CTransaction& trans, void* data) {
     //////////////////////////////////////////////////////
 
     if (opt->articulate)
-        opt->abi_spec.loadAbiByAddress(trans.to);
+        opt->abi_spec.loadAbiFromAddress(trans.to);
 
     for (auto trace : trans.traces) {
         if (!isTestMode() && isApiMode()) {
@@ -111,7 +111,7 @@ bool visitTransaction(CTransaction& trans, void* data) {
         }
 
         if (opt->articulate) {
-            opt->abi_spec.loadAbiByAddress(trace.action.to);
+            opt->abi_spec.loadAbiFromAddress(trace.action.to);
             opt->abi_spec.articulateTrace(&trace);
         }
         manageFields("CFunction:message", !trace.articulatedTrace.message.empty());
