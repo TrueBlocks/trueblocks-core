@@ -1,51 +1,48 @@
 [
   {
-    "name": "name",
-    "type": "function",
     "constant": true,
-    "signature": "name()",
     "encoding": "0x06fdde03",
     "inputs": [],
+    "name": "name",
     "outputs": [
       {
         "name": "memory",
         "type": "string"
       }
-    ]
+    ],
+    "signature": "name()",
+    "type": "function"
   },
   {
-    "name": "symbol",
-    "type": "function",
     "constant": true,
-    "signature": "symbol()",
     "encoding": "0x95d89b41",
     "inputs": [],
+    "name": "symbol",
     "outputs": [
       {
         "name": "memory",
         "type": "string"
       }
-    ]
+    ],
+    "signature": "symbol()",
+    "type": "function"
   },
   {
-    "name": "totalSupply",
-    "type": "function",
     "constant": true,
-    "signature": "totalSupply()",
     "encoding": "0x18160ddd",
     "inputs": [],
+    "name": "totalSupply",
     "outputs": [
       {
         "name": "ret_0",
         "type": "uint256"
       }
-    ]
+    ],
+    "signature": "totalSupply()",
+    "type": "function"
   },
   {
-    "name": "balanceOf",
-    "type": "function",
     "constant": true,
-    "signature": "balanceOf(address)",
     "encoding": "0x70a08231",
     "inputs": [
       {
@@ -53,47 +50,47 @@
         "type": "address"
       }
     ],
+    "name": "balanceOf",
     "outputs": [
       {
         "name": "ret_0",
         "type": "uint256"
       }
-    ]
+    ],
+    "signature": "balanceOf(address)",
+    "type": "function"
   },
   {
-    "name": "granularity",
-    "type": "function",
     "constant": true,
-    "signature": "granularity()",
     "encoding": "0x556f0dc7",
     "inputs": [],
+    "name": "granularity",
     "outputs": [
       {
         "name": "ret_0",
         "type": "uint256"
       }
-    ]
+    ],
+    "signature": "granularity()",
+    "type": "function"
   },
   {
-    "name": "defaultOperators",
-    "type": "function",
     "constant": true,
-    "signature": "defaultOperators()",
     "encoding": "0x06e48538",
     "inputs": [],
+    "name": "defaultOperators",
     "outputs": [
       {
+        "isArray": true,
         "name": "memory",
-        "type": "address[]",
-        "isArray": true
+        "type": "address[]"
       }
-    ]
+    ],
+    "signature": "defaultOperators()",
+    "type": "function"
   },
   {
-    "name": "isOperatorFor",
-    "type": "function",
     "constant": true,
-    "signature": "isOperatorFor(address,address)",
     "encoding": "0xd95b6371",
     "inputs": [
       {
@@ -105,17 +102,17 @@
         "type": "address"
       }
     ],
+    "name": "isOperatorFor",
     "outputs": [
       {
         "name": "ret_0",
         "type": "bool"
       }
-    ]
+    ],
+    "signature": "isOperatorFor(address,address)",
+    "type": "function"
   },
   {
-    "name": "authorizeOperator",
-    "type": "function",
-    "signature": "authorizeOperator(address)",
     "encoding": "0x959b8c3f",
     "inputs": [
       {
@@ -123,12 +120,12 @@
         "type": "address"
       }
     ],
-    "outputs": []
+    "name": "authorizeOperator",
+    "outputs": [],
+    "signature": "authorizeOperator(address)",
+    "type": "function"
   },
   {
-    "name": "revokeOperator",
-    "type": "function",
-    "signature": "revokeOperator(address)",
     "encoding": "0xfad8b32a",
     "inputs": [
       {
@@ -136,12 +133,12 @@
         "type": "address"
       }
     ],
-    "outputs": []
+    "name": "revokeOperator",
+    "outputs": [],
+    "signature": "revokeOperator(address)",
+    "type": "function"
   },
   {
-    "name": "send",
-    "type": "function",
-    "signature": "send(address,uint256,bytes)",
     "encoding": "0x9bd9bbc6",
     "inputs": [
       {
@@ -157,12 +154,12 @@
         "type": "bytes"
       }
     ],
-    "outputs": []
+    "name": "send",
+    "outputs": [],
+    "signature": "send(address,uint256,bytes)",
+    "type": "function"
   },
   {
-    "name": "operatorSend",
-    "type": "function",
-    "signature": "operatorSend(address,address,uint256,bytes,bytes)",
     "encoding": "0x62ad1b83",
     "inputs": [
       {
@@ -186,12 +183,12 @@
         "type": "bytes"
       }
     ],
-    "outputs": []
+    "name": "operatorSend",
+    "outputs": [],
+    "signature": "operatorSend(address,address,uint256,bytes,bytes)",
+    "type": "function"
   },
   {
-    "name": "burn",
-    "type": "function",
-    "signature": "burn(uint256,bytes)",
     "encoding": "0xfe9d9303",
     "inputs": [
       {
@@ -203,12 +200,12 @@
         "type": "bytes"
       }
     ],
-    "outputs": []
+    "name": "burn",
+    "outputs": [],
+    "signature": "burn(uint256,bytes)",
+    "type": "function"
   },
   {
-    "name": "operatorBurn",
-    "type": "function",
-    "signature": "operatorBurn(address,uint256,bytes,bytes)",
     "encoding": "0xfc673c4f",
     "inputs": [
       {
@@ -228,12 +225,12 @@
         "type": "bytes"
       }
     ],
-    "outputs": []
+    "name": "operatorBurn",
+    "outputs": [],
+    "signature": "operatorBurn(address,uint256,bytes,bytes)",
+    "type": "function"
   },
   {
-    "name": "Sent",
-    "type": "event",
-    "signature": "Sent(address,address,address,uint256,bytes,bytes)",
     "encoding": "0x06b541ddaa720db2b10a4d0cdac39b8d360425fc073085fac19bc82614677987",
     "inputs": [
       {
@@ -264,12 +261,12 @@
         "type": "bytes"
       }
     ],
-    "outputs": []
+    "name": "Sent",
+    "outputs": [],
+    "signature": "Sent(address,address,address,uint256,bytes,bytes)",
+    "type": "event"
   },
   {
-    "name": "Minted",
-    "type": "event",
-    "signature": "Minted(address,address,uint256,bytes,bytes)",
     "encoding": "0x2fe5be0146f74c5bce36c0b80911af6c7d86ff27e89d5cfa61fc681327954e5d",
     "inputs": [
       {
@@ -295,12 +292,12 @@
         "type": "bytes"
       }
     ],
-    "outputs": []
+    "name": "Minted",
+    "outputs": [],
+    "signature": "Minted(address,address,uint256,bytes,bytes)",
+    "type": "event"
   },
   {
-    "name": "Burned",
-    "type": "event",
-    "signature": "Burned(address,address,uint256,bytes,bytes)",
     "encoding": "0xa78a9be3a7b862d26933ad85fb11d80ef66b8f972d7cbba06621d583943a4098",
     "inputs": [
       {
@@ -326,12 +323,12 @@
         "type": "bytes"
       }
     ],
-    "outputs": []
+    "name": "Burned",
+    "outputs": [],
+    "signature": "Burned(address,address,uint256,bytes,bytes)",
+    "type": "event"
   },
   {
-    "name": "AuthorizedOperator",
-    "type": "event",
-    "signature": "AuthorizedOperator(address,address)",
     "encoding": "0xf4caeb2d6ca8932a215a353d0703c326ec2d81fc68170f320eb2ab49e9df61f9",
     "inputs": [
       {
@@ -345,12 +342,12 @@
         "type": "address"
       }
     ],
-    "outputs": []
+    "name": "AuthorizedOperator",
+    "outputs": [],
+    "signature": "AuthorizedOperator(address,address)",
+    "type": "event"
   },
   {
-    "name": "RevokedOperator",
-    "type": "event",
-    "signature": "RevokedOperator(address,address)",
     "encoding": "0x50546e66e5f44d728365dc3908c63bc5cfeeab470722c1677e3073a6ac294aa1",
     "inputs": [
       {
@@ -364,6 +361,9 @@
         "type": "address"
       }
     ],
-    "outputs": []
+    "name": "RevokedOperator",
+    "outputs": [],
+    "signature": "RevokedOperator(address,address)",
+    "type": "event"
   }
 ]

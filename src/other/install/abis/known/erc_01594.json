@@ -1,8 +1,5 @@
 [
   {
-    "name": "transferWithData",
-    "type": "function",
-    "signature": "transferWithData(address,uint256,bytes)",
     "encoding": "0x2535f762",
     "inputs": [
       {
@@ -18,12 +15,12 @@
         "type": "bytes"
       }
     ],
-    "outputs": []
+    "name": "transferWithData",
+    "outputs": [],
+    "signature": "transferWithData(address,uint256,bytes)",
+    "type": "function"
   },
   {
-    "name": "transferFromWithData",
-    "type": "function",
-    "signature": "transferFromWithData(address,address,uint256,bytes)",
     "encoding": "0xee532f31",
     "inputs": [
       {
@@ -43,26 +40,26 @@
         "type": "bytes"
       }
     ],
-    "outputs": []
+    "name": "transferFromWithData",
+    "outputs": [],
+    "signature": "transferFromWithData(address,address,uint256,bytes)",
+    "type": "function"
   },
   {
-    "name": "isIssuable",
-    "type": "function",
     "constant": true,
-    "signature": "isIssuable()",
     "encoding": "0x2f1cae85",
     "inputs": [],
+    "name": "isIssuable",
     "outputs": [
       {
         "name": "ret_0",
         "type": "bool"
       }
-    ]
+    ],
+    "signature": "isIssuable()",
+    "type": "function"
   },
   {
-    "name": "issue",
-    "type": "function",
-    "signature": "issue(address,uint256,bytes)",
     "encoding": "0xbb3acde9",
     "inputs": [
       {
@@ -78,12 +75,12 @@
         "type": "bytes"
       }
     ],
-    "outputs": []
+    "name": "issue",
+    "outputs": [],
+    "signature": "issue(address,uint256,bytes)",
+    "type": "function"
   },
   {
-    "name": "redeem",
-    "type": "function",
-    "signature": "redeem(uint256,bytes)",
     "encoding": "0xe77c646d",
     "inputs": [
       {
@@ -95,12 +92,12 @@
         "type": "bytes"
       }
     ],
-    "outputs": []
+    "name": "redeem",
+    "outputs": [],
+    "signature": "redeem(uint256,bytes)",
+    "type": "function"
   },
   {
-    "name": "redeemFrom",
-    "type": "function",
-    "signature": "redeemFrom(address,uint256,bytes)",
     "encoding": "0x9675193c",
     "inputs": [
       {
@@ -116,13 +113,13 @@
         "type": "bytes"
       }
     ],
-    "outputs": []
+    "name": "redeemFrom",
+    "outputs": [],
+    "signature": "redeemFrom(address,uint256,bytes)",
+    "type": "function"
   },
   {
-    "name": "canTransfer",
-    "type": "function",
     "constant": true,
-    "signature": "canTransfer(address,uint256,bytes)",
     "encoding": "0x1badb25c",
     "inputs": [
       {
@@ -138,6 +135,7 @@
         "type": "bytes"
       }
     ],
+    "name": "canTransfer",
     "outputs": [
       {
         "name": "ret_0",
@@ -151,13 +149,12 @@
         "name": "ret_2",
         "type": "bytes32"
       }
-    ]
+    ],
+    "signature": "canTransfer(address,uint256,bytes)",
+    "type": "function"
   },
   {
-    "name": "canTransferFrom",
-    "type": "function",
     "constant": true,
-    "signature": "canTransferFrom(address,address,uint256,bytes)",
     "encoding": "0x122eb575",
     "inputs": [
       {
@@ -177,6 +174,7 @@
         "type": "bytes"
       }
     ],
+    "name": "canTransferFrom",
     "outputs": [
       {
         "name": "ret_0",
@@ -190,12 +188,11 @@
         "name": "ret_2",
         "type": "bytes32"
       }
-    ]
+    ],
+    "signature": "canTransferFrom(address,address,uint256,bytes)",
+    "type": "function"
   },
   {
-    "name": "Issued",
-    "type": "event",
-    "signature": "Issued(address,address,uint256,bytes)",
     "encoding": "0x0e9905d62635f049c2f4e11678ebf9dc3d1f8c4a653e290759b772e47ba00d00",
     "inputs": [
       {
@@ -217,12 +214,12 @@
         "type": "bytes"
       }
     ],
-    "outputs": []
+    "name": "Issued",
+    "outputs": [],
+    "signature": "Issued(address,address,uint256,bytes)",
+    "type": "event"
   },
   {
-    "name": "Redeemed",
-    "type": "event",
-    "signature": "Redeemed(address,address,uint256,bytes)",
     "encoding": "0xb7d0d6b60740753e9f16692a2f479472a1385aec2420fa43225b02f2ffa1afe7",
     "inputs": [
       {
@@ -244,6 +241,9 @@
         "type": "bytes"
       }
     ],
-    "outputs": []
+    "name": "Redeemed",
+    "outputs": [],
+    "signature": "Redeemed(address,address,uint256,bytes)",
+    "type": "event"
   }
 ]

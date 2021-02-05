@@ -218,6 +218,12 @@ extern logger<log_policy_i>* eLogger;
 #define LOG_PROGRESS(op, progress, goal) LOG_PROGRESS1((op), progress, goal, "\n")
 #define LOG_CALL(a)                                                                                                    \
     { LOG4(bWhite, l_funcName, " ----> ", (isTestMode() ? substitute((a), getCachePath(""), "$CACHE/") : (a)), cOff); }
+#define LOG_TEST(a, b)                                                                                                 \
+    {                                                                                                                  \
+        if (isTestMode()) {                                                                                            \
+            LOG_INFO((string_q(a) + ": "), (b));                                                                       \
+        }                                                                                                              \
+    }
 #else
 #define LOG0(...)
 #define LOG1(...)
@@ -237,6 +243,7 @@ extern logger<log_policy_i>* eLogger;
 #define LOG_PROGRESS(...)
 #define LOG_PROGRESS1(...)
 #define LOG_CALL(a)
+#define LOG_TEST(a, b)
 #endif
 
 // The LOG parts of these routines disappear if turned off, but they still do their work because of the returns

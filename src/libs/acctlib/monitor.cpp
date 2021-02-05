@@ -700,8 +700,10 @@ const char* STR_DISPLAY_TOKENBALANCERECORD2 =
 
 //-------------------------------------------------------------------------
 string_q getTokenBalanceOf(const CMonitor& token, const address_t& holder, blknum_t blockNum) {
+    map<string_q, string_q> sigMap;
+    sigMap["balanceOf"] = "0x70a08231";
     CFunction result;
-    if (doEthCall(token.address, "0x70a08231", padLeft(extract(holder, 2), 64, '0'), blockNum, token.abi_spec, result))
+    if (doEthCall(token.address, sigMap["balanceOf"], padLeft(extract(holder, 2), 64, '0'), blockNum, token.abi_spec, result))
         return result.outputs[0].value;
     return "";
 }

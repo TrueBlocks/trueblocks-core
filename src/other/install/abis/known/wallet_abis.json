@@ -438,8 +438,8 @@
       }
     ],
     "payable": false,
-    "type": "function",
-    "stateMutability": "view"
+    "stateMutability": "view",
+    "type": "function"
   },
   {
     "constant": false,
@@ -452,8 +452,8 @@
     "name": "removeOwner",
     "outputs": [],
     "payable": false,
-    "type": "function",
-    "stateMutability": "nonpayable"
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
     "constant": false,
@@ -466,8 +466,8 @@
     "name": "revokeConfirmation",
     "outputs": [],
     "payable": false,
-    "type": "function",
-    "stateMutability": "nonpayable"
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
     "constant": true,
@@ -485,8 +485,8 @@
       }
     ],
     "payable": false,
-    "type": "function",
-    "stateMutability": "view"
+    "stateMutability": "view",
+    "type": "function"
   },
   {
     "constant": true,
@@ -508,8 +508,8 @@
       }
     ],
     "payable": false,
-    "type": "function",
-    "stateMutability": "view"
+    "stateMutability": "view",
+    "type": "function"
   },
   {
     "constant": true,
@@ -531,8 +531,8 @@
       }
     ],
     "payable": false,
-    "type": "function",
-    "stateMutability": "view"
+    "stateMutability": "view",
+    "type": "function"
   },
   {
     "constant": false,
@@ -545,8 +545,8 @@
     "name": "addOwner",
     "outputs": [],
     "payable": false,
-    "type": "function",
-    "stateMutability": "nonpayable"
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
     "constant": true,
@@ -564,8 +564,8 @@
       }
     ],
     "payable": false,
-    "type": "function",
-    "stateMutability": "view"
+    "stateMutability": "view",
+    "type": "function"
   },
   {
     "constant": true,
@@ -583,8 +583,8 @@
       }
     ],
     "payable": false,
-    "type": "function",
-    "stateMutability": "view"
+    "stateMutability": "view",
+    "type": "function"
   },
   {
     "constant": true,
@@ -614,8 +614,8 @@
       }
     ],
     "payable": false,
-    "type": "function",
-    "stateMutability": "view"
+    "stateMutability": "view",
+    "type": "function"
   },
   {
     "constant": true,
@@ -628,8 +628,8 @@
       }
     ],
     "payable": false,
-    "type": "function",
-    "stateMutability": "view"
+    "stateMutability": "view",
+    "type": "function"
   },
   {
     "constant": true,
@@ -659,8 +659,8 @@
       }
     ],
     "payable": false,
-    "type": "function",
-    "stateMutability": "view"
+    "stateMutability": "view",
+    "type": "function"
   },
   {
     "constant": true,
@@ -678,8 +678,8 @@
       }
     ],
     "payable": false,
-    "type": "function",
-    "stateMutability": "view"
+    "stateMutability": "view",
+    "type": "function"
   },
   {
     "constant": true,
@@ -692,8 +692,8 @@
       }
     ],
     "payable": false,
-    "type": "function",
-    "stateMutability": "view"
+    "stateMutability": "view",
+    "type": "function"
   },
   {
     "constant": false,
@@ -706,8 +706,8 @@
     "name": "changeRequirement",
     "outputs": [],
     "payable": false,
-    "type": "function",
-    "stateMutability": "nonpayable"
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
     "constant": false,
@@ -720,8 +720,8 @@
     "name": "confirmTransaction",
     "outputs": [],
     "payable": false,
-    "type": "function",
-    "stateMutability": "nonpayable"
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
     "constant": false,
@@ -747,8 +747,8 @@
       }
     ],
     "payable": false,
-    "type": "function",
-    "stateMutability": "nonpayable"
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
     "constant": true,
@@ -761,8 +761,8 @@
       }
     ],
     "payable": false,
-    "type": "function",
-    "stateMutability": "view"
+    "stateMutability": "view",
+    "type": "function"
   },
   {
     "constant": true,
@@ -775,8 +775,8 @@
       }
     ],
     "payable": false,
-    "type": "function",
-    "stateMutability": "view"
+    "stateMutability": "view",
+    "type": "function"
   },
   {
     "constant": false,
@@ -793,8 +793,8 @@
     "name": "replaceOwner",
     "outputs": [],
     "payable": false,
-    "type": "function",
-    "stateMutability": "nonpayable"
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
     "constant": false,
@@ -807,8 +807,8 @@
     "name": "executeTransaction",
     "outputs": [],
     "payable": false,
-    "type": "function",
-    "stateMutability": "nonpayable"
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
     "inputs": [
@@ -822,13 +822,13 @@
       }
     ],
     "payable": false,
-    "type": "constructor",
-    "stateMutability": "nonpayable"
+    "stateMutability": "nonpayable",
+    "type": "constructor"
   },
   {
     "payable": true,
-    "type": "fallback",
-    "stateMutability": "payable"
+    "stateMutability": "payable",
+    "type": "fallback"
   },
   {
     "anonymous": false,

@@ -1,9 +1,6 @@
 [
   {
-    "name": "canImplementInterfaceForAddress",
-    "type": "function",
     "constant": true,
-    "signature": "canImplementInterfaceForAddress(bytes32,address)",
     "encoding": "0x249cb3fa",
     "inputs": [
       {
@@ -15,17 +12,17 @@
         "type": "address"
       }
     ],
+    "name": "canImplementInterfaceForAddress",
     "outputs": [
       {
         "name": "ret_0",
         "type": "bytes32"
       }
-    ]
+    ],
+    "signature": "canImplementInterfaceForAddress(bytes32,address)",
+    "type": "function"
   },
   {
-    "name": "InterfaceImplementerSet",
-    "type": "event",
-    "signature": "InterfaceImplementerSet(address,bytes32,address)",
     "encoding": "0x93baa6efbd2244243bfee6ce4cfdd1d04fc4c0e9a786abd3a41313bd352db153",
     "inputs": [
       {
@@ -44,12 +41,12 @@
         "type": "address"
       }
     ],
-    "outputs": []
+    "name": "InterfaceImplementerSet",
+    "outputs": [],
+    "signature": "InterfaceImplementerSet(address,bytes32,address)",
+    "type": "event"
   },
   {
-    "name": "ManagerChanged",
-    "type": "event",
-    "signature": "ManagerChanged(address,address)",
     "encoding": "0x605c2dbf762e5f7d60a546d42e7205dcb1b011ebc62a61736a57c9089d3a4350",
     "inputs": [
       {
@@ -63,13 +60,13 @@
         "type": "address"
       }
     ],
-    "outputs": []
+    "name": "ManagerChanged",
+    "outputs": [],
+    "signature": "ManagerChanged(address,address)",
+    "type": "event"
   },
   {
-    "name": "getInterfaceImplementer",
-    "type": "function",
     "constant": true,
-    "signature": "getInterfaceImplementer(address,bytes32)",
     "encoding": "0xaabbb8ca",
     "inputs": [
       {
@@ -81,17 +78,17 @@
         "type": "bytes32"
       }
     ],
+    "name": "getInterfaceImplementer",
     "outputs": [
       {
         "name": "ret_0",
         "type": "address"
       }
-    ]
+    ],
+    "signature": "getInterfaceImplementer(address,bytes32)",
+    "type": "function"
   },
   {
-    "name": "setInterfaceImplementer",
-    "type": "function",
-    "signature": "setInterfaceImplementer(address,bytes32,address)",
     "encoding": "0x29965a1d",
     "inputs": [
       {
@@ -107,12 +104,12 @@
         "type": "address"
       }
     ],
-    "outputs": []
+    "name": "setInterfaceImplementer",
+    "outputs": [],
+    "signature": "setInterfaceImplementer(address,bytes32,address)",
+    "type": "function"
   },
   {
-    "name": "setManager",
-    "type": "function",
-    "signature": "setManager(address,address)",
     "encoding": "0x5df8122f",
     "inputs": [
       {
@@ -124,13 +121,13 @@
         "type": "address"
       }
     ],
-    "outputs": []
+    "name": "setManager",
+    "outputs": [],
+    "signature": "setManager(address,address)",
+    "type": "function"
   },
   {
-    "name": "getManager",
-    "type": "function",
     "constant": true,
-    "signature": "getManager(address)",
     "encoding": "0x3d584063",
     "inputs": [
       {
@@ -138,17 +135,17 @@
         "type": "address"
       }
     ],
+    "name": "getManager",
     "outputs": [
       {
         "name": "ret_0",
         "type": "address"
       }
-    ]
+    ],
+    "signature": "getManager(address)",
+    "type": "function"
   },
   {
-    "name": "interfaceHash",
-    "type": "function",
-    "signature": "interfaceHash(string)",
     "encoding": "0x65ba36c1",
     "inputs": [
       {
@@ -156,17 +153,17 @@
         "type": "string"
       }
     ],
+    "name": "interfaceHash",
     "outputs": [
       {
         "name": "ret_0",
         "type": "bytes32"
       }
-    ]
+    ],
+    "signature": "interfaceHash(string)",
+    "type": "function"
   },
   {
-    "name": "updateERC165Cache",
-    "type": "function",
-    "signature": "updateERC165Cache(address,bytes4)",
     "encoding": "0xa41e7d51",
     "inputs": [
       {
@@ -178,13 +175,13 @@
         "type": "bytes4"
       }
     ],
-    "outputs": []
+    "name": "updateERC165Cache",
+    "outputs": [],
+    "signature": "updateERC165Cache(address,bytes4)",
+    "type": "function"
   },
   {
-    "name": "implementsERC165Interface",
-    "type": "function",
     "constant": true,
-    "signature": "implementsERC165Interface(address,bytes4)",
     "encoding": "0xf712f3e8",
     "inputs": [
       {
@@ -196,18 +193,18 @@
         "type": "bytes4"
       }
     ],
+    "name": "implementsERC165Interface",
     "outputs": [
       {
         "name": "ret_0",
         "type": "bool"
       }
-    ]
+    ],
+    "signature": "implementsERC165Interface(address,bytes4)",
+    "type": "function"
   },
   {
-    "name": "implementsERC165InterfaceNoCache",
-    "type": "function",
     "constant": true,
-    "signature": "implementsERC165InterfaceNoCache(address,bytes4)",
     "encoding": "0xb7056765",
     "inputs": [
       {
@@ -219,17 +216,17 @@
         "type": "bytes4"
       }
     ],
+    "name": "implementsERC165InterfaceNoCache",
     "outputs": [
       {
         "name": "ret_0",
         "type": "bool"
       }
-    ]
+    ],
+    "signature": "implementsERC165InterfaceNoCache(address,bytes4)",
+    "type": "function"
   },
   {
-    "name": "isERC165Interface",
-    "type": "function",
-    "signature": "isERC165Interface(bytes32)",
     "encoding": "0x9d4cf268",
     "inputs": [
       {
@@ -237,18 +234,18 @@
         "type": "bytes32"
       }
     ],
+    "name": "isERC165Interface",
     "outputs": [
       {
         "name": "ret_0",
         "type": "bool"
       }
-    ]
+    ],
+    "signature": "isERC165Interface(bytes32)",
+    "type": "function"
   },
   {
-    "name": "noThrowCall",
-    "type": "function",
     "constant": true,
-    "signature": "noThrowCall(address,bytes4)",
     "encoding": "0xf86cd33d",
     "inputs": [
       {
@@ -260,6 +257,7 @@
         "type": "bytes4"
       }
     ],
+    "name": "noThrowCall",
     "outputs": [
       {
         "name": "success",
@@ -269,6 +267,8 @@
         "name": "result",
         "type": "uint256"
       }
-    ]
+    ],
+    "signature": "noThrowCall(address,bytes4)",
+    "type": "function"
   }
 ]

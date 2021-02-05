@@ -1,5 +1,30 @@
 grabABI argc: 2 [1:0xd26114cd6ee289accf82350c8d8487fedb8a0c07] 
 grabABI 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 
+TIME ~ CLOCK - <INFO>  : loadAbiAndCache: for address 0xd26114cd6ee289accf82350c8d8487fedb8a0c07
+TIME ~ CLOCK - <INFO>  : Inserting: function-mintingFinished()
+TIME ~ CLOCK - <INFO>  : Inserting: function-name()
+TIME ~ CLOCK - <INFO>  : Inserting: function-approve(address,uint256)
+TIME ~ CLOCK - <INFO>  : Inserting: function-totalSupply()
+TIME ~ CLOCK - <INFO>  : Inserting: function-transferFrom(address,address,uint256)
+TIME ~ CLOCK - <INFO>  : Inserting: function-decimals()
+TIME ~ CLOCK - <INFO>  : Inserting: function-unpause()
+TIME ~ CLOCK - <INFO>  : Inserting: function-mint(address,uint256)
+TIME ~ CLOCK - <INFO>  : Inserting: function-paused()
+TIME ~ CLOCK - <INFO>  : Inserting: function-balanceOf(address)
+TIME ~ CLOCK - <INFO>  : Inserting: function-finishMinting()
+TIME ~ CLOCK - <INFO>  : Inserting: function-pause()
+TIME ~ CLOCK - <INFO>  : Inserting: function-owner()
+TIME ~ CLOCK - <INFO>  : Inserting: function-symbol()
+TIME ~ CLOCK - <INFO>  : Inserting: function-transfer(address,uint256)
+TIME ~ CLOCK - <INFO>  : Inserting: function-mintTimelocked(address,uint256,uint256)
+TIME ~ CLOCK - <INFO>  : Inserting: function-allowance(address,address)
+TIME ~ CLOCK - <INFO>  : Inserting: function-transferOwnership(address)
+TIME ~ CLOCK - <INFO>  : Inserting: event-Mint(address,uint256)
+TIME ~ CLOCK - <INFO>  : Inserting: event-MintFinished()
+TIME ~ CLOCK - <INFO>  : Inserting: event-Pause()
+TIME ~ CLOCK - <INFO>  : Inserting: event-Unpause()
+TIME ~ CLOCK - <INFO>  : Inserting: event-Approval(address,address,uint256)
+TIME ~ CLOCK - <INFO>  : Inserting: event-Transfer(address,address,uint256)
 encoding	type	name	signature	input_names	output_names
 0xdd62ed3e	function	allowance	allowance(address,address)	_owner,_spender,	remaining,,
 0x095ea7b3	function	approve	approve(address,uint256)	_spender,_value,	,

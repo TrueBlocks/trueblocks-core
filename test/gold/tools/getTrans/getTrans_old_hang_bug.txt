@@ -1,6 +1,27 @@
 getTrans argc: 5 [1:6409270.108] [2:--articulate] [3:--fmt] [4:json] 
 getTrans 6409270.108 --articulate --fmt json 
 { "data": [
+TIME ~ CLOCK - <INFO>  : loadAbiFromFile: $CACHE/abis/0x6b92d76c9d0d40e53019ffa51b6f0c9b6bc657c9.json
+TIME ~ CLOCK - <INFO>  : Inserting: function-name()
+TIME ~ CLOCK - <INFO>  : Inserting: function-approve(address,uint256)
+TIME ~ CLOCK - <INFO>  : Inserting: function-totalSupply()
+TIME ~ CLOCK - <INFO>  : Inserting: function-multiTransfer(address[],uint256[])
+TIME ~ CLOCK - <INFO>  : Inserting: function-transferFrom(address,address,uint256)
+TIME ~ CLOCK - <INFO>  : Inserting: function-decimals()
+TIME ~ CLOCK - <INFO>  : Inserting: function-unpause()
+TIME ~ CLOCK - <INFO>  : Inserting: function-paused()
+TIME ~ CLOCK - <INFO>  : Inserting: function-balanceOf(address)
+TIME ~ CLOCK - <INFO>  : Inserting: function-pause()
+TIME ~ CLOCK - <INFO>  : Inserting: function-owner()
+TIME ~ CLOCK - <INFO>  : Inserting: function-symbol()
+TIME ~ CLOCK - <INFO>  : Inserting: function-transfer(address,uint256)
+TIME ~ CLOCK - <INFO>  : Inserting: function-allowance(address,address)
+TIME ~ CLOCK - <INFO>  : Inserting: function-transferOwnership(address)
+TIME ~ CLOCK - <INFO>  : Inserting: constructor-()
+TIME ~ CLOCK - <INFO>  : Inserting: event-Pause()
+TIME ~ CLOCK - <INFO>  : Inserting: event-Unpause()
+TIME ~ CLOCK - <INFO>  : Inserting: event-Approval(address,address,uint256)
+TIME ~ CLOCK - <INFO>  : Inserting: event-Transfer(address,address,uint256)
 --2 : 4 : 0
 --  0: destinations (address[])
 --  1: tokens (uint256[])

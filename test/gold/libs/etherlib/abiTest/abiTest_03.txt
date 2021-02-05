@@ -2,38 +2,48 @@ abiTest argc: 3 [1:generation] [2:encoding]
 abiTest generation encoding 
 Generation test...
 Testing of already sorted JSON
+TIME ~ CLOCK - <INFO>  : Inserting: function-a()
+TIME ~ CLOCK - <INFO>  : Inserting: function-c()
+TIME ~ CLOCK - <INFO>  : Inserting: event-d()
+TIME ~ CLOCK - <INFO>  : Inserting: function-e()
+TIME ~ CLOCK - <INFO>  : Inserting: function-m()
 {
   "address": "0x0",
   "interfaces": [
     {
       "name": "a",
+      "type": "function",
       "stateMutability": "nonpayable",
       "signature": "a()",
       "encoding": "0x0dbe671f"
     },
     {
       "name": "c",
+      "type": "function",
       "stateMutability": "nonpayable",
       "signature": "c()",
       "encoding": "0xc3da42b8"
     },
     {
-      "name": "d",
-      "stateMutability": "nonpayable",
-      "signature": "d()",
-      "encoding": "0x8a054ac2"
-    },
-    {
       "name": "e",
+      "type": "function",
       "stateMutability": "nonpayable",
       "signature": "e()",
       "encoding": "0xffae15ba"
     },
     {
       "name": "m",
+      "type": "function",
       "stateMutability": "nonpayable",
       "signature": "m()",
       "encoding": "0x5a2ee019"
+    },
+    {
+      "name": "d",
+      "type": "event",
+      "stateMutability": "nonpayable",
+      "signature": "d()",
+      "encoding": "0x8a054ac2e444b80bc3fb604e855f19d395adb9d8fc51ab7f53cbd727f64b91f2"
     }
   ]
 }
@@ -43,30 +53,35 @@ Testing of already sorted JSON
   "interfaces": [
     {
       "name": "a",
+      "type": "function",
       "stateMutability": "nonpayable",
       "signature": "a()",
       "encoding": "0x0dbe671f"
     },
     {
       "name": "m",
+      "type": "function",
       "stateMutability": "nonpayable",
       "signature": "m()",
       "encoding": "0x5a2ee019"
     },
     {
       "name": "d",
+      "type": "event",
       "stateMutability": "nonpayable",
       "signature": "d()",
-      "encoding": "0x8a054ac2"
+      "encoding": "0x8a054ac2e444b80bc3fb604e855f19d395adb9d8fc51ab7f53cbd727f64b91f2"
     },
     {
       "name": "c",
+      "type": "function",
       "stateMutability": "nonpayable",
       "signature": "c()",
       "encoding": "0xc3da42b8"
     },
     {
       "name": "e",
+      "type": "function",
       "stateMutability": "nonpayable",
       "signature": "e()",
       "encoding": "0xffae15ba"
@@ -75,62 +90,80 @@ Testing of already sorted JSON
 }
 
 Testing of not sorted JSON
+TIME ~ CLOCK - <INFO>  : Inserting: function-z()
+TIME ~ CLOCK - <INFO>  : Inserting: function-a()
+TIME ~ CLOCK - <INFO>  : Inserting: event-b()
+TIME ~ CLOCK - <INFO>  : Inserting: function-zz()
+TIME ~ CLOCK - <INFO>  : Inserting: function-az()
+TIME ~ CLOCK - <INFO>  : Inserting: event-bz()
+TIME ~ CLOCK - <INFO>  : Inserting: function-za1()
+TIME ~ CLOCK - <INFO>  : Inserting: function-aa1()
+TIME ~ CLOCK - <INFO>  : Inserting: function-ba1()
 {
   "address": "0x0",
   "interfaces": [
     {
       "name": "a",
+      "type": "function",
       "stateMutability": "nonpayable",
       "signature": "a()",
       "encoding": "0x0dbe671f"
     },
     {
       "name": "aa1",
+      "type": "function",
       "stateMutability": "nonpayable",
       "signature": "aa1()",
       "encoding": "0x74d0d855"
     },
     {
       "name": "az",
+      "type": "function",
       "stateMutability": "nonpayable",
       "signature": "az()",
       "encoding": "0x73fc24ec"
     },
     {
-      "name": "b",
-      "stateMutability": "nonpayable",
-      "signature": "b()",
-      "encoding": "0x4df7e3d0"
-    },
-    {
       "name": "ba1",
+      "type": "function",
       "stateMutability": "nonpayable",
       "signature": "ba1()",
       "encoding": "0x53241b65"
     },
     {
-      "name": "bz",
-      "stateMutability": "nonpayable",
-      "signature": "bz()",
-      "encoding": "0x3c7df70c"
-    },
-    {
       "name": "z",
+      "type": "function",
       "stateMutability": "nonpayable",
       "signature": "z()",
       "encoding": "0xc5d7802e"
     },
     {
       "name": "za1",
+      "type": "function",
       "stateMutability": "nonpayable",
       "signature": "za1()",
       "encoding": "0xb7938cb5"
     },
     {
       "name": "zz",
+      "type": "function",
       "stateMutability": "nonpayable",
       "signature": "zz()",
       "encoding": "0xfa14c2df"
+    },
+    {
+      "name": "b",
+      "type": "event",
+      "stateMutability": "nonpayable",
+      "signature": "b()",
+      "encoding": "0x4df7e3d0fdffd35719c59893b4839a04b686be9ac7bec9cdd04a272e9ad7c628"
+    },
+    {
+      "name": "bz",
+      "type": "event",
+      "stateMutability": "nonpayable",
+      "signature": "bz()",
+      "encoding": "0x3c7df70c450c6c7f893b4418119a685152cc821c054129201df48ec660f69273"
     }
   ]
 }
@@ -140,54 +173,63 @@ Testing of not sorted JSON
   "interfaces": [
     {
       "name": "a",
+      "type": "function",
       "stateMutability": "nonpayable",
       "signature": "a()",
       "encoding": "0x0dbe671f"
     },
     {
       "name": "bz",
+      "type": "event",
       "stateMutability": "nonpayable",
       "signature": "bz()",
-      "encoding": "0x3c7df70c"
+      "encoding": "0x3c7df70c450c6c7f893b4418119a685152cc821c054129201df48ec660f69273"
     },
     {
       "name": "b",
+      "type": "event",
       "stateMutability": "nonpayable",
       "signature": "b()",
-      "encoding": "0x4df7e3d0"
+      "encoding": "0x4df7e3d0fdffd35719c59893b4839a04b686be9ac7bec9cdd04a272e9ad7c628"
     },
     {
       "name": "ba1",
+      "type": "function",
       "stateMutability": "nonpayable",
       "signature": "ba1()",
       "encoding": "0x53241b65"
     },
     {
       "name": "az",
+      "type": "function",
       "stateMutability": "nonpayable",
       "signature": "az()",
       "encoding": "0x73fc24ec"
     },
     {
       "name": "aa1",
+      "type": "function",
       "stateMutability": "nonpayable",
       "signature": "aa1()",
       "encoding": "0x74d0d855"
     },
     {
       "name": "za1",
+      "type": "function",
       "stateMutability": "nonpayable",
       "signature": "za1()",
       "encoding": "0xb7938cb5"
     },
     {
       "name": "z",
+      "type": "function",
       "stateMutability": "nonpayable",
       "signature": "z()",
       "encoding": "0xc5d7802e"
     },
     {
       "name": "zz",
+      "type": "function",
       "stateMutability": "nonpayable",
       "signature": "zz()",
       "encoding": "0xfa14c2df"

@@ -1,8 +1,5 @@
 [
   {
-    "name": "setShouldReject",
-    "type": "function",
-    "signature": "setShouldReject(bool)",
     "encoding": "0xa175b638",
     "inputs": [
       {
@@ -10,12 +7,12 @@
         "type": "bool"
       }
     ],
-    "outputs": []
+    "name": "setShouldReject",
+    "outputs": [],
+    "signature": "setShouldReject(bool)",
+    "type": "function"
   },
   {
-    "name": "onERC1155Received",
-    "type": "function",
-    "signature": "onERC1155Received(address,address,uint256,uint256,bytes)",
     "encoding": "0xf23a6e61",
     "inputs": [
       {
@@ -39,17 +36,17 @@
         "type": "bytes"
       }
     ],
+    "name": "onERC1155Received",
     "outputs": [
       {
         "name": "ret_0",
         "type": "bytes4"
       }
-    ]
+    ],
+    "signature": "onERC1155Received(address,address,uint256,uint256,bytes)",
+    "type": "function"
   },
   {
-    "name": "onERC1155BatchReceived",
-    "type": "function",
-    "signature": "onERC1155BatchReceived(address,address,uint256[],uint256[],bytes)",
     "encoding": "0xbc197c81",
     "inputs": [
       {
@@ -61,32 +58,32 @@
         "type": "address"
       },
       {
+        "isArray": true,
         "name": "_ids",
-        "type": "uint256[]",
-        "isArray": true
+        "type": "uint256[]"
       },
       {
+        "isArray": true,
         "name": "_values",
-        "type": "uint256[]",
-        "isArray": true
+        "type": "uint256[]"
       },
       {
         "name": "_data",
         "type": "bytes"
       }
     ],
+    "name": "onERC1155BatchReceived",
     "outputs": [
       {
         "name": "ret_0",
         "type": "bytes4"
       }
-    ]
+    ],
+    "signature": "onERC1155BatchReceived(address,address,uint256[],uint256[],bytes)",
+    "type": "function"
   },
   {
-    "name": "supportsInterface",
-    "type": "function",
     "constant": true,
-    "signature": "supportsInterface(bytes4)",
     "encoding": "0x01ffc9a7",
     "inputs": [
       {
@@ -94,18 +91,18 @@
         "type": "bytes4"
       }
     ],
+    "name": "supportsInterface",
     "outputs": [
       {
         "name": "ret_0",
         "type": "bool"
       }
-    ]
+    ],
+    "signature": "supportsInterface(bytes4)",
+    "type": "function"
   },
   {
-    "name": "uri",
-    "type": "function",
     "constant": true,
-    "signature": "uri(uint256)",
     "encoding": "0x0e89341c",
     "inputs": [
       {
@@ -113,18 +110,18 @@
         "type": "uint256"
       }
     ],
+    "name": "uri",
     "outputs": [
       {
         "name": "memory",
         "type": "string"
       }
-    ]
+    ],
+    "signature": "uri(uint256)",
+    "type": "function"
   },
   {
-    "name": "supportsInterface",
-    "type": "function",
     "constant": true,
-    "signature": "supportsInterface(bytes4)",
     "encoding": "0x01ffc9a7",
     "inputs": [
       {
@@ -132,17 +129,17 @@
         "type": "bytes4"
       }
     ],
+    "name": "supportsInterface",
     "outputs": [
       {
         "name": "ret_0",
         "type": "bool"
       }
-    ]
+    ],
+    "signature": "supportsInterface(bytes4)",
+    "type": "function"
   },
   {
-    "name": "safeTransferFrom",
-    "type": "function",
-    "signature": "safeTransferFrom(address,address,uint256,uint256,bytes)",
     "encoding": "0xf242432a",
     "inputs": [
       {
@@ -166,12 +163,12 @@
         "type": "bytes"
       }
     ],
-    "outputs": []
+    "name": "safeTransferFrom",
+    "outputs": [],
+    "signature": "safeTransferFrom(address,address,uint256,uint256,bytes)",
+    "type": "function"
   },
   {
-    "name": "safeBatchTransferFrom",
-    "type": "function",
-    "signature": "safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)",
     "encoding": "0x2eb2c2d6",
     "inputs": [
       {
@@ -183,27 +180,27 @@
         "type": "address"
       },
       {
+        "isArray": true,
         "name": "_ids",
-        "type": "uint256[]",
-        "isArray": true
+        "type": "uint256[]"
       },
       {
+        "isArray": true,
         "name": "_values",
-        "type": "uint256[]",
-        "isArray": true
+        "type": "uint256[]"
       },
       {
         "name": "_data",
         "type": "bytes"
       }
     ],
-    "outputs": []
+    "name": "safeBatchTransferFrom",
+    "outputs": [],
+    "signature": "safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)",
+    "type": "function"
   },
   {
-    "name": "balanceOf",
-    "type": "function",
     "constant": true,
-    "signature": "balanceOf(address,uint256)",
     "encoding": "0x00fdd58e",
     "inputs": [
       {
@@ -215,43 +212,43 @@
         "type": "uint256"
       }
     ],
+    "name": "balanceOf",
     "outputs": [
       {
         "name": "ret_0",
         "type": "uint256"
       }
-    ]
+    ],
+    "signature": "balanceOf(address,uint256)",
+    "type": "function"
   },
   {
-    "name": "balanceOfBatch",
-    "type": "function",
     "constant": true,
-    "signature": "balanceOfBatch(address[],uint256[])",
     "encoding": "0x4e1273f4",
     "inputs": [
       {
+        "isArray": true,
         "name": "_owners",
-        "type": "address[]",
-        "isArray": true
+        "type": "address[]"
       },
       {
+        "isArray": true,
         "name": "_ids",
-        "type": "uint256[]",
-        "isArray": true
+        "type": "uint256[]"
       }
     ],
+    "name": "balanceOfBatch",
     "outputs": [
       {
+        "isArray": true,
         "name": "memory",
-        "type": "uint256[]",
-        "isArray": true
+        "type": "uint256[]"
       }
-    ]
+    ],
+    "signature": "balanceOfBatch(address[],uint256[])",
+    "type": "function"
   },
   {
-    "name": "setApprovalForAll",
-    "type": "function",
-    "signature": "setApprovalForAll(address,bool)",
     "encoding": "0xa22cb465",
     "inputs": [
       {
@@ -263,13 +260,13 @@
         "type": "bool"
       }
     ],
-    "outputs": []
+    "name": "setApprovalForAll",
+    "outputs": [],
+    "signature": "setApprovalForAll(address,bool)",
+    "type": "function"
   },
   {
-    "name": "isApprovedForAll",
-    "type": "function",
     "constant": true,
-    "signature": "isApprovedForAll(address,address)",
     "encoding": "0xe985e9c5",
     "inputs": [
       {
@@ -281,17 +278,17 @@
         "type": "address"
       }
     ],
+    "name": "isApprovedForAll",
     "outputs": [
       {
         "name": "ret_0",
         "type": "bool"
       }
-    ]
+    ],
+    "signature": "isApprovedForAll(address,address)",
+    "type": "function"
   },
   {
-    "name": "_doSafeTransferAcceptanceCheck",
-    "type": "function",
-    "signature": "_doSafeTransferAcceptanceCheck(address,address,address,uint256,uint256,bytes)",
     "encoding": "0x084e9e24",
     "inputs": [
       {
@@ -319,12 +316,12 @@
         "type": "bytes"
       }
     ],
-    "outputs": []
+    "name": "_doSafeTransferAcceptanceCheck",
+    "outputs": [],
+    "signature": "_doSafeTransferAcceptanceCheck(address,address,address,uint256,uint256,bytes)",
+    "type": "function"
   },
   {
-    "name": "_doSafeBatchTransferAcceptanceCheck",
-    "type": "function",
-    "signature": "_doSafeBatchTransferAcceptanceCheck(address,address,address,uint256[],uint256[],bytes)",
     "encoding": "0xe51c223d",
     "inputs": [
       {
@@ -340,27 +337,27 @@
         "type": "address"
       },
       {
+        "isArray": true,
         "name": "_ids",
-        "type": "uint256[]",
-        "isArray": true
+        "type": "uint256[]"
       },
       {
+        "isArray": true,
         "name": "_values",
-        "type": "uint256[]",
-        "isArray": true
+        "type": "uint256[]"
       },
       {
         "name": "_data",
         "type": "bytes"
       }
     ],
-    "outputs": []
+    "name": "_doSafeBatchTransferAcceptanceCheck",
+    "outputs": [],
+    "signature": "_doSafeBatchTransferAcceptanceCheck(address,address,address,uint256[],uint256[],bytes)",
+    "type": "function"
   },
   {
-    "name": "supportsInterface",
-    "type": "function",
     "constant": true,
-    "signature": "supportsInterface(bytes4)",
     "encoding": "0x01ffc9a7",
     "inputs": [
       {
@@ -368,17 +365,17 @@
         "type": "bytes4"
       }
     ],
+    "name": "supportsInterface",
     "outputs": [
       {
         "name": "ret_0",
         "type": "bool"
       }
-    ]
+    ],
+    "signature": "supportsInterface(bytes4)",
+    "type": "function"
   },
   {
-    "name": "create",
-    "type": "function",
-    "signature": "create(uint256,string)",
     "encoding": "0x0118fa49",
     "inputs": [
       {
@@ -390,17 +387,17 @@
         "type": "string"
       }
     ],
+    "name": "create",
     "outputs": [
       {
         "name": "_id",
         "type": "uint256"
       }
-    ]
+    ],
+    "signature": "create(uint256,string)",
+    "type": "function"
   },
   {
-    "name": "mint",
-    "type": "function",
-    "signature": "mint(uint256,address[],uint256[])",
     "encoding": "0xcfa84fc1",
     "inputs": [
       {
@@ -408,22 +405,22 @@
         "type": "uint256"
       },
       {
+        "isArray": true,
         "name": "_to",
-        "type": "address[]",
-        "isArray": true
+        "type": "address[]"
       },
       {
+        "isArray": true,
         "name": "_quantities",
-        "type": "uint256[]",
-        "isArray": true
+        "type": "uint256[]"
       }
     ],
-    "outputs": []
+    "name": "mint",
+    "outputs": [],
+    "signature": "mint(uint256,address[],uint256[])",
+    "type": "function"
   },
   {
-    "name": "setURI",
-    "type": "function",
-    "signature": "setURI(string,uint256)",
     "encoding": "0x67db3b8f",
     "inputs": [
       {
@@ -435,12 +432,12 @@
         "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "setURI",
+    "outputs": [],
+    "signature": "setURI(string,uint256)",
+    "type": "function"
   },
   {
-    "name": "TransferSingle",
-    "type": "event",
-    "signature": "TransferSingle(address,address,address,uint256,uint256)",
     "encoding": "0xc3d58168c5ae7397731d063d5bbf3d657854427343f4c083240f7aacaa2d0f62",
     "inputs": [
       {
@@ -467,12 +464,12 @@
         "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "TransferSingle",
+    "outputs": [],
+    "signature": "TransferSingle(address,address,address,uint256,uint256)",
+    "type": "event"
   },
   {
-    "name": "TransferBatch",
-    "type": "event",
-    "signature": "TransferBatch(address,address,address,uint256[],uint256[])",
     "encoding": "0x4a39dc06d4c0dbc64b70af90fd698a233a518aa5d07e595d983b8c0526c8f7fb",
     "inputs": [
       {
@@ -491,22 +488,22 @@
         "type": "address"
       },
       {
+        "isArray": true,
         "name": "_ids",
-        "type": "uint256[]",
-        "isArray": true
+        "type": "uint256[]"
       },
       {
+        "isArray": true,
         "name": "_values",
-        "type": "uint256[]",
-        "isArray": true
+        "type": "uint256[]"
       }
     ],
-    "outputs": []
+    "name": "TransferBatch",
+    "outputs": [],
+    "signature": "TransferBatch(address,address,address,uint256[],uint256[])",
+    "type": "event"
   },
   {
-    "name": "ApprovalForAll",
-    "type": "event",
-    "signature": "ApprovalForAll(address,address,bool)",
     "encoding": "0x17307eab39ab6107e8899845ad3d59bd9653f200f220920489ca2b5937696c31",
     "inputs": [
       {
@@ -524,12 +521,12 @@
         "type": "bool"
       }
     ],
-    "outputs": []
+    "name": "ApprovalForAll",
+    "outputs": [],
+    "signature": "ApprovalForAll(address,address,bool)",
+    "type": "event"
   },
   {
-    "name": "URI",
-    "type": "event",
-    "signature": "URI(string,uint256)",
     "encoding": "0x6bb7ff708619ba0610cba295a58592e0451dee2622938c8755667688daf3529b",
     "inputs": [
       {
@@ -542,12 +539,12 @@
         "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "URI",
+    "outputs": [],
+    "signature": "URI(string,uint256)",
+    "type": "event"
   },
   {
-    "name": "safeTransferFrom",
-    "type": "function",
-    "signature": "safeTransferFrom(address,address,uint256,uint256,bytes)",
     "encoding": "0xf242432a",
     "inputs": [
       {
@@ -571,12 +568,12 @@
         "type": "bytes"
       }
     ],
-    "outputs": []
+    "name": "safeTransferFrom",
+    "outputs": [],
+    "signature": "safeTransferFrom(address,address,uint256,uint256,bytes)",
+    "type": "function"
   },
   {
-    "name": "safeBatchTransferFrom",
-    "type": "function",
-    "signature": "safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)",
     "encoding": "0x2eb2c2d6",
     "inputs": [
       {
@@ -588,27 +585,27 @@
         "type": "address"
       },
       {
+        "isArray": true,
         "name": "_ids",
-        "type": "uint256[]",
-        "isArray": true
+        "type": "uint256[]"
       },
       {
+        "isArray": true,
         "name": "_values",
-        "type": "uint256[]",
-        "isArray": true
+        "type": "uint256[]"
       },
       {
         "name": "_data",
         "type": "bytes"
       }
     ],
-    "outputs": []
+    "name": "safeBatchTransferFrom",
+    "outputs": [],
+    "signature": "safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)",
+    "type": "function"
   },
   {
-    "name": "balanceOf",
-    "type": "function",
     "constant": true,
-    "signature": "balanceOf(address,uint256)",
     "encoding": "0x00fdd58e",
     "inputs": [
       {
@@ -620,43 +617,43 @@
         "type": "uint256"
       }
     ],
+    "name": "balanceOf",
     "outputs": [
       {
         "name": "ret_0",
         "type": "uint256"
       }
-    ]
+    ],
+    "signature": "balanceOf(address,uint256)",
+    "type": "function"
   },
   {
-    "name": "balanceOfBatch",
-    "type": "function",
     "constant": true,
-    "signature": "balanceOfBatch(address[],uint256[])",
     "encoding": "0x4e1273f4",
     "inputs": [
       {
+        "isArray": true,
         "name": "_owners",
-        "type": "address[]",
-        "isArray": true
+        "type": "address[]"
       },
       {
+        "isArray": true,
         "name": "_ids",
-        "type": "uint256[]",
-        "isArray": true
+        "type": "uint256[]"
       }
     ],
+    "name": "balanceOfBatch",
     "outputs": [
       {
+        "isArray": true,
         "name": "memory",
-        "type": "uint256[]",
-        "isArray": true
+        "type": "uint256[]"
       }
-    ]
+    ],
+    "signature": "balanceOfBatch(address[],uint256[])",
+    "type": "function"
   },
   {
-    "name": "setApprovalForAll",
-    "type": "function",
-    "signature": "setApprovalForAll(address,bool)",
     "encoding": "0xa22cb465",
     "inputs": [
       {
@@ -668,13 +665,13 @@
         "type": "bool"
       }
     ],
-    "outputs": []
+    "name": "setApprovalForAll",
+    "outputs": [],
+    "signature": "setApprovalForAll(address,bool)",
+    "type": "function"
   },
   {
-    "name": "isApprovedForAll",
-    "type": "function",
     "constant": true,
-    "signature": "isApprovedForAll(address,address)",
     "encoding": "0xe985e9c5",
     "inputs": [
       {
@@ -686,17 +683,17 @@
         "type": "address"
       }
     ],
+    "name": "isApprovedForAll",
     "outputs": [
       {
         "name": "ret_0",
         "type": "bool"
       }
-    ]
+    ],
+    "signature": "isApprovedForAll(address,address)",
+    "type": "function"
   },
   {
-    "name": "create",
-    "type": "function",
-    "signature": "create(string,bool)",
     "encoding": "0xcc10e401",
     "inputs": [
       {
@@ -708,17 +705,17 @@
         "type": "bool"
       }
     ],
+    "name": "create",
     "outputs": [
       {
         "name": "_type",
         "type": "uint256"
       }
-    ]
+    ],
+    "signature": "create(string,bool)",
+    "type": "function"
   },
   {
-    "name": "mintNonFungible",
-    "type": "function",
-    "signature": "mintNonFungible(uint256,address[])",
     "encoding": "0xf9419088",
     "inputs": [
       {
@@ -726,17 +723,17 @@
         "type": "uint256"
       },
       {
+        "isArray": true,
         "name": "_to",
-        "type": "address[]",
-        "isArray": true
+        "type": "address[]"
       }
     ],
-    "outputs": []
+    "name": "mintNonFungible",
+    "outputs": [],
+    "signature": "mintNonFungible(uint256,address[])",
+    "type": "function"
   },
   {
-    "name": "mintFungible",
-    "type": "function",
-    "signature": "mintFungible(uint256,address[],uint256[])",
     "encoding": "0x78b27221",
     "inputs": [
       {
@@ -744,22 +741,22 @@
         "type": "uint256"
       },
       {
+        "isArray": true,
         "name": "_to",
-        "type": "address[]",
-        "isArray": true
+        "type": "address[]"
       },
       {
+        "isArray": true,
         "name": "_quantities",
-        "type": "uint256[]",
-        "isArray": true
+        "type": "uint256[]"
       }
     ],
-    "outputs": []
+    "name": "mintFungible",
+    "outputs": [],
+    "signature": "mintFungible(uint256,address[],uint256[])",
+    "type": "function"
   },
   {
-    "name": "mul",
-    "type": "function",
-    "signature": "mul(uint256,uint256)",
     "encoding": "0xc8a4ac9c",
     "inputs": [
       {
@@ -771,17 +768,17 @@
         "type": "uint256"
       }
     ],
+    "name": "mul",
     "outputs": [
       {
         "name": "c",
         "type": "uint256"
       }
-    ]
+    ],
+    "signature": "mul(uint256,uint256)",
+    "type": "function"
   },
   {
-    "name": "div",
-    "type": "function",
-    "signature": "div(uint256,uint256)",
     "encoding": "0xa391c15b",
     "inputs": [
       {
@@ -793,17 +790,17 @@
         "type": "uint256"
       }
     ],
+    "name": "div",
     "outputs": [
       {
         "name": "ret_0",
         "type": "uint256"
       }
-    ]
+    ],
+    "signature": "div(uint256,uint256)",
+    "type": "function"
   },
   {
-    "name": "sub",
-    "type": "function",
-    "signature": "sub(uint256,uint256)",
     "encoding": "0xb67d77c5",
     "inputs": [
       {
@@ -815,17 +812,17 @@
         "type": "uint256"
       }
     ],
+    "name": "sub",
     "outputs": [
       {
         "name": "ret_0",
         "type": "uint256"
       }
-    ]
+    ],
+    "signature": "sub(uint256,uint256)",
+    "type": "function"
   },
   {
-    "name": "add",
-    "type": "function",
-    "signature": "add(uint256,uint256)",
     "encoding": "0x771602f7",
     "inputs": [
       {
@@ -837,18 +834,18 @@
         "type": "uint256"
       }
     ],
+    "name": "add",
     "outputs": [
       {
         "name": "c",
         "type": "uint256"
       }
-    ]
+    ],
+    "signature": "add(uint256,uint256)",
+    "type": "function"
   },
   {
-    "name": "isContract",
-    "type": "function",
     "constant": true,
-    "signature": "isContract(address)",
     "encoding": "0x16279055",
     "inputs": [
       {
@@ -856,17 +853,17 @@
         "type": "address"
       }
     ],
+    "name": "isContract",
     "outputs": [
       {
         "name": "ret_0",
         "type": "bool"
       }
-    ]
+    ],
+    "signature": "isContract(address)",
+    "type": "function"
   },
   {
-    "name": "setCompleted",
-    "type": "function",
-    "signature": "setCompleted(uint256)",
     "encoding": "0xfdacd576",
     "inputs": [
       {
@@ -874,12 +871,12 @@
         "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "setCompleted",
+    "outputs": [],
+    "signature": "setCompleted(uint256)",
+    "type": "function"
   },
   {
-    "name": "upgrade",
-    "type": "function",
-    "signature": "upgrade(address)",
     "encoding": "0x0900f010",
     "inputs": [
       {
@@ -887,12 +884,12 @@
         "type": "address"
       }
     ],
-    "outputs": []
+    "name": "upgrade",
+    "outputs": [],
+    "signature": "upgrade(address)",
+    "type": "function"
   },
   {
-    "name": "onERC1155Received",
-    "type": "function",
-    "signature": "onERC1155Received(address,address,uint256,uint256,bytes)",
     "encoding": "0xf23a6e61",
     "inputs": [
       {
@@ -916,17 +913,17 @@
         "type": "bytes"
       }
     ],
+    "name": "onERC1155Received",
     "outputs": [
       {
         "name": "ret_0",
         "type": "bytes4"
       }
-    ]
+    ],
+    "signature": "onERC1155Received(address,address,uint256,uint256,bytes)",
+    "type": "function"
   },
   {
-    "name": "onERC1155BatchReceived",
-    "type": "function",
-    "signature": "onERC1155BatchReceived(address,address,uint256[],uint256[],bytes)",
     "encoding": "0xbc197c81",
     "inputs": [
       {
@@ -938,31 +935,31 @@
         "type": "address"
       },
       {
+        "isArray": true,
         "name": "_ids",
-        "type": "uint256[]",
-        "isArray": true
+        "type": "uint256[]"
       },
       {
+        "isArray": true,
         "name": "_values",
-        "type": "uint256[]",
-        "isArray": true
+        "type": "uint256[]"
       },
       {
         "name": "_data",
         "type": "bytes"
       }
     ],
+    "name": "onERC1155BatchReceived",
     "outputs": [
       {
         "name": "ret_0",
         "type": "bytes4"
       }
-    ]
+    ],
+    "signature": "onERC1155BatchReceived(address,address,uint256[],uint256[],bytes)",
+    "type": "function"
   },
   {
-    "name": "updateContract",
-    "type": "function",
-    "signature": "updateContract(address,string,string)",
     "encoding": "0x61455567",
     "inputs": [
       {
@@ -978,12 +975,12 @@
         "type": "string"
       }
     ],
-    "outputs": []
+    "name": "updateContract",
+    "outputs": [],
+    "signature": "updateContract(address,string,string)",
+    "type": "function"
   },
   {
-    "name": "setShouldReject",
-    "type": "function",
-    "signature": "setShouldReject(bool)",
     "encoding": "0xa175b638",
     "inputs": [
       {
@@ -991,12 +988,12 @@
         "type": "bool"
       }
     ],
-    "outputs": []
+    "name": "setShouldReject",
+    "outputs": [],
+    "signature": "setShouldReject(bool)",
+    "type": "function"
   },
   {
-    "name": "onERC1155Received",
-    "type": "function",
-    "signature": "onERC1155Received(address,address,uint256,uint256,bytes)",
     "encoding": "0xf23a6e61",
     "inputs": [
       {
@@ -1020,17 +1017,17 @@
         "type": "bytes"
       }
     ],
+    "name": "onERC1155Received",
     "outputs": [
       {
         "name": "ret_0",
         "type": "bytes4"
       }
-    ]
+    ],
+    "signature": "onERC1155Received(address,address,uint256,uint256,bytes)",
+    "type": "function"
   },
   {
-    "name": "onERC1155BatchReceived",
-    "type": "function",
-    "signature": "onERC1155BatchReceived(address,address,uint256[],uint256[],bytes)",
     "encoding": "0xbc197c81",
     "inputs": [
       {
@@ -1042,32 +1039,32 @@
         "type": "address"
       },
       {
+        "isArray": true,
         "name": "_ids",
-        "type": "uint256[]",
-        "isArray": true
+        "type": "uint256[]"
       },
       {
+        "isArray": true,
         "name": "_values",
-        "type": "uint256[]",
-        "isArray": true
+        "type": "uint256[]"
       },
       {
         "name": "_data",
         "type": "bytes"
       }
     ],
+    "name": "onERC1155BatchReceived",
     "outputs": [
       {
         "name": "ret_0",
         "type": "bytes4"
       }
-    ]
+    ],
+    "signature": "onERC1155BatchReceived(address,address,uint256[],uint256[],bytes)",
+    "type": "function"
   },
   {
-    "name": "supportsInterface",
-    "type": "function",
     "constant": true,
-    "signature": "supportsInterface(bytes4)",
     "encoding": "0x01ffc9a7",
     "inputs": [
       {
@@ -1075,17 +1072,17 @@
         "type": "bytes4"
       }
     ],
+    "name": "supportsInterface",
     "outputs": [
       {
         "name": "ret_0",
         "type": "bool"
       }
-    ]
+    ],
+    "signature": "supportsInterface(bytes4)",
+    "type": "function"
   },
   {
-    "name": "setShouldRejectClash",
-    "type": "function",
-    "signature": "setShouldRejectClash(bool)",
     "encoding": "0x2090dd24",
     "inputs": [
       {
@@ -1093,12 +1090,12 @@
         "type": "bool"
       }
     ],
-    "outputs": []
+    "name": "setShouldRejectClash",
+    "outputs": [],
+    "signature": "setShouldRejectClash(bool)",
+    "type": "function"
   },
   {
-    "name": "setShouldRejectXXXX",
-    "type": "function",
-    "signature": "setShouldRejectXXXX(bool)",
     "encoding": "0x80f5fe74",
     "inputs": [
       {
@@ -1106,13 +1103,13 @@
         "type": "bool"
       }
     ],
-    "outputs": []
+    "name": "setShouldRejectXXXX",
+    "outputs": [],
+    "signature": "setShouldRejectXXXX(bool)",
+    "type": "function"
   },
   {
-    "name": "onERCXXXXReceived",
-    "type": "function",
     "constant": true,
-    "signature": "onERCXXXXReceived(address,address,uint256,uint256,bytes)",
     "encoding": "0xeb510be8",
     "inputs": [
       {
@@ -1136,18 +1133,18 @@
         "type": "bytes"
       }
     ],
+    "name": "onERCXXXXReceived",
     "outputs": [
       {
         "name": "ret_0",
         "type": "bytes4"
       }
-    ]
+    ],
+    "signature": "onERCXXXXReceived(address,address,uint256,uint256,bytes)",
+    "type": "function"
   },
   {
-    "name": "onERCXXXXBatchReceived",
-    "type": "function",
     "constant": true,
-    "signature": "onERCXXXXBatchReceived(address,address,uint256[],uint256[],bytes)",
     "encoding": "0xe9e5be6a",
     "inputs": [
       {
@@ -1159,31 +1156,31 @@
         "type": "address"
       },
       {
+        "isArray": true,
         "name": "_ids",
-        "type": "uint256[]",
-        "isArray": true
+        "type": "uint256[]"
       },
       {
+        "isArray": true,
         "name": "_values",
-        "type": "uint256[]",
-        "isArray": true
+        "type": "uint256[]"
       },
       {
         "name": "_data",
         "type": "bytes"
       }
     ],
+    "name": "onERCXXXXBatchReceived",
     "outputs": [
       {
         "name": "ret_0",
         "type": "bytes4"
       }
-    ]
+    ],
+    "signature": "onERCXXXXBatchReceived(address,address,uint256[],uint256[],bytes)",
+    "type": "function"
   },
   {
-    "name": "CommitMessage",
-    "type": "event",
-    "signature": "CommitMessage(string)",
     "encoding": "0xaa1c0a0a78cec2470f9652e5d29540752e7a64d70f926933cebf13afaeda45de",
     "inputs": [
       {
@@ -1191,12 +1188,12 @@
         "type": "string"
       }
     ],
-    "outputs": []
+    "name": "CommitMessage",
+    "outputs": [],
+    "signature": "CommitMessage(string)",
+    "type": "event"
   },
   {
-    "name": "FunctionUpdate",
-    "type": "event",
-    "signature": "FunctionUpdate(bytes4,address,address,string)",
     "encoding": "0x3234040ce3bd4564874e44810f198910133a1b24c4e84aac87edbf6b458f5353",
     "inputs": [
       {
@@ -1219,12 +1216,12 @@
         "type": "string"
       }
     ],
-    "outputs": []
+    "name": "FunctionUpdate",
+    "outputs": [],
+    "signature": "FunctionUpdate(bytes4,address,address,string)",
+    "type": "event"
   },
   {
-    "name": "updateContract",
-    "type": "function",
-    "signature": "updateContract(address,string,string)",
     "encoding": "0x61455567",
     "inputs": [
       {
@@ -1240,12 +1237,12 @@
         "type": "string"
       }
     ],
-    "outputs": []
+    "name": "updateContract",
+    "outputs": [],
+    "signature": "updateContract(address,string,string)",
+    "type": "function"
   },
   {
-    "name": "Approval",
-    "type": "event",
-    "signature": "Approval(address,address,uint256,uint256,uint256)",
     "encoding": "0x3a9c85c6b31f7a9d7fe1478f53e1be42e85db97ca30d1789cfef9196dbc472c9",
     "inputs": [
       {
@@ -1272,12 +1269,12 @@
         "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "Approval",
+    "outputs": [],
+    "signature": "Approval(address,address,uint256,uint256,uint256)",
+    "type": "event"
   },
   {
-    "name": "approve",
-    "type": "function",
-    "signature": "approve(address,uint256,uint256,uint256)",
     "encoding": "0x4f4df442",
     "inputs": [
       {
@@ -1297,13 +1294,13 @@
         "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "approve",
+    "outputs": [],
+    "signature": "approve(address,uint256,uint256,uint256)",
+    "type": "function"
   },
   {
-    "name": "allowance",
-    "type": "function",
     "constant": true,
-    "signature": "allowance(address,address,uint256)",
     "encoding": "0x598af9e7",
     "inputs": [
       {
@@ -1319,18 +1316,18 @@
         "type": "uint256"
       }
     ],
+    "name": "allowance",
     "outputs": [
       {
         "name": "ret_0",
         "type": "uint256"
       }
-    ]
+    ],
+    "signature": "allowance(address,address,uint256)",
+    "type": "function"
   },
   {
-    "name": "supportsInterface",
-    "type": "function",
     "constant": true,
-    "signature": "supportsInterface(bytes4)",
     "encoding": "0x01ffc9a7",
     "inputs": [
       {
@@ -1338,17 +1335,17 @@
         "type": "bytes4"
       }
     ],
+    "name": "supportsInterface",
     "outputs": [
       {
         "name": "ret_0",
         "type": "bool"
       }
-    ]
+    ],
+    "signature": "supportsInterface(bytes4)",
+    "type": "function"
   },
   {
-    "name": "safeTransferFrom",
-    "type": "function",
-    "signature": "safeTransferFrom(address,address,uint256,uint256,bytes)",
     "encoding": "0xf242432a",
     "inputs": [
       {
@@ -1372,12 +1369,12 @@
         "type": "bytes"
       }
     ],
-    "outputs": []
+    "name": "safeTransferFrom",
+    "outputs": [],
+    "signature": "safeTransferFrom(address,address,uint256,uint256,bytes)",
+    "type": "function"
   },
   {
-    "name": "safeBatchTransferFrom",
-    "type": "function",
-    "signature": "safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)",
     "encoding": "0x2eb2c2d6",
     "inputs": [
       {
@@ -1389,27 +1386,27 @@
         "type": "address"
       },
       {
+        "isArray": true,
         "name": "_ids",
-        "type": "uint256[]",
-        "isArray": true
+        "type": "uint256[]"
       },
       {
+        "isArray": true,
         "name": "_values",
-        "type": "uint256[]",
-        "isArray": true
+        "type": "uint256[]"
       },
       {
         "name": "_data",
         "type": "bytes"
       }
     ],
-    "outputs": []
+    "name": "safeBatchTransferFrom",
+    "outputs": [],
+    "signature": "safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)",
+    "type": "function"
   },
   {
-    "name": "balanceOf",
-    "type": "function",
     "constant": true,
-    "signature": "balanceOf(address,uint256)",
     "encoding": "0x00fdd58e",
     "inputs": [
       {
@@ -1421,17 +1418,17 @@
         "type": "uint256"
       }
     ],
+    "name": "balanceOf",
     "outputs": [
       {
         "name": "ret_0",
         "type": "uint256"
       }
-    ]
+    ],
+    "signature": "balanceOf(address,uint256)",
+    "type": "function"
   },
   {
-    "name": "setApprovalForAll",
-    "type": "function",
-    "signature": "setApprovalForAll(address,bool)",
     "encoding": "0xa22cb465",
     "inputs": [
       {
@@ -1443,13 +1440,13 @@
         "type": "bool"
       }
     ],
-    "outputs": []
+    "name": "setApprovalForAll",
+    "outputs": [],
+    "signature": "setApprovalForAll(address,bool)",
+    "type": "function"
   },
   {
-    "name": "isApprovedForAll",
-    "type": "function",
     "constant": true,
-    "signature": "isApprovedForAll(address,address)",
     "encoding": "0xe985e9c5",
     "inputs": [
       {
@@ -1461,18 +1458,18 @@
         "type": "address"
       }
     ],
+    "name": "isApprovedForAll",
     "outputs": [
       {
         "name": "ret_0",
         "type": "bool"
       }
-    ]
+    ],
+    "signature": "isApprovedForAll(address,address)",
+    "type": "function"
   },
   {
-    "name": "supportsInterface",
-    "type": "function",
     "constant": true,
-    "signature": "supportsInterface(bytes4)",
     "encoding": "0x01ffc9a7",
     "inputs": [
       {
@@ -1480,17 +1477,17 @@
         "type": "bytes4"
       }
     ],
+    "name": "supportsInterface",
     "outputs": [
       {
         "name": "ret_0",
         "type": "bool"
       }
-    ]
+    ],
+    "signature": "supportsInterface(bytes4)",
+    "type": "function"
   },
   {
-    "name": "isNonFungible",
-    "type": "function",
-    "signature": "isNonFungible(uint256)",
     "encoding": "0xe44591f0",
     "inputs": [
       {
@@ -1498,17 +1495,17 @@
         "type": "uint256"
       }
     ],
+    "name": "isNonFungible",
     "outputs": [
       {
         "name": "ret_0",
         "type": "bool"
       }
-    ]
+    ],
+    "signature": "isNonFungible(uint256)",
+    "type": "function"
   },
   {
-    "name": "isFungible",
-    "type": "function",
-    "signature": "isFungible(uint256)",
     "encoding": "0xadebf6f2",
     "inputs": [
       {
@@ -1516,17 +1513,17 @@
         "type": "uint256"
       }
     ],
+    "name": "isFungible",
     "outputs": [
       {
         "name": "ret_0",
         "type": "bool"
       }
-    ]
+    ],
+    "signature": "isFungible(uint256)",
+    "type": "function"
   },
   {
-    "name": "getNonFungibleIndex",
-    "type": "function",
-    "signature": "getNonFungibleIndex(uint256)",
     "encoding": "0x9cca1c64",
     "inputs": [
       {
@@ -1534,17 +1531,17 @@
         "type": "uint256"
       }
     ],
+    "name": "getNonFungibleIndex",
     "outputs": [
       {
         "name": "ret_0",
         "type": "uint256"
       }
-    ]
+    ],
+    "signature": "getNonFungibleIndex(uint256)",
+    "type": "function"
   },
   {
-    "name": "getNonFungibleBaseType",
-    "type": "function",
-    "signature": "getNonFungibleBaseType(uint256)",
     "encoding": "0x6f969c2d",
     "inputs": [
       {
@@ -1552,17 +1549,17 @@
         "type": "uint256"
       }
     ],
+    "name": "getNonFungibleBaseType",
     "outputs": [
       {
         "name": "ret_0",
         "type": "uint256"
       }
-    ]
+    ],
+    "signature": "getNonFungibleBaseType(uint256)",
+    "type": "function"
   },
   {
-    "name": "isNonFungibleBaseType",
-    "type": "function",
-    "signature": "isNonFungibleBaseType(uint256)",
     "encoding": "0x7269a327",
     "inputs": [
       {
@@ -1570,17 +1567,17 @@
         "type": "uint256"
       }
     ],
+    "name": "isNonFungibleBaseType",
     "outputs": [
       {
         "name": "ret_0",
         "type": "bool"
       }
-    ]
+    ],
+    "signature": "isNonFungibleBaseType(uint256)",
+    "type": "function"
   },
   {
-    "name": "isNonFungibleItem",
-    "type": "function",
-    "signature": "isNonFungibleItem(uint256)",
     "encoding": "0x5e81b958",
     "inputs": [
       {
@@ -1588,18 +1585,18 @@
         "type": "uint256"
       }
     ],
+    "name": "isNonFungibleItem",
     "outputs": [
       {
         "name": "ret_0",
         "type": "bool"
       }
-    ]
+    ],
+    "signature": "isNonFungibleItem(uint256)",
+    "type": "function"
   },
   {
-    "name": "ownerOf",
-    "type": "function",
     "constant": true,
-    "signature": "ownerOf(uint256)",
     "encoding": "0x6352211e",
     "inputs": [
       {
@@ -1607,17 +1604,17 @@
         "type": "uint256"
       }
     ],
+    "name": "ownerOf",
     "outputs": [
       {
         "name": "ret_0",
         "type": "address"
       }
-    ]
+    ],
+    "signature": "ownerOf(uint256)",
+    "type": "function"
   },
   {
-    "name": "safeTransferFrom",
-    "type": "function",
-    "signature": "safeTransferFrom(address,address,uint256,uint256,bytes)",
     "encoding": "0xf242432a",
     "inputs": [
       {
@@ -1641,12 +1638,12 @@
         "type": "bytes"
       }
     ],
-    "outputs": []
+    "name": "safeTransferFrom",
+    "outputs": [],
+    "signature": "safeTransferFrom(address,address,uint256,uint256,bytes)",
+    "type": "function"
   },
   {
-    "name": "safeBatchTransferFrom",
-    "type": "function",
-    "signature": "safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)",
     "encoding": "0x2eb2c2d6",
     "inputs": [
       {
@@ -1658,27 +1655,27 @@
         "type": "address"
       },
       {
+        "isArray": true,
         "name": "_ids",
-        "type": "uint256[]",
-        "isArray": true
+        "type": "uint256[]"
       },
       {
+        "isArray": true,
         "name": "_values",
-        "type": "uint256[]",
-        "isArray": true
+        "type": "uint256[]"
       },
       {
         "name": "_data",
         "type": "bytes"
       }
     ],
-    "outputs": []
+    "name": "safeBatchTransferFrom",
+    "outputs": [],
+    "signature": "safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)",
+    "type": "function"
   },
   {
-    "name": "balanceOf",
-    "type": "function",
     "constant": true,
-    "signature": "balanceOf(address,uint256)",
     "encoding": "0x00fdd58e",
     "inputs": [
       {
@@ -1690,37 +1687,40 @@
         "type": "uint256"
       }
     ],
+    "name": "balanceOf",
     "outputs": [
       {
         "name": "ret_0",
         "type": "uint256"
       }
-    ]
+    ],
+    "signature": "balanceOf(address,uint256)",
+    "type": "function"
   },
   {
-    "name": "balanceOfBatch",
-    "type": "function",
     "constant": true,
-    "signature": "balanceOfBatch(address[],uint256[])",
     "encoding": "0x4e1273f4",
     "inputs": [
       {
+        "isArray": true,
         "name": "_owners",
-        "type": "address[]",
-        "isArray": true
+        "type": "address[]"
       },
       {
+        "isArray": true,
         "name": "_ids",
-        "type": "uint256[]",
-        "isArray": true
+        "type": "uint256[]"
       }
     ],
+    "name": "balanceOfBatch",
     "outputs": [
       {
+        "isArray": true,
         "name": "memory",
-        "type": "uint256[]",
-        "isArray": true
+        "type": "uint256[]"
       }
-    ]
+    ],
+    "signature": "balanceOfBatch(address[],uint256[])",
+    "type": "function"
   }
 ]

@@ -1,215 +1,215 @@
 [
   {
-    "name": "OwnershipTransferred",
-    "type": "event",
-    "signature": "OwnershipTransferred(address,address)",
     "encoding": "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0",
     "inputs": [
       {
-        "type": "address",
+        "indexed": true,
         "name": "previousOwner",
-        "indexed": true
+        "type": "address"
       },
       {
-        "type": "address",
+        "indexed": true,
         "name": "newOwner",
-        "indexed": true
+        "type": "address"
       }
     ],
-    "outputs": []
+    "name": "OwnershipTransferred",
+    "outputs": [],
+    "signature": "OwnershipTransferred(address,address)",
+    "type": "event"
   },
   {
-    "name": "supportsInterface",
-    "type": "function",
     "constant": true,
-    "signature": "supportsInterface(bytes4)",
     "encoding": "0x01ffc9a7",
     "inputs": [
       {
-        "type": "bytes4",
-        "name": "_interfaceID"
+        "name": "_interfaceID",
+        "type": "bytes4"
       }
     ],
+    "name": "supportsInterface",
     "outputs": [
       {
-        "type": "bool",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "bool"
       }
-    ]
+    ],
+    "signature": "supportsInterface(bytes4)",
+    "type": "function"
   },
   {
-    "name": "diamondCut",
-    "type": "function",
-    "signature": "diamondCut(bytes[],address,bytes)",
     "encoding": "0x7c696fea",
     "inputs": [
       {
-        "type": "bytes[]",
+        "is_array": true,
         "name": "_diamondCut",
-        "is_array": true
+        "type": "bytes[]"
       },
       {
-        "type": "address",
-        "name": "_init"
+        "name": "_init",
+        "type": "address"
       },
       {
-        "type": "bytes",
-        "name": "_"
+        "name": "_",
+        "type": "bytes"
       }
     ],
-    "outputs": []
+    "name": "diamondCut",
+    "outputs": [],
+    "signature": "diamondCut(bytes[],address,bytes)",
+    "type": "function"
   },
   {
-    "name": "diamondCut",
-    "type": "function",
-    "signature": "diamondCut(bytes[])",
     "encoding": "0x99f5f52e",
     "inputs": [
       {
-        "type": "bytes[]",
+        "is_array": true,
         "name": "_diamondCut",
-        "is_array": true
+        "type": "bytes[]"
       }
     ],
-    "outputs": []
+    "name": "diamondCut",
+    "outputs": [],
+    "signature": "diamondCut(bytes[])",
+    "type": "function"
   },
   {
-    "name": "Cut",
-    "type": "function",
-    "signature": "Cut(bytes[])",
     "encoding": "0x043f1619",
     "inputs": [
       {
-        "type": "bytes[]",
+        "is_array": true,
         "name": "_diamondCut",
-        "is_array": true
+        "type": "bytes[]"
       }
     ],
-    "outputs": []
+    "name": "Cut",
+    "outputs": [],
+    "signature": "Cut(bytes[])",
+    "type": "function"
   },
   {
-    "name": "facets",
-    "type": "function",
     "constant": true,
-    "signature": "facets()",
     "encoding": "0x7a0ed627",
     "inputs": [],
+    "name": "facets",
     "outputs": [
       {
-        "type": "bytes[]",
+        "is_array": true,
         "name": "ret_0",
-        "is_array": true
+        "type": "bytes[]"
       }
-    ]
+    ],
+    "signature": "facets()",
+    "type": "function"
   },
   {
-    "name": "facetFunctionSelectors",
-    "type": "function",
     "constant": true,
-    "signature": "facetFunctionSelectors(address)",
     "encoding": "0xadfca15e",
     "inputs": [
       {
-        "type": "address",
-        "name": "_facet"
+        "name": "_facet",
+        "type": "address"
       }
     ],
+    "name": "facetFunctionSelectors",
     "outputs": [
       {
-        "type": "bytes",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "bytes"
       }
-    ]
+    ],
+    "signature": "facetFunctionSelectors(address)",
+    "type": "function"
   },
   {
-    "name": "facetAddresses",
-    "type": "function",
     "constant": true,
-    "signature": "facetAddresses()",
     "encoding": "0x52ef6b2c",
     "inputs": [],
+    "name": "facetAddresses",
     "outputs": [
       {
-        "type": "bytes",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "bytes"
       }
-    ]
+    ],
+    "signature": "facetAddresses()",
+    "type": "function"
   },
   {
-    "name": "facetAddress",
-    "type": "function",
     "constant": true,
-    "signature": "facetAddress(bytes4)",
     "encoding": "0xcdffacc6",
     "inputs": [
       {
-        "type": "bytes4",
-        "name": "_Selector"
+        "name": "_Selector",
+        "type": "bytes4"
       }
     ],
+    "name": "facetAddress",
     "outputs": [
       {
-        "type": "address",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "address"
       }
-    ]
+    ],
+    "signature": "facetAddress(bytes4)",
+    "type": "function"
   },
   {
-    "name": "supportsInterface",
-    "type": "function",
     "constant": true,
-    "signature": "supportsInterface(bytes4)",
     "encoding": "0x01ffc9a7",
     "inputs": [
       {
-        "type": "bytes4",
-        "name": "interfaceID"
+        "name": "interfaceID",
+        "type": "bytes4"
       }
     ],
+    "name": "supportsInterface",
     "outputs": [
       {
-        "type": "bool",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "bool"
       }
-    ]
+    ],
+    "signature": "supportsInterface(bytes4)",
+    "type": "function"
   },
   {
-    "name": "diamondStorage",
-    "type": "function",
-    "signature": "diamondStorage()",
     "encoding": "0x9459e9ce",
     "inputs": [],
+    "name": "diamondStorage",
     "outputs": [
       {
-        "type": "DiamondStorage",
-        "name": "storage ds"
+        "name": "storage ds",
+        "type": "DiamondStorage"
       }
-    ]
+    ],
+    "signature": "diamondStorage()",
+    "type": "function"
   },
   {
-    "name": "setCompleted",
-    "type": "function",
-    "signature": "setCompleted(uint256)",
     "encoding": "0xfdacd576",
     "inputs": [
       {
-        "type": "uint256",
-        "name": "completed"
+        "name": "completed",
+        "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "setCompleted",
+    "outputs": [],
+    "signature": "setCompleted(uint256)",
+    "type": "function"
   },
   {
-    "name": "upgrade",
-    "type": "function",
-    "signature": "upgrade(address)",
     "encoding": "0x0900f010",
     "inputs": [
       {
-        "type": "address",
-        "name": "new_address"
+        "name": "new_address",
+        "type": "address"
       }
     ],
-    "outputs": []
+    "name": "upgrade",
+    "outputs": [],
+    "signature": "upgrade(address)",
+    "type": "function"
   }
 ]

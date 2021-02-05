@@ -336,7 +336,7 @@ bool visitABI(const qblocks::string_q& path, void* data) {
 }
 
 //---------------------------------------------------------------------------
-bool CAbi::loadAndCacheAbiFolder(const string_q& sourcePath, const string_q& binPath) {
+bool CAbi::loadAbisFolderAndCache(const string_q& sourcePath, const string_q& binPath) {
     fileInfo info = getNewestFileInFolder(sourcePath);
     bool cacheIsFresh =
         (info.fileName == binPath) || (fileExists(binPath) && (fileLastModifyDate(binPath) > info.fileTime));
@@ -368,12 +368,12 @@ bool CAbi::loadAndCacheAbiFolder(const string_q& sourcePath, const string_q& bin
 
 //---------------------------------------------------------------------------
 bool CAbi::loadAbisKnown(int which) {
-    return loadAndCacheAbiFolder(configPath("abis/known/"), getAbiPath("known.bin"));
+    return loadAbisFolderAndCache(configPath("abis/known/"), getAbiPath("known.bin"));
 }
 
 //---------------------------------------------------------------------------
 bool CAbi::loadAbisInCache(void) {
-    return loadAndCacheAbiFolder(getCachePath("abis/"), getAbiPath("monitored.bin"));
+    return loadAbisFolderAndCache(getCachePath("abis/"), getAbiPath("monitored.bin"));
 }
 
 //---------------------------------------------------------------------------
@@ -388,8 +388,10 @@ bool CAbi::loadAbiByAddress(const address_t& which) {
 
 //---------------------------------------------------------------------------
 bool CAbi::loadAbiFromFile(const string_q& fileName, bool builtIn) {
-    if (!fileExists(fileName))
+    if (!fileExists(fileName)) {
+        LOG_TEST("loadAbiFromFile", "Could not load file " + substitute(substitute(fileName, getCachePath(""), "$CACHE/"), configPath(""), "$CONFIG/"));
         return false;
+    }
 
     //    string_q binFile = substitute(fileName, ".json", ".bin");
     //    if (fileExists(binFile)) {
@@ -403,6 +405,8 @@ bool CAbi::loadAbiFromFile(const string_q& fileName, bool builtIn) {
 
     string_q contents;
     asciiFileToString(fileName, contents);
+    LOG_TEST("loadAbiFromFile",
+             substitute(substitute(fileName, getCachePath(""), "$CACHE/"), configPath(""), "$CONFIG/"));
     // if (isTestMode())
     //    cout << "From file: " << contents << endl << "From file: " << endl;
     bool ret = loadAbiFromString(contents, builtIn);
@@ -505,6 +509,7 @@ void loadAbiAndCache(CAbi& abi, const address_t& addr, bool raw, CStringArray& e
                 os << "Could not grab ABI for " + addr + " from etherscan.io.";
                 errors.push_back(os.str());
             }
+            LOG_TEST("Writing empty ABI to cache for address", addr);
             establishFolder(fileName);
             stringToAsciiFile(fileName, "[]");
             results = "";
@@ -512,6 +517,7 @@ void loadAbiAndCache(CAbi& abi, const address_t& addr, bool raw, CStringArray& e
     }
 
     if (!results.empty()) {
+        LOG_TEST("loadAbiAndCache", "for address " + addr);
         CFunction func;
         while (func.parseJson3(results)) {
             abi.addInterface(func);
@@ -638,7 +644,8 @@ string_q removeSolComments(const string_q& contents) {
 bool sol_2_Abi(CAbi& abi, const string_q& addr) {
     string_q solFile = addr + ".sol";
     string_q contents = asciiFileToString(solFile);
-
+    LOG_TEST("sol_2_Abi", contents);
+    
     replaceAll(contents, "/*", string_q(1, COMMENT2));
     replaceAll(contents, "//", string_q(1, COMMENT1));
     replaceAll(contents, "*/", string_q(1, COMMENT_END2));
@@ -651,14 +658,20 @@ bool sol_2_Abi(CAbi& abi, const string_q& addr) {
     for (auto rem : removes)
         replaceAll(contents, rem, "");
 
+    LOG_TEST("Before removeComments", contents);
     contents = removeSolComments(contents);
+    LOG_TEST("After removeComments", contents);
 
     size_t scopeCount = 0;
 
+    CStringArray psStrs = { "OUT", "IN", "IN_COMMENT1", "IN_COMMENT2", "IN_FUNCTION", "IN_EVENT", "IN_STRUCT", "IN_MODIFIER" };
     ostringstream os;
     ParseState state = OUT;
+    ParseState pre_state = state;
     char lastChar = 0;
     for (auto ch : contents) {
+        LOG_TEST("State pre", psStrs[state]);
+        pre_state = state;
         switch (state) {
             case IN_MODIFIER:
                 if (ch == '{') {
@@ -745,6 +758,9 @@ bool sol_2_Abi(CAbi& abi, const string_q& addr) {
             default:
                 break;
         }
+        LOG_TEST("State post", psStrs[state]);
+        // if (state != pre_state)
+        //     printf("");
         lastChar = ch;
     }
 
@@ -752,6 +768,7 @@ bool sol_2_Abi(CAbi& abi, const string_q& addr) {
     replaceAll(contents, "\n\n", "\n");
     replaceAll(contents, "\r", "");
     replaceAll(contents, " )", ")");
+    LOG_TEST("Contents", contents);
 
     CStringArray lines;
     explode(lines, contents, '\n');
@@ -771,17 +788,6 @@ bool sol_2_Abi(CAbi& abi, const string_q& addr) {
 }
 
 //-----------------------------------------------------------------------
-bool sortByFuncName(const CFunction& f1, const CFunction& f2) {
-    string_q s1 = (f1.type == "event" ? "zzzevent" : f1.type) + f1.name + f1.encoding;
-    for (auto f : f1.inputs)
-        s1 += f.name;
-    string_q s2 = (f2.type == "event" ? "zzzevent" : f2.type) + f2.name + f2.encoding;
-    for (auto f : f2.inputs)
-        s2 += f.name;
-    return s1 < s2;
-}
-
-//-----------------------------------------------------------------------
 void CAbi::sortInterfaces(void) {
     sort(interfaces.begin(), interfaces.end(), sortByFuncName);
 }
@@ -791,21 +797,13 @@ void CAbi::addInterface(const CFunction& func) {
     if (func.name.empty() && func.type != "constructor")
         return;
 
-    if (contains(func.name, " "))
-        return;
-
-    // if the encoding already exists, replace it.
+    // first in wins
     if (interfaceMap[func.encoding]) {
-        // we should find it, but if we don't just add it below
-        for (uint32_t i = 0; i < interfaces.size(); i++) {
-            if (interfaces[i].encoding == func.encoding) {
-                interfaces[i] = func;
-                return;
-            }
-        }
+        LOG_TEST("Skipping", func.type + "-" + func.signature);
+        return;
     }
 
-    // ...else, add it
+    LOG_TEST("Inserting", func.type + "-" + func.signature);
     interfaces.push_back(func);
     interfaceMap[func.encoding] = true;
 }

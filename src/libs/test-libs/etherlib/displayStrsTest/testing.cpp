@@ -42,6 +42,7 @@ bool testDisplayStr(COptions& options) {
 
         CFunction func;
         func.name = "interface";
+        func.type = "function";
 
         CParameter param;
         param.name = "input";

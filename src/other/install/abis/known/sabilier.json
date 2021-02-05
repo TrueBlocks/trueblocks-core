@@ -1,5925 +1,5925 @@
 [
   {
-    "name": "balanceOf",
-    "type": "function",
     "constant": true,
-    "signature": "balanceOf(address)",
     "encoding": "0x70a08231",
     "inputs": [
       {
-        "type": "address",
-        "name": "who"
+        "name": "who",
+        "type": "address"
       }
     ],
+    "name": "balanceOf",
     "outputs": [
       {
-        "type": "uint256",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "uint256"
       }
-    ]
+    ],
+    "signature": "balanceOf(address)",
+    "type": "function"
   },
   {
-    "name": "isCToken",
-    "type": "function",
     "constant": true,
-    "signature": "isCToken()",
     "encoding": "0xfe9c44ae",
     "inputs": [],
+    "name": "isCToken",
     "outputs": [
       {
-        "type": "bool",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "bool"
       }
-    ]
+    ],
+    "signature": "isCToken()",
+    "type": "function"
   },
   {
-    "name": "approve",
-    "type": "function",
-    "signature": "approve(address,uint256)",
     "encoding": "0x095ea7b3",
     "inputs": [
       {
-        "type": "address",
-        "name": "spender"
+        "name": "spender",
+        "type": "address"
       },
       {
-        "type": "uint256",
-        "name": "value"
+        "name": "value",
+        "type": "uint256"
       }
     ],
+    "name": "approve",
     "outputs": [
       {
-        "type": "bool",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "bool"
       }
-    ]
+    ],
+    "signature": "approve(address,uint256)",
+    "type": "function"
   },
   {
-    "name": "balanceOfUnderlying",
-    "type": "function",
-    "signature": "balanceOfUnderlying(address)",
     "encoding": "0x3af9e669",
     "inputs": [
       {
-        "type": "address",
-        "name": "account"
+        "name": "account",
+        "type": "address"
       }
     ],
+    "name": "balanceOfUnderlying",
     "outputs": [
       {
-        "type": "uint256",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "uint256"
       }
-    ]
+    ],
+    "signature": "balanceOfUnderlying(address)",
+    "type": "function"
   },
   {
-    "name": "exchangeRateCurrent",
-    "type": "function",
-    "signature": "exchangeRateCurrent()",
     "encoding": "0xbd6d894d",
     "inputs": [],
+    "name": "exchangeRateCurrent",
     "outputs": [
       {
-        "type": "uint256",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "uint256"
       }
-    ]
+    ],
+    "signature": "exchangeRateCurrent()",
+    "type": "function"
   },
   {
-    "name": "mint",
-    "type": "function",
-    "signature": "mint(uint256)",
     "encoding": "0xa0712d68",
     "inputs": [
       {
-        "type": "uint256",
-        "name": "mintAmount"
+        "name": "mintAmount",
+        "type": "uint256"
       }
     ],
+    "name": "mint",
     "outputs": [
       {
-        "type": "uint256",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "uint256"
       }
-    ]
+    ],
+    "signature": "mint(uint256)",
+    "type": "function"
   },
   {
-    "name": "redeem",
-    "type": "function",
-    "signature": "redeem(uint256)",
     "encoding": "0xdb006a75",
     "inputs": [
       {
-        "type": "uint256",
-        "name": "redeemTokens"
+        "name": "redeemTokens",
+        "type": "uint256"
       }
     ],
+    "name": "redeem",
     "outputs": [
       {
-        "type": "uint256",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "uint256"
       }
-    ]
+    ],
+    "signature": "redeem(uint256)",
+    "type": "function"
   },
   {
-    "name": "redeemUnderlying",
-    "type": "function",
-    "signature": "redeemUnderlying(uint256)",
     "encoding": "0x852a12e3",
     "inputs": [
       {
-        "type": "uint256",
-        "name": "redeemAmount"
+        "name": "redeemAmount",
+        "type": "uint256"
       }
     ],
+    "name": "redeemUnderlying",
     "outputs": [
       {
-        "type": "uint256",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "uint256"
       }
-    ]
+    ],
+    "signature": "redeemUnderlying(uint256)",
+    "type": "function"
   },
   {
-    "name": "transfer",
-    "type": "function",
-    "signature": "transfer(address,uint256)",
     "encoding": "0xa9059cbb",
     "inputs": [
       {
-        "type": "address",
-        "name": "recipient"
+        "name": "recipient",
+        "type": "address"
       },
       {
-        "type": "uint256",
-        "name": "amount"
+        "name": "amount",
+        "type": "uint256"
       }
     ],
+    "name": "transfer",
     "outputs": [
       {
-        "type": "bool",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "bool"
       }
-    ]
+    ],
+    "signature": "transfer(address,uint256)",
+    "type": "function"
   },
   {
-    "name": "transferFrom",
-    "type": "function",
-    "signature": "transferFrom(address,address,uint256)",
     "encoding": "0x23b872dd",
     "inputs": [
       {
-        "type": "address",
-        "name": "sender"
+        "name": "sender",
+        "type": "address"
       },
       {
-        "type": "address",
-        "name": "recipient"
+        "name": "recipient",
+        "type": "address"
       },
       {
-        "type": "uint256",
-        "name": "amount"
+        "name": "amount",
+        "type": "uint256"
       }
     ],
+    "name": "transferFrom",
     "outputs": [
       {
-        "type": "bool",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "bool"
       }
-    ]
+    ],
+    "signature": "transferFrom(address,address,uint256)",
+    "type": "function"
   },
   {
-    "name": "_msgSender",
-    "type": "function",
     "constant": true,
-    "signature": "_msgSender()",
     "encoding": "0x119df25f",
     "inputs": [],
+    "name": "_msgSender",
     "outputs": [
       {
-        "type": "address",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "address"
       }
-    ]
+    ],
+    "signature": "_msgSender()",
+    "type": "function"
   },
   {
-    "name": "_msgData",
-    "type": "function",
     "constant": true,
-    "signature": "_msgData()",
     "encoding": "0x8b49d47e",
     "inputs": [],
+    "name": "_msgData",
     "outputs": [
       {
-        "type": "bytes",
-        "name": "memory"
+        "name": "memory",
+        "type": "bytes"
       }
-    ]
+    ],
+    "signature": "_msgData()",
+    "type": "function"
   },
   {
-    "name": "isConstructor",
-    "type": "function",
     "constant": true,
-    "signature": "isConstructor()",
     "encoding": "0xc4cbfa44",
     "inputs": [],
+    "name": "isConstructor",
     "outputs": [
       {
-        "type": "bool",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "bool"
       }
-    ]
+    ],
+    "signature": "isConstructor()",
+    "type": "function"
   },
   {
-    "name": "OwnershipTransferred",
-    "type": "event",
-    "signature": "OwnershipTransferred(address,address)",
     "encoding": "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0",
     "inputs": [
       {
-        "type": "address",
+        "indexed": true,
         "name": "previousOwner",
-        "indexed": true
+        "type": "address"
       },
       {
-        "type": "address",
+        "indexed": true,
         "name": "newOwner",
-        "indexed": true
+        "type": "address"
       }
     ],
-    "outputs": []
+    "name": "OwnershipTransferred",
+    "outputs": [],
+    "signature": "OwnershipTransferred(address,address)",
+    "type": "event"
   },
   {
-    "name": "initialize",
-    "type": "function",
-    "signature": "initialize(address)",
     "encoding": "0xc4d66de8",
     "inputs": [
       {
-        "type": "address",
-        "name": "sender"
+        "name": "sender",
+        "type": "address"
       }
     ],
-    "outputs": []
+    "name": "initialize",
+    "outputs": [],
+    "signature": "initialize(address)",
+    "type": "function"
   },
   {
-    "name": "owner",
-    "type": "function",
     "constant": true,
-    "signature": "owner()",
     "encoding": "0x8da5cb5b",
     "inputs": [],
+    "name": "owner",
     "outputs": [
       {
-        "type": "address",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "address"
       }
-    ]
+    ],
+    "signature": "owner()",
+    "type": "function"
   },
   {
-    "name": "isOwner",
-    "type": "function",
     "constant": true,
-    "signature": "isOwner()",
     "encoding": "0x8f32d59b",
     "inputs": [],
+    "name": "isOwner",
     "outputs": [
       {
-        "type": "bool",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "bool"
       }
-    ]
+    ],
+    "signature": "isOwner()",
+    "type": "function"
   },
   {
-    "name": "transferOwnership",
-    "type": "function",
-    "signature": "transferOwnership(address)",
     "encoding": "0xf2fde38b",
     "inputs": [
       {
-        "type": "address",
-        "name": "newOwner"
+        "name": "newOwner",
+        "type": "address"
       }
     ],
-    "outputs": []
+    "name": "transferOwnership",
+    "outputs": [],
+    "signature": "transferOwnership(address)",
+    "type": "function"
   },
   {
-    "name": "_transferOwnership",
-    "type": "function",
-    "signature": "_transferOwnership(address)",
     "encoding": "0xd29d44ee",
     "inputs": [
       {
-        "type": "address",
-        "name": "newOwner"
+        "name": "newOwner",
+        "type": "address"
       }
     ],
-    "outputs": []
+    "name": "_transferOwnership",
+    "outputs": [],
+    "signature": "_transferOwnership(address)",
+    "type": "function"
   },
   {
-    "name": "DiscardCToken",
-    "type": "event",
-    "signature": "DiscardCToken(address)",
     "encoding": "0x59699d7c9076678da939b1a98c86f40d8780564966fb30bf84d01b686dbb24c9",
     "inputs": [
       {
-        "type": "address",
+        "indexed": true,
         "name": "tokenAddress",
-        "indexed": true
+        "type": "address"
       }
     ],
-    "outputs": []
+    "name": "DiscardCToken",
+    "outputs": [],
+    "signature": "DiscardCToken(address)",
+    "type": "event"
   },
   {
-    "name": "WhitelistCToken",
-    "type": "event",
-    "signature": "WhitelistCToken(address)",
     "encoding": "0x6b059312af62bbe5ac6a9a59761eaf444083ad356cdbf3761bc98857e061ecb5",
     "inputs": [
       {
-        "type": "address",
+        "indexed": true,
         "name": "tokenAddress",
-        "indexed": true
+        "type": "address"
       }
     ],
-    "outputs": []
+    "name": "WhitelistCToken",
+    "outputs": [],
+    "signature": "WhitelistCToken(address)",
+    "type": "event"
   },
   {
-    "name": "whitelistCToken",
-    "type": "function",
-    "signature": "whitelistCToken(address)",
     "encoding": "0x0a7d2e1d",
     "inputs": [
       {
-        "type": "address",
-        "name": "tokenAddress"
+        "name": "tokenAddress",
+        "type": "address"
       }
     ],
-    "outputs": []
+    "name": "whitelistCToken",
+    "outputs": [],
+    "signature": "whitelistCToken(address)",
+    "type": "function"
   },
   {
-    "name": "discardCToken",
-    "type": "function",
-    "signature": "discardCToken(address)",
     "encoding": "0xdd219635",
     "inputs": [
       {
-        "type": "address",
-        "name": "tokenAddress"
+        "name": "tokenAddress",
+        "type": "address"
       }
     ],
-    "outputs": []
+    "name": "discardCToken",
+    "outputs": [],
+    "signature": "discardCToken(address)",
+    "type": "function"
   },
   {
-    "name": "isCToken",
-    "type": "function",
     "constant": true,
-    "signature": "isCToken(address)",
     "encoding": "0x2f52e595",
     "inputs": [
       {
-        "type": "address",
-        "name": "tokenAddress"
+        "name": "tokenAddress",
+        "type": "address"
       }
     ],
+    "name": "isCToken",
     "outputs": [
       {
-        "type": "bool",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "bool"
       }
-    ]
+    ],
+    "signature": "isCToken(address)",
+    "type": "function"
   },
   {
-    "name": "whitelistCToken",
-    "type": "function",
-    "signature": "whitelistCToken(address)",
     "encoding": "0x0a7d2e1d",
     "inputs": [
       {
-        "type": "address",
-        "name": "tokenAddress"
+        "name": "tokenAddress",
+        "type": "address"
       }
     ],
-    "outputs": []
+    "name": "whitelistCToken",
+    "outputs": [],
+    "signature": "whitelistCToken(address)",
+    "type": "function"
   },
   {
-    "name": "discardCToken",
-    "type": "function",
-    "signature": "discardCToken(address)",
     "encoding": "0xdd219635",
     "inputs": [
       {
-        "type": "address",
-        "name": "tokenAddress"
+        "name": "tokenAddress",
+        "type": "address"
       }
     ],
-    "outputs": []
+    "name": "discardCToken",
+    "outputs": [],
+    "signature": "discardCToken(address)",
+    "type": "function"
   },
   {
-    "name": "isCToken",
-    "type": "function",
     "constant": true,
-    "signature": "isCToken(address)",
     "encoding": "0x2f52e595",
     "inputs": [
       {
-        "type": "address",
-        "name": "tokenAddress"
+        "name": "tokenAddress",
+        "type": "address"
       }
     ],
+    "name": "isCToken",
     "outputs": [
       {
-        "type": "bool",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "bool"
       }
-    ]
+    ],
+    "signature": "isCToken(address)",
+    "type": "function"
   },
   {
-    "name": "isConstructor",
-    "type": "function",
     "constant": true,
-    "signature": "isConstructor()",
     "encoding": "0xc4cbfa44",
     "inputs": [],
+    "name": "isConstructor",
     "outputs": [
       {
-        "type": "bool",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "bool"
       }
-    ]
+    ],
+    "signature": "isConstructor()",
+    "type": "function"
   },
   {
-    "name": "getHubAddr",
-    "type": "function",
     "constant": true,
-    "signature": "getHubAddr()",
     "encoding": "0x74e861d6",
     "inputs": [],
+    "name": "getHubAddr",
     "outputs": [
       {
-        "type": "address",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "address"
       }
-    ]
+    ],
+    "signature": "getHubAddr()",
+    "type": "function"
   },
   {
-    "name": "acceptRelayedCall",
-    "type": "function",
     "constant": true,
-    "signature": "acceptRelayedCall(address,address,bytes,uint256,uint256,uint256,uint256,bytes,uint256)",
     "encoding": "0x83947ea0",
     "inputs": [
       {
-        "type": "address",
-        "name": "relay"
+        "name": "relay",
+        "type": "address"
       },
       {
-        "type": "address",
-        "name": "from"
+        "name": "from",
+        "type": "address"
       },
       {
-        "type": "bytes",
-        "name": "encodedFunction"
+        "name": "encodedFunction",
+        "type": "bytes"
       },
       {
-        "type": "uint256",
-        "name": "transactionFee"
+        "name": "transactionFee",
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "gasPrice"
+        "name": "gasPrice",
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "gasLimit"
+        "name": "gasLimit",
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "nonce"
+        "name": "nonce",
+        "type": "uint256"
       },
       {
-        "type": "bytes",
-        "name": "approvalData"
+        "name": "approvalData",
+        "type": "bytes"
       },
       {
-        "type": "uint256",
-        "name": "maxPossibleCharge"
+        "name": "maxPossibleCharge",
+        "type": "uint256"
       }
     ],
+    "name": "acceptRelayedCall",
     "outputs": [
       {
-        "type": "uint256",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "uint256"
       },
       {
-        "type": "bytes",
-        "name": "memory"
+        "name": "memory",
+        "type": "bytes"
       }
-    ]
+    ],
+    "signature": "acceptRelayedCall(address,address,bytes,uint256,uint256,uint256,uint256,bytes,uint256)",
+    "type": "function"
   },
   {
-    "name": "preRelayedCall",
-    "type": "function",
-    "signature": "preRelayedCall(bytes)",
     "encoding": "0x80274db7",
     "inputs": [
       {
-        "type": "bytes",
-        "name": "context"
+        "name": "context",
+        "type": "bytes"
       }
     ],
+    "name": "preRelayedCall",
     "outputs": [
       {
-        "type": "bytes32",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "bytes32"
       }
-    ]
+    ],
+    "signature": "preRelayedCall(bytes)",
+    "type": "function"
   },
   {
-    "name": "postRelayedCall",
-    "type": "function",
-    "signature": "postRelayedCall(bytes,bool,uint256,bytes32)",
     "encoding": "0xe06e0e22",
     "inputs": [
       {
-        "type": "bytes",
-        "name": "context"
+        "name": "context",
+        "type": "bytes"
       },
       {
-        "type": "bool",
-        "name": "success"
+        "name": "success",
+        "type": "bool"
       },
       {
-        "type": "uint256",
-        "name": "actualCharge"
+        "name": "actualCharge",
+        "type": "uint256"
       },
       {
-        "type": "bytes32",
-        "name": "preRetVal"
+        "name": "preRetVal",
+        "type": "bytes32"
       }
     ],
-    "outputs": []
+    "name": "postRelayedCall",
+    "outputs": [],
+    "signature": "postRelayedCall(bytes,bool,uint256,bytes32)",
+    "type": "function"
   },
   {
-    "name": "preRelayedCall",
-    "type": "function",
-    "signature": "preRelayedCall(bytes)",
     "encoding": "0x80274db7",
     "inputs": [
       {
-        "type": "bytes",
-        "name": "context"
+        "name": "context",
+        "type": "bytes"
       }
     ],
+    "name": "preRelayedCall",
     "outputs": [
       {
-        "type": "bytes32",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "bytes32"
       }
-    ]
+    ],
+    "signature": "preRelayedCall(bytes)",
+    "type": "function"
   },
   {
-    "name": "postRelayedCall",
-    "type": "function",
-    "signature": "postRelayedCall(bytes,bool,uint256,bytes32)",
     "encoding": "0xe06e0e22",
     "inputs": [
       {
-        "type": "bytes",
-        "name": "context"
+        "name": "context",
+        "type": "bytes"
       },
       {
-        "type": "bool",
-        "name": "success"
+        "name": "success",
+        "type": "bool"
       },
       {
-        "type": "uint256",
-        "name": "actualCharge"
+        "name": "actualCharge",
+        "type": "uint256"
       },
       {
-        "type": "bytes32",
-        "name": "preRetVal"
+        "name": "preRetVal",
+        "type": "bytes32"
       }
     ],
-    "outputs": []
+    "name": "postRelayedCall",
+    "outputs": [],
+    "signature": "postRelayedCall(bytes,bool,uint256,bytes32)",
+    "type": "function"
   },
   {
-    "name": "_approveRelayedCall",
-    "type": "function",
-    "signature": "_approveRelayedCall()",
     "encoding": "0x63955c52",
     "inputs": [],
+    "name": "_approveRelayedCall",
     "outputs": [
       {
-        "type": "uint256",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "uint256"
       },
       {
-        "type": "bytes",
-        "name": "memory"
+        "name": "memory",
+        "type": "bytes"
       }
-    ]
+    ],
+    "signature": "_approveRelayedCall()",
+    "type": "function"
   },
   {
-    "name": "_approveRelayedCall",
-    "type": "function",
-    "signature": "_approveRelayedCall(bytes)",
     "encoding": "0x61513210",
     "inputs": [
       {
-        "type": "bytes",
-        "name": "context"
+        "name": "context",
+        "type": "bytes"
       }
     ],
+    "name": "_approveRelayedCall",
     "outputs": [
       {
-        "type": "uint256",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "uint256"
       },
       {
-        "type": "bytes",
-        "name": "memory"
+        "name": "memory",
+        "type": "bytes"
       }
-    ]
+    ],
+    "signature": "_approveRelayedCall(bytes)",
+    "type": "function"
   },
   {
-    "name": "_rejectRelayedCall",
-    "type": "function",
-    "signature": "_rejectRelayedCall(uint256)",
     "encoding": "0xa4461b91",
     "inputs": [
       {
-        "type": "uint256",
-        "name": "errorCode"
+        "name": "errorCode",
+        "type": "uint256"
       }
     ],
+    "name": "_rejectRelayedCall",
     "outputs": [
       {
-        "type": "uint256",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "uint256"
       },
       {
-        "type": "bytes",
-        "name": "memory"
+        "name": "memory",
+        "type": "bytes"
       }
-    ]
+    ],
+    "signature": "_rejectRelayedCall(uint256)",
+    "type": "function"
   },
   {
-    "name": "_preRelayedCall",
-    "type": "function",
-    "signature": "_preRelayedCall(bytes)",
     "encoding": "0xf30492e8",
     "inputs": [
       {
-        "type": "bytes",
-        "name": "memory"
+        "name": "memory",
+        "type": "bytes"
       }
     ],
+    "name": "_preRelayedCall",
     "outputs": [
       {
-        "type": "bytes32",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "bytes32"
       }
-    ]
+    ],
+    "signature": "_preRelayedCall(bytes)",
+    "type": "function"
   },
   {
-    "name": "_postRelayedCall",
-    "type": "function",
-    "signature": "_postRelayedCall(bytes,bool,uint256,bytes32)",
     "encoding": "0xe90e066b",
     "inputs": [
       {
-        "type": "bytes",
-        "name": "memory"
+        "name": "memory",
+        "type": "bytes"
       },
       {
-        "type": "bool",
-        "name": "val_0"
+        "name": "val_0",
+        "type": "bool"
       },
       {
-        "type": "uint256",
-        "name": "val_1"
+        "name": "val_1",
+        "type": "uint256"
       },
       {
-        "type": "bytes32",
-        "name": "val_2"
+        "name": "val_2",
+        "type": "bytes32"
       }
     ],
-    "outputs": []
+    "name": "_postRelayedCall",
+    "outputs": [],
+    "signature": "_postRelayedCall(bytes,bool,uint256,bytes32)",
+    "type": "function"
   },
   {
-    "name": "_computeCharge",
-    "type": "function",
-    "signature": "_computeCharge(uint256,uint256,uint256)",
     "encoding": "0x0bb1d23d",
     "inputs": [
       {
-        "type": "uint256",
-        "name": "gas"
+        "name": "gas",
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "gasPrice"
+        "name": "gasPrice",
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "serviceFee"
+        "name": "serviceFee",
+        "type": "uint256"
       }
     ],
+    "name": "_computeCharge",
     "outputs": [
       {
-        "type": "uint256",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "uint256"
       }
-    ]
+    ],
+    "signature": "_computeCharge(uint256,uint256,uint256)",
+    "type": "function"
   },
   {
-    "name": "recover",
-    "type": "function",
-    "signature": "recover(bytes32,bytes)",
     "encoding": "0x19045a25",
     "inputs": [
       {
-        "type": "bytes32",
-        "name": "hash"
+        "name": "hash",
+        "type": "bytes32"
       },
       {
-        "type": "bytes",
-        "name": "signature"
+        "name": "signature",
+        "type": "bytes"
       }
     ],
+    "name": "recover",
     "outputs": [
       {
-        "type": "address",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "address"
       }
-    ]
+    ],
+    "signature": "recover(bytes32,bytes)",
+    "type": "function"
   },
   {
-    "name": "toEthSignedMessageHash",
-    "type": "function",
-    "signature": "toEthSignedMessageHash(bytes32)",
     "encoding": "0x918a15cf",
     "inputs": [
       {
-        "type": "bytes32",
-        "name": "hash"
+        "name": "hash",
+        "type": "bytes32"
       }
     ],
+    "name": "toEthSignedMessageHash",
     "outputs": [
       {
-        "type": "bytes32",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "bytes32"
       }
-    ]
+    ],
+    "signature": "toEthSignedMessageHash(bytes32)",
+    "type": "function"
   },
   {
-    "name": "initialize",
-    "type": "function",
-    "signature": "initialize(address)",
     "encoding": "0xc4d66de8",
     "inputs": [
       {
-        "type": "address",
-        "name": "trustedSigner"
+        "name": "trustedSigner",
+        "type": "address"
       }
     ],
-    "outputs": []
+    "name": "initialize",
+    "outputs": [],
+    "signature": "initialize(address)",
+    "type": "function"
   },
   {
-    "name": "acceptRelayedCall",
-    "type": "function",
     "constant": true,
-    "signature": "acceptRelayedCall(address,address,bytes,uint256,uint256,uint256,uint256,bytes,uint256)",
     "encoding": "0x83947ea0",
     "inputs": [
       {
-        "type": "address",
-        "name": "relay"
+        "name": "relay",
+        "type": "address"
       },
       {
-        "type": "address",
-        "name": "from"
+        "name": "from",
+        "type": "address"
       },
       {
-        "type": "bytes",
-        "name": "encodedFunction"
+        "name": "encodedFunction",
+        "type": "bytes"
       },
       {
-        "type": "uint256",
-        "name": "transactionFee"
+        "name": "transactionFee",
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "gasPrice"
+        "name": "gasPrice",
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "gasLimit"
+        "name": "gasLimit",
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "nonce"
+        "name": "nonce",
+        "type": "uint256"
       },
       {
-        "type": "bytes",
-        "name": "approvalData"
+        "name": "approvalData",
+        "type": "bytes"
       },
       {
-        "type": "uint256",
-        "name": "val_0"
+        "name": "val_0",
+        "type": "uint256"
       }
     ],
+    "name": "acceptRelayedCall",
     "outputs": [
       {
-        "type": "uint256",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "uint256"
       },
       {
-        "type": "bytes",
-        "name": "memory"
+        "name": "memory",
+        "type": "bytes"
       }
-    ]
+    ],
+    "signature": "acceptRelayedCall(address,address,bytes,uint256,uint256,uint256,uint256,bytes,uint256)",
+    "type": "function"
   },
   {
-    "name": "_getTrustedSigner",
-    "type": "function",
     "constant": true,
-    "signature": "_getTrustedSigner()",
     "encoding": "0x4b3ab4b7",
     "inputs": [],
+    "name": "_getTrustedSigner",
     "outputs": [
       {
-        "type": "address",
-        "name": "trustedSigner"
+        "name": "trustedSigner",
+        "type": "address"
       }
-    ]
+    ],
+    "signature": "_getTrustedSigner()",
+    "type": "function"
   },
   {
-    "name": "_setTrustedSigner",
-    "type": "function",
-    "signature": "_setTrustedSigner(address)",
     "encoding": "0xd1b8278a",
     "inputs": [
       {
-        "type": "address",
-        "name": "trustedSigner"
+        "name": "trustedSigner",
+        "type": "address"
       }
     ],
-    "outputs": []
+    "name": "_setTrustedSigner",
+    "outputs": [],
+    "signature": "_setTrustedSigner(address)",
+    "type": "function"
   },
   {
-    "name": "_msgSender",
-    "type": "function",
     "constant": true,
-    "signature": "_msgSender()",
     "encoding": "0x119df25f",
     "inputs": [],
+    "name": "_msgSender",
     "outputs": [
       {
-        "type": "address",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "address"
       }
-    ]
+    ],
+    "signature": "_msgSender()",
+    "type": "function"
   },
   {
-    "name": "_msgData",
-    "type": "function",
     "constant": true,
-    "signature": "_msgData()",
     "encoding": "0x8b49d47e",
     "inputs": [],
+    "name": "_msgData",
     "outputs": [
       {
-        "type": "bytes",
-        "name": "memory"
+        "name": "memory",
+        "type": "bytes"
       }
-    ]
+    ],
+    "signature": "_msgData()",
+    "type": "function"
   },
   {
-    "name": "RelayHubChanged",
-    "type": "event",
-    "signature": "RelayHubChanged(address,address)",
     "encoding": "0xb9f84b8e65164b14439ae3620df0a4d8786d896996c0282b683f9d8c08f046e8",
     "inputs": [
       {
-        "type": "address",
+        "indexed": true,
         "name": "oldRelayHub",
-        "indexed": true
+        "type": "address"
       },
       {
-        "type": "address",
+        "indexed": true,
         "name": "newRelayHub",
-        "indexed": true
+        "type": "address"
       }
     ],
-    "outputs": []
+    "name": "RelayHubChanged",
+    "outputs": [],
+    "signature": "RelayHubChanged(address,address)",
+    "type": "event"
   },
   {
-    "name": "initialize",
-    "type": "function",
-    "signature": "initialize()",
     "encoding": "0x8129fc1c",
     "inputs": [],
-    "outputs": []
+    "name": "initialize",
+    "outputs": [],
+    "signature": "initialize()",
+    "type": "function"
   },
   {
-    "name": "_getRelayHub",
-    "type": "function",
     "constant": true,
-    "signature": "_getRelayHub()",
     "encoding": "0x4e239ea0",
     "inputs": [],
+    "name": "_getRelayHub",
     "outputs": [
       {
-        "type": "address",
-        "name": "relayHub"
+        "name": "relayHub",
+        "type": "address"
       }
-    ]
+    ],
+    "signature": "_getRelayHub()",
+    "type": "function"
   },
   {
-    "name": "_upgradeRelayHub",
-    "type": "function",
-    "signature": "_upgradeRelayHub(address)",
     "encoding": "0xe8dcdc07",
     "inputs": [
       {
-        "type": "address",
-        "name": "newRelayHub"
+        "name": "newRelayHub",
+        "type": "address"
       }
     ],
-    "outputs": []
+    "name": "_upgradeRelayHub",
+    "outputs": [],
+    "signature": "_upgradeRelayHub(address)",
+    "type": "function"
   },
   {
-    "name": "_msgSender",
-    "type": "function",
     "constant": true,
-    "signature": "_msgSender()",
     "encoding": "0x119df25f",
     "inputs": [],
+    "name": "_msgSender",
     "outputs": [
       {
-        "type": "address",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "address"
       }
-    ]
+    ],
+    "signature": "_msgSender()",
+    "type": "function"
   },
   {
-    "name": "_msgData",
-    "type": "function",
     "constant": true,
-    "signature": "_msgData()",
     "encoding": "0x8b49d47e",
     "inputs": [],
+    "name": "_msgData",
     "outputs": [
       {
-        "type": "bytes",
-        "name": "memory"
+        "name": "memory",
+        "type": "bytes"
       }
-    ]
+    ],
+    "signature": "_msgData()",
+    "type": "function"
   },
   {
-    "name": "_getRelayedCallSender",
-    "type": "function",
-    "signature": "_getRelayedCallSender()",
     "encoding": "0x521bb2dd",
     "inputs": [],
+    "name": "_getRelayedCallSender",
     "outputs": [
       {
-        "type": "address",
-        "name": "result"
+        "name": "result",
+        "type": "address"
       }
-    ]
+    ],
+    "signature": "_getRelayedCallSender()",
+    "type": "function"
   },
   {
-    "name": "_getRelayedCallData",
-    "type": "function",
-    "signature": "_getRelayedCallData()",
     "encoding": "0x671457bf",
     "inputs": [],
+    "name": "_getRelayedCallData",
     "outputs": [
       {
-        "type": "bytes",
-        "name": "memory"
+        "name": "memory",
+        "type": "bytes"
       }
-    ]
+    ],
+    "signature": "_getRelayedCallData()",
+    "type": "function"
   },
   {
-    "name": "stake",
-    "type": "function",
-    "signature": "stake(address,uint256)",
     "encoding": "0xadc9772e",
     "inputs": [
       {
-        "type": "address",
-        "name": "relayaddr"
+        "name": "relayaddr",
+        "type": "address"
       },
       {
-        "type": "uint256",
-        "name": "unstakeDelay"
+        "name": "unstakeDelay",
+        "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "stake",
+    "outputs": [],
+    "signature": "stake(address,uint256)",
+    "type": "function"
   },
   {
-    "name": "Staked",
-    "type": "event",
-    "signature": "Staked(address,uint256,uint256)",
     "encoding": "0x1449c6dd7851abc30abf37f57715f492010519147cc2652fbc38202c18a6ee90",
     "inputs": [
       {
-        "type": "address",
+        "indexed": true,
         "name": "relay",
-        "indexed": true
+        "type": "address"
       },
       {
-        "type": "uint256",
-        "name": "stake"
+        "name": "stake",
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "unstakeDelay"
+        "name": "unstakeDelay",
+        "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "Staked",
+    "outputs": [],
+    "signature": "Staked(address,uint256,uint256)",
+    "type": "event"
   },
   {
-    "name": "registerRelay",
-    "type": "function",
-    "signature": "registerRelay(uint256,string)",
     "encoding": "0x1166073a",
     "inputs": [
       {
-        "type": "uint256",
-        "name": "transactionFee"
+        "name": "transactionFee",
+        "type": "uint256"
       },
       {
-        "type": "string",
-        "name": "url"
+        "name": "url",
+        "type": "string"
       }
     ],
-    "outputs": []
+    "name": "registerRelay",
+    "outputs": [],
+    "signature": "registerRelay(uint256,string)",
+    "type": "function"
   },
   {
-    "name": "RelayAdded",
-    "type": "event",
-    "signature": "RelayAdded(address,address,uint256,uint256,uint256,string)",
     "encoding": "0x85b3ae3aae9d3fcb31142fbd8c3b4722d57825b8edd6e1366e69204afa5a0dfa",
     "inputs": [
       {
-        "type": "address",
+        "indexed": true,
         "name": "relay",
-        "indexed": true
+        "type": "address"
       },
       {
-        "type": "address",
+        "indexed": true,
         "name": "owner",
-        "indexed": true
+        "type": "address"
       },
       {
-        "type": "uint256",
-        "name": "transactionFee"
+        "name": "transactionFee",
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "stake"
+        "name": "stake",
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "unstakeDelay"
+        "name": "unstakeDelay",
+        "type": "uint256"
       },
       {
-        "type": "string",
-        "name": "url"
+        "name": "url",
+        "type": "string"
       }
     ],
-    "outputs": []
+    "name": "RelayAdded",
+    "outputs": [],
+    "signature": "RelayAdded(address,address,uint256,uint256,uint256,string)",
+    "type": "event"
   },
   {
-    "name": "removeRelayByOwner",
-    "type": "function",
-    "signature": "removeRelayByOwner(address)",
     "encoding": "0xc3e712f2",
     "inputs": [
       {
-        "type": "address",
-        "name": "relay"
+        "name": "relay",
+        "type": "address"
       }
     ],
-    "outputs": []
+    "name": "removeRelayByOwner",
+    "outputs": [],
+    "signature": "removeRelayByOwner(address)",
+    "type": "function"
   },
   {
-    "name": "RelayRemoved",
-    "type": "event",
-    "signature": "RelayRemoved(address,uint256)",
     "encoding": "0x5490afc1d818789c8b3d5d63bce3d2a3327d0bba4efb5a7751f783dc977d7d11",
     "inputs": [
       {
-        "type": "address",
+        "indexed": true,
         "name": "relay",
-        "indexed": true
+        "type": "address"
       },
       {
-        "type": "uint256",
-        "name": "unstakeTime"
+        "name": "unstakeTime",
+        "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "RelayRemoved",
+    "outputs": [],
+    "signature": "RelayRemoved(address,uint256)",
+    "type": "event"
   },
   {
-    "name": "unstake",
-    "type": "function",
-    "signature": "unstake(address)",
     "encoding": "0xf2888dbb",
     "inputs": [
       {
-        "type": "address",
-        "name": "relay"
+        "name": "relay",
+        "type": "address"
       }
     ],
-    "outputs": []
+    "name": "unstake",
+    "outputs": [],
+    "signature": "unstake(address)",
+    "type": "function"
   },
   {
-    "name": "Unstaked",
-    "type": "event",
-    "signature": "Unstaked(address,uint256)",
     "encoding": "0x0f5bb82176feb1b5e747e28471aa92156a04d9f3ab9f45f28e2d704232b93f75",
     "inputs": [
       {
-        "type": "address",
+        "indexed": true,
         "name": "relay",
-        "indexed": true
+        "type": "address"
       },
       {
-        "type": "uint256",
-        "name": "stake"
+        "name": "stake",
+        "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "Unstaked",
+    "outputs": [],
+    "signature": "Unstaked(address,uint256)",
+    "type": "event"
   },
   {
-    "name": "getRelay",
-    "type": "function",
     "constant": true,
-    "signature": "getRelay(address)",
     "encoding": "0x8d851460",
     "inputs": [
       {
-        "type": "address",
-        "name": "relay"
+        "name": "relay",
+        "type": "address"
       }
     ],
+    "name": "getRelay",
     "outputs": [
       {
-        "type": "uint256",
-        "name": "totalStake"
+        "name": "totalStake",
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "unstakeDelay"
+        "name": "unstakeDelay",
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "unstakeTime"
+        "name": "unstakeTime",
+        "type": "uint256"
       },
       {
-        "type": "address",
-        "name": "payable owner"
+        "name": "owner",
+        "type": "address"
       },
       {
-        "type": "RelayState",
-        "name": "state"
+        "name": "state",
+        "type": "RelayState"
       }
-    ]
+    ],
+    "signature": "getRelay(address)",
+    "type": "function"
   },
   {
-    "name": "depositFor",
-    "type": "function",
-    "signature": "depositFor(address)",
     "encoding": "0xaa67c919",
     "inputs": [
       {
-        "type": "address",
-        "name": "target"
+        "name": "target",
+        "type": "address"
       }
     ],
-    "outputs": []
+    "name": "depositFor",
+    "outputs": [],
+    "signature": "depositFor(address)",
+    "type": "function"
   },
   {
-    "name": "Deposited",
-    "type": "event",
-    "signature": "Deposited(address,address,uint256)",
     "encoding": "0x8752a472e571a816aea92eec8dae9baf628e840f4929fbcc2d155e6233ff68a7",
     "inputs": [
       {
-        "type": "address",
+        "indexed": true,
         "name": "recipient",
-        "indexed": true
+        "type": "address"
       },
       {
-        "type": "address",
+        "indexed": true,
         "name": "from",
-        "indexed": true
+        "type": "address"
       },
       {
-        "type": "uint256",
-        "name": "amount"
+        "name": "amount",
+        "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "Deposited",
+    "outputs": [],
+    "signature": "Deposited(address,address,uint256)",
+    "type": "event"
   },
   {
-    "name": "balanceOf",
-    "type": "function",
     "constant": true,
-    "signature": "balanceOf(address)",
     "encoding": "0x70a08231",
     "inputs": [
       {
-        "type": "address",
-        "name": "target"
+        "name": "target",
+        "type": "address"
       }
     ],
+    "name": "balanceOf",
     "outputs": [
       {
-        "type": "uint256",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "uint256"
       }
-    ]
+    ],
+    "signature": "balanceOf(address)",
+    "type": "function"
   },
   {
-    "name": "withdraw",
-    "type": "function",
-    "signature": "withdraw(uint256,address)",
     "encoding": "0x00f714ce",
     "inputs": [
       {
-        "type": "uint256",
-        "name": "amount"
+        "name": "amount",
+        "type": "uint256"
       },
       {
-        "type": "address",
-        "name": "payable dest"
+        "name": "dest",
+        "type": "address"
       }
     ],
-    "outputs": []
+    "name": "withdraw",
+    "outputs": [],
+    "signature": "withdraw(uint256,address)",
+    "type": "function"
   },
   {
-    "name": "Withdrawn",
-    "type": "event",
-    "signature": "Withdrawn(address,address,uint256)",
     "encoding": "0xd1c19fbcd4551a5edfb66d43d2e337c04837afda3482b42bdf569a8fccdae5fb",
     "inputs": [
       {
-        "type": "address",
+        "indexed": true,
         "name": "account",
-        "indexed": true
+        "type": "address"
       },
       {
-        "type": "address",
+        "indexed": true,
         "name": "dest",
-        "indexed": true
+        "type": "address"
       },
       {
-        "type": "uint256",
-        "name": "amount"
+        "name": "amount",
+        "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "Withdrawn",
+    "outputs": [],
+    "signature": "Withdrawn(address,address,uint256)",
+    "type": "event"
   },
   {
-    "name": "canRelay",
-    "type": "function",
     "constant": true,
-    "signature": "canRelay(address,address,address,bytes,uint256,uint256,uint256,uint256,bytes,bytes)",
     "encoding": "0x2b601747",
     "inputs": [
       {
-        "type": "address",
-        "name": "relay"
+        "name": "relay",
+        "type": "address"
       },
       {
-        "type": "address",
-        "name": "from"
+        "name": "from",
+        "type": "address"
       },
       {
-        "type": "address",
-        "name": "to"
+        "name": "to",
+        "type": "address"
       },
       {
-        "type": "bytes",
-        "name": "encodedFunction"
+        "name": "encodedFunction",
+        "type": "bytes"
       },
       {
-        "type": "uint256",
-        "name": "transactionFee"
+        "name": "transactionFee",
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "gasPrice"
+        "name": "gasPrice",
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "gasLimit"
+        "name": "gasLimit",
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "nonce"
+        "name": "nonce",
+        "type": "uint256"
       },
       {
-        "type": "bytes",
-        "name": "signature"
+        "name": "signature",
+        "type": "bytes"
       },
       {
-        "type": "bytes",
-        "name": "approvalData"
+        "name": "approvalData",
+        "type": "bytes"
       }
     ],
+    "name": "canRelay",
     "outputs": [
       {
-        "type": "uint256",
-        "name": "status"
+        "name": "status",
+        "type": "uint256"
       },
       {
-        "type": "bytes",
-        "name": "recipientContext"
+        "name": "recipientContext",
+        "type": "bytes"
       }
-    ]
+    ],
+    "signature": "canRelay(address,address,address,bytes,uint256,uint256,uint256,uint256,bytes,bytes)",
+    "type": "function"
   },
   {
-    "name": "relayCall",
-    "type": "function",
-    "signature": "relayCall(address,address,bytes,uint256,uint256,uint256,uint256,bytes,bytes)",
     "encoding": "0x405cec67",
     "inputs": [
       {
-        "type": "address",
-        "name": "from"
+        "name": "from",
+        "type": "address"
       },
       {
-        "type": "address",
-        "name": "to"
+        "name": "to",
+        "type": "address"
       },
       {
-        "type": "bytes",
-        "name": "encodedFunction"
+        "name": "encodedFunction",
+        "type": "bytes"
       },
       {
-        "type": "uint256",
-        "name": "transactionFee"
+        "name": "transactionFee",
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "gasPrice"
+        "name": "gasPrice",
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "gasLimit"
+        "name": "gasLimit",
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "nonce"
+        "name": "nonce",
+        "type": "uint256"
       },
       {
-        "type": "bytes",
-        "name": "signature"
+        "name": "signature",
+        "type": "bytes"
       },
       {
-        "type": "bytes",
-        "name": "approvalData"
+        "name": "approvalData",
+        "type": "bytes"
       }
     ],
-    "outputs": []
+    "name": "relayCall",
+    "outputs": [],
+    "signature": "relayCall(address,address,bytes,uint256,uint256,uint256,uint256,bytes,bytes)",
+    "type": "function"
   },
   {
-    "name": "CanRelayFailed",
-    "type": "event",
-    "signature": "CanRelayFailed(address,address,address,bytes4,uint256)",
     "encoding": "0xafb5afd6d1c2e8ffbfb480e674a169f493ece0b22658d4f4484e7334f0241e22",
     "inputs": [
       {
-        "type": "address",
+        "indexed": true,
         "name": "relay",
-        "indexed": true
+        "type": "address"
       },
       {
-        "type": "address",
+        "indexed": true,
         "name": "from",
-        "indexed": true
+        "type": "address"
       },
       {
-        "type": "address",
+        "indexed": true,
         "name": "to",
-        "indexed": true
+        "type": "address"
       },
       {
-        "type": "bytes4",
-        "name": "selector"
+        "name": "selector",
+        "type": "bytes4"
       },
       {
-        "type": "uint256",
-        "name": "reason"
+        "name": "reason",
+        "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "CanRelayFailed",
+    "outputs": [],
+    "signature": "CanRelayFailed(address,address,address,bytes4,uint256)",
+    "type": "event"
   },
   {
-    "name": "TransactionRelayed",
-    "type": "event",
-    "signature": "TransactionRelayed(address,address,address,bytes4,RelayCallStatus,uint256)",
     "encoding": "0x5842ee2f1e4c9e74e454593aabf5ec184231cbffb01196c35aeabdf1e8f1e742",
     "inputs": [
       {
-        "type": "address",
+        "indexed": true,
         "name": "relay",
-        "indexed": true
+        "type": "address"
       },
       {
-        "type": "address",
+        "indexed": true,
         "name": "from",
-        "indexed": true
+        "type": "address"
       },
       {
-        "type": "address",
+        "indexed": true,
         "name": "to",
-        "indexed": true
+        "type": "address"
       },
       {
-        "type": "bytes4",
-        "name": "selector"
+        "name": "selector",
+        "type": "bytes4"
       },
       {
-        "type": "RelayCallStatus",
-        "name": "status"
+        "name": "status",
+        "type": "RelayCallStatus"
       },
       {
-        "type": "uint256",
-        "name": "charge"
+        "name": "charge",
+        "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "TransactionRelayed",
+    "outputs": [],
+    "signature": "TransactionRelayed(address,address,address,bytes4,RelayCallStatus,uint256)",
+    "type": "event"
   },
   {
-    "name": "requiredGas",
-    "type": "function",
     "constant": true,
-    "signature": "requiredGas(uint256)",
     "encoding": "0x6a7d84a4",
     "inputs": [
       {
-        "type": "uint256",
-        "name": "relayedCallStipend"
+        "name": "relayedCallStipend",
+        "type": "uint256"
       }
     ],
+    "name": "requiredGas",
     "outputs": [
       {
-        "type": "uint256",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "uint256"
       }
-    ]
+    ],
+    "signature": "requiredGas(uint256)",
+    "type": "function"
   },
   {
-    "name": "maxPossibleCharge",
-    "type": "function",
     "constant": true,
-    "signature": "maxPossibleCharge(uint256,uint256,uint256)",
     "encoding": "0xa863f8f9",
     "inputs": [
       {
-        "type": "uint256",
-        "name": "relayedCallStipend"
+        "name": "relayedCallStipend",
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "gasPrice"
+        "name": "gasPrice",
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "transactionFee"
+        "name": "transactionFee",
+        "type": "uint256"
       }
     ],
+    "name": "maxPossibleCharge",
     "outputs": [
       {
-        "type": "uint256",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "uint256"
       }
-    ]
+    ],
+    "signature": "maxPossibleCharge(uint256,uint256,uint256)",
+    "type": "function"
   },
   {
-    "name": "penalizeRepeatedNonce",
-    "type": "function",
-    "signature": "penalizeRepeatedNonce(bytes,bytes,bytes,bytes)",
     "encoding": "0xa8cd9572",
     "inputs": [
       {
-        "type": "bytes",
-        "name": "unsignedTx1"
+        "name": "unsignedTx1",
+        "type": "bytes"
       },
       {
-        "type": "bytes",
-        "name": "signature1"
+        "name": "signature1",
+        "type": "bytes"
       },
       {
-        "type": "bytes",
-        "name": "unsignedTx2"
+        "name": "unsignedTx2",
+        "type": "bytes"
       },
       {
-        "type": "bytes",
-        "name": "signature2"
+        "name": "signature2",
+        "type": "bytes"
       }
     ],
-    "outputs": []
+    "name": "penalizeRepeatedNonce",
+    "outputs": [],
+    "signature": "penalizeRepeatedNonce(bytes,bytes,bytes,bytes)",
+    "type": "function"
   },
   {
-    "name": "penalizeIllegalTransaction",
-    "type": "function",
-    "signature": "penalizeIllegalTransaction(bytes,bytes)",
     "encoding": "0x39002432",
     "inputs": [
       {
-        "type": "bytes",
-        "name": "unsignedTx"
+        "name": "unsignedTx",
+        "type": "bytes"
       },
       {
-        "type": "bytes",
-        "name": "signature"
+        "name": "signature",
+        "type": "bytes"
       }
     ],
-    "outputs": []
+    "name": "penalizeIllegalTransaction",
+    "outputs": [],
+    "signature": "penalizeIllegalTransaction(bytes,bytes)",
+    "type": "function"
   },
   {
-    "name": "Penalized",
-    "type": "event",
-    "signature": "Penalized(address,address,uint256)",
     "encoding": "0xb0595266ccec357806b2691f348b128209f1060a0bda4f5c95f7090730351ff8",
     "inputs": [
       {
-        "type": "address",
+        "indexed": true,
         "name": "relay",
-        "indexed": true
+        "type": "address"
       },
       {
-        "type": "address",
-        "name": "sender"
+        "name": "sender",
+        "type": "address"
       },
       {
-        "type": "uint256",
-        "name": "amount"
+        "name": "amount",
+        "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "Penalized",
+    "outputs": [],
+    "signature": "Penalized(address,address,uint256)",
+    "type": "event"
   },
   {
-    "name": "getNonce",
-    "type": "function",
     "constant": true,
-    "signature": "getNonce(address)",
     "encoding": "0x2d0335ab",
     "inputs": [
       {
-        "type": "address",
-        "name": "from"
+        "name": "from",
+        "type": "address"
       }
     ],
+    "name": "getNonce",
     "outputs": [
       {
-        "type": "uint256",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "uint256"
       }
-    ]
+    ],
+    "signature": "getNonce(address)",
+    "type": "function"
   },
   {
-    "name": "initialize",
-    "type": "function",
-    "signature": "initialize()",
     "encoding": "0x8129fc1c",
     "inputs": [],
-    "outputs": []
+    "name": "initialize",
+    "outputs": [],
+    "signature": "initialize()",
+    "type": "function"
   },
   {
-    "name": "getHubAddr",
-    "type": "function",
     "constant": true,
-    "signature": "getHubAddr()",
     "encoding": "0x74e861d6",
     "inputs": [],
+    "name": "getHubAddr",
     "outputs": [
       {
-        "type": "address",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "address"
       }
-    ]
+    ],
+    "signature": "getHubAddr()",
+    "type": "function"
   },
   {
-    "name": "relayHubVersion",
-    "type": "function",
     "constant": true,
-    "signature": "relayHubVersion()",
     "encoding": "0xad61ccd5",
     "inputs": [],
+    "name": "relayHubVersion",
     "outputs": [
       {
-        "type": "string",
-        "name": "memory"
+        "name": "memory",
+        "type": "string"
       }
-    ]
+    ],
+    "signature": "relayHubVersion()",
+    "type": "function"
   },
   {
-    "name": "_withdrawDeposits",
-    "type": "function",
-    "signature": "_withdrawDeposits(uint256,address)",
     "encoding": "0x43401e48",
     "inputs": [
       {
-        "type": "uint256",
-        "name": "amount"
+        "name": "amount",
+        "type": "uint256"
       },
       {
-        "type": "address",
-        "name": "payable payee"
+        "name": "payee",
+        "type": "address"
       }
     ],
-    "outputs": []
+    "name": "_withdrawDeposits",
+    "outputs": [],
+    "signature": "_withdrawDeposits(uint256,address)",
+    "type": "function"
   },
   {
-    "name": "transfer",
-    "type": "function",
-    "signature": "transfer(address,uint256)",
     "encoding": "0xa9059cbb",
     "inputs": [
       {
-        "type": "address",
-        "name": "to"
+        "name": "to",
+        "type": "address"
       },
       {
-        "type": "uint256",
-        "name": "value"
+        "name": "value",
+        "type": "uint256"
       }
     ],
+    "name": "transfer",
     "outputs": [
       {
-        "type": "bool",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "bool"
       }
-    ]
+    ],
+    "signature": "transfer(address,uint256)",
+    "type": "function"
   },
   {
-    "name": "approve",
-    "type": "function",
-    "signature": "approve(address,uint256)",
     "encoding": "0x095ea7b3",
     "inputs": [
       {
-        "type": "address",
-        "name": "spender"
+        "name": "spender",
+        "type": "address"
       },
       {
-        "type": "uint256",
-        "name": "value"
+        "name": "value",
+        "type": "uint256"
       }
     ],
+    "name": "approve",
     "outputs": [
       {
-        "type": "bool",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "bool"
       }
-    ]
+    ],
+    "signature": "approve(address,uint256)",
+    "type": "function"
   },
   {
-    "name": "transferFrom",
-    "type": "function",
-    "signature": "transferFrom(address,address,uint256)",
     "encoding": "0x23b872dd",
     "inputs": [
       {
-        "type": "address",
-        "name": "from"
+        "name": "from",
+        "type": "address"
       },
       {
-        "type": "address",
-        "name": "to"
+        "name": "to",
+        "type": "address"
       },
       {
-        "type": "uint256",
-        "name": "value"
+        "name": "value",
+        "type": "uint256"
       }
     ],
+    "name": "transferFrom",
     "outputs": [
       {
-        "type": "bool",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "bool"
       }
-    ]
+    ],
+    "signature": "transferFrom(address,address,uint256)",
+    "type": "function"
   },
   {
-    "name": "totalSupply",
-    "type": "function",
     "constant": true,
-    "signature": "totalSupply()",
     "encoding": "0x18160ddd",
     "inputs": [],
+    "name": "totalSupply",
     "outputs": [
       {
-        "type": "uint256",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "uint256"
       }
-    ]
+    ],
+    "signature": "totalSupply()",
+    "type": "function"
   },
   {
-    "name": "balanceOf",
-    "type": "function",
     "constant": true,
-    "signature": "balanceOf(address)",
     "encoding": "0x70a08231",
     "inputs": [
       {
-        "type": "address",
-        "name": "who"
+        "name": "who",
+        "type": "address"
       }
     ],
+    "name": "balanceOf",
     "outputs": [
       {
-        "type": "uint256",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "uint256"
       }
-    ]
+    ],
+    "signature": "balanceOf(address)",
+    "type": "function"
   },
   {
-    "name": "allowance",
-    "type": "function",
     "constant": true,
-    "signature": "allowance(address,address)",
     "encoding": "0xdd62ed3e",
     "inputs": [
       {
-        "type": "address",
-        "name": "owner"
+        "name": "owner",
+        "type": "address"
       },
       {
-        "type": "address",
-        "name": "spender"
+        "name": "spender",
+        "type": "address"
       }
     ],
+    "name": "allowance",
     "outputs": [
       {
-        "type": "uint256",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "uint256"
       }
-    ]
+    ],
+    "signature": "allowance(address,address)",
+    "type": "function"
   },
   {
-    "name": "Transfer",
-    "type": "event",
-    "signature": "Transfer(address,address,uint256)",
     "encoding": "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
     "inputs": [
       {
-        "type": "address",
+        "indexed": true,
         "name": "from",
-        "indexed": true
+        "type": "address"
       },
       {
-        "type": "address",
+        "indexed": true,
         "name": "to",
-        "indexed": true
+        "type": "address"
       },
       {
-        "type": "uint256",
-        "name": "value"
+        "name": "value",
+        "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "Transfer",
+    "outputs": [],
+    "signature": "Transfer(address,address,uint256)",
+    "type": "event"
   },
   {
-    "name": "Approval",
-    "type": "event",
-    "signature": "Approval(address,address,uint256)",
     "encoding": "0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925",
     "inputs": [
       {
-        "type": "address",
+        "indexed": true,
         "name": "owner",
-        "indexed": true
+        "type": "address"
       },
       {
-        "type": "address",
+        "indexed": true,
         "name": "spender",
-        "indexed": true
+        "type": "address"
       },
       {
-        "type": "uint256",
-        "name": "value"
+        "name": "value",
+        "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "Approval",
+    "outputs": [],
+    "signature": "Approval(address,address,uint256)",
+    "type": "event"
   },
   {
-    "name": "initialize",
-    "type": "function",
-    "signature": "initialize()",
     "encoding": "0x8129fc1c",
     "inputs": [],
-    "outputs": []
+    "name": "initialize",
+    "outputs": [],
+    "signature": "initialize()",
+    "type": "function"
   },
   {
-    "name": "mulUInt",
-    "type": "function",
-    "signature": "mulUInt(uint256,uint256)",
     "encoding": "0x20b43094",
     "inputs": [
       {
-        "type": "uint256",
-        "name": "a"
+        "name": "a",
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "b"
+        "name": "b",
+        "type": "uint256"
       }
     ],
+    "name": "mulUInt",
     "outputs": [
       {
-        "type": "MathError",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "MathError"
       },
       {
-        "type": "uint256",
-        "name": "ret_1"
+        "name": "ret_1",
+        "type": "uint256"
       }
-    ]
+    ],
+    "signature": "mulUInt(uint256,uint256)",
+    "type": "function"
   },
   {
-    "name": "divUInt",
-    "type": "function",
-    "signature": "divUInt(uint256,uint256)",
     "encoding": "0x1bc2b813",
     "inputs": [
       {
-        "type": "uint256",
-        "name": "a"
+        "name": "a",
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "b"
+        "name": "b",
+        "type": "uint256"
       }
     ],
+    "name": "divUInt",
     "outputs": [
       {
-        "type": "MathError",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "MathError"
       },
       {
-        "type": "uint256",
-        "name": "ret_1"
+        "name": "ret_1",
+        "type": "uint256"
       }
-    ]
+    ],
+    "signature": "divUInt(uint256,uint256)",
+    "type": "function"
   },
   {
-    "name": "subUInt",
-    "type": "function",
-    "signature": "subUInt(uint256,uint256)",
     "encoding": "0x9b7efac7",
     "inputs": [
       {
-        "type": "uint256",
-        "name": "a"
+        "name": "a",
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "b"
+        "name": "b",
+        "type": "uint256"
       }
     ],
+    "name": "subUInt",
     "outputs": [
       {
-        "type": "MathError",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "MathError"
       },
       {
-        "type": "uint256",
-        "name": "ret_1"
+        "name": "ret_1",
+        "type": "uint256"
       }
-    ]
+    ],
+    "signature": "subUInt(uint256,uint256)",
+    "type": "function"
   },
   {
-    "name": "addUInt",
-    "type": "function",
-    "signature": "addUInt(uint256,uint256)",
     "encoding": "0xdb27b0bc",
     "inputs": [
       {
-        "type": "uint256",
-        "name": "a"
+        "name": "a",
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "b"
+        "name": "b",
+        "type": "uint256"
       }
     ],
+    "name": "addUInt",
     "outputs": [
       {
-        "type": "MathError",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "MathError"
       },
       {
-        "type": "uint256",
-        "name": "ret_1"
+        "name": "ret_1",
+        "type": "uint256"
       }
-    ]
+    ],
+    "signature": "addUInt(uint256,uint256)",
+    "type": "function"
   },
   {
-    "name": "addThenSubUInt",
-    "type": "function",
-    "signature": "addThenSubUInt(uint256,uint256,uint256)",
     "encoding": "0x65dbcc0f",
     "inputs": [
       {
-        "type": "uint256",
-        "name": "a"
+        "name": "a",
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "b"
+        "name": "b",
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "c"
+        "name": "c",
+        "type": "uint256"
       }
     ],
+    "name": "addThenSubUInt",
     "outputs": [
       {
-        "type": "MathError",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "MathError"
       },
       {
-        "type": "uint256",
-        "name": "ret_1"
+        "name": "ret_1",
+        "type": "uint256"
       }
-    ]
+    ],
+    "signature": "addThenSubUInt(uint256,uint256,uint256)",
+    "type": "function"
   },
   {
-    "name": "getExp",
-    "type": "function",
-    "signature": "getExp(uint256,uint256)",
     "encoding": "0xba9316b7",
     "inputs": [
       {
-        "type": "uint256",
-        "name": "num"
+        "name": "num",
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "denom"
+        "name": "denom",
+        "type": "uint256"
       }
     ],
+    "name": "getExp",
     "outputs": [
       {
-        "type": "MathError",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "MathError"
       },
       {
-        "type": "Exp",
-        "name": "memory"
+        "name": "memory",
+        "type": "Exp"
       }
-    ]
+    ],
+    "signature": "getExp(uint256,uint256)",
+    "type": "function"
   },
   {
-    "name": "addExp",
-    "type": "function",
-    "signature": "addExp(Exp,Exp)",
     "encoding": "0xd1c254ae",
     "inputs": [
       {
-        "type": "Exp",
-        "name": "a"
+        "name": "a",
+        "type": "Exp"
       },
       {
-        "type": "Exp",
-        "name": "b"
+        "name": "b",
+        "type": "Exp"
       }
     ],
+    "name": "addExp",
     "outputs": [
       {
-        "type": "MathError",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "MathError"
       },
       {
-        "type": "Exp",
-        "name": "memory"
+        "name": "memory",
+        "type": "Exp"
       }
-    ]
+    ],
+    "signature": "addExp(Exp,Exp)",
+    "type": "function"
   },
   {
-    "name": "subExp",
-    "type": "function",
-    "signature": "subExp(Exp,Exp)",
     "encoding": "0xd23e7096",
     "inputs": [
       {
-        "type": "Exp",
-        "name": "a"
+        "name": "a",
+        "type": "Exp"
       },
       {
-        "type": "Exp",
-        "name": "b"
+        "name": "b",
+        "type": "Exp"
       }
     ],
+    "name": "subExp",
     "outputs": [
       {
-        "type": "MathError",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "MathError"
       },
       {
-        "type": "Exp",
-        "name": "memory"
+        "name": "memory",
+        "type": "Exp"
       }
-    ]
+    ],
+    "signature": "subExp(Exp,Exp)",
+    "type": "function"
   },
   {
-    "name": "mulScalar",
-    "type": "function",
-    "signature": "mulScalar(Exp,uint256)",
     "encoding": "0xe6247a38",
     "inputs": [
       {
-        "type": "Exp",
-        "name": "a"
+        "name": "a",
+        "type": "Exp"
       },
       {
-        "type": "uint256",
-        "name": "scalar"
+        "name": "scalar",
+        "type": "uint256"
       }
     ],
+    "name": "mulScalar",
     "outputs": [
       {
-        "type": "MathError",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "MathError"
       },
       {
-        "type": "Exp",
-        "name": "memory"
+        "name": "memory",
+        "type": "Exp"
       }
-    ]
+    ],
+    "signature": "mulScalar(Exp,uint256)",
+    "type": "function"
   },
   {
-    "name": "mulScalarTruncate",
-    "type": "function",
-    "signature": "mulScalarTruncate(Exp,uint256)",
     "encoding": "0x185c070f",
     "inputs": [
       {
-        "type": "Exp",
-        "name": "a"
+        "name": "a",
+        "type": "Exp"
       },
       {
-        "type": "uint256",
-        "name": "scalar"
+        "name": "scalar",
+        "type": "uint256"
       }
     ],
+    "name": "mulScalarTruncate",
     "outputs": [
       {
-        "type": "MathError",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "MathError"
       },
       {
-        "type": "uint256",
-        "name": "ret_1"
+        "name": "ret_1",
+        "type": "uint256"
       }
-    ]
+    ],
+    "signature": "mulScalarTruncate(Exp,uint256)",
+    "type": "function"
   },
   {
-    "name": "mulScalarTruncateAddUInt",
-    "type": "function",
-    "signature": "mulScalarTruncateAddUInt(Exp,uint256,uint256)",
     "encoding": "0xfe799fc9",
     "inputs": [
       {
-        "type": "Exp",
-        "name": "a"
+        "name": "a",
+        "type": "Exp"
       },
       {
-        "type": "uint256",
-        "name": "scalar"
+        "name": "scalar",
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "addend"
+        "name": "addend",
+        "type": "uint256"
       }
     ],
+    "name": "mulScalarTruncateAddUInt",
     "outputs": [
       {
-        "type": "MathError",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "MathError"
       },
       {
-        "type": "uint256",
-        "name": "ret_1"
+        "name": "ret_1",
+        "type": "uint256"
       }
-    ]
+    ],
+    "signature": "mulScalarTruncateAddUInt(Exp,uint256,uint256)",
+    "type": "function"
   },
   {
-    "name": "divScalar",
-    "type": "function",
-    "signature": "divScalar(Exp,uint256)",
     "encoding": "0x69fbe45e",
     "inputs": [
       {
-        "type": "Exp",
-        "name": "a"
+        "name": "a",
+        "type": "Exp"
       },
       {
-        "type": "uint256",
-        "name": "scalar"
+        "name": "scalar",
+        "type": "uint256"
       }
     ],
+    "name": "divScalar",
     "outputs": [
       {
-        "type": "MathError",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "MathError"
       },
       {
-        "type": "Exp",
-        "name": "memory"
+        "name": "memory",
+        "type": "Exp"
       }
-    ]
+    ],
+    "signature": "divScalar(Exp,uint256)",
+    "type": "function"
   },
   {
-    "name": "divScalarByExp",
-    "type": "function",
-    "signature": "divScalarByExp(uint256,Exp)",
     "encoding": "0x9d70934e",
     "inputs": [
       {
-        "type": "uint256",
-        "name": "scalar"
+        "name": "scalar",
+        "type": "uint256"
       },
       {
-        "type": "Exp",
-        "name": "divisor"
+        "name": "divisor",
+        "type": "Exp"
       }
     ],
+    "name": "divScalarByExp",
     "outputs": [
       {
-        "type": "MathError",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "MathError"
       },
       {
-        "type": "Exp",
-        "name": "memory"
+        "name": "memory",
+        "type": "Exp"
       }
-    ]
+    ],
+    "signature": "divScalarByExp(uint256,Exp)",
+    "type": "function"
   },
   {
-    "name": "divScalarByExpTruncate",
-    "type": "function",
-    "signature": "divScalarByExpTruncate(uint256,Exp)",
     "encoding": "0x100045df",
     "inputs": [
       {
-        "type": "uint256",
-        "name": "scalar"
+        "name": "scalar",
+        "type": "uint256"
       },
       {
-        "type": "Exp",
-        "name": "divisor"
+        "name": "divisor",
+        "type": "Exp"
       }
     ],
+    "name": "divScalarByExpTruncate",
     "outputs": [
       {
-        "type": "MathError",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "MathError"
       },
       {
-        "type": "uint256",
-        "name": "ret_1"
+        "name": "ret_1",
+        "type": "uint256"
       }
-    ]
+    ],
+    "signature": "divScalarByExpTruncate(uint256,Exp)",
+    "type": "function"
   },
   {
-    "name": "mulExp",
-    "type": "function",
-    "signature": "mulExp(Exp,Exp)",
     "encoding": "0x9ba9c354",
     "inputs": [
       {
-        "type": "Exp",
-        "name": "a"
+        "name": "a",
+        "type": "Exp"
       },
       {
-        "type": "Exp",
-        "name": "b"
+        "name": "b",
+        "type": "Exp"
       }
     ],
+    "name": "mulExp",
     "outputs": [
       {
-        "type": "MathError",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "MathError"
       },
       {
-        "type": "Exp",
-        "name": "memory"
+        "name": "memory",
+        "type": "Exp"
       }
-    ]
+    ],
+    "signature": "mulExp(Exp,Exp)",
+    "type": "function"
   },
   {
-    "name": "mulExp",
-    "type": "function",
-    "signature": "mulExp(uint256,uint256)",
     "encoding": "0xde32abd1",
     "inputs": [
       {
-        "type": "uint256",
-        "name": "a"
+        "name": "a",
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "b"
+        "name": "b",
+        "type": "uint256"
       }
     ],
+    "name": "mulExp",
     "outputs": [
       {
-        "type": "MathError",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "MathError"
       },
       {
-        "type": "Exp",
-        "name": "memory"
+        "name": "memory",
+        "type": "Exp"
       }
-    ]
+    ],
+    "signature": "mulExp(uint256,uint256)",
+    "type": "function"
   },
   {
-    "name": "mulExp3",
-    "type": "function",
-    "signature": "mulExp3(Exp,Exp,Exp)",
     "encoding": "0xe19ccb27",
     "inputs": [
       {
-        "type": "Exp",
-        "name": "a"
+        "name": "a",
+        "type": "Exp"
       },
       {
-        "type": "Exp",
-        "name": "b"
+        "name": "b",
+        "type": "Exp"
       },
       {
-        "type": "Exp",
-        "name": "c"
+        "name": "c",
+        "type": "Exp"
       }
     ],
+    "name": "mulExp3",
     "outputs": [
       {
-        "type": "MathError",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "MathError"
       },
       {
-        "type": "Exp",
-        "name": "memory"
+        "name": "memory",
+        "type": "Exp"
       }
-    ]
+    ],
+    "signature": "mulExp3(Exp,Exp,Exp)",
+    "type": "function"
   },
   {
-    "name": "divExp",
-    "type": "function",
-    "signature": "divExp(Exp,Exp)",
     "encoding": "0x943ab3fd",
     "inputs": [
       {
-        "type": "Exp",
-        "name": "a"
+        "name": "a",
+        "type": "Exp"
       },
       {
-        "type": "Exp",
-        "name": "b"
+        "name": "b",
+        "type": "Exp"
       }
     ],
+    "name": "divExp",
     "outputs": [
       {
-        "type": "MathError",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "MathError"
       },
       {
-        "type": "Exp",
-        "name": "memory"
+        "name": "memory",
+        "type": "Exp"
       }
-    ]
+    ],
+    "signature": "divExp(Exp,Exp)",
+    "type": "function"
   },
   {
-    "name": "truncate",
-    "type": "function",
-    "signature": "truncate(Exp)",
     "encoding": "0xabe932d9",
     "inputs": [
       {
-        "type": "Exp",
-        "name": "exp"
+        "name": "exp",
+        "type": "Exp"
       }
     ],
+    "name": "truncate",
     "outputs": [
       {
-        "type": "uint256",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "uint256"
       }
-    ]
+    ],
+    "signature": "truncate(Exp)",
+    "type": "function"
   },
   {
-    "name": "lessThanExp",
-    "type": "function",
-    "signature": "lessThanExp(Exp,Exp)",
     "encoding": "0xd2196cd2",
     "inputs": [
       {
-        "type": "Exp",
-        "name": "left"
+        "name": "left",
+        "type": "Exp"
       },
       {
-        "type": "Exp",
-        "name": "right"
+        "name": "right",
+        "type": "Exp"
       }
     ],
+    "name": "lessThanExp",
     "outputs": [
       {
-        "type": "bool",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "bool"
       }
-    ]
+    ],
+    "signature": "lessThanExp(Exp,Exp)",
+    "type": "function"
   },
   {
-    "name": "lessThanOrEqualExp",
-    "type": "function",
-    "signature": "lessThanOrEqualExp(Exp,Exp)",
     "encoding": "0xf96d822c",
     "inputs": [
       {
-        "type": "Exp",
-        "name": "left"
+        "name": "left",
+        "type": "Exp"
       },
       {
-        "type": "Exp",
-        "name": "right"
+        "name": "right",
+        "type": "Exp"
       }
     ],
+    "name": "lessThanOrEqualExp",
     "outputs": [
       {
-        "type": "bool",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "bool"
       }
-    ]
+    ],
+    "signature": "lessThanOrEqualExp(Exp,Exp)",
+    "type": "function"
   },
   {
-    "name": "greaterThanExp",
-    "type": "function",
-    "signature": "greaterThanExp(Exp,Exp)",
     "encoding": "0x8732ffe7",
     "inputs": [
       {
-        "type": "Exp",
-        "name": "left"
+        "name": "left",
+        "type": "Exp"
       },
       {
-        "type": "Exp",
-        "name": "right"
+        "name": "right",
+        "type": "Exp"
       }
     ],
+    "name": "greaterThanExp",
     "outputs": [
       {
-        "type": "bool",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "bool"
       }
-    ]
+    ],
+    "signature": "greaterThanExp(Exp,Exp)",
+    "type": "function"
   },
   {
-    "name": "isZeroExp",
-    "type": "function",
-    "signature": "isZeroExp(Exp)",
     "encoding": "0x6c13c023",
     "inputs": [
       {
-        "type": "Exp",
-        "name": "value"
+        "name": "value",
+        "type": "Exp"
       }
     ],
+    "name": "isZeroExp",
     "outputs": [
       {
-        "type": "bool",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "bool"
       }
-    ]
+    ],
+    "signature": "isZeroExp(Exp)",
+    "type": "function"
   },
   {
-    "name": "balanceOf",
-    "type": "function",
     "constant": true,
-    "signature": "balanceOf(address)",
     "encoding": "0x70a08231",
     "inputs": [
       {
-        "type": "address",
-        "name": "who"
+        "name": "who",
+        "type": "address"
       }
     ],
+    "name": "balanceOf",
     "outputs": [
       {
-        "type": "uint256",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "uint256"
       }
-    ]
+    ],
+    "signature": "balanceOf(address)",
+    "type": "function"
   },
   {
-    "name": "isCToken",
-    "type": "function",
     "constant": true,
-    "signature": "isCToken()",
     "encoding": "0xfe9c44ae",
     "inputs": [],
+    "name": "isCToken",
     "outputs": [
       {
-        "type": "bool",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "bool"
       }
-    ]
+    ],
+    "signature": "isCToken()",
+    "type": "function"
   },
   {
-    "name": "approve",
-    "type": "function",
-    "signature": "approve(address,uint256)",
     "encoding": "0x095ea7b3",
     "inputs": [
       {
-        "type": "address",
-        "name": "spender"
+        "name": "spender",
+        "type": "address"
       },
       {
-        "type": "uint256",
-        "name": "value"
+        "name": "value",
+        "type": "uint256"
       }
     ],
+    "name": "approve",
     "outputs": [
       {
-        "type": "bool",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "bool"
       }
-    ]
+    ],
+    "signature": "approve(address,uint256)",
+    "type": "function"
   },
   {
-    "name": "balanceOfUnderlying",
-    "type": "function",
-    "signature": "balanceOfUnderlying(address)",
     "encoding": "0x3af9e669",
     "inputs": [
       {
-        "type": "address",
-        "name": "account"
+        "name": "account",
+        "type": "address"
       }
     ],
+    "name": "balanceOfUnderlying",
     "outputs": [
       {
-        "type": "uint256",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "uint256"
       }
-    ]
+    ],
+    "signature": "balanceOfUnderlying(address)",
+    "type": "function"
   },
   {
-    "name": "exchangeRateCurrent",
-    "type": "function",
-    "signature": "exchangeRateCurrent()",
     "encoding": "0xbd6d894d",
     "inputs": [],
+    "name": "exchangeRateCurrent",
     "outputs": [
       {
-        "type": "uint256",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "uint256"
       }
-    ]
+    ],
+    "signature": "exchangeRateCurrent()",
+    "type": "function"
   },
   {
-    "name": "mint",
-    "type": "function",
-    "signature": "mint(uint256)",
     "encoding": "0xa0712d68",
     "inputs": [
       {
-        "type": "uint256",
-        "name": "mintAmount"
+        "name": "mintAmount",
+        "type": "uint256"
       }
     ],
+    "name": "mint",
     "outputs": [
       {
-        "type": "uint256",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "uint256"
       }
-    ]
+    ],
+    "signature": "mint(uint256)",
+    "type": "function"
   },
   {
-    "name": "redeem",
-    "type": "function",
-    "signature": "redeem(uint256)",
     "encoding": "0xdb006a75",
     "inputs": [
       {
-        "type": "uint256",
-        "name": "redeemTokens"
+        "name": "redeemTokens",
+        "type": "uint256"
       }
     ],
+    "name": "redeem",
     "outputs": [
       {
-        "type": "uint256",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "uint256"
       }
-    ]
+    ],
+    "signature": "redeem(uint256)",
+    "type": "function"
   },
   {
-    "name": "redeemUnderlying",
-    "type": "function",
-    "signature": "redeemUnderlying(uint256)",
     "encoding": "0x852a12e3",
     "inputs": [
       {
-        "type": "uint256",
-        "name": "redeemAmount"
+        "name": "redeemAmount",
+        "type": "uint256"
       }
     ],
+    "name": "redeemUnderlying",
     "outputs": [
       {
-        "type": "uint256",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "uint256"
       }
-    ]
+    ],
+    "signature": "redeemUnderlying(uint256)",
+    "type": "function"
   },
   {
-    "name": "transfer",
-    "type": "function",
-    "signature": "transfer(address,uint256)",
     "encoding": "0xa9059cbb",
     "inputs": [
       {
-        "type": "address",
-        "name": "recipient"
+        "name": "recipient",
+        "type": "address"
       },
       {
-        "type": "uint256",
-        "name": "amount"
+        "name": "amount",
+        "type": "uint256"
       }
     ],
+    "name": "transfer",
     "outputs": [
       {
-        "type": "bool",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "bool"
       }
-    ]
+    ],
+    "signature": "transfer(address,uint256)",
+    "type": "function"
   },
   {
-    "name": "transferFrom",
-    "type": "function",
-    "signature": "transferFrom(address,address,uint256)",
     "encoding": "0x23b872dd",
     "inputs": [
       {
-        "type": "address",
-        "name": "sender"
+        "name": "sender",
+        "type": "address"
       },
       {
-        "type": "address",
-        "name": "recipient"
+        "name": "recipient",
+        "type": "address"
       },
       {
-        "type": "uint256",
-        "name": "amount"
+        "name": "amount",
+        "type": "uint256"
       }
     ],
+    "name": "transferFrom",
     "outputs": [
       {
-        "type": "bool",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "bool"
       }
-    ]
+    ],
+    "signature": "transferFrom(address,address,uint256)",
+    "type": "function"
   },
   {
-    "name": "OwnershipTransferred",
-    "type": "event",
-    "signature": "OwnershipTransferred(address,address)",
     "encoding": "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0",
     "inputs": [
       {
-        "type": "address",
+        "indexed": true,
         "name": "previousOwner",
-        "indexed": true
+        "type": "address"
       },
       {
-        "type": "address",
+        "indexed": true,
         "name": "newOwner",
-        "indexed": true
+        "type": "address"
       }
     ],
-    "outputs": []
+    "name": "OwnershipTransferred",
+    "outputs": [],
+    "signature": "OwnershipTransferred(address,address)",
+    "type": "event"
   },
   {
-    "name": "initialize",
-    "type": "function",
-    "signature": "initialize(address)",
     "encoding": "0xc4d66de8",
     "inputs": [
       {
-        "type": "address",
-        "name": "sender"
+        "name": "sender",
+        "type": "address"
       }
     ],
-    "outputs": []
+    "name": "initialize",
+    "outputs": [],
+    "signature": "initialize(address)",
+    "type": "function"
   },
   {
-    "name": "owner",
-    "type": "function",
     "constant": true,
-    "signature": "owner()",
     "encoding": "0x8da5cb5b",
     "inputs": [],
+    "name": "owner",
     "outputs": [
       {
-        "type": "address",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "address"
       }
-    ]
+    ],
+    "signature": "owner()",
+    "type": "function"
   },
   {
-    "name": "isOwner",
-    "type": "function",
     "constant": true,
-    "signature": "isOwner()",
     "encoding": "0x8f32d59b",
     "inputs": [],
+    "name": "isOwner",
     "outputs": [
       {
-        "type": "bool",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "bool"
       }
-    ]
+    ],
+    "signature": "isOwner()",
+    "type": "function"
   },
   {
-    "name": "transferOwnership",
-    "type": "function",
-    "signature": "transferOwnership(address)",
     "encoding": "0xf2fde38b",
     "inputs": [
       {
-        "type": "address",
-        "name": "newOwner"
+        "name": "newOwner",
+        "type": "address"
       }
     ],
-    "outputs": []
+    "name": "transferOwnership",
+    "outputs": [],
+    "signature": "transferOwnership(address)",
+    "type": "function"
   },
   {
-    "name": "_transferOwnership",
-    "type": "function",
-    "signature": "_transferOwnership(address)",
     "encoding": "0xd29d44ee",
     "inputs": [
       {
-        "type": "address",
-        "name": "newOwner"
+        "name": "newOwner",
+        "type": "address"
       }
     ],
-    "outputs": []
+    "name": "_transferOwnership",
+    "outputs": [],
+    "signature": "_transferOwnership(address)",
+    "type": "function"
   },
   {
-    "name": "add",
-    "type": "function",
-    "signature": "add(Role,address)",
     "encoding": "0xb782197a",
     "inputs": [
       {
-        "type": "Role",
-        "name": "role"
+        "name": "role",
+        "type": "Role"
       },
       {
-        "type": "address",
-        "name": "account"
+        "name": "account",
+        "type": "address"
       }
     ],
-    "outputs": []
+    "name": "add",
+    "outputs": [],
+    "signature": "add(Role,address)",
+    "type": "function"
   },
   {
-    "name": "remove",
-    "type": "function",
-    "signature": "remove(Role,address)",
     "encoding": "0x3e59fb33",
     "inputs": [
       {
-        "type": "Role",
-        "name": "role"
+        "name": "role",
+        "type": "Role"
       },
       {
-        "type": "address",
-        "name": "account"
+        "name": "account",
+        "type": "address"
       }
     ],
-    "outputs": []
+    "name": "remove",
+    "outputs": [],
+    "signature": "remove(Role,address)",
+    "type": "function"
   },
   {
-    "name": "has",
-    "type": "function",
     "constant": true,
-    "signature": "has(Role,address)",
     "encoding": "0xced709a2",
     "inputs": [
       {
-        "type": "Role",
-        "name": "role"
+        "name": "role",
+        "type": "Role"
       },
       {
-        "type": "address",
-        "name": "account"
+        "name": "account",
+        "type": "address"
       }
     ],
+    "name": "has",
     "outputs": [
       {
-        "type": "bool",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "bool"
       }
-    ]
+    ],
+    "signature": "has(Role,address)",
+    "type": "function"
   },
   {
-    "name": "PauserAdded",
-    "type": "event",
-    "signature": "PauserAdded(address)",
     "encoding": "0x6719d08c1888103bea251a4ed56406bd0c3e69723c8a1686e017e7bbe159b6f8",
     "inputs": [
       {
-        "type": "address",
+        "indexed": true,
         "name": "account",
-        "indexed": true
+        "type": "address"
       }
     ],
-    "outputs": []
+    "name": "PauserAdded",
+    "outputs": [],
+    "signature": "PauserAdded(address)",
+    "type": "event"
   },
   {
-    "name": "PauserRemoved",
-    "type": "event",
-    "signature": "PauserRemoved(address)",
     "encoding": "0xcd265ebaf09df2871cc7bd4133404a235ba12eff2041bb89d9c714a2621c7c7e",
     "inputs": [
       {
-        "type": "address",
+        "indexed": true,
         "name": "account",
-        "indexed": true
+        "type": "address"
       }
     ],
-    "outputs": []
+    "name": "PauserRemoved",
+    "outputs": [],
+    "signature": "PauserRemoved(address)",
+    "type": "event"
   },
   {
-    "name": "initialize",
-    "type": "function",
-    "signature": "initialize(address)",
     "encoding": "0xc4d66de8",
     "inputs": [
       {
-        "type": "address",
-        "name": "sender"
+        "name": "sender",
+        "type": "address"
       }
     ],
-    "outputs": []
+    "name": "initialize",
+    "outputs": [],
+    "signature": "initialize(address)",
+    "type": "function"
   },
   {
-    "name": "isPauser",
-    "type": "function",
     "constant": true,
-    "signature": "isPauser(address)",
     "encoding": "0x46fbf68e",
     "inputs": [
       {
-        "type": "address",
-        "name": "account"
+        "name": "account",
+        "type": "address"
       }
     ],
+    "name": "isPauser",
     "outputs": [
       {
-        "type": "bool",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "bool"
       }
-    ]
+    ],
+    "signature": "isPauser(address)",
+    "type": "function"
   },
   {
-    "name": "addPauser",
-    "type": "function",
-    "signature": "addPauser(address)",
     "encoding": "0x82dc1ec4",
     "inputs": [
       {
-        "type": "address",
-        "name": "account"
+        "name": "account",
+        "type": "address"
       }
     ],
-    "outputs": []
+    "name": "addPauser",
+    "outputs": [],
+    "signature": "addPauser(address)",
+    "type": "function"
   },
   {
-    "name": "_addPauser",
-    "type": "function",
-    "signature": "_addPauser(address)",
     "encoding": "0xca2f5cb4",
     "inputs": [
       {
-        "type": "address",
-        "name": "account"
+        "name": "account",
+        "type": "address"
       }
     ],
-    "outputs": []
+    "name": "_addPauser",
+    "outputs": [],
+    "signature": "_addPauser(address)",
+    "type": "function"
   },
   {
-    "name": "_removePauser",
-    "type": "function",
-    "signature": "_removePauser(address)",
     "encoding": "0xddc8d7a6",
     "inputs": [
       {
-        "type": "address",
-        "name": "account"
+        "name": "account",
+        "type": "address"
       }
     ],
-    "outputs": []
+    "name": "_removePauser",
+    "outputs": [],
+    "signature": "_removePauser(address)",
+    "type": "function"
   },
   {
-    "name": "Paused",
-    "type": "event",
-    "signature": "Paused(address)",
     "encoding": "0x62e78cea01bee320cd4e420270b5ea74000d11b0c9f74754ebdbfc544b05a258",
     "inputs": [
       {
-        "type": "address",
-        "name": "account"
+        "name": "account",
+        "type": "address"
       }
     ],
-    "outputs": []
+    "name": "Paused",
+    "outputs": [],
+    "signature": "Paused(address)",
+    "type": "event"
   },
   {
-    "name": "Unpaused",
-    "type": "event",
-    "signature": "Unpaused(address)",
     "encoding": "0x5db9ee0a495bf2e6ff9c91a7834c1ba4fdd244a5e8aa4e537bd38aeae4b073aa",
     "inputs": [
       {
-        "type": "address",
-        "name": "account"
+        "name": "account",
+        "type": "address"
       }
     ],
-    "outputs": []
+    "name": "Unpaused",
+    "outputs": [],
+    "signature": "Unpaused(address)",
+    "type": "event"
   },
   {
-    "name": "initialize",
-    "type": "function",
-    "signature": "initialize(address)",
     "encoding": "0xc4d66de8",
     "inputs": [
       {
-        "type": "address",
-        "name": "sender"
+        "name": "sender",
+        "type": "address"
       }
     ],
-    "outputs": []
+    "name": "initialize",
+    "outputs": [],
+    "signature": "initialize(address)",
+    "type": "function"
   },
   {
-    "name": "paused",
-    "type": "function",
     "constant": true,
-    "signature": "paused()",
     "encoding": "0x5c975abb",
     "inputs": [],
+    "name": "paused",
     "outputs": [
       {
-        "type": "bool",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "bool"
       }
-    ]
+    ],
+    "signature": "paused()",
+    "type": "function"
   },
   {
-    "name": "pause",
-    "type": "function",
-    "signature": "pause()",
     "encoding": "0x8456cb59",
     "inputs": [],
-    "outputs": []
+    "name": "pause",
+    "outputs": [],
+    "signature": "pause()",
+    "type": "function"
   },
   {
-    "name": "unpause",
-    "type": "function",
-    "signature": "unpause()",
     "encoding": "0x3f4ba83a",
     "inputs": [],
-    "outputs": []
+    "name": "unpause",
+    "outputs": [],
+    "signature": "unpause()",
+    "type": "function"
   },
   {
-    "name": "DiscardCToken",
-    "type": "event",
-    "signature": "DiscardCToken(address)",
     "encoding": "0x59699d7c9076678da939b1a98c86f40d8780564966fb30bf84d01b686dbb24c9",
     "inputs": [
       {
-        "type": "address",
+        "indexed": true,
         "name": "tokenAddress",
-        "indexed": true
+        "type": "address"
       }
     ],
-    "outputs": []
+    "name": "DiscardCToken",
+    "outputs": [],
+    "signature": "DiscardCToken(address)",
+    "type": "event"
   },
   {
-    "name": "WhitelistCToken",
-    "type": "event",
-    "signature": "WhitelistCToken(address)",
     "encoding": "0x6b059312af62bbe5ac6a9a59761eaf444083ad356cdbf3761bc98857e061ecb5",
     "inputs": [
       {
-        "type": "address",
+        "indexed": true,
         "name": "tokenAddress",
-        "indexed": true
+        "type": "address"
       }
     ],
-    "outputs": []
+    "name": "WhitelistCToken",
+    "outputs": [],
+    "signature": "WhitelistCToken(address)",
+    "type": "event"
   },
   {
-    "name": "whitelistCToken",
-    "type": "function",
-    "signature": "whitelistCToken(address)",
     "encoding": "0x0a7d2e1d",
     "inputs": [
       {
-        "type": "address",
-        "name": "tokenAddress"
+        "name": "tokenAddress",
+        "type": "address"
       }
     ],
-    "outputs": []
+    "name": "whitelistCToken",
+    "outputs": [],
+    "signature": "whitelistCToken(address)",
+    "type": "function"
   },
   {
-    "name": "discardCToken",
-    "type": "function",
-    "signature": "discardCToken(address)",
     "encoding": "0xdd219635",
     "inputs": [
       {
-        "type": "address",
-        "name": "tokenAddress"
+        "name": "tokenAddress",
+        "type": "address"
       }
     ],
-    "outputs": []
+    "name": "discardCToken",
+    "outputs": [],
+    "signature": "discardCToken(address)",
+    "type": "function"
   },
   {
-    "name": "isCToken",
-    "type": "function",
     "constant": true,
-    "signature": "isCToken(address)",
     "encoding": "0x2f52e595",
     "inputs": [
       {
-        "type": "address",
-        "name": "tokenAddress"
+        "name": "tokenAddress",
+        "type": "address"
       }
     ],
+    "name": "isCToken",
     "outputs": [
       {
-        "type": "bool",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "bool"
       }
-    ]
+    ],
+    "signature": "isCToken(address)",
+    "type": "function"
   },
   {
-    "name": "CreateStream",
-    "type": "event",
-    "signature": "CreateStream(uint256,address,address,uint256,address,uint256,uint256)",
     "encoding": "0x7b01d409597969366dc268d7f957a990d1ca3d3449baf8fb45db67351aecfe78",
     "inputs": [
       {
-        "type": "uint256",
+        "indexed": true,
         "name": "streamId",
-        "indexed": true
+        "type": "uint256"
       },
       {
-        "type": "address",
+        "indexed": true,
         "name": "sender",
-        "indexed": true
+        "type": "address"
       },
       {
-        "type": "address",
+        "indexed": true,
         "name": "recipient",
-        "indexed": true
+        "type": "address"
       },
       {
-        "type": "uint256",
-        "name": "deposit"
+        "name": "deposit",
+        "type": "uint256"
       },
       {
-        "type": "address",
-        "name": "tokenAddress"
+        "name": "tokenAddress",
+        "type": "address"
       },
       {
-        "type": "uint256",
-        "name": "startTime"
+        "name": "startTime",
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "stopTime"
+        "name": "stopTime",
+        "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "CreateStream",
+    "outputs": [],
+    "signature": "CreateStream(uint256,address,address,uint256,address,uint256,uint256)",
+    "type": "event"
   },
   {
-    "name": "WithdrawFromStream",
-    "type": "event",
-    "signature": "WithdrawFromStream(uint256,address,uint256)",
     "encoding": "0x36c3ab437e6a424ed25dc4bfdeb62706aa06558660fab2dab229d2555adaf89c",
     "inputs": [
       {
-        "type": "uint256",
+        "indexed": true,
         "name": "streamId",
-        "indexed": true
+        "type": "uint256"
       },
       {
-        "type": "address",
+        "indexed": true,
         "name": "recipient",
-        "indexed": true
+        "type": "address"
       },
       {
-        "type": "uint256",
-        "name": "amount"
+        "name": "amount",
+        "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "WithdrawFromStream",
+    "outputs": [],
+    "signature": "WithdrawFromStream(uint256,address,uint256)",
+    "type": "event"
   },
   {
-    "name": "CancelStream",
-    "type": "event",
-    "signature": "CancelStream(uint256,address,address,uint256,uint256)",
     "encoding": "0xca3e6079b726e7728802a0537949e2d1c7762304fa641fb06eb56daf2ba8c6b9",
     "inputs": [
       {
-        "type": "uint256",
+        "indexed": true,
         "name": "streamId",
-        "indexed": true
+        "type": "uint256"
       },
       {
-        "type": "address",
+        "indexed": true,
         "name": "sender",
-        "indexed": true
+        "type": "address"
       },
       {
-        "type": "address",
+        "indexed": true,
         "name": "recipient",
-        "indexed": true
+        "type": "address"
       },
       {
-        "type": "uint256",
-        "name": "senderBalance"
+        "name": "senderBalance",
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "recipientBalance"
+        "name": "recipientBalance",
+        "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "CancelStream",
+    "outputs": [],
+    "signature": "CancelStream(uint256,address,address,uint256,uint256)",
+    "type": "event"
   },
   {
-    "name": "balanceOf",
-    "type": "function",
     "constant": true,
-    "signature": "balanceOf(uint256,address)",
     "encoding": "0x3656eec2",
     "inputs": [
       {
-        "type": "uint256",
-        "name": "streamId"
+        "name": "streamId",
+        "type": "uint256"
       },
       {
-        "type": "address",
-        "name": "who"
+        "name": "who",
+        "type": "address"
       }
     ],
+    "name": "balanceOf",
     "outputs": [
       {
-        "type": "uint256",
-        "name": "balance"
+        "name": "balance",
+        "type": "uint256"
       }
-    ]
+    ],
+    "signature": "balanceOf(uint256,address)",
+    "type": "function"
   },
   {
-    "name": "getStream",
-    "type": "function",
     "constant": true,
-    "signature": "getStream(uint256)",
     "encoding": "0x894e9a0d",
     "inputs": [
       {
-        "type": "uint256",
-        "name": "streamId"
+        "name": "streamId",
+        "type": "uint256"
       }
     ],
+    "name": "getStream",
     "outputs": [
       {
-        "type": "address",
-        "name": "sender"
+        "name": "sender",
+        "type": "address"
       },
       {
-        "type": "address",
-        "name": "recipient"
+        "name": "recipient",
+        "type": "address"
       },
       {
-        "type": "uint256",
-        "name": "deposit"
+        "name": "deposit",
+        "type": "uint256"
       },
       {
-        "type": "address",
-        "name": "token"
+        "name": "token",
+        "type": "address"
       },
       {
-        "type": "uint256",
-        "name": "startTime"
+        "name": "startTime",
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "stopTime"
+        "name": "stopTime",
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "balance"
+        "name": "balance",
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "rate"
+        "name": "rate",
+        "type": "uint256"
       }
-    ]
+    ],
+    "signature": "getStream(uint256)",
+    "type": "function"
   },
   {
-    "name": "createStream",
-    "type": "function",
-    "signature": "createStream(address,uint256,address,uint256,uint256)",
     "encoding": "0xcc1b4bf6",
     "inputs": [
       {
-        "type": "address",
-        "name": "recipient"
+        "name": "recipient",
+        "type": "address"
       },
       {
-        "type": "uint256",
-        "name": "deposit"
+        "name": "deposit",
+        "type": "uint256"
       },
       {
-        "type": "address",
-        "name": "tokenAddress"
+        "name": "tokenAddress",
+        "type": "address"
       },
       {
-        "type": "uint256",
-        "name": "startTime"
+        "name": "startTime",
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "stopTime"
+        "name": "stopTime",
+        "type": "uint256"
       }
     ],
+    "name": "createStream",
     "outputs": [
       {
-        "type": "uint256",
-        "name": "streamId"
+        "name": "streamId",
+        "type": "uint256"
       }
-    ]
+    ],
+    "signature": "createStream(address,uint256,address,uint256,uint256)",
+    "type": "function"
   },
   {
-    "name": "withdrawFromStream",
-    "type": "function",
-    "signature": "withdrawFromStream(uint256,uint256)",
     "encoding": "0x7a9b2c6c",
     "inputs": [
       {
-        "type": "uint256",
-        "name": "streamId"
+        "name": "streamId",
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "funds"
+        "name": "funds",
+        "type": "uint256"
       }
     ],
+    "name": "withdrawFromStream",
     "outputs": [
       {
-        "type": "bool",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "bool"
       }
-    ]
+    ],
+    "signature": "withdrawFromStream(uint256,uint256)",
+    "type": "function"
   },
   {
-    "name": "cancelStream",
-    "type": "function",
-    "signature": "cancelStream(uint256)",
     "encoding": "0x6db9241b",
     "inputs": [
       {
-        "type": "uint256",
-        "name": "streamId"
+        "name": "streamId",
+        "type": "uint256"
       }
     ],
+    "name": "cancelStream",
     "outputs": [
       {
-        "type": "bool",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "bool"
       }
-    ]
+    ],
+    "signature": "cancelStream(uint256)",
+    "type": "function"
   },
   {
-    "name": "CreateCompoundingStream",
-    "type": "event",
-    "signature": "CreateCompoundingStream(uint256,uint256,uint256,uint256)",
     "encoding": "0xa9bbfc8562a8e1e6b889a428f128c90ed60c6204c37e4fb4354a202b4db59204",
     "inputs": [
       {
-        "type": "uint256",
+        "indexed": true,
         "name": "streamId",
-        "indexed": true
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "exchangeRate"
+        "name": "exchangeRate",
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "senderSharePercentage"
+        "name": "senderSharePercentage",
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "recipientSharePercentage"
+        "name": "recipientSharePercentage",
+        "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "CreateCompoundingStream",
+    "outputs": [],
+    "signature": "CreateCompoundingStream(uint256,uint256,uint256,uint256)",
+    "type": "event"
   },
   {
-    "name": "PayInterest",
-    "type": "event",
-    "signature": "PayInterest(uint256,uint256,uint256,uint256)",
     "encoding": "0x5a8a03e48302e0bd2e011a3a2b54d1f849c55497f462f404bf52dce4290456b5",
     "inputs": [
       {
-        "type": "uint256",
+        "indexed": true,
         "name": "streamId",
-        "indexed": true
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "senderInterest"
+        "name": "senderInterest",
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "recipientInterest"
+        "name": "recipientInterest",
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "sablierInterest"
+        "name": "sablierInterest",
+        "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "PayInterest",
+    "outputs": [],
+    "signature": "PayInterest(uint256,uint256,uint256,uint256)",
+    "type": "event"
   },
   {
-    "name": "TakeEarnings",
-    "type": "event",
-    "signature": "TakeEarnings(address,uint256)",
     "encoding": "0x13e8af02ad3e36f8d82fc8b86dcd67b7ed11f718f0e52fb245d2038eb71856ba",
     "inputs": [
       {
-        "type": "address",
+        "indexed": true,
         "name": "tokenAddress",
-        "indexed": true
+        "type": "address"
       },
       {
-        "type": "uint256",
+        "indexed": true,
         "name": "amount",
-        "indexed": true
+        "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "TakeEarnings",
+    "outputs": [],
+    "signature": "TakeEarnings(address,uint256)",
+    "type": "event"
   },
   {
-    "name": "UpdateFee",
-    "type": "event",
-    "signature": "UpdateFee(uint256)",
     "encoding": "0x38e229a7f3f9c329892d08eb37c4e91ccac6d12c798d394990ca4f56028ec266",
     "inputs": [
       {
-        "type": "uint256",
+        "indexed": true,
         "name": "fee",
-        "indexed": true
+        "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "UpdateFee",
+    "outputs": [],
+    "signature": "UpdateFee(uint256)",
+    "type": "event"
   },
   {
-    "name": "updateFee",
-    "type": "function",
-    "signature": "updateFee(uint256)",
     "encoding": "0x9012c4a8",
     "inputs": [
       {
-        "type": "uint256",
-        "name": "feePercentage"
+        "name": "feePercentage",
+        "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "updateFee",
+    "outputs": [],
+    "signature": "updateFee(uint256)",
+    "type": "function"
   },
   {
-    "name": "takeEarnings",
-    "type": "function",
-    "signature": "takeEarnings(address,uint256)",
     "encoding": "0xc1eb9ee0",
     "inputs": [
       {
-        "type": "address",
-        "name": "tokenAddress"
+        "name": "tokenAddress",
+        "type": "address"
       },
       {
-        "type": "uint256",
-        "name": "amount"
+        "name": "amount",
+        "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "takeEarnings",
+    "outputs": [],
+    "signature": "takeEarnings(address,uint256)",
+    "type": "function"
   },
   {
-    "name": "getStream",
-    "type": "function",
     "constant": true,
-    "signature": "getStream(uint256)",
     "encoding": "0x894e9a0d",
     "inputs": [
       {
-        "type": "uint256",
-        "name": "streamId"
+        "name": "streamId",
+        "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "getStream",
+    "outputs": [],
+    "signature": "getStream(uint256)",
+    "type": "function"
   },
   {
-    "name": "deltaOf",
-    "type": "function",
     "constant": true,
-    "signature": "deltaOf(uint256)",
     "encoding": "0xa82ccd4d",
     "inputs": [
       {
-        "type": "uint256",
-        "name": "streamId"
+        "name": "streamId",
+        "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "deltaOf",
+    "outputs": [],
+    "signature": "deltaOf(uint256)",
+    "type": "function"
   },
   {
-    "name": "balanceOf",
-    "type": "function",
     "constant": true,
-    "signature": "balanceOf(uint256,address)",
     "encoding": "0x3656eec2",
     "inputs": [
       {
-        "type": "uint256",
-        "name": "streamId"
+        "name": "streamId",
+        "type": "uint256"
       },
       {
-        "type": "address",
-        "name": "who"
+        "name": "who",
+        "type": "address"
       }
     ],
-    "outputs": []
+    "name": "balanceOf",
+    "outputs": [],
+    "signature": "balanceOf(uint256,address)",
+    "type": "function"
   },
   {
-    "name": "isCompoundingStream",
-    "type": "function",
     "constant": true,
-    "signature": "isCompoundingStream(uint256)",
     "encoding": "0xa734d51b",
     "inputs": [
       {
-        "type": "uint256",
-        "name": "streamId"
+        "name": "streamId",
+        "type": "uint256"
       }
     ],
+    "name": "isCompoundingStream",
     "outputs": [
       {
-        "type": "bool",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "bool"
       }
-    ]
+    ],
+    "signature": "isCompoundingStream(uint256)",
+    "type": "function"
   },
   {
-    "name": "getCompoundingStream",
-    "type": "function",
     "constant": true,
-    "signature": "getCompoundingStream(uint256)",
     "encoding": "0x2b8a119d",
     "inputs": [
       {
-        "type": "uint256",
-        "name": "streamId"
+        "name": "streamId",
+        "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "getCompoundingStream",
+    "outputs": [],
+    "signature": "getCompoundingStream(uint256)",
+    "type": "function"
   },
   {
-    "name": "interestOf",
-    "type": "function",
-    "signature": "interestOf(uint256,uint256)",
     "encoding": "0x8c9a3252",
     "inputs": [
       {
-        "type": "uint256",
-        "name": "streamId"
+        "name": "streamId",
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "amount"
+        "name": "amount",
+        "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "interestOf",
+    "outputs": [],
+    "signature": "interestOf(uint256,uint256)",
+    "type": "function"
   },
   {
-    "name": "getEarnings",
-    "type": "function",
     "constant": true,
-    "signature": "getEarnings(address)",
     "encoding": "0x131b9c04",
     "inputs": [
       {
-        "type": "address",
-        "name": "tokenAddress"
+        "name": "tokenAddress",
+        "type": "address"
       }
     ],
+    "name": "getEarnings",
     "outputs": [
       {
-        "type": "uint256",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "uint256"
       }
-    ]
+    ],
+    "signature": "getEarnings(address)",
+    "type": "function"
   },
   {
-    "name": "createStream",
-    "type": "function",
-    "signature": "createStream(address,uint256,address,uint256,uint256)",
     "encoding": "0xcc1b4bf6",
     "inputs": [
       {
-        "type": "address",
-        "name": "recipient"
+        "name": "recipient",
+        "type": "address"
       },
       {
-        "type": "uint256",
-        "name": "deposit"
+        "name": "deposit",
+        "type": "uint256"
       },
       {
-        "type": "address",
-        "name": "tokenAddress"
+        "name": "tokenAddress",
+        "type": "address"
       },
       {
-        "type": "uint256",
-        "name": "startTime"
+        "name": "startTime",
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "stopTime"
+        "name": "stopTime",
+        "type": "uint256"
       }
     ],
+    "name": "createStream",
     "outputs": [
       {
-        "type": "uint256",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "uint256"
       }
-    ]
+    ],
+    "signature": "createStream(address,uint256,address,uint256,uint256)",
+    "type": "function"
   },
   {
-    "name": "createCompoundingStream",
-    "type": "function",
-    "signature": "createCompoundingStream(address,uint256,address,uint256,uint256,uint256,uint256)",
     "encoding": "0x8195aeaa",
     "inputs": [
       {
-        "type": "address",
-        "name": "recipient"
+        "name": "recipient",
+        "type": "address"
       },
       {
-        "type": "uint256",
-        "name": "deposit"
+        "name": "deposit",
+        "type": "uint256"
       },
       {
-        "type": "address",
-        "name": "tokenAddress"
+        "name": "tokenAddress",
+        "type": "address"
       },
       {
-        "type": "uint256",
-        "name": "startTime"
+        "name": "startTime",
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "stopTime"
+        "name": "stopTime",
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "senderSharePercentage"
+        "name": "senderSharePercentage",
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "recipientSharePercentage"
+        "name": "recipientSharePercentage",
+        "type": "uint256"
       }
     ],
+    "name": "createCompoundingStream",
     "outputs": [
       {
-        "type": "uint256",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "uint256"
       }
-    ]
+    ],
+    "signature": "createCompoundingStream(address,uint256,address,uint256,uint256,uint256,uint256)",
+    "type": "function"
   },
   {
-    "name": "withdrawFromStream",
-    "type": "function",
-    "signature": "withdrawFromStream(uint256,uint256)",
     "encoding": "0x7a9b2c6c",
     "inputs": [
       {
-        "type": "uint256",
-        "name": "streamId"
+        "name": "streamId",
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "amount"
+        "name": "amount",
+        "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "withdrawFromStream",
+    "outputs": [],
+    "signature": "withdrawFromStream(uint256,uint256)",
+    "type": "function"
   },
   {
-    "name": "cancelStream",
-    "type": "function",
-    "signature": "cancelStream(uint256)",
     "encoding": "0x6db9241b",
     "inputs": [
       {
-        "type": "uint256",
-        "name": "streamId"
+        "name": "streamId",
+        "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "cancelStream",
+    "outputs": [],
+    "signature": "cancelStream(uint256)",
+    "type": "function"
   },
   {
-    "name": "withdrawFromStreamInternal",
-    "type": "function",
-    "signature": "withdrawFromStreamInternal(uint256,uint256)",
     "encoding": "0x0e454254",
     "inputs": [
       {
-        "type": "uint256",
-        "name": "streamId"
+        "name": "streamId",
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "amount"
+        "name": "amount",
+        "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "withdrawFromStreamInternal",
+    "outputs": [],
+    "signature": "withdrawFromStreamInternal(uint256,uint256)",
+    "type": "function"
   },
   {
-    "name": "withdrawFromCompoundingStreamInternal",
-    "type": "function",
-    "signature": "withdrawFromCompoundingStreamInternal(uint256,uint256)",
     "encoding": "0xdb3e1b83",
     "inputs": [
       {
-        "type": "uint256",
-        "name": "streamId"
+        "name": "streamId",
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "amount"
+        "name": "amount",
+        "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "withdrawFromCompoundingStreamInternal",
+    "outputs": [],
+    "signature": "withdrawFromCompoundingStreamInternal(uint256,uint256)",
+    "type": "function"
   },
   {
-    "name": "cancelStreamInternal",
-    "type": "function",
-    "signature": "cancelStreamInternal(uint256)",
     "encoding": "0x36bfcbaf",
     "inputs": [
       {
-        "type": "uint256",
-        "name": "streamId"
+        "name": "streamId",
+        "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "cancelStreamInternal",
+    "outputs": [],
+    "signature": "cancelStreamInternal(uint256)",
+    "type": "function"
   },
   {
-    "name": "cancelCompoundingStreamInternal",
-    "type": "function",
-    "signature": "cancelCompoundingStreamInternal(uint256)",
     "encoding": "0x8ef15ecc",
     "inputs": [
       {
-        "type": "uint256",
-        "name": "streamId"
+        "name": "streamId",
+        "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "cancelCompoundingStreamInternal",
+    "outputs": [],
+    "signature": "cancelCompoundingStreamInternal(uint256)",
+    "type": "function"
   },
   {
-    "name": "CreateSalary",
-    "type": "event",
-    "signature": "CreateSalary(uint256,uint256,address)",
     "encoding": "0xc590dd516f4793872d9eaf042b84a80519946118b9313d57ea49fdb6c0fa95d1",
     "inputs": [
       {
-        "type": "uint256",
+        "indexed": true,
         "name": "salaryId",
-        "indexed": true
+        "type": "uint256"
       },
       {
-        "type": "uint256",
+        "indexed": true,
         "name": "streamId",
-        "indexed": true
+        "type": "uint256"
       },
       {
-        "type": "address",
+        "indexed": true,
         "name": "company",
-        "indexed": true
+        "type": "address"
       }
     ],
-    "outputs": []
+    "name": "CreateSalary",
+    "outputs": [],
+    "signature": "CreateSalary(uint256,uint256,address)",
+    "type": "event"
   },
   {
-    "name": "WithdrawFromSalary",
-    "type": "event",
-    "signature": "WithdrawFromSalary(uint256,uint256,address)",
     "encoding": "0x959f03f88f71fcaf842c68ddfeec5db0162cff55f29bebf0edf0c99cdbe4f7b6",
     "inputs": [
       {
-        "type": "uint256",
+        "indexed": true,
         "name": "salaryId",
-        "indexed": true
+        "type": "uint256"
       },
       {
-        "type": "uint256",
+        "indexed": true,
         "name": "streamId",
-        "indexed": true
+        "type": "uint256"
       },
       {
-        "type": "address",
+        "indexed": true,
         "name": "company",
-        "indexed": true
+        "type": "address"
       }
     ],
-    "outputs": []
+    "name": "WithdrawFromSalary",
+    "outputs": [],
+    "signature": "WithdrawFromSalary(uint256,uint256,address)",
+    "type": "event"
   },
   {
-    "name": "CancelSalary",
-    "type": "event",
-    "signature": "CancelSalary(uint256,uint256,address)",
     "encoding": "0x0ebba76804edfc459696b2dd872e917416f03011cc6e0420b8af454bc19a8a0e",
     "inputs": [
       {
-        "type": "uint256",
+        "indexed": true,
         "name": "salaryId",
-        "indexed": true
+        "type": "uint256"
       },
       {
-        "type": "uint256",
+        "indexed": true,
         "name": "streamId",
-        "indexed": true
+        "type": "uint256"
       },
       {
-        "type": "address",
+        "indexed": true,
         "name": "company",
-        "indexed": true
+        "type": "address"
       }
     ],
-    "outputs": []
+    "name": "CancelSalary",
+    "outputs": [],
+    "signature": "CancelSalary(uint256,uint256,address)",
+    "type": "event"
   },
   {
-    "name": "initialize",
-    "type": "function",
-    "signature": "initialize(address,address,address)",
     "encoding": "0xc0c53b8b",
     "inputs": [
       {
-        "type": "address",
-        "name": "ownerAddress"
+        "name": "ownerAddress",
+        "type": "address"
       },
       {
-        "type": "address",
-        "name": "signerAddress"
+        "name": "signerAddress",
+        "type": "address"
       },
       {
-        "type": "address",
-        "name": "sablierAddress"
+        "name": "sablierAddress",
+        "type": "address"
       }
     ],
-    "outputs": []
+    "name": "initialize",
+    "outputs": [],
+    "signature": "initialize(address,address,address)",
+    "type": "function"
   },
   {
-    "name": "whitelistRelayer",
-    "type": "function",
-    "signature": "whitelistRelayer(address,uint256)",
     "encoding": "0x52e877d2",
     "inputs": [
       {
-        "type": "address",
-        "name": "relayer"
+        "name": "relayer",
+        "type": "address"
       },
       {
-        "type": "uint256",
-        "name": "salaryId"
+        "name": "salaryId",
+        "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "whitelistRelayer",
+    "outputs": [],
+    "signature": "whitelistRelayer(address,uint256)",
+    "type": "function"
   },
   {
-    "name": "discardRelayer",
-    "type": "function",
-    "signature": "discardRelayer(address,uint256)",
     "encoding": "0x591bc226",
     "inputs": [
       {
-        "type": "address",
-        "name": "relayer"
+        "name": "relayer",
+        "type": "address"
       },
       {
-        "type": "uint256",
-        "name": "salaryId"
+        "name": "salaryId",
+        "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "discardRelayer",
+    "outputs": [],
+    "signature": "discardRelayer(address,uint256)",
+    "type": "function"
   },
   {
-    "name": "acceptRelayedCall",
-    "type": "function",
     "constant": true,
-    "signature": "acceptRelayedCall(address,address,bytes,uint256,uint256,uint256,uint256,bytes,uint256)",
     "encoding": "0x83947ea0",
     "inputs": [
       {
-        "type": "address",
-        "name": "relay"
+        "name": "relay",
+        "type": "address"
       },
       {
-        "type": "address",
-        "name": "from"
+        "name": "from",
+        "type": "address"
       },
       {
-        "type": "bytes",
-        "name": "encodedFunction"
+        "name": "encodedFunction",
+        "type": "bytes"
       },
       {
-        "type": "uint256",
-        "name": "transactionFee"
+        "name": "transactionFee",
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "gasPrice"
+        "name": "gasPrice",
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "gasLimit"
+        "name": "gasLimit",
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "nonce"
+        "name": "nonce",
+        "type": "uint256"
       },
       {
-        "type": "bytes",
-        "name": "approvalData"
+        "name": "approvalData",
+        "type": "bytes"
       },
       {
-        "type": "uint256",
-        "name": "val_0"
+        "name": "val_0",
+        "type": "uint256"
       }
     ],
+    "name": "acceptRelayedCall",
     "outputs": [
       {
-        "type": "uint256",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "uint256"
       },
       {
-        "type": "bytes",
-        "name": "memory"
+        "name": "memory",
+        "type": "bytes"
       }
-    ]
+    ],
+    "signature": "acceptRelayedCall(address,address,bytes,uint256,uint256,uint256,uint256,bytes,uint256)",
+    "type": "function"
   },
   {
-    "name": "getSalary",
-    "type": "function",
     "constant": true,
-    "signature": "getSalary(uint256)",
     "encoding": "0x80bfacc2",
     "inputs": [
       {
-        "type": "uint256",
-        "name": "salaryId"
+        "name": "salaryId",
+        "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "getSalary",
+    "outputs": [],
+    "signature": "getSalary(uint256)",
+    "type": "function"
   },
   {
-    "name": "createSalary",
-    "type": "function",
-    "signature": "createSalary(address,uint256,address,uint256,uint256)",
     "encoding": "0xdc7d9369",
     "inputs": [
       {
-        "type": "address",
-        "name": "employee"
+        "name": "employee",
+        "type": "address"
       },
       {
-        "type": "uint256",
-        "name": "salary"
+        "name": "salary",
+        "type": "uint256"
       },
       {
-        "type": "address",
-        "name": "tokenAddress"
+        "name": "tokenAddress",
+        "type": "address"
       },
       {
-        "type": "uint256",
-        "name": "startTime"
+        "name": "startTime",
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "stopTime"
+        "name": "stopTime",
+        "type": "uint256"
       }
     ],
+    "name": "createSalary",
     "outputs": [
       {
-        "type": "uint256",
-        "name": "salaryId"
+        "name": "salaryId",
+        "type": "uint256"
       }
-    ]
+    ],
+    "signature": "createSalary(address,uint256,address,uint256,uint256)",
+    "type": "function"
   },
   {
-    "name": "createCompoundingSalary",
-    "type": "function",
-    "signature": "createCompoundingSalary(address,uint256,address,uint256,uint256,uint256,uint256)",
     "encoding": "0x73f4823e",
     "inputs": [
       {
-        "type": "address",
-        "name": "employee"
+        "name": "employee",
+        "type": "address"
       },
       {
-        "type": "uint256",
-        "name": "salary"
+        "name": "salary",
+        "type": "uint256"
       },
       {
-        "type": "address",
-        "name": "tokenAddress"
+        "name": "tokenAddress",
+        "type": "address"
       },
       {
-        "type": "uint256",
-        "name": "startTime"
+        "name": "startTime",
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "stopTime"
+        "name": "stopTime",
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "senderSharePercentage"
+        "name": "senderSharePercentage",
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "recipientSharePercentage"
+        "name": "recipientSharePercentage",
+        "type": "uint256"
       }
     ],
+    "name": "createCompoundingSalary",
     "outputs": [
       {
-        "type": "uint256",
-        "name": "salaryId"
+        "name": "salaryId",
+        "type": "uint256"
       }
-    ]
+    ],
+    "signature": "createCompoundingSalary(address,uint256,address,uint256,uint256,uint256,uint256)",
+    "type": "function"
   },
   {
-    "name": "withdrawFromSalary",
-    "type": "function",
-    "signature": "withdrawFromSalary(uint256,uint256)",
     "encoding": "0xfea7c53f",
     "inputs": [
       {
-        "type": "uint256",
-        "name": "salaryId"
+        "name": "salaryId",
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "amount"
+        "name": "amount",
+        "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "withdrawFromSalary",
+    "outputs": [],
+    "signature": "withdrawFromSalary(uint256,uint256)",
+    "type": "function"
   },
   {
-    "name": "cancelSalary",
-    "type": "function",
-    "signature": "cancelSalary(uint256)",
     "encoding": "0xc5a66ff9",
     "inputs": [
       {
-        "type": "uint256",
-        "name": "salaryId"
+        "name": "salaryId",
+        "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "cancelSalary",
+    "outputs": [],
+    "signature": "cancelSalary(uint256)",
+    "type": "function"
   },
   {
-    "name": "transfer",
-    "type": "function",
-    "signature": "transfer(address,uint256)",
     "encoding": "0xa9059cbb",
     "inputs": [
       {
-        "type": "address",
-        "name": "to"
+        "name": "to",
+        "type": "address"
       },
       {
-        "type": "uint256",
-        "name": "value"
+        "name": "value",
+        "type": "uint256"
       }
     ],
+    "name": "transfer",
     "outputs": [
       {
-        "type": "bool",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "bool"
       }
-    ]
+    ],
+    "signature": "transfer(address,uint256)",
+    "type": "function"
   },
   {
-    "name": "approve",
-    "type": "function",
-    "signature": "approve(address,uint256)",
     "encoding": "0x095ea7b3",
     "inputs": [
       {
-        "type": "address",
-        "name": "spender"
+        "name": "spender",
+        "type": "address"
       },
       {
-        "type": "uint256",
-        "name": "value"
+        "name": "value",
+        "type": "uint256"
       }
     ],
+    "name": "approve",
     "outputs": [
       {
-        "type": "bool",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "bool"
       }
-    ]
+    ],
+    "signature": "approve(address,uint256)",
+    "type": "function"
   },
   {
-    "name": "transferFrom",
-    "type": "function",
-    "signature": "transferFrom(address,address,uint256)",
     "encoding": "0x23b872dd",
     "inputs": [
       {
-        "type": "address",
-        "name": "from"
+        "name": "from",
+        "type": "address"
       },
       {
-        "type": "address",
-        "name": "to"
+        "name": "to",
+        "type": "address"
       },
       {
-        "type": "uint256",
-        "name": "value"
+        "name": "value",
+        "type": "uint256"
       }
     ],
+    "name": "transferFrom",
     "outputs": [
       {
-        "type": "bool",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "bool"
       }
-    ]
+    ],
+    "signature": "transferFrom(address,address,uint256)",
+    "type": "function"
   },
   {
-    "name": "totalSupply",
-    "type": "function",
     "constant": true,
-    "signature": "totalSupply()",
     "encoding": "0x18160ddd",
     "inputs": [],
+    "name": "totalSupply",
     "outputs": [
       {
-        "type": "uint256",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "uint256"
       }
-    ]
+    ],
+    "signature": "totalSupply()",
+    "type": "function"
   },
   {
-    "name": "balanceOf",
-    "type": "function",
     "constant": true,
-    "signature": "balanceOf(address)",
     "encoding": "0x70a08231",
     "inputs": [
       {
-        "type": "address",
-        "name": "who"
+        "name": "who",
+        "type": "address"
       }
     ],
+    "name": "balanceOf",
     "outputs": [
       {
-        "type": "uint256",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "uint256"
       }
-    ]
+    ],
+    "signature": "balanceOf(address)",
+    "type": "function"
   },
   {
-    "name": "allowance",
-    "type": "function",
     "constant": true,
-    "signature": "allowance(address,address)",
     "encoding": "0xdd62ed3e",
     "inputs": [
       {
-        "type": "address",
-        "name": "owner"
+        "name": "owner",
+        "type": "address"
       },
       {
-        "type": "address",
-        "name": "spender"
+        "name": "spender",
+        "type": "address"
       }
     ],
+    "name": "allowance",
     "outputs": [
       {
-        "type": "uint256",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "uint256"
       }
-    ]
+    ],
+    "signature": "allowance(address,address)",
+    "type": "function"
   },
   {
-    "name": "Transfer",
-    "type": "event",
-    "signature": "Transfer(address,address,uint256)",
     "encoding": "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
     "inputs": [
       {
-        "type": "address",
+        "indexed": true,
         "name": "from",
-        "indexed": true
+        "type": "address"
       },
       {
-        "type": "address",
+        "indexed": true,
         "name": "to",
-        "indexed": true
+        "type": "address"
       },
       {
-        "type": "uint256",
-        "name": "value"
+        "name": "value",
+        "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "Transfer",
+    "outputs": [],
+    "signature": "Transfer(address,address,uint256)",
+    "type": "event"
   },
   {
-    "name": "Approval",
-    "type": "event",
-    "signature": "Approval(address,address,uint256)",
     "encoding": "0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925",
     "inputs": [
       {
-        "type": "address",
+        "indexed": true,
         "name": "owner",
-        "indexed": true
+        "type": "address"
       },
       {
-        "type": "address",
+        "indexed": true,
         "name": "spender",
-        "indexed": true
+        "type": "address"
       },
       {
-        "type": "uint256",
-        "name": "value"
+        "name": "value",
+        "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "Approval",
+    "outputs": [],
+    "signature": "Approval(address,address,uint256)",
+    "type": "event"
   },
   {
-    "name": "isConstructor",
-    "type": "function",
     "constant": true,
-    "signature": "isConstructor()",
     "encoding": "0xc4cbfa44",
     "inputs": [],
+    "name": "isConstructor",
     "outputs": [
       {
-        "type": "bool",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "bool"
       }
-    ]
+    ],
+    "signature": "isConstructor()",
+    "type": "function"
   },
   {
-    "name": "initialize",
-    "type": "function",
-    "signature": "initialize()",
     "encoding": "0x8129fc1c",
     "inputs": [],
-    "outputs": []
+    "name": "initialize",
+    "outputs": [],
+    "signature": "initialize()",
+    "type": "function"
   },
   {
-    "name": "mulUInt",
-    "type": "function",
-    "signature": "mulUInt(uint256,uint256)",
     "encoding": "0x20b43094",
     "inputs": [
       {
-        "type": "uint256",
-        "name": "a"
+        "name": "a",
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "b"
+        "name": "b",
+        "type": "uint256"
       }
     ],
+    "name": "mulUInt",
     "outputs": [
       {
-        "type": "MathError",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "MathError"
       },
       {
-        "type": "uint256",
-        "name": "ret_1"
+        "name": "ret_1",
+        "type": "uint256"
       }
-    ]
+    ],
+    "signature": "mulUInt(uint256,uint256)",
+    "type": "function"
   },
   {
-    "name": "divUInt",
-    "type": "function",
-    "signature": "divUInt(uint256,uint256)",
     "encoding": "0x1bc2b813",
     "inputs": [
       {
-        "type": "uint256",
-        "name": "a"
+        "name": "a",
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "b"
+        "name": "b",
+        "type": "uint256"
       }
     ],
+    "name": "divUInt",
     "outputs": [
       {
-        "type": "MathError",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "MathError"
       },
       {
-        "type": "uint256",
-        "name": "ret_1"
+        "name": "ret_1",
+        "type": "uint256"
       }
-    ]
+    ],
+    "signature": "divUInt(uint256,uint256)",
+    "type": "function"
   },
   {
-    "name": "subUInt",
-    "type": "function",
-    "signature": "subUInt(uint256,uint256)",
     "encoding": "0x9b7efac7",
     "inputs": [
       {
-        "type": "uint256",
-        "name": "a"
+        "name": "a",
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "b"
+        "name": "b",
+        "type": "uint256"
       }
     ],
+    "name": "subUInt",
     "outputs": [
       {
-        "type": "MathError",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "MathError"
       },
       {
-        "type": "uint256",
-        "name": "ret_1"
+        "name": "ret_1",
+        "type": "uint256"
       }
-    ]
+    ],
+    "signature": "subUInt(uint256,uint256)",
+    "type": "function"
   },
   {
-    "name": "addUInt",
-    "type": "function",
-    "signature": "addUInt(uint256,uint256)",
     "encoding": "0xdb27b0bc",
     "inputs": [
       {
-        "type": "uint256",
-        "name": "a"
+        "name": "a",
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "b"
+        "name": "b",
+        "type": "uint256"
       }
     ],
+    "name": "addUInt",
     "outputs": [
       {
-        "type": "MathError",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "MathError"
       },
       {
-        "type": "uint256",
-        "name": "ret_1"
+        "name": "ret_1",
+        "type": "uint256"
       }
-    ]
+    ],
+    "signature": "addUInt(uint256,uint256)",
+    "type": "function"
   },
   {
-    "name": "addThenSubUInt",
-    "type": "function",
-    "signature": "addThenSubUInt(uint256,uint256,uint256)",
     "encoding": "0x65dbcc0f",
     "inputs": [
       {
-        "type": "uint256",
-        "name": "a"
+        "name": "a",
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "b"
+        "name": "b",
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "c"
+        "name": "c",
+        "type": "uint256"
       }
     ],
+    "name": "addThenSubUInt",
     "outputs": [
       {
-        "type": "MathError",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "MathError"
       },
       {
-        "type": "uint256",
-        "name": "ret_1"
+        "name": "ret_1",
+        "type": "uint256"
       }
-    ]
+    ],
+    "signature": "addThenSubUInt(uint256,uint256,uint256)",
+    "type": "function"
   },
   {
-    "name": "getExp",
-    "type": "function",
-    "signature": "getExp(uint256,uint256)",
     "encoding": "0xba9316b7",
     "inputs": [
       {
-        "type": "uint256",
-        "name": "num"
+        "name": "num",
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "denom"
+        "name": "denom",
+        "type": "uint256"
       }
     ],
+    "name": "getExp",
     "outputs": [
       {
-        "type": "MathError",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "MathError"
       },
       {
-        "type": "Exp",
-        "name": "memory"
+        "name": "memory",
+        "type": "Exp"
       }
-    ]
+    ],
+    "signature": "getExp(uint256,uint256)",
+    "type": "function"
   },
   {
-    "name": "addExp",
-    "type": "function",
-    "signature": "addExp(Exp,Exp)",
     "encoding": "0xd1c254ae",
     "inputs": [
       {
-        "type": "Exp",
-        "name": "a"
+        "name": "a",
+        "type": "Exp"
       },
       {
-        "type": "Exp",
-        "name": "b"
+        "name": "b",
+        "type": "Exp"
       }
     ],
+    "name": "addExp",
     "outputs": [
       {
-        "type": "MathError",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "MathError"
       },
       {
-        "type": "Exp",
-        "name": "memory"
+        "name": "memory",
+        "type": "Exp"
       }
-    ]
+    ],
+    "signature": "addExp(Exp,Exp)",
+    "type": "function"
   },
   {
-    "name": "subExp",
-    "type": "function",
-    "signature": "subExp(Exp,Exp)",
     "encoding": "0xd23e7096",
     "inputs": [
       {
-        "type": "Exp",
-        "name": "a"
+        "name": "a",
+        "type": "Exp"
       },
       {
-        "type": "Exp",
-        "name": "b"
+        "name": "b",
+        "type": "Exp"
       }
     ],
+    "name": "subExp",
     "outputs": [
       {
-        "type": "MathError",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "MathError"
       },
       {
-        "type": "Exp",
-        "name": "memory"
+        "name": "memory",
+        "type": "Exp"
       }
-    ]
+    ],
+    "signature": "subExp(Exp,Exp)",
+    "type": "function"
   },
   {
-    "name": "mulScalar",
-    "type": "function",
-    "signature": "mulScalar(Exp,uint256)",
     "encoding": "0xe6247a38",
     "inputs": [
       {
-        "type": "Exp",
-        "name": "a"
+        "name": "a",
+        "type": "Exp"
       },
       {
-        "type": "uint256",
-        "name": "scalar"
+        "name": "scalar",
+        "type": "uint256"
       }
     ],
+    "name": "mulScalar",
     "outputs": [
       {
-        "type": "MathError",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "MathError"
       },
       {
-        "type": "Exp",
-        "name": "memory"
+        "name": "memory",
+        "type": "Exp"
       }
-    ]
+    ],
+    "signature": "mulScalar(Exp,uint256)",
+    "type": "function"
   },
   {
-    "name": "mulScalarTruncate",
-    "type": "function",
-    "signature": "mulScalarTruncate(Exp,uint256)",
     "encoding": "0x185c070f",
     "inputs": [
       {
-        "type": "Exp",
-        "name": "a"
+        "name": "a",
+        "type": "Exp"
       },
       {
-        "type": "uint256",
-        "name": "scalar"
+        "name": "scalar",
+        "type": "uint256"
       }
     ],
+    "name": "mulScalarTruncate",
     "outputs": [
       {
-        "type": "MathError",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "MathError"
       },
       {
-        "type": "uint256",
-        "name": "ret_1"
+        "name": "ret_1",
+        "type": "uint256"
       }
-    ]
+    ],
+    "signature": "mulScalarTruncate(Exp,uint256)",
+    "type": "function"
   },
   {
-    "name": "mulScalarTruncateAddUInt",
-    "type": "function",
-    "signature": "mulScalarTruncateAddUInt(Exp,uint256,uint256)",
     "encoding": "0xfe799fc9",
     "inputs": [
       {
-        "type": "Exp",
-        "name": "a"
+        "name": "a",
+        "type": "Exp"
       },
       {
-        "type": "uint256",
-        "name": "scalar"
+        "name": "scalar",
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "addend"
+        "name": "addend",
+        "type": "uint256"
       }
     ],
+    "name": "mulScalarTruncateAddUInt",
     "outputs": [
       {
-        "type": "MathError",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "MathError"
       },
       {
-        "type": "uint256",
-        "name": "ret_1"
+        "name": "ret_1",
+        "type": "uint256"
       }
-    ]
+    ],
+    "signature": "mulScalarTruncateAddUInt(Exp,uint256,uint256)",
+    "type": "function"
   },
   {
-    "name": "divScalar",
-    "type": "function",
-    "signature": "divScalar(Exp,uint256)",
     "encoding": "0x69fbe45e",
     "inputs": [
       {
-        "type": "Exp",
-        "name": "a"
+        "name": "a",
+        "type": "Exp"
       },
       {
-        "type": "uint256",
-        "name": "scalar"
+        "name": "scalar",
+        "type": "uint256"
       }
     ],
+    "name": "divScalar",
     "outputs": [
       {
-        "type": "MathError",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "MathError"
       },
       {
-        "type": "Exp",
-        "name": "memory"
+        "name": "memory",
+        "type": "Exp"
       }
-    ]
+    ],
+    "signature": "divScalar(Exp,uint256)",
+    "type": "function"
   },
   {
-    "name": "divScalarByExp",
-    "type": "function",
-    "signature": "divScalarByExp(uint256,Exp)",
     "encoding": "0x9d70934e",
     "inputs": [
       {
-        "type": "uint256",
-        "name": "scalar"
+        "name": "scalar",
+        "type": "uint256"
       },
       {
-        "type": "Exp",
-        "name": "divisor"
+        "name": "divisor",
+        "type": "Exp"
       }
     ],
+    "name": "divScalarByExp",
     "outputs": [
       {
-        "type": "MathError",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "MathError"
       },
       {
-        "type": "Exp",
-        "name": "memory"
+        "name": "memory",
+        "type": "Exp"
       }
-    ]
+    ],
+    "signature": "divScalarByExp(uint256,Exp)",
+    "type": "function"
   },
   {
-    "name": "divScalarByExpTruncate",
-    "type": "function",
-    "signature": "divScalarByExpTruncate(uint256,Exp)",
     "encoding": "0x100045df",
     "inputs": [
       {
-        "type": "uint256",
-        "name": "scalar"
+        "name": "scalar",
+        "type": "uint256"
       },
       {
-        "type": "Exp",
-        "name": "divisor"
+        "name": "divisor",
+        "type": "Exp"
       }
     ],
+    "name": "divScalarByExpTruncate",
     "outputs": [
       {
-        "type": "MathError",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "MathError"
       },
       {
-        "type": "uint256",
-        "name": "ret_1"
+        "name": "ret_1",
+        "type": "uint256"
       }
-    ]
+    ],
+    "signature": "divScalarByExpTruncate(uint256,Exp)",
+    "type": "function"
   },
   {
-    "name": "mulExp",
-    "type": "function",
-    "signature": "mulExp(Exp,Exp)",
     "encoding": "0x9ba9c354",
     "inputs": [
       {
-        "type": "Exp",
-        "name": "a"
+        "name": "a",
+        "type": "Exp"
       },
       {
-        "type": "Exp",
-        "name": "b"
+        "name": "b",
+        "type": "Exp"
       }
     ],
+    "name": "mulExp",
     "outputs": [
       {
-        "type": "MathError",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "MathError"
       },
       {
-        "type": "Exp",
-        "name": "memory"
+        "name": "memory",
+        "type": "Exp"
       }
-    ]
+    ],
+    "signature": "mulExp(Exp,Exp)",
+    "type": "function"
   },
   {
-    "name": "mulExp",
-    "type": "function",
-    "signature": "mulExp(uint256,uint256)",
     "encoding": "0xde32abd1",
     "inputs": [
       {
-        "type": "uint256",
-        "name": "a"
+        "name": "a",
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "b"
+        "name": "b",
+        "type": "uint256"
       }
     ],
+    "name": "mulExp",
     "outputs": [
       {
-        "type": "MathError",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "MathError"
       },
       {
-        "type": "Exp",
-        "name": "memory"
+        "name": "memory",
+        "type": "Exp"
       }
-    ]
+    ],
+    "signature": "mulExp(uint256,uint256)",
+    "type": "function"
   },
   {
-    "name": "mulExp3",
-    "type": "function",
-    "signature": "mulExp3(Exp,Exp,Exp)",
     "encoding": "0xe19ccb27",
     "inputs": [
       {
-        "type": "Exp",
-        "name": "a"
+        "name": "a",
+        "type": "Exp"
       },
       {
-        "type": "Exp",
-        "name": "b"
+        "name": "b",
+        "type": "Exp"
       },
       {
-        "type": "Exp",
-        "name": "c"
+        "name": "c",
+        "type": "Exp"
       }
     ],
+    "name": "mulExp3",
     "outputs": [
       {
-        "type": "MathError",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "MathError"
       },
       {
-        "type": "Exp",
-        "name": "memory"
+        "name": "memory",
+        "type": "Exp"
       }
-    ]
+    ],
+    "signature": "mulExp3(Exp,Exp,Exp)",
+    "type": "function"
   },
   {
-    "name": "divExp",
-    "type": "function",
-    "signature": "divExp(Exp,Exp)",
     "encoding": "0x943ab3fd",
     "inputs": [
       {
-        "type": "Exp",
-        "name": "a"
+        "name": "a",
+        "type": "Exp"
       },
       {
-        "type": "Exp",
-        "name": "b"
+        "name": "b",
+        "type": "Exp"
       }
     ],
+    "name": "divExp",
     "outputs": [
       {
-        "type": "MathError",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "MathError"
       },
       {
-        "type": "Exp",
-        "name": "memory"
+        "name": "memory",
+        "type": "Exp"
       }
-    ]
+    ],
+    "signature": "divExp(Exp,Exp)",
+    "type": "function"
   },
   {
-    "name": "truncate",
-    "type": "function",
-    "signature": "truncate(Exp)",
     "encoding": "0xabe932d9",
     "inputs": [
       {
-        "type": "Exp",
-        "name": "exp"
+        "name": "exp",
+        "type": "Exp"
       }
     ],
+    "name": "truncate",
     "outputs": [
       {
-        "type": "uint256",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "uint256"
       }
-    ]
+    ],
+    "signature": "truncate(Exp)",
+    "type": "function"
   },
   {
-    "name": "lessThanExp",
-    "type": "function",
-    "signature": "lessThanExp(Exp,Exp)",
     "encoding": "0xd2196cd2",
     "inputs": [
       {
-        "type": "Exp",
-        "name": "left"
+        "name": "left",
+        "type": "Exp"
       },
       {
-        "type": "Exp",
-        "name": "right"
+        "name": "right",
+        "type": "Exp"
       }
     ],
+    "name": "lessThanExp",
     "outputs": [
       {
-        "type": "bool",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "bool"
       }
-    ]
+    ],
+    "signature": "lessThanExp(Exp,Exp)",
+    "type": "function"
   },
   {
-    "name": "lessThanOrEqualExp",
-    "type": "function",
-    "signature": "lessThanOrEqualExp(Exp,Exp)",
     "encoding": "0xf96d822c",
     "inputs": [
       {
-        "type": "Exp",
-        "name": "left"
+        "name": "left",
+        "type": "Exp"
       },
       {
-        "type": "Exp",
-        "name": "right"
+        "name": "right",
+        "type": "Exp"
       }
     ],
+    "name": "lessThanOrEqualExp",
     "outputs": [
       {
-        "type": "bool",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "bool"
       }
-    ]
+    ],
+    "signature": "lessThanOrEqualExp(Exp,Exp)",
+    "type": "function"
   },
   {
-    "name": "greaterThanExp",
-    "type": "function",
-    "signature": "greaterThanExp(Exp,Exp)",
     "encoding": "0x8732ffe7",
     "inputs": [
       {
-        "type": "Exp",
-        "name": "left"
+        "name": "left",
+        "type": "Exp"
       },
       {
-        "type": "Exp",
-        "name": "right"
+        "name": "right",
+        "type": "Exp"
       }
     ],
+    "name": "greaterThanExp",
     "outputs": [
       {
-        "type": "bool",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "bool"
       }
-    ]
+    ],
+    "signature": "greaterThanExp(Exp,Exp)",
+    "type": "function"
   },
   {
-    "name": "isZeroExp",
-    "type": "function",
-    "signature": "isZeroExp(Exp)",
     "encoding": "0x6c13c023",
     "inputs": [
       {
-        "type": "Exp",
-        "name": "value"
+        "name": "value",
+        "type": "Exp"
       }
     ],
+    "name": "isZeroExp",
     "outputs": [
       {
-        "type": "bool",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "bool"
       }
-    ]
+    ],
+    "signature": "isZeroExp(Exp)",
+    "type": "function"
   },
   {
-    "name": "balanceOf",
-    "type": "function",
     "constant": true,
-    "signature": "balanceOf(address)",
     "encoding": "0x70a08231",
     "inputs": [
       {
-        "type": "address",
-        "name": "who"
+        "name": "who",
+        "type": "address"
       }
     ],
+    "name": "balanceOf",
     "outputs": [
       {
-        "type": "uint256",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "uint256"
       }
-    ]
+    ],
+    "signature": "balanceOf(address)",
+    "type": "function"
   },
   {
-    "name": "isCToken",
-    "type": "function",
     "constant": true,
-    "signature": "isCToken()",
     "encoding": "0xfe9c44ae",
     "inputs": [],
+    "name": "isCToken",
     "outputs": [
       {
-        "type": "bool",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "bool"
       }
-    ]
+    ],
+    "signature": "isCToken()",
+    "type": "function"
   },
   {
-    "name": "approve",
-    "type": "function",
-    "signature": "approve(address,uint256)",
     "encoding": "0x095ea7b3",
     "inputs": [
       {
-        "type": "address",
-        "name": "spender"
+        "name": "spender",
+        "type": "address"
       },
       {
-        "type": "uint256",
-        "name": "value"
+        "name": "value",
+        "type": "uint256"
       }
     ],
+    "name": "approve",
     "outputs": [
       {
-        "type": "bool",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "bool"
       }
-    ]
+    ],
+    "signature": "approve(address,uint256)",
+    "type": "function"
   },
   {
-    "name": "balanceOfUnderlying",
-    "type": "function",
-    "signature": "balanceOfUnderlying(address)",
     "encoding": "0x3af9e669",
     "inputs": [
       {
-        "type": "address",
-        "name": "account"
+        "name": "account",
+        "type": "address"
       }
     ],
+    "name": "balanceOfUnderlying",
     "outputs": [
       {
-        "type": "uint256",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "uint256"
       }
-    ]
+    ],
+    "signature": "balanceOfUnderlying(address)",
+    "type": "function"
   },
   {
-    "name": "exchangeRateCurrent",
-    "type": "function",
-    "signature": "exchangeRateCurrent()",
     "encoding": "0xbd6d894d",
     "inputs": [],
+    "name": "exchangeRateCurrent",
     "outputs": [
       {
-        "type": "uint256",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "uint256"
       }
-    ]
+    ],
+    "signature": "exchangeRateCurrent()",
+    "type": "function"
   },
   {
-    "name": "mint",
-    "type": "function",
-    "signature": "mint(uint256)",
     "encoding": "0xa0712d68",
     "inputs": [
       {
-        "type": "uint256",
-        "name": "mintAmount"
+        "name": "mintAmount",
+        "type": "uint256"
       }
     ],
+    "name": "mint",
     "outputs": [
       {
-        "type": "uint256",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "uint256"
       }
-    ]
+    ],
+    "signature": "mint(uint256)",
+    "type": "function"
   },
   {
-    "name": "redeem",
-    "type": "function",
-    "signature": "redeem(uint256)",
     "encoding": "0xdb006a75",
     "inputs": [
       {
-        "type": "uint256",
-        "name": "redeemTokens"
+        "name": "redeemTokens",
+        "type": "uint256"
       }
     ],
+    "name": "redeem",
     "outputs": [
       {
-        "type": "uint256",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "uint256"
       }
-    ]
+    ],
+    "signature": "redeem(uint256)",
+    "type": "function"
   },
   {
-    "name": "redeemUnderlying",
-    "type": "function",
-    "signature": "redeemUnderlying(uint256)",
     "encoding": "0x852a12e3",
     "inputs": [
       {
-        "type": "uint256",
-        "name": "redeemAmount"
+        "name": "redeemAmount",
+        "type": "uint256"
       }
     ],
+    "name": "redeemUnderlying",
     "outputs": [
       {
-        "type": "uint256",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "uint256"
       }
-    ]
+    ],
+    "signature": "redeemUnderlying(uint256)",
+    "type": "function"
   },
   {
-    "name": "transfer",
-    "type": "function",
-    "signature": "transfer(address,uint256)",
     "encoding": "0xa9059cbb",
     "inputs": [
       {
-        "type": "address",
-        "name": "recipient"
+        "name": "recipient",
+        "type": "address"
       },
       {
-        "type": "uint256",
-        "name": "amount"
+        "name": "amount",
+        "type": "uint256"
       }
     ],
+    "name": "transfer",
     "outputs": [
       {
-        "type": "bool",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "bool"
       }
-    ]
+    ],
+    "signature": "transfer(address,uint256)",
+    "type": "function"
   },
   {
-    "name": "transferFrom",
-    "type": "function",
-    "signature": "transferFrom(address,address,uint256)",
     "encoding": "0x23b872dd",
     "inputs": [
       {
-        "type": "address",
-        "name": "sender"
+        "name": "sender",
+        "type": "address"
       },
       {
-        "type": "address",
-        "name": "recipient"
+        "name": "recipient",
+        "type": "address"
       },
       {
-        "type": "uint256",
-        "name": "amount"
+        "name": "amount",
+        "type": "uint256"
       }
     ],
+    "name": "transferFrom",
     "outputs": [
       {
-        "type": "bool",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "bool"
       }
-    ]
+    ],
+    "signature": "transferFrom(address,address,uint256)",
+    "type": "function"
   },
   {
-    "name": "_msgSender",
-    "type": "function",
     "constant": true,
-    "signature": "_msgSender()",
     "encoding": "0x119df25f",
     "inputs": [],
+    "name": "_msgSender",
     "outputs": [
       {
-        "type": "address",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "address"
       }
-    ]
+    ],
+    "signature": "_msgSender()",
+    "type": "function"
   },
   {
-    "name": "_msgData",
-    "type": "function",
     "constant": true,
-    "signature": "_msgData()",
     "encoding": "0x8b49d47e",
     "inputs": [],
+    "name": "_msgData",
     "outputs": [
       {
-        "type": "bytes",
-        "name": "memory"
+        "name": "memory",
+        "type": "bytes"
       }
-    ]
+    ],
+    "signature": "_msgData()",
+    "type": "function"
   },
   {
-    "name": "OwnershipTransferred",
-    "type": "event",
-    "signature": "OwnershipTransferred(address,address)",
     "encoding": "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0",
     "inputs": [
       {
-        "type": "address",
+        "indexed": true,
         "name": "previousOwner",
-        "indexed": true
+        "type": "address"
       },
       {
-        "type": "address",
+        "indexed": true,
         "name": "newOwner",
-        "indexed": true
+        "type": "address"
       }
     ],
-    "outputs": []
+    "name": "OwnershipTransferred",
+    "outputs": [],
+    "signature": "OwnershipTransferred(address,address)",
+    "type": "event"
   },
   {
-    "name": "initialize",
-    "type": "function",
-    "signature": "initialize(address)",
     "encoding": "0xc4d66de8",
     "inputs": [
       {
-        "type": "address",
-        "name": "sender"
+        "name": "sender",
+        "type": "address"
       }
     ],
-    "outputs": []
+    "name": "initialize",
+    "outputs": [],
+    "signature": "initialize(address)",
+    "type": "function"
   },
   {
-    "name": "owner",
-    "type": "function",
     "constant": true,
-    "signature": "owner()",
     "encoding": "0x8da5cb5b",
     "inputs": [],
+    "name": "owner",
     "outputs": [
       {
-        "type": "address",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "address"
       }
-    ]
+    ],
+    "signature": "owner()",
+    "type": "function"
   },
   {
-    "name": "isOwner",
-    "type": "function",
     "constant": true,
-    "signature": "isOwner()",
     "encoding": "0x8f32d59b",
     "inputs": [],
+    "name": "isOwner",
     "outputs": [
       {
-        "type": "bool",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "bool"
       }
-    ]
+    ],
+    "signature": "isOwner()",
+    "type": "function"
   },
   {
-    "name": "transferOwnership",
-    "type": "function",
-    "signature": "transferOwnership(address)",
     "encoding": "0xf2fde38b",
     "inputs": [
       {
-        "type": "address",
-        "name": "newOwner"
+        "name": "newOwner",
+        "type": "address"
       }
     ],
-    "outputs": []
+    "name": "transferOwnership",
+    "outputs": [],
+    "signature": "transferOwnership(address)",
+    "type": "function"
   },
   {
-    "name": "_transferOwnership",
-    "type": "function",
-    "signature": "_transferOwnership(address)",
     "encoding": "0xd29d44ee",
     "inputs": [
       {
-        "type": "address",
-        "name": "newOwner"
+        "name": "newOwner",
+        "type": "address"
       }
     ],
-    "outputs": []
+    "name": "_transferOwnership",
+    "outputs": [],
+    "signature": "_transferOwnership(address)",
+    "type": "function"
   },
   {
-    "name": "add",
-    "type": "function",
-    "signature": "add(Role,address)",
     "encoding": "0xb782197a",
     "inputs": [
       {
-        "type": "Role",
-        "name": "role"
+        "name": "role",
+        "type": "Role"
       },
       {
-        "type": "address",
-        "name": "account"
+        "name": "account",
+        "type": "address"
       }
     ],
-    "outputs": []
+    "name": "add",
+    "outputs": [],
+    "signature": "add(Role,address)",
+    "type": "function"
   },
   {
-    "name": "remove",
-    "type": "function",
-    "signature": "remove(Role,address)",
     "encoding": "0x3e59fb33",
     "inputs": [
       {
-        "type": "Role",
-        "name": "role"
+        "name": "role",
+        "type": "Role"
       },
       {
-        "type": "address",
-        "name": "account"
+        "name": "account",
+        "type": "address"
       }
     ],
-    "outputs": []
+    "name": "remove",
+    "outputs": [],
+    "signature": "remove(Role,address)",
+    "type": "function"
   },
   {
-    "name": "has",
-    "type": "function",
     "constant": true,
-    "signature": "has(Role,address)",
     "encoding": "0xced709a2",
     "inputs": [
       {
-        "type": "Role",
-        "name": "role"
+        "name": "role",
+        "type": "Role"
       },
       {
-        "type": "address",
-        "name": "account"
+        "name": "account",
+        "type": "address"
       }
     ],
+    "name": "has",
     "outputs": [
       {
-        "type": "bool",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "bool"
       }
-    ]
+    ],
+    "signature": "has(Role,address)",
+    "type": "function"
   },
   {
-    "name": "PauserAdded",
-    "type": "event",
-    "signature": "PauserAdded(address)",
     "encoding": "0x6719d08c1888103bea251a4ed56406bd0c3e69723c8a1686e017e7bbe159b6f8",
     "inputs": [
       {
-        "type": "address",
+        "indexed": true,
         "name": "account",
-        "indexed": true
+        "type": "address"
       }
     ],
-    "outputs": []
+    "name": "PauserAdded",
+    "outputs": [],
+    "signature": "PauserAdded(address)",
+    "type": "event"
   },
   {
-    "name": "PauserRemoved",
-    "type": "event",
-    "signature": "PauserRemoved(address)",
     "encoding": "0xcd265ebaf09df2871cc7bd4133404a235ba12eff2041bb89d9c714a2621c7c7e",
     "inputs": [
       {
-        "type": "address",
+        "indexed": true,
         "name": "account",
-        "indexed": true
+        "type": "address"
       }
     ],
-    "outputs": []
+    "name": "PauserRemoved",
+    "outputs": [],
+    "signature": "PauserRemoved(address)",
+    "type": "event"
   },
   {
-    "name": "initialize",
-    "type": "function",
-    "signature": "initialize(address)",
     "encoding": "0xc4d66de8",
     "inputs": [
       {
-        "type": "address",
-        "name": "sender"
+        "name": "sender",
+        "type": "address"
       }
     ],
-    "outputs": []
+    "name": "initialize",
+    "outputs": [],
+    "signature": "initialize(address)",
+    "type": "function"
   },
   {
-    "name": "isPauser",
-    "type": "function",
     "constant": true,
-    "signature": "isPauser(address)",
     "encoding": "0x46fbf68e",
     "inputs": [
       {
-        "type": "address",
-        "name": "account"
+        "name": "account",
+        "type": "address"
       }
     ],
+    "name": "isPauser",
     "outputs": [
       {
-        "type": "bool",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "bool"
       }
-    ]
+    ],
+    "signature": "isPauser(address)",
+    "type": "function"
   },
   {
-    "name": "addPauser",
-    "type": "function",
-    "signature": "addPauser(address)",
     "encoding": "0x82dc1ec4",
     "inputs": [
       {
-        "type": "address",
-        "name": "account"
+        "name": "account",
+        "type": "address"
       }
     ],
-    "outputs": []
+    "name": "addPauser",
+    "outputs": [],
+    "signature": "addPauser(address)",
+    "type": "function"
   },
   {
-    "name": "_addPauser",
-    "type": "function",
-    "signature": "_addPauser(address)",
     "encoding": "0xca2f5cb4",
     "inputs": [
       {
-        "type": "address",
-        "name": "account"
+        "name": "account",
+        "type": "address"
       }
     ],
-    "outputs": []
+    "name": "_addPauser",
+    "outputs": [],
+    "signature": "_addPauser(address)",
+    "type": "function"
   },
   {
-    "name": "_removePauser",
-    "type": "function",
-    "signature": "_removePauser(address)",
     "encoding": "0xddc8d7a6",
     "inputs": [
       {
-        "type": "address",
-        "name": "account"
+        "name": "account",
+        "type": "address"
       }
     ],
-    "outputs": []
+    "name": "_removePauser",
+    "outputs": [],
+    "signature": "_removePauser(address)",
+    "type": "function"
   },
   {
-    "name": "Paused",
-    "type": "event",
-    "signature": "Paused(address)",
     "encoding": "0x62e78cea01bee320cd4e420270b5ea74000d11b0c9f74754ebdbfc544b05a258",
     "inputs": [
       {
-        "type": "address",
-        "name": "account"
+        "name": "account",
+        "type": "address"
       }
     ],
-    "outputs": []
+    "name": "Paused",
+    "outputs": [],
+    "signature": "Paused(address)",
+    "type": "event"
   },
   {
-    "name": "Unpaused",
-    "type": "event",
-    "signature": "Unpaused(address)",
     "encoding": "0x5db9ee0a495bf2e6ff9c91a7834c1ba4fdd244a5e8aa4e537bd38aeae4b073aa",
     "inputs": [
       {
-        "type": "address",
-        "name": "account"
+        "name": "account",
+        "type": "address"
       }
     ],
-    "outputs": []
+    "name": "Unpaused",
+    "outputs": [],
+    "signature": "Unpaused(address)",
+    "type": "event"
   },
   {
-    "name": "initialize",
-    "type": "function",
-    "signature": "initialize(address)",
     "encoding": "0xc4d66de8",
     "inputs": [
       {
-        "type": "address",
-        "name": "sender"
+        "name": "sender",
+        "type": "address"
       }
     ],
-    "outputs": []
+    "name": "initialize",
+    "outputs": [],
+    "signature": "initialize(address)",
+    "type": "function"
   },
   {
-    "name": "paused",
-    "type": "function",
     "constant": true,
-    "signature": "paused()",
     "encoding": "0x5c975abb",
     "inputs": [],
+    "name": "paused",
     "outputs": [
       {
-        "type": "bool",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "bool"
       }
-    ]
+    ],
+    "signature": "paused()",
+    "type": "function"
   },
   {
-    "name": "pause",
-    "type": "function",
-    "signature": "pause()",
     "encoding": "0x8456cb59",
     "inputs": [],
-    "outputs": []
+    "name": "pause",
+    "outputs": [],
+    "signature": "pause()",
+    "type": "function"
   },
   {
-    "name": "unpause",
-    "type": "function",
-    "signature": "unpause()",
     "encoding": "0x3f4ba83a",
     "inputs": [],
-    "outputs": []
+    "name": "unpause",
+    "outputs": [],
+    "signature": "unpause()",
+    "type": "function"
   },
   {
-    "name": "DiscardCToken",
-    "type": "event",
-    "signature": "DiscardCToken(address)",
     "encoding": "0x59699d7c9076678da939b1a98c86f40d8780564966fb30bf84d01b686dbb24c9",
     "inputs": [
       {
-        "type": "address",
+        "indexed": true,
         "name": "tokenAddress",
-        "indexed": true
+        "type": "address"
       }
     ],
-    "outputs": []
+    "name": "DiscardCToken",
+    "outputs": [],
+    "signature": "DiscardCToken(address)",
+    "type": "event"
   },
   {
-    "name": "WhitelistCToken",
-    "type": "event",
-    "signature": "WhitelistCToken(address)",
     "encoding": "0x6b059312af62bbe5ac6a9a59761eaf444083ad356cdbf3761bc98857e061ecb5",
     "inputs": [
       {
-        "type": "address",
+        "indexed": true,
         "name": "tokenAddress",
-        "indexed": true
+        "type": "address"
       }
     ],
-    "outputs": []
+    "name": "WhitelistCToken",
+    "outputs": [],
+    "signature": "WhitelistCToken(address)",
+    "type": "event"
   },
   {
-    "name": "whitelistCToken",
-    "type": "function",
-    "signature": "whitelistCToken(address)",
     "encoding": "0x0a7d2e1d",
     "inputs": [
       {
-        "type": "address",
-        "name": "tokenAddress"
+        "name": "tokenAddress",
+        "type": "address"
       }
     ],
-    "outputs": []
+    "name": "whitelistCToken",
+    "outputs": [],
+    "signature": "whitelistCToken(address)",
+    "type": "function"
   },
   {
-    "name": "discardCToken",
-    "type": "function",
-    "signature": "discardCToken(address)",
     "encoding": "0xdd219635",
     "inputs": [
       {
-        "type": "address",
-        "name": "tokenAddress"
+        "name": "tokenAddress",
+        "type": "address"
       }
     ],
-    "outputs": []
+    "name": "discardCToken",
+    "outputs": [],
+    "signature": "discardCToken(address)",
+    "type": "function"
   },
   {
-    "name": "isCToken",
-    "type": "function",
     "constant": true,
-    "signature": "isCToken(address)",
     "encoding": "0x2f52e595",
     "inputs": [
       {
-        "type": "address",
-        "name": "tokenAddress"
+        "name": "tokenAddress",
+        "type": "address"
       }
     ],
+    "name": "isCToken",
     "outputs": [
       {
-        "type": "bool",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "bool"
       }
-    ]
+    ],
+    "signature": "isCToken(address)",
+    "type": "function"
   },
   {
-    "name": "CreateStream",
-    "type": "event",
-    "signature": "CreateStream(uint256,address,address,uint256,address,uint256,uint256)",
     "encoding": "0x7b01d409597969366dc268d7f957a990d1ca3d3449baf8fb45db67351aecfe78",
     "inputs": [
       {
-        "type": "uint256",
+        "indexed": true,
         "name": "streamId",
-        "indexed": true
+        "type": "uint256"
       },
       {
-        "type": "address",
+        "indexed": true,
         "name": "sender",
-        "indexed": true
+        "type": "address"
       },
       {
-        "type": "address",
+        "indexed": true,
         "name": "recipient",
-        "indexed": true
+        "type": "address"
       },
       {
-        "type": "uint256",
-        "name": "deposit"
+        "name": "deposit",
+        "type": "uint256"
       },
       {
-        "type": "address",
-        "name": "tokenAddress"
+        "name": "tokenAddress",
+        "type": "address"
       },
       {
-        "type": "uint256",
-        "name": "startTime"
+        "name": "startTime",
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "stopTime"
+        "name": "stopTime",
+        "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "CreateStream",
+    "outputs": [],
+    "signature": "CreateStream(uint256,address,address,uint256,address,uint256,uint256)",
+    "type": "event"
   },
   {
-    "name": "WithdrawFromStream",
-    "type": "event",
-    "signature": "WithdrawFromStream(uint256,address,uint256)",
     "encoding": "0x36c3ab437e6a424ed25dc4bfdeb62706aa06558660fab2dab229d2555adaf89c",
     "inputs": [
       {
-        "type": "uint256",
+        "indexed": true,
         "name": "streamId",
-        "indexed": true
+        "type": "uint256"
       },
       {
-        "type": "address",
+        "indexed": true,
         "name": "recipient",
-        "indexed": true
+        "type": "address"
       },
       {
-        "type": "uint256",
-        "name": "amount"
+        "name": "amount",
+        "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "WithdrawFromStream",
+    "outputs": [],
+    "signature": "WithdrawFromStream(uint256,address,uint256)",
+    "type": "event"
   },
   {
-    "name": "CancelStream",
-    "type": "event",
-    "signature": "CancelStream(uint256,address,address,uint256,uint256)",
     "encoding": "0xca3e6079b726e7728802a0537949e2d1c7762304fa641fb06eb56daf2ba8c6b9",
     "inputs": [
       {
-        "type": "uint256",
+        "indexed": true,
         "name": "streamId",
-        "indexed": true
+        "type": "uint256"
       },
       {
-        "type": "address",
+        "indexed": true,
         "name": "sender",
-        "indexed": true
+        "type": "address"
       },
       {
-        "type": "address",
+        "indexed": true,
         "name": "recipient",
-        "indexed": true
+        "type": "address"
       },
       {
-        "type": "uint256",
-        "name": "senderBalance"
+        "name": "senderBalance",
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "recipientBalance"
+        "name": "recipientBalance",
+        "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "CancelStream",
+    "outputs": [],
+    "signature": "CancelStream(uint256,address,address,uint256,uint256)",
+    "type": "event"
   },
   {
-    "name": "balanceOf",
-    "type": "function",
     "constant": true,
-    "signature": "balanceOf(uint256,address)",
     "encoding": "0x3656eec2",
     "inputs": [
       {
-        "type": "uint256",
-        "name": "streamId"
+        "name": "streamId",
+        "type": "uint256"
       },
       {
-        "type": "address",
-        "name": "who"
+        "name": "who",
+        "type": "address"
       }
     ],
+    "name": "balanceOf",
     "outputs": [
       {
-        "type": "uint256",
-        "name": "balance"
+        "name": "balance",
+        "type": "uint256"
       }
-    ]
+    ],
+    "signature": "balanceOf(uint256,address)",
+    "type": "function"
   },
   {
-    "name": "getStream",
-    "type": "function",
     "constant": true,
-    "signature": "getStream(uint256)",
     "encoding": "0x894e9a0d",
     "inputs": [
       {
-        "type": "uint256",
-        "name": "streamId"
+        "name": "streamId",
+        "type": "uint256"
       }
     ],
+    "name": "getStream",
     "outputs": [
       {
-        "type": "address",
-        "name": "sender"
+        "name": "sender",
+        "type": "address"
       },
       {
-        "type": "address",
-        "name": "recipient"
+        "name": "recipient",
+        "type": "address"
       },
       {
-        "type": "uint256",
-        "name": "deposit"
+        "name": "deposit",
+        "type": "uint256"
       },
       {
-        "type": "address",
-        "name": "token"
+        "name": "token",
+        "type": "address"
       },
       {
-        "type": "uint256",
-        "name": "startTime"
+        "name": "startTime",
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "stopTime"
+        "name": "stopTime",
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "balance"
+        "name": "balance",
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "rate"
+        "name": "rate",
+        "type": "uint256"
       }
-    ]
+    ],
+    "signature": "getStream(uint256)",
+    "type": "function"
   },
   {
-    "name": "createStream",
-    "type": "function",
-    "signature": "createStream(address,uint256,address,uint256,uint256)",
     "encoding": "0xcc1b4bf6",
     "inputs": [
       {
-        "type": "address",
-        "name": "recipient"
+        "name": "recipient",
+        "type": "address"
       },
       {
-        "type": "uint256",
-        "name": "deposit"
+        "name": "deposit",
+        "type": "uint256"
       },
       {
-        "type": "address",
-        "name": "tokenAddress"
+        "name": "tokenAddress",
+        "type": "address"
       },
       {
-        "type": "uint256",
-        "name": "startTime"
+        "name": "startTime",
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "stopTime"
+        "name": "stopTime",
+        "type": "uint256"
       }
     ],
+    "name": "createStream",
     "outputs": [
       {
-        "type": "uint256",
-        "name": "streamId"
+        "name": "streamId",
+        "type": "uint256"
       }
-    ]
+    ],
+    "signature": "createStream(address,uint256,address,uint256,uint256)",
+    "type": "function"
   },
   {
-    "name": "withdrawFromStream",
-    "type": "function",
-    "signature": "withdrawFromStream(uint256,uint256)",
     "encoding": "0x7a9b2c6c",
     "inputs": [
       {
-        "type": "uint256",
-        "name": "streamId"
+        "name": "streamId",
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "funds"
+        "name": "funds",
+        "type": "uint256"
       }
     ],
+    "name": "withdrawFromStream",
     "outputs": [
       {
-        "type": "bool",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "bool"
       }
-    ]
+    ],
+    "signature": "withdrawFromStream(uint256,uint256)",
+    "type": "function"
   },
   {
-    "name": "cancelStream",
-    "type": "function",
-    "signature": "cancelStream(uint256)",
     "encoding": "0x6db9241b",
     "inputs": [
       {
-        "type": "uint256",
-        "name": "streamId"
+        "name": "streamId",
+        "type": "uint256"
       }
     ],
+    "name": "cancelStream",
     "outputs": [
       {
-        "type": "bool",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "bool"
       }
-    ]
+    ],
+    "signature": "cancelStream(uint256)",
+    "type": "function"
   },
   {
-    "name": "CreateCompoundingStream",
-    "type": "event",
-    "signature": "CreateCompoundingStream(uint256,uint256,uint256,uint256)",
     "encoding": "0xa9bbfc8562a8e1e6b889a428f128c90ed60c6204c37e4fb4354a202b4db59204",
     "inputs": [
       {
-        "type": "uint256",
+        "indexed": true,
         "name": "streamId",
-        "indexed": true
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "exchangeRate"
+        "name": "exchangeRate",
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "senderSharePercentage"
+        "name": "senderSharePercentage",
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "recipientSharePercentage"
+        "name": "recipientSharePercentage",
+        "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "CreateCompoundingStream",
+    "outputs": [],
+    "signature": "CreateCompoundingStream(uint256,uint256,uint256,uint256)",
+    "type": "event"
   },
   {
-    "name": "PayInterest",
-    "type": "event",
-    "signature": "PayInterest(uint256,uint256,uint256,uint256)",
     "encoding": "0x5a8a03e48302e0bd2e011a3a2b54d1f849c55497f462f404bf52dce4290456b5",
     "inputs": [
       {
-        "type": "uint256",
+        "indexed": true,
         "name": "streamId",
-        "indexed": true
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "senderInterest"
+        "name": "senderInterest",
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "recipientInterest"
+        "name": "recipientInterest",
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "sablierInterest"
+        "name": "sablierInterest",
+        "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "PayInterest",
+    "outputs": [],
+    "signature": "PayInterest(uint256,uint256,uint256,uint256)",
+    "type": "event"
   },
   {
-    "name": "TakeEarnings",
-    "type": "event",
-    "signature": "TakeEarnings(address,uint256)",
     "encoding": "0x13e8af02ad3e36f8d82fc8b86dcd67b7ed11f718f0e52fb245d2038eb71856ba",
     "inputs": [
       {
-        "type": "address",
+        "indexed": true,
         "name": "tokenAddress",
-        "indexed": true
+        "type": "address"
       },
       {
-        "type": "uint256",
+        "indexed": true,
         "name": "amount",
-        "indexed": true
+        "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "TakeEarnings",
+    "outputs": [],
+    "signature": "TakeEarnings(address,uint256)",
+    "type": "event"
   },
   {
-    "name": "UpdateFee",
-    "type": "event",
-    "signature": "UpdateFee(uint256)",
     "encoding": "0x38e229a7f3f9c329892d08eb37c4e91ccac6d12c798d394990ca4f56028ec266",
     "inputs": [
       {
-        "type": "uint256",
+        "indexed": true,
         "name": "fee",
-        "indexed": true
+        "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "UpdateFee",
+    "outputs": [],
+    "signature": "UpdateFee(uint256)",
+    "type": "event"
   },
   {
-    "name": "updateFee",
-    "type": "function",
-    "signature": "updateFee(uint256)",
     "encoding": "0x9012c4a8",
     "inputs": [
       {
-        "type": "uint256",
-        "name": "feePercentage"
+        "name": "feePercentage",
+        "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "updateFee",
+    "outputs": [],
+    "signature": "updateFee(uint256)",
+    "type": "function"
   },
   {
-    "name": "takeEarnings",
-    "type": "function",
-    "signature": "takeEarnings(address,uint256)",
     "encoding": "0xc1eb9ee0",
     "inputs": [
       {
-        "type": "address",
-        "name": "tokenAddress"
+        "name": "tokenAddress",
+        "type": "address"
       },
       {
-        "type": "uint256",
-        "name": "amount"
+        "name": "amount",
+        "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "takeEarnings",
+    "outputs": [],
+    "signature": "takeEarnings(address,uint256)",
+    "type": "function"
   },
   {
-    "name": "getStream",
-    "type": "function",
     "constant": true,
-    "signature": "getStream(uint256)",
     "encoding": "0x894e9a0d",
     "inputs": [
       {
-        "type": "uint256",
-        "name": "streamId"
+        "name": "streamId",
+        "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "getStream",
+    "outputs": [],
+    "signature": "getStream(uint256)",
+    "type": "function"
   },
   {
-    "name": "deltaOf",
-    "type": "function",
     "constant": true,
-    "signature": "deltaOf(uint256)",
     "encoding": "0xa82ccd4d",
     "inputs": [
       {
-        "type": "uint256",
-        "name": "streamId"
+        "name": "streamId",
+        "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "deltaOf",
+    "outputs": [],
+    "signature": "deltaOf(uint256)",
+    "type": "function"
   },
   {
-    "name": "balanceOf",
-    "type": "function",
     "constant": true,
-    "signature": "balanceOf(uint256,address)",
     "encoding": "0x3656eec2",
     "inputs": [
       {
-        "type": "uint256",
-        "name": "streamId"
+        "name": "streamId",
+        "type": "uint256"
       },
       {
-        "type": "address",
-        "name": "who"
+        "name": "who",
+        "type": "address"
       }
     ],
-    "outputs": []
+    "name": "balanceOf",
+    "outputs": [],
+    "signature": "balanceOf(uint256,address)",
+    "type": "function"
   },
   {
-    "name": "isCompoundingStream",
-    "type": "function",
     "constant": true,
-    "signature": "isCompoundingStream(uint256)",
     "encoding": "0xa734d51b",
     "inputs": [
       {
-        "type": "uint256",
-        "name": "streamId"
+        "name": "streamId",
+        "type": "uint256"
       }
     ],
+    "name": "isCompoundingStream",
     "outputs": [
       {
-        "type": "bool",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "bool"
       }
-    ]
+    ],
+    "signature": "isCompoundingStream(uint256)",
+    "type": "function"
   },
   {
-    "name": "getCompoundingStream",
-    "type": "function",
     "constant": true,
-    "signature": "getCompoundingStream(uint256)",
     "encoding": "0x2b8a119d",
     "inputs": [
       {
-        "type": "uint256",
-        "name": "streamId"
+        "name": "streamId",
+        "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "getCompoundingStream",
+    "outputs": [],
+    "signature": "getCompoundingStream(uint256)",
+    "type": "function"
   },
   {
-    "name": "interestOf",
-    "type": "function",
-    "signature": "interestOf(uint256,uint256)",
     "encoding": "0x8c9a3252",
     "inputs": [
       {
-        "type": "uint256",
-        "name": "streamId"
+        "name": "streamId",
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "amount"
+        "name": "amount",
+        "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "interestOf",
+    "outputs": [],
+    "signature": "interestOf(uint256,uint256)",
+    "type": "function"
   },
   {
-    "name": "getEarnings",
-    "type": "function",
     "constant": true,
-    "signature": "getEarnings(address)",
     "encoding": "0x131b9c04",
     "inputs": [
       {
-        "type": "address",
-        "name": "tokenAddress"
+        "name": "tokenAddress",
+        "type": "address"
       }
     ],
+    "name": "getEarnings",
     "outputs": [
       {
-        "type": "uint256",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "uint256"
       }
-    ]
+    ],
+    "signature": "getEarnings(address)",
+    "type": "function"
   },
   {
-    "name": "createStream",
-    "type": "function",
-    "signature": "createStream(address,uint256,address,uint256,uint256)",
     "encoding": "0xcc1b4bf6",
     "inputs": [
       {
-        "type": "address",
-        "name": "recipient"
+        "name": "recipient",
+        "type": "address"
       },
       {
-        "type": "uint256",
-        "name": "deposit"
+        "name": "deposit",
+        "type": "uint256"
       },
       {
-        "type": "address",
-        "name": "tokenAddress"
+        "name": "tokenAddress",
+        "type": "address"
       },
       {
-        "type": "uint256",
-        "name": "startTime"
+        "name": "startTime",
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "stopTime"
+        "name": "stopTime",
+        "type": "uint256"
       }
     ],
+    "name": "createStream",
     "outputs": [
       {
-        "type": "uint256",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "uint256"
       }
-    ]
+    ],
+    "signature": "createStream(address,uint256,address,uint256,uint256)",
+    "type": "function"
   },
   {
-    "name": "createCompoundingStream",
-    "type": "function",
-    "signature": "createCompoundingStream(address,uint256,address,uint256,uint256,uint256,uint256)",
     "encoding": "0x8195aeaa",
     "inputs": [
       {
-        "type": "address",
-        "name": "recipient"
+        "name": "recipient",
+        "type": "address"
       },
       {
-        "type": "uint256",
-        "name": "deposit"
+        "name": "deposit",
+        "type": "uint256"
       },
       {
-        "type": "address",
-        "name": "tokenAddress"
+        "name": "tokenAddress",
+        "type": "address"
       },
       {
-        "type": "uint256",
-        "name": "startTime"
+        "name": "startTime",
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "stopTime"
+        "name": "stopTime",
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "senderSharePercentage"
+        "name": "senderSharePercentage",
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "recipientSharePercentage"
+        "name": "recipientSharePercentage",
+        "type": "uint256"
       }
     ],
+    "name": "createCompoundingStream",
     "outputs": [
       {
-        "type": "uint256",
-        "name": "ret_0"
+        "name": "ret_0",
+        "type": "uint256"
       }
-    ]
+    ],
+    "signature": "createCompoundingStream(address,uint256,address,uint256,uint256,uint256,uint256)",
+    "type": "function"
   },
   {
-    "name": "withdrawFromStream",
-    "type": "function",
-    "signature": "withdrawFromStream(uint256,uint256)",
     "encoding": "0x7a9b2c6c",
     "inputs": [
       {
-        "type": "uint256",
-        "name": "streamId"
+        "name": "streamId",
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "amount"
+        "name": "amount",
+        "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "withdrawFromStream",
+    "outputs": [],
+    "signature": "withdrawFromStream(uint256,uint256)",
+    "type": "function"
   },
   {
-    "name": "cancelStream",
-    "type": "function",
-    "signature": "cancelStream(uint256)",
     "encoding": "0x6db9241b",
     "inputs": [
       {
-        "type": "uint256",
-        "name": "streamId"
+        "name": "streamId",
+        "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "cancelStream",
+    "outputs": [],
+    "signature": "cancelStream(uint256)",
+    "type": "function"
   },
   {
-    "name": "withdrawFromStreamInternal",
-    "type": "function",
-    "signature": "withdrawFromStreamInternal(uint256,uint256)",
     "encoding": "0x0e454254",
     "inputs": [
       {
-        "type": "uint256",
-        "name": "streamId"
+        "name": "streamId",
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "amount"
+        "name": "amount",
+        "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "withdrawFromStreamInternal",
+    "outputs": [],
+    "signature": "withdrawFromStreamInternal(uint256,uint256)",
+    "type": "function"
   },
   {
-    "name": "withdrawFromCompoundingStreamInternal",
-    "type": "function",
-    "signature": "withdrawFromCompoundingStreamInternal(uint256,uint256)",
     "encoding": "0xdb3e1b83",
     "inputs": [
       {
-        "type": "uint256",
-        "name": "streamId"
+        "name": "streamId",
+        "type": "uint256"
       },
       {
-        "type": "uint256",
-        "name": "amount"
+        "name": "amount",
+        "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "withdrawFromCompoundingStreamInternal",
+    "outputs": [],
+    "signature": "withdrawFromCompoundingStreamInternal(uint256,uint256)",
+    "type": "function"
   },
   {
-    "name": "cancelStreamInternal",
-    "type": "function",
-    "signature": "cancelStreamInternal(uint256)",
     "encoding": "0x36bfcbaf",
     "inputs": [
       {
-        "type": "uint256",
-        "name": "streamId"
+        "name": "streamId",
+        "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "cancelStreamInternal",
+    "outputs": [],
+    "signature": "cancelStreamInternal(uint256)",
+    "type": "function"
   },
   {
-    "name": "cancelCompoundingStreamInternal",
-    "type": "function",
-    "signature": "cancelCompoundingStreamInternal(uint256)",
     "encoding": "0x8ef15ecc",
     "inputs": [
       {
-        "type": "uint256",
-        "name": "streamId"
+        "name": "streamId",
+        "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "cancelCompoundingStreamInternal",
+    "outputs": [],
+    "signature": "cancelCompoundingStreamInternal(uint256)",
+    "type": "function"
   }
 ]

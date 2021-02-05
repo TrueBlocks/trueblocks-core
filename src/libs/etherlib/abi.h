@@ -53,7 +53,7 @@ class CAbi : public CBaseNode {
     bool articulateTrace(CTrace* t) const;
     bool articulateOutputs(const string_q& encoding, const string_q& value, CFunction& ret) const;
     CFunctionMap interfaceMap;
-    bool loadAndCacheAbiFolder(const string_q& sourcePath, const string_q& binPath);
+    bool loadAbisFolderAndCache(const string_q& sourcePath, const string_q& binPath);
     bool loadAbisKnown(int which);
     bool loadAbisInCache(void);
     bool loadAbiByAddress(const address_t& addr);

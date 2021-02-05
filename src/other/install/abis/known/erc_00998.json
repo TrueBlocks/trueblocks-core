@@ -1,8 +1,5 @@
 [
   {
-    "name": "ReceivedChild",
-    "type": "event",
-    "signature": "ReceivedChild(address,uint256,address,uint256)",
     "encoding": "0x0371ddf2288ad1ba92626a7e31c86a9d006e592cfe57d7d946ef08b13457c08b",
     "inputs": [
       {
@@ -25,12 +22,12 @@
         "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "ReceivedChild",
+    "outputs": [],
+    "signature": "ReceivedChild(address,uint256,address,uint256)",
+    "type": "event"
   },
   {
-    "name": "TransferChild",
-    "type": "event",
-    "signature": "TransferChild(uint256,address,address,uint256)",
     "encoding": "0x0ef52e516fb5aec15a5d3587e5480481b702b26db93c8430eca78b61990fd3f6",
     "inputs": [
       {
@@ -53,13 +50,13 @@
         "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "TransferChild",
+    "outputs": [],
+    "signature": "TransferChild(uint256,address,address,uint256)",
+    "type": "event"
   },
   {
-    "name": "rootOwnerOf",
-    "type": "function",
     "constant": true,
-    "signature": "rootOwnerOf(uint256)",
     "encoding": "0x43a61a8e",
     "inputs": [
       {
@@ -67,18 +64,18 @@
         "type": "uint256"
       }
     ],
+    "name": "rootOwnerOf",
     "outputs": [
       {
         "name": "rootOwner",
         "type": "bytes32"
       }
-    ]
+    ],
+    "signature": "rootOwnerOf(uint256)",
+    "type": "function"
   },
   {
-    "name": "rootOwnerOfChild",
-    "type": "function",
     "constant": true,
-    "signature": "rootOwnerOfChild(address,uint256)",
     "encoding": "0xed81cdda",
     "inputs": [
       {
@@ -90,18 +87,18 @@
         "type": "uint256"
       }
     ],
+    "name": "rootOwnerOfChild",
     "outputs": [
       {
         "name": "rootOwner",
         "type": "bytes32"
       }
-    ]
+    ],
+    "signature": "rootOwnerOfChild(address,uint256)",
+    "type": "function"
   },
   {
-    "name": "ownerOfChild",
-    "type": "function",
     "constant": true,
-    "signature": "ownerOfChild(address,uint256)",
     "encoding": "0xeadb80b8",
     "inputs": [
       {
@@ -113,6 +110,7 @@
         "type": "uint256"
       }
     ],
+    "name": "ownerOfChild",
     "outputs": [
       {
         "name": "parentTokenOwner",
@@ -122,12 +120,11 @@
         "name": "parentTokenId",
         "type": "uint256"
       }
-    ]
+    ],
+    "signature": "ownerOfChild(address,uint256)",
+    "type": "function"
   },
   {
-    "name": "onERC721Received",
-    "type": "function",
-    "signature": "onERC721Received(address,address,uint256,bytes)",
     "encoding": "0x150b7a02",
     "inputs": [
       {
@@ -147,17 +144,17 @@
         "type": "bytes"
       }
     ],
+    "name": "onERC721Received",
     "outputs": [
       {
         "name": "ret_0",
         "type": "bytes4"
       }
-    ]
+    ],
+    "signature": "onERC721Received(address,address,uint256,bytes)",
+    "type": "function"
   },
   {
-    "name": "transferChild",
-    "type": "function",
-    "signature": "transferChild(uint256,address,address,uint256)",
     "encoding": "0xbef44f18",
     "inputs": [
       {
@@ -177,12 +174,12 @@
         "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "transferChild",
+    "outputs": [],
+    "signature": "transferChild(uint256,address,address,uint256)",
+    "type": "function"
   },
   {
-    "name": "safeTransferChild",
-    "type": "function",
-    "signature": "safeTransferChild(uint256,address,address,uint256)",
     "encoding": "0x1d98f3c5",
     "inputs": [
       {
@@ -202,12 +199,12 @@
         "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "safeTransferChild",
+    "outputs": [],
+    "signature": "safeTransferChild(uint256,address,address,uint256)",
+    "type": "function"
   },
   {
-    "name": "safeTransferChild",
-    "type": "function",
-    "signature": "safeTransferChild(uint256,address,address,uint256,bytes)",
     "encoding": "0x8d81f51e",
     "inputs": [
       {
@@ -231,12 +228,12 @@
         "type": "bytes"
       }
     ],
-    "outputs": []
+    "name": "safeTransferChild",
+    "outputs": [],
+    "signature": "safeTransferChild(uint256,address,address,uint256,bytes)",
+    "type": "function"
   },
   {
-    "name": "transferChildToParent",
-    "type": "function",
-    "signature": "transferChildToParent(uint256,address,uint256,address,uint256,bytes)",
     "encoding": "0x08937f62",
     "inputs": [
       {
@@ -264,12 +261,12 @@
         "type": "bytes"
       }
     ],
-    "outputs": []
+    "name": "transferChildToParent",
+    "outputs": [],
+    "signature": "transferChildToParent(uint256,address,uint256,address,uint256,bytes)",
+    "type": "function"
   },
   {
-    "name": "getChild",
-    "type": "function",
-    "signature": "getChild(address,uint256,address,uint256)",
     "encoding": "0xba6b5f96",
     "inputs": [
       {
@@ -289,13 +286,13 @@
         "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "getChild",
+    "outputs": [],
+    "signature": "getChild(address,uint256,address,uint256)",
+    "type": "function"
   },
   {
-    "name": "totalChildContracts",
-    "type": "function",
     "constant": true,
-    "signature": "totalChildContracts(uint256)",
     "encoding": "0x8da7d0b5",
     "inputs": [
       {
@@ -303,18 +300,18 @@
         "type": "uint256"
       }
     ],
+    "name": "totalChildContracts",
     "outputs": [
       {
         "name": "ret_0",
         "type": "uint256"
       }
-    ]
+    ],
+    "signature": "totalChildContracts(uint256)",
+    "type": "function"
   },
   {
-    "name": "childContractByIndex",
-    "type": "function",
     "constant": true,
-    "signature": "childContractByIndex(uint256,uint256)",
     "encoding": "0x0d5a621b",
     "inputs": [
       {
@@ -326,18 +323,18 @@
         "type": "uint256"
       }
     ],
+    "name": "childContractByIndex",
     "outputs": [
       {
         "name": "childContract",
         "type": "address"
       }
-    ]
+    ],
+    "signature": "childContractByIndex(uint256,uint256)",
+    "type": "function"
   },
   {
-    "name": "totalChildTokens",
-    "type": "function",
     "constant": true,
-    "signature": "totalChildTokens(uint256,address)",
     "encoding": "0x35b21ceb",
     "inputs": [
       {
@@ -349,18 +346,18 @@
         "type": "address"
       }
     ],
+    "name": "totalChildTokens",
     "outputs": [
       {
         "name": "ret_0",
         "type": "uint256"
       }
-    ]
+    ],
+    "signature": "totalChildTokens(uint256,address)",
+    "type": "function"
   },
   {
-    "name": "childTokenByIndex",
-    "type": "function",
     "constant": true,
-    "signature": "childTokenByIndex(uint256,address,uint256)",
     "encoding": "0x160b01a1",
     "inputs": [
       {
@@ -376,17 +373,17 @@
         "type": "uint256"
       }
     ],
+    "name": "childTokenByIndex",
     "outputs": [
       {
         "name": "childTokenId",
         "type": "uint256"
       }
-    ]
+    ],
+    "signature": "childTokenByIndex(uint256,address,uint256)",
+    "type": "function"
   },
   {
-    "name": "ReceivedERC20",
-    "type": "event",
-    "signature": "ReceivedERC20(address,uint256,address,uint256)",
     "encoding": "0x684ce28ace37552c6bfb98b7cceda8ed55327078eafb5dfb31218e0856382763",
     "inputs": [
       {
@@ -409,12 +406,12 @@
         "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "ReceivedERC20",
+    "outputs": [],
+    "signature": "ReceivedERC20(address,uint256,address,uint256)",
+    "type": "event"
   },
   {
-    "name": "TransferERC20",
-    "type": "event",
-    "signature": "TransferERC20(uint256,address,address,uint256)",
     "encoding": "0xa8352277873fc0d2b233b8127433da351a4164fa701ed6ff79655694222932c4",
     "inputs": [
       {
@@ -437,12 +434,12 @@
         "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "TransferERC20",
+    "outputs": [],
+    "signature": "TransferERC20(uint256,address,address,uint256)",
+    "type": "event"
   },
   {
-    "name": "tokenFallback",
-    "type": "function",
-    "signature": "tokenFallback(address,uint256,bytes)",
     "encoding": "0xc0ee0b8a",
     "inputs": [
       {
@@ -458,13 +455,13 @@
         "type": "bytes"
       }
     ],
-    "outputs": []
+    "name": "tokenFallback",
+    "outputs": [],
+    "signature": "tokenFallback(address,uint256,bytes)",
+    "type": "function"
   },
   {
-    "name": "balanceOfERC20",
-    "type": "function",
     "constant": true,
-    "signature": "balanceOfERC20(uint256,address)",
     "encoding": "0xe226ed22",
     "inputs": [
       {
@@ -476,17 +473,17 @@
         "type": "address"
       }
     ],
+    "name": "balanceOfERC20",
     "outputs": [
       {
         "name": "ret_0",
         "type": "uint256"
       }
-    ]
+    ],
+    "signature": "balanceOfERC20(uint256,address)",
+    "type": "function"
   },
   {
-    "name": "transferERC20",
-    "type": "function",
-    "signature": "transferERC20(uint256,address,address,uint256)",
     "encoding": "0x830ef41b",
     "inputs": [
       {
@@ -506,12 +503,12 @@
         "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "transferERC20",
+    "outputs": [],
+    "signature": "transferERC20(uint256,address,address,uint256)",
+    "type": "function"
   },
   {
-    "name": "transferERC223",
-    "type": "function",
-    "signature": "transferERC223(uint256,address,address,uint256,bytes)",
     "encoding": "0xd49d1bac",
     "inputs": [
       {
@@ -535,12 +532,12 @@
         "type": "bytes"
       }
     ],
-    "outputs": []
+    "name": "transferERC223",
+    "outputs": [],
+    "signature": "transferERC223(uint256,address,address,uint256,bytes)",
+    "type": "function"
   },
   {
-    "name": "getERC20",
-    "type": "function",
-    "signature": "getERC20(address,uint256,address,uint256)",
     "encoding": "0x07cff6f2",
     "inputs": [
       {
@@ -560,13 +557,13 @@
         "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "getERC20",
+    "outputs": [],
+    "signature": "getERC20(address,uint256,address,uint256)",
+    "type": "function"
   },
   {
-    "name": "totalERC20Contracts",
-    "type": "function",
     "constant": true,
-    "signature": "totalERC20Contracts(uint256)",
     "encoding": "0xa7811732",
     "inputs": [
       {
@@ -574,18 +571,18 @@
         "type": "uint256"
       }
     ],
+    "name": "totalERC20Contracts",
     "outputs": [
       {
         "name": "ret_0",
         "type": "uint256"
       }
-    ]
+    ],
+    "signature": "totalERC20Contracts(uint256)",
+    "type": "function"
   },
   {
-    "name": "erc20ContractByIndex",
-    "type": "function",
     "constant": true,
-    "signature": "erc20ContractByIndex(uint256,uint256)",
     "encoding": "0x627c81ff",
     "inputs": [
       {
@@ -597,17 +594,17 @@
         "type": "uint256"
       }
     ],
+    "name": "erc20ContractByIndex",
     "outputs": [
       {
         "name": "ret_0",
         "type": "address"
       }
-    ]
+    ],
+    "signature": "erc20ContractByIndex(uint256,uint256)",
+    "type": "function"
   },
   {
-    "name": "transferFrom",
-    "type": "function",
-    "signature": "transferFrom(address,address,uint256)",
     "encoding": "0x23b872dd",
     "inputs": [
       {
@@ -623,17 +620,17 @@
         "type": "uint256"
       }
     ],
+    "name": "transferFrom",
     "outputs": [
       {
         "name": "success",
         "type": "bool"
       }
-    ]
+    ],
+    "signature": "transferFrom(address,address,uint256)",
+    "type": "function"
   },
   {
-    "name": "transfer",
-    "type": "function",
-    "signature": "transfer(address,uint256)",
     "encoding": "0xa9059cbb",
     "inputs": [
       {
@@ -645,17 +642,17 @@
         "type": "uint256"
       }
     ],
+    "name": "transfer",
     "outputs": [
       {
         "name": "success",
         "type": "bool"
       }
-    ]
+    ],
+    "signature": "transfer(address,uint256)",
+    "type": "function"
   },
   {
-    "name": "transfer",
-    "type": "function",
-    "signature": "transfer(address,uint256,bytes)",
     "encoding": "0xbe45fd62",
     "inputs": [
       {
@@ -671,18 +668,18 @@
         "type": "bytes"
       }
     ],
+    "name": "transfer",
     "outputs": [
       {
         "name": "success",
         "type": "bool"
       }
-    ]
+    ],
+    "signature": "transfer(address,uint256,bytes)",
+    "type": "function"
   },
   {
-    "name": "allowance",
-    "type": "function",
     "constant": true,
-    "signature": "allowance(address,address)",
     "encoding": "0xdd62ed3e",
     "inputs": [
       {
@@ -694,17 +691,17 @@
         "type": "address"
       }
     ],
+    "name": "allowance",
     "outputs": [
       {
         "name": "remaining",
         "type": "uint256"
       }
-    ]
+    ],
+    "signature": "allowance(address,address)",
+    "type": "function"
   },
   {
-    "name": "transferToParent",
-    "type": "function",
-    "signature": "transferToParent(address,address,uint256,uint256,bytes)",
     "encoding": "0xf50acfa0",
     "inputs": [
       {
@@ -728,12 +725,12 @@
         "type": "bytes"
       }
     ],
-    "outputs": []
+    "name": "transferToParent",
+    "outputs": [],
+    "signature": "transferToParent(address,address,uint256,uint256,bytes)",
+    "type": "function"
   },
   {
-    "name": "mint",
-    "type": "function",
-    "signature": "mint(address)",
     "encoding": "0x6a627842",
     "inputs": [
       {
@@ -741,18 +738,18 @@
         "type": "address"
       }
     ],
+    "name": "mint",
     "outputs": [
       {
         "name": "ret_0",
         "type": "uint256"
       }
-    ]
+    ],
+    "signature": "mint(address)",
+    "type": "function"
   },
   {
-    "name": "isContract",
-    "type": "function",
     "constant": true,
-    "signature": "isContract(address)",
     "encoding": "0x16279055",
     "inputs": [
       {
@@ -760,18 +757,18 @@
         "type": "address"
       }
     ],
+    "name": "isContract",
     "outputs": [
       {
         "name": "ret_0",
         "type": "bool"
       }
-    ]
+    ],
+    "signature": "isContract(address)",
+    "type": "function"
   },
   {
-    "name": "rootOwnerOf",
-    "type": "function",
     "constant": true,
-    "signature": "rootOwnerOf(uint256)",
     "encoding": "0x43a61a8e",
     "inputs": [
       {
@@ -779,18 +776,18 @@
         "type": "uint256"
       }
     ],
+    "name": "rootOwnerOf",
     "outputs": [
       {
         "name": "rootOwner",
         "type": "bytes32"
       }
-    ]
+    ],
+    "signature": "rootOwnerOf(uint256)",
+    "type": "function"
   },
   {
-    "name": "rootOwnerOfChild",
-    "type": "function",
     "constant": true,
-    "signature": "rootOwnerOfChild(address,uint256)",
     "encoding": "0xed81cdda",
     "inputs": [
       {
@@ -802,18 +799,18 @@
         "type": "uint256"
       }
     ],
+    "name": "rootOwnerOfChild",
     "outputs": [
       {
         "name": "rootOwner",
         "type": "bytes32"
       }
-    ]
+    ],
+    "signature": "rootOwnerOfChild(address,uint256)",
+    "type": "function"
   },
   {
-    "name": "ownerOf",
-    "type": "function",
     "constant": true,
-    "signature": "ownerOf(uint256)",
     "encoding": "0x6352211e",
     "inputs": [
       {
@@ -821,18 +818,18 @@
         "type": "uint256"
       }
     ],
+    "name": "ownerOf",
     "outputs": [
       {
         "name": "tokenOwner",
         "type": "address"
       }
-    ]
+    ],
+    "signature": "ownerOf(uint256)",
+    "type": "function"
   },
   {
-    "name": "balanceOf",
-    "type": "function",
     "constant": true,
-    "signature": "balanceOf(address)",
     "encoding": "0x70a08231",
     "inputs": [
       {
@@ -840,17 +837,17 @@
         "type": "address"
       }
     ],
+    "name": "balanceOf",
     "outputs": [
       {
         "name": "ret_0",
         "type": "uint256"
       }
-    ]
+    ],
+    "signature": "balanceOf(address)",
+    "type": "function"
   },
   {
-    "name": "approve",
-    "type": "function",
-    "signature": "approve(address,uint256)",
     "encoding": "0x095ea7b3",
     "inputs": [
       {
@@ -862,13 +859,13 @@
         "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "approve",
+    "outputs": [],
+    "signature": "approve(address,uint256)",
+    "type": "function"
   },
   {
-    "name": "getApproved",
-    "type": "function",
     "constant": true,
-    "signature": "getApproved(uint256)",
     "encoding": "0x081812fc",
     "inputs": [
       {
@@ -876,17 +873,17 @@
         "type": "uint256"
       }
     ],
+    "name": "getApproved",
     "outputs": [
       {
         "name": "ret_0",
         "type": "address"
       }
-    ]
+    ],
+    "signature": "getApproved(uint256)",
+    "type": "function"
   },
   {
-    "name": "setApprovalForAll",
-    "type": "function",
-    "signature": "setApprovalForAll(address,bool)",
     "encoding": "0xa22cb465",
     "inputs": [
       {
@@ -898,13 +895,13 @@
         "type": "bool"
       }
     ],
-    "outputs": []
+    "name": "setApprovalForAll",
+    "outputs": [],
+    "signature": "setApprovalForAll(address,bool)",
+    "type": "function"
   },
   {
-    "name": "isApprovedForAll",
-    "type": "function",
     "constant": true,
-    "signature": "isApprovedForAll(address,address)",
     "encoding": "0xe985e9c5",
     "inputs": [
       {
@@ -916,17 +913,17 @@
         "type": "address"
       }
     ],
+    "name": "isApprovedForAll",
     "outputs": [
       {
         "name": "ret_0",
         "type": "bool"
       }
-    ]
+    ],
+    "signature": "isApprovedForAll(address,address)",
+    "type": "function"
   },
   {
-    "name": "_transferFrom",
-    "type": "function",
-    "signature": "_transferFrom(address,address,uint256)",
     "encoding": "0xcb712535",
     "inputs": [
       {
@@ -942,12 +939,12 @@
         "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "_transferFrom",
+    "outputs": [],
+    "signature": "_transferFrom(address,address,uint256)",
+    "type": "function"
   },
   {
-    "name": "transferFrom",
-    "type": "function",
-    "signature": "transferFrom(address,address,uint256)",
     "encoding": "0x23b872dd",
     "inputs": [
       {
@@ -963,12 +960,12 @@
         "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "transferFrom",
+    "outputs": [],
+    "signature": "transferFrom(address,address,uint256)",
+    "type": "function"
   },
   {
-    "name": "safeTransferFrom",
-    "type": "function",
-    "signature": "safeTransferFrom(address,address,uint256)",
     "encoding": "0x42842e0e",
     "inputs": [
       {
@@ -984,12 +981,12 @@
         "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "safeTransferFrom",
+    "outputs": [],
+    "signature": "safeTransferFrom(address,address,uint256)",
+    "type": "function"
   },
   {
-    "name": "safeTransferFrom",
-    "type": "function",
-    "signature": "safeTransferFrom(address,address,uint256,bytes)",
     "encoding": "0xb88d4fde",
     "inputs": [
       {
@@ -1009,12 +1006,12 @@
         "type": "bytes"
       }
     ],
-    "outputs": []
+    "name": "safeTransferFrom",
+    "outputs": [],
+    "signature": "safeTransferFrom(address,address,uint256,bytes)",
+    "type": "function"
   },
   {
-    "name": "removeChild",
-    "type": "function",
-    "signature": "removeChild(uint256,address,uint256)",
     "encoding": "0x0f0ba766",
     "inputs": [
       {
@@ -1030,12 +1027,12 @@
         "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "removeChild",
+    "outputs": [],
+    "signature": "removeChild(uint256,address,uint256)",
+    "type": "function"
   },
   {
-    "name": "safeTransferChild",
-    "type": "function",
-    "signature": "safeTransferChild(uint256,address,address,uint256)",
     "encoding": "0x1d98f3c5",
     "inputs": [
       {
@@ -1055,12 +1052,12 @@
         "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "safeTransferChild",
+    "outputs": [],
+    "signature": "safeTransferChild(uint256,address,address,uint256)",
+    "type": "function"
   },
   {
-    "name": "safeTransferChild",
-    "type": "function",
-    "signature": "safeTransferChild(uint256,address,address,uint256,bytes)",
     "encoding": "0x8d81f51e",
     "inputs": [
       {
@@ -1084,12 +1081,12 @@
         "type": "bytes"
       }
     ],
-    "outputs": []
+    "name": "safeTransferChild",
+    "outputs": [],
+    "signature": "safeTransferChild(uint256,address,address,uint256,bytes)",
+    "type": "function"
   },
   {
-    "name": "transferChild",
-    "type": "function",
-    "signature": "transferChild(uint256,address,address,uint256)",
     "encoding": "0xbef44f18",
     "inputs": [
       {
@@ -1109,12 +1106,12 @@
         "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "transferChild",
+    "outputs": [],
+    "signature": "transferChild(uint256,address,address,uint256)",
+    "type": "function"
   },
   {
-    "name": "transferChildToParent",
-    "type": "function",
-    "signature": "transferChildToParent(uint256,address,uint256,address,uint256,bytes)",
     "encoding": "0x08937f62",
     "inputs": [
       {
@@ -1142,12 +1139,12 @@
         "type": "bytes"
       }
     ],
-    "outputs": []
+    "name": "transferChildToParent",
+    "outputs": [],
+    "signature": "transferChildToParent(uint256,address,uint256,address,uint256,bytes)",
+    "type": "function"
   },
   {
-    "name": "getChild",
-    "type": "function",
-    "signature": "getChild(address,uint256,address,uint256)",
     "encoding": "0xba6b5f96",
     "inputs": [
       {
@@ -1167,12 +1164,12 @@
         "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "getChild",
+    "outputs": [],
+    "signature": "getChild(address,uint256,address,uint256)",
+    "type": "function"
   },
   {
-    "name": "onERC721Received",
-    "type": "function",
-    "signature": "onERC721Received(address,uint256,bytes)",
     "encoding": "0xf0b9e5ba",
     "inputs": [
       {
@@ -1188,17 +1185,17 @@
         "type": "bytes"
       }
     ],
+    "name": "onERC721Received",
     "outputs": [
       {
         "name": "ret_0",
         "type": "bytes4"
       }
-    ]
+    ],
+    "signature": "onERC721Received(address,uint256,bytes)",
+    "type": "function"
   },
   {
-    "name": "onERC721Received",
-    "type": "function",
-    "signature": "onERC721Received(address,address,uint256,bytes)",
     "encoding": "0x150b7a02",
     "inputs": [
       {
@@ -1218,17 +1215,17 @@
         "type": "bytes"
       }
     ],
+    "name": "onERC721Received",
     "outputs": [
       {
         "name": "ret_0",
         "type": "bytes4"
       }
-    ]
+    ],
+    "signature": "onERC721Received(address,address,uint256,bytes)",
+    "type": "function"
   },
   {
-    "name": "receiveChild",
-    "type": "function",
-    "signature": "receiveChild(address,uint256,address,uint256)",
     "encoding": "0x597c255f",
     "inputs": [
       {
@@ -1248,13 +1245,13 @@
         "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "receiveChild",
+    "outputs": [],
+    "signature": "receiveChild(address,uint256,address,uint256)",
+    "type": "function"
   },
   {
-    "name": "_ownerOfChild",
-    "type": "function",
     "constant": true,
-    "signature": "_ownerOfChild(address,uint256)",
     "encoding": "0xa5aeb1d4",
     "inputs": [
       {
@@ -1266,6 +1263,7 @@
         "type": "uint256"
       }
     ],
+    "name": "_ownerOfChild",
     "outputs": [
       {
         "name": "parentTokenOwner",
@@ -1275,13 +1273,12 @@
         "name": "parentTokenId",
         "type": "uint256"
       }
-    ]
+    ],
+    "signature": "_ownerOfChild(address,uint256)",
+    "type": "function"
   },
   {
-    "name": "ownerOfChild",
-    "type": "function",
     "constant": true,
-    "signature": "ownerOfChild(address,uint256)",
     "encoding": "0xeadb80b8",
     "inputs": [
       {
@@ -1293,6 +1290,7 @@
         "type": "uint256"
       }
     ],
+    "name": "ownerOfChild",
     "outputs": [
       {
         "name": "parentTokenOwner",
@@ -1302,13 +1300,12 @@
         "name": "parentTokenId",
         "type": "uint256"
       }
-    ]
+    ],
+    "signature": "ownerOfChild(address,uint256)",
+    "type": "function"
   },
   {
-    "name": "childExists",
-    "type": "function",
     "constant": true,
-    "signature": "childExists(address,uint256)",
     "encoding": "0x5680a3ad",
     "inputs": [
       {
@@ -1320,18 +1317,18 @@
         "type": "uint256"
       }
     ],
+    "name": "childExists",
     "outputs": [
       {
         "name": "ret_0",
         "type": "bool"
       }
-    ]
+    ],
+    "signature": "childExists(address,uint256)",
+    "type": "function"
   },
   {
-    "name": "totalChildContracts",
-    "type": "function",
     "constant": true,
-    "signature": "totalChildContracts(uint256)",
     "encoding": "0x8da7d0b5",
     "inputs": [
       {
@@ -1339,18 +1336,18 @@
         "type": "uint256"
       }
     ],
+    "name": "totalChildContracts",
     "outputs": [
       {
         "name": "ret_0",
         "type": "uint256"
       }
-    ]
+    ],
+    "signature": "totalChildContracts(uint256)",
+    "type": "function"
   },
   {
-    "name": "childContractByIndex",
-    "type": "function",
     "constant": true,
-    "signature": "childContractByIndex(uint256,uint256)",
     "encoding": "0x0d5a621b",
     "inputs": [
       {
@@ -1362,18 +1359,18 @@
         "type": "uint256"
       }
     ],
+    "name": "childContractByIndex",
     "outputs": [
       {
         "name": "childContract",
         "type": "address"
       }
-    ]
+    ],
+    "signature": "childContractByIndex(uint256,uint256)",
+    "type": "function"
   },
   {
-    "name": "totalChildTokens",
-    "type": "function",
     "constant": true,
-    "signature": "totalChildTokens(uint256,address)",
     "encoding": "0x35b21ceb",
     "inputs": [
       {
@@ -1385,18 +1382,18 @@
         "type": "address"
       }
     ],
+    "name": "totalChildTokens",
     "outputs": [
       {
         "name": "ret_0",
         "type": "uint256"
       }
-    ]
+    ],
+    "signature": "totalChildTokens(uint256,address)",
+    "type": "function"
   },
   {
-    "name": "childTokenByIndex",
-    "type": "function",
     "constant": true,
-    "signature": "childTokenByIndex(uint256,address,uint256)",
     "encoding": "0x160b01a1",
     "inputs": [
       {
@@ -1412,18 +1409,18 @@
         "type": "uint256"
       }
     ],
+    "name": "childTokenByIndex",
     "outputs": [
       {
         "name": "childTokenId",
         "type": "uint256"
       }
-    ]
+    ],
+    "signature": "childTokenByIndex(uint256,address,uint256)",
+    "type": "function"
   },
   {
-    "name": "balanceOfERC20",
-    "type": "function",
     "constant": true,
-    "signature": "balanceOfERC20(uint256,address)",
     "encoding": "0xe226ed22",
     "inputs": [
       {
@@ -1435,17 +1432,17 @@
         "type": "address"
       }
     ],
+    "name": "balanceOfERC20",
     "outputs": [
       {
         "name": "ret_0",
         "type": "uint256"
       }
-    ]
+    ],
+    "signature": "balanceOfERC20(uint256,address)",
+    "type": "function"
   },
   {
-    "name": "removeERC20",
-    "type": "function",
-    "signature": "removeERC20(uint256,address,uint256)",
     "encoding": "0x9771ccc8",
     "inputs": [
       {
@@ -1461,12 +1458,12 @@
         "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "removeERC20",
+    "outputs": [],
+    "signature": "removeERC20(uint256,address,uint256)",
+    "type": "function"
   },
   {
-    "name": "transferERC20",
-    "type": "function",
-    "signature": "transferERC20(uint256,address,address,uint256)",
     "encoding": "0x830ef41b",
     "inputs": [
       {
@@ -1486,12 +1483,12 @@
         "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "transferERC20",
+    "outputs": [],
+    "signature": "transferERC20(uint256,address,address,uint256)",
+    "type": "function"
   },
   {
-    "name": "transferERC223",
-    "type": "function",
-    "signature": "transferERC223(uint256,address,address,uint256,bytes)",
     "encoding": "0xd49d1bac",
     "inputs": [
       {
@@ -1515,12 +1512,12 @@
         "type": "bytes"
       }
     ],
-    "outputs": []
+    "name": "transferERC223",
+    "outputs": [],
+    "signature": "transferERC223(uint256,address,address,uint256,bytes)",
+    "type": "function"
   },
   {
-    "name": "getERC20",
-    "type": "function",
-    "signature": "getERC20(address,uint256,address,uint256)",
     "encoding": "0x07cff6f2",
     "inputs": [
       {
@@ -1540,12 +1537,12 @@
         "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "getERC20",
+    "outputs": [],
+    "signature": "getERC20(address,uint256,address,uint256)",
+    "type": "function"
   },
   {
-    "name": "erc20Received",
-    "type": "function",
-    "signature": "erc20Received(address,uint256,address,uint256)",
     "encoding": "0x9e95670d",
     "inputs": [
       {
@@ -1565,12 +1562,12 @@
         "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "erc20Received",
+    "outputs": [],
+    "signature": "erc20Received(address,uint256,address,uint256)",
+    "type": "function"
   },
   {
-    "name": "tokenFallback",
-    "type": "function",
-    "signature": "tokenFallback(address,uint256,bytes)",
     "encoding": "0xc0ee0b8a",
     "inputs": [
       {
@@ -1586,13 +1583,13 @@
         "type": "bytes"
       }
     ],
-    "outputs": []
+    "name": "tokenFallback",
+    "outputs": [],
+    "signature": "tokenFallback(address,uint256,bytes)",
+    "type": "function"
   },
   {
-    "name": "erc20ContractByIndex",
-    "type": "function",
     "constant": true,
-    "signature": "erc20ContractByIndex(uint256,uint256)",
     "encoding": "0x627c81ff",
     "inputs": [
       {
@@ -1604,18 +1601,18 @@
         "type": "uint256"
       }
     ],
+    "name": "erc20ContractByIndex",
     "outputs": [
       {
         "name": "ret_0",
         "type": "address"
       }
-    ]
+    ],
+    "signature": "erc20ContractByIndex(uint256,uint256)",
+    "type": "function"
   },
   {
-    "name": "totalERC20Contracts",
-    "type": "function",
     "constant": true,
-    "signature": "totalERC20Contracts(uint256)",
     "encoding": "0xa7811732",
     "inputs": [
       {
@@ -1623,17 +1620,17 @@
         "type": "uint256"
       }
     ],
+    "name": "totalERC20Contracts",
     "outputs": [
       {
         "name": "ret_0",
         "type": "uint256"
       }
-    ]
+    ],
+    "signature": "totalERC20Contracts(uint256)",
+    "type": "function"
   },
   {
-    "name": "ReceivedChild",
-    "type": "event",
-    "signature": "ReceivedChild(address,uint256,address,uint256)",
     "encoding": "0x0371ddf2288ad1ba92626a7e31c86a9d006e592cfe57d7d946ef08b13457c08b",
     "inputs": [
       {
@@ -1656,12 +1653,12 @@
         "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "ReceivedChild",
+    "outputs": [],
+    "signature": "ReceivedChild(address,uint256,address,uint256)",
+    "type": "event"
   },
   {
-    "name": "TransferChild",
-    "type": "event",
-    "signature": "TransferChild(uint256,address,address,uint256)",
     "encoding": "0x0ef52e516fb5aec15a5d3587e5480481b702b26db93c8430eca78b61990fd3f6",
     "inputs": [
       {
@@ -1684,13 +1681,13 @@
         "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "TransferChild",
+    "outputs": [],
+    "signature": "TransferChild(uint256,address,address,uint256)",
+    "type": "event"
   },
   {
-    "name": "rootOwnerOf",
-    "type": "function",
     "constant": true,
-    "signature": "rootOwnerOf(uint256)",
     "encoding": "0x43a61a8e",
     "inputs": [
       {
@@ -1698,18 +1695,18 @@
         "type": "uint256"
       }
     ],
+    "name": "rootOwnerOf",
     "outputs": [
       {
         "name": "rootOwner",
         "type": "bytes32"
       }
-    ]
+    ],
+    "signature": "rootOwnerOf(uint256)",
+    "type": "function"
   },
   {
-    "name": "rootOwnerOfChild",
-    "type": "function",
     "constant": true,
-    "signature": "rootOwnerOfChild(address,uint256)",
     "encoding": "0xed81cdda",
     "inputs": [
       {
@@ -1721,18 +1718,18 @@
         "type": "uint256"
       }
     ],
+    "name": "rootOwnerOfChild",
     "outputs": [
       {
         "name": "rootOwner",
         "type": "bytes32"
       }
-    ]
+    ],
+    "signature": "rootOwnerOfChild(address,uint256)",
+    "type": "function"
   },
   {
-    "name": "ownerOfChild",
-    "type": "function",
     "constant": true,
-    "signature": "ownerOfChild(address,uint256)",
     "encoding": "0xeadb80b8",
     "inputs": [
       {
@@ -1744,6 +1741,7 @@
         "type": "uint256"
       }
     ],
+    "name": "ownerOfChild",
     "outputs": [
       {
         "name": "parentTokenOwner",
@@ -1753,12 +1751,11 @@
         "name": "parentTokenId",
         "type": "uint256"
       }
-    ]
+    ],
+    "signature": "ownerOfChild(address,uint256)",
+    "type": "function"
   },
   {
-    "name": "onERC721Received",
-    "type": "function",
-    "signature": "onERC721Received(address,address,uint256,bytes)",
     "encoding": "0x150b7a02",
     "inputs": [
       {
@@ -1778,17 +1775,17 @@
         "type": "bytes"
       }
     ],
+    "name": "onERC721Received",
     "outputs": [
       {
         "name": "ret_0",
         "type": "bytes4"
       }
-    ]
+    ],
+    "signature": "onERC721Received(address,address,uint256,bytes)",
+    "type": "function"
   },
   {
-    "name": "transferChild",
-    "type": "function",
-    "signature": "transferChild(uint256,address,address,uint256)",
     "encoding": "0xbef44f18",
     "inputs": [
       {
@@ -1808,12 +1805,12 @@
         "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "transferChild",
+    "outputs": [],
+    "signature": "transferChild(uint256,address,address,uint256)",
+    "type": "function"
   },
   {
-    "name": "safeTransferChild",
-    "type": "function",
-    "signature": "safeTransferChild(uint256,address,address,uint256)",
     "encoding": "0x1d98f3c5",
     "inputs": [
       {
@@ -1833,12 +1830,12 @@
         "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "safeTransferChild",
+    "outputs": [],
+    "signature": "safeTransferChild(uint256,address,address,uint256)",
+    "type": "function"
   },
   {
-    "name": "safeTransferChild",
-    "type": "function",
-    "signature": "safeTransferChild(uint256,address,address,uint256,bytes)",
     "encoding": "0x8d81f51e",
     "inputs": [
       {
@@ -1862,12 +1859,12 @@
         "type": "bytes"
       }
     ],
-    "outputs": []
+    "name": "safeTransferChild",
+    "outputs": [],
+    "signature": "safeTransferChild(uint256,address,address,uint256,bytes)",
+    "type": "function"
   },
   {
-    "name": "transferChildToParent",
-    "type": "function",
-    "signature": "transferChildToParent(uint256,address,uint256,address,uint256,bytes)",
     "encoding": "0x08937f62",
     "inputs": [
       {
@@ -1895,12 +1892,12 @@
         "type": "bytes"
       }
     ],
-    "outputs": []
+    "name": "transferChildToParent",
+    "outputs": [],
+    "signature": "transferChildToParent(uint256,address,uint256,address,uint256,bytes)",
+    "type": "function"
   },
   {
-    "name": "getChild",
-    "type": "function",
-    "signature": "getChild(address,uint256,address,uint256)",
     "encoding": "0xba6b5f96",
     "inputs": [
       {
@@ -1920,13 +1917,13 @@
         "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "getChild",
+    "outputs": [],
+    "signature": "getChild(address,uint256,address,uint256)",
+    "type": "function"
   },
   {
-    "name": "totalChildContracts",
-    "type": "function",
     "constant": true,
-    "signature": "totalChildContracts(uint256)",
     "encoding": "0x8da7d0b5",
     "inputs": [
       {
@@ -1934,18 +1931,18 @@
         "type": "uint256"
       }
     ],
+    "name": "totalChildContracts",
     "outputs": [
       {
         "name": "ret_0",
         "type": "uint256"
       }
-    ]
+    ],
+    "signature": "totalChildContracts(uint256)",
+    "type": "function"
   },
   {
-    "name": "childContractByIndex",
-    "type": "function",
     "constant": true,
-    "signature": "childContractByIndex(uint256,uint256)",
     "encoding": "0x0d5a621b",
     "inputs": [
       {
@@ -1957,18 +1954,18 @@
         "type": "uint256"
       }
     ],
+    "name": "childContractByIndex",
     "outputs": [
       {
         "name": "childContract",
         "type": "address"
       }
-    ]
+    ],
+    "signature": "childContractByIndex(uint256,uint256)",
+    "type": "function"
   },
   {
-    "name": "totalChildTokens",
-    "type": "function",
     "constant": true,
-    "signature": "totalChildTokens(uint256,address)",
     "encoding": "0x35b21ceb",
     "inputs": [
       {
@@ -1980,18 +1977,18 @@
         "type": "address"
       }
     ],
+    "name": "totalChildTokens",
     "outputs": [
       {
         "name": "ret_0",
         "type": "uint256"
       }
-    ]
+    ],
+    "signature": "totalChildTokens(uint256,address)",
+    "type": "function"
   },
   {
-    "name": "childTokenByIndex",
-    "type": "function",
     "constant": true,
-    "signature": "childTokenByIndex(uint256,address,uint256)",
     "encoding": "0x160b01a1",
     "inputs": [
       {
@@ -2007,17 +2004,17 @@
         "type": "uint256"
       }
     ],
+    "name": "childTokenByIndex",
     "outputs": [
       {
         "name": "childTokenId",
         "type": "uint256"
       }
-    ]
+    ],
+    "signature": "childTokenByIndex(uint256,address,uint256)",
+    "type": "function"
   },
   {
-    "name": "ReceivedERC20",
-    "type": "event",
-    "signature": "ReceivedERC20(address,uint256,address,uint256)",
     "encoding": "0x684ce28ace37552c6bfb98b7cceda8ed55327078eafb5dfb31218e0856382763",
     "inputs": [
       {
@@ -2040,12 +2037,12 @@
         "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "ReceivedERC20",
+    "outputs": [],
+    "signature": "ReceivedERC20(address,uint256,address,uint256)",
+    "type": "event"
   },
   {
-    "name": "TransferERC20",
-    "type": "event",
-    "signature": "TransferERC20(uint256,address,address,uint256)",
     "encoding": "0xa8352277873fc0d2b233b8127433da351a4164fa701ed6ff79655694222932c4",
     "inputs": [
       {
@@ -2068,12 +2065,12 @@
         "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "TransferERC20",
+    "outputs": [],
+    "signature": "TransferERC20(uint256,address,address,uint256)",
+    "type": "event"
   },
   {
-    "name": "tokenFallback",
-    "type": "function",
-    "signature": "tokenFallback(address,uint256,bytes)",
     "encoding": "0xc0ee0b8a",
     "inputs": [
       {
@@ -2089,13 +2086,13 @@
         "type": "bytes"
       }
     ],
-    "outputs": []
+    "name": "tokenFallback",
+    "outputs": [],
+    "signature": "tokenFallback(address,uint256,bytes)",
+    "type": "function"
   },
   {
-    "name": "balanceOfERC20",
-    "type": "function",
     "constant": true,
-    "signature": "balanceOfERC20(uint256,address)",
     "encoding": "0xe226ed22",
     "inputs": [
       {
@@ -2107,17 +2104,17 @@
         "type": "address"
       }
     ],
+    "name": "balanceOfERC20",
     "outputs": [
       {
         "name": "ret_0",
         "type": "uint256"
       }
-    ]
+    ],
+    "signature": "balanceOfERC20(uint256,address)",
+    "type": "function"
   },
   {
-    "name": "transferERC20",
-    "type": "function",
-    "signature": "transferERC20(uint256,address,address,uint256)",
     "encoding": "0x830ef41b",
     "inputs": [
       {
@@ -2137,12 +2134,12 @@
         "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "transferERC20",
+    "outputs": [],
+    "signature": "transferERC20(uint256,address,address,uint256)",
+    "type": "function"
   },
   {
-    "name": "transferERC223",
-    "type": "function",
-    "signature": "transferERC223(uint256,address,address,uint256,bytes)",
     "encoding": "0xd49d1bac",
     "inputs": [
       {
@@ -2166,12 +2163,12 @@
         "type": "bytes"
       }
     ],
-    "outputs": []
+    "name": "transferERC223",
+    "outputs": [],
+    "signature": "transferERC223(uint256,address,address,uint256,bytes)",
+    "type": "function"
   },
   {
-    "name": "getERC20",
-    "type": "function",
-    "signature": "getERC20(address,uint256,address,uint256)",
     "encoding": "0x07cff6f2",
     "inputs": [
       {
@@ -2191,13 +2188,13 @@
         "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "getERC20",
+    "outputs": [],
+    "signature": "getERC20(address,uint256,address,uint256)",
+    "type": "function"
   },
   {
-    "name": "totalERC20Contracts",
-    "type": "function",
     "constant": true,
-    "signature": "totalERC20Contracts(uint256)",
     "encoding": "0xa7811732",
     "inputs": [
       {
@@ -2205,18 +2202,18 @@
         "type": "uint256"
       }
     ],
+    "name": "totalERC20Contracts",
     "outputs": [
       {
         "name": "ret_0",
         "type": "uint256"
       }
-    ]
+    ],
+    "signature": "totalERC20Contracts(uint256)",
+    "type": "function"
   },
   {
-    "name": "erc20ContractByIndex",
-    "type": "function",
     "constant": true,
-    "signature": "erc20ContractByIndex(uint256,uint256)",
     "encoding": "0x627c81ff",
     "inputs": [
       {
@@ -2228,17 +2225,17 @@
         "type": "uint256"
       }
     ],
+    "name": "erc20ContractByIndex",
     "outputs": [
       {
         "name": "ret_0",
         "type": "address"
       }
-    ]
+    ],
+    "signature": "erc20ContractByIndex(uint256,uint256)",
+    "type": "function"
   },
   {
-    "name": "transferFrom",
-    "type": "function",
-    "signature": "transferFrom(address,address,uint256)",
     "encoding": "0x23b872dd",
     "inputs": [
       {
@@ -2254,17 +2251,17 @@
         "type": "uint256"
       }
     ],
+    "name": "transferFrom",
     "outputs": [
       {
         "name": "success",
         "type": "bool"
       }
-    ]
+    ],
+    "signature": "transferFrom(address,address,uint256)",
+    "type": "function"
   },
   {
-    "name": "transfer",
-    "type": "function",
-    "signature": "transfer(address,uint256)",
     "encoding": "0xa9059cbb",
     "inputs": [
       {
@@ -2276,17 +2273,17 @@
         "type": "uint256"
       }
     ],
+    "name": "transfer",
     "outputs": [
       {
         "name": "success",
         "type": "bool"
       }
-    ]
+    ],
+    "signature": "transfer(address,uint256)",
+    "type": "function"
   },
   {
-    "name": "transfer",
-    "type": "function",
-    "signature": "transfer(address,uint256,bytes)",
     "encoding": "0xbe45fd62",
     "inputs": [
       {
@@ -2302,18 +2299,18 @@
         "type": "bytes"
       }
     ],
+    "name": "transfer",
     "outputs": [
       {
         "name": "success",
         "type": "bool"
       }
-    ]
+    ],
+    "signature": "transfer(address,uint256,bytes)",
+    "type": "function"
   },
   {
-    "name": "allowance",
-    "type": "function",
     "constant": true,
-    "signature": "allowance(address,address)",
     "encoding": "0xdd62ed3e",
     "inputs": [
       {
@@ -2325,17 +2322,17 @@
         "type": "address"
       }
     ],
+    "name": "allowance",
     "outputs": [
       {
         "name": "remaining",
         "type": "uint256"
       }
-    ]
+    ],
+    "signature": "allowance(address,address)",
+    "type": "function"
   },
   {
-    "name": "transferToParent",
-    "type": "function",
-    "signature": "transferToParent(address,address,uint256,uint256,bytes)",
     "encoding": "0xf50acfa0",
     "inputs": [
       {
@@ -2359,12 +2356,12 @@
         "type": "bytes"
       }
     ],
-    "outputs": []
+    "name": "transferToParent",
+    "outputs": [],
+    "signature": "transferToParent(address,address,uint256,uint256,bytes)",
+    "type": "function"
   },
   {
-    "name": "mint",
-    "type": "function",
-    "signature": "mint(address)",
     "encoding": "0x6a627842",
     "inputs": [
       {
@@ -2372,18 +2369,18 @@
         "type": "address"
       }
     ],
+    "name": "mint",
     "outputs": [
       {
         "name": "ret_0",
         "type": "uint256"
       }
-    ]
+    ],
+    "signature": "mint(address)",
+    "type": "function"
   },
   {
-    "name": "isContract",
-    "type": "function",
     "constant": true,
-    "signature": "isContract(address)",
     "encoding": "0x16279055",
     "inputs": [
       {
@@ -2391,18 +2388,18 @@
         "type": "address"
       }
     ],
+    "name": "isContract",
     "outputs": [
       {
         "name": "ret_0",
         "type": "bool"
       }
-    ]
+    ],
+    "signature": "isContract(address)",
+    "type": "function"
   },
   {
-    "name": "rootOwnerOf",
-    "type": "function",
     "constant": true,
-    "signature": "rootOwnerOf(uint256)",
     "encoding": "0x43a61a8e",
     "inputs": [
       {
@@ -2410,18 +2407,18 @@
         "type": "uint256"
       }
     ],
+    "name": "rootOwnerOf",
     "outputs": [
       {
         "name": "rootOwner",
         "type": "bytes32"
       }
-    ]
+    ],
+    "signature": "rootOwnerOf(uint256)",
+    "type": "function"
   },
   {
-    "name": "rootOwnerOfChild",
-    "type": "function",
     "constant": true,
-    "signature": "rootOwnerOfChild(address,uint256)",
     "encoding": "0xed81cdda",
     "inputs": [
       {
@@ -2433,18 +2430,18 @@
         "type": "uint256"
       }
     ],
+    "name": "rootOwnerOfChild",
     "outputs": [
       {
         "name": "rootOwner",
         "type": "bytes32"
       }
-    ]
+    ],
+    "signature": "rootOwnerOfChild(address,uint256)",
+    "type": "function"
   },
   {
-    "name": "ownerOf",
-    "type": "function",
     "constant": true,
-    "signature": "ownerOf(uint256)",
     "encoding": "0x6352211e",
     "inputs": [
       {
@@ -2452,18 +2449,18 @@
         "type": "uint256"
       }
     ],
+    "name": "ownerOf",
     "outputs": [
       {
         "name": "tokenOwner",
         "type": "address"
       }
-    ]
+    ],
+    "signature": "ownerOf(uint256)",
+    "type": "function"
   },
   {
-    "name": "balanceOf",
-    "type": "function",
     "constant": true,
-    "signature": "balanceOf(address)",
     "encoding": "0x70a08231",
     "inputs": [
       {
@@ -2471,17 +2468,17 @@
         "type": "address"
       }
     ],
+    "name": "balanceOf",
     "outputs": [
       {
         "name": "ret_0",
         "type": "uint256"
       }
-    ]
+    ],
+    "signature": "balanceOf(address)",
+    "type": "function"
   },
   {
-    "name": "approve",
-    "type": "function",
-    "signature": "approve(address,uint256)",
     "encoding": "0x095ea7b3",
     "inputs": [
       {
@@ -2493,13 +2490,13 @@
         "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "approve",
+    "outputs": [],
+    "signature": "approve(address,uint256)",
+    "type": "function"
   },
   {
-    "name": "getApproved",
-    "type": "function",
     "constant": true,
-    "signature": "getApproved(uint256)",
     "encoding": "0x081812fc",
     "inputs": [
       {
@@ -2507,17 +2504,17 @@
         "type": "uint256"
       }
     ],
+    "name": "getApproved",
     "outputs": [
       {
         "name": "ret_0",
         "type": "address"
       }
-    ]
+    ],
+    "signature": "getApproved(uint256)",
+    "type": "function"
   },
   {
-    "name": "setApprovalForAll",
-    "type": "function",
-    "signature": "setApprovalForAll(address,bool)",
     "encoding": "0xa22cb465",
     "inputs": [
       {
@@ -2529,13 +2526,13 @@
         "type": "bool"
       }
     ],
-    "outputs": []
+    "name": "setApprovalForAll",
+    "outputs": [],
+    "signature": "setApprovalForAll(address,bool)",
+    "type": "function"
   },
   {
-    "name": "isApprovedForAll",
-    "type": "function",
     "constant": true,
-    "signature": "isApprovedForAll(address,address)",
     "encoding": "0xe985e9c5",
     "inputs": [
       {
@@ -2547,17 +2544,17 @@
         "type": "address"
       }
     ],
+    "name": "isApprovedForAll",
     "outputs": [
       {
         "name": "ret_0",
         "type": "bool"
       }
-    ]
+    ],
+    "signature": "isApprovedForAll(address,address)",
+    "type": "function"
   },
   {
-    "name": "_transferFrom",
-    "type": "function",
-    "signature": "_transferFrom(address,address,uint256)",
     "encoding": "0xcb712535",
     "inputs": [
       {
@@ -2573,12 +2570,12 @@
         "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "_transferFrom",
+    "outputs": [],
+    "signature": "_transferFrom(address,address,uint256)",
+    "type": "function"
   },
   {
-    "name": "transferFrom",
-    "type": "function",
-    "signature": "transferFrom(address,address,uint256)",
     "encoding": "0x23b872dd",
     "inputs": [
       {
@@ -2594,12 +2591,12 @@
         "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "transferFrom",
+    "outputs": [],
+    "signature": "transferFrom(address,address,uint256)",
+    "type": "function"
   },
   {
-    "name": "safeTransferFrom",
-    "type": "function",
-    "signature": "safeTransferFrom(address,address,uint256)",
     "encoding": "0x42842e0e",
     "inputs": [
       {
@@ -2615,12 +2612,12 @@
         "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "safeTransferFrom",
+    "outputs": [],
+    "signature": "safeTransferFrom(address,address,uint256)",
+    "type": "function"
   },
   {
-    "name": "safeTransferFrom",
-    "type": "function",
-    "signature": "safeTransferFrom(address,address,uint256,bytes)",
     "encoding": "0xb88d4fde",
     "inputs": [
       {
@@ -2640,12 +2637,12 @@
         "type": "bytes"
       }
     ],
-    "outputs": []
+    "name": "safeTransferFrom",
+    "outputs": [],
+    "signature": "safeTransferFrom(address,address,uint256,bytes)",
+    "type": "function"
   },
   {
-    "name": "removeChild",
-    "type": "function",
-    "signature": "removeChild(uint256,address,uint256)",
     "encoding": "0x0f0ba766",
     "inputs": [
       {
@@ -2661,12 +2658,12 @@
         "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "removeChild",
+    "outputs": [],
+    "signature": "removeChild(uint256,address,uint256)",
+    "type": "function"
   },
   {
-    "name": "safeTransferChild",
-    "type": "function",
-    "signature": "safeTransferChild(uint256,address,address,uint256)",
     "encoding": "0x1d98f3c5",
     "inputs": [
       {
@@ -2686,12 +2683,12 @@
         "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "safeTransferChild",
+    "outputs": [],
+    "signature": "safeTransferChild(uint256,address,address,uint256)",
+    "type": "function"
   },
   {
-    "name": "safeTransferChild",
-    "type": "function",
-    "signature": "safeTransferChild(uint256,address,address,uint256,bytes)",
     "encoding": "0x8d81f51e",
     "inputs": [
       {
@@ -2715,12 +2712,12 @@
         "type": "bytes"
       }
     ],
-    "outputs": []
+    "name": "safeTransferChild",
+    "outputs": [],
+    "signature": "safeTransferChild(uint256,address,address,uint256,bytes)",
+    "type": "function"
   },
   {
-    "name": "transferChild",
-    "type": "function",
-    "signature": "transferChild(uint256,address,address,uint256)",
     "encoding": "0xbef44f18",
     "inputs": [
       {
@@ -2740,12 +2737,12 @@
         "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "transferChild",
+    "outputs": [],
+    "signature": "transferChild(uint256,address,address,uint256)",
+    "type": "function"
   },
   {
-    "name": "transferChildToParent",
-    "type": "function",
-    "signature": "transferChildToParent(uint256,address,uint256,address,uint256,bytes)",
     "encoding": "0x08937f62",
     "inputs": [
       {
@@ -2773,12 +2770,12 @@
         "type": "bytes"
       }
     ],
-    "outputs": []
+    "name": "transferChildToParent",
+    "outputs": [],
+    "signature": "transferChildToParent(uint256,address,uint256,address,uint256,bytes)",
+    "type": "function"
   },
   {
-    "name": "getChild",
-    "type": "function",
-    "signature": "getChild(address,uint256,address,uint256)",
     "encoding": "0xba6b5f96",
     "inputs": [
       {
@@ -2798,12 +2795,12 @@
         "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "getChild",
+    "outputs": [],
+    "signature": "getChild(address,uint256,address,uint256)",
+    "type": "function"
   },
   {
-    "name": "onERC721Received",
-    "type": "function",
-    "signature": "onERC721Received(address,uint256,bytes)",
     "encoding": "0xf0b9e5ba",
     "inputs": [
       {
@@ -2819,17 +2816,17 @@
         "type": "bytes"
       }
     ],
+    "name": "onERC721Received",
     "outputs": [
       {
         "name": "ret_0",
         "type": "bytes4"
       }
-    ]
+    ],
+    "signature": "onERC721Received(address,uint256,bytes)",
+    "type": "function"
   },
   {
-    "name": "onERC721Received",
-    "type": "function",
-    "signature": "onERC721Received(address,address,uint256,bytes)",
     "encoding": "0x150b7a02",
     "inputs": [
       {
@@ -2849,17 +2846,17 @@
         "type": "bytes"
       }
     ],
+    "name": "onERC721Received",
     "outputs": [
       {
         "name": "ret_0",
         "type": "bytes4"
       }
-    ]
+    ],
+    "signature": "onERC721Received(address,address,uint256,bytes)",
+    "type": "function"
   },
   {
-    "name": "receiveChild",
-    "type": "function",
-    "signature": "receiveChild(address,uint256,address,uint256)",
     "encoding": "0x597c255f",
     "inputs": [
       {
@@ -2879,13 +2876,13 @@
         "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "receiveChild",
+    "outputs": [],
+    "signature": "receiveChild(address,uint256,address,uint256)",
+    "type": "function"
   },
   {
-    "name": "_ownerOfChild",
-    "type": "function",
     "constant": true,
-    "signature": "_ownerOfChild(address,uint256)",
     "encoding": "0xa5aeb1d4",
     "inputs": [
       {
@@ -2897,6 +2894,7 @@
         "type": "uint256"
       }
     ],
+    "name": "_ownerOfChild",
     "outputs": [
       {
         "name": "parentTokenOwner",
@@ -2906,13 +2904,12 @@
         "name": "parentTokenId",
         "type": "uint256"
       }
-    ]
+    ],
+    "signature": "_ownerOfChild(address,uint256)",
+    "type": "function"
   },
   {
-    "name": "ownerOfChild",
-    "type": "function",
     "constant": true,
-    "signature": "ownerOfChild(address,uint256)",
     "encoding": "0xeadb80b8",
     "inputs": [
       {
@@ -2924,6 +2921,7 @@
         "type": "uint256"
       }
     ],
+    "name": "ownerOfChild",
     "outputs": [
       {
         "name": "parentTokenOwner",
@@ -2933,13 +2931,12 @@
         "name": "parentTokenId",
         "type": "uint256"
       }
-    ]
+    ],
+    "signature": "ownerOfChild(address,uint256)",
+    "type": "function"
   },
   {
-    "name": "childExists",
-    "type": "function",
     "constant": true,
-    "signature": "childExists(address,uint256)",
     "encoding": "0x5680a3ad",
     "inputs": [
       {
@@ -2951,18 +2948,18 @@
         "type": "uint256"
       }
     ],
+    "name": "childExists",
     "outputs": [
       {
         "name": "ret_0",
         "type": "bool"
       }
-    ]
+    ],
+    "signature": "childExists(address,uint256)",
+    "type": "function"
   },
   {
-    "name": "totalChildContracts",
-    "type": "function",
     "constant": true,
-    "signature": "totalChildContracts(uint256)",
     "encoding": "0x8da7d0b5",
     "inputs": [
       {
@@ -2970,18 +2967,18 @@
         "type": "uint256"
       }
     ],
+    "name": "totalChildContracts",
     "outputs": [
       {
         "name": "ret_0",
         "type": "uint256"
       }
-    ]
+    ],
+    "signature": "totalChildContracts(uint256)",
+    "type": "function"
   },
   {
-    "name": "childContractByIndex",
-    "type": "function",
     "constant": true,
-    "signature": "childContractByIndex(uint256,uint256)",
     "encoding": "0x0d5a621b",
     "inputs": [
       {
@@ -2993,18 +2990,18 @@
         "type": "uint256"
       }
     ],
+    "name": "childContractByIndex",
     "outputs": [
       {
         "name": "childContract",
         "type": "address"
       }
-    ]
+    ],
+    "signature": "childContractByIndex(uint256,uint256)",
+    "type": "function"
   },
   {
-    "name": "totalChildTokens",
-    "type": "function",
     "constant": true,
-    "signature": "totalChildTokens(uint256,address)",
     "encoding": "0x35b21ceb",
     "inputs": [
       {
@@ -3016,18 +3013,18 @@
         "type": "address"
       }
     ],
+    "name": "totalChildTokens",
     "outputs": [
       {
         "name": "ret_0",
         "type": "uint256"
       }
-    ]
+    ],
+    "signature": "totalChildTokens(uint256,address)",
+    "type": "function"
   },
   {
-    "name": "childTokenByIndex",
-    "type": "function",
     "constant": true,
-    "signature": "childTokenByIndex(uint256,address,uint256)",
     "encoding": "0x160b01a1",
     "inputs": [
       {
@@ -3043,18 +3040,18 @@
         "type": "uint256"
       }
     ],
+    "name": "childTokenByIndex",
     "outputs": [
       {
         "name": "childTokenId",
         "type": "uint256"
       }
-    ]
+    ],
+    "signature": "childTokenByIndex(uint256,address,uint256)",
+    "type": "function"
   },
   {
-    "name": "balanceOfERC20",
-    "type": "function",
     "constant": true,
-    "signature": "balanceOfERC20(uint256,address)",
     "encoding": "0xe226ed22",
     "inputs": [
       {
@@ -3066,17 +3063,17 @@
         "type": "address"
       }
     ],
+    "name": "balanceOfERC20",
     "outputs": [
       {
         "name": "ret_0",
         "type": "uint256"
       }
-    ]
+    ],
+    "signature": "balanceOfERC20(uint256,address)",
+    "type": "function"
   },
   {
-    "name": "removeERC20",
-    "type": "function",
-    "signature": "removeERC20(uint256,address,uint256)",
     "encoding": "0x9771ccc8",
     "inputs": [
       {
@@ -3092,12 +3089,12 @@
         "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "removeERC20",
+    "outputs": [],
+    "signature": "removeERC20(uint256,address,uint256)",
+    "type": "function"
   },
   {
-    "name": "transferERC20",
-    "type": "function",
-    "signature": "transferERC20(uint256,address,address,uint256)",
     "encoding": "0x830ef41b",
     "inputs": [
       {
@@ -3117,12 +3114,12 @@
         "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "transferERC20",
+    "outputs": [],
+    "signature": "transferERC20(uint256,address,address,uint256)",
+    "type": "function"
   },
   {
-    "name": "transferERC223",
-    "type": "function",
-    "signature": "transferERC223(uint256,address,address,uint256,bytes)",
     "encoding": "0xd49d1bac",
     "inputs": [
       {
@@ -3146,12 +3143,12 @@
         "type": "bytes"
       }
     ],
-    "outputs": []
+    "name": "transferERC223",
+    "outputs": [],
+    "signature": "transferERC223(uint256,address,address,uint256,bytes)",
+    "type": "function"
   },
   {
-    "name": "getERC20",
-    "type": "function",
-    "signature": "getERC20(address,uint256,address,uint256)",
     "encoding": "0x07cff6f2",
     "inputs": [
       {
@@ -3171,12 +3168,12 @@
         "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "getERC20",
+    "outputs": [],
+    "signature": "getERC20(address,uint256,address,uint256)",
+    "type": "function"
   },
   {
-    "name": "erc20Received",
-    "type": "function",
-    "signature": "erc20Received(address,uint256,address,uint256)",
     "encoding": "0x9e95670d",
     "inputs": [
       {
@@ -3196,12 +3193,12 @@
         "type": "uint256"
       }
     ],
-    "outputs": []
+    "name": "erc20Received",
+    "outputs": [],
+    "signature": "erc20Received(address,uint256,address,uint256)",
+    "type": "function"
   },
   {
-    "name": "tokenFallback",
-    "type": "function",
-    "signature": "tokenFallback(address,uint256,bytes)",
     "encoding": "0xc0ee0b8a",
     "inputs": [
       {
@@ -3217,13 +3214,13 @@
         "type": "bytes"
       }
     ],
-    "outputs": []
+    "name": "tokenFallback",
+    "outputs": [],
+    "signature": "tokenFallback(address,uint256,bytes)",
+    "type": "function"
   },
   {
-    "name": "erc20ContractByIndex",
-    "type": "function",
     "constant": true,
-    "signature": "erc20ContractByIndex(uint256,uint256)",
     "encoding": "0x627c81ff",
     "inputs": [
       {
@@ -3235,18 +3232,18 @@
         "type": "uint256"
       }
     ],
+    "name": "erc20ContractByIndex",
     "outputs": [
       {
         "name": "ret_0",
         "type": "address"
       }
-    ]
+    ],
+    "signature": "erc20ContractByIndex(uint256,uint256)",
+    "type": "function"
   },
   {
-    "name": "totalERC20Contracts",
-    "type": "function",
     "constant": true,
-    "signature": "totalERC20Contracts(uint256)",
     "encoding": "0xa7811732",
     "inputs": [
       {
@@ -3254,11 +3251,14 @@
         "type": "uint256"
       }
     ],
+    "name": "totalERC20Contracts",
     "outputs": [
       {
         "name": "ret_0",
         "type": "uint256"
       }
-    ]
+    ],
+    "signature": "totalERC20Contracts(uint256)",
+    "type": "function"
   }
 ]
