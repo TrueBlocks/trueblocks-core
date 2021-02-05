@@ -667,11 +667,11 @@ bool sol_2_Abi(CAbi& abi, const string_q& addr) {
     CStringArray psStrs = { "OUT", "IN", "IN_COMMENT1", "IN_COMMENT2", "IN_FUNCTION", "IN_EVENT", "IN_STRUCT", "IN_MODIFIER" };
     ostringstream os;
     ParseState state = OUT;
-    ParseState pre_state = state;
+    // ParseState pre_state = state;
     char lastChar = 0;
     for (auto ch : contents) {
         LOG_TEST("State pre", psStrs[state]);
-        pre_state = state;
+        // pre_state = state;
         switch (state) {
             case IN_MODIFIER:
                 if (ch == '{') {
