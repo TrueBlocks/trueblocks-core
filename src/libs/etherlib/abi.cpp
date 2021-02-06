@@ -342,11 +342,16 @@ bool CAbi::loadAbisFolderAndCache(const string_q& sourcePath, const string_q& bi
         // If any file is newer, don't use binary cache
         fileInfo info = getNewestFileInFolder(sourcePath);
         if (info.fileName == binPath || fileLastModifyDate(binPath) > info.fileTime) {
+            interfaceMap.clear();
             CArchive archive(READING_ARCHIVE);
             if (archive.Lock(binPath, modeReadOnly, LOCK_NOWAIT)) {
                 archive >> *this;
                 archive.Release();
                 LOG_TEST("Loaded " + uint_2_Str(interfaces.size()) + " interfaces from", substitute(substitute(binPath, getCachePath(""), "$CACHE/"), configPath(""), "$CONFIG/"));
+                for (auto func : interfaces) {
+                    interfaceMap[func.encoding] = true;
+                    LOG_TEST("Inserting", func.type + "-" + func.signature);
+                }
                 return true;
             }
         }

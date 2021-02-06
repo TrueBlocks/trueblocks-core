@@ -565,7 +565,7 @@
             ],
             "outputs": [
               {
-                "name": "success",
+                "name": "_success",
                 "value": "true",
                 "internalType": "bool",
                 "components": []
