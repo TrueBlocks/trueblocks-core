@@ -463,17 +463,17 @@ TIME ~ CLOCK - <INFO>  : Skipping: function-wards(address)
         "value": "0x7d655c57f71464b6f83811c55d84009cd9f5221c"
       },
       {
-        "name": "_amount",
+        "name": "_value",
         "value": "5000000000000000000"
       }
     ],
     "outputs": [
       {
-        "name": "success"
+        "name": "_success"
       }
     ]
   },
-  "compressedTx": "approve ( _spender: 0x7d655c57f71464b6f83811c55d84009cd9f5221c, _amount: 5000000000000000000 )",
+  "compressedTx": "approve ( _spender: 0x7d655c57f71464b6f83811c55d84009cd9f5221c, _value: 5000000000000000000 )",
   "statements": [
     {
       "blockNumber": 10279295,
@@ -35272,17 +35272,17 @@ TIME ~ CLOCK - <INFO>  : Skipping: function-wards(address)
         "value": "0x7d655c57f71464b6f83811c55d84009cd9f5221c"
       },
       {
-        "name": "_amount",
+        "name": "_value",
         "value": "5000000000000000000"
       }
     ],
     "outputs": [
       {
-        "name": "success"
+        "name": "_success"
       }
     ]
   },
-  "compressedTx": "approve ( _spender: 0x7d655c57f71464b6f83811c55d84009cd9f5221c, _amount: 5000000000000000000 )",
+  "compressedTx": "approve ( _spender: 0x7d655c57f71464b6f83811c55d84009cd9f5221c, _value: 5000000000000000000 )",
   "statements": [
     {
       "blockNumber": 10290317,
@@ -36554,17 +36554,17 @@ TIME ~ CLOCK - <INFO>  : Skipping: function-wards(address)
         "value": "0x7d655c57f71464b6f83811c55d84009cd9f5221c"
       },
       {
-        "name": "_amount",
+        "name": "_value",
         "value": "5000000000000000000"
       }
     ],
     "outputs": [
       {
-        "name": "success"
+        "name": "_success"
       }
     ]
   },
-  "compressedTx": "approve ( _spender: 0x7d655c57f71464b6f83811c55d84009cd9f5221c, _amount: 5000000000000000000 )",
+  "compressedTx": "approve ( _spender: 0x7d655c57f71464b6f83811c55d84009cd9f5221c, _value: 5000000000000000000 )",
   "statements": [
     {
       "blockNumber": 10292014,
@@ -38068,17 +38068,17 @@ TIME ~ CLOCK - <INFO>  : Skipping: function-wards(address)
         "value": "0x7d655c57f71464b6f83811c55d84009cd9f5221c"
       },
       {
-        "name": "_amount",
+        "name": "_value",
         "value": "5000000000000000000"
       }
     ],
     "outputs": [
       {
-        "name": "success"
+        "name": "_success"
       }
     ]
   },
-  "compressedTx": "approve ( _spender: 0x7d655c57f71464b6f83811c55d84009cd9f5221c, _amount: 5000000000000000000 )",
+  "compressedTx": "approve ( _spender: 0x7d655c57f71464b6f83811c55d84009cd9f5221c, _value: 5000000000000000000 )",
   "statements": [
     {
       "blockNumber": 10293554,

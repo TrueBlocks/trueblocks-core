@@ -1,6 +1,6 @@
 getTokenInfo argc: 7 [1:0xd26114cd6ee289accf82350c8d8487fedb8a0c07] [2:0xb9e7f8568e08d5659f5d29c4997173d84cdf2607] [3:--fmt] [4:csv] [5:2000000] [6:--no_header] 
 getTokenInfo 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 --fmt csv 2000000 --no_header 
-TIME ~ CLOCK - <INFO>  : loadAbiFromFile: $CONFIG/abis/known/erc_00020.json
+TIME ~ CLOCK - <INFO>  : loadAbiFromFile: $CONFIG/abis/known-000/erc_00020.json
 TIME ~ CLOCK - <INFO>  : Inserting: function-allowance(address,address)
 TIME ~ CLOCK - <INFO>  : Inserting: function-approve(address,uint256)
 TIME ~ CLOCK - <INFO>  : Inserting: function-balanceOf(address)
@@ -12,7 +12,7 @@ TIME ~ CLOCK - <INFO>  : Inserting: function-decimals()
 TIME ~ CLOCK - <INFO>  : Inserting: function-symbol()
 TIME ~ CLOCK - <INFO>  : Inserting: event-Approval(address,address,uint256)
 TIME ~ CLOCK - <INFO>  : Inserting: event-Transfer(address,address,uint256)
-TIME ~ CLOCK - <INFO>  : loadAbiFromFile: $CONFIG/abis/known/erc_00721.json
+TIME ~ CLOCK - <INFO>  : loadAbiFromFile: $CONFIG/abis/known-000/erc_00721.json
 TIME ~ CLOCK - <INFO>  : Skipping: function-approve(address,uint256)
 TIME ~ CLOCK - <INFO>  : Skipping: function-balanceOf(address)
 TIME ~ CLOCK - <INFO>  : Inserting: function-getApproved(uint256)

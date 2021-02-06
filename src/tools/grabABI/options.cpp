@@ -141,6 +141,12 @@ bool COptions::parseArguments(string_q& command) {
     if (parts != SIG_CANONICAL && verbose)
         parts |= SIG_DETAILS;
 
+    if (known) {
+        CAbi abi;
+        abi.loadAbisFromKnown(ABI_ALL);
+        abiList.push_back(abi);
+    }
+
     for (auto a : addrs) {
         bool testing = isTestMode() && a == "0xeeeeeeeeddddddddeeeeeeeeddddddddeeeeeeee";
         string_q fileName = getCachePath("abis/" + a + ".json");
@@ -162,12 +168,6 @@ bool COptions::parseArguments(string_q& command) {
             abi.sortInterfaces();
             abiList.push_back(abi);
         }
-    }
-
-    if (known) {
-        CAbi abi;
-        abi.loadAbisFromKnown(ABI_ALL);
-        abiList.push_back(abi);
     }
 
     if (monitored) {

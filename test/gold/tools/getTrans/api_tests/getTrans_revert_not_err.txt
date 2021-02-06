@@ -214,7 +214,7 @@
           },
           "articulatedTrace": {
             "name": "balanceOf",
-            "stateMutability": "nonpayable",
+            "stateMutability": "view",
             "inputs": [
               {
                 "name": "_owner",
@@ -225,7 +225,7 @@
             ],
             "outputs": [
               {
-                "name": "balance",
+                "name": "_balance",
                 "value": "0",
                 "internalType": "uint256",
                 "components": []
@@ -255,7 +255,7 @@
           },
           "articulatedTrace": {
             "name": "balanceOf",
-            "stateMutability": "nonpayable",
+            "stateMutability": "view",
             "inputs": [
               {
                 "name": "_owner",
@@ -266,7 +266,7 @@
             ],
             "outputs": [
               {
-                "name": "balance",
+                "name": "_balance",
                 "value": "0",
                 "internalType": "uint256",
                 "components": []
@@ -296,7 +296,7 @@
           },
           "articulatedTrace": {
             "name": "balanceOf",
-            "stateMutability": "nonpayable",
+            "stateMutability": "view",
             "inputs": [
               {
                 "name": "_owner",
@@ -307,7 +307,7 @@
             ],
             "outputs": [
               {
-                "name": "balance",
+                "name": "_balance",
                 "value": "100000000",
                 "internalType": "uint256",
                 "components": []
@@ -337,7 +337,7 @@
           },
           "articulatedTrace": {
             "name": "balanceOf",
-            "stateMutability": "nonpayable",
+            "stateMutability": "view",
             "inputs": [
               {
                 "name": "_owner",
@@ -348,7 +348,7 @@
             ],
             "outputs": [
               {
-                "name": "balance",
+                "name": "_balance",
                 "value": "100000000",
                 "internalType": "uint256",
                 "components": []
@@ -378,7 +378,7 @@
           },
           "articulatedTrace": {
             "name": "balanceOf",
-            "stateMutability": "nonpayable",
+            "stateMutability": "view",
             "inputs": [
               {
                 "name": "_owner",
@@ -389,7 +389,7 @@
             ],
             "outputs": [
               {
-                "name": "balance",
+                "name": "_balance",
                 "value": "100000000",
                 "internalType": "uint256",
                 "components": []
@@ -419,7 +419,7 @@
           },
           "articulatedTrace": {
             "name": "balanceOf",
-            "stateMutability": "nonpayable",
+            "stateMutability": "view",
             "inputs": [
               {
                 "name": "_owner",
@@ -430,7 +430,7 @@
             ],
             "outputs": [
               {
-                "name": "balance",
+                "name": "_balance",
                 "value": "100000000",
                 "internalType": "uint256",
                 "components": []

@@ -1,231 +1,6 @@
 {
   "data": [
     {
-      "name": "",
-      "type": "constructor",
-      "stateMutability": "nonpayable",
-      "signature": "(uint256,uint256,int256,address)",
-      "encoding": "",
-      "input_names": "minimumQuorumForProposals,minutesForDebate,marginOfVotesForMajority,congressLeader,",
-      "output_names": ""
-    },
-    {
-      "name": "changeMembership",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "changeMembership(address,uint256,bool,string)",
-      "encoding": "0x824dbc9a",
-      "input_names": "targetMember,voteWeight,canAddProposals,memberName,",
-      "output_names": ""
-    },
-    {
-      "name": "changeUnicorn",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "changeUnicorn(uint256,address)",
-      "encoding": "0x522103fa",
-      "input_names": "newUnicornPriceInFinney,newUnicornAddress,",
-      "output_names": ""
-    },
-    {
-      "name": "changeVotingRules",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "changeVotingRules(uint256,uint256,int256)",
-      "encoding": "0xbcca1fd3",
-      "input_names": "minimumQuorumForProposals,minutesForDebate,marginOfVotesForMajority,",
-      "output_names": ""
-    },
-    {
-      "name": "checkProposalCode",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "checkProposalCode(uint256,address,uint256,bytes)",
-      "encoding": "0xeceb2945",
-      "input_names": "proposalNumber,beneficiary,amount,transactionBytecode,",
-      "output_names": "codeChecksOut,"
-    },
-    {
-      "name": "debatingPeriodInMinutes",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "debatingPeriodInMinutes()",
-      "encoding": "0x69bd3436",
-      "input_names": "",
-      "output_names": "val_0,"
-    },
-    {
-      "name": "executeProposal",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "executeProposal(uint256,bytes)",
-      "encoding": "0x237e9492",
-      "input_names": "proposalNumber,transactionBytecode,",
-      "output_names": "result,"
-    },
-    {
-      "name": "majorityMargin",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "majorityMargin()",
-      "encoding": "0xaa02a90f",
-      "input_names": "",
-      "output_names": "val_0,"
-    },
-    {
-      "name": "memberId",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "memberId(address)",
-      "encoding": "0x39106821",
-      "input_names": "val_0,",
-      "output_names": "val_0,"
-    },
-    {
-      "name": "members",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "members(uint256)",
-      "encoding": "0x5daf08ca",
-      "input_names": "val_0,",
-      "output_names": "member,voteWeight,canAddProposals,name,memberSince,"
-    },
-    {
-      "name": "minimumQuorum",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "minimumQuorum()",
-      "encoding": "0x8160f0b5",
-      "input_names": "",
-      "output_names": "val_0,"
-    },
-    {
-      "name": "newProposalInEther",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "newProposalInEther(address,uint256,string,bytes)",
-      "encoding": "0xb9f256cd",
-      "input_names": "beneficiary,etherAmount,JobDescription,transactionBytecode,",
-      "output_names": "proposalID,"
-    },
-    {
-      "name": "newProposalInWei",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "newProposalInWei(address,uint256,string,bytes)",
-      "encoding": "0x83876bc9",
-      "input_names": "beneficiary,weiAmount,JobDescription,transactionBytecode,",
-      "output_names": "proposalID,"
-    },
-    {
-      "name": "numProposals",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "numProposals()",
-      "encoding": "0x400e3949",
-      "input_names": "",
-      "output_names": "val_0,"
-    },
-    {
-      "name": "owner",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "owner()",
-      "encoding": "0x8da5cb5b",
-      "input_names": "",
-      "output_names": "val_0,"
-    },
-    {
-      "name": "priceOfAUnicornInFinney",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "priceOfAUnicornInFinney()",
-      "encoding": "0x50c34878",
-      "input_names": "",
-      "output_names": "val_0,"
-    },
-    {
-      "name": "proposals",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "proposals(uint256)",
-      "encoding": "0x013cf08b",
-      "input_names": "val_0,",
-      "output_names": "recipient,amount,description,votingDeadline,executed,proposalPassed,numberOfVotes,currentResult,proposalHash,"
-    },
-    {
-      "name": "transferOwnership",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "transferOwnership(address)",
-      "encoding": "0xf2fde38b",
-      "input_names": "newOwner,",
-      "output_names": ""
-    },
-    {
-      "name": "unicornAddress",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "unicornAddress()",
-      "encoding": "0xb7782455",
-      "input_names": "",
-      "output_names": "val_0,"
-    },
-    {
-      "name": "vote",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "vote(uint256,bool,string)",
-      "encoding": "0xd3c0715b",
-      "input_names": "proposalNumber,supportsProposal,justificationText,",
-      "output_names": "voteID,"
-    },
-    {
-      "name": "ChangeOfRules",
-      "type": "event",
-      "stateMutability": "nonpayable",
-      "signature": "ChangeOfRules(uint256,uint256,int256)",
-      "encoding": "0xa439d3fa452be5e0e1e24a8145e715f4fd8b9c08c96a42fd82a855a85e5d57de",
-      "input_names": "minimumQuorum,debatingPeriodInMinutes,majorityMargin,",
-      "output_names": ""
-    },
-    {
-      "name": "MembershipChanged",
-      "type": "event",
-      "stateMutability": "nonpayable",
-      "signature": "MembershipChanged(address)",
-      "encoding": "0x4cea7af04e7093442a4d8d039e7b517557c4787a8cf68f900473c9bf3abfae4c",
-      "input_names": "member,",
-      "output_names": ""
-    },
-    {
-      "name": "ProposalAdded",
-      "type": "event",
-      "stateMutability": "nonpayable",
-      "signature": "ProposalAdded(uint256,address,uint256,string)",
-      "encoding": "0x646fec02522b41e7125cfc859a64fd4f4cefd5dc3b6237ca0abe251ded1fa881",
-      "input_names": "proposalID,recipient,amount,description,",
-      "output_names": ""
-    },
-    {
-      "name": "ProposalTallied",
-      "type": "event",
-      "stateMutability": "nonpayable",
-      "signature": "ProposalTallied(uint256,int256,uint256,bool)",
-      "encoding": "0xd220b7272a8b6d0d7d6bcdace67b936a8f175e6d5c1b3ee438b72256b32ab3af",
-      "input_names": "proposalID,result,quorum,active,",
-      "output_names": ""
-    },
-    {
-      "name": "Voted",
-      "type": "event",
-      "stateMutability": "nonpayable",
-      "signature": "Voted(uint256,bool,address,string)",
-      "encoding": "0xc34f869b7ff431b034b7b9aea9822dac189a685e0b015c7d1be3add3f89128e8",
-      "input_names": "proposalID,position,voter,justification,",
-      "output_names": ""
-    },
-    {
       "name": "ABI",
       "type": "",
       "stateMutability": "nonpayable",
@@ -294,7 +69,7 @@
       "stateMutability": "nonpayable",
       "signature": "Approval(address,address,uint256)",
       "encoding": "0x8c5be1e5",
-      "input_names": "_owner,_spender,_amount,",
+      "input_names": "owner,spender,value,",
       "output_names": ""
     },
     {
@@ -303,7 +78,7 @@
       "stateMutability": "nonpayable",
       "signature": "ApprovalForAll(address,address,bool)",
       "encoding": "0x17307eab",
-      "input_names": "_owner,_operator,_approved,",
+      "input_names": "owner,operator,approved,",
       "output_names": ""
     },
     {
@@ -312,7 +87,7 @@
       "stateMutability": "nonpayable",
       "signature": "AuthorizedOperator(address,address)",
       "encoding": "0xf4caeb2d",
-      "input_names": "operator,holder,",
+      "input_names": "operator,tokenHolder,",
       "output_names": ""
     },
     {
@@ -546,7 +321,7 @@
       "stateMutability": "nonpayable",
       "signature": "InterfaceImplementerSet(address,bytes32,address)",
       "encoding": "0x93baa6ef",
-      "input_names": "addr,interfaceHash,implementer,",
+      "input_names": "account,interfaceHash,implementer,",
       "output_names": ""
     },
     {
@@ -573,7 +348,7 @@
       "stateMutability": "nonpayable",
       "signature": "ManagerChanged(address,address)",
       "encoding": "0x605c2dbf",
-      "input_names": "addr,newManager,",
+      "input_names": "account,newManager,",
       "output_names": ""
     },
     {
@@ -969,7 +744,7 @@
       "stateMutability": "nonpayable",
       "signature": "RevokedOperator(address,address)",
       "encoding": "0x50546e66",
-      "input_names": "operator,holder,",
+      "input_names": "operator,tokenHolder,",
       "output_names": ""
     },
     {
@@ -1248,7 +1023,7 @@
       "stateMutability": "nonpayable",
       "signature": "Transfer(address,address,uint256)",
       "encoding": "0xddf252ad",
-      "input_names": "_from,_to,_amount,",
+      "input_names": "from,to,value,",
       "output_names": ""
     },
     {
@@ -1455,7 +1230,7 @@
       "stateMutability": "nonpayable",
       "signature": "_approve(address,address,uint256)",
       "encoding": "0x104e81ff",
-      "input_names": "owner,spender,value,",
+      "input_names": "holder,spender,value,",
       "output_names": ""
     },
     {
@@ -1536,7 +1311,7 @@
       "stateMutability": "nonpayable",
       "signature": "_burn(address,uint256)",
       "encoding": "0x6161eb18",
-      "input_names": "account,value,",
+      "input_names": "account,amount,",
       "output_names": ""
     },
     {
@@ -2058,7 +1833,7 @@
       "stateMutability": "nonpayable",
       "signature": "_mint(address,uint256)",
       "encoding": "0x4e6ec247",
-      "input_names": "_receiver,_amount,",
+      "input_names": "account,amount,",
       "output_names": ""
     },
     {
@@ -2382,7 +2157,7 @@
       "stateMutability": "nonpayable",
       "signature": "_transfer(address,address,uint256)",
       "encoding": "0x30e0789e",
-      "input_names": "from,to,value,",
+      "input_names": "sender,recipient,amount,",
       "output_names": ""
     },
     {
@@ -2553,7 +2328,7 @@
       "stateMutability": "nonpayable",
       "signature": "add(uint256,uint256)",
       "encoding": "0x771602f7",
-      "input_names": "_a,_b,",
+      "input_names": "a,b,",
       "output_names": "ret_0,"
     },
     {
@@ -2683,15 +2458,6 @@
       "output_names": "ret_0,"
     },
     {
-      "name": "allowance",
-      "type": "",
-      "stateMutability": "nonpayable",
-      "signature": "allowance(address,address)",
-      "encoding": "0xdd62ed3e",
-      "input_names": "_owner,_spender,",
-      "output_names": "remaining,"
-    },
-    {
       "name": "append",
       "type": "",
       "stateMutability": "nonpayable",
@@ -2699,15 +2465,6 @@
       "encoding": "0xb9dbe28b",
       "input_names": "A,a,",
       "output_names": "memory,"
-    },
-    {
-      "name": "approve",
-      "type": "",
-      "stateMutability": "nonpayable",
-      "signature": "approve(address,uint256)",
-      "encoding": "0x095ea7b3",
-      "input_names": "_spender,_amount,",
-      "output_names": "success,"
     },
     {
       "name": "approve",
@@ -2931,7 +2688,7 @@
       "stateMutability": "nonpayable",
       "signature": "balanceOfAt(address,uint256)",
       "encoding": "0x4ee2cd7e",
-      "input_names": "_owner,_blockNumber,",
+      "input_names": "account,snapshotId,",
       "output_names": "ret_0,"
     },
     {
@@ -3093,7 +2850,7 @@
       "stateMutability": "nonpayable",
       "signature": "burn(address,uint256)",
       "encoding": "0x9dc29fac",
-      "input_names": "_holder,_amount,",
+      "input_names": "account,amount,",
       "output_names": ""
     },
     {
@@ -3165,7 +2922,7 @@
       "stateMutability": "nonpayable",
       "signature": "canImplementInterfaceForAddress(bytes32,address)",
       "encoding": "0x249cb3fa",
-      "input_names": "interfaceHash,addr,",
+      "input_names": "interfaceHash,account,",
       "output_names": "ret_0,"
     },
     {
@@ -3669,7 +3426,7 @@
       "stateMutability": "nonpayable",
       "signature": "div(uint256,uint256)",
       "encoding": "0xa391c15b",
-      "input_names": "_a,_b,",
+      "input_names": "a,b,",
       "output_names": "ret_0,"
     },
     {
@@ -3859,15 +3616,6 @@
       "signature": "execute(address,bytes,uint256,bytes,uint256,uint256)",
       "encoding": "0xaacaaf88",
       "input_names": "_wallet,_data,_nonce,_signatures,_gasPrice,_gasLimit,",
-      "output_names": ""
-    },
-    {
-      "name": "execute",
-      "type": "",
-      "stateMutability": "nonpayable",
-      "signature": "execute(address,uint256,bytes)",
-      "encoding": "0xb61d27f6",
-      "input_names": "_target,_ethValue,_data,",
       "output_names": ""
     },
     {
@@ -5079,6 +4827,15 @@
     {
       "name": "allowance",
       "type": "function",
+      "stateMutability": "view",
+      "signature": "allowance(address,address)",
+      "encoding": "0xdd62ed3e",
+      "input_names": "_owner,_spender,",
+      "output_names": "_allowance,"
+    },
+    {
+      "name": "allowance",
+      "type": "function",
       "stateMutability": "nonpayable",
       "signature": "allowance()",
       "encoding": "0xde242ff4",
@@ -5102,6 +4859,15 @@
       "encoding": "0x80afdea8",
       "input_names": "",
       "output_names": "ret_0,"
+    },
+    {
+      "name": "approve",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "approve(address,uint256)",
+      "encoding": "0x095ea7b3",
+      "input_names": "_spender,_value,",
+      "output_names": "_success,"
     },
     {
       "name": "approve",
@@ -5268,11 +5034,11 @@
     {
       "name": "balanceOf",
       "type": "function",
-      "stateMutability": "nonpayable",
+      "stateMutability": "view",
       "signature": "balanceOf(address)",
       "encoding": "0x70a08231",
       "input_names": "_owner,",
-      "output_names": "balance,"
+      "output_names": "_balance,"
     },
     {
       "name": "balanceOfUnderlying",
@@ -6526,6 +6292,15 @@
       "output_names": ""
     },
     {
+      "name": "execute",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "execute(address,uint256,bytes)",
+      "encoding": "0xb61d27f6",
+      "input_names": "_to,_value,_data,",
+      "output_names": "_r,"
+    },
+    {
       "name": "executePayment",
       "type": "function",
       "stateMutability": "nonpayable",
@@ -6801,8 +6576,8 @@
       "stateMutability": "view",
       "signature": "getApproved(uint256)",
       "encoding": "0x081812fc",
-      "input_names": "tokenId,",
-      "output_names": "val_0,"
+      "input_names": "_tokenId,",
+      "output_names": "ret_0,"
     },
     {
       "name": "getAuctionPriceParameters",
@@ -7161,7 +6936,7 @@
       "stateMutability": "nonpayable",
       "signature": "getManager(address)",
       "encoding": "0x3d584063",
-      "input_names": "_addr,",
+      "input_names": "account,",
       "output_names": "ret_0,"
     },
     {
@@ -7711,7 +7486,7 @@
       "signature": "implementation()",
       "encoding": "0x5c60da1b",
       "input_names": "",
-      "output_names": "codeAddr,"
+      "output_names": "ret_0,"
     },
     {
       "name": "increaseAllowance",
@@ -7800,7 +7575,7 @@
       "stateMutability": "nonpayable",
       "signature": "interfaceHash(string)",
       "encoding": "0x65ba36c1",
-      "input_names": "_interfaceName,",
+      "input_names": "interfaceName,",
       "output_names": "ret_0,"
     },
     {
@@ -7842,11 +7617,11 @@
     {
       "name": "isApprovedForAll",
       "type": "function",
-      "stateMutability": "view",
+      "stateMutability": "nonpayable",
       "signature": "isApprovedForAll(address,address)",
       "encoding": "0xe985e9c5",
-      "input_names": "owner,operator,",
-      "output_names": "val_0,"
+      "input_names": "_owner,_operator,",
+      "output_names": "ret_0,"
     },
     {
       "name": "isAttended",
@@ -7908,7 +7683,7 @@
       "stateMutability": "nonpayable",
       "signature": "isContract(address)",
       "encoding": "0x16279055",
-      "input_names": "_addr,",
+      "input_names": "account,",
       "output_names": "ret_0,"
     },
     {
@@ -7995,11 +7770,11 @@
     {
       "name": "isOwner",
       "type": "function",
-      "stateMutability": "view",
+      "stateMutability": "nonpayable",
       "signature": "isOwner()",
       "encoding": "0x8f32d59b",
       "input_names": "",
-      "output_names": "val_0,"
+      "output_names": "ret_0,"
     },
     {
       "name": "isPaid",
@@ -8439,8 +8214,8 @@
       "stateMutability": "nonpayable",
       "signature": "mint(address)",
       "encoding": "0x6a627842",
-      "input_names": "_to,",
-      "output_names": "ret_0,"
+      "input_names": "to,",
+      "output_names": ""
     },
     {
       "name": "mint",
@@ -8494,7 +8269,7 @@
       "signature": "name()",
       "encoding": "0x06fdde03",
       "input_names": "",
-      "output_names": "val_0,"
+      "output_names": "_name,"
     },
     {
       "name": "name",
@@ -8652,11 +8427,11 @@
     {
       "name": "owner",
       "type": "function",
-      "stateMutability": "view",
+      "stateMutability": "nonpayable",
       "signature": "owner()",
       "encoding": "0x8da5cb5b",
       "input_names": "",
-      "output_names": "val_0,"
+      "output_names": "ret_0,"
     },
     {
       "name": "ownerOf",
@@ -8665,7 +8440,7 @@
       "signature": "ownerOf(uint256)",
       "encoding": "0x6352211e",
       "input_names": "_tokenId,",
-      "output_names": "owner,"
+      "output_names": "ret_0,"
     },
     {
       "name": "owners",
@@ -8706,11 +8481,11 @@
     {
       "name": "paused",
       "type": "function",
-      "stateMutability": "view",
+      "stateMutability": "nonpayable",
       "signature": "paused()",
       "encoding": "0x5c975abb",
       "input_names": "",
-      "output_names": "val_0,"
+      "output_names": "ret_0,"
     },
     {
       "name": "payee",
@@ -9645,7 +9420,7 @@
       "stateMutability": "nonpayable",
       "signature": "safeTransferFrom(address,address,uint256)",
       "encoding": "0x42842e0e",
-      "input_names": "from,to,tokenId,",
+      "input_names": "_from,_to,_tokenId,",
       "output_names": ""
     },
     {
@@ -9654,7 +9429,7 @@
       "stateMutability": "nonpayable",
       "signature": "safeTransferFrom(address,address,uint256,bytes)",
       "encoding": "0xb88d4fde",
-      "input_names": "from,to,tokenId,_data,",
+      "input_names": "_from,_to,_tokenId,data,",
       "output_names": ""
     },
     {
@@ -9798,7 +9573,7 @@
       "stateMutability": "nonpayable",
       "signature": "setApprovalForAll(address,bool)",
       "encoding": "0xa22cb465",
-      "input_names": "to,approved,",
+      "input_names": "_operator,_approved,",
       "output_names": ""
     },
     {
@@ -10351,6 +10126,15 @@
       "output_names": "ret_0,"
     },
     {
+      "name": "split",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "split(address,address)",
+      "encoding": "0x0f2c9329",
+      "input_names": "targetFork,targetNoFork,",
+      "output_names": "ret_0,"
+    },
+    {
       "name": "sponsorProposal",
       "type": "function",
       "stateMutability": "nonpayable",
@@ -10470,10 +10254,10 @@
     {
       "name": "supportsInterface",
       "type": "function",
-      "stateMutability": "nonpayable",
+      "stateMutability": "view",
       "signature": "supportsInterface(bytes4)",
       "encoding": "0x01ffc9a7",
-      "input_names": "interfaceId,",
+      "input_names": "interfaceID,",
       "output_names": "ret_0,"
     },
     {
@@ -10564,7 +10348,7 @@
       "signature": "symbol()",
       "encoding": "0x95d89b41",
       "input_names": "",
-      "output_names": "val_0,"
+      "output_names": "_symbol,"
     },
     {
       "name": "toBytes",
@@ -10672,7 +10456,7 @@
       "signature": "tokenAddress()",
       "encoding": "0x9d76ea58",
       "input_names": "",
-      "output_names": "ret_0,"
+      "output_names": "out,"
     },
     {
       "name": "tokenByIndex",
@@ -10902,20 +10686,20 @@
     {
       "name": "totalShares",
       "type": "function",
-      "stateMutability": "view",
+      "stateMutability": "nonpayable",
       "signature": "totalShares()",
       "encoding": "0x3a98ef39",
       "input_names": "",
-      "output_names": "val_0,"
+      "output_names": "ret_0,"
     },
     {
       "name": "totalSupply",
       "type": "function",
-      "stateMutability": "nonpayable",
+      "stateMutability": "view",
       "signature": "totalSupply()",
       "encoding": "0x18160ddd",
       "input_names": "",
-      "output_names": "ret_0,"
+      "output_names": "_supply,"
     },
     {
       "name": "totalSupplyAt",
@@ -10923,7 +10707,7 @@
       "stateMutability": "nonpayable",
       "signature": "totalSupplyAt(uint256)",
       "encoding": "0x981b24d0",
-      "input_names": "_blockNumber,",
+      "input_names": "snapshotId,",
       "output_names": "ret_0,"
     },
     {
@@ -10981,6 +10765,15 @@
       "output_names": ""
     },
     {
+      "name": "transfer",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "transfer(address,uint256)",
+      "encoding": "0xa9059cbb",
+      "input_names": "_to,_value,",
+      "output_names": "_success,"
+    },
+    {
       "name": "transferAgents",
       "type": "function",
       "stateMutability": "nonpayable",
@@ -11006,6 +10799,15 @@
       "encoding": "0x1dc9a3b9",
       "input_names": "_node,_owner,",
       "output_names": ""
+    },
+    {
+      "name": "transferFrom",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "transferFrom(address,address,uint256)",
+      "encoding": "0x23b872dd",
+      "input_names": "_from,_to,_value,",
+      "output_names": "_success,"
     },
     {
       "name": "transferFrom",
@@ -11733,7 +11535,7 @@
       "stateMutability": "nonpayable",
       "signature": "getInterfaceImplementer(address,bytes32)",
       "encoding": "0xaabbb8ca",
-      "input_names": "_addr,_interfaceHash,",
+      "input_names": "account,interfaceHash,",
       "output_names": "ret_0,"
     },
     {
@@ -11949,7 +11751,7 @@
       "stateMutability": "nonpayable",
       "signature": "implementsERC165Interface(address,bytes4)",
       "encoding": "0xf712f3e8",
-      "input_names": "_contract,_interfaceId,",
+      "input_names": "account,interfaceId,",
       "output_names": "ret_0,"
     },
     {
@@ -11958,7 +11760,7 @@
       "stateMutability": "nonpayable",
       "signature": "implementsERC165InterfaceNoCache(address,bytes4)",
       "encoding": "0xb7056765",
-      "input_names": "_contract,_interfaceId,",
+      "input_names": "account,interfaceId,",
       "output_names": "ret_0,"
     },
     {
@@ -12120,7 +11922,7 @@
       "stateMutability": "nonpayable",
       "signature": "isOperatorFor(address,address)",
       "encoding": "0xd95b6371",
-      "input_names": "operator,holder,",
+      "input_names": "operator,tokenHolder,",
       "output_names": "ret_0,"
     },
     {
@@ -12246,7 +12048,7 @@
       "stateMutability": "nonpayable",
       "signature": "max(uint256,uint256)",
       "encoding": "0x6d5433e6",
-      "input_names": "x,y,",
+      "input_names": "a,b,",
       "output_names": "ret_0,"
     },
     {
@@ -12282,7 +12084,7 @@
       "stateMutability": "nonpayable",
       "signature": "mint(address,uint256)",
       "encoding": "0x40c10f19",
-      "input_names": "_receiver,_amount,",
+      "input_names": "recipient,amount,",
       "output_names": ""
     },
     {
@@ -12426,7 +12228,7 @@
       "stateMutability": "nonpayable",
       "signature": "mul(uint256,uint256)",
       "encoding": "0xc8a4ac9c",
-      "input_names": "_a,_b,",
+      "input_names": "a,b,",
       "output_names": "ret_0,"
     },
     {
@@ -12786,7 +12588,7 @@
       "stateMutability": "nonpayable",
       "signature": "operatorBurn(address,uint256,bytes,bytes)",
       "encoding": "0xfc673c4f",
-      "input_names": "from,amount,data,operatorData,",
+      "input_names": "account,amount,data,operatorData,",
       "output_names": ""
     },
     {
@@ -12795,7 +12597,7 @@
       "stateMutability": "nonpayable",
       "signature": "operatorSend(address,address,uint256,bytes,bytes)",
       "encoding": "0x62ad1b83",
-      "input_names": "from,to,amount,data,operatorData,",
+      "input_names": "sender,recipient,amount,data,operatorData,",
       "output_names": ""
     },
     {
@@ -13362,7 +13164,7 @@
       "stateMutability": "nonpayable",
       "signature": "send(address,uint256,bytes)",
       "encoding": "0x9bd9bbc6",
-      "input_names": "to,amount,data,",
+      "input_names": "recipient,amount,data,",
       "output_names": ""
     },
     {
@@ -13506,7 +13308,7 @@
       "stateMutability": "nonpayable",
       "signature": "setInterfaceImplementer(address,bytes32,address)",
       "encoding": "0x29965a1d",
-      "input_names": "_addr,_interfaceHash,_implementer,",
+      "input_names": "account,interfaceHash,implementer,",
       "output_names": ""
     },
     {
@@ -13515,7 +13317,7 @@
       "stateMutability": "nonpayable",
       "signature": "setManager(address,address)",
       "encoding": "0x5df8122f",
-      "input_names": "_addr,_newManager,",
+      "input_names": "account,newManager,",
       "output_names": ""
     },
     {
@@ -13681,15 +13483,6 @@
       "output_names": ""
     },
     {
-      "name": "split",
-      "type": "",
-      "stateMutability": "nonpayable",
-      "signature": "split(address,address)",
-      "encoding": "0x0f2c9329",
-      "input_names": "targetFork,targetNoFork,",
-      "output_names": ""
-    },
-    {
       "name": "splitTransfer",
       "type": "",
       "stateMutability": "nonpayable",
@@ -13776,7 +13569,7 @@
       "stateMutability": "nonpayable",
       "signature": "sub(uint256,uint256)",
       "encoding": "0xb67d77c5",
-      "input_names": "_a,_b,",
+      "input_names": "a,b,",
       "output_names": "ret_0,"
     },
     {
@@ -13945,15 +13738,6 @@
       "name": "transfer",
       "type": "",
       "stateMutability": "nonpayable",
-      "signature": "transfer(address,uint256)",
-      "encoding": "0xa9059cbb",
-      "input_names": "_to,_amount,",
-      "output_names": "success,"
-    },
-    {
-      "name": "transfer",
-      "type": "",
-      "stateMutability": "nonpayable",
       "signature": "transfer(address,uint256,bytes)",
       "encoding": "0xbe45fd62",
       "input_names": "to,value,data,",
@@ -14012,15 +13796,6 @@
       "encoding": "0xd49d1bac",
       "input_names": "_tokenId,_to,_erc223Contract,_value,_data,",
       "output_names": ""
-    },
-    {
-      "name": "transferFrom",
-      "type": "",
-      "stateMutability": "nonpayable",
-      "signature": "transferFrom(address,address,uint256)",
-      "encoding": "0x23b872dd",
-      "input_names": "_from,_to,_amount,",
-      "output_names": "success,"
     },
     {
       "name": "transferFromWithData",
@@ -14154,7 +13929,7 @@
       "stateMutability": "nonpayable",
       "signature": "updateERC165Cache(address,bytes4)",
       "encoding": "0xa41e7d51",
-      "input_names": "_contract,_interfaceId,",
+      "input_names": "account,interfaceId,",
       "output_names": ""
     },
     {
@@ -14424,7 +14199,7 @@
       "stateMutability": "nonpayable",
       "signature": "Approval(address,address,uint256)",
       "encoding": "0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925",
-      "input_names": "owner,approved,tokenId,",
+      "input_names": "_owner,_spender,_value,",
       "output_names": ""
     },
     {
@@ -14433,7 +14208,7 @@
       "stateMutability": "nonpayable",
       "signature": "ApprovalForAll(address,address,bool)",
       "encoding": "0x17307eab39ab6107e8899845ad3d59bd9653f200f220920489ca2b5937696c31",
-      "input_names": "owner,operator,approved,",
+      "input_names": "_owner,_operator,_approved,",
       "output_names": ""
     },
     {
@@ -15297,7 +15072,7 @@
       "stateMutability": "nonpayable",
       "signature": "Transfer(address,address,uint256)",
       "encoding": "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
-      "input_names": "from,to,tokenId,",
+      "input_names": "_from,_to,_value,",
       "output_names": ""
     },
     {
@@ -15388,6 +15163,231 @@
       "signature": "WithdrawSharedExpense(address,address,uint256,uint256)",
       "encoding": "0x223162e752821eb7bd44782f73723defb6e3a087a9afc4d3d4af13783f7b6aca",
       "input_names": "from,to,value,newSharedExpenseWithdrawn,",
+      "output_names": ""
+    },
+    {
+      "name": "",
+      "type": "constructor",
+      "stateMutability": "nonpayable",
+      "signature": "(uint256,uint256,int256,address)",
+      "encoding": "",
+      "input_names": "minimumQuorumForProposals,minutesForDebate,marginOfVotesForMajority,congressLeader,",
+      "output_names": ""
+    },
+    {
+      "name": "changeMembership",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "changeMembership(address,uint256,bool,string)",
+      "encoding": "0x824dbc9a",
+      "input_names": "targetMember,voteWeight,canAddProposals,memberName,",
+      "output_names": ""
+    },
+    {
+      "name": "changeUnicorn",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "changeUnicorn(uint256,address)",
+      "encoding": "0x522103fa",
+      "input_names": "newUnicornPriceInFinney,newUnicornAddress,",
+      "output_names": ""
+    },
+    {
+      "name": "changeVotingRules",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "changeVotingRules(uint256,uint256,int256)",
+      "encoding": "0xbcca1fd3",
+      "input_names": "minimumQuorumForProposals,minutesForDebate,marginOfVotesForMajority,",
+      "output_names": ""
+    },
+    {
+      "name": "checkProposalCode",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "checkProposalCode(uint256,address,uint256,bytes)",
+      "encoding": "0xeceb2945",
+      "input_names": "proposalNumber,beneficiary,amount,transactionBytecode,",
+      "output_names": "codeChecksOut,"
+    },
+    {
+      "name": "debatingPeriodInMinutes",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "debatingPeriodInMinutes()",
+      "encoding": "0x69bd3436",
+      "input_names": "",
+      "output_names": "val_0,"
+    },
+    {
+      "name": "executeProposal",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "executeProposal(uint256,bytes)",
+      "encoding": "0x237e9492",
+      "input_names": "proposalNumber,transactionBytecode,",
+      "output_names": "result,"
+    },
+    {
+      "name": "majorityMargin",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "majorityMargin()",
+      "encoding": "0xaa02a90f",
+      "input_names": "",
+      "output_names": "val_0,"
+    },
+    {
+      "name": "memberId",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "memberId(address)",
+      "encoding": "0x39106821",
+      "input_names": "val_0,",
+      "output_names": "val_0,"
+    },
+    {
+      "name": "members",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "members(uint256)",
+      "encoding": "0x5daf08ca",
+      "input_names": "val_0,",
+      "output_names": "member,voteWeight,canAddProposals,name,memberSince,"
+    },
+    {
+      "name": "minimumQuorum",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "minimumQuorum()",
+      "encoding": "0x8160f0b5",
+      "input_names": "",
+      "output_names": "val_0,"
+    },
+    {
+      "name": "newProposalInEther",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "newProposalInEther(address,uint256,string,bytes)",
+      "encoding": "0xb9f256cd",
+      "input_names": "beneficiary,etherAmount,JobDescription,transactionBytecode,",
+      "output_names": "proposalID,"
+    },
+    {
+      "name": "newProposalInWei",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "newProposalInWei(address,uint256,string,bytes)",
+      "encoding": "0x83876bc9",
+      "input_names": "beneficiary,weiAmount,JobDescription,transactionBytecode,",
+      "output_names": "proposalID,"
+    },
+    {
+      "name": "numProposals",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "numProposals()",
+      "encoding": "0x400e3949",
+      "input_names": "",
+      "output_names": "val_0,"
+    },
+    {
+      "name": "owner",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "owner()",
+      "encoding": "0x8da5cb5b",
+      "input_names": "",
+      "output_names": "val_0,"
+    },
+    {
+      "name": "priceOfAUnicornInFinney",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "priceOfAUnicornInFinney()",
+      "encoding": "0x50c34878",
+      "input_names": "",
+      "output_names": "val_0,"
+    },
+    {
+      "name": "proposals",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "proposals(uint256)",
+      "encoding": "0x013cf08b",
+      "input_names": "val_0,",
+      "output_names": "recipient,amount,description,votingDeadline,executed,proposalPassed,numberOfVotes,currentResult,proposalHash,"
+    },
+    {
+      "name": "transferOwnership",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "transferOwnership(address)",
+      "encoding": "0xf2fde38b",
+      "input_names": "newOwner,",
+      "output_names": ""
+    },
+    {
+      "name": "unicornAddress",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "unicornAddress()",
+      "encoding": "0xb7782455",
+      "input_names": "",
+      "output_names": "val_0,"
+    },
+    {
+      "name": "vote",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "vote(uint256,bool,string)",
+      "encoding": "0xd3c0715b",
+      "input_names": "proposalNumber,supportsProposal,justificationText,",
+      "output_names": "voteID,"
+    },
+    {
+      "name": "ChangeOfRules",
+      "type": "event",
+      "stateMutability": "nonpayable",
+      "signature": "ChangeOfRules(uint256,uint256,int256)",
+      "encoding": "0xa439d3fa452be5e0e1e24a8145e715f4fd8b9c08c96a42fd82a855a85e5d57de",
+      "input_names": "minimumQuorum,debatingPeriodInMinutes,majorityMargin,",
+      "output_names": ""
+    },
+    {
+      "name": "MembershipChanged",
+      "type": "event",
+      "stateMutability": "nonpayable",
+      "signature": "MembershipChanged(address)",
+      "encoding": "0x4cea7af04e7093442a4d8d039e7b517557c4787a8cf68f900473c9bf3abfae4c",
+      "input_names": "member,",
+      "output_names": ""
+    },
+    {
+      "name": "ProposalAdded",
+      "type": "event",
+      "stateMutability": "nonpayable",
+      "signature": "ProposalAdded(uint256,address,uint256,string)",
+      "encoding": "0x646fec02522b41e7125cfc859a64fd4f4cefd5dc3b6237ca0abe251ded1fa881",
+      "input_names": "proposalID,recipient,amount,description,",
+      "output_names": ""
+    },
+    {
+      "name": "ProposalTallied",
+      "type": "event",
+      "stateMutability": "nonpayable",
+      "signature": "ProposalTallied(uint256,int256,uint256,bool)",
+      "encoding": "0xd220b7272a8b6d0d7d6bcdace67b936a8f175e6d5c1b3ee438b72256b32ab3af",
+      "input_names": "proposalID,result,quorum,active,",
+      "output_names": ""
+    },
+    {
+      "name": "Voted",
+      "type": "event",
+      "stateMutability": "nonpayable",
+      "signature": "Voted(uint256,bool,address,string)",
+      "encoding": "0xc34f869b7ff431b034b7b9aea9822dac189a685e0b015c7d1be3add3f89128e8",
+      "input_names": "proposalID,position,voter,justification,",
       "output_names": ""
     }
   ],

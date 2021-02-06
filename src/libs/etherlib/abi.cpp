@@ -327,11 +327,15 @@ string_q getAbiPath(const address_t& addrOrName) {
 
 //---------------------------------------------------------------------------
 bool visitABI(const qblocks::string_q& path, void* data) {
-    if (!endsWith(path, ".json"))  // we only want to look at jsons (the source)
-        return true;
-    CAbi* abi = (CAbi*)data;  // NOLINT
-    if (!abi->loadAbiFromFile(path, false))
-        return false;
+    if (endsWith(path, '/')) {
+        forEveryFileInFolder(path + "*", visitABI, data);
+    } else {
+        if (endsWith(path, ".json")) {
+            CAbi* abi = (CAbi*)data;  // NOLINT
+            if (!abi->loadAbiFromFile(path, false))
+                return false;
+        }
+    }
     return true;
 }
 
@@ -368,7 +372,7 @@ bool CAbi::loadAbisFolderAndCache(const string_q& sourcePath, const string_q& bi
 
 //---------------------------------------------------------------------------
 bool CAbi::loadAbisFromKnown(int which) {
-    return loadAbisFolderAndCache(configPath("abis/known/"), getAbiPath("known.bin"));
+    return loadAbisFolderAndCache(configPath("abis/"), getAbiPath("known.bin"));
 }
 
 //---------------------------------------------------------------------------
@@ -393,35 +397,22 @@ bool CAbi::loadAbiFromFile(const string_q& fileName, bool builtIn) {
         return false;
     }
 
-    //    string_q binFile = substitute(fileName, ".json", ".bin");
-    //    if (fileExists(binFile)) {
-    //        CArchive archive(READING_ARCHIVE);
-    //        if (archive.Lock(binFile, modeReadOnly, LOCK_NOWAIT)) {
-    //            archive >> *this;
-    //            archive.Release();
-    //            return true;
-    //        }
-    //    }
+    // TODO(tjayrush): This could be cached to speed things up
 
     string_q contents;
     asciiFileToString(fileName, contents);
     LOG_TEST("loadAbiFromFile",
              substitute(substitute(fileName, getCachePath(""), "$CACHE/"), configPath(""), "$CONFIG/"));
-    // if (isTestMode())
-    //    cout << "From file: " << contents << endl << "From file: " << endl;
     bool ret = loadAbiFromString(contents, builtIn);
     if (ret) {
-        string_q addr = substitute(
-            substitute(substitute(fileName, configPath("abis/known/"), ""), getCachePath("abis/"), ""), ".json", "");
-        for (auto i = interfaces.begin(); i != interfaces.end(); i++)
-            i->address = addr;
+        if (contains(fileName, "0x")) {
+            string_q addr = fileName.substr(fileName.find("0x"), 42);
+            if (isAddress(addr)) {
+                for (auto i = interfaces.begin(); i != interfaces.end(); i++)
+                    i->address = addr;
+            }
+        }
         sortInterfaces();
-        //        CArchive archive(WRITING_ARCHIVE);
-        //        if (archive.Lock(binFile, modeWriteCreate, LOCK_NOWAIT)) {
-        //            archive << *this;
-        //            archive.Release();
-        //            return true;
-        //        }
         return true;
     }
     return false;

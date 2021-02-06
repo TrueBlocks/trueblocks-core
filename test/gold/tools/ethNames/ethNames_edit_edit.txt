@@ -7,7 +7,7 @@ TB_NAME_NAME = [NAME_CHANGED]
 TB_NAME_SOURCE = [SOURCE_CHANGED]
 TB_NAME_SYMBOL = [SYMBOL_CHANGED]
 TB_NAME_TAG = [TAGS_CHANGED]
-TIME ~ CLOCK - <INFO>  : loadAbiFromFile: $CONFIG/abis/known/erc_00020.json
+TIME ~ CLOCK - <INFO>  : loadAbiFromFile: $CONFIG/abis/known-000/erc_00020.json
 TIME ~ CLOCK - <INFO>  : Inserting: function-allowance(address,address)
 TIME ~ CLOCK - <INFO>  : Inserting: function-approve(address,uint256)
 TIME ~ CLOCK - <INFO>  : Inserting: function-balanceOf(address)
@@ -19,7 +19,7 @@ TIME ~ CLOCK - <INFO>  : Inserting: function-decimals()
 TIME ~ CLOCK - <INFO>  : Inserting: function-symbol()
 TIME ~ CLOCK - <INFO>  : Inserting: event-Approval(address,address,uint256)
 TIME ~ CLOCK - <INFO>  : Inserting: event-Transfer(address,address,uint256)
-TIME ~ CLOCK - <INFO>  : loadAbiFromFile: $CONFIG/abis/known/erc_00721.json
+TIME ~ CLOCK - <INFO>  : loadAbiFromFile: $CONFIG/abis/known-000/erc_00721.json
 TIME ~ CLOCK - <INFO>  : Skipping: function-approve(address,uint256)
 TIME ~ CLOCK - <INFO>  : Skipping: function-balanceOf(address)
 TIME ~ CLOCK - <INFO>  : Inserting: function-getApproved(uint256)

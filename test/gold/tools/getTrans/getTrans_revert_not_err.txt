@@ -379,7 +379,7 @@ TIME ~ CLOCK - <INFO>  : loadAbiFromFile: Could not load file $CACHE/abis/0x8ca1
         },
         "articulatedTrace": {
           "name": "balanceOf",
-          "stateMutability": "nonpayable",
+          "stateMutability": "view",
           "inputs": [
             {
               "name": "_owner",
@@ -389,7 +389,7 @@ TIME ~ CLOCK - <INFO>  : loadAbiFromFile: Could not load file $CACHE/abis/0x8ca1
           ],
           "outputs": [
             {
-              "name": "balance",
+              "name": "_balance",
               "value": "0",
               "internalType": "uint256"
             }
@@ -417,7 +417,7 @@ TIME ~ CLOCK - <INFO>  : loadAbiFromFile: Could not load file $CACHE/abis/0x8ca1
         },
         "articulatedTrace": {
           "name": "balanceOf",
-          "stateMutability": "nonpayable",
+          "stateMutability": "view",
           "inputs": [
             {
               "name": "_owner",
@@ -427,7 +427,7 @@ TIME ~ CLOCK - <INFO>  : loadAbiFromFile: Could not load file $CACHE/abis/0x8ca1
           ],
           "outputs": [
             {
-              "name": "balance",
+              "name": "_balance",
               "value": "0",
               "internalType": "uint256"
             }
@@ -455,7 +455,7 @@ TIME ~ CLOCK - <INFO>  : loadAbiFromFile: Could not load file $CACHE/abis/0x8ca1
         },
         "articulatedTrace": {
           "name": "balanceOf",
-          "stateMutability": "nonpayable",
+          "stateMutability": "view",
           "inputs": [
             {
               "name": "_owner",
@@ -465,7 +465,7 @@ TIME ~ CLOCK - <INFO>  : loadAbiFromFile: Could not load file $CACHE/abis/0x8ca1
           ],
           "outputs": [
             {
-              "name": "balance",
+              "name": "_balance",
               "value": "100000000",
               "internalType": "uint256"
             }
@@ -493,7 +493,7 @@ TIME ~ CLOCK - <INFO>  : loadAbiFromFile: Could not load file $CACHE/abis/0x8ca1
         },
         "articulatedTrace": {
           "name": "balanceOf",
-          "stateMutability": "nonpayable",
+          "stateMutability": "view",
           "inputs": [
             {
               "name": "_owner",
@@ -503,7 +503,7 @@ TIME ~ CLOCK - <INFO>  : loadAbiFromFile: Could not load file $CACHE/abis/0x8ca1
           ],
           "outputs": [
             {
-              "name": "balance",
+              "name": "_balance",
               "value": "100000000",
               "internalType": "uint256"
             }
@@ -531,7 +531,7 @@ TIME ~ CLOCK - <INFO>  : loadAbiFromFile: Could not load file $CACHE/abis/0x8ca1
         },
         "articulatedTrace": {
           "name": "balanceOf",
-          "stateMutability": "nonpayable",
+          "stateMutability": "view",
           "inputs": [
             {
               "name": "_owner",
@@ -541,7 +541,7 @@ TIME ~ CLOCK - <INFO>  : loadAbiFromFile: Could not load file $CACHE/abis/0x8ca1
           ],
           "outputs": [
             {
-              "name": "balance",
+              "name": "_balance",
               "value": "100000000",
               "internalType": "uint256"
             }
@@ -569,7 +569,7 @@ TIME ~ CLOCK - <INFO>  : loadAbiFromFile: Could not load file $CACHE/abis/0x8ca1
         },
         "articulatedTrace": {
           "name": "balanceOf",
-          "stateMutability": "nonpayable",
+          "stateMutability": "view",
           "inputs": [
             {
               "name": "_owner",
@@ -579,7 +579,7 @@ TIME ~ CLOCK - <INFO>  : loadAbiFromFile: Could not load file $CACHE/abis/0x8ca1
           ],
           "outputs": [
             {
-              "name": "balance",
+              "name": "_balance",
               "value": "100000000",
               "internalType": "uint256"
             }

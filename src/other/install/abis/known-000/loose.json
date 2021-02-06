@@ -917,6 +917,29 @@
     "type": "function"
   },
   {
+    "name": "split",
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "signature": "split(address,address)",
+    "encoding": "0x0f2c9329",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "targetFork",
+      },
+      {
+        "type": "address",
+        "name": "targetNoFork",
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bool",
+        "name": "ret_0",
+      }
+    ]
+  },
+  {
     "encoding": "0x0f2c9329",
     "inputs": [
       {

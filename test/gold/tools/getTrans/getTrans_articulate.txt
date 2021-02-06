@@ -118,10 +118,10 @@ TIME ~ CLOCK - <INFO>  : Skipping: event-ProposalTallied(uint256,bool,uint256)
 TIME ~ CLOCK - <INFO>  : Skipping: event-NewCurator(address)
 TIME ~ CLOCK - <INFO>  : Skipping: event-AllowedRecipientChanged(address,bool)
 --1 : 1 : 0
---  0: success (bool)
+--  0: _success (bool)
 --  0: 0000000000000000000000000000000000000000000000000000000000000000 <---
 --1 : 1 : 0
---  0: success (bool)
+--  0: _success (bool)
 --  0: 0000000000000000000000000000000000000000000000000000000000000000 <---
   {
     "hash": "0x2d92337aa72c51eaf61ab52692af28cc2f7efb62e32bbc1d8a420099a22510e9",
@@ -179,7 +179,7 @@ TIME ~ CLOCK - <INFO>  : Skipping: event-AllowedRecipientChanged(address,bool)
           ],
           "outputs": [
             {
-              "name": "success",
+              "name": "_success",
               "internalType": "bool"
             }
           ]
@@ -209,7 +209,7 @@ TIME ~ CLOCK - <INFO>  : Skipping: event-AllowedRecipientChanged(address,bool)
       ],
       "outputs": [
         {
-          "name": "success",
+          "name": "_success",
           "internalType": "bool"
         }
       ]
@@ -592,7 +592,7 @@ TIME ~ CLOCK - <INFO>  : loadAbiFromFile: Could not load file $CACHE/abis/0x167a
           ],
           "outputs": [
             {
-              "name": "val_0",
+              "name": "ret_0",
               "value": "true",
               "internalType": "bool"
             }
@@ -668,7 +668,7 @@ TIME ~ CLOCK - <INFO>  : loadAbiFromFile: Could not load file $CACHE/abis/0x167a
       ],
       "outputs": [
         {
-          "name": "val_0",
+          "name": "ret_0",
           "value": "true",
           "internalType": "bool"
         }

@@ -83,7 +83,7 @@ string_q getFileContentsByHash(const hash_t& hash) {  // also unzips if the file
 //----------------------------------------------------------------
 hash_t getCurrentManifest(void) {
     CAbi abi;
-    abi.loadAbiFromFile(configPath("abis/known/unchained.json"), false);
+    abi.loadAbiFromFile(configPath("abis/known-000/unchained.json"), false);
     address_t contractAddr = unchainedIndexAddr;
     CFunction result;
     if (doEthCall(contractAddr, manifestHashEncoding, "", getLatestBlock_client(), abi, result))

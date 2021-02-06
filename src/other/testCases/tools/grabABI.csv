@@ -38,6 +38,7 @@ on, cmd,  fast, abis, tools/grabABI, fmt_junk,              y, addrs = 0xe94327d
 on, both, fast, abis, tools/grabABI, to_file,               y, addrs = 0xe94327d07fc17907b4db788e5adf2ed424addff6 & fmt = json & to_file
 
 on, both, fast, abis, tools/grabABI, findSig,               y, find = 0xa6f9dae1
+#on, both, fast, abis, tools/grabABI, findSig1,              y, find = 0x6a627842 & find = 0xa6f9dae1
 #on, cmd,  fast, abis, tools/grabABI, rm_generation,        n, RMFILE -f generated/*
 #on, cmd,  fast, abis, tools/grabABI, rm_generation2,       n, RMFILE -f generated/classDefinitions/*
 #on, cmd,  fast, abis, tools/grabABI, generation,           n, addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & verbose = 10 & generate

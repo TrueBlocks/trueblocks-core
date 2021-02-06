@@ -166,5 +166,5 @@ func initConfig() {
 	viper.SetEnvKeyReplacer(strings.NewReplacer("SETTINGS.", ""))
 	viper.AutomaticEnv()
 
-	Options.signaturesPath = home + "/.quickBlocks/abis/known/"
+	Options.signaturesPath = home + "/.quickBlocks/abis/known-000/"
 }
