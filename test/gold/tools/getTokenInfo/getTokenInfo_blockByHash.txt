@@ -1,38 +1,5 @@
 getTokenInfo argc: 5 [1:0xd26114cd6ee289accf82350c8d8487fedb8a0c07] [2:0xcfb98637bcae43c13323eaa1731ced2b716962fd] [3:0x45205b0bdb6c9cc9bf0eb3753ae98175c563389b41b2d4a2178593a3415772c1] [4:0x966c946dff292e4e5d91169f3007c3c28cd50ca614b18db601806c486f9e6e87] 
 getTokenInfo 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xcfb98637bcae43c13323eaa1731ced2b716962fd 0x45205b0bdb6c9cc9bf0eb3753ae98175c563389b41b2d4a2178593a3415772c1 0x966c946dff292e4e5d91169f3007c3c28cd50ca614b18db601806c486f9e6e87 
-TIME ~ CLOCK - <INFO>  : loadAbiFromFile: $CONFIG/abis/known-000/erc_00020.json
-TIME ~ CLOCK - <INFO>  : Inserting: function-allowance(address,address)
-TIME ~ CLOCK - <INFO>  : Inserting: function-approve(address,uint256)
-TIME ~ CLOCK - <INFO>  : Inserting: function-balanceOf(address)
-TIME ~ CLOCK - <INFO>  : Inserting: function-name()
-TIME ~ CLOCK - <INFO>  : Inserting: function-totalSupply()
-TIME ~ CLOCK - <INFO>  : Inserting: function-transfer(address,uint256)
-TIME ~ CLOCK - <INFO>  : Inserting: function-transferFrom(address,address,uint256)
-TIME ~ CLOCK - <INFO>  : Inserting: function-decimals()
-TIME ~ CLOCK - <INFO>  : Inserting: function-symbol()
-TIME ~ CLOCK - <INFO>  : Inserting: event-Approval(address,address,uint256)
-TIME ~ CLOCK - <INFO>  : Inserting: event-Transfer(address,address,uint256)
-TIME ~ CLOCK - <INFO>  : loadAbiFromFile: $CONFIG/abis/known-000/erc_00721.json
-TIME ~ CLOCK - <INFO>  : Skipping: function-approve(address,uint256)
-TIME ~ CLOCK - <INFO>  : Skipping: function-balanceOf(address)
-TIME ~ CLOCK - <INFO>  : Inserting: function-getApproved(uint256)
-TIME ~ CLOCK - <INFO>  : Inserting: function-isApprovedForAll(address,address)
-TIME ~ CLOCK - <INFO>  : Skipping: function-name()
-TIME ~ CLOCK - <INFO>  : Inserting: function-onERC721Received(address,address,uint256,bytes)
-TIME ~ CLOCK - <INFO>  : Inserting: function-ownerOf(uint256)
-TIME ~ CLOCK - <INFO>  : Inserting: function-safeTransferFrom(address,address,uint256)
-TIME ~ CLOCK - <INFO>  : Inserting: function-safeTransferFrom(address,address,uint256,bytes)
-TIME ~ CLOCK - <INFO>  : Inserting: function-setApprovalForAll(address,bool)
-TIME ~ CLOCK - <INFO>  : Inserting: function-supportsInterface(bytes4)
-TIME ~ CLOCK - <INFO>  : Skipping: function-symbol()
-TIME ~ CLOCK - <INFO>  : Inserting: function-tokenByIndex(uint256)
-TIME ~ CLOCK - <INFO>  : Inserting: function-tokenOfOwnerByIndex(address,uint256)
-TIME ~ CLOCK - <INFO>  : Inserting: function-tokenURI(uint256)
-TIME ~ CLOCK - <INFO>  : Skipping: function-totalSupply()
-TIME ~ CLOCK - <INFO>  : Skipping: function-transferFrom(address,address,uint256)
-TIME ~ CLOCK - <INFO>  : Skipping: event-Approval(address,address,uint256)
-TIME ~ CLOCK - <INFO>  : Inserting: event-ApprovalForAll(address,address,bool)
-TIME ~ CLOCK - <INFO>  : Skipping: event-Transfer(address,address,uint256)
 blocknumber	holder	address	name	symbol	decimals	balance
 --1 : 1 : 0
 --  0: _balance (uint256)

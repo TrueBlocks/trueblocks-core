@@ -1,35 +1,5 @@
 grabABI argc: 4 [1:0xef638b4305b8a1620f4e0e562e127f1181ae16d2] [2:--fmt] [3:json] 
 grabABI 0xef638b4305b8a1620f4e0e562e127f1181ae16d2 --fmt json 
-TIME ~ CLOCK - <INFO>  : loadAbiFromFile: $CACHE/abis/0xef638b4305b8a1620f4e0e562e127f1181ae16d2.json
-TIME ~ CLOCK - <INFO>  : Inserting: function-removeOwner(address)
-TIME ~ CLOCK - <INFO>  : Inserting: function-isOwner(address)
-TIME ~ CLOCK - <INFO>  : Inserting: function-m_numOwners()
-TIME ~ CLOCK - <INFO>  : Inserting: function-m_lastDay()
-TIME ~ CLOCK - <INFO>  : Inserting: function-version()
-TIME ~ CLOCK - <INFO>  : Inserting: function-resetSpentToday()
-TIME ~ CLOCK - <INFO>  : Inserting: function-m_spentToday()
-TIME ~ CLOCK - <INFO>  : Inserting: function-addOwner(address)
-TIME ~ CLOCK - <INFO>  : Inserting: function-m_required()
-TIME ~ CLOCK - <INFO>  : Inserting: function-confirm(bytes32)
-TIME ~ CLOCK - <INFO>  : Inserting: function-setDailyLimit(uint256)
-TIME ~ CLOCK - <INFO>  : Inserting: function-execute(address,uint256,bytes)
-TIME ~ CLOCK - <INFO>  : Inserting: function-revoke(bytes32)
-TIME ~ CLOCK - <INFO>  : Inserting: function-changeRequirement(uint256)
-TIME ~ CLOCK - <INFO>  : Inserting: function-hasConfirmed(bytes32,address)
-TIME ~ CLOCK - <INFO>  : Inserting: function-kill(address)
-TIME ~ CLOCK - <INFO>  : Inserting: function-changeOwner(address,address)
-TIME ~ CLOCK - <INFO>  : Inserting: function-m_dailyLimit()
-TIME ~ CLOCK - <INFO>  : Inserting: constructor-(address[],uint256,uint256)
-TIME ~ CLOCK - <INFO>  : Inserting: event-Confirmation(address,bytes32)
-TIME ~ CLOCK - <INFO>  : Inserting: event-Revoke(address,bytes32)
-TIME ~ CLOCK - <INFO>  : Inserting: event-OwnerChanged(address,address)
-TIME ~ CLOCK - <INFO>  : Inserting: event-OwnerAdded(address)
-TIME ~ CLOCK - <INFO>  : Inserting: event-OwnerRemoved(address)
-TIME ~ CLOCK - <INFO>  : Inserting: event-RequirementChanged(uint256)
-TIME ~ CLOCK - <INFO>  : Inserting: event-Deposit(address,uint256)
-TIME ~ CLOCK - <INFO>  : Inserting: event-SingleTransact(address,uint256,address,bytes)
-TIME ~ CLOCK - <INFO>  : Inserting: event-MultiTransact(address,bytes32,uint256,address,bytes)
-TIME ~ CLOCK - <INFO>  : Inserting: event-ConfirmationNeeded(bytes32,address,uint256,address,bytes)
 { "data": [
 {
   "type": "constructor",

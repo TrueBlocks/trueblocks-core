@@ -318,6 +318,8 @@ const char* STR_DISPLAY_ABI =
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 //-----------------------------------------------------------------------
+#undef LOG_TEST
+#define LOG_TEST(a,b)
 bool loadAbiFile(const string_q& path, void* data) {
     if (endsWith(path, '/')) {
         forEveryFileInFolder(path + "*", loadAbiFile, data);
