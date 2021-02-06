@@ -1,36 +1,6 @@
 grabABI argc: 2 [1:0xffa93aacf49297d51e211817452839052fdfb961] 
 grabABI 0xffa93aacf49297d51e211817452839052fdfb961 
 TIME ~ CLOCK - <INFO>  : loadAbiFromEtherscan: for address 0xffa93aacf49297d51e211817452839052fdfb961
-TIME ~ CLOCK - <INFO>  : Inserting: function-mintingFinished()
-TIME ~ CLOCK - <INFO>  : Inserting: function-transfersEnabledFlag()
-TIME ~ CLOCK - <INFO>  : Inserting: function-name()
-TIME ~ CLOCK - <INFO>  : Inserting: function-approve(address,uint256)
-TIME ~ CLOCK - <INFO>  : Inserting: function-totalSupply()
-TIME ~ CLOCK - <INFO>  : Inserting: function-transferFrom(address,address,uint256)
-TIME ~ CLOCK - <INFO>  : Inserting: function-decimals()
-TIME ~ CLOCK - <INFO>  : Inserting: function-cap()
-TIME ~ CLOCK - <INFO>  : Inserting: function-mint(address,uint256)
-TIME ~ CLOCK - <INFO>  : Inserting: function-version()
-TIME ~ CLOCK - <INFO>  : Inserting: function-decreaseApproval(address,uint256)
-TIME ~ CLOCK - <INFO>  : Inserting: function-balanceOf(address)
-TIME ~ CLOCK - <INFO>  : Inserting: function-finishMinting()
-TIME ~ CLOCK - <INFO>  : Inserting: function-batchTransfer(address[],uint256[])
-TIME ~ CLOCK - <INFO>  : Inserting: function-owner()
-TIME ~ CLOCK - <INFO>  : Inserting: function-symbol()
-TIME ~ CLOCK - <INFO>  : Inserting: function-addMinter(address)
-TIME ~ CLOCK - <INFO>  : Inserting: function-transfer(address,uint256)
-TIME ~ CLOCK - <INFO>  : Inserting: function-enableTransfers()
-TIME ~ CLOCK - <INFO>  : Inserting: function-increaseApproval(address,uint256)
-TIME ~ CLOCK - <INFO>  : Inserting: function-deleteMinter(address)
-TIME ~ CLOCK - <INFO>  : Inserting: function-allowance(address,address)
-TIME ~ CLOCK - <INFO>  : Inserting: function-transferOwnership(address)
-TIME ~ CLOCK - <INFO>  : Inserting: function-minters(address)
-TIME ~ CLOCK - <INFO>  : Inserting: constructor-()
-TIME ~ CLOCK - <INFO>  : Inserting: event-Mint(address,uint256)
-TIME ~ CLOCK - <INFO>  : Inserting: event-MintFinished()
-TIME ~ CLOCK - <INFO>  : Inserting: event-OwnershipTransferred(address,address)
-TIME ~ CLOCK - <INFO>  : Inserting: event-Approval(address,address,uint256)
-TIME ~ CLOCK - <INFO>  : Inserting: event-Transfer(address,address,uint256)
 encoding	type	name	signature	input_names	output_names
 	constructor		()		,
 0x983b2d56	function	addMinter	addMinter(address)	_addr,	,

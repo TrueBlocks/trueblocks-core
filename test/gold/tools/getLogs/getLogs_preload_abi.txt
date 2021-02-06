@@ -1,18 +1,6 @@
 grabABI argc: 2 [1:0x51ffc1b089392a5bb65bf24eaf04d07d0e6f88b5] 
 grabABI 0x51ffc1b089392a5bb65bf24eaf04d07d0e6f88b5 
 TIME ~ CLOCK - <INFO>  : loadAbiFromEtherscan: for address 0x51ffc1b089392a5bb65bf24eaf04d07d0e6f88b5
-TIME ~ CLOCK - <INFO>  : Inserting: function-withdrawalProfit()
-TIME ~ CLOCK - <INFO>  : Inserting: function-expectedPayout(address)
-TIME ~ CLOCK - <INFO>  : Inserting: function-initEpochBalance()
-TIME ~ CLOCK - <INFO>  : Inserting: function-changeTokenContract(address)
-TIME ~ CLOCK - <INFO>  : Inserting: function-currentEpoch()
-TIME ~ CLOCK - <INFO>  : Inserting: function-owner()
-TIME ~ CLOCK - <INFO>  : Inserting: function-tokenCtr()
-TIME ~ CLOCK - <INFO>  : Inserting: function-transferOwnership(address)
-TIME ~ CLOCK - <INFO>  : Inserting: constructor-(address)
-TIME ~ CLOCK - <INFO>  : Inserting: event-WithdrawalEnabled()
-TIME ~ CLOCK - <INFO>  : Inserting: event-ProfitWithdrawn(address,uint256)
-TIME ~ CLOCK - <INFO>  : Inserting: event-TokenContractChanged(address)
 encoding	type	name	signature	input_names	output_names
 	constructor		(address)	_token,	,
 0x523aee69	function	changeTokenContract	changeTokenContract(address)	_newToken,	,

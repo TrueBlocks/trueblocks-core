@@ -1,34 +1,6 @@
 grabABI argc: 2 [1:0xb9e7f8568e08d5659f5d29c4997173d84cdf2607] 
 grabABI 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 
 TIME ~ CLOCK - <INFO>  : loadAbiFromEtherscan: for address 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607
-TIME ~ CLOCK - <INFO>  : Inserting: function-name()
-TIME ~ CLOCK - <INFO>  : Inserting: function-approve(address,uint256)
-TIME ~ CLOCK - <INFO>  : Inserting: function-creationBlock()
-TIME ~ CLOCK - <INFO>  : Inserting: function-totalSupply()
-TIME ~ CLOCK - <INFO>  : Inserting: function-transferFrom(address,address,uint256)
-TIME ~ CLOCK - <INFO>  : Inserting: function-decimals()
-TIME ~ CLOCK - <INFO>  : Inserting: function-changeController(address)
-TIME ~ CLOCK - <INFO>  : Inserting: function-balanceOfAt(address,uint256)
-TIME ~ CLOCK - <INFO>  : Inserting: function-version()
-TIME ~ CLOCK - <INFO>  : Inserting: function-createCloneToken(string,uint8,string,uint256,bool)
-TIME ~ CLOCK - <INFO>  : Inserting: function-balanceOf(address)
-TIME ~ CLOCK - <INFO>  : Inserting: function-parentToken()
-TIME ~ CLOCK - <INFO>  : Inserting: function-generateTokens(address,uint256)
-TIME ~ CLOCK - <INFO>  : Inserting: function-symbol()
-TIME ~ CLOCK - <INFO>  : Inserting: function-totalSupplyAt(uint256)
-TIME ~ CLOCK - <INFO>  : Inserting: function-transfer(address,uint256)
-TIME ~ CLOCK - <INFO>  : Inserting: function-transfersEnabled()
-TIME ~ CLOCK - <INFO>  : Inserting: function-parentSnapShotBlock()
-TIME ~ CLOCK - <INFO>  : Inserting: function-approveAndCall(address,uint256,bytes)
-TIME ~ CLOCK - <INFO>  : Inserting: function-destroyTokens(address,uint256)
-TIME ~ CLOCK - <INFO>  : Inserting: function-allowance(address,address)
-TIME ~ CLOCK - <INFO>  : Inserting: function-tokenFactory()
-TIME ~ CLOCK - <INFO>  : Inserting: function-enableTransfers(bool)
-TIME ~ CLOCK - <INFO>  : Inserting: function-controller()
-TIME ~ CLOCK - <INFO>  : Inserting: constructor-(address,address,uint256,string,uint8,string,bool)
-TIME ~ CLOCK - <INFO>  : Inserting: event-Transfer(address,address,uint256)
-TIME ~ CLOCK - <INFO>  : Inserting: event-NewCloneToken(address,uint256)
-TIME ~ CLOCK - <INFO>  : Inserting: event-Approval(address,address,uint256)
 encoding	type	name	signature	input_names	output_names
 	constructor		(address,address,uint256,string,uint8,string,bool)	_tokenFactory,_parentToken,_parentSnapShotBlock,_tokenName,_decimalUnits,_tokenSymbol,_transfersEnabled,	,
 0xdd62ed3e	function	allowance	allowance(address,address)	_owner,_spender,	remaining,,

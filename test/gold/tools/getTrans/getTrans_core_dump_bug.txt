@@ -2,23 +2,8 @@ getTrans argc: 5 [1:0xa5c9c1a65f998be86dc2131d57d0de0c418bb534d8d2b37b46c99888cc
 getTrans 0xa5c9c1a65f998be86dc2131d57d0de0c418bb534d8d2b37b46c99888ccef8d10 -avt --fmt api 
 {"data": [
 TIME ~ CLOCK - <INFO>  : loadAbiFromFile: $CACHE/abis/0xd7edd2f2bcccdb24afe9a4ab538264b0bbb31373.json
-TIME ~ CLOCK - <INFO>  : Inserting: function-postData(address,string,bytes32)
-TIME ~ CLOCK - <INFO>  : Inserting: function-isOwner(address)
-TIME ~ CLOCK - <INFO>  : Inserting: function-owner()
-TIME ~ CLOCK - <INFO>  : Inserting: constructor-()
-TIME ~ CLOCK - <INFO>  : Inserting: event-DataDumped(address,string,bytes32)
 TIME ~ CLOCK - <INFO>  : loadAbiFromFile: $CACHE/abis/0xd7edd2f2bcccdb24afe9a4ab538264b0bbb31373.json
-TIME ~ CLOCK - <INFO>  : Skipping: function-postData(address,string,bytes32)
-TIME ~ CLOCK - <INFO>  : Skipping: function-isOwner(address)
-TIME ~ CLOCK - <INFO>  : Skipping: function-owner()
-TIME ~ CLOCK - <INFO>  : Skipping: constructor-()
-TIME ~ CLOCK - <INFO>  : Skipping: event-DataDumped(address,string,bytes32)
 TIME ~ CLOCK - <INFO>  : loadAbiFromFile: $CACHE/abis/0xd7edd2f2bcccdb24afe9a4ab538264b0bbb31373.json
-TIME ~ CLOCK - <INFO>  : Skipping: function-postData(address,string,bytes32)
-TIME ~ CLOCK - <INFO>  : Skipping: function-isOwner(address)
-TIME ~ CLOCK - <INFO>  : Skipping: function-owner()
-TIME ~ CLOCK - <INFO>  : Skipping: constructor-()
-TIME ~ CLOCK - <INFO>  : Skipping: event-DataDumped(address,string,bytes32)
 --3 : 7 : 0
 --  0: recipient (address)
 --  1: topic (string)

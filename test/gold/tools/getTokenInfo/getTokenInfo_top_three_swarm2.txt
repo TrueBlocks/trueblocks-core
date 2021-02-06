@@ -1,38 +1,7 @@
 getTokenInfo argc: 8 [1:0xb9e7f8568e08d5659f5d29c4997173d84cdf2607] [2:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98] [3:0x6b65353ac052f6c3a0c9688911b078bd025d6ab3] [4:0xa25d04fa348f107428708ba19c95d1c79b3744bf] [5:4285364] [6:3510999] [7:2510010] 
 getTokenInfo 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98 0x6b65353ac052f6c3a0c9688911b078bd025d6ab3 0xa25d04fa348f107428708ba19c95d1c79b3744bf 4285364 3510999 2510010 
 TIME ~ CLOCK - <INFO>  : loadAbiFromFile: $CONFIG/abis/known-000/erc_00020.json
-TIME ~ CLOCK - <INFO>  : Inserting: function-allowance(address,address)
-TIME ~ CLOCK - <INFO>  : Inserting: function-approve(address,uint256)
-TIME ~ CLOCK - <INFO>  : Inserting: function-balanceOf(address)
-TIME ~ CLOCK - <INFO>  : Inserting: function-name()
-TIME ~ CLOCK - <INFO>  : Inserting: function-totalSupply()
-TIME ~ CLOCK - <INFO>  : Inserting: function-transfer(address,uint256)
-TIME ~ CLOCK - <INFO>  : Inserting: function-transferFrom(address,address,uint256)
-TIME ~ CLOCK - <INFO>  : Inserting: function-decimals()
-TIME ~ CLOCK - <INFO>  : Inserting: function-symbol()
-TIME ~ CLOCK - <INFO>  : Inserting: event-Approval(address,address,uint256)
-TIME ~ CLOCK - <INFO>  : Inserting: event-Transfer(address,address,uint256)
 TIME ~ CLOCK - <INFO>  : loadAbiFromFile: $CONFIG/abis/known-000/erc_00721.json
-TIME ~ CLOCK - <INFO>  : Skipping: function-approve(address,uint256)
-TIME ~ CLOCK - <INFO>  : Skipping: function-balanceOf(address)
-TIME ~ CLOCK - <INFO>  : Inserting: function-getApproved(uint256)
-TIME ~ CLOCK - <INFO>  : Inserting: function-isApprovedForAll(address,address)
-TIME ~ CLOCK - <INFO>  : Skipping: function-name()
-TIME ~ CLOCK - <INFO>  : Inserting: function-onERC721Received(address,address,uint256,bytes)
-TIME ~ CLOCK - <INFO>  : Inserting: function-ownerOf(uint256)
-TIME ~ CLOCK - <INFO>  : Inserting: function-safeTransferFrom(address,address,uint256)
-TIME ~ CLOCK - <INFO>  : Inserting: function-safeTransferFrom(address,address,uint256,bytes)
-TIME ~ CLOCK - <INFO>  : Inserting: function-setApprovalForAll(address,bool)
-TIME ~ CLOCK - <INFO>  : Inserting: function-supportsInterface(bytes4)
-TIME ~ CLOCK - <INFO>  : Skipping: function-symbol()
-TIME ~ CLOCK - <INFO>  : Inserting: function-tokenByIndex(uint256)
-TIME ~ CLOCK - <INFO>  : Inserting: function-tokenOfOwnerByIndex(address,uint256)
-TIME ~ CLOCK - <INFO>  : Inserting: function-tokenURI(uint256)
-TIME ~ CLOCK - <INFO>  : Skipping: function-totalSupply()
-TIME ~ CLOCK - <INFO>  : Skipping: function-transferFrom(address,address,uint256)
-TIME ~ CLOCK - <INFO>  : Skipping: event-Approval(address,address,uint256)
-TIME ~ CLOCK - <INFO>  : Inserting: event-ApprovalForAll(address,address,bool)
-TIME ~ CLOCK - <INFO>  : Skipping: event-Transfer(address,address,uint256)
 blocknumber	holder	address	name	symbol	decimals	balance
 4285364	0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98	0xb9e7f8568e08d5659f5d29c4997173d84cdf2607	Swarm City Token	SWT	18	1448799417541610000000000
 3510999	0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98	0xb9e7f8568e08d5659f5d29c4997173d84cdf2607	Swarm City Token	SWT	18	1047207870835250000000000

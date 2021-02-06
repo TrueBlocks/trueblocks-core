@@ -1,8 +1,6 @@
 abiTest2 argc: 1 
 abiTest2 
 [TIME ~ CLOCK - <INFO>  : loadAbiFromFile: ./approve.json
-TIME ~ CLOCK - <INFO>  : Inserting: function-approve(address,uint256)
-TIME ~ CLOCK - <INFO>  : Inserting: event-Approval(address,address,uint256)
 {
   "blockNumber": 10293554,
   "transactionIndex": 109,
@@ -52,8 +50,6 @@ TIME ~ CLOCK - <INFO>  : Inserting: event-Approval(address,address,uint256)
 }
 
 ,TIME ~ CLOCK - <INFO>  : loadAbiFromFile: ./donate.json
-TIME ~ CLOCK - <INFO>  : Inserting: function-donate((address,uint256,address)[])
-TIME ~ CLOCK - <INFO>  : Inserting: event-DonationSent(address,uint256,address,address)
 --1 : 8 : 0
 --  0: donations (tuple[])
 --      struct BulkCheckout.Donation[][token(address) amount(uint256) recipient(address) ]

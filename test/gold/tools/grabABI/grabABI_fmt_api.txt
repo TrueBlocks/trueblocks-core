@@ -1,31 +1,6 @@
 grabABI argc: 4 [1:0xe94327d07fc17907b4db788e5adf2ed424addff6] [2:--fmt] [3:api] 
 grabABI 0xe94327d07fc17907b4db788e5adf2ed424addff6 --fmt api 
 TIME ~ CLOCK - <INFO>  : loadAbiFromEtherscan: for address 0xe94327d07fc17907b4db788e5adf2ed424addff6
-TIME ~ CLOCK - <INFO>  : Inserting: function-name()
-TIME ~ CLOCK - <INFO>  : Inserting: function-approve(address,uint256)
-TIME ~ CLOCK - <INFO>  : Inserting: function-initialized()
-TIME ~ CLOCK - <INFO>  : Inserting: function-totalSupply()
-TIME ~ CLOCK - <INFO>  : Inserting: function-transferFrom(address,address,uint256)
-TIME ~ CLOCK - <INFO>  : Inserting: function-migrateBalance(address)
-TIME ~ CLOCK - <INFO>  : Inserting: function-targetSupply()
-TIME ~ CLOCK - <INFO>  : Inserting: function-decimals()
-TIME ~ CLOCK - <INFO>  : Inserting: function-unpause()
-TIME ~ CLOCK - <INFO>  : Inserting: function-migrateBalances(address[])
-TIME ~ CLOCK - <INFO>  : Inserting: function-paused()
-TIME ~ CLOCK - <INFO>  : Inserting: function-balanceOf(address)
-TIME ~ CLOCK - <INFO>  : Inserting: function-pause()
-TIME ~ CLOCK - <INFO>  : Inserting: function-owner()
-TIME ~ CLOCK - <INFO>  : Inserting: function-symbol()
-TIME ~ CLOCK - <INFO>  : Inserting: function-transfer(address,uint256)
-TIME ~ CLOCK - <INFO>  : Inserting: function-legacyRepContract()
-TIME ~ CLOCK - <INFO>  : Inserting: function-allowance(address,address)
-TIME ~ CLOCK - <INFO>  : Inserting: function-transferOwnership(address)
-TIME ~ CLOCK - <INFO>  : Inserting: constructor-(address,uint256,address)
-TIME ~ CLOCK - <INFO>  : Inserting: event-Migrated(address,uint256)
-TIME ~ CLOCK - <INFO>  : Inserting: event-Pause()
-TIME ~ CLOCK - <INFO>  : Inserting: event-Unpause()
-TIME ~ CLOCK - <INFO>  : Inserting: event-Approval(address,address,uint256)
-TIME ~ CLOCK - <INFO>  : Inserting: event-Transfer(address,address,uint256)
 {"data": [
 {
   "type": "constructor",

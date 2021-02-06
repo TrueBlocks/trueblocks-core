@@ -801,11 +801,11 @@ void CAbi::addInterface(const CFunction& func) {
 
     // first in wins
     if (interfaceMap[func.encoding]) {
-        LOG_TEST("Skipping", func.type + "-" + func.signature);
+        //LOG_TEST("Skipping", func.type + "-" + func.signature);
         return;
     }
 
-    LOG_TEST("Inserting", func.type + "-" + func.signature);
+    //LOG_TEST("Inserting", func.type + "-" + func.signature);
     interfaces.push_back(func);
     interfaceMap[func.encoding] = true;
 }
