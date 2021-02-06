@@ -53,7 +53,7 @@ class CTestCase : public CBaseNode {
 
     // EXISTING_CODE
     explicit CTestCase(const string_q& line, uint32_t id);
-    void prepareTest(bool cmdLine);
+    void prepareTest(bool cmdLine, bool removeWorking);
     // EXISTING_CODE
     bool operator==(const CTestCase& it) const;
     bool operator!=(const CTestCase& it) const {

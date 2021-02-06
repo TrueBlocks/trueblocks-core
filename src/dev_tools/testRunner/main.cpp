@@ -112,28 +112,29 @@ int main(int argc, const char* argv[]) {
         }
     }
 
-    bool allPassed = total.nTests == total.nPassed;
-    perf << total.Format(options.perf_format) << endl;
-    string_q perf_result = perf.str();
-    replaceAll(perf_result, ",E-", "," + toLower(getHostName()) + "," + (allPassed ? "E" : "F") + "-");
-    cerr << "    " << substitute(perf_result, "\n", "\n    ") << endl;
-    if (options.full_test && options.report)
-        appendToAsciiFile(configPath(string_q("performance") + (allPassed ? "" : "_failed") + ".csv"), perf_result);
-    appendToAsciiFile(configPath("performance_slow.csv"), slow.str());
-    string_q copyPath = getGlobalConfig()->getConfigStr("settings", "copyPath", "<NOT_SET>");
-
-    if (folderExists(copyPath)) {
-        CStringArray files = {"performance.csv", "performance_failed.csv", "performance_slow.csv",
-                              "performance_scraper.csv"};
-        for (auto file : files) {
-            if (fileExists(configPath(file))) {
-                ostringstream copyCmd;
-                copyCmd << "cp -f \"";
-                copyCmd << configPath(file) << "\" \"" << copyPath << "\"";
-                // clang-format off
-                if (system(copyCmd.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings
-                // clang-format on
-                // cerr << copyCmd.str() << endl;
+    if (options.report && options.skip == 1) {
+        bool allPassed = total.nTests == total.nPassed;
+        perf << total.Format(options.perf_format) << endl;
+        string_q perf_result = perf.str();
+        replaceAll(perf_result, ",E-", "," + toLower(getHostName()) + "," + (allPassed ? "E" : "F") + "-");
+        cerr << "    " << substitute(perf_result, "\n", "\n    ") << endl;
+        if (options.full_test && options.report)
+            appendToAsciiFile(configPath(string_q("performance") + (allPassed ? "" : "_failed") + ".csv"), perf_result);
+        appendToAsciiFile(configPath("performance_slow.csv"), slow.str());
+        string_q copyPath = getGlobalConfig()->getConfigStr("settings", "copyPath", "<NOT_SET>");
+        if (folderExists(copyPath)) {
+            CStringArray files = {"performance.csv", "performance_failed.csv", "performance_slow.csv",
+                                    "performance_scraper.csv"};
+            for (auto file : files) {
+                if (fileExists(configPath(file))) {
+                    ostringstream copyCmd;
+                    copyCmd << "cp -f \"";
+                    copyCmd << configPath(file) << "\" \"" << copyPath << "\"";
+                    // clang-format off
+                    if (system(copyCmd.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings
+                    // clang-format on
+                    // cerr << copyCmd.str() << endl;
+                }
             }
         }
     }
@@ -160,9 +161,11 @@ bool COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, cons
     cerr << measure.Format("Testing [{COMMAND}] ([{TYPE}] mode):") << endl;
 
     for (auto test : testArray) {
+        if (skip != 1 && nRun++ % skip)
+            continue;
         if (verbose)
             cerr << string_q(120, '=') << endl << test << endl << string_q(120, '=') << endl;
-        test.prepareTest(cmdTests);
+        test.prepareTest(cmdTests, skip > 0);
         if ((!cmdTests && test.mode == "cmd") || (cmdTests && test.mode == "api")) {
             // do nothing - wrong mode
 

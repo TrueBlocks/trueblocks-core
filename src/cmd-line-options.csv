@@ -101,6 +101,7 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,customizeable,c
 11880,dev_tools,,,testRunner,mode,m,,false,false,true,false,local,flag,enum[cmd*|api|both],determine which set of tests to run
 11900,dev_tools,,,testRunner,filter,f,,false,false,true,false,header,flag,enum[fast*|medi|slow|all],determine how long it takes to run tests
 11920,dev_tools,,,testRunner,clean,c,,false,false,true,false,header,switch,<boolean>,clean working folder before running tests
+11930,dev_tools,,,testRunner,skip,s,1,false,false,false,false,header,flag,<uint64>,run only every 'skip' test (faster)
 11940,dev_tools,,,testRunner,no_quit,n,,false,false,true,false,header,switch,<boolean>,do not quit testing on first error
 11940,dev_tools,,,testRunner,no_post,o,,false,false,true,false,header,switch,<boolean>,do not complete the post processing step
 11960,dev_tools,,,testRunner,report,r,,false,false,true,false,header,switch,<boolean>,display performance report to screen
@@ -219,7 +220,6 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,customizeable,c
 
 13660,tools,Accounts,abis,grabABI,addrs,,,true,false,true,true,header,positional,list<addr>,list of one or more smart contracts whose ABI to grab from EtherScan
 13680,tools,Accounts,abis,grabABI,canonical,c,,false,false,true,true,local,switch,<boolean>,convert all types to their canonical represenation and remove|all spaces from display
-13700,tools,Accounts,abis,grabABI,generate,g,,false,false,true,true,header,switch,<boolean>,generate C++ code into the current folder for all functions and|events found in the ABI
 13840,tools,Accounts,abis,grabABI,monitored,m,,false,false,true,false,local,switch,<boolean>,load ABIs from monitored addresses
 13850,tools,Accounts,abis,grabABI,known,k,,false,false,true,false,local,switch,<boolean>,load common 'known' ABIs from cache
 13855,tools,Accounts,abis,grabABI,attach,a,,false,false,true,false,local,switch,<boolean>,attach the smart contract's address to the the abi

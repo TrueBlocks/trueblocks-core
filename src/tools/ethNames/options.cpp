@@ -127,8 +127,7 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     if (clean) {
-        standards.abi_spec.loadAbiFromFile(configPath("abis/known-000/erc_00020.json"), true);
-        standards.abi_spec.loadAbiFromFile(configPath("abis/known-000/erc_00721.json"), true);
+        standards.abi_spec.loadAbisFromKnown(ABI_TOKENS);
         return handle_clean();
     }
 
@@ -138,8 +137,7 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     if (isCrudCommand()) {
-        standards.abi_spec.loadAbiFromFile(configPath("abis/known-000/erc_00020.json"), true);
-        standards.abi_spec.loadAbiFromFile(configPath("abis/known-000/erc_00721.json"), true);
+        standards.abi_spec.loadAbisFromKnown(ABI_TOKENS);
         if (!processEditCommand(terms, to_custom))
             return false;
     }

@@ -1,6 +1,6 @@
 grabABI argc: 2 [1:0x51ffc1b089392a5bb65bf24eaf04d07d0e6f88b5] 
 grabABI 0x51ffc1b089392a5bb65bf24eaf04d07d0e6f88b5 
-TIME ~ CLOCK - <INFO>  : loadAbiFromEtherscan: for address 0x51ffc1b089392a5bb65bf24eaf04d07d0e6f88b5
+TIME ~ CLOCK - <INFO>  : loadAbiFromFile: $CACHE/abis/0x51ffc1b089392a5bb65bf24eaf04d07d0e6f88b5.json
 TIME ~ CLOCK - <INFO>  : Inserting: function-withdrawalProfit()
 TIME ~ CLOCK - <INFO>  : Inserting: function-expectedPayout(address)
 TIME ~ CLOCK - <INFO>  : Inserting: function-initEpochBalance()

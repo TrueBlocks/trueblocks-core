@@ -491,8 +491,7 @@ bool noteABI(const string_q& path, void* data) {
             abii.nFunctions = abii.nEvents = abii.nOther = abii.sizeInBytes = 36963;
         } else {
             CAbi abi;
-            abi.loadAbiFromFile(path, false);
-            abi.sortInterfaces();
+            loadAbiFile(path, &abi);
             abii.nFunctions = nFunctions(abi.interfaces);
             abii.nEvents = nEvents(abi.interfaces);
             abii.nOther = nOther(abi.interfaces);

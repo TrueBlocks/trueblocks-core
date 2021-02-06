@@ -14,6 +14,8 @@
 #include "etherlib.h"
 #include "options.h"
 
+extern bool visitAbi(CAbi& abi, void* data);
+extern bool forEveryAbiInArray(ABIVISITFUNC func, void* data, const CAbiArray& abi_array);
 //-----------------------------------------------------------------------
 int main(int argc, const char* argv[]) {
     nodeNotRequired();
@@ -30,8 +32,7 @@ int main(int argc, const char* argv[]) {
         if (once)
             cout << exportPreamble(expContext().fmtMap["header"],
                                    isApiMode() ? GETRUNTIME_CLASS(CFunction) : GETRUNTIME_CLASS(CAbi));
-        if (!options.generate)
-            forEveryAbiInArray(visitAbi, &options, options.abiList);
+        forEveryAbiInArray(visitAbi, &options, options.abiList);
         once = false;
     }
     cout << exportPostamble(options.errors, expContext().fmtMap["meta"]);

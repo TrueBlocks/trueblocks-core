@@ -265,7 +265,7 @@ bool COptions::parseArguments(string_q& command) {
         // Try to articulate the monitored addresses
         for (size_t i = 0; i < monitors.size(); i++) {
             CMonitor* monitor = &monitors[i];
-            abi_spec.loadAbiFromEtherscan(monitor->address, false, errors);
+            abi_spec.loadAbiFromEtherscan(monitor->address, false);
         }
 
         if (expContext().exportFmt != JSON1 && expContext().exportFmt != API1) {

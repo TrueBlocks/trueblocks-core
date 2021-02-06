@@ -1,6 +1,8 @@
 getTrace argc: 6 [1:0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f] [2:--articulate] [3:--fmt] [4:api] [5:--verbose] 
 getTrace 0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f --articulate --fmt api --verbose 
+TIME ~ CLOCK - <INFO>  : Loaded 1685 interfaces from: $CACHE/abis/known.bin
 {"data": [
+TIME ~ CLOCK - <INFO>  : Local file copied to cache: ./0x159cf1e9ae58211b588f5e3bf1d7e423952d959b.json
 TIME ~ CLOCK - <INFO>  : loadAbiFromFile: $CACHE/abis/0x159cf1e9ae58211b588f5e3bf1d7e423952d959b.json
 TIME ~ CLOCK - <INFO>  : Inserting: function-add(uint256,uint256)
 TIME ~ CLOCK - <INFO>  : Inserting: function-sub(uint256,uint256)
@@ -69,6 +71,7 @@ TIME ~ CLOCK - <INFO>  : Inserting: event-ReclaimMisplacedTokens(address,uint256
 TIME ~ CLOCK - <INFO>  : Inserting: event-ToggleTrustedVerifier(address,bool)
 TIME ~ CLOCK - <INFO>  : Inserting: event-SettingChange(address,uint8,uint256)
 TIME ~ CLOCK - <INFO>  : Inserting: event-Message(string,string)
+TIME ~ CLOCK - <INFO>  : Local file copied to cache: ./0x159cf1e9ae58211b588f5e3bf1d7e423952d959b.json
 TIME ~ CLOCK - <INFO>  : loadAbiFromFile: $CACHE/abis/0x159cf1e9ae58211b588f5e3bf1d7e423952d959b.json
 TIME ~ CLOCK - <INFO>  : Skipping: function-add(uint256,uint256)
 TIME ~ CLOCK - <INFO>  : Skipping: function-sub(uint256,uint256)

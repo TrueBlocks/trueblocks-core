@@ -1,5 +1,6 @@
 acctExport argc: 7 [1:0x05a56e2d52c817161883f50c441c3228cfe54d9f] [2:--accounting] [3:--fmt] [4:api] [5:--max_records] [6:5] 
 acctExport 0x05a56e2d52c817161883f50c441c3228cfe54d9f --accounting --fmt api --max_records 5 
+TIME ~ CLOCK - <INFO>  : Loaded 1685 interfaces from: $CACHE/abis/known.bin
 {"data": [
 {
   "hash": "0x0",

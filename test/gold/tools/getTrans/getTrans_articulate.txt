@@ -1,5 +1,6 @@
 getTrans argc: 8 [1:6513870.62] [2:6687987.11] [3:0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f81f2fad45149f26e12] [4:--articulate] [5:--fmt] [6:api] [7:--trace] 
 getTrans 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f81f2fad45149f26e12 --articulate --fmt api --trace 
+TIME ~ CLOCK - <INFO>  : Loaded 1685 interfaces from: $CACHE/abis/known.bin
 {"data": [
 TIME ~ CLOCK - <INFO>  : loadAbiFromFile: $CACHE/abis/0xbb9bc244d798123fde783fcc1c72d3bb8c189413.json
 TIME ~ CLOCK - <INFO>  : Inserting: function-proposals(uint256)
@@ -219,7 +220,8 @@ TIME ~ CLOCK - <INFO>  : Skipping: event-AllowedRecipientChanged(address,bool)
     "gasUsed": 3000000,
     "date": "2018-10-14 13:49:30 UTC",
     "ether": 0.000000000000000000
-  }TIME ~ CLOCK - <INFO>  : loadAbiFromFile: $CACHE/abis/0x159cf1e9ae58211b588f5e3bf1d7e423952d959b.json
+  }TIME ~ CLOCK - <INFO>  : Local file copied to cache: ./0x159cf1e9ae58211b588f5e3bf1d7e423952d959b.json
+TIME ~ CLOCK - <INFO>  : loadAbiFromFile: $CACHE/abis/0x159cf1e9ae58211b588f5e3bf1d7e423952d959b.json
 TIME ~ CLOCK - <INFO>  : Inserting: function-add(uint256,uint256)
 TIME ~ CLOCK - <INFO>  : Inserting: function-sub(uint256,uint256)
 TIME ~ CLOCK - <INFO>  : Inserting: function-mul(uint256,uint256)
@@ -287,6 +289,7 @@ TIME ~ CLOCK - <INFO>  : Inserting: event-ReclaimMisplacedTokens(address,uint256
 TIME ~ CLOCK - <INFO>  : Inserting: event-ToggleTrustedVerifier(address,bool)
 TIME ~ CLOCK - <INFO>  : Inserting: event-SettingChange(address,uint8,uint256)
 TIME ~ CLOCK - <INFO>  : Inserting: event-Message(string,string)
+TIME ~ CLOCK - <INFO>  : Local file copied to cache: ./0x159cf1e9ae58211b588f5e3bf1d7e423952d959b.json
 TIME ~ CLOCK - <INFO>  : loadAbiFromFile: $CACHE/abis/0x159cf1e9ae58211b588f5e3bf1d7e423952d959b.json
 TIME ~ CLOCK - <INFO>  : Skipping: function-add(uint256,uint256)
 TIME ~ CLOCK - <INFO>  : Skipping: function-sub(uint256,uint256)
@@ -355,6 +358,7 @@ TIME ~ CLOCK - <INFO>  : Skipping: event-ReclaimMisplacedTokens(address,uint256)
 TIME ~ CLOCK - <INFO>  : Skipping: event-ToggleTrustedVerifier(address,bool)
 TIME ~ CLOCK - <INFO>  : Skipping: event-SettingChange(address,uint8,uint256)
 TIME ~ CLOCK - <INFO>  : Skipping: event-Message(string,string)
+TIME ~ CLOCK - <INFO>  : Local file copied to cache: ./0x159cf1e9ae58211b588f5e3bf1d7e423952d959b.json
 TIME ~ CLOCK - <INFO>  : loadAbiFromFile: $CACHE/abis/0x159cf1e9ae58211b588f5e3bf1d7e423952d959b.json
 TIME ~ CLOCK - <INFO>  : Skipping: function-add(uint256,uint256)
 TIME ~ CLOCK - <INFO>  : Skipping: function-sub(uint256,uint256)

@@ -2529,6 +2529,7 @@ TIME ~ CLOCK - <INFO>  : Skipping: function-settleRebalance()
 TIME ~ CLOCK - <INFO>  : Inserting: function-actualizeFee()
 TIME ~ CLOCK - <INFO>  : Skipping: function-adjustFee(bytes)
 TIME ~ CLOCK - <INFO>  : Inserting: function-validateUnitShares(uint256)
+TIME ~ CLOCK - <INFO>  : Saved 1685 interfaces in: $CACHE/abis/known.bin
 { "data": [
 TIME ~ CLOCK - <INFO>  : loadAbiFromFile: $CACHE/abis/0xbb9bc244d798123fde783fcc1c72d3bb8c189413.json
 TIME ~ CLOCK - <INFO>  : Inserting: function-proposals(uint256)
@@ -2673,7 +2674,8 @@ TIME ~ CLOCK - <INFO>  : Skipping: event-AllowedRecipientChanged(address,bool)
       ]
     },
     "compressedLog": "Transfer ( _from: 0x306b79fc32fb1561480102e032844bb36ea97102, _to: 0xdf21fa922215b1a56f5a6d6294e6e36c85a0acfb, _amount: 666666666600000000 )"
-  }TIME ~ CLOCK - <INFO>  : loadAbiFromFile: $CACHE/abis/0x51ffc1b089392a5bb65bf24eaf04d07d0e6f88b5.json
+  }TIME ~ CLOCK - <INFO>  : Loaded 1685 interfaces from: $CACHE/abis/known.bin
+TIME ~ CLOCK - <INFO>  : loadAbiFromFile: $CACHE/abis/0x51ffc1b089392a5bb65bf24eaf04d07d0e6f88b5.json
 TIME ~ CLOCK - <INFO>  : Inserting: function-withdrawalProfit()
 TIME ~ CLOCK - <INFO>  : Inserting: function-expectedPayout(address)
 TIME ~ CLOCK - <INFO>  : Inserting: function-initEpochBalance()

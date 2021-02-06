@@ -1,5 +1,6 @@
 getTrans argc: 5 [1:0xa5c9c1a65f998be86dc2131d57d0de0c418bb534d8d2b37b46c99888ccef8d10] [2:-avt] [3:--fmt] [4:api] 
 getTrans 0xa5c9c1a65f998be86dc2131d57d0de0c418bb534d8d2b37b46c99888ccef8d10 -avt --fmt api 
+TIME ~ CLOCK - <INFO>  : Loaded 1685 interfaces from: $CACHE/abis/known.bin
 {"data": [
 TIME ~ CLOCK - <INFO>  : loadAbiFromFile: $CACHE/abis/0xd7edd2f2bcccdb24afe9a4ab538264b0bbb31373.json
 TIME ~ CLOCK - <INFO>  : Inserting: function-postData(address,string,bytes32)

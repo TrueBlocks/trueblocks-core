@@ -50,7 +50,6 @@ class CFunction : public CBaseNode {
 
     // EXISTING_CODE
     bool checkTypes(void) const;
-    bool isBuiltIn;
     explicit CFunction(const string_q& n) : name(n), anonymous(false), constant(false) {
     }
     string_q getSignature(uint64_t parts) const;
@@ -126,7 +125,6 @@ inline void CFunction::initialize(void) {
     address = "";
 
     // EXISTING_CODE
-    isBuiltIn = false;
     // EXISTING_CODE
 }
 
@@ -148,7 +146,6 @@ inline void CFunction::duplicate(const CFunction& fu) {
     address = fu.address;
 
     // EXISTING_CODE
-    isBuiltIn = fu.isBuiltIn;
     // EXISTING_CODE
 }
 

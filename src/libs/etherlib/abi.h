@@ -24,7 +24,6 @@ namespace qblocks {
 class CTransaction;
 class CLogEntry;
 class CTrace;
-typedef map<string, bool> CFunctionMap;
 #define ABI_KNOWN (1 << 1)
 #define ABI_TOKENS (1 << 2)
 #define ABI_STANDARDS (1 << 3)
@@ -48,19 +47,20 @@ class CAbi : public CBaseNode {
     const CBaseNode* getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
+    CStringTimeMap sourcesMap;
+    CStringMap interfaceMap;
+
     bool articulateTransaction(CTransaction* p) const;
     bool articulateLog(CLogEntry* l) const;
     bool articulateTrace(CTrace* t) const;
     bool articulateOutputs(const string_q& encoding, const string_q& value, CFunction& ret) const;
-    CFunctionMap interfaceMap;
-    bool loadAbisFolderAndCache(const string_q& sourcePath, const string_q& binPath);
+
     bool loadAbisFromKnown(int which);
     bool loadAbisFromCache(void);
     bool loadAbiFromAddress(const address_t& addr);
-    bool loadAbiFromFile(const string_q& fileName, bool builtIn);
-    bool loadAbiFromString(const string_q& str, bool builtIn);
-    bool loadAbiFromEtherscan(const address_t& addr, bool raw, CStringArray& errors);
-    void sortInterfaces(void);
+    bool loadAbiFromEtherscan(const address_t& addr, bool raw);
+    bool loadAbiFromSolidity(const string_q& addr);
+
     void addInterface(const CFunction& func);
     // EXISTING_CODE
     bool operator==(const CAbi& it) const;
@@ -77,6 +77,11 @@ class CAbi : public CBaseNode {
     bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
+    bool loadAbisFolderAndCache(const string_q& sourcePath, const string_q& binPath);
+    bool loadAbiFromFile(const string_q& fileName);
+    bool loadAbiFromString(const string_q& str);
+    friend bool loadAbiFile(const string_q& path, void* data);
+    friend bool loadAbiString(const string_q& path, CAbi& abi);
     // EXISTING_CODE
 };
 
@@ -107,6 +112,8 @@ inline CAbi::~CAbi(void) {
 //--------------------------------------------------------------------------
 inline void CAbi::clear(void) {
     // EXISTING_CODE
+    interfaceMap.clear();
+    sourcesMap.clear();
     // EXISTING_CODE
 }
 
@@ -119,6 +126,7 @@ inline void CAbi::initialize(void) {
 
     // EXISTING_CODE
     interfaceMap.clear();
+    sourcesMap.clear();
     // EXISTING_CODE
 }
 
@@ -132,6 +140,7 @@ inline void CAbi::duplicate(const CAbi& ab) {
 
     // EXISTING_CODE
     interfaceMap = ab.interfaceMap;
+    sourcesMap = ab.sourcesMap;
     // EXISTING_CODE
 }
 
@@ -174,6 +183,6 @@ extern const char* STR_DISPLAY_ABI;
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 extern bool decodeRLP(CParameterArray& interfaces, const string_q& desc, const string_q& input);
-extern bool sol_2_Abi(CAbi& abi, const string_q& addr);
+extern bool sortByFuncName(const CFunction& f1, const CFunction& f2);
 // EXISTING_CODE
 }  // namespace qblocks

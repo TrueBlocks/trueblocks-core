@@ -3,13 +3,12 @@ grabABI 0x00001
 
   Invalid address '0x00001'. Length (7) is not equal to 40 characters (20 bytes).
 
-  Usage:    grabABI [-c|-g|-m|-k|-a|-f|-v|-h] <address> [address...]  
+  Usage:    grabABI [-c|-m|-k|-a|-f|-v|-h] <address> [address...]  
   Purpose:  Fetches the ABI for a smart contract.
 
   Where:  
 	addrs                 list of one or more smart contracts whose ABI to grab from EtherScan (required)
 	-c  (--canonical)     convert all types to their canonical represenation and remove all spaces from display
-	-g  (--generate)      generate C++ code into the current folder for all functions and events found in the ABI
 	-m  (--monitored)     load ABIs from monitored addresses
 	-k  (--known)         load common 'known' ABIs from cache
 	-a  (--attach)        attach the smart contract's address to the the abi

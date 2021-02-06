@@ -105,8 +105,7 @@ bool test_generation(void) {
     {
         CAbi abi;
         cout << "Testing of already sorted JSON" << endl;
-        abi.loadAbiFromString(getAlreadySortedJson(), false);
-        abi.sortInterfaces();
+        loadAbiString(getAlreadySortedJson(), abi);
         cout << abi.Format() << endl << endl;
         sort(abi.interfaces.begin(), abi.interfaces.end());
         cout << abi.Format() << endl << endl;
@@ -115,8 +114,7 @@ bool test_generation(void) {
     {
         CAbi abi;
         cout << "Testing of not sorted JSON" << endl;
-        abi.loadAbiFromString(getNotSortedJson(), false);
-        abi.sortInterfaces();
+        loadAbiString(getNotSortedJson(), abi);
         cout << abi.Format() << endl << endl;
         sort(abi.interfaces.begin(), abi.interfaces.end());
         cout << abi.Format() << endl << endl;
@@ -134,14 +132,12 @@ bool test_old_bug(void) {
 
     CAbi abi;
     cout << string_q(120, '-') << "\nABI of test1.json" << endl << string_q(120, '-') << endl;
-    abi.loadAbiFromFile("./test1.json", false);
-    abi.sortInterfaces();
+    loadAbiFile("./test1.json", &abi);
     cout << abi << endl;
     abi = CAbi();
 
     cout << string_q(120, '-') << "\nABI of test2.json" << endl << string_q(120, '-') << endl;
-    abi.loadAbiFromFile("./test2.json", false);
-    abi.sortInterfaces();
+    loadAbiFile("./test2.json", &abi);
     cout << abi << endl;
     return true;
 }

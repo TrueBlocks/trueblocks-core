@@ -511,7 +511,7 @@ bool CBaseNode::getVisibleFields(CFieldDataArray& visibleFields) const {
         return false;
     }
 
-    map<string_q, bool> fieldMap;
+    CStringMap fieldMap;
     while (pClass != GETRUNTIME_CLASS(CBaseNode)) {
         for (auto field : pClass->fieldList) {
             bool hidden = field.isHidden();

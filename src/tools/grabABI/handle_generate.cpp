@@ -14,6 +14,7 @@
 #include "etherlib.h"
 #include "options.h"
 
+#if 0    
 //-----------------------------------------------------------------------
 extern const char* STR_FACTORY1;
 extern const char* STR_FACTORY2;
@@ -50,8 +51,8 @@ void COptions::handle_generate(void) {
     string_q sources = "src= \\\n", registers, factory1, factory2;
 
     for (auto abi : abiList) {
-        for (auto interface : abi.interfaces) {
-            if (!interface.isBuiltIn) {
+        for (auto interface : abi.in terfaces) {
+            if (!interface.is BuiltIn) {
                 string_q name = interface.Format("[{NAME}]") + (interface.type == "event" ? "Event" : "");
                 if (name == "eventEvent")
                     name = "logEntry";
@@ -63,7 +64,7 @@ void COptions::handle_generate(void) {
                 string_q fixed;
                 fixed = ch;
                 name = fixed + extract(name, 1);
-                string_q theClass = (isBuiltIn() ? "Q" : "C") + name;
+                string_q theClass = (is BuiltIn() ? "Q" : "C") + name;
                 bool isConst = interface.constant;
                 bool isEmpty = name.empty() || interface.type.empty();
                 bool isLog = contains(toLower(name), "logentry");
@@ -73,13 +74,13 @@ void COptions::handle_generate(void) {
                             evtExterns += interface.Format("extern const string_q evt_[{NAME}]{QB};\n");
                             string_q decl = "const string_q evt_[{NAME}]{QB} = \"" + interface.encoding + "\";\n";
                             evtDecls += interface.Format(decl);
-                            if (!isBuiltIn())
+                            if (!is BuiltIn())
                                 evts += interface.Format("\tevt_[{NAME}],\n");
                         } else {
                             funcExterns += interface.Format("extern const string_q func_[{NAME}]{QB};\n");
                             string_q decl = "const string_q func_[{NAME}]{QB} = \"" + interface.encoding + "\";\n";
                             funcDecls += interface.Format(decl);
-                            if (!isBuiltIn())
+                            if (!is BuiltIn())
                                 sigs += interface.Format("\tfunc_[{NAME}],\n");
                         }
                     }
@@ -192,28 +193,28 @@ void COptions::handle_generate(void) {
     }
 
     // The library header file
-    if (!isBuiltIn())
+    if (!is BuiltIn())
         headers += ("#include \"visitor.h\"\n");
     string_q headerCode = substitute(string_q(STR_HEADERFILE), "[{HEADERS}]", headers);
     string_q parseInit = "parselib_init(QUITHANDLER qh)";
-    if (!isBuiltIn())
+    if (!is BuiltIn())
         replaceAll(headerCode, "[{PREFIX}]_init(void)", parseInit);
     // replaceAll(headerCode, "[{ADDRESS}]", substitute(primaryAddr, "0x", ""));
-    replaceAll(headerCode, "[{HEADER_SIGS}]", isBuiltIn() ? "" : STR_HEADER_SIGS);
+    replaceAll(headerCode, "[{HEADER_SIGS}]", is BuiltIn() ? "" : STR_HEADER_SIGS);
     replaceAll(headerCode, "[{PREFIX}]", toLower(prefix));
-    string_q pprefix = (isBuiltIn() ? substitute(toProper(prefix), "lib", "") : "Func");
+    string_q pprefix = (is BuiltIn() ? substitute(toProper(prefix), "lib", "") : "Func");
     replaceAll(headerCode, "[{PPREFIX}]", pprefix);
     replaceAll(headerCode, "FuncEvent", "Event");
     string_q comment = "//------------------------------------------------------------------------\n";
     funcExterns = (funcExterns.empty() ? "// No functions" : funcExterns);
     evtExterns = (evtExterns.empty() ? "// No events" : evtExterns);
     replaceAll(headerCode, "[{EXTERNS}]", comment + funcExterns + "\n" + comment + evtExterns);
-    headerCode = substitute(headerCode, "{QB}", (isBuiltIn() ? "_qb" : ""));
+    headerCode = substitute(headerCode, "{QB}", (is BuiltIn() ? "_qb" : ""));
     writeTheCode(codewrite_t(classDir + prefix + ".h", headerCode, "", 4, false, true, isTestMode()));
 
     // The library make file
     replaceReverse(sources, " \\\n", " \\\n" + prefix + ".cpp\n");
-    if (!isBuiltIn()) {
+    if (!is BuiltIn()) {
         string_q makefile;
         asciiFileToString(templateFolder + "CMakeLists.txt", makefile);
         replaceAll(makefile, "[{PROJECT_NAME}]", projectName(classDir));
@@ -229,7 +230,7 @@ void COptions::handle_generate(void) {
     string_q sourceCode;
     asciiFileToString(templateFolder + "parselib.cpp", sourceCode);
     parseInit = "parselib_init(QUITHANDLER qh)";
-    if (!isBuiltIn())
+    if (!is BuiltIn())
         replaceAll(sourceCode, "[{PREFIX}]_init(QUITHANDLER qh)", parseInit);
     if (isToken()) {
         replace(sourceCode, "return promoteToToken(p);", "return promoteToWallet(p);");
@@ -240,8 +241,8 @@ void COptions::handle_generate(void) {
         replaceAll(sourceCode, "never returns NULL",
                    "If we haven't found the thing, we can send back an extended thing");
     }
-    replace(sourceCode, "[{BLKPATH}]", isBuiltIn() ? "" : STR_BLOCK_PATH);
-    replaceAll(sourceCode, "[{CODE_SIGS}]", (isBuiltIn() ? "" : STR_CODE_SIGS));
+    replace(sourceCode, "[{BLKPATH}]", is BuiltIn() ? "" : STR_BLOCK_PATH);
+    replaceAll(sourceCode, "[{CODE_SIGS}]", (is BuiltIn() ? "" : STR_CODE_SIGS));
     // replaceAll(sourceCode, "[{ADDRESS}]", substitute(primaryAddr, "0x", ""));
     replaceAll(sourceCode, "[{ABI}]", "");  // theABI);
     replaceAll(sourceCode, "[{REGISTERS}]", registers);
@@ -254,23 +255,23 @@ void COptions::handle_generate(void) {
 
     headers = ("#include \"tokenlib.h\"\n");
     headers += ("#include \"walletlib.h\"\n");
-    if (!isBuiltIn())
+    if (!is BuiltIn())
         headers += "#include \"[{PREFIX}].h\"\n";
     replaceAll(sourceCode, "[{HEADERS}]", headers);
     replaceAll(sourceCode, "[{PREFIX}]", prefix);
-    pprefix = (isBuiltIn() ? substitute(toProper(prefix), "lib", "") : "Func");
+    pprefix = (is BuiltIn() ? substitute(toProper(prefix), "lib", "") : "Func");
     replaceAll(sourceCode, "[{PPREFIX}]", pprefix);
     replaceAll(sourceCode, "FuncEvent", "Event");
     replaceAll(sourceCode, "[{FUNC_DECLS}]", funcDecls.empty() ? "// No functions" : funcDecls);
     replaceAll(sourceCode, "[{SIGS}]", sigs.empty() ? "\t// No functions\n" : sigs);
     replaceAll(sourceCode, "[{EVENT_DECLS}]", evtDecls.empty() ? "// No events" : evtDecls);
     replaceAll(sourceCode, "[{EVTS}]", evts.empty() ? "\t// No events\n" : evts);
-    sourceCode = substitute(sourceCode, "{QB}", (isBuiltIn() ? "_qb" : ""));
+    sourceCode = substitute(sourceCode, "{QB}", (is BuiltIn() ? "_qb" : ""));
     writeTheCode(codewrite_t(classDir + prefix + ".cpp", sourceCode, "", 4, false, true, isTestMode()));
 
     string_q primaryAddr = "";
     // The code
-    if (!isBuiltIn()) {
+    if (!is BuiltIn()) {
         string_q addrList;
         for (auto addr : addrs)
             addrList += (addr + "");
@@ -441,3 +442,4 @@ const char* STR_ITEMS2 =
     "\t\t    first = false;\n"
     "\t\t}\n"
     "\t\tparams += data;\n";
+#endif

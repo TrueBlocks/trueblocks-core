@@ -45,5 +45,4 @@ class COptions : public CHistoryOptions {
 
     bool parseArguments(string_q& command) override;
     void Init(void) override;
-    void loadTokenAbis(void);
 };

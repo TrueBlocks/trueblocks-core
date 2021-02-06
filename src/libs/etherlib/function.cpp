@@ -436,10 +436,7 @@ string_q nextFunctionChunk_custom(const string_q& fieldIn, const void* dataPtr) 
                 }
                 break;
             case 'i':
-                if (fieldIn % "isBuiltIn") {
-                    return int_2_Str(fun->isBuiltIn);
-
-                } else if (fieldIn % "input_names") {
+                if (fieldIn % "input_names") {
                     string_q ret;
                     for (size_t i = 0; i < fun->inputs.size(); i++) {
                         ret += fun->inputs[i].name;

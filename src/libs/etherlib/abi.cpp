@@ -318,13 +318,13 @@ const char* STR_DISPLAY_ABI =
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 //-----------------------------------------------------------------------
-bool visitABI(const qblocks::string_q& path, void* data) {
+bool loadAbiFile(const string_q& path, void* data) {
     if (endsWith(path, '/')) {
-        forEveryFileInFolder(path + "*", visitABI, data);
+        forEveryFileInFolder(path + "*", loadAbiFile, data);
     } else {
         if (endsWith(path, ".json")) {
             CAbi* abi = (CAbi*)data;  // NOLINT
-            if (!abi->loadAbiFromFile(path, false))
+            if (!abi->loadAbiFromFile(path))
                 return false;
         }
     }
@@ -332,38 +332,50 @@ bool visitABI(const qblocks::string_q& path, void* data) {
 }
 
 //---------------------------------------------------------------------------
+bool loadAbiString(const string_q& jsonStr, CAbi& abi) {
+    return abi.loadAbiFromString(jsonStr);
+}
+
+//---------------------------------------------------------------------------
 bool CAbi::loadAbisFolderAndCache(const string_q& sourcePath, const string_q& binPath) {
-    fileInfo info = getNewestFileInFolder(sourcePath);
-    bool cacheIsFresh =
-        (info.fileName == binPath) || (fileExists(binPath) && (fileLastModifyDate(binPath) > info.fileTime));
-    if (cacheIsFresh) {
-        CArchive archive(READING_ARCHIVE);
-        if (archive.Lock(binPath, modeReadOnly, LOCK_NOWAIT)) {
-            archive >> *this;
-            archive.Release();
-            return true;
+    if (fileExists(binPath)) {
+        // If any file is newer, don't use binary cache
+        fileInfo info = getNewestFileInFolder(sourcePath);
+        if (info.fileName == binPath || fileLastModifyDate(binPath) > info.fileTime) {
+            CArchive archive(READING_ARCHIVE);
+            if (archive.Lock(binPath, modeReadOnly, LOCK_NOWAIT)) {
+                archive >> *this;
+                archive.Release();
+                LOG_TEST("Loaded " + uint_2_Str(interfaces.size()) + " interfaces from", substitute(substitute(binPath, getCachePath(""), "$CACHE/"), configPath(""), "$CONFIG/"));
+                return true;
+            }
         }
     }
 
     if (!isTestMode())
         LOG_INFO("Freshening abi cache for path: ", sourcePath);
-    if (!forEveryFileInFolder(sourcePath + "*", visitABI, this))
+    if (!forEveryFileInFolder(sourcePath + "*", loadAbiFile, this))
         return false;
 
-    sortInterfaces();
-
+    sort(interfaces.begin(), interfaces.end(), sortByFuncName);
     CArchive archive(WRITING_ARCHIVE);
     if (archive.Lock(binPath, modeWriteCreate, LOCK_NOWAIT)) {
         archive << *this;
         archive.Release();
+        LOG_TEST("Saved " + uint_2_Str(interfaces.size()) + " interfaces in", substitute(substitute(binPath, getCachePath(""), "$CACHE/"), configPath(""), "$CONFIG/"));
         return true;
     }
 
-    return true;
+    return false;
 }
 
 //---------------------------------------------------------------------------
 bool CAbi::loadAbisFromKnown(int which) {
+    if (which == ABI_TOKENS) {
+        bool ret1 = loadAbiFromFile(configPath("abis/known-000/erc_00020.json"));
+        bool ret2 = loadAbiFromFile(configPath("abis/known-000/erc_00721.json"));
+        return (ret1 && ret2);
+    }
     return loadAbisFolderAndCache(configPath("abis/"), getCachePath("abis/known.bin"));
 }
 
@@ -376,16 +388,20 @@ bool CAbi::loadAbisFromCache(void) {
 bool CAbi::loadAbiFromAddress(const address_t& addr) {
     if (isZeroAddr(addr))
         return false;
-    bool ret = visitABI(getCachePath("abis/" + toLower(addr) + ".json"), this);
-    if (ret)
-        sortInterfaces();
-    return ret;
+
+    string_q fileName = getCachePath("abis/" + addr + ".json");
+    string_q localFile = (getCWD() + addr + ".json");
+    if (fileExists(localFile) && localFile != fileName) {
+        LOG_TEST("Local file copied to cache", "./" + addr + ".json");
+        copyFile(localFile, fileName);
+    }
+    return loadAbiFromFile(fileName);
 }
 
 //---------------------------------------------------------------------------
-bool CAbi::loadAbiFromFile(const string_q& fileName, bool builtIn) {
+bool CAbi::loadAbiFromFile(const string_q& fileName) {
     if (!fileExists(fileName)) {
-        LOG_TEST("loadAbiFromFile", "Could not load file " + substitute(substitute(fileName, getCachePath(""), "$CACHE/"), configPath(""), "$CONFIG/"));
+        LOG_TEST("load""AbiFromFile", "Could not load file " + substitute(substitute(fileName, getCachePath(""), "$CACHE/"), configPath(""), "$CONFIG/"));
         return false;
     }
 
@@ -393,122 +409,67 @@ bool CAbi::loadAbiFromFile(const string_q& fileName, bool builtIn) {
 
     string_q contents;
     asciiFileToString(fileName, contents);
-    LOG_TEST("loadAbiFromFile",
+    LOG_TEST("load""AbiFromFile",
              substitute(substitute(fileName, getCachePath(""), "$CACHE/"), configPath(""), "$CONFIG/"));
-    bool ret = loadAbiFromString(contents, builtIn);
-    if (ret) {
-        if (contains(fileName, "0x")) {
-            string_q addr = fileName.substr(fileName.find("0x"), 42);
-            if (isAddress(addr)) {
-                for (auto i = interfaces.begin(); i != interfaces.end(); i++)
-                    i->address = addr;
-            }
-        }
-        sortInterfaces();
-        return true;
-    }
-    return false;
+    return loadAbiFromString(contents);
 }
 
 //---------------------------------------------------------------------------
-bool CAbi::loadAbiFromString(const string_q& in, bool builtIn) {
+bool CAbi::loadAbiFromString(const string_q& in) {
     string_q contents = in;
     CFunction func;
     while (func.parseJson3(contents)) {
-        func.isBuiltIn = builtIn;
         addInterface(func);
         func = CFunction();  // reset
     }
+    sort(interfaces.begin(), interfaces.end(), sortByFuncName);
     return interfaces.size();
 }
 
 //-----------------------------------------------------------------------
-bool CAbi::loadAbiFromEtherscan(const address_t& addr, bool raw, CStringArray& errors) {
-    if (isZeroAddr(addr))
+bool CAbi::loadAbiFromEtherscan(const address_t& addr, bool raw) {
+    // If this isn't a smart contract, don't bother
+    if (!isContractAt(addr, getLatestBlock_client()))
         return true;
 
-    uint64_t saveVerbose = verbose;
-    if (getGlobalConfig()->getConfigBool("dev", "debug_ethscan", false))
-        verbose = 10;
+    if (!raw && loadAbiFromAddress(addr))
+        return true;
 
-    string_q results;
-    string_q fileName = getCachePath("abis/" + toLower(addr) + ".json");
-    string_q localFile(getCWD() + addr + ".json");
-    if (fileExists(localFile) && localFile != fileName) {
-        LOG4("Local file copied to cache");
-        copyFile(localFile, fileName);
-    }
-
-    if (fileExists(fileName) && !raw) {
-        asciiFileToString(fileName, results);
-
-    } else {
-        // If this isn't a smart contract, don't bother
-        if (!isContractAt(addr, getLatestBlock_client()))
-            return true;
-
-        const char* STR_CONTRACT_API =
-            "http://api.etherscan.io/api?module=contract&action=getabi&address=[{ADDRESS}]&apikey=[{KEY}]";
-        if (!isTestMode())
-            LOG4("Reading ABI for address ", addr, " from ", (isTestMode() ? "--" : "EtherScan"), "\r");
-        string_q url = substitute(substitute(STR_CONTRACT_API, "[{ADDRESS}]", addr), "[{KEY}]",
+    const char* STR_CONTRACT_API =
+        "http://api.etherscan.io/api?module=contract&action=getabi&address=[{ADDRESS}]&apikey=[{KEY}]";
+    if (!isTestMode())
+        LOG4("Reading ABI for address ", addr, " from ", (isTestMode() ? "--" : "EtherScan"), "\r");
+    string_q url = substitute(substitute(STR_CONTRACT_API, "[{ADDRESS}]", addr), "[{KEY}]",
                                   getApiKey("Etherscan",
                                             "http:/"
                                             "/api.etherscan.io/apis"));
-        string_q fromES = urlToString(url);  // some of etherscan's data kind of sucks, so clean it
-        replaceAll(fromES, "\\r", "\r");
-        replaceAll(fromES, "\\n", "\n");
-        results = substitute(fromES, "\\", "");
+    string_q fromES = urlToString(url);
+    
+    // some of etherscan's data kind of sucks, so clean it
+    replaceAll(fromES, "\\r", "\r");
+    replaceAll(fromES, "\\n", "\n");
 
-        if (!contains(results, "NOTOK")) {
-            string_q dispName = substitute(fileName, getCachePath(""), "$BLOCK_CACHE/");
-            if (!isTestMode()) {
-                LOG4(results);
-                LOG4("Caching abi in ", dispName);
-            }
-            replace(results, "\"result\":\"", "<extract>");
-            replaceReverse(results, "\"}", "</extract>");
-            results = snagFieldClear(results, "extract", "");
-            establishFolder(fileName);
-            stringToAsciiFile(fileName, results);
+    string_q results = substitute(fromES, "\\", "");
+    if (!contains(results, "NOTOK")) {
+        replace(results, "\"result\":\"", "<extract>");
+        replaceReverse(results, "\"}", "</extract>");
+        results = snagFieldClear(results, "extract", "");
 
-        } else if (contains(toLower(results), "source code not verified")) {
-            if (verbose) {
-                ostringstream os;
-                os << "Could not get the ABI for " << addr << ". Etherscan returned: ";
-                os << substitute(substitute(results, "\"", "'"), "\n", " ") << ". ";
-                os << "Copy the ABI to " << addr << ".json in the current folder and re-run.";
-                errors.push_back(os.str());
-            }
-            results = "";
-
-        } else {
-            // TODO(tjayrush): If we store the ABI here even if empty, we won't have to get it again, but then
-            // what happens if user later posts the ABI? Need a 'refresh' option or clear cache option
-            if (verbose) {
-                ostringstream os;
-                os << "Etherscan returned: " << results << ". ";
-                os << "Could not grab ABI for " + addr + " from etherscan.io.";
-                errors.push_back(os.str());
-            }
-            LOG_TEST("Writing empty ABI to cache for address", addr);
-            establishFolder(fileName);
-            stringToAsciiFile(fileName, "[]");
-            results = "";
-        }
-    }
-
-    if (!results.empty()) {
         LOG_TEST("loadAbiFromEtherscan", "for address " + addr);
-        CFunction func;
-        while (func.parseJson3(results)) {
-            addInterface(func);
-            func = CFunction();  // reset
-        }
-    }
 
-    verbose = saveVerbose;
-    return true;
+        string_q fileName = getCachePath("abis/" + addr + ".json");
+        if (!isTestMode()) {
+            LOG4(results);
+            LOG4("Caching abi in ", substitute(fileName, getCachePath(""), "$BLOCK_CACHE/"));
+        }
+        establishFolder(fileName);
+        stringToAsciiFile(fileName, results);
+        return loadAbiFromAddress(addr);
+    }
+    
+    if (contains(toLower(results), "source code not verified"))
+        cerr << "Could not get the ABI data. Copy to ./" << addr << ".json and re-run.";
+    return false;
 }
 
 static const CStringArray removes = {"internal", "virtual", "memory", "private", "external", "pure", "calldata"};
@@ -517,56 +478,19 @@ static bool ofInterest(const string_q& line) {
     return (contains(line, "contract") || contains(line, "interface") || contains(line, "library") ||
             contains(line, "struct") || contains(line, "function") || contains(line, "event"));
 }
+
 /*
-public
-private
-external
-internal
-pure
-view
-payable
-constant
-immutable
-anonymous
-indexed
-virtual
-override
-
-pragma
-import
-abstract
-
-contract
-interface
-library
-
-using
-modifier
-returns
-enum
-mapping
-
-struct
-function
-event
-
-memory
-storage
-calldata
-
-address
-bool
-string
-var
-int*
-uint*
-bytes*
-fixed*
-ufixed*
+public, private, external, internal, pure, view, payable, constant, immutable, anonymous, indexed, virtual, override
+pragma, import, abstract
+contract, interface, library
+using, modifier, returns, enum, mapping
+struct, function, event
+memory, storage, calldata
+address, bool, string, var, int*, uint*, bytes*, fixed*, ufixed*
 */
 
 //----------------------------------------------------------------
-string_q removeSolComments(const string_q& contents) {
+string_q removeComments(const string_q& contents) {
     ostringstream os;
     ParseState state = OUT;
     char lastChar = 0;
@@ -608,7 +532,7 @@ string_q removeSolComments(const string_q& contents) {
 }
 
 //----------------------------------------------------------------
-bool sol_2_Abi(CAbi& abi, const string_q& addr) {
+bool CAbi::loadAbiFromSolidity(const string_q& addr) {
     string_q solFile = addr + ".sol";
     string_q contents = asciiFileToString(solFile);
     LOG_TEST("sol_2_Abi", contents);
@@ -624,18 +548,14 @@ bool sol_2_Abi(CAbi& abi, const string_q& addr) {
     replaceAll(contents, "modifier", string_q(1, MODIFIER_START));
     for (auto rem : removes)
         replaceAll(contents, rem, "");
-
-    LOG_TEST("Before removeComments", contents);
-    contents = removeSolComments(contents);
-    LOG_TEST("After removeComments", contents);
-
-    size_t scopeCount = 0;
+    contents = removeComments(contents);
 
     CStringArray psStrs = { "OUT", "IN", "IN_COMMENT1", "IN_COMMENT2", "IN_FUNCTION", "IN_EVENT", "IN_STRUCT", "IN_MODIFIER" };
     ostringstream os;
     ParseState state = OUT;
     // ParseState pre_state = state;
     char lastChar = 0;
+    size_t scopeCount = 0;
     for (auto ch : contents) {
         LOG_TEST("State pre", psStrs[state]);
         // pre_state = state;
@@ -746,28 +666,12 @@ bool sol_2_Abi(CAbi& abi, const string_q& addr) {
             if (contains(line, "function ") || contains(line, "event ")) {
                 CFunction func;
                 func.fromDefinition(line);
-                abi.addInterface(func);
+                addInterface(func);
             }
         }
     }
-
-    return true;
-}
-
-//-----------------------------------------------------------------------
-bool sortByFuncName(const CFunction& f1, const CFunction& f2) {
-    string_q s1 = (f1.type == "event" ? "zzzevent" : f1.type) + f1.name + f1.encoding;
-    for (auto f : f1.inputs)
-        s1 += f.name;
-    string_q s2 = (f2.type == "event" ? "zzzevent" : f2.type) + f2.name + f2.encoding;
-    for (auto f : f2.inputs)
-        s2 += f.name;
-    return s1 < s2;
-}
-
-//-----------------------------------------------------------------------
-void CAbi::sortInterfaces(void) {
     sort(interfaces.begin(), interfaces.end(), sortByFuncName);
+    return true;
 }
 
 //-----------------------------------------------------------------------
@@ -784,6 +688,17 @@ void CAbi::addInterface(const CFunction& func) {
     LOG_TEST("Inserting", func.type + "-" + func.signature);
     interfaces.push_back(func);
     interfaceMap[func.encoding] = true;
+}
+
+//-----------------------------------------------------------------------
+bool sortByFuncName(const CFunction& f1, const CFunction& f2) {
+    string_q s1 = (f1.type == "event" ? "zzzevent" : f1.type) + f1.name + f1.encoding;
+    for (auto f : f1.inputs)
+        s1 += f.name;
+    string_q s2 = (f2.type == "event" ? "zzzevent" : f2.type) + f2.name + f2.encoding;
+    for (auto f : f2.inputs)
+        s2 += f.name;
+    return s1 < s2;
 }
 // EXISTING_CODE
 }  // namespace qblocks

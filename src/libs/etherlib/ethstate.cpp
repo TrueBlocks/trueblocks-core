@@ -402,6 +402,8 @@ string_q getCodeAt(const string_q& addr, blknum_t num) {
 
 //-------------------------------------------------------------------------
 bool isContractAt(const address_t& addr, blknum_t num) {
+    if (isZeroAddr(addr))
+        return false;
     return !substitute(getCodeAt(addr, num), "0x", "").empty();
 }
 

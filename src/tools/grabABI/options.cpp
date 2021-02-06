@@ -22,7 +22,6 @@ static const COption params[] = {
     // clang-format off
     COption("addrs", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "list of one or more smart contracts whose ABI to grab from EtherScan"),  // NOLINT
     COption("canonical", "c", "", OPT_SWITCH, "convert all types to their canonical represenation and remove all spaces from display"),  // NOLINT
-    COption("generate", "g", "", OPT_SWITCH, "generate C++ code into the current folder for all functions and events found in the ABI"),  // NOLINT
     COption("monitored", "m", "", OPT_SWITCH, "load ABIs from monitored addresses"),
     COption("known", "k", "", OPT_SWITCH, "load common 'known' ABIs from cache"),
     COption("attach", "a", "", OPT_SWITCH, "attach the smart contract's address to the the abi"),
@@ -34,6 +33,7 @@ static const COption params[] = {
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
+extern void removeDuplicateEncodings(CAbiArray& abi_array);
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
     ENTER("parseArguments: " + command);
@@ -58,9 +58,6 @@ bool COptions::parseArguments(string_q& command) {
             // BEG_CODE_AUTO
         } else if (arg == "-c" || arg == "--canonical") {
             canonical = true;
-
-        } else if (arg == "-g" || arg == "--generate") {
-            generate = true;
 
         } else if (arg == "-m" || arg == "--monitored") {
             monitored = true;
@@ -127,11 +124,6 @@ bool COptions::parseArguments(string_q& command) {
     if (!addrs.size() && !known && !monitored)
         return usage("Please supply at least one Ethereum address.\n");
 
-    if (generate) {
-        classDir = getCWD();
-        prefix = getPrefix(classDir);
-    }
-
     if (canonical)
         parts |= SIG_CANONICAL;
 
@@ -154,18 +146,10 @@ bool COptions::parseArguments(string_q& command) {
             cerr << "Address " << addr << " is not a smart contract. Skipping..." << endl;
         } else {
             CAbi abi;
-            abi.loadAbiFromEtherscan(addr, isRaw, errors);
-            if (errors.size() > 0) {
-                ostringstream os;
-                for (auto err : errors)
-                    os << err;
-                // report but do not quit processing
-                cerr << os.str() << endl;
-            }
+            abi.loadAbiFromEtherscan(addr, isRaw);
             abi.address = addr;
             for (auto i = abi.interfaces.begin(); i != abi.interfaces.end(); i++)
                 i->address = addr;
-            abi.sortInterfaces();
             abiList.push_back(abi);
         }
     }
@@ -173,12 +157,8 @@ bool COptions::parseArguments(string_q& command) {
     if (monitored) {
         CAbi abi;
         abi.loadAbisFromCache();
-        abi.sortInterfaces();
         abiList.push_back(abi);
     }
-
-    if (generate)
-        handle_generate();
 
     // Display formatting
     string_q format = STR_DISPLAY_ABI;
@@ -214,7 +194,6 @@ void COptions::Init(void) {
     optionOn(OPT_RAW);
 
     // BEG_CODE_INIT
-    generate = false;
     // END_CODE_INIT
 
     parts = (SIG_DEFAULT | SIG_ENCODE);
@@ -240,31 +219,10 @@ COptions::COptions(void) {
 COptions::~COptions(void) {
 }
 
-//--------------------------------------------------------------------------------
-string_q getPrefix(const string_q& inIn) {
-    string_q in = inIn;                   // for example ./ENS/parselib/
-    replace(in, "parseLib", "parselib");  // hack: to fix dao monitor
-    reverse(in);
-    replace(in, "/", "");          // remove trailing '/'
-    in = nextTokenClear(in, '/');  // remove /parselib
-    reverse(in);
-    return in;
-}
-
-//---------------------------------------------------------------------------
-bool visitABIs(const string_q& path, void* dataPtr) {
-    if (endsWith(path, ".json")) {
-        string_q* str = reinterpret_cast<string_q*>(dataPtr);
-        *str += (path + "\n");
-    }
-    return true;
-}
-
 //-----------------------------------------------------------------------
-void COptions::convertFromSol(const address_t& a) {
+void COptions::convertFromSol(const address_t& addr) {
     CAbi abi;
-    sol_2_Abi(abi, a);
-    abi.sortInterfaces();
+    abi.loadAbiFromSolidity(addr);
     GETRUNTIME_CLASS(CFunction)->sortFieldList();
     GETRUNTIME_CLASS(CParameter)->sortFieldList();
     if (isTestMode()) {
@@ -278,10 +236,14 @@ void COptions::convertFromSol(const address_t& a) {
         HIDE_FIELD(CParameter, "value");
     }
     expContext().spcs = 2;
+
     ostringstream os;
-    abi.toJson(os);
-    ::remove((a + ".json").c_str());
-    stringToAsciiFile(a + ".json", os.str());
+    os << abi;
+
+    string_q fileName = addr + ".json";
+    ::remove(fileName.c_str());
+    stringToAsciiFile(fileName, os.str());
+
     isRaw = false;
 }
 

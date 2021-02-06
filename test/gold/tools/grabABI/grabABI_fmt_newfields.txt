@@ -1,6 +1,6 @@
 grabABI argc: 2 [1:0xffa93aacf49297d51e211817452839052fdfb961] 
 grabABI 0xffa93aacf49297d51e211817452839052fdfb961 
-TIME ~ CLOCK - <INFO>  : loadAbiFromEtherscan: for address 0xffa93aacf49297d51e211817452839052fdfb961
+TIME ~ CLOCK - <INFO>  : loadAbiFromFile: $CACHE/abis/0xffa93aacf49297d51e211817452839052fdfb961.json
 TIME ~ CLOCK - <INFO>  : Inserting: function-mintingFinished()
 TIME ~ CLOCK - <INFO>  : Inserting: function-transfersEnabledFlag()
 TIME ~ CLOCK - <INFO>  : Inserting: function-name()

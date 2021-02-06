@@ -529,7 +529,7 @@ CTestCase::CTestCase(const string_q& line, uint32_t id) {
 }
 
 //---------------------------------------------------------------------------------------------
-void CTestCase::prepareTest(bool cmdLine) {
+void CTestCase::prepareTest(bool cmdLine, bool removeWorking) {
     goldPath = substitute(getCWD(), "/test/gold/dev_tools/testRunner/", "/test/gold/" + path + "/" + tool + "/");
     workPath = substitute(goldPath, "/gold/", "/working/");
     establishFolder(goldPath);
@@ -562,9 +562,11 @@ void CTestCase::prepareTest(bool cmdLine) {
         }
     }
 
-    string_q removePath = workPath + fileName;  // order matters
-    if (fileExists(removePath))
-        ::remove(removePath.c_str());
+    if (removeWorking) {
+        string_q removePath = workPath + fileName;  // order matters
+        if (fileExists(removePath))
+            ::remove(removePath.c_str());
+    }
 
     if (!extra.empty() && !contains(extra, "=")) {  // order matters
         tool = extra;

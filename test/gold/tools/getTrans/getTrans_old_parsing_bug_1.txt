@@ -1,5 +1,6 @@
 getTrans argc: 5 [1:0xfa62ab036f36b4755bfa0d6e3e641d08daa7e41e95b0c1f2246485702319efb8] [2:--fmt] [3:json] [4:--articulate] 
 getTrans 0xfa62ab036f36b4755bfa0d6e3e641d08daa7e41e95b0c1f2246485702319efb8 --fmt json --articulate 
+TIME ~ CLOCK - <INFO>  : Loaded 1685 interfaces from: $CACHE/abis/known.bin
 { "data": [
 TIME ~ CLOCK - <INFO>  : loadAbiFromFile: $CACHE/abis/0x1e0447b19bb6ecfdae1e4ae1694b0c3659614e4e.json
 TIME ~ CLOCK - <INFO>  : Inserting: function-ownerSetSpreadPremium(uint256,(uint256))

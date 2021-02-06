@@ -1,6 +1,6 @@
 grabABI argc: 4 [1:0xef638b4305b8a1620f4e0e562e127f1181ae16d2] [2:--fmt] [3:json] 
 grabABI 0xef638b4305b8a1620f4e0e562e127f1181ae16d2 --fmt json 
-TIME ~ CLOCK - <INFO>  : loadAbiFromEtherscan: for address 0xef638b4305b8a1620f4e0e562e127f1181ae16d2
+TIME ~ CLOCK - <INFO>  : loadAbiFromFile: $CACHE/abis/0xef638b4305b8a1620f4e0e562e127f1181ae16d2.json
 TIME ~ CLOCK - <INFO>  : Inserting: function-removeOwner(address)
 TIME ~ CLOCK - <INFO>  : Inserting: function-isOwner(address)
 TIME ~ CLOCK - <INFO>  : Inserting: function-m_numOwners()

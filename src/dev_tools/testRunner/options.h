@@ -31,6 +31,7 @@ class COptions : public COptionsBase {
     // BEG_CODE_DECLARE
     string_q filter;
     bool clean;
+    uint64_t skip;
     bool no_quit;
     bool no_post;
     bool report;
@@ -42,6 +43,7 @@ class COptions : public COptionsBase {
     bool full_test;
     string_q perf_format;
     string_q apiProvider;
+    uint64_t nRun = 0;
 
     COptions(void);
     ~COptions(void);

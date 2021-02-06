@@ -69,7 +69,7 @@ extern void doFunctionTest(void) {
 //--------------------------------------------------------------
 void doOne(const string_q& fn) {
     CAbi abi;
-    abi.loadAbiFromFile("./" + fn + ".json", false);
+    loadAbiFile("./" + fn + ".json", &abi);
     CTransaction tx;
     string_q txStr = asciiFileToString("./" + fn + ".tx");
     tx.parseJson3(txStr);

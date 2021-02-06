@@ -24,6 +24,7 @@ static const COption params[] = {
     COption("mode", "m", "enum[cmd*|api|both]", OPT_FLAG, "determine which set of tests to run"),
     COption("filter", "f", "enum[fast*|medi|slow|all]", OPT_FLAG, "determine how long it takes to run tests"),
     COption("clean", "c", "", OPT_SWITCH, "clean working folder before running tests"),
+    COption("skip", "s", "<uint64>", OPT_HIDDEN | OPT_FLAG, "run only every 'skip' test (faster)"),
     COption("no_quit", "n", "", OPT_SWITCH, "do not quit testing on first error"),
     COption("no_post", "o", "", OPT_SWITCH, "do not complete the post processing step"),
     COption("report", "r", "", OPT_SWITCH, "display performance report to screen"),
@@ -60,6 +61,10 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-c" || arg == "--clean") {
             clean = true;
+
+        } else if (startsWith(arg, "-s:") || startsWith(arg, "--skip:")) {
+            if (!confirmUint("skip", skip, arg))
+                return false;
 
         } else if (arg == "-n" || arg == "--no_quit") {
             no_quit = true;
@@ -205,6 +210,7 @@ void COptions::Init(void) {
     // BEG_CODE_INIT
     filter = "";
     clean = false;
+    skip = 1;
     no_quit = false;
     no_post = false;
     report = false;

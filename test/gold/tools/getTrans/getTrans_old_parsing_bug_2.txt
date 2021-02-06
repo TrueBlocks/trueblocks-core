@@ -1,5 +1,6 @@
 getTrans argc: 5 [1:0xaf50151cdcc2c1b76c63c588daee0ca43687a087459939eb2fc422fe66491d64] [2:--fmt] [3:json] [4:--articulate] 
 getTrans 0xaf50151cdcc2c1b76c63c588daee0ca43687a087459939eb2fc422fe66491d64 --fmt json --articulate 
+TIME ~ CLOCK - <INFO>  : Loaded 1685 interfaces from: $CACHE/abis/known.bin
 { "data": [
 TIME ~ CLOCK - <INFO>  : loadAbiFromFile: $CACHE/abis/0x111111125434b319222cdbf8c261674adb56f3ae.json
 TIME ~ CLOCK - <INFO>  : Inserting: event-Error(string)

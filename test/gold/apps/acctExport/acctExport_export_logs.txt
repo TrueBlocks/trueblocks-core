@@ -1,5 +1,6 @@
 acctExport argc: 7 [1:0x001d14804b399c6ef80e64576f657660804fec0b] [2:--logs] [3:--fmt] [4:json] [5:--end] [6:001506480] 
 acctExport 0x001d14804b399c6ef80e64576f657660804fec0b --logs --fmt json --end 001506480 
+TIME ~ CLOCK - <INFO>  : Loaded 1685 interfaces from: $CACHE/abis/known.bin
 { "data": [
 ], "types": [
 { "type": "CLogEntry", "fields": [{ "name": "address", "type": "address" }, { "name": "blockNumber", "type": "blocknum" }, { "name": "logIndex", "type": "blocknum" }, { "name": "topics", "type": "object|ts_array" }, { "name": "data", "type": "text" }, { "name": "articulatedLog", "type": "object" }, { "name": "compressedLog", "type": "text" }, { "name": "transactionIndex", "type": "blocknum" }] }

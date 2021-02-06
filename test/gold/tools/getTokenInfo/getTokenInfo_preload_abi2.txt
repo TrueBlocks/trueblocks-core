@@ -1,6 +1,6 @@
 grabABI argc: 2 [1:0xb9e7f8568e08d5659f5d29c4997173d84cdf2607] 
 grabABI 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 
-TIME ~ CLOCK - <INFO>  : loadAbiFromEtherscan: for address 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607
+TIME ~ CLOCK - <INFO>  : loadAbiFromFile: $CACHE/abis/0xb9e7f8568e08d5659f5d29c4997173d84cdf2607.json
 TIME ~ CLOCK - <INFO>  : Inserting: function-name()
 TIME ~ CLOCK - <INFO>  : Inserting: function-approve(address,uint256)
 TIME ~ CLOCK - <INFO>  : Inserting: function-creationBlock()

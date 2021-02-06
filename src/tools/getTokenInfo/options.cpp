@@ -204,7 +204,7 @@ bool COptions::parseArguments(string_q& command) {
     if (tokens.size() == 0)
         return usage("You must provide at least one valid token address. Quitting...");
 
-    loadTokenAbis();
+    standards.abi_spec.loadAbisFromKnown(ABI_TOKENS);
 
     if ((!isTestMode() && !requestsHistory()) || nodeHasBalances(true))
         return true;
@@ -268,10 +268,4 @@ COptions::COptions(void) : CHistoryOptions() {
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
-}
-
-//--------------------------------------------------------------------------------
-void COptions::loadTokenAbis(void) {
-    standards.abi_spec.loadAbiFromFile(configPath("abis/known-000/erc_00020.json"), true);
-    standards.abi_spec.loadAbiFromFile(configPath("abis/known-000/erc_00721.json"), true);
 }
