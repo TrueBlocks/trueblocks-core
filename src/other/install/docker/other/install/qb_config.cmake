@@ -19,7 +19,11 @@ file(MAKE_DIRECTORY "${DEST_PATH}/names")
 #file(MAKE_DIRECTORY "${DEST_PATH}/makeClass")
 file(MAKE_DIRECTORY "${DEST_PATH}/grabABI")
 file(MAKE_DIRECTORY "${DEST_PATH}/chifra")
-file(MAKE_DIRECTORY "${DEST_PATH}/known_abis")
+file(MAKE_DIRECTORY "${DEST_PATH}/abis")
+file(MAKE_DIRECTORY "${DEST_PATH}/abis/known-000")
+file(MAKE_DIRECTORY "${DEST_PATH}/abis/known-005")
+file(MAKE_DIRECTORY "${DEST_PATH}/abis/known-010")
+file(MAKE_DIRECTORY "${DEST_PATH}/abis/known-015")
 file(MAKE_DIRECTORY "${DEST_PATH}/ipfs-hashes")
 
 #---------------------------------------------------------------
@@ -105,8 +109,8 @@ file(COPY "${SOURCE_PATH}/mockData/mockData.tar.gz" DESTINATION "${DEST_PATH}/mo
 message(STATUS "Copying grabABI templates to ${DEST_PATH}/grabABI")
 file(GLOB TARGET_FILES "${CMAKE_SOURCE_DIR}/../../../src/tools/grabABI/templates/*")
 foreach(FILE ${TARGET_FILES} )
-	# message(STATUS "  Copied file to ${DEST_PATH}/grabABI")
-	file(COPY "${FILE}" DESTINATION "${DEST_PATH}/grabABI")
+    # message(STATUS "  Copied file to ${DEST_PATH}/grabABI")
+    file(COPY "${FILE}" DESTINATION "${DEST_PATH}/grabABI")
 endforeach( FILE )
 
 #---------------------------------------------------------------
@@ -119,12 +123,28 @@ foreach(FILE ${TARGET_FILES} )
 endforeach( FILE )
 
 #---------------------------------------------------------------
-# known abis
+# abis
 #---------------------------------------------------------------
-message(STATUS "Copying known abis to ${DEST_PATH}/known_abis")
-file(GLOB TARGET_FILES "${SOURCE_PATH}/known_abis/*")
+message(STATUS "Copying abis to ${DEST_PATH}/abis/")
+file(GLOB TARGET_FILES "${SOURCE_PATH}/abis/known-000/*")
 foreach(FILE ${TARGET_FILES} )
-	file(COPY "${FILE}" DESTINATION "${DEST_PATH}/known_abis")
+	file(TOUCH "${FILE}")
+	file(COPY "${FILE}" DESTINATION "${DEST_PATH}/abis/known-000/")
+endforeach( FILE )
+file(GLOB TARGET_FILES "${SOURCE_PATH}/abis/known-005/*.json")
+foreach(FILE ${TARGET_FILES} )
+	file(TOUCH "${FILE}")
+	file(COPY "${FILE}" DESTINATION "${DEST_PATH}/abis/known-005/")
+endforeach( FILE )
+file(GLOB TARGET_FILES "${SOURCE_PATH}/abis/known-010/*.json")
+foreach(FILE ${TARGET_FILES} )
+	file(TOUCH "${FILE}")
+	file(COPY "${FILE}" DESTINATION "${DEST_PATH}/abis/known-010/")
+endforeach( FILE )
+file(GLOB TARGET_FILES "${SOURCE_PATH}/abis/known-015/*.json")
+foreach(FILE ${TARGET_FILES} )
+	file(TOUCH "${FILE}")
+	file(COPY "${FILE}" DESTINATION "${DEST_PATH}/abis/known-015/")
 endforeach( FILE )
 
 #---------------------------------------------------------------

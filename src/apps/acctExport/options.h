@@ -45,7 +45,7 @@ class COptions : public COptionsBase {
 
     int write_opt;  // cache options as resolved (see options.cpp for notes)
 
-    CAbi abis;
+    CAbi abi_spec;
     CMonitorArray monitors;
     CMonitorCountArray counts;
     CAppearanceArray_base apps;

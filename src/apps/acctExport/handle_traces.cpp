@@ -87,7 +87,7 @@ bool COptions::handle_traces(void) {
                         qblocks::eLogger->setEndline('\n');
                     }
                     if (articulate)
-                        abis.articulateTrace(&trace);
+                        abi_spec.articulateTrace(&trace);
                     nProcessed++;
                     if (shouldDisplay && !factory) {
                         cout << ((isJson() && !first) ? ", " : "");

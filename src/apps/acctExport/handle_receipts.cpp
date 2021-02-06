@@ -74,7 +74,7 @@ bool COptions::handle_receipts(void) {
             }
 
             if (articulate)
-                abis.articulateTransaction(&trans);
+                abi_spec.articulateTransaction(&trans);
             nProcessed++;
             if (shouldDisplay) {
                 cout << ((isJson() && !first) ? ", " : "");

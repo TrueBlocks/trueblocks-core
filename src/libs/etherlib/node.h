@@ -135,9 +135,6 @@ extern bool forEveryLogInBlock(LOGVISITFUNC func, void* data, const CBlock& bloc
 
 //-------------------------------------------------------------------------
 // forEvery functions
-extern bool forEveryAbiInArray(ABIVISITFUNC func, void* data, const CAbiArray& abis);
-
-//-------------------------------------------------------------------------
 extern blknum_t getLatestBlock_client(void);
 extern blknum_t getLatestBlock_cache_final(void);
 extern blknum_t getLatestBlock_cache_staging(void);

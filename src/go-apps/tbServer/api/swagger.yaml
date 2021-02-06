@@ -142,14 +142,6 @@ paths:
         explode: true
         schema:
           type: number
-      - name: all_abis
-        in: query
-        description: load all previously cached abi files
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
       - name: freshen
         in: query
         description: freshen but do not print the exported data

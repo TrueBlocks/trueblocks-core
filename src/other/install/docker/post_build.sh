@@ -13,13 +13,14 @@ mkdir /root/.quickBlocks/cache/monitors
 mkdir /root/.quickBlocks/cache/monitors/staging
 mkdir /root/.quickBlocks/cache/prices
 mkdir /root/.quickBlocks/cache/tmp
+
+mkdir /root/.quickBlocks/abis
 mkdir /root/.quickBlocks/chifra
 mkdir /root/.quickBlocks/grabABI
 mkdir /root/.quickBlocks/grabABI/docs
 mkdir /root/.quickBlocks/grabABI/parselib
 mkdir /root/.quickBlocks/ipfs-hashes
 mkdir /root/.quickBlocks/ipfs-hashes/data
-mkdir /root/.quickBlocks/abis
 mkdir /root/.quickBlocks/makeClass
 mkdir /root/.quickBlocks/names
 

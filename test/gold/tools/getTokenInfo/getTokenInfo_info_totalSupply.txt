@@ -1,6 +1,37 @@
 getTokenInfo argc: 4 [1:0xd26114cd6ee289accf82350c8d8487fedb8a0c07] [2:--parts] [3:totalSupply] 
 getTokenInfo 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 --parts totalSupply 
 TIME ~ CLOCK - <INFO>  : loadAbiFromFile: $CONFIG/abis/known-000/erc_00020.json
+TIME ~ CLOCK - <INFO>  : Inserting: function-allowance(address,address)
+TIME ~ CLOCK - <INFO>  : Inserting: function-approve(address,uint256)
+TIME ~ CLOCK - <INFO>  : Inserting: function-balanceOf(address)
+TIME ~ CLOCK - <INFO>  : Inserting: function-name()
+TIME ~ CLOCK - <INFO>  : Inserting: function-totalSupply()
+TIME ~ CLOCK - <INFO>  : Inserting: function-transfer(address,uint256)
+TIME ~ CLOCK - <INFO>  : Inserting: function-transferFrom(address,address,uint256)
+TIME ~ CLOCK - <INFO>  : Inserting: function-decimals()
+TIME ~ CLOCK - <INFO>  : Inserting: function-symbol()
+TIME ~ CLOCK - <INFO>  : Inserting: event-Approval(address,address,uint256)
+TIME ~ CLOCK - <INFO>  : Inserting: event-Transfer(address,address,uint256)
 TIME ~ CLOCK - <INFO>  : loadAbiFromFile: $CONFIG/abis/known-000/erc_00721.json
+TIME ~ CLOCK - <INFO>  : Skipping: function-approve(address,uint256)
+TIME ~ CLOCK - <INFO>  : Skipping: function-balanceOf(address)
+TIME ~ CLOCK - <INFO>  : Inserting: function-getApproved(uint256)
+TIME ~ CLOCK - <INFO>  : Inserting: function-isApprovedForAll(address,address)
+TIME ~ CLOCK - <INFO>  : Skipping: function-name()
+TIME ~ CLOCK - <INFO>  : Inserting: function-onERC721Received(address,address,uint256,bytes)
+TIME ~ CLOCK - <INFO>  : Inserting: function-ownerOf(uint256)
+TIME ~ CLOCK - <INFO>  : Inserting: function-safeTransferFrom(address,address,uint256)
+TIME ~ CLOCK - <INFO>  : Inserting: function-safeTransferFrom(address,address,uint256,bytes)
+TIME ~ CLOCK - <INFO>  : Inserting: function-setApprovalForAll(address,bool)
+TIME ~ CLOCK - <INFO>  : Inserting: function-supportsInterface(bytes4)
+TIME ~ CLOCK - <INFO>  : Skipping: function-symbol()
+TIME ~ CLOCK - <INFO>  : Inserting: function-tokenByIndex(uint256)
+TIME ~ CLOCK - <INFO>  : Inserting: function-tokenOfOwnerByIndex(address,uint256)
+TIME ~ CLOCK - <INFO>  : Inserting: function-tokenURI(uint256)
+TIME ~ CLOCK - <INFO>  : Skipping: function-totalSupply()
+TIME ~ CLOCK - <INFO>  : Skipping: function-transferFrom(address,address,uint256)
+TIME ~ CLOCK - <INFO>  : Skipping: event-Approval(address,address,uint256)
+TIME ~ CLOCK - <INFO>  : Inserting: event-ApprovalForAll(address,address,bool)
+TIME ~ CLOCK - <INFO>  : Skipping: event-Transfer(address,address,uint256)
 address	totalsupply
 0xd26114cd6ee289accf82350c8d8487fedb8a0c07	140245398245132780789239631

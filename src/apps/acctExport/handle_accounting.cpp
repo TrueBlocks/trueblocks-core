@@ -178,11 +178,11 @@ bool isTokenTopic(const topic_t& topic) {
 void COptions::articulateAll(CTransaction& trans) {
     if (articulate) {
         abiMap[trans.to]++;
-        if (abiMap[trans.to] == 1 || fileExists(getAbiPath(trans.to))) {
+        if (abiMap[trans.to] == 1 || fileExists(getCachePath("abis/" + trans.to + ".json"))) {
             CStringArray unused;
-            abis.loadAbiFromEtherscan(trans.to, false, unused);
+            abi_spec.loadAbiFromEtherscan(trans.to, false, unused);
         }
-        abis.articulateTransaction(&trans);
+        abi_spec.articulateTransaction(&trans);
         trans.hasToken |= isTokenFunc(trans.input);
 
         for (size_t j = 0; j < trans.receipt.logs.size(); j++) {
@@ -191,11 +191,11 @@ void COptions::articulateAll(CTransaction& trans) {
             string_q str = log->Format();
             if (contains(str, bytesOnly)) {
                 abiMap[log->address]++;
-                if (abiMap[log->address] == 1 || fileExists(getAbiPath(log->address))) {
+                if (abiMap[log->address] == 1 || fileExists(getCachePath("abis/" + log->address + ".json"))) {
                     CStringArray unused;
-                    abis.loadAbiFromEtherscan(log->address, false, unused);
+                    abi_spec.loadAbiFromEtherscan(log->address, false, unused);
                 }
-                abis.articulateLog(log);
+                abi_spec.articulateLog(log);
             }
         }
 
@@ -203,11 +203,11 @@ void COptions::articulateAll(CTransaction& trans) {
             CTrace* trace = (CTrace*)&trans.traces[j];
             trans.hasToken |= isTokenFunc(trace->action.input);
             abiMap[trace->action.to]++;
-            if (abiMap[trace->action.to] == 1 || fileExists(getAbiPath(trace->action.to))) {
+            if (abiMap[trace->action.to] == 1 || fileExists(getCachePath("abis/" + trace->action.to + ".json"))) {
                 CStringArray unused;
-                abis.loadAbiFromEtherscan(trace->action.to, false, unused);
+                abi_spec.loadAbiFromEtherscan(trace->action.to, false, unused);
             }
-            abis.articulateTrace(trace);
+            abi_spec.articulateTrace(trace);
         }
     }
 }

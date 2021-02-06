@@ -14,9 +14,9 @@ dataSources:
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.3
-      abis:
+      abi s:
         - name: CTokenManager
-          file: ./abis/CTokenManager.json
+          file: ./abi s/CTokenManager.json
       entities:
         - CToken
       eventHandlers:
@@ -36,9 +36,9 @@ dataSources:
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.3
-      abis:
+      abi s:
         - name: Sablier
-          file: ./abis/Sablier.json
+          file: ./abi s/Sablier.json
       entities:
         - Cancellation
         - Stream
@@ -69,9 +69,9 @@ dataSources:
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.3
-      abis:
+      abi s:
         - name: Payroll
-          file: ./abis/Payroll.json
+          file: ./abi s/Payroll.json
       entities:
         - ProxyStream
       eventHandlers:

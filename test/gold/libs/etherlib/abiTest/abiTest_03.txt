@@ -2,6 +2,11 @@ abiTest argc: 3 [1:generation] [2:encoding]
 abiTest generation encoding 
 Generation test...
 Testing of already sorted JSON
+TIME ~ CLOCK - <INFO>  : Inserting: function-a()
+TIME ~ CLOCK - <INFO>  : Inserting: function-c()
+TIME ~ CLOCK - <INFO>  : Inserting: event-d()
+TIME ~ CLOCK - <INFO>  : Inserting: function-e()
+TIME ~ CLOCK - <INFO>  : Inserting: function-m()
 {
   "address": "0x0",
   "interfaces": [
@@ -85,6 +90,15 @@ Testing of already sorted JSON
 }
 
 Testing of not sorted JSON
+TIME ~ CLOCK - <INFO>  : Inserting: function-z()
+TIME ~ CLOCK - <INFO>  : Inserting: function-a()
+TIME ~ CLOCK - <INFO>  : Inserting: event-b()
+TIME ~ CLOCK - <INFO>  : Inserting: function-zz()
+TIME ~ CLOCK - <INFO>  : Inserting: function-az()
+TIME ~ CLOCK - <INFO>  : Inserting: event-bz()
+TIME ~ CLOCK - <INFO>  : Inserting: function-za1()
+TIME ~ CLOCK - <INFO>  : Inserting: function-aa1()
+TIME ~ CLOCK - <INFO>  : Inserting: function-ba1()
 {
   "address": "0x0",
   "interfaces": [

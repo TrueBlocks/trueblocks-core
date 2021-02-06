@@ -33,7 +33,7 @@ class COptions : public COptionsBase {
     timestamp_t ts;
     string_q report(void);
     uint64_t countNonZero(void);
-    CAbi abi;
+    CAbi abi_spec;
     uint64_t nRows;
     address_t token;
     bool reverse;

@@ -54,3 +54,6 @@ class COptions : public COptionsBase {
 
 //-----------------------------------------------------------------------
 extern string_q getPrefix(const string_q& in);
+extern bool visitAbi(CAbi& abi, void* data);
+extern bool forEveryAbiInArray(ABIVISITFUNC func, void* data, const CAbiArray& abi_array);
+extern void removeDuplicateEncodings(CAbiArray& abi_array);

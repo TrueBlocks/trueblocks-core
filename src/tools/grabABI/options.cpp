@@ -25,7 +25,7 @@ static const COption params[] = {
     COption("generate", "g", "", OPT_SWITCH, "generate C++ code into the current folder for all functions and events found in the ABI"),  // NOLINT
     COption("monitored", "m", "", OPT_SWITCH, "load ABIs from monitored addresses"),
     COption("known", "k", "", OPT_SWITCH, "load common 'known' ABIs from cache"),
-    COption("addr", "a", "", OPT_SWITCH, "include address of smart contract for the abi in output"),
+    COption("attach", "a", "", OPT_SWITCH, "attach the smart contract's address to the the abi"),
     COption("sol", "s", "<string>", OPT_HIDDEN | OPT_FLAG, "file name of .sol file from which to create a new known abi (without .sol)"),  // NOLINT
     COption("find", "f", "<string>", OPT_FLAG, "try to search for a function declaration given a four byte code"),
     COption("", "", "", OPT_DESCRIPTION, "Fetches the ABI for a smart contract."),
@@ -44,7 +44,7 @@ bool COptions::parseArguments(string_q& command) {
     bool canonical = false;
     bool monitored = false;
     bool known = false;
-    bool addr = false;
+    bool attach = false;
     string_q sol = "";
     string_q find = "";
     // END_CODE_LOCAL_INIT
@@ -68,8 +68,8 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-k" || arg == "--known") {
             known = true;
 
-        } else if (arg == "-a" || arg == "--addr") {
-            addr = true;
+        } else if (arg == "-a" || arg == "--attach") {
+            attach = true;
 
         } else if (startsWith(arg, "-s:") || startsWith(arg, "--sol:")) {
             sol = substitute(substitute(arg, "-s:", ""), "--sol:", "");
@@ -110,15 +110,15 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     if (isRaw) {
-        for (auto a : addrs) {
-            string_q fileName = getCachePath("abis/" + a + ".json");
-            string_q localFile("./" + a + ".json");
+        for (auto addr : addrs) {
+            string_q fileName = getCachePath("abis/" + addr + ".json");
+            string_q localFile("./" + addr + ".json");
             if (fileExists(localFile)) {
                 LOG_INFO("Using local ABI file");
                 fileName = localFile;
             }
             if (!fileExists(fileName))
-                return usage("ABI for '" + a + "' not found. Quitting...");
+                return usage("ABI for '" + addr + "' not found. Quitting...");
             cout << asciiFileToString(fileName) << endl;
         }
         return false;
@@ -147,14 +147,14 @@ bool COptions::parseArguments(string_q& command) {
         abiList.push_back(abi);
     }
 
-    for (auto a : addrs) {
-        bool testing = isTestMode() && a == "0xeeeeeeeeddddddddeeeeeeeeddddddddeeeeeeee";
-        string_q fileName = getCachePath("abis/" + a + ".json");
-        if (!testing && !isContractAt(a, latest) && !fileExists(fileName)) {
-            cerr << "Address " << a << " is not a smart contract. Skipping..." << endl;
+    for (auto addr : addrs) {
+        bool testing = isTestMode() && addr == "0xeeeeeeeeddddddddeeeeeeeeddddddddeeeeeeee";
+        string_q fileName = getCachePath("abis/" + addr + ".json");
+        if (!testing && !isContractAt(addr, latest) && !fileExists(fileName)) {
+            cerr << "Address " << addr << " is not a smart contract. Skipping..." << endl;
         } else {
             CAbi abi;
-            abi.loadAbiFromEtherscan(a, isRaw, errors);
+            abi.loadAbiFromEtherscan(addr, isRaw, errors);
             if (errors.size() > 0) {
                 ostringstream os;
                 for (auto err : errors)
@@ -162,9 +162,9 @@ bool COptions::parseArguments(string_q& command) {
                 // report but do not quit processing
                 cerr << os.str() << endl;
             }
-            abi.address = a;
+            abi.address = addr;
             for (auto i = abi.interfaces.begin(); i != abi.interfaces.end(); i++)
-                i->address = a;
+                i->address = addr;
             abi.sortInterfaces();
             abiList.push_back(abi);
         }
@@ -187,7 +187,7 @@ bool COptions::parseArguments(string_q& command) {
     if (isTestMode())
         funcFields = "CFunction:" + substitute(ffields, "inputs,outputs", "input_names,output_names");
 
-    if (!addr) {
+    if (!attach) {
         replace(format, "[{ADDRESS}]\t", "");
         replace(funcFields, "address,", "");
     }
@@ -283,4 +283,19 @@ void COptions::convertFromSol(const address_t& a) {
     ::remove((a + ".json").c_str());
     stringToAsciiFile(a + ".json", os.str());
     isRaw = false;
+}
+
+//-----------------------------------------------------------------------
+void removeDuplicateEncodings(CAbiArray& abi_array) {
+    if (abi_array.size() < 2)
+        return;
+
+    size_t j = 0;
+    size_t n = abi_array.size();
+    for (size_t i = 0; i < n - 1; i++) {
+        if (abi_array[i] != abi_array[i + 1]) {
+            abi_array[j++] = abi_array[i];
+        }
+    }
+    abi_array[j++] = abi_array[n - 1];
 }

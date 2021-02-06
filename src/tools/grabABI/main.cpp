@@ -14,7 +14,6 @@
 #include "etherlib.h"
 #include "options.h"
 
-extern bool visitAbi(CAbi& abi, void* data);
 //-----------------------------------------------------------------------
 int main(int argc, const char* argv[]) {
     nodeNotRequired();
@@ -55,6 +54,17 @@ bool visitAbi(CAbi& abi, void* data) {
         }
         cout << interface.Format(expContext().fmtMap["format"]);
         opt->first = false;
+    }
+    return true;
+}
+
+//-------------------------------------------------------------------------
+bool forEveryAbiInArray(ABIVISITFUNC func, void* data, const CAbiArray& abi_array) {
+    if (!func)
+        return false;
+    for (auto abi : abi_array) {
+        if (!(*func)(abi, data))
+            return false;
     }
     return true;
 }

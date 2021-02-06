@@ -14,7 +14,7 @@ grabABI -th
 | -g | --generate | generate C++ code into the current folder for all functions and events found in the ABI |
 | -m | --monitored | load ABIs from monitored addresses |
 | -k | --known | load common 'known' ABIs from cache |
-| -a | --addr | include address of smart contract for the abi in output |
+| -a | --attach | attach the smart contract's address to the the abi |
 | -f | --find <str> | try to search for a function declaration given a four byte code |
 |####|Hidden options||
 | -s | --sol <str> | file name of .sol file from which to create a new known abi (without .sol) |

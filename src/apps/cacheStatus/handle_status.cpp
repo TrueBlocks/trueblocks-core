@@ -95,24 +95,24 @@ bool COptions::handle_status(ostream& os) {
         status.caches.push_back(&names);
     }
 
-    CAbiCache abis;
+    CAbiCache abi_cache;
     if (contains(mode, "|abis|")) {
         LOG8("Reporting on abis");
-        if (!abis.readBinaryCache("abis", details)) {
-            abis.type = abis.getRuntimeClass()->m_ClassName;
-            expContext().types[abis.type] = abis.getRuntimeClass();
-            abis.path = pathName("abis");
-            forEveryFileInFolder(getCachePath("abis/"), countFiles, &abis);
+        if (!abi_cache.readBinaryCache("abis", details)) {
+            abi_cache.type = abi_cache.getRuntimeClass()->m_ClassName;
+            expContext().types[abi_cache.type] = abi_cache.getRuntimeClass();
+            abi_cache.path = pathName("abis");
+            forEveryFileInFolder(getCachePath("abis/"), countFiles, &abi_cache);
             if (details) {
                 CItemCounter counter(this, start, end);
-                counter.cachePtr = &abis;
-                counter.abiArray = &abis.items;
+                counter.cachePtr = &abi_cache;
+                counter.abiArray = &abi_cache.items;
                 forEveryFileInFolder(getCachePath("abis/"), noteABI, &counter);
             }
             LOG8("\tre-writing abis cache");
-            abis.writeBinaryCache("abis", details);
+            abi_cache.writeBinaryCache("abis", details);
         }
-        status.caches.push_back(&abis);
+        status.caches.push_back(&abi_cache);
     }
 
     CChainCache blocks;

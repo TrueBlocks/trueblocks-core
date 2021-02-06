@@ -6,8 +6,8 @@ echo "    functions breaking some test cases Especially, Ben D.'s GitCoin Round 
 echo "    struct 'Donation' in the interface."
 echo
 
-#export HOME="/Users/jrush/.quickBlocks/known_abis"
-#export SOURCE="../src/other/install/known_abis"
+#export HOME="/Users/jrush/.quickBlocks/abis/known-000"
+#export SOURCE="../src/other/install/abis/known-000"
 #
 #pico $SOURCE/loose.sol
 #cp -p $SOURCE/loose.sol ./0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE.sol

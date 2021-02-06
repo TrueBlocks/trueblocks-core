@@ -1014,17 +1014,6 @@ bool forEveryTransactionInList(TRANSVISITFUNC func, void* data, const string_q& 
 }
 
 //-------------------------------------------------------------------------
-bool forEveryAbiInArray(ABIVISITFUNC func, void* data, const CAbiArray& abis) {
-    if (!func)
-        return false;
-    for (auto abi : abis) {
-        if (!(*func)(abi, data))
-            return false;
-    }
-    return true;
-}
-
-//-------------------------------------------------------------------------
 string_q getIndexPath(const string_q& _part) {
     string_q indexPath = getGlobalConfig()->getConfigStr("settings", "indexPath", "<not-set>");
     if (indexPath == "<not-set>" || !folderExists(indexPath))

@@ -24,7 +24,6 @@ acctExport -th
 |####|Hidden options||
 | -d | --skip_ddos | toggle skipping over 2016 dDos transactions ('on' by default) |
 | -m | --max_traces <num> | if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250) |
-| -A | --all_abis | load all previously cached abi files |
 | -f | --freshen | freshen but do not print the exported data |
 | -F | --freshen_max <num> | maximum number of records to process for --freshen option |
 | -y | --factory | scan for contract creations from the given address(es) and report address of those contracts |

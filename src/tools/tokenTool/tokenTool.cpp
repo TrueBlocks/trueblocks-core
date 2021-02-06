@@ -52,7 +52,7 @@ bool build_cap_table(COptions& options, int argc, const char* argv[]) {
                 CBlock block;
                 getBlock(block, blockNum);
                 trans.pBlock = &block;
-                options.abi.articulateTransaction(&trans);
+                options.abi_spec.articulateTransaction(&trans);
                 if (!verbose && !(counter % 13)) {
                     cerr << cTeal << "Processing: " << cOff;
                     cerr << blockNum << " : ";
@@ -154,7 +154,7 @@ string_q COptions::getTotalSupply(blknum_t blockNum) {
     replace(cmd, "[BLOCK]", uint_2_Hex(blockNum));
 
     CFunction ret;
-    if (!abi.articulateOutputs(encoding, callRPC("eth_call", cmd, false), ret))
+    if (!abi_spec.articulateOutputs(encoding, callRPC("eth_call", cmd, false), ret))
         return "";
     return ret.outputs[0].value;
 #endif
@@ -175,7 +175,7 @@ wei_t COptions::getTokenBalance(const address_t& holder, blknum_t blockNum) {
     replace(cmd, "[BLOCK]", uint_2_Hex(blockNum));
 
     CFunction ret;
-    if (!abi.articulateOutputs(encoding, callRPC("eth_call", cmd, false), ret))
+    if (!abi_spec.articulateOutputs(encoding, callRPC("eth_call", cmd, false), ret))
         return 0;
     return str_2_Wei(ret.outputs[0].value);
 #endif

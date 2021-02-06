@@ -318,14 +318,6 @@ const char* STR_DISPLAY_ABI =
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 //-----------------------------------------------------------------------
-string_q getAbiPath(const address_t& addrOrName) {
-    string_q base = "abis/";
-    if (isAddress(addrOrName))
-        return getCachePath(base + addrOrName + ".json");
-    return getCachePath(base + addrOrName);
-}
-
-//---------------------------------------------------------------------------
 bool visitABI(const qblocks::string_q& path, void* data) {
     if (endsWith(path, '/')) {
         forEveryFileInFolder(path + "*", visitABI, data);
@@ -372,19 +364,19 @@ bool CAbi::loadAbisFolderAndCache(const string_q& sourcePath, const string_q& bi
 
 //---------------------------------------------------------------------------
 bool CAbi::loadAbisFromKnown(int which) {
-    return loadAbisFolderAndCache(configPath("abis/"), getAbiPath("known.bin"));
+    return loadAbisFolderAndCache(configPath("abis/"), getCachePath("abis/known.bin"));
 }
 
 //---------------------------------------------------------------------------
 bool CAbi::loadAbisFromCache(void) {
-    return loadAbisFolderAndCache(getCachePath("abis/"), getAbiPath("monitored.bin"));
+    return loadAbisFolderAndCache(getCachePath("abis/"), getCachePath("abis/monitored.bin"));
 }
 
 //---------------------------------------------------------------------------
-bool CAbi::loadAbiFromAddress(const address_t& which) {
-    if (isZeroAddr(which))
+bool CAbi::loadAbiFromAddress(const address_t& addr) {
+    if (isZeroAddr(addr))
         return false;
-    bool ret = visitABI(getCachePath("abis/" + toLower(which) + ".json"), this);
+    bool ret = visitABI(getCachePath("abis/" + toLower(addr) + ".json"), this);
     if (ret)
         sortInterfaces();
     return ret;
@@ -440,8 +432,7 @@ bool CAbi::loadAbiFromEtherscan(const address_t& addr, bool raw, CStringArray& e
         verbose = 10;
 
     string_q results;
-    string_q fileName = getAbiPath(addr);
-
+    string_q fileName = getCachePath("abis/" + toLower(addr) + ".json");
     string_q localFile(getCWD() + addr + ".json");
     if (fileExists(localFile) && localFile != fileName) {
         LOG4("Local file copied to cache");
@@ -518,21 +509,6 @@ bool CAbi::loadAbiFromEtherscan(const address_t& addr, bool raw, CStringArray& e
 
     verbose = saveVerbose;
     return true;
-}
-
-//-----------------------------------------------------------------------
-void removeDuplicateEncodings(CAbiArray& abis) {
-    if (abis.size() < 2)
-        return;
-
-    size_t j = 0;
-    size_t n = abis.size();
-    for (size_t i = 0; i < n - 1; i++) {
-        if (abis[i] != abis[i + 1]) {
-            abis[j++] = abis[i];
-        }
-    }
-    abis[j++] = abis[n - 1];
 }
 
 static const CStringArray removes = {"internal", "virtual", "memory", "private", "external", "pure", "calldata"};
@@ -801,11 +777,11 @@ void CAbi::addInterface(const CFunction& func) {
 
     // first in wins
     if (interfaceMap[func.encoding]) {
-        //LOG_TEST("Skipping", func.type + "-" + func.signature);
+        LOG_TEST("Skipping", func.type + "-" + func.signature);
         return;
     }
 
-    //LOG_TEST("Inserting", func.type + "-" + func.signature);
+    LOG_TEST("Inserting", func.type + "-" + func.signature);
     interfaces.push_back(func);
     interfaceMap[func.encoding] = true;
 }

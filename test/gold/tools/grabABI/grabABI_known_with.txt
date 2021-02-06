@@ -1,6 +1,31 @@
 grabABI argc: 3 [1:0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359] [2:--known] 
 grabABI 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 --known 
 TIME ~ CLOCK - <INFO>  : loadAbiFromEtherscan: for address 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359
+TIME ~ CLOCK - <INFO>  : Inserting: function-proposals(uint256)
+TIME ~ CLOCK - <INFO>  : Inserting: function-executeProposal(uint256,bytes)
+TIME ~ CLOCK - <INFO>  : Inserting: function-memberId(address)
+TIME ~ CLOCK - <INFO>  : Inserting: function-numProposals()
+TIME ~ CLOCK - <INFO>  : Inserting: function-priceOfAUnicornInFinney()
+TIME ~ CLOCK - <INFO>  : Inserting: function-changeUnicorn(uint256,address)
+TIME ~ CLOCK - <INFO>  : Inserting: function-members(uint256)
+TIME ~ CLOCK - <INFO>  : Inserting: function-debatingPeriodInMinutes()
+TIME ~ CLOCK - <INFO>  : Inserting: function-minimumQuorum()
+TIME ~ CLOCK - <INFO>  : Inserting: function-changeMembership(address,uint256,bool,string)
+TIME ~ CLOCK - <INFO>  : Inserting: function-newProposalInWei(address,uint256,string,bytes)
+TIME ~ CLOCK - <INFO>  : Inserting: function-owner()
+TIME ~ CLOCK - <INFO>  : Inserting: function-majorityMargin()
+TIME ~ CLOCK - <INFO>  : Inserting: function-unicornAddress()
+TIME ~ CLOCK - <INFO>  : Inserting: function-newProposalInEther(address,uint256,string,bytes)
+TIME ~ CLOCK - <INFO>  : Inserting: function-changeVotingRules(uint256,uint256,int256)
+TIME ~ CLOCK - <INFO>  : Inserting: function-vote(uint256,bool,string)
+TIME ~ CLOCK - <INFO>  : Inserting: function-checkProposalCode(uint256,address,uint256,bytes)
+TIME ~ CLOCK - <INFO>  : Inserting: function-transferOwnership(address)
+TIME ~ CLOCK - <INFO>  : Inserting: constructor-(uint256,uint256,int256,address)
+TIME ~ CLOCK - <INFO>  : Inserting: event-ProposalAdded(uint256,address,uint256,string)
+TIME ~ CLOCK - <INFO>  : Inserting: event-Voted(uint256,bool,address,string)
+TIME ~ CLOCK - <INFO>  : Inserting: event-ProposalTallied(uint256,int256,uint256,bool)
+TIME ~ CLOCK - <INFO>  : Inserting: event-MembershipChanged(address)
+TIME ~ CLOCK - <INFO>  : Inserting: event-ChangeOfRules(uint256,uint256,int256)
 encoding	type	name	signature	input_names	output_names
 0x2203ab56		ABI	ABI(bytes32,uint256)	node,contentTypes,	contentType,data,,
 0x3ffb58fc		AddEmployee	AddEmployee(uint256,address,uint256,uint64,string)	employeeId,accountAddress,initialDenominationSalary,startDate,role,	,

@@ -1,5 +1,5 @@
-grabABI argc: 3 [1:--known] [2:--addr] 
-grabABI --known --addr 
+grabABI argc: 3 [1:--known] [2:--attach] 
+grabABI --known --attach 
 address	encoding	type	name	signature	input_names	output_names
 0x0	0x2203ab56		ABI	ABI(bytes32,uint256)	node,contentTypes,	contentType,data,,
 0x0	0x3ffb58fc		AddEmployee	AddEmployee(uint256,address,uint256,uint64,string)	employeeId,accountAddress,initialDenominationSalary,startDate,role,	,

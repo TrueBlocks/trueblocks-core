@@ -26,7 +26,6 @@ static const COption params[] = {
     COption("write_traces", "R", "", OPT_SWITCH, "write traces to the cache (see notes)"),
     COption("skip_ddos", "d", "", OPT_HIDDEN | OPT_TOGGLE, "toggle skipping over 2016 dDos transactions ('on' by default)"),  // NOLINT
     COption("max_traces", "m", "<uint64>", OPT_HIDDEN | OPT_FLAG, "if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250)"),  // NOLINT
-    COption("all_abis", "A", "", OPT_HIDDEN | OPT_SWITCH, "load all previously cached abi files"),
     COption("freshen", "f", "", OPT_HIDDEN | OPT_SWITCH, "freshen but do not print the exported data"),
     COption("freshen_max", "F", "<uint64>", OPT_HIDDEN | OPT_FLAG, "maximum number of records to process for --freshen option"),  // NOLINT
     COption("factory", "y", "", OPT_HIDDEN | OPT_SWITCH, "scan for contract creations from the given address(es) and report address of those contracts"),  // NOLINT
@@ -57,7 +56,6 @@ bool COptions::parseArguments(string_q& command) {
     CTopicArray topics;
     bool write_txs = false;
     bool write_traces = false;
-    bool all_abis = false;
     blknum_t start = NOPOS;
     blknum_t end = NOPOS;
     bool staging = false;
@@ -107,9 +105,6 @@ bool COptions::parseArguments(string_q& command) {
         } else if (startsWith(arg, "-m:") || startsWith(arg, "--max_traces:")) {
             if (!confirmUint("max_traces", max_traces, arg))
                 return false;
-
-        } else if (arg == "-A" || arg == "--all_abis") {
-            all_abis = true;
 
         } else if (arg == "-f" || arg == "--freshen") {
             freshen = true;
@@ -264,16 +259,13 @@ bool COptions::parseArguments(string_q& command) {
         manageFields(show, true);
 
         // Load as many ABI files as we have
-        if (!appearances) {
-            abis.loadAbisFromKnown(ABI_ALL);
-            if (all_abis)
-                abis.loadAbisFromCache();
-        }
+        if (!appearances)
+            abi_spec.loadAbisFromKnown(ABI_ALL);
 
         // Try to articulate the monitored addresses
         for (size_t i = 0; i < monitors.size(); i++) {
             CMonitor* monitor = &monitors[i];
-            abis.loadAbiFromEtherscan(monitor->address, false, errors);
+            abi_spec.loadAbiFromEtherscan(monitor->address, false, errors);
         }
 
         if (expContext().exportFmt != JSON1 && expContext().exportFmt != API1) {
