@@ -129,8 +129,8 @@ bool COptions::parseArguments(string_q& command) {
                 tests.push_back("apps/acctScrape");
                 tests.push_back("apps/blockScrape");
                 tests.push_back("apps/cacheStatus");
-                tests.push_back("apps/pinStatus");
                 tests.push_back("apps/chifra");
+                tests.push_back("apps/pinStatus");
 
             } else {
                 tests.push_back(arg);
@@ -176,8 +176,8 @@ bool COptions::parseArguments(string_q& command) {
         tests.push_back("apps/acctScrape");
         tests.push_back("apps/blockScrape");
         tests.push_back("apps/cacheStatus");
-        tests.push_back("apps/pinStatus");
         tests.push_back("apps/chifra");
+        tests.push_back("apps/pinStatus");
     }
 
     SHOW_FIELD(CTestCase, "test_id");
