@@ -16,5 +16,6 @@ import (
 
 func main() {
 	log.Printf("Server started at port 8080")
+	tb.RunWebsocketPool()
 	log.Fatal(http.ListenAndServe(":8080", tb.NewRouter()))
 }

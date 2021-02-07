@@ -48,15 +48,44 @@ func callOneExtra(w http.ResponseWriter, r *http.Request, tbCmd, extra string) {
 	cmd := exec.Command(tbCmd, allDogs...)
 
 	if r.Header.Get("User-Agent") == "testRunner" {
-		cmd.Env = append(append(os.Environ(), "TEST_MODE=true"), "API_MODE=true") 
+		cmd.Env = append(append(os.Environ(), "TEST_MODE=true"), "API_MODE=true")
 	} else {
-        cmd.Env = append(os.Environ(), "API_MODE=true")
-    }
-	out, err := cmd.Output()
+		cmd.Env = append(os.Environ(), "API_MODE=true")
+	}
+
+	stderrPipe, err := cmd.StderrPipe()
+
 	if err != nil {
 		fmt.Printf("%s", err)
+	} else {
+		go func() {
+			ScanForProgress(stderrPipe, func (commandProgress *CommandProgress) {
+				connectionPool.broadcast <- &Message{
+					Action: ProgressMessage,
+					Id: tbCmd,
+					Progress: commandProgress,
+				}
+			})
+		}()
 	}
+
+	out, err := cmd.Output()
+
+	if err != nil {
+		fmt.Printf("%s", err)
+		connectionPool.broadcast <- &Message{
+			Action: CommandErrorMessage,
+			Id: tbCmd,
+			Content:     err.Error(),
+		}
+	}
+
 	output := string(out[:])
+	connectionPool.broadcast <- &Message{
+		Action: CommandOutputMessage,
+		Id: tbCmd,
+		Content: string(output),
+	}
 	fmt.Fprint(w, output)
 }
 
@@ -154,6 +183,7 @@ func StateTokens(w http.ResponseWriter, r *http.Request) {
 }
 
 var nProcessed int
+
 func Logger(inner http.Handler, name string) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		start := time.Now()
@@ -168,6 +198,12 @@ func Logger(inner http.Handler, name string) http.Handler {
 		)
 		nProcessed++
 	})
+}
+
+var connectionPool = newConnectionPool()
+
+func RunWebsocketPool() {
+	go connectionPool.run()
 }
 
 type Response struct {
@@ -207,6 +243,15 @@ func Index(w http.ResponseWriter, r *http.Request) {
 }
 
 var routes = Routes{
+	Route{
+		"Websockets",
+		"GET",
+		"/websocket",
+		func(w http.ResponseWriter, r *http.Request) {
+			HandleWebsockets(connectionPool, w, r)
+		},
+	},
+
 	Route{
 		"Index",
 		"GET",
