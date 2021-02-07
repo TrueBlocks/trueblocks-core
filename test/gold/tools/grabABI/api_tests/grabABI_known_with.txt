@@ -5536,6 +5536,24 @@
       "output_names": ""
     },
     {
+      "name": "changeUnicorn",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "changeUnicorn(uint256,address)",
+      "encoding": "0x522103fa",
+      "input_names": "newUnicornPriceInFinney,newUnicornAddress,",
+      "output_names": ""
+    },
+    {
+      "name": "changeVotingRules",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "changeVotingRules(uint256,uint256,int256)",
+      "encoding": "0xbcca1fd3",
+      "input_names": "minimumQuorumForProposals,minutesForDebate,marginOfVotesForMajority,",
+      "output_names": ""
+    },
+    {
       "name": "checkERC20Balance",
       "type": "function",
       "stateMutability": "view",
@@ -5543,6 +5561,15 @@
       "encoding": "0x9b3bc6fb",
       "input_names": "token,",
       "output_names": "val_0,"
+    },
+    {
+      "name": "checkProposalCode",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "checkProposalCode(uint256,address,uint256,bytes)",
+      "encoding": "0xeceb2945",
+      "input_names": "proposalNumber,beneficiary,amount,transactionBytecode,",
+      "output_names": "codeChecksOut,"
     },
     {
       "name": "claim",
@@ -5885,6 +5912,15 @@
       "encoding": "0xa693cacd",
       "input_names": "a,",
       "output_names": "ret_0,"
+    },
+    {
+      "name": "debatingPeriodInMinutes",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "debatingPeriodInMinutes()",
+      "encoding": "0x69bd3436",
+      "input_names": "",
+      "output_names": "val_0,"
     },
     {
       "name": "decimals",
@@ -6308,6 +6344,15 @@
       "encoding": "0x162a0cf8",
       "input_names": "_paymentId,",
       "output_names": ""
+    },
+    {
+      "name": "executeProposal",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "executeProposal(uint256,bytes)",
+      "encoding": "0x237e9492",
+      "input_names": "proposalNumber,transactionBytecode,",
+      "output_names": "result,"
     },
     {
       "name": "executeTransaction",
@@ -8047,6 +8092,15 @@
       "output_names": "val_0,"
     },
     {
+      "name": "majorityMargin",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "majorityMargin()",
+      "encoding": "0xaa02a90f",
+      "input_names": "",
+      "output_names": "val_0,"
+    },
+    {
       "name": "makeCommitment",
       "type": "function",
       "stateMutability": "pure",
@@ -8119,6 +8173,15 @@
       "output_names": "ret_0,"
     },
     {
+      "name": "memberId",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "memberId(address)",
+      "encoding": "0x39106821",
+      "input_names": "val_0,",
+      "output_names": "val_0,"
+    },
+    {
       "name": "memberKeys",
       "type": "function",
       "stateMutability": "view",
@@ -8135,6 +8198,15 @@
       "encoding": "0x08ae4b0c",
       "input_names": "val_0,",
       "output_names": "exists,admin,shares,withdrawn,memberName,"
+    },
+    {
+      "name": "members",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "members(uint256)",
+      "encoding": "0x5daf08ca",
+      "input_names": "val_0,",
+      "output_names": "member,voteWeight,canAddProposals,name,memberSince,"
     },
     {
       "name": "migrateAll",
@@ -8189,6 +8261,15 @@
       "encoding": "0xf81d6d32",
       "input_names": "",
       "output_names": "ret_0,"
+    },
+    {
+      "name": "minimumQuorum",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "minimumQuorum()",
+      "encoding": "0x8160f0b5",
+      "input_names": "",
+      "output_names": "val_0,"
     },
     {
       "name": "minimumRebalanceInterval",
@@ -8335,6 +8416,24 @@
       "output_names": "reg,"
     },
     {
+      "name": "newProposalInEther",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "newProposalInEther(address,uint256,string,bytes)",
+      "encoding": "0xb9f256cd",
+      "input_names": "beneficiary,etherAmount,JobDescription,transactionBytecode,",
+      "output_names": "proposalID,"
+    },
+    {
+      "name": "newProposalInWei",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "newProposalInWei(address,uint256,string,bytes)",
+      "encoding": "0x83876bc9",
+      "input_names": "beneficiary,weiAmount,JobDescription,transactionBytecode,",
+      "output_names": "proposalID,"
+    },
+    {
       "name": "newSubdomain",
       "type": "function",
       "stateMutability": "nonpayable",
@@ -8405,6 +8504,15 @@
       "encoding": "0x0191dc92",
       "input_names": "",
       "output_names": "ret_0,"
+    },
+    {
+      "name": "numProposals",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "numProposals()",
+      "encoding": "0x400e3949",
+      "input_names": "",
+      "output_names": "val_0,"
     },
     {
       "name": "onERC721Received",
@@ -8632,6 +8740,15 @@
       "output_names": "val_0,"
     },
     {
+      "name": "priceOfAUnicornInFinney",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "priceOfAUnicornInFinney()",
+      "encoding": "0x50c34878",
+      "input_names": "",
+      "output_names": "val_0,"
+    },
+    {
       "name": "processGuildKickProposal",
       "type": "function",
       "stateMutability": "nonpayable",
@@ -8675,6 +8792,15 @@
       "encoding": "0xa9faafd9",
       "input_names": "",
       "output_names": "ret_0,"
+    },
+    {
+      "name": "proposals",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "proposals(uint256)",
+      "encoding": "0x013cf08b",
+      "input_names": "val_0,",
+      "output_names": "recipient,amount,description,votingDeadline,executed,proposalPassed,numberOfVotes,currentResult,proposalHash,"
     },
     {
       "name": "proxyPayment",
@@ -10918,6 +11044,15 @@
       "output_names": "ret_0,"
     },
     {
+      "name": "unicornAddress",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "unicornAddress()",
+      "encoding": "0xb7782455",
+      "input_names": "",
+      "output_names": "val_0,"
+    },
+    {
       "name": "unitShares",
       "type": "function",
       "stateMutability": "nonpayable",
@@ -11330,6 +11465,15 @@
       "encoding": "0x0121b93f",
       "input_names": "videoID,",
       "output_names": ""
+    },
+    {
+      "name": "vote",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "vote(uint256,bool,string)",
+      "encoding": "0xd3c0715b",
+      "input_names": "proposalNumber,supportsProposal,justificationText,",
+      "output_names": "voteID,"
     },
     {
       "name": "whiteList",
@@ -14302,6 +14446,15 @@
       "output_names": ""
     },
     {
+      "name": "ChangeOfRules",
+      "type": "event",
+      "stateMutability": "nonpayable",
+      "signature": "ChangeOfRules(uint256,uint256,int256)",
+      "encoding": "0xa439d3fa452be5e0e1e24a8145e715f4fd8b9c08c96a42fd82a855a85e5d57de",
+      "input_names": "minimumQuorum,debatingPeriodInMinutes,majorityMargin,",
+      "output_names": ""
+    },
+    {
       "name": "ChangePeriodDuration",
       "type": "event",
       "stateMutability": "nonpayable",
@@ -14563,6 +14716,15 @@
       "output_names": ""
     },
     {
+      "name": "MembershipChanged",
+      "type": "event",
+      "stateMutability": "nonpayable",
+      "signature": "MembershipChanged(address)",
+      "encoding": "0x4cea7af04e7093442a4d8d039e7b517557c4787a8cf68f900473c9bf3abfae4c",
+      "input_names": "member,",
+      "output_names": ""
+    },
+    {
       "name": "Minted",
       "type": "event",
       "stateMutability": "nonpayable",
@@ -14821,6 +14983,24 @@
       "signature": "Pregnant(address,uint256,uint256,uint256)",
       "encoding": "0x241ea03ca20251805084d27d4440371c34a0b85ff108f6bb5611248f73818b80",
       "input_names": "owner,matronId,sireId,cooldownEndBlock,",
+      "output_names": ""
+    },
+    {
+      "name": "ProposalAdded",
+      "type": "event",
+      "stateMutability": "nonpayable",
+      "signature": "ProposalAdded(uint256,address,uint256,string)",
+      "encoding": "0x646fec02522b41e7125cfc859a64fd4f4cefd5dc3b6237ca0abe251ded1fa881",
+      "input_names": "proposalID,recipient,amount,description,",
+      "output_names": ""
+    },
+    {
+      "name": "ProposalTallied",
+      "type": "event",
+      "stateMutability": "nonpayable",
+      "signature": "ProposalTallied(uint256,int256,uint256,bool)",
+      "encoding": "0xd220b7272a8b6d0d7d6bcdace67b936a8f175e6d5c1b3ee438b72256b32ab3af",
+      "input_names": "proposalID,result,quorum,active,",
       "output_names": ""
     },
     {
@@ -15139,6 +15319,15 @@
       "output_names": ""
     },
     {
+      "name": "Voted",
+      "type": "event",
+      "stateMutability": "nonpayable",
+      "signature": "Voted(uint256,bool,address,string)",
+      "encoding": "0xc34f869b7ff431b034b7b9aea9822dac189a685e0b015c7d1be3add3f89128e8",
+      "input_names": "proposalID,position,voter,justification,",
+      "output_names": ""
+    },
+    {
       "name": "WhitelistCToken",
       "type": "event",
       "stateMutability": "nonpayable",
@@ -15163,231 +15352,6 @@
       "signature": "WithdrawSharedExpense(address,address,uint256,uint256)",
       "encoding": "0x223162e752821eb7bd44782f73723defb6e3a087a9afc4d3d4af13783f7b6aca",
       "input_names": "from,to,value,newSharedExpenseWithdrawn,",
-      "output_names": ""
-    },
-    {
-      "name": "",
-      "type": "constructor",
-      "stateMutability": "nonpayable",
-      "signature": "(uint256,uint256,int256,address)",
-      "encoding": "",
-      "input_names": "minimumQuorumForProposals,minutesForDebate,marginOfVotesForMajority,congressLeader,",
-      "output_names": ""
-    },
-    {
-      "name": "changeMembership",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "changeMembership(address,uint256,bool,string)",
-      "encoding": "0x824dbc9a",
-      "input_names": "targetMember,voteWeight,canAddProposals,memberName,",
-      "output_names": ""
-    },
-    {
-      "name": "changeUnicorn",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "changeUnicorn(uint256,address)",
-      "encoding": "0x522103fa",
-      "input_names": "newUnicornPriceInFinney,newUnicornAddress,",
-      "output_names": ""
-    },
-    {
-      "name": "changeVotingRules",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "changeVotingRules(uint256,uint256,int256)",
-      "encoding": "0xbcca1fd3",
-      "input_names": "minimumQuorumForProposals,minutesForDebate,marginOfVotesForMajority,",
-      "output_names": ""
-    },
-    {
-      "name": "checkProposalCode",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "checkProposalCode(uint256,address,uint256,bytes)",
-      "encoding": "0xeceb2945",
-      "input_names": "proposalNumber,beneficiary,amount,transactionBytecode,",
-      "output_names": "codeChecksOut,"
-    },
-    {
-      "name": "debatingPeriodInMinutes",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "debatingPeriodInMinutes()",
-      "encoding": "0x69bd3436",
-      "input_names": "",
-      "output_names": "val_0,"
-    },
-    {
-      "name": "executeProposal",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "executeProposal(uint256,bytes)",
-      "encoding": "0x237e9492",
-      "input_names": "proposalNumber,transactionBytecode,",
-      "output_names": "result,"
-    },
-    {
-      "name": "majorityMargin",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "majorityMargin()",
-      "encoding": "0xaa02a90f",
-      "input_names": "",
-      "output_names": "val_0,"
-    },
-    {
-      "name": "memberId",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "memberId(address)",
-      "encoding": "0x39106821",
-      "input_names": "val_0,",
-      "output_names": "val_0,"
-    },
-    {
-      "name": "members",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "members(uint256)",
-      "encoding": "0x5daf08ca",
-      "input_names": "val_0,",
-      "output_names": "member,voteWeight,canAddProposals,name,memberSince,"
-    },
-    {
-      "name": "minimumQuorum",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "minimumQuorum()",
-      "encoding": "0x8160f0b5",
-      "input_names": "",
-      "output_names": "val_0,"
-    },
-    {
-      "name": "newProposalInEther",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "newProposalInEther(address,uint256,string,bytes)",
-      "encoding": "0xb9f256cd",
-      "input_names": "beneficiary,etherAmount,JobDescription,transactionBytecode,",
-      "output_names": "proposalID,"
-    },
-    {
-      "name": "newProposalInWei",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "newProposalInWei(address,uint256,string,bytes)",
-      "encoding": "0x83876bc9",
-      "input_names": "beneficiary,weiAmount,JobDescription,transactionBytecode,",
-      "output_names": "proposalID,"
-    },
-    {
-      "name": "numProposals",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "numProposals()",
-      "encoding": "0x400e3949",
-      "input_names": "",
-      "output_names": "val_0,"
-    },
-    {
-      "name": "owner",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "owner()",
-      "encoding": "0x8da5cb5b",
-      "input_names": "",
-      "output_names": "val_0,"
-    },
-    {
-      "name": "priceOfAUnicornInFinney",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "priceOfAUnicornInFinney()",
-      "encoding": "0x50c34878",
-      "input_names": "",
-      "output_names": "val_0,"
-    },
-    {
-      "name": "proposals",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "proposals(uint256)",
-      "encoding": "0x013cf08b",
-      "input_names": "val_0,",
-      "output_names": "recipient,amount,description,votingDeadline,executed,proposalPassed,numberOfVotes,currentResult,proposalHash,"
-    },
-    {
-      "name": "transferOwnership",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "transferOwnership(address)",
-      "encoding": "0xf2fde38b",
-      "input_names": "newOwner,",
-      "output_names": ""
-    },
-    {
-      "name": "unicornAddress",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "unicornAddress()",
-      "encoding": "0xb7782455",
-      "input_names": "",
-      "output_names": "val_0,"
-    },
-    {
-      "name": "vote",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "vote(uint256,bool,string)",
-      "encoding": "0xd3c0715b",
-      "input_names": "proposalNumber,supportsProposal,justificationText,",
-      "output_names": "voteID,"
-    },
-    {
-      "name": "ChangeOfRules",
-      "type": "event",
-      "stateMutability": "nonpayable",
-      "signature": "ChangeOfRules(uint256,uint256,int256)",
-      "encoding": "0xa439d3fa452be5e0e1e24a8145e715f4fd8b9c08c96a42fd82a855a85e5d57de",
-      "input_names": "minimumQuorum,debatingPeriodInMinutes,majorityMargin,",
-      "output_names": ""
-    },
-    {
-      "name": "MembershipChanged",
-      "type": "event",
-      "stateMutability": "nonpayable",
-      "signature": "MembershipChanged(address)",
-      "encoding": "0x4cea7af04e7093442a4d8d039e7b517557c4787a8cf68f900473c9bf3abfae4c",
-      "input_names": "member,",
-      "output_names": ""
-    },
-    {
-      "name": "ProposalAdded",
-      "type": "event",
-      "stateMutability": "nonpayable",
-      "signature": "ProposalAdded(uint256,address,uint256,string)",
-      "encoding": "0x646fec02522b41e7125cfc859a64fd4f4cefd5dc3b6237ca0abe251ded1fa881",
-      "input_names": "proposalID,recipient,amount,description,",
-      "output_names": ""
-    },
-    {
-      "name": "ProposalTallied",
-      "type": "event",
-      "stateMutability": "nonpayable",
-      "signature": "ProposalTallied(uint256,int256,uint256,bool)",
-      "encoding": "0xd220b7272a8b6d0d7d6bcdace67b936a8f175e6d5c1b3ee438b72256b32ab3af",
-      "input_names": "proposalID,result,quorum,active,",
-      "output_names": ""
-    },
-    {
-      "name": "Voted",
-      "type": "event",
-      "stateMutability": "nonpayable",
-      "signature": "Voted(uint256,bool,address,string)",
-      "encoding": "0xc34f869b7ff431b034b7b9aea9822dac189a685e0b015c7d1be3add3f89128e8",
-      "input_names": "proposalID,position,voter,justification,",
       "output_names": ""
     }
   ],

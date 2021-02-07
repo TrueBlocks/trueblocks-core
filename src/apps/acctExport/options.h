@@ -61,7 +61,6 @@ class COptions : public COptionsBase {
     addr_count_map_t creationMap;
     addr_count_map_t toTraceAddrMap;
     addr_count_map_t fromTraceAddrMap;
-    addr_count_map_t abiMap;
 
     uint32_t* ts_array;
     size_t ts_cnt;

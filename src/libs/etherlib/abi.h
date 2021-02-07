@@ -56,7 +56,6 @@ class CAbi : public CBaseNode {
     bool articulateOutputs(const string_q& encoding, const string_q& value, CFunction& ret) const;
 
     bool loadAbisFromKnown(int which);
-    bool loadAbisFromCache(void);
     bool loadAbiFromAddress(const address_t& addr);
     bool loadAbiFromEtherscan(const address_t& addr, bool raw);
     bool loadAbiFromSolidity(const string_q& addr);

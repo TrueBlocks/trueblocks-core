@@ -395,11 +395,6 @@ bool CAbi::loadAbisFromKnown(int which) {
 }
 
 //---------------------------------------------------------------------------
-bool CAbi::loadAbisFromCache(void) {
-    return loadAbisFolderAndCache(getCachePath("abis/"), getCachePath("abis/monitored.bin"));
-}
-
-//---------------------------------------------------------------------------
 bool CAbi::loadAbiFromAddress(const address_t& addr) {
     if (isZeroAddr(addr))
         return false;
@@ -450,9 +445,14 @@ bool CAbi::loadAbiFromString(const string_q& in) {
 
 //-----------------------------------------------------------------------
 bool CAbi::loadAbiFromEtherscan(const address_t& addr, bool raw) {
-    // If this isn't a smart contract, don't bother
-    if (!isContractAt(addr, getLatestBlock_client()))
+    if (!raw && sourcesMap[addr])
         return true;
+
+    // If this isn't a smart contract, don't bother
+    if (!isContractAt(addr, getLatestBlock_client())) {
+        sourcesMap[addr] = true;
+        return true;
+    }
 
     if (!raw && loadAbiFromAddress(addr))
         return true;
@@ -491,6 +491,7 @@ bool CAbi::loadAbiFromEtherscan(const address_t& addr, bool raw) {
     
     if (contains(toLower(results), "source code not verified"))
         cerr << "Could not get the ABI data. Copy to ./" << addr << ".json and re-run.";
+    sourcesMap[addr] = true;
     return false;
 }
 

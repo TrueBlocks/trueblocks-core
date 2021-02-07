@@ -22,7 +22,6 @@ static const COption params[] = {
     // clang-format off
     COption("addrs", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "list of one or more smart contracts whose ABI to grab from EtherScan"),  // NOLINT
     COption("canonical", "c", "", OPT_SWITCH, "convert all types to their canonical represenation and remove all spaces from display"),  // NOLINT
-    COption("monitored", "m", "", OPT_SWITCH, "load ABIs from monitored addresses"),
     COption("known", "k", "", OPT_SWITCH, "load common 'known' ABIs from cache"),
     COption("attach", "a", "", OPT_SWITCH, "attach the smart contract's address to the the abi"),
     COption("sol", "s", "<string>", OPT_HIDDEN | OPT_FLAG, "file name of .sol file from which to create a new known abi (without .sol)"),  // NOLINT
@@ -42,7 +41,6 @@ bool COptions::parseArguments(string_q& command) {
 
     // BEG_CODE_LOCAL_INIT
     bool canonical = false;
-    bool monitored = false;
     bool known = false;
     bool attach = false;
     string_q sol = "";
@@ -58,9 +56,6 @@ bool COptions::parseArguments(string_q& command) {
             // BEG_CODE_AUTO
         } else if (arg == "-c" || arg == "--canonical") {
             canonical = true;
-
-        } else if (arg == "-m" || arg == "--monitored") {
-            monitored = true;
 
         } else if (arg == "-k" || arg == "--known") {
             known = true;
@@ -121,7 +116,7 @@ bool COptions::parseArguments(string_q& command) {
         return false;
     }
 
-    if (!addrs.size() && !known && !monitored)
+    if (!addrs.size() && !known)
         return usage("Please supply at least one Ethereum address.\n");
 
     if (canonical)
@@ -133,11 +128,8 @@ bool COptions::parseArguments(string_q& command) {
     if (parts != SIG_CANONICAL && verbose)
         parts |= SIG_DETAILS;
 
-    if (known) {
-        CAbi abi;
-        abi.loadAbisFromKnown(ABI_ALL);
-        abiList.push_back(abi);
-    }
+    if (known)
+        abi_spec.loadAbisFromKnown(ABI_ALL);
 
     for (auto addr : addrs) {
         bool testing = isTestMode() && addr == "0xeeeeeeeeddddddddeeeeeeeeddddddddeeeeeeee";
@@ -145,19 +137,11 @@ bool COptions::parseArguments(string_q& command) {
         if (!testing && !isContractAt(addr, latest) && !fileExists(fileName)) {
             cerr << "Address " << addr << " is not a smart contract. Skipping..." << endl;
         } else {
-            CAbi abi;
-            abi.loadAbiFromEtherscan(addr, isRaw);
-            abi.address = addr;
-            for (auto i = abi.interfaces.begin(); i != abi.interfaces.end(); i++)
+            abi_spec.loadAbiFromEtherscan(addr, isRaw);
+            abi_spec.address = addr;
+            for (auto i = abi_spec.interfaces.begin(); i != abi_spec.interfaces.end(); i++)
                 i->address = addr;
-            abiList.push_back(abi);
         }
-    }
-
-    if (monitored) {
-        CAbi abi;
-        abi.loadAbisFromCache();
-        abiList.push_back(abi);
     }
 
     // Display formatting
@@ -182,8 +166,6 @@ bool COptions::parseArguments(string_q& command) {
     manageFields(funcFields, true);
     manageFields("CParameter:all", false);
     manageFields("CParameter:type,name,internalType,components,is_array,indexed", true);
-
-    removeDuplicateEncodings(abiList);
 
     return true;
 }
@@ -245,19 +227,4 @@ void COptions::convertFromSol(const address_t& addr) {
     stringToAsciiFile(fileName, os.str());
 
     isRaw = false;
-}
-
-//-----------------------------------------------------------------------
-void removeDuplicateEncodings(CAbiArray& abi_array) {
-    if (abi_array.size() < 2)
-        return;
-
-    size_t j = 0;
-    size_t n = abi_array.size();
-    for (size_t i = 0; i < n - 1; i++) {
-        if (abi_array[i] != abi_array[i + 1]) {
-            abi_array[j++] = abi_array[i];
-        }
-    }
-    abi_array[j++] = abi_array[n - 1];
 }

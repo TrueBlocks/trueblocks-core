@@ -411,7 +411,6 @@ void COptions::Init(void) {
     // blkRewardMap.clear();
     // toNameExistsMap.clear();
     // fromNameExistsMap.clear();
-    // abiMap.clear();
 
     oldestMonitor = latestDate;
 

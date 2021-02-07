@@ -28,8 +28,7 @@ class COptions : public COptionsBase {
 
     bool first;
     uint64_t parts;
-    CAbiArray abiList;
-    string_q classDir;
+    CAbi abi_spec;
 
     COptions(void);
     ~COptions(void);
