@@ -38,7 +38,6 @@ using addr_wei_mp = map<address_t, wei_t>;
 //-------------------------------------------------------------------------
 using CStringArray = vector<string_q>;
 using CStringMap = map<string_q, bool>;
-using CStringTimeMap = map<string_q, time_q>;
 using CBlockNumArray = vector<uint64_t>;
 using CBlockRangeArray = vector<blkrange_t>;
 using CUintArray = vector<uint64_t>;

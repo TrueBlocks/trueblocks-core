@@ -47,7 +47,7 @@ class CAbi : public CBaseNode {
     const CBaseNode* getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
-    CStringTimeMap sourcesMap;
+    CStringMap sourcesMap;
     CStringMap interfaceMap;
 
     bool articulateTransaction(CTransaction* p) const;

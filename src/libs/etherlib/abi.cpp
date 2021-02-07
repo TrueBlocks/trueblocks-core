@@ -320,6 +320,8 @@ const char* STR_DISPLAY_ABI =
 //-----------------------------------------------------------------------
 #undef LOG_TEST
 #define LOG_TEST(a,b)
+
+//-----------------------------------------------------------------------
 bool loadAbiFile(const string_q& path, void* data) {
     if (endsWith(path, '/')) {
         forEveryFileInFolder(path + "*", loadAbiFile, data);
@@ -340,6 +342,9 @@ bool loadAbiString(const string_q& jsonStr, CAbi& abi) {
 
 //---------------------------------------------------------------------------
 bool CAbi::loadAbisFolderAndCache(const string_q& sourcePath, const string_q& binPath) {
+    if (sourcesMap[sourcePath])
+        return true;
+
     if (fileExists(binPath)) {
         // If any file is newer, don't use binary cache
         fileInfo info = getNewestFileInFolder(sourcePath);
@@ -354,6 +359,7 @@ bool CAbi::loadAbisFolderAndCache(const string_q& sourcePath, const string_q& bi
                     interfaceMap[func.encoding] = true;
                     LOG_TEST("Inserting", func.type + "-" + func.signature);
                 }
+                sourcesMap[sourcePath] = true;
                 return true;
             }
         }
@@ -365,6 +371,8 @@ bool CAbi::loadAbisFolderAndCache(const string_q& sourcePath, const string_q& bi
         return false;
 
     sort(interfaces.begin(), interfaces.end(), sortByFuncName);
+    sourcesMap[sourcePath] = true;
+
     CArchive archive(WRITING_ARCHIVE);
     if (archive.Lock(binPath, modeWriteCreate, LOCK_NOWAIT)) {
         archive << *this;
@@ -407,6 +415,9 @@ bool CAbi::loadAbiFromAddress(const address_t& addr) {
 
 //---------------------------------------------------------------------------
 bool CAbi::loadAbiFromFile(const string_q& fileName) {
+    if (sourcesMap[fileName])
+        return true;
+
     if (!fileExists(fileName)) {
         LOG_TEST("load""AbiFromFile", "Could not load file " + substitute(substitute(fileName, getCachePath(""), "$CACHE/"), configPath(""), "$CONFIG/"));
         return false;
@@ -418,7 +429,11 @@ bool CAbi::loadAbiFromFile(const string_q& fileName) {
     asciiFileToString(fileName, contents);
     LOG_TEST("load""AbiFromFile",
              substitute(substitute(fileName, getCachePath(""), "$CACHE/"), configPath(""), "$CONFIG/"));
-    return loadAbiFromString(contents);
+    if (loadAbiFromString(contents)) {
+        sourcesMap[fileName] = true;
+        return true;
+    }
+    return false;
 }
 
 //---------------------------------------------------------------------------
