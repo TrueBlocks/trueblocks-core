@@ -8,7 +8,7 @@ fields = blknum blockNumber|\
         address address (nowrite)|\
         blknum deployed (nowrite)|\
         string accttype (nowrite)
-includes = abilib.h
+includes = utillib.h|abi.h
 cpp_includes = etherlib.h
 sort = v1.blockNumber < v2.blockNumber
 equals = blockNumber == it.blockNumber

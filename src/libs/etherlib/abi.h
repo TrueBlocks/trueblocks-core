@@ -16,7 +16,6 @@
  * of 'EXISTING_CODE' tags.
  */
 #include "function.h"
-#include "parameter.h"
 
 namespace qblocks {
 

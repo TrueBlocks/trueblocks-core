@@ -13,7 +13,7 @@ fields = address address|\
         blknum transactionLogIndex (nowrite)|\
         string type (nowrite)|\
         sbool removed (nowrite)
-includes = abilib.h
+includes = utillib.h|abi.h
 cpp_includes = etherlib.h
 scope = extern
 serializable = true

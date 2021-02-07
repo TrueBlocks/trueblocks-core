@@ -24,6 +24,6 @@ fields = blknum blockNumber|\
         string amountNet|\
         string reconciliationType|\
         bool reconciled
-includes = abilib.h|reconciliation.h
+includes = utillib.h|abi.h|reconciliation.h
 cpp_includes = etherlib.h
 serializable = true

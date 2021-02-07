@@ -24,7 +24,7 @@ fields = blknum blockNumber|\
         int256 amountNet|\
         string reconciliationType|\
         bool reconciled
-includes = abilib.h
+includes = utillib.h|abi.h
 cpp_includes = etherlib.h
 serializable = true
 equals = ((blockNumber == it.blockNumber) && (asset == it.asset))

@@ -12,7 +12,7 @@ fields = hash blockHash (nowrite-min)|\
         address to (nowrite-min)|\
         hash transactionHash (nowrite-min)|\
         blknum transactionIndex (nowrite-min)
-includes = abilib.h|logentry.h
+includes = utillib.h|abi.h|logentry.h
 cpp_includes = etherlib.h
 scope = extern
 serializable = true

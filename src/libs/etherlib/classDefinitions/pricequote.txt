@@ -2,6 +2,6 @@
 class = CPriceQuote
 fields = timestamp timestamp|\
         double close
-includes = abilib.h
+includes = utillib.h|abi.h
 cpp_includes = pricesource.h
 display_str = timestamp, date, close

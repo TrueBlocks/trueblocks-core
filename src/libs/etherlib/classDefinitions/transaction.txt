@@ -23,7 +23,7 @@ fields = hash hash|\
         string compressedTx (nowrite)|\
         CReconciliationOutputArray statements (nowrite)|\
         sbool finalized (nowrite)
-includes = abilib.h|receipt.h|trace.h|reconciliation.h|reconciliationoutput.h|ethstate.h
+includes = utillib.h|abi.h|receipt.h|trace.h|reconciliation.h|reconciliationoutput.h|ethstate.h
 cpp_includes = etherlib.h
 scope = extern
 serializable = true
