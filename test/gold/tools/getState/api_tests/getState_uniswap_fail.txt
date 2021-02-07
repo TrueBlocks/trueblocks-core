@@ -1,0 +1,5 @@
+{
+  "errors": [
+    "getState - No result from call to 0xbb2b8038a1640196fbe3e38816f3e67cba72d940 with fourbyte 0x0902f1ad. Quitting..."
+  ]
+}

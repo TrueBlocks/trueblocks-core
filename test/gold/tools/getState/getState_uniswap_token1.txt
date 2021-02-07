@@ -1,0 +1,21 @@
+getState argc: 4 [1:--call] [2:0xbb2b8038a1640196fbe3e38816f3e67cba72d940!0xd21220a7] [3:10092000] 
+getState --call 0xbb2b8038a1640196fbe3e38816f3e67cba72d940!0xd21220a7 10092000 
+{
+  "blockNumber": 10092000,
+  "balance": 0,
+  "result": {
+    "name": "token1",
+    "type": "function",
+    "stateMutability": "view",
+    "signature": "token1()",
+    "encoding": "0xd21220a7",
+    "outputs": [
+      {
+        "type": "address",
+        "name": "val_0",
+        "value": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"
+      }
+    ]
+  }
+}
+

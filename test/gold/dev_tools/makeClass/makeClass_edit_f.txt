@@ -9,7 +9,7 @@ current = "0.8.3-alpha"
 [settings]
 class = "CBlock"
 fields = "uint32 gasLimit|uint32 gasUsed|hash hash|bloom logsBloom|uint32 blockNumber|hash parentHash|uint32 timestamp|CTransactionArray transactions"
-includes = "ethtypes.h|abilib.h|transaction.h"
+includes = "ethtypes.h|etherlib.h|transaction.h"
 cIncs = "#include \"etherlib.h"
 scope = "extern"
 serialize = true

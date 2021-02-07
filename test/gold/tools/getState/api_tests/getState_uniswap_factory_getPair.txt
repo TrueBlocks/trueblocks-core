@@ -1,0 +1,32 @@
+{
+  "blockNumber": 10092000,
+  "balance": 0,
+  "result": {
+    "name": "getPair",
+    "type": "function",
+    "constant": true,
+    "stateMutability": "view",
+    "signature": "getPair(address,address)",
+    "encoding": "0xe6a43905",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "tokenA",
+        "value": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599"
+      },
+      {
+        "type": "address",
+        "name": "tokenB",
+        "value": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"
+      }
+    ],
+    "outputs": [
+      {
+        "type": "address",
+        "name": "pair",
+        "value": "0xbb2b8038a1640196fbe3e38816f3e67cba72d940"
+      }
+    ],
+    "address": "0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f"
+  }
+}

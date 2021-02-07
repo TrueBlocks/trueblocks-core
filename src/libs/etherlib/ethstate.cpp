@@ -105,6 +105,13 @@ string_q CEthState::getValueByName(const string_q& fieldName) const {
                 return uint_2_Str(nonce);
             }
             break;
+        case 'r':
+            if (fieldName % "result") {
+                if (result == CFunction())
+                    return "{}";
+                return result.Format();
+            }
+            break;
         case 's':
             if (fieldName % "storage") {
                 return storage;
@@ -116,6 +123,15 @@ string_q CEthState::getValueByName(const string_q& fieldName) const {
 
     // EXISTING_CODE
     // EXISTING_CODE
+
+    string_q s;
+    s = toUpper(string_q("result")) + "::";
+    if (contains(fieldName, s)) {
+        string_q f = fieldName;
+        replaceAll(f, s, "");
+        f = result.getValueByName(f);
+        return f;
+    }
 
     // Finally, give the parent class a chance
     return CBaseNode::getValueByName(fieldName);
@@ -172,6 +188,11 @@ bool CEthState::setValueByName(const string_q& fieldNameIn, const string_q& fiel
                 return true;
             }
             break;
+        case 'r':
+            if (fieldName % "result") {
+                return result.parseJson3(fieldValue);
+            }
+            break;
         case 's':
             if (fieldName % "storage") {
                 storage = fieldValue;
@@ -211,6 +232,7 @@ bool CEthState::Serialize(CArchive& archive) {
     // archive >> address;
     // archive >> deployed;
     // archive >> accttype;
+    // archive >> result;
     finishParse();
     return true;
 }
@@ -230,6 +252,7 @@ bool CEthState::SerializeC(CArchive& archive) const {
     // archive << address;
     // archive << deployed;
     // archive << accttype;
+    // archive << result;
 
     return true;
 }
@@ -280,6 +303,8 @@ void CEthState::registerClass(void) {
     HIDE_FIELD(CEthState, "deployed");
     ADD_FIELD(CEthState, "accttype", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CEthState, "accttype");
+    ADD_OBJECT(CEthState, "result", T_OBJECT | TS_OMITEMPTY, ++fieldNum, GETRUNTIME_CLASS(CFunction));
+    HIDE_FIELD(CEthState, "result");
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CEthState, "schema");
@@ -342,6 +367,14 @@ ostream& operator<<(ostream& os, const CEthState& it) {
     it.Format(os, "", nullptr);
     os << "\n";
     return os;
+}
+
+//---------------------------------------------------------------------------
+const CBaseNode* CEthState::getObjectAt(const string_q& fieldName, size_t index) const {
+    if (fieldName % "result")
+        return &result;
+
+    return NULL;
 }
 
 //---------------------------------------------------------------------------

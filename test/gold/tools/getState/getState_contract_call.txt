@@ -1,0 +1,21 @@
+getState argc: 4 [1:--call] [2:0xa4f29fc548856180f6b1e319ee4d86715875cce4!0x12065fe0] [3:6523977-6540000:2000] 
+getState --call 0xa4f29fc548856180f6b1e319ee4d86715875cce4!0x12065fe0 6523977-6540000:2000 
+{
+  "blockNumber": 10092000,
+  "balance": 0,
+  "result": {
+    "name": "getBalance",
+    "type": "function",
+    "stateMutability": "view",
+    "signature": "getBalance()",
+    "encoding": "0x12065fe0",
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "balance",
+        "value": "0"
+      }
+    ]
+  }
+}
+

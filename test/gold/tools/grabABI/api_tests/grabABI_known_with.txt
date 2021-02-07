@@ -4794,8 +4794,8 @@
       "stateMutability": "view",
       "signature": "allPairs(uint256)",
       "encoding": "0x1e3dd18b",
-      "input_names": "val_0,",
-      "output_names": "val_0,"
+      "input_names": "which,",
+      "output_names": "pair,"
     },
     {
       "name": "allPairsLength",
@@ -4804,7 +4804,7 @@
       "signature": "allPairsLength()",
       "encoding": "0x574f2ba3",
       "input_names": "",
-      "output_names": "val_0,"
+      "output_names": "len,"
     },
     {
       "name": "allocateShares",
@@ -6460,7 +6460,7 @@
       "signature": "feeTo()",
       "encoding": "0x017e7e58",
       "input_names": "",
-      "output_names": "val_0,"
+      "output_names": "fee,"
     },
     {
       "name": "feeToSetter",
@@ -6469,7 +6469,7 @@
       "signature": "feeToSetter()",
       "encoding": "0x094b7415",
       "input_names": "",
-      "output_names": "val_0,"
+      "output_names": "feeToSetter,"
     },
     {
       "name": "finalize",
@@ -7080,8 +7080,8 @@
       "stateMutability": "view",
       "signature": "getPair(address,address)",
       "encoding": "0xe6a43905",
-      "input_names": "val_0,val_1,",
-      "output_names": "val_0,"
+      "input_names": "tokenA,tokenB,",
+      "output_names": "pair,"
     },
     {
       "name": "getPayment",
@@ -14937,7 +14937,7 @@
       "stateMutability": "nonpayable",
       "signature": "PairCreated(address,address,address,uint256)",
       "encoding": "0x0d3648bd0f6ba80134a33ba9275ac585d9d315f0ad8355cddefde31afa28d0e9",
-      "input_names": "token0,token1,pair,val_0,",
+      "input_names": "token0,token1,pair,len,",
       "output_names": ""
     },
     {

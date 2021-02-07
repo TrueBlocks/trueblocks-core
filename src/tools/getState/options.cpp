@@ -83,99 +83,128 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    if (!call.empty()) {
-        CStringArray vars;
-        explode(vars, call, '!');
-        if (vars.size() == 0)
-            return usage("You must supply the address of a smart contract. Quitting...");
-        if (vars.size() == 1)
-            return usage("You must provide a four-byte code to the smart contract you're calling. Quitting...");
-        address_t addr = vars[0];
-        string_q fourByte = vars.size() > 1 ? vars[1] : "";
-        string_q bytes = vars.size() > 2 ? vars[2] : "";
-        blknum_t bn = vars.size() > 3 ? str_2_Uint(vars[3]) : getLatestBlock_client();
-        if (!isContractAt(addr, bn))
-            return usage("The address your provided (" + vars[0] + ") is not a smart contract at block " +
-                         uint_2_Str(bn) + ". Quitting...");
-
-        CAbi abi;
-        abi.loadAbiFromAddress(addr);
-
-        CFunction result;
-        if (doEthCall(addr, fourByte, bytes, bn, abi, result))
-            cout << result << endl;
-        else
-            cout << "No result" << endl;
-
-        return false;
-    }
-
-    for (auto part : parts) {
-        if (part == "none")
-            modeBits = ST_NONE;
-        if (part == "balance")
-            modeBits = ethstate_t(modeBits | ST_BALANCE);
-        if (part == "nonce")
-            modeBits = ethstate_t(modeBits | ST_NONCE);
-        if (part == "code")
-            modeBits = ethstate_t(modeBits | ST_CODE);
-        if (part == "storage")
-            modeBits = ethstate_t(modeBits | ST_STORAGE);
-        if (part == "deployed")
-            modeBits = ethstate_t(modeBits | ST_DEPLOYED);
-        if (part == "accttype")
-            modeBits = ethstate_t(modeBits | ST_ACCTTYPE);
-        if (part == "some")
-            modeBits = ethstate_t(modeBits | ST_SOME);
-        if (part == "all")
-            modeBits = ethstate_t(modeBits | ST_ALL);
-    }
-
     // Data wrangling
     if (!blocks.hasBlocks())
         blocks.numList.push_back(newestBlock);  // use 'latest'
 
-    if (!addrs.size())
-        return usage("You must provide at least one Ethereum address.");
+    if (!call.empty() && !parts.empty())
+        return usage("The --parts option is not available with the --call option. Quitting...");
 
-    deminimus = str_2_Wei(getGlobalConfig("getState")->getConfigStr("settings", "deminimus", "0"));
+    if (call.empty()) {
+        if (!addrs.size())
+            return usage("You must provide at least one Ethereum address.");
 
-    UNHIDE_FIELD(CEthState, "address");
-    string_q format = STR_DISPLAY_ETHSTATE;
-    if (!(modeBits & ST_BALANCE)) {
-        replace(format, "\t[{BALANCE}]", "");
-    } else {
-        UNHIDE_FIELD(CEthState, "balance");
-        UNHIDE_FIELD(CEthState, "ether");
-    }
-    if (!(modeBits & ST_NONCE)) {
-        replace(format, "\t[{NONCE}]", "");
-    } else {
-        UNHIDE_FIELD(CEthState, "nonce");
-    }
-    if (!(modeBits & ST_CODE)) {
-        replace(format, "\t[{CODE}]", "");
-    } else {
-        UNHIDE_FIELD(CEthState, "code");
-    }
-    if (!(modeBits & ST_STORAGE)) {
-        replace(format, "\t[{STORAGE}]", "");
-    } else {
-        UNHIDE_FIELD(CEthState, "storage");
-    }
-    if (!(modeBits & ST_DEPLOYED)) {
-        replace(format, "\t[{DEPLOYED}]", "");
-    } else {
-        UNHIDE_FIELD(CEthState, "deployed");
-    }
-    if (!(modeBits & ST_ACCTTYPE)) {
-        replace(format, "\t[{ACCTTYPE}]", "");
-    } else {
-        UNHIDE_FIELD(CEthState, "accttype");
-    }
+        for (auto part : parts) {
+            if (part == "none")
+                modeBits = ST_NONE;
+            if (part == "balance")
+                modeBits = ethstate_t(modeBits | ST_BALANCE);
+            if (part == "nonce")
+                modeBits = ethstate_t(modeBits | ST_NONCE);
+            if (part == "code")
+                modeBits = ethstate_t(modeBits | ST_CODE);
+            if (part == "storage")
+                modeBits = ethstate_t(modeBits | ST_STORAGE);
+            if (part == "deployed")
+                modeBits = ethstate_t(modeBits | ST_DEPLOYED);
+            if (part == "accttype")
+                modeBits = ethstate_t(modeBits | ST_ACCTTYPE);
+            if (part == "some")
+                modeBits = ethstate_t(modeBits | ST_SOME);
+            if (part == "all")
+                modeBits = ethstate_t(modeBits | ST_ALL);
+        }
+        
+        deminimus = str_2_Wei(getGlobalConfig("getState")->getConfigStr("settings", "deminimus", "0"));
+        
+        UNHIDE_FIELD(CEthState, "address");
+        string_q format = STR_DISPLAY_ETHSTATE;
+        if (!(modeBits & ST_BALANCE)) {
+            replace(format, "\t[{BALANCE}]", "");
+        } else {
+            UNHIDE_FIELD(CEthState, "balance");
+            UNHIDE_FIELD(CEthState, "ether");
+        }
+        if (!(modeBits & ST_NONCE)) {
+            replace(format, "\t[{NONCE}]", "");
+        } else {
+            UNHIDE_FIELD(CEthState, "nonce");
+        }
+        if (!(modeBits & ST_CODE)) {
+            replace(format, "\t[{CODE}]", "");
+        } else {
+            UNHIDE_FIELD(CEthState, "code");
+        }
+        if (!(modeBits & ST_STORAGE)) {
+            replace(format, "\t[{STORAGE}]", "");
+        } else {
+            UNHIDE_FIELD(CEthState, "storage");
+        }
+        if (!(modeBits & ST_DEPLOYED)) {
+            replace(format, "\t[{DEPLOYED}]", "");
+        } else {
+            UNHIDE_FIELD(CEthState, "deployed");
+        }
+        if (!(modeBits & ST_ACCTTYPE)) {
+            replace(format, "\t[{ACCTTYPE}]", "");
+        } else {
+            UNHIDE_FIELD(CEthState, "accttype");
+        }
+        
+        // Display formatting
+        configureDisplay("getState", "CEthState", format.empty() ? STR_DISPLAY_ETHSTATE : format);
 
-    // Display formatting
-    configureDisplay("getState", "CEthState", format.empty() ? STR_DISPLAY_ETHSTATE : format);
+    } else {
+        HIDE_FIELD(CParameter, "str_default");
+        HIDE_FIELD(CParameter, "indexed");
+        HIDE_FIELD(CParameter, "internalType");
+        HIDE_FIELD(CParameter, "components");
+        HIDE_FIELD(CParameter, "no_write");
+        HIDE_FIELD(CParameter, "is_pointer");
+        HIDE_FIELD(CParameter, "is_array");
+        HIDE_FIELD(CParameter, "is_object");
+        HIDE_FIELD(CParameter, "is_builtin");
+        HIDE_FIELD(CParameter, "is_minimal");
+        SHOW_FIELD(CFunction, "address");
+        SHOW_FIELD(CEthState, "result");
+
+        // Display formatting
+        string_q format = STR_DISPLAY_FUNCTION;
+        configureDisplay("getState", "CFunction", format.empty() ? STR_DISPLAY_FUNCTION : format);
+
+        CStringArray vars;
+        explode(vars, call, '!');
+        if (vars.size() == 0)
+            return usage("You must supply the address of a smart contract for the --call option. Quitting...");
+        if (vars.size() == 1)
+            return usage("You must provide a four-byte code to the smart contract you're calling. Quitting...");
+        if (!isAddress(vars[0]))
+            return usage("The first part of the call data to --call must be an address. Quitting...");
+        if (!isHexStr(vars[1]))
+            return usage("The four byte must be a hex string. Quitting...");
+
+        CEthState state;
+        state.result.address = vars[0];
+        state.blockNumber = 10092000;
+
+        string_q fourByte = vars[1];
+        string_q bytes = vars.size() > 2 ? vars[2] : "";
+
+        CAbi abi_spec;
+        abi_spec.loadAbisFromKnown(ABI_ALL);
+        abi_spec.loadAbiFromEtherscan(state.result.address, false); // may fail, but it's okay as we will pick up from known abis
+        if (doEthCall(state.result.address, fourByte, bytes, state.blockNumber, abi_spec, state.result)) {
+            CTransaction art;
+            art.input = fourByte + bytes;
+            abi_spec.articulateTransaction(&art);
+            state.result.inputs = art.articulatedTx.inputs;
+            state.result.address = vars[0];
+            cout << state << endl;
+            return false;
+        }
+
+        return usage("No result from call to " + state.result.address + " with fourbyte " + fourByte + ". Quitting...");
+    }
 
     if (!requestsHistory())  // if the user did not request historical state, we can return safely
         return true;

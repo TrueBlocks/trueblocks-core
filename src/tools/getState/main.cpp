@@ -25,12 +25,19 @@ int main(int argc, const char* argv[]) {
         if (!options.parseArguments(command))
             return 0;
 
-        for (auto addr : options.addrs) {
-            if (once)
-                cout << exportPreamble(expContext().fmtMap["header"], GETRUNTIME_CLASS(CEthState));
-            options.current = addr;
-            options.blocks.forEveryBlockNumber(visitBlock, &options);
-            once = false;
+        if (!options.call.empty()) {
+            // if (once)
+            //     cout << exportPreamble(expContext().fmtMap["header"], GETRUNTIME_CLASS(CFunction));
+            // once = false;
+
+        } else {
+            for (auto addr : options.addrs) {
+                if (once)
+                    cout << exportPreamble(expContext().fmtMap["header"], GETRUNTIME_CLASS(CEthState));
+                options.current = addr;
+                options.blocks.forEveryBlockNumber(visitBlock, &options);
+                once = false;
+            }
         }
         cout << exportPostamble(options.errors, expContext().fmtMap["meta"]);
     }
