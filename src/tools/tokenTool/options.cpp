@@ -100,7 +100,7 @@ bool COptions::parseArguments(string_q& command) {
             cacheFile + ".lck'. Quitting...");
 
     // We need an ABI (although we could run without it)
-    if (!abi_spec.loadAbiFromAddress(token))
+    if (!abi_spec.loadAbiFromEtherscan(token))
         return usage("Could not find the ABI. Run grabABI " + token + " to retrieve it. Quitting...");
 
     return true;

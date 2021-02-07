@@ -8,6 +8,7 @@ getState --call 0x2260fac5e5542a773aa44fbcfedf7c193bc2c599!0x06fdde03 10092000
 {
   "blockNumber": 10092000,
   "balance": 0,
+  "address": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
   "result": {
     "name": "name",
     "type": "function",

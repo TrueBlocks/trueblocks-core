@@ -1,6 +1,5 @@
 enabled, mode, speed, route, path/tool, filename, post, options, opt_cmd
 on, cmd,  all,  logs, tools/getLogs, preload,             y, blocks = 3657480 & force, getBlock
-on, cmd,  all,  logs, tools/getLogs, preload_abi,         y, addrs = 0x51ffc1b089392a5bb65bf24eaf04d07d0e6f88b5, grabABI
 
 on, cmd,  fast, logs, tools/getLogs, README,              y, @th
 on, cmd,  fast, logs, tools/getLogs, help,                y, @h

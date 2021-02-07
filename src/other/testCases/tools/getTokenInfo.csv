@@ -1,7 +1,4 @@
 enabled, mode, speed, route, path/tool, filename, post, options, opt_cmd
-on, cmd,  all,  tokens, tools/getTokenInfo, preload_abi,                   n, addrs2 = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07, grabABI
-on, cmd,  all,  tokens, tools/getTokenInfo, preload_abi2,                  n, addrs2 = 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607, grabABI
-
 on, cmd,  fast, tokens, tools/getTokenInfo, README,                        n, @th
 on, cmd,  fast, tokens, tools/getTokenInfo, help,                          n, @h
 on, cmd,  fast, tokens, tools/getTokenInfo, help_long,                     n, help

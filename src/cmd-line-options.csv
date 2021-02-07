@@ -221,7 +221,6 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,customizeable,c
 13660,tools,Accounts,abis,grabABI,addrs,,,true,false,true,true,header,positional,list<addr>,list of one or more smart contracts whose ABI to grab from EtherScan
 13680,tools,Accounts,abis,grabABI,canonical,c,,false,false,true,true,local,switch,<boolean>,convert all types to their canonical represenation and remove|all spaces from display
 13850,tools,Accounts,abis,grabABI,known,k,,false,false,true,false,local,switch,<boolean>,load common 'known' ABIs from cache
-13855,tools,Accounts,abis,grabABI,attach,a,,false,false,true,false,local,switch,<boolean>,attach the smart contract's address to the the abi
 13860,tools,Accounts,abis,grabABI,sol,s,,false,false,false,false,local,flag,<string>,file name of .sol file from which to create a new known abi (without|.sol)
 13865,tools,Accounts,abis,grabABI,find,f,,false,false,true,false,local,flag,<string>,try to search for a function declaration given a four byte code
 13880,tools,Accounts,abis,grabABI,,,,false,false,true,true,--,description,,Fetches the ABI for a smart contract.

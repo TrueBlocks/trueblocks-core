@@ -77,9 +77,6 @@ string_q CFunction::getValueByName(const string_q& fieldName) const {
             if (fieldName % "anonymous") {
                 return bool_2_Str(anonymous);
             }
-            if (fieldName % "address") {
-                return addr_2_Str(address);
-            }
             break;
         case 'c':
             if (fieldName % "constant") {
@@ -200,10 +197,6 @@ bool CFunction::setValueByName(const string_q& fieldNameIn, const string_q& fiel
                 anonymous = str_2_Bool(fieldValue);
                 return true;
             }
-            if (fieldName % "address") {
-                address = str_2_Addr(fieldValue);
-                return true;
-            }
             break;
         case 'c':
             if (fieldName % "constant") {
@@ -319,7 +312,6 @@ bool CFunction::Serialize(CArchive& archive) {
     // archive >> message;
     archive >> inputs;
     archive >> outputs;
-    // archive >> address;
     finishParse();
     return true;
 }
@@ -341,7 +333,6 @@ bool CFunction::SerializeC(CArchive& archive) const {
     // archive << message;
     archive << inputs;
     archive << outputs;
-    // archive << address;
 
     return true;
 }
@@ -389,8 +380,6 @@ void CFunction::registerClass(void) {
     HIDE_FIELD(CFunction, "message");
     ADD_FIELD(CFunction, "inputs", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CFunction, "outputs", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CFunction, "address", T_ADDRESS | TS_OMITEMPTY, ++fieldNum);
-    HIDE_FIELD(CFunction, "address");
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CFunction, "schema");

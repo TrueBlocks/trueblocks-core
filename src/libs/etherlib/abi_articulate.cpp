@@ -25,15 +25,17 @@ bool CAbi::articulateTransaction(CTransaction* p) const {
         EXIT_NOMSG8(false);
 
     // articulate the events, so we can return with a fully articulated object
-    for (size_t i = 0; i < p->receipt.logs.size(); i++)
+    for (size_t i = 0; i < p->receipt.logs.size(); i++) {
+        ((CAbi*)this)->loadAbiFromEtherscan(p->receipt.logs[i].address);  // NOLINT
         articulateLog(&p->receipt.logs[i]);
+    }
 
     // articulate the traces, so we can return with a fully articulated object
     bool hasTraces = false;
     for (auto& trace : p->traces) {
         hasTraces = true;
         trace.articulatedTrace.m_showing = false;
-        ((CAbi*)this)->loadAbiFromAddress(trace.action.to);  // NOLINT
+        ((CAbi*)this)->loadAbiFromEtherscan(trace.action.to);  // NOLINT
         if (articulateTrace(&trace))
             trace.articulatedTrace.m_showing = true;
     }
@@ -41,6 +43,7 @@ bool CAbi::articulateTransaction(CTransaction* p) const {
     if (p->input.length() >= 10 || p->input == "0x") {
         string_q encoding = extract(p->input, 0, 10);
         string_q input = extract(p->input, 10);
+        ((CAbi*)this)->loadAbiFromEtherscan(p->to);  // NOLINT
         for (auto interface : interfaces) {
             if (encoding % interface.encoding) {
                 p->articulatedTx = CFunction(interface);

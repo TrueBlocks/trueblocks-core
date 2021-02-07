@@ -257,17 +257,6 @@ bool COptions::cleanTest(const string_q& path, const string_q& testName) {
 }
 
 //---------------------------------------------------------------------------------------------------
-void establishABI(const address_t& addr) {
-    cerr << "Loading ABI for " << addr;
-    if (!fileExists(getCachePath("abis/" + toLower(addr) + ".json"))) {
-        doCommand("grabABI " + addr);
-        usleep(250000);
-    }
-    cerr << "...done.\r";
-    cerr.flush();
-}
-
-//---------------------------------------------------------------------------------------------------
 void establishMonitor(const address_t& addr) {
     cerr << "Loading monitor for " << addr;
     if (!fileExists(getCachePath("monitors/" + toLower(addr) + ".acct.bin"))) {
@@ -284,19 +273,6 @@ void establishTestData(void) {
     // before running the tests. The tests fail if one removes this. The tests should not fail.
     doCommand(" getBlock --uniq_tx 0");
     doCommand("getBlock --force 4369999");
-
-    establishABI("0x111111125434b319222cdbf8c261674adb56f3ae");
-    establishABI("0x1e0447b19bb6ecfdae1e4ae1694b0c3659614e4e");
-    establishABI("0x45f783cce6b7ff23b2ab2d70e416cdb7d6055f51");
-    establishABI("0xee9a6009b926645d33e10ee5577e9c8d3c95c165");
-    establishABI("0x9ba00d6856a4edf4665bca2c2309936572473b7e");
-    establishABI("0x6b92d76c9d0d40e53019ffa51b6f0c9b6bc657c9");
-    establishABI("0x3da1313ae46132a397d90d95b1424a9a7e3e0fce");
-    establishABI("0x314159265dd8dbb310642f98f50c066173c1259b");
-    establishABI("0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a");
-    establishABI("0x159cf1e9ae58211b588f5e3bf1d7e423952d959b");
-    establishABI("0xbb9bc244d798123fde783fcc1c72d3bb8c189413");
-    establishABI("0x8055d0504666e2b6942beb8d6014c964658ca591");
 
     if (!folderExists(getCachePath("monitors/"))) {
         establishMonitor("0xfdecc82ddfc56192e26f563c3d68cb544a96bfed");

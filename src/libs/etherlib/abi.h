@@ -55,8 +55,7 @@ class CAbi : public CBaseNode {
     bool articulateOutputs(const string_q& encoding, const string_q& value, CFunction& ret) const;
 
     bool loadAbisFromKnown(int which);
-    bool loadAbiFromAddress(const address_t& addr);
-    bool loadAbiFromEtherscan(const address_t& addr, bool raw);
+    bool loadAbiFromEtherscan(const address_t& addr, bool raw = false);
     bool loadAbiFromSolidity(const string_q& addr);
 
     void addInterface(const CFunction& func);
@@ -75,6 +74,7 @@ class CAbi : public CBaseNode {
     bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
+    bool loadAbiFromAddress(const address_t& addr);
     bool loadAbisFolderAndCache(const string_q& sourcePath, const string_q& binPath);
     bool loadAbiFromFile(const string_q& fileName);
     bool loadAbiFromString(const string_q& str);

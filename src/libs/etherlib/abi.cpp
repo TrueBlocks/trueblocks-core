@@ -364,9 +364,8 @@ bool CAbi::loadAbisFolderAndCache(const string_q& sourcePath, const string_q& bi
             }
         }
     }
-
-    if (!isTestMode())
-        LOG_INFO("Freshening abi cache for path: ", sourcePath);
+    
+    LOG4("Freshening abi cache for path: ", sourcePath);
     if (!forEveryFileInFolder(sourcePath + "*", loadAbiFile, this))
         return false;
 
@@ -490,7 +489,7 @@ bool CAbi::loadAbiFromEtherscan(const address_t& addr, bool raw) {
     }
     
     if (contains(toLower(results), "source code not verified"))
-        cerr << "Could not get the ABI data. Copy to ./" << addr << ".json and re-run.";
+        LOG4("Could not get the ABI data. Copy to ./", addr, ".json and re-run.");
     sourcesMap[addr] = true;
     return false;
 }

@@ -3,6 +3,7 @@ getState --call 0xa4f29fc548856180f6b1e319ee4d86715875cce4!0x12065fe0 6523977-65
 {
   "blockNumber": 10092000,
   "balance": 0,
+  "address": "0xa4f29fc548856180f6b1e319ee4d86715875cce4",
   "result": {
     "name": "getBalance",
     "type": "function",

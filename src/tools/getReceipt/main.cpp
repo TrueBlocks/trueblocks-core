@@ -61,7 +61,7 @@ bool visitTransaction(CTransaction& trans, void* data) {
 
     if (true) {
         if (opt->articulate) {
-            opt->abi_spec.loadAbiFromAddress(trans.to);
+            opt->abi_spec.loadAbiFromEtherscan(trans.to);
             opt->abi_spec.articulateTransaction(&trans);
         }
         manageFields("CFunction:message", !trans.articulatedTx.message.empty());

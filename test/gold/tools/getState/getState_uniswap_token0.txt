@@ -3,6 +3,7 @@ getState --call 0xbb2b8038a1640196fbe3e38816f3e67cba72d940!0x0dfe1681 10092000
 {
   "blockNumber": 10092000,
   "balance": 0,
+  "address": "0xbb2b8038a1640196fbe3e38816f3e67cba72d940",
   "result": {
     "name": "token0",
     "type": "function",

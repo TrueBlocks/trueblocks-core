@@ -28,12 +28,12 @@ on, both, fast, names, tools/ethNames, owned,                            y, owne
 on, both, medi, names, tools/ethNames, prefund,                          y, prefund
 on, both, fast, names, tools/ethNames, run,                              y, owned & no_header
 on, both, medi, names, tools/ethNames, upgrade_fail,                     y, fmt = json
-on, cmd,  fast, null,  tools/ethNames, nosave_backup,                    n, MOVEFILE -f $CONFIG/names/names.bin ./testing_data/backup/
-on, cmd,  fast, null,  tools/ethNames, nosave_copy,                      n, COPYFILE -f ./testing_data/ethNames_upgrade_to_067/names.bin $CONFIG/names/
-on, cmd,  fast, null,  tools/ethNames, nosave_touch,                     n, TOUCHFILE $CONFIG/names/names.bin
-on, both, medi, names, tools/ethNames, upgrade_to_067,                   y, fmt = json
-on, cmd,  fast, null,  tools/ethNames, nosave_remove,                    n, RMFILE -f $CONFIG/names/names.bin
-on, cmd,  fast, null,  tools/ethNames, nosave_restore,                   n, MOVEFILE -f ./testing_data/backup/names.bin $CONFIG/names/
+#on, cmd,  fast, null,  tools/ethNames, nosave_backup,                    n, MOVEFILE -f $CONFIG/names/names.bin ./testing_data/backup/
+#on, cmd,  fast, null,  tools/ethNames, nosave_copy,                      n, COPYFILE -f ./testing_data/ethNames_upgrade_to_067/names.bin $CONFIG/names/
+#on, cmd,  fast, null,  tools/ethNames, nosave_touch,                     n, TOUCHFILE $CONFIG/names/names.bin
+#on, both, medi, names, tools/ethNames, upgrade_to_067,                   y, fmt = json
+#on, cmd,  fast, null,  tools/ethNames, nosave_remove,                    n, RMFILE -f $CONFIG/names/names.bin
+#on, cmd,  fast, null,  tools/ethNames, nosave_restore,                   n, MOVEFILE -f ./testing_data/backup/names.bin $CONFIG/names/
 on, both, fast, names, tools/ethNames, verbose,                          n, verbose & owned & fmt = txt
 on, both, fast, names, tools/ethNames, list,                             y, fmt = json
 on, both, medi, names, tools/ethNames, long_list,                        n, fmt = txt

@@ -23,7 +23,6 @@ static const COption params[] = {
     COption("addrs", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "list of one or more smart contracts whose ABI to grab from EtherScan"),  // NOLINT
     COption("canonical", "c", "", OPT_SWITCH, "convert all types to their canonical represenation and remove all spaces from display"),  // NOLINT
     COption("known", "k", "", OPT_SWITCH, "load common 'known' ABIs from cache"),
-    COption("attach", "a", "", OPT_SWITCH, "attach the smart contract's address to the the abi"),
     COption("sol", "s", "<string>", OPT_HIDDEN | OPT_FLAG, "file name of .sol file from which to create a new known abi (without .sol)"),  // NOLINT
     COption("find", "f", "<string>", OPT_FLAG, "try to search for a function declaration given a four byte code"),
     COption("", "", "", OPT_DESCRIPTION, "Fetches the ABI for a smart contract."),
@@ -42,7 +41,6 @@ bool COptions::parseArguments(string_q& command) {
     // BEG_CODE_LOCAL_INIT
     bool canonical = false;
     bool known = false;
-    bool attach = false;
     string_q sol = "";
     string_q find = "";
     // END_CODE_LOCAL_INIT
@@ -59,9 +57,6 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-k" || arg == "--known") {
             known = true;
-
-        } else if (arg == "-a" || arg == "--attach") {
-            attach = true;
 
         } else if (startsWith(arg, "-s:") || startsWith(arg, "--sol:")) {
             sol = substitute(substitute(arg, "-s:", ""), "--sol:", "");
@@ -139,8 +134,6 @@ bool COptions::parseArguments(string_q& command) {
         } else {
             abi_spec.loadAbiFromEtherscan(addr, isRaw);
             abi_spec.address = addr;
-            for (auto i = abi_spec.interfaces.begin(); i != abi_spec.interfaces.end(); i++)
-                i->address = addr;
         }
     }
 
@@ -151,11 +144,9 @@ bool COptions::parseArguments(string_q& command) {
     if (isTestMode())
         funcFields = "CFunction:" + substitute(ffields, "inputs,outputs", "input_names,output_names");
 
-    if (!attach) {
-        replace(format, "[{ADDRESS}]\t", "");
-        replace(funcFields, "address,", "");
-    }
-
+    replace(format, "[{ADDRESS}]\t", "");
+    replace(funcFields, "address,", "");
+    
     if (verbose && (expContext().exportFmt == JSON1 || expContext().exportFmt == API1)) {
         replaceAll(funcFields, "_name", "");
         replaceAll(format, "_NAME", "");

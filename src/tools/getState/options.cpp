@@ -167,6 +167,7 @@ bool COptions::parseArguments(string_q& command) {
         HIDE_FIELD(CParameter, "is_minimal");
         SHOW_FIELD(CFunction, "address");
         SHOW_FIELD(CEthState, "result");
+        SHOW_FIELD(CEthState, "address");
 
         // Display formatting
         string_q format = STR_DISPLAY_FUNCTION;
@@ -184,7 +185,7 @@ bool COptions::parseArguments(string_q& command) {
             return usage("The four byte must be a hex string. Quitting...");
 
         CEthState state;
-        state.result.address = vars[0];
+        state.address = vars[0];
         state.blockNumber = 10092000;
 
         string_q fourByte = vars[1];
@@ -192,18 +193,18 @@ bool COptions::parseArguments(string_q& command) {
 
         CAbi abi_spec;
         abi_spec.loadAbisFromKnown(ABI_ALL);
-        abi_spec.loadAbiFromEtherscan(state.result.address, false); // may fail, but it's okay as we will pick up from known abis
-        if (doEthCall(state.result.address, fourByte, bytes, state.blockNumber, abi_spec, state.result)) {
+        abi_spec.loadAbiFromEtherscan(state.address, false); // may fail, but it's okay as we will pick up from known abis
+        if (doEthCall(state.address, fourByte, bytes, state.blockNumber, abi_spec, state.result)) {
             CTransaction art;
             art.input = fourByte + bytes;
             abi_spec.articulateTransaction(&art);
             state.result.inputs = art.articulatedTx.inputs;
-            state.result.address = vars[0];
+            state.address = vars[0];
             cout << state << endl;
             return false;
         }
 
-        return usage("No result from call to " + state.result.address + " with fourbyte " + fourByte + ". Quitting...");
+        return usage("No result from call to " + state.address + " with fourbyte " + fourByte + ". Quitting...");
     }
 
     if (!requestsHistory())  // if the user did not request historical state, we can return safely
