@@ -265,7 +265,8 @@ bool COptions::parseArguments(string_q& command) {
         // Try to articulate the monitored addresses
         for (size_t i = 0; i < monitors.size(); i++) {
             CMonitor* monitor = &monitors[i];
-            abi_spec.loadAbiFromEtherscan(monitor->address, false);
+            if (isContractAt(monitor->address, latestBlock))
+                abi_spec.loadAbiFromEtherscan(monitor->address, false);
         }
 
         if (expContext().exportFmt != JSON1 && expContext().exportFmt != API1) {
@@ -411,6 +412,7 @@ void COptions::Init(void) {
     // blkRewardMap.clear();
     // toNameExistsMap.clear();
     // fromNameExistsMap.clear();
+    // abiMap.clear();
 
     oldestMonitor = latestDate;
 

@@ -177,7 +177,10 @@ bool isTokenTopic(const topic_t& topic) {
 
 void COptions::articulateAll(CTransaction& trans) {
     if (articulate) {
-        abi_spec.loadAbiFromEtherscan(trans.to, false);
+        abiMap[trans.to]++;
+        if (abiMap[trans.to] == 1 || fileExists(getCachePath("abis/" + trans.to))) {
+            abi_spec.loadAbiFromEtherscan(trans.to, false);
+        }
         abi_spec.articulateTransaction(&trans);
         trans.hasToken |= isTokenFunc(trans.input);
 
@@ -186,7 +189,10 @@ void COptions::articulateAll(CTransaction& trans) {
             trans.hasToken |= isTokenTopic(log->topics[0]);
             string_q str = log->Format();
             if (contains(str, bytesOnly)) {
-                abi_spec.loadAbiFromEtherscan(log->address, false);
+                abiMap[log->address]++;
+                if (abiMap[log->address] == 1 || fileExists(getCachePath("abis/" + log->address))) {
+                    abi_spec.loadAbiFromEtherscan(log->address, false);
+                }
                 abi_spec.articulateLog(log);
             }
         }
@@ -194,7 +200,10 @@ void COptions::articulateAll(CTransaction& trans) {
         for (size_t j = 0; j < trans.traces.size(); j++) {
             CTrace* trace = (CTrace*)&trans.traces[j];
             trans.hasToken |= isTokenFunc(trace->action.input);
-            abi_spec.loadAbiFromEtherscan(trace->action.to, false);
+            abiMap[trace->action.to]++;
+            if (abiMap[trace->action.to] == 1 || fileExists(getCachePath("abis/" + trace->action.to))) {
+                abi_spec.loadAbiFromEtherscan(trace->action.to, false);
+            }
             abi_spec.articulateTrace(trace);
         }
     }

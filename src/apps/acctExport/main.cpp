@@ -6,6 +6,7 @@
 #include "options.h"
 
 //-----------------------------------------------------------------------
+extern bool removeAbi(const string_q& path, void *data);
 int main(int argc, const char* argv[]) {
     acctlib_init(quickQuitHandler);
 
@@ -63,7 +64,10 @@ int main(int argc, const char* argv[]) {
 
             } else {
                 ASSERT(accounting);
-                options.handle_accounting();
+                //for (int i = 0 ; i < 100 ; i++) {
+                //    forEveryFileInFolder(getCachePath("abis/"), removeAbi, nullptr);
+                    options.handle_accounting();
+                //}
             }
         }
 
@@ -96,4 +100,13 @@ int main(int argc, const char* argv[]) {
 
     acctlib_cleanup();
     return 0;
+}
+
+bool removeAbi(const string_q& path, void *data) {
+    if (endsWith(path, "/")) {
+        return forEveryFileInFolder(path + "*", removeAbi, data);
+    } else {
+        ::remove(path.c_str());
+    }
+    return true;
 }
