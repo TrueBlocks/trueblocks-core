@@ -44,6 +44,7 @@ bool CAbi::articulateTransaction(CTransaction* p) const {
         string_q encoding = extract(p->input, 0, 10);
         string_q input = extract(p->input, 10);
         ((CAbi*)this)->loadAbiFromEtherscan(p->to);  // NOLINT
+#if 1
         for (auto interface : interfaces) {
             if (encoding % interface.encoding) {
                 p->articulatedTx = CFunction(interface);
@@ -52,6 +53,15 @@ bool CAbi::articulateTransaction(CTransaction* p) const {
                 EXIT_NOMSG8(ret1 || ret2);
             }
         }
+#else
+        CFunction f = ((CAbi*)this)->functions[encoding];
+        if (f.encoding == encoding) {
+            p->articulatedTx = CFunction(f);
+            bool ret1 = decodeRLP(p->articulatedTx.inputs, "", input);
+            bool ret2 = (hasTraces ? decodeRLP(p->articulatedTx.outputs, "", p->traces[0].result.output) : false);
+            EXIT_NOMSG8(ret1 || ret2);
+        }
+#endif
 
         if (!toPrintable(p->input, p->articulatedTx.message))
             p->articulatedTx.message = "";
@@ -139,18 +149,13 @@ bool CAbi::articulateLog(CLogEntry* p) const {
     // data params back into the copied array and from there into the event's inputs array. See the note below
     // from the Solidity documentation.
 
+#if 1
     CAbi* ncABI = (CAbi*)this;  // NOLINT
     for (size_t i = 0; i < ncABI->interfaces.size(); i++) {
         CFunction* funcPtr = &ncABI->interfaces[i];
-#if 0
-//            // TODO(tjayrush): ISSUE #1160
-//            string_q padded = p adRight(funcPtr->encoding, 66, '0');
-//            cout << padded << endl;
-//            cout << topic_2_Str(p->topics[0]) << endl;
-#else
-        string_q padded = funcPtr->encoding;
-#endif
-        if (topic_2_Str(p->topics[0]) % padded) {
+        string_q encoding = funcPtr->encoding;
+
+        if (topic_2_Str(p->topics[0]) % encoding) {
             // We found the topic we're looking for...work on a copy...
             p->articulatedLog = CFunction(*funcPtr);
 
@@ -186,35 +191,48 @@ bool CAbi::articulateLog(CLogEntry* p) const {
                 }
             }
             return (ret1 && ret2);
-
-#if 0
-                p->articulatedLog = CFunction(*intf);
-
-                // separate out the topic params from the data params
-                string_q topicStr; size_t which = 1, pos = 0;
-                CParameterArray topics, data;
-                for (auto in : p->articulatedLog.inputs) {
-                    if (in.indexed && which < p->topics.size()) {
-                        in.pos = pos++;
-                        topics.push_back(in);
-                        topicStr += topic_2_Str(p->topics[which++]);
-                    } else {
-                        in.pos = pos++;
-                        data.push_back(in);
-                    }
-                }
-                bool ret1 = decodeRLP(topics, "", topicStr);
-                bool ret2 = decodeRLP(data, "", p->data);
-                p->articulatedLog.inputs.clear();
-                for (auto a : topics)
-                    p->articulatedLog.inputs.push_back(a);
-                for (auto a : data)
-                    p->articulatedLog.inputs.push_back(a);
-                sort(p->articulatedLog.inputs.begin(), p->articulatedLog.inputs.end(), sortByPosition);
-                return (ret1 || ret2);
-#endif
         }
     }
+#else
+    string_q encoding = topic_2_Str(p->topics[0]);
+    CFunction f = ((CAbi*)this)->events[encoding];
+    if (!encoding.empty() && f.encoding == encoding) {
+        p->articulatedLog = CFunction(f);
+        
+        bool ret1 = true, ret2 = true;
+        size_t which = 1;
+        CParameterArray dataParams;
+        for (auto& param : p->articulatedLog.inputs) {
+            if (param.indexed && p->topics.size() > which) {
+                string_q top = substitute(topic_2_Str(p->topics[which++]), "0x", "");
+                if (param.type == "string" || param.type == "bytes") {
+                    param.value = parse_by32(top);
+                
+                } else if (contains(param.type, "[")) {
+                    param.value = "0x" + top;
+                
+                } else {
+                    CParameterArray tmp;
+                    tmp.push_back(param);
+                    if (!decodeRLP(tmp, param.type, "0x" + top))
+                        ret1 = false;
+                    else
+                        param = tmp[0];
+                }
+            } else {
+                dataParams.push_back(param);
+            }
+        }
+        ret2 = decodeRLP(dataParams, "", p->data);
+        for (auto d : dataParams) {
+            for (auto& param : p->articulatedLog.inputs) {
+                if (d.name == param.name)
+                    param.value = d.value;
+            }
+        }
+        return (ret1 && ret2);
+    }
+#endif
 
     return false;
 
@@ -244,6 +262,7 @@ bool CAbi::articulateTrace(CTrace* p) const {
     if (p->action.input.length() >= 10 || p->action.input == "0x") {
         string_q encoding = extract(p->action.input, 0, 10);
         string_q input = extract(p->action.input, 10);
+#if 1
         for (auto interface : interfaces) {
             if (encoding % interface.encoding) {
                 p->articulatedTrace = CFunction(interface);
@@ -252,6 +271,15 @@ bool CAbi::articulateTrace(CTrace* p) const {
                 EXIT_NOMSG8(ret1 || ret2);
             }
         }
+#else
+        CFunction f = ((CAbi*)this)->functions[encoding];
+        if (f.encoding == encoding) {
+            p->articulatedTrace = CFunction(f);
+            bool ret1 = decodeRLP(p->articulatedTrace.inputs, "", input);
+            bool ret2 = decodeRLP(p->articulatedTrace.outputs, "", p->result.output);
+            EXIT_NOMSG8(ret1 || ret2);
+        }
+#endif
     }
     EXIT_NOMSG8(false);
 }

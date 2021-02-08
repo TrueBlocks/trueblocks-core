@@ -319,7 +319,7 @@ const char* STR_DISPLAY_ABI =
 // EXISTING_CODE
 //-----------------------------------------------------------------------
 #undef LOG_TEST
-#define LOG_TEST(a,b)
+#define LOG_TEST(a, b)
 
 //-----------------------------------------------------------------------
 bool loadAbiFile(const string_q& path, void* data) {
@@ -354,7 +354,8 @@ bool CAbi::loadAbisFolderAndCache(const string_q& sourcePath, const string_q& bi
             if (archive.Lock(binPath, modeReadOnly, LOCK_NOWAIT)) {
                 archive >> *this;
                 archive.Release();
-                LOG_TEST("Loaded " + uint_2_Str(interfaces.size()) + " interfaces from", substitute(substitute(binPath, getCachePath(""), "$CACHE/"), configPath(""), "$CONFIG/"));
+                LOG_TEST("Loaded " + uint_2_Str(interfaces.size()) + " interfaces from",
+                         substitute(substitute(binPath, getCachePath(""), "$CACHE/"), configPath(""), "$CONFIG/"));
                 for (auto func : interfaces) {
                     interfaceMap[func.encoding] = true;
                     LOG_TEST("Inserting", func.type + "-" + func.signature);
@@ -364,7 +365,7 @@ bool CAbi::loadAbisFolderAndCache(const string_q& sourcePath, const string_q& bi
             }
         }
     }
-    
+
     LOG4("Freshening abi cache for path: ", sourcePath);
     if (!forEveryFileInFolder(sourcePath + "*", loadAbiFile, this))
         return false;
@@ -376,7 +377,8 @@ bool CAbi::loadAbisFolderAndCache(const string_q& sourcePath, const string_q& bi
     if (archive.Lock(binPath, modeWriteCreate, LOCK_NOWAIT)) {
         archive << *this;
         archive.Release();
-        LOG_TEST("Saved " + uint_2_Str(interfaces.size()) + " interfaces in", substitute(substitute(binPath, getCachePath(""), "$CACHE/"), configPath(""), "$CONFIG/"));
+        LOG_TEST("Saved " + uint_2_Str(interfaces.size()) + " interfaces in",
+                 substitute(substitute(binPath, getCachePath(""), "$CACHE/"), configPath(""), "$CONFIG/"));
         return true;
     }
 
@@ -404,7 +406,47 @@ bool CAbi::loadAbiFromAddress(const address_t& addr) {
         LOG_TEST("Local file copied to cache", "./" + addr + ".json");
         copyFile(localFile, fileName);
     }
+
+#if 1
     return loadAbiFromFile(fileName);
+#else
+    if (sourcesMap[fileName])
+        return true;
+
+    string_q binPath = substitute(fileName, ".json", ".bin");
+    string_q displayName = substitute(substitute(binPath, getCachePath(""), "$CACHE/"), configPath(""), "$CONFIG/");
+    if (fileExists(binPath) && fileLastModifyDate(binPath) > fileLastModifyDate(fileName)) {
+        CArchive archive(READING_ARCHIVE);
+        if (archive.Lock(binPath, modeReadOnly, LOCK_NOWAIT)) {
+            CAbi single;
+            archive >> single;
+            archive.Release();
+            LOG_TEST("Loaded " + uint_2_Str(interfaces.size()) + " interfaces from ", displayName);
+            for (auto func : single.interfaces)
+                addInterface(func);
+            sourcesMap[fileName] = true;
+            return true;
+        }
+        // fall through
+    }
+
+    CAbi single;
+    if (!single.loadAbiFromFile(fileName))
+        return false;
+
+    CArchive archive(WRITING_ARCHIVE);
+    if (archive.Lock(binPath, modeWriteCreate, LOCK_NOWAIT)) {
+        archive << single;
+        archive.Release();
+        LOG_TEST("Saved " + uint_2_Str(interfaces.size()) + " interfaces in ", displayName);
+        for (auto func : single.interfaces)
+            addInterface(func);
+        sourcesMap[fileName] = true;
+        return true;
+    }
+
+    return false;
+#endif
 }
 
 //---------------------------------------------------------------------------
@@ -413,7 +455,11 @@ bool CAbi::loadAbiFromFile(const string_q& fileName) {
         return true;
 
     if (!fileExists(fileName)) {
-        LOG_TEST("load""AbiFromFile", "Could not load file " + substitute(substitute(fileName, getCachePath(""), "$CACHE/"), configPath(""), "$CONFIG/"));
+        LOG_TEST(
+            "load"
+            "AbiFromFile",
+            "Could not load file " +
+                substitute(substitute(fileName, getCachePath(""), "$CACHE/"), configPath(""), "$CONFIG/"));
         return false;
     }
 
@@ -421,8 +467,10 @@ bool CAbi::loadAbiFromFile(const string_q& fileName) {
 
     string_q contents;
     asciiFileToString(fileName, contents);
-    LOG_TEST("load""AbiFromFile",
-             substitute(substitute(fileName, getCachePath(""), "$CACHE/"), configPath(""), "$CONFIG/"));
+    LOG_TEST(
+        "load"
+        "AbiFromFile",
+        substitute(substitute(fileName, getCachePath(""), "$CACHE/"), configPath(""), "$CONFIG/"));
     if (loadAbiFromString(contents)) {
         sourcesMap[fileName] = true;
         return true;
@@ -461,11 +509,11 @@ bool CAbi::loadAbiFromEtherscan(const address_t& addr, bool raw) {
     if (!isTestMode())
         LOG4("Reading ABI for address ", addr, " from ", (isTestMode() ? "--" : "EtherScan"), "\r");
     string_q url = substitute(substitute(STR_CONTRACT_API, "[{ADDRESS}]", addr), "[{KEY}]",
-                                  getApiKey("Etherscan",
-                                            "http:/"
-                                            "/api.etherscan.io/apis"));
+                              getApiKey("Etherscan",
+                                        "http:/"
+                                        "/api.etherscan.io/apis"));
     string_q fromES = urlToString(url);
-    
+
     // some of etherscan's data kind of sucks, so clean it
     replaceAll(fromES, "\\r", "\r");
     replaceAll(fromES, "\\n", "\n");
@@ -487,7 +535,7 @@ bool CAbi::loadAbiFromEtherscan(const address_t& addr, bool raw) {
         stringToAsciiFile(fileName, results);
         return loadAbiFromAddress(addr);
     }
-    
+
     if (contains(toLower(results), "source code not verified"))
         LOG4("Could not get the ABI data. Copy to ./", addr, ".json and re-run.");
     sourcesMap[addr] = true;
@@ -558,7 +606,7 @@ bool CAbi::loadAbiFromSolidity(const string_q& addr) {
     string_q solFile = addr + ".sol";
     string_q contents = asciiFileToString(solFile);
     LOG_TEST("sol_2_Abi", contents);
-    
+
     replaceAll(contents, "/*", string_q(1, COMMENT2));
     replaceAll(contents, "//", string_q(1, COMMENT1));
     replaceAll(contents, "*/", string_q(1, COMMENT_END2));
@@ -572,7 +620,8 @@ bool CAbi::loadAbiFromSolidity(const string_q& addr) {
         replaceAll(contents, rem, "");
     contents = removeComments(contents);
 
-    CStringArray psStrs = { "OUT", "IN", "IN_COMMENT1", "IN_COMMENT2", "IN_FUNCTION", "IN_EVENT", "IN_STRUCT", "IN_MODIFIER" };
+    CStringArray psStrs = {"OUT",         "IN",       "IN_COMMENT1", "IN_COMMENT2",
+                           "IN_FUNCTION", "IN_EVENT", "IN_STRUCT",   "IN_MODIFIER"};
     ostringstream os;
     ParseState state = OUT;
     // ParseState pre_state = state;
@@ -710,6 +759,33 @@ void CAbi::addInterface(const CFunction& func) {
     LOG_TEST("Inserting", func.type + "-" + func.signature);
     interfaces.push_back(func);
     interfaceMap[func.encoding] = true;
+    if (func.type == "event")
+        events[func.encoding] = interfaces[interfaces.size()-1];
+    else
+        functions[func.encoding] = interfaces[interfaces.size()-1];
+}
+
+//---------------------------------------------------------------------------
+size_t CAbi::nFunctions(void) const {
+    size_t cnt = 0;
+    for (auto i : interfaces)
+        if (i.type == "function")
+            cnt++;
+    return cnt;
+}
+
+//---------------------------------------------------------------------------
+size_t CAbi::nEvents(void) const {
+    size_t cnt = 0;
+    for (auto i : interfaces)
+        if (i.type == "event")
+            cnt++;
+    return cnt;
+}
+
+//---------------------------------------------------------------------------
+size_t CAbi::nOther(void) const {
+    return interfaces.size() - nFunctions() - nEvents();
 }
 
 //-----------------------------------------------------------------------

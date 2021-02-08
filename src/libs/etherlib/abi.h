@@ -27,6 +27,7 @@ class CTrace;
 #define ABI_TOKENS (1 << 2)
 #define ABI_STANDARDS (1 << 3)
 #define ABI_ALL (ABI_KNOWN | ABI_TOKENS | ABI_STANDARDS)
+typedef map<string, CFunction> CFunctionPtrMap;
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
@@ -48,6 +49,8 @@ class CAbi : public CBaseNode {
     // EXISTING_CODE
     CStringMap sourcesMap;
     CStringMap interfaceMap;
+    CFunctionPtrMap events;
+    CFunctionPtrMap functions;
 
     bool articulateTransaction(CTransaction* p) const;
     bool articulateLog(CLogEntry* l) const;
@@ -59,6 +62,12 @@ class CAbi : public CBaseNode {
     bool loadAbiFromSolidity(const string_q& addr);
 
     void addInterface(const CFunction& func);
+    size_t nInterfaces(void) const {
+        return interfaces.size();
+     }
+    size_t nFunctions(void) const;
+    size_t nEvents(void) const;
+    size_t nOther(void) const;
     // EXISTING_CODE
     bool operator==(const CAbi& it) const;
     bool operator!=(const CAbi& it) const {
