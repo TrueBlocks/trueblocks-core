@@ -80,7 +80,7 @@ int main(int argc, const char* argv[]) {
     if (!options.count && options.monitors.size() == 1) {
         options.getNamedAccount(options.monitors[0], options.monitors[0].address);
         HIDE_FIELD(CMonitor, "summaryStatement");
-        if (options.monitors[0].abi_spec.nInterfaces() == 0) {
+        if (options.abi_spec.nInterfaces() == 0) {
             HIDE_FIELD(CMonitor, "abi_spec");
         }
         os << ", \"accountedFor\": " << options.monitors[0] << endl;

@@ -115,7 +115,7 @@ bool CAbi::setValueByName(const string_q& fieldNameIn, const string_q& fieldValu
         CFunction obj;
         string_q str = fieldValue;
         while (obj.parseJson3(str)) {
-            addInterface(obj);
+            loadAbiAddInterface(obj);
             obj = CFunction();  // reset
         }
         return true;
@@ -321,7 +321,7 @@ const char* STR_DISPLAY_ABI =
 #undef LOG_TEST
 #define LOG_TEST(a, b)
 
-//-----------------------------------------------------------------------
+//---------------------------------------------------------------------------
 bool loadAbiFile(const string_q& path, void* data) {
     if (endsWith(path, '/')) {
         forEveryFileInFolder(path + "*", loadAbiFile, data);
@@ -342,8 +342,8 @@ bool loadAbiString(const string_q& jsonStr, CAbi& abi) {
 
 //---------------------------------------------------------------------------
 bool CAbi::loadAbisFolderAndCache(const string_q& sourcePath, const string_q& binPath) {
-    if (sourcesMap[sourcePath])
-        return true;
+    // if (sourcesMap[sourcePath])
+    //    return true;
 
     if (fileExists(binPath)) {
         // If any file is newer, don't use binary cache
@@ -360,7 +360,7 @@ bool CAbi::loadAbisFolderAndCache(const string_q& sourcePath, const string_q& bi
                     interfaceMap[func.encoding] = true;
                     LOG_TEST("Inserting", func.type + "-" + func.signature);
                 }
-                sourcesMap[sourcePath] = true;
+                // sourcesMap[sourcePath] = true;
                 return true;
             }
         }
@@ -371,7 +371,7 @@ bool CAbi::loadAbisFolderAndCache(const string_q& sourcePath, const string_q& bi
         return false;
 
     sort(interfaces.begin(), interfaces.end(), sortByFuncName);
-    sourcesMap[sourcePath] = true;
+    // sourcesMap[sourcePath] = true;
 
     CArchive archive(WRITING_ARCHIVE);
     if (archive.Lock(binPath, modeWriteCreate, LOCK_NOWAIT)) {
@@ -407,52 +407,13 @@ bool CAbi::loadAbiFromAddress(const address_t& addr) {
         copyFile(localFile, fileName);
     }
 
-#if 1
     return loadAbiFromFile(fileName);
-#else
-    if (sourcesMap[fileName])
-        return true;
-
-    string_q binPath = substitute(fileName, ".json", ".bin");
-    string_q displayName = substitute(substitute(binPath, getCachePath(""), "$CACHE/"), configPath(""), "$CONFIG/");
-    if (fileExists(binPath) && fileLastModifyDate(binPath) > fileLastModifyDate(fileName)) {
-        CArchive archive(READING_ARCHIVE);
-        if (archive.Lock(binPath, modeReadOnly, LOCK_NOWAIT)) {
-            CAbi single;
-            archive >> single;
-            archive.Release();
-            LOG_TEST("Loaded " + uint_2_Str(interfaces.size()) + " interfaces from ", displayName);
-            for (auto func : single.interfaces)
-                addInterface(func);
-            sourcesMap[fileName] = true;
-            return true;
-        }
-        // fall through
-    }
-
-    CAbi single;
-    if (!single.loadAbiFromFile(fileName))
-        return false;
-
-    CArchive archive(WRITING_ARCHIVE);
-    if (archive.Lock(binPath, modeWriteCreate, LOCK_NOWAIT)) {
-        archive << single;
-        archive.Release();
-        LOG_TEST("Saved " + uint_2_Str(interfaces.size()) + " interfaces in ", displayName);
-        for (auto func : single.interfaces)
-            addInterface(func);
-        sourcesMap[fileName] = true;
-        return true;
-    }
-
-    return false;
-#endif
 }
 
 //---------------------------------------------------------------------------
 bool CAbi::loadAbiFromFile(const string_q& fileName) {
-    if (sourcesMap[fileName])
-        return true;
+    // if (sourcesMap[fileName])
+    //    return true;
 
     if (!fileExists(fileName)) {
         LOG_TEST(
@@ -463,8 +424,6 @@ bool CAbi::loadAbiFromFile(const string_q& fileName) {
         return false;
     }
 
-    // TODO(tjayrush): This could be cached to speed things up
-
     string_q contents;
     asciiFileToString(fileName, contents);
     LOG_TEST(
@@ -472,7 +431,8 @@ bool CAbi::loadAbiFromFile(const string_q& fileName) {
         "AbiFromFile",
         substitute(substitute(fileName, getCachePath(""), "$CACHE/"), configPath(""), "$CONFIG/"));
     if (loadAbiFromString(contents)) {
-        sourcesMap[fileName] = true;
+        sort(interfaces.begin(), interfaces.end(), sortByFuncName);
+        // sourcesMap[fileName] = true;
         return true;
     }
     return false;
@@ -483,7 +443,7 @@ bool CAbi::loadAbiFromString(const string_q& in) {
     string_q contents = in;
     CFunction func;
     while (func.parseJson3(contents)) {
-        addInterface(func);
+        loadAbiAddInterface(func);
         func = CFunction();  // reset
     }
     sort(interfaces.begin(), interfaces.end(), sortByFuncName);
@@ -492,17 +452,22 @@ bool CAbi::loadAbiFromString(const string_q& in) {
 
 //-----------------------------------------------------------------------
 bool CAbi::loadAbiFromEtherscan(const address_t& addr, bool raw) {
-    if (!raw && sourcesMap[addr])
+    if (isZeroAddr(addr))
         return true;
+
+    if (!raw) {
+        // if (sourcesMap[addr])
+        //     return true;
+
+        if (loadAbiFromAddress(addr))
+            return true;
+    }
 
     // If this isn't a smart contract, don't bother
     if (!isContractAt(addr, getLatestBlock_client())) {
-        sourcesMap[addr] = true;
+        // sourcesMap[addr] = true;
         return true;
     }
-
-    if (!raw && loadAbiFromAddress(addr))
-        return true;
 
     const char* STR_CONTRACT_API =
         "http://api.etherscan.io/api?module=contract&action=getabi&address=[{ADDRESS}]&apikey=[{KEY}]";
@@ -538,7 +503,7 @@ bool CAbi::loadAbiFromEtherscan(const address_t& addr, bool raw) {
 
     if (contains(toLower(results), "source code not verified"))
         LOG4("Could not get the ABI data. Copy to ./", addr, ".json and re-run.");
-    sourcesMap[addr] = true;
+    // sourcesMap[addr] = true;
     return false;
 }
 
@@ -737,7 +702,7 @@ bool CAbi::loadAbiFromSolidity(const string_q& addr) {
             if (contains(line, "function ") || contains(line, "event ")) {
                 CFunction func;
                 func.fromDefinition(line);
-                addInterface(func);
+                loadAbiAddInterface(func);
             }
         }
     }
@@ -746,7 +711,7 @@ bool CAbi::loadAbiFromSolidity(const string_q& addr) {
 }
 
 //-----------------------------------------------------------------------
-void CAbi::addInterface(const CFunction& func) {
+void CAbi::loadAbiAddInterface(const CFunction& func) {
     if (func.name.empty() && func.type != "constructor")
         return;
 
@@ -759,10 +724,6 @@ void CAbi::addInterface(const CFunction& func) {
     LOG_TEST("Inserting", func.type + "-" + func.signature);
     interfaces.push_back(func);
     interfaceMap[func.encoding] = true;
-    if (func.type == "event")
-        events[func.encoding] = interfaces[interfaces.size()-1];
-    else
-        functions[func.encoding] = interfaces[interfaces.size()-1];
 }
 
 //---------------------------------------------------------------------------

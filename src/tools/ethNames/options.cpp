@@ -127,7 +127,7 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     if (clean) {
-        standards.abi_spec.loadAbisFromKnown(ABI_TOKENS);
+        abi_spec.loadAbisFromKnown(ABI_TOKENS);
         return handle_clean();
     }
 
@@ -137,7 +137,7 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     if (isCrudCommand()) {
-        standards.abi_spec.loadAbisFromKnown(ABI_TOKENS);
+        abi_spec.loadAbisFromKnown(ABI_TOKENS);
         if (!processEditCommand(terms, to_custom))
             return false;
     }

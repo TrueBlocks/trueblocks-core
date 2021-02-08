@@ -29,7 +29,6 @@ typedef enum { FM_PRODUCTION, FM_STAGING } freshen_e;
 //--------------------------------------------------------------------------
 class CMonitor : public CAccountName {
   public:
-    CAbi abi_spec;
     CReconciliation summaryStatement;
     CEthStateArray stateHistory;
     wei_t curBalance;
@@ -150,7 +149,6 @@ inline void CMonitor::clear(void) {
 inline void CMonitor::initialize(void) {
     CAccountName::initialize();
 
-    abi_spec = CAbi();
     summaryStatement = CReconciliation();
     stateHistory.clear();
     curBalance = 0;
@@ -172,7 +170,6 @@ inline void CMonitor::duplicate(const CMonitor& mo) {
     clear();
     CAccountName::duplicate(mo);
 
-    abi_spec = mo.abi_spec;
     summaryStatement = mo.summaryStatement;
     stateHistory = mo.stateHistory;
     curBalance = mo.curBalance;
@@ -235,8 +232,9 @@ typedef map<address_t, CMonitor> CMonitorMap;  // NOLINT
 extern void establishMonitorFolders(void);
 extern void cleanMonitorStage(void);
 extern const char* STR_DISPLAY_TOKENBALANCERECORD2;
-extern string_q getTokenBalanceOf(const CMonitor& token, const address_t& holder, blknum_t blockNum);
-extern string_q getTokenState(const string_q& what, const CMonitor& token, blknum_t blockNum);
+extern string_q getTokenBalanceOf(const CAbi& abi_spec, const CMonitor& token, const address_t& holder,
+                                  blknum_t blockNum);
+extern string_q getTokenState(const string_q& what, const CAbi& abi_spec, const CMonitor& token, blknum_t blockNum);
 extern bool freshen_internal(CMonitorArray& list, const string_q& freshen_flags);
 // EXISTING_CODE
 }  // namespace qblocks

@@ -42,6 +42,7 @@ class COptions : public COptionsBase {
     blknum_t latestBlock;
 
     CMonitor standards;
+    CAbi abi_spec;
     CAccountNameMap items;
     CStringArray searches;
     string_q searchFields;

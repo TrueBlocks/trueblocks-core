@@ -109,7 +109,7 @@ typedef bool (*BLOCKVISITFUNC)(CBlock& block, void* data);
 typedef bool (*TRANSVISITFUNC)(CTransaction& trans, void* data);
 typedef bool (*LOGVISITFUNC)(CLogEntry& log, void* data);
 typedef bool (*TRACEVISITFUNC)(CTrace& trace, void* data);
-typedef bool (*ABIVISITFUNC)(CAbi& trace, void* data);
+typedef bool (*ABIVISITFUNC)(CAbi& abi_spec, void* data);
 
 //-------------------------------------------------------------------------
 // forEvery functions
@@ -178,7 +178,7 @@ extern bool excludeTrace(const CTransaction* trans, size_t maxTraces);
 
 extern wei_t getBalanceAt(const address_t& addr, blknum_t blockNum);
 extern bool doEthCall(const address_t& to, const string_q& encoding, const string_q& bytes, blknum_t blockNum,
-                      const CAbi& abi, CFunction& output);
+                      const CAbi& abi_spec, CFunction& output);
 
 }  // namespace qblocks
 

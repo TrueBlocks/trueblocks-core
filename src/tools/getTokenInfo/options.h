@@ -33,6 +33,7 @@ class COptions : public CHistoryOptions {
 
     CAddressArray tokens;
     CAddressArray holders;
+    CAbi abi_spec;
 
     CTokenBalanceRecord curToken;
     CMonitor standards;

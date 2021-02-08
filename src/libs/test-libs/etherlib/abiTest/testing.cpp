@@ -103,21 +103,21 @@ bool test_generation(void) {
     CParameter::registerClass();
 
     {
-        CAbi abi;
+        CAbi abi_spec;
         cout << "Testing of already sorted JSON" << endl;
-        loadAbiString(getAlreadySortedJson(), abi);
-        cout << abi.Format() << endl << endl;
+        loadAbiString(getAlreadySortedJson(), abi_spec);
+        cout << abi_spec.Format() << endl << endl;
         sort(abi.interfaces.begin(), abi.interfaces.end());
         cout << abi.Format() << endl << endl;
     }
 
     {
-        CAbi abi;
+        CAbi abi_spec;
         cout << "Testing of not sorted JSON" << endl;
-        loadAbiString(getNotSortedJson(), abi);
-        cout << abi.Format() << endl << endl;
-        sort(abi.interfaces.begin(), abi.interfaces.end());
-        cout << abi.Format() << endl << endl;
+        loadAbiString(getNotSortedJson(), abi_spec);
+        cout << abi_spec.Format() << endl << endl;
+        sort(abi_spec.interfaces.begin(), abi_spec.interfaces.end());
+        cout << abi_spec.Format() << endl << endl;
     }
 
     return true;
@@ -130,15 +130,15 @@ bool test_old_bug(void) {
     CParameter::registerClass();
     manageFields("CParameter:is_flags,is_enabled", false);
 
-    CAbi abi;
+    CAbi abi_spec;
     cout << string_q(120, '-') << "\nABI of test1.json" << endl << string_q(120, '-') << endl;
-    loadAbiFile("./test1.json", &abi);
-    cout << abi << endl;
-    abi = CAbi();
+    loadAbiFile("./test1.json", &abi_spec);
+    cout << abi_spec << endl;
+    abi_spec = CAbi();
 
     cout << string_q(120, '-') << "\nABI of test2.json" << endl << string_q(120, '-') << endl;
-    loadAbiFile("./test2.json", &abi);
-    cout << abi << endl;
+    loadAbiFile("./test2.json", &abi_spec);
+    cout << abi_spec << endl;
     return true;
 }
 

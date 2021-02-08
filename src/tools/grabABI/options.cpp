@@ -31,7 +31,6 @@ static const COption params[] = {
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
-extern void removeDuplicateEncodings(CAbiArray& abi_array);
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
     ENTER("parseArguments: " + command);
@@ -194,8 +193,8 @@ COptions::~COptions(void) {
 
 //-----------------------------------------------------------------------
 void COptions::convertFromSol(const address_t& addr) {
-    CAbi abi;
-    abi.loadAbiFromSolidity(addr);
+    CAbi abi_spec;
+    abi_spec.loadAbiFromSolidity(addr);
     GETRUNTIME_CLASS(CFunction)->sortFieldList();
     GETRUNTIME_CLASS(CParameter)->sortFieldList();
     if (isTestMode()) {
@@ -211,7 +210,7 @@ void COptions::convertFromSol(const address_t& addr) {
     expContext().spcs = 2;
 
     ostringstream os;
-    os << abi;
+    os << abi_spec;
 
     string_q fileName = addr + ".json";
     ::remove(fileName.c_str());

@@ -60,11 +60,10 @@ const vector<marker_t> bals = {{TOK_BALANCE, "balanceOf"}};
 bool processPair(uint64_t blockNum, void* data) {
     COptions* opt = reinterpret_cast<COptions*>(data);
     opt->curToken.blockNumber = blockNum;
-    opt->curToken.abi_spec = opt->standards.abi_spec;
     if ((opt->modeBits & TOK_TOTALSUPPLY) || !opt->getNamedAccount(opt->curToken, opt->curToken.address)) {
         for (auto marker : base) {
             if (opt->modeBits & marker.bits) {
-                string_q value = getTokenState(marker.field, opt->curToken, blockNum);
+                string_q value = getTokenState(marker.field, opt->abi_spec, opt->curToken, blockNum);
                 opt->curToken.setValueByName(marker.field, value);
                 if ((marker.field == "name" || marker.field == "symbol") && !value.empty())
                     opt->curToken.is_erc20 = true;
@@ -76,7 +75,7 @@ bool processPair(uint64_t blockNum, void* data) {
 
     static bool first = true;
     if (opt->modeBits & TOK_BALANCE) {
-        string_q val = getTokenBalanceOf(opt->curToken, opt->curToken.holder, blockNum);
+        string_q val = getTokenBalanceOf(opt->abi_spec, opt->curToken, opt->curToken.holder, blockNum);
         if (val == "0" && opt->no_zero) {
             LOG_INFO("Skipping: ", opt->curToken.holder, " at ", blockNum, "\r");
             return !shouldQuit();

@@ -204,7 +204,7 @@ bool COptions::parseArguments(string_q& command) {
     if (tokens.size() == 0)
         return usage("You must provide at least one valid token address. Quitting...");
 
-    standards.abi_spec.loadAbisFromKnown(ABI_TOKENS);
+    abi_spec.loadAbisFromKnown(ABI_TOKENS);
 
     if ((!isTestMode() && !requestsHistory()) || nodeHasBalances(true))
         return true;

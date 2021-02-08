@@ -82,11 +82,11 @@ string_q getFileContentsByHash(const hash_t& hash) {  // also unzips if the file
 
 //----------------------------------------------------------------
 hash_t getCurrentManifest(void) {
-    CAbi abi;
-    loadAbiFile(configPath("abis/known-000/unchained.json"), &abi);
+    CAbi abi_spec;
+    loadAbiFile(configPath("abis/known-000/unchained.json"), &abi_spec);
     address_t contractAddr = unchainedIndexAddr;
     CFunction result;
-    if (doEthCall(contractAddr, manifestHashEncoding, "", getLatestBlock_client(), abi, result))
+    if (doEthCall(contractAddr, manifestHashEncoding, "", getLatestBlock_client(), abi_spec, result))
         return result.outputs[0].value;
     return "";
 }

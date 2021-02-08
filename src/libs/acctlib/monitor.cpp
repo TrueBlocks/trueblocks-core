@@ -73,13 +73,6 @@ string_q CMonitor::getValueByName(const string_q& fieldName) const {
 
     // Return field values
     switch (tolower(fieldName[0])) {
-        case 'a':
-            if (fieldName % "abi_spec") {
-                if (abi_spec == CAbi())
-                    return "{}";
-                return abi_spec.Format();
-            }
-            break;
         case 'c':
             if (fieldName % "curBalance") {
                 return wei_2_Str(curBalance);
@@ -123,14 +116,6 @@ string_q CMonitor::getValueByName(const string_q& fieldName) const {
     // EXISTING_CODE
 
     string_q s;
-    s = toUpper(string_q("abi_spec")) + "::";
-    if (contains(fieldName, s)) {
-        string_q f = fieldName;
-        replaceAll(f, s, "");
-        f = abi_spec.getValueByName(f);
-        return f;
-    }
-
     s = toUpper(string_q("summaryStatement")) + "::";
     if (contains(fieldName, s)) {
         string_q f = fieldName;
@@ -163,11 +148,6 @@ bool CMonitor::setValueByName(const string_q& fieldNameIn, const string_q& field
         return true;
 
     switch (tolower(fieldName[0])) {
-        case 'a':
-            if (fieldName % "abi_spec") {
-                return abi_spec.parseJson3(fieldValue);
-            }
-            break;
         case 'c':
             if (fieldName % "curBalance") {
                 curBalance = str_2_Wei(fieldValue);
@@ -225,7 +205,6 @@ bool CMonitor::Serialize(CArchive& archive) {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive >> abi_spec;
     archive >> summaryStatement;
     archive >> stateHistory;
     archive >> curBalance;
@@ -242,7 +221,6 @@ bool CMonitor::SerializeC(CArchive& archive) const {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive << abi_spec;
     archive << summaryStatement;
     archive << stateHistory;
     archive << curBalance;
@@ -286,7 +264,6 @@ void CMonitor::registerClass(void) {
     ADD_FIELD(CMonitor, "deleted", T_BOOL, ++fieldNum);
     ADD_FIELD(CMonitor, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CMonitor, "cname", T_TEXT, ++fieldNum);
-    ADD_OBJECT(CMonitor, "abi_spec", T_OBJECT | TS_OMITEMPTY, ++fieldNum, GETRUNTIME_CLASS(CAbi));
     ADD_OBJECT(CMonitor, "summaryStatement", T_OBJECT | TS_OMITEMPTY, ++fieldNum, GETRUNTIME_CLASS(CReconciliation));
     ADD_FIELD(CMonitor, "stateHistory", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CMonitor, "curBalance", T_WEI, ++fieldNum);
@@ -361,9 +338,6 @@ ostream& operator<<(ostream& os, const CMonitor& it) {
 
 //---------------------------------------------------------------------------
 const CBaseNode* CMonitor::getObjectAt(const string_q& fieldName, size_t index) const {
-    if (fieldName % "abi_spec")
-        return &abi_spec;
-
     if (fieldName % "summaryStatement")
         return &summaryStatement;
 
@@ -699,17 +673,17 @@ const char* STR_DISPLAY_TOKENBALANCERECORD2 =
     "[{BALANCE}]";
 
 //-------------------------------------------------------------------------
-string_q getTokenBalanceOf(const CMonitor& token, const address_t& holder, blknum_t blockNum) {
+string_q getTokenBalanceOf(const CAbi& abi_spec, const CMonitor& token, const address_t& holder, blknum_t blockNum) {
     map<string_q, string_q> sigMap;
     sigMap["balanceOf"] = "0x70a08231";
     CFunction result;
-    if (doEthCall(token.address, sigMap["balanceOf"], padLeft(extract(holder, 2), 64, '0'), blockNum, token.abi_spec, result))
+    if (doEthCall(token.address, sigMap["balanceOf"], padLeft(extract(holder, 2), 64, '0'), blockNum, abi_spec, result))
         return result.outputs[0].value;
     return "";
 }
 
 //-------------------------------------------------------------------------
-string_q getTokenState(const string_q& what, const CMonitor& token, blknum_t blockNum) {
+string_q getTokenState(const string_q& what, const CAbi& abi_spec, const CMonitor& token, blknum_t blockNum) {
     map<string_q, string_q> sigMap;
     sigMap["totalSupply"] = "0x18160ddd";
     sigMap["decimals"] = "0x313ce567";
@@ -720,17 +694,17 @@ string_q getTokenState(const string_q& what, const CMonitor& token, blknum_t blo
     }
 
     CFunction result;
-    if (!doEthCall(token.address, sigMap[what], "", blockNum, token.abi_spec, result)) {
+    if (!doEthCall(token.address, sigMap[what], "", blockNum, abi_spec, result)) {
         // This may be a proxy contract, so we can try to get its implementation and call back in
         CMonitor proxy = token;
         // sigMap["implementation"] = "0x5c60da1b";
         CFunction proxyResult;
-        if (doEthCall(token.address, "0x5c60da1b", "", blockNum, token.abi_spec, proxyResult)) {
+        if (doEthCall(token.address, "0x5c60da1b", "", blockNum, abi_spec, proxyResult)) {
             address_t addr = proxyResult.outputs[0].value;
             if (isZeroAddr(addr))
                 return "";
             proxy.address = addr;
-            if (doEthCall(proxy.address, sigMap[what], "", blockNum, token.abi_spec, result))
+            if (doEthCall(proxy.address, sigMap[what], "", blockNum, abi_spec, result))
                 return result.outputs[0].value;
             return "";
         }
