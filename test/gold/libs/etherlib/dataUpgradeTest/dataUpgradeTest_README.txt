@@ -1,7 +1,7 @@
 dataUpgradeTest argc: 1 
 dataUpgradeTest 
 
-  Not enough arguments presented.
+  Not enough arguments presented. Quitting...
 
   Usage:    dataUpgradeTest [-v|-h] mode  
   Purpose:  Test upgrading binary data to new format.

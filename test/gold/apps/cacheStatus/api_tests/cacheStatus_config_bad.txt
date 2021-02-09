@@ -1,5 +1,5 @@
 {
   "errors": [
-    "cacheStatus - Invalid option 'config' for 'modes'. One or more of [index|monitors|collections|names|abis|caches|some|all] required. Quitting..."
+    "cacheStatus - Invalid option 'config' for 'modes'. One or more of [index|monitors|collections|names|abis|caches|some|all] required."
   ]
 }

@@ -36,7 +36,7 @@ bool build_cap_table(COptions& options, int argc, const char* argv[]) {
     // We need to be able to open the cache
     CArchive txCache(READING_ARCHIVE);
     if (!txCache.Lock(options.cacheFile, modeReadOnly, LOCK_NOWAIT)) {
-        cout << "Could not open file: " << options.cacheFile << ". Quitting...";
+        cout << "Could not open file: " << options.cacheFile << ".";
         return EXIT_FAILURE;
     }
 

@@ -452,13 +452,8 @@ size_t quitCount(size_t s) {
 
 //-----------------------------------------------------------------------
 bool shouldQuit(void) {
-    if (quitCount() == 0) {
-        //            eLogger->setEndline('\r');
-        //            LOG_INFO("\t\t\t\t", COptionsBase::g_progName, ": shouldQuit: ", sectionLocks, ": ", quitCount());
-        //            eLogger->setEndline('\n');
+    if (quitCount() == 0)
         return false;
-    }
-    //        LOG_INFO(bGreen, COptionsBase::g_progName, ": shouldQuit - Quitting: ", quitCount(), cOff);
     cout << "\nFinishing work...\n";
     cleanFileLocks();
     cout.flush();

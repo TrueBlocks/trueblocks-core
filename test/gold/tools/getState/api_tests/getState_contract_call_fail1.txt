@@ -1,5 +1,5 @@
 {
   "errors": [
-    "getState - The first part of the call data to --call must be an address. Quitting..."
+    "getState - The first part of the call data to --call must be an address."
   ]
 }

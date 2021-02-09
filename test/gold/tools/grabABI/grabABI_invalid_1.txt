@@ -1,7 +1,7 @@
 grabABI argc: 2 [1:0x00001] 
 grabABI 0x00001 
 
-  Invalid address '0x00001'. Length (7) is not equal to 40 characters (20 bytes).
+  Invalid address '0x00001'. Length (7) is not equal to 40 characters (20 bytes). Quitting...
 
   Usage:    grabABI [-c|-k|-f|-v|-h] <address> [address...]  
   Purpose:  Fetches the ABI for a smart contract.

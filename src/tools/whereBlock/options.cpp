@@ -63,7 +63,7 @@ bool COptions::parseArguments(string_q& command) {
 
     // Data verifiction
     if (!blocks.hasBlocks())
-        return usage("You must enter a valid block number. Quitting...");
+        return usage("You must enter a valid block number.");
 
     // Display formatting
     configureDisplay("whereBlock", "CCacheEntry", STR_DISPLAY_WHERE);

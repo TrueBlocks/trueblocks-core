@@ -168,7 +168,7 @@ bool COptions::parseArguments(string_q& command) {
 
     if (contains(tool_flags, "help")) {
         if (cmdMap[mode].empty())
-            return usage("Incorrect mode: " + mode + ". Quitting...");
+            return usage("Incorrect mode: " + mode + ".");
         ostringstream cmd;
         cmd << cmdMap[mode] << " --help";
         if (verbose)

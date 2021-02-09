@@ -497,7 +497,7 @@ const char* STR_ENUMLIST_PROCESSOR =
 //---------------------------------------------------------------------------------------------------
 const char* STR_ENUM_PROCESSOR =
     "            if (![{COMMAND}].empty())\n"
-    "                return usage(\"Please specify only one [{COMMAND}]. Quitting...\");\n"
+    "                return usage(\"Please specify only one [{COMMAND}].\");\n"
     "            if (!confirmEnum(\"[{COMMAND}]\", [{COMMAND}], arg))\n"
     "                return false;\n";
 

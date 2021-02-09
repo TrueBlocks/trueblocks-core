@@ -82,7 +82,7 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     if (skip != NOPOS && !skip)
-        return usage("--skip value must be larger than zero. Quitting...");
+        return usage("--skip value must be larger than zero.");
 
     blknum_t latest = getLatestBlock_client();
     for (auto item : block_list) {

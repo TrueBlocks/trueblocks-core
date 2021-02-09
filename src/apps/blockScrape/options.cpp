@@ -85,7 +85,7 @@ bool COptions::parseArguments(string_q& command) {
 
         } else {
             if (!mode.empty())
-                return usage("Please specify only one mode. Quitting...");
+                return usage("Please specify only one mode.");
             if (!confirmEnum("mode", mode, arg))
                 return false;
 
@@ -107,7 +107,7 @@ bool COptions::parseArguments(string_q& command) {
         mode = "run";
 
     if (tool.size() > 1)
-        return usage("You must specify only one of none, index, monitors, both. Quitting...");
+        return usage("You must specify only one of none, index, monitors, both.");
     if (tool.empty())
         tool.push_back("index");
     if (tool[0] == "none")
@@ -127,11 +127,10 @@ bool COptions::parseArguments(string_q& command) {
     if (hasPinCmd) {
         if (!isTestMode() && !hasPinataKeys()) {
             return usage(
-                "In order to use the pin options, you must enter a Pinata key in ~/.quickBlocks/blockScrape.toml. "
-                "Quitting...");
+                "In order to use the pin options, you must enter a Pinata key in ~/.quickBlocks/blockScrape.toml.");
 
         } else if (publish && !pin) {
-            return usage("The --publish option is only available with the --pin option. Quitting...");
+            return usage("The --publish option is only available with the --pin option.");
         }
     }
 
@@ -205,11 +204,11 @@ bool COptions::parseArguments(string_q& command) {
     if (needsParity && !isParity()) {
         return usage(
             "This tool requires Parity. Add [requires]\\nparity=false to ~/.quickBlocks/blockScrape.toml turn this "
-            "test off. Quitting...");
+            "test off.");
     }
 
     if (!isTracingNode()) {
-        string_q errMsg = "Tracing is required for this program to work properly. Quitting...";
+        string_q errMsg = "Tracing is required for this program to work properly.";
         if (isDockerMode())
             errMsg += " If you're running docker, enable remote RPC endpoints (see your node's help).";
         return usage(errMsg);
@@ -217,11 +216,11 @@ bool COptions::parseArguments(string_q& command) {
 
     bool needsBalances = config->getConfigBool("requires", "balances", false);
     if (needsBalances && !nodeHasBalances(true)) {
-        return usage("This tool requires an --archive node with historical balances. Quitting...");
+        return usage("This tool requires an --archive node with historical balances.");
     }
 
     if (amIRunning("blockScrape")) {
-        LOG_WARN("The blockScrape app is already running. Quitting...");
+        LOG_WARN("The blockScrape app is already running.");
         return false;
     }
 

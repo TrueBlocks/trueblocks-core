@@ -252,12 +252,12 @@ COptions::COptions(void) : classFile("") {
 
     // BEG_ERROR_MSG
     errStrs[ERR_NOERROR] = "No error";
-    errStrs[ERR_CLASSDEFNOTEXIST] = "./classDefinitions folder does not exist. Quitting...";
-    errStrs[ERR_CONFIGMISSING] = "[{CONFIG_FOLDER}]makeClass/ folder does not exist. Quitting...";
-    errStrs[ERR_EMPTYJSFILE] = "Cannot export javscript for an empty class. Quitting...";
-    errStrs[ERR_CHOOSEONE] = "Please chose exactly one of --run, --list, or --edit. Quitting...";
-    errStrs[ERR_NOFILTERMATCH] = "No definitions found that matched the filter: [{FILTER}]. Quitting...";
-    errStrs[ERR_NEEDONECLASS] = "Please specify at least one className. Quitting...";
+    errStrs[ERR_CLASSDEFNOTEXIST] = "./classDefinitions folder does not exist.";
+    errStrs[ERR_CONFIGMISSING] = "[{CONFIG_FOLDER}]makeClass/ folder does not exist.";
+    errStrs[ERR_EMPTYJSFILE] = "Cannot export javscript for an empty class.";
+    errStrs[ERR_CHOOSEONE] = "Please chose exactly one of --run, --list, or --edit.";
+    errStrs[ERR_NOFILTERMATCH] = "No definitions found that matched the filter: [{FILTER}].";
+    errStrs[ERR_NEEDONECLASS] = "Please specify at least one className.";
     // END_ERROR_MSG
 
     updateTemplates();

@@ -323,7 +323,7 @@ string_q wei_2_Dollars(timestamp_t ts, biguint_t weiIn) {
         string_q message;
         CPriceSource source(STR_PRICE_URL, "USDT_ETH", parsePoloniex);
         if (!loadPriceData(source, quotes, false, message, 1)) {
-            cerr << "Cannot load price data. Quitting.\n";
+            cerr << "Cannot load price data. Quitting..." << endl;
             quickQuitHandler(EXIT_FAILURE);
         }
     }

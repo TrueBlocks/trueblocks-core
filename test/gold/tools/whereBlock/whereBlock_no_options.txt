@@ -1,7 +1,7 @@
 whereBlock argc: 1 
 whereBlock 
 
-  Not enough arguments presented.
+  Not enough arguments presented. Quitting...
 
   Usage:    whereBlock [-v|-h] <block> [block...]  
   Purpose:  Reports in which cache (if any) a block is found.

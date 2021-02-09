@@ -1,5 +1,5 @@
 {
   "errors": [
-    "getTokenInfo - Address '0xd26114cd6ee289accf82350c8d84870000000000' is not a token contract. You must provide at least one valid token address. Quitting..."
+    "getTokenInfo - Address '0xd26114cd6ee289accf82350c8d84870000000000' is not a token contract. You must provide at least one valid token address."
   ]
 }

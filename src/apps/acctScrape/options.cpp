@@ -100,7 +100,7 @@ bool COptions::parseArguments(string_q& command) {
         visitTypes |= VIS_STAGING;
     if (unripe) {
         if (!(visitTypes & VIS_STAGING))
-            EXIT_USAGE("You must also specify --staging when using --unripe. Quitting...");
+            EXIT_USAGE("You must also specify --staging when using --unripe.");
         visitTypes |= VIS_UNRIPE;
     }
 
@@ -109,7 +109,7 @@ bool COptions::parseArguments(string_q& command) {
 
     // We need at least one address to scrape...
     if (addrs.size() == 0)
-        EXIT_USAGE("You must provide at least one Ethereum address. Quitting...");
+        EXIT_USAGE("You must provide at least one Ethereum address.");
 
     // Accumulate the addresses into the monitors list and decide where we should start
     for (auto addr : addrs) {

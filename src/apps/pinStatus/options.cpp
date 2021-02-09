@@ -60,7 +60,7 @@ bool COptions::parseArguments(string_q& command) {
 
         } else {
             if (!mode.empty())
-                return usage("Please specify only one mode. Quitting...");
+                return usage("Please specify only one mode.");
             if (!confirmEnum("mode", mode, arg))
                 return false;
 
@@ -72,7 +72,7 @@ bool COptions::parseArguments(string_q& command) {
         expContext().exportFmt = JSON1;
 
     if (!getPinataKeys(lic))
-        return usage("You need a pinata license to proceed. Quitting...");
+        return usage("You need a pinata license to proceed.");
 
     provider = getGlobalConfig()->getConfigStr("settings", "rpcProvider", "http://localhost:8545");
 

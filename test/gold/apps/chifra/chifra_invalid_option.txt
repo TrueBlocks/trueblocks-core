@@ -1,7 +1,7 @@
 chifra argc: 2 [1:not_a_mode] 
 chifra not_a_mode 
 
-  Please specify which command to run. 'chifra -v' for more information...
+  Please specify which command to run. 'chifra -v' for more information... Quitting...
 
   Usage:    chifra [-v|-h] commands  
   Purpose:  Main TrueBlocks command line controls.

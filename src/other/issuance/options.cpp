@@ -78,7 +78,7 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     if (startBlock >= endBlock || endBlock > getLatestBlock_client())
-        return usage("Invalid --start or --end. Quitting...");
+        return usage("Invalid --start or --end.");
 
     if (thing) {
         check_uncles();
@@ -86,7 +86,7 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     if (!by_date.empty() && !by_block.empty())
-        return usage("Please choose either --by_date or --by_block, not both. Quitting...");
+        return usage("Please choose either --by_date or --by_block, not both.");
 
     if (!by_date.empty() || !by_block.empty()) {
         string_q by_what = by_date + by_block;

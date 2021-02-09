@@ -1,7 +1,7 @@
 getReceipt argc: 2 [1:0x0012] 
 getReceipt 0x0012 
 
-  The argument '0x0012' is not properly formatted. Is it the right length?
+  The argument '0x0012' is not properly formatted. Is it the right length? Quitting...
 
   Usage:    getReceipt [-a|-l|-v|-h] <tx_id> [tx_id...]  
   Purpose:  Retrieve a transaction's receipt from the cache or the node.

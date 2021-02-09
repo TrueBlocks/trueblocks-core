@@ -1,1 +1,1 @@
-{ "errors": [ "blockScrape - The --publish option is only available with the --pin option. Quitting..." ] }
+{ "errors": [ "blockScrape - The --publish option is only available with the --pin option." ] }

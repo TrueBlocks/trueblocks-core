@@ -150,7 +150,6 @@ COptions::COptions(void) {
     Init();
 
     UNHIDE_FIELD(CTransaction, "isError");
-    UNHIDE_FIELD(CTransaction, "hasToken");
     UNHIDE_FIELD(CTransaction, "date");
     UNHIDE_FIELD(CTransaction, "ether");
 
@@ -271,7 +270,7 @@ bool COptions::buildDisplayStrings(void) {
 
         const CFieldData* field = GETRUNTIME_CLASS(CTransaction)->findField(fieldName);
         if (!field) {
-            cerr << "Field '" << fieldName << "' not found in fieldList '" << origList << "'. Quitting...\n";
+            cerr << "Field '" << fieldName << "' not found in fieldList '" << origList << "'.";
             quickQuitHandler(EXIT_FAILURE);
         }
         if (field->isHidden() && force)

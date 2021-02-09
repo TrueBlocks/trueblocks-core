@@ -46,7 +46,7 @@ int main(int argc, const char* argv[]) {
 void COptions::handle_status(void) {
     string_q pins;
     if (!pinataListOfPins(lic, pins)) {
-        usageStr(pins + ". Quitting...");
+        usageStr(pins + ".");
         return;
     }
 

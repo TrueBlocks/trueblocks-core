@@ -1,7 +1,7 @@
 whenBlock argc: 2 [1:2015-03-02] 
 whenBlock 2015-03-02 
 
-  The date you specified (2015-03-02) is before the first block.
+  The date you specified (2015-03-02) is before the first block. Quitting...
 
   Usage:    whenBlock [-l|-t|-s|-v|-h] < block | date > [ block... | date... ]  
   Purpose:  Finds block based on date, blockNum, timestamp, or 'special'.

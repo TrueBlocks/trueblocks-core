@@ -1,5 +1,5 @@
 {
   "errors": [
-    "cacheStatus - --depth parameter must be less than 4. Quitting..."
+    "cacheStatus - --depth parameter must be less than 4."
   ]
 }

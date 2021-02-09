@@ -21,7 +21,7 @@ bool COptions::handle_commands(void) {
             cout << "{ \"status\": \"cannot run\" }";
             LOG_ERR(
                 "Use the API only to pause, restart, or quit the scraper -- to run, start in a new window with chifra "
-                "scrape run. Quitting...");
+                "scrape run.");
             return EXIT_FAILURE;
         }
     }

@@ -276,7 +276,7 @@ bool COptions::finalize_chunks(CConsolidator* cons) {
         consolidatedLines.reserve(lines.size());
         for (uint64_t record = 0; record <= where; record++) {
             if (countOf(lines[record], '\t') != 2) {
-                LOG_WARN("Found a record with less than two tabs. Quitting...");
+                LOG_WARN("Found a record with less than two tabs.");
                 LOG_WARN("preceeding line:\t[", ((record > 0) ? lines[record - 1] : "N/A"), "]");
                 LOG_WARN("offending line:\t[", lines[record], "]");
                 LOG_WARN("following line:\t[", ((record < where) ? lines[record + 1] : "N/A"), "]");

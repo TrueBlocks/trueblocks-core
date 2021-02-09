@@ -1,7 +1,7 @@
 displayStrsTest argc: 1 
 displayStrsTest 
 
-  Not enough arguments presented.
+  Not enough arguments presented. Quitting...
 
   Usage:    displayStrsTest [-v|-h] mode  
   Purpose:  Test upgrading binary data to new format.

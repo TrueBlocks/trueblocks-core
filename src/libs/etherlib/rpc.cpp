@@ -68,7 +68,7 @@ CReceipt RPCSession::e th_get TransactionReceipt(const string_q& _transactionHas
 
     string_q const result = rpcCall("e th_getTransactionReceipt", { _transactionHash });
     if (result.empty()) {
-        cerr << "Result from e th_getTransactionReceipt call is empty. Quitting...\n";
+        cerr << "Result from e th_getTransactionReceipt call is empty. Q uitting...\n";
         return;
     }
     receipt.gasUsed = result["gasUsed"];

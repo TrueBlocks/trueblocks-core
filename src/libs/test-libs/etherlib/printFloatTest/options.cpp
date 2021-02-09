@@ -32,7 +32,7 @@ bool COptions::parseArguments(string_q& command) {
             arg = substitute(substitute(arg, "--testNum:", ""), "-t:", "");
             testNum = (int32_t)str_2_Int(arg);
             if (!testNum || testNum > 2)
-                return usage("Invalid argument: " + orig + ". Quitting...");
+                return usage("Invalid argument: " + orig + ".");
 
         } else {
             return usage("Invalid option: " + arg);

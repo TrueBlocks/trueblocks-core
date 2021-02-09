@@ -3,7 +3,7 @@ chifra blocks
 getBlock argc: 1 
 getBlock 
 
-  Not enough arguments presented.
+  Not enough arguments presented. Quitting...
 
   Usage:    getBlock [-e|-a|-u|-n|-c|-U|-v|-h] <block> [block...]  
   Purpose:  Returns block(s) from local cache or directly from a running node.

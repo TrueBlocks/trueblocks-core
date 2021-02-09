@@ -102,54 +102,42 @@ bool COptions::parseArguments(string_q& command) {
     if (force)
         etherlib_init(defaultQuitHandler);
 
+    filterType = (uniq_tx ? "uniq_tx" : (uniq ? "uniq" : (apps ? "apps" : "")));
+
+    if (force && uncles)
+        return usage("The --force option is not available for uncle blocks.");
+    
+    if (force && !filterType.empty())
+        return usage("The --force option is not available when using one of the address options.");
+
+    if (trace && !isTracingNode())
+        return usage("A tracing node is required for the --trace options to work properly.");
+
+    if (trace && !filterType.empty())
+        return usage("The --trace option is not available when using one of the address options.");
+    
+    if (trace && hashes_only)
+        return usage("The --hashes_only and --trace options are exclusive.");
+
+    if (!blocks.hasBlocks())
+        return usage("You must specify at least one block.");
+
+    secsFinal =
+        (timestamp_t)getGlobalConfig("getBlock")->getConfigInt("settings", "secs_when_final", (uint64_t)secsFinal);
+
     if (expContext().asParity) {
-        HIDE_FIELD(CTransaction, "cumulativeGasUsed");
-        HIDE_FIELD(CTransaction, "gasUsed");
-        HIDE_FIELD(CTransaction, "timestamp");
+        manageFields("CTransaction:cumulativeGasUsed,gasUsed,timestamp", FLD_HIDE);
         RENAME_FIELD(CBlock, "blockNumber", "number");
         GETRUNTIME_CLASS(CBlock)->sortFieldList();
     }
 
     if (hashes_only) {
-        HIDE_FIELD(CTransaction, "blockHash");
-        HIDE_FIELD(CTransaction, "blockNumber");
-        HIDE_FIELD(CTransaction, "transactionIndex");
-        HIDE_FIELD(CTransaction, "nonce");
-        HIDE_FIELD(CTransaction, "timestamp");
-        HIDE_FIELD(CTransaction, "from");
-        HIDE_FIELD(CTransaction, "to");
-        HIDE_FIELD(CTransaction, "value");
-        HIDE_FIELD(CTransaction, "gas");
-        HIDE_FIELD(CTransaction, "gasPrice");
-        HIDE_FIELD(CTransaction, "input");
-        HIDE_FIELD(CTransaction, "isError");
-        HIDE_FIELD(CTransaction, "hasToken");
-        HIDE_FIELD(CTransaction, "receipt");
-        HIDE_FIELD(CTransaction, "gasUsed");
-        HIDE_FIELD(CReceipt, "contractAddress");
-        HIDE_FIELD(CReceipt, "gasUsed");
-        HIDE_FIELD(CReceipt, "logs");
-        HIDE_FIELD(CReceipt, "status");
-        HIDE_FIELD(CBlock, "gasLimit");
-        HIDE_FIELD(CBlock, "gasUsed");
-        HIDE_FIELD(CBlock, "miner");
-        HIDE_FIELD(CBlock, "difficulty");
-        HIDE_FIELD(CBlock, "price");
-        HIDE_FIELD(CBlock, "finalized");
+        manageFields("CTransaction:all", FLD_HIDE);
+        manageFields("CBlock:all", FLD_HIDE);
+
+        manageFields("CTransaction:hash", FLD_SHOW);
+        manageFields("CBlock:hash,blockNumber,parentHash,timestamp,transactions", FLD_SHOW);
     }
-
-    filterType = (uniq_tx ? "uniq_tx" : (uniq ? "uniq" : (apps ? "apps" : "")));
-    if (!filterType.empty() && force)
-        return usage("The --force option is not available when using one of the address options. Quitting...");
-
-    if (uncles && force)
-        return usage("The --force option is not available for uncles. Quitting...");
-
-    if (!blocks.hasBlocks())
-        return usage("You must specify at least one block. Quitting...");
-
-    secsFinal =
-        (timestamp_t)getGlobalConfig("getBlock")->getConfigInt("settings", "secs_when_final", (uint64_t)secsFinal);
 
     if (expContext().exportFmt == NONE1)
         expContext().exportFmt = (isApiMode() ? API1 : (filterType.empty() ? JSON1 : TXT1));
@@ -164,16 +152,20 @@ bool COptions::parseArguments(string_q& command) {
             replace(ff, "\t[{ADDR_COUNT}]", "");
         }
         configureDisplay("", "CBlock", ff);
+
     } else if (!filterType.empty()) {
         configureDisplay("", "CBlock", STR_FORMAT_FILTER_TXT);
         if (blocks.hasZeroBlock) {
             optionOn(OPT_PREFUND);
             loadNames();
         }
+
     } else if (trace) {
         configureDisplay("getBlock", "CTrace", STR_DISPLAY_TRACE);
+
     } else {
         configureDisplay("getBlock", "CBlock", STR_DISPLAY_BLOCK);
+
     }
 
     if (expContext().exportFmt == API1 || expContext().exportFmt == JSON1) {
@@ -184,21 +176,14 @@ bool COptions::parseArguments(string_q& command) {
                 replace(ff, "\t[{ADDR_COUNT}]", "");
             }
             expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(ff);
+
         } else if (!filterType.empty()) {
             expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(STR_FORMAT_FILTER_JSON);
+
         }
     }
     if (isNoHeader)
         expContext().fmtMap["header"] = "";
-
-    if (trace) {
-        if (!isTracingNode())
-            return usage("Tracing is required for this program to work properly. Quitting...");
-        if (!filterType.empty())
-            return usage("--uniq* options and --trace options are exclusive. Quitting...");
-        if (hashes_only)
-            return usage("--hashes_only options and --trace options are exclusive. Quitting...");
-    }
 
     return true;
 }

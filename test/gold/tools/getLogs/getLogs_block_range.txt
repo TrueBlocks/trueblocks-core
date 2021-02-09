@@ -1,7 +1,7 @@
 getLogs argc: 2 [1:1718400-1718420] 
 getLogs 1718400-1718420 
 
-  1718400-1718420 does not appear to be a valid transaction index.
+  1718400-1718420 does not appear to be a valid transaction index. Quitting...
 
   Usage:    getLogs [-a|-v|-h] <tx_id> [tx_id...]  
   Purpose:  Retrieve a transaction's logs from the cache or the node.

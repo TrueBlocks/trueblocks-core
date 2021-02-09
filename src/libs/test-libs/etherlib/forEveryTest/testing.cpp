@@ -39,7 +39,7 @@ int main(int argc, const char* argv[]) {
             return 0;
 
         CBlock block;
-        getBlock(block, 4312145);
+        getBlock(block, 412149);
 
         cout << sep << "\n";
         switch (options.testNum) {

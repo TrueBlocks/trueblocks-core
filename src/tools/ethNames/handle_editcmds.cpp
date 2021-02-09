@@ -26,7 +26,7 @@ bool COptions::processEditCommand(CStringArray& terms, bool to_custom) {
     ENTER("processEditCommand");
 
     if (!contains("create|update|delete|undelete|remove", crudCommand))
-        EXIT_USAGE("Invalid edit command '" + crudCommand + "'. Quitting...");
+        EXIT_USAGE("Invalid edit command '" + crudCommand + "'.");
 
     CAccountName target;
     target.address = toLower(trim(getEnvStr("TB_NAME_ADDRESS"), '\"'));

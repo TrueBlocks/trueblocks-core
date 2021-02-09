@@ -43,7 +43,7 @@ bool visitStagingIndexFiles(const string_q& path, void* data) {
         options->stats.nChecked++;
 
         // if (!establishIndexChunk(indexPath))
-        //   EXIT_FAIL("Could not download index chunk " + indexPath + ". Quitting...");
+        //   EXIT_FAIL("Could not download index chunk " + indexPath + ".");
 
         size_t nRecords = fileSize(path) / 59;
         options->stats.nRecords += nRecords;

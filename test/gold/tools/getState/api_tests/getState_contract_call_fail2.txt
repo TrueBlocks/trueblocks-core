@@ -1,5 +1,5 @@
 {
   "errors": [
-    "getState - The four byte must be a hex string. Quitting..."
+    "getState - The four byte must be a hex string."
   ]
 }

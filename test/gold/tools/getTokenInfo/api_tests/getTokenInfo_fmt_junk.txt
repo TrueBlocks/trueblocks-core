@@ -1,5 +1,5 @@
 {
   "errors": [
-    "getTokenInfo - Export format (junk) must be one of [ json | txt | csv | api ]. Quitting..."
+    "getTokenInfo - Export format (junk) must be one of [ json | txt | csv | api ]."
   ]
 }

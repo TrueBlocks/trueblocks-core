@@ -1,7 +1,7 @@
 getReceipt argc: 1 
 getReceipt 
 
-  Not enough arguments presented.
+  Not enough arguments presented. Quitting...
 
   Usage:    getReceipt [-a|-l|-v|-h] <tx_id> [tx_id...]  
   Purpose:  Retrieve a transaction's receipt from the cache or the node.

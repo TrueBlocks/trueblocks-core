@@ -1,7 +1,7 @@
 getTrace argc: 2 [1:.whatever] 
 getTrace .whatever 
 
-  .whatever does not appear to be a valid transaction index.
+  .whatever does not appear to be a valid transaction index. Quitting...
 
   Usage:    getTrace [-a|-c|-v|-h] <tx_id> [tx_id...]  
   Purpose:  Retrieve a transaction's traces from the cache or the node.

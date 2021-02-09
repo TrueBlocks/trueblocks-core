@@ -1,7 +1,7 @@
 getTokenInfo argc: 4 [1:a] [2:b] [3:c] 
 getTokenInfo a b c 
 
-  Input argument appears to be invalid. No such skip marker: a:b
+  Input argument appears to be invalid. No such skip marker: a:b Quitting...
 
   Usage:    getTokenInfo [-p|-b|-n|-v|-h] <address> <address> [address...] [block...]  
   Purpose:  Retrieve token balances for one or more address at given block(s).

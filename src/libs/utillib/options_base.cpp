@@ -194,7 +194,7 @@ bool COptionsBase::prepareArguments(int argCountIn, const char* argvIn[]) {
             cmdFileName = substitute(arg, "--file:", "");
             replace(cmdFileName, "~/", getHomeFolder());
             if (!fileExists(cmdFileName)) {
-                return usage("--file: '" + cmdFileName + "' not found. Quitting.");
+                return usage("--file: '" + cmdFileName + "' not found.");
             }
 
         } else if (startsWith(arg, "-v:") || startsWith(arg, "--verbose:")) {
@@ -202,7 +202,7 @@ bool COptionsBase::prepareArguments(int argCountIn, const char* argvIn[]) {
             arg = substitute(substitute(arg, "-v:", ""), "--verbose:", "");
             if (!arg.empty()) {
                 if (!isUnsigned(arg))
-                    return usage("Invalid verbose level '" + arg + "'. Quitting...");
+                    return usage("Invalid verbose level '" + arg + "'.");
                 verbose = str_2_Uint(arg);
             }
 
@@ -219,7 +219,7 @@ bool COptionsBase::prepareArguments(int argCountIn, const char* argvIn[]) {
             } else if (arg == "api") {
                 expContext().exportFmt = API1;
             } else {
-                return usage("Export format (" + arg + ") must be one of [ json | txt | csv | api ]. Quitting...");
+                return usage("Export format (" + arg + ") must be one of [ json | txt | csv | api ].");
             }
             argumentsOut[i] = "";
         }
@@ -248,7 +248,7 @@ bool COptionsBase::prepareArguments(int argCountIn, const char* argvIn[]) {
         string_q contents = substitute(asciiFileToString(cmdFileName), "\t", " ");
         cleanString(contents, false);
         if (contents.empty())
-            return usage("Command file '" + cmdFileName + "' is empty. Quitting...");
+            return usage("Command file '" + cmdFileName + "' is empty.");
         if (startsWith(contents, "NOPARSE\n")) {
             commandList = contents;
             nextTokenClear(commandList, '\n');
@@ -375,22 +375,22 @@ bool COptionsBase::standardOptions(string_q& cmdLine) {
         nextTokenClear(temp, '|');
         temp = nextTokenClear(temp, ' ');
         if (temp.empty())
-            return usage("Please provide a filename for the --output option. Quitting...");
+            return usage("Please provide a filename for the --output option.");
         if (!isValidName(temp))
-            return usage("Please provide a valid filename (" + temp + ") for the --output option. Quitting...");
+            return usage("Please provide a valid filename (" + temp + ") for the --output option.");
         rd_zipOnClose = endsWith(temp, ".gz");
         replace(temp, ".gz", "");
         CFilename fn(temp);
         establishFolder(fn.getPath());
         if (!folderExists(fn.getPath()))
-            return usage("Output file path not found and could not be created: '" + fn.getPath() + "'. Quitting...");
+            return usage("Output file path not found and could not be created: '" + fn.getPath() + "'.");
         rd_outputFilename = fn.getFullPath();
         outputStream.open(rd_outputFilename.c_str());
         if (outputStream.is_open()) {
             coutSaved = cout.rdbuf();          // back up cout's streambuf
             cout.rdbuf(outputStream.rdbuf());  // assign streambuf to cout
         } else {
-            return usage("Could not open output stream at '" + rd_outputFilename + ". Quitting...");
+            return usage("Could not open output stream at '" + rd_outputFilename + ".");
         }
     }
 
@@ -504,7 +504,7 @@ bool COptionsBase::confirmUint(const string_q& name, uint64_t& value, const stri
 
     const COption* param = findParam(name);
     if (!param)
-        return usage("Unknown parameter `" + name + "'. Quitting...");
+        return usage("Unknown parameter `" + name + "'.");
     if (!contains(param->type, "uint") && !contains(param->type, "blknum"))
         return true;
 
@@ -514,7 +514,7 @@ bool COptionsBase::confirmUint(const string_q& name, uint64_t& value, const stri
     replaceAll(arg, "-", "");
 
     if (!isNumeral(arg))
-        return usage("Value to --" + name + " parameter (" + arg + ") must be a valid unsigned integer. Quitting...");
+        return usage("Value to --" + name + " parameter (" + arg + ") must be a valid unsigned integer.");
     value = str_2_Uint(arg);
     return true;
 }
@@ -525,7 +525,7 @@ bool COptionsBase::confirmDouble(const string_q& name, double& value, const stri
 
     const COption* param = findParam(name);
     if (!param)
-        return usage("Unknown parameter `" + name + "'. Quitting...");
+        return usage("Unknown parameter `" + name + "'.");
     if (!contains(param->type, "double"))
         return true;
 
@@ -535,7 +535,7 @@ bool COptionsBase::confirmDouble(const string_q& name, double& value, const stri
     replaceAll(arg, "-", "");
 
     if (!isDouble(arg))
-        return usage("Value to --" + name + " parameter (" + arg + ") must be a valid double. Quitting...");
+        return usage("Value to --" + name + " parameter (" + arg + ") must be a valid double.");
     value = str_2_Double(arg);
     return true;
 }
@@ -547,7 +547,7 @@ bool COptionsBase::confirmBlockNum(const string_q& name, blknum_t& value, const 
 
     const COption* param = findParam(name);
     if (!param)
-        return usage("Unknown parameter `" + name + "'. Quitting...");
+        return usage("Unknown parameter `" + name + "'.");
     if (!contains(param->type, "uint") && !contains(param->type, "blknum"))
         return true;
 
@@ -571,7 +571,7 @@ bool COptionsBase::confirmBlockNum(const string_q& name, blknum_t& value, const 
         return false;
 
     if (value > latest)
-        return usage("Block number (" + argIn + ") is greater than the latest block. Quitting...");
+        return usage("Block number (" + argIn + ") is greater than the latest block.");
 
     return true;
 }
@@ -580,7 +580,7 @@ bool COptionsBase::confirmBlockNum(const string_q& name, blknum_t& value, const 
 bool COptionsBase::confirmEnum(const string_q& name, string_q& value, const string_q& argIn) const {
     const COption* param = findParam(name);
     if (!param)
-        return usage("Unknown parameter `" + name + "'. Quitting...");
+        return usage("Unknown parameter `" + name + "'.");
     if (param->type.empty() || !contains(param->type, "enum["))
         return true;
 
@@ -600,7 +600,7 @@ bool COptionsBase::confirmEnum(const string_q& name, string_q& value, const stri
     if (!contains(type, "|" + arg + "|")) {
         string_q desc = substitute(substitute(param->description, ", one ", "| One "), "*", "");
         nextTokenClear(desc, '|');
-        return usage("Invalid option '" + arg + "' for '" + name + "'." + desc + " required. Quitting...");
+        return usage("Invalid option '" + arg + "' for '" + name + "'." + desc + " required.");
     }
 
     value = arg;
@@ -649,7 +649,13 @@ COption::COption(const string_q& ln, const string_q& sn, const string_q& t, size
 
 //--------------------------------------------------------------------------------
 bool COptionsBase::usage(const string_q& errMsg) const {
-    cerr << usageStr(errMsg);
+    if (errMsg.empty() ||
+        contains(errMsg, "Invalid option:") ||
+        isApiMode()) {
+        cerr << usageStr(errMsg);
+    } else {
+        cerr << usageStr(errMsg + " Quitting...");
+    }
     return false;
 }
 

@@ -86,13 +86,13 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     if (mode.empty())
-        return usage("You must provide a mode of operation. Quitting...");
+        return usage("You must provide a mode of operation.");
 
     if (!folderExists(datadir))
-        return usage("Folder '" + datadir + "' does not exist. Quitting...");
+        return usage("Folder '" + datadir + "' does not exist.");
 
     if (mode == "dump" && name.empty())
-        return usage("You must provide a table name for the dump command. Quitting...");
+        return usage("You must provide a table name for the dump command.");
 
     if (!loadTables())
         return false;
@@ -107,7 +107,7 @@ bool COptions::parseArguments(string_q& command) {
     if (mode == "dump") {
         CTableEntry table = tableMap[name];
         if (table.name != name)
-            return usage("Table name '" + name + "' not found. Quitting...");
+            return usage("Table name '" + name + "' not found.");
     }
 
     return true;
@@ -209,19 +209,19 @@ bool COptions::loadTables(void) {
     tableMap[e.name] = e;
 
     if (!stat.ms_entries)
-        return usage("No tables found in " + datadir + "data.mdb. Quitting...");
+        return usage("No tables found in " + datadir + "data.mdb.");
 
     MDB_val key, value;
     int rc = unnamed->get_first(&key, &value);
     if (rc != MDB_SUCCESS) {
         LOG_WARN("Something went wrong reading values from database: ", rc);
-        return usage("Quitting...");
+        return usage(".");
     }
 
     while (rc != MDB_NOTFOUND) {
         if (value.mv_size < sizeof(size_t)) {
             LOG_WARN("Sizes disagree when reading database: ", value.mv_size, sizeof(size_t), MDB_INVALID);
-            return usage("Quitting...");
+            return usage(".");
         }
 
         // auto p_data = static_cast<uint8_t*>(value.mv_data);

@@ -89,7 +89,7 @@ bool COptions::parseArguments(string_q& command) {
 
     if (!sol.empty()) {
         if (!fileExists(sol + ".sol") && !fileExists(sol))
-            return usage("Cannot find .sol file at '" + sol + "'. Quitting...");
+            return usage("Cannot find .sol file at '" + sol + "'.");
         convertFromSol(substitute(sol, ".sol", ""));
         cerr << sol << " coverted in current folder." << endl;
         return false;
@@ -104,7 +104,7 @@ bool COptions::parseArguments(string_q& command) {
                 fileName = localFile;
             }
             if (!fileExists(fileName))
-                return usage("ABI for '" + addr + "' not found. Quitting...");
+                return usage("ABI for '" + addr + "' not found.");
             cout << asciiFileToString(fileName) << endl;
         }
         return false;

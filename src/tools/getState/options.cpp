@@ -88,7 +88,7 @@ bool COptions::parseArguments(string_q& command) {
         blocks.numList.push_back(newestBlock);  // use 'latest'
 
     if (!call.empty() && !parts.empty())
-        return usage("The --parts option is not available with the --call option. Quitting...");
+        return usage("The --parts option is not available with the --call option.");
 
     if (call.empty()) {
         if (!addrs.size())
@@ -176,13 +176,13 @@ bool COptions::parseArguments(string_q& command) {
         CStringArray vars;
         explode(vars, call, '!');
         if (vars.size() == 0)
-            return usage("You must supply the address of a smart contract for the --call option. Quitting...");
+            return usage("You must supply the address of a smart contract for the --call option.");
         if (vars.size() == 1)
-            return usage("You must provide a four-byte code to the smart contract you're calling. Quitting...");
+            return usage("You must provide a four-byte code to the smart contract you're calling.");
         if (!isAddress(vars[0]))
-            return usage("The first part of the call data to --call must be an address. Quitting...");
+            return usage("The first part of the call data to --call must be an address.");
         if (!isHexStr(vars[1]))
-            return usage("The four byte must be a hex string. Quitting...");
+            return usage("The four byte must be a hex string.");
 
         CEthState state;
         state.address = vars[0];
@@ -203,7 +203,7 @@ bool COptions::parseArguments(string_q& command) {
             return false;
         }
 
-        return usage("No result from call to " + state.address + " with fourbyte " + fourByte + ". Quitting...");
+        return usage("No result from call to " + state.address + " with fourbyte " + fourByte + ".");
     }
 
     if (!requestsHistory())  // if the user did not request historical state, we can return safely
@@ -214,11 +214,11 @@ bool COptions::parseArguments(string_q& command) {
         string_q rpcProvider = getGlobalConfig()->getConfigStr("settings", "rpcProvider", "http://localhost:8545");
         string_q balanceProvider = getGlobalConfig()->getConfigStr("settings", "balanceProvider", rpcProvider);
         if (rpcProvider == balanceProvider || balanceProvider.empty())
-            return usage("The RPC server does not have historical state. Quitting...");
+            return usage("The RPC server does not have historical state.");
 
         setRpcProvider(balanceProvider);
         if (!nodeHasBalances(false))
-            return usage("balanceServer set but it does not have historical state. Quitting...");
+            return usage("balanceServer set but it does not have historical state.");
     }
 
     return true;

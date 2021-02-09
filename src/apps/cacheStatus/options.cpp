@@ -119,7 +119,7 @@ bool COptions::parseArguments(string_q& command) {
         start = 0;
 
     if (get_config && set_config)
-        return usage("Please chose only one of --set_config and --get_config. Quitting...");
+        return usage("Please chose only one of --set_config and --get_config.");
 
     if (set_config) {
         mode = "set";
@@ -141,7 +141,7 @@ bool COptions::parseArguments(string_q& command) {
             if (details && depth == NOPOS)
                 depth = 0;
             if (depth != NOPOS && depth > 3)
-                return usage("--depth parameter must be less than 4. Quitting...");
+                return usage("--depth parameter must be less than 4.");
             replaceAll(mode, "|caches", "");
             ASSERT(endsWith(mode, '|'));
             bool hasAll = false;

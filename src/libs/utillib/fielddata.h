@@ -52,6 +52,9 @@ namespace qblocks {
 #define T_POINTER (70 | TS_POINTER)
 #define T_OBJECT (75 | TS_OBJECT)
 
+#define FLD_HIDE false
+#define FLD_SHOW true
+
 class CRuntimeClass;
 //-------------------------------------------------------------------------
 class CFieldData {

@@ -174,7 +174,7 @@ CURL* CCurlContext::getCurl(void) {
     if (!curlHandle) {
         curlHandle = curl_easy_init();
         if (!curlHandle) {
-            fprintf(stderr, "Curl failed to initialize. Quitting...\n");
+            cerr << "Curl failed to initialize. Quitting..." << endl;
             quickQuitHandler(EXIT_FAILURE);
         }
 

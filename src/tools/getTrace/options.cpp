@@ -77,7 +77,7 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     if (!isTracingNode())
-        return usage("Tracing is required for this program to work properly. Quitting...");
+        return usage("Tracing is required for this program to work properly.");
 
     if (!filter.empty()) {
         string_q headerLine = "fromBlock,toBlock,fromAddress,toAddress,after,count";
@@ -92,9 +92,9 @@ bool COptions::parseArguments(string_q& command) {
         if (parts.size() > 1)
             extractBlocksFromFilter(f.fromBlock, parts[0], f.toBlock, parts[1]);
         if (f.fromBlock > f.toBlock)
-            return usage("filter.fromBlock must be less or equal to filter.toBlock. Quitting...");
+            return usage("filter.fromBlock must be less or equal to filter.toBlock.");
         if (f.fromBlock + 100 < f.toBlock)
-            return usage("filter.fromBlock must be no more than 100 blocks before filter.toBlock. Quitting...");
+            return usage("filter.fromBlock must be no more than 100 blocks before filter.toBlock.");
         filters.push_back(f);
         manageFields("CTraceAction:balance,init,refundAddress,selfDestructed", false);  // hide
         manageFields("CTraceResult:code,newContract", false);
@@ -212,7 +212,7 @@ bool COptions::extractBlocksFromFilter(blknum_t& b1, const string_q& p1, blknum_
         return true;
     // parse p1 into b1
     if (!parseBlockList2(this, blocks, p1, latest))
-        return usage("Could not parse invalid block " + p1 + ". Quitting...");
+        return usage("Could not parse invalid block " + p1 + ".");
     b1 = blocks.numList.size() ? blocks.numList[0] : latest;
 
     // if p2 is empty, set b2 to b1 and return
@@ -222,7 +222,7 @@ bool COptions::extractBlocksFromFilter(blknum_t& b1, const string_q& p1, blknum_
     }
 
     if (!parseBlockList2(this, blocks, p2, latest))
-        return usage("Could not parse invalid block " + p2 + ". Quitting...");
+        return usage("Could not parse invalid block " + p2 + ".");
     b2 = blocks.numList.size() > 1 ? blocks.numList[1] : b1;
 
     return true;

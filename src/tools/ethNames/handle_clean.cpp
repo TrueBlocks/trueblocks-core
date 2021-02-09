@@ -117,12 +117,12 @@ bool COptions::handle_clean(void) {
     string_q mainSource = getGlobalConfig("ethNames")->getConfigStr("settings", "source", "<UNSET>");
     string_q mainDest = configPath("names/names.tab");
     if (!cleanNames(mainSource, mainDest))
-        EXIT_USAGE("Primary names file (" + mainSource + ") not found. Quitting...");
+        EXIT_USAGE("Primary names file (" + mainSource + ") not found.");
 
     string_q customSource = getGlobalConfig("ethNames")->getConfigStr("settings", "custom", "<UNSET>");
     string_q customDest = configPath("names/names_custom.tab");
     if (!cleanNames(customSource, customDest))
-        EXIT_USAGE("Custom names file (" + customSource + ") not found. Quitting...");
+        EXIT_USAGE("Custom names file (" + customSource + ") not found.");
 
     ::remove(getCachePath("names/names.bin").c_str());
     CAccountName acct;

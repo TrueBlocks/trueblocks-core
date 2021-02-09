@@ -196,7 +196,7 @@ bool COptions::parseArguments(string_q& command) {
         monitor.setValueByName("name", toLower(addr));
 
         if (!monitor.exists())
-            EXIT_USAGE("Monitor file for address " + addr + " not found. Quitting...");
+            EXIT_USAGE("Monitor file for address " + addr + " not found.");
         string_q unused;
         if (monitor.isLocked(unused))
             LOG_ERR(
@@ -218,23 +218,23 @@ bool COptions::parseArguments(string_q& command) {
     SHOW_FIELD(CTransaction, "traces");
 
     if ((appearances + receipts + logs + traces) > 1)
-        EXIT_USAGE("Please export only one of list, receipts, logs, or traces. Quitting...");
+        EXIT_USAGE("Please export only one of list, receipts, logs, or traces.");
 
     if (emitter && !logs)
-        EXIT_USAGE("The emitter option is only available when exporting logs. Quitting...");
+        EXIT_USAGE("The emitter option is only available when exporting logs.");
 
     if (emitter && monitors.size() > 1)
-        EXIT_USAGE("The emitter option is only available when exporting logs from a single address. Quitting...");
+        EXIT_USAGE("The emitter option is only available when exporting logs from a single address.");
 
     if (factory && !traces)
-        EXIT_USAGE("The facotry option is only available when exporting traces. Quitting...");
+        EXIT_USAGE("The facotry option is only available when exporting traces.");
 
     if (monitors.size() == 0)
-        EXIT_USAGE("You must provide at least one Ethereum address. Quitting...");
+        EXIT_USAGE("You must provide at least one Ethereum address.");
 
     if (count) {
         if (receipts || logs || traces || emitter || factory)
-            EXIT_USAGE("--count option is only available with --appearances option. Quitting...");
+            EXIT_USAGE("--count option is only available with --appearances option.");
         bool isText = expContext().exportFmt != JSON1 && expContext().exportFmt != API1;
         string_q format =
             getGlobalConfig("acctExport")->getConfigStr("display", "format", isText ? STR_DISPLAY_MONITORCOUNT : "");
@@ -266,7 +266,7 @@ bool COptions::parseArguments(string_q& command) {
             manageFields("CTransaction:" + format);
 
             if (format.empty())
-                EXIT_USAGE("For non-json export a 'trans_fmt' string is required. Check your config file. Quitting...");
+                EXIT_USAGE("For non-json export a 'trans_fmt' string is required. Check your config file.");
             if (!contains(toLower(format), "trace"))
                 HIDE_FIELD(CTransaction, "traces");
 
@@ -323,11 +323,11 @@ bool COptions::parseArguments(string_q& command) {
 
         if (accounting || statements) {
             if (addrs.size() != 1)
-                EXIT_USAGE("You may only use --accounting option with a single address. Quitting...");
+                EXIT_USAGE("You may only use --accounting option with a single address.");
             if (freshen)
-                EXIT_USAGE("Do not use the --accounting option with --freshen. Quitting...");
+                EXIT_USAGE("Do not use the --accounting option with --freshen.");
             if (appearances || logs || traces)
-                EXIT_USAGE("Do not use the --accounting option with other options. Quitting...");
+                EXIT_USAGE("Do not use the --accounting option with other options.");
             expContext().accountedFor = addrs[0];
             bytesOnly = substitute(expContext().accountedFor, "0x", "");
             articulate = true;
@@ -338,11 +338,10 @@ bool COptions::parseArguments(string_q& command) {
             if (!nodeHasBals) {
                 string_q balanceProvider = getGlobalConfig()->getConfigStr("settings", "balanceProvider", rpcProvider);
                 if (rpcProvider == balanceProvider || balanceProvider.empty())
-                    EXIT_USAGE(
-                        "--accounting requires historical balances. The RPC server does not have them. Quitting...");
+                    EXIT_USAGE("--accounting requires historical balances. The RPC server does not have them.");
                 setRpcProvider(balanceProvider);
                 if (!nodeHasBalances(false))
-                    EXIT_USAGE("balanceServer is set, but it does not have historical state. Quitting...");
+                    EXIT_USAGE("balanceServer is set, but it does not have historical state.");
             }
         }
     }

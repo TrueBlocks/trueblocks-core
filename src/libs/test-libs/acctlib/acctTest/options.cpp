@@ -66,7 +66,7 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     if (hasN && endBlock != NOPOS)
-        return usage("You may use either -n or -e, not both. Quitting...");
+        return usage("You may use either -n or -e, not both.");
     if (endBlock != NOPOS)
         nBlocks = (endBlock - startBlock);
     return true;

@@ -49,7 +49,7 @@ int main(int argc, const char* argv[]) {
 
             string_q testFile = testFolder + path + "/" + testName + ".csv";
             if (!fileExists(testFile))
-                return options.usage("Cannot find test file " + testFile + ". Quitting.");
+                return options.usage("Cannot find test file " + testFile + ".");
 
             string_q contents = asciiFileToString(testFile) + "\n";
             replaceAll(contents, "\n\n", "\n");
@@ -84,7 +84,7 @@ int main(int argc, const char* argv[]) {
                     CTestCase test(line, testID++);
                     string_q key = test.Format("[{KEY}]");
                     if (testMap[key] != CTestCase()) {
-                        LOG_ERR("Duplicate test names: ", key, ". Quitting...");
+                        cerr << "Duplicate test names: " << key << ". Quitting..." << endl;
                         return 1;
                     }
                     testMap[key] = test;
@@ -170,10 +170,10 @@ bool COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, cons
             // do nothing - wrong mode
 
         } else if (!folderExists(test.goldPath)) {
-            return usage("Folder " + test.goldPath + " not found. Quitting...");
+            return usage("Folder " + test.goldPath + " not found.");
 
         } else if (!folderExists(test.workPath)) {
-            return usage("Folder " + test.workPath + " not found. Quitting...");
+            return usage("Folder " + test.workPath + " not found.");
 
         } else {
             CStringArray envLines;
@@ -182,7 +182,7 @@ bool COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, cons
                 if (test.env) {
                     string_q envFile = substitute(test.goldPath, "/api_tests", "") + test.name + ".env";
                     if (!fileExists(envFile)) {
-                        return usage("Could not find the environment file: '" + envFile + "'. Quitting...");
+                        return usage("Could not find the environment file: '" + envFile + "'.");
                     }
                     asciiFileToLines(envFile, envLines);
                     for (auto line : envLines) {
@@ -199,7 +199,7 @@ bool COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, cons
                     // TODO(tjayrush): handle the case of using curl to edit names
                     // string_q envFile = substitute(test.goldPath, "/api_tests", "") + test.name + ".env";
                     // if (!fileExists(envFile)) {
-                    //     return usage("Could not find the environment file: '" + envFile + "'. Quitting...");
+                    //     return usage("Could not find the environment file: '" + envFile + "'.");
                     // }
                     // CStringArray lines;
                     // asciiFileToLines(envFile, lines);

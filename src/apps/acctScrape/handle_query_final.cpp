@@ -86,7 +86,7 @@ bool COptions::visitBinaryFile(const string_q& path, void* data) {
     }
 
     if (!establishIndexChunk(indexPath))
-        EXIT_FAIL("Could not download index chunk " + indexPath + ". Quitting...");
+        EXIT_FAIL("Could not download index chunk " + indexPath + ".");
 
     options->stats.nBloomHits++;
     LOG_PROGRESS1("Scanning", options->fileRange.first, options->scanRange.second, " bloom hit \r");

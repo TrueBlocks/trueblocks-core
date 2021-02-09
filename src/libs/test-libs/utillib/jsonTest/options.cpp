@@ -40,15 +40,15 @@ bool COptions::parseArguments(string_q& command) {
         } else {
             string_q fn = "tests/" + arg + ".json";
             if (!fileExists(fn))
-                return usage("File : " + fn + " does not exists. Quitting...");
+                return usage("File : " + fn + " does not exists.");
             if (!fileName.empty())
-                return usage("Only specify one file name per command. Quitting...");
+                return usage("Only specify one file name per command.");
             fileName = arg;
         }
     }
 
     if (fileName.empty())
-        return usage("You must supply a filename to test. Quitting...");
+        return usage("You must supply a filename to test.");
 
     return true;
 }

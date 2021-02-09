@@ -34,15 +34,15 @@ bool COptions::parseArguments(string_q& command) {
         } else if (startsWith(arg, "-s:") || startsWith(arg, "--sub:")) {
             arg = substitute(substitute(arg, "-s:", ""), "--sub:", "");
             if (!isUnsigned(arg))
-                return usage("--sub must be a non-negative number. Quitting...");
+                return usage("--sub must be a non-negative number.");
             sub = str_2_Uint(arg);
 
         } else {
-            return usage("Invalid argument " + arg + ". Please enter either 'encoding' or 'generation'. Quitting...");
+            return usage("Invalid argument " + arg + ". Please enter either 'encoding' or 'generation'.");
         }
     }
     if (mode == "")
-        return usage("You must enter either 'encoding' or 'generation'. Quitting...");
+        return usage("You must enter either 'encoding' or 'generation'.");
     return true;
 }
 

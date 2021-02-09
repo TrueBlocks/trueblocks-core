@@ -1,7 +1,7 @@
 getTokenInfo argc: 1 
 getTokenInfo 
 
-  Not enough arguments presented.
+  Not enough arguments presented. Quitting...
 
   Usage:    getTokenInfo [-p|-b|-n|-v|-h] <address> <address> [address...] [block...]  
   Purpose:  Retrieve token balances for one or more address at given block(s).

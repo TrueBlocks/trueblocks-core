@@ -1,7 +1,7 @@
 getReceipt argc: 2 [1:.th] 
 getReceipt .th 
 
-  .th does not appear to be a valid transaction index.
+  .th does not appear to be a valid transaction index. Quitting...
 
   Usage:    getReceipt [-a|-l|-v|-h] <tx_id> [tx_id...]  
   Purpose:  Retrieve a transaction's receipt from the cache or the node.

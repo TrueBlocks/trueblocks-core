@@ -51,13 +51,13 @@ bool COptions::parseArguments(string_q& command) {
         } else if (startsWith(arg, "-i:") || startsWith(arg, "--int:")) {
             arg = substitute(substitute(arg, "-i:", ""), "--int:", "");
             if (arg.empty() || (arg[0] != '-' && arg[0] != '+' && !isdigit(arg[0])))
-                return usage("--int requires a number. Quitting");
+                return usage("--int requires a number.");
             numOption = str_2_Int(arg);
 
         } else if (startsWith(arg, "-u:") || startsWith(arg, "--uint:")) {
             arg = substitute(substitute(arg, "-u:", ""), "--uint:", "");
             if (arg.empty() || (arg[0] != '+' && !isdigit(arg[0]))) {
-                // return usage("--uint requires a non-negative number. Quitting");
+                // return usage("--uint requires a non-negative number.");
             } else {
                 numOption = str_2_Int(arg);
             }

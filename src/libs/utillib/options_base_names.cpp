@@ -227,7 +227,7 @@ bool COptionsBase::loadNames(void) {
     // A final set of options that do not have command line options
     if (isEnabled(OPT_PREFUND)) {
         if (!loadPrefunds(prefundFile, *this)) {
-            EXIT_USAGE("Could not open prefunds data. Quitting...");
+            EXIT_USAGE("Could not open prefunds data.");
         }
     }
 

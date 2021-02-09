@@ -1,8 +1,7 @@
 printFloatTest argc: 1 
 printFloatTest 
 
-  Unknown test: -1
-
+  Unknown test: -1. Quitting...
 
   Usage:    printFloatTest [-t|-v|-h]  
   Purpose:  This program tests floating point printing and conversions.

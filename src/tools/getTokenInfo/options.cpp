@@ -86,7 +86,7 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     if (parts.empty() && addrs.size() < 2)
-        return usage("Use either --parts or provide at least one token and one other account. Quitting...");
+        return usage("Use either --parts or provide at least one token and one other account.");
 
     string_q format;
     if (parts.size() > 0) {
@@ -191,7 +191,7 @@ bool COptions::parseArguments(string_q& command) {
                 if (!isContractAt(addr, latestBlock))
                     return usage(
                         "Address '" + addr +
-                        "' is not a token contract. You must provide at least one valid token address. Quitting...");
+                        "' is not a token contract. You must provide at least one valid token address.");
                 else
                     tokens.push_back(addr);
             } else {
@@ -202,7 +202,7 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     if (tokens.size() == 0)
-        return usage("You must provide at least one valid token address. Quitting...");
+        return usage("You must provide at least one valid token address.");
 
     abi_spec.loadAbisFromKnown(true);
 

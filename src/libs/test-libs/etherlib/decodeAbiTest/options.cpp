@@ -27,7 +27,7 @@ bool COptions::parseArguments(string_q& command) {
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
         if (!arg.empty())
-            return usage("Invalid argument " + arg + ". This program takes no arguments. Quitting...");
+            return usage("Invalid argument " + arg + ". This program takes no arguments.");
     }
     return true;
 }

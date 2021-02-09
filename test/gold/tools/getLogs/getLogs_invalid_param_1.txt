@@ -1,7 +1,7 @@
 getLogs argc: 2 [1:.th] 
 getLogs .th 
 
-  .th does not appear to be a valid transaction index.
+  .th does not appear to be a valid transaction index. Quitting...
 
   Usage:    getLogs [-a|-v|-h] <tx_id> [tx_id...]  
   Purpose:  Retrieve a transaction's logs from the cache or the node.

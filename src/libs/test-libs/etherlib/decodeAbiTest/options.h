@@ -66,7 +66,7 @@ class T {
         if (verbose || res != expected) {
             os << report(res);
             if (res != expected) {
-                cerr << os.str() << "\t" << cRed << "Test failed. Quitting" << cOff << endl;
+                cerr << os.str() << "\t" << cRed << "Test failed. Quitting..." << cOff << endl;
                 quickQuitHandler(0);
             }
         }

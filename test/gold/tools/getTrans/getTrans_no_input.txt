@@ -1,7 +1,7 @@
 getTrans argc: 1 
 getTrans 
 
-  Not enough arguments presented.
+  Not enough arguments presented. Quitting...
 
   Usage:    getTrans [-a|-t|-u|-v|-h] <tx_id> [tx_id...]  
   Purpose:  Retrieve a transaction from the cache or the node.

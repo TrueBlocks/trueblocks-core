@@ -50,22 +50,19 @@ bool visitFile(const string_q& path, void* data) {
             char* rawData = NULL;
             uint32_t nAddrs = 0;
             CArchive chunk(READING_ARCHIVE);
-            if (!chunk.Lock(path, modeReadOnly, LOCK_NOWAIT)) {
-                cerr << "Could not open index file " << path << ". Quitting...";
-                return false;
-            }
+            if (!chunk.Lock(path, modeReadOnly, LOCK_NOWAIT))
+                return usage("Could not open index file " + path + ".");
 
             size_t sz = fileSize(path);
             rawData = (char*)malloc(sz + (2 * 59));
             if (!rawData) {
-                cerr << "Could not allocate memory for data. Quitting...";
                 chunk.Release();
-                return false;
+                return usage("Could not allocate memory for data.");
             }
             bzero(rawData, sz + (2 * 59));
             size_t nRead = chunk.Read(rawData, sz, sizeof(char));
             if (nRead != sz) {
-                cerr << "Could not read entire file. Quitting..." << endl;
+                usage("Could not read entire file.");
                 return true;
             }
             CHeaderRecord_base* h = (CHeaderRecord_base*)rawData;
