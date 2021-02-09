@@ -1,13 +1,22 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
+	"os/exec"
 
 	tb "github.com/Great-Hill-Corporation/trueblocks-core/src/go-apps/goServer/cmd"
 )
 
 func main() {
-	log.Printf("TrueBlocks API server started at port 8080")
-	log.Fatal(http.ListenAndServe(":8080", tb.NewRouter()))
+	log.Printf("Starting TrueBlocks API server on port :8080")
+	out, err := exec.Command("chifra", "status --terse").Output()
+	if err != nil {
+		fmt.Printf("%s", err)
+	} else {
+		output := string(out[:])
+		log.Printf(output)
+	}
+  	log.Fatal(http.ListenAndServe(":8080", tb.NewRouter()))
 }

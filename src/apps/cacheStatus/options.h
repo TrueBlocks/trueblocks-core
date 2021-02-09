@@ -29,6 +29,7 @@ class COptions : public CAbiOptions {
     // BEG_CODE_DECLARE
     bool details;
     uint64_t depth;
+    bool terse;
     blknum_t start;
     blknum_t end;
     // END_CODE_DECLARE

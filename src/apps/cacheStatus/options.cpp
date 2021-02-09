@@ -17,7 +17,8 @@ static const COption params[] = {
     COption("details", "d", "", OPT_SWITCH, "include details about items found in monitors, slurps, abis, or price caches"),  // NOLINT
     COption("types", "t", "list<enum[blocks|transactions|traces|slurps|prices|all*]>", OPT_FLAG, "for cache mode only, which type(s) of cache to report"),  // NOLINT
     COption("depth", "p", "<uint64>", OPT_HIDDEN | OPT_FLAG, "for cache mode only, number of levels deep to report"),
-    COption("report", "r", "", OPT_SWITCH, "show a summary of the current status of the blockchain and TrueBlocks scrapers"),  // NOLINT
+    COption("report", "r", "", OPT_HIDDEN | OPT_SWITCH, "show a summary of the current status of TrueBlocks (deprecated)"),  // NOLINT
+    COption("terse", "e", "", OPT_HIDDEN | OPT_SWITCH, "show a terse summary report"),
     COption("get_config", "g", "", OPT_HIDDEN | OPT_SWITCH, "returns JSON data of the editable configuration file items"),  // NOLINT
     COption("set_config", "s", "", OPT_HIDDEN | OPT_SWITCH, "accepts JSON in an env variable and writes it to configuration files"),  // NOLINT
     COption("start", "S", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to process (inclusive)"),
@@ -66,6 +67,9 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-r" || arg == "--report") {
             report = true;
+
+        } else if (arg == "-e" || arg == "--terse") {
+            terse = true;
 
         } else if (arg == "-g" || arg == "--get_config") {
             get_config = true;
@@ -176,6 +180,7 @@ void COptions::Init(void) {
     // BEG_CODE_INIT
     details = false;
     depth = NOPOS;
+    terse = false;
     start = NOPOS;
     end = NOPOS;
     // END_CODE_INIT
