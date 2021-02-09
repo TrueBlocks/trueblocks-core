@@ -377,7 +377,7 @@ class CFunctionTester : public CFunction {
         for (auto& p : parts)
             p = trim(p);
 
-        fromDefinition(parts[2]);
+        fromDefinition(*this, parts[2]);
         if (type != "function" && type != "event") {
             cout << "invalid: " << parts[2] << endl;
             return false;

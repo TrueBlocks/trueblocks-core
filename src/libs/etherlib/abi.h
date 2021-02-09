@@ -51,12 +51,9 @@ class CAbi : public CBaseNode {
     bool articulateTrace(CTrace* t) const;
     bool articulateOutputs(const string_q& encoding, const string_q& value, CFunction& ret) const;
 
-    bool loadAbisFromKnown(void);
-    bool loadAbisFromTokens(void);
+    bool loadAbisFromKnown(bool tokensOnly=false);
     bool loadAbiFromEtherscan(const address_t& addr, bool raw = false);
     bool loadAbiFromSolidity(const string_q& addr);
-    bool loadAbiFromAddress(const address_t& addr);
-    void loadAbiAddInterface(const CFunction& func);
 
     size_t nInterfaces(void) const;
     size_t nFunctions(void) const;
@@ -77,9 +74,11 @@ class CAbi : public CBaseNode {
     bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
-    bool loadAbiFromFile(const string_q& fileName);
-    bool loadAbiFromString(const string_q& str);
     bool loadAbisFolderAndCache(const string_q& sourcePath, const string_q& binPath);
+    bool loadAbiFromFile(const string_q& fileName);
+    bool loadAbiFromAddress(const address_t& addr);
+    bool loadAbiFromString(const string_q& str);
+    void loadAbiAddInterface(const CFunction& func);
     friend bool loadAbiFile(const string_q& path, void* data);
     friend bool loadAbiString(const string_q& path, CAbi& abi);
     // EXISTING_CODE
@@ -182,6 +181,8 @@ extern const char* STR_DISPLAY_ABI;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
+extern bool fromDefinition(CFunction& func, const string_q& lineIn);
+extern bool fromDefinition(CParameter& parm, const string_q& input);
 extern bool decodeRLP(CParameterArray& interfaces, const string_q& desc, const string_q& input);
 extern bool sortByFuncName(const CFunction& f1, const CFunction& f2);
 inline size_t CAbi::nInterfaces(void) const {

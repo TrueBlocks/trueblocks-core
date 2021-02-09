@@ -51,7 +51,7 @@ extern void doTupleTest(void) {
 //--------------------------------------------------------------
 bool visitLine(const char* lineIn, void* data) {
     CFunction func;
-    func.fromDefinition(lineIn);
+    fromDefinition(func, lineIn);
     static bool first = true;
     cout << (!first ? ", " : "");
     cout << func << endl;

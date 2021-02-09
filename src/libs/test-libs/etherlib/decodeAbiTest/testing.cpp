@@ -84,8 +84,8 @@ size_t extractParams(CParameterArray& paramArray, const string_q& paramStr) {
 
 //-----------------------------------------------------------------------------------------
 namespace qblocks {
-extern string_q params_2_Str(CParameterArray& interfaces);
-extern size_t decodeTheData(CParameterArray& interfaces, const CStringArray& dataArray, size_t& readIndex);
+extern string_q params_2_Str(CParameterArray& params);
+extern size_t decodeTheData(CParameterArray& params, const CStringArray& dataArray, size_t& readIndex);
 }  // namespace qblocks
 
 //-----------------------------------------------------------------------------------------
@@ -118,11 +118,11 @@ void speedTest(void) {
             test.desc = parts[2];
             test.input = parts[3];
             test.expected = (parts.size() > 4 ? parts[4] : "");
-            CParameterArray interfaces;
-            extractParams(interfaces, test.desc);
+            CParameterArray params;
+            extractParams(params, test.desc);
             string_q cleaned = cleanIt(test.desc);
             for (size_t t = 1; t <= N_SPEED_TESTS; t++) {
-                decodeRLP(interfaces, cleaned, test.input);
+                decodeRLP(params, cleaned, test.input);
                 cerr << t << "\t\r";
                 cerr.flush();
             }
@@ -153,11 +153,11 @@ void decodeTest(void) {
             test.desc = parts[2];
             test.input = parts[3];
             test.expected = parts[4];
-            CParameterArray interfaces;
-            extractParams(interfaces, test.desc);
+            CParameterArray params;
+            extractParams(params, test.desc);
             string_q cleaned = cleanIt(test.desc);
-            decodeRLP(interfaces, cleaned, test.input);
-            cout << test.check(params_2_Str(interfaces));
+            decodeRLP(params, cleaned, test.input);
+            cout << test.check(params_2_Str(params));
         } else if (startsWith(testcase, "#end")) {
             return;
         }

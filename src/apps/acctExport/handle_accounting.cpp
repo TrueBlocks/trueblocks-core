@@ -179,7 +179,7 @@ void COptions::articulateAll(CTransaction& trans) {
     if (articulate) {
         abiMap[trans.to]++;
         if (abiMap[trans.to] == 1 || fileExists(getCachePath("abis/" + trans.to))) {
-            abi_spec.loadAbiFromEtherscan(trans.to, false);
+            abi_spec.loadAbiFromEtherscan(trans.to);
         }
         abi_spec.articulateTransaction(&trans);
         trans.hasToken |= isTokenFunc(trans.input);
@@ -191,7 +191,7 @@ void COptions::articulateAll(CTransaction& trans) {
             if (contains(str, bytesOnly)) {
                 abiMap[log->address]++;
                 if (abiMap[log->address] == 1 || fileExists(getCachePath("abis/" + log->address))) {
-                    abi_spec.loadAbiFromEtherscan(log->address, false);
+                    abi_spec.loadAbiFromEtherscan(log->address);
                 }
                 abi_spec.articulateLog(log);
             }
@@ -202,7 +202,7 @@ void COptions::articulateAll(CTransaction& trans) {
             trans.hasToken |= isTokenFunc(trace->action.input);
             abiMap[trace->action.to]++;
             if (abiMap[trace->action.to] == 1 || fileExists(getCachePath("abis/" + trace->action.to))) {
-                abi_spec.loadAbiFromEtherscan(trace->action.to, false);
+                abi_spec.loadAbiFromEtherscan(trace->action.to);
             }
             abi_spec.articulateTrace(trace);
         }

@@ -584,50 +584,6 @@ string_q CParameter::getEventAssign(uint64_t which, uint64_t nIndexed) const {
 }
 
 //-----------------------------------------------------------------------
-static string_q elementaryName(const string_q& in) {
-    // clang-format off
-    if (startsWith(in, "int["))    return "int256" + in.substr(3);
-    if (in == "int")               return "int256";
-    if (startsWith(in, "uint["))   return "uint256" + in.substr(4);
-    if (in == "uint")              return "uint256";
-    if (startsWith(in, "fixed["))  return "fixed128x128" + in.substr(5);
-    if (in == "fixed")             return "fixed128x128";
-    if (startsWith(in, "ufixed[")) return "ufixed128x128" + in.substr(6);
-    if (in == "ufixed")            return "ufixed128x128";
-    // clang-format on
-    return in;
-}
-
-//-----------------------------------------------------------------------
-bool CParameter::fromDefinition(const string_q& strIn) {
-    string_q str = strIn;
-    indexed = contains(str, "indexed");
-    str = trim(substitute(str, "indexed", ""));
-    type = trim(elementaryName(nextTokenClear(str, ' ')));
-    if (contains(type, '['))
-        is_flags |= IS_ARRAY;
-    name = trim(str);
-    if (contains(type, "+")) {
-        while (contains(type, "(")) {
-            replaceAll(type, "(", "<tuple>");
-            replaceAll(type, ")", "</tuple>");
-            string_q tuple = snagFieldClear(type, "tuple");
-            CStringArray parts;
-            explode(parts, tuple, '+');
-            size_t cnt = 1;
-            for (auto part : parts) {
-                CParameter p;
-                p.type = nextTokenClear(part, ' ');
-                p.name = (part.empty() ? ("val_" + uint_2_Str(cnt++)) : part);
-                components.push_back(p);
-            }
-            type = "tuple" + type;
-        }
-    }
-    return true;
-}
-
-//-----------------------------------------------------------------------
 bool CParameter::isValid(void) const {
     // TODO(tjayrush): not exhaustive
     if (!(startsWith(type, "address") || startsWith(type, "bool") || startsWith(type, "string") ||

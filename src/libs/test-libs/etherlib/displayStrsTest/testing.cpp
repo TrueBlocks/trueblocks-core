@@ -52,7 +52,7 @@ bool testDisplayStr(COptions& options) {
 
         CAbi abi;
         abi.address = "0x1234567890123456789012345678901234567890";
-        abi.loadAbiAddInterface(func);
+        abi.interfaces.push_back(func);
 
         CEthState es;
         es.address = "0x1234567890123456789012345678901234567890";

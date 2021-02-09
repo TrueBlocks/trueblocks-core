@@ -258,17 +258,6 @@ bool COptions::parseArguments(string_q& command) {
             defShow + (isApiMode() ? "|CTransaction:encoding,function,input,etherGasCost|CTrace:traceAddress" : "");
         manageFields(show, true);
 
-        // Load as many ABI files as we have
-        if (!appearances)
-            abi_spec.loadAbisFromKnown();
-
-        // Try to articulate the monitored addresses
-        for (size_t i = 0; i < monitors.size(); i++) {
-            CMonitor* monitor = &monitors[i];
-            if (isContractAt(monitor->address, latestBlock))
-                abi_spec.loadAbiFromEtherscan(monitor->address, false);
-        }
-
         if (expContext().exportFmt != JSON1 && expContext().exportFmt != API1) {
             string_q format;
 
@@ -361,6 +350,17 @@ bool COptions::parseArguments(string_q& command) {
     if (logs) {
         SHOW_FIELD(CLogEntry, "blockNumber");
         SHOW_FIELD(CLogEntry, "transactionIndex");
+    }
+
+    if (appearances || count)
+        articulate = false;
+
+    if (articulate) {
+        abi_spec.loadAbisFromKnown();
+        for (auto monitor : monitors) {
+            if (isContractAt(monitor.address, latestBlock))
+                abi_spec.loadAbiFromEtherscan(monitor.address);
+        }
     }
 
     EXIT_NOMSG(true);

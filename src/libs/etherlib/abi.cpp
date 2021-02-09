@@ -112,11 +112,11 @@ bool CAbi::setValueByName(const string_q& fieldNameIn, const string_q& fieldValu
 
     // EXISTING_CODE
     if (fieldName % "interfaces") {
-        CFunction obj;
+        CFunction func;
         string_q str = fieldValue;
-        while (obj.parseJson3(str)) {
-            loadAbiAddInterface(obj);
-            obj = CFunction();  // reset
+        while (func.parseJson3(str)) {
+            loadAbiAddInterface(func);
+            func = CFunction();  // reset
         }
         return true;
     }
@@ -337,7 +337,10 @@ bool loadAbiFile(const string_q& path, void* data) {
 
 //---------------------------------------------------------------------------
 bool loadAbiString(const string_q& jsonStr, CAbi& abi) {
-    return abi.loadAbiFromString(jsonStr);
+    bool ret = abi.loadAbiFromString(jsonStr);
+    if (ret)
+        sort(abi.interfaces.begin(), abi.interfaces.end(), sortByFuncName);
+    return ret;
 }
 
 //---------------------------------------------------------------------------
@@ -386,14 +389,12 @@ bool CAbi::loadAbisFolderAndCache(const string_q& sourcePath, const string_q& bi
 }
 
 //---------------------------------------------------------------------------
-bool CAbi::loadAbisFromTokens(void) {
-    bool ret1 = loadAbiFromFile(configPath("abis/known-000/erc_00020.json"));
-    bool ret2 = loadAbiFromFile(configPath("abis/known-000/erc_00721.json"));
-    return (ret1 && ret2);
-}
-
-//---------------------------------------------------------------------------
-bool CAbi::loadAbisFromKnown(void) {
+bool CAbi::loadAbisFromKnown(bool tokensOnly) {
+    if (tokensOnly) {
+        bool ret1 = loadAbiFromFile(configPath("abis/known-000/erc_00020.json"));
+        bool ret2 = loadAbiFromFile(configPath("abis/known-000/erc_00721.json"));
+        return (ret1 && ret2);
+    }
     return loadAbisFolderAndCache(configPath("abis/"), getCachePath("abis/known.bin"));
 }
 
@@ -413,26 +414,22 @@ bool CAbi::loadAbiFromAddress(const address_t& addr) {
 }
 
 //---------------------------------------------------------------------------
+// static string_q dispName(const string_q& fileName) {
+//     return substitute(substitute(fileName, getCachePath(""), "$CACHE/"), configPath(""), "$CONFIG/");
+// }
+
+//---------------------------------------------------------------------------
 bool CAbi::loadAbiFromFile(const string_q& fileName) {
     if (sourcesMap[fileName])
        return true;
 
     if (!fileExists(fileName)) {
-        LOG_TEST(
-            "load"
-            "AbiFromFile",
-            "Could not load file " +
-                substitute(substitute(fileName, getCachePath(""), "$CACHE/"), configPath(""), "$CONFIG/"));
+        LOG_TEST("loadAbiFromFile", "Could not load file " + dispName(fileName));
         return false;
     }
+    LOG_TEST("loadAbiFromFile", dispName(fileName));
 
-    string_q contents;
-    asciiFileToString(fileName, contents);
-    LOG_TEST(
-        "load"
-        "AbiFromFile",
-        substitute(substitute(fileName, getCachePath(""), "$CACHE/"), configPath(""), "$CONFIG/"));
-    if (loadAbiFromString(contents)) {
+    if (loadAbiFromString(asciiFileToString(fileName))) {
         sort(interfaces.begin(), interfaces.end(), sortByFuncName);
         sourcesMap[fileName] = true;
         return true;
@@ -448,7 +445,6 @@ bool CAbi::loadAbiFromString(const string_q& in) {
         loadAbiAddInterface(func);
         func = CFunction();  // reset
     }
-    sort(interfaces.begin(), interfaces.end(), sortByFuncName);
     return interfaces.size();
 }
 
@@ -507,209 +503,6 @@ bool CAbi::loadAbiFromEtherscan(const address_t& addr, bool raw) {
         LOG4("Could not get the ABI data. Copy to ./", addr, ".json and re-run.");
     sourcesMap[addr] = true;
     return false;
-}
-
-static const CStringArray removes = {"internal", "virtual", "memory", "private", "external", "pure", "calldata"};
-
-static bool ofInterest(const string_q& line) {
-    return (contains(line, "contract") || contains(line, "interface") || contains(line, "library") ||
-            contains(line, "struct") || contains(line, "function") || contains(line, "event"));
-}
-
-/*
-public, private, external, internal, pure, view, payable, constant, immutable, anonymous, indexed, virtual, override
-pragma, import, abstract
-contract, interface, library
-using, modifier, returns, enum, mapping
-struct, function, event
-memory, storage, calldata
-address, bool, string, var, int*, uint*, bytes*, fixed*, ufixed*
-*/
-
-//----------------------------------------------------------------
-string_q removeComments(const string_q& contents) {
-    ostringstream os;
-    ParseState state = OUT;
-    char lastChar = 0;
-    for (auto ch : contents) {
-        switch (state) {
-            case IN_COMMENT1:
-                if (ch == COMMENT_END1) {
-                    if (!isspace(lastChar))
-                        os << ch;
-                    state = OUT;
-                } else {
-                    // do nothing
-                }
-                break;
-            case IN_COMMENT2:
-                if (ch == COMMENT_END2) {
-                    state = OUT;
-                } else {
-                    // do nothing
-                }
-                break;
-            case OUT:
-                if (ch == COMMENT1) {
-                    state = IN_COMMENT1;
-                } else if (ch == COMMENT2) {
-                    state = IN_COMMENT2;
-                } else {
-                    if (!isspace(ch) || !isspace(lastChar))
-                        os << ch;
-                }
-                break;
-            default:
-                break;
-        }
-        lastChar = ch;
-    }
-
-    return os.str();
-}
-
-//----------------------------------------------------------------
-bool CAbi::loadAbiFromSolidity(const string_q& addr) {
-    string_q solFile = addr + ".sol";
-    string_q contents = asciiFileToString(solFile);
-    LOG_TEST("sol_2_Abi", contents);
-
-    replaceAll(contents, "/*", string_q(1, COMMENT2));
-    replaceAll(contents, "//", string_q(1, COMMENT1));
-    replaceAll(contents, "*/", string_q(1, COMMENT_END2));
-    replaceAll(contents, "pragma", string_q(1, COMMENT1));  // simply remove pragmas
-    replaceAll(contents, "constructor", "modifier");        // treat constructors like modifiers
-    replaceAll(contents, "function", string_q(1, FUNCTION_START));
-    replaceAll(contents, "struct", string_q(1, STRUCT_START));
-    replaceAll(contents, "event", string_q(1, EVENT_START));
-    replaceAll(contents, "modifier", string_q(1, MODIFIER_START));
-    for (auto rem : removes)
-        replaceAll(contents, rem, "");
-    contents = removeComments(contents);
-
-    CStringArray psStrs = {"OUT",         "IN",       "IN_COMMENT1", "IN_COMMENT2",
-                           "IN_FUNCTION", "IN_EVENT", "IN_STRUCT",   "IN_MODIFIER"};
-    ostringstream os;
-    ParseState state = OUT;
-    // ParseState pre_state = state;
-    char lastChar = 0;
-    size_t scopeCount = 0;
-    for (auto ch : contents) {
-        LOG_TEST("State pre", psStrs[state]);
-        // pre_state = state;
-        switch (state) {
-            case IN_MODIFIER:
-                if (ch == '{') {
-                    scopeCount++;
-                } else if (ch == '}') {
-                    scopeCount--;
-                    if (scopeCount == 0) {
-                        state = OUT;
-                    }
-                }
-                break;
-            case IN_EVENT:
-                if (ch == '\n') {
-                    // do nothing
-                } else if (ch == ';') {
-                    if (!isspace(ch) || !isspace(lastChar))
-                        os << ch;
-                    state = OUT;
-                } else {
-                    if (!isspace(ch) || !isspace(lastChar))
-                        os << ch;
-                }
-                break;
-            case IN_STRUCT:
-                if (ch == '\n') {
-                    // do nothing
-                } else if (ch == '{') {
-                    os << ch;
-                    scopeCount++;
-                } else if (ch == '}') {
-                    os << ch;
-                    scopeCount--;
-                    if (scopeCount == 0) {
-                        state = OUT;
-                    }
-                } else {
-                    if (!isspace(ch) || !isspace(lastChar))
-                        os << ch;
-                }
-                break;
-            case IN_FUNCTION:
-                if (ch == '\n') {
-                    // do nothing
-                } else if (ch == ';') {
-                    if (scopeCount == 0) {
-                        os << ch;
-                        state = OUT;
-                    }
-                } else if (ch == '{') {
-                    if (scopeCount == 0)
-                        os << ch;
-                    scopeCount++;
-                } else if (ch == '}') {
-                    scopeCount--;
-                    if (scopeCount == 0) {
-                        os << ch;
-                        state = OUT;
-                    }
-                } else {
-                    if (scopeCount == 0 && (!isspace(ch) || !isspace(lastChar)))
-                        os << ch;
-                }
-                break;
-            case OUT:
-                if (ch == EVENT_START) {
-                    os << "event";
-                    state = IN_EVENT;
-                } else if (ch == STRUCT_START) {
-                    os << "struct";
-                    scopeCount = 0;
-                    state = IN_STRUCT;
-                } else if (ch == FUNCTION_START) {
-                    os << "function";
-                    scopeCount = 0;
-                    state = IN_FUNCTION;
-                } else if (ch == MODIFIER_START) {
-                    scopeCount = 0;
-                    state = IN_MODIFIER;
-                } else {
-                    if (!isspace(ch) || !isspace(lastChar))
-                        os << ch;
-                }
-                break;
-            default:
-                break;
-        }
-        LOG_TEST("State post", psStrs[state]);
-        // if (state != pre_state)
-        //     printf("");
-        lastChar = ch;
-    }
-
-    contents = os.str();
-    replaceAll(contents, "\n\n", "\n");
-    replaceAll(contents, "\r", "");
-    replaceAll(contents, " )", ")");
-    LOG_TEST("Contents", contents);
-
-    CStringArray lines;
-    explode(lines, contents, '\n');
-    for (auto line : lines) {
-        if (ofInterest(line)) {
-            if (isTestMode())
-                cerr << line << endl;
-            if (contains(line, "function ") || contains(line, "event ")) {
-                CFunction func;
-                func.fromDefinition(line);
-                loadAbiAddInterface(func);
-            }
-        }
-    }
-    sort(interfaces.begin(), interfaces.end(), sortByFuncName);
-    return true;
 }
 
 //-----------------------------------------------------------------------

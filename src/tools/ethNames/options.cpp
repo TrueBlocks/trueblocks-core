@@ -127,7 +127,7 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     if (clean || isCrudCommand()) {
-        abi_spec.loadAbisFromTokens();
+        abi_spec.loadAbisFromKnown(true);
         if (clean)
             return handle_clean();
         if (!processEditCommand(terms, to_custom))
