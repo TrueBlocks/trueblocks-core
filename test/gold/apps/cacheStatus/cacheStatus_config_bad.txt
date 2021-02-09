@@ -3,17 +3,18 @@ cacheStatus config
 
   Invalid option 'config' for 'modes'. One or more of [index|monitors|collections|names|abis|caches|some|all] required. Quitting...
 
-  Usage:    cacheStatus [-d|-t|-r|-v|-h] <mode> [mode...]  
+  Usage:    cacheStatus [-d|-t|-v|-h] <mode> [mode...]  
   Purpose:  Report on status of one or more TrueBlocks caches.
 
   Where:  
 	modes                 the type of status info to retrieve, one or more of [index|monitors|collections|names|abis|caches|some*|all]
 	-d  (--details)       include details about items found in monitors, slurps, abis, or price caches
 	-t  (--types <val>)   for cache mode only, which type(s) of cache to report, one or more of [blocks|transactions|traces|slurps|prices|all*]
-	-r  (--report)        show a summary of the current status of the blockchain and TrueBlocks scrapers
 
 	#### Hidden options
 	-p  (--depth <num>)   for cache mode only, number of levels deep to report
+	-r  (--report)        show a summary of the current status of TrueBlocks (deprecated)
+	-e  (--terse)         show a terse summary report
 	-g  (--get_config)    returns JSON data of the editable configuration file items
 	-s  (--set_config)    accepts JSON in an env variable and writes it to configuration files
 	-S  (--start <num>)   first block to process (inclusive)

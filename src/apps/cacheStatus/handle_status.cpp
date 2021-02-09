@@ -34,7 +34,7 @@ bool COptions::handle_status(ostream& os) {
         replaceAll(report, "[{CACHE_PATH}]", status.cache_path);
         replaceAll(report, "[{INDEX_PATH}]", status.index_path);
         replaceAll(report, "[{PROVIDER}]", status.rpc_provider);
-        replaceAll(report, "[{TIME}]", substitute(Now().Format(FMT_EXPORT), "T", " "));
+        replaceAll(report, "[{TIME}]", substitute(substitute(Now().Format(FMT_EXPORT), "T", " "), "-", "/"));
         os << report << endl;
         return true;
     }
