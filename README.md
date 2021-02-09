@@ -66,28 +66,29 @@ chifra --version
 For a complete list of available commands, run this command:
 
 ```[shell]
-chifra --help --verbose
+chifra --help
 ```
 
 Next, let's see if you can get a block from your Ethereum node. Enter this command:
 
 ```[shell]
-getBlock 100
+chifra blocks 1000
 ```
 
-This should return valid JSON data for block 100 (type `getBlock --help` for more options on this tool.) If you get an error, such as this:
+This should return valid JSON data for block 1,000 (type `getBlock --help` for more options on this tool.) If you get an error, such as this:
 
 ```[shell]
 Warning: The Ethereum RPC: 'http://localhost:8545' was not found. Quitting...
 ```
-You need to edit the file `~/.quickBlocks/quickBlocks.toml` to provide the URL of an available Ethereum RPC provider. Add this text:
+
+You need to edit the file `~/.quickBlocks/quickBlocks.toml` to provide the URL of an available Ethereum RPC provider. Enter this text (adding the `settings` sections if it's not present):
 
 ```[toml]
 [settings]
 rpcProvider="<url-to-your-rpc-provider>
 ```
 
-Once you get `getBlock` to return JSON data, you are ready to test your installtion. While optional, one of the tools (`ethslurp`) requires an Etherscan key. Get an EtherScan API key now, then run:
+Once you get `chifra blocks` to return JSON data, you are ready to test your installtion. While optional, one of the tools (`ethslurp`) requires an Etherscan key. Get an EtherScan API key now, then run:
 
 ```[shell]
 make tests
@@ -96,7 +97,7 @@ make tests
 ## Using TrueBlocks
 ---
 
-The `chifra` tool is the basis for everything related to TrueBlocks. (`chifra` is derived from the Arabic word for `chipher`.) It helps you decipher the chain data.
+The `chifra` tool is the basis for everything related to TrueBlocks. (`chifra` is derived from the Arabic word for `chipher`.) It helps you decipher chain data.
 
 [Running the API](./docs/FAQ.md#running-the-api)
 
@@ -112,7 +113,7 @@ The `chifra` tool is the basis for everything related to TrueBlocks. (`chifra` i
 ---
 Please see information about our [work flow](./docs/BRANCHING.md) before proceeding.
 
-1. Fork this repository.
+1. Fork this repository into your own repo.
 2. Create a branch: `git checkout -b <branch_name>`.
 3. Make changes and commit them: `git commit -m '<commit_message>'`
 4. Push to the original branch: `git push origin TrueBlocks/trueblocks-core`

@@ -64,11 +64,9 @@ bool COptions::parseArguments(string_q& command) {
             // END_CODE_AUTO
 
         } else if (arg == "-h" || arg == "--help") {
-            if (mode.empty()) {
+            if (mode.empty() || mode == "serve") {
                 optionOn(OPT_HELP);
-                return usage();
-            } else if (mode == "serve") {
-                optionOn(OPT_HELP);
+                verbose = true;
                 return usage();
             }
             setenv("PROG_NAME", ("chifra " + mode).c_str(), true);
@@ -124,6 +122,7 @@ bool COptions::parseArguments(string_q& command) {
         COption* option = (COption*)&params[0];
         option->description =
             string_q("which command to run.") + (!verbose ? " 'chifra -v' for more information..." : "");
+        verbose = true;
         return usage("Please specify " + params[0].description);
     }
 
