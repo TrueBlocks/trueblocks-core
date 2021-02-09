@@ -14,7 +14,7 @@
 // END_ERROR_DEFINES
 
 //-------------------------------------------------------------------------
-class COptions : public COptionsBase {
+class COptions : public CAbiOptions {
   public:
     // BEG_CODE_DECLARE
     string_q mode;
@@ -34,4 +34,5 @@ class COptions : public COptionsBase {
     void Init(void) override;
 
     void handle_status(void);
+    hash_t getCurrentManifest(void);
 };

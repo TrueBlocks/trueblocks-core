@@ -50,9 +50,9 @@ bool testDisplayStr(COptions& options) {
         param.name = "output";
         func.outputs.push_back(param);
 
-        CAbi abi_spec;
-        abi_spec.address = "0x1234567890123456789012345678901234567890";
-        abi_spec.loadAbiAddInterface(func);
+        CAbi abi;
+        abi.address = "0x1234567890123456789012345678901234567890";
+        abi.loadAbiAddInterface(func);
 
         CEthState es;
         es.address = "0x1234567890123456789012345678901234567890";
@@ -71,8 +71,8 @@ bool testDisplayStr(COptions& options) {
         //      monitor.Format("[{ABI_SPEC::INTERFACES[0]::NAME}]" name of specific element
         // or
         //      monitor.Format("[{ABI_SPEC::INTERFACES[i]::NAME}]" name of all elements
-        cout << abi_spec.interfaces[0].Format("[{p:NAME}]: [{NAME}]") << endl;
-        cout << abi_spec.interfaces[0].inputs[0].Format("[{p:NAME}]: [{NAME}]") << endl;
+        cout << abi.interfaces[0].Format("[{p:NAME}]: [{NAME}]") << endl;
+        cout << abi.interfaces[0].inputs[0].Format("[{p:NAME}]: [{NAME}]") << endl;
         cout << monitor.stateHistory[0].Format("[{p:ADDRESS}]: [{ADDRESS}]") << endl;
         cout << monitor.stateHistory[0].Format("[{p:BALANCE}]: [{BALANCE}]") << endl;
         cout << monitor.stateHistory[0].Format("[{p:NONCE}]: [{NONCE}]") << endl;

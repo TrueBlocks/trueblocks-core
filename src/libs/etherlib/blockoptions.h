@@ -13,8 +13,14 @@
  *-------------------------------------------------------------------------------------------*/
 #include "utillib.h"
 
+//--------------------------------------------------------------------------
+class CAbiOptions : public COptionsBase {
+  public:
+    CAbi abi_spec;
+};
+
 //-----------------------------------------------------------------------------
-class CBlockOptions : public COptionsBase {
+class CBlockOptions : public CAbiOptions {
   public:
     COptionsBlockList blocks;
     CBlockOptions(void);

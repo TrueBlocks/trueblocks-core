@@ -81,17 +81,6 @@ string_q getFileContentsByHash(const hash_t& hash) {  // also unzips if the file
 }
 
 //----------------------------------------------------------------
-hash_t getCurrentManifest(void) {
-    CAbi abi_spec;
-    loadAbiFile(configPath("abis/known-000/unchained.json"), &abi_spec);
-    address_t contractAddr = unchainedIndexAddr;
-    CFunction result;
-    if (doEthCall(contractAddr, manifestHashEncoding, "", getLatestBlock_client(), abi_spec, result))
-        return result.outputs[0].value;
-    return "";
-}
-
-//----------------------------------------------------------------
 hash_t getLastManifest(void) {
     return asciiFileToString(configPath("ipfs-hashes/lastHash.txt"));
 }
@@ -103,19 +92,18 @@ bool checkOnDisc(CPinnedItem& pin, void* data) {
 }
 
 //----------------------------------------------------------------
-bool freshenBloomFilters(bool download) {
-    string_q cur = getCurrentManifest();
+bool freshenBloomFilters(bool download, const string_q& currManifest) {
     string_q prev = getLastManifest();
-    if (cur != prev) {
-        LOG_INFO("Manifest needs to be updated. Previous [", prev, "] Current [", cur, "]");
-        stringToAsciiFile(configPath("ipfs-hashes/lastHash.txt"), cur);
-        string_q contents = getFileContentsByHash(cur);
+    if (currManifest != prev) {
+        LOG_INFO("Manifest needs to be updated. Previous [", prev, "] Current [", currManifest, "]");
+        stringToAsciiFile(configPath("ipfs-hashes/lastHash.txt"), currManifest);
+        string_q contents = getFileContentsByHash(currManifest);
         if (contents != "empty file") {
             stringToAsciiFile(configPath("ipfs-hashes/pin-manifest.json"), contents);
             pinList.clear();
         }
     } else {
-        LOG_INFO("Manifest is up to data at: ", cur);
+        LOG_INFO("Manifest is up to data at: ", currManifest);
     }
 
     readManifest();

@@ -260,7 +260,7 @@ bool COptions::parseArguments(string_q& command) {
 
         // Load as many ABI files as we have
         if (!appearances)
-            abi_spec.loadAbisFromKnown(ABI_ALL);
+            abi_spec.loadAbisFromKnown();
 
         // Try to articulate the monitored addresses
         for (size_t i = 0; i < monitors.size(); i++) {

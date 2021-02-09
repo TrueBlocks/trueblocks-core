@@ -23,9 +23,6 @@ namespace qblocks {
 class CTransaction;
 class CLogEntry;
 class CTrace;
-#define ABI_KNOWN (1 << 1)
-#define ABI_TOKENS (1 << 2)
-#define ABI_ALL (ABI_KNOWN | ABI_TOKENS)
 typedef map<string, CFunction> CFunctionPtrMap;
 // EXISTING_CODE
 
@@ -46,7 +43,7 @@ class CAbi : public CBaseNode {
     const CBaseNode* getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
-    // CStringMap sourcesMap;
+    CStringMap sourcesMap;
     CStringMap interfaceMap;
 
     bool articulateTransaction(CTransaction* p) const;
@@ -54,7 +51,8 @@ class CAbi : public CBaseNode {
     bool articulateTrace(CTrace* t) const;
     bool articulateOutputs(const string_q& encoding, const string_q& value, CFunction& ret) const;
 
-    bool loadAbisFromKnown(int which);
+    bool loadAbisFromKnown(void);
+    bool loadAbisFromTokens(void);
     bool loadAbiFromEtherscan(const address_t& addr, bool raw = false);
     bool loadAbiFromSolidity(const string_q& addr);
     bool loadAbiFromAddress(const address_t& addr);
@@ -115,7 +113,7 @@ inline CAbi::~CAbi(void) {
 inline void CAbi::clear(void) {
     // EXISTING_CODE
     interfaceMap.clear();
-    // sourcesMap.clear();
+    sourcesMap.clear();
     // EXISTING_CODE
 }
 
@@ -128,7 +126,7 @@ inline void CAbi::initialize(void) {
 
     // EXISTING_CODE
     interfaceMap.clear();
-    // sourcesMap.clear();
+    sourcesMap.clear();
     // EXISTING_CODE
 }
 
@@ -142,7 +140,7 @@ inline void CAbi::duplicate(const CAbi& ab) {
 
     // EXISTING_CODE
     interfaceMap = ab.interfaceMap;
-    // sourcesMap = ab.sourcesMap;
+    sourcesMap = ab.sourcesMap;
     // EXISTING_CODE
 }
 

@@ -26,14 +26,13 @@ class CCapTable : public map<address_t, CStake> {
 };
 
 //-----------------------------------------------------------------------------
-class COptions : public COptionsBase {
+class COptions : public CAbiOptions {
   public:
     blknum_t curBucket = NOPOS;
     string_q totSupply;
     timestamp_t ts;
     string_q report(void);
     uint64_t countNonZero(void);
-    CAbi abi_spec;
     uint64_t nRows;
     address_t token;
     bool reverse;

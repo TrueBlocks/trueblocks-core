@@ -21,7 +21,7 @@
 // END_ERROR_DEFINES
 
 //-----------------------------------------------------------------------------
-class COptions : public COptionsBase {
+class COptions : public CAbiOptions {
   public:
     // BEG_CODE_DECLARE
     bool articulate;
@@ -33,7 +33,6 @@ class COptions : public COptionsBase {
 
     CTraceFilterArray filters;
     COptionsTransList transList;
-    CAbi abi_spec;
     bool first;
 
     COptions(void);

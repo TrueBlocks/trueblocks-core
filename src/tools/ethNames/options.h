@@ -31,7 +31,7 @@ enum account_t {
 };
 
 //-----------------------------------------------------------------------------
-class COptions : public COptionsBase {
+class COptions : public CAbiOptions {
   public:
     // BEG_CODE_DECLARE
     bool match_case;
@@ -42,7 +42,6 @@ class COptions : public COptionsBase {
     blknum_t latestBlock;
 
     CMonitor standards;
-    CAbi abi_spec;
     CAccountNameMap items;
     CStringArray searches;
     string_q searchFields;

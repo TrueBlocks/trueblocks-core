@@ -20,7 +20,7 @@
 // BEG_ERROR_DEFINES
 // END_ERROR_DEFINES
 
-class COptions : public COptionsBase {
+class COptions : public CAbiOptions {
   public:
     // BEG_CODE_DECLARE
     CAddressArray addrs;
@@ -28,8 +28,7 @@ class COptions : public COptionsBase {
 
     bool first;
     uint64_t parts;
-    CAbi abi_spec;
-
+ 
     COptions(void);
     ~COptions(void);
 

@@ -342,8 +342,8 @@ bool loadAbiString(const string_q& jsonStr, CAbi& abi) {
 
 //---------------------------------------------------------------------------
 bool CAbi::loadAbisFolderAndCache(const string_q& sourcePath, const string_q& binPath) {
-    // if (sourcesMap[sourcePath])
-    //    return true;
+    if (sourcesMap[sourcePath])
+       return true;
 
     if (fileExists(binPath)) {
         // If any file is newer, don't use binary cache
@@ -360,7 +360,7 @@ bool CAbi::loadAbisFolderAndCache(const string_q& sourcePath, const string_q& bi
                     interfaceMap[func.encoding] = true;
                     LOG_TEST("Inserting", func.type + "-" + func.signature);
                 }
-                // sourcesMap[sourcePath] = true;
+                sourcesMap[sourcePath] = true;
                 return true;
             }
         }
@@ -371,7 +371,7 @@ bool CAbi::loadAbisFolderAndCache(const string_q& sourcePath, const string_q& bi
         return false;
 
     sort(interfaces.begin(), interfaces.end(), sortByFuncName);
-    // sourcesMap[sourcePath] = true;
+    sourcesMap[sourcePath] = true;
 
     CArchive archive(WRITING_ARCHIVE);
     if (archive.Lock(binPath, modeWriteCreate, LOCK_NOWAIT)) {
@@ -386,12 +386,14 @@ bool CAbi::loadAbisFolderAndCache(const string_q& sourcePath, const string_q& bi
 }
 
 //---------------------------------------------------------------------------
-bool CAbi::loadAbisFromKnown(int which) {
-    if (which == ABI_TOKENS) {
-        bool ret1 = loadAbiFromFile(configPath("abis/known-000/erc_00020.json"));
-        bool ret2 = loadAbiFromFile(configPath("abis/known-000/erc_00721.json"));
-        return (ret1 && ret2);
-    }
+bool CAbi::loadAbisFromTokens(void) {
+    bool ret1 = loadAbiFromFile(configPath("abis/known-000/erc_00020.json"));
+    bool ret2 = loadAbiFromFile(configPath("abis/known-000/erc_00721.json"));
+    return (ret1 && ret2);
+}
+
+//---------------------------------------------------------------------------
+bool CAbi::loadAbisFromKnown(void) {
     return loadAbisFolderAndCache(configPath("abis/"), getCachePath("abis/known.bin"));
 }
 
@@ -412,8 +414,8 @@ bool CAbi::loadAbiFromAddress(const address_t& addr) {
 
 //---------------------------------------------------------------------------
 bool CAbi::loadAbiFromFile(const string_q& fileName) {
-    // if (sourcesMap[fileName])
-    //    return true;
+    if (sourcesMap[fileName])
+       return true;
 
     if (!fileExists(fileName)) {
         LOG_TEST(
@@ -432,7 +434,7 @@ bool CAbi::loadAbiFromFile(const string_q& fileName) {
         substitute(substitute(fileName, getCachePath(""), "$CACHE/"), configPath(""), "$CONFIG/"));
     if (loadAbiFromString(contents)) {
         sort(interfaces.begin(), interfaces.end(), sortByFuncName);
-        // sourcesMap[fileName] = true;
+        sourcesMap[fileName] = true;
         return true;
     }
     return false;
@@ -456,8 +458,8 @@ bool CAbi::loadAbiFromEtherscan(const address_t& addr, bool raw) {
         return true;
 
     if (!raw) {
-        // if (sourcesMap[addr])
-        //     return true;
+        if (sourcesMap[addr])
+            return true;
 
         if (loadAbiFromAddress(addr))
             return true;
@@ -465,7 +467,7 @@ bool CAbi::loadAbiFromEtherscan(const address_t& addr, bool raw) {
 
     // If this isn't a smart contract, don't bother
     if (!isContractAt(addr, getLatestBlock_client())) {
-        // sourcesMap[addr] = true;
+        sourcesMap[addr] = true;
         return true;
     }
 
@@ -503,7 +505,7 @@ bool CAbi::loadAbiFromEtherscan(const address_t& addr, bool raw) {
 
     if (contains(toLower(results), "source code not verified"))
         LOG4("Could not get the ABI data. Copy to ./", addr, ".json and re-run.");
-    // sourcesMap[addr] = true;
+    sourcesMap[addr] = true;
     return false;
 }
 

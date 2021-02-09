@@ -22,7 +22,7 @@
 #define CACHE_BYDEFAULT (1 << 6)
 
 //-----------------------------------------------------------------------
-class COptions : public COptionsBase {
+class COptions : public CAbiOptions {
   public:
     // BEG_CODE_DECLARE
     bool appearances;
@@ -45,7 +45,6 @@ class COptions : public COptionsBase {
 
     int write_opt;  // cache options as resolved (see options.cpp for notes)
 
-    CAbi abi_spec;
     CMonitorArray monitors;
     CMonitorCountArray counts;
     CAppearanceArray_base apps;

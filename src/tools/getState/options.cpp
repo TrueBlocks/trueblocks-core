@@ -191,8 +191,7 @@ bool COptions::parseArguments(string_q& command) {
         string_q fourByte = vars[1];
         string_q bytes = vars.size() > 2 ? vars[2] : "";
 
-        CAbi abi_spec;
-        abi_spec.loadAbisFromKnown(ABI_ALL);
+        abi_spec.loadAbisFromKnown();
         abi_spec.loadAbiFromEtherscan(state.address, false); // may fail, but it's okay as we will pick up from known abis
         if (doEthCall(state.address, fourByte, bytes, state.blockNumber, abi_spec, state.result)) {
             CTransaction art;

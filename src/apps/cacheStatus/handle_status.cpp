@@ -467,11 +467,11 @@ bool noteABI(const string_q& path, void* data) {
         if (isTestMode()) {
             abii.nFunctions = abii.nEvents = abii.nOther = abii.sizeInBytes = 36963;
         } else {
-            CAbi abi_spec;
-            loadAbiFile(path, &abi_spec);
-            abii.nFunctions = abi_spec.nFunctions();
-            abii.nEvents = abi_spec.nEvents();
-            abii.nOther = abi_spec.nOther();
+            counter->options->abi_spec = CAbi(); // reset
+            loadAbiFile(path, &counter->options->abi_spec);
+            abii.nFunctions = counter->options->abi_spec.nFunctions();
+            abii.nEvents = counter->options->abi_spec.nEvents();
+            abii.nOther = counter->options->abi_spec.nOther();
             abii.sizeInBytes = fileSize(path);
         }
         counter->abiArray->push_back(abii);

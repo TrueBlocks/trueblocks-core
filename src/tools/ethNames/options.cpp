@@ -126,23 +126,21 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    if (clean) {
-        abi_spec.loadAbisFromKnown(ABI_TOKENS);
-        return handle_clean();
+    if (clean || isCrudCommand()) {
+        abi_spec.loadAbisFromTokens();
+        if (clean)
+            return handle_clean();
+        if (!processEditCommand(terms, to_custom))
+            return false;
     }
+
+    for (auto term : terms)
+        searches.push_back(term);
 
     if (collections) {
         exportCollections(terms);
         return false;
     }
-
-    if (isCrudCommand()) {
-        abi_spec.loadAbisFromKnown(ABI_TOKENS);
-        if (!processEditCommand(terms, to_custom))
-            return false;
-    }
-    for (auto term : terms)
-        searches.push_back(term);
 
     CAccountName unused;
     getNamedAccount(unused, "0x0");

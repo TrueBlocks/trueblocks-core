@@ -116,3 +116,13 @@ COptions::COptions(void) {
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
 }
+
+//----------------------------------------------------------------
+hash_t COptions::getCurrentManifest(void) {
+    loadAbiFile(configPath("abis/known-000/unchained.json"), &abi_spec);
+    address_t contractAddr = unchainedIndexAddr;
+    CFunction result;
+    if (doEthCall(contractAddr, manifestHashEncoding, "", getLatestBlock_client(), abi_spec, result))
+        return result.outputs[0].value;
+    return "";
+}

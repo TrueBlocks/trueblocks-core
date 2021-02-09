@@ -123,7 +123,7 @@ bool COptions::parseArguments(string_q& command) {
         parts |= SIG_DETAILS;
 
     if (known)
-        abi_spec.loadAbisFromKnown(ABI_ALL);
+        abi_spec.loadAbisFromKnown();
 
     for (auto addr : addrs) {
         bool testing = isTestMode() && addr == "0xeeeeeeeeddddddddeeeeeeeeddddddddeeeeeeee";
@@ -193,7 +193,6 @@ COptions::~COptions(void) {
 
 //-----------------------------------------------------------------------
 void COptions::convertFromSol(const address_t& addr) {
-    CAbi abi_spec;
     abi_spec.loadAbiFromSolidity(addr);
     GETRUNTIME_CLASS(CFunction)->sortFieldList();
     GETRUNTIME_CLASS(CParameter)->sortFieldList();

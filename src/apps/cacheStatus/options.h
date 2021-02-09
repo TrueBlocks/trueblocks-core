@@ -24,7 +24,7 @@
 // END_ERROR_DEFINES
 
 //-------------------------------------------------------------------------
-class COptions : public COptionsBase {
+class COptions : public CAbiOptions {
   public:
     // BEG_CODE_DECLARE
     bool details;

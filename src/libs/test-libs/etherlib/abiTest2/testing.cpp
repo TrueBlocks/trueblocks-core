@@ -68,14 +68,14 @@ extern void doFunctionTest(void) {
 
 //--------------------------------------------------------------
 void doOne(const string_q& fn) {
-    CAbi abi_spec;
-    loadAbiFile("./" + fn + ".json", &abi_spec);
+    CAbi abi;
+    loadAbiFile("./" + fn + ".json", &abi);
     CTransaction tx;
     string_q txStr = asciiFileToString("./" + fn + ".tx");
     tx.parseJson3(txStr);
-    abi_spec.articulateTransaction(&tx);
+    abi.articulateTransaction(&tx);
     for (auto log : tx.receipt.logs) {
-        abi_spec.articulateLog(&log);
+        abi.articulateLog(&log);
     }
     cout << tx << endl;
 }
