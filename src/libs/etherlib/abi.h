@@ -55,6 +55,7 @@ class CAbi : public CBaseNode {
     bool loadAbiFromEtherscan(const address_t& addr, bool raw = false);
     bool loadAbiFromSolidity(const string_q& addr);
 
+    const CFunctionArray& interfaceArray(void) const;
     size_t nInterfaces(void) const;
     size_t nFunctions(void) const;
     size_t nEvents(void) const;

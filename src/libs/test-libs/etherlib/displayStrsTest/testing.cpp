@@ -40,20 +40,6 @@ bool testDisplayStr(COptions& options) {
         SHOW_FIELD(CMonitor, "abi_spec");
         monitor.name = "monitor";
 
-        CFunction func;
-        func.name = "interface";
-        func.type = "function";
-
-        CParameter param;
-        param.name = "input";
-        func.inputs.push_back(param);
-        param.name = "output";
-        func.outputs.push_back(param);
-
-        CAbi abi;
-        abi.address = "0x1234567890123456789012345678901234567890";
-        abi.interfaces.push_back(func);
-
         CEthState es;
         es.address = "0x1234567890123456789012345678901234567890";
         es.balance = str_2_Wei("6000000000000000000");
@@ -67,12 +53,6 @@ bool testDisplayStr(COptions& options) {
         monitor.summaryStatement = is;
 
         cout << monitor.Format("[{p:STATEMENT::AMOUNTIN}]: [{STATEMENT::AMOUNTIN}]") << endl;
-        // TODO(tjayrush): To address elements of array it should look like this:
-        //      monitor.Format("[{ABI_SPEC::INTERFACES[0]::NAME}]" name of specific element
-        // or
-        //      monitor.Format("[{ABI_SPEC::INTERFACES[i]::NAME}]" name of all elements
-        cout << abi.interfaces[0].Format("[{p:NAME}]: [{NAME}]") << endl;
-        cout << abi.interfaces[0].inputs[0].Format("[{p:NAME}]: [{NAME}]") << endl;
         cout << monitor.stateHistory[0].Format("[{p:ADDRESS}]: [{ADDRESS}]") << endl;
         cout << monitor.stateHistory[0].Format("[{p:BALANCE}]: [{BALANCE}]") << endl;
         cout << monitor.stateHistory[0].Format("[{p:NONCE}]: [{NONCE}]") << endl;

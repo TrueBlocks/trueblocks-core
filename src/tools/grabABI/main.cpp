@@ -35,7 +35,7 @@ int main(int argc, const char* argv[]) {
         if (isText && !options.isNoHeader)
             cout << expContext().fmtMap["header"] << endl;
 
-        for (auto func : options.abi_spec.interfaces) {
+        for (auto func : options.abi_spec.interfaceArray()) {
             if (!options.first) {
                 if (!isText)
                     cout << ",";

@@ -322,6 +322,11 @@ const char* STR_DISPLAY_ABI =
 #define LOG_TEST(a, b)
 
 //---------------------------------------------------------------------------
+const CFunctionArray& CAbi::interfaceArray(void) const {
+    return interfaces;
+}
+
+//---------------------------------------------------------------------------
 bool loadAbiFile(const string_q& path, void* data) {
     if (endsWith(path, '/')) {
         forEveryFileInFolder(path + "*", loadAbiFile, data);
@@ -483,24 +488,18 @@ bool CAbi::loadAbiFromEtherscan(const address_t& addr, bool raw) {
 
     string_q results = substitute(fromES, "\\", "");
     if (!contains(results, "NOTOK")) {
+        LOG_TEST("loadAbiFromEtherscan", "for address " + addr);
+
         replace(results, "\"result\":\"", "<extract>");
         replaceReverse(results, "\"}", "</extract>");
         results = snagFieldClear(results, "extract", "");
 
-        LOG_TEST("loadAbiFromEtherscan", "for address " + addr);
-
         string_q fileName = getCachePath("abis/" + addr + ".json");
-        if (!isTestMode()) {
-            LOG4(results);
-            LOG4("Caching abi in ", substitute(fileName, getCachePath(""), "$BLOCK_CACHE/"));
-        }
         establishFolder(fileName);
         stringToAsciiFile(fileName, results);
         return loadAbiFromAddress(addr);
     }
 
-    if (contains(toLower(results), "source code not verified"))
-        LOG4("Could not get the ABI data. Copy to ./", addr, ".json and re-run.");
     sourcesMap[addr] = true;
     return false;
 }
