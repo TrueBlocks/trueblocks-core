@@ -1,3 +1,7 @@
+## pinStatus
+
+The `pinStatus` program allows one to manage and view the status of TrueBlocks's IPFS pins.
+
 ## Building
 
 After building **trueblocks** on the `develop` branch, go to the pinata test folder:
@@ -73,3 +77,43 @@ OPENSSLDIR: "/usr/lib/ssl"
 ENGINESDIR: "/usr/lib/x86_64-linux-gnu/engines-1.1"
 Seeding source: os-specific
 ```
+
+#### Usage
+
+`Usage:`    pinStatus [-a|-p|-u|-v|-h] mode  
+`Purpose:`  Report on and manage pinned appearance index and bloom chunks.
+
+`Where:`  
+
+| Short Cut | Option | Description |
+| -------: | :------- | :------- |
+|  | mode | display local or remote manifest or its IPFS hash, one of [local*&#124;remote&#124;onchain] (required) |
+| -a | --hash | display the hash instead of contents of manifest ('on' for onchain mode) |
+| -p | --pin <str> | pin indexes and blooms, add to manifest, and return hash |
+| -u | --unpin <str> | unpin index(es) and blooms given a hash, a filename, or 'all' |
+| -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
+| -h | --help | display this help screen |
+
+#### Other Options
+
+All **TrueBlocks** command-line tools support the following commands (although in some case, they have no meaning):
+
+    Command     |     Description
+    -----------------------------------------------------------------------------
+    --version   |   display the current version of the tool
+    --nocolor   |   turn off colored display
+    --wei       |   specify value in wei (the default)
+    --ether     |   specify value in ether
+    --dollars   |   specify value in US dollars
+    --raw       |   report JSON data from the node with minimal processing
+    --very_raw  |   report JSON data from node with zero processing
+    --fmt       |   export format (where appropriate). One of [none|txt|csv|json|api]
+    --to_file   |   write the results to a temporary file and return the filename
+    --output:fn |   write the results to file 'fn' and return the filename
+    --file:fn   |   specify multiple sets of command line options in a file.
+
+<small>*For the `--file:fn` option, place a series of valid command lines in a file and use the above options. In some cases, this option may significantly improve performance. A semi-colon at the start of a line makes that line a comment.*</small>
+
+**Powered by TrueBlocks<sup>&trade;</sup>**
+
+

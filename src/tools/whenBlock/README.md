@@ -11,8 +11,7 @@ You may name your own blocks (for example, to denote the start of an ICO perhaps
 #### Usage
 
 `Usage:`    whenBlock [-l|-t|-s|-v|-h] &lt; block | date &gt; [ block... | date... ]  
-`Purpose:`  Finds the nearest block prior to a date, or the nearest date prior to a block.
-            Alternatively, search for one of 'special' blocks.
+`Purpose:`  Finds block based on date, blockNum, timestamp, or 'special'.
 
 `Where:`  
 

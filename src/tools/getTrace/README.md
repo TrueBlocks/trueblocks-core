@@ -5,7 +5,7 @@
 #### Usage
 
 `Usage:`    getTrace [-a|-c|-v|-h] &lt;tx_id&gt; [tx_id...]  
-`Purpose:`  Retrieve a transaction's traces from the local cache or a running node.
+`Purpose:`  Retrieve a transaction's traces from the cache or the node.
 
 `Where:`  
 

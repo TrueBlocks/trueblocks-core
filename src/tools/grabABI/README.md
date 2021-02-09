@@ -4,8 +4,8 @@
 
 #### Usage
 
-`Usage:`    grabABI [-c|-g|-m|-k|-a|-f|-v|-h] &lt;address&gt; [address...]  
-`Purpose:`  Fetches the ABI for a smart contract. Optionally generates C++ source code representing that ABI.
+`Usage:`    grabABI [-c|-k|-f|-v|-h] &lt;address&gt; [address...]  
+`Purpose:`  Fetches the ABI for a smart contract.
 
 `Where:`  
 
@@ -13,10 +13,7 @@
 | -------: | :------- | :------- |
 |  | addrs | list of one or more smart contracts whose ABI to grab from EtherScan (required) |
 | -c | --canonical | convert all types to their canonical represenation and remove all spaces from display |
-| -g | --generate | generate C++ code into the current folder for all functions and events found in the ABI |
-| -m | --monitored | load ABIs from monitored addresses |
 | -k | --known | load common 'known' ABIs from cache |
-| -a | --addr | include address of smart contract for the abi in output |
 | -f | --find <str> | try to search for a function declaration given a four byte code |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |

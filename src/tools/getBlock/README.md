@@ -15,7 +15,7 @@ The tool may also be used to double check that the results produced from the Tru
 | -------: | :------- | :------- |
 |  | blocks | a space-separated list of one or more blocks to retrieve (required) |
 | -e | --hashes_only | display only transaction hashes, default is to display full transaction detail |
-| -a | --apps | display all addresses included in the block |
+| -a | --apps | display all address appearances included in the block |
 | -u | --uniq | display only uniq addresses found per block |
 | -n | --uniq_tx | display only uniq addresses found per transaction |
 | -c | --count | display counts of appearances (for --apps, --uniq, or --uniq_tx) or transactions |

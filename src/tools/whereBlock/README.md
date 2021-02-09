@@ -9,7 +9,7 @@ This tool is intended mostly as an aid in developing and debugging TrueBlocks to
 #### Usage
 
 `Usage:`    whereBlock [-v|-h] &lt;block&gt; [block...]  
-`Purpose:`  Reports if a block was found in the cache, at a local, or at a remote node.
+`Purpose:`  Reports in which cache (if any) a block is found.
 
 `Where:`  
 
