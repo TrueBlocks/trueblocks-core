@@ -64,40 +64,9 @@ bool visitBlock(CBlock& block, void* data) {
         unindent();
     }
     opt->first = false;
-    if (isTestMode() && opt->timestamps)
-        return block.blockNumber < 100;
+    if (isTestMode() && (++opt->cnt > 100))
+        return false;
     return true;
-}
-
-//---------------------------------------------------------------
-bool lookupDate(const COptions* options, CBlock& block, const timestamp_t& ts) {
-    time_q date = ts_2_Date(ts);
-
-    // speed up
-    blknum_t start = 1, stop = getLatestBlock_client();
-    if (date.GetYear() >= 2020) {
-        start = 9193265;
-    } else if (date.GetYear() >= 2019) {
-        start = 6988614;
-        stop = 9193265;
-    } else if (date.GetYear() >= 2018) {
-        start = 4832685;
-        stop = 6988614;
-    } else if (date.GetYear() >= 2017) {
-        start = 2912406;
-        stop = 4832685;
-    } else if (date.GetYear() >= 2016) {
-        start = 778482;
-        stop = 2912406;
-    }
-
-    block.timestamp = ts;
-    bool ret = findTimestamp_binarySearch(block, start, stop, true);
-    if (!isTestMode()) {
-        cerr << "\r";
-        cerr.flush();
-    }
-    return ret;
 }
 
 //-------------------------------------------------------------------------
@@ -162,13 +131,18 @@ void COptions::applyFilter() {
                 }
             }
             block.name = request.second;
-            visitBlock(block, this);
+            if (!visitBlock(block, this)) {
+                return;
+            }
 
         } else if (request.first == "date") {
-            if (lookupDate(this, block, (timestamp_t)str_2_Uint(request.second)))
-                visitBlock(block, this);
-            else
+            if (lookupDate(block, (timestamp_t)str_2_Uint(request.second), getLatestBlock_client())) {
+                if (!visitBlock(block, this)) {
+                    return;
+                }
+            } else {
                 LOG_WARN("Could not find a block at date " + request.second);
+            }
         }
     }
 }

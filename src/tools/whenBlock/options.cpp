@@ -155,6 +155,7 @@ void COptions::Init(void) {
     stop = 0;
     skip = NOPOS;
     isText = false;
+    cnt = 0;
     requests.clear();
     blocks.Init();
 }

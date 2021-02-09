@@ -33,6 +33,7 @@ class COptions : public CBlockOptions {
     bool isText;
     blknum_t stop;
     bool first;
+    blknum_t cnt;
 
     COptions(void);
     ~COptions(void);
@@ -44,5 +45,4 @@ class COptions : public CBlockOptions {
     string_q listSpecials(format_t fmt) const;
 };
 
-extern bool lookupDate(const COptions* options, CBlock& block, const timestamp_t& ts);
 extern bool showSpecials(CNameValue& pair, void* data);

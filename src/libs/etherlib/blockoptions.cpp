@@ -185,14 +185,90 @@ bool parseTransList2(COptionsBase* opt, COptionsTransList& transList, const stri
 }
 
 //--------------------------------------------------------------------------------
+time_q getBlockDate(blknum_t num) {
+    CBlock block;
+    getBlock_light(block, num);
+    return ts_2_Date(block.timestamp);
+}
+
+//---------------------------------------------------------------
+bool lookupDate(CBlock& block, const timestamp_t& ts, blknum_t latest) {
+    time_q date = ts_2_Date(ts);
+    
+    // speed up
+    blknum_t start = 1, stop = latest;
+    if (date.GetYear() >= 2021) {
+        start = 11565019;
+    } else if (date.GetYear() >= 2020) {
+        start = 9193265;
+        stop = 11565019;
+    } else if (date.GetYear() >= 2019) {
+        start = 6988614;
+        stop = 9193265;
+    } else if (date.GetYear() >= 2018) {
+        start = 4832685;
+        stop = 6988614;
+    } else if (date.GetYear() >= 2017) {
+        start = 2912406;
+        stop = 4832685;
+    } else if (date.GetYear() >= 2016) {
+        start = 778482;
+        stop = 2912406;
+    }
+    
+    block.timestamp = ts;
+    bool ret = findTimestamp_binarySearch(block, start, stop, true);
+    if (!isTestMode()) {
+        cerr << "\r";
+        cerr.flush();
+    }
+    return ret;
+}
+
+//--------------------------------------------------------------------------------
 bool parseBlockList2(COptionsBase* opt, COptionsBlockList& blocks, const string_q& argIn, blknum_t latest) {
-    string_q ret = blocks.parseBlockList(argIn, latest);
+    string_q ret = blocks.parseBlockList_inner(argIn, latest);
     if (endsWith(ret, "\n")) {
         cerr << "\n  " << ret << "\n";
         return false;
     } else if (!ret.empty()) {
         return (opt ? opt->usage(ret) : false);
     }
+
+    if (blocks.skip_type != UNTIMED) {
+        time_q startDate = getBlockDate(blocks.start);
+        time_q stopDate = getBlockDate(blocks.stop);
+        CTimeArray times;
+        switch (blocks.skip_type) {
+            case HOURLY:
+                expandHourly(times, startDate, stopDate);
+                break;
+            case DAILY:
+                expandDaily(times, startDate, stopDate);
+                break;
+            case WEEKLY:
+                expandWeekly(times, startDate, stopDate);
+                break;
+            case MONTHLY:
+                expandMonthly(times, startDate, stopDate);
+                break;
+            case QUARTERLY:
+                expandQuarterly(times, startDate, stopDate);
+                break;
+            case ANNUALLY:
+            default:
+                expandAnnually(times, startDate, stopDate);
+                break;
+        }
+        blocks.start = NOPOS;
+        blocks.stop = NOPOS;
+        for (auto t : times) {
+            CBlock block;
+            lookupDate(block, date_2_Ts(t), latest);
+            blocks.numList.push_back(block.blockNumber);
+        }
+    }
+
     return true;
 }
 

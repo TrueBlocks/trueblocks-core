@@ -49,6 +49,7 @@ class CHistoryOptions : public CBlockOptions {
 extern string_q getDispBal(blknum_t blockNum, biguint_t bal);
 
 //-----------------------------------------------------------------------------
+extern bool lookupDate(CBlock& block, const timestamp_t& ts, blknum_t latest);
 extern bool parseBlockList2(COptionsBase* opts, COptionsBlockList& blocks, const string_q& arg, blknum_t latest);
 extern bool parseTransList2(COptionsBase* opt, COptionsTransList& transList, const string_q& argIn);
 extern bool parseAddressList2(COptionsBase* opt, CAddressArray& addrs, const string_q& argIn);

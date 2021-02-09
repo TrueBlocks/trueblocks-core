@@ -204,6 +204,7 @@ extern void editFile(const string_q& fileName);
 extern string_q configPath(const string_q& part);
 extern string_q configPathRelative(const string_q& part);
 
+typedef enum { UNTIMED = 0, HOURLY, DAILY, WEEKLY, MONTHLY, QUARTERLY, ANNUALLY } skip_t;
 //--------------------------------------------------------------------------------
 class CToml;
 extern const CToml* getGlobalConfig(const string_q& name = "");
@@ -217,10 +218,11 @@ class COptionsBlockList {
     blknum_t stop;
     blknum_t skip;
     blknum_t latest;
+    skip_t skip_type;
     bool hasZeroBlock{false};
 
     void Init(void);
-    string_q parseBlockList(const string_q& arg, blknum_t latest);
+    string_q parseBlockList_inner(const string_q& arg, blknum_t latest);
     COptionsBlockList(void);
     bool forEveryBlockNumber(UINT64VISITFUNC func, void*) const;
     bool hasBlocks(void) const {

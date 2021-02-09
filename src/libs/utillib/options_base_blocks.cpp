@@ -64,18 +64,17 @@ blknum_t COptionsBlockList::parseBlockOption(string_q& msg, blknum_t lastBlock, 
     return ret;
 }
 
-typedef enum { NONE = 0, HOURLY, DAILY, WEEKLY, MONTHLY, QUARTERLY, ANNUALLY } skip_t;
+//--------------------------------------------------------------------------------
+static string_q skip_markers = "untimed|hourly|daily|weekly|monthly|quarterly|annually";
 
 //--------------------------------------------------------------------------------
-static string_q skip_markers = "hourly|daily|weekly|monthly|quarterly|annually";
-//--------------------------------------------------------------------------------
-string_q COptionsBlockList::parseBlockList(const string_q& argIn, blknum_t lastBlock) {
+string_q COptionsBlockList::parseBlockList_inner(const string_q& argIn, blknum_t lastBlock) {
     string_q arg = argIn;
 
     direction_t offset = (contains(arg, ".next") ? NEXT : contains(arg, ".prev") ? PREV : NODIR);
     arg = substitute(substitute(arg, ".next", ""), ".prev", "");
 
-    skip_t skip_type = NONE;
+    skip_type = UNTIMED;
 
     // scrape off the skip marker if any
     if (contains(arg, ":")) {
@@ -102,7 +101,9 @@ string_q COptionsBlockList::parseBlockList(const string_q& argIn, blknum_t lastB
                 ASSERT(0);  // should never happen
                 skip = 1;
             }
-            LOG_INFO("skip_type: ", skip_type);
+            CStringArray m;
+            explode(m, skip_markers, '|');
+            LOG_INFO("skip_type: ", m[skip_type]);
         }
     }
 
@@ -140,7 +141,7 @@ string_q COptionsBlockList::parseBlockList(const string_q& argIn, blknum_t lastB
 
         if (stop <= start)
             return "'stop' must be strictly larger than 'start'";
-
+        
     } else {
         if (isHash(arg)) {
             hashList.push_back(arg);
@@ -151,13 +152,6 @@ string_q COptionsBlockList::parseBlockList(const string_q& argIn, blknum_t lastB
             if (!msg.empty())
                 return msg;
             numList.push_back(num);
-            // CTimeArray times;
-            // extern bool expandHourly(CTimeArray& ta, const time_q& start, size_t n, bool fallback = true);
-            // extern bool expandDaily(CTimeArray& ta, const time_q& start, size_t n, bool fallback = true);
-            // extern bool expandWeekly(CTimeArray& ta, const time_q& start, size_t n, bool fallback = true);
-            // extern bool expandMonthly(CTimeArray& ta, const time_q& start, size_t n, bool fallback = true);
-            // extern bool expandQuarterly(CTimeArray& ta, const time_q& start, size_t n, bool fallback = true);
-            // extern bool expandAnnually(CTimeArray& ta, const time_q& start, size_t n, bool fallback = true);
         }
     }
 
