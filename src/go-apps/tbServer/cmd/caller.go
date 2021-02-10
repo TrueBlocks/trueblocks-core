@@ -16,10 +16,6 @@ import (
 	"github.com/gorilla/mux"
 )
 
-func callOne(w http.ResponseWriter, r *http.Request, tbCmd string) {
-	callOneExtra(w, r, tbCmd, "")
-}
-
 func callOneExtra(w http.ResponseWriter, r *http.Request, tbCmd, extra string) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
@@ -28,9 +24,7 @@ func callOneExtra(w http.ResponseWriter, r *http.Request, tbCmd, extra string) {
 	w.WriteHeader(http.StatusOK)
 
 	allDogs := []string{}
-	if extra != "" {
-		allDogs = append(allDogs, extra)
-	}
+	mocked := false
 	for key, value := range r.URL.Query() {
 		if key != "addrs" &&
 			key != "terms" &&
@@ -44,7 +38,17 @@ func callOneExtra(w http.ResponseWriter, r *http.Request, tbCmd, extra string) {
 			allDogs = append(allDogs, "--"+key)
 		}
 		allDogs = append(allDogs, value...)
+		if (key == "mocked") {
+			mocked = true
+		}
 	}
+	if tbCmd != "chifra" {
+		allDogs = append([]string{extra}, allDogs...)
+	} else if mocked {
+		tbCmd = "chifra"
+		allDogs = append([]string{extra}, allDogs...)
+	}
+	log.Printf(tbCmd, allDogs)
 	cmd := exec.Command(tbCmd, allDogs...)
 
 	if r.Header.Get("User-Agent") == "testRunner" {
@@ -60,7 +64,7 @@ func callOneExtra(w http.ResponseWriter, r *http.Request, tbCmd, extra string) {
 	fmt.Fprint(w, output)
 }
 
-// FileExists
+// FileExists returns true if the given file exists
 func FileExists(filename string) bool {
 	info, err := os.Stat(filename)
 	if os.IsNotExist(err) {
@@ -70,11 +74,11 @@ func FileExists(filename string) bool {
 }
 
 func AccountsAbis(w http.ResponseWriter, r *http.Request) {
-	callOne(w, r, "grabABI")
+	callOneExtra(w, r, "grabABI", "collections")
 }
 
 func AccountsCollections(w http.ResponseWriter, r *http.Request) {
-	callOne(w, r, "ethNames")
+	callOneExtra(w, r, "ethNames", "names")
 }
 
 func AccountsExport(w http.ResponseWriter, r *http.Request) {
@@ -86,7 +90,7 @@ func AccountsList(w http.ResponseWriter, r *http.Request) {
 }
 
 func AccountsNames(w http.ResponseWriter, r *http.Request) {
-	callOne(w, r, "ethNames")
+	callOneExtra(w, r, "ethNames", "names")
 }
 
 func AccountsRm(w http.ResponseWriter, r *http.Request) {
@@ -94,7 +98,7 @@ func AccountsRm(w http.ResponseWriter, r *http.Request) {
 }
 
 func AccountsTags(w http.ResponseWriter, r *http.Request) {
-	callOne(w, r, "ethNames")
+	callOneExtra(w, r, "ethNames", "tags")
 }
 
 func AdminScrape(w http.ResponseWriter, r *http.Request) {
@@ -102,59 +106,59 @@ func AdminScrape(w http.ResponseWriter, r *http.Request) {
 }
 
 func AdminPins(w http.ResponseWriter, r *http.Request) {
-    callOne(w, r, "pinStatus");
+    callOneExtra(w, r, "pinStatus", "pins");
 }
 
 func AdminStatus(w http.ResponseWriter, r *http.Request) {
-	callOne(w, r, "cacheStatus")
+	callOneExtra(w, r, "cacheStatus", "status")
 }
 
 func DataBlocks(w http.ResponseWriter, r *http.Request) {
-	callOne(w, r, "getBlock")
+	callOneExtra(w, r, "getBlock", "blocks")
 }
 
 func DataLogs(w http.ResponseWriter, r *http.Request) {
-	callOne(w, r, "getLogs")
+	callOneExtra(w, r, "getLogs", "logs")
 }
 
 func DataReceipts(w http.ResponseWriter, r *http.Request) {
-	callOne(w, r, "getReceipt")
+	callOneExtra(w, r, "getReceipt", "receipts")
 }
 
 func DataTraces(w http.ResponseWriter, r *http.Request) {
-	callOne(w, r, "getTrace")
+	callOneExtra(w, r, "getTrace", "traces")
 }
 
 func DataTransactions(w http.ResponseWriter, r *http.Request) {
-	callOne(w, r, "getTrans")
+	callOneExtra(w, r, "getTrans", "transactions")
 }
 
 func DataWhen(w http.ResponseWriter, r *http.Request) {
-	callOne(w, r, "whenBlock")
+	callOneExtra(w, r, "whenBlock", "when")
 }
 
 func OtherDive(w http.ResponseWriter, r *http.Request) {
-	callOne(w, r, "turboDive")
+	callOneExtra(w, r, "turboDive", "dive")
 }
 
 func OtherQuotes(w http.ResponseWriter, r *http.Request) {
-	callOne(w, r, "ethQuote")
+	callOneExtra(w, r, "ethQuote", "quotes")
 }
 
 func OtherSlurp(w http.ResponseWriter, r *http.Request) {
-	callOne(w, r, "ethslurp")
+	callOneExtra(w, r, "ethslurp", "slurp")
 }
 
 func OtherWhere(w http.ResponseWriter, r *http.Request) {
-	callOne(w, r, "whereBlock")
+	callOneExtra(w, r, "whereBlock", "where")
 }
 
 func StateState(w http.ResponseWriter, r *http.Request) {
-	callOne(w, r, "getState")
+	callOneExtra(w, r, "getState", "state")
 }
 
 func StateTokens(w http.ResponseWriter, r *http.Request) {
-	callOne(w, r, "getTokenInfo")
+	callOneExtra(w, r, "getTokenInfo", "tokens")
 }
 
 var nProcessed int

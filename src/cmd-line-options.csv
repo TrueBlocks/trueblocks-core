@@ -250,7 +250,7 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,customizeable,c
 
 14400,all,,all,all,version,,,false,false,true,false,--,switch,<boolean>,display the current version of the tool
 14420,all,,all,all,nocolor,,,false,false,true,false,--,switch,<boolean>,turn off colored display
-14430,all,,all,all,mockData,,,false,false,true,false,--,switch,<boolean>,useful for testing&#44; instead of generating real data simulate the data
+14430,all,,all,all,mocked,,,false,false,true,false,--,switch,<boolean>,useful for testing&#44; instead of generating real data simulate the data
 14440,all,,all,all,wei,,,false,false,true,false,--,switch,<boolean>,specify value in wei (the default)
 14460,all,,all,all,ether,,,false,false,true,false,--,switch,<boolean>,specify value in ether
 14480,all,,all,all,dollars,,,false,false,true,false,--,switch,<boolean>,specify value in US dollars

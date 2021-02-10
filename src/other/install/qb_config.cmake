@@ -83,8 +83,8 @@ endif()
 #---------------------------------------------------------------
 # Copy the mock data, but don't unzip it
 #---------------------------------------------------------------
-message(STATUS "Copying unzipped mock data to ${DEST_PATH}/mockData")
-file(COPY "${SOURCE_PATH}/mockData/mockData.tar.gz" DESTINATION "${DEST_PATH}/mockData" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
+message(STATUS "Copying unzipped mock data to ${DEST_PATH}/")
+file(COPY "${SOURCE_PATH}/mocked/mocked.tar.gz" DESTINATION "${DEST_PATH}/" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
 
 #---------------------------------------------------------------
 # makeClass content

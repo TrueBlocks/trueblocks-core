@@ -72,7 +72,7 @@ class COptionsBase {
     bool isReadme;
     bool isRaw;
     bool isVeryRaw;
-    bool mockData;
+    bool mocked;
     bool isNoHeader;
     string_q crudCommand;
     bool isCrudCommand(void) const {
@@ -250,7 +250,7 @@ extern void errorMessage(const string_q& msg);
 inline bool isReserved(const string_q& command) {
     const char* STR_RESERVED =
         "|help|verbose|fmt|output|noop|version|nocolor|no_header|very_raw|raw|"
-        "wei|ether|dollars|parity|cmd|mockData|api_mode|to_file|file|";
+        "wei|ether|dollars|parity|cmd|mocked|api_mode|to_file|file|";
     return contains(STR_RESERVED, "|" + command + "|");
 }
 }  // namespace qblocks

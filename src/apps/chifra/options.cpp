@@ -179,7 +179,7 @@ bool COptions::parseArguments(string_q& command) {
         return false;
     }
 
-    if (mockData) {
+    if (mocked) {
         string_q which = origMode;
         if (origMode == "names") {
             if (contains(tool_flags, "tags")) {
@@ -194,7 +194,7 @@ bool COptions::parseArguments(string_q& command) {
         }
 
         uint64_t nMocked = getGlobalConfig("")->getConfigInt("dev", "n_mocked", 100);
-        string_q path = configPath("mockData/" + origMode + ".json");
+        string_q path = configPath("mocked/" + origMode + ".json");
         if (fileExists(path)) {
             if (origMode == "export") {
                 // simulate listing
@@ -220,8 +220,8 @@ bool COptions::parseArguments(string_q& command) {
                 return false;
             }
         }
-        tool_flags += " --mockData ";
-        freshen_flags += " --mockData ";
+        tool_flags += " --mocked ";
+        freshen_flags += " --mocked ";
     }
 
     return true;

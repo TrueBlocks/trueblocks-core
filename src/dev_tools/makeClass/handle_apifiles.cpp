@@ -79,31 +79,37 @@ void COptions::writeOpenApiFile(void) {
         }
     }
 
-    string_q sourceFn = "../../trueblocks-explorer/yaml-resolved/swagger.yaml";
+    string_q explFolder = "../../trueblocks-explorer/";
+    string_q sourceFn = explFolder + "yaml-resolved/swagger.yaml";
+    string_q destHTML = explFolder + "public/help/api.html";
     string_q templateFn = configPath("makeClass/blank_swagger.yaml");
-    if (!test && fileExists(sourceFn) && fileExists(templateFn)) {
-        string_q orig = asciiFileToString(sourceFn);
-        string_q str = asciiFileToString(templateFn);
-        replace(str, "[{PATHS}]", pathStream.str());
-        replace(str, "[{TAGS}]", tagStream.str());
-        if (orig != str) {
+    string_q converter = doCommand("which swag2html.py");
+
+    if (!test &&
+        fileExists(sourceFn) &&
+        fileExists(destHTML) &&
+        fileExists(templateFn) &&
+        fileExists(converter)) {
+
+        string_q oldCode = asciiFileToString(sourceFn);
+        string_q newCode = asciiFileToString(templateFn);
+        replace(newCode, "[{PATHS}]", pathStream.str());
+        replace(newCode, "[{TAGS}]", tagStream.str());
+        if (oldCode != newCode) {
             counter.nChanged++;
-            stringToAsciiFile(sourceFn, str);
-            string_q which = doCommand("which swag2html.py");
-            string_q destHTML = "../../trueblocks-explorer/public/help/api.html";
-            if (fileExists(which) && fileExists(destHTML)) {
-                ostringstream cmd;
-                cmd << "python " << which << " <" << sourceFn << " >" << destHTML << " ; date ; ls -l " << destHTML;
-                string_q c = cmd.str();
-                string_q result = doCommand(c);
-                // LOG_INFO("result: ", result);
-            }
+            stringToAsciiFile(sourceFn, newCode);
+
+            ostringstream cmd;
+            cmd << "python " << converter << " <" << sourceFn << " >" << destHTML << " ; date ; ls -l " << destHTML;
+            doCommand(cmd.str());
         }
     }
+
     if (test) {
         counter.routeCount = 0;
         LOG_WARN("Testing only - openapi file not written");
     }
+
     LOG_INFO(cYellow, "makeClass --openapi", cOff, " processed ", counter.routeCount, "/", counter.cmdCount,
              " routes/cmds ", " (changed ", counter.nChanged, ").", string_q(40, ' '));
 }

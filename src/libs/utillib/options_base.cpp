@@ -364,9 +364,9 @@ bool COptionsBase::standardOptions(string_q& cmdLine) {
         }
     }
 
-    if (isEnabled(OPT_MOCKDATA) && contains(cmdLine, "--mockData ")) {
-        replaceAll(cmdLine, "--mockData ", "");
-        mockData = true;
+    if (isEnabled(OPT_MOCKDATA) && contains(cmdLine, "--mocked ")) {
+        replaceAll(cmdLine, "--mocked ", "");
+        mocked = true;
     }
 
     if (isEnabled(OPT_OUTPUT) && contains(cmdLine, "--output:")) {
@@ -444,7 +444,7 @@ bool COptionsBase::builtInCmd(const string_q& arg) {
         return true;
     if (isEnabled(OPT_RAW) && (arg == "--raw" || arg == "--very_raw"))
         return true;
-    if (isEnabled(OPT_MOCKDATA) && arg == "--mockData")
+    if (isEnabled(OPT_MOCKDATA) && arg == "--mocked")
         return true;
     if (isEnabled(OPT_WEI) && arg == "--wei")
         return true;
@@ -1125,7 +1125,7 @@ COptionsBase::COptionsBase(void) {
     isReadme = false;
     isRaw = false;
     isVeryRaw = false;
-    mockData = false;
+    mocked = false;
     isNoHeader = false;
     enableBits = OPT_DEFAULT;
     scanRange = make_pair(0, NOPOS);
