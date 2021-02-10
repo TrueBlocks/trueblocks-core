@@ -16,6 +16,10 @@ import (
 	"github.com/gorilla/mux"
 )
 
+func callOne(w http.ResponseWriter, r *http.Request, tbCmd string) {
+	callOneExtra(w, r, tbCmd, "")
+}
+
 func callOneExtra(w http.ResponseWriter, r *http.Request, tbCmd, extra string) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
@@ -24,7 +28,9 @@ func callOneExtra(w http.ResponseWriter, r *http.Request, tbCmd, extra string) {
 	w.WriteHeader(http.StatusOK)
 
 	allDogs := []string{}
-	mocked := false
+	if extra != "" {
+		allDogs = append(allDogs, extra)
+	}
 	for key, value := range r.URL.Query() {
 		if key != "addrs" &&
 			key != "terms" &&
@@ -38,15 +44,6 @@ func callOneExtra(w http.ResponseWriter, r *http.Request, tbCmd, extra string) {
 			allDogs = append(allDogs, "--"+key)
 		}
 		allDogs = append(allDogs, value...)
-		if (key == "mocked") {
-			mocked = true
-		}
-	}
-	if tbCmd != "chifra" {
-		allDogs = append([]string{extra}, allDogs...)
-	} else if mocked {
-		tbCmd = "chifra"
-		allDogs = append([]string{extra}, allDogs...)
 	}
 	cmd := exec.Command(tbCmd, allDogs...)
 
@@ -63,7 +60,7 @@ func callOneExtra(w http.ResponseWriter, r *http.Request, tbCmd, extra string) {
 	fmt.Fprint(w, output)
 }
 
-// FileExists returns true if the given file exists
+// FileExists
 func FileExists(filename string) bool {
 	info, err := os.Stat(filename)
 	if os.IsNotExist(err) {
@@ -73,11 +70,11 @@ func FileExists(filename string) bool {
 }
 
 func AccountsAbis(w http.ResponseWriter, r *http.Request) {
-	callOneExtra(w, r, "grabABI", "collections")
+	callOne(w, r, "grabABI")
 }
 
 func AccountsCollections(w http.ResponseWriter, r *http.Request) {
-	callOneExtra(w, r, "ethNames", "names")
+	callOne(w, r, "ethNames")
 }
 
 func AccountsExport(w http.ResponseWriter, r *http.Request) {
@@ -89,7 +86,7 @@ func AccountsList(w http.ResponseWriter, r *http.Request) {
 }
 
 func AccountsNames(w http.ResponseWriter, r *http.Request) {
-	callOneExtra(w, r, "ethNames", "names")
+	callOne(w, r, "ethNames")
 }
 
 func AccountsRm(w http.ResponseWriter, r *http.Request) {
@@ -97,7 +94,7 @@ func AccountsRm(w http.ResponseWriter, r *http.Request) {
 }
 
 func AccountsTags(w http.ResponseWriter, r *http.Request) {
-	callOneExtra(w, r, "ethNames", "tags")
+	callOne(w, r, "ethNames")
 }
 
 func AdminScrape(w http.ResponseWriter, r *http.Request) {
@@ -105,59 +102,59 @@ func AdminScrape(w http.ResponseWriter, r *http.Request) {
 }
 
 func AdminPins(w http.ResponseWriter, r *http.Request) {
-    callOneExtra(w, r, "pinStatus", "pins");
+    callOne(w, r, "pinStatus");
 }
 
 func AdminStatus(w http.ResponseWriter, r *http.Request) {
-	callOneExtra(w, r, "cacheStatus", "status")
+	callOne(w, r, "cacheStatus")
 }
 
 func DataBlocks(w http.ResponseWriter, r *http.Request) {
-	callOneExtra(w, r, "getBlock", "blocks")
+	callOne(w, r, "getBlock")
 }
 
 func DataLogs(w http.ResponseWriter, r *http.Request) {
-	callOneExtra(w, r, "getLogs", "logs")
+	callOne(w, r, "getLogs")
 }
 
 func DataReceipts(w http.ResponseWriter, r *http.Request) {
-	callOneExtra(w, r, "getReceipt", "receipts")
+	callOne(w, r, "getReceipt")
 }
 
 func DataTraces(w http.ResponseWriter, r *http.Request) {
-	callOneExtra(w, r, "getTrace", "traces")
+	callOne(w, r, "getTrace")
 }
 
 func DataTransactions(w http.ResponseWriter, r *http.Request) {
-	callOneExtra(w, r, "getTrans", "transactions")
+	callOne(w, r, "getTrans")
 }
 
 func DataWhen(w http.ResponseWriter, r *http.Request) {
-	callOneExtra(w, r, "whenBlock", "when")
+	callOne(w, r, "whenBlock")
 }
 
 func OtherDive(w http.ResponseWriter, r *http.Request) {
-	callOneExtra(w, r, "turboDive", "dive")
+	callOne(w, r, "turboDive")
 }
 
 func OtherQuotes(w http.ResponseWriter, r *http.Request) {
-	callOneExtra(w, r, "ethQuote", "quotes")
+	callOne(w, r, "ethQuote")
 }
 
 func OtherSlurp(w http.ResponseWriter, r *http.Request) {
-	callOneExtra(w, r, "ethslurp", "slurp")
+	callOne(w, r, "ethslurp")
 }
 
 func OtherWhere(w http.ResponseWriter, r *http.Request) {
-	callOneExtra(w, r, "whereBlock", "where")
+	callOne(w, r, "whereBlock")
 }
 
 func StateState(w http.ResponseWriter, r *http.Request) {
-	callOneExtra(w, r, "getState", "state")
+	callOne(w, r, "getState")
 }
 
 func StateTokens(w http.ResponseWriter, r *http.Request) {
-	callOneExtra(w, r, "getTokenInfo", "tokens")
+	callOne(w, r, "getTokenInfo")
 }
 
 var nProcessed int

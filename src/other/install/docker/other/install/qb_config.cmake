@@ -81,16 +81,10 @@ if (NOT EXISTS "${CUSTOM_COLLS}")
 endif()
 
 #---------------------------------------------------------------
-# Clear the bin file, so it gets regenerated on each build
-#---------------------------------------------------------------
-message(STATUS "Removing binary name file: ${DEST_PATH}/cache/names/names.bin")
-file(REMOVE "${DEST_PATH}/cache/names/names.bin")
-
-#---------------------------------------------------------------
 # Copy the mock data, but don't unzip it
 #---------------------------------------------------------------
-message(STATUS "Copying unzipped mock data to ${DEST_PATH}/mockData")
-file(COPY "${SOURCE_PATH}/mockData/mockData.tar.gz" DESTINATION "${DEST_PATH}/mockData" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
+message(STATUS "Copying unzipped mock data to ${DEST_PATH}/")
+file(COPY "${SOURCE_PATH}/mocked/mocked.tar.gz" DESTINATION "${DEST_PATH}/" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
 
 #---------------------------------------------------------------
 # makeClass content
@@ -128,22 +122,18 @@ endforeach( FILE )
 message(STATUS "Copying abis to ${DEST_PATH}/abis/")
 file(GLOB TARGET_FILES "${SOURCE_PATH}/abis/known-000/*")
 foreach(FILE ${TARGET_FILES} )
-	file(TOUCH "${FILE}")
 	file(COPY "${FILE}" DESTINATION "${DEST_PATH}/abis/known-000/")
 endforeach( FILE )
 file(GLOB TARGET_FILES "${SOURCE_PATH}/abis/known-005/*.json")
 foreach(FILE ${TARGET_FILES} )
-	file(TOUCH "${FILE}")
 	file(COPY "${FILE}" DESTINATION "${DEST_PATH}/abis/known-005/")
 endforeach( FILE )
 file(GLOB TARGET_FILES "${SOURCE_PATH}/abis/known-010/*.json")
 foreach(FILE ${TARGET_FILES} )
-	file(TOUCH "${FILE}")
 	file(COPY "${FILE}" DESTINATION "${DEST_PATH}/abis/known-010/")
 endforeach( FILE )
 file(GLOB TARGET_FILES "${SOURCE_PATH}/abis/known-015/*.json")
 foreach(FILE ${TARGET_FILES} )
-	file(TOUCH "${FILE}")
 	file(COPY "${FILE}" DESTINATION "${DEST_PATH}/abis/known-015/")
 endforeach( FILE )
 
@@ -175,3 +165,10 @@ if (NOT EXISTS "${TS_FILE}")
 	file(COPY "${SOURCE_PATH}/prices/ts.bin.gz" DESTINATION "${DEST_PATH}" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
 endif()
 
+#---------------------------------------------------------------
+# Clear a few bin files, so they get regenerated for each build
+#---------------------------------------------------------------
+message(STATUS "Removing file: ${DEST_PATH}/cache/names/names.bin")
+file(REMOVE "${DEST_PATH}/cache/names/names.bin")
+message(STATUS "Removing file: ${DEST_PATH}/cache/abis/known.bin")
+file(REMOVE "${DEST_PATH}/cache/abis/known.bin")
