@@ -48,7 +48,6 @@ func callOneExtra(w http.ResponseWriter, r *http.Request, tbCmd, extra string) {
 		tbCmd = "chifra"
 		allDogs = append([]string{extra}, allDogs...)
 	}
-	log.Printf(tbCmd, allDogs)
 	cmd := exec.Command(tbCmd, allDogs...)
 
 	if r.Header.Get("User-Agent") == "testRunner" {
