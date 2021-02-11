@@ -6,31 +6,31 @@
 ![GitHub forks](https://img.shields.io/github/forks/Great-Hill-Corporation/trueblocks-core?style=social)
 ![Twitter Follow](https://img.shields.io/twitter/follow/trueblocks?style=social)
 
-TrueBlocks allows you to build local-first, fully-decentralized applications using data directly from an Ethereum node. It does this through two mechanisms:
+Build local-first, fully-decentralized applications using data directly from
+an Ethereum node. TrueBlocks works through two mechanisms:
 
-1. A lightning-fast index of every appearance of every addresses on the chain, and
-2. A binary cache of only the data your application extracts. 
+* A lightning-fast index of every appearance of every addresses on the chain, and
+* A binary cache of only the data your application extracts.
 
-Local-first means your application is **private by default**, the client-side cache means your application is **fast**, and *extraction-on-demand* means your application will remain **minimal**.
+Local-first means your application is **private by default**. The client-side cache means your application is **fast**.  *Extraction-on-demand* means your application remains **minimal**.
 
 [How does TrueBlocks Work?](./docs/FAQ.md#how-it-works)
 
 ## Prerequisites
----
 
-Before building TrueBlocks, you need to make sure you have `git`, `cmake`, `clang-format`, and `go` available.
+Before building TrueBlocks, you need to have `git`, `cmake`, `clang-format`, and `go` available.
 
-Follow [these instructions](https://golang.org/doc/install) for installing `golang` on your system.
+To install `golang` on your system, follow [these instructions](https://golang.org/doc/install).
 
-Complete these commands to install `git`, `cmake`, and `clang-format`:
+To install `git`, `cmake`, and `clang-format`, run these commands.
 
-#### On Linux:
+### On Linux
 
 ```[shell]
 sudo apt install build-essential git cmake python python-dev libcurl3-dev clang-format jq
 ```
 
-#### On Mac:
+### On Mac
 
 ```[shell]
 brew install cmake
@@ -38,6 +38,13 @@ brew install git
 brew install clang-format
 brew install jq
 ```
+
+### An Ethereum node
+
+Besides the build tools, the only thing TrueBlocks requires is access to an
+Ethereum node. This node code be running locally on your machine, or remotely
+on a service like [Infura](https://infura.io/dashboard).
+
 ## Building TrueBlocks
 
 Currently, you must build TrueBlocks from source:
@@ -50,12 +57,12 @@ cmake ../src
 make
 ```
 
-This will create a series of executables in the `./bin` folder at the top of the repo. The following instructions assume you've added this folder to your `$PATH`.
+This creates a series of executables in the `./bin` folder at the top of the
+repo. If you want to use the command line tools, export this folder to your `$PATH`.
 
 [Does TrueBlocks Work on Windows?](./docs/FAQ.md-windows)
 
 ## Testing Installation
----
 
 After building TrueBlocks, you may test your configuration with this command:
 
@@ -69,17 +76,19 @@ For a complete list of available commands, run this command:
 chifra --help --verbose
 ```
 
-Next, let's see if you can get a block from your Ethereum node. Enter this command:
+Next, check that you can get a block from your Ethereum node. Enter this command:
 
 ```[shell]
 getBlock 100
 ```
 
-This should return valid JSON data for block 100 (type `getBlock --help` for more options on this tool.) If you get an error, such as this:
+This should return valid JSON data for block 100 (type `getBlock --help` for
+more options with this tool). If you get an error like this:
 
 ```[shell]
 Warning: The Ethereum RPC: 'http://localhost:8545' was not found. Quitting...
 ```
+
 You need to edit the file `~/.quickBlocks/quickBlocks.toml` to provide the URL of an available Ethereum RPC provider. Add this text:
 
 ```[toml]
@@ -87,16 +96,24 @@ You need to edit the file `~/.quickBlocks/quickBlocks.toml` to provide the URL o
 rpcProvider="<url-to-your-rpc-provider>
 ```
 
-Once you get `getBlock` to return JSON data, you are ready to test your installtion. While optional, one of the tools (`ethslurp`) requires an Etherscan key. Get an EtherScan API key now, then run:
+Once you get `getBlock` to return JSON data, you are ready to test your installation. In the `/build` directory, run this command:
 
 ```[shell]
 make tests
 ```
 
+### ethslurp requires an API key
+
+One optional tool, `ethslurp`, requires an EtherScan key. To use `ethslurp`, get an EtherScan API key, then add the following to `~/.quickBlocks/quickBlocks.toml`:
+
+```toml
+etherscan_key = "{YOUR_KEY}"
+```
+
 ## Using TrueBlocks
 ---
 
-The `chifra` tool is the basis for everything related to TrueBlocks. (`chifra` is derived from the Arabic word for `chipher`.) It helps you decipher the chain data.
+The `chifra` tool is the basis for everything related to TrueBlocks. (`chifra` is derived from the Arabic word for `cipher`.) It helps you decipher the chain data.
 
 [Running the API](./docs/FAQ.md#running-the-api)
 
@@ -109,7 +126,7 @@ The `chifra` tool is the basis for everything related to TrueBlocks. (`chifra` i
 [Full Documentation...](./docs/FAQ.md#full-documentation)
 
 ## Contributing to TrueBlocks
----
+
 Please see information about our [work flow](./docs/BRANCHING.md) before proceeding.
 
 1. Fork this repository.
@@ -119,7 +136,7 @@ Please see information about our [work flow](./docs/BRANCHING.md) before proceed
 5. Create the pull request.
 
 ## Contributors
----
+
 Thanks to the following people who have contributed to this project:
 
 * [@tjayrush](https://github.com/tjayrush)
@@ -127,9 +144,9 @@ Thanks to the following people who have contributed to this project:
 * [@wildmolasses](https://github.com/wildmolasses)
 
 ## Contact
----
+
 If you have specific requests, contact us here <info@quickblocks.io>.
 
 ## License
----
-This project licensed under the [Apache License Version 2.0](LICENSE.md).
+
+This project licensed under the (GNU General Public License v3.0)(LICENSE.md).
