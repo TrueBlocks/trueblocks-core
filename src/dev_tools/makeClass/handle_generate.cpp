@@ -73,34 +73,34 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
         // order matters in the next block
         string_q setFmt, regType;
         // clang-format off
-               if (fld.type == "wei")              { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_WEI";
-        } else if (fld.type == "gas")              { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_GAS";
-        } else if (fld.type == "timestamp")        { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_TIMESTAMP";
-        } else if (fld.type == "blknum")           { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_BLOCKNUM";
-        } else if (fld.type == "string")           { setFmt = "`[{NAME}] = [{DEFS}];\n";   regType = "T_TEXT | TS_OMITEMPTY";
-        } else if (fld.type == "addr")             { setFmt = "`[{NAME}] = [{DEFS}];\n";   regType = "T_ADDRESS | TS_OMITEMPTY";
-        } else if (fld.type == "address")          { setFmt = "`[{NAME}] = [{DEFS}];\n";   regType = "T_ADDRESS | TS_OMITEMPTY";
-        } else if (fld.type == "hash")             { setFmt = "`[{NAME}] = [{DEFS}];\n";   regType = "T_HASH | TS_OMITEMPTY";
-        } else if (fld.type == "ipfshash")         { setFmt = "`[{NAME}] = [{DEFS}];\n";   regType = "T_IPFSHASH | TS_OMITEMPTY";
-        } else if (fld.type == "int8")             { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_NUMBER";
-        } else if (fld.type == "int16")            { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_NUMBER";
-        } else if (fld.type == "int32")            { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_NUMBER";
-        } else if (fld.type == "int64")            { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_NUMBER";
-        } else if (fld.type == "int256")           { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_INT256";
-        } else if (fld.type == "uint8")            { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_UNUMBER";
-        } else if (fld.type == "uint16")           { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_UNUMBER";
-        } else if (fld.type == "uint32")           { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_UNUMBER";
-        } else if (fld.type == "uint64")           { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_UNUMBER";
-        } else if (fld.type == "suint64")          { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_UNUMBER | TS_OMITEMPTY"; fld.type = "uint64";
-        } else if (fld.type == "uint256")          { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_UINT256";
-        } else if (fld.type == "bool")             { setFmt = "`[{NAME}] = [{DEFB}];\n";   regType = "T_BOOL | TS_OMITEMPTY";
-        } else if (fld.type == "sbool")            { setFmt = "`[{NAME}] = [{DEFB}];\n";   regType = "T_BOOL | TS_OMITEMPTY";
-        } else if (startsWith(fld.type, "double")) { setFmt = "`[{NAME}] = [{DEFF}];\n";   regType = "T_DOUBLE";
-        } else if (startsWith(fld.type, "bytes"))  { setFmt = "`[{NAME}] = [{DEFS}];\n";   regType = "T_TEXT | TS_OMITEMPTY";
-        } else if (endsWith(fld.type, "_e"))       { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_NUMBER";
-        } else if ((fld.is_flags & IS_POINTER))    { setFmt = "`[{NAME}] = [{DEFP}];\n";   regType = "T_POINTER | TS_OMITEMPTY";
-        } else if ((fld.is_flags & IS_OBJECT))     { setFmt = "`[{NAME}] = [{TYPE}]();\n"; regType = "T_OBJECT | TS_OMITEMPTY";
-        } else                                     { setFmt = STR_UNKOWNTYPE;              regType = "T_TEXT | TS_OMITEMPTY"; }
+               if (fld.type == "wei")             { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_WEI";
+        } else if (fld.type == "gas")             { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_GAS";
+        } else if (fld.type == "timestamp")       { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_TIMESTAMP";
+        } else if (fld.type == "blknum")          { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_BLOCKNUM";
+        } else if (fld.type == "string")          { setFmt = "`[{NAME}] = [{DEFS}];\n";   regType = "T_TEXT | TS_OMITEMPTY";
+        } else if (fld.type == "addr")            { setFmt = "`[{NAME}] = [{DEFS}];\n";   regType = "T_ADDRESS | TS_OMITEMPTY";
+        } else if (fld.type == "address")         { setFmt = "`[{NAME}] = [{DEFS}];\n";   regType = "T_ADDRESS | TS_OMITEMPTY";
+        } else if (fld.type == "hash")            { setFmt = "`[{NAME}] = [{DEFS}];\n";   regType = "T_HASH | TS_OMITEMPTY";
+        } else if (fld.type == "ipfshash")        { setFmt = "`[{NAME}] = [{DEFS}];\n";   regType = "T_IPFSHASH | TS_OMITEMPTY";
+        } else if (fld.type == "int8")            { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_NUMBER";
+        } else if (fld.type == "int16")           { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_NUMBER";
+        } else if (fld.type == "int32")           { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_NUMBER";
+        } else if (fld.type == "int64")           { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_NUMBER";
+        } else if (fld.type == "int256")          { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_INT256";
+        } else if (fld.type == "uint8")           { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_UNUMBER";
+        } else if (fld.type == "uint16")          { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_UNUMBER";
+        } else if (fld.type == "uint32")          { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_UNUMBER";
+        } else if (fld.type == "uint64")          { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_UNUMBER";
+        } else if (fld.type == "suint64")         { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_UNUMBER | TS_OMITEMPTY"; fld.type = "uint64";
+        } else if (fld.type == "uint256")         { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_UINT256";
+        } else if (fld.type == "bool")            { setFmt = "`[{NAME}] = [{DEFB}];\n";   regType = "T_BOOL | TS_OMITEMPTY";
+        } else if (fld.type == "sbool")           { setFmt = "`[{NAME}] = [{DEFB}];\n";   regType = "T_BOOL | TS_OMITEMPTY";
+        } else if (fld.type == "double")          { setFmt = "`[{NAME}] = [{DEFF}];\n";   regType = "T_DOUBLE";
+        } else if (startsWith(fld.type, "bytes")) { setFmt = "`[{NAME}] = [{DEFS}];\n";   regType = "T_TEXT | TS_OMITEMPTY";
+        } else if (endsWith(fld.type, "_e"))      { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_NUMBER";
+        } else if ((fld.is_flags & IS_POINTER))   { setFmt = "`[{NAME}] = [{DEFP}];\n";   regType = "T_POINTER | TS_OMITEMPTY";
+        } else if ((fld.is_flags & IS_OBJECT))    { setFmt = "`[{NAME}] = [{TYPE}]();\n"; regType = "T_OBJECT | TS_OMITEMPTY";
+        } else                                    { setFmt = STR_UNKOWNTYPE;              regType = "T_TEXT | TS_OMITEMPTY"; }
         // clang-format on
 
         if ((fld.is_flags & IS_ARRAY)) {
@@ -332,6 +332,12 @@ string_q getCaseGetCode(const CParameterArray& fieldsIn) {
 
     map<char, CParameterArray> ch_map;
     for (auto f : fieldsIn) {
+        if (startsWith(f.type, "double")) {
+            f.precision = str_2_Uint(substitute(f.type, "double", ""));
+            if (f.precision == 0)
+                f.precision = 5;
+            f.type = "double";
+        }
         if (!(f.is_flags & IS_MINIMAL)) {
             ch_map[f.name[0]].push_back(f);
         }
@@ -389,9 +395,8 @@ string_q getCaseGetCode(const CParameterArray& fieldsIn) {
                 } else if (p.type == "int256") {
                     outStream << ("return bni_2_Str([{PTR}]" + p.name + ");");
 
-                } else if (startsWith(p.type, "double")) {
-                    uint64_t digits = str_2_Uint(substitute(p.type, "double", ""));
-                    outStream << "return double_2_Str([{PTR}]" << p.name << ", " << (digits == 0 ? 5 : digits) << ");";
+                } else if (p.type == "double") {
+                    outStream << "return double_2_Str([{PTR}]" << p.name << ", " << p.precision << ");";
 
                 } else if (endsWith(p.type, "_e")) {
                     outStream << ("return uint_2_Str(" + p.name + ");");
@@ -469,6 +474,12 @@ string_q getCaseGetCode(const CParameterArray& fieldsIn) {
 string_q getCaseSetCode(const CParameterArray& fieldsIn) {
     map<char, CParameterArray> ch_map;
     for (auto f : fieldsIn) {
+        if (startsWith(f.type, "double")) {
+            f.precision = str_2_Uint(substitute(f.type, "double", ""));
+            if (f.precision == 0)
+                f.precision = 5;
+            f.type = "double";
+        }
         if (!(f.is_flags & IS_MINIMAL)) {
             ch_map[f.name[0]].push_back(f);
         }
@@ -501,7 +512,7 @@ string_q getCaseSetCode(const CParameterArray& fieldsIn) {
                 } else if (p.type == "blknum") {
                     outStream << (p.name + " = str_2_Uint(fieldValue);\n````return true;");
 
-                } else if (startsWith(p.type, "double")) {
+                } else if (p.type == "double") {
                     outStream << (p.name + " = str_2_Double(fieldValue);\n````return true;");
 
                 } else if (endsWith(p.type, "_e")) {

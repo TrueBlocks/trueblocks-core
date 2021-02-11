@@ -8,6 +8,7 @@ fields = string type|\
         string internalType|\
         CParameterArray components|\
         sbool no_write|\
-        uint64 is_flags=IS_ENABLED
+        uint64 is_flags=IS_ENABLED|\
+        uint64 precision=5 (nowrite)
 includes = utillib.h
 display_str = type, name, str_default, value, internalType, indexed, is_pointer, is_array, is_object, is_builtin, no_write, is_minimal

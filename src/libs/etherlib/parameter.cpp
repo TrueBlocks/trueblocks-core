@@ -107,6 +107,11 @@ string_q CParameter::getValueByName(const string_q& fieldName) const {
                 return bool_2_Str_t(no_write);
             }
             break;
+        case 'p':
+            if (fieldName % "precision") {
+                return uint_2_Str(precision);
+            }
+            break;
         case 's':
             if (fieldName % "str_default") {
                 return str_default;
@@ -186,6 +191,12 @@ bool CParameter::setValueByName(const string_q& fieldNameIn, const string_q& fie
                 return true;
             }
             break;
+        case 'p':
+            if (fieldName % "precision") {
+                precision = str_2_Uint(fieldValue);
+                return true;
+            }
+            break;
         case 's':
             if (fieldName % "str_default") {
                 str_default = fieldValue;
@@ -240,6 +251,7 @@ bool CParameter::Serialize(CArchive& archive) {
     archive >> components;
     archive >> no_write;
     archive >> is_flags;
+    // archive >> precision;
     finishParse();
     return true;
 }
@@ -260,6 +272,7 @@ bool CParameter::SerializeC(CArchive& archive) const {
     archive << components;
     archive << no_write;
     archive << is_flags;
+    // archive << precision;
 
     return true;
 }
@@ -305,6 +318,8 @@ void CParameter::registerClass(void) {
     ADD_FIELD(CParameter, "components", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CParameter, "no_write", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CParameter, "is_flags", T_UNUMBER, ++fieldNum);
+    ADD_FIELD(CParameter, "precision", T_UNUMBER, ++fieldNum);
+    HIDE_FIELD(CParameter, "precision");
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CParameter, "schema");
