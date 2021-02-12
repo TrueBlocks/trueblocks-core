@@ -96,7 +96,7 @@ You need to edit the file `~/.quickBlocks/quickBlocks.toml` to provide the URL o
 rpcProvider="<url-to-your-rpc-provider>
 ```
 
-Once you get `getBlock` to return JSON data, you are ready to test your installation. In the `/build` directory, run this command:
+Once you get `getBlock` to return JSON data, you are ready to test your installation. In the `./build` directory, run this command:
 
 ```[shell]
 make tests
