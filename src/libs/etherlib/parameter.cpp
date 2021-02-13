@@ -465,6 +465,10 @@ CParameter::CParameter(string_q& textIn) {
     }
 
     type = nextTokenClear(textIn, ' ');
+    if (startsWith(type, "double")) {
+        precision = str_2_Uint(substitute(type, "double", "") == "" ? "5" : substitute(type, "double", ""));
+        type = "double";
+    }
     if (contains(type, "*") || contains(type, "Ptr"))
         is_flags |= IS_POINTER;
     if (contains(type, "Array"))

@@ -42,7 +42,6 @@
 #define OPT_HIDDEN (1 << 17)
 #define OPT_DEPRECATED (OPT_HIDDEN | (1 << 18))
 
-typedef map<size_t, qblocks::string_q> CErrorStringMap;
 #define ERR_NOERROR 0
 
 //-----------------------------------------------------------------------------
@@ -53,17 +52,13 @@ typedef bool (*NAMEVALFUNC)(CNameValue& pair, void* data);
 typedef bool (*UINT64VISITFUNC)(uint64_t num, void* data);
 typedef uint64_t (*HASHFINDFUNC)(const hash_t& hash, void* data);
 
-using blk_addr_map_t = map<uint32_t, address_t>;
-using addr_count_map_t = map<address_t, uint64_t>;
-using addr_exists_map_t = map<address_t, bool>;
-
 class COption;
 class COptionsBase {
   public:
     CErrorStringMap errStrs;
-    addr_wei_mp prefundWeiMap;
-    addr_exists_map_t maliciousMap;
-    addr_exists_map_t airdropMap;
+    CAddressWeiMap prefundWeiMap;
+    CAddressBoolMap maliciousMap;
+    CAddressBoolMap airdropMap;
 
     CStringArray arguments;
     CStringArray errors;

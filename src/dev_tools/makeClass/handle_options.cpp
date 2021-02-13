@@ -40,7 +40,7 @@ bool COptions::handle_options(void) {
     counter = CCounter();  // reset
 
     // read in and prepare the options for all tools
-    CStringMap tools;
+    CStringBoolMap tools;
     string_q contents = asciiFileToString("../src/cmd-line-options.csv");
     CStringArray lines;
     explode(lines, contents, '\n');

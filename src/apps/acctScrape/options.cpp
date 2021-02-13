@@ -17,6 +17,7 @@ static const COption params[] = {
     COption("staging", "s", "", OPT_HIDDEN | OPT_SWITCH, "enable search of staging (not yet finalized) folder"),
     COption("unripe", "u", "", OPT_HIDDEN | OPT_SWITCH, "enable search of unripe (neither staged nor finalized) folder (requires --staging)"),  // NOLINT
     COption("blooms", "b", "", OPT_HIDDEN | OPT_SWITCH, "process query by first using bloom filter and, if hit, downloading index chunk from remote"),  // NOLINT
+    COption("clean", "c", "", OPT_HIDDEN | OPT_SWITCH, "clean (i.e. remove dups) from all existing monitors"),
     COption("start", "S", "<blknum>", OPT_HIDDEN | OPT_FLAG, "this value is ignored but remains for backward compatibility"),  // NOLINT
     COption("end", "E", "<blknum>", OPT_HIDDEN | OPT_FLAG, "this value is ignored but remains for backward compatibility"),  // NOLINT
     COption("", "", "", OPT_DESCRIPTION, "Add or remove monitors for a given Ethereum address (or collection of addresses)."),  // NOLINT
@@ -59,6 +60,9 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-b" || arg == "--blooms") {
             blooms = true;
+
+        } else if (arg == "-c" || arg == "--clean") {
+            clean = true;
 
         } else if (startsWith(arg, "-S:") || startsWith(arg, "--start:")) {
             if (!confirmBlockNum("start", start, arg, latest))
@@ -106,6 +110,11 @@ bool COptions::parseArguments(string_q& command) {
 
     // Where will we start?
     blknum_t nextBlockToVisit = NOPOS;
+
+    if (clean) {
+        handle_clean();
+        return false;
+    }
 
     // We need at least one address to scrape...
     if (addrs.size() == 0)
@@ -162,6 +171,7 @@ void COptions::Init(void) {
 
     // BEG_CODE_INIT
     blooms = false;
+    clean = false;
     // END_CODE_INIT
 
     minArgs = 0;

@@ -547,8 +547,7 @@ void getIndexMetrics(const string_q& path, uint32_t& nAppearences, uint32_t& nAd
         nAppearences = (uint32_t)fileSize(path) / (uint32_t)59;
         CStringArray lines;
         asciiFileToLines(path, lines);
-        typedef map<address_t, bool> CAddressMap;
-        CAddressMap addrMap;
+        CAddressBoolMap addrMap;
         for (auto line : lines)
             addrMap[nextTokenClear(line, '\t')] = true;
         nAddresses = (uint32_t)addrMap.size();

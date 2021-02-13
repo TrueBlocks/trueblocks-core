@@ -92,7 +92,7 @@ int main(int argc, const char* argv[]) {
     if (!isTestMode() && !options.freshen && !options.count && !options.accounting && !options.logs &&
         !options.statements) {
         ostringstream oss;
-        oss << "exported " << padNum6T(options.nProcessed) << " ";
+        oss << "Exported " << padNum6T(options.nProcessed) << " ";
         oss << (!options.className.empty() ? (plural(options.className) + " from ") : "of ");
         oss << padNum6T(options.nTransactions) << " transactions for address " << options.monitors[0].address;
         LOG_INFO(oss.str());

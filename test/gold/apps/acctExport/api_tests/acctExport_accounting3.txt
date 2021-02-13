@@ -12005,7 +12005,7 @@
     "namedTo": {
       "0x7d655c57f71464b6f83811c55d84009cd9f5221c": {
         "tags": "31-Gitcoin Grants:Core",
-        "name": "Gitcoin Round 6",
+        "name": "GitCoin Grant 6,7,8",
         "is_contract": true,
         "count": 17
       },

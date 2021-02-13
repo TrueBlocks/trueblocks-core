@@ -195,19 +195,21 @@ bool COptions::parseArguments(string_q& command) {
         monitor.setValueByName("address", toLower(addr));
         monitor.setValueByName("name", toLower(addr));
 
-        if (!monitor.exists())
-            EXIT_USAGE("Monitor file for address " + addr + " not found.");
-        string_q unused;
-        if (monitor.isLocked(unused))
-            LOG_ERR(
-                "The cache file is locked. The program is either already "
-                "running or it did not end cleanly the\n\tlast time it ran. "
-                "Quit the already running program or, if it is not running, "
-                "remove the lock\n\tfile: " +
-                getMonitorPath(addr) + +".lck'. Proceeding anyway...");
-        monitor.clearLocks();
-        monitor.finishParse();
-        monitors.push_back(monitor);
+        if (monitor.exists()) {
+            string_q unused;
+            if (monitor.isLocked(unused))
+                LOG_ERR(
+                    "The cache file is locked. The program is either already "
+                    "running or it did not end cleanly the\n\tlast time it ran. "
+                    "Quit the already running program or, if it is not running, "
+                    "remove the lock\n\tfile: " +
+                    getMonitorPath(addr) + +".lck'. Proceeding anyway...");
+            monitor.clearLocks();
+            monitor.finishParse();
+            monitors.push_back(monitor);
+        } else {
+            LOG4("Monitor not found: ", monitor.address, ". Skipping...");
+        }
     }
 
     if (start != NOPOS)

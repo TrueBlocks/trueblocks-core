@@ -332,12 +332,6 @@ string_q getCaseGetCode(const CParameterArray& fieldsIn) {
 
     map<char, CParameterArray> ch_map;
     for (auto f : fieldsIn) {
-        if (startsWith(f.type, "double")) {
-            f.precision = str_2_Uint(substitute(f.type, "double", ""));
-            if (f.precision == 0)
-                f.precision = 5;
-            f.type = "double";
-        }
         if (!(f.is_flags & IS_MINIMAL)) {
             ch_map[f.name[0]].push_back(f);
         }
@@ -474,12 +468,6 @@ string_q getCaseGetCode(const CParameterArray& fieldsIn) {
 string_q getCaseSetCode(const CParameterArray& fieldsIn) {
     map<char, CParameterArray> ch_map;
     for (auto f : fieldsIn) {
-        if (startsWith(f.type, "double")) {
-            f.precision = str_2_Uint(substitute(f.type, "double", ""));
-            if (f.precision == 0)
-                f.precision = 5;
-            f.type = "double";
-        }
         if (!(f.is_flags & IS_MINIMAL)) {
             ch_map[f.name[0]].push_back(f);
         }

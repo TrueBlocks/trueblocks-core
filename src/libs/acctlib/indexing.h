@@ -21,9 +21,6 @@
 namespace qblocks {
 
 //-----------------------------------------------------------------------
-typedef map<blknum_t, string_q> CIndexHashMap;
-
-//-----------------------------------------------------------------------
 #define MAGIC_NUMBER ((uint32_t)str_2_Uint("0xdeadbeef"))
 extern hash_t versionHash;
 extern void writeIndexAsAscii(const string_q& outFn, const CStringArray& lines);

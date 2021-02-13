@@ -15,6 +15,7 @@ NO_NAMES = [true]
 | -s | --staging | enable search of staging (not yet finalized) folder |
 | -u | --unripe | enable search of unripe (neither staged nor finalized) folder (requires --staging) |
 | -b | --blooms | process query by first using bloom filter and, if hit, downloading index chunk from remote |
+| -c | --clean | clean (i.e. remove dups) from all existing monitors |
 | -S | --start <num> | this value is ignored but remains for backward compatibility |
 | -E | --end <num> | this value is ignored but remains for backward compatibility |
 |####|Hidden options||

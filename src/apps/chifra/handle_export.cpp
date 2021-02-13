@@ -10,7 +10,7 @@ bool COptions::handle_export(void) {
     ENTER("handle_" + mode);
     nodeRequired();
 
-    if (addrs.empty())
+    if (addrs.empty() && !contains(tool_flags, "clean"))
         EXIT_USAGE("This function requires an address.");
 
     CMonitorArray fa;
@@ -27,6 +27,18 @@ bool COptions::handle_export(void) {
     if (contains(tool_flags, "--count") || contains(tool_flags, "-U")) {
         ostringstream os;
         os << "acctExport " << tool_flags;
+        for (auto a : addrs) {
+            os << " " << a;
+        }
+        // clang-format off
+        if (system(os.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings
+        // clang-format on
+        EXIT_NOMSG(true);
+    }
+
+    if (contains(tool_flags, "--clean") || contains(tool_flags, "-c")) {
+        ostringstream os;
+        os << "acctScrape " << tool_flags;
         for (auto a : addrs) {
             os << " " << a;
         }
@@ -54,7 +66,7 @@ bool COptions::handle_export(void) {
             LOG8("command: ", trim(cmds[i]), " returned with '", quit, "'");
         }
         if (++cnt < addrs.size())
-            usleep(500000);  // this sleep is here so that chifra remains responsive to Cntl+C. Do not remove
+            usleep(5000);  // this sleep is here so that chifra remains responsive to Cntl+C. Do not remove
     }
     EXIT_NOMSG(true);
 }

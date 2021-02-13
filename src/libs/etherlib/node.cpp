@@ -228,7 +228,7 @@ bool writeNodeToBinary(const CBaseNode& node, const string_q& fileName) {
     string_q created;
     if (establishFolder(fileName, created)) {
         if (!created.empty() && !isTestMode())
-            cerr << "mkdir(" << created << ")" << string_q(75, ' ') << "\n";
+            cerr << "mkdir(" << created << ")" << string_q(80, ' ') << "\n";
         CArchive nodeCache(WRITING_ARCHIVE);
         if (nodeCache.Lock(fileName, modeWriteCreate, LOCK_CREATE)) {
             node.SerializeC(nodeCache);

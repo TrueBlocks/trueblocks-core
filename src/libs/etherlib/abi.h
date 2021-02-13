@@ -43,8 +43,8 @@ class CAbi : public CBaseNode {
     const CBaseNode* getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
-    CStringMap sourcesMap;
-    CStringMap interfaceMap;
+    CStringBoolMap sourcesMap;
+    CStringBoolMap interfaceMap;
 
     bool articulateTransaction(CTransaction* p) const;
     bool articulateLog(CLogEntry* l) const;

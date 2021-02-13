@@ -732,7 +732,7 @@ bool freshen_internal(CMonitorArray& fa, const string_q& freshen_flags) {
                 cnt = 0;
             }
         } else {
-            LOG4(cTeal, "Scraping addresses ", f.address, " ", cnt2, " of ", fa.size(), string_q(80, ' '), cOff, "\r");
+            LOG4(cTeal, "Updating addresses ", f.address, " ", cnt2, " of ", fa.size(), string_q(80, ' '), cOff, "\r");
         }
         cnt2++;
     }
@@ -746,7 +746,7 @@ bool freshen_internal(CMonitorArray& fa, const string_q& freshen_flags) {
         // clang-format off
         uint64_t n = countOf(thisFive, ' ');
         if (fa.size() > 1)
-            LOG_INFO(cTeal, "Scraping addresses ", cur, "-", (cur+n-1), " of ", fa.size(), string_q(80, ' '), cOff);
+            LOG_INFO(cTeal, "Updating addresses ", cur+1, "-", (cur+n), " of ", fa.size(), string_q(80, ' '), cOff);
         cur += n;
         if (system(cmd.c_str())) {}  // Don't remove cruft. Silences compiler warnings
         // clang-format on

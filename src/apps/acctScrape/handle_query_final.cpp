@@ -54,8 +54,7 @@ bool COptions::visitBinaryFile(const string_q& path, void* data) {
     COptions* options = reinterpret_cast<COptions*>(data);
     options->stats.nChecked++;
 
-    typedef map<address_t, bool> CHitMap;
-    CHitMap hitMap;
+    CAddressBoolMap hitMap;
 
     string_q bloomPath = path;
     string_q indexPath = substitute(substitute(path, indexFolder_blooms, indexFolder_finalized), ".bloom", ".bin");

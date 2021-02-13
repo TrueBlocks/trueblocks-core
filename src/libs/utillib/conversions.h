@@ -33,11 +33,9 @@ using topic_t = string_q;
 using uchar_t = unsigned char;
 using addrbytes_t = vector<uint8_t>;
 using hashbytes_t = vector<uint8_t>;
-using addr_wei_mp = map<address_t, wei_t>;
 
 //-------------------------------------------------------------------------
 using CStringArray = vector<string_q>;
-using CStringMap = map<string_q, bool>;
 using CBlockNumArray = vector<uint64_t>;
 using CBlockRangeArray = vector<blkrange_t>;
 using CUintArray = vector<uint64_t>;
@@ -46,6 +44,15 @@ using CBigUintArray = vector<biguint_t>;
 using CBigIntArray = vector<bigint_t>;
 using CAddressArray = vector<address_t>;
 using CTopicArray = vector<topic_t>;
+
+//-------------------------------------------------------------------------
+using CAddressWeiMap = map<address_t, wei_t>;
+using CStringBoolMap = map<string_q, bool>;
+using CBlockAddressMap = map<uint32_t, address_t>;
+using CAddressUintMap = map<address_t, uint64_t>;
+using CAddressBoolMap = map<address_t, bool>;
+using CErrorStringMap = map<size_t, string_q>;
+using CIndexHashMap = map<blknum_t, string_q>;
 
 //-------------------------------------------------------------------------
 extern bool str_2_Bool(const string_q& str);

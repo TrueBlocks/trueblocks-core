@@ -93,7 +93,7 @@ bool loadPrefunds(const string_q& prefundFile, COptionsBase& options) {
         CArchive archive(WRITING_ARCHIVE);
         if (!archive.Lock(binFile, modeWriteCreate, LOCK_NOWAIT))
             return false;
-        addr_wei_mp::iterator it = options.prefundWeiMap.begin();
+        CAddressWeiMap::iterator it = options.prefundWeiMap.begin();
         archive << uint64_t(options.prefundWeiMap.size());
         while (it != options.prefundWeiMap.end()) {
             archive << it->first << it->second;

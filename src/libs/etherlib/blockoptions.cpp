@@ -277,7 +277,14 @@ bool parseAddressList2(COptionsBase* opt, CAddressArray& addrs, const string_q& 
     if (!isAddress(argIn))
         return opt->usage("Invalid address '" + argIn + "'. Length (" + uint_2_Str(argIn.length()) +
                           ") is not equal to 40 characters (20 bytes).");
-    addrs.push_back(toLower(str_2_Addr(argIn)));
+    address_t lower = toLower(str_2_Addr(argIn));
+    for (auto a : addrs) {
+        if (a == lower) {
+            LOG_WARN("Duplicate address. Not adding ", lower);
+            return true;
+        }
+    }
+    addrs.push_back(lower);
     return true;
 }
 

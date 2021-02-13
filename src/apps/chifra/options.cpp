@@ -77,6 +77,13 @@ bool COptions::parseArguments(string_q& command) {
                 return usage("Missing mode: " + arg);
 
         } else {
+            bool exists = false;
+            string_q lower = toLower(arg);
+            for (auto a : addrs) {
+                if (a == lower)
+                    exists = true;
+            }
+
             string descr = substitute(substitute(params[0].description, "[", "|"), "]", "|");
             bool isStatus = (mode == "status");
             if (!isStatus && contains(descr, "|" + arg + "|")) {
@@ -95,16 +102,19 @@ bool COptions::parseArguments(string_q& command) {
                     } else if (!isAddress(arg)) {
                         return usage("Invalid address: " + arg);
                     }
-                    addrs.push_back(toLower(arg));
+                    if (!exists)
+                        addrs.push_back(lower);
                 } else {
                     tool_flags += substitute(arg, ",", " ");
                 }
 
             } else if (isAddress(arg) || arg == "--known" || arg == "--monitored") {
-                addrs.push_back(toLower(arg));
+                if (!exists)
+                    addrs.push_back(lower);
 
             } else if (mode == "when") {
-                addrs.push_back(toLower(arg));
+                if (!exists)
+                    addrs.push_back(lower);
 
             } else {
                 if (arg == "--staging") {

@@ -21,10 +21,15 @@
 //    return true;
 //}
 
+//11728437,1611625091,4459297003201165
+//jrush@iMac:~/D/t/s/o/difficulty|develop⚡*?➤ whenBlock latest
+//blocknumber timestamp   date    name
+//11828006
+
 #if 1
 int main(int argc, const char* argv[]) {
     etherlib_init(quickQuitHandler);
-    for (size_t i = 11706702; i < 11728438; i++) {
+    for (size_t i = 11728438 ; i < 11828006; i++) {
         CBlock block;
         getBlock_light(block, i);
         cout << block.blockNumber << "," << block.timestamp << "," << block.difficulty << endl;

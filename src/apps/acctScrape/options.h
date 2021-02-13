@@ -20,6 +20,7 @@ class COptions : public COptionsBase {
   public:
     // BEG_CODE_DECLARE
     bool blooms;
+    bool clean;
     // END_CODE_DECLARE
 
     CAcctScrapeStats stats;
@@ -35,6 +36,7 @@ class COptions : public COptionsBase {
 
     bool visitBinaryFile(const string_q& path, void* data);
     bool handle_rm(const CAddressArray& addrs);
+    bool handle_clean(void);
 };
 
 #define VIS_FINAL (1 << 1)

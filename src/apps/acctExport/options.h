@@ -51,16 +51,16 @@ class COptions : public CAbiOptions {
     uint64_t nProcessed;
     string_q className;
     address_t hackAppAddr;
-    blk_addr_map_t prefundAddrMap;
-    blk_addr_map_t blkRewardMap;
+    CBlockAddressMap prefundAddrMap;
+    CBlockAddressMap blkRewardMap;
 
-    addr_count_map_t toAddrMap;
-    addr_count_map_t fromAddrMap;
-    addr_count_map_t emitterAddrMap;
-    addr_count_map_t creationMap;
-    addr_count_map_t toTraceAddrMap;
-    addr_count_map_t fromTraceAddrMap;
-    addr_count_map_t abiMap;
+    CAddressUintMap toAddrMap;
+    CAddressUintMap fromAddrMap;
+    CAddressUintMap emitterAddrMap;
+    CAddressUintMap creationMap;
+    CAddressUintMap toTraceAddrMap;
+    CAddressUintMap fromTraceAddrMap;
+    CAddressUintMap abiMap;
 
     uint32_t* ts_array;
     size_t ts_cnt;
@@ -90,7 +90,7 @@ class COptions : public CAbiOptions {
     bool handle_statements(void);
     bool handle_traces(void);
 
-    void addNeighbor(addr_count_map_t& map, const address_t& addr);
+    void addNeighbor(CAddressUintMap& map, const address_t& addr);
     void markNeighbors(const CTransaction& trans);
     void articulateAll(CTransaction& trans);
     bool reportNeighbors(void);

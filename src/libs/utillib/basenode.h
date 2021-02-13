@@ -54,6 +54,7 @@ class CBaseNode {
         return false;
     };
     virtual CRuntimeClass* getRuntimeClass(void) const;
+    virtual string_q getKeyByName(const string_q& fieldName) const;
     virtual string_q getValueByName(const string_q& fieldName) const;
     virtual bool setValueByName(const string_q& fieldName, const string_q& fieldValue);
     virtual bool Serialize(CArchive& archive);

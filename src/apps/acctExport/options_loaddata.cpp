@@ -72,7 +72,7 @@ bool COptions::loadAllAppearances(void) {
 
     if (tmp.size() == 0) {
         if (!freshen)
-            LOG_INFO("Nothing to export" + (monitors.size() ? (" from " + monitors[0].address) : "") + ".");
+            LOG4("Nothing to export" + (monitors.size() ? (" from " + monitors[0].address) : "") + ".");
         return false;
     }
 

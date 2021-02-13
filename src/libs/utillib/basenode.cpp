@@ -104,6 +104,13 @@ bool CBaseNode::setValueByName(const string_q& fieldName, const string_q& fieldV
 }
 
 //--------------------------------------------------------------------------------
+string_q CBaseNode::getKeyByName(const string_q& fieldName) const {
+    if (expContext().quoteKeys)
+        return "\"" + fieldName + "\"" + ": ";
+    return fieldName + ": ";
+}
+
+//--------------------------------------------------------------------------------
 string_q CBaseNode::getValueByName(const string_q& fieldName) const {
     switch (tolower(fieldName[0])) {
         case 'c':
@@ -451,13 +458,6 @@ string_q indentStr(void) {
 }
 
 //--------------------------------------------------------------------------------
-inline string_q doKey(const string_q& key) {
-    if (expContext().quoteKeys)
-        return "\"" + key + "\"" + ": ";
-    return key + ": ";
-}
-
-//--------------------------------------------------------------------------------
 bool isEmptyObj(const string_q& str) {
     bool startToken = false;
     bool endToken = false;
@@ -511,7 +511,7 @@ bool CBaseNode::getVisibleFields(CFieldDataArray& visibleFields) const {
         return false;
     }
 
-    CStringMap fieldMap;
+    CStringBoolMap fieldMap;
     while (pClass != GETRUNTIME_CLASS(CBaseNode)) {
         for (auto field : pClass->fieldList) {
             bool hidden = field.isHidden();
@@ -595,7 +595,7 @@ void CBaseNode::toJson(ostream& os) const {
     for (auto field : visibleFields) {
         if (field.getName() != visibleFields[0].getName())
             os << ",";
-        os << endl << indentStr() << doKey(field.getName());
+        os << endl << indentStr() << getKeyByName(field.getName());
 
         if (field.isArray()) {
             uint64_t cnt = str_2_Uint(getValueByName(field.getName() + "Cnt"));
@@ -699,7 +699,7 @@ void CBaseNode::toYaml(ostream& os) const {
         //        os << field.getName() << ":"
         //        if (field.getName() != visibleFields[0].getName())
         //            os << ",";
-        //        os << endl << indentStr() << doKey(field.getName());
+        //        os << endl << indentStr() << getKeyByName(field.getName());
         //
         //        if (field.isArray()) {
         //            uint64_t cnt = str_2_Uint(getValueByName(field.getName() + "Cnt"));
