@@ -74,7 +74,7 @@ bool COptions::visitBinaryFile(const string_q& path, void* data) {
         if (!hit) {
             // none of them hit, so write last block for each of them
             for (auto monitor : monitors) {
-                string_q filename = getMonitorPath(monitor.address);
+                string_q filename = monitor.getMonitorPath(monitor.address);
                 monitor.fm_mode = (fileExists(filename) ? FM_PRODUCTION : FM_STAGING);
                 monitor.writeLastBlock(fileRange.second + 1);
             }
@@ -99,12 +99,12 @@ bool COptions::visitBinaryFile(const string_q& path, void* data) {
     for (size_t mo = 0; mo < monitors.size() && !shouldQuit(); mo++) {
         CMonitor* monitor = &monitors[mo];
         if (hitMap[monitor->address]) {
-            string_q filename = getMonitorPath(monitor->address);
+            string_q filename = monitor->getMonitorPath(monitor->address);
             bool exists = fileExists(filename);
             monitor->fm_mode = (exists ? FM_PRODUCTION : FM_STAGING);
 
             if (!monitor->openCacheFile1())
-                EXIT_FAIL("Could not open cache file " + getMonitorPath(monitor->address, monitor->fm_mode) + ".");
+                EXIT_FAIL("Could not open cache file " + monitor->getMonitorPath(monitor->address, monitor->fm_mode) + ".");
 
             CAppearanceArray_base items;
             items.reserve(300000);
@@ -169,7 +169,7 @@ bool COptions::visitBinaryFile(const string_q& path, void* data) {
     }
 
     for (auto monitor : monitors) {
-        string_q filename = getMonitorPath(monitor.address);
+        string_q filename = monitor.getMonitorPath(monitor.address);
         monitor.fm_mode = (fileExists(filename) ? FM_PRODUCTION : FM_STAGING);
         monitor.writeLastBlock(fileRange.second + 1);
     }

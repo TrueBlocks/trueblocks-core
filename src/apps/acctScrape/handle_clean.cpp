@@ -63,5 +63,6 @@ bool visitFile(const string_q& path, void* data) {
 
 //---------------------------------------------------------------
 bool COptions::handle_clean(void) {
-    return forEveryFileInFolder(getMonitorPath(""), visitFile, NULL);
+    CMonitor m;
+    return forEveryFileInFolder(m.getMonitorPath(""), visitFile, NULL);
 }

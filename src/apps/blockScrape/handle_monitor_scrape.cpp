@@ -10,8 +10,9 @@ bool COptions::scrape_monitors(void) {
     ENTER("scrape_monitors");
 
     CMonitorArray monitors;
+    CMonitor m;
     // Catch the monitors addresses up to the scraper if in --deamon mode
-    forEveryFileInFolder(getMonitorPath("") + "*", prepareMonitors, &monitors);
+    forEveryFileInFolder(m.getMonitorPath("") + "*", prepareMonitors, &monitors);
     if (!freshen_internal(monitors, getEnvStr("FRESHEN_FLAGS")))
         EXIT_FAIL("'chifra " + mode + "' returns false");
 
@@ -36,7 +37,7 @@ bool prepareMonitors(const string_q& path, void* data) {
         return true;
 
     CMonitor m;
-    m.address = substitute(substitute(path, getMonitorPath(""), ""), ".acct.bin", "");
+    m.address = substitute(substitute(path, m.getMonitorPath(""), ""), ".acct.bin", "");
     if (isAddress(m.address)) {
         m.cntBefore = m.getRecordCount();
         m.needsRefresh = false;

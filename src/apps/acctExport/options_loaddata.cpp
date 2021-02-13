@@ -12,7 +12,8 @@ bool COptions::loadOneAddress(CAppearanceArray_base& appsOut, const address_t& a
     if (hackAppAddr.empty())
         hackAppAddr = addr;
 
-    string_q fn = getMonitorPath(addr);
+    CMonitor m;
+    string_q fn = m.getMonitorPath(addr);
 
     size_t nRecords = (fileSize(fn) / sizeof(CAppearance_base));
     ASSERT(nRecords);

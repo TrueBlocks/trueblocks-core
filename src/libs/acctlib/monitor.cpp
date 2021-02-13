@@ -476,7 +476,7 @@ void CMonitor::moveToProduction(void) {
 }
 
 //---------------------------------------------------------------------------
-string_q getMonitorPath(const address_t& addr, freshen_e mode) {
+string_q CMonitor::getMonitorPath(const address_t& addr, freshen_e mode) const {
     string_q base = ((mode == FM_STAGING) ? "monitors/staging/" : "monitors/");
     if (!isAddress(addr))  // empty for example
         return getCachePath(base + addr);
@@ -484,7 +484,7 @@ string_q getMonitorPath(const address_t& addr, freshen_e mode) {
 }
 
 //---------------------------------------------------------------------------
-string_q getMonitorLast(const address_t& addr, freshen_e mode) {
+string_q CMonitor::getMonitorLast(const address_t& addr, freshen_e mode) const {
     string_q base = ((mode == FM_STAGING) ? "monitors/staging/" : "monitors/");
     if (!isTestMode() && !isAddress(addr)) {
         cerr << "Not an address: " << addr << endl;
@@ -494,7 +494,7 @@ string_q getMonitorLast(const address_t& addr, freshen_e mode) {
 }
 
 //---------------------------------------------------------------------------
-string_q getMonitorExpt(const address_t& addr, freshen_e mode) {
+string_q CMonitor::getMonitorExpt(const address_t& addr, freshen_e mode) const {
     string_q base = ((mode == FM_STAGING) ? "monitors/staging/" : "monitors/");
     if (!isTestMode() && !isAddress(addr)) {
         cerr << "Not an address: " << addr << endl;
@@ -504,12 +504,12 @@ string_q getMonitorExpt(const address_t& addr, freshen_e mode) {
 }
 
 //---------------------------------------------------------------------------
-string_q getMonitorDels(const address_t& addr, freshen_e mode) {
+string_q CMonitor::getMonitorDels(const address_t& addr, freshen_e mode) const {
     return getMonitorPath(addr) + ".deleted";
 }
 
 //---------------------------------------------------------------------------
-string_q getMonitorCach(const address_t& addr, freshen_e mode) {
+string_q CMonitor::getMonitorCach(const address_t& addr, freshen_e mode) const {
     return getMonitorPath(addr + ".txs.bin");
 }
 
@@ -520,7 +520,7 @@ void removeFile(const string_q& fn) {
 }
 
 //---------------------------------------------------------------------------
-void cleanMonitor(const address_t& addr) {
+void CMonitor::cleanMonitor(const address_t& addr) const {
     removeFile(getMonitorPath(addr));
     removeFile(getMonitorLast(addr));
     removeFile(getMonitorExpt(addr));
@@ -530,8 +530,11 @@ void cleanMonitor(const address_t& addr) {
 
 //---------------------------------------------------------------------------
 void cleanMonitors(const CAddressArray& addrs) {
-    for (auto addr : addrs)
-        cleanMonitor(addr);
+    for (auto addr : addrs) {
+        CMonitor m;
+        m.address = addr;
+        m.cleanMonitor(addr);
+    }
 }
 
 //----------------------------------------------------------------
@@ -542,9 +545,10 @@ void establishTestMonitors(void) {
         exit(0);
     }
 
+    CMonitor m;
     ostringstream os;
-    os << "cp -p " << loc << "app_tests.tar.gz " << getMonitorPath("") << " && ";
-    os << "cd " << getMonitorPath("") << " && ";
+    os << "cp -p " << loc << "app_tests.tar.gz " << m.getMonitorPath("") << " && ";
+    os << "cd " << m.getMonitorPath("") << " && ";
     os << "gunzip *.gz 2>/dev/null && ";
     os << "tar -xvf *.tar 2>/dev/null && ";
     os << "rm -f *.tar && ";
@@ -556,13 +560,15 @@ void establishTestMonitors(void) {
 
 //----------------------------------------------------------------
 void establishMonitorFolders(void) {
-    establishFolder(getMonitorPath("", FM_PRODUCTION));
-    establishFolder(getMonitorPath("", FM_STAGING));
+    CMonitor m;
+    establishFolder(m.getMonitorPath("", FM_PRODUCTION));
+    establishFolder(m.getMonitorPath("", FM_STAGING));
 }
 
 //----------------------------------------------------------------
 void cleanMonitorStage(void) {
-    cleanFolder(getMonitorPath("", FM_STAGING));
+    CMonitor m;
+    cleanFolder(m.getMonitorPath("", FM_STAGING));
 }
 
 //-----------------------------------------------------------------------
@@ -751,7 +757,7 @@ bool freshen_internal(CMonitorArray& fa, const string_q& freshen_flags) {
         if (system(cmd.c_str())) {}  // Don't remove cruft. Silences compiler warnings
         // clang-format on
         if (!tenAddresses.empty())
-            usleep(250000);  // this sleep is here so that chifra remains responsive to Cntl+C. Do not remove
+            usleep(50000);  // this sleep is here so that chifra remains responsive to Cntl+C. Do not remove
     }
 
     for (CMonitor& f : fa)

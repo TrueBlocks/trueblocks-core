@@ -9,7 +9,7 @@ chifra -th
 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
-|  | commands | which command to run, one or more of [list&#124;export&#124;slurp&#124;collections&#124;names&#124;tags&#124;abis&#124;blocks&#124;transactions&#124;receipts&#124;logs&#124;traces&#124;quotes&#124;state&#124;tokens&#124;when&#124;where&#124;dive&#124;init&#124;scrape&#124;serve&#124;pins&#124;status&#124;rm] (required) |
+|  | commands | which command to run, one or more of [list&#124;export&#124;slurp&#124;collections&#124;names&#124;tags&#124;abis&#124;blocks&#124;transactions&#124;receipts&#124;logs&#124;traces&#124;quotes&#124;explore&#124;state&#124;tokens&#124;when&#124;where&#124;dive&#124;init&#124;scrape&#124;serve&#124;pins&#124;status&#124;rm] (required) |
 |####|Hidden options||
 | -S | --start <num> | first block to process (inclusive) |
 | -E | --end <num> | last block to process (inclusive) |
@@ -46,6 +46,7 @@ chifra -th
    pins          query the status of the pinning system
    status        query the status of the system
    quotes        return prices collected from configured remote API
+   explore       open the configured block explorer for the given address
    when          return a date given a block number or a block number given a date
    where         determine the location of block(s), either local or remote cache
 

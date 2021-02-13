@@ -1220,7 +1220,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 31-Gitcoin Grants:Friends	0x2ac2b3c5588e98b5da17213d8c341219ffce9afd	slayorktc		Gitcoin Website			false	false	false	false	false	false
 30-Contracts	0x2ad672fda8a042c4c78c411bf9d4f1b320aa915a	1inch Exchange		0xTracker			false	false	false	true	false	false
 81-Other	0x2add087d02fe18f1855f99b64d44354f2ebdfa98	Tokensalefactory		EtherScan.io			false	false	false	true	false	false
-31-Gitcoin Grants:Grant	0x2ae09febfd8a811207a378b142d74ffd23073610	Grant 015 Whiteblock Testing		https://gitcoin.co/grants/15/whiteblock-testing-2			false	false	false	false	false	false
+31-Gitcoin Grants:Grant	0x2ae09febfd8a811207a378b142d74ffd23073610	Grant 0015 Whiteblock Testing		https://gitcoin.co/grants/15/whiteblock-testing			false	false	false	false	false	false
 31-Gitcoin Grants:Core	0x2aea4add166ebf38b63d09a75de1a7b94aa24163	KudosToken	KDO	On chain			false	false	false	true	true	false
 50-Tokens:ERC20	0x2aec18c5500f21359ce1bea5dc1777344df4c0dc	FarmaTrust Token	FTT	On chain	18	The global tracking system which provides security to the pharmaceutical companies, governments, regulators and the public, that counterfeit drugs do not enter the supply chain.	false	false	false	true	true	false
 31-Gitcoin Grants:Friends	0x2af159c310e5ba57c5c0936b65267267b9c89e47	daisymarisfung		Gitcoin Website			false	false	false	false	false	false
@@ -2863,6 +2863,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 80-Malicious:Shanghai	0x6a0a0fc761c612c340a0e98d33b37a75e5268472	Possibly Malicious 0x6a0		TrueBlocks.io			false	false	false	true	false	false
 30-Contracts	0x6a0c50788e462f322959a2458687096994d66316	Arbitrage Bot		0xTracker			false	false	false	true	false	false
 50-Tokens:ERC20	0x6a27348483d59150ae76ef4c0f3622a78b0ca698	MetaGraphChain	BKBT	On chain	18		false	false	false	true	true	false
+31-Gitcoin Grants:Grant	0x6a2fc127cd2926752338917d8e09fb8481d12e3b	Grant 1985 HARD LIFE		https://gitcoin.co/grants/1985/hard-life			false	false	false	false	false	false
 81-Other	0x6a3120d8a66fe96eb260cce4b6da02e7835b8426	Chal2Sweep		EtherScan.io			false	false	false	false	false	false
 31-Gitcoin Grants:Friends	0x6a3738c6299f45c31697acea647d49edcc9c28a4	skywinder		Gitcoin Website			false	false	false	false	false	false
 30-Contracts:Pasta	0x6a3f3e76ad1ee05f5382d79f9047effd8417670c	Pasta/MKR Uniswap		Spaghetti Website			false	false	false	true	false	false
@@ -4469,6 +4470,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0xaa19961b6b858d9f18a115f25aa1d98abc1fdba8	LocalCoinSwap Cryptoshare	LCS	On chain	18	Directly trade any cryptocurrency, using any conceivable payment method, in any geographical location.	false	false	false	true	true	false
 81-Other	0xaa1a6e3e6ef20068f7f8d8c835d2d22fd5116444	ReplaySafeSplit		Ether Camp			false	false	false	true	false	false
 50-Tokens:ERC20	0xaa26931ebba45b69834eb35fe3315cab4b1e97fe	AWARE Token	AT	On chain	8		false	false	false	true	true	false
+31-Gitcoin Grants:Grant	0xaa42aa2e1888c5aa2861e970cb2720848b868c68	Grant 0007 ETH2.0 Implementers Call Notes		https://gitcoin.co/grants/7/eth20-implementers-call-notes			false	false	false	false	false	false
 34-Twitter: Friends	0xaa57fb0d32c8a1a297ccdaaccdfa5a4dbce430b0	$		Twitter		$	false	false	false	false	false	false
 31-Gitcoin Grants:Friends	0xaa648512b0e9d52b677026d7d38b70264af418d0	lomasse860		Gitcoin Website			false	false	false	false	false	false
 31-Gitcoin Grants:Friends	0xaa6b17591b75cf687afce0434e66790048f54312	brechtpd		Gitcoin Website			false	false	false	false	false	false

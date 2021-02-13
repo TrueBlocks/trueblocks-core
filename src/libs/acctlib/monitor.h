@@ -72,6 +72,12 @@ class CMonitor : public CAccountName {
     void undeleteMonitor(void);
     void deleteMonitor(void);
     void removeMonitor(void);
+    string_q getMonitorPath(const address_t& addr, freshen_e mode = FM_PRODUCTION) const;
+    string_q getMonitorLast(const address_t& addr, freshen_e mode = FM_PRODUCTION) const;
+    string_q getMonitorExpt(const address_t& addr, freshen_e mode = FM_PRODUCTION) const;
+    string_q getMonitorDels(const address_t& addr, freshen_e mode = FM_PRODUCTION) const;
+    string_q getMonitorCach(const address_t& addr, freshen_e mode = FM_PRODUCTION) const;
+    void cleanMonitor(const address_t& addr) const;
     // EXISTING_CODE
     bool operator==(const CMonitor& it) const;
     bool operator!=(const CMonitor& it) const {
@@ -220,13 +226,7 @@ extern const char* STR_DISPLAY_MONITOR;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-extern string_q getMonitorPath(const address_t& addr, freshen_e mode = FM_PRODUCTION);
-extern string_q getMonitorLast(const address_t& addr, freshen_e mode = FM_PRODUCTION);
-extern string_q getMonitorExpt(const address_t& addr, freshen_e mode = FM_PRODUCTION);
-extern string_q getMonitorDels(const address_t& addr, freshen_e mode = FM_PRODUCTION);
-extern string_q getMonitorCach(const address_t& addr, freshen_e mode = FM_PRODUCTION);
 extern void cleanMonitors(const CAddressArray& addrs);
-extern void cleanMonitor(const address_t& addr);
 extern void establishTestMonitors(void);
 typedef map<address_t, CMonitor> CMonitorMap;  // NOLINT
 extern void establishMonitorFolders(void);

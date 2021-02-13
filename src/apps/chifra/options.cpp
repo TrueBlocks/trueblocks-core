@@ -14,7 +14,7 @@ const string_q opt_string =
     "list<enum["
     "list|export|slurp|"
     "collections|names|tags|abis|"
-    "blocks|transactions|receipts|logs|traces|quotes|"
+    "blocks|transactions|receipts|logs|traces|quotes|explore|"
     "state|tokens|when|where|dive|"
     "init|scrape|serve|pins|status|rm]"
     ">";
@@ -289,6 +289,7 @@ COptions::COptions(void) {
                 "  pins          query the status of the pinning system|"
                 "  status        query the status of the system|"
                 "  quotes        return prices collected from configured remote API|"
+                "  explore       open the configured block explorer for the given address|"
                 "  when          return a date given a block number or a block number given a date|"
                 "  where         determine the location of block(s), either local or remote cache"
     );

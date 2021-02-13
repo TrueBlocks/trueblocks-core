@@ -1,5 +1,9 @@
 [settings]
 class = CMonitor
 base_class = CAccountName
-fields = CReconciliation summaryStatement|CEthStateArray stateHistory|wei curBalance|bool enabled=true|freshen_e fm_mode=FM_PRODUCTION (nowrite)
+fields = CReconciliation summaryStatement|\
+        CEthStateArray stateHistory|\
+        wei curBalance|\
+        bool enabled=true|\
+        freshen_e fm_mode=FM_PRODUCTION (nowrite)
 includes = etherlib.h|transaction.h|reconciliation.h|ethstate.h

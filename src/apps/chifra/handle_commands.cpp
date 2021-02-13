@@ -59,4 +59,4 @@ map<string, string> cmdMap = {{"slurp", "ethslurp"},        {"collections", "eth
                               {"rm", "acctScrape --rm"},    {"list", "acctScrape"},
                               {"export", "acctExport"},     {"scrape", "blockScrape"},
                               {"dive", "turboDive"},        {"serve", "tbServer"},
-                              {"pins", "pinStatus"}};
+                              {"pins", "pinStatus"},        {"explore", "ethscan.py"}};

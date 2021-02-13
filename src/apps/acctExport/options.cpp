@@ -203,7 +203,7 @@ bool COptions::parseArguments(string_q& command) {
                     "running or it did not end cleanly the\n\tlast time it ran. "
                     "Quit the already running program or, if it is not running, "
                     "remove the lock\n\tfile: " +
-                    getMonitorPath(addr) + +".lck'. Proceeding anyway...");
+                    monitor.getMonitorPath(addr) + +".lck'. Proceeding anyway...");
             monitor.clearLocks();
             monitor.finishParse();
             monitors.push_back(monitor);
@@ -245,7 +245,7 @@ bool COptions::parseArguments(string_q& command) {
         for (auto monitor : monitors) {
             CMonitorCount monCount;
             monCount.address = monitor.address;
-            monCount.fileSize = fileSize(getMonitorPath(monitor.address));
+            monCount.fileSize = fileSize(monitor.getMonitorPath(monitor.address));
             monCount.nRecords = monCount.fileSize / sizeof(CAppearance_base);
             counts.push_back(monCount);
         }

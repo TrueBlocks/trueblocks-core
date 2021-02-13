@@ -66,7 +66,7 @@ bool COptions::parseArguments(string_q& command) {
     bool addr_only = false;
 
     Init();
-    blknum_t latest = getLatestBlock_client();
+    blknum_t latest = isTestMode() ? 11500000 : getLatestBlock_client();
     latestBlock = latest;
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
@@ -362,7 +362,6 @@ bool COptions::addIfUnique(const CAccountName& item) {
 void COptions::applyFilter() {
     //------------------------
     if (types & OWNED) {
-        nodeRequired();
         if (isTestMode()) {
             for (uint32_t i = 1; i < 5; i++) {
                 CAccountName item;
@@ -370,6 +369,7 @@ void COptions::applyFilter() {
                 addIfUnique(item);
             }
         } else {
+            nodeRequired();
             CStringArray addrs;
             getAccounts(addrs);
             uint32_t cnt = 0;
