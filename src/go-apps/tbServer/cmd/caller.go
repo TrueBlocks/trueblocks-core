@@ -46,27 +46,54 @@ func callOneExtra(w http.ResponseWriter, r *http.Request, tbCmd, extra string) {
 		}
 		allDogs = append(allDogs, value...)
 	}
-    // log.Println("tbCmd: ", tbCmd)
-    // log.Println("allDogs: ", allDogs)
+	// log.Println("tbCmd: ", tbCmd)
+	// log.Println("allDogs: ", allDogs)
 	cmd := exec.Command(tbCmd, allDogs...)
 
 	if r.Header.Get("User-Agent") == "testRunner" {
 		cmd.Env = append(append(os.Environ(), "TEST_MODE=true"), "API_MODE=true")
 		vars := strings.Split(r.Header.Get("X-TestRunner-Env"), "|")
 		for _, v := range vars {
-			cmd.Env = append(cmd.Env, v) 
-            // log.Printf(v)
+			cmd.Env = append(cmd.Env, v)
+			// log.Printf(v)
 		}
 	} else {
-        cmd.Env = append(os.Environ(), "API_MODE=true")
-    }
+		cmd.Env = append(os.Environ(), "API_MODE=true")
+	}
 
-	out, err := cmd.Output()
+	stderrPipe, err := cmd.StderrPipe()
+
 	if err != nil {
 		fmt.Printf("%s", err)
+	} else {
+		go func() {
+			ScanForProgress(stderrPipe, func(commandProgress *CommandProgress) {
+				connectionPool.broadcast <- &Message{
+					Action:   ProgressMessage,
+					Id:       tbCmd,
+					Progress: commandProgress,
+				}
+			})
+		}()
+	}
+
+	out, err := cmd.Output()
+
+	if err != nil {
+		fmt.Printf("%s", err)
+		connectionPool.broadcast <- &Message{
+			Action:  CommandErrorMessage,
+			Id:      tbCmd,
+			Content: err.Error(),
+		}
 	}
 
 	output := string(out[:])
+	connectionPool.broadcast <- &Message{
+		Action:  CommandOutputMessage,
+		Id:      tbCmd,
+		Content: string(output),
+	}
 	fmt.Fprint(w, output)
 }
 
@@ -112,7 +139,7 @@ func AdminScrape(w http.ResponseWriter, r *http.Request) {
 }
 
 func AdminPins(w http.ResponseWriter, r *http.Request) {
-    callOne(w, r, "pinMan");
+	callOne(w, r, "pinMan")
 }
 
 func AdminStatus(w http.ResponseWriter, r *http.Request) {
@@ -173,21 +200,27 @@ func Logger(inner http.Handler, name string) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		start := time.Now()
 		inner.ServeHTTP(w, r)
-        t := ""
-        if r.Header.Get("User-Agent") == "testRunner" {
-            t = "-test"
-        }
+		t := ""
+		if r.Header.Get("User-Agent") == "testRunner" {
+			t = "-test"
+		}
 		log.Printf(
 			"%d %s%s %s %s %s",
 			nProcessed,
 			r.Method,
-            t,
+			t,
 			r.RequestURI,
 			name,
 			time.Since(start),
 		)
 		nProcessed++
 	})
+}
+
+var connectionPool = newConnectionPool()
+
+func RunWebsocketPool() {
+	go connectionPool.run()
 }
 
 type Response struct {
@@ -227,6 +260,15 @@ func Index(w http.ResponseWriter, r *http.Request) {
 }
 
 var routes = Routes{
+	Route{
+		"Websockets",
+		"GET",
+		"/websocket",
+		func(w http.ResponseWriter, r *http.Request) {
+			HandleWebsockets(connectionPool, w, r)
+		},
+	},
+
 	Route{
 		"Index",
 		"GET",
@@ -290,12 +332,12 @@ var routes = Routes{
 		AdminScrape,
 	},
 
-    Route{
-        "AdminPins",
-        "GET",
-        "/pins",
-        AdminPins,
-    },
+	Route{
+		"AdminPins",
+		"GET",
+		"/pins",
+		AdminPins,
+	},
 
 	Route{
 		"AdminStatus",
