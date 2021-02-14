@@ -15,8 +15,8 @@
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
     COption("all", "a", "", OPT_FLAG, "process all transactions from start of chain to latest block"),
-    COption("start", "s", "<uint>", OPT_FLAG, "the first block to process"),
-    COption("end", "e", "<uint>", OPT_FLAG, "the last block (less one) to process"),
+    COption("first", "f", "<uint>", OPT_FLAG, "the first block to process"),
+    COption("last", "l", "<uint>", OPT_FLAG, "the last block (less one) to process"),
     COption("nblocks", "n", "<uint>", OPT_FLAG, "the number of blocks to visit (ignored for -a)"),
     COption(
         "", "", "", OPT_DESCRIPTION,
@@ -42,14 +42,14 @@ bool COptions::parseArguments(string_q& command) {
             nBlocks = str_2_Uint(arg);
             hasN = true;
 
-        } else if (startsWith(arg, "-s:") || startsWith(arg, "--start:")) {
-            arg = substitute(substitute(orig, "-s:", ""), "--start:", "");
+        } else if (startsWith(arg, "-f:") || startsWith(arg, "--first:")) {
+            arg = substitute(substitute(orig, "-f:", ""), "--first:", "");
             startBlock = str_2_Uint(arg);
             if (!isUnsigned(arg))
                 return usage("Positive start block number expected: " + orig);
 
-        } else if (startsWith(arg, "-e:") || startsWith(arg, "--end:")) {
-            arg = substitute(substitute(orig, "-e:", ""), "--end:", "");
+        } else if (startsWith(arg, "-l:") || startsWith(arg, "--last:")) {
+            arg = substitute(substitute(orig, "-l:", ""), "--last:", "");
             if (arg == "latest") {
                 endBlock = getLatestBlock_client();
             } else {

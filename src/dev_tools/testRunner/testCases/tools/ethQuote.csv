@@ -1,4 +1,4 @@
-enabled, mode, speed, route, path/tool, filename, post, options, opt_cmd
+enabled, mode, speed, route, path/tool, filename, post, options, opt_cmd, has_env
 on, cmd,  fast, quotes, tools/ethQuote, README,            n, @th
 on, cmd,  fast, quotes, tools/ethQuote, help,              n, @h
 on, cmd,  fast, quotes, tools/ethQuote, help_long,         n, help

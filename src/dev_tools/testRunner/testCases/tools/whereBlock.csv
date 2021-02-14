@@ -1,4 +1,4 @@
-enabled, mode, speed, route, path/tool, filename, post, options, opt_cmd
+enabled, mode, speed, route, path/tool, filename, post, options, opt_cmd, has_env
 on, both, all,  blocks,tools/whereBlock, preload,          y, blocks = 1001001 & force, getBlock
 on, both, all,  blocks,tools/whereBlock, preload2,         y, blocks = 1001010 & force, getBlock
 

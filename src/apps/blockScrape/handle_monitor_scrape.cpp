@@ -26,6 +26,7 @@ bool COptions::scrape_monitors(void) {
         if (system(os.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings
         // clang-format on
         state = getCurrentState();
+        usleep(50000);
     }
 
     return true;

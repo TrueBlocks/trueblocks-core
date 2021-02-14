@@ -16,7 +16,6 @@ static const COption params[] = {
     COption("addrs", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "one or more Ethereum addresses"),
     COption("staging", "s", "", OPT_HIDDEN | OPT_SWITCH, "enable search of staging (not yet finalized) folder"),
     COption("unripe", "u", "", OPT_HIDDEN | OPT_SWITCH, "enable search of unripe (neither staged nor finalized) folder (requires --staging)"),  // NOLINT
-    COption("blooms", "b", "", OPT_HIDDEN | OPT_SWITCH, "process query by first using bloom filter and, if hit, downloading index chunk from remote"),  // NOLINT
     COption("clean", "c", "", OPT_HIDDEN | OPT_SWITCH, "clean (i.e. remove dups) from all existing monitors"),
     COption("start", "S", "<blknum>", OPT_HIDDEN | OPT_FLAG, "this value is ignored but remains for backward compatibility"),  // NOLINT
     COption("end", "E", "<blknum>", OPT_HIDDEN | OPT_FLAG, "this value is ignored but remains for backward compatibility"),  // NOLINT
@@ -57,9 +56,6 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-u" || arg == "--unripe") {
             unripe = true;
-
-        } else if (arg == "-b" || arg == "--blooms") {
-            blooms = true;
 
         } else if (arg == "-c" || arg == "--clean") {
             clean = true;
@@ -109,7 +105,7 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     // Where will we start?
-    blknum_t nextBlockToVisit = NOPOS;
+    blknum_t firstBlockToVisit = NOPOS;
 
     if (clean) {
         handle_clean();
@@ -125,17 +121,18 @@ bool COptions::parseArguments(string_q& command) {
         CMonitor monitor;
         monitor.setValueByName("address", addr);  // do not remove, this also sets the bloom value for the address
         monitor.finishParse();
+        monitor.fm_mode = (fileExists(monitor.getMonitorPath(monitor.address)) ? FM_PRODUCTION : FM_STAGING);
         string_q msg;
         if (monitor.isLocked(msg))  // If locked, we fail
             EXIT_USAGE(msg);
-        nextBlockToVisit = min(nextBlockToVisit, monitor.nextBlockAsPerMonitor());
-        monitors.push_back(monitor);
+        firstBlockToVisit = min(firstBlockToVisit, monitor.getLastVisited());
+        allMonitors.push_back(monitor);
     }
 
     if (rm)
         return handle_rm(addrs);
 
-    // Last block depends on scrape type or user input --end (with appropriate check)
+    // Last block depends on scrape type or user input `end` option (with appropriate check)
     // clang-format off
     blknum_t lastBlockToVisit = max((blknum_t)1, (visitTypes & VIS_UNRIPE)    ? unripeBlk
                                                  : (visitTypes & VIS_STAGING) ? stagingBlk
@@ -143,7 +140,7 @@ bool COptions::parseArguments(string_q& command) {
     // clang-format on
 
     // Mark the range...
-    scanRange = make_pair(nextBlockToVisit, lastBlockToVisit);
+    scanRange = make_pair(firstBlockToVisit, lastBlockToVisit);
     if (isTestMode()) {
         scanRange.first = max(scanRange.first, start);
         scanRange.second = max(scanRange.second, end);
@@ -157,7 +154,7 @@ bool COptions::parseArguments(string_q& command) {
 
     // If there's nothing to scrape, quit silently...
     if (scanRange.first >= scanRange.second) {
-        LOG4("Account scraper is up to date.");
+        LOG8("Account scraper is up to date.");
         EXIT_NOMSG(false);
     }
 
@@ -170,14 +167,14 @@ void COptions::Init(void) {
     optionOn(OPT_CRUD);
 
     // BEG_CODE_INIT
-    blooms = false;
     clean = false;
     // END_CODE_INIT
 
     minArgs = 0;
     fileRange = make_pair(NOPOS, NOPOS);
     visitTypes = VIS_FINAL;
-    monitors.clear();
+    allMonitors.clear();
+    possibles.clear();
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -207,7 +204,7 @@ const char* STR_DELETEFIRST = "Monitor [{ADDRESS}] must be deleted before it can
 //------------------------------------------------------------------------------------------------
 bool COptions::handle_rm(const CAddressArray& addrs) {
     CStringArray results;
-    for (auto monitor : monitors) {
+    for (auto monitor : allMonitors) {
         if (!monitor.exists()) {
             results.push_back(monitor.Format(STR_NOTFOUND));
             LOG_WARN(monitor.Format(STR_NOTFOUND));

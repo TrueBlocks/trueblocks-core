@@ -3,7 +3,6 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,customizeable,c
 10110,apps,Accounts,list,acctScrape,addrs,,,true,false,true,true,local,positional,list<addr>,one or more Ethereum addresses
 10120,apps,Accounts,list,acctScrape,staging,s,false,false,false,false,false,local,switch,<boolean>,enable search of staging (not yet finalized) folder
 10130,apps,Accounts,list,acctScrape,unripe,u,false,false,false,false,false,local,switch,<boolean>,enable search of unripe (neither staged nor finalized) folder|(requires --staging)
-10140,apps,Accounts,list,acctScrape,blooms,b,false,false,false,false,false,header,switch,<boolean>,process query by first using bloom filter and&#44; if hit&#44; downloading|index chunk from remote
 10145,apps,Accounts,list,acctScrape,clean,c,false,false,false,false,false,header,switch,<boolean>,clean (i.e. remove dups) from all existing monitors
 10150,apps,Accounts,list,acctScrape,start,S,,false,false,false,false,local,flag,<blknum>,this value is ignored but remains for backward compatibility
 10160,apps,Accounts,list,acctScrape,end,E,,false,false,false,false,local,flag,<blknum>,this value is ignored but remains for backward compatibility

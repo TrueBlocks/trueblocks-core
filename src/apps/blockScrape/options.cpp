@@ -289,7 +289,7 @@ ScrapeState COptions::getCurrentState(void) {
         state = STATE_STOPPED;
         stateStr = "stopped";
     }
-    LOG4("The scraper was ", stateStr, ".");
+    LOG8("The scraper was ", stateStr, ".");
     return state;
 }
 

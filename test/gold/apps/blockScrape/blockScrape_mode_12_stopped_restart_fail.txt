@@ -1,6 +1,6 @@
 blockScrape argc: 2 [1:restart] 
 blockScrape restart 
-TIME ~ CLOCK - : 4-----The scraper was stopped.
+TIME ~ CLOCK - : 8------The scraper was stopped.
 TIME ~ CLOCK - <ERROR> : blockScrape is stopped. Cannot restart.
 { "status": "stopped" }
 {

@@ -31,9 +31,9 @@ int main(int argc, const char* argv[]) {
         if (options.visitTypes & VIS_UNRIPE)
             forEveryFileInFolder(indexFolder_unripe, visitUnripeIndexFiles, &options);
 
-        for (auto monitor : options.monitors) {
+        for (auto monitor : options.allMonitors) {
             monitor.moveToProduction();
-            LOG4(monitor.address, " freshened to ", monitor.nextBlockAsPerMonitor());
+            LOG4(monitor.address, " freshened to ", monitor.getLastVisited(true /* fresh */));
         }
     }
 

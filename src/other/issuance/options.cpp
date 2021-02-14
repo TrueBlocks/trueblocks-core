@@ -62,11 +62,11 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-i" || arg == "--discrete") {
             discrete = true;
 
-        } else if (startsWith(arg, "-S:") || startsWith(arg, "--start:")) {
+        } else if (startsWith(arg, "- S:") || startsWith(arg, "--s tart:")) {
             if (!confirmUint("start", startBlock, arg))
                 return false;
 
-        } else if (startsWith(arg, "-E:") || startsWith(arg, "--end:")) {
+        } else if (startsWith(arg, "- E:") || startsWith(arg, "--e nd:")) {
             if (!confirmUint("end", endBlock, arg))
                 return false;
 
@@ -78,7 +78,7 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     if (startBlock >= endBlock || endBlock > getLatestBlock_client())
-        return usage("Invalid --start or --end.");
+        return usage("Invalid --s tart or --e nd.");
 
     if (thing) {
         check_uncles();

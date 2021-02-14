@@ -1,4 +1,4 @@
-enabled, mode, speed, route, path/tool, filename, post, options, opt_cmd
+enabled, mode, speed, route, path/tool, filename, post, options, opt_cmd, has_env
 on, cmd,  fast, pins, apps/pinStatus, README,          n, @th
 on, cmd,  fast, pins, apps/pinStatus, help,            n, @h
 on, cmd,  fast, pins, apps/pinStatus, help_long,       n, help

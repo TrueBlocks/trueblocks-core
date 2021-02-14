@@ -1,4 +1,4 @@
-enabled, mode, speed, route, path/tool, filename, post, options, opt_cmd
+enabled, mode, speed, route, path/tool, filename, post, options, opt_cmd, has_env
 
 on, cmd,  fast, null, etherlib/abiTest,         README,           n, @th
 on, cmd,  fast, null, etherlib/abiTest,         ethtest,          n, val = eth_test @ s = 0

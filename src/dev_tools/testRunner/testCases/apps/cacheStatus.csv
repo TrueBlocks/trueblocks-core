@@ -1,4 +1,4 @@
-enabled, mode, speed, route, path/tool, filename, post, options, opt_cmd
+enabled, mode, speed, route, path/tool, filename, post, options, opt_cmd, has_env
 on, cmd,  fast, status, apps/cacheStatus, CLEANUP,         n, CLEANUP
 
 on, cmd,  fast, status, apps/cacheStatus, README,          n, @th

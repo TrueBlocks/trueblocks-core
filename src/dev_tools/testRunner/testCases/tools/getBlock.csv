@@ -1,4 +1,4 @@
-enabled, mode, speed, route, path/tool, filename, post, options, opt_cmd
+enabled, mode, speed, route, path/tool, filename, post, options, opt_cmd, has_env
 on, cmd,  all,  blocks, tools/getBlock, force_01,           y, blocks = 2768801 1995314 1958017 & force, getBlock
 on, cmd,  all,  blocks, tools/getBlock, force_03,           y, blocks = 4369999 & force, getBlock
 

@@ -1,4 +1,4 @@
-enabled, mode, speed, route, path/tool, filename, post, options, opt_cmd
+enabled, mode, speed, route, path/tool, filename, post, options, opt_cmd, has_env
 # ./dev_tools/testRunner/options.cpp:    COption("", "", "", OPT_DESCRIPTION, "Run TrueBlocks' test cases with options."),
 # ./dev_tools/testRunner/options.cpp:    COption("clean", "c", "", OPT_SWITCH, "clean working folder before running tests"),
 # ./dev_tools/testRunner/options.cpp:    COption("filter", "f", "enum[fast*|medi|slow|all]", OPT_FLAG, "determine how long it takes to run tests"),

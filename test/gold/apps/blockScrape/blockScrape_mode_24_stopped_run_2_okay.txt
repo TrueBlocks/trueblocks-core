@@ -1,6 +1,6 @@
 blockScrape argc: 2 [1:run] 
 blockScrape run 
-TIME ~ CLOCK - : 4-----The scraper was stopped.
+TIME ~ CLOCK - : 8------The scraper was stopped.
 { "status": "running" }
 TIME ~ CLOCK - : 4-----changing state: stopped --> running
 {

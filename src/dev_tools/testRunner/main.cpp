@@ -35,7 +35,7 @@ int main(int argc, const char* argv[]) {
         return 0;
 
     total.git_hash = "git_" + string_q(GIT_COMMIT_HASH).substr(0, 10);
-    string_q testFolder = getCWD() + "../../../../src/other/testCases/";
+    string_q testFolder = getCWD() + "../../../../src/dev_tools/testRunner/testCases/";
     uint32_t testID = 0;
     for (auto command : options.commandLines) {
         if (!options.parseArguments(command))

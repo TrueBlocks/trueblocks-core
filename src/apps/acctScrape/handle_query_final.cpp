@@ -18,7 +18,7 @@ bool visitFinalIndexFiles(const string_q& path, void* data) {
         options->stats.nFiles++;
 
         // Filenames take the form 'start-end.[txt|bin]' where both 'start' and 'end'
-        // are inclusive. Silently skips unknown files in the folder (such as shell scripts).
+        // are inclusive. This silently skips unknown files in the folder (such as shell scripts).
         if (!contains(path, "-") || !endsWith(path, ".bloom")) {
             options->stats.nSkipped++;
             return !shouldQuit();
@@ -28,10 +28,16 @@ bool visitFinalIndexFiles(const string_q& path, void* data) {
         options->fileRange.first = bnFromPath(path, options->fileRange.second, unused);
         ASSERT(unused != NOPOS && options->fileRange.first != NOPOS && options->fileRange.second != NOPOS);
 
-        // Note that --start and --end options are ignored when scanning
+        // Note that `start` and `end` options are ignored when scanning
         if (!rangesIntersect(options->scanRange, options->fileRange)) {
             options->stats.nSkipped++;
             return !shouldQuit();
+        }
+
+        options->possibles.clear();
+        for (auto m : options->allMonitors) {
+            if (m.getLastVisitedBlock() < options->fileRange.first)
+                options->possibles.push_back(m);
         }
 
         if (isTestMode() && options->fileRange.second > 5000000) {
@@ -64,18 +70,16 @@ bool COptions::visitBinaryFile(const string_q& path, void* data) {
         bool hit = false;
         // Note: we used to stop searching on the first hit, and then scan the larger data files for all monitors in
         // this run, but now we keep a map of addresses that were bloom hits and only scan the ones that match.
-        for (size_t a = 0; a < monitors.size(); a++) {  // && !hit; a++) { (remove after groking above comment)
-            if (isMember(bloomArray, monitors[a].getBloom())) {
+        for (size_t a = 0; a < possibles.size(); a++) {  // && !hit; a++) { (remove after groking above comment)
+            if (isMember(bloomArray, possibles[a].getBloom())) {
                 hit = true;
-                hitMap[monitors[a].address] = true;
+                hitMap[possibles[a].address] = true;
             }
         }
 
         if (!hit) {
             // none of them hit, so write last block for each of them
-            for (auto monitor : monitors) {
-                string_q filename = monitor.getMonitorPath(monitor.address);
-                monitor.fm_mode = (fileExists(filename) ? FM_PRODUCTION : FM_STAGING);
+            for (auto monitor : possibles) {
                 monitor.writeLastBlock(fileRange.second + 1);
             }
             options->stats.nBloomMisses++;
@@ -96,13 +100,9 @@ bool COptions::visitBinaryFile(const string_q& path, void* data) {
 
     bool indexHit = false;
     string_q hits;
-    for (size_t mo = 0; mo < monitors.size() && !shouldQuit(); mo++) {
-        CMonitor* monitor = &monitors[mo];
+    for (size_t mo = 0; mo < possibles.size() && !shouldQuit(); mo++) {
+        CMonitor* monitor = &possibles[mo];
         if (hitMap[monitor->address]) {
-            string_q filename = monitor->getMonitorPath(monitor->address);
-            bool exists = fileExists(filename);
-            monitor->fm_mode = (exists ? FM_PRODUCTION : FM_STAGING);
-
             if (!monitor->openCacheFile1())
                 EXIT_FAIL("Could not open cache file " + monitor->getMonitorPath(monitor->address, monitor->fm_mode) + ".");
 
@@ -168,11 +168,8 @@ bool COptions::visitBinaryFile(const string_q& path, void* data) {
         }
     }
 
-    for (auto monitor : monitors) {
-        string_q filename = monitor.getMonitorPath(monitor.address);
-        monitor.fm_mode = (fileExists(filename) ? FM_PRODUCTION : FM_STAGING);
+    for (auto monitor : possibles)
         monitor.writeLastBlock(fileRange.second + 1);
-    }
 
     if (chunk) {
         chunk->Release();

@@ -39,8 +39,8 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-r" || arg == "--reverse") {
             reverse = true;
 
-        } else if (startsWith(arg, "-s") || startsWith(arg, "--start")) {
-            arg = substitute(substitute(arg, "-s:", ""), "--start:", "");
+        } else if (startsWith(arg, "-s") || startsWith(arg, "--s tart")) {
+            arg = substitute(substitute(arg, "-s:", ""), "--s tart:", "");
             if (!isNumeral(arg))
                 return usage("Start option must be a numeral.");
             start = str_2_Uint(arg);

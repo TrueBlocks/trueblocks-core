@@ -19,12 +19,12 @@
 class COptions : public COptionsBase {
   public:
     // BEG_CODE_DECLARE
-    bool blooms;
     bool clean;
     // END_CODE_DECLARE
 
     CAcctScrapeStats stats;
-    CMonitorArray monitors;
+    CMonitorArray allMonitors;
+    CMonitorArray possibles;
     blkrange_t fileRange;
     size_t visitTypes;
 

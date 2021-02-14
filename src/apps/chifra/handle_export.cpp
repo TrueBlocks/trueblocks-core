@@ -66,7 +66,7 @@ bool COptions::handle_export(void) {
             LOG8("command: ", trim(cmds[i]), " returned with '", quit, "'");
         }
         if (++cnt < addrs.size())
-            usleep(5000);  // this sleep is here so that chifra remains responsive to Cntl+C. Do not remove
+            usleep(50000);  // this sleep is here so that chifra remains responsive to Cntl+C. Do not remove
     }
     EXIT_NOMSG(true);
 }

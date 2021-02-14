@@ -59,7 +59,7 @@ class CMonitor : public CAccountName {
     void writeAnArray(const CAppearanceArray_base& array);
     void writeARecord(blknum_t bn, blknum_t tx_id);
     bool openCacheFile1(void);
-    blknum_t nextBlockAsPerMonitor(void) const;
+    blknum_t getLastVisited(bool fresh=false) const;
     bool isLocked(string_q& msg) const;
     bool clearLocks(void);
     void moveToProduction(void);
@@ -93,6 +93,7 @@ class CMonitor : public CAccountName {
     bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
+    blknum_t lastVisitedBlock;
     // EXISTING_CODE
 };
 
@@ -148,6 +149,7 @@ inline void CMonitor::clear(void) {
     tx_cache = NULL;
     cntBefore = 0;
     needsRefresh = false;
+    lastVisitedBlock = NOPOS;
     // EXISTING_CODE
 }
 
@@ -168,6 +170,7 @@ inline void CMonitor::initialize(void) {
     tx_cache = NULL;
     cntBefore = 0;
     needsRefresh = false;
+    lastVisitedBlock = NOPOS;
     // EXISTING_CODE
 }
 
@@ -189,6 +192,7 @@ inline void CMonitor::duplicate(const CMonitor& mo) {
     tx_cache = NULL;  // we do not copy the tx_cache
     cntBefore = mo.cntBefore;
     needsRefresh = mo.needsRefresh;
+    lastVisitedBlock = mo.lastVisitedBlock;
     // EXISTING_CODE
 }
 

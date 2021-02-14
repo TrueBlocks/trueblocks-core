@@ -32,7 +32,7 @@ bool visitStagingIndexFiles(const string_q& path, void* data) {
         options->fileRange.first = bnFromPath(path, options->fileRange.second, unused);
         // TODO - Not right: ASSERT(unused != NOPOS && options->fileRange.first != NOPOS && options->fileRange.second != NOPOS);
 
-        // Note that --start and --end options are ignored when scanning
+        // Note that `start` and `end` options are ignored when scanning
         if (!rangesIntersect(options->scanRange, options->fileRange)) {
             options->stats.nSkipped++;
             return !shouldQuit();

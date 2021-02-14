@@ -371,6 +371,7 @@ bool CMonitor::openCacheFile1(void) {
 
 //-------------------------------------------------------------------------
 void CMonitor::writeLastBlock(blknum_t bn) {
+    lastVisitedBlock = bn;
     stringToAsciiFile(getMonitorLast(address, fm_mode), uint_2_Str(bn) + "\n");
 }
 
@@ -397,17 +398,23 @@ void CMonitor::writeAnArray(const CAppearanceArray_base& items) {
 }
 
 //--------------------------------------------------------------------------------
-blknum_t CMonitor::nextBlockAsPerMonitor(void) const {
-    if (fileExists(getMonitorLast(address)))
-        return str_2_Uint(asciiFileToString(getMonitorLast(address)));
+blknum_t CMonitor::getLastVisited(bool fresh) const {
+    if (lastVisitedBlock == NOPOS || fresh) {
+        // If the monitor exists, the next block is stored in the database...
+        if (fileExists(getMonitorLast(address))) {
+            ((CMonitor*)this)->lastVisitedBlock = str_2_Uint(asciiFileToString(getMonitorLast(address))); // NOLINT
 
-    // Contracts can receive ether prior to being deployed (counter-factually). By default, we ignore
-    // this and start our scan at the deploy block. EOAs return NOPOS as deploy block.
-    if (getGlobalConfig("acctScrape")->getConfigBool("settings", "start-when-deployed", true)) {
-        blknum_t deployed = getDeployBlock(address);
-        return (deployed == NOPOS ? 0 : deployed);
+        } else {
+            // Accounts can receive ETH counter-factually. By default, we ignore
+            // this and start our scan from the account's deploy block (in the case
+            // of a contract) or the zero block. User can change this setting.
+            if (getGlobalConfig("acctScrape")->getConfigBool("settings", "start-when-deployed", true)) {
+                blknum_t deployed = getDeployBlock(address);
+                ((CMonitor*)this)->lastVisitedBlock = (deployed == NOPOS ? 0 : deployed); // NOLINT
+            }
+        }
     }
-    return 0;
+    return lastVisitedBlock;
 }
 
 //--------------------------------------------------------------------------------
@@ -459,7 +466,8 @@ void CMonitor::moveToProduction(void) {
     }
     lockSection(true);
     bool binExists = fileExists(getMonitorPath(address, FM_STAGING));
-    if (binExists) {
+    bool lastExists = fileExists(getMonitorLast(address, FM_STAGING));
+    if (binExists || lastExists) {
         doMoveFile(getMonitorPath(address, FM_STAGING), getMonitorPath(address));
         doMoveFile(getMonitorLast(address, FM_STAGING), getMonitorLast(address));
         doMoveFile(getMonitorExpt(address, FM_STAGING), getMonitorExpt(address));
@@ -720,7 +728,7 @@ string_q getTokenState(const string_q& what, const CAbi& abi_spec, const CMonito
 
 //------------------------------------------------------------------------------------------------
 bool freshen_internal(CMonitorArray& fa, const string_q& freshen_flags) {
-    ENTER("freshen_internal");
+    // ENTER("freshen_internal");
     nodeNotRequired();
 
     ostringstream base;
@@ -748,7 +756,7 @@ bool freshen_internal(CMonitorArray& fa, const string_q& freshen_flags) {
     while (!tenAddresses.empty()) {
         string_q thisFive = nextTokenClear(tenAddresses, '|');
         string_q cmd = substitute(base.str(), "[ADDRS]", thisFive);
-        LOG_CALL(cmd);
+        // LOG_CALL(cmd);
         // clang-format off
         uint64_t n = countOf(thisFive, ' ');
         if (fa.size() > 1)
@@ -763,7 +771,8 @@ bool freshen_internal(CMonitorArray& fa, const string_q& freshen_flags) {
     for (CMonitor& f : fa)
         f.needsRefresh = (f.cntBefore != f.getRecordCount());
 
-    EXIT_NOMSG(true);
+    return true;
+    // EXIT_NOMSG(true);
 }
 // EXISTING_CODE
 }  // namespace qblocks
