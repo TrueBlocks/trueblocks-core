@@ -134,15 +134,6 @@ string_q join(T begin, T end) {
     return join(begin, end, ", ");
 }
 
-//---------------------------------------------------------------------------------------
-inline string_q getEnvStr(const char* name) {
-    char* sss = getenv(name);
-    return (sss ? string_q(sss) : string_q(""));
-}
-inline string_q getEnvStr(const string_q& name) {
-    return getEnvStr(name.c_str());
-}
-
 // formatting only
 extern string_q uint_2_Str(uint64_t i);
 extern string_q int_2_Str(int64_t i);

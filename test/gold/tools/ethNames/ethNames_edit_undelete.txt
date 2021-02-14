@@ -1,5 +1,5 @@
-ethNames argc: 6 [1:--undelete] [2:0x0000000000000000000000000000000010101010] [3:--expand] [4:--verbose] [5:10] 
-ethNames --undelete 0x0000000000000000000000000000000010101010 --expand --verbose 10 
+ethNames argc: 8 [1:--undelete] [2:0x0000000000000000000000000000000010101010] [3:--expand] [4:--verbose] [5:10] [6:--fmt] [7:api] 
+ethNames --undelete 0x0000000000000000000000000000000010101010 --expand --verbose 10 --fmt api 
 TIME ~ CLOCK - <INFO>  : Cleaning 0x0000000000000000000000000000000010101010                                  ---------------------------------------------
 {
   "address": "0x0000000000000000000000000000000010101010"
@@ -16,5 +16,17 @@ TIME ~ CLOCK - : 4-----Reading prefund names from binary cache
 TIME ~ CLOCK - : 8------Finished adding names from prefunds database...
 TIME ~ CLOCK - : 8------Writing binary cache
 TIME ~ CLOCK - : 8------Finished writing binary cache...
-tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefund	is_contract	is_erc20	is_erc721
-TAGS_CHANGED	0x0000000000000000000000000000000010101010	NAME_CHANGED	SYMBOL_CHANGED	SOURCE_CHANGED	13	DESCRIPTION_CHANGED	false	false	false	false	true	false
+{"data": [
+  {
+    "deleted": false,
+    "tags": "TAGS_CHANGED",
+    "address": "0x0000000000000000000000000000000010101010",
+    "name": "NAME_CHANGED",
+    "symbol": "SYMBOL_CHANGED",
+    "source": "SOURCE_CHANGED",
+    "decimals": 13,
+    "description": "DESCRIPTION_CHANGED",
+    "is_erc20": true
+  }], "types": [
+{ "type": "CAccountName", "fields": [{ "name": "deleted", "type": "bool" }, { "name": "tags", "type": "text" }, { "name": "address", "type": "address" }, { "name": "name", "type": "text" }, { "name": "symbol", "type": "text" }, { "name": "source", "type": "text" }, { "name": "decimals", "type": "unumber" }, { "name": "description", "type": "text" }, { "name": "is_custom", "type": "bool" }, { "name": "is_prefund", "type": "bool" }, { "name": "is_contract", "type": "bool" }, { "name": "is_erc20", "type": "bool" }, { "name": "is_erc721", "type": "bool" }] }
+], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef", "namePath": "--" } }

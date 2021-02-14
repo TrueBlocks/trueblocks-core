@@ -1,4 +1,16 @@
-ethNames argc: 7 [1:0x0000000000000000000000000000000010101010] [2:--fmt] [3:txt] [4:--expand] [5:--verbose] [6:10] 
-ethNames 0x0000000000000000000000000000000010101010 --fmt txt --expand --verbose 10 
-tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefund	is_contract	is_erc20	is_erc721
-TAGS_CHANGED	0x0000000000000000000000000000000010101010	NAME_CHANGED	SYMBOL_CHANGED	SOURCE_CHANGED	13	DESCRIPTION_CHANGED	false	false	false	false	true	false
+ethNames argc: 7 [1:0x0000000000000000000000000000000010101010] [2:--expand] [3:--verbose] [4:10] [5:--fmt] [6:api] 
+ethNames 0x0000000000000000000000000000000010101010 --expand --verbose 10 --fmt api 
+{"data": [
+  {
+    "deleted": false,
+    "tags": "TAGS_CHANGED",
+    "address": "0x0000000000000000000000000000000010101010",
+    "name": "NAME_CHANGED",
+    "symbol": "SYMBOL_CHANGED",
+    "source": "SOURCE_CHANGED",
+    "decimals": 13,
+    "description": "DESCRIPTION_CHANGED",
+    "is_erc20": true
+  }], "types": [
+{ "type": "CAccountName", "fields": [{ "name": "deleted", "type": "bool" }, { "name": "tags", "type": "text" }, { "name": "address", "type": "address" }, { "name": "name", "type": "text" }, { "name": "symbol", "type": "text" }, { "name": "source", "type": "text" }, { "name": "decimals", "type": "unumber" }, { "name": "description", "type": "text" }, { "name": "is_custom", "type": "bool" }, { "name": "is_prefund", "type": "bool" }, { "name": "is_contract", "type": "bool" }, { "name": "is_erc20", "type": "bool" }, { "name": "is_erc721", "type": "bool" }] }
+], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef", "namePath": "--" } }

@@ -11,6 +11,7 @@ import (
 	"net/http"
 	"os"
 	"os/exec"
+	"strings"
 	"time"
 
 	"github.com/gorilla/mux"
@@ -49,6 +50,10 @@ func callOneExtra(w http.ResponseWriter, r *http.Request, tbCmd, extra string) {
 
 	if r.Header.Get("User-Agent") == "testRunner" {
 		cmd.Env = append(append(os.Environ(), "TEST_MODE=true"), "API_MODE=true") 
+		vars := strings.Split(r.Header.Get("X-TestRunner-Env"), "|")
+		for _, v := range vars {
+			cmd.Env = append(cmd.Env, v) 
+		}
 	} else {
         cmd.Env = append(os.Environ(), "API_MODE=true")
     }

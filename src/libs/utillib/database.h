@@ -137,9 +137,15 @@ class CSharedResource {
 };
 
 //----------------------------------------------------------------------
+extern string_q asciiFileToString(const string_q& filename);
+extern size_t asciiFileToString(const string_q& filename, string& contents); // non-copy
+extern size_t asciiFileToLines(const string_q& fileName, CStringArray& lines);
+extern size_t asciiFileToLines(const string_q& fileName, CUintArray& lines);
 extern size_t stringToAsciiFile(const string_q& fileName, const string_q& contents);
-extern size_t linesToAsciiFile(const string_q& fileName, const CStringArray& lines, bool addNewline = false);
-extern uint64_t appendToAsciiFile(const string_q& fileName, const string_q& addContents);
+extern size_t linesToAsciiFile(const string_q& fileName, const CStringArray& lines, char sep = '\n');
+extern string_q linesToString(const CStringArray& lines, char sep = '\n');
+extern size_t appendToAsciiFile(const string_q& fileName, const string_q& addContents);
+extern bool forEveryLineInAsciiFile(const string_q& filename, CHARPTRFUNC func, void* data);
 
 //----------------------------------------------------------------------
 extern string_q docxToString(const string_q& filename);
@@ -169,13 +175,6 @@ extern bool shouldQuit(void);
 extern void lockSection(bool lock);
 extern bool isSectionLocked(void);
 extern bool writeTheCode(const codewrite_t& cw);
-
-//----------------------------------------------------------------------
-extern size_t asciiFileToString(const string_q& filename, string& contents);
-extern string_q asciiFileToString(const string_q& filename);
-extern size_t asciiFileToLines(const string_q& fileName, CStringArray& lines);
-extern size_t asciiFileToLines(const string_q& fileName, CUintArray& lines);
-extern bool forEveryLineInAsciiFile(const string_q& filename, CHARPTRFUNC func, void* data);
 
 //----------------------------------------------------------------------
 inline bool isFileLocked(const string_q& fileName) {

@@ -126,7 +126,41 @@ extern bool isUnsigned(const string_q& in);
 
 //--------------------------------------------------------------------
 extern bool rangesIntersect(const blkrange_t& r1, const blkrange_t& r2);
-
 typedef enum { NODIR, PREV, NEXT } direction_t;
+
+//---------------------------------------------------------------------------------------
+inline string_q getEnvStr(const string_q& name) {
+    char* sss = getenv(name.c_str());
+    return (sss ? string_q(sss) : string_q(""));
+}
+//---------------------------------------------------------------------------------------
+inline uint64_t getEnvUint(const string_q& name) {
+    char* sss = getenv(name.c_str());
+    return (sss ? str_2_Uint(sss) : NOPOS);
+}
+
+//---------------------------------------------------------------------------
+inline bool isDockerMode(void) {
+    static uint64_t docker_mode = NOPOS;
+    if (docker_mode == NOPOS)
+        docker_mode = getEnvStr("DOCKER_MODE") == "true";
+    return docker_mode;
+}
+
+//---------------------------------------------------------------------------
+inline bool isTestMode(void) {
+    static uint64_t test_mode = NOPOS;
+    if (test_mode == NOPOS)
+        test_mode = getEnvStr("TEST_MODE") == "true";
+    return test_mode;
+}
+
+//---------------------------------------------------------------------------
+inline bool isApiMode(void) {
+    static uint64_t api_mode = NOPOS;
+    if (api_mode == NOPOS)
+        api_mode = getEnvStr("API_MODE") == "true";
+    return api_mode;
+}
 
 }  // namespace qblocks

@@ -82,9 +82,6 @@ string_q CTestCase::getValueByName(const string_q& fieldName) const {
             if (fieldName % "extra") {
                 return extra;
             }
-            if (fieldName % "env") {
-                return bool_2_Str(env);
-            }
             break;
         case 'f':
             if (fieldName % "fileName") {
@@ -177,10 +174,6 @@ bool CTestCase::setValueByName(const string_q& fieldNameIn, const string_q& fiel
         case 'e':
             if (fieldName % "extra") {
                 extra = fieldValue;
-                return true;
-            }
-            if (fieldName % "env") {
-                env = str_2_Bool(fieldValue);
                 return true;
             }
             break;
@@ -296,7 +289,6 @@ bool CTestCase::Serialize(CArchive& archive) {
     archive >> post;
     archive >> options;
     archive >> extra;
-    archive >> env;
     archive >> path;
     archive >> goldPath;
     archive >> workPath;
@@ -324,7 +316,6 @@ bool CTestCase::SerializeC(CArchive& archive) const {
     archive << post;
     archive << options;
     archive << extra;
-    archive << env;
     archive << path;
     archive << goldPath;
     archive << workPath;
@@ -377,7 +368,6 @@ void CTestCase::registerClass(void) {
     ADD_FIELD(CTestCase, "post", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CTestCase, "options", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CTestCase, "extra", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CTestCase, "env", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CTestCase, "path", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CTestCase, "goldPath", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CTestCase, "workPath", T_TEXT | TS_OMITEMPTY, ++fieldNum);
@@ -506,7 +496,6 @@ CTestCase::CTestCase(const string_q& line, uint32_t id) {
     post = parts.size() > 6 ? trim(parts[6]) : "";
     options = parts.size() > 7 ? trim(parts[7]) : "";
     extra = parts.size() > 8 ? trim(parts[8]) : "";
-    env = parts.size() > 9 ? str_2_Bool(trim(parts[9])) : false;
 
     path = nextTokenClear(tool, '/');
     if (endsWith(path, "lib"))

@@ -1,38 +1,26 @@
-enabled, mode, speed, route, path/tool, filename, post, options, opt_cmd, has_env
-on, cmd,  fast, export, apps/acctExport, CLEANUP,               n, CLEANUP
-
-on, cmd,  fast, export, apps/acctExport, README,                n, @th
-on, cmd,  fast, export, apps/acctExport, help,                  n, @h
-on, cmd,  fast, export, apps/acctExport, help_long,             n, help
-
-on, both, fast, export, apps/acctExport, no_params,             y,
-
-on, both, fast, export, apps/acctExport, export_apps,           y, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & appearances & fmt = json & max_records = 1
-on, both, fast, export, apps/acctExport, export_apps_c,         y, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & appearances & count
-
-on, both, fast, export, apps/acctExport, export,                n, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & fmt = txt & max_records = 2
-on, both, fast, export, apps/acctExport, export_c,              y, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & count
-on, both, fast, export, apps/acctExport, export_c_fail,         y, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & count & logs
-
-on, both, fast, export, apps/acctExport, export_receipts,       y, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & receipts & fmt = json & max_records = 5
-on, both, fast, export, apps/acctExport, export_logs,           y, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & logs & fmt = json & end = 001506480
-#on, both, fast, export, apps/acctExport, export_logs_art,       y, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & logs & fmt = json & end = 001506480 & articulate
-on, cmd,  fast, export, apps/acctExport, export_logs_emit,      y, addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & logs & fmt = json & end = 006500000 & emitter
-on, both, fast, export, apps/acctExport, export_logs_factory,   y, addrs = 0xd2f5852eb4b0c12c23a97914b2a9d954cf621781 & traces & fmt = json & end = 1750000 & factory
-on, both, fast, export, apps/acctExport, export_traces,         y, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & traces & fmt = api & end = 001506480 & max_records = 5
-
-on, both, fast, export, apps/acctExport, export_balances,       y, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & statements & fmt = json & end = 001506480
-on, both, fast, export, apps/acctExport, export_balances_dol,   y, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & statements & fmt = json & dollars & end = 001507000
-on, both, fast, export, apps/acctExport, export_balances_ether, y, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & statements & fmt = json & ether & end = 001507000
-
-on, both, fast, export, apps/acctExport, accounting1,           y, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & accounting & fmt = api & max_records = 5
-on, both, fast, export, apps/acctExport, accounting2,           y, addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & accounting & fmt = api & max_records = 5
-on, both, fast, export, apps/acctExport, accounting3,           y, addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & accounting & ether & start = 10277780 & end = 10296792 & fmt = api
-#on, both, fast, export, apps/acctExport, accounting4,           y, addrs = 0x0ece224fbc24d40b446c6a94a142dc41fae76f2d & accounting & ether & first_record = 1 & max_records = 10 & fmt = json
-
-on, both, fast, export, apps/acctExport, to_file,               y, addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & accounting & ether & start = 10277780 & end = 10296792 & fmt = api & to_file
-
-on, cmd,  fast, export, apps/acctExport, export_backcompat,     n, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & staging & unripe & first_record = 0 & max_records = 1
-
-# COption("all_abis", "A", "", OPT_HIDDEN | OPT_SWITCH, "load all previously cached abi files"),
-# COption("emitter", "M", "", OPT_HIDDEN | OPT_SWITCH, "available for --logs option only, export will only export if the address emitted the event"),  // NOLINT
+enabled,mode,speed,route,path/tool,filename,post,options,opt_cmd,has_env
+on,cmd,fast,export,apps/acctExport,CLEANUP,n,CLEANUP
+on,cmd,fast,export,apps/acctExport,README,n,@th
+on,cmd,fast,export,apps/acctExport,help,n,@h
+on,cmd,fast,export,apps/acctExport,help_long,n,help
+on,both,fast,export,apps/acctExport,no_params,y,
+on,both,fast,export,apps/acctExport,export_apps,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & appearances & fmt = json & max_records = 1
+on,both,fast,export,apps/acctExport,export_apps_c,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & appearances & count
+on,both,fast,export,apps/acctExport,export,n,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & fmt = txt & max_records = 2
+on,both,fast,export,apps/acctExport,export_c,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & count
+on,both,fast,export,apps/acctExport,export_c_fail,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & count & logs
+on,both,fast,export,apps/acctExport,export_receipts,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & receipts & fmt = json & max_records = 5
+on,both,fast,export,apps/acctExport,export_logs,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & logs & fmt = json & end = 001506480
+off,both,fast,export,apps/acctExport,export_logs_art,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & logs & fmt = json & end = 001506480 & articulate
+on,cmd,fast,export,apps/acctExport,export_logs_emit,y,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & logs & fmt = json & end = 006500000 & emitter
+on,both,fast,export,apps/acctExport,export_logs_factory,y,addrs = 0xd2f5852eb4b0c12c23a97914b2a9d954cf621781 & traces & fmt = json & end = 1750000 & factory
+on,both,fast,export,apps/acctExport,export_traces,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & traces & fmt = api & end = 001506480 & max_records = 5
+on,both,fast,export,apps/acctExport,export_balances,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & statements & fmt = json & end = 001506480
+on,both,fast,export,apps/acctExport,export_balances_dol,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & statements & fmt = json & dollars & end = 001507000
+on,both,fast,export,apps/acctExport,export_balances_ether,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & statements & fmt = json & ether & end = 001507000
+on,both,fast,export,apps/acctExport,accounting1,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & accounting & fmt = api & max_records = 5
+on,both,fast,export,apps/acctExport,accounting2,y,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & accounting & fmt = api & max_records = 5
+on,both,fast,export,apps/acctExport,accounting3,y,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & accounting & ether & start = 10277780 & end = 10296792 & fmt = api
+off,both,fast,export,apps/acctExport,accounting4,y,addrs = 0x0ece224fbc24d40b446c6a94a142dc41fae76f2d & accounting & ether & first_record = 1 & max_records = 10 & fmt = json
+on,both,fast,export,apps/acctExport,to_file,y,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & accounting & ether & start = 10277780 & end = 10296792 & fmt = api & to_file
+on,cmd,fast,export,apps/acctExport,export_backcompat,n,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & staging & unripe & first_record = 0 & max_records = 1

@@ -1,27 +1,20 @@
-enabled, mode, speed, route, path/tool, filename, post, options, opt_cmd, has_env
-on, cmd,  fast, list, apps/acctScrape, CLEANUP,          n, CLEANUP
-
-on, cmd,  fast, null, apps/acctScrape, README,           n, @th
-on, cmd,  fast, null, apps/acctScrape, help,             n, @h
-on, cmd,  fast, null, apps/acctScrape, help_long,        n, help
-
-on, both, fast, list, apps/acctScrape, no_params,        n,
-on, both, fast, list, apps/acctScrape, fail_list1,       n, list
-on, both, fast, list, apps/acctScrape, fail_list2,       n, addrs = 0x1234567890123456789012345678901234567890 & start = 1000000 & end = 2200000 & fmt = csv
-on, both, fast, list, apps/acctScrape, list_test,        y, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & start = 100000 & end = 2000000
-on, both, fast, list, apps/acctScrape, list_chifra,      y, modes = list & addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & start = 100000 & end = 2000000, chifra
-
-on, both, fast, list, apps/acctScrape, list_final,       n, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b 0x1234567890123456789012345678901234567890 & start = 3000000 & end = 4500000 & fmt = csv & no_header
-on, both, fast, list, apps/acctScrape, list_stage,       y, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & start = 100000 & end = 2000000 & staging
-on, both, fast, list, apps/acctScrape, list_unripe,      y, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & start = 100000 & end = 2000000 & staging & unripe
-on, both, fast, list, apps/acctScrape, list_unripe_fail, y, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & start = 100000 & end = 2000000 & unripe
-
-on, both, fast, list, apps/acctScrape, list_prefund1,    y, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & start = 0 & end = 0
-on, both, fast, list, apps/acctScrape, list_prefund2,    y, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & start = 0 & end = 1
-on, both, fast, list, apps/acctScrape, list_prefund3,    y, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & start = 1 & end = 2
-
-on, cmd,  slow, list, apps/acctScrape, list_speed_test,  y, addrs = 0x1234567890123456789012345678901234567890 & end = 7000000
-
-on, cmd,  slow, list, apps/acctScrape, list_seed_1,      y, addrs = 0x807640a13483f8ac783c557fcdf27be11ea4ac7a 0xf503017d7baf7fbc0fff7492b751025c6a78179b & end = 10296792
-
-on, both, fast, list, apps/acctScrape, to_file,          y, addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & start = 100000 & end = 2000000 & to_file
+enabled,mode,speed,route,path/tool,filename,post,options,opt_cmd,has_env
+on,cmd,fast,list,apps/acctScrape,CLEANUP,n,CLEANUP
+on,cmd,fast,null,apps/acctScrape,README,n,@th
+on,cmd,fast,null,apps/acctScrape,help,n,@h
+on,cmd,fast,null,apps/acctScrape,help_long,n,help
+on,both,fast,list,apps/acctScrape,no_params,n,
+on,both,fast,list,apps/acctScrape,fail_list1,n,list
+on,both,fast,list,apps/acctScrape,fail_list2,n,addrs = 0x1234567890123456789012345678901234567890 & start = 1000000 & end = 2200000 & fmt = csv
+on,both,fast,list,apps/acctScrape,list_test,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & start = 100000 & end = 2000000
+on,both,fast,list,apps/acctScrape,list_chifra,y,modes = list & addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & start = 100000 & end = 2000000,chifra
+on,both,fast,list,apps/acctScrape,list_final,n,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b 0x1234567890123456789012345678901234567890 & start = 3000000 & end = 4500000 & fmt = csv & no_header
+on,both,fast,list,apps/acctScrape,list_stage,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & start = 100000 & end = 2000000 & staging
+on,both,fast,list,apps/acctScrape,list_unripe,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & start = 100000 & end = 2000000 & staging & unripe
+on,both,fast,list,apps/acctScrape,list_unripe_fail,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & start = 100000 & end = 2000000 & unripe
+on,both,fast,list,apps/acctScrape,list_prefund1,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & start = 0 & end = 0
+on,both,fast,list,apps/acctScrape,list_prefund2,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & start = 0 & end = 1
+on,both,fast,list,apps/acctScrape,list_prefund3,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & start = 1 & end = 2
+on,cmd,slow,list,apps/acctScrape,list_speed_test,y,addrs = 0x1234567890123456789012345678901234567890 & end = 7000000
+on,cmd,slow,list,apps/acctScrape,list_seed_1,y,addrs = 0x807640a13483f8ac783c557fcdf27be11ea4ac7a 0xf503017d7baf7fbc0fff7492b751025c6a78179b & end = 10296792
+on,both,fast,list,apps/acctScrape,to_file,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & start = 100000 & end = 2000000 & to_file

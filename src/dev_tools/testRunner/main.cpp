@@ -78,7 +78,7 @@ int main(int argc, const char* argv[]) {
 
                 if (line.empty() || ignore1 || ignore2 || ignore3 || ignore4) {
                     if (ignore2 && !options.ignoreOff)
-                        cerr << iBlue << "   # " << line << cOff << endl;
+                        cerr << iBlue << "   # " << line.substr(0,120) << cOff << endl;
                     // do nothing
 
                 } else {
@@ -177,47 +177,34 @@ bool COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, cons
             return usage("Folder " + test.workPath + " not found.");
 
         } else {
-            CStringArray envLines;
             ostringstream cmd;
+
+            CStringArray envLines;
+            string_q envFile = substitute(test.goldPath, "/api_tests", "") + test.name + ".env";
+            if (fileExists(envFile))
+                asciiFileToLines(envFile, envLines);
+
             if (cmdTests) {
-                if (test.env) {
-                    string_q envFile = substitute(test.goldPath, "/api_tests", "") + test.name + ".env";
-                    if (!fileExists(envFile)) {
-                        return usage("Could not find the environment file: '" + envFile + "'.");
-                    }
-                    asciiFileToLines(envFile, envLines);
-                    for (auto line : envLines) {
-                        CStringArray parts;
-                        explode(parts, line, '=');
-                        setenv(trim(parts[0]).c_str(), trim(parts[1]).c_str(), true);
-                    }
-                }
+                string_q env = substitute(substitute(linesToString(envLines, '|'), " ", ""), "|", " ");
+                string_q e = "env " + env + " TEST_MODE=true NO_COLOR=true REDIR_CERR=true ";
                 string_q c = test.tool + test.options + " >" + test.workPath + test.fileName + " 2>&1";
-                string_q e = "env " + test.extra + " TEST_MODE=true NO_COLOR=true REDIR_CERR=true ";
                 cmd << e << c;
+
             } else {
-                if (test.env) {
-                    // TODO(tjayrush): handle the case of using curl to edit names
-                    // string_q envFile = substitute(test.goldPath, "/api_tests", "") + test.name + ".env";
-                    // if (!fileExists(envFile)) {
-                    //     return usage("Could not find the environment file: '" + envFile + "'.");
-                    // }
-                    // CStringArray lines;
-                    // asciiFileToLines(envFile, lines);
-                    // for (auto line : lines) {
-                    //     CStringArray parts;
-                    //     explode(parts, line, '=');
-                    //     setenv(trim(parts[0]).c_str(), trim(parts[1]).c_str(), true);
-                    // }
-                } else {
-                    cmd << "curl -s -H \"User-Agent: testRunner\" \"" << apiProvider << test.route;
-                    if (!test.builtin && !test.options.empty())
-                        cmd << "?" << test.options;
-                    cmd << "\"";
-                    if (!no_post && !test.post.empty())
-                        cmd << " | " << test.post << " ";
-                    cmd << " >" << test.workPath + test.fileName;
-                }
+                bool has_options = (!test.builtin && !test.options.empty());
+                bool has_post = (!no_post && !test.post.empty());
+                bool has_env = (envLines.size() > 0);
+                cmd << "curl -s ";
+                cmd << "-H \"User-Agent: testRunner\" ";
+                if (has_env)
+                    cmd << "-H \"X-TestRunner-Env: " << substitute(linesToString(envLines, '|'), " ", "") << "\" ";
+                cmd << "\"";
+                cmd << apiProvider;
+                cmd << test.route;
+                cmd << (has_options ? ("?" + test.options) : "");
+                cmd << "\"";
+                cmd << (has_post ? (" | " + test.post + " ") : "");
+                cmd << " >" << test.workPath + test.fileName;
             }
 
             // To run the test, we cd into the gold path (so we find the test files), but we send results to working
@@ -359,13 +346,7 @@ bool COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, cons
                 LOG4("Quitting because of shouldQuit");
                 break;
             }
-
-            // unset the variables
-            for (auto line : envLines) {
-                CStringArray parts;
-                explode(parts, line, '=');
-                setenv(trim(parts[0]).c_str(), "", true);
-            }
+            envLines.clear();
         }
     }
 

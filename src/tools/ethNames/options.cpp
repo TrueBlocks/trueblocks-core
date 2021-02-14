@@ -130,8 +130,15 @@ bool COptions::parseArguments(string_q& command) {
         abi_spec.loadAbisFromKnown(true);
         if (clean)
             return handle_clean();
-        if (!processEditCommand(terms, to_custom))
-            return false;
+        if (isCrudCommand()) {
+            address_t address = toLower(trim(getEnvStr("TB_NAME_ADDRESS"), '\"'));
+            if (address.empty() && !terms.empty())
+                address = terms[0];
+            if (!isAddress(address) || isZeroAddr(address))
+                return usage("You must provide an address to crud commands.");
+            if (!processEditCommand(terms, to_custom)) // returns true on success
+                return false;
+        }
     }
 
     for (auto term : terms)

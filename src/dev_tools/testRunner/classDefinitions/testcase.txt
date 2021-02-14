@@ -12,7 +12,6 @@ fields = \
     string post|\
     string options|\
     string extra|\
-    bool env|\
     string path|\
     string goldPath|\
     string workPath|\

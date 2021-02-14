@@ -1,104 +1,91 @@
-enabled, mode, speed, route, path/tool, filename, post, options, opt_cmd, has_env
-
-on, cmd,  fast, null, etherlib/abiTest,         README,           n, @th
-on, cmd,  fast, null, etherlib/abiTest,         ethtest,          n, val = eth_test @ s = 0
-on, cmd,  fast, null, etherlib/abiTest,         ethtest_sigs,     n, val = eth_test @ s = 1
-on, cmd,  fast, null, etherlib/abiTest,         ethtest_encode,   n, val = eth_test @ s = 2
-on, cmd,  fast, null, etherlib/abiTest,         ethtest_encode_r, n, val = eth_test @ s = 3
-on, cmd,  fast, null, etherlib/abiTest,         ethtest_decode,   n, val = eth_test @ s = 4
-on, cmd,  fast, null, etherlib/abiTest,         ethtest_decode_r, n, val = eth_test @ s = 5
-on, cmd,  fast, null, etherlib/abiTest,         ethtest_tight,    n, val = eth_test @ s = 6
-on, cmd,  fast, null, etherlib/abiTest,         evtassign,        n, val = evt_assign
-on, cmd,  fast, null, etherlib/abiTest,         funcassign,       n, val = func_assign
-on, cmd,  fast, null, etherlib/abiTest,         01,               n, val = ecoding
-on, cmd,  slow, null, etherlib/abiTest,         02,               n, val = encoding
-on, cmd,  slow, null, etherlib/abiTest,         03,               n, val = generation encoding
-on, cmd,  slow, null, etherlib/abiTest,         04,               n, val = generation encoding bad
-on, cmd,  slow, null, etherlib/abiTest,         05_old_bug,       n, val = old_bug
-
-on, cmd,  fast, null, etherlib/abiTest2,        articulate,       n,
-
-on, cmd,  fast, null, etherlib/binaryPathTest,  00,               n,
-
-on, cmd,  fast, null, etherlib/blockTest,       README,           n, @th
-on, cmd,  slow, null, etherlib/blockTest,       00,               n, val = 0
-on, cmd,  slow, null, etherlib/blockTest,       01,               n, val = 1
-on, cmd,  slow, null, etherlib/blockTest,       02,               n, val = 2
-on, cmd,  fast, null, etherlib/blockTest,       03,               n, val = 3
-on, cmd,  fast, null, etherlib/blockTest,       04,               n, val = 4
-
-on, cmd,  fast, null, etherlib/dataUpgradeTest, README,           n,
-on, cmd,  fast, null, etherlib/dataUpgradeTest, 00,               n, val = 0
-on, cmd,  fast, null, etherlib/dataUpgradeTest, 01,               n, val = 1
-on, cmd,  fast, null, etherlib/dataUpgradeTest, 02,               n, val = 2
-on, cmd,  fast, null, etherlib/dataUpgradeTest, 03,               n, val = 3
-on, cmd,  fast, null, etherlib/dataUpgradeTest, 04,               n, val = 4
-on, cmd,  fast, null, etherlib/dataUpgradeTest, 05,               n, val = 5
-on, cmd,  fast, null, etherlib/dataUpgradeTest, 06,               n, file:cmd_file1
-on, cmd,  fast, null, etherlib/dataUpgradeTest, CAbi,             n, val = CAbi
-on, cmd,  fast, null, etherlib/dataUpgradeTest, CAccount,         n, val = CAccount
-on, cmd,  fast, null, etherlib/dataUpgradeTest, CMonitor,         n, val = CMonitor
-on, cmd,  fast, null, etherlib/dataUpgradeTest, CApiSpec,         n, val = CApiSpec
-on, cmd,  fast, null, etherlib/dataUpgradeTest, CBlock,           n, val = CBlock
-on, cmd,  fast, null, etherlib/dataUpgradeTest, CFunction,        n, val = CFunction
-on, cmd,  fast, null, etherlib/dataUpgradeTest, CReconciliationOutput, n, val = CReconciliationOutput
-on, cmd,  fast, null, etherlib/dataUpgradeTest, CLogEntry,        n, val = CLogEntry
-on, cmd,  fast, null, etherlib/dataUpgradeTest, CNewBlock,        n, val = CNewBlock
-on, cmd,  fast, null, etherlib/dataUpgradeTest, CNewReceipt,      n, val = CNewReceipt
-on, cmd,  fast, null, etherlib/dataUpgradeTest, CParameter,       n, val = CParameter
-on, cmd,  fast, null, etherlib/dataUpgradeTest, CPriceQuote,      n, val = CPriceQuote
-on, cmd,  fast, null, etherlib/dataUpgradeTest, CRPCResult,       n, val = CRPCResult
-on, cmd,  fast, null, etherlib/dataUpgradeTest, CReceipt,         n, val = CReceipt
-on, cmd,  fast, null, etherlib/dataUpgradeTest, CTrace,           n, val = CTrace
-on, cmd,  fast, null, etherlib/dataUpgradeTest, CTraceAction,     n, val = CTraceAction
-on, cmd,  fast, null, etherlib/dataUpgradeTest, CTraceResult,     n, val = CTraceResult
-on, cmd,  fast, null, etherlib/dataUpgradeTest, CTransaction,     n, val = CTransaction
-on, cmd,  slow, null, etherlib/dataUpgradeTest, AllClasses,       n, file:cmd_file2
-
-on, cmd,  fast, null, etherlib/decodeAbiTest,   README,           n, @th
-on, cmd,  fast, null, etherlib/decodeAbiTest,   01,               n, verbose
-
-on, cmd,  fast, null, etherlib/displayStrsTest, README,           n,
-on, cmd,  fast, null, etherlib/displayStrsTest, CAccountName,     n, val = CAccountName
-on, cmd,  fast, null, etherlib/displayStrsTest, CMonitor,    n, val = CMonitor
-on, cmd,  fast, null, etherlib/displayStrsTest, CAcctCacheItem,   n, val = CAcctCacheItem
-on, cmd,  fast, null, etherlib/displayStrsTest, CBlock,           n, val = CBlock
-on, cmd,  fast, null, etherlib/displayStrsTest, CBranch,          n, val = CBranch
-on, cmd,  fast, null, etherlib/displayStrsTest, CInfix,           n, val = CInfix
-on, cmd,  fast, null, etherlib/displayStrsTest, CLeaf,            n, val = CLeaf
-on, cmd,  fast, null, etherlib/displayStrsTest, CPriceQuote,      n, val = CPriceQuote
-on, cmd,  fast, null, etherlib/displayStrsTest, CRPCResult,       n, val = CRPCResult
-on, cmd,  fast, null, etherlib/displayStrsTest, CTreeNode,        n, val = CTreeNode
-on, cmd,  fast, null, etherlib/displayStrsTest, CTreeRoot,        n, val = CTreeRoot
-
-on, cmd,  fast, null, etherlib/forEveryTest,    README,           n, @th
-on, cmd,  slow, null, etherlib/forEveryTest,    00,               n, val = 0
-on, cmd,  slow, null, etherlib/forEveryTest,    01,               n, val = 1
-on, cmd,  slow, null, etherlib/forEveryTest,    02,               n, val = 2
-
-on, cmd,  fast, null, etherlib/generalTest,     00,               n
-on, cmd,  fast, null, etherlib/generalTest,     01,               n, @t
-
-on, cmd,  fast, null, etherlib/lastBlockTest,   test00,           n
-on, cmd,  fast, null, etherlib/lastBlockTest,   test01,           n, val = recurse
-
-on, cmd,  fast, null, etherlib/printFloatTest,  README,           n, @th
-on, cmd,  fast, null, etherlib/printFloatTest,  00,               n,
-on, cmd,  fast, null, etherlib/printFloatTest,  01,               n, @t = 1
-on, cmd,  fast, null, etherlib/printFloatTest,  02,               n, @t = 2
-on, cmd,  fast, null, etherlib/printFloatTest,  03,               n, @t = 3
-on, cmd,  fast, null, etherlib/printFloatTest,  long_01,          n, testNum = 1
-on, cmd,  fast, null, etherlib/printFloatTest,  long_02,          n, testNum = 2
-on, cmd,  fast, null, etherlib/printFloatTest,  long_03,          n, testNum = 3
-on, cmd,  fast, null, etherlib/printFloatTest,  nc_01,            n, @t = 1
-on, cmd,  fast, null, etherlib/printFloatTest,  nc_02,            n, @t = 2
-on, cmd,  fast, null, etherlib/printFloatTest,  nc_03,            n, @t = 3
-on, cmd,  fast, null, etherlib/printFloatTest,  nc_long_01,       n, testNum = 1
-on, cmd,  fast, null, etherlib/printFloatTest,  nc_long_02,       n, testNum = 2
-on, cmd,  fast, null, etherlib/printFloatTest,  nc_long_03,       n, testNum = 3
-
-on, cmd,  fast, null, etherlib/serializeTest,   README,           n, @th
-on, cmd,  fast, null, etherlib/serializeTest,   00,               n,
-
-on, cmd,  fast, null, etherlib/sha3Test,        00,               n,
-on, cmd,  fast, null, etherlib/sha3Test,        01,               n, @t
+enabled,mode,speed,route,path/tool,filename,post,options,opt_cmd,has_env
+on,cmd,fast,null,etherlib/abiTest,README,n,@th
+on,cmd,fast,null,etherlib/abiTest,ethtest,n,val = eth_test @ s = 0
+on,cmd,fast,null,etherlib/abiTest,ethtest_sigs,n,val = eth_test @ s = 1
+on,cmd,fast,null,etherlib/abiTest,ethtest_encode,n,val = eth_test @ s = 2
+on,cmd,fast,null,etherlib/abiTest,ethtest_encode_r,n,val = eth_test @ s = 3
+on,cmd,fast,null,etherlib/abiTest,ethtest_decode,n,val = eth_test @ s = 4
+on,cmd,fast,null,etherlib/abiTest,ethtest_decode_r,n,val = eth_test @ s = 5
+on,cmd,fast,null,etherlib/abiTest,ethtest_tight,n,val = eth_test @ s = 6
+on,cmd,fast,null,etherlib/abiTest,evtassign,n,val = evt_assign
+on,cmd,fast,null,etherlib/abiTest,funcassign,n,val = func_assign
+on,cmd,fast,null,etherlib/abiTest,01,n,val = ecoding
+on,cmd,slow,null,etherlib/abiTest,02,n,val = encoding
+on,cmd,slow,null,etherlib/abiTest,03,n,val = generation encoding
+on,cmd,slow,null,etherlib/abiTest,04,n,val = generation encoding bad
+on,cmd,slow,null,etherlib/abiTest,05_old_bug,n,val = old_bug
+on,cmd,fast,null,etherlib/abiTest2,articulate,n,
+on,cmd,fast,null,etherlib/binaryPathTest,00,n,
+on,cmd,fast,null,etherlib/blockTest,README,n,@th
+on,cmd,slow,null,etherlib/blockTest,00,n,val = 0
+on,cmd,slow,null,etherlib/blockTest,01,n,val = 1
+on,cmd,slow,null,etherlib/blockTest,02,n,val = 2
+on,cmd,fast,null,etherlib/blockTest,03,n,val = 3
+on,cmd,fast,null,etherlib/blockTest,04,n,val = 4
+on,cmd,fast,null,etherlib/dataUpgradeTest,README,n,
+on,cmd,fast,null,etherlib/dataUpgradeTest,00,n,val = 0
+on,cmd,fast,null,etherlib/dataUpgradeTest,01,n,val = 1
+on,cmd,fast,null,etherlib/dataUpgradeTest,02,n,val = 2
+on,cmd,fast,null,etherlib/dataUpgradeTest,03,n,val = 3
+on,cmd,fast,null,etherlib/dataUpgradeTest,04,n,val = 4
+on,cmd,fast,null,etherlib/dataUpgradeTest,05,n,val = 5
+on,cmd,fast,null,etherlib/dataUpgradeTest,06,n,file:cmd_file1
+on,cmd,fast,null,etherlib/dataUpgradeTest,CAbi,n,val = CAbi
+on,cmd,fast,null,etherlib/dataUpgradeTest,CAccount,n,val = CAccount
+on,cmd,fast,null,etherlib/dataUpgradeTest,CMonitor,n,val = CMonitor
+on,cmd,fast,null,etherlib/dataUpgradeTest,CApiSpec,n,val = CApiSpec
+on,cmd,fast,null,etherlib/dataUpgradeTest,CBlock,n,val = CBlock
+on,cmd,fast,null,etherlib/dataUpgradeTest,CFunction,n,val = CFunction
+on,cmd,fast,null,etherlib/dataUpgradeTest,CReconciliationOutput,n,val = CReconciliationOutput
+on,cmd,fast,null,etherlib/dataUpgradeTest,CLogEntry,n,val = CLogEntry
+on,cmd,fast,null,etherlib/dataUpgradeTest,CNewBlock,n,val = CNewBlock
+on,cmd,fast,null,etherlib/dataUpgradeTest,CNewReceipt,n,val = CNewReceipt
+on,cmd,fast,null,etherlib/dataUpgradeTest,CParameter,n,val = CParameter
+on,cmd,fast,null,etherlib/dataUpgradeTest,CPriceQuote,n,val = CPriceQuote
+on,cmd,fast,null,etherlib/dataUpgradeTest,CRPCResult,n,val = CRPCResult
+on,cmd,fast,null,etherlib/dataUpgradeTest,CReceipt,n,val = CReceipt
+on,cmd,fast,null,etherlib/dataUpgradeTest,CTrace,n,val = CTrace
+on,cmd,fast,null,etherlib/dataUpgradeTest,CTraceAction,n,val = CTraceAction
+on,cmd,fast,null,etherlib/dataUpgradeTest,CTraceResult,n,val = CTraceResult
+on,cmd,fast,null,etherlib/dataUpgradeTest,CTransaction,n,val = CTransaction
+on,cmd,slow,null,etherlib/dataUpgradeTest,AllClasses,n,file:cmd_file2
+on,cmd,fast,null,etherlib/decodeAbiTest,README,n,@th
+on,cmd,fast,null,etherlib/decodeAbiTest,01,n,verbose
+on,cmd,fast,null,etherlib/displayStrsTest,README,n,
+on,cmd,fast,null,etherlib/displayStrsTest,CAccountName,n,val = CAccountName
+on,cmd,fast,null,etherlib/displayStrsTest,CMonitor,n,val = CMonitor
+on,cmd,fast,null,etherlib/displayStrsTest,CAcctCacheItem,n,val = CAcctCacheItem
+on,cmd,fast,null,etherlib/displayStrsTest,CBlock,n,val = CBlock
+on,cmd,fast,null,etherlib/displayStrsTest,CBranch,n,val = CBranch
+on,cmd,fast,null,etherlib/displayStrsTest,CInfix,n,val = CInfix
+on,cmd,fast,null,etherlib/displayStrsTest,CLeaf,n,val = CLeaf
+on,cmd,fast,null,etherlib/displayStrsTest,CPriceQuote,n,val = CPriceQuote
+on,cmd,fast,null,etherlib/displayStrsTest,CRPCResult,n,val = CRPCResult
+on,cmd,fast,null,etherlib/displayStrsTest,CTreeNode,n,val = CTreeNode
+on,cmd,fast,null,etherlib/displayStrsTest,CTreeRoot,n,val = CTreeRoot
+on,cmd,fast,null,etherlib/forEveryTest,README,n,@th
+on,cmd,slow,null,etherlib/forEveryTest,00,n,val = 0
+on,cmd,slow,null,etherlib/forEveryTest,01,n,val = 1
+on,cmd,slow,null,etherlib/forEveryTest,02,n,val = 2
+on,cmd,fast,null,etherlib/generalTest,00,n
+on,cmd,fast,null,etherlib/generalTest,01,n,@t
+on,cmd,fast,null,etherlib/lastBlockTest,test00,n
+on,cmd,fast,null,etherlib/lastBlockTest,test01,n,val = recurse
+on,cmd,fast,null,etherlib/printFloatTest,README,n,@th
+on,cmd,fast,null,etherlib/printFloatTest,00,n,
+on,cmd,fast,null,etherlib/printFloatTest,01,n,@t = 1
+on,cmd,fast,null,etherlib/printFloatTest,02,n,@t = 2
+on,cmd,fast,null,etherlib/printFloatTest,03,n,@t = 3
+on,cmd,fast,null,etherlib/printFloatTest,long_01,n,testNum = 1
+on,cmd,fast,null,etherlib/printFloatTest,long_02,n,testNum = 2
+on,cmd,fast,null,etherlib/printFloatTest,long_03,n,testNum = 3
+on,cmd,fast,null,etherlib/printFloatTest,nc_01,n,@t = 1
+on,cmd,fast,null,etherlib/printFloatTest,nc_02,n,@t = 2
+on,cmd,fast,null,etherlib/printFloatTest,nc_03,n,@t = 3
+on,cmd,fast,null,etherlib/printFloatTest,nc_long_01,n,testNum = 1
+on,cmd,fast,null,etherlib/printFloatTest,nc_long_02,n,testNum = 2
+on,cmd,fast,null,etherlib/printFloatTest,nc_long_03,n,testNum = 3
+on,cmd,fast,null,etherlib/serializeTest,README,n,@th
+on,cmd,fast,null,etherlib/serializeTest,00,n,
+on,cmd,fast,null,etherlib/sha3Test,00,n,
+on,cmd,fast,null,etherlib/sha3Test,01,n,@t

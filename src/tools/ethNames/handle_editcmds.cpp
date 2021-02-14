@@ -30,9 +30,9 @@ bool COptions::processEditCommand(CStringArray& terms, bool to_custom) {
 
     CAccountName target;
     target.address = toLower(trim(getEnvStr("TB_NAME_ADDRESS"), '\"'));
-    if (target.address.empty()) {
+    ASSERT(!terms.empty());
+    if (target.address.empty())
         target.address = terms[0];
-    }
     target.name = trim(getEnvStr("TB_NAME_NAME"), '\"');
     target.tags = trim(getEnvStr("TB_NAME_TAG"), '\"');
     target.source = trim(getEnvStr("TB_NAME_SOURCE"), '\"');

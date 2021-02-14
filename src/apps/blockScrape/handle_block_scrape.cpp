@@ -322,7 +322,7 @@ bool COptions::finalize_chunks(CConsolidator* cons) {
         }
 
         ::remove(newStage.c_str());
-        linesToAsciiFile(newStage, remainingLines, true);
+        linesToAsciiFile(newStage, remainingLines);
         LOG_INFO(cWhite, "  Wrote ", remainingLines.size(), " records to ",
                  substitute(newStage, indexFolder_staging, "$STAGING/"), cOff);
 
