@@ -14,6 +14,7 @@
 #include <libgen.h>
 #include <algorithm>
 #include "basetypes.h"
+#include "conversions.h"
 #include "sfos.h"
 #include "sftime.h"
 #include "sfstring.h"

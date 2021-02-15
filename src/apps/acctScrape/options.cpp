@@ -17,8 +17,6 @@ static const COption params[] = {
     COption("staging", "s", "", OPT_HIDDEN | OPT_SWITCH, "enable search of staging (not yet finalized) folder"),
     COption("unripe", "u", "", OPT_HIDDEN | OPT_SWITCH, "enable search of unripe (neither staged nor finalized) folder (requires --staging)"),  // NOLINT
     COption("clean", "c", "", OPT_HIDDEN | OPT_SWITCH, "clean (i.e. remove dups) from all existing monitors"),
-    COption("start", "S", "<blknum>", OPT_HIDDEN | OPT_FLAG, "this value is ignored but remains for backward compatibility"),  // NOLINT
-    COption("end", "E", "<blknum>", OPT_HIDDEN | OPT_FLAG, "this value is ignored but remains for backward compatibility"),  // NOLINT
     COption("", "", "", OPT_DESCRIPTION, "Add or remove monitors for a given Ethereum address (or collection of addresses)."),  // NOLINT
     COption("rm", "", "", OPT_SWITCH, "process the request to delete, undelete, or remove monitors"),
     // clang-format on
@@ -29,6 +27,12 @@ static const size_t nParams = sizeof(params) / sizeof(COption);
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
     ENTER("parseArguments");
+
+    // deprecated
+    CStringArray deprecated = { "--start ", "-S ", "--end ", "-E " };
+    for (auto d : deprecated)
+        command = substitute(command, d, "--noop:");
+
     if (!standardOptions(command))
         EXIT_NOMSG(false);
 
@@ -36,8 +40,6 @@ bool COptions::parseArguments(string_q& command) {
     CAddressArray addrs;
     bool staging = false;
     bool unripe = false;
-    blknum_t start = NOPOS;
-    blknum_t end = NOPOS;
     bool rm = false;
     // END_CODE_LOCAL_INIT
 
@@ -59,14 +61,6 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-c" || arg == "--clean") {
             clean = true;
-
-        } else if (startsWith(arg, "-S:") || startsWith(arg, "--start:")) {
-            if (!confirmBlockNum("start", start, arg, latest))
-                return false;
-
-        } else if (startsWith(arg, "-E:") || startsWith(arg, "--end:")) {
-            if (!confirmBlockNum("end", end, arg, latest))
-                return false;
 
         } else if (arg == "--rm") {
             rm = true;
@@ -141,10 +135,6 @@ bool COptions::parseArguments(string_q& command) {
 
     // Mark the range...
     scanRange = make_pair(firstBlockToVisit, lastBlockToVisit);
-    if (isTestMode()) {
-        scanRange.first = max(scanRange.first, start);
-        scanRange.second = max(scanRange.second, end);
-    }
 
     // If the chain is behind the monitor (for example, the user is re-syncing), quit silently...
     if (latest < scanRange.first) {

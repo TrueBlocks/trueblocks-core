@@ -53,6 +53,7 @@ func callOneExtra(w http.ResponseWriter, r *http.Request, tbCmd, extra string) {
 		vars := strings.Split(r.Header.Get("X-TestRunner-Env"), "|")
 		for _, v := range vars {
 			cmd.Env = append(cmd.Env, v) 
+            // log.Printf(v)
 		}
 	} else {
         cmd.Env = append(os.Environ(), "API_MODE=true")

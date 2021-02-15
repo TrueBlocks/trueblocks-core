@@ -160,15 +160,11 @@ bool COptions::parseArguments(string_q& command) {
     if (verbose && !contains(freshen_flags, "-v"))
         freshen_flags += (" -v:" + uint_2_Str(verbose));
 
-    if (start != 0) {
+    if (start != 0)
         tool_flags += " --start " + uint_2_Str(start);
-        freshen_flags += " --start " + uint_2_Str(start);
-    }
 
-    if (end != NOPOS) {
+    if (end != NOPOS)
         tool_flags += " --end " + uint_2_Str(end);
-        freshen_flags += " --end " + uint_2_Str(end);
-    }
 
     tool_flags += addExportMode(expContext().exportFmt);
     tool_flags = trim(tool_flags, ' ');
