@@ -11987,7 +11987,7 @@
       },
       "0x6f620ba7907a3d9a6dda9821eeb4e59b3f69c367": {
         "tags": "31-Gitcoin Grants:Grant",
-        "name": "Grant 864 Dutch Swap Digital Dutch Auctions for Everyone",
+        "name": "Grant 0864 Dutch Swap Digital Dutch Auctions for Everyone",
         "count": 1
       },
       "0x89c65d0759a25ca4b4ae0fd1b4827d00018dc931": {

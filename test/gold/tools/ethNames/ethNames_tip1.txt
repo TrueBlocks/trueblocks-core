@@ -4,5 +4,5 @@ tags	address	name	symbol	decimals
 31-Gitcoin Grants:Grant	0x133d705a9696882228f6bb7fe008745aef7cdc93	Grant 160 Antiprosynth Twitter Account Activity
 91-Known	0x68821f2943a218f7dfa9c4b1c788f007940fc2f3	psdev tip jar
 90-DevCon2:Individual	0x7cb57b5a97eabe94205c07890be4c1ad31e486a8	My Ethereum Wallet Tip Jar Taylor Van Orden
-31-Gitcoin Grants:Grant	0xbc2138f76db98af69c8c9d5c365263dca32f5e63	Grant 379 AntiPhishing Browser Plugin PhishFort Protect
+31-Gitcoin Grants:Grant	0xbc2138f76db98af69c8c9d5c365263dca32f5e63	Grant 0379 Antiphishing Browser Plugin Phishfort Protect
 30-Contracts	0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359	Ethereum Tip Jar	TIP

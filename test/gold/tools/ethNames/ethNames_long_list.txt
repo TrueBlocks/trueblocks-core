@@ -41,8 +41,8 @@ tags	address	name	symbol	decimals
 80-Malicious:DaoDrain	0x005f5cee7a43331d5a3d3eec71305925a62f34b6	Dao Drain 086
 50-Tokens:ERC20	0x006bea43baa3f7a6f765f14f10a1a1b08334ef45	Stox	STX		18
 80-Malicious:Shanghai	0x006e61aa7e7ce25b8dad331d5181f2fbe5c23a54	Shanghai Cleaner Contract
-31-Gitcoin Grants:Grant	0x007b003c4d0145b512286494d5ae123aeef29d9e	Grant 845 Remote Developer Bootcamp
-31-Gitcoin Grants:Grant	0x0087a081a9b430fd8f688c6ac5dd24421bfb060d	Grant 779 DeFi LATAM
+31-Gitcoin Grants:Grant	0x007b003c4d0145b512286494d5ae123aeef29d9e	Grant 0845 Remote Developer Bootcamp
+31-Gitcoin Grants:Grant	0x0087a081a9b430fd8f688c6ac5dd24421bfb060d	Grant 0779 DeFi Latam
 31-Gitcoin Grants:Friends	0x008b1ffe244bf31896c833bff4ad9009e7a0f4eb	Name 0x008b1ffe
 50-Tokens:ERC20	0x009e864923b49263c7f10d19b7f8ab7a9a5aad33	Knoxstertoken	FKX		18
 90-DevCon2:Individual	0x00c4734f88e8da8e24bf9085d60bb34690957ee1	will
@@ -54,18 +54,18 @@ tags	address	name	symbol	decimals
 31-Gitcoin Grants:Grant	0x00de4b13153673bcae2616b67bf822500d325fc3	Grant 012 Grant 086 Gitcoin Sustainability Fund
 60-Airdrops	0x00ee337d1aa5229d92889ac27fc3841573590289	VOS.AI Airdrop Sender
 60-Airdrops	0x00f78d023dd008c6e8bd3e16327466d58fb6b576	XNN Airdrop Sender
-31-Gitcoin Grants:Grant	0x00fe460a15b49d09f39b057d0f1a7b9444f4f2be	Grant 624 Nescience Software Portfolio Rebalancing Direct Indexing
+31-Gitcoin Grants:Grant	0x00fe460a15b49d09f39b057d0f1a7b9444f4f2be	Grant 0624 Nescience Software Portfolio Rebalancing Direct Indexing
 80-Malicious:DaoDrain	0x0101f3be8ebb4bbd39a2e3b9a3639d4259832fd9	Dao Drain 075
 31-Gitcoin Grants:Friends	0x010afb8548a5d1a3a3d62f58ca0a5a1329974206	Name 0x010afb85
-31-Gitcoin Grants:Grant	0x0115f5ce3f986a35b1edb6f2c3815cebb2461e70	Grant 790 Loft Radio
-31-Gitcoin Grants:Grant	0x011c2c1433b36a524b548444ae2f20c015427d04	Grant 491 Tokamak Network: Decentralized Scalable Turing Complete Layer 2 Plasma
+31-Gitcoin Grants:Grant	0x0115f5ce3f986a35b1edb6f2c3815cebb2461e70	Grant 0790 Loft Radio
+31-Gitcoin Grants:Grant	0x011c2c1433b36a524b548444ae2f20c015427d04	Grant 0491 Tokamak Network: Decentralized Scalable Turing Complete Layer 2 Plasma
 34-ENS	0x012233b3c8177f0778d910ed88170b82de3bfe57	Old ENS Registrar
 30-Contracts	0x0122676358aee287246b2a84377c8ab664d013cb	dYdX 0x Wrapper
 36-Chainlink	0x0133aa47b6197d0ba090bf2cd96626eb71ffd13c	Chainlink BTC-ETH Aggregator
 50-Tokens:ERC20	0x0142c3b2fc51819b5af5dfc4aa52df9722790851	Paycentos Token	PYN		18
 50-Tokens:ERC20	0x014b50466590340d41307cc54dcee990c8d58aa8	ICOS			6
 30-Contracts	0x015531a044bae03bf4dab1ceabfc232a969b7175	GU: Rare Pack
-31-Gitcoin Grants:Grant	0x015bf68ef11bd55e43a119b5752c4b3becae7f24	Grant 627 Veridex
+31-Gitcoin Grants:Grant	0x015bf68ef11bd55e43a119b5752c4b3becae7f24	Grant 0627 Veridex
 31-Gitcoin Grants:Friends	0x015f9e50dc7b2a41ab8cc0b2b58763287dd3dd81	Name 0x015f9e50
 50-Tokens:ERC20	0x016396044709eb3edc69c44f4d5fa6996917e4e8	KingXChain	KXC		18
 50-Tokens:ERC20	0x0168703872fa06741ecaa9dff7803168e83f7ae0	MIRO Token	MIRO		8
@@ -76,7 +76,7 @@ tags	address	name	symbol	decimals
 30-Contracts	0x01da73c4ec1355f953ad0aaca3ef20e342aea92a	Arbitrage Bot
 55-Defi	0x01da76dea59703578040012357b81ffe62015c2d	Cream yETH	crYETH		8
 31-Gitcoin Grants:Friends	0x01e6fd0ae73d9194b19f9b376065577927a0d5f5	Name 0x01e6fd0a
-31-Gitcoin Grants:Grant	0x01f1e9319982ab828203c0276727cf48065434d3	Grant 602 RealityLearn: Teaching the world about blockchain
+31-Gitcoin Grants:Grant	0x01f1e9319982ab828203c0276727cf48065434d3	Grant 0602 Realitylearn: Teaching the World About Blockchain
 31-Gitcoin Grants:Friends	0x01f7700c13707eee8349f9800e70a940168812e3	Name 0x01f7700c
 31-Gitcoin Grants:Friends	0x01feb5003fbbd3cae8da33de679cf2e2d07102b3	Name 0x01feb500
 50-Tokens:ERC20	0x01ff50f8b7f74e4f00580d9596cd3d0d6d6e326f	BF Token	BFT		18
@@ -87,7 +87,7 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0x02725836ebf3ecdb1cdf1c7b02fcbbfaa2736af8	BitAir	BTCA		8
 34-Twitter: Friends	0x02bbea9326048fb2bd96664adc3ef47bbe3e02b6	Name 0x02bbea93
 50-Tokens:ERC20	0x02c4c78c462e32cca4a90bc499bf411fb7bc6afb	InvestDigital Token	IDT		18
-31-Gitcoin Grants:Grant	0x02cb3c150bedca124d0ae8cccb72fefbe705c953	Grant 782 Ethereum Cat Herders Community Fund
+31-Gitcoin Grants:Grant	0x02cb3c150bedca124d0ae8cccb72fefbe705c953	Grant 0782 Ethereum Cat Herders Community Fund
 36-Chainlink	0x02d5c618dbc591544b19d0bf13543c0728a3c4ec	Chainlink CHF-USD Aggregator
 31-Gitcoin Grants:Friends	0x02d9cc72bc796d2128e58c04b6e50a4e101c0be1	Name 0x02d9cc72
 31-Gitcoin Grants:Friends	0x02dbd1aa375c7d00ecf1de198158ffa332110d47	Name 0x02dbd1aa
@@ -101,20 +101,20 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0x0371a82e4a9d0a4312f3ee2ac9c6958512891372	Student Coin	STU		18
 36-Chainlink	0x037e8f2125bf532f3e228991e051c8a7253b642c	Chainlink DAI-ETH Aggregator
 30-Contracts	0x0385b3f162a0e001b60ecb84d3cb06199d78f666	Argent: Relayer 2
-31-Gitcoin Grants:Grant	0x039ae2898d257f4c9d7e381d478ee1ed042fe2f4	Grant 284 My DAO Dashboard
+31-Gitcoin Grants:Grant	0x039ae2898d257f4c9d7e381d478ee1ed042fe2f4	Grant 0284 My DAO Dashboard
 50-Tokens:ERC20	0x039b5649a59967e3e936d7471f9c3700100ee1ab	Kucoin Shares	KCS		6
 30-Contracts	0x039b739a1e7353878bfb2f2a4ec23502f4885baa	Maker: Oasis
 30-Contracts	0x03a99d9235732d94a300bf7013acb11020484bf1	Arbitrage Bot
 31-Gitcoin Grants:Friends	0x03b45f0f660adcaa24fbacffd45e171464ec63a8	Name 0x03b45f0f
 31-Gitcoin Grants:Friends	0x03b85b333c99ec60a6d540e4277d71d3a4c0975d	Name 0x03b85b33
 80-Malicious:Shanghai	0x03b904c8b912194464ae97eaa0381e5518446d25	Possibly Malicious 0x03b
-31-Gitcoin Grants:Grant	0x03c2bc72a3e007179e54ffb4563cc235bec8151a	Grant 600 Synthereum: synthetic assets with liquidity pools to bridge traditional and digital finance
+31-Gitcoin Grants:Grant	0x03c2bc72a3e007179e54ffb4563cc235bec8151a	Grant 0600 Synthereum: Synthetic Assets with Liquidity Pools to Bridge Traditional and Digital Finance
 50-Tokens:ERC20	0x03c780cd554598592b97b7256ddaad759945b125	BTRN	BTRN		18
 31-Gitcoin Grants:Friends	0x03ea9f51913a2a40a2c37e70700102486acf6c40	Name 0x03ea9f51
 31-Gitcoin Grants:Friends	0x04373aac4df8be1696be816b97f4ad8bcd93beb7	Name 0x04373aac
 34-Twitter: Friends	0x04498150b495a1f126b88952a756b5b9a4385e30	Name 0x04498150
-31-Gitcoin Grants:Grant	0x04607ca1048f490578f233a8b1354778defdd178	Grant 608 Signatory Client
-31-Gitcoin Grants:Grant	0x0466e612137bca50e524f25ac9f7b6f826ee15b7	Grant 900 1Hive Gardens
+31-Gitcoin Grants:Grant	0x04607ca1048f490578f233a8b1354778defdd178	Grant 0608 Signatory Client
+31-Gitcoin Grants:Grant	0x0466e612137bca50e524f25ac9f7b6f826ee15b7	Grant 0900 1hive Gardens
 60-Airdrops	0x0475929d867e95b3828ab4ef2d08a7f80766bf90	OCN Airdrop Sender
 30-Contracts	0x047ed17511d9287b2bf82a456aa87ba9cd45bb0d	Totle Bancor Wrapper
 90-DevCon2:Individual	0x0492104bbf24a97deeb64c03377fb8d6d75a711c	Kung Chen-Yalie
@@ -122,7 +122,7 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0x049399a6b048d52971f7d122ae21a1532722285f	Fire Lotto	FLOT		18
 50-Tokens:ERC20	0x04a020325024f130988782bd5276e53595e8d16e	Herbalist Token	HERB		8
 30-Contracts	0x04a487afd662c4f9deacc07a7b10cfb686b682a4	Kyber Oasis Reserve
-31-Gitcoin Grants:Grant	0x04b7f60169fe048b7806a7e5fe731a37be23111e	Grant 650 KodaDot: Claim Tokens feature
+31-Gitcoin Grants:Grant	0x04b7f60169fe048b7806a7e5fe731a37be23111e	Grant 0650 Kodadot: Claim Tokens Feature
 31-Gitcoin Grants:Grant	0x04bb33c3a8c2d018836a1f938054ebb59e0036b2	Grant 104 Walletsreview
 30-Contracts	0x04d702ebd0a77503b154865fe3e8da97255b931b	Commons Stack Org Membership	CSOM
 50-Tokens:ERC20	0x04f2e7221fdb1b52a68169b25793e51478ff0329	Cappasity	CAPP		2
@@ -134,7 +134,7 @@ tags	address	name	symbol	decimals
 31-Gitcoin Grants:Friends	0x056fa2506578a8cd1b15aaf153d327c981140492	Name 0x056fa250
 50-Tokens:ERC20	0x056fd409e1d7a124bd7017459dfea2f387b6d5cd	Gemini dollar	GUSD		2
 60-Airdrops	0x0571325cd46718cd9445f082332a4fd9a21b8498	FIFAMini Airdrop Sender
-31-Gitcoin Grants:Grant	0x057a3d5383fd9277f3ab4f98e319d7d9a9a9e198	Grant 292 Will Brealey Ethereum Writer
+31-Gitcoin Grants:Grant	0x057a3d5383fd9277f3ab4f98e319d7d9a9a9e198	Grant 0292 Will Brealey Ethereum Writer
 80-Malicious:DaoDrain	0x057b56736d32b86616a10f619859c6cd6f59092a	Dao Drain 065
 90-DevCon2:Individual	0x058601725fcf134e2cdeef2d9e53cb91dc7e6c15	kelvin
 50-Tokens:ERC20	0x05860d453c7974cbf46508c06cba14e211c629ce	Eden Coin	EDN		18
@@ -150,7 +150,7 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0x05d412ce18f24040bb3fa45cf2c69e506586d8e8	MFTU	MFTU		18
 50-Tokens:ERC20	0x05f4a42e251f2d52b8ed15e9fedaacfcef1fad27	Zilliqa	ZIL		12
 30-Contracts	0x06012c8cf97bead5deae237070f9587f8e7a266d	CryptoKitties	CK
-31-Gitcoin Grants:Grant	0x06044b5359d8df7886366c22c61c7ecd29becac7	Grant 336 dHack A decentralized hackathon model
+31-Gitcoin Grants:Grant	0x06044b5359d8df7886366c22c61c7ecd29becac7	Grant 0336 Dhack a Decentralized Hackathon Model
 31-Gitcoin Grants:Friends	0x060a24a6c7a493d2bc58db7b03bece9e67d2bd53	Name 0x060a24a6
 90-DevCon2:Individual	0x06105042f9e891ad291a39f49be2eaa94f796945	bernard lin
 50-Tokens:ERC20	0x06147110022b768ba8f99a8f385df11a151a9cc8	ACE Token	ACE
@@ -171,9 +171,9 @@ tags	address	name	symbol	decimals
 30-Contracts	0x06fe76b2f432fdfecaef1a7d4f6c3d41b5861672	Zerion: Adapter Registry
 50-Tokens:ERC20	0x0707681f344deb24184037fc0228856f2137b02e	FNKOSToken	FNKOS		18
 60-Airdrops	0x070f9d09370fd7ae3a583fc22a4e9f50ae1bdc78	RZM Airdrop Sender
-31-Gitcoin Grants:Grant	0x0730fd7d15fa9a40a6c7b2bbb4b8ce9ee6e6d08b	Grant 141 Metamoneymarket jacobshiach
+31-Gitcoin Grants:Grant	0x0730fd7d15fa9a40a6c7b2bbb4b8ce9ee6e6d08b	Grant 141 Metamoneymarket (jacobshiach)
 80-Malicious:DaoDrain	0x0737a6b837f97f46ebade41b9bc3e1c509c85c53	Dao Drain 059
-31-Gitcoin Grants:Grant	0x073ab1c0cad3677cde9bdb0cdeedc2085c029579	Grant 268 Simpleaswater
+31-Gitcoin Grants:Grant	0x073ab1c0cad3677cde9bdb0cdeedc2085c029579	Grant 0268 Simpleaswater
 31-Gitcoin Grants:Friends	0x073c841e832b7cc2e75d0fb1f8a98dca355bf485	Name 0x073c841e
 50-Tokens:ERC20	0x0743392132d1a03a902c477e5a176f256ba3220c	Coimatic 3.0	CTIC3		18
 55-Defi	0x075b1bb99792c9e1041ba13afef80c91a1e70fb3	Curve.fi renBTC/wBTC/sBTC	crvRenWSBTC		18

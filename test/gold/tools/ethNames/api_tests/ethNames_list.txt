@@ -363,7 +363,7 @@
     {
       "tags": "31-Gitcoin Grants:Grant",
       "address": "0x007b003c4d0145b512286494d5ae123aeef29d9e",
-      "name": "Grant 845 Remote Developer Bootcamp",
+      "name": "Grant 0845 Remote Developer Bootcamp",
       "symbol": "",
       "source": "https://gitcoin.co/grants/845/remote-developer-bootcamp",
       "decimals": 0,
@@ -372,7 +372,7 @@
     {
       "tags": "31-Gitcoin Grants:Grant",
       "address": "0x0087a081a9b430fd8f688c6ac5dd24421bfb060d",
-      "name": "Grant 779 DeFi LATAM",
+      "name": "Grant 0779 DeFi Latam",
       "symbol": "",
       "source": "https://gitcoin.co/grants/779/defi-latam",
       "decimals": 0,
@@ -480,7 +480,7 @@
     {
       "tags": "31-Gitcoin Grants:Grant",
       "address": "0x00fe460a15b49d09f39b057d0f1a7b9444f4f2be",
-      "name": "Grant 624 Nescience Software Portfolio Rebalancing Direct Indexing",
+      "name": "Grant 0624 Nescience Software Portfolio Rebalancing Direct Indexing",
       "symbol": "",
       "source": "https://gitcoin.co/grants/624/nescience-software-portfolio-rebalancing-direct-in",
       "decimals": 0,
@@ -507,7 +507,7 @@
     {
       "tags": "31-Gitcoin Grants:Grant",
       "address": "0x0115f5ce3f986a35b1edb6f2c3815cebb2461e70",
-      "name": "Grant 790 Loft Radio",
+      "name": "Grant 0790 Loft Radio",
       "symbol": "",
       "source": "https://gitcoin.co/grants/790/loft-radio",
       "decimals": 0,
@@ -516,7 +516,7 @@
     {
       "tags": "31-Gitcoin Grants:Grant",
       "address": "0x011c2c1433b36a524b548444ae2f20c015427d04",
-      "name": "Grant 491 Tokamak Network: Decentralized Scalable Turing Complete Layer 2 Plasma",
+      "name": "Grant 0491 Tokamak Network: Decentralized Scalable Turing Complete Layer 2 Plasma",
       "symbol": "",
       "source": "https://gitcoin.co/grants/491/tokamak-network-decentralized-scalable-turing-comp",
       "decimals": 0,
@@ -579,7 +579,7 @@
     {
       "tags": "31-Gitcoin Grants:Grant",
       "address": "0x015bf68ef11bd55e43a119b5752c4b3becae7f24",
-      "name": "Grant 627 Veridex",
+      "name": "Grant 0627 Veridex",
       "symbol": "",
       "source": "https://gitcoin.co/grants/627/veridex",
       "decimals": 0,
@@ -678,7 +678,7 @@
     {
       "tags": "31-Gitcoin Grants:Grant",
       "address": "0x01f1e9319982ab828203c0276727cf48065434d3",
-      "name": "Grant 602 RealityLearn: Teaching the world about blockchain",
+      "name": "Grant 0602 Realitylearn: Teaching the World About Blockchain",
       "symbol": "",
       "source": "https://gitcoin.co/grants/602/realitylearn",
       "decimals": 0,
@@ -777,7 +777,7 @@
     {
       "tags": "31-Gitcoin Grants:Grant",
       "address": "0x02cb3c150bedca124d0ae8cccb72fefbe705c953",
-      "name": "Grant 782 Ethereum Cat Herders Community Fund",
+      "name": "Grant 0782 Ethereum Cat Herders Community Fund",
       "symbol": "",
       "source": "https://gitcoin.co/grants/782/ethereum-cat-herders-community-fund",
       "decimals": 0,
@@ -903,7 +903,7 @@
     {
       "tags": "31-Gitcoin Grants:Grant",
       "address": "0x039ae2898d257f4c9d7e381d478ee1ed042fe2f4",
-      "name": "Grant 284 My DAO Dashboard",
+      "name": "Grant 0284 My DAO Dashboard",
       "symbol": "",
       "source": "https://gitcoin.co/grants/284/my-dao-dashboard",
       "decimals": 0,
@@ -966,7 +966,7 @@
     {
       "tags": "31-Gitcoin Grants:Grant",
       "address": "0x03c2bc72a3e007179e54ffb4563cc235bec8151a",
-      "name": "Grant 600 Synthereum: synthetic assets with liquidity pools to bridge traditional and digital finance",
+      "name": "Grant 0600 Synthereum: Synthetic Assets with Liquidity Pools to Bridge Traditional and Digital Finance",
       "symbol": "",
       "source": "https://gitcoin.co/grants/600/synthereum-synthetic-assets-with-liquidity-pools-t",
       "decimals": 0,
@@ -1011,7 +1011,7 @@
     {
       "tags": "31-Gitcoin Grants:Grant",
       "address": "0x04607ca1048f490578f233a8b1354778defdd178",
-      "name": "Grant 608 Signatory Client",
+      "name": "Grant 0608 Signatory Client",
       "symbol": "",
       "source": "https://gitcoin.co/grants/608/signatory-client",
       "decimals": 0,
@@ -1020,7 +1020,7 @@
     {
       "tags": "31-Gitcoin Grants:Grant",
       "address": "0x0466e612137bca50e524f25ac9f7b6f826ee15b7",
-      "name": "Grant 900 1Hive Gardens",
+      "name": "Grant 0900 1hive Gardens",
       "symbol": "",
       "source": "https://gitcoin.co/grants/900/1hive-gardens-2",
       "decimals": 0,
@@ -1092,7 +1092,7 @@
     {
       "tags": "31-Gitcoin Grants:Grant",
       "address": "0x04b7f60169fe048b7806a7e5fe731a37be23111e",
-      "name": "Grant 650 KodaDot: Claim Tokens feature",
+      "name": "Grant 0650 Kodadot: Claim Tokens Feature",
       "symbol": "",
       "source": "https://gitcoin.co/grants/650/kodadot-claim-tokens-feature",
       "decimals": 0,
@@ -1200,7 +1200,7 @@
     {
       "tags": "31-Gitcoin Grants:Grant",
       "address": "0x057a3d5383fd9277f3ab4f98e319d7d9a9a9e198",
-      "name": "Grant 292 Will Brealey Ethereum Writer",
+      "name": "Grant 0292 Will Brealey Ethereum Writer",
       "symbol": "",
       "source": "https://gitcoin.co/grants/292/will-brealey-ethereum-writer",
       "decimals": 0,
@@ -1344,7 +1344,7 @@
     {
       "tags": "31-Gitcoin Grants:Grant",
       "address": "0x06044b5359d8df7886366c22c61c7ecd29becac7",
-      "name": "Grant 336 dHack A decentralized hackathon model",
+      "name": "Grant 0336 Dhack a Decentralized Hackathon Model",
       "symbol": "",
       "source": "https://gitcoin.co/grants/336/dhack-a-decentralized-hackathon-model",
       "decimals": 0,
@@ -1533,7 +1533,7 @@
     {
       "tags": "31-Gitcoin Grants:Grant",
       "address": "0x0730fd7d15fa9a40a6c7b2bbb4b8ce9ee6e6d08b",
-      "name": "Grant 141 Metamoneymarket jacobshiach",
+      "name": "Grant 141 Metamoneymarket (jacobshiach)",
       "symbol": "",
       "source": "https://gitcoin.co/grants/141/metamoneymarket",
       "decimals": 0,
@@ -1551,7 +1551,7 @@
     {
       "tags": "31-Gitcoin Grants:Grant",
       "address": "0x073ab1c0cad3677cde9bdb0cdeedc2085c029579",
-      "name": "Grant 268 Simpleaswater",
+      "name": "Grant 0268 Simpleaswater",
       "symbol": "",
       "source": "https://gitcoin.co/grants/268/simpleaswater",
       "decimals": 0,

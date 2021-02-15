@@ -21,7 +21,7 @@ ethNames tip --fmt api
   {
     "tags": "31-Gitcoin Grants:Grant",
     "address": "0xbc2138f76db98af69c8c9d5c365263dca32f5e63",
-    "name": "Grant 379 AntiPhishing Browser Plugin PhishFort Protect",
+    "name": "Grant 0379 Antiphishing Browser Plugin Phishfort Protect",
     "source": "https://gitcoin.co/grants/379/anti-phishing-browser-plugin-phishfort-protect",
     "description": "https://phishfort.com/protect"
   },

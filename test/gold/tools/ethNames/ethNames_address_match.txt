@@ -70,7 +70,7 @@ ethNames 0x1 --fmt api
   {
     "tags": "31-Gitcoin Grants:Grant",
     "address": "0x1074f62d7019c3184a2f7ea8c6a8acd6780beb48",
-    "name": "Grant 083 Poa Network Community Management Grant For Adj",
+    "name": "Grant 083 Poa Network Community Management Grant for Adj",
     "source": "https://gitcoin.co/grants/83/poa-network-community-management-grant-for-adj-2"
   },
   {
@@ -220,7 +220,7 @@ ethNames 0x1 --fmt api
   {
     "tags": "31-Gitcoin Grants:Grant",
     "address": "0x11e52c75998fe2e7928b191bfc5b25937ca16741",
-    "name": "Grant 678 EthAddress Stats Utility Dashboard",
+    "name": "Grant 0678 Ethaddress Stats Utility Dashboard",
     "source": "https://gitcoin.co/grants/678/ethaddress-stats-utility-dashboard",
     "description": "https://ethstats.info"
   },
@@ -262,7 +262,7 @@ ethNames 0x1 --fmt api
   {
     "tags": "31-Gitcoin Grants:Grant",
     "address": "0x1222d0ded67a533b3163397fd917bc8ac6f96b7a",
-    "name": "Grant 655 Alternative income for poor families in Brazil",
+    "name": "Grant 0655 Alternative Income for Poor Families in Brazil",
     "source": "https://gitcoin.co/grants/655/alternative-income-for-poor-families-in-brazil"
   },
   {
@@ -345,7 +345,7 @@ ethNames 0x1 --fmt api
   {
     "tags": "31-Gitcoin Grants:Grant",
     "address": "0x1266f928b7964173434d3feb6da2554b141920b8",
-    "name": "Grant 723 EtherDNA",
+    "name": "Grant 0723 EtherDNA",
     "source": "https://gitcoin.co/grants/723/etherdna",
     "description": "https://etherdna.github.io/app/"
   },
@@ -367,7 +367,7 @@ ethNames 0x1 --fmt api
   {
     "tags": "31-Gitcoin Grants:Grant",
     "address": "0x127c6839dee7c737767c9f62d13996e27854505d",
-    "name": "Grant 419 Project Maple Cryptographic Currency Redefined.",
+    "name": "Grant 0419 Project Maple Cryptographic Currency Redefined.",
     "source": "https://gitcoin.co/grants/419/project-maple-cryptographic-currency-redefined",
     "description": "https://github.com/alialiwa2005/Maple"
   },
@@ -481,7 +481,7 @@ ethNames 0x1 --fmt api
   {
     "tags": "31-Gitcoin Grants:Grant",
     "address": "0x1388961fbc1df252749b91a2a73c4b0d7377841f",
-    "name": "Grant 530 0xEarth",
+    "name": "Grant 0530 0xEarth",
     "source": "https://gitcoin.co/grants/530/0xearth",
     "description": "https://0xearth.github.io/"
   },
@@ -511,7 +511,7 @@ ethNames 0x1 --fmt api
   {
     "tags": "31-Gitcoin Grants:Grant",
     "address": "0x139e7746745fbf42ca485845881697f9621b4b27",
-    "name": "Grant 575 GetLogin.Eth",
+    "name": "Grant 0575 Getlogin.eth",
     "source": "https://gitcoin.co/grants/575/getlogineth",
     "description": "https://github.com/GetLoginEth/"
   },
@@ -593,7 +593,7 @@ ethNames 0x1 --fmt api
   {
     "tags": "31-Gitcoin Grants:Grant",
     "address": "0x140e7364ee4e29a677a9d6ccf26ac945e7e80b65",
-    "name": "Grant 212 Thx Open Protocol For Online Rewards",
+    "name": "Grant 0212 Thx Open Protocol for Online Rewards",
     "source": "https://gitcoin.co/grants/212/thx-open-protocol-for-online-rewards"
   },
   {
@@ -650,7 +650,7 @@ ethNames 0x1 --fmt api
   {
     "tags": "31-Gitcoin Grants:Grant",
     "address": "0x147c06f559f742cc9ef2ea5e628f381bccdce2ba",
-    "name": "Grant 364 React Native support for IPFS",
+    "name": "Grant 0364 React Native Support for IPFS",
     "source": "https://gitcoin.co/grants/364/react-native-support-for-ipfs",
     "description": "https://github.com/openworklabs/react-native-ipfs-http-client/"
   },
@@ -781,14 +781,14 @@ ethNames 0x1 --fmt api
   {
     "tags": "31-Gitcoin Grants:Grant",
     "address": "0x158d6727b17aaba726d7318ac7dca5edf8faf6f8",
-    "name": "Grant 475 CryptoGift",
+    "name": "Grant 0475 Cryptogift",
     "source": "https://gitcoin.co/grants/475/cryptogift",
     "description": "https://vittominacori.github.io/cryptogift/"
   },
   {
     "tags": "31-Gitcoin Grants:Grant",
     "address": "0x1591b9056822c273252fcea32963223650db18e1",
-    "name": "Grant 220 Cryptorado"
+    "name": "Grant 0220 Cryptorado"
   },
   {
     "tags": "80-Malicious:DaoDrain",
@@ -828,7 +828,7 @@ ethNames 0x1 --fmt api
   {
     "tags": "31-Gitcoin Grants:Grant",
     "address": "0x15ef9189a8282e4e1e985eb8ed767e7426b4bfd5",
-    "name": "Grant 211 Trust Graphic Novel anneconnelly"
+    "name": "Grant 0211 Trust Graphic Novel (anneconnelly)"
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -868,14 +868,14 @@ ethNames 0x1 --fmt api
   {
     "tags": "31-Gitcoin Grants:Grant",
     "address": "0x16385dfcc9139ffb357746780b64a605b4cb46f0",
-    "name": "Grant 377 NEWFORKDELTA",
+    "name": "Grant 0377 Newforkdelta",
     "source": "https://gitcoin.co/grants/377/newforkdelta-2",
     "description": "https://newforkdelta.github.io/"
   },
   {
     "tags": "31-Gitcoin Grants:Grant",
     "address": "0x163cc449cdf9d1ba22e9b81f0f9c9f01c2ab76a1",
-    "name": "Grant 895 Help with studies",
+    "name": "Grant 0895 Help with Studies",
     "source": "https://gitcoin.co/grants/895/help-with-studies",
     "description": "https://www.udemy.com/"
   },
@@ -888,7 +888,7 @@ ethNames 0x1 --fmt api
   {
     "tags": "31-Gitcoin Grants:Grant",
     "address": "0x165107ce980edff38065261326354c3d6cd809e6",
-    "name": "Grant 709 Adoption and dissemination of Ethereum Technology",
+    "name": "Grant 0709 Adoption and Dissemination of Ethereum Technology",
     "source": "https://gitcoin.co/grants/709/adoption-and-dissemination-of-ethereum-technology",
     "description": "https://blockchaincounselor.blogspot.com/"
   },
@@ -934,7 +934,7 @@ ethNames 0x1 --fmt api
   {
     "tags": "31-Gitcoin Grants:Grant",
     "address": "0x16a59020e5054da726a4d6d0d465758eb0b49e7c",
-    "name": "Grant 862 The Movement DAO",
+    "name": "Grant 0862 the Movement DAO",
     "source": "https://gitcoin.co/grants/862/the-movement-dao",
     "description": "https://movementdao.io/"
   },
@@ -998,7 +998,7 @@ ethNames 0x1 --fmt api
   {
     "tags": "31-Gitcoin Grants:Grant",
     "address": "0x1719c7dc8216ce67f96171e1a817195ae075d78d",
-    "name": "Grant 428 Solexplorer Gitcoin Community Manager",
+    "name": "Grant 0428 Solexplorer Gitcoin Community Manager",
     "source": "https://gitcoin.co/grants/428/solexplorer-gitcoin-community-manager",
     "description": "https://gitcoin.co/solexplorer"
   },
@@ -1161,7 +1161,7 @@ ethNames 0x1 --fmt api
   {
     "tags": "31-Gitcoin Grants:Grant",
     "address": "0x18ac920241e0f5699448379e63069724d9d8a603",
-    "name": "Grant 544 CultureStake",
+    "name": "Grant 0544 Culturestake",
     "source": "https://gitcoin.co/grants/544/culturestake",
     "description": "https://www.furtherfield.org/culturestake-2/"
   },
@@ -1228,7 +1228,7 @@ ethNames 0x1 --fmt api
   {
     "tags": "31-Gitcoin Grants:Grant",
     "address": "0x197553ddfdb7b9c3c4216e2914456788bfd59c86",
-    "name": "Grant 844 Solidity Visualizer Extension",
+    "name": "Grant 0844 Solidity Visualizer Extension",
     "source": "https://gitcoin.co/grants/844/solidity-visualizer-extension",
     "description": "https://marketplace.visualstudio.com/items?itemName=tintinweb.solidity-visual-auditor"
   },
@@ -1284,7 +1284,7 @@ ethNames 0x1 --fmt api
   {
     "tags": "31-Gitcoin Grants:Grant",
     "address": "0x19fa61309158e138b685646247f58a3ce9f18145",
-    "name": "Grant 311 echonomics",
+    "name": "Grant 0311 Echonomics",
     "source": "https://gitcoin.co/grants/311/echonomics",
     "description": "https://twitter.com/Maverickal_"
   },
