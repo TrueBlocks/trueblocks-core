@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# addName - adds a name to the names database
+
 defSource="Etherscan"
 defDecimals=""
 
