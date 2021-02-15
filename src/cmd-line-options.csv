@@ -67,8 +67,6 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,customizeable,c
 10910,apps,Admin,pins,pinStatus,,,,false,false,true,true,--,description,,Report on and manage pinned appearance index and bloom chunks.
 
 11200,apps,,,chifra,commands,,,true,false,true,true,--weird,positional,opt_string,which command to run
-11280,apps,,,chifra,start,S,0,false,false,false,false,local,flag,<blknum>,first block to process (inclusive)
-11300,apps,,,chifra,end,E,,false,false,false,false,local,flag,<blknum>,last block to process (inclusive)
 11320,apps,,,chifra,,,,false,false,true,true,--,description,,Main TrueBlocks command line controls.
 
 11660,dev_tools,,,makeClass,files,,,true,false,true,false,local,positional,list<path>,one or more class definition files

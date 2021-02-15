@@ -8,12 +8,6 @@ chifra
 
   Where:  
 	commands              which command to run. 'chifra -v' for more information... (required)
-
-	#### Hidden options
-	-S  (--start <num>)   first block to process (inclusive)
-	-E  (--end <num>)     last block to process (inclusive)
-	#### Hidden options
-
 	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
 	-h  (--help)          display this help screen

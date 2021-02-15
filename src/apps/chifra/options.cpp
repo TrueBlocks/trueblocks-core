@@ -24,8 +24,6 @@ static const COption params[] = {
     // BEG_CODE_OPTIONS
     // clang-format off
     COption("commands", "", ""+opt_string+"", OPT_REQUIRED | OPT_POSITIONAL, "which command to run"),
-    COption("start", "S", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to process (inclusive)"),
-    COption("end", "E", "<blknum>", OPT_HIDDEN | OPT_FLAG, "last block to process (inclusive)"),
     COption("", "", "", OPT_DESCRIPTION, "Main TrueBlocks command line controls."),
     // clang-format on
     // END_CODE_OPTIONS
@@ -40,12 +38,9 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
     // BEG_CODE_LOCAL_INIT
-    blknum_t start = 0;
-    blknum_t end = NOPOS;
     // END_CODE_LOCAL_INIT
 
     bool tool_help = false;
-    blknum_t latest = NOPOS;
 
     Init();
     explode(arguments, command, ' ');
@@ -53,14 +48,6 @@ bool COptions::parseArguments(string_q& command) {
         if (false) {
             // do nothing -- make auto code generation easier
             // BEG_CODE_AUTO
-        } else if (startsWith(arg, "-S:") || startsWith(arg, "--start:")) {
-            if (!confirmBlockNum("start", start, arg, latest))
-                return false;
-
-        } else if (startsWith(arg, "-E:") || startsWith(arg, "--end:")) {
-            if (!confirmBlockNum("end", end, arg, latest))
-                return false;
-
             // END_CODE_AUTO
 
         } else if (arg == "-h" || arg == "--help") {
@@ -159,12 +146,6 @@ bool COptions::parseArguments(string_q& command) {
 
     if (verbose && !contains(freshen_flags, "-v"))
         freshen_flags += (" -v:" + uint_2_Str(verbose));
-
-    if (start != 0)
-        tool_flags += " --start " + uint_2_Str(start);
-
-    if (end != NOPOS)
-        tool_flags += " --end " + uint_2_Str(end);
 
     tool_flags += addExportMode(expContext().exportFmt);
     tool_flags = trim(tool_flags, ' ');
