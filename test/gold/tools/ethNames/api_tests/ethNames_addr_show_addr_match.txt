@@ -1,6 +1,10 @@
 {
   "data": [
     {
+      "address": "0xb61a98a0e542dcea1da7c44c2e8017373b95d350",
+      "decimals": 0
+    },
+    {
       "address": "0xb62132e35a6c13ee1ee0f84dc5d40bad8d815206",
       "decimals": 18
     },
@@ -45,6 +49,14 @@
       "decimals": 0
     },
     {
+      "address": "0xb656cd9e370f0be5a02a85bb70bca7bc25f03c07",
+      "decimals": 0
+    },
+    {
+      "address": "0xb65b6cb75c7d558ca39dbb098f5b9a7b690164fc",
+      "decimals": 0
+    },
+    {
       "address": "0xb66db713a90e5afdd22c5830f2141eaa05134661",
       "decimals": 0
     },
@@ -55,6 +67,18 @@
     {
       "address": "0xb679afd97bcbc7448c1b327795c3ef226b39f0e9",
       "decimals": 6
+    },
+    {
+      "address": "0xb67b1f2363e2f9c30be7c614b29e4ba9064b10bc",
+      "decimals": 0
+    },
+    {
+      "address": "0xb67e55884096f203a423c80fe6f6b1c1bd791782",
+      "decimals": 0
+    },
+    {
+      "address": "0xb67fecf7af733b16cd08a7959eae2d8554d246af",
+      "decimals": 0
     },
     {
       "address": "0xb682fd6a16c409594bc49c7874e4ca383033d7a5",
@@ -81,6 +105,14 @@
       "decimals": 0
     },
     {
+      "address": "0xb6ad42d615759e50c8087849a2f6f0e2032f7085",
+      "decimals": 0
+    },
+    {
+      "address": "0xb6bccce9cfe99d4b593aba72f3a36028d1ade4c5",
+      "decimals": 0
+    },
+    {
       "address": "0xb6e040c9ecaae172a89bd561c5f73e1c48d28cd9",
       "decimals": 0
     },
@@ -99,6 +131,14 @@
     {
       "address": "0xb6f43025b29196af2dddd69b0a58afba079cd600",
       "decimals": 18
+    },
+    {
+      "address": "0xb6f7c2a6eefb0d627d149d7263152ad4548120f2",
+      "decimals": 0
+    },
+    {
+      "address": "0xb6f947eed973bc0072bd0fbe2c44594f8d62b332",
+      "decimals": 0
     },
     {
       "address": "0xb6fab2c9e391ad3af57567e22bf3eb792079f55c",

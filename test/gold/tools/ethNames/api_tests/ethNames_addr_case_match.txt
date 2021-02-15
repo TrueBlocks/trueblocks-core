@@ -12,14 +12,16 @@ tags	address	name	symbol	decimals
 31-Gitcoin Grants:Friends	0xcb5fba4419abc4d7c11af0c24ba0f2e555407f5b	Name 0xcb5fba44
 91-Known	0xcb75f1f9cc69e3b1a27b8d9c08bb73a58ede24be	Simon Sender
 90-DevCon2:Individual	0xcb860eb2eda14f37e5c046b154786048e2062138	mperklin
-31-Gitcoin Grants:Grant	0xcb9327bd57680a9cb9eed1246f8f439a630b3696	Grant 0803 Alef
+31-Gitcoin Grants:Grant	0xcb8f9c706f9f5683d1bd6261f52f5f2b2182d780	Grant 1796 Crypton Network
+31-Gitcoin Grants:Grant	0xcb9327bd57680a9cb9eed1246f8f439a630b3696	Grant 0803 ALEF
 50-Tokens:ERC20	0xcb94be6f13a1182e4a4b6140cb7bf2025d28e41b	Trustcoin	TRST		6
 50-Tokens:ERC20	0xcb97e65f07da24d46bcdd078ebebd7c6e6e3d750	Bytom	BTM		8
 31-Gitcoin Grants:Friends	0xcba69d3fd92dc945284d007acd5f96be6b8dc4ab	Name 0xcba69d3f
 55-Defi	0xcbae0a83f4f9926997c8339545fb8ee32edc6b76	Cream YFI	crYFI		8
 90-DevCon2:Individual	0xcbb0ea707202861471450acc55fca2b62c45899a	Toby Wise
-80-Malicious:DaoDrain	0xcbb9d3703e651b0d496cdefb8b92c25aeb2171f7	Dao Drain 104
+80-Malicious:DaoDrain	0xcbb9d3703e651b0d496cdefb8b92c25aeb2171f7	DAO Drain 104
 90-DevCon2:Individual	0xcbbf6758a9e032d68628a5294c6b340160410eb6	Hillmer Reyes
+31-Gitcoin Grants:Grant	0xcbc3dc48ba005cd292de77e582d5b9c55e43b95c	Grant 1666 Tokenlog - Token-weighted Backlogs
 50-Tokens:ERC20	0xcbcc0f036ed4788f63fc0fee32873d6a7487b908	Humaniq	HMQ		8
 50-Tokens:ERC20	0xcbeaec699431857fdb4d37addbbdc20e132d4903	YOYOW Token	YOYOW		18
-31-Gitcoin Grants:Grant	0xcbec15583a21c3ddad5fab658be5b4fe85df730b	Grant 0275 Walletconnect 2 (pedrouid)
+31-Gitcoin Grants:Grant	0xcbec15583a21c3ddad5fab658be5b4fe85df730b	Grant 0275 Walletconnect (pedrouid)

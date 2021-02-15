@@ -65,9 +65,32 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
+    "tags": "31-Gitcoin Grants:Grant",
+    "address": "0x006087d6ac20840c23ba298512db454a05c19b10",
+    "name": "Grant 0743 #fittogetherdao (like Pooltogether for Fitness and Wellbeing)",
+    "source": "https://gitcoin.co/grants/743/fittogetherdao-like-pooltogether-for-fitness-and-",
+    "is_contract": true
+  },
+  {
+    "deleted": false,
+    "tags": "31-Gitcoin Grants:Grant",
+    "address": "0x007b003c4d0145b512286494d5ae123aeef29d9e",
+    "name": "Grant 1068 Blocksig - Notarized Document Signing on Ethereum and Ipfs (previous: Grant 845 Remote Developer Bootcamp)",
+    "source": "https://gitcoin.co/grants/1068/blocksig-notarized-document-signing-on-ethereum-a",
+    "description": "https://gitcoin.co/grants/845/remote-developer-bootcamp, https://github.com/blockvigil/bootcamp"
+  },
+  {
+    "deleted": false,
+    "tags": "31-Gitcoin Grants:Grant",
+    "address": "0x00e4f5f746242e4d115bd65aac7c08fe5d38fb21",
+    "name": "Grant 1839 the Etherchest Ecosystem",
+    "source": "https://gitcoin.co/grants/1839/the-etherchest-ecosystem"
+  },
+  {
+    "deleted": false,
     "tags": "80-Malicious:DaoDrain",
     "address": "0x0101f3be8ebb4bbd39a2e3b9a3639d4259832fd9",
-    "name": "Dao Drain 075",
+    "name": "DAO Drain 075",
     "source": "GethSource Ether Camp",
     "is_contract": true
   },
@@ -86,6 +109,13 @@ ethNames Ether --expand --verbose --fmt json
     "name": "GU: Rare Pack",
     "source": "EtherScan.io",
     "is_contract": true
+  },
+  {
+    "deleted": false,
+    "tags": "31-Gitcoin Grants:Grant",
+    "address": "0x02a522d98ec2d2c3bbe91acc29ee7fd32ab880ab",
+    "name": "Grant 1694 Mintable.app - A Nft Platform for Everyone In Ethereum",
+    "source": "https://gitcoin.co/grants/1694/mintableapp-a-nft-platform-for-everyone-in-ethere"
   },
   {
     "deleted": false,
@@ -141,6 +171,14 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
+    "tags": "31-Gitcoin Grants:Grant",
+    "address": "0x0559a413a3ab19508a144aeebc474eb14c5e76ce",
+    "name": "Grant 0386 Wolfofethereum.eth",
+    "source": "https://gitcoin.co/grants/386/wolfofethereumeth",
+    "description": "@lukacacic"
+  },
+  {
+    "deleted": false,
     "tags": "30-Contracts",
     "address": "0x055cc48f7968fd8640ef140610dd4038e1b03926",
     "name": "Owned Upgradeability Proxy",
@@ -151,7 +189,7 @@ ethNames Ether --expand --verbose --fmt json
     "deleted": false,
     "tags": "31-Gitcoin Grants:Grant",
     "address": "0x057a3d5383fd9277f3ab4f98e319d7d9a9a9e198",
-    "name": "Grant 0292 Will Brealey Ethereum Writer",
+    "name": "Grant 0292 Will Brealey - Ethereum Writer",
     "source": "https://gitcoin.co/grants/292/will-brealey-ethereum-writer",
     "description": "https://medium.com/@w_brealey"
   },
@@ -174,7 +212,7 @@ ethNames Ether --expand --verbose --fmt json
     "deleted": false,
     "tags": "31-Gitcoin Grants:Grant",
     "address": "0x068792edecad424d42f0f45de7f693ca33526cf1",
-    "name": "Grant 075 Ethereum Dev Fund Working Group",
+    "name": "Grant 0075 Ethereum Dev Fund Working Group",
     "source": "https://gitcoin.co/grants/75/ethereum-dev-fund-working-group"
   },
   {
@@ -196,9 +234,17 @@ ethNames Ether --expand --verbose --fmt json
     "deleted": false,
     "tags": "80-Malicious:DaoDrain",
     "address": "0x0737a6b837f97f46ebade41b9bc3e1c509c85c53",
-    "name": "Dao Drain 059",
+    "name": "DAO Drain 059",
     "source": "GethSource Ether Camp",
     "is_contract": true
+  },
+  {
+    "deleted": false,
+    "tags": "31-Gitcoin Grants:Grant",
+    "address": "0x073ab1c0cad3677cde9bdb0cdeedc2085c029579",
+    "name": "Grant 1122 Vyper.fun | Cryptozombies+ethernaut for Vyper (previous: Grant 0268 Simpleaswater)",
+    "source": "https://gitcoin.co/grants/1122/vyperfun-cryptozombiesethernaut-for-vyper",
+    "description": "https://gitcoin.co/grants/268/simpleaswater"
   },
   {
     "deleted": false,
@@ -253,8 +299,8 @@ ethNames Ether --expand --verbose --fmt json
     "deleted": false,
     "tags": "31-Gitcoin Grants:Grant",
     "address": "0x08497b07916280da27b43d28a0d3dfa7d6676b58",
-    "name": "Grant 122 Austin Griffith Ethereum Rampd",
-    "source": "https://gitcoin.co/grants/122/austin-griffith-ethereum-rampd"
+    "name": "Grant 0122 Austin Griffith Ethereum Research and Development",
+    "source": "https://gitcoin.co/grants/122/austin-griffith-ethereum-research-and-development"
   },
   {
     "deleted": false,
@@ -379,7 +425,7 @@ ethNames Ether --expand --verbose --fmt json
     "deleted": false,
     "tags": "31-Gitcoin Grants:Grant",
     "address": "0x0df05adac0159e215111696339ad4998e5871b3d",
-    "name": "Grant 0576 Blockscout.com for Ethereum Mainnet Hosting",
+    "name": "Grant 0576 BlockScout.com for Ethereum Mainnet hosting",
     "source": "https://gitcoin.co/grants/576/blockscoutcom-for-ethereum-mainnet-hosting",
     "description": "https://blockscout.com/eth/mainnet",
     "is_contract": true
@@ -388,7 +434,7 @@ ethNames Ether --expand --verbose --fmt json
     "deleted": false,
     "tags": "80-Malicious:DaoDrain",
     "address": "0x0e0da70933f4c7849fc0d203f5d1d43b9ae4532d",
-    "name": "Dao Drain 087",
+    "name": "DAO Drain 087",
     "source": "GethSource Ether Camp",
     "is_contract": true
   },
@@ -551,7 +597,7 @@ ethNames Ether --expand --verbose --fmt json
     "deleted": false,
     "tags": "60-Airdrops",
     "address": "0x17405148473e521b62cbcf8ebd929e8a30c4d3aa",
-    "name": "Dao Issued Cert Airdrop",
+    "name": "DAO Issued Cert Airdrop",
     "symbol": "DIC",
     "source": "EtherScan.io",
     "is_contract": true,
@@ -603,7 +649,7 @@ ethNames Ether --expand --verbose --fmt json
     "deleted": false,
     "tags": "80-Malicious:DaoDrain",
     "address": "0x1975bd06d486162d5dc297798dfc41edd5d160a7",
-    "name": "Dao Drain 005",
+    "name": "DAO Drain 005",
     "source": "GethSource Ether Camp",
     "is_contract": true
   },
@@ -611,8 +657,8 @@ ethNames Ether --expand --verbose --fmt json
     "deleted": false,
     "tags": "31-Gitcoin Grants:Grant",
     "address": "0x1aa587c2288750173cc6af7c92bad7209904e496",
-    "name": "Grant 150 Ethereum Egift Cards",
-    "source": "https://gitcoin.co/grants/150/ethereum-egift-cards"
+    "name": "Grant 0150 Mccardi - Ethereum Egift Cards",
+    "source": "https://gitcoin.co/grants/150/mccardi-ethereum-egift-cards"
   },
   {
     "deleted": false,
@@ -675,6 +721,13 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
+    "tags": "31-Gitcoin Grants:Grant",
+    "address": "0x1fa313ba8c968d00bc109404bd08e963eae3f1dd",
+    "name": "Grant 0433 Edcon (community Ethereum Development Conference)",
+    "source": "https://gitcoin.co/grants/433/edcon-community-ethereum-development-conference"
+  },
+  {
+    "deleted": false,
     "tags": "30-Contracts",
     "address": "0x1fd169a4f5c59acf79d0fd5d91d1201ef1bce9f1",
     "name": "Moloch DAO",
@@ -683,9 +736,16 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
+    "tags": "31-Gitcoin Grants:Grant",
+    "address": "0x2001909016b05f7eff9af6e25d806f364074628a",
+    "name": "Grant 1719 the Ethereum Open Desktop Environment",
+    "source": "https://gitcoin.co/grants/1719/the-ethereum-open-desktop-environment"
+  },
+  {
+    "deleted": false,
     "tags": "80-Malicious:DaoDrain",
     "address": "0x200450f06520bdd6c527622a273333384d870efb",
-    "name": "Dao Drain 015",
+    "name": "DAO Drain 015",
     "source": "GethSource Ether Camp",
     "is_contract": true
   },
@@ -760,8 +820,15 @@ ethNames Ether --expand --verbose --fmt json
   {
     "deleted": false,
     "tags": "31-Gitcoin Grants:Grant",
+    "address": "0x2489404ede77ec853c3345424bb919c9031856e2",
+    "name": "Grant 0079 Lodestar Ethereum 2.0 Client",
+    "source": "https://gitcoin.co/grants/79/lodestar-ethereum-20-client"
+  },
+  {
+    "deleted": false,
+    "tags": "31-Gitcoin Grants:Grant",
     "address": "0x24e8bb6a37774d8a0187e196beb29601ed5920bf",
-    "name": "Grant 0348 Etherloans Undercollateralized Loans Unstoppable DeFi",
+    "name": "Grant 0348 EtherLoans undercollateralized loans unstoppable DeFi",
     "source": "https://gitcoin.co/grants/348/etherloans-undercollateralized-loans-unstoppable-d",
     "description": "https://www.etherloans.io/"
   },
@@ -769,7 +836,7 @@ ethNames Ether --expand --verbose --fmt json
     "deleted": false,
     "tags": "80-Malicious:DaoDrain",
     "address": "0x253488078a4edf4d6f42f113d1e62836a942cf1a",
-    "name": "Dao Drain 097",
+    "name": "DAO Drain 097",
     "source": "GethSource Ether Camp",
     "is_contract": true
   },
@@ -961,7 +1028,7 @@ ethNames Ether --expand --verbose --fmt json
     "deleted": false,
     "tags": "80-Malicious:DaoDrain",
     "address": "0x2c19c7f9ae8b751e37aeb2d93a699722395ae18f",
-    "name": "Dao Drain 003",
+    "name": "DAO Drain 003",
     "source": "GethSource Ether Camp",
     "is_contract": true
   },
@@ -1023,7 +1090,7 @@ ethNames Ether --expand --verbose --fmt json
     "deleted": false,
     "tags": "80-Malicious:DaoDrain",
     "address": "0x304a554a310c7e546dfe434669c62820b7d83490",
-    "name": "Dao Drain 067 (DarkDAO)",
+    "name": "DAO Drain 067 (DarkDAO)",
     "source": "GethSource SlackNation OnChain Ether Camp",
     "is_contract": true
   },
@@ -1055,7 +1122,7 @@ ethNames Ether --expand --verbose --fmt json
     "deleted": false,
     "tags": "80-Malicious:DaoDrain",
     "address": "0x319f70bab6845585f412ec7724b744fec6095c85",
-    "name": "Dao Drain 007",
+    "name": "DAO Drain 007",
     "source": "GethSource Ether Camp",
     "is_contract": true
   },
@@ -1073,6 +1140,13 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
+    "tags": "31-Gitcoin Grants:Grant",
+    "address": "0x32b74b90407309f6637245292cd90347de658a37",
+    "name": "Grant 1634 Ethereum Staking Guides (ubuntu)",
+    "source": "https://gitcoin.co/grants/1634/ethereum-staking-guides-ubuntu"
+  },
+  {
+    "deleted": false,
     "tags": "91-Known",
     "address": "0x32be343b94f860124dc4fee278fdcbd38c102d88",
     "name": "Poliniex Exchange, DAO Whale 4 Vlad Zamphir 0x127 Sender 1 Sept_DDOS_ACCOUNT_1",
@@ -1082,7 +1156,8 @@ ethNames Ether --expand --verbose --fmt json
     "deleted": false,
     "tags": "31-Gitcoin Grants:Grant",
     "address": "0x32cefb2dc869bbfe636f7547cda43f561bf88d5a",
-    "name": "Grant 152 Ethereum for Farsi Speaking Population"
+    "name": "Grant 0152 Ethereum for Farsi Speaking Population",
+    "source": "https://gitcoin.co/grants/152/ethereum-for-farsi-speaking-population"
   },
   {
     "deleted": false,
@@ -1108,7 +1183,7 @@ ethNames Ether --expand --verbose --fmt json
     "deleted": false,
     "tags": "31-Gitcoin Grants:Grant",
     "address": "0x35ca7ae854338dcbc154066f0ea00b636d38e431",
-    "name": "Grant 126 Humans of Ethereum",
+    "name": "Grant 0126 #humansofethereum",
     "source": "https://gitcoin.co/grants/126/humansofethereum"
   },
   {
@@ -1131,8 +1206,8 @@ ethNames Ether --expand --verbose --fmt json
     "deleted": false,
     "tags": "31-Gitcoin Grants:Grant",
     "address": "0x38298ef8a8306579e21246d5227694b5560d9cb5",
-    "name": "Grant 085 Tennagraph Minimum Bias Ethereum Signal Aggregat",
-    "source": "https://gitcoin.co/grants/85/tennagraph-minimum-bias-ethereum-signal-aggregat-2",
+    "name": "Grant 0085 Tennagraph - Minimum Bias Ethereum Signal Aggregator",
+    "source": "https://gitcoin.co/grants/85/tennagraph-minimum-bias-ethereum-signal-aggregato",
     "is_contract": true
   },
   {
@@ -1157,14 +1232,6 @@ ethNames Ether --expand --verbose --fmt json
     "description": "NEURAL PROTOCOL NRP is a decentralized blockchain-based payment instrument that aims to bring together buyers and sellers in a marketplace.",
     "is_contract": true,
     "is_erc20": true
-  },
-  {
-    "deleted": false,
-    "tags": "31-Gitcoin Grants:Grant",
-    "address": "0x3953017af23ab99a7d40f3d26f1595f27c91345f",
-    "name": "Grant 0548 Togedao a Forum and Social Media Community Built on the Ethereum Blockchain to Incentivize Content Creators.",
-    "source": "https://gitcoin.co/grants/548/togedao-a-forum-and-social-media-community-built-o",
-    "description": "http://togedao.ml/"
   },
   {
     "deleted": false,
@@ -1266,9 +1333,16 @@ ethNames Ether --expand --verbose --fmt json
     "deleted": false,
     "tags": "31-Gitcoin Grants:Grant",
     "address": "0x40e3780e5bec58629ac4c5dc3bca3df2d7fd0c35",
-    "name": "Grant 0412 Ethereum Commons: Testnets for Etc Eth",
-    "source": "https://gitcoin.co/grants/412/ethereumcore-public-goods-faucets-gas-estimator-st",
+    "name": "Grant 0412 Ethereum Classic Development Team",
+    "source": "https://gitcoin.co/grants/412/ethereum-classic-development-team",
     "description": "https://EthereumCore.org"
+  },
+  {
+    "deleted": false,
+    "tags": "31-Gitcoin Grants:Grant",
+    "address": "0x416deca06f9af666abe1666e80e8d30bba66d1c5",
+    "name": "Grant 0496 Ethereum Contacts Registry (ecr)",
+    "source": "https://gitcoin.co/grants/496/ethereum-contacts-registry-ecr"
   },
   {
     "deleted": false,
@@ -1306,7 +1380,7 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "31-Gitcoin Grants:Grant",
     "address": "0x41d2a18e1ddacdabfddadb62e9aee67c63070b76",
     "name": "Grant 0562 Learning Data Science on the Ethereum Blockchain with @omnianalytics",
-    "source": "https://gitcoin.co/grants/562/learning-data-science-on-the-ethereum-blockchain-w",
+    "source": "https://gitcoin.co/grants/562/learning-data-science-on-the-ethereum-blockchain-",
     "description": "https://github.com/Omni-Analytics-Group/eth-data-science-course"
   },
   {
@@ -1320,6 +1394,13 @@ ethNames Ether --expand --verbose --fmt json
     "description": "A cryptoeconomic powered adult entertainment ecosystem built on the Ethereum network.",
     "is_contract": true,
     "is_erc20": true
+  },
+  {
+    "deleted": false,
+    "tags": "31-Gitcoin Grants:Grant",
+    "address": "0x433ee2f00ad7ff824b2fe74bace417afd2d86d31",
+    "name": "Grant 1464 Kontext.app - Social Bookmarking on Filecoin & Ethereum",
+    "source": "https://gitcoin.co/grants/1464/kontextapp-social-bookmarking-on-filecoin-ethereu"
   },
   {
     "deleted": false,
@@ -1357,7 +1438,7 @@ ethNames Ether --expand --verbose --fmt json
     "deleted": false,
     "tags": "80-Malicious:DaoDrain",
     "address": "0x440c59b325d2997a134c2c7c60a8c61611212bad",
-    "name": "Dao Drain 041",
+    "name": "DAO Drain 041",
     "source": "GethSource Ether Camp",
     "is_contract": true
   },
@@ -1389,7 +1470,7 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "NxC",
     "source": "On chain",
     "decimals": 3,
-    "description": "The Economy of Beyond The Void is based on the Ethereum Blockchain, which can be used with tokens called Nexium.",
+    "description": "The Economy of Beyond the Void is based on the Ethereum Blockchain, which can be used with tokens called Nexium.",
     "is_contract": true,
     "is_erc20": true
   },
@@ -1405,7 +1486,7 @@ ethNames Ether --expand --verbose --fmt json
     "deleted": false,
     "tags": "80-Malicious:DaoDrain",
     "address": "0x4613f3bca5c44ea06337a9e439fbc6d42e501d0a",
-    "name": "Dao Drain 109 DAO_Hell_007",
+    "name": "DAO Drain 109 DAO_Hell_007",
     "source": "GethSource Ether Camp",
     "is_contract": true
   },
@@ -1541,7 +1622,7 @@ ethNames Ether --expand --verbose --fmt json
     "deleted": false,
     "tags": "31-Gitcoin Grants:Grant",
     "address": "0x4d07af703c163540c59763ff404710204334af81",
-    "name": "Grant 0590 Gwei.cz Cz/sk DeFi/Ethereum Community",
+    "name": "Grant 0590 Gwei.cz - Cz/sk DeFi/Ethereum Community",
     "source": "https://gitcoin.co/grants/590/gweicz-czsk-defiethereum-community",
     "description": "https://gwei.cz",
     "is_contract": true
@@ -1575,6 +1656,13 @@ ethNames Ether --expand --verbose --fmt json
     "description": "A hybrid exchange registered as an N. V. Public company in the Netherlands and provides fiat pairs to all altcoins on its platform",
     "is_contract": true,
     "is_erc20": true
+  },
+  {
+    "deleted": false,
+    "tags": "31-Gitcoin Grants:Grant",
+    "address": "0x4ef6ea0720862903bbb039e1ab30563e9ec33aba",
+    "name": "Grant 1937 Ethereum Integration: Blockchain Data In Trading Bots",
+    "source": "https://gitcoin.co/grants/1937/ethereum-integration-blockchain-data-in-trading-b"
   },
   {
     "deleted": false,
@@ -1621,17 +1709,9 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
-    "tags": "30-Contracts",
-    "address": "0x519b70055af55a007110b4ff99b0ea33071c720a",
-    "name": "dxDAO",
-    "source": "EtherScan.io",
-    "is_contract": true
-  },
-  {
-    "deleted": false,
     "tags": "80-Malicious:DaoDrain",
     "address": "0x51e0ddd9998364a2eb38588679f0d2c42653e4a6",
-    "name": "Dao Drain 021",
+    "name": "DAO Drain 021",
     "source": "GethSource Ether Camp",
     "is_contract": true
   },
@@ -1662,7 +1742,7 @@ ethNames Ether --expand --verbose --fmt json
     "deleted": false,
     "tags": "80-Malicious:DaoDrain",
     "address": "0x52c5317c848ba20c7504cb2c8052abd1fde29d03",
-    "name": "Dao Drain 061",
+    "name": "DAO Drain 061",
     "source": "GethSource Ether Camp",
     "is_contract": true
   },
@@ -1691,106 +1771,6 @@ ethNames Ether --expand --verbose --fmt json
     "source": "On chain",
     "decimals": 8,
     "description": "BLUE is anERC20 token built from the ground-up to facilitate payments and transfers without sacrificing your security.",
-    "is_contract": true,
-    "is_erc20": true
-  },
-  {
-    "deleted": false,
-    "tags": "30-Contracts",
-    "address": "0x5407381b6c251cfd498ccd4a1d877739cb7960b8",
-    "name": "Nexus Mutual: Token Controller Proxy",
-    "source": "EtherScan.io",
-    "is_contract": true
-  },
-  {
-    "deleted": false,
-    "tags": "80-Malicious:DaoDrain",
-    "address": "0x5524c55fb03cf21f549444ccbecb664d0acad706",
-    "name": "Dao Drain 093",
-    "source": "GethSource Ether Camp",
-    "is_contract": true
-  },
-  {
-    "deleted": false,
-    "tags": "50-Tokens:ERC20",
-    "address": "0x56b6431f45d08eed55f34371386326c739eacbcc",
-    "name": "Ethereum Meta",
-    "symbol": "ETHM",
-    "source": "On chain",
-    "decimals": 18,
-    "description": "Ethereum Meta addresses the lack of privacy in Ethereum.",
-    "is_contract": true,
-    "is_erc20": true
-  },
-  {
-    "deleted": false,
-    "tags": "60-Airdrops",
-    "address": "0x5717d19616fab9079cf2bfce7d94126bca3ae536",
-    "name": "BerryXToken Airdrop Sender",
-    "symbol": "BRX",
-    "source": "EtherScan.io",
-    "is_erc20": true
-  },
-  {
-    "deleted": false,
-    "tags": "30-Contracts",
-    "address": "0x5789e2b5460cae9329d93a78511e2ac49f98a1f6",
-    "name": "GU: Legendary Pack",
-    "source": "EtherScan.io",
-    "is_contract": true
-  },
-  {
-    "deleted": false,
-    "tags": "34-ENS",
-    "address": "0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85",
-    "name": "ENS: Base Registrar Implementation",
-    "source": "EtherScan.io",
-    "is_contract": true
-  },
-  {
-    "deleted": false,
-    "tags": "30-Contracts",
-    "address": "0x5aad137d8f7d2dc6e1b2548c059b1483360bcc6a",
-    "name": "BrightID Aragon Org",
-    "source": "EtherScan.io",
-    "is_contract": true
-  },
-  {
-    "deleted": false,
-    "tags": "50-Tokens:ERC20",
-    "address": "0x5adc961d6ac3f7062d2ea45fefb8d8167d44b190",
-    "name": "Dether",
-    "symbol": "DTH",
-    "source": "On chain",
-    "decimals": 18,
-    "description": "A peer-to-peer ecosystem of crypto buyers, sellers and physical shops.",
-    "is_contract": true,
-    "is_erc20": true
-  },
-  {
-    "deleted": false,
-    "tags": "31-Gitcoin Grants:Grant",
-    "address": "0x5b92bd6c37a1958f95ea1e56b6121a89314cfb66",
-    "name": "Grant 0337 Cream: Confidential Reliable Ethereum Anonymous Mixer",
-    "source": "https://gitcoin.co/grants/337/cream-confidential-reliable-ethereum-anonymous-mix",
-    "description": "https://github.com/couger-inc/cream"
-  },
-  {
-    "deleted": false,
-    "tags": "50-Tokens:ERC20",
-    "address": "0x5bb622ba7b2f09bf23f1a9b509cd210a818c53d7",
-    "name": "Based.Money: Curve sUSD Pool",
-    "source": "EtherScan.io",
-    "is_contract": true
-  },
-  {
-    "deleted": false,
-    "tags": "50-Tokens:ERC20",
-    "address": "0x5c543e7ae0a1104f78406c340e9c64fd9fce5170",
-    "name": "vSlice",
-    "symbol": "VSL",
-    "source": "EtherScan.io",
-    "description": "An Ethereum Gaming Platform Token",
     "is_contract": true,
     "is_erc20": true
   }], "types": [

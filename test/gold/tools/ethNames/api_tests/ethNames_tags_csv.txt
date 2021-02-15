@@ -26,7 +26,6 @@
 "35-Pool Together"
 "36-Chainlink"
 "36-Compound"
-"37-Sablier"
 "40-Exchanges"
 "50-Tokens"
 "50-Tokens:ERC20"

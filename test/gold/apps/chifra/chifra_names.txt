@@ -40,7 +40,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x05984006707585f66465e8a6505341f46b64fa7a	Nam Coin	NAM	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x05aaaa829afa407d83315cded1d45eb16025910c	SP8DE Token	SPX	On chain	18	The Game of Chance.Changed	false	false	false	true	true	false
 50-Tokens:ERC20	0x05c7065d644096a4e4c3fe24af86e36de021074b	LendConnect Token	LCT	On chain	18	Aims to be a passive-income-generating Platform.	false	false	false	true	true	false
-50-Tokens:ERC20	0x05d412ce18f24040bb3fa45cf2c69e506586d8e8	MFTU	MFTU	On chain	18	Coin for custom CyberFM 'Mainstream For The Underground' royalty payments.	false	false	false	true	true	false
+50-Tokens:ERC20	0x05d412ce18f24040bb3fa45cf2c69e506586d8e8	MFTU	MFTU	On chain	18	Coin for custom CyberFM 'Mainstream for the Underground' royalty payments.	false	false	false	true	true	false
 50-Tokens:ERC20	0x05f4a42e251f2d52b8ed15e9fedaacfcef1fad27	Zilliqa	ZIL	On chain	12	Zilliqa is a high-throughput public blockchain platform - designed to scale to thousands of transactions per second.	false	false	false	true	true	false
 50-Tokens:ERC20	0x06147110022b768ba8f99a8f385df11a151a9cc8	ACE Token	ACE	On chain		ACE is a utility token, that serves as a form of access to the TokenStars platform and its internal currency. TokenStars is the first talent management platform on the blockchain, that will connect talents celebrities with fans and advertisers.	false	false	false	true	true	false
 50-Tokens:ERC20	0x06a2cf3f024d8871baedd0f7bd9340001aada574	SingularDTV Sender 2		EtherScan.io			false	false	false	false	false	false

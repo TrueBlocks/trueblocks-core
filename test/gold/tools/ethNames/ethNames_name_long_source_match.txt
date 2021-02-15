@@ -9,29 +9,35 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 35-Pool Together	0x0034ea9808e620a0ef79261c51af20614b742b24	Pool Usdc MCDAwarePool v0.2.12		EtherScan.io			false	false	false	true	false	false
 60-Airdrops	0x00476aecb24edfed50aaf2e2361badbd8d3efdc2	HEALP Airdrop Sender		EtherScan.io			false	false	false	false	false	false
 30-Contracts	0x005ca4f1493f451c1588186c570a434ec38e718d	BrightID Agent		EtherScan.io			false	false	false	true	false	false
-80-Malicious:DaoDrain	0x0101f3be8ebb4bbd39a2e3b9a3639d4259832fd9	Dao Drain 075		GethSource Ether Camp			false	false	false	true	false	false
+31-Gitcoin Grants:Grant	0x006087d6ac20840c23ba298512db454a05c19b10	Grant 0743 #fittogetherdao (like Pooltogether for Fitness and Wellbeing)		https://gitcoin.co/grants/743/fittogetherdao-like-pooltogether-for-fitness-and-			false	false	false	true	false	false
+31-Gitcoin Grants:Grant	0x007b003c4d0145b512286494d5ae123aeef29d9e	Grant 1068 Blocksig - Notarized Document Signing on Ethereum and Ipfs (previous: Grant 845 Remote Developer Bootcamp)		https://gitcoin.co/grants/1068/blocksig-notarized-document-signing-on-ethereum-a		https://gitcoin.co/grants/845/remote-developer-bootcamp, https://github.com/blockvigil/bootcamp	false	false	false	false	false	false
+31-Gitcoin Grants:Grant	0x00e4f5f746242e4d115bd65aac7c08fe5d38fb21	Grant 1839 the Etherchest Ecosystem		https://gitcoin.co/grants/1839/the-etherchest-ecosystem			false	false	false	false	false	false
+80-Malicious:DaoDrain	0x0101f3be8ebb4bbd39a2e3b9a3639d4259832fd9	DAO Drain 075		GethSource Ether Camp			false	false	false	true	false	false
 36-Chainlink	0x0133aa47b6197d0ba090bf2cd96626eb71ffd13c	Chainlink BTC-ETH Aggregator		EtherScan.io			false	false	false	true	false	false
 30-Contracts	0x015531a044bae03bf4dab1ceabfc232a969b7175	GU: Rare Pack		EtherScan.io			false	false	false	true	false	false
+31-Gitcoin Grants:Grant	0x02a522d98ec2d2c3bbe91acc29ee7fd32ab880ab	Grant 1694 Mintable.app - A Nft Platform for Everyone In Ethereum		https://gitcoin.co/grants/1694/mintableapp-a-nft-platform-for-everyone-in-ethere			false	false	false	false	false	false
 31-Gitcoin Grants:Grant	0x02cb3c150bedca124d0ae8cccb72fefbe705c953	Grant 0782 Ethereum Cat Herders Community Fund		https://gitcoin.co/grants/782/ethereum-cat-herders-community-fund		https://twitter.com/EthCatHerders	false	false	false	true	false	false
 36-Chainlink	0x02d5c618dbc591544b19d0bf13543c0728a3c4ec	Chainlink CHF-USD Aggregator		EtherScan.io			false	false	false	true	false	false
 36-Chainlink	0x037e8f2125bf532f3e228991e051c8a7253b642c	Chainlink DAI-ETH Aggregator		EtherScan.io			false	false	false	true	false	false
 30-Contracts	0x0385b3f162a0e001b60ecb84d3cb06199d78f666	Argent: Relayer 2		EtherScan.io			false	false	false	false	false	false
 30-Contracts	0x039b739a1e7353878bfb2f2a4ec23502f4885baa	Maker: Oasis		EtherScan.io			false	false	false	true	false	false
 50-Tokens:ERC20	0x049399a6b048d52971f7d122ae21a1532722285f	Fire Lotto	FLOT	On chain	18	Decentralized lottery platform based on the Ethereum blockchain and managed by smart contracts without any human intervention.	false	false	false	true	true	false
+31-Gitcoin Grants:Grant	0x0559a413a3ab19508a144aeebc474eb14c5e76ce	Grant 0386 Wolfofethereum.eth		https://gitcoin.co/grants/386/wolfofethereumeth		@lukacacic	false	false	false	false	false	false
 30-Contracts	0x055cc48f7968fd8640ef140610dd4038e1b03926	Owned Upgradeability Proxy		EtherScan.io			false	false	false	true	false	false
-31-Gitcoin Grants:Grant	0x057a3d5383fd9277f3ab4f98e319d7d9a9a9e198	Grant 0292 Will Brealey Ethereum Writer		https://gitcoin.co/grants/292/will-brealey-ethereum-writer		https://medium.com/@w_brealey	false	false	false	false	false	false
+31-Gitcoin Grants:Grant	0x057a3d5383fd9277f3ab4f98e319d7d9a9a9e198	Grant 0292 Will Brealey - Ethereum Writer		https://gitcoin.co/grants/292/will-brealey-ethereum-writer		https://medium.com/@w_brealey	false	false	false	false	false	false
 36-Chainlink	0x05cf62c4ba0ccea3da680f9a8744ac51116d6231	Chainlink AUD-USD Aggregator		EtherScan.io			false	false	false	true	false	false
 40-Exchanges	0x0681d8db095565fe8a346fa0277bffde9c0edbbf	Binance 4		EtherScan.io			false	false	false	false	false	false
-31-Gitcoin Grants:Grant	0x068792edecad424d42f0f45de7f693ca33526cf1	Grant 075 Ethereum Dev Fund Working Group		https://gitcoin.co/grants/75/ethereum-dev-fund-working-group			false	false	false	false	false	false
+31-Gitcoin Grants:Grant	0x068792edecad424d42f0f45de7f693ca33526cf1	Grant 0075 Ethereum Dev Fund Working Group		https://gitcoin.co/grants/75/ethereum-dev-fund-working-group			false	false	false	false	false	false
 50-Tokens:ERC20	0x06a2cf3f024d8871baedd0f7bd9340001aada574	SingularDTV Sender 2		EtherScan.io			false	false	false	false	false	false
 30-Contracts	0x06fe76b2f432fdfecaef1a7d4f6c3d41b5861672	Zerion: Adapter Registry		EtherScan.io			false	false	false	true	false	false
-80-Malicious:DaoDrain	0x0737a6b837f97f46ebade41b9bc3e1c509c85c53	Dao Drain 059		GethSource Ether Camp			false	false	false	true	false	false
+80-Malicious:DaoDrain	0x0737a6b837f97f46ebade41b9bc3e1c509c85c53	DAO Drain 059		GethSource Ether Camp			false	false	false	true	false	false
+31-Gitcoin Grants:Grant	0x073ab1c0cad3677cde9bdb0cdeedc2085c029579	Grant 1122 Vyper.fun | Cryptozombies+ethernaut for Vyper (previous: Grant 0268 Simpleaswater)		https://gitcoin.co/grants/1122/vyperfun-cryptozombiesethernaut-for-vyper		https://gitcoin.co/grants/268/simpleaswater	false	false	false	false	false	false
 40-Exchanges	0x077d52b047735976dfda76fef74d4d988ac25196	Uniswap: ANT	ANT	EtherScan.io			false	false	false	true	true	false
 50-Tokens:ERC20	0x0784dbabb6c6834bddfb7cfee116ba049e5dafab	IBTC	IBTC	On chain	18	IBTC is a tokenized version of Bitcoin build on Ethereum blockchain.	false	false	false	true	true	false
 50-Tokens:ERC20	0x07d9e49ea402194bf48a8276dafb16e4ed633317	DALECOIN	DALC	On chain	8	DaleCoin is an ERC20 token based on the Ethereum blockchain which shall serve as a payment token for goods and services to whoever wishes to accept it.	false	false	false	true	true	false
 55-Defi	0x07db4b9b3951094b9e278d336adf46a036295de7	Yearn: StrategyCurveYVoterProxy		EtherScan.io			false	false	false	true	false	false
 30-Contracts	0x07f455f30e862e13e3e3d960762cb11c4f744d52	Gnosis Safe: Replay Service Deployment		EtherScan.io			false	false	false	false	false	false
-31-Gitcoin Grants:Grant	0x08497b07916280da27b43d28a0d3dfa7d6676b58	Grant 122 Austin Griffith Ethereum Rampd		https://gitcoin.co/grants/122/austin-griffith-ethereum-rampd			false	false	false	false	false	false
+31-Gitcoin Grants:Grant	0x08497b07916280da27b43d28a0d3dfa7d6676b58	Grant 0122 Austin Griffith Ethereum Research and Development		https://gitcoin.co/grants/122/austin-griffith-ethereum-research-and-development			false	false	false	false	false	false
 50-Tokens:ERC20	0x08711d3b02c8758f2fb3ab4e80228418a7f8e39c	Edgeless	EDG	On chain		The Ethereum smart contract-based that offers a 0% house edge and solves the transparency question once and for all.	false	false	false	true	true	false
 30-Contracts:Pasta	0x08a2e41fb99a7599725190b9c970ad3893fa33cf	Pasta V1 Token		EtherScan.io			false	false	false	true	false	false
 30-Contracts	0x08dbf4f942ba8cd7871c13addefdffef3e5a8035	GU: Rare Pack Three		EtherScan.io			false	false	false	true	false	false
@@ -45,8 +51,8 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 36-Compound	0x0c3f8df27e1a00b47653fde878d68d35f00714c0	Compound: 200bps_Slope1000bps		EtherScan.io			false	false	false	true	false	false
 55-Defi	0x0cec743b8ce4ef8802cac0e5df18a180ed8402a7	Yearn: Signer Milkyklim		EtherScan.io			false	false	false	false	false	false
 50-Tokens:ERC20	0x0d88ed6e74bbfd96b831231638b66c05571e824f	AVT	AVT	EtherScan.io		An open-source protocol that delivers the global standard for ticketing.	false	false	false	true	true	false
-31-Gitcoin Grants:Grant	0x0df05adac0159e215111696339ad4998e5871b3d	Grant 0576 Blockscout.com for Ethereum Mainnet Hosting		https://gitcoin.co/grants/576/blockscoutcom-for-ethereum-mainnet-hosting		https://blockscout.com/eth/mainnet	false	false	false	true	false	false
-80-Malicious:DaoDrain	0x0e0da70933f4c7849fc0d203f5d1d43b9ae4532d	Dao Drain 087		GethSource Ether Camp			false	false	false	true	false	false
+31-Gitcoin Grants:Grant	0x0df05adac0159e215111696339ad4998e5871b3d	Grant 0576 BlockScout.com for Ethereum Mainnet hosting		https://gitcoin.co/grants/576/blockscoutcom-for-ethereum-mainnet-hosting		https://blockscout.com/eth/mainnet	false	false	false	true	false	false
+80-Malicious:DaoDrain	0x0e0da70933f4c7849fc0d203f5d1d43b9ae4532d	DAO Drain 087		GethSource Ether Camp			false	false	false	true	false	false
 50-Tokens:ERC20	0x0f5d2fb29fb7d3cfee444a200298f468908cc942	Decentraland MANA	MANA	On chain	18	Decentraland is a virtual reality platform powered by the Ethereum blockchain. Users can create, experience, and monetize content and applications	false	false	false	true	true	false
 50-Tokens:ERC20	0x107c4504cd79c5d2696ea0030a8dd4e92601b82e	Bloom Token	BLT	On chain	18	Decentralized credit scoring powered by Ethereum and IPFS.	false	false	false	true	true	false
 30-Contracts	0x10a0847c2d170008ddca7c3a688124f493630032	RelayerManager		EtherScan.io			false	false	false	true	false	false
@@ -65,21 +71,23 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 55-Defi	0x1676fc274b65966ed0c6438a26d34c6c92a5981c	Cream.Finance: CREAM/USDC Pool		EtherScan.io			false	false	false	true	false	false
 36-Chainlink	0x16924ae9c2ac6cdbc9d6bb16fafcd38bed560936	Chainlink FTSE-GBP Aggregator		EtherScan.io			false	false	false	true	false	false
 55-Defi	0x16e58463eb9792bc236d8860f5bc69a81e26e32b	SushiSwap: Liquidity Migrator		EtherScan.io			false	false	false	true	false	false
-60-Airdrops	0x17405148473e521b62cbcf8ebd929e8a30c4d3aa	Dao Issued Cert Airdrop	DIC	EtherScan.io			false	false	false	true	true	false
+60-Airdrops	0x17405148473e521b62cbcf8ebd929e8a30c4d3aa	DAO Issued Cert Airdrop	DIC	EtherScan.io			false	false	false	true	true	false
 30-Contracts	0x1820a4b7618bde71dce8cdc73aab6c95905fad24	1820 Registry	REG	TrueBlocks.io		Registration smart contract as described in this EIP: https://eips.ethereum.org/EIPS/eip-1820	false	false	false	true	true	false
 50-Tokens:ERC20	0x1844b21593262668b7248d0f57a220caaba46ab9	Oyster Pearl	PRL	On chain	18	Platform for website monetization and distributed storage, built on IOTA Tangle and Ethereum	false	false	false	true	true	false
 91-Known	0x191167380d430036ca2cb067ab86b527e3d584ee	POAP Token Sender		EtherScan.io			false	false	false	false	false	false
 50-Tokens:ERC20	0x1966d718a565566e8e202792658d7b5ff4ece469	nDEX	NDX	On chain	18	nDEX Network is a next generation decentralized ethereum token exchange. Our primary goal is to provide a clean, fast and secure trading environment with lowest service charge.	false	false	false	true	true	false
-80-Malicious:DaoDrain	0x1975bd06d486162d5dc297798dfc41edd5d160a7	Dao Drain 005		GethSource Ether Camp			false	false	false	true	false	false
-31-Gitcoin Grants:Grant	0x1aa587c2288750173cc6af7c92bad7209904e496	Grant 150 Ethereum Egift Cards		https://gitcoin.co/grants/150/ethereum-egift-cards			false	false	false	false	false	false
+80-Malicious:DaoDrain	0x1975bd06d486162d5dc297798dfc41edd5d160a7	DAO Drain 005		GethSource Ether Camp			false	false	false	true	false	false
+31-Gitcoin Grants:Grant	0x1aa587c2288750173cc6af7c92bad7209904e496	Grant 0150 Mccardi - Ethereum Egift Cards		https://gitcoin.co/grants/150/mccardi-ethereum-egift-cards			false	false	false	false	false	false
 50-Tokens:ERC20	0x1c83501478f1320977047008496dacbd60bb15ef	DigitexFutures	DGTX	On chain	18	The DGTX Token is a protocol token that has real world utility and value. Its value derives directly from its utility as a vehicle for the commission-free trading of liquid futures contracts on the price of Bitcoin, Ethereum and Litecoin against the US Dollar.	false	false	false	true	true	false
 50-Tokens:ERC20	0x1d4ccc31dab6ea20f461d329a0562c1c58412515	Talao	TALAO	On chain	18	Reputation Protocol and Decentralized Marketplace based on Ethereum blockchain	false	false	false	true	true	false
 55-Defi	0x1d91e3f77271ed069618b4ba06d19821bc2ed8b0	Yearn: StrategyTUSDCurve		EtherScan.io			false	false	false	true	false	false
 34-ENS	0x1da022710df5002339274aadee8d58218e9d6ab5	ENS: Old Public Resolver 1		EtherScan.io			false	false	false	true	false	false
 36-Chainlink	0x1eeaf25f2ecbcaf204ecadc8db7b0db9da845327	Chainlink LEND-ETH Aggregator		EtherScan.io			false	false	false	true	false	false
 50-Tokens:ERC20	0x1f75047233517dcf67970d9e3c3bb385cb647f30	Unicorns	🦄	On chain		Ethereum tip jar unicorn tokens	false	false	false	true	true	false
+31-Gitcoin Grants:Grant	0x1fa313ba8c968d00bc109404bd08e963eae3f1dd	Grant 0433 Edcon (community Ethereum Development Conference)		https://gitcoin.co/grants/433/edcon-community-ethereum-development-conference			false	false	false	false	false	false
 30-Contracts	0x1fd169a4f5c59acf79d0fd5d91d1201ef1bce9f1	Moloch DAO		EtherScan.io			false	false	false	true	false	false
-80-Malicious:DaoDrain	0x200450f06520bdd6c527622a273333384d870efb	Dao Drain 015		GethSource Ether Camp			false	false	false	true	false	false
+31-Gitcoin Grants:Grant	0x2001909016b05f7eff9af6e25d806f364074628a	Grant 1719 the Ethereum Open Desktop Environment		https://gitcoin.co/grants/1719/the-ethereum-open-desktop-environment			false	false	false	false	false	false
+80-Malicious:DaoDrain	0x200450f06520bdd6c527622a273333384d870efb	DAO Drain 015		GethSource Ether Camp			false	false	false	true	false	false
 50-Tokens:ERC20	0x2167fb82309cf76513e83b25123f8b0559d6b48f	LION	LION	On chain	18	LION token is an ERC20 token powered by the Ethereum Blockchain. It is a utility token designed to operate inside of the CoinLion trading platform and research portal.	false	false	false	true	true	false
 30-Contracts	0x216aa06957cd8747a32c3c0683b1aaf912a1dc55	Synthetix: YFI Rewards		EtherScan.io			false	false	false	true	false	false
 34-ENS	0x226159d592e2b063810a10ebf6dcbada94ed68b8	ENS: Old Public Resolver 2		EtherScan.io			false	false	false	true	false	false
@@ -87,8 +95,9 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 30-Contracts	0x23850f3e6f760b92491892a5a3772e7fc000adf1	Uniswap: ORB 2		EtherScan.io			false	false	false	true	false	false
 30-Contracts	0x240f9f86b1465bf1b8eb29bc88cbf65573dfdd97	Polymath: Security Token Registry Proxy		EtherScan.io			false	false	false	true	false	false
 50-Tokens:ERC20	0x24692791bc444c5cd0b81e3cbcaba4b04acd1f3b	UnikoinGold	UKG	On chain	18	UnikoinGold is an ethereum-based, decentralized crypto token designed for high-volume, high security, inexpensive gaming and esports related transactions on the Unikrn platform.	false	false	false	true	true	false
-31-Gitcoin Grants:Grant	0x24e8bb6a37774d8a0187e196beb29601ed5920bf	Grant 0348 Etherloans Undercollateralized Loans Unstoppable DeFi		https://gitcoin.co/grants/348/etherloans-undercollateralized-loans-unstoppable-d		https://www.etherloans.io/	false	false	false	false	false	false
-80-Malicious:DaoDrain	0x253488078a4edf4d6f42f113d1e62836a942cf1a	Dao Drain 097		GethSource Ether Camp			false	false	false	true	false	false
+31-Gitcoin Grants:Grant	0x2489404ede77ec853c3345424bb919c9031856e2	Grant 0079 Lodestar Ethereum 2.0 Client		https://gitcoin.co/grants/79/lodestar-ethereum-20-client			false	false	false	false	false	false
+31-Gitcoin Grants:Grant	0x24e8bb6a37774d8a0187e196beb29601ed5920bf	Grant 0348 EtherLoans undercollateralized loans unstoppable DeFi		https://gitcoin.co/grants/348/etherloans-undercollateralized-loans-unstoppable-d		https://www.etherloans.io/	false	false	false	false	false	false
+80-Malicious:DaoDrain	0x253488078a4edf4d6f42f113d1e62836a942cf1a	DAO Drain 097		GethSource Ether Camp			false	false	false	true	false	false
 50-Tokens:ERC20	0x255aa6df07540cb5d3d297f0d0d4d84cb52bc8e6	Raiden Token	RDN	On chain	18	The Raiden Network is an off-chain scaling solution, enabling near-instant, low-fee and scalable payments. It‚Äö√Ñ√¥s complementary to the Ethereum blockchain and works with any ERC20 compatible token.	false	false	false	true	true	false
 36-Chainlink	0x25fa978ea1a7dc9bdc33a2959b9053eae57169b5	Chainlink EUR-USD Aggregator		EtherScan.io			false	false	false	true	false	false
 55-Defi	0x25faca21dd2ad7edb3a027d543e617496820d8d6	Yearn: StrategyVaultUSDC		EtherScan.io			false	false	false	true	false	false
@@ -109,30 +118,30 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 60-Airdrops	0x2afbc96be0ac57e9e2194506d5565c45b2481f88	YOO Airdrop Sender		EtherScan.io			false	false	false	false	false	false
 60-Airdrops	0x2b3e697c2b90e3ecde2416e106d61bd0b1deab0f	BasicCoin Airdrop		EtherScan.io			false	false	false	true	false	false
 31-Gitcoin Grants:Grant	0x2bb1b3510a1f609cbc74b98b3eb622cfcc3be16e	Grant 0381 Animated Charts of DeFi/Ethereum by James Todaro		https://gitcoin.co/grants/381/animated-charts-of-defiethereum-by-james-todaro		https://twitter.com/JamesTodaroMD	false	false	false	false	false	false
-80-Malicious:DaoDrain	0x2c19c7f9ae8b751e37aeb2d93a699722395ae18f	Dao Drain 003		GethSource Ether Camp			false	false	false	true	false	false
+80-Malicious:DaoDrain	0x2c19c7f9ae8b751e37aeb2d93a699722395ae18f	DAO Drain 003		GethSource Ether Camp			false	false	false	true	false	false
 55-Defi	0x2de055fec2b826ed4a7478ceddbeff82c1edfa70	Yearn: StrategyYfii		EtherScan.io			false	false	false	true	false	false
 50-Tokens:ERC20	0x2e071d2966aa7d8decb1005885ba1977d6038a65	DICE	ROL	On chain	16	Provably fair online Ether gaming on the Ethereum Blockchain	false	false	false	true	true	false
 60-Airdrops	0x2e12a5a98afd8407d8fcd5bbdb39f964b74f231d	KickAirdropSender		EtherScan.io			false	false	false	false	false	false
 30-Contracts	0x2e3b10abf091cdc53cc892a50dabdb432e220398	GeneralizedTCR		EtherScan.io			false	false	false	true	false	false
 55-Defi	0x2ee856843bb65c244f527ad302d6d2853921727e	Yearn: StrategyCurveYBUSDVoterProxy		EtherScan.io			false	false	false	true	false	false
 55-Defi	0x2f08119c6f07c006695e079aafc638b8789faf18	yearn Tether USD	yUSDT	On chain	6		false	false	false	true	true	false
-80-Malicious:DaoDrain	0x304a554a310c7e546dfe434669c62820b7d83490	Dao Drain 067 (DarkDAO)		GethSource SlackNation OnChain Ether Camp			false	false	false	true	false	false
+80-Malicious:DaoDrain	0x304a554a310c7e546dfe434669c62820b7d83490	DAO Drain 067 (DarkDAO)		GethSource SlackNation OnChain Ether Camp			false	false	false	true	false	false
 55-Defi	0x31317f9a5e4cc1d231bdf07755c994015a96a37c	Yearn: Controller		EtherScan.io			false	false	false	true	false	false
 34-ENS	0x314159265dd8dbb310642f98f50c066173c1259b	ENS: Eth Name Service		EtherScan.io			false	false	false	true	false	false
 30-Contracts	0x314495517f380ceb7c498a35739e40864240adcf	GU: Shiny Legendary Pack Three		EtherScan.io			false	false	false	true	false	false
-80-Malicious:DaoDrain	0x319f70bab6845585f412ec7724b744fec6095c85	Dao Drain 007		GethSource Ether Camp			false	false	false	true	false	false
+80-Malicious:DaoDrain	0x319f70bab6845585f412ec7724b744fec6095c85	DAO Drain 007		GethSource Ether Camp			false	false	false	true	false	false
 50-Tokens:ERC20	0x31f3d9d1bece0c033ff78fa6da60a6048f3e13c5	EBCoin	EBC	On chain	18	The universal cryptocurrency based on Ethereum for travelers in the world	false	false	false	true	true	false
+31-Gitcoin Grants:Grant	0x32b74b90407309f6637245292cd90347de658a37	Grant 1634 Ethereum Staking Guides (ubuntu)		https://gitcoin.co/grants/1634/ethereum-staking-guides-ubuntu			false	false	false	false	false	false
 91-Known	0x32be343b94f860124dc4fee278fdcbd38c102d88	Poliniex Exchange, DAO Whale 4 Vlad Zamphir 0x127 Sender 1 Sept_DDOS_ACCOUNT_1		TrueBlocks.io CarbonVote WhaleWatch.io SEPT_DDOS http://www.reddit.com/r/ethereum/			false	false	false	false	false	false
-31-Gitcoin Grants:Grant	0x32cefb2dc869bbfe636f7547cda43f561bf88d5a	Grant 152 Ethereum for Farsi Speaking Population					false	false	false	false	false	false
+31-Gitcoin Grants:Grant	0x32cefb2dc869bbfe636f7547cda43f561bf88d5a	Grant 0152 Ethereum for Farsi Speaking Population		https://gitcoin.co/grants/152/ethereum-for-farsi-speaking-population			false	false	false	false	false	false
 36-Chainlink	0x32dbd3214ac75223e27e575c53944307914f7a90	Chainlink LINK-USD Aggregator		EtherScan.io			false	false	false	true	false	false
 50-Tokens:ERC20	0x33c623a2baafeb8d15dfaf3ce44095efec83d72c	SGPay Token	SGP	On chain	18	SGPay is the payments system built for the mobile platform. It aims to combine new digital tokens, next generation innovators and modern e-payment systems together.	false	false	false	true	true	false
-31-Gitcoin Grants:Grant	0x35ca7ae854338dcbc154066f0ea00b636d38e431	Grant 126 Humans of Ethereum		https://gitcoin.co/grants/126/humansofethereum			false	false	false	false	false	false
+31-Gitcoin Grants:Grant	0x35ca7ae854338dcbc154066f0ea00b636d38e431	Grant 0126 #humansofethereum		https://gitcoin.co/grants/126/humansofethereum			false	false	false	false	false	false
 30-Contracts	0x374026a48d777cb0ffdccdb9a919c0aa7ce8a0fc	Genesis Protocol		EtherScan.io			false	false	false	true	false	false
 55-Defi	0x382185f3ea9268e65bb16f81de6b4e725134ed72	Yearn: StrategyYfii		EtherScan.io			false	false	false	true	false	false
-31-Gitcoin Grants:Grant	0x38298ef8a8306579e21246d5227694b5560d9cb5	Grant 085 Tennagraph Minimum Bias Ethereum Signal Aggregat		https://gitcoin.co/grants/85/tennagraph-minimum-bias-ethereum-signal-aggregat-2			false	false	false	true	false	false
+31-Gitcoin Grants:Grant	0x38298ef8a8306579e21246d5227694b5560d9cb5	Grant 0085 Tennagraph - Minimum Bias Ethereum Signal Aggregator		https://gitcoin.co/grants/85/tennagraph-minimum-bias-ethereum-signal-aggregato			false	false	false	true	false	false
 50-Tokens:ERC20	0x38c6a68304cdefb9bec48bbfaaba5c5b47818bb2	HPBCoin	HPB	EtherScan.io		HPB High-Performance Blockchain is a new kind of block chain hardware and software architecture, which includes a chip acceleration engine and the blockchain platform, aiming to realize the performance extension of distributed applications	false	false	false	true	true	false
 50-Tokens:ERC20	0x3918c42f14f2eb1168365f911f63e540e5a306b5	Neural Protocol	NRP	On chain	8	NEURAL PROTOCOL NRP is a decentralized blockchain-based payment instrument that aims to bring together buyers and sellers in a marketplace.	false	false	false	true	true	false
-31-Gitcoin Grants:Grant	0x3953017af23ab99a7d40f3d26f1595f27c91345f	Grant 0548 Togedao a Forum and Social Media Community Built on the Ethereum Blockchain to Incentivize Content Creators.		https://gitcoin.co/grants/548/togedao-a-forum-and-social-media-community-built-o		http://togedao.ml/	false	false	false	false	false	false
 55-Defi	0x395f93350d5102b6139abfc84a7d6ee70488797c	Yearn: StrategyYFIGovernance		EtherScan.io			false	false	false	true	false	false
 50-Tokens:ERC20	0x398ec7346dcd622edc5ae82352f02be94c62d119	Aave: Lending Pool V1		EtherScan.io			false	false	false	true	false	false
 50-Tokens:ERC20	0x3a1237d38d0fb94513f85d61679cad7f38507242	Mindexcoin	MIC	On chain	18	Mindexcoin MIC is a token that enables data operations in the Ethereum Decentralized Network.	false	false	false	true	true	false
@@ -144,21 +153,23 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 40-Exchanges	0x3fda67f7583380e67ef93072294a7fac882fd7e7	Compound		EtherScan.io			false	false	false	true	false	false
 50-Tokens:ERC20	0x408e41876cccdc0f92210600ef50372656052a38	Republic Token	REN	On chain	18	A decentralized dark pool for trustless cross-chain atomic trading of Ether, ERC20 tokens and Bitcoin pairs.	false	false	false	true	true	false
 55-Defi	0x40bd98e3cce4f34c087a73dd3d05558733549afb	Yearn: StrategyCreamYFI		EtherScan.io			false	false	false	true	false	false
-31-Gitcoin Grants:Grant	0x40e3780e5bec58629ac4c5dc3bca3df2d7fd0c35	Grant 0412 Ethereum Commons: Testnets for Etc Eth		https://gitcoin.co/grants/412/ethereumcore-public-goods-faucets-gas-estimator-st		https://EthereumCore.org	false	false	false	false	false	false
+31-Gitcoin Grants:Grant	0x40e3780e5bec58629ac4c5dc3bca3df2d7fd0c35	Grant 0412 Ethereum Classic Development Team		https://gitcoin.co/grants/412/ethereum-classic-development-team		https://EthereumCore.org	false	false	false	false	false	false
+31-Gitcoin Grants:Grant	0x416deca06f9af666abe1666e80e8d30bba66d1c5	Grant 0496 Ethereum Contacts Registry (ecr)		https://gitcoin.co/grants/496/ethereum-contacts-registry-ecr			false	false	false	false	false	false
 31-Gitcoin Grants:Grant	0x41997060113af630a591e6cb23e1bc15fc90dc73	Grant 0551 the Ethereum 2.0 Annotated Specification		https://gitcoin.co/grants/551/the-ethereum-20-annotated-specification		https://benjaminion.xyz/eth2-annotated-spec/	false	false	false	false	false	false
 50-Tokens:ERC20	0x419d0d8bdd9af5e606ae2232ed285aff190e711b	FunFair	FUN	On chain	8	FunFair is a decentralised gaming platform powered by Ethereum smart contracts	false	false	false	true	true	false
 50-Tokens:ERC20	0x41a7820c86f4bea29e6c9239aeb0fbdba12dd790	Unicorns	🦄	On chain		Ethereum tip jar unicorn tokens	false	false	false	true	true	false
-31-Gitcoin Grants:Grant	0x41d2a18e1ddacdabfddadb62e9aee67c63070b76	Grant 0562 Learning Data Science on the Ethereum Blockchain with @omnianalytics		https://gitcoin.co/grants/562/learning-data-science-on-the-ethereum-blockchain-w		https://github.com/Omni-Analytics-Group/eth-data-science-course	false	false	false	false	false	false
+31-Gitcoin Grants:Grant	0x41d2a18e1ddacdabfddadb62e9aee67c63070b76	Grant 0562 Learning Data Science on the Ethereum Blockchain with @omnianalytics		https://gitcoin.co/grants/562/learning-data-science-on-the-ethereum-blockchain-		https://github.com/Omni-Analytics-Group/eth-data-science-course	false	false	false	false	false	false
 50-Tokens:ERC20	0x42d6622dece394b54999fbd73d108123806f6a18	SPANK	SPANK	On chain	18	A cryptoeconomic powered adult entertainment ecosystem built on the Ethereum network.	false	false	false	true	true	false
+31-Gitcoin Grants:Grant	0x433ee2f00ad7ff824b2fe74bace417afd2d86d31	Grant 1464 Kontext.app - Social Bookmarking on Filecoin & Ethereum		https://gitcoin.co/grants/1464/kontextapp-social-bookmarking-on-filecoin-ethereu			false	false	false	false	false	false
 50-Tokens:ERC20	0x4355fc160f74328f9b383df2ec589bb3dfd82ba0	Opus Token	OPT	On chain	18	Decentralised music platform built on Ethereum and IPFS.	false	false	false	true	true	false
 50-Tokens:ERC20	0x436f0f3a982074c4a05084485d421466a994fe53	Rate3	RTE	On chain	18	Payment Without Borders - A decentralised protocol for cross border payments and credit scoring. Empowered by Stellar and Ethereum.	false	false	false	true	true	false
 55-Defi	0x43a8ece49718e22d21077000768aff91849bceff	Cream.Finance: CREAM/WETH Pool		EtherScan.io			false	false	false	true	false	false
-80-Malicious:DaoDrain	0x440c59b325d2997a134c2c7c60a8c61611212bad	Dao Drain 041		GethSource Ether Camp			false	false	false	true	false	false
+80-Malicious:DaoDrain	0x440c59b325d2997a134c2c7c60a8c61611212bad	DAO Drain 041		GethSource Ether Camp			false	false	false	true	false	false
 50-Tokens:ERC20	0x44197a4c44d6a059297caf6be4f7e172bd56caaf	ELTCOIN	ELTCOIN	On chain	8	Ethereum Limited Total Coin	false	false	false	true	true	false
 30-Contracts	0x445b774c012c5418d6d885f6cbfeb049a7fe6558	Everest		EtherScan.io			false	false	false	true	false	false
-50-Tokens:ERC20	0x45e42d659d9f9466cd5df622506033145a9b89bc	Nexium	NxC	On chain	3	The Economy of Beyond The Void is based on the Ethereum Blockchain, which can be used with tokens called Nexium.	false	false	false	true	true	false
+50-Tokens:ERC20	0x45e42d659d9f9466cd5df622506033145a9b89bc	Nexium	NxC	On chain	3	The Economy of Beyond the Void is based on the Ethereum Blockchain, which can be used with tokens called Nexium.	false	false	false	true	true	false
 50-Tokens:ERC20	0x45f783cce6b7ff23b2ab2d70e416cdb7d6055f51	Curve.fi: y Swap		EtherScan.io			false	false	false	true	false	false
-80-Malicious:DaoDrain	0x4613f3bca5c44ea06337a9e439fbc6d42e501d0a	Dao Drain 109 DAO_Hell_007		GethSource Ether Camp			false	false	false	true	false	false
+80-Malicious:DaoDrain	0x4613f3bca5c44ea06337a9e439fbc6d42e501d0a	DAO Drain 109 DAO_Hell_007		GethSource Ether Camp			false	false	false	true	false	false
 50-Tokens:ERC20	0x461733c17b0755ca5649b6db08b3e213fcf22546	ATN	ATN	On Chain	18	ATN is a global artificial intelligence API marketplace where developers, technology suppliers and buyers come together to access and develop new and innovative forms of A.I. technology.	false	false	false	true	true	false
 50-Tokens:ERC20	0x4678f0a6958e4d2bc4f1baf7bc52e8f3564f3fe4	Maker: Proxy Registry		EtherScan.io			false	false	false	true	false	false
 55-Defi	0x4720515963a9d40ca10b1ade806c1291e6c9a86d	StrategyUSDC3pool		EtherScan.io			false	false	false	true	false	false
@@ -173,32 +184,21 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 30-Contracts	0x4a5c681ddc32acc6cca51ac17e9d461e6be87900	Nexus Mutual: Governance Proxy		EtherScan.io			false	false	false	true	false	false
 30-Contracts	0x4aa42145aa6ebf72e164c9bbc74fbd3788045016	POA Network: DAI-XDAI Bridge		EtherScan.io			false	false	false	true	false	false
 30-Contracts	0x4ae0ede482f825fb9cccce8f0fe089f0379eaa2a	MCH: Gum Gateway 1		EtherScan.io			false	false	false	true	false	false
-31-Gitcoin Grants:Grant	0x4d07af703c163540c59763ff404710204334af81	Grant 0590 Gwei.cz Cz/sk DeFi/Ethereum Community		https://gitcoin.co/grants/590/gweicz-czsk-defiethereum-community		https://gwei.cz	false	false	false	true	false	false
+31-Gitcoin Grants:Grant	0x4d07af703c163540c59763ff404710204334af81	Grant 0590 Gwei.cz - Cz/sk DeFi/Ethereum Community		https://gitcoin.co/grants/590/gweicz-czsk-defiethereum-community		https://gwei.cz	false	false	false	true	false	false
 30-Contracts	0x4d953115678b15ce0b0396bcf95db68003f86fb5	Gnosis Safe: Relay service - Transactions		EtherScan.io			false	false	false	false	false	false
 36-Compound	0x4ddc2d193948926d02f9b1fe9e1daa0718270ed5	Compound Ether	cETH	On chain	8		false	false	false	true	true	false
 50-Tokens:ERC20	0x4e005a760e00e17c4912a8070eec047cfecbabbb	NEXT.exchange	NEXT	On chain	18	A hybrid exchange registered as an N. V. Public company in the Netherlands and provides fiat pairs to all altcoins on its platform	false	false	false	true	true	false
+31-Gitcoin Grants:Grant	0x4ef6ea0720862903bbb039e1ab30563e9ec33aba	Grant 1937 Ethereum Integration: Blockchain Data In Trading Bots		https://gitcoin.co/grants/1937/ethereum-integration-blockchain-data-in-trading-b			false	false	false	false	false	false
 30-Contracts:Set Prototcol	0x4f57e1f2020c35cd2fb45cf53cfeb6ff2e796180	Set: Rebalancing Set Exchange Issuance Module V2		EtherScan.io			false	false	false	true	false	false
 35-Pool Together	0x4fc604536134dc64718800361ecbca0df6cbfe08	Pool Together Pool 2		EtherScan.io			false	false	false	true	false	false
 55-Defi	0x4feeaeced575239b46d70b50e13532ecb62e4ea8	Yearn: StrategyCurveSBTC		EtherScan.io			false	false	false	true	false	false
 50-Tokens:ERC20	0x501262281b2ba043e2fbf14904980689cddb0c78	Mithril Ore	MORE	On chain	2	Mithril Ore is a Casper Ethereum Staking Pool. Participation in Casper may be limited due to complexity, network-congestion, and/or lack of funds. This token allows participation by resolving these variables.	false	false	false	true	true	false
 75-Early Actors	0x5088d623ba0fcf0131e0897a91734a4d83596aa0	MinerBlk3		EtherScan.io			false	false	false	false	false	false
-30-Contracts	0x519b70055af55a007110b4ff99b0ea33071c720a	dxDAO		EtherScan.io			false	false	false	true	false	false
-80-Malicious:DaoDrain	0x51e0ddd9998364a2eb38588679f0d2c42653e4a6	Dao Drain 021		GethSource Ether Camp			false	false	false	true	false	false
+80-Malicious:DaoDrain	0x51e0ddd9998364a2eb38588679f0d2c42653e4a6	DAO Drain 021		GethSource Ether Camp			false	false	false	true	false	false
 60-Airdrops	0x52140ae1c6abbcdbefd566c346d2cd751c162921	AGLD Airdrop Sender 2		EtherScan.io			false	false	false	false	false	false
 30-Contracts	0x521d32f3d23f1fc82b1dbe306edc3ef668e5d973	Clovers Network Related		EtherScan.io			false	false	false	true	false	false
 30-Contracts	0x526af336d614ade5cc252a407062b8861af998f5	Maker: Sai Proxy 2		EtherScan.io			false	false	false	true	false	false
-80-Malicious:DaoDrain	0x52c5317c848ba20c7504cb2c8052abd1fde29d03	Dao Drain 061		GethSource Ether Camp			false	false	false	true	false	false
+80-Malicious:DaoDrain	0x52c5317c848ba20c7504cb2c8052abd1fde29d03	DAO Drain 061		GethSource Ether Camp			false	false	false	true	false	false
 55-Defi	0x530da5aef3c8f9ccbc75c97c182d6ee2284b643f	Yearn: StrategyCurveCompoundVoterProxy		EtherScan.io			false	false	false	true	false	false
 30-Contracts	0x5346d0f80e2816fad329f2c140c870ffc3c3e2ef	EtherRouter: Colony Network		EtherScan.io			false	false	false	true	false	false
 50-Tokens:ERC20	0x539efe69bcdd21a83efd9122571a64cc25e0282b	Ethereum Blue	BLUE	On chain	8	BLUE is anERC20 token built from the ground-up to facilitate payments and transfers without sacrificing your security.	false	false	false	true	true	false
-30-Contracts	0x5407381b6c251cfd498ccd4a1d877739cb7960b8	Nexus Mutual: Token Controller Proxy		EtherScan.io			false	false	false	true	false	false
-80-Malicious:DaoDrain	0x5524c55fb03cf21f549444ccbecb664d0acad706	Dao Drain 093		GethSource Ether Camp			false	false	false	true	false	false
-50-Tokens:ERC20	0x56b6431f45d08eed55f34371386326c739eacbcc	Ethereum Meta	ETHM	On chain	18	Ethereum Meta addresses the lack of privacy in Ethereum.	false	false	false	true	true	false
-60-Airdrops	0x5717d19616fab9079cf2bfce7d94126bca3ae536	BerryXToken Airdrop Sender	BRX	EtherScan.io			false	false	false	false	true	false
-30-Contracts	0x5789e2b5460cae9329d93a78511e2ac49f98a1f6	GU: Legendary Pack		EtherScan.io			false	false	false	true	false	false
-34-ENS	0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85	ENS: Base Registrar Implementation		EtherScan.io			false	false	false	true	false	false
-30-Contracts	0x5aad137d8f7d2dc6e1b2548c059b1483360bcc6a	BrightID Aragon Org		EtherScan.io			false	false	false	true	false	false
-50-Tokens:ERC20	0x5adc961d6ac3f7062d2ea45fefb8d8167d44b190	Dether	DTH	On chain	18	A peer-to-peer ecosystem of crypto buyers, sellers and physical shops.	false	false	false	true	true	false
-31-Gitcoin Grants:Grant	0x5b92bd6c37a1958f95ea1e56b6121a89314cfb66	Grant 0337 Cream: Confidential Reliable Ethereum Anonymous Mixer		https://gitcoin.co/grants/337/cream-confidential-reliable-ethereum-anonymous-mix		https://github.com/couger-inc/cream	false	false	false	false	false	false
-50-Tokens:ERC20	0x5bb622ba7b2f09bf23f1a9b509cd210a818c53d7	Based.Money: Curve sUSD Pool		EtherScan.io			false	false	false	true	false	false
-50-Tokens:ERC20	0x5c543e7ae0a1104f78406c340e9c64fd9fce5170	vSlice	VSL	EtherScan.io		An Ethereum Gaming Platform Token	false	false	false	true	true	false

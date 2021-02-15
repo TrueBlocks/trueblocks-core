@@ -336,9 +336,18 @@
     {
       "tags": "80-Malicious:DaoDrain",
       "address": "0x005f5cee7a43331d5a3d3eec71305925a62f34b6",
-      "name": "Dao Drain 086",
+      "name": "DAO Drain 086",
       "symbol": "",
       "source": "GethSource",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "31-Gitcoin Grants:Grant",
+      "address": "0x006087d6ac20840c23ba298512db454a05c19b10",
+      "name": "Grant 0743 #fittogetherdao (like Pooltogether for Fitness and Wellbeing)",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/743/fittogetherdao-like-pooltogether-for-fitness-and-",
       "decimals": 0,
       "description": ""
     },
@@ -363,11 +372,11 @@
     {
       "tags": "31-Gitcoin Grants:Grant",
       "address": "0x007b003c4d0145b512286494d5ae123aeef29d9e",
-      "name": "Grant 0845 Remote Developer Bootcamp",
+      "name": "Grant 1068 Blocksig - Notarized Document Signing on Ethereum and Ipfs (previous: Grant 845 Remote Developer Bootcamp)",
       "symbol": "",
-      "source": "https://gitcoin.co/grants/845/remote-developer-bootcamp",
+      "source": "https://gitcoin.co/grants/1068/blocksig-notarized-document-signing-on-ethereum-a",
       "decimals": 0,
-      "description": "https://github.com/blockvigil/bootcamp"
+      "description": "https://gitcoin.co/grants/845/remote-developer-bootcamp, https://github.com/blockvigil/bootcamp"
     },
     {
       "tags": "31-Gitcoin Grants:Grant",
@@ -395,6 +404,15 @@
       "source": "On chain",
       "decimals": 18,
       "description": "FortKnoxster offers end-to-end encrypted inbox, chat, decentralized storage, calling, video conferencing, voice messages and much more."
+    },
+    {
+      "tags": "31-Gitcoin Grants:Grant",
+      "address": "0x00b491d250b9bcce482b6e70321b0a5339d183a6",
+      "name": "Grant 0976 Magical Machine Money",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/976/magical-machine-money",
+      "decimals": 0,
+      "description": ""
     },
     {
       "tags": "90-DevCon2:Individual",
@@ -426,9 +444,9 @@
     {
       "tags": "31-Gitcoin Grants:Grant",
       "address": "0x00cf36853aa4024fb5bf5cc377dfd85844b411a0",
-      "name": "Grant 143 Dappnode",
+      "name": "Grant 0143 Dappnode - Panvala League",
       "symbol": "",
-      "source": "https://gitcoin.co/grants/143/dappnode",
+      "source": "https://gitcoin.co/grants/143/dappnode-panvala-league",
       "decimals": 0,
       "description": ""
     },
@@ -453,9 +471,18 @@
     {
       "tags": "31-Gitcoin Grants:Grant",
       "address": "0x00de4b13153673bcae2616b67bf822500d325fc3",
-      "name": "Grant 012 Grant 086 Gitcoin Sustainability Fund",
+      "name": "Grant 0472 Example Public Health Project (previous: Grant 0110 Gitcoin Grant 20190522 Grant 0086 Gitcoin Grants Round 8 + Dev Fund (previous: Grant 012 Gitcoin Sustainability Fund))",
       "symbol": "",
-      "source": "https://gitcoin.co/grants/12/gitcoin-open-source-support-fund",
+      "source": "https://gitcoin.co/grants/472/example-public-health-project",
+      "decimals": 0,
+      "description": "https://gitcoin.co/grants/110/gitcoin-grant-20190522,https://gitcoin.co/grants/86/gitcoin-grants-round-8-dev-fund,https://gitcoin.co/grants/12/gitcoin-open-source-support-fund"
+    },
+    {
+      "tags": "31-Gitcoin Grants:Grant",
+      "address": "0x00e4f5f746242e4d115bd65aac7c08fe5d38fb21",
+      "name": "Grant 1839 the Etherchest Ecosystem",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/1839/the-etherchest-ecosystem",
       "decimals": 0,
       "description": ""
     },
@@ -489,7 +516,7 @@
     {
       "tags": "80-Malicious:DaoDrain",
       "address": "0x0101f3be8ebb4bbd39a2e3b9a3639d4259832fd9",
-      "name": "Dao Drain 075",
+      "name": "DAO Drain 075",
       "symbol": "",
       "source": "GethSource Ether Camp",
       "decimals": 0,
@@ -568,6 +595,15 @@
       "description": ""
     },
     {
+      "tags": "31-Gitcoin Grants:Grant",
+      "address": "0x014ffcf34d8515535b99d6aef654258c237168b6",
+      "name": "Grant 1850 Fireth",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/1850/fireth",
+      "decimals": 0,
+      "description": ""
+    },
+    {
       "tags": "30-Contracts",
       "address": "0x015531a044bae03bf4dab1ceabfc232a969b7175",
       "name": "GU: Rare Pack",
@@ -615,9 +651,18 @@
     {
       "tags": "31-Gitcoin Grants:Grant",
       "address": "0x017946fc126d57e7823e68c647c24f28e5dc9988",
-      "name": "Grant 190 Groundhog",
+      "name": "Grant 0190 Groundhog",
       "symbol": "",
       "source": "https://gitcoin.co/grants/190/groundhog",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "31-Gitcoin Grants:Grant",
+      "address": "0x018047343e8105fed2c5000912d03815d99f3e48",
+      "name": "Grant 1920 Kevin",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/1920/kevin",
       "decimals": 0,
       "description": ""
     },
@@ -757,6 +802,15 @@
       "description": "Payments solutions for the travel industry."
     },
     {
+      "tags": "31-Gitcoin Grants:Grant",
+      "address": "0x02a522d98ec2d2c3bbe91acc29ee7fd32ab880ab",
+      "name": "Grant 1694 Mintable.app - A Nft Platform for Everyone In Ethereum",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/1694/mintableapp-a-nft-platform-for-everyone-in-ethere",
+      "decimals": 0,
+      "description": ""
+    },
+    {
       "tags": "34-Twitter: Friends",
       "address": "0x02bbea9326048fb2bd96664adc3ef47bbe3e02b6",
       "name": "Name 0x02bbea93",
@@ -822,9 +876,18 @@
     {
       "tags": "31-Gitcoin Grants:Grant",
       "address": "0x02eb002d88051c03ef312f63bbf3e38aada0b902",
-      "name": "Grant 031 Grantops",
+      "name": "Grant 0031 Grantops",
       "symbol": "",
       "source": "https://gitcoin.co/grants/31/grantops",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "31-Gitcoin Grants:Grant",
+      "address": "0x02ee97a13e434717e3ffa12758a235d1a1680775",
+      "name": "Grant 1551 Niftycrates",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/1551/niftycrates",
       "decimals": 0,
       "description": ""
     },
@@ -897,6 +960,15 @@
       "name": "Argent: Relayer 2",
       "symbol": "",
       "source": "EtherScan.io",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "31-Gitcoin Grants:Grant",
+      "address": "0x0389836416d1d46724f0913eeee42622950b20c1",
+      "name": "Grant 1488 Ercgraph",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/1488/ercgraph",
       "decimals": 0,
       "description": ""
     },
@@ -991,6 +1063,24 @@
       "description": ""
     },
     {
+      "tags": "31-Gitcoin Grants:Grant",
+      "address": "0x03ed2992a1d07ab57ec01f0c8914e22b53e48d87",
+      "name": "Grant 0774 Nuts Platform | Designed for DeFi Builders and Service Providers",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/774/nuts-platform-designed-for-defi-builders-and-serv",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "31-Gitcoin Grants:Grant",
+      "address": "0x04335c092bc8c06f48f9def5e3285140138fbbfc",
+      "name": "Grant 1496 Optimistic Casino",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/1496/optimistic-casino",
+      "decimals": 0,
+      "description": ""
+    },
+    {
       "tags": "31-Gitcoin Grants:Friends",
       "address": "0x04373aac4df8be1696be816b97f4ad8bcd93beb7",
       "name": "Name 0x04373aac",
@@ -1022,9 +1112,27 @@
       "address": "0x0466e612137bca50e524f25ac9f7b6f826ee15b7",
       "name": "Grant 0900 1hive Gardens",
       "symbol": "",
-      "source": "https://gitcoin.co/grants/900/1hive-gardens-2",
+      "source": "https://gitcoin.co/grants/900/1hive-gardens",
       "decimals": 0,
       "description": "https://1hive.org"
+    },
+    {
+      "tags": "31-Gitcoin Grants:Grant",
+      "address": "0x0467f3b464ff75ac91f6ed8a4139fc6e38256efb",
+      "name": "Grant 1781 Cursed Mining",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/1781/cursed-mining",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "31-Gitcoin Grants:Grant",
+      "address": "0x046b8b30767592487badb59e43418e3f58f46b26",
+      "name": "Grant 1828 Australian Digital Security",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/1828/australian-digital-security",
+      "decimals": 0,
+      "description": ""
     },
     {
       "tags": "60-Airdrops",
@@ -1092,16 +1200,16 @@
     {
       "tags": "31-Gitcoin Grants:Grant",
       "address": "0x04b7f60169fe048b7806a7e5fe731a37be23111e",
-      "name": "Grant 0650 Kodadot: Claim Tokens Feature",
+      "name": "Grant 0650 Kodadot: Polkadot and Substrate Wallet",
       "symbol": "",
-      "source": "https://gitcoin.co/grants/650/kodadot-claim-tokens-feature",
+      "source": "https://gitcoin.co/grants/650/kodadot-polkadot-and-substrate-wallet",
       "decimals": 0,
       "description": "https://vue-polkadot.js.org"
     },
     {
       "tags": "31-Gitcoin Grants:Grant",
       "address": "0x04bb33c3a8c2d018836a1f938054ebb59e0036b2",
-      "name": "Grant 104 Walletsreview",
+      "name": "Grant 0104 Wallets.review",
       "symbol": "",
       "source": "https://gitcoin.co/grants/104/walletsreview",
       "decimals": 0,
@@ -1135,6 +1243,15 @@
       "description": ""
     },
     {
+      "tags": "31-Gitcoin Grants:Grant",
+      "address": "0x05267b74523dd09a7a316d83760a09e5a710fbf7",
+      "name": "Grant 1726 Pinpals Crypto",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/1726/pinpals-crypto",
+      "decimals": 0,
+      "description": ""
+    },
+    {
       "tags": "30-Contracts:dAppNode",
       "address": "0x0545c8d8537fd8b5d8b5cec24ca94103bd4b67d4",
       "name": "dAddNode Package 001",
@@ -1153,13 +1270,13 @@
       "description": "The Eternal Project is an undertaking for the rapid spread of Eternal Wallet and Eternal Coin around the world, by utilizing the skills and infrastructures of global corporations and individuals."
     },
     {
-      "tags": "34-Twitter: Friends",
+      "tags": "31-Gitcoin Grants:Grant",
       "address": "0x0559a413a3ab19508a144aeebc474eb14c5e76ce",
-      "name": "Name 0x0559a413",
+      "name": "Grant 0386 Wolfofethereum.eth",
       "symbol": "",
-      "source": "Twitter",
+      "source": "https://gitcoin.co/grants/386/wolfofethereumeth",
       "decimals": 0,
-      "description": "@LUKACACIC"
+      "description": "@lukacacic"
     },
     {
       "tags": "30-Contracts",
@@ -1200,7 +1317,7 @@
     {
       "tags": "31-Gitcoin Grants:Grant",
       "address": "0x057a3d5383fd9277f3ab4f98e319d7d9a9a9e198",
-      "name": "Grant 0292 Will Brealey Ethereum Writer",
+      "name": "Grant 0292 Will Brealey - Ethereum Writer",
       "symbol": "",
       "source": "https://gitcoin.co/grants/292/will-brealey-ethereum-writer",
       "decimals": 0,
@@ -1209,7 +1326,7 @@
     {
       "tags": "80-Malicious:DaoDrain",
       "address": "0x057b56736d32b86616a10f619859c6cd6f59092a",
-      "name": "Dao Drain 065",
+      "name": "DAO Drain 065",
       "symbol": "",
       "source": "GethSource",
       "decimals": 0,
@@ -1279,6 +1396,24 @@
       "description": "The Game of Chance.Changed"
     },
     {
+      "tags": "31-Gitcoin Grants:Grant",
+      "address": "0x05b22a6e05ae7c54fa5a87d15b5e0c73c4b87249",
+      "name": "Grant 1662 La Hora Cripto",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/1662/la-hora-cripto",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "31-Gitcoin Grants:Grant",
+      "address": "0x05c351382db8d770207f319d96ac1184c3717ede",
+      "name": "Grant 1511 Soappunk - Pirateshower Universe",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/1511/soappunk-pirateshower-universe",
+      "decimals": 0,
+      "description": ""
+    },
+    {
       "tags": "50-Tokens:ERC20",
       "address": "0x05c7065d644096a4e4c3fe24af86e36de021074b",
       "name": "LendConnect Token",
@@ -1321,7 +1456,16 @@
       "symbol": "MFTU",
       "source": "On chain",
       "decimals": 18,
-      "description": "Coin for custom CyberFM 'Mainstream For The Underground' royalty payments."
+      "description": "Coin for custom CyberFM 'Mainstream for the Underground' royalty payments."
+    },
+    {
+      "tags": "31-Gitcoin Grants:Grant",
+      "address": "0x05df81bf098ae29afad54250cd224379edcae850",
+      "name": "Grant 1764 Hashing It Out's Community Fund (panvala League)",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/1764/hashing-it-outs-community-fund-panvala-league",
+      "decimals": 0,
+      "description": ""
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -1331,6 +1475,15 @@
       "source": "On chain",
       "decimals": 12,
       "description": "Zilliqa is a high-throughput public blockchain platform - designed to scale to thousands of transactions per second."
+    },
+    {
+      "tags": "31-Gitcoin Grants:Grant",
+      "address": "0x05f9f39e372bbe8cd2f73736ae0441ab8052dbb6",
+      "name": "Grant 1979 Vusd Stablecoin",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/1979/vusd-stablecoin",
+      "decimals": 0,
+      "description": ""
     },
     {
       "tags": "30-Contracts",
@@ -1344,7 +1497,7 @@
     {
       "tags": "31-Gitcoin Grants:Grant",
       "address": "0x06044b5359d8df7886366c22c61c7ecd29becac7",
-      "name": "Grant 0336 Dhack a Decentralized Hackathon Model",
+      "name": "Grant 0336 Dhack - A Decentralized Hackathon Model",
       "symbol": "",
       "source": "https://gitcoin.co/grants/336/dhack-a-decentralized-hackathon-model",
       "decimals": 0,
@@ -1380,7 +1533,7 @@
     {
       "tags": "31-Gitcoin Grants:Grant",
       "address": "0x0639092a9c3d9467dd6f89a13213541c8a1e58b2",
-      "name": "Grant 194 Reach Platform",
+      "name": "Grant 0194 Reach Platform",
       "symbol": "",
       "source": "https://gitcoin.co/grants/194/reach-platform",
       "decimals": 0,
@@ -1405,11 +1558,29 @@
       "description": "@okbabyqn88"
     },
     {
+      "tags": "31-Gitcoin Grants:Grant",
+      "address": "0x066d4d13c5bc10e14e30e862471772aa7d23b4f1",
+      "name": "Grant 1388 Crypto Valuations Youtube Channel",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/1388/crypto-valuations-youtube-channel",
+      "decimals": 0,
+      "description": ""
+    },
+    {
       "tags": "80-Malicious:DaoDrain",
       "address": "0x06706dd3f2c9abf0a21ddcc6941d9b86f0596936",
-      "name": "Dao Drain 008",
+      "name": "DAO Drain 008",
       "symbol": "",
       "source": "GethSource",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "31-Gitcoin Grants:Grant",
+      "address": "0x067f2bef6a1f929544253b9fb95f99bae77b2518",
+      "name": "Grant 1753 Resetdao ― Web 3.0 Programmable Social Network",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/1753/resetdao-web-30-programmable-social-network",
       "decimals": 0,
       "description": ""
     },
@@ -1434,9 +1605,18 @@
     {
       "tags": "31-Gitcoin Grants:Grant",
       "address": "0x068792edecad424d42f0f45de7f693ca33526cf1",
-      "name": "Grant 075 Ethereum Dev Fund Working Group",
+      "name": "Grant 0075 Ethereum Dev Fund Working Group",
       "symbol": "",
       "source": "https://gitcoin.co/grants/75/ethereum-dev-fund-working-group",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "31-Gitcoin Grants:Grant",
+      "address": "0x068d9f17fbf0ccbf39bd8da421731fe86986bd3a",
+      "name": "Grant 1648 Nifty Cannon",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/1648/nifty-cannon",
       "decimals": 0,
       "description": ""
     },
@@ -1486,6 +1666,15 @@
       "description": ""
     },
     {
+      "tags": "31-Gitcoin Grants:Grant",
+      "address": "0x06c401236b6d0ec77e3c8cf806773d77e424931e",
+      "name": "Grant 1658 Littleloong",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/1658/littleloong",
+      "decimals": 0,
+      "description": ""
+    },
+    {
       "tags": "75-Early Actors",
       "address": "0x06d138312754bdeb5c1175f47ce00620c480e9c9",
       "name": "Miner_0067_90",
@@ -1500,6 +1689,15 @@
       "name": "Name 0x06dbfdbf",
       "symbol": "",
       "source": "Gitcoin Website",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "31-Gitcoin Grants:Grant",
+      "address": "0x06fa77a7747aa2d13c942d8507b03541306e2697",
+      "name": "Grant 1300 Fractal",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/1300/fractal",
       "decimals": 0,
       "description": ""
     },
@@ -1532,8 +1730,17 @@
     },
     {
       "tags": "31-Gitcoin Grants:Grant",
+      "address": "0x07169d3d71dc9c1c7c1656b3436a984d50619860",
+      "name": "Grant 1556 Apy.vision",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/1556/apyvision",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "31-Gitcoin Grants:Grant",
       "address": "0x0730fd7d15fa9a40a6c7b2bbb4b8ce9ee6e6d08b",
-      "name": "Grant 141 Metamoneymarket (jacobshiach)",
+      "name": "Grant 0141 Metamoneymarket (jacobshiach)",
       "symbol": "",
       "source": "https://gitcoin.co/grants/141/metamoneymarket",
       "decimals": 0,
@@ -1542,7 +1749,7 @@
     {
       "tags": "80-Malicious:DaoDrain",
       "address": "0x0737a6b837f97f46ebade41b9bc3e1c509c85c53",
-      "name": "Dao Drain 059",
+      "name": "DAO Drain 059",
       "symbol": "",
       "source": "GethSource Ether Camp",
       "decimals": 0,
@@ -1551,11 +1758,11 @@
     {
       "tags": "31-Gitcoin Grants:Grant",
       "address": "0x073ab1c0cad3677cde9bdb0cdeedc2085c029579",
-      "name": "Grant 0268 Simpleaswater",
+      "name": "Grant 1122 Vyper.fun | Cryptozombies+ethernaut for Vyper (previous: Grant 0268 Simpleaswater)",
       "symbol": "",
-      "source": "https://gitcoin.co/grants/268/simpleaswater",
+      "source": "https://gitcoin.co/grants/1122/vyperfun-cryptozombiesethernaut-for-vyper",
       "decimals": 0,
-      "description": ""
+      "description": "https://gitcoin.co/grants/268/simpleaswater"
     },
     {
       "tags": "31-Gitcoin Grants:Friends",
@@ -1600,213 +1807,6 @@
       "symbol": "EXN",
       "source": "On chain",
       "decimals": 18,
-      "description": ""
-    },
-    {
-      "tags": "50-Tokens:ERC20",
-      "address": "0x076a93a40bf9e0d21d3f75dd1e0584ddbe0f9d1a",
-      "name": "Qurito",
-      "symbol": "QURO",
-      "source": "On chain",
-      "decimals": 18,
-      "description": "The online community where you earn for sharing knowledge ideas."
-    },
-    {
-      "tags": "50-Tokens:ERC20",
-      "address": "0x076c97e1c869072ee22f8c91978c99b4bcb02591",
-      "name": "CommerceBlock Token",
-      "symbol": "CBT",
-      "source": "On chain",
-      "decimals": 18,
-      "description": "Infrastructure company that provides a suite of tools for traditional asset markets to leverage the highly flexible and powerful qualities of blockchain based digital asset protocols"
-    },
-    {
-      "tags": "50-Tokens:ERC20",
-      "address": "0x0775c81a273b355e6a5b76e240bf708701f00279",
-      "name": "Bulleon",
-      "symbol": "BUL",
-      "source": "On chain",
-      "decimals": 18,
-      "description": "Revolutionizing the way of Financial Transactions"
-    },
-    {
-      "tags": "30-Contracts:dAppNode",
-      "address": "0x077d271a3e4c3b45358417142490bd21172c81b5",
-      "name": "dAddNode Package 003",
-      "symbol": "",
-      "source": "TrueBlocks.io",
-      "decimals": 0,
-      "description": ""
-    },
-    {
-      "tags": "40-Exchanges",
-      "address": "0x077d52b047735976dfda76fef74d4d988ac25196",
-      "name": "Uniswap: ANT",
-      "symbol": "ANT",
-      "source": "EtherScan.io",
-      "decimals": 0,
-      "description": ""
-    },
-    {
-      "tags": "50-Tokens:ERC20",
-      "address": "0x0784dbabb6c6834bddfb7cfee116ba049e5dafab",
-      "name": "IBTC",
-      "symbol": "IBTC",
-      "source": "On chain",
-      "decimals": 18,
-      "description": "IBTC is a tokenized version of Bitcoin build on Ethereum blockchain."
-    },
-    {
-      "tags": "30-Contracts",
-      "address": "0x07995e463f8957b70d683addd00a695ba83bb324",
-      "name": "Gavin Wood VouchFor",
-      "symbol": "",
-      "source": "TrueBlocks.io",
-      "decimals": 0,
-      "description": ""
-    },
-    {
-      "tags": "50-Tokens:ERC20",
-      "address": "0x07a58629aaf3e1a0d07d8f43114b76bd5eee3b91",
-      "name": "Guaranteed Ethurance Token Extra",
-      "symbol": "GETX",
-      "source": "On chain",
-      "decimals": 18,
-      "description": ""
-    },
-    {
-      "tags": "60-Airdrops",
-      "address": "0x07b8a9e9d8729f162c9d04b4762446bc76346e60",
-      "name": "QunFaBa Airdrop Sender",
-      "symbol": "",
-      "source": "",
-      "decimals": 0,
-      "description": ""
-    },
-    {
-      "tags": "50-Tokens:ERC20",
-      "address": "0x07d9e49ea402194bf48a8276dafb16e4ed633317",
-      "name": "DALECOIN",
-      "symbol": "DALC",
-      "source": "On chain",
-      "decimals": 8,
-      "description": "DaleCoin is an ERC20 token based on the Ethereum blockchain which shall serve as a payment token for goods and services to whoever wishes to accept it."
-    },
-    {
-      "tags": "55-Defi",
-      "address": "0x07db4b9b3951094b9e278d336adf46a036295de7",
-      "name": "Yearn: StrategyCurveYVoterProxy",
-      "symbol": "",
-      "source": "EtherScan.io",
-      "decimals": 0,
-      "description": ""
-    },
-    {
-      "tags": "50-Tokens:ERC20",
-      "address": "0x07e3c70653548b04f0a75970c1f81b4cbbfb606f",
-      "name": "Delta",
-      "symbol": "DLT",
-      "source": "On chain",
-      "decimals": 18,
-      "description": "Legally Binding Smart Contracts, Powered by AI."
-    },
-    {
-      "tags": "31-Gitcoin Grants:Friends",
-      "address": "0x07e405e6ec64b85206ad5aaf490a534394d7a65b",
-      "name": "Name 0x07e405e6",
-      "symbol": "",
-      "source": "Gitcoin Website",
-      "decimals": 0,
-      "description": ""
-    },
-    {
-      "tags": "50-Tokens:ERC20",
-      "address": "0x07ef9e82721ac16809d24dafbe1792ce01654db4",
-      "name": "Chimpion",
-      "symbol": "BNANA",
-      "source": "On chain",
-      "decimals": 18,
-      "description": ""
-    },
-    {
-      "tags": "30-Contracts",
-      "address": "0x07f455f30e862e13e3e3d960762cb11c4f744d52",
-      "name": "Gnosis Safe: Replay Service Deployment",
-      "symbol": "",
-      "source": "EtherScan.io",
-      "decimals": 0,
-      "description": ""
-    },
-    {
-      "tags": "80-Malicious:DaoDrain",
-      "address": "0x07f5c1e1bc2c93e0402f23341973a0e043f7bf8a",
-      "name": "Dao Drain 070",
-      "symbol": "",
-      "source": "GethSource",
-      "decimals": 0,
-      "description": ""
-    },
-    {
-      "tags": "31-Gitcoin Grants:Friends",
-      "address": "0x07f66cde25828ddb3578b30c52a491db08c92d77",
-      "name": "Name 0x07f66cde",
-      "symbol": "",
-      "source": "Gitcoin Website",
-      "decimals": 0,
-      "description": ""
-    },
-    {
-      "tags": "90-DevCon2:Individual",
-      "address": "0x080a14c02ceb515e3854818071b3480b49311839",
-      "name": "Darius",
-      "symbol": "",
-      "source": "DevCon2 Token Contract",
-      "decimals": 0,
-      "description": ""
-    },
-    {
-      "tags": "30-Contracts",
-      "address": "0x080bf510fcbf18b91105470639e9561022937712",
-      "name": "0x Exchange V2.1",
-      "symbol": "",
-      "source": "0xTracker",
-      "decimals": 0,
-      "description": ""
-    },
-    {
-      "tags": "31-Gitcoin Grants:Friends",
-      "address": "0x083fc10ce7e97cafbae0fe332a9c4384c5f54e45",
-      "name": "Name 0x083fc10c",
-      "symbol": "",
-      "source": "Gitcoin Website",
-      "decimals": 0,
-      "description": ""
-    },
-    {
-      "tags": "31-Gitcoin Grants:Grant",
-      "address": "0x08497b07916280da27b43d28a0d3dfa7d6676b58",
-      "name": "Grant 122 Austin Griffith Ethereum Rampd",
-      "symbol": "",
-      "source": "https://gitcoin.co/grants/122/austin-griffith-ethereum-rampd",
-      "decimals": 0,
-      "description": ""
-    },
-    {
-      "tags": "50-Tokens:ERC20",
-      "address": "0x08711d3b02c8758f2fb3ab4e80228418a7f8e39c",
-      "name": "Edgeless",
-      "symbol": "EDG",
-      "source": "On chain",
-      "decimals": 0,
-      "description": "The Ethereum smart contract-based that offers a 0% house edge and solves the transparency question once and for all."
-    },
-    {
-      "tags": "50-Tokens:ERC20",
-      "address": "0x0879e0c9822b75f31f0b0ed2a30be9f484a57c2f",
-      "name": "LiteCoinGold",
-      "symbol": "LTG",
-      "source": "On chain",
-      "decimals": 0,
       "description": ""
     }
   ],

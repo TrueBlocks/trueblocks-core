@@ -563,7 +563,7 @@
       "symbol": "MFTU",
       "source": "On chain",
       "decimals": 18,
-      "description": "Coin for custom CyberFM 'Mainstream For The Underground' royalty payments.",
+      "description": "Coin for custom CyberFM 'Mainstream for the Underground' royalty payments.",
       "is_custom": false,
       "is_prefund": false,
       "is_contract": true,

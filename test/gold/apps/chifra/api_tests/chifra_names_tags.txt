@@ -82,9 +82,6 @@
       "tags": "36-Compound"
     },
     {
-      "tags": "37-Sablier"
-    },
-    {
       "tags": "40-Exchanges"
     },
     {
