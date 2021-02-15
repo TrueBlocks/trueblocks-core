@@ -6941,7 +6941,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 34-Twitter: Friends	0xef2182b8cb0c399ebf7ab95ad11484deee56ec96	Adedho		Twitter		@Adedho1	false	false	false	false	false	false
 50-Tokens:ERC20	0xef2463099360a085f1f10b076ed72ef625497a06	Sharpe Platform Token	SHP	On chain	18	A fintech business that aims to bridge the gap between crypto and traditional finance.	false	false	false	true	true	false
 32-Kickback:Contracts	0xef29a4d8a11d503f575cee67979b5294b399994a	Klab Workshop		https://kickback.events/event/[{ADDRESS}]			false	false	false	true	false	false
-31-Gitcoin Grants:Grant	0xef42cf85be6adf3081ada73af87e27996046fe63	Grant 188 Ethdevtools musnit		https://gitcoin.co/grants/188/ethdevtools			false	false	false	false	false	false
+31-Gitcoin Grants:Grant	0xef42cf85be6adf3081ada73af87e27996046fe63	Grant 0188 Ethdevtools musnit		https://gitcoin.co/grants/188/ethdevtools			false	false	false	false	false	false
 32-Kickback:Friends	0xef4550439896ff1efb760027d1c81afe88f7138f	wiezzel		https://kickback.events/			false	false	false	false	false	false
 50-Tokens:ERC20	0xef51c9377feb29856e61625caf9390bd0b67ea18	Bionic	BNC	On chain	8	Bionic is an ethereum token created to facilitate the transaction between electronic companies	false	false	false	true	true	false
 30-Contracts	0xef536c805482feb3d838426ed48320f77fd5f82b	Gods Unchained Contract Deployer		EtherScan.io			false	false	false	false	false	false
@@ -7310,7 +7310,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 31-Gitcoin Grants:Grant	0xfc29ae0db30064d306cea90f349448ad0d1fa030	Grant 0403 Swap Box		https://gitcoin.co/grants/403/swap-box		https://www.github.com/TrueLevelSA/swap-box	false	false	false	false	false	false
 81-Other	0xfc2bf51c1f14eaad6a0d2f3cb132f57caa1a4733	EthlanceSearch		http://ethlance.com/#/about			false	false	false	true	false	false
 50-Tokens:ERC20	0xfc2c4d8f95002c14ed0a7aa65102cac9e5953b5e	Rublix	RBLX	On chain	18		false	false	false	true	true	false
-31-Gitcoin Grants:Grant	0xfc2c722b8fe7b3ca277d349cbad6d2c5ce2ecf9c	Grant 185 Daism		https://gitcoin.co/grants/185/daism			false	false	false	false	false	false
+31-Gitcoin Grants:Grant	0xfc2c722b8fe7b3ca277d349cbad6d2c5ce2ecf9c	Grant 0185 Daism		https://gitcoin.co/grants/185/daism			false	false	false	false	false	false
 30-Contracts	0xfc3528ff08d19b02b5b97bd231eda8eaf1c27b51	AppProxyPinned		TrueBlocks.io			false	false	false	true	false	false
 81-Other:DAO Whales	0xfc361105dd90f9ede566499d69e9130395f12ac8	DAO_WHALE_08 (Prefund_8738)		WhaleWatch.io			false	false	false	false	false	false
 32-Kickback:Friends	0xfc3cc62e17ab67cda146ee6b4a44659e5354a7a6	yapglobal		https://kickback.events/			false	false	false	false	false	false
@@ -7426,7 +7426,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0xffc63b9146967a1ba33066fb057ee3722221acf0	Alpha	A	On chain	18		false	false	false	true	true	false
 90-DevCon2:Individual	0xffccb68fbdc333edbbd870f1472e88eaaa50a14b	George		DevCon2 Token Contract			false	false	false	false	false	false
 31-Gitcoin Grants:Friends	0xffd1ac3e8818adcbe5c597ea076e8d3210b45df5	makoto		Gitcoin Website			false	false	false	false	false	false
-31-Gitcoin Grants:Grant	0xffd55d121713682b27fd4ad42270461830c45a3e	Grant 174 DeFi Educational Videos by Chris Blec		https://gitcoin.co/grants/174/defi-educational-videos-by-chris-blec			false	false	false	false	false	false
+31-Gitcoin Grants:Grant	0xffd55d121713682b27fd4ad42270461830c45a3e	Grant 0174 DeFi Educational Videos by Chris Blec		https://gitcoin.co/grants/174/defi-educational-videos-by-chris-blec			false	false	false	false	false	false
 50-Tokens:ERC20	0xffe02ee4c69edf1b340fcad64fbd6b37a7b9e265	NANJCOIN	NANJ	On chain	8		false	false	false	true	true	false
 91-Known	0xffe34e7adbd7ac2569aed16db908e7dda9828b7d	Wild Inflow 1		TrueBlocks.io			false	false	false	false	false	false
 50-Tokens:ERC20	0xffe8196bc259e8dedc544d935786aa4709ec3e64	Hedge	HDG	On chain	18	An investment portal for the ICO and Staking platforms.	false	false	false	true	true	false
