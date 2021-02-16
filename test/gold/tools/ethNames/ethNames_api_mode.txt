@@ -20,13 +20,6 @@ ethNames tip --fmt api
     "source": "Slack DevCon2 Token Contract"
   },
   {
-    "tags": "31-Gitcoin Grants:Grant",
-    "address": "0xbc2138f76db98af69c8c9d5c365263dca32f5e63",
-    "name": "Grant 0379 AntiPhishing Browser Plugin PhishFort Protect",
-    "source": "https://gitcoin.co/grants/379/anti-phishing-browser-plugin-phishfort-protect",
-    "description": "https://phishfort.com/protect"
-  },
-  {
     "tags": "30-Contracts",
     "address": "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359",
     "name": "Ethereum Tip Jar",

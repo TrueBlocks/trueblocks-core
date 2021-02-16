@@ -407,15 +407,6 @@
     },
     {
       "tags": "31-Gitcoin Grants:Grant",
-      "address": "0x007b003c4d0145b512286494d5ae123aeef29d9e",
-      "name": "Grant 1068 Blocksig - Notarized Document Signing on Ethereum and Ipfs (previous: Grant 845 Remote Developer Bootcamp)",
-      "symbol": "",
-      "source": "https://gitcoin.co/grants/1068/blocksig-notarized-document-signing-on-ethereum-a",
-      "decimals": 0,
-      "description": "https://gitcoin.co/grants/845/remote-developer-bootcamp, https://github.com/blockvigil/bootcamp"
-    },
-    {
-      "tags": "31-Gitcoin Grants:Grant",
       "address": "0x0087a081a9b430fd8f688c6ac5dd24421bfb060d",
       "name": "Grant 0779 DeFi Latam",
       "symbol": "",
@@ -478,15 +469,6 @@
       "description": ""
     },
     {
-      "tags": "31-Gitcoin Grants:Grant",
-      "address": "0x00cf36853aa4024fb5bf5cc377dfd85844b411a0",
-      "name": "Grant 0143 Dappnode - Panvala League",
-      "symbol": "",
-      "source": "https://gitcoin.co/grants/143/dappnode-panvala-league",
-      "decimals": 0,
-      "description": ""
-    },
-    {
       "tags": "60-Airdrops",
       "address": "0x00cfbbaf7ddb3a1476767101c12a0162e241fbad",
       "name": "Amber Airdrop Token",
@@ -503,15 +485,6 @@
       "source": "Twitter",
       "decimals": 0,
       "description": "@Aezakmi_Steemit"
-    },
-    {
-      "tags": "31-Gitcoin Grants:Grant",
-      "address": "0x00de4b13153673bcae2616b67bf822500d325fc3",
-      "name": "Grant 0472 Example Public Health Project (previous: Grant 0110 Gitcoin Grant 20190522 Grant 0086 Gitcoin Grants Round 8 + Dev Fund (previous: Grant 012 Gitcoin Sustainability Fund))",
-      "symbol": "",
-      "source": "https://gitcoin.co/grants/472/example-public-health-project",
-      "decimals": 0,
-      "description": "https://gitcoin.co/grants/110/gitcoin-grant-20190522,https://gitcoin.co/grants/86/gitcoin-grants-round-8-dev-fund,https://gitcoin.co/grants/12/gitcoin-open-source-support-fund"
     },
     {
       "tags": "31-Gitcoin Grants:Grant",
@@ -575,15 +548,6 @@
       "source": "https://gitcoin.co/grants/790/loft-radio",
       "decimals": 0,
       "description": "https://loft.radio/"
-    },
-    {
-      "tags": "31-Gitcoin Grants:Grant",
-      "address": "0x011c2c1433b36a524b548444ae2f20c015427d04",
-      "name": "Grant 0491 Tokamak Network: Decentralized Scalable Turing Complete Layer 2 Plasma",
-      "symbol": "",
-      "source": "https://gitcoin.co/grants/491/tokamak-network-decentralized-scalable-turing-comp",
-      "decimals": 0,
-      "description": "https://tokamak.network/"
     },
     {
       "tags": "34-ENS",
@@ -836,15 +800,6 @@
       "source": "On chain",
       "decimals": 8,
       "description": "Payments solutions for the travel industry."
-    },
-    {
-      "tags": "31-Gitcoin Grants:Grant",
-      "address": "0x02a522d98ec2d2c3bbe91acc29ee7fd32ab880ab",
-      "name": "Grant 1694 Mintable.app - A Nft Platform for Everyone In Ethereum",
-      "symbol": "",
-      "source": "https://gitcoin.co/grants/1694/mintableapp-a-nft-platform-for-everyone-in-ethere",
-      "decimals": 0,
-      "description": ""
     },
     {
       "tags": "34-Twitter: Friends",
@@ -1142,15 +1097,6 @@
       "source": "https://gitcoin.co/grants/608/signatory-client",
       "decimals": 0,
       "description": "https://vbstreetz.github.io/signatory-client/"
-    },
-    {
-      "tags": "31-Gitcoin Grants:Grant",
-      "address": "0x0466e612137bca50e524f25ac9f7b6f826ee15b7",
-      "name": "Grant 0900 1hive Gardens",
-      "symbol": "",
-      "source": "https://gitcoin.co/grants/900/1hive-gardens",
-      "decimals": 0,
-      "description": "https://1hive.org"
     },
     {
       "tags": "31-Gitcoin Grants:Grant",
@@ -1495,15 +1441,6 @@
       "description": "Coin for custom CyberFM 'Mainstream for the Underground' royalty payments."
     },
     {
-      "tags": "31-Gitcoin Grants:Grant",
-      "address": "0x05df81bf098ae29afad54250cd224379edcae850",
-      "name": "Grant 1764 Hashing It Out's Community Fund (panvala League)",
-      "symbol": "",
-      "source": "https://gitcoin.co/grants/1764/hashing-it-outs-community-fund-panvala-league",
-      "decimals": 0,
-      "description": ""
-    },
-    {
       "tags": "50-Tokens:ERC20",
       "address": "0x05f4a42e251f2d52b8ed15e9fedaacfcef1fad27",
       "name": "Zilliqa",
@@ -1511,15 +1448,6 @@
       "source": "On chain",
       "decimals": 12,
       "description": "Zilliqa is a high-throughput public blockchain platform - designed to scale to thousands of transactions per second."
-    },
-    {
-      "tags": "31-Gitcoin Grants:Grant",
-      "address": "0x05f9f39e372bbe8cd2f73736ae0441ab8052dbb6",
-      "name": "Grant 1979 Vusd Stablecoin",
-      "symbol": "",
-      "source": "https://gitcoin.co/grants/1979/vusd-stablecoin",
-      "decimals": 0,
-      "description": ""
     },
     {
       "tags": "30-Contracts",
@@ -1533,7 +1461,7 @@
     {
       "tags": "31-Gitcoin Grants:Grant",
       "address": "0x06044b5359d8df7886366c22c61c7ecd29becac7",
-      "name": "Grant 0336 Dhack - A Decentralized Hackathon Model",
+      "name": "Grant 0336 Dhack - a Decentralized Hackathon Model",
       "symbol": "",
       "source": "https://gitcoin.co/grants/336/dhack-a-decentralized-hackathon-model",
       "decimals": 0,
@@ -1774,15 +1702,6 @@
       "description": ""
     },
     {
-      "tags": "31-Gitcoin Grants:Grant",
-      "address": "0x0730fd7d15fa9a40a6c7b2bbb4b8ce9ee6e6d08b",
-      "name": "Grant 0141 Metamoneymarket (jacobshiach)",
-      "symbol": "",
-      "source": "https://gitcoin.co/grants/141/metamoneymarket",
-      "decimals": 0,
-      "description": ""
-    },
-    {
       "tags": "80-Malicious:DaoDrain",
       "address": "0x0737a6b837f97f46ebade41b9bc3e1c509c85c53",
       "name": "DAO Drain 059",
@@ -1792,15 +1711,6 @@
       "description": ""
     },
     {
-      "tags": "31-Gitcoin Grants:Grant",
-      "address": "0x073ab1c0cad3677cde9bdb0cdeedc2085c029579",
-      "name": "Grant 1122 Vyper.fun | Cryptozombies+ethernaut for Vyper (previous: Grant 0268 Simpleaswater)",
-      "symbol": "",
-      "source": "https://gitcoin.co/grants/1122/vyperfun-cryptozombiesethernaut-for-vyper",
-      "decimals": 0,
-      "description": "https://gitcoin.co/grants/268/simpleaswater"
-    },
-    {
       "tags": "31-Gitcoin Grants:Friends",
       "address": "0x073c841e832b7cc2e75d0fb1f8a98dca355bf485",
       "name": "Name 0x073c841e",
@@ -1808,6 +1718,96 @@
       "source": "Gitcoin Website",
       "decimals": 0,
       "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x0743392132d1a03a902c477e5a176f256ba3220c",
+      "name": "Coimatic 3.0",
+      "symbol": "CTIC3",
+      "source": "On chain",
+      "decimals": 18,
+      "description": "A global decentralized blockchain deal and discount marketplace."
+    },
+    {
+      "tags": "55-Defi",
+      "address": "0x075b1bb99792c9e1041ba13afef80c91a1e70fb3",
+      "name": "Curve.fi renBTC/wBTC/sBTC",
+      "symbol": "crvRenWSBTC",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x076641af1b8f06b7f8c92587156143c109002cbe",
+      "name": "SoPay",
+      "symbol": "SOP",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x0766e79a6fd74469733e8330b3b461c0320ff059",
+      "name": "EXN",
+      "symbol": "EXN",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x076a93a40bf9e0d21d3f75dd1e0584ddbe0f9d1a",
+      "name": "Qurito",
+      "symbol": "QURO",
+      "source": "On chain",
+      "decimals": 18,
+      "description": "The online community where you earn for sharing knowledge ideas."
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x076c97e1c869072ee22f8c91978c99b4bcb02591",
+      "name": "CommerceBlock Token",
+      "symbol": "CBT",
+      "source": "On chain",
+      "decimals": 18,
+      "description": "Infrastructure company that provides a suite of tools for traditional asset markets to leverage the highly flexible and powerful qualities of blockchain based digital asset protocols"
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x0775c81a273b355e6a5b76e240bf708701f00279",
+      "name": "Bulleon",
+      "symbol": "BUL",
+      "source": "On chain",
+      "decimals": 18,
+      "description": "Revolutionizing the way of Financial Transactions"
+    },
+    {
+      "tags": "30-Contracts:dAppNode",
+      "address": "0x077d271a3e4c3b45358417142490bd21172c81b5",
+      "name": "dAddNode Package 003",
+      "symbol": "",
+      "source": "TrueBlocks.io",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "40-Exchanges",
+      "address": "0x077d52b047735976dfda76fef74d4d988ac25196",
+      "name": "Uniswap: ANT",
+      "symbol": "ANT",
+      "source": "EtherScan.io",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x0784dbabb6c6834bddfb7cfee116ba049e5dafab",
+      "name": "IBTC",
+      "symbol": "IBTC",
+      "source": "On chain",
+      "decimals": 18,
+      "description": "IBTC is a tokenized version of Bitcoin build on Ethereum blockchain."
     }
   ],
   "types": [

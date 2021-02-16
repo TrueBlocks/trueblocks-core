@@ -62,21 +62,6 @@
     },
     {
       "deleted": false,
-      "tags": "31-Gitcoin Grants:Grant",
-      "address": "0x224cf0b963c59b95623b3dd6ce07b4ce40f7b134",
-      "name": "Grant 0522 Support the 🌟 Community Currency Alliance 🌟 Enabling An Inclusive Currency Ecosystem (previous: Grant 0853 Launching a web wallet)",
-      "symbol": "",
-      "source": "https://gitcoin.co/grants/522/support-the-community-currency-alliance-enabling-",
-      "decimals": 0,
-      "description": "https://multiply.charity",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": false,
-      "is_erc20": false,
-      "is_erc721": false
-    },
-    {
-      "deleted": false,
       "tags": "34-Twitter: Friends",
       "address": "0x24029403d13c2e0cfee4a4ee1ba998e5b0367f03",
       "name": "Name 0x24029403",
@@ -238,21 +223,6 @@
       "is_prefund": false,
       "is_contract": true,
       "is_erc20": true,
-      "is_erc721": false
-    },
-    {
-      "deleted": false,
-      "tags": "31-Gitcoin Grants:Grant",
-      "address": "0xbc2138f76db98af69c8c9d5c365263dca32f5e63",
-      "name": "Grant 0379 AntiPhishing Browser Plugin PhishFort Protect",
-      "symbol": "",
-      "source": "https://gitcoin.co/grants/379/anti-phishing-browser-plugin-phishfort-protect",
-      "decimals": 0,
-      "description": "https://phishfort.com/protect",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": false,
-      "is_erc20": false,
       "is_erc721": false
     },
     {
