@@ -21,6 +21,10 @@
       "decimals": 18
     },
     {
+      "address": "0xb631e8650fb4befdae74ab9f86a9cb65bc134706",
+      "decimals": 0
+    },
+    {
       "address": "0xb632c8e5f87a47a0caeb613cbdf0f748217d2840",
       "decimals": 0
     },

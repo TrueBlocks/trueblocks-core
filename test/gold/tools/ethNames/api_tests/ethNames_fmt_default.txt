@@ -62,6 +62,21 @@
     },
     {
       "deleted": false,
+      "tags": "31-Gitcoin Grants:Grant",
+      "address": "0x224cf0b963c59b95623b3dd6ce07b4ce40f7b134",
+      "name": "Grant 0522 Support the 🌟 Community Currency Alliance 🌟 Enabling An Inclusive Currency Ecosystem",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/522/support-the-community-currency-alliance-enabling-",
+      "decimals": 0,
+      "description": "https://multiply.charity",
+      "is_custom": false,
+      "is_prefund": false,
+      "is_contract": false,
+      "is_erc20": false,
+      "is_erc721": false
+    },
+    {
+      "deleted": false,
       "tags": "34-Twitter: Friends",
       "address": "0x24029403d13c2e0cfee4a4ee1ba998e5b0367f03",
       "name": "Name 0x24029403",

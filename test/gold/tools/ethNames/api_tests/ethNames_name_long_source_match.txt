@@ -90,6 +90,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 30-Contracts	0x23850f3e6f760b92491892a5a3772e7fc000adf1	Uniswap: ORB 2		EtherScan.io			false	false	false	true	false	false
 30-Contracts	0x240f9f86b1465bf1b8eb29bc88cbf65573dfdd97	Polymath: Security Token Registry Proxy		EtherScan.io			false	false	false	true	false	false
 50-Tokens:ERC20	0x24692791bc444c5cd0b81e3cbcaba4b04acd1f3b	UnikoinGold	UKG	On chain	18	UnikoinGold is an ethereum-based, decentralized crypto token designed for high-volume, high security, inexpensive gaming and esports related transactions on the Unikrn platform.	false	false	false	true	true	false
+31-Gitcoin Grants:Grant	0x2489404ede77ec853c3345424bb919c9031856e2	Grant 0079 Lodestar -ethereum 2.0 Client		https://gitcoin.co/grants/79/lodestar-ethereum-20-client			false	false	false	false	false	false
 80-Malicious:DaoDrain	0x253488078a4edf4d6f42f113d1e62836a942cf1a	DAO Drain 097		GethSource Ether Camp			false	false	false	true	false	false
 50-Tokens:ERC20	0x255aa6df07540cb5d3d297f0d0d4d84cb52bc8e6	Raiden Token	RDN	On chain	18	The Raiden Network is an off-chain scaling solution, enabling near-instant, low-fee and scalable payments. It‚Äö√Ñ√¥s complementary to the Ethereum blockchain and works with any ERC20 compatible token.	false	false	false	true	true	false
 36-Chainlink	0x25fa978ea1a7dc9bdc33a2959b9053eae57169b5	Chainlink EUR-USD Aggregator		EtherScan.io			false	false	false	true	false	false
@@ -199,4 +200,3 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 80-Malicious:DaoDrain	0x5524c55fb03cf21f549444ccbecb664d0acad706	DAO Drain 093		GethSource Ether Camp			false	false	false	true	false	false
 50-Tokens:ERC20	0x56b6431f45d08eed55f34371386326c739eacbcc	Ethereum Meta	ETHM	On chain	18	Ethereum Meta addresses the lack of privacy in Ethereum.	false	false	false	true	true	false
 60-Airdrops	0x5717d19616fab9079cf2bfce7d94126bca3ae536	BerryXToken Airdrop Sender	BRX	EtherScan.io			false	false	false	false	true	false
-30-Contracts	0x5789e2b5460cae9329d93a78511e2ac49f98a1f6	GU: Legendary Pack		EtherScan.io			false	false	false	true	false	false

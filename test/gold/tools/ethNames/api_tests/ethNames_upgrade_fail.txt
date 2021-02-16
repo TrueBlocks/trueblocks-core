@@ -371,6 +371,15 @@
     },
     {
       "tags": "31-Gitcoin Grants:Grant",
+      "address": "0x007b003c4d0145b512286494d5ae123aeef29d9e",
+      "name": "Grant 0845 Remote Developer Bootcamp",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/845/remote-developer-bootcamp",
+      "decimals": 0,
+      "description": "https://gitcoin.co/grants/845/remote-developer-bootcamp, https://github.com/blockvigil/bootcamp"
+    },
+    {
+      "tags": "31-Gitcoin Grants:Grant",
       "address": "0x0087a081a9b430fd8f688c6ac5dd24421bfb060d",
       "name": "Grant 0779 DeFi Latam",
       "symbol": "",
@@ -433,6 +442,15 @@
       "description": ""
     },
     {
+      "tags": "31-Gitcoin Grants:Grant",
+      "address": "0x00cf36853aa4024fb5bf5cc377dfd85844b411a0",
+      "name": "Grant 0143 Dappnode - Panvala League",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/143/dappnode-panvala-league",
+      "decimals": 0,
+      "description": ""
+    },
+    {
       "tags": "60-Airdrops",
       "address": "0x00cfbbaf7ddb3a1476767101c12a0162e241fbad",
       "name": "Amber Airdrop Token",
@@ -449,6 +467,15 @@
       "source": "Twitter",
       "decimals": 0,
       "description": "@Aezakmi_Steemit"
+    },
+    {
+      "tags": "31-Gitcoin Grants:Grant",
+      "address": "0x00de4b13153673bcae2616b67bf822500d325fc3",
+      "name": "Grant 0472 Example Public Health Project",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/472/example-public-health-project",
+      "decimals": 0,
+      "description": "https://gitcoin.co/grants/110/gitcoin-grant-20190522,https://gitcoin.co/grants/86/gitcoin-grants-round-8-dev-fund,https://gitcoin.co/grants/12/gitcoin-open-source-support-fund"
     },
     {
       "tags": "31-Gitcoin Grants:Grant",
@@ -1414,6 +1441,15 @@
       "description": "Zilliqa is a high-throughput public blockchain platform - designed to scale to thousands of transactions per second."
     },
     {
+      "tags": "31-Gitcoin Grants:Grant",
+      "address": "0x05f9f39e372bbe8cd2f73736ae0441ab8052dbb6",
+      "name": "Grant 1979 Vusd Stablecoin",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/1979/vusd-stablecoin",
+      "decimals": 0,
+      "description": ""
+    },
+    {
       "tags": "30-Contracts",
       "address": "0x06012c8cf97bead5deae237070f9587f8e7a266d",
       "name": "CryptoKitties",
@@ -1666,6 +1702,15 @@
       "description": ""
     },
     {
+      "tags": "31-Gitcoin Grants:Grant",
+      "address": "0x0730fd7d15fa9a40a6c7b2bbb4b8ce9ee6e6d08b",
+      "name": "Grant 0141 Metamoneymarket",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/141/metamoneymarket",
+      "decimals": 0,
+      "description": ""
+    },
+    {
       "tags": "80-Malicious:DaoDrain",
       "address": "0x0737a6b837f97f46ebade41b9bc3e1c509c85c53",
       "name": "DAO Drain 059",
@@ -1673,6 +1718,15 @@
       "source": "GethSource Ether Camp",
       "decimals": 0,
       "description": ""
+    },
+    {
+      "tags": "31-Gitcoin Grants:Grant",
+      "address": "0x073ab1c0cad3677cde9bdb0cdeedc2085c029579",
+      "name": "Grant 0701 Virality: Your Social Accountability App",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/701/virality-your-social-accountability-app",
+      "decimals": 0,
+      "description": "https://gitcoin.co/grants/268/simpleaswater"
     },
     {
       "tags": "31-Gitcoin Grants:Friends",
@@ -1752,60 +1806,6 @@
       "name": "dAddNode Package 003",
       "symbol": "",
       "source": "TrueBlocks.io",
-      "decimals": 0,
-      "description": ""
-    },
-    {
-      "tags": "40-Exchanges",
-      "address": "0x077d52b047735976dfda76fef74d4d988ac25196",
-      "name": "Uniswap: ANT",
-      "symbol": "ANT",
-      "source": "EtherScan.io",
-      "decimals": 0,
-      "description": ""
-    },
-    {
-      "tags": "50-Tokens:ERC20",
-      "address": "0x0784dbabb6c6834bddfb7cfee116ba049e5dafab",
-      "name": "IBTC",
-      "symbol": "IBTC",
-      "source": "On chain",
-      "decimals": 18,
-      "description": "IBTC is a tokenized version of Bitcoin build on Ethereum blockchain."
-    },
-    {
-      "tags": "30-Contracts",
-      "address": "0x07995e463f8957b70d683addd00a695ba83bb324",
-      "name": "Gavin Wood VouchFor",
-      "symbol": "",
-      "source": "TrueBlocks.io",
-      "decimals": 0,
-      "description": ""
-    },
-    {
-      "tags": "50-Tokens:ERC20",
-      "address": "0x07a58629aaf3e1a0d07d8f43114b76bd5eee3b91",
-      "name": "Guaranteed Ethurance Token Extra",
-      "symbol": "GETX",
-      "source": "On chain",
-      "decimals": 18,
-      "description": ""
-    },
-    {
-      "tags": "31-Gitcoin Grants:Grant",
-      "address": "0x07af1daf78ba692185d3f0e04a88c80bbd559b0b",
-      "name": "Grant 1502 Dexther",
-      "symbol": "",
-      "source": "https://gitcoin.co/grants/1502/dexther",
-      "decimals": 0,
-      "description": ""
-    },
-    {
-      "tags": "60-Airdrops",
-      "address": "0x07b8a9e9d8729f162c9d04b4762446bc76346e60",
-      "name": "QunFaBa Airdrop Sender",
-      "symbol": "",
-      "source": "",
       "decimals": 0,
       "description": ""
     }

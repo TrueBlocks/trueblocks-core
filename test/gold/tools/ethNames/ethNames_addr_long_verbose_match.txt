@@ -6,6 +6,7 @@ tags	address	name	symbol	decimals	source
 50-Tokens:ERC20	0xb6259685685235c1ef4b8529e7105f00bd42b9f8	RRChain	RRC		2	On chain
 31-Gitcoin Grants:Friends	0xb6277cb5a2abd2b296c1d7f61a8f24c2d4942f9f	Name 0xb6277cb5				Gitcoin Website
 50-Tokens:ERC20	0xb62d18dea74045e822352ce4b3ee77319dc5ff2f	EventChain	EVC		18	On chain
+31-Gitcoin Grants:Grant	0xb631e8650fb4befdae74ab9f86a9cb65bc134706	Grant 0228 Buidlhub				https://gitcoin.co/grants/228/buidlhub
 31-Gitcoin Grants:Grant	0xb632c8e5f87a47a0caeb613cbdf0f748217d2840	Grant 0618 Arboreum				https://gitcoin.co/grants/618/arboreum
 50-Tokens:ERC20	0xb63b606ac810a52cca15e44bb630fd42d8d1d83d	Monaco	MCO		8	On chain
 31-Gitcoin Grants:Friends	0xb63bb45b2ef614ce087dc01c98013d87fd757896	Name 0xb63bb45b				Gitcoin Website

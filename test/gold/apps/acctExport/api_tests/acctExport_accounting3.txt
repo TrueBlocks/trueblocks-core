@@ -11937,7 +11937,7 @@
     "namedFrom": {
       "0x00de4b13153673bcae2616b67bf822500d325fc3": {
         "tags": "31-Gitcoin Grants:Grant",
-        "name": "Grant 0472 Example Public Health Project (previous: Grant 0110 Gitcoin Grant 20190522 Grant 0086 Gitcoin Grants Round 8 + Dev Fund (previous: Grant 012 Gitcoin Sustainability Fund))",
+        "name": "Grant 0472 Example Public Health Project",
         "count": 1
       },
       "0x054993ab0f2b1acc0fdc65405ee203b4271bebe6": {
@@ -11982,7 +11982,7 @@
       },
       "0x62051bfd3a4f7039a849142e6e5ea172cbda5949": {
         "tags": "31-Gitcoin Grants:Grant",
-        "name": "Grant 0467 Gitcoin Developer Grant - Walid Mujahid (walidmujahid) وليد مجاهد",
+        "name": "Grant 0467 Gitcoin Developer Grant - Walid Mujahid وليد مجاهد",
         "count": 1
       },
       "0x6f620ba7907a3d9a6dda9821eeb4e59b3f69c367": {

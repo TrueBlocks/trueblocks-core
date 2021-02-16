@@ -24,3 +24,4 @@ tags	address	name	symbol	decimals
 31-Gitcoin Grants:Grant	0xcbc3dc48ba005cd292de77e582d5b9c55e43b95c	Grant 1666 Tokenlog - Token-weighted Backlogs
 50-Tokens:ERC20	0xcbcc0f036ed4788f63fc0fee32873d6a7487b908	Humaniq	HMQ		8
 50-Tokens:ERC20	0xcbeaec699431857fdb4d37addbbdc20e132d4903	YOYOW Token	YOYOW		18
+31-Gitcoin Grants:Grant	0xcbec15583a21c3ddad5fab658be5b4fe85df730b	Grant 0275 Walletconnect

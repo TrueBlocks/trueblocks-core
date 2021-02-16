@@ -286,6 +286,13 @@ ethNames --named --custom --owned --fmt json
   },
   {
     "tags": "31-Gitcoin Grants:Grant",
+    "address": "0x007b003c4d0145b512286494d5ae123aeef29d9e",
+    "name": "Grant 0845 Remote Developer Bootcamp",
+    "source": "https://gitcoin.co/grants/845/remote-developer-bootcamp",
+    "description": "https://gitcoin.co/grants/845/remote-developer-bootcamp, https://github.com/blockvigil/bootcamp"
+  },
+  {
+    "tags": "31-Gitcoin Grants:Grant",
     "address": "0x0087a081a9b430fd8f688c6ac5dd24421bfb060d",
     "name": "Grant 0779 DeFi Latam",
     "source": "https://gitcoin.co/grants/779/defi-latam",
@@ -334,6 +341,12 @@ ethNames --named --custom --owned --fmt json
     "source": "Gitcoin Website"
   },
   {
+    "tags": "31-Gitcoin Grants:Grant",
+    "address": "0x00cf36853aa4024fb5bf5cc377dfd85844b411a0",
+    "name": "Grant 0143 Dappnode - Panvala League",
+    "source": "https://gitcoin.co/grants/143/dappnode-panvala-league"
+  },
+  {
     "tags": "60-Airdrops",
     "address": "0x00cfbbaf7ddb3a1476767101c12a0162e241fbad",
     "name": "Amber Airdrop Token",
@@ -345,6 +358,13 @@ ethNames --named --custom --owned --fmt json
     "name": "Name 0x00dc74ce",
     "source": "Twitter",
     "description": "@Aezakmi_Steemit"
+  },
+  {
+    "tags": "31-Gitcoin Grants:Grant",
+    "address": "0x00de4b13153673bcae2616b67bf822500d325fc3",
+    "name": "Grant 0472 Example Public Health Project",
+    "source": "https://gitcoin.co/grants/472/example-public-health-project",
+    "description": "https://gitcoin.co/grants/110/gitcoin-grant-20190522,https://gitcoin.co/grants/86/gitcoin-grants-round-8-dev-fund,https://gitcoin.co/grants/12/gitcoin-open-source-support-fund"
   },
   {
     "tags": "31-Gitcoin Grants:Grant",
@@ -1078,6 +1098,12 @@ ethNames --named --custom --owned --fmt json
     "description": "Zilliqa is a high-throughput public blockchain platform - designed to scale to thousands of transactions per second."
   },
   {
+    "tags": "31-Gitcoin Grants:Grant",
+    "address": "0x05f9f39e372bbe8cd2f73736ae0441ab8052dbb6",
+    "name": "Grant 1979 Vusd Stablecoin",
+    "source": "https://gitcoin.co/grants/1979/vusd-stablecoin"
+  },
+  {
     "tags": "30-Contracts",
     "address": "0x06012c8cf97bead5deae237070f9587f8e7a266d",
     "name": "CryptoKitties",
@@ -1255,10 +1281,23 @@ ethNames --named --custom --owned --fmt json
     "source": "https://gitcoin.co/grants/1556/apyvision"
   },
   {
+    "tags": "31-Gitcoin Grants:Grant",
+    "address": "0x0730fd7d15fa9a40a6c7b2bbb4b8ce9ee6e6d08b",
+    "name": "Grant 0141 Metamoneymarket",
+    "source": "https://gitcoin.co/grants/141/metamoneymarket"
+  },
+  {
     "tags": "80-Malicious:DaoDrain",
     "address": "0x0737a6b837f97f46ebade41b9bc3e1c509c85c53",
     "name": "DAO Drain 059",
     "source": "GethSource Ether Camp"
+  },
+  {
+    "tags": "31-Gitcoin Grants:Grant",
+    "address": "0x073ab1c0cad3677cde9bdb0cdeedc2085c029579",
+    "name": "Grant 0701 Virality: Your Social Accountability App",
+    "source": "https://gitcoin.co/grants/701/virality-your-social-accountability-app",
+    "description": "https://gitcoin.co/grants/268/simpleaswater"
   },
   {
     "tags": "31-Gitcoin Grants:Friends",
@@ -1298,55 +1337,6 @@ ethNames --named --custom --owned --fmt json
     "symbol": "EXN",
     "source": "On chain",
     "decimals": 18
-  },
-  {
-    "tags": "50-Tokens:ERC20",
-    "address": "0x076a93a40bf9e0d21d3f75dd1e0584ddbe0f9d1a",
-    "name": "Qurito",
-    "symbol": "QURO",
-    "source": "On chain",
-    "decimals": 18,
-    "description": "The online community where you earn for sharing knowledge ideas."
-  },
-  {
-    "tags": "50-Tokens:ERC20",
-    "address": "0x076c97e1c869072ee22f8c91978c99b4bcb02591",
-    "name": "CommerceBlock Token",
-    "symbol": "CBT",
-    "source": "On chain",
-    "decimals": 18,
-    "description": "Infrastructure company that provides a suite of tools for traditional asset markets to leverage the highly flexible and powerful qualities of blockchain based digital asset protocols"
-  },
-  {
-    "tags": "50-Tokens:ERC20",
-    "address": "0x0775c81a273b355e6a5b76e240bf708701f00279",
-    "name": "Bulleon",
-    "symbol": "BUL",
-    "source": "On chain",
-    "decimals": 18,
-    "description": "Revolutionizing the way of Financial Transactions"
-  },
-  {
-    "tags": "30-Contracts:dAppNode",
-    "address": "0x077d271a3e4c3b45358417142490bd21172c81b5",
-    "name": "dAddNode Package 003",
-    "source": "TrueBlocks.io"
-  },
-  {
-    "tags": "40-Exchanges",
-    "address": "0x077d52b047735976dfda76fef74d4d988ac25196",
-    "name": "Uniswap: ANT",
-    "symbol": "ANT",
-    "source": "EtherScan.io"
-  },
-  {
-    "tags": "50-Tokens:ERC20",
-    "address": "0x0784dbabb6c6834bddfb7cfee116ba049e5dafab",
-    "name": "IBTC",
-    "symbol": "IBTC",
-    "source": "On chain",
-    "decimals": 18,
-    "description": "IBTC is a tokenized version of Bitcoin build on Ethereum blockchain."
   }], "types": [
 { "type": "CAccountName", "fields": [{ "name": "tags", "type": "text" }, { "name": "address", "type": "address" }, { "name": "name", "type": "text" }, { "name": "symbol", "type": "text" }, { "name": "source", "type": "text" }, { "name": "decimals", "type": "unumber" }, { "name": "description", "type": "text" }] }
 ] }

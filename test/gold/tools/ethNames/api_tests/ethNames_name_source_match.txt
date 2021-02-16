@@ -1367,6 +1367,21 @@
     },
     {
       "deleted": false,
+      "tags": "31-Gitcoin Grants:Grant",
+      "address": "0x2489404ede77ec853c3345424bb919c9031856e2",
+      "name": "Grant 0079 Lodestar -ethereum 2.0 Client",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/79/lodestar-ethereum-20-client",
+      "decimals": 0,
+      "description": "",
+      "is_custom": false,
+      "is_prefund": false,
+      "is_contract": false,
+      "is_erc20": false,
+      "is_erc721": false
+    },
+    {
+      "deleted": false,
       "tags": "80-Malicious:DaoDrain",
       "address": "0x253488078a4edf4d6f42f113d1e62836a942cf1a",
       "name": "DAO Drain 097",
@@ -2998,21 +3013,6 @@
       "is_prefund": false,
       "is_contract": false,
       "is_erc20": true,
-      "is_erc721": false
-    },
-    {
-      "deleted": false,
-      "tags": "30-Contracts",
-      "address": "0x5789e2b5460cae9329d93a78511e2ac49f98a1f6",
-      "name": "GU: Legendary Pack",
-      "symbol": "",
-      "source": "EtherScan.io",
-      "decimals": 0,
-      "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": false,
       "is_erc721": false
     }
   ],
