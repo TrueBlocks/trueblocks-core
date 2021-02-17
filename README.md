@@ -79,10 +79,10 @@ chifra --help --verbose
 Next, check that you can get a block from your Ethereum node. Enter this command:
 
 ```[shell]
-getBlock 100
+chifra blocks 100
 ```
 
-This should return valid JSON data for block 100 (type `getBlock --help` for
+This should return valid JSON data for block 100 (type `chifra blocks --help` for
 more options with this tool). If you get an error like this:
 
 ```[shell]
@@ -96,7 +96,8 @@ You need to edit the file `~/.quickBlocks/quickBlocks.toml` to provide the URL o
 rpcProvider="<url-to-your-rpc-provider>
 ```
 
-Once you get `getBlock` to return JSON data, you are ready to test your installation. In the `./build` directory, run this command:
+Once you get `chifra blocks` to return JSON data, you are ready to test your
+installation. In the `./build` directory, run this command:
 
 ```[shell]
 make tests
@@ -104,14 +105,16 @@ make tests
 
 ### ethslurp requires an API key
 
-One optional tool, `ethslurp`, requires an EtherScan key. To use `ethslurp`, get an EtherScan API key, then add the following to `~/.quickBlocks/quickBlocks.toml`:
+One optional tool, `ethslurp`, requires an EtherScan key. To use `ethslurp`, get an EtherScan API key, then add the following to the [settings] group of
+`~/.quickBlocks/quickBlocks.toml`:
 
 ```toml
+
+[settings]
 etherscan_key = "{YOUR_KEY}"
 ```
 
 ## Using TrueBlocks
----
 
 The `chifra` tool is the basis for everything related to TrueBlocks. (`chifra` is derived from the Arabic word for `cipher`.) It helps you decipher the chain data.
 
@@ -149,4 +152,4 @@ If you have specific requests, contact us here <info@quickblocks.io>.
 
 ## License
 
-This project licensed under the (GNU General Public License v3.0)(LICENSE.md).
+The open source parts of this project are licensed under (Apache License Version 2.0)(LICENSE.md).
