@@ -1064,7 +1064,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 31-Gitcoin Grants:Grant	0x21f53db4d2eacde70a2e4f0407d073c971ec1a33	Grant 0916 Ancient Beast		https://gitcoin.co/grants/916/ancient-beast			false	false	false	false	false	false
 60-Airdrops	0x220232f6023d5655b1f63348658b7f8bf941d96f	TRX Airdrop		TrueBlocks.io			false	false	false	true	false	false
 80-Malicious:Shanghai	0x2213d4738bfec14a2f98df5e428f48ebbde33e12	Possibly Malicious 0x221		TrueBlocks.io			false	false	false	true	false	false
-30-Contracts	0x221657776846890989a759ba2973e427dff5c9bb	Reputation	REPv2	On chain	18		false	false	false	true	true	false
+30-Contracts	0x221657776846890989a759ba2973e427dff5c9bb	Augur: REPv2 Token	REPv2	On chain	18		false	false	false	true	true	false
 31-Gitcoin Grants:Friends	0x22270a0b82cbf0bd80c6e0fad85342600518e114	raphmc		Gitcoin Website			false	false	false	false	false	false
 81-Other	0x222bf5c06cf4cb86554e165e6082350a6078735a	Aggregation	Wh	On chain			false	false	false	true	true	false
 81-Other	0x2230b903ad8429333eebf64a19b12f8503c613e8	Test Fail Campaign		Weifund Website			false	false	false	false	false	false
@@ -5329,7 +5329,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 81-Other:DAO Whales	0xb89f4632df5909e58b2a9964f74feb9a3b01e0c5	DAO_WHALE_41 (Prefund_6358)		WhaleWatch.io			false	false	false	false	false	false
 75-Early Actors	0xb8aed614fcbbc496506c9f8faa41d99023e12a6d	Miner_0020_312		OnChain			false	false	false	false	false	false
 36-Chainlink	0xb8b513d9cf440c1b6f5c7142120d611c94fc220c	Chainlink REP-ETH Aggregator		EtherScan.io			false	false	false	true	false	false
-30-Contracts	0xb8baa0e4287890a5f79863ab62b7f175cecbd433	Swerve DAO Token	SWRV	On chain	18		false	false	false	true	true	false
+30-Contracts	0xb8baa0e4287890a5f79863ab62b7f175cecbd433	Swerve.fi: SWRV Token	SWRV	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0xb8c77482e45f1f44de1745f52c74426c631bdd52	BNB	BNB	On chain	18	Binance aims to build a world-class crypto exchange, powering the future of crypto finance.	false	false	false	true	true	false
 34-Twitter: Friends	0xb8cad5d7c88e4e6e714a88d55fda664163a1e43b	Alamibtc		Twitter		@Alamibtc1	false	false	false	false	false	false
 30-Contracts:Humanity DAO	0xb8d65d7487f763013d4ea5084ca57f73527e3dee	AnettRolikova		https://www.humanitydao.org/humans			false	false	false	false	false	false
@@ -6595,7 +6595,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0xe5dada80aa6477e85d09747f2842f7993d0df71c	DockToken	DOCK	On chain	18	dock.io is a decentralized data exchange protocol that lets people connect their profiles, reputations and experiences across the web with privacy and security.	false	false	false	true	true	false
 30-Contracts	0xe5dc9d1b58fd5a95fc20a6c6afaa76d44d70a7df	GU: Epic Pack Two		EtherScan.io			false	false	false	true	false	false
 31-Gitcoin Grants:Grant	0xe5e1e9c58db4ecab40fd46d7ac3578b74c1d0921	Grant 0327 DeFi Fund		https://gitcoin.co/grants/327/defi-fund		https://medium.com/@colin_	false	false	false	false	false	false
-30-Contracts	0xe5e7ddadd563018b0e692c1524b60b754fbd7f02	Vote-escrowed SWRV	veSWRV	On chain	18		false	false	false	true	true	false
+30-Contracts	0xe5e7ddadd563018b0e692c1524b60b754fbd7f02	Voting Escrow Curve Finance SWRV	veSWRV	On chain	18		false	false	false	true	true	false
 31-Gitcoin Grants:Grant	0xe5ea1120545c4da80aeb4dcc509f8041ebe670bc	Grant 1617 Nixocoin Project		https://gitcoin.co/grants/1617/nixocoin-project			false	false	false	false	false	false
 30-Contracts:Humanity DAO	0xe5ed3d9340a602efe293189935d6a6151c1e08d0	SijjalKhan		https://www.humanitydao.org/humans			false	false	false	false	false	false
 50-Tokens:ERC20	0xe5f166c0d8872b68790061317bb6cca04582c912	TE-FOOD	TFD	On chain	18	TE-FOOD is a successful food traceability solution, used by 6,000+ companies, managing more than 400,000 transactions each day, reaching 30 million people.	false	false	false	true	true	false
