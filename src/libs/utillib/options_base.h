@@ -102,6 +102,7 @@ class COptionsBase {
     void setProgName(const string_q& name);
     string_q getProgName(void) const;
     bool prepareArguments(int argc, const char* argv[]);
+    bool prePrepareArguments(CStringArray& separatedArgs_, int argCountIn, const char* argvIn[]);
     virtual bool parseArguments(string_q& command) = 0;
     bool builtInCmd(const string_q& arg);
     bool standardOptions(string_q& cmdLine);
@@ -145,21 +146,21 @@ class COptionsBase {
             return false;
         value = (uint32_t)temp;
         return true;
-    }
-    const COption* findParam(const string_q& name) const;
-    void setSorts(CRuntimeClass* c1, CRuntimeClass* c2, CRuntimeClass* c3);
+        }
+        const COption* findParam(const string_q& name) const;
+        void setSorts(CRuntimeClass * c1, CRuntimeClass * c2, CRuntimeClass * c3);
 
-  protected:
-    void configureDisplay(const string_q& tool, const string_q& dataType, const string_q& defFormat,
-                          const string_q& meta = "");
-    void registerOptions(size_t nP, COption const* pP);
-    virtual void Init(void) = 0;
-    const COption* pParams;
-    size_t cntParams;
-    string_q hiUp1;
-    string_q hiUp2;
-    string_q hiDown;
-};
+      protected:
+        void configureDisplay(const string_q& tool, const string_q& dataType, const string_q& defFormat,
+                              const string_q& meta = "");
+        void registerOptions(size_t nP, COption const* pP);
+        virtual void Init(void) = 0;
+        const COption* pParams;
+        size_t cntParams;
+        string_q hiUp1;
+        string_q hiUp2;
+        string_q hiDown;
+    };
 
 //--------------------------------------------------------------------------------
 class CDefaultOptions : public COptionsBase {

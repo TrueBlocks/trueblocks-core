@@ -44,7 +44,7 @@ string_q COptionsBase::getProgName(void) const {
 }
 
 //--------------------------------------------------------------------------------
-bool COptionsBase::prepareArguments(int argCountIn, const char* argvIn[]) {
+bool COptionsBase::prePrepareArguments(CStringArray& separatedArgs_, int argCountIn, const char* argvIn[]) {
     if (argCountIn > 0)  // always is, but check anyway
         COptionsBase::g_progName = CFilename(argvIn[0]).getFilename();
     if (!getEnvStr("PROG_NAME").empty())
@@ -57,28 +57,27 @@ bool COptionsBase::prepareArguments(int argCountIn, const char* argvIn[]) {
     // We allow users to add 'true' or 'false' to boolean options, but the following code works by the
     // presence or absense of the boolean key, so here we spin through, removing 'true' and 'false' and
     // removing the key if we find 'false'
-    CStringArray cleaned;
+    CStringArray cleaned_;
     for (int i = 1; i < argCountIn; i++) {
         if (toLower(argvIn[i]) == "true") {
             // don't put this in, but leave the key
         } else if (toLower(argvIn[i]) == "false") {
             // remove the key
-            if (cleaned.size())
-                cleaned.pop_back();
+            if (cleaned_.size())
+                cleaned_.pop_back();
         } else {
             // add this arg
-            cleaned.push_back(argvIn[i]);
+            cleaned_.push_back(argvIn[i]);
         }
     }
 
-    CStringArray separatedArgs;
-    for (auto item : cleaned) {
+    for (auto item : cleaned_) {
         CStringArray parts;
         string_q arg = substitute(substituteAny(item, "\n\r\t", " "), ",", " ");
         explode(parts, arg, ' ');
         for (auto part : parts) {
             if (!part.empty()) {
-                separatedArgs.push_back(part);
+                separatedArgs_.push_back(part);
             }
         }
     }
@@ -86,8 +85,8 @@ bool COptionsBase::prepareArguments(int argCountIn, const char* argvIn[]) {
     if (isTestMode()) {
         size_t cnt = 0;
         ostringstream os;
-        cerr << getProgName() << " argc: " << (separatedArgs.size() + 1) << " ";
-        for (auto arg : separatedArgs) {
+        cerr << getProgName() << " argc: " << (separatedArgs_.size() + 1) << " ";
+        for (auto arg : separatedArgs_) {
             cerr << "[" << ++cnt << ":" << trim(arg) << "] ";
             os << trim(arg) << " ";
         }
@@ -106,9 +105,16 @@ bool COptionsBase::prepareArguments(int argCountIn, const char* argvIn[]) {
                 cerr << key << " = [" << val << "]" << endl;
         }
     }
+    return true;
+}
+
+//--------------------------------------------------------------------------------
+bool COptionsBase::prepareArguments(int argCountIn, const char* argvIn[]) {
+    CStringArray separatedArgs_;
+    prePrepareArguments(separatedArgs_, argCountIn, argvIn);
 
     CStringArray argumentsIn;
-    for (auto arg : separatedArgs) {
+    for (auto arg : separatedArgs_) {
         replace(arg, "--verbose", "-v");
         while (!arg.empty()) {
             string_q opt = expandOption(arg);  // handles case of -rf for example
