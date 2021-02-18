@@ -4505,7 +4505,6 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x9b70740e708a083c6ff38df52297020f5dfaa5ee	Daneel	DAN	On chain	10		false	false	false	true	true	false
 60-Airdrops	0x9b737eca2f0c7b5364702e9d4a932677a0bb2ea9	RZM Airdrop Sender		TrueBlocks.io			false	false	false	false	false	false
 30-Contracts:Humanity DAO	0x9b7b2b4f7a391b6f14a81221ae0920a9735b67fb	pedrouid		https://www.humanitydao.org/humans			false	false	false	false	false	false
-20-Freinds	0x9b814233894cd227f561b78cc65891aa55c62ad2	Cilent 0142 Account 2					false	false	false	false	false	false
 31-Gitcoin Grants:Friends	0x9b814f2c064bcc5b4c9c72c9ccd84349a54b4854	ljohnnes		Gitcoin Website			false	false	false	false	false	false
 31-Gitcoin Grants:Grant	0x9b984d5a03980d8dc0a24506c968465424c81dbe	Grant 0024 Prysm by Prysmatic Labs		https://gitcoin.co/grants/24/prysm-by-prysmatic-labs			false	false	false	true	false	false
 30-Contracts	0x9ba6c9d09db964771cb4d526188f6af81e9bcf9e	Arbitrage Bot		0xTracker			false	false	false	true	false	false
@@ -4522,7 +4521,6 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 80-Malicious:DaoDrain	0x9c15b54878ba618f494b38f0ae7443db6af648ba	DAO Drain 043		GethSource Ether Camp			false	false	false	true	false	false
 50-Tokens:ERC20	0x9c23d67aea7b95d80942e3836bcdf7e708a747c2	LOCIcoin	LOCI	On chain	18	Platform for Intellectual Property Discovery and Mining.	false	false	false	true	true	false
 31-Gitcoin Grants:Friends	0x9c288e7f4dbd99e5753c4fb4c24cad3d73828ecb	davidullo		Gitcoin Website			false	false	false	false	false	false
-20-Freinds	0x9c33a0cc4f4d722a5abc8b8b9e6b51ea90e8a0e4	Client 0143 Account 1					false	false	false	false	false	false
 32-Kickback:Friends	0x9c37867fb987769f6f18b9c1990f187fa1fd553e	pallabpaul		https://kickback.events/			false	false	false	false	false	false
 32-Kickback:Friends	0x9c3c83fc9b8fe1dfd5409788d188348413619539	masanori		https://kickback.events/			false	false	false	false	false	false
 90-DevCon2:Individual	0x9c498b7590cc310d5ef1164218db323fa238d4b0	weeeeeew		DevCon2 Token Contract			false	false	false	false	false	false
@@ -4723,7 +4721,6 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 60-Airdrops	0xa3c52fd3235422d2ef328be58ffa77a0aa7ad683	EMAN Token Airdrop	EMAN	On chain	18		false	false	false	true	true	false
 81-Other	0xa3d4d7df3988d48c48728787cb5910a8a4cc4d26	Etheropt		EtherScan.io			false	false	false	true	false	false
 50-Tokens:ERC20	0xa3d58c4e56fedcae3a7c43a725aee9a71f0ece4e	Metronome	MET	On chain	18	A new cryptocurrency focused on making greater decentralization possible and delivering institutional-class endurance.	false	false	false	true	true	false
-20-Friends	0xa3e05db8bd2a3e690f224a82643dab88009bf4c9	Client 0143 Jaxx Wallet					false	false	false	false	false	false
 31-Gitcoin Grants:Grant	0xa3eafad76d4b533ac2e7d7c11ca9c4b31accbbc6	Grant 1237 Zksync Powered Mobile Dapp to Make Faster and Lower Fee Transactions		https://gitcoin.co/grants/1237/zksync-powered-mobile-dapp-to-make-faster-and-low			false	false	false	true	false	false
 50-Tokens:ERC20	0xa3efef1a1e3d1ad72b9d0f4253e7c9c084c2c08b	Online.io	OIO	On chain	18	Online.io platform aims at revolutionizing the browsing experience by making it faster, ad free, more reliable, secure and non-trackable, thus marking a groundbreaking change of the Internet.	false	false	false	true	true	false
 31-Gitcoin Grants:Grant	0xa3f83326ce7bd51fb6fdfc3d1c7fa76dc9d52aee	Grant 1101 Archivenode.io - the Public Access Ethereum Archive Node		https://gitcoin.co/grants/1101/archivenodeio-the-public-access-ethereum-archive-			false	false	false	true	false	false
