@@ -18,7 +18,7 @@ ethNames -th
 | -p | --prefund | include prefund accounts |
 | -n | --named | include well know token and airdrop addresses in the search |
 | -a | --addr | display only addresses in the results (useful for scripting) |
-| -s | --collections | display collections data |
+| -s | --entities | display entity data |
 | -g | --tags | export the list of tags and subtags only |
 |####|Hidden options||
 | -t | --other | export other addresses if found |
@@ -36,5 +36,5 @@ ethNames -th
 - When there are two search terms, both must match.
 - The `--match_case` option requires case sensitive matching. It works with all other options.
 - To customize the list of names add a `custom` section to the config file (see documentation).
-- Name file: `~/.quickBlocks/names/names.tab` (1160379)
+- Name file: `~/.quickBlocks/names/names.tab` (1162015)
 

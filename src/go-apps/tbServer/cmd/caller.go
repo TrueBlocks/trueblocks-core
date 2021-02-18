@@ -82,7 +82,7 @@ func AccountsAbis(w http.ResponseWriter, r *http.Request) {
 	callOne(w, r, "grabABI")
 }
 
-func AccountsCollections(w http.ResponseWriter, r *http.Request) {
+func AccountsEntities(w http.ResponseWriter, r *http.Request) {
 	callOne(w, r, "ethNames")
 }
 
@@ -241,10 +241,10 @@ var routes = Routes{
 	},
 
 	Route{
-		"AccountsCollections",
+		"AccountsEntities",
 		"GET",
-		"/collections",
-		AccountsCollections,
+		"/entities",
+		AccountsEntities,
 	},
 
 	Route{

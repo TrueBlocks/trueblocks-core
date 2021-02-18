@@ -72,7 +72,7 @@ void etherlib_init(QUITHANDLER qh) {
     CAppearance::registerClass();
     CRPCResult::registerClass();
     CAccountName::registerClass();
-    CCollection::registerClass();
+    CEntity::registerClass();
     CCacheEntry::registerClass();
 
     establishFolder(configPath(""));

@@ -87,7 +87,7 @@ Steps
              
   Where:    
         -c  (or --clear)      Clear the database and re-download price data
-        -f  (or --freshen)    Freshen database even if not needed
+        -f  (or --fres hen)    Freshen database even if not needed
         -p  (or --period)     Time increment for display. Default 120 mins or :t where t is in [5|15|30|120|240|1440]
         -w  (or --when)       Time of day to start the display. :h determines the hour to start
         -o  (or --output)     Output level (default 1). :2 exposes more data per record

@@ -9,7 +9,7 @@ on,cmd,fast,null,apps/chifra,help_list,n,modes = list & help
 on,cmd,fast,null,apps/chifra,help_export,n,modes = export & help
 on,cmd,fast,null,apps/chifra,help_slurp,n,modes = slurp & help
 on,cmd,fast,null,apps/chifra,help_rm,n,modes = rm & help
-on,cmd,fast,null,apps/chifra,help_collections,n,modes = collections & help
+on,cmd,fast,null,apps/chifra,help_entities,n,modes = entities & help
 on,cmd,fast,null,apps/chifra,help_names,n,modes = names & help
 on,cmd,fast,null,apps/chifra,help_tags,n,modes = tags & help
 on,cmd,fast,null,apps/chifra,help_abis,n,modes = abis & help
@@ -34,7 +34,7 @@ on,both,fast,names,apps/chifra,names,y,modes = names & names = 50-Tokens & expan
 on,both,fast,names,apps/chifra,names_noparams,n,modes = names & names = 50-Tokens & fmt = txt
 on,both,fast,names,apps/chifra,names_badparams,y,modes = names & not_an_option
 on,both,fast,names,apps/chifra,names_tags,y,modes = names & tags
-on,both,fast,names,apps/chifra,names_collections,y,modes = names & collections
+on,both,fast,names,apps/chifra,names_entities,y,modes = names & entities
 on,both,fast,quotes,apps/chifra,prices,y,modes = quotes @ p 1440
 on,both,fast,slurp,apps/chifra,slurp,y,modes = slurp & addrs = 0x1234567812345678123456781234567812345678
 on,both,fast,blocks,apps/chifra,blocks_noparams,y,modes = blocks

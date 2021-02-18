@@ -47,7 +47,7 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,customizeable,c
 10658,apps,Admin,scrape,blockScrape,sleep,s,14,false,false,true,false,header,flag,<double>,the number of seconds to sleep between passes (default [{DEF}])
 10660,apps,Admin,scrape,blockScrape,,,,false,false,true,true,--,description,,Decentralized blockchain scraper and block cache.
 
-10700,apps,Admin,status,cacheStatus,modes,,,false,false,true,true,local,positional,list<enum[index|monitors|collections|names|abis|caches|some*|all]>,the type of status info to retrieve
+10700,apps,Admin,status,cacheStatus,modes,,,false,false,true,true,local,positional,list<enum[index|monitors|entities|names|abis|caches|some*|all]>,the type of status info to retrieve
 10720,apps,Admin,status,cacheStatus,details,d,,false,false,true,true,header,switch,<boolean>,include details about items found in monitors&#44; slurps&#44; abis&#44;|or price caches
 10730,apps,Admin,status,cacheStatus,types,t,,false,false,true,false,local,flag,list<enum[blocks|transactions|traces|slurps|prices|all*]>,for cache mode only&#44; which type(s) of cache to report
 10735,apps,Admin,status,cacheStatus,depth,p,,false,false,false,false,header,flag,<uint64>,for cache mode only&#44; number of levels deep to report
@@ -129,7 +129,7 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,customizeable,c
 12380,tools,Accounts,names,ethNames,named,n,,false,false,true,true,local,switch,<boolean>,include well know token and airdrop addresses in the search
 12400,tools,Accounts,names,ethNames,other,t,,false,false,false,false,local,switch,<boolean>,export other addresses if found
 12420,tools,Accounts,names,ethNames,addr,a,,false,false,true,true,local,switch,<boolean>,display only addresses in the results (useful for scripting)
-12430,tools,Accounts,collections,ethNames,collections,s,,false,false,true,true,header,switch,<boolean>,display collections data
+12430,tools,Accounts,entities,ethNames,entities,s,,false,false,true,true,header,switch,<boolean>,display entity data
 12445,tools,Accounts,tags,ethNames,tags,g,,false,false,true,true,header,switch,<boolean>,export the list of tags and subtags only
 12450,tools,Accounts,names,ethNames,to_custom,u,,false,false,false,false,local,switch,<boolean>,for editCmd only&#44; is the edited name a custom name or not
 12455,tools,Accounts,names,ethNames,clean,C,,false,false,false,false,local,switch,<boolean>,clean the data (addrs to lower case&#44; sort by addr)

@@ -1,6 +1,0 @@
-[settings]
-class = CCollectionCacheItem
-base_class = CAccountName
-fields = string type
-includes = etherlib.h
-serialize = true

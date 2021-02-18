@@ -1,0 +1,30 @@
+{
+  "data": [
+    {
+      "client_version": "Client version",
+      "client_ids": "chainId: 1 networkId: 1",
+      "trueblocks_version": "GHC-TrueBlocks//0.8.3-alpha--git-hash---git-ts-",
+      "rpc_provider": "--providers--",
+      "balance_provider": "--providers--",
+      "cache_path": "--paths--",
+      "index_path": "--paths--",
+      "host": "--hostname-- (--username--)",
+      "is_testing": true,
+      "is_api": true,
+      "is_docker": false,
+      "is_scraping": false,
+      "is_archive": true,
+      "is_tracing": true,
+      "has_eskey": true,
+      "caches": [],
+      "date": "--date--"
+    }
+  ],
+  "meta": {
+    "unripe": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "client": "0xdeadbeef"
+  }
+}

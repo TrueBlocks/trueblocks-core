@@ -30,7 +30,7 @@
 #include "options_base.h"
 #include "filenames.h"
 #include "accountname.h"
-#include "collection.h"
+#include "entity.h"
 #include "memmap.h"
 #include "rpcresult.h"
 #include "logging.h"

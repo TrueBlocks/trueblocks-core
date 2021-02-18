@@ -345,7 +345,7 @@
     {
       "tags": "31-Gitcoin Grants:Grant",
       "address": "0x11e4857bb9993a50c685a79afad4e6f65d518dda",
-      "name": "Grant 048 Uniswap",
+      "name": "Grant 0048 Uniswap",
       "symbol": "",
       "source": "https://gitcoin.co/grants/48/uniswap",
       "decimals": 0,
@@ -1650,9 +1650,9 @@
     {
       "tags": "31-Gitcoin Grants:Grant",
       "address": "0x1852ce0c68657ed51b4bf6ef02cfc7a4f32298a9",
-      "name": "Grant 133 Abridged",
+      "name": "Grant 0133 Abridged",
       "symbol": "",
-      "source": "",
+      "source": "GitCoin Website",
       "decimals": 0,
       "description": ""
     },

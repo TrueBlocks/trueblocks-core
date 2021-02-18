@@ -31,7 +31,7 @@ void COptions::writeOpenApiFile(void) {
     options_2_Commands(commands);
 
     CStringArray endpoints = {
-        "Accounts|Access and cache transactional data|export,list,tags,names,collections,abis,rm",
+        "Accounts|Access and cache transactional data|export,list,tags,names,entities,abis,rm",
         "Admin|Control the scraper and build the index|status,scrape",
         "Data|Access and cache blockchain-related data|blocks,transactions,receipts,logs,traces,when",
         "State|Access to account and token state|state,tokens",
@@ -224,7 +224,7 @@ string_q getTypeStr(const CCommandOption& opt, const string& lead) {
             /*
              list<enum[blocks|transactions|traces|slurps|prices|all*]>
              list<enum[ext*|int|token|nfts|miner|all]>
-             list<enum[index|monitors|collections|names|abis|caches|some*|all]>
+             list<enum[index|monitors|entities|names|abis|caches|some*|all]>
              list<enum[monitors|index*|none|both]>
              list<enum[name|symbol|decimals|totalSupply|version|none|all*]>
              list<enum[none|some*|all|balance|nonce|code|storage|deployed|accttype]>

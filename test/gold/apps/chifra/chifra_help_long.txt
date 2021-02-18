@@ -5,7 +5,7 @@ chifra --help
   Purpose:  Main TrueBlocks command line controls.
 
   Where:  
-	commands              which command to run, one or more of [list|export|slurp|collections|names|tags|abis|blocks|transactions|receipts|logs|traces|quotes|explore|state|tokens|when|where|dive|init|scrape|serve|pins|status|rm] (required)
+	commands              which command to run, one or more of [list|export|slurp|entities|names|tags|abis|blocks|transactions|receipts|logs|traces|quotes|explore|state|tokens|when|where|dive|init|scrape|serve|pins|status|rm] (required)
 	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
 	-h  (--help)          display this help screen
@@ -18,7 +18,7 @@ chifra --help
 	   slurp         export details by querying EtherScan (note: will not return as many appearances as --list)
 	   rm            remove previously monitored address(es)
 	 SHARED DATA
-	   collections   list and/or share collections (groups of addresses)
+	   entities      list and/or share entities (groups of addresses)
 	   names         list and/or share named addresses
 	   tags          list and/or share tags (subgroups of addresses)
 	   abis          list and/or share abi signatures

@@ -9,7 +9,7 @@ cacheStatus -th
 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
-|  | modes | the type of status info to retrieve, one or more of [index&#124;monitors&#124;collections&#124;names&#124;abis&#124;caches&#124;some*&#124;all] |
+|  | modes | the type of status info to retrieve, one or more of [index&#124;monitors&#124;entities&#124;names&#124;abis&#124;caches&#124;some*&#124;all] |
 | -d | --details | include details about items found in monitors, slurps, abis, or price caches |
 | -t | --types <val> | for cache mode only, which type(s) of cache to report, one or more of [blocks&#124;transactions&#124;traces&#124;slurps&#124;prices&#124;all*] |
 |####|Hidden options||

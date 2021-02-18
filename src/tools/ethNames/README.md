@@ -42,7 +42,7 @@ Using ethName to find Singular's address, list tokens held by other token accoun
 | -p | --prefund | include prefund accounts |
 | -n | --named | include well know token and airdrop addresses in the search |
 | -a | --addr | display only addresses in the results (useful for scripting) |
-| -s | --collections | display collections data |
+| -s | --entities | display entity data |
 | -g | --tags | export the list of tags and subtags only |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |

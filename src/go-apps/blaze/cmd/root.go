@@ -21,7 +21,7 @@ Description:
   index blocks from the last visited block (startBlock) to the front
   of the chain (or for nBlocks if specified). It accumulates an index
   of every address as it appears anywhere in the data. You may
-  later query this index (with acctScrape) many orders of magnitude
+  later query this index (with acctExport) many orders of magnitude
   more quickly than scanning the blockchain directly. All of the
   component's numeric command line options are required.`,
 	Version: "GHC-TrueBlocks, LLC//0.8.1-alpha",

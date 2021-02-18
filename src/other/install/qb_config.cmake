@@ -72,12 +72,12 @@ if (NOT EXISTS "${CUSTOM_NAMES}")
 endif()
 
 #---------------------------------------------------------------
-# Copy the sample collections if it does not already exist
+# Copy the sample entities if it does not already exist
 #---------------------------------------------------------------
-set(CUSTOM_COLLS "${DEST_PATH}/names/collections.csv")
-if (NOT EXISTS "${CUSTOM_COLLS}")
-	message(STATUS "Copying sample collections file${DEST_PATH}/names")
-	file(COPY "${SOURCE_PATH}/names/collections.csv" DESTINATION "${DEST_PATH}/names" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
+set(CUSTOM_ENTS "${DEST_PATH}/names/entities.csv")
+if (NOT EXISTS "${CUSTOM_ENTS}")
+	message(STATUS "Copying sample entities file${DEST_PATH}/names")
+	file(COPY "${SOURCE_PATH}/names/entities.csv" DESTINATION "${DEST_PATH}/names" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
 endif()
 
 #---------------------------------------------------------------

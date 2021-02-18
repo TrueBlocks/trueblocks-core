@@ -6,16 +6,16 @@ The present folder stores the configuration files and caches needed to create th
 
 ### Gathering Transactions per Account
 
-QuickBlocks allows you to gather lists of transactions per account directly from a locally-running Ethereum node. Prior to QuickBlocks, the only way to gather such lists was to use a third party API such as EtherScan. This section discusses `acctScrape` which provides lists of transactions per account from a locally-running node.
+QuickBlocks allows you to gather lists of transactions per account directly from a locally-running Ethereum node. Prior to QuickBlocks, the only way to gather such lists was to use a third party API such as EtherScan. This section discusses `acctExport` which provides lists of transactions per account from a locally-running node.
 
-To start an `acctScrape` monitor, do this:
+To start an `acctExport` monitor, do this:
 
     cd ./monitors/<monitor_name>
-    acctScrape
+    acctExport
 
-where `<monitor_name>` is the folder containing the configuration file and binary cache for the monitor. Details of the configuration file may be found in the example folders. The [acctScrape app is described here](../src/apps/acctScrape/README.md).
+where `<monitor_name>` is the folder containing the configuration file and binary cache for the monitor. Details of the configuration file may be found in the example folders. The [acctExport app is described here](../src/apps/acctExport/README.md).
 
-**Important Note:** The `acctScrape` process is currently not publically available. See the managing the binary cache section below for information on how to import lists of transactions from EtherScan.
+**Important Note:** The `acctExport` process is currently not publically available. See the managing the binary cache section below for information on how to import lists of transactions from EtherScan.
 
 ### Exporting Transactions
 

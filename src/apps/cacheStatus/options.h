@@ -11,7 +11,7 @@
 #include "pinlib.h"
 #include "status.h"
 #include "chaincache.h"
-#include "collectioncache.h"
+#include "entitycache.h"
 #include "pricecache.h"
 #include "monitorcache.h"
 #include "indexcache.h"
@@ -71,7 +71,7 @@ class CItemCounter : public CCache {
     CMonitorCacheItemArray* monitorArray;
     CAbiCacheItemArray* abiArray;
     CPriceCacheItemArray* priceArray;
-    CCollectionCacheItemArray* collectionArray;
+    CEntityCacheItemArray* entityArray;
     uint32_t* ts_array;
     size_t ts_cnt;
     blkrange_t scanRange;

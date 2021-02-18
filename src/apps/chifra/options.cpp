@@ -13,7 +13,7 @@
 const string_q opt_string =
     "list<enum["
     "list|export|slurp|"
-    "collections|names|tags|abis|"
+    "entities|names|tags|abis|"
     "blocks|transactions|receipts|logs|traces|quotes|explore|"
     "state|tokens|when|where|dive|"
     "init|scrape|serve|pins|status|rm]"
@@ -171,8 +171,8 @@ bool COptions::parseArguments(string_q& command) {
         if (origMode == "names") {
             if (contains(tool_flags, "tags")) {
                 origMode = "tags";
-            } else if (contains(tool_flags, "collections")) {
-                origMode = "collections";
+            } else if (contains(tool_flags, "entities")) {
+                origMode = "entities";
             }
         } else if (origMode == "status") {
             if (contains(tool_flags, "monitors")) {
@@ -247,7 +247,7 @@ COptions::COptions(void) {
                 "  slurp         export details by querying EtherScan (note: will not return as many appearances as --list)|"
                 "  rm            remove previously monitored address(es)|"
                 "SHARED DATA|"
-                "  collections   list and/or share collections (groups of addresses)|"
+                "  entities      list and/or share entities (groups of addresses)|"
                 "  names         list and/or share named addresses|"
                 "  tags          list and/or share tags (subgroups of addresses)|"
                 "  abis          list and/or share abi signatures|"
