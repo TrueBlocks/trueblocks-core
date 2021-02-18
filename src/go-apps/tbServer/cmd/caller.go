@@ -49,7 +49,7 @@ func callOneExtra(w http.ResponseWriter, r *http.Request, tbCmd, extra string) {
 	cmd := exec.Command(tbCmd, allDogs...)
 
 	if r.Header.Get("User-Agent") == "testRunner" {
-		cmd.Env = append(append(os.Environ(), "TEST_MODE=true"), "API_MODE=true") 
+		cmd.Env = append(append(os.Environ(), "TEST_MODE=true"), "API_MODE=true")
 		vars := strings.Split(r.Header.Get("X-TestRunner-Env"), "|")
 		for _, v := range vars {
 			cmd.Env = append(cmd.Env, v) 
@@ -58,10 +58,13 @@ func callOneExtra(w http.ResponseWriter, r *http.Request, tbCmd, extra string) {
 	} else {
         cmd.Env = append(os.Environ(), "API_MODE=true")
     }
+
 	out, err := cmd.Output()
+
 	if err != nil {
 		fmt.Printf("%s", err)
 	}
+
 	output := string(out[:])
 	fmt.Fprint(w, output)
 }
@@ -164,6 +167,7 @@ func StateTokens(w http.ResponseWriter, r *http.Request) {
 }
 
 var nProcessed int
+
 func Logger(inner http.Handler, name string) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		start := time.Now()
