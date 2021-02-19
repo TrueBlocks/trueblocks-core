@@ -4062,6 +4062,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 30-Contracts:Humanity DAO	0x8b5d4632562d20e727a3919ec6353cf7c345cd47	0xfair		https://www.humanitydao.org/humans			false	false	false	false	false	false
 31-Gitcoin Grants:Friends	0x8b6af950c33e5208d5f42216f733e913bb28f42f	hexloveseth		Gitcoin Website			false	false	false	false	false	false
 81-Other	0x8b6b36d8bbde2605623d2b3f3b2e25496dc87144	DynamicToken_id320_cnt4_1mo		Ether Camp			false	false	false	true	false	false
+30-Contracts	0x8b6e6e7b5b3801fed2cafd4b22b8a16c2f2db21a	Balancer Pool Token	BPT	On chain	18		false	false	false	true	true	false
 31-Gitcoin Grants:Friends	0x8b7354f6c2748667da007aa2889045b0fce47e35	souciseehey		Gitcoin Website			false	false	false	false	false	false
 81-Other	0x8b803d9f2bd4aeaa2a7c5265fb5684fe3e68c879	EtherVote_id286_cnt4_2mo		Ether Camp			false	false	false	true	false	false
 30-Contracts:Humanity DAO	0x8b91c0dd24c4fd4f973e49ed8568921e31cf38b7	I'min		https://www.humanitydao.org/humans			false	false	false	false	false	false
@@ -7163,6 +7164,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 30-Contracts	0xf97e0a5b616dffc913e72455fde9ea8bbe946a2b	CryptoKitties: Gene Science		EtherScan.io			false	false	false	true	false	false
 90-DevCon2:Individual	0xf986e17da5d99d8ab201b5cb8e517c5d3e0a91c0	Jordan Leigh		DevCon2 Token Contract			false	false	false	false	false	false
 31-Gitcoin Grants:Friends	0xf9ab04b9e99673cf71bd2c41cf79a4cb5e807b2d	minkoffski		Gitcoin Website			false	false	false	false	false	false
+30-Contracts	0xf9ab7776c7baeed1d65f0492fe2bb3951a1787ef	Balancer Pool Token	BPT	On chain	18		false	false	false	true	true	false
 30-Contracts:Humanity DAO	0xf9adb4852142fa22d8de96c7cfceee500803f1f1	makevoid		https://www.humanitydao.org/humans			false	false	false	false	false	false
 32-Kickback:Friends	0xf9b0d1842b49213f855e505473159e41f5826f16	kn		https://kickback.events/			false	false	false	false	false	false
 30-Contracts	0xf9be8f0945acddeedaa64dfca5fe9629d0cf8e5d	Polling Emitter		EtherScan.io			false	false	false	true	false	false
