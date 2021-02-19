@@ -21,6 +21,7 @@ the cache consists of only the data you extract, this application is minimal. Al
 * Minimal. Only the data you need, very few dependencies.
 
 If you want a GUI, TrueBlock-core is also the engine of our [Explorer](http://github.com/TrueBlocks/trueblocks-explorer) application.
+We also have a full [reference of commands here](./docs/chifra.md). 
 
 ## Build
 
@@ -105,7 +106,7 @@ make tests
 
 ### `slurp` requires an API key
 
-One optional tool, `chifra slurp`, requires an EtherScan key. To use `ethslurp`, get an EtherScan API key, then add the following to the [settings] group of
+One optional tool, `chifra slurp`, requires an EtherScan key. If you want to use it, get an EtherScan API key, then add the following to the [settings] group of
 `~/.quickBlocks/quickBlocks.toml`:
 
 ```toml
