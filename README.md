@@ -1,10 +1,9 @@
 # TrueBlocks Core
+![Twitter Follow](https://img.shields.io/twitter/follow/trueblocks?style=social)
 
-Command line application that lets you make simple or complex queries of ethereum
+Command line application that lets you query all types of ethereum
 data. Works how an ethereum application should:
 **local-first**, **lightning fast**, and **private by default**.
-
-![Twitter Follow](https://img.shields.io/twitter/follow/trueblocks?style=social)
 
 ─[What it does](#what-it-does)─[Build](#Building-trublocks)─[Test](#Test-install)─[Make infinite queries](#make-infinite-queries)─[Contribute](#contribute)─[Get in touch](#contact)─
 
