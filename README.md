@@ -144,7 +144,7 @@ for the Wrapped Ether address. With `chifra slurp`, we can query the address.
 chifra slurp 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
 ```
 
-That's a lot of output. Maybe you it'd be easier to handle as a CSV:
+That's a lot of output. Maybe it'd be easier to handle as a CSV:
 
 ```shell
 chifra slurp --fmt:csv 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2 > weth.csv
