@@ -18,10 +18,7 @@
       "has_eskey": true,
       "caches": [
         {
-          "addrs": [
-            "---address---",
-            "---address---"
-          ],
+          "addrs": [],
           "items": [],
           "type": "CNameCache",
           "path": "namesPath",

@@ -70,19 +70,6 @@ cacheStatus --details some --start 3000000 --end 3100000
       "is_valid": true
     },
     {
-      "items": [
-        {
-          "sizeInBytes2": 0,
-          "tags": "--tags--",
-          "address": "---address---",
-          "name": "--name--",
-          "symbol": "--symbol--",
-          "source": "--source--",
-          "nAppearances": 0,
-          "firstAppearance": 0,
-          "latestAppearance": 0
-        }
-      ],
       "type": "CNameCache",
       "path": "namesPath",
       "nFiles": 0,

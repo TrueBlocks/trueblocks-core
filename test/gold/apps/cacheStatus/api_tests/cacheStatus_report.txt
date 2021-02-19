@@ -37,10 +37,7 @@
       "is_valid": true
     },
     {
-      "addrs": [
-        "---address---",
-        "---address---"
-      ],
+      "addrs": [],
       "items": [],
       "type": "CNameCache",
       "path": "namesPath",

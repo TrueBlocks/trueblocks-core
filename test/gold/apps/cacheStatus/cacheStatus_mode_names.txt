@@ -15,10 +15,6 @@ cacheStatus names
   "has_eskey": true,
   "caches": [
     {
-      "addrs": [
-        "---address---",
-        "---address---"
-      ],
       "type": "CNameCache",
       "path": "namesPath",
       "nFiles": 0,

@@ -105,14 +105,14 @@ bool COptions::handle_status(ostream& os) {
             names.type = names.getRuntimeClass()->m_ClassName;
             expContext().types[names.type] = names.getRuntimeClass();
             names.path = pathName("names");
-            forEveryFileInFolder(getCachePath("monitors/"), countFiles, &names);
+            forEveryFileInFolder(getCachePath("names/"), countFiles, &names);
             CItemCounter counter(this, start, end);
             counter.cachePtr = &names;
             counter.monitorArray = &names.items;
             if (details) {
-                forEveryFileInFolder(getCachePath("monitors/"), noteMonitor, &counter);
+                forEveryFileInFolder(getCachePath("names/"), noteMonitor, &counter);
             } else {
-                forEveryFileInFolder(getCachePath("monitors/"), noteMonitor_light, &counter);
+                forEveryFileInFolder(getCachePath("names/"), noteMonitor_light, &counter);
                 if (names.addrs.size() == 0)
                     names.is_valid = true;
             }
