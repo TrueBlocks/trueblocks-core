@@ -103,7 +103,7 @@ installation. In the `./build` directory, run this command:
 make tests
 ```
 
-### ethslurp requires an API key
+### `slurp` requires an API key
 
 One optional tool, `ethslurp`, requires an EtherScan key. To use `ethslurp`, get an EtherScan API key, then add the following to the [settings] group of
 `~/.quickBlocks/quickBlocks.toml`:
