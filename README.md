@@ -1,8 +1,8 @@
 # TrueBlocks Core
 
 Command line application that lets you make simple or complex queries of ethereum
-data. Works the way an ethereum application should:
-local-first, lightning fast, and private by default.
+data. Works how an ethereum application should:
+**local-first**, **lightning fast**, and **private by default**.
 
 ![Twitter Follow](https://img.shields.io/twitter/follow/trueblocks?style=social)
 
@@ -13,10 +13,8 @@ local-first, lightning fast, and private by default.
 ## What it does
 
 With TrueBlocks, you have an index of every appearance of every address on the chain.
-Because the application uses a  binary cache, this application is fast. Because
-the cache consists of only the data your application extracts, this application is minimal.
-
-All of this means a huge amount of etheruem data at your disposal, with an app that is
+Because it uses a  binary cache, this application is fast. Because
+the cache consists of only the data you extracts, this application is minimal. All of this means a huge amount of ethereum data at your disposal, with an app that is:
 
 * Fully decentralized, private by default.
 * Very fast
@@ -28,19 +26,18 @@ If you want a GUI, TrueBlock-core is also the engine of our [Explorer](http://gi
 
 All you need is an ethereum node and a few build tools.
 
-The application had minimal dependancies: only `go`, `git`, and some basic build tools `cmake` and `clang-format`.
+The application has minimal dependancies: only `go`, `git`, and some basic build tools like
+`cmake` and `clang-format`. To install `golang` on your system, follow [these instructions](https://golang.org/doc/install).
 
-To install `golang` on your system, follow [these instructions](https://golang.org/doc/install).
+To install the build tools, run these commands:
 
-To install `git`, `cmake`, and `clang-format`, run these commands.
-
-* Install on Linux
+* On Linux
 
 ```[shell]
 sudo apt install build-essential git cmake python python-dev libcurl3-dev clang-format jq
 ```
 
-* Install on Mac
+* On Mac
 
 ```[shell]
 brew install cmake
@@ -51,7 +48,7 @@ brew install jq
 
 ### An Ethereum node
 
-Of course, you'll also need an Ethereum node. This node code be running locally on your machine, or remotely
+Of course, you'll also need an Ethereum node. This node can be running locally on your machine, or remotely
 on a service like [Infura](https://infura.io/dashboard).
 
 ## Building Trueblocks
@@ -77,16 +74,14 @@ After building TrueBlocks, test your configuration with this command:
 chifra --version
 ```
 
-Next, check that you can get a block from your Ethereum node. Enter this command:
+Next, check that you can get a block from your Ethereum node. Lets check out block 100:
 
 ```[shell]
 chifra blocks 100
 ```
 
-This should return valid JSON data for block 100 (type `chifra blocks --help` for
-more options with this tool). However, this assumes you're running your node locally.
-
-If you're want data from an external RPC provider, you'll get an error like this:
+If you're running your node locally, this should return valid JSON data for block 100. 
+If you want data from an external RPC provider, you've probably got an error like this:
 
 ```[shell]
 Warning: The Ethereum RPC: 'http://localhost:8545' was not found. Quitting...
@@ -122,7 +117,7 @@ etherscan_key = "{YOUR_KEY}"
 Again, if you want a graphic display, checkout our [Explorer app](http://github.com/TrueBlocks/trueblocks-explorer).
 Otherwise, let's see what we can do on the CLI.
 
-TrueBlocks ships with huge amount of tools that to pull all kinds of ethereum data─
+TrueBlocks ships with huge amount of tools that can pull all kinds of ethereum data─
 blocks, transactions, receipts, logs, traces, names, tokens, state, ABIs, etc.
 
 Luckily, all of these commands are organized under one master command, `chifra`.
@@ -154,17 +149,16 @@ That's a lot of output. Maybe you it'd be easier to handle as a CSV:
 chifra slurp --fmt:csv 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2 > weth.csv
 ```
 
-Now you have a ten-thousand line file your spreadsheet.
+Now you have a ten-thousand line file for your spreadsheet software.
 
-This doesn't even scratch the surface! To figure out how to make the query you
-want, check out [full list of chifra commands and options](./docs/chifra.md).
+These two examples don't even scratch the surface! To figure out how to make the query you
+want, check out [the full list of chifra commands and options](./docs/chifra.md).
 
 ## Contribute
 
 **Issues**: If you find any bugs, have any feature requests, or just feel confused, feel free to make an issue. Don't be shy! Each issue helps us make TrueBlocks better.
 
 **Contributions**: From big optimizations to typo fixes, we welcome any help we can get. If you see how you can fix something, you can fork and make a pull request. We appreciate each one.
-Please see information about our [work flow](./docs/BRANCHING.md) before proceeding.
 
 ## Contact
 
