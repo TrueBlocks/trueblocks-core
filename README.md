@@ -105,7 +105,7 @@ make tests
 
 ### `slurp` requires an API key
 
-One optional tool, `ethslurp`, requires an EtherScan key. To use `ethslurp`, get an EtherScan API key, then add the following to the [settings] group of
+One optional tool, `chifra slurp`, requires an EtherScan key. To use `ethslurp`, get an EtherScan API key, then add the following to the [settings] group of
 `~/.quickBlocks/quickBlocks.toml`:
 
 ```toml
@@ -124,7 +124,6 @@ blocks, transactions, receipts, logs, traces, names, tokens, state, ABIs, etc.
 
 Luckily, all of these commands are organized under one master command, `chifra`.
 Meaning "cipher" in arabic, `chifra` is the one command to rule them all.
-
 To check the full list of commands, run:
 
 ```shell
@@ -151,7 +150,7 @@ That's a lot of output. Maybe you it'd be easier to handle as a CSV:
 chifra slurp --fmt:csv 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2 > weth.csv
 ```
 
-Now you have a ten-thousand line file for your spreadsheet software.
+Now you have a ten-thousand line file for your spreadsheet collection.
 
 These two examples don't even scratch the surface! To figure out how to make the query you
 want, check out [the full list of chifra commands and options](./docs/chifra.md).
@@ -164,4 +163,4 @@ want, check out [the full list of chifra commands and options](./docs/chifra.md)
 
 ## Contact
 
-Come and chat on [our discord](https://discord.com/invite/c6KDJXvX)!
+Come and chat on [our discord](https://discord.com/invite/c6KDJXvX).
