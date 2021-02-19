@@ -6,7 +6,7 @@ data. Works how an ethereum application should:
 
 ![Twitter Follow](https://img.shields.io/twitter/follow/trueblocks?style=social)
 
-─[What it does](#what-it-does)─[Prerequisites](#Install)─[Build](#Building-trublocks)─[Test](#Test-install)─[Make infinite queries](#make-infinite-queries)─[Contribute](#contribute)─[Get in touch](#contact)─
+─[What it does](#what-it-does)─[Build](#Building-trublocks)─[Test](#Test-install)─[Make infinite queries](#make-infinite-queries)─[Contribute](#contribute)─[Get in touch](#contact)─
 
 ![A gif showing quotes](./docs/quotes.gif)
 
@@ -22,9 +22,11 @@ the cache consists of only the data you extracts, this application is minimal. A
 
 If you want a GUI, TrueBlock-core is also the engine of our [Explorer](http://github.com/TrueBlocks/trueblocks-explorer) application.
 
-## Prerequisites
+## Build
 
-All you need is an ethereum node and a few build tools.
+All you need is an ethereum node and a few build tools. Then compile the program and start pulling data.
+
+### Prereqs
 
 The application has minimal dependancies: only `go`, `git`, and some basic build tools like
 `cmake` and `clang-format`. To install `golang` on your system, follow [these instructions](https://golang.org/doc/install).
@@ -46,12 +48,12 @@ brew install clang-format
 brew install jq
 ```
 
-### An Ethereum node
+#### An Ethereum node
 
 Of course, you'll also need an Ethereum node. This node can be running locally on your machine, or remotely
 on a service like [Infura](https://infura.io/dashboard).
 
-## Building Trueblocks
+### Building Trueblocks
 
 Currently, you must build TrueBlocks from source:
 
