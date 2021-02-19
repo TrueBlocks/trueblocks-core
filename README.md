@@ -14,7 +14,7 @@ data. Works how an ethereum application should:
 
 With TrueBlocks, you have an index of every appearance of every address on the chain.
 Because it uses a  binary cache, this application is fast. Because
-the cache consists of only the data you extracts, this application is minimal. All of this means a huge amount of ethereum data at your disposal, with an app that is:
+the cache consists of only the data you extract, this application is minimal. All of this means a huge amount of ethereum data at your disposal, with an app that is:
 
 * Fully decentralized, private by default.
 * Very fast
