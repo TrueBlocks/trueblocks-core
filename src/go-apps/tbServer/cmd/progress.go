@@ -27,7 +27,7 @@ func (cp *CommandProgress) toJSON() []byte {
 	return json
 }
 
-var progressLine = regexp.MustCompile(`:([A-Za-z|\s]+)[\s]+([\d]+) of ([\d]+)`)
+var progressLine = regexp.MustCompile(`:[\s]+([A-Za-z]+)[\s]+([\d]+) of ([\d]+)`)
 
 func MatchProgress(outputLine string) []string {
 	return progressLine.FindStringSubmatch(outputLine)
