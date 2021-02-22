@@ -8,13 +8,13 @@ on,both,fast,export,apps/acctExport,no_params,y,
 
 on,both,fast,monitor,apps/acctExport,list_list2,n,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & end = 3375495 & fmt = csv
 on,both,fast,monitor,apps/acctExport,list_test,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & start = 100000 & end = 2000000
-on,api,fast,monitor,apps/acctExport,list_chifra,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & start = 100000 & end = 2000000,chifra
+on,both,fast,monitor,apps/acctExport,list_chifra,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & start = 100000 & end = 2000000,chifra
 on,both,fast,monitor,apps/acctExport,list_final,n,addrs = 0x1234567890123456789012345678901234567890 0x001d14804b399c6ef80e64576f657660804fec0b & appearances & start = 3000000 & end = 3375498 & fmt = csv & no_header
 on,both,fast,monitor,apps/acctExport,list_prefund1,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & start = 0 & end = 0
 on,both,fast,monitor,apps/acctExport,list_prefund2,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & start = 0 & end = 1
 on,both,fast,monitor,apps/acctExport,list_prefund3,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & start = 1 & end = 2
-on,cmd,slow,monitor,apps/acctExport,list_speed_test,y,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & end = 7000000
-on,cmd,slow,monitor,apps/acctExport,list_seed_1,y,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & end = 9000000
+on,both,slow,monitor,apps/acctExport,list_speed_test,y,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & end = 7000000
+on,both,slow,monitor,apps/acctExport,list_seed_1,y,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & end = 9000000 & fmt = json
 on,both,fast,monitor,apps/acctExport,list_to_file,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & start = 100000 & end = 2000000 & to_file
 
 on,both,fast,export,apps/acctExport,export_apps,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & appearances & fmt = json & max_records = 1
