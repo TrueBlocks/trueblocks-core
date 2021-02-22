@@ -3,302 +3,255 @@
  * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
  * All Rights Reserved
  *------------------------------------------------------------------------*/
-/*
- * Parts of this file were generated with makeClass. Edit only those parts of the code
- * outside of the BEG_CODE/END_CODE sections
- */
 #include "options.h"
 
-//---------------------------------------------------------------------------------------------------
-const string_q opt_string =
-    "list<enum["
-    "list|export|slurp|"
-    "entities|names|tags|abis|"
-    "blocks|transactions|receipts|logs|traces|quotes|explore|"
-    "state|tokens|when|where|dive|"
-    "init|scrape|serve|pins|status|rm]"
-    ">";
-
+extern string_q getSubcommands(void);
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
-    // BEG_CODE_OPTIONS
-    // clang-format off
-    COption("commands", "", ""+opt_string+"", OPT_REQUIRED | OPT_POSITIONAL, "which command to run"),
-    COption("", "", "", OPT_DESCRIPTION, "Main TrueBlocks command line controls."),
-    // clang-format on
-    // END_CODE_OPTIONS
+    COption("command", getSubcommands(), "<string>", OPT_REQUIRED | OPT_POSITIONAL, "which command to run"),
+    COption("", "", "", OPT_DESCRIPTION, "Access to all TrueBlocks tools (`chifra <cmd> --help` for more)."),
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
-extern bool visitIndexFiles(const string_q& path, void* data);
-extern string_q addExportMode(format_t fmt);
-//---------------------------------------------------------------------------------------------------
-bool COptions::parseArguments(string_q& command) {
-    if (!standardOptions(command))
-        return false;
+// TODO(tjayrush): Do not allow duplicate addresses in the command line
 
-    // BEG_CODE_LOCAL_INIT
-    // END_CODE_LOCAL_INIT
+//------------------------------------------------------------------------------------------------
+bool COptions::call_command(int argc, const char* argv[]) {
+    verbose = 10;  // rather be more than less verbose here
+    ENTER("call_command");
 
-    bool tool_help = false;
+    CStringArray unused;
+    prePrepareArguments(unused, argc, argv);
 
-    Init();
-    explode(arguments, command, ' ');
-    for (auto arg : arguments) {
-        if (false) {
-            // do nothing -- make auto code generation easier
-            // BEG_CODE_AUTO
-            // END_CODE_AUTO
+    string_q mode;
+    bool has_help = false;
+    bool has_run = false;
+    for (int i = 1; i < argc; i++) {
+        string_q arg = argv[i];
+        if (arg == "-h" || arg == "--help") {
+            has_help = true;
 
-        } else if (arg == "-h" || arg == "--help") {
-            if (mode.empty() || mode == "serve") {
-                optionOn(OPT_HELP);
-                verbose = true;
-                return usage();
-            }
-            setenv("PROG_NAME", ("chifra " + mode).c_str(), true);
-            tool_help = true;
+        } else if (arg == "run") {
+            has_run = true;
 
-        } else if (mode.empty() && startsWith(arg, '-')) {
-            if (!builtInCmd(arg))
-                return usage("Missing mode: " + arg);
+        } else if (arg == "-th" || arg == "-ht") {
+            isReadme = true;
+            hiUp1 = hiUp2 = hiDown = '`';
 
-        } else {
-            bool exists = false;
-            string_q lower = toLower(arg);
-            for (auto a : addrs) {
-                if (a == lower)
-                    exists = true;
-            }
-
-            string descr = substitute(substitute(params[0].description, "[", "|"), "]", "|");
-            bool isStatus = (mode == "status");
-            if (!isStatus && contains(descr, "|" + arg + "|")) {
-                if (!mode.empty())
-                    return usage("Please specify " + params[0].description + ". " + mode + ":" + arg);
+        } else if (!cmdMap[arg].empty()) {
+            if (mode.empty()) {
                 mode = arg;
-
-            } else if (contains(arg, ",")) {
-                if (isAddress(arg.substr(0, 42))) {
-                    if (mode == "list") {
-                        CStringArray parts;
-                        explode(parts, arg, ',');
-                        arg = parts[0];
-                        freshen_flags = substitute(parts[1], "=", ":");
-
-                    } else if (!isAddress(arg)) {
-                        return usage("Invalid address: " + arg);
-                    }
-                    if (!exists)
-                        addrs.push_back(lower);
-                } else {
-                    tool_flags += substitute(arg, ",", " ");
-                }
-
-            } else if (isAddress(arg) || arg == "--known" || arg == "--monitored") {
-                if (!exists)
-                    addrs.push_back(lower);
-
-            } else if (mode == "when") {
-                if (!exists)
-                    addrs.push_back(lower);
-
             } else {
-                if (arg == "--staging") {
-                    freshen_flags += (arg + " ");
-                } else {
-                    tool_flags += (arg + " ");
-                }
+                ostringstream os;
+                os << "Provide only a single mode. Encountered both '" << mode << "' and '" << arg << "'.";
+                return usage(os.str());
             }
         }
     }
 
-    string_q origMode = mode;
-    if (mode.empty()) {
-        optionOn(OPT_HELP);
-        COption* option = (COption*)&params[0];
-        option->description =
-            string_q("which command to run.") + (!verbose ? " 'chifra -v' for more information..." : "");
-        verbose = true;
-        return usage("Please specify " + params[0].description);
+    setProgName("chifra");
+    // show chifra's help in limited cases, the tool's help otherwise
+    if (has_help && (argc == 2 || mode == "serve"))
+        EXIT_USAGE("");
+
+    LOG_TEST("mode", mode);
+    if (!mode.empty() && mode != "serve")
+        setenv("PROG_NAME", ("chifra " + string_q(argv[1])).c_str(), true);
+
+    if (argc > 1 && cmdMap[argv[1]].empty())
+        EXIT_USAGE("Unknown subcommand '" + string_q(argv[1]) + "'.");
+
+    if (mode.empty())
+        EXIT_USAGE("The first argument you provide must be a chifra subcommand.");
+
+    if (isApiMode() && mode == "scrape" && has_run) {
+        cout << "{ \"status\": \"cannot run\" }";
+        LOG_ERR(
+            "Use the API to pause, restart, or quit the scraper -- not to run it. Instead "
+            "open a new terminal window and enter ",
+            cTeal, "chifra scrape run", cOff, ".");
+        EXIT_NOMSG(false);
     }
 
-    establishMonitorFolders();
+    CStringBoolMap removeMap;
+    removeMap["--names"] = true;
+    removeMap["--terms"] = true;
+    removeMap["--addrs"] = true;
 
-    // Handle base layer options
-    if (tool_help)
-        tool_flags += " --help";
+    // everything past the mode gets sent to the tool...
+    ostringstream os;
+    os << cmdMap[mode];
+    for (int i = 2; i < argc; i++)
+        if (!removeMap[argv[i]])
+            os << " " << argv[i];
 
-    if (isNoHeader)
-        tool_flags += " --no_header";
-
-    if (expContext().asEther)
-        tool_flags += " --ether";
-
-    if (expContext().asDollars)
-        tool_flags += " --dollars";
-
-    if (expContext().asParity)
-        tool_flags += " --parity";
-
-    if (verbose && !contains(tool_flags, "-v"))
-        tool_flags += (" -v:" + uint_2_Str(verbose));
-
-    if (verbose && !contains(freshen_flags, "-v"))
-        freshen_flags += (" -v:" + uint_2_Str(verbose));
-
-    tool_flags += addExportMode(expContext().exportFmt);
-    tool_flags = trim(tool_flags, ' ');
-
-    freshen_flags += addExportMode(expContext().exportFmt);
-    freshen_flags = trim(freshen_flags, ' ');
-
-    if (contains(tool_flags, "help")) {
-        if (cmdMap[mode].empty())
-            return usage("Incorrect mode: " + mode + ".");
-        ostringstream cmd;
-        cmd << cmdMap[mode] << " --help";
-        if (verbose)
-            cmd << " --verbose " << verbose << endl;
-        // clang-format off
-        if (system(cmd.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings
-        // clang-format on
-        return false;
-    }
-
-    if (mocked) {
-        string_q which = origMode;
-        if (origMode == "names") {
-            if (contains(tool_flags, "tags")) {
-                origMode = "tags";
-            } else if (contains(tool_flags, "entities")) {
-                origMode = "entities";
-            }
-        } else if (origMode == "status") {
-            if (contains(tool_flags, "monitors")) {
-                origMode = "monitors";
-            }
-        }
-
-        uint64_t nMocked = getGlobalConfig("")->getConfigInt("dev", "n_mocked", 100);
-        string_q path = configPath("mocked/" + origMode + ".json");
-        if (fileExists(path)) {
-            if (origMode == "export") {
-                // simulate listing
-                for (size_t i = 0; i < nMocked; i++) {
-                    LOG_PROGRESS1("Extracting", i, nMocked, "\r");
-                    usleep(30000);
-                }
-                CStringArray lines;
-                asciiFileToLines(path, lines);
-                size_t cnt = 0;
-                size_t record = 0;
-                size_t recordSize = lines.size() / nMocked;
-                for (auto line : lines) {
-                    cout << line << endl;
-                    if (!(++cnt % recordSize)) {
-                        LOG_PROGRESS1("Displaying", record++, nMocked, "\r");
-                        usleep(10000);
-                    }
-                }
-                return false;
-            } else {
-                cout << asciiFileToString(path);
-                return false;
-            }
-        }
-        tool_flags += " --mocked ";
-        freshen_flags += " --mocked ";
-    }
-
-    return true;
+    LOG_CALL(os.str());
+    EXIT_NOMSG(system(os.str().c_str()));
 }
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
     registerOptions(nParams, params);
-    optionOff(OPT_HELP | OPT_CRUD | OPT_OUTPUT);
+    optionOff(OPT_DEFAULT);
+    optionOn(OPT_MOCKDATA);
 
     // BEG_CODE_INIT
     // END_CODE_INIT
 
-    addrs.clear();
-    tool_flags = "";
-    freshen_flags = "";
-    mode = "";
-    minArgs = 0;
+    // addrs.clear();
+    // tool_flags = "";
+    // mode = "";
+    // minArgs = 0;
 }
 
+extern const char* STR_FULL_HELP;
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
-    setSorts(GETRUNTIME_CLASS(CBlock), GETRUNTIME_CLASS(CTransaction), GETRUNTIME_CLASS(CReceipt));
     Init();
-    // BEG_CODE_NOTES
-    // clang-format off
-    // clang-format on
-    // END_CODE_NOTES
-
-    // clang-format off
-    notes.push_back(
-        "Get more detailed help with `'chifra <cmd> --help'`.|"
-                "MONITORS|"
-                "  list          list all appearances of address(es) on the chain, also adds monitor(s)|"
-                "  export        export details for each appearance (as transacitons, logs, traces, balances, etc.)|"
-                "  slurp         export details by querying EtherScan (note: will not return as many appearances as --list)|"
-                "  rm            remove previously monitored address(es)|"
-                "SHARED DATA|"
-                "  entities      list and/or share entities (groups of addresses)|"
-                "  names         list and/or share named addresses|"
-                "  tags          list and/or share tags (subgroups of addresses)|"
-                "  abis          list and/or share abi signatures|"
-                "BLOCKCHAIN DATA|"
-                "  blocks        export block-related data|"
-                "  transactions  export transaction-related data|"
-                "  receipts      export receipt-related data|"
-                "  logs          export log-related data|"
-                "  traces        export trace-related data|"
-                "  state         export parts of the state for given address(es)|"
-                "  tokens        export data related to ERC20 and/or ERC721 token(s)|"
-                "OTHER|"
-                "  init          initialize TrueBlocks databases|"
-                "  scrape        scrape the chain and build an index of address appearances (aka digests)|"
-                "  serve         serve the TrueBlocks API via tbServer|"
-                "  pins          query the status of the pinning system|"
-                "  status        query the status of the system|"
-                "  quotes        return prices collected from configured remote API|"
-                "  explore       open the configured block explorer for the given address|"
-                "  when          return a date given a block number or a block number given a date|"
-                "  where         determine the location of block(s), either local or remote cache"
-    );
-    // clang-format on
-
-    // BEG_ERROR_MSG
-    // END_ERROR_MSG
+    overrideStr = STR_FULL_HELP;
 }
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
 }
 
-//--------------------------------------------------------------------------------
-string_q addExportMode(format_t fmt) {
-    if (isApiMode() && fmt == API1)
-        return "";
-    if (!isApiMode() && fmt == TXT1)
-        return "";
-    switch (fmt) {
-        case NONE1:
-            return " --fmt none";
-        case JSON1:
-            return " --fmt json";
-        case TXT1:
-            return " --fmt txt";
-        case CSV1:
-            return " --fmt csv";
-        case API1:
-            return " --fmt api";
-        default:
-            break;
-    }
-    return "";
+//------------------------------------------------------------------------------------------------
+map<string, string> cmdMap = {{"slurp", "ethslurp"},
+                              {"entities", "ethNames --entities"},
+                              {"names", "ethNames"},
+                              {"tags", "ethNames --tags"},
+                              {"abis", "grabABI"},
+                              {"blocks", "getBlock"},
+                              {"transactions", "getTrans"},
+                              {"receipts", "getReceipt"},
+                              {"logs", "getLogs"},
+                              {"traces", "getTrace"},
+                              {"quotes", "ethQuote"},
+                              {"state", "getState"},
+                              {"tokens", "getTokenInfo"},
+                              {"when", "whenBlock"},
+                              {"where", "whereBlock"},
+                              {"status", "cacheStatus"},
+                              {"monitor", "acctExport --appearances"},
+                              {"list", "acctExport --appearances"},
+                              {"export", "acctExport"},
+                              {"scrape", "blockScrape"},
+                              {"dive", "turboDive"},
+                              {"serve", "tbServer"},
+                              {"pins", "pinStatus"},
+                              {"explore", "ethscan.py"}};
+
+//------------------------------------------------------------------------------------------------
+const char* cmdList =
+    "monitor|"
+    "export|"
+    "entities|"
+    "names|"
+    "tags|"
+    "abis|"
+    "blocks|"
+    "transactions|"
+    "receipts|"
+    "logs|"
+    "traces|"
+    "state|"
+    "tokens|"
+    "when|"
+    "init|"
+    "scrape|"
+    "serve|"
+    "pins|"
+    "status|"
+    "explore|"
+    "slurp|"
+    "quotes|"
+    "where|";
+
+//------------------------------------------------------------------------------------------------
+string_q getSubcommands(void) {
+    CStringArray cmds;
+    explode(cmds, cmdList, '|');
+    ostringstream out;
+    for (auto cmd : cmds)
+        out << cmd << "|";
+    string_q l = trim(out.str(), '|');
+    return "list<enum[" + l + "]>";
 }
+
+//------------------------------------------------------------------------------------------------
+const char* STR_FULL_HELP =
+    "MONITORS|"
+    "  monitor       add, remove, clean, and list appearances of address(es) on the chain|"
+    "  export        export details for each appearance (as txs, logs, traces, balances, reconciliations, etc.)|"
+    "SHARED DATA|"
+    "  entities      list and/or share entities (groups of addresses)|"
+    "  names         list and/or share named addresses|"
+    "  tags          list and/or share tags (subgroups of addresses)|"
+    "  abis          list and/or share abi signatures|"
+    "BLOCKCHAIN DATA|"
+    "  blocks        export block-related data|"
+    "  transactions  export transaction-related data|"
+    "  receipts      export receipt-related data|"
+    "  logs          export log-related data|"
+    "  traces        export trace-related data|"
+    "  state         export parts of the state for given address(es)|"
+    "  tokens        export data related to ERC20 and/or ERC721 token(s)|"
+    "  when          return a date given a block number or a block number given a date|"
+    "ADMIN|"
+    "  init          initialize TrueBlocks databases|"
+    "  scrape        scrape the chain and build an index of address appearances (aka digests)|"
+    "  serve         serve the TrueBlocks API via tbServer|"
+    "  pins          query the status of the pinning system|"
+    "  status        query the status of the system|"
+    "OTHER|"
+    "  explore       open the configured block explorer for the given address|"
+    "  slurp         export details by querying EtherScan (note: will not return as many appearances as --list)|"
+    "  quotes        return prices collected from configured remote API|"
+    "  where         determine the location of block(s), either local or remote cache, or on-chain";
+
+// if (mocked) {
+//     string_q which = origMode;
+//     if (origMode == "names") {
+//         if (contains(tool_flags, "tags")) {
+//             origMode = "tags";
+//         } else if (contains(tool_flags, "entities")) {
+//             origMode = "entities";
+//         }
+//     } else if (origMode == "status") {
+//         if (contains(tool_flags, "monitors")) {
+//             origMode = "monitors";
+//         }
+//     }
+//     uint64_t nMocked = getGlobalConfig("")->getConfigInt("dev", "n_mocked", 100);
+//     string_q path = configPath("mocked/" + origMode + ".json");
+//     if (fileExists(path)) {
+//         if (origMode == "export") {
+//             for (size_t i = 0; i < nMocked; i++) {
+//                 LOG_PROGRESS1("Extracting", i, nMocked, "\r");
+//                 usleep(30000);
+//             }
+//             CStringArray lines;
+//             asciiFileToLines(path, lines);
+//             size_t cnt = 0;
+//             size_t record = 0;
+//             size_t recordSize = lines.size() / nMocked;
+//             for (auto line : lines) {
+//                 cout << line << endl;
+//                 if (!(++cnt % recordSize)) {
+//                     LOG_PROGRESS1("Displaying", record++, nMocked, "\r");
+//                     usleep(10000);
+//                 }
+//             }
+//             return false;
+//         } else {
+//             cout << asciiFileToString(path);
+//             return false;
+//         }
+//     }
+//     tool_flags += " --mocked ";
+// }
+
+// This will probably break in the real usage.
+// CStringArray scraper = {"--restart", "--pause", "--quit"};
+// for (auto cmd : scraper)
+//     replace(tool_flags, cmd, substitute(cmd, "--", ""));

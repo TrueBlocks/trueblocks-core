@@ -52,7 +52,7 @@ class CBaseNode {
     static CBaseNode* createObject(void);
     virtual bool isDefault(const CBaseNode* test) const {
         return false;
-    };
+    }
     virtual CRuntimeClass* getRuntimeClass(void) const;
     virtual string_q getKeyByName(const string_q& fieldName) const;
     virtual string_q getValueByName(const string_q& fieldName) const;

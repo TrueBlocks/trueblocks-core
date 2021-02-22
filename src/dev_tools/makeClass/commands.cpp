@@ -253,7 +253,7 @@ const CBaseNode* CCommands::getObjectAt(const string_q& fieldName, size_t index)
     if (fieldName % "routes") {
         if (index == NOPOS) {
             CApiRoute empty;
-            ((CCommands*)this)->routes.push_back(empty);
+            ((CCommands*)this)->routes.push_back(empty);  // NOLINT
             index = routes.size() - 1;
         }
         if (index < routes.size())

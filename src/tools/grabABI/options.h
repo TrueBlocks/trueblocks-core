@@ -28,7 +28,7 @@ class COptions : public CAbiOptions {
 
     bool first;
     uint64_t parts;
- 
+
     COptions(void);
     ~COptions(void);
 

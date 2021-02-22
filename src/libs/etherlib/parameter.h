@@ -206,15 +206,15 @@ extern const char* STR_DISPLAY_PARAMETER;
 // EXISTING_CODE
 size_t explode(CParameterArray& result, const string& input, char needle);
 enum {
-    COMMENT1 = (char)1,
-    COMMENT_END1 = (char)'\n',
-    COMMENT2 = (char)2,
-    COMMENT_END2 = (char)3,
-    FUNCTION_START = (char)5,
-    EVENT_START = (char)6,
-    STRUCT_START = (char)7,
-    STRUCT_END = (char)8,
-    MODIFIER_START = (char)9,
+    COMMENT1 = (char)1,         // NOLINT
+    COMMENT_END1 = (char)'\n',  // NOLINT
+    COMMENT2 = (char)2,         // NOLINT
+    COMMENT_END2 = (char)3,     // NOLINT
+    FUNCTION_START = (char)5,   // NOLINT
+    EVENT_START = (char)6,      // NOLINT
+    STRUCT_START = (char)7,     // NOLINT
+    STRUCT_END = (char)8,       // NOLINT
+    MODIFIER_START = (char)9,   // NOLINT
 };
 enum ParseState { OUT, IN, IN_COMMENT1, IN_COMMENT2, IN_FUNCTION, IN_EVENT, IN_STRUCT, IN_MODIFIER };
 // EXISTING_CODE

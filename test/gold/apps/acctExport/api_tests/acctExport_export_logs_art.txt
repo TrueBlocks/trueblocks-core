@@ -1,0 +1,229 @@
+{
+  "data": [
+    {
+      "address": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
+      "blockNumber": 1700025,
+      "logIndex": 0,
+      "topics": [
+        "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+        "0x000000000000000000000000df21fa922215b1a56f5a6d6294e6e36c85a0acfb",
+        "0x000000000000000000000000a914d5e0b7e117e20b3517296b643b86e76f4ef4"
+      ],
+      "data": "0x000000000000000000000000000000000000000000000001ee4cfb6d573c8000",
+      "articulatedLog": {
+        "name": "Transfer",
+        "inputs": [
+          {
+            "name": "_from",
+            "value": "0xdf21fa922215b1a56f5a6d6294e6e36c85a0acfb"
+          },
+          {
+            "name": "_to",
+            "value": "0xa914d5e0b7e117e20b3517296b643b86e76f4ef4"
+          },
+          {
+            "name": "_amount",
+            "value": "35618120000000000000"
+          }
+        ],
+        "outputs": []
+      },
+      "compressedLog": "Transfer ( _from: 0xdf21fa922215b1a56f5a6d6294e6e36c85a0acfb, _to: 0xa914d5e0b7e117e20b3517296b643b86e76f4ef4, _amount: 35618120000000000000 )",
+      "transactionIndex": 1
+    },
+    {
+      "address": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
+      "blockNumber": 1700028,
+      "logIndex": 0,
+      "topics": [
+        "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+        "0x00000000000000000000000010ea2d94ee752fcdb5cbe5dbb3051d39c2d4534b",
+        "0x000000000000000000000000e7a73e294bb6614328cdf69e689d89bd2f3ad408"
+      ],
+      "data": "0x00000000000000000000000000000000000000000000000000b1a2bc2ec50000",
+      "articulatedLog": {
+        "name": "Transfer",
+        "inputs": [
+          {
+            "name": "_from",
+            "value": "0x10ea2d94ee752fcdb5cbe5dbb3051d39c2d4534b"
+          },
+          {
+            "name": "_to",
+            "value": "0xe7a73e294bb6614328cdf69e689d89bd2f3ad408"
+          },
+          {
+            "name": "_amount",
+            "value": "50000000000000000"
+          }
+        ],
+        "outputs": []
+      },
+      "compressedLog": "Transfer ( _from: 0x10ea2d94ee752fcdb5cbe5dbb3051d39c2d4534b, _to: 0xe7a73e294bb6614328cdf69e689d89bd2f3ad408, _amount: 50000000000000000 )",
+      "transactionIndex": 4
+    },
+    {
+      "address": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
+      "blockNumber": 1700031,
+      "logIndex": 0,
+      "topics": [
+        "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+        "0x0000000000000000000000006c5953566432c12c41b397fcd373a9732fb5d01f",
+        "0x000000000000000000000000a59034dbcddee3636dfa5a1796cf311396929b8a"
+      ],
+      "data": "0x000000000000000000000000000000000000000000000002b5e3af16b1880000",
+      "articulatedLog": {
+        "name": "Transfer",
+        "inputs": [
+          {
+            "name": "_from",
+            "value": "0x6c5953566432c12c41b397fcd373a9732fb5d01f"
+          },
+          {
+            "name": "_to",
+            "value": "0xa59034dbcddee3636dfa5a1796cf311396929b8a"
+          },
+          {
+            "name": "_amount",
+            "value": "50000000000000000000"
+          }
+        ],
+        "outputs": []
+      },
+      "compressedLog": "Transfer ( _from: 0x6c5953566432c12c41b397fcd373a9732fb5d01f, _to: 0xa59034dbcddee3636dfa5a1796cf311396929b8a, _amount: 50000000000000000000 )",
+      "transactionIndex": 0
+    },
+    {
+      "address": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
+      "blockNumber": 1700040,
+      "logIndex": 0,
+      "topics": [
+        "0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925",
+        "0x000000000000000000000000f30844b3b1934ca35dd4ccf0bfe6be7f49a869a4",
+        "0x000000000000000000000000df21fa922215b1a56f5a6d6294e6e36c85a0acfb"
+      ],
+      "data": "0x0000000000000000000000000000000000000000204fce5e3e25026110000000",
+      "articulatedLog": {
+        "name": "Approval",
+        "inputs": [
+          {
+            "name": "_owner",
+            "value": "0xf30844b3b1934ca35dd4ccf0bfe6be7f49a869a4"
+          },
+          {
+            "name": "_spender",
+            "value": "0xdf21fa922215b1a56f5a6d6294e6e36c85a0acfb"
+          },
+          {
+            "name": "_amount",
+            "value": "10000000000000000000000000000"
+          }
+        ],
+        "outputs": []
+      },
+      "compressedLog": "Approval ( _owner: 0xf30844b3b1934ca35dd4ccf0bfe6be7f49a869a4, _spender: 0xdf21fa922215b1a56f5a6d6294e6e36c85a0acfb, _amount: 10000000000000000000000000000 )",
+      "transactionIndex": 0
+    },
+    {
+      "address": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
+      "blockNumber": 1700043,
+      "logIndex": 0,
+      "topics": [
+        "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+        "0x000000000000000000000000a59034dbcddee3636dfa5a1796cf311396929b8a",
+        "0x000000000000000000000000df21fa922215b1a56f5a6d6294e6e36c85a0acfb"
+      ],
+      "data": "0x000000000000000000000000000000000000000000000002b5e3af16b1880000",
+      "articulatedLog": {
+        "name": "Transfer",
+        "inputs": [
+          {
+            "name": "_from",
+            "value": "0xa59034dbcddee3636dfa5a1796cf311396929b8a"
+          },
+          {
+            "name": "_to",
+            "value": "0xdf21fa922215b1a56f5a6d6294e6e36c85a0acfb"
+          },
+          {
+            "name": "_amount",
+            "value": "50000000000000000000"
+          }
+        ],
+        "outputs": []
+      },
+      "compressedLog": "Transfer ( _from: 0xa59034dbcddee3636dfa5a1796cf311396929b8a, _to: 0xdf21fa922215b1a56f5a6d6294e6e36c85a0acfb, _amount: 50000000000000000000 )",
+      "transactionIndex": 0
+    },
+    {
+      "address": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
+      "blockNumber": 1700044,
+      "logIndex": 0,
+      "topics": [
+        "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+        "0x000000000000000000000000df21fa922215b1a56f5a6d6294e6e36c85a0acfb",
+        "0x000000000000000000000000f2b75b05520f38a9e1aa8b724e327ea811d0b23c"
+      ],
+      "data": "0x00000000000000000000000000000000000000000000001b0d03c53c3771c000",
+      "articulatedLog": {
+        "name": "Transfer",
+        "inputs": [
+          {
+            "name": "_from",
+            "value": "0xdf21fa922215b1a56f5a6d6294e6e36c85a0acfb"
+          },
+          {
+            "name": "_to",
+            "value": "0xf2b75b05520f38a9e1aa8b724e327ea811d0b23c"
+          },
+          {
+            "name": "_amount",
+            "value": "498999900000000000000"
+          }
+        ],
+        "outputs": []
+      },
+      "compressedLog": "Transfer ( _from: 0xdf21fa922215b1a56f5a6d6294e6e36c85a0acfb, _to: 0xf2b75b05520f38a9e1aa8b724e327ea811d0b23c, _amount: 498999900000000000000 )",
+      "transactionIndex": 28
+    }
+  ],
+  "types": [
+    {
+      "type": "CLogEntry",
+      "fields": [
+        {
+          "name": "address",
+          "type": "address"
+        },
+        {
+          "name": "blockNumber",
+          "type": "blocknum"
+        },
+        {
+          "name": "logIndex",
+          "type": "blocknum"
+        },
+        {
+          "name": "topics",
+          "type": "object|ts_array"
+        },
+        {
+          "name": "data",
+          "type": "text"
+        },
+        {
+          "name": "articulatedLog",
+          "type": "object"
+        },
+        {
+          "name": "compressedLog",
+          "type": "text"
+        },
+        {
+          "name": "transactionIndex",
+          "type": "blocknum"
+        }
+      ]
+    }
+  ]
+}

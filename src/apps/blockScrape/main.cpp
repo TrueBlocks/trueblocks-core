@@ -19,7 +19,7 @@ int main(int argc, const char* argv[]) {
 
         options.state = options.getCurrentState();
         while (options.state != STATE_STOPPED && !shouldQuit()) {
-            if (isRunning("acctScrape") || options.state == STATE_PAUSED) {
+            if (isRunning("acctExport") || options.state == STATE_PAUSED) {
                 cerr << "Block scraper is paused: " << Now().Format(FMT_EXPORT) << "\r";
                 cerr.flush();
             } else {

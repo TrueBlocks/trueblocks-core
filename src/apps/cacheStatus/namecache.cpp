@@ -285,7 +285,7 @@ const CBaseNode* CNameCache::getObjectAt(const string_q& fieldName, size_t index
     if (fieldName % "items") {
         if (index == NOPOS) {
             CNameCacheItem empty;
-            ((CNameCache*)this)->items.push_back(empty);
+            ((CNameCache*)this)->items.push_back(empty);  // NOLINT
             index = items.size() - 1;
         }
         if (index < items.size())

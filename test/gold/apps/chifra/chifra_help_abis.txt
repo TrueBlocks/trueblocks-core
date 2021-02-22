@@ -1,5 +1,7 @@
 chifra argc: 3 [1:abis] [2:--help] 
 chifra abis --help 
+TIME ~ CLOCK - <INFO>  : mode: abis
+TIME ~ CLOCK - : 4-----call_command ----> grabABI --help
 chifra abis argc: 2 [1:--help] 
 chifra abis --help 
 PROG_NAME = [chifra abis]

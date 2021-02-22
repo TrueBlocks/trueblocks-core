@@ -42,7 +42,7 @@ code                	1006	0	20971570	T_TEXT TS_STRING TS_OMITEMPTY
 gasUsed             	1007	0	545259560	T_GAS TS_NUMERAL TS_BIGNUM
 output              	1008	0	20971570	T_TEXT TS_STRING TS_OMITEMPTY
 {
-  "schema": 8003,
+  "schema": 8004,
   "deleted": false,
   "showing": true,
   "cname": "TraceResult",

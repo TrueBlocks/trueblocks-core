@@ -938,7 +938,7 @@ const CBaseNode* CTransaction::getObjectAt(const string_q& fieldName, size_t ind
     if (fieldName % "traces") {
         if (index == NOPOS) {
             CTrace empty;
-            ((CTransaction*)this)->traces.push_back(empty);
+            ((CTransaction*)this)->traces.push_back(empty);  // NOLINT
             index = traces.size() - 1;
         }
         if (index < traces.size())
@@ -951,7 +951,7 @@ const CBaseNode* CTransaction::getObjectAt(const string_q& fieldName, size_t ind
     if (fieldName % "reconciliations") {
         if (index == NOPOS) {
             CReconciliation empty;
-            ((CTransaction*)this)->reconciliations.push_back(empty);
+            ((CTransaction*)this)->reconciliations.push_back(empty);  // NOLINT
             index = reconciliations.size() - 1;
         }
         if (index < reconciliations.size())
@@ -961,7 +961,7 @@ const CBaseNode* CTransaction::getObjectAt(const string_q& fieldName, size_t ind
     if (fieldName % "statements") {
         if (index == NOPOS) {
             CReconciliationOutput empty;
-            ((CTransaction*)this)->statements.push_back(empty);
+            ((CTransaction*)this)->statements.push_back(empty);  // NOLINT
             index = statements.size() - 1;
         }
         if (index < statements.size())

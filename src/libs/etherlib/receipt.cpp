@@ -418,7 +418,7 @@ const CBaseNode* CReceipt::getObjectAt(const string_q& fieldName, size_t index) 
     if (fieldName % "logs") {
         if (index == NOPOS) {
             CLogEntry empty;
-            ((CReceipt*)this)->logs.push_back(empty);
+            ((CReceipt*)this)->logs.push_back(empty);  // NOLINT
             index = logs.size() - 1;
         }
         if (index < logs.size())

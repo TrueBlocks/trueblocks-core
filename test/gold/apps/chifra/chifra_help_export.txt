@@ -1,5 +1,7 @@
 chifra argc: 3 [1:export] [2:--help] 
 chifra export --help 
+TIME ~ CLOCK - <INFO>  : mode: export
+TIME ~ CLOCK - : 4-----call_command ----> acctExport --help
 chifra export argc: 2 [1:--help] 
 chifra export --help 
 PROG_NAME = [chifra export]
@@ -17,8 +19,8 @@ PROG_NAME = [chifra export]
 	-T  (--statements)    export reconcilations instead of transaction list
 	-C  (--accounting)    export accounting records instead of transaction list
 	-a  (--articulate)    articulate transactions, traces, logs, and outputs
-	-i  (--write_txs)     write transactions to the cache (see notes)
-	-R  (--write_traces)  write traces to the cache (see notes)
+	-i  (--cache_txs)     write transactions to the cache (see notes)
+	-R  (--cache_traces)  write traces to the cache (see notes)
 	-U  (--count)         only available for --appearances mode, if present return only the number of records
 
 	#### Hidden options
@@ -30,8 +32,8 @@ PROG_NAME = [chifra export]
 	-M  (--emitter)       available for --logs option only, export will only export if the address emitted the event
 	-c  (--first_record <num>)the first record to process
 	-e  (--max_records <num>)the maximum number of records to process before reporting
-	-s  (--staging)       ignored (preserved for backwards compatibility)
-	-u  (--unripe)        ignored (preserved for backwards compatibility)
+	-s  (--staging)       enable search of staging (not yet finalized) folder
+	-u  (--unripe)        enable search of unripe (neither staged nor finalized) folder (assumes --staging)
 	#### Hidden options
 
 	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]

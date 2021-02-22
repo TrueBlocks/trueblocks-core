@@ -129,9 +129,10 @@ inline void CStatus::initialize(void) {
     // EXISTING_CODE
     // convert ts to UTC
     time_t lt = ts;
-    auto local_field = *gmtime(&lt);
-    local_field.tm_isdst = -1;
-    ts = mktime(&local_field);
+    tm unused;
+    auto local_field = gmtime_r(&lt, &unused);
+    local_field->tm_isdst = -1;
+    ts = mktime(local_field);
     // EXISTING_CODE
 }
 

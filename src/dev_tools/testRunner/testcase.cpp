@@ -439,15 +439,29 @@ const char* STR_DISPLAY_TESTCASE = "";
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 //---------------------------------------------------------------------------------------------
-CStringArray commands = {"COPYFILE|cp", "RMFILE|rm", "MOVEFILE|mv", "TOUCHFILE|touch", "CLEANUP"};
-CAddressArray testAddrs = {
-    "0x1111111111111111111111111111111111111111",
-    "0x1111122222111112222211111222221111122222", "0x1234567812345678123456781234567812345678",
-    "0x1234567890123456789012345678901234567890", "0x5555533333555553333355555333335555533333",
-    "0x9876543210987654321098765432109876543210", "0xfb744b951d094b310262c8f986c860df9ab1de65",
-    // "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359",  // this is the Etheruem Tip jar, don't remove it if it's there
-};
+void establishTestMonitors(void) {
+    string_q gzipFile = configPath("mocked/monitors.tar.gz");
+    if (!fileExists(gzipFile)) {
+        LOG_WARN("Cannot find test monitors file: ", gzipFile);
+        return;
+    }
 
+    const char* STR_UNZIP_CMD =
+        "cd [{PATH}] && "
+        "rm -fR mocks && "
+        "rm -fR monitors && "
+        "gunzip --keep *.gz && "
+        "tar -xvf monitors.tar 2>/dev/null && rm -f monitors.tar && "
+        "tar -xvf mocks.tar 2>/dev/null && rm -f mocks.tar";
+
+    string_q cmd = substitute(STR_UNZIP_CMD, "[{PATH}]", configPath("mocked/"));
+    // LOG_INFO(cmd);
+    // clang-format off
+    if (system(cmd.c_str())) {}  // Don't remove cruft. Silences compiler warnings
+    // clang-format on
+}
+
+CStringArray commands = {"COPYFILE|cp", "RMFILE|rm", "MOVEFILE|mv", "TOUCHFILE|touch", "RESET"};
 //-----------------------------------------------------------------------
 bool prepareBuiltIn(string_q& options) {
     for (auto cmd : commands) {
@@ -455,8 +469,7 @@ bool prepareBuiltIn(string_q& options) {
         if (startsWith(options, match)) {
             bool debug = false;
             ostringstream os;
-            if (match == "CLEANUP") {
-                cleanMonitors(testAddrs);
+            if (match == "RESET") {
                 establishTestMonitors();
                 options = "";
                 if (debug)

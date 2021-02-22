@@ -5,10 +5,10 @@
  *------------------------------------------------------------------------*/
 #include "options.h"
 
-//#define MAX_ROWS 50
-//#define CLIENT 10480200
-//#define N_BLOCKS 100
-//#define THE_CMD "/Users/jrush/Development/trueblocks-core/bin/blaze scrape"
+// #define MAX_ROWS 50
+// #define CLIENT 10480200
+// #define N_BLOCKS 100
+// #define THE_CMD "/Users/jrush/Development/trueblocks-core/bin/blaze scrape"
 #define MAX_ROWS 2000000
 #define CLIENT (client + 0)
 #define N_BLOCKS (n_blocks + 0)
@@ -104,16 +104,16 @@ bool COptions::scrape_blocks(void) {
 
     LOG_INFO("\r", string_q(120, ' '), "\r");
 
-    // Blaze succeeded, but the user may have started `acctScrape` since it was called. We don't want
+    // Blaze succeeded, but the user may have started `acctExport` since it was called. We don't want
     // to get incorrect results, so we return here knowing it will get cleaned up next time.
-    if (isRunning("acctScrape")) {
-        LOG_WARN("acctScrape is running. blockScrape will re-run in a moment...");
+    if (isRunning("acctExport")) {
+        LOG_WARN("acctExport is running. blockScrape will re-run in a moment...");
         return false;
     }
 
     // Blaze sucessfullly created individual files, one for each block between 'start' and 'start + n_blocks'.
     // Each contains a list of addresses that appear in that block. The unripe folder holds blocks that
-    // are less than 28 blocks old. We do nothing further with them, but the query tool (acctScrape)
+    // are less than 28 blocks old. We do nothing further with them, but the query tool (acctExport)
     // may use them if it wants to.
 
     // From this point until the end of this invocation, the processing must be able to stop abruptly

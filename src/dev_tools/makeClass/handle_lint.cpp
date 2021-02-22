@@ -45,22 +45,21 @@ bool lintFiles(const string_q& path, void* data) {
         forEveryFileInFolder(path + "*", lintFiles, data);
 
     } else {
-        if (contains(path, "/other/"))
-            return true;
-
-        if (contains(path, "/blank"))
-            return true;
+        CStringArray skips = {"/other/", "/blank", "sqlite3", "utillib/json_", "turboDive"};
+        for (auto skip : skips)
+            if (contains(path, skip))
+                return !shouldQuit();
 
         if (endsWith(path, ".cpp") || endsWith(path, ".h")) {
             COptions* opts = reinterpret_cast<COptions*>(data);
             if (opts->counter.is_counting) {
                 opts->counter.fileCount++;
-                return true;
+                return !shouldQuit();
             }
             opts->counter.nVisited++;
             timestamp_t ts = date_2_Ts(fileLastModifyDate(path));
             if (ts < opts->lastLint)
-                return true;
+                return !shouldQuit();
 
             string_q fullPath = substitute(path, "./", getCWD());
             string_q resPath = getCachePath("tmp/" + CFilename(path).getFilename());
@@ -77,9 +76,14 @@ bool lintFiles(const string_q& path, void* data) {
                 size_t lints = 0;
                 for (auto line : lines) {
                     if (!startsWith(line, "Linting")) {
-                        line = substitute(line, getCWD(), "./");
-                        replace(line, path + ":", path + ":" + cYellow);
-                        LOG_INFO(line, cOff);
+                        line = substitute(line, getCWD(), "../src/");
+                        CStringArray parts;
+                        explode(parts, line, ':');
+                        if (parts.size() == 3) {
+                            line = parts[0] + ":" + parts[1] + ":" + cYellow + parts[2];
+                            // Note: we don't print using LOG here so the error is clickable
+                            LOG_INFO(line, cOff);
+                        }
                         lints++;
                     }
                 }

@@ -1,5 +1,7 @@
 chifra argc: 3 [1:slurp] [2:--help] 
 chifra slurp --help 
+TIME ~ CLOCK - <INFO>  : mode: slurp
+TIME ~ CLOCK - : 4-----call_command ----> ethslurp --help
 chifra slurp argc: 2 [1:--help] 
 chifra slurp --help 
 PROG_NAME = [chifra slurp]

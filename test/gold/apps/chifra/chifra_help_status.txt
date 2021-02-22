@@ -1,5 +1,7 @@
 chifra argc: 3 [1:status] [2:--help] 
 chifra status --help 
+TIME ~ CLOCK - <INFO>  : mode: status
+TIME ~ CLOCK - : 4-----call_command ----> cacheStatus --help
 chifra status argc: 2 [1:--help] 
 chifra status --help 
 PROG_NAME = [chifra status]

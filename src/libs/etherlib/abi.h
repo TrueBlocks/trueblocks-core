@@ -51,7 +51,7 @@ class CAbi : public CBaseNode {
     bool articulateTrace(CTrace* t) const;
     bool articulateOutputs(const string_q& encoding, const string_q& value, CFunction& ret) const;
 
-    bool loadAbisFromKnown(bool tokensOnly=false);
+    bool loadAbisFromKnown(bool tokensOnly = false);
     bool loadAbiFromEtherscan(const address_t& addr, bool raw = false);
     bool loadAbiFromSolidity(const string_q& addr);
 

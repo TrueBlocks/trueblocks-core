@@ -267,7 +267,7 @@ const CBaseNode* CConfigFile::getObjectAt(const string_q& fieldName, size_t inde
     if (fieldName % "sections") {
         if (index == NOPOS) {
             CConfigSection empty;
-            ((CConfigFile*)this)->sections.push_back(empty);
+            ((CConfigFile*)this)->sections.push_back(empty);  // NOLINT
             index = sections.size() - 1;
         }
         if (index < sections.size())

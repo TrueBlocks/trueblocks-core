@@ -455,7 +455,7 @@ const CBaseNode* CPage::getObjectAt(const string_q& fieldName, size_t index) con
     if (fieldName % "subpages") {
         if (index == NOPOS) {
             CSubpage empty;
-            ((CPage*)this)->subpages.push_back(empty);
+            ((CPage*)this)->subpages.push_back(empty);  // NOLINT
             index = subpages.size() - 1;
         }
         if (index < subpages.size())

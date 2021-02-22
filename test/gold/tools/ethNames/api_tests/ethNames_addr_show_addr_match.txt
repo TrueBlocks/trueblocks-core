@@ -1,6 +1,10 @@
 {
   "data": [
     {
+      "address": "0xb618f903ad1d00d6f7b92f5b0954dcdc056fc533",
+      "decimals": 0
+    },
+    {
       "address": "0xb61a98a0e542dcea1da7c44c2e8017373b95d350",
       "decimals": 0
     },

@@ -78,7 +78,7 @@ int main(int argc, const char* argv[]) {
 
                 if (line.empty() || ignore1 || ignore2 || ignore3 || ignore4) {
                     if (ignore2 && !options.ignoreOff)
-                        cerr << iBlue << "   # " << line.substr(0,120) << cOff << endl;
+                        cerr << iBlue << "   # " << line.substr(0, 120) << cOff << endl;
                     // do nothing
 
                 } else {
@@ -125,7 +125,7 @@ int main(int argc, const char* argv[]) {
         string_q copyPath = getGlobalConfig()->getConfigStr("settings", "copyPath", "<NOT_SET>");
         if (folderExists(copyPath)) {
             CStringArray files = {"performance.csv", "performance_failed.csv", "performance_slow.csv",
-                                    "performance_scraper.csv"};
+                                  "performance_scraper.csv"};
             for (auto file : files) {
                 if (fileExists(configPath(file))) {
                     ostringstream copyCmd;
@@ -144,8 +144,6 @@ int main(int argc, const char* argv[]) {
     for (auto fail : fails)
         cerr << fail;
     cerr << endl;
-
-    cleanMonitors(testAddrs);
 
     return 0;
 }

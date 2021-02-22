@@ -59,7 +59,7 @@ class CMonitor : public CAccountName {
     void writeAnArray(const CAppearanceArray_base& array);
     void writeARecord(blknum_t bn, blknum_t tx_id);
     bool openCacheFile1(void);
-    blknum_t getLastVisited(bool fresh=false) const;
+    blknum_t getLastVisited(bool fresh = false) const;
     bool isLocked(string_q& msg) const;
     bool clearLocks(void);
     void moveToProduction(void);
@@ -77,7 +77,6 @@ class CMonitor : public CAccountName {
     string_q getMonitorExpt(const address_t& addr, freshen_e mode = FM_PRODUCTION) const;
     string_q getMonitorDels(const address_t& addr, freshen_e mode = FM_PRODUCTION) const;
     string_q getMonitorCach(const address_t& addr, freshen_e mode = FM_PRODUCTION) const;
-    void cleanMonitor(const address_t& addr) const;
     // EXISTING_CODE
     bool operator==(const CMonitor& it) const;
     bool operator!=(const CMonitor& it) const {
@@ -230,8 +229,6 @@ extern const char* STR_DISPLAY_MONITOR;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-extern void cleanMonitors(const CAddressArray& addrs);
-extern void establishTestMonitors(void);
 typedef map<address_t, CMonitor> CMonitorMap;  // NOLINT
 extern void establishMonitorFolders(void);
 extern void cleanMonitorStage(void);
@@ -239,6 +236,5 @@ extern const char* STR_DISPLAY_TOKENBALANCERECORD2;
 extern string_q getTokenBalanceOf(const CAbi& abi_spec, const CMonitor& token, const address_t& holder,
                                   blknum_t blockNum);
 extern string_q getTokenState(const string_q& what, const CAbi& abi_spec, const CMonitor& token, blknum_t blockNum);
-extern bool freshen_internal(CMonitorArray& list, const string_q& freshen_flags);
 // EXISTING_CODE
 }  // namespace qblocks

@@ -1,11 +1,14 @@
 chifra argc: 2 [1:blocks] 
 chifra blocks 
-getBlock argc: 1 
-getBlock 
+TIME ~ CLOCK - <INFO>  : mode: blocks
+TIME ~ CLOCK - : 4-----call_command ----> getBlock
+chifra blocks argc: 1 
+chifra blocks 
+PROG_NAME = [chifra blocks]
 
   Not enough arguments presented. Quitting...
 
-  Usage:    getBlock [-e|-a|-u|-n|-c|-U|-v|-h] <block> [block...]  
+  Usage:    chifra blocks [-e|-a|-u|-n|-c|-U|-v|-h] <block> [block...]  
   Purpose:  Returns block(s) from local cache or directly from a running node.
 
   Where:  

@@ -498,7 +498,7 @@ const CBaseNode* CFunction::getObjectAt(const string_q& fieldName, size_t index)
     if (fieldName % "inputs") {
         if (index == NOPOS) {
             CParameter empty;
-            ((CFunction*)this)->inputs.push_back(empty);
+            ((CFunction*)this)->inputs.push_back(empty);  // NOLINT
             index = inputs.size() - 1;
         }
         if (index < inputs.size())
@@ -508,7 +508,7 @@ const CBaseNode* CFunction::getObjectAt(const string_q& fieldName, size_t index)
     if (fieldName % "outputs") {
         if (index == NOPOS) {
             CParameter empty;
-            ((CFunction*)this)->outputs.push_back(empty);
+            ((CFunction*)this)->outputs.push_back(empty);  // NOLINT
             index = outputs.size() - 1;
         }
         if (index < outputs.size())
@@ -586,6 +586,8 @@ string_q CFunction::encodeItem(void) const {
 
 //-----------------------------------------------------------------------
 string_q CFunction::compressed(void) const {
+// OLD_CODE
+#if 1
     if (name.empty())
         return "";
     string_q ret = name + " ( ";
@@ -594,6 +596,25 @@ string_q CFunction::compressed(void) const {
     ret = trim(trim(ret, ' '), ',');
     ret += " )";
     return ret;
+#else
+    if (name.empty())
+        return "";
+    string_q ret = name + " (";
+    for (auto input : inputs) {
+        if (input.internalType == "address")
+            ret += ("str_2_Addr(\"" + input.value + "\"), ");
+        else if (input.internalType == "uint256")
+            ret += ("str_2_Wei(\"" + input.value + "\"), ");
+        else
+            ret += ("\"" + input.value + "\", ");
+    }
+    ret = trim(trim(ret, ' '), ',');
+    ret += " ); // ";
+    for (auto input : inputs)
+        ret += (input.name + ", ");
+    ret = trim(trim(ret, ' '), ',');
+    return ret;
+#endif
 }
 
 //-----------------------------------------------------------------------

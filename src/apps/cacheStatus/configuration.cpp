@@ -253,7 +253,7 @@ const CBaseNode* CConfiguration::getObjectAt(const string_q& fieldName, size_t i
     if (fieldName % "files") {
         if (index == NOPOS) {
             CConfigFile empty;
-            ((CConfiguration*)this)->files.push_back(empty);
+            ((CConfiguration*)this)->files.push_back(empty);  // NOLINT
             index = files.size() - 1;
         }
         if (index < files.size())

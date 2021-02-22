@@ -539,7 +539,7 @@ const CBaseNode* CBlock::getObjectAt(const string_q& fieldName, size_t index) co
     if (fieldName % "transactions") {
         if (index == NOPOS) {
             CTransaction empty;
-            ((CBlock*)this)->transactions.push_back(empty);
+            ((CBlock*)this)->transactions.push_back(empty);  // NOLINT
             index = transactions.size() - 1;
         }
         if (index < transactions.size())

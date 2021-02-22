@@ -48,7 +48,7 @@ bool build_cap_table(COptions& options, int argc, const char* argv[]) {
             CTransaction trans;
             getTransaction(trans, blockNum, transID);
             getReceipt(trans.receipt, trans.hash);
-            if (true) {  //}!trans.is_error) { // ignore errors
+            if (true) {  // }!trans.is_error) { // ignore errors
                 CBlock block;
                 getBlock(block, blockNum);
                 trans.pBlock = &block;
@@ -245,7 +245,7 @@ string_q COptions::report(void) {
     else
         sort(stakes.begin(), stakes.end());
 
-//#define EXPORT
+// #define EXPORT
 #ifdef EXPORT
     ostringstream os;
     for (auto stake : stakes)

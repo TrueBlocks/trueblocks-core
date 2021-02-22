@@ -279,7 +279,7 @@ const CBaseNode* CPinataPinlist::getObjectAt(const string_q& fieldName, size_t i
     if (fieldName % "rows") {
         if (index == NOPOS) {
             CPinataPin empty;
-            ((CPinataPinlist*)this)->rows.push_back(empty);
+            ((CPinataPinlist*)this)->rows.push_back(empty);  // NOLINT
             index = rows.size() - 1;
         }
         if (index < rows.size())

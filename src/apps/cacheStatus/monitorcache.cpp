@@ -285,7 +285,7 @@ const CBaseNode* CMonitorCache::getObjectAt(const string_q& fieldName, size_t in
     if (fieldName % "items") {
         if (index == NOPOS) {
             CMonitorCacheItem empty;
-            ((CMonitorCache*)this)->items.push_back(empty);
+            ((CMonitorCache*)this)->items.push_back(empty);  // NOLINT
             index = items.size() - 1;
         }
         if (index < items.size())

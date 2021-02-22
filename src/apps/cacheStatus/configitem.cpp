@@ -348,7 +348,7 @@ const CBaseNode* CConfigItem::getObjectAt(const string_q& fieldName, size_t inde
     if (fieldName % "named") {
         if (index == NOPOS) {
             CAccountName empty;
-            ((CConfigItem*)this)->named.push_back(empty);
+            ((CConfigItem*)this)->named.push_back(empty);  // NOLINT
             index = named.size() - 1;
         }
         if (index < named.size())

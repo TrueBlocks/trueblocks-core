@@ -689,8 +689,8 @@ bool isTracingNode(void) {
     // 0x6df0b4a0d15ae3b925b9819646a0cff4d1bc0a53b294c0d84d884865302d13a5) we know there were exactly 23 traces as per
     // Parity. We check that here to see if the node is running with --tracing enabled. Not sure how this works with
     // Geth
-    static int answered = int(-1);
-    if (answered != int(-1))
+    static int answered = int(-1);  // NOLINT
+    if (answered != int(-1))        // NOLINT
         return answered;
     bool at23 = hasTraceAt("0x6df0b4a0d15ae3b925b9819646a0cff4d1bc0a53b294c0d84d884865302d13a5", 23);
     bool at24 = hasTraceAt("0x6df0b4a0d15ae3b925b9819646a0cff4d1bc0a53b294c0d84d884865302d13a5", 24);

@@ -344,7 +344,7 @@ const CBaseNode* CMonitor::getObjectAt(const string_q& fieldName, size_t index) 
     if (fieldName % "stateHistory") {
         if (index == NOPOS) {
             CEthState empty;
-            ((CMonitor*)this)->stateHistory.push_back(empty);
+            ((CMonitor*)this)->stateHistory.push_back(empty);  // NOLINT
             index = stateHistory.size() - 1;
         }
         if (index < stateHistory.size())
@@ -402,15 +402,15 @@ blknum_t CMonitor::getLastVisited(bool fresh) const {
     if (lastVisitedBlock == NOPOS || fresh) {
         // If the monitor exists, the next block is stored in the database...
         if (fileExists(getMonitorLast(address))) {
-            ((CMonitor*)this)->lastVisitedBlock = str_2_Uint(asciiFileToString(getMonitorLast(address))); // NOLINT
+            ((CMonitor*)this)->lastVisitedBlock = str_2_Uint(asciiFileToString(getMonitorLast(address)));  // NOLINT
 
         } else {
             // Accounts can receive ETH counter-factually. By default, we ignore
             // this and start our scan from the account's deploy block (in the case
             // of a contract) or the zero block. User can change this setting.
-            if (getGlobalConfig("acctScrape")->getConfigBool("settings", "start-when-deployed", true)) {
+            if (getGlobalConfig("acctExport")->getConfigBool("settings", "start-when-deployed", true)) {
                 blknum_t deployed = getDeployBlock(address);
-                ((CMonitor*)this)->lastVisitedBlock = (deployed == NOPOS ? 0 : deployed); // NOLINT
+                ((CMonitor*)this)->lastVisitedBlock = (deployed == NOPOS ? 0 : deployed);  // NOLINT
             }
         }
     }
@@ -485,30 +485,21 @@ void CMonitor::moveToProduction(void) {
 
 //---------------------------------------------------------------------------
 string_q CMonitor::getMonitorPath(const address_t& addr, freshen_e mode) const {
-    string_q base = ((mode == FM_STAGING) ? "monitors/staging/" : "monitors/");
-    if (!isAddress(addr))  // empty for example
-        return getCachePath(base + addr);
-    return getCachePath(base + addr + ".acct.bin");
+    string_q fn = isAddress(addr) ? addr + ".acct.bin" : addr;
+    string_q base = getCachePath("monitors/") + (mode == FM_STAGING ? "staging/" : "");
+    if (isTestMode())
+        base = configPath("mocked/monitors/") + (mode == FM_STAGING ? "staging/" : "");
+    return base + fn;
 }
 
 //---------------------------------------------------------------------------
 string_q CMonitor::getMonitorLast(const address_t& addr, freshen_e mode) const {
-    string_q base = ((mode == FM_STAGING) ? "monitors/staging/" : "monitors/");
-    if (!isTestMode() && !isAddress(addr)) {
-        cerr << "Not an address: " << addr << endl;
-        quickQuitHandler(0);
-    }
-    return getCachePath(base + addr + ".last.txt");
+    return substitute(getMonitorPath(addr, mode), ".acct.bin", ".last.txt");
 }
 
 //---------------------------------------------------------------------------
 string_q CMonitor::getMonitorExpt(const address_t& addr, freshen_e mode) const {
-    string_q base = ((mode == FM_STAGING) ? "monitors/staging/" : "monitors/");
-    if (!isTestMode() && !isAddress(addr)) {
-        cerr << "Not an address: " << addr << endl;
-        quickQuitHandler(0);
-    }
-    return getCachePath(base + addr + ".expt.txt");
+    return substitute(getMonitorPath(addr, mode), ".acct.bin", ".expt.txt");
 }
 
 //---------------------------------------------------------------------------
@@ -519,51 +510,6 @@ string_q CMonitor::getMonitorDels(const address_t& addr, freshen_e mode) const {
 //---------------------------------------------------------------------------
 string_q CMonitor::getMonitorCach(const address_t& addr, freshen_e mode) const {
     return getMonitorPath(addr + ".txs.bin");
-}
-
-//---------------------------------------------------------------------------
-void removeFile(const string_q& fn) {
-    ::remove(fn.c_str());
-    ::remove((fn + ".lck").c_str());
-}
-
-//---------------------------------------------------------------------------
-void CMonitor::cleanMonitor(const address_t& addr) const {
-    removeFile(getMonitorPath(addr));
-    removeFile(getMonitorLast(addr));
-    removeFile(getMonitorExpt(addr));
-    removeFile(getMonitorDels(addr));
-    removeFile(getMonitorCach(addr));
-}
-
-//---------------------------------------------------------------------------
-void cleanMonitors(const CAddressArray& addrs) {
-    for (auto addr : addrs) {
-        CMonitor m;
-        m.address = addr;
-        m.cleanMonitor(addr);
-    }
-}
-
-//----------------------------------------------------------------
-void establishTestMonitors(void) {
-    string_q loc = getCWD() + "./app_tests/";
-    if (!folderExists(loc)) {
-        cerr << "apps test files not found at: " << loc << endl;
-        exit(0);
-    }
-
-    CMonitor m;
-    ostringstream os;
-    os << "cp -p " << loc << "app_tests.tar.gz " << m.getMonitorPath("") << " && ";
-    os << "cd " << m.getMonitorPath("") << " && ";
-    os << "gunzip *.gz 2>/dev/null && ";
-    os << "tar -xvf *.tar 2>/dev/null && ";
-    os << "rm -f *.tar && ";
-    os << "cd - 2>&1 1>/dev/null";
-    // clang-format off
-    if (system(os.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings
-    // clang-format on
 }
 
 //----------------------------------------------------------------
@@ -590,7 +536,7 @@ bool CMonitor::loadAndSort(CAppearanceArray& items) {
 
     CAppearance_base* buffer = new CAppearance_base[nRecords];
     if (buffer) {
-        bzero((void*)buffer, nRecords * sizeof(CAppearance_base));
+        bzero((void*)buffer, nRecords * sizeof(CAppearance_base));  // NOLINT
         CArchive txCache(READING_ARCHIVE);
         if (txCache.Lock(fn, modeReadOnly, LOCK_NOWAIT)) {
             txCache.Read(buffer, sizeof(CAppearance_base), nRecords);
@@ -662,9 +608,19 @@ void CMonitor::deleteMonitor(void) {
     stringToAsciiFile(getMonitorDels(address), Now().Format(FMT_EXPORT));
 }
 
+//---------------------------------------------------------------------------
+void removeFile(const string_q& fn) {
+    ::remove(fn.c_str());
+    ::remove((fn + ".lck").c_str());
+}
+
 //-----------------------------------------------------------------------
 void CMonitor::removeMonitor(void) {
-    cleanMonitor(address);
+    removeFile(getMonitorPath(address));
+    removeFile(getMonitorLast(address));
+    removeFile(getMonitorExpt(address));
+    removeFile(getMonitorDels(address));
+    removeFile(getMonitorCach(address));
 }
 
 //-----------------------------------------------------------------------
@@ -724,55 +680,6 @@ string_q getTokenState(const string_q& what, const CAbi& abi_spec, const CMonito
         }
     }
     return result.outputs.size() ? result.outputs[0].value : "";
-}
-
-//------------------------------------------------------------------------------------------------
-bool freshen_internal(CMonitorArray& fa, const string_q& freshen_flags) {
-    // ENTER("freshen_internal");
-    nodeNotRequired();
-
-    ostringstream base;
-    base << "acctScrape " << freshen_flags << " [ADDRS] ;";
-
-    size_t cnt = 0, cnt2 = 0;
-    string_q tenAddresses;
-    for (auto f : fa) {
-        bool needsUpdate = true;
-        if (needsUpdate) {
-            LOG4(cTeal, "Needs update ", f.address, string_q(80, ' '), cOff);
-            tenAddresses += (f.address + " ");
-            if (!(++cnt % 10)) {  // we don't want to do too many addrs at a time
-                tenAddresses += "|";
-                cnt = 0;
-            }
-        } else {
-            LOG4(cTeal, "Updating addresses ", f.address, " ", cnt2, " of ", fa.size(), string_q(80, ' '), cOff, "\r");
-        }
-        cnt2++;
-    }
-
-    // Process them until we're done
-    uint64_t cur = 0;
-    while (!tenAddresses.empty()) {
-        string_q thisFive = nextTokenClear(tenAddresses, '|');
-        string_q cmd = substitute(base.str(), "[ADDRS]", thisFive);
-        // LOG_CALL(cmd);
-        // clang-format off
-        uint64_t n = countOf(thisFive, ' ');
-        if (fa.size() > 1)
-            LOG_INFO(cTeal, "Updating addresses ", cur+1, "-", (cur+n), " of ", fa.size(), string_q(80, ' '), cOff);
-        cur += n;
-        if (system(cmd.c_str())) {}  // Don't remove cruft. Silences compiler warnings
-        // clang-format on
-        if (!tenAddresses.empty())
-            usleep(50000);  // this sleep is here so that chifra remains responsive to Cntl+C. Do not remove
-    }
-
-    for (CMonitor& f : fa)
-        f.needsRefresh = (f.cntBefore != f.getRecordCount());
-
-    return true;
-    // EXIT_NOMSG(true);
 }
 // EXISTING_CODE
 }  // namespace qblocks

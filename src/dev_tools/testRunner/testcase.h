@@ -186,6 +186,6 @@ extern const char* STR_DISPLAY_TESTCASE;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-extern CAddressArray testAddrs;
+extern void establishTestMonitors(void);
 // EXISTING_CODE
 }  // namespace qblocks

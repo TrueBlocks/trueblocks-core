@@ -368,7 +368,7 @@ const CBaseNode* CPinataPin::getObjectAt(const string_q& fieldName, size_t index
     if (fieldName % "regions") {
         if (index == NOPOS) {
             CPinataRegion empty;
-            ((CPinataPin*)this)->regions.push_back(empty);
+            ((CPinataPin*)this)->regions.push_back(empty);  // NOLINT
             index = regions.size() - 1;
         }
         if (index < regions.size())

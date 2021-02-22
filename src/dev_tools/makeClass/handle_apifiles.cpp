@@ -83,13 +83,15 @@ void COptions::writeOpenApiFile(void) {
     string_q sourceFn = explFolder + "yaml-resolved/swagger.yaml";
     string_q destHTML = explFolder + "public/help/api.html";
     string_q templateFn = configPath("makeClass/blank_swagger.yaml");
-    string_q converter = doCommand("which swag2html.py");
+    string_q converter = "disabled";  // doCommand("which swag2html.py");
 
+    // clang-format off
     if (!test &&
         fileExists(sourceFn) &&
         fileExists(destHTML) &&
         fileExists(templateFn) &&
         fileExists(converter)) {
+        // clang-format on
 
         string_q oldCode = asciiFileToString(sourceFn);
         string_q newCode = asciiFileToString(templateFn);

@@ -26,8 +26,8 @@ bool CAbi::articulateTransaction(CTransaction* p) const {
 
     // articulate the events, so we can return with a fully articulated object
     for (size_t i = 0; i < p->receipt.logs.size(); i++) {
-       ((CAbi*)this)->loadAbiFromEtherscan(p->receipt.logs[i].address);  // NOLINT
-       articulateLog(&p->receipt.logs[i]);
+        ((CAbi*)this)->loadAbiFromEtherscan(p->receipt.logs[i].address);  // NOLINT
+        articulateLog(&p->receipt.logs[i]);
     }
 
     // articulate the traces, so we can return with a fully articulated object

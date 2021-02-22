@@ -248,7 +248,7 @@ static void keccak(uint64_t* out, size_t bits, const uint8_t* data, size_t size)
     size_t i;
     uint64_t* state_iter;
     uint64_t last_word = 0;
-    uint8_t* last_word_iter = (uint8_t*)&last_word;
+    uint8_t* last_word_iter = (uint8_t*)&last_word;  // NOLINT
 
     uint64_t state[25] = {0};
 

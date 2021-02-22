@@ -1,5 +1,7 @@
 chifra argc: 3 [1:receipts] [2:--help] 
 chifra receipts --help 
+TIME ~ CLOCK - <INFO>  : mode: receipts
+TIME ~ CLOCK - : 4-----call_command ----> getReceipt --help
 chifra receipts argc: 2 [1:--help] 
 chifra receipts --help 
 PROG_NAME = [chifra receipts]

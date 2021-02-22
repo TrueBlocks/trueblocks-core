@@ -1,6 +1,8 @@
-chifra argc: 3 [1:rm] [2:0xfb744b951d094b310262c8f986c860df9ab1de65] 
-chifra rm 0xfb744b951d094b310262c8f986c860df9ab1de65 
-acctScrape argc: 3 [1:--rm] [2:0xfb744b951d094b310262c8f986c860df9ab1de65] 
-acctScrape --rm 0xfb744b951d094b310262c8f986c860df9ab1de65 
-NO_NAMES = [true]
-TIME ~ CLOCK - <INFO>  : Monitor 0xfb744b951d094b310262c8f986c860df9ab1de65 was undeleted
+chifra argc: 4 [1:monitor] [2:0x807640a13483f8ac783c557fcdf27be11ea4ac7a] [3:--remove] 
+chifra monitor 0x807640a13483f8ac783c557fcdf27be11ea4ac7a --remove 
+TIME ~ CLOCK - <INFO>  : mode: monitor
+TIME ~ CLOCK - : 4-----call_command ----> acctExport --appearances 0x807640a13483f8ac783c557fcdf27be11ea4ac7a --remove
+chifra monitor argc: 4 [1:--appearances] [2:0x807640a13483f8ac783c557fcdf27be11ea4ac7a] [3:--remove] 
+chifra monitor --appearances 0x807640a13483f8ac783c557fcdf27be11ea4ac7a --remove 
+PROG_NAME = [chifra monitor]
+TIME ~ CLOCK - <INFO>  : Monitor 0x807640a13483f8ac783c557fcdf27be11ea4ac7a must be deleted first

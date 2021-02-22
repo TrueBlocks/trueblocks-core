@@ -461,7 +461,7 @@ string_q indentStr(void) {
 bool isEmptyObj(const string_q& str) {
     bool startToken = false;
     bool endToken = false;
-    char* s = (char*)str.c_str();
+    char* s = (char*)str.c_str();  // NOLINT
     while (*s) {
         switch (*s) {
             case '{':
@@ -536,13 +536,13 @@ bool CBaseNode::getVisibleFields(CFieldDataArray& visibleFields) const {
 
                     } else {
                         string_q val = getValueByName(field.getName());
-                        if (field.m_fieldType & T_BOOL && val == "false")
+                        if (field.m_fieldType & T_BOOL && val == "false") {
                             hidden = true;
-                        else if (field.m_fieldType & T_TEXT && val.empty())
+                        } else if (field.m_fieldType & T_TEXT && val.empty()) {
                             hidden = true;
-                        else if (field.m_fieldType & T_POINTER && (val.empty() || val % "null"))
+                        } else if (field.m_fieldType & T_POINTER && (val.empty() || val % "null")) {
                             hidden = true;
-                        else if (field.m_fieldType & T_OBJECT) {
+                        } else if (field.m_fieldType & T_OBJECT) {
                             if (isEmptyObj(val) || val.empty()) {
                                 hidden = true;
                             } else {

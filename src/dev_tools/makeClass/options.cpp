@@ -196,7 +196,7 @@ bool COptions::parseArguments(string_q& command) {
 
     // We need the template files
     if (!folderExists(configPath("makeClass/")))
-        return usage(errStrs[ERR_CONFIGMISSING]);
+        return false;  // usage(errStrs[ERR_CONFIGMISSING]);
 
     // If we got this far, user needs to tell us what to do...
     if (!run && !edit)

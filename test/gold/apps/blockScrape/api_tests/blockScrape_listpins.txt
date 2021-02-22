@@ -1,1 +1,1 @@
-{ "errors": [ "blockScrape - Invalid option: --listpins" ] }
+{ "errors": [ "chifra scrape - Invalid option: --listpins" ] }

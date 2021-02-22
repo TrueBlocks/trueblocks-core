@@ -22,7 +22,7 @@ class CNode {
     string_q name;
     string_q URL;
     string_q APIKey;
-    CNode(string_q& str) {
+    explicit CNode(string_q& str) {
         name = trim(nextTokenClear(str, ','));
         URL = trim(nextTokenClear(str, ','));
         APIKey = trim(str);
@@ -37,7 +37,7 @@ class CTest {
     string_q name;
     string_q params;
     bool turbo{false};
-    CTest(string_q& str) {
+    explicit CTest(string_q& str) {
         static uint64_t cnt = 0;
         replaceAll(str, "\t", " ");
         replaceAll(str, "  ", " ");

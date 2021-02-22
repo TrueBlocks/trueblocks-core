@@ -67,6 +67,8 @@ bool transFilter(const CTransaction* trans, void* data) {
 
 //--------------------------------------------------------------
 bool visitTransaction(CTransaction& trans, void* data) {
+    LOG4("blockNumber.txid: ", trans.blockNumber, "\t", trans.transactionIndex);
+
     COptions* opt = reinterpret_cast<COptions*>(data);
     bool isText = (expContext().exportFmt & (TXT1 | CSV1));
 

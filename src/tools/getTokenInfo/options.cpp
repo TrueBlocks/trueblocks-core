@@ -189,9 +189,8 @@ bool COptions::parseArguments(string_q& command) {
         for (auto addr : addrs) {
             if (first) {
                 if (!isContractAt(addr, latestBlock))
-                    return usage(
-                        "Address '" + addr +
-                        "' is not a token contract. You must provide at least one valid token address.");
+                    return usage("Address '" + addr +
+                                 "' is not a token contract. You must provide at least one valid token address.");
                 else
                     tokens.push_back(addr);
             } else {

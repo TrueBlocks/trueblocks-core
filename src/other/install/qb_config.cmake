@@ -25,6 +25,7 @@ file(MAKE_DIRECTORY "${DEST_PATH}/abis/known-005")
 file(MAKE_DIRECTORY "${DEST_PATH}/abis/known-010")
 file(MAKE_DIRECTORY "${DEST_PATH}/abis/known-015")
 file(MAKE_DIRECTORY "${DEST_PATH}/ipfs-hashes")
+file(MAKE_DIRECTORY "${DEST_PATH}/mocked")
 
 #---------------------------------------------------------------
 # Create main config file, if it does not already exist
@@ -81,10 +82,11 @@ if (NOT EXISTS "${CUSTOM_ENTS}")
 endif()
 
 #---------------------------------------------------------------
-# Copy the mock data, but don't unzip it
+# Copy the mock data and testing monitors
 #---------------------------------------------------------------
-message(STATUS "Copying unzipped mock data to ${DEST_PATH}/")
-file(COPY "${SOURCE_PATH}/mocked/mocked.tar.gz" DESTINATION "${DEST_PATH}/" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
+message(STATUS "Copying mocked data to ${DEST_PATH}/mocked")
+file(COPY "${SOURCE_PATH}/mocked/mocks.tar.gz" DESTINATION "${DEST_PATH}/mocked/" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
+file(COPY "${SOURCE_PATH}/mocked/monitors.tar.gz" DESTINATION "${DEST_PATH}/mocked/" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
 
 #---------------------------------------------------------------
 # makeClass content

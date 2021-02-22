@@ -70,6 +70,7 @@ class COptionsBase {
     bool mocked;
     bool isNoHeader;
     string_q crudCommand;
+    string_q overrideStr;
     bool isCrudCommand(void) const {
         return !crudCommand.empty();
     }
@@ -134,6 +135,7 @@ class COptionsBase {
     string_q oneDescription(const string_q& sN, const string_q& lN, const string_q& d, bool isMode = false,
                             bool required = false) const;
     string_q get_notes(void) const;
+    string_q format_notes(const CStringArray& strs) const;
 
     bool confirmEnum(const string_q& name, string_q& value, const string_q& arg) const;
     bool confirmBlockNum(const string_q& name, blknum_t& value, const string_q& arg, blknum_t latest) const;
@@ -146,21 +148,21 @@ class COptionsBase {
             return false;
         value = (uint32_t)temp;
         return true;
-        }
-        const COption* findParam(const string_q& name) const;
-        void setSorts(CRuntimeClass * c1, CRuntimeClass * c2, CRuntimeClass * c3);
+    }
+    const COption* findParam(const string_q& name) const;
+    void setSorts(CRuntimeClass* c1, CRuntimeClass* c2, CRuntimeClass* c3);
 
-      protected:
-        void configureDisplay(const string_q& tool, const string_q& dataType, const string_q& defFormat,
-                              const string_q& meta = "");
-        void registerOptions(size_t nP, COption const* pP);
-        virtual void Init(void) = 0;
-        const COption* pParams;
-        size_t cntParams;
-        string_q hiUp1;
-        string_q hiUp2;
-        string_q hiDown;
-    };
+  protected:
+    void configureDisplay(const string_q& tool, const string_q& dataType, const string_q& defFormat,
+                          const string_q& meta = "");
+    void registerOptions(size_t nP, COption const* pP);
+    virtual void Init(void) = 0;
+    const COption* pParams;
+    size_t cntParams;
+    string_q hiUp1;
+    string_q hiUp2;
+    string_q hiDown;
+};
 
 //--------------------------------------------------------------------------------
 class CDefaultOptions : public COptionsBase {

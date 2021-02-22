@@ -67,7 +67,7 @@ input_names         	1015	0	20971570	T_TEXT TS_STRING TS_OMITEMPTY
 output_names        	1016	0	20971570	T_TEXT TS_STRING TS_OMITEMPTY
 declaration         	1017	0	20971570	T_TEXT TS_STRING TS_OMITEMPTY
 {
-  "schema": 8003,
+  "schema": 8004,
   "deleted": false,
   "showing": true,
   "cname": "Function",

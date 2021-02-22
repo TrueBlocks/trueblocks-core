@@ -194,7 +194,7 @@ time_q getBlockDate(blknum_t num) {
 //---------------------------------------------------------------
 bool lookupDate(CBlock& block, const timestamp_t& ts, blknum_t latest) {
     time_q date = ts_2_Date(ts);
-    
+
     // speed up
     blknum_t start = 1, stop = latest;
     if (date.GetYear() >= 2021) {
@@ -215,7 +215,7 @@ bool lookupDate(CBlock& block, const timestamp_t& ts, blknum_t latest) {
         start = 778482;
         stop = 2912406;
     }
-    
+
     block.timestamp = ts;
     bool ret = findTimestamp_binarySearch(block, start, stop, true);
     if (!isTestMode()) {

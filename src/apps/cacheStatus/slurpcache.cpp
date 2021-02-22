@@ -285,7 +285,7 @@ const CBaseNode* CSlurpCache::getObjectAt(const string_q& fieldName, size_t inde
     if (fieldName % "items") {
         if (index == NOPOS) {
             CMonitorCacheItem empty;
-            ((CSlurpCache*)this)->items.push_back(empty);
+            ((CSlurpCache*)this)->items.push_back(empty);  // NOLINT
             index = items.size() - 1;
         }
         if (index < items.size())

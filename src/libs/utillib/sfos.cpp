@@ -264,7 +264,7 @@ bool establishFolder(const string_q& path, string_q& created) {
 #endif
 
 #ifdef MACOS
-//#error
+// #error
 #endif
 
 //----------------------------------------------------------------------------

@@ -261,22 +261,22 @@
         "name": "approve",
         "inputs": [
           {
-            "name": "_spender",
+            "name": "usr",
             "value": "0x7d655c57f71464b6f83811c55d84009cd9f5221c"
           },
           {
-            "name": "_value",
+            "name": "wad",
             "value": "5000000000000000000"
           }
         ],
         "outputs": [
           {
-            "name": "_success",
+            "name": "val_0",
             "value": ""
           }
         ]
       },
-      "compressedTx": "approve ( _spender: 0x7d655c57f71464b6f83811c55d84009cd9f5221c, _value: 5000000000000000000 )",
+      "compressedTx": "approve ( usr: 0x7d655c57f71464b6f83811c55d84009cd9f5221c, wad: 5000000000000000000 )",
       "statements": [
         {
           "blockNumber": 10279295,
@@ -7760,22 +7760,22 @@
         "name": "approve",
         "inputs": [
           {
-            "name": "_spender",
+            "name": "usr",
             "value": "0x7d655c57f71464b6f83811c55d84009cd9f5221c"
           },
           {
-            "name": "_value",
+            "name": "wad",
             "value": "5000000000000000000"
           }
         ],
         "outputs": [
           {
-            "name": "_success",
+            "name": "val_0",
             "value": ""
           }
         ]
       },
-      "compressedTx": "approve ( _spender: 0x7d655c57f71464b6f83811c55d84009cd9f5221c, _value: 5000000000000000000 )",
+      "compressedTx": "approve ( usr: 0x7d655c57f71464b6f83811c55d84009cd9f5221c, wad: 5000000000000000000 )",
       "statements": [
         {
           "blockNumber": 10290317,
@@ -8415,22 +8415,22 @@
         "name": "approve",
         "inputs": [
           {
-            "name": "_spender",
+            "name": "usr",
             "value": "0x7d655c57f71464b6f83811c55d84009cd9f5221c"
           },
           {
-            "name": "_value",
+            "name": "wad",
             "value": "5000000000000000000"
           }
         ],
         "outputs": [
           {
-            "name": "_success",
+            "name": "val_0",
             "value": ""
           }
         ]
       },
-      "compressedTx": "approve ( _spender: 0x7d655c57f71464b6f83811c55d84009cd9f5221c, _value: 5000000000000000000 )",
+      "compressedTx": "approve ( usr: 0x7d655c57f71464b6f83811c55d84009cd9f5221c, wad: 5000000000000000000 )",
       "statements": [
         {
           "blockNumber": 10292014,
@@ -9170,22 +9170,22 @@
         "name": "approve",
         "inputs": [
           {
-            "name": "_spender",
+            "name": "usr",
             "value": "0x7d655c57f71464b6f83811c55d84009cd9f5221c"
           },
           {
-            "name": "_value",
+            "name": "wad",
             "value": "5000000000000000000"
           }
         ],
         "outputs": [
           {
-            "name": "_success",
+            "name": "val_0",
             "value": ""
           }
         ]
       },
-      "compressedTx": "approve ( _spender: 0x7d655c57f71464b6f83811c55d84009cd9f5221c, _value: 5000000000000000000 )",
+      "compressedTx": "approve ( usr: 0x7d655c57f71464b6f83811c55d84009cd9f5221c, wad: 5000000000000000000 )",
       "statements": [
         {
           "blockNumber": 10293554,

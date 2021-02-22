@@ -1,6 +1,38 @@
-acctExport argc: 8 [1:0xd2f5852eb4b0c12c23a97914b2a9d954cf621781] [2:--traces] [3:--fmt] [4:json] [5:--end] [6:1750000] [7:--factory] 
-acctExport 0xd2f5852eb4b0c12c23a97914b2a9d954cf621781 --traces --fmt json --end 1750000 --factory 
-{ "data": [
-], "types": [
-{ "type": "CTrace", "fields": [{ "name": "type", "type": "text" }, { "name": "error", "type": "text" }, { "name": "action", "type": "object" }, { "name": "result", "type": "object" }, { "name": "articulatedTrace", "type": "object" }, { "name": "compressedTrace", "type": "text" }] }
-] }
+acctExport argc: 6 [1:0x8b3b3b624c3c0397d3da8fd861512393d51dcbac] [2:--factory] [3:--traces] [4:--end] [5:1603174] 
+acctExport 0x8b3b3b624c3c0397d3da8fd861512393d51dcbac --factory --traces --end 1603174 
+TIME ~ CLOCK - <INFO>  : Monitor found for: 0x8b3b3b624c3c0397d3da8fd861512393d51dcbac
+TIME ~ CLOCK - <INFO>  : Monitor path: /Users/jrush/.quickBlocks/mocked/monitors/0x8b3b3b624c3c0397d3da8fd861512393d51dcbac.acct.bin
+TIME ~ CLOCK - <INFO>  : Last visited block: 4996422
+TIME ~ CLOCK - <INFO>  : m.getLastVisitedBlock(): 4996422
+TIME ~ CLOCK - <INFO>  : options->fileRange.first: 4996422
+TIME ~ CLOCK - <INFO>  : m.getLastVisitedBlock(): 4996422
+TIME ~ CLOCK - <INFO>  : options->fileRange.first: 5001425
+TIME ~ CLOCK - <INFO>  : stats.nFiles: --value--
+TIME ~ CLOCK - <INFO>  : stats.nSkipped: --value--
+TIME ~ CLOCK - <INFO>  : nMonitors: 1
+TIME ~ CLOCK - <INFO>  : exportRange.first: 0
+TIME ~ CLOCK - <INFO>  : exportRange.second: 1603174
+TIME ~ CLOCK - <INFO>  : listRange.first: 4996422
+TIME ~ CLOCK - <INFO>  : listRange.second: --latest--
+TIME ~ CLOCK - <INFO>  : first_record: 0
+TIME ~ CLOCK - <INFO>  : max_records: 18446744073709551615
+TIME ~ CLOCK - <INFO>  : traces: true
+TIME ~ CLOCK - <INFO>  : factory: true
+blocknumber	transactionindex	traceaddress	action::calltype	error	action::from	action::to	action::value	action::ether	action::gas	result::gasused	action::input	compressedtrace	result::output
+1600495	9	null-s	creation		0x0	0x8b3b3b624c3c0397d3da8fd861512393d51dcbac	0	0.000000000000000000	2192168	823600			
+1600546	15	0-s	creation		0x0	0xa8eced73b863886478a81b411868fbac8ffbd334	0	0.000000000000000000	195789	155966			
+1600597	4	0-s	creation		0x0	0x6d4e427e35c8daffe77719e166f51cc1e4d68a4c	0	0.000000000000000000	195789	155966			
+1600598	0	0-s	creation		0x0	0x53d2e99857fd426e8204aa9d5b51ab2bcf3d7a55	0	0.000000000000000000	195789	155966			
+1601229	10	0-s	creation		0x0	0x25a94c918500c8fbcc9e340d8db8fdbd19e563cf	0	0.000000000000000000	195789	155966			
+1601438	18	0-s	creation		0x0	0x3c20199c2ca76b2d74508df90394b7f5477f859c	0	0.000000000000000000	195789	155966			
+1602153	0	0-s	creation		0x0	0xb1fa9e33e9684a08718076047569ec87ddfb2963	0	0.000000000000000000	195789	155966			
+1602397	4	0-s	creation		0x0	0xef436dc387093904792b08cbc62691457bef5dfb	0	0.000000000000000000	195789	155966			
+1602427	4	0-s	creation		0x0	0xcfe771fe863e4d6fe5f21348980b4329f59ead8a	0	0.000000000000000000	195789	155966			
+1602464	2	0-s	creation		0x0	0xc743bf777427f917f0c910f96232e00ee4c6fc34	0	0.000000000000000000	195789	155966			
+1602685	35	0-s	creation		0x0	0xfb26a5474e91db31cbad68933e7726422c1ddc1d	0	0.000000000000000000	195789	155966			
+1602721	0	0-s	creation		0x0	0xe754bb3f679303aa3086170a2ca4a434a1842d4c	0	0.000000000000000000	195789	155966			
+1602897	3	0-s	creation		0x0	0xc6f58fd005c95a75622f5bbe091f77c2e8c07bf1	0	0.000000000000000000	195789	155966			
+1602903	3	0-s	creation		0x0	0xa63d5adefb4424901c7904106d55df61b2f90e07	0	0.000000000000000000	195789	155966			
+1603124	22	0-s	creation		0x0	0x3ea5a7c881ca1ccf8b090d4465f0c9f47863bb1b	0	0.000000000000000000	195789	155966			
+1603135	2	0-s	creation		0x0	0x58669f55fc4162830887823cee1e9da1731f5173	0	0.000000000000000000	195789	155966			
+1603174	1	0-s	creation		0x0	0xf4d0a0814621b22e80d7d0767213f94c7644bbab	0	0.000000000000000000	195789	155966			

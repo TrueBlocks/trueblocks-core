@@ -141,7 +141,7 @@ string_q COptionsBlockList::parseBlockList_inner(const string_q& argIn, blknum_t
 
         if (stop <= start)
             return "'stop' must be strictly larger than 'start'";
-        
+
     } else {
         if (isHash(arg)) {
             hashList.push_back(arg);

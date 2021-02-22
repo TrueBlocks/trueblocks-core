@@ -1,6 +1,7 @@
 ethNames argc: 5 [1:0xb6] [2:--verbose] [3:--fmt] [4:txt] 
 ethNames 0xb6 --verbose --fmt txt 
 tags	address	name	symbol	decimals	source
+36-Balancer	0xb618f903ad1d00d6f7b92f5b0954dcdc056fc533	Balancer DAO
 31-Gitcoin Grants:Grant	0xb61a98a0e542dcea1da7c44c2e8017373b95d350	Grant 1250 Borderless Basic Income -- Decentralized Ubi and Distributions				https://gitcoin.co/grants/1250/borderless-basic-income-decentralized-ubi-and-dis
 50-Tokens:ERC20	0xb62132e35a6c13ee1ee0f84dc5d40bad8d815206	Nexo	NEXO		18	On chain
 50-Tokens:ERC20	0xb6259685685235c1ef4b8529e7105f00bd42b9f8	RRChain	RRC		2	On chain

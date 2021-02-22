@@ -53,7 +53,7 @@ fm_mode             	1009	0	8388633	T_NUMBER TS_NUMERAL
 curEther            	1010	0	545259565	T_ETHER TS_NUMERAL TS_BIGNUM
 curDollars          	1011	0	545259565	T_ETHER TS_NUMERAL TS_BIGNUM
 {
-  "schema": 8003,
+  "schema": 8004,
   "deleted": false,
   "showing": true,
   "cname": "Monitor",

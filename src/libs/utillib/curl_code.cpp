@@ -59,7 +59,6 @@ string_q urlToString(const string_q& url, CURLCALLBACKFUNC noteFunc) {
     CURL* curl = curl_easy_init();
     if (!curl) {
         errorMessage("Curl failed to initialize.");
-        ;
         quickQuitHandler(0);
     }
     CResponseData result;

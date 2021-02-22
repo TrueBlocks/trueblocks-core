@@ -21,14 +21,16 @@ bool COptions::handle_receipts(void) {
     SHOW_FIELD(CReceipt, "isError");
 
     bool first = true;
-    blknum_t lastExported = scanRange.second;
+    blknum_t lastExported = exportRange.second;
     for (size_t i = 0; i < apps.size() && (!freshen || (nProcessed < freshen_max)); i++) {
         const CAppearance_base* app = &apps[i];
         if (shouldQuit() || app->blk >= ts_cnt) {
             lastExported = app->blk - 1;
             break;
         }
-        if (inRange((blknum_t)app->blk, scanRange.first, scanRange.second)) {
+
+        // LOG_TEST("passes", inRange((blknum_t)app->blk, exportRange.first, exportRange.second) ? "true" : "false");
+        if (inRange((blknum_t)app->blk, exportRange.first, exportRange.second)) {
             CBlock block;  // do not move this from this scope
             block.blockNumber = app->blk;
             CTransaction trans;
@@ -69,7 +71,7 @@ bool COptions::handle_receipts(void) {
                 trans.timestamp = block.timestamp = (timestamp_t)ts_array[(app->blk * 2) + 1];
 
                 // ... we don't write the data here since it will not be complete.
-                // if (false) // (write_opt & CACHE_TXS) && !fileExists(txFilename))
+                // if (false) // (cache_txs && !fileExists(txFilename))
                 //    writeTransToBinary(trans, txFilename);
             }
 
@@ -87,7 +89,7 @@ bool COptions::handle_receipts(void) {
                 ostringstream os;
                 os << "Exporting " << nProcessed << " ";
                 os << plural(className) << " of ";
-                os << nTransactions << " (max " << nProcessing << ") txs for address " << monitors[0].address;
+                os << nTransactions << " (max " << nProcessing << ") txs for address " << allMonitors[0].address;
                 LOG_INFO(os.str() + "\r");
             }
         }
@@ -95,9 +97,9 @@ bool COptions::handle_receipts(void) {
 
     if (!isTestMode())
         LOG_PROGRESS1((freshen ? "Updated" : "Reported"), (first_record + nProcessed), nTransactions,
-                      " receipts for address " + monitors[0].address + "\r");
+                      " receipts for address " + allMonitors[0].address + "\r");
 
-    for (auto monitor : monitors)
+    for (auto monitor : allMonitors)
         monitor.updateLastExport(lastExported);
 
     reportNeighbors();

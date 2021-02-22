@@ -13,9 +13,9 @@ bool COptions::scrape_monitors(void) {
     CMonitor m;
     // Catch the monitors addresses up to the scraper if in --deamon mode
     forEveryFileInFolder(m.getMonitorPath("") + "*", prepareMonitors, &monitors);
-    if (!freshen_internal(monitors, getEnvStr("FRESHEN_FLAGS")))
-        EXIT_FAIL("'chifra " + mode + "' returns false");
-
+    // OLD_CODE
+    // if (!freshen_internal(monitors, getEnvStr("FRESHEN_FLAG S")))
+    //     EXIT_FAIL("'chifra " + mode + "' returns false");
     for (auto monitor : monitors) {
         if (state == STATE_STOPPED || shouldQuit())
             break;

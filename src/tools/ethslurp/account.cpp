@@ -318,7 +318,7 @@ const CBaseNode* CAccount::getObjectAt(const string_q& fieldName, size_t index) 
     if (fieldName % "transactions") {
         if (index == NOPOS) {
             CTransaction empty;
-            ((CAccount*)this)->transactions.push_back(empty);
+            ((CAccount*)this)->transactions.push_back(empty);  // NOLINT
             index = transactions.size() - 1;
         }
         if (index < transactions.size())

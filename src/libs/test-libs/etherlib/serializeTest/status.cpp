@@ -336,7 +336,7 @@ const CBaseNode* CStatus::getObjectAt(const string_q& fieldName, size_t index) c
     if (fieldName % "caches") {
         if (index == NOPOS) {
             CCache* empty;
-            ((CStatus*)this)->caches.push_back(empty);
+            ((CStatus*)this)->caches.push_back(empty);  // NOLINT
             index = caches.size() - 1;
         }
         if (index < caches.size())

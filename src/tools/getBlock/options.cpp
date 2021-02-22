@@ -106,7 +106,7 @@ bool COptions::parseArguments(string_q& command) {
 
     if (force && uncles)
         return usage("The --force option is not available for uncle blocks.");
-    
+
     if (force && !filterType.empty())
         return usage("The --force option is not available when using one of the address options.");
 
@@ -115,7 +115,7 @@ bool COptions::parseArguments(string_q& command) {
 
     if (trace && !filterType.empty())
         return usage("The --trace option is not available when using one of the address options.");
-    
+
     if (trace && hashes_only)
         return usage("The --hashes_only and --trace options are exclusive.");
 
@@ -165,7 +165,6 @@ bool COptions::parseArguments(string_q& command) {
 
     } else {
         configureDisplay("getBlock", "CBlock", STR_DISPLAY_BLOCK);
-
     }
 
     if (expContext().exportFmt == API1 || expContext().exportFmt == JSON1) {
@@ -179,7 +178,6 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (!filterType.empty()) {
             expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(STR_FORMAT_FILTER_JSON);
-
         }
     }
     if (isNoHeader)

@@ -6,9 +6,9 @@
 #include "options.h"
 
 //-----------------------------------------------------------------------
-extern bool removeAbi(const string_q& path, void *data);
+extern bool removeAbi(const string_q& path, void* data);
 int main(int argc, const char* argv[]) {
-    acctlib_init(quickQuitHandler);
+    pinlib_init(quickQuitHandler);
 
     COptions options;
     if (!options.prepareArguments(argc, argv))
@@ -48,7 +48,7 @@ int main(int argc, const char* argv[]) {
                 }
 
             } else if (options.appearances) {
-                options.hanlde_appearances();
+                options.handle_appearances();
 
             } else if (options.receipts) {
                 options.handle_receipts();
@@ -64,10 +64,7 @@ int main(int argc, const char* argv[]) {
 
             } else {
                 ASSERT(accounting);
-                //for (int i = 0 ; i < 100 ; i++) {
-                //    forEveryFileInFolder(getCachePath("abis/"), removeAbi, nullptr);
-                    options.handle_accounting();
-                //}
+                options.handle_accounting();
             }
         }
 
@@ -75,15 +72,15 @@ int main(int argc, const char* argv[]) {
     }
 
     ostringstream os;
-    os << ", \"start\": " << (isTestMode() ? "\"0xdeadbeef\"" : uint_2_Str(options.scanRange.first)) << endl;
-    os << ", \"end\": " << (isTestMode() ? "\"0xdeadbeef\"" : uint_2_Str(options.scanRange.second)) << endl;
-    if (!options.count && options.monitors.size() == 1) {
-        options.getNamedAccount(options.monitors[0], options.monitors[0].address);
+    os << ", \"start\": " << (isTestMode() ? "\"0xdeadbeef\"" : uint_2_Str(options.exportRange.first)) << endl;
+    os << ", \"end\": " << (isTestMode() ? "\"0xdeadbeef\"" : uint_2_Str(options.exportRange.second)) << endl;
+    if (!options.count && options.allMonitors.size() == 1) {
+        options.getNamedAccount(options.allMonitors[0], options.allMonitors[0].address);
         HIDE_FIELD(CMonitor, "summaryStatement");
         if (options.abi_spec.nInterfaces() == 0) {
             HIDE_FIELD(CMonitor, "abi_spec");
         }
-        os << ", \"accountedFor\": " << options.monitors[0] << endl;
+        os << ", \"accountedFor\": " << options.allMonitors[0] << endl;
     }
     expContext().fmtMap["meta"] += os.str();
 
@@ -94,15 +91,34 @@ int main(int argc, const char* argv[]) {
         ostringstream oss;
         oss << "Exported " << padNum6T(options.nProcessed) << " ";
         oss << (!options.className.empty() ? (plural(options.className) + " from ") : "of ");
-        oss << padNum6T(options.nTransactions) << " transactions for address " << options.monitors[0].address;
+        oss << padNum6T(options.nTransactions) << " transactions for address "
+            << (options.allMonitors.size() ? options.allMonitors[0].address : "");
         LOG_INFO(oss.str());
     }
 
-    acctlib_cleanup();
+    if (options.stats.nFiles != options.stats.nSkipped) {
+        ostringstream header;
+        header << options.stats.Format(substitute(substitute(STR_DISPLAY_ACCTSCRAPESTATS, "\t", ","), "{", "{p:"));
+        LOG4(header.str());
+        header << endl;
+
+        ostringstream data;
+        data << options.stats.Format(substitute(STR_DISPLAY_ACCTSCRAPESTATS, "\t", ","));
+        LOG4(data.str());
+        data << endl;
+
+        string_q statsFile = configPath("performance_scraper.csv");
+        if (!fileExists(statsFile))
+            stringToAsciiFile(statsFile, header.str());
+        appendToAsciiFile(statsFile, data.str());
+    }
+
+    pinlib_cleanup();
     return 0;
 }
 
-bool removeAbi(const string_q& path, void *data) {
+//-----------------------------------------------------------------------
+bool removeAbi(const string_q& path, void* data) {
     if (endsWith(path, "/")) {
         return forEveryFileInFolder(path + "*", removeAbi, data);
     } else {

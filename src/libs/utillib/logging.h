@@ -224,6 +224,11 @@ extern logger<log_policy_i>* eLogger;
             LOG_INFO((string_q(a) + ": "), (b));                                                                       \
         }                                                                                                              \
     }
+#define LOG_TEST_BOOL(a, b)                                                                                            \
+    {                                                                                                                  \
+        if (b)                                                                                                         \
+            LOG_TEST(a, "true")                                                                                        \
+    }
 #else
 #define LOG0(...)
 #define LOG1(...)
@@ -244,6 +249,7 @@ extern logger<log_policy_i>* eLogger;
 #define LOG_PROGRESS1(...)
 #define LOG_CALL(a)
 #define LOG_TEST(a, b)
+#define LOG_TEST_BOOL(a, b)
 #endif
 
 // The LOG parts of these routines disappear if turned off, but they still do their work because of the returns

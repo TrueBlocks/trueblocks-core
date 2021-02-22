@@ -76,6 +76,9 @@
       "tags": "35-Pool Together"
     },
     {
+      "tags": "36-Balancer"
+    },
+    {
       "tags": "36-Chainlink"
     },
     {

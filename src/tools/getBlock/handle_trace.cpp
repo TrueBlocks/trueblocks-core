@@ -15,7 +15,7 @@
 // extern string_q traceOneBlock(blknum_t num, COptions& opt);
 //---------------------------------------------------------------------------------------------------
 bool traceBlock(uint64_t num, void* data) {
-    COptions* opt = (COptions*)data;
+    COptions* opt = (COptions*)data;  // NOLINT
     if (opt->isRaw) {
         string_q results;
         queryRawBlockTrace(results, num);

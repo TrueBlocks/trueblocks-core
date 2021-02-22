@@ -264,7 +264,7 @@ const CBaseNode* CIndexCache::getObjectAt(const string_q& fieldName, size_t inde
     if (fieldName % "items") {
         if (index == NOPOS) {
             CIndexCacheItem empty;
-            ((CIndexCache*)this)->items.push_back(empty);
+            ((CIndexCache*)this)->items.push_back(empty);  // NOLINT
             index = items.size() - 1;
         }
         if (index < items.size())

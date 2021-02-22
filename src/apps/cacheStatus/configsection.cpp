@@ -294,7 +294,7 @@ const CBaseNode* CConfigSection::getObjectAt(const string_q& fieldName, size_t i
     if (fieldName % "keys") {
         if (index == NOPOS) {
             CConfigItem empty;
-            ((CConfigSection*)this)->keys.push_back(empty);
+            ((CConfigSection*)this)->keys.push_back(empty);  // NOLINT
             index = keys.size() - 1;
         }
         if (index < keys.size())

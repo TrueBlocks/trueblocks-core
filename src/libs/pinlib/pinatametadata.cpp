@@ -279,7 +279,7 @@ const CBaseNode* CPinataMetadata::getObjectAt(const string_q& fieldName, size_t 
     if (fieldName % "keyvalues") {
         if (index == NOPOS) {
             CKeyValue empty;
-            ((CPinataMetadata*)this)->keyvalues.push_back(empty);
+            ((CPinataMetadata*)this)->keyvalues.push_back(empty);  // NOLINT
             index = keyvalues.size() - 1;
         }
         if (index < keyvalues.size())

@@ -46,6 +46,8 @@ func callOneExtra(w http.ResponseWriter, r *http.Request, tbCmd, extra string) {
 		}
 		allDogs = append(allDogs, value...)
 	}
+    // log.Println("tbCmd: ", tbCmd)
+    // log.Println("allDogs: ", allDogs)
 	cmd := exec.Command(tbCmd, allDogs...)
 
 	if r.Header.Get("User-Agent") == "testRunner" {
@@ -60,7 +62,6 @@ func callOneExtra(w http.ResponseWriter, r *http.Request, tbCmd, extra string) {
     }
 
 	out, err := cmd.Output()
-
 	if err != nil {
 		fmt.Printf("%s", err)
 	}
@@ -90,16 +91,16 @@ func AccountsExport(w http.ResponseWriter, r *http.Request) {
 	callOneExtra(w, r, "chifra", "export")
 }
 
+func AccountsMonitor(w http.ResponseWriter, r *http.Request) {
+	callOneExtra(w, r, "chifra", "monitor")
+}
+
 func AccountsList(w http.ResponseWriter, r *http.Request) {
 	callOneExtra(w, r, "chifra", "list")
 }
 
 func AccountsNames(w http.ResponseWriter, r *http.Request) {
 	callOne(w, r, "ethNames")
-}
-
-func AccountsRm(w http.ResponseWriter, r *http.Request) {
-	callOneExtra(w, r, "chifra", "rm")
 }
 
 func AccountsTags(w http.ResponseWriter, r *http.Request) {
@@ -255,6 +256,13 @@ var routes = Routes{
 	},
 
 	Route{
+		"AccountsMonitor",
+		"GET",
+		"/monitor",
+		AccountsMonitor,
+	},
+
+	Route{
 		"AccountsList",
 		"GET",
 		"/list",
@@ -266,13 +274,6 @@ var routes = Routes{
 		"GET",
 		"/names",
 		AccountsNames,
-	},
-
-	Route{
-		"AccountsRm",
-		"GET",
-		"/rm",
-		AccountsRm,
 	},
 
 	Route{

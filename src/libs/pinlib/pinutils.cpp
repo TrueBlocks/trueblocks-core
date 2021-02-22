@@ -39,7 +39,7 @@ bool forEveryPin(PINFUNC func, void* data) {
 
 //----------------------------------------------------------------
 bool addNewPin(CPinnedItem& pin, void* data) {
-    CPinReport* reportPtr = (CPinReport*)data;
+    CPinReport* reportPtr = (CPinReport*)data;  // NOLINT
     reportPtr->newPins.push_back(pin);
 
     timestamp_t unused;
@@ -61,13 +61,12 @@ bool getFileByHash(const hash_t& hash, const string_q& outFilename) {  // also u
     string_q cmd = "curl -s ";
     cmd += "\"https://ipfs.io/ipfs/" + hash + "\" ";
     cmd += "--output " + getCachePath("tmp/") + outFilename + " ; ";
-    if (system(cmd.c_str())) {
-    }  // Don't remove cruft. Silences compiler warnings
-
+    if (system(cmd.c_str())) {  // NOLINT
+    }                           // Don't remove cruft. Silences compiler warnings
     if (endsWith(outFilename, ".gz")) {
         cmd = "cd " + getCachePath("tmp/") + " ; gunzip *.gz";
-        if (system(cmd.c_str())) {
-        }  // Don't remove cruft. Silences compiler warnings
+        if (system(cmd.c_str())) {  // NOLINT
+        }                           // Don't remove cruft. Silences compiler warnings
     }
 
     return fileExists(substitute(outFilename, ".gz", ""));
@@ -119,7 +118,7 @@ bool publishManifest(ostream& os) {
     pinReport.fileName = "pin-manifest.json";
     pinReport.indexFormat = hashToIndexFormatFile;
     pinReport.bloomFormat = hashToBloomFormatFile;
-    pinReport.prevHash = "";  //(prevHash == "" ? hashToEmptyFile : prevHash);
+    pinReport.prevHash = "";  // (prevHash == "" ? hashToEmptyFile : prevHash);
 
     forEveryPin(addNewPin, &pinReport);
 
@@ -275,7 +274,7 @@ static size_t curlCallback(char* ptr, size_t size, size_t nmemb, void* userdata)
     char* s = (char*)part.c_str();  // NOLINT
     strncpy(s, ptr, size * nmemb);
     s[size * nmemb] = '\0';
-    string_q* str = (string_q*)userdata;
+    string_q* str = (string_q*)userdata;  // NOLINT
     ASSERT(str);
     *str += s;
     return size * nmemb;

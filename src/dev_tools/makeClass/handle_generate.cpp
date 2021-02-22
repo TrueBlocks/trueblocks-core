@@ -688,7 +688,7 @@ const char* STR_GETOBJ_CODE_FIELD =
     "`if (fieldName % \"[{FIELD}]\") {\n"
     "``if (index == NOPOS) {\n"
     "```[{TYPE}] empty;\n"
-    "```(([{CLASS_NAME}]*)this)->[{FIELD}].push_back(empty);\n"
+    "```(([{CLASS_NAME}]*)this)->[{FIELD}].push_back(empty);  // NOLINT\n"
     "```index = [{FIELD}].size() - 1;\n"
     "``}\n"
     "``if (index < [{FIELD}].size())\n"

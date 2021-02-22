@@ -1,11 +1,14 @@
 chifra argc: 3 [1:status] [2:all] 
 chifra status all 
-cacheStatus argc: 2 [1:all] 
-cacheStatus all 
+TIME ~ CLOCK - <INFO>  : mode: status
+TIME ~ CLOCK - : 4-----call_command ----> cacheStatus all
+chifra status argc: 2 [1:all] 
+chifra status all 
+PROG_NAME = [chifra status]
 {
   "client_version": "Client version",
   "client_ids": "chainId: 1 networkId: 1",
-  "trueblocks_version": "GHC-TrueBlocks//0.8.3-alpha--git-hash---git-ts-",
+  "trueblocks_version": "GHC-TrueBlocks//0.8.4-alpha--git-hash---git-ts-",
   "rpc_provider": "--providers--",
   "balance_provider": "--providers--",
   "cache_path": "--paths--",

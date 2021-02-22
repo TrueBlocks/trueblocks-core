@@ -258,7 +258,7 @@ const CBaseNode* CEntityCache::getObjectAt(const string_q& fieldName, size_t ind
     if (fieldName % "items") {
         if (index == NOPOS) {
             CEntityCacheItem empty;
-            ((CEntityCache*)this)->items.push_back(empty);
+            ((CEntityCache*)this)->items.push_back(empty);  // NOLINT
             index = items.size() - 1;
         }
         if (index < items.size())

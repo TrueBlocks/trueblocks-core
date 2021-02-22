@@ -2,8 +2,8 @@
 current = "0.5.5-alpha"
 
 [settings]
-# write_txs = true
-# write_traces = true
+# cache_txs = true
+# cache_traces = true
 # skip_ddos = true
 # max_traces = 250
 

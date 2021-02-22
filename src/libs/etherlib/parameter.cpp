@@ -417,7 +417,7 @@ const CBaseNode* CParameter::getObjectAt(const string_q& fieldName, size_t index
     if (fieldName % "components") {
         if (index == NOPOS) {
             CParameter empty;
-            ((CParameter*)this)->components.push_back(empty);
+            ((CParameter*)this)->components.push_back(empty);  // NOLINT
             index = components.size() - 1;
         }
         if (index < components.size())

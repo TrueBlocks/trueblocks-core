@@ -1,1 +1,1 @@
-{ "errors": [ "blockScrape - The --publish option is only available with the --pin option." ] }
+{ "errors": [ "chifra scrape - The --publish option is only available with the --pin option." ] }

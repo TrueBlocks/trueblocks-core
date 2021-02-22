@@ -11,12 +11,12 @@ import (
 
 func main() {
 	log.Printf("Starting TrueBlocks API server on port :8080")
-	out, err := exec.Command("chifra", "status --terse").Output()
+	out, err := exec.Command("cacheStatus", "--terse").Output()
 	if err != nil {
 		fmt.Printf("%s", err)
 	} else {
 		output := string(out[:])
 		log.Printf(output)
 	}
-    log.Fatal(http.ListenAndServe(":8080", tb.NewRouter()))
+	log.Fatal(http.ListenAndServe(":8080", tb.NewRouter()))
 }

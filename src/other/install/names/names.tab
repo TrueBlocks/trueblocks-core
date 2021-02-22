@@ -1885,7 +1885,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 31-Gitcoin Grants:Grant	0x40e3780e5bec58629ac4c5dc3bca3df2d7fd0c35	Grant 0412 Ethereum Classic Development Team		https://gitcoin.co/grants/412/ethereum-classic-development-team		https://EthereumCore.org	false	false	false	false	false	false
 90-DevCon2:Individual	0x40eae18771c0c33cf2523793f699b6e28c4e979f	Kevin James Allan		DevCon2 Token Contract			false	false	false	false	false	false
 30-Contracts:Humanity DAO	0x40f353f412fd546d572e129c4c7477cb380b5c20	hapsavage		https://www.humanitydao.org/humans			false	false	false	false	false	false
-50-Tokens:ERC20	0x41284a88d970d3552a26fae680692ed40b34010c	Balancer Pool Token	BPT	On chain	18		false	false	false	true	true	false
+36-Balancer	0x41284a88d970d3552a26fae680692ed40b34010c	Balancer Pool Token 0x4128	BPT	On chain	18		false	false	false	true	true	false
 31-Gitcoin Grants:Grant	0x413db04a4d7207cae7a7686639ce68caac137bae	Grant 1692 Dappchaser		https://gitcoin.co/grants/1692/dappchaser			false	false	false	false	false	false
 31-Gitcoin Grants:Grant	0x413ed157a79f9197e2fcc6af89ef89e7da00e5f2	Grant 0674 Pixelart Crypto Portfolio		https://gitcoin.co/grants/674/pixelart-crypto-portfolio		https://twitter.com/Bighands_dev	false	false	false	false	false	false
 90-DevCon2:Individual	0x415655297a0f299d13acce68195890200c5d4a8b	ianjm		DevCon2 Token Contract			false	false	false	false	false	false
@@ -3771,7 +3771,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x814f67fa286f7572b041d041b1d99b432c9155ee	DRAGON	DRG	On chain	8		false	false	false	true	true	false
 31-Gitcoin Grants:Friends	0x81526fe1aea357f894fe770b255484b9456f9a4d	agoel006		Gitcoin Website			false	false	false	false	false	false
 81-Other	0x8154ae317a767e69d7f427aebdfbdddadcd5cf48	Rating		EtherScan.io			false	false	false	true	false	false
-50-Tokens:ERC20	0x815f8ef4863451f4faf34fbc860034812e7377d9	Balancer Pool Token	BPT	On chain	18		false	false	false	true	true	false
+36-Balancer	0x815f8ef4863451f4faf34fbc860034812e7377d9	Balancer Pool Token 0x815f	BPT	On chain	18		false	false	false	true	true	false
 80-Malicious:DaoDrain	0x8163e7fb499e90f8544ea62bbf80d21cd26d9efd	DAO Drain 020		GethSource			false	false	false	true	false	false
 50-Tokens:ERC20	0x81705082ef9f0d660f07be80093d46d826d48b25	Globalvillage ecosystem	GVE	On chain	18		false	false	false	true	true	false
 31-Gitcoin Grants:Grant	0x817b2e8579f63582c02ac03264ac35f051e7d27e	Grant 1611 Decentralized Docker Hub		https://gitcoin.co/grants/1611/decentralized-docker-hub			false	false	false	false	false	false
@@ -4062,7 +4062,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 30-Contracts:Humanity DAO	0x8b5d4632562d20e727a3919ec6353cf7c345cd47	0xfair		https://www.humanitydao.org/humans			false	false	false	false	false	false
 31-Gitcoin Grants:Friends	0x8b6af950c33e5208d5f42216f733e913bb28f42f	hexloveseth		Gitcoin Website			false	false	false	false	false	false
 81-Other	0x8b6b36d8bbde2605623d2b3f3b2e25496dc87144	DynamicToken_id320_cnt4_1mo		Ether Camp			false	false	false	true	false	false
-30-Contracts	0x8b6e6e7b5b3801fed2cafd4b22b8a16c2f2db21a	Balancer Pool Token	BPT	On chain	18		false	false	false	true	true	false
+36-Balancer	0x8b6e6e7b5b3801fed2cafd4b22b8a16c2f2db21a	Balancer Pool Token 0x8b6e	BPT	On chain	18		false	false	false	true	true	false
 31-Gitcoin Grants:Friends	0x8b7354f6c2748667da007aa2889045b0fce47e35	souciseehey		Gitcoin Website			false	false	false	false	false	false
 81-Other	0x8b803d9f2bd4aeaa2a7c5265fb5684fe3e68c879	EtherVote_id286_cnt4_2mo		Ether Camp			false	false	false	true	false	false
 30-Contracts:Humanity DAO	0x8b91c0dd24c4fd4f973e49ed8568921e31cf38b7	I'min		https://www.humanitydao.org/humans			false	false	false	false	false	false
@@ -4302,6 +4302,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 32-Kickback:Friends	0x9410a73737e73e105c7cbd57ba64a3073e6a0924	ejwessel		https://kickback.events/			false	false	false	false	false	false
 30-Contracts	0x941f40c2955ee09ba638409f67ef27c531fc055c	Vyper Multisend		EtherScan.io			false	false	false	true	false	false
 31-Gitcoin Grants:Grant	0x9423cd58e21c2e81d1bb4f476ac2cf90fe22e57b	Grant 0985 Nodedata		https://gitcoin.co/grants/985/nodedata			false	false	false	true	false	false
+36-Balancer	0x9424b1412450d0f8fc2255faf6046b98213b76bd	Balancer BFactory		EtherScan.io			false	false	false	true	false	false
 81-Other	0x943bbeef41460a3f0f3ac7f7a062128ad0ba9cb1	Dgxswap		EtherScan.io			false	false	false	true	false	false
 50-Tokens:ERC20	0x943ed852dadb5c3938ecdc6883718df8142de4c8	FTI	FTI	On chain	18		false	false	false	true	true	false
 81-Other	0x9448b35b4c9eea695dedff285e0cd8bc6c65e2b1	SPARA	BRA	On chain	18		false	false	false	true	true	false
@@ -5249,6 +5250,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0xb5dbc6d3cf380079df3b27135664b6bcf45d1869	Omix	OMX	On chain	8	Shivom will enable DNA data donors to collaborate with revolutionary changemakers in biotechnology, healthcare industry, and government-ordained research institutes and contribute to an unprecedented era of medical marvels.	false	false	false	true	true	false
 31-Gitcoin Grants:Grant	0xb5e48595afb989ddbc97763cd516ae3a983a3e36	Grant 0072 Poa Network Community Management Grant for Khizer		https://gitcoin.co/grants/72/poa-network-community-management-grant-for-khizer			false	false	false	false	false	false
 75-Early Actors	0xb5edd17d2582a94610ebf0c6832c1652ebbbe210	Miner_0025_274		OnChain			false	false	false	false	false	false
+36-Balancer	0xb618f903ad1d00d6f7b92f5b0954dcdc056fc533	Balancer DAO					false	false	false	true	false	false
 31-Gitcoin Grants:Grant	0xb61a98a0e542dcea1da7c44c2e8017373b95d350	Grant 1250 Borderless Basic Income -- Decentralized Ubi and Distributions		https://gitcoin.co/grants/1250/borderless-basic-income-decentralized-ubi-and-dis			false	false	false	false	false	false
 81-Other	0xb61fb596b0cc9fa829d678eb0b8a0e058c3f1b91	Jackpot		EtherScan.io			false	false	false	false	false	false
 50-Tokens:ERC20	0xb62132e35a6c13ee1ee0f84dc5d40bad8d815206	Nexo	NEXO	On chain	18	Instant Crypto-backed Loans	false	false	false	true	true	false
@@ -5375,6 +5377,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 80-Malicious:Shanghai	0xba0577e1419237fd4b8c14a6f49984f6466b5996	Possibly Malicious 0xba0		TrueBlocks.io			false	false	false	false	false	false
 34-Twitter: Friends	0xba09160818fb5b5384e921ed3f813e7f2af4ceee	danielle		Twitter		leo	false	false	false	false	false	false
 31-Gitcoin Grants:Grant	0xba0fee8490118fc4f46bd0974d7bf93d0e2f1064	Grant 0816 Grassroots Economics Cic Support - Kenya & Beyond (!panvala League!)		https://gitcoin.co/grants/816/grassroots-economics-cic-support-kenya-beyond-pan		https://www.grassrootseconomics.org/	false	false	false	false	false	false
+36-Balancer	0xba100000625a3754423978a60c9317c58a424e3d	Balancer	BAL	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0xba11d00c5f74255f56a5e366f4f77f5a186d7f55	BandToken	BAND	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0xba2184520a1cc49a6159c57e61e1844e085615b6	HelloGold Token	HGT	On chain	8	HelloGold is a start-up that creates simple and accessible gold products for everyone, providing access to gold as a form of savings, loan collateral and remittance	false	false	false	true	true	false
 30-Contracts	0xba2a44af3e4ecbfab560f8752f4565a9dff108f2	DolphinPod Elite		EtherScan.io			false	false	false	true	false	false
@@ -7164,7 +7167,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 30-Contracts	0xf97e0a5b616dffc913e72455fde9ea8bbe946a2b	CryptoKitties: Gene Science		EtherScan.io			false	false	false	true	false	false
 90-DevCon2:Individual	0xf986e17da5d99d8ab201b5cb8e517c5d3e0a91c0	Jordan Leigh		DevCon2 Token Contract			false	false	false	false	false	false
 31-Gitcoin Grants:Friends	0xf9ab04b9e99673cf71bd2c41cf79a4cb5e807b2d	minkoffski		Gitcoin Website			false	false	false	false	false	false
-30-Contracts	0xf9ab7776c7baeed1d65f0492fe2bb3951a1787ef	Balancer Pool Token	BPT	On chain	18		false	false	false	true	true	false
+36-Balancer	0xf9ab7776c7baeed1d65f0492fe2bb3951a1787ef	Balancer Pool Token 0xf9ab	BPT	On chain	18		false	false	false	true	true	false
 30-Contracts:Humanity DAO	0xf9adb4852142fa22d8de96c7cfceee500803f1f1	makevoid		https://www.humanitydao.org/humans			false	false	false	false	false	false
 32-Kickback:Friends	0xf9b0d1842b49213f855e505473159e41f5826f16	kn		https://kickback.events/			false	false	false	false	false	false
 30-Contracts	0xf9be8f0945acddeedaa64dfca5fe9629d0cf8e5d	Polling Emitter		EtherScan.io			false	false	false	true	false	false

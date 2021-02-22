@@ -43,7 +43,7 @@ class CNameStats {
     bool is_contract;
     bool is_erc20;
     bool is_erc721;
-    CNameStats(const CAccountName& acct, uint64_t c = 0) {
+    explicit CNameStats(const CAccountName& acct, uint64_t c = 0) {
         address = acct.address;
         tags = acct.tags;
         name = acct.name;

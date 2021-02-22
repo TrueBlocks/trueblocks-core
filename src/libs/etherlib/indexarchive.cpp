@@ -69,12 +69,12 @@ bool CIndexArchive::ReadIndexFromBinary(const string_q& path) {
     ASSERT(bytes_2_Hash(h->hash) == versionHash);
     nAddrs = header->nAddrs;
     nApps = header->nRows;
-    addresses = (CAddressRecord_base*)(rawData + sizeof(CHeaderRecord_base));
+    addresses = (CAddressRecord_base*)(rawData + sizeof(CHeaderRecord_base));  // NOLINT
     size_t aRecSize = sizeof(CAddressRecord_base);
     size_t sizeOfARecs = aRecSize * nAddrs;
     size_t sizeOfHeader = sizeof(CHeaderRecord_base);
     size_t size = sizeOfHeader + sizeOfARecs;
-    appearances = (CAppearance_base*)(rawData + size);
+    appearances = (CAppearance_base*)(rawData + size);  // NOLINT
     Release();
     return true;
 }

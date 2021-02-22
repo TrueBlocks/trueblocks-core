@@ -722,7 +722,7 @@ bool CReconciliation::reconcileUsingTraces(const CReconciliation& lastStatement,
     // If this transaction was read from cache, it will have the traces already. Moreover, they will be
     // articulated, so we only want to load traces if we don't already have them
     if (trans->traces.size() == 0) {
-        loadTraces(*((CTransaction*)trans), trans->blockNumber, trans->transactionIndex, false, false);
+        loadTraces(*((CTransaction*)trans), trans->blockNumber, trans->transactionIndex, false, false);  // NOLINT
     }
 
     for (auto trace : trans->traces) {
@@ -777,7 +777,7 @@ bool CReconciliation::reconcileUsingTraces(const CReconciliation& lastStatement,
     // TODO(tjayrush): add an option to the function to allow preservation of the traces.
     if (!reconciled) {
         // remove the traces if we don't need them to balance
-        ((CTransaction*)trans)->traces.clear();
+        ((CTransaction*)trans)->traces.clear();  // NOLINT
     } else {
         amountNet = endBal - begBal;
     }

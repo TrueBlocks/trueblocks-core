@@ -1078,7 +1078,7 @@ bool Value::isIntegral() const {
             // Note that maxUInt64 (= 2^64 - 1) is not exactly representable as a
             // double, so double(maxUInt64) will be rounded up to 2^64. Therefore we
             // require the value to be strictly less than the limit.
-            return value_.real_ >= double(minInt64) && value_.real_ < maxUInt64AsDouble && IsIntegral(value_.real_);
+            return (value_.real_ >= double(minInt64)) && (value_.real_ < maxUInt64AsDouble) && IsIntegral(value_.real_);
         default:
             break;
     }

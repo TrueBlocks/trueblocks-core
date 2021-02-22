@@ -366,7 +366,7 @@ const CBaseNode* CPinReport::getObjectAt(const string_q& fieldName, size_t index
     if (fieldName % "newPins") {
         if (index == NOPOS) {
             CPinnedItem empty;
-            ((CPinReport*)this)->newPins.push_back(empty);
+            ((CPinReport*)this)->newPins.push_back(empty);  // NOLINT
             index = newPins.size() - 1;
         }
         if (index < newPins.size())
@@ -376,7 +376,7 @@ const CBaseNode* CPinReport::getObjectAt(const string_q& fieldName, size_t index
     if (fieldName % "prevPins") {
         if (index == NOPOS) {
             CPinnedItem empty;
-            ((CPinReport*)this)->prevPins.push_back(empty);
+            ((CPinReport*)this)->prevPins.push_back(empty);  // NOLINT
             index = prevPins.size() - 1;
         }
         if (index < prevPins.size())

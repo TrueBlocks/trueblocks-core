@@ -136,7 +136,7 @@ bool COptions::parseArguments(string_q& command) {
                 address = terms[0];
             if (!isAddress(address) || isZeroAddr(address))
                 return usage("You must provide an address to crud commands.");
-            if (!processEditCommand(terms, to_custom)) // returns true on success
+            if (!processEditCommand(terms, to_custom))  // returns true on success
                 return false;
         }
     }
@@ -293,8 +293,10 @@ COptions::COptions(void) {
     notes.push_back("To customize the list of names add a `custom` section to the config file (see documentation).");
     // clang-format on
     // END_CODE_NOTES
-    notes.push_back("Name file: `" + configPathRelative("names/names.tab") + "` (" +
-                    uint_2_Str(fileSize(configPath("names/names.tab"))) + ")");
+    ostringstream os;
+    os << "Name file: `" << configPathRelative("names/names.tab") << "` (";
+    os << (isTestMode() ? "--size--" : uint_2_Str(fileSize(configPath("names/names.tab")))) << ")";
+    notes.push_back(os.str());
 
     // BEG_ERROR_MSG
     // END_ERROR_MSG

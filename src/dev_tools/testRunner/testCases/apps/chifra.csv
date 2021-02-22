@@ -1,14 +1,13 @@
 enabled,mode,speed,route,path/tool,filename,post,options,opt_cmd,has_env
-on,cmd,fast,null,apps/chifra,CLEANUP,n,CLEANUP
-on,cmd,fast,null,apps/chifra,copy1,n,COPYFILE -f ./testing_data/* ./
+on,cmd,fast,null,apps/chifra,RESET,n,RESET
 on,cmd,fast,null,apps/chifra,README,n,@th
 on,cmd,fast,null,apps/chifra,help,n,@h
 on,cmd,fast,null,apps/chifra,help_long,n,help
 on,cmd,fast,null,apps/chifra,chifra_help,n,help
-on,cmd,fast,null,apps/chifra,help_list,n,modes = list & help
+on,cmd,fast,null,apps/chifra,help_list,n,modes = monitor & help
 on,cmd,fast,null,apps/chifra,help_export,n,modes = export & help
 on,cmd,fast,null,apps/chifra,help_slurp,n,modes = slurp & help
-on,cmd,fast,null,apps/chifra,help_rm,n,modes = rm & help
+on,cmd,fast,null,apps/chifra,help_rm,n,modes = monitor & delete & help
 on,cmd,fast,null,apps/chifra,help_entities,n,modes = entities & help
 on,cmd,fast,null,apps/chifra,help_names,n,modes = names & help
 on,cmd,fast,null,apps/chifra,help_tags,n,modes = tags & help
@@ -28,8 +27,9 @@ on,cmd,fast,null,apps/chifra,help_when,n,modes = when & help
 on,cmd,fast,null,apps/chifra,help_where,n,modes = where & help
 on,cmd,fast,null,apps/chifra,no_params,n,
 on,cmd,fast,null,apps/chifra,invalid_option,n,modes = not_a_mode
-on,both,fast,list,apps/chifra,list,y,modes = list & addrs = 0xfb744b951d094b310262c8f986c860df9ab1de65 & end = 10000
-on,both,fast,rm,apps/chifra,rm,y,modes = rm & addrs = 0xfb744b951d094b310262c8f986c860df9ab1de65
+
+#on,both,fast,export,apps/chifra,list,y,modes = monitor & addrs = 0xfb744b951d094b310262c8f986c860df9ab1de65 & end = 10000
+on,both,fast,export,apps/chifra,rm,y,modes = monitor & addrs = 0x807640a13483f8ac783c557fcdf27be11ea4ac7a & remove
 on,both,fast,names,apps/chifra,names,y,modes = names & names = 50-Tokens & expand
 on,both,fast,names,apps/chifra,names_noparams,n,modes = names & names = 50-Tokens & fmt = txt
 on,both,fast,names,apps/chifra,names_badparams,y,modes = names & not_an_option
@@ -41,11 +41,11 @@ on,both,fast,blocks,apps/chifra,blocks_noparams,y,modes = blocks
 on,both,fast,blocks,apps/chifra,blocks_badparams,y,modes = blocks & not_an_option
 on,both,fast,blocks,apps/chifra,blocks,y,modes = blocks & blocks = 12
 on,both,fast,blocks,apps/chifra,blocks2,n,modes = blocks & blocks = 12 & fmt = csv & no_header
-off,both,fast,abis,apps/chifra,abi,y,modes = abis & addrs = 0x1234567812345678123456781234567812345678
+on,both,fast,abis,apps/chifra,abi,y,modes = abis & addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413
 on,both,fast,when,apps/chifra,when,y,modes = when & list
 on,both,fast,status,apps/chifra,status,y,modes = status all
 on,both,fast,status,apps/chifra,status_details,y,modes = status all & details & start = 1400000 & end = 2000000
-on,both,slow,export,apps/chifra,export,y,modes = export & addrs = 0xfdecc82ddfc56192e26f563c3d68cb544a96bfed & end = 10
+#on,both,slow,export,apps/chifra,export,y,modes = export & addrs = 0xfdecc82ddfc56192e26f563c3d68cb544a96bfed & end = 10
 #on,both,fast,null,apps/chifra,daemon_noparms,n,modes = scrape & daemon
 #on,both,fast,null,apps/chifra,daemon_badparms,n,modes = scrape & daemon & not_an_option
 #on,both,fast,null,apps/chifra,daemon,n,modes = scrape & daemon & sleep 10 & filter 0x1 0x2

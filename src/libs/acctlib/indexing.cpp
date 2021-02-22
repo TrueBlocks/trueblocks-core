@@ -157,7 +157,7 @@ bool chunkVisitFunc(const string_q& path, void* data) {
         return forEveryFileInFolder(path + "*", chunkVisitFunc, data);
 
     } else {
-        CChunkVisitor* visitor = (CChunkVisitor*)data;
+        CChunkVisitor* visitor = (CChunkVisitor*)data;  // NOLINT
         if (!visitor || !visitor->indexFunc)
             return false;
         CIndexArchive archive(READING_ARCHIVE);
@@ -191,7 +191,7 @@ bool addressVisitFunc(const string_q& path, void* data) {
         return forEveryFileInFolder(path + "*", chunkVisitFunc, data);
 
     } else {
-        CChunkVisitor* visitor = (CChunkVisitor*)data;
+        CChunkVisitor* visitor = (CChunkVisitor*)data;  // NOLINT
         if (!visitor || !visitor->addrFunc)
             return false;
         CIndexArchive archive(READING_ARCHIVE);
@@ -225,7 +225,7 @@ bool smartContractVisitFunc(const string_q& path, void* data) {
         return forEveryFileInFolder(path + "*", chunkVisitFunc, data);
 
     } else {
-        CChunkVisitor* visitor = (CChunkVisitor*)data;
+        CChunkVisitor* visitor = (CChunkVisitor*)data;  // NOLINT
         if (!visitor || !visitor->addrFunc)
             return false;
         CIndexArchive archive(READING_ARCHIVE);

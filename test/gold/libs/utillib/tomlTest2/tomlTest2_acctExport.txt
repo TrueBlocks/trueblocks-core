@@ -2,7 +2,7 @@ tomlTest2 argc: 2 [1:acctExport.toml]
 tomlTest2 acctExport.toml 
 tests/acctExport.toml
 [version]
-current = "0.8.3-alpha"
+current = "0.8.4-alpha"
 
 [settings]
 # writeBlocks = false

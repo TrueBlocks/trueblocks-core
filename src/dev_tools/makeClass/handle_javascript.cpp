@@ -180,9 +180,9 @@ bool COptions::handle_generate_js_pages(void) {
 
                 CStringArray fields;
                 for (auto line : lines) {
-                    if (fields.empty())
+                    if (fields.empty()) {
                         explode(fields, line, ',');
-                    else {
+                    } else {
                         CSchema schema;
                         schema.parseCSV(fields, line);
                         schemas.push_back(schema);
@@ -244,7 +244,7 @@ bool visitHelpFile(const string& path, void* data) {
     if (endsWith(path, "/")) {
         return forEveryFileInFolder(path + "*", visitHelpFile, data);
     } else {
-        CStringArray* array = (CStringArray*)data;
+        CStringArray* array = (CStringArray*)data;  // NOLINT
         array->push_back(path);
     }
     return true;
@@ -514,9 +514,9 @@ bool COptions::handle_generate_js_menus(void) {
                     // clang-format on
                 }
 
-                if (sub.isSeparator)
+                if (sub.isSeparator) {
                     tmpMenu << "        { label: 'Separator' }," << endl;
-                else if (sub.subpage != "") {
+                } else if (sub.subpage != "") {
                     tmpMenu << "        { label: '" << sub.subpage << "'";
                     if (!sub.route.empty())
                         tmpMenu << ", route: '" << sub.route << "'";

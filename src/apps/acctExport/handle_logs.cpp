@@ -20,14 +20,18 @@ bool COptions::handle_logs(void) {
         lastStatement.endBal = getBalanceAt(expContext().accountedFor, apps[0].blk - 1);
 
     bool first = true;
-    blknum_t lastExported = scanRange.second;
+    blknum_t lastExported = exportRange.second;
     for (size_t i = 0; i < apps.size() && (!freshen || (nProcessed < freshen_max)); i++) {
         const CAppearance_base* app = &apps[i];
         if (shouldQuit() || app->blk >= ts_cnt) {
             lastExported = app->blk - 1;
             break;
         }
-        if (inRange((blknum_t)app->blk, scanRange.first, scanRange.second)) {
+
+        // if (app->blk > exportRange.first)
+        //     LOG_TEST("passes", inRange((blknum_t)app->blk, exportRange.first, exportRange.second) ? "true" :
+        //     "false");
+        if (inRange((blknum_t)app->blk, exportRange.first, exportRange.second)) {
             CBlock block;  // do not move this from this scope
             block.blockNumber = app->blk;
             CTransaction trans;
@@ -66,7 +70,7 @@ bool COptions::handle_logs(void) {
                     blknum_t current = first_record + nProcessed;
                     blknum_t goal = min(first_record + max_records, nTransactions);
                     ostringstream post;
-                    post << " txs (max " << goal << ") for address " << monitors[0].address << "\r";
+                    post << " txs (max " << goal << ") for address " << allMonitors[0].address << "\r";
                     LOG_PROGRESS1("Reading", current, nTransactions, post.str());
                 }
 
@@ -114,7 +118,7 @@ bool COptions::handle_logs(void) {
                 markNeighbors(trans);
                 articulateAll(trans);
 
-                if ((write_opt & CACHE_TXS))
+                if (cache_txs)
                     writeTransToBinary(trans, txFilename);
 
                 HIDE_FIELD(CFunction, "message");
@@ -122,7 +126,7 @@ bool COptions::handle_logs(void) {
                     blknum_t current = first_record + nProcessed;
                     blknum_t goal = min(first_record + max_records, nTransactions);
                     ostringstream post;
-                    post << " txs (max " << goal << ") for address " << monitors[0].address;
+                    post << " txs (max " << goal << ") for address " << allMonitors[0].address;
                     if (!isApiMode())
                         post << " " << app->blk;
                     LOG_PROGRESS1("Extracting", current, nTransactions, post.str() + "\r");
@@ -130,7 +134,7 @@ bool COptions::handle_logs(void) {
             }
 
             for (auto log : trans.receipt.logs) {
-                if (!emitter || log.address == monitors[0].address) {
+                if (!emitter || log.address == allMonitors[0].address) {
                     nProcessed++;
                     if (shouldDisplay) {
                         cout << ((isJson() && !first) ? ", " : "");
@@ -139,14 +143,16 @@ bool COptions::handle_logs(void) {
                     }
                 }
             }
+        } else if (app->blk > exportRange.second) {
+            break;
         }
     }
 
     if (!isTestMode())
         LOG_PROGRESS1((freshen ? "Updated" : "Reported"), (first_record + nProcessed), nTransactions,
-                      " transactions for address " + monitors[0].address + "\r");
+                      " transactions for address " + allMonitors[0].address + "\r");
 
-    for (auto monitor : monitors)
+    for (auto monitor : allMonitors)
         monitor.updateLastExport(lastExported);
 
     reportNeighbors();

@@ -137,11 +137,11 @@ bool COptions::handle_config_get(ostream& os) {
         const CToml* cc = getGlobalConfig("acctExport");
         CConfigFile f("acctExport.toml");
         CConfigSection g1("Exporter", "settings");
-        string_q v2 = (isTestMode() ? "--write Txs--" : cc->getConfigStr(g1.name, "write_txs", "true"));
-        string_q v3 = (isTestMode() ? "--write Traces--" : cc->getConfigStr(g1.name, "write_traces", "true"));
-        CConfigItem i2("write_txs", v2, "bool", "write transactions to the TrueBlocks binary cache", false, false);
+        string_q v2 = (isTestMode() ? "--write Txs--" : cc->getConfigStr(g1.name, "cache_txs", "true"));
+        string_q v3 = (isTestMode() ? "--write Traces--" : cc->getConfigStr(g1.name, "cache_traces", "true"));
+        CConfigItem i2("cache_txs", v2, "bool", "write transactions to the TrueBlocks binary cache", false, false);
         g1.keys.push_back(i2);
-        CConfigItem i3("write_traces", v3, "bool", "write traces to the TrueBlocks binary cache", false, false);
+        CConfigItem i3("cache_traces", v3, "bool", "write traces to the TrueBlocks binary cache", false, false);
         g1.keys.push_back(i3);
         f.sections.push_back(g1);
         config.files.push_back(f);

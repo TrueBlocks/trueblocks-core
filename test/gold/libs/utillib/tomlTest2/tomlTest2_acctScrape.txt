@@ -1,8 +1,0 @@
-tomlTest2 argc: 2 [1:acctScrape.toml] 
-tomlTest2 acctScrape.toml 
-tests/acctScrape.toml
-[version]
-current = "0.8.3-alpha"
-
-[settings]
-# none = ""

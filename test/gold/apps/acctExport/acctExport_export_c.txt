@@ -1,4 +1,21 @@
 acctExport argc: 3 [1:0x001d14804b399c6ef80e64576f657660804fec0b] [2:--count] 
 acctExport 0x001d14804b399c6ef80e64576f657660804fec0b --count 
+TIME ~ CLOCK - <INFO>  : Monitor found for: 0x001d14804b399c6ef80e64576f657660804fec0b
+TIME ~ CLOCK - <INFO>  : Monitor path: /Users/jrush/.quickBlocks/mocked/monitors/0x001d14804b399c6ef80e64576f657660804fec0b.acct.bin
+TIME ~ CLOCK - <INFO>  : Last visited block: 11854827
+TIME ~ CLOCK - <INFO>  : m.getLastVisitedBlock(): 11854827
+TIME ~ CLOCK - <INFO>  : options->fileRange.first: 11854827
+TIME ~ CLOCK - <INFO>  : m.getLastVisitedBlock(): 11854827
+TIME ~ CLOCK - <INFO>  : options->fileRange.first: 11857782
+TIME ~ CLOCK - <INFO>  : stats.nFiles: --value--
+TIME ~ CLOCK - <INFO>  : stats.nSkipped: --value--
+TIME ~ CLOCK - <INFO>  : nMonitors: 1
+TIME ~ CLOCK - <INFO>  : exportRange.first: 0
+TIME ~ CLOCK - <INFO>  : exportRange.second: 18446744073709551615
+TIME ~ CLOCK - <INFO>  : listRange.first: 11854827
+TIME ~ CLOCK - <INFO>  : listRange.second: --latest--
+TIME ~ CLOCK - <INFO>  : first_record: 0
+TIME ~ CLOCK - <INFO>  : max_records: 18446744073709551615
+TIME ~ CLOCK - <INFO>  : count: true
 address	nrecords	filesize
 0x001d14804b399c6ef80e64576f657660804fec0b	3	24

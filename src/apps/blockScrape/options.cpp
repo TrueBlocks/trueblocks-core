@@ -225,8 +225,8 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     // Do not run if the index is being searched...
-    if (isRunning("acctScrape")) {
-        LOG_WARN("Refusing to run while acctScrape is running. Will restart shortly...");
+    if (isRunning("acctExport")) {
+        LOG_WARN("Refusing to run while acctExport is running. Will restart shortly...");
         return false;
     }
 
@@ -281,11 +281,11 @@ ScrapeState COptions::getCurrentState(void) {
     if (controlFile.empty())
         controlFile = configPath("cache/tmp/scraper-state.txt");
     stateStr = asciiFileToString(controlFile);
-    if (stateStr == "running")
+    if (stateStr == "running") {
         state = STATE_RUNNING;
-    else if (stateStr == "paused")
+    } else if (stateStr == "paused") {
         state = STATE_PAUSED;
-    else {
+    } else {
         state = STATE_STOPPED;
         stateStr = "stopped";
     }

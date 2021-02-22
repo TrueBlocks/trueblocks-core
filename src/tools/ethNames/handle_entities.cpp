@@ -52,10 +52,10 @@ void COptions::exportEntities(const CStringArray& terms) {
             if (first)
                 cout << exportPreamble(expContext().fmtMap["header"], entity.getRuntimeClass());
             if (isText) {
-                cout << substitute(substitute(substitute(trim(entity.Format(expContext().fmtMap["format"]), '\t'),
-                                                         "\n", "|"),
-                                              "\"", ""),
-                                   ",|", "|")
+                cout << substitute(
+                            substitute(substitute(trim(entity.Format(expContext().fmtMap["format"]), '\t'), "\n", "|"),
+                                       "\"", ""),
+                            ",|", "|")
                      << endl;
             } else {
                 if (!first)

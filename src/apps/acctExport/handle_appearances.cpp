@@ -8,8 +8,8 @@
 #define FREQ 5
 
 //-----------------------------------------------------------------------
-bool COptions::hanlde_appearances(void) {
-    ENTER("hanlde_appearances");
+bool COptions::handle_appearances(void) {
+    ENTER("handle_appearances");
 
     ASSERT(appearances);
     ASSERT(nodeHasBalances(false));
@@ -21,7 +21,9 @@ bool COptions::hanlde_appearances(void) {
         const CAppearance_base* app = &apps[i];
         if (shouldQuit() || app->blk >= ts_cnt)
             break;
-        if (inRange((blknum_t)app->blk, scanRange.first, scanRange.second)) {
+
+        // LOG_TEST("passes", inRange((blknum_t)app->blk, exportRange.first, exportRange.second) ? "true" : "false");
+        if (inRange((blknum_t)app->blk, exportRange.first, exportRange.second)) {
             nProcessed++;
             if (shouldDisplay) {
                 CAppearanceDisplay dapp(hackAppAddr, app->blk, app->txid);
@@ -29,12 +31,14 @@ bool COptions::hanlde_appearances(void) {
                 cout << dapp.Format() << endl;
                 first = false;
             }
+        } else if (app->blk > exportRange.second) {
+            break;
         }
     }
 
     if (!isTestMode())
         LOG_PROGRESS1((freshen ? "Updated" : "Reported"), (first_record + nProcessed), nTransactions,
-                      " appearances for address " + monitors[0].address + "\r");
+                      " appearances for address " + allMonitors[0].address + "\r");
 
     EXIT_NOMSG(true);
 }

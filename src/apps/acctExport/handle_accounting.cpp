@@ -20,9 +20,7 @@ bool COptions::handle_accounting(void) {
         lastStatement.endBal = getBalanceAt(expContext().accountedFor, apps[0].blk - 1);
 
     bool first = true;
-    blknum_t lastExported = scanRange.second;
-    //    LOG_INFO(cRed, "lastExported: ", lastExported, " scan.start: ", scanRange.first, " scan.end: ",
-    //    scanRange.second,
+    blknum_t lastExported = exportRange.second;
     //             " nApps: ", nApps, string_q(20, ' '), cOff);
     for (size_t i = 0; i < apps.size() && (!freshen || (nProcessed < freshen_max)); i++) {
         const CAppearance_base* app = &apps[i];
@@ -30,7 +28,9 @@ bool COptions::handle_accounting(void) {
             lastExported = app->blk - 1;
             break;
         }
-        if (inRange((blknum_t)app->blk, scanRange.first, scanRange.second)) {
+
+        // LOG_TEST("passes", inRange((blknum_t)app->blk, exportRange.first, exportRange.second) ? "true" : "false");
+        if (inRange((blknum_t)app->blk, exportRange.first, exportRange.second)) {
             CBlock block;  // do not move this from this scope
             block.blockNumber = app->blk;
             CTransaction trans;
@@ -69,7 +69,7 @@ bool COptions::handle_accounting(void) {
                     blknum_t current = first_record + i;
                     // blknum_t goal = min(first_record + max_records, nApps);
                     ostringstream post;
-                    post << " txs for address " << monitors[0].address;
+                    post << " txs for address " << allMonitors[0].address;
                     post << " " << first_record << " " << nProcessed << " " << i << " " << nTransactions << "\r";
                     LOG_PROGRESS1("Reading ", current, nTransactions, post.str());
                 }
@@ -118,7 +118,7 @@ bool COptions::handle_accounting(void) {
                 markNeighbors(trans);
                 articulateAll(trans);
 
-                if ((write_opt & CACHE_TXS))
+                if (cache_txs)
                     writeTransToBinary(trans, txFilename);
 
                 HIDE_FIELD(CFunction, "message");
@@ -126,7 +126,7 @@ bool COptions::handle_accounting(void) {
                     blknum_t current = first_record + i;
                     // blknum_t goal = min(first_record + max_records, nApp);
                     ostringstream post;
-                    post << " txs for address " << monitors[0].address;
+                    post << " txs for address " << allMonitors[0].address;
                     post << " " << first_record << " " << nProcessed << " " << i << " " << nTransactions << "\r";
                     LOG_PROGRESS1("Extract ", current, nTransactions, post.str());
                 }
@@ -138,17 +138,19 @@ bool COptions::handle_accounting(void) {
                 cout << trans.Format() << endl;
                 first = false;
             }
+        } else if (app->blk > exportRange.second) {
+            break;
         }
     }
 
     if (!isTestMode()) {
         LOG_PROGRESS1((freshen ? "Updated" : "Reported"), (first_record + nProcessed), nTransactions,
-                      " txs for address " + monitors[0].address);
+                      " txs for address " + allMonitors[0].address);
     }
 
     // LOG_INFO("n: ", monitors.size(), " lastExported: ", lastExported);
     // getchar();
-    for (auto monitor : monitors)
+    for (auto monitor : allMonitors)
         monitor.updateLastExport(lastExported);
 
     reportNeighbors();
@@ -185,7 +187,7 @@ void COptions::articulateAll(CTransaction& trans) {
         trans.hasToken |= isTokenFunc(trans.input);
 
         for (size_t j = 0; j < trans.receipt.logs.size(); j++) {
-            CLogEntry* log = (CLogEntry*)&trans.receipt.logs[j];
+            CLogEntry* log = (CLogEntry*)&trans.receipt.logs[j];  // NOLINT
             trans.hasToken |= isTokenTopic(log->topics[0]);
             string_q str = log->Format();
             if (contains(str, bytesOnly)) {
@@ -198,7 +200,7 @@ void COptions::articulateAll(CTransaction& trans) {
         }
 
         for (size_t j = 0; j < trans.traces.size(); j++) {
-            CTrace* trace = (CTrace*)&trans.traces[j];
+            CTrace* trace = (CTrace*)&trans.traces[j];  // NOLINT
             trans.hasToken |= isTokenFunc(trace->action.input);
             abiMap[trace->action.to]++;
             if (abiMap[trace->action.to] == 1 || fileExists(getCachePath("abis/" + trace->action.to))) {

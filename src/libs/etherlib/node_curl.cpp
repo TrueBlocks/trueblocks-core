@@ -272,11 +272,6 @@ void nodeNotRequired(void) {
 }
 
 //-------------------------------------------------------------------------
-void namesNotRequired(void) {
-    setenv("NO_NAMES", "true", true);
-}
-
-//-------------------------------------------------------------------------
 void nodeRequired(void) {
     getCurlContext()->nodeRequired = true;
     checkNodeRequired();

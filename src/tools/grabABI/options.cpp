@@ -145,7 +145,7 @@ bool COptions::parseArguments(string_q& command) {
 
     replace(format, "[{ADDRESS}]\t", "");
     replace(funcFields, "address,", "");
-    
+
     if (verbose && (expContext().exportFmt == JSON1 || expContext().exportFmt == API1)) {
         replaceAll(funcFields, "_name", "");
         replaceAll(format, "_NAME", "");

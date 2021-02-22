@@ -22,8 +22,8 @@ static const COption params[] = {
     COption("statements", "T", "", OPT_SWITCH, "export reconcilations instead of transaction list"),
     COption("accounting", "C", "", OPT_SWITCH, "export accounting records instead of transaction list"),
     COption("articulate", "a", "", OPT_SWITCH, "articulate transactions, traces, logs, and outputs"),
-    COption("write_txs", "i", "", OPT_SWITCH, "write transactions to the cache (see notes)"),
-    COption("write_traces", "R", "", OPT_SWITCH, "write traces to the cache (see notes)"),
+    COption("cache_txs", "i", "", OPT_SWITCH, "write transactions to the cache (see notes)"),
+    COption("cache_traces", "R", "", OPT_SWITCH, "write traces to the cache (see notes)"),
     COption("skip_ddos", "d", "", OPT_HIDDEN | OPT_TOGGLE, "toggle skipping over 2016 dDos transactions ('on' by default)"),  // NOLINT
     COption("max_traces", "m", "<uint64>", OPT_HIDDEN | OPT_FLAG, "if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250)"),  // NOLINT
     COption("freshen", "f", "", OPT_HIDDEN | OPT_SWITCH, "freshen but do not print the exported data"),
@@ -35,16 +35,15 @@ static const COption params[] = {
     COption("end", "E", "<blknum>", OPT_HIDDEN | OPT_DEPRECATED, "last block to process (inclusive)"),
     COption("first_record", "c", "<blknum>", OPT_HIDDEN | OPT_FLAG, "the first record to process"),
     COption("max_records", "e", "<blknum>", OPT_HIDDEN | OPT_FLAG, "the maximum number of records to process before reporting"),  // NOLINT
-    COption("staging", "s", "", OPT_HIDDEN | OPT_SWITCH, "ignored (preserved for backwards compatibility)"),
-    COption("unripe", "u", "", OPT_HIDDEN | OPT_SWITCH, "ignored (preserved for backwards compatibility)"),
+    COption("clean", "", "", OPT_HIDDEN | OPT_SWITCH, "clean (i.e. remove duplicate appearances) from all existing monitors"),  // NOLINT
+    COption("staging", "s", "", OPT_HIDDEN | OPT_SWITCH, "enable search of staging (not yet finalized) folder"),
+    COption("unripe", "u", "", OPT_HIDDEN | OPT_SWITCH, "enable search of unripe (neither staged nor finalized) folder (assumes --staging)"),  // NOLINT
     COption("", "", "", OPT_DESCRIPTION, "Export full detail of transactions for one or more Ethereum addresses."),
     // clang-format on
     // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
-extern int xor_options(bool, bool);
-extern string_q report_cache(int);
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
     ENTER("parseArguments");
@@ -54,15 +53,15 @@ bool COptions::parseArguments(string_q& command) {
     // BEG_CODE_LOCAL_INIT
     CAddressArray addrs;
     CTopicArray topics;
-    bool write_txs = false;
-    bool write_traces = false;
     blknum_t start = NOPOS;
     blknum_t end = NOPOS;
     bool staging = false;
     bool unripe = false;
     // END_CODE_LOCAL_INIT
 
-    latestBlock = getLatestBlock_client();
+    blknum_t unripeBlk, ripeBlk, stagingBlk, finalizedBlk;
+    getLatestBlocks(unripeBlk, ripeBlk, stagingBlk, finalizedBlk, latestBlock);
+
     blknum_t latest = latestBlock;
     string_q origCmd = command;
 
@@ -93,11 +92,11 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-a" || arg == "--articulate") {
             articulate = true;
 
-        } else if (arg == "-i" || arg == "--write_txs") {
-            write_txs = true;
+        } else if (arg == "-i" || arg == "--cache_txs") {
+            cache_txs = true;
 
-        } else if (arg == "-R" || arg == "--write_traces") {
-            write_traces = true;
+        } else if (arg == "-R" || arg == "--cache_traces") {
+            cache_traces = true;
 
         } else if (arg == "-d" || arg == "--skip_ddos") {
             skip_ddos = !skip_ddos;
@@ -138,6 +137,9 @@ bool COptions::parseArguments(string_q& command) {
             if (!confirmBlockNum("max_records", max_records, arg, latest))
                 return false;
 
+        } else if (arg == "--clean") {
+            clean = true;
+
         } else if (arg == "-s" || arg == "--staging") {
             staging = true;
 
@@ -162,39 +164,57 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    // Once we know how many exported appearances there will be (see loadAllAppearances), we will decide
-    // what to cache. If the user has either told us via the command line or the config file, we will
-    // use those settings. By default, user and config cache settins are off (0), so if they are
-    // not zero, we know the user has made their desires known.
-    const CToml* conf = getGlobalConfig("acctExport");
-
-    // Caching options (i.e. write_opt) are as per config file...
-    write_opt = xor_options(conf->getConfigBool("settings", "write_txs", false),
-                            conf->getConfigBool("settings", "write_traces", false));
-    if (write_opt)
-        write_opt |= CACHE_BYCONFIG;
-
-    // ...unless user has explicitly told us what to do on the command line...
-    if (contains(origCmd, "write")) {
-        write_opt = xor_options(write_txs, write_traces);
-        write_opt |= (CACHE_BYUSER);
+    if (clean) {
+        if (!handle_clean())
+            return usage("Clean function returned false.");
+        return false;
     }
 
-    // avoid warnings on Ubuntu 20.04
-    if (staging)
-        cerr << "";
-    if (unripe)
-        cerr << "";
+    // Handle the easy cases first...
+    if (isCrudCommand()) {
+        if (crudCommand == "delete" || crudCommand == "undelete" || crudCommand == "remove")
+            return handle_rm(addrs);
+        return usage("You may only use --delete, --undelete, or --remove on monitors.");
+    }
 
-    // ... but may not be done. In loadAllAppearances, if write_opt is not set by user, we set it to cache transactions
-    // or traces if there are less than 1,000 exported appearances
+    // We need at least one address to scrape...
+    if (addrs.size() == 0)
+        EXIT_USAGE("You must provide at least one Ethereum address.");
+
+    if ((appearances + receipts + logs + traces) > 1)
+        EXIT_USAGE("Please export only one of list, receipts, logs, or traces.");
+
+    if (emitter && !logs)
+        EXIT_USAGE("The emitter option is only available when exporting logs.");
+
+    if (emitter && addrs.size() > 1)
+        EXIT_USAGE("The emitter option is only available when exporting logs from a single address.");
+
+    if (factory && !traces)
+        EXIT_USAGE("The facotry option is only available when exporting traces.");
+
+    if (count && (receipts || logs || traces || emitter || factory))
+        EXIT_USAGE("--count option is only available with --appearances option.");
+
+    if ((accounting || statements) && (addrs.size() != 1))
+        EXIT_USAGE("You may only use --accounting option with a single address.");
+
+    if ((accounting || statements) && freshen)
+        EXIT_USAGE("Do not use the --accounting option with --freshen.");
+
+    if ((accounting || statements) && (appearances || logs || traces))
+        EXIT_USAGE("Do not use the --accounting option with other options.");
+
+    // Where will we start?
+    blknum_t firstBlockToVisit = NOPOS;
 
     for (auto addr : addrs) {
         CMonitor monitor;
-
         monitor.setValueByName("address", toLower(addr));
         monitor.setValueByName("name", toLower(addr));
-
+        monitor.clearLocks();
+        monitor.finishParse();
+        monitor.fm_mode = (fileExists(monitor.getMonitorPath(monitor.address)) ? FM_PRODUCTION : FM_STAGING);
         if (monitor.exists()) {
             string_q unused;
             if (monitor.isLocked(unused))
@@ -204,62 +224,259 @@ bool COptions::parseArguments(string_q& command) {
                     "Quit the already running program or, if it is not running, "
                     "remove the lock\n\tfile: " +
                     monitor.getMonitorPath(addr) + +".lck'. Proceeding anyway...");
-            monitor.clearLocks();
-            monitor.finishParse();
-            monitors.push_back(monitor);
+            string_q msg;
+            if (monitor.isLocked(msg))  // If locked, we fail
+                EXIT_USAGE(msg);
+            firstBlockToVisit = min(firstBlockToVisit, monitor.getLastVisited());
+            LOG_TEST("Monitor found for", addr);
+            LOG_TEST("Monitor path", monitor.getMonitorPath(monitor.address));
+            LOG_TEST("Last visited block", monitor.getLastVisitedBlock());
         } else {
-            LOG4("Monitor not found: ", monitor.address, ". Skipping...");
+            LOG_TEST("Monitor not found for", addr + ". Continuing anyway.");
+        }
+        allMonitors.push_back(monitor);
+    }
+
+    if (appearances || count)
+        articulate = false;
+    if (articulate) {
+        abi_spec.loadAbisFromKnown();
+        for (auto monitor : allMonitors) {
+            if (isContractAt(monitor.address, latestBlock))
+                abi_spec.loadAbiFromEtherscan(monitor.address);
         }
     }
 
-    if (start != NOPOS)
-        scanRange.first = start;
-    if (end != NOPOS)
-        scanRange.second = end;
+    if (!setDisplayFormatting())
+        return false;
 
-    SHOW_FIELD(CTransaction, "traces");
+    // Are we visiting unripe and/or staging in our search?
+    if (staging)
+        visitTypes |= VIS_STAGING;
+    if (unripe) {
+        if (!(visitTypes & VIS_STAGING))
+            EXIT_USAGE("You must also specify --staging when using --unripe.");
+        visitTypes |= VIS_UNRIPE;
+    }
 
-    if ((appearances + receipts + logs + traces) > 1)
-        EXIT_USAGE("Please export only one of list, receipts, logs, or traces.");
+    // Last block depends on scrape type or user input `end` option (with appropriate check)
+    blknum_t lastBlockToVisit = max((blknum_t)1, (visitTypes & VIS_UNRIPE)    ? unripeBlk
+                                                 : (visitTypes & VIS_STAGING) ? stagingBlk
+                                                                              : finalizedBlk);
 
-    if (emitter && !logs)
-        EXIT_USAGE("The emitter option is only available when exporting logs.");
+    // Mark the range...
+    listRange = make_pair((firstBlockToVisit == NOPOS ? 0 : firstBlockToVisit), lastBlockToVisit);
 
-    if (emitter && monitors.size() > 1)
-        EXIT_USAGE("The emitter option is only available when exporting logs from a single address.");
-
-    if (factory && !traces)
-        EXIT_USAGE("The facotry option is only available when exporting traces.");
-
-    if (monitors.size() == 0)
-        EXIT_USAGE("You must provide at least one Ethereum address.");
+    if (!freshen_internal())  // getEnvStr("FRESHEN_FLAG S")))
+        return usage("'freshen_internal' returned false.");
 
     if (count) {
-        if (receipts || logs || traces || emitter || factory)
-            EXIT_USAGE("--count option is only available with --appearances option.");
-        bool isText = expContext().exportFmt != JSON1 && expContext().exportFmt != API1;
-        string_q format =
-            getGlobalConfig("acctExport")->getConfigStr("display", "format", isText ? STR_DISPLAY_MONITORCOUNT : "");
-        expContext().fmtMap["monitorcount_fmt"] = cleanFmt(format);
-        expContext().fmtMap["header"] = isNoHeader ? "" : cleanFmt(format);
-        for (auto monitor : monitors) {
+        for (auto monitor : allMonitors) {
             CMonitorCount monCount;
             monCount.address = monitor.address;
             monCount.fileSize = fileSize(monitor.getMonitorPath(monitor.address));
             monCount.nRecords = monCount.fileSize / sizeof(CAppearance_base);
             counts.push_back(monCount);
         }
+    }
+
+    // If the chain is behind the monitor (for example, the user is re-syncing), quit silently...
+    if (latest < listRange.first) {
+        LOG4("Chain is behind the monitor.");
+        EXIT_NOMSG(false);
+    }
+
+    if (start != NOPOS)
+        exportRange.first = start;
+    if (end != NOPOS)
+        exportRange.second = end;
+
+    // OLD_CODE
+    //    // Accumulate the addresses into the allMonitors list and decide where we should start
+    //    for (auto addr : addrs) {
+    //        CMonitor monitor;
+    //
+    //        monitor.setValueByName("address", toLower(addr));
+    //        monitor.setValueByName("name", toLower(addr));
+    //
+    //        if (monitor.exists()) {
+    //            string_q unused;
+    //            if (monitor.isLocked(unused))
+    //                LOG_ERR(
+    //                        "The cache file is locked. The program is either already "
+    //                        "running or it did not end cleanly the\n\tlast time it ran. "
+    //                        "Quit the already running program or, if it is not running, "
+    //                        "remove the lock\n\tfile: " +
+    //                        monitor.getMonitorPath(addr) + +".lck'. Proceeding anyway...");
+    //            monitor.clearLocks();
+    //            monitor.finishParse();
+    //            monitor.fm_mode = (fileExists(monitor.getMonitorPath(monitor.address)) ? FM_PRODUCTION :
+    //            FM_STAGING); string_q msg; if (monitor.isLocked(msg))  // If locked, we fail
+    //                EXIT_USAGE(msg);
+    //            firstBlockToVisit = min(firstBlockToVisit, monitor.getLastVisited());
+    //        } else {
+    //            monitor.clearLocks();
+    //            monitor.finishParse();
+    //            monitor.fm_mode = (fileExists(monitor.getMonitorPath(monitor.address)) ? FM_PRODUCTION :
+    //            FM_STAGING); cleanMonitorStage(); if (visitTypes & VIS_FINAL)
+    //                forEveryFileInFolder(indexFolder_blooms, visitFinalIndexFiles, this);
+    //            if (visitTypes & VIS_STAGING)
+    //                forEveryFileInFolder(indexFolder_staging, visitStagingIndexFiles, this);
+    //            if (visitTypes & VIS_UNRIPE)
+    //                forEveryFileInFolder(indexFolder_unripe, visitUnripeIndexFiles, this);
+    //            //            for (auto monitor : allMonitors) {
+    //            monitor.moveToProduction();
+    //            LOG4(monitor.address, " freshened to ", monitor.getLastVisited(true /* fresh */));
+    //            //            }
+    //            string_q msg;
+    //            if (monitor.isLocked(msg))  // If locked, we fail
+    //                EXIT_USAGE(msg);
+    //            firstBlockToVisit = min(firstBlockToVisit, monitor.getLastVisited());
+    //        }
+    //        if (monitor.exists()) {
+    //            allMonitors.push_back(monitor);
+    //        } else {
+    //            LOG4("Monitor not found: ", monitor.address, ". Skipping...");
+    //        }
+    //    }
+
+    LOG_TEST("nMonitors", allMonitors.size());
+    LOG_TEST("exportRange.first", exportRange.first);
+    LOG_TEST("exportRange.second", exportRange.second);
+    LOG_TEST("listRange.first", listRange.first);
+    LOG_TEST("listRange.second", "--latest--");
+    LOG_TEST("first_record", first_record);
+    LOG_TEST("max_records", max_records);
+    LOG_TEST_BOOL("appearances", appearances);
+    LOG_TEST_BOOL("receipts", receipts);
+    LOG_TEST_BOOL("logs", logs);
+    LOG_TEST_BOOL("traces", traces);
+    LOG_TEST_BOOL("statements", statements);
+    LOG_TEST_BOOL("articulate", articulate);
+    LOG_TEST_BOOL("freshen", freshen);
+    LOG_TEST_BOOL("factory", factory);
+    LOG_TEST_BOOL("emitter", emitter);
+    // LOG_TEST_BOOL("to", to);
+    // LOG_TEST_BOOL("from", from);
+    LOG_TEST_BOOL("count", count);
+    LOG_TEST_BOOL("clean", clean);
+
+    EXIT_NOMSG(true);
+}
+
+//---------------------------------------------------------------------------------------------------
+void COptions::Init(void) {
+    registerOptions(nParams, params);
+    optionOn(OPT_PREFUND);
+    optionOn(OPT_CRUD);
+    // Since we need prefunds, let's load the names library here
+    CAccountName unused;
+    getNamedAccount(unused, "0x0");
+
+    // BEG_CODE_INIT
+    appearances = false;
+    receipts = false;
+    logs = false;
+    traces = false;
+    statements = false;
+    accounting = false;
+    articulate = false;
+    cache_txs = getGlobalConfig("acctExport")->getConfigBool("settings", "cache_txs", false);
+    cache_traces = getGlobalConfig("acctExport")->getConfigBool("settings", "cache_traces", false);
+    skip_ddos = getGlobalConfig("acctExport")->getConfigBool("settings", "skip_ddos", true);
+    max_traces = getGlobalConfig("acctExport")->getConfigInt("settings", "max_traces", 250);
+    freshen = false;
+    freshen_max = 5000;
+    factory = false;
+    emitter = false;
+    count = false;
+    first_record = 0;
+    max_records = NOPOS;
+    clean = false;
+    // END_CODE_INIT
+
+    nProcessed = 0;
+    nProcessing = 0;
+    nTransactions = 0;
+    nCacheItemsRead = 0;
+    nCacheItemsWritten = 0;
+    listRange.second = getLatestBlock_cache_ripe();
+
+    allMonitors.clear();
+    counts.clear();
+    apps.clear();
+
+    expContext().accountedFor = "";
+    bytesOnly = "";
+
+    // We don't clear these because they are part of meta data
+    // prefundAddrMap.clear();
+    // blkRewardMap.clear();
+    // toNameExistsMap.clear();
+    // fromNameExistsMap.clear();
+    // abiMap.clear();
+
+    oldestMonitor = latestDate;
+
+    minArgs = 0;
+    fileRange = make_pair(NOPOS, NOPOS);
+    visitTypes = VIS_FINAL;
+    allMonitors.clear();
+    possibles.clear();
+
+    // Establish folders. This may be redundant, but it's cheap.
+    establishMonitorFolders();
+    establishFolder(indexFolder);
+    establishFolder(indexFolder_finalized);
+    establishFolder(indexFolder_blooms);
+    establishFolder(indexFolder_staging);
+    establishFolder(indexFolder_unripe);
+    establishFolder(indexFolder_ripe);
+    establishFolder(configPath("cache/tmp/"));
+}
+
+//---------------------------------------------------------------------------------------------------
+COptions::COptions(void) {
+    setSorts(GETRUNTIME_CLASS(CBlock), GETRUNTIME_CLASS(CTransaction), GETRUNTIME_CLASS(CReceipt));
+    ts_array = NULL;
+    ts_cnt = 0;
+    Init();
+
+    CMonitorCount::registerClass();
+    CAppearanceDisplay::registerClass();
+
+    // BEG_CODE_NOTES
+    // clang-format off
+    notes.push_back("`addresses` must start with '0x' and be forty two characters long.");
+    notes.push_back("By default, transactions and traces are cached if the number of exported | items is <= to 1,000 items. Otherwise, if you specify any `write_*` options, | your preference predominates.");  // NOLINT
+    // clang-format on
+    // END_CODE_NOTES
+
+    // BEG_ERROR_MSG
+    // END_ERROR_MSG
+}
+
+//--------------------------------------------------------------------------------
+COptions::~COptions(void) {
+}
+
+//--------------------------------------------------------------------------------
+bool COptions::setDisplayFormatting(void) {
+    ENTER("setDisplayFormatting");
+
+    if (count) {
+        bool isText = expContext().exportFmt != JSON1 && expContext().exportFmt != API1;
+        string_q format =
+            getGlobalConfig("acctExport")->getConfigStr("display", "format", isText ? STR_DISPLAY_MONITORCOUNT : "");
+        expContext().fmtMap["monitorcount_fmt"] = cleanFmt(format);
+        expContext().fmtMap["header"] = isNoHeader ? "" : cleanFmt(format);
 
     } else {
-        // show certain fields and hide others
-        // SEP4("default field hiding: " + defHide);
         string_q hide = substitute(defHide, "|CLogEntry: data, topics", "");
         manageFields(hide, false);
-        // SEP4("default field showing: " + defShow);
         string_q show =
             defShow + (isApiMode() ? "|CTransaction:encoding,function,input,etherGasCost|CTrace:traceAddress" : "");
         manageFields(show, true);
-
         if (expContext().exportFmt != JSON1 && expContext().exportFmt != API1) {
             string_q format;
 
@@ -302,6 +519,7 @@ bool COptions::parseArguments(string_q& command) {
         HIDE_FIELD(CTransaction, "datesh");
         HIDE_FIELD(CTransaction, "time");
         HIDE_FIELD(CTransaction, "age");
+        SHOW_FIELD(CTransaction, "traces");
 
         expContext().fmtMap["header"] = "";
         if (!isNoHeader) {
@@ -320,17 +538,16 @@ bool COptions::parseArguments(string_q& command) {
             }
         }
 
+        if (logs) {
+            SHOW_FIELD(CLogEntry, "blockNumber");
+            SHOW_FIELD(CLogEntry, "transactionIndex");
+        }
+
         if (freshen)
             expContext().exportFmt = NONE1;
 
         if (accounting || statements) {
-            if (addrs.size() != 1)
-                EXIT_USAGE("You may only use --accounting option with a single address.");
-            if (freshen)
-                EXIT_USAGE("Do not use the --accounting option with --freshen.");
-            if (appearances || logs || traces)
-                EXIT_USAGE("Do not use the --accounting option with other options.");
-            expContext().accountedFor = addrs[0];
+            expContext().accountedFor = allMonitors[0].address;
             bytesOnly = substitute(expContext().accountedFor, "0x", "");
             articulate = true;
             manageFields("CTransaction:statements", true);
@@ -348,151 +565,109 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    if (logs) {
-        SHOW_FIELD(CLogEntry, "blockNumber");
-        SHOW_FIELD(CLogEntry, "transactionIndex");
-    }
+    // TODO(tjayrush): This doesn't work for some reason (see test case acctExport_export_logs.txt)
+    if (!articulate)
+        HIDE_FIELD(CLogEntry, "compressedTx");
 
-    if (appearances || count)
-        articulate = false;
-
-    if (articulate) {
-        abi_spec.loadAbisFromKnown();
-        for (auto monitor : monitors) {
-            if (isContractAt(monitor.address, latestBlock))
-                abi_spec.loadAbiFromEtherscan(monitor.address);
-        }
-    }
-
-    EXIT_NOMSG(true);
+    return true;
 }
 
-//---------------------------------------------------------------------------------------------------
-void COptions::Init(void) {
-    registerOptions(nParams, params);
-    optionOn(OPT_PREFUND);
-    // Since we need prefunds, let's load the names library here
-    CAccountName unused;
-    getNamedAccount(unused, "0x0");
-
-    // BEG_CODE_INIT
-    appearances = false;
-    receipts = false;
-    logs = false;
-    traces = false;
-    statements = false;
-    accounting = false;
-    articulate = false;
-    skip_ddos = getGlobalConfig("acctExport")->getConfigBool("settings", "skip_ddos", true);
-    max_traces = getGlobalConfig("acctExport")->getConfigInt("settings", "max_traces", 250);
-    freshen = false;
-    freshen_max = 5000;
-    factory = false;
-    emitter = false;
-    count = false;
-    first_record = 0;
-    max_records = NOPOS;
-    // END_CODE_INIT
-
-    nProcessed = 0;
-    nProcessing = 0;
-    nTransactions = 0;
-    nCacheItemsRead = 0;
-    nCacheItemsWritten = 0;
-    scanRange.second = getLatestBlock_cache_ripe();
-
-    monitors.clear();
-    counts.clear();
-    apps.clear();
-
-    expContext().accountedFor = "";
-    bytesOnly = "";
-
-    // We don't clear these because they are part of meta data
-    // prefundAddrMap.clear();
-    // blkRewardMap.clear();
-    // toNameExistsMap.clear();
-    // fromNameExistsMap.clear();
-    // abiMap.clear();
-
-    oldestMonitor = latestDate;
-
-    minArgs = 0;
-}
-
-//---------------------------------------------------------------------------------------------------
-COptions::COptions(void) {
-    setSorts(GETRUNTIME_CLASS(CBlock), GETRUNTIME_CLASS(CTransaction), GETRUNTIME_CLASS(CReceipt));
-    ts_array = NULL;
-    ts_cnt = 0;
-    Init();
-
-    CMonitorCount::registerClass();
-    CAppearanceDisplay::registerClass();
-
-    // BEG_CODE_NOTES
-    // clang-format off
-    notes.push_back("`addresses` must start with '0x' and be forty two characters long.");
-    notes.push_back("By default, transactions and traces are cached if the number of exported | items is <= to 1,000 items. Otherwise, if you specify any `write_*` options, | your preference predominates.");  // NOLINT
-    // clang-format on
-    // END_CODE_NOTES
-
-    // BEG_ERROR_MSG
-    // END_ERROR_MSG
-}
-
-//--------------------------------------------------------------------------------
-COptions::~COptions(void) {
-}
-
-//------------------------------------------------------------------------
-int xor_options(bool txs, bool traces) {
-    int ret = CACHE_NONE;
-    if (txs)
-        ret |= CACHE_TXS;
-    if (traces)
-        ret |= CACHE_TRACES;
-    return ret;
-}
-
-//------------------------------------------------------------------------
-string_q report_cache(int opt) {
-    ostringstream os;
-    if (opt == CACHE_NONE) {
-        os << "CACHE_NONE ";
+#define LOG_TEST_VAL(a, b)                                                                                             \
+    {                                                                                                                  \
+        if (b != 0)                                                                                                    \
+            LOG_TEST(a, "--value--")                                                                                   \
     }
-    if (opt & CACHE_TXS) {
-        os << "CACHE_TXS ";
+
+//------------------------------------------------------------------------------------------------
+bool COptions::freshen_internal(void) {
+    LOG_TEST_VAL("stats.nFiles", stats.nFiles);
+    LOG_TEST_VAL("stats.nSkipped", stats.nSkipped);
+    LOG_TEST_VAL("stats.nChecked", stats.nChecked);
+    LOG_TEST_VAL("stats.nBloomMisses", stats.nBloomMisses);
+    LOG_TEST_VAL("stats.nBloomHits", stats.nBloomHits);
+    LOG_TEST_VAL("stats.nFalsePositive", stats.nFalsePositive);
+    LOG_TEST_VAL("stats.nPositive", stats.nPositive);
+    LOG_TEST_VAL("stats.nRecords", stats.nRecords);
+
+    // Clean the monitor stage of previously unfinished scrapes
+    cleanMonitorStage();
+
+    if (visitTypes & VIS_FINAL)
+        forEveryFileInFolder(indexFolder_blooms, visitFinalIndexFiles, this);
+
+    if (visitTypes & VIS_STAGING)
+        forEveryFileInFolder(indexFolder_staging, visitStagingIndexFiles, this);
+
+    if (visitTypes & VIS_UNRIPE)
+        forEveryFileInFolder(indexFolder_unripe, visitUnripeIndexFiles, this);
+
+    for (auto monitor : allMonitors) {
+        monitor.moveToProduction();
+        LOG4(monitor.address, " freshened to ", monitor.getLastVisited(true /* fresh */));
     }
-    if (opt & CACHE_TRACES) {
-        os << "CACHE_TRACES ";
-    }
-    if (opt & CACHE_BYCONFIG) {
-        os << "CACHE_BYCONFIG ";
-    }
-    if (opt & CACHE_BYUSER) {
-        os << "CACHE_BYUSER ";
-    }
-    if (opt & CACHE_BYDEFAULT) {
-        os << "CACHE_BYDEFAULT ";
-    }
-    return os.str();
+
+    LOG_TEST_VAL("stats.nFiles", stats.nFiles);
+    LOG_TEST_VAL("stats.nSkipped", stats.nSkipped);
+    LOG_TEST_VAL("stats.nChecked", stats.nChecked);
+    LOG_TEST_VAL("stats.nBloomMisses", stats.nBloomMisses);
+    LOG_TEST_VAL("stats.nBloomHits", stats.nBloomHits);
+    LOG_TEST_VAL("stats.nFalsePositive", stats.nFalsePositive);
+    LOG_TEST_VAL("stats.nPositive", stats.nPositive);
+    LOG_TEST_VAL("stats.nRecords", stats.nRecords);
+
+    // OLD_CODE
+    // size_t cnt = 0, cnt2 = 0;
+    // string_q tenAddresses;
+    // for (auto f : fa) {
+    //     bool needsUpdate = true;
+    //     if (needsUpdate) {
+    //         LOG4(cTeal, "Needs update ", f.address, string_q(80, ' '), cOff);
+    //         tenAddresses += (f.address + " ");
+    //         if (!(++cnt % 10)) {  // we don't want to do too many addrs at a time
+    //             tenAddresses += "|";
+    //             cnt = 0;
+    //         }
+    //     } else {
+    //         LOG4(cTeal, "Updating addresses ", f.address, " ", cnt2, " of ", fa.size(), string_q(80, ' '), cOff,
+    //         "\r");
+    //     }
+    //     cnt2++;
+    // }
+
+    // // Process them until we're done
+    // uint64_t cur = 0;
+    // while (!tenAddresses.empty()) {
+    //     string_q thisFive = nextTokenClear(tenAddresses, '|');
+    //     string_q cmd = substitute(base.str(), "[ADDRS]", thisFive);
+    //     // LOG_CALL(cmd);
+    //     // clang-format off
+    //     uint64_t n = countOf(thisFive, ' ');
+    //     if (fa.size() > 1)
+    //         LOG_INFO(cTeal, "Updating addresses ", cur+1, "-", (cur+n), " of ", fa.size(), string_q(80, ' '), cOff);
+    //     cur += n;
+    //     LOG_TEST("cmd: ", cmd);
+    //     if (system(cmd.c_str())) {}  // Don't remove cruft. Silences compiler warnings
+    //     // clang-format on
+    //     if (!tenAddresses.empty())
+    //         usleep(50000);  // this sleep is here so that chifra remains responsive to Cntl+C. Do not remove
+    // }
+
+    // for (CMonitor& f : fa)
+    //     f.needsRefresh = (f.cntBefore != f.getRecordCount());
+
+    return true;
+    // // EXIT_NOMSG(true);
 }
 
 // TODO(tjayrush): If an abi file is changed, we should re-articulate.
-// TODO(tjayrush): accounting must be API mode -- why?
 // TODO(tjayrush): accounting can not be freshen, appearances, logs, receipts, traces, but must be articulate - why?
 // TODO(tjayrush): accounting must be exportFmt API1 - why?
 // TODO(tjayrush): accounting must be for one monitor address - why?
 // TODO(tjayrush): accounting requires node balances - why?
-// TODO(tjayrush): Used to ask if any ABI files were newer than monitors, noted it (knownIsStale) and then would
-// re-articulate
+// TODO(tjayrush): Used to do this: if any ABI files was newer, re-read abi and re-articulate in cache
 // TODO(tjayrush): What does prefundAddrMap and prefundWeiMap do? Needs testing
 // TODO(tjayrush): What does blkRewardMap do? Needs testing
-// TODO(tjayrush): Reconciliation loads traces -- plus it reduplicates the isSuicide, isGeneration, isUncle shit (I
-// think)
-// TODO(tjayrush): Used to use toAddrMap[trans.to] to see it we've already loaded the abi to avoid loading it more than
-// once
+// TODO(tjayrush): Reconciliation loads traces -- plus it reduplicates the isSuicide, isGeneration, isUncle shit
 // TODO(tjayrush): updateLastExport is really weird
 // TODO(tjayrush): writeLastBlock is really weird
 // TODO(tjayrush): We used to write traces sometimes

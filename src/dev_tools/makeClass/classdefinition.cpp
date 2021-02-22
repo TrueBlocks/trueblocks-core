@@ -472,7 +472,7 @@ const CBaseNode* CClassDefinition::getObjectAt(const string_q& fieldName, size_t
     if (fieldName % "fieldArray") {
         if (index == NOPOS) {
             CParameter empty;
-            ((CClassDefinition*)this)->fieldArray.push_back(empty);
+            ((CClassDefinition*)this)->fieldArray.push_back(empty);  // NOLINT
             index = fieldArray.size() - 1;
         }
         if (index < fieldArray.size())

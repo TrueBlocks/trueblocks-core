@@ -1,5 +1,7 @@
 chifra argc: 3 [1:transactions] [2:--help] 
 chifra transactions --help 
+TIME ~ CLOCK - <INFO>  : mode: transactions
+TIME ~ CLOCK - : 4-----call_command ----> getTrans --help
 chifra transactions argc: 2 [1:--help] 
 chifra transactions --help 
 PROG_NAME = [chifra transactions]

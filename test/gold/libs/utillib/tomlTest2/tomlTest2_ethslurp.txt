@@ -2,7 +2,7 @@ tomlTest2 argc: 2 [1:ethslurp.toml]
 tomlTest2 ethslurp.toml 
 tests/ethslurp.toml
 [version]
-current = "0.8.3-alpha"
+current = "0.8.4-alpha"
 
 [settings]
 api_provider = "EtherScan"

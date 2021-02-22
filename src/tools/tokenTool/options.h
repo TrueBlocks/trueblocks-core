@@ -14,7 +14,7 @@
 #include "etherlib.h"
 #include "stake.h"
 
-//#define DEBUGGING 1
+// #define DEBUGGING 1
 
 class COptions;
 //-----------------------------------------------------------------------------
