@@ -31,7 +31,7 @@ class CCounter {
     void loadFromFile(void) {
         string_q contents;
         asciiFileToString("./data/countsByWeek.txt", contents);
-        if (contents.empty()){
+        if (contents.empty()) {
             cerr << "Error: /data/countsByWeek.txt contents is empty" << '\n';
             return;
         }
