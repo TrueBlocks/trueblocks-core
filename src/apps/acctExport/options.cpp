@@ -291,55 +291,6 @@ bool COptions::parseArguments(string_q& command) {
     if (end != NOPOS)
         exportRange.second = end;
 
-    // OLD_CODE
-    //    // Accumulate the addresses into the allMonitors list and decide where we should start
-    //    for (auto addr : addrs) {
-    //        CMonitor monitor;
-    //
-    //        monitor.setValueByName("address", toLower(addr));
-    //        monitor.setValueByName("name", toLower(addr));
-    //
-    //        if (monitor.exists()) {
-    //            string_q unused;
-    //            if (monitor.isLocked(unused))
-    //                LOG_ERR(
-    //                        "The cache file is locked. The program is either already "
-    //                        "running or it did not end cleanly the\n\tlast time it ran. "
-    //                        "Quit the already running program or, if it is not running, "
-    //                        "remove the lock\n\tfile: " +
-    //                        monitor.getMonitorPath(addr) + +".lck'. Proceeding anyway...");
-    //            monitor.clearLocks();
-    //            monitor.finishParse();
-    //            monitor.fm_mode = (fileExists(monitor.getMonitorPath(monitor.address)) ? FM_PRODUCTION :
-    //            FM_STAGING); string_q msg; if (monitor.isLocked(msg))  // If locked, we fail
-    //                EXIT_USAGE(msg);
-    //            firstBlockToVisit = min(firstBlockToVisit, monitor.getLastVisited());
-    //        } else {
-    //            monitor.clearLocks();
-    //            monitor.finishParse();
-    //            monitor.fm_mode = (fileExists(monitor.getMonitorPath(monitor.address)) ? FM_PRODUCTION :
-    //            FM_STAGING); cleanMonitorStage(); if (visitTypes & VIS_FINAL)
-    //                forEveryFileInFolder(indexFolder_blooms, visitFinalIndexFiles, this);
-    //            if (visitTypes & VIS_STAGING)
-    //                forEveryFileInFolder(indexFolder_staging, visitStagingIndexFiles, this);
-    //            if (visitTypes & VIS_UNRIPE)
-    //                forEveryFileInFolder(indexFolder_unripe, visitUnripeIndexFiles, this);
-    //            //            for (auto monitor : allMonitors) {
-    //            monitor.moveToProduction();
-    //            LOG4(monitor.address, " freshened to ", monitor.getLastVisited(true /* fresh */));
-    //            //            }
-    //            string_q msg;
-    //            if (monitor.isLocked(msg))  // If locked, we fail
-    //                EXIT_USAGE(msg);
-    //            firstBlockToVisit = min(firstBlockToVisit, monitor.getLastVisited());
-    //        }
-    //        if (monitor.exists()) {
-    //            allMonitors.push_back(monitor);
-    //        } else {
-    //            LOG4("Monitor not found: ", monitor.address, ". Skipping...");
-    //        }
-    //    }
-
     LOG_TEST("nMonitors", allMonitors.size());
     LOG_TEST("exportRange.first", exportRange.first);
     LOG_TEST("exportRange.second", exportRange.second);
@@ -615,48 +566,7 @@ bool COptions::freshen_internal(void) {
     LOG_TEST_VAL("stats.nPositive", stats.nPositive);
     LOG_TEST_VAL("stats.nRecords", stats.nRecords);
 
-    // OLD_CODE
-    // size_t cnt = 0, cnt2 = 0;
-    // string_q tenAddresses;
-    // for (auto f : fa) {
-    //     bool needsUpdate = true;
-    //     if (needsUpdate) {
-    //         LOG4(cTeal, "Needs update ", f.address, string_q(80, ' '), cOff);
-    //         tenAddresses += (f.address + " ");
-    //         if (!(++cnt % 10)) {  // we don't want to do too many addrs at a time
-    //             tenAddresses += "|";
-    //             cnt = 0;
-    //         }
-    //     } else {
-    //         LOG4(cTeal, "Updating addresses ", f.address, " ", cnt2, " of ", fa.size(), string_q(80, ' '), cOff,
-    //         "\r");
-    //     }
-    //     cnt2++;
-    // }
-
-    // // Process them until we're done
-    // uint64_t cur = 0;
-    // while (!tenAddresses.empty()) {
-    //     string_q thisFive = nextTokenClear(tenAddresses, '|');
-    //     string_q cmd = substitute(base.str(), "[ADDRS]", thisFive);
-    //     // LOG_CALL(cmd);
-    //     // clang-format off
-    //     uint64_t n = countOf(thisFive, ' ');
-    //     if (fa.size() > 1)
-    //         LOG_INFO(cTeal, "Updating addresses ", cur+1, "-", (cur+n), " of ", fa.size(), string_q(80, ' '), cOff);
-    //     cur += n;
-    //     LOG_TEST("cmd: ", cmd);
-    //     if (system(cmd.c_str())) {}  // Don't remove cruft. Silences compiler warnings
-    //     // clang-format on
-    //     if (!tenAddresses.empty())
-    //         usleep(50000);  // this sleep is here so that chifra remains responsive to Cntl+C. Do not remove
-    // }
-
-    // for (CMonitor& f : fa)
-    //     f.needsRefresh = (f.cntBefore != f.getRecordCount());
-
     return true;
-    // // EXIT_NOMSG(true);
 }
 
 // TODO(tjayrush): If an abi file is changed, we should re-articulate.
@@ -672,3 +582,10 @@ bool COptions::freshen_internal(void) {
 // TODO(tjayrush): writeLastBlock is really weird
 // TODO(tjayrush): We used to write traces sometimes
 // TODO(tjayrush): We used to cache the monitored txs - I think it was pretty fast (we used the monitor staging folder)
+// TODO(tjayrush): We used to do a ten address thing that would scan the index for ten addrs at a time and then
+// TODO(tjayrush): (oddly) scan for --freshen on acctExport one address at a time. All that got removed when we
+// TODO(tjayrush): made chifra so light weight. It might be interesting to put it back in (or re-write it actually)
+// TODO(tjayrush): While looking into that, make sure to take advantage of 'needsUpdate' which would do this:
+// TODO(tjayrush): (1) store the number of records in monitor file, (2) freshen monitor file, (3) only --freshen if the
+// TODO(tjayrush): We used to check to see if the monitor file was locked. That may have gotten lost. Don't spin. Just
+// die right away if it's locked.

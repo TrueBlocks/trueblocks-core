@@ -259,12 +259,14 @@ bool COptions::cleanTest(const string_q& path, const string_q& testName) {
 void establishTestData(void) {
     cleanFolder(getCachePath("tmp/"));
 
-    // TODO(tjayrush): This whole thing is a hack. We should fix the reason these tests fail
-    // TODO(tjayrush): when one removes the data in the cache. This code puts the data into the cache
-    // TODO(tjayrush): before running the tests. The tests fail if one removes this. The tests should not fail.
+    // TODO(tjayrush): This code is a hack to make test cases pass. We should fix the underlyign reason
+    // TODO(tjayrush): these tests fail. To reproduce, delete the entire cache, comment the lines below
+    // TODO(tjayrush): and re-run. You will see the tests that fail.
     doCommand("getBlock --uniq_tx 0");
     doCommand("getBlock --force 4369999");
     doCommand("getTrans --force 47055.0");
     doCommand("getTrans --force 46147.0");
     doCommand("grabABI 0x45f783cce6b7ff23b2ab2d70e416cdb7d6055f51");
+    doCommand("grabABI 0xd7edd2f2bcccdb24afe9a4ab538264b0bbb31373");
+    doCommand("grabABI 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359");
 }
