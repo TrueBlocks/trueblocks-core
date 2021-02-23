@@ -13,8 +13,6 @@ static const COption params[] = {
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
-// TODO(tjayrush): Do not allow duplicate addresses in the command line
-
 //------------------------------------------------------------------------------------------------
 bool COptions::call_command(int argc, const char* argv[]) {
     verbose = 10;  // rather be more than less verbose here
@@ -255,3 +253,7 @@ const char* STR_FULL_HELP =
 // CStringArray scraper = {"--restart", "--pause", "--quit"};
 // for (auto cmd : scraper)
 //     replace(tool_flags, cmd, substitute(cmd, "--", ""));
+
+// TODO(tjayrush): Do not allow duplicate addresses in the command line
+// TODO(tjayrush): Re-enable mocked data
+// TODO(tjayrush): Re-enable the ability to start, stop, pause, and quit the block scraper
