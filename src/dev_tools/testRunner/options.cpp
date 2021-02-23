@@ -269,4 +269,5 @@ void establishTestData(void) {
     doCommand("grabABI 0x45f783cce6b7ff23b2ab2d70e416cdb7d6055f51");
     doCommand("grabABI 0xd7edd2f2bcccdb24afe9a4ab538264b0bbb31373");
     doCommand("grabABI 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359");
+    doCommand("grabABI 0x226159d592e2b063810a10ebf6dcbada94ed68b8");
 }

@@ -177,7 +177,7 @@ string_q doCommand(const string_q& cmd) {
     waitForCreate(filename);
     string_q ret;
     asciiFileToString(filename, ret);
-    remove(filename.c_str());
+    ::remove(filename.c_str());
     return trim(ret, '\n');
 }
 

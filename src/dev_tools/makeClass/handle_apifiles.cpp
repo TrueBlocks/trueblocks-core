@@ -19,6 +19,7 @@
 extern const char* STR_TAG_ENTRY;
 extern const char* STR_PATH_ENTRY;
 extern const char* STR_PATH_PARAM;
+extern const char* STR_HTML_CODE;
 extern string_q getTypeStr(const CCommandOption& opt, const string_q& lead);
 //---------------------------------------------------------------------------------------------------
 void COptions::writeOpenApiFile(void) {
@@ -39,7 +40,13 @@ void COptions::writeOpenApiFile(void) {
 
     ostringstream tagStream;
     ostringstream pathStream;
+    ostringstream specStream;
+    bool first = true;
     for (auto ep : endpoints) {
+        if (!first)
+            specStream << ",";
+        specStream << ep << endl;
+        first = false;
         CStringArray parts;
         explode(parts, ep, '|');
         tagStream << substitute(substitute(STR_TAG_ENTRY, "[{NAME}]", parts[0]), "[{DESCR}]", parts[1]);
@@ -80,32 +87,28 @@ void COptions::writeOpenApiFile(void) {
     }
 
     string_q explFolder = "../../trueblocks-explorer/";
-    string_q sourceFn = explFolder + "yaml-resolved/swagger.yaml";
-    string_q destHTML = explFolder + "public/help/api.html";
-    string_q templateFn = configPath("makeClass/blank_swagger.yaml");
-    string_q converter = "disabled";  // doCommand("which swag2html.py");
+    if (!folderExists(explFolder)) {
+        LOG_WARN("Explorer folder not found: ", explFolder);
+        return;
+    }
 
-    // clang-format off
-    if (!test &&
-        fileExists(sourceFn) &&
-        fileExists(destHTML) &&
-        fileExists(templateFn) &&
-        fileExists(converter)) {
-        // clang-format on
-
-        string_q oldCode = asciiFileToString(sourceFn);
-        string_q newCode = asciiFileToString(templateFn);
-        replace(newCode, "[{PATHS}]", pathStream.str());
-        replace(newCode, "[{TAGS}]", tagStream.str());
-        if (oldCode != newCode) {
+    string_q yamlTemplate = configPath("makeClass/blank_swagger.yaml");
+    string_q newYamlCode = asciiFileToString(yamlTemplate);
+    if (!newYamlCode.empty()) {
+        replace(newYamlCode, "[{PATHS}]", pathStream.str());
+        replace(newYamlCode, "[{TAGS}]", tagStream.str());
+        string_q origYaml = configPath("makeClass/swagger.yaml");
+        string_q origYamlCode = asciiFileToString(origYaml);
+        if (origYamlCode != newYamlCode) {
             counter.nChanged++;
-            stringToAsciiFile(sourceFn, newCode);
-
-            ostringstream cmd;
-            cmd << "python " << converter << " <" << sourceFn << " >" << destHTML << " ; date ; ls -l " << destHTML;
-            doCommand(cmd.str());
+            stringToAsciiFile(origYaml, newYamlCode);
         }
     }
+
+    // string_q html = STR_HTML_CODE;
+    // replace(html, "[{SPEC}]", specStream.str());
+    // stringToAsciiFile("../docs/api.html", html);
+    // stringToAsciiFile(explFolder + "public/help/api.html", html);
 
     if (test) {
         counter.routeCount = 0;
@@ -286,6 +289,7 @@ const char* STR_TAG_ENTRY =
     "- name: [{NAME}]\n"
     "  description: [{DESCR}]\n";
 
+//---------------------------------------------------------------------------------------------------
 const char* STR_PATH_ENTRY =
     "  /[{PATH}]:\n"
     "    get:\n"
@@ -308,6 +312,7 @@ const char* STR_PATH_ENTRY =
     "        \"400\":\n"
     "          description: bad input parameter\n";
 
+//---------------------------------------------------------------------------------------------------
 const char* STR_PATH_PARAM =
     "      - name: [{NAME}]\n"
     "        in: [{IN}]\n"
@@ -317,3 +322,62 @@ const char* STR_PATH_PARAM =
     "        explode: true\n"
     "        schema:\n"
     "[{TYPE}]";
+
+//---------------------------------------------------------------------------------------------------
+const char* STR_HTML_CODE =
+    "<!DOCTYPE html>\n"
+    "<html lang=\"en\">\n"
+    "<head>\n"
+    "  <meta charset=\"UTF-8\">\n"
+    "  <title>Swagger UI</title>\n"
+    "  <link "
+    "href=\"https://fonts.googleapis.com/"
+    "css?family=Open+Sans:400,700|Source+Code+Pro:300,600|Titillium+Web:400,600,700\" rel=\"stylesheet\">\n"
+    "  <link rel=\"stylesheet\" type=\"text/css\" "
+    "href=\"https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/3.24.2/swagger-ui.css\" >\n"
+    "  <style>\n"
+    "    html\n"
+    "    {\n"
+    "      box-sizing: border-box;\n"
+    "      overflow: -moz-scrollbars-vertical;\n"
+    "      overflow-y: scroll;\n"
+    "    }\n"
+    "    *,\n"
+    "    *:before,\n"
+    "    *:after\n"
+    "    {\n"
+    "      box-sizing: inherit;\n"
+    "    }\n"
+    "    body {\n"
+    "      margin:0;\n"
+    "      background: #fafafa;\n"
+    "    }\n"
+    "  </style>\n"
+    "</head>\n"
+    "<body>\n"
+    "<div id=\"swagger-ui\"></div>\n"
+    "<script src=\"https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/3.24.2/swagger-ui-bundle.js\"> </script>\n"
+    "<script src=\"https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/3.24.2/swagger-ui-standalone-preset.js\"> "
+    "</script>\n"
+    "<script>\n"
+    "window.onload = function() {\n"
+    "  var spec = [{SPEC}];\n"
+    "  // Build a system\n"
+    "  const ui = SwaggerUIBundle({\n"
+    "    spec: spec,\n"
+    "    dom_id: '#swagger-ui',\n"
+    "    deepLinking: true,\n"
+    "    presets: [\n"
+    "      SwaggerUIBundle.presets.apis,\n"
+    "      SwaggerUIStandalonePreset\n"
+    "    ],\n"
+    "    plugins: [\n"
+    "      SwaggerUIBundle.plugins.DownloadUrl\n"
+    "    ],\n"
+    "    layout: \"StandaloneLayout\"\n"
+    "  })\n"
+    "  window.ui = ui\n"
+    "}\n"
+    "</script>\n"
+    "</body>\n"
+    "</html>\n";

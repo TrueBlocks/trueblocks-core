@@ -11,6 +11,7 @@
 bool COptions::handle_logs(void) {
     ENTER("handle_logs");
 
+    ASSERT(logs && !(accounting || balances));
     ASSERT(nodeHasBalances(false));
 
     bool shouldDisplay = !freshen;
@@ -28,9 +29,6 @@ bool COptions::handle_logs(void) {
             break;
         }
 
-        // if (app->blk > exportRange.first)
-        //     LOG_TEST("passes", inRange((blknum_t)app->blk, exportRange.first, exportRange.second) ? "true" :
-        //     "false");
         if (inRange((blknum_t)app->blk, exportRange.first, exportRange.second)) {
             CBlock block;  // do not move this from this scope
             block.blockNumber = app->blk;

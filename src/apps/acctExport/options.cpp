@@ -202,7 +202,7 @@ bool COptions::parseArguments(string_q& command) {
     if ((accounting || statements) && freshen)
         EXIT_USAGE("Do not use the --accounting option with --freshen.");
 
-    if ((accounting || statements) && (appearances || logs || traces))
+    if ((accounting || statements) && (appearances || logs || traces || receipts))
         EXIT_USAGE("Do not use the --accounting option with other options.");
 
     // Where will we start?
@@ -489,11 +489,6 @@ bool COptions::setDisplayFormatting(void) {
             }
         }
 
-        if (logs) {
-            SHOW_FIELD(CLogEntry, "blockNumber");
-            SHOW_FIELD(CLogEntry, "transactionIndex");
-        }
-
         if (freshen)
             expContext().exportFmt = NONE1;
 
@@ -513,6 +508,14 @@ bool COptions::setDisplayFormatting(void) {
                 if (!nodeHasBalances(false))
                     EXIT_USAGE("balanceServer is set, but it does not have historical state.");
             }
+        }
+
+        if (logs) {
+            SHOW_FIELD(CLogEntry, "blockNumber");
+            SHOW_FIELD(CLogEntry, "transactionIndex");
+            SHOW_FIELD(CReceipt, "blockNumber");
+            SHOW_FIELD(CReceipt, "transactionIndex");
+            SHOW_FIELD(CReceipt, "isError");
         }
     }
 
