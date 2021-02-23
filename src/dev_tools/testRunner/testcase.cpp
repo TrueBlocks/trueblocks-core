@@ -440,6 +440,9 @@ const char* STR_DISPLAY_TESTCASE = "";
 // EXISTING_CODE
 //---------------------------------------------------------------------------------------------
 void establishTestMonitors(void) {
+    if (folderExists(configPath("mocked/monitors/")))
+        return;
+
     string_q gzipFile = configPath("mocked/monitors.tar.gz");
     if (!fileExists(gzipFile)) {
         LOG_WARN("Cannot find test monitors file: ", gzipFile);
