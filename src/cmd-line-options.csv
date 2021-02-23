@@ -57,7 +57,8 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,customizeable,c
 10900,apps,Admin,pins,pinStatus,hash,a,,false,false,true,true,header,switch,<boolean>,display the hash instead of contents of manifest ('on' for onchain mode)
 10900,apps,Admin,pins,pinStatus,pin,p,,false,false,true,true,header,flag,<string>,pin indexes and blooms&#44; add to manifest&#44; and return hash
 10900,apps,Admin,pins,pinStatus,unpin,u,,false,false,true,true,header,flag,<string>,unpin index(es) and blooms given a hash&#44; a filename&#44; or 'all'
-10900,apps,Admin,pins,pinStatus,license,i,,false,false,false,false,header,switch,<boolean>,show the current pinata license information&#44; if any
+10900,apps,Admin,pins,pinStatus,init,i,,false,false,true,true,header,switch,<boolean>,initialize the TrueBlocks appearance index
+10900,apps,Admin,pins,pinStatus,license,l,,false,false,false,false,header,switch,<boolean>,show the current pinata license information&#44; if any
 10910,apps,Admin,pins,pinStatus,,,,false,false,true,true,--,description,,Report on and manage pinned appearance index and bloom chunks.
 
 11660,dev_tools,,,makeClass,files,,,true,false,true,false,local,positional,list<path>,one or more class definition files

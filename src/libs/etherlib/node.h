@@ -16,6 +16,7 @@
 #include "cacheentry.h"
 #include "rewards.h"
 #include "logquery.h"
+#include "ethcall.h"
 
 namespace qblocks {
 
@@ -177,9 +178,6 @@ extern bool loadTimestampFile(uint32_t** theArray, size_t& cnt);
 extern bool excludeTrace(const CTransaction* trans, size_t maxTraces);
 
 extern wei_t getBalanceAt(const address_t& addr, blknum_t blockNum);
-extern bool doEthCall(const address_t& to, const string_q& encoding, const string_q& bytes, blknum_t blockNum,
-                      const CAbi& abi_spec, CFunction& output);
-
 }  // namespace qblocks
 
 //-------------------------------------------------------------------------

@@ -69,6 +69,7 @@ void etherlib_init(QUITHANDLER qh) {
     CReconciliationOutput::registerClass();
     CReconciliation::registerClass();
     CEthState::registerClass();
+    CEthCall::registerClass();
     CAppearance::registerClass();
     CRPCResult::registerClass();
     CAccountName::registerClass();
@@ -1327,21 +1328,6 @@ bool loadTimestampFile(uint32_t** theArray, size_t& cnt) {
         *theArray = (uint32_t*)file.getData();  // NOLINT
 
     return true;
-}
-
-//-------------------------------------------------------------------------
-bool doEthCall(const address_t& to, const string_q& encoding, const string_q& bytes, blknum_t blockNum, const CAbi& abi,
-               CFunction& result) {
-    ostringstream cmd;
-    cmd << "[{";
-    cmd << "\"to\": \"" << to << "\", ";
-    cmd << "\"data\": \"" << encoding << substitute(bytes, "0x", "") << "\"";
-    cmd << "}, \"" << uint_2_Hex(blockNum) << "\"]";
-
-    string_q rpcRet = callRPC("eth_call", cmd.str(), false);
-    if (startsWith(rpcRet, "0x"))
-        abi.articulateOutputs(encoding, rpcRet, result);
-    return result.outputs.size();
 }
 
 //-----------------------------------------------------------------------

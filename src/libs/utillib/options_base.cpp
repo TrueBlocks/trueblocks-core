@@ -367,17 +367,16 @@ bool COptionsBase::standardOptions(string_q& cmdLine) {
     }
 
     if (isEnabled(OPT_CRUD)) {
-        CStringArray crud;
-        crud.push_back("--create ");
-        crud.push_back("--update ");
-        crud.push_back("--delete ");
-        crud.push_back("--undelete ");
-        crud.push_back("--remove ");
-        for (const string_q& cmd : crud) {
-            // last in wins
+        CStringArray validCruds;
+        validCruds.push_back("--create ");
+        validCruds.push_back("--update ");
+        validCruds.push_back("--delete ");
+        validCruds.push_back("--undelete ");
+        validCruds.push_back("--remove ");
+        for (const string_q& cmd : validCruds) {
             if (contains(cmdLine, cmd)) {
                 replaceAll(cmdLine, cmd, "");
-                crudCommand = trim(substitute(cmd, "--", ""));
+                crudCommands.push_back(trim(substitute(cmd, "--", "")));
             }
         }
     }

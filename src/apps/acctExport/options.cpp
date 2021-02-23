@@ -164,18 +164,19 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
+    if (!bloomsAreInitalized()) {
+        EXIT_USAGE("You must run 'chifra init' before running this command.")
+    }
+
     if (clean) {
         if (!handle_clean())
-            return usage("Clean function returned false.");
-        return false;
+            EXIT_USAGE("Clean function returned false.");
+        EXIT_NOMSG(false);
     }
 
     // Handle the easy cases first...
-    if (isCrudCommand()) {
-        if (crudCommand == "delete" || crudCommand == "undelete" || crudCommand == "remove")
-            return handle_rm(addrs);
-        return usage("You may only use --delete, --undelete, or --remove on monitors.");
-    }
+    if (isCrudCommand())
+        EXIT_NOMSG(handle_rm(addrs));
 
     // We need at least one address to scrape...
     if (addrs.size() == 0)
@@ -248,7 +249,7 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     if (!setDisplayFormatting())
-        return false;
+        EXIT_NOMSG(false);
 
     // Are we visiting unripe and/or staging in our search?
     if (staging)
@@ -268,7 +269,7 @@ bool COptions::parseArguments(string_q& command) {
     listRange = make_pair((firstBlockToVisit == NOPOS ? 0 : firstBlockToVisit), lastBlockToVisit);
 
     if (!freshen_internal())  // getEnvStr("FRESHEN_FLAG S")))
-        return usage("'freshen_internal' returned false.");
+        EXIT_USAGE("'freshen_internal' returned false.");
 
     if (count) {
         for (auto monitor : allMonitors) {
@@ -523,7 +524,7 @@ bool COptions::setDisplayFormatting(void) {
     if (!articulate)
         HIDE_FIELD(CLogEntry, "compressedTx");
 
-    return true;
+    EXIT_NOMSG(true);
 }
 
 #define LOG_TEST_VAL(a, b)                                                                                             \
@@ -534,6 +535,8 @@ bool COptions::setDisplayFormatting(void) {
 
 //------------------------------------------------------------------------------------------------
 bool COptions::freshen_internal(void) {
+    ENTER("freshen_internal");
+
     LOG_TEST_VAL("stats.nFiles", stats.nFiles);
     LOG_TEST_VAL("stats.nSkipped", stats.nSkipped);
     LOG_TEST_VAL("stats.nChecked", stats.nChecked);
@@ -569,7 +572,7 @@ bool COptions::freshen_internal(void) {
     LOG_TEST_VAL("stats.nPositive", stats.nPositive);
     LOG_TEST_VAL("stats.nRecords", stats.nRecords);
 
-    return true;
+    EXIT_NOMSG(true);
 }
 
 // TODO(tjayrush): If an abi file is changed, we should re-articulate.

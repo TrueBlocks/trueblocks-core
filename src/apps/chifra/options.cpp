@@ -134,6 +134,7 @@ map<string, string> cmdMap = {{"slurp", "ethslurp"},
                               {"list", "acctExport --appearances"},
                               {"export", "acctExport"},
                               {"scrape", "blockScrape"},
+                              {"init", "pinStatus local --init"},
                               {"dive", "turboDive"},
                               {"serve", "tbServer"},
                               {"pins", "pinStatus"},
@@ -196,7 +197,7 @@ const char* STR_FULL_HELP =
     "  tokens        export data related to ERC20 and/or ERC721 token(s)|"
     "  when          return a date given a block number or a block number given a date|"
     "ADMIN|"
-    "  init          initialize TrueBlocks databases|"
+    "  init          initialize TrueBlocks databases by downloading pinned bloom filters|"
     "  scrape        scrape the chain and build an index of address appearances (aka digests)|"
     "  serve         serve the TrueBlocks API via tbServer|"
     "  pins          query the status of the pinning system|"

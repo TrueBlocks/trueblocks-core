@@ -25,8 +25,9 @@ void pushToOutput(CAccountNameArray& out, const CAccountName& name, bool to_cust
 bool COptions::processEditCommand(CStringArray& terms, bool to_custom) {
     ENTER("processEditCommand");
 
-    if (!contains("create|update|delete|undelete|remove", crudCommand))
-        EXIT_USAGE("Invalid edit command '" + crudCommand + "'.");
+    string_q crud = crudCommands[0];
+    if (!contains("create|update|delete|undelete|remove", crud))
+        EXIT_USAGE("Invalid edit command '" + crud + "'.");
 
     CAccountName target;
     target.address = toLower(trim(getEnvStr("TB_NAME_ADDRESS"), '\"'));
@@ -48,7 +49,7 @@ bool COptions::processEditCommand(CStringArray& terms, bool to_custom) {
         cout << string_q(45, '-') << endl;
     }
 
-    bool isEdit = crudCommand == "create" || crudCommand == "update";
+    bool isEdit = crud == "create" || crud == "update";
     string_q fmt = isEdit ? "tags\taddress\tname\tsymbol\tsource\tdescription\tdecimals\tdeleted\tis_custom"
                             "\tis_prefund\tis_contract\tis_erc20\tis_erc721"
                           : "address";
@@ -61,14 +62,14 @@ bool COptions::processEditCommand(CStringArray& terms, bool to_custom) {
     bool edited = false;
     for (auto name : namedAccounts) {
         if (name.address == target.address) {
-            if (crudCommand == "remove") {
+            if (crud == "remove") {
                 // do nothing (i.e. skip this name)
                 LOG4("Removing ", name.address);
-            } else if (crudCommand == "delete") {
+            } else if (crud == "delete") {
                 name.m_deleted = true;
                 pushToOutput(outArray, name, to_custom);
                 LOG4("Deleting ", name.address);
-            } else if (crudCommand == "undelete") {
+            } else if (crud == "undelete") {
                 name.m_deleted = false;
                 pushToOutput(outArray, name, to_custom);
                 LOG4("Undeleting ", name.address);
@@ -85,7 +86,7 @@ bool COptions::processEditCommand(CStringArray& terms, bool to_custom) {
         }
     }
 
-    if (crudCommand == "create" && !edited) {
+    if (crud == "create" && !edited) {
         pushToOutput(outArray, target, to_custom);
         LOG4("Creating ", target.address);
         terms.clear();

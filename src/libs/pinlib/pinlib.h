@@ -19,6 +19,7 @@
 #include "pinatapin.h"
 #include "pinutils.h"
 #include "pinreport.h"
+#include "acctscrapestats.h"
 
 extern void pinlib_init(QUITHANDLER qh);
 extern void pinlib_cleanup(void);

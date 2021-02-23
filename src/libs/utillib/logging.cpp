@@ -22,14 +22,23 @@ logger<log_policy_i>* eLogger = (logger<log_policy_i>*)&elog;
 static CDefaultOptions g_LocalUseOnly;
 bool silenceEnter = true;  // getEnvStr("SILENCE") != "false";
 bool silenceExit = silenceEnter;
+static size_t dbg_depth = 0;
 //----------------------------------------------------------------
 string_q _logEnter(const string_q& func) {
-    return "Enter(" + g_LocalUseOnly.getProgName() + "," + func + "): ";
+    ostringstream os;
+    os << string_q(dbg_depth++, ' ') + bGreen << "Enter" << cOff << "(" << g_LocalUseOnly.getProgName() << "," << func
+       << "): ";
+    return os.str();
 }
 
 //----------------------------------------------------------------
 string_q _logExit(const string_q& func) {
-    return "Exit(" + g_LocalUseOnly.getProgName() + "," + func + "): ";
+    if (dbg_depth > 0)
+        dbg_depth = dbg_depth - 1;
+    ostringstream os;
+    os << string_q(dbg_depth, ' ') + bBlue << "Exit" << cOff << "(" << g_LocalUseOnly.getProgName() << "," << func
+       << "): ";
+    return os.str();
 }
 
 //----------------------------------------------------------------

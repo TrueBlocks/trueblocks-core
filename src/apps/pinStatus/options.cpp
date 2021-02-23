@@ -17,7 +17,8 @@ static const COption params[] = {
     COption("hash", "a", "", OPT_SWITCH, "display the hash instead of contents of manifest ('on' for onchain mode)"),
     COption("pin", "p", "<string>", OPT_FLAG, "pin indexes and blooms, add to manifest, and return hash"),
     COption("unpin", "u", "<string>", OPT_FLAG, "unpin index(es) and blooms given a hash, a filename, or 'all'"),
-    COption("license", "i", "", OPT_HIDDEN | OPT_SWITCH, "show the current pinata license information, if any"),
+    COption("init", "i", "", OPT_SWITCH, "initialize the TrueBlocks appearance index"),
+    COption("license", "l", "", OPT_HIDDEN | OPT_SWITCH, "show the current pinata license information, if any"),
     COption("", "", "", OPT_DESCRIPTION, "Report on and manage pinned appearance index and bloom chunks."),
     // clang-format on
     // END_CODE_OPTIONS
@@ -49,7 +50,10 @@ bool COptions::parseArguments(string_q& command) {
         } else if (startsWith(arg, "-u:") || startsWith(arg, "--unpin:")) {
             unpin = substitute(substitute(arg, "-u:", ""), "--unpin:", "");
 
-        } else if (arg == "-i" || arg == "--license") {
+        } else if (arg == "-i" || arg == "--init") {
+            init = true;
+
+        } else if (arg == "-l" || arg == "--license") {
             license = true;
 
         } else if (startsWith(arg, '-')) {  // do not collapse
@@ -94,6 +98,7 @@ void COptions::Init(void) {
     hash = false;
     pin = "";
     unpin = "";
+    init = false;
     license = false;
     // END_CODE_INIT
 }
@@ -119,10 +124,10 @@ COptions::~COptions(void) {
 
 //----------------------------------------------------------------
 hash_t COptions::getCurrentManifest(void) {
-    loadAbiFile(configPath("abis/known-000/unchained.json"), &abi_spec);
-    address_t contractAddr = unchainedIndexAddr;
-    CFunction result;
-    if (doEthCall(contractAddr, manifestHashEncoding, "", getLatestBlock_client(), abi_spec, result))
-        return result.outputs[0].value;
-    return "";
+    CEthCall theCall;
+    theCall.address = unchainedIndexAddr;
+    theCall.encoding = manifestHashEncoding;
+    theCall.blockNumber = getLatestBlock_client();
+    loadAbiFile(configPath("abis/known-000/unchained.json"), &theCall.abi_spec);
+    return doEthCall(theCall) ? theCall.result.outputs[0].value : "";
 }

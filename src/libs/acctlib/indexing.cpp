@@ -216,9 +216,11 @@ bool forEveryAddressInIndex(ADDRESSFUNC func, void* data) {
     return true;
 }
 
+//--------------------------------------------------------------
 bool hasCodeAt(const address_t& addr, blknum_t blk) {
     return !getCodeAt(addr, blk).empty();
 }
+
 //--------------------------------------------------------------
 bool smartContractVisitFunc(const string_q& path, void* data) {
     if (endsWith(path, "/")) {
@@ -292,5 +294,22 @@ bool forEverySmartContractInIndex(ADDRESSFUNC func, void* data) {
 //
 //        return true;
 //    }
+
+//--------------------------------------------------------------
+bool visitBloom(const string_q& path, void* data) {
+    if (endsWith(path, "/")) {
+        return forEveryFileInFolder(path + "*", visitBloom, data);
+    } else {
+        (*((size_t*)data))++;  // NOLINT
+    }
+    return true;
+}
+
+//--------------------------------------------------------------
+bool bloomsAreInitalized(void) {
+    size_t counter = 0;
+    forEveryFileInFolder(indexFolder_blooms, visitBloom, &counter);
+    return counter > 100;
+}
 
 }  // namespace qblocks

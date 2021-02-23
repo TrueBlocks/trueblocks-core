@@ -21,6 +21,7 @@ class COptions : public CAbiOptions {
     bool hash;
     string_q pin;
     string_q unpin;
+    bool init;
     bool license;
     // END_CODE_DECLARE
 

@@ -9,7 +9,6 @@
  * outside of the BEG_CODE/END_CODE sections
  */
 #include "pinlib.h"
-#include "acctscrapestats.h"
 
 // BEG_ERROR_DEFINES
 // END_ERROR_DEFINES

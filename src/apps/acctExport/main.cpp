@@ -6,7 +6,6 @@
 #include "options.h"
 
 //-----------------------------------------------------------------------
-extern bool removeAbi(const string_q& path, void* data);
 int main(int argc, const char* argv[]) {
     pinlib_init(quickQuitHandler);
 
@@ -115,14 +114,4 @@ int main(int argc, const char* argv[]) {
 
     pinlib_cleanup();
     return 0;
-}
-
-//-----------------------------------------------------------------------
-bool removeAbi(const string_q& path, void* data) {
-    if (endsWith(path, "/")) {
-        return forEveryFileInFolder(path + "*", removeAbi, data);
-    } else {
-        ::remove(path.c_str());
-    }
-    return true;
 }

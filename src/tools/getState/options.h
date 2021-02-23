@@ -36,6 +36,7 @@ class COptions : public CHistoryOptions {
     wei_t deminimus;
     bool first;
     blknum_t latestBlock;
+    CEthCall theCall;
 
     COptions(void);
     ~COptions(void);

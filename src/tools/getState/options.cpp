@@ -155,23 +155,14 @@ bool COptions::parseArguments(string_q& command) {
         configureDisplay("getState", "CEthState", format.empty() ? STR_DISPLAY_ETHSTATE : format);
 
     } else {
-        HIDE_FIELD(CParameter, "str_default");
-        HIDE_FIELD(CParameter, "indexed");
-        HIDE_FIELD(CParameter, "internalType");
-        HIDE_FIELD(CParameter, "components");
-        HIDE_FIELD(CParameter, "no_write");
-        HIDE_FIELD(CParameter, "is_pointer");
-        HIDE_FIELD(CParameter, "is_array");
-        HIDE_FIELD(CParameter, "is_object");
-        HIDE_FIELD(CParameter, "is_builtin");
-        HIDE_FIELD(CParameter, "is_minimal");
-        SHOW_FIELD(CFunction, "address");
-        SHOW_FIELD(CEthState, "result");
-        SHOW_FIELD(CEthState, "address");
-
         // Display formatting
         string_q format = STR_DISPLAY_FUNCTION;
         configureDisplay("getState", "CFunction", format.empty() ? STR_DISPLAY_FUNCTION : format);
+        manageFields(
+            "CParameter:str_default,indexed,internalType,components,no_write,is_pointer,is_array,is_object,is_builtin,"
+            "is_minimal,type|CFunction:stateMutability,type,constant,inputs|CEthCall:abi_spec",
+            FLD_HIDE);
+        manageFields("CFunction:address|CEthState:result,address", FLD_SHOW);
 
         CStringArray vars;
         explode(vars, call, '!');
@@ -184,27 +175,22 @@ bool COptions::parseArguments(string_q& command) {
         if (!isHexStr(vars[1]))
             return usage("The four byte must be a hex string.");
 
-        CEthState state;
-        state.address = vars[0];
-        state.blockNumber = 10092000;
-
-        string_q fourByte = vars[1];
-        string_q bytes = vars.size() > 2 ? vars[2] : "";
-
-        abi_spec.loadAbisFromKnown();
-        abi_spec.loadAbiFromEtherscan(state.address,
-                                      false);  // may fail, but it's okay as we will pick up from known abis
-        if (doEthCall(state.address, fourByte, bytes, state.blockNumber, abi_spec, state.result)) {
+        theCall.address = vars[0];
+        theCall.encoding = vars[1];
+        theCall.bytes = vars.size() > 2 ? vars[2] : "";
+        theCall.blockNumber = isTestMode() ? 10092000 : getLatestBlock_client();
+        // We load known abis first (so we have something, if possible) then lay over from etherscan to get better names
+        theCall.abi_spec.loadAbisFromKnown();
+        theCall.abi_spec.loadAbiFromEtherscan(theCall.address, false);
+        if (doEthCall(theCall)) {
             CTransaction art;
-            art.input = fourByte + bytes;
+            art.input = theCall.encoding + theCall.bytes;
             abi_spec.articulateTransaction(&art);
-            state.result.inputs = art.articulatedTx.inputs;
-            state.address = vars[0];
-            cout << state << endl;
-            return false;
+            theCall.result.inputs = art.articulatedTx.inputs;
+            theCall.address = vars[0];
+            return true;
         }
-
-        return usage("No result from call to " + state.address + " with fourbyte " + fourByte + ".");
+        return usage("No result from call to " + theCall.address + " with fourbyte " + theCall.encoding + ".");
     }
 
     if (!requestsHistory())  // if the user did not request historical state, we can return safely
