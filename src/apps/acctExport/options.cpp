@@ -229,7 +229,7 @@ bool COptions::parseArguments(string_q& command) {
                 EXIT_USAGE(msg);
             firstBlockToVisit = min(firstBlockToVisit, monitor.getLastVisited());
             LOG_TEST("Monitor found for", addr);
-            LOG_TEST("Monitor path", monitor.getMonitorPath(monitor.address));
+            // LOG_TEST("Monitor path", monitor.getMonitorPath(monitor.address));
             LOG_TEST("Last visited block", monitor.getLastVisitedBlock());
         } else {
             LOG_TEST("Monitor not found for", addr + ". Continuing anyway.");

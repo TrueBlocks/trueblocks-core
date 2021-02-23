@@ -1,7 +1,6 @@
 acctExport argc: 10 [1:0xbb9bc244d798123fde783fcc1c72d3bb8c189413] [2:--logs] [3:--fmt] [4:csv] [5:--start] [6:1431850] [7:--end] [8:1431860] [9:--emitter] 
 acctExport 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 --logs --fmt csv --start 1431850 --end 1431860 --emitter 
 TIME ~ CLOCK - <INFO>  : Monitor found for: 0xbb9bc244d798123fde783fcc1c72d3bb8c189413
-TIME ~ CLOCK - <INFO>  : Monitor path: /Users/jrush/.quickBlocks/mocked/monitors/0xbb9bc244d798123fde783fcc1c72d3bb8c189413.acct.bin
 TIME ~ CLOCK - <INFO>  : Last visited block: 4996422
 TIME ~ CLOCK - <INFO>  : m.getLastVisitedBlock(): 4996422
 TIME ~ CLOCK - <INFO>  : options->fileRange.first: 4996422

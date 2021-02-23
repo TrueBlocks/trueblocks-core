@@ -1,7 +1,6 @@
 acctExport argc: 6 [1:0x8b3b3b624c3c0397d3da8fd861512393d51dcbac] [2:--factory] [3:--traces] [4:--end] [5:1603174] 
 acctExport 0x8b3b3b624c3c0397d3da8fd861512393d51dcbac --factory --traces --end 1603174 
 TIME ~ CLOCK - <INFO>  : Monitor found for: 0x8b3b3b624c3c0397d3da8fd861512393d51dcbac
-TIME ~ CLOCK - <INFO>  : Monitor path: /Users/jrush/.quickBlocks/mocked/monitors/0x8b3b3b624c3c0397d3da8fd861512393d51dcbac.acct.bin
 TIME ~ CLOCK - <INFO>  : Last visited block: 4996422
 TIME ~ CLOCK - <INFO>  : m.getLastVisitedBlock(): 4996422
 TIME ~ CLOCK - <INFO>  : options->fileRange.first: 4996422
