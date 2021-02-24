@@ -1,5 +1,6 @@
 ethNames argc: 5 [1:--verbose] [2:--owned] [3:--fmt] [4:txt] 
 ethNames --verbose --owned --fmt txt 
+TIME ~ CLOCK - <INFO>  : owned: true
 tags	address	name	symbol	decimals	source
 0x0000000000000000000000000000000000000001
 0x0000000000000000000000000000000000000002

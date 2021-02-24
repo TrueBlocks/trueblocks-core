@@ -93,6 +93,17 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
+    // BEG_DEBUG_TEST
+    LOG_TEST("mode", mode, (mode == ""));
+    // LOG_TEST("tool", tool, (tool == ""));
+    LOG_TEST("n_blocks", n_blocks, (n_blocks == NOPOS));
+    LOG_TEST("n_block_procs", n_block_procs, (n_block_procs == NOPOS));
+    LOG_TEST("n_addr_procs", n_addr_procs, (n_addr_procs == NOPOS));
+    LOG_TEST_BOOL("pin", pin);
+    LOG_TEST_BOOL("publish", publish);
+    LOG_TEST("sleep", sleep, (sleep == 14));
+    // END_DEBUG_TEST
+
     if (mode.empty())
         mode = "run";
 

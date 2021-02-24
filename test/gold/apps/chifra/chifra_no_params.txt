@@ -1,6 +1,5 @@
 chifra argc: 1 
 chifra 
-TIME ~ CLOCK - <INFO>  : mode: 
 TIME ~ CLOCK - <ERROR> : Exit(chifra,call_command): 
 
   The first argument you provide must be a chifra subcommand. Quitting...

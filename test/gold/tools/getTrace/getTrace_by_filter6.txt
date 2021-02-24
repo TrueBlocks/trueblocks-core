@@ -1,5 +1,7 @@
 getTrace argc: 5 [1:--fmt] [2:json] [3:--filter] [4:0x42ae50!0x42ae52!0x8c3064d32441f0190e8b3fa1ef9fc81fccb06111] 
 getTrace --fmt json --filter 0x42ae50!0x42ae52!0x8c3064d32441f0190e8b3fa1ef9fc81fccb06111 
+TIME ~ CLOCK - <INFO>  : skip_ddos: true
+TIME ~ CLOCK - <INFO>  : filter: 0x42ae50!0x42ae52!0x8c3064d32441f0190e8b3fa1ef9fc81fccb06111
 TIME ~ CLOCK - <INFO>  : {
   "fromBlock": 4370000,
   "toBlock": 4370002,

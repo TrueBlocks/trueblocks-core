@@ -1,5 +1,6 @@
 getTrans argc: 5 [1:0xaf50151cdcc2c1b76c63c588daee0ca43687a087459939eb2fc422fe66491d64] [2:--fmt] [3:json] [4:--articulate] 
 getTrans 0xaf50151cdcc2c1b76c63c588daee0ca43687a087459939eb2fc422fe66491d64 --fmt json --articulate 
+TIME ~ CLOCK - <INFO>  : articulate: true
 { "data": [
 --7 : 7 : 0
 --  0: dstReceiver (address)

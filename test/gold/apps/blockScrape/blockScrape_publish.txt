@@ -1,5 +1,6 @@
 blockScrape argc: 2 [1:--publish] 
 blockScrape --publish 
+TIME ~ CLOCK - <INFO>  : publish: true
 
   The --publish option is only available when using the --pin option. Quitting...
 

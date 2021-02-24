@@ -164,6 +164,32 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
+    // BEG_DEBUG_TEST
+    // LOG_TEST("addrs", addrs, (addrs == NOPOS));
+    // LOG_TEST("topics", topics, (topics == NOPOS));
+    LOG_TEST_BOOL("appearances", appearances);
+    LOG_TEST_BOOL("receipts", receipts);
+    LOG_TEST_BOOL("logs", logs);
+    LOG_TEST_BOOL("traces", traces);
+    LOG_TEST_BOOL("statements", statements);
+    LOG_TEST_BOOL("accounting", accounting);
+    LOG_TEST_BOOL("articulate", articulate);
+    LOG_TEST_BOOL("cache_txs", cache_txs);
+    LOG_TEST_BOOL("cache_traces", cache_traces);
+    LOG_TEST_BOOL("skip_ddos", skip_ddos);
+    LOG_TEST("max_traces", max_traces, (max_traces == 250));
+    LOG_TEST_BOOL("freshen", freshen);
+    LOG_TEST("freshen_max", freshen_max, (freshen_max == 5000));
+    LOG_TEST_BOOL("factory", factory);
+    LOG_TEST_BOOL("emitter", emitter);
+    LOG_TEST_BOOL("count", count);
+    LOG_TEST("first_record", first_record, (first_record == 0));
+    LOG_TEST("max_records", max_records, (max_records == NOPOS));
+    LOG_TEST_BOOL("clean", clean);
+    LOG_TEST_BOOL("staging", staging);
+    LOG_TEST_BOOL("unripe", unripe);
+    // END_DEBUG_TEST
+
     if (!bloomsAreInitalized()) {
         EXIT_USAGE("You must run 'chifra init' before running this command.")
     }
@@ -229,11 +255,11 @@ bool COptions::parseArguments(string_q& command) {
             if (monitor.isLocked(msg))  // If locked, we fail
                 EXIT_USAGE(msg);
             firstBlockToVisit = min(firstBlockToVisit, monitor.getLastVisited());
-            LOG_TEST("Monitor found for", addr);
+            LOG_TEST("Monitor found for", addr, false);
             // LOG_TEST("Monitor path", monitor.getMonitorPath(monitor.address));
-            LOG_TEST("Last visited block", monitor.getLastVisitedBlock());
+            LOG_TEST("Last visited block", monitor.getLastVisitedBlock(), false);
         } else {
-            LOG_TEST("Monitor not found for", addr + ". Continuing anyway.");
+            LOG_TEST("Monitor not found for", addr + ". Continuing anyway.", false);
         }
         allMonitors.push_back(monitor);
     }
@@ -292,26 +318,11 @@ bool COptions::parseArguments(string_q& command) {
     if (end != NOPOS)
         exportRange.second = end;
 
-    LOG_TEST("nMonitors", allMonitors.size());
-    LOG_TEST("exportRange.first", exportRange.first);
-    LOG_TEST("exportRange.second", exportRange.second);
-    LOG_TEST("listRange.first", listRange.first);
-    LOG_TEST("listRange.second", "--latest--");
-    LOG_TEST("first_record", first_record);
-    LOG_TEST("max_records", max_records);
-    LOG_TEST_BOOL("appearances", appearances);
-    LOG_TEST_BOOL("receipts", receipts);
-    LOG_TEST_BOOL("logs", logs);
-    LOG_TEST_BOOL("traces", traces);
-    LOG_TEST_BOOL("statements", statements);
-    LOG_TEST_BOOL("articulate", articulate);
-    LOG_TEST_BOOL("freshen", freshen);
-    LOG_TEST_BOOL("factory", factory);
-    LOG_TEST_BOOL("emitter", emitter);
-    // LOG_TEST_BOOL("to", to);
-    // LOG_TEST_BOOL("from", from);
-    LOG_TEST_BOOL("count", count);
-    LOG_TEST_BOOL("clean", clean);
+    LOG_TEST("nMonitors", allMonitors.size(), false);
+    LOG_TEST("exportRange.first", exportRange.first, false);
+    LOG_TEST("exportRange.second", exportRange.second, false);
+    LOG_TEST("listRange.first", listRange.first, false);
+    LOG_TEST("listRange.second", "--latest--", false);
 
     EXIT_NOMSG(true);
 }
@@ -530,7 +541,7 @@ bool COptions::setDisplayFormatting(void) {
 #define LOG_TEST_VAL(a, b)                                                                                             \
     {                                                                                                                  \
         if (b != 0)                                                                                                    \
-            LOG_TEST(a, "--value--")                                                                                   \
+            LOG_TEST(a, "--value--", false)                                                                            \
     }
 
 //------------------------------------------------------------------------------------------------

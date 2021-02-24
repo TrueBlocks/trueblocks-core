@@ -1,5 +1,7 @@
 getTrans argc: 8 [1:6513870.62] [2:6687987.11] [3:0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f81f2fad45149f26e12] [4:--articulate] [5:--fmt] [6:api] [7:--trace] 
 getTrans 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f81f2fad45149f26e12 --articulate --fmt api --trace 
+TIME ~ CLOCK - <INFO>  : articulate: true
+TIME ~ CLOCK - <INFO>  : trace: true
 {"data": [
 --1 : 1 : 0
 --  0: _success (bool)

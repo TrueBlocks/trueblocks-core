@@ -1,5 +1,6 @@
 ethNames argc: 4 [1:--entities] [2:--fmt] [3:json] 
 ethNames --entities --fmt json 
+TIME ~ CLOCK - <INFO>  : entities: true
 { "data": [
   {
     "deleted": true,

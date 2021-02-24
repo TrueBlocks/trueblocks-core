@@ -1,4 +1,5 @@
 pinStatus argc: 4 [1:--license] [2:--fmt] [3:txt] 
 pinStatus --license --fmt txt 
+TIME ~ CLOCK - <INFO>  : license: true
 apikey	secretkey
 --license_codes--	--license_codes--

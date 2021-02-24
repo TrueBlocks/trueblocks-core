@@ -1,5 +1,8 @@
 blockScrape argc: 7 [1:--n_blocks] [2:12] [3:--n_block_procs] [4:12] [5:--n_addr_procs] [6:12] 
 blockScrape --n_blocks 12 --n_block_procs 12 --n_addr_procs 12 
+TIME ~ CLOCK - <INFO>  : n_blocks: 12
+TIME ~ CLOCK - <INFO>  : n_block_procs: 12
+TIME ~ CLOCK - <INFO>  : n_addr_procs: 12
 TIME ~ CLOCK - : 8------The scraper was stopped.
 { "status": "running" }
 TIME ~ CLOCK - : 4-----changing state: stopped --> running

@@ -101,6 +101,19 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
+    // BEG_DEBUG_TEST
+    // LOG_TEST("modes", modes, (modes == ""));
+    LOG_TEST_BOOL("details", details);
+    // LOG_TEST("types", types, (types == ""));
+    LOG_TEST("depth", depth, (depth == NOPOS));
+    LOG_TEST_BOOL("report", report);
+    LOG_TEST_BOOL("terse", terse);
+    LOG_TEST_BOOL("get_config", get_config);
+    LOG_TEST_BOOL("set_config", set_config);
+    LOG_TEST("start", start, (start == NOPOS));
+    LOG_TEST("end", end, (end == NOPOS));
+    // END_DEBUG_TEST
+
     // removes warning on Ubuntu 20.04
     if (report)
         cerr << "";

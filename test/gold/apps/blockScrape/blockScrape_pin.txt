@@ -1,5 +1,6 @@
 blockScrape argc: 2 [1:--pin] 
 blockScrape --pin 
+TIME ~ CLOCK - <INFO>  : pin: true
 TIME ~ CLOCK - : 8------The scraper was stopped.
 { "status": "running" }
 TIME ~ CLOCK - : 4-----changing state: stopped --> running

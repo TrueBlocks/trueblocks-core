@@ -1,5 +1,8 @@
 acctExport argc: 10 [1:0xbb9bc244d798123fde783fcc1c72d3bb8c189413] [2:--logs] [3:--fmt] [4:json] [5:--start] [6:1700000] [7:--end] [8:1700050] [9:--articulate] 
 acctExport 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 --logs --fmt json --start 1700000 --end 1700050 --articulate 
+TIME ~ CLOCK - <INFO>  : logs: true
+TIME ~ CLOCK - <INFO>  : articulate: true
+TIME ~ CLOCK - <INFO>  : skip_ddos: true
 TIME ~ CLOCK - <INFO>  : Monitor found for: 0xbb9bc244d798123fde783fcc1c72d3bb8c189413
 TIME ~ CLOCK - <INFO>  : Last visited block: 4996422
 TIME ~ CLOCK - <INFO>  : m.getLastVisitedBlock(): 4996422
@@ -13,10 +16,6 @@ TIME ~ CLOCK - <INFO>  : exportRange.first: 1700000
 TIME ~ CLOCK - <INFO>  : exportRange.second: 1700050
 TIME ~ CLOCK - <INFO>  : listRange.first: 4996422
 TIME ~ CLOCK - <INFO>  : listRange.second: --latest--
-TIME ~ CLOCK - <INFO>  : first_record: 0
-TIME ~ CLOCK - <INFO>  : max_records: 18446744073709551615
-TIME ~ CLOCK - <INFO>  : logs: true
-TIME ~ CLOCK - <INFO>  : articulate: true
 { "data": [
 {
   "address": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",

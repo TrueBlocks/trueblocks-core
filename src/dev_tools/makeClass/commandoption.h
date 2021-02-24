@@ -53,6 +53,7 @@ class CCommandOption : public CBaseNode {
 
     // EXISTING_CODE
     bool isEnumList;
+    bool isList;
     bool isEnum;
     bool isBool;
     bool isBlockNum;
@@ -64,6 +65,7 @@ class CCommandOption : public CBaseNode {
     explicit CCommandOption(const string_q& line);
     void verifyOptions(CStringArray& warnings);
     void verifyHotkey(CStringArray& warnings);
+    string_q debugCode(void) const;
     string_q swagger_descr;
     // EXISTING_CODE
     bool operator==(const CCommandOption& it) const;
@@ -137,6 +139,7 @@ inline void CCommandOption::initialize(void) {
 
     // EXISTING_CODE
     isEnumList = false;
+    isList = false;
     isEnum = false;
     isBool = false;
     isBlockNum = false;
@@ -173,6 +176,7 @@ inline void CCommandOption::duplicate(const CCommandOption& co) {
     description = co.description;
 
     // EXISTING_CODE
+    isList = co.isList;
     isEnumList = co.isEnumList;
     isEnum = co.isEnum;
     isBool = co.isBool;

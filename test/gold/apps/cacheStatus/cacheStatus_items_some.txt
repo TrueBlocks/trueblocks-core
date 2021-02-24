@@ -1,5 +1,8 @@
 cacheStatus argc: 7 [1:--details] [2:some] [3:--start] [4:3000000] [5:--end] [6:3100000] 
 cacheStatus --details some --start 3000000 --end 3100000 
+TIME ~ CLOCK - <INFO>  : details: true
+TIME ~ CLOCK - <INFO>  : start: 3000000
+TIME ~ CLOCK - <INFO>  : end: 3100000
 {
   "client_version": "Client version",
   "client_ids": "chainId: 1 networkId: 1",

@@ -1,5 +1,6 @@
 getBlock argc: 5 [1:1] [2:--uniq_tx] [3:--fmt] [4:json] 
 getBlock 1 --uniq_tx --fmt json 
+TIME ~ CLOCK - <INFO>  : uniq_tx: true
 { "data": [
   {
     "bn": 1,

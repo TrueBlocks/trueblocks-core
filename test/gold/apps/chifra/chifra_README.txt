@@ -1,6 +1,5 @@
 chifra argc: 2 [1:-th] 
 chifra -th 
-TIME ~ CLOCK - <INFO>  : mode: 
 TIME ~ CLOCK - <ERROR> : Exit(chifra,call_command): 
 #### Usage
 

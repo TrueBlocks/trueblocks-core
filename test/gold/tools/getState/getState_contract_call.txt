@@ -1,5 +1,6 @@
 getState argc: 4 [1:--call] [2:0xa4f29fc548856180f6b1e319ee4d86715875cce4!0x12065fe0] [3:6523977-6540000:2000] 
 getState --call 0xa4f29fc548856180f6b1e319ee4d86715875cce4!0x12065fe0 6523977-6540000:2000 
+TIME ~ CLOCK - <INFO>  : call: 0xa4f29fc548856180f6b1e319ee4d86715875cce4!0x12065fe0
 { "data": [
 {
   "blockNumber": 10092000,

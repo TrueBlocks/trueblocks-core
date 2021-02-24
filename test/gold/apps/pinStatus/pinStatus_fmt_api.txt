@@ -1,5 +1,6 @@
 pinStatus argc: 4 [1:--license] [2:--fmt] [3:api] 
 pinStatus --license --fmt api 
+TIME ~ CLOCK - <INFO>  : license: true
 {"data": [
 {
     "apiKey": "--license_codes--",

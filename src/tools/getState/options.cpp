@@ -83,6 +83,15 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
+    // BEG_DEBUG_TEST
+    // LOG_TEST("addrs", addrs, (addrs == NOPOS));
+    // LOG_TEST("blocks", blocks, (blocks == NOPOS));
+    // LOG_TEST("parts", parts, (parts == ""));
+    LOG_TEST_BOOL("changes", changes);
+    LOG_TEST_BOOL("no_zero", no_zero);
+    LOG_TEST("call", call, (call == ""));
+    // END_DEBUG_TEST
+
     // Data wrangling
     if (!blocks.hasBlocks())
         blocks.numList.push_back(newestBlock);  // use 'latest'

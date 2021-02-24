@@ -206,6 +206,7 @@ void COptions::generate_toggle(const CCommandOption& option) {
         header_stream << option.Format(STR_DECLARATION) << endl;
         auto_stream << option.Format(STR_AUTO_TOGGLE) << endl;
     }
+    debug_stream << option.debugCode() << endl;
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -228,6 +229,7 @@ void COptions::generate_switch(const CCommandOption& option) {
         header_stream << option.Format(STR_DECLARATION) << endl;
         auto_stream << option.Format(STR_AUTO_SWITCH) << endl;
     }
+    debug_stream << option.debugCode() << endl;
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -285,6 +287,7 @@ void COptions::generate_flag(const CCommandOption& option) {
                             << endl;
         }
     }
+    debug_stream << option.debugCode() << endl;
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -365,6 +368,8 @@ void COptions::generate_positional(const CCommandOption& option) {
     }
     if (!pos_stream.str().empty())
         positionals.push_back(pos_stream.str());
+
+    debug_stream << option.debugCode() << endl;
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -385,6 +390,7 @@ bool COptions::writeCode(const string_q& fn) {
         converted = replaceCode(converted, "CODE_INIT", init_stream.str());
         converted = replaceCode(converted, "CODE_NOTES", notes_stream.str());
         converted = replaceCode(converted, "CODE_ERROR_MSG", errors_stream.str());
+        converted = replaceCode(converted, "DEBUG_TEST", debug_stream.str());
     } else {
         converted = replaceCode(converted, "CODE_DECLARE", header_stream.str());
     }

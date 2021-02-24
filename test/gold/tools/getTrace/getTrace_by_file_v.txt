@@ -1,5 +1,6 @@
 getTrace argc: 5 [1:--verbose] [2:--file:cmd_file] [3:--fmt] [4:api] 
 getTrace --verbose --file:cmd_file --fmt api 
+TIME ~ CLOCK - <INFO>  : skip_ddos: true
 {"data": [
   {
     "blockHash": "0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9",
@@ -25,7 +26,8 @@ getTrace --verbose --file:cmd_file --fmt api
       "gasUsed": 0,
       "output": "0x"
     }
-  },  {
+  }TIME ~ CLOCK - <INFO>  : skip_ddos: true
+,  {
     "blockHash": "0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9",
     "blockNumber": 3657480,
     "subtraces": 0,
@@ -49,7 +51,8 @@ getTrace --verbose --file:cmd_file --fmt api
       "gasUsed": 0,
       "output": "0x"
     }
-  },  {
+  }TIME ~ CLOCK - <INFO>  : skip_ddos: true
+,  {
     "blockHash": "0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9",
     "blockNumber": "0x37cf08",
     "subtraces": "0x0",

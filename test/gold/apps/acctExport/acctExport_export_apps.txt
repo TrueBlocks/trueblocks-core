@@ -1,5 +1,8 @@
 acctExport argc: 7 [1:0x001d14804b399c6ef80e64576f657660804fec0b] [2:--appearances] [3:--fmt] [4:json] [5:--max_records] [6:1] 
 acctExport 0x001d14804b399c6ef80e64576f657660804fec0b --appearances --fmt json --max_records 1 
+TIME ~ CLOCK - <INFO>  : appearances: true
+TIME ~ CLOCK - <INFO>  : skip_ddos: true
+TIME ~ CLOCK - <INFO>  : max_records: 1
 TIME ~ CLOCK - <INFO>  : Monitor found for: 0x001d14804b399c6ef80e64576f657660804fec0b
 TIME ~ CLOCK - <INFO>  : Last visited block: 11854827
 TIME ~ CLOCK - <INFO>  : m.getLastVisitedBlock(): 11854827
@@ -13,9 +16,6 @@ TIME ~ CLOCK - <INFO>  : exportRange.first: 0
 TIME ~ CLOCK - <INFO>  : exportRange.second: 18446744073709551615
 TIME ~ CLOCK - <INFO>  : listRange.first: 11854827
 TIME ~ CLOCK - <INFO>  : listRange.second: --latest--
-TIME ~ CLOCK - <INFO>  : first_record: 0
-TIME ~ CLOCK - <INFO>  : max_records: 1
-TIME ~ CLOCK - <INFO>  : appearances: true
 { "data": [
 {
   "address": "0x001d14804b399c6ef80e64576f657660804fec0b",

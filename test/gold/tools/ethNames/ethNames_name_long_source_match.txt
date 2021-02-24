@@ -1,5 +1,6 @@
 ethNames argc: 5 [1:Ether] [2:--expand] [3:--fmt] [4:txt] 
 ethNames Ether --expand --fmt txt 
+TIME ~ CLOCK - <INFO>  : expand: true
 tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefund	is_contract	is_erc20	is_erc721
 55-Defi	0x000000000000000000000000000000000000dead	ENS: Burn Address		EtherScan.io			false	false	false	false	false	false
 34-ENS	0x00000000000c2e074ec69a0dfb2997ba6c7d2e1e	ENS: Registry with Fallback		EtherScan.io			false	false	false	true	false	false

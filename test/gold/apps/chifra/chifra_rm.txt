@@ -5,4 +5,6 @@ TIME ~ CLOCK - : 4-----call_command ----> acctExport --appearances 0x807640a1348
 chifra monitor argc: 4 [1:--appearances] [2:0x807640a13483f8ac783c557fcdf27be11ea4ac7a] [3:--remove] 
 chifra monitor --appearances 0x807640a13483f8ac783c557fcdf27be11ea4ac7a --remove 
 PROG_NAME = [chifra monitor]
+TIME ~ CLOCK - <INFO>  : appearances: true
+TIME ~ CLOCK - <INFO>  : skip_ddos: true
 TIME ~ CLOCK - <INFO>  : Monitor 0x807640a13483f8ac783c557fcdf27be11ea4ac7a must be deleted first

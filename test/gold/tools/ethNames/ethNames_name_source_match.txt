@@ -1,5 +1,6 @@
 ethNames argc: 6 [1:Ether] [2:--expand] [3:--verbose] [4:--fmt] [5:json] 
 ethNames Ether --expand --verbose --fmt json 
+TIME ~ CLOCK - <INFO>  : expand: true
 { "data": [
   {
     "deleted": false,

@@ -47,12 +47,15 @@ bool COptions::call_command(int argc, const char* argv[]) {
         }
     }
 
+    // BEG_DEBUG_TEST
+    LOG_TEST("mode", mode, mode == "");
+    // END_DEBUG_TEST
+
     setProgName("chifra");
     // show chifra's help in limited cases, the tool's help otherwise
     if (has_help && (argc == 2 || mode == "serve"))
         EXIT_USAGE("");
 
-    LOG_TEST("mode", mode);
     if (!mode.empty() && mode != "serve")
         setenv("PROG_NAME", ("chifra " + string_q(argv[1])).c_str(), true);
 

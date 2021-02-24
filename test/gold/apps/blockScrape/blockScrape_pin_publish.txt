@@ -1,5 +1,7 @@
 blockScrape argc: 3 [1:--publish] [2:--pin] 
 blockScrape --publish --pin 
+TIME ~ CLOCK - <INFO>  : pin: true
+TIME ~ CLOCK - <INFO>  : publish: true
 TIME ~ CLOCK - : 8------The scraper was stopped.
 { "status": "running" }
 TIME ~ CLOCK - : 4-----changing state: stopped --> running

@@ -1,5 +1,6 @@
 cacheStatus argc: 4 [1:--report] [2:--fmt] [3:json] 
 cacheStatus --report --fmt json 
+TIME ~ CLOCK - <INFO>  : report: true
 { "data": [
 {
   "client_version": "Client version",

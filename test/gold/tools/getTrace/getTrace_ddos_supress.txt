@@ -1,5 +1,6 @@
 getTrace argc: 4 [1:0x37c469573ca24f538d91f39e9d0b8d49927a36d70496ef74521cbf5c44a056d4] [2:--fmt] [3:json] 
 getTrace 0x37c469573ca24f538d91f39e9d0b8d49927a36d70496ef74521cbf5c44a056d4 --fmt json 
+TIME ~ CLOCK - <INFO>  : skip_ddos: true
 { "data": [
   {
     "blockHash": "0x7d7e699feaf7658d34e9e8b637021824bc15dda1e8ddc626bf33dab01153e6a2",

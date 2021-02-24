@@ -1,5 +1,7 @@
 getBlock argc: 6 [1:1301011-1312011:313] [2:--uniq_tx] [3:--count] [4:--fmt] [5:json] 
 getBlock 1301011-1312011:313 --uniq_tx --count --fmt json 
+TIME ~ CLOCK - <INFO>  : uniq_tx: true
+TIME ~ CLOCK - <INFO>  : count: true
 { "data": [
 { "blockNumber": 1301011, "transactionsCnt": 1, "uniq_tx": 4},
 { "blockNumber": 1301324, "transactionsCnt": 0, "uniq_tx": 1},

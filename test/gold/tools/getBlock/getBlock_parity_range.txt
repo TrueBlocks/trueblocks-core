@@ -1,5 +1,6 @@
 getBlock argc: 4 [1:358450-0x5785a] [2:--force] [3:--parity] 
 getBlock 358450-0x5785a --force --parity 
+TIME ~ CLOCK - <INFO>  : force: true
 { "data": [
 {
   "difficulty": "0x5a5753781c6",

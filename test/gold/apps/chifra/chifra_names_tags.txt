@@ -5,6 +5,7 @@ TIME ~ CLOCK - : 4-----call_command ----> ethNames --tags
 chifra names argc: 2 [1:--tags] 
 chifra names --tags 
 PROG_NAME = [chifra names]
+TIME ~ CLOCK - <INFO>  : tags: true
 tags
 
 30-Contracts

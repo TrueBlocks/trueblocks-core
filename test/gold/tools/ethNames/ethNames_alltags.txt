@@ -1,5 +1,6 @@
 ethNames argc: 2 [1:--all] 
 ethNames --all 
+TIME ~ CLOCK - <INFO>  : all: true
 tags	address	name	symbol	decimals
 0x0000000000000000000000000000000000000001	Account_1
 0x0000000000000000000000000000000000000002	Account_2

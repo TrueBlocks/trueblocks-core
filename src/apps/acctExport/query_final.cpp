@@ -38,8 +38,8 @@ bool visitFinalIndexFiles(const string_q& path, void* data) {
 
         options->possibles.clear();
         for (auto m : options->allMonitors) {
-            LOG_TEST("m.getLastVisitedBlock()", m.getLastVisitedBlock());
-            LOG_TEST("options->fileRange.first", options->fileRange.first)
+            LOG_TEST("m.getLastVisitedBlock()", m.getLastVisitedBlock(), false);
+            LOG_TEST("options->fileRange.first", options->fileRange.first, false)
             if (m.getLastVisitedBlock() == 0 || m.getLastVisitedBlock() < options->fileRange.first)
                 options->possibles.push_back(m);
         }

@@ -1,5 +1,6 @@
 acctExport argc: 6 [1:0xf503017d7baf7fbc0fff7492b751025c6a78179b] [2:--end] [3:9000000] [4:--fmt] [5:json] 
 acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --end 9000000 --fmt json 
+TIME ~ CLOCK - <INFO>  : skip_ddos: true
 TIME ~ CLOCK - <INFO>  : Monitor found for: 0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TIME ~ CLOCK - <INFO>  : Last visited block: 11854827
 TIME ~ CLOCK - <INFO>  : m.getLastVisitedBlock(): 11854827
@@ -13,8 +14,6 @@ TIME ~ CLOCK - <INFO>  : exportRange.first: 0
 TIME ~ CLOCK - <INFO>  : exportRange.second: 9000000
 TIME ~ CLOCK - <INFO>  : listRange.first: 11854827
 TIME ~ CLOCK - <INFO>  : listRange.second: --latest--
-TIME ~ CLOCK - <INFO>  : first_record: 0
-TIME ~ CLOCK - <INFO>  : max_records: 18446744073709551615
 { "data": [
 {
   "hash": "0x1a898c5448b37f693343917ea40b7ad1c43b28a4ddd37af1bd6d0bb4a0c99891",
@@ -64,7 +63,25 @@ TIME ~ CLOCK - <INFO>  : max_records: 18446744073709551615
           "0x65412581168e88a1e60c6459d7f44ae83ad0832e670826c05a4e2476b57af752",
           "0xb5cc13b0db8f3867b84d8e0362dd9aa9d4afa8b878a09ef60c72faf968f0c970"
         ],
-        "data": "0x000000000000000000000000000000000000000000000000000000000000003c00000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000014f503017d7baf7fbc0fff7492b751025c6a78179b000000000000000000000000"
+        "data": "0x000000000000000000000000000000000000000000000000000000000000003c00000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000014f503017d7baf7fbc0fff7492b751025c6a78179b000000000000000000000000",
+        "articulatedLog": {
+          "name": "AddressChanged",
+          "inputs": [
+            {
+              "name": "node",
+              "value": "0xb5cc13b0db8f3867b84d8e0362dd9aa9d4afa8b878a09ef60c72faf968f0c970"
+            },
+            {
+              "name": "coinType",
+              "value": "60"
+            },
+            {
+              "name": "newAddress",
+              "value": "0xf503017d7baf7fbc0fff7492b751025c6a78179b"
+            }
+          ]
+        },
+        "compressedLog": "AddressChanged ( node: 0xb5cc13b0db8f3867b84d8e0362dd9aa9d4afa8b878a09ef60c72faf968f0c970, coinType: 60, newAddress: 0xf503017d7baf7fbc0fff7492b751025c6a78179b )"
       },
       {
         "address": "0x226159d592e2b063810a10ebf6dcbada94ed68b8",
@@ -73,12 +90,39 @@ TIME ~ CLOCK - <INFO>  : max_records: 18446744073709551615
           "0x52d7d861f09ab3d26239d492e8968629f95e9e318cf0b73bfddc441522a15fd2",
           "0xb5cc13b0db8f3867b84d8e0362dd9aa9d4afa8b878a09ef60c72faf968f0c970"
         ],
-        "data": "0x000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b"
+        "data": "0x000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b",
+        "articulatedLog": {
+          "name": "AddrChanged",
+          "inputs": [
+            {
+              "name": "node",
+              "value": "0xb5cc13b0db8f3867b84d8e0362dd9aa9d4afa8b878a09ef60c72faf968f0c970"
+            },
+            {
+              "name": "a",
+              "value": "0xf503017d7baf7fbc0fff7492b751025c6a78179b"
+            }
+          ]
+        },
+        "compressedLog": "AddrChanged ( node: 0xb5cc13b0db8f3867b84d8e0362dd9aa9d4afa8b878a09ef60c72faf968f0c970, a: 0xf503017d7baf7fbc0fff7492b751025c6a78179b )"
       }
     ],
     "status": 1
   },
-  "compressedTx": "0xd5fa2b00 ( stub: b5cc13b0db8f3867b84d8e0362dd9aa9d4afa8b878a09ef60c72faf968f0c970000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b )",
+  "articulatedTx": {
+    "name": "setAddr",
+    "inputs": [
+      {
+        "name": "node",
+        "value": "0xb5cc13b0db8f3867b84d8e0362dd9aa9d4afa8b878a09ef60c72faf968f0c970"
+      },
+      {
+        "name": "a",
+        "value": "0xf503017d7baf7fbc0fff7492b751025c6a78179b"
+      }
+    ]
+  },
+  "compressedTx": "setAddr ( node: 0xb5cc13b0db8f3867b84d8e0362dd9aa9d4afa8b878a09ef60c72faf968f0c970, a: 0xf503017d7baf7fbc0fff7492b751025c6a78179b )",
   "gasCost": 55144000000000,
   "gasUsed": 55144,
   "date": "2019-11-01 23:31:45 UTC",
@@ -144,7 +188,7 @@ TIME ~ CLOCK - <INFO>  : max_records: 18446744073709551615
   "gas": 200000,
   "gasPrice": 4000000000,
   "isError": 0,
-  "hasToken": 0,
+  "hasToken": 1,
   "receipt": {
     "contractAddress": "0x0",
     "gasUsed": 37298,
@@ -157,12 +201,48 @@ TIME ~ CLOCK - <INFO>  : max_records: 18446744073709551615
           "0x000000000000000000000000eba60d324c2546459e1e9dd4c7e740ca80134588",
           "0x000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b"
         ],
-        "data": "0x0000000000000000000000000000000000000000000000000de0b6b3a7640000"
+        "data": "0x0000000000000000000000000000000000000000000000000de0b6b3a7640000",
+        "articulatedLog": {
+          "name": "Transfer",
+          "inputs": [
+            {
+              "name": "_from",
+              "value": "0xeba60d324c2546459e1e9dd4c7e740ca80134588"
+            },
+            {
+              "name": "_to",
+              "value": "0xf503017d7baf7fbc0fff7492b751025c6a78179b"
+            },
+            {
+              "name": "_amount",
+              "value": "1000000000000000000"
+            }
+          ]
+        },
+        "compressedLog": "Transfer ( _from: 0xeba60d324c2546459e1e9dd4c7e740ca80134588, _to: 0xf503017d7baf7fbc0fff7492b751025c6a78179b, _amount: 1000000000000000000 )"
       }
     ],
     "status": 1
   },
-  "compressedTx": "0xa9059cbb ( stub: 000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b0000000000000000000000000000000000000000000000000de0b6b3a7640000 )",
+  "articulatedTx": {
+    "name": "transfer",
+    "inputs": [
+      {
+        "name": "dst",
+        "value": "0xf503017d7baf7fbc0fff7492b751025c6a78179b"
+      },
+      {
+        "name": "wad",
+        "value": "1000000000000000000"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "val_0"
+      }
+    ]
+  },
+  "compressedTx": "transfer ( dst: 0xf503017d7baf7fbc0fff7492b751025c6a78179b, wad: 1000000000000000000 )",
   "gasCost": 149192000000000,
   "gasUsed": 37298,
   "date": "2019-11-02 02:56:10 UTC",
@@ -180,7 +260,7 @@ TIME ~ CLOCK - <INFO>  : max_records: 18446744073709551615
   "gas": 200000,
   "gasPrice": 5000000000,
   "isError": 0,
-  "hasToken": 0,
+  "hasToken": 1,
   "receipt": {
     "contractAddress": "0x0",
     "gasUsed": 22426,
@@ -193,12 +273,48 @@ TIME ~ CLOCK - <INFO>  : max_records: 18446744073709551615
           "0x0000000000000000000000008c492d5f763841767362d716e3e69511f0527791",
           "0x000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b"
         ],
-        "data": "0x00000000000000000000000000000000000000000000010eff0fae29b1bc0000"
+        "data": "0x00000000000000000000000000000000000000000000010eff0fae29b1bc0000",
+        "articulatedLog": {
+          "name": "Transfer",
+          "inputs": [
+            {
+              "name": "_from",
+              "value": "0x8c492d5f763841767362d716e3e69511f0527791"
+            },
+            {
+              "name": "_to",
+              "value": "0xf503017d7baf7fbc0fff7492b751025c6a78179b"
+            },
+            {
+              "name": "_amount",
+              "value": "4999000000000000000000"
+            }
+          ]
+        },
+        "compressedLog": "Transfer ( _from: 0x8c492d5f763841767362d716e3e69511f0527791, _to: 0xf503017d7baf7fbc0fff7492b751025c6a78179b, _amount: 4999000000000000000000 )"
       }
     ],
     "status": 1
   },
-  "compressedTx": "0xa9059cbb ( stub: 000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b00000000000000000000000000000000000000000000010eff0fae29b1bc0000 )",
+  "articulatedTx": {
+    "name": "transfer",
+    "inputs": [
+      {
+        "name": "dst",
+        "value": "0xf503017d7baf7fbc0fff7492b751025c6a78179b"
+      },
+      {
+        "name": "wad",
+        "value": "4999000000000000000000"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "val_0"
+      }
+    ]
+  },
+  "compressedTx": "transfer ( dst: 0xf503017d7baf7fbc0fff7492b751025c6a78179b, wad: 4999000000000000000000 )",
   "gasCost": 112130000000000,
   "gasUsed": 22426,
   "date": "2019-11-02 03:04:19 UTC",
@@ -216,7 +332,7 @@ TIME ~ CLOCK - <INFO>  : max_records: 18446744073709551615
   "gas": 200000,
   "gasPrice": 10000000000,
   "isError": 0,
-  "hasToken": 0,
+  "hasToken": 1,
   "receipt": {
     "contractAddress": "0x0",
     "gasUsed": 22362,
@@ -229,12 +345,48 @@ TIME ~ CLOCK - <INFO>  : max_records: 18446744073709551615
           "0x0000000000000000000000003f1c1e14fd919415010c03f9de29cbafd5866e81",
           "0x000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b"
         ],
-        "data": "0x0000000000000000000000000000000000000000000000878678326eac900000"
+        "data": "0x0000000000000000000000000000000000000000000000878678326eac900000",
+        "articulatedLog": {
+          "name": "Transfer",
+          "inputs": [
+            {
+              "name": "_from",
+              "value": "0x3f1c1e14fd919415010c03f9de29cbafd5866e81"
+            },
+            {
+              "name": "_to",
+              "value": "0xf503017d7baf7fbc0fff7492b751025c6a78179b"
+            },
+            {
+              "name": "_amount",
+              "value": "2500000000000000000000"
+            }
+          ]
+        },
+        "compressedLog": "Transfer ( _from: 0x3f1c1e14fd919415010c03f9de29cbafd5866e81, _to: 0xf503017d7baf7fbc0fff7492b751025c6a78179b, _amount: 2500000000000000000000 )"
       }
     ],
     "status": 1
   },
-  "compressedTx": "0xa9059cbb ( stub: 000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b0000000000000000000000000000000000000000000000878678326eac900000 )",
+  "articulatedTx": {
+    "name": "transfer",
+    "inputs": [
+      {
+        "name": "dst",
+        "value": "0xf503017d7baf7fbc0fff7492b751025c6a78179b"
+      },
+      {
+        "name": "wad",
+        "value": "2500000000000000000000"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "val_0"
+      }
+    ]
+  },
+  "compressedTx": "transfer ( dst: 0xf503017d7baf7fbc0fff7492b751025c6a78179b, wad: 2500000000000000000000 )",
   "gasCost": 223620000000000,
   "gasUsed": 22362,
   "date": "2019-11-02 18:23:31 UTC",
@@ -252,7 +404,7 @@ TIME ~ CLOCK - <INFO>  : max_records: 18446744073709551615
   "gas": 68977,
   "gasPrice": 1000000000,
   "isError": 0,
-  "hasToken": 0,
+  "hasToken": 1,
   "receipt": {
     "contractAddress": "0x0",
     "gasUsed": 45985,
@@ -265,12 +417,48 @@ TIME ~ CLOCK - <INFO>  : max_records: 18446744073709551615
           "0x000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b",
           "0x00000000000000000000000030f938fed5de6e06a9a7cd2ac3517131c317b1e7"
         ],
-        "data": "0x00000000000000000000000000000000000000000000001b1ae4d6e2ef500000"
+        "data": "0x00000000000000000000000000000000000000000000001b1ae4d6e2ef500000",
+        "articulatedLog": {
+          "name": "Approval",
+          "inputs": [
+            {
+              "name": "_owner",
+              "value": "0xf503017d7baf7fbc0fff7492b751025c6a78179b"
+            },
+            {
+              "name": "_spender",
+              "value": "0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7"
+            },
+            {
+              "name": "_amount",
+              "value": "500000000000000000000"
+            }
+          ]
+        },
+        "compressedLog": "Approval ( _owner: 0xf503017d7baf7fbc0fff7492b751025c6a78179b, _spender: 0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7, _amount: 500000000000000000000 )"
       }
     ],
     "status": 1
   },
-  "compressedTx": "0x095ea7b3 ( stub: 00000000000000000000000030f938fed5de6e06a9a7cd2ac3517131c317b1e700000000000000000000000000000000000000000000001b1ae4d6e2ef500000 )",
+  "articulatedTx": {
+    "name": "approve",
+    "inputs": [
+      {
+        "name": "guy",
+        "value": "0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7"
+      },
+      {
+        "name": "wad",
+        "value": "500000000000000000000"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "val_0"
+      }
+    ]
+  },
+  "compressedTx": "approve ( guy: 0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7, wad: 500000000000000000000 )",
   "gasCost": 45985000000000,
   "gasUsed": 45985,
   "date": "2019-11-02 18:41:43 UTC",
@@ -288,7 +476,7 @@ TIME ~ CLOCK - <INFO>  : max_records: 18446744073709551615
   "gas": 53918,
   "gasPrice": 1000000000,
   "isError": 0,
-  "hasToken": 0,
+  "hasToken": 1,
   "receipt": {
     "contractAddress": "0x0",
     "gasUsed": 34017,
@@ -301,7 +489,25 @@ TIME ~ CLOCK - <INFO>  : max_records: 18446744073709551615
           "0x000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b",
           "0x00000000000000000000000030f938fed5de6e06a9a7cd2ac3517131c317b1e7"
         ],
-        "data": "0x00000000000000000000000000000000000000000000001b1ae4d6e2ef500000"
+        "data": "0x00000000000000000000000000000000000000000000001b1ae4d6e2ef500000",
+        "articulatedLog": {
+          "name": "Transfer",
+          "inputs": [
+            {
+              "name": "_from",
+              "value": "0xf503017d7baf7fbc0fff7492b751025c6a78179b"
+            },
+            {
+              "name": "_to",
+              "value": "0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7"
+            },
+            {
+              "name": "_amount",
+              "value": "500000000000000000000"
+            }
+          ]
+        },
+        "compressedLog": "Transfer ( _from: 0xf503017d7baf7fbc0fff7492b751025c6a78179b, _to: 0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7, _amount: 500000000000000000000 )"
       },
       {
         "address": "0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7",
@@ -309,12 +515,55 @@ TIME ~ CLOCK - <INFO>  : max_records: 18446744073709551615
         "topics": [
           "0xc77b8feedf86922981aed41179f4a071d80467c7f17c5c13837269e363ac545b"
         ],
-        "data": "0x0000000000000000000000000000000000000000000000000000000000000799000000000000000000000000000000000000000000000000000000000000057a00000000000000000000000089d24a6b4ccb1b6faa2625fe562bdd9a2326035900000000000000000000000000000000000000000000001b1ae4d6e2ef500000"
+        "data": "0x0000000000000000000000000000000000000000000000000000000000000799000000000000000000000000000000000000000000000000000000000000057a00000000000000000000000089d24a6b4ccb1b6faa2625fe562bdd9a2326035900000000000000000000000000000000000000000000001b1ae4d6e2ef500000",
+        "articulatedLog": {
+          "name": "Donate",
+          "inputs": [
+            {
+              "name": "giverId",
+              "value": "1945"
+            },
+            {
+              "name": "receiverId",
+              "value": "1402"
+            },
+            {
+              "name": "token",
+              "value": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359"
+            },
+            {
+              "name": "amount",
+              "value": "500000000000000000000"
+            }
+          ]
+        },
+        "compressedLog": "Donate ( giverId: 1945, receiverId: 1402, token: 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359, amount: 500000000000000000000 )"
       }
     ],
     "status": 1
   },
-  "compressedTx": "0x4c4316c7 ( stub: 0000000000000000000000000000000000000000000000000000000000000799000000000000000000000000000000000000000000000000000000000000057a00000000000000000000000089d24a6b4ccb1b6faa2625fe562bdd9a2326035900000000000000000000000000000000000000000000001b1ae4d6e2ef500000 )",
+  "articulatedTx": {
+    "name": "donate",
+    "inputs": [
+      {
+        "name": "giverId",
+        "value": "1945"
+      },
+      {
+        "name": "receiverId",
+        "value": "1402"
+      },
+      {
+        "name": "token",
+        "value": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359"
+      },
+      {
+        "name": "_amount",
+        "value": "500000000000000000000"
+      }
+    ]
+  },
+  "compressedTx": "donate ( giverId: 1945, receiverId: 1402, token: 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359, _amount: 500000000000000000000 )",
   "gasCost": 34017000000000,
   "gasUsed": 34017,
   "date": "2019-11-02 18:42:30 UTC",
@@ -332,7 +581,7 @@ TIME ~ CLOCK - <INFO>  : max_records: 18446744073709551615
   "gas": 69073,
   "gasPrice": 1000000000,
   "isError": 0,
-  "hasToken": 0,
+  "hasToken": 1,
   "receipt": {
     "contractAddress": "0x0",
     "gasUsed": 46049,
@@ -345,12 +594,48 @@ TIME ~ CLOCK - <INFO>  : max_records: 18446744073709551615
           "0x000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b",
           "0x00000000000000000000000030f938fed5de6e06a9a7cd2ac3517131c317b1e7"
         ],
-        "data": "0x00000000000000000000000000000000000000000000017b7883c06916600000"
+        "data": "0x00000000000000000000000000000000000000000000017b7883c06916600000",
+        "articulatedLog": {
+          "name": "Approval",
+          "inputs": [
+            {
+              "name": "_owner",
+              "value": "0xf503017d7baf7fbc0fff7492b751025c6a78179b"
+            },
+            {
+              "name": "_spender",
+              "value": "0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7"
+            },
+            {
+              "name": "_amount",
+              "value": "7000000000000000000000"
+            }
+          ]
+        },
+        "compressedLog": "Approval ( _owner: 0xf503017d7baf7fbc0fff7492b751025c6a78179b, _spender: 0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7, _amount: 7000000000000000000000 )"
       }
     ],
     "status": 1
   },
-  "compressedTx": "0x095ea7b3 ( stub: 00000000000000000000000030f938fed5de6e06a9a7cd2ac3517131c317b1e700000000000000000000000000000000000000000000017b7883c06916600000 )",
+  "articulatedTx": {
+    "name": "approve",
+    "inputs": [
+      {
+        "name": "guy",
+        "value": "0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7"
+      },
+      {
+        "name": "wad",
+        "value": "7000000000000000000000"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "val_0"
+      }
+    ]
+  },
+  "compressedTx": "approve ( guy: 0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7, wad: 7000000000000000000000 )",
   "gasCost": 46049000000000,
   "gasUsed": 46049,
   "date": "2019-11-02 18:45:58 UTC",
@@ -368,7 +653,7 @@ TIME ~ CLOCK - <INFO>  : max_records: 18446744073709551615
   "gas": 53989,
   "gasPrice": 1000000000,
   "isError": 0,
-  "hasToken": 0,
+  "hasToken": 1,
   "receipt": {
     "contractAddress": "0x0",
     "gasUsed": 24541,
@@ -381,7 +666,25 @@ TIME ~ CLOCK - <INFO>  : max_records: 18446744073709551615
           "0x000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b",
           "0x00000000000000000000000030f938fed5de6e06a9a7cd2ac3517131c317b1e7"
         ],
-        "data": "0x00000000000000000000000000000000000000000000017b7883c06916600000"
+        "data": "0x00000000000000000000000000000000000000000000017b7883c06916600000",
+        "articulatedLog": {
+          "name": "Transfer",
+          "inputs": [
+            {
+              "name": "_from",
+              "value": "0xf503017d7baf7fbc0fff7492b751025c6a78179b"
+            },
+            {
+              "name": "_to",
+              "value": "0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7"
+            },
+            {
+              "name": "_amount",
+              "value": "7000000000000000000000"
+            }
+          ]
+        },
+        "compressedLog": "Transfer ( _from: 0xf503017d7baf7fbc0fff7492b751025c6a78179b, _to: 0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7, _amount: 7000000000000000000000 )"
       },
       {
         "address": "0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7",
@@ -389,12 +692,55 @@ TIME ~ CLOCK - <INFO>  : max_records: 18446744073709551615
         "topics": [
           "0xc77b8feedf86922981aed41179f4a071d80467c7f17c5c13837269e363ac545b"
         ],
-        "data": "0x000000000000000000000000000000000000000000000000000000000000079a000000000000000000000000000000000000000000000000000000000000057a00000000000000000000000089d24a6b4ccb1b6faa2625fe562bdd9a2326035900000000000000000000000000000000000000000000017b7883c06916600000"
+        "data": "0x000000000000000000000000000000000000000000000000000000000000079a000000000000000000000000000000000000000000000000000000000000057a00000000000000000000000089d24a6b4ccb1b6faa2625fe562bdd9a2326035900000000000000000000000000000000000000000000017b7883c06916600000",
+        "articulatedLog": {
+          "name": "Donate",
+          "inputs": [
+            {
+              "name": "giverId",
+              "value": "1946"
+            },
+            {
+              "name": "receiverId",
+              "value": "1402"
+            },
+            {
+              "name": "token",
+              "value": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359"
+            },
+            {
+              "name": "amount",
+              "value": "7000000000000000000000"
+            }
+          ]
+        },
+        "compressedLog": "Donate ( giverId: 1946, receiverId: 1402, token: 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359, amount: 7000000000000000000000 )"
       }
     ],
     "status": 1
   },
-  "compressedTx": "0x4c4316c7 ( stub: 000000000000000000000000000000000000000000000000000000000000079a000000000000000000000000000000000000000000000000000000000000057a00000000000000000000000089d24a6b4ccb1b6faa2625fe562bdd9a2326035900000000000000000000000000000000000000000000017b7883c06916600000 )",
+  "articulatedTx": {
+    "name": "donate",
+    "inputs": [
+      {
+        "name": "giverId",
+        "value": "1946"
+      },
+      {
+        "name": "receiverId",
+        "value": "1402"
+      },
+      {
+        "name": "token",
+        "value": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359"
+      },
+      {
+        "name": "_amount",
+        "value": "7000000000000000000000"
+      }
+    ]
+  },
+  "compressedTx": "donate ( giverId: 1946, receiverId: 1402, token: 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359, _amount: 7000000000000000000000 )",
   "gasCost": 24541000000000,
   "gasUsed": 24541,
   "date": "2019-11-02 18:46:01 UTC",
@@ -425,7 +771,25 @@ TIME ~ CLOCK - <INFO>  : max_records: 18446744073709551615
           "0x91d1777781884d03a6757a803996e38de2a42967fb37eeaca72729271025a9e2",
           "0x34d7d37af75afceaf725e564326d0d768ec97480c4b6df329e2abd04224bae81"
         ],
-        "data": "0x0000000000000000000000009062c0a6dbd6108336bcbe4593a3d1ce05512069"
+        "data": "0x0000000000000000000000009062c0a6dbd6108336bcbe4593a3d1ce05512069",
+        "articulatedLog": {
+          "name": "NewOwner",
+          "inputs": [
+            {
+              "name": "node",
+              "value": "0x91d1777781884d03a6757a803996e38de2a42967fb37eeaca72729271025a9e2"
+            },
+            {
+              "name": "label",
+              "value": "0x34d7d37af75afceaf725e564326d0d768ec97480c4b6df329e2abd04224bae81"
+            },
+            {
+              "name": "owner",
+              "value": "0x9062c0a6dbd6108336bcbe4593a3d1ce05512069"
+            }
+          ]
+        },
+        "compressedLog": "NewOwner ( node: 0x91d1777781884d03a6757a803996e38de2a42967fb37eeaca72729271025a9e2, label: 0x34d7d37af75afceaf725e564326d0d768ec97480c4b6df329e2abd04224bae81, owner: 0x9062c0a6dbd6108336bcbe4593a3d1ce05512069 )"
       },
       {
         "address": "0x314159265dd8dbb310642f98f50c066173c1259b",
@@ -434,12 +798,40 @@ TIME ~ CLOCK - <INFO>  : max_records: 18446744073709551615
           "0x335721b01866dc23fbee8b6b2c7b1e14d6f05c28cd35a2c934239f94095602a0",
           "0x454e891299c049b3fe9b52689501e9c2752298e8e7967fe82166577427b17dc9"
         ],
-        "data": "0x0000000000000000000000005fbb459c49bb06083c33109fa4f14810ec2cf358"
+        "data": "0x0000000000000000000000005fbb459c49bb06083c33109fa4f14810ec2cf358",
+        "articulatedLog": {
+          "name": "NewResolver",
+          "inputs": [
+            {
+              "name": "node",
+              "value": "0x454e891299c049b3fe9b52689501e9c2752298e8e7967fe82166577427b17dc9"
+            },
+            {
+              "name": "resolver",
+              "value": "0x5fbb459c49bb06083c33109fa4f14810ec2cf358"
+            }
+          ]
+        },
+        "compressedLog": "NewResolver ( node: 0x454e891299c049b3fe9b52689501e9c2752298e8e7967fe82166577427b17dc9, resolver: 0x5fbb459c49bb06083c33109fa4f14810ec2cf358 )"
       }
     ],
     "status": 1
   },
-  "compressedTx": "0xc47f0027 ( stub: 0000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000000e74727565626c6f636b732e657468000000000000000000000000000000000000 )",
+  "articulatedTx": {
+    "name": "setName",
+    "inputs": [
+      {
+        "name": "name",
+        "value": "trueblocks.eth"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "node"
+      }
+    ]
+  },
+  "compressedTx": "setName ( name: trueblocks.eth )",
   "gasCost": 105208000000000,
   "gasUsed": 105208,
   "date": "2019-11-03 22:52:17 UTC",
@@ -513,7 +905,7 @@ TIME ~ CLOCK - <INFO>  : max_records: 18446744073709551615
   "gas": 340046,
   "gasPrice": 3000000000,
   "isError": 0,
-  "hasToken": 0,
+  "hasToken": 1,
   "receipt": {
     "contractAddress": "0x0",
     "gasUsed": 186953,
@@ -547,7 +939,25 @@ TIME ~ CLOCK - <INFO>  : max_records: 18446744073709551615
           "0x0000000000000000000000000000000000000000000000000000000000000000",
           "0x000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b"
         ],
-        "data": "0x0000000000000000000000000000000000000000000004c3ba39c5e411100000"
+        "data": "0x0000000000000000000000000000000000000000000004c3ba39c5e411100000",
+        "articulatedLog": {
+          "name": "Transfer",
+          "inputs": [
+            {
+              "name": "_from",
+              "value": "0x0"
+            },
+            {
+              "name": "_to",
+              "value": "0xf503017d7baf7fbc0fff7492b751025c6a78179b"
+            },
+            {
+              "name": "_amount",
+              "value": "22500000000000000000000"
+            }
+          ]
+        },
+        "compressedLog": "Transfer ( _from: 0x0, _to: 0xf503017d7baf7fbc0fff7492b751025c6a78179b, _amount: 22500000000000000000000 )"
       },
       {
         "address": "0xac104c988ff9c90dafc7754b2fb9072e25f93507",

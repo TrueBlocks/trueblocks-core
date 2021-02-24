@@ -1,5 +1,6 @@
 blockScrape argc: 2 [1:run] 
 blockScrape run 
+TIME ~ CLOCK - <INFO>  : mode: run
 TIME ~ CLOCK - : 8------The scraper was running.
 TIME ~ CLOCK - <ERROR> : blockScrape is already running. Cannot run.
 { "status": "running" }

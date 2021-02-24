@@ -1,5 +1,7 @@
 getTrace argc: 5 [1:4348290.92] [2:--fmt] [3:api] [4:--count] 
 getTrace 4348290.92 --fmt api --count 
+TIME ~ CLOCK - <INFO>  : count: true
+TIME ~ CLOCK - <INFO>  : skip_ddos: true
 {"data": [
 { "bn": "4348290", "tx_id": "92", "hash": "0x66e49e99a984cd88e097782a001afaac8c6ff786c936651895475dd88ec360f6", "count": "1" }], "types": [
 { "type": "CTrace", "fields": [{ "name": "blockHash", "type": "hash" }, { "name": "blockNumber", "type": "blocknum" }, { "name": "subtraces", "type": "unumber" }, { "name": "traceAddress", "type": "text" }, { "name": "transactionHash", "type": "hash" }, { "name": "transactionIndex", "type": "blocknum" }, { "name": "type", "type": "text" }, { "name": "error", "type": "text" }, { "name": "action", "type": "object" }, { "name": "result", "type": "object" }] }

@@ -218,16 +218,16 @@ extern logger<log_policy_i>* eLogger;
 #define LOG_PROGRESS(op, progress, goal) LOG_PROGRESS1((op), progress, goal, "\n")
 #define LOG_CALL(a)                                                                                                    \
     { LOG4(bWhite, l_funcName, " ----> ", (isTestMode() ? substitute((a), getCachePath(""), "$CACHE/") : (a)), cOff); }
-#define LOG_TEST(a, b)                                                                                                 \
+#define LOG_TEST(a, b, is_default)                                                                                     \
     {                                                                                                                  \
-        if (isTestMode()) {                                                                                            \
+        if (isTestMode() && !(is_default)) {                                                                           \
             LOG_INFO((string_q(a) + ": "), (b));                                                                       \
         }                                                                                                              \
     }
 #define LOG_TEST_BOOL(a, b)                                                                                            \
     {                                                                                                                  \
-        if (b)                                                                                                         \
-            LOG_TEST(a, "true")                                                                                        \
+        if ((b))                                                                                                       \
+            LOG_TEST((a), "true", false)                                                                               \
     }
 #else
 #define LOG0(...)

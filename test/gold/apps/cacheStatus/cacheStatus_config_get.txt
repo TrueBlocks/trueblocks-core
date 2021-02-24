@@ -1,5 +1,6 @@
 cacheStatus argc: 2 [1:--get_config] 
 cacheStatus --get_config 
+TIME ~ CLOCK - <INFO>  : get_config: true
 {
   "files": [
     {

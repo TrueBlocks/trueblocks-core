@@ -1,5 +1,9 @@
 acctExport argc: 8 [1:0x001d14804b399c6ef80e64576f657660804fec0b] [2:--staging] [3:--unripe] [4:--first_record] [5:0] [6:--max_records] [7:1] 
 acctExport 0x001d14804b399c6ef80e64576f657660804fec0b --staging --unripe --first_record 0 --max_records 1 
+TIME ~ CLOCK - <INFO>  : skip_ddos: true
+TIME ~ CLOCK - <INFO>  : max_records: 1
+TIME ~ CLOCK - <INFO>  : staging: true
+TIME ~ CLOCK - <INFO>  : unripe: true
 TIME ~ CLOCK - <INFO>  : Monitor found for: 0x001d14804b399c6ef80e64576f657660804fec0b
 TIME ~ CLOCK - <INFO>  : Last visited block: 11854827
 TIME ~ CLOCK - <INFO>  : m.getLastVisitedBlock(): 11854827
@@ -13,7 +17,5 @@ TIME ~ CLOCK - <INFO>  : exportRange.first: 0
 TIME ~ CLOCK - <INFO>  : exportRange.second: 18446744073709551615
 TIME ~ CLOCK - <INFO>  : listRange.first: 11854827
 TIME ~ CLOCK - <INFO>  : listRange.second: --latest--
-TIME ~ CLOCK - <INFO>  : first_record: 0
-TIME ~ CLOCK - <INFO>  : max_records: 1
 blocknumber	transactionindex	date	timestamp	from	to	ether	ethergasprice	gasused	hash	iserror	encoding	compressedtx
 0	2	2015-07-30 15:26:00 UTC	1438269960	0xPrefund	0x001d14804b399c6ef80e64576f657660804fec0b	4200.000000000000000000	0.000000000000000000	0	0x0	0		0x ( )

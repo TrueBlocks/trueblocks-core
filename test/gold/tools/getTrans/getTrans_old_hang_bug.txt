@@ -1,5 +1,6 @@
 getTrans argc: 5 [1:6409270.108] [2:--articulate] [3:--fmt] [4:json] 
 getTrans 6409270.108 --articulate --fmt json 
+TIME ~ CLOCK - <INFO>  : articulate: true
 { "data": [
 --2 : 4 : 0
 --  0: destinations (address[])

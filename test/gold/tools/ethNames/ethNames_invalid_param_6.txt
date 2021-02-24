@@ -1,3 +1,4 @@
 ethNames argc: 4 [1:--other] [2:--fmt] [3:txt] 
 ethNames --other --fmt txt 
+TIME ~ CLOCK - <INFO>  : other: true
 No results for --other

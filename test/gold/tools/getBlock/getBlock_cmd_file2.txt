@@ -1,5 +1,6 @@
 getBlock argc: 3 [1:--file:cmd_file2] [2:--force] 
 getBlock --file:cmd_file2 --force 
+TIME ~ CLOCK - <INFO>  : force: true
 { "data": [
 {
   "gasLimit": 3141592,
@@ -12,7 +13,8 @@ getBlock --file:cmd_file2 --force
   "price": 0.00000,
   "finalized": true,
   "timestamp": 1439674369
-},
+}TIME ~ CLOCK - <INFO>  : force: true
+,
 {
   "gasLimit": 3141592,
   "gasUsed": 0,
@@ -24,7 +26,8 @@ getBlock --file:cmd_file2 --force
   "price": 0.00000,
   "finalized": true,
   "timestamp": 1440511996
-},
+}TIME ~ CLOCK - <INFO>  : force: true
+,
 {
   "gasLimit": 3141592,
   "gasUsed": 0,
@@ -36,7 +39,8 @@ getBlock --file:cmd_file2 --force
   "price": 0.00000,
   "finalized": true,
   "timestamp": 1440826383
-},
+}TIME ~ CLOCK - <INFO>  : force: true
+,
 {
   "gasLimit": 3141592,
   "gasUsed": 0,
@@ -48,7 +52,8 @@ getBlock --file:cmd_file2 --force
   "price": 0.00000,
   "finalized": true,
   "timestamp": 1443211927
-},
+}TIME ~ CLOCK - <INFO>  : force: true
+,
 {
   "gasLimit": 3141592,
   "gasUsed": 0,
@@ -60,7 +65,8 @@ getBlock --file:cmd_file2 --force
   "price": 0.00000,
   "finalized": true,
   "timestamp": 1444799304
-},
+}TIME ~ CLOCK - <INFO>  : force: true
+,
 {
   "gasLimit": 3141592,
   "gasUsed": 0,
@@ -72,7 +78,8 @@ getBlock --file:cmd_file2 --force
   "price": 0.00000,
   "finalized": true,
   "timestamp": 1445036868
-},
+}TIME ~ CLOCK - <INFO>  : force: true
+,
 {
   "gasLimit": 3141592,
   "gasUsed": 0,
@@ -84,7 +91,8 @@ getBlock --file:cmd_file2 --force
   "price": 0.00000,
   "finalized": true,
   "timestamp": 1445864379
-},
+}TIME ~ CLOCK - <INFO>  : force: true
+,
 {
   "gasLimit": 3141592,
   "gasUsed": 0,
@@ -96,7 +104,8 @@ getBlock --file:cmd_file2 --force
   "price": 0.00000,
   "finalized": true,
   "timestamp": 1446452690
-},
+}TIME ~ CLOCK - <INFO>  : force: true
+,
 {
   "gasLimit": 3141592,
   "gasUsed": 21000,
@@ -132,7 +141,8 @@ getBlock --file:cmd_file2 --force
       "gasUsed": 21000
     }
   ]
-},
+}TIME ~ CLOCK - <INFO>  : force: true
+,
 {
   "gasLimit": 3141592,
   "gasUsed": 21000,
@@ -168,7 +178,8 @@ getBlock --file:cmd_file2 --force
       "gasUsed": 21000
     }
   ]
-},
+}TIME ~ CLOCK - <INFO>  : force: true
+,
 {
   "gasLimit": 3141592,
   "gasUsed": 0,
@@ -180,7 +191,8 @@ getBlock --file:cmd_file2 --force
   "price": 0.00000,
   "finalized": true,
   "timestamp": 1449247432
-},
+}TIME ~ CLOCK - <INFO>  : force: true
+,
 {
   "gasLimit": 3141592,
   "gasUsed": 0,
@@ -192,7 +204,8 @@ getBlock --file:cmd_file2 --force
   "price": 0.00000,
   "finalized": true,
   "timestamp": 1450655797
-},
+}TIME ~ CLOCK - <INFO>  : force: true
+,
 {
   "gasLimit": 3141592,
   "gasUsed": 21000,
@@ -228,7 +241,8 @@ getBlock --file:cmd_file2 --force
       "gasUsed": 21000
     }
   ]
-},
+}TIME ~ CLOCK - <INFO>  : force: true
+,
 {
   "gasLimit": 3141592,
   "gasUsed": 21000,
@@ -264,7 +278,8 @@ getBlock --file:cmd_file2 --force
       "gasUsed": 21000
     }
   ]
-},
+}TIME ~ CLOCK - <INFO>  : force: true
+,
 {
   "gasLimit": 3141592,
   "gasUsed": 42000,
@@ -322,7 +337,8 @@ getBlock --file:cmd_file2 --force
       "gasUsed": 21000
     }
   ]
-},
+}TIME ~ CLOCK - <INFO>  : force: true
+,
 {
   "gasLimit": 3141592,
   "gasUsed": 333222,
@@ -577,7 +593,8 @@ getBlock --file:cmd_file2 --force
       "gasUsed": 165222
     }
   ]
-},
+}TIME ~ CLOCK - <INFO>  : force: true
+,
 {
   "gasLimit": 3141592,
   "gasUsed": 113244,
@@ -711,7 +728,8 @@ getBlock --file:cmd_file2 --force
       "gasUsed": 21000
     }
   ]
-},
+}TIME ~ CLOCK - <INFO>  : force: true
+,
 {
   "gasLimit": 4712388,
   "gasUsed": 42000,
@@ -769,7 +787,8 @@ getBlock --file:cmd_file2 --force
       "gasUsed": 21000
     }
   ]
-},
+}TIME ~ CLOCK - <INFO>  : force: true
+,
 {
   "gasLimit": 3141592,
   "gasUsed": 50244,

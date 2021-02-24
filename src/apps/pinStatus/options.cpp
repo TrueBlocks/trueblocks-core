@@ -72,6 +72,15 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
+    // BEG_DEBUG_TEST
+    LOG_TEST("mode", mode, (mode == ""));
+    LOG_TEST_BOOL("hash", hash);
+    LOG_TEST("pin", pin, (pin == ""));
+    LOG_TEST("unpin", unpin, (unpin == ""));
+    LOG_TEST_BOOL("init", init);
+    LOG_TEST_BOOL("license", license);
+    // END_DEBUG_TEST
+
     if (isRaw)
         expContext().exportFmt = JSON1;
 

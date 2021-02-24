@@ -1,5 +1,6 @@
 ethNames argc: 4 [1:--match_case] [2:--fmt] [3:txt] 
 ethNames --match_case --fmt txt 
+TIME ~ CLOCK - <INFO>  : match_case: true
 tags	address	name	symbol	decimals
 55-Defi	0x000000000000000000000000000000000000dead	ENS: Burn Address
 30-Contracts	0x0000000000001b84b1cb32787b0d64758d019317	HomeWork 🏠🛠️	HWK

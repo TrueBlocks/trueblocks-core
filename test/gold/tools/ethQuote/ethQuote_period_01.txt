@@ -1,5 +1,6 @@
 ethQuote argc: 5 [1:--period] [2:60] [3:--fmt] [4:json] 
 ethQuote --period 60 --fmt json 
+TIME ~ CLOCK - <INFO>  : period: 60
 { "data": [
   {
     "timestamp": 1439078400,

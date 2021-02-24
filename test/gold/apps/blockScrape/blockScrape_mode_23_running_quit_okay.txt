@@ -1,5 +1,6 @@
 blockScrape argc: 2 [1:quit] 
 blockScrape quit 
+TIME ~ CLOCK - <INFO>  : mode: quit
 TIME ~ CLOCK - : 8------The scraper was running.
 TIME ~ CLOCK - : 4-----changing state: running --> stopped
 { "status": "stopped" }

@@ -529,6 +529,7 @@ CCommandOption::CCommandOption(const string_q& line) {
         description = trim(substitute(description, "|", " "));
     }
 
+    isList = contains(data_type, "list<");
     isEnumList = contains(data_type, "list<enum");
     isEnum = contains(data_type, "enum") && !isEnumList;
     isBool = contains(data_type, "boolean");
@@ -636,5 +637,20 @@ void CCommandOption::verifyHotkey(CStringArray& warnings) {
 
     explode(warnings, warnstream.str(), '|');
 }
+
+//---------------------------------------------------------------------------------------------------
+extern const char* STR_DEBUG_TEST;
+extern const char* STR_DEBUG_TEST_BOOL;
+//---------------------------------------------------------------------------------------------------
+string_q CCommandOption::debugCode(void) const {
+    string_q debug = Format(isBool ? STR_DEBUG_TEST_BOOL : STR_DEBUG_TEST);
+    if (isList)
+        replace(debug, "    ", "    // ");
+    return debug;
+}
+
+//---------------------------------------------------------------------------------------------------
+const char* STR_DEBUG_TEST = "    LOG_TEST(\"[{COMMAND}]\", [{COMMAND}], ([{COMMAND}] == [{DEF_VAL}]));";
+const char* STR_DEBUG_TEST_BOOL = "    LOG_TEST_BOOL(\"[{COMMAND}]\", [{COMMAND}]);";
 // EXISTING_CODE
 }  // namespace qblocks

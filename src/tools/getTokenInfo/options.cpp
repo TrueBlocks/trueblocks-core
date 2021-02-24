@@ -79,6 +79,14 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
+    // BEG_DEBUG_TEST
+    // LOG_TEST("addrs2", addrs2, (addrs2 == NOPOS));
+    // LOG_TEST("blocks", blocks, (blocks == NOPOS));
+    // LOG_TEST("parts", parts, (parts == ""));
+    LOG_TEST_BOOL("by_acct", by_acct);
+    LOG_TEST_BOOL("no_zero", no_zero);
+    // END_DEBUG_TEST
+
     bool userBlocks = true;
     if (!blocks.hasBlocks()) {
         blocks.numList.push_back(newestBlock);  // use 'latest'

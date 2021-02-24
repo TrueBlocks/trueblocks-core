@@ -1,5 +1,8 @@
 ethNames argc: 6 [1:--named] [2:--custom] [3:--owned] [4:--fmt] [5:json] 
 ethNames --named --custom --owned --fmt json 
+TIME ~ CLOCK - <INFO>  : owned: true
+TIME ~ CLOCK - <INFO>  : custom: true
+TIME ~ CLOCK - <INFO>  : named: true
 { "data": [
   {
     "address": "0x0000000000000000000000000000000000000001",

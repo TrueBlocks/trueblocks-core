@@ -7,6 +7,7 @@ TB_NAME_NAME = [NAME]
 TB_NAME_SOURCE = [SOURCE]
 TB_NAME_SYMBOL = [SYMBOL]
 TB_NAME_TAG = [TAGS]
+TIME ~ CLOCK - <INFO>  : expand: true
 TIME ~ CLOCK - <INFO>  : Cleaning 0x0000000000000000000000000000000010101010                                  ---------------------------------------------
 {
   "tags": "TAGS",

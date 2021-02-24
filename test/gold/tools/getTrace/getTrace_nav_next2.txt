@@ -1,4 +1,5 @@
 getTrace argc: 2 [1:1001001.3.next] 
 getTrace 1001001.3.next 
+TIME ~ CLOCK - <INFO>  : skip_ddos: true
 blocknumber	transactionindex	traceaddress	action::calltype	error	action::from	action::to	action::value	action::ether	action::gas	result::gasused	action::input	compressedtrace	result::output
 1001002	0	null	call		0x2a65aca4d5fc5b5c859090a6c34d164135398226	0xfc8bc4ed86df73001ce6082f3db914d7c7a9a6cc	2139205320000000000	2.139205320000000000	69000	0	0x		0x

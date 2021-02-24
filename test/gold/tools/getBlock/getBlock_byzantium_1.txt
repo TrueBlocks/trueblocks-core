@@ -1,5 +1,6 @@
 getBlock argc: 5 [1:4369999] [2:4370000] [3:4380101] [4:--force] 
 getBlock 4369999 4370000 4380101 --force 
+TIME ~ CLOCK - <INFO>  : force: true
 { "data": [
 {
   "gasLimit": 6712355,
