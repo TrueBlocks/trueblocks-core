@@ -1,21 +1,62 @@
 {
-  "blockNumber": 10092000,
-  "balance": 0,
-  "address": "0xbb2b8038a1640196fbe3e38816f3e67cba72d940",
-  "result": {
-    "name": "name",
-    "type": "function",
-    "constant": true,
-    "stateMutability": "view",
-    "signature": "name()",
-    "encoding": "0x06fdde03",
-    "inputs": [],
-    "outputs": [
-      {
-        "type": "string",
-        "name": "_name",
-        "value": "Uniswap V2"
-      }
-    ]
-  }
+  "data": [
+    {
+      "blockNumber": 10092000,
+      "encoding": "0x06fdde03",
+      "bytes": "",
+      "result": {
+        "name": "name",
+        "signature": "name()",
+        "encoding": "0x06fdde03",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "_name",
+            "value": "Uniswap V2"
+          }
+        ]
+      },
+      "balance": 0,
+      "address": "0xbb2b8038a1640196fbe3e38816f3e67cba72d940"
+    }
+  ],
+  "types": [
+    {
+      "type": "CEthCall",
+      "fields": [
+        {
+          "name": "blockNumber",
+          "type": "blocknum"
+        },
+        {
+          "name": "encoding",
+          "type": "text"
+        },
+        {
+          "name": "bytes",
+          "type": "text"
+        },
+        {
+          "name": "result",
+          "type": "object"
+        },
+        {
+          "name": "blockNumber",
+          "type": "blocknum"
+        },
+        {
+          "name": "balance",
+          "type": "wei"
+        },
+        {
+          "name": "address",
+          "type": "address"
+        },
+        {
+          "name": "result",
+          "type": "object"
+        }
+      ]
+    }
+  ]
 }

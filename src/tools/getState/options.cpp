@@ -155,15 +155,6 @@ bool COptions::parseArguments(string_q& command) {
         configureDisplay("getState", "CEthState", format.empty() ? STR_DISPLAY_ETHSTATE : format);
 
     } else {
-        // Display formatting
-        string_q format = STR_DISPLAY_FUNCTION;
-        configureDisplay("getState", "CFunction", format.empty() ? STR_DISPLAY_FUNCTION : format);
-        manageFields(
-            "CParameter:str_default,indexed,internalType,components,no_write,is_pointer,is_array,is_object,is_builtin,"
-            "is_minimal,type|CFunction:stateMutability,type,constant,inputs|CEthCall:abi_spec",
-            FLD_HIDE);
-        manageFields("CFunction:address|CEthState:result,address", FLD_SHOW);
-
         CStringArray vars;
         explode(vars, call, '!');
         if (vars.size() == 0)
@@ -188,6 +179,18 @@ bool COptions::parseArguments(string_q& command) {
             abi_spec.articulateTransaction(&art);
             theCall.result.inputs = art.articulatedTx.inputs;
             theCall.address = vars[0];
+
+            // Display formatting
+            expContext().exportFmt = JSON1;
+            string_q format = STR_DISPLAY_FUNCTION;
+            configureDisplay("getState", "CEthState", format.empty() ? STR_DISPLAY_ETHSTATE : format);
+            manageFields(
+                "CParameter:str_default,indexed,internalType,components,no_write,is_pointer,is_array,is_object,is_"
+                "builtin,"
+                "is_minimal,type|CFunction:stateMutability,type,constant|CEthCall:abi_spec",
+                FLD_HIDE);
+            manageFields("CFunction:address|CEthState:result,address", FLD_SHOW);
+
             return true;
         }
         return usage("No result from call to " + theCall.address + " with fourbyte " + theCall.encoding + ".");

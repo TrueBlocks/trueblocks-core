@@ -692,7 +692,13 @@ void errorMessage(const string_q& msg) {
 }
 
 //--------------------------------------------------------------------------------
-string_q COptionsBase::usageStr(const string_q& errMsg) const {
+string_q COptionsBase::usageStr(const string_q& errMsgIn) const {
+    string_q errMsg = errMsgIn;
+    while (contains(errMsg, "`")) {
+        replace(errMsg, "`", "");  // cTeal);
+        replace(errMsg, "`", "");  // cRed);
+    }
+
     if (isApiMode())
         errorMessage(getProgName() + " - " + errMsg);
 

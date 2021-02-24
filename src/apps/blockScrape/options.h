@@ -66,7 +66,7 @@ class COptions : public COptionsBase {
 
     bool changeState(void);
     ScrapeState getCurrentState(void);
-    void cleanup(void) {
+    void cleanupAndQuit(void) {
         mode = "quit";
         changeState();
     }

@@ -9,10 +9,10 @@
 bool COptions::scrape_monitors(void) {
     ENTER("scrape_monitors");
 
-    CMonitorArray monitors;
     CMonitor m;
-    // Catch the monitors addresses up to the scraper if in --deamon mode
+    CMonitorArray monitors;
     forEveryFileInFolder(m.getMonitorPath("") + "*", prepareMonitors, &monitors);
+
     for (auto monitor : monitors) {
         if (state == STATE_STOPPED || shouldQuit())
             break;

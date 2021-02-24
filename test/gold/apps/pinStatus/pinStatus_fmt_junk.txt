@@ -3,7 +3,7 @@ pinStatus --license --fmt junk
 
   Export format (junk) must be one of [ json | txt | csv | api ]. Quitting...
 
-  Usage:    pinStatus [-a|-p|-u|-v|-h] mode  
+  Usage:    pinStatus [-a|-p|-u|-i|-v|-h] mode  
   Purpose:  Report on and manage pinned appearance index and bloom chunks.
 
   Where:  
@@ -11,9 +11,10 @@ pinStatus --license --fmt junk
 	-a  (--hash)          display the hash instead of contents of manifest ('on' for onchain mode)
 	-p  (--pin <str>)     pin indexes and blooms, add to manifest, and return hash
 	-u  (--unpin <str>)   unpin index(es) and blooms given a hash, a filename, or 'all'
+	-i  (--init)          initialize the TrueBlocks appearance index
 
 	#### Hidden options
-	-i  (--license)       show the current pinata license information, if any
+	-l  (--license)       show the current pinata license information, if any
 	#### Hidden options
 
 	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]

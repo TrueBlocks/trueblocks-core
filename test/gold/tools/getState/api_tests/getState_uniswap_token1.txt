@@ -1,21 +1,62 @@
 {
-  "blockNumber": 10092000,
-  "balance": 0,
-  "address": "0xbb2b8038a1640196fbe3e38816f3e67cba72d940",
-  "result": {
-    "name": "token1",
-    "type": "function",
-    "constant": true,
-    "stateMutability": "view",
-    "signature": "token1()",
-    "encoding": "0xd21220a7",
-    "inputs": [],
-    "outputs": [
-      {
-        "type": "address",
-        "name": "val_0",
-        "value": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"
-      }
-    ]
-  }
+  "data": [
+    {
+      "blockNumber": 10092000,
+      "encoding": "0xd21220a7",
+      "bytes": "",
+      "result": {
+        "name": "token1",
+        "signature": "token1()",
+        "encoding": "0xd21220a7",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "val_0",
+            "value": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"
+          }
+        ]
+      },
+      "balance": 0,
+      "address": "0xbb2b8038a1640196fbe3e38816f3e67cba72d940"
+    }
+  ],
+  "types": [
+    {
+      "type": "CEthCall",
+      "fields": [
+        {
+          "name": "blockNumber",
+          "type": "blocknum"
+        },
+        {
+          "name": "encoding",
+          "type": "text"
+        },
+        {
+          "name": "bytes",
+          "type": "text"
+        },
+        {
+          "name": "result",
+          "type": "object"
+        },
+        {
+          "name": "blockNumber",
+          "type": "blocknum"
+        },
+        {
+          "name": "balance",
+          "type": "wei"
+        },
+        {
+          "name": "address",
+          "type": "address"
+        },
+        {
+          "name": "result",
+          "type": "object"
+        }
+      ]
+    }
+  ]
 }

@@ -93,77 +93,78 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    // Establish the folders that hold the data...
-    establishMonitorFolders();
-    establishFolder(indexFolder);
-    establishFolder(indexFolder_finalized);
-    establishFolder(indexFolder_blooms);
-    establishFolder(indexFolder_staging);
-    establishFolder(indexFolder_unripe);
-    establishFolder(indexFolder_ripe);
-    establishFolder(configPath("cache/tmp/"));
-
     if (mode.empty())
         mode = "run";
 
     if (tool.size() > 1)
-        return usage("You must specify only one of none, index, monitors, both.");
+        return usage("Please specify only one of [ none | index | monitors | both].");
+    ASSERT(tool.empty());
+
     if (tool.empty())
         tool.push_back("index");
     if (tool[0] == "none")
         tools = TOOL_NONE;
-    else if (tool[0] == "index")
-        tools = TOOL_INDEX;
+    else if (tool[0] == "both")
+        tools = TOOL_BOTH;
     else if (tool[0] == "monitors")
         tools = TOOL_MONITORS;
     else
-        tools = TOOL_BOTH;
+        tools = TOOL_INDEX;
 
-    // Min of 1/2 second
+    // no less than one half second of sleep between runs
     if (sleep < .5)
         sleep = .5;
 
-    bool hasPinCmd = (pin || publish);
-    if (hasPinCmd) {
-        if (!isTestMode() && !hasPinataKeys()) {
-            return usage(
-                "In order to use the pin options, you must enter a Pinata key in ~/.quickBlocks/blockScrape.toml.");
+    if (publish && !pin)
+        return usage("The --publish option is only available when using the --pin option.");
 
-        } else if (publish && !pin) {
-            return usage("The --publish option is only available with the --pin option.");
-        }
-    }
+    if (!isTestMode() && pin && !hasPinataKeys())
+        return usage("The --pin option requires you to have a Pinata key.");
 
+    // In test mode, all we do is try to control and report on the state (but we never scrape)
     // Control the state of the app (the state is stored in a temporary file). This only returns
     // false if we moved from stopped state to running state. All other state changes end here.
     bool result = changeState();
-    if (isTestMode() || result) {
-        if (isTestMode()) {
-            ostringstream os;
-            os << "{" << endl;
-            os << "  \"message\": \"Testing only\""
-               << "," << endl;
-            os << "  \"mode\": \"" << mode << "\"," << endl;
-            os << "  \"tool\": \"" << tool[0] << "\"," << endl;
-            os << "  \"tools\": " << tools << "," << endl;
-            os << "  \"n_blocks\": " << n_blocks << "," << endl;
-            os << "  \"n_block_procs\": " << n_block_procs << "," << endl;
-            os << "  \"n_addr_procs\": " << n_addr_procs << "," << endl;
-            os << "  \"pin\": " << pin << "," << endl;
-            os << "  \"publish\": " << publish << "," << endl;
-            os << "}" << endl;
-            if (isApiMode())
-                cout << os.str();
-            else
-                cerr << os.str();
-            if (!contains(command, "run") && !contains(command, "quit") && !contains(command, "restart") &&
-                !contains(command, "pause")) {
-                cleanup();
-            }
-        }
+    if (isTestMode()) {
+        ostringstream os;
+        os << "{" << endl;
+        os << "  \"message\": \"Testing only\"," << endl;
+        os << "  \"mode\": \"" << mode << "\"," << endl;
+        os << "  \"tool\": \"" << tool[0] << "\"," << endl;
+        os << "  \"tools\": " << tools << "," << endl;
+        os << "  \"n_blocks\": " << n_blocks << "," << endl;
+        os << "  \"n_block_procs\": " << n_block_procs << "," << endl;
+        os << "  \"n_addr_procs\": " << n_addr_procs << "," << endl;
+        os << "  \"pin\": " << pin << "," << endl;
+        os << "  \"publish\": " << publish << "," << endl;
+        os << "}" << endl;
+        cout << os.str();
+        if (!contains(command, "run") && !contains(command, "quit") && !contains(command, "restart") &&
+            !contains(command, "pause"))
+            cleanupAndQuit();
         return false;
     }
 
+    // In non-testing mode, we first try to change the state of the scraper (if stopped, start...if
+    // started, pause, etc.). We store the state in a temporary file (terrible idea, but it works).
+    // `changeState` returns false only if we moved from not running --> running. In this case, we
+    // want to enter the scraping state. All other states changes end here and the invocation quits.
+    if (result)
+        return false;
+
+    // We shouldn't run if we're already running...
+    if (amIRunning("blockScrape")) {
+        LOG_WARN("The blockScrape app is already running.");
+        return false;
+    }
+
+    // Nor should we run if the index is being actively scanned...
+    if (isRunning("acctExport")) {
+        LOG_WARN("Refusing to run while acctExport is running.");
+        return false;
+    }
+
+    // Debugging data...
     LOG4("indexPath: ", indexFolder);
     LOG4("finalized: ", indexFolder_finalized);
     LOG4("blooms: ", indexFolder_blooms);
@@ -172,6 +173,7 @@ bool COptions::parseArguments(string_q& command) {
     LOG4("ripe: ", indexFolder_ripe);
     LOG4("tmp: ", configPath("cache/tmp/"));
 
+    // This may be the first time we've ever run. In that case, we need to build the zero block index file...
     string_q zeroBloom = getIndexPath("blooms/" + padNum9(0) + "-" + padNum9(0) + ".bloom");
     if (!fileExists(zeroBloom)) {
         ASSERT(prefundWeiMap.size() == 8893);  // This is a known value
@@ -199,38 +201,35 @@ bool COptions::parseArguments(string_q& command) {
         LOG_INFO("Done...");
     }
 
+    // We need this below...
     const CToml* config = getGlobalConfig("blockScrape");
-    bool needsParity = config->getConfigBool("requires", "parity", true);
-    if (needsParity && !isParity()) {
-        return usage(
-            "This tool requires Parity. Add [requires]\\nparity=false to ~/.quickBlocks/blockScrape.toml turn this "
-            "test off.");
-    }
 
-    if (!isTracingNode()) {
+    // A tracing node is required. Otherwise, the index will be 'short' (i.e. it will
+    // be missing appearances). This is okay, if the user tells us it's okay. For
+    // example, if the user only wants an index of event emitters or something
+    bool needsTracing = config->getConfigBool("requires", "tracing", true);
+    if (needsTracing && !isTracingNode()) {
         string_q errMsg = "Tracing is required for this program to work properly.";
         if (isDockerMode())
-            errMsg += " If you're running docker, enable remote RPC endpoints (see your node's help).";
+            errMsg += " If you're running docker, enable remote RPC endpoints.";
         return usage(errMsg);
     }
 
+    // Parity traces are much better (and easier to use) than Geth's. But, in some
+    // cases, the user may not care and tells us she doesn't need parity
+    bool needsParity = config->getConfigBool("requires", "parity", true);
+    if (needsParity && !isParity())
+        return usage(
+            "This tool requires Parity. Add [requires]\\nparity=false to ~/.quickBlocks/blockScrape.toml to turn this "
+            "restriction off.");
+
+    // Balances are needed to make reconcilations. The user may not need that, so we allow it
     bool needsBalances = config->getConfigBool("requires", "balances", false);
-    if (needsBalances && !nodeHasBalances(true)) {
+    if (needsBalances && !nodeHasBalances(true))
         return usage("This tool requires an --archive node with historical balances.");
-    }
 
-    if (amIRunning("blockScrape")) {
-        LOG_WARN("The blockScrape app is already running.");
-        return false;
-    }
-
-    // Do not run if the index is being searched...
-    if (isRunning("acctExport")) {
-        LOG_WARN("Refusing to run while acctExport is running. Will restart shortly...");
-        return false;
-    }
-
-    // The previous run may have quit early, leaving the folders in a mild state of disrepair. Clean up first.
+    // The previous run may have quit early, leaving the folders in a mild state of
+    // disrepair. We clean that up here.
     ::remove((indexFolder_staging + "000000000-temp.txt").c_str());
     cleanFolder(indexFolder_unripe);
 
@@ -270,6 +269,16 @@ COptions::COptions(void) {
 
     // BEG_ERROR_MSG
     // END_ERROR_MSG
+
+    // Establish the folders that hold the data...
+    establishMonitorFolders();
+    establishFolder(indexFolder);
+    establishFolder(indexFolder_finalized);
+    establishFolder(indexFolder_blooms);
+    establishFolder(indexFolder_staging);
+    establishFolder(indexFolder_unripe);
+    establishFolder(indexFolder_ripe);
+    establishFolder(configPath("cache/tmp/"));
 }
 
 //--------------------------------------------------------------------------------

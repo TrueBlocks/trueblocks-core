@@ -1,21 +1,62 @@
 {
-  "blockNumber": 10092000,
-  "balance": 0,
-  "address": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
-  "result": {
-    "name": "name",
-    "type": "function",
-    "constant": true,
-    "stateMutability": "view",
-    "signature": "name()",
-    "encoding": "0x06fdde03",
-    "inputs": [],
-    "outputs": [
-      {
-        "type": "string",
-        "name": "_name",
-        "value": "Wrapped Ether"
-      }
-    ]
-  }
+  "data": [
+    {
+      "blockNumber": 10092000,
+      "encoding": "0x06fdde03",
+      "bytes": "",
+      "result": {
+        "name": "name",
+        "signature": "name()",
+        "encoding": "0x06fdde03",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "_name",
+            "value": "Wrapped Ether"
+          }
+        ]
+      },
+      "balance": 0,
+      "address": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"
+    }
+  ],
+  "types": [
+    {
+      "type": "CEthCall",
+      "fields": [
+        {
+          "name": "blockNumber",
+          "type": "blocknum"
+        },
+        {
+          "name": "encoding",
+          "type": "text"
+        },
+        {
+          "name": "bytes",
+          "type": "text"
+        },
+        {
+          "name": "result",
+          "type": "object"
+        },
+        {
+          "name": "blockNumber",
+          "type": "blocknum"
+        },
+        {
+          "name": "balance",
+          "type": "wei"
+        },
+        {
+          "name": "address",
+          "type": "address"
+        },
+        {
+          "name": "result",
+          "type": "object"
+        }
+      ]
+    }
+  ]
 }

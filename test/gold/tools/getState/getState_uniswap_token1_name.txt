@@ -5,23 +5,25 @@ getState --call 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2!0x06fdde03 10092000
 --  0: 0000000000000000000000000000000000000000000000000000000000000020 <---
 --  1: 000000000000000000000000000000000000000000000000000000000000000d
 --  2: 5772617070656420457468657200000000000000000000000000000000000000
+{ "data": [
 {
   "blockNumber": 10092000,
-  "balance": 0,
-  "address": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+  "encoding": "0x06fdde03",
   "result": {
     "name": "name",
-    "type": "function",
-    "stateMutability": "view",
     "signature": "name()",
     "encoding": "0x06fdde03",
     "outputs": [
       {
-        "type": "string",
         "name": "_name",
         "value": "Wrapped Ether"
       }
     ]
-  }
+  },
+  "balance": 0,
+  "address": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"
 }
 
+], "types": [
+{ "type": "CEthCall", "fields": [{ "name": "blockNumber", "type": "blocknum" }, { "name": "encoding", "type": "text" }, { "name": "bytes", "type": "text" }, { "name": "result", "type": "object" }, { "name": "blockNumber", "type": "blocknum" }, { "name": "balance", "type": "wei" }, { "name": "address", "type": "address" }, { "name": "result", "type": "object" }] }
+] }
