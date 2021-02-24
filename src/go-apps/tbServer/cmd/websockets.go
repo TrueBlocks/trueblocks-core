@@ -27,6 +27,7 @@ type Message struct {
 type Connection struct {
 	connection *websocket.Conn
 	send chan *Message
+	errors chan error
 }
 
 func (c *Connection) write() {
@@ -47,7 +48,8 @@ func (c *Connection) write() {
 			err := c.connection.WriteJSON(message)
 
 			if err != nil {
-				log.Fatal(err)
+				log.Print("Error while sending message, dropping connection", err)
+				c.errors <- err
 			}
 		}
 	}
@@ -104,6 +106,16 @@ func HandleWebsockets(pool *ConnectionPool, w http.ResponseWriter, r *http.Reque
 
 	connection := &Connection{connection: c, send: make(chan *Message)}
 	pool.register <- connection
+	go func() {
+		for {
+			select {
+			case err := <- connection.errors:
+				if err != nil {
+					closeAndDelete(pool, connection)
+				}
+			}
+		}
+	}()
 
 	go connection.write()
 }

@@ -64,7 +64,7 @@ func callOneExtra(w http.ResponseWriter, r *http.Request, tbCmd, extra string) {
 	stderrPipe, err := cmd.StderrPipe()
 
 	if err != nil {
-		fmt.Printf("%s", err)
+		log.Println(err)
 	} else {
 		go func() {
 			ScanForProgress(stderrPipe, func(commandProgress *CommandProgress) {
@@ -80,7 +80,7 @@ func callOneExtra(w http.ResponseWriter, r *http.Request, tbCmd, extra string) {
 	out, err := cmd.Output()
 
 	if err != nil {
-		fmt.Printf("%s", err)
+		log.Println(err)
 		connectionPool.broadcast <- &Message{
 			Action:  CommandErrorMessage,
 			Id:      tbCmd,

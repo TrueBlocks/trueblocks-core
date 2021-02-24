@@ -39,7 +39,10 @@ func ScanForProgress(stderrPipe io.Reader, fn SendFunc) {
 	scanner := bufio.NewScanner(stderrPipe)
 
 	for scanner.Scan() {
-		matches := MatchProgress(scanner.Text())
+		text := scanner.Text()
+		matches := MatchProgress(text)
+
+		log.Println(text)
 
 		if len(matches) != 0 {
 			done, err := strconv.Atoi(matches[2])
