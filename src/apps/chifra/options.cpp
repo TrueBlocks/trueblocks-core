@@ -15,7 +15,6 @@ static const size_t nParams = sizeof(params) / sizeof(COption);
 
 //------------------------------------------------------------------------------------------------
 bool COptions::call_command(int argc, const char* argv[]) {
-    verbose = 10;  // rather be more than less verbose here
     ENTER("call_command");
 
     CStringArray unused;

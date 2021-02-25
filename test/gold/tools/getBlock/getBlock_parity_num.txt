@@ -10,8 +10,7 @@ getBlock 728708 --parity
   "miner": "0x68795c4aa09d6f4ed3e5deddf8c2ad3049a601da",
   "number": "0xb1e84",
   "parentHash": "0x7fc5c22134193cb181054c9388b527da6546e2a279579f219b7bd95420c16de1",
-  "price": 0.00000,
   "timestamp": "0x5678c231"
 }], "types": [
-{ "type": "CBlock", "fields": [{ "name": "difficulty", "type": "unumber" }, { "name": "finalized", "type": "bool" }, { "name": "gasLimit", "type": "gas" }, { "name": "gasUsed", "type": "gas" }, { "name": "hash", "type": "hash" }, { "name": "miner", "type": "address" }, { "name": "number", "type": "blocknum" }, { "name": "parentHash", "type": "hash" }, { "name": "price", "type": "double" }, { "name": "timestamp", "type": "timestamp" }, { "name": "transactions", "type": "object|ts_array" }] }
+{ "type": "CBlock", "fields": [{ "name": "difficulty", "type": "unumber" }, { "name": "finalized", "type": "bool" }, { "name": "gasLimit", "type": "gas" }, { "name": "gasUsed", "type": "gas" }, { "name": "hash", "type": "hash" }, { "name": "miner", "type": "address" }, { "name": "number", "type": "blocknum" }, { "name": "parentHash", "type": "hash" }, { "name": "timestamp", "type": "timestamp" }, { "name": "transactions", "type": "object|ts_array" }] }
 ] }
