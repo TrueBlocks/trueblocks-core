@@ -81,12 +81,12 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    // BEG_DEBUG_TEST
+    // BEG_DEBUG_DISPLAY
     // LOG_TEST("block_list", block_list, (block_list == NOPOS));
     LOG_TEST_BOOL("list", list);
     LOG_TEST_BOOL("timestamps", timestamps);
     LOG_TEST("skip", skip, (skip == NOPOS));
-    // END_DEBUG_TEST
+    // END_DEBUG_DISPLAY
 
     if (skip != NOPOS && !skip)
         return usage("--skip value must be larger than zero.");

@@ -74,12 +74,12 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    // BEG_DEBUG_TEST
+    // BEG_DEBUG_DISPLAY
     LOG_TEST_BOOL("freshen", freshen);
     LOG_TEST("period", period, (period == ""));
     LOG_TEST("pair", pair, (pair == ""));
     LOG_TEST("feed", feed, (feed == ""));
-    // END_DEBUG_TEST
+    // END_DEBUG_DISPLAY
 
     // Data wrangling
     if (!pair.empty())

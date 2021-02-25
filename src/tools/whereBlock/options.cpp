@@ -61,9 +61,9 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    // BEG_DEBUG_TEST
+    // BEG_DEBUG_DISPLAY
     // LOG_TEST("blocks", blocks, (blocks == NOPOS));
-    // END_DEBUG_TEST
+    // END_DEBUG_DISPLAY
 
     // Data verifiction
     if (!blocks.hasBlocks())

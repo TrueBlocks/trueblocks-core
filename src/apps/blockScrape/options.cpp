@@ -37,9 +37,8 @@ bool COptions::parseArguments(string_q& command) {
     // BEG_CODE_LOCAL_INIT
     // END_CODE_LOCAL_INIT
 
-    blknum_t latest = getBlockProgress(BP_CLIENT).client;
     CBlock block;
-    getBlock_light(block, latest);
+    getBlock_light(block, getBlockProgress(BP_CLIENT).client);
     latestBlockTs = block.timestamp;
     latestBlockNum = block.blockNumber;
 
@@ -93,7 +92,7 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    // BEG_DEBUG_TEST
+    // BEG_DEBUG_DISPLAY
     LOG_TEST("mode", mode, (mode == ""));
     // LOG_TEST("tool", tool, (tool == ""));
     LOG_TEST("n_blocks", n_blocks, (n_blocks == NOPOS));
@@ -102,7 +101,7 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST_BOOL("pin", pin);
     LOG_TEST_BOOL("publish", publish);
     LOG_TEST("sleep", sleep, (sleep == 14));
-    // END_DEBUG_TEST
+    // END_DEBUG_DISPLAY
 
     if (mode.empty())
         mode = "run";

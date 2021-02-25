@@ -101,7 +101,7 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    // BEG_DEBUG_TEST
+    // BEG_DEBUG_DISPLAY
     // LOG_TEST("modes", modes, (modes == ""));
     LOG_TEST_BOOL("details", details);
     // LOG_TEST("types", types, (types == ""));
@@ -112,7 +112,7 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST_BOOL("set_config", set_config);
     LOG_TEST("start", start, (start == NOPOS));
     LOG_TEST("end", end, (end == NOPOS));
-    // END_DEBUG_TEST
+    // END_DEBUG_DISPLAY
 
     // removes warning on Ubuntu 20.04
     if (report)

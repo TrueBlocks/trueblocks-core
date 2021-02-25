@@ -79,13 +79,13 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    // BEG_DEBUG_TEST
+    // BEG_DEBUG_DISPLAY
     // LOG_TEST("addrs2", addrs2, (addrs2 == NOPOS));
     // LOG_TEST("blocks", blocks, (blocks == NOPOS));
     // LOG_TEST("parts", parts, (parts == ""));
     LOG_TEST_BOOL("by_acct", by_acct);
     LOG_TEST_BOOL("no_zero", no_zero);
-    // END_DEBUG_TEST
+    // END_DEBUG_DISPLAY
 
     bool userBlocks = true;
     if (!blocks.hasBlocks()) {

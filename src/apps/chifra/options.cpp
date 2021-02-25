@@ -5,10 +5,9 @@
  *------------------------------------------------------------------------*/
 #include "options.h"
 
-extern string_q getSubcommands(void);
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
-    COption("command", getSubcommands(), "<string>", OPT_REQUIRED | OPT_POSITIONAL, "which command to run"),
+    COption("command", "", "<string>", OPT_REQUIRED | OPT_POSITIONAL, "which command to run"),
     COption("", "", "", OPT_DESCRIPTION, "Access to all TrueBlocks tools (`chifra <cmd> --help` for more)."),
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
@@ -46,23 +45,26 @@ bool COptions::call_command(int argc, const char* argv[]) {
         }
     }
 
-    // BEG_DEBUG_TEST
+    // BEG_DEBUG_DISPLAY
     LOG_TEST("mode", mode, mode == "");
-    // END_DEBUG_TEST
+    // END_DEBUG_DISPLAY
 
     setProgName("chifra");
+
     // show chifra's help in limited cases, the tool's help otherwise
     if (has_help && (argc == 2 || mode == "serve"))
         EXIT_USAGE("");
 
-    if (!mode.empty() && mode != "serve")
-        setenv("PROG_NAME", ("chifra " + string_q(argv[1])).c_str(), true);
-
+    // Make sure user sent a real subcommand
     if (argc > 1 && cmdMap[argv[1]].empty())
         EXIT_USAGE("Unknown subcommand '" + string_q(argv[1]) + "'.");
 
     if (mode.empty())
         EXIT_USAGE("The first argument you provide must be a chifra subcommand.");
+
+    // We want the help screen to display 'chifra subcommand' and not the program's name
+    if (!mode.empty() && mode != "serve")
+        setenv("PROG_NAME", ("chifra " + string_q(argv[1])).c_str(), true);
 
     if (isApiMode() && mode == "scrape" && has_run) {
         cout << "{ \"status\": \"cannot run\" }";
@@ -73,19 +75,30 @@ bool COptions::call_command(int argc, const char* argv[]) {
         EXIT_NOMSG(false);
     }
 
+    // Everything past the mode gets sent to the tool...execpt a few syntactic sugars
     CStringBoolMap removeMap;
     removeMap["--names"] = true;
     removeMap["--terms"] = true;
     removeMap["--addrs"] = true;
 
-    // everything past the mode gets sent to the tool...
+    CAddressBoolMap addressMap;
+
     ostringstream os;
     os << cmdMap[mode];
-    for (int i = 2; i < argc; i++)
-        if (!removeMap[argv[i]])
-            os << " " << argv[i];
+    for (int i = 2; i < argc; i++) {
+        // If we're not removing it...
+        if (!removeMap[argv[i]]) {
+            string_q arg = argv[i];
+            // ... and it's either not an address or not already in the map, pass it through
+            if (!isAddress(arg) || !addressMap[arg])
+                os << " " << argv[i];
+            addressMap[arg] = isAddress(arg);
+        }
+    }
 
     LOG_CALL(os.str());
+
+    // Make the actual system call and return the result
     EXIT_NOMSG(system(os.str().c_str()));
 }
 
@@ -97,11 +110,6 @@ void COptions::Init(void) {
 
     // BEG_CODE_INIT
     // END_CODE_INIT
-
-    // addrs.clear();
-    // tool_flags = "";
-    // mode = "";
-    // minArgs = 0;
 }
 
 extern const char* STR_FULL_HELP;
@@ -116,7 +124,8 @@ COptions::~COptions(void) {
 }
 
 //------------------------------------------------------------------------------------------------
-map<string, string> cmdMap = {{"slurp", "ethslurp"},
+map<string, string> cmdMap = {{"monitor", "acctExport --appearances"},
+                              {"export", "acctExport"},
                               {"entities", "ethNames --entities"},
                               {"names", "ethNames"},
                               {"tags", "ethNames --tags"},
@@ -126,58 +135,20 @@ map<string, string> cmdMap = {{"slurp", "ethslurp"},
                               {"receipts", "getReceipt"},
                               {"logs", "getLogs"},
                               {"traces", "getTrace"},
-                              {"quotes", "ethQuote"},
                               {"state", "getState"},
                               {"tokens", "getTokenInfo"},
                               {"when", "whenBlock"},
-                              {"where", "whereBlock"},
-                              {"status", "cacheStatus"},
-                              {"monitor", "acctExport --appearances"},
-                              {"list", "acctExport --appearances"},
-                              {"export", "acctExport"},
-                              {"scrape", "blockScrape"},
                               {"init", "pinStatus local --init"},
-                              {"dive", "turboDive"},
+                              {"scrape", "blockScrape"},
                               {"serve", "tbServer"},
                               {"pins", "pinStatus"},
-                              {"explore", "ethscan.py"}};
-
-//------------------------------------------------------------------------------------------------
-const char* cmdList =
-    "monitor|"
-    "export|"
-    "entities|"
-    "names|"
-    "tags|"
-    "abis|"
-    "blocks|"
-    "transactions|"
-    "receipts|"
-    "logs|"
-    "traces|"
-    "state|"
-    "tokens|"
-    "when|"
-    "init|"
-    "scrape|"
-    "serve|"
-    "pins|"
-    "status|"
-    "explore|"
-    "slurp|"
-    "quotes|"
-    "where|";
-
-//------------------------------------------------------------------------------------------------
-string_q getSubcommands(void) {
-    CStringArray cmds;
-    explode(cmds, cmdList, '|');
-    ostringstream out;
-    for (auto cmd : cmds)
-        out << cmd << "|";
-    string_q l = trim(out.str(), '|');
-    return "list<enum[" + l + "]>";
-}
+                              {"status", "cacheStatus"},
+                              {"explore", "ethscan.py"},
+                              {"slurp", "ethslurp"},
+                              {"quotes", "ethQuote"},
+                              {"where", "whereBlock"},
+                              {"list", "acctExport --appearances"},
+                              {"dive", "turboDive"}};
 
 //------------------------------------------------------------------------------------------------
 const char* STR_FULL_HELP =
@@ -210,6 +181,7 @@ const char* STR_FULL_HELP =
     "  quotes        return prices collected from configured remote API|"
     "  where         determine the location of block(s), either local or remote cache, or on-chain";
 
+// TODO(tjayrush): Re-enable mocked data
 // if (mocked) {
 //     string_q which = origMode;
 //     if (origMode == "names") {
@@ -252,11 +224,8 @@ const char* STR_FULL_HELP =
 //     tool_flags += " --mocked ";
 // }
 
+// TODO(tjayrush): Re-enable the ability to start, stop, pause, and quit the block scraper
 // This will probably break in the real usage.
 // CStringArray scraper = {"--restart", "--pause", "--quit"};
 // for (auto cmd : scraper)
 //     replace(tool_flags, cmd, substitute(cmd, "--", ""));
-
-// TODO(tjayrush): Do not allow duplicate addresses in the command line
-// TODO(tjayrush): Re-enable mocked data
-// TODO(tjayrush): Re-enable the ability to start, stop, pause, and quit the block scraper

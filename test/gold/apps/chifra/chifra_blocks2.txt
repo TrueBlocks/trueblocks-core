@@ -1,7 +1,6 @@
 chifra argc: 6 [1:blocks] [2:12] [3:--fmt] [4:csv] [5:--no_header] 
 chifra blocks 12 --fmt csv --no_header 
 TIME ~ CLOCK - <INFO>  : mode: blocks
-TIME ~ CLOCK - : 4-----call_command ----> getBlock 12 --fmt csv --no_header
 chifra blocks argc: 5 [1:12] [2:--fmt] [3:csv] [4:--no_header] 
 chifra blocks 12 --fmt csv --no_header 
 PROG_NAME = [chifra blocks]

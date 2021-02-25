@@ -73,8 +73,8 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    // BEG_DEBUG_TEST
-    // END_DEBUG_TEST
+    // BEG_DEBUG_DISPLAY
+    // END_DEBUG_DISPLAY
 
     if (token.empty())
         return usage("Please supply a single ERC20 token address.");

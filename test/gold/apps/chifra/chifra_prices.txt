@@ -1,7 +1,6 @@
 chifra argc: 4 [1:quotes] [2:-p] [3:1440] 
 chifra quotes -p 1440 
 TIME ~ CLOCK - <INFO>  : mode: quotes
-TIME ~ CLOCK - : 4-----call_command ----> ethQuote -p 1440
 chifra quotes argc: 3 [1:-p] [2:1440] 
 chifra quotes -p 1440 
 PROG_NAME = [chifra quotes]

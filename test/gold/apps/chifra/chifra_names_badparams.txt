@@ -1,7 +1,6 @@
 chifra argc: 3 [1:names] [2:--not_an_option] 
 chifra names --not_an_option 
 TIME ~ CLOCK - <INFO>  : mode: names
-TIME ~ CLOCK - : 4-----call_command ----> ethNames --not_an_option
 chifra names argc: 2 [1:--not_an_option] 
 chifra names --not_an_option 
 PROG_NAME = [chifra names]

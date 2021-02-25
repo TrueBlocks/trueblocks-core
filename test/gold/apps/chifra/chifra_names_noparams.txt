@@ -1,7 +1,6 @@
 chifra argc: 6 [1:names] [2:--names] [3:50-Tokens] [4:--fmt] [5:txt] 
 chifra names --names 50-Tokens --fmt txt 
 TIME ~ CLOCK - <INFO>  : mode: names
-TIME ~ CLOCK - : 4-----call_command ----> ethNames 50-Tokens --fmt txt
 chifra names argc: 4 [1:50-Tokens] [2:--fmt] [3:txt] 
 chifra names 50-Tokens --fmt txt 
 PROG_NAME = [chifra names]

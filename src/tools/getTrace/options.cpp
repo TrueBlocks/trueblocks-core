@@ -76,14 +76,14 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    // BEG_DEBUG_TEST
+    // BEG_DEBUG_DISPLAY
     // LOG_TEST("transactions", transactions, (transactions == NOPOS));
     LOG_TEST_BOOL("articulate", articulate);
     LOG_TEST_BOOL("count", count);
     LOG_TEST_BOOL("skip_ddos", skip_ddos);
     LOG_TEST("max_traces", max_traces, (max_traces == 250));
     LOG_TEST("filter", filter, (filter == ""));
-    // END_DEBUG_TEST
+    // END_DEBUG_DISPLAY
 
     if (!isTracingNode())
         return usage("Tracing is required for this program to work properly.");

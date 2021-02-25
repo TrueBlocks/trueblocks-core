@@ -126,7 +126,7 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    // BEG_DEBUG_TEST
+    // BEG_DEBUG_DISPLAY
     // LOG_TEST("terms", terms, (terms == NOPOS));
     LOG_TEST_BOOL("expand", expand);
     LOG_TEST_BOOL("match_case", match_case);
@@ -141,7 +141,7 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST_BOOL("tags", tags);
     LOG_TEST_BOOL("to_custom", to_custom);
     LOG_TEST_BOOL("clean", clean);
-    // END_DEBUG_TEST
+    // END_DEBUG_DISPLAY
 
     if (clean || isCrudCommand()) {
         abi_spec.loadAbisFromKnown(true);

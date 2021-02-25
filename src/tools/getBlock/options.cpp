@@ -99,7 +99,7 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    // BEG_DEBUG_TEST
+    // BEG_DEBUG_DISPLAY
     // LOG_TEST("blocks", blocks, (blocks == NOPOS));
     LOG_TEST_BOOL("hashes_only", hashes_only);
     LOG_TEST_BOOL("apps", apps);
@@ -109,7 +109,7 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST_BOOL("uncles", uncles);
     LOG_TEST_BOOL("force", force);
     LOG_TEST_BOOL("trace", trace);
-    // END_DEBUG_TEST
+    // END_DEBUG_DISPLAY
 
     if (force)
         etherlib_init(defaultQuitHandler);

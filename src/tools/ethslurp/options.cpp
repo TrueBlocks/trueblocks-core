@@ -74,12 +74,12 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    // BEG_DEBUG_TEST
+    // BEG_DEBUG_DISPLAY
     // LOG_TEST("addrs", addrs, (addrs == NOPOS));
     // LOG_TEST("blocks", blocks, (blocks == NOPOS));
     // LOG_TEST("types", types, (types == ""));
     LOG_TEST_BOOL("appearances", appearances);
-    // END_DEBUG_TEST
+    // END_DEBUG_DISPLAY
 
     // This will fail if we don't have a key. Let's fail early.
     getApiKey("Etherscan", "http://api.etherscan.io/apis");

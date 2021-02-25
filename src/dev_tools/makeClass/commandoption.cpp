@@ -639,18 +639,18 @@ void CCommandOption::verifyHotkey(CStringArray& warnings) {
 }
 
 //---------------------------------------------------------------------------------------------------
-extern const char* STR_DEBUG_TEST;
-extern const char* STR_DEBUG_TEST_BOOL;
+extern const char* STR_DEBUG_DISPLAY;
+extern const char* STR_DEBUG_DISPLAY_BOOL;
 //---------------------------------------------------------------------------------------------------
 string_q CCommandOption::debugCode(void) const {
-    string_q debug = Format(isBool ? STR_DEBUG_TEST_BOOL : STR_DEBUG_TEST);
+    string_q debug = Format(isBool ? STR_DEBUG_DISPLAY_BOOL : STR_DEBUG_DISPLAY);
     if (isList)
         replace(debug, "    ", "    // ");
     return debug;
 }
 
 //---------------------------------------------------------------------------------------------------
-const char* STR_DEBUG_TEST = "    LOG_TEST(\"[{COMMAND}]\", [{COMMAND}], ([{COMMAND}] == [{DEF_VAL}]));";
-const char* STR_DEBUG_TEST_BOOL = "    LOG_TEST_BOOL(\"[{COMMAND}]\", [{COMMAND}]);";
+const char* STR_DEBUG_DISPLAY = "    LOG_TEST(\"[{COMMAND}]\", [{COMMAND}], ([{COMMAND}] == [{DEF_VAL}]));";
+const char* STR_DEBUG_DISPLAY_BOOL = "    LOG_TEST_BOOL(\"[{COMMAND}]\", [{COMMAND}]);";
 // EXISTING_CODE
 }  // namespace qblocks

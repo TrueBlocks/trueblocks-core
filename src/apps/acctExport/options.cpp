@@ -168,7 +168,7 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    // BEG_DEBUG_TEST
+    // BEG_DEBUG_DISPLAY
     // LOG_TEST("addrs", addrs, (addrs == NOPOS));
     // LOG_TEST("topics", topics, (topics == NOPOS));
     LOG_TEST_BOOL("appearances", appearances);
@@ -192,7 +192,7 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST_BOOL("clean", clean);
     LOG_TEST_BOOL("staging", staging);
     LOG_TEST_BOOL("unripe", unripe);
-    // END_DEBUG_TEST
+    // END_DEBUG_DISPLAY
 
     if (!bloomsAreInitalized()) {
         EXIT_USAGE("You must run 'chifra init' before running this command.")

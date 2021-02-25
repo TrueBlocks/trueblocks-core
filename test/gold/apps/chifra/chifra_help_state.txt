@@ -1,7 +1,6 @@
 chifra argc: 3 [1:state] [2:--help] 
 chifra state --help 
 TIME ~ CLOCK - <INFO>  : mode: state
-TIME ~ CLOCK - : 4-----call_command ----> getState --help
 chifra state argc: 2 [1:--help] 
 chifra state --help 
 PROG_NAME = [chifra state]

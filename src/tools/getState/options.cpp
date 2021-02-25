@@ -83,14 +83,14 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    // BEG_DEBUG_TEST
+    // BEG_DEBUG_DISPLAY
     // LOG_TEST("addrs", addrs, (addrs == NOPOS));
     // LOG_TEST("blocks", blocks, (blocks == NOPOS));
     // LOG_TEST("parts", parts, (parts == ""));
     LOG_TEST_BOOL("changes", changes);
     LOG_TEST_BOOL("no_zero", no_zero);
     LOG_TEST("call", call, (call == ""));
-    // END_DEBUG_TEST
+    // END_DEBUG_DISPLAY
 
     // Data wrangling
     if (!blocks.hasBlocks())

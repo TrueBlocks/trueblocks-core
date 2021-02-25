@@ -77,13 +77,13 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    // BEG_DEBUG_TEST
+    // BEG_DEBUG_DISPLAY
     // LOG_TEST("addrs", addrs, (addrs == NOPOS));
     LOG_TEST_BOOL("canonical", canonical);
     LOG_TEST_BOOL("known", known);
     LOG_TEST("sol", sol, (sol == ""));
     LOG_TEST("find", find, (find == ""));
-    // END_DEBUG_TEST
+    // END_DEBUG_DISPLAY
 
     if (!find.empty()) {
         ostringstream os;

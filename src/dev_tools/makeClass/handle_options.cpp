@@ -390,7 +390,7 @@ bool COptions::writeCode(const string_q& fn) {
         converted = replaceCode(converted, "CODE_INIT", init_stream.str());
         converted = replaceCode(converted, "CODE_NOTES", notes_stream.str());
         converted = replaceCode(converted, "CODE_ERROR_MSG", errors_stream.str());
-        converted = replaceCode(converted, "DEBUG_TEST", debug_stream.str());
+        converted = replaceCode(converted, "DEBUG_DISPLAY", debug_stream.str());
     } else {
         converted = replaceCode(converted, "CODE_DECLARE", header_stream.str());
     }

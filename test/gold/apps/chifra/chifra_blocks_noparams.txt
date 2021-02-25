@@ -1,7 +1,6 @@
 chifra argc: 2 [1:blocks] 
 chifra blocks 
 TIME ~ CLOCK - <INFO>  : mode: blocks
-TIME ~ CLOCK - : 4-----call_command ----> getBlock
 chifra blocks argc: 1 
 chifra blocks 
 PROG_NAME = [chifra blocks]
