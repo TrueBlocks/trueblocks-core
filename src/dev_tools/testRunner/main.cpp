@@ -23,7 +23,6 @@ extern const char* STR_SCREEN_REPORT;
 
 //-----------------------------------------------------------------------
 int main(int argc, const char* argv[]) {
-    nodeNotRequired();
     etherlib_init(quickQuitHandler);
     CTestCase::registerClass();
 
