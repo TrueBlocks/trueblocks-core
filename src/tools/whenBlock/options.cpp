@@ -91,7 +91,7 @@ bool COptions::parseArguments(string_q& command) {
     if (skip != NOPOS && !skip)
         return usage("--skip value must be larger than zero.");
 
-    blknum_t latest = getLatestBlock_client();
+    blknum_t latest = getBlockProgress(BP_CLIENT).client;
     for (auto item : block_list) {
         if (isDate(item)) {
             if (!parseRequestDates(this, requests, item))
@@ -199,7 +199,7 @@ COptions::~COptions(void) {
 bool showSpecials(CNameValue& pair, void* data) {
     CNameValueArray* array = reinterpret_cast<CNameValueArray*>(data);
     if (pair.first == "latest")
-        pair.second = uint_2_Str(getLatestBlock_client());
+        pair.second = uint_2_Str(getBlockProgress(BP_CLIENT).client);
     CNameValue nv("block", pair.second + "|" + pair.first);
     array->push_back(nv);
     return true;
@@ -220,7 +220,7 @@ string_q COptions::listSpecials(format_t fmt) const {
                 bn = "";
             } else if (COptionsBase::isReadme) {
                 bn = "--";
-            } else if (i > 0 && str_2_Uint(bn) >= getLatestBlock_client()) {
+            } else if (i > 0 && str_2_Uint(bn) >= getBlockProgress(BP_CLIENT).client) {
                 extra = " (syncing)";
             }
         }

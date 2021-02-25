@@ -22,7 +22,7 @@ public:
 };
 
 blknum_t start = 0;
-blknum_t n = getLatestBlock_client() - start;
+blknum_t n = getBlockProgress(BP_CLIENT).client - start;
 blknum_t step = 1;
 blknum_t progress = 1000;
 blknum_t report = 50000;

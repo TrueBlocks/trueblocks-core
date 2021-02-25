@@ -250,7 +250,7 @@ bool forEverySmartContractInIndex(ADDRESSFUNC func, void* data) {
     CChunkVisitor visitor;
     visitor.addrFunc = func;
     visitor.callData = data;
-    visitor.atBlock = getLatestBlock_client();
+    visitor.atBlock = getBlockProgress(BP_CLIENT).client;
     return forEveryFileInFolder(indexFolder_finalized, smartContractVisitFunc, &visitor);
     return true;
 }

@@ -20,8 +20,12 @@ bool COptions::scrape_blocks(void) {
     maxIndexRows = MAX_ROWS;  // not configurable really
 
     // Find the last visited block. (It's the later of ripe, staging, or finalized.)
-    blknum_t unused1, ripe, staging, finalized, client;
-    getLatestBlocks(unused1, ripe, staging, finalized, client);
+    CBlockProgress progress = getBlockProgress();
+    // blknum_t unused1 = progress.unripe;
+    blknum_t ripe = progress.ripe;
+    blknum_t staging = progress.staging;
+    blknum_t finalized = progress.final;
+    blknum_t client = progress.client;
     client = CLIENT;
 
     // The latest of finalized block, staging block, or ripe block is the last 'good' block. Start one past that...

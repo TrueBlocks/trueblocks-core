@@ -34,7 +34,7 @@ int main(int argc, const char* argv[]) {
 
         if (options.all) {
             options.startBlock = 0;
-            options.nBlocks = getLatestBlock_client();
+            options.nBlocks = getBlockProgress(BP_CLIENT).client;
         }
 
         CFilename fn("accts.bin");

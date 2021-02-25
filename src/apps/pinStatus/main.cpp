@@ -29,7 +29,7 @@ int main(int argc, const char* argv[]) {
 
         } else {
             LOG_INFO("rpcProvider:\t", cGreen, options.provider, cOff);
-            LOG_INFO("latestBlock:\t", cGreen, getLatestBlock_client(), cOff);
+            LOG_INFO("latestBlock:\t", cGreen, getBlockProgress(BP_CLIENT).client, cOff);
             LOG_INFO("unchainedIndexAddr:\t", cGreen, unchainedIndexAddr, cOff);
             options.handle_status();
         }

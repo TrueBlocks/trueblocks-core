@@ -59,8 +59,12 @@ bool COptions::parseArguments(string_q& command) {
     bool unripe = false;
     // END_CODE_LOCAL_INIT
 
-    blknum_t unripeBlk, ripeBlk, stagingBlk, finalizedBlk;
-    getLatestBlocks(unripeBlk, ripeBlk, stagingBlk, finalizedBlk, latestBlock);
+    CBlockProgress progress = getBlockProgress();
+    blknum_t unripeBlk = progress.unripe;
+    // blknum_t ripeBlk = progress.ripe;
+    blknum_t stagingBlk = progress.staging;
+    blknum_t finalizedBlk = progress.final;
+    latestBlock = progress.client;
 
     blknum_t latest = latestBlock;
     string_q origCmd = command;
@@ -363,7 +367,7 @@ void COptions::Init(void) {
     nTransactions = 0;
     nCacheItemsRead = 0;
     nCacheItemsWritten = 0;
-    listRange.second = getLatestBlock_cache_ripe();
+    listRange.second = getBlockProgress(BP_RIPE).ripe;
 
     allMonitors.clear();
     counts.clear();

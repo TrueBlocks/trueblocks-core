@@ -136,7 +136,7 @@ void COptions::applyFilter() {
             }
 
         } else if (request.first == "date") {
-            if (lookupDate(block, (timestamp_t)str_2_Uint(request.second), getLatestBlock_client())) {
+            if (lookupDate(block, (timestamp_t)str_2_Uint(request.second), getBlockProgress(BP_CLIENT).client)) {
                 if (!visitBlock(block, this)) {
                     return;
                 }

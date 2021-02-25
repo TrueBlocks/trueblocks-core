@@ -37,7 +37,7 @@ bool COptions::parseArguments(string_q& command) {
     // BEG_CODE_LOCAL_INIT
     // END_CODE_LOCAL_INIT
 
-    blknum_t latest = getLatestBlock_client();
+    blknum_t latest = getBlockProgress(BP_CLIENT).client;
     CBlock block;
     getBlock_light(block, latest);
     latestBlockTs = block.timestamp;
@@ -184,6 +184,33 @@ bool COptions::parseArguments(string_q& command) {
     LOG4("ripe: ", indexFolder_ripe);
     LOG4("tmp: ", configPath("cache/tmp/"));
 
+    // We need this below...
+    const CToml* config = getGlobalConfig("blockScrape");
+
+    // A tracing node is required. Otherwise, the index will be 'short' (i.e. it will
+    // be missing appearances). This is okay, if the user tells us it's okay. For
+    // example, if the user only wants an index of event emitters or something
+    bool needsTracing = config->getConfigBool("requires", "tracing", true);
+    if (needsTracing && !isTracingNode()) {
+        string_q errMsg = "Tracing is required for this program to work properly.";
+        if (isDockerMode())
+            errMsg += " If you're running docker, enable remote RPC endpoints.";
+        return usage(errMsg);
+    }
+
+    // Parity traces are much better (and easier to use) than Geth's. But, in some
+    // cases, the user may not care and tells us she doesn't need parity
+    bool needsParity = config->getConfigBool("requires", "parity", true);
+    if (needsParity && !isParity())
+        return usage(
+            "This tool requires Parity. Add [requires]\\nparity=false to ~/.quickBlocks/blockScrape.toml to turn this "
+            "restriction off.");
+
+    // Balances are needed to make reconcilations. The user may not need that, so we allow it
+    bool needsBalances = config->getConfigBool("requires", "balances", false);
+    if (needsBalances && !nodeHasBalances(true))
+        return usage("This tool requires an --archive node with historical balances.");
+
     // This may be the first time we've ever run. In that case, we need to build the zero block index file...
     string_q zeroBloom = getIndexPath("blooms/" + padNum9(0) + "-" + padNum9(0) + ".bloom");
     if (!fileExists(zeroBloom)) {
@@ -211,33 +238,6 @@ bool COptions::parseArguments(string_q& command) {
         }
         LOG_INFO("Done...");
     }
-
-    // We need this below...
-    const CToml* config = getGlobalConfig("blockScrape");
-
-    // A tracing node is required. Otherwise, the index will be 'short' (i.e. it will
-    // be missing appearances). This is okay, if the user tells us it's okay. For
-    // example, if the user only wants an index of event emitters or something
-    bool needsTracing = config->getConfigBool("requires", "tracing", true);
-    if (needsTracing && !isTracingNode()) {
-        string_q errMsg = "Tracing is required for this program to work properly.";
-        if (isDockerMode())
-            errMsg += " If you're running docker, enable remote RPC endpoints.";
-        return usage(errMsg);
-    }
-
-    // Parity traces are much better (and easier to use) than Geth's. But, in some
-    // cases, the user may not care and tells us she doesn't need parity
-    bool needsParity = config->getConfigBool("requires", "parity", true);
-    if (needsParity && !isParity())
-        return usage(
-            "This tool requires Parity. Add [requires]\\nparity=false to ~/.quickBlocks/blockScrape.toml to turn this "
-            "restriction off.");
-
-    // Balances are needed to make reconcilations. The user may not need that, so we allow it
-    bool needsBalances = config->getConfigBool("requires", "balances", false);
-    if (needsBalances && !nodeHasBalances(true))
-        return usage("This tool requires an --archive node with historical balances.");
 
     // The previous run may have quit early, leaving the folders in a mild state of
     // disrepair. We clean that up here.

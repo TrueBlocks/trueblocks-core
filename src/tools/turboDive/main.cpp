@@ -83,8 +83,8 @@ bool COptions::handle_tables(void) {
                     ostringstream os;
                     os << "\"" << Now().Format(FMT_EXPORT)
                        << "\",\"";  // "[" << Now().Format(FMT_EXPORT) << "{TRUE}]\t";
-                    os << getLatestBlock_client()
-                       << "\",\"";  //"[" << uint_2_Str(getLatestBlock_client()) << "{TRUE}]\t";
+                    os << getBlockProgress(BP_CLIENT).client
+                       << "\",\"";  //"[" << uint_2_Str(getBlockProgress(BP_CLIENT).client) << "{TRUE}]\t";
                     os << expContext().fmtMap["format"];
                     cout << bBlue << table.Format(os.str()) << endl;
                 }

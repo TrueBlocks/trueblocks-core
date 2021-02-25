@@ -43,7 +43,7 @@ bool COptions::parseArguments(string_q& command) {
     // END_CODE_LOCAL_INIT
 
     Init();
-    latestBlock = getLatestBlock_client();
+    latestBlock = getBlockProgress(BP_CLIENT).client;
     blknum_t latest = latestBlock;
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
@@ -178,7 +178,7 @@ bool COptions::parseArguments(string_q& command) {
         theCall.address = vars[0];
         theCall.encoding = vars[1];
         theCall.bytes = vars.size() > 2 ? vars[2] : "";
-        theCall.blockNumber = isTestMode() ? 10092000 : getLatestBlock_client();
+        theCall.blockNumber = isTestMode() ? 10092000 : getBlockProgress(BP_CLIENT).client;
         // We load known abis first (so we have something, if possible) then lay over from etherscan to get better names
         theCall.abi_spec.loadAbisFromKnown();
         theCall.abi_spec.loadAbiFromEtherscan(theCall.address, false);
@@ -241,7 +241,7 @@ void COptions::Init(void) {
     current = "";
     blocks.Init();
     CHistoryOptions::Init();
-    newestBlock = oldestBlock = getLatestBlock_client();
+    newestBlock = oldestBlock = getBlockProgress(BP_CLIENT).client;
 }
 
 //---------------------------------------------------------------------------------------------------

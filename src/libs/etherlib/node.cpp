@@ -170,7 +170,7 @@ bool getUncle(CBlock& block, const hash_t& blockHash, size_t index) {
 //-------------------------------------------------------------------------
 bool queryUncle(CBlock& block, const string_q& datIn, size_t index) {
     if (datIn == "latest")
-        return queryUncle(block, uint_2_Hex(getLatestBlock_client()), index);
+        return queryUncle(block, uint_2_Hex(getBlockProgress(BP_CLIENT).client), index);
     string_q func = isHash(datIn) ? "eth_getUncleByBlockHashAndIndex" : "eth_getUncleByBlockNumberAndIndex";
     string_q params = "[" + quote(datIn) + "," + quote(uint_2_Hex(index)) + "]";
     return getObjectViaRPC(block, func, params);
@@ -189,7 +189,7 @@ size_t getUncleCount(const hash_t& blockHash) {
 //-------------------------------------------------------------------------
 size_t queryUncleCount(const string_q& datIn) {
     if (datIn == "latest")
-        return queryUncleCount(uint_2_Hex(getLatestBlock_client()));
+        return queryUncleCount(uint_2_Hex(getBlockProgress(BP_CLIENT).client));
     string_q func = isHash(datIn) ? "eth_getUncleCountByBlockHash" : "eth_getUncleCountByBlockNumber";
     return str_2_Uint(callRPC(func, "[" + quote(datIn) + "]", false));
 }
@@ -353,7 +353,7 @@ bool getFullReceipt(CTransaction* trans, bool needsTrace) {
 //-------------------------------------------------------------------------
 bool queryBlock(CBlock& block, const string_q& datIn, bool needTrace) {
     if (datIn == "latest")
-        return queryBlock(block, uint_2_Str(getLatestBlock_client()), needTrace);
+        return queryBlock(block, uint_2_Str(getBlockProgress(BP_CLIENT).client), needTrace);
 
     if (isHash(datIn)) {
         getObjectViaRPC(block, "eth_getBlockByHash", "[" + quote(datIn) + ",true]");
@@ -397,7 +397,7 @@ bool queryRawBlock(string_q& blockStr, const string_q& datIn, bool needTrace, bo
 //-------------------------------------------------------------------------
 bool queryRawUncle(string_q& results, const string_q& blockNum, uint64_t index) {
     if (blockNum == "latest")
-        return queryRawUncle(results, uint_2_Str(getLatestBlock_client()), index);
+        return queryRawUncle(results, uint_2_Str(getBlockProgress(BP_CLIENT).client), index);
     string_q func = isHash(blockNum) ? "eth_getUncleByBlockHashAndIndex" : "eth_getUncleByBlockNumberAndIndex";
     uint64_t bn = str_2_Uint(blockNum);
     string_q params = "[" + quote(uint_2_Hex(bn)) + "," + quote(uint_2_Hex(index)) + "]";
@@ -623,13 +623,24 @@ blknum_t getLatestBlock_client(void) {
 }
 
 //--------------------------------------------------------------------------
-bool getLatestBlocks(blknum_t& unripe, blknum_t& ripe, blknum_t& staging, blknum_t& finalized, blknum_t& client) {
-    ripe = getLatestBlock_cache_ripe();
-    unripe = getLatestBlock_cache_unripe();
-    staging = getLatestBlock_cache_staging();
-    finalized = getLatestBlock_cache_final();
-    client = (isNodeRunning() ? getLatestBlock_client() : NOPOS);
-    return true;
+CBlockProgress getBlockProgress(size_t which) {
+    CBlockProgress ret;
+    if (which & BP_CLIENT)
+        ret.client = (isNodeRunning() ? getLatestBlock_client() : NOPOS);
+
+    if (which & BP_FINAL)
+        ret.final = getLatestBlock_cache_final();
+
+    if (which & BP_STAGING)
+        ret.staging = getLatestBlock_cache_staging();
+
+    if (which & BP_RIPE)
+        ret.ripe = getLatestBlock_cache_ripe();
+
+    if (which & BP_RIPE)
+        ret.unripe = getLatestBlock_cache_unripe();
+
+    return ret;
 }
 
 //-------------------------------------------------------------------------
@@ -1172,8 +1183,12 @@ string_q exportPostamble(const CStringArray& errorsIn, const string_q& extra) {
         return os.str() + " }";
     ASSERT(fmt == API1);
 
-    uint64_t unripe, ripe, staging, finalized, client;
-    getLatestBlocks(unripe, ripe, staging, finalized, client);
+    CBlockProgress progress = getBlockProgress();
+    blknum_t unripe = progress.unripe;
+    blknum_t ripe = progress.ripe;
+    blknum_t staging = progress.staging;
+    blknum_t finalized = progress.final;
+    blknum_t client = progress.client;
     if (isTestMode())
         unripe = ripe = staging = finalized = client = 0xdeadbeef;
     os << ", \"meta\": {";

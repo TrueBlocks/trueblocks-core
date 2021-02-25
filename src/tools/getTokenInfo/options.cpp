@@ -41,7 +41,7 @@ bool COptions::parseArguments(string_q& command) {
     // END_CODE_LOCAL_INIT
 
     Init();
-    blknum_t latest = getLatestBlock_client();
+    blknum_t latest = getBlockProgress(BP_CLIENT).client;
     latestBlock = latest;
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
@@ -250,7 +250,7 @@ void COptions::Init(void) {
     optionOff(OPT_DOLLARS | OPT_ETHER);
     blocks.Init();
     CHistoryOptions::Init();
-    newestBlock = oldestBlock = getLatestBlock_client();
+    newestBlock = oldestBlock = getBlockProgress(BP_CLIENT).client;
 }
 
 //---------------------------------------------------------------------------------------------------

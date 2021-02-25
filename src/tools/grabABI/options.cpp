@@ -46,7 +46,7 @@ bool COptions::parseArguments(string_q& command) {
 
     Init();
     explode(arguments, command, ' ');
-    blknum_t latest = NOPOS;  // getLatestBlock_client();
+    blknum_t latest = NOPOS;  // getBlockProgress(BP_CLIENT).client;
     for (auto arg : arguments) {
         if (false) {
             // do nothing -- make auto code generation easier

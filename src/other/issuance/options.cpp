@@ -77,7 +77,7 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    if (startBlock >= endBlock || endBlock > getLatestBlock_client())
+    if (startBlock >= endBlock || endBlock > getBlockProgress(BP_CLIENT).client)
         return usage("Invalid --s tart or --e nd.");
 
     if (thing) {
@@ -125,7 +125,7 @@ void COptions::Init(void) {
     getNamedAccount(unused, "0x0");
 
     startBlock = 0;
-    endBlock = getLatestBlock_client();
+    endBlock = getBlockProgress(BP_CLIENT).client;
 }
 
 //---------------------------------------------------------------------------------------------------

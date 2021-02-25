@@ -136,7 +136,7 @@ hash_t COptions::getCurrentManifest(void) {
     CEthCall theCall;
     theCall.address = unchainedIndexAddr;
     theCall.encoding = manifestHashEncoding;
-    theCall.blockNumber = getLatestBlock_client();
+    theCall.blockNumber = getBlockProgress(BP_CLIENT).client;
     loadAbiFile(configPath("abis/known-000/unchained.json"), &theCall.abi_spec);
     return doEthCall(theCall) ? theCall.result.outputs[0].value : "";
 }
