@@ -262,13 +262,36 @@ void establishTestData(void) {
     // TODO(tjayrush): This code is a hack to make test cases pass. We should fix the underlyign reason
     // TODO(tjayrush): these tests fail. To reproduce, delete the entire cache, comment the lines below
     // TODO(tjayrush): and re-run. You will see the tests that fail.
+
+    // Forces a few blocks into the cache
     doCommand("getBlock --uniq_tx 0");
     doCommand("getBlock --force 4369999");
     doCommand("getTrans --force 47055.0");
     doCommand("getTrans --force 46147.0");
+
+    // Forces the retreival of a few ABI files without which some tests will fail
     doCommand("grabABI 0x45f783cce6b7ff23b2ab2d70e416cdb7d6055f51");
     doCommand("grabABI 0xd7edd2f2bcccdb24afe9a4ab538264b0bbb31373");
     doCommand("grabABI 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359");
     doCommand("grabABI 0x226159d592e2b063810a10ebf6dcbada94ed68b8");
     doCommand("grabABI 0x17996cbddd23c2a912de8477c37d43a1b79770b8");
+
+// OLD_CODE
+#if 1
+    // Hard to explain, but this removes a few transactions from the cache
+    ::remove(getBinaryCacheFilename(CT_TXS, 8854723, 61).c_str());
+    ::remove(getBinaryCacheFilename(CT_TXS, 8855603, 121).c_str());
+    ::remove(getBinaryCacheFilename(CT_TXS, 8856290, 62).c_str());
+    ::remove(getBinaryCacheFilename(CT_TXS, 8856316, 91).c_str());
+    ::remove(getBinaryCacheFilename(CT_TXS, 8856476, 55).c_str());
+    ::remove(getBinaryCacheFilename(CT_TXS, 8856511, 161).c_str());
+    ::remove(getBinaryCacheFilename(CT_TXS, 8860434, 21).c_str());
+    ::remove(getBinaryCacheFilename(CT_TXS, 8860511, 47).c_str());
+    ::remove(getBinaryCacheFilename(CT_TXS, 8860513, 85).c_str());
+    ::remove(getBinaryCacheFilename(CT_TXS, 8860529, 145).c_str());
+    ::remove(getBinaryCacheFilename(CT_TXS, 8860531, 152).c_str());
+    ::remove(getBinaryCacheFilename(CT_TXS, 8867898, 28).c_str());
+    ::remove(getBinaryCacheFilename(CT_TXS, 8875684, 148).c_str());
+    ::remove(getBinaryCacheFilename(CT_TXS, 8876232, 84).c_str());
+#endif
 }

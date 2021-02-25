@@ -59,5 +59,12 @@ void COptions::articulateAll(CTransaction& trans) {
             }
             abi_spec.articulateTrace(trace);
         }
+    } else {
+        // Even if we're not articulating, we want to mark token-related transactions
+        trans.hasToken |= isTokenFunc(trans.input);
+        for (size_t j = 0; j < trans.receipt.logs.size(); j++) {
+            CLogEntry* log = (CLogEntry*)&trans.receipt.logs[j];  // NOLINT
+            trans.hasToken |= isTokenTopic(log->topics[0]);
+        }
     }
 }
