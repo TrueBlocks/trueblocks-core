@@ -217,7 +217,7 @@ ethNames 0x1 --fmt api
     "source": "https://gitcoin.co/grants/675/legrandjeu-vr-bring-token-economics-gaming-to-the"
   },
   {
-    "tags": "34-Twitter: Friends",
+    "tags": "34-Twitter:Friends",
     "address": "0x1187d6bff168fe8f17252396701147343adb8ddc",
     "name": "Name 0x1187d6bf",
     "source": "Twitter",

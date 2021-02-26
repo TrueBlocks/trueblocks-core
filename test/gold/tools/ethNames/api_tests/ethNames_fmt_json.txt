@@ -496,7 +496,7 @@
       "description": ""
     },
     {
-      "tags": "34-Twitter: Friends",
+      "tags": "34-Twitter:Friends",
       "address": "0x00dc74ce5d346b14b913071a032b7e2d29b0f2a6",
       "name": "Name 0x00dc74ce",
       "symbol": "",
@@ -829,7 +829,7 @@
       "description": "Payments solutions for the travel industry."
     },
     {
-      "tags": "34-Twitter: Friends",
+      "tags": "34-Twitter:Friends",
       "address": "0x02bbea9326048fb2bd96664adc3ef47bbe3e02b6",
       "name": "Name 0x02bbea93",
       "symbol": "",
@@ -1108,7 +1108,7 @@
       "description": ""
     },
     {
-      "tags": "34-Twitter: Friends",
+      "tags": "34-Twitter:Friends",
       "address": "0x04498150b495a1f126b88952a756b5b9a4385e30",
       "name": "Name 0x04498150",
       "symbol": "",
@@ -1549,7 +1549,7 @@
       "description": ""
     },
     {
-      "tags": "34-Twitter: Friends",
+      "tags": "34-Twitter:Friends",
       "address": "0x0667ad4cf9d2fd571a6a94412dbb98c0f9cf704e",
       "name": "Name 0x0667ad4c",
       "symbol": "",

@@ -528,9 +528,9 @@ void getTracesByFilter(CTraceArray& traces, const CTraceFilter& filter) {
     }
 }
 
-static string_q clientVersion;
 //-------------------------------------------------------------------------
 string_q getVersionFromClient(void) {
+    static string_q clientVersion;
     if (clientVersion.empty())
         clientVersion = callRPC("web3_clientVersion", "[]", false);
     return clientVersion;

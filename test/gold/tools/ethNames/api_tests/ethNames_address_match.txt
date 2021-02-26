@@ -289,7 +289,7 @@
       "description": ""
     },
     {
-      "tags": "34-Twitter: Friends",
+      "tags": "34-Twitter:Friends",
       "address": "0x1187d6bff168fe8f17252396701147343adb8ddc",
       "name": "Name 0x1187d6bf",
       "symbol": "",

@@ -143,6 +143,10 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST_BOOL("clean", clean);
     // END_DEBUG_DISPLAY
 
+    // for (auto& term : terms)
+    //     if (endsWith(term, ".eth"))
+    //         term = addressFromENSName(term);
+
     if (clean || isCrudCommand()) {
         abi_spec.loadAbisFromKnown(true);
         if (clean)
