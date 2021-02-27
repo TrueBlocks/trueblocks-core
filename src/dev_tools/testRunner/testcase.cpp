@@ -474,6 +474,7 @@ bool prepareBuiltIn(string_q& options) {
             ostringstream os;
             if (match == "RESET") {
                 establishTestMonitors();
+                cleanFolder(getCachePath("tmp/"));
                 options = "";
                 if (debug)
                     os << "Cleanup" << endl;

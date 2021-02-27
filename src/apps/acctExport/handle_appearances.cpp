@@ -36,9 +36,10 @@ bool COptions::handle_appearances(void) {
         }
     }
 
-    if (!isTestMode())
-        LOG_PROGRESS1((freshen ? "Updated" : "Reported"), (first_record + nProcessed), nTransactions,
-                      " appearances for address " + allMonitors[0].address + "\r");
+    if (!isTestMode()) {
+        LOG_PROGRESS((freshen ? "Updated" : "Reported"), (first_record + nProcessed), nTransactions,
+                     " appearances for address " + allMonitors[0].address);
+    }
 
     EXIT_NOMSG(true);
 }

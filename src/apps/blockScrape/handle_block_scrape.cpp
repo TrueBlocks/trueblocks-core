@@ -5,53 +5,48 @@
  *------------------------------------------------------------------------*/
 #include "options.h"
 
-// #define MAX_ROWS 50
-// #define CLIENT 10480200
-// #define N_BLOCKS 100
-// #define THE_CMD "/Users/jrush/Development/trueblocks-core/bin/blaze scrape"
+// OLD_CODE - SET THIS BACK
+#if 0
+#define MAX_ROWS 174
+#define CLIENT 600
+#define N_BLOCKS 100
+#define SNAP_TO_GRID 75
+#else
 #define MAX_ROWS 2000000
-#define CLIENT (client + 0)
+#define CLIENT (progress.client + 0)
 #define N_BLOCKS (n_blocks + 0)
-#define THE_CMD "blaze scrape"
+#define SNAP_TO_GRID 100000
+#endif
+
+#define LOG_MARKER(l)                                                                                                  \
+    LOG_INFO("\n");                                                                                                    \
+    LOG_INFO(string_q((l), '-'));
+
 //--------------------------------------------------------------------------
 bool COptions::scrape_blocks(void) {
-    LOG_INFO(string_q(120, '-'));
+    ENTER("scrape_blocks");
 
-    maxIndexRows = MAX_ROWS;  // not configurable really
+    LOG_MARKER(120);
 
-    // Find the last visited block. (It's the later of ripe, staging, or finalized.)
+    // We want to re-evaluate our progress each time we loop.
+
+    // First, get the progress (i.e. highest block) of the client and the each of index caches
     CBlockProgress progress = getBlockProgress();
-    // blknum_t unused1 = progress.unripe;
-    blknum_t ripe = progress.ripe;
-    blknum_t staging = progress.staging;
-    blknum_t finalized = progress.final;
-    blknum_t client = progress.client;
-    client = CLIENT;
+    progress.client = CLIENT;
 
-    // The latest of finalized block, staging block, or ripe block is the last 'good' block. Start one past that...
-    blknum_t lastVisit = max(ripe, max(staging, finalized));
-    blknum_t startBlock = lastVisit + 1;
+    // From there, we can determine where to start the scraper (one more than the largest cache)
+    blknum_t startBlock = max(progress.ripe, max(progress.staging, progress.final)) + 1;
 
-    // In some cases, the index may be ahead of tip. In that case, we doing nothing...
-    if (startBlock > client) {
-        LOG_INFO("The index (", startBlock, ") is caught up to the tip of the chain (", client, ").");
-        return false;
+    // In some cases, for example, the index is ahead of the tip because we're re-syncing...do nothing...
+    if (startBlock > progress.client) {
+        ostringstream os;
+        os << "The index (" << startBlock << ") is caught up to the tip of the chain (" << progress.client << ").";
+        LOG_INFO(os.str());
+        EXIT_NOMSG(false);
     }
 
-    if (isDockerMode()) {
-        n_blocks = 100;
-        n_block_procs = 5;
-        n_addr_procs = 10;
-    }
-
-    const CToml* config = getGlobalConfig("blockScrape");
-    n_blocks = config->getConfigInt("settings", "n_blocks", (n_blocks == NOPOS ? 2000 : n_blocks));
-    n_block_procs = config->getConfigInt("settings", "n_block_procs", (n_block_procs == NOPOS ? 10 : n_block_procs));
-    n_addr_procs = config->getConfigInt("settings", "n_addr_procs", (n_addr_procs == NOPOS ? 20 : n_addr_procs));
-
-    // Docker will kill blaze if it uses too many resources...
+    // Make a few adjustments here in the non-docker case to speed things up a bit
     if (!isDockerMode()) {
-        // ...so we only override on n_blocks to speed things up if not docker...
         if (startBlock < 450000) {
             n_blocks = max((blknum_t)4000, n_blocks);
 
@@ -68,34 +63,32 @@ bool COptions::scrape_blocks(void) {
     // but is a bit more than six minutes under normal operation ((14 * 28) / 60 == 6.5). If the
     // index is near the head of the chain and the difficulty level is high (the time bomb is
     // exploding), the time will extend, but the final nature is the same.
-    blknum_t ripeBlock = client - 28;
-    if (client < 28)
-        ripeBlock = 0;
+    blknum_t ripeBlock = (progress.client < 28 ? 0 : progress.client - 28);
 
     // Now we want to do a final adjustment to n_blocks to make sure it doesn't go past the
     // last synced block at the client
-    if ((startBlock + n_blocks) > client) {
-        ASSERT(startBlock <= client);  // see above
-        n_blocks = (client - startBlock);
+    if ((startBlock + n_blocks) > progress.client) {
+        ASSERT(startBlock <= progress.client);  // see above
+        n_blocks = (progress.client - startBlock);
     }
 
-    string_q cmd = THE_CMD;
+    if (shouldQuit()) {
+        LOG_WARN("User quit...");
+        EXIT_NOMSG(false);
+    }
+
+    // Tell the user what's going on...
+    LOG_INFO(cGreen, "blaze scrape (", (progress.client - startBlock), " blocks from head)", cOff);
+
     // We're ready to scrape, so build the blaze command line...
     ostringstream os;
-    os << cmd;
-    os << " --startBlock " << startBlock << " --nBlocks " << n_blocks;
-    if (n_block_procs != 20)
-        os << " --nBlockProcs " << n_block_procs;
-    if (n_addr_procs != 60)
-        os << " --nAddrProcs " << n_addr_procs;
-
-    // Report to the screen...
-    string_q tmp = "cmd: " + substitute(os.str(), "/Users/jrush/Development/trueblocks-core/bin/", "");
-    LOG_INFO(cGreen, tmp, cOff, " (", (client - startBlock), " blocks from head)");
-
-    // ...and make the call to blaze.
-    os << " --ripeBlock " << ripeBlock;
-    // os << " 2>/dev/null 1>/dev/null ";
+    os << "blaze scrape ";
+    os << "--startBlock " << startBlock << " ";
+    os << "--nBlocks " << n_blocks << " ";
+    os << "--nBlockProcs " << n_block_procs << " ";
+    os << "--nAddrProcs " << n_addr_procs << " ";
+    os << " --ripeBlock " << ripeBlock << " ";
+    LOG_CALL(os.str());
     if (system(os.str().c_str()) != 0) {
         // blaze will return non-zero if it fails. In this case, we need to remove files in the 'ripe'
         // folder because they're inconsistent (blaze's 'go' processes do not run in sequence). We
@@ -103,16 +96,14 @@ bool COptions::scrape_blocks(void) {
         // Next time we run, it will start over at the last staged block.
         cleanFolder(indexFolder_ripe);
         LOG_WARN("Blaze quit without finishing. Reprocessing...");
-        return false;
+        EXIT_NOMSG(false);
     }
-
-    LOG_INFO("\r", string_q(120, ' '), "\r");
 
     // Blaze succeeded, but the user may have started `acctExport` since it was called. We don't want
     // to get incorrect results, so we return here knowing it will get cleaned up next time.
     if (isRunning("acctExport")) {
         LOG_WARN("acctExport is running. blockScrape will re-run in a moment...");
-        return false;
+        EXIT_NOMSG(false);
     }
 
     // Blaze sucessfullly created individual files, one for each block between 'start' and 'start + n_blocks'.
@@ -136,13 +127,13 @@ bool COptions::scrape_blocks(void) {
     // ahead of the scraper) at the same time.
 
     // Pick up the latest of zero, finalized, or staging...
-    blknum_t p = (staging == NOPOS ? (finalized == NOPOS ? 0 : finalized) : staging);
+    blknum_t p = (progress.staging == NOPOS ? (progress.final == NOPOS ? 0 : progress.final) : progress.staging);
 
     // Carries state we need to process the blocks
     CConsolidator cons(p);
     if (!cons.tmp_file.is_open()) {
         LOG_WARN("Could not open temporary staging file.");
-        return false;
+        EXIT_NOMSG(false);
     }
 
     // Spin through 'ripe' files and process as we go. Note: it's okay to allow the timestamp file to get
@@ -154,13 +145,13 @@ bool COptions::scrape_blocks(void) {
         cleanFolder(indexFolder_ripe);
         cons.tmp_file.close();
         ::remove(cons.tmp_fn.c_str());
-        return false;
+        EXIT_NOMSG(false);
     }
     cons.tmp_file.close();
 
     // The stage now contains all non-consolidated records. Ripe should be empty. All files are closed.
 
-    // Next, we try to pick off chunks of 500,000 records (maxIndexRows) if we can, consolidate them (write
+    // Next, we try to pick off chunks of MAX_ROWS  records if we can, consolidate them (write
     // them to a binary relational table), and re-write any unfinalized records back onto the stage. Again, if
     // anything goes wrong we need clean up and leave the data in a recoverable state.
     if (!finalize_chunks(&cons)) {
@@ -168,11 +159,13 @@ bool COptions::scrape_blocks(void) {
         cleanFolder(indexFolder_ripe);
         ::remove(cons.tmp_fn.c_str());
     }
-    return true;
+    EXIT_NOMSG(true);
 }
 
 //--------------------------------------------------------------------------
 bool COptions::finalize_chunks(CConsolidator* cons) {
+    // 'blaze' is finished scraping (and extracting addresses from) new blocks from the chain. Those appearance records
+    // are stored in a file called "XXX";
     // 'oldStage' contains staged but not yet consolidated records. 'tempStage' contains
     // newly scraped ripe blocks. 'newStage' is empty. This temporary file is where we will put
     // the records from these two files. We need to process in a way that will allow for interruption.
@@ -182,12 +175,20 @@ bool COptions::finalize_chunks(CConsolidator* cons) {
     string_q oldStage = getLastFileInFolder(indexFolder_staging, false);
     string_q tempStage = cons->tmp_fn;
     string_q newStage = indexFolder_staging + padNum9(cons->prevBlock) + ".txt";
+    LOG8("");
+    LOG8("tmpFile:   ", substitute(tmpFile, getIndexPath(""), "$INDEX/"));
+    LOG8("oldStage:  ", substitute(oldStage, getIndexPath(""), "$INDEX/"));
+    LOG8("tempStage: ", substitute(tempStage, getIndexPath(""), "$INDEX/"));
+    LOG8("newStage:  ", substitute(newStage, getIndexPath(""), "$INDEX/"));
 
     if (oldStage == newStage) {
         blknum_t curSize = fileSize(newStage) / 59;
         LOG_INFO(bBlue, "Consolidation not ready...", cOff);
-        LOG_INFO(cYellow, "  No new blocks. Have ", curSize, " records of ", maxIndexRows, ". Need ",
-                 (maxIndexRows - curSize), " more.", cOff);
+        LOG_INFO(cYellow, "  No new blocks. Have ", curSize, " records of ", MAX_ROWS, ". Need ", (MAX_ROWS - curSize),
+                 " more.", cOff);
+        LOG8("Going to sleep since we're basically caught up.");
+        mode = "quit";
+        changeState();
         return true;
     }
 
@@ -223,17 +224,17 @@ bool COptions::finalize_chunks(CConsolidator* cons) {
         return true;
 
     // If we don't have enough records to consolidate, tell the user and return...
-    if (curSize <= maxIndexRows) {
+    if (curSize <= MAX_ROWS) {
         LOG_INFO(" ");
         LOG_INFO(bBlue, "Consolidation not ready...", cOff);
-        LOG_INFO(cYellow, "  Have ", curSize, " records of ", maxIndexRows, ". Need ", (maxIndexRows - curSize),
-                 " more.", cOff);
+        LOG_INFO(cYellow, "  Have ", curSize, " records of ", MAX_ROWS, ". Need ", (MAX_ROWS - curSize), " more.",
+                 cOff);
         return true;
     }
 
-    // Process until curSize is less than maxIndexRows. This may mean more than one pass
+    // Process until curSize is less than MAX_ROWS. This may mean more than one pass
     size_t pass = 0;
-    while (curSize > maxIndexRows && !shouldQuit()) {
+    while (curSize > MAX_ROWS && !shouldQuit()) {
         lockSection(true);
 
         CStringArray lines;
@@ -242,15 +243,15 @@ bool COptions::finalize_chunks(CConsolidator* cons) {
 
         LOG_INFO(" ");
         LOG_INFO(bBlue, "Consolidation pass ", pass++, cOff);
-        LOG_INFO(cWhite, "  Starting search at record ", (maxIndexRows - 1), " of ", lines.size(), cOff);
+        LOG_INFO(cWhite, "  Starting search at record ", (MAX_ROWS - 1), " of ", lines.size(), cOff);
         if (verbose > 2) {
-            LOG_INFO(cGreen, "\t", (maxIndexRows - 1), ": ", lines[maxIndexRows - 1], cOff);
-            LOG_INFO(cGreen, "\t", (maxIndexRows), ": ", lines[maxIndexRows], cOff);
+            LOG_INFO(cGreen, "\t", (MAX_ROWS - 1), ": ", lines[MAX_ROWS - 1], cOff);
+            LOG_INFO(cGreen, "\t", (MAX_ROWS), ": ", lines[MAX_ROWS], cOff);
         }
 
         size_t where = 0;
         string_q prev;
-        for (uint64_t record = (maxIndexRows - 1); record < lines.size() && where == 0; record++) {
+        for (uint64_t record = (MAX_ROWS - 1); record < lines.size() && where == 0; record++) {
             CStringArray pParts;
             explode(pParts, lines[record], '\t');
             if (verbose > 2 && (record == lines.size() - 2)) {
@@ -295,23 +296,17 @@ bool COptions::finalize_chunks(CConsolidator* cons) {
         explode(p2, consolidatedLines[consolidatedLines.size() - 1], '\t');
 
         sort(consolidatedLines.begin(), consolidatedLines.end());
-        string_q binFile = indexFolder_finalized + p1[1] + "-" + p2[1] + ".bin";
-        writeIndexAsBinary(binFile, consolidatedLines);
+        string_q chunkId = p1[1] + "-" + p2[1];
+        string_q chunkPath = indexFolder_finalized + chunkId + ".bin";
+        CPinnedItem pinRecord;
+        writeIndexAsBinary(chunkPath, consolidatedLines, (pin ? visitToPin : nullptr), &pinRecord);
 
-        if (pin) {
-            CPinnedItem pinRecord;
-            pinChunk(p1[1] + "-" + p2[1], pinRecord);
-        }
-
-        if (publish) {
-            publishManifest(cout);
-        }
         LOG_INFO(cWhite, "  Wrote ", consolidatedLines.size(), " records to ",
-                 substitute(binFile, indexFolder_finalized, "$FINAL/"), cOff);
+                 substitute(chunkPath, indexFolder_finalized, "$FINAL/"), cOff);
 
         where += 1;
         CStringArray remainingLines;
-        remainingLines.reserve(maxIndexRows + 100);
+        remainingLines.reserve(MAX_ROWS + 100);
 
         if (verbose > 2) {
             LOG_INFO(cWhite, "  Extracting records ", where, " to ", lines.size(), " of ", lines.size(), cOff);
@@ -398,4 +393,13 @@ CConsolidator::CConsolidator(blknum_t p) {
     prevBlock = p;
     tmp_fn = indexFolder_staging + "000000000-temp.txt";
     tmp_file.open(tmp_fn, ios::out | ios::trunc);
+}
+
+//---------------------------------------------------------------------------------------------------
+bool visitToPin(const string_q& chunkId, void* data) {
+    LOG_INFO("I am going to pin ", chunkId);
+    ASSERT(data);
+    // CPinnedItem pinRecord = *(CPinnedItem*)data;
+    // pinChunk(chunkId, pinRecord);
+    return !shouldQuit();
 }

@@ -9,5 +9,6 @@
   "n_addr_procs": 12,
   "pin": 0,
   "publish": 0,
+  "current": running,
 }
 { "status": "stopped" }

@@ -153,9 +153,10 @@ bool COptions::handle_traces(void) {
         }
     }
 
-    if (!isTestMode())
-        LOG_PROGRESS1((freshen ? "Updated" : "Reported"), (first_record + nProcessed), nTransactions,
-                      " traces for address " + allMonitors[0].address + "\r");
+    if (!isTestMode()) {
+        LOG_PROGRESS((freshen ? "Updated" : "Reported"), (first_record + nProcessed), nTransactions,
+                     " traces for address " + allMonitors[0].address);
+    }
 
     for (auto monitor : allMonitors)
         monitor.updateLastExport(lastExported);

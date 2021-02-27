@@ -200,7 +200,7 @@ const char* STR_FULL_HELP =
 //     if (fileExists(path)) {
 //         if (origMode == "export") {
 //             for (size_t i = 0; i < nMocked; i++) {
-//                 LOG_PROGRESS1("Extracting", i, nMocked, "\r");
+//                 LOG_PROGRESS("Extracting", i, nMocked, "\r");
 //                 usleep(30000);
 //             }
 //             CStringArray lines;
@@ -211,7 +211,7 @@ const char* STR_FULL_HELP =
 //             for (auto line : lines) {
 //                 cout << line << endl;
 //                 if (!(++cnt % recordSize)) {
-//                     LOG_PROGRESS1("Displaying", record++, nMocked, "\r");
+//                     LOG_PROGRESS("Displaying", record++, nMocked, "\r");
 //                     usleep(10000);
 //                 }
 //             }

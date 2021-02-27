@@ -71,7 +71,7 @@ void writeIndexAsAscii(const string_q& outFn, const CStringArray& lines) {
 }
 
 //----------------------------------------------------------------
-void writeIndexAsBinary(const string_q& outFn, const CStringArray& lines) {
+bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines, FILEVISITOR pinFunc, void* pinFuncData) {
     // ASSUMES THE ARRAY IS SORTED!
 
     ASSERT(!fileExists(outFn));
@@ -149,6 +149,8 @@ void writeIndexAsBinary(const string_q& outFn, const CStringArray& lines) {
     lockSection(false);
 
     LOG_INFO(cYellow, "  ", os.str(), " binary file created: ", greenCheck, cOff);
+
+    return (pinFunc ? ((*pinFunc)(outFn, pinFuncData)) : true);
 }
 
 //--------------------------------------------------------------

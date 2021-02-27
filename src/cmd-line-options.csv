@@ -33,9 +33,9 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,customizeable,c
 
 10600,apps,Admin,scrape,blockScrape,mode,,,true,false,true,true,header,positional,enum[run*|quit|pause|restart],control the block and account scrapers
 10610,apps,Admin,scrape,blockScrape,tool,t,,false,false,true,true,header,flag,list<enum[monitors|index*|none|both]>,process the index&#44; monitors&#44; or both (none means process timestamps|only)
-10615,apps,Admin,scrape,blockScrape,n_blocks,n,,false,false,true,true,header,flag,<uint64>,maximum number of blocks to process (defaults to 5000)
-10620,apps,Admin,scrape,blockScrape,n_block_procs,b,,false,false,false,false,header,flag,<uint64>,number of block channels for blaze
-10640,apps,Admin,scrape,blockScrape,n_addr_procs,a,,false,false,false,false,header,flag,<uint64>,number of address channels for blaze
+10615,apps,Admin,scrape,blockScrape,n_blocks,n,(isDockerMode() ? 100 : 2000),false,true,true,true,header,flag,<uint64>,maximum number of blocks to process (defaults to 5000)
+10620,apps,Admin,scrape,blockScrape,n_block_procs,b,(isDockerMode() ? 5 : 10),false,true,false,false,header,flag,<uint64>,number of block channels for blaze
+10640,apps,Admin,scrape,blockScrape,n_addr_procs,a,(isDockerMode() ? 10 : 20),false,true,false,false,header,flag,<uint64>,number of address channels for blaze
 10645,apps,Admin,scrape,blockScrape,pin,p,,false,false,true,true,header,switch,<boolean>,pin new chunks (and blooms) to IPFS (requires Pinata key and running IPFS node)
 10648,apps,Admin,scrape,blockScrape,publish,u,,false,false,true,true,header,switch,<boolean>,publish the hash of the pin manifest to the UnchainedIndex smart|contract
 10658,apps,Admin,scrape,blockScrape,sleep,s,14,false,false,true,false,header,flag,<double>,the number of seconds to sleep between passes (default [{DEF}])

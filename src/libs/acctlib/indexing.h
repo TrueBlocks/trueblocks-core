@@ -24,7 +24,8 @@ namespace qblocks {
 #define MAGIC_NUMBER ((uint32_t)str_2_Uint("0xdeadbeef"))
 extern hash_t versionHash;
 extern void writeIndexAsAscii(const string_q& outFn, const CStringArray& lines);
-extern void writeIndexAsBinary(const string_q& outFn, const CStringArray& lines);
+extern bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines, FILEVISITOR pinFunc = nullptr,
+                               void* pinFuncData = nullptr);
 extern size_t readIndexFromBinary(const string_q& inFn, uint64_t& nAppearances, const CStringArray& lines);
 extern bool readIndexHeaderFromBinary(const string_q& inFn, CHeaderRecord_base* header);
 //--------------------------------------------------------------

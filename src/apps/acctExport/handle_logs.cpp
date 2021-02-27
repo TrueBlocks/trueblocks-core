@@ -69,7 +69,7 @@ bool COptions::handle_logs(void) {
                     blknum_t goal = min(first_record + max_records, nTransactions);
                     ostringstream post;
                     post << " txs (max " << goal << ") for address " << allMonitors[0].address << "\r";
-                    LOG_PROGRESS1("Reading", current, nTransactions, post.str());
+                    LOG_PROGRESS("Reading", current, nTransactions, post.str());
                 }
 
             } else {
@@ -127,7 +127,7 @@ bool COptions::handle_logs(void) {
                     post << " txs (max " << goal << ") for address " << allMonitors[0].address;
                     if (!isApiMode())
                         post << " " << app->blk;
-                    LOG_PROGRESS1("Extracting", current, nTransactions, post.str() + "\r");
+                    LOG_PROGRESS("Extracting", current, nTransactions, post.str() + "\r");
                 }
             }
 
@@ -146,9 +146,10 @@ bool COptions::handle_logs(void) {
         }
     }
 
-    if (!isTestMode())
-        LOG_PROGRESS1((freshen ? "Updated" : "Reported"), (first_record + nProcessed), nTransactions,
-                      " transactions for address " + allMonitors[0].address + "\r");
+    if (!isTestMode()) {
+        LOG_PROGRESS((freshen ? "Updated" : "Reported"), (first_record + nProcessed), nTransactions,
+                     " transactions for address " + allMonitors[0].address);
+    }
 
     for (auto monitor : allMonitors)
         monitor.updateLastExport(lastExported);

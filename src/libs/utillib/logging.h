@@ -213,9 +213,8 @@ extern logger<log_policy_i>* eLogger;
 #define SEP3(a) LOG3(cYellow + string_q(10, '-') + (a) + string_q(10, '-') + cOff)
 #define SEP4(a) LOG4(cRed + string_q(10, '-') + (a) + string_q(10, '-') + cOff)
 #define SEP8(a) LOG8(cTeal + string_q(10, '-') + (a) + string_q(10, '-') + cOff)
-#define LOG_PROGRESS1(op, progress, goal, post)                                                                        \
+#define LOG_PROGRESS(op, progress, goal, post)                                                                         \
     LOG_INFO((op), " ", padNum6T(uint64_t(progress)), " of ", padNum6T(uint64_t(goal)), (post))
-#define LOG_PROGRESS(op, progress, goal) LOG_PROGRESS1((op), progress, goal, "\n")
 #define LOG_CALL(a)                                                                                                    \
     { LOG4(bWhite, l_funcName, " ----> ", (isTestMode() ? substitute((a), getCachePath(""), "$CACHE/") : (a)), cOff); }
 #define LOG_TEST(a, b, is_default)                                                                                     \
@@ -246,7 +245,6 @@ extern logger<log_policy_i>* eLogger;
 #define SEP4(...)
 #define SEP5(...)
 #define LOG_PROGRESS(...)
-#define LOG_PROGRESS1(...)
 #define LOG_CALL(a)
 #define LOG_TEST(a, b)
 #define LOG_TEST_BOOL(a, b)

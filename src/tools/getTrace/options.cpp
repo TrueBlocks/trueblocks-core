@@ -182,8 +182,10 @@ void COptions::Init(void) {
     // BEG_CODE_INIT
     articulate = false;
     count = false;
+    // clang-format off
     skip_ddos = getGlobalConfig("getTrace")->getConfigBool("settings", "skip_ddos", true);
     max_traces = getGlobalConfig("getTrace")->getConfigInt("settings", "max_traces", 250);
+    // clang-format on
     filter = "";
     // END_CODE_INIT
 

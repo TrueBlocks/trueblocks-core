@@ -1,17 +1,21 @@
 blockScrape argc: 2 [1:run] 
 blockScrape run 
 TIME ~ CLOCK - <INFO>  : mode: run
-TIME ~ CLOCK - : 8------The scraper was paused.
+TIME ~ CLOCK - : 8------Current state paused.
 TIME ~ CLOCK - : 4-----changing state: paused --> running
 { "status": "running" }
+TIME ~ CLOCK - : 8------Current state running.
 {
   "message": "Testing only",
   "mode": "run",
   "tool": "index",
   "tools": 2,
-  "n_blocks": 18446744073709551615,
-  "n_block_procs": 18446744073709551615,
-  "n_addr_procs": 18446744073709551615,
+  "n_blocks": 2000,
+  "n_block_procs": 10,
+  "n_addr_procs": 20,
   "pin": 0,
   "publish": 0,
+  "current": running,
 }
+TIME ~ CLOCK - : 8------Current state running.
+TIME ~ CLOCK - <INFO>  : file contents: running

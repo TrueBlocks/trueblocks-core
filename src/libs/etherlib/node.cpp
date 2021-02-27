@@ -1314,13 +1314,13 @@ bool freshenTimestamps(blknum_t minBlock) {
         file.flush();
         ostringstream post;
         post << " (" << block.timestamp << " - " << ts_2_Date(block.timestamp).Format(FMT_EXPORT) << ")";
-        LOG_PROGRESS1("Update timestamps ", block.blockNumber, minBlock, post.str());
+        LOG_PROGRESS("Update timestamps ", block.blockNumber, minBlock, post.str());
     }
     file.Release();
 
     ostringstream post;
     post << " (" << block.timestamp << " - " << ts_2_Date(block.timestamp).Format(FMT_EXPORT) << ")";
-    LOG_PROGRESS1("Update timestamps ", block.blockNumber, minBlock, post.str());
+    LOG_PROGRESS("Update timestamps ", block.blockNumber, minBlock, post.str());
     return true;
 }
 

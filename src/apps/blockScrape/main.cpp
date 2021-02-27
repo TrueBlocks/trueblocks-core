@@ -19,7 +19,8 @@ int main(int argc, const char* argv[]) {
         return 0;
 
     // We keep track of what state we're in (paused, running, etc.)...
-    options.state = options.getCurrentState();
+    string_q unused;
+    options.state = options.getCurrentState(unused);
 
     // ...and run forever (until user tells us to quit)...
     while (options.state != STATE_STOPPED && !shouldQuit()) {
@@ -54,7 +55,7 @@ int main(int argc, const char* argv[]) {
         ScrapeState prevState = options.state;
         for (size_t n = 0; n < nHalfSeconds && !shouldQuit() && options.state == prevState; n++) {
             usleep((useconds_t)(500000));
-            options.state = options.getCurrentState();
+            options.state = options.getCurrentState(unused);
         }
     }
     // }

@@ -93,7 +93,7 @@ bool COptions::visitBinaryFile(const string_q& path, void* data) {
                 monitor.writeLastBlock(fileRange.second + 1);
             }
             options->stats.nBloomMisses++;
-            LOG_PROGRESS1("Skipping", options->fileRange.first, options->listRange.second, " bloom miss\r");
+            LOG_PROGRESS("Skipping", options->fileRange.first, options->listRange.second, " bloom miss\r");
             EXIT_NOMSG(true);
         }
     }
@@ -102,7 +102,7 @@ bool COptions::visitBinaryFile(const string_q& path, void* data) {
         EXIT_FAIL("Could not download index chunk " + indexPath + ".");
 
     options->stats.nBloomHits++;
-    LOG_PROGRESS1("Scanning", options->fileRange.first, options->listRange.second, " bloom hit \r");
+    LOG_PROGRESS("Scanning", options->fileRange.first, options->listRange.second, " bloom hit \r");
 
     CArchive* chunk = NULL;
     char* rawData = NULL;
@@ -194,7 +194,7 @@ bool COptions::visitBinaryFile(const string_q& path, void* data) {
     }
 
     string_q result = indexHit ? " index hit " + hits : " false positive";
-    LOG_PROGRESS1("Scanning", options->fileRange.first, options->listRange.second, " bloom hit" + result);
+    LOG_PROGRESS("Scanning", options->fileRange.first, options->listRange.second, " bloom hit" + result);
 
     EXIT_NOMSG(!shouldQuit());
 }

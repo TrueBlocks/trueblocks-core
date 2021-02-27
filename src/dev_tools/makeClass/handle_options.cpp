@@ -391,6 +391,7 @@ bool COptions::writeCode(const string_q& fn) {
         converted = replaceCode(converted, "CODE_NOTES", notes_stream.str());
         converted = replaceCode(converted, "CODE_ERROR_MSG", errors_stream.str());
         converted = replaceCode(converted, "DEBUG_DISPLAY", debug_stream.str());
+        replaceAll(converted, "    // clang-format on\n    // clang-format off\n", "");
     } else {
         converted = replaceCode(converted, "CODE_DECLARE", header_stream.str());
     }
@@ -512,8 +513,10 @@ const char* STR_ENUM_PROCESSOR =
 
 //---------------------------------------------------------------------------------------------------
 const char* STR_CUSTOM_INIT =
+    "    // clang-format off\n"
     "    [{COMMAND}] = getGlobalConfig(\"[{TOOL}]\")->getConfig[CTYPE](\"settings\", \"[{COMMAND}]\", "
-    "[{DEF_VAL}]);";
+    "[{DEF_VAL}]);\n"
+    "    // clang-format on";
 
 //---------------------------------------------------------------------------------------------------
 const char* STR_DEFAULT_ASSIGNMENT = "    [{REAL_TYPE}] [{COMMAND}] = [{DEF_VAL}];";

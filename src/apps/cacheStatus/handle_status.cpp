@@ -420,7 +420,7 @@ bool noteIndex(const string_q& path, void* data) {
         blknum_t last = NOPOS;
         blknum_t first = bnFromPath(path, last, unused);
         if (!isTestMode()) {
-            LOG_PROGRESS1("Scanning", ++counter->fileRange.first, counter->fileRange.second, "\r");
+            LOG_PROGRESS("Scanning", ++counter->fileRange.first, counter->fileRange.second, "\r");
         }
 
         if (last < counter->scanRange.first)

@@ -348,10 +348,12 @@ void COptions::Init(void) {
     statements = false;
     accounting = false;
     articulate = false;
+    // clang-format off
     cache_txs = getGlobalConfig("acctExport")->getConfigBool("settings", "cache_txs", false);
     cache_traces = getGlobalConfig("acctExport")->getConfigBool("settings", "cache_traces", false);
     skip_ddos = getGlobalConfig("acctExport")->getConfigBool("settings", "skip_ddos", true);
     max_traces = getGlobalConfig("acctExport")->getConfigInt("settings", "max_traces", 250);
+    // clang-format on
     freshen = false;
     freshen_max = 5000;
     factory = false;

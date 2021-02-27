@@ -91,4 +91,3 @@ pgrep -lx runningTest: [
 isRunning(notRunning): 0
 isRunning(runningTest): 1
 isRunning(testRunner): 1
-

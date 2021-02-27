@@ -51,7 +51,6 @@ class COptions : public COptionsBase {
     uint32_t tools = TOOL_NONE;
     timestamp_t latestBlockTs;
     blknum_t latestBlockNum;
-    blknum_t maxIndexRows;
 
     COptions(void);
     ~COptions(void);
@@ -65,7 +64,7 @@ class COptions : public COptionsBase {
     bool finalize_chunks(CConsolidator* cons);
 
     bool changeState(void);
-    ScrapeState getCurrentState(void);
+    ScrapeState getCurrentState(string_q& current);
     void cleanupAndQuit(void) {
         mode = "quit";
         changeState();
@@ -76,3 +75,4 @@ class COptions : public COptionsBase {
 extern bool visitCopyRipeToStage(const string_q& path, void* data);
 extern bool appendFile(const string_q& toFile, const string_q& fromFile);
 extern bool prepareMonitors(const string_q& path, void* data);
+extern bool visitToPin(const string_q& chunkId, void* data);

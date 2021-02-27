@@ -53,7 +53,8 @@ bool addNewPin(CPinnedItem& pin, void* data) {
         blknum_t oldStart = bnFromPath(reportPtr->newBlockRange, oldEnd, unused);
         reportPtr->newBlockRange = padNum9(min(oldStart, newStart)) + "-" + padNum9(max(oldEnd, newEnd));
     }
-    return true;
+    // TODO(tjayrush): Note...
+    return !isTestMode();
 }
 
 //-------------------------------------------------------------------------
@@ -122,7 +123,7 @@ bool publishManifest(ostream& os) {
 
     forEveryPin(addNewPin, &pinReport);
 
-    // pinReport.toJson(os);
+    pinReport.toJson(os);
     LOG_INFO(bRed, "  Pinned manifest and posted it to Ethereum address: ", unchainedIndexAddr, cOff);
 
     return true;
