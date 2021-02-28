@@ -72,7 +72,7 @@ bool visitStagingIndexFiles(const string_q& path, void* data) {
                     if (in)
                         done = true;
                 }
-                lockSection(true);
+                lockSection();
                 if (items.size()) {
                     monitor.writeAnArray(items);
                     options->stats.nPositive++;
@@ -80,7 +80,7 @@ bool visitStagingIndexFiles(const string_q& path, void* data) {
                     options->stats.nSkipped++;
                 }
                 monitor.writeLastBlock(options->fileRange.first + 1);
-                lockSection(false);
+                unlockSection();
             }
         }
         // string_q result = indexHit ? " index hit " + hits : " false positive";

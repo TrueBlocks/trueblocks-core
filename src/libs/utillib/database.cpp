@@ -425,16 +425,20 @@ bool writeTheCode(const codewrite_t& cw) {
 //-----------------------------------------------------------------------
 // TODO(tjayrush): global data
 static uint32_t sectionLocks = 0;
-void lockSection(bool lock) {
-    if (lock)
-        sectionLocks++;
-    else if (sectionLocks > 0)
-        sectionLocks--;
-    //        LOG_INFO(COptionsBase::g_progName, ": lockSection: ", sectionLocks);
+void lockSection(void) {
+    sectionLocks++;
+    // LOG8("Section locked: ", sectionLocks);
 }
 
 //-----------------------------------------------------------------------
-bool isSectionLocked(void) {
+void unlockSection(void) {
+    if (sectionLocks > 0)
+        sectionLocks--;
+    // LOG8("Section unlocked: ", sectionLocks);
+}
+
+//-----------------------------------------------------------------------
+static bool isSectionLocked(void) {
     return (sectionLocks > 0);
 }
 
@@ -471,7 +475,7 @@ void cleanFileLocks(void) {
     explode(files, list, '|');
     for (auto file : files) {
         remove(file.c_str());
-        if (!isTestMode() && !isBlockScrapeTest())
+        if (!isTestMode() && !isLiveTest())
             LOG_INFO("Removing file: ", file);
     }
     manageRemoveList("clear");

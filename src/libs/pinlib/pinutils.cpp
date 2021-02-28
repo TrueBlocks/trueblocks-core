@@ -447,7 +447,7 @@ static void cleanPinataStr(string_q& in) {
 
 //---------------------------------------------------------------------------
 static bool writeManifest(const CPinnedItemArray& array) {
-    lockSection(true);  // disallow control+C until we write both files
+    lockSection();  // disallow control+C until we write both files
 
     string_q binFile = getCachePath("tmp/pins.bin");
     establishFolder(binFile);
@@ -459,7 +459,7 @@ static bool writeManifest(const CPinnedItemArray& array) {
     pinFile << array;
     pinFile.Release();
 
-    lockSection(false);  // enable control+C
+    unlockSection();  // enable control+C
 
     return true;
 }

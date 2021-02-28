@@ -164,7 +164,7 @@ inline bool isApiMode(void) {
 }
 
 //---------------------------------------------------------------------------
-inline bool isBlockScrapeTest(void) {
+inline bool isLiveTest(void) {
     static uint64_t test_mode = NOPOS;
     if (test_mode == NOPOS)
         test_mode = getEnvStr("BLOCK_SCRAPE_TEST") == "true";

@@ -172,8 +172,8 @@ class codewrite_t {
     }
 };
 extern bool shouldQuit(void);
-extern void lockSection(bool lock);
-extern bool isSectionLocked(void);
+extern void lockSection(void);
+extern void unlockSection(void);
 extern bool writeTheCode(const codewrite_t& cw);
 
 //----------------------------------------------------------------------

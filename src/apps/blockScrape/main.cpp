@@ -9,7 +9,7 @@
 int main(int argc, const char* argv[]) {
     pinlib_init(defaultQuitHandler);
 
-    if (isBlockScrapeTest()) {
+    if (isLiveTest()) {
         // clean up if we're in live testing
         cleanFolder(getCachePath("tmp/"));
         cleanFolder(configPath("mocked/addr_index"));
@@ -33,23 +33,22 @@ int main(int argc, const char* argv[]) {
         if (isRunning("acctExport") || options.state == STATE_PAUSED) {
             // User may have started the account scraper since we started. Here, we
             // go to sleep for a short while to allow that program to complete...
-            cerr << "Block scraper is paused: " << Now().Format(FMT_EXPORT) << "\r";
-            cerr.flush();
+            LOG_INFO("Block scraper is paused: ", Now().Format(FMT_EXPORT), "\r");
 
         } else {
-            // User can tell us to process the index...
+            bool ret = false;
             if (options.tools & TOOL_INDEX) {
-                cerr << cYellow << "Block scraper is running...";
-                cerr << (options.scrape_blocks() ? "completed..." : "did not complete...");
+                LOG_INFO(cYellow, "Block scraper is running...", cOff);
+                ret = options.scrape_blocks();
             }
 
-            // ...or the monitors (or both).
             if (options.tools & TOOL_MONITORS) {
-                cerr << cYellow << "Monitor scraper is running...";
-                cerr << (options.scrape_monitors() ? "completed..." : "did not complete...");
+                LOG_INFO(cYellow, "Monitor scraper is running...", cOff);
+                ret = options.scrape_monitors();
             }
 
-            cerr << "running again in " << options.sleep << " seconds... " << cOff << endl;
+            LOG_INFO((ret ? "  ...pass completed" : "  ...pass did not complete"), ". Running again in ", options.sleep,
+                     " seconds... ");
 
             // TODO(tjayrush): FIX_THIS_CODE
             freshenTimestamps(getBlockProgress(BP_RIPE).ripe);
@@ -57,7 +56,7 @@ int main(int argc, const char* argv[]) {
 
         // We need to sleep, but we want to wake up frequently enough to check to see if user has
         // told hit the control-C or sent pause, quit or restart. (The `sleep` value is in seconds.)
-        if (!isBlockScrapeTest()) {  // don't sleep if we're in live testing
+        if (!isLiveTest()) {  // don't sleep if we're in live testing
             uint32_t nHalfSeconds = (uint32_t)(options.sleep * 2);
             ScrapeState prevState = options.state;
             for (size_t n = 0; n < nHalfSeconds && !shouldQuit() && options.state == prevState; n++) {

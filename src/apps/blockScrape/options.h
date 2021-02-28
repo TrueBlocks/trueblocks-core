@@ -48,7 +48,6 @@ class COptions : public COptionsBase {
     bool start_scraper(void);
     bool scrape_blocks(void);
     bool scrape_monitors(void);
-    bool finalize_chunks(CConsolidator* cons);
 
     bool changeState(void);
     ScrapeState getCurrentState(string_q& current);

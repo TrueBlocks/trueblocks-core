@@ -2,13 +2,6 @@ blockScrape argc: 8 [1:--tool] [2:index] [3:--sleep] [4:.5] [5:--pin] [6:--verbo
 blockScrape --tool index --sleep .5 --pin --verbose 8 
 <INFO>  : pin: true
 <INFO>  : sleep: 0.5
-: 4-----
-pgrep -lfa "blockScrape"
-blockScrape --tool index --sleep .5 --pin --verbose 8
- 1
-: 4-----
-pgrep -lfa "acctExport"
- 0
 : 8------Current state stopped.
 { "status": "running" }
 : 4-----changing state: stopped --> running
@@ -20,28 +13,26 @@ pgrep -lfa "acctExport"
 : 8------indexFolder_ripe:        $INDEX/ripe/ 64
 : 8------configPath("cache/tmp/"):$CACHE/tmp/ 96
 <INFO>  : Index for block zero was not found. Building it from 8893 prefunds.
-<INFO>  :   Extracting addresses...extracting appearances...exporting...finalizing... binary file created: ✓
+<INFO>  :   Extracting addresses...extracting appearances...exporting...finalizing...binary file created ✓
 : 8------chunkId:                 $INDEX/finalized/000000000-000000000.bin 320192
+<INFO>  :   Pinning /Users/jrush/.quickBlocks/mocked/addr_index/finalized/000000000-000000000.bin
 <INFO>  : Done...
 : 8------Current state running.
-: 4-----
-pgrep -lfa "acctExport"
- 0
-Block scraper is running...: 4----- 
-: 4----- 
-: 4-----------------------------------------------------------------------------------------------------------------------------
-: 4-----------------------------------------------------------------------------------------------------------------------------
-: 4-----bs.unripe:         0
-: 4-----bs.ripe:           0
-: 4-----bs.staging:        0
-: 4-----bs.finalized:      0
-: 4-----bs.client:         81
-: 4-----bs.blazeStart:     1
-: 4-----bs.blazeNBlocks:   16
-: 4-----bs.n_block_procs:  10
-: 4-----bs.n_addr_procs:   20
-: 4-----bs.blazeRipeBlock: 53
-: 4-----bs.MAX_ROWS:       13
+<INFO>  : Block scraper is running...
+: 8------ 
+: 8------------------------------------------------------------------------------------------------------------------------------
+: 8------------------------------------------------------------------------------------------------------------------------------
+: 8------bs.unripe:         0
+: 8------bs.ripe:           0
+: 8------bs.staging:        0
+: 8------bs.finalized:      0
+: 8------bs.client:         81
+: 8------bs.blazeStart:     1
+: 8------bs.blazeCnt:       16
+: 8------bs.n_block_procs:  10
+: 8------bs.n_addr_procs:   20
+: 8------bs.blazeRipe:      53
+: 8------bs.MAX_ROWS:       13
 <INFO>  : blaze scrape (80 blocks from head)
 : 4-----scrape_blocks ----> env TB_INDEXPATH="$INDEX/" blaze scrape --startBlock 1 --nBlocks 16 --nBlockProcs 10 --nAddrProcs 20 --ripeBlock 53 --verbose 8
 blaze.startBlock:   1
@@ -50,18 +41,68 @@ blaze.nBlockProcs:  10
 blaze.nAddrProcs:   20
 blaze.ripeBlock:    53
 blaze.verbose:      8
-................: 4-----
-pgrep -lfa "acctExport"
- 0
+................
 : 8------
 : 8------oldStage:                $INDEX/staging/000000000-temp.txt 1121
 : 8------newStage:                $INDEX/staging/000000016.txt 0
 : 8------tmpFile:                 $INDEX/temp.txt 0
-: 8------cons->tmp_fn:            $INDEX/staging/000000000-temp.txt 1121
+: 8------tmp_fn:                  $INDEX/staging/000000000-temp.txt 1121
 : 8------Appended con->tmp_fn to tmpFile
 : 8------tmpFile:                 $INDEX/temp.txt 1121
-: 8------We're done appending and now replaceing...
-<INFO>  :  
+: 8------Contents of tmpFile after appending tmp_fn:
+: 8------0x05a56e2d52c817161883f50c441c3228cfe54d9f	000000001	99999
+: 8------0xdd2f1e6e498202e86d8f5442af596580a4f03c2c	000000002	99999
+: 8------0x5088d623ba0fcf0131e0897a91734a4d83596aa0	000000003	99999
+: 8------0xc8ebccc5f5689fa8659d83713341e5ad19349448	000000003	99998
+: 8------0x5088d623ba0fcf0131e0897a91734a4d83596aa0	000000004	99998
+: 8------0xc8ebccc5f5689fa8659d83713341e5ad19349448	000000004	99999
+: 8------0x05a56e2d52c817161883f50c441c3228cfe54d9f	000000005	99999
+: 8------0x0193d941b50d91be6567c7ee1c0fe7af498b4137	000000006	99999
+: 8------0x0193d941b50d91be6567c7ee1c0fe7af498b4137	000000007	99998
+: 8------0xdd2f1e6e498202e86d8f5442af596580a4f03c2c	000000007	99999
+: 8------0x0193d941b50d91be6567c7ee1c0fe7af498b4137	000000008	99999
+: 8------0xdd2f1e6e498202e86d8f5442af596580a4f03c2c	000000009	99999
+: 8------0x0193d941b50d91be6567c7ee1c0fe7af498b4137	000000010	99999
+: 8------0x19dafe19f11e960e4ccfc6a5aa8890ebd748ca1e	000000011	99999
+: 8------0x0193d941b50d91be6567c7ee1c0fe7af498b4137	000000012	99999
+: 8------0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	000000013	99999
+: 8------0xacc8decdfdcbed202b8632947c60487494f5d2c7	000000014	99999
+: 8------0x0193d941b50d91be6567c7ee1c0fe7af498b4137	000000015	99999
+: 8------0x19dafe19f11e960e4ccfc6a5aa8890ebd748ca1e	000000016	99999
+: 8------
+: 8------We're done appending. Next, move records from tmpFile to newStage...
+: 8------tmpFile:                 $INDEX/temp.txt 0
+: 8------Contents of tmpFile staging completed:
+: 8------
+: 8------tmp_fn:                  $INDEX/staging/000000000-temp.txt 0
+: 8------Contents of tmp_fn staging completed:
+: 8------
+: 8------oldStage:                $INDEX/staging/000000000-temp.txt 0
+: 8------Contents of oldStage staging completed:
+: 8------
+: 8------newStage:                $INDEX/staging/000000016.txt 1121
+: 8------Contents of newStage staging completed not yet consolidated:
+: 8------0x05a56e2d52c817161883f50c441c3228cfe54d9f	000000001	99999
+: 8------0xdd2f1e6e498202e86d8f5442af596580a4f03c2c	000000002	99999
+: 8------0x5088d623ba0fcf0131e0897a91734a4d83596aa0	000000003	99999
+: 8------0xc8ebccc5f5689fa8659d83713341e5ad19349448	000000003	99998
+: 8------0x5088d623ba0fcf0131e0897a91734a4d83596aa0	000000004	99998
+: 8------0xc8ebccc5f5689fa8659d83713341e5ad19349448	000000004	99999
+: 8------0x05a56e2d52c817161883f50c441c3228cfe54d9f	000000005	99999
+: 8------0x0193d941b50d91be6567c7ee1c0fe7af498b4137	000000006	99999
+: 8------0x0193d941b50d91be6567c7ee1c0fe7af498b4137	000000007	99998
+: 8------0xdd2f1e6e498202e86d8f5442af596580a4f03c2c	000000007	99999
+: 8------0x0193d941b50d91be6567c7ee1c0fe7af498b4137	000000008	99999
+: 8------0xdd2f1e6e498202e86d8f5442af596580a4f03c2c	000000009	99999
+: 8------0x0193d941b50d91be6567c7ee1c0fe7af498b4137	000000010	99999
+: 8------0x19dafe19f11e960e4ccfc6a5aa8890ebd748ca1e	000000011	99999
+: 8------0x0193d941b50d91be6567c7ee1c0fe7af498b4137	000000012	99999
+: 8------0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	000000013	99999
+: 8------0xacc8decdfdcbed202b8632947c60487494f5d2c7	000000014	99999
+: 8------0x0193d941b50d91be6567c7ee1c0fe7af498b4137	000000015	99999
+: 8------0x19dafe19f11e960e4ccfc6a5aa8890ebd748ca1e	000000016	99999
+: 8------
+<INFO>  : 
 <INFO>  : Consolidation pass 0
 <INFO>  :   Starting search at record 12 of 19
 <INFO>  : 	12: 0x0193d941b50d91be6567c7ee1c0fe7af498b4137	000000010	99999
@@ -71,8 +112,9 @@ pgrep -lfa "acctExport"
 <INFO>  : 	1: 0xdd2f1e6e498202e86d8f5442af596580a4f03c2c	000000002	99999
 <INFO>  : 	12: 0x0193d941b50d91be6567c7ee1c0fe7af498b4137	000000010	99999
 <INFO>  : 	13: 0x19dafe19f11e960e4ccfc6a5aa8890ebd748ca1e	000000011	99999
-<INFO>  :   Extracting addresses...extracting appearances...exporting...finalizing... binary file created: ✓
+<INFO>  :   Extracting addresses...extracting appearances...exporting...finalizing...binary file created ✓
 : 8------chunkId:                 $INDEX/finalized/000000001-000000010.bin 288
+<INFO>  :   Pinning /Users/jrush/.quickBlocks/mocked/addr_index/finalized/000000001-000000010.bin
 <INFO>  :   Wrote 13 records to $FINAL/000000001-000000010.bin
 <INFO>  :   Extracting records 13 to 19 of 19
 <INFO>  : 	13: 0x19dafe19f11e960e4ccfc6a5aa8890ebd748ca1e	000000011	99999
@@ -80,26 +122,32 @@ pgrep -lfa "acctExport"
 <INFO>  : 	12: 0x0193d941b50d91be6567c7ee1c0fe7af498b4137	000000010	99999
 <INFO>  : 	13: 0x19dafe19f11e960e4ccfc6a5aa8890ebd748ca1e	000000011	99999
 <INFO>  :   Wrote 6 records to $STAGING/000000016.txt
-completed...running again in 0.5 seconds... 
+: 8------newStage:                $INDEX/staging/000000016.txt 354
+: 8------Contents of newStage after consolidation:
+: 8------0x19dafe19f11e960e4ccfc6a5aa8890ebd748ca1e	000000011	99999
+: 8------0x0193d941b50d91be6567c7ee1c0fe7af498b4137	000000012	99999
+: 8------0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	000000013	99999
+: 8------0xacc8decdfdcbed202b8632947c60487494f5d2c7	000000014	99999
+: 8------0x0193d941b50d91be6567c7ee1c0fe7af498b4137	000000015	99999
+: 8------0x19dafe19f11e960e4ccfc6a5aa8890ebd748ca1e	000000016	99999
+: 8------
+<INFO>  :   ...pass completed. Running again in 0.5 seconds... 
 : 8------Current state running.
-: 4-----
-pgrep -lfa "acctExport"
- 0
-Block scraper is running...: 4----- 
-: 4----- 
-: 4-----------------------------------------------------------------------------------------------------------------------------
-: 4-----------------------------------------------------------------------------------------------------------------------------
-: 4-----bs.unripe:         16
-: 4-----bs.ripe:           16
-: 4-----bs.staging:        16
-: 4-----bs.finalized:      10
-: 4-----bs.client:         82
-: 4-----bs.blazeStart:     17
-: 4-----bs.blazeNBlocks:   16
-: 4-----bs.n_block_procs:  10
-: 4-----bs.n_addr_procs:   20
-: 4-----bs.blazeRipeBlock: 54
-: 4-----bs.MAX_ROWS:       13
+<INFO>  : Block scraper is running...
+: 8------ 
+: 8------------------------------------------------------------------------------------------------------------------------------
+: 8------------------------------------------------------------------------------------------------------------------------------
+: 8------bs.unripe:         16
+: 8------bs.ripe:           16
+: 8------bs.staging:        16
+: 8------bs.finalized:      10
+: 8------bs.client:         82
+: 8------bs.blazeStart:     17
+: 8------bs.blazeCnt:       16
+: 8------bs.n_block_procs:  10
+: 8------bs.n_addr_procs:   20
+: 8------bs.blazeRipe:      54
+: 8------bs.MAX_ROWS:       13
 <INFO>  : blaze scrape (65 blocks from head)
 : 4-----scrape_blocks ----> env TB_INDEXPATH="$INDEX/" blaze scrape --startBlock 17 --nBlocks 16 --nBlockProcs 10 --nAddrProcs 20 --ripeBlock 54 --verbose 8
 blaze.startBlock:   17
@@ -108,23 +156,98 @@ blaze.nBlockProcs:  10
 blaze.nAddrProcs:   20
 blaze.ripeBlock:    54
 blaze.verbose:      8
-................: 4-----
-pgrep -lfa "acctExport"
- 0
+................
 : 8------
 : 8------oldStage:                $INDEX/staging/000000016.txt 354
 : 8------newStage:                $INDEX/staging/000000032.txt 0
 : 8------tmpFile:                 $INDEX/temp.txt 0
-: 8------cons->tmp_fn:            $INDEX/staging/000000000-temp.txt 1003
-: 8------oldStage != cons->tmp_fn
+: 8------tmp_fn:                  $INDEX/staging/000000000-temp.txt 1003
+: 8------oldStage != tmp_fn
 : 8------oldStage:                $INDEX/staging/000000016.txt 354
-: 8------cons->tmp_fn:            $INDEX/staging/000000000-temp.txt 1003
+: 8------tmp_fn:                  $INDEX/staging/000000000-temp.txt 1003
 : 8------Appended oldStage to tmpFile
+: 8------oldStage:                $INDEX/staging/000000016.txt 354
+: 8------Contents of oldStage:
+: 8------0x19dafe19f11e960e4ccfc6a5aa8890ebd748ca1e	000000011	99999
+: 8------0x0193d941b50d91be6567c7ee1c0fe7af498b4137	000000012	99999
+: 8------0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	000000013	99999
+: 8------0xacc8decdfdcbed202b8632947c60487494f5d2c7	000000014	99999
+: 8------0x0193d941b50d91be6567c7ee1c0fe7af498b4137	000000015	99999
+: 8------0x19dafe19f11e960e4ccfc6a5aa8890ebd748ca1e	000000016	99999
+: 8------
 : 8------tmpFile:                 $INDEX/temp.txt 354
+: 8------Contents of tmpFile after appending oldStage:
+: 8------0x19dafe19f11e960e4ccfc6a5aa8890ebd748ca1e	000000011	99999
+: 8------0x0193d941b50d91be6567c7ee1c0fe7af498b4137	000000012	99999
+: 8------0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	000000013	99999
+: 8------0xacc8decdfdcbed202b8632947c60487494f5d2c7	000000014	99999
+: 8------0x0193d941b50d91be6567c7ee1c0fe7af498b4137	000000015	99999
+: 8------0x19dafe19f11e960e4ccfc6a5aa8890ebd748ca1e	000000016	99999
+: 8------
 : 8------Appended con->tmp_fn to tmpFile
 : 8------tmpFile:                 $INDEX/temp.txt 1357
-: 8------We're done appending and now replaceing...
-<INFO>  :  
+: 8------Contents of tmpFile after appending tmp_fn:
+: 8------0x19dafe19f11e960e4ccfc6a5aa8890ebd748ca1e	000000011	99999
+: 8------0x0193d941b50d91be6567c7ee1c0fe7af498b4137	000000012	99999
+: 8------0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	000000013	99999
+: 8------0xacc8decdfdcbed202b8632947c60487494f5d2c7	000000014	99999
+: 8------0x0193d941b50d91be6567c7ee1c0fe7af498b4137	000000015	99999
+: 8------0x19dafe19f11e960e4ccfc6a5aa8890ebd748ca1e	000000016	99999
+: 8------0x0193d941b50d91be6567c7ee1c0fe7af498b4137	000000017	99999
+: 8------0x1b7047b4338acf65be94c1a3e8c5c9338ad7d67c	000000018	99999
+: 8------0x1b7047b4338acf65be94c1a3e8c5c9338ad7d67c	000000019	99999
+: 8------0x0193d941b50d91be6567c7ee1c0fe7af498b4137	000000020	99999
+: 8------0x1b7047b4338acf65be94c1a3e8c5c9338ad7d67c	000000021	99999
+: 8------0x6923f88fcdc5d737237ba10c2d830aa40f4634de	000000021	99998
+: 8------0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	000000022	99999
+: 8------0x0193d941b50d91be6567c7ee1c0fe7af498b4137	000000023	99999
+: 8------0x1b7047b4338acf65be94c1a3e8c5c9338ad7d67c	000000024	99999
+: 8------0xbb7b8287f3f0a933474a79eae42cbca977791171	000000025	99999
+: 8------0x48cd680bb700f6b7de89dd9ff4932ccc158c3e05	000000026	99999
+: 8------0x48cd680bb700f6b7de89dd9ff4932ccc158c3e05	000000027	99999
+: 8------0x0193d941b50d91be6567c7ee1c0fe7af498b4137	000000028	99999
+: 8------0x322df8fd261820c36234f806b15f51a2203a8f88	000000029	99999
+: 8------0xbb7b8287f3f0a933474a79eae42cbca977791171	000000030	99999
+: 8------0xacc8decdfdcbed202b8632947c60487494f5d2c7	000000031	99999
+: 8------0x9ab9f7a4b85412bfbe2f4f63b1c98808851c4f32	000000032	99999
+: 8------
+: 8------We're done appending. Next, move records from tmpFile to newStage...
+: 8------tmpFile:                 $INDEX/temp.txt 0
+: 8------Contents of tmpFile staging completed:
+: 8------
+: 8------tmp_fn:                  $INDEX/staging/000000000-temp.txt 0
+: 8------Contents of tmp_fn staging completed:
+: 8------
+: 8------oldStage:                $INDEX/staging/000000016.txt 0
+: 8------Contents of oldStage staging completed:
+: 8------
+: 8------newStage:                $INDEX/staging/000000032.txt 1357
+: 8------Contents of newStage staging completed not yet consolidated:
+: 8------0x19dafe19f11e960e4ccfc6a5aa8890ebd748ca1e	000000011	99999
+: 8------0x0193d941b50d91be6567c7ee1c0fe7af498b4137	000000012	99999
+: 8------0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	000000013	99999
+: 8------0xacc8decdfdcbed202b8632947c60487494f5d2c7	000000014	99999
+: 8------0x0193d941b50d91be6567c7ee1c0fe7af498b4137	000000015	99999
+: 8------0x19dafe19f11e960e4ccfc6a5aa8890ebd748ca1e	000000016	99999
+: 8------0x0193d941b50d91be6567c7ee1c0fe7af498b4137	000000017	99999
+: 8------0x1b7047b4338acf65be94c1a3e8c5c9338ad7d67c	000000018	99999
+: 8------0x1b7047b4338acf65be94c1a3e8c5c9338ad7d67c	000000019	99999
+: 8------0x0193d941b50d91be6567c7ee1c0fe7af498b4137	000000020	99999
+: 8------0x1b7047b4338acf65be94c1a3e8c5c9338ad7d67c	000000021	99999
+: 8------0x6923f88fcdc5d737237ba10c2d830aa40f4634de	000000021	99998
+: 8------0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	000000022	99999
+: 8------0x0193d941b50d91be6567c7ee1c0fe7af498b4137	000000023	99999
+: 8------0x1b7047b4338acf65be94c1a3e8c5c9338ad7d67c	000000024	99999
+: 8------0xbb7b8287f3f0a933474a79eae42cbca977791171	000000025	99999
+: 8------0x48cd680bb700f6b7de89dd9ff4932ccc158c3e05	000000026	99999
+: 8------0x48cd680bb700f6b7de89dd9ff4932ccc158c3e05	000000027	99999
+: 8------0x0193d941b50d91be6567c7ee1c0fe7af498b4137	000000028	99999
+: 8------0x322df8fd261820c36234f806b15f51a2203a8f88	000000029	99999
+: 8------0xbb7b8287f3f0a933474a79eae42cbca977791171	000000030	99999
+: 8------0xacc8decdfdcbed202b8632947c60487494f5d2c7	000000031	99999
+: 8------0x9ab9f7a4b85412bfbe2f4f63b1c98808851c4f32	000000032	99999
+: 8------
+<INFO>  : 
 <INFO>  : Consolidation pass 0
 <INFO>  :   Starting search at record 12 of 23
 <INFO>  : 	12: 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	000000022	99999
@@ -134,8 +257,9 @@ pgrep -lfa "acctExport"
 <INFO>  : 	1: 0x0193d941b50d91be6567c7ee1c0fe7af498b4137	000000012	99999
 <INFO>  : 	12: 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	000000022	99999
 <INFO>  : 	13: 0x0193d941b50d91be6567c7ee1c0fe7af498b4137	000000023	99999
-<INFO>  :   Extracting addresses...extracting appearances...exporting...finalizing... binary file created: ✓
+<INFO>  :   Extracting addresses...extracting appearances...exporting...finalizing...binary file created ✓
 : 8------chunkId:                 $INDEX/finalized/000000011-000000022.bin 316
+<INFO>  :   Pinning /Users/jrush/.quickBlocks/mocked/addr_index/finalized/000000011-000000022.bin
 <INFO>  :   Wrote 13 records to $FINAL/000000011-000000022.bin
 <INFO>  :   Extracting records 13 to 23 of 23
 <INFO>  : 	13: 0x0193d941b50d91be6567c7ee1c0fe7af498b4137	000000023	99999
@@ -143,26 +267,36 @@ pgrep -lfa "acctExport"
 <INFO>  : 	12: 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	000000022	99999
 <INFO>  : 	13: 0x0193d941b50d91be6567c7ee1c0fe7af498b4137	000000023	99999
 <INFO>  :   Wrote 10 records to $STAGING/000000032.txt
-completed...running again in 0.5 seconds... 
+: 8------newStage:                $INDEX/staging/000000032.txt 590
+: 8------Contents of newStage after consolidation:
+: 8------0x0193d941b50d91be6567c7ee1c0fe7af498b4137	000000023	99999
+: 8------0x1b7047b4338acf65be94c1a3e8c5c9338ad7d67c	000000024	99999
+: 8------0xbb7b8287f3f0a933474a79eae42cbca977791171	000000025	99999
+: 8------0x48cd680bb700f6b7de89dd9ff4932ccc158c3e05	000000026	99999
+: 8------0x48cd680bb700f6b7de89dd9ff4932ccc158c3e05	000000027	99999
+: 8------0x0193d941b50d91be6567c7ee1c0fe7af498b4137	000000028	99999
+: 8------0x322df8fd261820c36234f806b15f51a2203a8f88	000000029	99999
+: 8------0xbb7b8287f3f0a933474a79eae42cbca977791171	000000030	99999
+: 8------0xacc8decdfdcbed202b8632947c60487494f5d2c7	000000031	99999
+: 8------0x9ab9f7a4b85412bfbe2f4f63b1c98808851c4f32	000000032	99999
+: 8------
+<INFO>  :   ...pass completed. Running again in 0.5 seconds... 
 : 8------Current state running.
-: 4-----
-pgrep -lfa "acctExport"
- 0
-Block scraper is running...: 4----- 
-: 4----- 
-: 4-----------------------------------------------------------------------------------------------------------------------------
-: 4-----------------------------------------------------------------------------------------------------------------------------
-: 4-----bs.unripe:         32
-: 4-----bs.ripe:           32
-: 4-----bs.staging:        32
-: 4-----bs.finalized:      22
-: 4-----bs.client:         83
-: 4-----bs.blazeStart:     33
-: 4-----bs.blazeNBlocks:   16
-: 4-----bs.n_block_procs:  10
-: 4-----bs.n_addr_procs:   20
-: 4-----bs.blazeRipeBlock: 55
-: 4-----bs.MAX_ROWS:       13
+<INFO>  : Block scraper is running...
+: 8------ 
+: 8------------------------------------------------------------------------------------------------------------------------------
+: 8------------------------------------------------------------------------------------------------------------------------------
+: 8------bs.unripe:         32
+: 8------bs.ripe:           32
+: 8------bs.staging:        32
+: 8------bs.finalized:      22
+: 8------bs.client:         83
+: 8------bs.blazeStart:     33
+: 8------bs.blazeCnt:       16
+: 8------bs.n_block_procs:  10
+: 8------bs.n_addr_procs:   20
+: 8------bs.blazeRipe:      55
+: 8------bs.MAX_ROWS:       13
 <INFO>  : blaze scrape (50 blocks from head)
 : 4-----scrape_blocks ----> env TB_INDEXPATH="$INDEX/" blaze scrape --startBlock 33 --nBlocks 16 --nBlockProcs 10 --nAddrProcs 20 --ripeBlock 55 --verbose 8
 blaze.startBlock:   33
@@ -171,23 +305,118 @@ blaze.nBlockProcs:  10
 blaze.nAddrProcs:   20
 blaze.ripeBlock:    55
 blaze.verbose:      8
-................: 4-----
-pgrep -lfa "acctExport"
- 0
+................
 : 8------
 : 8------oldStage:                $INDEX/staging/000000032.txt 590
 : 8------newStage:                $INDEX/staging/000000048.txt 0
 : 8------tmpFile:                 $INDEX/temp.txt 0
-: 8------cons->tmp_fn:            $INDEX/staging/000000000-temp.txt 1121
-: 8------oldStage != cons->tmp_fn
+: 8------tmp_fn:                  $INDEX/staging/000000000-temp.txt 1121
+: 8------oldStage != tmp_fn
 : 8------oldStage:                $INDEX/staging/000000032.txt 590
-: 8------cons->tmp_fn:            $INDEX/staging/000000000-temp.txt 1121
+: 8------tmp_fn:                  $INDEX/staging/000000000-temp.txt 1121
 : 8------Appended oldStage to tmpFile
+: 8------oldStage:                $INDEX/staging/000000032.txt 590
+: 8------Contents of oldStage:
+: 8------0x0193d941b50d91be6567c7ee1c0fe7af498b4137	000000023	99999
+: 8------0x1b7047b4338acf65be94c1a3e8c5c9338ad7d67c	000000024	99999
+: 8------0xbb7b8287f3f0a933474a79eae42cbca977791171	000000025	99999
+: 8------0x48cd680bb700f6b7de89dd9ff4932ccc158c3e05	000000026	99999
+: 8------0x48cd680bb700f6b7de89dd9ff4932ccc158c3e05	000000027	99999
+: 8------0x0193d941b50d91be6567c7ee1c0fe7af498b4137	000000028	99999
+: 8------0x322df8fd261820c36234f806b15f51a2203a8f88	000000029	99999
+: 8------0xbb7b8287f3f0a933474a79eae42cbca977791171	000000030	99999
+: 8------0xacc8decdfdcbed202b8632947c60487494f5d2c7	000000031	99999
+: 8------0x9ab9f7a4b85412bfbe2f4f63b1c98808851c4f32	000000032	99999
+: 8------
 : 8------tmpFile:                 $INDEX/temp.txt 590
+: 8------Contents of tmpFile after appending oldStage:
+: 8------0x0193d941b50d91be6567c7ee1c0fe7af498b4137	000000023	99999
+: 8------0x1b7047b4338acf65be94c1a3e8c5c9338ad7d67c	000000024	99999
+: 8------0xbb7b8287f3f0a933474a79eae42cbca977791171	000000025	99999
+: 8------0x48cd680bb700f6b7de89dd9ff4932ccc158c3e05	000000026	99999
+: 8------0x48cd680bb700f6b7de89dd9ff4932ccc158c3e05	000000027	99999
+: 8------0x0193d941b50d91be6567c7ee1c0fe7af498b4137	000000028	99999
+: 8------0x322df8fd261820c36234f806b15f51a2203a8f88	000000029	99999
+: 8------0xbb7b8287f3f0a933474a79eae42cbca977791171	000000030	99999
+: 8------0xacc8decdfdcbed202b8632947c60487494f5d2c7	000000031	99999
+: 8------0x9ab9f7a4b85412bfbe2f4f63b1c98808851c4f32	000000032	99999
+: 8------
 : 8------Appended con->tmp_fn to tmpFile
 : 8------tmpFile:                 $INDEX/temp.txt 1711
-: 8------We're done appending and now replaceing...
-<INFO>  :  
+: 8------Contents of tmpFile after appending tmp_fn:
+: 8------0x0193d941b50d91be6567c7ee1c0fe7af498b4137	000000023	99999
+: 8------0x1b7047b4338acf65be94c1a3e8c5c9338ad7d67c	000000024	99999
+: 8------0xbb7b8287f3f0a933474a79eae42cbca977791171	000000025	99999
+: 8------0x48cd680bb700f6b7de89dd9ff4932ccc158c3e05	000000026	99999
+: 8------0x48cd680bb700f6b7de89dd9ff4932ccc158c3e05	000000027	99999
+: 8------0x0193d941b50d91be6567c7ee1c0fe7af498b4137	000000028	99999
+: 8------0x322df8fd261820c36234f806b15f51a2203a8f88	000000029	99999
+: 8------0xbb7b8287f3f0a933474a79eae42cbca977791171	000000030	99999
+: 8------0xacc8decdfdcbed202b8632947c60487494f5d2c7	000000031	99999
+: 8------0x9ab9f7a4b85412bfbe2f4f63b1c98808851c4f32	000000032	99999
+: 8------0x5088d623ba0fcf0131e0897a91734a4d83596aa0	000000033	99999
+: 8------0xdb312d1d6a2ccc64dd94a3892928bac82b4e8c15	000000033	99998
+: 8------0x1b7047b4338acf65be94c1a3e8c5c9338ad7d67c	000000034	99999
+: 8------0x1b7047b4338acf65be94c1a3e8c5c9338ad7d67c	000000035	99999
+: 8------0x26350da68d694a2ced5cd7a1309baa782966a039	000000036	99998
+: 8------0xbb7b8287f3f0a933474a79eae42cbca977791171	000000036	99999
+: 8------0x1b7047b4338acf65be94c1a3e8c5c9338ad7d67c	000000037	99999
+: 8------0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	000000037	99998
+: 8------0x0193d941b50d91be6567c7ee1c0fe7af498b4137	000000038	99999
+: 8------0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	000000039	99999
+: 8------0xbb7b8287f3f0a933474a79eae42cbca977791171	000000040	99999
+: 8------0x19dafe19f11e960e4ccfc6a5aa8890ebd748ca1e	000000041	99999
+: 8------0x1b7047b4338acf65be94c1a3e8c5c9338ad7d67c	000000042	99999
+: 8------0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	000000043	99999
+: 8------0xbb7b8287f3f0a933474a79eae42cbca977791171	000000044	99999
+: 8------0x1b7047b4338acf65be94c1a3e8c5c9338ad7d67c	000000045	99999
+: 8------0xd8030bb90dfc593e614ef0aed456bfe342ad45f5	000000046	99999
+: 8------0x1b7047b4338acf65be94c1a3e8c5c9338ad7d67c	000000047	99999
+: 8------0x1b7047b4338acf65be94c1a3e8c5c9338ad7d67c	000000048	99999
+: 8------
+: 8------We're done appending. Next, move records from tmpFile to newStage...
+: 8------tmpFile:                 $INDEX/temp.txt 0
+: 8------Contents of tmpFile staging completed:
+: 8------
+: 8------tmp_fn:                  $INDEX/staging/000000000-temp.txt 0
+: 8------Contents of tmp_fn staging completed:
+: 8------
+: 8------oldStage:                $INDEX/staging/000000032.txt 0
+: 8------Contents of oldStage staging completed:
+: 8------
+: 8------newStage:                $INDEX/staging/000000048.txt 1711
+: 8------Contents of newStage staging completed not yet consolidated:
+: 8------0x0193d941b50d91be6567c7ee1c0fe7af498b4137	000000023	99999
+: 8------0x1b7047b4338acf65be94c1a3e8c5c9338ad7d67c	000000024	99999
+: 8------0xbb7b8287f3f0a933474a79eae42cbca977791171	000000025	99999
+: 8------0x48cd680bb700f6b7de89dd9ff4932ccc158c3e05	000000026	99999
+: 8------0x48cd680bb700f6b7de89dd9ff4932ccc158c3e05	000000027	99999
+: 8------0x0193d941b50d91be6567c7ee1c0fe7af498b4137	000000028	99999
+: 8------0x322df8fd261820c36234f806b15f51a2203a8f88	000000029	99999
+: 8------0xbb7b8287f3f0a933474a79eae42cbca977791171	000000030	99999
+: 8------0xacc8decdfdcbed202b8632947c60487494f5d2c7	000000031	99999
+: 8------0x9ab9f7a4b85412bfbe2f4f63b1c98808851c4f32	000000032	99999
+: 8------0x5088d623ba0fcf0131e0897a91734a4d83596aa0	000000033	99999
+: 8------0xdb312d1d6a2ccc64dd94a3892928bac82b4e8c15	000000033	99998
+: 8------0x1b7047b4338acf65be94c1a3e8c5c9338ad7d67c	000000034	99999
+: 8------0x1b7047b4338acf65be94c1a3e8c5c9338ad7d67c	000000035	99999
+: 8------0x26350da68d694a2ced5cd7a1309baa782966a039	000000036	99998
+: 8------0xbb7b8287f3f0a933474a79eae42cbca977791171	000000036	99999
+: 8------0x1b7047b4338acf65be94c1a3e8c5c9338ad7d67c	000000037	99999
+: 8------0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	000000037	99998
+: 8------0x0193d941b50d91be6567c7ee1c0fe7af498b4137	000000038	99999
+: 8------0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	000000039	99999
+: 8------0xbb7b8287f3f0a933474a79eae42cbca977791171	000000040	99999
+: 8------0x19dafe19f11e960e4ccfc6a5aa8890ebd748ca1e	000000041	99999
+: 8------0x1b7047b4338acf65be94c1a3e8c5c9338ad7d67c	000000042	99999
+: 8------0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	000000043	99999
+: 8------0xbb7b8287f3f0a933474a79eae42cbca977791171	000000044	99999
+: 8------0x1b7047b4338acf65be94c1a3e8c5c9338ad7d67c	000000045	99999
+: 8------0xd8030bb90dfc593e614ef0aed456bfe342ad45f5	000000046	99999
+: 8------0x1b7047b4338acf65be94c1a3e8c5c9338ad7d67c	000000047	99999
+: 8------0x1b7047b4338acf65be94c1a3e8c5c9338ad7d67c	000000048	99999
+: 8------
+<INFO>  : 
 <INFO>  : Consolidation pass 0
 <INFO>  :   Starting search at record 12 of 29
 <INFO>  : 	12: 0x1b7047b4338acf65be94c1a3e8c5c9338ad7d67c	000000034	99999
@@ -197,8 +426,9 @@ pgrep -lfa "acctExport"
 <INFO>  : 	1: 0x1b7047b4338acf65be94c1a3e8c5c9338ad7d67c	000000024	99999
 <INFO>  : 	12: 0x1b7047b4338acf65be94c1a3e8c5c9338ad7d67c	000000034	99999
 <INFO>  : 	13: 0x1b7047b4338acf65be94c1a3e8c5c9338ad7d67c	000000035	99999
-<INFO>  :   Extracting addresses...extracting appearances...exporting...finalizing... binary file created: ✓
+<INFO>  :   Extracting addresses...extracting appearances...exporting...finalizing...binary file created ✓
 : 8------chunkId:                 $INDEX/finalized/000000023-000000034.bin 400
+<INFO>  :   Pinning /Users/jrush/.quickBlocks/mocked/addr_index/finalized/000000023-000000034.bin
 <INFO>  :   Wrote 13 records to $FINAL/000000023-000000034.bin
 <INFO>  :   Extracting records 13 to 29 of 29
 <INFO>  : 	13: 0x1b7047b4338acf65be94c1a3e8c5c9338ad7d67c	000000035	99999
@@ -206,7 +436,7 @@ pgrep -lfa "acctExport"
 <INFO>  : 	12: 0x1b7047b4338acf65be94c1a3e8c5c9338ad7d67c	000000034	99999
 <INFO>  : 	13: 0x1b7047b4338acf65be94c1a3e8c5c9338ad7d67c	000000035	99999
 <INFO>  :   Wrote 16 records to $STAGING/000000048.txt
-<INFO>  :  
+<INFO>  : 
 <INFO>  : Consolidation pass 1
 <INFO>  :   Starting search at record 12 of 16
 <INFO>  : 	12: 0x1b7047b4338acf65be94c1a3e8c5c9338ad7d67c	000000045	99999
@@ -216,8 +446,9 @@ pgrep -lfa "acctExport"
 <INFO>  : 	1: 0x26350da68d694a2ced5cd7a1309baa782966a039	000000036	99998
 <INFO>  : 	12: 0x1b7047b4338acf65be94c1a3e8c5c9338ad7d67c	000000045	99999
 <INFO>  : 	13: 0xd8030bb90dfc593e614ef0aed456bfe342ad45f5	000000046	99999
-<INFO>  :   Extracting addresses...extracting appearances...exporting...finalizing... binary file created: ✓
+<INFO>  :   Extracting addresses...extracting appearances...exporting...finalizing...binary file created ✓
 : 8------chunkId:                 $INDEX/finalized/000000035-000000045.bin 316
+<INFO>  :   Pinning /Users/jrush/.quickBlocks/mocked/addr_index/finalized/000000035-000000045.bin
 <INFO>  :   Wrote 13 records to $FINAL/000000035-000000045.bin
 <INFO>  :   Extracting records 13 to 16 of 16
 <INFO>  : 	13: 0xd8030bb90dfc593e614ef0aed456bfe342ad45f5	000000046	99999
@@ -225,26 +456,29 @@ pgrep -lfa "acctExport"
 <INFO>  : 	12: 0x1b7047b4338acf65be94c1a3e8c5c9338ad7d67c	000000045	99999
 <INFO>  : 	13: 0xd8030bb90dfc593e614ef0aed456bfe342ad45f5	000000046	99999
 <INFO>  :   Wrote 3 records to $STAGING/000000048.txt
-completed...running again in 0.5 seconds... 
+: 8------newStage:                $INDEX/staging/000000048.txt 177
+: 8------Contents of newStage after consolidation:
+: 8------0xd8030bb90dfc593e614ef0aed456bfe342ad45f5	000000046	99999
+: 8------0x1b7047b4338acf65be94c1a3e8c5c9338ad7d67c	000000047	99999
+: 8------0x1b7047b4338acf65be94c1a3e8c5c9338ad7d67c	000000048	99999
+: 8------
+<INFO>  :   ...pass completed. Running again in 0.5 seconds... 
 : 8------Current state running.
-: 4-----
-pgrep -lfa "acctExport"
- 0
-Block scraper is running...: 4----- 
-: 4----- 
-: 4-----------------------------------------------------------------------------------------------------------------------------
-: 4-----------------------------------------------------------------------------------------------------------------------------
-: 4-----bs.unripe:         48
-: 4-----bs.ripe:           48
-: 4-----bs.staging:        48
-: 4-----bs.finalized:      45
-: 4-----bs.client:         84
-: 4-----bs.blazeStart:     49
-: 4-----bs.blazeNBlocks:   16
-: 4-----bs.n_block_procs:  10
-: 4-----bs.n_addr_procs:   20
-: 4-----bs.blazeRipeBlock: 56
-: 4-----bs.MAX_ROWS:       13
+<INFO>  : Block scraper is running...
+: 8------ 
+: 8------------------------------------------------------------------------------------------------------------------------------
+: 8------------------------------------------------------------------------------------------------------------------------------
+: 8------bs.unripe:         48
+: 8------bs.ripe:           48
+: 8------bs.staging:        48
+: 8------bs.finalized:      45
+: 8------bs.client:         84
+: 8------bs.blazeStart:     49
+: 8------bs.blazeCnt:       16
+: 8------bs.n_block_procs:  10
+: 8------bs.n_addr_procs:   20
+: 8------bs.blazeRipe:      56
+: 8------bs.MAX_ROWS:       13
 <INFO>  : blaze scrape (35 blocks from head)
 : 4-----scrape_blocks ----> env TB_INDEXPATH="$INDEX/" blaze scrape --startBlock 49 --nBlocks 16 --nBlockProcs 10 --nAddrProcs 20 --ripeBlock 56 --verbose 8
 blaze.startBlock:   49
@@ -253,49 +487,111 @@ blaze.nBlockProcs:  10
 blaze.nAddrProcs:   20
 blaze.ripeBlock:    56
 blaze.verbose:      8
-................: 4-----
-pgrep -lfa "acctExport"
- 0
+................
 : 8------
 : 8------oldStage:                $INDEX/staging/000000048.txt 177
 : 8------newStage:                $INDEX/staging/000000056.txt 0
 : 8------tmpFile:                 $INDEX/temp.txt 0
-: 8------cons->tmp_fn:            $INDEX/staging/000000000-temp.txt 590
-: 8------oldStage != cons->tmp_fn
+: 8------tmp_fn:                  $INDEX/staging/000000000-temp.txt 590
+: 8------oldStage != tmp_fn
 : 8------oldStage:                $INDEX/staging/000000048.txt 177
-: 8------cons->tmp_fn:            $INDEX/staging/000000000-temp.txt 590
+: 8------tmp_fn:                  $INDEX/staging/000000000-temp.txt 590
 : 8------Appended oldStage to tmpFile
+: 8------oldStage:                $INDEX/staging/000000048.txt 177
+: 8------Contents of oldStage:
+: 8------0xd8030bb90dfc593e614ef0aed456bfe342ad45f5	000000046	99999
+: 8------0x1b7047b4338acf65be94c1a3e8c5c9338ad7d67c	000000047	99999
+: 8------0x1b7047b4338acf65be94c1a3e8c5c9338ad7d67c	000000048	99999
+: 8------
 : 8------tmpFile:                 $INDEX/temp.txt 177
+: 8------Contents of tmpFile after appending oldStage:
+: 8------0xd8030bb90dfc593e614ef0aed456bfe342ad45f5	000000046	99999
+: 8------0x1b7047b4338acf65be94c1a3e8c5c9338ad7d67c	000000047	99999
+: 8------0x1b7047b4338acf65be94c1a3e8c5c9338ad7d67c	000000048	99999
+: 8------
 : 8------Appended con->tmp_fn to tmpFile
 : 8------tmpFile:                 $INDEX/temp.txt 767
-: 8------We're done appending and now replaceing...
-<INFO>  :  
+: 8------Contents of tmpFile after appending tmp_fn:
+: 8------0xd8030bb90dfc593e614ef0aed456bfe342ad45f5	000000046	99999
+: 8------0x1b7047b4338acf65be94c1a3e8c5c9338ad7d67c	000000047	99999
+: 8------0x1b7047b4338acf65be94c1a3e8c5c9338ad7d67c	000000048	99999
+: 8------0x48cd680bb700f6b7de89dd9ff4932ccc158c3e05	000000049	99999
+: 8------0xbb7b8287f3f0a933474a79eae42cbca977791171	000000050	99999
+: 8------0x1b7047b4338acf65be94c1a3e8c5c9338ad7d67c	000000051	99999
+: 8------0x1b7047b4338acf65be94c1a3e8c5c9338ad7d67c	000000052	99999
+: 8------0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	000000053	99999
+: 8------0x48cd680bb700f6b7de89dd9ff4932ccc158c3e05	000000054	99999
+: 8------0xbb7b8287f3f0a933474a79eae42cbca977791171	000000055	99999
+: 8------0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	000000055	99998
+: 8------0x05a56e2d52c817161883f50c441c3228cfe54d9f	000000056	99998
+: 8------0x2f85b3bf062769b2a2672200afb21e3f4067a86d	000000056	99999
+: 8------
+: 8------We're done appending. Next, move records from tmpFile to newStage...
+: 8------tmpFile:                 $INDEX/temp.txt 0
+: 8------Contents of tmpFile staging completed:
+: 8------
+: 8------tmp_fn:                  $INDEX/staging/000000000-temp.txt 0
+: 8------Contents of tmp_fn staging completed:
+: 8------
+: 8------oldStage:                $INDEX/staging/000000048.txt 0
+: 8------Contents of oldStage staging completed:
+: 8------
+: 8------newStage:                $INDEX/staging/000000056.txt 767
+: 8------Contents of newStage staging completed not yet consolidated:
+: 8------0xd8030bb90dfc593e614ef0aed456bfe342ad45f5	000000046	99999
+: 8------0x1b7047b4338acf65be94c1a3e8c5c9338ad7d67c	000000047	99999
+: 8------0x1b7047b4338acf65be94c1a3e8c5c9338ad7d67c	000000048	99999
+: 8------0x48cd680bb700f6b7de89dd9ff4932ccc158c3e05	000000049	99999
+: 8------0xbb7b8287f3f0a933474a79eae42cbca977791171	000000050	99999
+: 8------0x1b7047b4338acf65be94c1a3e8c5c9338ad7d67c	000000051	99999
+: 8------0x1b7047b4338acf65be94c1a3e8c5c9338ad7d67c	000000052	99999
+: 8------0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	000000053	99999
+: 8------0x48cd680bb700f6b7de89dd9ff4932ccc158c3e05	000000054	99999
+: 8------0xbb7b8287f3f0a933474a79eae42cbca977791171	000000055	99999
+: 8------0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	000000055	99998
+: 8------0x05a56e2d52c817161883f50c441c3228cfe54d9f	000000056	99998
+: 8------0x2f85b3bf062769b2a2672200afb21e3f4067a86d	000000056	99999
+: 8------
+<INFO>  : 
 <INFO>  : Consolidation not ready...
 <INFO>  :   Have 13 records of 13. Need 0 more.
-completed...running again in 0.5 seconds... 
+: 8------newStage:                $INDEX/staging/000000056.txt 767
+: 8------Contents of newStage consolidation not ready:
+: 8------0xd8030bb90dfc593e614ef0aed456bfe342ad45f5	000000046	99999
+: 8------0x1b7047b4338acf65be94c1a3e8c5c9338ad7d67c	000000047	99999
+: 8------0x1b7047b4338acf65be94c1a3e8c5c9338ad7d67c	000000048	99999
+: 8------0x48cd680bb700f6b7de89dd9ff4932ccc158c3e05	000000049	99999
+: 8------0xbb7b8287f3f0a933474a79eae42cbca977791171	000000050	99999
+: 8------0x1b7047b4338acf65be94c1a3e8c5c9338ad7d67c	000000051	99999
+: 8------0x1b7047b4338acf65be94c1a3e8c5c9338ad7d67c	000000052	99999
+: 8------0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	000000053	99999
+: 8------0x48cd680bb700f6b7de89dd9ff4932ccc158c3e05	000000054	99999
+: 8------0xbb7b8287f3f0a933474a79eae42cbca977791171	000000055	99999
+: 8------0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	000000055	99998
+: 8------0x05a56e2d52c817161883f50c441c3228cfe54d9f	000000056	99998
+: 8------0x2f85b3bf062769b2a2672200afb21e3f4067a86d	000000056	99999
+: 8------
+<INFO>  :   ...pass completed. Running again in 0.5 seconds... 
 : 8------Current state running.
-: 4-----
-pgrep -lfa "acctExport"
- 0
-Block scraper is running...: 4----- 
-: 4----- 
-: 4-----------------------------------------------------------------------------------------------------------------------------
-: 4-----------------------------------------------------------------------------------------------------------------------------
-: 4-----bs.unripe:         64
-: 4-----bs.ripe:           56
-: 4-----bs.staging:        56
-: 4-----bs.finalized:      45
-: 4-----bs.client:         85
-: 4-----bs.blazeStart:     57
-: 4-----bs.blazeNBlocks:   16
-: 4-----bs.n_block_procs:  10
-: 4-----bs.n_addr_procs:   20
-: 4-----bs.blazeRipeBlock: 57
-: 4-----bs.MAX_ROWS:       13
+<INFO>  : Block scraper is running...
+: 8------ 
+: 8------------------------------------------------------------------------------------------------------------------------------
+: 8------------------------------------------------------------------------------------------------------------------------------
+: 8------bs.unripe:         64
+: 8------bs.ripe:           56
+: 8------bs.staging:        56
+: 8------bs.finalized:      45
+: 8------bs.client:         85
+: 8------bs.blazeStart:     57
+: 8------bs.blazeCnt:       16
+: 8------bs.n_block_procs:  10
+: 8------bs.n_addr_procs:   20
+: 8------bs.blazeRipe:      57
+: 8------bs.MAX_ROWS:       13
 
 Finishing work...
 <WARNG> : The user hit control+C...
-did not complete...running again in 0.5 seconds... 
+<INFO>  :   ...pass did not complete. Running again in 0.5 seconds... 
 : 8------Current state stopped.
 : 8------Current state stopped.
 { "status": "stopped" }

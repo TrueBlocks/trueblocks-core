@@ -1023,7 +1023,7 @@ bool forEveryTransactionInList(TRANSVISITFUNC func, void* data, const string_q& 
 
 //-------------------------------------------------------------------------
 string_q getIndexPath(const string_q& _part) {
-    if (isBlockScrapeTest())
+    if (isLiveTest())
         return configPath("mocked/addr_index/" + _part);
     string_q indexPath = getGlobalConfig()->getConfigStr("settings", "indexPath", "<not-set>");
     if (indexPath == "<not-set>" || !folderExists(indexPath))
@@ -1315,14 +1315,14 @@ bool freshenTimestamps(blknum_t minBlock) {
         file << ((uint32_t)block.blockNumber) << ((uint32_t)block.timestamp);
         file.flush();
         ostringstream post;
-        post << " (" << block.timestamp << " - " << ts_2_Date(block.timestamp).Format(FMT_EXPORT) << ")";
+        post << " (" << block.timestamp << " - " << ts_2_Date(block.timestamp).Format(FMT_EXPORT) << ")"
+             << "\r";
         LOG_PROGRESS("Update timestamps ", block.blockNumber, minBlock, post.str());
     }
-    file.Release();
+    cerr << "\r" << string_q(150, ' ') << "\r";
+    cerr.flush();
 
-    ostringstream post;
-    post << " (" << block.timestamp << " - " << ts_2_Date(block.timestamp).Format(FMT_EXPORT) << ")";
-    LOG_PROGRESS("Update timestamps ", block.blockNumber, minBlock, post.str());
+    file.Release();
     return true;
 }
 

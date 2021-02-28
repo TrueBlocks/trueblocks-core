@@ -129,10 +129,10 @@ bool Slurp(CAccount& theAccount, COptions& options) {
                     LOG4("Appending ", nAdded, " new records, total ", theAccount.transactions.size(), "\r");
                     CArchive outArchive(WRITING_ARCHIVE);
                     if (outArchive.Lock(cacheFilename, (first ? modeWriteCreate : modeWriteAppend), LOCK_CREATE)) {
-                        lockSection(true);
+                        lockSection();
                         theAccount.Serialize(outArchive);
                         outArchive.Close();
-                        lockSection(false);
+                        unlockSection();
                         first = false;
 
                     } else {

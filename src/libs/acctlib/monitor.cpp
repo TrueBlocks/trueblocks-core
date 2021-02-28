@@ -464,9 +464,9 @@ void CMonitor::moveToProduction(void) {
         delete tx_cache;
         tx_cache = NULL;
     }
-    lockSection(true);
     bool binExists = fileExists(getMonitorPath(address, FM_STAGING));
     bool lastExists = fileExists(getMonitorLast(address, FM_STAGING));
+    lockSection();
     if (binExists || lastExists) {
         doMoveFile(getMonitorPath(address, FM_STAGING), getMonitorPath(address));
         doMoveFile(getMonitorLast(address, FM_STAGING), getMonitorLast(address));
@@ -480,7 +480,7 @@ void CMonitor::moveToProduction(void) {
         ::remove(getMonitorExpt(address, FM_STAGING).c_str());
         ::remove(getMonitorCach(address, FM_STAGING).c_str());
     }
-    lockSection(false);
+    unlockSection();
 }
 
 //---------------------------------------------------------------------------

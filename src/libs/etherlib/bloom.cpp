@@ -173,10 +173,10 @@ bool readBloomFromBinary(const string_q& fileName, CBloomArray& blooms) {
 
 //----------------------------------------------------------------------
 bool writeBloomToBinary(const string_q& fileName, const CBloomArray& blooms) {
-    lockSection(true);
+    lockSection();
     CArchive output(WRITING_ARCHIVE);
     if (!output.Lock(fileName, modeWriteCreate, LOCK_NOWAIT)) {
-        lockSection(false);
+        unlockSection();
         return false;
     }
     output.Write((uint32_t)blooms.size());
@@ -185,7 +185,7 @@ bool writeBloomToBinary(const string_q& fileName, const CBloomArray& blooms) {
         output.Write(bloom.bits, sizeof(uint8_t), BLOOM_WIDTH_IN_BYTES);
     }
     output.Release();
-    lockSection(false);
+    unlockSection();
     return true;
 }
 

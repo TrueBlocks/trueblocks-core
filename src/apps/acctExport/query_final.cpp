@@ -169,9 +169,9 @@ bool COptions::visitBinaryFile(const string_q& path, void* data) {
                 }
 
                 if (items.size()) {
-                    lockSection(true);
+                    lockSection();
                     monitor->writeAnArray(items);
-                    lockSection(false);
+                    unlockSection();
                 }
             } else {
                 options->stats.nFalsePositive++;
