@@ -48,6 +48,7 @@ type globalOptionsT struct {
 	nBlockProcs int
 	nAddrProcs  int
 	ripeBlock   int
+	verbose     int
 }
 
 // Options Carries the configuration options (from both command line and config file)
@@ -64,6 +65,7 @@ func init() {
 	rootCmd.PersistentFlags().IntVarP(&Options.nBlockProcs, "nBlockProcs", "b", 20, "The number of block processors to create (required)")
 	rootCmd.PersistentFlags().IntVarP(&Options.nAddrProcs, "nAddrProcs", "a", 60, "The number of address processors to create (required)")
 	rootCmd.PersistentFlags().IntVarP(&Options.ripeBlock, "ripeBlock", "e", 0, "Blocks prior to this value are written to 'ripe' folder (required)")
+	rootCmd.PersistentFlags().IntVarP(&Options.verbose, "verbose", "v", 0, "Display more or less information")
 	rootCmd.MarkPersistentFlagRequired("startBlock")
 	rootCmd.MarkPersistentFlagRequired("nBlocks")
 	rootCmd.MarkPersistentFlagRequired("ripeBlock")
@@ -125,5 +127,18 @@ func initConfig() {
 	Options.unripePath = Options.indexPath + "unripe/"
 	if _, err := os.Stat(Options.unripePath); os.IsNotExist(err) {
 		os.MkdirAll(Options.unripePath, 0777)
+	}
+
+	if (Options.verbose > 1) {
+		fmt.Println("blaze.rpcProvider: ", Options.rpcProvider);
+		fmt.Println("blaze.indexPath:   ", Options.indexPath);
+		fmt.Println("blaze.ripePath:    ", Options.ripePath);
+		fmt.Println("blaze.unripePath:  ", Options.unripePath);
+		fmt.Println("blaze.startBlock:  ", Options.startBlock);
+		fmt.Println("blaze.nBlocks:     ", Options.nBlocks);
+		fmt.Println("blaze.nBlockProcs: ", Options.nBlockProcs);
+		fmt.Println("blaze.nAddrProcs:  ", Options.nAddrProcs);
+		fmt.Println("blaze.ripeBlock:   ", Options.ripeBlock);
+		fmt.Println("blaze.verbose:     ", Options.verbose);
 	}
 }

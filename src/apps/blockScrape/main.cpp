@@ -9,6 +9,12 @@
 int main(int argc, const char* argv[]) {
     pinlib_init(defaultQuitHandler);
 
+    if (isBlockScrapeTest()) {
+        // clean up if we're in live testing
+        cleanFolder(getCachePath("tmp/"));
+        cleanFolder(configPath("mocked/addr_index"));
+    }
+
     COptions options;
     if (!options.prepareArguments(argc, argv))
         return 0;
@@ -45,16 +51,20 @@ int main(int argc, const char* argv[]) {
 
             cerr << "running again in " << options.sleep << " seconds... " << cOff << endl;
 
-            // FIX_THIS_CODE
+            // TODO(tjayrush): FIX_THIS_CODE
             freshenTimestamps(getBlockProgress(BP_RIPE).ripe);
         }
 
         // We need to sleep, but we want to wake up frequently enough to check to see if user has
         // told hit the control-C or sent pause, quit or restart. (The `sleep` value is in seconds.)
-        uint32_t nHalfSeconds = (uint32_t)(options.sleep * 2);
-        ScrapeState prevState = options.state;
-        for (size_t n = 0; n < nHalfSeconds && !shouldQuit() && options.state == prevState; n++) {
-            usleep((useconds_t)(500000));
+        if (!isBlockScrapeTest()) {  // don't sleep if we're in live testing
+            uint32_t nHalfSeconds = (uint32_t)(options.sleep * 2);
+            ScrapeState prevState = options.state;
+            for (size_t n = 0; n < nHalfSeconds && !shouldQuit() && options.state == prevState; n++) {
+                usleep((useconds_t)(500000));
+                options.state = options.getCurrentState(unused);
+            }
+        } else {
             options.state = options.getCurrentState(unused);
         }
     }

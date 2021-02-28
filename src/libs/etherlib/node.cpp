@@ -629,7 +629,7 @@ CBlockProgress getBlockProgress(size_t which) {
         ret.client = (isNodeRunning() ? getLatestBlock_client() : NOPOS);
 
     if (which & BP_FINAL)
-        ret.final = getLatestBlock_cache_final();
+        ret.finalized = getLatestBlock_cache_final();
 
     if (which & BP_STAGING)
         ret.staging = getLatestBlock_cache_staging();
@@ -1023,6 +1023,8 @@ bool forEveryTransactionInList(TRANSVISITFUNC func, void* data, const string_q& 
 
 //-------------------------------------------------------------------------
 string_q getIndexPath(const string_q& _part) {
+    if (isBlockScrapeTest())
+        return configPath("mocked/addr_index/" + _part);
     string_q indexPath = getGlobalConfig()->getConfigStr("settings", "indexPath", "<not-set>");
     if (indexPath == "<not-set>" || !folderExists(indexPath))
         return getCachePath("addr_index/" + _part);
@@ -1187,7 +1189,7 @@ string_q exportPostamble(const CStringArray& errorsIn, const string_q& extra) {
     blknum_t unripe = progress.unripe;
     blknum_t ripe = progress.ripe;
     blknum_t staging = progress.staging;
-    blknum_t finalized = progress.final;
+    blknum_t finalized = progress.finalized;
     blknum_t client = progress.client;
     if (isTestMode())
         unripe = ripe = staging = finalized = client = 0xdeadbeef;

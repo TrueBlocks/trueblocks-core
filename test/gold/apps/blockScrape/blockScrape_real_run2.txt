@@ -1,0 +1,52 @@
+blockScrape argc: 5 [1:--tool] [2:index] [3:--sleep] [4:.5] 
+blockScrape --tool index --sleep .5 
+<INFO>  : sleep: 0.5
+{ "status": "running" }
+<INFO>  : Index for block zero was not found. Building it from 8893 prefunds.
+<INFO>  :   Extracting addresses...extracting appearances...exporting...finalizing... binary file created: ✓
+<INFO>  : Done...
+Block scraper is running...<INFO>  : blaze scrape (80 blocks from head)
+................<INFO>  :  
+<INFO>  : Consolidation pass 0
+<INFO>  :   Starting search at record 12 of 19
+<INFO>  :   Found a break at line 12 extracting records 0 to 12 (inclusive) of 19
+<INFO>  :   Extracting addresses...extracting appearances...exporting...finalizing... binary file created: ✓
+<INFO>  :   Wrote 13 records to $FINAL/000000001-000000010.bin
+<INFO>  :   Wrote 6 records to $STAGING/000000016.txt
+completed...running again in 0.5 seconds... 
+Block scraper is running...<INFO>  : blaze scrape (65 blocks from head)
+................<INFO>  :  
+<INFO>  : Consolidation pass 0
+<INFO>  :   Starting search at record 12 of 23
+<INFO>  :   Found a break at line 12 extracting records 0 to 12 (inclusive) of 23
+<INFO>  :   Extracting addresses...extracting appearances...exporting...finalizing... binary file created: ✓
+<INFO>  :   Wrote 13 records to $FINAL/000000011-000000022.bin
+<INFO>  :   Wrote 10 records to $STAGING/000000032.txt
+completed...running again in 0.5 seconds... 
+Block scraper is running...<INFO>  : blaze scrape (50 blocks from head)
+................<INFO>  :  
+<INFO>  : Consolidation pass 0
+<INFO>  :   Starting search at record 12 of 29
+<INFO>  :   Found a break at line 12 extracting records 0 to 12 (inclusive) of 29
+<INFO>  :   Extracting addresses...extracting appearances...exporting...finalizing... binary file created: ✓
+<INFO>  :   Wrote 13 records to $FINAL/000000023-000000034.bin
+<INFO>  :   Wrote 16 records to $STAGING/000000048.txt
+<INFO>  :  
+<INFO>  : Consolidation pass 1
+<INFO>  :   Starting search at record 12 of 16
+<INFO>  :   Found a break at line 12 extracting records 0 to 12 (inclusive) of 16
+<INFO>  :   Extracting addresses...extracting appearances...exporting...finalizing... binary file created: ✓
+<INFO>  :   Wrote 13 records to $FINAL/000000035-000000045.bin
+<INFO>  :   Wrote 3 records to $STAGING/000000048.txt
+completed...running again in 0.5 seconds... 
+Block scraper is running...<INFO>  : blaze scrape (35 blocks from head)
+................<INFO>  :  
+<INFO>  : Consolidation not ready...
+<INFO>  :   Have 13 records of 13. Need 0 more.
+completed...running again in 0.5 seconds... 
+Block scraper is running...
+Finishing work...
+<INFO>  : Removing file: /Users/jrush/.quickBlocks/cache/tmp/scraper-state.txt
+<WARNG> : The user hit control+C...
+did not complete...running again in 0.5 seconds... 
+{ "status": "stopped" }

@@ -475,6 +475,7 @@ bool prepareBuiltIn(string_q& options) {
             if (match == "RESET") {
                 establishTestMonitors();
                 cleanFolder(getCachePath("tmp/"));
+                cleanFolder(configPath("mocked/addr_index"));
                 options = "";
                 if (debug)
                     os << "Cleanup" << endl;

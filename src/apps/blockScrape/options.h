@@ -14,23 +14,10 @@
 // BEG_ERROR_DEFINES
 // END_ERROR_DEFINES
 
-//--------------------------------------------------------------------------
-class CConsolidator {
-  public:
-    ofstream tmp_file;
-    string_q tmp_fn;
-
-    blknum_t prevBlock;
-    explicit CConsolidator(blknum_t p);
-
-  private:
-    CConsolidator(void) {
-    }
-};
-
 enum { TOOL_NONE = 0, TOOL_MONITORS = (1 << 0), TOOL_INDEX = (1 << 1), TOOL_BOTH = (TOOL_MONITORS | TOOL_INDEX) };
 typedef enum { STATE_STOPPED, STATE_RUNNING, STATE_PAUSED } ScrapeState;
 
+class CConsolidator;
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
   public:

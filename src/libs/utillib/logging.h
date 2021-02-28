@@ -228,6 +228,9 @@ extern logger<log_policy_i>* eLogger;
         if ((b))                                                                                                       \
             LOG_TEST((a), "true", false)                                                                               \
     }
+#define LOG_MARKER(l)                                                                                                  \
+    LOG_INFO("\n");                                                                                                    \
+    LOG_INFO(string_q((l), '-'));
 #else
 #define LOG0(...)
 #define LOG1(...)
@@ -248,6 +251,7 @@ extern logger<log_policy_i>* eLogger;
 #define LOG_CALL(a)
 #define LOG_TEST(a, b)
 #define LOG_TEST_BOOL(a, b)
+#define LOG_MARKER(l)
 #endif
 
 // The LOG parts of these routines disappear if turned off, but they still do their work because of the returns

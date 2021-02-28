@@ -158,7 +158,7 @@ bool COptions::parseArguments(string_q& command) {
     // Control the state of the app (the state is stored in a temporary file). This only returns
     // false if we moved from stopped state to running state. All other state changes end here.
     bool result = changeState();
-    if (isTestMode()) {
+    if (isTestMode() && !isBlockScrapeTest()) {
         string_q current;
         getCurrentState(current);
         ostringstream os;
@@ -330,7 +330,7 @@ ScrapeState COptions::getCurrentState(string_q& current) {
 
 //--------------------------------------------------------------------------------
 bool COptions::changeState(void) {
-    if (isTestMode())
+    if (isTestMode() && !isBlockScrapeTest())
         verbose = 10;
     state = getCurrentState(stateStr);
     switch (state) {

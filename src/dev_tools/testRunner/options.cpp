@@ -258,6 +258,7 @@ bool COptions::cleanTest(const string_q& path, const string_q& testName) {
 //---------------------------------------------------------------------------------------------------
 void establishTestData(void) {
     cleanFolder(getCachePath("tmp/"));
+    cleanFolder(configPath("mocked/addr_index"));
 
     // TODO(tjayrush): This code is a hack to make test cases pass. We should fix the underlyign reason
     // TODO(tjayrush): these tests fail. To reproduce, delete the entire cache, comment the lines below
@@ -276,7 +277,7 @@ void establishTestData(void) {
     doCommand("grabABI 0x226159d592e2b063810a10ebf6dcbada94ed68b8");
     doCommand("grabABI 0x17996cbddd23c2a912de8477c37d43a1b79770b8");
 
-// OLD_CODE
+// TODO(tjayrush): FIX_THIS_CODE
 #if 1
     // Hard to explain, but this removes a few transactions from the cache
     ::remove(getBinaryCacheFilename(CT_TXS, 8854723, 61).c_str());

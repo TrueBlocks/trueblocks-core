@@ -586,7 +586,7 @@ string_q CFunction::encodeItem(void) const {
 
 //-----------------------------------------------------------------------
 string_q CFunction::compressed(void) const {
-// OLD_CODE
+// TODO(tjayrush): FIX_THIS_CODE
 #if 1
     if (name.empty())
         return "";

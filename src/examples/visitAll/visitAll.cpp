@@ -18,7 +18,7 @@ int main(int argc, const char* argv[]) {
     etherlib_init(quickQuitHandler);
 
     // Visit every block between the first and the most recent
-    forEveryBlockOnDisc(visitBlock, NULL, 3055641, getBlockProgress(BP_FINAL).final);
+    forEveryBlockOnDisc(visitBlock, NULL, 3055641, getBlockProgress(BP_FINAL).finalized);
 
     return 1;
 }

@@ -63,7 +63,7 @@ bool COptions::parseArguments(string_q& command) {
     blknum_t unripeBlk = progress.unripe;
     // blknum_t ripeBlk = progress.ripe;
     blknum_t stagingBlk = progress.staging;
-    blknum_t finalizedBlk = progress.final;
+    blknum_t finalizedBlk = progress.finalized;
     latestBlock = progress.client;
 
     blknum_t latest = latestBlock;

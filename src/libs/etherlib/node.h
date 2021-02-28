@@ -141,7 +141,7 @@ struct CBlockProgress {
     blknum_t unripe;
     blknum_t ripe;
     blknum_t staging;
-    blknum_t final;
+    blknum_t finalized;
     blknum_t client;
 };
 #define BP_CLIENT (1 << 1)

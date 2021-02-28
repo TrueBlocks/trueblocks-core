@@ -163,4 +163,12 @@ inline bool isApiMode(void) {
     return api_mode;
 }
 
+//---------------------------------------------------------------------------
+inline bool isBlockScrapeTest(void) {
+    static uint64_t test_mode = NOPOS;
+    if (test_mode == NOPOS)
+        test_mode = getEnvStr("BLOCK_SCRAPE_TEST") == "true";
+    return test_mode;
+}
+
 }  // namespace qblocks
