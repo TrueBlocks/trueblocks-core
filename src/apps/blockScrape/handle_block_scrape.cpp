@@ -121,7 +121,7 @@ bool COptions::scrape_blocks(void) {
     os << "--nAddrProcs " << n_addr_procs << " ";
     os << "--ripeBlock " << progress.blazeRipeBlock << " ";
     os << (verbose ? ("--verbose " + uint_2_Str(verbose)) : "");
-    LOG_CALL(os.str());
+    LOG_CALL(substitute(os.str(), getIndexPath(""), "$INDEX/"));
     if (system(os.str().c_str()) != 0) {
         // Blaze returns non-zero if it fails. In this case, we need to remove files in the 'ripe'
         // folder because they're inconsistent (blaze's runs in parallel, so the block sequence
@@ -213,7 +213,7 @@ bool COptions::finalize_chunks(CConsolidator* cons) {
     // then move that temporary file to the newStage file, and finally remove this file. In this way,
     // oldStage is the 'gold' data right up until the time 'newStage' replaces it.
     string_q oldStage = getLastFileInFolder(indexFolder_staging, false);
-    LOG8("oldStage:  ", oldStage);
+    LOG_FN8(oldStage);
 
     // This is the file as it will be once we're done moving any new blocks to the stage. Remember
     // that the stage has a single, sorted text file whereas 'blaze' creates one file per block
@@ -221,7 +221,7 @@ bool COptions::finalize_chunks(CConsolidator* cons) {
     // in the staging folder. If the process does not complete, the previous staging file (oldStage)
     // will still be valid.
     string_q newStage = indexFolder_staging + padNum9(cons->prevBlock) + ".txt";
-    LOG8("newStage:  ", newStage);
+    LOG_FN8(newStage);
 
     // If newStage and oldStage are the same, blaze did not produce any new blocks...
     if (oldStage == newStage) {
@@ -235,19 +235,20 @@ bool COptions::finalize_chunks(CConsolidator* cons) {
     // We always want the stage to contain a file with perfectly valid data. We do this by working in
     // a temporary file. Once we're ready, we move the temp file to newStage and only then delete oldStage.
     string_q tmpFile = getIndexPath("temp.txt");
-    LOG8("tmpFile:   ", tmpFile);
+    LOG_FN8(tmpFile);
 
-    LOG8("cons->tmp_fn: ", cons->tmp_fn);
+    LOG_FN8(cons->tmp_fn);
     if (oldStage != cons->tmp_fn) {
-        LOG8("oldStage != cons->tmp_fn:");
-        LOG8(oldStage, " ", fileSize(oldStage));
-        LOG8(cons->tmp_fn, " ", fileSize(cons->tmp_fn));
+        LOG8("oldStage != cons->tmp_fn");
+        LOG_FN8(oldStage);
+        LOG_FN8(cons->tmp_fn);
         if (!appendFile(tmpFile /* to */, oldStage /* from */)) {
             // oldStage is still valid. Caller will clean up the rest
             LOG_ERR("Could not append oldStage to temp.fil.");
             return false;
         }
-        LOG8("Appended oldStage to tmpFile ", tmpFile, " ", fileSize(tmpFile));
+        LOG8("Appended oldStage to tmpFile");
+        LOG_FN8(tmpFile);
     }
 
     // ...next we append the new ripe records if we can...
@@ -257,7 +258,8 @@ bool COptions::finalize_chunks(CConsolidator* cons) {
         LOG_ERR("Could not append cons->tmp_fn to temp.fil.");
         return false;
     }
-    LOG8("Appended con->tmp_fn to tmpFile ", tmpFile, " ", fileSize(tmpFile));
+    LOG8("Appended con->tmp_fn to tmpFile");
+    LOG_FN8(tmpFile);
     LOG8("We're done appending and now replaceing...");
 
     // ...finally, we move the temp file to the new stage without allowing user to hit control+c
@@ -455,7 +457,7 @@ CConsolidator::CConsolidator(const CBlockProgress& progress) {
 
 //---------------------------------------------------------------------------------------------------
 bool visitToPin(const string_q& chunkId, void* data) {
-    LOG_INFO("   --> Pinning ", chunkId);
+    LOG_FN8(chunkId);
     ASSERT(data);
     // CPinnedItem pinRecord = *(CPinnedItem*)data;
     // pinChunk(chunkId, pinRecord);

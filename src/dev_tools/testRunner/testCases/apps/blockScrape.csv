@@ -39,5 +39,5 @@ on      ,both ,fast  ,scrape ,apps/blockScrape ,mode_33_paused_restart_okay  ,n 
 on      ,both ,fast  ,scrape ,apps/blockScrape ,mode_34_running_pause_3_okay ,n    ,terms = pause
 on      ,both ,fast  ,scrape ,apps/blockScrape ,mode_35_paused_quit_okay     ,n    ,terms = quit
 on      ,cmd  ,fast  ,export ,apps/blockScrape ,RESET2                       ,n    ,RESET
-on      ,cmd  ,fast  ,scrape ,apps/blockScrape ,real_run                     ,n    ,tool = index & sleep = .5 & pin & verbose = 10
+on      ,cmd  ,fast  ,scrape ,apps/blockScrape ,real_run                     ,n    ,tool = index & sleep = .5 & pin & verbose = 8
 on      ,cmd  ,fast  ,scrape ,apps/blockScrape ,real_run2                    ,n    ,tool = index & sleep = .5

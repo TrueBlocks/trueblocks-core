@@ -188,7 +188,28 @@ extern bool loadTimestampFile(uint32_t** theArray, size_t& cnt);
 extern bool excludeTrace(const CTransaction* trans, size_t maxTraces);
 
 extern wei_t getBalanceAt(const address_t& addr, blknum_t blockNum);
+
+#ifdef LOGGING_LEVEL
+//--------------------------------------------------------------------------
+inline string_q relativize(const string_q& path) {
+    string_q ret = path;
+    replace(ret, getIndexPath(""), "$INDEX/");
+    replace(ret, getCachePath(""), "$CACHE/");
+    replace(ret, configPath(""), "$CONFIG/");
+    replace(ret, getHomeFolder(), "$HOME/");
+    return ret;
+}
+//--------------------------------------------------------------------------
+#define LOG_FN8(fn)                                                                                                    \
+    {                                                                                                                  \
+        string_q lfn8 = relativize((fn));                                                                              \
+        LOG8(padRight((string_q(#fn) + ":"), 25), lfn8, " ", fileSize((fn)));                                          \
+    }
+
 }  // namespace qblocks
+#else
+#define LOG_FN8(fn)
+#endif
 
 //-------------------------------------------------------------------------
 extern bool visitBlockNumber(blknum_t bn, void* data);

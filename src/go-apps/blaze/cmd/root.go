@@ -129,11 +129,14 @@ func initConfig() {
 		os.MkdirAll(Options.unripePath, 0777)
 	}
 
-	if (Options.verbose > 1) {
+	if (Options.verbose > 8) {
 		fmt.Println("blaze.rpcProvider: ", Options.rpcProvider);
 		fmt.Println("blaze.indexPath:   ", Options.indexPath);
 		fmt.Println("blaze.ripePath:    ", Options.ripePath);
 		fmt.Println("blaze.unripePath:  ", Options.unripePath);
+	}
+
+	if (Options.verbose > 4) {
 		fmt.Println("blaze.startBlock:  ", Options.startBlock);
 		fmt.Println("blaze.nBlocks:     ", Options.nBlocks);
 		fmt.Println("blaze.nBlockProcs: ", Options.nBlockProcs);

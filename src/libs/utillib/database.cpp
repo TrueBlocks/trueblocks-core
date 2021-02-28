@@ -471,7 +471,8 @@ void cleanFileLocks(void) {
     explode(files, list, '|');
     for (auto file : files) {
         remove(file.c_str());
-        LOG_INFO("Removing file: ", file);
+        if (!isTestMode() && !isBlockScrapeTest())
+            LOG_INFO("Removing file: ", file);
     }
     manageRemoveList("clear");
 }

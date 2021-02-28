@@ -1,6 +1,0 @@
-pinStatus argc: 2 [1:--list] 
-pinStatus --list 
-TIME ~ CLOCK - <INFO>  : rpcProvider:	http://localhost:23456
-TIME ~ CLOCK - <INFO>  : latestBlock:	latest
-TIME ~ CLOCK - <INFO>  : unchainedIndexAddr:	0xcfd7f3b24f3551741f922fd8c4381aa4e00fc8fd
-This is the list of pins
