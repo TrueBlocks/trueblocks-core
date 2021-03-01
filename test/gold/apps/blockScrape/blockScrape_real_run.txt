@@ -5,17 +5,17 @@ blockScrape --tool index --sleep .5 --pin --verbose 8
 : 8------Current state stopped.
 { "status": "running" }
 : 4-----changing state: stopped --> running
-: 8------indexFolder:             $INDEX/ 224
-: 8------indexFolder_finalized:   $INDEX/finalized/ 64
-: 8------indexFolder_blooms:      $INDEX/blooms/ 64
-: 8------indexFolder_staging:     $INDEX/staging/ 64
-: 8------indexFolder_unripe:      $INDEX/unripe/ 64
-: 8------indexFolder_ripe:        $INDEX/ripe/ 64
-: 8------configPath("cache/tmp/"):$CACHE/tmp/ 96
+: 8------indexFolder:             $INDEX/
+: 8------indexFolder_finalized:   $INDEX/finalized/
+: 8------indexFolder_blooms:      $INDEX/blooms/
+: 8------indexFolder_staging:     $INDEX/staging/
+: 8------indexFolder_unripe:      $INDEX/unripe/
+: 8------indexFolder_ripe:        $INDEX/ripe/
+: 8------configPath("cache/tmp/"):$CACHE/tmp/
 <INFO>  : Index for block zero was not found. Building it from 8893 prefunds.
 <INFO>  :   Extracting addresses...extracting appearances...exporting...finalizing...binary file created ✓
+<INFO>  :   Pinning
 : 8------chunkId:                 $INDEX/finalized/000000000-000000000.bin 320192
-<INFO>  :   Pinning /Users/jrush/.quickBlocks/mocked/addr_index/finalized/000000000-000000000.bin
 <INFO>  : Done...
 : 8------Current state running.
 <INFO>  : Block scraper is running...
@@ -113,8 +113,8 @@ blaze.verbose:      8
 <INFO>  : 	12: 0x0193d941b50d91be6567c7ee1c0fe7af498b4137	000000010	99999
 <INFO>  : 	13: 0x19dafe19f11e960e4ccfc6a5aa8890ebd748ca1e	000000011	99999
 <INFO>  :   Extracting addresses...extracting appearances...exporting...finalizing...binary file created ✓
+<INFO>  :   Pinning
 : 8------chunkId:                 $INDEX/finalized/000000001-000000010.bin 288
-<INFO>  :   Pinning /Users/jrush/.quickBlocks/mocked/addr_index/finalized/000000001-000000010.bin
 <INFO>  :   Wrote 13 records to $FINAL/000000001-000000010.bin
 <INFO>  :   Extracting records 13 to 19 of 19
 <INFO>  : 	13: 0x19dafe19f11e960e4ccfc6a5aa8890ebd748ca1e	000000011	99999
@@ -258,8 +258,8 @@ blaze.verbose:      8
 <INFO>  : 	12: 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	000000022	99999
 <INFO>  : 	13: 0x0193d941b50d91be6567c7ee1c0fe7af498b4137	000000023	99999
 <INFO>  :   Extracting addresses...extracting appearances...exporting...finalizing...binary file created ✓
+<INFO>  :   Pinning
 : 8------chunkId:                 $INDEX/finalized/000000011-000000022.bin 316
-<INFO>  :   Pinning /Users/jrush/.quickBlocks/mocked/addr_index/finalized/000000011-000000022.bin
 <INFO>  :   Wrote 13 records to $FINAL/000000011-000000022.bin
 <INFO>  :   Extracting records 13 to 23 of 23
 <INFO>  : 	13: 0x0193d941b50d91be6567c7ee1c0fe7af498b4137	000000023	99999
@@ -427,8 +427,8 @@ blaze.verbose:      8
 <INFO>  : 	12: 0x1b7047b4338acf65be94c1a3e8c5c9338ad7d67c	000000034	99999
 <INFO>  : 	13: 0x1b7047b4338acf65be94c1a3e8c5c9338ad7d67c	000000035	99999
 <INFO>  :   Extracting addresses...extracting appearances...exporting...finalizing...binary file created ✓
+<INFO>  :   Pinning
 : 8------chunkId:                 $INDEX/finalized/000000023-000000034.bin 400
-<INFO>  :   Pinning /Users/jrush/.quickBlocks/mocked/addr_index/finalized/000000023-000000034.bin
 <INFO>  :   Wrote 13 records to $FINAL/000000023-000000034.bin
 <INFO>  :   Extracting records 13 to 29 of 29
 <INFO>  : 	13: 0x1b7047b4338acf65be94c1a3e8c5c9338ad7d67c	000000035	99999
@@ -447,8 +447,8 @@ blaze.verbose:      8
 <INFO>  : 	12: 0x1b7047b4338acf65be94c1a3e8c5c9338ad7d67c	000000045	99999
 <INFO>  : 	13: 0xd8030bb90dfc593e614ef0aed456bfe342ad45f5	000000046	99999
 <INFO>  :   Extracting addresses...extracting appearances...exporting...finalizing...binary file created ✓
+<INFO>  :   Pinning
 : 8------chunkId:                 $INDEX/finalized/000000035-000000045.bin 316
-<INFO>  :   Pinning /Users/jrush/.quickBlocks/mocked/addr_index/finalized/000000035-000000045.bin
 <INFO>  :   Wrote 13 records to $FINAL/000000035-000000045.bin
 <INFO>  :   Extracting records 13 to 16 of 16
 <INFO>  : 	13: 0xd8030bb90dfc593e614ef0aed456bfe342ad45f5	000000046	99999

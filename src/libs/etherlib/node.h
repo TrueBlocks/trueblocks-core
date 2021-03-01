@@ -205,11 +205,16 @@ inline string_q relativize(const string_q& path) {
         string_q lfn8 = relativize((fn));                                                                              \
         LOG8(padRight((string_q(#fn) + ":"), 25), lfn8, " ", fileSize((fn)));                                          \
     }
-
-}  // namespace qblocks
+#define LOG_DIR8(dir)                                                                                                  \
+    {                                                                                                                  \
+        string_q lfn8 = relativize((dir));                                                                             \
+        LOG8(padRight((string_q(#dir) + ":"), 25), lfn8);                                                              \
+    }
 #else
 #define LOG_FN8(fn)
+#define LOG_DIR8(dir)
 #endif
+}  // namespace qblocks
 
 //-------------------------------------------------------------------------
 extern bool visitBlockNumber(blknum_t bn, void* data);

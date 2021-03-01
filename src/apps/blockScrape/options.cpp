@@ -191,13 +191,13 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
     // Debugging data...
-    LOG_FN8(indexFolder);
-    LOG_FN8(indexFolder_finalized);
-    LOG_FN8(indexFolder_blooms);
-    LOG_FN8(indexFolder_staging);
-    LOG_FN8(indexFolder_unripe);
-    LOG_FN8(indexFolder_ripe);
-    LOG_FN8(configPath("cache/tmp/"));
+    LOG_DIR8(indexFolder);
+    LOG_DIR8(indexFolder_finalized);
+    LOG_DIR8(indexFolder_blooms);
+    LOG_DIR8(indexFolder_staging);
+    LOG_DIR8(indexFolder_unripe);
+    LOG_DIR8(indexFolder_ripe);
+    LOG_DIR8(configPath("cache/tmp/"));
 
     // We need this below...
     const CToml* config = getGlobalConfig("blockScrape");
