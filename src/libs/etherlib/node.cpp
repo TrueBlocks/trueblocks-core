@@ -271,8 +271,7 @@ void getTraces(CTraceArray& traces, const hash_t& hash) {
     CTrace trace;
     traces.clear();
     while (trace.parseJson4(generic.result)) {
-        if (trace.action.to != "0x0000000000000000000000000000000000000004")  // this fixes a bug in parity
-            traces.push_back(trace);
+        traces.push_back(trace);
         trace = CTrace();  // reset
     }
 }
@@ -524,8 +523,7 @@ void getTracesByFilter(CTraceArray& traces, const CTraceFilter& filter) {
     CTrace trace;
     traces.clear();
     while (trace.parseJson4(generic.result)) {
-        if (trace.action.to != "0x0000000000000000000000000000000000000004")  // this fixes a bug in parity
-            traces.push_back(trace);
+        traces.push_back(trace);
         trace = CTrace();  // reset
     }
 }
@@ -551,7 +549,7 @@ bool isGeth(void) {
 //-------------------------------------------------------------------------
 bool isParity(void) {
     return contains(toLower(getVersionFromClient()), "parity") ||
-           contains(toLower(getVersionFromClient()), "openetherum");
+           contains(toLower(getVersionFromClient()), "openethereum");
 }
 
 //-------------------------------------------------------------------------
