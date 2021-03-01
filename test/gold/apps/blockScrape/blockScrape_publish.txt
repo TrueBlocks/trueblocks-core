@@ -2,7 +2,7 @@ blockScrape argc: 2 [1:--publish]
 blockScrape --publish 
 TIME ~ CLOCK - <INFO>  : publish: true
 {
-  "fileName": "pin-manifest.json",
+  "fileName": "initial-manifest.json",
   "indexFormat": "Qmart6XP9XjL43p72PGR93QKytbK8jWWcMguhFgxATTya2",
   "bloomFormat": "QmNhPk39DUFoEdhUmtGARqiFECUHeghyeryxZM9kyRxzHD",
   "prevHash": "0x0",

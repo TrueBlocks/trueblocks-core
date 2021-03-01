@@ -1,0 +1,30 @@
+{
+  "data": [
+    {
+      "apiKey": "--license_codes--",
+      "secretKey": "--license_codes--"
+    }
+  ],
+  "types": [
+    {
+      "type": "CPinataLicense",
+      "fields": [
+        {
+          "name": "apiKey",
+          "type": "text"
+        },
+        {
+          "name": "secretKey",
+          "type": "text"
+        }
+      ]
+    }
+  ],
+  "meta": {
+    "unripe": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "client": "0xdeadbeef"
+  }
+}

@@ -15,35 +15,35 @@ bool CConsolidator::consolidate_chunks(void) {
     LOG_INDEX8(oldStage, " staging completed");
     LOG_INDEX8(newStage, " staging completed not yet consolidated");
 
-    // We are now in a valid state with all records that have not yet been consolidated in newStage. If we
-    // still don't have enough records to consolidate, tell the user and return...
-    blknum_t curSize = fileSize(newStage) / 59;
-    if (curSize <= MAX_ROWS) {
+    // We are now in a valid state. All records that have not yet been consolidated
+    // are in newStage. Count how many lines we have...
+    blknum_t nRecords = fileSize(newStage) / 59;
+
+    // ...if we don't have enough, return and get more...
+    if (nRecords <= MAX_ROWS) {
+        blknum_t distToHead = (MAX_ROWS - nRecords);
         LOG_INFO("");
         LOG_INFO(bBlue, "Consolidation not ready...", cOff);
-        LOG_INFO(cYellow, "  Have ", curSize, " records of ", MAX_ROWS, ". Need ", (MAX_ROWS - curSize), " more.",
-                 cOff);
+        LOG_INFO(cYellow, "  Have ", nRecords, " records of ", MAX_ROWS, ". Need ", distToHead, " more.", cOff);
         LOG_INDEX8(newStage, " consolidation not ready");
         EXIT_NOMSG(true);
     }
 
-    // We have enough records to consolidate. Process chunks of size MAX_ROWS until we don't. This
-    // may take more than one pass. Check for user input at each pass.
+    // We have enough records to consolidate. Process chunks (of size MAX_ROWS) until done.
+    // This may take more than one pass. Check for user input control+C at each pass.
     size_t pass = 0;
-    while (curSize > MAX_ROWS && !shouldQuit()) {
+    while (nRecords > MAX_ROWS && !shouldQuit()) {
         lockSection();
 
         LOG_INFO("");
         LOG_INFO(bBlue, "Consolidation pass ", pass++, cOff);
         CStringArray lines;
-        lines.reserve(curSize + 100);
+        lines.reserve(nRecords + 100);
         asciiFileToLines(newStage, lines);
 
         LOG_INFO(cWhite, "  Starting search at record ", (MAX_ROWS - 1), " of ", lines.size(), cOff);
-        if (verbose > 2) {
-            LOG_INFO(cGreen, "\t", (MAX_ROWS - 1), ": ", lines[MAX_ROWS - 1], cOff);
-            LOG_INFO(cGreen, "\t", (MAX_ROWS), ": ", lines[MAX_ROWS], cOff);
-        }
+        LOG4(cGreen, "\t", (MAX_ROWS - 1), ": ", lines[MAX_ROWS - 1], cOff);
+        LOG4(cGreen, "\t", (MAX_ROWS), ": ", lines[MAX_ROWS], cOff);
 
         size_t where = 0;
         string_q prev;
@@ -64,14 +64,11 @@ bool CConsolidator::consolidate_chunks(void) {
             where = lines.size() - 1;
         }
 
-        LOG_INFO(cWhite, "  Found a break at line ", where, " extracting records 0 to ", where, " (inclusive) of ",
-                 lines.size(), cOff);
-        if (verbose > 2) {
-            LOG_INFO(cGreen, "\t", 0, ": ", lines[0], cOff);
-            LOG_INFO(cGreen, "\t", 1, ": ", lines[1], cOff);
-            LOG_INFO(bBlue, "\t", where, ": ", lines[where], cOff);
-            LOG_INFO(bTeal, "\t", (where + 1), ": ", lines[where + 1], cOff);
-        }
+        LOG_INFO(cWhite, "  Break at line ", where, ". Extracting [0 to ", where, "] of ", lines.size(), cOff);
+        LOG4(cGreen, "\t", 0, ": ", lines[0], cOff);
+        LOG4(cGreen, "\t", 1, ": ", lines[1], cOff);
+        LOG4(bBlue, "\t", where, ": ", lines[where], cOff);
+        LOG4(bTeal, "\t", (where + 1), ": ", lines[where + 1], cOff);
 
         CStringArray consolidatedLines;
         consolidatedLines.reserve(lines.size());
@@ -104,14 +101,11 @@ bool CConsolidator::consolidate_chunks(void) {
         CStringArray remainingLines;
         remainingLines.reserve(MAX_ROWS + 100);
 
-        if (verbose > 2) {
-            LOG_INFO(cWhite, "  Extracting records ", where, " to ", lines.size(), " of ", lines.size(), cOff);
-            LOG_INFO(cGreen, "\t", where, ": ", lines[where], cOff);
-            LOG_INFO(cGreen, "\t", (where + 1), ": ", (lines.size() > (where + 1) ? lines[where + 1] : "-end-of-file-"),
-                     cOff);
-            LOG_INFO(bBlue, "\t", (where - 1), ": ", lines[where - 1], cOff);
-            LOG_INFO(bTeal, "\t", (where), ": ", lines[where], cOff);
-        }
+        LOG4(cWhite, "  Extracting records ", where, " to ", lines.size(), " of ", lines.size(), cOff);
+        LOG4(cGreen, "\t", where, ": ", lines[where], cOff);
+        LOG4(cGreen, "\t", (where + 1), ": ", (lines.size() > (where + 1) ? lines[where + 1] : "-end-of-file-"), cOff);
+        LOG4(bBlue, "\t", (where - 1), ": ", lines[where - 1], cOff);
+        LOG4(bTeal, "\t", (where), ": ", lines[where], cOff);
 
         for (uint64_t record = where; record < lines.size(); record++)
             remainingLines.push_back(lines[record]);
@@ -121,10 +115,20 @@ bool CConsolidator::consolidate_chunks(void) {
         LOG_INFO(cWhite, "  Wrote ", remainingLines.size(), " records to ",
                  substitute(newStage, indexFolder_staging, "$STAGING/"), cOff);
 
-        curSize = fileSize(newStage) / 59;
+        nRecords = fileSize(newStage) / 59;
         unlockSection();
     }
 
     LOG_INDEX8(newStage, " after consolidation");
     EXIT_NOMSG(true);
+}
+
+//---------------------------------------------------------------------------------------------------
+bool visitToPin(const string_q& chunkId, void* data) {
+    LOG_INFO("  Pinning");
+    LOG_FN8(chunkId);
+    ASSERT(data);
+    // CPinnedItem pinRecord = *(CPinnedItem*)data;
+    // pinChunk(chunkId, pinRecord);
+    return !shouldQuit();
 }

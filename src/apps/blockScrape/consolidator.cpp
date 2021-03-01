@@ -74,13 +74,3 @@ bool appendFile(const string_q& toFile, const string_q& fromFile) {
 
     return true;
 }
-
-//---------------------------------------------------------------------------------------------------
-bool visitToPin(const string_q& chunkId, void* data) {
-    LOG_INFO("  Pinning");
-    LOG_FN8(chunkId);
-    ASSERT(data);
-    // CPinnedItem pinRecord = *(CPinnedItem*)data;
-    // pinChunk(chunkId, pinRecord);
-    return !shouldQuit();
-}

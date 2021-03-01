@@ -17,11 +17,44 @@
 #include "pinneditem.h"
 #include "pinatalist.h"
 #include "pinatapin.h"
-#include "pinutils.h"
 #include "pinreport.h"
 #include "acctscrapestats.h"
 
+namespace qblocks {
+
 extern void pinlib_init(QUITHANDLER qh);
 extern void pinlib_cleanup(void);
+
+extern bool ipfsExists(void);
+
+extern bool pinChunk(const string_q& fileName, CPinnedItem& item);
+extern bool unpinChunk(const string_q& fileName, CPinnedItem& item);
+
+extern bool publishManifest(ostream& os);
+extern bool freshenBloomFilters(bool download, const string_q& currManifest);
+extern hash_t getLastManifest(void);
+
+extern bool findChunk(const string_q& fileName, CPinnedItem& item);
+
+extern void loadPinMaps(CIndexHashMap& bloomMap, CIndexHashMap& indexMap);
+
+extern bool unpinChunkByHash(const string_q& hash);
+extern bool getChunkByHash(const string_q& fileName, CPinnedItem& item);
+extern bool getFileByHash(const hash_t& hash, const string_q& outFilename);
+extern string_q getFileContentsByHash(const hash_t& hash);
+
+extern bool removeFromPinata(CPinnedItem& item, void* data);
+
+typedef bool (*PINFUNC)(CPinnedItem& pin, void* data);
+extern bool forEveryPin(PINFUNC func, void* data);
+
+//---------------------------------------------------------------------------
+#define hashToEmptyFile "QmP4i6ihnVrj8Tx7cTFw4aY6ungpaPYxDJEZ7Vg1RSNSdm"
+#define hashToIndexFormatFile "Qmart6XP9XjL43p72PGR93QKytbK8jWWcMguhFgxATTya2"
+#define hashToBloomFormatFile "QmNhPk39DUFoEdhUmtGARqiFECUHeghyeryxZM9kyRxzHD"
+#define unchainedIndexAddr "0xcfd7f3b24f3551741f922fd8c4381aa4e00fc8fd"
+#define manifestHashEncoding "0x337f3f32"
+
+}  // namespace qblocks
 
 using namespace qblocks;  // NOLINT

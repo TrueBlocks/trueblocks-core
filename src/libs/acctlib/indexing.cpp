@@ -102,6 +102,7 @@ bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines, FILEVI
     CAppearanceArray_base blockTable;
 
     hashbytes_t hash = hash_2_Bytes(versionHash);
+    LOG8("versionHash: ", versionHash);
 
     CBloomArray blooms;
 

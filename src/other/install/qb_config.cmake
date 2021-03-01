@@ -22,7 +22,7 @@ file(MAKE_DIRECTORY "${DEST_PATH}/abis/known-000")
 file(MAKE_DIRECTORY "${DEST_PATH}/abis/known-005")
 file(MAKE_DIRECTORY "${DEST_PATH}/abis/known-010")
 file(MAKE_DIRECTORY "${DEST_PATH}/abis/known-015")
-file(MAKE_DIRECTORY "${DEST_PATH}/ipfs-hashes")
+file(MAKE_DIRECTORY "${DEST_PATH}/manifest")
 file(MAKE_DIRECTORY "${DEST_PATH}/mocked")
 
 #---------------------------------------------------------------
@@ -149,12 +149,9 @@ endforeach( FILE )
 #---------------------------------------------------------------
 # Copy the ipfs hash files (if they don't exist -- user may be building them)
 #---------------------------------------------------------------
-set(IPFS_HASHES "${DEST_PATH}/ipfs-hashes/pin-manifest.json")
-if (NOT EXISTS "${IPFS_HASHES}")
-	message(STATUS "Seeding ipfs hash files to ${DEST_PATH}/ipfs-hashes")
-	file(COPY "${SOURCE_PATH}/ipfs-hashes/pin-manifest.json" DESTINATION "${DEST_PATH}/ipfs-hashes" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
-	file(COPY "${SOURCE_PATH}/ipfs-hashes/empty.fil" DESTINATION "${DEST_PATH}/ipfs-hashes" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
-endif()
+message(STATUS "Seeding initial manifest ${DEST_PATH}/manifest/")
+file(COPY "${SOURCE_PATH}/manifest/empty-manifest.json" DESTINATION "${DEST_PATH}/manifest/" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
+file(COPY "${SOURCE_PATH}/manifest/initial-manifest.json" DESTINATION "${DEST_PATH}/manifest/" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
 
 #---------------------------------------------------------------
 # Copy the prices files

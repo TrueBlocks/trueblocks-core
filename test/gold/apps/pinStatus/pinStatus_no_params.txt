@@ -1,5 +1,7 @@
-pinStatus argc: 2 [1:-h] 
-pinStatus -h 
+pinStatus argc: 1 
+pinStatus 
+
+  Not enough arguments presented. Quitting...
 
   Usage:    pinStatus [-a|-p|-u|-i|-v|-h] <mode> [mode...]  
   Purpose:  Report on and manage the pinned appearance index chunks and associated bloom filters.

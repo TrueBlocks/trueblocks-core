@@ -93,7 +93,7 @@ bool COptionsBase::prePrepareArguments(CStringArray& separatedArgs_, int argCoun
         cerr << endl;
         cerr << getProgName() << " " << os.str() << endl;
         CStringArray envs = {
-            "API_MODE", "DOCKER_MODE", "PROG_NAME", "HIDE_NAMES", "TEST_BLOCK_SCRAPE",
+            "API_MODE", "DOCKER_MODE", "PROG_NAME", "HIDE_NAMES", "LIVE_TEST",
             // "FRESHEN_FLAG S", "IPFS_PATH",
             "SILENCE", "NO_CACHE", "NO_NAMES", "NO_PROGRESS", "NO_SCHEMAS", "TB_NAME_ADDRESS", "TB_NAME_CUSTOM",
             "TB_NAME_DECIMALS", "TB_NAME_DESCR", "TB_NAME_NAME", "TB_NAME_SOURCE", "TB_NAME_SYMBOL", "TB_NAME_TAG",

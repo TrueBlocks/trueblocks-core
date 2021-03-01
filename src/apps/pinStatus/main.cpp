@@ -28,10 +28,10 @@ int main(int argc, const char* argv[]) {
             }
 
         } else {
-            LOG_INFO("rpcProvider:\t", cGreen, options.provider, cOff);
-            LOG_INFO("latestBlock:\t", cGreen, getBlockProgress(BP_CLIENT).client, cOff);
+            LOG_INFO("latestBlock:\t", cGreen,
+                     (isTestMode() ? "--latest--" : uint_2_Str(getBlockProgress(BP_CLIENT).client)), cOff);
             LOG_INFO("unchainedIndexAddr:\t", cGreen, unchainedIndexAddr, cOff);
-            options.handle_status();
+            options.handle_pin();
         }
 
         once = false;
@@ -43,7 +43,21 @@ int main(int argc, const char* argv[]) {
 }
 
 //----------------------------------------------------------------
-void COptions::handle_status(void) {
+void COptions::handle_pin(void) {
+    LOG8("Handle pin: ", pin);
+
+    string_q pins;
+    if (!pinataListOfPins(lic, pins)) {
+        usageStr(pins + ".");
+        return;
+    }
+    cout << pins << endl;
+}
+
+//----------------------------------------------------------------
+void COptions::handle_unpin(void) {
+    LOG8("Handle unpin: ", unpin);
+
     string_q pins;
     if (!pinataListOfPins(lic, pins)) {
         usageStr(pins + ".");
@@ -90,7 +104,7 @@ int main(int argc, const char* argv[]) {
     }
 
 //    LOG4("Starting");
-//    cout << "ascii: " << fileLastModifyDate(configPath("ipfs-hashes/pins.json")) << endl;
+//    cout << "ascii: " << fileLastModifyDate(getInitialManifest()) << endl;
 //    cout << "binary: " << fileLastModifyDate(getCachePath("tmp/pins.bin")) << endl;
 //    cout << "Should be found: ";
     CPinnedItem item;
@@ -104,7 +118,7 @@ int main(int argc, const char* argv[]) {
 //    item = CPinnedItem();
 //    unpinChunk(argv[1], item);
 //
-//    cout << "ascii: " << fileLastModifyDate(configPath("ipfs-hashes/pins.json")) << endl;
+//    cout << "ascii: " << fileLastModifyDate(getInitalManifest()) << endl;
 //    cout << "binary: " << fileLastModifyDate(getCachePath("tmp/pins.bin")) << endl;
 //    cout << "Removed: " << item << endl;
 //
@@ -119,7 +133,7 @@ int main(int argc, const char* argv[]) {
     item = CPinnedItem();
     pinChunk(argv[1], item);
 
-    cout << "ascii: " << fileLastModifyDate(configPath("ipfs-hashes/pins.json")) << endl;
+    cout << "ascii: " << fileLastModifyDate(getInitalManifest()) << endl;
     cout << "binary: " << fileLastModifyDate(getCachePath("tmp/pins.bin")) << endl;
     cout << "Pinned: " << item << endl;
 

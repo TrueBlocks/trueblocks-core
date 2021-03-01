@@ -17,7 +17,7 @@
 class COptions : public CAbiOptions {
   public:
     // BEG_CODE_DECLARE
-    string_q mode;
+    string_q modes;
     bool hash;
     string_q pin;
     string_q unpin;
@@ -26,7 +26,6 @@ class COptions : public CAbiOptions {
     // END_CODE_DECLARE
 
     CPinataLicense lic;
-    string_q provider;
 
     COptions(void);
     ~COptions(void);
@@ -34,6 +33,7 @@ class COptions : public CAbiOptions {
     bool parseArguments(string_q& command) override;
     void Init(void) override;
 
-    void handle_status(void);
     hash_t getCurrentManifest(void);
+    void handle_unpin(void);
+    void handle_pin(void);
 };

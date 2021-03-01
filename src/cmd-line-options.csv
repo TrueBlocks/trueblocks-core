@@ -53,13 +53,13 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,customizeable,c
 10840,apps,Admin,status,cacheStatus,end,E,,false,false,false,false,header,flag,<blknum>,last block to process (inclusive)
 10860,apps,Admin,status,cacheStatus,,,,false,false,true,true,--,description,,Report on status of one or more TrueBlocks caches.
 
-10900,apps,Admin,pins,pinStatus,mode,,,true,false,true,true,header,positional,enum[local*|remote|onchain],display local or remote manifest or its IPFS hash
-10900,apps,Admin,pins,pinStatus,hash,a,,false,false,true,true,header,switch,<boolean>,display the hash instead of contents of manifest ('on' for onchain mode)
-10900,apps,Admin,pins,pinStatus,pin,p,,false,false,true,true,header,flag,<string>,pin indexes and blooms&#44; add to manifest&#44; and return hash
-10900,apps,Admin,pins,pinStatus,unpin,u,,false,false,true,true,header,flag,<string>,unpin index(es) and blooms given a hash&#44; a filename&#44; or 'all'
-10900,apps,Admin,pins,pinStatus,init,i,,false,false,true,true,header,switch,<boolean>,initialize the TrueBlocks appearance index
-10900,apps,Admin,pins,pinStatus,license,l,,false,false,false,false,header,switch,<boolean>,show the current pinata license information&#44; if any
-10910,apps,Admin,pins,pinStatus,,,,false,false,true,true,--,description,,Report on and manage pinned appearance index and bloom chunks.
+10900,apps,Admin,pins,pinStatus,modes,,,true,false,true,true,header,positional,enum[local*|remote|onchain],display the pin manifest (or its hash)&#44; using 'modes' as the source
+10900,apps,Admin,pins,pinStatus,hash,a,,false,false,true,true,header,switch,<boolean>,display the hash instead of contents of manifest
+10900,apps,Admin,pins,pinStatus,pin,p,,false,false,true,true,header,flag,<string>,pin items either locally or remotely ('all' to all items in a folder)
+10900,apps,Admin,pins,pinStatus,unpin,u,,false,false,true,true,header,flag,<string>,unpin previously pinned items give a hash&#44; a filename&#44; or 'all'
+10900,apps,Admin,pins,pinStatus,init,i,,false,false,true,true,header,switch,<boolean>,initialize the TrueBlocks appearance index by downloading only bloom filters
+10900,apps,Admin,pins,pinStatus,license,l,,false,false,false,false,header,switch,<boolean>,show the current pinata license information
+10910,apps,Admin,pins,pinStatus,,,,false,false,true,true,--,description,,Report on and manage the pinned appearance index chunks and associated bloom filters.
 
 11660,dev_tools,,,makeClass,files,,,true,false,true,false,local,positional,list<path>,one or more class definition files
 11700,dev_tools,,,makeClass,run,r,,false,false,true,false,local,switch,<boolean>,run the class maker on associated <class_name(s)>
