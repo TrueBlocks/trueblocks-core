@@ -11,7 +11,6 @@ blockScrape --tool index --sleep .5 --pin --verbose 8
 : 8------indexFolder_staging:     $INDEX/staging/
 : 8------indexFolder_unripe:      $INDEX/unripe/
 : 8------indexFolder_ripe:        $INDEX/ripe/
-: 8------configPath("cache/tmp/"):$CACHE/tmp/
 <INFO>  : Index for block zero was not found. Building it from 8893 prefunds.
 <INFO>  :   Extracting addresses...extracting appearances...exporting...finalizing...binary file created ✓
 <INFO>  :   Pinning

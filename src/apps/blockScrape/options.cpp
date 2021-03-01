@@ -197,7 +197,6 @@ bool COptions::parseArguments(string_q& command) {
     LOG_DIR8(indexFolder_staging);
     LOG_DIR8(indexFolder_unripe);
     LOG_DIR8(indexFolder_ripe);
-    LOG_DIR8(configPath("cache/tmp/"));
 
     // We need this below...
     const CToml* config = getGlobalConfig("blockScrape");
