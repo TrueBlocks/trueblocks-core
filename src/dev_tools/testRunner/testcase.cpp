@@ -533,12 +533,6 @@ CTestCase::CTestCase(const string_q& line, uint32_t id) {
         replaceAll(options, " @ ", "@");
         replaceAll(options, "@ ", "@");
     }
-
-    // TODO(tjayrush): FIX_THIS_CODE - Hack alert
-#ifndef APPLE
-    if (contains(name, "runningTest_01"))
-        onOff = "off";
-#endif
 }
 
 //---------------------------------------------------------------------------------------------
