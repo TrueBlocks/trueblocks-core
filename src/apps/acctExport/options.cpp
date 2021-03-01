@@ -311,12 +311,6 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    // If the chain is behind the monitor (for example, the user is re-syncing), quit silently...
-    if (latest < listRange.first) {
-        LOG4("Chain is behind the monitor.");
-        EXIT_NOMSG(false);
-    }
-
     if (start != NOPOS)
         exportRange.first = start;
     if (end != NOPOS)

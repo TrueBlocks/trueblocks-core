@@ -88,7 +88,8 @@ bool COptions::loadAllAppearances(void) {
             if (app.blk > latestBlock) {
                 static bool hasFuture = false;
                 if (!hasFuture) {
-                    LOG_WARN("Cache file contains blocks ahead of the chain. Some apps will not be exported.");
+                    if (!isTestMode())
+                        LOG_WARN("Cache file contains blocks ahead of the chain. Some apps will not be exported.");
                     hasFuture = true;
                 }
             } else {
