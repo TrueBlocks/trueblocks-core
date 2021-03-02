@@ -25,17 +25,17 @@ extern void pinlib_init(QUITHANDLER qh);
 extern void pinlib_cleanup(void);
 
 extern bool ipfsExists(void);
-extern bool pinChunk(const string_q& fileName, CPinnedItem& item);
-extern bool unpinChunk(const string_q& fileName, CPinnedItem& item);
+extern bool pinChunk(CPinnedItemArray& pList, const string_q& fileName, CPinnedItem& item);
+extern bool unpinChunk(CPinnedItemArray& pList, const string_q& fileName, CPinnedItem& item);
 
-extern bool findChunk(const string_q& fileName, CPinnedItem& item);
-extern bool getChunkByHash(const string_q& fileName, CPinnedItem& item);
+extern bool getChunkByHash(CPinnedItemArray& pList, const string_q& fileName, CPinnedItem& item);
 
 extern string_q pinOneFile(const string_q& fileName, const string_q& type, bool compress);
 extern string_q unpinOneFile(const string_q& hash);
 
-extern bool writeBinaryManifest(const CPinnedItemArray& array);
-extern bool readBinaryManifest(CPinnedItemArray& array, bool required);
+extern bool findChunk(CPinnedItemArray& pList, const string_q& fileName, CPinnedItem& item);
+extern bool writePinList(const CPinnedItemArray& pList);
+extern bool readPinList(CPinnedItemArray& pList, bool required);
 
 typedef bool (*PINFUNC)(CPinnedItem& pin, void* data);
 bool forEveryPin(CPinnedItemArray& pList, PINFUNC func, void* data);

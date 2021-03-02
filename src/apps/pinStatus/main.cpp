@@ -109,7 +109,7 @@ int main(int argc, const char* argv[]) {
 //    cout << "binary: " << fileLastModifyDate(getCachePath("tmp/pins.bin")) << endl;
 //    cout << "Should be found: ";
     CPinnedItem item;
-//    if (findChunk(argv[1], item)) {
+//    if (findChunk(pinList, argv[1], item)) {
 //        cout << item << endl;
 //    } else {
 //        cout << "Not found" << endl;
@@ -117,14 +117,14 @@ int main(int argc, const char* argv[]) {
 //
 //    LOG4("unpinning");
 //    item = CPinnedItem();
-//    unpinChunk(argv[1], item);
+//    unpinChunk(pinList, argv[1], item);
 //
 //    cout << "ascii: " << fileLastModifyDate(getInitalManifest()) << endl;
 //    cout << "binary: " << fileLastModifyDate(getCachePath("tmp/pins.bin")) << endl;
 //    cout << "Removed: " << item << endl;
 //
 //    cout << "Should not be found: ";
-//    if (findChunk(argv[1], item)) {
+//    if (findChunk(pinList, argv[1], item)) {
 //        cout << item << endl;
 //    } else {
 //        cout << "Not found" << endl;
@@ -132,14 +132,14 @@ int main(int argc, const char* argv[]) {
 
     LOG4("pinning");
     item = CPinnedItem();
-    pinChunk(argv[1], item);
+    pinChunk(pinList, argv[1], item);
 
     cout << "ascii: " << fileLastModifyDate(getInitalManifest()) << endl;
     cout << "binary: " << fileLastModifyDate(getCachePath("tmp/pins.bin")) << endl;
     cout << "Pinned: " << item << endl;
 
     cout << "Should be found: ";
-    if (findChunk(argv[1], item)) {
+    if (findChunk(pinList, argv[1], item)) {
         cout << item << endl;
     } else {
         cout << "Not found" << endl;

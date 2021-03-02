@@ -147,7 +147,7 @@ bool COptions::parseArguments(string_q& command) {
         manifest.prevHash = "";  // (prevHash == "" ? hashToEmptyFile : prevHash);
 
         CPinnedItemArray pList;
-        readBinaryManifest(pList, true);
+        readPinList(pList, true);
         forEveryPin(pList, addNewPin, &manifest);
         manifest.toJson(cout);
 
@@ -258,8 +258,7 @@ bool COptions::parseArguments(string_q& command) {
 
         // Write the chunk and the bloom to the binary cache
         string_q chunkPath = getIndexPath("finalized/" + chunkId + ".bin");
-        CPinnedItem pinRecord;
-        writeIndexAsBinary(chunkPath, appearances, (pin ? visitToPin : nullptr), &pinRecord);
+        writeIndexAsBinary(chunkPath, appearances, (pin ? visitToPin : nullptr), &pinList);
         LOG_INFO("Done...");
     }
 

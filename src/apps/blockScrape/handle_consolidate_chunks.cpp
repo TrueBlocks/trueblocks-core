@@ -91,8 +91,8 @@ bool CConsolidator::consolidate_chunks(void) {
         sort(consolidatedLines.begin(), consolidatedLines.end());
         string_q chunkId = p1[1] + "-" + p2[1];
         string_q chunkPath = indexFolder_finalized + chunkId + ".bin";
-        CPinnedItem pinRecord;
-        writeIndexAsBinary(chunkPath, consolidatedLines, (pin ? visitToPin : nullptr), &pinRecord);
+
+        writeIndexAsBinary(chunkPath, consolidatedLines, (pin ? visitToPin : nullptr), &pinList);
 
         LOG_INFO(cWhite, "  Wrote ", consolidatedLines.size(), " records to ",
                  substitute(chunkPath, indexFolder_finalized, "$FINAL/"), cOff);
@@ -128,7 +128,8 @@ bool visitToPin(const string_q& chunkId, void* data) {
     LOG_INFO("  Pinning");
     LOG_FN8(chunkId);
     ASSERT(data);
-    // CPinnedItem pinRecord = *(CPinnedItem*)data;
-    // pinChunk(chunkId, pinRecord);
+    CPinnedItemArray& pinList = *(CPinnedItemArray*)data;  // NO_LINT
+    CPinnedItem pinRecord;
+    pinChunk(pinList, chunkId, pinRecord);
     return !shouldQuit();
 }

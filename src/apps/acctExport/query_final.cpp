@@ -6,7 +6,6 @@
 #include "acctlib.h"
 #include "options.h"
 
-extern bool establishIndexChunk(const string_q& chunk);
 //---------------------------------------------------------------
 bool visitFinalIndexFiles(const string_q& path, void* data) {
     ENTER("visitFinalIndexFiles");
@@ -205,12 +204,12 @@ bool getIndexChunkFromIPFS(const string_q& chunk) {
 }
 
 //---------------------------------------------------------------
-bool establishIndexChunk(const string_q& fileName) {
+bool COptions::establishIndexChunk(const string_q& fileName) {
     ENTER("establishIndexChunk")
     if (!fileExists(fileName)) {
         LOG_INFO(bRed, fileName, " not found.", bGreen, " Retreiving from IPFS.", cOff);
         CPinnedItem pin;
-        if (!getChunkByHash(substitute(substitute(fileName, indexFolder_finalized, ""), ".bin", ""), pin)) {
+        if (!getChunkByHash(pinList, substitute(substitute(fileName, indexFolder_finalized, ""), ".bin", ""), pin)) {
             cerr << "Could not retrieve file from IPFS: " << fileName << endl;
         }
     }

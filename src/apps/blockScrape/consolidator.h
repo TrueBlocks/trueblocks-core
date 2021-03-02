@@ -25,6 +25,8 @@ class CConsolidator : public CBlockProgress {
     string_q tmpFile;
     string_q tmp_fn;
     ofstream tmp_stream;
+    CPinnedItemArray pinList;
+
     explicit CConsolidator(const CBlockProgress& prog);
     bool finalize_chunks(void);
     bool consolidate_chunks(void);

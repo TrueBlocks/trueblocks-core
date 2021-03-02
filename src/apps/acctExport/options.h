@@ -51,6 +51,7 @@ class COptions : public CAbiOptions {
     address_t hackAppAddr;
     CBlockAddressMap prefundAddrMap;
     CBlockAddressMap blkRewardMap;
+    CPinnedItemArray pinList;
 
     CAddressUintMap toAddrMap;
     CAddressUintMap fromAddrMap;
@@ -99,6 +100,8 @@ class COptions : public CAbiOptions {
     void markNeighbors(const CTransaction& trans);
     void articulateAll(CTransaction& trans);
     bool reportNeighbors(void);
+
+    bool establishIndexChunk(const string_q& fileName);
 };
 
 //--------------------------------------------------------------------------------

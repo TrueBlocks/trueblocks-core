@@ -166,7 +166,7 @@ bool COptions::freshenBlooms(bool download, const string_q& currManifest) {
         LOG_INFO("Manifest is up to data at: ", currManifest);
     }
 
-    readBinaryManifest(pList, false);
+    readPinList(pList, false);
     if (download)
         forEveryPin(pList, checkOnDisc, NULL);
 

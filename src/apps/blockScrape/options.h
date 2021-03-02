@@ -38,6 +38,7 @@ class COptions : public COptionsBase {
     uint32_t tools = TOOL_NONE;
     timestamp_t latestBlockTs;
     blknum_t latestBlockNum;
+    CPinnedItemArray pinList;
 
     COptions(void);
     ~COptions(void);

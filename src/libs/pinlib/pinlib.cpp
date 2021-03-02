@@ -32,12 +32,6 @@ void pinlib_cleanup(void) {
     acctlib_cleanup();
 }
 
-static void cleanPinataStr(string_q& in);
-
-//---------------------------------------------------------------------------
-static CPinnedItemArray pinList;
-static CManifest pinReport;
-
 //-------------------------------------------------------------------------
 bool getFileByHash(const hash_t& hash, const string_q& outFilename) {  // also unzips if the file is zipped
     string_q cmd = "curl -s ";
@@ -56,14 +50,14 @@ bool getFileByHash(const hash_t& hash, const string_q& outFilename) {  // also u
 
 #define hashToEmptyFile "QmP4i6ihnVrj8Tx7cTFw4aY6ungpaPYxDJEZ7Vg1RSNSdm"
 //---------------------------------------------------------------------------
-bool findChunk(const string_q& fileName, CPinnedItem& item) {
-    if (!readBinaryManifest(pinList, false))
+bool findChunk(CPinnedItemArray& pList, const string_q& fileName, CPinnedItem& item) {
+    if (!readPinList(pList, false))
         return false;
 
     CPinnedItem search;
     search.fileName = fileName;
-    const vector<CPinnedItem>::iterator it = find(pinList.begin(), pinList.end(), search);
-    if (it != pinList.end()) {
+    const vector<CPinnedItem>::iterator it = find(pList.begin(), pList.end(), search);
+    if (it != pList.end()) {
         item = *it;
         return true;
     }
@@ -71,14 +65,14 @@ bool findChunk(const string_q& fileName, CPinnedItem& item) {
 }
 
 //----------------------------------------------------------------
-bool pinChunk(const string_q& fileName, CPinnedItem& item) {
-    if (!readBinaryManifest(pinList, false)) {
+bool pinChunk(CPinnedItemArray& pList, const string_q& fileName, CPinnedItem& item) {
+    if (!readPinList(pList, false)) {
         return false;
     }
 
     // If already pinned, no reason to pin it again...
     CPinnedItem copy;
-    if (findChunk(fileName, copy)) {
+    if (findChunk(pList, fileName, copy)) {
         LOG_WARN("Pin for blocks ", fileName, " already exists.");
         item = copy;
         return true;
@@ -91,7 +85,9 @@ bool pinChunk(const string_q& fileName, CPinnedItem& item) {
         return false;
     }
 
-    cleanPinataStr(indexStr);
+    replace(indexStr, "IpfsHash", "ipfs_pin_hash");
+    replace(indexStr, "PinSize", "size");
+    replace(indexStr, "Timestamp", "date_pinned");
     CPinataPin index;
     index.parseJson3(indexStr);
     item.indexHash = index.ipfs_pin_hash;
@@ -103,7 +99,9 @@ bool pinChunk(const string_q& fileName, CPinnedItem& item) {
         return false;
     }
 
-    cleanPinataStr(bloomStr);
+    replace(bloomStr, "IpfsHash", "ipfs_pin_hash");
+    replace(bloomStr, "PinSize", "size");
+    replace(bloomStr, "Timestamp", "date_pinned");
     CPinataPin bloom;
     bloom.parseJson3(bloomStr);
     item.bloomHash = bloom.ipfs_pin_hash;
@@ -111,28 +109,28 @@ bool pinChunk(const string_q& fileName, CPinnedItem& item) {
              cOff);
 
     // add it to the array
-    pinList.push_back(item);
+    pList.push_back(item);
 
     // write the array (after sorting it) to the database
-    sort(pinList.begin(), pinList.end());
-    return writeBinaryManifest(pinList);
+    sort(pList.begin(), pList.end());
+    return writePinList(pList);
 }
 
 //---------------------------------------------------------------------------
-bool unpinChunk(const string_q& fileName, CPinnedItem& item) {
-    if (!readBinaryManifest(pinList, false))
+bool unpinChunk(CPinnedItemArray& pList, const string_q& fileName, CPinnedItem& item) {
+    if (!readPinList(pList, false))
         return false;
 
     // If we don't think it's pinned, Pinata may, so proceed even if not found
     CPinnedItem copy;
-    if (!findChunk(fileName, copy)) {
+    if (!findChunk(pList, fileName, copy)) {
         item = copy;
         item.fileName = fileName;
         // return true;
     }
 
     CPinnedItemArray array;
-    for (auto pin : pinList) {
+    for (auto pin : pList) {
         if (pin.fileName == fileName) {
             cout << "Unpinning: " << pin.fileName << endl;
             unpinOneFile(pin.indexHash);
@@ -146,19 +144,19 @@ bool unpinChunk(const string_q& fileName, CPinnedItem& item) {
     }
     cout << endl;
 
-    pinList.clear();
-    pinList = array;
-    sort(pinList.begin(), pinList.end());
-    return writeBinaryManifest(pinList);
+    pList.clear();
+    pList = array;
+    sort(pList.begin(), pList.end());
+    return writePinList(pList);
 }
 
 //-------------------------------------------------------------------------
-bool getChunkByHash(const string_q& fileName, CPinnedItem& item) {
-    if (!readBinaryManifest(pinList, true))
+bool getChunkByHash(CPinnedItemArray& pList, const string_q& fileName, CPinnedItem& item) {
+    if (!readPinList(pList, true))
         return false;
 
     // If we don't think it's pinned, Pinata may, so proceed even if not found
-    if (!findChunk(fileName, item)) {
+    if (!findChunk(pList, fileName, item)) {
         // return true;
     }
 
@@ -350,15 +348,8 @@ bool pinataListOfPins(const CPinataLicense& lic, string& result) {
     return true;
 }
 
-//----------------------------------------------------------------
-static void cleanPinataStr(string_q& in) {
-    replace(in, "IpfsHash", "ipfs_pin_hash");
-    replace(in, "PinSize", "size");
-    replace(in, "Timestamp", "date_pinned");
-}
-
 //---------------------------------------------------------------------------
-bool writeBinaryManifest(const CPinnedItemArray& array) {
+bool writePinList(const CPinnedItemArray& pList) {
     string_q binFile = getCachePath("tmp/pins.bin");
     establishFolder(binFile);
 
@@ -369,7 +360,7 @@ bool writeBinaryManifest(const CPinnedItemArray& array) {
         unlockSection();  // enable control+C
         return false;
     }
-    pinFile << array;
+    pinFile << pList;
     pinFile.Release();
     unlockSection();  // enable control+C
 
@@ -377,7 +368,7 @@ bool writeBinaryManifest(const CPinnedItemArray& array) {
 }
 
 //---------------------------------------------------------------------------
-bool readBinaryManifest(CPinnedItemArray& pinArray, bool required) {
+bool readPinList(CPinnedItemArray& pinArray, bool required) {
     if (!pinArray.empty())
         return true;
 
@@ -387,8 +378,8 @@ bool readBinaryManifest(CPinnedItemArray& pinArray, bool required) {
     time_q binDate = fileLastModifyDate(binFile);
     time_q textDate = fileLastModifyDate(textFile);
 
-    LOG8("binDate: ", binDate.Format(FMT_JSON));
-    LOG8("textDate: ", textDate.Format(FMT_JSON));
+    // LOG8("binDate: ", binDate.Format(FMT_JSON));
+    // LOG8("textDate: ", textDate.Format(FMT_JSON));
 
     if (binDate > textDate && fileExists(binFile)) {
         CArchive pinFile(READING_ARCHIVE);
@@ -417,7 +408,7 @@ bool readBinaryManifest(CPinnedItemArray& pinArray, bool required) {
             pinArray.push_back(pin);
         LOG4("Done Loading pins");
         sort(pinArray.begin(), pinArray.end());
-        writeBinaryManifest(pinArray);
+        writePinList(pinArray);
     }
     return true;
 }
@@ -426,8 +417,10 @@ bool readBinaryManifest(CPinnedItemArray& pinArray, bool required) {
 bool forEveryPin(CPinnedItemArray& pList, PINFUNC func, void* data) {
     if (!func)
         return false;
-    if (!readBinaryManifest(pList, true))
+
+    if (!readPinList(pList, true))
         return false;
+
     for (auto pin : pList) {
         if (!(*func)(pin, data))
             return false;
