@@ -14,26 +14,26 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
-#include "pinneditem.h"
+#include "pinapilicense.h"
 
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CPinnedItem, CBaseNode);
+IMPLEMENT_NODE(CPinApiLicense, CBaseNode);
 
 //---------------------------------------------------------------------------
-static string_q nextPinneditemChunk(const string_q& fieldIn, const void* dataPtr);
-static string_q nextPinneditemChunk_custom(const string_q& fieldIn, const void* dataPtr);
+static string_q nextPinapilicenseChunk(const string_q& fieldIn, const void* dataPtr);
+static string_q nextPinapilicenseChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
-void CPinnedItem::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
+void CPinApiLicense::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
     if (!m_showing)
         return;
 
     // EXISTING_CODE
     // EXISTING_CODE
 
-    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["pinneditem_fmt"] : fmtIn);
+    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["pinapilicense_fmt"] : fmtIn);
     if (fmt.empty()) {
         if (expContext().exportFmt == YAML1) {
             toYaml(ctx);
@@ -47,13 +47,13 @@ void CPinnedItem::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) con
     // EXISTING_CODE
 
     while (!fmt.empty())
-        ctx << getNextChunk(fmt, nextPinneditemChunk, this);
+        ctx << getNextChunk(fmt, nextPinapilicenseChunk, this);
 }
 
 //---------------------------------------------------------------------------
-string_q nextPinneditemChunk(const string_q& fieldIn, const void* dataPtr) {
+string_q nextPinapilicenseChunk(const string_q& fieldIn, const void* dataPtr) {
     if (dataPtr)
-        return reinterpret_cast<const CPinnedItem*>(dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CPinApiLicense*>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -62,9 +62,9 @@ string_q nextPinneditemChunk(const string_q& fieldIn, const void* dataPtr) {
 }
 
 //---------------------------------------------------------------------------
-string_q CPinnedItem::getValueByName(const string_q& fieldName) const {
+string_q CPinApiLicense::getValueByName(const string_q& fieldName) const {
     // Give customized code a chance to override first
-    string_q ret = nextPinneditemChunk_custom(fieldName, this);
+    string_q ret = nextPinapilicenseChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
@@ -73,24 +73,14 @@ string_q CPinnedItem::getValueByName(const string_q& fieldName) const {
 
     // Return field values
     switch (tolower(fieldName[0])) {
-        case 'b':
-            if (fieldName % "bloomHash") {
-                return bloomHash;
+        case 'a':
+            if (fieldName % "apiKey") {
+                return apiKey;
             }
             break;
-        case 'f':
-            if (fieldName % "fileName") {
-                return fileName;
-            }
-            break;
-        case 'i':
-            if (fieldName % "indexHash") {
-                return indexHash;
-            }
-            break;
-        case 'o':
-            if (fieldName % "onDisc") {
-                return bool_2_Str(onDisc);
+        case 's':
+            if (fieldName % "secretKey") {
+                return secretKey;
             }
             break;
         default:
@@ -105,7 +95,7 @@ string_q CPinnedItem::getValueByName(const string_q& fieldName) const {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CPinnedItem::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
+bool CPinApiLicense::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
     string_q fieldName = fieldNameIn;
     string_q fieldValue = fieldValueIn;
 
@@ -113,27 +103,15 @@ bool CPinnedItem::setValueByName(const string_q& fieldNameIn, const string_q& fi
     // EXISTING_CODE
 
     switch (tolower(fieldName[0])) {
-        case 'b':
-            if (fieldName % "bloomHash") {
-                bloomHash = fieldValue;
+        case 'a':
+            if (fieldName % "apiKey") {
+                apiKey = fieldValue;
                 return true;
             }
             break;
-        case 'f':
-            if (fieldName % "fileName") {
-                fileName = fieldValue;
-                return true;
-            }
-            break;
-        case 'i':
-            if (fieldName % "indexHash") {
-                indexHash = fieldValue;
-                return true;
-            }
-            break;
-        case 'o':
-            if (fieldName % "onDisc") {
-                onDisc = str_2_Bool(fieldValue);
+        case 's':
+            if (fieldName % "secretKey") {
+                secretKey = fieldValue;
                 return true;
             }
             break;
@@ -144,13 +122,13 @@ bool CPinnedItem::setValueByName(const string_q& fieldNameIn, const string_q& fi
 }
 
 //---------------------------------------------------------------------------------------------------
-void CPinnedItem::finishParse() {
+void CPinApiLicense::finishParse() {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CPinnedItem::Serialize(CArchive& archive) {
+bool CPinApiLicense::Serialize(CArchive& archive) {
     if (archive.isWriting())
         return SerializeC(archive);
 
@@ -162,31 +140,27 @@ bool CPinnedItem::Serialize(CArchive& archive) {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive >> fileName;
-    archive >> bloomHash;
-    archive >> indexHash;
-    // archive >> onDisc;
+    archive >> apiKey;
+    archive >> secretKey;
     finishParse();
     return true;
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CPinnedItem::SerializeC(CArchive& archive) const {
+bool CPinApiLicense::SerializeC(CArchive& archive) const {
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive << fileName;
-    archive << bloomHash;
-    archive << indexHash;
-    // archive << onDisc;
+    archive << apiKey;
+    archive << secretKey;
 
     return true;
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, CPinnedItemArray& array) {
+CArchive& operator>>(CArchive& archive, CPinApiLicenseArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -198,7 +172,7 @@ CArchive& operator>>(CArchive& archive, CPinnedItemArray& array) {
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator<<(CArchive& archive, const CPinnedItemArray& array) {
+CArchive& operator<<(CArchive& archive, const CPinApiLicenseArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0; i < array.size(); i++)
@@ -207,37 +181,34 @@ CArchive& operator<<(CArchive& archive, const CPinnedItemArray& array) {
 }
 
 //---------------------------------------------------------------------------
-void CPinnedItem::registerClass(void) {
+void CPinApiLicense::registerClass(void) {
     // only do this once
-    if (HAS_FIELD(CPinnedItem, "schema"))
+    if (HAS_FIELD(CPinApiLicense, "schema"))
         return;
 
     size_t fieldNum = 1000;
-    ADD_FIELD(CPinnedItem, "schema", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CPinnedItem, "deleted", T_BOOL, ++fieldNum);
-    ADD_FIELD(CPinnedItem, "showing", T_BOOL, ++fieldNum);
-    ADD_FIELD(CPinnedItem, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CPinnedItem, "fileName", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CPinnedItem, "bloomHash", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CPinnedItem, "indexHash", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CPinnedItem, "onDisc", T_BOOL | TS_OMITEMPTY, ++fieldNum);
-    HIDE_FIELD(CPinnedItem, "onDisc");
+    ADD_FIELD(CPinApiLicense, "schema", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CPinApiLicense, "deleted", T_BOOL, ++fieldNum);
+    ADD_FIELD(CPinApiLicense, "showing", T_BOOL, ++fieldNum);
+    ADD_FIELD(CPinApiLicense, "cname", T_TEXT, ++fieldNum);
+    ADD_FIELD(CPinApiLicense, "apiKey", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CPinApiLicense, "secretKey", T_TEXT | TS_OMITEMPTY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
-    HIDE_FIELD(CPinnedItem, "schema");
-    HIDE_FIELD(CPinnedItem, "deleted");
-    HIDE_FIELD(CPinnedItem, "showing");
-    HIDE_FIELD(CPinnedItem, "cname");
+    HIDE_FIELD(CPinApiLicense, "schema");
+    HIDE_FIELD(CPinApiLicense, "deleted");
+    HIDE_FIELD(CPinApiLicense, "showing");
+    HIDE_FIELD(CPinApiLicense, "cname");
 
-    builtIns.push_back(_biCPinnedItem);
+    builtIns.push_back(_biCPinApiLicense);
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------
-string_q nextPinneditemChunk_custom(const string_q& fieldIn, const void* dataPtr) {
-    const CPinnedItem* pin = reinterpret_cast<const CPinnedItem*>(dataPtr);
+string_q nextPinapilicenseChunk_custom(const string_q& fieldIn, const void* dataPtr) {
+    const CPinApiLicense* pin = reinterpret_cast<const CPinApiLicense*>(dataPtr);
     if (pin) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -259,7 +230,7 @@ string_q nextPinneditemChunk_custom(const string_q& fieldIn, const void* dataPtr
 }
 
 //---------------------------------------------------------------------------
-bool CPinnedItem::readBackLevel(CArchive& archive) {
+bool CPinApiLicense::readBackLevel(CArchive& archive) {
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -267,19 +238,19 @@ bool CPinnedItem::readBackLevel(CArchive& archive) {
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator<<(CArchive& archive, const CPinnedItem& pin) {
+CArchive& operator<<(CArchive& archive, const CPinApiLicense& pin) {
     pin.SerializeC(archive);
     return archive;
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, CPinnedItem& pin) {
+CArchive& operator>>(CArchive& archive, CPinApiLicense& pin) {
     pin.Serialize(archive);
     return archive;
 }
 
 //-------------------------------------------------------------------------
-ostream& operator<<(ostream& os, const CPinnedItem& it) {
+ostream& operator<<(ostream& os, const CPinApiLicense& it) {
     // EXISTING_CODE
     // EXISTING_CODE
 
@@ -289,10 +260,9 @@ ostream& operator<<(ostream& os, const CPinnedItem& it) {
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_PINNEDITEM =
-    "[{FILENAME}]\t"
-    "[{BLOOMHASH}]\t"
-    "[{INDEXHASH}]";
+const char* STR_DISPLAY_PINAPILICENSE =
+    "[{APIKEY}]\t"
+    "[{SECRETKEY}]";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

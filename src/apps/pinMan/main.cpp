@@ -17,7 +17,7 @@ int main(int argc, const char* argv[]) {
 
         if (once)
             cout << exportPreamble(expContext().fmtMap["header"],
-                                   (options.license ? "CPinataLicense" : "CPinManifest"));
+                                   (options.license ? "CPinApiLicense" : "CPinManifest"));
 
         if (options.license) {
             if (expContext().exportFmt == TXT1 || expContext().exportFmt == CSV1) {
@@ -48,7 +48,7 @@ void COptions::handle_pin(void) {
     LOG8("Handle pin: ", pin);
 
     string_q pins;
-    if (!pinlib_pinataListOfPins(lic, pins)) {
+    if (!pinlib_getPinList(lic, pins)) {
         usageStr(pins + ".");
         return;
     }
@@ -60,7 +60,7 @@ void COptions::handle_unpin(void) {
     LOG8("Handle unpin: ", unpin);
 
     string_q pins;
-    if (!pinlib_pinataListOfPins(lic, pins)) {
+    if (!pinlib_getPinList(lic, pins)) {
         usageStr(pins + ".");
         return;
     }
@@ -77,78 +77,8 @@ void COptions::handle_unpin(void) {
         usleep(300000);
         pins = "";
         pins.clear();
-        pinlib_pinataListOfPins(lic, pins);
+        pinlib_getPinList(lic, pins);
         pinList = CPinataPinlist();
         pinList.parseJson3(pins);
     }
 }
-
-#if 0
-/*
- //----------------------------------------------------------------
-int main(int argc, const char* argv[]) {
-    pinlib_init(quickQuitHandler);
-    verbose = 5;
-
-    if (argc != 2) {
-        cerr << "pinata <filename>" << endl;
-        return 1;
-    }
-
-    if (getGlobalConfig("blockScrape")->getConfigStr("settings", "pinata_api_key", "<notset>") == "<notset>") {
-        cerr << "Pinata key not set.";
-        return 1;
-    }
-
-    if (getGlobalConfig("blockScrape")->getConfigStr("settings", "pinata_secret_api_key", "<notset>") == "<notset>") {
-        cerr << "Pinata secret key not set.";
-        return 1;
-    }
-
-//    LOG4("Starting");
-//    cout << "ascii: " << fileLastModifyDate(getInitialManifest()) << endl;
-//    cout << "binary: " << fileLastModifyDate(getCachePath("tmp/pins.bin")) << endl;
-//    cout << "Should be found: ";
-    CPinnedItem item;
-//    if (findChunk(pinList, argv[1], item)) {
-//        cout << item << endl;
-//    } else {
-//        cout << "Not found" << endl;
-//    }
-//
-//    LOG4("unpinning");
-//    item = CPinnedItem();
-//    unpinChunk(pinList, argv[1], item);
-//
-//    cout << "ascii: " << fileLastModifyDate(getInitalManifest()) << endl;
-//    cout << "binary: " << fileLastModifyDate(getCachePath("tmp/pins.bin")) << endl;
-//    cout << "Removed: " << item << endl;
-//
-//    cout << "Should not be found: ";
-//    if (findChunk(pinList, argv[1], item)) {
-//        cout << item << endl;
-//    } else {
-//        cout << "Not found" << endl;
-//    }
-
-    LOG4("pinning");
-    item = CPinnedItem();
-    pinChunk(pinList, argv[1], item);
-
-    cout << "ascii: " << fileLastModifyDate(getInitalManifest()) << endl;
-    cout << "binary: " << fileLastModifyDate(getCachePath("tmp/pins.bin")) << endl;
-    cout << "Pinned: " << item << endl;
-
-    cout << "Should be found: ";
-    if (findChunk(pinList, argv[1], item)) {
-        cout << item << endl;
-    } else {
-        cout << "Not found" << endl;
-    }
-
-    LOG4("Done");
-    pinlib_cleanup();
-    return 1;
-}
-*/
-#endif

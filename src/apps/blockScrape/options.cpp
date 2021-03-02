@@ -128,7 +128,7 @@ bool COptions::parseArguments(string_q& command) {
     if (publish && pin)
         return usage("The --publish option is not available when using the --pin option.");
 
-    if ((pin || publish) && !pinlib_hasPinataKeys()) {
+    if ((pin || publish) && !pinlib_getApiKeys(lic)) {
         if (!isTestMode()) {
             ostringstream os;
             os << "The " << (pin ? "--pin" : "--publish") << " option requires you to have a Pinata key.";
@@ -146,7 +146,7 @@ bool COptions::parseArguments(string_q& command) {
         manifest.bloomFormat = hashToBloomFormatFile;
         manifest.prevHash = "";  // (prevHash == "" ? hashToEmptyFile : prevHash);
 
-        CPinnedItemArray pList;
+        CPinnedChunkArray pList;
         pinlib_readPinList(pList, true);
         pinlib_forEveryPin(pList, addNewPin, &manifest);
         manifest.toJson(cout);
@@ -401,7 +401,7 @@ bool COptions::changeState(void) {
 }
 
 //----------------------------------------------------------------
-bool addNewPin(CPinnedItem& pin, void* data) {
+bool addNewPin(CPinnedChunk& pin, void* data) {
     CPinManifest* manifestPtr = (CPinManifest*)data;  // NOLINT
     manifestPtr->newPins.push_back(pin);
 

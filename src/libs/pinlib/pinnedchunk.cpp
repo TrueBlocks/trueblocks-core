@@ -14,26 +14,26 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
-#include "pinatalicense.h"
+#include "pinnedchunk.h"
 
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CPinataLicense, CBaseNode);
+IMPLEMENT_NODE(CPinnedChunk, CBaseNode);
 
 //---------------------------------------------------------------------------
-static string_q nextPinatalicenseChunk(const string_q& fieldIn, const void* dataPtr);
-static string_q nextPinatalicenseChunk_custom(const string_q& fieldIn, const void* dataPtr);
+static string_q nextPinnedchunkChunk(const string_q& fieldIn, const void* dataPtr);
+static string_q nextPinnedchunkChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
-void CPinataLicense::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
+void CPinnedChunk::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
     if (!m_showing)
         return;
 
     // EXISTING_CODE
     // EXISTING_CODE
 
-    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["pinatalicense_fmt"] : fmtIn);
+    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["pinnedchunk_fmt"] : fmtIn);
     if (fmt.empty()) {
         if (expContext().exportFmt == YAML1) {
             toYaml(ctx);
@@ -47,13 +47,13 @@ void CPinataLicense::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) 
     // EXISTING_CODE
 
     while (!fmt.empty())
-        ctx << getNextChunk(fmt, nextPinatalicenseChunk, this);
+        ctx << getNextChunk(fmt, nextPinnedchunkChunk, this);
 }
 
 //---------------------------------------------------------------------------
-string_q nextPinatalicenseChunk(const string_q& fieldIn, const void* dataPtr) {
+string_q nextPinnedchunkChunk(const string_q& fieldIn, const void* dataPtr) {
     if (dataPtr)
-        return reinterpret_cast<const CPinataLicense*>(dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CPinnedChunk*>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -62,9 +62,9 @@ string_q nextPinatalicenseChunk(const string_q& fieldIn, const void* dataPtr) {
 }
 
 //---------------------------------------------------------------------------
-string_q CPinataLicense::getValueByName(const string_q& fieldName) const {
+string_q CPinnedChunk::getValueByName(const string_q& fieldName) const {
     // Give customized code a chance to override first
-    string_q ret = nextPinatalicenseChunk_custom(fieldName, this);
+    string_q ret = nextPinnedchunkChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
@@ -73,14 +73,24 @@ string_q CPinataLicense::getValueByName(const string_q& fieldName) const {
 
     // Return field values
     switch (tolower(fieldName[0])) {
-        case 'a':
-            if (fieldName % "apiKey") {
-                return apiKey;
+        case 'b':
+            if (fieldName % "bloomHash") {
+                return bloomHash;
             }
             break;
-        case 's':
-            if (fieldName % "secretKey") {
-                return secretKey;
+        case 'f':
+            if (fieldName % "fileName") {
+                return fileName;
+            }
+            break;
+        case 'i':
+            if (fieldName % "indexHash") {
+                return indexHash;
+            }
+            break;
+        case 'o':
+            if (fieldName % "onDisc") {
+                return bool_2_Str(onDisc);
             }
             break;
         default:
@@ -95,7 +105,7 @@ string_q CPinataLicense::getValueByName(const string_q& fieldName) const {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CPinataLicense::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
+bool CPinnedChunk::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
     string_q fieldName = fieldNameIn;
     string_q fieldValue = fieldValueIn;
 
@@ -103,15 +113,27 @@ bool CPinataLicense::setValueByName(const string_q& fieldNameIn, const string_q&
     // EXISTING_CODE
 
     switch (tolower(fieldName[0])) {
-        case 'a':
-            if (fieldName % "apiKey") {
-                apiKey = fieldValue;
+        case 'b':
+            if (fieldName % "bloomHash") {
+                bloomHash = fieldValue;
                 return true;
             }
             break;
-        case 's':
-            if (fieldName % "secretKey") {
-                secretKey = fieldValue;
+        case 'f':
+            if (fieldName % "fileName") {
+                fileName = fieldValue;
+                return true;
+            }
+            break;
+        case 'i':
+            if (fieldName % "indexHash") {
+                indexHash = fieldValue;
+                return true;
+            }
+            break;
+        case 'o':
+            if (fieldName % "onDisc") {
+                onDisc = str_2_Bool(fieldValue);
                 return true;
             }
             break;
@@ -122,13 +144,13 @@ bool CPinataLicense::setValueByName(const string_q& fieldNameIn, const string_q&
 }
 
 //---------------------------------------------------------------------------------------------------
-void CPinataLicense::finishParse() {
+void CPinnedChunk::finishParse() {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CPinataLicense::Serialize(CArchive& archive) {
+bool CPinnedChunk::Serialize(CArchive& archive) {
     if (archive.isWriting())
         return SerializeC(archive);
 
@@ -140,27 +162,31 @@ bool CPinataLicense::Serialize(CArchive& archive) {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive >> apiKey;
-    archive >> secretKey;
+    archive >> fileName;
+    archive >> bloomHash;
+    archive >> indexHash;
+    // archive >> onDisc;
     finishParse();
     return true;
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CPinataLicense::SerializeC(CArchive& archive) const {
+bool CPinnedChunk::SerializeC(CArchive& archive) const {
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive << apiKey;
-    archive << secretKey;
+    archive << fileName;
+    archive << bloomHash;
+    archive << indexHash;
+    // archive << onDisc;
 
     return true;
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, CPinataLicenseArray& array) {
+CArchive& operator>>(CArchive& archive, CPinnedChunkArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -172,7 +198,7 @@ CArchive& operator>>(CArchive& archive, CPinataLicenseArray& array) {
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator<<(CArchive& archive, const CPinataLicenseArray& array) {
+CArchive& operator<<(CArchive& archive, const CPinnedChunkArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0; i < array.size(); i++)
@@ -181,34 +207,37 @@ CArchive& operator<<(CArchive& archive, const CPinataLicenseArray& array) {
 }
 
 //---------------------------------------------------------------------------
-void CPinataLicense::registerClass(void) {
+void CPinnedChunk::registerClass(void) {
     // only do this once
-    if (HAS_FIELD(CPinataLicense, "schema"))
+    if (HAS_FIELD(CPinnedChunk, "schema"))
         return;
 
     size_t fieldNum = 1000;
-    ADD_FIELD(CPinataLicense, "schema", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CPinataLicense, "deleted", T_BOOL, ++fieldNum);
-    ADD_FIELD(CPinataLicense, "showing", T_BOOL, ++fieldNum);
-    ADD_FIELD(CPinataLicense, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CPinataLicense, "apiKey", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CPinataLicense, "secretKey", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CPinnedChunk, "schema", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CPinnedChunk, "deleted", T_BOOL, ++fieldNum);
+    ADD_FIELD(CPinnedChunk, "showing", T_BOOL, ++fieldNum);
+    ADD_FIELD(CPinnedChunk, "cname", T_TEXT, ++fieldNum);
+    ADD_FIELD(CPinnedChunk, "fileName", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CPinnedChunk, "bloomHash", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CPinnedChunk, "indexHash", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CPinnedChunk, "onDisc", T_BOOL | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CPinnedChunk, "onDisc");
 
     // Hide our internal fields, user can turn them on if they like
-    HIDE_FIELD(CPinataLicense, "schema");
-    HIDE_FIELD(CPinataLicense, "deleted");
-    HIDE_FIELD(CPinataLicense, "showing");
-    HIDE_FIELD(CPinataLicense, "cname");
+    HIDE_FIELD(CPinnedChunk, "schema");
+    HIDE_FIELD(CPinnedChunk, "deleted");
+    HIDE_FIELD(CPinnedChunk, "showing");
+    HIDE_FIELD(CPinnedChunk, "cname");
 
-    builtIns.push_back(_biCPinataLicense);
+    builtIns.push_back(_biCPinnedChunk);
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------
-string_q nextPinatalicenseChunk_custom(const string_q& fieldIn, const void* dataPtr) {
-    const CPinataLicense* pin = reinterpret_cast<const CPinataLicense*>(dataPtr);
+string_q nextPinnedchunkChunk_custom(const string_q& fieldIn, const void* dataPtr) {
+    const CPinnedChunk* pin = reinterpret_cast<const CPinnedChunk*>(dataPtr);
     if (pin) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -230,7 +259,7 @@ string_q nextPinatalicenseChunk_custom(const string_q& fieldIn, const void* data
 }
 
 //---------------------------------------------------------------------------
-bool CPinataLicense::readBackLevel(CArchive& archive) {
+bool CPinnedChunk::readBackLevel(CArchive& archive) {
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -238,19 +267,19 @@ bool CPinataLicense::readBackLevel(CArchive& archive) {
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator<<(CArchive& archive, const CPinataLicense& pin) {
+CArchive& operator<<(CArchive& archive, const CPinnedChunk& pin) {
     pin.SerializeC(archive);
     return archive;
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, CPinataLicense& pin) {
+CArchive& operator>>(CArchive& archive, CPinnedChunk& pin) {
     pin.Serialize(archive);
     return archive;
 }
 
 //-------------------------------------------------------------------------
-ostream& operator<<(ostream& os, const CPinataLicense& it) {
+ostream& operator<<(ostream& os, const CPinnedChunk& it) {
     // EXISTING_CODE
     // EXISTING_CODE
 
@@ -260,9 +289,10 @@ ostream& operator<<(ostream& os, const CPinataLicense& it) {
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_PINATALICENSE =
-    "[{APIKEY}]\t"
-    "[{SECRETKEY}]";
+const char* STR_DISPLAY_PINNEDCHUNK =
+    "[{FILENAME}]\t"
+    "[{BLOOMHASH}]\t"
+    "[{INDEXHASH}]";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

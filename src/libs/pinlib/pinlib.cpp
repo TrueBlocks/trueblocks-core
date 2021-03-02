@@ -15,13 +15,16 @@
 
 namespace qblocks {
 
+extern bool pinlib_getFileByHash(const hash_t& hash, const string_q& outFilename);
+#define hashToEmptyFile "QmP4i6ihnVrj8Tx7cTFw4aY6ungpaPYxDJEZ7Vg1RSNSdm"
+
 //-------------------------------------------------------------------------
 void pinlib_init(QUITHANDLER qh) {
     acctlib_init(qh);
-    CPinnedItem::registerClass();
+    CPinnedChunk::registerClass();
     CPinataPin::registerClass();
     CPinataPinlist::registerClass();
-    CPinataLicense::registerClass();
+    CPinApiLicense::registerClass();
     CPinataMetadata::registerClass();
     CPinataRegion::registerClass();
     CPinManifest::registerClass();
@@ -32,46 +35,14 @@ void pinlib_cleanup(void) {
     acctlib_cleanup();
 }
 
-//-------------------------------------------------------------------------
-bool pinlib_getFileByHash(const hash_t& hash, const string_q& outFilename) {  // also unzips if the file is zipped
-    string_q cmd = "curl -s ";
-    cmd += "\"https://ipfs.io/ipfs/" + hash + "\" ";
-    cmd += "--output " + getCachePath("tmp/") + outFilename + " ; ";
-    if (system(cmd.c_str())) {  // NOLINT
-    }                           // Don't remove cruft. Silences compiler warnings
-    if (endsWith(outFilename, ".gz")) {
-        cmd = "cd " + getCachePath("tmp/") + " ; gunzip *.gz";
-        if (system(cmd.c_str())) {  // NOLINT
-        }                           // Don't remove cruft. Silences compiler warnings
-    }
-
-    return fileExists(substitute(outFilename, ".gz", ""));
-}
-
-#define hashToEmptyFile "QmP4i6ihnVrj8Tx7cTFw4aY6ungpaPYxDJEZ7Vg1RSNSdm"
-//---------------------------------------------------------------------------
-bool pinlib_findChunk(CPinnedItemArray& pList, const string_q& fileName, CPinnedItem& item) {
-    if (!pinlib_readPinList(pList, false))
-        return false;
-
-    CPinnedItem search;
-    search.fileName = fileName;
-    const vector<CPinnedItem>::iterator it = find(pList.begin(), pList.end(), search);
-    if (it != pList.end()) {
-        item = *it;
-        return true;
-    }
-    return false;
-}
-
 //----------------------------------------------------------------
-bool pinlib_pinChunk(CPinnedItemArray& pList, const string_q& fileName, CPinnedItem& item) {
+bool pinlib_pinChunk(CPinnedChunkArray& pList, const string_q& fileName, CPinnedChunk& item) {
     if (!pinlib_readPinList(pList, false)) {
         return false;
     }
 
     // If already pinned, no reason to pin it again...
-    CPinnedItem copy;
+    CPinnedChunk copy;
     if (pinlib_findChunk(pList, fileName, copy)) {
         LOG_WARN("Pin for blocks ", fileName, " already exists.");
         item = copy;
@@ -79,7 +50,7 @@ bool pinlib_pinChunk(CPinnedItemArray& pList, const string_q& fileName, CPinnedI
     }
 
     item.fileName = fileName;
-    string_q indexStr = pinlib_pinOneFile(fileName, "finalized", true);
+    string_q indexStr = pinlib_pinOneFile(fileName, "finalized");
     if (!contains(indexStr, "IpfsHash")) {
         LOG_ERR("Could not pin index for blocks ", fileName, " file to Pinata. Quitting...");
         return false;
@@ -93,7 +64,7 @@ bool pinlib_pinChunk(CPinnedItemArray& pList, const string_q& fileName, CPinnedI
     item.indexHash = index.ipfs_pin_hash;
     LOG_INFO(bRed, "  Pinned index to blocks ", substitute(fileName, "-", " "), " to: ", item.indexHash, cOff);
 
-    string_q bloomStr = pinlib_pinOneFile(fileName, "blooms", true);
+    string_q bloomStr = pinlib_pinOneFile(fileName, "blooms");
     if (!contains(bloomStr, "IpfsHash")) {
         LOG_ERR("Could not pin bloom for blocks ", fileName, " file to Pinata. Quitting...");
         return false;
@@ -117,19 +88,19 @@ bool pinlib_pinChunk(CPinnedItemArray& pList, const string_q& fileName, CPinnedI
 }
 
 //---------------------------------------------------------------------------
-bool pinlib_unpinChunk(CPinnedItemArray& pList, const string_q& fileName, CPinnedItem& item) {
+bool pinlib_unpinChunk(CPinnedChunkArray& pList, const string_q& fileName, CPinnedChunk& item) {
     if (!pinlib_readPinList(pList, false))
         return false;
 
     // If we don't think it's pinned, Pinata may, so proceed even if not found
-    CPinnedItem copy;
+    CPinnedChunk copy;
     if (!pinlib_findChunk(pList, fileName, copy)) {
         item = copy;
         item.fileName = fileName;
         // return true;
     }
 
-    CPinnedItemArray array;
+    CPinnedChunkArray array;
     for (auto pin : pList) {
         if (pin.fileName == fileName) {
             cout << "Unpinning: " << pin.fileName << endl;
@@ -151,7 +122,7 @@ bool pinlib_unpinChunk(CPinnedItemArray& pList, const string_q& fileName, CPinne
 }
 
 //-------------------------------------------------------------------------
-bool pinlib_getChunkByHash(CPinnedItemArray& pList, const string_q& fileName, CPinnedItem& item) {
+bool pinlib_getChunkByHash(CPinnedChunkArray& pList, const string_q& fileName, CPinnedChunk& item) {
     if (!pinlib_readPinList(pList, true))
         return false;
 
@@ -171,6 +142,101 @@ bool pinlib_getChunkByHash(CPinnedItemArray& pList, const string_q& fileName, CP
     return true;
 }
 
+//---------------------------------------------------------------------------
+bool pinlib_findChunk(CPinnedChunkArray& pList, const string_q& fileName, CPinnedChunk& item) {
+    if (!pinlib_readPinList(pList, false))
+        return false;
+
+    CPinnedChunk search;
+    search.fileName = fileName;
+    const vector<CPinnedChunk>::iterator it = find(pList.begin(), pList.end(), search);
+    if (it != pList.end()) {
+        item = *it;
+        return true;
+    }
+    return false;
+}
+
+//-------------------------------------------------------------------------
+bool pinlib_forEveryPin(CPinnedChunkArray& pList, PINFUNC func, void* data) {
+    if (!func)
+        return false;
+
+    if (!pinlib_readPinList(pList, true))
+        return false;
+
+    for (auto pin : pList) {
+        if (!(*func)(pin, data))
+            return false;
+    }
+    return true;
+}
+
+//---------------------------------------------------------------------------
+bool pinlib_readPinList(CPinnedChunkArray& pinArray, bool required) {
+    if (!pinArray.empty())
+        return true;
+
+    string_q binFile = getCachePath("tmp/pins.bin");
+    string_q textFile = configPath("manifest/initial-manifest.json");
+
+    time_q binDate = fileLastModifyDate(binFile);
+    time_q textDate = fileLastModifyDate(textFile);
+
+    // LOG8("binDate: ", binDate.Format(FMT_JSON));
+    // LOG8("textDate: ", textDate.Format(FMT_JSON));
+
+    if (binDate > textDate && fileExists(binFile)) {
+        CArchive pinFile(READING_ARCHIVE);
+        if (!pinFile.Lock(binFile, modeReadOnly, LOCK_NOWAIT)) {
+            LOG_ERR("Could not open pin file for reading. Quitting...");
+            return false;
+        }
+        pinFile >> pinArray;
+        pinFile.Release();
+
+    } else if (!fileExists(textFile)) {
+        if (required) {
+            LOG_ERR("Pins file is required, but not found. Quitting...");
+            return false;
+        }
+        return true;
+
+    } else {
+        pinArray.clear();  // redundant, but fine
+        string_q contents = asciiFileToString(textFile);
+        CPinManifest report;
+        report.parseJson3(contents);
+        for (auto pin : report.prevPins)
+            pinArray.push_back(pin);
+        for (auto pin : report.newPins)
+            pinArray.push_back(pin);
+        LOG4("Done Loading pins");
+        sort(pinArray.begin(), pinArray.end());
+        pinlib_writePinList(pinArray);
+    }
+    return true;
+}
+
+//---------------------------------------------------------------------------
+bool pinlib_writePinList(CPinnedChunkArray& pList) {
+    string_q binFile = getCachePath("tmp/pins.bin");
+    establishFolder(binFile);
+
+    lockSection();  // disallow control+C until we write both files
+    CArchive pinFile(WRITING_ARCHIVE);
+    if (!pinFile.Lock(binFile, modeWriteCreate, LOCK_WAIT)) {
+        cerr << "Could not lock pin file for writing." << endl;
+        unlockSection();  // enable control+C
+        return false;
+    }
+    pinFile << pList;
+    pinFile.Release();
+    unlockSection();  // enable control+C
+
+    return true;
+}
+
 //-------------------------------------------------------------------------
 static size_t curlCallback(char* ptr, size_t size, size_t nmemb, void* userdata) {
     string_q part;
@@ -185,21 +251,11 @@ static size_t curlCallback(char* ptr, size_t size, size_t nmemb, void* userdata)
 }
 
 //----------------------------------------------------------------
-bool pinlib_getPinataKeys(CPinataLicense& lic) {
-    lic.apiKey = getGlobalConfig("blockScrape")->getConfigStr("settings", "pinata_api_key", "<notset>");
-    lic.secretKey = getGlobalConfig("blockScrape")->getConfigStr("settings", "pinata_secret_api_key", "<notset>");
-    if (isTestMode()) {
-        lic.apiKey = lic.secretKey = "--license_codes--";
-    }
-    return (lic.apiKey != "<notset>" && lic.secretKey != "<notset>");
-}
-
-//----------------------------------------------------------------
-string_q pinlib_pinOneFile(const string_q& fileName, const string_q& type, bool compress) {
+string_q pinlib_pinOneFile(const string_q& fileName, const string_q& type) {
     LOG4("Starting pin");
 
-    CPinataLicense lic;
-    if (!pinlib_getPinataKeys(lic)) {
+    CPinApiLicense lic;
+    if (!pinlib_getApiKeys(lic)) {
         cerr << "You need to put Pinata API keys in ~/.quickBlocks/blockScrape.toml" << endl;
         return "";
     }
@@ -208,14 +264,12 @@ string_q pinlib_pinOneFile(const string_q& fileName, const string_q& type, bool 
         (type == "blooms" ? substitute(substitute(fileName, ".bin", ".bloom"), "/finalized/", "/blooms/") : fileName);
     string_q zip = source;
     LOG4("source: ", source, " ", fileExists(source));
-    if (compress) {
-        zip = source + ".gz";
-        // clang-format off
-        string_q cmd1 = "yes | gzip -n --keep " + source; // + " 2>/dev/null";
-        if (system(cmd1.c_str())) {}  // Don't remove cruft. Silences compiler warnings
-        // clang-format on
-        LOG4("zip: ", zip, " ", fileExists(zip));
-    }
+    zip = source + ".gz";
+    // clang-format off
+    string_q cmd1 = "yes | gzip -n --keep " + source; // + " 2>/dev/null";
+    if (system(cmd1.c_str())) {}  // Don't remove cruft. Silences compiler warnings
+    // clang-format on
+    LOG4("zip: ", zip, " ", fileExists(zip));
 
     string_q result;
     CURL* curl;
@@ -262,8 +316,8 @@ string_q pinlib_pinOneFile(const string_q& fileName, const string_q& type, bool 
 string_q pinlib_unpinOneFile(const string_q& hash) {
     LOG4("Starting unpin");
 
-    CPinataLicense lic;
-    if (!pinlib_getPinataKeys(lic)) {
+    CPinApiLicense lic;
+    if (!pinlib_getApiKeys(lic)) {
         cerr << "You need to put Pinata API keys in ~/.quickBlocks/blockScrape.toml" << endl;
         return "";
     }
@@ -296,9 +350,18 @@ string_q pinlib_unpinOneFile(const string_q& hash) {
     return result;
 }
 
+//----------------------------------------------------------------
+bool pinlib_getApiKeys(CPinApiLicense& lic) {
+    lic.apiKey = getGlobalConfig("blockScrape")->getConfigStr("settings", "pinata_api_key", "<notset>");
+    lic.secretKey = getGlobalConfig("blockScrape")->getConfigStr("settings", "pinata_secret_api_key", "<notset>");
+    if (isTestMode())
+        lic.apiKey = lic.secretKey = "--license_codes--";
+    return (lic.apiKey != "<notset>" && lic.secretKey != "<notset>");
+}
+
 //---------------------------------------------------------------------------
 // Assumes the license is valid
-bool pinlib_pinataListOfPins(const CPinataLicense& lic, string& result) {
+bool pinlib_getPinList(const CPinApiLicense& lic, string& result) {
     result = "";
     result.clear();
 
@@ -341,84 +404,21 @@ bool pinlib_pinataListOfPins(const CPinataLicense& lic, string& result) {
     return true;
 }
 
-//---------------------------------------------------------------------------
-bool pinlib_writePinList(CPinnedItemArray& pList) {
-    string_q binFile = getCachePath("tmp/pins.bin");
-    establishFolder(binFile);
-
-    lockSection();  // disallow control+C until we write both files
-    CArchive pinFile(WRITING_ARCHIVE);
-    if (!pinFile.Lock(binFile, modeWriteCreate, LOCK_WAIT)) {
-        cerr << "Could not lock pin file for writing." << endl;
-        unlockSection();  // enable control+C
-        return false;
-    }
-    pinFile << pList;
-    pinFile.Release();
-    unlockSection();  // enable control+C
-
-    return true;
-}
-
-//---------------------------------------------------------------------------
-bool pinlib_readPinList(CPinnedItemArray& pinArray, bool required) {
-    if (!pinArray.empty())
-        return true;
-
-    string_q binFile = getCachePath("tmp/pins.bin");
-    string_q textFile = configPath("manifest/initial-manifest.json");
-
-    time_q binDate = fileLastModifyDate(binFile);
-    time_q textDate = fileLastModifyDate(textFile);
-
-    // LOG8("binDate: ", binDate.Format(FMT_JSON));
-    // LOG8("textDate: ", textDate.Format(FMT_JSON));
-
-    if (binDate > textDate && fileExists(binFile)) {
-        CArchive pinFile(READING_ARCHIVE);
-        if (!pinFile.Lock(binFile, modeReadOnly, LOCK_NOWAIT)) {
-            LOG_ERR("Could not open pin file for reading. Quitting...");
-            return false;
-        }
-        pinFile >> pinArray;
-        pinFile.Release();
-
-    } else if (!fileExists(textFile)) {
-        if (required) {
-            LOG_ERR("Pins file is required, but not found. Quitting...");
-            return false;
-        }
-        return true;
-
-    } else {
-        pinArray.clear();  // redundant, but fine
-        string_q contents = asciiFileToString(textFile);
-        CPinManifest report;
-        report.parseJson3(contents);
-        for (auto pin : report.prevPins)
-            pinArray.push_back(pin);
-        for (auto pin : report.newPins)
-            pinArray.push_back(pin);
-        LOG4("Done Loading pins");
-        sort(pinArray.begin(), pinArray.end());
-        pinlib_writePinList(pinArray);
-    }
-    return true;
-}
-
 //-------------------------------------------------------------------------
-bool pinlib_forEveryPin(CPinnedItemArray& pList, PINFUNC func, void* data) {
-    if (!func)
-        return false;
-
-    if (!pinlib_readPinList(pList, true))
-        return false;
-
-    for (auto pin : pList) {
-        if (!(*func)(pin, data))
-            return false;
+bool pinlib_getFileByHash(const hash_t& hash,
+                          const string_q& outFilename) {  // also unzips if the file is zipped
+    string_q cmd = "curl -s ";
+    cmd += "\"https://ipfs.io/ipfs/" + hash + "\" ";
+    cmd += "--output " + getCachePath("tmp/") + outFilename + " ; ";
+    if (system(cmd.c_str())) {  // NOLINT
+    }                           // Don't remove cruft. Silences compiler warnings
+    if (endsWith(outFilename, ".gz")) {
+        cmd = "cd " + getCachePath("tmp/") + " ; gunzip *.gz";
+        if (system(cmd.c_str())) {  // NOLINT
+        }                           // Don't remove cruft. Silences compiler warnings
     }
-    return true;
+
+    return fileExists(substitute(outFilename, ".gz", ""));
 }
 
 }  // namespace qblocks

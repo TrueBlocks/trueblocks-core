@@ -1,8 +1,8 @@
 [settings]
-class = CPinataLicense
+class = CPinApiLicense
 fields = string apiKey|\
     string secretKey
-includes = pinlib.h
+includes = utillib.h
 cpp_includes =
 serializable = true
 equals = (apiKey == it.apiKey)

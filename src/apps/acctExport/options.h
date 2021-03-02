@@ -51,7 +51,7 @@ class COptions : public CAbiOptions {
     address_t hackAppAddr;
     CBlockAddressMap prefundAddrMap;
     CBlockAddressMap blkRewardMap;
-    CPinnedItemArray pinList;
+    CPinnedChunkArray pinList;
 
     CAddressUintMap toAddrMap;
     CAddressUintMap fromAddrMap;

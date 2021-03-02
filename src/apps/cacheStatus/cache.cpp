@@ -357,9 +357,6 @@ bool CCache::writeBinaryCache(const string_q& cacheType, bool details) {
 
 //---------------------------------------------------------------------------
 bool CCache::needsRefresh(const string_q& cacheType, bool details) {
-#if 0
-    return true;
-#else
     if (isTestMode())
         return true;
     string_q lPath = getCachePath(cacheType) + "/";
@@ -374,7 +371,6 @@ bool CCache::needsRefresh(const string_q& cacheType, bool details) {
     LOG4("fileInfo:    ", ret.fileTime.Format(FMT_EXPORT), " - ", ret.fileName);
     LOG4("needsRefresh:", res);
     return (res);
-#endif
 }
 // EXISTING_CODE
 }  // namespace qblocks

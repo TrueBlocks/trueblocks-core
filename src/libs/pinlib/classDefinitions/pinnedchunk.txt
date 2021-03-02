@@ -1,5 +1,5 @@
 [settings]
-class = CPinnedItem
+class = CPinnedChunk
 fields = string fileName|\
         string bloomHash|\
         string indexHash|\

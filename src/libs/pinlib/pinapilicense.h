@@ -15,7 +15,7 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
-#include "pinlib.h"
+#include "utillib.h"
 
 namespace qblocks {
 
@@ -23,32 +23,32 @@ namespace qblocks {
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class CPinataLicense : public CBaseNode {
+class CPinApiLicense : public CBaseNode {
   public:
     string_q apiKey;
     string_q secretKey;
 
   public:
-    CPinataLicense(void);
-    CPinataLicense(const CPinataLicense& pi);
-    virtual ~CPinataLicense(void);
-    CPinataLicense& operator=(const CPinataLicense& pi);
+    CPinApiLicense(void);
+    CPinApiLicense(const CPinApiLicense& pi);
+    virtual ~CPinApiLicense(void);
+    CPinApiLicense& operator=(const CPinApiLicense& pi);
 
-    DECLARE_NODE(CPinataLicense);
+    DECLARE_NODE(CPinApiLicense);
 
     // EXISTING_CODE
     // EXISTING_CODE
-    bool operator==(const CPinataLicense& it) const;
-    bool operator!=(const CPinataLicense& it) const {
+    bool operator==(const CPinApiLicense& it) const;
+    bool operator!=(const CPinApiLicense& it) const {
         return !operator==(it);
     }
-    friend bool operator<(const CPinataLicense& v1, const CPinataLicense& v2);
-    friend ostream& operator<<(ostream& os, const CPinataLicense& it);
+    friend bool operator<(const CPinApiLicense& v1, const CPinApiLicense& v2);
+    friend ostream& operator<<(ostream& os, const CPinApiLicense& it);
 
   protected:
     void clear(void);
     void initialize(void);
-    void duplicate(const CPinataLicense& pi);
+    void duplicate(const CPinApiLicense& pi);
     bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
@@ -56,14 +56,14 @@ class CPinataLicense : public CBaseNode {
 };
 
 //--------------------------------------------------------------------------
-inline CPinataLicense::CPinataLicense(void) {
+inline CPinApiLicense::CPinApiLicense(void) {
     initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CPinataLicense::CPinataLicense(const CPinataLicense& pi) {
+inline CPinApiLicense::CPinApiLicense(const CPinApiLicense& pi) {
     // EXISTING_CODE
     // EXISTING_CODE
     duplicate(pi);
@@ -73,20 +73,20 @@ inline CPinataLicense::CPinataLicense(const CPinataLicense& pi) {
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline CPinataLicense::~CPinataLicense(void) {
+inline CPinApiLicense::~CPinApiLicense(void) {
     clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CPinataLicense::clear(void) {
+inline void CPinApiLicense::clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CPinataLicense::initialize(void) {
+inline void CPinApiLicense::initialize(void) {
     CBaseNode::initialize();
 
     apiKey = "";
@@ -97,7 +97,7 @@ inline void CPinataLicense::initialize(void) {
 }
 
 //--------------------------------------------------------------------------
-inline void CPinataLicense::duplicate(const CPinataLicense& pi) {
+inline void CPinApiLicense::duplicate(const CPinApiLicense& pi) {
     clear();
     CBaseNode::duplicate(pi);
 
@@ -109,7 +109,7 @@ inline void CPinataLicense::duplicate(const CPinataLicense& pi) {
 }
 
 //--------------------------------------------------------------------------
-inline CPinataLicense& CPinataLicense::operator=(const CPinataLicense& pi) {
+inline CPinApiLicense& CPinApiLicense::operator=(const CPinApiLicense& pi) {
     duplicate(pi);
     // EXISTING_CODE
     // EXISTING_CODE
@@ -117,7 +117,7 @@ inline CPinataLicense& CPinataLicense::operator=(const CPinataLicense& pi) {
 }
 
 //-------------------------------------------------------------------------
-inline bool CPinataLicense::operator==(const CPinataLicense& it) const {
+inline bool CPinApiLicense::operator==(const CPinApiLicense& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // Equality operator as defined in class definition
@@ -125,7 +125,7 @@ inline bool CPinataLicense::operator==(const CPinataLicense& it) const {
 }
 
 //-------------------------------------------------------------------------
-inline bool operator<(const CPinataLicense& v1, const CPinataLicense& v2) {
+inline bool operator<(const CPinApiLicense& v1, const CPinApiLicense& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default sort defined in class definition, assume already sorted, preserve ordering
@@ -133,24 +133,18 @@ inline bool operator<(const CPinataLicense& v1, const CPinataLicense& v2) {
 }
 
 //---------------------------------------------------------------------------
-typedef vector<CPinataLicense> CPinataLicenseArray;
-extern CArchive& operator>>(CArchive& archive, CPinataLicenseArray& array);
-extern CArchive& operator<<(CArchive& archive, const CPinataLicenseArray& array);
+typedef vector<CPinApiLicense> CPinApiLicenseArray;
+extern CArchive& operator>>(CArchive& archive, CPinApiLicenseArray& array);
+extern CArchive& operator<<(CArchive& archive, const CPinApiLicenseArray& array);
 
 //---------------------------------------------------------------------------
-extern CArchive& operator<<(CArchive& archive, const CPinataLicense& pin);
-extern CArchive& operator>>(CArchive& archive, CPinataLicense& pin);
+extern CArchive& operator<<(CArchive& archive, const CPinApiLicense& pin);
+extern CArchive& operator>>(CArchive& archive, CPinApiLicense& pin);
 
 //---------------------------------------------------------------------------
-extern const char* STR_DISPLAY_PINATALICENSE;
+extern const char* STR_DISPLAY_PINAPILICENSE;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-extern bool pinlib_pinataListOfPins(const CPinataLicense& lic, string_q& result);
-extern bool pinlib_getPinataKeys(CPinataLicense& lic);
-inline bool pinlib_hasPinataKeys(void) {
-    CPinataLicense lic;
-    return pinlib_getPinataKeys(lic);
-}
 // EXISTING_CODE
 }  // namespace qblocks

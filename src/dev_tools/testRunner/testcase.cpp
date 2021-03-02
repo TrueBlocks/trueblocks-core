@@ -546,7 +546,7 @@ void CTestCase::prepareTest(bool cmdLine, bool removeWorking) {
         if (cmdLine) {
             CStringArray opts = {
                 "val",   "addrs",        "addrs2", "blocks",    "block_list", "files",
-                "dates", "transactions", "terms",  "functions", "modes",
+                "dates", "transactions", "terms",  "functions", "modes",      "mode",
             };
             options = "&" + options;
             for (auto opt : opts)

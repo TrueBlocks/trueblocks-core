@@ -128,8 +128,8 @@ bool visitToPin(const string_q& chunkId, void* data) {
     LOG_INFO("  Pinning");
     LOG_FN8(chunkId);
     ASSERT(data);
-    CPinnedItemArray& pinList = *(CPinnedItemArray*)data;  // NO_LINT
-    CPinnedItem pinRecord;
+    CPinnedChunkArray& pinList = *(CPinnedChunkArray*)data;  // NO_LINT
+    CPinnedChunk pinRecord;
     pinlib_pinChunk(pinList, chunkId, pinRecord);
     return !shouldQuit();
 }

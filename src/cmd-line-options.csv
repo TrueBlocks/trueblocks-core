@@ -53,11 +53,11 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,customizeable,c
 10840,apps,Admin,status,cacheStatus,end,E,,false,false,false,false,header,flag,<blknum>,last block to process (inclusive)
 10860,apps,Admin,status,cacheStatus,,,,false,false,true,true,--,description,,Report on status of one or more TrueBlocks caches.
 
-10900,apps,Admin,pins,pinMan,modes,,,true,false,true,true,header,positional,enum[local*|remote|onchain],display the pin manifest (or its hash)&#44; using 'modes' as the source
+10900,apps,Admin,pins,pinMan,mode,,,true,false,true,true,header,positional,enum[local*|remote|onchain],the source from which to pin&#44; unpin&#44; or display the index hashes
 10900,apps,Admin,pins,pinMan,hash,a,,false,false,true,true,header,switch,<boolean>,display the hash instead of contents of manifest
 10900,apps,Admin,pins,pinMan,pin,p,,false,false,true,true,header,flag,<string>,pin items either locally or remotely ('all' to all items in a folder)
 10900,apps,Admin,pins,pinMan,unpin,u,,false,false,true,true,header,flag,<string>,unpin previously pinned items give a hash&#44; a filename&#44; or 'all'
-10900,apps,Admin,pins,pinMan,init,i,,false,false,true,true,header,switch,<boolean>,initialize the TrueBlocks appearance index by downloading only bloom filters
+10900,apps,Admin,pins,pinMan,init,i,,false,false,true,true,header,switch,<boolean>,initialize the TrueBlocks appearance index by downloading the bloom filters
 10900,apps,Admin,pins,pinMan,license,l,,false,false,false,false,header,switch,<boolean>,show the current pinata license information
 10910,apps,Admin,pins,pinMan,,,,false,false,true,true,--,description,,Report on and manage the pinned appearance index chunks and associated bloom filters.
 

@@ -291,7 +291,7 @@ COptions::~COptions(void) {
 
 //--------------------------------------------------------------------------------
 void loadPinMaps(CIndexHashMap& bloomMap, CIndexHashMap& indexMap) {
-    CPinnedItemArray pinList;
+    CPinnedChunkArray pinList;
     if (!pinlib_readPinList(pinList, false))
         return;
 

@@ -17,7 +17,7 @@
 class COptions : public CAbiOptions {
   public:
     // BEG_CODE_DECLARE
-    string_q modes;
+    string_q mode;
     bool hash;
     string_q pin;
     string_q unpin;
@@ -25,8 +25,8 @@ class COptions : public CAbiOptions {
     bool license;
     // END_CODE_DECLARE
 
-    CPinataLicense lic;
-    CPinnedItemArray pList;
+    CPinApiLicense lic;
+    CPinnedChunkArray pList;
 
     COptions(void);
     ~COptions(void);

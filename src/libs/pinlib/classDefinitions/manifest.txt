@@ -5,8 +5,8 @@ fields = string fileName|\
         string bloomFormat|\
         hash prevHash|\
         string newBlockRange|\
-        CPinnedItemArray newPins|\
+        CPinnedChunkArray newPins|\
         string prevBlockRange|\
-        CPinnedItemArray prevPins
-includes = etherlib.h|pinneditem.h
+        CPinnedChunkArray prevPins
+includes = etherlib.h|pinnedchunk.h
 serializable = true

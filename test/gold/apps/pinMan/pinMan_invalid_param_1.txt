@@ -3,15 +3,15 @@ pinMan --junk
 
   Invalid option: --junk
 
-  Usage:    pinMan [-a|-p|-u|-i|-v|-h] <mode> [mode...]  
+  Usage:    pinMan [-a|-p|-u|-i|-v|-h] mode  
   Purpose:  Report on and manage the pinned appearance index chunks and associated bloom filters.
 
   Where:  
-	modes                 display the pin manifest (or its hash), using 'modes' as the source, one of [local*|remote|onchain] (required)
+	mode                  the source from which to pin, unpin, or display the index hashes, one of [local*|remote|onchain] (required)
 	-a  (--hash)          display the hash instead of contents of manifest
 	-p  (--pin <str>)     pin items either locally or remotely ('all' to all items in a folder)
 	-u  (--unpin <str>)   unpin previously pinned items give a hash, a filename, or 'all'
-	-i  (--init)          initialize the TrueBlocks appearance index by downloading only bloom filters
+	-i  (--init)          initialize the TrueBlocks appearance index by downloading the bloom filters
 
 	#### Hidden options
 	-l  (--license)       show the current pinata license information

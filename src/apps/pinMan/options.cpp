@@ -13,11 +13,11 @@
 static const COption params[] = {
     // BEG_CODE_OPTIONS
     // clang-format off
-    COption("modes", "", "enum[local*|remote|onchain]", OPT_REQUIRED | OPT_POSITIONAL, "display the pin manifest (or its hash), using 'modes' as the source"),  // NOLINT
+    COption("mode", "", "enum[local*|remote|onchain]", OPT_REQUIRED | OPT_POSITIONAL, "the source from which to pin, unpin, or display the index hashes"),  // NOLINT
     COption("hash", "a", "", OPT_SWITCH, "display the hash instead of contents of manifest"),
     COption("pin", "p", "<string>", OPT_FLAG, "pin items either locally or remotely ('all' to all items in a folder)"),
     COption("unpin", "u", "<string>", OPT_FLAG, "unpin previously pinned items give a hash, a filename, or 'all'"),
-    COption("init", "i", "", OPT_SWITCH, "initialize the TrueBlocks appearance index by downloading only bloom filters"),  // NOLINT
+    COption("init", "i", "", OPT_SWITCH, "initialize the TrueBlocks appearance index by downloading the bloom filters"),
     COption("license", "l", "", OPT_HIDDEN | OPT_SWITCH, "show the current pinata license information"),
     COption("", "", "", OPT_DESCRIPTION, "Report on and manage the pinned appearance index chunks and associated bloom filters."),  // NOLINT
     // clang-format on
@@ -63,9 +63,9 @@ bool COptions::parseArguments(string_q& command) {
             }
 
         } else {
-            if (!modes.empty())
-                return usage("Please specify only one modes.");
-            if (!confirmEnum("modes", modes, arg))
+            if (!mode.empty())
+                return usage("Please specify only one mode.");
+            if (!confirmEnum("mode", mode, arg))
                 return false;
 
             // END_CODE_AUTO
@@ -73,7 +73,7 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     // BEG_DEBUG_DISPLAY
-    LOG_TEST("modes", modes, (modes == ""));
+    LOG_TEST("mode", mode, (mode == ""));
     LOG_TEST_BOOL("hash", hash);
     LOG_TEST("pin", pin, (pin == ""));
     LOG_TEST("unpin", unpin, (unpin == ""));
@@ -81,11 +81,11 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST_BOOL("license", license);
     // END_DEBUG_DISPLAY
 
-    if (!pinlib_getPinataKeys(lic))
+    if (!pinlib_getApiKeys(lic))
         return usage("You need a pinata license to proceed.");
 
     if (license)
-        configureDisplay("pinMan", "CPinataLicense", STR_DISPLAY_PINATALICENSE);
+        configureDisplay("pinMan", "CPinApiLicense", STR_DISPLAY_PINAPILICENSE);
     else
         configureDisplay("pinMan", "CPinManifest", STR_DISPLAY_PINMANIFEST);
 
@@ -139,7 +139,7 @@ hash_t getLastManifest(void) {
 }
 
 //----------------------------------------------------------------
-bool checkOnDisc(CPinnedItem& pin, void* data) {
+bool checkOnDisc(CPinnedChunk& pin, void* data) {
     pin.onDisc = fileExists(pin.fileName);
     return true;
 }

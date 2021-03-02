@@ -16,7 +16,7 @@
  * of 'EXISTING_CODE' tags.
  */
 #include "etherlib.h"
-#include "pinneditem.h"
+#include "pinnedchunk.h"
 
 namespace qblocks {
 
@@ -31,9 +31,9 @@ class CPinManifest : public CBaseNode {
     string_q bloomFormat;
     hash_t prevHash;
     string_q newBlockRange;
-    CPinnedItemArray newPins;
+    CPinnedChunkArray newPins;
     string_q prevBlockRange;
-    CPinnedItemArray prevPins;
+    CPinnedChunkArray prevPins;
 
   public:
     CPinManifest(void);

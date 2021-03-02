@@ -7,7 +7,7 @@
   ],
   "types": [
     {
-      "type": "CPinataLicense",
+      "type": "CPinApiLicense",
       "fields": [
         {
           "name": "apiKey",

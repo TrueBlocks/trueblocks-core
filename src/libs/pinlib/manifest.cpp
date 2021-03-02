@@ -171,11 +171,11 @@ bool CPinManifest::setValueByName(const string_q& fieldNameIn, const string_q& f
                 return true;
             }
             if (fieldName % "newPins") {
-                CPinnedItem obj;
+                CPinnedChunk obj;
                 string_q str = fieldValue;
                 while (obj.parseJson3(str)) {
                     newPins.push_back(obj);
-                    obj = CPinnedItem();  // reset
+                    obj = CPinnedChunk();  // reset
                 }
                 return true;
             }
@@ -190,11 +190,11 @@ bool CPinManifest::setValueByName(const string_q& fieldNameIn, const string_q& f
                 return true;
             }
             if (fieldName % "prevPins") {
-                CPinnedItem obj;
+                CPinnedChunk obj;
                 string_q str = fieldValue;
                 while (obj.parseJson3(str)) {
                     prevPins.push_back(obj);
-                    obj = CPinnedItem();  // reset
+                    obj = CPinnedChunk();  // reset
                 }
                 return true;
             }
@@ -365,7 +365,7 @@ ostream& operator<<(ostream& os, const CPinManifest& it) {
 const CBaseNode* CPinManifest::getObjectAt(const string_q& fieldName, size_t index) const {
     if (fieldName % "newPins") {
         if (index == NOPOS) {
-            CPinnedItem empty;
+            CPinnedChunk empty;
             ((CPinManifest*)this)->newPins.push_back(empty);  // NOLINT
             index = newPins.size() - 1;
         }
@@ -375,7 +375,7 @@ const CBaseNode* CPinManifest::getObjectAt(const string_q& fieldName, size_t ind
 
     if (fieldName % "prevPins") {
         if (index == NOPOS) {
-            CPinnedItem empty;
+            CPinnedChunk empty;
             ((CPinManifest*)this)->prevPins.push_back(empty);  // NOLINT
             index = prevPins.size() - 1;
         }

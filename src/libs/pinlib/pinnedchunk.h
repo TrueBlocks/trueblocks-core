@@ -23,7 +23,7 @@ namespace qblocks {
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class CPinnedItem : public CBaseNode {
+class CPinnedChunk : public CBaseNode {
   public:
     string_q fileName;
     string_q bloomHash;
@@ -31,26 +31,26 @@ class CPinnedItem : public CBaseNode {
     bool onDisc;
 
   public:
-    CPinnedItem(void);
-    CPinnedItem(const CPinnedItem& pi);
-    virtual ~CPinnedItem(void);
-    CPinnedItem& operator=(const CPinnedItem& pi);
+    CPinnedChunk(void);
+    CPinnedChunk(const CPinnedChunk& pi);
+    virtual ~CPinnedChunk(void);
+    CPinnedChunk& operator=(const CPinnedChunk& pi);
 
-    DECLARE_NODE(CPinnedItem);
+    DECLARE_NODE(CPinnedChunk);
 
     // EXISTING_CODE
     // EXISTING_CODE
-    bool operator==(const CPinnedItem& it) const;
-    bool operator!=(const CPinnedItem& it) const {
+    bool operator==(const CPinnedChunk& it) const;
+    bool operator!=(const CPinnedChunk& it) const {
         return !operator==(it);
     }
-    friend bool operator<(const CPinnedItem& v1, const CPinnedItem& v2);
-    friend ostream& operator<<(ostream& os, const CPinnedItem& it);
+    friend bool operator<(const CPinnedChunk& v1, const CPinnedChunk& v2);
+    friend ostream& operator<<(ostream& os, const CPinnedChunk& it);
 
   protected:
     void clear(void);
     void initialize(void);
-    void duplicate(const CPinnedItem& pi);
+    void duplicate(const CPinnedChunk& pi);
     bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
@@ -58,14 +58,14 @@ class CPinnedItem : public CBaseNode {
 };
 
 //--------------------------------------------------------------------------
-inline CPinnedItem::CPinnedItem(void) {
+inline CPinnedChunk::CPinnedChunk(void) {
     initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CPinnedItem::CPinnedItem(const CPinnedItem& pi) {
+inline CPinnedChunk::CPinnedChunk(const CPinnedChunk& pi) {
     // EXISTING_CODE
     // EXISTING_CODE
     duplicate(pi);
@@ -75,20 +75,20 @@ inline CPinnedItem::CPinnedItem(const CPinnedItem& pi) {
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline CPinnedItem::~CPinnedItem(void) {
+inline CPinnedChunk::~CPinnedChunk(void) {
     clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CPinnedItem::clear(void) {
+inline void CPinnedChunk::clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CPinnedItem::initialize(void) {
+inline void CPinnedChunk::initialize(void) {
     CBaseNode::initialize();
 
     fileName = "";
@@ -101,7 +101,7 @@ inline void CPinnedItem::initialize(void) {
 }
 
 //--------------------------------------------------------------------------
-inline void CPinnedItem::duplicate(const CPinnedItem& pi) {
+inline void CPinnedChunk::duplicate(const CPinnedChunk& pi) {
     clear();
     CBaseNode::duplicate(pi);
 
@@ -115,7 +115,7 @@ inline void CPinnedItem::duplicate(const CPinnedItem& pi) {
 }
 
 //--------------------------------------------------------------------------
-inline CPinnedItem& CPinnedItem::operator=(const CPinnedItem& pi) {
+inline CPinnedChunk& CPinnedChunk::operator=(const CPinnedChunk& pi) {
     duplicate(pi);
     // EXISTING_CODE
     // EXISTING_CODE
@@ -123,7 +123,7 @@ inline CPinnedItem& CPinnedItem::operator=(const CPinnedItem& pi) {
 }
 
 //-------------------------------------------------------------------------
-inline bool CPinnedItem::operator==(const CPinnedItem& it) const {
+inline bool CPinnedChunk::operator==(const CPinnedChunk& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // Equality operator as defined in class definition
@@ -131,7 +131,7 @@ inline bool CPinnedItem::operator==(const CPinnedItem& it) const {
 }
 
 //-------------------------------------------------------------------------
-inline bool operator<(const CPinnedItem& v1, const CPinnedItem& v2) {
+inline bool operator<(const CPinnedChunk& v1, const CPinnedChunk& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
     // Default sort as defined in class definition
@@ -139,16 +139,16 @@ inline bool operator<(const CPinnedItem& v1, const CPinnedItem& v2) {
 }
 
 //---------------------------------------------------------------------------
-typedef vector<CPinnedItem> CPinnedItemArray;
-extern CArchive& operator>>(CArchive& archive, CPinnedItemArray& array);
-extern CArchive& operator<<(CArchive& archive, const CPinnedItemArray& array);
+typedef vector<CPinnedChunk> CPinnedChunkArray;
+extern CArchive& operator>>(CArchive& archive, CPinnedChunkArray& array);
+extern CArchive& operator<<(CArchive& archive, const CPinnedChunkArray& array);
 
 //---------------------------------------------------------------------------
-extern CArchive& operator<<(CArchive& archive, const CPinnedItem& pin);
-extern CArchive& operator>>(CArchive& archive, CPinnedItem& pin);
+extern CArchive& operator<<(CArchive& archive, const CPinnedChunk& pin);
+extern CArchive& operator>>(CArchive& archive, CPinnedChunk& pin);
 
 //---------------------------------------------------------------------------
-extern const char* STR_DISPLAY_PINNEDITEM;
+extern const char* STR_DISPLAY_PINNEDCHUNK;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
