@@ -276,6 +276,7 @@ void establishTestData(void) {
     doCommand("grabABI 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359");
     doCommand("grabABI 0x226159d592e2b063810a10ebf6dcbada94ed68b8");
     doCommand("grabABI 0x17996cbddd23c2a912de8477c37d43a1b79770b8");
+    doCommand("grabABI 0x0000000000004946c0e9f43f4dee607b0ef1fa1c");
 
 // TODO(tjayrush): FIX_THIS_CODE
 #if 1
