@@ -288,3 +288,16 @@ COptions::COptions(void) {
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
 }
+
+//--------------------------------------------------------------------------------
+void loadPinMaps(CIndexHashMap& bloomMap, CIndexHashMap& indexMap) {
+    CPinnedItemArray pinList;
+    if (!readBinaryManifest(pinList, false))
+        return;
+
+    for (auto pin : pinList) {
+        blknum_t num = str_2_Uint(pin.fileName);
+        bloomMap[num] = pin.bloomHash;
+        indexMap[num] = pin.indexHash;
+    }
+}

@@ -14,4 +14,5 @@ TIME ~ CLOCK - <INFO>  : publish: true
       "indexHash": "QmZ5Atm8Z7aFLz2EycK4pVMHuH4y3PDGspuFejnE9fx2i5"
     }
   ]
-}TIME ~ CLOCK - <INFO>  :   Pinned manifest and posted it to Ethereum address: 0xcfd7f3b24f3551741f922fd8c4381aa4e00fc8fd
+}TIME ~ CLOCK - : 8------Current state stopped.
+{ "status": "stopped" }

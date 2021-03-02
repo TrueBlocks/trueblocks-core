@@ -9,7 +9,7 @@
   ],
   "types": [
     {
-      "type": "CPinReport",
+      "type": "CManifest",
       "fields": [
         {
           "name": "fileName",

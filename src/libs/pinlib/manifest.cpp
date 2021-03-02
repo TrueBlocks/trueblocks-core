@@ -14,26 +14,26 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
-#include "pinreport.h"
+#include "manifest.h"
 
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CPinReport, CBaseNode);
+IMPLEMENT_NODE(CManifest, CBaseNode);
 
 //---------------------------------------------------------------------------
-static string_q nextPinreportChunk(const string_q& fieldIn, const void* dataPtr);
-static string_q nextPinreportChunk_custom(const string_q& fieldIn, const void* dataPtr);
+static string_q nextManifestChunk(const string_q& fieldIn, const void* dataPtr);
+static string_q nextManifestChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
-void CPinReport::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
+void CManifest::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
     if (!m_showing)
         return;
 
     // EXISTING_CODE
     // EXISTING_CODE
 
-    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["pinreport_fmt"] : fmtIn);
+    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["manifest_fmt"] : fmtIn);
     if (fmt.empty()) {
         if (expContext().exportFmt == YAML1) {
             toYaml(ctx);
@@ -47,13 +47,13 @@ void CPinReport::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) cons
     // EXISTING_CODE
 
     while (!fmt.empty())
-        ctx << getNextChunk(fmt, nextPinreportChunk, this);
+        ctx << getNextChunk(fmt, nextManifestChunk, this);
 }
 
 //---------------------------------------------------------------------------
-string_q nextPinreportChunk(const string_q& fieldIn, const void* dataPtr) {
+string_q nextManifestChunk(const string_q& fieldIn, const void* dataPtr) {
     if (dataPtr)
-        return reinterpret_cast<const CPinReport*>(dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CManifest*>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -62,9 +62,9 @@ string_q nextPinreportChunk(const string_q& fieldIn, const void* dataPtr) {
 }
 
 //---------------------------------------------------------------------------
-string_q CPinReport::getValueByName(const string_q& fieldName) const {
+string_q CManifest::getValueByName(const string_q& fieldName) const {
     // Give customized code a chance to override first
-    string_q ret = nextPinreportChunk_custom(fieldName, this);
+    string_q ret = nextManifestChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
@@ -139,7 +139,7 @@ string_q CPinReport::getValueByName(const string_q& fieldName) const {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CPinReport::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
+bool CManifest::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
     string_q fieldName = fieldNameIn;
     string_q fieldValue = fieldValueIn;
 
@@ -206,13 +206,13 @@ bool CPinReport::setValueByName(const string_q& fieldNameIn, const string_q& fie
 }
 
 //---------------------------------------------------------------------------------------------------
-void CPinReport::finishParse() {
+void CManifest::finishParse() {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CPinReport::Serialize(CArchive& archive) {
+bool CManifest::Serialize(CArchive& archive) {
     if (archive.isWriting())
         return SerializeC(archive);
 
@@ -237,7 +237,7 @@ bool CPinReport::Serialize(CArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CPinReport::SerializeC(CArchive& archive) const {
+bool CManifest::SerializeC(CArchive& archive) const {
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
 
@@ -256,7 +256,7 @@ bool CPinReport::SerializeC(CArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, CPinReportArray& array) {
+CArchive& operator>>(CArchive& archive, CManifestArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -268,7 +268,7 @@ CArchive& operator>>(CArchive& archive, CPinReportArray& array) {
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator<<(CArchive& archive, const CPinReportArray& array) {
+CArchive& operator<<(CArchive& archive, const CManifestArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0; i < array.size(); i++)
@@ -277,48 +277,48 @@ CArchive& operator<<(CArchive& archive, const CPinReportArray& array) {
 }
 
 //---------------------------------------------------------------------------
-void CPinReport::registerClass(void) {
+void CManifest::registerClass(void) {
     // only do this once
-    if (HAS_FIELD(CPinReport, "schema"))
+    if (HAS_FIELD(CManifest, "schema"))
         return;
 
     size_t fieldNum = 1000;
-    ADD_FIELD(CPinReport, "schema", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CPinReport, "deleted", T_BOOL, ++fieldNum);
-    ADD_FIELD(CPinReport, "showing", T_BOOL, ++fieldNum);
-    ADD_FIELD(CPinReport, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CPinReport, "fileName", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CPinReport, "indexFormat", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CPinReport, "bloomFormat", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CPinReport, "prevHash", T_HASH | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CPinReport, "newBlockRange", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CPinReport, "newPins", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CPinReport, "prevBlockRange", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CPinReport, "prevPins", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CManifest, "schema", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CManifest, "deleted", T_BOOL, ++fieldNum);
+    ADD_FIELD(CManifest, "showing", T_BOOL, ++fieldNum);
+    ADD_FIELD(CManifest, "cname", T_TEXT, ++fieldNum);
+    ADD_FIELD(CManifest, "fileName", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CManifest, "indexFormat", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CManifest, "bloomFormat", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CManifest, "prevHash", T_HASH | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CManifest, "newBlockRange", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CManifest, "newPins", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CManifest, "prevBlockRange", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CManifest, "prevPins", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
-    HIDE_FIELD(CPinReport, "schema");
-    HIDE_FIELD(CPinReport, "deleted");
-    HIDE_FIELD(CPinReport, "showing");
-    HIDE_FIELD(CPinReport, "cname");
+    HIDE_FIELD(CManifest, "schema");
+    HIDE_FIELD(CManifest, "deleted");
+    HIDE_FIELD(CManifest, "showing");
+    HIDE_FIELD(CManifest, "cname");
 
-    builtIns.push_back(_biCPinReport);
+    builtIns.push_back(_biCManifest);
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------
-string_q nextPinreportChunk_custom(const string_q& fieldIn, const void* dataPtr) {
-    const CPinReport* pin = reinterpret_cast<const CPinReport*>(dataPtr);
-    if (pin) {
+string_q nextManifestChunk_custom(const string_q& fieldIn, const void* dataPtr) {
+    const CManifest* man = reinterpret_cast<const CManifest*>(dataPtr);
+    if (man) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if (fieldIn % "parsed")
-                    return nextBasenodeChunk(fieldIn, pin);
+                    return nextBasenodeChunk(fieldIn, man);
                 // EXISTING_CODE
                 // EXISTING_CODE
                 break;
@@ -332,7 +332,7 @@ string_q nextPinreportChunk_custom(const string_q& fieldIn, const void* dataPtr)
 }
 
 //---------------------------------------------------------------------------
-bool CPinReport::readBackLevel(CArchive& archive) {
+bool CManifest::readBackLevel(CArchive& archive) {
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -340,19 +340,19 @@ bool CPinReport::readBackLevel(CArchive& archive) {
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator<<(CArchive& archive, const CPinReport& pin) {
-    pin.SerializeC(archive);
+CArchive& operator<<(CArchive& archive, const CManifest& man) {
+    man.SerializeC(archive);
     return archive;
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, CPinReport& pin) {
-    pin.Serialize(archive);
+CArchive& operator>>(CArchive& archive, CManifest& man) {
+    man.Serialize(archive);
     return archive;
 }
 
 //-------------------------------------------------------------------------
-ostream& operator<<(ostream& os, const CPinReport& it) {
+ostream& operator<<(ostream& os, const CManifest& it) {
     // EXISTING_CODE
     // EXISTING_CODE
 
@@ -362,11 +362,11 @@ ostream& operator<<(ostream& os, const CPinReport& it) {
 }
 
 //---------------------------------------------------------------------------
-const CBaseNode* CPinReport::getObjectAt(const string_q& fieldName, size_t index) const {
+const CBaseNode* CManifest::getObjectAt(const string_q& fieldName, size_t index) const {
     if (fieldName % "newPins") {
         if (index == NOPOS) {
             CPinnedItem empty;
-            ((CPinReport*)this)->newPins.push_back(empty);  // NOLINT
+            ((CManifest*)this)->newPins.push_back(empty);  // NOLINT
             index = newPins.size() - 1;
         }
         if (index < newPins.size())
@@ -376,7 +376,7 @@ const CBaseNode* CPinReport::getObjectAt(const string_q& fieldName, size_t index
     if (fieldName % "prevPins") {
         if (index == NOPOS) {
             CPinnedItem empty;
-            ((CPinReport*)this)->prevPins.push_back(empty);  // NOLINT
+            ((CManifest*)this)->prevPins.push_back(empty);  // NOLINT
             index = prevPins.size() - 1;
         }
         if (index < prevPins.size())
@@ -387,7 +387,7 @@ const CBaseNode* CPinReport::getObjectAt(const string_q& fieldName, size_t index
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_PINREPORT = "";
+const char* STR_DISPLAY_MANIFEST = "";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

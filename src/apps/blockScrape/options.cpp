@@ -137,9 +137,21 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     // Is the user asking to publish the pin manifest to the smart contract?
+#define hashToIndexFormatFile "Qmart6XP9XjL43p72PGR93QKytbK8jWWcMguhFgxATTya2"
+#define hashToBloomFormatFile "QmNhPk39DUFoEdhUmtGARqiFECUHeghyeryxZM9kyRxzHD"
     if (publish) {
-        publishManifest(cout);
-        return false;
+        CManifest manifest;
+        manifest.fileName = "initial-manifest.json";
+        manifest.indexFormat = hashToIndexFormatFile;
+        manifest.bloomFormat = hashToBloomFormatFile;
+        manifest.prevHash = "";  // (prevHash == "" ? hashToEmptyFile : prevHash);
+
+        CPinnedItemArray pList;
+        readBinaryManifest(pList, true);
+        forEveryPin(pList, addNewPin, &manifest);
+        manifest.toJson(cout);
+
+        return true;
     }
 
     // We shouldn't run if we're already running...
@@ -387,4 +399,24 @@ bool COptions::changeState(void) {
     }
     cout << "{ \"status\": \"" << stateStr << "\" }" << endl;
     return true;
+}
+
+//----------------------------------------------------------------
+bool addNewPin(CPinnedItem& pin, void* data) {
+    CManifest* manifestPtr = (CManifest*)data;  // NOLINT
+    manifestPtr->newPins.push_back(pin);
+
+    timestamp_t unused;
+    blknum_t newEnd;
+    blknum_t newStart = bnFromPath(pin.fileName, newEnd, unused);
+
+    if (manifestPtr->newBlockRange.empty()) {
+        manifestPtr->newBlockRange = padNum9(newStart) + "-" + padNum9(newEnd);
+    } else {
+        blknum_t oldEnd;
+        blknum_t oldStart = bnFromPath(manifestPtr->newBlockRange, oldEnd, unused);
+        manifestPtr->newBlockRange = padNum9(min(oldStart, newStart)) + "-" + padNum9(max(oldEnd, newEnd));
+    }
+    // TODO(tjayrush): Note...
+    return !isTestMode();
 }

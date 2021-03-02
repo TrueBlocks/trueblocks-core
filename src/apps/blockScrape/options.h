@@ -62,3 +62,4 @@ extern bool visitCopyRipeToStage(const string_q& path, void* data);
 extern bool appendFile(const string_q& toFile, const string_q& fromFile);
 extern bool prepareMonitors(const string_q& path, void* data);
 extern bool visitToPin(const string_q& chunkId, void* data);
+extern bool addNewPin(CPinnedItem& pin, void* data);

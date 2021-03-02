@@ -92,3 +92,6 @@ class CItemCounter : public CCache {
     CItemCounter(void) : CCache() {
     }
 };
+
+//--------------------------------------------------------------------------------
+extern void loadPinMaps(CIndexHashMap& bloomMap, CIndexHashMap& indexMap);

@@ -1,5 +1,5 @@
 [settings]
-class = CPinReport
+class = CManifest
 fields = string fileName|\
         string indexFormat|\
         string bloomFormat|\

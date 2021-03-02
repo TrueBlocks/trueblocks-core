@@ -13,4 +13,4 @@
   ],
   "prevBlockRange": "",
   "prevPins": []
-}
+}{ "status": "stopped" }

@@ -87,7 +87,7 @@ bool COptions::parseArguments(string_q& command) {
     if (license)
         configureDisplay("pinStatus", "CPinataLicense", STR_DISPLAY_PINATALICENSE);
     else
-        configureDisplay("pinStatus", "CPinReport", STR_DISPLAY_PINREPORT);
+        configureDisplay("pinStatus", "CManifest", STR_DISPLAY_MANIFEST);
 
     EXIT_NOMSG(true);
 }
@@ -131,4 +131,44 @@ hash_t COptions::getCurrentManifest(void) {
     theCall.blockNumber = getBlockProgress(BP_CLIENT).client;
     loadAbiFile(configPath("abis/known-000/unchained.json"), &theCall.abi_spec);
     return doEthCall(theCall) ? theCall.result.outputs[0].value : "";
+}
+
+//----------------------------------------------------------------
+hash_t getLastManifest(void) {
+    return asciiFileToString(configPath("ipfs-hashes/lastHash.txt"));
+}
+
+//----------------------------------------------------------------
+bool checkOnDisc(CPinnedItem& pin, void* data) {
+    pin.onDisc = fileExists(pin.fileName);
+    return true;
+}
+
+//-------------------------------------------------------------------------
+string_q getFileContentsByHash(const hash_t& hash) {  // also unzips if the file is zipped
+    string_q cmd = "curl -s ";
+    cmd += "\"https://ipfs.io/ipfs/" + hash + "\" ";
+    return doCommand(cmd);
+}
+
+//----------------------------------------------------------------
+bool COptions::freshenBlooms(bool download, const string_q& currManifest) {
+    string_q prev = getLastManifest();
+    if (currManifest != prev) {
+        LOG_INFO("Manifest needs to be updated. Previous [", prev, "] Current [", currManifest, "]");
+        stringToAsciiFile(configPath("ipfs-hashes/lastHash.txt"), currManifest);
+        string_q contents = getFileContentsByHash(currManifest);
+        if (contents != "empty file") {
+            stringToAsciiFile(configPath("manifest/initial-manifest.json"), contents);
+            pList.clear();
+        }
+    } else {
+        LOG_INFO("Manifest is up to data at: ", currManifest);
+    }
+
+    readBinaryManifest(pList, false);
+    if (download)
+        forEveryPin(pList, checkOnDisc, NULL);
+
+    return true;
 }

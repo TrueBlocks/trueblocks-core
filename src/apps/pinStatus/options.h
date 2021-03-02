@@ -26,6 +26,7 @@ class COptions : public CAbiOptions {
     // END_CODE_DECLARE
 
     CPinataLicense lic;
+    CPinnedItemArray pList;
 
     COptions(void);
     ~COptions(void);
@@ -34,6 +35,11 @@ class COptions : public CAbiOptions {
     void Init(void) override;
 
     hash_t getCurrentManifest(void);
+    bool freshenBlooms(bool download, const string_q& currManifest);
     void handle_unpin(void);
     void handle_pin(void);
 };
+
+//-------------------------------------------------------------------------
+#define unchainedIndexAddr "0xcfd7f3b24f3551741f922fd8c4381aa4e00fc8fd"
+#define manifestHashEncoding "0x337f3f32"

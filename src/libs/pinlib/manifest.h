@@ -24,7 +24,7 @@ namespace qblocks {
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class CPinReport : public CBaseNode {
+class CManifest : public CBaseNode {
   public:
     string_q fileName;
     string_q indexFormat;
@@ -36,28 +36,28 @@ class CPinReport : public CBaseNode {
     CPinnedItemArray prevPins;
 
   public:
-    CPinReport(void);
-    CPinReport(const CPinReport& pi);
-    virtual ~CPinReport(void);
-    CPinReport& operator=(const CPinReport& pi);
+    CManifest(void);
+    CManifest(const CManifest& ma);
+    virtual ~CManifest(void);
+    CManifest& operator=(const CManifest& ma);
 
-    DECLARE_NODE(CPinReport);
+    DECLARE_NODE(CManifest);
 
     const CBaseNode* getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
     // EXISTING_CODE
-    bool operator==(const CPinReport& it) const;
-    bool operator!=(const CPinReport& it) const {
+    bool operator==(const CManifest& it) const;
+    bool operator!=(const CManifest& it) const {
         return !operator==(it);
     }
-    friend bool operator<(const CPinReport& v1, const CPinReport& v2);
-    friend ostream& operator<<(ostream& os, const CPinReport& it);
+    friend bool operator<(const CManifest& v1, const CManifest& v2);
+    friend ostream& operator<<(ostream& os, const CManifest& it);
 
   protected:
     void clear(void);
     void initialize(void);
-    void duplicate(const CPinReport& pi);
+    void duplicate(const CManifest& ma);
     bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
@@ -65,37 +65,37 @@ class CPinReport : public CBaseNode {
 };
 
 //--------------------------------------------------------------------------
-inline CPinReport::CPinReport(void) {
+inline CManifest::CManifest(void) {
     initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CPinReport::CPinReport(const CPinReport& pi) {
+inline CManifest::CManifest(const CManifest& ma) {
     // EXISTING_CODE
     // EXISTING_CODE
-    duplicate(pi);
+    duplicate(ma);
 }
 
 // EXISTING_CODE
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline CPinReport::~CPinReport(void) {
+inline CManifest::~CManifest(void) {
     clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CPinReport::clear(void) {
+inline void CManifest::clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CPinReport::initialize(void) {
+inline void CManifest::initialize(void) {
     CBaseNode::initialize();
 
     fileName = "";
@@ -112,33 +112,33 @@ inline void CPinReport::initialize(void) {
 }
 
 //--------------------------------------------------------------------------
-inline void CPinReport::duplicate(const CPinReport& pi) {
+inline void CManifest::duplicate(const CManifest& ma) {
     clear();
-    CBaseNode::duplicate(pi);
+    CBaseNode::duplicate(ma);
 
-    fileName = pi.fileName;
-    indexFormat = pi.indexFormat;
-    bloomFormat = pi.bloomFormat;
-    prevHash = pi.prevHash;
-    newBlockRange = pi.newBlockRange;
-    newPins = pi.newPins;
-    prevBlockRange = pi.prevBlockRange;
-    prevPins = pi.prevPins;
+    fileName = ma.fileName;
+    indexFormat = ma.indexFormat;
+    bloomFormat = ma.bloomFormat;
+    prevHash = ma.prevHash;
+    newBlockRange = ma.newBlockRange;
+    newPins = ma.newPins;
+    prevBlockRange = ma.prevBlockRange;
+    prevPins = ma.prevPins;
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CPinReport& CPinReport::operator=(const CPinReport& pi) {
-    duplicate(pi);
+inline CManifest& CManifest::operator=(const CManifest& ma) {
+    duplicate(ma);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
 //-------------------------------------------------------------------------
-inline bool CPinReport::operator==(const CPinReport& it) const {
+inline bool CManifest::operator==(const CManifest& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)
@@ -146,7 +146,7 @@ inline bool CPinReport::operator==(const CPinReport& it) const {
 }
 
 //-------------------------------------------------------------------------
-inline bool operator<(const CPinReport& v1, const CPinReport& v2) {
+inline bool operator<(const CManifest& v1, const CManifest& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default sort defined in class definition, assume already sorted, preserve ordering
@@ -154,16 +154,16 @@ inline bool operator<(const CPinReport& v1, const CPinReport& v2) {
 }
 
 //---------------------------------------------------------------------------
-typedef vector<CPinReport> CPinReportArray;
-extern CArchive& operator>>(CArchive& archive, CPinReportArray& array);
-extern CArchive& operator<<(CArchive& archive, const CPinReportArray& array);
+typedef vector<CManifest> CManifestArray;
+extern CArchive& operator>>(CArchive& archive, CManifestArray& array);
+extern CArchive& operator<<(CArchive& archive, const CManifestArray& array);
 
 //---------------------------------------------------------------------------
-extern CArchive& operator<<(CArchive& archive, const CPinReport& pin);
-extern CArchive& operator>>(CArchive& archive, CPinReport& pin);
+extern CArchive& operator<<(CArchive& archive, const CManifest& man);
+extern CArchive& operator>>(CArchive& archive, CManifest& man);
 
 //---------------------------------------------------------------------------
-extern const char* STR_DISPLAY_PINREPORT;
+extern const char* STR_DISPLAY_MANIFEST;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

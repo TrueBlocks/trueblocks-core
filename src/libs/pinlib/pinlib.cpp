@@ -24,7 +24,7 @@ void pinlib_init(QUITHANDLER qh) {
     CPinataLicense::registerClass();
     CPinataMetadata::registerClass();
     CPinataRegion::registerClass();
-    CPinReport::registerClass();
+    CManifest::registerClass();
 }
 
 //-------------------------------------------------------------------------
@@ -32,48 +32,11 @@ void pinlib_cleanup(void) {
     acctlib_cleanup();
 }
 
-static string_q pinOneFile(const string_q& fileName, const string_q& type, bool compress);
-static string_q unpinOneFile(const string_q& hash);
 static void cleanPinataStr(string_q& in);
-static bool writeManifest(const CPinnedItemArray& array);
-static bool readManifest(bool required = false);
 
 //---------------------------------------------------------------------------
 static CPinnedItemArray pinList;
-static CPinReport pinReport;
-
-//-------------------------------------------------------------------------
-bool forEveryPin(PINFUNC func, void* data) {
-    if (!func)
-        return false;
-    if (!readManifest(true))
-        return false;
-    for (auto pin : pinList) {
-        if (!(*func)(pin, data))
-            return false;
-    }
-    return true;
-}
-
-//----------------------------------------------------------------
-bool addNewPin(CPinnedItem& pin, void* data) {
-    CPinReport* reportPtr = (CPinReport*)data;  // NOLINT
-    reportPtr->newPins.push_back(pin);
-
-    timestamp_t unused;
-    blknum_t newEnd;
-    blknum_t newStart = bnFromPath(pin.fileName, newEnd, unused);
-
-    if (reportPtr->newBlockRange.empty()) {
-        reportPtr->newBlockRange = padNum9(newStart) + "-" + padNum9(newEnd);
-    } else {
-        blknum_t oldEnd;
-        blknum_t oldStart = bnFromPath(reportPtr->newBlockRange, oldEnd, unused);
-        reportPtr->newBlockRange = padNum9(min(oldStart, newStart)) + "-" + padNum9(max(oldEnd, newEnd));
-    }
-    // TODO(tjayrush): Note...
-    return !isTestMode();
-}
+static CManifest pinReport;
 
 //-------------------------------------------------------------------------
 bool getFileByHash(const hash_t& hash, const string_q& outFilename) {  // also unzips if the file is zipped
@@ -91,65 +54,10 @@ bool getFileByHash(const hash_t& hash, const string_q& outFilename) {  // also u
     return fileExists(substitute(outFilename, ".gz", ""));
 }
 
-//-------------------------------------------------------------------------
-string_q getFileContentsByHash(const hash_t& hash) {  // also unzips if the file is zipped
-    string_q cmd = "curl -s ";
-    cmd += "\"https://ipfs.io/ipfs/" + hash + "\" ";
-    return doCommand(cmd);
-}
-
-//----------------------------------------------------------------
-hash_t getLastManifest(void) {
-    return asciiFileToString(configPath("ipfs-hashes/lastHash.txt"));
-}
-
-//----------------------------------------------------------------
-bool checkOnDisc(CPinnedItem& pin, void* data) {
-    pin.onDisc = fileExists(pin.fileName);
-    return true;
-}
-
-//----------------------------------------------------------------
-bool freshenBloomFilters(bool download, const string_q& currManifest) {
-    string_q prev = getLastManifest();
-    if (currManifest != prev) {
-        LOG_INFO("Manifest needs to be updated. Previous [", prev, "] Current [", currManifest, "]");
-        stringToAsciiFile(configPath("ipfs-hashes/lastHash.txt"), currManifest);
-        string_q contents = getFileContentsByHash(currManifest);
-        if (contents != "empty file") {
-            stringToAsciiFile(configPath("manifest/initial-manifest.json"), contents);
-            pinList.clear();
-        }
-    } else {
-        LOG_INFO("Manifest is up to data at: ", currManifest);
-    }
-
-    readManifest();
-    if (download) {
-        forEveryPin(checkOnDisc, NULL);
-    }
-
-    return true;
-}
-
-//----------------------------------------------------------------
-bool publishManifest(ostream& os) {
-    pinReport.fileName = "initial-manifest.json";
-    pinReport.indexFormat = hashToIndexFormatFile;
-    pinReport.bloomFormat = hashToBloomFormatFile;
-    pinReport.prevHash = "";  // (prevHash == "" ? hashToEmptyFile : prevHash);
-
-    forEveryPin(addNewPin, &pinReport);
-
-    pinReport.toJson(os);
-    LOG_INFO(bRed, "  Pinned manifest and posted it to Ethereum address: ", unchainedIndexAddr, cOff);
-
-    return true;
-}
-
+#define hashToEmptyFile "QmP4i6ihnVrj8Tx7cTFw4aY6ungpaPYxDJEZ7Vg1RSNSdm"
 //---------------------------------------------------------------------------
 bool findChunk(const string_q& fileName, CPinnedItem& item) {
-    if (!readManifest())
+    if (!readBinaryManifest(pinList, false))
         return false;
 
     CPinnedItem search;
@@ -164,7 +72,7 @@ bool findChunk(const string_q& fileName, CPinnedItem& item) {
 
 //----------------------------------------------------------------
 bool pinChunk(const string_q& fileName, CPinnedItem& item) {
-    if (!readManifest()) {
+    if (!readBinaryManifest(pinList, false)) {
         return false;
     }
 
@@ -207,19 +115,12 @@ bool pinChunk(const string_q& fileName, CPinnedItem& item) {
 
     // write the array (after sorting it) to the database
     sort(pinList.begin(), pinList.end());
-    return writeManifest(pinList);
-}
-
-//---------------------------------------------------------------------------
-bool unpinChunkByHash(const hash_t& hash) {
-    unpinOneFile(hash);
-    usleep(1000000);
-    return true;
+    return writeBinaryManifest(pinList);
 }
 
 //---------------------------------------------------------------------------
 bool unpinChunk(const string_q& fileName, CPinnedItem& item) {
-    if (!readManifest())
+    if (!readBinaryManifest(pinList, false))
         return false;
 
     // If we don't think it's pinned, Pinata may, so proceed even if not found
@@ -248,19 +149,12 @@ bool unpinChunk(const string_q& fileName, CPinnedItem& item) {
     pinList.clear();
     pinList = array;
     sort(pinList.begin(), pinList.end());
-    return writeManifest(pinList);
-}
-
-//----------------------------------------------------------------
-bool removeFromPinata(CPinnedItem& item, void* data) {
-    cout << item << endl;
-    unpinChunk(item.fileName, item);
-    return true;
+    return writeBinaryManifest(pinList);
 }
 
 //-------------------------------------------------------------------------
 bool getChunkByHash(const string_q& fileName, CPinnedItem& item) {
-    if (!readManifest(true))
+    if (!readBinaryManifest(pinList, true))
         return false;
 
     // If we don't think it's pinned, Pinata may, so proceed even if not found
@@ -310,7 +204,7 @@ bool getPinataKeys(CPinataLicense& lic) {
 }
 
 //----------------------------------------------------------------
-static string_q pinOneFile(const string_q& fileName, const string_q& type, bool compress) {
+string_q pinOneFile(const string_q& fileName, const string_q& type, bool compress) {
     LOG4("Starting pin");
 
     CPinataLicense lic;
@@ -324,7 +218,7 @@ static string_q pinOneFile(const string_q& fileName, const string_q& type, bool 
     string_q zip = source;
     LOG4("source: ", source, " ", fileExists(source));
     if (compress) {
-        string_q zip = source + ".gz";
+        zip = source + ".gz";
         // clang-format off
         string_q cmd1 = "yes | gzip -n --keep " + source; // + " 2>/dev/null";
         if (system(cmd1.c_str())) {}  // Don't remove cruft. Silences compiler warnings
@@ -374,7 +268,7 @@ static string_q pinOneFile(const string_q& fileName, const string_q& type, bool 
 }
 
 //----------------------------------------------------------------
-static string_q unpinOneFile(const string_q& hash) {
+string_q unpinOneFile(const string_q& hash) {
     LOG4("Starting unpin");
 
     CPinataLicense lic;
@@ -464,27 +358,27 @@ static void cleanPinataStr(string_q& in) {
 }
 
 //---------------------------------------------------------------------------
-static bool writeManifest(const CPinnedItemArray& array) {
-    lockSection();  // disallow control+C until we write both files
-
+bool writeBinaryManifest(const CPinnedItemArray& array) {
     string_q binFile = getCachePath("tmp/pins.bin");
     establishFolder(binFile);
+
+    lockSection();  // disallow control+C until we write both files
     CArchive pinFile(WRITING_ARCHIVE);
     if (!pinFile.Lock(binFile, modeWriteCreate, LOCK_WAIT)) {
-        cerr << "Could not lock pin file for writing. Quitting..." << endl;
+        cerr << "Could not lock pin file for writing." << endl;
+        unlockSection();  // enable control+C
         return false;
     }
     pinFile << array;
     pinFile.Release();
-
     unlockSection();  // enable control+C
 
     return true;
 }
 
 //---------------------------------------------------------------------------
-static bool readManifest(bool required) {
-    if (!pinList.empty())
+bool readBinaryManifest(CPinnedItemArray& pinArray, bool required) {
+    if (!pinArray.empty())
         return true;
 
     string_q binFile = getCachePath("tmp/pins.bin");
@@ -502,7 +396,7 @@ static bool readManifest(bool required) {
             LOG_ERR("Could not open pin file for reading. Quitting...");
             return false;
         }
-        pinFile >> pinList;
+        pinFile >> pinArray;
         pinFile.Release();
 
     } else if (!fileExists(textFile)) {
@@ -513,30 +407,32 @@ static bool readManifest(bool required) {
         return true;
 
     } else {
-        pinList.clear();  // redundant, but fine
+        pinArray.clear();  // redundant, but fine
         string_q contents = asciiFileToString(textFile);
-        CPinReport report;
+        CManifest report;
         report.parseJson3(contents);
         for (auto pin : report.prevPins)
-            pinList.push_back(pin);
+            pinArray.push_back(pin);
         for (auto pin : report.newPins)
-            pinList.push_back(pin);
+            pinArray.push_back(pin);
         LOG4("Done Loading pins");
-        sort(pinList.begin(), pinList.end());
-        writeManifest(pinList);
+        sort(pinArray.begin(), pinArray.end());
+        writeBinaryManifest(pinArray);
     }
     return true;
 }
 
-//--------------------------------------------------------------------------------
-void loadPinMaps(CIndexHashMap& bloomMap, CIndexHashMap& indexMap) {
-    if (!readManifest())
-        return;
-    for (auto pin : pinList) {
-        blknum_t num = str_2_Uint(pin.fileName);
-        bloomMap[num] = pin.bloomHash;
-        indexMap[num] = pin.indexHash;
+//-------------------------------------------------------------------------
+bool forEveryPin(CPinnedItemArray& pList, PINFUNC func, void* data) {
+    if (!func)
+        return false;
+    if (!readBinaryManifest(pList, true))
+        return false;
+    for (auto pin : pList) {
+        if (!(*func)(pin, data))
+            return false;
     }
+    return true;
 }
 
 }  // namespace qblocks

@@ -16,7 +16,7 @@ int main(int argc, const char* argv[]) {
             break;
 
         if (once)
-            cout << exportPreamble(expContext().fmtMap["header"], (options.license ? "CPinataLicense" : "CPinReport"));
+            cout << exportPreamble(expContext().fmtMap["header"], (options.license ? "CPinataLicense" : "CManifest"));
 
         if (options.license) {
             if (expContext().exportFmt == TXT1 || expContext().exportFmt == CSV1) {
@@ -70,7 +70,8 @@ void COptions::handle_unpin(void) {
         cout << pinList.count << endl;
         for (auto thePin : pinList.rows) {
             cout << "Unpinning " << thePin.metadata.name << ": " << thePin.ipfs_pin_hash << " ";
-            unpinChunkByHash(thePin.ipfs_pin_hash);
+            unpinOneFile(thePin.ipfs_pin_hash);
+            usleep(1000000);
         }
         usleep(300000);
         pins = "";
