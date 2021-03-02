@@ -128,7 +128,7 @@ bool COptions::parseArguments(string_q& command) {
     if (publish && pin)
         return usage("The --publish option is not available when using the --pin option.");
 
-    if ((pin || publish) && !hasPinataKeys()) {
+    if ((pin || publish) && !pinlib_hasPinataKeys()) {
         if (!isTestMode()) {
             ostringstream os;
             os << "The " << (pin ? "--pin" : "--publish") << " option requires you to have a Pinata key.";
@@ -140,15 +140,15 @@ bool COptions::parseArguments(string_q& command) {
 #define hashToIndexFormatFile "Qmart6XP9XjL43p72PGR93QKytbK8jWWcMguhFgxATTya2"
 #define hashToBloomFormatFile "QmNhPk39DUFoEdhUmtGARqiFECUHeghyeryxZM9kyRxzHD"
     if (publish) {
-        CManifest manifest;
+        CPinManifest manifest;
         manifest.fileName = "initial-manifest.json";
         manifest.indexFormat = hashToIndexFormatFile;
         manifest.bloomFormat = hashToBloomFormatFile;
         manifest.prevHash = "";  // (prevHash == "" ? hashToEmptyFile : prevHash);
 
         CPinnedItemArray pList;
-        readPinList(pList, true);
-        forEveryPin(pList, addNewPin, &manifest);
+        pinlib_readPinList(pList, true);
+        pinlib_forEveryPin(pList, addNewPin, &manifest);
         manifest.toJson(cout);
 
         return true;
@@ -402,7 +402,7 @@ bool COptions::changeState(void) {
 
 //----------------------------------------------------------------
 bool addNewPin(CPinnedItem& pin, void* data) {
-    CManifest* manifestPtr = (CManifest*)data;  // NOLINT
+    CPinManifest* manifestPtr = (CPinManifest*)data;  // NOLINT
     manifestPtr->newPins.push_back(pin);
 
     timestamp_t unused;

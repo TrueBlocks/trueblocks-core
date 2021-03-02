@@ -22,7 +22,7 @@ getTrace
 getTrans
 grabABI
 makeClass
-pinStatus
+pinMan
 tbServer
 testRunner
 turboDive

@@ -1,0 +1,4 @@
+pinMan argc: 5 [1:--license] [2:--fmt] [3:json] [4:--to_file] 
+pinMan --license --fmt json --to_file 
+TIME ~ CLOCK - <INFO>  : license: true
+{ "outputFilename": "--output_filename--" }

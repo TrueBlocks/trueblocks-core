@@ -292,7 +292,7 @@ COptions::~COptions(void) {
 //--------------------------------------------------------------------------------
 void loadPinMaps(CIndexHashMap& bloomMap, CIndexHashMap& indexMap) {
     CPinnedItemArray pinList;
-    if (!readPinList(pinList, false))
+    if (!pinlib_readPinList(pinList, false))
         return;
 
     for (auto pin : pinList) {

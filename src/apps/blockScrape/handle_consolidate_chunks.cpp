@@ -130,6 +130,6 @@ bool visitToPin(const string_q& chunkId, void* data) {
     ASSERT(data);
     CPinnedItemArray& pinList = *(CPinnedItemArray*)data;  // NO_LINT
     CPinnedItem pinRecord;
-    pinChunk(pinList, chunkId, pinRecord);
+    pinlib_pinChunk(pinList, chunkId, pinRecord);
     return !shouldQuit();
 }

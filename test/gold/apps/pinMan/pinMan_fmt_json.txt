@@ -1,0 +1,10 @@
+pinMan argc: 4 [1:--license] [2:--fmt] [3:json] 
+pinMan --license --fmt json 
+TIME ~ CLOCK - <INFO>  : license: true
+{ "data": [
+{
+    "apiKey": "--license_codes--",
+    "secretKey": "--license_codes--"
+  }], "types": [
+{ "type": "CPinataLicense", "fields": [{ "name": "apiKey", "type": "text" }, { "name": "secretKey", "type": "text" }] }
+] }

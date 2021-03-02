@@ -146,11 +146,11 @@ extern const char* STR_DISPLAY_PINATALICENSE;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-extern bool pinataListOfPins(const CPinataLicense& lic, string_q& result);
-extern bool getPinataKeys(CPinataLicense& lic);
-inline bool hasPinataKeys(void) {
+extern bool pinlib_pinataListOfPins(const CPinataLicense& lic, string_q& result);
+extern bool pinlib_getPinataKeys(CPinataLicense& lic);
+inline bool pinlib_hasPinataKeys(void) {
     CPinataLicense lic;
-    return getPinataKeys(lic);
+    return pinlib_getPinataKeys(lic);
 }
 // EXISTING_CODE
 }  // namespace qblocks

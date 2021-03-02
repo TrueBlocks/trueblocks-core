@@ -1,5 +1,5 @@
 [settings]
-class = CManifest
+class = CPinManifest
 fields = string fileName|\
         string indexFormat|\
         string bloomFormat|\

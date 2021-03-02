@@ -112,7 +112,7 @@ func AdminScrape(w http.ResponseWriter, r *http.Request) {
 }
 
 func AdminPins(w http.ResponseWriter, r *http.Request) {
-    callOne(w, r, "pinStatus");
+    callOne(w, r, "pinMan");
 }
 
 func AdminStatus(w http.ResponseWriter, r *http.Request) {

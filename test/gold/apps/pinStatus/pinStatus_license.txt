@@ -1,5 +1,0 @@
-pinStatus argc: 2 [1:--license] 
-pinStatus --license 
-TIME ~ CLOCK - <INFO>  : license: true
-apikey	secretkey
---license_codes--	--license_codes--

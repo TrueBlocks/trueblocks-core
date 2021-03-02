@@ -1,7 +1,0 @@
-pinStatus argc: 4 [1:remote] [2:--unpin] [3:empty_file] 
-pinStatus remote --unpin empty_file 
-TIME ~ CLOCK - <INFO>  : modes: remote
-TIME ~ CLOCK - <INFO>  : unpin: empty_file
-TIME ~ CLOCK - <INFO>  : latestBlock:	--latest--
-TIME ~ CLOCK - <INFO>  : unchainedIndexAddr:	0xcfd7f3b24f3551741f922fd8c4381aa4e00fc8fd
-{"error":{"reason":"INVALID_API_KEYS","details":"Invalid API key provided"}}

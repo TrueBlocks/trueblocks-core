@@ -209,7 +209,8 @@ bool COptions::establishIndexChunk(const string_q& fileName) {
     if (!fileExists(fileName)) {
         LOG_INFO(bRed, fileName, " not found.", bGreen, " Retreiving from IPFS.", cOff);
         CPinnedItem pin;
-        if (!getChunkByHash(pinList, substitute(substitute(fileName, indexFolder_finalized, ""), ".bin", ""), pin)) {
+        if (!pinlib_getChunkByHash(pinList, substitute(substitute(fileName, indexFolder_finalized, ""), ".bin", ""),
+                                   pin)) {
             cerr << "Could not retrieve file from IPFS: " << fileName << endl;
         }
     }

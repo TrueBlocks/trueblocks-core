@@ -1,5 +1,0 @@
-{
-  "errors": [
-    "pinStatus - Not enough arguments presented."
-  ]
-}

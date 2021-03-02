@@ -1,5 +1,0 @@
-{
-  "errors": [
-    "pinStatus - Export format (junk) must be one of [ json | txt | csv | api ]."
-  ]
-}
