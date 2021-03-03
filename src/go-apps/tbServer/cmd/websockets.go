@@ -1,33 +1,35 @@
 package trueblocks
 
 import (
+	"fmt"
 	"log"
+	"net"
 	"net/http"
 
 	"github.com/gorilla/websocket"
 )
 
-type MessageType string;
+type MessageType string
 
 const (
-	CommandErrorMessage MessageType = "command_error"
+	CommandErrorMessage  MessageType = "command_error"
 	CommandOutputMessage MessageType = "output"
-	ProgressMessage MessageType = "progress"
+	ProgressMessage      MessageType = "progress"
 )
 
 var upgrader = websocket.Upgrader{}
 
 type Message struct {
-	Action MessageType `json:"action"`
-	Id string `json:"id"`
-	Content string `json:"content"`
+	Action   MessageType      `json:"action"`
+	Id       string           `json:"id"`
+	Content  string           `json:"content"`
 	Progress *CommandProgress `json:"progress"`
 }
 
 type Connection struct {
 	connection *websocket.Conn
-	send chan *Message
-	errors chan error
+	send       chan *Message
+	pool       *ConnectionPool
 }
 
 func (c *Connection) write() {
@@ -38,9 +40,9 @@ func (c *Connection) write() {
 
 	for {
 		select {
-		case message, ok := <- c.send:
+		case message, ok := <-c.send:
 			if !ok {
-				log.Printf("Connection closed")
+				c.Log("Connection closed")
 				c.connection.WriteMessage(websocket.CloseMessage, []byte{})
 				return
 			}
@@ -48,18 +50,26 @@ func (c *Connection) write() {
 			err := c.connection.WriteJSON(message)
 
 			if err != nil {
-				log.Print("Error while sending message, dropping connection", err)
-				c.errors <- err
+				c.Log("Error while sending message, dropping connection: %s", err.Error())
+				c.pool.unregister <- c
 			}
 		}
 	}
 }
 
+func (c *Connection) RemoteAddr() net.Addr {
+	return c.connection.RemoteAddr()
+}
+
+func (c *Connection) Log(s string, args ...interface{}) {
+	log.Printf("%s %s\n", c.RemoteAddr(), fmt.Sprintf(s, args...))
+}
+
 type ConnectionPool struct {
 	connections map[*Connection]bool
-	broadcast chan *Message
-	register chan *Connection
-	unregister chan *Connection
+	broadcast   chan *Message
+	register    chan *Connection
+	unregister  chan *Connection
 }
 
 func closeAndDelete(pool *ConnectionPool, connection *Connection) {
@@ -70,22 +80,24 @@ func closeAndDelete(pool *ConnectionPool, connection *Connection) {
 func newConnectionPool() *ConnectionPool {
 	return &ConnectionPool{
 		connections: make(map[*Connection]bool),
-		broadcast: make(chan *Message),
-		register: make(chan *Connection),
-		unregister: make(chan *Connection),
+		broadcast:   make(chan *Message),
+		register:    make(chan *Connection),
+		unregister:  make(chan *Connection),
 	}
 }
 
 func (pool *ConnectionPool) run() {
 	for {
 		select {
-		case connection := <- pool.register:
+		case connection := <-pool.register:
+			connection.Log("Connected (Websockets)")
 			pool.connections[connection] = true
-		case connection := <- pool.unregister:
+		case connection := <-pool.unregister:
 			if _, ok := pool.connections[connection]; ok {
+				connection.Log("Unregistering connection")
 				closeAndDelete(pool, connection)
 			}
-		case message := <- pool.broadcast:
+		case message := <-pool.broadcast:
 			for connection := range pool.connections {
 				connection.send <- message
 			}
@@ -104,18 +116,8 @@ func HandleWebsockets(pool *ConnectionPool, w http.ResponseWriter, r *http.Reque
 		return
 	}
 
-	connection := &Connection{connection: c, send: make(chan *Message)}
+	connection := &Connection{connection: c, send: make(chan *Message), pool: pool}
 	pool.register <- connection
-	go func() {
-		for {
-			select {
-			case err := <- connection.errors:
-				if err != nil {
-					closeAndDelete(pool, connection)
-				}
-			}
-		}
-	}()
 
 	go connection.write()
 }
