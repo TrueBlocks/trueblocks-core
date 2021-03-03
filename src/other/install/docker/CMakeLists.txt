@@ -73,7 +73,7 @@ set (BASE_INCLUDE
 
 # ----------------------------------------------------------------------------------------
 # Enable testing
-enable_testing()
+# enable_testing()
 
 # ----------------------------------------------------------------------------------------
 # Builds the README.md file in the given folder
@@ -84,11 +84,11 @@ endfunction(build_readme)
 
 add_custom_target(lint COMMAND "${CMAKE_SOURCE_DIR}/../bin/makeClass" "--lint" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
 add_custom_target(format COMMAND "${CMAKE_SOURCE_DIR}/../bin/makeClass" "--format" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
-add_custom_target(options COMMAND "${CMAKE_SOURCE_DIR}/../bin/makeClass" "--options" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
-add_custom_target(generate COMMAND "${CMAKE_SOURCE_DIR}/../bin/makeClass" "-ao" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
+add_custom_target(options COMMAND "${CMAKE_SOURCE_DIR}/../bin/makeClass" "--options --api" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
+add_custom_target(generate COMMAND "${CMAKE_SOURCE_DIR}/../bin/makeClass" "-aopA" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
 add_custom_target(finish COMMAND "${CMAKE_SOURCE_DIR}/../bin/makeClass" "-lf" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
-add_custom_target(tests COMMAND "${CMAKE_SOURCE_DIR}/../bin/test/doTesting" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/../build")
-add_custom_target(test-all COMMAND "${CMAKE_SOURCE_DIR}/../bin/test/doTestingAll" "--no_quit" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/../build")
+add_custom_target(tests COMMAND "${CMAKE_SOURCE_DIR}/../bin/test/test.sh" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/../build")
+add_custom_target(test-all COMMAND "${CMAKE_SOURCE_DIR}/../bin/test/test-all.sh" "--no_quit" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/../build")
 
 # ----------------------------------------------------------------------------------------
 # Compilation order for the subfolders
