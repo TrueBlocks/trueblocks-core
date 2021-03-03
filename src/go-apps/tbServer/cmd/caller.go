@@ -69,8 +69,10 @@ func callOneExtra(w http.ResponseWriter, r *http.Request, tbCmd, extra string) {
 		go func() {
 			ScanForProgress(stderrPipe, func(commandProgress *CommandProgress) {
 				connectionPool.broadcast <- &Message{
-					Action:   ProgressMessage,
-					Id:       tbCmd,
+					Action: ProgressMessage,
+					// TODO: this should be tbCmd, but current frontend (Explorer) does not support
+					// ids other than "export"
+					Id:       "export",
 					Progress: commandProgress,
 				}
 			})
