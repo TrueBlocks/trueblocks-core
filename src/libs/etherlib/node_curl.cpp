@@ -206,8 +206,16 @@ bool isNodeRunning(void) {
     CURLCALLBACKFUNC prev = getCurlContext()->setCurlCallback(nullCallback);
     getCurlContext()->setPostData("web3_clientVersion", "[]");
     CURLcode res = curl_easy_perform(getCurlContext()->getCurl());
+    string_q res1 = getCurlContext()->result;
+    int pos = res1.find("error");
+    bool err = false;
+    if (pos == -1)
+        err = false;
+    else
+        err = true;
+
     getCurlContext()->setCurlCallback(prev);
-    return (res == CURLE_OK);
+    return (res == CURLE_OK) && !err;
 }
 
 //-------------------------------------------------------------------------
@@ -338,6 +346,14 @@ size_t errorCallback(char* ptr, size_t size, size_t nmemb, void* userdata) {
 
 //-------------------------------------------------------------------------
 size_t nullCallback(char* ptr, size_t size, size_t nmemb, void* userdata) {
+    string_q part;
+    part.reserve(size * nmemb + 1);
+    char* s = (char*)part.c_str();  // NOLINT
+    strncpy(s, ptr, size * nmemb);
+    s[size * nmemb] = '\0';
+//    ASSERT(userdata);
+    CCurlContext* data = (CCurlContext*)userdata;  // NOLINT
+    data->result += s;
     return size * nmemb;
 }
 }  // namespace qblocks
