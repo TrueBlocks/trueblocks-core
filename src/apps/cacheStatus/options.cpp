@@ -119,6 +119,8 @@ bool COptions::parseArguments(string_q& command) {
         cerr << "";
 
     establishFolder(getCachePath("tmp/"));
+    establishFolder(indexFolder_finalized);
+    establishFolder(indexFolder_blooms);
     establishFolder(getCachePath("slurps/"));
     establishFolder(getCachePath("blocks/"));
     establishFolder(getCachePath("txs/"));
