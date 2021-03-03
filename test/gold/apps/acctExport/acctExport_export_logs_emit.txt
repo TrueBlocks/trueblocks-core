@@ -5,10 +5,6 @@ TIME ~ CLOCK - <INFO>  : skip_ddos: true
 TIME ~ CLOCK - <INFO>  : emitter: true
 TIME ~ CLOCK - <INFO>  : Monitor found for: 0xbb9bc244d798123fde783fcc1c72d3bb8c189413
 TIME ~ CLOCK - <INFO>  : Last visited block: 4996422
-TIME ~ CLOCK - <INFO>  : m.getLastVisitedBlock(): 4996422
-TIME ~ CLOCK - <INFO>  : options->fileRange.first: 4996422
-TIME ~ CLOCK - <INFO>  : m.getLastVisitedBlock(): 4996422
-TIME ~ CLOCK - <INFO>  : options->fileRange.first: 5001425
 TIME ~ CLOCK - <INFO>  : stats.nFiles: --value--
 TIME ~ CLOCK - <INFO>  : stats.nSkipped: --value--
 TIME ~ CLOCK - <INFO>  : nMonitors: 1

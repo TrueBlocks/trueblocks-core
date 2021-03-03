@@ -5,10 +5,6 @@ TIME ~ CLOCK - <INFO>  : skip_ddos: true
 TIME ~ CLOCK - <INFO>  : max_records: 5
 TIME ~ CLOCK - <INFO>  : Monitor found for: 0x001d14804b399c6ef80e64576f657660804fec0b
 TIME ~ CLOCK - <INFO>  : Last visited block: 11854827
-TIME ~ CLOCK - <INFO>  : m.getLastVisitedBlock(): 11854827
-TIME ~ CLOCK - <INFO>  : options->fileRange.first: 11854827
-TIME ~ CLOCK - <INFO>  : m.getLastVisitedBlock(): 11854827
-TIME ~ CLOCK - <INFO>  : options->fileRange.first: 11857782
 TIME ~ CLOCK - <INFO>  : stats.nFiles: --value--
 TIME ~ CLOCK - <INFO>  : stats.nSkipped: --value--
 TIME ~ CLOCK - <INFO>  : nMonitors: 1

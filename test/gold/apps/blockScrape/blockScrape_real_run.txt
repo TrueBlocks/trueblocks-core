@@ -19,10 +19,8 @@ LIVE_TEST = [true]
 : 8------chunkId:                 $INDEX/finalized/000000000-000000000.bin 320192
 : 4-----Done Loading pins
 : 4-----Starting pin
-: 4-----source: /Users/jrush/.quickBlocks/mocked/addr_index/finalized/000000000-000000000.bin 1
-: 4-----zip: /Users/jrush/.quickBlocks/mocked/addr_index/finalized/000000000-000000000.bin.gz 1
 : 4-----Finishing pin
-<ERROR> : Could not pin index for blocks /Users/jrush/.quickBlocks/mocked/addr_index/finalized/000000000-000000000.bin file to Pinata. Quitting...
+<ERROR> : Could not pin index for blocks file to Pinata. Quitting...
 <INFO>  : Done...
 : 8------Current state running.
 <INFO>  : Block scraper is running...
@@ -124,10 +122,8 @@ blaze.verbose:      8
 <INFO>  :   Pinning
 : 8------chunkId:                 $INDEX/finalized/000000001-000000010.bin 288
 : 4-----Starting pin
-: 4-----source: /Users/jrush/.quickBlocks/mocked/addr_index/finalized/000000001-000000010.bin 1
-: 4-----zip: /Users/jrush/.quickBlocks/mocked/addr_index/finalized/000000001-000000010.bin.gz 1
 : 4-----Finishing pin
-<ERROR> : Could not pin index for blocks /Users/jrush/.quickBlocks/mocked/addr_index/finalized/000000001-000000010.bin file to Pinata. Quitting...
+<ERROR> : Could not pin index for blocks file to Pinata. Quitting...
 <INFO>  :   Wrote 13 records to $FINAL/000000001-000000010.bin
 : 4-----  Extracting records 13 to 19 of 19
 : 4-----	13: 0x19dafe19f11e960e4ccfc6a5aa8890ebd748ca1e	000000011	99999
@@ -275,10 +271,8 @@ blaze.verbose:      8
 <INFO>  :   Pinning
 : 8------chunkId:                 $INDEX/finalized/000000011-000000022.bin 316
 : 4-----Starting pin
-: 4-----source: /Users/jrush/.quickBlocks/mocked/addr_index/finalized/000000011-000000022.bin 1
-: 4-----zip: /Users/jrush/.quickBlocks/mocked/addr_index/finalized/000000011-000000022.bin.gz 1
 : 4-----Finishing pin
-<ERROR> : Could not pin index for blocks /Users/jrush/.quickBlocks/mocked/addr_index/finalized/000000011-000000022.bin file to Pinata. Quitting...
+<ERROR> : Could not pin index for blocks file to Pinata. Quitting...
 <INFO>  :   Wrote 13 records to $FINAL/000000011-000000022.bin
 : 4-----  Extracting records 13 to 23 of 23
 : 4-----	13: 0x0193d941b50d91be6567c7ee1c0fe7af498b4137	000000023	99999
@@ -450,10 +444,8 @@ blaze.verbose:      8
 <INFO>  :   Pinning
 : 8------chunkId:                 $INDEX/finalized/000000023-000000034.bin 400
 : 4-----Starting pin
-: 4-----source: /Users/jrush/.quickBlocks/mocked/addr_index/finalized/000000023-000000034.bin 1
-: 4-----zip: /Users/jrush/.quickBlocks/mocked/addr_index/finalized/000000023-000000034.bin.gz 1
 : 4-----Finishing pin
-<ERROR> : Could not pin index for blocks /Users/jrush/.quickBlocks/mocked/addr_index/finalized/000000023-000000034.bin file to Pinata. Quitting...
+<ERROR> : Could not pin index for blocks file to Pinata. Quitting...
 <INFO>  :   Wrote 13 records to $FINAL/000000023-000000034.bin
 : 4-----  Extracting records 13 to 29 of 29
 : 4-----	13: 0x1b7047b4338acf65be94c1a3e8c5c9338ad7d67c	000000035	99999
@@ -476,10 +468,8 @@ blaze.verbose:      8
 <INFO>  :   Pinning
 : 8------chunkId:                 $INDEX/finalized/000000035-000000045.bin 316
 : 4-----Starting pin
-: 4-----source: /Users/jrush/.quickBlocks/mocked/addr_index/finalized/000000035-000000045.bin 1
-: 4-----zip: /Users/jrush/.quickBlocks/mocked/addr_index/finalized/000000035-000000045.bin.gz 1
 : 4-----Finishing pin
-<ERROR> : Could not pin index for blocks /Users/jrush/.quickBlocks/mocked/addr_index/finalized/000000035-000000045.bin file to Pinata. Quitting...
+<ERROR> : Could not pin index for blocks file to Pinata. Quitting...
 <INFO>  :   Wrote 13 records to $FINAL/000000035-000000045.bin
 : 4-----  Extracting records 13 to 16 of 16
 : 4-----	13: 0xd8030bb90dfc593e614ef0aed456bfe342ad45f5	000000046	99999

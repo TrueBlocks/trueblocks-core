@@ -52,7 +52,8 @@ bool pinlib_pinChunk(CPinnedChunkArray& pList, const string_q& fileName, CPinned
     item.fileName = fileName;
     string_q indexStr = pinlib_pinOneFile(fileName, "finalized");
     if (!contains(indexStr, "IpfsHash")) {
-        LOG_ERR("Could not pin index for blocks ", fileName, " file to Pinata. Quitting...");
+        // LOG_ERR("Could not pin index for blocks ", fileName, " file to Pinata. Quitting...");
+        LOG_ERR("Could not pin index for blocks file to Pinata. Quitting...");
         return false;
     }
 
@@ -263,13 +264,13 @@ string_q pinlib_pinOneFile(const string_q& fileName, const string_q& type) {
     string_q source =
         (type == "blooms" ? substitute(substitute(fileName, ".bin", ".bloom"), "/finalized/", "/blooms/") : fileName);
     string_q zip = source;
-    LOG4("source: ", source, " ", fileExists(source));
+    // LOG4("source: ", source, " ", fileExists(source));
     zip = source + ".gz";
     // clang-format off
     string_q cmd1 = "yes | gzip -n --keep " + source; // + " 2>/dev/null";
     if (system(cmd1.c_str())) {}  // Don't remove cruft. Silences compiler warnings
     // clang-format on
-    LOG4("zip: ", zip, " ", fileExists(zip));
+    // LOG4("zip: ", zip, " ", fileExists(zip));
 
     string_q result;
     CURL* curl;

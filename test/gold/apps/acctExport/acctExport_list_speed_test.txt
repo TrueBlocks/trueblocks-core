@@ -3,10 +3,6 @@ acctExport 0x05a56e2d52c817161883f50c441c3228cfe54d9f --end 7000000
 TIME ~ CLOCK - <INFO>  : skip_ddos: true
 TIME ~ CLOCK - <INFO>  : Monitor found for: 0x05a56e2d52c817161883f50c441c3228cfe54d9f
 TIME ~ CLOCK - <INFO>  : Last visited block: 11854827
-TIME ~ CLOCK - <INFO>  : m.getLastVisitedBlock(): 11854827
-TIME ~ CLOCK - <INFO>  : options->fileRange.first: 11854827
-TIME ~ CLOCK - <INFO>  : m.getLastVisitedBlock(): 11854827
-TIME ~ CLOCK - <INFO>  : options->fileRange.first: 11857782
 TIME ~ CLOCK - <INFO>  : stats.nFiles: --value--
 TIME ~ CLOCK - <INFO>  : stats.nSkipped: --value--
 TIME ~ CLOCK - <INFO>  : nMonitors: 1
