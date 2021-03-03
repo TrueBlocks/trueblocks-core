@@ -18,5 +18,6 @@ func main() {
 		output := string(out[:])
 		log.Printf(output)
 	}
+	tb.RunWebsocketPool()
 	log.Fatal(http.ListenAndServe(":8080", tb.NewRouter()))
 }
