@@ -107,7 +107,7 @@ func (pool *ConnectionPool) run() {
 
 func HandleWebsockets(pool *ConnectionPool, w http.ResponseWriter, r *http.Request) {
 	// TODO: the line below allows any connection through WebSockets. Once the server
-	// is ready, we should implement some rules here
+	// TODO: is ready, we should implement some rules here
 	upgrader.CheckOrigin = func(r *http.Request) bool { return true }
 
 	c, err := upgrader.Upgrade(w, r, nil)

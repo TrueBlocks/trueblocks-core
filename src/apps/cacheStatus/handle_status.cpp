@@ -14,11 +14,11 @@ bool COptions::handle_status(ostream& os) {
 
     if (terse) {
         const char* STR_TERSE_REPORT =
-            "[{CLIENT_VER}][{MODES1}]\n"
-            "[{TIME}] [{TB_VER}][{MODES2}]\n"
-            "[{TIME}] [{CACHE_PATH}]\n"
-            "[{TIME}] [{INDEX_PATH}]\n"
-            "[{TIME}] [{PROVIDER}]";
+            "client: [{CLIENT_VER}][{MODES1}]\n"
+            "[{TIME}] trueblocks: [{TB_VER}][{MODES2}]\n"
+            "[{TIME}] cachePath: [{CACHE_PATH}]\n"
+            "[{TIME}] indexPath: [{INDEX_PATH}]\n"
+            "[{TIME}] rpcProvider: [{PROVIDER}]";
 
         string_q modes1;
         modes1 += string_q(status.is_testing ? "testing|" : "");
