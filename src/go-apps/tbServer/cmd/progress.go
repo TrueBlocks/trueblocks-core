@@ -2,12 +2,12 @@ package trueblocks
 
 import (
 	"bufio"
+	"encoding/json"
 	"fmt"
-	"log"
 	"io"
+	"log"
 	"regexp"
 	"strconv"
-	"encoding/json"
 )
 
 type CommandProgress struct{

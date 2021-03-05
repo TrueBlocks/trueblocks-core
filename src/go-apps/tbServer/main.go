@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"log"
 	"net/http"
@@ -10,7 +11,14 @@ import (
 )
 
 func main() {
-	log.Printf("Starting TrueBlocks API server on port :8080")
+    port := flag.String("port", "8080", "the server's port")
+    verbose := flag.Int("verbose", 0, "debug level")
+	flag.Parse()
+	tb.Options.Verbose = *verbose
+	tb.Options.Port = ":" + *port
+
+	// Let the user know what's going on...
+	log.Printf("Starting TrueBlocks API server on port " + tb.Options.Port)
 	out, err := exec.Command("cacheStatus", "--terse").Output()
 	if err != nil {
 		fmt.Printf("%s", err)
@@ -18,6 +26,10 @@ func main() {
 		output := string(out[:])
 		log.Printf(output)
 	}
+
+	// Enable web sockets
 	tb.RunWebsocketPool()
-	log.Fatal(http.ListenAndServe(":8080", tb.NewRouter()))
+
+	// Start listening
+	log.Fatal(http.ListenAndServe(tb.Options.Port, tb.NewRouter()))
 }

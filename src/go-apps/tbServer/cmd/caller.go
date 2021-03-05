@@ -11,17 +11,25 @@ import (
 	"net/http"
 	"os"
 	"os/exec"
+	"strconv"
 	"strings"
 	"time"
 
 	"github.com/gorilla/mux"
 )
 
-func callOne(w http.ResponseWriter, r *http.Request, tbCmd string) {
-	callOneExtra(w, r, tbCmd, "")
+type optionsType struct {
+	Verbose int
+	Port string
+}
+// Options command line options
+var Options optionsType
+ 
+func callOne(w http.ResponseWriter, r *http.Request, tbCmd , apiCmd string) {
+	callOneExtra(w, r, tbCmd, "", apiCmd)
 }
 
-func callOneExtra(w http.ResponseWriter, r *http.Request, tbCmd, extra string) {
+func callOneExtra(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd string) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
@@ -32,6 +40,7 @@ func callOneExtra(w http.ResponseWriter, r *http.Request, tbCmd, extra string) {
 	if extra != "" {
 		allDogs = append(allDogs, extra)
 	}
+	hasVerbose := false;
 	for key, value := range r.URL.Query() {
 		if key != "addrs" &&
 			key != "terms" &&
@@ -44,7 +53,14 @@ func callOneExtra(w http.ResponseWriter, r *http.Request, tbCmd, extra string) {
 			key != "addrs2" {
 			allDogs = append(allDogs, "--"+key)
 		}
+		if (key == "verbose") {
+			hasVerbose = true
+		}
 		allDogs = append(allDogs, value...)
+	}
+	if Options.Verbose > 0 && !hasVerbose {
+		allDogs = append(allDogs, "--verbose")
+		allDogs = append(allDogs, strconv.Itoa(Options.Verbose))
 	}
 	cmd := exec.Command(tbCmd, allDogs...)
 
@@ -97,7 +113,7 @@ func callOneExtra(w http.ResponseWriter, r *http.Request, tbCmd, extra string) {
 	fmt.Fprint(w, output)
 }
 
-// FileExists
+// FileExists help text todo
 func FileExists(filename string) bool {
 	info, err := os.Stat(filename)
 	if os.IsNotExist(err) {
@@ -106,92 +122,114 @@ func FileExists(filename string) bool {
 	return !info.IsDir()
 }
 
+// AccountsAbis help text todo
 func AccountsAbis(w http.ResponseWriter, r *http.Request) {
-	callOne(w, r, "grabABI")
+	callOne(w, r, "grabABI", "abis")
 }
 
+// AccountsEntities help text todo
 func AccountsEntities(w http.ResponseWriter, r *http.Request) {
-	callOne(w, r, "ethNames")
+	callOne(w, r, "ethNames", "entities")
 }
 
+// AccountsExport help text todo
 func AccountsExport(w http.ResponseWriter, r *http.Request) {
-	callOneExtra(w, r, "chifra", "export")
+	callOneExtra(w, r, "chifra", "export", "export")
 }
 
+// AccountsMonitor help text todo
 func AccountsMonitor(w http.ResponseWriter, r *http.Request) {
-	callOneExtra(w, r, "chifra", "monitor")
+	callOneExtra(w, r, "chifra", "monitor", "monitor")
 }
 
+// AccountsList help text todo
 func AccountsList(w http.ResponseWriter, r *http.Request) {
-	callOneExtra(w, r, "chifra", "list")
+	callOneExtra(w, r, "chifra", "list", "list")
 }
 
+// AccountsNames help text todo
 func AccountsNames(w http.ResponseWriter, r *http.Request) {
-	callOne(w, r, "ethNames")
+	callOne(w, r, "ethNames", "names")
 }
 
+// AccountsTags help text todo
 func AccountsTags(w http.ResponseWriter, r *http.Request) {
-	callOne(w, r, "ethNames")
+	callOne(w, r, "ethNames", "tags")
 }
 
+// AdminScrape help text todo
 func AdminScrape(w http.ResponseWriter, r *http.Request) {
-	callOneExtra(w, r, "chifra", "scrape")
+	callOneExtra(w, r, "chifra", "scrape", "scrape")
 }
 
+// AdminPins help text todo
 func AdminPins(w http.ResponseWriter, r *http.Request) {
-	callOne(w, r, "pinMan")
+	callOne(w, r, "pinMan", "pins")
 }
 
+// AdminStatus help text todo
 func AdminStatus(w http.ResponseWriter, r *http.Request) {
-	callOne(w, r, "cacheStatus")
+	callOne(w, r, "cacheStatus", "status")
 }
 
+// DataBlocks help text todo
 func DataBlocks(w http.ResponseWriter, r *http.Request) {
-	callOne(w, r, "getBlock")
+	callOne(w, r, "getBlock", "blocks")
 }
 
+// DataLogs help text todo
 func DataLogs(w http.ResponseWriter, r *http.Request) {
-	callOne(w, r, "getLogs")
+	callOne(w, r, "getLogs", "logs")
 }
 
+// DataReceipts help text todo
 func DataReceipts(w http.ResponseWriter, r *http.Request) {
-	callOne(w, r, "getReceipt")
+	callOne(w, r, "getReceipt", "receipts")
 }
 
+// DataTraces help text todo
 func DataTraces(w http.ResponseWriter, r *http.Request) {
-	callOne(w, r, "getTrace")
+	callOne(w, r, "getTrace", "traces")
 }
 
+// DataTransactions help text todo
 func DataTransactions(w http.ResponseWriter, r *http.Request) {
-	callOne(w, r, "getTrans")
+	callOne(w, r, "getTrans", "transactions")
 }
 
+// DataWhen help text todo
 func DataWhen(w http.ResponseWriter, r *http.Request) {
-	callOne(w, r, "whenBlock")
+	callOne(w, r, "whenBlock", "when")
 }
 
+// OtherDive help text todo
 func OtherDive(w http.ResponseWriter, r *http.Request) {
-	callOne(w, r, "turboDive")
+	callOne(w, r, "turboDive", "dive")
 }
 
+// OtherQuotes help text todo
 func OtherQuotes(w http.ResponseWriter, r *http.Request) {
-	callOne(w, r, "ethQuote")
+	callOne(w, r, "ethQuote", "quotes")
 }
 
+// OtherSlurp help text todo
 func OtherSlurp(w http.ResponseWriter, r *http.Request) {
-	callOne(w, r, "ethslurp")
+	callOne(w, r, "ethslurp", "slurp")
 }
 
+// OtherWhere help text todo
 func OtherWhere(w http.ResponseWriter, r *http.Request) {
-	callOne(w, r, "whereBlock")
+	callOne(w, r, "whereBlock", "where")
 }
 
+// StateState help text todo
 func StateState(w http.ResponseWriter, r *http.Request) {
-	callOne(w, r, "getState")
+	callOne(w, r, "getState", "state")
 }
 
+// StateTokens help text todo
 func StateTokens(w http.ResponseWriter, r *http.Request) {
-	callOne(w, r, "getTokenInfo")
+	callOne(w, r, "getTokenInfo", "tokens")
 }
 
 var nProcessed int
