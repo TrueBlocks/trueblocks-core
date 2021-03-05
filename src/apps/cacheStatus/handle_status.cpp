@@ -14,21 +14,25 @@ bool COptions::handle_status(ostream& os) {
 
     if (terse) {
         const char* STR_TERSE_REPORT =
-            "[{CLIENT_VER}][{MODES}]\n"
-            "[{TIME}] [{TB_VER}]\n"
+            "[{CLIENT_VER}][{MODES1}]\n"
+            "[{TIME}] [{TB_VER}][{MODES2}]\n"
             "[{TIME}] [{CACHE_PATH}]\n"
             "[{TIME}] [{INDEX_PATH}]\n"
             "[{TIME}] [{PROVIDER}]";
 
-        string_q modes;
-        modes += string_q(status.is_testing ? "testing|" : "");
-        modes += string_q(status.is_archive ? "" : "not ") + "archive|";
-        modes += string_q(status.is_tracing ? "" : "not ") + "tracing|";
-        modes += string_q(status.is_docker ? "docker|" : "");
-        modes += string_q(status.has_eskey ? "" : "no ") + "eskey|";
-        modes = (modes.empty() ? "" : " (" + substitute(trim(modes, '|'), "|", ", ") + ")");
+        string_q modes1;
+        modes1 += string_q(status.is_testing ? "testing|" : "");
+        modes1 += string_q(status.is_archive ? "" : "not ") + "archive|";
+        modes1 += string_q(status.is_tracing ? "" : "not ") + "tracing|";
+        modes1 += string_q(status.is_docker ? "docker|" : "");
+        modes1 = (modes1.empty() ? "" : " (" + substitute(trim(modes1, '|'), "|", ", ") + ")");
+        string_q modes2;
+        modes2 += string_q(status.has_eskey ? "" : "no ") + "eskey|";
+        modes2 += string_q(status.has_pinkey ? "" : "no ") + "pinkey|";
+        modes2 = (modes2.empty() ? "" : " (" + substitute(trim(modes2, '|'), "|", ", ") + ")");
         string_q report = STR_TERSE_REPORT;
-        replaceAll(report, "[{MODES}]", modes);
+        replaceAll(report, "[{MODES1}]", modes1);
+        replaceAll(report, "[{MODES2}]", modes2);
         replaceAll(report, "[{CLIENT_VER}]",
                    (status.client_version.empty() ? "--no rpc server--" : status.client_version));
         replaceAll(report, "[{TB_VER}]", status.trueblocks_version);
