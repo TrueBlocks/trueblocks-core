@@ -47,24 +47,9 @@ func Index(w http.ResponseWriter, r *http.Request) {
 
 // BEGIN_ROUTE_CODE
 
-// AccountsAbis help text todo
-func AccountsAbis(w http.ResponseWriter, r *http.Request) {
-	CallOne(w, r, "grabABI", "abis")
-}
-
-// AccountsEntities help text todo
-func AccountsEntities(w http.ResponseWriter, r *http.Request) {
-	CallOne(w, r, "ethNames", "entities")
-}
-
 // AccountsExport help text todo
 func AccountsExport(w http.ResponseWriter, r *http.Request) {
 	CallOneExtra(w, r, "chifra", "export", "export")
-}
-
-// AccountsMonitor help text todo
-func AccountsMonitor(w http.ResponseWriter, r *http.Request) {
-	CallOneExtra(w, r, "chifra", "monitor", "monitor")
 }
 
 // AccountsList help text todo
@@ -72,14 +57,34 @@ func AccountsList(w http.ResponseWriter, r *http.Request) {
 	CallOneExtra(w, r, "chifra", "list", "list")
 }
 
+// AccountsTags help text todo
+func AccountsTags(w http.ResponseWriter, r *http.Request) {
+	CallOne(w, r, "ethNames", "tags")
+}
+
 // AccountsNames help text todo
 func AccountsNames(w http.ResponseWriter, r *http.Request) {
 	CallOne(w, r, "ethNames", "names")
 }
 
-// AccountsTags help text todo
-func AccountsTags(w http.ResponseWriter, r *http.Request) {
-	CallOne(w, r, "ethNames", "tags")
+// AccountsEntities help text todo
+func AccountsEntities(w http.ResponseWriter, r *http.Request) {
+	CallOne(w, r, "ethNames", "entities")
+}
+
+// AccountsAbis help text todo
+func AccountsAbis(w http.ResponseWriter, r *http.Request) {
+	CallOne(w, r, "grabABI", "abis")
+}
+
+// AccountsMonitor help text todo
+func AccountsMonitor(w http.ResponseWriter, r *http.Request) {
+	CallOneExtra(w, r, "chifra", "monitor", "monitor")
+}
+
+// AdminStatus help text todo
+func AdminStatus(w http.ResponseWriter, r *http.Request) {
+	CallOne(w, r, "cacheStatus", "status")
 }
 
 // AdminScrape help text todo
@@ -92,29 +97,9 @@ func AdminPins(w http.ResponseWriter, r *http.Request) {
 	CallOne(w, r, "pinMan", "pins")
 }
 
-// AdminStatus help text todo
-func AdminStatus(w http.ResponseWriter, r *http.Request) {
-	CallOne(w, r, "cacheStatus", "status")
-}
-
 // DataBlocks help text todo
 func DataBlocks(w http.ResponseWriter, r *http.Request) {
 	CallOne(w, r, "getBlock", "blocks")
-}
-
-// DataLogs help text todo
-func DataLogs(w http.ResponseWriter, r *http.Request) {
-	CallOne(w, r, "getLogs", "logs")
-}
-
-// DataReceipts help text todo
-func DataReceipts(w http.ResponseWriter, r *http.Request) {
-	CallOne(w, r, "getReceipt", "receipts")
-}
-
-// DataTraces help text todo
-func DataTraces(w http.ResponseWriter, r *http.Request) {
-	CallOne(w, r, "getTrace", "traces")
 }
 
 // DataTransactions help text todo
@@ -122,14 +107,34 @@ func DataTransactions(w http.ResponseWriter, r *http.Request) {
 	CallOne(w, r, "getTrans", "transactions")
 }
 
+// DataReceipts help text todo
+func DataReceipts(w http.ResponseWriter, r *http.Request) {
+	CallOne(w, r, "getReceipt", "receipts")
+}
+
+// DataLogs help text todo
+func DataLogs(w http.ResponseWriter, r *http.Request) {
+	CallOne(w, r, "getLogs", "logs")
+}
+
+// DataTraces help text todo
+func DataTraces(w http.ResponseWriter, r *http.Request) {
+	CallOne(w, r, "getTrace", "traces")
+}
+
 // DataWhen help text todo
 func DataWhen(w http.ResponseWriter, r *http.Request) {
 	CallOne(w, r, "whenBlock", "when")
 }
 
-// OtherDive help text todo
-func OtherDive(w http.ResponseWriter, r *http.Request) {
-	CallOne(w, r, "turboDive", "dive")
+// StateState help text todo
+func StateState(w http.ResponseWriter, r *http.Request) {
+	CallOne(w, r, "getState", "state")
+}
+
+// StateTokens help text todo
+func StateTokens(w http.ResponseWriter, r *http.Request) {
+	CallOne(w, r, "getTokenInfo", "tokens")
 }
 
 // OtherQuotes help text todo
@@ -147,14 +152,9 @@ func OtherWhere(w http.ResponseWriter, r *http.Request) {
 	CallOne(w, r, "whereBlock", "where")
 }
 
-// StateState help text todo
-func StateState(w http.ResponseWriter, r *http.Request) {
-	CallOne(w, r, "getState", "state")
-}
-
-// StateTokens help text todo
-func StateTokens(w http.ResponseWriter, r *http.Request) {
-	CallOne(w, r, "getTokenInfo", "tokens")
+// OtherDive help text todo
+func OtherDive(w http.ResponseWriter, r *http.Request) {
+	CallOne(w, r, "turboDive", "dive")
 }
 // END_ROUTE_CODE
 
@@ -177,31 +177,10 @@ var routes = Routes{
 
 	// BEGIN_ROUTE_ITEMS
 	Route{
-		"AccountsAbis",
-		"GET",
-		"/abis",
-		AccountsAbis,
-	},
-
-	Route{
-		"AccountsEntities",
-		"GET",
-		"/entities",
-		AccountsEntities,
-	},
-
-	Route{
 		"AccountsExport",
 		"GET",
 		"/export",
 		AccountsExport,
-	},
-
-	Route{
-		"AccountsMonitor",
-		"GET",
-		"/monitor",
-		AccountsMonitor,
 	},
 
 	Route{
@@ -212,6 +191,13 @@ var routes = Routes{
 	},
 
 	Route{
+		"AccountsTags",
+		"GET",
+		"/tags",
+		AccountsTags,
+	},
+
+	Route{
 		"AccountsNames",
 		"GET",
 		"/names",
@@ -219,10 +205,31 @@ var routes = Routes{
 	},
 
 	Route{
-		"AccountsTags",
+		"AccountsEntities",
 		"GET",
-		"/tags",
-		AccountsTags,
+		"/entities",
+		AccountsEntities,
+	},
+
+	Route{
+		"AccountsAbis",
+		"GET",
+		"/abis",
+		AccountsAbis,
+	},
+
+	Route{
+		"AccountsMonitor",
+		"GET",
+		"/monitor",
+		AccountsMonitor,
+	},
+
+	Route{
+		"AdminStatus",
+		"GET",
+		"/status",
+		AdminStatus,
 	},
 
 	Route{
@@ -240,38 +247,10 @@ var routes = Routes{
 	},
 
 	Route{
-		"AdminStatus",
-		"GET",
-		"/status",
-		AdminStatus,
-	},
-
-	Route{
 		"DataBlocks",
 		"GET",
 		"/blocks",
 		DataBlocks,
-	},
-
-	Route{
-		"DataLogs",
-		"GET",
-		"/logs",
-		DataLogs,
-	},
-
-	Route{
-		"DataReceipts",
-		"GET",
-		"/receipts",
-		DataReceipts,
-	},
-
-	Route{
-		"DataTraces",
-		"GET",
-		"/traces",
-		DataTraces,
 	},
 
 	Route{
@@ -282,6 +261,27 @@ var routes = Routes{
 	},
 
 	Route{
+		"DataReceipts",
+		"GET",
+		"/receipts",
+		DataReceipts,
+	},
+
+	Route{
+		"DataLogs",
+		"GET",
+		"/logs",
+		DataLogs,
+	},
+
+	Route{
+		"DataTraces",
+		"GET",
+		"/traces",
+		DataTraces,
+	},
+
+	Route{
 		"DataWhen",
 		"GET",
 		"/when",
@@ -289,10 +289,17 @@ var routes = Routes{
 	},
 
 	Route{
-		"OtherDive",
+		"StateState",
 		"GET",
-		"/dive",
-		OtherDive,
+		"/state",
+		StateState,
+	},
+
+	Route{
+		"StateTokens",
+		"GET",
+		"/tokens",
+		StateTokens,
 	},
 
 	Route{
@@ -317,17 +324,10 @@ var routes = Routes{
 	},
 
 	Route{
-		"StateState",
+		"OtherDive",
 		"GET",
-		"/state",
-		StateState,
-	},
-
-	Route{
-		"StateTokens",
-		"GET",
-		"/tokens",
-		StateTokens,
+		"/dive",
+		OtherDive,
 	},
 	// END_ROUTE_ITEMS
 }

@@ -41,6 +41,8 @@ void COptions::writeOpenApiFile(void) {
     ostringstream tagStream;
     ostringstream pathStream;
     ostringstream specStream;
+    ostringstream apiStream;
+    ostringstream routeStream;
     bool first = true;
     for (auto ep : endpoints) {
         if (!first)
@@ -83,6 +85,9 @@ void COptions::writeOpenApiFile(void) {
             replace(entry, "[{PARAMS}]", paramStream.str());
             pathStream << entry;
             counter.routeCount++;
+
+            cout << parts[0] << toProper(cmd) << endl;
+            printf("");
         }
     }
 
@@ -95,6 +100,7 @@ void COptions::writeOpenApiFile(void) {
     string_q yamlTemplate = configPath("makeClass/blank_swagger.yaml");
     string_q newYamlCode = asciiFileToString(yamlTemplate);
     if (!newYamlCode.empty()) {
+        LOG_INFO("Generating new yaml code");
         replace(newYamlCode, "[{PATHS}]", pathStream.str());
         replace(newYamlCode, "[{TAGS}]", tagStream.str());
         string_q origYaml = configPath("makeClass/swagger.yaml");
@@ -102,6 +108,7 @@ void COptions::writeOpenApiFile(void) {
         if (origYamlCode != newYamlCode) {
             counter.nChanged++;
             stringToAsciiFile(origYaml, newYamlCode);
+            LOG_INFO("New yaml code written to ", origYaml);
         }
     }
 
