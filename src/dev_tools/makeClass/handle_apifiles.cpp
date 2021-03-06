@@ -90,6 +90,10 @@ void COptions::writeOpenApiFile(void) {
             apiStream << "func " << route << "(w http.ResponseWriter, r *http.Request) {" << endl;
             if (descr.size() && route != "AccountsExport" && route != "AdminScrape") {
                 apiStream << "\tCallOne(w, r, \"" << descr[0].tool << "\", \"" << cmd << "\")" << endl;
+            } else if (route == "AccountsTags") {
+                apiStream << "\tCallOne(w, r, \"ethNames\", \"tags\")" << endl;
+            } else if (route == "AccountsEntities") {
+                apiStream << "\tCallOne(w, r, \"ethNames\", \"entities\")" << endl;
             } else {
                 apiStream << "\tCallOneExtra(w, r, \"chifra\", \"" << cmd << "\", \"" << cmd << "\")" << endl;
             }

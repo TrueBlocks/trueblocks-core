@@ -64,7 +64,7 @@ func AccountsMonitor(w http.ResponseWriter, r *http.Request) {
 
 // AccountsTags help text todo
 func AccountsTags(w http.ResponseWriter, r *http.Request) {
-	CallOneExtra(w, r, "chifra", "tags", "tags")
+	CallOne(w, r, "ethNames", "tags")
 }
 
 // AccountsNames help text todo
@@ -74,7 +74,7 @@ func AccountsNames(w http.ResponseWriter, r *http.Request) {
 
 // AccountsEntities help text todo
 func AccountsEntities(w http.ResponseWriter, r *http.Request) {
-	CallOneExtra(w, r, "chifra", "entities", "entities")
+	CallOne(w, r, "ethNames", "entities")
 }
 
 // AccountsAbis help text todo
