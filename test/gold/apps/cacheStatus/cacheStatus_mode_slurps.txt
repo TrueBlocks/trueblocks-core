@@ -13,6 +13,7 @@ cacheStatus caches --types slurps
   "is_archive": true,
   "is_tracing": true,
   "has_eskey": true,
+  "has_pinkey": true,
   "caches": [
     {
       "type": "CSlurpCache",

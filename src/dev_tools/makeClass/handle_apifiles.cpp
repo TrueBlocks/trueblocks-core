@@ -32,7 +32,7 @@ void COptions::writeOpenApiFile(void) {
     options_2_Commands(commands);
 
     CStringArray endpoints = {
-        "Accounts|Access and cache transactional data|export,list,tags,names,entities,abis,rm",
+        "Accounts|Access and cache transactional data|export,list,tags,names,entities,abis,pins",
         "Admin|Control the scraper and build the index|status,scrape",
         "Data|Access and cache blockchain-related data|blocks,transactions,receipts,logs,traces,when",
         "State|Access to account and token state|state,tokens",
@@ -41,8 +41,6 @@ void COptions::writeOpenApiFile(void) {
     ostringstream tagStream;
     ostringstream pathStream;
     ostringstream specStream;
-    ostringstream apiStream;
-    ostringstream routeStream;
     bool first = true;
     for (auto ep : endpoints) {
         if (!first)
@@ -67,6 +65,25 @@ void COptions::writeOpenApiFile(void) {
             if (descr.size()) {
                 replace(entry, "[{SUMMARY}]", descr[0].swagger_descr);
                 replace(entry, "[{DESCR}]", descr[0].swagger_descr);
+                string_q route = descr[0].tags + toProper(cmd);
+                apiStream << endl;
+                apiStream << "// " << route << " help text todo" << endl;
+                apiStream << "func " << route << "(w http.ResponseWriter, r *http.Request) {" << endl;
+                if (route != "AccountsExport" && route != "AdminScrape") {
+                    apiStream << "\tCallOne(w, r, \"" << descr[0].tool << "\", \"" << descr[0].api_route << "\")"
+                              << endl;
+                } else {
+                    apiStream << "\tCallOneExtra(w, r, \"chifra\", \"" << descr[0].api_route << "\", \""
+                              << descr[0].api_route << "\")" << endl;
+                }
+                apiStream << "}" << endl;
+                goRouteStream << endl;
+                goRouteStream << "\tRoute{" << endl;
+                goRouteStream << "\t\t\"" << route << "\"," << endl;
+                goRouteStream << "\t\t\"GET\"," << endl;
+                goRouteStream << "\t\t\"/" << cmd << "\"," << endl;
+                goRouteStream << "\t\t" << route << "," << endl;
+                goRouteStream << "\t}," << endl;
             }
             replace(entry, "      summary: [{SUMMARY}]\n", "");
             replace(entry, "      description: [{DESCR}]\n", "");
@@ -85,9 +102,6 @@ void COptions::writeOpenApiFile(void) {
             replace(entry, "[{PARAMS}]", paramStream.str());
             pathStream << entry;
             counter.routeCount++;
-
-            cout << parts[0] << toProper(cmd) << endl;
-            printf("");
         }
     }
 
@@ -100,7 +114,7 @@ void COptions::writeOpenApiFile(void) {
     string_q yamlTemplate = configPath("makeClass/blank_swagger.yaml");
     string_q newYamlCode = asciiFileToString(yamlTemplate);
     if (!newYamlCode.empty()) {
-        LOG_INFO("Generating new yaml code");
+        // LOG_INFO("Generating new yaml code");
         replace(newYamlCode, "[{PATHS}]", pathStream.str());
         replace(newYamlCode, "[{TAGS}]", tagStream.str());
         string_q origYaml = configPath("makeClass/swagger.yaml");
@@ -108,9 +122,11 @@ void COptions::writeOpenApiFile(void) {
         if (origYamlCode != newYamlCode) {
             counter.nChanged++;
             stringToAsciiFile(origYaml, newYamlCode);
-            LOG_INFO("New yaml code written to ", origYaml);
+            // LOG_INFO("New yaml code written to ", origYaml);
         }
     }
+
+    writeCode("../src/go-apps/tbServer/cmd/routes.go");
 
     // string_q html = STR_HTML_CODE;
     // replace(html, "[{SPEC}]", specStream.str());
@@ -137,7 +153,6 @@ void COptions::writeApiFile(void) {
     CCommands commands;
     options_2_Commands(commands);
 
-    ostringstream routeStream;
     bool firstRoute = true;
     routeStream << "{" << endl;
     for (auto route : commands.routes) {

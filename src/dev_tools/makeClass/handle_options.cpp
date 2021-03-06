@@ -177,10 +177,14 @@ bool COptions::handle_options(void) {
 string_q replaceCode(const string_q& orig, const string_q& which, const string_q& new_code) {
     string_q converted = orig;
     converted = substitute(converted, "// BEG_" + which, "// BEG_" + which + "\n[{NEW_CODE}]\n<remove>");
+    converted = substitute(converted, "\n// END_" + which, "</remove>\nX// END_" + which);
+    converted = substitute(converted, "\n\t// END_" + which, "</remove>\nY// END_" + which);
     converted = substitute(converted, "\n    // END_" + which, "</remove>\n+// END_" + which);
     converted = substitute(converted, "\n            // END_" + which, "</remove>\n-// END_" + which);
     snagFieldClear(converted, "remove");
     replace(converted, "[{NEW_CODE}]\n\n", new_code);
+    replaceAll(converted, "X//", "//");
+    replaceAll(converted, "Y//", "\t//");
     replaceAll(converted, "+//", "    //");
     replaceAll(converted, "-//", "            //");
     return converted;
@@ -392,6 +396,9 @@ bool COptions::writeCode(const string_q& fn) {
         converted = replaceCode(converted, "CODE_ERROR_MSG", errors_stream.str());
         converted = replaceCode(converted, "DEBUG_DISPLAY", debug_stream.str());
         replaceAll(converted, "    // clang-format on\n    // clang-format off\n", "");
+    } else if (endsWith(fn, ".go")) {
+        converted = replaceCode(converted, "ROUTE_CODE", apiStream.str());
+        converted = replaceCode(converted, "ROUTE_ITEMS", goRouteStream.str());
     } else {
         converted = replaceCode(converted, "CODE_DECLARE", header_stream.str());
     }

@@ -73,6 +73,7 @@ class COptions : public COptionsBase {
     timestamp_t lastLint;
     ostringstream option_stream, init_stream, local_stream, auto_stream;
     ostringstream header_stream, notes_stream, errors_stream, debug_stream;
+    ostringstream apiStream, routeStream, goRouteStream;
     void clearStreams(void) {
         auto_stream.str("");
         option_stream.str("");
@@ -82,6 +83,9 @@ class COptions : public COptionsBase {
         errors_stream.str("");
         header_stream.str("");
         debug_stream.str("");
+        apiStream.str("");
+        routeStream.str("");
+        goRouteStream.str("");
 
         auto_stream.clear();
         option_stream.clear();
@@ -91,6 +95,9 @@ class COptions : public COptionsBase {
         errors_stream.clear();
         header_stream.clear();
         debug_stream.clear();
+        apiStream.clear();
+        routeStream.clear();
+        goRouteStream.clear();
 
         positionals.clear();
     }

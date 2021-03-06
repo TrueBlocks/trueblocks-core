@@ -45,13 +45,6 @@ func Index(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Users Manual")
 }
 
-// BEGIN_ROUTE_CODE
-
-// AccountsExport help text todo
-func AccountsExport(w http.ResponseWriter, r *http.Request) {
-	CallOneExtra(w, r, "chifra", "export", "export")
-}
-
 // AccountsList help text todo
 func AccountsList(w http.ResponseWriter, r *http.Request) {
 	CallOneExtra(w, r, "chifra", "list", "list")
@@ -62,14 +55,26 @@ func AccountsTags(w http.ResponseWriter, r *http.Request) {
 	CallOne(w, r, "ethNames", "tags")
 }
 
-// AccountsNames help text todo
-func AccountsNames(w http.ResponseWriter, r *http.Request) {
-	CallOne(w, r, "ethNames", "names")
-}
-
 // AccountsEntities help text todo
 func AccountsEntities(w http.ResponseWriter, r *http.Request) {
 	CallOne(w, r, "ethNames", "entities")
+}
+
+// AccountsMonitor help text todo
+func AccountsMonitor(w http.ResponseWriter, r *http.Request) {
+	CallOneExtra(w, r, "chifra", "monitor", "monitor")
+}
+
+// BEG_ROUTE_CODE
+
+// AccountsExport help text todo
+func AccountsExport(w http.ResponseWriter, r *http.Request) {
+	CallOneExtra(w, r, "chifra", "export", "export")
+}
+
+// AccountsNames help text todo
+func AccountsNames(w http.ResponseWriter, r *http.Request) {
+	CallOne(w, r, "ethNames", "names")
 }
 
 // AccountsAbis help text todo
@@ -77,9 +82,9 @@ func AccountsAbis(w http.ResponseWriter, r *http.Request) {
 	CallOne(w, r, "grabABI", "abis")
 }
 
-// AccountsMonitor help text todo
-func AccountsMonitor(w http.ResponseWriter, r *http.Request) {
-	CallOneExtra(w, r, "chifra", "monitor", "monitor")
+// AdminPins help text todo
+func AdminPins(w http.ResponseWriter, r *http.Request) {
+	CallOne(w, r, "pinMan", "pins")
 }
 
 // AdminStatus help text todo
@@ -90,11 +95,6 @@ func AdminStatus(w http.ResponseWriter, r *http.Request) {
 // AdminScrape help text todo
 func AdminScrape(w http.ResponseWriter, r *http.Request) {
 	CallOneExtra(w, r, "chifra", "scrape", "scrape")
-}
-
-// AdminPins help text todo
-func AdminPins(w http.ResponseWriter, r *http.Request) {
-	CallOne(w, r, "pinMan", "pins")
 }
 
 // DataBlocks help text todo
@@ -175,14 +175,6 @@ var routes = Routes{
 		Index,
 	},
 
-	// BEGIN_ROUTE_ITEMS
-	Route{
-		"AccountsExport",
-		"GET",
-		"/export",
-		AccountsExport,
-	},
-
 	Route{
 		"AccountsList",
 		"GET",
@@ -198,17 +190,34 @@ var routes = Routes{
 	},
 
 	Route{
-		"AccountsNames",
-		"GET",
-		"/names",
-		AccountsNames,
-	},
-
-	Route{
 		"AccountsEntities",
 		"GET",
 		"/entities",
 		AccountsEntities,
+	},
+
+
+	Route{
+		"AccountsMonitor",
+		"GET",
+		"/monitor",
+		AccountsMonitor,
+	},
+
+	// BEG_ROUTE_ITEMS
+
+	Route{
+		"AccountsExport",
+		"GET",
+		"/export",
+		AccountsExport,
+	},
+
+	Route{
+		"AccountsNames",
+		"GET",
+		"/names",
+		AccountsNames,
 	},
 
 	Route{
@@ -219,10 +228,10 @@ var routes = Routes{
 	},
 
 	Route{
-		"AccountsMonitor",
+		"AdminPins",
 		"GET",
-		"/monitor",
-		AccountsMonitor,
+		"/pins",
+		AdminPins,
 	},
 
 	Route{
@@ -237,13 +246,6 @@ var routes = Routes{
 		"GET",
 		"/scrape",
 		AdminScrape,
-	},
-
-	Route{
-		"AdminPins",
-		"GET",
-		"/pins",
-		AdminPins,
 	},
 
 	Route{

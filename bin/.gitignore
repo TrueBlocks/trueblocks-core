@@ -69,6 +69,7 @@ lastBlockTest
 loggingTest
 makeReadme.py
 parsingTest
+pinTest
 printFloatTest
 pylint.py
 runningTest
