@@ -49,7 +49,7 @@ func Index(w http.ResponseWriter, r *http.Request) {
 
 // AccountsExport help text todo
 func AccountsExport(w http.ResponseWriter, r *http.Request) {
-	CallOneExtra(w, r, "chifra", "export", "export")
+	CallOne(w, r, "acctExport", "export")
 }
 
 // AccountsList help text todo

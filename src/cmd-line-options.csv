@@ -23,7 +23,7 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,customizeable,c
 10440,apps,Accounts,export,acctExport,start,S,,false,false,false,false,local,deprecated,<blknum>,first block to process (inclusive)
 10450,apps,Accounts,export,acctExport,end,E,,false,false,false,false,local,deprecated,<blknum>,last block to process (inclusive)
 10453,apps,Accounts,export,acctExport,first_record,c,0,false,false,false,false,header,flag,<blknum>,the first record to process
-10457,apps,Accounts,export,acctExport,max_records,e,,false,false,false,false,header,flag,<blknum>,the maximum number of records to process before reporting
+10457,apps,Accounts,export,acctExport,max_records,e,(isApiMode() ? 250 : NOPOS),false,false,false,false,header,flag,<blknum>,the maximum number of records to process before reporting
 10085,apps,Accounts,export,acctExport,clean,,false,false,false,false,false,header,switch,<boolean>,clean (i.e. remove duplicate appearances) from all existing monitors
 10060,apps,Accounts,export,acctExport,staging,s,,false,false,false,false,local,switch,<boolean>,enable search of staging (not yet finalized) folder
 10080,apps,Accounts,export,acctExport,unripe,u,,false,false,false,false,local,switch,<boolean>,enable search of unripe (neither staged nor finalized) folder|(assumes --staging)

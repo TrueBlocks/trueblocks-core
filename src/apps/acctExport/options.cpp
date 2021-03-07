@@ -188,7 +188,7 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST_BOOL("emitter", emitter);
     LOG_TEST_BOOL("count", count);
     LOG_TEST("first_record", first_record, (first_record == 0));
-    LOG_TEST("max_records", max_records, (max_records == NOPOS));
+    LOG_TEST("max_records", max_records, (max_records == (isApiMode() ? 250 : NOPOS)));
     LOG_TEST_BOOL("clean", clean);
     LOG_TEST_BOOL("staging", staging);
     LOG_TEST_BOOL("unripe", unripe);
@@ -354,7 +354,7 @@ void COptions::Init(void) {
     emitter = false;
     count = false;
     first_record = 0;
-    max_records = NOPOS;
+    max_records = (isApiMode() ? 250 : NOPOS);
     clean = false;
     // END_CODE_INIT
 

@@ -99,111 +99,71 @@ bool COptions::parseArguments(string_q& command) {
     if (!call.empty() && !parts.empty())
         return usage("The --parts option is not available with the --call option.");
 
-    if (call.empty()) {
-        if (!addrs.size())
-            return usage("You must provide at least one Ethereum address.");
+    if (!call.empty())
+        return handle_call();
 
-        for (auto part : parts) {
-            if (part == "none")
-                modeBits = ST_NONE;
-            if (part == "balance")
-                modeBits = ethstate_t(modeBits | ST_BALANCE);
-            if (part == "nonce")
-                modeBits = ethstate_t(modeBits | ST_NONCE);
-            if (part == "code")
-                modeBits = ethstate_t(modeBits | ST_CODE);
-            if (part == "storage")
-                modeBits = ethstate_t(modeBits | ST_STORAGE);
-            if (part == "deployed")
-                modeBits = ethstate_t(modeBits | ST_DEPLOYED);
-            if (part == "accttype")
-                modeBits = ethstate_t(modeBits | ST_ACCTTYPE);
-            if (part == "some")
-                modeBits = ethstate_t(modeBits | ST_SOME);
-            if (part == "all")
-                modeBits = ethstate_t(modeBits | ST_ALL);
-        }
+    if (!addrs.size())
+        return usage("You must provide at least one Ethereum address.");
 
-        deminimus = str_2_Wei(getGlobalConfig("getState")->getConfigStr("settings", "deminimus", "0"));
-
-        UNHIDE_FIELD(CEthState, "address");
-        string_q format = STR_DISPLAY_ETHSTATE;
-        if (!(modeBits & ST_BALANCE)) {
-            replace(format, "\t[{BALANCE}]", "");
-        } else {
-            UNHIDE_FIELD(CEthState, "balance");
-            UNHIDE_FIELD(CEthState, "ether");
-        }
-        if (!(modeBits & ST_NONCE)) {
-            replace(format, "\t[{NONCE}]", "");
-        } else {
-            UNHIDE_FIELD(CEthState, "nonce");
-        }
-        if (!(modeBits & ST_CODE)) {
-            replace(format, "\t[{CODE}]", "");
-        } else {
-            UNHIDE_FIELD(CEthState, "code");
-        }
-        if (!(modeBits & ST_STORAGE)) {
-            replace(format, "\t[{STORAGE}]", "");
-        } else {
-            UNHIDE_FIELD(CEthState, "storage");
-        }
-        if (!(modeBits & ST_DEPLOYED)) {
-            replace(format, "\t[{DEPLOYED}]", "");
-        } else {
-            UNHIDE_FIELD(CEthState, "deployed");
-        }
-        if (!(modeBits & ST_ACCTTYPE)) {
-            replace(format, "\t[{ACCTTYPE}]", "");
-        } else {
-            UNHIDE_FIELD(CEthState, "accttype");
-        }
-
-        // Display formatting
-        configureDisplay("getState", "CEthState", format.empty() ? STR_DISPLAY_ETHSTATE : format);
-
-    } else {
-        CStringArray vars;
-        explode(vars, call, '!');
-        if (vars.size() == 0)
-            return usage("You must supply the address of a smart contract for the --call option.");
-        if (vars.size() == 1)
-            return usage("You must provide a four-byte code to the smart contract you're calling.");
-        if (!isAddress(vars[0]))
-            return usage("The first part of the call data to --call must be an address.");
-        if (!isHexStr(vars[1]))
-            return usage("The four byte must be a hex string.");
-
-        theCall.address = vars[0];
-        theCall.encoding = vars[1];
-        theCall.bytes = vars.size() > 2 ? vars[2] : "";
-        theCall.blockNumber = isTestMode() ? 10092000 : getBlockProgress(BP_CLIENT).client;
-        // We load known abis first (so we have something, if possible) then lay over from etherscan to get better names
-        theCall.abi_spec.loadAbisFromKnown();
-        theCall.abi_spec.loadAbiFromEtherscan(theCall.address, false);
-        if (doEthCall(theCall)) {
-            CTransaction art;
-            art.input = theCall.encoding + theCall.bytes;
-            abi_spec.articulateTransaction(&art);
-            theCall.result.inputs = art.articulatedTx.inputs;
-            theCall.address = vars[0];
-
-            // Display formatting
-            expContext().exportFmt = JSON1;
-            string_q format = STR_DISPLAY_FUNCTION;
-            configureDisplay("getState", "CEthState", format.empty() ? STR_DISPLAY_ETHSTATE : format);
-            manageFields(
-                "CParameter:str_default,indexed,internalType,components,no_write,is_pointer,is_array,is_object,is_"
-                "builtin,"
-                "is_minimal,type|CFunction:stateMutability,type,constant|CEthCall:abi_spec",
-                FLD_HIDE);
-            manageFields("CFunction:address|CEthState:result,address", FLD_SHOW);
-
-            return true;
-        }
-        return usage("No result from call to " + theCall.address + " with fourbyte " + theCall.encoding + ".");
+    for (auto part : parts) {
+        if (part == "none")
+            modeBits = ST_NONE;
+        if (part == "balance")
+            modeBits = ethstate_t(modeBits | ST_BALANCE);
+        if (part == "nonce")
+            modeBits = ethstate_t(modeBits | ST_NONCE);
+        if (part == "code")
+            modeBits = ethstate_t(modeBits | ST_CODE);
+        if (part == "storage")
+            modeBits = ethstate_t(modeBits | ST_STORAGE);
+        if (part == "deployed")
+            modeBits = ethstate_t(modeBits | ST_DEPLOYED);
+        if (part == "accttype")
+            modeBits = ethstate_t(modeBits | ST_ACCTTYPE);
+        if (part == "some")
+            modeBits = ethstate_t(modeBits | ST_SOME);
+        if (part == "all")
+            modeBits = ethstate_t(modeBits | ST_ALL);
     }
+
+    deminimus = str_2_Wei(getGlobalConfig("getState")->getConfigStr("settings", "deminimus", "0"));
+
+    UNHIDE_FIELD(CEthState, "address");
+    string_q format = STR_DISPLAY_ETHSTATE;
+    if (!(modeBits & ST_BALANCE)) {
+        replace(format, "\t[{BALANCE}]", "");
+    } else {
+        UNHIDE_FIELD(CEthState, "balance");
+        UNHIDE_FIELD(CEthState, "ether");
+    }
+    if (!(modeBits & ST_NONCE)) {
+        replace(format, "\t[{NONCE}]", "");
+    } else {
+        UNHIDE_FIELD(CEthState, "nonce");
+    }
+    if (!(modeBits & ST_CODE)) {
+        replace(format, "\t[{CODE}]", "");
+    } else {
+        UNHIDE_FIELD(CEthState, "code");
+    }
+    if (!(modeBits & ST_STORAGE)) {
+        replace(format, "\t[{STORAGE}]", "");
+    } else {
+        UNHIDE_FIELD(CEthState, "storage");
+    }
+    if (!(modeBits & ST_DEPLOYED)) {
+        replace(format, "\t[{DEPLOYED}]", "");
+    } else {
+        UNHIDE_FIELD(CEthState, "deployed");
+    }
+    if (!(modeBits & ST_ACCTTYPE)) {
+        replace(format, "\t[{ACCTTYPE}]", "");
+    } else {
+        UNHIDE_FIELD(CEthState, "accttype");
+    }
+
+    // Display formatting
+    configureDisplay("getState", "CEthState", format.empty() ? STR_DISPLAY_ETHSTATE : format);
 
     if (!requestsHistory())  // if the user did not request historical state, we can return safely
         return true;

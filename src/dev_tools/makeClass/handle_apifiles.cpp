@@ -88,7 +88,7 @@ void COptions::writeOpenApiFile(void) {
             apiStream << endl;
             apiStream << "// " << route << " help text todo" << endl;
             apiStream << "func " << route << "(w http.ResponseWriter, r *http.Request) {" << endl;
-            if (descr.size() && route != "AccountsExport" && route != "AdminScrape") {
+            if (descr.size() && route != "AdminScrape") {
                 apiStream << "\tCallOne(w, r, \"" << descr[0].tool << "\", \"" << cmd << "\")" << endl;
             } else if (route == "AccountsTags") {
                 apiStream << "\tCallOne(w, r, \"ethNames\", \"tags\")" << endl;

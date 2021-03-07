@@ -17,6 +17,7 @@
 #include "options.h"
 
 bool parseRequestDates(COptionsBase* opt, CNameValueArray& blocks, const string_q& arg);
+bool parseRequestTs(COptionsBase* opt, CNameValueArray& blocks, timestamp_t ts);
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
     // BEG_CODE_OPTIONS
@@ -95,6 +96,10 @@ bool COptions::parseArguments(string_q& command) {
     for (auto item : block_list) {
         if (isDate(item)) {
             if (!parseRequestDates(this, requests, item))
+                return false;
+
+        } else if (isTimestamp(item)) {
+            if (!parseRequestTs(this, requests, str_2_Ts(item)))
                 return false;
 
         } else if (!parseBlockList2(this, blocks, item, latest)) {
@@ -236,6 +241,12 @@ string_q COptions::listSpecials(format_t fmt) const {
         }
     }
     return os.str().c_str();
+}
+
+//-----------------------------------------------------------------------
+bool parseRequestTs(COptionsBase* opt, CNameValueArray& requests, timestamp_t ts) {
+    requests.push_back(CNameValue("date", int_2_Str(ts)));
+    return true;
 }
 
 //-----------------------------------------------------------------------

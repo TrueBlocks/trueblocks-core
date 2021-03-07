@@ -35,12 +35,20 @@ bool COptions::call_command(int argc, const char* argv[]) {
             hiUp1 = hiUp2 = hiDown = '`';
 
         } else if (!cmdMap[arg].empty()) {
-            if (mode.empty()) {
-                mode = arg;
-            } else {
+            if (mode == "status") {
+                string_q validModes = "|index|monitors|entities|names|abis|caches|some|all|";
+                if (!contains(validModes, arg)) {
+                    ostringstream os;
+                    os << "Invalid submode '" << arg << "' provided to status mode.";
+                    return usage(os.str());
+                }
+                // pass it through
+            } else if (!mode.empty()) {
                 ostringstream os;
                 os << "Provide only a single mode. Encountered both '" << mode << "' and '" << arg << "'.";
                 return usage(os.str());
+            } else {
+                mode = arg;
             }
         }
     }

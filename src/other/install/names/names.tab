@@ -438,6 +438,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 31-Gitcoin Grants:Friends	0x0d33a9cb75dc90717b5a200b5427f096b40893a9	vishnusr		Gitcoin Website			false	false	false	false	false	false
 31-Gitcoin Grants:Grant	0x0d3d681762f9eda9541fab6acfb17c50025b630b	Grant 0554 Commūnitās		https://gitcoin.co/grants/554/communitas		https://github.com/jpaulet/comunitas	false	false	false	false	false	false
 31-Gitcoin Grants:Grant	0x0d3f3ae5a4ef9577f15448e0e6141b36da4f46bd	Grant 0921 Artists for Artists		https://gitcoin.co/grants/921/artists-for-artists			false	false	false	false	false	false
+30-Contracts	0x0d4a11d5eeaac28ec3f61d100daf4d40471f1852	Uniswap V2	UNI-V2	On chain	18		false	false	false	true	true	false
 31-Gitcoin Grants:Friends	0x0d4b7b8c924a524e836005b5fba039093928b94e	flexthought		Gitcoin Website			false	false	false	false	false	false
 31-Gitcoin Grants:Grant	0x0d54b43d103f5702ebcc522cd4b70e71ee8ea50b	Grant 0601 Spells.fyi - Timelocks in DeFi		https://gitcoin.co/grants/601/spellsfyi-timelocks-in-defi		https://spells.fyi	false	false	false	false	false	false
 30-Contracts:Humanity DAO	0x0d565374cb19e9e7d51a3c3e721eccec9a08b699	ferranrego		https://www.humanitydao.org/humans			false	false	false	false	false	false
@@ -5420,6 +5421,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 31-Gitcoin Grants:Grant	0xbb2281ca5b4d07263112604d1f182ad0ab26a252	Grant 1510 Pickle Jar Info		https://gitcoin.co/grants/1510/pickle-jar-info			false	false	false	false	false	false
 31-Gitcoin Grants:Grant	0xbb2581d00c6a72df195e6f3d3f02557fda48f401	Grant 0392 Ethfans		https://gitcoin.co/grants/392/ethfans			false	false	false	false	false	false
 32-Kickback:Friends	0xbb29f5be9cc59e28587f5bb8f6c6ac6ba9b5f18a	roman_pavlovskyi		https://kickback.events/			false	false	false	false	false	false
+30-Contracts	0xbb2b8038a1640196fbe3e38816f3e67cba72d940	Uniswap V2	UNI-V2	On chain	18		false	false	false	true	true	false
 34-Twitter:Friends	0xbb2d54f98605d3d18ad05a772a6ff36d4b7b6468	Hilmi		Twitter		Boşnak	false	false	false	false	false	false
 30-Contracts:Humanity DAO	0xbb324b6926bb6e524a1f2a669a936f3d130aca08	superphiz		https://www.humanitydao.org/humans			false	false	false	false	false	false
 30-Contracts:Humanity DAO	0xbb3c8acbd530accc8cfbabfdede2684e8018b09e	jane_yan111		https://www.humanitydao.org/humans			false	false	false	false	false	false
