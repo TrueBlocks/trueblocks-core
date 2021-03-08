@@ -124,8 +124,15 @@ func FileExists(filename string) bool {
 }
 
 var nProcessed int
+// Logger sends information to the server's console
 func Logger(inner http.Handler, name string) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		var limiter = rate.NewLimiter(1, 3)
+		// fmt.Println("limiter.Limit: ", limiter.Limit())
+		if limiter.Allow() == false {
+            http.Error(w, http.StatusText(429), http.StatusTooManyRequests)
+            return
+        }
 		start := time.Now()
 		inner.ServeHTTP(w, r)
 		t := ""
