@@ -1,6 +1,13 @@
 package trueblocks
 
+/*-------------------------------------------------------------------------
+ * This source code is confidential proprietary information which is
+ * copyright (c) 2018, 2021 TrueBlocks, LLC (http://trueblocks.io)
+ * All Rights Reserved
+ *------------------------------------------------------------------------*/
+
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 	"net"
@@ -19,13 +26,15 @@ const (
 
 var upgrader = websocket.Upgrader{}
 
+// Message is a structure used to send messages via websockets
 type Message struct {
 	Action   MessageType      `json:"action"`
-	Id       string           `json:"id"`
+	ID       string           `json:"id"`
 	Content  string           `json:"content"`
 	Progress *CommandProgress `json:"progress"`
 }
 
+// Connection is a structure representing a websocket connection
 type Connection struct {
 	connection *websocket.Conn
 	send       chan *Message
@@ -33,7 +42,6 @@ type Connection struct {
 }
 
 func (c *Connection) write() {
-
 	defer func() {
 		c.connection.Close()
 	}()
@@ -50,7 +58,7 @@ func (c *Connection) write() {
 			err := c.connection.WriteJSON(message)
 
 			if err != nil {
-				c.Log("Error while sending message, dropping connection: %s", err.Error())
+				// c.Log("Error while sending message, dropping connection: %s", err.Error())
 				c.pool.unregister <- c
 			}
 		}

@@ -1,70 +1,66 @@
 package trueblocks
 
+/*-------------------------------------------------------------------------
+ * This source code is confidential proprietary information which is
+ * copyright (c) 2018, 2021 TrueBlocks, LLC (http://trueblocks.io)
+ * All Rights Reserved
+ *------------------------------------------------------------------------*/
+
 import (
 	"bufio"
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"io"
 	"log"
-	"regexp"
-	"strconv"
+	"strings"
 )
 
+// CommandProgress shows progress for a long running request
 type CommandProgress struct{
 	Op string `json:"op"`
-	Done int `json:"done"`
-	Total int `json:"total"`
-	Finished bool `json:"finished"`
 }
 
 func (cp *CommandProgress) toJSON() []byte {
 	json, err := json.Marshal(cp)
-
 	if err != nil {
 		log.Fatalf("Cannot marshal CommandProgress to JSON: %s", err.Error())
 	}
-
 	return json
 }
 
-var progressLine = regexp.MustCompile(`:[\s]+([A-Za-z]+)[\s]+([\d]+) of ([\d]+)`)
-
-func MatchProgress(outputLine string) []string {
-	return progressLine.FindStringSubmatch(outputLine)
+func dropNL(data []byte) []byte {
+	if len(data) > 0 && data[len(data)-1] == '\n' {
+		return data[0 : len(data)-1]
+	}
+	return data
 }
 
-type SendFunc func(*CommandProgress)
+// ScanProgressLine looks for "lines" that end with `\r` not `\n` like usual
+func ScanProgressLine(data []byte, atEOF bool) (advance int, token []byte, err error) {
+	if atEOF && len(data) == 0 {
+		return 0, nil, nil
+	}
+	if i := bytes.IndexByte(data, '\r'); i >= 0 {
+		return i + 1, dropNL(data[0:i]), nil
+	}
+	return bufio.ScanLines(data, atEOF);
+}
 
-func ScanForProgress(stderrPipe io.Reader, fn SendFunc) {
+// ScanForProgress watches stderr and picks of progress messages
+func ScanForProgress(stderrPipe io.Reader, fn func(*CommandProgress)) {
 	scanner := bufio.NewScanner(stderrPipe)
-
+	scanner.Split(ScanProgressLine)
 	for scanner.Scan() {
 		text := scanner.Text()
-		matches := MatchProgress(text)
-
-		log.Println(text)
-
-		if len(matches) != 0 {
-			done, err := strconv.Atoi(matches[2])
-
-			if err != nil {
-				fmt.Println("Cannot get 'done' from stderr");
-				continue;
+		if len(text) > 0 {
+			fmt.Println(text)
+			if (strings.Contains(text, "<PROG>")) {
+				substring := strings.SplitAfter(text, ":")
+				fn(&CommandProgress{
+					Op: substring[1],
+				})
 			}
-
-			total, err := strconv.Atoi(matches[3])
-
-			if err != nil {
-				fmt.Println("Cannot get 'total' from stderr");
-				continue;
-			}
-
-			fn(&CommandProgress{
-				Op: matches[1],
-				Done: done,
-				Total: total,
-				Finished: done == total,
-			})
 		}
 	}
 

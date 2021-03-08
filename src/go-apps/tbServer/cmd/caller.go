@@ -14,13 +14,17 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
+	"golang.org/x/time/rate"
 )
 
 func CallOne(w http.ResponseWriter, r *http.Request, tbCmd , apiCmd string) {
 	CallOneExtra(w, r, tbCmd, "", apiCmd)
 }
 
+// CallOneExtra processes one request
 func CallOneExtra(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd string) {
+	
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
@@ -67,9 +71,8 @@ func CallOneExtra(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd s
 	}
 
 	stderrPipe, err := cmd.StderrPipe()
-
 	if err != nil {
-		log.Println(err)
+		log.Printf("%s", err)
 	} else {
 		go func() {
 			ScanForProgress(stderrPipe, func(commandProgress *CommandProgress) {
@@ -77,7 +80,7 @@ func CallOneExtra(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd s
 					Action: ProgressMessage,
 					// TODO: this should be tbCmd, but current frontend (Explorer) does not support
 					// ids other than "export"
-					Id:       "export",
+					ID:       "export",
 					Progress: commandProgress,
 				}
 			})
@@ -85,22 +88,21 @@ func CallOneExtra(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd s
 	}
 
 	out, err := cmd.Output()
-
 	if err != nil {
 		log.Println(err)
 		connectionPool.broadcast <- &Message{
 			Action:  CommandErrorMessage,
-			Id:      tbCmd,
+			ID:      tbCmd,
 			Content: err.Error(),
 		}
 	}
 
 	output := string(out[:])
-	connectionPool.broadcast <- &Message{
-		Action:  CommandOutputMessage,
-		Id:      tbCmd,
-		Content: string(output),
-	}
+	// connectionPool.broadcast <- &Message{
+	// 	Action:  CommandOutputMessage,
+	// 	ID:      tbCmd,
+	// 	Content: string(output),
+	// }
 	fmt.Fprint(w, output)
 }
 
