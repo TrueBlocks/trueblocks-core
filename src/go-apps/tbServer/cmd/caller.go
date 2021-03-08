@@ -58,6 +58,14 @@ func CallOneExtra(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd s
 		allDogs = append(allDogs, strconv.Itoa(Options.Verbose))
 	}
 	cmd := exec.Command(tbCmd, allDogs...)
+	notify := w.(http.CloseNotifier).CloseNotify()
+	go func() {
+		<-notify
+		if err := cmd.Process.Kill(); err != nil {
+			log.Println("failed to kill process: ", err)
+		}
+		log.Println("The client closed the connection prematurely. Cleaning up.")
+	}()
 
 	if r.Header.Get("User-Agent") == "testRunner" {
 		cmd.Env = append(append(os.Environ(), "TEST_MODE=true"), "API_MODE=true")
