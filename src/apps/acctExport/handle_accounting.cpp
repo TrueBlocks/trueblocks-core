@@ -128,7 +128,7 @@ bool COptions::handle_accounting(void) {
                     ostringstream post;
                     post << " txs for address " << allMonitors[0].address;
                     post << " " << first_record << " " << nProcessed << " " << i << " " << nTransactions << "\r";
-                    LOG_PROGRESS("Extract ", current, nTransactions, post.str());
+                    LOG_PROGRESS("Extracting ", current, nTransactions, post.str());
                 }
             }
 
@@ -144,8 +144,9 @@ bool COptions::handle_accounting(void) {
     }
 
     if (!isTestMode()) {
-        LOG_PROGRESS((freshen ? "Updated" : "Reported"), (first_record + nProcessed), nTransactions,
-                     " txs for address " + allMonitors[0].address);
+        if ((first_record + nProcessed) == nTransactions)
+            LOG_PROGRESS((freshen ? "Finished updating" : "Finished reporting on"), (first_record + nProcessed), nTransactions,
+                " txs for address " + allMonitors[0].address);
     }
 
     // LOG_INFO("n: ", monitors.size(), " lastExported: ", lastExported);

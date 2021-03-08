@@ -142,8 +142,9 @@ bool COptions::handle_statements(void) {
     }
 
     if (!isTestMode()) {
-        LOG_PROGRESS((freshen ? "Updated" : "Reported"), (first_record + nProcessed), nTransactions,
-                     " transactions for address " + allMonitors[0].address);
+        if ((first_record + nProcessed) == nTransactions)
+            LOG_PROGRESS((freshen ? "Finished updating" : "Finished reporting on"), (first_record + nProcessed),
+                nTransactions, " statements for address " + allMonitors[0].address);
     }
 
     for (auto monitor : allMonitors)

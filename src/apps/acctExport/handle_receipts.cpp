@@ -96,8 +96,9 @@ bool COptions::handle_receipts(void) {
     }
 
     if (!isTestMode()) {
-        LOG_PROGRESS((freshen ? "Updated" : "Reported"), (first_record + nProcessed), nTransactions,
-                     " receipts for address " + allMonitors[0].address);
+        if ((first_record + nProcessed) == nTransactions)
+            LOG_PROGRESS((freshen ? "Finished updating" : "Finished reporting on"), (first_record + nProcessed),
+                         nTransactions, " receipts for address " + allMonitors[0].address);
     }
 
     for (auto monitor : allMonitors)

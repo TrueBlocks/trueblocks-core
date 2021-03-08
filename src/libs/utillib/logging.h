@@ -21,6 +21,7 @@ namespace qblocks {
 typedef enum {
     sev_na = 0,
     sev_info = 1,
+    sev_prog = 2,
     sev_warning,
     sev_error,
     sev_fatal,
@@ -166,6 +167,9 @@ class logger {
             case sev_debug8:
                 log_stream << ": " << cTeal << "8" << cOff << "------";
                 break;
+            case sev_prog:
+                log_stream << bGreen << "<PROG>  " << cOff << ": ";
+                break;
             case sev_info:
                 log_stream << bGreen << "<INFO>  " << cOff << ": ";
                 break;
@@ -204,6 +208,7 @@ extern logger<log_policy_i>* eLogger;
 #define LOG3 dLogger->print<sev_debug3>
 #define LOG4 dLogger->print<sev_debug4>
 #define LOG8 dLogger->print<sev_debug8>
+#define LOG_PROG eLogger->print<sev_prog>
 #define LOG_INFO eLogger->print<sev_info>
 #define LOG_WARN eLogger->print<sev_warning>
 #define LOG_ERR eLogger->print<sev_error>
@@ -214,8 +219,7 @@ extern logger<log_policy_i>* eLogger;
 #define SEP4(a) LOG4(cRed + string_q(10, '-') + (a) + string_q(10, '-') + cOff)
 #define SEP8(a) LOG8(cTeal + string_q(10, '-') + (a) + string_q(10, '-') + cOff)
 #define LOG_PROGRESS(op, progress, goal, post)                                                                         \
-    LOG_INFO((op), " ", padNum6T(uint64_t(progress)), " of ", padNum6T(uint64_t(goal)), (post),                        \
-             (!(progress % 50) ? "\n" : ""))
+    LOG_PROG((op), " ", padNum6T(uint64_t(progress)), " of ", padNum6T(uint64_t(goal)), (post))
 #define LOG_CALL(a)                                                                                                    \
     { LOG4(bWhite, l_funcName, " ----> ", (isTestMode() ? substitute((a), getCachePath(""), "$CACHE/") : (a)), cOff); }
 #define LOG_TEST(a, b, is_default)                                                                                     \
