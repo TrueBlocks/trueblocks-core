@@ -585,36 +585,30 @@ string_q CFunction::encodeItem(void) const {
 }
 
 //-----------------------------------------------------------------------
+const char* STR_COMPRESSED_FMT = "[{NAME}](++INPUTS++);";
+const char* STR_COMPRESSED_INPUT_QUOTED = "\"[{VALUE}]\" /*[{NAME}]*/, ";
+const char* STR_COMPRESSED_INPUT = "[{VALUE}] /*[{NAME}]*/, ";
+
 string_q CFunction::compressed(void) const {
-// TODO(tjayrush): FIX_THIS_CODE
-#if 1
     if (name.empty())
         return "";
-    string_q ret = name + " ( ";
-    for (auto input : inputs)
-        ret += (input.name + ": " + input.value + ", ");
-    ret = trim(trim(ret, ' '), ',');
-    ret += " )";
-    return ret;
-#else
-    if (name.empty())
-        return "";
-    string_q ret = name + " (";
-    for (auto input : inputs) {
-        if (input.internalType == "address")
-            ret += ("str_2_Addr(\"" + input.value + "\"), ");
-        else if (input.internalType == "uint256")
-            ret += ("str_2_Wei(\"" + input.value + "\"), ");
-        else
-            ret += ("\"" + input.value + "\", ");
+
+    if (isApiMode()) {
+        string_q ret = name + " ( ";
+        for (auto input : inputs)
+            ret += (input.name + ": " + input.value + ", ");
+        ret = trim(trim(ret, ' '), ',');
+        ret += " )";
+        return ret;
     }
-    ret = trim(trim(ret, ' '), ',');
-    ret += " ); // ";
+
+    ostringstream func, inp;
+    func << Format(STR_COMPRESSED_FMT) << endl;
     for (auto input : inputs)
-        ret += (input.name + ", ");
-    ret = trim(trim(ret, ' '), ',');
+        inp << input.Format(substitute(STR_COMPRESSED_INPUT, " /*[{NAME}]*/", (verbose ? " /*[{NAME}]*/" : "")));
+    string_q ret = func.str();
+    replace(ret, "++INPUTS++", trim(trim(inp.str(), ' '), ','));
     return ret;
-#endif
 }
 
 //-----------------------------------------------------------------------
