@@ -1148,6 +1148,10 @@ string_q exportPostamble(const CStringArray& errorsIn, const string_q& extra) {
     if (!errStrs.str().empty())
         os << ", \"errors\": [\n" << errStrs.str() << "\n]";
 
+    if (fmt == JSON1)
+        return os.str() + " }";
+    ASSERT(fmt == API1);
+
     bool showSchemas = getEnvStr("NO_SCHEMAS") != "true";
     bool showProgress = getEnvStr("NO_PROGRESS") != "true";
     if (showSchemas) {
@@ -1180,10 +1184,6 @@ string_q exportPostamble(const CStringArray& errorsIn, const string_q& extra) {
             os << ", \"types\": [\n" << typeStrs.str() << "\n]";
         }
     }
-
-    if (fmt == JSON1)
-        return os.str() + " }";
-    ASSERT(fmt == API1);
 
     CBlockProgress progress = getBlockProgress();
     blknum_t unripe = progress.unripe;
