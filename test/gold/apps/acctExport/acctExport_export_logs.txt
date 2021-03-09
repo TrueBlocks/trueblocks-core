@@ -739,6 +739,4 @@ TIME ~ CLOCK - <INFO>  : listRange.second: --latest--
   "data": "0x00000000000000000000000000000000000000000000000000a4c799e6ffe000",
   "transactionIndex": 4
 }
-], "types": [
-{ "type": "CLogEntry", "fields": [{ "name": "address", "type": "address" }, { "name": "blockNumber", "type": "blocknum" }, { "name": "logIndex", "type": "blocknum" }, { "name": "topics", "type": "object|ts_array" }, { "name": "data", "type": "text" }, { "name": "articulatedLog", "type": "object" }, { "name": "compressedLog", "type": "text" }, { "name": "transactionIndex", "type": "blocknum" }] }
 ] }

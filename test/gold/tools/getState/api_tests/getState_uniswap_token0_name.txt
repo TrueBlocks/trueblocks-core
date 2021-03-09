@@ -19,44 +19,5 @@
       "balance": 0,
       "address": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599"
     }
-  ],
-  "types": [
-    {
-      "type": "CEthCall",
-      "fields": [
-        {
-          "name": "blockNumber",
-          "type": "blocknum"
-        },
-        {
-          "name": "encoding",
-          "type": "text"
-        },
-        {
-          "name": "bytes",
-          "type": "text"
-        },
-        {
-          "name": "result",
-          "type": "object"
-        },
-        {
-          "name": "blockNumber",
-          "type": "blocknum"
-        },
-        {
-          "name": "balance",
-          "type": "wei"
-        },
-        {
-          "name": "address",
-          "type": "address"
-        },
-        {
-          "name": "result",
-          "type": "object"
-        }
-      ]
-    }
   ]
 }

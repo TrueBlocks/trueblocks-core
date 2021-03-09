@@ -47,7 +47,7 @@ TIME ~ CLOCK - <INFO>  : trace: true
               }
             ]
           },
-          "compressedLog": "Transfer ( _from: 0xe81a6c6b733d52df5d6aa863d75aab78147a0f28, _to: 0x8ca1fec705f7060aaa3d8c6757e34d1e7cc61021, _amount: 100000000 )"
+          "compressedLog": "Transfer(0xe81a6c6b733d52df5d6aa863d75aab78147a0f28, 0x8ca1fec705f7060aaa3d8c6757e34d1e7cc61021, 100000000); "
         },
         {
           "address": "0x2428e9af9bc3d66e4ee9604da681c6e5493f8454",
@@ -204,7 +204,7 @@ TIME ~ CLOCK - <INFO>  : trace: true
             }
           ]
         },
-        "compressedTrace": "balanceOf ( _owner: 0xc14830e53aa344e8c14603a91229a0b925b0b262 )"
+        "compressedTrace": "balanceOf(0xc14830e53aa344e8c14603a91229a0b925b0b262); "
       },
       {
         "type": "call",
@@ -242,7 +242,7 @@ TIME ~ CLOCK - <INFO>  : trace: true
             }
           ]
         },
-        "compressedTrace": "balanceOf ( _owner: 0xe81a6c6b733d52df5d6aa863d75aab78147a0f28 )"
+        "compressedTrace": "balanceOf(0xe81a6c6b733d52df5d6aa863d75aab78147a0f28); "
       },
       {
         "type": "call",
@@ -280,7 +280,7 @@ TIME ~ CLOCK - <INFO>  : trace: true
             }
           ]
         },
-        "compressedTrace": "balanceOf ( _owner: 0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a )"
+        "compressedTrace": "balanceOf(0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a); "
       },
       {
         "type": "call",
@@ -318,7 +318,7 @@ TIME ~ CLOCK - <INFO>  : trace: true
             }
           ]
         },
-        "compressedTrace": "balanceOf ( _owner: 0xe81a6c6b733d52df5d6aa863d75aab78147a0f28 )"
+        "compressedTrace": "balanceOf(0xe81a6c6b733d52df5d6aa863d75aab78147a0f28); "
       },
       {
         "type": "call",
@@ -356,7 +356,7 @@ TIME ~ CLOCK - <INFO>  : trace: true
             }
           ]
         },
-        "compressedTrace": "balanceOf ( _owner: 0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a )"
+        "compressedTrace": "balanceOf(0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a); "
       },
       {
         "type": "call",
@@ -394,7 +394,7 @@ TIME ~ CLOCK - <INFO>  : trace: true
             }
           ]
         },
-        "compressedTrace": "balanceOf ( _owner: 0xe81a6c6b733d52df5d6aa863d75aab78147a0f28 )"
+        "compressedTrace": "balanceOf(0xe81a6c6b733d52df5d6aa863d75aab78147a0f28); "
       },
       {
         "type": "call",
@@ -435,7 +435,7 @@ TIME ~ CLOCK - <INFO>  : trace: true
             }
           ]
         },
-        "compressedTrace": "transfer ( _token: 0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a, _to: 0x8ca1fec705f7060aaa3d8c6757e34d1e7cc61021, _value: 100000000 )"
+        "compressedTrace": "transfer(0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a, 0x8ca1fec705f7060aaa3d8c6757e34d1e7cc61021, 100000000); "
       },
       {
         "type": "call",
@@ -516,7 +516,7 @@ TIME ~ CLOCK - <INFO>  : trace: true
             }
           ]
         },
-        "compressedTrace": "transfer ( _to: 0x8ca1fec705f7060aaa3d8c6757e34d1e7cc61021, _value: 100000000 )"
+        "compressedTrace": "transfer(0x8ca1fec705f7060aaa3d8c6757e34d1e7cc61021, 100000000); "
       },
       {
         "type": "call",
@@ -657,6 +657,4 @@ TIME ~ CLOCK - <INFO>  : trace: true
     "gasUsed": 947585,
     "date": "2018-12-13 01:26:32 UTC",
     "ether": 0.000000000000000000
-  }], "types": [
-{ "type": "CTransaction", "fields": [{ "name": "hash", "type": "hash" }, { "name": "blockHash", "type": "hash" }, { "name": "blockNumber", "type": "blocknum" }, { "name": "transactionIndex", "type": "blocknum" }, { "name": "timestamp", "type": "timestamp" }, { "name": "from", "type": "address" }, { "name": "to", "type": "address" }, { "name": "value", "type": "wei" }, { "name": "gas", "type": "gas" }, { "name": "gasPrice", "type": "gas" }, { "name": "input", "type": "text" }, { "name": "isError", "type": "unumber" }, { "name": "hasToken", "type": "unumber" }, { "name": "receipt", "type": "object" }, { "name": "traces", "type": "object|ts_array" }, { "name": "articulatedTx", "type": "object" }, { "name": "compressedTx", "type": "text" }, { "name": "gasCost", "type": "wei" }, { "name": "gasUsed", "type": "gas" }, { "name": "date", "type": "date" }, { "name": "ether", "type": "ether" }] }
-] }
+  }] }

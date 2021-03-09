@@ -15,6 +15,4 @@ TIME ~ CLOCK - <INFO>  : {
 
 { "data": [
 {"fromBlock":"0x2ed0c4","toBlock":"0x2ed128","toAddress":["0x8bbb73bcb5d553b5a556358d27625323fd781d37"],"after":1000,"count":100}
-], "types": [
-{ "type": "CTrace", "fields": [{ "name": "action", "type": "object" }, { "name": "blockHash", "type": "hash" }, { "name": "blockNumber", "type": "blocknum" }, { "name": "result", "type": "object" }, { "name": "subtraces", "type": "unumber" }, { "name": "traceAddress", "type": "text" }, { "name": "transactionHash", "type": "hash" }, { "name": "transactionIndex", "type": "blocknum" }, { "name": "type", "type": "text" }] }
 ] }

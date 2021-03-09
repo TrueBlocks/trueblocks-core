@@ -4,20 +4,5 @@
       "apiKey": "--license_codes--",
       "secretKey": "--license_codes--"
     }
-  ],
-  "types": [
-    {
-      "type": "CPinApiLicense",
-      "fields": [
-        {
-          "name": "apiKey",
-          "type": "text"
-        },
-        {
-          "name": "secretKey",
-          "type": "text"
-        }
-      ]
-    }
   ]
 }

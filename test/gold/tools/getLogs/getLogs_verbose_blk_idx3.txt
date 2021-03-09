@@ -10,6 +10,4 @@ getLogs 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.36 --
       "0x0000000000000000000000004811e6996291cd78b9f9272ead30da18774db174"
     ],
     "data": "0x000000000000000000000000000000000000000000000000002aa1efb94e0000"
-  }], "types": [
-{ "type": "CLogEntry", "fields": [{ "name": "address", "type": "address" }, { "name": "logIndex", "type": "blocknum" }, { "name": "topics", "type": "object|ts_array" }, { "name": "data", "type": "text" }, { "name": "articulatedLog", "type": "object" }, { "name": "compressedLog", "type": "text" }] }
-] }
+  }] }

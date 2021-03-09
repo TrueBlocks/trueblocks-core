@@ -1866,44 +1866,5 @@
       "compressedLog": "CreatedToken ( to: 0xe46d8ec2d4f501e3c0c67a818ada2e534056f4d9, amount: 46381360000000000 )",
       "transactionIndex": 4
     }
-  ],
-  "types": [
-    {
-      "type": "CLogEntry",
-      "fields": [
-        {
-          "name": "address",
-          "type": "address"
-        },
-        {
-          "name": "blockNumber",
-          "type": "blocknum"
-        },
-        {
-          "name": "logIndex",
-          "type": "blocknum"
-        },
-        {
-          "name": "topics",
-          "type": "object|ts_array"
-        },
-        {
-          "name": "data",
-          "type": "text"
-        },
-        {
-          "name": "articulatedLog",
-          "type": "object"
-        },
-        {
-          "name": "compressedLog",
-          "type": "text"
-        },
-        {
-          "name": "transactionIndex",
-          "type": "blocknum"
-        }
-      ]
-    }
   ]
 }

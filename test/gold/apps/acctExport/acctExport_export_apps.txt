@@ -18,6 +18,4 @@ TIME ~ CLOCK - <INFO>  : listRange.second: --latest--
   "blockNumber": 0,
   "transactionIndex": 2
 }
-], "types": [
-{ "type": "CAppearance", "fields": [{ "name": "bn", "type": "blocknum" }, { "name": "tx", "type": "blocknum" }, { "name": "tc", "type": "blocknum" }, { "name": "addr", "type": "address" }, { "name": "reason", "type": "text" }] }
 ] }

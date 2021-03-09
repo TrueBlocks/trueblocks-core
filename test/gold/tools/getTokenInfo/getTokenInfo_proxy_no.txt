@@ -17,6 +17,4 @@ getTokenInfo 0x00000000441378008ea67f4284a57932b1c000a5 --fmt json 7442048 --par
     "blockNumber": 7442048,
     "totalSupply": 0,
     "address": "0x00000000441378008ea67f4284a57932b1c000a5"
-  }], "types": [
-{ "type": "CTokenBalanceRecord", "fields": [{ "name": "blockNumber", "type": "blocknum" }, { "name": "totalSupply", "type": "wei" }, { "name": "address", "type": "address" }, { "name": "name", "type": "text" }, { "name": "symbol", "type": "text" }, { "name": "decimals", "type": "unumber" }, { "name": "is_contract", "type": "bool" }, { "name": "is_erc20", "type": "bool" }, { "name": "is_erc721", "type": "bool" }] }
-] }
+  }] }

@@ -70,7 +70,7 @@ TIME ~ CLOCK - <INFO>  : trace: true
             }
           ]
         },
-        "compressedTrace": "transferFrom ( _from: 0xbb9bc244d798123fde783fcc1c72d3bb8c189413, _to: 0x713fa27cb26b5902ea398b04d21e6018bba3a2f1, _value: 8263636363636363636 )"
+        "compressedTrace": "transferFrom(0xbb9bc244d798123fde783fcc1c72d3bb8c189413, 0x713fa27cb26b5902ea398b04d21e6018bba3a2f1, 8263636363636363636); "
       }
     ],
     "articulatedTx": {
@@ -100,7 +100,7 @@ TIME ~ CLOCK - <INFO>  : trace: true
         }
       ]
     },
-    "compressedTx": "transferFrom ( _from: 0xbb9bc244d798123fde783fcc1c72d3bb8c189413, _to: 0x713fa27cb26b5902ea398b04d21e6018bba3a2f1, _value: 8263636363636363636 )",
+    "compressedTx": "transferFrom(0xbb9bc244d798123fde783fcc1c72d3bb8c189413, 0x713fa27cb26b5902ea398b04d21e6018bba3a2f1, 8263636363636363636); ",
     "gasCost": 6000000000000000,
     "gasUsed": 3000000,
     "date": "2018-10-14 13:49:30 UTC",
@@ -157,7 +157,7 @@ TIME ~ CLOCK - <INFO>  : trace: true
               }
             ]
           },
-          "compressedLog": "CancelRequest ( _key: 1, _sender: 0x752c71a68e4e0ea308c6e4209b7802d135c49292, _deposit: 307140400019656960, _amount: 25000000000000000000 )"
+          "compressedLog": "CancelRequest(1, 0x752c71a68e4e0ea308c6e4209b7802d135c49292, 307140400019656960, 25000000000000000000); "
         }
       ],
       "status": 1
@@ -192,7 +192,7 @@ TIME ~ CLOCK - <INFO>  : trace: true
             }
           ]
         },
-        "compressedTrace": "cancelExistingRequest ( _key: 1 )"
+        "compressedTrace": "cancelExistingRequest(1); "
       }
     ],
     "articulatedTx": {
@@ -206,7 +206,7 @@ TIME ~ CLOCK - <INFO>  : trace: true
         }
       ]
     },
-    "compressedTx": "cancelExistingRequest ( _key: 1 )",
+    "compressedTx": "cancelExistingRequest(1); ",
     "gasCost": 3925900000000000,
     "gasUsed": 78518,
     "date": "2018-11-12 01:45:21 UTC",
@@ -272,7 +272,7 @@ TIME ~ CLOCK - <INFO>  : trace: true
             }
           ]
         },
-        "compressedTrace": "split ( targetFork: 0x167a9333bf582556f35bd4d16a7e80e191aa6476, targetNoFork: 0x571b7b69829ce2568b9bc3d32eaf7405dab76b21 )"
+        "compressedTrace": "split(0x167a9333bf582556f35bd4d16a7e80e191aa6476, 0x571b7b69829ce2568b9bc3d32eaf7405dab76b21); "
       },
       {
         "type": "call",
@@ -303,7 +303,7 @@ TIME ~ CLOCK - <INFO>  : trace: true
             }
           ]
         },
-        "compressedTrace": "forked ( )"
+        "compressedTrace": "forked(); "
       },
       {
         "type": "call",
@@ -348,7 +348,7 @@ TIME ~ CLOCK - <INFO>  : trace: true
         }
       ]
     },
-    "compressedTx": "split ( targetFork: 0x167a9333bf582556f35bd4d16a7e80e191aa6476, targetNoFork: 0x571b7b69829ce2568b9bc3d32eaf7405dab76b21 )",
+    "compressedTx": "split(0x167a9333bf582556f35bd4d16a7e80e191aa6476, 0x571b7b69829ce2568b9bc3d32eaf7405dab76b21); ",
     "gasCost": 3156100000000000,
     "gasUsed": 31561,
     "date": "2016-08-03 01:34:28 UTC",

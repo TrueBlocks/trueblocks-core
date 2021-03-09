@@ -16,36 +16,5 @@
       "is_erc20": true,
       "is_erc721": false
     }
-  ],
-  "types": [
-    {
-      "type": "CTokenBalanceRecord",
-      "fields": [
-        {
-          "name": "blockNumber",
-          "type": "blocknum"
-        },
-        {
-          "name": "address",
-          "type": "address"
-        },
-        {
-          "name": "name",
-          "type": "text"
-        },
-        {
-          "name": "is_contract",
-          "type": "bool"
-        },
-        {
-          "name": "is_erc20",
-          "type": "bool"
-        },
-        {
-          "name": "is_erc721",
-          "type": "bool"
-        }
-      ]
-    }
   ]
 }

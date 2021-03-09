@@ -70,32 +70,5 @@
       "blockNumber": 8876232,
       "transactionIndex": 84
     }
-  ],
-  "types": [
-    {
-      "type": "CAppearance",
-      "fields": [
-        {
-          "name": "bn",
-          "type": "blocknum"
-        },
-        {
-          "name": "tx",
-          "type": "blocknum"
-        },
-        {
-          "name": "tc",
-          "type": "blocknum"
-        },
-        {
-          "name": "addr",
-          "type": "address"
-        },
-        {
-          "name": "reason",
-          "type": "text"
-        }
-      ]
-    }
   ]
 }

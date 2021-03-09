@@ -95,44 +95,5 @@
         "0xf285bde0bce33e55225c6ee156bfb64b0be9ec9e"
       ]
     }
-  ],
-  "types": [
-    {
-      "type": "CEntity",
-      "fields": [
-        {
-          "name": "deleted",
-          "type": "bool"
-        },
-        {
-          "name": "cid",
-          "type": "text"
-        },
-        {
-          "name": "tags",
-          "type": "text"
-        },
-        {
-          "name": "name",
-          "type": "text"
-        },
-        {
-          "name": "client",
-          "type": "text"
-        },
-        {
-          "name": "monitored",
-          "type": "bool"
-        },
-        {
-          "name": "sizeInBytes",
-          "type": "unumber"
-        },
-        {
-          "name": "addresses",
-          "type": "address|ts_array"
-        }
-      ]
-    }
   ]
 }

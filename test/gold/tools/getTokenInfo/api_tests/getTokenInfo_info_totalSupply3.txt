@@ -16,36 +16,5 @@
       "is_erc20": false,
       "is_erc721": false
     }
-  ],
-  "types": [
-    {
-      "type": "CTokenBalanceRecord",
-      "fields": [
-        {
-          "name": "blockNumber",
-          "type": "blocknum"
-        },
-        {
-          "name": "totalSupply",
-          "type": "wei"
-        },
-        {
-          "name": "address",
-          "type": "address"
-        },
-        {
-          "name": "is_contract",
-          "type": "bool"
-        },
-        {
-          "name": "is_erc20",
-          "type": "bool"
-        },
-        {
-          "name": "is_erc721",
-          "type": "bool"
-        }
-      ]
-    }
   ]
 }

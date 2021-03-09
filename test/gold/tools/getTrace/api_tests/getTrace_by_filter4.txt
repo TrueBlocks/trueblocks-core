@@ -21,48 +21,5 @@
       "transactionIndex": 1,
       "type": "call"
     }
-  ],
-  "types": [
-    {
-      "type": "CTrace",
-      "fields": [
-        {
-          "name": "action",
-          "type": "object"
-        },
-        {
-          "name": "blockHash",
-          "type": "hash"
-        },
-        {
-          "name": "blockNumber",
-          "type": "blocknum"
-        },
-        {
-          "name": "result",
-          "type": "object"
-        },
-        {
-          "name": "subtraces",
-          "type": "unumber"
-        },
-        {
-          "name": "traceAddress",
-          "type": "text"
-        },
-        {
-          "name": "transactionHash",
-          "type": "hash"
-        },
-        {
-          "name": "transactionIndex",
-          "type": "blocknum"
-        },
-        {
-          "name": "type",
-          "type": "text"
-        }
-      ]
-    }
   ]
 }

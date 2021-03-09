@@ -49,6 +49,4 @@ TIME ~ CLOCK - <INFO>  : call: 0xbb2b8038a1640196fbe3e38816f3e67cba72d940!0x0902
   "address": "0xbb2b8038a1640196fbe3e38816f3e67cba72d940"
 }
 
-], "types": [
-{ "type": "CEthCall", "fields": [{ "name": "blockNumber", "type": "blocknum" }, { "name": "encoding", "type": "text" }, { "name": "bytes", "type": "text" }, { "name": "result", "type": "object" }, { "name": "blockNumber", "type": "blocknum" }, { "name": "balance", "type": "wei" }, { "name": "address", "type": "address" }, { "name": "result", "type": "object" }] }
 ] }

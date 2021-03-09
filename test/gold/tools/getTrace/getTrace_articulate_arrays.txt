@@ -225,7 +225,7 @@ TIME ~ CLOCK - <INFO>  : skip_ddos: true
         }
       ]
     },
-    "compressedTrace": "acceptTheseAskRequestsAndBUY ( _keys: [6, 5], _tokenAmounts: [25000000000000000000, 25000000000000000000], _dollarPrices: [2000000000000000000, 2000000000000000000] )"
+    "compressedTrace": "acceptTheseAskRequestsAndBUY([6, 5] /*_keys*/, [25000000000000000000, 25000000000000000000] /*_tokenAmounts*/, [2000000000000000000, 2000000000000000000] /*_dollarPrices*/); "
   },  {
     "type": "call",
     "action": {
@@ -262,7 +262,7 @@ TIME ~ CLOCK - <INFO>  : skip_ddos: true
         }
       ]
     },
-    "compressedTrace": "USD ( _id: 0 )"
+    "compressedTrace": "USD(0 /*_id*/); "
   },  {
     "type": "call",
     "action": {
@@ -299,7 +299,7 @@ TIME ~ CLOCK - <INFO>  : skip_ddos: true
         }
       ]
     },
-    "compressedTrace": "USD ( _id: 0 )"
+    "compressedTrace": "USD(0 /*_id*/); "
   }], "types": [
 { "type": "CTrace", "fields": [{ "name": "type", "type": "text" }, { "name": "error", "type": "text" }, { "name": "action", "type": "object" }, { "name": "result", "type": "object" }, { "name": "articulatedTrace", "type": "object" }, { "name": "compressedTrace", "type": "text" }] }
 ], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }

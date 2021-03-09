@@ -70758,6 +70758,4 @@ TIME ~ CLOCK - <INFO>  : period: 60
     "timestamp": 1502755200,
     "close": 298.05590,
     "date": "2017-08-15 00:00:00 UTC"
-  }], "types": [
-{ "type": "CPriceQuote", "fields": [{ "name": "timestamp", "type": "timestamp" }, { "name": "close", "type": "double" }, { "name": "date", "type": "date" }] }
-] }
+  }] }

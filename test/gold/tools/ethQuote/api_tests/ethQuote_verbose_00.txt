@@ -44225,24 +44225,5 @@
       "close": 298.0559,
       "date": "2017-08-15 00:00:00 UTC"
     }
-  ],
-  "types": [
-    {
-      "type": "CPriceQuote",
-      "fields": [
-        {
-          "name": "timestamp",
-          "type": "timestamp"
-        },
-        {
-          "name": "close",
-          "type": "double"
-        },
-        {
-          "name": "date",
-          "type": "date"
-        }
-      ]
-    }
   ]
 }

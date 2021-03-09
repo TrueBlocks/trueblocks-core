@@ -1969,6 +1969,4 @@ TIME ~ CLOCK - <INFO>  : force: true
   "number": "0x57859",
   "parentHash": "0x51ac91f8777a09c8351f05a429015fcc6d7a02e937e1dc240cb29edc823ded72",
   "timestamp": "0x5617fc6a"
-}], "types": [
-{ "type": "CBlock", "fields": [{ "name": "difficulty", "type": "unumber" }, { "name": "finalized", "type": "bool" }, { "name": "gasLimit", "type": "gas" }, { "name": "gasUsed", "type": "gas" }, { "name": "hash", "type": "hash" }, { "name": "miner", "type": "address" }, { "name": "number", "type": "blocknum" }, { "name": "parentHash", "type": "hash" }, { "name": "timestamp", "type": "timestamp" }, { "name": "transactions", "type": "object|ts_array" }] }
-] }
+}] }
