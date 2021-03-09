@@ -156,7 +156,7 @@ bool COptions::handle_traces(void) {
     if (!isTestMode()) {
         if ((first_record + nProcessed) == nTransactions)
             LOG_PROGRESS((freshen ? "Finished updating" : "Finished reporting on"), (first_record + nProcessed),
-                    nTransactions, " traces for address " + allMonitors[0].address);
+                         nTransactions, " traces for address " + allMonitors[0].address);
     }
 
     for (auto monitor : allMonitors)

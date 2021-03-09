@@ -7,7 +7,6 @@ package trueblocks
  *------------------------------------------------------------------------*/
 
 import (
-	"encoding/json"
 	"fmt"
 	"log"
 	"net"

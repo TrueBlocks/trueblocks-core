@@ -144,7 +144,7 @@ bool COptions::handle_statements(void) {
     if (!isTestMode()) {
         if ((first_record + nProcessed) == nTransactions)
             LOG_PROGRESS((freshen ? "Finished updating" : "Finished reporting on"), (first_record + nProcessed),
-                nTransactions, " statements for address " + allMonitors[0].address);
+                         nTransactions, " statements for address " + allMonitors[0].address);
     }
 
     for (auto monitor : allMonitors)

@@ -145,8 +145,8 @@ bool COptions::handle_accounting(void) {
 
     if (!isTestMode()) {
         if ((first_record + nProcessed) == nTransactions)
-            LOG_PROGRESS((freshen ? "Finished updating" : "Finished reporting on"), (first_record + nProcessed), nTransactions,
-                " txs for address " + allMonitors[0].address);
+            LOG_PROGRESS((freshen ? "Finished updating" : "Finished reporting on"), (first_record + nProcessed),
+                         nTransactions, " txs for address " + allMonitors[0].address);
     }
 
     // LOG_INFO("n: ", monitors.size(), " lastExported: ", lastExported);
