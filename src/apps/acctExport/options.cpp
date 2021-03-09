@@ -218,9 +218,6 @@ bool COptions::parseArguments(string_q& command) {
     if (emitter && !logs)
         EXIT_USAGE("The emitter option is only available when exporting logs.");
 
-    if (emitter && addrs.size() > 1)
-        EXIT_USAGE("The emitter option is only available when exporting logs from a single address.");
-
     if (factory && !traces)
         EXIT_USAGE("The facotry option is only available when exporting traces.");
 

@@ -132,7 +132,7 @@ bool COptions::handle_logs(void) {
             }
 
             for (auto log : trans.receipt.logs) {
-                if (!emitter || log.address == allMonitors[0].address) {
+                if (!emitter || isEmitter(log.address)) {
                     nProcessed++;
                     if (shouldDisplay) {
                         cout << ((isJson() && !first) ? ", " : "");
@@ -158,4 +158,12 @@ bool COptions::handle_logs(void) {
     reportNeighbors();
 
     EXIT_NOMSG(true);
+}
+
+//-----------------------------------------------------------------------
+bool COptions::isEmitter(const address_t& test) const {
+    for (auto monitor : allMonitors)
+        if (monitor.address == test)
+            return true;
+    return false;
 }

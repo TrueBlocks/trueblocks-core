@@ -102,6 +102,7 @@ class COptions : public CAbiOptions {
     bool reportNeighbors(void);
 
     bool establishIndexChunk(const string_q& fileName);
+    bool isEmitter(const address_t& test) const;
 };
 
 //--------------------------------------------------------------------------------
