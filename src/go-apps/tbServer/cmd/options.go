@@ -6,10 +6,11 @@ package trueblocks
  * All Rights Reserved
  *------------------------------------------------------------------------*/
 
+// optionsType makes command line options available to the package
  type optionsType struct {
 	Verbose int
 	Port string
 }
 
-// Options command line options
+// Options carries command line options
 var Options optionsType

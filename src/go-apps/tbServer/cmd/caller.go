@@ -18,11 +18,12 @@ import (
 	"golang.org/x/time/rate"
 )
 
+// CallOne handles a route that calls the underlying TrueBlocks tool directly
 func CallOne(w http.ResponseWriter, r *http.Request, tbCmd , apiCmd string) {
 	CallOneExtra(w, r, tbCmd, "", apiCmd)
 }
 
-// CallOneExtra processes one request
+// CallOneExtra handles a route by calling into chifra
 func CallOneExtra(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd string) {
 	
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
@@ -31,12 +32,15 @@ func CallOneExtra(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd s
 	w.Header().Set("Access-Control-Allow-Methods", "PUT, POST, GET, DELETE, OPTIONS")
 	w.WriteHeader(http.StatusOK)
 
+	// We build an array of options that we send along with the call...
 	allDogs := []string{}
 	if extra != "" {
 		allDogs = append(allDogs, extra)
 	}
 	hasVerbose := false;
 	for key, value := range r.URL.Query() {
+		// These keys exist only in the API. We strip them here since the command line
+		// tools will report them as invalid options.
 		if key != "addrs" &&
 			key != "terms" &&
 			key != "modes" &&
@@ -53,11 +57,16 @@ func CallOneExtra(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd s
 		}
 		allDogs = append(allDogs, value...)
 	}
+	// If the server was started with --verbose and hte command does not have --verbose...
 	if Options.Verbose > 0 && !hasVerbose {
 		allDogs = append(allDogs, "--verbose")
 		allDogs = append(allDogs, strconv.Itoa(Options.Verbose))
 	}
+
+	// Do the actual call
 	cmd := exec.Command(tbCmd, allDogs...)
+
+	// Listen if the call gets canceled
 	notify := w.(http.CloseNotifier).CloseNotify()
 	go func() {
 		<-notify
@@ -67,6 +76,9 @@ func CallOneExtra(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd s
 		log.Println("The client closed the connection prematurely. Cleaning up.")
 	}()
 
+	// In regular operation, we set an environment variable API_MODE=true. When
+	// testing (the test harness sends a special header) we also send the TEST_MODE=true
+	// environment variable and any other vars for this particular test
 	if r.Header.Get("User-Agent") == "testRunner" {
 		cmd.Env = append(append(os.Environ(), "TEST_MODE=true"), "API_MODE=true")
 		vars := strings.Split(r.Header.Get("X-TestRunner-Env"), "|")
@@ -78,18 +90,18 @@ func CallOneExtra(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd s
 		cmd.Env = append(os.Environ(), "API_MODE=true")
 	}
 
+	// We need to pass the stderr through to the command line and also pick
+	// off and pass along through the web socket and progress reports
 	stderrPipe, err := cmd.StderrPipe()
 	if err != nil {
 		log.Printf("%s", err)
 	} else {
 		go func() {
-			ScanForProgress(stderrPipe, func(commandProgress *CommandProgress) {
+			ScanForProgress(stderrPipe, func(msg string) {
 				connectionPool.broadcast <- &Message{
 					Action: ProgressMessage,
-					// TODO: this should be tbCmd, but current frontend (Explorer) does not support
-					// ids other than "export"
-					ID:       "export",
-					Progress: commandProgress,
+					ID: tbCmd,
+					Content: msg,
 				}
 			})
 		}()

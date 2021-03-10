@@ -9,26 +9,12 @@ package trueblocks
 import (
 	"bufio"
 	"bytes"
-	"encoding/json"
 	"fmt"
 	"io"
-	"log"
 	"strings"
 )
 
-// CommandProgress shows progress for a long running request
-type CommandProgress struct{
-	Op string `json:"op"`
-}
-
-func (cp *CommandProgress) toJSON() []byte {
-	json, err := json.Marshal(cp)
-	if err != nil {
-		log.Fatalf("Cannot marshal CommandProgress to JSON: %s", err.Error())
-	}
-	return json
-}
-
+// dropNL drops new line characters (\n) from the progress stream
 func dropNL(data []byte) []byte {
 	if len(data) > 0 && data[len(data)-1] == '\n' {
 		return data[0 : len(data)-1]
@@ -48,7 +34,7 @@ func ScanProgressLine(data []byte, atEOF bool) (advance int, token []byte, err e
 }
 
 // ScanForProgress watches stderr and picks of progress messages
-func ScanForProgress(stderrPipe io.Reader, fn func(*CommandProgress)) {
+func ScanForProgress(stderrPipe io.Reader, fn func(string)) {
 	scanner := bufio.NewScanner(stderrPipe)
 	scanner.Split(ScanProgressLine)
 	for scanner.Scan() {
@@ -56,10 +42,7 @@ func ScanForProgress(stderrPipe io.Reader, fn func(*CommandProgress)) {
 		if len(text) > 0 {
 			fmt.Println(text)
 			if (strings.Contains(text, "<PROG>")) {
-				substring := strings.SplitAfter(text, ":")
-				fn(&CommandProgress{
-					Op: substring[1],
-				})
+				fn(strings.SplitAfter(text, ":")[1])
 			}
 		}
 	}
