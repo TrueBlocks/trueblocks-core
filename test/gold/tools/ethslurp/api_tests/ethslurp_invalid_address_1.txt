@@ -1,5 +1,5 @@
 {
   "errors": [
-    "ethslurp - The given value 'invalid' is not a numeral or a special named block."
+    "chifra slurp - The given value 'invalid' is not a numeral or a special named block."
   ]
 }

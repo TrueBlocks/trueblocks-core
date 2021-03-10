@@ -124,6 +124,7 @@ func CallOneExtra(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd s
 	} else {
 		cmd.Env = append(os.Environ(), "API_MODE=true")
 	}
+    cmd.Env = append(cmd.Env, "PROG_NAME=chifra " + apiCmd);
 
 	// We need to pass the stderr through to the command line and also pick
 	// off and pass along through the web socket and progress reports

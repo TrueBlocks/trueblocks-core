@@ -1,5 +1,5 @@
 {
   "errors": [
-    "getReceipt - Not enough arguments presented."
+    "chifra receipts - Not enough arguments presented."
   ]
 }

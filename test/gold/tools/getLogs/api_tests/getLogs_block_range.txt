@@ -1,5 +1,5 @@
 {
   "errors": [
-    "getLogs - 1718400-1718420 does not appear to be a valid transaction index."
+    "chifra logs - 1718400-1718420 does not appear to be a valid transaction index."
   ]
 }

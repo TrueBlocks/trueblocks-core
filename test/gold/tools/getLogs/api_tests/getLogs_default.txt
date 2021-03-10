@@ -1,5 +1,5 @@
 {
   "errors": [
-    "getLogs - Invalid option: --address"
+    "chifra logs - Invalid option: --address"
   ]
 }

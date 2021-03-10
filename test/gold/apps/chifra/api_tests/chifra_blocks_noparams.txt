@@ -1,5 +1,5 @@
 {
   "errors": [
-    "getBlock - Not enough arguments presented."
+    "chifra blocks - Not enough arguments presented."
   ]
 }

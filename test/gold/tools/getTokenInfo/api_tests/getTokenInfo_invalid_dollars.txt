@@ -1,1 +1,1 @@
-{ "errors": [ "getTokenInfo - Invalid option: --dollars" ] }
+{ "errors": [ "chifra tokens - Invalid option: --dollars" ] }

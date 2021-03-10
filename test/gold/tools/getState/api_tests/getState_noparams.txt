@@ -1,5 +1,5 @@
 {
   "errors": [
-    "getState - Not enough arguments presented."
+    "chifra state - Not enough arguments presented."
   ]
 }

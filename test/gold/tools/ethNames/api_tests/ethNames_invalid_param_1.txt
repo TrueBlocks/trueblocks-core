@@ -1,5 +1,5 @@
 {
   "errors": [
-    "ethNames - Invalid option: --punk"
+    "chifra names - Invalid option: --punk"
   ]
 }

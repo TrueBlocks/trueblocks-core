@@ -1,5 +1,5 @@
 {
   "errors": [
-    "getBlock - Specify only a single block range at a time."
+    "chifra blocks - Specify only a single block range at a time."
   ]
 }

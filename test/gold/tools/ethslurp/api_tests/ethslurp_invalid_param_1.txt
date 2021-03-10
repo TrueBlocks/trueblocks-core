@@ -1,5 +1,5 @@
 {
   "errors": [
-    "ethslurp - Invalid option: --pink"
+    "chifra slurp - Invalid option: --pink"
   ]
 }

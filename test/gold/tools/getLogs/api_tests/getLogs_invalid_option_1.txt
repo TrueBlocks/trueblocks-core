@@ -1,5 +1,5 @@
 {
   "errors": [
-    "getLogs - Invalid option: --oink"
+    "chifra logs - Invalid option: --oink"
   ]
 }

@@ -1,5 +1,5 @@
 {
   "errors": [
-    "getTrans - .whatever does not appear to be a valid transaction index."
+    "chifra transactions - .whatever does not appear to be a valid transaction index."
   ]
 }

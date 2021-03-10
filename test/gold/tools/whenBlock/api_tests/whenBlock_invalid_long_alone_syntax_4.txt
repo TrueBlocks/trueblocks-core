@@ -1,5 +1,5 @@
 {
   "errors": [
-    "whenBlock - The given value '0pppppp' is not a numeral or a special named block."
+    "chifra when - The given value '0pppppp' is not a numeral or a special named block."
   ]
 }

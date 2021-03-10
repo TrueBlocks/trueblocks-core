@@ -1,1 +1,1 @@
-{ "errors": [ "ethNames - Invalid option: --pink" ] }
+{ "errors": [ "chifra names - Invalid option: --pink" ] }

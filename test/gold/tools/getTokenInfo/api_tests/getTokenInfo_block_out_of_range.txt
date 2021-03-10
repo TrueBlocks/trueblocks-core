@@ -1,5 +1,5 @@
 {
   "errors": [
-    "getTokenInfo - Block 16000000 is later than the last valid block --."
+    "chifra tokens - Block 16000000 is later than the last valid block --."
   ]
 }

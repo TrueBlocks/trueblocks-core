@@ -1,5 +1,5 @@
 {
   "errors": [
-    "getTokenInfo - Invalid option 'junk' for 'parts'. One or more of [name|symbol|decimals|totalSupply|version|none|all] required."
+    "chifra tokens - Invalid option 'junk' for 'parts'. One or more of [name|symbol|decimals|totalSupply|version|none|all] required."
   ]
 }

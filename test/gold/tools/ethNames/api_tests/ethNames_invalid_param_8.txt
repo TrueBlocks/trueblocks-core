@@ -1,1 +1,1 @@
-{ "errors": [ "ethNames - Invalid option: -z" ] }
+{ "errors": [ "chifra names - Invalid option: -z" ] }

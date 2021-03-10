@@ -1,5 +1,5 @@
 {
   "errors": [
-    "getLogs - The argument '0x0012' is not properly formatted. Is it the right length?"
+    "chifra logs - The argument '0x0012' is not properly formatted. Is it the right length?"
   ]
 }

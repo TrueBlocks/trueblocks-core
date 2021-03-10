@@ -1,5 +1,5 @@
 {
   "errors": [
-    "acctExport - You must also specify --staging when using --unripe."
+    "chifra export - You must also specify --staging when using --unripe."
   ]
 }

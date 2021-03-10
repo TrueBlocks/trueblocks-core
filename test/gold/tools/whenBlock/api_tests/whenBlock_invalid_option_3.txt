@@ -1,5 +1,5 @@
 {
   "errors": [
-    "whenBlock - 'stop' must be strictly larger than 'start'"
+    "chifra when - 'stop' must be strictly larger than 'start'"
   ]
 }

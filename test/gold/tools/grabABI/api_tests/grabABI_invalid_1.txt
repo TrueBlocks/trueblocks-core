@@ -1,5 +1,5 @@
 {
   "errors": [
-    "grabABI - Invalid address '0x00001'. Length (7) is not equal to 40 characters (20 bytes)."
+    "chifra abis - Invalid address '0x00001'. Length (7) is not equal to 40 characters (20 bytes)."
   ]
 }

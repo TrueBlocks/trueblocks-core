@@ -1,5 +1,5 @@
 {
   "errors": [
-    "getTrans - Not enough arguments presented."
+    "chifra transactions - Not enough arguments presented."
   ]
 }

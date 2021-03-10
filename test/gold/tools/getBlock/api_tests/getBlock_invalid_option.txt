@@ -1,5 +1,5 @@
 {
   "errors": [
-    "getBlock - Invalid option: --junk"
+    "chifra blocks - Invalid option: --junk"
   ]
 }

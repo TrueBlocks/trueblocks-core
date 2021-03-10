@@ -1,5 +1,5 @@
 {
   "errors": [
-    "getLogs - Not enough arguments presented."
+    "chifra logs - Not enough arguments presented."
   ]
 }

@@ -1,5 +1,5 @@
 {
   "errors": [
-    "getReceipt - Invalid option: --other"
+    "chifra receipts - Invalid option: --other"
   ]
 }

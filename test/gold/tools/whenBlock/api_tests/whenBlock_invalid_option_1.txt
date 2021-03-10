@@ -1,5 +1,5 @@
 {
   "errors": [
-    "whenBlock - Invalid option: --x"
+    "chifra when - Invalid option: --x"
   ]
 }

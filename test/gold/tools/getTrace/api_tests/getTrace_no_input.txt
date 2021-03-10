@@ -1,5 +1,5 @@
 {
   "errors": [
-    "getTrace - Not enough arguments presented."
+    "chifra traces - Not enough arguments presented."
   ]
 }

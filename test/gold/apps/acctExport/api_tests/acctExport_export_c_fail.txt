@@ -1,5 +1,5 @@
 {
   "errors": [
-    "acctExport - --count option is only available with --appearances option."
+    "chifra export - --count option is only available with --appearances option."
   ]
 }

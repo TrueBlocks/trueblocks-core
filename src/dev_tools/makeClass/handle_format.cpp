@@ -48,6 +48,9 @@ bool formatFiles(const string_q& path, void* data) {
         if (contains(path, "/other/"))
             return true;
 
+        if (contains(path, "/build/"))
+            return true;
+
         if (contains(path, "/blank"))
             return true;
 

@@ -1,5 +1,5 @@
 {
   "errors": [
-    "pinMan - Invalid option: --junk"
+    "chifra pins - Invalid option: --junk"
   ]
 }

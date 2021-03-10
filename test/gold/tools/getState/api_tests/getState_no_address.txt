@@ -1,5 +1,5 @@
 {
   "errors": [
-    "getState - You must provide at least one Ethereum address."
+    "chifra state - You must provide at least one Ethereum address."
   ]
 }
