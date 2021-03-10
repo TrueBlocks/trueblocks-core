@@ -38,6 +38,7 @@ func CallOneExtra(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd s
 		allDogs = append(allDogs, extra)
 	}
 	hasVerbose := false;
+	hasRun := apiCmd == "scrape";
 	for key, value := range r.URL.Query() {
 		// These keys exist only in the API. We strip them here since the command line
 		// tools will report them as invalid options.
@@ -52,10 +53,18 @@ func CallOneExtra(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd s
 			key != "addrs2" {
 			allDogs = append(allDogs, "--"+key)
 		}
-		if (key == "verbose") {
+		if key == "verbose" {
 			hasVerbose = true
 		}
+		if apiCmd == "scrape" && key == "mode" && (value[0] == "quit" || value[0] == "pause" || value[0] == "restart") {
+			hasRun = false;
+		}
 		allDogs = append(allDogs, value...)
+	}
+	if hasRun && apiCmd == "scrape" {
+		log.Println("You cannot run the scrape command from the API. Quitting.");
+		fmt.Fprint(w, "{\"error\": \"You cannot run the scrape command from the API. Quitting.\"}")
+		return
 	}
 	// If the server was started with --verbose and hte command does not have --verbose...
 	if Options.Verbose > 0 && !hasVerbose {
@@ -70,10 +79,20 @@ func CallOneExtra(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd s
 	notify := w.(http.CloseNotifier).CloseNotify()
 	go func() {
 		<-notify
+        pid := cmd.Process.Pid
 		if err := cmd.Process.Kill(); err != nil {
 			log.Println("failed to kill process: ", err)
 		}
-		log.Println("The client closed the connection prematurely. Cleaning up.")
+		log.Println("apiCmd: ", apiCmd)
+		if (apiCmd == "scrape") {
+			out, err := exec.Command("blockScrape", "quit --verbose").Output()
+			if err != nil {
+				fmt.Printf("%s", err)
+			} else {
+				log.Printf(string(out[:]))
+			}
+		}		
+		log.Println("The client closed the connection to process id ", pid, ". Cleaning up.")
 	}()
 
 	// In regular operation, we set an environment variable API_MODE=true. When
