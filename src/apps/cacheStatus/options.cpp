@@ -44,7 +44,7 @@ bool COptions::parseArguments(string_q& command) {
     bool set_config = false;
     // END_CODE_LOCAL_INIT
 
-    blknum_t latest = NOPOS;  // getLatestBlock_client();
+    blknum_t latest = NOPOS;  // getBlockProgress(BP_CLIENT).client;
 
     Init();
     explode(arguments, command, ' ');
@@ -101,11 +101,26 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
+    // BEG_DEBUG_DISPLAY
+    // LOG_TEST("modes", modes, (modes == ""));
+    LOG_TEST_BOOL("details", details);
+    // LOG_TEST("types", types, (types == ""));
+    LOG_TEST("depth", depth, (depth == NOPOS));
+    LOG_TEST_BOOL("report", report);
+    LOG_TEST_BOOL("terse", terse);
+    LOG_TEST_BOOL("get_config", get_config);
+    LOG_TEST_BOOL("set_config", set_config);
+    LOG_TEST("start", start, (start == NOPOS));
+    LOG_TEST("end", end, (end == NOPOS));
+    // END_DEBUG_DISPLAY
+
     // removes warning on Ubuntu 20.04
     if (report)
         cerr << "";
 
     establishFolder(getCachePath("tmp/"));
+    establishFolder(indexFolder_finalized);
+    establishFolder(indexFolder_blooms);
     establishFolder(getCachePath("slurps/"));
     establishFolder(getCachePath("blocks/"));
     establishFolder(getCachePath("txs/"));
@@ -229,6 +244,8 @@ void COptions::Init(void) {
     status.is_archive = isArchiveNode();
     status.is_tracing = isTracingNode();
     status.has_eskey = getGlobalConfig("")->getConfigStr("settings", "etherscan_key", "<not_set>") != "<not_set>";
+    status.has_pinkey =
+        getGlobalConfig("blcokScrape")->getConfigStr("settings", "pinata_api_key", "<not_set>") != "<not_set>";
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -274,4 +291,17 @@ COptions::COptions(void) {
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
+}
+
+//--------------------------------------------------------------------------------
+void loadPinMaps(CIndexHashMap& bloomMap, CIndexHashMap& indexMap) {
+    CPinnedChunkArray pinList;
+    if (!pinlib_readPinList(pinList, false))
+        return;
+
+    for (auto pin : pinList) {
+        blknum_t num = str_2_Uint(pin.fileName);
+        bloomMap[num] = pin.bloomHash;
+        indexMap[num] = pin.indexHash;
+    }
 }

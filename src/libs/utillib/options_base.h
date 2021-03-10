@@ -69,10 +69,10 @@ class COptionsBase {
     bool isVeryRaw;
     bool mocked;
     bool isNoHeader;
-    string_q crudCommand;
+    CStringArray crudCommands;
     string_q overrideStr;
     bool isCrudCommand(void) const {
-        return !crudCommand.empty();
+        return crudCommands.size() > 0;
     }
     blkrange_t scanRange;
     CStringArray notes;

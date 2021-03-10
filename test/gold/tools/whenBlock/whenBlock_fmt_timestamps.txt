@@ -1,5 +1,6 @@
 whenBlock argc: 2 [1:--timestamps] 
 whenBlock --timestamps 
+TIME ~ CLOCK - <INFO>  : timestamps: true
 blocknumber	timestamp
 0	1438269960
 1	1438269988

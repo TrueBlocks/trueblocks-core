@@ -1,5 +1,6 @@
 cacheStatus argc: 5 [1:caches] [2:--types] [3:transactions] [4:--details] 
 cacheStatus caches --types transactions --details 
+TIME ~ CLOCK - <INFO>  : details: true
 {
   "client_version": "Client version",
   "client_ids": "chainId: 1 networkId: 1",
@@ -13,6 +14,7 @@ cacheStatus caches --types transactions --details
   "is_archive": true,
   "is_tracing": true,
   "has_eskey": true,
+  "has_pinkey": true,
   "caches": [
     {
       "items": [

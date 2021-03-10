@@ -1,7 +1,7 @@
 fileTest argc: 2 [1:recurse] 
 fileTest recurse 
 Recursive from ../
-Found 121 (121) files
+Found 120 (120) files
 ../arrayTest/arrayTest_Insertion.txt
 ../arrayTest/arrayTest_README.txt
 ../bigIntTest/bigIntTest_00.txt
@@ -51,7 +51,6 @@ Found 121 (121) files
 ../parsingTest/parsingTest_03.txt
 ../parsingTest/parsingTest_04.txt
 ../parsingTest/parsingTest_README.txt
-../runningTest/runningTest_01.txt
 ../sizeofTest/sizeofTest_00.txt
 ../sizeofTest/sizeofTest_README.txt
 ../stringTest/solidity_code.sol

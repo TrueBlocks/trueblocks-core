@@ -63,6 +63,12 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
+    // BEG_DEBUG_DISPLAY
+    // LOG_TEST("transactions", transactions, (transactions == NOPOS));
+    LOG_TEST_BOOL("articulate", articulate);
+    LOG_TEST_BOOL("logs", logs);
+    // END_DEBUG_DISPLAY
+
     // Data wrangling
     if (!transList.hasTrans())
         return usage("Please specify at least one transaction identifier.");

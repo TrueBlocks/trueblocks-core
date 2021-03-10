@@ -1,5 +1,6 @@
 getTrace argc: 4 [1:2222221.*] [2:--fmt] [3:json] 
 getTrace 2222221.* --fmt json 
+TIME ~ CLOCK - <INFO>  : skip_ddos: true
 { "data": [
   {
     "blockHash": "0xe4c2b8cb9ddd1acb41043afb3bd0149c281eca23f1bc563af5899bac748ec372",
@@ -97,6 +98,4 @@ getTrace 2222221.* --fmt json
       "gasUsed": 0,
       "output": "0x"
     }
-  }], "types": [
-{ "type": "CTrace", "fields": [{ "name": "blockHash", "type": "hash" }, { "name": "blockNumber", "type": "blocknum" }, { "name": "subtraces", "type": "unumber" }, { "name": "traceAddress", "type": "text" }, { "name": "transactionHash", "type": "hash" }, { "name": "transactionIndex", "type": "blocknum" }, { "name": "type", "type": "text" }, { "name": "error", "type": "text" }, { "name": "action", "type": "object" }, { "name": "result", "type": "object" }] }
-] }
+  }] }

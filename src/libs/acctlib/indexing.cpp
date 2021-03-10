@@ -15,6 +15,14 @@
 namespace qblocks {
 
 //----------------------------------------------------------------
+static const string_q STR_STEP1 = "  Extracting addresses...";
+static const string_q STR_STEP2 = STR_STEP1 + "extracting appearances...";
+static const string_q STR_STEP3 = STR_STEP2 + "exporting...";
+static const string_q STR_STEP4 = STR_STEP3 + "finalizing...";
+static const string_q STR_STEP5 = STR_STEP4 + "binary file created ";
+static const string_q STR_STEP5_A = STR_STEP4 + "ascii file created ";
+
+//----------------------------------------------------------------
 void writeIndexAsAscii(const string_q& outFn, const CStringArray& lines) {
     ASSERT(!fileExists(outFn));
 
@@ -22,11 +30,20 @@ void writeIndexAsAscii(const string_q& outFn, const CStringArray& lines) {
     uint32_t offset = 0, nAddrs = 0, cnt = 0;
     CAppearanceArray_base blockTable;
 
-    ostringstream os;
-    os << "Extracting addresses...";
+    if (!isLiveTest())
+        LOG_INFO(cYellow, STR_STEP1, cOff, "\r");
 
+    // We want to notify 12 times
+    uint64_t notifyCnt = lines.size() / 12;
+    uint64_t progress = 0;
+
+    string_q msg = "";
     ostringstream addrStream;
-    for (auto line : lines) {
+    for (const auto& line : lines) {
+        if (!isLiveTest() && !(++progress % notifyCnt)) {
+            msg += ".";
+            LOG_INFO(cYellow, STR_STEP1, msg, cOff, "\r");
+        }
         CStringArray parts;
         explode(parts, line, '\t');
         CAppearance_base rec(parts[1], parts[2]);
@@ -48,30 +65,33 @@ void writeIndexAsAscii(const string_q& outFn, const CStringArray& lines) {
     addrStream << padNum6(cnt) << endl;
     nAddrs++;
 
-    os << "extracting appearances...";
+    if (!isLiveTest())
+        LOG_INFO(cYellow, STR_STEP2, cOff, "\r");
     ostringstream blockStream;
     for (auto record : blockTable) {
         blockStream << padNum9(record.blk) << "\t";
         blockStream << padNum5(record.txid) << endl;
     }
 
-    os << "exporting...";
+    if (!isLiveTest())
+        LOG_INFO(cYellow, STR_STEP3, cOff, "\r");
     ostringstream headerStream;
     headerStream << padNum7(MAGIC_NUMBER) << "\t";
     headerStream << versionHash << "\t";
     headerStream << padNum7(nAddrs) << "\t";
     headerStream << padNum7((uint32_t)blockTable.size()) << endl;
 
-    os << "finalizing...";
-    lockSection(true);
+    if (!isLiveTest())
+        LOG_INFO(cYellow, STR_STEP4, cOff, "\r");
+    lockSection();
     stringToAsciiFile(outFn, headerStream.str() + addrStream.str() + blockStream.str());
-    lockSection(false);
+    unlockSection();
 
-    LOG_INFO(cYellow, "  ", os.str(), " ascii file created: ", greenCheck, cOff);
+    LOG_INFO(cYellow, STR_STEP5_A, greenCheck, cOff);
 }
 
 //----------------------------------------------------------------
-void writeIndexAsBinary(const string_q& outFn, const CStringArray& lines) {
+bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines, FILEVISITOR pinFunc, void* pinFuncData) {
     // ASSUMES THE ARRAY IS SORTED!
 
     ASSERT(!fileExists(outFn));
@@ -82,11 +102,16 @@ void writeIndexAsBinary(const string_q& outFn, const CStringArray& lines) {
     CAppearanceArray_base blockTable;
 
     hashbytes_t hash = hash_2_Bytes(versionHash);
+    LOG8("versionHash: ", versionHash);
 
     CBloomArray blooms;
 
-    ostringstream os;
-    os << "Extracting addresses...";
+    // We want to notify 12 times
+    uint64_t notifyCnt = lines.size() / 12;
+    uint64_t progress = 0;
+
+    if (!isLiveTest())
+        LOG_INFO(cYellow, STR_STEP1, cOff, "\r");
 
     CArchive archive(WRITING_ARCHIVE);
     archive.Lock(tmpFile, modeWriteCreate, LOCK_NOWAIT);
@@ -95,7 +120,12 @@ void writeIndexAsBinary(const string_q& outFn, const CStringArray& lines) {
     archive.Write(hash.data(), hash.size(), sizeof(uint8_t));
     archive.Write(nAddrs);
     archive.Write((uint32_t)blockTable.size());  // not accurate yet
+    string_q msg = "";
     for (size_t l = 0; l < lines.size(); l++) {
+        if (!isLiveTest() && !(++progress % notifyCnt)) {
+            msg += ".";
+            LOG_INFO(cYellow, STR_STEP1, msg, cOff, "\r");
+        }
         string_q line = lines[l];
         ASSERT(countOf(line, '\t') == 2);
         CStringArray parts;
@@ -124,13 +154,15 @@ void writeIndexAsBinary(const string_q& outFn, const CStringArray& lines) {
     archive.Write(cnt);
     nAddrs++;
 
-    os << "extracting appearances...";
+    if (!isLiveTest())
+        LOG_INFO(cYellow, STR_STEP2, cOff, "\r");
     for (auto record : blockTable) {
         archive.Write(record.blk);
         archive.Write(record.txid);
     }
 
-    os << "exporting...";
+    if (!isLiveTest())
+        LOG_INFO(cYellow, STR_STEP3, cOff, "\r");
     archive.Seek(0, SEEK_SET);  // re-write the header now that we have full data
     archive.Write(MAGIC_NUMBER);
     archive.Write(hash.data(), hash.size(), sizeof(uint8_t));
@@ -140,15 +172,18 @@ void writeIndexAsBinary(const string_q& outFn, const CStringArray& lines) {
 
     // We've built the data in a temporary file. We do this in case we're interrupted during the building of the
     // data so it's not corrupted. In this way, we only move the data to its final resting place once. It's safer.
-    os << "finalizing...";
-    lockSection(true);  // disallow control+c
+    if (!isLiveTest())
+        LOG_INFO(cYellow, STR_STEP4, cOff, "\r");
     string_q bloomFile = substitute(substitute(outFn, "/finalized/", "/blooms/"), ".bin", ".bloom");
+    lockSection();                          // disallow control+c
     writeBloomToBinary(bloomFile, blooms);  // write the bloom file
     copyFile(tmpFile, outFn);               // move the index file
     ::remove(tmpFile.c_str());              // remove the tmp file
-    lockSection(false);
+    unlockSection();
 
-    LOG_INFO(cYellow, "  ", os.str(), " binary file created: ", greenCheck, cOff);
+    LOG_INFO(cYellow, STR_STEP5, greenCheck, cOff);
+
+    return (pinFunc ? ((*pinFunc)(outFn, pinFuncData)) : true);
 }
 
 //--------------------------------------------------------------
@@ -216,9 +251,11 @@ bool forEveryAddressInIndex(ADDRESSFUNC func, void* data) {
     return true;
 }
 
+//--------------------------------------------------------------
 bool hasCodeAt(const address_t& addr, blknum_t blk) {
     return !getCodeAt(addr, blk).empty();
 }
+
 //--------------------------------------------------------------
 bool smartContractVisitFunc(const string_q& path, void* data) {
     if (endsWith(path, "/")) {
@@ -248,7 +285,7 @@ bool forEverySmartContractInIndex(ADDRESSFUNC func, void* data) {
     CChunkVisitor visitor;
     visitor.addrFunc = func;
     visitor.callData = data;
-    visitor.atBlock = getLatestBlock_client();
+    visitor.atBlock = getBlockProgress(BP_CLIENT).client;
     return forEveryFileInFolder(indexFolder_finalized, smartContractVisitFunc, &visitor);
     return true;
 }
@@ -292,5 +329,22 @@ bool forEverySmartContractInIndex(ADDRESSFUNC func, void* data) {
 //
 //        return true;
 //    }
+
+//--------------------------------------------------------------
+bool visitBloom(const string_q& path, void* data) {
+    if (endsWith(path, "/")) {
+        return forEveryFileInFolder(path + "*", visitBloom, data);
+    } else {
+        (*((size_t*)data))++;  // NOLINT
+    }
+    return true;
+}
+
+//--------------------------------------------------------------
+bool bloomsAreInitalized(void) {
+    size_t counter = 0;
+    forEveryFileInFolder(indexFolder_blooms, visitBloom, &counter);
+    return counter > 100;
+}
 
 }  // namespace qblocks

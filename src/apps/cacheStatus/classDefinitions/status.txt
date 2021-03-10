@@ -15,6 +15,7 @@ fields = string client_version|\
         bool is_archive|\
         bool is_tracing|\
         bool has_eskey|\
+        bool has_pinkey|\
         timestamp ts=date_2_Ts(Now()) (nowrite)|\
         CCachePtrArray caches
 includes = etherlib.h|cache.h

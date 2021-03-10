@@ -1,5 +1,8 @@
 ethNames argc: 6 [1:--named] [2:--custom] [3:--owned] [4:--fmt] [5:json] 
 ethNames --named --custom --owned --fmt json 
+TIME ~ CLOCK - <INFO>  : owned: true
+TIME ~ CLOCK - <INFO>  : custom: true
+TIME ~ CLOCK - <INFO>  : named: true
 { "data": [
   {
     "address": "0x0000000000000000000000000000000000000001",
@@ -353,7 +356,7 @@ ethNames --named --custom --owned --fmt json
     "source": "TrueBlocks.io"
   },
   {
-    "tags": "34-Twitter: Friends",
+    "tags": "34-Twitter:Friends",
     "address": "0x00dc74ce5d346b14b913071a032b7e2d29b0f2a6",
     "name": "Name 0x00dc74ce",
     "source": "Twitter",
@@ -603,7 +606,7 @@ ethNames --named --custom --owned --fmt json
     "description": "Payments solutions for the travel industry."
   },
   {
-    "tags": "34-Twitter: Friends",
+    "tags": "34-Twitter:Friends",
     "address": "0x02bbea9326048fb2bd96664adc3ef47bbe3e02b6",
     "name": "Name 0x02bbea93",
     "source": "Twitter",
@@ -816,7 +819,7 @@ ethNames --named --custom --owned --fmt json
     "source": "Gitcoin Website"
   },
   {
-    "tags": "34-Twitter: Friends",
+    "tags": "34-Twitter:Friends",
     "address": "0x04498150b495a1f126b88952a756b5b9a4385e30",
     "name": "Name 0x04498150",
     "source": "Twitter",
@@ -1150,7 +1153,7 @@ ethNames --named --custom --owned --fmt json
     "source": "Gitcoin Website"
   },
   {
-    "tags": "34-Twitter: Friends",
+    "tags": "34-Twitter:Friends",
     "address": "0x0667ad4cf9d2fd571a6a94412dbb98c0f9cf704e",
     "name": "Name 0x0667ad4c",
     "source": "Twitter",
@@ -1337,6 +1340,4 @@ ethNames --named --custom --owned --fmt json
     "symbol": "EXN",
     "source": "On chain",
     "decimals": 18
-  }], "types": [
-{ "type": "CAccountName", "fields": [{ "name": "tags", "type": "text" }, { "name": "address", "type": "address" }, { "name": "name", "type": "text" }, { "name": "symbol", "type": "text" }, { "name": "source", "type": "text" }, { "name": "decimals", "type": "unumber" }, { "name": "description", "type": "text" }] }
-] }
+  }] }

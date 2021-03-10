@@ -9,7 +9,6 @@
  * outside of the BEG_CODE/END_CODE sections
  */
 #include "pinlib.h"
-#include "acctscrapestats.h"
 
 // BEG_ERROR_DEFINES
 // END_ERROR_DEFINES
@@ -52,6 +51,7 @@ class COptions : public CAbiOptions {
     address_t hackAppAddr;
     CBlockAddressMap prefundAddrMap;
     CBlockAddressMap blkRewardMap;
+    CPinnedChunkArray pinList;
 
     CAddressUintMap toAddrMap;
     CAddressUintMap fromAddrMap;
@@ -100,6 +100,9 @@ class COptions : public CAbiOptions {
     void markNeighbors(const CTransaction& trans);
     void articulateAll(CTransaction& trans);
     bool reportNeighbors(void);
+
+    bool establishIndexChunk(const string_q& fileName);
+    bool isEmitter(const address_t& test) const;
 };
 
 //--------------------------------------------------------------------------------

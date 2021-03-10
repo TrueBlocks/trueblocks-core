@@ -1,12 +1,9 @@
 acctExport argc: 8 [1:0x001d14804b399c6ef80e64576f657660804fec0b] [2:--statements] [3:--fmt] [4:json] [5:--dollars] [6:--end] [7:001507000] 
 acctExport 0x001d14804b399c6ef80e64576f657660804fec0b --statements --fmt json --dollars --end 001507000 
+TIME ~ CLOCK - <INFO>  : statements: true
+TIME ~ CLOCK - <INFO>  : skip_ddos: true
 TIME ~ CLOCK - <INFO>  : Monitor found for: 0x001d14804b399c6ef80e64576f657660804fec0b
-TIME ~ CLOCK - <INFO>  : Monitor path: /Users/jrush/.quickBlocks/mocked/monitors/0x001d14804b399c6ef80e64576f657660804fec0b.acct.bin
 TIME ~ CLOCK - <INFO>  : Last visited block: 11854827
-TIME ~ CLOCK - <INFO>  : m.getLastVisitedBlock(): 11854827
-TIME ~ CLOCK - <INFO>  : options->fileRange.first: 11854827
-TIME ~ CLOCK - <INFO>  : m.getLastVisitedBlock(): 11854827
-TIME ~ CLOCK - <INFO>  : options->fileRange.first: 11857782
 TIME ~ CLOCK - <INFO>  : stats.nFiles: --value--
 TIME ~ CLOCK - <INFO>  : stats.nSkipped: --value--
 TIME ~ CLOCK - <INFO>  : nMonitors: 1
@@ -14,10 +11,6 @@ TIME ~ CLOCK - <INFO>  : exportRange.first: 0
 TIME ~ CLOCK - <INFO>  : exportRange.second: 1507000
 TIME ~ CLOCK - <INFO>  : listRange.first: 11854827
 TIME ~ CLOCK - <INFO>  : listRange.second: --latest--
-TIME ~ CLOCK - <INFO>  : first_record: 0
-TIME ~ CLOCK - <INFO>  : max_records: 18446744073709551615
-TIME ~ CLOCK - <INFO>  : statements: true
-TIME ~ CLOCK - <INFO>  : articulate: true
 { "data": [
 {
   "blockNumber": 0,
@@ -54,6 +47,4 @@ TIME ~ CLOCK - <INFO>  : articulate: true
   "amountNet": "-0.735591306817411759",
   "reconciled": true
 }
-], "types": [
-{ "type": "CReconciliation", "fields": [{ "name": "blockNumber", "type": "blocknum" }, { "name": "transactionIndex", "type": "blocknum" }, { "name": "timestamp", "type": "timestamp" }, { "name": "asset", "type": "text" }, { "name": "begBal", "type": "int256" }, { "name": "begBalDiff", "type": "int256" }, { "name": "amountIn", "type": "int256" }, { "name": "internalIn", "type": "int256" }, { "name": "selfDestructIn", "type": "int256" }, { "name": "minerBaseRewardIn", "type": "int256" }, { "name": "minerNephewRewardIn", "type": "int256" }, { "name": "minerTxFeeIn", "type": "int256" }, { "name": "minerUncleRewardIn", "type": "int256" }, { "name": "prefundIn", "type": "int256" }, { "name": "amountOut", "type": "int256" }, { "name": "internalOut", "type": "int256" }, { "name": "selfDestructOut", "type": "int256" }, { "name": "gasCostOut", "type": "int256" }, { "name": "endBal", "type": "int256" }, { "name": "endBalCalc", "type": "int256" }, { "name": "endBalDiff", "type": "int256" }, { "name": "amountNet", "type": "int256" }, { "name": "reconciliationType", "type": "text" }, { "name": "reconciled", "type": "bool" }] }
 ] }

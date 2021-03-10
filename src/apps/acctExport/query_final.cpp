@@ -6,11 +6,12 @@
 #include "acctlib.h"
 #include "options.h"
 
-extern bool establishIndexChunk(const string_q& chunk);
 //---------------------------------------------------------------
 bool visitFinalIndexFiles(const string_q& path, void* data) {
+    ENTER("visitFinalIndexFiles");
+
     if (endsWith(path, "/")) {
-        return forEveryFileInFolder(path + "*", visitFinalIndexFiles, data);
+        EXIT_NOMSG(forEveryFileInFolder(path + "*", visitFinalIndexFiles, data));
 
     } else {
         // Pick up some useful data for either method...
@@ -21,7 +22,7 @@ bool visitFinalIndexFiles(const string_q& path, void* data) {
         // are inclusive. This silently skips unknown files in the folder (such as shell scripts).
         if (!contains(path, "-") || !endsWith(path, ".bloom")) {
             options->stats.nSkipped++;
-            return !shouldQuit();
+            EXIT_NOMSG(!shouldQuit());
         }
 
         timestamp_t unused;
@@ -31,38 +32,39 @@ bool visitFinalIndexFiles(const string_q& path, void* data) {
         // Note that `start` and `end` options are ignored when scanning
         if (!rangesIntersect(options->listRange, options->fileRange)) {
             options->stats.nSkipped++;
-            return !shouldQuit();
+            EXIT_NOMSG(!shouldQuit());
         }
 
         options->possibles.clear();
         for (auto m : options->allMonitors) {
-            LOG_TEST("m.getLastVisitedBlock()", m.getLastVisitedBlock());
-            LOG_TEST("options->fileRange.first", options->fileRange.first)
+            // LOG_TEST("m.getLastVisitedBlock()", m.getLastVisitedBlock(), false);
+            // LOG_TEST("options->fileRange.first", options->fileRange.first, false)
             if (m.getLastVisitedBlock() == 0 || m.getLastVisitedBlock() < options->fileRange.first)
                 options->possibles.push_back(m);
         }
 
         if (options->possibles.size() == 0) {
             options->stats.nSkipped++;
-            return !shouldQuit();
+            EXIT_NOMSG(!shouldQuit());
         }
 
         if (isTestMode() && options->fileRange.second > 5000000) {
             options->stats.nSkipped++;
-            return false;
+            EXIT_NOMSG(false);
         }
 
         // LOG4("Scanning ", path);
-        return options->visitBinaryFile(path, data) && !shouldQuit();
+        bool ret = options->visitBinaryFile(path, data) && !shouldQuit();
+        EXIT_NOMSG(ret);
     }
 
     ASSERT(0);  // should not happen
-    return !shouldQuit();
+    EXIT_NOMSG(!shouldQuit());
 }
 
 //---------------------------------------------------------------
 bool COptions::visitBinaryFile(const string_q& path, void* data) {
-    string_q l_funcName = "visitBinaryFile";
+    ENTER("visitBinaryFile");
 
     COptions* options = reinterpret_cast<COptions*>(data);
     options->stats.nChecked++;
@@ -90,8 +92,8 @@ bool COptions::visitBinaryFile(const string_q& path, void* data) {
                 monitor.writeLastBlock(fileRange.second + 1);
             }
             options->stats.nBloomMisses++;
-            LOG_PROGRESS1("Skipping", options->fileRange.first, options->listRange.second, " bloom miss\r");
-            return true;
+            LOG_PROGRESS("Skipping", options->fileRange.first, options->listRange.second, " bloom miss\r");
+            EXIT_NOMSG(true);
         }
     }
 
@@ -99,7 +101,7 @@ bool COptions::visitBinaryFile(const string_q& path, void* data) {
         EXIT_FAIL("Could not download index chunk " + indexPath + ".");
 
     options->stats.nBloomHits++;
-    LOG_PROGRESS1("Scanning", options->fileRange.first, options->listRange.second, " bloom hit \r");
+    LOG_PROGRESS("Scanning", options->fileRange.first, options->listRange.second, " bloom hit \r");
 
     CArchive* chunk = NULL;
     char* rawData = NULL;
@@ -166,9 +168,9 @@ bool COptions::visitBinaryFile(const string_q& path, void* data) {
                 }
 
                 if (items.size()) {
-                    lockSection(true);
+                    lockSection();
                     monitor->writeAnArray(items);
-                    lockSection(false);
+                    unlockSection();
                 }
             } else {
                 options->stats.nFalsePositive++;
@@ -191,9 +193,9 @@ bool COptions::visitBinaryFile(const string_q& path, void* data) {
     }
 
     string_q result = indexHit ? " index hit " + hits : " false positive";
-    LOG_PROGRESS1("Scanning", options->fileRange.first, options->listRange.second, " bloom hit" + result);
+    LOG_PROGRESS("Scanning", options->fileRange.first, options->listRange.second, " bloom hit" + result);
 
-    return !shouldQuit();
+    EXIT_NOMSG(!shouldQuit());
 }
 
 //---------------------------------------------------------------
@@ -202,13 +204,15 @@ bool getIndexChunkFromIPFS(const string_q& chunk) {
 }
 
 //---------------------------------------------------------------
-bool establishIndexChunk(const string_q& fileName) {
+bool COptions::establishIndexChunk(const string_q& fileName) {
+    ENTER("establishIndexChunk")
     if (!fileExists(fileName)) {
         LOG_INFO(bRed, fileName, " not found.", bGreen, " Retreiving from IPFS.", cOff);
-        CPinnedItem pin;
-        if (!getChunkByHash(substitute(substitute(fileName, indexFolder_finalized, ""), ".bin", ""), pin)) {
+        CPinnedChunk pin;
+        if (!pinlib_getChunkByHash(pinList, substitute(substitute(fileName, indexFolder_finalized, ""), ".bin", ""),
+                                   pin)) {
             cerr << "Could not retrieve file from IPFS: " << fileName << endl;
         }
     }
-    return fileExists(fileName);
+    EXIT_NOMSG(fileExists(fileName));
 }

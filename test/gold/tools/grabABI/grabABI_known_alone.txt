@@ -1,5 +1,6 @@
 grabABI argc: 2 [1:--known] 
 grabABI --known 
+TIME ~ CLOCK - <INFO>  : known: true
 encoding	type	name	signature	input_names	output_names
 0x2203ab56		ABI	ABI(bytes32,uint256)	node,contentTypes,	contentType,data,,
 0x3ffb58fc		AddEmployee	AddEmployee(uint256,address,uint256,uint64,string)	employeeId,accountAddress,initialDenominationSalary,startDate,role,	,
@@ -897,7 +898,7 @@ encoding	type	name	signature	input_names	output_names
 0x746c9171	function	m_required	m_required()		val_0,,
 0xf49826be	function	makeCommitment	makeCommitment(string,address,bytes32)	name,owner,secret,	val_0,,
 0x3d86c52f	function	makeCommitmentWithConfig	makeCommitmentWithConfig(string,address,bytes32,address,address)	name,owner,secret,resolver,addr,	val_0,,
-0x337f3f32	function	manifestHash	manifestHash()		val_0,,
+0x337f3f32	function	manifestHash	manifestHash()		manifestHash,,
 0x0e6848cc	function	massNotify	massNotify(address[])	_owners,	,
 0xce1e09c0	function	maxCommitmentAge	maxCommitmentAge()		val_0,,
 0x4c2097fd	function	maxUInt256	maxUInt256()		ret_0,,

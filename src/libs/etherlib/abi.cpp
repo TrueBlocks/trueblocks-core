@@ -467,7 +467,7 @@ bool CAbi::loadAbiFromEtherscan(const address_t& addr, bool raw) {
     }
 
     // If this isn't a smart contract, don't bother
-    if (!isContractAt(addr, getLatestBlock_client())) {
+    if (!isContractAt(addr, getBlockProgress(BP_CLIENT).client)) {
         sourcesMap[addr] = true;
         return true;
     }

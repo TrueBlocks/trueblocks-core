@@ -17,6 +17,7 @@
 #include "options.h"
 
 bool parseRequestDates(COptionsBase* opt, CNameValueArray& blocks, const string_q& arg);
+bool parseRequestTs(COptionsBase* opt, CNameValueArray& blocks, timestamp_t ts);
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
     // BEG_CODE_OPTIONS
@@ -81,13 +82,24 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
+    // BEG_DEBUG_DISPLAY
+    // LOG_TEST("block_list", block_list, (block_list == NOPOS));
+    LOG_TEST_BOOL("list", list);
+    LOG_TEST_BOOL("timestamps", timestamps);
+    LOG_TEST("skip", skip, (skip == NOPOS));
+    // END_DEBUG_DISPLAY
+
     if (skip != NOPOS && !skip)
         return usage("--skip value must be larger than zero.");
 
-    blknum_t latest = getLatestBlock_client();
+    blknum_t latest = getBlockProgress(BP_CLIENT).client;
     for (auto item : block_list) {
         if (isDate(item)) {
             if (!parseRequestDates(this, requests, item))
+                return false;
+
+        } else if (isTimestamp(item)) {
+            if (!parseRequestTs(this, requests, str_2_Ts(item)))
                 return false;
 
         } else if (!parseBlockList2(this, blocks, item, latest)) {
@@ -192,7 +204,7 @@ COptions::~COptions(void) {
 bool showSpecials(CNameValue& pair, void* data) {
     CNameValueArray* array = reinterpret_cast<CNameValueArray*>(data);
     if (pair.first == "latest")
-        pair.second = uint_2_Str(getLatestBlock_client());
+        pair.second = uint_2_Str(getBlockProgress(BP_CLIENT).client);
     CNameValue nv("block", pair.second + "|" + pair.first);
     array->push_back(nv);
     return true;
@@ -213,7 +225,7 @@ string_q COptions::listSpecials(format_t fmt) const {
                 bn = "";
             } else if (COptionsBase::isReadme) {
                 bn = "--";
-            } else if (i > 0 && str_2_Uint(bn) >= getLatestBlock_client()) {
+            } else if (i > 0 && str_2_Uint(bn) >= getBlockProgress(BP_CLIENT).client) {
                 extra = " (syncing)";
             }
         }
@@ -229,6 +241,12 @@ string_q COptions::listSpecials(format_t fmt) const {
         }
     }
     return os.str().c_str();
+}
+
+//-----------------------------------------------------------------------
+bool parseRequestTs(COptionsBase* opt, CNameValueArray& requests, timestamp_t ts) {
+    requests.push_back(CNameValue("date", int_2_Str(ts)));
+    return true;
 }
 
 //-----------------------------------------------------------------------

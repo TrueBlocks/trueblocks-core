@@ -41,7 +41,7 @@ bool COptions::parseArguments(string_q& command) {
     // END_CODE_LOCAL_INIT
 
     Init();
-    blknum_t latest = getLatestBlock_client();
+    blknum_t latest = getBlockProgress(BP_CLIENT).client;
     latestBlock = latest;
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
@@ -78,6 +78,14 @@ bool COptions::parseArguments(string_q& command) {
             // END_CODE_AUTO
         }
     }
+
+    // BEG_DEBUG_DISPLAY
+    // LOG_TEST("addrs2", addrs2, (addrs2 == NOPOS));
+    // LOG_TEST("blocks", blocks, (blocks == NOPOS));
+    // LOG_TEST("parts", parts, (parts == ""));
+    LOG_TEST_BOOL("by_acct", by_acct);
+    LOG_TEST_BOOL("no_zero", no_zero);
+    // END_DEBUG_DISPLAY
 
     bool userBlocks = true;
     if (!blocks.hasBlocks()) {
@@ -242,7 +250,7 @@ void COptions::Init(void) {
     optionOff(OPT_DOLLARS | OPT_ETHER);
     blocks.Init();
     CHistoryOptions::Init();
-    newestBlock = oldestBlock = getLatestBlock_client();
+    newestBlock = oldestBlock = getBlockProgress(BP_CLIENT).client;
 }
 
 //---------------------------------------------------------------------------------------------------

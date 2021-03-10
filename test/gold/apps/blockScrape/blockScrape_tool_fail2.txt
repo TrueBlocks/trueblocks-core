@@ -1,7 +1,7 @@
 blockScrape argc: 5 [1:--tool] [2:monitors] [3:--tool] [4:index] 
 blockScrape --tool monitors --tool index 
 
-  You must specify only one of none, index, monitors, both. Quitting...
+  Please specify only one of [ none | index | monitors | both]. Quitting...
 
   Usage:    blockScrape [-t|-n|-p|-u|-s|-v|-h] mode  
   Purpose:  Decentralized blockchain scraper and block cache.

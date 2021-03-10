@@ -1,5 +1,6 @@
 getTrans argc: 7 [1:1301011.0] [2:1301672.0] [3:1301324.0] [4:--uniq] [5:--fmt] [6:json] 
 getTrans 1301011.0 1301672.0 1301324.0 --uniq --fmt json 
+TIME ~ CLOCK - <INFO>  : uniq: true
 { "data": [
   {
     "bn": 1301011,
@@ -27,6 +28,4 @@ getTrans 1301011.0 1301672.0 1301324.0 --uniq --fmt json
     "reason": "to"
   }], "errors": [
 "Transaction 1301324.0 not found."
-], "types": [
-{ "type": "CTransaction", "fields": [{ "name": "hash", "type": "hash" }, { "name": "blockHash", "type": "hash" }, { "name": "blockNumber", "type": "blocknum" }, { "name": "transactionIndex", "type": "blocknum" }, { "name": "nonce", "type": "unumber" }, { "name": "timestamp", "type": "timestamp" }, { "name": "from", "type": "address" }, { "name": "to", "type": "address" }, { "name": "value", "type": "wei" }, { "name": "gas", "type": "gas" }, { "name": "gasPrice", "type": "gas" }, { "name": "input", "type": "text" }, { "name": "isError", "type": "unumber" }, { "name": "hasToken", "type": "unumber" }, { "name": "receipt", "type": "object" }, { "name": "gasUsed", "type": "gas" }] }
 ] }

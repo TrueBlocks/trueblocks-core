@@ -66,7 +66,7 @@ bool COptions::parseArguments(string_q& command) {
     bool addr_only = false;
 
     Init();
-    blknum_t latest = isTestMode() ? 11500000 : getLatestBlock_client();
+    blknum_t latest = isTestMode() ? 10800000 : getBlockProgress(BP_CLIENT).client;
     latestBlock = latest;
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
@@ -125,6 +125,27 @@ bool COptions::parseArguments(string_q& command) {
             // END_CODE_AUTO
         }
     }
+
+    // BEG_DEBUG_DISPLAY
+    // LOG_TEST("terms", terms, (terms == NOPOS));
+    LOG_TEST_BOOL("expand", expand);
+    LOG_TEST_BOOL("match_case", match_case);
+    LOG_TEST_BOOL("all", all);
+    LOG_TEST_BOOL("owned", owned);
+    LOG_TEST_BOOL("custom", custom);
+    LOG_TEST_BOOL("prefund", prefund);
+    LOG_TEST_BOOL("named", named);
+    LOG_TEST_BOOL("other", other);
+    LOG_TEST_BOOL("addr", addr);
+    LOG_TEST_BOOL("entities", entities);
+    LOG_TEST_BOOL("tags", tags);
+    LOG_TEST_BOOL("to_custom", to_custom);
+    LOG_TEST_BOOL("clean", clean);
+    // END_DEBUG_DISPLAY
+
+    // for (auto& term : terms)
+    //     if (endsWith(term, ".eth"))
+    //         term = addressFromENSName(term);
 
     if (clean || isCrudCommand()) {
         abi_spec.loadAbisFromKnown(true);

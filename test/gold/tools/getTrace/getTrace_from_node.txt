@@ -1,5 +1,6 @@
 getTrace argc: 4 [1:4000000.5] [2:--fmt] [3:json] 
 getTrace 4000000.5 --fmt json 
+TIME ~ CLOCK - <INFO>  : skip_ddos: true
 { "data": [
   {
     "blockHash": "0xb8a3f7f5cfc1748f91a684f20fe89031202cbadcd15078c49b85ec2a57f43853",
@@ -25,6 +26,4 @@ getTrace 4000000.5 --fmt json
       "gasUsed": 29552,
       "output": "0x"
     }
-  }], "types": [
-{ "type": "CTrace", "fields": [{ "name": "blockHash", "type": "hash" }, { "name": "blockNumber", "type": "blocknum" }, { "name": "subtraces", "type": "unumber" }, { "name": "traceAddress", "type": "text" }, { "name": "transactionHash", "type": "hash" }, { "name": "transactionIndex", "type": "blocknum" }, { "name": "type", "type": "text" }, { "name": "error", "type": "text" }, { "name": "action", "type": "object" }, { "name": "result", "type": "object" }] }
-] }
+  }] }

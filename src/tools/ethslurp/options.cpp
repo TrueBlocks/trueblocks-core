@@ -40,7 +40,7 @@ bool COptions::parseArguments(string_q& command) {
     // END_CODE_LOCAL_INIT
 
     Init();
-    blknum_t latest = getLatestBlock_client();
+    blknum_t latest = getBlockProgress(BP_CLIENT).client;
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
         string_q orig = arg;
@@ -73,6 +73,13 @@ bool COptions::parseArguments(string_q& command) {
             // END_CODE_AUTO
         }
     }
+
+    // BEG_DEBUG_DISPLAY
+    // LOG_TEST("addrs", addrs, (addrs == NOPOS));
+    // LOG_TEST("blocks", blocks, (blocks == NOPOS));
+    // LOG_TEST("types", types, (types == ""));
+    LOG_TEST_BOOL("appearances", appearances);
+    // END_DEBUG_DISPLAY
 
     // This will fail if we don't have a key. Let's fail early.
     getApiKey("Etherscan", "http://api.etherscan.io/apis");

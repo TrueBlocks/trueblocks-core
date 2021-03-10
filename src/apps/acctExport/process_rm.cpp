@@ -20,42 +20,46 @@ const char* STR_ALREADYDELETED = "Monitor [{ADDRESS}] is already deleted";
 //------------------------------------------------------------------------------------------------
 bool COptions::handle_rm(const CAddressArray& addrs) {
     CStringArray results;
-    for (auto addr : addrs) {
-        CMonitor monitor;
-        monitor.address = addr;
-        if (!monitor.exists()) {
-            results.push_back(monitor.Format(STR_NOTFOUND));
-            LOG_WARN(monitor.Format(STR_NOTFOUND));
-        } else {
-            if (crudCommand == "remove") {
-                if (monitor.isDeleted()) {
-                    if (isTestMode()) {
-                        results.push_back(monitor.Format(STR_REMOVED) + " NOT REMOVED BECAUSE TESTING.");
-                    } else {
-                        monitor.removeMonitor();
-                        results.push_back(monitor.Format(STR_REMOVED));
-                    }
-                } else {
-                    results.push_back(monitor.Format(STR_DELETEFIRST));
-                }
+    for (auto crudCmd : crudCommands) {
+        for (auto addr : addrs) {
+            CMonitor monitor;
+            monitor.address = addr;
+            if (!monitor.exists()) {
+                results.push_back(monitor.Format(STR_NOTFOUND));
+                LOG_WARN(monitor.Format(STR_NOTFOUND));
             } else {
-                if (crudCommand == "delete") {
+                if (crudCmd == "remove") {
                     if (monitor.isDeleted()) {
-                        results.push_back(monitor.Format(STR_ALREADYDELETED));
-                    } else {
-                        monitor.deleteMonitor();
-                        results.push_back(monitor.Format(STR_DELETED));
-                    }
-                } else {
-                    if (monitor.isDeleted()) {
-                        monitor.undeleteMonitor();
-                        results.push_back(monitor.Format(STR_UNDELETED));
+                        if (isTestMode()) {
+                            results.push_back(monitor.Format(STR_REMOVED) + " NOT REMOVED BECAUSE TESTING.");
+                        } else {
+                            monitor.removeMonitor();
+                            results.push_back(monitor.Format(STR_REMOVED));
+                        }
                     } else {
                         results.push_back(monitor.Format(STR_DELETEFIRST));
                     }
+                } else {
+                    if (crudCmd == "delete") {
+                        if (monitor.isDeleted()) {
+                            results.push_back(monitor.Format(STR_ALREADYDELETED));
+                        } else {
+                            monitor.deleteMonitor();
+                            results.push_back(monitor.Format(STR_DELETED));
+                        }
+                    } else if (crudCmd == "undelete") {
+                        if (monitor.isDeleted()) {
+                            monitor.undeleteMonitor();
+                            results.push_back(monitor.Format(STR_UNDELETED));
+                        } else {
+                            results.push_back(monitor.Format(STR_DELETEFIRST));
+                        }
+                    } else {
+                        // do nothing for --create and --edit
+                    }
                 }
+                LOG_INFO(results[results.size() - 1]);
             }
-            LOG_INFO(results[results.size() - 1]);
         }
     }
 

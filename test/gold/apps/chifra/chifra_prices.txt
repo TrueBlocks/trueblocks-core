@@ -1,10 +1,10 @@
 chifra argc: 4 [1:quotes] [2:-p] [3:1440] 
 chifra quotes -p 1440 
 TIME ~ CLOCK - <INFO>  : mode: quotes
-TIME ~ CLOCK - : 4-----call_command ----> ethQuote -p 1440
 chifra quotes argc: 3 [1:-p] [2:1440] 
 chifra quotes -p 1440 
 PROG_NAME = [chifra quotes]
+TIME ~ CLOCK - <INFO>  : period: 1440
 timestamp	date	close
 1439078400	2015-08-09 00:00:00 UTC	1.40000
 1439164800	2015-08-10 00:00:00 UTC	1.40000

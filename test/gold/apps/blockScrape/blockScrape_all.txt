@@ -1,8 +1,12 @@
 blockScrape argc: 7 [1:--n_blocks] [2:12] [3:--n_block_procs] [4:12] [5:--n_addr_procs] [6:12] 
 blockScrape --n_blocks 12 --n_block_procs 12 --n_addr_procs 12 
-TIME ~ CLOCK - : 8------The scraper was stopped.
+TIME ~ CLOCK - <INFO>  : n_blocks: 12
+TIME ~ CLOCK - <INFO>  : n_block_procs: 12
+TIME ~ CLOCK - <INFO>  : n_addr_procs: 12
+TIME ~ CLOCK - : 8------Current state stopped.
 { "status": "running" }
 TIME ~ CLOCK - : 4-----changing state: stopped --> running
+TIME ~ CLOCK - : 8------Current state running.
 {
   "message": "Testing only",
   "mode": "run",
@@ -13,7 +17,10 @@ TIME ~ CLOCK - : 4-----changing state: stopped --> running
   "n_addr_procs": 12,
   "pin": 0,
   "publish": 0,
+  "current": running,
 }
-TIME ~ CLOCK - : 8------The scraper was running.
+TIME ~ CLOCK - : 8------Current state running.
 TIME ~ CLOCK - : 4-----changing state: running --> stopped
 { "status": "stopped" }
+TIME ~ CLOCK - : 8------Current state stopped.
+TIME ~ CLOCK - <INFO>  : file contents: 

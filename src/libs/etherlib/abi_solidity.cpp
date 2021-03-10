@@ -69,7 +69,7 @@ static string_q removeComments(const string_q& contents) {
 bool CAbi::loadAbiFromSolidity(const string_q& addr) {
     string_q solFile = addr + ".sol";
     string_q contents = asciiFileToString(solFile);
-    LOG_TEST("sol_2_Abi", contents);
+    // LOG_TEST("sol_2_Abi", contents, contents == "");
 
     replaceAll(contents, "/*", string_q(1, COMMENT2));
     replaceAll(contents, "//", string_q(1, COMMENT1));
@@ -92,7 +92,7 @@ bool CAbi::loadAbiFromSolidity(const string_q& addr) {
     char lastChar = 0;
     size_t scopeCount = 0;
     for (auto ch : contents) {
-        LOG_TEST("State pre", psStrs[state]);
+        // LOG_TEST("State pre", psStrs[state], false);
         // pre_state = state;
         switch (state) {
             case IN_MODIFIER:
@@ -180,7 +180,7 @@ bool CAbi::loadAbiFromSolidity(const string_q& addr) {
             default:
                 break;
         }
-        LOG_TEST("State post", psStrs[state]);
+        // LOG_TEST("State post", psStrs[state], false);
         // if (state != pre_state)
         //     printf("");
         lastChar = ch;
@@ -190,7 +190,7 @@ bool CAbi::loadAbiFromSolidity(const string_q& addr) {
     replaceAll(contents, "\n\n", "\n");
     replaceAll(contents, "\r", "");
     replaceAll(contents, " )", ")");
-    LOG_TEST("Contents", contents);
+    // LOG_TEST("Contents", contents, contents == "");
 
     CStringArray lines;
     explode(lines, contents, '\n');

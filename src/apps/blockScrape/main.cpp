@@ -9,44 +9,69 @@
 int main(int argc, const char* argv[]) {
     pinlib_init(defaultQuitHandler);
 
+    if (isLiveTest()) {
+        // clean up if we're in live testing
+        cleanFolder(getCachePath("tmp/"));
+        cleanFolder(configPath("mocked/addr_index"));
+    }
+
     COptions options;
     if (!options.prepareArguments(argc, argv))
         return 0;
 
-    for (auto command : options.commandLines) {
-        if (!options.parseArguments(command))
-            return 0;
+    ASSERT(options.commandLines.size() > 0);  // no support for --file: option
+    // for (auto command : options.commandLines) {
+    if (!options.parseArguments(options.commandLines[0]))
+        return 0;
 
-        options.state = options.getCurrentState();
-        while (options.state != STATE_STOPPED && !shouldQuit()) {
-            if (isRunning("acctExport") || options.state == STATE_PAUSED) {
-                cerr << "Block scraper is paused: " << Now().Format(FMT_EXPORT) << "\r";
-                cerr.flush();
-            } else {
-                if (options.tools & TOOL_INDEX) {
-                    cerr << cYellow << "Block scraper is running...";
-                    cerr << (options.scrape_blocks() ? "completed..." : "did not complete...");
-                }
-                if (options.tools & TOOL_MONITORS) {
-                    cerr << cYellow << "Monitor scraper is running...";
-                    cerr << (options.scrape_monitors() ? "completed..." : "did not complete...");
-                }
-                cerr << "running again in " << options.sleep << " seconds... " << cOff << endl;
-                // FIX_THIS_CODE
-                freshenTimestamps(getLatestBlock_cache_ripe());
+    // We keep track of what state we're in (paused, running, etc.)...
+    string_q unused;
+    options.state = options.getCurrentState(unused);
+
+    // ...and run forever (until user tells us to quit)...
+    while (options.state != STATE_STOPPED && !shouldQuit()) {
+        if (isRunning("acctExport") || options.state == STATE_PAUSED) {
+            // User may have started the account scraper since we started. Here, we
+            // go to sleep for a short while to allow that program to complete...
+            LOG_INFO("Block scraper is paused: ", Now().Format(FMT_EXPORT), "\r");
+
+        } else {
+            bool ret = false;
+            if (options.tools & TOOL_INDEX) {
+                LOG_INFO(cYellow, "Block scraper is running...", cOff);
+                ret = options.scrape_blocks();
             }
-            // We need to sleep, but we want to wake up frequently enough to check if user has
-            // told us to quit, pause or restart. (The `sleep` value is in seconds.)
+
+            if (options.tools & TOOL_MONITORS) {
+                LOG_INFO(cYellow, "Monitor scraper is running...", cOff);
+                ret = options.scrape_monitors();
+            }
+
+            LOG_INFO((ret ? "  ...pass completed" : "  ...pass did not complete"), ". Running again in ", options.sleep,
+                     " seconds... ");
+
+            // TODO(tjayrush): FIX_THIS_CODE
+            freshenTimestamps(getBlockProgress(BP_RIPE).ripe);
+        }
+
+        // We need to sleep, but we want to wake up frequently enough to check to see if user has
+        // told hit the control-C or sent pause, quit or restart. (The `sleep` value is in seconds.)
+        if (!isLiveTest()) {  // don't sleep if we're in live testing
             uint32_t nHalfSeconds = (uint32_t)(options.sleep * 2);
             ScrapeState prevState = options.state;
             for (size_t n = 0; n < nHalfSeconds && !shouldQuit() && options.state == prevState; n++) {
                 usleep((useconds_t)(500000));
-                options.state = options.getCurrentState();
+                options.state = options.getCurrentState(unused);
             }
+        } else {
+            options.state = options.getCurrentState(unused);
         }
     }
+    // }
 
-    options.cleanup();
+    // clean up the control file...
+    options.cleanupAndQuit();
+
     pinlib_cleanup();
     return 0;
 }

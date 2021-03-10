@@ -20,28 +20,17 @@ Here is a screen shot of an interaction with Chifra building a smart contract mo
 
 <img src=docs/image.png>
 
+00005970 (   5970)- <ERROR> : Exit(chifra,call_command): 
 #### Usage
 
-`Usage:`    chifra [-v|-h] commands  
-`Purpose:`  Main TrueBlocks command line controls.
+`Usage:`    chifra command  
+`Purpose:`  Access to all TrueBlocks tools (`chifra <cmd> --help` for more).
 
 `Where:`  
-
-| Short Cut | Option | Description |
-| -------: | :------- | :------- |
-|  | commands | which command to run, one or more of [list&#124;export&#124;slurp&#124;entities&#124;names&#124;tags&#124;abis&#124;blocks&#124;transactions&#124;receipts&#124;logs&#124;traces&#124;explore&#124;quotes&#124;state&#124;tokens&#124;when&#124;where&#124;dive&#124;init&#124;scrape&#124;serve&#124;pins&#124;status&#124;rm] (required) |
-| -x | --fmt <val> | export format, one of [none&#124;json*&#124;txt&#124;csv&#124;api] |
-| -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
-| -h | --help | display this help screen |
-
-`Notes:`
-
-- Get more detailed help with `'chifra <cmd> --help'`.
+```
  MONITORS
-   list          list all appearances of address(es) on the chain, also adds monitor(s)
-   export        export details for each appearance (as transacitons, logs, traces, balances, etc.)
-   slurp         export details by querying EtherScan (note: will not return as many appearances as --list)
-   rm            remove previously monitored address(es)
+   monitor       add, remove, clean, and list appearances of address(es) on the chain
+   export        export details for each appearance (as txs, logs, traces, balances, reconciliations, etc.)
  SHARED DATA
    entities      list and/or share entities (groups of addresses)
    names         list and/or share named addresses
@@ -55,16 +44,19 @@ Here is a screen shot of an interaction with Chifra building a smart contract mo
    traces        export trace-related data
    state         export parts of the state for given address(es)
    tokens        export data related to ERC20 and/or ERC721 token(s)
- OTHER
+   when          return a date given a block number or a block number given a date
+ ADMIN
    init          initialize TrueBlocks databases
    scrape        scrape the chain and build an index of address appearances (aka digests)
    serve         serve the TrueBlocks API via tbServer
    pins          query the status of the pinning system
    status        query the status of the system
+ OTHER
+   explore       open the configured block explorer for the given address
+   slurp         export details by querying EtherScan (note: will not return as many appearances as --list)
    quotes        return prices collected from configured remote API
-   explore       open the configured block explorer for a given address
-   when          return a date given a block number or a block number given a date
-   where         determine the location of block(s), either local or remote cache
+   where         determine the location of block(s), either local or remote cache, or on-chain
+```
 
 #### Other Options
 

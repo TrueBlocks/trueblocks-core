@@ -1,16 +1,21 @@
 blockScrape argc: 2 [1:restart] 
 blockScrape restart 
-TIME ~ CLOCK - : 8------The scraper was stopped.
+TIME ~ CLOCK - <INFO>  : mode: restart
+TIME ~ CLOCK - : 8------Current state stopped.
 TIME ~ CLOCK - <ERROR> : blockScrape is stopped. Cannot restart.
 { "status": "stopped" }
+TIME ~ CLOCK - : 8------Current state stopped.
 {
   "message": "Testing only",
   "mode": "restart",
   "tool": "index",
   "tools": 2,
-  "n_blocks": 18446744073709551615,
-  "n_block_procs": 18446744073709551615,
-  "n_addr_procs": 18446744073709551615,
+  "n_blocks": 2000,
+  "n_block_procs": 10,
+  "n_addr_procs": 20,
   "pin": 0,
   "publish": 0,
+  "current": stopped,
 }
+TIME ~ CLOCK - : 8------Current state stopped.
+TIME ~ CLOCK - <INFO>  : file contents: 

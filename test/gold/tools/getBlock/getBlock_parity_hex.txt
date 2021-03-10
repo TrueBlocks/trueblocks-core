@@ -1,5 +1,6 @@
 getBlock argc: 4 [1:0x2e7721] [2:--force] [3:--parity] 
 getBlock 0x2e7721 --force --parity 
+TIME ~ CLOCK - <INFO>  : force: true
 { "data": [
 {
   "difficulty": "0x62f79fffb26f",
@@ -10,7 +11,6 @@ getBlock 0x2e7721 --force --parity
   "miner": "0x2a65aca4d5fc5b5c859090a6c34d164135398226",
   "number": "0x2e7721",
   "parentHash": "0x74a7b7ed731f1a1ff41e97de97ec255908e6ca341ff1f7498e4df55e792d163d",
-  "price": 0.00000,
   "timestamp": "0x58852147",
   "transactions": [
     {
@@ -325,6 +325,4 @@ getBlock 0x2e7721 --force --parity
       "value": "0x2e5cfb5f5bcad8c"
     }
   ]
-}], "types": [
-{ "type": "CBlock", "fields": [{ "name": "difficulty", "type": "unumber" }, { "name": "finalized", "type": "bool" }, { "name": "gasLimit", "type": "gas" }, { "name": "gasUsed", "type": "gas" }, { "name": "hash", "type": "hash" }, { "name": "miner", "type": "address" }, { "name": "number", "type": "blocknum" }, { "name": "parentHash", "type": "hash" }, { "name": "price", "type": "double" }, { "name": "timestamp", "type": "timestamp" }, { "name": "transactions", "type": "object|ts_array" }] }
-] }
+}] }

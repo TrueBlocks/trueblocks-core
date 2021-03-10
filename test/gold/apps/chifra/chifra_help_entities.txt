@@ -1,7 +1,6 @@
 chifra argc: 3 [1:entities] [2:--help] 
 chifra entities --help 
 TIME ~ CLOCK - <INFO>  : mode: entities
-TIME ~ CLOCK - : 4-----call_command ----> ethNames --entities --help
 chifra entities argc: 3 [1:--entities] [2:--help] 
 chifra entities --entities --help 
 PROG_NAME = [chifra entities]

@@ -1,5 +1,7 @@
 getBlock argc: 7 [1:2769609] [2:2799895] [3:2872831] [4:3076260] [5:--force] [6:--uniq_tx] 
 getBlock 2769609 2799895 2872831 3076260 --force --uniq_tx 
+TIME ~ CLOCK - <INFO>  : uniq_tx: true
+TIME ~ CLOCK - <INFO>  : force: true
 
   The --force option is not available when using one of the address options. Quitting...
 

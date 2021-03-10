@@ -440,6 +440,9 @@ const char* STR_DISPLAY_TESTCASE = "";
 // EXISTING_CODE
 //---------------------------------------------------------------------------------------------
 void establishTestMonitors(void) {
+    if (folderExists(configPath("mocked/monitors/")))
+        return;
+
     string_q gzipFile = configPath("mocked/monitors.tar.gz");
     if (!fileExists(gzipFile)) {
         LOG_WARN("Cannot find test monitors file: ", gzipFile);
@@ -471,6 +474,8 @@ bool prepareBuiltIn(string_q& options) {
             ostringstream os;
             if (match == "RESET") {
                 establishTestMonitors();
+                cleanFolder(getCachePath("tmp/"));
+                cleanFolder(configPath("mocked/addr_index"));
                 options = "";
                 if (debug)
                     os << "Cleanup" << endl;
@@ -541,7 +546,7 @@ void CTestCase::prepareTest(bool cmdLine, bool removeWorking) {
         if (cmdLine) {
             CStringArray opts = {
                 "val",   "addrs",        "addrs2", "blocks",    "block_list", "files",
-                "dates", "transactions", "terms",  "functions", "modes",
+                "dates", "transactions", "terms",  "functions", "modes",      "mode",
             };
             options = "&" + options;
             for (auto opt : opts)

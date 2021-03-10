@@ -41,7 +41,7 @@ int main(int argc, const char* argv[]) {
 }
 
 void regenerate(void) {
-    f reshenTimestampFile(getLatestBlock_client());
+    f reshenTimestampFile(getBlockProgress(BP_CLIENT).client);
 }
 
 void list(void) {

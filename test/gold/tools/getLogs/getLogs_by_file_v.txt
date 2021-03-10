@@ -1,5 +1,6 @@
 getLogs argc: 5 [1:--file:cmd_file] [2:--verbose] [3:--fmt] [4:json] 
 getLogs --file:cmd_file --verbose --fmt json 
+TIME ~ CLOCK - <INFO>  : articulate: true
 { "data": [
   {
     "address": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
@@ -27,8 +28,9 @@ getLogs --file:cmd_file --verbose --fmt json
         }
       ]
     },
-    "compressedLog": "Transfer ( _from: 0x306b79fc32fb1561480102e032844bb36ea97102, _to: 0xdf21fa922215b1a56f5a6d6294e6e36c85a0acfb, _amount: 666666666600000000 )"
-  },  {
+    "compressedLog": "Transfer(0x306b79fc32fb1561480102e032844bb36ea97102 /*_from*/, 0xdf21fa922215b1a56f5a6d6294e6e36c85a0acfb /*_to*/, 666666666600000000 /*_amount*/); "
+  }TIME ~ CLOCK - <INFO>  : articulate: true
+,  {
     "address": "0x51ffc1b089392a5bb65bf24eaf04d07d0e6f88b5",
     "logIndex": "0x0",
     "topics": [
@@ -51,7 +53,5 @@ getLogs --file:cmd_file --verbose --fmt json
         }
       ]
     },
-    "compressedLog": "ProfitWithdrawn ( tokenHolder: 0x63585740143301cf0163f6448fd8a63c3b376fd3, amountPaidOut: 87810925078238973 )"
-  }], "types": [
-{ "type": "CLogEntry", "fields": [{ "name": "address", "type": "address" }, { "name": "logIndex", "type": "blocknum" }, { "name": "topics", "type": "object|ts_array" }, { "name": "data", "type": "text" }, { "name": "articulatedLog", "type": "object" }, { "name": "compressedLog", "type": "text" }] }
-] }
+    "compressedLog": "ProfitWithdrawn(0x63585740143301cf0163f6448fd8a63c3b376fd3 /*tokenHolder*/, 87810925078238973 /*amountPaidOut*/); "
+  }] }

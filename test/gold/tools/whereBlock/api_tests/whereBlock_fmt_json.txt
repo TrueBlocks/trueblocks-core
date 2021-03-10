@@ -5,24 +5,5 @@
       "cached": true,
       "path": "./blocks/00/10/01/001001001.bin"
     }
-  ],
-  "types": [
-    {
-      "type": "CCacheEntry",
-      "fields": [
-        {
-          "name": "blockNumber",
-          "type": "text"
-        },
-        {
-          "name": "cached",
-          "type": "bool"
-        },
-        {
-          "name": "path",
-          "type": "text"
-        }
-      ]
-    }
   ]
 }

@@ -1,21 +1,23 @@
 {
-  "blockNumber": 10092000,
-  "balance": 0,
-  "address": "0xa4f29fc548856180f6b1e319ee4d86715875cce4",
-  "result": {
-    "name": "getBalance",
-    "type": "function",
-    "constant": true,
-    "stateMutability": "view",
-    "signature": "getBalance()",
-    "encoding": "0x12065fe0",
-    "inputs": [],
-    "outputs": [
-      {
-        "type": "uint256",
-        "name": "balance",
-        "value": "0"
-      }
-    ]
-  }
+  "data": [
+    {
+      "blockNumber": 10092000,
+      "encoding": "0x12065fe0",
+      "bytes": "",
+      "result": {
+        "name": "getBalance",
+        "signature": "getBalance()",
+        "encoding": "0x12065fe0",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "balance",
+            "value": "0"
+          }
+        ]
+      },
+      "balance": 0,
+      "address": "0xa4f29fc548856180f6b1e319ee4d86715875cce4"
+    }
+  ]
 }

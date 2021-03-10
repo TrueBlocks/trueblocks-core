@@ -121,6 +121,7 @@ extern bool isDouble(const string_q& test);
 extern bool isHexStr(const string_q& str);
 extern bool isAddress(const string_q& addr);
 extern bool isDate(const string_q& date);
+extern bool isTimestamp(const string_q& ts);
 extern bool isHash(const hash_t& hashIn);
 extern bool isUnsigned(const string_q& in);
 
@@ -161,6 +162,14 @@ inline bool isApiMode(void) {
     if (api_mode == NOPOS)
         api_mode = getEnvStr("API_MODE") == "true";
     return api_mode;
+}
+
+//---------------------------------------------------------------------------
+inline bool isLiveTest(void) {
+    static uint64_t test_mode = NOPOS;
+    if (test_mode == NOPOS)
+        test_mode = getEnvStr("LIVE_TEST") == "true";
+    return test_mode;
 }
 
 }  // namespace qblocks

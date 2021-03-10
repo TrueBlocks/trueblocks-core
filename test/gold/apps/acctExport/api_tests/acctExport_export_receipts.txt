@@ -24,36 +24,5 @@
       "status": null,
       "transactionIndex": 2
     }
-  ],
-  "types": [
-    {
-      "type": "CReceipt",
-      "fields": [
-        {
-          "name": "blockNumber",
-          "type": "blocknum"
-        },
-        {
-          "name": "contractAddress",
-          "type": "address"
-        },
-        {
-          "name": "gasUsed",
-          "type": "gas"
-        },
-        {
-          "name": "logs",
-          "type": "object|ts_array"
-        },
-        {
-          "name": "status",
-          "type": "unumber"
-        },
-        {
-          "name": "transactionIndex",
-          "type": "blocknum"
-        }
-      ]
-    }
   ]
 }

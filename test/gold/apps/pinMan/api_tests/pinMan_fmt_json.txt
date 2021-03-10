@@ -1,0 +1,8 @@
+{
+  "data": [
+    {
+      "apiKey": "--license_codes--",
+      "secretKey": "--license_codes--"
+    }
+  ]
+}

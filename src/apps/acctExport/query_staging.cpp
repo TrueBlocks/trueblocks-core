@@ -18,8 +18,9 @@ bool visitStagingIndexFiles(const string_q& path, void* data) {
         // 0000000000-temp.txt which we skip). The file contains all blocks the scraper
         // has seen but has not yet consolidated. Here, we read the file which is
         // fixed length: [address, blockNum, txid (59 bytes)]. We read the entire file
-        // into memory at once, sort it by address (the file is sorted by block) and
-        // then binary search for the address we're looking for. Should be super fast.
+        // into memory at once, sort it by address (the file is sorted by block and since
+        // new blocks will be appended, there's no reason so sort it each time) and then
+        // binary search for the address we're looking for. Should be super fast.
         COptions* options = reinterpret_cast<COptions*>(data);
         options->stats.nFiles++;
 
@@ -30,7 +31,7 @@ bool visitStagingIndexFiles(const string_q& path, void* data) {
 
         timestamp_t unused;
         options->fileRange.first = bnFromPath(path, options->fileRange.second, unused);
-        // TODO - Not right: ASSERT(unused != NOPOS && options->fileRange.first != NOPOS && options->fileRange.second != NOPOS);
+        // TODO - This assert is not right: ASSERT(unused != NOPOS && options->fileRange.first != NOPOS && options->fileRange.second != NOPOS);
 
         // Note that `start` and `end` options are ignored when scanning
         if (!rangesIntersect(options->listRange, options->fileRange)) {
@@ -39,7 +40,7 @@ bool visitStagingIndexFiles(const string_q& path, void* data) {
         }
 
         LOG4("Scanning ", path);
-        LOG_PROGRESS("Scanning staging", options->fileRange.first, options->listRange.second);
+        LOG_PROGRESS("Scanning staging", options->fileRange.first, options->listRange.second, "");
         options->stats.nChecked++;
 
         // if (!establishIndexChunk(indexPath))
@@ -72,7 +73,7 @@ bool visitStagingIndexFiles(const string_q& path, void* data) {
                     if (in)
                         done = true;
                 }
-                lockSection(true);
+                lockSection();
                 if (items.size()) {
                     monitor.writeAnArray(items);
                     options->stats.nPositive++;
@@ -80,7 +81,7 @@ bool visitStagingIndexFiles(const string_q& path, void* data) {
                     options->stats.nSkipped++;
                 }
                 monitor.writeLastBlock(options->fileRange.first + 1);
-                lockSection(false);
+                unlockSection();
             }
         }
         // string_q result = indexHit ? " index hit " + hits : " false positive";

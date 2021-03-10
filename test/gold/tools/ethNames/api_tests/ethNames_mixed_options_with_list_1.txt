@@ -2,6 +2,4 @@
   {
     "address": "0xb64ef51c888972c908cfacf59b47c1afbc0ab8ac",
     "decimals": 8
-  }], "types": [
-{ "type": "CAccountName", "fields": [{ "name": "address", "type": "address" }, { "name": "decimals", "type": "unumber" }] }
-] }
+  }] }

@@ -1,5 +1,10 @@
 ethNames argc: 6 [1:--named] [2:--custom] [3:--owned] [4:--prefund] [5:--addr] 
 ethNames --named --custom --owned --prefund --addr 
+TIME ~ CLOCK - <INFO>  : owned: true
+TIME ~ CLOCK - <INFO>  : custom: true
+TIME ~ CLOCK - <INFO>  : prefund: true
+TIME ~ CLOCK - <INFO>  : named: true
+TIME ~ CLOCK - <INFO>  : addr: true
 0x0000000000000000000000000000000000000001
 0x0000000000000000000000000000000000000002
 0x0000000000000000000000000000000000000003

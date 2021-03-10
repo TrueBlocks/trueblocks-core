@@ -1,5 +1,8 @@
 cacheStatus argc: 7 [1:--details] [2:index] [3:--start] [4:1000000] [5:--end] [6:2200000] 
 cacheStatus --details index --start 1000000 --end 2200000 
+TIME ~ CLOCK - <INFO>  : details: true
+TIME ~ CLOCK - <INFO>  : start: 1000000
+TIME ~ CLOCK - <INFO>  : end: 2200000
 {
   "client_version": "Client version",
   "client_ids": "chainId: 1 networkId: 1",
@@ -13,6 +16,7 @@ cacheStatus --details index --start 1000000 --end 2200000
   "is_archive": true,
   "is_tracing": true,
   "has_eskey": true,
+  "has_pinkey": true,
   "caches": [
     {
       "items": [

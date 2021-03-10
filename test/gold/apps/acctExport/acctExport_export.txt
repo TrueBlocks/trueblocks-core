@@ -1,12 +1,9 @@
 acctExport argc: 6 [1:0x001d14804b399c6ef80e64576f657660804fec0b] [2:--fmt] [3:txt] [4:--max_records] [5:2] 
 acctExport 0x001d14804b399c6ef80e64576f657660804fec0b --fmt txt --max_records 2 
+TIME ~ CLOCK - <INFO>  : skip_ddos: true
+TIME ~ CLOCK - <INFO>  : max_records: 2
 TIME ~ CLOCK - <INFO>  : Monitor found for: 0x001d14804b399c6ef80e64576f657660804fec0b
-TIME ~ CLOCK - <INFO>  : Monitor path: /Users/jrush/.quickBlocks/mocked/monitors/0x001d14804b399c6ef80e64576f657660804fec0b.acct.bin
 TIME ~ CLOCK - <INFO>  : Last visited block: 11854827
-TIME ~ CLOCK - <INFO>  : m.getLastVisitedBlock(): 11854827
-TIME ~ CLOCK - <INFO>  : options->fileRange.first: 11854827
-TIME ~ CLOCK - <INFO>  : m.getLastVisitedBlock(): 11854827
-TIME ~ CLOCK - <INFO>  : options->fileRange.first: 11857782
 TIME ~ CLOCK - <INFO>  : stats.nFiles: --value--
 TIME ~ CLOCK - <INFO>  : stats.nSkipped: --value--
 TIME ~ CLOCK - <INFO>  : nMonitors: 1
@@ -14,8 +11,6 @@ TIME ~ CLOCK - <INFO>  : exportRange.first: 0
 TIME ~ CLOCK - <INFO>  : exportRange.second: 18446744073709551615
 TIME ~ CLOCK - <INFO>  : listRange.first: 11854827
 TIME ~ CLOCK - <INFO>  : listRange.second: --latest--
-TIME ~ CLOCK - <INFO>  : first_record: 0
-TIME ~ CLOCK - <INFO>  : max_records: 2
 blocknumber	transactionindex	date	timestamp	from	to	ether	ethergasprice	gasused	hash	iserror	encoding	compressedtx
 0	2	2015-07-30 15:26:00 UTC	1438269960	0xPrefund	0x001d14804b399c6ef80e64576f657660804fec0b	4200.000000000000000000	0.000000000000000000	0	0x0	0		0x ( )
 202249	0	2015-09-08 09:09:16 UTC	1441703356	0x001d14804b399c6ef80e64576f657660804fec0b	0x2910543af39aba0cd09dbb2d50200b3e800a63d2	4199.900000000000000000	0.000001171602790622	21612	0x6e443af86a84920cace198340020e4ca54321a2c515cd3ad1f274d3506b4aff8	0	0x454e3456	0x454e3456 ( stub: 3147544238 )

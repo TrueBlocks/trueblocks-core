@@ -1,0 +1,5 @@
+pinMan argc: 4 [1:--license] [2:--fmt] [3:csv] 
+pinMan --license --fmt csv 
+TIME ~ CLOCK - <INFO>  : license: true
+"apikey","secretkey"
+"--license_codes--","--license_codes--"

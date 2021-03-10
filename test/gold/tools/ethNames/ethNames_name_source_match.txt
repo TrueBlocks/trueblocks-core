@@ -1,5 +1,6 @@
 ethNames argc: 6 [1:Ether] [2:--expand] [3:--verbose] [4:--fmt] [5:json] 
 ethNames Ether --expand --verbose --fmt json 
+TIME ~ CLOCK - <INFO>  : expand: true
 { "data": [
   {
     "deleted": false,
@@ -312,14 +313,6 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x0904dac3347ea47d208f3fd67402d039a3b99859",
     "name": "ENS: Wallet 1 nickdjohnson",
     "source": "EtherScan.io"
-  },
-  {
-    "deleted": false,
-    "tags": "50-Tokens:ERC20",
-    "address": "0x090d4613473dee047c3f2706764f49e0821d256e",
-    "name": "Uniswap: Token Distributor",
-    "source": "EtherScan.io",
-    "is_contract": true
   },
   {
     "deleted": false,
@@ -1779,6 +1772,12 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "BRX",
     "source": "EtherScan.io",
     "is_erc20": true
-  }], "types": [
-{ "type": "CAccountName", "fields": [{ "name": "deleted", "type": "bool" }, { "name": "tags", "type": "text" }, { "name": "address", "type": "address" }, { "name": "name", "type": "text" }, { "name": "symbol", "type": "text" }, { "name": "source", "type": "text" }, { "name": "decimals", "type": "unumber" }, { "name": "description", "type": "text" }, { "name": "is_custom", "type": "bool" }, { "name": "is_prefund", "type": "bool" }, { "name": "is_contract", "type": "bool" }, { "name": "is_erc20", "type": "bool" }, { "name": "is_erc721", "type": "bool" }] }
-] }
+  },
+  {
+    "deleted": false,
+    "tags": "30-Contracts",
+    "address": "0x5789e2b5460cae9329d93a78511e2ac49f98a1f6",
+    "name": "GU: Legendary Pack",
+    "source": "EtherScan.io",
+    "is_contract": true
+  }] }

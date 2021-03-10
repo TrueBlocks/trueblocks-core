@@ -1,5 +1,7 @@
 getTrace argc: 7 [1:6513870.62] [2:6687987.11] [3:0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f81f2fad45149f26e12] [4:--articulate] [5:--fmt] [6:json] 
 getTrace 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f81f2fad45149f26e12 --articulate --fmt json 
+TIME ~ CLOCK - <INFO>  : articulate: true
+TIME ~ CLOCK - <INFO>  : skip_ddos: true
 { "data": [
 --1 : 1 : 0
 --  0: _success (bool)
@@ -45,7 +47,7 @@ getTrace 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f8
         }
       ]
     },
-    "compressedTrace": "transferFrom ( _from: 0xbb9bc244d798123fde783fcc1c72d3bb8c189413, _to: 0x713fa27cb26b5902ea398b04d21e6018bba3a2f1, _value: 8263636363636363636 )"
+    "compressedTrace": "transferFrom(0xbb9bc244d798123fde783fcc1c72d3bb8c189413, 0x713fa27cb26b5902ea398b04d21e6018bba3a2f1, 8263636363636363636); "
   },  {
     "type": "call",
     "action": {
@@ -75,7 +77,7 @@ getTrace 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f8
         }
       ]
     },
-    "compressedTrace": "cancelExistingRequest ( _key: 1 )"
+    "compressedTrace": "cancelExistingRequest(1); "
   },  {
     "type": "call",
     "action": {
@@ -117,7 +119,7 @@ getTrace 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f8
         }
       ]
     },
-    "compressedTrace": "split ( targetFork: 0x167a9333bf582556f35bd4d16a7e80e191aa6476, targetNoFork: 0x571b7b69829ce2568b9bc3d32eaf7405dab76b21 )"
+    "compressedTrace": "split(0x167a9333bf582556f35bd4d16a7e80e191aa6476, 0x571b7b69829ce2568b9bc3d32eaf7405dab76b21); "
   },  {
     "type": "call",
     "action": {
@@ -147,7 +149,7 @@ getTrace 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f8
         }
       ]
     },
-    "compressedTrace": "forked ( )"
+    "compressedTrace": "forked(); "
   },  {
     "type": "call",
     "action": {
@@ -166,6 +168,4 @@ getTrace 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f8
       "gasUsed": 0,
       "output": "0x"
     }
-  }], "types": [
-{ "type": "CTrace", "fields": [{ "name": "type", "type": "text" }, { "name": "error", "type": "text" }, { "name": "action", "type": "object" }, { "name": "result", "type": "object" }, { "name": "articulatedTrace", "type": "object" }, { "name": "compressedTrace", "type": "text" }] }
-] }
+  }] }

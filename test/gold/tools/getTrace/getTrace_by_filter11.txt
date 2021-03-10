@@ -1,5 +1,7 @@
 getTrace argc: 5 [1:--fmt] [2:json] [3:--filter] [4:4370000!4370002!!!1!2] 
 getTrace --fmt json --filter 4370000!4370002!!!1!2 
+TIME ~ CLOCK - <INFO>  : skip_ddos: true
+TIME ~ CLOCK - <INFO>  : filter: 4370000!4370002!!!1!2
 TIME ~ CLOCK - <INFO>  : {
   "fromBlock": 4370000,
   "toBlock": 4370002,
@@ -54,6 +56,4 @@ TIME ~ CLOCK - <INFO>  : {
   "type": "call"
 }
 
-], "types": [
-{ "type": "CTrace", "fields": [{ "name": "action", "type": "object" }, { "name": "blockHash", "type": "hash" }, { "name": "blockNumber", "type": "blocknum" }, { "name": "result", "type": "object" }, { "name": "subtraces", "type": "unumber" }, { "name": "traceAddress", "type": "text" }, { "name": "transactionHash", "type": "hash" }, { "name": "transactionIndex", "type": "blocknum" }, { "name": "type", "type": "text" }] }
 ] }

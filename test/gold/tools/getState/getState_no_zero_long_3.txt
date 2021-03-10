@@ -1,4 +1,5 @@
 getState argc: 7 [1:0xf27daff52c38b2c373ad2b9392652ddf433303c4] [2:0] [3:4000000] [4:--fmt] [5:txt] [6:--no_zero] 
 getState 0xf27daff52c38b2c373ad2b9392652ddf433303c4 0 4000000 --fmt txt --no_zero 
+TIME ~ CLOCK - <INFO>  : no_zero: true
 blocknumber	address	balance
 4000000	0xf27daff52c38b2c373ad2b9392652ddf433303c4	672784612482328644707614

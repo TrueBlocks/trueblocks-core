@@ -26,9 +26,10 @@ int main(int argc, const char* argv[]) {
             return 0;
 
         if (!options.call.empty()) {
-            // if (once)
-            //     cout << exportPreamble(expContext().fmtMap["header"], GETRUNTIME_CLASS(CFunction));
-            // once = false;
+            if (once)
+                cout << exportPreamble(expContext().fmtMap["header"], GETRUNTIME_CLASS(CEthCall));
+            cout << options.theCall << endl;
+            once = false;
 
         } else {
             for (auto addr : options.addrs) {

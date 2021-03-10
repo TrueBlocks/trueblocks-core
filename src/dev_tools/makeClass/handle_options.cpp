@@ -177,10 +177,14 @@ bool COptions::handle_options(void) {
 string_q replaceCode(const string_q& orig, const string_q& which, const string_q& new_code) {
     string_q converted = orig;
     converted = substitute(converted, "// BEG_" + which, "// BEG_" + which + "\n[{NEW_CODE}]\n<remove>");
+    converted = substitute(converted, "\n// END_" + which, "</remove>\nX// END_" + which);
+    converted = substitute(converted, "\n\t// END_" + which, "</remove>\nY// END_" + which);
     converted = substitute(converted, "\n    // END_" + which, "</remove>\n+// END_" + which);
     converted = substitute(converted, "\n            // END_" + which, "</remove>\n-// END_" + which);
     snagFieldClear(converted, "remove");
     replace(converted, "[{NEW_CODE}]\n\n", new_code);
+    replaceAll(converted, "X//", "//");
+    replaceAll(converted, "Y//", "\t//");
     replaceAll(converted, "+//", "    //");
     replaceAll(converted, "-//", "            //");
     return converted;
@@ -206,6 +210,7 @@ void COptions::generate_toggle(const CCommandOption& option) {
         header_stream << option.Format(STR_DECLARATION) << endl;
         auto_stream << option.Format(STR_AUTO_TOGGLE) << endl;
     }
+    debug_stream << option.debugCode() << endl;
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -228,6 +233,7 @@ void COptions::generate_switch(const CCommandOption& option) {
         header_stream << option.Format(STR_DECLARATION) << endl;
         auto_stream << option.Format(STR_AUTO_SWITCH) << endl;
     }
+    debug_stream << option.debugCode() << endl;
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -285,6 +291,7 @@ void COptions::generate_flag(const CCommandOption& option) {
                             << endl;
         }
     }
+    debug_stream << option.debugCode() << endl;
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -365,6 +372,8 @@ void COptions::generate_positional(const CCommandOption& option) {
     }
     if (!pos_stream.str().empty())
         positionals.push_back(pos_stream.str());
+
+    debug_stream << option.debugCode() << endl;
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -385,6 +394,11 @@ bool COptions::writeCode(const string_q& fn) {
         converted = replaceCode(converted, "CODE_INIT", init_stream.str());
         converted = replaceCode(converted, "CODE_NOTES", notes_stream.str());
         converted = replaceCode(converted, "CODE_ERROR_MSG", errors_stream.str());
+        converted = replaceCode(converted, "DEBUG_DISPLAY", debug_stream.str());
+        replaceAll(converted, "    // clang-format on\n    // clang-format off\n", "");
+    } else if (endsWith(fn, ".go")) {
+        converted = replaceCode(converted, "ROUTE_CODE", apiStream.str());
+        converted = replaceCode(converted, "ROUTE_ITEMS", goRouteStream.str());
     } else {
         converted = replaceCode(converted, "CODE_DECLARE", header_stream.str());
     }
@@ -506,8 +520,10 @@ const char* STR_ENUM_PROCESSOR =
 
 //---------------------------------------------------------------------------------------------------
 const char* STR_CUSTOM_INIT =
+    "    // clang-format off\n"
     "    [{COMMAND}] = getGlobalConfig(\"[{TOOL}]\")->getConfig[CTYPE](\"settings\", \"[{COMMAND}]\", "
-    "[{DEF_VAL}]);";
+    "[{DEF_VAL}]);\n"
+    "    // clang-format on";
 
 //---------------------------------------------------------------------------------------------------
 const char* STR_DEFAULT_ASSIGNMENT = "    [{REAL_TYPE}] [{COMMAND}] = [{DEF_VAL}];";

@@ -43,7 +43,7 @@ bool COptions::parseArguments(string_q& command) {
     // END_CODE_LOCAL_INIT
 
     Init();
-    latestBlock = getLatestBlock_client();
+    latestBlock = getBlockProgress(BP_CLIENT).client;
     blknum_t latest = latestBlock;
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
@@ -83,6 +83,15 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
+    // BEG_DEBUG_DISPLAY
+    // LOG_TEST("addrs", addrs, (addrs == NOPOS));
+    // LOG_TEST("blocks", blocks, (blocks == NOPOS));
+    // LOG_TEST("parts", parts, (parts == ""));
+    LOG_TEST_BOOL("changes", changes);
+    LOG_TEST_BOOL("no_zero", no_zero);
+    LOG_TEST("call", call, (call == ""));
+    // END_DEBUG_DISPLAY
+
     // Data wrangling
     if (!blocks.hasBlocks())
         blocks.numList.push_back(newestBlock);  // use 'latest'
@@ -90,122 +99,71 @@ bool COptions::parseArguments(string_q& command) {
     if (!call.empty() && !parts.empty())
         return usage("The --parts option is not available with the --call option.");
 
-    if (call.empty()) {
-        if (!addrs.size())
-            return usage("You must provide at least one Ethereum address.");
+    if (!call.empty())
+        return handle_call();
 
-        for (auto part : parts) {
-            if (part == "none")
-                modeBits = ST_NONE;
-            if (part == "balance")
-                modeBits = ethstate_t(modeBits | ST_BALANCE);
-            if (part == "nonce")
-                modeBits = ethstate_t(modeBits | ST_NONCE);
-            if (part == "code")
-                modeBits = ethstate_t(modeBits | ST_CODE);
-            if (part == "storage")
-                modeBits = ethstate_t(modeBits | ST_STORAGE);
-            if (part == "deployed")
-                modeBits = ethstate_t(modeBits | ST_DEPLOYED);
-            if (part == "accttype")
-                modeBits = ethstate_t(modeBits | ST_ACCTTYPE);
-            if (part == "some")
-                modeBits = ethstate_t(modeBits | ST_SOME);
-            if (part == "all")
-                modeBits = ethstate_t(modeBits | ST_ALL);
-        }
+    if (!addrs.size())
+        return usage("You must provide at least one Ethereum address.");
 
-        deminimus = str_2_Wei(getGlobalConfig("getState")->getConfigStr("settings", "deminimus", "0"));
-
-        UNHIDE_FIELD(CEthState, "address");
-        string_q format = STR_DISPLAY_ETHSTATE;
-        if (!(modeBits & ST_BALANCE)) {
-            replace(format, "\t[{BALANCE}]", "");
-        } else {
-            UNHIDE_FIELD(CEthState, "balance");
-            UNHIDE_FIELD(CEthState, "ether");
-        }
-        if (!(modeBits & ST_NONCE)) {
-            replace(format, "\t[{NONCE}]", "");
-        } else {
-            UNHIDE_FIELD(CEthState, "nonce");
-        }
-        if (!(modeBits & ST_CODE)) {
-            replace(format, "\t[{CODE}]", "");
-        } else {
-            UNHIDE_FIELD(CEthState, "code");
-        }
-        if (!(modeBits & ST_STORAGE)) {
-            replace(format, "\t[{STORAGE}]", "");
-        } else {
-            UNHIDE_FIELD(CEthState, "storage");
-        }
-        if (!(modeBits & ST_DEPLOYED)) {
-            replace(format, "\t[{DEPLOYED}]", "");
-        } else {
-            UNHIDE_FIELD(CEthState, "deployed");
-        }
-        if (!(modeBits & ST_ACCTTYPE)) {
-            replace(format, "\t[{ACCTTYPE}]", "");
-        } else {
-            UNHIDE_FIELD(CEthState, "accttype");
-        }
-
-        // Display formatting
-        configureDisplay("getState", "CEthState", format.empty() ? STR_DISPLAY_ETHSTATE : format);
-
-    } else {
-        HIDE_FIELD(CParameter, "str_default");
-        HIDE_FIELD(CParameter, "indexed");
-        HIDE_FIELD(CParameter, "internalType");
-        HIDE_FIELD(CParameter, "components");
-        HIDE_FIELD(CParameter, "no_write");
-        HIDE_FIELD(CParameter, "is_pointer");
-        HIDE_FIELD(CParameter, "is_array");
-        HIDE_FIELD(CParameter, "is_object");
-        HIDE_FIELD(CParameter, "is_builtin");
-        HIDE_FIELD(CParameter, "is_minimal");
-        SHOW_FIELD(CFunction, "address");
-        SHOW_FIELD(CEthState, "result");
-        SHOW_FIELD(CEthState, "address");
-
-        // Display formatting
-        string_q format = STR_DISPLAY_FUNCTION;
-        configureDisplay("getState", "CFunction", format.empty() ? STR_DISPLAY_FUNCTION : format);
-
-        CStringArray vars;
-        explode(vars, call, '!');
-        if (vars.size() == 0)
-            return usage("You must supply the address of a smart contract for the --call option.");
-        if (vars.size() == 1)
-            return usage("You must provide a four-byte code to the smart contract you're calling.");
-        if (!isAddress(vars[0]))
-            return usage("The first part of the call data to --call must be an address.");
-        if (!isHexStr(vars[1]))
-            return usage("The four byte must be a hex string.");
-
-        CEthState state;
-        state.address = vars[0];
-        state.blockNumber = 10092000;
-
-        string_q fourByte = vars[1];
-        string_q bytes = vars.size() > 2 ? vars[2] : "";
-
-        abi_spec.loadAbisFromKnown();
-        abi_spec.loadAbiFromEtherscan(state.address,
-                                      false);  // may fail, but it's okay as we will pick up from known abis
-        if (doEthCall(state.address, fourByte, bytes, state.blockNumber, abi_spec, state.result)) {
-            CTransaction art;
-            art.input = fourByte + bytes;
-            abi_spec.articulateTransaction(&art);
-            state.result.inputs = art.articulatedTx.inputs;
-            state.address = vars[0];
-            cout << state << endl;
-            return false;
-        }
-
-        return usage("No result from call to " + state.address + " with fourbyte " + fourByte + ".");
+    for (auto part : parts) {
+        if (part == "none")
+            modeBits = ST_NONE;
+        if (part == "balance")
+            modeBits = ethstate_t(modeBits | ST_BALANCE);
+        if (part == "nonce")
+            modeBits = ethstate_t(modeBits | ST_NONCE);
+        if (part == "code")
+            modeBits = ethstate_t(modeBits | ST_CODE);
+        if (part == "storage")
+            modeBits = ethstate_t(modeBits | ST_STORAGE);
+        if (part == "deployed")
+            modeBits = ethstate_t(modeBits | ST_DEPLOYED);
+        if (part == "accttype")
+            modeBits = ethstate_t(modeBits | ST_ACCTTYPE);
+        if (part == "some")
+            modeBits = ethstate_t(modeBits | ST_SOME);
+        if (part == "all")
+            modeBits = ethstate_t(modeBits | ST_ALL);
     }
+
+    deminimus = str_2_Wei(getGlobalConfig("getState")->getConfigStr("settings", "deminimus", "0"));
+
+    UNHIDE_FIELD(CEthState, "address");
+    string_q format = STR_DISPLAY_ETHSTATE;
+    if (!(modeBits & ST_BALANCE)) {
+        replace(format, "\t[{BALANCE}]", "");
+    } else {
+        UNHIDE_FIELD(CEthState, "balance");
+        UNHIDE_FIELD(CEthState, "ether");
+    }
+    if (!(modeBits & ST_NONCE)) {
+        replace(format, "\t[{NONCE}]", "");
+    } else {
+        UNHIDE_FIELD(CEthState, "nonce");
+    }
+    if (!(modeBits & ST_CODE)) {
+        replace(format, "\t[{CODE}]", "");
+    } else {
+        UNHIDE_FIELD(CEthState, "code");
+    }
+    if (!(modeBits & ST_STORAGE)) {
+        replace(format, "\t[{STORAGE}]", "");
+    } else {
+        UNHIDE_FIELD(CEthState, "storage");
+    }
+    if (!(modeBits & ST_DEPLOYED)) {
+        replace(format, "\t[{DEPLOYED}]", "");
+    } else {
+        UNHIDE_FIELD(CEthState, "deployed");
+    }
+    if (!(modeBits & ST_ACCTTYPE)) {
+        replace(format, "\t[{ACCTTYPE}]", "");
+    } else {
+        UNHIDE_FIELD(CEthState, "accttype");
+    }
+
+    // Display formatting
+    configureDisplay("getState", "CEthState", format.empty() ? STR_DISPLAY_ETHSTATE : format);
 
     if (!requestsHistory())  // if the user did not request historical state, we can return safely
         return true;
@@ -243,7 +201,7 @@ void COptions::Init(void) {
     current = "";
     blocks.Init();
     CHistoryOptions::Init();
-    newestBlock = oldestBlock = getLatestBlock_client();
+    newestBlock = oldestBlock = getBlockProgress(BP_CLIENT).client;
 }
 
 //---------------------------------------------------------------------------------------------------

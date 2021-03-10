@@ -1,5 +1,6 @@
 getTrace argc: 5 [1:0x96a09b25c3748974bb7e08780074482a164ab5a21e2ffc6c7115ec73c84e7f73.92] [2:--parity] [3:--fmt] [4:api] 
 getTrace 0x96a09b25c3748974bb7e08780074482a164ab5a21e2ffc6c7115ec73c84e7f73.92 --parity --fmt api 
+TIME ~ CLOCK - <INFO>  : skip_ddos: true
 {"data": [
   {
     "blockHash": "0x96a09b25c3748974bb7e08780074482a164ab5a21e2ffc6c7115ec73c84e7f73",

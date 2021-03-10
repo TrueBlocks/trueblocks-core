@@ -80,6 +80,14 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
+    // BEG_DEBUG_DISPLAY
+    LOG_TEST("mode", mode, (mode == ""));
+    LOG_TEST("datadir", datadir, (datadir == ""));
+    LOG_TEST("name", name, (name == ""));
+    LOG_TEST_BOOL("goerli", goerli);
+    LOG_TEST_BOOL("no_zero", no_zero);
+    // END_DEBUG_DISPLAY
+
     // Data verification
     if (goerli) {
         datadir = substitute(datadir, "/TurboGeth/tg/chaindata/", "/TurboGeth/goerli/tg/chaindata/");

@@ -23,6 +23,7 @@
 #include "indexing.h"
 #include "ethstate.h"
 #include "ens.h"
+#include "acctscrapestats.h"
 
 extern void acctlib_init(QUITHANDLER qh);
 extern void acctlib_cleanup(void);

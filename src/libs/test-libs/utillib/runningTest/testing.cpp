@@ -51,7 +51,7 @@ void doTest(const string_q& prog) {
 
 //--------------------------------------------------------------
 int main(int argc, const char* argv[]) {
-#if 0
+#if 1
     etherlib_init(quickQuitHandler);
 
     // Parse command line, allowing for command files

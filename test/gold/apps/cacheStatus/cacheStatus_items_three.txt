@@ -1,5 +1,6 @@
 cacheStatus argc: 7 [1:--details] [2:abis] [3:caches] [4:monitors] [5:--types] [6:slurps] 
 cacheStatus --details abis caches monitors --types slurps 
+TIME ~ CLOCK - <INFO>  : details: true
 {
   "client_version": "Client version",
   "client_ids": "chainId: 1 networkId: 1",
@@ -13,6 +14,7 @@ cacheStatus --details abis caches monitors --types slurps
   "is_archive": true,
   "is_tracing": true,
   "has_eskey": true,
+  "has_pinkey": true,
   "caches": [
     {
       "items": [

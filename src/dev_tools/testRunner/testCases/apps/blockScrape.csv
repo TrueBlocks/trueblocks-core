@@ -1,40 +1,43 @@
-enabled,mode,speed,route,path/tool,filename,post,options,opt_cmd,has_env
-on,cmd,fast,export,apps/blockScrape,RESET,n,RESET
-on,cmd,fast,scrape,apps/blockScrape,README,n,@th
-on,cmd,fast,scrape,apps/blockScrape,help,n,@h
-on,cmd,fast,scrape,apps/blockScrape,help_long,n,help
-on,both,fast,scrape,apps/blockScrape,invalid,n,junk
-on,both,fast,scrape,apps/blockScrape,nBlocks_invalid,n,n_blocks = -12
-on,both,fast,scrape,apps/blockScrape,nBProcs_invalid,n,n_block_procs = -12
-on,both,fast,scrape,apps/blockScrape,nAProcs_invalid,n,n_addr_procs = -12
-on,both,fast,scrape,apps/blockScrape,nBlocks,n,n_blocks = 12
-on,both,fast,scrape,apps/blockScrape,nBlockProcs,n,n_block_procs = 12
-on,both,fast,scrape,apps/blockScrape,nAddrProcs,n,n_addr_procs = 12
-on,both,fast,scrape,apps/blockScrape,all,n,n_blocks = 12 & n_block_procs = 12 & n_addr_procs = 12
-on,both,fast,scrape,apps/blockScrape,tool_fail,n,tool = badtool
-on,both,fast,scrape,apps/blockScrape,tool_fail2,n,tool = monitors & tool = index
-on,both,fast,scrape,apps/blockScrape,tool_monitors,n,tool = monitors
-on,both,fast,scrape,apps/blockScrape,tool_index,n,tool = index
-on,both,fast,scrape,apps/blockScrape,tool_none,n,tool = none
-on,both,fast,scrape,apps/blockScrape,tool_both,n,tool = both
-on,both,fast,scrape,apps/blockScrape,listpins,n,listpins
-on,both,fast,scrape,apps/blockScrape,pin,n,pin
-on,both,fast,scrape,apps/blockScrape,publish,n,publish
-on,both,fast,scrape,apps/blockScrape,pin_publish,n,publish & pin
-on,both,fast,scrape,apps/blockScrape,pin_publish_list,n,publish & pin
-on,both,fast,scrape,apps/blockScrape,mode_01_fail,n,terms = badmode
-on,both,fast,scrape,apps/blockScrape,mode_02_fail2,n,terms = run & terms = quit
-on,both,fast,scrape,apps/blockScrape,mode_11_stopped_quit_fail,n,terms = quit
-on,both,fast,scrape,apps/blockScrape,mode_12_stopped_restart_fail,n,terms = restart
-on,both,fast,scrape,apps/blockScrape,mode_13_stopped_pause_fail,n,terms = pause
-on,both,fast,scrape,apps/blockScrape,mode_14_stopped_run_okay,n,terms = run
-on,both,fast,scrape,apps/blockScrape,mode_21_running_run_fail,n,terms = run
-on,both,fast,scrape,apps/blockScrape,mode_22_running_restart_fail,n,terms = restart
-on,both,fast,scrape,apps/blockScrape,mode_23_running_quit_okay,n,terms = quit
-on,both,fast,scrape,apps/blockScrape,mode_24_stopped_run_2_okay,n,terms = run
-on,both,fast,scrape,apps/blockScrape,mode_25_running_pause_okay,n,terms = pause
-on,both,fast,scrape,apps/blockScrape,mode_31_paused_run_okay,n,terms = run
-on,both,fast,scrape,apps/blockScrape,mode_32_running_pause_2_okay,n,terms = pause
-on,both,fast,scrape,apps/blockScrape,mode_33_paused_restart_okay,n,terms = restart
-on,both,fast,scrape,apps/blockScrape,mode_34_running_pause_3_okay,n,terms = pause
-on,both,fast,scrape,apps/blockScrape,mode_35_paused_quit_okay,n,terms = quit
+enabled ,mode ,speed ,route  ,path/tool        ,filename                     ,post ,options                                                ,opt_cmd ,has_env
+on      ,cmd  ,fast  ,export ,apps/blockScrape ,RESET                        ,n    ,RESET
+on      ,cmd  ,fast  ,scrape ,apps/blockScrape ,README                       ,n    ,@th
+on      ,cmd  ,fast  ,scrape ,apps/blockScrape ,help                         ,n    ,@h
+on      ,cmd  ,fast  ,scrape ,apps/blockScrape ,help_long                    ,n    ,help
+on      ,both ,fast  ,scrape ,apps/blockScrape ,invalid                      ,n    ,junk
+on      ,both ,fast  ,scrape ,apps/blockScrape ,nBlocks_invalid              ,n    ,n_blocks = -12
+on      ,both ,fast  ,scrape ,apps/blockScrape ,nBProcs_invalid              ,n    ,n_block_procs = -12
+on      ,both ,fast  ,scrape ,apps/blockScrape ,nAProcs_invalid              ,n    ,n_addr_procs = -12
+on      ,both ,fast  ,scrape ,apps/blockScrape ,nBlocks                      ,n    ,n_blocks = 12
+on      ,both ,fast  ,scrape ,apps/blockScrape ,nBlockProcs                  ,n    ,n_block_procs = 12
+on      ,both ,fast  ,scrape ,apps/blockScrape ,nAddrProcs                   ,n    ,n_addr_procs = 12
+on      ,both ,fast  ,scrape ,apps/blockScrape ,all                          ,n    ,n_blocks = 12 & n_block_procs = 12 & n_addr_procs = 12
+on      ,both ,fast  ,scrape ,apps/blockScrape ,tool_fail                    ,n    ,tool = badtool
+on      ,both ,fast  ,scrape ,apps/blockScrape ,tool_fail2                   ,n    ,tool = monitors & tool = index
+on      ,both ,fast  ,scrape ,apps/blockScrape ,tool_monitors                ,n    ,tool = monitors
+on      ,both ,fast  ,scrape ,apps/blockScrape ,tool_index                   ,n    ,tool = index
+on      ,both ,fast  ,scrape ,apps/blockScrape ,tool_none                    ,n    ,tool = none
+on      ,both ,fast  ,scrape ,apps/blockScrape ,tool_both                    ,n    ,tool = both
+on      ,both ,fast  ,scrape ,apps/blockScrape ,listpins                     ,n    ,listpins
+on      ,both ,fast  ,scrape ,apps/blockScrape ,pin                          ,n    ,pin
+on      ,both ,fast  ,scrape ,apps/blockScrape ,publish                      ,n    ,publish
+on      ,both ,fast  ,scrape ,apps/blockScrape ,pin_publish                  ,n    ,publish & pin
+on      ,both ,fast  ,scrape ,apps/blockScrape ,pin_publish_list             ,n    ,publish & pin
+on      ,both ,fast  ,scrape ,apps/blockScrape ,mode_01_fail                 ,n    ,terms = badmode
+on      ,both ,fast  ,scrape ,apps/blockScrape ,mode_02_fail2                ,n    ,terms = run & terms = quit
+on      ,both ,fast  ,scrape ,apps/blockScrape ,mode_11_stopped_quit_fail    ,n    ,terms = quit
+on      ,both ,fast  ,scrape ,apps/blockScrape ,mode_12_stopped_restart_fail ,n    ,terms = restart
+on      ,both ,fast  ,scrape ,apps/blockScrape ,mode_13_stopped_pause_fail   ,n    ,terms = pause
+on      ,both ,fast  ,scrape ,apps/blockScrape ,mode_14_stopped_run_okay     ,n    ,terms = run
+on      ,both ,fast  ,scrape ,apps/blockScrape ,mode_21_running_run_fail     ,n    ,terms = run
+on      ,both ,fast  ,scrape ,apps/blockScrape ,mode_22_running_restart_fail ,n    ,terms = restart
+on      ,both ,fast  ,scrape ,apps/blockScrape ,mode_23_running_quit_okay    ,n    ,terms = quit
+on      ,both ,fast  ,scrape ,apps/blockScrape ,mode_24_stopped_run_2_okay   ,n    ,terms = run
+on      ,both ,fast  ,scrape ,apps/blockScrape ,mode_25_running_pause_okay   ,n    ,terms = pause
+on      ,both ,fast  ,scrape ,apps/blockScrape ,mode_31_paused_run_okay      ,n    ,terms = run
+on      ,both ,fast  ,scrape ,apps/blockScrape ,mode_32_running_pause_2_okay ,n    ,terms = pause
+on      ,both ,fast  ,scrape ,apps/blockScrape ,mode_33_paused_restart_okay  ,n    ,terms = restart
+on      ,both ,fast  ,scrape ,apps/blockScrape ,mode_34_running_pause_3_okay ,n    ,terms = pause
+on      ,both ,fast  ,scrape ,apps/blockScrape ,mode_35_paused_quit_okay     ,n    ,terms = quit
+on      ,cmd  ,fast  ,export ,apps/blockScrape ,RESET2                       ,n    ,RESET
+on      ,cmd  ,fast  ,scrape ,apps/blockScrape ,real_run                     ,n    ,tool = index & sleep = .5 & pin & verbose = 8
+on      ,cmd  ,fast  ,scrape ,apps/blockScrape ,real_run2                    ,n    ,tool = index & sleep = .5

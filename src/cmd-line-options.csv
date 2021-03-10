@@ -23,7 +23,7 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,customizeable,c
 10440,apps,Accounts,export,acctExport,start,S,,false,false,false,false,local,deprecated,<blknum>,first block to process (inclusive)
 10450,apps,Accounts,export,acctExport,end,E,,false,false,false,false,local,deprecated,<blknum>,last block to process (inclusive)
 10453,apps,Accounts,export,acctExport,first_record,c,0,false,false,false,false,header,flag,<blknum>,the first record to process
-10457,apps,Accounts,export,acctExport,max_records,e,,false,false,false,false,header,flag,<blknum>,the maximum number of records to process before reporting
+10457,apps,Accounts,export,acctExport,max_records,e,(isApiMode() ? 250 : NOPOS),false,false,false,false,header,flag,<blknum>,the maximum number of records to process before reporting
 10085,apps,Accounts,export,acctExport,clean,,false,false,false,false,false,header,switch,<boolean>,clean (i.e. remove duplicate appearances) from all existing monitors
 10060,apps,Accounts,export,acctExport,staging,s,,false,false,false,false,local,switch,<boolean>,enable search of staging (not yet finalized) folder
 10080,apps,Accounts,export,acctExport,unripe,u,,false,false,false,false,local,switch,<boolean>,enable search of unripe (neither staged nor finalized) folder|(assumes --staging)
@@ -33,9 +33,9 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,customizeable,c
 
 10600,apps,Admin,scrape,blockScrape,mode,,,true,false,true,true,header,positional,enum[run*|quit|pause|restart],control the block and account scrapers
 10610,apps,Admin,scrape,blockScrape,tool,t,,false,false,true,true,header,flag,list<enum[monitors|index*|none|both]>,process the index&#44; monitors&#44; or both (none means process timestamps|only)
-10615,apps,Admin,scrape,blockScrape,n_blocks,n,,false,false,true,true,header,flag,<uint64>,maximum number of blocks to process (defaults to 5000)
-10620,apps,Admin,scrape,blockScrape,n_block_procs,b,,false,false,false,false,header,flag,<uint64>,number of block channels for blaze
-10640,apps,Admin,scrape,blockScrape,n_addr_procs,a,,false,false,false,false,header,flag,<uint64>,number of address channels for blaze
+10615,apps,Admin,scrape,blockScrape,n_blocks,n,(isDockerMode() ? 100 : 2000),false,true,true,true,header,flag,<uint64>,maximum number of blocks to process (defaults to 5000)
+10620,apps,Admin,scrape,blockScrape,n_block_procs,b,(isDockerMode() ? 5 : 10),false,true,false,false,header,flag,<uint64>,number of block channels for blaze
+10640,apps,Admin,scrape,blockScrape,n_addr_procs,a,(isDockerMode() ? 10 : 20),false,true,false,false,header,flag,<uint64>,number of address channels for blaze
 10645,apps,Admin,scrape,blockScrape,pin,p,,false,false,true,true,header,switch,<boolean>,pin new chunks (and blooms) to IPFS (requires Pinata key and running IPFS node)
 10648,apps,Admin,scrape,blockScrape,publish,u,,false,false,true,true,header,switch,<boolean>,publish the hash of the pin manifest to the UnchainedIndex smart|contract
 10658,apps,Admin,scrape,blockScrape,sleep,s,14,false,false,true,false,header,flag,<double>,the number of seconds to sleep between passes (default [{DEF}])
@@ -53,12 +53,13 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,customizeable,c
 10840,apps,Admin,status,cacheStatus,end,E,,false,false,false,false,header,flag,<blknum>,last block to process (inclusive)
 10860,apps,Admin,status,cacheStatus,,,,false,false,true,true,--,description,,Report on status of one or more TrueBlocks caches.
 
-10900,apps,Admin,pins,pinStatus,mode,,,true,false,true,true,header,positional,enum[local*|remote|onchain],display local or remote manifest or its IPFS hash
-10900,apps,Admin,pins,pinStatus,hash,a,,false,false,true,true,header,switch,<boolean>,display the hash instead of contents of manifest ('on' for onchain mode)
-10900,apps,Admin,pins,pinStatus,pin,p,,false,false,true,true,header,flag,<string>,pin indexes and blooms&#44; add to manifest&#44; and return hash
-10900,apps,Admin,pins,pinStatus,unpin,u,,false,false,true,true,header,flag,<string>,unpin index(es) and blooms given a hash&#44; a filename&#44; or 'all'
-10900,apps,Admin,pins,pinStatus,license,i,,false,false,false,false,header,switch,<boolean>,show the current pinata license information&#44; if any
-10910,apps,Admin,pins,pinStatus,,,,false,false,true,true,--,description,,Report on and manage pinned appearance index and bloom chunks.
+10900,apps,Admin,pins,pinMan,mode,,,true,false,true,true,header,positional,enum[local*|remote|onchain],the source from which to pin&#44; unpin&#44; or display the index hashes
+10900,apps,Admin,pins,pinMan,hash,a,,false,false,true,true,header,switch,<boolean>,display the hash instead of contents of manifest
+10900,apps,Admin,pins,pinMan,pin,p,,false,false,true,true,header,flag,<string>,pin items either locally or remotely ('all' to all items in a folder)
+10900,apps,Admin,pins,pinMan,unpin,u,,false,false,true,true,header,flag,<string>,unpin previously pinned items give a hash&#44; a filename&#44; or 'all'
+10900,apps,Admin,pins,pinMan,init,i,,false,false,true,true,header,switch,<boolean>,initialize the TrueBlocks appearance index by downloading the bloom filters
+10900,apps,Admin,pins,pinMan,license,l,,false,false,false,false,header,switch,<boolean>,show the current pinata license information
+10910,apps,Admin,pins,pinMan,,,,false,false,true,true,--,description,,Report on and manage the pinned appearance index chunks and associated bloom filters.
 
 11660,dev_tools,,,makeClass,files,,,true,false,true,false,local,positional,list<path>,one or more class definition files
 11700,dev_tools,,,makeClass,run,r,,false,false,true,false,local,switch,<boolean>,run the class maker on associated <class_name(s)>

@@ -69,6 +69,7 @@ void etherlib_init(QUITHANDLER qh) {
     CReconciliationOutput::registerClass();
     CReconciliation::registerClass();
     CEthState::registerClass();
+    CEthCall::registerClass();
     CAppearance::registerClass();
     CRPCResult::registerClass();
     CAccountName::registerClass();
@@ -169,7 +170,7 @@ bool getUncle(CBlock& block, const hash_t& blockHash, size_t index) {
 //-------------------------------------------------------------------------
 bool queryUncle(CBlock& block, const string_q& datIn, size_t index) {
     if (datIn == "latest")
-        return queryUncle(block, uint_2_Hex(getLatestBlock_client()), index);
+        return queryUncle(block, uint_2_Hex(getBlockProgress(BP_CLIENT).client), index);
     string_q func = isHash(datIn) ? "eth_getUncleByBlockHashAndIndex" : "eth_getUncleByBlockNumberAndIndex";
     string_q params = "[" + quote(datIn) + "," + quote(uint_2_Hex(index)) + "]";
     return getObjectViaRPC(block, func, params);
@@ -188,7 +189,7 @@ size_t getUncleCount(const hash_t& blockHash) {
 //-------------------------------------------------------------------------
 size_t queryUncleCount(const string_q& datIn) {
     if (datIn == "latest")
-        return queryUncleCount(uint_2_Hex(getLatestBlock_client()));
+        return queryUncleCount(uint_2_Hex(getBlockProgress(BP_CLIENT).client));
     string_q func = isHash(datIn) ? "eth_getUncleCountByBlockHash" : "eth_getUncleCountByBlockNumber";
     return str_2_Uint(callRPC(func, "[" + quote(datIn) + "]", false));
 }
@@ -352,7 +353,7 @@ bool getFullReceipt(CTransaction* trans, bool needsTrace) {
 //-------------------------------------------------------------------------
 bool queryBlock(CBlock& block, const string_q& datIn, bool needTrace) {
     if (datIn == "latest")
-        return queryBlock(block, uint_2_Str(getLatestBlock_client()), needTrace);
+        return queryBlock(block, uint_2_Str(getBlockProgress(BP_CLIENT).client), needTrace);
 
     if (isHash(datIn)) {
         getObjectViaRPC(block, "eth_getBlockByHash", "[" + quote(datIn) + ",true]");
@@ -396,7 +397,7 @@ bool queryRawBlock(string_q& blockStr, const string_q& datIn, bool needTrace, bo
 //-------------------------------------------------------------------------
 bool queryRawUncle(string_q& results, const string_q& blockNum, uint64_t index) {
     if (blockNum == "latest")
-        return queryRawUncle(results, uint_2_Str(getLatestBlock_client()), index);
+        return queryRawUncle(results, uint_2_Str(getBlockProgress(BP_CLIENT).client), index);
     string_q func = isHash(blockNum) ? "eth_getUncleByBlockHashAndIndex" : "eth_getUncleByBlockNumberAndIndex";
     uint64_t bn = str_2_Uint(blockNum);
     string_q params = "[" + quote(uint_2_Hex(bn)) + "," + quote(uint_2_Hex(index)) + "]";
@@ -527,9 +528,9 @@ void getTracesByFilter(CTraceArray& traces, const CTraceFilter& filter) {
     }
 }
 
-static string_q clientVersion;
 //-------------------------------------------------------------------------
 string_q getVersionFromClient(void) {
+    static string_q clientVersion;
     if (clientVersion.empty())
         clientVersion = callRPC("web3_clientVersion", "[]", false);
     return clientVersion;
@@ -548,7 +549,7 @@ bool isGeth(void) {
 //-------------------------------------------------------------------------
 bool isParity(void) {
     return contains(toLower(getVersionFromClient()), "parity") ||
-           contains(toLower(getVersionFromClient()), "openetherum");
+           contains(toLower(getVersionFromClient()), "openethereum");
 }
 
 //-------------------------------------------------------------------------
@@ -622,13 +623,24 @@ blknum_t getLatestBlock_client(void) {
 }
 
 //--------------------------------------------------------------------------
-bool getLatestBlocks(blknum_t& unripe, blknum_t& ripe, blknum_t& staging, blknum_t& finalized, blknum_t& client) {
-    ripe = getLatestBlock_cache_ripe();
-    unripe = getLatestBlock_cache_unripe();
-    staging = getLatestBlock_cache_staging();
-    finalized = getLatestBlock_cache_final();
-    client = (isNodeRunning() ? getLatestBlock_client() : NOPOS);
-    return true;
+CBlockProgress getBlockProgress(size_t which) {
+    CBlockProgress ret;
+    if (which & BP_CLIENT)
+        ret.client = (isNodeRunning() ? getLatestBlock_client() : NOPOS);
+
+    if (which & BP_FINAL)
+        ret.finalized = getLatestBlock_cache_final();
+
+    if (which & BP_STAGING)
+        ret.staging = getLatestBlock_cache_staging();
+
+    if (which & BP_RIPE)
+        ret.ripe = getLatestBlock_cache_ripe();
+
+    if (which & BP_RIPE)
+        ret.unripe = getLatestBlock_cache_unripe();
+
+    return ret;
 }
 
 //-------------------------------------------------------------------------
@@ -1011,6 +1023,8 @@ bool forEveryTransactionInList(TRANSVISITFUNC func, void* data, const string_q& 
 
 //-------------------------------------------------------------------------
 string_q getIndexPath(const string_q& _part) {
+    if (isLiveTest())
+        return configPath("mocked/addr_index/" + _part);
     string_q indexPath = getGlobalConfig()->getConfigStr("settings", "indexPath", "<not-set>");
     if (indexPath == "<not-set>" || !folderExists(indexPath))
         return getCachePath("addr_index/" + _part);
@@ -1134,6 +1148,10 @@ string_q exportPostamble(const CStringArray& errorsIn, const string_q& extra) {
     if (!errStrs.str().empty())
         os << ", \"errors\": [\n" << errStrs.str() << "\n]";
 
+    if (fmt == JSON1)
+        return os.str() + " }";
+    ASSERT(fmt == API1);
+
     bool showSchemas = getEnvStr("NO_SCHEMAS") != "true";
     bool showProgress = getEnvStr("NO_PROGRESS") != "true";
     if (showSchemas) {
@@ -1167,12 +1185,12 @@ string_q exportPostamble(const CStringArray& errorsIn, const string_q& extra) {
         }
     }
 
-    if (fmt == JSON1)
-        return os.str() + " }";
-    ASSERT(fmt == API1);
-
-    uint64_t unripe, ripe, staging, finalized, client;
-    getLatestBlocks(unripe, ripe, staging, finalized, client);
+    CBlockProgress progress = getBlockProgress();
+    blknum_t unripe = progress.unripe;
+    blknum_t ripe = progress.ripe;
+    blknum_t staging = progress.staging;
+    blknum_t finalized = progress.finalized;
+    blknum_t client = progress.client;
     if (isTestMode())
         unripe = ripe = staging = finalized = client = 0xdeadbeef;
     os << ", \"meta\": {";
@@ -1297,14 +1315,14 @@ bool freshenTimestamps(blknum_t minBlock) {
         file << ((uint32_t)block.blockNumber) << ((uint32_t)block.timestamp);
         file.flush();
         ostringstream post;
-        post << " (" << block.timestamp << " - " << ts_2_Date(block.timestamp).Format(FMT_EXPORT) << ")";
-        LOG_PROGRESS1("Update timestamps ", block.blockNumber, minBlock, post.str());
+        post << " (" << block.timestamp << " - " << ts_2_Date(block.timestamp).Format(FMT_EXPORT) << ")"
+             << "\r";
+        LOG_PROGRESS("Update timestamps ", block.blockNumber, minBlock, post.str());
     }
-    file.Release();
+    cerr << "\r" << string_q(150, ' ') << "\r";
+    cerr.flush();
 
-    ostringstream post;
-    post << " (" << block.timestamp << " - " << ts_2_Date(block.timestamp).Format(FMT_EXPORT) << ")";
-    LOG_PROGRESS1("Update timestamps ", block.blockNumber, minBlock, post.str());
+    file.Release();
     return true;
 }
 
@@ -1327,21 +1345,6 @@ bool loadTimestampFile(uint32_t** theArray, size_t& cnt) {
         *theArray = (uint32_t*)file.getData();  // NOLINT
 
     return true;
-}
-
-//-------------------------------------------------------------------------
-bool doEthCall(const address_t& to, const string_q& encoding, const string_q& bytes, blknum_t blockNum, const CAbi& abi,
-               CFunction& result) {
-    ostringstream cmd;
-    cmd << "[{";
-    cmd << "\"to\": \"" << to << "\", ";
-    cmd << "\"data\": \"" << encoding << substitute(bytes, "0x", "") << "\"";
-    cmd << "}, \"" << uint_2_Hex(blockNum) << "\"]";
-
-    string_q rpcRet = callRPC("eth_call", cmd.str(), false);
-    if (startsWith(rpcRet, "0x"))
-        abi.articulateOutputs(encoding, rpcRet, result);
-    return result.outputs.size();
 }
 
 //-----------------------------------------------------------------------

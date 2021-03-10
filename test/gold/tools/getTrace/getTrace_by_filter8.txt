@@ -1,5 +1,7 @@
 getTrace argc: 5 [1:--fmt] [2:json] [3:--filter] [4:4370000!0x42ae53!0x8c3064d32441f0190e8b3fa1ef9fc81fccb06111!0xc42209accc14029c1012fb5680d95fbd6036e2a0] 
 getTrace --fmt json --filter 4370000!0x42ae53!0x8c3064d32441f0190e8b3fa1ef9fc81fccb06111!0xc42209accc14029c1012fb5680d95fbd6036e2a0 
+TIME ~ CLOCK - <INFO>  : skip_ddos: true
+TIME ~ CLOCK - <INFO>  : filter: 4370000!0x42ae53!0x8c3064d32441f0190e8b3fa1ef9fc81fccb06111!0xc42209accc14029c1012fb5680d95fbd6036e2a0
 TIME ~ CLOCK - <INFO>  : {
   "fromBlock": 4370000,
   "toBlock": 4370003,
@@ -38,6 +40,4 @@ TIME ~ CLOCK - <INFO>  : {
   "type": "call"
 }
 
-], "types": [
-{ "type": "CTrace", "fields": [{ "name": "action", "type": "object" }, { "name": "blockHash", "type": "hash" }, { "name": "blockNumber", "type": "blocknum" }, { "name": "result", "type": "object" }, { "name": "subtraces", "type": "unumber" }, { "name": "traceAddress", "type": "text" }, { "name": "transactionHash", "type": "hash" }, { "name": "transactionIndex", "type": "blocknum" }, { "name": "type", "type": "text" }] }
 ] }

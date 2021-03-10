@@ -233,6 +233,4 @@ grabABI 0xef638b4305b8a1620f4e0e562e127f1181ae16d2 --fmt json
   "signature": "SingleTransact(address,uint256,address,bytes)",
   "encoding": "0x92ca3a80853e6663fa31fa10b99225f18d4902939b4c53a9caae9043f6efd004",
   "input_names": "owner,value,to,data,"
-}], "types": [
-{ "type": "CAbi", "fields": [{ "name": "address", "type": "address" }, { "name": "interfaces", "type": "object|ts_array" }] }
-] }
+}] }

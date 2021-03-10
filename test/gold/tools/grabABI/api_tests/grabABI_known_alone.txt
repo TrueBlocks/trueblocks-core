@@ -8071,7 +8071,7 @@
       "signature": "manifestHash()",
       "encoding": "0x337f3f32",
       "input_names": "",
-      "output_names": "val_0,"
+      "output_names": "manifestHash,"
     },
     {
       "name": "massNotify",

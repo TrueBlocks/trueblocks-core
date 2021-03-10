@@ -1,5 +1,21 @@
 #include "etherlib.h"
 
+#define START 11951568
+#define END 11994368
+
+#if 1
+int main(int argc, const char* argv[]) {
+    etherlib_init(quickQuitHandler);
+    for (size_t i = START ; i < END; i++) {
+        CBlock block;
+        getBlock_light(block, i);
+        cout << block.blockNumber << "," << block.timestamp << "," << block.difficulty << endl;
+        cerr << block.blockNumber << "\r"; cerr.flush();
+    }
+    return 0;
+}
+#endif
+
 //#define byzantiumBlock        4370000 - 3000000 = 1370000 --> period 13
 //#define constantinopleBlock   7280000 - 5000000 = 2280000 --> period 22
 //#define instanbulBlock        9069000 - 9000000 = 69000
@@ -25,19 +41,6 @@
 //jrush@iMac:~/D/t/s/o/difficulty|develop⚡*?➤ whenBlock latest
 //blocknumber timestamp   date    name
 //11828006
-
-#if 1
-int main(int argc, const char* argv[]) {
-    etherlib_init(quickQuitHandler);
-    for (size_t i = 11728438 ; i < 11828006; i++) {
-        CBlock block;
-        getBlock_light(block, i);
-        cout << block.blockNumber << "," << block.timestamp << "," << block.difficulty << endl;
-        cerr << block.blockNumber << "\r"; cerr.flush();
-    }
-    return 0;
-}
-#endif
 
 #if 0
 int main(int argc, const char* argv[]) {

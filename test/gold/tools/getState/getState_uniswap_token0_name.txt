@@ -1,27 +1,28 @@
 getState argc: 4 [1:--call] [2:0x2260fac5e5542a773aa44fbcfedf7c193bc2c599!0x06fdde03] [3:10092000] 
 getState --call 0x2260fac5e5542a773aa44fbcfedf7c193bc2c599!0x06fdde03 10092000 
+TIME ~ CLOCK - <INFO>  : call: 0x2260fac5e5542a773aa44fbcfedf7c193bc2c599!0x06fdde03
 --1 : 3 : 0
 --  0: _name (string)
 --  0: 0000000000000000000000000000000000000000000000000000000000000020 <---
 --  1: 000000000000000000000000000000000000000000000000000000000000000b
 --  2: 5772617070656420425443000000000000000000000000000000000000000000
+{ "data": [
 {
   "blockNumber": 10092000,
-  "balance": 0,
-  "address": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
+  "encoding": "0x06fdde03",
   "result": {
     "name": "name",
-    "type": "function",
-    "stateMutability": "view",
     "signature": "name()",
     "encoding": "0x06fdde03",
     "outputs": [
       {
-        "type": "string",
         "name": "_name",
         "value": "Wrapped BTC"
       }
     ]
-  }
+  },
+  "balance": 0,
+  "address": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599"
 }
 
+] }

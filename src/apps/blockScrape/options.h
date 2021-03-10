@@ -14,23 +14,10 @@
 // BEG_ERROR_DEFINES
 // END_ERROR_DEFINES
 
-//--------------------------------------------------------------------------
-class CConsolidator {
-  public:
-    ofstream tmp_file;
-    string_q tmp_fn;
-
-    blknum_t prevBlock;
-    explicit CConsolidator(blknum_t p);
-
-  private:
-    CConsolidator(void) {
-    }
-};
-
 enum { TOOL_NONE = 0, TOOL_MONITORS = (1 << 0), TOOL_INDEX = (1 << 1), TOOL_BOTH = (TOOL_MONITORS | TOOL_INDEX) };
 typedef enum { STATE_STOPPED, STATE_RUNNING, STATE_PAUSED } ScrapeState;
 
+class CConsolidator;
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
   public:
@@ -51,7 +38,8 @@ class COptions : public COptionsBase {
     uint32_t tools = TOOL_NONE;
     timestamp_t latestBlockTs;
     blknum_t latestBlockNum;
-    blknum_t maxIndexRows;
+    CPinnedChunkArray pinList;
+    CPinApiLicense lic;
 
     COptions(void);
     ~COptions(void);
@@ -62,11 +50,10 @@ class COptions : public COptionsBase {
     bool start_scraper(void);
     bool scrape_blocks(void);
     bool scrape_monitors(void);
-    bool finalize_chunks(CConsolidator* cons);
 
     bool changeState(void);
-    ScrapeState getCurrentState(void);
-    void cleanup(void) {
+    ScrapeState getCurrentState(string_q& current);
+    void cleanupAndQuit(void) {
         mode = "quit";
         changeState();
     }
@@ -76,3 +63,5 @@ class COptions : public COptionsBase {
 extern bool visitCopyRipeToStage(const string_q& path, void* data);
 extern bool appendFile(const string_q& toFile, const string_q& fromFile);
 extern bool prepareMonitors(const string_q& path, void* data);
+extern bool visitToPin(const string_q& chunkId, void* data);
+extern bool addNewPin(CPinnedChunk& pin, void* data);

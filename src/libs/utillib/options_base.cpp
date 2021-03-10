@@ -93,7 +93,7 @@ bool COptionsBase::prePrepareArguments(CStringArray& separatedArgs_, int argCoun
         cerr << endl;
         cerr << getProgName() << " " << os.str() << endl;
         CStringArray envs = {
-            "API_MODE", "DOCKER_MODE", "PROG_NAME", "HIDE_NAMES",
+            "API_MODE", "DOCKER_MODE", "PROG_NAME", "HIDE_NAMES", "LIVE_TEST",
             // "FRESHEN_FLAG S", "IPFS_PATH",
             "SILENCE", "NO_CACHE", "NO_NAMES", "NO_PROGRESS", "NO_SCHEMAS", "TB_NAME_ADDRESS", "TB_NAME_CUSTOM",
             "TB_NAME_DECIMALS", "TB_NAME_DESCR", "TB_NAME_NAME", "TB_NAME_SOURCE", "TB_NAME_SYMBOL", "TB_NAME_TAG",
@@ -367,17 +367,16 @@ bool COptionsBase::standardOptions(string_q& cmdLine) {
     }
 
     if (isEnabled(OPT_CRUD)) {
-        CStringArray crud;
-        crud.push_back("--create ");
-        crud.push_back("--update ");
-        crud.push_back("--delete ");
-        crud.push_back("--undelete ");
-        crud.push_back("--remove ");
-        for (const string_q& cmd : crud) {
-            // last in wins
+        CStringArray validCruds;
+        validCruds.push_back("--create ");
+        validCruds.push_back("--update ");
+        validCruds.push_back("--delete ");
+        validCruds.push_back("--undelete ");
+        validCruds.push_back("--remove ");
+        for (const string_q& cmd : validCruds) {
             if (contains(cmdLine, cmd)) {
                 replaceAll(cmdLine, cmd, "");
-                crudCommand = trim(substitute(cmd, "--", ""));
+                crudCommands.push_back(trim(substitute(cmd, "--", "")));
             }
         }
     }
@@ -693,7 +692,13 @@ void errorMessage(const string_q& msg) {
 }
 
 //--------------------------------------------------------------------------------
-string_q COptionsBase::usageStr(const string_q& errMsg) const {
+string_q COptionsBase::usageStr(const string_q& errMsgIn) const {
+    string_q errMsg = errMsgIn;
+    while (contains(errMsg, "`")) {
+        replace(errMsg, "`", "");  // cTeal);
+        replace(errMsg, "`", "");  // cRed);
+    }
+
     if (isApiMode())
         errorMessage(getProgName() + " - " + errMsg);
 

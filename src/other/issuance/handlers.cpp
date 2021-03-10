@@ -308,7 +308,7 @@ public:
         period = BY_NOTHING;
         discrete = false;
         start = 0;
-        end = getLatestBlock_client();
+        end = getBlockProgress(BP_CLIENT).client;
     }
     bool isSamePeriod(const CReconciliation& r) {
         if (isBlockSummary())

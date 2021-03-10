@@ -59,8 +59,12 @@ bool COptions::parseArguments(string_q& command) {
     bool unripe = false;
     // END_CODE_LOCAL_INIT
 
-    blknum_t unripeBlk, ripeBlk, stagingBlk, finalizedBlk;
-    getLatestBlocks(unripeBlk, ripeBlk, stagingBlk, finalizedBlk, latestBlock);
+    CBlockProgress progress = getBlockProgress();
+    blknum_t unripeBlk = progress.unripe;
+    // blknum_t ripeBlk = progress.ripe;
+    blknum_t stagingBlk = progress.staging;
+    blknum_t finalizedBlk = progress.finalized;
+    latestBlock = progress.client;
 
     blknum_t latest = latestBlock;
     string_q origCmd = command;
@@ -164,18 +168,45 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
+    // BEG_DEBUG_DISPLAY
+    // LOG_TEST("addrs", addrs, (addrs == NOPOS));
+    // LOG_TEST("topics", topics, (topics == NOPOS));
+    LOG_TEST_BOOL("appearances", appearances);
+    LOG_TEST_BOOL("receipts", receipts);
+    LOG_TEST_BOOL("logs", logs);
+    LOG_TEST_BOOL("traces", traces);
+    LOG_TEST_BOOL("statements", statements);
+    LOG_TEST_BOOL("accounting", accounting);
+    LOG_TEST_BOOL("articulate", articulate);
+    LOG_TEST_BOOL("cache_txs", cache_txs);
+    LOG_TEST_BOOL("cache_traces", cache_traces);
+    LOG_TEST_BOOL("skip_ddos", skip_ddos);
+    LOG_TEST("max_traces", max_traces, (max_traces == 250));
+    LOG_TEST_BOOL("freshen", freshen);
+    LOG_TEST("freshen_max", freshen_max, (freshen_max == 5000));
+    LOG_TEST_BOOL("factory", factory);
+    LOG_TEST_BOOL("emitter", emitter);
+    LOG_TEST_BOOL("count", count);
+    LOG_TEST("first_record", first_record, (first_record == 0));
+    LOG_TEST("max_records", max_records, (max_records == (isApiMode() ? 250 : NOPOS)));
+    LOG_TEST_BOOL("clean", clean);
+    LOG_TEST_BOOL("staging", staging);
+    LOG_TEST_BOOL("unripe", unripe);
+    // END_DEBUG_DISPLAY
+
+    if (!bloomsAreInitalized()) {
+        EXIT_USAGE("You must run 'chifra init' before running this command.")
+    }
+
     if (clean) {
         if (!handle_clean())
-            return usage("Clean function returned false.");
-        return false;
+            EXIT_USAGE("Clean function returned false.");
+        EXIT_NOMSG(false);
     }
 
     // Handle the easy cases first...
-    if (isCrudCommand()) {
-        if (crudCommand == "delete" || crudCommand == "undelete" || crudCommand == "remove")
-            return handle_rm(addrs);
-        return usage("You may only use --delete, --undelete, or --remove on monitors.");
-    }
+    if (isCrudCommand())
+        EXIT_NOMSG(handle_rm(addrs));
 
     // We need at least one address to scrape...
     if (addrs.size() == 0)
@@ -186,9 +217,6 @@ bool COptions::parseArguments(string_q& command) {
 
     if (emitter && !logs)
         EXIT_USAGE("The emitter option is only available when exporting logs.");
-
-    if (emitter && addrs.size() > 1)
-        EXIT_USAGE("The emitter option is only available when exporting logs from a single address.");
 
     if (factory && !traces)
         EXIT_USAGE("The facotry option is only available when exporting traces.");
@@ -202,7 +230,7 @@ bool COptions::parseArguments(string_q& command) {
     if ((accounting || statements) && freshen)
         EXIT_USAGE("Do not use the --accounting option with --freshen.");
 
-    if ((accounting || statements) && (appearances || logs || traces))
+    if ((accounting || statements) && (appearances || logs || traces || receipts))
         EXIT_USAGE("Do not use the --accounting option with other options.");
 
     // Where will we start?
@@ -228,11 +256,11 @@ bool COptions::parseArguments(string_q& command) {
             if (monitor.isLocked(msg))  // If locked, we fail
                 EXIT_USAGE(msg);
             firstBlockToVisit = min(firstBlockToVisit, monitor.getLastVisited());
-            LOG_TEST("Monitor found for", addr);
-            LOG_TEST("Monitor path", monitor.getMonitorPath(monitor.address));
-            LOG_TEST("Last visited block", monitor.getLastVisitedBlock());
+            LOG_TEST("Monitor found for", addr, false);
+            // LOG_TEST("Monitor path", monitor.getMonitorPath(monitor.address));
+            LOG_TEST("Last visited block", monitor.getLastVisitedBlock(), false);
         } else {
-            LOG_TEST("Monitor not found for", addr + ". Continuing anyway.");
+            LOG_TEST("Monitor not found for", addr + ". Continuing anyway.", false);
         }
         allMonitors.push_back(monitor);
     }
@@ -248,7 +276,7 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     if (!setDisplayFormatting())
-        return false;
+        EXIT_NOMSG(false);
 
     // Are we visiting unripe and/or staging in our search?
     if (staging)
@@ -268,7 +296,7 @@ bool COptions::parseArguments(string_q& command) {
     listRange = make_pair((firstBlockToVisit == NOPOS ? 0 : firstBlockToVisit), lastBlockToVisit);
 
     if (!freshen_internal())  // getEnvStr("FRESHEN_FLAG S")))
-        return usage("'freshen_internal' returned false.");
+        EXIT_USAGE("'freshen_internal' returned false.");
 
     if (count) {
         for (auto monitor : allMonitors) {
@@ -280,37 +308,16 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    // If the chain is behind the monitor (for example, the user is re-syncing), quit silently...
-    if (latest < listRange.first) {
-        LOG4("Chain is behind the monitor.");
-        EXIT_NOMSG(false);
-    }
-
     if (start != NOPOS)
         exportRange.first = start;
     if (end != NOPOS)
         exportRange.second = end;
 
-    LOG_TEST("nMonitors", allMonitors.size());
-    LOG_TEST("exportRange.first", exportRange.first);
-    LOG_TEST("exportRange.second", exportRange.second);
-    LOG_TEST("listRange.first", listRange.first);
-    LOG_TEST("listRange.second", "--latest--");
-    LOG_TEST("first_record", first_record);
-    LOG_TEST("max_records", max_records);
-    LOG_TEST_BOOL("appearances", appearances);
-    LOG_TEST_BOOL("receipts", receipts);
-    LOG_TEST_BOOL("logs", logs);
-    LOG_TEST_BOOL("traces", traces);
-    LOG_TEST_BOOL("statements", statements);
-    LOG_TEST_BOOL("articulate", articulate);
-    LOG_TEST_BOOL("freshen", freshen);
-    LOG_TEST_BOOL("factory", factory);
-    LOG_TEST_BOOL("emitter", emitter);
-    // LOG_TEST_BOOL("to", to);
-    // LOG_TEST_BOOL("from", from);
-    LOG_TEST_BOOL("count", count);
-    LOG_TEST_BOOL("clean", clean);
+    LOG_TEST("nMonitors", allMonitors.size(), false);
+    LOG_TEST("exportRange.first", exportRange.first, false);
+    LOG_TEST("exportRange.second", exportRange.second, false);
+    LOG_TEST("listRange.first", listRange.first, false);
+    LOG_TEST("listRange.second", "--latest--", false);
 
     EXIT_NOMSG(true);
 }
@@ -332,17 +339,19 @@ void COptions::Init(void) {
     statements = false;
     accounting = false;
     articulate = false;
+    // clang-format off
     cache_txs = getGlobalConfig("acctExport")->getConfigBool("settings", "cache_txs", false);
     cache_traces = getGlobalConfig("acctExport")->getConfigBool("settings", "cache_traces", false);
     skip_ddos = getGlobalConfig("acctExport")->getConfigBool("settings", "skip_ddos", true);
     max_traces = getGlobalConfig("acctExport")->getConfigInt("settings", "max_traces", 250);
+    // clang-format on
     freshen = false;
     freshen_max = 5000;
     factory = false;
     emitter = false;
     count = false;
     first_record = 0;
-    max_records = NOPOS;
+    max_records = (isApiMode() ? 250 : NOPOS);
     clean = false;
     // END_CODE_INIT
 
@@ -351,7 +360,7 @@ void COptions::Init(void) {
     nTransactions = 0;
     nCacheItemsRead = 0;
     nCacheItemsWritten = 0;
-    listRange.second = getLatestBlock_cache_ripe();
+    listRange.second = getBlockProgress(BP_RIPE).ripe;
 
     allMonitors.clear();
     counts.clear();
@@ -489,11 +498,6 @@ bool COptions::setDisplayFormatting(void) {
             }
         }
 
-        if (logs) {
-            SHOW_FIELD(CLogEntry, "blockNumber");
-            SHOW_FIELD(CLogEntry, "transactionIndex");
-        }
-
         if (freshen)
             expContext().exportFmt = NONE1;
 
@@ -514,23 +518,33 @@ bool COptions::setDisplayFormatting(void) {
                     EXIT_USAGE("balanceServer is set, but it does not have historical state.");
             }
         }
+
+        if (logs) {
+            SHOW_FIELD(CLogEntry, "blockNumber");
+            SHOW_FIELD(CLogEntry, "transactionIndex");
+            SHOW_FIELD(CReceipt, "blockNumber");
+            SHOW_FIELD(CReceipt, "transactionIndex");
+            SHOW_FIELD(CReceipt, "isError");
+        }
     }
 
     // TODO(tjayrush): This doesn't work for some reason (see test case acctExport_export_logs.txt)
     if (!articulate)
         HIDE_FIELD(CLogEntry, "compressedTx");
 
-    return true;
+    EXIT_NOMSG(true);
 }
 
 #define LOG_TEST_VAL(a, b)                                                                                             \
     {                                                                                                                  \
         if (b != 0)                                                                                                    \
-            LOG_TEST(a, "--value--")                                                                                   \
+            LOG_TEST(a, "--value--", false)                                                                            \
     }
 
 //------------------------------------------------------------------------------------------------
 bool COptions::freshen_internal(void) {
+    ENTER("freshen_internal");
+
     LOG_TEST_VAL("stats.nFiles", stats.nFiles);
     LOG_TEST_VAL("stats.nSkipped", stats.nSkipped);
     LOG_TEST_VAL("stats.nChecked", stats.nChecked);
@@ -566,7 +580,7 @@ bool COptions::freshen_internal(void) {
     LOG_TEST_VAL("stats.nPositive", stats.nPositive);
     LOG_TEST_VAL("stats.nRecords", stats.nRecords);
 
-    return true;
+    EXIT_NOMSG(true);
 }
 
 // TODO(tjayrush): If an abi file is changed, we should re-articulate.

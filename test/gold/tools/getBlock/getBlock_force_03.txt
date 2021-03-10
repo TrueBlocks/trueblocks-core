@@ -1,5 +1,6 @@
 getBlock argc: 3 [1:4369999] [2:--force] 
 getBlock 4369999 --force 
+TIME ~ CLOCK - <INFO>  : force: true
 { "data": [
 {
   "gasLimit": 6712355,
@@ -9,7 +10,6 @@ getBlock 4369999 --force
   "parentHash": "0x0c8afc74a5e5c7d19f8dd5f2ca13098f871e5b6fd8a6e237df111f935d777105",
   "miner": "0xea674fdde714fd979de3edf0f56aa9716b898ec8",
   "difficulty": 2997274096101735,
-  "price": 0.00000,
   "finalized": true,
   "timestamp": 1508131303,
   "transactions": [
@@ -2223,6 +2223,4 @@ getBlock 4369999 --force
       "gasUsed": 21000
     }
   ]
-}], "types": [
-{ "type": "CBlock", "fields": [{ "name": "gasLimit", "type": "gas" }, { "name": "gasUsed", "type": "gas" }, { "name": "hash", "type": "hash" }, { "name": "blockNumber", "type": "blocknum" }, { "name": "parentHash", "type": "hash" }, { "name": "miner", "type": "address" }, { "name": "difficulty", "type": "unumber" }, { "name": "price", "type": "double" }, { "name": "finalized", "type": "bool" }, { "name": "timestamp", "type": "timestamp" }, { "name": "transactions", "type": "object|ts_array" }] }
-] }
+}] }

@@ -43,7 +43,7 @@ bool visitFile(const string_q& path, void* data) {
         cerr << "\tSorting..." << endl;
         sort(lines.begin(), lines.end());
 
-        lockSection(true);
+        lockSection();
         if (asciiExists)
             cerr << "\t" << greenCheck << " Ascii file " << asciiFn << " exists..." << endl;
         if (!asciiExists) {
@@ -90,7 +90,7 @@ bool visitFile(const string_q& path, void* data) {
             if (!doCommand(cmd).empty())
                 cerr << "\t" << redX << " command failed." << endl;
         }
-        lockSection(false);
+        unlockSection();
     }
 
     return !shouldQuit();

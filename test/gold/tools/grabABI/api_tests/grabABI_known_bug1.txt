@@ -225,40 +225,5 @@
       "input_names": "",
       "output_names": ""
     }
-  ],
-  "types": [
-    {
-      "type": "CFunction",
-      "fields": [
-        {
-          "name": "name",
-          "type": "text"
-        },
-        {
-          "name": "type",
-          "type": "text"
-        },
-        {
-          "name": "stateMutability",
-          "type": "text"
-        },
-        {
-          "name": "signature",
-          "type": "text"
-        },
-        {
-          "name": "encoding",
-          "type": "text"
-        },
-        {
-          "name": "input_names",
-          "type": "text"
-        },
-        {
-          "name": "output_names",
-          "type": "text"
-        }
-      ]
-    }
   ]
 }

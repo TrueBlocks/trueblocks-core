@@ -46,7 +46,7 @@ bool COptions::parseArguments(string_q& command) {
 
     Init();
     explode(arguments, command, ' ');
-    blknum_t latest = NOPOS;  // getLatestBlock_client();
+    blknum_t latest = NOPOS;  // getBlockProgress(BP_CLIENT).client;
     for (auto arg : arguments) {
         if (false) {
             // do nothing -- make auto code generation easier
@@ -76,6 +76,14 @@ bool COptions::parseArguments(string_q& command) {
             // END_CODE_AUTO
         }
     }
+
+    // BEG_DEBUG_DISPLAY
+    // LOG_TEST("addrs", addrs, (addrs == NOPOS));
+    LOG_TEST_BOOL("canonical", canonical);
+    LOG_TEST_BOOL("known", known);
+    LOG_TEST("sol", sol, (sol == ""));
+    LOG_TEST("find", find, (find == ""));
+    // END_DEBUG_DISPLAY
 
     if (!find.empty()) {
         ostringstream os;

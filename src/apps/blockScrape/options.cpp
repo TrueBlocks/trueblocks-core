@@ -37,9 +37,8 @@ bool COptions::parseArguments(string_q& command) {
     // BEG_CODE_LOCAL_INIT
     // END_CODE_LOCAL_INIT
 
-    blknum_t latest = getLatestBlock_client();
     CBlock block;
-    getBlock_light(block, latest);
+    getBlock_light(block, getBlockProgress(BP_CLIENT).client);
     latestBlockTs = block.timestamp;
     latestBlockNum = block.blockNumber;
 
@@ -93,87 +92,156 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    // Establish the folders that hold the data...
-    establishMonitorFolders();
-    establishFolder(indexFolder);
-    establishFolder(indexFolder_finalized);
-    establishFolder(indexFolder_blooms);
-    establishFolder(indexFolder_staging);
-    establishFolder(indexFolder_unripe);
-    establishFolder(indexFolder_ripe);
-    establishFolder(configPath("cache/tmp/"));
+    // BEG_DEBUG_DISPLAY
+    LOG_TEST("mode", mode, (mode == ""));
+    // LOG_TEST("tool", tool, (tool == ""));
+    LOG_TEST("n_blocks", n_blocks, (n_blocks == (isDockerMode() ? 100 : 2000)));
+    LOG_TEST("n_block_procs", n_block_procs, (n_block_procs == (isDockerMode() ? 5 : 10)));
+    LOG_TEST("n_addr_procs", n_addr_procs, (n_addr_procs == (isDockerMode() ? 10 : 20)));
+    LOG_TEST_BOOL("pin", pin);
+    LOG_TEST_BOOL("publish", publish);
+    LOG_TEST("sleep", sleep, (sleep == 14));
+    // END_DEBUG_DISPLAY
 
     if (mode.empty())
         mode = "run";
 
     if (tool.size() > 1)
-        return usage("You must specify only one of none, index, monitors, both.");
+        return usage("Please specify only one of [ none | index | monitors | both].");
+    ASSERT(tool.empty());
+
     if (tool.empty())
         tool.push_back("index");
     if (tool[0] == "none")
         tools = TOOL_NONE;
-    else if (tool[0] == "index")
-        tools = TOOL_INDEX;
+    else if (tool[0] == "both")
+        tools = TOOL_BOTH;
     else if (tool[0] == "monitors")
         tools = TOOL_MONITORS;
     else
-        tools = TOOL_BOTH;
+        tools = TOOL_INDEX;
 
-    // Min of 1/2 second
+    // no less than one half second of sleep between runs
     if (sleep < .5)
         sleep = .5;
 
-    bool hasPinCmd = (pin || publish);
-    if (hasPinCmd) {
-        if (!isTestMode() && !hasPinataKeys()) {
-            return usage(
-                "In order to use the pin options, you must enter a Pinata key in ~/.quickBlocks/blockScrape.toml.");
+    if (publish && pin)
+        return usage("The --publish option is not available when using the --pin option.");
 
-        } else if (publish && !pin) {
-            return usage("The --publish option is only available with the --pin option.");
+    if ((pin || publish) && !pinlib_getApiKeys(lic)) {
+        if (!isTestMode()) {
+            ostringstream os;
+            os << "The " << (pin ? "--pin" : "--publish") << " option requires you to have a Pinata key.";
+            return usage(os.str());
         }
     }
 
-    // Control the state of the app (the state is stored in a temporary file). This only returns
-    // false if we moved from stopped state to running state. All other state changes end here.
-    bool result = changeState();
-    if (isTestMode() || result) {
-        if (isTestMode()) {
-            ostringstream os;
-            os << "{" << endl;
-            os << "  \"message\": \"Testing only\""
-               << "," << endl;
-            os << "  \"mode\": \"" << mode << "\"," << endl;
-            os << "  \"tool\": \"" << tool[0] << "\"," << endl;
-            os << "  \"tools\": " << tools << "," << endl;
-            os << "  \"n_blocks\": " << n_blocks << "," << endl;
-            os << "  \"n_block_procs\": " << n_block_procs << "," << endl;
-            os << "  \"n_addr_procs\": " << n_addr_procs << "," << endl;
-            os << "  \"pin\": " << pin << "," << endl;
-            os << "  \"publish\": " << publish << "," << endl;
-            os << "}" << endl;
-            if (isApiMode())
-                cout << os.str();
-            else
-                cerr << os.str();
-            if (!contains(command, "run") && !contains(command, "quit") && !contains(command, "restart") &&
-                !contains(command, "pause")) {
-                cleanup();
-            }
-        }
+    // Is the user asking to publish the pin manifest to the smart contract?
+#define hashToIndexFormatFile "Qmart6XP9XjL43p72PGR93QKytbK8jWWcMguhFgxATTya2"
+#define hashToBloomFormatFile "QmNhPk39DUFoEdhUmtGARqiFECUHeghyeryxZM9kyRxzHD"
+    if (publish) {
+        CPinManifest manifest;
+        manifest.fileName = "initial-manifest.json";
+        manifest.indexFormat = hashToIndexFormatFile;
+        manifest.bloomFormat = hashToBloomFormatFile;
+        manifest.prevHash = "";  // (prevHash == "" ? hashToEmptyFile : prevHash);
+
+        CPinnedChunkArray pList;
+        pinlib_readPinList(pList, true);
+        pinlib_forEveryPin(pList, addNewPin, &manifest);
+        manifest.toJson(cout);
+
+        return true;
+    }
+
+    // We shouldn't run if we're already running...
+    if (mode == "run" && amIRunning("blockScrape")) {
+        LOG_WARN("The blockScrape app is already running.");
         return false;
     }
 
-    LOG4("indexPath: ", indexFolder);
-    LOG4("finalized: ", indexFolder_finalized);
-    LOG4("blooms: ", indexFolder_blooms);
-    LOG4("staging: ", indexFolder_staging);
-    LOG4("unripe: ", indexFolder_unripe);
-    LOG4("ripe: ", indexFolder_ripe);
-    LOG4("tmp: ", configPath("cache/tmp/"));
+    // Nor should we run if the index is being actively scanned...
+    if (isRunning("acctExport")) {
+        LOG_WARN("Refusing to run while acctExport is running.");
+        return false;
+    }
 
-    string_q zeroBloom = getIndexPath("blooms/" + padNum9(0) + "-" + padNum9(0) + ".bloom");
-    if (!fileExists(zeroBloom)) {
+    // In test mode, all we do is try to control and report on the state (but we never scrape)
+    // Control the state of the app (the state is stored in a temporary file). This only returns
+    // false if we moved from stopped state to running state. All other state changes end here.
+    bool result = changeState();
+    if (isTestMode() && !isLiveTest()) {
+        string_q current;
+        getCurrentState(current);
+        ostringstream os;
+        os << "{" << endl;
+        os << "  \"message\": \"Testing only\"," << endl;
+        os << "  \"mode\": \"" << mode << "\"," << endl;
+        os << "  \"tool\": \"" << tool[0] << "\"," << endl;
+        os << "  \"tools\": " << tools << "," << endl;
+        os << "  \"n_blocks\": " << n_blocks << "," << endl;
+        os << "  \"n_block_procs\": " << n_block_procs << "," << endl;
+        os << "  \"n_addr_procs\": " << n_addr_procs << "," << endl;
+        os << "  \"pin\": " << pin << "," << endl;
+        os << "  \"publish\": " << publish << "," << endl;
+        os << "  \"current\": " << current << "," << endl;
+        os << "}" << endl;
+        cout << os.str();
+        if (!contains(command, "run") && !contains(command, "quit") && !contains(command, "restart") &&
+            !contains(command, "pause"))
+            cleanupAndQuit();
+        getCurrentState(current);
+        LOG_INFO("file contents: ", asciiFileToString(configPath("cache/tmp/scraper-state.txt")));
+        return false;
+    }
+
+    // In non-testing mode, we first try to change the state of the scraper (if stopped, start...if
+    // started, pause, etc.). We store the state in a temporary file (terrible idea, but it works).
+    // `changeState` returns false only if we moved from not running --> running. In this case, we
+    // want to enter the scraping state. All other states changes end here and the invocation quits.
+    if (result)
+        return false;
+
+    // Debugging data...
+    LOG_DIR8(indexFolder);
+    LOG_DIR8(indexFolder_finalized);
+    LOG_DIR8(indexFolder_blooms);
+    LOG_DIR8(indexFolder_staging);
+    LOG_DIR8(indexFolder_unripe);
+    LOG_DIR8(indexFolder_ripe);
+
+    // We need this below...
+    const CToml* config = getGlobalConfig("blockScrape");
+
+    // A tracing node is required. Otherwise, the index will be 'short' (i.e. it will
+    // be missing appearances). This is okay, if the user tells us it's okay. For
+    // example, if the user only wants an index of event emitters or something
+    bool needsTracing = config->getConfigBool("requires", "tracing", true);
+    if (needsTracing && !isTracingNode()) {
+        string_q errMsg = "Tracing is required for this program to work properly.";
+        if (isDockerMode())
+            errMsg += " If you're running docker, enable remote RPC endpoints.";
+        return usage(errMsg);
+    }
+
+    // Parity traces are much better (and easier to use) than Geth's. But, in some
+    // cases, the user may not care and tells us she doesn't need parity
+    bool needsParity = config->getConfigBool("requires", "parity", true);
+    if (needsParity && !isParity())
+        return usage(
+            "This tool requires Parity. Add [requires]\\nparity=false to ~/.quickBlocks/blockScrape.toml to turn "
+            "this "
+            "restriction off.");
+
+    // Balances are needed to make reconcilations. The user may not need that, so we allow it
+    bool needsBalances = config->getConfigBool("requires", "balances", false);
+    if (needsBalances && !nodeHasBalances(true))
+        return usage("This tool requires an --archive node with historical balances.");
+
+    // This may be the first time we've ever run. In that case, we need to build the zero block index file...
+    string chunkId = padNum9(0) + "-" + padNum9(0);
+    string_q bloomPath = getIndexPath("blooms/" + chunkId + ".bloom");
+    if (!fileExists(bloomPath)) {
         ASSERT(prefundWeiMap.size() == 8893);  // This is a known value
         LOG_INFO("Index for block zero was not found. Building it from ", uint_2_Str(prefundWeiMap.size()),
                  " prefunds.");
@@ -188,49 +256,14 @@ bool COptions::parseArguments(string_q& command) {
             appearances.push_back(os.str());
         }
 
-        string_q zeroBin = getIndexPath("finalized/" + padNum9(0) + "-" + padNum9(0) + ".bin");
-        writeIndexAsBinary(zeroBin, appearances);  // also writes the bloom file
-        if (pin) {
-            CPinnedItem pinRecord;
-            pinChunk(padNum9(0) + "-" + padNum9(0), pinRecord);
-            if (publish)
-                publishManifest(cout);
-        }
+        // Write the chunk and the bloom to the binary cache
+        string_q chunkPath = getIndexPath("finalized/" + chunkId + ".bin");
+        writeIndexAsBinary(chunkPath, appearances, (pin ? visitToPin : nullptr), &pinList);
         LOG_INFO("Done...");
     }
 
-    const CToml* config = getGlobalConfig("blockScrape");
-    bool needsParity = config->getConfigBool("requires", "parity", true);
-    if (needsParity && !isParity()) {
-        return usage(
-            "This tool requires Parity. Add [requires]\\nparity=false to ~/.quickBlocks/blockScrape.toml turn this "
-            "test off.");
-    }
-
-    if (!isTracingNode()) {
-        string_q errMsg = "Tracing is required for this program to work properly.";
-        if (isDockerMode())
-            errMsg += " If you're running docker, enable remote RPC endpoints (see your node's help).";
-        return usage(errMsg);
-    }
-
-    bool needsBalances = config->getConfigBool("requires", "balances", false);
-    if (needsBalances && !nodeHasBalances(true)) {
-        return usage("This tool requires an --archive node with historical balances.");
-    }
-
-    if (amIRunning("blockScrape")) {
-        LOG_WARN("The blockScrape app is already running.");
-        return false;
-    }
-
-    // Do not run if the index is being searched...
-    if (isRunning("acctExport")) {
-        LOG_WARN("Refusing to run while acctExport is running. Will restart shortly...");
-        return false;
-    }
-
-    // The previous run may have quit early, leaving the folders in a mild state of disrepair. Clean up first.
+    // The previous run may have quit early, leaving the folders in a mild state of
+    // disrepair. We clean that up here.
     ::remove((indexFolder_staging + "000000000-temp.txt").c_str());
     cleanFolder(indexFolder_unripe);
 
@@ -248,9 +281,11 @@ void COptions::Init(void) {
 
     // BEG_CODE_INIT
     tool.clear();
-    n_blocks = NOPOS;
-    n_block_procs = NOPOS;
-    n_addr_procs = NOPOS;
+    // clang-format off
+    n_blocks = getGlobalConfig("blockScrape")->getConfigInt("settings", "n_blocks", (isDockerMode() ? 100 : 2000));
+    n_block_procs = getGlobalConfig("blockScrape")->getConfigInt("settings", "n_block_procs", (isDockerMode() ? 5 : 10));
+    n_addr_procs = getGlobalConfig("blockScrape")->getConfigInt("settings", "n_addr_procs", (isDockerMode() ? 10 : 20));
+    // clang-format on
     pin = false;
     publish = false;
     sleep = 14;
@@ -270,6 +305,16 @@ COptions::COptions(void) {
 
     // BEG_ERROR_MSG
     // END_ERROR_MSG
+
+    // Establish the folders that hold the data...
+    establishMonitorFolders();
+    establishFolder(indexFolder);
+    establishFolder(indexFolder_finalized);
+    establishFolder(indexFolder_blooms);
+    establishFolder(indexFolder_staging);
+    establishFolder(indexFolder_unripe);
+    establishFolder(indexFolder_ripe);
+    establishFolder(configPath("cache/tmp/"));
 }
 
 //--------------------------------------------------------------------------------
@@ -277,27 +322,27 @@ COptions::~COptions(void) {
 }
 
 //--------------------------------------------------------------------------------
-ScrapeState COptions::getCurrentState(void) {
+ScrapeState COptions::getCurrentState(string_q& current) {
     if (controlFile.empty())
         controlFile = configPath("cache/tmp/scraper-state.txt");
-    stateStr = asciiFileToString(controlFile);
-    if (stateStr == "running") {
+    current = asciiFileToString(controlFile);
+    if (current == "running") {
         state = STATE_RUNNING;
-    } else if (stateStr == "paused") {
+    } else if (current == "paused") {
         state = STATE_PAUSED;
     } else {
         state = STATE_STOPPED;
-        stateStr = "stopped";
+        current = "stopped";
     }
-    LOG8("The scraper was ", stateStr, ".");
+    LOG8("Current state ", current, ".");
     return state;
 }
 
 //--------------------------------------------------------------------------------
 bool COptions::changeState(void) {
-    if (isTestMode())
+    if (isTestMode() && !isLiveTest())
         verbose = 10;
-    state = getCurrentState();
+    state = getCurrentState(stateStr);
     switch (state) {
         case STATE_STOPPED:
             if (mode == "run" || mode.empty()) {
@@ -308,8 +353,8 @@ bool COptions::changeState(void) {
                 LOG4("changing state: stopped --> running");
                 return false;
             } else {
-                LOG_ERR("blockScrape is ", stateStr, ". Cannot ", mode, ".");
-                // state = STATE_STOPPED; // redunant, but okay
+                if (!(stateStr == "stopped" && mode == "quit"))
+                    LOG_ERR("blockScrape is ", stateStr, ". Cannot ", mode, ".");
             }
             break;
         case STATE_RUNNING:
@@ -353,4 +398,24 @@ bool COptions::changeState(void) {
     }
     cout << "{ \"status\": \"" << stateStr << "\" }" << endl;
     return true;
+}
+
+//----------------------------------------------------------------
+bool addNewPin(CPinnedChunk& pin, void* data) {
+    CPinManifest* manifestPtr = (CPinManifest*)data;  // NOLINT
+    manifestPtr->newPins.push_back(pin);
+
+    timestamp_t unused;
+    blknum_t newEnd;
+    blknum_t newStart = bnFromPath(pin.fileName, newEnd, unused);
+
+    if (manifestPtr->newBlockRange.empty()) {
+        manifestPtr->newBlockRange = padNum9(newStart) + "-" + padNum9(newEnd);
+    } else {
+        blknum_t oldEnd;
+        blknum_t oldStart = bnFromPath(manifestPtr->newBlockRange, oldEnd, unused);
+        manifestPtr->newBlockRange = padNum9(min(oldStart, newStart)) + "-" + padNum9(max(oldEnd, newEnd));
+    }
+    // TODO(tjayrush): Note...
+    return !isTestMode();
 }

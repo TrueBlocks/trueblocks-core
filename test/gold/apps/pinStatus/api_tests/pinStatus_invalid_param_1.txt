@@ -1,5 +1,0 @@
-{
-  "errors": [
-    "pinStatus - Invalid option: --junk"
-  ]
-}

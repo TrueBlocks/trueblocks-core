@@ -393,7 +393,7 @@ const char* STR_DISPLAY_ETHSTATE =
 //-------------------------------------------------------------------------
 wei_t getBalanceAt(const string_q& addr, blknum_t num) {
     if (num == NOPOS)
-        num = getLatestBlock_client();
+        num = getBlockProgress(BP_CLIENT).client;
     string_q params = "[\"[{ADDRESS}]\",\"[{NUM}]\"]";
     replace(params, "[{ADDRESS}]", str_2_Addr(addr));
     replace(params, "[{NUM}]", uint_2_Hex(num));
@@ -426,7 +426,7 @@ bool nodeHasBalances(bool showErrors) {
 //-------------------------------------------------------------------------
 string_q getCodeAt(const string_q& addr, blknum_t num) {
     if (num == NOPOS)
-        num = getLatestBlock_client();
+        num = getBlockProgress(BP_CLIENT).client;
     string_q params = "[\"[{ADDRESS}]\",\"[{NUM}]\"]";
     replace(params, "[{ADDRESS}]", str_2_Addr(addr));
     replace(params, "[{NUM}]", uint_2_Hex(num));
@@ -443,7 +443,7 @@ bool isContractAt(const address_t& addr, blknum_t num) {
 //-------------------------------------------------------------------------
 uint64_t getNonceAt(const address_t& addr, blknum_t num) {
     if (num == NOPOS)
-        num = getLatestBlock_client();
+        num = getBlockProgress(BP_CLIENT).client;
     string_q params = "[\"[{ADDRESS}]\",\"[{NUM}]\"]";
     replace(params, "[{ADDRESS}]", str_2_Addr(addr));
     replace(params, "[{NUM}]", uint_2_Hex(num));
@@ -453,7 +453,7 @@ uint64_t getNonceAt(const address_t& addr, blknum_t num) {
 //-------------------------------------------------------------------------
 string_q getStorageAt(const string_q& addr, uint64_t pos, blknum_t num) {
     if (num == NOPOS)
-        num = getLatestBlock_client();
+        num = getBlockProgress(BP_CLIENT).client;
     string_q params = "[\"[{ADDRESS}]\",\"[{POS}]\",\"[{NUM}]\"]";
     replace(params, "[{ADDRESS}]", str_2_Addr(addr));
     replace(params, "[{POS}]", uint_2_Hex(pos));
@@ -534,7 +534,7 @@ static blknum_t findCodeAt_binarySearch(const address_t& addr, blknum_t first, b
 
 //-------------------------------------------------------------------------------------
 blknum_t getDeployBlock(const address_t& addr) {
-    blknum_t latest = getLatestBlock_client();
+    blknum_t latest = getBlockProgress(BP_CLIENT).client;
     if (!isContractAt(addr, latest))
         return NOPOS;
     blknum_t num = findCodeAt_binarySearch(addr, 0, latest);

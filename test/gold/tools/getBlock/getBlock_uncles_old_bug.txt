@@ -1,5 +1,6 @@
 getBlock argc: 5 [1:3] [2:12] [3:469] [4:--uncles] 
 getBlock 3 12 469 --uncles 
+TIME ~ CLOCK - <INFO>  : uncles: true
 { "data": [
 {
   "gasLimit": 5000,
@@ -9,7 +10,6 @@ getBlock 3 12 469 --uncles
   "parentHash": "0xd4e56740f876aef8c010b86a40d5f56745a118d0906a34e69aec8c0db1cb8fa3",
   "miner": "0xc8ebccc5f5689fa8659d83713341e5ad19349448",
   "difficulty": 17171480576,
-  "price": 0.00000,
   "finalized": true,
   "timestamp": 1438270018
 },
@@ -21,7 +21,6 @@ getBlock 3 12 469 --uncles
   "parentHash": "0x8f266d7906594e639a4c8084284361e27ad1a488f95a355e6c276fe946bad2ee",
   "miner": "0xbb7b8287f3f0a933474a79eae42cbca977791171",
   "difficulty": 21421302720,
-  "price": 0.00000,
   "finalized": true,
   "timestamp": 1438271149
 },
@@ -33,9 +32,6 @@ getBlock 3 12 469 --uncles
   "parentHash": "0x8f266d7906594e639a4c8084284361e27ad1a488f95a355e6c276fe946bad2ee",
   "miner": "0xbb7b8287f3f0a933474a79eae42cbca977791171",
   "difficulty": 21421302720,
-  "price": 0.00000,
   "finalized": true,
   "timestamp": 1438271149
-}], "types": [
-{ "type": "CBlock", "fields": [{ "name": "gasLimit", "type": "gas" }, { "name": "gasUsed", "type": "gas" }, { "name": "hash", "type": "hash" }, { "name": "blockNumber", "type": "blocknum" }, { "name": "parentHash", "type": "hash" }, { "name": "miner", "type": "address" }, { "name": "difficulty", "type": "unumber" }, { "name": "price", "type": "double" }, { "name": "finalized", "type": "bool" }, { "name": "timestamp", "type": "timestamp" }, { "name": "transactions", "type": "object|ts_array" }] }
-] }
+}] }

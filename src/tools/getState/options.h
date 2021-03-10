@@ -36,12 +36,15 @@ class COptions : public CHistoryOptions {
     wei_t deminimus;
     bool first;
     blknum_t latestBlock;
+    CEthCall theCall;
 
     COptions(void);
     ~COptions(void);
 
     bool parseArguments(string_q& command) override;
     void Init(void) override;
+
+    bool handle_call(void);
 };
 
 //-----------------------------------------------------------------------------

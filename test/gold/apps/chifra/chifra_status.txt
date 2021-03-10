@@ -1,7 +1,6 @@
 chifra argc: 3 [1:status] [2:all] 
 chifra status all 
 TIME ~ CLOCK - <INFO>  : mode: status
-TIME ~ CLOCK - : 4-----call_command ----> cacheStatus all
 chifra status argc: 2 [1:all] 
 chifra status all 
 PROG_NAME = [chifra status]
@@ -18,6 +17,7 @@ PROG_NAME = [chifra status]
   "is_archive": true,
   "is_tracing": true,
   "has_eskey": true,
+  "has_pinkey": true,
   "caches": [
     {
       "type": "CIndexCache",

@@ -1,5 +1,6 @@
 getBlock argc: 5 [1:1590000] [2:4000001] [3:4000002] [4:--force] 
 getBlock 1590000 4000001 4000002 --force 
+TIME ~ CLOCK - <INFO>  : force: true
 { "data": [
 {
   "gasLimit": 4712388,
@@ -9,7 +10,6 @@ getBlock 1590000 4000001 4000002 --force
   "parentHash": "0xe8ba231ac8fd0d4834d4ef2889949d375ff5ec5da0244fb7c8069a38edfbca92",
   "miner": "0x2a65aca4d5fc5b5c859090a6c34d164135398226",
   "difficulty": 41857221373863,
-  "price": 0.00000,
   "finalized": true,
   "timestamp": 1464293714,
   "transactions": [
@@ -77,7 +77,6 @@ getBlock 1590000 4000001 4000002 --force
   "parentHash": "0xb8a3f7f5cfc1748f91a684f20fe89031202cbadcd15078c49b85ec2a57f43853",
   "miner": "0xea674fdde714fd979de3edf0f56aa9716b898ec8",
   "difficulty": 1097113993909745,
-  "price": 0.00000,
   "finalized": true,
   "timestamp": 1499633571,
   "transactions": [
@@ -455,7 +454,6 @@ getBlock 1590000 4000001 4000002 --force
   "parentHash": "0x79990fd526c4751139a7a3afc7420cde1a1141b1920d2afd411858ecb4926a39",
   "miner": "0x829bd824b016326a401d083b33d092293333a830",
   "difficulty": 1097924572009027,
-  "price": 0.00000,
   "finalized": true,
   "timestamp": 1499633574,
   "transactions": [
@@ -670,6 +668,4 @@ getBlock 1590000 4000001 4000002 --force
       "gasUsed": 21000
     }
   ]
-}], "types": [
-{ "type": "CBlock", "fields": [{ "name": "gasLimit", "type": "gas" }, { "name": "gasUsed", "type": "gas" }, { "name": "hash", "type": "hash" }, { "name": "blockNumber", "type": "blocknum" }, { "name": "parentHash", "type": "hash" }, { "name": "miner", "type": "address" }, { "name": "difficulty", "type": "unumber" }, { "name": "price", "type": "double" }, { "name": "finalized", "type": "bool" }, { "name": "timestamp", "type": "timestamp" }, { "name": "transactions", "type": "object|ts_array" }] }
-] }
+}] }

@@ -16,6 +16,7 @@
 #include "cacheentry.h"
 #include "rewards.h"
 #include "logquery.h"
+#include "ethcall.h"
 
 namespace qblocks {
 
@@ -135,11 +136,21 @@ extern bool forEveryLogInBlock(LOGVISITFUNC func, void* data, const CBlock& bloc
 
 //-------------------------------------------------------------------------
 // forEvery functions
-extern blknum_t getLatestBlock_client(void);
-extern blknum_t getLatestBlock_cache_final(void);
-extern blknum_t getLatestBlock_cache_staging(void);
-extern blknum_t getLatestBlock_cache_ripe(void);
-extern bool getLatestBlocks(blknum_t& unripe, blknum_t& ripe, blknum_t& staging, blknum_t& final, blknum_t& client);
+struct CBlockProgress {
+  public:
+    blknum_t unripe;
+    blknum_t ripe;
+    blknum_t staging;
+    blknum_t finalized;
+    blknum_t client;
+};
+#define BP_CLIENT (1 << 1)
+#define BP_FINAL (1 << 2)
+#define BP_STAGING (1 << 3)
+#define BP_RIPE (1 << 4)
+#define BP_UNRIPE (1 << 5)
+#define BP_ALL (BP_CLIENT | BP_FINAL | BP_STAGING | BP_RIPE | BP_UNRIPE)
+CBlockProgress getBlockProgress(size_t which = BP_ALL);
 
 //-------------------------------------------------------------------------
 extern string_q getIndexPath(const string_q& _part);
@@ -177,9 +188,32 @@ extern bool loadTimestampFile(uint32_t** theArray, size_t& cnt);
 extern bool excludeTrace(const CTransaction* trans, size_t maxTraces);
 
 extern wei_t getBalanceAt(const address_t& addr, blknum_t blockNum);
-extern bool doEthCall(const address_t& to, const string_q& encoding, const string_q& bytes, blknum_t blockNum,
-                      const CAbi& abi_spec, CFunction& output);
 
+#ifdef LOGGING_LEVEL
+//--------------------------------------------------------------------------
+inline string_q relativize(const string_q& path) {
+    string_q ret = path;
+    replace(ret, getIndexPath(""), "$INDEX/");
+    replace(ret, getCachePath(""), "$CACHE/");
+    replace(ret, configPath(""), "$CONFIG/");
+    replace(ret, getHomeFolder(), "$HOME/");
+    return ret;
+}
+//--------------------------------------------------------------------------
+#define LOG_FN8(fn)                                                                                                    \
+    {                                                                                                                  \
+        string_q lfn8 = relativize((fn));                                                                              \
+        LOG8(padRight((string_q(#fn) + ":"), 25), lfn8, " ", fileSize((fn)));                                          \
+    }
+#define LOG_DIR8(dir)                                                                                                  \
+    {                                                                                                                  \
+        string_q lfn8 = relativize((dir));                                                                             \
+        LOG8(padRight((string_q(#dir) + ":"), 25), lfn8);                                                              \
+    }
+#else
+#define LOG_FN8(fn)
+#define LOG_DIR8(dir)
+#endif
 }  // namespace qblocks
 
 //-------------------------------------------------------------------------

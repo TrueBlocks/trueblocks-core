@@ -177,7 +177,7 @@ string_q doCommand(const string_q& cmd) {
     waitForCreate(filename);
     string_q ret;
     asciiFileToString(filename, ret);
-    remove(filename.c_str());
+    ::remove(filename.c_str());
     return trim(ret, '\n');
 }
 
@@ -283,7 +283,7 @@ string_q listProcesses(const string_q& progName) {
             }
         }
     }
-    if (isTestMode())
+    if (isTestMode() && !isLiveTest())
         LOG4("\n", cmd, "\n", result, " ", !result.empty());
     return result;
 }
@@ -294,7 +294,7 @@ bool amIRunning(const string_q& progName) {
     replaceAll(pList, "`", "");        // We count how many occurences of the progName using a single character...
     replaceAll(pList, progName, "`");  // remove any if they exist before replacing
     replace(pList, "`", "");
-    return countOf(pList, '`') > 1;  // We ourselves are running, so there needs to be at least one more...
+    return countOf(pList, '`') > 0;  // We ourselves are running, so there needs to be at least one more...
 }
 
 //----------------------------------------------------------------------------

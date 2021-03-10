@@ -8,7 +8,6 @@
       "parentHash": "0x1866b3bebb9a131c36bff4fc9feea56f205e79c6af45dc3810a40a5365815ac7",
       "miner": "0x68795c4aa09d6f4ed3e5deddf8c2ad3049a601da",
       "difficulty": 12462338280735,
-      "price": 0,
       "finalized": true,
       "timestamp": 1455422019,
       "transactions": [
@@ -102,10 +101,6 @@
         {
           "name": "difficulty",
           "type": "unumber"
-        },
-        {
-          "name": "price",
-          "type": "double"
         },
         {
           "name": "finalized",

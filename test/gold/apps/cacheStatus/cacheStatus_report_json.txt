@@ -1,5 +1,6 @@
 cacheStatus argc: 4 [1:--report] [2:--fmt] [3:json] 
 cacheStatus --report --fmt json 
+TIME ~ CLOCK - <INFO>  : report: true
 { "data": [
 {
   "client_version": "Client version",
@@ -14,6 +15,7 @@ cacheStatus --report --fmt json
   "is_archive": true,
   "is_tracing": true,
   "has_eskey": true,
+  "has_pinkey": true,
   "caches": [
     {
       "type": "CIndexCache",
@@ -61,6 +63,4 @@ cacheStatus --report --fmt json
     }
   ],
   "date": "--date--"
-}], "types": [
-{ "type": "CIndexCache", "fields": [{ "name": "items", "type": "object|ts_array" }, { "name": "type", "type": "text" }, { "name": "path", "type": "text" }, { "name": "nFiles", "type": "number" }, { "name": "nFolders", "type": "number" }, { "name": "sizeInBytes", "type": "number" }, { "name": "is_valid", "type": "bool" }, { "name": "type", "type": "text" }, { "name": "path", "type": "text" }, { "name": "nFiles", "type": "unumber" }, { "name": "nFolders", "type": "unumber" }, { "name": "sizeInBytes", "type": "unumber" }, { "name": "is_valid", "type": "bool" }] }, { "type": "CMonitorCache", "fields": [{ "name": "addrs", "type": "address|ts_array" }, { "name": "type", "type": "text" }, { "name": "path", "type": "text" }, { "name": "nFiles", "type": "unumber" }, { "name": "nFolders", "type": "unumber" }, { "name": "sizeInBytes", "type": "unumber" }, { "name": "is_valid", "type": "bool" }] }, { "type": "CNameCache", "fields": [{ "name": "addrs", "type": "address|ts_array" }, { "name": "items", "type": "object|ts_array" }, { "name": "type", "type": "text" }, { "name": "path", "type": "text" }, { "name": "nFiles", "type": "unumber" }, { "name": "nFolders", "type": "unumber" }, { "name": "sizeInBytes", "type": "unumber" }, { "name": "is_valid", "type": "bool" }] }, { "type": "CPriceCache", "fields": [{ "name": "type", "type": "text" }, { "name": "path", "type": "text" }, { "name": "nFiles", "type": "unumber" }, { "name": "nFolders", "type": "unumber" }, { "name": "sizeInBytes", "type": "unumber" }, { "name": "is_valid", "type": "bool" }] }, { "type": "CSlurpCache", "fields": [{ "name": "type", "type": "text" }, { "name": "path", "type": "text" }, { "name": "nFiles", "type": "unumber" }, { "name": "nFolders", "type": "unumber" }, { "name": "sizeInBytes", "type": "unumber" }, { "name": "is_valid", "type": "bool" }] }
-] }
+}] }

@@ -1,3 +1,4 @@
 getTrace argc: 5 [1:3657480.79] [2:--verbose] [3:--output] [4:test_file] 
 getTrace 3657480.79 --verbose --output test_file 
+TIME ~ CLOCK - <INFO>  : skip_ddos: true
 --output_filename--

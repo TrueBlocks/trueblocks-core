@@ -1,7 +1,6 @@
 chifra argc: 6 [1:names] [2:--names] [3:50-Tokens] [4:--fmt] [5:txt] 
 chifra names --names 50-Tokens --fmt txt 
 TIME ~ CLOCK - <INFO>  : mode: names
-TIME ~ CLOCK - : 4-----call_command ----> ethNames 50-Tokens --fmt txt
 chifra names argc: 4 [1:50-Tokens] [2:--fmt] [3:txt] 
 chifra names 50-Tokens --fmt txt 
 PROG_NAME = [chifra names]
@@ -64,7 +63,6 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0x089a6d83282fb8988a656189f1e7a73fa6c1cac2	Prospectors Gold	PGL		18
 50-Tokens:ERC20	0x08d32b0da63e2c3bcf8019c9c5d849d7a9d791e6	Dentacoin	٨
 50-Tokens:ERC20	0x08f5a9235b08173b7569f83645d2c7fb55e8ccd8	Tierion Network Token	TNT		8
-50-Tokens:ERC20	0x090d4613473dee047c3f2706764f49e0821d256e	Uniswap: Token Distributor
 50-Tokens:ERC20	0x0947b0e6d821378805c9598291385ce7c791a6b2	Lendingblock	LND		18
 50-Tokens:ERC20	0x09617f6fd6cf8a71278ec86e23bbab29c04353a7	Unblocked Ledger Token	ULT		18
 50-Tokens:ERC20	0x09fe5f0236f0ea5d930197dce254d77b04128075	Wrapped CryptoKitties	WCK		18
@@ -207,3 +205,4 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0x23352036e911a22cfc692b5e2e196692658aded9	Friendz Coin	FDZ		18
 50-Tokens:ERC20	0x2344871f523cbb28a4f60045531184cf1f03ad24	RoBET - Truly Decentralized Sportsbetting	ROBET		18
 50-Tokens:ERC20	0x23b75bc7aaf28e2d6628c3f424b3882f8f072a3c	Vice	VIT		18
+50-Tokens:ERC20	0x23ccc43365d9dd3882eab88f43d515208f832430	MidasProtocol	MAS		18

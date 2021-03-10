@@ -1,0 +1,13 @@
+[settings]
+base_class = CEthState
+class = CEthCall
+fields = blknum blockNumber|\
+        string encoding|\
+        string bytes|\
+        CAbi abi_spec|\
+        CFunction result
+includes = utillib.h|ethstate.h
+cpp_includes = etherlib.h
+sort = v1.blockNumber < v2.blockNumber
+equals = blockNumber == it.blockNumber
+display_str = blockNumber, address, balance, nonce, code, storage, deployed, acctType

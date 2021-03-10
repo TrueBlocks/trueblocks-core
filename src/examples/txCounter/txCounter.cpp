@@ -31,7 +31,7 @@ class CCounter {
     void loadFromFile(void) {
         string_q contents;
         asciiFileToString("./data/countsByWeek.txt", contents);
-        if (contents.empty()){
+        if (contents.empty()) {
             cerr << "Error: /data/countsByWeek.txt contents is empty" << '\n';
             return;
         }
@@ -60,7 +60,7 @@ int main(int argc, const char* argv[]) {
 
     CCounter counter;
     counter.loadFromFile();
-    blknum_t latest = getLatestBlock_cache_final();
+    blknum_t latest = getBlockProgress(BP_FINAL).finalized;
     for (blknum_t i = counter.startBlock - 1; i < latest; i++) {
         string_q fileName = getBinaryCacheFilename(CT_BLOCKS, i);
         if (fileExists(fileName)) {

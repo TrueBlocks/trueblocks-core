@@ -76,6 +76,15 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
+    // BEG_DEBUG_DISPLAY
+    // LOG_TEST("transactions", transactions, (transactions == NOPOS));
+    LOG_TEST_BOOL("articulate", articulate);
+    LOG_TEST_BOOL("count", count);
+    LOG_TEST_BOOL("skip_ddos", skip_ddos);
+    LOG_TEST("max_traces", max_traces, (max_traces == 250));
+    LOG_TEST("filter", filter, (filter == ""));
+    // END_DEBUG_DISPLAY
+
     if (!isTracingNode())
         return usage("Tracing is required for this program to work properly.");
 
@@ -173,8 +182,10 @@ void COptions::Init(void) {
     // BEG_CODE_INIT
     articulate = false;
     count = false;
+    // clang-format off
     skip_ddos = getGlobalConfig("getTrace")->getConfigBool("settings", "skip_ddos", true);
     max_traces = getGlobalConfig("getTrace")->getConfigInt("settings", "max_traces", 250);
+    // clang-format on
     filter = "";
     // END_CODE_INIT
 
@@ -204,7 +215,7 @@ COptions::~COptions(void) {
 
 //--------------------------------------------------------------------------------
 bool COptions::extractBlocksFromFilter(blknum_t& b1, const string_q& p1, blknum_t& b2, const string_q& p2) {
-    blknum_t latest = getLatestBlock_client();
+    blknum_t latest = getBlockProgress(BP_CLIENT).client;
     COptionsBlockList blocks;
 
     // if p1 is empty, the user provided nothing so just return

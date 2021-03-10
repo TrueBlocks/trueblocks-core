@@ -9,7 +9,6 @@
       "miner": "0x2a65aca4d5fc5b5c859090a6c34d164135398226",
       "number": "0x2e7721",
       "parentHash": "0x74a7b7ed731f1a1ff41e97de97ec255908e6ca341ff1f7498e4df55e792d163d",
-      "price": 0,
       "timestamp": "0x58852147",
       "transactions": [
         {
@@ -450,10 +449,6 @@
         {
           "name": "parentHash",
           "type": "hash"
-        },
-        {
-          "name": "price",
-          "type": "double"
         },
         {
           "name": "timestamp",

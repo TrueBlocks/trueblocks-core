@@ -21,6 +21,6 @@ inline wei_t getUsdFromMakerAt(const string_q& blk) {
     if (blk == "first")
         return getUsdFromMakerAt(0);
     if (blk == "latest")
-        return getUsdFromMakerAt(getLatestBlock_client());
+        return getUsdFromMakerAt(getBlockProgress(BP_CLIENT).client);
     return getUsdFromMakerAt(str_2_Uint(blk));  // handles hex
 }

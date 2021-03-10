@@ -1,25 +1,18 @@
 blockScrape argc: 2 [1:--publish] 
 blockScrape --publish 
-
-  The --publish option is only available with the --pin option. Quitting...
-
-  Usage:    blockScrape [-t|-n|-p|-u|-s|-v|-h] mode  
-  Purpose:  Decentralized blockchain scraper and block cache.
-
-  Where:  
-	mode                  control the block and account scrapers, one of [run*|quit|pause|restart] (required)
-	-t  (--tool <val>)    process the index, monitors, or both (none means process timestamps only), one or more of [monitors|index*|none|both]
-	-n  (--n_blocks <num>)maximum number of blocks to process (defaults to 5000)
-	-p  (--pin)           pin new chunks (and blooms) to IPFS (requires Pinata key and running IPFS node)
-	-u  (--publish)       publish the hash of the pin manifest to the UnchainedIndex smart contract
-	-s  (--sleep <double>)the number of seconds to sleep between passes (default 14)
-
-	#### Hidden options
-	-b  (--n_block_procs <num>)number of block channels for blaze
-	-a  (--n_addr_procs <num>)number of address channels for blaze
-	#### Hidden options
-
-	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
-	-h  (--help)          display this help screen
-
-  Powered by TrueBlocks
+TIME ~ CLOCK - <INFO>  : publish: true
+{
+  "fileName": "initial-manifest.json",
+  "indexFormat": "Qmart6XP9XjL43p72PGR93QKytbK8jWWcMguhFgxATTya2",
+  "bloomFormat": "QmNhPk39DUFoEdhUmtGARqiFECUHeghyeryxZM9kyRxzHD",
+  "prevHash": "0x0",
+  "newBlockRange": "000000000-000000000",
+  "newPins": [
+    {
+      "fileName": "000000000-000000000",
+      "bloomHash": "QmPQEgUm7nzQuW9HYyWp5Ff3aoUwg2rsxDngyuyddJTvrv",
+      "indexHash": "QmZ5Atm8Z7aFLz2EycK4pVMHuH4y3PDGspuFejnE9fx2i5"
+    }
+  ]
+}TIME ~ CLOCK - : 8------Current state stopped.
+{ "status": "stopped" }

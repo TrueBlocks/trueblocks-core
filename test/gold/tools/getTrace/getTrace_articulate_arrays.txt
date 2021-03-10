@@ -1,5 +1,7 @@
 getTrace argc: 6 [1:0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f] [2:--articulate] [3:--fmt] [4:api] [5:--verbose] 
 getTrace 0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f --articulate --fmt api --verbose 
+TIME ~ CLOCK - <INFO>  : articulate: true
+TIME ~ CLOCK - <INFO>  : skip_ddos: true
 {"data": [
 --3 : 12 : 0
 --  0: _keys (uint256[])
@@ -223,7 +225,7 @@ getTrace 0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f --ar
         }
       ]
     },
-    "compressedTrace": "acceptTheseAskRequestsAndBUY ( _keys: [6, 5], _tokenAmounts: [25000000000000000000, 25000000000000000000], _dollarPrices: [2000000000000000000, 2000000000000000000] )"
+    "compressedTrace": "acceptTheseAskRequestsAndBUY([6, 5] /*_keys*/, [25000000000000000000, 25000000000000000000] /*_tokenAmounts*/, [2000000000000000000, 2000000000000000000] /*_dollarPrices*/); "
   },  {
     "type": "call",
     "action": {
@@ -260,7 +262,7 @@ getTrace 0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f --ar
         }
       ]
     },
-    "compressedTrace": "USD ( _id: 0 )"
+    "compressedTrace": "USD(0 /*_id*/); "
   },  {
     "type": "call",
     "action": {
@@ -297,7 +299,7 @@ getTrace 0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f --ar
         }
       ]
     },
-    "compressedTrace": "USD ( _id: 0 )"
+    "compressedTrace": "USD(0 /*_id*/); "
   }], "types": [
 { "type": "CTrace", "fields": [{ "name": "type", "type": "text" }, { "name": "error", "type": "text" }, { "name": "action", "type": "object" }, { "name": "result", "type": "object" }, { "name": "articulatedTrace", "type": "object" }, { "name": "compressedTrace", "type": "text" }] }
 ], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }

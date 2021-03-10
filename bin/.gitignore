@@ -22,7 +22,7 @@ getTrace
 getTrans
 grabABI
 makeClass
-pinStatus
+pinMan
 tbServer
 testRunner
 turboDive
@@ -69,6 +69,7 @@ lastBlockTest
 loggingTest
 makeReadme.py
 parsingTest
+pinTest
 printFloatTest
 pylint.py
 runningTest

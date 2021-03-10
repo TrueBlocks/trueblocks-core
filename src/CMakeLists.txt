@@ -58,6 +58,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1z -Werror -Wall -O2 -fPIC")
 if(APPLE)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1z -Werror -Wconversion -Wall -O2 -fPIC")
 endif()
+
 # ----------------------------------------------------------------------------------------
 # Linkable libraries
 set (BASE_LIBS pin acct ether util ${CURL_LIBRARIES})

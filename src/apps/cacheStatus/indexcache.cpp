@@ -288,22 +288,7 @@ bool CIndexCache::readBinaryCache(const string_q& cacheType, bool details, bool 
     LOG4("\tReading from cache ", fn);
     CArchive archive(READING_ARCHIVE);
     if (archive.Lock(fn, modeReadOnly, LOCK_NOWAIT)) {
-        // CStatus status;
         Serialize(archive);
-        // if (status.caches.size() > 0) {
-        //    CIndexCache* cache = (CIndexCache*)status.caches[0];
-        //    *this = *cache;  // copy the values from the parent class
-        //    const CRuntimeClass* pClass = cache->getRuntimeClass();
-        //    if (pClass) {  // copy the values from this class
-        //        for (auto field : pClass->fieldList) {
-        //            string_q ff = field.getName();
-        //            string_q val = cache->getValueByName(ff);
-        //      //              char chars[] = {'\t', '\r', '\"', '\n', 0x1f};
-        //      //              removeCharacters(val, 5, chars);
-        //            setValueByName(ff, val);
-        //        }
-        //    }
-        //}
         archive.Release();
         LOG4("\tData was read from cache ", fn);
         return true;
@@ -320,8 +305,6 @@ bool CIndexCache::writeBinaryCache(const string_q& cacheType, bool details) {
     string_q fn = getCachePath("tmp/" + cacheType + (details ? "_det" : "") + ".bin");
     CArchive archive(WRITING_ARCHIVE);
     if (archive.Lock(fn, modeWriteCreate, LOCK_WAIT)) {
-        // CStatus status;
-        // status.caches.push_back(this);
         SerializeC(archive);
         archive.Release();
         return true;

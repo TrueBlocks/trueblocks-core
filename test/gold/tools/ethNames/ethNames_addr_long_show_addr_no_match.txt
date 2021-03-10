@@ -1,3 +1,4 @@
 ethNames argc: 5 [1:0xCB1] [2:--addr] [3:--fmt] [4:txt] 
 ethNames 0xCB1 --addr --fmt txt 
+TIME ~ CLOCK - <INFO>  : addr: true
 0xcb18b23d3fd1a69b520a6f9fb7f0de37525fb291

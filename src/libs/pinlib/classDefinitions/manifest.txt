@@ -1,0 +1,12 @@
+[settings]
+class = CPinManifest
+fields = string fileName|\
+        string indexFormat|\
+        string bloomFormat|\
+        hash prevHash|\
+        string newBlockRange|\
+        CPinnedChunkArray newPins|\
+        string prevBlockRange|\
+        CPinnedChunkArray prevPins
+includes = etherlib.h|pinnedchunk.h
+serializable = true

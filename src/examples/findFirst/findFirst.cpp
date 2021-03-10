@@ -19,7 +19,7 @@ int main(int argc, const char* argv[]) {
 
     address_t search("0xbb9bc244d798123fde783fcc1c72d3bb8c189413");
     blknum_t start = 1428000;
-    for (blknum_t bl = start; bl < getLatestBlock_client(); bl++) {
+    for (blknum_t bl = start; bl < getBlockProgress(BP_CLIENT).client; bl++) {
         CBlock block;
         getBlock(block, bl);
         if (!block.forEveryUniqueAppearanceInBlock(visitAddress, NULL, &search))

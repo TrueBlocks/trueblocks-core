@@ -1,13 +1,1 @@
-{ "status": "running" }
-{
-  "message": "Testing only",
-  "mode": "run",
-  "tool": "index",
-  "tools": 2,
-  "n_blocks": 18446744073709551615,
-  "n_block_procs": 18446744073709551615,
-  "n_addr_procs": 18446744073709551615,
-  "pin": 1,
-  "publish": 1,
-}
-{ "status": "stopped" }
+{ "errors": [ "chifra scrape - The --publish option is not available when using the --pin option." ] }

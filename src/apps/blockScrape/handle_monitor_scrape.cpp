@@ -9,21 +9,26 @@
 bool COptions::scrape_monitors(void) {
     ENTER("scrape_monitors");
 
-    CMonitorArray monitors;
     CMonitor m;
-    // Catch the monitors addresses up to the scraper if in --deamon mode
+    CMonitorArray monitors;
     forEveryFileInFolder(m.getMonitorPath("") + "*", prepareMonitors, &monitors);
+
     for (auto monitor : monitors) {
+        // We check frequently if the user has told us to quit (either by sending
+        // a direct command to pause or by hitting control+C)
         if (state == STATE_STOPPED || shouldQuit())
             break;
+
         ostringstream os;
         os << "acctExport " << monitor.address << " --freshen";
-        LOG_INFO("Calling: ", os.str(), string_q(40, ' '), "\r");
+        LOG_TEST("Calling: ", os.str() + string_q(40, ' ') + "\r", false);
         // clang-format off
         if (system(os.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings
         // clang-format on
-        state = getCurrentState();
-        usleep(50000);
+
+        string_q unused;
+        state = getCurrentState(unused);
+        usleep(50000);  // allows user to get a control+c in edgewise
     }
 
     return true;

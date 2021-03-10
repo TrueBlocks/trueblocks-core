@@ -1,5 +1,5 @@
 {
   "errors": [
-    "chifra export - You must provide at least one Ethereum address."
+    "acctExport - You must provide at least one Ethereum address."
   ]
 }

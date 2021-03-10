@@ -1,5 +1,5 @@
 {
   "errors": [
-    "chifra export - Invalid option: --to"
+    "acctExport - Invalid option: --to"
   ]
 }

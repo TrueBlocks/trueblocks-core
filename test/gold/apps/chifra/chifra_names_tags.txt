@@ -1,10 +1,10 @@
 chifra argc: 3 [1:names] [2:--tags] 
 chifra names --tags 
 TIME ~ CLOCK - <INFO>  : mode: names
-TIME ~ CLOCK - : 4-----call_command ----> ethNames --tags
 chifra names argc: 2 [1:--tags] 
 chifra names --tags 
 PROG_NAME = [chifra names]
+TIME ~ CLOCK - <INFO>  : tags: true
 tags
 
 30-Contracts
@@ -29,7 +29,7 @@ tags
 31-Gitcoin Grants:Friends
 31-Gitcoin Grants:Grant
 34-ENS
-34-Twitter: Friends
+34-Twitter:Friends
 35-Pool Together
 36-Balancer
 36-Chainlink

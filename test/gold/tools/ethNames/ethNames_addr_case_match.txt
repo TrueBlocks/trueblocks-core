@@ -1,5 +1,6 @@
 ethNames argc: 5 [1:0xcb] [2:--match_case] [3:--fmt] [4:txt] 
 ethNames 0xcb --match_case --fmt txt 
+TIME ~ CLOCK - <INFO>  : match_case: true
 tags	address	name	symbol	decimals
 31-Gitcoin Grants:Friends	0xcb18b23d3fd1a69b520a6f9fb7f0de37525fb291	Name 0xcb18b23d
 31-Gitcoin Grants:Friends	0xcb23fbe30de52338156849c89fdea31a50c23a77	Name 0xcb23fbe3

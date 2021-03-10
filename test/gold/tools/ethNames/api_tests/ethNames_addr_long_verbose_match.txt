@@ -36,4 +36,4 @@ tags	address	name	symbol	decimals	source
 31-Gitcoin Grants:Grant	0xb6f7c2a6eefb0d627d149d7263152ad4548120f2	Grant 1266 the Giving Block - Making Crypto Donations Easy				https://gitcoin.co/grants/1266/the-giving-block-making-crypto-donations-easy
 31-Gitcoin Grants:Grant	0xb6f947eed973bc0072bd0fbe2c44594f8d62b332	Grant 0977 Teaching South Africans to Better Themselves				https://gitcoin.co/grants/977/teaching-south-africans-to-better-themselves
 60-Airdrops	0xb6fab2c9e391ad3af57567e22bf3eb792079f55c	HEALP Airdrop Sender				TrueBlocks.io
-34-Twitter: Friends	0xb6fee4df663addc0081b51385a6195d52d1c2001	Name 0xb6fee4df				Twitter
+34-Twitter:Friends	0xb6fee4df663addc0081b51385a6195d52d1c2001	Name 0xb6fee4df				Twitter

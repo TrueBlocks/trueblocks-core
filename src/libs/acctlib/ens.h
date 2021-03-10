@@ -18,5 +18,9 @@
 #include "etherlib.h"
 
 namespace qblocks {
-hash_t namehash(const string_q& domainIn);
-}
+
+extern hash_t namehash(const string_q& domainIn);
+extern address_t addressFromENSName(const string_q& name);
+extern string_q ensNameFromAddress(const address_t& addr);
+
+}  // namespace qblocks

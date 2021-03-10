@@ -1,7 +1,6 @@
 chifra argc: 3 [1:tokens] [2:--help] 
 chifra tokens --help 
 TIME ~ CLOCK - <INFO>  : mode: tokens
-TIME ~ CLOCK - : 4-----call_command ----> getTokenInfo --help
 chifra tokens argc: 2 [1:--help] 
 chifra tokens --help 
 PROG_NAME = [chifra tokens]

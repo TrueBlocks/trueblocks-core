@@ -17,14 +17,12 @@ file(MAKE_DIRECTORY "${DEST_PATH}/cache/prices")
 file(MAKE_DIRECTORY "${DEST_PATH}/cache/tmp")
 file(MAKE_DIRECTORY "${DEST_PATH}/names")
 file(MAKE_DIRECTORY "${DEST_PATH}/makeClass")
-file(MAKE_DIRECTORY "${DEST_PATH}/grabABI")
-file(MAKE_DIRECTORY "${DEST_PATH}/chifra")
 file(MAKE_DIRECTORY "${DEST_PATH}/abis")
 file(MAKE_DIRECTORY "${DEST_PATH}/abis/known-000")
 file(MAKE_DIRECTORY "${DEST_PATH}/abis/known-005")
 file(MAKE_DIRECTORY "${DEST_PATH}/abis/known-010")
 file(MAKE_DIRECTORY "${DEST_PATH}/abis/known-015")
-file(MAKE_DIRECTORY "${DEST_PATH}/ipfs-hashes")
+file(MAKE_DIRECTORY "${DEST_PATH}/manifest")
 file(MAKE_DIRECTORY "${DEST_PATH}/mocked")
 
 #---------------------------------------------------------------
@@ -92,7 +90,17 @@ file(COPY "${SOURCE_PATH}/mocked/monitors.tar.gz" DESTINATION "${DEST_PATH}/mock
 # makeClass content
 #---------------------------------------------------------------
 message(STATUS "Copying makeClass templates to ${DEST_PATH}/makeClass")
-file(GLOB TARGET_FILES "${CMAKE_SOURCE_DIR}/../../../src/dev_tools/makeClass/templates/blank*")
+file(GLOB TARGET_FILES "${CMAKE_SOURCE_DIR}/../../../src/dev_tools/makeClass/templates/*")
+foreach(FILE ${TARGET_FILES} )
+	#message(STATUS "  Copied file to ${DEST_PATH}/makeClass")
+	file(COPY "${FILE}" DESTINATION "${DEST_PATH}/makeClass")
+endforeach( FILE )
+file(GLOB TARGET_FILES "${CMAKE_SOURCE_DIR}/../../../docs/swagger.yaml")
+foreach(FILE ${TARGET_FILES} )
+	#message(STATUS "  Copied file to ${DEST_PATH}/makeClass")
+	file(COPY "${FILE}" DESTINATION "${DEST_PATH}/makeClass")
+endforeach( FILE )
+file(GLOB TARGET_FILES "${CMAKE_SOURCE_DIR}/../../../docs/api.html")
 foreach(FILE ${TARGET_FILES} )
 	#message(STATUS "  Copied file to ${DEST_PATH}/makeClass")
 	file(COPY "${FILE}" DESTINATION "${DEST_PATH}/makeClass")
@@ -141,12 +149,9 @@ endforeach( FILE )
 #---------------------------------------------------------------
 # Copy the ipfs hash files (if they don't exist -- user may be building them)
 #---------------------------------------------------------------
-set(IPFS_HASHES "${DEST_PATH}/ipfs-hashes/pin-manifest.json")
-if (NOT EXISTS "${IPFS_HASHES}")
-	message(STATUS "Seeding ipfs hash files to ${DEST_PATH}/ipfs-hashes")
-	file(COPY "${SOURCE_PATH}/ipfs-hashes/pin-manifest.json" DESTINATION "${DEST_PATH}/ipfs-hashes" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
-	file(COPY "${SOURCE_PATH}/ipfs-hashes/empty.fil" DESTINATION "${DEST_PATH}/ipfs-hashes" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
-endif()
+message(STATUS "Seeding initial manifest ${DEST_PATH}/manifest/")
+file(COPY "${SOURCE_PATH}/manifest/empty-manifest.json" DESTINATION "${DEST_PATH}/manifest/" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
+file(COPY "${SOURCE_PATH}/manifest/initial-manifest.json" DESTINATION "${DEST_PATH}/manifest/" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
 
 #---------------------------------------------------------------
 # Copy the prices files

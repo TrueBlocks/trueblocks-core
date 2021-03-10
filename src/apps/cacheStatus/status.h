@@ -42,6 +42,7 @@ class CStatus : public CBaseNode {
     bool is_archive;
     bool is_tracing;
     bool has_eskey;
+    bool has_pinkey;
     timestamp_t ts;
     CCachePtrArray caches;
 
@@ -123,6 +124,7 @@ inline void CStatus::initialize(void) {
     is_archive = false;
     is_tracing = false;
     has_eskey = false;
+    has_pinkey = false;
     ts = date_2_Ts(Now());
     caches.clear();
 
@@ -156,6 +158,7 @@ inline void CStatus::duplicate(const CStatus& st) {
     is_archive = st.is_archive;
     is_tracing = st.is_tracing;
     has_eskey = st.has_eskey;
+    has_pinkey = st.has_pinkey;
     ts = st.ts;
     caches = st.caches;
 

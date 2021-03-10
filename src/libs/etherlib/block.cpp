@@ -404,6 +404,7 @@ void CBlock::registerClass(void) {
     HIDE_FIELD(CBlock, "date");
     ADD_FIELD(CBlock, "age", T_DATE, ++fieldNum);
     HIDE_FIELD(CBlock, "age");
+    HIDE_FIELD(CBlock, "price");
     // EXISTING_CODE
 }
 

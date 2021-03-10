@@ -1,7 +1,6 @@
 chifra argc: 3 [1:blocks] [2:12] 
 chifra blocks 12 
 TIME ~ CLOCK - <INFO>  : mode: blocks
-TIME ~ CLOCK - : 4-----call_command ----> getBlock 12
 chifra blocks argc: 2 [1:12] 
 chifra blocks 12 
 PROG_NAME = [chifra blocks]
@@ -14,9 +13,6 @@ PROG_NAME = [chifra blocks]
   "parentHash": "0x3f5e756c3efcb93099361b7ddd0dabfeaa592439437c1c836e443ccb81e93242",
   "miner": "0x0193d941b50d91be6567c7ee1c0fe7af498b4137",
   "difficulty": 17179844608,
-  "price": 0.00000,
   "finalized": true,
   "timestamp": 1438270144
-}], "types": [
-{ "type": "CBlock", "fields": [{ "name": "gasLimit", "type": "gas" }, { "name": "gasUsed", "type": "gas" }, { "name": "hash", "type": "hash" }, { "name": "blockNumber", "type": "blocknum" }, { "name": "parentHash", "type": "hash" }, { "name": "miner", "type": "address" }, { "name": "difficulty", "type": "unumber" }, { "name": "price", "type": "double" }, { "name": "finalized", "type": "bool" }, { "name": "timestamp", "type": "timestamp" }, { "name": "transactions", "type": "object|ts_array" }] }
-] }
+}] }

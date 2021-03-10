@@ -62285,10 +62285,6 @@
           "type": "unumber"
         },
         {
-          "name": "price",
-          "type": "double"
-        },
-        {
           "name": "finalized",
           "type": "bool"
         },

@@ -18,4 +18,4 @@ add_executable(${TOOL_NAME} ${SOURCE_FILES})
 target_link_libraries (${TOOL_NAME} ${BASE_LIBS})
 
 # Additional target to make the README.md
-build_readme(${CMAKE_CURRENT_SOURCE_DIR} ${TOOL_NAME})
+# build_readme(${CMAKE_CURRENT_SOURCE_DIR} ${TOOL_NAME})

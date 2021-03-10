@@ -1,4 +1,6 @@
 getBlock argc: 6 [1:3982128] [2:--uniq] [3:--count] [4:--fmt] [5:txt] 
 getBlock 3982128 --uniq --count --fmt txt 
+TIME ~ CLOCK - <INFO>  : uniq: true
+TIME ~ CLOCK - <INFO>  : count: true
 blocknumber	transactionscnt	addr_count
 3982128	91	164

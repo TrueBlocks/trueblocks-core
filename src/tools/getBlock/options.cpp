@@ -52,7 +52,7 @@ bool COptions::parseArguments(string_q& command) {
     // END_CODE_LOCAL_INIT
 
     Init();
-    blknum_t latest = getLatestBlock_client();
+    blknum_t latest = getBlockProgress(BP_CLIENT).client;
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
         string_q orig = arg;
@@ -98,6 +98,18 @@ bool COptions::parseArguments(string_q& command) {
             // END_CODE_AUTO
         }
     }
+
+    // BEG_DEBUG_DISPLAY
+    // LOG_TEST("blocks", blocks, (blocks == NOPOS));
+    LOG_TEST_BOOL("hashes_only", hashes_only);
+    LOG_TEST_BOOL("apps", apps);
+    LOG_TEST_BOOL("uniq", uniq);
+    LOG_TEST_BOOL("uniq_tx", uniq_tx);
+    LOG_TEST_BOOL("count", count);
+    LOG_TEST_BOOL("uncles", uncles);
+    LOG_TEST_BOOL("force", force);
+    LOG_TEST_BOOL("trace", trace);
+    // END_DEBUG_DISPLAY
 
     if (force)
         etherlib_init(defaultQuitHandler);

@@ -1,5 +1,6 @@
 cacheStatus argc: 4 [1:--report] [2:--fmt] [3:txt] 
 cacheStatus --report --fmt txt 
+TIME ~ CLOCK - <INFO>  : report: true
 {
   "client_version": "Client version",
   "client_ids": "chainId: 1 networkId: 1",
@@ -13,6 +14,7 @@ cacheStatus --report --fmt txt
   "is_archive": true,
   "is_tracing": true,
   "has_eskey": true,
+  "has_pinkey": true,
   "caches": [
     {
       "type": "CIndexCache",

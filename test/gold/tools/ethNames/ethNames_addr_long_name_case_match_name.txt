@@ -1,3 +1,4 @@
 ethNames argc: 6 [1:0xCB] [2:torj] [3:--match_case] [4:--fmt] [5:txt] 
 ethNames 0xCB torj --match_case --fmt txt 
+TIME ~ CLOCK - <INFO>  : match_case: true
 No results for 0xCB torj --match_case

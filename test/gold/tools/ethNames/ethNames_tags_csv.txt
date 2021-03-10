@@ -1,5 +1,6 @@
 ethNames argc: 4 [1:--tags] [2:--fmt] [3:csv] 
 ethNames --tags --fmt csv 
+TIME ~ CLOCK - <INFO>  : tags: true
 "tags"
 ""
 "30-Contracts"
@@ -24,7 +25,7 @@ ethNames --tags --fmt csv
 "31-Gitcoin Grants:Friends"
 "31-Gitcoin Grants:Grant"
 "34-ENS"
-"34-Twitter: Friends"
+"34-Twitter:Friends"
 "35-Pool Together"
 "36-Balancer"
 "36-Chainlink"

@@ -109,6 +109,9 @@ string_q CStatus::getValueByName(const string_q& fieldName) const {
             if (fieldName % "has_eskey") {
                 return bool_2_Str(has_eskey);
             }
+            if (fieldName % "has_pinkey") {
+                return bool_2_Str(has_pinkey);
+            }
             break;
         case 'i':
             if (fieldName % "index_path") {
@@ -205,6 +208,10 @@ bool CStatus::setValueByName(const string_q& fieldNameIn, const string_q& fieldV
                 has_eskey = str_2_Bool(fieldValue);
                 return true;
             }
+            if (fieldName % "has_pinkey") {
+                has_pinkey = str_2_Bool(fieldValue);
+                return true;
+            }
             break;
         case 'i':
             if (fieldName % "index_path") {
@@ -292,6 +299,7 @@ bool CStatus::Serialize(CArchive& archive) {
     archive >> is_archive;
     archive >> is_tracing;
     archive >> has_eskey;
+    archive >> has_pinkey;
     // archive >> ts;
     uint64_t nCaches = 0;
     archive >> nCaches;
@@ -332,6 +340,7 @@ bool CStatus::SerializeC(CArchive& archive) const {
     archive << is_archive;
     archive << is_tracing;
     archive << has_eskey;
+    archive << has_pinkey;
     // archive << ts;
     archive << (uint64_t)caches.size();
     for (auto cache : caches) {
@@ -389,6 +398,7 @@ void CStatus::registerClass(void) {
     ADD_FIELD(CStatus, "is_archive", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CStatus, "is_tracing", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CStatus, "has_eskey", T_BOOL | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CStatus, "has_pinkey", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CStatus, "ts", T_TIMESTAMP, ++fieldNum);
     HIDE_FIELD(CStatus, "ts");
     ADD_FIELD(CStatus, "caches", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
@@ -456,8 +466,16 @@ ostream& operator<<(ostream& os, const CStatus& it) {
 
 //---------------------------------------------------------------------------
 const CBaseNode* CStatus::getObjectAt(const string_q& fieldName, size_t index) const {
-    if (fieldName % "caches" && index < caches.size())
-        return caches[index];
+    if (fieldName % "caches") {
+        if (index == NOPOS) {
+            CCache* empty;
+            ((CStatus*)this)->caches.push_back(empty);  // NOLINT
+            index = caches.size() - 1;
+        }
+        if (index < caches.size())
+            return caches[index];
+    }
+
     return NULL;
 }
 

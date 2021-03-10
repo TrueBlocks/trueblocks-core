@@ -217,7 +217,8 @@ static const char* STR_CURLERROR =
 //-------------------------------------------------------------------------
 static const char* STR_CURLRESEMPTY = "The Ethereum node returned an empty response.";
 
-static const char* STR_ERROR_NODEREQUIRED = "The Ethereum RPC: '[RPC]' was not found.";
+static const char* STR_ERROR_NODEREQUIRED =
+    "TrueBlocks does not work without a valid RPC endpoint. [RPC] was not found.";
 
 //-------------------------------------------------------------------------
 void displayCurlError(const string_q& msg, const string_q& val) {

@@ -1,5 +1,7 @@
 getTrans argc: 5 [1:0xa5c9c1a65f998be86dc2131d57d0de0c418bb534d8d2b37b46c99888ccef8d10] [2:-avt] [3:--fmt] [4:api] 
 getTrans 0xa5c9c1a65f998be86dc2131d57d0de0c418bb534d8d2b37b46c99888ccef8d10 -avt --fmt api 
+TIME ~ CLOCK - <INFO>  : articulate: true
+TIME ~ CLOCK - <INFO>  : trace: true
 {"data": [
 --3 : 7 : 0
 --  0: recipient (address)
@@ -115,7 +117,7 @@ getTrans 0xa5c9c1a65f998be86dc2131d57d0de0c418bb534d8d2b37b46c99888ccef8d10 -avt
               }
             ]
           },
-          "compressedLog": "DataDumped ( _recipient: 0xd31f381ad54386895852f311fc3be2008c88cb27, _topic: 0xf31b5730bd294639c67fa143fca1dad2c7aa05644f8d8b0e104aad5922d2f866, _dataHash: QmQ4N388Lsnw8NHnJrRoY2uagmPqsm3S )"
+          "compressedLog": "DataDumped(0xd31f381ad54386895852f311fc3be2008c88cb27 /*_recipient*/, 0xf31b5730bd294639c67fa143fca1dad2c7aa05644f8d8b0e104aad5922d2f866 /*_topic*/, QmQ4N388Lsnw8NHnJrRoY2uagmPqsm3S /*_dataHash*/); "
         }
       ],
       "status": null
@@ -160,7 +162,7 @@ getTrans 0xa5c9c1a65f998be86dc2131d57d0de0c418bb534d8d2b37b46c99888ccef8d10 -avt
             }
           ]
         },
-        "compressedTrace": "postData ( recipient: 0xd31f381ad54386895852f311fc3be2008c88cb27, topic: This is the string that represents the type of data being posted, data: 0x516d51344e3338384c736e77384e486e4a72526f59327561676d5071736d3353 )"
+        "compressedTrace": "postData(0xd31f381ad54386895852f311fc3be2008c88cb27 /*recipient*/, This is the string that represents the type of data being posted /*topic*/, 0x516d51344e3338384c736e77384e486e4a72526f59327561676d5071736d3353 /*data*/); "
       }
     ],
     "articulatedTx": {
@@ -184,7 +186,7 @@ getTrans 0xa5c9c1a65f998be86dc2131d57d0de0c418bb534d8d2b37b46c99888ccef8d10 -avt
         }
       ]
     },
-    "compressedTx": "postData ( recipient: 0xd31f381ad54386895852f311fc3be2008c88cb27, topic: This is the string that represents the type of data being posted, data: 0x516d51344e3338384c736e77384e486e4a72526f59327561676d5071736d3353 )",
+    "compressedTx": "postData(0xd31f381ad54386895852f311fc3be2008c88cb27 /*recipient*/, This is the string that represents the type of data being posted /*topic*/, 0x516d51344e3338384c736e77384e486e4a72526f59327561676d5071736d3353 /*data*/); ",
     "gasCost": 73459170000000,
     "gasUsed": 33543,
     "date": "2017-05-12 01:17:33 UTC",
