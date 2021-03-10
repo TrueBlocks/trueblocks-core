@@ -7272,7 +7272,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0xfd1e80508f243e64ce234ea88a5fd2827c71d4b7	MEDX TOKEN	MEDX	On chain	8	Decentralized healthcare information system	false	false	false	true	true	false
 81-Other	0xfd2487cc0e5dce97f08be1bc8ef1dce8d5988b4d	Doubler_Etherdoubler.Com		EtherScan.io			false	false	false	true	false	false
 75-Early Actors	0xfd2605a2bf58fdbb90db1da55df61628b47f9e8c	Miner_0051_130		OnChain			false	false	false	false	false	false
-34-Twitter Friends	0xfd2ae44009605d43b3fecdbcc311ab60104b0e66	Aparna Krishnan @aparnalocked		Twitter			false	false	false	false	false	false
+34-Twitter:Friends	0xfd2ae44009605d43b3fecdbcc311ab60104b0e66	Aparna Krishnan @aparnalocked		Twitter			false	false	false	false	false	false
 81-Other	0xfd2dfa00ba5941958eaec567e59b42c2aa9dbf70	Ethereum_Twelve_Bagger		EtherScan.io			false	false	false	true	false	false
 81-Other	0xfd3031dd0381121611aa6844a619f50d741f73b2	@wisehammer		Steem			false	false	false	false	false	false
 81-Other	0xfd39bd49ab3df4eda75a23807dab186d4902f924	Self_Store		EtherScan.io			false	false	false	true	false	false

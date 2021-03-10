@@ -317,14 +317,6 @@ TIME ~ CLOCK - <INFO>  : expand: true
   {
     "deleted": false,
     "tags": "50-Tokens:ERC20",
-    "address": "0x090d4613473dee047c3f2706764f49e0821d256e",
-    "name": "Uniswap: Token Distributor",
-    "source": "EtherScan.io",
-    "is_contract": true
-  },
-  {
-    "deleted": false,
-    "tags": "50-Tokens:ERC20",
     "address": "0x0a76aad21948ea1ef447d26dee91a54370e151e0",
     "name": "Ethereum Lite",
     "symbol": "ELITE",
@@ -1780,4 +1772,12 @@ TIME ~ CLOCK - <INFO>  : expand: true
     "symbol": "BRX",
     "source": "EtherScan.io",
     "is_erc20": true
+  },
+  {
+    "deleted": false,
+    "tags": "30-Contracts",
+    "address": "0x5789e2b5460cae9329d93a78511e2ac49f98a1f6",
+    "name": "GU: Legendary Pack",
+    "source": "EtherScan.io",
+    "is_contract": true
   }] }
