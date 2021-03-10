@@ -21,14 +21,10 @@ bool COptions::call_command(int argc, const char* argv[]) {
 
     string_q mode;
     bool has_help = false;
-    bool has_run = false;
     for (int i = 1; i < argc; i++) {
         string_q arg = argv[i];
         if (arg == "-h" || arg == "--help") {
             has_help = true;
-
-        } else if (arg == "run") {
-            has_run = true;
 
         } else if (arg == "-th" || arg == "-ht") {
             isReadme = true;
@@ -73,15 +69,6 @@ bool COptions::call_command(int argc, const char* argv[]) {
     // We want the help screen to display 'chifra subcommand' and not the program's name
     if (!mode.empty() && mode != "serve")
         setenv("PROG_NAME", ("chifra " + string_q(argv[1])).c_str(), true);
-
-    if (isApiMode() && mode == "scrape" && has_run) {
-        cout << "{ \"status\": \"cannot run\" }";
-        LOG_ERR(
-            "Use the API to pause, restart, or quit the scraper -- not to run it. Instead "
-            "open a new terminal window and enter ",
-            cTeal, "chifra scrape run", cOff, ".");
-        EXIT_NOMSG(false);
-    }
 
     // Everything past the mode gets sent to the tool...execpt a few syntactic sugars
     CStringBoolMap removeMap;
@@ -232,9 +219,3 @@ const char* STR_FULL_HELP =
 //     }
 //     tool_flags += " --mocked ";
 // }
-
-// TODO(tjayrush): Re-enable the ability to start, stop, pause, and quit the block scraper
-// This will probably break in the real usage.
-// CStringArray scraper = {"--restart", "--pause", "--quit"};
-// for (auto cmd : scraper)
-//     replace(tool_flags, cmd, substitute(cmd, "--", ""));

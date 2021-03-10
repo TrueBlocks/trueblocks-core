@@ -88,12 +88,10 @@ void COptions::writeOpenApiFile(void) {
             apiStream << endl;
             apiStream << "// " << route << " help text todo" << endl;
             apiStream << "func " << route << "(w http.ResponseWriter, r *http.Request) {" << endl;
-            if (descr.size() && route != "AdminScrape") {
+            if (descr.size()) {
                 apiStream << "\tCallOne(w, r, \"" << descr[0].tool << "\", \"" << cmd << "\")" << endl;
-            } else if (route == "AccountsTags") {
-                apiStream << "\tCallOne(w, r, \"ethNames\", \"tags\")" << endl;
-            } else if (route == "AccountsEntities") {
-                apiStream << "\tCallOne(w, r, \"ethNames\", \"entities\")" << endl;
+            } else if (route == "AccountsTags" || route == "AccountsEntities") {
+                apiStream << "\tCallOne(w, r, \"ethNames\", \"" << cmd << "\")" << endl;
             } else {
                 apiStream << "\tCallOneExtra(w, r, \"chifra\", \"" << cmd << "\", \"" << cmd << "\")" << endl;
             }

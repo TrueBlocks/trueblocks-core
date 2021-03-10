@@ -1,1 +1,1 @@
-{ "errors": [ "chifra scrape - Invalid option 'badmode' for 'mode'. One of [run|quit|pause|restart] required." ] }
+{ "errors": [ "blockScrape - Invalid option 'badmode' for 'mode'. One of [run|quit|pause|restart] required." ] }

@@ -1,1 +1,1 @@
-{ "errors": [ "chifra scrape - Invalid option: --junk" ] }
+{ "errors": [ "blockScrape - Invalid option: --junk" ] }

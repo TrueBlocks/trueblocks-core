@@ -90,7 +90,7 @@ func AdminStatus(w http.ResponseWriter, r *http.Request) {
 
 // AdminScrape help text todo
 func AdminScrape(w http.ResponseWriter, r *http.Request) {
-	CallOneExtra(w, r, "chifra", "scrape", "scrape")
+	CallOne(w, r, "blockScrape", "scrape")
 }
 
 // AdminPins help text todo

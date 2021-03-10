@@ -18,6 +18,11 @@ import (
 	"golang.org/x/time/rate"
 )
 
+// isTestMode return true if we are running from the testing harness
+func isTestMode(r *http.Request) bool {
+	return r.Header.Get("User-Agent") == "testRunner"
+}
+
 // CallOne handles a route that calls the underlying TrueBlocks tool directly
 func CallOne(w http.ResponseWriter, r *http.Request, tbCmd , apiCmd string) {
 	CallOneExtra(w, r, tbCmd, "", apiCmd)
@@ -38,7 +43,7 @@ func CallOneExtra(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd s
 		allDogs = append(allDogs, extra)
 	}
 	hasVerbose := false;
-	hasRun := apiCmd == "scrape";
+	var scrapeCmd string
 	for key, value := range r.URL.Query() {
 		// These keys exist only in the API. We strip them here since the command line
 		// tools will report them as invalid options.
@@ -56,16 +61,27 @@ func CallOneExtra(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd s
 		if key == "verbose" {
 			hasVerbose = true
 		}
-		if apiCmd == "scrape" && key == "mode" && (value[0] == "quit" || value[0] == "pause" || value[0] == "restart") {
-			hasRun = false;
+		if apiCmd == "scrape" && key == "terms" {
+			scrapeCmd = value[0];
 		}
 		allDogs = append(allDogs, value...)
 	}
-	if hasRun && apiCmd == "scrape" {
-		log.Println("You cannot run the scrape command from the API. Quitting.");
-		fmt.Fprint(w, "{\"error\": \"You cannot run the scrape command from the API. Quitting.\"}")
-		return
+
+	if apiCmd == "scrape" {
+		// When we're not testing, only 'quit', 'pause', and 'restart' are valid. While
+		// testing, we allow any mode to pass through so we can test options parsing.
+		// The scraper won't run in test mode anyway, so it's okay.
+		hasRun := scrapeCmd != "quit" && scrapeCmd != "pause" && scrapeCmd != "restart"
+		if isTestMode(r) {
+			hasRun = scrapeCmd == "run"
+		}
+		if hasRun {
+			fmt.Fprint(w, "{ \"status\": \"cannot run\" }")
+			log.Println("Use only 'pause', 'restart', or 'quit' options for the scraper through the API.")
+			return
+		}
 	}
+
 	// If the server was started with --verbose and hte command does not have --verbose...
 	if Options.Verbose > 0 && !hasVerbose {
 		allDogs = append(allDogs, "--verbose")
@@ -98,7 +114,7 @@ func CallOneExtra(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd s
 	// In regular operation, we set an environment variable API_MODE=true. When
 	// testing (the test harness sends a special header) we also send the TEST_MODE=true
 	// environment variable and any other vars for this particular test
-	if r.Header.Get("User-Agent") == "testRunner" {
+	if isTestMode(r) {
 		cmd.Env = append(append(os.Environ(), "TEST_MODE=true"), "API_MODE=true")
 		vars := strings.Split(r.Header.Get("X-TestRunner-Env"), "|")
 		for _, v := range vars {
@@ -167,7 +183,7 @@ func Logger(inner http.Handler, name string) http.Handler {
 		start := time.Now()
 		inner.ServeHTTP(w, r)
 		t := ""
-		if r.Header.Get("User-Agent") == "testRunner" {
+		if isTestMode(r) {
 			t = "-test"
 		}
 		log.Printf(

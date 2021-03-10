@@ -1,1 +1,1 @@
-{ "errors": [ "chifra scrape - Invalid option: -2" ] }
+{ "errors": [ "blockScrape - Invalid option: -2" ] }
