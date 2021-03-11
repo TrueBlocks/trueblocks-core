@@ -20,11 +20,10 @@ bool COptions::call_command(int argc, const char* argv[]) {
     prePrepareArguments(unused, argc, argv);
 
     string_q mode;
-    bool has_help = false;
     for (int i = 1; i < argc; i++) {
         string_q arg = argv[i];
         if (arg == "-h" || arg == "--help") {
-            has_help = true;
+            // do nothing, handled below
 
         } else if (arg == "-th" || arg == "-ht") {
             isReadme = true;
@@ -56,7 +55,7 @@ bool COptions::call_command(int argc, const char* argv[]) {
     setProgName("chifra");
 
     // show chifra's help in limited cases, the tool's help otherwise
-    if (has_help && (argc == 2 || mode == "serve"))
+    if (argc == 2 && (string_q(argv[1]) == "--help" || string_q(argv[1]) == "-h"))
         EXIT_USAGE("");
 
     // Make sure user sent a real subcommand
@@ -67,8 +66,7 @@ bool COptions::call_command(int argc, const char* argv[]) {
         EXIT_USAGE("The first argument you provide must be a chifra subcommand.");
 
     // We want the help screen to display 'chifra subcommand' and not the program's name
-    if (!mode.empty() && mode != "serve")
-        setenv("PROG_NAME", ("chifra " + string_q(argv[1])).c_str(), true);
+    setenv("PROG_NAME", ("chifra " + string_q(argv[1])).c_str(), true);
 
     // Everything past the mode gets sent to the tool...execpt a few syntactic sugars
     CStringBoolMap removeMap;
@@ -134,7 +132,7 @@ map<string, string> cmdMap = {{"monitor", "acctExport --appearances"},
                               {"tokens", "getTokenInfo"},
                               {"when", "whenBlock"},
                               {"init", "pinMan local --init"},
-                              {"scrape", "blockScrape"},
+                              {"scrape", "tbServer --scrape"},
                               {"serve", "tbServer"},
                               {"pins", "pinMan"},
                               {"status", "cacheStatus"},
@@ -167,7 +165,7 @@ const char* STR_FULL_HELP =
     "  when          return a date given a block number or a block number given a date|"
     "ADMIN|"
     "  init          initialize TrueBlocks databases by downloading pinned bloom filters|"
-    "  scrape        scrape the chain and build an index of address appearances (aka digests)|"
+    "  scrape        scrape the chain and build an index of appearances (identical to 'chifra serve --scrape')|"
     "  serve         serve the TrueBlocks API via tbServer|"
     "  pins          query the status of the pinning system|"
     "  status        query the status of the system|"

@@ -19,6 +19,7 @@ import (
 
 func main() {
 	// handle some command line options
+	flag.BoolVar(&tb.Options.Scrape, "scrape", false, "enable block scraper mode")
 	flag.StringVar(&tb.Options.Port, "port", ":8080", "specify the server's port")
     flag.IntVar(&tb.Options.Verbose, "verbose", 0, "verbose level (between 0 and 10 inclusive)")
 	flag.Parse()
@@ -35,6 +36,15 @@ func main() {
 		fmt.Printf("%s", err)
 	} else {
 		log.Printf(string(out[:]))
+	}
+	if tb.Options.Scrape {
+		log.Println("options.scrape: ", tb.Options.Scrape)
+	}
+	if tb.Options.Port != ":8080" {
+		log.Println("options.port: ", tb.Options.Scrape)
+	}
+	if tb.Options.Verbose > 0 {
+		log.Println("options.scrape: ", tb.Options.Scrape)
 	}
 
 	// Start listening on web sockets

@@ -142,3 +142,10 @@ func HandleWebsockets(pool *ConnectionPool, w http.ResponseWriter, r *http.Reque
 
 	go connection.write()
 }
+
+var connectionPool = newConnectionPool()
+
+// RunWebsocketPool runs the websocket pool
+func RunWebsocketPool() {
+	go connectionPool.run()
+}

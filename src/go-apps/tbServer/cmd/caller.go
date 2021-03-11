@@ -1,9 +1,10 @@
+package trueblocks
+
 /*-------------------------------------------------------------------------
  * This source code is confidential proprietary information which is
  * copyright (c) 2018, 2021 TrueBlocks, LLC (http://trueblocks.io)
  * All Rights Reserved
  *------------------------------------------------------------------------*/
-package trueblocks
 
 import (
 	"fmt"
@@ -13,9 +14,6 @@ import (
 	"os/exec"
 	"strconv"
 	"strings"
-	"time"
-
-	"golang.org/x/time/rate"
 )
 
 // isTestMode return true if we are running from the testing harness
@@ -160,53 +158,4 @@ func CallOneExtra(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd s
 	// 	Content: string(output),
 	// }
 	fmt.Fprint(w, output)
-}
-
-// FileExists help text todo
-func FileExists(filename string) bool {
-	info, err := os.Stat(filename)
-	if os.IsNotExist(err) {
-		return false
-	}
-	return !info.IsDir()
-}
-
-var nProcessed int
-// Logger sends information to the server's console
-func Logger(inner http.Handler, name string) http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		var limiter = rate.NewLimiter(1, 3)
-		// fmt.Println("limiter.Limit: ", limiter.Limit())
-		if limiter.Allow() == false {
-            http.Error(w, http.StatusText(429), http.StatusTooManyRequests)
-            return
-        }
-		start := time.Now()
-		inner.ServeHTTP(w, r)
-		t := ""
-		if isTestMode(r) {
-			t = "-test"
-		}
-		log.Printf(
-			"%d %s%s %s %s %s",
-			nProcessed,
-			r.Method,
-			t,
-			r.RequestURI,
-			name,
-			time.Since(start),
-		)
-		nProcessed++
-	})
-}
-
-var connectionPool = newConnectionPool()
-
-func RunWebsocketPool() {
-	go connectionPool.run()
-}
-
-type Response struct {
-	Data *interface{} `json:"data,omitempty"`
-	Error_ []string `json:"error,omitempty"`
 }
