@@ -245,7 +245,7 @@ void COptions::Init(void) {
     status.is_tracing = isTracingNode();
     status.has_eskey = getGlobalConfig("")->getConfigStr("settings", "etherscan_key", "<not_set>") != "<not_set>";
     status.has_pinkey =
-        getGlobalConfig("blcokScrape")->getConfigStr("settings", "pinata_api_key", "<not_set>") != "<not_set>";
+        getGlobalConfig("blockScrape")->getConfigStr("settings", "pinata_api_key", "<not_set>") != "<not_set>";
 }
 
 //---------------------------------------------------------------------------------------------------
