@@ -120,8 +120,7 @@ bool COptions::handle_config_get(ostream& os) {
         string_q v1 = (isTestMode() ? "--n Blocks--" : cc->getConfigStr(g1.name, "n_blocks", "2000"));
         string_q v2 = (isTestMode() ? "--n Addr Procs--" : cc->getConfigStr(g1.name, "n_addr_procs", "20"));
         string_q v3 = (isTestMode() ? "--n Block Procs--" : cc->getConfigStr(g1.name, "n_block_procs", "10"));
-        CConfigItem i1("n_blocks", v1, "uint", "number of blocks to process per invocation of blaze (> 50)", true,
-                       false);
+        CConfigItem i1("n_blocks", v1, "uint", "number of blocks to process per scrape (> 50)", true, false);
         g1.keys.push_back(i1);
         CConfigItem i2("n_addr_procs", v2, "uint", "number of parallel go processes to use to process addresses (> 0)",
                        true, false);

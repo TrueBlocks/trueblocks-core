@@ -32,20 +32,20 @@ LIVE_TEST = [true]
 : 8------bs.staging:        0
 : 8------bs.finalized:      0
 : 8------bs.client:         81
-: 8------bs.blazeStart:     1
-: 8------bs.blazeCnt:       16
+: 8------bs.scrapeStart:      1
+: 8------bs.scrapeCnt:        16
 : 8------bs.n_block_procs:  10
 : 8------bs.n_addr_procs:   20
-: 8------bs.blazeRipe:      53
+: 8------bs.scrapeRipe:       53
 : 8------bs.MAX_ROWS:       13
-<INFO>  : blaze scrape (80 blocks from head)
-: 4-----scrape_blocks ----> env TB_INDEXPATH="$INDEX/" blaze scrape --startBlock 1 --nBlocks 16 --nBlockProcs 10 --nAddrProcs 20 --ripeBlock 53 --verbose 8
-blaze.startBlock:   1
-blaze.nBlocks:      16
-blaze.nBlockProcs:  10
-blaze.nAddrProcs:   20
-blaze.ripeBlock:    53
-blaze.verbose:      8
+<INFO>  : bbbb scrape (80 blocks from head)
+: 4-----scrape_blocks ----> env TB_INDEXPATH="$INDEX/" bbbb scrape --startBlock 1 --nBlocks 16 --nBlockProcs 10 --nAddrProcs 20 --ripeBlock 53 --verbose 8
+bbbb.startBlock:   1
+bbbb.nBlocks:      16
+bbbb.nBlockProcs:  10
+bbbb.nAddrProcs:   20
+bbbb.ripeBlock:    53
+bbbb.verbose:      8
 ................
 : 8------
 : 8------oldStage:                $INDEX/staging/000000000-temp.txt 1121
@@ -151,20 +151,20 @@ blaze.verbose:      8
 : 8------bs.staging:        16
 : 8------bs.finalized:      10
 : 8------bs.client:         82
-: 8------bs.blazeStart:     17
-: 8------bs.blazeCnt:       16
+: 8------bs.scrapeStart:      17
+: 8------bs.scrapeCnt:        16
 : 8------bs.n_block_procs:  10
 : 8------bs.n_addr_procs:   20
-: 8------bs.blazeRipe:      54
+: 8------bs.scrapeRipe:       54
 : 8------bs.MAX_ROWS:       13
-<INFO>  : blaze scrape (65 blocks from head)
-: 4-----scrape_blocks ----> env TB_INDEXPATH="$INDEX/" blaze scrape --startBlock 17 --nBlocks 16 --nBlockProcs 10 --nAddrProcs 20 --ripeBlock 54 --verbose 8
-blaze.startBlock:   17
-blaze.nBlocks:      16
-blaze.nBlockProcs:  10
-blaze.nAddrProcs:   20
-blaze.ripeBlock:    54
-blaze.verbose:      8
+<INFO>  : bbbb scrape (65 blocks from head)
+: 4-----scrape_blocks ----> env TB_INDEXPATH="$INDEX/" bbbb scrape --startBlock 17 --nBlocks 16 --nBlockProcs 10 --nAddrProcs 20 --ripeBlock 54 --verbose 8
+bbbb.startBlock:   17
+bbbb.nBlocks:      16
+bbbb.nBlockProcs:  10
+bbbb.nAddrProcs:   20
+bbbb.ripeBlock:    54
+bbbb.verbose:      8
 ................
 : 8------
 : 8------oldStage:                $INDEX/staging/000000016.txt 354
@@ -304,20 +304,20 @@ blaze.verbose:      8
 : 8------bs.staging:        32
 : 8------bs.finalized:      22
 : 8------bs.client:         83
-: 8------bs.blazeStart:     33
-: 8------bs.blazeCnt:       16
+: 8------bs.scrapeStart:      33
+: 8------bs.scrapeCnt:        16
 : 8------bs.n_block_procs:  10
 : 8------bs.n_addr_procs:   20
-: 8------bs.blazeRipe:      55
+: 8------bs.scrapeRipe:       55
 : 8------bs.MAX_ROWS:       13
-<INFO>  : blaze scrape (50 blocks from head)
-: 4-----scrape_blocks ----> env TB_INDEXPATH="$INDEX/" blaze scrape --startBlock 33 --nBlocks 16 --nBlockProcs 10 --nAddrProcs 20 --ripeBlock 55 --verbose 8
-blaze.startBlock:   33
-blaze.nBlocks:      16
-blaze.nBlockProcs:  10
-blaze.nAddrProcs:   20
-blaze.ripeBlock:    55
-blaze.verbose:      8
+<INFO>  : bbbb scrape (50 blocks from head)
+: 4-----scrape_blocks ----> env TB_INDEXPATH="$INDEX/" bbbb scrape --startBlock 33 --nBlocks 16 --nBlockProcs 10 --nAddrProcs 20 --ripeBlock 55 --verbose 8
+bbbb.startBlock:   33
+bbbb.nBlocks:      16
+bbbb.nBlockProcs:  10
+bbbb.nAddrProcs:   20
+bbbb.ripeBlock:    55
+bbbb.verbose:      8
 ................
 : 8------
 : 8------oldStage:                $INDEX/staging/000000032.txt 590
@@ -494,20 +494,20 @@ blaze.verbose:      8
 : 8------bs.staging:        48
 : 8------bs.finalized:      45
 : 8------bs.client:         84
-: 8------bs.blazeStart:     49
-: 8------bs.blazeCnt:       16
+: 8------bs.scrapeStart:      49
+: 8------bs.scrapeCnt:        16
 : 8------bs.n_block_procs:  10
 : 8------bs.n_addr_procs:   20
-: 8------bs.blazeRipe:      56
+: 8------bs.scrapeRipe:       56
 : 8------bs.MAX_ROWS:       13
-<INFO>  : blaze scrape (35 blocks from head)
-: 4-----scrape_blocks ----> env TB_INDEXPATH="$INDEX/" blaze scrape --startBlock 49 --nBlocks 16 --nBlockProcs 10 --nAddrProcs 20 --ripeBlock 56 --verbose 8
-blaze.startBlock:   49
-blaze.nBlocks:      16
-blaze.nBlockProcs:  10
-blaze.nAddrProcs:   20
-blaze.ripeBlock:    56
-blaze.verbose:      8
+<INFO>  : bbbb scrape (35 blocks from head)
+: 4-----scrape_blocks ----> env TB_INDEXPATH="$INDEX/" bbbb scrape --startBlock 49 --nBlocks 16 --nBlockProcs 10 --nAddrProcs 20 --ripeBlock 56 --verbose 8
+bbbb.startBlock:   49
+bbbb.nBlocks:      16
+bbbb.nBlockProcs:  10
+bbbb.nAddrProcs:   20
+bbbb.ripeBlock:    56
+bbbb.verbose:      8
 ................
 : 8------
 : 8------oldStage:                $INDEX/staging/000000048.txt 177
@@ -603,11 +603,11 @@ blaze.verbose:      8
 : 8------bs.staging:        56
 : 8------bs.finalized:      45
 : 8------bs.client:         85
-: 8------bs.blazeStart:     57
-: 8------bs.blazeCnt:       16
+: 8------bs.scrapeStart:      57
+: 8------bs.scrapeCnt:        16
 : 8------bs.n_block_procs:  10
 : 8------bs.n_addr_procs:   20
-: 8------bs.blazeRipe:      57
+: 8------bs.scrapeRipe:       57
 : 8------bs.MAX_ROWS:       13
 
 Finishing work...

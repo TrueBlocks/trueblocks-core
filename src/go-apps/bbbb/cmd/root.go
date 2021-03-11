@@ -13,11 +13,11 @@ import (
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
-	Use:   "blaze",
+	Use:   "bbbb",
 	Short: "Build, query, or share an index of Ethereum addresses per block",
 	Long: `
 Description:
-  Blaze is an internal-use-only component called by 'blockScrape' to 
+  Bbbb is an internal-use-only component called by 'blockScrape' to 
   index blocks from the last visited block (startBlock) to the front
   of the chain (or for nBlocks if specified). It accumulates an index
   of every address as it appears anywhere in the data. You may
@@ -130,18 +130,18 @@ func initConfig() {
 	}
 
 	if (Options.verbose > 8) {
-		fmt.Println("blaze.rpcProvider: ", Options.rpcProvider);
-		fmt.Println("blaze.indexPath:   ", Options.indexPath);
-		fmt.Println("blaze.ripePath:    ", Options.ripePath);
-		fmt.Println("blaze.unripePath:  ", Options.unripePath);
+		fmt.Println("bbbb.rpcProvider: ", Options.rpcProvider);
+		fmt.Println("bbbb.indexPath:   ", Options.indexPath);
+		fmt.Println("bbbb.ripePath:    ", Options.ripePath);
+		fmt.Println("bbbb.unripePath:  ", Options.unripePath);
 	}
 
 	if (Options.verbose > 4) {
-		fmt.Println("blaze.startBlock:  ", Options.startBlock);
-		fmt.Println("blaze.nBlocks:     ", Options.nBlocks);
-		fmt.Println("blaze.nBlockProcs: ", Options.nBlockProcs);
-		fmt.Println("blaze.nAddrProcs:  ", Options.nAddrProcs);
-		fmt.Println("blaze.ripeBlock:   ", Options.ripeBlock);
-		fmt.Println("blaze.verbose:     ", Options.verbose);
+		fmt.Println("bbbb.startBlock:  ", Options.startBlock);
+		fmt.Println("bbbb.nBlocks:     ", Options.nBlocks);
+		fmt.Println("bbbb.nBlockProcs: ", Options.nBlockProcs);
+		fmt.Println("bbbb.nAddrProcs:  ", Options.nAddrProcs);
+		fmt.Println("bbbb.ripeBlock:   ", Options.ripeBlock);
+		fmt.Println("bbbb.verbose:     ", Options.verbose);
 	}
 }

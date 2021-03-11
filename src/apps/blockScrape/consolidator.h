@@ -17,9 +17,9 @@ class CConsolidator : public CBlockProgress {
     bool pin;
     blknum_t distFromHead;
     blknum_t prevBlock;
-    blknum_t blazeStart;
-    blknum_t blazeRipe;
-    blknum_t blazeCnt;
+    blknum_t scrapeStart;
+    blknum_t scrapeRipe;
+    blknum_t scrapeCnt;
     string_q oldStage;
     string_q newStage;
     string_q tmpFile;
@@ -39,7 +39,7 @@ class CConsolidator : public CBlockProgress {
 //--------------------------------------------------------------------------
 // These defines give us control over the scrape when we're testing. A bit cludgy, but effective.
 #define CLIENT (isLiveTest() ? (80 + (runs)) : (cons.client))
-#define N_BLOCKS (isLiveTest() ? 16 : cons.blazeCnt)
+#define N_BLOCKS (isLiveTest() ? 16 : cons.scrapeCnt)
 #define MAX_ROWS (isLiveTest() ? 13 : 2000000)
 #define SNAP_TO_GRID (isLiveTest() ? 12 : 100000)
 #define TEST_RUNS 3

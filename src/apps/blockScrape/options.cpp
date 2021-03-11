@@ -16,8 +16,8 @@ static const COption params[] = {
     COption("mode", "", "enum[run*|quit|pause|restart]", OPT_REQUIRED | OPT_POSITIONAL, "control the block and account scrapers"),  // NOLINT
     COption("tool", "t", "list<enum[monitors|index*|none|both]>", OPT_FLAG, "process the index, monitors, or both (none means process timestamps only)"),  // NOLINT
     COption("n_blocks", "n", "<uint64>", OPT_FLAG, "maximum number of blocks to process (defaults to 5000)"),
-    COption("n_block_procs", "b", "<uint64>", OPT_HIDDEN | OPT_FLAG, "number of block channels for blaze"),
-    COption("n_addr_procs", "a", "<uint64>", OPT_HIDDEN | OPT_FLAG, "number of address channels for blaze"),
+    COption("n_block_procs", "b", "<uint64>", OPT_HIDDEN | OPT_FLAG, "number of block channels per scrape"),
+    COption("n_addr_procs", "a", "<uint64>", OPT_HIDDEN | OPT_FLAG, "number of address channels per scrape"),
     COption("pin", "p", "", OPT_SWITCH, "pin new chunks (and blooms) to IPFS (requires Pinata key and running IPFS node)"),  // NOLINT
     COption("publish", "u", "", OPT_SWITCH, "publish the hash of the pin manifest to the UnchainedIndex smart contract"),  // NOLINT
     COption("sleep", "s", "<double>", OPT_FLAG, "the number of seconds to sleep between passes (default 14)"),

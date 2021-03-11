@@ -25,22 +25,22 @@ bool COptions::scrape_blocks(void) {
 
     if (true) {  // !isLiveTest()
         // From there, we can determine where to start the scraper (one more than the largest cache)
-        cons.blazeStart = max(cons.ripe, max(cons.staging, cons.finalized)) + 1;
+        cons.scrapeStart = max(cons.ripe, max(cons.staging, cons.finalized)) + 1;
 
         cons.client = CLIENT;
-        cons.blazeCnt = n_blocks;
+        cons.scrapeCnt = n_blocks;
 
         // Make a few adjustments here in the non-docker case to speed things up a bit
         if (!isDockerMode()) {
-            if (cons.blazeStart < 450000) {
-                cons.blazeCnt = max((blknum_t)4000, cons.blazeCnt);
+            if (cons.scrapeStart < 450000) {
+                cons.scrapeCnt = max((blknum_t)4000, cons.scrapeCnt);
 
-            } else if (ddosRange(cons.blazeStart)) {
+            } else if (ddosRange(cons.scrapeStart)) {
                 // ...or slow things down...
-                cons.blazeCnt = getGlobalConfig("blockScrape")->getConfigInt("settings", "n_blocks_fallback", 200);
+                cons.scrapeCnt = getGlobalConfig("blockScrape")->getConfigInt("settings", "n_blocks_fallback", 200);
             }
         }
-        cons.blazeCnt = N_BLOCKS;
+        cons.scrapeCnt = N_BLOCKS;
 
         // If a block is more than 28 blocks from the head we consider it 'ripe.' Once a block goes
         // ripe, we no longer ask the node about it. We try to move it to staging. Staging means the
@@ -48,12 +48,12 @@ bool COptions::scrape_blocks(void) {
         // but is a bit more than six minutes under normal operation ((14 * 28) / 60 == 6.5). If the
         // index is near the head of the chain and the difficulty level is high (the time bomb is
         // exploding), the time will extend, but the final nature of the operation is the same.
-        cons.blazeRipe = (cons.client < 28 ? 0 : cons.client - 28);
+        cons.scrapeRipe = (cons.client < 28 ? 0 : cons.client - 28);
 
         // One final adjustment to nBlocks so we don't run past the tip of the chain
-        if ((cons.blazeStart + cons.blazeCnt) > cons.client) {
-            ASSERT(blazeStart <= cons.client);  // see above
-            cons.blazeCnt = (cons.client - cons.blazeStart);
+        if ((cons.scrapeStart + cons.scrapeCnt) > cons.client) {
+            ASSERT(scrapeStart <= cons.client);  // see above
+            cons.scrapeCnt = (cons.client - cons.scrapeStart);
         }
     }
 
@@ -62,24 +62,24 @@ bool COptions::scrape_blocks(void) {
     LOG8("bs.staging:        ", cons.staging);
     LOG8("bs.finalized:      ", cons.finalized);
     LOG8("bs.client:         ", cons.client);
-    LOG8("bs.blazeStart:     ", cons.blazeStart);
-    LOG8("bs.blazeCnt:       ", cons.blazeCnt);
+    LOG8("bs.scrapeStart:      ", cons.scrapeStart);
+    LOG8("bs.scrapeCnt:        ", cons.scrapeCnt);
     LOG8("bs.n_block_procs:  ", n_block_procs);
     LOG8("bs.n_addr_procs:   ", n_addr_procs);
-    LOG8("bs.blazeRipe:      ", cons.blazeRipe);
+    LOG8("bs.scrapeRipe:       ", cons.scrapeRipe);
     LOG8("bs.MAX_ROWS:       ", MAX_ROWS);
 
     // How far are we from the head?
-    cons.distFromHead = (cons.client > cons.blazeStart ? cons.client - cons.blazeStart : 0);
+    cons.distFromHead = (cons.client > cons.scrapeStart ? cons.client - cons.scrapeStart : 0);
 
     // If we're caught up, we can sleep longer - say 13 seconds
-    if (sleep < 13 && cons.distFromHead <= cons.blazeCnt)
+    if (sleep < 13 && cons.distFromHead <= cons.scrapeCnt)
         sleep = 13;
 
     // In some cases, for example, the index is ahead of the tip because we're re-syncing...do nothing...
-    if (cons.blazeStart > cons.client) {
+    if (cons.scrapeStart > cons.client) {
         ostringstream os;
-        os << "The index (" << cons.blazeStart << ") is at the tip of the chain (" << cons.client << ").";
+        os << "The index (" << cons.scrapeStart << ") is at the tip of the chain (" << cons.client << ").";
         LOG_INFO(os.str());
         // Returning false just means this round didn't complete. Loop continues.
         EXIT_NOMSG(false);
@@ -91,32 +91,32 @@ bool COptions::scrape_blocks(void) {
     }
 
     // Tell the user what's going on...
-    LOG_INFO(cGreen, "blaze scrape (", (cons.distFromHead), " blocks from head)", cOff);
+    LOG_INFO(cGreen, "bbbb scrape (", (cons.distFromHead), " blocks from head)", cOff);
 
-    // We're ready to scrape, so build the blaze command line...
+    // We're ready to scrape, so build the bbbb command line...
     ostringstream os;
     os << "env TB_INDEXPATH=\"" << getIndexPath("") << "\" ";
-    os << "blaze scrape ";
-    os << "--startBlock " << cons.blazeStart << " ";
-    os << "--nBlocks " << cons.blazeCnt << " ";
+    os << "bbbb scrape ";
+    os << "--startBlock " << cons.scrapeStart << " ";
+    os << "--nBlocks " << cons.scrapeCnt << " ";
     os << "--nBlockProcs " << n_block_procs << " ";
     os << "--nAddrProcs " << n_addr_procs << " ";
-    os << "--ripeBlock " << cons.blazeRipe << " ";
+    os << "--ripeBlock " << cons.scrapeRipe << " ";
     os << (verbose ? ("--verbose " + uint_2_Str(verbose)) : "");
     LOG_CALL(substitute(os.str(), getIndexPath(""), "$INDEX/"));
     if (system(os.str().c_str()) != 0) {
-        // Blaze returns non-zero if it fails. In this case, we need to remove files in the 'ripe'
-        // folder because they're inconsistent (blaze's runs in parallel, so the block sequence
+        // bbbb returns non-zero if it fails. In this case, we need to remove files in the 'ripe'
+        // folder because they're inconsistent (bbbb's runs in parallel, so the block sequence
         // is not complete). We blindly clean all ripe files, which is a bit of overill, but it's
-        // easy and it works. Next time we run, blaze will start over at the last staged block.
+        // easy and it works. Next time we run, bbbb will start over at the last staged block.
         cleanFolder(indexFolder_ripe);
-        LOG_WARN("Blaze quit without finishing. Reprocessing...");
+        LOG_WARN("bbbb quit without finishing. Reprocessing...");
         defaultQuitHandler(1);  // assume the user hit control+c
         EXIT_NOMSG(false);
     }
     cerr << endl;
 
-    // Blaze succeeded, but the user may have started `acctExport` during the time blaze was running.
+    // bbbb succeeded, but the user may have started `acctExport` during the time bbbb was running.
     // We don't want acctExport to get incorrect results, so we bail out knowing that the ripe
     // folder is in a consistant state, and the next scrape will pick up where it left off.
     if (isRunning("acctExport")) {
@@ -124,8 +124,8 @@ bool COptions::scrape_blocks(void) {
         EXIT_NOMSG(false);
     }
 
-    // Blaze has sucessfullly created individual files, one for each block between 'blazeStart' and
-    // 'blazeStart + n_blocks'. Each file is a fixed-width list of addresses that appear in that block.
+    // bbbb has sucessfullly created individual files, one for each block between 'scrapeStart' and
+    // 'scrapeStart + n_blocks'. Each file is a fixed-width list of addresses that appear in that block.
     // The unripe folder holds blocks that are less than 28 blocks old. We do nothing further with them,
     // but the query tool (acctExport) may use them if the user so instructs.
 
@@ -182,4 +182,4 @@ bool COptions::scrape_blocks(void) {
     EXIT_NOMSG(true);
 }
 
-// TODO(tjayrush): We should try to scrape timestamps with blaze while we're doing this scan
+// TODO(tjayrush): We should try to scrape timestamps with bbbb while we're doing this scan

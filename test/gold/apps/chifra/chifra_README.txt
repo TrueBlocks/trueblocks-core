@@ -28,8 +28,8 @@ TIME ~ CLOCK - <ERROR> : Exit(chifra,call_command):
    when          return a date given a block number or a block number given a date
  ADMIN
    init          initialize TrueBlocks databases by downloading pinned bloom filters
-   scrape        scrape the chain and build an index of address appearances (aka digests)
-   serve         serve the TrueBlocks API via tbServer
+   scrape        scrape the chain and build an index of appearances (identical to 'chifra serve --scrape')
+   serve         serve the TrueBlocks API via the blaze server
    pins          query the status of the pinning system
    status        query the status of the system
  OTHER

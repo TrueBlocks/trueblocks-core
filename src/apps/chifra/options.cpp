@@ -132,8 +132,8 @@ map<string, string> cmdMap = {{"monitor", "acctExport --appearances"},
                               {"tokens", "getTokenInfo"},
                               {"when", "whenBlock"},
                               {"init", "pinMan local --init"},
-                              {"scrape", "tbServer --scrape"},
-                              {"serve", "tbServer"},
+                              {"scrape", "blaze --scrape"},
+                              {"serve", "blaze"},
                               {"pins", "pinMan"},
                               {"status", "cacheStatus"},
                               {"explore", "ethscan.py"},
@@ -166,7 +166,7 @@ const char* STR_FULL_HELP =
     "ADMIN|"
     "  init          initialize TrueBlocks databases by downloading pinned bloom filters|"
     "  scrape        scrape the chain and build an index of appearances (identical to 'chifra serve --scrape')|"
-    "  serve         serve the TrueBlocks API via tbServer|"
+    "  serve         serve the TrueBlocks API via the blaze server|"
     "  pins          query the status of the pinning system|"
     "  status        query the status of the system|"
     "OTHER|"

@@ -1,39 +1,18 @@
-package cmd
+package trueblocks
 
-//----------------------------------------------------------------------------
-import (
-	"strings"
-)
+/*-------------------------------------------------------------------------
+ * This source code is confidential proprietary information which is
+ * copyright (c) 2018, 2021 TrueBlocks, LLC (http://trueblocks.io)
+ * All Rights Reserved
+ *------------------------------------------------------------------------*/
 
-// goodAddr Returns true if the address is not a precompile and not zero
-func goodAddr(addr string) bool {
-	// As per EIP 1352, all addresses less or equal to the following
-	// value are reserved for pre-compiles. We don't index precompiles.
-	if addr <= "0x000000000000000000000000000000000000ffff" {
+import "os"
+
+// FileExists help text todo
+func FileExists(filename string) bool {
+	info, err := os.Stat(filename)
+	if os.IsNotExist(err) {
 		return false
 	}
-	return true
-}
-
-// potentialAddress Processing 'input' value, 'output' value or event 'data' value
-// we do our best, but we don't include everything we could. We do the best we can
-func potentialAddress(addr string) bool {
-	// Any address smaller than this we call a 'baddress' and do not index
-	small := "00000000000000000000000000000000000000ffffffffffffffffffffffffff"
-	//        -------+-------+-------+-------+-------+-------+-------+-------+
-	if addr <= small {
-		return false
-	}
-
-	// Any address with less than this many leading zeros is not an left-padded 20-byte address
-	largePrefix := "000000000000000000000000"
-	//              -------+-------+-------+
-	if !strings.HasPrefix(addr, largePrefix) {
-		return false
-	}
-
-	if strings.HasSuffix(addr, "00000000") {
-		return false
-	}
-	return true
+	return !info.IsDir()
 }

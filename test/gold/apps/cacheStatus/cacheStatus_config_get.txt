@@ -137,7 +137,7 @@ TIME ~ CLOCK - <INFO>  : get_config: true
               "name": "n_blocks",
               "value": "--n Blocks--",
               "type": "uint",
-              "tip": "number of blocks to process per invocation of blaze (> 50)",
+              "tip": "number of blocks to process per scrape (> 50)",
               "required": true
             },
             {

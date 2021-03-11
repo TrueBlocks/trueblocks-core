@@ -16,8 +16,8 @@ blockScrape -th
 | -u | --publish | publish the hash of the pin manifest to the UnchainedIndex smart contract |
 | -s | --sleep <double> | the number of seconds to sleep between passes (default 14) |
 |####|Hidden options||
-| -b | --n_block_procs <num> | number of block channels for blaze |
-| -a | --n_addr_procs <num> | number of address channels for blaze |
+| -b | --n_block_procs <num> | number of block channels per scrape |
+| -a | --n_addr_procs <num> | number of address channels per scrape |
 |####|Hidden options||
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |

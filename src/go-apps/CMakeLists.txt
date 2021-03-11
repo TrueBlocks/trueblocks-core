@@ -11,8 +11,8 @@ include_directories(${BASE_INCLUDE})
 # message (MESSAGE "Entering go-apps folder")
 
 # Compilation order of the src subdirectories
-add_subdirectory(blaze)
+add_subdirectory(bbbb)
 add_subdirectory(acctScrape2)
 add_subdirectory(unchained)
 add_subdirectory(findSig)
-add_subdirectory(tbServer)
+add_subdirectory(blaze)

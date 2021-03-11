@@ -11,13 +11,13 @@ bool CConsolidator::finalize_chunks(void) {
     LOG8("");
     ENTER("finalize_chunks");
 
-    // 'blaze' is finished scraping (and extracting addresses from) new blocks from the chain.
+    // 'bbbb' is finished scraping (and extracting addresses from) new blocks from the chain.
     // Those appearance records are stored in a file called "XXX"; The file 'oldStage' contains
     // staged but not yet consolidated records. 'tempStage' contains newly scraped ripe blocks.
     // 'newStage' is empty. This temporary file is where we will put the records from these two files.
     // We need to process in a way that will allow for interruption.
 
-    // This file, in the staging folder, is the result of that previous blaze scrape. It is sorted.
+    // This file, in the staging folder, is the result of that previous bbbb scrape. It is sorted.
     // We append this file into a temporary file, then append all new blocks into that same file,
     // then move that temporary file to the newStage file, and finally remove this file. In this way,
     // oldStage is the 'gold' data right up until the time 'newStage' replaces it.
@@ -25,14 +25,14 @@ bool CConsolidator::finalize_chunks(void) {
     LOG_FN8(oldStage);
 
     // This is the file as it will be once we're done moving any new blocks to the stage. Remember
-    // that the stage has a single, sorted text file whereas 'blaze' creates one file per block
-    // because blaze is parallel. If the process completes, this file will be the only file remaining
+    // that the stage has a single, sorted text file whereas 'bbbb' creates one file per block
+    // because bbbb is parallel. If the process completes, this file will be the only file remaining
     // in the staging folder. If the process does not complete, the previous staging file (oldStage)
     // will still be valid.
     newStage = indexFolder_staging + padNum9(prevBlock) + ".txt";
     LOG_FN8(newStage);
 
-    // If newStage and oldStage are the same, blaze did not produce any new blocks...
+    // If newStage and oldStage are the same, bbbb did not produce any new blocks...
     if (oldStage == newStage) {
         // TODO(tjayrush): the number 59 here is obviously not a good thing...
         blknum_t curSize = fileSize(oldStage) / 59;
