@@ -12,19 +12,21 @@ import (
 	"log"
 	"net/http"
 	"os/exec"
+	"strings"
 
 	tb "github.com/Great-Hill-Corporation/trueblocks-core/src/go-apps/goServer/cmd"
 )
 
 func main() {
 	// handle some command line options
-    port := flag.String("port", "8080", "the server's port")
-    verbose := flag.Int("verbose", 0, "debug level")
+	flag.StringVar(&tb.Options.Port, "port", ":8080", "specify the server's port")
+    flag.IntVar(&tb.Options.Verbose, "verbose", 0, "verbose level (between 0 and 10 inclusive)")
 	flag.Parse()
 
-	// Assign them to a globally available options struct
-	tb.Options.Verbose = *verbose
-	tb.Options.Port = ":" + *port
+	// Cleanup user input
+	if !strings.HasPrefix(tb.Options.Port, ":") {
+		tb.Options.Port = ":" + tb.Options.Port
+	}
 
 	// Let the user know we're starting up...
 	log.Printf("Starting TrueBlocks API server on port " + tb.Options.Port)

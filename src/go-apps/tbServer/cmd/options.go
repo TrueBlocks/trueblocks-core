@@ -8,8 +8,8 @@ package trueblocks
 
 // optionsType makes command line options available to the package
  type optionsType struct {
-	Verbose int
 	Port string
+	Verbose int
 }
 
 // Options carries command line options
