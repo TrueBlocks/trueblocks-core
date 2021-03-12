@@ -14,11 +14,12 @@ bool COptions::handle_status(ostream& os) {
 
     if (terse) {
         const char* STR_TERSE_REPORT =
-            "client: [{CLIENT_VER}][{MODES1}]\n"
-            "[{TIME}] trueblocks: [{TB_VER}][{MODES2}]\n"
-            "[{TIME}] cachePath: [{CACHE_PATH}]\n"
-            "[{TIME}] indexPath: [{INDEX_PATH}]\n"
-            "[{TIME}] rpcProvider: [{PROVIDER}]";
+            "client=     [{CLIENT_VER}][{MODES1}]\n"
+            "trueblocks= [{TB_VER}][{MODES2}]\n"
+            "rpcProvider=[{PROVIDER}]\n"
+            "cachePath=  [{CACHE_PATH}]\n"
+            "indexPath=  [{INDEX_PATH}]\n"
+            "progress=   [{PROGRESS}]";
 
         string_q modes1;
         modes1 += string_q(status.is_testing ? "testing|" : "");
@@ -39,7 +40,10 @@ bool COptions::handle_status(ostream& os) {
         replaceAll(report, "[{CACHE_PATH}]", status.cache_path);
         replaceAll(report, "[{INDEX_PATH}]", status.index_path);
         replaceAll(report, "[{PROVIDER}]", status.rpc_provider);
-        replaceAll(report, "[{TIME}]", substitute(substitute(Now().Format(FMT_EXPORT), "T", " "), "-", "/"));
+        ostringstream p;
+        CBlockProgress prog = getBlockProgress();
+        p << "[" << prog.unripe << ", " << prog.staging << ", " << prog.finalized << ", " << prog.client << "]";
+        replaceAll(report, "[{PROGRESS}]", p.str());
         os << report << endl;
         return true;
     }

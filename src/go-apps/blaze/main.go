@@ -7,48 +7,52 @@ package main
  *------------------------------------------------------------------------*/
 
 import (
-	"flag"
-	"fmt"
 	"log"
 	"net/http"
-	"os/exec"
-	"strings"
+	"time"
 
-	tb "github.com/Great-Hill-Corporation/trueblocks-core/src/go-apps/goServer/cmd"
+	tb "github.com/TrueBlocks/trueblocks-core/src/go-apps/blaze/cmd"
+	utils "github.com/TrueBlocks/trueblocks-core/src/go-apps/blaze/utils"
+	scrap "github.com/TrueBlokcs/trueblocks-core/src/go-apps/blaze/scrapers"
 )
 
 func main() {
-	// handle some command line options
-	flag.BoolVar(&tb.Options.Scrape, "scrape", false, "enable block scraper mode")
-	flag.StringVar(&tb.Options.Port, "port", ":8080", "specify the server's port")
-    flag.IntVar(&tb.Options.Verbose, "verbose", 0, "verbose level (between 0 and 10 inclusive)")
-	flag.Parse()
-
-	// Cleanup user input
-	if !strings.HasPrefix(tb.Options.Port, ":") {
-		tb.Options.Port = ":" + tb.Options.Port
-	}
-
-	// Let the user know we're starting up...
-	log.Printf("Starting TrueBlocks API server on port " + tb.Options.Port)
-	out, err := exec.Command("cacheStatus", "--terse").Output()
+	// Handle command line options
+	err := tb.ParseOptions()
 	if err != nil {
-		fmt.Printf("%s", err)
-	} else {
-		log.Printf(string(out[:]))
+		log.Println("Could not parse command line.")
+		return
 	}
-	if tb.Options.Scrape {
-		log.Println("options.scrape: ", tb.Options.Scrape)
-	}
-	if tb.Options.Port != ":8080" {
-		log.Println("options.port: ", tb.Options.Scrape)
-	}
-	if tb.Options.Verbose > 0 {
-		log.Println("options.scrape: ", tb.Options.Scrape)
-	}
+
+	// Let the user know what's going on...
+	tb.StartupMessage()
 
 	// Start listening on web sockets
 	tb.RunWebsocketPool()
+
+	if tb.Options.BlockScrape {
+		go func() {
+			for true {
+				scrap.BlockScraper.Counter++
+				log.Print(utils.Yellow, "BlockScrape awake", utils.Off, "\n")
+				time.Sleep(1 * time.Second)
+				log.Print(utils.Yellow, "BlockScrape sleeping: ", scrap.BlockScraper.Counter, utils.Off, "\n")
+				time.Sleep(1 * time.Second)
+			}
+		}()
+	}
+
+	if tb.Options.MonitorScrape {
+		go func() {
+			for true {
+				scrap.MonitorScraper.Counter++
+				log.Print(utils.Blue, "MonitorScrape awake", utils.Off, "\n")
+				time.Sleep(1 * time.Second)
+				log.Print(utils.Blue, "MonitorScrape sleeping: ", scrap.MonitorScraper.Counter, utils.Off, "\n")
+				time.Sleep(14 * time.Second)
+			}
+		}()
+	}
 
 	// Start listening for requests
 	log.Fatal(http.ListenAndServe(tb.Options.Port, tb.NewRouter()))
