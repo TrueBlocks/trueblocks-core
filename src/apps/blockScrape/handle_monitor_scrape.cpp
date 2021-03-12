@@ -21,7 +21,7 @@ bool COptions::scrape_monitors(void) {
 
         ostringstream os;
         os << "acctExport " << monitor.address << " --freshen";
-        LOG_TEST("Calling: ", os.str() + string_q(40, ' ') + "\r", false);
+        LOG4("Calling: ", os.str() + string_q(40, ' ') + "\r");
         // clang-format off
         if (system(os.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings
         // clang-format on
@@ -50,3 +50,7 @@ bool prepareMonitors(const string_q& path, void* data) {
 
     return true;
 }
+
+// TODO(tjayrush): If the block scraper 'touched' each monitor that needs updating every
+// TODO(tjayrush): time something changed, we could skip over anything that hasn't changed
+// TODO(tjayrush): when we do an update

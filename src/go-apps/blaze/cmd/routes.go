@@ -12,6 +12,7 @@ import (
 	"net/http"
 	"time"
 
+	scrapers "github.com/TrueBlocks/trueblocks-core/src/go-apps/blaze/scrapers"
 	"github.com/gorilla/mux"
 	"golang.org/x/time/rate"
 )
@@ -206,6 +207,20 @@ var routes = Routes{
 		"GET",
 		"/",
 		Index,
+	},
+
+	Route{
+		"ScrapersMonitor",
+		"GET",
+		"/toggle-monitors",
+		func(w http.ResponseWriter, r *http.Request) {scrapers.MonitorScraper.Paused = !scrapers.MonitorScraper.Paused},
+	},
+
+	Route{
+		"ScrapersBlocks",
+		"GET",
+		"/toggle-blocks",
+		func(w http.ResponseWriter, r *http.Request) {scrapers.BlockScraper.Paused = !scrapers.BlockScraper.Paused},
 	},
 
 	// BEG_ROUTE_ITEMS

@@ -9,11 +9,9 @@ package main
 import (
 	"log"
 	"net/http"
-	"time"
 
 	tb "github.com/TrueBlocks/trueblocks-core/src/go-apps/blaze/cmd"
-	utils "github.com/TrueBlocks/trueblocks-core/src/go-apps/blaze/utils"
-	scrap "github.com/TrueBlokcs/trueblocks-core/src/go-apps/blaze/scrapers"
+	scrapers "github.com/TrueBlocks/trueblocks-core/src/go-apps/blaze/scrapers"
 )
 
 func main() {
@@ -31,27 +29,11 @@ func main() {
 	tb.RunWebsocketPool()
 
 	if tb.Options.BlockScrape {
-		go func() {
-			for true {
-				scrap.BlockScraper.Counter++
-				log.Print(utils.Yellow, "BlockScrape awake", utils.Off, "\n")
-				time.Sleep(1 * time.Second)
-				log.Print(utils.Yellow, "BlockScrape sleeping: ", scrap.BlockScraper.Counter, utils.Off, "\n")
-				time.Sleep(1 * time.Second)
-			}
-		}()
+		go scrapers.RunBlockScraper()
 	}
 
 	if tb.Options.MonitorScrape {
-		go func() {
-			for true {
-				scrap.MonitorScraper.Counter++
-				log.Print(utils.Blue, "MonitorScrape awake", utils.Off, "\n")
-				time.Sleep(1 * time.Second)
-				log.Print(utils.Blue, "MonitorScrape sleeping: ", scrap.MonitorScraper.Counter, utils.Off, "\n")
-				time.Sleep(14 * time.Second)
-			}
-		}()
+		go scrapers.RunMonitorScraper()
 	}
 
 	// Start listening for requests
