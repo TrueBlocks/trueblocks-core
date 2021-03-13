@@ -360,7 +360,7 @@ type scrapeOptionsT struct {
 	columns2 string
 }
 
-// scanOptions carries local command line options related to the scan command
+// scrapeOptions carries local command line options related to the scrape command
 var scrapeOptions scrapeOptionsT
 
 var scrapeCmd = &cobra.Command{

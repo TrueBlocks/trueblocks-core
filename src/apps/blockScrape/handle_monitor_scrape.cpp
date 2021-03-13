@@ -50,7 +50,3 @@ bool prepareMonitors(const string_q& path, void* data) {
 
     return true;
 }
-
-// TODO(tjayrush): If the block scraper 'touched' each monitor that needs updating every
-// TODO(tjayrush): time something changed, we could skip over anything that hasn't changed
-// TODO(tjayrush): when we do an update

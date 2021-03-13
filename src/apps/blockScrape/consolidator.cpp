@@ -54,23 +54,3 @@ bool visitCopyRipeToStage(const string_q& path, void* data) {
 
     return !shouldQuit();
 }
-
-//--------------------------------------------------------------------------
-bool appendFile(const string_q& toFile, const string_q& fromFile) {
-    ofstream output;
-    output.open(toFile, ios::out | ios::app);
-    if (!output.is_open())
-        return false;
-
-    ifstream input(fromFile, ios::in);
-    if (!input.is_open()) {
-        output.close();
-        return false;
-    }
-
-    output << input.rdbuf();
-    output.flush();
-    input.close();
-
-    return true;
-}

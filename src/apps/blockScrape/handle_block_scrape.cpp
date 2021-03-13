@@ -181,5 +181,3 @@ bool COptions::scrape_blocks(void) {
     // We completed one scrape and can now go to sleep
     EXIT_NOMSG(true);
 }
-
-// TODO(tjayrush): We should try to scrape timestamps with bbbb while we're doing this scan

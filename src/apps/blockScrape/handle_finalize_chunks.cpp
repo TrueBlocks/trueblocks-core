@@ -51,7 +51,7 @@ bool CConsolidator::finalize_chunks(void) {
         LOG8("oldStage != tmp_fn");
         LOG_FN8(oldStage);
         LOG_FN8(tmp_fn);
-        if (!appendFile(tmpFile /* to */, oldStage /* from */)) {
+        if (!appendFileToFile(tmpFile /* to */, oldStage /* from */)) {
             // oldStage is still valid. Caller will clean up the rest
             LOG_ERR("Could not append oldStage to temp.fil.");
             EXIT_NOMSG(false);
@@ -62,7 +62,7 @@ bool CConsolidator::finalize_chunks(void) {
     }
 
     // ...next we append the new ripe records if we can...
-    if (!appendFile(tmpFile /* to */, tmp_fn /* from */)) {
+    if (!appendFileToFile(tmpFile /* to */, tmp_fn /* from */)) {
         // oldStage is still valid. Caller will clean up the rest
         ::remove(tmpFile.c_str());
         LOG_ERR("Could not append tmp_fn to temp.fil.");
