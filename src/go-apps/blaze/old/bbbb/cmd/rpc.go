@@ -136,3 +136,20 @@ func getTransactionReceipt(hash string) ([]byte, error) {
 	defer resp.Body.Close()
 	return receiptBody, nil
 }
+
+// RPCParams are used during calls to the RPC.
+type RPCParams []interface{}
+
+// RPCPayload is used during to make calls to the RPC.
+type RPCPayload struct {
+	Jsonrpc   string `json:"jsonrpc"`
+	Method    string `json:"method"`
+	RPCParams `json:"params"`
+	ID        int `json:"id"`
+}
+
+// LogFilter is used the eth_getLogs RPC call to identify the block range to query
+type LogFilter struct {
+	Fromblock string `json:"fromBlock"`
+	Toblock   string `json:"toBlock"`
+}

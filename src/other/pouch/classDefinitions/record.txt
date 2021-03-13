@@ -1,0 +1,13 @@
+[settings]
+class = CRecord
+fields = \
+    uint32 key|\
+    string date|\
+    string type|\
+    address address|\
+    string name|\
+    uint32 cnt|\
+    string csv|\
+    string json
+includes = etherlib.h
+display_str = key, date, type, address, name, cnt, csv, json

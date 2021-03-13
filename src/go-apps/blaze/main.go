@@ -10,8 +10,8 @@ import (
 	"log"
 	"net/http"
 
-	tb "github.com/TrueBlocks/trueblocks-core/src/go-apps/blaze/cmd"
 	scrapers "github.com/TrueBlocks/trueblocks-core/src/go-apps/blaze/scrapers"
+	tb "github.com/TrueBlocks/trueblocks-core/src/go-apps/blaze/server"
 )
 
 func main() {
@@ -28,13 +28,9 @@ func main() {
 	// Start listening on web sockets
 	tb.RunWebsocketPool()
 
-	if tb.Options.BlockScrape {
-		go scrapers.RunBlockScraper()
-	}
-
-	if tb.Options.MonitorScrape {
-		go scrapers.RunMonitorScraper()
-	}
+	// We always start the scrapers...the user will tell us to turn them on
+	go scrapers.RunBlockScraper()
+	go scrapers.RunMonitorScraper()
 
 	// Start listening for requests
 	log.Fatal(http.ListenAndServe(tb.Options.Port, tb.NewRouter()))
