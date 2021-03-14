@@ -1261,19 +1261,33 @@ bool excludeTrace(const CTransaction* trans, size_t maxTraces) {
 }
 
 //-----------------------------------------------------------------------
-bool establishTsFile(const string_q& fn) {
-    if (fileExists(fn))
+bool establishTsFile(void) {
+    if (fileExists(tsIndex))
         return true;
 
+    establishFolder(indexFolder);
+
     string_q zipFile = configPath("ts.bin.gz");
-    if (fileExists(zipFile)) {  // first run since install? Let's try to get some timestamps
-        string_q cmd = "cd " + configPath("") + " ; gunzip " + zipFile;
-        string_q result = doCommand(cmd);
+    time_q zipDate = fileLastModifyDate(zipFile);
+    time_q tsDate = fileLastModifyDate(tsIndex);
+
+    if (zipDate > tsDate) {
+        ostringstream cmd;
+        cmd << "cd \"" << indexFolder << "\" ; ";
+        cmd << "cp \"" << zipFile << "\" . ; ";
+        cmd << "ls -l ts* ; ";
+        cmd << "gunzip ts.bin.gz";
+        string_q result = doCommand(cmd.str());
         LOG_INFO(result);
-        ASSERT(!fileExists(zipFile));
-        ASSERT(fileExists(fn));
-        return !fileExists(zipFile) && fileExists(fn);
+        // The original zip file still exists
+        ASSERT(fileExists(zipFile));
+        // The new timestamp file exists
+        ASSERT(fileExists(tsIndex));
+        // The copy of the zip file does not exist
+        ASSERT(!fileExists(tsIndex + ".gz"));
+        return fileExists(tsIndex);
     }
+
     return false;
 }
 
@@ -1282,22 +1296,21 @@ bool freshenTimestamps(blknum_t minBlock) {
     if (isTestMode())
         return true;
 
-    string_q fn = configPath("ts.bin");
-    if (!establishTsFile(fn))
+    if (!establishTsFile())
         return false;
 
-    size_t nRecords = ((fileSize(fn) / sizeof(uint32_t)) / 2);
+    size_t nRecords = ((fileSize(tsIndex) / sizeof(uint32_t)) / 2);
     if (nRecords >= minBlock)
         return true;
 
-    if (fileExists(fn + ".lck")) {  // it's being updated elsewhere
-        LOG_ERR("Timestamp file (ts.bin) is locked. Cannot update.");
+    if (fileExists(tsIndex + ".lck")) {  // it's being updated elsewhere
+        LOG_ERR("Timestamp file ", tsIndex, " is locked. Cannot update.");
         return false;
     }
 
     CArchive file(WRITING_ARCHIVE);
-    if (!file.Lock(fn, modeWriteAppend, LOCK_NOWAIT)) {
-        LOG_ERR("Failed to open ts.bin");
+    if (!file.Lock(tsIndex, modeWriteAppend, LOCK_NOWAIT)) {
+        LOG_ERR("Failed to open ", tsIndex);
         return false;
     }
 
@@ -1332,15 +1345,16 @@ bool loadTimestampFile(uint32_t** theArray, size_t& cnt) {
     if (file.is_open())
         file.close();
 
-    string_q fn = configPath("ts.bin");
-    if (!establishTsFile(fn))
+    if (!establishTsFile())
         return false;
 
-    cnt = ((fileSize(fn) / sizeof(uint32_t)) / 2);
+    // Order matters.
+    // User may call us with a NULL array pointer, but we still want to file 'cnt'
+    cnt = ((fileSize(tsIndex) / sizeof(uint32_t)) / 2);
     if (theArray == NULL)
         return false;
 
-    file.open(configPath("ts.bin"));
+    file.open(tsIndex);
     if (file.isValid())
         *theArray = (uint32_t*)file.getData();  // NOLINT
 

@@ -164,6 +164,7 @@ extern string_q getIndexPath(const string_q& _part);
 #define indexFolder_ripe (getIndexPath("ripe/"))
 #define indexFolder_finalized (getIndexPath("finalized/"))
 #define indexFolder_blooms (getIndexPath("blooms/"))
+#define tsIndex getIndexPath("ts.bin")
 
 //-------------------------------------------------------------------------
 extern biguint_t weiPerEther(void);

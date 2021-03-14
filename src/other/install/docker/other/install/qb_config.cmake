@@ -165,11 +165,8 @@ endif()
 #---------------------------------------------------------------
 # Copy the ts files
 #---------------------------------------------------------------
-set(TS_FILE "${DEST_PATH}/ts.bin")
-if (NOT EXISTS "${TS_FILE}")
-	message(STATUS "Copying ts file to ${DEST_PATH}")
-	file(COPY "${SOURCE_PATH}/prices/ts.bin.gz" DESTINATION "${DEST_PATH}" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
-endif()
+message(STATUS "Copying ts.bin.gz file to ${DEST_PATH}")
+file(COPY "${SOURCE_PATH}/prices/ts.bin.gz" DESTINATION "${DEST_PATH}" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
 
 #---------------------------------------------------------------
 # Clear a few bin files, so they get regenerated for each build

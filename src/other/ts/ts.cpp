@@ -18,8 +18,6 @@ extern void trunc(void);
 extern void list(void);
 //----------------------------------------------------------------
 int main(int argc, const char* argv[]) {
-    //    cout << (fileSize(configPath("ts.bin")) / sizeof(uint32_t) / 2) << endl;
-
     size_t path = 3;
     switch (path) {
         case 0:
@@ -45,7 +43,7 @@ void regenerate(void) {
 }
 
 void list(void) {
-    string_q fn = configPath("ts.bin");
+    string_q fn = tsIndex;
 
     CArchive file(READING_ARCHIVE);
     if (!file.Lock(fn, modeReadOnly, LOCK_NOWAIT))
@@ -65,7 +63,7 @@ void list(void) {
 }
 
 void check(void) {
-    string_q fn = configPath("ts.bin");
+    string_q fn = tsIndex;
 
     CArchive file(READING_ARCHIVE);
     if (!file.Lock(fn, modeReadOnly, LOCK_NOWAIT))
@@ -114,7 +112,7 @@ void check(void) {
 }
 
 void trunc(void) {
-    string_q fn = configPath("ts.bin");
+    string_q fn = tsIndex;
 
     CArchive file(READING_ARCHIVE);
     if (!file.Lock(fn, modeReadOnly, LOCK_NOWAIT))
