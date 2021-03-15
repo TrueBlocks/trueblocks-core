@@ -132,13 +132,17 @@ bool COptions::handle_logs(void) {
             }
 
             for (auto log : trans.receipt.logs) {
-                if (!emitter || isEmitter(log.address)) {
-                    nProcessed++;
-                    if (shouldDisplay) {
-                        cout << ((isJson() && !first) ? ", " : "");
-                        cout << log.Format() << endl;
-                        first = false;
-                    }
+                bool showMe = true;
+                if (!emitted_by.empty()) {
+                    showMe = emitted_by == log.address;
+                } else if (emitter) {
+                    showMe = isEmitter(log.address);
+                }
+                nProcessed++;
+                if (showMe && shouldDisplay) {
+                    cout << ((isJson() && !first) ? ", " : "");
+                    cout << log.Format() << endl;
+                    first = false;
                 }
             }
         } else if (app->blk > exportRange.second) {
