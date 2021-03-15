@@ -221,10 +221,13 @@ bool COptions::parseArguments(string_q& command) {
         EXIT_USAGE("Please export only one of list, receipts, logs, or traces.");
 
     if (emitter && !logs)
-        EXIT_USAGE("The emitter option is only available when exporting logs.");
+        EXIT_USAGE("The --emitter option is only available when exporting logs.");
+
+    if (!emitted_by.empty() && !logs)
+        EXIT_USAGE("The --emitted_by option is only available when exporting logs.");
 
     if (factory && !traces)
-        EXIT_USAGE("The facotry option is only available when exporting traces.");
+        EXIT_USAGE("The --factory option is only available when exporting traces.");
 
     if (count && (receipts || logs || traces || emitter || factory))
         EXIT_USAGE("--count option is only available with --appearances option.");

@@ -1275,7 +1275,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 32-Kickback:Friends	0x2955f5c9493a514beadaaa77fa2da8b3b81f58ef	harithk		https://kickback.events/			false	false	false	false	false	false
 50-Tokens:ERC20	0x2956356cd2a2bf3202f771f50d3d14a367b48070	Ether Token	WETH	On chain	18		false	false	false	true	true	false
 32-Kickback:Friends	0x2958db51a0b4c458d0aa183e8cfb4f2e95cf6e75	antsankov		https://kickback.events/			false	false	false	false	false	false
-31-Gitcoin Grants:Contracts	0x29620f5387afba2f09bd4b4c6e3dc67ed407b860	Grant 0308 Subscription Contract		OnChain			false	false	false	true	false	false
+31-Gitcoin Grants:Core	0x29620f5387afba2f09bd4b4c6e3dc67ed407b860	Grant 0308 Subscription Contract		OnChain			false	false	false	true	false	false
 32-Kickback:Friends	0x29706496d4e41942ec62d45adc362a4bb1dc3111	sharonm		https://kickback.events/			false	false	false	false	false	false
 50-Tokens:ERC20	0x2971adfa57b20e5a416ae5a708a8655a9c74f723	InstaDApp: Index		EtherScan.io			false	false	false	true	false	false
 31-Gitcoin Grants:Friends	0x297bf847dcb01f3e870515628b36eabad491e5e8	ameensol		Gitcoin Website			false	false	false	false	false	false
@@ -1950,7 +1950,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 31-Gitcoin Grants:Grant	0x43093861e897d139342ce149935a5f721532a660	Grant 0966 Bipoc Artist Fellowship		https://gitcoin.co/grants/966/bipoc-artist-fellowship			false	false	false	false	false	false
 31-Gitcoin Grants:Friends	0x4314aeeffc15b5958752d8a89c9e5283ce1ca0ee	halo3mic		Gitcoin Website			false	false	false	false	false	false
 31-Gitcoin Grants:Friends	0x432dcbda06e8b296ca29705572d7cb6315ed8bed	mbaril010		Gitcoin Website			false	false	false	false	false	false
-31-Gitcoin Grants:Contracts	0x4331b095bc38dc3bce0a269682b5ebaefa252929	Gitcoin Multisig Deployer					false	false	false	false	false	false
+31-Gitcoin Grants:Core	0x4331b095bc38dc3bce0a269682b5ebaefa252929	Gitcoin Multisig Deployer					false	false	false	false	false	false
 31-Gitcoin Grants:Friends	0x433485b5951f250cefdcbf197cb0f60fdbe55513	benlls		Gitcoin Website			false	false	false	false	false	false
 34-Twitter:Friends	0x433643144de7ced3b785cbeaa5eb5bff66e193ec	DropShip		Twitter		IO	false	false	false	false	false	false
 50-Tokens:ERC20	0x433e077d4da9ffc4b353c1bf1ed69daac8f78aa5	HODL	HODL	On chain	18		false	false	false	true	true	false
@@ -6558,7 +6558,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 81-Other	0xe3e5741337a7be0fd8eae7df28705566980a577e	Early_Partners_040		Ether Camp			false	false	false	false	false	false
 50-Tokens:ERC20	0xe3f4b4a5d91e5cb9435b947f090a319737036312	POPCHAIN CASH	PCH	On chain	18	A brand new blockchain for K-Pop Asian content market	false	false	false	true	true	false
 31-Gitcoin Grants:Grant	0xe402823203e5714eec86f8959fc26688c1e42142	Grant 0353 Lease		https://gitcoin.co/grants/353/lease		https://github.com/TamirTian/Lease	false	false	false	false	false	false
-31-Gitcoin Grants:Contracts	0xe4101d014443af2b7f6f9f603e904adc9faf0de5	CLR7	CLR7	On chain	18		false	false	false	true	true	false
+31-Gitcoin Grants:Core	0xe4101d014443af2b7f6f9f603e904adc9faf0de5	CLR7 Test Token	CLR7	On chain	18		false	false	false	true	true	false
 32-Kickback:Friends	0xe419053e4cbcddc6c17d5806d58907289e446bd5	Vitaliy_Gataulin		https://kickback.events/			false	false	false	false	false	false
 50-Tokens:ERC20	0xe41d2489571d322189246dafa5ebde1f4699f498	0x Protocol Token	ZRX	On chain	18	Description: 0x is an open, permissionless protocol allowing for tokens to be traded on the Ethereum blockchain.	false	false	false	true	true	false
 31-Gitcoin Grants:Friends	0xe42f8e2c4b778fcd572c55e457ed77db4cb20a69	parrachia		Gitcoin Website			false	false	false	false	false	false
@@ -6836,7 +6836,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 60-Airdrops	0xed6ca9522fda3b9cd93025780a2939bd04a7ecd6	https://www.yidaibi.me/ 最佳一键发币解决方案 Create tokens easily Airdrop	www.yidaibi.me一键发币CreateTokens	On chain	18		false	false	false	true	true	false
 30-Contracts:Humanity DAO	0xed78465600d6d7020baa0e385d1002221bcc0723	swBroadcast		https://www.humanitydao.org/humans			false	false	false	false	false	false
 31-Gitcoin Grants:Friends	0xed7f50b4a658bec62dc4663b604a5b873615a676	kaddycoltt		Gitcoin Website			false	false	false	false	false	false
-31-Gitcoin Grants:Contracts	0xed8306f10a5aa548d09c1d9c622f3f58dd9f2144	CLR6	CLR6	On chain	18		false	false	false	true	true	false
+31-Gitcoin Grants:Core	0xed8306f10a5aa548d09c1d9c622f3f58dd9f2144	CLR6 Test Token	CLR6	On chain	18		false	false	false	true	true	false
 30-Contracts:Humanity DAO	0xed832ef021d9c74ba4d2830d73ffb963607a0618	ars_ars87		https://www.humanitydao.org/humans			false	false	false	false	false	false
 30-Contracts	0xed897b658ca098028a4adb4be2240da47eae511d	Fantastic12		EtherScan.io			false	false	false	true	false	false
 31-Gitcoin Grants:Friends	0xed9b15ba4d0e3d8bb1825f1b994eb6406d8b3a92	abysms		Gitcoin Website			false	false	false	false	false	false
@@ -6958,7 +6958,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 31-Gitcoin Grants:Grant	0xf223bcaed22ddd7358c0a8279ed50bdd33c5ce9e	Grant 0503 the Gathering Place: a Refuge for Rebuilding Lives		https://gitcoin.co/grants/503/the-gathering-place-a-refuge-for-rebuilding-lives			false	false	false	false	false	false
 81-Other	0xf2289a55cd754d3b586cac1675e1c157a36637bb	Simplestorage		EtherScan.io			false	false	false	true	false	false
 30-Contracts:Humanity DAO	0xf22dc9996da8fd05f05ef0825d4805fb60f19147	jackd121 ECA_GROOT		https://www.humanitydao.org/humans			false	false	false	false	false	false
-31-Gitcoin Grants:Contracts	0xf2354570be2fb420832fb7ff6ff0ae0df80cf2c6	GitCoin Rnd 8 MatchPayouts		EtherScan.io			false	false	false	true	false	false
+31-Gitcoin Grants:Core	0xf2354570be2fb420832fb7ff6ff0ae0df80cf2c6	GitCoin Rnd 8 MatchPayouts		EtherScan.io			false	false	false	true	false	false
 81-Other	0xf236d15aa8164626e3457cd38e69d7f46f95eeb9	Comm_Channel		EtherScan.io			false	false	false	true	false	false
 81-Other	0xf243688304fa4f6c6efadc22b9c1dd009aa76650	Send1Get2		EtherScan.io			false	false	false	true	false	false
 31-Gitcoin Grants:Grant	0xf24ba7799e1d3b3a5c9a9e31e8bb35cc1d23f864	Grant 1545 Gbdev		https://gitcoin.co/grants/1545/gbdev			false	false	false	false	false	false
