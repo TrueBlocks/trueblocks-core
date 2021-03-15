@@ -16,7 +16,6 @@
  * of 'EXISTING_CODE' tags.
  */
 #include "etherlib.h"
-#include "balance.h"
 
 namespace qblocks {
 
@@ -24,40 +23,32 @@ namespace qblocks {
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class CRecord : public CBaseNode {
+class CBalance : public CBaseNode {
   public:
-    uint32_t key;
-    string_q date;
-    string_q type;
-    uint32_t grant_id;
-    address_t address;
-    string_q name;
-    string_q slug;
-    uint32_t cnt;
-    bool has_data;
+    string_q asset;
+    string_q balance;
 
   public:
-    CRecord(void);
-    CRecord(const CRecord& re);
-    virtual ~CRecord(void);
-    CRecord& operator=(const CRecord& re);
+    CBalance(void);
+    CBalance(const CBalance& ba);
+    virtual ~CBalance(void);
+    CBalance& operator=(const CBalance& ba);
 
-    DECLARE_NODE(CRecord);
+    DECLARE_NODE(CBalance);
 
     // EXISTING_CODE
-    CBalanceMap bals;
     // EXISTING_CODE
-    bool operator==(const CRecord& it) const;
-    bool operator!=(const CRecord& it) const {
+    bool operator==(const CBalance& it) const;
+    bool operator!=(const CBalance& it) const {
         return !operator==(it);
     }
-    friend bool operator<(const CRecord& v1, const CRecord& v2);
-    friend ostream& operator<<(ostream& os, const CRecord& it);
+    friend bool operator<(const CBalance& v1, const CBalance& v2);
+    friend ostream& operator<<(ostream& os, const CBalance& it);
 
   protected:
     void clear(void);
     void initialize(void);
-    void duplicate(const CRecord& re);
+    void duplicate(const CBalance& ba);
     bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
@@ -65,82 +56,68 @@ class CRecord : public CBaseNode {
 };
 
 //--------------------------------------------------------------------------
-inline CRecord::CRecord(void) {
+inline CBalance::CBalance(void) {
     initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CRecord::CRecord(const CRecord& re) {
+inline CBalance::CBalance(const CBalance& ba) {
     // EXISTING_CODE
     // EXISTING_CODE
-    duplicate(re);
+    duplicate(ba);
 }
 
 // EXISTING_CODE
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline CRecord::~CRecord(void) {
+inline CBalance::~CBalance(void) {
     clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CRecord::clear(void) {
+inline void CBalance::clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CRecord::initialize(void) {
+inline void CBalance::initialize(void) {
     CBaseNode::initialize();
 
-    key = 0;
-    date = "";
-    type = "";
-    grant_id = 0;
-    address = "";
-    name = "";
-    slug = "";
-    cnt = 0;
-    has_data = false;
+    asset = "";
+    balance = "";
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CRecord::duplicate(const CRecord& re) {
+inline void CBalance::duplicate(const CBalance& ba) {
     clear();
-    CBaseNode::duplicate(re);
+    CBaseNode::duplicate(ba);
 
-    key = re.key;
-    date = re.date;
-    type = re.type;
-    grant_id = re.grant_id;
-    address = re.address;
-    name = re.name;
-    slug = re.slug;
-    cnt = re.cnt;
-    has_data = re.has_data;
+    asset = ba.asset;
+    balance = ba.balance;
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CRecord& CRecord::operator=(const CRecord& re) {
-    duplicate(re);
+inline CBalance& CBalance::operator=(const CBalance& ba) {
+    duplicate(ba);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
 //-------------------------------------------------------------------------
-inline bool CRecord::operator==(const CRecord& it) const {
+inline bool CBalance::operator==(const CBalance& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)
@@ -148,7 +125,7 @@ inline bool CRecord::operator==(const CRecord& it) const {
 }
 
 //-------------------------------------------------------------------------
-inline bool operator<(const CRecord& v1, const CRecord& v2) {
+inline bool operator<(const CBalance& v1, const CBalance& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default sort defined in class definition, assume already sorted, preserve ordering
@@ -156,14 +133,15 @@ inline bool operator<(const CRecord& v1, const CRecord& v2) {
 }
 
 //---------------------------------------------------------------------------
-typedef vector<CRecord> CRecordArray;
-extern CArchive& operator>>(CArchive& archive, CRecordArray& array);
-extern CArchive& operator<<(CArchive& archive, const CRecordArray& array);
+typedef vector<CBalance> CBalanceArray;
+extern CArchive& operator>>(CArchive& archive, CBalanceArray& array);
+extern CArchive& operator<<(CArchive& archive, const CBalanceArray& array);
 
 //---------------------------------------------------------------------------
-extern const char* STR_DISPLAY_RECORD;
+extern const char* STR_DISPLAY_BALANCE;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
+typedef map<string, CBalance> CBalanceMap;
 // EXISTING_CODE
 }  // namespace qblocks

@@ -1,6 +1,12 @@
 [
     {
       "tags": "31-Gitcoin Grants:Grant",
+      "address": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "name": "Grant 184 TrueBlocks",
+      "source": "https://gitcoin.co/grants/184/trueblocks"
+    }
+    {
+      "tags": "31-Gitcoin Grants:Grant",
       "address": "0x00216505799d9e3117b40b94a24dc0fa286a57a4",
       "name": "Grant 1168 Flowerpatch Emojis & Artwork Fund",
       "source": "https://gitcoin.co/grants/1168/flowerpatch-emojis-artwork-fund"

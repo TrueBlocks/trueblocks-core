@@ -4,10 +4,11 @@ fields = \
     uint32 key|\
     string date|\
     string type|\
+    uint32 grant_id|\
     address address|\
     string name|\
+    string slug|\
     uint32 cnt|\
-    string csv|\
-    string json
-includes = etherlib.h
+    bool has_data
+includes = etherlib.h|balance.h
 display_str = key, date, type, address, name, cnt, csv, json

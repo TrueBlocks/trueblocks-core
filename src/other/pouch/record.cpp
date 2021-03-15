@@ -82,18 +82,20 @@ string_q CRecord::getValueByName(const string_q& fieldName) const {
             if (fieldName % "cnt") {
                 return uint_2_Str(cnt);
             }
-            if (fieldName % "csv") {
-                return csv;
-            }
             break;
         case 'd':
             if (fieldName % "date") {
                 return date;
             }
             break;
-        case 'j':
-            if (fieldName % "json") {
-                return json;
+        case 'g':
+            if (fieldName % "grant_id") {
+                return uint_2_Str(grant_id);
+            }
+            break;
+        case 'h':
+            if (fieldName % "has_data") {
+                return bool_2_Str(has_data);
             }
             break;
         case 'k':
@@ -104,6 +106,11 @@ string_q CRecord::getValueByName(const string_q& fieldName) const {
         case 'n':
             if (fieldName % "name") {
                 return name;
+            }
+            break;
+        case 's':
+            if (fieldName % "slug") {
+                return slug;
             }
             break;
         case 't':
@@ -142,10 +149,6 @@ bool CRecord::setValueByName(const string_q& fieldNameIn, const string_q& fieldV
                 cnt = (uint32_t)str_2_Uint(fieldValue);
                 return true;
             }
-            if (fieldName % "csv") {
-                csv = fieldValue;
-                return true;
-            }
             break;
         case 'd':
             if (fieldName % "date") {
@@ -153,9 +156,15 @@ bool CRecord::setValueByName(const string_q& fieldNameIn, const string_q& fieldV
                 return true;
             }
             break;
-        case 'j':
-            if (fieldName % "json") {
-                json = fieldValue;
+        case 'g':
+            if (fieldName % "grant_id") {
+                grant_id = (uint32_t)str_2_Uint(fieldValue);
+                return true;
+            }
+            break;
+        case 'h':
+            if (fieldName % "has_data") {
+                has_data = str_2_Bool(fieldValue);
                 return true;
             }
             break;
@@ -168,6 +177,12 @@ bool CRecord::setValueByName(const string_q& fieldNameIn, const string_q& fieldV
         case 'n':
             if (fieldName % "name") {
                 name = fieldValue;
+                return true;
+            }
+            break;
+        case 's':
+            if (fieldName % "slug") {
+                slug = fieldValue;
                 return true;
             }
             break;
@@ -205,11 +220,12 @@ bool CRecord::Serialize(CArchive& archive) {
     archive >> key;
     archive >> date;
     archive >> type;
+    archive >> grant_id;
     archive >> address;
     archive >> name;
+    archive >> slug;
     archive >> cnt;
-    archive >> csv;
-    archive >> json;
+    archive >> has_data;
     finishParse();
     return true;
 }
@@ -224,11 +240,12 @@ bool CRecord::SerializeC(CArchive& archive) const {
     archive << key;
     archive << date;
     archive << type;
+    archive << grant_id;
     archive << address;
     archive << name;
+    archive << slug;
     archive << cnt;
-    archive << csv;
-    archive << json;
+    archive << has_data;
 
     return true;
 }
@@ -268,11 +285,12 @@ void CRecord::registerClass(void) {
     ADD_FIELD(CRecord, "key", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CRecord, "date", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CRecord, "type", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CRecord, "grant_id", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CRecord, "address", T_ADDRESS | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CRecord, "name", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CRecord, "slug", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CRecord, "cnt", T_UNUMBER, ++fieldNum);
-    ADD_FIELD(CRecord, "csv", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CRecord, "json", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CRecord, "has_data", T_BOOL | TS_OMITEMPTY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CRecord, "schema");
@@ -292,6 +310,20 @@ string_q nextRecordChunk_custom(const string_q& fieldIn, const void* dataPtr) {
     if (rec) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
+            case 'b':
+                if (fieldIn % "bals") {
+                    ostringstream os;
+                    os << "[";
+                    bool first = true;
+                    for (auto b : rec->bals) {
+                        if (!first)
+                            os << ",\n";
+                        os << b.second << endl;
+                        first = false;
+                    }
+                    os << "]";
+                    return os.str();
+                }
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
