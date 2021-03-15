@@ -133,7 +133,10 @@ bool getBlock_light(CBlock& block, blknum_t num) {
 
 //--------------------------------------------------------------------------------
 bool getBlock_header(CBlock& block, const string_q& val) {
-    getObjectViaRPC(block, "parity_getBlockHeaderByNumber", "[" + quote(val) + "]");
+    if (isParity())
+        getObjectViaRPC(block, "parity_getBlockHeaderByNumber", "[" + quote(val) + "]");
+    else
+        getBlock_light(block, str_2_Uint(val));
     return true;
 }
 
@@ -558,11 +561,6 @@ bool getAccounts(CAddressArray& addrs) {
     while (!results.empty())
         addrs.push_back(toLower(nextTokenClear(results, ',')));
     return true;
-}
-
-//--------------------------------------------------------------------------
-bool getChainHead(void) {
-    return false;  // callRPC("parity_chainStatus", "[]", false);
 }
 
 //--------------------------------------------------------------------------
