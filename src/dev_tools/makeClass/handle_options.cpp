@@ -22,6 +22,7 @@ extern const char* STR_AUTO_TOGGLE;
 extern const char* STR_AUTO_FLAG;
 extern const char* STR_AUTO_FLAG_ENUM;
 extern const char* STR_AUTO_FLAG_ENUM_LIST;
+extern const char* STR_AUTO_FLAG_STRING_LIST;
 extern const char* STR_AUTO_FLAG_BLOCKNUM;
 extern const char* STR_AUTO_FLAG_UINT;
 extern const char* STR_AUTO_FLAG_DOUBLE;
@@ -92,7 +93,7 @@ bool COptions::handle_options(void) {
                 string_q initFmt = "    [{COMMAND}] = [{DEF_VAL}];";
                 if (option.is_customizable)
                     initFmt = substitute(STR_CUSTOM_INIT, "[CTYPE]",
-                                         ((option.isEnum || option.isEnumList) ? "String"
+                                         ((option.isEnum || option.isEnumList || option.isStringList) ? "String"
                                           : (option.isBool)                    ? "Bool"
                                                                                : "Int"));
                 // clang-format on
@@ -196,7 +197,7 @@ void COptions::generate_toggle(const CCommandOption& option) {
     // clang-format off
     if (option.is_customizable)
         initFmt = substitute(STR_CUSTOM_INIT, "[CTYPE]",
-                             ((option.isEnum || option.isEnumList) ? "String"
+                             ((option.isEnum || option.isEnumList || option.isStringList) ? "String"
                               : (option.isBool)                    ? "Bool"
                                                                    : "Int"));
     // clang-format on
@@ -219,7 +220,7 @@ void COptions::generate_switch(const CCommandOption& option) {
     // clang-format off
     if (option.is_customizable)
         initFmt = substitute(STR_CUSTOM_INIT, "[CTYPE]",
-                             ((option.isEnum || option.isEnumList) ? "String"
+                             ((option.isEnum || option.isEnumList | option.isStringList) ? "String"
                               : (option.isBool)                    ? "Bool"
                                                                    : "Int"));
     // clang-format on
@@ -242,7 +243,7 @@ void COptions::generate_flag(const CCommandOption& option) {
     // clang-format off
     if (option.is_customizable)
         initFmt = substitute(STR_CUSTOM_INIT, "[CTYPE]",
-                             ((option.isEnum || option.isEnumList) ? "String"
+                             ((option.isEnum || option.isEnumList || option.isStringList) ? "String"
                               : (option.isBool)                    ? "Bool"
                                                                    : "Int"));
     // clang-format on
@@ -251,7 +252,9 @@ void COptions::generate_flag(const CCommandOption& option) {
         if (option.isEnumList) {
             local_stream << option.Format("    CStringArray [{COMMAND}];") << endl;
             auto_stream << option.Format(STR_AUTO_FLAG_ENUM_LIST) << endl;
-
+        } else if (option.isStringList) {
+            local_stream << option.Format("    CStringArray [{COMMAND}];") << endl;
+            auto_stream << option.Format(STR_AUTO_FLAG_STRING_LIST) << endl;
         } else {
             local_stream << option.Format(STR_DEFAULT_ASSIGNMENT) << endl;
             if (option.isEnum)
@@ -273,7 +276,10 @@ void COptions::generate_flag(const CCommandOption& option) {
             init_stream << option.Format("    [{COMMAND}].clear();") << endl;
             header_stream << option.Format("    CStringArray [{COMMAND}];") << endl;
             auto_stream << option.Format(STR_AUTO_FLAG_ENUM_LIST) << endl;
-
+        } else if (option.isStringList) {
+            init_stream << option.Format("    [{COMMAND}].clear();") << endl;
+            header_stream << option.Format("    CStringArray [{COMMAND}];") << endl;
+            auto_stream << option.Format(STR_AUTO_FLAG_STRING_LIST) << endl;
         } else {
             init_stream << option.Format(initFmt) << endl;
             header_stream << option.Format(STR_DECLARATION) << endl;
@@ -452,6 +458,12 @@ const char* STR_AUTO_FLAG_ENUM_LIST =
     "            if (!confirmEnum(\"[{COMMAND}]\", [{COMMAND}]_tmp, arg))\n"
     "                return false;\n"
     "            [{COMMAND}].push_back([{COMMAND}]_tmp);\n";
+
+//---------------------------------------------------------------------------------------------------
+const char* STR_AUTO_FLAG_STRING_LIST =
+    "        } else if ([startsWith(arg, \"-{HOTKEY}:\") || ]startsWith(arg, \"--[{COMMAND}]:\")) {\n"
+    "            arg = substitute(substitute(arg, \"-[{HOTKEY}]:\", \"\"), \"--[{COMMAND}]:\", \"\");\n"
+    "            [{COMMAND}].push_back(arg);\n";
 
 //---------------------------------------------------------------------------------------------------
 const char* STR_AUTO_FLAG_BLOCKNUM =

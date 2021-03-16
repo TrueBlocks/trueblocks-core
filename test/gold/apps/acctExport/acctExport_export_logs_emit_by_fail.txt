@@ -1,7 +1,6 @@
 acctExport argc: 8 [1:0xf503017d7baf7fbc0fff7492b751025c6a78179b] [2:--start] [3:10277780] [4:--end] [5:10279650] [6:--emitted_by] [7:0x7d655c57f71464b6f83811c55d84009cd9f5221c] 
 acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --start 10277780 --end 10279650 --emitted_by 0x7d655c57f71464b6f83811c55d84009cd9f5221c 
 TIME ~ CLOCK - <INFO>  : skip_ddos: true
-TIME ~ CLOCK - <INFO>  : emitted_by: 0x7d655c57f71464b6f83811c55d84009cd9f5221c
 TIME ~ CLOCK - <ERROR> : Exit(acctExport,parseArguments): 
 
   The --emitted_by option is only available when exporting logs. Quitting...
@@ -30,7 +29,7 @@ TIME ~ CLOCK - <ERROR> : Exit(acctExport,parseArguments):
 	-F  (--freshen_max <num>)maximum number of records to process for --freshen option
 	-y  (--factory)       scan for contract creations from the given address(es) and report address of those contracts
 	-M  (--emitter)       available for --logs option only, export will only export if one of the exported addresses emitted the event
-	-I  (--emitted_by <str>)available for --logs option only, export will only export if this address emitted the event
+	-I  (--emitted_by list<str>)available for --logs option only, export will only export if this address emitted the event
 	-c  (--first_record <num>)the first record to process
 	-e  (--max_records <num>)the maximum number of records to process before reporting
 	-s  (--staging)       enable search of staging (not yet finalized) folder

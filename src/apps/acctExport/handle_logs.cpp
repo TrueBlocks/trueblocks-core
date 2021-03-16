@@ -134,7 +134,7 @@ bool COptions::handle_logs(void) {
             for (auto log : trans.receipt.logs) {
                 bool showMe = true;
                 if (!emitted_by.empty()) {
-                    showMe = emitted_by == log.address;
+                    showMe = wasEmittedBy(log.address);
                 } else if (emitter) {
                     showMe = isEmitter(log.address);
                 }
@@ -168,6 +168,14 @@ bool COptions::handle_logs(void) {
 bool COptions::isEmitter(const address_t& test) const {
     for (auto monitor : allMonitors)
         if (monitor.address == test)
+            return true;
+    return false;
+}
+
+//-----------------------------------------------------------------------
+bool COptions::wasEmittedBy(const address_t& test) const {
+    for (auto emitter : emitted_by)
+        if (emitter == test)
             return true;
     return false;
 }

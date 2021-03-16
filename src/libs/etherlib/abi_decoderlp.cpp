@@ -201,6 +201,7 @@ size_t decodeTheData(CParameterArray& params, const CStringArray& dataArray, siz
                     param.value = "[" + params_2_Str(tmp) + "]";
 
                 } else {
+                    LOG_WARN("param.type: ", param.type);
                     LOG_WARN("dataStart(", nItems, ") larger than nDataItems(", nDataItems, "). Ignoring...");
                     return false;
                 }

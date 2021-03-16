@@ -30,7 +30,7 @@ static const COption params[] = {
     COption("freshen_max", "F", "<uint64>", OPT_HIDDEN | OPT_FLAG, "maximum number of records to process for --freshen option"),  // NOLINT
     COption("factory", "y", "", OPT_HIDDEN | OPT_SWITCH, "scan for contract creations from the given address(es) and report address of those contracts"),  // NOLINT
     COption("emitter", "M", "", OPT_HIDDEN | OPT_SWITCH, "available for --logs option only, export will only export if one of the exported addresses emitted the event"),  // NOLINT
-    COption("emitted_by", "I", "<string>", OPT_HIDDEN | OPT_FLAG, "available for --logs option only, export will only export if this address emitted the event"),  // NOLINT
+    COption("emitted_by", "I", "list<string>", OPT_HIDDEN | OPT_FLAG, "available for --logs option only, export will only export if this address emitted the event"),  // NOLINT
     COption("count", "U", "", OPT_SWITCH, "only available for --appearances mode, if present return only the number of records"),  // NOLINT
     COption("start", "S", "<blknum>", OPT_HIDDEN | OPT_DEPRECATED, "first block to process (inclusive)"),
     COption("end", "E", "<blknum>", OPT_HIDDEN | OPT_DEPRECATED, "last block to process (inclusive)"),
@@ -124,7 +124,8 @@ bool COptions::parseArguments(string_q& command) {
             emitter = true;
 
         } else if (startsWith(arg, "-I:") || startsWith(arg, "--emitted_by:")) {
-            emitted_by = substitute(substitute(arg, "-I:", ""), "--emitted_by:", "");
+            arg = substitute(substitute(arg, "-I:", ""), "--emitted_by:", "");
+            emitted_by.push_back(arg);
 
         } else if (arg == "-U" || arg == "--count") {
             count = true;
@@ -190,7 +191,7 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST("freshen_max", freshen_max, (freshen_max == 5000));
     LOG_TEST_BOOL("factory", factory);
     LOG_TEST_BOOL("emitter", emitter);
-    LOG_TEST("emitted_by", emitted_by, (emitted_by == ""));
+    // LOG_TEST("emitted_by", emitted_by, (emitted_by == NOPOS));
     LOG_TEST_BOOL("count", count);
     LOG_TEST("first_record", first_record, (first_record == 0));
     LOG_TEST("max_records", max_records, (max_records == (isApiMode() ? 250 : NOPOS)));
@@ -357,7 +358,7 @@ void COptions::Init(void) {
     freshen_max = 5000;
     factory = false;
     emitter = false;
-    emitted_by = "";
+    emitted_by.clear();
     count = false;
     first_record = 0;
     max_records = (isApiMode() ? 250 : NOPOS);
