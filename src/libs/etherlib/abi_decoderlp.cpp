@@ -68,15 +68,13 @@ size_t decodeTheData(CParameterArray& params, const CStringArray& dataArray, siz
 
     uint64_t nDataItems = dataArray.size();
     if (params.size() > nDataItems) {
-        cerr << "{ \"error\": \"decodeTheData: nParams(" << params.size() << ") > nDataItems(" << nDataItems
-             << "). Ignoring...\" }," << endl;
+        LOG_WARN("{ \"error1\": \"decodeTheData: nParams(", params.size(), ") > nDataItems(", nDataItems, ")\"},");
         level--;
         return false;
     }
 
     if (readIndex > nDataItems) {
-        cerr << "{ \"error\": \"decodeTheData: readIndex(" << readIndex << ") > nDataItems(" << nDataItems
-             << "). Ignoring...\" }," << endl;
+        LOG_WARN("{ \"error2\": \"decodeTheData: readIndex(", readIndex, ") > nDataItems(", nDataItems, ")\"},");
         level--;
         return false;
     }
@@ -84,8 +82,7 @@ size_t decodeTheData(CParameterArray& params, const CStringArray& dataArray, siz
     for (auto& param : params) {
         prettyPrint(params, dataArray, readIndex, dStart);
         if (readIndex >= nDataItems) {
-            cerr << "{ \"error\": \"decodeTheData: readIndex(" << readIndex << ") > nDataItems(" << nDataItems
-                 << "). Ignoring...\" }," << endl;
+            LOG_WARN("{ \"error3\": \"decodeTheData: readIndex(", readIndex, ") >= nDataItems(", nDataItems, ")\", \"type\": \"", param.type, "\", \"name\": \"", param.name, "\"},");
             level--;
             return false;
         }
@@ -172,7 +169,7 @@ size_t decodeTheData(CParameterArray& params, const CStringArray& dataArray, siz
                     param.value = tmp[0].value;
 
                 } else {
-                    LOG_WARN("dataStart(", dataStart, ") larger than nDataItems(", nDataItems, "). Ignoring...");
+                    LOG_WARN("{ \"error4\": \"decodeTheData: dataStart(", dataStart, ") > nDataItems(", nDataItems, ")\", \"type\": \"", param.type, "\", \"name\": \"", param.name, "\"},");
                     return false;
                 }
 
