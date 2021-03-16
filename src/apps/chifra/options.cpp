@@ -78,6 +78,7 @@ bool COptions::call_command(int argc, const char* argv[]) {
 
     CAddressBoolMap addressMap;
 
+    string_q prev;
     ostringstream os;
     os << cmdMap[mode];
     for (int i = 2; i < argc; i++) {
@@ -87,7 +88,9 @@ bool COptions::call_command(int argc, const char* argv[]) {
             // ... and it's either not an address or not already in the map, pass it through
             if (!isAddress(arg) || !addressMap[arg])
                 os << " " << argv[i];
-            addressMap[arg] = isAddress(arg);
+            if (prev != "--emitted_by" && prev != "--emitter")
+                addressMap[arg] = isAddress(arg);
+            prev = arg;
         }
     }
 
