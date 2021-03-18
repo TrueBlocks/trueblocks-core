@@ -134,11 +134,7 @@ bool COptions::handle_logs(void) {
             for (auto log : trans.receipt.logs) {
                 bool showMe = true;
                 if (relevant) {
-                    if (trans.blockNumber == 10277780 && trans.transactionIndex == 102 && log.logIndex == 120)
-                        printf("");
                     showMe = isRelevant(log);
-                    if (trans.blockNumber == 10277780 && trans.transactionIndex == 102 && log.logIndex == 120)
-                        printf("");
                     if (showMe && !emitted_by.empty())
                         showMe = wasEmittedBy(log.address);
                 } else if (!emitted_by.empty()) {
