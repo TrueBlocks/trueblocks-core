@@ -2850,7 +2850,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 32-Kickback:Friends	0x60c4b1ca9efe96ab7c5b8130a1dc1e70f2477131	nategeier		https://kickback.events/			false	false	false	false	false	false
 50-Tokens:ERC20	0x60c68a87be1e8a84144b543aacfa77199cd3d024	Themis	GET	On chain	18		false	false	false	true	true	false
 31-Gitcoin Grants:Friends	0x60c8eed11cccab1e6d75a825dd9f36d85d855c53	kg039		Gitcoin Website			false	false	false	false	false	false
-30-Contracts	0x60cd862c9c687a9de49aecdc3a99b74a4fc54ab6	MoonCats	🐱	On chain			false	false	false	true	true	false
+51-Tokens:ERC721	0x60cd862c9c687a9de49aecdc3a99b74a4fc54ab6	Moon Cats	🐱	Bokky			false	false	false	true	true	true
 32-Kickback:Friends	0x60d3aa7b41c1daf5e9e0dccd1b25ae11cb833b28	tmatta2000		https://kickback.events/			false	false	false	false	false	false
 81-Other	0x60e16961ad6138d2fb3e556fc284d9c2fff41486	Digx_Presale_Whale_10 DAO_WHALE_05		SlackNation WhaleWatch.io			false	false	false	false	false	false
 31-Gitcoin Grants:Grant	0x60e18f4971077412af2bd0297999093642f28e15	Grant 0191 Brightid Universal Proof Of Uniqueness		https://gitcoin.co/grants/191/brightid-universal-proof-of-uniqueness			false	false	false	true	false	false
@@ -6270,6 +6270,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 30-Contracts:Set Prototcol	0xda6786379ff88729264d31d472fa917f5e561443	Set: Rebalancing Set Issuance Module V2		EtherScan.io			false	false	false	true	false	false
 50-Tokens:ERC20	0xda6cb58a0d0c01610a29c5a65c303e13e885887c	cVToken	cV	On chain	18	Decentralized Car History Registry Built on Blockchain	false	false	false	true	true	false
 31-Gitcoin Grants:Grant	0xda72e4f2f86cc4114844c5894241616c82667c48	Grant 1229 Pulp Network		https://gitcoin.co/grants/1229/pulp-network			false	false	false	false	false	false
+31-Gitcoin Grants:Admin	0xda7357bbce5e8c616bc7b0c3c86f0c71c5b4eabb	zkSync Sender					false	false	false	false	false	false
 31-Gitcoin Grants:Grant	0xda774f955b61cea127e7d168d94bcb5ede7089ea	Grant 1980 the Genesys Block		https://gitcoin.co/grants/1980/the-genesys-block			false	false	false	false	false	false
 50-Tokens:ERC20	0xda80b20038bdf968c7307bb5907a469482cf6251	BrokerNekoNetwork	BNN	On chain	8	BrokerNeko Network provides rational, quick and easy solutions for individual and institutional transactions with its own unique system.	false	false	false	true	true	false
 31-Gitcoin Grants:Grant	0xda94f06099c67bdae46762552ba5b6175b7a0af4	Grant 0661 Ethereum Explained		https://gitcoin.co/grants/661/ethereum-explained			false	false	false	false	false	false
@@ -6435,7 +6436,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0xdf6ef343350780bf8c3410bf062e0c015b1dd671	Blackmoon Crypto Token	BMC	On chain	8		false	false	false	true	true	false
 31-Gitcoin Grants:Friends	0xdf73fe01dfddb55a900b947c5726b2e54dddd95a	wolflo		Gitcoin Website			false	false	false	false	false	false
 81-Other	0xdf7734f8dbd40b392128993d847e9ede790dd1c9	Dice		EtherScan.io			false	false	false	true	false	false
-31-Gitcoin Grants:Core	0xdf869fad6db91f437b59f1edefab319493d4c4ce	Gitcoin Round 5		Gitcoin Website			false	false	false	true	false	false
+31-Gitcoin Grants:Core	0xdf869fad6db91f437b59f1edefab319493d4c4ce	Gitcoin Pre Round 6		Gitcoin Website			false	false	false	true	false	false
 32-Kickback:Friends	0xdf88db057916e6f856877c3f399a16c9100e23b4	cptnthunderbacon		https://kickback.events/			false	false	false	false	false	false
 32-Kickback:Friends	0xdf9186aa39ecb85b45d78ae7019a5de685ca73c5	dtutila		https://kickback.events/			false	false	false	false	false	false
 31-Gitcoin Grants:Grant	0xdf9a17a73308416f555783239573913afb77fa8a	Grant 1906 Build Finance DAO		https://gitcoin.co/grants/1906/build-finance-dao			false	false	false	true	false	false

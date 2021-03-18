@@ -70,7 +70,7 @@ bool COptions::parseArguments(string_q& command) {
             }
 
         } else {
-            if (!parseAddressList2(this, addrs, arg))
+            if (!parseAddressList(this, addrs, arg))
                 return false;
 
             // END_CODE_AUTO

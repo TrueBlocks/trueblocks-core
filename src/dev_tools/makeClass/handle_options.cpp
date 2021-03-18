@@ -127,7 +127,7 @@ bool COptions::handle_options(void) {
                         string_q str = auto_stream.str();
                         if (contains(pos, "Address"))
                             replaceReverse(str, "else {\n",
-                                           "else if (isAddress(arg)) {\n            if (!parseAddressList2(this, "
+                                           "else if (isAddress(arg)) {\n            if (!parseAddressList(this, "
                                            "addrs, arg))\n                return false;\n\n");
                         else
                             replaceReverse(pos, "} else if", "if");
@@ -503,7 +503,7 @@ const char* STR_TXLIST_PROCESSOR =
 
 //---------------------------------------------------------------------------------------------------
 const char* STR_ADDRLIST_PROCESSOR =
-    "            } else if (!parseAddressList2(this, [{COMMAND}], arg))\n"
+    "            } else if (!parseAddressList(this, [{COMMAND}], arg))\n"
     "                return false;\n";
 
 //---------------------------------------------------------------------------------------------------

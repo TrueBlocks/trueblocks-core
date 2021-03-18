@@ -72,7 +72,7 @@ bool COptions::parseArguments(string_q& command) {
             }
 
         } else if (isAddress(arg)) {
-            if (!parseAddressList2(this, addrs, arg))
+            if (!parseAddressList(this, addrs, arg))
                 return false;
 
         } else {

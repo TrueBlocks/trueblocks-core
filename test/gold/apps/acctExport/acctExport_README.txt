@@ -27,10 +27,12 @@ acctExport -th
 | -f | --freshen | freshen but do not print the exported data |
 | -F | --freshen_max <num> | maximum number of records to process for --freshen option |
 | -y | --factory | scan for contract creations from the given address(es) and report address of those contracts |
-| -M | --emitter | available for --logs option only, export will only export if one of the exported addresses emitted the event |
-| -I | --emitted_by list<str> | available for --logs option only, export will only export if this address emitted the event |
+|  | --emitter | for log export only, export only if one of the given export addresses emitted the event |
+|  | --emitted_by list<str> | for log export only, export only one of these addresses emitted the event |
+|  | --relevant list<str> | for log export only, export only log is relevant to one of the given export addresses |
 | -c | --first_record <num> | the first record to process |
 | -e | --max_records <num> | the maximum number of records to process before reporting |
+|  | --clean | clean (i.e. remove duplicate appearances) from all existing monitors |
 | -s | --staging | enable search of staging (not yet finalized) folder |
 | -u | --unripe | enable search of unripe (neither staged nor finalized) folder (assumes --staging) |
 |####|Hidden options||
@@ -41,7 +43,4 @@ acctExport -th
 `Notes:`
 
 - `addresses` must start with '0x' and be forty two characters long.
-- By default, transactions and traces are cached if the number of exported 
-  items is <= to 1,000 items. Otherwise, if you specify any `write_*` options, 
-  your preference predominates.
 

@@ -20,7 +20,7 @@ static COption params[] = {
     COption("-bucket:<num>", "number of block to process between cap table reports"),
     COption("-nRows:<num>", "show this many rows of the cap table (default = 30)"),
     COption("-showErrors", "in verbose mode, print out in-error transactions (never effects accounting)"),
-    COption("", "Show ERC20 token cap tables with various options.\n"),
+    COption("", OPT_DESCRIPTION, "Show ERC20 token cap tables with various options.\n"),
 };
 static size_t nParams = sizeof(params) / sizeof(COption);
 

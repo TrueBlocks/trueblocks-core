@@ -151,9 +151,9 @@ bool COptionsBase::prepareArguments(int argCountIn, const char* argvIn[]) {
         bool combine = false;
         for (size_t j = 0; j < cntParams && !combine; j++) {
             if (!pParams[j].permitted.empty()) {
-                string_q shortName = pParams[j].shortName;
+                string_q hotKey = pParams[j].hotKey;
                 string_q longName = pParams[j].longName;
-                if (shortName == arg || startsWith(longName, arg)) {
+                if (hotKey == arg || startsWith(longName, arg)) {
                     // We want to pull the next parameter into this one since it's a ':' param
                     combine = true;
                 }
@@ -526,7 +526,7 @@ bool COptionsBase::confirmUint(const string_q& name, uint64_t& value, const stri
         return true;
 
     string_q arg = argIn;
-    replace(arg, param->shortName + ":", "");
+    replace(arg, param->hotKey + ":", "");
     replace(arg, name + ":", "");
     replaceAll(arg, "-", "");
 
@@ -547,7 +547,7 @@ bool COptionsBase::confirmDouble(const string_q& name, double& value, const stri
         return true;
 
     string_q arg = argIn;
-    replace(arg, param->shortName + ":", "");
+    replace(arg, param->hotKey + ":", "");
     replace(arg, name + ":", "");
     replaceAll(arg, "-", "");
 
@@ -569,7 +569,7 @@ bool COptionsBase::confirmBlockNum(const string_q& name, blknum_t& value, const 
         return true;
 
     string_q arg = argIn;
-    replace(arg, param->shortName + ":", "");
+    replace(arg, param->hotKey + ":", "");
     replace(arg, name + ":", "");
     replaceAll(arg, "-", "");
 
@@ -610,7 +610,7 @@ bool COptionsBase::confirmEnum(const string_q& name, string_q& value, const stri
     replace(type, "]", "|");
 
     string_q arg = argIn;
-    replace(arg, param->shortName + ":", "");
+    replace(arg, param->hotKey + ":", "");
     replace(arg, name + ":", "");
     replaceAll(arg, "-", "");
 
@@ -659,9 +659,9 @@ COption::COption(const string_q& ln, const string_q& sn, const string_q& t, size
     }
 
     longName = "--" + ln + (permitted.empty() ? "" : " " + permitted);
-    shortName = (sn.empty() ? "" : "-" + sn);
+    hotKey = (sn.empty() ? "" : "-" + sn);
     if (is_positional)
-        longName = shortName = ln;
+        longName = hotKey = ln;
 }
 
 //--------------------------------------------------------------------------------
@@ -735,8 +735,8 @@ string_q COptionsBase::options(void) const {
         } else if (pParams[i].is_hidden || pParams[i].is_deprecated) {
             // invisible option
 
-        } else if (!pParams[i].shortName.empty()) {
-            shorts << pParams[i].shortName << "|";
+        } else if (!pParams[i].hotKey.empty()) {
+            shorts << pParams[i].hotKey << "|";
         }
     }
     if (isEnabled(OPT_VERBOSE))
@@ -870,15 +870,15 @@ string_q COptionsBase::descriptions(void) const {
 
         size_t nHidden = 0;
         for (uint64_t i = 0; i < cntParams; i++) {
-            string_q sName = pParams[i].shortName;
+            string_q hKey = pParams[i].hotKey;
             string_q lName = substitute(pParams[i].longName, "addrs2", "addrs");
             string_q descr = trim(pParams[i].description);
             bool isPositional = pParams[i].is_positional;
-            if (!pParams[i].is_hidden && !pParams[i].is_deprecated && !sName.empty()) {
+            if (!pParams[i].is_hidden && !pParams[i].is_deprecated && !pParams[i].longName.empty()) {
                 bool isReq = !pParams[i].is_optional;
-                sName = (isPositional ? "" : sName);
+                hKey = (isPositional ? "" : hKey);
                 lName = substitute(substitute((isPositional ? substitute(lName, "-", "") : lName), "!", ""), "~", "");
-                os << oneDescription(sName, lName, descr, isPositional, isReq);
+                os << oneDescription(hKey, lName, descr, isPositional, isReq);
             }
             if (pParams[i].is_hidden)
                 nHidden++;
@@ -893,17 +893,17 @@ string_q COptionsBase::descriptions(void) const {
                 os << cTeal << italic << "\t#### Hidden options" << cOff << endl;
             }
             for (uint64_t i = 0; i < cntParams; i++) {
-                string_q sName = pParams[i].shortName;
+                string_q hKey = pParams[i].hotKey;
                 string_q lName = pParams[i].longName;
                 string_q descr = trim(pParams[i].description);
                 bool isPositional = pParams[i].is_positional;
-                if (pParams[i].is_hidden && !pParams[i].is_deprecated && !sName.empty()) {
+                if (pParams[i].is_hidden && !pParams[i].is_deprecated && !pParams[i].longName.empty()) {
                     bool isReq = !pParams[i].is_optional;
                     lName =
                         substitute(substitute((isPositional ? substitute(lName, "-", "") : lName), "!", ""), "~", "");
                     lName = substitute(lName, "@-", "");
-                    sName = (isPositional ? "" : pParams[i].shortName);
-                    os << oneDescription(sName, lName, descr, isPositional, isReq);
+                    hKey = (isPositional ? "" : pParams[i].hotKey);
+                    os << oneDescription(hKey, lName, descr, isPositional, isReq);
                 }
             }
             if (isReadme) {
@@ -993,11 +993,11 @@ string_q COptionsBase::expandOption(string_q& arg) {
 int sortParams(const void* c1, const void* c2) {
     const COption* p1 = reinterpret_cast<const COption*>(c1);
     const COption* p2 = reinterpret_cast<const COption*>(c2);
-    if (p1->shortName == "-h")
+    if (p1->hotKey == "-h")
         return 1;
-    else if (p2->shortName == "-h")
+    else if (p2->hotKey == "-h")
         return -1;
-    return p1->shortName.compare(p2->shortName);
+    return p1->hotKey.compare(p2->hotKey);
 }
 
 //--------------------------------------------------------------------------------

@@ -273,7 +273,7 @@ bool parseBlockList2(COptionsBase* opt, COptionsBlockList& blocks, const string_
 }
 
 //--------------------------------------------------------------------------------
-bool parseAddressList2(COptionsBase* opt, CAddressArray& addrs, const string_q& argIn) {
+bool parseAddressList(COptionsBase* opt, CAddressArray& addrs, const string_q& argIn) {
     if (!isAddress(argIn))
         return opt->usage("Invalid address '" + argIn + "'. Length (" + uint_2_Str(argIn.length()) +
                           ") is not equal to 40 characters (20 bytes).");

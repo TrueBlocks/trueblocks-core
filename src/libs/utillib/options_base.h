@@ -179,7 +179,7 @@ class CDefaultOptions : public COptionsBase {
 //--------------------------------------------------------------------------------
 class COption {
   public:
-    string_q shortName;
+    string_q hotKey;
     string_q longName;
     string_q description;
     string_q permitted;

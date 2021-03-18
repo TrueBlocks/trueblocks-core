@@ -29,8 +29,9 @@ static const COption params[] = {
     COption("freshen", "f", "", OPT_HIDDEN | OPT_SWITCH, "freshen but do not print the exported data"),
     COption("freshen_max", "F", "<uint64>", OPT_HIDDEN | OPT_FLAG, "maximum number of records to process for --freshen option"),  // NOLINT
     COption("factory", "y", "", OPT_HIDDEN | OPT_SWITCH, "scan for contract creations from the given address(es) and report address of those contracts"),  // NOLINT
-    COption("emitter", "M", "", OPT_HIDDEN | OPT_SWITCH, "available for --logs option only, export will only export if one of the exported addresses emitted the event"),  // NOLINT
-    COption("emitted_by", "I", "list<string>", OPT_HIDDEN | OPT_FLAG, "available for --logs option only, export will only export if this address emitted the event"),  // NOLINT
+    COption("emitter", "", "", OPT_HIDDEN | OPT_SWITCH, "for log export only, export only if one of the given export addresses emitted the event"),  // NOLINT
+    COption("emitted_by", "", "list<string>", OPT_HIDDEN | OPT_FLAG, "for log export only, export only one of these addresses emitted the event"),  // NOLINT
+    COption("relevant", "", "list<string>", OPT_HIDDEN | OPT_FLAG, "for log export only, export only log is relevant to one of the given export addresses"),  // NOLINT
     COption("count", "U", "", OPT_SWITCH, "only available for --appearances mode, if present return only the number of records"),  // NOLINT
     COption("start", "S", "<blknum>", OPT_HIDDEN | OPT_DEPRECATED, "first block to process (inclusive)"),
     COption("end", "E", "<blknum>", OPT_HIDDEN | OPT_DEPRECATED, "last block to process (inclusive)"),
@@ -120,12 +121,16 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-y" || arg == "--factory") {
             factory = true;
 
-        } else if (arg == "-M" || arg == "--emitter") {
+        } else if (arg == "--emitter") {
             emitter = true;
 
-        } else if (startsWith(arg, "-I:") || startsWith(arg, "--emitted_by:")) {
-            arg = substitute(substitute(arg, "-I:", ""), "--emitted_by:", "");
+        } else if (startsWith(arg, "--emitted_by:")) {
+            arg = substitute(substitute(arg, "-:", ""), "--emitted_by:", "");
             emitted_by.push_back(arg);
+
+        } else if (startsWith(arg, "--relevant:")) {
+            arg = substitute(substitute(arg, "-:", ""), "--relevant:", "");
+            relevant.push_back(arg);
 
         } else if (arg == "-U" || arg == "--count") {
             count = true;
@@ -162,7 +167,7 @@ bool COptions::parseArguments(string_q& command) {
             }
 
         } else if (isAddress(arg)) {
-            if (!parseAddressList2(this, addrs, arg))
+            if (!parseAddressList(this, addrs, arg))
                 return false;
 
         } else {
@@ -192,6 +197,7 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST_BOOL("factory", factory);
     LOG_TEST_BOOL("emitter", emitter);
     // LOG_TEST("emitted_by", emitted_by, (emitted_by == NOPOS));
+    // LOG_TEST("relevant", relevant, (relevant == NOPOS));
     LOG_TEST_BOOL("count", count);
     LOG_TEST("first_record", first_record, (first_record == 0));
     LOG_TEST("max_records", max_records, (max_records == (isApiMode() ? 250 : NOPOS)));
@@ -359,6 +365,7 @@ void COptions::Init(void) {
     factory = false;
     emitter = false;
     emitted_by.clear();
+    relevant.clear();
     count = false;
     first_record = 0;
     max_records = (isApiMode() ? 250 : NOPOS);
@@ -418,7 +425,6 @@ COptions::COptions(void) {
     // BEG_CODE_NOTES
     // clang-format off
     notes.push_back("`addresses` must start with '0x' and be forty two characters long.");
-    notes.push_back("By default, transactions and traces are cached if the number of exported | items is <= to 1,000 items. Otherwise, if you specify any `write_*` options, | your preference predominates.");  // NOLINT
     // clang-format on
     // END_CODE_NOTES
 

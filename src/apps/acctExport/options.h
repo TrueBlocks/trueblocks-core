@@ -33,6 +33,7 @@ class COptions : public CAbiOptions {
     bool factory;
     bool emitter;
     CStringArray emitted_by;
+    CStringArray relevant;
     bool count;
     blknum_t first_record;
     blknum_t max_records;
