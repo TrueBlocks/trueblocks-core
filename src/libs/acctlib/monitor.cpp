@@ -360,7 +360,7 @@ const char* STR_DISPLAY_MONITOR = "";
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 //---------------------------------------------------------------------------
-bool CMonitor::openCacheFile1(void) {
+bool CMonitor::openForWriting(void) {
     if (tx_cache != NULL)
         return true;
     tx_cache = new CArchive(WRITING_ARCHIVE);
@@ -370,31 +370,57 @@ bool CMonitor::openCacheFile1(void) {
 }
 
 //-------------------------------------------------------------------------
+void CMonitor::writeMonitorArray(const CAppearanceArray_base& items) {
+    if (tx_cache == NULL)
+        return;
+    for (auto item : items)
+        *tx_cache << item.blk << item.txid;
+    tx_cache->flush();
+}
+
+//-------------------------------------------------------------------------
 void CMonitor::writeLastBlock(blknum_t bn) {
     lastVisitedBlock = bn;
     stringToAsciiFile(getMonitorLast(address, fm_mode), uint_2_Str(bn) + "\n");
 }
 
 //-------------------------------------------------------------------------
-void CMonitor::updateLastExport(blknum_t bn) {
+void CMonitor::writeLastExport(blknum_t bn) {
     stringToAsciiFile(getMonitorExpt(address, fm_mode), uint_2_Str(bn) + "\n");
 }
 
-//-------------------------------------------------------------------------
-void CMonitor::writeARecord(blknum_t bn, blknum_t tx_id) {
-    if (tx_cache == NULL)
-        return;
-    *tx_cache << bn << tx_id;
-    tx_cache->flush();
+//---------------------------------------------------------------------------
+string_q CMonitor::getMonitorPath(const address_t& addr, freshen_e mode) const {
+    string_q fn = isAddress(addr) ? addr + ".acct.bin" : addr;
+    string_q base = getCachePath("monitors/") + (mode == FM_STAGING ? "staging/" : "");
+    if (isTestMode())
+        base = configPath("mocked/monitors/") + (mode == FM_STAGING ? "staging/" : "");
+    return base + fn;
 }
 
-//-------------------------------------------------------------------------
-void CMonitor::writeAnArray(const CAppearanceArray_base& items) {
-    if (tx_cache == NULL)
-        return;
-    for (auto item : items)
-        *tx_cache << item.blk << item.txid;
-    tx_cache->flush();
+//---------------------------------------------------------------------------
+string_q CMonitor::getMonitorLast(const address_t& addr, freshen_e mode) const {
+    return substitute(getMonitorPath(addr, mode), ".acct.bin", ".last.txt");
+}
+
+//---------------------------------------------------------------------------
+string_q CMonitor::getMonitorExpt(const address_t& addr, freshen_e mode) const {
+    return substitute(getMonitorPath(addr, mode), ".acct.bin", ".expt.txt");
+}
+
+//---------------------------------------------------------------------------
+string_q CMonitor::getMonitorDels(const address_t& addr, freshen_e mode) const {
+    return getMonitorPath(addr) + ".deleted";
+}
+
+//---------------------------------------------------------------------------
+string_q CMonitor::getMonitorCach(const address_t& addr, freshen_e mode) const {
+    return getMonitorPath(addr + ".txs.bin");
+}
+
+//-----------------------------------------------------------------------
+uint64_t CMonitor::getRecordCount(void) const {
+    return fileSize(getMonitorPath(address)) / sizeof(CAppearance_base);
 }
 
 //--------------------------------------------------------------------------------
@@ -417,14 +443,29 @@ blknum_t CMonitor::getLastVisited(bool fresh) const {
     return lastVisitedBlock;
 }
 
-//--------------------------------------------------------------------------------
-bool CMonitor::clearLocks(void) {
-    ::remove((getMonitorPath(address) + ".lck").c_str());
-    ::remove((getMonitorLast(address) + ".lck").c_str());
-    ::remove((getMonitorExpt(address) + ".lck").c_str());
-    ::remove((getMonitorDels(address) + ".lck").c_str());
-    ::remove((getMonitorCach(address) + ".lck").c_str());
-    return true;
+//-----------------------------------------------------------------------
+blknum_t CMonitor::getLastVisitedBlock(void) const {
+    return str_2_Uint(asciiFileToString(getMonitorLast(address)));
+}
+
+//-----------------------------------------------------------------------
+blknum_t CMonitor::getLastExportedBlock(void) const {
+    return str_2_Uint(asciiFileToString(getMonitorExpt(address)));
+}
+
+//-----------------------------------------------------------------------
+bool CMonitor::monitorExists(void) const {
+    if (fileExists(getMonitorPath(address)))
+        return true;
+    if (fileExists(getMonitorLast(address)))
+        return true;
+    if (fileExists(getMonitorExpt(address)))
+        return true;
+    if (fileExists(getMonitorDels(address)))
+        return true;
+    if (fileExists(getMonitorCach(address)))
+        return true;
+    return false;
 }
 
 //--------------------------------------------------------------------------------
@@ -435,13 +476,23 @@ bool CMonitor::clearLocks(void) {
     }
 
 //--------------------------------------------------------------------------------
-bool CMonitor::isLocked(string_q& msg) const {
+bool CMonitor::isMonitorLocked(string_q& msg) const {
     checkLock(getMonitorPath(address), "cache");
     checkLock(getMonitorLast(address), "last block");
     checkLock(getMonitorExpt(address), "last export");
     checkLock(getMonitorDels(address), "marker");
     checkLock(getMonitorCach(address), "cache");
     return false;
+}
+
+//--------------------------------------------------------------------------------
+bool CMonitor::clearMonitorLocks(void) {
+    ::remove((getMonitorPath(address) + ".lck").c_str());
+    ::remove((getMonitorLast(address) + ".lck").c_str());
+    ::remove((getMonitorExpt(address) + ".lck").c_str());
+    ::remove((getMonitorDels(address) + ".lck").c_str());
+    ::remove((getMonitorCach(address) + ".lck").c_str());
+    return true;
 }
 
 //--------------------------------------------------------------------------------
@@ -483,129 +534,19 @@ void CMonitor::moveToProduction(void) {
     unlockSection();
 }
 
-//---------------------------------------------------------------------------
-string_q CMonitor::getMonitorPath(const address_t& addr, freshen_e mode) const {
-    string_q fn = isAddress(addr) ? addr + ".acct.bin" : addr;
-    string_q base = getCachePath("monitors/") + (mode == FM_STAGING ? "staging/" : "");
-    if (isTestMode())
-        base = configPath("mocked/monitors/") + (mode == FM_STAGING ? "staging/" : "");
-    return base + fn;
-}
-
-//---------------------------------------------------------------------------
-string_q CMonitor::getMonitorLast(const address_t& addr, freshen_e mode) const {
-    return substitute(getMonitorPath(addr, mode), ".acct.bin", ".last.txt");
-}
-
-//---------------------------------------------------------------------------
-string_q CMonitor::getMonitorExpt(const address_t& addr, freshen_e mode) const {
-    return substitute(getMonitorPath(addr, mode), ".acct.bin", ".expt.txt");
-}
-
-//---------------------------------------------------------------------------
-string_q CMonitor::getMonitorDels(const address_t& addr, freshen_e mode) const {
-    return getMonitorPath(addr) + ".deleted";
-}
-
-//---------------------------------------------------------------------------
-string_q CMonitor::getMonitorCach(const address_t& addr, freshen_e mode) const {
-    return getMonitorPath(addr + ".txs.bin");
-}
-
-//----------------------------------------------------------------
-void establishMonitorFolders(void) {
-    CMonitor m;
-    establishFolder(m.getMonitorPath("", FM_PRODUCTION));
-    establishFolder(m.getMonitorPath("", FM_STAGING));
-}
-
-//----------------------------------------------------------------
-void cleanMonitorStage(void) {
-    CMonitor m;
-    cleanFolder(m.getMonitorPath("", FM_STAGING));
-}
-
-//-----------------------------------------------------------------------
-bool CMonitor::loadAndSort(CAppearanceArray& items) {
-    ENTER("loadAndSort");
-
-    string_q fn = getMonitorPath(address);
-    size_t nRecords = (fileSize(fn) / sizeof(CAppearance_base));
-    if (!nRecords)
-        EXIT_FAIL("No records found for address '" + address + "'. Quitting...");
-
-    CAppearance_base* buffer = new CAppearance_base[nRecords];
-    if (buffer) {
-        bzero((void*)buffer, nRecords * sizeof(CAppearance_base));  // NOLINT
-        CArchive txCache(READING_ARCHIVE);
-        if (txCache.Lock(fn, modeReadOnly, LOCK_NOWAIT)) {
-            txCache.Read(buffer, sizeof(CAppearance_base), nRecords);
-            txCache.Release();
-        } else {
-            EXIT_FAIL("Could not open cache file'" + fn + "'. Quitting...\n");
-        }
-        // Expand the apps array (which may be non-empty)
-        items.reserve(items.size() + nRecords);
-        for (size_t i = 0; i < nRecords; i++) {
-            CAppearance app;
-            app.bn = buffer[i].blk;
-            app.tx = buffer[i].txid;
-            items.push_back(app);
-        }
-        delete[] buffer;
-    } else {
-        EXIT_FAIL("Could not allocate memory for address " + address + "Quitting...\n");
-    }
-
-    // Sort them, so when we write them later we can remove dups
-    sort(items.begin(), items.end());
-
-    EXIT_NOMSG(true);
-}
-
-//-----------------------------------------------------------------------
-uint64_t CMonitor::getRecordCount(void) const {
-    return fileSize(getMonitorPath(address)) / sizeof(CAppearance_base);
-}
-
-//-----------------------------------------------------------------------
-bool CMonitor::exists(void) const {
-    if (fileExists(getMonitorPath(address)))
-        return true;
-    if (fileExists(getMonitorLast(address)))
-        return true;
-    if (fileExists(getMonitorExpt(address)))
-        return true;
-    if (fileExists(getMonitorDels(address)))
-        return true;
-    if (fileExists(getMonitorCach(address)))
-        return true;
-    return false;
-}
-
-//-----------------------------------------------------------------------
-blknum_t CMonitor::getLastVisitedBlock(void) const {
-    return str_2_Uint(asciiFileToString(getMonitorLast(address)));
-}
-
-//-----------------------------------------------------------------------
-blknum_t CMonitor::getLastExportedBlock(void) const {
-    return str_2_Uint(asciiFileToString(getMonitorExpt(address)));
-}
-
 //-----------------------------------------------------------------------
 bool CMonitor::isDeleted(void) const {
     return fileExists(getMonitorDels(address));
 }
 
 //-----------------------------------------------------------------------
-void CMonitor::undeleteMonitor(void) {
-    ::remove(getMonitorDels(address).c_str());
+void CMonitor::deleteMonitor(void) {
+    stringToAsciiFile(getMonitorDels(address), Now().Format(FMT_EXPORT));
 }
 
 //-----------------------------------------------------------------------
-void CMonitor::deleteMonitor(void) {
-    stringToAsciiFile(getMonitorDels(address), Now().Format(FMT_EXPORT));
+void CMonitor::undeleteMonitor(void) {
+    ::remove(getMonitorDels(address).c_str());
 }
 
 //---------------------------------------------------------------------------
@@ -630,6 +571,19 @@ bloom_t CMonitor::getBloom(void) {
         bloom = addr_2_Bloom(address);
     }
     return bloom;
+}
+
+//----------------------------------------------------------------
+void establishMonitorFolders(void) {
+    CMonitor m;
+    establishFolder(m.getMonitorPath("", FM_PRODUCTION));
+    establishFolder(m.getMonitorPath("", FM_STAGING));
+}
+
+//----------------------------------------------------------------
+void cleanMonitorStage(void) {
+    CMonitor m;
+    cleanFolder(m.getMonitorPath("", FM_STAGING));
 }
 
 //-------------------------------------------------------------------------

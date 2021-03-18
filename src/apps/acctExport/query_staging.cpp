@@ -75,7 +75,7 @@ bool visitStagingIndexFiles(const string_q& path, void* data) {
                 }
                 lockSection();
                 if (items.size()) {
-                    monitor.writeAnArray(items);
+                    monitor.writeMonitorArray(items);
                     options->stats.nPositive++;
                 } else {
                     options->stats.nSkipped++;

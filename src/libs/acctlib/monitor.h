@@ -47,36 +47,43 @@ class CMonitor : public CAccountName {
 
     // EXISTING_CODE
     bloom_t bloom;
-    bloom_t getBloom(void);
+    CArchive* tx_cache;
     uint64_t cntBefore;
     bool needsRefresh;
+    bool inBlock;
+
     CMonitor(const string_q& _addr, const string_q& _name, blknum_t fB, blknum_t lB);
     CMonitor(const address_t& _addr, const string_q& _name);
-    bool inBlock;
-    CArchive* tx_cache;
+
+    bool openForWriting(void);
+
+    void writeMonitorArray(const CAppearanceArray_base& array);
     void writeLastBlock(blknum_t bn);
-    void updateLastExport(blknum_t bn);
-    void writeAnArray(const CAppearanceArray_base& array);
-    void writeARecord(blknum_t bn, blknum_t tx_id);
-    bool openCacheFile1(void);
-    blknum_t getLastVisited(bool fresh = false) const;
-    bool isLocked(string_q& msg) const;
-    bool clearLocks(void);
-    void moveToProduction(void);
-    bool loadAndSort(CAppearanceArray& items);
-    uint64_t getRecordCount(void) const;
-    bool exists(void) const;
-    blknum_t getLastVisitedBlock(void) const;
-    blknum_t getLastExportedBlock(void) const;
-    bool isDeleted(void) const;
-    void undeleteMonitor(void);
-    void deleteMonitor(void);
-    void removeMonitor(void);
+    void writeLastExport(blknum_t bn);
+
     string_q getMonitorPath(const address_t& addr, freshen_e mode = FM_PRODUCTION) const;
     string_q getMonitorLast(const address_t& addr, freshen_e mode = FM_PRODUCTION) const;
     string_q getMonitorExpt(const address_t& addr, freshen_e mode = FM_PRODUCTION) const;
     string_q getMonitorDels(const address_t& addr, freshen_e mode = FM_PRODUCTION) const;
     string_q getMonitorCach(const address_t& addr, freshen_e mode = FM_PRODUCTION) const;
+
+    uint64_t getRecordCount(void) const;
+    blknum_t getLastVisited(bool fresh = false) const;
+    blknum_t getLastVisitedBlock(void) const;
+    blknum_t getLastExportedBlock(void) const;
+
+    bool monitorExists(void) const;
+    bool isMonitorLocked(string_q& msg) const;
+    bool clearMonitorLocks(void);
+
+    void moveToProduction(void);
+
+    bool isDeleted(void) const;
+    void deleteMonitor(void);
+    void undeleteMonitor(void);
+    void removeMonitor(void);
+
+    bloom_t getBloom(void);
     // EXISTING_CODE
     bool operator==(const CMonitor& it) const;
     bool operator!=(const CMonitor& it) const {
@@ -230,11 +237,11 @@ extern const char* STR_DISPLAY_MONITOR;
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 typedef map<address_t, CMonitor> CMonitorMap;  // NOLINT
-extern void establishMonitorFolders(void);
-extern void cleanMonitorStage(void);
 extern const char* STR_DISPLAY_TOKENBALANCERECORD2;
 extern string_q getTokenBalanceOf(const CAbi& abi_spec, const CMonitor& token, const address_t& holder,
                                   blknum_t blockNum);
 extern string_q getTokenState(const string_q& what, const CAbi& abi_spec, const CMonitor& token, blknum_t blockNum);
+extern void establishMonitorFolders(void);
+extern void cleanMonitorStage(void);
 // EXISTING_CODE
 }  // namespace qblocks

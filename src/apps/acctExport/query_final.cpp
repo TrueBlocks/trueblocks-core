@@ -37,8 +37,6 @@ bool visitFinalIndexFiles(const string_q& path, void* data) {
 
         options->possibles.clear();
         for (auto m : options->allMonitors) {
-            // LOG_TEST("m.getLastVisitedBlock()", m.getLastVisitedBlock(), false);
-            // LOG_TEST("options->fileRange.first", options->fileRange.first, false)
             if (m.getLastVisitedBlock() == 0 || m.getLastVisitedBlock() < options->fileRange.first)
                 options->possibles.push_back(m);
         }
@@ -112,7 +110,7 @@ bool COptions::visitBinaryFile(const string_q& path, void* data) {
     for (size_t mo = 0; mo < possibles.size() && !shouldQuit(); mo++) {
         CMonitor* monitor = &possibles[mo];
         if (hitMap[monitor->address]) {
-            if (!monitor->openCacheFile1())
+            if (!monitor->openForWriting())
                 EXIT_FAIL("Could not open cache file " + monitor->getMonitorPath(monitor->address, monitor->fm_mode) +
                           ".");
 
@@ -169,7 +167,7 @@ bool COptions::visitBinaryFile(const string_q& path, void* data) {
 
                 if (items.size()) {
                     lockSection();
-                    monitor->writeAnArray(items);
+                    monitor->writeMonitorArray(items);
                     unlockSection();
                 }
             } else {

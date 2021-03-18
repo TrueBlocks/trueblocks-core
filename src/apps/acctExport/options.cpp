@@ -255,12 +255,12 @@ bool COptions::parseArguments(string_q& command) {
         CMonitor monitor;
         monitor.setValueByName("address", toLower(addr));
         monitor.setValueByName("name", toLower(addr));
-        monitor.clearLocks();
+        monitor.clearMonitorLocks();
         monitor.finishParse();
         monitor.fm_mode = (fileExists(monitor.getMonitorPath(monitor.address)) ? FM_PRODUCTION : FM_STAGING);
-        if (monitor.exists()) {
+        if (monitor.monitorExists()) {
             string_q unused;
-            if (monitor.isLocked(unused))
+            if (monitor.isMonitorLocked(unused))
                 LOG_ERR(
                     "The cache file is locked. The program is either already "
                     "running or it did not end cleanly the\n\tlast time it ran. "
@@ -268,7 +268,7 @@ bool COptions::parseArguments(string_q& command) {
                     "remove the lock\n\tfile: " +
                     monitor.getMonitorPath(addr) + +".lck'. Proceeding anyway...");
             string_q msg;
-            if (monitor.isLocked(msg))  // If locked, we fail
+            if (monitor.isMonitorLocked(msg))  // If locked, we fail
                 EXIT_USAGE(msg);
             firstBlockToVisit = min(firstBlockToVisit, monitor.getLastVisited());
             LOG_TEST("Monitor found for", addr, false);
@@ -608,7 +608,7 @@ bool COptions::freshen_internal(void) {
 // TODO(tjayrush): What does prefundAddrMap and prefundWeiMap do? Needs testing
 // TODO(tjayrush): What does blkRewardMap do? Needs testing
 // TODO(tjayrush): Reconciliation loads traces -- plus it reduplicates the isSuicide, isGeneration, isUncle shit
-// TODO(tjayrush): updateLastExport is really weird
+// TODO(tjayrush): writeLastExport is really weird
 // TODO(tjayrush): writeLastBlock is really weird
 // TODO(tjayrush): We used to write traces sometimes
 // TODO(tjayrush): We used to cache the monitored txs - I think it was pretty fast (we used the monitor staging folder)

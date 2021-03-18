@@ -20,16 +20,12 @@ bool COptions::handle_accounting(void) {
         lastStatement.endBal = getBalanceAt(expContext().accountedFor, apps[0].blk - 1);
 
     bool first = true;
-    blknum_t lastExported = exportRange.second;
-    //             " nApps: ", nApps, string_q(20, ' '), cOff);
+    blknum_t lastExportedBlock = NOPOS;
     for (size_t i = 0; i < apps.size() && (!freshen || (nProcessed < freshen_max)); i++) {
         const CAppearance_base* app = &apps[i];
-        if (shouldQuit() || app->blk >= ts_cnt) {
-            lastExported = app->blk - 1;
+        if (shouldQuit() || app->blk >= ts_cnt)
             break;
-        }
 
-        // LOG_TEST("passes", inRange((blknum_t)app->blk, exportRange.first, exportRange.second) ? "true" : "false");
         if (inRange((blknum_t)app->blk, exportRange.first, exportRange.second)) {
             CBlock block;  // do not move this from this scope
             block.blockNumber = app->blk;
@@ -149,10 +145,9 @@ bool COptions::handle_accounting(void) {
                          nTransactions, " txs for address " + allMonitors[0].address);
     }
 
-    // LOG_INFO("n: ", monitors.size(), " lastExported: ", lastExported);
-    // getchar();
-    for (auto monitor : allMonitors)
-        monitor.updateLastExport(lastExported);
+    if (lastExportedBlock != NOPOS)
+        for (auto monitor : allMonitors)
+            monitor.writeLastExport(lastExportedBlock);
 
     reportNeighbors();
 

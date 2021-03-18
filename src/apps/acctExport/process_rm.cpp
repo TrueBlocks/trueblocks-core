@@ -24,7 +24,7 @@ bool COptions::handle_rm(const CAddressArray& addrs) {
         for (auto addr : addrs) {
             CMonitor monitor;
             monitor.address = addr;
-            if (!monitor.exists()) {
+            if (!monitor.monitorExists()) {
                 results.push_back(monitor.Format(STR_NOTFOUND));
                 LOG_WARN(monitor.Format(STR_NOTFOUND));
             } else {

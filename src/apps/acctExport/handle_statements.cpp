@@ -21,13 +21,11 @@ bool COptions::handle_statements(void) {
         lastStatement.endBal = getBalanceAt(expContext().accountedFor, apps[0].blk - 1);
 
     bool first = true;
-    blknum_t lastExported = exportRange.second;
+    blknum_t lastExportedBlock = NOPOS;
     for (size_t i = 0; i < apps.size() && (!freshen || (nProcessed < freshen_max)); i++) {
         const CAppearance_base* app = &apps[i];
-        if (shouldQuit() || app->blk >= ts_cnt) {
-            lastExported = app->blk;
+        if (shouldQuit() || app->blk >= ts_cnt)
             break;
-        }
 
         // LOG_TEST("passes", inRange((blknum_t)app->blk, exportRange.first, exportRange.second) ? "true" : "false");
         if (inRange((blknum_t)app->blk, exportRange.first, exportRange.second)) {
@@ -147,8 +145,9 @@ bool COptions::handle_statements(void) {
                          nTransactions, " statements for address " + allMonitors[0].address);
     }
 
-    for (auto monitor : allMonitors)
-        monitor.updateLastExport(lastExported);
+    if (lastExportedBlock != NOPOS)
+        for (auto monitor : allMonitors)
+            monitor.writeLastExport(lastExportedBlock);
 
     reportNeighbors();
 
