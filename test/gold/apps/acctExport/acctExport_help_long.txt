@@ -25,8 +25,8 @@ acctExport --help
 	-F  (--freshen_max <num>)maximum number of records to process for --freshen option
 	-y  (--factory)       scan for contract creations from the given address(es) and report address of those contracts
 	    (--emitter)       for log export only, export only if one of the given export addresses emitted the event
-	    (--emitted_by list<str>)for log export only, export only one of these addresses emitted the event
-	    (--relevant list<str>)for log export only, export only log is relevant to one of the given export addresses
+	    (--emitted_by list<addr>)for log export only, export only one of these addresses emitted the event
+	    (--relevant)      for log export only, if true export only logs relevant to one of the given export addresses
 	-c  (--first_record <num>)the first record to process
 	-e  (--max_records <num>)the maximum number of records to process before reporting
 	    (--clean)         clean (i.e. remove duplicate appearances) from all existing monitors

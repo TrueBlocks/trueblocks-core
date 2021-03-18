@@ -17,8 +17,8 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,customizeable,c
 10390,apps,Accounts,export,acctExport,freshen_max,F,5000,false,false,false,false,header,flag,<uint64>,maximum number of records to process for --freshen option
 10395,apps,Accounts,export,acctExport,factory,y,false,false,false,false,false,header,switch,<boolean>,scan for contract creations from the given address(es) and report|address of those contracts
 10430,apps,Accounts,export,acctExport,emitter,,,false,false,false,true,header,switch,<boolean>,for log export only&#44; export only if one of the given export addresses emitted the event
-10431,apps,Accounts,export,acctExport,emitted_by,,,false,false,false,true,header,flag,list<string>,for log export only&#44; export only one of these addresses emitted the event
-10433,apps,Accounts,export,acctExport,relevant,,,false,false,false,true,header,flag,list<string>,for log export only&#44; export only log is relevant to one of the given export addresses
+10431,apps,Accounts,export,acctExport,emitted_by,,,false,false,false,true,header,flag,list<addr>,for log export only&#44; export only one of these addresses emitted the event
+10433,apps,Accounts,export,acctExport,relevant,,,false,false,false,true,header,switch,<boolean>,for log export only&#44; if true export only logs relevant to one of the given export addresses
 #10435,apps,Accounts,export,acctExport,to,,,false,false,false,true,header,switch,<boolean>,show only export lines where the address appears in the tx's (or trace action's) `to` field
 #10437,apps,Accounts,export,acctExport,from,,,false,false,false,true,header,switch,<boolean>,show only export lines where the address appears in the tx's (or trace action's) `from` field
 10439,apps,Accounts,export,acctExport,count,U,,false,false,true,true,header,switch,<boolean>,only available for --appearances mode&#44; if present return only|the number of records

@@ -133,7 +133,15 @@ bool COptions::handle_logs(void) {
 
             for (auto log : trans.receipt.logs) {
                 bool showMe = true;
-                if (!emitted_by.empty()) {
+                if (relevant) {
+                    if (trans.blockNumber == 10277780 && trans.transactionIndex == 102 && log.logIndex == 120)
+                        printf("");
+                    showMe = isRelevant(log);
+                    if (trans.blockNumber == 10277780 && trans.transactionIndex == 102 && log.logIndex == 120)
+                        printf("");
+                    if (showMe && !emitted_by.empty())
+                        showMe = wasEmittedBy(log.address);
+                } else if (!emitted_by.empty()) {
                     showMe = wasEmittedBy(log.address);
                 } else if (emitter) {
                     showMe = isEmitter(log.address);
@@ -174,8 +182,17 @@ bool COptions::isEmitter(const address_t& test) const {
 
 //-----------------------------------------------------------------------
 bool COptions::wasEmittedBy(const address_t& test) const {
-    for (auto emitter : emitted_by)
-        if (emitter == test)
+    for (auto e : emitted_by)
+        if (e == test)
+            return true;
+    return false;
+}
+
+//-----------------------------------------------------------------------
+bool COptions::isRelevant(const CLogEntry& log) const {
+    string_q str = toLower(log.Format(STR_DISPLAY_LOGENTRY));
+    for (auto monitor : allMonitors)
+        if (contains(str, monitor.address.substr(2)))
             return true;
     return false;
 }

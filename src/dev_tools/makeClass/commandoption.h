@@ -54,6 +54,7 @@ class CCommandOption : public CBaseNode {
     // EXISTING_CODE
     bool isEnumList;
     bool isStringList;
+    bool isAddressList;
     bool isList;
     bool isEnum;
     bool isBool;
@@ -141,6 +142,7 @@ inline void CCommandOption::initialize(void) {
     // EXISTING_CODE
     isEnumList = false;
     isStringList = false;
+    isAddressList = false;
     isList = false;
     isEnum = false;
     isBool = false;
@@ -181,6 +183,7 @@ inline void CCommandOption::duplicate(const CCommandOption& co) {
     isList = co.isList;
     isEnumList = co.isEnumList;
     isStringList = co.isStringList;
+    isAddressList = co.isAddressList;
     isEnum = co.isEnum;
     isBool = co.isBool;
     isBlockNum = co.isBlockNum;

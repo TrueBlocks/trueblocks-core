@@ -32,8 +32,8 @@ class COptions : public CAbiOptions {
     uint64_t freshen_max;
     bool factory;
     bool emitter;
-    CStringArray emitted_by;
-    CStringArray relevant;
+    CAddressArray emitted_by;
+    bool relevant;
     bool count;
     blknum_t first_record;
     blknum_t max_records;
@@ -106,6 +106,7 @@ class COptions : public CAbiOptions {
     bool establishIndexChunk(const string_q& fileName);
     bool isEmitter(const address_t& test) const;
     bool wasEmittedBy(const address_t& test) const;
+    bool isRelevant(const CLogEntry& log) const;
 };
 
 //--------------------------------------------------------------------------------

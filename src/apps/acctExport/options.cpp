@@ -30,8 +30,8 @@ static const COption params[] = {
     COption("freshen_max", "F", "<uint64>", OPT_HIDDEN | OPT_FLAG, "maximum number of records to process for --freshen option"),  // NOLINT
     COption("factory", "y", "", OPT_HIDDEN | OPT_SWITCH, "scan for contract creations from the given address(es) and report address of those contracts"),  // NOLINT
     COption("emitter", "", "", OPT_HIDDEN | OPT_SWITCH, "for log export only, export only if one of the given export addresses emitted the event"),  // NOLINT
-    COption("emitted_by", "", "list<string>", OPT_HIDDEN | OPT_FLAG, "for log export only, export only one of these addresses emitted the event"),  // NOLINT
-    COption("relevant", "", "list<string>", OPT_HIDDEN | OPT_FLAG, "for log export only, export only log is relevant to one of the given export addresses"),  // NOLINT
+    COption("emitted_by", "", "list<addr>", OPT_HIDDEN | OPT_FLAG, "for log export only, export only one of these addresses emitted the event"),  // NOLINT
+    COption("relevant", "", "", OPT_HIDDEN | OPT_SWITCH, "for log export only, if true export only logs relevant to one of the given export addresses"),  // NOLINT
     COption("count", "U", "", OPT_SWITCH, "only available for --appearances mode, if present return only the number of records"),  // NOLINT
     COption("start", "S", "<blknum>", OPT_HIDDEN | OPT_DEPRECATED, "first block to process (inclusive)"),
     COption("end", "E", "<blknum>", OPT_HIDDEN | OPT_DEPRECATED, "last block to process (inclusive)"),
@@ -126,11 +126,11 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (startsWith(arg, "--emitted_by:")) {
             arg = substitute(substitute(arg, "-:", ""), "--emitted_by:", "");
-            emitted_by.push_back(arg);
+            if (!parseAddressList(this, emitted_by, arg))
+                return false;
 
-        } else if (startsWith(arg, "--relevant:")) {
-            arg = substitute(substitute(arg, "-:", ""), "--relevant:", "");
-            relevant.push_back(arg);
+        } else if (arg == "--relevant") {
+            relevant = true;
 
         } else if (arg == "-U" || arg == "--count") {
             count = true;
@@ -197,7 +197,7 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST_BOOL("factory", factory);
     LOG_TEST_BOOL("emitter", emitter);
     // LOG_TEST("emitted_by", emitted_by, (emitted_by == NOPOS));
-    // LOG_TEST("relevant", relevant, (relevant == NOPOS));
+    LOG_TEST_BOOL("relevant", relevant);
     LOG_TEST_BOOL("count", count);
     LOG_TEST("first_record", first_record, (first_record == 0));
     LOG_TEST("max_records", max_records, (max_records == (isApiMode() ? 250 : NOPOS)));
@@ -365,7 +365,7 @@ void COptions::Init(void) {
     factory = false;
     emitter = false;
     emitted_by.clear();
-    relevant.clear();
+    relevant = false;
     count = false;
     first_record = 0;
     max_records = (isApiMode() ? 250 : NOPOS);
