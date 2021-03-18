@@ -187,5 +187,11 @@ extern const char* STR_DISPLAY_FUNCTION;
 inline bool sortByFunctionName(const CFunction& f1, const CFunction& f2) {
     return f1.name < f2.name;
 }
+inline bool useDict(void) {
+    static uint64_t dict_mode = NOPOS;
+    if (dict_mode == NOPOS)
+        dict_mode = getEnvStr("DICT_MODE") == "true";
+    return dict_mode;
+}
 // EXISTING_CODE
 }  // namespace qblocks
