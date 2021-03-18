@@ -84,7 +84,7 @@ class COptions : public CAbiOptions {
     void Init(void);
 
     bool setDisplayFormatting(void);
-    bool loadOneAddress(CAppearanceArray_base& apps, const address_t& addr);
+    bool loadOneAddress(const CMonitor& monitor, CAppearanceArray_base& arrayOut);
     bool loadAllAppearances(void);
     bool freshen_internal(void);
 

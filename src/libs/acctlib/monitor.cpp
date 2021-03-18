@@ -418,11 +418,6 @@ string_q CMonitor::getMonitorCach(const address_t& addr, freshen_e mode) const {
     return getMonitorPath(addr + ".txs.bin");
 }
 
-//-----------------------------------------------------------------------
-uint64_t CMonitor::getRecordCount(void) const {
-    return fileSize(getMonitorPath(address)) / sizeof(CAppearance_base);
-}
-
 //--------------------------------------------------------------------------------
 blknum_t CMonitor::getLastVisited(bool fresh) const {
     if (lastVisitedBlock == NOPOS || fresh) {

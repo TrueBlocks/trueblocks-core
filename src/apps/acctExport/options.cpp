@@ -272,7 +272,6 @@ bool COptions::parseArguments(string_q& command) {
                 EXIT_USAGE(msg);
             firstBlockToVisit = min(firstBlockToVisit, monitor.getLastVisited());
             LOG_TEST("Monitor found for", addr, false);
-            // LOG_TEST("Monitor path", monitor.getMonitorPath(monitor.address));
             LOG_TEST("Last visited block", monitor.getLastVisitedBlock(), false);
         } else {
             LOG_TEST("Monitor not found for", addr + ". Continuing anyway.", false);
@@ -315,10 +314,11 @@ bool COptions::parseArguments(string_q& command) {
 
     if (count) {
         for (auto monitor : allMonitors) {
+            string_q path = monitor.getMonitorPath(monitor.address);
             CMonitorCount monCount;
             monCount.address = monitor.address;
-            monCount.fileSize = fileSize(monitor.getMonitorPath(monitor.address));
-            monCount.nRecords = monCount.fileSize / sizeof(CAppearance_base);
+            monCount.fileSize = fileSize(path);
+            monCount.nRecords = fileSize(path) / sizeof(CAppearance_base);
             counts.push_back(monCount);
         }
     }

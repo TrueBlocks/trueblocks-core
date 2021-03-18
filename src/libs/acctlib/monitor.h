@@ -48,7 +48,6 @@ class CMonitor : public CAccountName {
     // EXISTING_CODE
     bloom_t bloom;
     CArchive* tx_cache;
-    uint64_t cntBefore;
     bool needsRefresh;
     bool inBlock;
 
@@ -67,7 +66,6 @@ class CMonitor : public CAccountName {
     string_q getMonitorDels(const address_t& addr, freshen_e mode = FM_PRODUCTION) const;
     string_q getMonitorCach(const address_t& addr, freshen_e mode = FM_PRODUCTION) const;
 
-    uint64_t getRecordCount(void) const;
     blknum_t getLastVisited(bool fresh = false) const;
     blknum_t getLastVisitedBlock(void) const;
     blknum_t getLastExportedBlock(void) const;
@@ -153,7 +151,6 @@ inline void CMonitor::clear(void) {
         delete tx_cache;
     }
     tx_cache = NULL;
-    cntBefore = 0;
     needsRefresh = false;
     lastVisitedBlock = NOPOS;
     // EXISTING_CODE
@@ -174,7 +171,6 @@ inline void CMonitor::initialize(void) {
     latestAppearance = UINT_MAX;
     inBlock = false;
     tx_cache = NULL;
-    cntBefore = 0;
     needsRefresh = false;
     lastVisitedBlock = NOPOS;
     // EXISTING_CODE
@@ -196,7 +192,6 @@ inline void CMonitor::duplicate(const CMonitor& mo) {
     latestAppearance = mo.latestAppearance;
     inBlock = mo.inBlock;
     tx_cache = NULL;  // we do not copy the tx_cache
-    cntBefore = mo.cntBefore;
     needsRefresh = mo.needsRefresh;
     lastVisitedBlock = mo.lastVisitedBlock;
     // EXISTING_CODE

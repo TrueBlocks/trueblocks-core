@@ -22,7 +22,6 @@ bool COptions::handle_appearances(void) {
         if (shouldQuit() || app->blk >= ts_cnt)
             break;
 
-        // LOG_TEST("passes", inRange((blknum_t)app->blk, exportRange.first, exportRange.second) ? "true" : "false");
         if (inRange((blknum_t)app->blk, exportRange.first, exportRange.second)) {
             nProcessed++;
             if (shouldDisplay) {

@@ -42,7 +42,6 @@ bool prepareMonitors(const string_q& path, void* data) {
     CMonitor m;
     m.address = substitute(substitute(path, m.getMonitorPath(""), ""), ".acct.bin", "");
     if (isAddress(m.address)) {
-        m.cntBefore = m.getRecordCount();
         m.needsRefresh = false;
         CMonitorArray* array = (CMonitorArray*)data;  // NOLINT
         array->push_back(m);

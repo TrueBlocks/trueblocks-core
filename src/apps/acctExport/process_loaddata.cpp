@@ -6,16 +6,11 @@
 #include "options.h"
 
 //-----------------------------------------------------------------------
-bool COptions::loadOneAddress(CAppearanceArray_base& appsOut, const address_t& addr) {
+bool COptions::loadOneAddress(const CMonitor& monitor, CAppearanceArray_base& arrayOut) {
     ENTER("loadOneAddress");
 
-    if (hackAppAddr.empty())
-        hackAppAddr = addr;
-
-    CMonitor m;
-    string_q fn = m.getMonitorPath(addr);
-
-    size_t nRecords = (fileSize(fn) / sizeof(CAppearance_base));
+    string_q path = monitor.getMonitorPath(monitor.address);
+    size_t nRecords = (fileSize(path) / sizeof(CAppearance_base));
     ASSERT(nRecords);
     nTransactions += nRecords;
 
@@ -24,7 +19,7 @@ bool COptions::loadOneAddress(CAppearanceArray_base& appsOut, const address_t& a
         bzero((void*)buffer, nRecords * sizeof(CAppearance_base));  // NOLINT
 
         CArchive txCache(READING_ARCHIVE);
-        if (txCache.Lock(fn, modeReadOnly, LOCK_NOWAIT)) {
+        if (txCache.Lock(path, modeReadOnly, LOCK_NOWAIT)) {
             txCache.Read(buffer, sizeof(CAppearance_base), nRecords);
             txCache.Release();
         } else {
@@ -32,19 +27,19 @@ bool COptions::loadOneAddress(CAppearanceArray_base& appsOut, const address_t& a
         }
 
         // Add to the apps which may be non-empty
-        appsOut.reserve(appsOut.size() + nRecords);
+        arrayOut.reserve(arrayOut.size() + nRecords);
         for (size_t i = first_record; i < min(((blknum_t)nRecords), (first_record + max_records)); i++) {
             if (buffer[i].blk == 0)
-                prefundAddrMap[buffer[i].txid] = toLower(addr);
+                prefundAddrMap[buffer[i].txid] = toLower(monitor.address);
             if (buffer[i].txid == 99997 || buffer[i].txid == 99998 || buffer[i].txid == 99999)
-                blkRewardMap[buffer[i].blk] = addr;
-            appsOut.push_back(buffer[i]);
+                blkRewardMap[buffer[i].blk] = monitor.address;
+            arrayOut.push_back(buffer[i]);
         }
 
         delete[] buffer;
 
     } else {
-        EXIT_FAIL("Could not allocate memory for address " + addr);
+        EXIT_FAIL("Could not allocate memory for address " + monitor.address);
     }
 
     EXIT_NOMSG(true);
@@ -59,8 +54,10 @@ bool COptions::loadAllAppearances(void) {
 
     CAppearanceArray_base tmp;
     for (auto monitor : allMonitors) {
-        if (!loadOneAddress(tmp, monitor.address))
-            EXIT_FAIL("Could not load data.");
+        if (hackAppAddr.empty())
+            hackAppAddr = monitor.address;
+        if (!loadOneAddress(monitor, tmp))
+            EXIT_FAIL("Could not load monitor for address " + monitor.address);
         if (freshen) {
             // If we're freshening...
             blknum_t lastExport = monitor.getLastExportedBlock();
