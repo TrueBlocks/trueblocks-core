@@ -44,6 +44,7 @@ namespace qblocks {
 #define T_INT256 (48 | TS_NUMERAL | TS_BIGNUM)
 
 #define T_TEXT (50 | TS_STRING)
+#define T_JSONVAL (53 | TS_STRING)
 #define T_ADDRESS (55 | TS_STRING)
 #define T_HASH (60 | TS_STRING)
 #define T_IPFSHASH (62 | TS_STRING)

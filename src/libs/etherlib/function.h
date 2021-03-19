@@ -36,6 +36,8 @@ class CFunction : public CBaseNode {
     string_q message;
     CParameterArray inputs;
     CParameterArray outputs;
+    Value inputs_dict;
+    Value outputs_dict;
 
   public:
     CFunction(void);
@@ -120,6 +122,8 @@ inline void CFunction::initialize(void) {
     message = "";
     inputs.clear();
     outputs.clear();
+    inputs_dict.clear();
+    outputs_dict.clear();
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -140,6 +144,8 @@ inline void CFunction::duplicate(const CFunction& fu) {
     message = fu.message;
     inputs = fu.inputs;
     outputs = fu.outputs;
+    inputs_dict = fu.inputs_dict;
+    outputs_dict = fu.outputs_dict;
 
     // EXISTING_CODE
     // EXISTING_CODE

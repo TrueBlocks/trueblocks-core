@@ -102,6 +102,17 @@ string_q CFunction::getValueByName(const string_q& fieldName) const {
                 }
                 return retS;
             }
+            if (fieldName % "inputs_dict") {
+                for (size_t i = 0; i < inputs.size(); i++)
+                    ((CFunction*)this)->inputs_dict[inputs[i].name] = inputs[i].value;
+                ostringstream os;
+                JsonWriter writer;
+                writer.writeJson(os, inputs_dict);
+                string_q str = os.str();
+                while (startsWith(str, '\n') || startsWith(str, ' '))
+                    str = trim(trim(str, '\n'), ' ');
+                return str;
+            }
             break;
         case 'm':
             if (fieldName % "message") {
@@ -126,6 +137,17 @@ string_q CFunction::getValueByName(const string_q& fieldName) const {
                     retS += ((i < cnt - 1) ? ",\n" : "\n");
                 }
                 return retS;
+            }
+            if (fieldName % "outputs_dict") {
+                for (size_t i = 0; i < outputs.size(); i++)
+                    ((CFunction*)this)->outputs_dict[outputs[i].name] = outputs[i].value;
+                ostringstream os;
+                JsonWriter writer;
+                writer.writeJson(os, outputs_dict);
+                string_q str = os.str();
+                while (startsWith(str, '\n') || startsWith(str, ' '))
+                    str = trim(trim(str, '\n'), ' ');
+                return str;
             }
             break;
         case 's':
@@ -220,6 +242,10 @@ bool CFunction::setValueByName(const string_q& fieldNameIn, const string_q& fiel
                 }
                 return true;
             }
+            if (fieldName % "inputs_dict") {
+                inputs_dict = fieldValue;
+                return true;
+            }
             break;
         case 'm':
             if (fieldName % "message") {
@@ -241,6 +267,10 @@ bool CFunction::setValueByName(const string_q& fieldNameIn, const string_q& fiel
                     outputs.push_back(obj);
                     obj = CParameter();  // reset
                 }
+                return true;
+            }
+            if (fieldName % "outputs_dict") {
+                outputs_dict = fieldValue;
                 return true;
             }
             break;
@@ -312,6 +342,8 @@ bool CFunction::Serialize(CArchive& archive) {
     // archive >> message;
     archive >> inputs;
     archive >> outputs;
+    // archive >> inputs_dict;
+    // archive >> outputs_dict;
     finishParse();
     return true;
 }
@@ -333,6 +365,8 @@ bool CFunction::SerializeC(CArchive& archive) const {
     // archive << message;
     archive << inputs;
     archive << outputs;
+    // archive << inputs_dict;
+    // archive << outputs_dict;
 
     return true;
 }
@@ -380,6 +414,10 @@ void CFunction::registerClass(void) {
     HIDE_FIELD(CFunction, "message");
     ADD_FIELD(CFunction, "inputs", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CFunction, "outputs", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CFunction, "inputs_dict", T_JSONVAL | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CFunction, "inputs_dict");
+    ADD_FIELD(CFunction, "outputs_dict", T_JSONVAL | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CFunction, "outputs_dict");
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CFunction, "schema");
@@ -397,6 +435,12 @@ void CFunction::registerClass(void) {
     ADD_FIELD(CFunction, "declaration", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CFunction, "declaration");
     HIDE_FIELD(CFunction, "anonymous");
+    if (useDict()) {
+        HIDE_FIELD(CFunction, "inputs");
+        SHOW_FIELD(CFunction, "inputs_dict")
+        HIDE_FIELD(CFunction, "outputs");
+        SHOW_FIELD(CFunction, "outputs_dict")
+    }
     // EXISTING_CODE
 }
 

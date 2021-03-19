@@ -134,9 +134,10 @@ bool COptions::parseArguments(string_q& command) {
         manageFields(defShow, true);
         manageFields("CParameter:str_default", false);  // hide
         manageFields("CTransaction:price", false);      // hide
-        manageFields("CFunction:outputs", true);        // show
-        manageFields("CTransaction:input", true);       // show
-        manageFields("CLogEntry:topics", true);         // show
+        if (!useDict())
+            manageFields("CFunction:outputs", true);  // show
+        manageFields("CTransaction:input", true);     // show
+        manageFields("CLogEntry:topics", true);       // show
         abi_spec.loadAbisFromKnown();
     }
 

@@ -106,7 +106,7 @@ bool CBaseNode::setValueByName(const string_q& fieldName, const string_q& fieldV
 //--------------------------------------------------------------------------------
 string_q CBaseNode::getKeyByName(const string_q& fieldName) const {
     if (expContext().quoteKeys)
-        return "\"" + fieldName + "\"" + ": ";
+        return "\"" + substitute(fieldName, "_dict", "") + "\"" + ": ";
     return fieldName + ": ";
 }
 
@@ -523,6 +523,10 @@ bool CBaseNode::getVisibleFields(CFieldDataArray& visibleFields) const {
                         hidden = str_2_Uint(getValueByName(field.getName() + "Cnt")) == 0;
                     }
 
+                } else if (field.m_fieldType == (T_JSONVAL | TS_OMITEMPTY)) {
+                    string_q str = trim(trim(getValueByName(field.getName()), '\n'), ' ');
+                    hidden = (str == "null");
+
                 } else {
                     CBaseNode* defObject = getDefaultObject(field);
                     if (isApiMode()) {
@@ -633,8 +637,10 @@ void CBaseNode::toJson(ostream& os) const {
             node->toJson(os);
 
         } else {
-            string_q val = getValueByName(field.getName());
+            string_q nn = field.getName();
+            string_q val = getValueByName(nn);
             bool isTuple = contains(val, "--tuple--");
+            bool isDict = contains(nn, "_dict");
             if (isTuple) {
                 replaceReverse(val, "--tuple--", "");  // hacky
                 val = trim(val, '\"');
@@ -648,6 +654,9 @@ void CBaseNode::toJson(ostream& os) const {
             bool isNum = (field.m_fieldType & TS_NUMERAL);
 
             if (isTuple || val == "null" || field.m_fieldType == T_BOOL || (isNum && contains(val, "."))) {
+                os << val;
+
+            } else if (isDict) {
                 os << val;
 
             } else if (!isNum) {

@@ -9,7 +9,9 @@ fields = string name|\
         string encoding|\
         string message (nowrite)|\
         CParameterArray inputs|\
-        CParameterArray outputs
+        CParameterArray outputs|\
+        Value inputs_dict (nowrite)|\
+        Value outputs_dict (nowrite)
 includes = utillib.h|parameter.h
 sort = v1.encoding < v2.encoding
 equals = encoding % it.encoding && message % it.message

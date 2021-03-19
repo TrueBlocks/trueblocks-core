@@ -73,7 +73,8 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
         // order matters in the next block
         string_q setFmt, regType;
         // clang-format off
-               if (fld.type == "wei")             { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_WEI";
+               if (fld.type == "Value")           { setFmt = "`[{NAME}] = [{DEF}]\n";     regType = "T_JSONVAL | TS_OMITEMPTY";
+        } else if (fld.type == "wei")             { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_WEI";
         } else if (fld.type == "gas")             { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_GAS";
         } else if (fld.type == "timestamp")       { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_TIMESTAMP";
         } else if (fld.type == "blknum")          { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_BLOCKNUM";
@@ -102,6 +103,10 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
         } else if ((fld.is_flags & IS_OBJECT))    { setFmt = "`[{NAME}] = [{TYPE}]();\n"; regType = "T_OBJECT | TS_OMITEMPTY";
         } else                                    { setFmt = STR_UNKOWNTYPE;              regType = "T_TEXT | TS_OMITEMPTY"; }
         // clang-format on
+
+        if ((fld.type == "Value")) {
+            setFmt = "\t[{NAME}].clear();\n";
+        }
 
         if ((fld.is_flags & IS_ARRAY)) {
             setFmt = "\t[{NAME}].clear();\n";
@@ -347,7 +352,23 @@ string_q getCaseGetCode(const CParameterArray& fieldsIn) {
                     outStream << (" || fieldName % \"" + p.name + "Cnt\"");
                 outStream << (") {\n````");
 
-                if (p.type == "bool") {
+                if (p.type == "Value") {
+                    const char* STR_JSON_VALUE_STR =
+                        "for (size_t i = 0; i < [{FIELD_ND}].size(); i++)\n"
+                        "    ((CFunction*)this)->[{FIELD}][[{FIELD_ND}][i].name] = [{FIELD_ND}][i].value;\n"
+                        "ostringstream os;\n"
+                        "JsonWriter writer;\n"
+                        "writer.writeJson(os, [{FIELD}]);\n"
+                        "string_q str = os.str();\n"
+                        "while (startsWith(str, '\\n') || startsWith(str, ' '))\n"
+                        "    str = trim(trim(str, '\\n'), ' ');\n"
+                        "return str;";
+                    string_q str = substitute(STR_JSON_VALUE_STR, "\n", "\n````");
+                    replaceAll(str, "[{FIELD}]", p.name);
+                    replaceAll(str, "[{FIELD_ND}]", substitute(p.name, "_dict", ""));
+                    outStream << str;
+
+                } else if (p.type == "bool") {
                     outStream << ("return bool_2_Str([{PTR}]" + p.name + ");");
 
                 } else if (p.type == "sbool") {
@@ -479,7 +500,10 @@ string_q getCaseSetCode(const CParameterArray& fieldsIn) {
         for (auto p : ar.second) {
             if (p.name[0] == ar.first) {
                 outStream << ("```if (fieldName % \"" + p.name + "\") {\n````");
-                if (p.type == "bool" || p.type == "sbool") {
+                if (p.type == "Value") {
+                    outStream << (p.name + " = fieldValue;\n````return true;");
+
+                } else if (p.type == "bool" || p.type == "sbool") {
                     outStream << (p.name + " = str_2_Bool(fieldValue);\n````return true;");
 
                 } else if (p.type == "wei") {
