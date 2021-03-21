@@ -33,9 +33,6 @@ Please contact us at [sales@greathill.com](mailto:sales@greathill.com) for more 
 `Notes:`
 
 - `addresses` must start with '0x' and be forty two characters long.
-- By default, transactions and traces are cached if the number of exported 
-  items is <= to 1,000 items. Otherwise, if you specify any `write_*` options, 
-  your preference predominates.
 
 #### Other Options
 

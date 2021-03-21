@@ -20,7 +20,7 @@ Here is a screen shot of an interaction with Chifra building a smart contract mo
 
 <img src=docs/image.png>
 
-00005970 (   5970)- <ERROR> : Exit(chifra,call_command): 
+00009612 (   9612)- <ERROR> : Exit(chifra,call_command): 
 #### Usage
 
 `Usage:`    chifra command  
@@ -29,8 +29,9 @@ Here is a screen shot of an interaction with Chifra building a smart contract mo
 `Where:`  
 ```
  MONITORS
-   monitor       add, remove, clean, and list appearances of address(es) on the chain
+   list          list every appearance of an address anywhere on the chain
    export        export details for each appearance (as txs, logs, traces, balances, reconciliations, etc.)
+   monitor       add, remove, clean, and list appearances of address(es) on the chain
  SHARED DATA
    entities      list and/or share entities (groups of addresses)
    names         list and/or share named addresses
@@ -46,7 +47,7 @@ Here is a screen shot of an interaction with Chifra building a smart contract mo
    tokens        export data related to ERC20 and/or ERC721 token(s)
    when          return a date given a block number or a block number given a date
  ADMIN
-   init          initialize TrueBlocks databases
+   init          initialize TrueBlocks databases by downloading pinned bloom filters
    scrape        scrape the chain and build an index of address appearances (aka digests)
    serve         serve the TrueBlocks API via tbServer
    pins          query the status of the pinning system

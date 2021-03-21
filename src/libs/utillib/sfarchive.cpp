@@ -236,11 +236,12 @@ bool forEveryLineInAsciiFile(const string_q& filenameIn, CHARPTRFUNC func, void*
     CFilename filename(filenameIn);
     CArchive archive(READING_ARCHIVE);
     if (archive.Lock(filename.getFullPath(), modeReadOnly, LOCK_NOWAIT)) {
+#define MAX_LINE (4096*1000)
+        char buffer[MAX_LINE];
         bool done = false;
         while (!done) {
-            char buffer[4096];
-            bzero(buffer, 4096);
-            done = (archive.ReadLine(buffer, 4096) == NULL);
+            bzero(buffer, MAX_LINE);
+            done = (archive.ReadLine(buffer, MAX_LINE) == NULL);
             if (!done)
                 done = !(*func)(buffer, data);  // returns true to continue
         }
