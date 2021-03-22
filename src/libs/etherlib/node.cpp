@@ -1294,18 +1294,22 @@ bool freshenTimestamps(blknum_t minBlock) {
     if (isTestMode())
         return true;
 
+    // LOG_INFO("Not test mode. minBlock: ", minBlock);
     if (!establishTsFile())
         return false;
 
+    // LOG_INFO("Established ts file");
     size_t nRecords = ((fileSize(tsIndex) / sizeof(uint32_t)) / 2);
     if (nRecords >= minBlock)
         return true;
 
+    // LOG_INFO("Found ", nRecords, " records");
     if (fileExists(tsIndex + ".lck")) {  // it's being updated elsewhere
         LOG_ERR("Timestamp file ", tsIndex, " is locked. Cannot update.");
         return false;
     }
 
+    // LOG_INFO("Updating");
     CArchive file(WRITING_ARCHIVE);
     if (!file.Lock(tsIndex, modeWriteAppend, LOCK_NOWAIT)) {
         LOG_ERR("Failed to open ", tsIndex);
@@ -1350,7 +1354,7 @@ bool loadTimestampFile(uint32_t** theArray, size_t& cnt) {
     // User may call us with a NULL array pointer, but we still want to file 'cnt'
     cnt = ((fileSize(tsIndex) / sizeof(uint32_t)) / 2);
     if (theArray == NULL)
-        return false;
+        return cnt;
 
     file.open(tsIndex);
     if (file.isValid())

@@ -243,9 +243,10 @@ bool addressVisitFunc(const string_q& path, void* data) {
 }
 
 //--------------------------------------------------------------
-bool forEveryAddressInIndex(ADDRESSFUNC func, void* data) {
+bool forEveryAddressInIndex(ADDRESSFUNC func, const blkrange_t& range, void* data) {
     CChunkVisitor visitor;
     visitor.addrFunc = func;
+    visitor.range = range;
     visitor.callData = data;
     return forEveryFileInFolder(indexFolder_finalized, addressVisitFunc, &visitor);
     return true;
@@ -270,7 +271,7 @@ bool smartContractVisitFunc(const string_q& path, void* data) {
         for (uint64_t i = 0; i < archive.nAddrs; i++) {
             CAddressRecord_base* rec = &archive.addresses[i];
             address_t addr = bytes_2_Addr(rec->bytes);
-            if (hasCodeAt(addr, visitor->atBlock)) {
+            if (hasCodeAt(addr, visitor->range.first)) {
                 bool ret = (*visitor->addrFunc)(addr, visitor->callData);
                 if (!ret)
                     return false;
@@ -285,7 +286,7 @@ bool forEverySmartContractInIndex(ADDRESSFUNC func, void* data) {
     CChunkVisitor visitor;
     visitor.addrFunc = func;
     visitor.callData = data;
-    visitor.atBlock = getBlockProgress(BP_CLIENT).client;
+    visitor.range.first = getBlockProgress(BP_CLIENT).client;
     return forEveryFileInFolder(indexFolder_finalized, smartContractVisitFunc, &visitor);
     return true;
 }
