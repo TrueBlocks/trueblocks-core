@@ -4949,7 +4949,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 31-Gitcoin Grants:Grant	0xabe26faee77419897090bc4c5a112d463443a662	Grant 0818 Metis Protocol: a Governance and Collaboration Implementation Framework for DAOs		https://gitcoin.co/grants/818/metis-protocol-a-governance-and-collaboration-imp		https://gitcoin.co/grants/818/metis-protocol-a-governance-and-collaboration-implementation-framework-for-daos,https://metislab.io	false	false	false	false	false	false
 60-Airdrops	0xabe32e544b16b7b2428dbfb85e1affbe3bd67c98	Elec Airdrop Sender		TrueBlocks.io			false	false	false	false	false	false
 31-Gitcoin Grants:Grant	0xabe47ec0e8c66d994c3b904d751392bc41742dbc	Grant 0968 Dshackle - Fault Tolerant Load Balancer for Ethereum Api		https://gitcoin.co/grants/968/dshackle-fault-tolerant-load-balancer-for-ethereu			false	false	false	false	false	false
-30-Contracts	0xabea9132b05a70803a4e85094fd0e1800777fbef	zkSync		zkSync Website			false	false	false	true	false	false
+31-Gitcoin Grants:Core	0xabea9132b05a70803a4e85094fd0e1800777fbef	zkSync		zkSync Website			false	false	false	true	false	false
 31-Gitcoin Grants:Grant	0xabf3e252006d805cce3c7219a929b83465f2a46e	Grant 0093 Foo Bar		https://gitcoin.co/grants/93/foo-bar			false	false	false	false	false	false
 30-Contracts:Humanity DAO	0xac03bb73b6a9e108530aff4df5077c2b3d481e5a	ryancreatescopy		https://www.humanitydao.org/humans			false	false	false	false	false	false
 50-Tokens:ERC20	0xac0741127cac11e4455c7943b654bcced7fdd5a4	Ejoy Coin	EJOY	On chain	18		false	false	false	true	true	false

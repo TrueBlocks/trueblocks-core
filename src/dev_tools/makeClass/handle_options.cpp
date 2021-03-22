@@ -41,12 +41,18 @@ bool COptions::handle_options(void) {
     LOG_INFO(cYellow, "handling options...", cOff);
     counter = CCounter();  // reset
 
-    if (!fileExists("../src/cmd-line-options.csv"))
-        return usage("Could not find cmd-line-options.csv file in folder " + getCWD());
+    // Look for local file first
+    string_q cmdFile = "./cmd-line-options.csv";
+    if (!fileExists(cmdFile))
+        cmdFile = "../src/cmd-line-options.csv";
+
+    if (!fileExists(cmdFile))
+        return usage("Could not find cmd-line-options.csv file: " + cmdFile);
+
     // read in and prepare the options for all tools
     CStringBoolMap tools;
     CStringArray lines;
-    asciiFileToLines("../src/cmd-line-options.csv", lines);
+    asciiFileToLines(cmdFile, lines);
     for (auto line : lines) {
         if (!startsWith(line, '#')) {
             CCommandOption opt(line);
@@ -155,6 +161,8 @@ bool COptions::handle_options(void) {
                 LOG_WARN(warning);
         } else {
             string_q fn = "../src/" + tool.first + "/options.cpp";
+            if (tool.first == "/./")
+                fn = "./options.cpp";
             if (!test) {
                 writeCode(substitute(fn, ".cpp", ".h"));
                 writeCode(fn);
