@@ -45,6 +45,7 @@ int main(int argc, const char* argv[]) {
             if (options.tools & TOOL_MONITORS) {
                 LOG_INFO(cYellow, "Monitor scraper is running...", cOff);
                 ret = options.scrape_monitors();
+                LOG_INFO(cYellow, "   finished...", cOff);
             }
 
             LOG_INFO((ret ? "  ...pass completed" : "  ...pass did not complete"), ". Running again in ", options.sleep,

@@ -22,6 +22,7 @@ bool COptions::scrape_monitors(void) {
         ostringstream os;
         os << "acctExport " << monitor.address << " --freshen";
         LOG_TEST("Calling: ", os.str() + string_q(40, ' ') + "\r", false);
+        LOG_INFO("Checking ", monitor.address, "\r");
         // clang-format off
         if (system(os.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings
         // clang-format on
@@ -31,7 +32,7 @@ bool COptions::scrape_monitors(void) {
         usleep(50000);  // allows user to get a control+c in edgewise
     }
 
-    return true;
+    return !shouldQuit();
 }
 
 //---------------------------------------------------------------------------
