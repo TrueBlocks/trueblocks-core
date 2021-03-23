@@ -300,7 +300,7 @@ void COptions::Init(void) {
     publish = false;
     sleep = 14;
     // clang-format off
-    cache_txs = getGlobalConfig("blockScrape")->getConfigBool("settings", "cache_txs", false);
+    cache_txs = getGlobalConfig("blockScrape")->getConfigBool("settings", "cache_txs", true);
     cache_traces = getGlobalConfig("blockScrape")->getConfigBool("settings", "cache_traces", false);
     // clang-format on
     // END_CODE_INIT

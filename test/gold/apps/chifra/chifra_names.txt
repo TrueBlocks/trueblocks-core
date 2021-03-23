@@ -88,6 +88,8 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x0db8d8b76bc361bacbb72e2c491e06085a97ab31	iQeon	IQN	On chain	18	decentralized PvP gaming platform integrating games, applications and services based on intelligent competitions between users created to help players monetize their in-gaming achievements.	false	false	false	true	true	false
 50-Tokens:ERC20	0x0df721639ca2f7ff0e1f618b918a65ffb199ac4e	uDOO	uDOO	On chain	18	Howdoo is a decentralized social platform for users, content creators, advertisers.	false	false	false	true	true	false
 50-Tokens:ERC20	0x0e0989b1f9b8a38983c2ba8053269ca62ec9b195	Po.et	POE	On chain	8	Po.et aims to reclaim value for content creators, publishers and consumers.	false	false	false	true	true	false
+50-Tokens:ERC20	0x0e2298e3b3390e3b945a5456fbf59ecc3f55da16	Yam.Finance: Old YAM V1 Token	YAM	On chain	18		false	false	false	true	true	false
+50-Tokens:ERC20	0x0e29e5abbb5fd88e28b2d355774e73bd47de3bcd	Hakka Finance: HAKKA Token	HAKKA	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x0e69d0a2bbb30abcb7e5cfea0e4fde19c00a8d47	CarLive Chain	IOV	On chain	8		false	false	false	true	true	false
 50-Tokens:ERC20	0x0e8d6b471e332f140e7d9dbb99e5e3822f728da6	ABYSS	ABYSS	On chain	18	The next-generation digital distribution platform, delivering all types of video games including AAA-titles, to the fast-growing global game community.	false	false	false	true	true	false
 50-Tokens:ERC20	0x0ea984e789302b7b612147e4e4144e64f21425eb	WaleTokeN	WTN	On chain	8	Wal-e is social media project behind of WaleTokeN, we developing Live video streaming social network application, this application will allowed you connect with people through live videos and messaging.	false	false	false	true	true	false
@@ -176,6 +178,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x1c83501478f1320977047008496dacbd60bb15ef	DigitexFutures	DGTX	On chain	18	The DGTX Token is a protocol token that has real world utility and value. Its value derives directly from its utility as a vehicle for the commission-free trading of liquid futures contracts on the price of Bitcoin, Ethereum and Litecoin against the US Dollar.	false	false	false	true	true	false
 50-Tokens:ERC20	0x1cb3209d45b2a60b7fbca1ccdbf87f674237a4aa	ThoreCoin	THR	On chain	4	THR represents a basket of top-traded high-demand coins Simply put, it‚Äö√Ñ√¥s a Basket of Multiple cryptocurrencies in which you can invest by buying tokens	false	false	false	true	true	false
 50-Tokens:ERC20	0x1ccaa0f2a7210d76e1fdec740d5f323e2e1b1672	Faceter Token	FACE	On chain	18	A computer vision surveillance technology powered by fog network of miners.	false	false	false	true	true	false
+50-Tokens:ERC20	0x1cf4592ebffd730c7dc92c1bdffdfc3b9efcf29a	Waves: WAVES Token	WAVES	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x1d287cc25dad7ccaf76a26bc660c5f7c8e2a05bd	Fetch	FET	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x1d462414fe14cf489c7a21cac78509f4bf8cd7c0	CanYaCoin	CAN	On chain	6	Blockchain-Powered Marketplace of Services	false	false	false	true	true	false
 50-Tokens:ERC20	0x1d4ccc31dab6ea20f461d329a0562c1c58412515	Talao	TALAO	On chain	18	Reputation Protocol and Decentralized Marketplace based on Ethereum blockchain	false	false	false	true	true	false
@@ -189,6 +192,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x1f573d6fb3f13d689ff844b4ce37794d79a7ff1c	Bancor Network Token	BNT	On chain	18	Bancor Protocol is a standard for a new generation of cryptocurrencies called Smart Tokens	false	false	false	true	true	false
 50-Tokens:ERC20	0x1f58af89d12d4a60647f99a9fc71dd0367b56df4	Burnup Tiles	BURN	On chain			false	false	false	true	true	false
 50-Tokens:ERC20	0x1f75047233517dcf67970d9e3c3bb385cb647f30	Unicorns	🦄	On chain		Ethereum tip jar unicorn tokens	false	false	false	true	true	false
+50-Tokens:ERC20	0x1f9840a85d5af5bf1d1762f925bdaddc4201f984	Uniswap	UNI	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x1fc52f1abade452dd4674477d4711951700b3d27	NOKU	NOKU	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x1fe70be734e473e5721ea57c8b5b01e6caa52686	RNTB Token	RNTB	On chain	18	BitRent is the blockchain platform meant to attract commercial and residential property investments at an early stage of construction in order to gain maximum profit by selling and renting out the acquired property	false	false	false	true	true	false
 50-Tokens:ERC20	0x2008e3057bd734e10ad13c9eae45ff132abc1722	Zebi Coin	ZCO	On chain	8	Blockchaining India‚Äö√Ñ√¥s Big Data	false	false	false	true	true	false
@@ -203,7 +207,3 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x226bb599a12c826476e3a771454697ea52e9e220	Propy	PRO	On chain	8	Property Transactions Secured Through Blockchain.	false	false	false	true	true	false
 50-Tokens:ERC20	0x228ba514309ffdf03a81a205a6d040e429d6e80c	Global Social Chain	GSC	On chain	18	Social Chain based on hundreds of millions of users.	false	false	false	true	true	false
 50-Tokens:ERC20	0x22c1f6050e56d2876009903609a2cc3fef83b415	POAP	The Proof of Attendance Protocol	On chain			false	false	false	true	true	false
-50-Tokens:ERC20	0x23352036e911a22cfc692b5e2e196692658aded9	Friendz Coin	FDZ	On chain	18	A digital marketing revolutionon the blockchain	false	false	false	true	true	false
-50-Tokens:ERC20	0x2344871f523cbb28a4f60045531184cf1f03ad24	RoBET - Truly Decentralized Sportsbetting	ROBET	On chain	18	RoBet is an Ethereum based sportsbook platform regulated by smart contracts.	false	false	false	true	true	false
-50-Tokens:ERC20	0x23b75bc7aaf28e2d6628c3f424b3882f8f072a3c	Vice	VIT	On chain	18		false	false	false	true	true	false
-50-Tokens:ERC20	0x23ccc43365d9dd3882eab88f43d515208f832430	MidasProtocol	MAS	On chain	18	A smart, secure, user-friendly, multi-coin wallet for all essential crypto needs, from safekeeping, intelligent trading, portfolio management, easy conversion to fiat and spending of cryptocurrencies - MidasProtocol.io	false	false	false	true	true	false
