@@ -3,6 +3,7 @@ blockScrape --tool index --sleep .5 --pin --verbose 8
 LIVE_TEST = [true]
 <INFO>  : pin: true
 <INFO>  : sleep: 0.5
+<INFO>  : cache_txs: true
 : 8------Current state stopped.
 { "status": "running" }
 : 4-----changing state: stopped --> running

@@ -1,6 +1,7 @@
 blockScrape argc: 2 [1:--pin] 
 blockScrape --pin 
 TIME ~ CLOCK - <INFO>  : pin: true
+TIME ~ CLOCK - <INFO>  : cache_txs: true
 TIME ~ CLOCK - : 8------Current state stopped.
 { "status": "running" }
 TIME ~ CLOCK - : 4-----changing state: stopped --> running

@@ -2,6 +2,7 @@ blockScrape argc: 5 [1:--tool] [2:index] [3:--sleep] [4:.5]
 blockScrape --tool index --sleep .5 
 LIVE_TEST = [true]
 <INFO>  : sleep: 0.5
+<INFO>  : cache_txs: true
 { "status": "running" }
 <INFO>  : Index for block zero was not found. Building it from 8893 prefunds.
 <INFO>  :   Extracting addresses...extracting appearances...exporting...finalizing...binary file created ✓

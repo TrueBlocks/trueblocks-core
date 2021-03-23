@@ -21,6 +21,8 @@ static const COption params[] = {
     COption("pin", "p", "", OPT_SWITCH, "pin new chunks (and blooms) to IPFS (requires Pinata key and running IPFS node)"),  // NOLINT
     COption("publish", "u", "", OPT_SWITCH, "publish the hash of the pin manifest to the UnchainedIndex smart contract"),  // NOLINT
     COption("sleep", "s", "<double>", OPT_FLAG, "the number of seconds to sleep between passes (default 14)"),
+    COption("cache_txs", "i", "", OPT_SWITCH, "write transactions to the cache (see notes)"),
+    COption("cache_traces", "R", "", OPT_SWITCH, "write traces to the cache (see notes)"),
     COption("", "", "", OPT_DESCRIPTION, "Decentralized blockchain scraper and block cache."),
     // clang-format on
     // END_CODE_OPTIONS
@@ -76,6 +78,12 @@ bool COptions::parseArguments(string_q& command) {
             if (!confirmDouble("sleep", sleep, arg))
                 return false;
 
+        } else if (arg == "-i" || arg == "--cache_txs") {
+            cache_txs = true;
+
+        } else if (arg == "-R" || arg == "--cache_traces") {
+            cache_traces = true;
+
         } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
@@ -101,6 +109,8 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST_BOOL("pin", pin);
     LOG_TEST_BOOL("publish", publish);
     LOG_TEST("sleep", sleep, (sleep == 14));
+    LOG_TEST_BOOL("cache_txs", cache_txs);
+    LOG_TEST_BOOL("cache_traces", cache_traces);
     // END_DEBUG_DISPLAY
 
     if (mode.empty())
@@ -289,6 +299,10 @@ void COptions::Init(void) {
     pin = false;
     publish = false;
     sleep = 14;
+    // clang-format off
+    cache_txs = getGlobalConfig("blockScrape")->getConfigBool("settings", "cache_txs", true);
+    cache_traces = getGlobalConfig("blockScrape")->getConfigBool("settings", "cache_traces", false);
+    // clang-format on
     // END_CODE_INIT
 
     minArgs = 0;

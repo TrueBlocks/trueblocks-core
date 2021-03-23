@@ -1,6 +1,7 @@
 blockScrape argc: 2 [1:--publish] 
 blockScrape --publish 
 TIME ~ CLOCK - <INFO>  : publish: true
+TIME ~ CLOCK - <INFO>  : cache_txs: true
 {
   "fileName": "initial-manifest.json",
   "indexFormat": "Qmart6XP9XjL43p72PGR93QKytbK8jWWcMguhFgxATTya2",

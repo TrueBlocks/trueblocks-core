@@ -20,7 +20,10 @@ bool COptions::scrape_monitors(void) {
             break;
 
         ostringstream os;
-        os << "acctExport --cache_txs --cache_traces " << monitor.address << " --freshen";
+        os << "acctExport --freshen ";
+        os << (cache_txs ? "--cache_txs " : "");
+        os << (cache_traces ? "--cache_traces " : "");
+        os << monitor.address;
         LOG_TEST("Calling: ", os.str() + string_q(40, ' ') + "\r", false);
         LOG_INFO("Checking ", monitor.address, "\r");
         if (system(os.str().c_str()) != 0) {

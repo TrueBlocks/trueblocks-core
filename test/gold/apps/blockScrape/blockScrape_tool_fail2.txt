@@ -1,9 +1,10 @@
 blockScrape argc: 5 [1:--tool] [2:monitors] [3:--tool] [4:index] 
 blockScrape --tool monitors --tool index 
+TIME ~ CLOCK - <INFO>  : cache_txs: true
 
   Please specify only one of [ none | index | monitors | both]. Quitting...
 
-  Usage:    blockScrape [-t|-n|-p|-u|-s|-v|-h] mode  
+  Usage:    blockScrape [-t|-n|-p|-u|-s|-i|-R|-v|-h] mode  
   Purpose:  Decentralized blockchain scraper and block cache.
 
   Where:  
@@ -13,6 +14,8 @@ blockScrape --tool monitors --tool index
 	-p  (--pin)           pin new chunks (and blooms) to IPFS (requires Pinata key and running IPFS node)
 	-u  (--publish)       publish the hash of the pin manifest to the UnchainedIndex smart contract
 	-s  (--sleep <double>)the number of seconds to sleep between passes (default 14)
+	-i  (--cache_txs)     write transactions to the cache (see notes)
+	-R  (--cache_traces)  write traces to the cache (see notes)
 
 	#### Hidden options
 	-b  (--n_block_procs <num>)number of block channels for blaze

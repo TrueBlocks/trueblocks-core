@@ -30,6 +30,8 @@ class COptions : public COptionsBase {
     bool pin;
     bool publish;
     double sleep;
+    bool cache_txs;
+    bool cache_traces;
     // END_CODE_DECLARE
 
     ScrapeState state;

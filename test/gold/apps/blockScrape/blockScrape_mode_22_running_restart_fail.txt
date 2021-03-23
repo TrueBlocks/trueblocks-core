@@ -1,6 +1,7 @@
 blockScrape argc: 2 [1:restart] 
 blockScrape restart 
 TIME ~ CLOCK - <INFO>  : mode: restart
+TIME ~ CLOCK - <INFO>  : cache_txs: true
 TIME ~ CLOCK - : 8------Current state running.
 TIME ~ CLOCK - <ERROR> : blockScrape is running. Cannot restart.
 { "status": "running" }
