@@ -20,12 +20,13 @@ bool COptions::scrape_monitors(void) {
             break;
 
         ostringstream os;
-        os << "acctExport " << monitor.address << " --freshen";
+        os << "acctExport --cache_txs --cache_traces " << monitor.address << " --freshen";
         LOG_TEST("Calling: ", os.str() + string_q(40, ' ') + "\r", false);
         LOG_INFO("Checking ", monitor.address, "\r");
-        // clang-format off
-        if (system(os.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings
-        // clang-format on
+        if (system(os.str().c_str()) != 0) {
+            defaultQuitHandler(1);
+            return false;
+        }
 
         string_q unused;
         state = getCurrentState(unused);
