@@ -493,7 +493,7 @@ void COptionsBase::configureDisplay(const string_q& tool, const string_q& dataTy
                 // Just warning the user as if this is set it may break test cases
                 string test = getGlobalConfig(tool)->getConfigStr("display", "format", "<not-set>");
                 if (test != "<not-set>")
-                    LOG_WARN("Custom [display]format field set to: ", test);
+                    LOG_WARN("Tests will fail. Custom display string set to: ", test);
             }
             format = getGlobalConfig(tool)->getConfigStr("display", "format", format.empty() ? defFormat : format);
             manageFields(dataType + ":" + cleanFmt((format.empty() ? defFormat : format)));

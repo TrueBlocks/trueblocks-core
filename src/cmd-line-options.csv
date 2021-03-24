@@ -40,7 +40,7 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,customizeable,c
 10645,apps,Admin,scrape,blockScrape,pin,p,,false,false,true,true,header,switch,<boolean>,pin new chunks (and blooms) to IPFS (requires Pinata key and running IPFS node)
 10648,apps,Admin,scrape,blockScrape,publish,u,,false,false,true,true,header,switch,<boolean>,publish the hash of the pin manifest to the UnchainedIndex smart|contract
 10650,apps,Admin,scrape,blockScrape,sleep,s,14,false,false,true,false,header,flag,<double>,the number of seconds to sleep between passes (default [{DEF}])
-10655,apps,Admin,scrape,blockScrape,cache_txs,i,true,false,true,true,false,header,switch,<boolean>,write transactions to the cache (see notes)
+10655,apps,Admin,scrape,blockScrape,cache_txs,i,false,false,true,true,false,header,switch,<boolean>,write transactions to the cache (see notes)
 10658,apps,Admin,scrape,blockScrape,cache_traces,R,false,false,true,true,false,header,switch,<boolean>,write traces to the cache (see notes)
 10660,apps,Admin,scrape,blockScrape,,,,false,false,true,true,--,description,,Decentralized blockchain scraper and block cache.
 

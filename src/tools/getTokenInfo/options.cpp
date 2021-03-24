@@ -96,9 +96,8 @@ bool COptions::parseArguments(string_q& command) {
     if (parts.empty() && addrs.size() < 2)
         return usage("Use either --parts or provide at least one token and one other account.");
 
-    string_q format;
+    string_q format = STR_DISPLAY_TOKENBALANCERECORD;
     if (parts.size() > 0) {
-        format = STR_DISPLAY_TOKENBALANCERECORD;
         for (auto part : parts) {
             if (part == "none")
                 modeBits = TOK_NONE;
@@ -116,7 +115,6 @@ bool COptions::parseArguments(string_q& command) {
                 modeBits = tokstate_t(modeBits | TOK_PARTS);
         }
     } else {
-        format = STR_DISPLAY_TOKENBALANCERECORD2;
         modeBits = TOK_BALRECORD;
     }
 
@@ -213,6 +211,10 @@ bool COptions::parseArguments(string_q& command) {
 
     abi_spec.loadAbisFromKnown(true);
 
+    freshenTimestamps(getBlockProgress(BP_CLIENT).client);
+    if (!loadTimestamps(&tsMemMap, tsCnt))
+        return usage("Could not open timestamp file.");
+
     if ((!isTestMode() && !requestsHistory()) || nodeHasBalances(true))
         return true;
     // fall through...
@@ -246,6 +248,8 @@ void COptions::Init(void) {
     tokens.clear();
     holders.clear();
     modeBits = TOK_NONE;
+    tsMemMap = NULL;
+    tsCnt = 0;
 
     optionOff(OPT_DOLLARS | OPT_ETHER);
     blocks.Init();

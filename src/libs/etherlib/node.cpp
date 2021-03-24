@@ -1342,7 +1342,7 @@ bool freshenTimestamps(blknum_t minBlock) {
 }
 
 //-----------------------------------------------------------------------
-bool loadTimestampFile(uint32_t** theArray, size_t& cnt) {
+bool loadTimestamps(uint32_t** theArray, size_t& cnt) {
     static CMemMapFile file;
     if (file.is_open())
         file.close();

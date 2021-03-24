@@ -58,7 +58,7 @@ timestamp_t getBlockTimestamp(blknum_t bn) {
     static uint32_t* timestamps = NULL;
     static size_t nTimestamps = 0;
     if (nTimestamps == 0) {
-        loadTimestampFile(&timestamps, nTimestamps);
+        loadTimestamps(&timestamps, nTimestamps);
         cerr << "Timestamps loaded..." << endl;
     }
     return bn < nTimestamps ? timestamps[(bn * 2) + 1] : 0;

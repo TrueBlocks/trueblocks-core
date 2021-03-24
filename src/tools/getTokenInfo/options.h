@@ -31,6 +31,9 @@ class COptions : public CHistoryOptions {
     bool no_zero;
     // END_CODE_DECLARE
 
+    uint32_t* tsMemMap;
+    size_t tsCnt;
+
     CAddressArray tokens;
     CAddressArray holders;
 

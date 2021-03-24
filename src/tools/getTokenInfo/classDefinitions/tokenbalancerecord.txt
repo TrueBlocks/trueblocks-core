@@ -1,0 +1,18 @@
+[settings]
+class = CTokenBalanceRecord
+base_class = CMonitor
+fields = \
+        blknum blockNumber|\
+        string date|\
+        wei totalSupply|\
+        blknum transactionIndex|\
+        address holder (nowrite)|\
+        wei priorBalance|\
+        wei balance|\
+        int256 diff
+includes = acctlib.h
+scope = extern
+serializable = true
+equals = address == it.address
+sort = v1.address < v2.address
+display_str = blockNumber, holder, address, name, symbol, decimals, totalsupply, balance

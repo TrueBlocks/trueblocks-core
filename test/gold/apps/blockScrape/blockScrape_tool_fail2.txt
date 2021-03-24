@@ -1,6 +1,5 @@
 blockScrape argc: 5 [1:--tool] [2:monitors] [3:--tool] [4:index] 
 blockScrape --tool monitors --tool index 
-TIME ~ CLOCK - <INFO>  : cache_txs: true
 
   Please specify only one of [ none | index | monitors | both]. Quitting...
 

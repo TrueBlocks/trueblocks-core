@@ -38,6 +38,7 @@ typedef enum {
 class CTokenBalanceRecord : public CMonitor {
   public:
     blknum_t blockNumber;
+    string_q date;
     wei_t totalSupply;
     blknum_t transactionIndex;
     address_t holder;
@@ -55,12 +56,12 @@ class CTokenBalanceRecord : public CMonitor {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    bool operator==(const CTokenBalanceRecord& item) const;
-    bool operator!=(const CTokenBalanceRecord& item) const {
-        return !operator==(item);
+    bool operator==(const CTokenBalanceRecord& it) const;
+    bool operator!=(const CTokenBalanceRecord& it) const {
+        return !operator==(it);
     }
     friend bool operator<(const CTokenBalanceRecord& v1, const CTokenBalanceRecord& v2);
-    friend ostream& operator<<(ostream& os, const CTokenBalanceRecord& item);
+    friend ostream& operator<<(ostream& os, const CTokenBalanceRecord& it);
 
   protected:
     void clear(void);
@@ -107,6 +108,7 @@ inline void CTokenBalanceRecord::initialize(void) {
     CMonitor::initialize();
 
     blockNumber = 0;
+    date = "";
     totalSupply = 0;
     transactionIndex = 0;
     holder = "";
@@ -124,6 +126,7 @@ inline void CTokenBalanceRecord::duplicate(const CTokenBalanceRecord& to) {
     CMonitor::duplicate(to);
 
     blockNumber = to.blockNumber;
+    date = to.date;
     totalSupply = to.totalSupply;
     transactionIndex = to.transactionIndex;
     holder = to.holder;
@@ -144,11 +147,11 @@ inline CTokenBalanceRecord& CTokenBalanceRecord::operator=(const CTokenBalanceRe
 }
 
 //-------------------------------------------------------------------------
-inline bool CTokenBalanceRecord::operator==(const CTokenBalanceRecord& item) const {
+inline bool CTokenBalanceRecord::operator==(const CTokenBalanceRecord& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // Equality operator as defined in class definition
-    return address == item.address;
+    return address == it.address;
 }
 
 //-------------------------------------------------------------------------

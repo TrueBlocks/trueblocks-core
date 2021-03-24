@@ -582,16 +582,6 @@ void cleanMonitorStage(void) {
 }
 
 //-------------------------------------------------------------------------
-const char* STR_DISPLAY_TOKENBALANCERECORD2 =
-    "[{BLOCKNUMBER}]\t"
-    "[{HOLDER}]\t"
-    "[{ADDRESS}]\t"
-    "[{NAME}]\t"
-    "[{SYMBOL}]\t"
-    "[{DECIMALS}]\t"
-    "[{BALANCE}]";
-
-//-------------------------------------------------------------------------
 string_q getTokenBalanceOf(const CAbi& abi_spec, const CMonitor& token, const address_t& holder, blknum_t blockNum) {
     map<string_q, string_q> sigMap;
     sigMap["balanceOf"] = "0x70a08231";

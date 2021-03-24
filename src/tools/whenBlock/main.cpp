@@ -76,7 +76,7 @@ bool forEveryTimestamp(BLOCKVISITFUNC func, void* data, uint64_t start, uint64_t
 
     uint32_t* tsArray = NULL;
     size_t nItems;
-    if (!loadTimestampFile(&tsArray, nItems))
+    if (!loadTimestamps(&tsArray, nItems))
         return false;
     if (!tsArray)  // it may not have failed, but there may be no timestamps
         return false;
@@ -87,7 +87,7 @@ bool forEveryTimestamp(BLOCKVISITFUNC func, void* data, uint64_t start, uint64_t
         block.timestamp = tsArray[bn + 1];
         bool ret = (*func)(block, data);
         if (!ret) {
-            // IMPORTANT NOTE - loadTimestampFile does not return a pointer that's been allocated. It returns
+            // IMPORTANT NOTE - loadTimestamps does not return a pointer that's been allocated. It returns
             // a pointer to a memory mapped file, so we can't delete it. We leave this here as documentation.
             // ASSERT(tsArray)
             // delete[] tsArray;
@@ -95,7 +95,7 @@ bool forEveryTimestamp(BLOCKVISITFUNC func, void* data, uint64_t start, uint64_t
         }
     }
 
-    // IMPORTANT NOTE - loadTimestampFile does not return a pointer that's been allocated. It returns
+    // IMPORTANT NOTE - loadTimestamps does not return a pointer that's been allocated. It returns
     // a pointer to a memory mapped file, so we can't delete it. We leave this here as documentation.
     // ASSERT(tsArray)
     // delete[] tsArray;

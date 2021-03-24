@@ -49,6 +49,7 @@ using CTopicArray = vector<topic_t>;
 using CAddressWeiMap = map<address_t, wei_t>;
 using CStringBoolMap = map<string_q, bool>;
 using CBlockAddressMap = map<uint32_t, address_t>;
+using CUintBoolMap = map<uint32_t, bool>;
 using CAddressUintMap = map<address_t, uint64_t>;
 using CAddressBoolMap = map<address_t, bool>;
 using CErrorStringMap = map<size_t, string_q>;

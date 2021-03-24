@@ -415,8 +415,8 @@ void COptions::Init(void) {
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
     setSorts(GETRUNTIME_CLASS(CBlock), GETRUNTIME_CLASS(CTransaction), GETRUNTIME_CLASS(CReceipt));
-    ts_array = NULL;
-    ts_cnt = 0;
+    tsMemMap = NULL;
+    tsCnt = 0;
     Init();
 
     CMonitorCount::registerClass();

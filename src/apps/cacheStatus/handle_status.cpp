@@ -56,7 +56,7 @@ bool COptions::handle_status(ostream& os) {
             forEveryFileInFolder(thePath, countFiles, &index);
             LOG8("Counted files");
             CItemCounter counter(this, start, end);
-            loadTimestampFile(&counter.ts_array, counter.ts_cnt);
+            loadTimestamps(&counter.tsMemMap, counter.tsCnt);
             index.path = pathName("index", indexFolder_finalized);
             counter.cachePtr = &index;
             counter.indexArray = &index.items;
@@ -465,10 +465,10 @@ bool noteIndex(const string_q& path, void* data) {
             aci.indexSizeBytes = (uint32_t)fileSize(path);
         }
 
-        if (counter->ts_array) {
-            if (aci.firstAppearance < counter->ts_cnt && aci.latestAppearance < counter->ts_cnt) {
-                aci.firstTs = (timestamp_t)counter->ts_array[(aci.firstAppearance * 2) + 1];
-                aci.latestTs = (timestamp_t)counter->ts_array[(aci.latestAppearance * 2) + 1];
+        if (counter->tsMemMap) {
+            if (aci.firstAppearance < counter->tsCnt && aci.latestAppearance < counter->tsCnt) {
+                aci.firstTs = (timestamp_t)counter->tsMemMap[(aci.firstAppearance * 2) + 1];
+                aci.latestTs = (timestamp_t)counter->tsMemMap[(aci.latestAppearance * 2) + 1];
             } else {
                 aci.firstTs = (timestamp_t)0;
                 aci.latestTs = (timestamp_t)0;

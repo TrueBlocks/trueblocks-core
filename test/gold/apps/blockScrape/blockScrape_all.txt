@@ -3,7 +3,6 @@ blockScrape --n_blocks 12 --n_block_procs 12 --n_addr_procs 12
 TIME ~ CLOCK - <INFO>  : n_blocks: 12
 TIME ~ CLOCK - <INFO>  : n_block_procs: 12
 TIME ~ CLOCK - <INFO>  : n_addr_procs: 12
-TIME ~ CLOCK - <INFO>  : cache_txs: true
 TIME ~ CLOCK - : 8------Current state stopped.
 { "status": "running" }
 TIME ~ CLOCK - : 4-----changing state: stopped --> running

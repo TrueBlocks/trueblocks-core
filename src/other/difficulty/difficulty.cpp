@@ -62,11 +62,11 @@ int main(int argc, const char* argv[]) {
 #endif
 #if 0
 int main(int argc, const char* argv[]) {
-    uint32_t *ts_array = NULL;
+    uint32_t *tsMemMap = NULL;
     size_t cnt;
-    loadTimestampFile(&ts_array, cnt);
+    loadTimestamps(&tsMemMap, cnt);
     for (size_t i=0 ; i < cnt*2 ; i = i+2) {
-        cout << (i/2) << "\t" << ((i/2)-ts_array[i]) << "\t" << ts_array[i] << "\t" << ts_array[i+1] << endl;
+        cout << (i/2) << "\t" << ((i/2)-tsMemMap[i]) << "\t" << tsMemMap[i] << "\t" << tsMemMap[i+1] << endl;
     }
     return 0;
 }

@@ -72,8 +72,8 @@ class CItemCounter : public CCache {
     CAbiCacheItemArray* abiArray;
     CPriceCacheItemArray* priceArray;
     CEntityCacheItemArray* entityArray;
-    uint32_t* ts_array;
-    size_t ts_cnt;
+    uint32_t* tsMemMap;
+    size_t tsCnt;
     blkrange_t scanRange;
     blkrange_t fileRange;
     CItemCounter(COptions* opt, blknum_t start, blknum_t end) : CCache(), options(opt) {
@@ -82,8 +82,8 @@ class CItemCounter : public CCache {
         monitorArray = NULL;
         abiArray = NULL;
         priceArray = NULL;
-        ts_array = NULL;
-        ts_cnt = 0;
+        tsMemMap = NULL;
+        tsCnt = 0;
         scanRange.first = start;
         scanRange.second = end;
     }

@@ -63,8 +63,8 @@ class COptions : public CAbiOptions {
     CAddressUintMap fromTraceAddrMap;
     CAddressUintMap abiMap;
 
-    uint32_t* ts_array;
-    size_t ts_cnt;
+    uint32_t* tsMemMap;
+    size_t tsCnt;
     blknum_t latestBlock;
     time_q oldestMonitor;
 

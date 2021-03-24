@@ -35,7 +35,11 @@ void CTokenBalanceRecord::Format(ostream& ctx, const string_q& fmtIn, void* data
 
     string_q fmt = (fmtIn.empty() ? expContext().fmtMap["tokenbalancerecord_fmt"] : fmtIn);
     if (fmt.empty()) {
-        toJson(ctx);
+        if (expContext().exportFmt == YAML1) {
+            toYaml(ctx);
+        } else {
+            toJson(ctx);
+        }
         return;
     }
 
@@ -78,6 +82,9 @@ string_q CTokenBalanceRecord::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 'd':
+            if (fieldName % "date") {
+                return date;
+            }
             if (fieldName % "diff") {
                 return bni_2_Str(diff);
             }
@@ -138,6 +145,10 @@ bool CTokenBalanceRecord::setValueByName(const string_q& fieldNameIn, const stri
             }
             break;
         case 'd':
+            if (fieldName % "date") {
+                date = fieldValue;
+                return true;
+            }
             if (fieldName % "diff") {
                 diff = str_2_Wei(fieldValue);
                 return true;
@@ -191,6 +202,7 @@ bool CTokenBalanceRecord::Serialize(CArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     archive >> blockNumber;
+    archive >> date;
     archive >> totalSupply;
     archive >> transactionIndex;
     // archive >> holder;
@@ -209,6 +221,7 @@ bool CTokenBalanceRecord::SerializeC(CArchive& archive) const {
     // EXISTING_CODE
     // EXISTING_CODE
     archive << blockNumber;
+    archive << date;
     archive << totalSupply;
     archive << transactionIndex;
     // archive << holder;
@@ -254,9 +267,10 @@ void CTokenBalanceRecord::registerClass(void) {
     ADD_FIELD(CTokenBalanceRecord, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CTokenBalanceRecord, "cname", T_TEXT, ++fieldNum);
     ADD_FIELD(CTokenBalanceRecord, "blockNumber", T_BLOCKNUM, ++fieldNum);
+    ADD_FIELD(CTokenBalanceRecord, "date", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CTokenBalanceRecord, "totalSupply", T_WEI, ++fieldNum);
     ADD_FIELD(CTokenBalanceRecord, "transactionIndex", T_BLOCKNUM, ++fieldNum);
-    ADD_FIELD(CTokenBalanceRecord, "holder", T_ADDRESS, ++fieldNum);
+    ADD_FIELD(CTokenBalanceRecord, "holder", T_ADDRESS | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CTokenBalanceRecord, "holder");
     ADD_FIELD(CTokenBalanceRecord, "priorBalance", T_WEI, ++fieldNum);
     ADD_FIELD(CTokenBalanceRecord, "balance", T_WEI, ++fieldNum);
@@ -318,11 +332,11 @@ CArchive& operator>>(CArchive& archive, CTokenBalanceRecord& tok) {
 }
 
 //-------------------------------------------------------------------------
-ostream& operator<<(ostream& os, const CTokenBalanceRecord& item) {
+ostream& operator<<(ostream& os, const CTokenBalanceRecord& it) {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    item.Format(os, "", nullptr);
+    it.Format(os, "", nullptr);
     os << "\n";
     return os;
 }
@@ -330,11 +344,13 @@ ostream& operator<<(ostream& os, const CTokenBalanceRecord& item) {
 //---------------------------------------------------------------------------
 const char* STR_DISPLAY_TOKENBALANCERECORD =
     "[{BLOCKNUMBER}]\t"
+    "[{HOLDER}]\t"
     "[{ADDRESS}]\t"
     "[{NAME}]\t"
     "[{SYMBOL}]\t"
     "[{DECIMALS}]\t"
-    "[{TOTALSUPPLY}]";
+    "[{TOTALSUPPLY}]\t"
+    "[{BALANCE}]";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

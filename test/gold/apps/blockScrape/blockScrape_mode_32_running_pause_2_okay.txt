@@ -1,7 +1,6 @@
 blockScrape argc: 2 [1:pause] 
 blockScrape pause 
 TIME ~ CLOCK - <INFO>  : mode: pause
-TIME ~ CLOCK - <INFO>  : cache_txs: true
 TIME ~ CLOCK - : 8------Current state running.
 TIME ~ CLOCK - : 4-----changing state: running --> paused
 { "status": "paused" }

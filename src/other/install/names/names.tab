@@ -1305,6 +1305,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 40-Exchanges	0x2a1530c4c41db0b0b2bb646cb5eb1a67b7158667	Uniswap: DAI		EtherScan.io			false	false	false	true	false	false
 31-Gitcoin Grants:Friends	0x2a1b86d7cab4815431827276525f570f37eca21d	razgraf		Gitcoin Website			false	false	false	false	false	false
 31-Gitcoin Grants:Grant	0x2a1ba6c3bb615406069d7697e59ea3167513c790	Grant 1173 Blockchain-comparison.com - #1 Blockchain Support		https://gitcoin.co/grants/1173/blockchain-comparisoncom-1-blockchain-support			false	false	false	false	false	false
+30-Contracts	0x2a2127753653f6210d26f5b470738bf13b73423d	Amulets	AMULET	Nick Johnson Tweet			false	false	false	true	true	false
 31-Gitcoin Grants:Grant	0x2a21476c0eae40b0c46cb4771e6b8cf8a20f4d37	Grant 0676 the Great Pug		https://gitcoin.co/grants/676/the-great-pug		https://thegreatpug.com	false	false	false	false	false	false
 31-Gitcoin Grants:Friends	0x2a2ba93556feb0c0560625367dd4e0fdfdca9810	garfieldkwong		Gitcoin Website			false	false	false	false	false	false
 81-Other	0x2a3967d9b88c11612503d45411c7d07a13554250	Market_id73_cnt1_5mo		EtherScan.io			false	false	false	true	false	false

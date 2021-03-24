@@ -105,7 +105,7 @@ bool COptions::loadAllAppearances(void) {
     if (apps.size()) {
         // it's okay to not be able to freshen this. We'll just report less txs
         freshenTimestamps(apps[apps.size() - 1].blk);
-        if (!loadTimestampFile(&ts_array, ts_cnt))
+        if (!loadTimestamps(&tsMemMap, tsCnt))
             EXIT_FAIL("Could not open timestamp file.");
     }
 

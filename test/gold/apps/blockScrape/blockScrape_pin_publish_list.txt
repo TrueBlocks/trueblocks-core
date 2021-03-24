@@ -2,7 +2,6 @@ blockScrape argc: 3 [1:--publish] [2:--pin]
 blockScrape --publish --pin 
 TIME ~ CLOCK - <INFO>  : pin: true
 TIME ~ CLOCK - <INFO>  : publish: true
-TIME ~ CLOCK - <INFO>  : cache_txs: true
 
   The --publish option is not available when using the --pin option. Quitting...
 

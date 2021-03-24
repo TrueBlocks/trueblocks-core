@@ -19,7 +19,7 @@ bool COptions::handle_appearances(void) {
     bool first = true;
     for (size_t i = 0; i < apps.size(); i++) {
         const CAppearance_base* app = &apps[i];
-        if (shouldQuit() || app->blk >= ts_cnt)
+        if (shouldQuit() || app->blk >= tsCnt)
             break;
 
         if (inRange((blknum_t)app->blk, exportRange.first, exportRange.second)) {
