@@ -162,12 +162,14 @@ size_t decodeTheData(CParameterArray& params, const CStringArray& dataArray, siz
                     p.internalType = param.internalType;
                     p.components = param.components;
                     size_t nItems = str_2_Uint("0x" + dataArray[dataStart]);
-                    replaceReverse(p.type, "[]", "[" + uint_2_Str(nItems) + "]");
-                    replace(p.type, "bytes[", "bytes32[");
-                    tmp.push_back(p);
-                    dataStart++;
-                    decodeTheData(tmp, dataArray, dataStart, dataStart - 1);
-                    param.value = tmp[0].value;
+                    if (nItems > 0) {
+                        replaceReverse(p.type, "[]", "[" + uint_2_Str(nItems) + "]");
+                        replace(p.type, "bytes[", "bytes32[");
+                        tmp.push_back(p);
+                        dataStart++;
+                        decodeTheData(tmp, dataArray, dataStart, dataStart - 1);
+                        param.value = tmp[0].value;
+                    }
 
                 } else {
                     LOG_WARN("{ \"error5\": \"decodeTheData: dataStart(", dataStart, ") > nDataItems(", nDataItems,
