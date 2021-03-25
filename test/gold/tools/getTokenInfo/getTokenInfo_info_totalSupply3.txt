@@ -1,11 +1,19 @@
 getTokenInfo argc: 8 [1:0xd26114cd6ee289accf82350c8d8487fedb8a0c07] [2:0xb9e7f8568e08d5659f5d29c4997173d84cdf2607] [3:--parts] [4:totalSupply] [5:4001001-4001002] [6:--fmt] [7:json] 
 getTokenInfo 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 --parts totalSupply 4001001-4001002 --fmt json 
 { "data": [
+TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
+TIME ~ CLOCK - <INFO>  : typeList: : 
+TIME ~ CLOCK - <INFO>  : inputStr: : 0x00000000000000000000000000000000000000000074021e45de4e977a570f4f
+TIME ~ CLOCK - <INFO>  : Parse func found: : uint256
   {
     "blockNumber": 4001001,
     "totalSupply": 140245398245132780789239631,
     "address": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07"
-  },
+  }TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
+TIME ~ CLOCK - <INFO>  : typeList: : 
+TIME ~ CLOCK - <INFO>  : inputStr: : 0x0000000000000000000000000000000000000000000618088bcbda3edb75c18d
+TIME ~ CLOCK - <INFO>  : Parse func found: : uint256
+,
   {
     "blockNumber": 4001001,
     "totalSupply": 7367049360614191258780045,

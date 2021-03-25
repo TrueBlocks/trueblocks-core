@@ -18,72 +18,81 @@
 namespace qblocks {
 
 extern bool toPrintable(const string_q& inHex, string_q& result);
-//-----------------------------------------------------------------------------------------
-string_q params_2_Str(CParameterArray& params) {
-    string_q ret;
-    for (auto param : params) {
-        if (!ret.empty())
-            ret += ", ";
-        ret += param.value;
-    }
-    return trim(ret);
-}
-
 static size_t level = 0;
 //------------------------------------------------------------------------------------------------
-void prettyPrint(CParameterArray& params, const CStringArray& dataArray, const size_t& readIndex, size_t dStart) {
+void prettyPrint(CParameterArray& params, const CStringArray& dataArray, const size_t& readOffset, size_t dataStart) {
     if (!isTestMode())
         return;
-    string_q indent = substitute(string_q(level - 1, '\t'), "\t", "  ") + "--";
-    cerr << indent << params.size() << " : " << dataArray.size() << " : " << readIndex;
-    if (dStart != NOPOS)
-        cerr << " : " << dStart;
-    cerr << endl;
+
+    string_q indent = substitute(string_q(level == 0 ? 0 : level - 1, '\t'), "\t", " ");
+    if (level == 1)
+        cerr << endl;
+    cerr << string_q(50, '=') << endl;
+    cerr << indent << "level: " << level << endl;
+    cerr << indent << "readOffset: " << readOffset << endl;
+    cerr << indent << "dataStart: " << dataStart << endl;
+    cerr << indent << "params.size: " << params.size() << endl;
+
     uint64_t cnt = 0;
     for (auto param : params) {
-        cerr << indent << padNum3T(cnt) << ": " << param.name << " (" << param.type << ")";
+        cerr << indent << padNum3T(cnt) << ": " << param.type << (param.name.empty() ? "" : " " + param.name);
         if (!param.value.empty())
             cerr << " = " << param.value;
         cerr << endl;
         if (!param.internalType.empty() && (param.internalType != param.type)) {
-            cerr << indent << string_q(6, ' ') << param.internalType << "[";
-            for (auto component : param.components) {
-                cerr << component.name << "(" << component.type << ") ";
+            cerr << indent << "  internalType: " << param.internalType << endl;
+            if (param.components.size()) {
+                cerr << indent << "  compont.size: " << param.components.size() << endl;
+                for (auto component : param.components)
+                    cerr << indent << "    " << component.type << " " << component.name << endl;
             }
-            cerr << "]" << endl;
         }
         cnt++;
     }
+
     cnt = 0;
+    cerr << indent << " dataArray.size: " << dataArray.size() << endl;
     for (auto data : dataArray) {
-        cerr << indent << padNum3T(cnt) << ": " << data
-             << (cnt == readIndex ? " <---" : (dStart != NOPOS && cnt == dStart ? " <===" : "")) << endl;
+        cerr << indent << padNum3T(cnt) << " (0x" << (padLeft(substitute(uint_2_Hex(cnt * 32), "0x", ""), 3, '0'))
+             << ") " << data;
+        if (cnt == dataStart)
+            cerr << " <=d";
+        else if (cnt == readOffset)
+            cerr << " <-r";
+        cerr << endl;
         cnt++;
     }
 }
 
+#define LOG_PARSE_ERR(tag, l1, v1, t, l2, v2)                                                                          \
+    {                                                                                                                  \
+        ostringstream es;                                                                                              \
+        es << "{ \"" << tag << "\": \"decodeAnObject: " << l1 << "(" << v1 << ") " << t << " " << l2 << "(" << v2      \
+           << ")\"},";                                                                                                 \
+        LOG_WARN(es.str());                                                                                            \
+    }
+
 //------------------------------------------------------------------------------------------------
-size_t decodeTheData(CParameterArray& params, const CStringArray& dataArray, size_t& readIndex, size_t dStart) {
+size_t decodeAnObject(CParameterArray& params, const CStringArray& dataArray, size_t& readOffset, size_t dataStart) {
     level++;
 
     uint64_t nDataItems = dataArray.size();
     if (params.size() > nDataItems) {
-        LOG_WARN("{ \"error1\": \"decodeTheData: nParams(", params.size(), ") > nDataItems(", nDataItems, ")\"},");
+        LOG_PARSE_ERR("error1", "nParams", params.size(), ">", "nDataItems", nDataItems);
         level--;
         return false;
     }
 
-    if (readIndex > nDataItems) {
-        LOG_WARN("{ \"error2\": \"decodeTheData: readIndex(", readIndex, ") > nDataItems(", nDataItems, ")\"},");
+    if (readOffset > nDataItems) {
+        LOG_PARSE_ERR("error2", "readOffset", readOffset, ">", "nDataItems", nDataItems);
         level--;
         return false;
     }
 
     for (auto& param : params) {
-        prettyPrint(params, dataArray, readIndex, dStart);
-        if (readIndex >= nDataItems) {
-            LOG_WARN("{ \"error3\": \"decodeTheData: readIndex(", readIndex, ") >= nDataItems(", nDataItems,
-                     ")\", \"type\": \"", param.type, "\", \"name\": \"", param.name, "\"},");
+        prettyPrint(params, dataArray, readOffset, dataStart);
+        if (readOffset >= nDataItems) {
+            LOG_PARSE_ERR("error3", "readOffset", readOffset, ">=", "nDataItems", nDataItems);
             level--;
             return false;
         }
@@ -92,33 +101,33 @@ size_t decodeTheData(CParameterArray& params, const CStringArray& dataArray, siz
         if (isBaseType) {
             if (contains(param.type, "bool")) {
                 size_t bits = 256;
-                param.value = bnu_2_Str(str_2_BigUint("0x" + dataArray[readIndex++], bits));
+                param.value = bnu_2_Str(str_2_BigUint("0x" + dataArray[readOffset++], bits));
                 param.value = (param.value == "1" ? "true" : "false");
 
             } else if (contains(param.type, "address")) {
                 size_t bits = 160;
                 param.value =
-                    "0x" + padLeft(toLower(bnu_2_Hex(str_2_BigUint("0x" + dataArray[readIndex++], bits))), 40, '0');
+                    "0x" + padLeft(toLower(bnu_2_Hex(str_2_BigUint("0x" + dataArray[readOffset++], bits))), 40, '0');
 
             } else if (contains(param.type, "uint")) {
                 size_t bits = str_2_Uint(substitute(param.type, "uint", ""));
-                param.value = bnu_2_Str(str_2_BigUint("0x" + dataArray[readIndex++], bits));
+                param.value = bnu_2_Str(str_2_BigUint("0x" + dataArray[readOffset++], bits));
 
             } else if (contains(param.type, "int")) {
                 size_t bits = str_2_Uint(substitute(param.type, "int", ""));
-                param.value = bni_2_Str(str_2_BigInt("0x" + dataArray[readIndex++], bits));
+                param.value = bni_2_Str(str_2_BigInt("0x" + dataArray[readOffset++], bits));
 
             } else if (param.type == "string" || param.type == "bytes") {
-                // Strings and bytes are dynamic sized. The fixed size part resides at readIndex and points to
+                // Strings and bytes are dynamic sized. The fixed size part resides at readOffset and points to
                 // start of string. Start of string is length of string. Start of string + 1 is the string
                 string_q result;
-                uint64_t dataStart = (str_2_Uint("0x" + dataArray[readIndex++]) / 32);
-                if (dataStart < nDataItems) {
-                    uint64_t nBytes = str_2_Uint("0x" + dataArray[dataStart]);
+                uint64_t newStart = (str_2_Uint("0x" + dataArray[readOffset++]) / 32);
+                if (newStart < nDataItems) {
+                    uint64_t nBytes = str_2_Uint("0x" + dataArray[newStart]);
                     size_t nWords = (nBytes / 32) + 1;
                     if (nWords <= nDataItems) {  // some of the data sent in may be bogus, so we protext ourselves
                         for (size_t w = 0; w < nWords; w++) {
-                            size_t pos = dataStart + 1 + w;
+                            size_t pos = newStart + 1 + w;
                             if (pos < nDataItems)
                                 result += dataArray[pos].substr(0, nBytes * 2);  // at most 64
                             if (nBytes >= 32)
@@ -127,58 +136,83 @@ size_t decodeTheData(CParameterArray& params, const CStringArray& dataArray, siz
                                 nBytes = 0;
                         }
                         param.value = (param.type == "string" ? hex_2_Str("0x" + result) : "0x" + result);
+                    } else {
+                        LOG_PARSE_ERR("error4", "nWords", nWords, ">=", "nDataItems", nDataItems);
                     }
                 } else {
+                    LOG_PARSE_ERR("error5", "newStart", newStart, ">=", "nDataItems", nDataItems);
                     param.value = "";  // we've run out of bytes -- protect ourselves from bad data
                 }
 
             } else if (contains(param.type, "bytes")) {
                 // this is a bytes<M> (fixed length)
-                param.value = "0x" + dataArray[readIndex++];
+                param.value = "0x" + dataArray[readOffset++];
 
             } else if (param.type == "tuple") {
-                decodeTheData(param.components, dataArray, readIndex, dStart);
+                LOG_TEST("Section: ", "tuple of type " + param.type + "--" + param.internalType, false);
+#if 0
+                // TODO(tjayrush): If I turn this on, the code fixes the test case called broken_unparsable (which is
+                // commented), but
+                // TODO(tjayrush): it breaks other tests
+                size_t newStart = str_2_Uint("0x" + dataArray[readOffset]) / 32;
+                readOffset++;
+                if (newStart <= nDataItems) {
+                    decodeAnObject(param.components, dataArray, newStart, newStart);
+                    param.value = "{";
+                    for (auto p : param.components) {
+                        param.value += (param.value != "{" ? ", " : "");
+                        param.value += ("\"" + p.name + "\":\"" + p.value + "\"");
+                    }
+                    param.value += "}";
+                } else {
+                    LOG_PARSE_ERR("error6", "newStart", newStart, ">", "nDataItems", nDataItems);
+                    return false;
+                }
+#else
+                // size_t newStart = str_2_Uint("0x" + dataArray[readOffset]) / 32;
+                // cerr << "newStart: " << newStart << " dataStart: " << dataStart << endl;
+                decodeAnObject(param.components, dataArray, readOffset, dataStart);
                 param.value = "{";
                 for (auto p : param.components) {
                     param.value += (param.value != "{" ? ", " : "");
                     param.value += ("\"" + p.name + "\":\"" + p.value + "\"");
                 }
                 param.value += "}";
+#endif
 
             } else {
-                LOG_WARN("{ \"error4\": \"decodeTheData: Unknown type: ", param.type, "\"},");
+                LOG_PARSE_ERR("error7", "Unknown type", param.type, "", "", "");
                 return true;  // we can just skip this
             }
 
         } else {
             if (endsWith(param.type, "[]")) {
                 // ends with type...[]. We need to pick up the size from the data
-                LOG4("array of type...[]");
-                size_t dataStart = str_2_Uint("0x" + dataArray[readIndex++]) / 32;
-                if (dataStart <= nDataItems) {
+                LOG_TEST("Section: ", "Variable array of " + param.type, false);
+                size_t newStart = str_2_Uint("0x" + dataArray[readOffset++]) / 32;
+                if (newStart <= nDataItems) {
                     CParameterArray tmp;
                     CParameter p;
                     p.type = param.type;
                     p.internalType = param.internalType;
                     p.components = param.components;
-                    size_t nItems = str_2_Uint("0x" + dataArray[dataStart]);
+                    size_t nItems = str_2_Uint("0x" + dataArray[newStart]);
                     if (nItems > 0) {
                         replaceReverse(p.type, "[]", "[" + uint_2_Str(nItems) + "]");
                         replace(p.type, "bytes[", "bytes32[");
                         tmp.push_back(p);
-                        dataStart++;
-                        decodeTheData(tmp, dataArray, dataStart, dataStart - 1);
+                        newStart++;
+                        decodeAnObject(tmp, dataArray, newStart, newStart - 1);
                         param.value = tmp[0].value;
                     }
 
                 } else {
-                    LOG_WARN("{ \"error5\": \"decodeTheData: dataStart(", dataStart, ") > nDataItems(", nDataItems,
-                             ")\", \"type\": \"", param.type, "\", \"name\": \"", param.name, "\"},");
+                    LOG_PARSE_ERR("error8", "newStart", newStart, ">", "nDataItems", nDataItems);
                     return false;
                 }
 
             } else {
-                LOG4("array of type...[M]");
+                LOG_TEST("Section: ", "Fixed array of " + param.type, false);
                 ASSERT(contains(param.type, "["));
                 ASSERT(contains(param.type, "]"));
                 string_q type = param.type;
@@ -198,12 +232,11 @@ size_t decodeTheData(CParameterArray& params, const CStringArray& dataArray, siz
                         p.components = param.components;
                         tmp.push_back(p);
                     }
-                    decodeTheData(tmp, dataArray, readIndex, dStart);
+                    decodeAnObject(tmp, dataArray, readOffset, dataStart);
                     param.value = "[" + params_2_Str(tmp) + "]";
 
                 } else {
-                    LOG_WARN("param.type: ", param.type);
-                    LOG_WARN("dataStart(", nItems, ") larger than nDataItems(", nDataItems, "). Ignoring...");
+                    LOG_PARSE_ERR("error9", "nItems", nItems, ">", "nDataItems", nDataItems);
                     return false;
                 }
             }
@@ -477,20 +510,29 @@ void loadParseMap(void) {
 
 //---------------------------------------------------------------------------
 bool decodeRLP(CParameterArray& params, const string_q& desc, const string_q& inputStrIn) {
-    string_q inputStr = (inputStrIn == "0x" ? "" : inputStrIn);
     string_q typeList = desc;
+    string_q inputStr = (inputStrIn == "0x" ? "" : inputStrIn);
+    LOG_TEST("decodeRLP--------------------------------------", "", false);
+    LOG_TEST("typeList: ", typeList, false);
+    LOG_TEST("inputStr: ", inputStr, false);
 
-    // we use fast, simple routines for common patters if we can. This is purely for performance reasons
+    // The parseMap contains very fast parsing functions for known typeLists. If we find a parsing function
+    // in parseMap, we use it since it's so much faster (see below)...
     NEXTCHUNKFUNC func = parseMap[typeList];
     if (!func) {
+        // If we don't find a parsing function directly from the user provided typeList, we try to build
+        // a typeList from the supplied parameter array...
         typeList = "";
         for (auto i : params)
             typeList += (i.type + ",");
         typeList = trim(typeList, ',');
         func = parseMap[typeList];
     }
+
+    // If we have a parsing function and a non-empty inputString, use it...
     if (func) {
         if (!inputStr.empty()) {
+            LOG_TEST("Parse func found: ", typeList, false);
             string_q result = (*func)(substitute(inputStr, "0x", ""), NULL);
             for (auto& item : params)
                 item.value = nextTokenClear(result, ',');
@@ -498,12 +540,16 @@ bool decodeRLP(CParameterArray& params, const string_q& desc, const string_q& in
         }
     }
 
-    // Clean up the input to work with the provided params - one input row per 32 bytes
+    // We did not find a parsing function. Here we clean up the input to work with the
+    // provided params -- one input row per 32 bytes (64 chars).
     CStringArray inputs;
     if (inputStr.empty() || inputStr == "0x") {
-        // In the case where the input is empty, we fill up all the fixed sized slots with zero bytes
-        for (auto i : params)
+        // There is nothing to stop the user from providing an ABI that disagrees with the actual data on
+        // chain. We try to handle that where we can, such as here, where we insert '0' value strings to
+        // accomodate whatever params we are given.
+        for (auto unused : params)
             inputs.push_back(string_q(64, '0'));
+
     } else {
         // Put each 32-byte segment into it's own string in the array
         string_q str = trim(substitute(inputStr, "0x", ""), ' ');
@@ -516,8 +562,10 @@ bool decodeRLP(CParameterArray& params, const string_q& desc, const string_q& in
         }
     }
 
-    size_t offset = 0;
-    return decodeTheData(params, inputs, offset, NOPOS);
+    size_t readOffset = 0;
+    size_t dataStart = 0;
+    prettyPrint(params, inputs, readOffset, dataStart);
+    return decodeAnObject(params, inputs, readOffset, dataStart);
 }
 
 }  // namespace qblocks

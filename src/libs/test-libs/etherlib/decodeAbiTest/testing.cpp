@@ -83,12 +83,6 @@ size_t extractParams(CParameterArray& paramArray, const string_q& paramStr) {
 }
 
 //-----------------------------------------------------------------------------------------
-namespace qblocks {
-extern string_q params_2_Str(CParameterArray& params);
-extern size_t decodeTheData(CParameterArray& params, const CStringArray& dataArray, size_t& readIndex);
-}  // namespace qblocks
-
-//-----------------------------------------------------------------------------------------
 string_q cleanIt(const string_q& in) {
     string_q out = in;
     nextTokenClear(out, '(');

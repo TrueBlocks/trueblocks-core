@@ -3,9 +3,30 @@ getTrace 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f8
 TIME ~ CLOCK - <INFO>  : articulate: true
 TIME ~ CLOCK - <INFO>  : skip_ddos: true
 { "data": [
---1 : 1 : 0
---  0: _success (bool)
---  0: 0000000000000000000000000000000000000000000000000000000000000000 <---
+TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
+TIME ~ CLOCK - <INFO>  : typeList: : 
+TIME ~ CLOCK - <INFO>  : inputStr: : 000000000000000000000000bb9bc244d798123fde783fcc1c72d3bb8c189413000000000000000000000000713fa27cb26b5902ea398b04d21e6018bba3a2f100000000000000000000000000000000000000000000000072ae557d778bd174
+TIME ~ CLOCK - <INFO>  : Parse func found: : address,address,uint256
+TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
+TIME ~ CLOCK - <INFO>  : typeList: : 
+TIME ~ CLOCK - <INFO>  : inputStr: : 
+==================================================
+level: 0
+readOffset: 0
+dataStart: 0
+params.size: 1
+  0: bool _success
+ dataArray.size: 1
+  0 (0x000) 0000000000000000000000000000000000000000000000000000000000000000 <=d
+
+==================================================
+level: 1
+readOffset: 0
+dataStart: 0
+params.size: 1
+  0: bool _success
+ dataArray.size: 1
+  0 (0x000) 0000000000000000000000000000000000000000000000000000000000000000 <=d
   {
     "type": "call",
     "error": "Bad jump destination",
@@ -33,7 +54,20 @@ TIME ~ CLOCK - <INFO>  : skip_ddos: true
       }
     },
     "compressedTrace": "transferFrom(0xbb9bc244d798123fde783fcc1c72d3bb8c189413, 0x713fa27cb26b5902ea398b04d21e6018bba3a2f1, 8263636363636363636); "
-  },  {
+  }TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
+TIME ~ CLOCK - <INFO>  : typeList: : 
+TIME ~ CLOCK - <INFO>  : inputStr: : 0000000000000000000000000000000000000000000000000000000000000001
+TIME ~ CLOCK - <INFO>  : Parse func found: : uint256
+TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
+TIME ~ CLOCK - <INFO>  : typeList: : 
+TIME ~ CLOCK - <INFO>  : inputStr: : 
+==================================================
+level: 0
+readOffset: 0
+dataStart: 0
+params.size: 0
+ dataArray.size: 0
+,  {
     "type": "call",
     "action": {
       "selfDestructed": "0x0",
@@ -59,7 +93,15 @@ TIME ~ CLOCK - <INFO>  : skip_ddos: true
       }
     },
     "compressedTrace": "cancelExistingRequest(1); "
-  },  {
+  }TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
+TIME ~ CLOCK - <INFO>  : typeList: : 
+TIME ~ CLOCK - <INFO>  : inputStr: : 000000000000000000000000167a9333bf582556f35bd4d16a7e80e191aa6476000000000000000000000000571b7b69829ce2568b9bc3d32eaf7405dab76b21
+TIME ~ CLOCK - <INFO>  : Parse func found: : address,address
+TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
+TIME ~ CLOCK - <INFO>  : typeList: : 
+TIME ~ CLOCK - <INFO>  : inputStr: : 0x0000000000000000000000000000000000000000000000000000000000000001
+TIME ~ CLOCK - <INFO>  : Parse func found: : bool
+,  {
     "type": "call",
     "action": {
       "selfDestructed": "0x0",
@@ -89,7 +131,20 @@ TIME ~ CLOCK - <INFO>  : skip_ddos: true
       }
     },
     "compressedTrace": "split(0x167a9333bf582556f35bd4d16a7e80e191aa6476, 0x571b7b69829ce2568b9bc3d32eaf7405dab76b21); "
-  },  {
+  }TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
+TIME ~ CLOCK - <INFO>  : typeList: : 
+TIME ~ CLOCK - <INFO>  : inputStr: : 
+==================================================
+level: 0
+readOffset: 0
+dataStart: 0
+params.size: 0
+ dataArray.size: 0
+TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
+TIME ~ CLOCK - <INFO>  : typeList: : 
+TIME ~ CLOCK - <INFO>  : inputStr: : 0x0000000000000000000000000000000000000000000000000000000000000001
+TIME ~ CLOCK - <INFO>  : Parse func found: : bool
+,  {
     "type": "call",
     "action": {
       "selfDestructed": "0x0",

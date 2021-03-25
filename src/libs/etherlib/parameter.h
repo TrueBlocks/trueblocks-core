@@ -217,5 +217,14 @@ enum {
     MODIFIER_START = (char)9,   // NOLINT
 };
 enum ParseState { OUT, IN, IN_COMMENT1, IN_COMMENT2, IN_FUNCTION, IN_EVENT, IN_STRUCT, IN_MODIFIER };
+inline string_q params_2_Str(CParameterArray& params) {
+    string_q ret;
+    for (auto param : params) {
+        if (!ret.empty())
+            ret += ", ";
+        ret += param.value;
+    }
+    return trim(ret);
+}
 // EXISTING_CODE
 }  // namespace qblocks

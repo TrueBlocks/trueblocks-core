@@ -1,21 +1,96 @@
 getTokenInfo argc: 8 [1:0xb9e7f8568e08d5659f5d29c4997173d84cdf2607] [2:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98] [3:0x6b65353ac052f6c3a0c9688911b078bd025d6ab3] [4:0xa25d04fa348f107428708ba19c95d1c79b3744bf] [5:4285364] [6:3510999] [7:2510010] 
 getTokenInfo 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98 0x6b65353ac052f6c3a0c9688911b078bd025d6ab3 0xa25d04fa348f107428708ba19c95d1c79b3744bf 4285364 3510999 2510010 
 blocknumber	holder	address	name	symbol	decimals	balance
+TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
+TIME ~ CLOCK - <INFO>  : typeList: : 
+TIME ~ CLOCK - <INFO>  : inputStr: : 0x0000000000000000000000000000000000000000000132cb92e489cc791aa400
+TIME ~ CLOCK - <INFO>  : Parse func found: : uint256
 4285364	0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98	0xb9e7f8568e08d5659f5d29c4997173d84cdf2607	Swarm City Token	SWT	18	1448799417541610000000000
+TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
+TIME ~ CLOCK - <INFO>  : typeList: : 
+TIME ~ CLOCK - <INFO>  : inputStr: : 0x00000000000000000000000000000000000000000000ddc1409f4391a05f7400
+TIME ~ CLOCK - <INFO>  : Parse func found: : uint256
 3510999	0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98	0xb9e7f8568e08d5659f5d29c4997173d84cdf2607	Swarm City Token	SWT	18	1047207870835250000000000
---1 : 1 : 0
---  0: _balance (uint256)
---  0: 0000000000000000000000000000000000000000000000000000000000000000 <---
+TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
+TIME ~ CLOCK - <INFO>  : typeList: : 
+TIME ~ CLOCK - <INFO>  : inputStr: : 
+==================================================
+level: 0
+readOffset: 0
+dataStart: 0
+params.size: 1
+  0: uint256 _balance
+ dataArray.size: 1
+  0 (0x000) 0000000000000000000000000000000000000000000000000000000000000000 <=d
+
+==================================================
+level: 1
+readOffset: 0
+dataStart: 0
+params.size: 1
+  0: uint256 _balance
+ dataArray.size: 1
+  0 (0x000) 0000000000000000000000000000000000000000000000000000000000000000 <=d
 2510010	0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98	0xb9e7f8568e08d5659f5d29c4997173d84cdf2607	Swarm City Token	SWT	18	0
+TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
+TIME ~ CLOCK - <INFO>  : typeList: : 
+TIME ~ CLOCK - <INFO>  : inputStr: : 0x000000000000000000000000000000000000000000007d262c982bccf3600000
+TIME ~ CLOCK - <INFO>  : Parse func found: : uint256
 4285364	0x6b65353ac052f6c3a0c9688911b078bd025d6ab3	0xb9e7f8568e08d5659f5d29c4997173d84cdf2607	Swarm City Token	SWT	18	591000000000000000000000
+TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
+TIME ~ CLOCK - <INFO>  : typeList: : 
+TIME ~ CLOCK - <INFO>  : inputStr: : 0x0000000000000000000000000000000000000000000090251d8da8bc6bb7f544
+TIME ~ CLOCK - <INFO>  : Parse func found: : uint256
 3510999	0x6b65353ac052f6c3a0c9688911b078bd025d6ab3	0xb9e7f8568e08d5659f5d29c4997173d84cdf2607	Swarm City Token	SWT	18	680705432607682194830660
---1 : 1 : 0
---  0: _balance (uint256)
---  0: 0000000000000000000000000000000000000000000000000000000000000000 <---
+TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
+TIME ~ CLOCK - <INFO>  : typeList: : 
+TIME ~ CLOCK - <INFO>  : inputStr: : 
+==================================================
+level: 0
+readOffset: 0
+dataStart: 0
+params.size: 1
+  0: uint256 _balance
+ dataArray.size: 1
+  0 (0x000) 0000000000000000000000000000000000000000000000000000000000000000 <=d
+
+==================================================
+level: 1
+readOffset: 0
+dataStart: 0
+params.size: 1
+  0: uint256 _balance
+ dataArray.size: 1
+  0 (0x000) 0000000000000000000000000000000000000000000000000000000000000000 <=d
 2510010	0x6b65353ac052f6c3a0c9688911b078bd025d6ab3	0xb9e7f8568e08d5659f5d29c4997173d84cdf2607	Swarm City Token	SWT	18	0
+TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
+TIME ~ CLOCK - <INFO>  : typeList: : 
+TIME ~ CLOCK - <INFO>  : inputStr: : 0x000000000000000000000000000000000000000000005c1d65b2473949e00000
+TIME ~ CLOCK - <INFO>  : Parse func found: : uint256
 4285364	0xa25d04fa348f107428708ba19c95d1c79b3744bf	0xb9e7f8568e08d5659f5d29c4997173d84cdf2607	Swarm City Token	SWT	18	435000000000000000000000
+TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
+TIME ~ CLOCK - <INFO>  : typeList: : 
+TIME ~ CLOCK - <INFO>  : inputStr: : 0x0000000000000000000000000000000000000000000000000000000000000000
+TIME ~ CLOCK - <INFO>  : Parse func found: : uint256
 3510999	0xa25d04fa348f107428708ba19c95d1c79b3744bf	0xb9e7f8568e08d5659f5d29c4997173d84cdf2607	Swarm City Token	SWT	18	0
---1 : 1 : 0
---  0: _balance (uint256)
---  0: 0000000000000000000000000000000000000000000000000000000000000000 <---
+TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
+TIME ~ CLOCK - <INFO>  : typeList: : 
+TIME ~ CLOCK - <INFO>  : inputStr: : 
+==================================================
+level: 0
+readOffset: 0
+dataStart: 0
+params.size: 1
+  0: uint256 _balance
+ dataArray.size: 1
+  0 (0x000) 0000000000000000000000000000000000000000000000000000000000000000 <=d
+
+==================================================
+level: 1
+readOffset: 0
+dataStart: 0
+params.size: 1
+  0: uint256 _balance
+ dataArray.size: 1
+  0 (0x000) 0000000000000000000000000000000000000000000000000000000000000000 <=d
 2510010	0xa25d04fa348f107428708ba19c95d1c79b3744bf	0xb9e7f8568e08d5659f5d29c4997173d84cdf2607	Swarm City Token	SWT	18	0

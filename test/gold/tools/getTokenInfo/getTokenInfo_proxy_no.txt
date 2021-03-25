@@ -1,18 +1,86 @@
 getTokenInfo argc: 7 [1:0x00000000441378008ea67f4284a57932b1c000a5] [2:--fmt] [3:json] [4:7442048] [5:--parts] [6:all] 
 getTokenInfo 0x00000000441378008ea67f4284a57932b1c000a5 --fmt json 7442048 --parts all 
 { "data": [
---1 : 1 : 0
---  0: _name (string)
---  0: 0000000000000000000000000000000000000000000000000000000000000000 <---
---1 : 1 : 0
---  0: _symbol (string)
---  0: 0000000000000000000000000000000000000000000000000000000000000000 <---
---1 : 1 : 0
---  0: _decimals (uint8)
---  0: 0000000000000000000000000000000000000000000000000000000000000000 <---
---1 : 1 : 0
---  0: _supply (uint256)
---  0: 0000000000000000000000000000000000000000000000000000000000000000 <---
+TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
+TIME ~ CLOCK - <INFO>  : typeList: : 
+TIME ~ CLOCK - <INFO>  : inputStr: : 
+==================================================
+level: 0
+readOffset: 0
+dataStart: 0
+params.size: 1
+  0: string _name
+ dataArray.size: 1
+  0 (0x000) 0000000000000000000000000000000000000000000000000000000000000000 <=d
+
+==================================================
+level: 1
+readOffset: 0
+dataStart: 0
+params.size: 1
+  0: string _name
+ dataArray.size: 1
+  0 (0x000) 0000000000000000000000000000000000000000000000000000000000000000 <=d
+TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
+TIME ~ CLOCK - <INFO>  : typeList: : 
+TIME ~ CLOCK - <INFO>  : inputStr: : 
+==================================================
+level: 0
+readOffset: 0
+dataStart: 0
+params.size: 1
+  0: string _symbol
+ dataArray.size: 1
+  0 (0x000) 0000000000000000000000000000000000000000000000000000000000000000 <=d
+
+==================================================
+level: 1
+readOffset: 0
+dataStart: 0
+params.size: 1
+  0: string _symbol
+ dataArray.size: 1
+  0 (0x000) 0000000000000000000000000000000000000000000000000000000000000000 <=d
+TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
+TIME ~ CLOCK - <INFO>  : typeList: : 
+TIME ~ CLOCK - <INFO>  : inputStr: : 
+==================================================
+level: 0
+readOffset: 0
+dataStart: 0
+params.size: 1
+  0: uint8 _decimals
+ dataArray.size: 1
+  0 (0x000) 0000000000000000000000000000000000000000000000000000000000000000 <=d
+
+==================================================
+level: 1
+readOffset: 0
+dataStart: 0
+params.size: 1
+  0: uint8 _decimals
+ dataArray.size: 1
+  0 (0x000) 0000000000000000000000000000000000000000000000000000000000000000 <=d
+TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
+TIME ~ CLOCK - <INFO>  : typeList: : 
+TIME ~ CLOCK - <INFO>  : inputStr: : 
+==================================================
+level: 0
+readOffset: 0
+dataStart: 0
+params.size: 1
+  0: uint256 _supply
+ dataArray.size: 1
+  0 (0x000) 0000000000000000000000000000000000000000000000000000000000000000 <=d
+
+==================================================
+level: 1
+readOffset: 0
+dataStart: 0
+params.size: 1
+  0: uint256 _supply
+ dataArray.size: 1
+  0 (0x000) 0000000000000000000000000000000000000000000000000000000000000000 <=d
   {
     "blockNumber": 7442048,
     "totalSupply": 0,

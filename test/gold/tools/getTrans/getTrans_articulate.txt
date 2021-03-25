@@ -3,12 +3,54 @@ getTrans 6513870.62 6687987.11 0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f8
 TIME ~ CLOCK - <INFO>  : articulate: true
 TIME ~ CLOCK - <INFO>  : trace: true
 {"data": [
---1 : 1 : 0
---  0: _success (bool)
---  0: 0000000000000000000000000000000000000000000000000000000000000000 <---
---1 : 1 : 0
---  0: _success (bool)
---  0: 0000000000000000000000000000000000000000000000000000000000000000 <---
+TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
+TIME ~ CLOCK - <INFO>  : typeList: : 
+TIME ~ CLOCK - <INFO>  : inputStr: : 000000000000000000000000bb9bc244d798123fde783fcc1c72d3bb8c189413000000000000000000000000713fa27cb26b5902ea398b04d21e6018bba3a2f100000000000000000000000000000000000000000000000072ae557d778bd174
+TIME ~ CLOCK - <INFO>  : Parse func found: : address,address,uint256
+TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
+TIME ~ CLOCK - <INFO>  : typeList: : 
+TIME ~ CLOCK - <INFO>  : inputStr: : 
+==================================================
+level: 0
+readOffset: 0
+dataStart: 0
+params.size: 1
+  0: bool _success
+ dataArray.size: 1
+  0 (0x000) 0000000000000000000000000000000000000000000000000000000000000000 <=d
+
+==================================================
+level: 1
+readOffset: 0
+dataStart: 0
+params.size: 1
+  0: bool _success
+ dataArray.size: 1
+  0 (0x000) 0000000000000000000000000000000000000000000000000000000000000000 <=d
+TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
+TIME ~ CLOCK - <INFO>  : typeList: : 
+TIME ~ CLOCK - <INFO>  : inputStr: : 000000000000000000000000bb9bc244d798123fde783fcc1c72d3bb8c189413000000000000000000000000713fa27cb26b5902ea398b04d21e6018bba3a2f100000000000000000000000000000000000000000000000072ae557d778bd174
+TIME ~ CLOCK - <INFO>  : Parse func found: : address,address,uint256
+TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
+TIME ~ CLOCK - <INFO>  : typeList: : 
+TIME ~ CLOCK - <INFO>  : inputStr: : 
+==================================================
+level: 0
+readOffset: 0
+dataStart: 0
+params.size: 1
+  0: bool _success
+ dataArray.size: 1
+  0 (0x000) 0000000000000000000000000000000000000000000000000000000000000000 <=d
+
+==================================================
+level: 1
+readOffset: 0
+dataStart: 0
+params.size: 1
+  0: bool _success
+ dataArray.size: 1
+  0 (0x000) 0000000000000000000000000000000000000000000000000000000000000000 <=d
   {
     "hash": "0x2d92337aa72c51eaf61ab52692af28cc2f7efb62e32bbc1d8a420099a22510e9",
     "blockHash": "0x10a610f712557f961e854be9b19561eea3c9c19ab7b302027877181935789da8",
@@ -75,7 +117,41 @@ TIME ~ CLOCK - <INFO>  : trace: true
     "gasUsed": 3000000,
     "date": "2018-10-14 13:49:30 UTC",
     "ether": 0.000000000000000000
-  },  {
+  }TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
+TIME ~ CLOCK - <INFO>  : typeList: : address
+TIME ~ CLOCK - <INFO>  : inputStr: : 0x000000000000000000000000752c71a68e4e0ea308c6e4209b7802d135c49292
+TIME ~ CLOCK - <INFO>  : Parse func found: : address
+TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
+TIME ~ CLOCK - <INFO>  : typeList: : 
+TIME ~ CLOCK - <INFO>  : inputStr: : 0x000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000004432e910757d1000000000000000000000000000000000000000000000000015af1d78b58c40000
+TIME ~ CLOCK - <INFO>  : Parse func found: : uint256,uint256,uint256
+TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
+TIME ~ CLOCK - <INFO>  : typeList: : 
+TIME ~ CLOCK - <INFO>  : inputStr: : 0000000000000000000000000000000000000000000000000000000000000001
+TIME ~ CLOCK - <INFO>  : Parse func found: : uint256
+TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
+TIME ~ CLOCK - <INFO>  : typeList: : 
+TIME ~ CLOCK - <INFO>  : inputStr: : 
+==================================================
+level: 0
+readOffset: 0
+dataStart: 0
+params.size: 0
+ dataArray.size: 0
+TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
+TIME ~ CLOCK - <INFO>  : typeList: : 
+TIME ~ CLOCK - <INFO>  : inputStr: : 0000000000000000000000000000000000000000000000000000000000000001
+TIME ~ CLOCK - <INFO>  : Parse func found: : uint256
+TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
+TIME ~ CLOCK - <INFO>  : typeList: : 
+TIME ~ CLOCK - <INFO>  : inputStr: : 
+==================================================
+level: 0
+readOffset: 0
+dataStart: 0
+params.size: 0
+ dataArray.size: 0
+,  {
     "hash": "0x8c0b6d6bf0390ba6618b10aa629f8208c8b871b0c052408505a7d9b5bf015f91",
     "blockHash": "0x9a06b1e8e7249a36a5e532997882429805c7a6510e91b05fd9b5ad6e367acb13",
     "blockNumber": 6687987,
@@ -157,7 +233,36 @@ TIME ~ CLOCK - <INFO>  : trace: true
     "gasUsed": 78518,
     "date": "2018-11-12 01:45:21 UTC",
     "ether": 0.000000000000000000
-  },  {
+  }TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
+TIME ~ CLOCK - <INFO>  : typeList: : 
+TIME ~ CLOCK - <INFO>  : inputStr: : 000000000000000000000000167a9333bf582556f35bd4d16a7e80e191aa6476000000000000000000000000571b7b69829ce2568b9bc3d32eaf7405dab76b21
+TIME ~ CLOCK - <INFO>  : Parse func found: : address,address
+TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
+TIME ~ CLOCK - <INFO>  : typeList: : 
+TIME ~ CLOCK - <INFO>  : inputStr: : 0x0000000000000000000000000000000000000000000000000000000000000001
+TIME ~ CLOCK - <INFO>  : Parse func found: : bool
+TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
+TIME ~ CLOCK - <INFO>  : typeList: : 
+TIME ~ CLOCK - <INFO>  : inputStr: : 
+==================================================
+level: 0
+readOffset: 0
+dataStart: 0
+params.size: 0
+ dataArray.size: 0
+TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
+TIME ~ CLOCK - <INFO>  : typeList: : 
+TIME ~ CLOCK - <INFO>  : inputStr: : 0x0000000000000000000000000000000000000000000000000000000000000001
+TIME ~ CLOCK - <INFO>  : Parse func found: : bool
+TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
+TIME ~ CLOCK - <INFO>  : typeList: : 
+TIME ~ CLOCK - <INFO>  : inputStr: : 000000000000000000000000167a9333bf582556f35bd4d16a7e80e191aa6476000000000000000000000000571b7b69829ce2568b9bc3d32eaf7405dab76b21
+TIME ~ CLOCK - <INFO>  : Parse func found: : address,address
+TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
+TIME ~ CLOCK - <INFO>  : typeList: : 
+TIME ~ CLOCK - <INFO>  : inputStr: : 0x0000000000000000000000000000000000000000000000000000000000000001
+TIME ~ CLOCK - <INFO>  : Parse func found: : bool
+,  {
     "hash": "0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f81f2fad45149f26e12",
     "blockHash": "0xcd4dbd459893241b0c21c91d64b445b1eb0579f7341afd17e7b797795a7f1d7e",
     "blockNumber": 2001002,

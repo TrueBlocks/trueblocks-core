@@ -1,6 +1,23 @@
 getTokenInfo argc: 7 [1:0xd26114cd6ee289accf82350c8d8487fedb8a0c07] [2:0xb9e7f8568e08d5659f5d29c4997173d84cdf2607] [3:--fmt] [4:json] [5:2000000] [6:--to_file] 
 getTokenInfo 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 --fmt json 2000000 --to_file 
---1 : 1 : 0
---  0: _balance (uint256)
---  0: 0000000000000000000000000000000000000000000000000000000000000000 <---
+TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
+TIME ~ CLOCK - <INFO>  : typeList: : 
+TIME ~ CLOCK - <INFO>  : inputStr: : 
+==================================================
+level: 0
+readOffset: 0
+dataStart: 0
+params.size: 1
+  0: uint256 _balance
+ dataArray.size: 1
+  0 (0x000) 0000000000000000000000000000000000000000000000000000000000000000 <=d
+
+==================================================
+level: 1
+readOffset: 0
+dataStart: 0
+params.size: 1
+  0: uint256 _balance
+ dataArray.size: 1
+  0 (0x000) 0000000000000000000000000000000000000000000000000000000000000000 <=d
 { "outputFilename": "--output_filename--" }

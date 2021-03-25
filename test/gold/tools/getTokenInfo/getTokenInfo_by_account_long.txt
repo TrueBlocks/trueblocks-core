@@ -2,4 +2,8 @@ getTokenInfo argc: 5 [1:0xb9e7f8568e08d5659f5d29c4997173d84cdf2607] [2:0xa25d04f
 getTokenInfo 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 0xa25d04fa348f107428708ba19c95d1c79b3744bf --by_acct 4000000 
 TIME ~ CLOCK - <INFO>  : by_acct: true
 blocknumber	holder	address	name	symbol	decimals	balance
+TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
+TIME ~ CLOCK - <INFO>  : typeList: : 
+TIME ~ CLOCK - <INFO>  : inputStr: : 0x000000000000000000000000000000000000000000005c1d65b2473949e00000
+TIME ~ CLOCK - <INFO>  : Parse func found: : uint256
 4000000	0xa25d04fa348f107428708ba19c95d1c79b3744bf	0xb9e7f8568e08d5659f5d29c4997173d84cdf2607	Swarm City Token	SWT	18	435000000000000000000000

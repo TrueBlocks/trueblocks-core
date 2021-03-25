@@ -3,120 +3,300 @@ getTrans 3648669.24 --articulate --verbose --trace --fmt json
 TIME ~ CLOCK - <INFO>  : articulate: true
 TIME ~ CLOCK - <INFO>  : trace: true
 { "data": [
---2 : 6 : 0
---  0: hashes (bytes32[])
---  1: sealedBid (bytes32)
---  0: 0000000000000000000000000000000000000000000000000000000000000040 <---
---  1: cb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811
---  2: 0000000000000000000000000000000000000000000000000000000000000003
---  3: 000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c
---  4: 0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc
---  5: 00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573
-  --1 : 6 : 3 : 2
-  --  0:  (bytes32[3])
-  --      bytes32[][]
-  --  0: 0000000000000000000000000000000000000000000000000000000000000040
-  --  1: cb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811
-  --  2: 0000000000000000000000000000000000000000000000000000000000000003 <===
-  --  3: 000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c <---
-  --  4: 0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc
-  --  5: 00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573
-    --3 : 6 : 3 : 2
-    --  0:  (bytes32)
-    --  1:  (bytes32)
-    --  2:  (bytes32)
-    --  0: 0000000000000000000000000000000000000000000000000000000000000040
-    --  1: cb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811
-    --  2: 0000000000000000000000000000000000000000000000000000000000000003 <===
-    --  3: 000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c <---
-    --  4: 0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc
-    --  5: 00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573
-    --3 : 6 : 4 : 2
-    --  0:  (bytes32) = 0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c
-    --  1:  (bytes32)
-    --  2:  (bytes32)
-    --  0: 0000000000000000000000000000000000000000000000000000000000000040
-    --  1: cb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811
-    --  2: 0000000000000000000000000000000000000000000000000000000000000003 <===
-    --  3: 000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c
-    --  4: 0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc <---
-    --  5: 00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573
-    --3 : 6 : 5 : 2
-    --  0:  (bytes32) = 0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c
-    --  1:  (bytes32) = 0x0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc
-    --  2:  (bytes32)
-    --  0: 0000000000000000000000000000000000000000000000000000000000000040
-    --  1: cb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811
-    --  2: 0000000000000000000000000000000000000000000000000000000000000003 <===
-    --  3: 000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c
-    --  4: 0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc
-    --  5: 00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573 <---
---2 : 6 : 1
---  0: hashes (bytes32[]) = [0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c, 0x0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc, 0x00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573]
---  1: sealedBid (bytes32)
---  0: 0000000000000000000000000000000000000000000000000000000000000040
---  1: cb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811 <---
---  2: 0000000000000000000000000000000000000000000000000000000000000003
---  3: 000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c
---  4: 0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc
---  5: 00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573
---2 : 6 : 0
---  0: hashes (bytes32[])
---  1: sealedBid (bytes32)
---  0: 0000000000000000000000000000000000000000000000000000000000000040 <---
---  1: cb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811
---  2: 0000000000000000000000000000000000000000000000000000000000000003
---  3: 000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c
---  4: 0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc
---  5: 00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573
-  --1 : 6 : 3 : 2
-  --  0:  (bytes32[3])
-  --      bytes32[][]
-  --  0: 0000000000000000000000000000000000000000000000000000000000000040
-  --  1: cb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811
-  --  2: 0000000000000000000000000000000000000000000000000000000000000003 <===
-  --  3: 000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c <---
-  --  4: 0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc
-  --  5: 00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573
-    --3 : 6 : 3 : 2
-    --  0:  (bytes32)
-    --  1:  (bytes32)
-    --  2:  (bytes32)
-    --  0: 0000000000000000000000000000000000000000000000000000000000000040
-    --  1: cb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811
-    --  2: 0000000000000000000000000000000000000000000000000000000000000003 <===
-    --  3: 000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c <---
-    --  4: 0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc
-    --  5: 00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573
-    --3 : 6 : 4 : 2
-    --  0:  (bytes32) = 0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c
-    --  1:  (bytes32)
-    --  2:  (bytes32)
-    --  0: 0000000000000000000000000000000000000000000000000000000000000040
-    --  1: cb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811
-    --  2: 0000000000000000000000000000000000000000000000000000000000000003 <===
-    --  3: 000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c
-    --  4: 0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc <---
-    --  5: 00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573
-    --3 : 6 : 5 : 2
-    --  0:  (bytes32) = 0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c
-    --  1:  (bytes32) = 0x0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc
-    --  2:  (bytes32)
-    --  0: 0000000000000000000000000000000000000000000000000000000000000040
-    --  1: cb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811
-    --  2: 0000000000000000000000000000000000000000000000000000000000000003 <===
-    --  3: 000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c
-    --  4: 0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc
-    --  5: 00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573 <---
---2 : 6 : 1
---  0: hashes (bytes32[]) = [0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c, 0x0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc, 0x00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573]
---  1: sealedBid (bytes32)
---  0: 0000000000000000000000000000000000000000000000000000000000000040
---  1: cb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811 <---
---  2: 0000000000000000000000000000000000000000000000000000000000000003
---  3: 000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c
---  4: 0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc
---  5: 00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573
+TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
+TIME ~ CLOCK - <INFO>  : typeList: : bytes32
+TIME ~ CLOCK - <INFO>  : inputStr: : 0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c
+TIME ~ CLOCK - <INFO>  : Parse func found: : bytes32
+TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
+TIME ~ CLOCK - <INFO>  : typeList: : 
+TIME ~ CLOCK - <INFO>  : inputStr: : 0x000000000000000000000000000000000000000000000000000000005911a79a
+TIME ~ CLOCK - <INFO>  : Parse func found: : uint256
+TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
+TIME ~ CLOCK - <INFO>  : typeList: : bytes32
+TIME ~ CLOCK - <INFO>  : inputStr: : 0x0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc
+TIME ~ CLOCK - <INFO>  : Parse func found: : bytes32
+TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
+TIME ~ CLOCK - <INFO>  : typeList: : 
+TIME ~ CLOCK - <INFO>  : inputStr: : 0x000000000000000000000000000000000000000000000000000000005911a79a
+TIME ~ CLOCK - <INFO>  : Parse func found: : uint256
+TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
+TIME ~ CLOCK - <INFO>  : typeList: : bytes32
+TIME ~ CLOCK - <INFO>  : inputStr: : 0x00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573
+TIME ~ CLOCK - <INFO>  : Parse func found: : bytes32
+TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
+TIME ~ CLOCK - <INFO>  : typeList: : 
+TIME ~ CLOCK - <INFO>  : inputStr: : 0x000000000000000000000000000000000000000000000000000000005911a79a
+TIME ~ CLOCK - <INFO>  : Parse func found: : uint256
+TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
+TIME ~ CLOCK - <INFO>  : typeList: : bytes32
+TIME ~ CLOCK - <INFO>  : inputStr: : 0xcb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811
+TIME ~ CLOCK - <INFO>  : Parse func found: : bytes32
+TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
+TIME ~ CLOCK - <INFO>  : typeList: : address
+TIME ~ CLOCK - <INFO>  : inputStr: : 0x000000000000000000000000d1220a0cf47c7b9be7a2e6ba89f429762e7b9adb
+TIME ~ CLOCK - <INFO>  : Parse func found: : address
+TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
+TIME ~ CLOCK - <INFO>  : typeList: : 
+TIME ~ CLOCK - <INFO>  : inputStr: : 0x000000000000000000000000000000000000000000000000002386f26fc10000
+TIME ~ CLOCK - <INFO>  : Parse func found: : uint256
+TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
+TIME ~ CLOCK - <INFO>  : typeList: : 
+TIME ~ CLOCK - <INFO>  : inputStr: : 0000000000000000000000000000000000000000000000000000000000000040cb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb898110000000000000000000000000000000000000000000000000000000000000003000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573
+==================================================
+level: 0
+readOffset: 0
+dataStart: 0
+params.size: 2
+  0: bytes32[] hashes
+  1: bytes32 sealedBid
+ dataArray.size: 6
+  0 (0x000) 0000000000000000000000000000000000000000000000000000000000000040 <=d
+  1 (0x020) cb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811
+  2 (0x040) 0000000000000000000000000000000000000000000000000000000000000003
+  3 (0x060) 000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c
+  4 (0x080) 0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc
+  5 (0x0a0) 00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573
+
+==================================================
+level: 1
+readOffset: 0
+dataStart: 0
+params.size: 2
+  0: bytes32[] hashes
+  1: bytes32 sealedBid
+ dataArray.size: 6
+  0 (0x000) 0000000000000000000000000000000000000000000000000000000000000040 <=d
+  1 (0x020) cb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811
+  2 (0x040) 0000000000000000000000000000000000000000000000000000000000000003
+  3 (0x060) 000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c
+  4 (0x080) 0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc
+  5 (0x0a0) 00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573
+TIME ~ CLOCK - <INFO>  : Section: : Variable array of bytes32[]
+==================================================
+ level: 2
+ readOffset: 3
+ dataStart: 2
+ params.size: 1
+   0: bytes32[3]
+   internalType: bytes32[]
+  dataArray.size: 6
+   0 (0x000) 0000000000000000000000000000000000000000000000000000000000000040
+   1 (0x020) cb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811
+   2 (0x040) 0000000000000000000000000000000000000000000000000000000000000003 <=d
+   3 (0x060) 000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c <-r
+   4 (0x080) 0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc
+   5 (0x0a0) 00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573
+TIME ~ CLOCK - <INFO>  : Section: : Fixed array of bytes32[3]
+==================================================
+  level: 3
+  readOffset: 3
+  dataStart: 2
+  params.size: 3
+    0: bytes32
+    1: bytes32
+    2: bytes32
+   dataArray.size: 6
+    0 (0x000) 0000000000000000000000000000000000000000000000000000000000000040
+    1 (0x020) cb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811
+    2 (0x040) 0000000000000000000000000000000000000000000000000000000000000003 <=d
+    3 (0x060) 000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c <-r
+    4 (0x080) 0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc
+    5 (0x0a0) 00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573
+==================================================
+  level: 3
+  readOffset: 4
+  dataStart: 2
+  params.size: 3
+    0: bytes32 = 0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c
+    1: bytes32
+    2: bytes32
+   dataArray.size: 6
+    0 (0x000) 0000000000000000000000000000000000000000000000000000000000000040
+    1 (0x020) cb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811
+    2 (0x040) 0000000000000000000000000000000000000000000000000000000000000003 <=d
+    3 (0x060) 000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c
+    4 (0x080) 0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc <-r
+    5 (0x0a0) 00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573
+==================================================
+  level: 3
+  readOffset: 5
+  dataStart: 2
+  params.size: 3
+    0: bytes32 = 0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c
+    1: bytes32 = 0x0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc
+    2: bytes32
+   dataArray.size: 6
+    0 (0x000) 0000000000000000000000000000000000000000000000000000000000000040
+    1 (0x020) cb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811
+    2 (0x040) 0000000000000000000000000000000000000000000000000000000000000003 <=d
+    3 (0x060) 000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c
+    4 (0x080) 0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc
+    5 (0x0a0) 00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573 <-r
+
+==================================================
+level: 1
+readOffset: 1
+dataStart: 0
+params.size: 2
+  0: bytes32[] hashes = [0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c, 0x0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc, 0x00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573]
+  1: bytes32 sealedBid
+ dataArray.size: 6
+  0 (0x000) 0000000000000000000000000000000000000000000000000000000000000040 <=d
+  1 (0x020) cb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811 <-r
+  2 (0x040) 0000000000000000000000000000000000000000000000000000000000000003
+  3 (0x060) 000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c
+  4 (0x080) 0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc
+  5 (0x0a0) 00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573
+TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
+TIME ~ CLOCK - <INFO>  : typeList: : 
+TIME ~ CLOCK - <INFO>  : inputStr: : 
+==================================================
+level: 0
+readOffset: 0
+dataStart: 0
+params.size: 0
+ dataArray.size: 0
+TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
+TIME ~ CLOCK - <INFO>  : typeList: : 
+TIME ~ CLOCK - <INFO>  : inputStr: : 93cdeb708b7545dc668eb9280176169d1c33cfd8ed6f04690a0bcc88a93fc4ae
+TIME ~ CLOCK - <INFO>  : Parse func found: : bytes32
+TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
+TIME ~ CLOCK - <INFO>  : typeList: : 
+TIME ~ CLOCK - <INFO>  : inputStr: : 0x0000000000000000000000006090a6e47849629b7245dfa1ca21d94cd15878ef
+TIME ~ CLOCK - <INFO>  : Parse func found: : address
+TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
+TIME ~ CLOCK - <INFO>  : typeList: : 
+TIME ~ CLOCK - <INFO>  : inputStr: : 93cdeb708b7545dc668eb9280176169d1c33cfd8ed6f04690a0bcc88a93fc4ae
+TIME ~ CLOCK - <INFO>  : Parse func found: : bytes32
+TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
+TIME ~ CLOCK - <INFO>  : typeList: : 
+TIME ~ CLOCK - <INFO>  : inputStr: : 0x0000000000000000000000006090a6e47849629b7245dfa1ca21d94cd15878ef
+TIME ~ CLOCK - <INFO>  : Parse func found: : address
+TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
+TIME ~ CLOCK - <INFO>  : typeList: : 
+TIME ~ CLOCK - <INFO>  : inputStr: : 93cdeb708b7545dc668eb9280176169d1c33cfd8ed6f04690a0bcc88a93fc4ae
+TIME ~ CLOCK - <INFO>  : Parse func found: : bytes32
+TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
+TIME ~ CLOCK - <INFO>  : typeList: : 
+TIME ~ CLOCK - <INFO>  : inputStr: : 0x0000000000000000000000006090a6e47849629b7245dfa1ca21d94cd15878ef
+TIME ~ CLOCK - <INFO>  : Parse func found: : address
+TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
+TIME ~ CLOCK - <INFO>  : typeList: : 
+TIME ~ CLOCK - <INFO>  : inputStr: : 0000000000000000000000000000000000000000000000000000000000000040cb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb898110000000000000000000000000000000000000000000000000000000000000003000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573
+==================================================
+level: 0
+readOffset: 0
+dataStart: 0
+params.size: 2
+  0: bytes32[] hashes
+  1: bytes32 sealedBid
+ dataArray.size: 6
+  0 (0x000) 0000000000000000000000000000000000000000000000000000000000000040 <=d
+  1 (0x020) cb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811
+  2 (0x040) 0000000000000000000000000000000000000000000000000000000000000003
+  3 (0x060) 000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c
+  4 (0x080) 0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc
+  5 (0x0a0) 00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573
+
+==================================================
+level: 1
+readOffset: 0
+dataStart: 0
+params.size: 2
+  0: bytes32[] hashes
+  1: bytes32 sealedBid
+ dataArray.size: 6
+  0 (0x000) 0000000000000000000000000000000000000000000000000000000000000040 <=d
+  1 (0x020) cb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811
+  2 (0x040) 0000000000000000000000000000000000000000000000000000000000000003
+  3 (0x060) 000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c
+  4 (0x080) 0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc
+  5 (0x0a0) 00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573
+TIME ~ CLOCK - <INFO>  : Section: : Variable array of bytes32[]
+==================================================
+ level: 2
+ readOffset: 3
+ dataStart: 2
+ params.size: 1
+   0: bytes32[3]
+   internalType: bytes32[]
+  dataArray.size: 6
+   0 (0x000) 0000000000000000000000000000000000000000000000000000000000000040
+   1 (0x020) cb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811
+   2 (0x040) 0000000000000000000000000000000000000000000000000000000000000003 <=d
+   3 (0x060) 000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c <-r
+   4 (0x080) 0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc
+   5 (0x0a0) 00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573
+TIME ~ CLOCK - <INFO>  : Section: : Fixed array of bytes32[3]
+==================================================
+  level: 3
+  readOffset: 3
+  dataStart: 2
+  params.size: 3
+    0: bytes32
+    1: bytes32
+    2: bytes32
+   dataArray.size: 6
+    0 (0x000) 0000000000000000000000000000000000000000000000000000000000000040
+    1 (0x020) cb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811
+    2 (0x040) 0000000000000000000000000000000000000000000000000000000000000003 <=d
+    3 (0x060) 000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c <-r
+    4 (0x080) 0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc
+    5 (0x0a0) 00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573
+==================================================
+  level: 3
+  readOffset: 4
+  dataStart: 2
+  params.size: 3
+    0: bytes32 = 0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c
+    1: bytes32
+    2: bytes32
+   dataArray.size: 6
+    0 (0x000) 0000000000000000000000000000000000000000000000000000000000000040
+    1 (0x020) cb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811
+    2 (0x040) 0000000000000000000000000000000000000000000000000000000000000003 <=d
+    3 (0x060) 000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c
+    4 (0x080) 0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc <-r
+    5 (0x0a0) 00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573
+==================================================
+  level: 3
+  readOffset: 5
+  dataStart: 2
+  params.size: 3
+    0: bytes32 = 0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c
+    1: bytes32 = 0x0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc
+    2: bytes32
+   dataArray.size: 6
+    0 (0x000) 0000000000000000000000000000000000000000000000000000000000000040
+    1 (0x020) cb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811
+    2 (0x040) 0000000000000000000000000000000000000000000000000000000000000003 <=d
+    3 (0x060) 000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c
+    4 (0x080) 0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc
+    5 (0x0a0) 00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573 <-r
+
+==================================================
+level: 1
+readOffset: 1
+dataStart: 0
+params.size: 2
+  0: bytes32[] hashes = [0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c, 0x0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc, 0x00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573]
+  1: bytes32 sealedBid
+ dataArray.size: 6
+  0 (0x000) 0000000000000000000000000000000000000000000000000000000000000040 <=d
+  1 (0x020) cb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811 <-r
+  2 (0x040) 0000000000000000000000000000000000000000000000000000000000000003
+  3 (0x060) 000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c
+  4 (0x080) 0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc
+  5 (0x0a0) 00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573
+TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
+TIME ~ CLOCK - <INFO>  : typeList: : 
+TIME ~ CLOCK - <INFO>  : inputStr: : 
+==================================================
+level: 0
+readOffset: 0
+dataStart: 0
+params.size: 0
+ dataArray.size: 0
   {
     "hash": "0x811bb4494b3bbcfd6f0205f22b3e983792b21cb0a9689366903b843ec4d62531",
     "blockHash": "0x836c4866ea68fbe3b9786cdb3c2c8a36fa0c689e77b0f9fc441d37fb85489fad",

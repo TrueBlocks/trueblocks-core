@@ -1,6 +1,10 @@
 getState argc: 4 [1:--call] [2:0xa4f29fc548856180f6b1e319ee4d86715875cce4!0x12065fe0] [3:6523977-6540000:2000] 
 getState --call 0xa4f29fc548856180f6b1e319ee4d86715875cce4!0x12065fe0 6523977-6540000:2000 
 TIME ~ CLOCK - <INFO>  : call: 0xa4f29fc548856180f6b1e319ee4d86715875cce4!0x12065fe0
+TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
+TIME ~ CLOCK - <INFO>  : typeList: : 
+TIME ~ CLOCK - <INFO>  : inputStr: : 0x0000000000000000000000000000000000000000000000000000000000000000
+TIME ~ CLOCK - <INFO>  : Parse func found: : uint256
 { "data": [
 {
   "blockNumber": 10092000,
