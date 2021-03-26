@@ -34,6 +34,8 @@ class CExportContext {
     bool asDollars;
     bool asWei;
     bool asParity;
+    uint32_t* tsMemMap;
+    size_t tsCnt;
     format_t exportFmt;
     CNameValueMap fmtMap;
     address_t accountedFor;

@@ -118,9 +118,8 @@ bool loadPrefunds(const string_q& prefundFile, COptionsBase& options) {
     return true;
 }
 
-typedef map<address_t, CAccountName> name_map_t;
 //-----------------------------------------------------------------------
-void addToMap(name_map_t& theMap, CAccountName& account, const string_q& tabFilename, uint64_t cnt) {
+void addToMap(CAddressNameMap& theMap, CAccountName& account, const string_q& tabFilename, uint64_t cnt) {
     if (contains(tabFilename, "_custom")) {
         // From the custom file - store the values found in the file
         account.is_custom = true;
@@ -149,7 +148,7 @@ void addToMap(name_map_t& theMap, CAccountName& account, const string_q& tabFile
 }
 
 //-----------------------------------------------------------------------
-bool importTabFile(name_map_t& theMap, const string_q& tabFilename) {
+bool importTabFile(CAddressNameMap& theMap, const string_q& tabFilename) {
     string_q prefundBin = getCachePath("names/names_prefunds.bin");
 
     uint64_t cnt = 0;
@@ -255,21 +254,20 @@ bool COptionsBase::loadNames(void) {
         }
     }
 
-    name_map_t theMap;
-    if (!importTabFile(theMap, txtFile))
+    if (!importTabFile(namesMap, txtFile))
         EXIT_USAGE("Could not open names database...");
     LOG8("Finished adding names from regular database...");
 
-    if (!importTabFile(theMap, customFile))
+    if (!importTabFile(namesMap, customFile))
         EXIT_USAGE("Could not open custom names database...");
     LOG8("Finished adding names from custom database...");
 
-    if (!importTabFile(theMap, prefundFile))
+    if (!importTabFile(namesMap, prefundFile))
         EXIT_USAGE("Could not open prefunds database...");
     LOG8("Finished adding names from prefunds database...");
 
-    // theMap is already sorted by address, so simply copy it into the array
-    for (auto item : theMap) {
+    // namesMap is already sorted by address, so simply copy it into the array
+    for (auto item : namesMap) {
         namedAccounts.push_back(item.second);
         if (contains(item.second.tags, "Malicious"))
             maliciousMap[item.second.address] = true;

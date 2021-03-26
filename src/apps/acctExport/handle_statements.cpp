@@ -24,7 +24,7 @@ bool COptions::handle_statements(void) {
     blknum_t lastExportedBlock = NOPOS;
     for (size_t i = 0; i < apps.size() && (!freshen || (nProcessed < freshen_max)); i++) {
         const CAppearance_base* app = &apps[i];
-        if (shouldQuit() || app->blk >= tsCnt)
+        if (shouldQuit() || app->blk >= expContext().tsCnt)
             break;
 
         // LOG_TEST("passes", inRange((blknum_t)app->blk, exportRange.first, exportRange.second) ? "true" : "false");
@@ -40,7 +40,7 @@ bool COptions::handle_statements(void) {
                 readTransFromBinary(trans, txFilename);
                 trans.finishParse();
                 trans.pBlock = &block;
-                block.timestamp = trans.timestamp = (timestamp_t)tsMemMap[(app->blk * 2) + 1];
+                block.timestamp = trans.timestamp = (timestamp_t)expContext().tsMemMap[(app->blk * 2) + 1];
 
                 // This data isn't stored, so we need to recreate it
                 if (accounting || statements) {
@@ -95,7 +95,7 @@ bool COptions::handle_statements(void) {
                 }
 
                 trans.pBlock = &block;
-                trans.timestamp = block.timestamp = (timestamp_t)tsMemMap[(app->blk * 2) + 1];
+                trans.timestamp = block.timestamp = (timestamp_t)expContext().tsMemMap[(app->blk * 2) + 1];
 
                 if (accounting || statements) {
                     blknum_t next = i < apps.size() - 1 ? apps[i + 1].blk : NOPOS;

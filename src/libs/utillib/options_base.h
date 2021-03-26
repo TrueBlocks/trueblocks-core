@@ -51,14 +51,18 @@ typedef bool (*NAMEFUNC)(CAccountName& name, void* data);
 typedef bool (*NAMEVALFUNC)(CNameValue& pair, void* data);
 typedef bool (*UINT64VISITFUNC)(uint64_t num, void* data);
 typedef uint64_t (*HASHFINDFUNC)(const hash_t& hash, void* data);
+typedef map<address_t, CAccountName> CAddressNameMap;
 
 class COption;
 class COptionsBase {
   public:
+    // TODO(tjayrush): All of these can (and should) be moved to expContext as it would be available to things other
+    // TODO(tjayrush): than options. See fmtMap and tsMemMap for examples
     CErrorStringMap errStrs;
     CAddressWeiMap prefundWeiMap;
     CAddressBoolMap maliciousMap;
     CAddressBoolMap airdropMap;
+    CAddressNameMap namesMap;
 
     CStringArray arguments;
     CStringArray errors;

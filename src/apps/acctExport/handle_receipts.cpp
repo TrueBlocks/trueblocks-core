@@ -24,7 +24,7 @@ bool COptions::handle_receipts(void) {
     blknum_t lastExportedBlock = NOPOS;
     for (size_t i = 0; i < apps.size() && (!freshen || (nProcessed < freshen_max)); i++) {
         const CAppearance_base* app = &apps[i];
-        if (shouldQuit() || app->blk >= tsCnt)
+        if (shouldQuit() || app->blk >= expContext().tsCnt)
             break;
 
         // LOG_TEST("passes", inRange((blknum_t)app->blk, exportRange.first, exportRange.second) ? "true" : "false");
@@ -40,7 +40,7 @@ bool COptions::handle_receipts(void) {
                 readTransFromBinary(trans, txFilename);
                 trans.finishParse();
                 trans.pBlock = &block;
-                block.timestamp = trans.timestamp = (timestamp_t)tsMemMap[(app->blk * 2) + 1];
+                block.timestamp = trans.timestamp = (timestamp_t)expContext().tsMemMap[(app->blk * 2) + 1];
 
             } else {
                 if (app->blk == 0) {
@@ -66,7 +66,7 @@ bool COptions::handle_receipts(void) {
                 }
 
                 trans.pBlock = &block;
-                trans.timestamp = block.timestamp = (timestamp_t)tsMemMap[(app->blk * 2) + 1];
+                trans.timestamp = block.timestamp = (timestamp_t)expContext().tsMemMap[(app->blk * 2) + 1];
 
                 // ... we don't write the data here since it will not be complete.
                 // if (false) // (cache_txs && !fileExists(txFilename))

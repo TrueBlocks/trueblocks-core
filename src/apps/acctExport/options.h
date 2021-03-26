@@ -51,6 +51,7 @@ class COptions : public CAbiOptions {
     uint64_t nProcessed;
     string_q className;
     address_t hackAppAddr;
+    string_q hackAppName;
     CBlockAddressMap prefundAddrMap;
     CBlockAddressMap blkRewardMap;
     CPinnedChunkArray pinList;
@@ -63,8 +64,6 @@ class COptions : public CAbiOptions {
     CAddressUintMap fromTraceAddrMap;
     CAddressUintMap abiMap;
 
-    uint32_t* tsMemMap;
-    size_t tsCnt;
     blknum_t latestBlock;
     time_q oldestMonitor;
 

@@ -1,5 +1,7 @@
 [settings]
 class = CAppearanceDisplay
-fields = address address|blknum blockNumber|blknum transactionIndex
+base_class = CAccountName
+fields = blknum blockNumber|\
+    blknum transactionIndex
 includes = etherlib.h
-display_str = address, blockNumber, transactionIndex
+display_str = address, blockNumber, transactionIndex, timestamp, date, name

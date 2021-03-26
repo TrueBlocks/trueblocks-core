@@ -54,8 +54,13 @@ bool COptions::loadAllAppearances(void) {
 
     CAppearanceArray_base tmp;
     for (auto monitor : allMonitors) {
-        if (hackAppAddr.empty())
-            hackAppAddr = monitor.address;
+        if (hackAppAddr.empty()) {
+            CAccountName acct;
+            acct.address = monitor.address;
+            getNamedAccount(acct, monitor.address);
+            hackAppName = acct.name;
+            hackAppAddr = acct.address;
+        }
         if (!loadOneAddress(monitor, tmp))
             EXIT_FAIL("Could not load monitor for address " + monitor.address);
         if (freshen) {
@@ -105,7 +110,7 @@ bool COptions::loadAllAppearances(void) {
     if (apps.size()) {
         // it's okay to not be able to freshen this. We'll just report less txs
         freshenTimestamps(apps[apps.size() - 1].blk);
-        if (!loadTimestamps(&tsMemMap, tsCnt))
+        if (!loadTimestamps(&expContext().tsMemMap, expContext().tsCnt))
             EXIT_FAIL("Could not open timestamp file.");
     }
 

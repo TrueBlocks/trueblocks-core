@@ -1187,6 +1187,11 @@ COptionsBase::COptionsBase(void) {
     arguments.clear();
     commandLines.clear();
     namedAccounts.clear();
+    errStrs.clear();
+    prefundWeiMap.clear();
+    maliciousMap.clear();
+    airdropMap.clear();
+    namesMap.clear();
     pParams = NULL;
     cntParams = 0;
     coutSaved = NULL;
