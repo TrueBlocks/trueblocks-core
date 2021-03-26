@@ -26,6 +26,7 @@ params.size: 1
   0: uint256 _balance
 dataArray.size: 1
   0 (0x000) 0000000000000000000000000000000000000000000000000000000000000000 <=d
+  0: uint256 _balance = 0
 2717576	0x5e44c3e467a49c9ca0296a9f130fc433041aaa28	0xd26114cd6ee289accf82350c8d8487fedb8a0c07	OMGToken Airdrop	OMG	18	0
 TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
 TIME ~ CLOCK - <INFO>  : typeList: : 
@@ -47,6 +48,7 @@ params.size: 1
   0: uint256 _balance
 dataArray.size: 1
   0 (0x000) 0000000000000000000000000000000000000000000000000000000000000000 <=d
+  0: uint256 _balance = 0
 1428756	0x5e44c3e467a49c9ca0296a9f130fc433041aaa28	0xd26114cd6ee289accf82350c8d8487fedb8a0c07	OMGToken Airdrop	OMG	18	0
 TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
 TIME ~ CLOCK - <INFO>  : typeList: : 
@@ -73,6 +75,7 @@ params.size: 1
   0: uint256 _balance
 dataArray.size: 1
   0 (0x000) 0000000000000000000000000000000000000000000000000000000000000000 <=d
+  0: uint256 _balance = 0
 2717576	0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98	0xd26114cd6ee289accf82350c8d8487fedb8a0c07	OMGToken Airdrop	OMG	18	0
 TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
 TIME ~ CLOCK - <INFO>  : typeList: : 
@@ -94,4 +97,5 @@ params.size: 1
   0: uint256 _balance
 dataArray.size: 1
   0 (0x000) 0000000000000000000000000000000000000000000000000000000000000000 <=d
+  0: uint256 _balance = 0
 1428756	0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98	0xd26114cd6ee289accf82350c8d8487fedb8a0c07	OMGToken Airdrop	OMG	18	0

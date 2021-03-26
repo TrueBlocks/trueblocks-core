@@ -19,45 +19,51 @@ namespace qblocks {
 
 extern bool toPrintable(const string_q& inHex, string_q& result);
 static size_t level = 0;
+
+void prettyPrintParams(const CParameterArray& params) {
+    string_q indnt = substitute(string_q(level == 0 ? 0 : level - 1, '\t'), "\t", " ");
+    uint64_t cnt = 0;
+    for (auto param : params) {
+        cerr << indnt << padNum3T(cnt) << ": " << param.type << (param.name.empty() ? "" : " " + param.name);
+        if (!param.value.empty())
+            cerr << " = " << param.value;
+        cerr << endl;
+        if (!param.internalType.empty() && (param.internalType != param.type)) {
+            cerr << indnt << "  internalType: " << param.internalType << endl;
+            if (param.components.size()) {
+                cerr << indnt << "  compont.size: " << param.components.size() << endl;
+                for (auto component : param.components)
+                    cerr << indnt << "    " << component.type << " " << component.name << endl;
+            }
+        }
+        cnt++;
+    }
+}
+
 void prettyPrint(CParameterArray& params, const CStringArray& dataArray, const size_t& readOffset, size_t dataStart);
 void prettyPrint2(CParameterArray& params, const CStringArray& dataArray, const size_t& readOffset, size_t dataStart) {
-    // prettyPrint(params, dataArray, readOffset, dataStart);
+    prettyPrintParams(params);
 }
 //------------------------------------------------------------------------------------------------
 void prettyPrint(CParameterArray& params, const CStringArray& dataArray, const size_t& readOffset, size_t dataStart) {
     if (!isTestMode())
         return;
 
-    string_q indent = substitute(string_q(level == 0 ? 0 : level - 1, '\t'), "\t", " ");
+    string_q indnt = substitute(string_q(level == 0 ? 0 : level - 1, '\t'), "\t", " ");
     if (level == 1)
         cerr << endl;
     cerr << string_q(50, '=') << endl;
-    cerr << indent << "level: " << level << endl;
-    cerr << indent << "readOffset: " << readOffset << endl;
-    cerr << indent << "dataStart: " << dataStart << endl;
-    cerr << indent << "params.size: " << params.size() << endl;
+    cerr << indnt << "level: " << level << endl;
+    cerr << indnt << "readOffset: " << readOffset << endl;
+    cerr << indnt << "dataStart: " << dataStart << endl;
+    cerr << indnt << "params.size: " << params.size() << endl;
+
+    prettyPrintParams(params);
 
     uint64_t cnt = 0;
-    for (auto param : params) {
-        cerr << indent << padNum3T(cnt) << ": " << param.type << (param.name.empty() ? "" : " " + param.name);
-        if (!param.value.empty())
-            cerr << " = " << param.value;
-        cerr << endl;
-        if (!param.internalType.empty() && (param.internalType != param.type)) {
-            cerr << indent << "  internalType: " << param.internalType << endl;
-            if (param.components.size()) {
-                cerr << indent << "  compont.size: " << param.components.size() << endl;
-                for (auto component : param.components)
-                    cerr << indent << "    " << component.type << " " << component.name << endl;
-            }
-        }
-        cnt++;
-    }
-
-    cnt = 0;
-    cerr << indent << "dataArray.size: " << dataArray.size() << endl;
+    cerr << indnt << "dataArray.size: " << dataArray.size() << endl;
     for (auto data : dataArray) {
-        cerr << indent << padNum3T(cnt) << " (0x" << (padLeft(substitute(uint_2_Hex(cnt * 32), "0x", ""), 3, '0'))
+        cerr << indnt << padNum3T(cnt) << " (0x" << (padLeft(substitute(uint_2_Hex(cnt * 32), "0x", ""), 3, '0'))
              << ") " << data;
         if (cnt == dataStart)
             cerr << " <=d";

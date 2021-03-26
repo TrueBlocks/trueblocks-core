@@ -132,6 +132,11 @@ TIME ~ CLOCK - <INFO>  : Section: : Fixed array of bytes32[3]
     3 (0x060) 000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c
     4 (0x080) 0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc
     5 (0x0a0) 00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573 <-r
+   0: bytes32 = 0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c
+   1: bytes32 = 0x0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc
+   2: bytes32 = 0x00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573
+  0: bytes32[3] = [0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c, 0x0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc, 0x00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573]
+  internalType: bytes32[]
 
 ==================================================
 level: 1
@@ -147,6 +152,8 @@ dataArray.size: 6
   3 (0x060) 000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c
   4 (0x080) 0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc
   5 (0x0a0) 00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573
+  0: bytes32[] hashes = [0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c, 0x0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc, 0x00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573]
+  1: bytes32 sealedBid = 0xcb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811
 TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
 TIME ~ CLOCK - <INFO>  : typeList: : 
 TIME ~ CLOCK - <INFO>  : inputStr: : 
@@ -273,6 +280,11 @@ TIME ~ CLOCK - <INFO>  : Section: : Fixed array of bytes32[3]
     3 (0x060) 000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c
     4 (0x080) 0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc
     5 (0x0a0) 00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573 <-r
+   0: bytes32 = 0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c
+   1: bytes32 = 0x0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc
+   2: bytes32 = 0x00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573
+  0: bytes32[3] = [0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c, 0x0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc, 0x00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573]
+  internalType: bytes32[]
 
 ==================================================
 level: 1
@@ -288,6 +300,8 @@ dataArray.size: 6
   3 (0x060) 000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c
   4 (0x080) 0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc
   5 (0x0a0) 00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573
+  0: bytes32[] hashes = [0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c, 0x0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc, 0x00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573]
+  1: bytes32 sealedBid = 0xcb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811
 TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
 TIME ~ CLOCK - <INFO>  : typeList: : 
 TIME ~ CLOCK - <INFO>  : inputStr: : 

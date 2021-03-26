@@ -21,6 +21,7 @@ params.size: 1
   0: string _name
 dataArray.size: 1
   0 (0x000) 0000000000000000000000000000000000000000000000000000000000000000 <=d
+  0: string _name
 TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
 TIME ~ CLOCK - <INFO>  : typeList: : 
 TIME ~ CLOCK - <INFO>  : inputStr: : 
@@ -41,6 +42,7 @@ params.size: 1
   0: string _symbol
 dataArray.size: 1
   0 (0x000) 0000000000000000000000000000000000000000000000000000000000000000 <=d
+  0: string _symbol
 TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
 TIME ~ CLOCK - <INFO>  : typeList: : 
 TIME ~ CLOCK - <INFO>  : inputStr: : 
@@ -61,6 +63,7 @@ params.size: 1
   0: uint8 _decimals
 dataArray.size: 1
   0 (0x000) 0000000000000000000000000000000000000000000000000000000000000000 <=d
+  0: uint8 _decimals = 0
 TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
 TIME ~ CLOCK - <INFO>  : typeList: : 
 TIME ~ CLOCK - <INFO>  : inputStr: : 
@@ -81,6 +84,7 @@ params.size: 1
   0: uint256 _supply
 dataArray.size: 1
   0 (0x000) 0000000000000000000000000000000000000000000000000000000000000000 <=d
+  0: uint256 _supply = 0
   {
     "blockNumber": 7442048,
     "totalSupply": 0,
