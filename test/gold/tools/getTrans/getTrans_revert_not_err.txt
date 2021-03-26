@@ -63,7 +63,7 @@ level: 0
 readOffset: 0
 dataStart: 0
 params.size: 0
- dataArray.size: 1
+dataArray.size: 1
   0 (0x000) 0000000000000000000000000000000000000000000000000000000000000001 <=d
 TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
 TIME ~ CLOCK - <INFO>  : typeList: : 

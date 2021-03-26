@@ -19,6 +19,10 @@ namespace qblocks {
 
 extern bool toPrintable(const string_q& inHex, string_q& result);
 static size_t level = 0;
+void prettyPrint(CParameterArray& params, const CStringArray& dataArray, const size_t& readOffset, size_t dataStart);
+void prettyPrint2(CParameterArray& params, const CStringArray& dataArray, const size_t& readOffset, size_t dataStart) {
+    // prettyPrint(params, dataArray, readOffset, dataStart);
+}
 //------------------------------------------------------------------------------------------------
 void prettyPrint(CParameterArray& params, const CStringArray& dataArray, const size_t& readOffset, size_t dataStart) {
     if (!isTestMode())
@@ -51,7 +55,7 @@ void prettyPrint(CParameterArray& params, const CStringArray& dataArray, const s
     }
 
     cnt = 0;
-    cerr << indent << " dataArray.size: " << dataArray.size() << endl;
+    cerr << indent << "dataArray.size: " << dataArray.size() << endl;
     for (auto data : dataArray) {
         cerr << indent << padNum3T(cnt) << " (0x" << (padLeft(substitute(uint_2_Hex(cnt * 32), "0x", ""), 3, '0'))
              << ") " << data;
@@ -78,13 +82,15 @@ size_t decodeAnObject(CParameterArray& params, const CStringArray& dataArray, si
 
     uint64_t nDataItems = dataArray.size();
     if (params.size() > nDataItems) {
-        LOG_PARSE_ERR("error1", "nParams", params.size(), ">", "nDataItems", nDataItems);
+        LOG_PARSE_ERR("err1", "nParams", params.size(), ">", "nDataItems", nDataItems);
+        prettyPrint2(params, dataArray, readOffset, dataStart);
         level--;
         return false;
     }
 
     if (readOffset > nDataItems) {
-        LOG_PARSE_ERR("error2", "readOffset", readOffset, ">", "nDataItems", nDataItems);
+        LOG_PARSE_ERR("err2", "readOffset", readOffset, ">", "nDataItems", nDataItems);
+        prettyPrint2(params, dataArray, readOffset, dataStart);
         level--;
         return false;
     }
@@ -92,7 +98,8 @@ size_t decodeAnObject(CParameterArray& params, const CStringArray& dataArray, si
     for (auto& param : params) {
         prettyPrint(params, dataArray, readOffset, dataStart);
         if (readOffset >= nDataItems) {
-            LOG_PARSE_ERR("error3", "readOffset", readOffset, ">=", "nDataItems", nDataItems);
+            LOG_PARSE_ERR("err3", "readOffset", readOffset, ">=", "nDataItems", nDataItems);
+            prettyPrint2(params, dataArray, readOffset, dataStart);
             level--;
             return false;
         }
@@ -137,10 +144,10 @@ size_t decodeAnObject(CParameterArray& params, const CStringArray& dataArray, si
                         }
                         param.value = (param.type == "string" ? hex_2_Str("0x" + result) : "0x" + result);
                     } else {
-                        LOG_PARSE_ERR("error4", "nWords", nWords, ">=", "nDataItems", nDataItems);
+                        LOG_PARSE_ERR("err4", "nWords", nWords, ">=", "nDataItems", nDataItems);
                     }
                 } else {
-                    LOG_PARSE_ERR("error5", "newStart", newStart, ">=", "nDataItems", nDataItems);
+                    LOG_PARSE_ERR("err5", "newStart", newStart, ">=", "nDataItems", nDataItems);
                     param.value = "";  // we've run out of bytes -- protect ourselves from bad data
                 }
 
@@ -157,7 +164,11 @@ size_t decodeAnObject(CParameterArray& params, const CStringArray& dataArray, si
                 size_t newStart = str_2_Uint("0x" + dataArray[readOffset]) / 32;
                 readOffset++;
                 if (newStart <= nDataItems) {
-                    decodeAnObject(param.components, dataArray, newStart, newStart);
+                    if (!decodeAnObject(param.components, dataArray, newStart, newStart)) {
+                        LOG_PARSE_ERR("err11", "decodeAnObect failed", 0, "", "", 0);
+                        prettyPrint2(params, dataArray, readOffset, dataStart);
+                        return false;
+                    }
                     param.value = "{";
                     for (auto p : param.components) {
                         param.value += (param.value != "{" ? ", " : "");
@@ -165,13 +176,18 @@ size_t decodeAnObject(CParameterArray& params, const CStringArray& dataArray, si
                     }
                     param.value += "}";
                 } else {
-                    LOG_PARSE_ERR("error6", "newStart", newStart, ">", "nDataItems", nDataItems);
+                    LOG_PARSE_ERR("err6", "newStart", newStart, ">", "nDataItems", nDataItems);
+                    prettyPrint2(params, dataArray, readOffset, dataStart);
                     return false;
                 }
 #else
                 // size_t newStart = str_2_Uint("0x" + dataArray[readOffset]) / 32;
                 // cerr << "newStart: " << newStart << " dataStart: " << dataStart << endl;
-                decodeAnObject(param.components, dataArray, readOffset, dataStart);
+                if (!decodeAnObject(param.components, dataArray, readOffset, dataStart)) {
+                    LOG_PARSE_ERR("err12", "decodeAnObect failed", 0, "", "", 0);
+                    prettyPrint2(params, dataArray, readOffset, dataStart);
+                    return false;
+                }
                 param.value = "{";
                 for (auto p : param.components) {
                     param.value += (param.value != "{" ? ", " : "");
@@ -181,7 +197,8 @@ size_t decodeAnObject(CParameterArray& params, const CStringArray& dataArray, si
 #endif
 
             } else {
-                LOG_PARSE_ERR("error7", "Unknown type", param.type, "", "", "");
+                LOG_PARSE_ERR("err7", "Unknown type", param.type, "", "", "");
+                prettyPrint2(params, dataArray, readOffset, dataStart);
                 return true;  // we can just skip this
             }
 
@@ -202,12 +219,17 @@ size_t decodeAnObject(CParameterArray& params, const CStringArray& dataArray, si
                         replace(p.type, "bytes[", "bytes32[");
                         tmp.push_back(p);
                         newStart++;
-                        decodeAnObject(tmp, dataArray, newStart, newStart - 1);
+                        if (!decodeAnObject(tmp, dataArray, newStart, newStart - 1)) {
+                            LOG_PARSE_ERR("err10", "decodeAnObect failed", 0, "", "", 0);
+                            prettyPrint2(params, dataArray, readOffset, dataStart);
+                            return false;
+                        }
                         param.value = tmp[0].value;
                     }
 
                 } else {
-                    LOG_PARSE_ERR("error8", "newStart", newStart, ">", "nDataItems", nDataItems);
+                    LOG_PARSE_ERR("err8", "newStart", newStart, ">", "nDataItems", nDataItems);
+                    prettyPrint2(params, dataArray, readOffset, dataStart);
                     return false;
                 }
 
@@ -232,11 +254,16 @@ size_t decodeAnObject(CParameterArray& params, const CStringArray& dataArray, si
                         p.components = param.components;
                         tmp.push_back(p);
                     }
-                    decodeAnObject(tmp, dataArray, readOffset, dataStart);
+                    if (!decodeAnObject(tmp, dataArray, readOffset, dataStart)) {
+                        LOG_PARSE_ERR("err14", "decodeAnObect failed", 0, "", "", 0);
+                        prettyPrint2(params, dataArray, readOffset, dataStart);
+                        return false;
+                    }
                     param.value = "[" + params_2_Str(tmp) + "]";
 
                 } else {
-                    LOG_PARSE_ERR("error9", "nItems", nItems, ">", "nDataItems", nDataItems);
+                    LOG_PARSE_ERR("err9", "nItems", nItems, ">", "nDataItems", nDataItems);
+                    prettyPrint2(params, dataArray, readOffset, dataStart);
                     return false;
                 }
             }
@@ -244,6 +271,7 @@ size_t decodeAnObject(CParameterArray& params, const CStringArray& dataArray, si
     }
 
     level--;
+    prettyPrint2(params, dataArray, readOffset, dataStart);
     return true;
 }
 

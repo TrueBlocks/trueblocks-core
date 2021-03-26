@@ -10,7 +10,7 @@ readOffset: 0
 dataStart: 0
 params.size: 1
   0: string _name
- dataArray.size: 1
+dataArray.size: 1
   0 (0x000) 0000000000000000000000000000000000000000000000000000000000000000 <=d
 
 ==================================================
@@ -19,7 +19,7 @@ readOffset: 0
 dataStart: 0
 params.size: 1
   0: string _name
- dataArray.size: 1
+dataArray.size: 1
   0 (0x000) 0000000000000000000000000000000000000000000000000000000000000000 <=d
 TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
 TIME ~ CLOCK - <INFO>  : typeList: : 
@@ -30,7 +30,7 @@ readOffset: 0
 dataStart: 0
 params.size: 1
   0: string _symbol
- dataArray.size: 1
+dataArray.size: 1
   0 (0x000) 0000000000000000000000000000000000000000000000000000000000000000 <=d
 
 ==================================================
@@ -39,7 +39,7 @@ readOffset: 0
 dataStart: 0
 params.size: 1
   0: string _symbol
- dataArray.size: 1
+dataArray.size: 1
   0 (0x000) 0000000000000000000000000000000000000000000000000000000000000000 <=d
 TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
 TIME ~ CLOCK - <INFO>  : typeList: : 
@@ -50,7 +50,7 @@ readOffset: 0
 dataStart: 0
 params.size: 1
   0: uint8 _decimals
- dataArray.size: 1
+dataArray.size: 1
   0 (0x000) 0000000000000000000000000000000000000000000000000000000000000000 <=d
 
 ==================================================
@@ -59,7 +59,7 @@ readOffset: 0
 dataStart: 0
 params.size: 1
   0: uint8 _decimals
- dataArray.size: 1
+dataArray.size: 1
   0 (0x000) 0000000000000000000000000000000000000000000000000000000000000000 <=d
 TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
 TIME ~ CLOCK - <INFO>  : typeList: : 
@@ -70,7 +70,7 @@ readOffset: 0
 dataStart: 0
 params.size: 1
   0: uint256 _supply
- dataArray.size: 1
+dataArray.size: 1
   0 (0x000) 0000000000000000000000000000000000000000000000000000000000000000 <=d
 
 ==================================================
@@ -79,7 +79,7 @@ readOffset: 0
 dataStart: 0
 params.size: 1
   0: uint256 _supply
- dataArray.size: 1
+dataArray.size: 1
   0 (0x000) 0000000000000000000000000000000000000000000000000000000000000000 <=d
   {
     "blockNumber": 7442048,

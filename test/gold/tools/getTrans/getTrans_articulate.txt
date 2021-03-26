@@ -16,7 +16,7 @@ readOffset: 0
 dataStart: 0
 params.size: 1
   0: bool _success
- dataArray.size: 1
+dataArray.size: 1
   0 (0x000) 0000000000000000000000000000000000000000000000000000000000000000 <=d
 
 ==================================================
@@ -25,7 +25,7 @@ readOffset: 0
 dataStart: 0
 params.size: 1
   0: bool _success
- dataArray.size: 1
+dataArray.size: 1
   0 (0x000) 0000000000000000000000000000000000000000000000000000000000000000 <=d
 TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
 TIME ~ CLOCK - <INFO>  : typeList: : 
@@ -40,7 +40,7 @@ readOffset: 0
 dataStart: 0
 params.size: 1
   0: bool _success
- dataArray.size: 1
+dataArray.size: 1
   0 (0x000) 0000000000000000000000000000000000000000000000000000000000000000 <=d
 
 ==================================================
@@ -49,7 +49,7 @@ readOffset: 0
 dataStart: 0
 params.size: 1
   0: bool _success
- dataArray.size: 1
+dataArray.size: 1
   0 (0x000) 0000000000000000000000000000000000000000000000000000000000000000 <=d
   {
     "hash": "0x2d92337aa72c51eaf61ab52692af28cc2f7efb62e32bbc1d8a420099a22510e9",
@@ -137,7 +137,7 @@ level: 0
 readOffset: 0
 dataStart: 0
 params.size: 0
- dataArray.size: 0
+dataArray.size: 0
 TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
 TIME ~ CLOCK - <INFO>  : typeList: : 
 TIME ~ CLOCK - <INFO>  : inputStr: : 0000000000000000000000000000000000000000000000000000000000000001
@@ -150,7 +150,7 @@ level: 0
 readOffset: 0
 dataStart: 0
 params.size: 0
- dataArray.size: 0
+dataArray.size: 0
 ,  {
     "hash": "0x8c0b6d6bf0390ba6618b10aa629f8208c8b871b0c052408505a7d9b5bf015f91",
     "blockHash": "0x9a06b1e8e7249a36a5e532997882429805c7a6510e91b05fd9b5ad6e367acb13",
@@ -249,7 +249,7 @@ level: 0
 readOffset: 0
 dataStart: 0
 params.size: 0
- dataArray.size: 0
+dataArray.size: 0
 TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
 TIME ~ CLOCK - <INFO>  : typeList: : 
 TIME ~ CLOCK - <INFO>  : inputStr: : 0x0000000000000000000000000000000000000000000000000000000000000001

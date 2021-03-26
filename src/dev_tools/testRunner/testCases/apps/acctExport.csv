@@ -1,58 +1,58 @@
 enabled,mode,speed,route,path/tool,filename,post,options,opt_cmd,has_env
 
-on,cmd,fast,export,apps/acctExport,RESET,n,RESET
-on,cmd,fast,export,apps/acctExport,README,n,@th
-on,cmd,fast,export,apps/acctExport,help,n,@h
-on,cmd,fast,export,apps/acctExport,help_long,n,help
-on,both,fast,export,apps/acctExport,no_params,y,
+#on,cmd,fast,export,apps/acctExport,RESET,n,RESET
+#on,cmd,fast,export,apps/acctExport,README,n,@th
+#on,cmd,fast,export,apps/acctExport,help,n,@h
+#on,cmd,fast,export,apps/acctExport,help_long,n,help
+#on,both,fast,export,apps/acctExport,no_params,y,
 
-on,both,fast,monitor,apps/acctExport,list_list2,n,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & end = 3375495 & fmt = csv
-on,both,fast,monitor,apps/acctExport,list_test,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & start = 100000 & end = 2000000
-on,both,fast,monitor,apps/acctExport,list_chifra,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & start = 100000 & end = 2000000,chifra
-on,both,fast,monitor,apps/acctExport,list_final,n,addrs = 0x1234567890123456789012345678901234567890 0x001d14804b399c6ef80e64576f657660804fec0b & appearances & start = 3000000 & end = 3375498 & fmt = csv & no_header
-on,both,fast,monitor,apps/acctExport,list_prefund1,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & start = 0 & end = 0
-on,both,fast,monitor,apps/acctExport,list_prefund2,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & start = 0 & end = 1
-on,both,fast,monitor,apps/acctExport,list_prefund3,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & start = 1 & end = 2
-on,both,slow,monitor,apps/acctExport,list_speed_test,y,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & end = 7000000
-on,both,slow,monitor,apps/acctExport,list_seed_1,y,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & end = 9000000 & fmt = json
+#on,both,fast,monitor,apps/acctExport,list_list2,n,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & end = 3375495 & fmt = csv
+#on,both,fast,monitor,apps/acctExport,list_test,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & start = 100000 & end = 2000000
+#on,both,fast,monitor,apps/acctExport,list_chifra,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & start = 100000 & end = 2000000,chifra
+#on,both,fast,monitor,apps/acctExport,list_final,n,addrs = 0x1234567890123456789012345678901234567890 0x001d14804b399c6ef80e64576f657660804fec0b & appearances & start = 3000000 & end = 3375498 & fmt = csv & no_header
+#on,both,fast,monitor,apps/acctExport,list_prefund1,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & start = 0 & end = 0
+#on,both,fast,monitor,apps/acctExport,list_prefund2,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & start = 0 & end = 1
+#on,both,fast,monitor,apps/acctExport,list_prefund3,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & start = 1 & end = 2
+#on,both,slow,monitor,apps/acctExport,list_speed_test,y,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & end = 7000000
+#on,both,slow,monitor,apps/acctExport,list_seed_1,y,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & end = 9000000 & fmt = json
 on,both,fast,monitor,apps/acctExport,list_to_file,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & start = 100000 & end = 2000000 & to_file
 
-on,both,fast,export,apps/acctExport,export_apps,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & appearances & fmt = json & max_records = 1
-on,both,fast,export,apps/acctExport,export_apps_c,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & appearances & count
-on,both,fast,export,apps/acctExport,export,n,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & fmt = txt & max_records = 2
-on,both,fast,export,apps/acctExport,export_from,y,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & start = 10277780 & end = 10296792 & fmt = api & from
-on,both,fast,export,apps/acctExport,export_to,y,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & start = 10277780 & end = 10296792 & fmt = api & to
-on,both,fast,export,apps/acctExport,export_c,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & count
-on,both,fast,export,apps/acctExport,export_c_fail,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & count & logs
-on,both,fast,export,apps/acctExport,export_receipts,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & receipts & fmt = json & max_records = 5
-on,both,fast,export,apps/acctExport,export_logs,y,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & logs & fmt = json & start = 1429283 & end = 1429468
-on,both,fast,export,apps/acctExport,export_logs_art,y,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & logs & fmt = json & start = 1429283 & end = 1429468 & articulate
-on,both,fast,export,apps/acctExport,export_logs_emit,n,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & logs & fmt = csv & start = 1429283 & end = 1429468 & emitter
-on,both,fast,export,apps/acctExport,export_logs_emit_by_fail,y,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & start = 10277780 & end = 10279650 & emitted_by = 0x7d655c57f71464b6f83811c55d84009cd9f5221c
-on,both,fast,export,apps/acctExport,export_logs_emit_by,n,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & logs & fmt = csv & start = 10277780 & end = 10279650 & emitted_by = 0x7d655c57f71464b6f83811c55d84009cd9f5221c
-on,both,fast,export,apps/acctExport,export_notrelevant,n,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & logs & fmt = csv & start = 10245999 & end = 10288980 & emitted_by = 0x7d655c57f71464b6f83811c55d84009cd9f5221c
-on,both,fast,export,apps/acctExport,export_relevant,n,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & logs & fmt = csv & start = 10245999 & end = 10288980 & emitted_by = 0x7d655c57f71464b6f83811c55d84009cd9f5221c & relevant
-on,both,fast,export,apps/acctExport,export_logs_factory,y,addrs = 0x8b3b3b624c3c0397d3da8fd861512393d51dcbac & factory & traces & end = 1603174
-on,both,fast,export,apps/acctExport,export_traces,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & traces & fmt = api & end = 001506480 & max_records = 5
-on,both,fast,export,apps/acctExport,export_balances,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & statements & fmt = json & end = 001506480
-on,both,fast,export,apps/acctExport,export_balances_dol,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & statements & fmt = json & dollars & end = 001507000
-on,both,fast,export,apps/acctExport,export_balances_ether,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & statements & fmt = json & ether & end = 001507000
-on,both,fast,export,apps/acctExport,accounting1,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & accounting & fmt = api & max_records = 5
-on,both,fast,export,apps/acctExport,accounting2,y,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & accounting & fmt = api & max_records = 5
-on,both,fast,export,apps/acctExport,accounting3,y,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & accounting & ether & start = 10277780 & end = 10296792 & fmt = api
-off,both,fast,export,apps/acctExport,accounting4,y,addrs = 0x0ece224fbc24d40b446c6a94a142dc41fae76f2d & accounting & ether & first_record = 1 & max_records = 10 & fmt = json
-on,both,fast,export,apps/acctExport,to_file,y,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & accounting & ether & start = 10277780 & end = 10296792 & fmt = api & to_file
-on,cmd,fast,export,apps/acctExport,export_backcompat,n,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & staging & unripe & first_record = 0 & max_records = 1
-on,both,fast,export,apps/acctExport,export_stage,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & start = 100000 & end = 2000000 & staging
-on,both,fast,export,apps/acctExport,export_unripe,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & start = 100000 & end = 2000000 & staging & unripe
-on,both,fast,export,apps/acctExport,export_unripe_fail,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & start = 100000 & end = 2000000 & unripe
+#on,both,fast,export,apps/acctExport,export_apps,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & appearances & fmt = json & max_records = 1
+#on,both,fast,export,apps/acctExport,export_apps_c,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & appearances & count
+#on,both,fast,export,apps/acctExport,export,n,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & fmt = txt & max_records = 2
+#on,both,fast,export,apps/acctExport,export_from,y,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & start = 10277780 & end = 10296792 & fmt = api & from
+#on,both,fast,export,apps/acctExport,export_to,y,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & start = 10277780 & end = 10296792 & fmt = api & to
+#on,both,fast,export,apps/acctExport,export_c,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & count
+#on,both,fast,export,apps/acctExport,export_c_fail,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & count & logs
+#on,both,fast,export,apps/acctExport,export_receipts,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & receipts & fmt = json & max_records = 5
+#on,both,fast,export,apps/acctExport,export_logs,y,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & logs & fmt = json & start = 1429283 & end = 1429468
+#on,both,fast,export,apps/acctExport,export_logs_art,y,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & logs & fmt = json & start = 1429283 & end = 1429468 & articulate
+#on,both,fast,export,apps/acctExport,export_logs_emit,n,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & logs & fmt = csv & start = 1429283 & end = 1429468 & emitter
+#on,both,fast,export,apps/acctExport,export_logs_emit_by_fail,y,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & start = 10277780 & end = 10279650 & emitted_by = 0x7d655c57f71464b6f83811c55d84009cd9f5221c
+#on,both,fast,export,apps/acctExport,export_logs_emit_by,n,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & logs & fmt = csv & start = 10277780 & end = 10279650 & emitted_by = 0x7d655c57f71464b6f83811c55d84009cd9f5221c
+#on,both,fast,export,apps/acctExport,export_notrelevant,n,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & logs & fmt = csv & start = 10245999 & end = 10288980 & emitted_by = 0x7d655c57f71464b6f83811c55d84009cd9f5221c
+#on,both,fast,export,apps/acctExport,export_relevant,n,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & logs & fmt = csv & start = 10245999 & end = 10288980 & emitted_by = 0x7d655c57f71464b6f83811c55d84009cd9f5221c & relevant
+#on,both,fast,export,apps/acctExport,export_logs_factory,y,addrs = 0x8b3b3b624c3c0397d3da8fd861512393d51dcbac & factory & traces & end = 1603174
+#on,both,fast,export,apps/acctExport,export_traces,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & traces & fmt = api & end = 001506480 & max_records = 5
+#on,both,fast,export,apps/acctExport,export_balances,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & statements & fmt = json & end = 001506480
+#on,both,fast,export,apps/acctExport,export_balances_dol,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & statements & fmt = json & dollars & end = 001507000
+#on,both,fast,export,apps/acctExport,export_balances_ether,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & statements & fmt = json & ether & end = 001507000
+#on,both,fast,export,apps/acctExport,accounting1,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & accounting & fmt = api & max_records = 5
+#on,both,fast,export,apps/acctExport,accounting2,y,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & accounting & fmt = api & max_records = 5
+ on,both,fast,export,apps/acctExport,accounting3,y,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & accounting & ether & start = 10277780 & end = 10296792 & fmt = api
+#off,both,fast,export,apps/acctExport,accounting4,y,addrs = 0x0ece224fbc24d40b446c6a94a142dc41fae76f2d & accounting & ether & first_record = 1 & max_records = 10 & fmt = json
+#on,both,fast,export,apps/acctExport,to_file,y,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & accounting & ether & start = 10277780 & end = 10296792 & fmt = api & to_file
+#on,cmd,fast,export,apps/acctExport,export_backcompat,n,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & staging & unripe & first_record = 0 & max_records = 1
+#on,both,fast,export,apps/acctExport,export_stage,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & start = 100000 & end = 2000000 & staging
+#on,both,fast,export,apps/acctExport,export_unripe,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & start = 100000 & end = 2000000 & staging & unripe
+#on,both,fast,export,apps/acctExport,export_unripe_fail,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & start = 100000 & end = 2000000 & unripe
 
-on,both,fast,monitor,apps/acctExport,clean,y,clean
-on,both,fast,monitor,apps/acctExport,delete_1,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & delete
-on,both,fast,monitor,apps/acctExport,delete_1_fail,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & delete
-on,both,fast,monitor,apps/acctExport,undelete,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & undelete
-on,both,fast,monitor,apps/acctExport,undelete_fail,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & undelete
-on,both,fast,monitor,apps/acctExport,remove_fail,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & remove
-on,both,fast,monitor,apps/acctExport,delete_2,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & delete
-on,both,fast,monitor,apps/acctExport,remove,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & remove
-on,both,fast,monitor,apps/acctExport,undelete2,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & undelete
+#on,both,fast,monitor,apps/acctExport,clean,y,clean
+#on,both,fast,monitor,apps/acctExport,delete_1,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & delete
+#on,both,fast,monitor,apps/acctExport,delete_1_fail,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & delete
+#on,both,fast,monitor,apps/acctExport,undelete,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & undelete
+#on,both,fast,monitor,apps/acctExport,undelete_fail,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & undelete
+#on,both,fast,monitor,apps/acctExport,remove_fail,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & remove
+#on,both,fast,monitor,apps/acctExport,delete_2,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & delete
+#on,both,fast,monitor,apps/acctExport,remove,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & remove
+#on,both,fast,monitor,apps/acctExport,undelete2,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & undelete

@@ -10,7 +10,7 @@ readOffset: 0
 dataStart: 0
 params.size: 1
   0: uint256 _balance
- dataArray.size: 1
+dataArray.size: 1
   0 (0x000) 0000000000000000000000000000000000000000000000000000000000000000 <=d
 
 ==================================================
@@ -19,7 +19,7 @@ readOffset: 0
 dataStart: 0
 params.size: 1
   0: uint256 _balance
- dataArray.size: 1
+dataArray.size: 1
   0 (0x000) 0000000000000000000000000000000000000000000000000000000000000000 <=d
 3001001	0xcfb98637bcae43c13323eaa1731ced2b716962fd	0xd26114cd6ee289accf82350c8d8487fedb8a0c07	OMGToken Airdrop	OMG	18	0
 TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 

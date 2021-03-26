@@ -16,7 +16,7 @@ readOffset: 0
 dataStart: 0
 params.size: 1
   0: bool _success
- dataArray.size: 1
+dataArray.size: 1
   0 (0x000) 0000000000000000000000000000000000000000000000000000000000000000 <=d
 
 ==================================================
@@ -25,7 +25,7 @@ readOffset: 0
 dataStart: 0
 params.size: 1
   0: bool _success
- dataArray.size: 1
+dataArray.size: 1
   0 (0x000) 0000000000000000000000000000000000000000000000000000000000000000 <=d
   {
     "type": "call",
@@ -66,7 +66,7 @@ level: 0
 readOffset: 0
 dataStart: 0
 params.size: 0
- dataArray.size: 0
+dataArray.size: 0
 ,  {
     "type": "call",
     "action": {
@@ -139,7 +139,7 @@ level: 0
 readOffset: 0
 dataStart: 0
 params.size: 0
- dataArray.size: 0
+dataArray.size: 0
 TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
 TIME ~ CLOCK - <INFO>  : typeList: : 
 TIME ~ CLOCK - <INFO>  : inputStr: : 0x0000000000000000000000000000000000000000000000000000000000000001
