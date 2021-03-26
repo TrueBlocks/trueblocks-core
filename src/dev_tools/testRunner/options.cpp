@@ -89,10 +89,10 @@ bool COptions::parseArguments(string_q& command) {
                 if (been_here)
                     break;
                 been_here = true;
-                //                tests.push_back("libs/utillib");
+                tests.push_back("libs/utillib");
                 tests.push_back("libs/etherlib");
-                //                tests.push_back("libs/acctlib");
-                //                tests.push_back("libs/pinlib");
+                tests.push_back("libs/acctlib");
+                tests.push_back("libs/pinlib");
 
             } else if (arg == "dev_tools" || arg == "dev_tools/") {
                 static bool been_here = false;
@@ -106,19 +106,19 @@ bool COptions::parseArguments(string_q& command) {
                 if (been_here)
                     break;
                 been_here = true;
-                //                tests.push_back("tools/ethNames");
-                //                tests.push_back("tools/ethQuote");
-                //                tests.push_back("tools/ethslurp");
-                //                tests.push_back("tools/getBlock");
+                tests.push_back("tools/ethNames");
+                tests.push_back("tools/ethQuote");
+                tests.push_back("tools/ethslurp");
+                tests.push_back("tools/getBlock");
                 tests.push_back("tools/getLogs");
-                //                tests.push_back("tools/getReceipt");
+                tests.push_back("tools/getReceipt");
                 tests.push_back("tools/getState");
                 tests.push_back("tools/getTokenInfo");
                 tests.push_back("tools/getTrace");
                 tests.push_back("tools/getTrans");
-                //                tests.push_back("tools/grabABI");
-                //                tests.push_back("tools/whenBlock");
-                //                tests.push_back("tools/whereBlock");
+                tests.push_back("tools/grabABI");
+                tests.push_back("tools/whenBlock");
+                tests.push_back("tools/whereBlock");
 
             } else if (arg == "apps" || arg == "apps/") {
                 static bool been_here = false;
@@ -126,10 +126,10 @@ bool COptions::parseArguments(string_q& command) {
                     break;
                 been_here = true;
                 tests.push_back("apps/acctExport");
-                //                tests.push_back("apps/blockScrape");
-                //                tests.push_back("apps/cacheStatus");
-                //                tests.push_back("apps/chifra");
-                //                tests.push_back("apps/pinMan");
+                tests.push_back("apps/blockScrape");
+                tests.push_back("apps/cacheStatus");
+                tests.push_back("apps/chifra");
+                tests.push_back("apps/pinMan");
 
             } else {
                 tests.push_back(arg);
@@ -138,7 +138,6 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     modes = (mode == "both" ? BOTH : (mode == "api" ? API : CMD));
-    modes = CMD;
 
     if (filter.empty())
         filter = "fast";
@@ -154,29 +153,29 @@ bool COptions::parseArguments(string_q& command) {
 #endif
     if (tests.empty()) {
         full_test = true;
-        //        tests.push_back("libs/utillib");
+        tests.push_back("libs/utillib");
         tests.push_back("libs/etherlib");
-        //        tests.push_back("libs/acctlib");
-        //        tests.push_back("libs/pinlib");
-        //        tests.push_back("dev_tools/makeClass");
-        //        tests.push_back("tools/ethNames");
-        //        tests.push_back("tools/ethQuote");
-        //        tests.push_back("tools/ethslurp");
-        //        tests.push_back("tools/getBlock");
+        tests.push_back("libs/acctlib");
+        tests.push_back("libs/pinlib");
+        tests.push_back("dev_tools/makeClass");
+        tests.push_back("tools/ethNames");
+        tests.push_back("tools/ethQuote");
+        tests.push_back("tools/ethslurp");
+        tests.push_back("tools/getBlock");
         tests.push_back("tools/getLogs");
-        //        tests.push_back("tools/getReceipt");
+        tests.push_back("tools/getReceipt");
         tests.push_back("tools/getState");
         tests.push_back("tools/getTokenInfo");
         tests.push_back("tools/getTrace");
         tests.push_back("tools/getTrans");
-        //        tests.push_back("tools/grabABI");
-        //        tests.push_back("tools/whenBlock");
-        //        tests.push_back("tools/whereBlock");
+        tests.push_back("tools/grabABI");
+        tests.push_back("tools/whenBlock");
+        tests.push_back("tools/whereBlock");
         tests.push_back("apps/acctExport");
-        //        tests.push_back("apps/blockScrape");
-        //        tests.push_back("apps/cacheStatus");
-        //        tests.push_back("apps/chifra");
-        //        tests.push_back("apps/pinMan");
+        tests.push_back("apps/blockScrape");
+        tests.push_back("apps/cacheStatus");
+        tests.push_back("apps/chifra");
+        tests.push_back("apps/pinMan");
     }
 
     SHOW_FIELD(CTestCase, "test_id");
@@ -239,7 +238,7 @@ COptions::~COptions(void) {
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::cleanTest(const string_q& path, const string_q& testName) {
-    if (true)  //! clean)
+    if (!clean)
         return true;
     ostringstream os;
     os << "find ../../../working/" << path << "/" << testName;
