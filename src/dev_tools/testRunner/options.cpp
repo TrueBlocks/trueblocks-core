@@ -137,6 +137,16 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
+    // BEG_DEBUG_DISPLAY
+    LOG_TEST("mode", mode, (mode == ""));
+    LOG_TEST("filter", filter, (filter == ""));
+    LOG_TEST_BOOL("clean", clean);
+    LOG_TEST("skip", skip, (skip == 1));
+    LOG_TEST_BOOL("no_quit", no_quit);
+    LOG_TEST_BOOL("no_post", no_post);
+    LOG_TEST_BOOL("report", report);
+    // END_DEBUG_DISPLAY
+
     modes = (mode == "both" ? BOTH : (mode == "api" ? API : CMD));
 
     if (filter.empty())
