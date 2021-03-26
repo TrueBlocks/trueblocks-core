@@ -31,7 +31,7 @@ dataArray.size: 4
   2 (0x040) 000000000bebc200000000000000000000000000000000000000000000000000
   3 (0x060) 0000000011e1a300
 TIME ~ CLOCK - <INFO>  : Section: : Variable array of address[]
-TIME ~ CLOCK - <WARNG> : { "err8": "decodeAnObject: newStart(418973819366999115) > nDataItems(4)"},
+TIME ~ CLOCK - <WARNG> : { "err8": "decodeAnObject: newStart(418973819366999115) > dataArray.size(4)"},
   {
     "hash": "0x7f4ed854e4b318fc1ba3d07506639e50942fa1a82eb9e35373a0d9cb2d1ee37e",
     "blockHash": "0x9e901f01afb3f1745ebca74d5ac4b37a1a6fe4c177e2e88ba0bb20824f107ace",
