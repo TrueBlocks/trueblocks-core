@@ -27,7 +27,6 @@ params.size: 1
   0: bool _success
 dataArray.size: 1
   0 (0x000) 0000000000000000000000000000000000000000000000000000000000000000 <=d
-  0: bool _success = false
   {
     "type": "call",
     "error": "Bad jump destination",

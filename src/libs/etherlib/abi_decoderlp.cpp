@@ -42,7 +42,7 @@ void prettyPrintParams(const CParameterArray& params) {
 
 void prettyPrint(CParameterArray& params, const CStringArray& dataArray, const size_t& readOffset, size_t dataStart);
 void prettyPrint2(CParameterArray& params, const CStringArray& dataArray, const size_t& readOffset, size_t dataStart) {
-    prettyPrintParams(params);
+    // prettyPrintParams(params);
 }
 //------------------------------------------------------------------------------------------------
 void prettyPrint(CParameterArray& params, const CStringArray& dataArray, const size_t& readOffset, size_t dataStart) {

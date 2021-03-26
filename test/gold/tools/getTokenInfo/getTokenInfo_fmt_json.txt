@@ -21,7 +21,6 @@ params.size: 1
   0: uint256 _balance
 dataArray.size: 1
   0 (0x000) 0000000000000000000000000000000000000000000000000000000000000000 <=d
-  0: uint256 _balance = 0
   {
     "blockNumber": 2000000,
     "holder": "0xb9e7f8568e08d5659f5d29c4997173d84cdf2607",

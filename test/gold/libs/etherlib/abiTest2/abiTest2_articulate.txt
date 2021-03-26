@@ -215,10 +215,6 @@ TIME ~ CLOCK - <INFO>  : Section: : tuple of type tuple--struct BulkCheckout.Don
      5 (0x0a0) 0000000000000000000000006b175474e89094c44da98b954eedeac495271d0f
      6 (0x0c0) 00000000000000000000000000000000000000000000001f711def073e900000
      7 (0x0e0) 0000000000000000000000001719c7dc8216ce67f96171e1a817195ae075d78d
-    0: address token = 0x6b175474e89094c44da98b954eedeac495271d0e
-    1: uint256 amount = 580000000000000000001
-    2: address recipient = 0x1719c7dc8216ce67f96171e1a817195ae075d78e
-    internalType: address payable
 ==================================================
   level: 3
   readOffset: 5
@@ -300,34 +296,6 @@ TIME ~ CLOCK - <INFO>  : Section: : tuple of type tuple--struct BulkCheckout.Don
      5 (0x0a0) 0000000000000000000000006b175474e89094c44da98b954eedeac495271d0f
      6 (0x0c0) 00000000000000000000000000000000000000000000001f711def073e900000
      7 (0x0e0) 0000000000000000000000001719c7dc8216ce67f96171e1a817195ae075d78d <-r
-    0: address token = 0x6b175474e89094c44da98b954eedeac495271d0f
-    1: uint256 amount = 580000000000000000000
-    2: address recipient = 0x1719c7dc8216ce67f96171e1a817195ae075d78d
-    internalType: address payable
-   0: tuple = {"token":"0x6b175474e89094c44da98b954eedeac495271d0e", "amount":"580000000000000000001", "recipient":"0x1719c7dc8216ce67f96171e1a817195ae075d78e"}
-   internalType: struct BulkCheckout.Donation[]
-   compont.size: 3
-     address token
-     uint256 amount
-     address recipient
-   1: tuple = {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"580000000000000000000", "recipient":"0x1719c7dc8216ce67f96171e1a817195ae075d78d"}
-   internalType: struct BulkCheckout.Donation[]
-   compont.size: 3
-     address token
-     uint256 amount
-     address recipient
-  0: tuple[2] = [{"token":"0x6b175474e89094c44da98b954eedeac495271d0e", "amount":"580000000000000000001", "recipient":"0x1719c7dc8216ce67f96171e1a817195ae075d78e"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"580000000000000000000", "recipient":"0x1719c7dc8216ce67f96171e1a817195ae075d78d"}]
-  internalType: struct BulkCheckout.Donation[]
-  compont.size: 3
-    address token
-    uint256 amount
-    address recipient
-  0: tuple[] donations = [{"token":"0x6b175474e89094c44da98b954eedeac495271d0e", "amount":"580000000000000000001", "recipient":"0x1719c7dc8216ce67f96171e1a817195ae075d78e"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"580000000000000000000", "recipient":"0x1719c7dc8216ce67f96171e1a817195ae075d78d"}]
-  internalType: struct BulkCheckout.Donation[]
-  compont.size: 3
-    address token
-    uint256 amount
-    address recipient
 TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
 TIME ~ CLOCK - <INFO>  : typeList: : address
 TIME ~ CLOCK - <INFO>  : inputStr: : 0x0000000000000000000000006b175474e89094c44da98b954eedeac495271d0f
