@@ -483,24 +483,22 @@ bool COptions::setDisplayFormatting(void) {
             // future reference.
             format =
                 getGlobalConfig("acctExport")->getConfigStr("display", "appearances", STR_DISPLAY_APPEARANCEDISPLAY);
-            if (true) {  // appearances) {
-                HIDE_FIELD(CAppearanceDisplay, "tags");
-                HIDE_FIELD(CAppearanceDisplay, "symbol");
-                HIDE_FIELD(CAppearanceDisplay, "source");
-                HIDE_FIELD(CAppearanceDisplay, "decimals");
-                HIDE_FIELD(CAppearanceDisplay, "description");
-                HIDE_FIELD(CAppearanceDisplay, "is_custom");
-                HIDE_FIELD(CAppearanceDisplay, "is_prefund");
-                HIDE_FIELD(CAppearanceDisplay, "is_contract");
-                HIDE_FIELD(CAppearanceDisplay, "is_erc20");
-                HIDE_FIELD(CAppearanceDisplay, "is_erc721");
-                if (!verbose) {
-                    replace(format, "\t[{TIMESTAMP}]\t[{DATE}]\t[{NAME}]", "");
-                } else {
-                    SHOW_FIELD(CAppearanceDisplay, "timestamp");
-                    SHOW_FIELD(CAppearanceDisplay, "date");
-                    SHOW_FIELD(CAppearanceDisplay, "name");
-                }
+            HIDE_FIELD(CAppearanceDisplay, "tags");
+            HIDE_FIELD(CAppearanceDisplay, "symbol");
+            HIDE_FIELD(CAppearanceDisplay, "source");
+            HIDE_FIELD(CAppearanceDisplay, "decimals");
+            HIDE_FIELD(CAppearanceDisplay, "description");
+            HIDE_FIELD(CAppearanceDisplay, "is_custom");
+            HIDE_FIELD(CAppearanceDisplay, "is_prefund");
+            HIDE_FIELD(CAppearanceDisplay, "is_contract");
+            HIDE_FIELD(CAppearanceDisplay, "is_erc20");
+            HIDE_FIELD(CAppearanceDisplay, "is_erc721");
+            if (!verbose) {
+                replace(format, "\t[{TIMESTAMP}]\t[{DATE}]\t[{NAME}]", "");
+            } else {
+                SHOW_FIELD(CAppearanceDisplay, "timestamp");
+                SHOW_FIELD(CAppearanceDisplay, "date");
+                SHOW_FIELD(CAppearanceDisplay, "name");
             }
             expContext().fmtMap["appearancedisplay_fmt"] = cleanFmt(format);
             manageFields("CAppearanceDisplay:" + format);
