@@ -80,10 +80,12 @@ void prettyPrint(CParameterArray& params, const CStringArray& dataArray, const s
 #define LOG_DECODE_ERR(tag, l1, v1, t, l2, v2)                                                                         \
     {                                                                                                                  \
         ostringstream es;                                                                                              \
-        es << "{ \"" << tag << "\": \"decodeAnObject: " << l1 << "(" << v1 << ") " << t << " " << l2 << "(" << v2      \
+        es << "{ \"error" << tag << "\": \"decodeAnObject: " << l1 << "(" << v1 << ") " << t << " " << l2 << "(" << v2 \
            << ")\"},";                                                                                                 \
         LOG_WARN(es.str());                                                                                            \
     }
+
+#define SECTION_START(a, b) LOG_TEST(string_q("Section-") + (a) + ":(" + (b) + ")", param.type, false);
 
 //------------------------------------------------------------------------------------------------
 size_t decodeAnObject(CParameterArray& params, const CStringArray& dataArray, size_t& readOffset, size_t dataStart) {
@@ -91,7 +93,7 @@ size_t decodeAnObject(CParameterArray& params, const CStringArray& dataArray, si
     for (auto& param : params) {
         prettyPrint(params, dataArray, readOffset, dataStart);
         if (readOffset > dataArray.size()) {
-            LOG_DECODE_ERR("err3", "readOffset", readOffset, ">=", "dataArray.size", dataArray.size());
+            LOG_DECODE_ERR("3", "readOffset", readOffset, ">=", "dataArray.size", dataArray.size());
             prettyPrint2(params, dataArray, readOffset, dataStart);
             level--;
             return false;
@@ -100,7 +102,7 @@ size_t decodeAnObject(CParameterArray& params, const CStringArray& dataArray, si
         bool isBaseType = (!contains(param.type, "[") && !(param.type == "string" || param.type == "bytes"));
         if (isBaseType) {
             if (param.type == "tuple") {
-                LOG_TEST("Section-01:(tuple)", param.type, false);
+                SECTION_START("01", "tuple");
                 // size_t tupStart = str_2_Uint("0x" + dataArray[readOffset]) / 32;
 #if 0
                 // TODO(tjayrush): If I turn this on, the code fixes the test case called broken_unparsable (which is
@@ -119,13 +121,13 @@ size_t decodeAnObject(CParameterArray& params, const CStringArray& dataArray, si
                         continue;
 
                     } else {
-                        LOG_DECODE_ERR("err11", "decodeAnObect failed", 0, "", "", 0);
+                        LOG_DECODE_ERR("11", "decodeAnObect failed", 0, "", "", 0);
                         prettyPrint2(params, dataArray, readOffset, dataStart);
                         level--;
                         return false;
                     }
                 } else {
-                    LOG_DECODE_ERR("err6", "tupStart", tupStart, ">", "dataArray.size", dataArray.size());
+                    LOG_DECODE_ERR("6", "tupStart", tupStart, ">", "dataArray.size", dataArray.size());
                     prettyPrint2(params, dataArray, readOffset, dataStart);
                     level--;
                     return false;
@@ -144,7 +146,7 @@ size_t decodeAnObject(CParameterArray& params, const CStringArray& dataArray, si
                     continue;
 
                 } else {
-                    LOG_DECODE_ERR("err12", "decodeAnObect failed", 0, "", "", 0);
+                    LOG_DECODE_ERR("12", "decodeAnObect failed", 0, "", "", 0);
                     prettyPrint2(params, dataArray, readOffset, dataStart);
                     level--;
                     return false;
@@ -152,13 +154,13 @@ size_t decodeAnObject(CParameterArray& params, const CStringArray& dataArray, si
 #endif
 
             } else if (contains(param.type, "bool")) {
-                LOG_TEST("Section-02:(bool)", param.type, false);
+                SECTION_START("02", "bool");
                 param.value = (dataArray[readOffset++][63] == '1' ? "true" : "false");
                 prettyPrintParams(params);
                 continue;
 
             } else if (contains(param.type, "address")) {
-                LOG_TEST("Section-03:(address)", param.type, false);
+                SECTION_START("03", "address");
                 size_t bits = 160;
                 param.value =
                     "0x" + padLeft(toLower(bnu_2_Hex(str_2_BigUint("0x" + dataArray[readOffset++], bits))), 40, '0');
@@ -166,46 +168,47 @@ size_t decodeAnObject(CParameterArray& params, const CStringArray& dataArray, si
                 continue;
 
             } else if (contains(param.type, "uint")) {
-                LOG_TEST("Section-04:(uint)", param.type, false);
+                SECTION_START("04", "uint");
                 size_t bits = str_2_Uint(substitute(param.type, "uint", ""));
                 param.value = bnu_2_Str(str_2_BigUint("0x" + dataArray[readOffset++], bits));
                 prettyPrintParams(params);
                 continue;
 
             } else if (contains(param.type, "int")) {
-                LOG_TEST("Section-05:(int)", param.type, false);
+                SECTION_START("05", "int");
                 size_t bits = str_2_Uint(substitute(param.type, "int", ""));
                 param.value = bni_2_Str(str_2_BigInt("0x" + dataArray[readOffset++], bits));
                 prettyPrintParams(params);
                 continue;
 
             } else if (contains(param.type, "bytes")) {
-                LOG_TEST("Section-06:(bytes)", param.type, false);
+                SECTION_START("06", "bytes<M>");
                 // this is a bytes<M> (fixed length)
                 param.value = "0x" + dataArray[readOffset++];
                 prettyPrintParams(params);
                 continue;
 
             } else {
-                LOG_TEST("Section-07:(unknown)", param.type, false);
-                LOG_DECODE_ERR("err7", "Unknown type", param.type, "", "", "");
+                SECTION_START("07", "unknown");
+                LOG_DECODE_ERR("7", "Unknown type", param.type, "", "", "");
                 prettyPrint2(params, dataArray, readOffset, dataStart);
                 level--;
                 return true;  // we can just skip this
             }
             LOG_ERR("Should never happen at line ", __LINE__, " of file ", __FILE__);
             quickQuitHandler(-1);
+
         } else {
             if (param.type == "string" || param.type == "bytes") {
-                LOG_TEST("Section-08:(" + param.type + ")", param.type, false);
+                SECTION_START("08", param.type);
                 string_q result;
                 uint64_t start = (str_2_Uint("0x" + dataArray[readOffset++]) / 32);
                 if (start < dataArray.size()) {
                     uint64_t nBytes = str_2_Uint("0x" + dataArray[start]);
                     uint64_t maxBytes = nBytes;
-                    size_t nWords = (nBytes / 32) + 1;
-                    if (nWords <= dataArray.size()) {  // some of the data sent in may be bogus, so we protext ourselves
-                        for (size_t w = 0; w < nWords; w++) {
+                    size_t nItems = (nBytes / 32) + 1;
+                    if (nItems <= dataArray.size()) {  // some of the data sent in may be bogus, so we protext ourselves
+                        for (size_t w = 0; w < nItems; w++) {
                             size_t pos = start + 1 + w;
                             if (pos < dataArray.size())
                                 result += dataArray[pos].substr(0, nBytes * 2);  // at most 64
@@ -220,20 +223,22 @@ size_t decodeAnObject(CParameterArray& params, const CStringArray& dataArray, si
                         continue;
 
                     } else {
-                        LOG_DECODE_ERR("err4", "nWords", nWords, ">=", "dataArray.size", dataArray.size());
+                        LOG_DECODE_ERR("4", "nItems", nItems, ">=", "dataArray.size", dataArray.size());
+                        param.value = (param.type == "string" ? hex_2_Str("0x" + result.substr(0, maxBytes * 2))
+                                                              : "0x" + result.substr(0, maxBytes * 2));
                         prettyPrintParams(params);
                         level--;
-                        return false;
+                        return true;
                     }
                 } else {
                     param.value = "";  // we've run out of bytes -- protect ourselves from bad data
-                    LOG_DECODE_ERR("err5", "start", start, ">=", "dataArray.size", dataArray.size());
+                    LOG_DECODE_ERR("5", "start", start, ">=", "dataArray.size", dataArray.size());
                     prettyPrintParams(params);
                     level--;
                     return false;
                 }
             } else if (endsWith(param.type, "[]")) {
-                LOG_TEST("Section-09:([])", param.type, false);
+                SECTION_START("09", "[]");
                 size_t start = str_2_Uint("0x" + dataArray[readOffset++]) / 32;
                 if (start <= dataArray.size()) {
                     CParameterArray tmp;
@@ -253,7 +258,7 @@ size_t decodeAnObject(CParameterArray& params, const CStringArray& dataArray, si
                             continue;
 
                         } else {
-                            LOG_DECODE_ERR("err10", "decodeAnObect failed", 0, "", "", 0);
+                            LOG_DECODE_ERR("10", "decodeAnObect failed", 0, "", "", 0);
                             prettyPrint2(params, dataArray, readOffset, dataStart);
                             level--;
                             return false;
@@ -263,7 +268,7 @@ size_t decodeAnObject(CParameterArray& params, const CStringArray& dataArray, si
                     continue;
 
                 } else {
-                    LOG_DECODE_ERR("err8", "start", start, ">", "dataArray.size", dataArray.size());
+                    LOG_DECODE_ERR("8", "start", start, ">", "dataArray.size", dataArray.size());
                     prettyPrint2(params, dataArray, readOffset, dataStart);
                     level--;
                     return false;
@@ -271,8 +276,8 @@ size_t decodeAnObject(CParameterArray& params, const CStringArray& dataArray, si
                 LOG_ERR("Should never happen at line ", __LINE__, " of file ", __FILE__);
                 quickQuitHandler(-1);
 
-            } else {
-                LOG_TEST("Section-10:([M])", param.type, false);
+            } else if (endsWith(param.type, "]")) {
+                SECTION_START("10", "[M]");
                 ASSERT(contains(param.type, "["));
                 ASSERT(contains(param.type, "]"));
                 string_q type = param.type;
@@ -300,19 +305,27 @@ size_t decodeAnObject(CParameterArray& params, const CStringArray& dataArray, si
                         continue;
 
                     } else {
-                        LOG_DECODE_ERR("err14", "decodeAnObect failed", 0, "", "", 0);
+                        LOG_DECODE_ERR("14", "decodeAnObect failed", 0, "", "", 0);
                         prettyPrint2(params, dataArray, readOffset, dataStart);
                         level--;
                         return false;
                     }
 
                 } else {
-                    LOG_DECODE_ERR("err9", "nItems", nItems, ">", "dataArray.size", dataArray.size());
+                    LOG_DECODE_ERR("9", "nItems", nItems, ">", "dataArray.size", dataArray.size());
                     prettyPrint2(params, dataArray, readOffset, dataStart);
                     level--;
                     return false;
                 }
+            } else {
+                SECTION_START("11", "[unknown]");
+                LOG_DECODE_ERR("11", "Unknown type", param.type, "", "", "");
+                prettyPrint2(params, dataArray, readOffset, dataStart);
+                level--;
+                return true;  // we can just skip this
             }
+            LOG_ERR("Should never happen at line ", __LINE__, " of file ", __FILE__);
+            quickQuitHandler(-1);
         }
     }
 

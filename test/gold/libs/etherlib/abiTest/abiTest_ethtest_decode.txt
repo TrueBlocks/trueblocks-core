@@ -763,7 +763,7 @@ dataArray.size: 7
   5 (0x0a0) 486920426f622047...486572652061726520796f757220746f
   6 (0x0c0) 6b656e7321...6b656e7321
 TIME ~ CLOCK - <INFO>  : Section-08:(string): string
-TIME ~ CLOCK - <WARNG> : { "err4": "decodeAnObject: nWords(25981192414412801) >= dataArray.size(7)"},
+TIME ~ CLOCK - <WARNG> : { "error4": "decodeAnObject: nItems(25981192414412801) >= dataArray.size(7)"},
   0: address _from = 0xf3c9c5719eb4f26a3ab45cb86771827629f9a999
   1: address _to = 0x71d402ac181de4a8739a15f5a56141f64fc522f8
   2: uint256 _value = 462000000000000000000
@@ -2276,7 +2276,7 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): bytes32[3]
     3 (0x060) 000bf9f2adc93a1d...f99c467a2812b354d70a07f0b3cdc58c <-r
     4 (0x080) 0007cc5734453f8d...50dc4a432aaa5be5b048c59e0b5ac5fc
     5 (0x0a0) 00120aa407bdbff1...56b589b427167ec414bccbe0cfdfd573
-TIME ~ CLOCK - <INFO>  : Section-06:(bytes): bytes32
+TIME ~ CLOCK - <INFO>  : Section-06:(bytes<M>): bytes32
     0: bytes32 = 0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c
     1: bytes32
     2: bytes32
@@ -2295,7 +2295,7 @@ TIME ~ CLOCK - <INFO>  : Section-06:(bytes): bytes32
     3 (0x060) 000bf9f2adc93a1d...f99c467a2812b354d70a07f0b3cdc58c
     4 (0x080) 0007cc5734453f8d...50dc4a432aaa5be5b048c59e0b5ac5fc <-r
     5 (0x0a0) 00120aa407bdbff1...56b589b427167ec414bccbe0cfdfd573
-TIME ~ CLOCK - <INFO>  : Section-06:(bytes): bytes32
+TIME ~ CLOCK - <INFO>  : Section-06:(bytes<M>): bytes32
     0: bytes32 = 0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c
     1: bytes32 = 0x0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc
     2: bytes32
@@ -2314,7 +2314,7 @@ TIME ~ CLOCK - <INFO>  : Section-06:(bytes): bytes32
     3 (0x060) 000bf9f2adc93a1d...f99c467a2812b354d70a07f0b3cdc58c
     4 (0x080) 0007cc5734453f8d...50dc4a432aaa5be5b048c59e0b5ac5fc
     5 (0x0a0) 00120aa407bdbff1...56b589b427167ec414bccbe0cfdfd573 <-r
-TIME ~ CLOCK - <INFO>  : Section-06:(bytes): bytes32
+TIME ~ CLOCK - <INFO>  : Section-06:(bytes<M>): bytes32
     0: bytes32 = 0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c
     1: bytes32 = 0x0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc
     2: bytes32 = 0x00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573
@@ -2337,7 +2337,7 @@ dataArray.size: 6
   3 (0x060) 000bf9f2adc93a1d...f99c467a2812b354d70a07f0b3cdc58c
   4 (0x080) 0007cc5734453f8d...50dc4a432aaa5be5b048c59e0b5ac5fc
   5 (0x0a0) 00120aa407bdbff1...56b589b427167ec414bccbe0cfdfd573
-TIME ~ CLOCK - <INFO>  : Section-06:(bytes): bytes32
+TIME ~ CLOCK - <INFO>  : Section-06:(bytes<M>): bytes32
   0: bytes[] a = [0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c, 0x0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc, 0x00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573]
   1: bytes32 b = 0xcb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811
 expected: --[0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c, 0x0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc, 0x00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573], 0xcb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811--?
@@ -7476,8 +7476,8 @@ TIME ~ CLOCK - <INFO>  : Section-09:([]): uint256+uint256+address+uint256+bytes)
   49 (0x620) 0000000000000000...00000000000000000000000000000001
   50 (0x640) 0000000000000000...0000000000000000000000005cdb5c15
 TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint256+uint256+address+uint256+bytes)[64]
-TIME ~ CLOCK - <WARNG> : { "err9": "decodeAnObject: nItems(64) > dataArray.size(51)"},
-TIME ~ CLOCK - <WARNG> : { "err10": "decodeAnObject: decodeAnObect failed(0)  (0)"},
+TIME ~ CLOCK - <WARNG> : { "error9": "decodeAnObject: nItems(64) > dataArray.size(51)"},
+TIME ~ CLOCK - <WARNG> : { "error10": "decodeAnObject: decodeAnObect failed(0)  (0)"},
 expected: --[{"val_1":"0x370e4d84b8e8bf093856d23cb4043b095214c334", "val_2":"5043588733683792621175946945497712124696440476173407745608908406314328985642"}, {"val_1":"0x370e4d84b8e8bf093856d23cb4043b095214c334", "val_2":"0"}], 0, {"val_1":"false", "val_2":"52", "val_3":"42", "val_4":"314313455637166220426001862249185256324161913652"}, []--?
 result:   --[{"val_1":"0x370e4d84b8e8bf093856d23cb4043b095214c334", "val_2":"5043588733683792621175946945497712124696440476173407745608908406314328985642"}, {"val_1":"0x370e4d84b8e8bf093856d23cb4043b095214c334", "val_2":"0"}], 0, {"val_1":"false", "val_2":"52", "val_3":"42", "val_4":"314313455637166220426001862249185256324161913652"},--? 0
 testName: decode complicated multi level tuple

@@ -89,7 +89,7 @@ dataArray.size: 7
   4 (0x080) 0000000000000000...00000000000000000000000000000040
   5 (0x0a0) 5468697320697320...6e67207468617420726570726573656e
   6 (0x0c0) 7473207468652074...617461206265696e6720706f73746564
-TIME ~ CLOCK - <INFO>  : Section-06:(bytes): bytes32
+TIME ~ CLOCK - <INFO>  : Section-06:(bytes<M>): bytes32
   0: address recipient = 0xd31f381ad54386895852f311fc3be2008c88cb27
   1: string topic = This is the string that represents the type of data being posted
   2: bytes32 data = 0x516d51344e3338384c736e77384e486e4a72526f59327561676d5071736d3353
@@ -180,7 +180,7 @@ dataArray.size: 7
   4 (0x080) 0000000000000000...00000000000000000000000000000040
   5 (0x0a0) 5468697320697320...6e67207468617420726570726573656e
   6 (0x0c0) 7473207468652074...617461206265696e6720706f73746564
-TIME ~ CLOCK - <INFO>  : Section-06:(bytes): bytes32
+TIME ~ CLOCK - <INFO>  : Section-06:(bytes<M>): bytes32
   0: address recipient = 0xd31f381ad54386895852f311fc3be2008c88cb27
   1: string topic = This is the string that represents the type of data being posted
   2: bytes32 data = 0x516d51344e3338384c736e77384e486e4a72526f59327561676d5071736d3353
