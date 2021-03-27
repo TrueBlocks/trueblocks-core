@@ -5,6 +5,7 @@ on,cmd,fast,null,etherlib/abiTest,ethtest_sigs,n,val = eth_test @ s = 1
 on,cmd,fast,null,etherlib/abiTest,ethtest_encode,n,val = eth_test @ s = 2
 on,cmd,fast,null,etherlib/abiTest,ethtest_encode_r,n,val = eth_test @ s = 3
 on,cmd,fast,null,etherlib/abiTest,ethtest_decode,n,val = eth_test @ s = 4
+on,cmd,fast,null,etherlib/abiTest,ethtest_decode2,n,val = eth_test @ s = 7
 on,cmd,fast,null,etherlib/abiTest,ethtest_decode_r,n,val = eth_test @ s = 5
 on,cmd,fast,null,etherlib/abiTest,ethtest_tight,n,val = eth_test @ s = 6
 on,cmd,fast,null,etherlib/abiTest,evtassign,n,val = evt_assign

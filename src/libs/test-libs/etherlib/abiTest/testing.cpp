@@ -363,8 +363,10 @@ class CFunctionTester : public CFunction {
         string_q expected, result;
         CStringArray parts;
         explode(parts, line, '|');
-        if (parts.size() < 5)
+        if (parts.size() < 5) {
+            cerr << "Invalid test: " << line << endl;
             return false;
+        }
         for (auto& p : parts)
             p = trim(p);
 
@@ -421,12 +423,11 @@ class CFunctionTester : public CFunction {
             return true;  // debugging
         }
 
-        // cout << (expected == result ? bGreen : bRed);
-        // cout << "expected: --" << expected << "--?" << endl;
-        // cout << "result:   --" << result << "--? " << (expected == result) << endl;
-        // cout << "testName: " << parts[1] << endl;
-        // cout << cOff;
-        ASSERT("Should not happen");
+        cout << (expected == result ? bGreen : bRed);
+        cout << "expected: --" << expected << "--?" << endl;
+        cout << "result:   --" << result << "--? " << (expected == result) << endl;
+        cout << "testName: " << parts[1] << endl;
+        cout << cOff;
         return true;  // debugging
     }
 };

@@ -207,6 +207,10 @@ bool COptions::parseArguments(string_q& command) {
 
     establishTestData();
 
+    if (getGlobalConfig()->getConfigBool("dev", "debug_curl", false)) {
+        return usage("[dev]debug_curl is set in config file. All tests will fail.");
+    }
+
     return true;
 }
 

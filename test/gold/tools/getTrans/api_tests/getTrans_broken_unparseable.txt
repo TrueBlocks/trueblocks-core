@@ -810,7 +810,18 @@
           },
           {
             "name": "desc",
-            "value": "--unparsable--",
+            "value": {
+              "srcToken": "0x0000000000000000000000000000000000000060",
+              "dstToken": "0x00000000000000000000000000000000000001c0",
+              "srcReceiver": "0x5732046a883704404f284ce41ffadd5b007fd668",
+              "dstReceiver": "0x6b175474e89094c44da98b954eedeac495271d0f",
+              "amount": "1281173195321750650756914221150884052843809082481",
+              "minReturnAmount": "4957305349080171221489756848185353997596647363",
+              "guaranteedAmount": "114395560000000000000000",
+              "flags": "7631771537292792796830",
+              "referrer": "0x0000000000000000000001aa83bcf6811dd5ed18",
+              "permit": "0x"
+            },
             "internalType": "struct OneInchExchange.SwapDescription",
             "components": [
               {
@@ -869,7 +880,7 @@
               },
               {
                 "name": "permit",
-                "value": "",
+                "value": "0x",
                 "internalType": "bytes",
                 "components": []
               }
@@ -916,7 +927,7 @@
           }
         ]
       },
-      "compressedTx": "swap ( caller: 0xe069cb01d06ba617bcdf789bf2ff0d5e5ca20c71, desc: , calls:  )",
+      "compressedTx": "swap ( caller: 0xe069cb01d06ba617bcdf789bf2ff0d5e5ca20c71, desc: {\"srcToken\":\"0x0000000000000000000000000000000000000060\", \"dstToken\":\"0x00000000000000000000000000000000000001c0\", \"srcReceiver\":\"0x5732046a883704404f284ce41ffadd5b007fd668\", \"dstReceiver\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"1281173195321750650756914221150884052843809082481\", \"minReturnAmount\":\"4957305349080171221489756848185353997596647363\", \"guaranteedAmount\":\"114395560000000000000000\", \"flags\":\"7631771537292792796830\", \"referrer\":\"0x0000000000000000000001aa83bcf6811dd5ed18\", \"permit\":\"0x\"}, calls:  )",
       "gasCost": 47543461000000000,
       "gasUsed": 461587,
       "date": "2021-01-04 21:22:10 UTC",
