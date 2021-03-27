@@ -4,25 +4,28 @@ blocknumber	holder	address	name	symbol	decimals	balance
 TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
 TIME ~ CLOCK - <INFO>  : typeList: : 
 TIME ~ CLOCK - <INFO>  : inputStr: : 
-==================================================
 level: 0
 readOffset: 0
-dataStart: 0
+objectStart: 0
 params.size: 1
-  0: uint256 _balance
+  0: uint256 _balance = <>
 dataArray.size: 1
-  0 (0x000) 0000000000000000...00000000000000000000000000000000 <=d <-r
+  0 (0x000) 0000000000000000...00000000000000000000000000000000 <=o <-r
 
-==================================================
 level: 1
 readOffset: 0
-dataStart: 0
+objectStart: 0
 params.size: 1
-  0: uint256 _balance
+  0: uint256 _balance = <>
 dataArray.size: 1
-  0 (0x000) 0000000000000000...00000000000000000000000000000000 <=d <-r
+  0 (0x000) 0000000000000000...00000000000000000000000000000000 <=o <-r
+
+==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
   0: uint256 _balance = 0
+  0: uint256 _balance = 0
+==================================================
+
 0	0x5e44c3e467a49c9ca0296a9f130fc433041aaa28	0xd26114cd6ee289accf82350c8d8487fedb8a0c07	OMGToken Airdrop	OMG	18	0
 TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
 TIME ~ CLOCK - <INFO>  : typeList: : 
@@ -32,25 +35,28 @@ TIME ~ CLOCK - <INFO>  : Parse func found: : uint256
 TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
 TIME ~ CLOCK - <INFO>  : typeList: : 
 TIME ~ CLOCK - <INFO>  : inputStr: : 
-==================================================
 level: 0
 readOffset: 0
-dataStart: 0
+objectStart: 0
 params.size: 1
-  0: uint256 _balance
+  0: uint256 _balance = <>
 dataArray.size: 1
-  0 (0x000) 0000000000000000...00000000000000000000000000000000 <=d <-r
+  0 (0x000) 0000000000000000...00000000000000000000000000000000 <=o <-r
 
-==================================================
 level: 1
 readOffset: 0
-dataStart: 0
+objectStart: 0
 params.size: 1
-  0: uint256 _balance
+  0: uint256 _balance = <>
 dataArray.size: 1
-  0 (0x000) 0000000000000000...00000000000000000000000000000000 <=d <-r
+  0 (0x000) 0000000000000000...00000000000000000000000000000000 <=o <-r
+
+==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
   0: uint256 _balance = 0
+  0: uint256 _balance = 0
+==================================================
+
 0	0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98	0xd26114cd6ee289accf82350c8d8487fedb8a0c07	OMGToken Airdrop	OMG	18	0
 TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
 TIME ~ CLOCK - <INFO>  : typeList: : 

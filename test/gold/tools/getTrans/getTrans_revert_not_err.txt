@@ -58,13 +58,14 @@ TIME ~ CLOCK - <INFO>  : Parse func found: : address,address,uint256
 TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
 TIME ~ CLOCK - <INFO>  : typeList: : 
 TIME ~ CLOCK - <INFO>  : inputStr: : 0x0000000000000000000000000000000000000000000000000000000000000001
-==================================================
 level: 0
 readOffset: 0
-dataStart: 0
+objectStart: 0
 params.size: 0
 dataArray.size: 1
-  0 (0x000) 0000000000000000...00000000000000000000000000000001 <=d <-r
+  0 (0x000) 0000000000000000...00000000000000000000000000000001 <=o <-r
+==================================================
+
 TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
 TIME ~ CLOCK - <INFO>  : typeList: : 
 TIME ~ CLOCK - <INFO>  : inputStr: : 0000000000000000000000008ca1fec705f7060aaa3d8c6757e34d1e7cc610210000000000000000000000000000000000000000000000000000000005f5e100

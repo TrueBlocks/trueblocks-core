@@ -71,19 +71,38 @@ TIME ~ CLOCK - <INFO>  : Parse func found: : address
 TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
 TIME ~ CLOCK - <INFO>  : typeList: : 
 TIME ~ CLOCK - <INFO>  : inputStr: : 000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000020000000000000000000000006b175474e89094c44da98b954eedeac495271d0e00000000000000000000000000000000000000000000001f711def073e9000010000000000000000000000001719c7dc8216ce67f96171e1a817195ae075d78e0000000000000000000000006b175474e89094c44da98b954eedeac495271d0f00000000000000000000000000000000000000000000001f711def073e9000000000000000000000000000001719c7dc8216ce67f96171e1a817195ae075d78d
-==================================================
 level: 0
 readOffset: 0
-dataStart: 0
+objectStart: 0
 params.size: 1
-  0: tuple[] donations
+  0: tuple[] donations = <>
   internalType: struct BulkCheckout.Donation[]
   compont.size: 3
     address token
     uint256 amount
     address recipient
 dataArray.size: 8
-  0 (0x000) 0000000000000000...00000000000000000000000000000020 <=d <-r
+  0 (0x000) 0000000000000000...00000000000000000000000000000020 <=o <-r
+  1 (0x020) 0000000000000000...00000000000000000000000000000002
+  2 (0x040) 0000000000000000...e89094c44da98b954eedeac495271d0e
+  3 (0x060) 0000000000000000...000000000000001f711def073e900001
+  4 (0x080) 0000000000000000...8216ce67f96171e1a817195ae075d78e
+  5 (0x0a0) 0000000000000000...e89094c44da98b954eedeac495271d0f
+  6 (0x0c0) 0000000000000000...000000000000001f711def073e900000
+  7 (0x0e0) 0000000000000000...8216ce67f96171e1a817195ae075d78d
+
+level: 1
+readOffset: 0
+objectStart: 0
+params.size: 1
+  0: tuple[] donations = <>
+  internalType: struct BulkCheckout.Donation[]
+  compont.size: 3
+    address token
+    uint256 amount
+    address recipient
+dataArray.size: 8
+  0 (0x000) 0000000000000000...00000000000000000000000000000020 <=o <-r
   1 (0x020) 0000000000000000...00000000000000000000000000000002
   2 (0x040) 0000000000000000...e89094c44da98b954eedeac495271d0e
   3 (0x060) 0000000000000000...000000000000001f711def073e900001
@@ -93,32 +112,12 @@ dataArray.size: 8
   7 (0x0e0) 0000000000000000...8216ce67f96171e1a817195ae075d78d
 
 ==================================================
-level: 1
-readOffset: 0
-dataStart: 0
-params.size: 1
-  0: tuple[] donations
-  internalType: struct BulkCheckout.Donation[]
-  compont.size: 3
-    address token
-    uint256 amount
-    address recipient
-dataArray.size: 8
-  0 (0x000) 0000000000000000...00000000000000000000000000000020 <=d <-r
-  1 (0x020) 0000000000000000...00000000000000000000000000000002
-  2 (0x040) 0000000000000000...e89094c44da98b954eedeac495271d0e
-  3 (0x060) 0000000000000000...000000000000001f711def073e900001
-  4 (0x080) 0000000000000000...8216ce67f96171e1a817195ae075d78e
-  5 (0x0a0) 0000000000000000...e89094c44da98b954eedeac495271d0f
-  6 (0x0c0) 0000000000000000...000000000000001f711def073e900000
-  7 (0x0e0) 0000000000000000...8216ce67f96171e1a817195ae075d78d
 TIME ~ CLOCK - <INFO>  : Section-09:([]): tuple[]
-==================================================
  level: 2
  readOffset: 2
- dataStart: 1
+ objectStart: 1
  params.size: 1
-   0: tuple[2]
+   0: tuple[2] = <>
    internalType: struct BulkCheckout.Donation[]
    compont.size: 3
      address token
@@ -126,26 +125,27 @@ TIME ~ CLOCK - <INFO>  : Section-09:([]): tuple[]
      address recipient
  dataArray.size: 8
    0 (0x000) 0000000000000000...00000000000000000000000000000020
-   1 (0x020) 0000000000000000...00000000000000000000000000000002 <=d
+   1 (0x020) 0000000000000000...00000000000000000000000000000002 <=o
    2 (0x040) 0000000000000000...e89094c44da98b954eedeac495271d0e <-r
    3 (0x060) 0000000000000000...000000000000001f711def073e900001
    4 (0x080) 0000000000000000...8216ce67f96171e1a817195ae075d78e
    5 (0x0a0) 0000000000000000...e89094c44da98b954eedeac495271d0f
    6 (0x0c0) 0000000000000000...000000000000001f711def073e900000
    7 (0x0e0) 0000000000000000...8216ce67f96171e1a817195ae075d78d
-TIME ~ CLOCK - <INFO>  : Section-10:([M]): tuple[2]
+
 ==================================================
+TIME ~ CLOCK - <INFO>  : Section-10:([M]): tuple[2]
   level: 3
   readOffset: 2
-  dataStart: 1
+  objectStart: 1
   params.size: 2
-    0: tuple
+    0: tuple = <>
     internalType: struct BulkCheckout.Donation[]
     compont.size: 3
       address token
       uint256 amount
       address recipient
-    1: tuple
+    1: tuple = <>
     internalType: struct BulkCheckout.Donation[]
     compont.size: 3
       address token
@@ -153,78 +153,83 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): tuple[2]
       address recipient
   dataArray.size: 8
     0 (0x000) 0000000000000000...00000000000000000000000000000020
-    1 (0x020) 0000000000000000...00000000000000000000000000000002 <=d
+    1 (0x020) 0000000000000000...00000000000000000000000000000002 <=o
     2 (0x040) 0000000000000000...e89094c44da98b954eedeac495271d0e <-r
     3 (0x060) 0000000000000000...000000000000001f711def073e900001
     4 (0x080) 0000000000000000...8216ce67f96171e1a817195ae075d78e
     5 (0x0a0) 0000000000000000...e89094c44da98b954eedeac495271d0f
     6 (0x0c0) 0000000000000000...000000000000001f711def073e900000
     7 (0x0e0) 0000000000000000...8216ce67f96171e1a817195ae075d78d
-TIME ~ CLOCK - <INFO>  : Section-01:(tuple): tuple
+
 ==================================================
+TIME ~ CLOCK - <INFO>  : Section-01:(tuple): tuple
    level: 4
    readOffset: 2
-   dataStart: 1
+   objectStart: 1
    params.size: 3
-     0: address token
-     1: uint256 amount
-     2: address recipient
+     0: address token = <>
+     1: uint256 amount = <>
+     2: address recipient = <>
      internalType: address payable
    dataArray.size: 8
      0 (0x000) 0000000000000000...00000000000000000000000000000020
-     1 (0x020) 0000000000000000...00000000000000000000000000000002 <=d
+     1 (0x020) 0000000000000000...00000000000000000000000000000002 <=o
      2 (0x040) 0000000000000000...e89094c44da98b954eedeac495271d0e <-r
      3 (0x060) 0000000000000000...000000000000001f711def073e900001
      4 (0x080) 0000000000000000...8216ce67f96171e1a817195ae075d78e
      5 (0x0a0) 0000000000000000...e89094c44da98b954eedeac495271d0f
      6 (0x0c0) 0000000000000000...000000000000001f711def073e900000
      7 (0x0e0) 0000000000000000...8216ce67f96171e1a817195ae075d78d
+
+==================================================
 TIME ~ CLOCK - <INFO>  : Section-03:(address): address
      0: address token = 0x6b175474e89094c44da98b954eedeac495271d0e
-     1: uint256 amount
-     2: address recipient
+     1: uint256 amount = <>
+     2: address recipient = <>
      internalType: address payable
-==================================================
    level: 4
    readOffset: 3
-   dataStart: 1
+   objectStart: 1
    params.size: 3
      0: address token = 0x6b175474e89094c44da98b954eedeac495271d0e
-     1: uint256 amount
-     2: address recipient
+     1: uint256 amount = <>
+     2: address recipient = <>
      internalType: address payable
    dataArray.size: 8
      0 (0x000) 0000000000000000...00000000000000000000000000000020
-     1 (0x020) 0000000000000000...00000000000000000000000000000002 <=d
+     1 (0x020) 0000000000000000...00000000000000000000000000000002 <=o
      2 (0x040) 0000000000000000...e89094c44da98b954eedeac495271d0e
      3 (0x060) 0000000000000000...000000000000001f711def073e900001 <-r
      4 (0x080) 0000000000000000...8216ce67f96171e1a817195ae075d78e
      5 (0x0a0) 0000000000000000...e89094c44da98b954eedeac495271d0f
      6 (0x0c0) 0000000000000000...000000000000001f711def073e900000
      7 (0x0e0) 0000000000000000...8216ce67f96171e1a817195ae075d78d
+
+==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
      0: address token = 0x6b175474e89094c44da98b954eedeac495271d0e
      1: uint256 amount = 580000000000000000001
-     2: address recipient
+     2: address recipient = <>
      internalType: address payable
-==================================================
    level: 4
    readOffset: 4
-   dataStart: 1
+   objectStart: 1
    params.size: 3
      0: address token = 0x6b175474e89094c44da98b954eedeac495271d0e
      1: uint256 amount = 580000000000000000001
-     2: address recipient
+     2: address recipient = <>
      internalType: address payable
    dataArray.size: 8
      0 (0x000) 0000000000000000...00000000000000000000000000000020
-     1 (0x020) 0000000000000000...00000000000000000000000000000002 <=d
+     1 (0x020) 0000000000000000...00000000000000000000000000000002 <=o
      2 (0x040) 0000000000000000...e89094c44da98b954eedeac495271d0e
      3 (0x060) 0000000000000000...000000000000001f711def073e900001
      4 (0x080) 0000000000000000...8216ce67f96171e1a817195ae075d78e <-r
      5 (0x0a0) 0000000000000000...e89094c44da98b954eedeac495271d0f
      6 (0x0c0) 0000000000000000...000000000000001f711def073e900000
      7 (0x0e0) 0000000000000000...8216ce67f96171e1a817195ae075d78d
+
+==================================================
 TIME ~ CLOCK - <INFO>  : Section-03:(address): address
      0: address token = 0x6b175474e89094c44da98b954eedeac495271d0e
      1: uint256 amount = 580000000000000000001
@@ -236,16 +241,15 @@ TIME ~ CLOCK - <INFO>  : Section-03:(address): address
       address token
       uint256 amount
       address recipient
-    1: tuple
+    1: tuple = <>
     internalType: struct BulkCheckout.Donation[]
     compont.size: 3
       address token
       uint256 amount
       address recipient
-==================================================
   level: 3
   readOffset: 5
-  dataStart: 1
+  objectStart: 1
   params.size: 2
     0: tuple = {"token":"0x6b175474e89094c44da98b954eedeac495271d0e", "amount":"580000000000000000001", "recipient":"0x1719c7dc8216ce67f96171e1a817195ae075d78e"}
     internalType: struct BulkCheckout.Donation[]
@@ -253,7 +257,7 @@ TIME ~ CLOCK - <INFO>  : Section-03:(address): address
       address token
       uint256 amount
       address recipient
-    1: tuple
+    1: tuple = <>
     internalType: struct BulkCheckout.Donation[]
     compont.size: 3
       address token
@@ -261,78 +265,83 @@ TIME ~ CLOCK - <INFO>  : Section-03:(address): address
       address recipient
   dataArray.size: 8
     0 (0x000) 0000000000000000...00000000000000000000000000000020
-    1 (0x020) 0000000000000000...00000000000000000000000000000002 <=d
+    1 (0x020) 0000000000000000...00000000000000000000000000000002 <=o
     2 (0x040) 0000000000000000...e89094c44da98b954eedeac495271d0e
     3 (0x060) 0000000000000000...000000000000001f711def073e900001
     4 (0x080) 0000000000000000...8216ce67f96171e1a817195ae075d78e
     5 (0x0a0) 0000000000000000...e89094c44da98b954eedeac495271d0f <-r
     6 (0x0c0) 0000000000000000...000000000000001f711def073e900000
     7 (0x0e0) 0000000000000000...8216ce67f96171e1a817195ae075d78d
-TIME ~ CLOCK - <INFO>  : Section-01:(tuple): tuple
+
 ==================================================
+TIME ~ CLOCK - <INFO>  : Section-01:(tuple): tuple
    level: 4
    readOffset: 5
-   dataStart: 1
+   objectStart: 1
    params.size: 3
-     0: address token
-     1: uint256 amount
-     2: address recipient
+     0: address token = <>
+     1: uint256 amount = <>
+     2: address recipient = <>
      internalType: address payable
    dataArray.size: 8
      0 (0x000) 0000000000000000...00000000000000000000000000000020
-     1 (0x020) 0000000000000000...00000000000000000000000000000002 <=d
+     1 (0x020) 0000000000000000...00000000000000000000000000000002 <=o
      2 (0x040) 0000000000000000...e89094c44da98b954eedeac495271d0e
      3 (0x060) 0000000000000000...000000000000001f711def073e900001
      4 (0x080) 0000000000000000...8216ce67f96171e1a817195ae075d78e
      5 (0x0a0) 0000000000000000...e89094c44da98b954eedeac495271d0f <-r
      6 (0x0c0) 0000000000000000...000000000000001f711def073e900000
      7 (0x0e0) 0000000000000000...8216ce67f96171e1a817195ae075d78d
+
+==================================================
 TIME ~ CLOCK - <INFO>  : Section-03:(address): address
      0: address token = 0x6b175474e89094c44da98b954eedeac495271d0f
-     1: uint256 amount
-     2: address recipient
+     1: uint256 amount = <>
+     2: address recipient = <>
      internalType: address payable
-==================================================
    level: 4
    readOffset: 6
-   dataStart: 1
+   objectStart: 1
    params.size: 3
      0: address token = 0x6b175474e89094c44da98b954eedeac495271d0f
-     1: uint256 amount
-     2: address recipient
+     1: uint256 amount = <>
+     2: address recipient = <>
      internalType: address payable
    dataArray.size: 8
      0 (0x000) 0000000000000000...00000000000000000000000000000020
-     1 (0x020) 0000000000000000...00000000000000000000000000000002 <=d
+     1 (0x020) 0000000000000000...00000000000000000000000000000002 <=o
      2 (0x040) 0000000000000000...e89094c44da98b954eedeac495271d0e
      3 (0x060) 0000000000000000...000000000000001f711def073e900001
      4 (0x080) 0000000000000000...8216ce67f96171e1a817195ae075d78e
      5 (0x0a0) 0000000000000000...e89094c44da98b954eedeac495271d0f
      6 (0x0c0) 0000000000000000...000000000000001f711def073e900000 <-r
      7 (0x0e0) 0000000000000000...8216ce67f96171e1a817195ae075d78d
+
+==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
      0: address token = 0x6b175474e89094c44da98b954eedeac495271d0f
      1: uint256 amount = 580000000000000000000
-     2: address recipient
+     2: address recipient = <>
      internalType: address payable
-==================================================
    level: 4
    readOffset: 7
-   dataStart: 1
+   objectStart: 1
    params.size: 3
      0: address token = 0x6b175474e89094c44da98b954eedeac495271d0f
      1: uint256 amount = 580000000000000000000
-     2: address recipient
+     2: address recipient = <>
      internalType: address payable
    dataArray.size: 8
      0 (0x000) 0000000000000000...00000000000000000000000000000020
-     1 (0x020) 0000000000000000...00000000000000000000000000000002 <=d
+     1 (0x020) 0000000000000000...00000000000000000000000000000002 <=o
      2 (0x040) 0000000000000000...e89094c44da98b954eedeac495271d0e
      3 (0x060) 0000000000000000...000000000000001f711def073e900001
      4 (0x080) 0000000000000000...8216ce67f96171e1a817195ae075d78e
      5 (0x0a0) 0000000000000000...e89094c44da98b954eedeac495271d0f
      6 (0x0c0) 0000000000000000...000000000000001f711def073e900000
      7 (0x0e0) 0000000000000000...8216ce67f96171e1a817195ae075d78d <-r
+
+==================================================
 TIME ~ CLOCK - <INFO>  : Section-03:(address): address
      0: address token = 0x6b175474e89094c44da98b954eedeac495271d0f
      1: uint256 amount = 580000000000000000000
@@ -362,6 +371,14 @@ TIME ~ CLOCK - <INFO>  : Section-03:(address): address
     address token
     uint256 amount
     address recipient
+  0: tuple[] donations = [{"token":"0x6b175474e89094c44da98b954eedeac495271d0e", "amount":"580000000000000000001", "recipient":"0x1719c7dc8216ce67f96171e1a817195ae075d78e"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"580000000000000000000", "recipient":"0x1719c7dc8216ce67f96171e1a817195ae075d78d"}]
+  internalType: struct BulkCheckout.Donation[]
+  compont.size: 3
+    address token
+    uint256 amount
+    address recipient
+==================================================
+
 TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
 TIME ~ CLOCK - <INFO>  : typeList: : address
 TIME ~ CLOCK - <INFO>  : inputStr: : 0x0000000000000000000000006b175474e89094c44da98b954eedeac495271d0f
