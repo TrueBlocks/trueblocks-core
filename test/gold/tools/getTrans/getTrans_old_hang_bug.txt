@@ -30,7 +30,7 @@ dataArray.size: 4
   1 (0x020) 91734a4d83596aa0000000000000000000000000000000000000000000000000
   2 (0x040) 000000000bebc200000000000000000000000000000000000000000000000000
   3 (0x060) 0000000011e1a300
-TIME ~ CLOCK - <INFO>  : Section: : Variable array of address[]
+TIME ~ CLOCK - <INFO>  : Section-09:([]): address[]
 TIME ~ CLOCK - <WARNG> : { "err8": "decodeAnObject: newStart(418973819366999115) > dataArray.size(4)"},
   {
     "hash": "0x7f4ed854e4b318fc1ba3d07506639e50942fa1a82eb9e35373a0d9cb2d1ee37e",

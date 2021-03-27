@@ -112,7 +112,7 @@ dataArray.size: 8
   5 (0x0a0) 0000000000000000000000006b175474e89094c44da98b954eedeac495271d0f
   6 (0x0c0) 00000000000000000000000000000000000000000000001f711def073e900000
   7 (0x0e0) 0000000000000000000000001719c7dc8216ce67f96171e1a817195ae075d78d
-TIME ~ CLOCK - <INFO>  : Section: : Variable array of tuple[]
+TIME ~ CLOCK - <INFO>  : Section-09:([]): tuple[]
 ==================================================
  level: 2
  readOffset: 2
@@ -133,7 +133,7 @@ TIME ~ CLOCK - <INFO>  : Section: : Variable array of tuple[]
    5 (0x0a0) 0000000000000000000000006b175474e89094c44da98b954eedeac495271d0f
    6 (0x0c0) 00000000000000000000000000000000000000000000001f711def073e900000
    7 (0x0e0) 0000000000000000000000001719c7dc8216ce67f96171e1a817195ae075d78d
-TIME ~ CLOCK - <INFO>  : Section: : Fixed array of tuple[2]
+TIME ~ CLOCK - <INFO>  : Section-10:([M]): tuple[2]
 ==================================================
   level: 3
   readOffset: 2
@@ -160,7 +160,7 @@ TIME ~ CLOCK - <INFO>  : Section: : Fixed array of tuple[2]
     5 (0x0a0) 0000000000000000000000006b175474e89094c44da98b954eedeac495271d0f
     6 (0x0c0) 00000000000000000000000000000000000000000000001f711def073e900000
     7 (0x0e0) 0000000000000000000000001719c7dc8216ce67f96171e1a817195ae075d78d
-TIME ~ CLOCK - <INFO>  : Section: : tuple of type tuple--struct BulkCheckout.Donation[]
+TIME ~ CLOCK - <INFO>  : Section-01:(tuple): tuple
 ==================================================
    level: 4
    readOffset: 2
@@ -179,6 +179,7 @@ TIME ~ CLOCK - <INFO>  : Section: : tuple of type tuple--struct BulkCheckout.Don
      5 (0x0a0) 0000000000000000000000006b175474e89094c44da98b954eedeac495271d0f
      6 (0x0c0) 00000000000000000000000000000000000000000000001f711def073e900000
      7 (0x0e0) 0000000000000000000000001719c7dc8216ce67f96171e1a817195ae075d78d
+TIME ~ CLOCK - <INFO>  : Section-03:(address): address
      0: address token = 0x6b175474e89094c44da98b954eedeac495271d0e
      1: uint256 amount
      2: address recipient
@@ -201,6 +202,7 @@ TIME ~ CLOCK - <INFO>  : Section: : tuple of type tuple--struct BulkCheckout.Don
      5 (0x0a0) 0000000000000000000000006b175474e89094c44da98b954eedeac495271d0f
      6 (0x0c0) 00000000000000000000000000000000000000000000001f711def073e900000
      7 (0x0e0) 0000000000000000000000001719c7dc8216ce67f96171e1a817195ae075d78d
+TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
      0: address token = 0x6b175474e89094c44da98b954eedeac495271d0e
      1: uint256 amount = 580000000000000000001
      2: address recipient
@@ -223,6 +225,7 @@ TIME ~ CLOCK - <INFO>  : Section: : tuple of type tuple--struct BulkCheckout.Don
      5 (0x0a0) 0000000000000000000000006b175474e89094c44da98b954eedeac495271d0f
      6 (0x0c0) 00000000000000000000000000000000000000000000001f711def073e900000
      7 (0x0e0) 0000000000000000000000001719c7dc8216ce67f96171e1a817195ae075d78d
+TIME ~ CLOCK - <INFO>  : Section-03:(address): address
      0: address token = 0x6b175474e89094c44da98b954eedeac495271d0e
      1: uint256 amount = 580000000000000000001
      2: address recipient = 0x1719c7dc8216ce67f96171e1a817195ae075d78e
@@ -265,7 +268,7 @@ TIME ~ CLOCK - <INFO>  : Section: : tuple of type tuple--struct BulkCheckout.Don
     5 (0x0a0) 0000000000000000000000006b175474e89094c44da98b954eedeac495271d0f <-r
     6 (0x0c0) 00000000000000000000000000000000000000000000001f711def073e900000
     7 (0x0e0) 0000000000000000000000001719c7dc8216ce67f96171e1a817195ae075d78d
-TIME ~ CLOCK - <INFO>  : Section: : tuple of type tuple--struct BulkCheckout.Donation[]
+TIME ~ CLOCK - <INFO>  : Section-01:(tuple): tuple
 ==================================================
    level: 4
    readOffset: 5
@@ -284,6 +287,7 @@ TIME ~ CLOCK - <INFO>  : Section: : tuple of type tuple--struct BulkCheckout.Don
      5 (0x0a0) 0000000000000000000000006b175474e89094c44da98b954eedeac495271d0f <-r
      6 (0x0c0) 00000000000000000000000000000000000000000000001f711def073e900000
      7 (0x0e0) 0000000000000000000000001719c7dc8216ce67f96171e1a817195ae075d78d
+TIME ~ CLOCK - <INFO>  : Section-03:(address): address
      0: address token = 0x6b175474e89094c44da98b954eedeac495271d0f
      1: uint256 amount
      2: address recipient
@@ -306,6 +310,7 @@ TIME ~ CLOCK - <INFO>  : Section: : tuple of type tuple--struct BulkCheckout.Don
      5 (0x0a0) 0000000000000000000000006b175474e89094c44da98b954eedeac495271d0f
      6 (0x0c0) 00000000000000000000000000000000000000000000001f711def073e900000 <-r
      7 (0x0e0) 0000000000000000000000001719c7dc8216ce67f96171e1a817195ae075d78d
+TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
      0: address token = 0x6b175474e89094c44da98b954eedeac495271d0f
      1: uint256 amount = 580000000000000000000
      2: address recipient
@@ -328,6 +333,7 @@ TIME ~ CLOCK - <INFO>  : Section: : tuple of type tuple--struct BulkCheckout.Don
      5 (0x0a0) 0000000000000000000000006b175474e89094c44da98b954eedeac495271d0f
      6 (0x0c0) 00000000000000000000000000000000000000000000001f711def073e900000
      7 (0x0e0) 0000000000000000000000001719c7dc8216ce67f96171e1a817195ae075d78d <-r
+TIME ~ CLOCK - <INFO>  : Section-03:(address): address
      0: address token = 0x6b175474e89094c44da98b954eedeac495271d0f
      1: uint256 amount = 580000000000000000000
      2: address recipient = 0x1719c7dc8216ce67f96171e1a817195ae075d78d

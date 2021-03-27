@@ -101,43 +101,13 @@ size_t decodeAnObject(CParameterArray& params, const CStringArray& dataArray, si
 
         bool isBaseType = (!contains(param.type, "[") && !(param.type == "string" || param.type == "bytes"));
         if (isBaseType) {
-            if (contains(param.type, "bool")) {
-                param.value = (dataArray[readOffset++][63] == '1' ? "true" : "false");
-                LOG_DECODE_OKAY(params);
-                continue;
-
-            } else if (contains(param.type, "address")) {
-                size_t bits = 160;
-                param.value =
-                    "0x" + padLeft(toLower(bnu_2_Hex(str_2_BigUint("0x" + dataArray[readOffset++], bits))), 40, '0');
-                LOG_DECODE_OKAY(params);
-                continue;
-
-            } else if (contains(param.type, "uint")) {
-                size_t bits = str_2_Uint(substitute(param.type, "uint", ""));
-                param.value = bnu_2_Str(str_2_BigUint("0x" + dataArray[readOffset++], bits));
-                LOG_DECODE_OKAY(params);
-                continue;
-
-            } else if (contains(param.type, "int")) {
-                size_t bits = str_2_Uint(substitute(param.type, "int", ""));
-                param.value = bni_2_Str(str_2_BigInt("0x" + dataArray[readOffset++], bits));
-                LOG_DECODE_OKAY(params);
-                continue;
-
-            } else if (contains(param.type, "bytes")) {
-                // this is a bytes<M> (fixed length)
-                param.value = "0x" + dataArray[readOffset++];
-                LOG_DECODE_OKAY(params);
-                continue;
-
-            } else if (param.type == "tuple") {
-                LOG_TEST("Section: ", "tuple of type " + param.type + "--" + param.internalType, false);
+            if (param.type == "tuple") {
+                LOG_TEST("Section-01:(tuple)", param.type, false);
+                // size_t newStart = str_2_Uint("0x" + dataArray[readOffset]) / 32;
 #if 0
                 // TODO(tjayrush): If I turn this on, the code fixes the test case called broken_unparsable (which is
                 // commented), but
                 // TODO(tjayrush): it breaks other tests
-                size_t newStart = str_2_Uint("0x" + dataArray[readOffset]) / 32;
                 readOffset++;
                 if (newStart <= dataArray.size()) {
                     if (decodeAnObject(param.components, dataArray, newStart, newStart)) {
@@ -163,8 +133,6 @@ size_t decodeAnObject(CParameterArray& params, const CStringArray& dataArray, si
                     return false;
                 }
 #else
-                // size_t newStart = str_2_Uint("0x" + dataArray[readOffset]) / 32;
-                // cerr << "newStart: " << newStart << " dataStart: " << dataStart << endl;
                 if (decodeAnObject(param.components, dataArray, readOffset, dataStart)) {
                     param.value = "{";
                     for (auto p : param.components) {
@@ -183,7 +151,43 @@ size_t decodeAnObject(CParameterArray& params, const CStringArray& dataArray, si
                 }
 #endif
 
+            } else if (contains(param.type, "bool")) {
+                LOG_TEST("Section-02:(bool)", param.type, false);
+                param.value = (dataArray[readOffset++][63] == '1' ? "true" : "false");
+                LOG_DECODE_OKAY(params);
+                continue;
+
+            } else if (contains(param.type, "address")) {
+                LOG_TEST("Section-03:(address)", param.type, false);
+                size_t bits = 160;
+                param.value =
+                    "0x" + padLeft(toLower(bnu_2_Hex(str_2_BigUint("0x" + dataArray[readOffset++], bits))), 40, '0');
+                LOG_DECODE_OKAY(params);
+                continue;
+
+            } else if (contains(param.type, "uint")) {
+                LOG_TEST("Section-04:(uint)", param.type, false);
+                size_t bits = str_2_Uint(substitute(param.type, "uint", ""));
+                param.value = bnu_2_Str(str_2_BigUint("0x" + dataArray[readOffset++], bits));
+                LOG_DECODE_OKAY(params);
+                continue;
+
+            } else if (contains(param.type, "int")) {
+                LOG_TEST("Section-05:(int)", param.type, false);
+                size_t bits = str_2_Uint(substitute(param.type, "int", ""));
+                param.value = bni_2_Str(str_2_BigInt("0x" + dataArray[readOffset++], bits));
+                LOG_DECODE_OKAY(params);
+                continue;
+
+            } else if (contains(param.type, "bytes")) {
+                LOG_TEST("Section-06:(bytes)", param.type, false);
+                // this is a bytes<M> (fixed length)
+                param.value = "0x" + dataArray[readOffset++];
+                LOG_DECODE_OKAY(params);
+                continue;
+
             } else {
+                LOG_TEST("Section-07:(unknown)", param.type, false);
                 LOG_DECODE_ERR("err7", "Unknown type", param.type, "", "", "");
                 prettyPrint2(params, dataArray, readOffset, dataStart);
                 level--;
@@ -191,9 +195,9 @@ size_t decodeAnObject(CParameterArray& params, const CStringArray& dataArray, si
             }
             LOG_ERR("Should never happen at line ", __LINE__, " of file ", __FILE__);
             quickQuitHandler(-1);
-
         } else {
-            if (param.type == "string" || param.type == "bytes") {
+            if (param.type == "string") {
+                LOG_TEST("Section-08a:(string)", param.type, false);
                 // Strings and bytes are dynamic sized. The fixed size part resides at readOffset and points to
                 // start of string. Start of string is length of string. Start of string + 1 is the string
                 string_q result;
@@ -228,10 +232,45 @@ size_t decodeAnObject(CParameterArray& params, const CStringArray& dataArray, si
                     level--;
                     return false;
                 }
+            } else if (param.type == "bytes") {
+                LOG_TEST("Section-08b:(byxtes)", param.type, false);
+                // Strings and bytes are dynamic sized. The fixed size part resides at readOffset and points to
+                // start of string. Start of string is length of string. Start of string + 1 is the string
+                string_q result;
+                uint64_t newStart = (str_2_Uint("0x" + dataArray[readOffset++]) / 32);
+                if (newStart < dataArray.size()) {
+                    uint64_t nBytes = str_2_Uint("0x" + dataArray[newStart]);
+                    size_t nWords = (nBytes / 32) + 1;
+                    if (nWords <= dataArray.size()) {  // some of the data sent in may be bogus, so we protext ourselves
+                        for (size_t w = 0; w < nWords; w++) {
+                            size_t pos = newStart + 1 + w;
+                            if (pos < dataArray.size())
+                                result += dataArray[pos].substr(0, nBytes * 2);  // at most 64
+                            if (nBytes >= 32)
+                                nBytes -= 32;
+                            else
+                                nBytes = 0;
+                        }
+                        param.value = (param.type == "string" ? hex_2_Str("0x" + result) : "0x" + result);
+                        LOG_DECODE_OKAY(params);
+                        continue;
 
+                    } else {
+                        LOG_DECODE_ERR("err4", "nWords", nWords, ">=", "dataArray.size", dataArray.size());
+                        prettyPrintParams(params);
+                        level--;
+                        return false;
+                    }
+                } else {
+                    param.value = "";  // we've run out of bytes -- protect ourselves from bad data
+                    LOG_DECODE_ERR("err5", "newStart", newStart, ">=", "dataArray.size", dataArray.size());
+                    prettyPrintParams(params);
+                    level--;
+                    return false;
+                }
             } else if (endsWith(param.type, "[]")) {
                 // ends with type...[]. We need to pick up the size from the data
-                LOG_TEST("Section: ", "Variable array of " + param.type, false);
+                LOG_TEST("Section-09:([])", param.type, false);
                 size_t newStart = str_2_Uint("0x" + dataArray[readOffset++]) / 32;
                 if (newStart <= dataArray.size()) {
                     CParameterArray tmp;
@@ -270,7 +309,7 @@ size_t decodeAnObject(CParameterArray& params, const CStringArray& dataArray, si
                 quickQuitHandler(-1);
 
             } else {
-                LOG_TEST("Section: ", "Fixed array of " + param.type, false);
+                LOG_TEST("Section-10:([M])", param.type, false);
                 ASSERT(contains(param.type, "["));
                 ASSERT(contains(param.type, "]"));
                 string_q type = param.type;

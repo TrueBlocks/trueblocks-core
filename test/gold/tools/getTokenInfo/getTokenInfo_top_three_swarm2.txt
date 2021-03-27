@@ -31,6 +31,7 @@ params.size: 1
   0: uint256 _balance
 dataArray.size: 1
   0 (0x000) 0000000000000000000000000000000000000000000000000000000000000000 <=d
+TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
   0: uint256 _balance = 0
 2510010	0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98	0xb9e7f8568e08d5659f5d29c4997173d84cdf2607	Swarm City Token	SWT	18	0
 TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
@@ -63,6 +64,7 @@ params.size: 1
   0: uint256 _balance
 dataArray.size: 1
   0 (0x000) 0000000000000000000000000000000000000000000000000000000000000000 <=d
+TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
   0: uint256 _balance = 0
 2510010	0x6b65353ac052f6c3a0c9688911b078bd025d6ab3	0xb9e7f8568e08d5659f5d29c4997173d84cdf2607	Swarm City Token	SWT	18	0
 TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
@@ -95,5 +97,6 @@ params.size: 1
   0: uint256 _balance
 dataArray.size: 1
   0 (0x000) 0000000000000000000000000000000000000000000000000000000000000000 <=d
+TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
   0: uint256 _balance = 0
 2510010	0xa25d04fa348f107428708ba19c95d1c79b3744bf	0xb9e7f8568e08d5659f5d29c4997173d84cdf2607	Swarm City Token	SWT	18	0
