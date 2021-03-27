@@ -233,7 +233,7 @@ size_t decodeAnObject(CParameterArray& params, const CStringArray& dataArray, si
                     return false;
                 }
             } else if (param.type == "bytes") {
-                LOG_TEST("Section-08b:(byxtes)", param.type, false);
+                LOG_TEST("Section-08b:(bytes)", param.type, false);
                 // Strings and bytes are dynamic sized. The fixed size part resides at readOffset and points to
                 // start of string. Start of string is length of string. Start of string + 1 is the string
                 string_q result;

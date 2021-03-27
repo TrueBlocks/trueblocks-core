@@ -59,4 +59,4 @@ on,cmd,fast,transactions,tools/getTrans,by_file_long_v,n,file:cmd_file & fmt = j
 on,both,fast,transactions,tools/getTrans,old_hang_bug,y,transactions = 6409270.108 & articulate & fmt = json
 on,both,slow,transactions,tools/getTrans,old_parsing_bug_1,y,transactions = 0xfa62ab036f36b4755bfa0d6e3e641d08daa7e41e95b0c1f2246485702319efb8 & fmt = json & articulate
 on,both,slow,transactions,tools/getTrans,old_parsing_bug_2,y,transactions = 0xfa62ab036f36b4755bfa0d6e3e641d08daa7e41e95b0c1f2246485702319efb8 & fmt = json & articulate
-#on,both,slow,transactions,tools/getTrans,broken_unparseable,y,transactions = 0xd886ab84df63e4eeb3ea07ccf12fa1f752afdc4d7b82ab4d71c95adae1d86b1f & fmt = json & articulate
+on,both,slow,transactions,tools/getTrans,broken_unparseable,y,transactions = 0xd886ab84df63e4eeb3ea07ccf12fa1f752afdc4d7b82ab4d71c95adae1d86b1f & fmt = json & articulate
