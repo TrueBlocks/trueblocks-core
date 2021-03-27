@@ -120,10 +120,10 @@ bool loadPrefunds(const string_q& prefundFile, COptionsBase& options) {
 
 //-----------------------------------------------------------------------
 void addToMap(CAddressNameMap& theMap, CAccountName& account, const string_q& tabFilename, uint64_t cnt) {
-    // if (theMap[account.address].address == account.address) {
-    //     // first in wins;
-    //     return;
-    // }
+    if (theMap[account.address].address == account.address) {
+        // first in wins;
+        return;
+    }
 
     if (contains(tabFilename, "_custom")) {
         // From the custom file - store the values found in the file

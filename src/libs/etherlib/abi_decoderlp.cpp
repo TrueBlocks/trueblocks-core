@@ -63,8 +63,10 @@ void prettyPrint(CParameterArray& params, const CStringArray& dataArray, const s
     uint64_t cnt = 0;
     cerr << indnt << "dataArray.size: " << dataArray.size() << endl;
     for (auto data : dataArray) {
+        size_t pos1 = min((size_t)16, data.size());
+        size_t pos2 = min((size_t)32, data.size());
         cerr << indnt << padNum3T(cnt) << " (0x" << (padLeft(substitute(uint_2_Hex(cnt * 32), "0x", ""), 3, '0'))
-             << ") " << data.substr(0, 10) + "..." + data.substr(data.size() - 10, data.size());
+             << ") " << data.substr(0, pos1) + "..." + data.substr(data.size() - pos2, data.size());
         if (cnt == dataStart)
             cerr << " <=d";
         if (cnt == readOffset)
@@ -82,10 +84,6 @@ void prettyPrint(CParameterArray& params, const CStringArray& dataArray, const s
            << ")\"},";                                                                                                 \
         LOG_WARN(es.str());                                                                                            \
     }
-
-//------------------------------------------------------------------------------------------------
-#define LOG_DECODE_OKAY(p)                                                                                             \
-    { prettyPrintParams(p); }
 
 //------------------------------------------------------------------------------------------------
 size_t decodeAnObject(CParameterArray& params, const CStringArray& dataArray, size_t& readOffset, size_t dataStart) {
@@ -117,7 +115,7 @@ size_t decodeAnObject(CParameterArray& params, const CStringArray& dataArray, si
                             param.value += ("\"" + p.name + "\":\"" + p.value + "\"");
                         }
                         param.value += "}";
-                        LOG_DECODE_OKAY(params);
+                        prettyPrintParams(params);
                         continue;
 
                     } else {
@@ -140,7 +138,7 @@ size_t decodeAnObject(CParameterArray& params, const CStringArray& dataArray, si
                         param.value += ("\"" + p.name + "\":\"" + p.value + "\"");
                     }
                     param.value += "}";
-                    LOG_DECODE_OKAY(params);
+                    prettyPrintParams(params);
                     continue;
 
                 } else {
@@ -154,7 +152,7 @@ size_t decodeAnObject(CParameterArray& params, const CStringArray& dataArray, si
             } else if (contains(param.type, "bool")) {
                 LOG_TEST("Section-02:(bool)", param.type, false);
                 param.value = (dataArray[readOffset++][63] == '1' ? "true" : "false");
-                LOG_DECODE_OKAY(params);
+                prettyPrintParams(params);
                 continue;
 
             } else if (contains(param.type, "address")) {
@@ -162,28 +160,28 @@ size_t decodeAnObject(CParameterArray& params, const CStringArray& dataArray, si
                 size_t bits = 160;
                 param.value =
                     "0x" + padLeft(toLower(bnu_2_Hex(str_2_BigUint("0x" + dataArray[readOffset++], bits))), 40, '0');
-                LOG_DECODE_OKAY(params);
+                prettyPrintParams(params);
                 continue;
 
             } else if (contains(param.type, "uint")) {
                 LOG_TEST("Section-04:(uint)", param.type, false);
                 size_t bits = str_2_Uint(substitute(param.type, "uint", ""));
                 param.value = bnu_2_Str(str_2_BigUint("0x" + dataArray[readOffset++], bits));
-                LOG_DECODE_OKAY(params);
+                prettyPrintParams(params);
                 continue;
 
             } else if (contains(param.type, "int")) {
                 LOG_TEST("Section-05:(int)", param.type, false);
                 size_t bits = str_2_Uint(substitute(param.type, "int", ""));
                 param.value = bni_2_Str(str_2_BigInt("0x" + dataArray[readOffset++], bits));
-                LOG_DECODE_OKAY(params);
+                prettyPrintParams(params);
                 continue;
 
             } else if (contains(param.type, "bytes")) {
                 LOG_TEST("Section-06:(bytes)", param.type, false);
                 // this is a bytes<M> (fixed length)
                 param.value = "0x" + dataArray[readOffset++];
-                LOG_DECODE_OKAY(params);
+                prettyPrintParams(params);
                 continue;
 
             } else {
@@ -198,8 +196,7 @@ size_t decodeAnObject(CParameterArray& params, const CStringArray& dataArray, si
         } else {
             if (param.type == "string") {
                 LOG_TEST("Section-08a:(string)", param.type, false);
-                // Strings are dynamic sized. The fixed size part resides at readOffset and points to
-                // start of string. Start of string is length of string. Start of string + 1 is the string
+                // Strings are dynamic sized.
                 string_q result;
                 uint64_t strStart = (str_2_Uint("0x" + dataArray[readOffset++]) / 32);
                 if (strStart < dataArray.size()) {
@@ -216,7 +213,7 @@ size_t decodeAnObject(CParameterArray& params, const CStringArray& dataArray, si
                                 nBytes = 0;
                         }
                         param.value = hex_2_Str("0x" + result);
-                        LOG_DECODE_OKAY(params);
+                        prettyPrintParams(params);
                         continue;
 
                     } else {
@@ -234,7 +231,7 @@ size_t decodeAnObject(CParameterArray& params, const CStringArray& dataArray, si
                 }
             } else if (param.type == "bytes") {
                 LOG_TEST("Section-08b:(bytes)", param.type, false);
-                // Bytes are dynamic sized (see string above)
+                // Bytes are dynamic sized (see string above).
                 string_q result;
                 uint64_t bytesStart = (str_2_Uint("0x" + dataArray[readOffset++]) / 32);
                 if (bytesStart < dataArray.size()) {
@@ -250,8 +247,8 @@ size_t decodeAnObject(CParameterArray& params, const CStringArray& dataArray, si
                             else
                                 nBytes = 0;
                         }
-                        param.value = "0x" + result;
-                        LOG_DECODE_OKAY(params);
+                        param.value = "0x" + result.substr(0, nBytes);
+                        prettyPrintParams(params);
                         continue;
 
                     } else {
@@ -285,7 +282,7 @@ size_t decodeAnObject(CParameterArray& params, const CStringArray& dataArray, si
                         arrayStart++;
                         if (decodeAnObject(tmp, dataArray, arrayStart, arrayStart - 1)) {
                             param.value = tmp[0].value;
-                            LOG_DECODE_OKAY(params);
+                            prettyPrintParams(params);
                             continue;
 
                         } else {
@@ -330,7 +327,7 @@ size_t decodeAnObject(CParameterArray& params, const CStringArray& dataArray, si
                     }
                     if (decodeAnObject(tmp, dataArray, readOffset, dataStart)) {
                         param.value = "[" + params_2_Str(tmp) + "]";
-                        LOG_DECODE_OKAY(params);
+                        prettyPrintParams(params);
                         continue;
 
                     } else {
