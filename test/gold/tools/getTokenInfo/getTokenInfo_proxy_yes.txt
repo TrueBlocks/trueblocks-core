@@ -25,7 +25,7 @@ dataArray.size: 3
   0 (0x000) 0000000000000000...00000000000000000000000000000020 <=d <-r
   1 (0x020) 0000000000000000...00000000000000000000000000000007
   2 (0x040) 5472756547425000...00000000000000000000000000000000
-TIME ~ CLOCK - <INFO>  : Section-08a:(string): string
+TIME ~ CLOCK - <INFO>  : Section-08:(string): string
   0: string _name = TrueGBP
 TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
 TIME ~ CLOCK - <INFO>  : typeList: : 
@@ -51,7 +51,7 @@ dataArray.size: 3
   0 (0x000) 0000000000000000...00000000000000000000000000000020 <=d <-r
   1 (0x020) 0000000000000000...00000000000000000000000000000004
   2 (0x040) 5447425000000000...00000000000000000000000000000000
-TIME ~ CLOCK - <INFO>  : Section-08a:(string): string
+TIME ~ CLOCK - <INFO>  : Section-08:(string): string
   0: string _symbol = TGBP
 TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
 TIME ~ CLOCK - <INFO>  : typeList: : 

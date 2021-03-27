@@ -131,7 +131,9 @@ size_t decodeAnObject(CParameterArray& params, const CStringArray& dataArray, si
                     return false;
                 }
 #else
-                if (decodeAnObject(param.components, dataArray, readOffset, dataStart)) {
+                size_t pos = readOffset++;
+                if (decodeAnObject(param.components, dataArray, pos, dataStart)) {
+                    readOffset = pos;
                     param.value = "{";
                     for (auto p : param.components) {
                         param.value += (param.value != "{" ? ", " : "");
@@ -194,17 +196,17 @@ size_t decodeAnObject(CParameterArray& params, const CStringArray& dataArray, si
             LOG_ERR("Should never happen at line ", __LINE__, " of file ", __FILE__);
             quickQuitHandler(-1);
         } else {
-            if (param.type == "string") {
-                LOG_TEST("Section-08a:(string)", param.type, false);
-                // Strings are dynamic sized.
+            if (param.type == "string" || param.type == "bytes") {
+                LOG_TEST("Section-08:(" + param.type + ")", param.type, false);
                 string_q result;
-                uint64_t strStart = (str_2_Uint("0x" + dataArray[readOffset++]) / 32);
-                if (strStart < dataArray.size()) {
-                    uint64_t nBytes = str_2_Uint("0x" + dataArray[strStart]);
+                uint64_t start = (str_2_Uint("0x" + dataArray[readOffset++]) / 32);
+                if (start < dataArray.size()) {
+                    uint64_t nBytes = str_2_Uint("0x" + dataArray[start]);
+                    uint64_t maxBytes = nBytes;
                     size_t nWords = (nBytes / 32) + 1;
                     if (nWords <= dataArray.size()) {  // some of the data sent in may be bogus, so we protext ourselves
                         for (size_t w = 0; w < nWords; w++) {
-                            size_t pos = strStart + 1 + w;
+                            size_t pos = start + 1 + w;
                             if (pos < dataArray.size())
                                 result += dataArray[pos].substr(0, nBytes * 2);  // at most 64
                             if (nBytes >= 32)
@@ -212,7 +214,8 @@ size_t decodeAnObject(CParameterArray& params, const CStringArray& dataArray, si
                             else
                                 nBytes = 0;
                         }
-                        param.value = hex_2_Str("0x" + result);
+                        param.value = (param.type == "string" ? hex_2_Str("0x" + result.substr(0, maxBytes * 2))
+                                                              : "0x" + result.substr(0, maxBytes * 2));
                         prettyPrintParams(params);
                         continue;
 
@@ -224,63 +227,27 @@ size_t decodeAnObject(CParameterArray& params, const CStringArray& dataArray, si
                     }
                 } else {
                     param.value = "";  // we've run out of bytes -- protect ourselves from bad data
-                    LOG_DECODE_ERR("err5", "strStart", strStart, ">=", "dataArray.size", dataArray.size());
-                    prettyPrintParams(params);
-                    level--;
-                    return false;
-                }
-            } else if (param.type == "bytes") {
-                LOG_TEST("Section-08b:(bytes)", param.type, false);
-                // Bytes are dynamic sized (see string above).
-                string_q result;
-                uint64_t bytesStart = (str_2_Uint("0x" + dataArray[readOffset++]) / 32);
-                if (bytesStart < dataArray.size()) {
-                    uint64_t nBytes = str_2_Uint("0x" + dataArray[bytesStart]);
-                    size_t nWords = (nBytes / 32) + 1;
-                    if (nWords <= dataArray.size()) {  // some of the data sent in may be bogus, so we protext ourselves
-                        for (size_t w = 0; w < nWords; w++) {
-                            size_t pos = bytesStart + 1 + w;
-                            if (pos < dataArray.size())
-                                result += dataArray[pos].substr(0, nBytes * 2);  // at most 64
-                            if (nBytes >= 32)
-                                nBytes -= 32;
-                            else
-                                nBytes = 0;
-                        }
-                        param.value = "0x" + result.substr(0, nBytes);
-                        prettyPrintParams(params);
-                        continue;
-
-                    } else {
-                        LOG_DECODE_ERR("err4", "nWords", nWords, ">=", "dataArray.size", dataArray.size());
-                        prettyPrintParams(params);
-                        level--;
-                        return false;
-                    }
-                } else {
-                    param.value = "";  // we've run out of bytes -- protect ourselves from bad data
-                    LOG_DECODE_ERR("err5", "bytesStart", bytesStart, ">=", "dataArray.size", dataArray.size());
+                    LOG_DECODE_ERR("err5", "start", start, ">=", "dataArray.size", dataArray.size());
                     prettyPrintParams(params);
                     level--;
                     return false;
                 }
             } else if (endsWith(param.type, "[]")) {
-                // ends with type...[]. We need to pick up the size from the data
                 LOG_TEST("Section-09:([])", param.type, false);
-                size_t arrayStart = str_2_Uint("0x" + dataArray[readOffset++]) / 32;
-                if (arrayStart <= dataArray.size()) {
+                size_t start = str_2_Uint("0x" + dataArray[readOffset++]) / 32;
+                if (start <= dataArray.size()) {
                     CParameterArray tmp;
                     CParameter p;
                     p.type = param.type;
                     p.internalType = param.internalType;
                     p.components = param.components;
-                    size_t nItems = str_2_Uint("0x" + dataArray[arrayStart]);
+                    size_t nItems = str_2_Uint("0x" + dataArray[start]);
                     if (nItems > 0) {
                         replaceReverse(p.type, "[]", "[" + uint_2_Str(nItems) + "]");
                         replace(p.type, "bytes[", "bytes32[");
                         tmp.push_back(p);
-                        arrayStart++;
-                        if (decodeAnObject(tmp, dataArray, arrayStart, arrayStart - 1)) {
+                        start++;
+                        if (decodeAnObject(tmp, dataArray, start, start - 1)) {
                             param.value = tmp[0].value;
                             prettyPrintParams(params);
                             continue;
@@ -296,7 +263,7 @@ size_t decodeAnObject(CParameterArray& params, const CStringArray& dataArray, si
                     continue;
 
                 } else {
-                    LOG_DECODE_ERR("err8", "arrayStart", arrayStart, ">", "dataArray.size", dataArray.size());
+                    LOG_DECODE_ERR("err8", "start", start, ">", "dataArray.size", dataArray.size());
                     prettyPrint2(params, dataArray, readOffset, dataStart);
                     level--;
                     return false;
@@ -325,7 +292,9 @@ size_t decodeAnObject(CParameterArray& params, const CStringArray& dataArray, si
                         p.components = param.components;
                         tmp.push_back(p);
                     }
-                    if (decodeAnObject(tmp, dataArray, readOffset, dataStart)) {
+                    size_t pos = readOffset++;
+                    if (decodeAnObject(tmp, dataArray, pos, dataStart)) {
+                        readOffset = pos;
                         param.value = "[" + params_2_Str(tmp) + "]";
                         prettyPrintParams(params);
                         continue;

@@ -999,7 +999,7 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
     23 (0x2e0) 0000000000000000...00000000000000000000000000000001
     24 (0x300) 0000000000000000...00000000000000000000000000000001
     25 (0x320) 0000000000000000...00000000000000000000000000000000
-TIME ~ CLOCK - <INFO>  : Section-08b:(bytes): bytes
+TIME ~ CLOCK - <INFO>  : Section-08:(bytes): bytes
      0: uint8 actionType = 32
      1: uint256 accountId = 4
      2: tuple amount = {"sign":"false", "denomination":"0", "ref":"0", "value":"0"}
