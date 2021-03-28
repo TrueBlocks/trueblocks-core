@@ -21,7 +21,9 @@ dataArray.size: 1
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-02:(bool): bool
+params.size: 1
   0: bool _success = false
+params.size: 1
   0: bool _success = false
 ==================================================
 
@@ -43,7 +45,9 @@ dataArray.size: 1
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-02:(bool): bool
+params.size: 1
   0: bool _success = false
+params.size: 1
   0: bool _success = false
 ==================================================
 
@@ -128,6 +132,7 @@ TIME ~ CLOCK - <INFO>  : Parse func found: : uint256
 TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
 TIME ~ CLOCK - <INFO>  : typeList: : 
 TIME ~ CLOCK - <INFO>  : inputStr: : 
+params.size: 0
 ==================================================
 
 TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
@@ -137,6 +142,7 @@ TIME ~ CLOCK - <INFO>  : Parse func found: : uint256
 TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
 TIME ~ CLOCK - <INFO>  : typeList: : 
 TIME ~ CLOCK - <INFO>  : inputStr: : 
+params.size: 0
 ==================================================
 
 ,  {
@@ -232,6 +238,7 @@ TIME ~ CLOCK - <INFO>  : Parse func found: : bool
 TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
 TIME ~ CLOCK - <INFO>  : typeList: : 
 TIME ~ CLOCK - <INFO>  : inputStr: : 
+params.size: 0
 ==================================================
 
 TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 

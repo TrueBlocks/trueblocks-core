@@ -17,7 +17,9 @@ dataArray.size: 3
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-08:(string): string
+params.size: 1
   0: string _name = Wrapped Ether
+params.size: 1
   0: string _name = Wrapped Ether
 ==================================================
 

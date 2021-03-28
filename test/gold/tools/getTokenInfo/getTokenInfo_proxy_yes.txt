@@ -17,7 +17,9 @@ dataArray.size: 3
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-08:(string): string
+params.size: 1
   0: string _name = TrueGBP
+params.size: 1
   0: string _name = TrueGBP
 ==================================================
 
@@ -37,7 +39,9 @@ dataArray.size: 3
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-08:(string): string
+params.size: 1
   0: string _symbol = TGBP
+params.size: 1
   0: string _symbol = TGBP
 ==================================================
 

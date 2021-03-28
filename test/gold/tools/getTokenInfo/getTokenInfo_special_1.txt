@@ -15,7 +15,9 @@ dataArray.size: 1
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
+params.size: 1
   0: uint256 _balance = 0
+params.size: 1
   0: uint256 _balance = 0
 ==================================================
 
@@ -39,7 +41,9 @@ dataArray.size: 1
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
+params.size: 1
   0: uint256 _balance = 0
+params.size: 1
   0: uint256 _balance = 0
 ==================================================
 

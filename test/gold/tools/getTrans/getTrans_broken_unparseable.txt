@@ -62,6 +62,7 @@ dataArray.size: 10
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
+params.size: 6
   0: uint256 platformFeeWei = 0
   1: uint256 rewardWei = <>
   2: uint256 rebateWei = <>
@@ -93,6 +94,7 @@ dataArray.size: 10
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
+params.size: 6
   0: uint256 platformFeeWei = 0
   1: uint256 rewardWei = 5160776834001879
   2: uint256 rebateWei = <>
@@ -124,6 +126,7 @@ dataArray.size: 10
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
+params.size: 6
   0: uint256 platformFeeWei = 0
   1: uint256 rewardWei = 5160776834001879
   2: uint256 rebateWei = 2029966883012028
@@ -194,9 +197,12 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): address[1]
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-03:(address): address
+  params.size: 1
     0: address = 0xbc33a1f908612640f2849b56b67a4de4d179c151
+ params.size: 1
    0: address[1] = [0xbc33a1f908612640f2849b56b67a4de4d179c151]
    internalType: address[]
+params.size: 6
   0: uint256 platformFeeWei = 0
   1: uint256 rewardWei = 5160776834001879
   2: uint256 rebateWei = 2029966883012028
@@ -267,9 +273,12 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint256[1]
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
+  params.size: 1
     0: uint256 = 10000
+ params.size: 1
    0: uint256[1] = [10000]
    internalType: uint256[]
+params.size: 6
   0: uint256 platformFeeWei = 0
   1: uint256 rewardWei = 5160776834001879
   2: uint256 rebateWei = 2029966883012028
@@ -301,12 +310,14 @@ dataArray.size: 10
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
+params.size: 6
   0: uint256 platformFeeWei = 0
   1: uint256 rewardWei = 5160776834001879
   2: uint256 rebateWei = 2029966883012028
   3: address[] rebateWallets = [0xbc33a1f908612640f2849b56b67a4de4d179c151]
   4: uint256[] rebatePercentBpsPerWallet = [10000]
   5: uint256 burnAmtWei = 475294360826081
+params.size: 6
   0: uint256 platformFeeWei = 0
   1: uint256 rewardWei = 5160776834001879
   2: uint256 rebateWei = 2029966883012028
@@ -362,6 +373,7 @@ dataArray.size: 18
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
+params.size: 9
   0: uint256 ethWeiValue = 7666038077839988828
   1: uint256 networkFeeWei = <>
   2: uint256 customPlatformFeeWei = <>
@@ -407,6 +419,7 @@ dataArray.size: 18
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
+params.size: 9
   0: uint256 ethWeiValue = 7666038077839988828
   1: uint256 networkFeeWei = 7666038077839988
   2: uint256 customPlatformFeeWei = <>
@@ -452,6 +465,7 @@ dataArray.size: 18
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
+params.size: 9
   0: uint256 ethWeiValue = 7666038077839988828
   1: uint256 networkFeeWei = 7666038077839988
   2: uint256 customPlatformFeeWei = 0
@@ -552,9 +566,12 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): bytes32[1]
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-06:(bytes<M>): bytes32
+  params.size: 1
     0: bytes32 = 0xff4b796265722046707256320000000000000000000000000000000000000000
+ params.size: 1
    0: bytes32[1] = [0xff4b796265722046707256320000000000000000000000000000000000000000]
    internalType: bytes32[]
+params.size: 9
   0: uint256 ethWeiValue = 7666038077839988828
   1: uint256 networkFeeWei = 7666038077839988
   2: uint256 customPlatformFeeWei = 0
@@ -692,9 +709,12 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint256[1]
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
+  params.size: 1
     0: uint256 = 114395560000000000000000
+ params.size: 1
    0: uint256[1] = [114395560000000000000000]
    internalType: uint256[]
+params.size: 9
   0: uint256 ethWeiValue = 7666038077839988828
   1: uint256 networkFeeWei = 7666038077839988
   2: uint256 customPlatformFeeWei = 0
@@ -832,9 +852,12 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint256[1]
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
+  params.size: 1
     0: uint256 = 67013423229363
+ params.size: 1
    0: uint256[1] = [67013423229363]
    internalType: uint256[]
+params.size: 9
   0: uint256 ethWeiValue = 7666038077839988828
   1: uint256 networkFeeWei = 7666038077839988
   2: uint256 customPlatformFeeWei = 0
@@ -881,6 +904,7 @@ dataArray.size: 18
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-09:([]): uint256[]
 TIME ~ CLOCK - <INFO>  : Zero sized array: e2tRates
+params.size: 9
   0: uint256 ethWeiValue = 7666038077839988828
   1: uint256 networkFeeWei = 7666038077839988
   2: uint256 customPlatformFeeWei = 0
@@ -924,6 +948,7 @@ dataArray.size: 7
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-03:(address): address
+params.size: 7
   0: address src = 0x5732046a883704404f284ce41ffadd5b007fd668
   internalType: contract IERC20
   1: address dest = <>
@@ -958,6 +983,7 @@ dataArray.size: 7
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-03:(address): address
+params.size: 7
   0: address src = 0x5732046a883704404f284ce41ffadd5b007fd668
   internalType: contract IERC20
   1: address dest = 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
@@ -992,6 +1018,7 @@ dataArray.size: 7
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-03:(address): address
+params.size: 7
   0: address src = 0x5732046a883704404f284ce41ffadd5b007fd668
   internalType: contract IERC20
   1: address dest = 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
@@ -1026,6 +1053,7 @@ dataArray.size: 7
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
+params.size: 7
   0: address src = 0x5732046a883704404f284ce41ffadd5b007fd668
   internalType: contract IERC20
   1: address dest = 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
@@ -1060,6 +1088,7 @@ dataArray.size: 7
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
+params.size: 7
   0: address src = 0x5732046a883704404f284ce41ffadd5b007fd668
   internalType: contract IERC20
   1: address dest = 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
@@ -1094,6 +1123,7 @@ dataArray.size: 7
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-03:(address): address
+params.size: 7
   0: address src = 0x5732046a883704404f284ce41ffadd5b007fd668
   internalType: contract IERC20
   1: address dest = 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
@@ -1128,6 +1158,7 @@ dataArray.size: 7
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
+params.size: 7
   0: address src = 0x5732046a883704404f284ce41ffadd5b007fd668
   internalType: contract IERC20
   1: address dest = 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
@@ -1137,6 +1168,7 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
   4: uint256 actualDestAmount = 7658372039762148840
   5: address platformWallet = 0x910bf2d50fa5e014fd06666f456182d4ab7c8bd2
   6: uint256 platformFeeBps = 0
+params.size: 7
   0: address src = 0x5732046a883704404f284ce41ffadd5b007fd668
   internalType: contract IERC20
   1: address dest = 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
@@ -1206,6 +1238,7 @@ dataArray.size: 7
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-03:(address): address
+params.size: 7
   0: address dstReceiver = 0x00de4b13153673bcae2616b67bf822500d325fc3
   1: uint256 amount = <>
   2: uint256 spentAmount = <>
@@ -1236,6 +1269,7 @@ dataArray.size: 7
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
+params.size: 7
   0: address dstReceiver = 0x00de4b13153673bcae2616b67bf822500d325fc3
   1: uint256 amount = 114395560000000000000000
   2: uint256 spentAmount = <>
@@ -1266,6 +1300,7 @@ dataArray.size: 7
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
+params.size: 7
   0: address dstReceiver = 0x00de4b13153673bcae2616b67bf822500d325fc3
   1: uint256 amount = 114395560000000000000000
   2: uint256 spentAmount = 114395560000000000000000
@@ -1296,6 +1331,7 @@ dataArray.size: 7
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
+params.size: 7
   0: address dstReceiver = 0x00de4b13153673bcae2616b67bf822500d325fc3
   1: uint256 amount = 114395560000000000000000
   2: uint256 spentAmount = 114395560000000000000000
@@ -1326,6 +1362,7 @@ dataArray.size: 7
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
+params.size: 7
   0: address dstReceiver = 0x00de4b13153673bcae2616b67bf822500d325fc3
   1: uint256 amount = 114395560000000000000000
   2: uint256 spentAmount = 114395560000000000000000
@@ -1356,6 +1393,7 @@ dataArray.size: 7
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
+params.size: 7
   0: address dstReceiver = 0x00de4b13153673bcae2616b67bf822500d325fc3
   1: uint256 amount = 114395560000000000000000
   2: uint256 spentAmount = 114395560000000000000000
@@ -1386,6 +1424,7 @@ dataArray.size: 7
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-03:(address): address
+params.size: 7
   0: address dstReceiver = 0x00de4b13153673bcae2616b67bf822500d325fc3
   1: uint256 amount = 114395560000000000000000
   2: uint256 spentAmount = 114395560000000000000000
@@ -1393,6 +1432,7 @@ TIME ~ CLOCK - <INFO>  : Section-03:(address): address
   4: uint256 minReturnAmount = 7631771537292792796830
   5: uint256 guaranteedAmount = 7867805708549270924568
   6: address referrer = 0x0000000000000000000000000000000000000000
+params.size: 7
   0: address dstReceiver = 0x00de4b13153673bcae2616b67bf822500d325fc3
   1: uint256 amount = 114395560000000000000000
   2: uint256 spentAmount = 114395560000000000000000
@@ -1576,6 +1616,7 @@ dataArray.size: 140
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-03:(address): address
+params.size: 3
   0: address caller = 0xe069cb01d06ba617bcdf789bf2ff0d5e5ca20c71
   internalType: contract IOneInchCaller
   1: tuple desc = <>
@@ -1929,6 +1970,7 @@ TIME ~ CLOCK - <INFO>  : Section-01:(tuple): tuple
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-03:(address): address
+ params.size: 10
    0: address srcToken = 0x0000000000000000000000000000000000000060
    internalType: contract IERC20
    1: address dstToken = <>
@@ -2101,6 +2143,7 @@ TIME ~ CLOCK - <INFO>  : Section-03:(address): address
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-03:(address): address
+ params.size: 10
    0: address srcToken = 0x0000000000000000000000000000000000000060
    internalType: contract IERC20
    1: address dstToken = 0x00000000000000000000000000000000000001c0
@@ -2273,6 +2316,7 @@ TIME ~ CLOCK - <INFO>  : Section-03:(address): address
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-03:(address): address
+ params.size: 10
    0: address srcToken = 0x0000000000000000000000000000000000000060
    internalType: contract IERC20
    1: address dstToken = 0x00000000000000000000000000000000000001c0
@@ -2445,6 +2489,7 @@ TIME ~ CLOCK - <INFO>  : Section-03:(address): address
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-03:(address): address
+ params.size: 10
    0: address srcToken = 0x0000000000000000000000000000000000000060
    internalType: contract IERC20
    1: address dstToken = 0x00000000000000000000000000000000000001c0
@@ -2617,6 +2662,7 @@ TIME ~ CLOCK - <INFO>  : Section-03:(address): address
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
+ params.size: 10
    0: address srcToken = 0x0000000000000000000000000000000000000060
    internalType: contract IERC20
    1: address dstToken = 0x00000000000000000000000000000000000001c0
@@ -2789,6 +2835,7 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
+ params.size: 10
    0: address srcToken = 0x0000000000000000000000000000000000000060
    internalType: contract IERC20
    1: address dstToken = 0x00000000000000000000000000000000000001c0
@@ -2961,6 +3008,7 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
+ params.size: 10
    0: address srcToken = 0x0000000000000000000000000000000000000060
    internalType: contract IERC20
    1: address dstToken = 0x00000000000000000000000000000000000001c0
@@ -3133,6 +3181,7 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
+ params.size: 10
    0: address srcToken = 0x0000000000000000000000000000000000000060
    internalType: contract IERC20
    1: address dstToken = 0x00000000000000000000000000000000000001c0
@@ -3305,6 +3354,7 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-03:(address): address
+ params.size: 10
    0: address srcToken = 0x0000000000000000000000000000000000000060
    internalType: contract IERC20
    1: address dstToken = 0x00000000000000000000000000000000000001c0
@@ -3478,6 +3528,7 @@ TIME ~ CLOCK - <INFO>  : Section-03:(address): address
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-08:(bytes): bytes
 TIME ~ CLOCK - <WARNG> : { "error4": "decodeAnObject: nItems(547179017974124644) > dataArray.size(140)"},
+ params.size: 10
    0: address srcToken = 0x0000000000000000000000000000000000000060
    internalType: contract IERC20
    1: address dstToken = 0x00000000000000000000000000000000000001c0
@@ -3490,6 +3541,7 @@ TIME ~ CLOCK - <WARNG> : { "error4": "decodeAnObject: nItems(547179017974124644)
    7: uint256 flags = 7631771537292792796830
    8: address referrer = 0x0000000000000000000001aa83bcf6811dd5ed18
    9: bytes permit = <>
+params.size: 3
   0: address caller = 0xe069cb01d06ba617bcdf789bf2ff0d5e5ca20c71
   internalType: contract IOneInchCaller
   1: tuple desc = {"srcToken":"0x0000000000000000000000000000000000000060", "dstToken":"0x00000000000000000000000000000000000001c0", "srcReceiver":"0x5732046a883704404f284ce41ffadd5b007fd668", "dstReceiver":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"1281173195321750650756914221150884052843809082481", "minReturnAmount":"4957305349080171221489756848185353997596647363", "guaranteedAmount":"114395560000000000000000", "flags":"7631771537292792796830", "referrer":"0x0000000000000000000001aa83bcf6811dd5ed18", "permit":""}
@@ -3840,6 +3892,30 @@ TIME ~ CLOCK - <INFO>  : Section-09:([]): tuple[]
 TIME ~ CLOCK - <INFO>  : Section-10:([M]): tuple[17509728575171988593]
 TIME ~ CLOCK - <WARNG> : { "error9": "decodeAnObject: nItems(17509728575171988593) > dataArray.size(140)"},
 TIME ~ CLOCK - <WARNG> : { "error10": "decodeAnObject: decodeAnObect failed(0)  (0)"},
+params.size: 3
+  0: address caller = 0xe069cb01d06ba617bcdf789bf2ff0d5e5ca20c71
+  internalType: contract IOneInchCaller
+  1: tuple desc = {"srcToken":"0x0000000000000000000000000000000000000060", "dstToken":"0x00000000000000000000000000000000000001c0", "srcReceiver":"0x5732046a883704404f284ce41ffadd5b007fd668", "dstReceiver":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"1281173195321750650756914221150884052843809082481", "minReturnAmount":"4957305349080171221489756848185353997596647363", "guaranteedAmount":"114395560000000000000000", "flags":"7631771537292792796830", "referrer":"0x0000000000000000000001aa83bcf6811dd5ed18", "permit":""}
+  internalType: struct OneInchExchange.SwapDescription
+  compont.size: 10
+    address srcToken
+    address dstToken
+    address srcReceiver
+    address dstReceiver
+    uint256 amount
+    uint256 minReturnAmount
+    uint256 guaranteedAmount
+    uint256 flags
+    address referrer
+    bytes permit
+  2: tuple[] calls = <>
+  internalType: struct IOneInchCaller.CallDescription[]
+  compont.size: 4
+    uint256 targetWithMandatory
+    uint256 gasLimit
+    uint256 value
+    bytes data
+params.size: 3
   0: address caller = 0xe069cb01d06ba617bcdf789bf2ff0d5e5ca20c71
   internalType: contract IOneInchCaller
   1: tuple desc = {"srcToken":"0x0000000000000000000000000000000000000060", "dstToken":"0x00000000000000000000000000000000000001c0", "srcReceiver":"0x5732046a883704404f284ce41ffadd5b007fd668", "dstReceiver":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"1281173195321750650756914221150884052843809082481", "minReturnAmount":"4957305349080171221489756848185353997596647363", "guaranteedAmount":"114395560000000000000000", "flags":"7631771537292792796830", "referrer":"0x0000000000000000000001aa83bcf6811dd5ed18", "permit":""}

@@ -19,6 +19,7 @@ dataArray.size: 3
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint112
+params.size: 3
   0: uint112 _reserve0 = 11186797
   1: uint112 _reserve1 = <>
   2: uint32 _blockTimestampLast = <>
@@ -37,6 +38,7 @@ dataArray.size: 3
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint112
+params.size: 3
   0: uint112 _reserve0 = 11186797
   1: uint112 _reserve1 = 5095051840848895862
   2: uint32 _blockTimestampLast = <>
@@ -55,9 +57,11 @@ dataArray.size: 3
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint32
+params.size: 3
   0: uint112 _reserve0 = 11186797
   1: uint112 _reserve1 = 5095051840848895862
   2: uint32 _blockTimestampLast = 1589829395
+params.size: 3
   0: uint112 _reserve0 = 11186797
   1: uint112 _reserve1 = 5095051840848895862
   2: uint32 _blockTimestampLast = 1589829395

@@ -15,7 +15,9 @@ dataArray.size: 1
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-08:(string): string
+params.size: 1
   0: string _name = <>
+params.size: 1
   0: string _name = <>
 ==================================================
 
@@ -33,7 +35,9 @@ dataArray.size: 1
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-08:(string): string
+params.size: 1
   0: string _symbol = <>
+params.size: 1
   0: string _symbol = <>
 ==================================================
 
@@ -51,7 +55,9 @@ dataArray.size: 1
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint8
+params.size: 1
   0: uint8 _decimals = 0
+params.size: 1
   0: uint8 _decimals = 0
 ==================================================
 
@@ -69,7 +75,9 @@ dataArray.size: 1
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
+params.size: 1
   0: uint256 _supply = 0
+params.size: 1
   0: uint256 _supply = 0
 ==================================================
 

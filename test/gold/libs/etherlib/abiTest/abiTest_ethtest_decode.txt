@@ -106,6 +106,7 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint256[2]
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
+   params.size: 2
      0: uint256 = 1
      1: uint256 = <>
    level: 4
@@ -131,10 +132,13 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
+   params.size: 2
      0: uint256 = 1
      1: uint256 = 2
+  params.size: 1
     0: uint256[2] = [1, 2]
     internalType: uint256[]
+ params.size: 3
    0: uint256[] = [1, 2]
    1: uint256[] = <>
    2: uint256[] = <>
@@ -208,6 +212,7 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint256[2]
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
+   params.size: 2
      0: uint256 = 3
      1: uint256 = <>
    level: 4
@@ -233,10 +238,13 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
+   params.size: 2
      0: uint256 = 3
      1: uint256 = 4
+  params.size: 1
     0: uint256[2] = [3, 4]
     internalType: uint256[]
+ params.size: 3
    0: uint256[] = [1, 2]
    1: uint256[] = [3, 4]
    2: uint256[] = <>
@@ -310,6 +318,7 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint256[2]
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
+   params.size: 2
      0: uint256 = 5
      1: uint256 = <>
    level: 4
@@ -335,13 +344,17 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
+   params.size: 2
      0: uint256 = 5
      1: uint256 = 6
+  params.size: 1
     0: uint256[2] = [5, 6]
     internalType: uint256[]
+ params.size: 3
    0: uint256[] = [1, 2]
    1: uint256[] = [3, 4]
    2: uint256[] = [5, 6]
+params.size: 2
   0: uint256[][3] val_0 = [[1, 2], [3, 4], [5, 6]]
   1: uint256 val_1 = <>
 
@@ -368,8 +381,10 @@ dataArray.size: 13
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
+params.size: 2
   0: uint256[][3] val_0 = [[1, 2], [3, 4], [5, 6]]
   1: uint256 val_1 = 10
+params.size: 2
   0: uint256[][3] val_0 = [[1, 2], [3, 4], [5, 6]]
   1: uint256 val_1 = 10
 ==================================================
@@ -467,6 +482,7 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint256[3]
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
+   params.size: 3
      0: uint256 = 1
      1: uint256 = <>
      2: uint256 = <>
@@ -490,6 +506,7 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
+   params.size: 3
      0: uint256 = 1
      1: uint256 = 2
      2: uint256 = <>
@@ -513,9 +530,11 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
+   params.size: 3
      0: uint256 = 1
      1: uint256 = 2
      2: uint256 = 3
+  params.size: 2
     0: uint256[3] = [1, 2, 3]
     1: uint256[3] = <>
   level: 3
@@ -557,6 +576,7 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint256[3]
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
+   params.size: 3
      0: uint256 = 4
      1: uint256 = <>
      2: uint256 = <>
@@ -580,6 +600,7 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
+   params.size: 3
      0: uint256 = 4
      1: uint256 = 5
      2: uint256 = <>
@@ -603,13 +624,17 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
+   params.size: 3
      0: uint256 = 4
      1: uint256 = 5
      2: uint256 = 6
+  params.size: 2
     0: uint256[3] = [1, 2, 3]
     1: uint256[3] = [4, 5, 6]
+ params.size: 1
    0: uint256[3][2] = [[1, 2, 3], [4, 5, 6]]
    internalType: uint256[3][]
+params.size: 2
   0: uint256[3][] val_0 = [[1, 2, 3], [4, 5, 6]]
   1: uint256 val_1 = <>
 
@@ -632,8 +657,10 @@ dataArray.size: 9
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
+params.size: 2
   0: uint256[3][] val_0 = [[1, 2, 3], [4, 5, 6]]
   1: uint256 val_1 = 10
+params.size: 2
   0: uint256[3][] val_0 = [[1, 2, 3], [4, 5, 6]]
   1: uint256 val_1 = 10
 ==================================================
@@ -673,6 +700,7 @@ dataArray.size: 7
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-03:(address): address
+params.size: 4
   0: address _from = 0xf3c9c5719eb4f26a3ab45cb86771827629f9a999
   1: address _to = <>
   2: uint256 _value = <>
@@ -697,6 +725,7 @@ dataArray.size: 7
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-03:(address): address
+params.size: 4
   0: address _from = 0xf3c9c5719eb4f26a3ab45cb86771827629f9a999
   1: address _to = 0x71d402ac181de4a8739a15f5a56141f64fc522f8
   2: uint256 _value = <>
@@ -721,6 +750,7 @@ dataArray.size: 7
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
+params.size: 4
   0: address _from = 0xf3c9c5719eb4f26a3ab45cb86771827629f9a999
   1: address _to = 0x71d402ac181de4a8739a15f5a56141f64fc522f8
   2: uint256 _value = 462000000000000000000
@@ -746,10 +776,12 @@ dataArray.size: 7
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-08:(string): string
 TIME ~ CLOCK - <WARNG> : { "error4": "decodeAnObject: nItems(25981192414412801) > dataArray.size(7)"},
+params.size: 4
   0: address _from = 0xf3c9c5719eb4f26a3ab45cb86771827629f9a999
   1: address _to = 0x71d402ac181de4a8739a15f5a56141f64fc522f8
   2: uint256 _value = 462000000000000000000
   3: string _transferData = <>
+params.size: 4
   0: address _from = 0xf3c9c5719eb4f26a3ab45cb86771827629f9a999
   1: address _to = 0x71d402ac181de4a8739a15f5a56141f64fc522f8
   2: uint256 _value = 462000000000000000000
@@ -791,6 +823,7 @@ dataArray.size: 7
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-03:(address): address
+params.size: 4
   0: address _from = 0xf3c9c5719eb4f26a3ab45cb86771827629f9a999
   1: address _to = <>
   2: uint256 _value = <>
@@ -815,6 +848,7 @@ dataArray.size: 7
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-03:(address): address
+params.size: 4
   0: address _from = 0xf3c9c5719eb4f26a3ab45cb86771827629f9a999
   1: address _to = 0x71d402ac181de4a8739a15f5a56141f64fc522f8
   2: uint256 _value = <>
@@ -839,6 +873,7 @@ dataArray.size: 7
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
+params.size: 4
   0: address _from = 0xf3c9c5719eb4f26a3ab45cb86771827629f9a999
   1: address _to = 0x71d402ac181de4a8739a15f5a56141f64fc522f8
   2: uint256 _value = 462000000000000000000
@@ -863,10 +898,12 @@ dataArray.size: 7
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-08:(string): string
+params.size: 4
   0: address _from = 0xf3c9c5719eb4f26a3ab45cb86771827629f9a999
   1: address _to = 0x71d402ac181de4a8739a15f5a56141f64fc522f8
   2: uint256 _value = 462000000000000000000
   3: string _transferData = Hi Bob Glaser-- Here are your tokens!
+params.size: 4
   0: address _from = 0xf3c9c5719eb4f26a3ab45cb86771827629f9a999
   1: address _to = 0x71d402ac181de4a8739a15f5a56141f64fc522f8
   2: uint256 _value = 462000000000000000000
@@ -888,6 +925,7 @@ testSig: function baz() --> baz()
 TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
 TIME ~ CLOCK - <INFO>  : typeList: : baz()
 TIME ~ CLOCK - <INFO>  : inputStr: : 0x0000000000000000000000000000000000000000000000000000000000000000
+params.size: 0
 ==================================================
 
 expected:  ?
@@ -964,7 +1002,9 @@ dataArray.size: 1
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-05:(int): int40
+params.size: 1
   0: int40 val_0 = -2
+params.size: 1
   0: int40 val_0 = -2
 ==================================================
 
@@ -994,7 +1034,9 @@ dataArray.size: 1
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-05:(int): int48
+params.size: 1
   0: int48 val_0 = -2
+params.size: 1
   0: int48 val_0 = -2
 ==================================================
 
@@ -1024,7 +1066,9 @@ dataArray.size: 1
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-05:(int): int56
+params.size: 1
   0: int56 val_0 = -2
+params.size: 1
   0: int56 val_0 = -2
 ==================================================
 
@@ -1118,7 +1162,9 @@ dataArray.size: 1
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-05:(int): int40
+params.size: 1
   0: int40 val_0 = 2
+params.size: 1
   0: int40 val_0 = 2
 ==================================================
 
@@ -1148,7 +1194,9 @@ dataArray.size: 1
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-05:(int): int48
+params.size: 1
   0: int48 val_0 = 2
+params.size: 1
   0: int48 val_0 = 2
 ==================================================
 
@@ -1178,7 +1226,9 @@ dataArray.size: 1
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-05:(int): int56
+params.size: 1
   0: int56 val_0 = 2
+params.size: 1
   0: int56 val_0 = 2
 ==================================================
 
@@ -1224,7 +1274,9 @@ dataArray.size: 1
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-05:(int): int72
+params.size: 1
   0: int72 val_0 = -2
+params.size: 1
   0: int72 val_0 = -2
 ==================================================
 
@@ -1254,7 +1306,9 @@ dataArray.size: 1
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-05:(int): int80
+params.size: 1
   0: int80 val_0 = 196383738119422
+params.size: 1
   0: int80 val_0 = 196383738119422
 ==================================================
 
@@ -1284,7 +1338,9 @@ dataArray.size: 1
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-05:(int): int88
+params.size: 1
   0: int88 val_0 = 2
+params.size: 1
   0: int88 val_0 = 2
 ==================================================
 
@@ -1314,7 +1370,9 @@ dataArray.size: 1
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-05:(int): int96
+params.size: 1
   0: int96 val_0 = 2
+params.size: 1
   0: int96 val_0 = 2
 ==================================================
 
@@ -1344,7 +1402,9 @@ dataArray.size: 1
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-05:(int): int104
+params.size: 1
   0: int104 val_0 = 2
+params.size: 1
   0: int104 val_0 = 2
 ==================================================
 
@@ -1374,7 +1434,9 @@ dataArray.size: 1
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-05:(int): int112
+params.size: 1
   0: int112 val_0 = 2
+params.size: 1
   0: int112 val_0 = 2
 ==================================================
 
@@ -1404,7 +1466,9 @@ dataArray.size: 1
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-05:(int): int120
+params.size: 1
   0: int120 val_0 = 2
+params.size: 1
   0: int120 val_0 = 2
 ==================================================
 
@@ -1482,7 +1546,9 @@ dataArray.size: 1
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint40
+params.size: 1
   0: uint40 val_0 = 1099511627774
+params.size: 1
   0: uint40 val_0 = 1099511627774
 ==================================================
 
@@ -1512,7 +1578,9 @@ dataArray.size: 1
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint48
+params.size: 1
   0: uint48 val_0 = 281474976710654
+params.size: 1
   0: uint48 val_0 = 281474976710654
 ==================================================
 
@@ -1542,7 +1610,9 @@ dataArray.size: 1
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint56
+params.size: 1
   0: uint56 val_0 = 72057594037927934
+params.size: 1
   0: uint56 val_0 = 72057594037927934
 ==================================================
 
@@ -1636,7 +1706,9 @@ dataArray.size: 1
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint40
+params.size: 1
   0: uint40 val_0 = 2
+params.size: 1
   0: uint40 val_0 = 2
 ==================================================
 
@@ -1666,7 +1738,9 @@ dataArray.size: 1
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint48
+params.size: 1
   0: uint48 val_0 = 2
+params.size: 1
   0: uint48 val_0 = 2
 ==================================================
 
@@ -1696,7 +1770,9 @@ dataArray.size: 1
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint56
+params.size: 1
   0: uint56 val_0 = 2
+params.size: 1
   0: uint56 val_0 = 2
 ==================================================
 
@@ -1742,7 +1818,9 @@ dataArray.size: 1
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint72
+params.size: 1
   0: uint72 val_0 = 2
+params.size: 1
   0: uint72 val_0 = 2
 ==================================================
 
@@ -1772,7 +1850,9 @@ dataArray.size: 1
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint80
+params.size: 1
   0: uint80 val_0 = 196383738119422
+params.size: 1
   0: uint80 val_0 = 196383738119422
 ==================================================
 
@@ -1802,7 +1882,9 @@ dataArray.size: 1
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint88
+params.size: 1
   0: uint88 val_0 = 309485009821345068724781054
+params.size: 1
   0: uint88 val_0 = 309485009821345068724781054
 ==================================================
 
@@ -1832,7 +1914,9 @@ dataArray.size: 1
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint96
+params.size: 1
   0: uint96 val_0 = 2
+params.size: 1
   0: uint96 val_0 = 2
 ==================================================
 
@@ -1862,7 +1946,9 @@ dataArray.size: 1
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint104
+params.size: 1
   0: uint104 val_0 = 2
+params.size: 1
   0: uint104 val_0 = 2
 ==================================================
 
@@ -1892,7 +1978,9 @@ dataArray.size: 1
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint112
+params.size: 1
   0: uint112 val_0 = 2
+params.size: 1
   0: uint112 val_0 = 2
 ==================================================
 
@@ -1922,7 +2010,9 @@ dataArray.size: 1
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint120
+params.size: 1
   0: uint120 val_0 = 2
+params.size: 1
   0: uint120 val_0 = 2
 ==================================================
 
@@ -1970,7 +2060,9 @@ dataArray.size: 3
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-08:(string): string
+params.size: 1
   0: string val_0 = hello world
+params.size: 1
   0: string val_0 = hello world
 ==================================================
 
@@ -2002,6 +2094,7 @@ dataArray.size: 2
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-02:(bool): bool
+params.size: 2
   0: bool val_0 = true
   1: uint32 val_1 = <>
 
@@ -2017,8 +2110,10 @@ dataArray.size: 2
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint32
+params.size: 2
   0: bool val_0 = true
   1: uint32 val_1 = 42
+params.size: 2
   0: bool val_0 = true
   1: uint32 val_1 = 42
 ==================================================
@@ -2052,7 +2147,9 @@ dataArray.size: 4
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-08:(bytes): bytes
+params.size: 1
   0: bytes val_0 = 0x68656c6c6f20776f726c6468656c6c6f20776f726c6468656c6c6f20776f726c6468656c6c6f20776f726c64
+params.size: 1
   0: bytes val_0 = 0x68656c6c6f20776f726c6468656c6c6f20776f726c6468656c6c6f20776f726c6468656c6c6f20776f726c64
 ==================================================
 
@@ -2121,6 +2218,7 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): bytes32[3]
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-06:(bytes<M>): bytes32
+  params.size: 3
     0: bytes32 = 0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c
     1: bytes32 = <>
     2: bytes32 = <>
@@ -2141,6 +2239,7 @@ TIME ~ CLOCK - <INFO>  : Section-06:(bytes<M>): bytes32
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-06:(bytes<M>): bytes32
+  params.size: 3
     0: bytes32 = 0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c
     1: bytes32 = 0x0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc
     2: bytes32 = <>
@@ -2161,11 +2260,14 @@ TIME ~ CLOCK - <INFO>  : Section-06:(bytes<M>): bytes32
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-06:(bytes<M>): bytes32
+  params.size: 3
     0: bytes32 = 0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c
     1: bytes32 = 0x0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc
     2: bytes32 = 0x00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573
+ params.size: 1
    0: bytes32[3] = [0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c, 0x0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc, 0x00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573]
    internalType: bytes[]
+params.size: 2
   0: bytes[] a = [0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c, 0x0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc, 0x00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573]
   1: bytes32 b = <>
 
@@ -2185,8 +2287,10 @@ dataArray.size: 6
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-06:(bytes<M>): bytes32
+params.size: 2
   0: bytes[] a = [0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c, 0x0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc, 0x00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573]
   1: bytes32 b = 0xcb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811
+params.size: 2
   0: bytes[] a = [0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c, 0x0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc, 0x00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573]
   1: bytes32 b = 0xcb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811
 ==================================================
@@ -2221,6 +2325,7 @@ dataArray.size: 4
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-02:(bool): bool
+params.size: 2
   0: bool val_0 = true
   1: uint256[] val_1 = <>
 
@@ -2265,11 +2370,15 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint256[1]
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
+  params.size: 1
     0: uint256 = 42
+ params.size: 1
    0: uint256[1] = [42]
    internalType: uint256[]
+params.size: 2
   0: bool val_0 = true
   1: uint256[] val_1 = [42]
+params.size: 2
   0: bool val_0 = true
   1: uint256[] val_1 = [42]
 ==================================================
@@ -2331,9 +2440,12 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint256[1]
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
+  params.size: 1
     0: uint256 = 42
+ params.size: 1
    0: uint256[1] = [42]
    internalType: uint256[]
+params.size: 2
   0: uint256[] val_0 = [42]
   1: bool val_1 = <>
 
@@ -2351,8 +2463,10 @@ dataArray.size: 4
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-02:(bool): bool
+params.size: 2
   0: uint256[] val_0 = [42]
   1: bool val_1 = true
+params.size: 2
   0: uint256[] val_0 = [42]
   1: bool val_1 = true
 ==================================================
@@ -2418,6 +2532,7 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint256[3]
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
+  params.size: 3
     0: uint256 = 1
     1: uint256 = <>
     2: uint256 = <>
@@ -2437,6 +2552,7 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
+  params.size: 3
     0: uint256 = 1
     1: uint256 = 2
     2: uint256 = <>
@@ -2456,12 +2572,16 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
+  params.size: 3
     0: uint256 = 1
     1: uint256 = 2
     2: uint256 = 3
+ params.size: 1
    0: uint256[3] = [1, 2, 3]
    internalType: uint256[]
+params.size: 1
   0: uint256[] val_0 = [1, 2, 3]
+params.size: 1
   0: uint256[] val_0 = [1, 2, 3]
 ==================================================
 
@@ -2507,6 +2627,7 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint32[3]
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint32
+ params.size: 3
    0: uint32 = 1
    1: uint32 = <>
    2: uint32 = <>
@@ -2524,6 +2645,7 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint32
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint32
+ params.size: 3
    0: uint32 = 1
    1: uint32 = 2
    2: uint32 = <>
@@ -2541,10 +2663,13 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint32
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint32
+ params.size: 3
    0: uint32 = 1
    1: uint32 = 2
    2: uint32 = 3
+params.size: 1
   0: uint32[3] val_0 = [1, 2, 3]
+params.size: 1
   0: uint32[3] val_0 = [1, 2, 3]
 ==================================================
 
@@ -2590,6 +2715,7 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint256[3]
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
+ params.size: 3
    0: uint256 = 1
    1: uint256 = <>
    2: uint256 = <>
@@ -2607,6 +2733,7 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
+ params.size: 3
    0: uint256 = 1
    1: uint256 = 2
    2: uint256 = <>
@@ -2624,10 +2751,13 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
+ params.size: 3
    0: uint256 = 1
    1: uint256 = 2
    2: uint256 = 3
+params.size: 1
   0: uint256[3] val_0 = [1, 2, 3]
+params.size: 1
   0: uint256[3] val_0 = [1, 2, 3]
 ==================================================
 
@@ -2673,6 +2803,7 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): int32[3]
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-05:(int): int32
+ params.size: 3
    0: int32 = 42
    1: int32 = <>
    2: int32 = <>
@@ -2690,6 +2821,7 @@ TIME ~ CLOCK - <INFO>  : Section-05:(int): int32
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-05:(int): int32
+ params.size: 3
    0: int32 = 42
    1: int32 = 2
    2: int32 = <>
@@ -2707,10 +2839,13 @@ TIME ~ CLOCK - <INFO>  : Section-05:(int): int32
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-05:(int): int32
+ params.size: 3
    0: int32 = 42
    1: int32 = 2
    2: int32 = 3
+params.size: 1
   0: int32[3] val_0 = [42, 2, 3]
+params.size: 1
   0: int32[3] val_0 = [42, 2, 3]
 ==================================================
 
@@ -2756,6 +2891,7 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): int256[3]
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-05:(int): int256
+ params.size: 3
    0: int256 = 42
    1: int256 = <>
    2: int256 = <>
@@ -2773,6 +2909,7 @@ TIME ~ CLOCK - <INFO>  : Section-05:(int): int256
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-05:(int): int256
+ params.size: 3
    0: int256 = 42
    1: int256 = -3
    2: int256 = <>
@@ -2790,10 +2927,13 @@ TIME ~ CLOCK - <INFO>  : Section-05:(int): int256
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-05:(int): int256
+ params.size: 3
    0: int256 = 42
    1: int256 = -3
    2: int256 = -5
+params.size: 1
   0: int256[3] val_0 = [42, -3, -5]
+params.size: 1
   0: int256[3] val_0 = [42, -3, -5]
 ==================================================
 
@@ -2839,6 +2979,7 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint256[2]
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
+ params.size: 2
    0: uint256 = 1
    1: uint256 = <>
  level: 2
@@ -2854,8 +2995,10 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
+ params.size: 2
    0: uint256 = 1
    1: uint256 = 92
+params.size: 2
   0: uint256[2] val_0 = [1, 92]
   1: uint256 val_1 = <>
 
@@ -2872,8 +3015,10 @@ dataArray.size: 3
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
+params.size: 2
   0: uint256[2] val_0 = [1, 92]
   1: uint256 val_1 = 3
+params.size: 2
   0: uint256[2] val_0 = [1, 92]
   1: uint256 val_1 = 3
 ==================================================
@@ -2906,7 +3051,9 @@ dataArray.size: 3
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-08:(string): string
+params.size: 1
   0: string val_0 = ethereum számítógép
+params.size: 1
   0: string val_0 = ethereum számítógép
 ==================================================
 
@@ -2938,7 +3085,9 @@ dataArray.size: 3
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-08:(string): string
+params.size: 1
   0: string val_0 = 为什么那么认真？
+params.size: 1
   0: string val_0 = 为什么那么认真？
 ==================================================
 
@@ -2999,6 +3148,7 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint256[2]
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
+  params.size: 2
     0: uint256 = 1
     1: uint256 = <>
   level: 3
@@ -3015,8 +3165,10 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
+  params.size: 2
     0: uint256 = 1
     1: uint256 = 2
+ params.size: 2
    0: uint256[2] = [1, 2]
    1: uint256[2] = <>
  level: 2
@@ -3047,6 +3199,7 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint256[2]
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
+  params.size: 2
     0: uint256 = 4
     1: uint256 = <>
   level: 3
@@ -3063,11 +3216,15 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
+  params.size: 2
     0: uint256 = 4
     1: uint256 = 8
+ params.size: 2
    0: uint256[2] = [1, 2]
    1: uint256[2] = [4, 8]
+params.size: 1
   0: uint256[2][2] val_0 = [[1, 2], [4, 8]]
+params.size: 1
   0: uint256[2][2] val_0 = [[1, 2], [4, 8]]
 ==================================================
 
@@ -3139,6 +3296,7 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint128[2]
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
+  params.size: 2
     0: uint128 = 1
     1: uint128 = <>
   level: 3
@@ -3158,8 +3316,10 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
+  params.size: 2
     0: uint128 = 1
     1: uint128 = 2
+ params.size: 3
    0: uint128[2] = [1, 2]
    1: uint128[2] = <>
    2: uint128[2] = <>
@@ -3198,6 +3358,7 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint128[2]
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
+  params.size: 2
     0: uint128 = 3
     1: uint128 = <>
   level: 3
@@ -3217,8 +3378,10 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
+  params.size: 2
     0: uint128 = 3
     1: uint128 = 4
+ params.size: 3
    0: uint128[2] = [1, 2]
    1: uint128[2] = [3, 4]
    2: uint128[2] = <>
@@ -3257,6 +3420,7 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint128[2]
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
+  params.size: 2
     0: uint128 = 5
     1: uint128 = <>
   level: 3
@@ -3276,11 +3440,14 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
+  params.size: 2
     0: uint128 = 5
     1: uint128 = 6
+ params.size: 3
    0: uint128[2] = [1, 2]
    1: uint128[2] = [3, 4]
    2: uint128[2] = [5, 6]
+params.size: 2
   0: uint128[2][3] val_0 = [[1, 2], [3, 4], [5, 6]]
   1: uint256 val_1 = <>
 
@@ -3301,8 +3468,10 @@ dataArray.size: 7
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
+params.size: 2
   0: uint128[2][3] val_0 = [[1, 2], [3, 4], [5, 6]]
   1: uint256 val_1 = 10
+params.size: 2
   0: uint128[2][3] val_0 = [[1, 2], [3, 4], [5, 6]]
   1: uint256 val_1 = 10
 ==================================================
@@ -3416,6 +3585,7 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint128[2]
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
+   params.size: 2
      0: uint128 = 1
      1: uint128 = <>
    level: 4
@@ -3441,8 +3611,10 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
+   params.size: 2
      0: uint128 = 1
      1: uint128 = 2
+  params.size: 3
     0: uint128[2] = [1, 2]
     1: uint128[2] = <>
     2: uint128[2] = <>
@@ -3493,6 +3665,7 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint128[2]
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
+   params.size: 2
      0: uint128 = 3
      1: uint128 = <>
    level: 4
@@ -3518,8 +3691,10 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
+   params.size: 2
      0: uint128 = 3
      1: uint128 = 4
+  params.size: 3
     0: uint128[2] = [1, 2]
     1: uint128[2] = [3, 4]
     2: uint128[2] = <>
@@ -3570,6 +3745,7 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint128[2]
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
+   params.size: 2
      0: uint128 = 5
      1: uint128 = <>
    level: 4
@@ -3595,11 +3771,14 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
+   params.size: 2
      0: uint128 = 5
      1: uint128 = 6
+  params.size: 3
     0: uint128[2] = [1, 2]
     1: uint128[2] = [3, 4]
     2: uint128[2] = [5, 6]
+ params.size: 2
    0: uint128[2][3] = [[1, 2], [3, 4], [5, 6]]
    1: uint128[2][3] = <>
  level: 2
@@ -3672,6 +3851,7 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint128[2]
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
+   params.size: 2
      0: uint128 = 1
      1: uint128 = <>
    level: 4
@@ -3697,8 +3877,10 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
+   params.size: 2
      0: uint128 = 1
      1: uint128 = 2
+  params.size: 3
     0: uint128[2] = [1, 2]
     1: uint128[2] = <>
     2: uint128[2] = <>
@@ -3749,6 +3931,7 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint128[2]
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
+   params.size: 2
      0: uint128 = 3
      1: uint128 = <>
    level: 4
@@ -3774,8 +3957,10 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
+   params.size: 2
      0: uint128 = 3
      1: uint128 = 4
+  params.size: 3
     0: uint128[2] = [1, 2]
     1: uint128[2] = [3, 4]
     2: uint128[2] = <>
@@ -3826,6 +4011,7 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint128[2]
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
+   params.size: 2
      0: uint128 = 5
      1: uint128 = <>
    level: 4
@@ -3851,13 +4037,17 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
+   params.size: 2
      0: uint128 = 5
      1: uint128 = 6
+  params.size: 3
     0: uint128[2] = [1, 2]
     1: uint128[2] = [3, 4]
     2: uint128[2] = [5, 6]
+ params.size: 2
    0: uint128[2][3] = [[1, 2], [3, 4], [5, 6]]
    1: uint128[2][3] = [[1, 2], [3, 4], [5, 6]]
+params.size: 2
   0: uint128[2][3][2] val_0 = [[[1, 2], [3, 4], [5, 6]], [[1, 2], [3, 4], [5, 6]]]
   1: uint256 val_1 = <>
 
@@ -3884,8 +4074,10 @@ dataArray.size: 13
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
+params.size: 2
   0: uint128[2][3][2] val_0 = [[[1, 2], [3, 4], [5, 6]], [[1, 2], [3, 4], [5, 6]]]
   1: uint256 val_1 = 10
+params.size: 2
   0: uint128[2][3][2] val_0 = [[[1, 2], [3, 4], [5, 6]], [[1, 2], [3, 4], [5, 6]]]
   1: uint256 val_1 = 10
 ==================================================
@@ -3931,6 +4123,7 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint256[2]
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
+ params.size: 2
    0: uint256 = 1
    1: uint256 = <>
  level: 2
@@ -3946,9 +4139,12 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
+ params.size: 2
    0: uint256 = 1
    1: uint256 = 2
+params.size: 1
   0: uint256[2] val_0 = [1, 2]
+params.size: 1
   0: uint256[2] val_0 = [1, 2]
 ==================================================
 
@@ -4041,6 +4237,7 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): address[2]
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-03:(address): address
+  params.size: 2
     0: address = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413
     1: address = <>
   level: 3
@@ -4057,11 +4254,15 @@ TIME ~ CLOCK - <INFO>  : Section-03:(address): address
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-03:(address): address
+  params.size: 2
     0: address = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413
     1: address = 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607
+ params.size: 1
    0: address[2] = [0xbb9bc244d798123fde783fcc1c72d3bb8c189413, 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607]
    internalType: address[]
+params.size: 1
   0: address[] val_0 = [0xbb9bc244d798123fde783fcc1c72d3bb8c189413, 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607]
+params.size: 1
   0: address[] val_0 = [0xbb9bc244d798123fde783fcc1c72d3bb8c189413, 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607]
 ==================================================
 
@@ -4104,6 +4305,7 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): address[2]
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-03:(address): address
+ params.size: 2
    0: address = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413
    1: address = <>
  level: 2
@@ -4118,9 +4320,12 @@ TIME ~ CLOCK - <INFO>  : Section-03:(address): address
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-03:(address): address
+ params.size: 2
    0: address = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413
    1: address = 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607
+params.size: 1
   0: address[2] val_0 = [0xbb9bc244d798123fde783fcc1c72d3bb8c189413, 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607]
+params.size: 1
   0: address[2] val_0 = [0xbb9bc244d798123fde783fcc1c72d3bb8c189413, 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607]
 ==================================================
 
@@ -4207,6 +4412,7 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint256[2]
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
+  params.size: 2
     0: uint256 = 6
     1: uint256 = <>
   level: 3
@@ -4231,10 +4437,13 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
+  params.size: 2
     0: uint256 = 6
     1: uint256 = 5
+ params.size: 1
    0: uint256[2] = [6, 5]
    internalType: uint256[]
+params.size: 3
   0: uint256[] a = [6, 5]
   1: uint256[] b = <>
   2: uint256[] c = <>
@@ -4306,6 +4515,7 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint256[2]
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
+  params.size: 2
     0: uint256 = 25000000000000000000
     1: uint256 = <>
   level: 3
@@ -4330,10 +4540,13 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
+  params.size: 2
     0: uint256 = 25000000000000000000
     1: uint256 = 25000000000000000000
+ params.size: 1
    0: uint256[2] = [25000000000000000000, 25000000000000000000]
    internalType: uint256[]
+params.size: 3
   0: uint256[] a = [6, 5]
   1: uint256[] b = [25000000000000000000, 25000000000000000000]
   2: uint256[] c = <>
@@ -4405,6 +4618,7 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint256[2]
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
+  params.size: 2
     0: uint256 = 2000000000000000000
     1: uint256 = <>
   level: 3
@@ -4429,13 +4643,17 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
+  params.size: 2
     0: uint256 = 2000000000000000000
     1: uint256 = 2000000000000000000
+ params.size: 1
    0: uint256[2] = [2000000000000000000, 2000000000000000000]
    internalType: uint256[]
+params.size: 3
   0: uint256[] a = [6, 5]
   1: uint256[] b = [25000000000000000000, 25000000000000000000]
   2: uint256[] c = [2000000000000000000, 2000000000000000000]
+params.size: 3
   0: uint256[] a = [6, 5]
   1: uint256[] b = [25000000000000000000, 25000000000000000000]
   2: uint256[] c = [2000000000000000000, 2000000000000000000]
@@ -4498,6 +4716,7 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): bool[2]
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-02:(bool): bool
+  params.size: 2
     0: bool = false
     1: bool = <>
   level: 3
@@ -4514,11 +4733,15 @@ TIME ~ CLOCK - <INFO>  : Section-02:(bool): bool
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-02:(bool): bool
+  params.size: 2
     0: bool = false
     1: bool = true
+ params.size: 1
    0: bool[2] = [false, true]
    internalType: bool[]
+params.size: 1
   0: bool[] val_0 = [false, true]
+params.size: 1
   0: bool[] val_0 = [false, true]
 ==================================================
 
@@ -4595,6 +4818,7 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): bool[2]
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-02:(bool): bool
+  params.size: 2
     0: bool = false
     1: bool = <>
   level: 3
@@ -4616,10 +4840,13 @@ TIME ~ CLOCK - <INFO>  : Section-02:(bool): bool
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-02:(bool): bool
+  params.size: 2
     0: bool = false
     1: bool = true
+ params.size: 1
    0: bool[2] = [false, true]
    internalType: bool[]
+params.size: 2
   0: bool[] val_0 = [false, true]
   1: address[] val_1 = <>
 
@@ -4681,6 +4908,7 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): address[3]
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-03:(address): address
+  params.size: 3
     0: address = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413
     1: address = <>
     2: address = <>
@@ -4704,6 +4932,7 @@ TIME ~ CLOCK - <INFO>  : Section-03:(address): address
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-03:(address): address
+  params.size: 3
     0: address = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413
     1: address = 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607
     2: address = <>
@@ -4727,13 +4956,17 @@ TIME ~ CLOCK - <INFO>  : Section-03:(address): address
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-03:(address): address
+  params.size: 3
     0: address = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413
     1: address = 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607
     2: address = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413
+ params.size: 1
    0: address[3] = [0xbb9bc244d798123fde783fcc1c72d3bb8c189413, 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607, 0xbb9bc244d798123fde783fcc1c72d3bb8c189413]
    internalType: address[]
+params.size: 2
   0: bool[] val_0 = [false, true]
   1: address[] val_1 = [0xbb9bc244d798123fde783fcc1c72d3bb8c189413, 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607, 0xbb9bc244d798123fde783fcc1c72d3bb8c189413]
+params.size: 2
   0: bool[] val_0 = [false, true]
   1: address[] val_1 = [0xbb9bc244d798123fde783fcc1c72d3bb8c189413, 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607, 0xbb9bc244d798123fde783fcc1c72d3bb8c189413]
 ==================================================
@@ -4772,6 +5005,7 @@ dataArray.size: 6
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-03:(address): address
+params.size: 4
   0: address val_0 = 0xf3c9c5719eb4f26a3ab45cb86771827629f9a999
   1: address val_1 = <>
   2: uint256 val_2 = <>
@@ -4795,6 +5029,7 @@ dataArray.size: 6
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-03:(address): address
+params.size: 4
   0: address val_0 = 0xf3c9c5719eb4f26a3ab45cb86771827629f9a999
   1: address val_1 = 0x71d402ac181de4a8739a15f5a56141f64fc522f8
   2: uint256 val_2 = <>
@@ -4818,6 +5053,7 @@ dataArray.size: 6
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
+params.size: 4
   0: address val_0 = 0xf3c9c5719eb4f26a3ab45cb86771827629f9a999
   1: address val_1 = 0x71d402ac181de4a8739a15f5a56141f64fc522f8
   2: uint256 val_2 = 462000000000000000000
@@ -4841,10 +5077,12 @@ dataArray.size: 6
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-08:(string): string
+params.size: 4
   0: address val_0 = 0xf3c9c5719eb4f26a3ab45cb86771827629f9a999
   1: address val_1 = 0x71d402ac181de4a8739a15f5a56141f64fc522f8
   2: uint256 val_2 = 462000000000000000000
   3: string val_3 = Hi Bob -- Here are your tokens!
+params.size: 4
   0: address val_0 = 0xf3c9c5719eb4f26a3ab45cb86771827629f9a999
   1: address val_1 = 0x71d402ac181de4a8739a15f5a56141f64fc522f8
   2: uint256 val_2 = 462000000000000000000
@@ -4883,6 +5121,7 @@ dataArray.size: 4
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint8
+params.size: 4
   0: uint8 val_0 = 254
   1: uint32 val_1 = <>
   2: uint64 val_2 = <>
@@ -4904,6 +5143,7 @@ dataArray.size: 4
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint32
+params.size: 4
   0: uint8 val_0 = 254
   1: uint32 val_1 = 4294967294
   2: uint64 val_2 = <>
@@ -4925,6 +5165,7 @@ dataArray.size: 4
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint64
+params.size: 4
   0: uint8 val_0 = 254
   1: uint32 val_1 = 4294967294
   2: uint64 val_2 = 18446744073709551614
@@ -4946,10 +5187,12 @@ dataArray.size: 4
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
+params.size: 4
   0: uint8 val_0 = 254
   1: uint32 val_1 = 4294967294
   2: uint64 val_2 = 18446744073709551614
   3: uint128 val_3 = 340282366920938463463374607431768211454
+params.size: 4
   0: uint8 val_0 = 254
   1: uint32 val_1 = 4294967294
   2: uint64 val_2 = 18446744073709551614
@@ -4990,6 +5233,7 @@ dataArray.size: 5
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-05:(int): int8
+params.size: 5
   0: int8 val_0 = -2
   1: int32 val_1 = <>
   2: int64 val_2 = <>
@@ -5014,6 +5258,7 @@ dataArray.size: 5
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-05:(int): int32
+params.size: 5
   0: int8 val_0 = -2
   1: int32 val_1 = -2
   2: int64 val_2 = <>
@@ -5038,6 +5283,7 @@ dataArray.size: 5
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-05:(int): int64
+params.size: 5
   0: int8 val_0 = -2
   1: int32 val_1 = -2
   2: int64 val_2 = -2
@@ -5062,6 +5308,7 @@ dataArray.size: 5
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-05:(int): int128
+params.size: 5
   0: int8 val_0 = -2
   1: int32 val_1 = -2
   2: int64 val_2 = -2
@@ -5086,11 +5333,13 @@ dataArray.size: 5
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-05:(int): int256
+params.size: 5
   0: int8 val_0 = -2
   1: int32 val_1 = -2
   2: int64 val_2 = -2
   3: int128 val_3 = -2
   4: int256 val_4 = -2
+params.size: 5
   0: int8 val_0 = -2
   1: int32 val_1 = -2
   2: int64 val_2 = -2
@@ -5166,6 +5415,7 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint128[2]
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
+  params.size: 2
     0: uint128 = 1
     1: uint128 = <>
   level: 3
@@ -5185,8 +5435,10 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
+  params.size: 2
     0: uint128 = 1
     1: uint128 = 2
+ params.size: 3
    0: uint128[2] = [1, 2]
    1: uint128[2] = <>
    2: uint128[2] = <>
@@ -5225,6 +5477,7 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint128[2]
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
+  params.size: 2
     0: uint128 = 3
     1: uint128 = <>
   level: 3
@@ -5244,8 +5497,10 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
+  params.size: 2
     0: uint128 = 3
     1: uint128 = 4
+ params.size: 3
    0: uint128[2] = [1, 2]
    1: uint128[2] = [3, 4]
    2: uint128[2] = <>
@@ -5284,6 +5539,7 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint128[2]
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
+  params.size: 2
     0: uint128 = 5
     1: uint128 = <>
   level: 3
@@ -5303,11 +5559,14 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
+  params.size: 2
     0: uint128 = 5
     1: uint128 = 6
+ params.size: 3
    0: uint128[2] = [1, 2]
    1: uint128[2] = [3, 4]
    2: uint128[2] = [5, 6]
+params.size: 2
   0: uint128[2][3] val_0 = [[1, 2], [3, 4], [5, 6]]
   1: uint256 val_1 = <>
 
@@ -5328,8 +5587,10 @@ dataArray.size: 7
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
+params.size: 2
   0: uint128[2][3] val_0 = [[1, 2], [3, 4], [5, 6]]
   1: uint256 val_1 = 10
+params.size: 2
   0: uint128[2][3] val_0 = [[1, 2], [3, 4], [5, 6]]
   1: uint256 val_1 = 10
 ==================================================
@@ -5443,6 +5704,7 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint128[2]
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
+   params.size: 2
      0: uint128 = 1
      1: uint128 = <>
    level: 4
@@ -5468,8 +5730,10 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
+   params.size: 2
      0: uint128 = 1
      1: uint128 = 2
+  params.size: 3
     0: uint128[2] = [1, 2]
     1: uint128[2] = <>
     2: uint128[2] = <>
@@ -5520,6 +5784,7 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint128[2]
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
+   params.size: 2
      0: uint128 = 3
      1: uint128 = <>
    level: 4
@@ -5545,8 +5810,10 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
+   params.size: 2
      0: uint128 = 3
      1: uint128 = 4
+  params.size: 3
     0: uint128[2] = [1, 2]
     1: uint128[2] = [3, 4]
     2: uint128[2] = <>
@@ -5597,6 +5864,7 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint128[2]
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
+   params.size: 2
      0: uint128 = 5
      1: uint128 = <>
    level: 4
@@ -5622,11 +5890,14 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
+   params.size: 2
      0: uint128 = 5
      1: uint128 = 6
+  params.size: 3
     0: uint128[2] = [1, 2]
     1: uint128[2] = [3, 4]
     2: uint128[2] = [5, 6]
+ params.size: 2
    0: uint128[2][3] = [[1, 2], [3, 4], [5, 6]]
    1: uint128[2][3] = <>
  level: 2
@@ -5699,6 +5970,7 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint128[2]
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
+   params.size: 2
      0: uint128 = 1
      1: uint128 = <>
    level: 4
@@ -5724,8 +5996,10 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
+   params.size: 2
      0: uint128 = 1
      1: uint128 = 2
+  params.size: 3
     0: uint128[2] = [1, 2]
     1: uint128[2] = <>
     2: uint128[2] = <>
@@ -5776,6 +6050,7 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint128[2]
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
+   params.size: 2
      0: uint128 = 3
      1: uint128 = <>
    level: 4
@@ -5801,8 +6076,10 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
+   params.size: 2
      0: uint128 = 3
      1: uint128 = 4
+  params.size: 3
     0: uint128[2] = [1, 2]
     1: uint128[2] = [3, 4]
     2: uint128[2] = <>
@@ -5853,6 +6130,7 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint128[2]
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
+   params.size: 2
      0: uint128 = 5
      1: uint128 = <>
    level: 4
@@ -5878,13 +6156,17 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
+   params.size: 2
      0: uint128 = 5
      1: uint128 = 6
+  params.size: 3
     0: uint128[2] = [1, 2]
     1: uint128[2] = [3, 4]
     2: uint128[2] = [5, 6]
+ params.size: 2
    0: uint128[2][3] = [[1, 2], [3, 4], [5, 6]]
    1: uint128[2][3] = [[1, 2], [3, 4], [5, 6]]
+params.size: 2
   0: uint128[2][3][2] val_0 = [[[1, 2], [3, 4], [5, 6]], [[1, 2], [3, 4], [5, 6]]]
   1: uint256 val_1 = <>
 
@@ -5911,8 +6193,10 @@ dataArray.size: 13
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
+params.size: 2
   0: uint128[2][3][2] val_0 = [[[1, 2], [3, 4], [5, 6]], [[1, 2], [3, 4], [5, 6]]]
   1: uint256 val_1 = 10
+params.size: 2
   0: uint128[2][3][2] val_0 = [[[1, 2], [3, 4], [5, 6]], [[1, 2], [3, 4], [5, 6]]]
   1: uint256 val_1 = 10
 ==================================================

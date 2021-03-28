@@ -90,6 +90,7 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint256[2]
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
+  params.size: 2
     0: uint256 = 6
     1: uint256 = <>
   level: 3
@@ -114,10 +115,13 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
+  params.size: 2
     0: uint256 = 6
     1: uint256 = 5
+ params.size: 1
    0: uint256[2] = [6, 5]
    internalType: uint256[]
+params.size: 3
   0: uint256[] _keys = [6, 5]
   1: uint256[] _tokenAmounts = <>
   2: uint256[] _dollarPrices = <>
@@ -189,6 +193,7 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint256[2]
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
+  params.size: 2
     0: uint256 = 25000000000000000000
     1: uint256 = <>
   level: 3
@@ -213,10 +218,13 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
+  params.size: 2
     0: uint256 = 25000000000000000000
     1: uint256 = 25000000000000000000
+ params.size: 1
    0: uint256[2] = [25000000000000000000, 25000000000000000000]
    internalType: uint256[]
+params.size: 3
   0: uint256[] _keys = [6, 5]
   1: uint256[] _tokenAmounts = [25000000000000000000, 25000000000000000000]
   2: uint256[] _dollarPrices = <>
@@ -288,6 +296,7 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint256[2]
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
+  params.size: 2
     0: uint256 = 2000000000000000000
     1: uint256 = <>
   level: 3
@@ -312,13 +321,17 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
+  params.size: 2
     0: uint256 = 2000000000000000000
     1: uint256 = 2000000000000000000
+ params.size: 1
    0: uint256[2] = [2000000000000000000, 2000000000000000000]
    internalType: uint256[]
+params.size: 3
   0: uint256[] _keys = [6, 5]
   1: uint256[] _tokenAmounts = [25000000000000000000, 25000000000000000000]
   2: uint256[] _dollarPrices = [2000000000000000000, 2000000000000000000]
+params.size: 3
   0: uint256[] _keys = [6, 5]
   1: uint256[] _tokenAmounts = [25000000000000000000, 25000000000000000000]
   2: uint256[] _dollarPrices = [2000000000000000000, 2000000000000000000]
@@ -327,6 +340,7 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
 TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
 TIME ~ CLOCK - <INFO>  : typeList: : 
 TIME ~ CLOCK - <INFO>  : inputStr: : 
+params.size: 0
 ==================================================
 
 TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
@@ -416,6 +430,7 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint256[2]
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
+  params.size: 2
     0: uint256 = 6
     1: uint256 = <>
   level: 3
@@ -440,10 +455,13 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
+  params.size: 2
     0: uint256 = 6
     1: uint256 = 5
+ params.size: 1
    0: uint256[2] = [6, 5]
    internalType: uint256[]
+params.size: 3
   0: uint256[] _keys = [6, 5]
   1: uint256[] _tokenAmounts = <>
   2: uint256[] _dollarPrices = <>
@@ -515,6 +533,7 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint256[2]
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
+  params.size: 2
     0: uint256 = 25000000000000000000
     1: uint256 = <>
   level: 3
@@ -539,10 +558,13 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
+  params.size: 2
     0: uint256 = 25000000000000000000
     1: uint256 = 25000000000000000000
+ params.size: 1
    0: uint256[2] = [25000000000000000000, 25000000000000000000]
    internalType: uint256[]
+params.size: 3
   0: uint256[] _keys = [6, 5]
   1: uint256[] _tokenAmounts = [25000000000000000000, 25000000000000000000]
   2: uint256[] _dollarPrices = <>
@@ -614,6 +636,7 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint256[2]
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
+  params.size: 2
     0: uint256 = 2000000000000000000
     1: uint256 = <>
   level: 3
@@ -638,13 +661,17 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
+  params.size: 2
     0: uint256 = 2000000000000000000
     1: uint256 = 2000000000000000000
+ params.size: 1
    0: uint256[2] = [2000000000000000000, 2000000000000000000]
    internalType: uint256[]
+params.size: 3
   0: uint256[] _keys = [6, 5]
   1: uint256[] _tokenAmounts = [25000000000000000000, 25000000000000000000]
   2: uint256[] _dollarPrices = [2000000000000000000, 2000000000000000000]
+params.size: 3
   0: uint256[] _keys = [6, 5]
   1: uint256[] _tokenAmounts = [25000000000000000000, 25000000000000000000]
   2: uint256[] _dollarPrices = [2000000000000000000, 2000000000000000000]
@@ -653,6 +680,7 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
 TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
 TIME ~ CLOCK - <INFO>  : typeList: : 
 TIME ~ CLOCK - <INFO>  : inputStr: : 
+params.size: 0
 ==================================================
 
   {

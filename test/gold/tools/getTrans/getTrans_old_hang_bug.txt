@@ -21,6 +21,10 @@ dataArray.size: 4
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-09:([]): address[]
 TIME ~ CLOCK - <WARNG> : { "error8": "decodeAnObject: countLoc(418973819366999115) > dataArray.size(4)"},
+params.size: 2
+  0: address[] destinations = <>
+  1: uint256[] tokens = <>
+params.size: 2
   0: address[] destinations = <>
   1: uint256[] tokens = <>
 ==================================================

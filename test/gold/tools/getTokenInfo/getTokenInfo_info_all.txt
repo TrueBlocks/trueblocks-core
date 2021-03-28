@@ -17,7 +17,9 @@ dataArray.size: 3
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-08:(string): string
+params.size: 1
   0: string _name = OMGToken
+params.size: 1
   0: string _name = OMGToken
 ==================================================
 
@@ -37,7 +39,9 @@ dataArray.size: 3
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-08:(string): string
+params.size: 1
   0: string _symbol = OMG
+params.size: 1
   0: string _symbol = OMG
 ==================================================
 

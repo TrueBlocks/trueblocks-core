@@ -41,6 +41,7 @@ TIME ~ CLOCK - <INFO>  : Parse func found: : address,uint256
 TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
 TIME ~ CLOCK - <INFO>  : typeList: : 
 TIME ~ CLOCK - <INFO>  : inputStr: : 
+params.size: 0
 ==================================================
 
 TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
