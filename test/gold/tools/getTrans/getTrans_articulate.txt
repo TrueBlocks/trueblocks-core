@@ -10,13 +10,6 @@ TIME ~ CLOCK - <INFO>  : Parse func found: : address,address,uint256
 TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
 TIME ~ CLOCK - <INFO>  : typeList: : 
 TIME ~ CLOCK - <INFO>  : inputStr: : 
-level: 0
-readOffset: 0
-objectStart: 0
-params.size: 1
-  0: bool _success = <>
-dataArray.size: 1
-  0 (0x000) 0000000000000000...00000000000000000000000000000000 <=o <-r
 
 level: 1
 readOffset: 0
@@ -39,13 +32,6 @@ TIME ~ CLOCK - <INFO>  : Parse func found: : address,address,uint256
 TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
 TIME ~ CLOCK - <INFO>  : typeList: : 
 TIME ~ CLOCK - <INFO>  : inputStr: : 
-level: 0
-readOffset: 0
-objectStart: 0
-params.size: 1
-  0: bool _success = <>
-dataArray.size: 1
-  0 (0x000) 0000000000000000...00000000000000000000000000000000 <=o <-r
 
 level: 1
 readOffset: 0
@@ -142,11 +128,6 @@ TIME ~ CLOCK - <INFO>  : Parse func found: : uint256
 TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
 TIME ~ CLOCK - <INFO>  : typeList: : 
 TIME ~ CLOCK - <INFO>  : inputStr: : 
-level: 0
-readOffset: 0
-objectStart: 0
-params.size: 0
-dataArray.size: 0
 ==================================================
 
 TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
@@ -156,11 +137,6 @@ TIME ~ CLOCK - <INFO>  : Parse func found: : uint256
 TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
 TIME ~ CLOCK - <INFO>  : typeList: : 
 TIME ~ CLOCK - <INFO>  : inputStr: : 
-level: 0
-readOffset: 0
-objectStart: 0
-params.size: 0
-dataArray.size: 0
 ==================================================
 
 ,  {
@@ -256,11 +232,6 @@ TIME ~ CLOCK - <INFO>  : Parse func found: : bool
 TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
 TIME ~ CLOCK - <INFO>  : typeList: : 
 TIME ~ CLOCK - <INFO>  : inputStr: : 
-level: 0
-readOffset: 0
-objectStart: 0
-params.size: 0
-dataArray.size: 0
 ==================================================
 
 TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 

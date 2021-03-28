@@ -4,13 +4,6 @@ blocknumber	holder	address	name	symbol	decimals	balance
 TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
 TIME ~ CLOCK - <INFO>  : typeList: : 
 TIME ~ CLOCK - <INFO>  : inputStr: : 
-level: 0
-readOffset: 0
-objectStart: 0
-params.size: 1
-  0: uint256 _balance = <>
-dataArray.size: 1
-  0 (0x000) 0000000000000000...00000000000000000000000000000000 <=o <-r
 
 level: 1
 readOffset: 0
@@ -30,13 +23,6 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
 TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
 TIME ~ CLOCK - <INFO>  : typeList: : 
 TIME ~ CLOCK - <INFO>  : inputStr: : 
-level: 0
-readOffset: 0
-objectStart: 0
-params.size: 1
-  0: uint256 _balance = <>
-dataArray.size: 1
-  0 (0x000) 0000000000000000...00000000000000000000000000000000 <=o <-r
 
 level: 1
 readOffset: 0
@@ -61,13 +47,6 @@ TIME ~ CLOCK - <INFO>  : Parse func found: : uint256
 TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
 TIME ~ CLOCK - <INFO>  : typeList: : 
 TIME ~ CLOCK - <INFO>  : inputStr: : 
-level: 0
-readOffset: 0
-objectStart: 0
-params.size: 1
-  0: uint256 _balance = <>
-dataArray.size: 1
-  0 (0x000) 0000000000000000...00000000000000000000000000000000 <=o <-r
 
 level: 1
 readOffset: 0
@@ -87,13 +66,6 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
 TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
 TIME ~ CLOCK - <INFO>  : typeList: : 
 TIME ~ CLOCK - <INFO>  : inputStr: : 
-level: 0
-readOffset: 0
-objectStart: 0
-params.size: 1
-  0: uint256 _balance = <>
-dataArray.size: 1
-  0 (0x000) 0000000000000000...00000000000000000000000000000000 <=o <-r
 
 level: 1
 readOffset: 0
