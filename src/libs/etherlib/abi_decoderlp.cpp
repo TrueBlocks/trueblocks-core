@@ -596,8 +596,8 @@ void loadParseMap(void) {
 }
 
 //---------------------------------------------------------------------------
-bool decodeRLP(CParameterArray& params, const string_q& desc, const string_q& inputStrIn) {
-    string_q typeList = desc;
+bool decodeRLP(CParameterArray& params, const string_q& typeListIn, const string_q& inputStrIn) {
+    string_q typeList = typeListIn;
     string_q inputStr = (inputStrIn == "0x" ? "" : inputStrIn);
     LOG_TEST("decodeRLP--------------------------------------", "", false);
     LOG_TEST("typeList: ", typeList, false);

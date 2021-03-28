@@ -342,7 +342,7 @@ TEST_F(CThisTest, TestSerpent) {
 //------------------------------------------------------------------------
 class CFunctionTester : public CFunction {
   public:
-    bool doTest(const string_q& line1) {
+    bool doTest(const string_q& lineIn) {
 #if 0
         string_q line;
         line =
@@ -358,52 +358,52 @@ class CFunctionTester : public CFunction {
 00000000000000000000000000de4b13153673bcae2616b67bf822500d325fc3\
 |[{\"val_1\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"val_2\":\"9700000000000000000\", \"val_3\":\"0xf503017d7baf7fbc0fff7492b751025c6a78179b\"}, {\"val_1\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"val_2\":\"250000000000000000\", \"val_3\":\"0x00de4b13153673bcae2616b67bf822500d325fc3\"}]";
 #else
-        string_q line = line1;
+        string_q line = lineIn;
 #endif
-        string_q expected, result;
+        string_q result;
         CStringArray parts;
         explode(parts, line, '|');
-        if (parts.size() < 5) {
+        if (parts.size() != 5) {
             cerr << "Invalid test: " << line << endl;
             return false;
         }
-        for (auto& p : parts)
-            p = trim(p);
+        string_q testType = trim(parts[0]);
+        string_q testName = trim(parts[1]);
+        string_q testSig = trim(parts[2]);
+        string_q inputBytes = trim(parts[3]);
+        string_q expected = trim(substitute(parts[4], "<empty>", ""));
 
-        fromDefinition(*this, parts[2]);
+        fromDefinition(*this, testSig);
         if (type != "function" && type != "event") {
-            cout << "invalid: " << parts[2] << endl;
+            cout << "invalid: " << testSig << endl;
             return false;
         }
 
         cout << endl;
         cout << "line: " << line << endl;
-        cout << "testType: " << parts[0] << endl;
-        cout << "testName: " << parts[1] << endl;
-        cout << "signature: " << parts[2] << " : " << type << " " << getSignature(SIG_CANONICAL) << endl;
+        cout << "testType: " << testType << endl;
+        cout << "testName: " << testName << endl;
+        cout << "testSig: " << testSig << " --> " << getSignature(SIG_CANONICAL) << endl;
         if (startsWith(line, ';')) {
             cout << (expected == result ? bGreen : bRed);
-            cout << "expected: --" << parts[4] << "--?" << endl;
-            cout << "result:   --" << parts[4] << "--? " << (parts[4] == parts[4]) << endl;
-            cout << "testName: " << parts[1] << endl;
+            cout << "expected: " << expected << " ?" << endl;
+            cout << "result:   " << expected << " ? " << (expected == expected) << endl;
+            cout << "testName: " << testName << endl;
             cout << cOff;
             return true;  // report on commented lines, but don't do the test
         }
 
-        if (parts[0] == "signature") {
-            expected = parts[4];
+        if (testType == "signature") {
             result = checkTypes() ? encodeItem() : "fail";
             result = (type == "function" ? result.substr(0, 10) : result);
 
-        } else if (parts[0] == "encode" || parts[0] == "encode_raw") {
-            expected = parts[4];
+        } else if (testType == "encode" || testType == "encode_raw") {
             result = encodeItem();
             result = (type == "function" ? result.substr(0, 10) : result);
 
-        } else if (parts[0] == "decode" || parts[0] == "decode_raw") {
+        } else if (testType == "decode" || testType == "decode_raw") {
             cerr << endl << string_q(50, '-') << endl;
-            decodeRLP(inputs, parts[2], parts[3]);
-            expected = substitute(parts[4], "<empty>", "");
+            decodeRLP(inputs, getSignature(SIG_CANONICAL), inputBytes);
             for (auto param : inputs) {
                 if (!result.empty())
                     result += ", ";
@@ -413,20 +413,21 @@ class CFunctionTester : public CFunction {
             cout << (expected == result ? bGreen : bRed);
             cout << "expected: " << expected << " ?" << endl;
             cout << "result:   " << result << " ? " << (expected == result) << endl;
-            cout << "testName: " << parts[1] << endl;
+            cout << "testName: " << testName << endl;
             cout << cOff;
-            if (!(expected == result))
-                cout << "THIS IS AN ERROR, BUT WE DON'T QUIT." << endl;
+            // if (!(expected == result))
+            //     cout << "THIS IS AN ERROR, BUT WE DON'T QUIT." << endl;
             return true;  // debugging
 
         } else {
+            cerr << "Unknown test type" << testType << endl;
             return true;  // debugging
         }
 
         cout << (expected == result ? bGreen : bRed);
         cout << "expected: --" << expected << "--?" << endl;
         cout << "result:   --" << result << "--? " << (expected == result) << endl;
-        cout << "testName: " << parts[1] << endl;
+        cout << "testName: " << testName << endl;
         cout << cOff;
         return true;  // debugging
     }
