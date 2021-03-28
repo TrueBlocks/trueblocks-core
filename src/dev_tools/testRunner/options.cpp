@@ -137,6 +137,9 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
+    if (getGlobalConfig()->getConfigBool("dev", "debug_curl", false))
+        return usage("[dev]debug_curl is set in config file. All tests will fail.");
+
     // BEG_DEBUG_DISPLAY
     LOG_TEST("mode", mode, (mode == ""));
     LOG_TEST("filter", filter, (filter == ""));
@@ -190,14 +193,6 @@ bool COptions::parseArguments(string_q& command) {
 
     SHOW_FIELD(CTestCase, "test_id");
 
-    // If there are tests in libs, we do NOT need to sleep so the API can set up, otherwise, we do need to sleep
-    bool hasLibs = false;
-    for (auto test : tests)
-        if (contains(test, "/libs/"))
-            hasLibs = true;
-    if (!hasLibs)
-        sleep(1.);
-
     expContext().exportFmt = CSV1;
     perf_format = substitute(cleanFmt(STR_DISPLAY_MEASURE), "\"", "");
 
@@ -206,10 +201,6 @@ bool COptions::parseArguments(string_q& command) {
         apiProvider += "/";
 
     establishTestData();
-
-    if (getGlobalConfig()->getConfigBool("dev", "debug_curl", false)) {
-        return usage("[dev]debug_curl is set in config file. All tests will fail.");
-    }
 
     return true;
 }
@@ -255,15 +246,9 @@ bool COptions::cleanTest(const string_q& path, const string_q& testName) {
     if (!clean)
         return true;
     ostringstream os;
-    os << "find ../../../working/" << path << "/" << testName;
-    os << "/ -maxdepth 1 -name \"get*.txt\" -exec rm '{}' ';' 2>/dev/null ; ";
-    os << "find ../../../working/" << path << "/" << testName;
-    os << "/ -maxdepth 1 -name \"eth*.txt\" -exec rm '{}' ';' 2>/dev/null ; ";
-    os << "find ../../../working/" << path << "/" << testName;
-    os << "/ -maxdepth 1 -name \"grab*.txt\" -exec rm '{}' ';' 2>/dev/null ; ";
-    os << "find ../../../working/" << path << "/" << testName;
-    os << "/ -maxdepth 1 -name \"*Block*.txt\" -exec rm '{}' ';' 2>/dev/null ; ";
     // clang-format off
+    os << "find ../../../working/" << path << "/" << testName << "/ -maxdepth 1 -name \"" << testName << "_*.txt\" -exec rm '{}' ';' 2>/dev/null ; ";
+    os << "find ../../../working/" << path << "/" << testName << "/api_tests/ -maxdepth 1 -name \"" << testName << "_*.txt\" -exec rm '{}' ';' 2>/dev/null ; ";
     if (system(os.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings
     // clang-format on
     return true;
