@@ -104,11 +104,11 @@ size_t decodeAnObject(CParameterArray& params, const CStringArray& dataArray, si
         bool isBaseType = (!contains(param.type, "[") && !(param.type == "string" || param.type == "bytes"));
         if (isBaseType) {
             if (param.type == "tuple") {
+                //!------------ fixed size tuple -----------------------------------
                 SECTION_START("01", "tuple");
-                // size_t tupStart = str_2_Uint("0x" + dataArray[readOffset]) / 32;
 #if 0
                 // TODO(tjayrush): If I turn this on, the code fixes the test case called broken_unparsable
-                readOffset++;
+                size_t tupStart = str_2_Uint("0x" + dataArray[readOffset++]) / 32;
                 if (tupStart <= dataArray.size()) {
                     if (decodeAnObject(param.components, dataArray, tupStart, tupStart)) {
                         param.value = "{";
@@ -133,33 +133,33 @@ size_t decodeAnObject(CParameterArray& params, const CStringArray& dataArray, si
                     return false;
                 }
 #else
-                size_t pos = readOffset++;
-                if (decodeAnObject(param.components, dataArray, pos, objectStart)) {
-                    readOffset = pos;
-                    param.value = "{";
-                    for (auto p : param.components) {
-                        param.value += (param.value != "{" ? ", " : "");
-                        param.value += ("\"" + p.name + "\":\"" + p.value + "\"");
-                    }
-                    param.value += "}";
-                    cerr << prettyPrintParams(params);
-                    continue;
-
-                } else {
+                size_t pos = readOffset++;  // we need to advance even if there's an error
+                if (!decodeAnObject(param.components, dataArray, pos, objectStart)) {
                     LOG_DECODE_ERR("12", "decodeAnObect failed", 0, "", "", 0);
                     // prettyPrint2(params, dataArray, readOffset, objectStart);
                     level--;
                     return false;
                 }
+                readOffset = pos;
+                param.value = "{";
+                for (auto p : param.components) {
+                    param.value += (param.value != "{" ? ", " : "");
+                    param.value += ("\"" + p.name + "\":\"" + p.value + "\"");
+                }
+                param.value += "}";
+                cerr << prettyPrintParams(params);
+                continue;
 #endif
 
             } else if (contains(param.type, "bool")) {
+                //!------------ fixed size bool -----------------------------------
                 SECTION_START("02", "bool");
                 param.value = (dataArray[readOffset++][63] == '1' ? "true" : "false");
                 cerr << prettyPrintParams(params);
                 continue;
 
             } else if (contains(param.type, "address")) {
+                //!------------ fixed size address -----------------------------------
                 SECTION_START("03", "address");
                 size_t bits = 160;
                 param.value =
@@ -168,6 +168,7 @@ size_t decodeAnObject(CParameterArray& params, const CStringArray& dataArray, si
                 continue;
 
             } else if (contains(param.type, "uint")) {
+                //!------------ fixed size uint -----------------------------------
                 SECTION_START("04", "uint");
                 size_t bits = str_2_Uint(substitute(param.type, "uint", ""));
                 param.value = bnu_2_Str(str_2_BigUint("0x" + dataArray[readOffset++], bits));
@@ -175,6 +176,7 @@ size_t decodeAnObject(CParameterArray& params, const CStringArray& dataArray, si
                 continue;
 
             } else if (contains(param.type, "int")) {
+                //!------------ fixed size int -----------------------------------
                 SECTION_START("05", "int");
                 size_t bits = str_2_Uint(substitute(param.type, "int", ""));
                 param.value = bni_2_Str(str_2_BigInt("0x" + dataArray[readOffset++], bits));
@@ -182,6 +184,7 @@ size_t decodeAnObject(CParameterArray& params, const CStringArray& dataArray, si
                 continue;
 
             } else if (contains(param.type, "bytes")) {
+                //!------------ fixed size bytes -----------------------------------
                 SECTION_START("06", "bytes<M>");
                 // this is a bytes<M> (fixed length)
                 param.value = "0x" + dataArray[readOffset++];
@@ -189,6 +192,7 @@ size_t decodeAnObject(CParameterArray& params, const CStringArray& dataArray, si
                 continue;
 
             } else {
+                //!------------ unknown -----------------------------------
                 SECTION_START("07", "unknown");
                 LOG_DECODE_ERR("7", "Unknown type", param.type, "", "", "");
                 // prettyPrint2(params, dataArray, readOffset, objectStart);
@@ -202,84 +206,81 @@ size_t decodeAnObject(CParameterArray& params, const CStringArray& dataArray, si
             if (param.type == "string" || param.type == "bytes") {
                 //!------------ strings and bytes -----------------------------------
                 SECTION_START("08", param.type);
-                string_q result;
                 uint64_t sizeLoc = (str_2_Uint("0x" + dataArray[readOffset++]) / 32);
-                if (sizeLoc < dataArray.size()) {
-                    uint64_t nBytes = str_2_Uint("0x" + dataArray[sizeLoc]);
-                    uint64_t maxBytes = nBytes;
-                    size_t nItems = (nBytes / 32) + 1;
-                    if (nItems <= dataArray.size()) {  // some of the data sent in may be bogus, so we protext ourselves
-                        for (size_t w = 0; w < nItems; w++) {
-                            size_t pos = sizeLoc + 1 + w;
-                            if (pos < dataArray.size())
-                                result += dataArray[pos].substr(0, nBytes * 2);  // at most 64
-                            if (nBytes >= 32)
-                                nBytes -= 32;
-                            else
-                                nBytes = 0;
-                        }
-                        param.value = (param.type == "string" ? hex_2_Str("0x" + result.substr(0, maxBytes * 2))
-                                                              : "0x" + result.substr(0, maxBytes * 2));
-                        cerr << prettyPrintParams(params);
-                        continue;
-
-                    } else {
-                        LOG_DECODE_ERR("4", "nItems", nItems, ">=", "dataArray.size", dataArray.size());
-                        param.value = (param.type == "string" ? hex_2_Str("0x" + result.substr(0, maxBytes * 2))
-                                                              : "0x" + result.substr(0, maxBytes * 2));
-                        cerr << prettyPrintParams(params);
-                        level--;
-                        return true;
-                    }
-                } else {
+                if (sizeLoc > dataArray.size()) {
                     param.value = "";  // we've run out of bytes -- protect ourselves from bad data
-                    LOG_DECODE_ERR("5", "sizeLoc", sizeLoc, ">=", "dataArray.size", dataArray.size());
+                    LOG_DECODE_ERR("5", "sizeLoc", sizeLoc, ">", "dataArray.size", dataArray.size());
                     cerr << prettyPrintParams(params);
                     level--;
                     return false;
                 }
+
+                string_q result;
+                uint64_t nBytes = str_2_Uint("0x" + dataArray[sizeLoc]);
+                uint64_t maxBytes = nBytes;
+                size_t nItems = (nBytes / 32) + 1;
+                if (nItems > dataArray.size()) {  // some of the data sent in may be bogus, so we protext ourselves
+                    LOG_DECODE_ERR("4", "nItems", nItems, ">", "dataArray.size", dataArray.size());
+                    cerr << prettyPrintParams(params);
+                    level--;
+                    return true;
+                }
+
+                for (size_t w = 0; w < nItems; w++) {
+                    size_t pos = sizeLoc + 1 + w;
+                    if (pos < dataArray.size())
+                        result += dataArray[pos].substr(0, nBytes * 2);  // at most 64
+                    if (nBytes >= 32)
+                        nBytes -= 32;
+                    else
+                        nBytes = 0;
+                }
+                param.value = "0x" + result.substr(0, maxBytes * 2);
+                if (param.type == "string")
+                    param.value = hex_2_Str("0x" + result.substr(0, maxBytes * 2));
+                cerr << prettyPrintParams(params);
+                continue;
+
             } else if (endsWith(param.type, "[]")) {
-                //!------------ Variable Length Array [] -----------------------------------
+                //!------------ variable length array [] -----------------------------------
                 SECTION_START("09", "[]");
                 size_t countLoc = str_2_Uint("0x" + dataArray[readOffset++]) / 32;
-                if (countLoc <= dataArray.size()) {
-                    CParameterArray tmp;
-                    CParameter p;
-                    p.type = param.type;
-                    p.internalType = param.internalType;
-                    p.components = param.components;
-                    size_t nItems = str_2_Uint("0x" + dataArray[countLoc]);
-                    if (nItems > 0) {
-                        replaceReverse(p.type, "[]", "[" + uint_2_Str(nItems) + "]");
-                        replace(p.type, "bytes[", "bytes32[");
-                        tmp.push_back(p);
-                        countLoc++;
-                        if (decodeAnObject(tmp, dataArray, countLoc, countLoc - 1)) {
-                            param.value = tmp[0].value;
-                            cerr << prettyPrintParams(params);
-                            continue;
-
-                        } else {
-                            LOG_DECODE_ERR("10", "decodeAnObect failed", 0, "", "", 0);
-                            // prettyPrint2(params, dataArray, readOffset, objectStart);
-                            level--;
-                            return false;
-                        }
-                    }
-                    LOG_TEST("Zero sized array", param.name, false);
-                    continue;
-
-                } else {
+                if (countLoc > dataArray.size()) {
                     LOG_DECODE_ERR("8", "countLoc", countLoc, ">", "dataArray.size", dataArray.size());
-                    // prettyPrint2(params, dataArray, readOffset, objectStart);
+                    prettyPrintParams(params);
                     level--;
                     return false;
                 }
-                LOG_ERR("Should never happen at line ", __LINE__, " of file ", __FILE__);
-                quickQuitHandler(-1);
+
+                size_t nItems = str_2_Uint("0x" + dataArray[countLoc]);
+                if (nItems == 0) {
+                    LOG_TEST("Zero sized array", param.name, false);
+                    continue;
+                }
+
+                CParameterArray tmp;
+                CParameter p;
+                p.type = param.type;
+                p.internalType = param.internalType;
+                p.components = param.components;
+                replaceReverse(p.type, "[]", "[" + uint_2_Str(nItems) + "]");
+                replace(p.type, "bytes[", "bytes32[");
+                tmp.push_back(p);
+
+                size_t loc = countLoc + 1;
+                if (!decodeAnObject(tmp, dataArray, loc, countLoc)) {
+                    LOG_DECODE_ERR("10", "decodeAnObect failed", 0, "", "", 0);
+                    prettyPrintParams(params);
+                    level--;
+                    return false;
+                }
+
+                param.value = tmp[0].value;
+                cerr << prettyPrintParams(params);
+                continue;
 
             } else if (endsWith(param.type, "]")) {
-                //!------------ Fixed Width Array [] -----------------------------------
+                //!------------ fixed width array [M] -----------------------------------
                 SECTION_START("10", "[M]");
                 ASSERT(contains(param.type, "["));
                 ASSERT(contains(param.type, "]"));
@@ -307,7 +308,7 @@ size_t decodeAnObject(CParameterArray& params, const CStringArray& dataArray, si
                     tmp.push_back(p);
                 }
 
-                size_t pos = readOffset++;
+                size_t pos = readOffset++;  // we need to advance even if there's an error
                 if (!decodeAnObject(tmp, dataArray, pos, objectStart)) {
                     LOG_DECODE_ERR("14", "decodeAnObect failed", 0, "", "", 0);
                     // prettyPrint2(params, dataArray, readOffset, objectStart);
@@ -315,12 +316,13 @@ size_t decodeAnObject(CParameterArray& params, const CStringArray& dataArray, si
                     return false;
                 }
 
-                // readOffset = pos;
+                readOffset = pos;
                 param.value = "[" + params_2_Str(tmp) + "]";
                 cerr << prettyPrintParams(params);
                 continue;
 
             } else {
+                //!------------ unknown  -----------------------------------
                 SECTION_START("11", "[unknown]");
                 LOG_DECODE_ERR("11", "Unknown type", param.type, "", "", "");
                 // prettyPrint2(params, dataArray, readOffset, objectStart);

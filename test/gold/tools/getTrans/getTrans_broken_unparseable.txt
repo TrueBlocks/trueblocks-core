@@ -3477,7 +3477,7 @@ TIME ~ CLOCK - <INFO>  : Section-03:(address): address
 
 ==================================================
 TIME ~ CLOCK - <INFO>  : Section-08:(bytes): bytes
-TIME ~ CLOCK - <WARNG> : { "error4": "decodeAnObject: nItems(547179017974124644) >= dataArray.size(140)"},
+TIME ~ CLOCK - <WARNG> : { "error4": "decodeAnObject: nItems(547179017974124644) > dataArray.size(140)"},
    0: address srcToken = 0x0000000000000000000000000000000000000060
    internalType: contract IERC20
    1: address dstToken = 0x00000000000000000000000000000000000001c0
@@ -3489,10 +3489,10 @@ TIME ~ CLOCK - <WARNG> : { "error4": "decodeAnObject: nItems(547179017974124644)
    6: uint256 guaranteedAmount = 114395560000000000000000
    7: uint256 flags = 7631771537292792796830
    8: address referrer = 0x0000000000000000000001aa83bcf6811dd5ed18
-   9: bytes permit = 0x
+   9: bytes permit = <>
   0: address caller = 0xe069cb01d06ba617bcdf789bf2ff0d5e5ca20c71
   internalType: contract IOneInchCaller
-  1: tuple desc = {"srcToken":"0x0000000000000000000000000000000000000060", "dstToken":"0x00000000000000000000000000000000000001c0", "srcReceiver":"0x5732046a883704404f284ce41ffadd5b007fd668", "dstReceiver":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"1281173195321750650756914221150884052843809082481", "minReturnAmount":"4957305349080171221489756848185353997596647363", "guaranteedAmount":"114395560000000000000000", "flags":"7631771537292792796830", "referrer":"0x0000000000000000000001aa83bcf6811dd5ed18", "permit":"0x"}
+  1: tuple desc = {"srcToken":"0x0000000000000000000000000000000000000060", "dstToken":"0x00000000000000000000000000000000000001c0", "srcReceiver":"0x5732046a883704404f284ce41ffadd5b007fd668", "dstReceiver":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"1281173195321750650756914221150884052843809082481", "minReturnAmount":"4957305349080171221489756848185353997596647363", "guaranteedAmount":"114395560000000000000000", "flags":"7631771537292792796830", "referrer":"0x0000000000000000000001aa83bcf6811dd5ed18", "permit":""}
   internalType: struct OneInchExchange.SwapDescription
   compont.size: 10
     address srcToken
@@ -3519,7 +3519,7 @@ objectStart: 0
 params.size: 3
   0: address caller = 0xe069cb01d06ba617bcdf789bf2ff0d5e5ca20c71
   internalType: contract IOneInchCaller
-  1: tuple desc = {"srcToken":"0x0000000000000000000000000000000000000060", "dstToken":"0x00000000000000000000000000000000000001c0", "srcReceiver":"0x5732046a883704404f284ce41ffadd5b007fd668", "dstReceiver":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"1281173195321750650756914221150884052843809082481", "minReturnAmount":"4957305349080171221489756848185353997596647363", "guaranteedAmount":"114395560000000000000000", "flags":"7631771537292792796830", "referrer":"0x0000000000000000000001aa83bcf6811dd5ed18", "permit":"0x"}
+  1: tuple desc = {"srcToken":"0x0000000000000000000000000000000000000060", "dstToken":"0x00000000000000000000000000000000000001c0", "srcReceiver":"0x5732046a883704404f284ce41ffadd5b007fd668", "dstReceiver":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"1281173195321750650756914221150884052843809082481", "minReturnAmount":"4957305349080171221489756848185353997596647363", "guaranteedAmount":"114395560000000000000000", "flags":"7631771537292792796830", "referrer":"0x0000000000000000000001aa83bcf6811dd5ed18", "permit":""}
   internalType: struct OneInchExchange.SwapDescription
   compont.size: 10
     address srcToken
@@ -3842,7 +3842,7 @@ TIME ~ CLOCK - <WARNG> : { "error9": "decodeAnObject: nItems(1750972857517198859
 TIME ~ CLOCK - <WARNG> : { "error10": "decodeAnObject: decodeAnObect failed(0)  (0)"},
   0: address caller = 0xe069cb01d06ba617bcdf789bf2ff0d5e5ca20c71
   internalType: contract IOneInchCaller
-  1: tuple desc = {"srcToken":"0x0000000000000000000000000000000000000060", "dstToken":"0x00000000000000000000000000000000000001c0", "srcReceiver":"0x5732046a883704404f284ce41ffadd5b007fd668", "dstReceiver":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"1281173195321750650756914221150884052843809082481", "minReturnAmount":"4957305349080171221489756848185353997596647363", "guaranteedAmount":"114395560000000000000000", "flags":"7631771537292792796830", "referrer":"0x0000000000000000000001aa83bcf6811dd5ed18", "permit":"0x"}
+  1: tuple desc = {"srcToken":"0x0000000000000000000000000000000000000060", "dstToken":"0x00000000000000000000000000000000000001c0", "srcReceiver":"0x5732046a883704404f284ce41ffadd5b007fd668", "dstReceiver":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"1281173195321750650756914221150884052843809082481", "minReturnAmount":"4957305349080171221489756848185353997596647363", "guaranteedAmount":"114395560000000000000000", "flags":"7631771537292792796830", "referrer":"0x0000000000000000000001aa83bcf6811dd5ed18", "permit":""}
   internalType: struct OneInchExchange.SwapDescription
   compont.size: 10
     address srcToken
@@ -4542,7 +4542,7 @@ TIME ~ CLOCK - <WARNG> : { "error10": "decodeAnObject: decodeAnObect failed(0)  
         },
         {
           "name": "desc",
-          "value": {"srcToken":"0x0000000000000000000000000000000000000060", "dstToken":"0x00000000000000000000000000000000000001c0", "srcReceiver":"0x5732046a883704404f284ce41ffadd5b007fd668", "dstReceiver":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"1281173195321750650756914221150884052843809082481", "minReturnAmount":"4957305349080171221489756848185353997596647363", "guaranteedAmount":"114395560000000000000000", "flags":"7631771537292792796830", "referrer":"0x0000000000000000000001aa83bcf6811dd5ed18", "permit":"0x"},
+          "value": {"srcToken":"0x0000000000000000000000000000000000000060", "dstToken":"0x00000000000000000000000000000000000001c0", "srcReceiver":"0x5732046a883704404f284ce41ffadd5b007fd668", "dstReceiver":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"1281173195321750650756914221150884052843809082481", "minReturnAmount":"4957305349080171221489756848185353997596647363", "guaranteedAmount":"114395560000000000000000", "flags":"7631771537292792796830", "referrer":"0x0000000000000000000001aa83bcf6811dd5ed18", "permit":""},
           "internalType": "struct OneInchExchange.SwapDescription",
           "components": [
             {
@@ -4592,7 +4592,6 @@ TIME ~ CLOCK - <WARNG> : { "error10": "decodeAnObject: decodeAnObect failed(0)  
             },
             {
               "name": "permit",
-              "value": "0x",
               "internalType": "bytes"
             }
           ]
@@ -4628,7 +4627,7 @@ TIME ~ CLOCK - <WARNG> : { "error10": "decodeAnObject: decodeAnObect failed(0)  
         }
       ]
     },
-    "compressedTx": swap(0xe069cb01d06ba617bcdf789bf2ff0d5e5ca20c71, {\"srcToken\":\"0x0000000000000000000000000000000000000060\", \"dstToken\":\"0x00000000000000000000000000000000000001c0\", \"srcReceiver\":\"0x5732046a883704404f284ce41ffadd5b007fd668\", \"dstReceiver\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"1281173195321750650756914221150884052843809082481\", \"minReturnAmount\":\"4957305349080171221489756848185353997596647363\", \"guaranteedAmount\":\"114395560000000000000000\", \"flags\":\"7631771537292792796830\", \"referrer\":\"0x0000000000000000000001aa83bcf6811dd5ed18\", \"permit\":\"0x\"}--tuple--, ); ,
+    "compressedTx": swap(0xe069cb01d06ba617bcdf789bf2ff0d5e5ca20c71, {\"srcToken\":\"0x0000000000000000000000000000000000000060\", \"dstToken\":\"0x00000000000000000000000000000000000001c0\", \"srcReceiver\":\"0x5732046a883704404f284ce41ffadd5b007fd668\", \"dstReceiver\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"1281173195321750650756914221150884052843809082481\", \"minReturnAmount\":\"4957305349080171221489756848185353997596647363\", \"guaranteedAmount\":\"114395560000000000000000\", \"flags\":\"7631771537292792796830\", \"referrer\":\"0x0000000000000000000001aa83bcf6811dd5ed18\", \"permit\":\"\"}--tuple--, ); ,
     "gasCost": 47543461000000000,
     "gasUsed": 461587,
     "date": "2021-01-04 21:22:10 UTC",
