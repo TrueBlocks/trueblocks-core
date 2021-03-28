@@ -259,20 +259,22 @@ bool COptionsBase::loadNames(void) {
         }
     }
 
-    if (!importTabFile(namesMap, txtFile))
+    CAddressNameMap theMap;
+    if (!importTabFile(theMap, txtFile))
         EXIT_USAGE("Could not open names database...");
     LOG8("Finished adding names from regular database...");
 
-    if (!importTabFile(namesMap, customFile))
+    if (!importTabFile(theMap, customFile))
         EXIT_USAGE("Could not open custom names database...");
     LOG8("Finished adding names from custom database...");
 
-    if (!importTabFile(namesMap, prefundFile))
+    if (!importTabFile(theMap, prefundFile))
         EXIT_USAGE("Could not open prefunds database...");
     LOG8("Finished adding names from prefunds database...");
 
-    // namesMap is already sorted by address, so simply copy it into the array
-    for (auto item : namesMap) {
+    // theMap is already sorted by address, so simply copy it into the array
+    for (auto item : theMap) {
+        namesMap[item.first] = item.second;
         namedAccounts.push_back(item.second);
         if (contains(item.second.tags, "Malicious"))
             maliciousMap[item.second.address] = true;
