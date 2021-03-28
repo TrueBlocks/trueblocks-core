@@ -403,13 +403,15 @@ class CFunctionTester : public CFunction {
 
         } else if (testType == "decode" || testType == "decode_raw") {
             cerr << endl << string_q(50, '-') << endl;
-            decodeRLP(inputs, getSignature(SIG_CANONICAL), inputBytes);
+            bool ret = decodeRLP(inputs, getSignature(SIG_CANONICAL), inputBytes);
             for (auto param : inputs) {
                 if (!result.empty())
                     result += ", ";
                 result += param.value;
             }
             result = trim(result);
+            if (result.empty() && !ret)
+                result = "fail";
             cout << (expected == result ? bGreen : bRed);
             cout << "expected: " << expected << " ?" << endl;
             cout << "result:   " << result << " ? " << (expected == result) << endl;

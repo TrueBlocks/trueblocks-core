@@ -2197,6 +2197,41 @@ expected: [{"val_1":"0x370e4d84b8e8bf093856d23cb4043b095214c334", "val_2":"50435
 result:   [{"val_1":"0x370e4d84b8e8bf093856d23cb4043b095214c334", "val_2":"5043588733683792621175946945497712124696440476173407745608908406314328985642"}, {"val_1":"0x370e4d84b8e8bf093856d23cb4043b095214c334", "val_2":"0"}], 0, {"val_1":"false", "val_2":"52", "val_3":"42", "val_4":"314313455637166220426001862249185256324161913652"}, ? 0
 testName: decode complicated multi level tuple
 passed 'func.doTest(line)' is true
+--------------------------------------------------------------------------------
+	000.003 test_3                           ==> 
+line: decode|an older example of arrays with bogus data|function multiTransfer(address[],uint256[])|0xdd2f1e6e498202e86d8f5442af596580a4f03c2c5088d623ba0fcf0131e0897a91734a4d83596aa0000000000000000000000000000000000000000000000000000000000bebc2000000000000000000000000000000000000000000000000000000000011e1a300|fail
+testType: decode
+testName: an older example of arrays with bogus data
+testSig: function multiTransfer(address[],uint256[]) --> multiTransfer(address[],uint256[])
+
+--------------------------------------------------
+TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
+TIME ~ CLOCK - <INFO>  : typeList: : multiTransfer(address[],uint256[])
+TIME ~ CLOCK - <INFO>  : inputStr: : 0xdd2f1e6e498202e86d8f5442af596580a4f03c2c5088d623ba0fcf0131e0897a91734a4d83596aa0000000000000000000000000000000000000000000000000000000000bebc2000000000000000000000000000000000000000000000000000000000011e1a300
+
+level: 1
+readOffset: 0
+objectStart: 0
+params.size: 2
+  0: address[] val_0 = <>
+  1: uint256[] val_1 = <>
+dataArray.size: 4
+  0 (0x000) dd2f1e6e498202e8...a4f03c2c5088d623ba0fcf0131e0897a <=o <-r
+  1 (0x020) 91734a4d83596aa0...00000000000000000000000000000000
+  2 (0x040) 000000000bebc200...00000000000000000000000000000000
+  3 (0x060) 0000000011e1a300...0000000011e1a300
+
+==================================================
+TIME ~ CLOCK - <INFO>  : Section-09:([]): address[]
+TIME ~ CLOCK - <WARNG> : { "error8": "decodeAnObject: countLoc(418973819366999115) > dataArray.size(4)"},
+  0: address[] val_0 = <>
+  1: uint256[] val_1 = <>
+==================================================
+
+expected: fail ?
+result:   fail ? 1
+testName: an older example of arrays with bogus data
+passed 'func.doTest(line)' is true
 ...passed
 
 Done...
