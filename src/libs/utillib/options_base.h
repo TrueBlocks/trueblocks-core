@@ -119,7 +119,6 @@ class COptionsBase {
     static bool forEverySpecialBlock(NAMEVALFUNC func, void* data);
 
     // supporting named accounts
-    CAccountNameArray namedAccounts;
     bool getNamedAccount(CAccountName& acct, const string_q& addr);
     bool loadNames(void);
     string_q findNameByAddress(const string_q& addr);

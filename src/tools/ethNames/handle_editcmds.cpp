@@ -57,10 +57,11 @@ bool COptions::processEditCommand(CStringArray& terms, bool to_custom) {
     explode(fields, fmt, '\t');
 
     CAccountNameArray outArray;
-    outArray.reserve(namedAccounts.size() + 2);
+    outArray.reserve(namesMap.size() + 2);
 
     bool edited = false;
-    for (auto name : namedAccounts) {
+    for (auto mapItem : namesMap) {
+        CAccountName name = mapItem.second;
         if (name.address == target.address) {
             if (crud == "remove") {
                 // do nothing (i.e. skip this name)
@@ -110,7 +111,7 @@ bool COptions::processEditCommand(CStringArray& terms, bool to_custom) {
 
     string_q dest = to_custom ? configPath("names/names_custom.tab") : configPath("names/names.tab");
     stringToAsciiFile(dest, dataStream2.str());
-    namedAccounts.clear();
+    namesMap.clear();
     ::remove(getCachePath("names/names.bin").c_str());
     LOG4("Finished writing...");
 

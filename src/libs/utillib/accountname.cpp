@@ -505,5 +505,27 @@ const char* STR_DISPLAY_ACCOUNTNAME =
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
+//---------------------------------------------------------------------------
+extern CArchive& operator>>(CArchive& archive, CAccountNameMap& nameMap) {
+    uint64_t count;
+    archive >> count;
+    for (size_t i = 0; i < count; i++) {
+        ASSERT(i < array.capacity());
+        CAccountName item;
+        item.Serialize(archive);
+        nameMap[item.address] = item;
+    }
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+extern CArchive& operator<<(CArchive& archive, const CAccountNameMap& nameMap) {
+    uint64_t count = nameMap.size();
+    archive << count;
+    for (auto item : nameMap) {
+        item.second.SerializeC(archive);
+    }
+    return archive;
+}
 // EXISTING_CODE
 }  // namespace qblocks

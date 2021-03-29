@@ -218,7 +218,7 @@ bool COptionsBase::loadNames(void) {
     if (getEnvStr("NO_NAMES") == "true")
         EXIT_NOMSG8(true);
 
-    if (namedAccounts.size() > 0)
+    if (namesMap.size() > 0)
         EXIT_NOMSG8(true);
 
     LOG8("Entering loadNames...");
@@ -247,12 +247,12 @@ bool COptionsBase::loadNames(void) {
         LOG8("Reading names from binary cache");
         CArchive nameCache(READING_ARCHIVE);
         if (nameCache.Lock(binFile, modeReadOnly, LOCK_NOWAIT)) {
-            nameCache >> namedAccounts;
-            for (auto item : namedAccounts) {
-                if (contains(item.tags, "Malicious"))
-                    maliciousMap[item.address] = true;
-                if (contains(item.tags, "Airdrop"))
-                    airdropMap[item.address] = true;
+            nameCache >> namesMap;
+            for (const auto& item : namesMap) {
+                if (contains(item.second.tags, "Malicious"))
+                    maliciousMap[item.second.address] = true;
+                if (contains(item.second.tags, "Airdrop"))
+                    airdropMap[item.second.address] = true;
             }
             nameCache.Release();
             EXIT_NOMSG8(true);
@@ -275,7 +275,6 @@ bool COptionsBase::loadNames(void) {
     // theMap is already sorted by address, so simply copy it into the array
     for (auto item : theMap) {
         namesMap[item.first] = item.second;
-        namedAccounts.push_back(item.second);
         if (contains(item.second.tags, "Malicious"))
             maliciousMap[item.second.address] = true;
         if (contains(item.second.tags, "Airdrop"))
@@ -285,7 +284,7 @@ bool COptionsBase::loadNames(void) {
     LOG8("Writing binary cache");
     CArchive nameCache(WRITING_ARCHIVE);
     if (nameCache.Lock(binFile, modeWriteCreate, LOCK_CREATE)) {
-        nameCache << namedAccounts;
+        nameCache << namesMap;
         nameCache.Release();
     }
     LOG8("Finished writing binary cache...");
@@ -301,8 +300,9 @@ bool COptionsBase::forEveryNamedAccount(NAMEFUNC func, void* data) {
     if (!func)
         return false;
 
-    for (auto namedAccount : namedAccounts) {
-        if (!(*func)(namedAccount, data))
+    for (auto mapItem : namesMap) {
+        CAccountName item = mapItem.second;
+        if (!(*func)(item, data))
             return false;
     }
 
@@ -314,13 +314,11 @@ bool COptionsBase::getNamedAccount(CAccountName& acct, const string_q& addr) {
     if (!loadNames())
         return false;
 
-    CAccountName search;
-    search.address = addr;
-    ResultPair range = equal_range(namedAccounts.begin(), namedAccounts.end(), search);
-    if (range.first == namedAccounts.end() || range.first->address != addr)
-        return false;
-    acct = *range.first;
-    return true;
+    if (namesMap[addr].address == addr) {
+        acct = namesMap[addr];
+        return true;
+    }
+    return false;
 }
 
 //-----------------------------------------------------------------------

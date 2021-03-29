@@ -196,5 +196,7 @@ extern const char* STR_DISPLAY_ACCOUNTNAME;
 // EXISTING_CODE
 typedef map<address_t, CAccountName> CAccountNameMap;
 extern string_q getCachePath(const string_q& _part);
+extern CArchive& operator>>(CArchive& archive, CAccountNameMap& nameMap);
+extern CArchive& operator<<(CArchive& archive, const CAccountNameMap& nameMap);
 // EXISTING_CODE
 }  // namespace qblocks

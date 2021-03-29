@@ -1186,12 +1186,11 @@ COptionsBase::COptionsBase(void) {
     hiDown = (isTestMode() ? "" : cOff);
     arguments.clear();
     commandLines.clear();
-    namedAccounts.clear();
+    namesMap.clear();
     errStrs.clear();
     prefundWeiMap.clear();
     maliciousMap.clear();
     airdropMap.clear();
-    namesMap.clear();
     pParams = NULL;
     cntParams = 0;
     coutSaved = NULL;

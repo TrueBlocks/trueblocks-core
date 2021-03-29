@@ -76,7 +76,7 @@ void prettyPrint(CParameterArray& params, const CStringArray& dataArray, const s
 
 //------------------------------------------------------------------------------------------------
 #define LOG_DECODE_ERR(tag, l1, v1, t, l2, v2)                                                                         \
-    {                                                                                                                  \
+    if (isTestMode()) {                                                                                                \
         ostringstream es;                                                                                              \
         es << "{ \"error" << tag << "\": \"decodeAnObject: " << l1 << "(" << v1 << ") " << t << " " << l2 << "(" << v2 \
            << ")\"},";                                                                                                 \
@@ -91,6 +91,7 @@ void prettyPrint(CParameterArray& params, const CStringArray& dataArray, const s
         LOG_TEST(string_q("Section-") + (a) + ":(" + (b) + ")", param.type, false);                                    \
     }
 
+//------------------------------------------------------------------------------------------------
 #define LOG_TEST_PARAMS(p)                                                                                             \
     if (isTestMode()) {                                                                                                \
         cerr << prettyPrintParams((p));                                                                                \

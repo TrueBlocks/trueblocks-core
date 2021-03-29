@@ -429,7 +429,8 @@ void COptions::applyFilter() {
                 addIfUnique(item);
             }
         } else {
-            for (auto item : namedAccounts) {
+            for (auto mapItem : namesMap) {
+                CAccountName item = mapItem.second;
                 if (item.is_custom)
                     addIfUnique(item);
             }
@@ -438,7 +439,8 @@ void COptions::applyFilter() {
 
     //------------------------
     if (types & NAMED) {
-        for (auto item : namedAccounts) {
+        for (auto mapItem : namesMap) {
+            CAccountName item = mapItem.second;
             if (!item.is_custom && !item.is_prefund && !startsWith(item.tags, "81-Other"))
                 addIfUnique(item);
         }
@@ -446,7 +448,8 @@ void COptions::applyFilter() {
 
     //------------------------
     if (types & PREFUND) {
-        for (auto item : namedAccounts) {
+        for (auto mapItem : namesMap) {
+            CAccountName item = mapItem.second;
             if (item.is_prefund)
                 addIfUnique(item);
         }
@@ -454,7 +457,8 @@ void COptions::applyFilter() {
 
     //------------------------
     if (!isTestMode() && (types & OTHER)) {
-        for (auto item : namedAccounts) {
+        for (auto mapItem : namesMap) {
+            CAccountName item = mapItem.second;
             if (startsWith(item.tags, "81-Other"))
                 addIfUnique(item);
         }
