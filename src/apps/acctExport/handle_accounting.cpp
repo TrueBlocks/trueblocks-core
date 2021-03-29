@@ -41,7 +41,7 @@ bool COptions::handle_accounting(void) {
                 block.timestamp = trans.timestamp = (timestamp_t)expContext().tsMemMap[(app->blk * 2) + 1];
 
                 // This data isn't stored, so we need to recreate it
-                if (accounting || statements) {
+                if (accounting) {
                     blknum_t next = i < apps.size() - 1 ? apps[i + 1].blk : NOPOS;
                     CReconciliation nums;
                     nums.blockNumber = trans.blockNumber;
@@ -54,6 +54,9 @@ bool COptions::handle_accounting(void) {
                     trans.statements.clear();
                     CReconciliationOutput st(nums);
                     trans.statements.push_back(st);
+                    if (tokens) {
+                        trans.statements.push_back(st);
+                    }
                     lastStatement = nums;
                 }
 
@@ -96,7 +99,7 @@ bool COptions::handle_accounting(void) {
                 trans.pBlock = &block;
                 trans.timestamp = block.timestamp = (timestamp_t)expContext().tsMemMap[(app->blk * 2) + 1];
 
-                if (accounting || statements) {
+                if (accounting) {
                     blknum_t next = i < apps.size() - 1 ? apps[i + 1].blk : NOPOS;
                     CReconciliation nums;
                     nums.blockNumber = trans.blockNumber;

@@ -19,8 +19,8 @@ static const COption params[] = {
     COption("receipts", "r", "", OPT_SWITCH, "export receipts instead of transaction list"),
     COption("logs", "l", "", OPT_SWITCH, "export logs instead of transaction list"),
     COption("traces", "t", "", OPT_SWITCH, "export traces instead of transaction list"),
-    COption("statements", "T", "", OPT_SWITCH, "export reconcilations instead of transaction list"),
     COption("accounting", "C", "", OPT_SWITCH, "export accounting records instead of transaction list"),
+    COption("tokens", "O", "", OPT_SWITCH, "export accounting for ERC 20 tokens (assumes ETH accounting as above)"),
     COption("articulate", "a", "", OPT_SWITCH, "articulate transactions, traces, logs, and outputs"),
     COption("cache_txs", "i", "", OPT_SWITCH, "write transactions to the cache (see notes)"),
     COption("cache_traces", "R", "", OPT_SWITCH, "write traces to the cache (see notes)"),
@@ -89,11 +89,11 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-t" || arg == "--traces") {
             traces = true;
 
-        } else if (arg == "-T" || arg == "--statements") {
-            statements = true;
-
         } else if (arg == "-C" || arg == "--accounting") {
             accounting = true;
+
+        } else if (arg == "-O" || arg == "--tokens") {
+            tokens = true;
 
         } else if (arg == "-a" || arg == "--articulate") {
             articulate = true;
@@ -185,8 +185,8 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST_BOOL("receipts", receipts);
     LOG_TEST_BOOL("logs", logs);
     LOG_TEST_BOOL("traces", traces);
-    LOG_TEST_BOOL("statements", statements);
     LOG_TEST_BOOL("accounting", accounting);
+    LOG_TEST_BOOL("tokens", tokens);
     LOG_TEST_BOOL("articulate", articulate);
     LOG_TEST_BOOL("cache_txs", cache_txs);
     LOG_TEST_BOOL("cache_traces", cache_traces);
@@ -239,13 +239,13 @@ bool COptions::parseArguments(string_q& command) {
     if (count && (receipts || logs || traces || emitter || factory))
         EXIT_USAGE("--count option is only available with --appearances option.");
 
-    if ((accounting || statements) && (addrs.size() != 1))
+    if ((accounting) && (addrs.size() != 1))
         EXIT_USAGE("You may only use --accounting option with a single address.");
 
-    if ((accounting || statements) && freshen)
+    if ((accounting) && freshen)
         EXIT_USAGE("Do not use the --accounting option with --freshen.");
 
-    if ((accounting || statements) && (appearances || logs || traces || receipts))
+    if ((accounting) && (appearances || logs || traces || receipts))
         EXIT_USAGE("Do not use the --accounting option with other options.");
 
     // Where will we start?
@@ -351,8 +351,8 @@ void COptions::Init(void) {
     receipts = false;
     logs = false;
     traces = false;
-    statements = false;
     accounting = false;
+    tokens = false;
     articulate = false;
     // clang-format off
     cache_txs = getGlobalConfig("acctExport")->getConfigBool("settings", "cache_txs", false);
@@ -522,8 +522,6 @@ bool COptions::setDisplayFormatting(void) {
                 expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["logentry_fmt"]);
             } else if (appearances) {
                 expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["appearancedisplay_fmt"]);
-            } else if (statements) {
-                expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["reconciliation_fmt"]);
             } else {
                 expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["transaction_fmt"]);
             }
@@ -532,7 +530,7 @@ bool COptions::setDisplayFormatting(void) {
         if (freshen)
             expContext().exportFmt = NONE1;
 
-        if (accounting || statements) {
+        if (accounting) {
             expContext().accountedFor = allMonitors[0].address;
             bytesOnly = substitute(expContext().accountedFor, "0x", "");
             articulate = true;

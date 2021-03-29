@@ -21,7 +21,6 @@ Please contact us at [sales@greathill.com](mailto:sales@greathill.com) for more 
 | -r | --receipts | export receipts instead of transaction list |
 | -l | --logs | export logs instead of transaction list |
 | -t | --traces | export traces instead of transaction list |
-| -T | --statements | export reconcilations instead of transaction list |
 | -C | --accounting | export accounting records instead of transaction list |
 | -a | --articulate | articulate transactions, traces, logs, and outputs |
 | -i | --cache_txs | write transactions to the cache (see notes) |

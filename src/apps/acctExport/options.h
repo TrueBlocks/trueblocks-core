@@ -21,8 +21,8 @@ class COptions : public CAbiOptions {
     bool receipts;
     bool logs;
     bool traces;
-    bool statements;
     bool accounting;
+    bool tokens;
     bool articulate;
     bool cache_txs;
     bool cache_traces;
@@ -91,7 +91,6 @@ class COptions : public CAbiOptions {
     bool handle_appearances(void);
     bool handle_logs(void);
     bool handle_receipts(void);
-    bool handle_statements(void);
     bool handle_traces(void);
     bool handle_clean(void);
     bool handle_rm(const CAddressArray& addrs);

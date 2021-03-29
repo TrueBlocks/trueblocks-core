@@ -22,6 +22,7 @@ static const COption params[] = {
     // clang-format off
     COption("transactions", "", "list<tx_id>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)"),  // NOLINT
     COption("articulate", "a", "", OPT_SWITCH, "articulate the transactions if an ABI is found for the 'to' address"),
+    COption("statediff", "d", "", OPT_SWITCH, "export stateDiff traces for the transaction(s)"),
     COption("count", "c", "", OPT_SWITCH, "show the number of traces for the transaction only (fast)"),
     COption("skip_ddos", "s", "", OPT_HIDDEN | OPT_TOGGLE, "skip over 2018 ddos during export ('on' by default)"),
     COption("max_traces", "m", "<uint64>", OPT_HIDDEN | OPT_FLAG, "if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250)"),  // NOLINT
@@ -48,6 +49,9 @@ bool COptions::parseArguments(string_q& command) {
             // BEG_CODE_AUTO
         } else if (arg == "-a" || arg == "--articulate") {
             articulate = true;
+
+        } else if (arg == "-d" || arg == "--statediff") {
+            statediff = true;
 
         } else if (arg == "-c" || arg == "--count") {
             count = true;
@@ -79,6 +83,7 @@ bool COptions::parseArguments(string_q& command) {
     // BEG_DEBUG_DISPLAY
     // LOG_TEST("transactions", transactions, (transactions == NOPOS));
     LOG_TEST_BOOL("articulate", articulate);
+    LOG_TEST_BOOL("statediff", statediff);
     LOG_TEST_BOOL("count", count);
     LOG_TEST_BOOL("skip_ddos", skip_ddos);
     LOG_TEST("max_traces", max_traces, (max_traces == 250));
@@ -182,6 +187,7 @@ void COptions::Init(void) {
 
     // BEG_CODE_INIT
     articulate = false;
+    statediff = false;
     count = false;
     // clang-format off
     skip_ddos = getGlobalConfig("getTrace")->getConfigBool("settings", "skip_ddos", true);

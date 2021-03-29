@@ -63,8 +63,6 @@ bool visitTransaction(CTransaction& trans, void* data) {
         queryRawTrace(result, trans.getValueByName("hash"));
         if (!isText && !opt->first)
             cout << ",";
-        replace(result, "[", "");         // not sure why we need this
-        replaceReverse(result, "]", "");  // not sure why we need this
         cout << result;
         opt->first = false;
         return true;

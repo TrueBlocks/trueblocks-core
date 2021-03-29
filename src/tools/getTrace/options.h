@@ -25,6 +25,7 @@ class COptions : public CAbiOptions {
   public:
     // BEG_CODE_DECLARE
     bool articulate;
+    bool statediff;
     bool count;
     bool skip_ddos;
     uint64_t max_traces;

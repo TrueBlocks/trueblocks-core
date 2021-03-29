@@ -41,23 +41,6 @@ bool COptions::handle_logs(void) {
                 trans.pBlock = &block;
                 block.timestamp = trans.timestamp = (timestamp_t)expContext().tsMemMap[(app->blk * 2) + 1];
 
-                // This data isn't stored, so we need to recreate it
-                if (accounting || statements) {
-                    blknum_t next = i < apps.size() - 1 ? apps[i + 1].blk : NOPOS;
-                    CReconciliation nums;
-                    nums.blockNumber = trans.blockNumber;
-                    nums.transactionIndex = trans.transactionIndex;
-                    nums.timestamp = trans.timestamp;
-                    CStringArray corrections;
-                    nums.reconcile(corrections, lastStatement, next, &trans);
-                    // trans.reconciliations.clear();
-                    trans.reconciliations.push_back(nums);
-                    trans.statements.clear();
-                    CReconciliationOutput st(nums);
-                    trans.statements.push_back(st);
-                    lastStatement = nums;
-                }
-
                 markNeighbors(trans);
                 articulateAll(trans);
 
@@ -95,21 +78,6 @@ bool COptions::handle_logs(void) {
 
                 trans.pBlock = &block;
                 trans.timestamp = block.timestamp = (timestamp_t)expContext().tsMemMap[(app->blk * 2) + 1];
-
-                if (accounting || statements) {
-                    blknum_t next = i < apps.size() - 1 ? apps[i + 1].blk : NOPOS;
-                    CReconciliation nums;
-                    nums.blockNumber = trans.blockNumber;
-                    nums.transactionIndex = trans.transactionIndex;
-                    nums.timestamp = trans.timestamp;
-                    CStringArray corrections;
-                    nums.reconcile(corrections, lastStatement, next, &trans);
-                    trans.reconciliations.push_back(nums);
-                    trans.statements.clear();
-                    CReconciliationOutput st(nums);
-                    trans.statements.push_back(st);
-                    lastStatement = nums;
-                }
 
                 markNeighbors(trans);
                 articulateAll(trans);

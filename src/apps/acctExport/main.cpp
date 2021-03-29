@@ -28,8 +28,7 @@ int main(int argc, const char* argv[]) {
                         : (options.receipts
                                ? GETRUNTIME_CLASS(CReceipt)->m_ClassName
                                : (options.logs ? GETRUNTIME_CLASS(CLogEntry)->m_ClassName
-                                               : (options.statements ? GETRUNTIME_CLASS(CReconciliation)->m_ClassName
-                                                                     : GETRUNTIME_CLASS(CTransaction)->m_ClassName)))));
+                                               : GETRUNTIME_CLASS(CTransaction)->m_ClassName))));
         // clang-format on
 
         if (once)
@@ -58,9 +57,6 @@ int main(int argc, const char* argv[]) {
             } else if (options.logs) {
                 options.handle_logs();
 
-            } else if (options.statements) {
-                options.handle_statements();
-
             } else {
                 ASSERT(accounting);
                 options.handle_accounting();
@@ -85,8 +81,7 @@ int main(int argc, const char* argv[]) {
 
     cout << exportPostamble(options.errors, expContext().fmtMap["meta"]);
 
-    if (!isTestMode() && !options.freshen && !options.count && !options.accounting && !options.logs &&
-        !options.statements) {
+    if (!isTestMode() && !options.freshen && !options.count && !options.accounting && !options.logs) {
         ostringstream oss;
         oss << "Exported " << padNum6T(options.nProcessed) << " ";
         oss << (!options.className.empty() ? (plural(options.className) + " from ") : "of ");
