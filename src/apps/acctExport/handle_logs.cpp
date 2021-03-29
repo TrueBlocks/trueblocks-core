@@ -5,8 +5,6 @@
  *------------------------------------------------------------------------*/
 #include "options.h"
 
-#define FREQ 5
-
 //-----------------------------------------------------------------------
 bool COptions::handle_logs(void) {
     ENTER("handle_logs");
@@ -45,7 +43,7 @@ bool COptions::handle_logs(void) {
                 articulateAll(trans);
 
                 HIDE_FIELD(CFunction, "message");
-                if (!isTestMode() && !(i % FREQ)) {
+                if (!isTestMode() && !(i % 5)) {
                     blknum_t current = first_record + nProcessed;
                     blknum_t goal = min(first_record + max_records, nTransactions);
                     ostringstream post;
@@ -56,7 +54,7 @@ bool COptions::handle_logs(void) {
             } else {
                 if (app->blk == 0) {
                     address_t addr = prefundAddrMap[app->txid];
-                    trans.loadTransAsPrefund(app->blk, app->txid, addr, prefundWeiMap[addr]);
+                    trans.loadTransAsPrefund(app->blk, app->txid, addr, expContext().prefundMap[addr]);
 
                 } else if (app->txid == 99997 || app->txid == 99999) {
                     trans.loadTransAsBlockReward(app->blk, app->txid, blkRewardMap[app->blk]);
@@ -86,7 +84,7 @@ bool COptions::handle_logs(void) {
                     writeTransToBinary(trans, txFilename);
 
                 HIDE_FIELD(CFunction, "message");
-                if (!isTestMode() && !(i % FREQ)) {
+                if (!isTestMode() && !(i % 5)) {
                     blknum_t current = first_record + nProcessed;
                     blknum_t goal = min(first_record + max_records, nTransactions);
                     ostringstream post;

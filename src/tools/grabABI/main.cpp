@@ -32,7 +32,7 @@ int main(int argc, const char* argv[]) {
             cout << exportPreamble(expContext().fmtMap["header"],
                                    isApiMode() ? GETRUNTIME_CLASS(CFunction) : GETRUNTIME_CLASS(CAbi));
         bool isText = (expContext().exportFmt == (TXT1 | CSV1));
-        if (isText && !options.isNoHeader)
+        if (isText && !options.noHeader)
             cout << expContext().fmtMap["header"] << endl;
 
         for (auto func : options.abi_spec.interfaceArray()) {

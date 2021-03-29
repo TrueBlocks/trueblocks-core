@@ -39,6 +39,7 @@ extern bool getTransaction(CTransaction& trans, const hash_t& blockHash, txnum_t
 extern bool getReceipt(CReceipt& receipt, const hash_t& txHash);
 extern bool getLogEntry(CLogEntry& log, const hash_t& txHash);
 extern void getTraces(CTraceArray& traces, const hash_t& txHash);
+extern void getStateDiffAddrs(CAddressArray& addrs, const hash_t& txHash);
 extern void getTracesByFilter(CTraceArray& traces, const CTraceFilter& filter);
 extern size_t getTraceCount(const hash_t& hashIn);
 extern bool loadTraces(CTransaction& trans, blknum_t bn, blknum_t txid, bool useCache, bool skipDdos);
@@ -60,6 +61,7 @@ extern bool queryRawUncle(string_q& results, const string_q& blockNum, uint64_t 
 extern bool queryRawTransaction(string_q& results, const hash_t& txHash);
 extern bool queryRawReceipt(string_q& results, const hash_t& txHash);
 extern bool queryRawTrace(string_q& results, const hash_t& hashIn);
+extern bool queryRawStateDiff(string_q& results, const hash_t& hashIn);
 extern bool queryRawLogs(string_q& results, const CLogQuery& query);
 
 //-----------------------------------------------------------------------

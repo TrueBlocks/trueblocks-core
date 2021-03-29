@@ -218,7 +218,7 @@ bool COptions::parseArguments(string_q& command) {
 
     if (addr) {
         addr_only = true;
-        isNoHeader = true;
+        noHeader = true;
         format = "[{ADDRESS}]";
         searchFields = "[{ADDRESS}]\t[{NAME}]";
     }
@@ -299,8 +299,6 @@ void COptions::Init(void) {
 
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
-    setSorts(GETRUNTIME_CLASS(CBlock), GETRUNTIME_CLASS(CTransaction), GETRUNTIME_CLASS(CReceipt));
-
     establishFolder(getCachePath("names/"));
     CAccountName acct;
     getNamedAccount(acct, "0x0");  // loads names database

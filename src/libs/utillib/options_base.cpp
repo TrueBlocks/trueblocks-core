@@ -338,7 +338,7 @@ bool COptionsBase::standardOptions(string_q& cmdLine) {
 
     if (contains(cmdLine, "--no_header ")) {
         replaceAll(cmdLine, "--no_header ", "");
-        isNoHeader = true;
+        noHeader = true;
     }
 
     if (isEnabled(OPT_HELP) && (contains(cmdLine, "-h ") || contains(cmdLine, "--help "))) {
@@ -431,9 +431,6 @@ bool COptionsBase::standardOptions(string_q& cmdLine) {
         expContext().hexNums = true;
         expContext().quoteNums = true;
         expContext().asParity = true;
-        for (int i = 0; i < 5; i++)
-            if (sorts[i])
-                sorts[i]->sortFieldList();
     }
 
     cmdLine = trim(cmdLine);
@@ -511,7 +508,7 @@ void COptionsBase::configureDisplay(const string_q& tool, const string_q& dataTy
     expContext().fmtMap["meta"] = meta;
     expContext().fmtMap["format"] = cleanFmt(format);
     expContext().fmtMap["header"] = cleanFmt(format);
-    if (isNoHeader)
+    if (noHeader)
         expContext().fmtMap["header"] = "";
 }
 
@@ -533,6 +530,16 @@ bool COptionsBase::confirmUint(const string_q& name, uint64_t& value, const stri
     if (!isNumeral(arg))
         return usage("Value to --" + name + " parameter (" + arg + ") must be a valid unsigned integer.");
     value = str_2_Uint(arg);
+    return true;
+}
+
+//---------------------------------------------------------------------------------------------------
+bool COptionsBase::confirmUint(const string_q& name, uint32_t& value, const string_q& arg) const {
+    value = (uint32_t)NOPOS;
+    uint64_t temp;
+    if (!confirmUint(name, temp, arg))
+        return false;
+    value = (uint32_t)temp;
     return true;
 }
 
@@ -1176,19 +1183,20 @@ COptionsBase::COptionsBase(void) {
     isRaw = false;
     isVeryRaw = false;
     mocked = false;
-    isNoHeader = false;
+    noHeader = false;
     enableBits = OPT_DEFAULT;
     scanRange = make_pair(0, NOPOS);
-    for (int i = 0; i < 5; i++)
-        sorts[i] = NULL;
     hiUp1 = (isTestMode() ? "" : cYellow) + "  ";
     hiUp2 = (isTestMode() ? "" : cTeal);
     hiDown = (isTestMode() ? "" : cOff);
     arguments.clear();
+    usageErrs.clear();
+    notes.clear();
     commandLines.clear();
+
     namesMap.clear();
-    errStrs.clear();
-    prefundWeiMap.clear();
+    tokenMap.clear();
+    expContext().prefundMap.clear();
     maliciousMap.clear();
     airdropMap.clear();
     pParams = NULL;
@@ -1203,13 +1211,6 @@ COptionsBase::COptionsBase(void) {
 //--------------------------------------------------------------------------------
 COptionsBase::~COptionsBase(void) {
     closeRedirect();
-}
-
-//-----------------------------------------------------------------------
-void COptionsBase::setSorts(CRuntimeClass* c1, CRuntimeClass* c2, CRuntimeClass* c3) {
-    sorts[0] = c1;
-    sorts[1] = c2;
-    sorts[2] = c3;
 }
 
 //--------------------------------------------------------------------------------

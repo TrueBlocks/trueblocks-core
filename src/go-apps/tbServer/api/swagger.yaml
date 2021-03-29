@@ -85,14 +85,6 @@ paths:
         explode: true
         schema:
           type: boolean
-      - name: statements
-        in: query
-        description: export reconcilations instead of transaction list
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
       - name: accounting
         in: query
         description: export accounting records instead of transaction list

@@ -5,8 +5,6 @@
  *------------------------------------------------------------------------*/
 #include "options.h"
 
-#define FREQ 5
-
 //-----------------------------------------------------------------------
 bool COptions::handle_appearances(void) {
     ENTER("handle_appearances");

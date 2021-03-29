@@ -414,7 +414,6 @@ void COptions::Init(void) {
 
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
-    setSorts(GETRUNTIME_CLASS(CBlock), GETRUNTIME_CLASS(CTransaction), GETRUNTIME_CLASS(CReceipt));
     Init();
 
     CMonitorCount::registerClass();
@@ -443,7 +442,7 @@ bool COptions::setDisplayFormatting(void) {
         string_q format =
             getGlobalConfig("acctExport")->getConfigStr("display", "format", isText ? STR_DISPLAY_MONITORCOUNT : "");
         expContext().fmtMap["monitorcount_fmt"] = cleanFmt(format);
-        expContext().fmtMap["header"] = isNoHeader ? "" : cleanFmt(format);
+        expContext().fmtMap["header"] = noHeader ? "" : cleanFmt(format);
 
     } else {
         string_q hide = substitute(defHide, "|CLogEntry: data, topics", "");
@@ -513,7 +512,7 @@ bool COptions::setDisplayFormatting(void) {
         SHOW_FIELD(CTransaction, "traces");
 
         expContext().fmtMap["header"] = "";
-        if (!isNoHeader) {
+        if (!noHeader) {
             if (traces) {
                 expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["trace_fmt"]);
             } else if (receipts) {
@@ -556,6 +555,7 @@ bool COptions::setDisplayFormatting(void) {
             SHOW_FIELD(CReceipt, "isError");
         }
     }
+    articulate = (articulate && (!isTestMode() || getEnvStr("TEST_NO_ART") != "true"));
 
     // TODO(tjayrush): This doesn't work for some reason (see test case acctExport_export_logs.txt)
     if (!articulate)
@@ -618,7 +618,7 @@ bool COptions::freshen_internal(void) {
 // TODO(tjayrush): accounting must be for one monitor address - why?
 // TODO(tjayrush): accounting requires node balances - why?
 // TODO(tjayrush): Used to do this: if any ABI files was newer, re-read abi and re-articulate in cache
-// TODO(tjayrush): What does prefundAddrMap and prefundWeiMap do? Needs testing
+// TODO(tjayrush): What does prefundAddrMap and prefundMap do? Needs testing
 // TODO(tjayrush): What does blkRewardMap do? Needs testing
 // TODO(tjayrush): Reconciliation loads traces -- plus it reduplicates the isSuicide, isGeneration, isUncle shit
 // TODO(tjayrush): writeLastExport is really weird

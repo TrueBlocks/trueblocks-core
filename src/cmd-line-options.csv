@@ -6,8 +6,8 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,customizeable,c
 10220,apps,Accounts,export,acctExport,receipts,r,,false,false,true,true,header,switch,<boolean>,export receipts instead of transaction list
 10230,apps,Accounts,export,acctExport,logs,l,,false,false,true,true,header,switch,<boolean>,export logs instead of transaction list
 10240,apps,Accounts,export,acctExport,traces,t,,false,false,true,true,header,switch,<boolean>,export traces instead of transaction list
-10250,apps,Accounts,export,acctExport,statements,T,,false,false,true,true,header,switch,<boolean>,export reconcilations instead of transaction list
 10280,apps,Accounts,export,acctExport,accounting,C,,false,false,true,true,header,switch,<boolean>,export accounting records instead of transaction list
+10290,apps,Accounts,export,acctExport,tokens,O,,false,false,true,true,header,switch,<boolean>,export accounting for ERC 20 tokens (assumes ETH accounting as above)
 10310,apps,Accounts,export,acctExport,articulate,a,,false,false,true,true,header,switch,<boolean>,articulate transactions&#44; traces&#44; logs&#44; and outputs
 10320,apps,Accounts,export,acctExport,cache_txs,i,false,false,true,true,false,header,switch,<boolean>,write transactions to the cache (see notes)
 10330,apps,Accounts,export,acctExport,cache_traces,R,false,false,true,true,false,header,switch,<boolean>,write traces to the cache (see notes)
@@ -191,6 +191,7 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,customizeable,c
 
 13400,tools,Data,traces,getTrace,transactions,,,true,false,true,true,local,positional,list<tx_id>,a space-separated list of one or more transaction identifiers|(tx_hash&#44; bn.txID&#44; blk_hash.txID)
 13420,tools,Data,traces,getTrace,articulate,a,,false,false,true,true,header,switch,<boolean>,articulate the transactions if an ABI is found for the 'to' address
+13420,tools,Data,traces,getTrace,statediff,d,,false,false,true,true,header,switch,<boolean>,export stateDiff traces for the transaction(s)
 13440,tools,Data,traces,getTrace,count,c,,false,false,true,true,header,switch,<boolean>,show the number of traces for the transaction only (fast)
 13460,tools,Data,traces,getTrace,skip_ddos,s,true,false,true,false,false,header,toggle,<boolean>,skip over 2018 ddos during export ([{DEF}] by default)
 13480,tools,Data,traces,getTrace,max_traces,m,250,false,true,false,false,header,flag,<uint64>,if --skip_ddos is on&#44; this many traces defines what a ddos transaction|is (default = [{DEF}])

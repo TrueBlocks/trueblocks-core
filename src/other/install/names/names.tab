@@ -355,6 +355,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 31-Gitcoin Grants:Friends	0x0a82e6ef40cfcca9d5f651292194aa1c7fb2f9f4	the-3d		Gitcoin Website			false	false	false	false	false	false
 81-Other:DAO Whales	0x0a9de66f5fda96a5b40d1ca9cd18bfb298c67d1c	LargeDAOInteractor_230		WhaleWatch.io			false	false	false	false	false	false
 75-Early Actors	0x0aa8ae2485e31c024201bdf77bfa25021bc10c5b	Miner_0076_75		OnChain			false	false	false	false	false	false
+55-Defi	0x0aacfbec6a24756c20d41914f2caba817c0d8521	YAM	YAM	On chain	18		false	false	false	true	true	false
 32-Kickback:Contracts	0x0ab305931a717b8227d76de52e19a23066150360	Creating a Decentralized World Together		https://kickback.events/event/[{ADDRESS}]			false	false	false	true	false	false
 30-Contracts:Humanity DAO	0x0abd6688715d521182848f903f8ce270b36865cd	shakedog		https://www.humanitydao.org/humans			false	false	false	false	false	false
 50-Tokens:ERC20	0x0abdace70d3790235af448c88547603b945604ea	district0x Network Token	DNT	On chain	18	A network of decentralized markets and communities. Create, operate, and govern. Powered by Ethereum, Aragon, and IPFS.	false	false	false	true	true	false
@@ -1141,6 +1142,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 31-Gitcoin Grants:Friends	0x2482dc04ac628a4b2700c071bfee557fd86c91ea	amadeobrands		Gitcoin Website			false	false	false	false	false	false
 30-Contracts	0x248363c37452be586df09f4d961210fafb4059d2	Arbitrage Bot		0xTracker			false	false	false	true	false	false
 31-Gitcoin Grants:Grant	0x2489404ede77ec853c3345424bb919c9031856e2	Grant 0079 Lodestar -ethereum 2.0 Client		https://gitcoin.co/grants/79/lodestar-ethereum-20-client			false	false	false	false	false	false
+55-Defi	0x24a6a37576377f63f194caa5f518a60f45b42921	Float Bank	BANK	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x24a77c1f17c547105e14813e517be06b0040aa76	Live Stars Token	LIVE	On chain	18		false	false	false	true	true	false
 32-Kickback:Contracts	0x24aa98be2879922088e766094f4d57c3cfe2b9b6	Staking 4 Fitness		https://kickback.events/event/[{ADDRESS}]			false	false	false	true	false	false
 31-Gitcoin Grants:Friends	0x24acfb5dd795b35f7687f3c0fe965e92cff56c4d	donutjr		Gitcoin Website			false	false	false	false	false	false
@@ -3043,6 +3045,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x671abbe5ce652491985342e85428eb1b07bc6c64	Quantum	QAU	On chain	8	Quantum aims to be a deflationary currency.	false	false	false	true	true	false
 31-Gitcoin Grants:Friends	0x67201cb74b974b43f8083d32e290dca1eacd9382	askeluv		Gitcoin Website			false	false	false	false	false	false
 50-Tokens:ERC20	0x672a1ad4f667fb18a333af13667aa0af1f5b5bdd	Verify Token	CRED	On chain	18	A distributed reputation protocol built on the Ethereum blockchain.	false	false	false	true	true	false
+55-Defi	0x673b95d277ef022e5efaf9f167ffdfab36991738	Float Protocol: YAM Phase 2 Pool					false	false	false	true	false	false
 50-Tokens:ERC20	0x6745fab6801e376cd24f03572b9c9b0d4edddccf	Sense	SENSE	On chain	8	Sense creates blockchain based smart contracts in chat and rewards humans for the contributions they make to one another conversationally, across Sensay and other messenger applications.	false	false	false	true	true	false
 81-Other:DAO Related	0x674f70f8a9628ade117ccf7b6bc25df152d2e63c	Control_Account_0x674f70		The DAO			false	false	false	false	false	false
 50-Tokens:ERC20	0x6758b7d441a9739b98552b373703d8d3d14f9e62	POA ERC20 on Foundation	POA20	On chain	18	POA Network is an Ethereum-based platform that offers an open-source framework for smart contracts.	false	false	false	true	true	false
@@ -4298,6 +4301,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 30-Contracts:Set Protocol Wrappers	0x9378ad514c00e4869656ee27b634d852dd48fead	Taker Wallet Wrapper None		https://github.com/SetProtocol/set-protocol-contracts			false	false	false	true	false	false
 31-Gitcoin Grants:Friends	0x938475992a3ceff5258a783cd71d80ff3fd0fa45	worix		Gitcoin Website			false	false	false	false	false	false
 31-Gitcoin Grants:Grant	0x9384eb57f892cce158c9ad5446d815cc7584d42b	Grant 0939 Agency		https://gitcoin.co/grants/939/agency			false	false	false	false	false	false
+55-Defi	0x938625591adb4e865b882377e2c965f9f9b85e34	SushiSwap LP Token	SLP	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x9389434852b94bbad4c8afed5b7bdbc5ff0c2275	TTC	TTC	On chain	18		false	false	false	true	true	false
 31-Gitcoin Grants:Friends	0x93903dcbb0f0be5ac528238e9a10f642e401d569	peppilittera		Gitcoin Website			false	false	false	false	false	false
 91-Known	0x93916fa230873e168ead051e4c16f76382b535a5	Ida Jonsson and Simon Saarinen		TrueBlocks.io			false	false	false	false	false	false
@@ -6003,6 +6007,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 60-Airdrops	0xd037a81b22e7f814bc6f87d50e5bd67d8c329fa2	EMO tokens Airdrop	EMO	On chain	18		false	false	false	true	true	false
 31-Gitcoin Grants:Friends	0xd046b3c521c0f5513c8a47eb3c2011684ea80b27	phabc		Gitcoin Website			false	false	false	false	false	false
 30-Contracts:Humanity DAO	0xd04becea681bec713c013078de3858ee15fce327	micah_warren		https://www.humanitydao.org/humans			false	false	false	false	false	false
+55-Defi	0xd04f4759a2cc28a5ae33287534caa4dfce90b9c3	Float Protocol: BANK-ETH sLP Phase 2 Pool					false	false	false	true	false	false
 31-Gitcoin Grants:Friends	0xd05261207be10f95e431c6ca9770ce988b7faa93	pioul		Gitcoin Website			false	false	false	false	false	false
 81-Other	0xd05d56acd892f33010d93ddf6d9593511b618946	Dgxswap		EtherScan.io			false	false	false	true	false	false
 50-Tokens:ERC20	0xd061d61a4d941c39e5453435b6345dc261c2fce0	Curve.fi: Token Minter		EtherScan.io			false	false	false	true	false	false

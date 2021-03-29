@@ -279,6 +279,22 @@ void getTraces(CTraceArray& traces, const hash_t& hash) {
     }
 }
 
+//--------------------------------------------------------------
+void getStateDiffAddrs(CAddressArray& addrs, const hash_t& hash) {
+    string_q str;
+    queryRawStateDiff(str, hash);
+    cout << str << endl;
+    // CRPCResult generic;
+    // generic.parseJson3(str);  // pull out the result
+    // generic.result = cleanUpJson((char*)generic.result.c_str());  // NOLINT
+    // CTrace trace;
+    // diffs.clear();
+    // while (trace.parseJson4(generic.result)) {
+    //     diffs.push_back(trace);
+    //     trace = CTrace();  // reset
+    // }
+}
+
 //-----------------------------------------------------------------------
 bool loadTraces(CTransaction& trans, blknum_t bn, blknum_t txid, bool useCache, bool skipDdos) {
     string_q trcFilename = getBinaryCacheFilename(CT_TRACES, bn, txid, "");
@@ -475,6 +491,12 @@ bool queryRawReceipt(string_q& results, const hash_t& txHash) {
 //-------------------------------------------------------------------------
 bool queryRawTrace(string_q& trace, const string_q& hashIn) {
     trace = "[" + callRPC("trace_transaction", "[\"" + str_2_Hash(hashIn) + "\"]", true) + "]";
+    return true;
+}
+
+//-------------------------------------------------------------------------
+bool queryRawStateDiff(string_q& diffs, const string_q& hashIn) {
+    diffs = "[" + callRPC("trace_replayTransaction", "[\"" + str_2_Hash(hashIn) + "\",[\"stateDiff\"]]", true) + "]";
     return true;
 }
 
@@ -1122,29 +1144,29 @@ string_q exportPostamble(const CStringArray& errorsIn, const string_q& extra) {
     for (auto curlError : getCurlContext()->curlErrors)
         errors.push_back(substitute(substitute(curlError, "\"", ""), "\n", ""));
 
-    ostringstream errStrs;
+    ostringstream errStream;
     bool first = true;
     for (auto error : errors) {
         string_q msg = (isText ? STR_ERROR_MSG_TXT : STR_ERROR_MSG_JSON);
         if (!first) {
             if (isText)
-                errStrs << endl;
+                errStream << endl;
             else
-                errStrs << ", ";
+                errStream << ", ";
         }
-        errStrs << substitute(substitute(substitute(msg, "[MSG]", error), "{", cRed), "}", cOff);
+        errStream << substitute(substitute(substitute(msg, "[MSG]", error), "{", cRed), "}", cOff);
         first = false;
     }
 
     if (isText)
-        return errStrs.str();  // only errors are reported for text or csv
+        return errStream.str();  // only errors are reported for text or csv
     ASSERT(fmt == JSON1 || fmt == API1);
 
     ostringstream os;
     os << "]";  // finish the data array (or the error array)...
 
-    if (!errStrs.str().empty())
-        os << ", \"errors\": [\n" << errStrs.str() << "\n]";
+    if (!errStream.str().empty())
+        os << ", \"errors\": [\n" << errStream.str() << "\n]";
 
     if (fmt == JSON1)
         return os.str() + " }";

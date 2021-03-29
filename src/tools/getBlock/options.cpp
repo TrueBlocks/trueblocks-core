@@ -192,7 +192,7 @@ bool COptions::parseArguments(string_q& command) {
             expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(STR_FORMAT_FILTER_JSON);
         }
     }
-    if (isNoHeader)
+    if (noHeader)
         expContext().fmtMap["header"] = "";
 
     return true;
@@ -220,7 +220,6 @@ void COptions::Init(void) {
 
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
-    setSorts(GETRUNTIME_CLASS(CBlock), GETRUNTIME_CLASS(CTransaction), GETRUNTIME_CLASS(CReceipt));
     Init();
     first = true;
     expContext().exportFmt = NONE1;

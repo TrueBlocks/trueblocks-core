@@ -15,7 +15,7 @@
 //--------------------------------------------------------------------
 void COptions::finishClean(CAccountName& account) {
     LOG_INFO("Cleaning ", account.address, "                                  \r");
-    account.is_prefund = prefundWeiMap[account.address] > 0;
+    account.is_prefund = expContext().prefundMap[account.address] > 0;
     account.is_contract = isContractAt(account.address, latestBlock);
     account.is_erc20 = isTokenContract(account);
     if (account.is_contract && account.is_erc20) {

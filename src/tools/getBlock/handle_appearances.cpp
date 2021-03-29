@@ -42,7 +42,7 @@ void COptions::handle_appearances(blknum_t num, void* data) {
     } else if (!nProcessed) {
         if (num == 0) {
             uint64_t cnt = 0;
-            for (auto prefund : prefundWeiMap) {
+            for (auto prefund : expContext().prefundMap) {
                 CAppearance item;
                 item.bn = num;
                 item.tx = cnt++;

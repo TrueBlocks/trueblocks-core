@@ -43,9 +43,12 @@ int main(int argc, const char* argv[]) {
         for (auto testName : options.tests) {
             string_q path = nextTokenClear(testName, '/');
             LOG1("Processing file: ", path);
-            options.cleanTest(path, testName);
-            if (options.modes & API)
-                options.cleanTest(path, testName + "/api_tests");
+            if (options.full_test) {
+                // only clean if we're testing all
+                options.cleanTest(path, testName);
+                if (options.modes & API)
+                    options.cleanTest(path, testName + "/api_tests");
+            }
 
             string_q testFile = testFolder + path + "/" + testName + ".csv";
             if (!fileExists(testFile))
@@ -118,24 +121,27 @@ int main(int argc, const char* argv[]) {
         string_q perf_result = perf.str();
         replaceAll(perf_result, ",E-", "," + toLower(getHostName()) + "," + (allPassed ? "E" : "F") + "-");
         cerr << "    " << substitute(perf_result, "\n", "\n    ") << endl;
-        if (options.full_test && options.report)
+        if (options.full_test && options.report) {
             appendToAsciiFile(configPath(string_q("performance") + (allPassed ? "" : "_failed") + ".csv"), perf_result);
-        appendToAsciiFile(configPath("performance_slow.csv"), slow.str());
-        string_q copyPath = getGlobalConfig()->getConfigStr("settings", "copyPath", "<NOT_SET>");
-        if (folderExists(copyPath)) {
-            CStringArray files = {"performance.csv", "performance_failed.csv", "performance_slow.csv",
-                                  "performance_scraper.csv"};
-            for (auto file : files) {
-                if (fileExists(configPath(file))) {
-                    ostringstream copyCmd;
-                    copyCmd << "cp -f \"";
-                    copyCmd << configPath(file) << "\" \"" << copyPath << "\"";
-                    // clang-format off
+            appendToAsciiFile(configPath("performance_slow.csv"), slow.str());
+            string_q copyPath = getGlobalConfig()->getConfigStr("settings", "copyPath", "<NOT_SET>");
+            if (folderExists(copyPath)) {
+                CStringArray files = {"performance.csv", "performance_failed.csv", "performance_slow.csv",
+                                      "performance_scraper.csv"};
+                for (auto file : files) {
+                    if (fileExists(configPath(file))) {
+                        ostringstream copyCmd;
+                        copyCmd << "cp -f \"";
+                        copyCmd << configPath(file) << "\" \"" << copyPath << "\"";
+                        // clang-format off
                     if (system(copyCmd.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings
-                    // clang-format on
-                    // cerr << copyCmd.str() << endl;
+                        // clang-format on
+                        // cerr << copyCmd.str() << endl;
+                    }
                 }
             }
+        } else {
+            LOG_WARN(cRed, "Performance results not written because not full test", cOff);
         }
     }
 

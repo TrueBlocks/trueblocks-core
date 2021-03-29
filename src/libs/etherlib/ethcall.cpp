@@ -336,17 +336,17 @@ const char* STR_DISPLAY_ETHCALL =
 // EXISTING_CODE
 //-------------------------------------------------------------------------
 //-------------------------------------------------------------------------
-bool doEthCall(const address_t& to, const string_q& encoding, const string_q& bytes, blknum_t blockNum, const CAbi& abi,
+bool doEthCall(const address_t& to, const string_q& enc, const string_q& bytes, blknum_t bn, const CAbi& abi,
                CFunction& result) {
     ostringstream cmd;
     cmd << "[{";
     cmd << "\"to\": \"" << to << "\", ";
-    cmd << "\"data\": \"" << encoding << substitute(bytes, "0x", "") << "\"";
-    cmd << "}, \"" << uint_2_Hex(blockNum) << "\"]";
+    cmd << "\"data\": \"" << enc << substitute(bytes, "0x", "") << "\"";
+    cmd << "}, \"" << uint_2_Hex(bn) << "\"]";
 
     string_q rpcRet = callRPC("eth_call", cmd.str(), false);
     if (startsWith(rpcRet, "0x"))
-        abi.articulateOutputs(encoding, rpcRet, result);
+        abi.articulateOutputs(enc, rpcRet, result);
     return result.outputs.size();
 }
 

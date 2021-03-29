@@ -149,7 +149,7 @@ bool COptions::parseArguments(string_q& command) {
     if (js)
         return handle_export_js();
     if (contains(command, "-j"))
-        return usage(errStrs[ERR_EMPTYJSFILE]);
+        return usage(usageErrs[ERR_EMPTYJSFILE]);
 
     // Ignoring classDefs for a moment, process special options. Note: order matters
     if (options && !handle_options())
@@ -169,7 +169,7 @@ bool COptions::parseArguments(string_q& command) {
 
     // If not, we need classDefs to work with...
     if (classDefs.empty())
-        return usage(!filter.empty() ? errStrs[ERR_NOFILTERMATCH] : errStrs[ERR_NEEDONECLASS]);
+        return usage(!filter.empty() ? usageErrs[ERR_NOFILTERMATCH] : usageErrs[ERR_NEEDONECLASS]);
 
     // If we're dumping, dump...
     if (dump) {
@@ -196,15 +196,15 @@ bool COptions::parseArguments(string_q& command) {
 
     // We need the template files
     if (!folderExists(configPath("makeClass/")))
-        return false;  // usage(errStrs[ERR_CONFIGMISSING]);
+        return false;  // usage(usageErrs[ERR_CONFIGMISSING]);
 
     // If we got this far, user needs to tell us what to do...
     if (!run && !edit)
-        return usage(errStrs[ERR_CHOOSEONE]);
+        return usage(usageErrs[ERR_CHOOSEONE]);
 
     // ..but only one thing to do.
     if ((run + edit) > 1)
-        return usage(errStrs[ERR_CHOOSEONE]);
+        return usage(usageErrs[ERR_CHOOSEONE]);
 
     mode = (edit ? EDIT : RUN);
     LOG8("run: ", run, " edit: ", edit, " classes: ", all, " mode: ", mode);
@@ -239,7 +239,6 @@ void COptions::Init(void) {
 
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) : classFile("") {
-    setSorts(GETRUNTIME_CLASS(CBlock), GETRUNTIME_CLASS(CTransaction), GETRUNTIME_CLASS(CReceipt));
     Init();
 
     // BEG_CODE_NOTES
@@ -251,13 +250,13 @@ COptions::COptions(void) : classFile("") {
     // END_CODE_NOTES
 
     // BEG_ERROR_MSG
-    errStrs[ERR_NOERROR] = "No error";
-    errStrs[ERR_CLASSDEFNOTEXIST] = "./classDefinitions folder does not exist.";
-    errStrs[ERR_CONFIGMISSING] = "[{CONFIG_FOLDER}]makeClass/ folder does not exist.";
-    errStrs[ERR_EMPTYJSFILE] = "Cannot export javscript for an empty class.";
-    errStrs[ERR_CHOOSEONE] = "Please chose exactly one of --run, --list, or --edit.";
-    errStrs[ERR_NOFILTERMATCH] = "No definitions found that matched the filter: [{FILTER}].";
-    errStrs[ERR_NEEDONECLASS] = "Please specify at least one className.";
+    usageErrs[ERR_NOERROR] = "No error";
+    usageErrs[ERR_CLASSDEFNOTEXIST] = "./classDefinitions folder does not exist.";
+    usageErrs[ERR_CONFIGMISSING] = "[{CONFIG_FOLDER}]makeClass/ folder does not exist.";
+    usageErrs[ERR_EMPTYJSFILE] = "Cannot export javscript for an empty class.";
+    usageErrs[ERR_CHOOSEONE] = "Please chose exactly one of --run, --list, or --edit.";
+    usageErrs[ERR_NOFILTERMATCH] = "No definitions found that matched the filter: [{FILTER}].";
+    usageErrs[ERR_NEEDONECLASS] = "Please specify at least one className.";
     // END_ERROR_MSG
 
     updateTemplates();

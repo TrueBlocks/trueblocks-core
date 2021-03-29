@@ -5,8 +5,6 @@
  *------------------------------------------------------------------------*/
 #include "options.h"
 
-#define FREQ 5
-
 //-----------------------------------------------------------------------
 bool COptions::handle_receipts(void) {
     ENTER("handle_receipts");
@@ -45,7 +43,7 @@ bool COptions::handle_receipts(void) {
             } else {
                 if (app->blk == 0) {
                     address_t addr = prefundAddrMap[app->txid];
-                    trans.loadTransAsPrefund(app->blk, app->txid, addr, prefundWeiMap[addr]);
+                    trans.loadTransAsPrefund(app->blk, app->txid, addr, expContext().prefundMap[addr]);
 
                 } else if (app->txid == 99997 || app->txid == 99999) {
                     trans.loadTransAsBlockReward(app->blk, app->txid, blkRewardMap[app->blk]);

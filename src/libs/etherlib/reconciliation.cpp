@@ -551,8 +551,8 @@ const char* STR_DISPLAY_RECONCILIATION = "";
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 //---------------------------------------------------------------------------
-bool CReconciliation::reconcile(const CStringArray& corrections, const CReconciliation& lastStatement,
-                                blknum_t nextBlock, const CTransaction* trans) {
+bool CReconciliation::reconcileEth(const CStringArray& corrections, blknum_t lastBlock, bigint_t lastEndBal,
+                                   bigint_t lastEndBalCalc, blknum_t nextBlock, const CTransaction* trans) {
     // LOG4(lastStatement.Format());
     // LOG4(Format());
 
@@ -606,7 +606,7 @@ bool CReconciliation::reconcile(const CStringArray& corrections, const CReconcil
                  minerTxFeeIn + minerUncleRewardIn - amountOut - internalOut - selfDestructOut - gasCostOut;
 
     // Check to see if there are any mismatches...
-    begBalDiff = trans - blockNumber == 0 ? 0 : begBal - lastStatement.endBal;
+    begBalDiff = trans - blockNumber == 0 ? 0 : begBal - lastEndBal;
     endBalDiff = endBal - endBalCalc;
 
     // ...if not, we're reconciled, so we can return...
@@ -619,7 +619,7 @@ bool CReconciliation::reconcile(const CStringArray& corrections, const CReconcil
     // ...otherwise, we try to recover
     // Case 4: We need to dig into the traces (Note: this is the first place where we dig into the traces...
     // doing so without having been forced to causes a huge performance penalty.)
-    if (reconcileUsingTraces(lastStatement, nextBlock, trans))
+    if (reconcileUsingTraces(lastBlock, lastEndBal, lastEndBalCalc, nextBlock, trans))
         return true;
 
     // Case 2: The blockchain only returns balances PER block. This means that if two value changing transactions
@@ -638,7 +638,7 @@ bool CReconciliation::reconcile(const CStringArray& corrections, const CReconcil
           12          13           15        both next and previous are different (handled above)
      */
 
-    bool prevDifferent = lastStatement.blockNumber != blockNumber;
+    bool prevDifferent = lastBlock != blockNumber;
     bool nextDifferent = blockNumber != nextBlock;
 
     if (prevDifferent && nextDifferent) {
@@ -651,7 +651,7 @@ bool CReconciliation::reconcile(const CStringArray& corrections, const CReconcil
 
         // Ending balance at the previous block should be the same as beginning balance at this block...
         begBal = getBalanceAt(expContext().accountedFor, blockNumber == 0 ? 0 : blockNumber - 1);
-        begBalDiff = trans->blockNumber == 0 ? 0 : begBal - lastStatement.endBal;
+        begBalDiff = trans->blockNumber == 0 ? 0 : begBal - lastEndBal;
 
         // We use the same "in-transaction" data to arrive at...
         endBalCalc = begBal + amountIn + internalIn + selfDestructIn + prefundIn + minerBaseRewardIn +
@@ -670,9 +670,9 @@ bool CReconciliation::reconcile(const CStringArray& corrections, const CReconcil
         // beginning of block balance because that previous transaction may have altered the account's balance
         // after the start of the block. We have to use the previously calculated ending balance as the
         // beginning balance for this transaction. Note: diff will be zero in every case.
-        begBal = lastStatement.endBalCalc;
+        begBal = lastEndBalCalc;
         ASSERT(trans->blockNumber != 0);
-        begBalDiff = begBal - lastStatement.endBalCalc;
+        begBalDiff = begBal - lastEndBalCalc;
 
         // Again, we use the same "in-transaction" data to arrive at...
         endBalCalc = begBal + amountIn + internalIn + selfDestructIn + prefundIn + minerBaseRewardIn +
@@ -691,9 +691,9 @@ bool CReconciliation::reconcile(const CStringArray& corrections, const CReconcil
         // transaction or the next transaction or both could have changed the balance). Our only recourse is to
         // make use of the calculated balances and make a note of the fact that we've done this...We have to use
         // calculated values
-        begBal = lastStatement.endBalCalc;
+        begBal = lastEndBalCalc;
         ASSERT(trans->blockNumber != 0);
-        begBalDiff = begBal - lastStatement.endBalCalc;
+        begBalDiff = begBal - lastEndBalCalc;
 
         endBalCalc = begBal + amountIn + internalIn + selfDestructIn + prefundIn + minerBaseRewardIn +
                      minerNephewRewardIn + minerTxFeeIn + minerUncleRewardIn - amountOut - internalOut -
@@ -714,8 +714,8 @@ bool CReconciliation::reconcile(const CStringArray& corrections, const CReconcil
 
 extern bool loadTraces(CTransaction& trans, blknum_t bn, blknum_t txid, bool useCache, bool skipDdos);
 //---------------------------------------------------------------------------
-bool CReconciliation::reconcileUsingTraces(const CReconciliation& lastStatement, blknum_t nextBlock,
-                                           const CTransaction* trans) {
+bool CReconciliation::reconcileUsingTraces(blknum_t lastBn, bigint_t lastEndBal, bigint_t lastEndBalCalc,
+                                           blknum_t nextBlock, const CTransaction* trans) {
     amountOut = amountIn = 0;  // we will store it in the internal values
     prefundIn = minerBaseRewardIn = minerNephewRewardIn = minerTxFeeIn + minerUncleRewardIn = 0;
 
@@ -770,7 +770,7 @@ bool CReconciliation::reconcileUsingTraces(const CReconciliation& lastStatement,
     endBalCalc = begBal + amountIn + internalIn + selfDestructIn + prefundIn + minerBaseRewardIn + minerNephewRewardIn +
                  minerTxFeeIn + minerUncleRewardIn - amountOut - internalOut - selfDestructOut - gasCostOut;
     endBalDiff = endBal - endBalCalc;
-    begBalDiff = trans->blockNumber == 0 ? 0 : begBal - lastStatement.endBal;
+    begBalDiff = trans->blockNumber == 0 ? 0 : begBal - lastEndBal;
     reconciled = (endBalDiff == 0 && begBalDiff == 0);
 
     // As crazy as this seems, we clear out the traces here.

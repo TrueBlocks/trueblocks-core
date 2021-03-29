@@ -582,13 +582,15 @@ void cleanMonitorStage(void) {
 }
 
 //-------------------------------------------------------------------------
-string_q getTokenBalanceOf(const CAbi& abi_spec, const CMonitor& token, const address_t& holder, blknum_t blockNum) {
-    map<string_q, string_q> sigMap;
-    sigMap["balanceOf"] = "0x70a08231";
-    CFunction result;
-    if (doEthCall(token.address, sigMap["balanceOf"], padLeft(extract(holder, 2), 64, '0'), blockNum, abi_spec, result))
-        return result.outputs[0].value;
-    return "";
+string_q getTokenBalanceOf(const CMonitor& token, const address_t& holder, blknum_t blockNum) {
+    ostringstream cmd;
+    cmd << "[{";
+    cmd << "\"to\": \"" << token.address << "\", ";
+    cmd << "\"data\": \"0x70a08231" << padLeft(substitute(holder, "0x", ""), 64, '0') << "\"";
+    cmd << "}, \"" << uint_2_Hex(blockNum) << "\"]";
+    string_q ret = callRPC("eth_call", cmd.str(), false);
+    ret = bnu_2_Str(str_2_BigUint(ret, 256));
+    return ret;
 }
 
 //-------------------------------------------------------------------------

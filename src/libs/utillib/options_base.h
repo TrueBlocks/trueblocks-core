@@ -47,58 +47,48 @@
 //-----------------------------------------------------------------------------
 namespace qblocks {
 
+class COption;
+
+//-----------------------------------------------------------------------------
 typedef bool (*NAMEFUNC)(CAccountName& name, void* data);
 typedef bool (*NAMEVALFUNC)(CNameValue& pair, void* data);
 typedef bool (*UINT64VISITFUNC)(uint64_t num, void* data);
 typedef uint64_t (*HASHFINDFUNC)(const hash_t& hash, void* data);
 typedef map<address_t, CAccountName> CAddressNameMap;
 
-class COption;
+//-----------------------------------------------------------------------------
 class COptionsBase {
   public:
+    blkrange_t scanRange;
+
     // TODO(tjayrush): All of these can (and should) be moved to expContext as it would be available to things other
     // TODO(tjayrush): than options. See fmtMap and tsMemMap for examples
-    CErrorStringMap errStrs;
-    CAddressWeiMap prefundWeiMap;
     CAddressBoolMap maliciousMap;
     CAddressBoolMap airdropMap;
+    CAddressNameMap tokenMap;
     CAddressNameMap namesMap;
 
+    CStringArray commandLines;
     CStringArray arguments;
+    CStringArray notes;
+    CErrorStringMap usageErrs;
     CStringArray errors;
+
     // TODO(tjayrush): global data
+    uint64_t minArgs;
     uint32_t enableBits;
     bool isReadme;
     bool isRaw;
     bool isVeryRaw;
+    bool noHeader;
     bool mocked;
-    bool isNoHeader;
-    CStringArray crudCommands;
     string_q overrideStr;
+    CStringArray crudCommands;
     bool isCrudCommand(void) const {
         return crudCommands.size() > 0;
     }
-    blkrange_t scanRange;
-    CStringArray notes;
-
-    bool isRedirected(void) const;
-
-    string_q getOutputFn(void) const {
-        return rd_outputFilename;
-    }
-
-  private:
-    streambuf* coutSaved;   // saves original cout buffer
-    ofstream outputStream;  // the redirected stream (if any)
-    void closeRedirect(void);
-    string_q rd_outputFilename;
-    bool rd_zipOnClose;
 
   public:
-    CStringArray commandLines;
-    uint64_t minArgs;
-    CRuntimeClass* sorts[5];
-
     COptionsBase(void);
     virtual ~COptionsBase(void);
 
@@ -106,11 +96,17 @@ class COptionsBase {
     static string_q g_progName;
     void setProgName(const string_q& name);
     string_q getProgName(void) const;
+
+    virtual bool parseArguments(string_q& command) = 0;
     bool prepareArguments(int argc, const char* argv[]);
     bool prePrepareArguments(CStringArray& separatedArgs_, int argCountIn, const char* argvIn[]);
-    virtual bool parseArguments(string_q& command) = 0;
     bool builtInCmd(const string_q& arg);
     bool standardOptions(string_q& cmdLine);
+    bool confirmEnum(const string_q& name, string_q& value, const string_q& arg) const;
+    bool confirmBlockNum(const string_q& name, blknum_t& value, const string_q& arg, blknum_t latest) const;
+    bool confirmUint(const string_q& name, uint64_t& value, const string_q& arg) const;
+    bool confirmDouble(const string_q& name, double& value, const string_q& arg) const;
+    bool confirmUint(const string_q& name, uint32_t& value, const string_q& arg) const;
 
     // supporting special block names
     static CNameValueArray specials;
@@ -129,7 +125,7 @@ class COptionsBase {
     void optionOff(uint32_t q);
     void optionOn(uint32_t q);
 
-    string_q expandOption(string_q& arg);
+    // usage related
     bool usage(const string_q& errMsg = "") const;
     string_q usageStr(const string_q& errMsg = "") const;
     string_q purpose(void) const;
@@ -140,31 +136,32 @@ class COptionsBase {
     string_q get_notes(void) const;
     string_q format_notes(const CStringArray& strs) const;
 
-    bool confirmEnum(const string_q& name, string_q& value, const string_q& arg) const;
-    bool confirmBlockNum(const string_q& name, blknum_t& value, const string_q& arg, blknum_t latest) const;
-    bool confirmUint(const string_q& name, uint64_t& value, const string_q& arg) const;
-    bool confirmDouble(const string_q& name, double& value, const string_q& arg) const;
-    inline bool confirmUint(const string_q& name, uint32_t& value, const string_q& arg) const {
-        value = (uint32_t)NOPOS;
-        uint64_t temp;
-        if (!confirmUint(name, temp, arg))
-            return false;
-        value = (uint32_t)temp;
-        return true;
-    }
     const COption* findParam(const string_q& name) const;
-    void setSorts(CRuntimeClass* c1, CRuntimeClass* c2, CRuntimeClass* c3);
+    string_q expandOption(string_q& arg);
+
+    bool isRedirected(void) const;
+    string_q getOutputFn(void) const {
+        return rd_outputFilename;
+    }
 
   protected:
-    void configureDisplay(const string_q& tool, const string_q& dataType, const string_q& defFormat,
-                          const string_q& meta = "");
-    void registerOptions(size_t nP, COption const* pP);
-    virtual void Init(void) = 0;
     const COption* pParams;
     size_t cntParams;
     string_q hiUp1;
     string_q hiUp2;
     string_q hiDown;
+
+    virtual void Init(void) = 0;
+    void configureDisplay(const string_q& tool, const string_q& dataType, const string_q& defFormat,
+                          const string_q& meta = "");
+    void registerOptions(size_t nP, COption const* pP);
+
+  private:
+    streambuf* coutSaved;   // saves original cout buffer
+    ofstream outputStream;  // the redirected stream (if any)
+    void closeRedirect(void);
+    string_q rd_outputFilename;
+    bool rd_zipOnClose;
 };
 
 //--------------------------------------------------------------------------------

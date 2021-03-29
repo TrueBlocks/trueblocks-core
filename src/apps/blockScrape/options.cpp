@@ -252,12 +252,12 @@ bool COptions::parseArguments(string_q& command) {
     string chunkId = padNum9(0) + "-" + padNum9(0);
     string_q bloomPath = getIndexPath("blooms/" + chunkId + ".bloom");
     if (!fileExists(bloomPath)) {
-        ASSERT(prefundWeiMap.size() == 8893);  // This is a known value
-        LOG_INFO("Index for block zero was not found. Building it from ", uint_2_Str(prefundWeiMap.size()),
+        ASSERT(expContext().prefundMap.size() == 8893);  // This is a known value
+        LOG_INFO("Index for block zero was not found. Building it from ", uint_2_Str(expContext().prefundMap.size()),
                  " prefunds.");
 
         CStringArray appearances;
-        for (auto prefund : prefundWeiMap) {
+        for (auto prefund : expContext().prefundMap) {
             // The prefund transactions have 'zero' block numbers and an index into thier location
             // in the list of presale addresses which is sorted by address. We need to do this in order to
             // distinquish each transaction when it is exported.
@@ -310,7 +310,6 @@ void COptions::Init(void) {
 
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
-    setSorts(GETRUNTIME_CLASS(CBlock), GETRUNTIME_CLASS(CTransaction), GETRUNTIME_CLASS(CReceipt));
     Init();
     // BEG_CODE_NOTES
     // clang-format off

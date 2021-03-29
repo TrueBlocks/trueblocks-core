@@ -2,7 +2,7 @@ acctExport argc: 2 [1:-th]
 acctExport -th 
 #### Usage
 
-`Usage:`    acctExport [-p|-r|-l|-t|-T|-C|-a|-i|-R|-U|-v|-h] &lt;address&gt; [address...] topics  
+`Usage:`    acctExport [-p|-r|-l|-t|-C|-O|-a|-i|-R|-U|-v|-h] &lt;address&gt; [address...] topics  
 `Purpose:`  Export full detail of transactions for one or more Ethereum addresses.
 
 `Where:`  
@@ -15,8 +15,8 @@ acctExport -th
 | -r | --receipts | export receipts instead of transaction list |
 | -l | --logs | export logs instead of transaction list |
 | -t | --traces | export traces instead of transaction list |
-| -T | --statements | export reconcilations instead of transaction list |
 | -C | --accounting | export accounting records instead of transaction list |
+| -O | --tokens | export accounting for ERC 20 tokens (assumes ETH accounting as above) |
 | -a | --articulate | articulate transactions, traces, logs, and outputs |
 | -i | --cache_txs | write transactions to the cache (see notes) |
 | -R | --cache_traces | write traces to the cache (see notes) |

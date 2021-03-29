@@ -1,8 +1,4 @@
 getTokenInfo argc: 4 [1:0xd26114cd6ee289accf82350c8d8487fedb8a0c07] [2:0x5e44c3e467a49c9ca0296a9f130fc43304000000] [3:4000000] 
 getTokenInfo 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0x5e44c3e467a49c9ca0296a9f130fc43304000000 4000000 
 blocknumber	holder	address	name	symbol	decimals	balance
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : 
-TIME ~ CLOCK - <INFO>  : inputStr: : 0x0000000000000000000000000000000000000000000000000000000000000000
-TIME ~ CLOCK - <INFO>  : Parse func found: : uint256
 4000000	0x5e44c3e467a49c9ca0296a9f130fc43304000000	0xd26114cd6ee289accf82350c8d8487fedb8a0c07	OMGToken Airdrop	OMG	18	0

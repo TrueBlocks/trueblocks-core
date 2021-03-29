@@ -60,9 +60,12 @@ class CReconciliation : public CBaseNode {
     DECLARE_NODE(CReconciliation);
 
     // EXISTING_CODE
-    bool reconcile(const CStringArray& corrections, const CReconciliation& lastStatement, blknum_t nextBlock,
-                   const CTransaction* trans);
-    bool reconcileUsingTraces(const CReconciliation& lastStatement, blknum_t nextBlock, const CTransaction* trans);
+    bool reconcileEth(const CStringArray& corrections, blknum_t lastBn, bigint_t lastEndBal, bigint_t lastEndBalCalc,
+                      blknum_t nextBlock, const CTransaction* trans);
+    bool reconcileToken(const CStringArray& corrections, blknum_t lastBn, bigint_t lastEndBal, bigint_t lastEndBalCalc,
+                        blknum_t nextBlock, const CAccountName& token, const address_t& accountedFor);
+    bool reconcileUsingTraces(blknum_t lastBn, bigint_t lastEndBal, bigint_t lastEndBalCalc, blknum_t nextBlock,
+                              const CTransaction* trans);
     // EXISTING_CODE
     bool operator==(const CReconciliation& it) const;
     bool operator!=(const CReconciliation& it) const {

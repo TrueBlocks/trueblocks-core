@@ -69,9 +69,9 @@ string_q getCachePath(const string_q& _part) {
 }
 
 //-----------------------------------------------------------------------
-bool loadPrefunds(const string_q& prefundFile, COptionsBase& options) {
+bool loadPrefunds(const string_q& prefundFile) {
     // start with a clean slate
-    options.prefundWeiMap.clear();
+    expContext().prefundMap.clear();
 
     // Note: we don't need to check the dates to see if the prefunds.txt file has been updated
     // since it will never change. In that sense, the binary file is always right once it's created.
@@ -86,16 +86,16 @@ bool loadPrefunds(const string_q& prefundFile, COptionsBase& options) {
             if (!first && !startsWith(line, '#')) {
                 CStringArray parts;
                 explode(parts, line, '\t');
-                options.prefundWeiMap[toLower(parts[0])] = str_2_Wei(parts[1]);
+                expContext().prefundMap[toLower(parts[0])] = str_2_Wei(parts[1]);
             }
             first = false;
         }
         CArchive archive(WRITING_ARCHIVE);
         if (!archive.Lock(binFile, modeWriteCreate, LOCK_NOWAIT))
             return false;
-        CAddressWeiMap::iterator it = options.prefundWeiMap.begin();
-        archive << uint64_t(options.prefundWeiMap.size());
-        while (it != options.prefundWeiMap.end()) {
+        CAddressWeiMap::iterator it = expContext().prefundMap.begin();
+        archive << uint64_t(expContext().prefundMap.size());
+        while (it != expContext().prefundMap.end()) {
             archive << it->first << it->second;
             it++;
         }
@@ -112,7 +112,7 @@ bool loadPrefunds(const string_q& prefundFile, COptionsBase& options) {
         string_q key;
         wei_t wei;
         archive >> key >> wei;
-        options.prefundWeiMap[key] = wei;
+        expContext().prefundMap[key] = wei;
     }
     archive.Release();
     return true;
@@ -230,7 +230,7 @@ bool COptionsBase::loadNames(void) {
 
     // A final set of options that do not have command line options
     if (isEnabled(OPT_PREFUND)) {
-        if (!loadPrefunds(prefundFile, *this)) {
+        if (!loadPrefunds(prefundFile)) {
             EXIT_USAGE("Could not open prefunds data.");
         }
     }
@@ -253,6 +253,8 @@ bool COptionsBase::loadNames(void) {
                     maliciousMap[item.second.address] = true;
                 if (contains(item.second.tags, "Airdrop"))
                     airdropMap[item.second.address] = true;
+                if (contains(item.second.tags, ":ERC20"))
+                    tokenMap[item.second.address] = item.second;
             }
             nameCache.Release();
             EXIT_NOMSG8(true);
@@ -279,6 +281,8 @@ bool COptionsBase::loadNames(void) {
             maliciousMap[item.second.address] = true;
         if (contains(item.second.tags, "Airdrop"))
             airdropMap[item.second.address] = true;
+        if (contains(item.second.tags, ":ERC20"))
+            tokenMap[item.second.address] = item.second;
     }
 
     LOG8("Writing binary cache");
