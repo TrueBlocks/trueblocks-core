@@ -27,7 +27,7 @@ static const COption params[] = {
     COption("uniq_tx", "n", "", OPT_SWITCH, "display only uniq addresses found per transaction"),
     COption("count", "c", "", OPT_SWITCH, "display counts of appearances (for --apps, --uniq, or --uniq_tx) or transactions"),  // NOLINT
     COption("uncles", "U", "", OPT_SWITCH, "display uncle blocks (if any) instead of the requested block"),
-    COption("force", "o", "", OPT_HIDDEN | OPT_SWITCH, "force a re-write of the block to the cache"),
+    COption("cache", "o", "", OPT_HIDDEN | OPT_SWITCH, "force a re-write of the block to the cache"),
     COption("trace", "t", "", OPT_HIDDEN | OPT_SWITCH, "export the traces from the block as opposed to the block data"),
     COption("", "", "", OPT_DESCRIPTION, "Returns block(s) from local cache or directly from a running node."),
     // clang-format on
@@ -79,8 +79,8 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-U" || arg == "--uncles") {
             uncles = true;
 
-        } else if (arg == "-o" || arg == "--force") {
-            force = true;
+        } else if (arg == "-o" || arg == "--cache") {
+            cache = true;
 
         } else if (arg == "-t" || arg == "--trace") {
             trace = true;
@@ -107,20 +107,20 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST_BOOL("uniq_tx", uniq_tx);
     LOG_TEST_BOOL("count", count);
     LOG_TEST_BOOL("uncles", uncles);
-    LOG_TEST_BOOL("force", force);
+    LOG_TEST_BOOL("cache", cache);
     LOG_TEST_BOOL("trace", trace);
     // END_DEBUG_DISPLAY
 
-    if (force)
+    if (cache)
         etherlib_init(defaultQuitHandler);
 
     filterType = (uniq_tx ? "uniq_tx" : (uniq ? "uniq" : (apps ? "apps" : "")));
 
-    if (force && uncles)
-        return usage("The --force option is not available for uncle blocks.");
+    if (cache && uncles)
+        return usage("The --cache option is not available for uncle blocks.");
 
-    if (force && !filterType.empty())
-        return usage("The --force option is not available when using one of the address options.");
+    if (cache && !filterType.empty())
+        return usage("The --cache option is not available when using one of the address options.");
 
     if (trace && !isTracingNode())
         return usage("A tracing node is required for the --trace options to work properly.");
@@ -207,7 +207,7 @@ void COptions::Init(void) {
     hashes_only = false;
     count = false;
     uncles = false;
-    force = false;
+    cache = false;
     trace = false;
     // END_CODE_INIT
 

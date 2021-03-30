@@ -23,7 +23,7 @@ static const COption params[] = {
     COption("transactions", "", "list<tx_id>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)"),  // NOLINT
     COption("articulate", "a", "", OPT_SWITCH, "articulate the transactions if an ABI is found for the 'to' address"),
     COption("trace", "t", "", OPT_SWITCH, "display the transaction's trace"),
-    COption("force", "o", "", OPT_HIDDEN | OPT_SWITCH, "force the results into the tx cache"),
+    COption("cache", "o", "", OPT_HIDDEN | OPT_SWITCH, "force the results into the tx cache"),
     COption("uniq", "u", "", OPT_SWITCH, "display a list of uniq addresses found in this transaction"),
     COption("", "", "", OPT_DESCRIPTION, "Retrieve a transaction from the cache or the node."),
     // clang-format on
@@ -51,8 +51,8 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-t" || arg == "--trace") {
             trace = true;
 
-        } else if (arg == "-o" || arg == "--force") {
-            force = true;
+        } else if (arg == "-o" || arg == "--cache") {
+            cache = true;
 
         } else if (arg == "-u" || arg == "--uniq") {
             uniq = true;
@@ -75,7 +75,7 @@ bool COptions::parseArguments(string_q& command) {
     // LOG_TEST("transactions", transactions, (transactions == NOPOS));
     LOG_TEST_BOOL("articulate", articulate);
     LOG_TEST_BOOL("trace", trace);
-    LOG_TEST_BOOL("force", force);
+    LOG_TEST_BOOL("cache", cache);
     LOG_TEST_BOOL("uniq", uniq);
     // END_DEBUG_DISPLAY
 
@@ -125,7 +125,7 @@ void COptions::Init(void) {
     // BEG_CODE_INIT
     articulate = false;
     trace = false;
-    force = false;
+    cache = false;
     uniq = false;
     // END_CODE_INIT
 

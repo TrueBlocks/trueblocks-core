@@ -120,7 +120,7 @@ bool visitTransaction(CTransaction& trans, void* data) {
         }
     }
 
-    if (opt->force) {
+    if (opt->cache) {
         string_q txFilename = getBinaryCacheFilename(CT_TXS, trans.blockNumber, trans.transactionIndex);
         if (!fileExists(txFilename)) {
             CBlock block;

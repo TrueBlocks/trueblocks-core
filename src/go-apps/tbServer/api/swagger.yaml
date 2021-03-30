@@ -870,9 +870,9 @@ paths:
         explode: true
         schema:
           type: boolean
-      - name: force
+      - name: cache
         in: query
-        description: force a re-write of the block to the cache
+        description: cache a re-write of the block to the cache
         required: false
         style: form
         explode: true
@@ -933,9 +933,9 @@ paths:
         explode: true
         schema:
           type: boolean
-      - name: force
+      - name: cache
         in: query
-        description: force the results into the tx cache
+        description: cache the results into the tx cache
         required: false
         style: form
         explode: true

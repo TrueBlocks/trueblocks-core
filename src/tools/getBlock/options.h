@@ -27,7 +27,7 @@ class COptions : public CBlockOptions {
     bool hashes_only;
     bool count;
     bool uncles;
-    bool force;
+    bool cache;
     bool trace;
     // END_CODE_DECLARE
 

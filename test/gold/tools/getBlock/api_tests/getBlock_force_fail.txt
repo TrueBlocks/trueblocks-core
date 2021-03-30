@@ -1,5 +1,5 @@
 {
   "errors": [
-    "chifra blocks - The --force option is not available when using one of the address options."
+    "chifra blocks - The --cache option is not available when using one of the address options."
   ]
 }

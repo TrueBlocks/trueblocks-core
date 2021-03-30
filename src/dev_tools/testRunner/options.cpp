@@ -265,9 +265,9 @@ void establishTestData(void) {
 
     // Forces a few blocks into the cache
     doCommand("getBlock --uniq_tx 0");
-    doCommand("getBlock --force 4369999");
-    doCommand("getTrans --force 47055.0");
-    doCommand("getTrans --force 46147.0");
+    doCommand("getBlock --cache 4369999");
+    doCommand("getTrans --cache 47055.0");
+    doCommand("getTrans --cache 46147.0");
 
     // Forces the retreival of a few ABI files without which some tests will fail
     doCommand("grabABI 0x45f783cce6b7ff23b2ab2d70e416cdb7d6055f51");
