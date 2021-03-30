@@ -42,7 +42,7 @@ mkdir build && cd build
 cmake ../src
 make -j
 ----
-. Set the new `./bin` folder to PATH
+. Add the `./bin` and `./bin/tests` folders to your PATH
 . If needed, add keys for RPC and EtherScan (for `chifra slurp`). In `~/.quickBlocks/quickBlocks.toml`, add these lines. Be sure they're under `[settings]`:
 +
 [toml]
