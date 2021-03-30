@@ -63,7 +63,7 @@ Found 119 (119) files
 ../dataUpgradeTest/dataUpgradeTest_CPriceQuote.txt
 ../dataUpgradeTest/dataUpgradeTest_CRPCResult.txt
 ../dataUpgradeTest/dataUpgradeTest_CReceipt.txt
-../dataUpgradeTest/dataUpgradeTest_CReconciliationOutput.txt
+../dataUpgradeTest/dataUpgradeTest_CReconciliation.txt
 ../dataUpgradeTest/dataUpgradeTest_CTrace.txt
 ../dataUpgradeTest/dataUpgradeTest_CTraceAction.txt
 ../dataUpgradeTest/dataUpgradeTest_CTraceResult.txt

@@ -21,9 +21,9 @@ fields = hash hash|\
         CFunction articulatedTx|\
         CReconciliationArray reconciliations (nowrite)|\
         string compressedTx (nowrite)|\
-        CReconciliationOutputArray statements (nowrite)|\
+        CReconciliationArray statements (nowrite)|\
         sbool finalized (nowrite)
-includes = utillib.h|abi.h|receipt.h|trace.h|reconciliation.h|reconciliationoutput.h|ethstate.h
+includes = utillib.h|abi.h|receipt.h|trace.h|reconciliation.h|ethstate.h
 cpp_includes = etherlib.h
 scope = extern
 serializable = true

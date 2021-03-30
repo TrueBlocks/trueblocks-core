@@ -29,6 +29,5 @@
 #include "bloom.h"
 #include "cacheentry.h"
 #include "reconciliation.h"
-#include "reconciliationoutput.h"
 
 using namespace qblocks;  // NOLINT

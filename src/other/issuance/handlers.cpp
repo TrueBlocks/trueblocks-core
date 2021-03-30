@@ -341,7 +341,7 @@ bool visitLine(const char* str, void* data) {
 
     bool same = acc->isSamePeriod(rec);
     if (!same) {
-        CReconciliationOutput out(acc->sum);
+        CReconciliation out(acc->sum);
         cout << out.Format(acc->fmt) << endl;
         if (acc->discrete) {
             CReconciliation reset;
@@ -368,7 +368,7 @@ bool COptions::summary_by_period(void) {
     accumulator.start = startBlock;
     accumulator.end = endBlock;
     forEveryLineInAsciiFile(resultsFile, visitLine, &accumulator);
-    CReconciliationOutput out(accumulator.sum);
+    CReconciliation out(accumulator.sum);
     cout << out.Format(accumulator.fmt) << endl;
 
     return true;

@@ -6,7 +6,7 @@ CMonitor
 CApiSpec
 CBalHistory
 CBlock
-CReconciliationOutput
+CReconciliation
 CLogEntry
 CPriceQuote
 CReceipt

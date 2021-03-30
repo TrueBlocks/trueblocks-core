@@ -172,8 +172,8 @@ CBaseNode* getNode(const string_q& nodeType) {
         node = CApiSpec::createObject();
     else if (nodeType == "CBlock")
         node = CBlock::createObject();
-    else if (nodeType == "CReconciliationOutput")
-        node = CReconciliationOutput::createObject();
+    else if (nodeType == "CReconciliation")
+        node = CReconciliation::createObject();
     else if (nodeType == "CLogEntry")
         node = CLogEntry::createObject();
     else if (nodeType == "CPriceQuote")

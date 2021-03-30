@@ -20,7 +20,6 @@
 #include "receipt.h"
 #include "trace.h"
 #include "reconciliation.h"
-#include "reconciliationoutput.h"
 #include "ethstate.h"
 
 namespace qblocks {
@@ -56,7 +55,7 @@ class CTransaction : public CBaseNode {
     CFunction articulatedTx;
     CReconciliationArray reconciliations;
     string_q compressedTx;
-    CReconciliationOutputArray statements;
+    CReconciliationArray statements;
     bool finalized;
 
   public:

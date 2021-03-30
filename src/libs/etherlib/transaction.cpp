@@ -389,11 +389,11 @@ bool CTransaction::setValueByName(const string_q& fieldNameIn, const string_q& f
             break;
         case 's':
             if (fieldName % "statements") {
-                CReconciliationOutput obj;
+                CReconciliation obj;
                 string_q str = fieldValue;
                 while (obj.parseJson3(str)) {
                     statements.push_back(obj);
-                    obj = CReconciliationOutput();  // reset
+                    obj = CReconciliation();  // reset
                 }
                 return true;
             }
@@ -960,7 +960,7 @@ const CBaseNode* CTransaction::getObjectAt(const string_q& fieldName, size_t ind
 
     if (fieldName % "statements") {
         if (index == NOPOS) {
-            CReconciliationOutput empty;
+            CReconciliation empty;
             ((CTransaction*)this)->statements.push_back(empty);  // NOLINT
             index = statements.size() - 1;
         }

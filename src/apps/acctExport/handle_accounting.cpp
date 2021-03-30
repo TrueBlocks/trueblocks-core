@@ -15,14 +15,13 @@ bool handle_reconciliation(COptions* options, CTransaction& trans, CReconciliati
     nums.reconcileEth(corrections, prev.blockNumber, prev.endBal, prev.endBalCalc, next, &trans);
     trans.reconciliations.push_back(nums);
     trans.statements.clear();
-    CReconciliationOutput st(nums);
-    trans.statements.push_back(st);
+    trans.statements.push_back(nums);
     // if (tokens) {
     //     CAddressBoolMap done;
     //     for (auto log : trans.receipt.logs) {
     //         const CAccountName& name = options->tokenMap[log.address];
     //         if (name.address == log.address && !done[log.address]) {
-    //             st = CReconciliationOutput();
+    //             st = C ReconciliationOutput();
     //             nums.blockNumber = trans.blockNumber;
     //             nums.transactionIndex = trans.transactionIndex;
     //             nums.timestamp = trans.timestamp;
@@ -34,7 +33,7 @@ bool handle_reconciliation(COptions* options, CTransaction& trans, CReconciliati
     //             // st.begBal = "1200";
     //             // st.endBal = "1300";
     //             // st.amountIn = "100";
-    //             // CReconciliationOutput st(nums);
+    //             // CRec onciliationOutput st(nums);
     //             // trans.statements.push_back(st);
     //             // done[log.address] = true;
     //         }

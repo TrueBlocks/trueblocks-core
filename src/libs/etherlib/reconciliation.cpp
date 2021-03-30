@@ -334,16 +334,16 @@ bool CReconciliation::Serialize(CArchive& archive) {
     archive >> begBal;
     archive >> begBalDiff;
     archive >> amountIn;
+    archive >> amountOut;
     archive >> internalIn;
+    archive >> internalOut;
     archive >> selfDestructIn;
+    archive >> selfDestructOut;
     archive >> minerBaseRewardIn;
     archive >> minerNephewRewardIn;
     archive >> minerTxFeeIn;
     archive >> minerUncleRewardIn;
     archive >> prefundIn;
-    archive >> amountOut;
-    archive >> internalOut;
-    archive >> selfDestructOut;
     archive >> gasCostOut;
     archive >> endBal;
     archive >> endBalCalc;
@@ -369,16 +369,16 @@ bool CReconciliation::SerializeC(CArchive& archive) const {
     archive << begBal;
     archive << begBalDiff;
     archive << amountIn;
+    archive << amountOut;
     archive << internalIn;
+    archive << internalOut;
     archive << selfDestructIn;
+    archive << selfDestructOut;
     archive << minerBaseRewardIn;
     archive << minerNephewRewardIn;
     archive << minerTxFeeIn;
     archive << minerUncleRewardIn;
     archive << prefundIn;
-    archive << amountOut;
-    archive << internalOut;
-    archive << selfDestructOut;
     archive << gasCostOut;
     archive << endBal;
     archive << endBalCalc;
@@ -429,16 +429,16 @@ void CReconciliation::registerClass(void) {
     ADD_FIELD(CReconciliation, "begBal", T_INT256, ++fieldNum);
     ADD_FIELD(CReconciliation, "begBalDiff", T_INT256, ++fieldNum);
     ADD_FIELD(CReconciliation, "amountIn", T_INT256, ++fieldNum);
+    ADD_FIELD(CReconciliation, "amountOut", T_INT256, ++fieldNum);
     ADD_FIELD(CReconciliation, "internalIn", T_INT256, ++fieldNum);
+    ADD_FIELD(CReconciliation, "internalOut", T_INT256, ++fieldNum);
     ADD_FIELD(CReconciliation, "selfDestructIn", T_INT256, ++fieldNum);
+    ADD_FIELD(CReconciliation, "selfDestructOut", T_INT256, ++fieldNum);
     ADD_FIELD(CReconciliation, "minerBaseRewardIn", T_INT256, ++fieldNum);
     ADD_FIELD(CReconciliation, "minerNephewRewardIn", T_INT256, ++fieldNum);
     ADD_FIELD(CReconciliation, "minerTxFeeIn", T_INT256, ++fieldNum);
     ADD_FIELD(CReconciliation, "minerUncleRewardIn", T_INT256, ++fieldNum);
     ADD_FIELD(CReconciliation, "prefundIn", T_INT256, ++fieldNum);
-    ADD_FIELD(CReconciliation, "amountOut", T_INT256, ++fieldNum);
-    ADD_FIELD(CReconciliation, "internalOut", T_INT256, ++fieldNum);
-    ADD_FIELD(CReconciliation, "selfDestructOut", T_INT256, ++fieldNum);
     ADD_FIELD(CReconciliation, "gasCostOut", T_INT256, ++fieldNum);
     ADD_FIELD(CReconciliation, "endBal", T_INT256, ++fieldNum);
     ADD_FIELD(CReconciliation, "endBalCalc", T_INT256, ++fieldNum);
@@ -465,9 +465,52 @@ string_q nextReconciliationChunk_custom(const string_q& fieldIn, const void* dat
     if (rec) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
+            case 'a':
+                if (fieldIn % "asset") {
+                    if (expContext().asEther) {
+                        return "ETH";
+                    } else if (expContext().asDollars) {
+                        return "USD";
+                    }
+                    return "WEI";
+                }
+                if (fieldIn % "amountIn") {
+                    return bni_2_Export(rec->timestamp, rec->amountIn);
+                }
+                if (fieldIn % "amountOut") {
+                    return bni_2_Export(rec->timestamp, rec->amountOut);
+                }
+                if (fieldIn % "amountNet") {
+                    return bni_2_Export(rec->timestamp, rec->amountNet);
+                }
+                break;
+            case 'b':
+                if (fieldIn % "begBal") {
+                    return bni_2_Export(rec->timestamp, rec->begBal);
+                }
+                if (fieldIn % "begBalDiff") {
+                    return bni_2_Export(rec->timestamp, rec->begBalDiff);
+                }
+                break;
             case 'd':
                 if (fieldIn % "day") {
                     return ts_2_Date(rec->timestamp).Format(FMT_JSON).substr(0, 10);
+                }
+                break;
+            case 'e':
+                if (fieldIn % "endBal") {
+                    return bni_2_Export(rec->timestamp, rec->endBal);
+                }
+                if (fieldIn % "endBalCalc") {
+                    return bni_2_Export(rec->timestamp, rec->endBalCalc);
+                }
+                if (fieldIn % "endBalDiff") {
+                    return bni_2_Export(rec->timestamp, rec->endBalDiff);
+                }
+                break;
+            case 'g':
+                if (fieldIn % "gasCostOut") {
+                    return bni_2_Export(rec->timestamp, rec->gasCostOut);
                 }
                 break;
             case 'h':
@@ -476,16 +519,43 @@ string_q nextReconciliationChunk_custom(const string_q& fieldIn, const void* dat
                 }
                 break;
             case 'i':
+                if (fieldIn % "internalIn") {
+                    return bni_2_Export(rec->timestamp, rec->internalIn);
+                }
+                if (fieldIn % "internalOut") {
+                    return bni_2_Export(rec->timestamp, rec->internalOut);
+                }
                 if (fieldIn % "issuance") {
-                    return bni_2_Str(rec->minerBaseRewardIn + rec->minerNephewRewardIn + rec->minerUncleRewardIn);
+                    return bni_2_Export(rec->timestamp,
+                                        rec->minerBaseRewardIn + rec->minerNephewRewardIn + rec->minerUncleRewardIn);
                 }
                 break;
             case 'm':
+                if (fieldIn % "minerBaseRewardIn") {
+                    return bni_2_Export(rec->timestamp, rec->minerBaseRewardIn);
+                }
+                if (fieldIn % "minerNephewRewardIn") {
+                    return bni_2_Export(rec->timestamp, rec->minerNephewRewardIn);
+                }
+                if (fieldIn % "minerTxFeeIn") {
+                    return bni_2_Export(rec->timestamp, rec->minerTxFeeIn);
+                }
+                if (fieldIn % "minerUncleRewardIn") {
+                    return bni_2_Export(rec->timestamp, rec->minerUncleRewardIn);
+                }
                 if (fieldIn % "month") {
                     return ts_2_Date(rec->timestamp).Format(FMT_EXPORT).substr(0, 7);
                 }
                 if (fieldIn % "minerissuance") {
-                    return bni_2_Str(rec->minerBaseRewardIn + rec->minerNephewRewardIn);
+                    return bni_2_Export(rec->timestamp, rec->minerBaseRewardIn + rec->minerNephewRewardIn);
+                }
+                break;
+            case 's':
+                if (fieldIn % "selfDestructIn") {
+                    return bni_2_Export(rec->timestamp, rec->selfDestructIn);
+                }
+                if (fieldIn % "selfDestructOut") {
+                    return bni_2_Export(rec->timestamp, rec->selfDestructOut);
                 }
                 break;
             case 'w':
@@ -504,6 +574,9 @@ string_q nextReconciliationChunk_custom(const string_q& fieldIn, const void* dat
                 if (fieldIn % "parsed")
                     return nextBasenodeChunk(fieldIn, rec);
                 // EXISTING_CODE
+                if (fieldIn % "prefundIn") {
+                    return bni_2_Export(rec->timestamp, rec->prefundIn);
+                }
                 // EXISTING_CODE
                 break;
 
@@ -803,6 +876,129 @@ CReconciliation operator+(const CReconciliation& a, const CReconciliation& b) {
     rec.selfDestructOut += b.selfDestructOut;
     rec.gasCostOut += b.gasCostOut;
     return rec;
+}
+
+//---------------------------------------------------------------------------
+string_q bni_2_Ether(const bigint_t& num) {
+    if (num == 0)
+        return "";
+
+    bigint_t n = num;
+    bool negative = false;
+    if (n < 0) {
+        negative = true;
+        n = n * -1;
+    }
+
+    static uint64_t round = NOPOS;
+    if (round == NOPOS) {
+        round = getGlobalConfig("acctExport")->getConfigInt("settings", "ether_rounding", 18);
+    }
+    string_q ret = wei_2_Ether(str_2_Wei(bni_2_Str(n)));
+    CStringArray parts;
+    explode(parts, ret, '.');
+    ret = parts[0] + ".";
+    if (parts.size() == 1)
+        return (negative ? "-" : "") + ret + "0000000";
+    if (parts[1].length() >= round)
+        return (negative ? "-" : "") + ret + parts[1].substr(0, round);
+    return (negative ? "-" : "") + ret + parts[1] + string_q(round - parts[1].length(), '0');
+}
+
+//---------------------------------------------------------------------------
+string_q bni_2_Dollars(const timestamp_t& ts, const bigint_t& num) {
+    if (num == 0)
+        return "";
+    bigint_t n = num;
+    bool negative = false;
+    if (n < 0) {
+        negative = true;
+        n = n * -1;
+    }
+    return (negative ? "-" : "") + wei_2_Dollars(ts, str_2_Wei(bni_2_Str(n)));
+}
+
+//---------------------------------------------------------------------------
+// CReconciliationOutput::CReconciliationOutput(const CReconciliation& numsIn) {
+//     nums = numsIn;
+//     reconciliationType = nums.reconciliationType;
+//     reconciled = nums.reconciled;
+//     blockNumber = nums.blockNumber;
+//     transactionIndex = nums.transactionIndex;
+//     timestamp = nums.timestamp;
+//     if (expContext().asEther) {
+//         asset = "ETH";
+//         begBal = bni_2_Ether(nums.begBal);
+//         begBalDiff = bni_2_Ether(nums.begBalDiff);
+//         amountIn = bni_2_Ether(nums.amountIn);
+//         amountOut = bni_2_Ether(nums.amountOut);
+//         internalIn = bni_2_Ether(nums.internalIn);
+//         internalOut = bni_2_Ether(nums.internalOut);
+//         selfDestructIn = bni_2_Ether(nums.selfDestructIn);
+//         selfDestructOut = bni_2_Ether(nums.selfDestructOut);
+//         minerBaseRewardIn = bni_2_Ether(nums.minerBaseRewardIn);
+//         minerNephewRewardIn = bni_2_Ether(nums.minerNephewRewardIn);
+//         minerTxFeeIn = bni_2_Ether(nums.minerTxFeeIn);
+//         minerUncleRewardIn = bni_2_Ether(nums.minerUncleRewardIn);
+//         prefundIn = bni_2_Ether(nums.prefundIn);
+//         gasCostOut = bni_2_Ether(nums.gasCostOut);
+//         endBal = bni_2_Ether(nums.endBal);
+//         endBalCalc = bni_2_Ether(nums.endBalCalc);
+//         endBalDiff = bni_2_Ether(nums.endBalDiff);
+//         amountNet = bni_2_Ether(nums.amountNet);
+//     } else if (expContext().asDollars) {
+//         asset = "USD";
+//         begBal = bni_2_Dollars(nums.timestamp, nums.begBal);
+//         begBalDiff = bni_2_Dollars(nums.timestamp, nums.begBalDiff);
+//         amountIn = bni_2_Dollars(nums.timestamp, nums.amountIn);
+//         amountOut = bni_2_Dollars(nums.timestamp, nums.amountOut);
+//         internalIn = bni_2_Dollars(nums.timestamp, nums.internalIn);
+//         internalOut = bni_2_Dollars(nums.timestamp, nums.internalOut);
+//         selfDestructIn = bni_2_Dollars(nums.timestamp, nums.selfDestructIn);
+//         selfDestructOut = bni_2_Dollars(nums.timestamp, nums.selfDestructOut);
+//         minerBaseRewardIn = bni_2_Dollars(nums.timestamp, nums.minerBaseRewardIn);
+//         minerNephewRewardIn = bni_2_Dollars(nums.timestamp, nums.minerNephewRewardIn);
+//         minerTxFeeIn = bni_2_Dollars(nums.timestamp, nums.minerTxFeeIn);
+//         minerUncleRewardIn = bni_2_Dollars(nums.timestamp, nums.minerUncleRewardIn);
+//         prefundIn = bni_2_Dollars(nums.timestamp, nums.prefundIn);
+//         gasCostOut = bni_2_Dollars(nums.timestamp, nums.gasCostOut);
+//         endBal = bni_2_Dollars(nums.timestamp, nums.endBal);
+//         endBalCalc = bni_2_Dollars(nums.timestamp, nums.endBalCalc);
+//         endBalDiff = bni_2_Dollars(nums.timestamp, nums.endBalDiff);
+//         amountNet = bni_2_Dollars(nums.timestamp, nums.amountNet);
+//     } else {
+//         asset = "WEI";
+//         begBal = bni_2_Str(nums.begBal);
+//         begBalDiff = bni_2_Str(nums.begBalDiff);
+//         amountIn = bni_2_Str(nums.amountIn);
+//         amountOut = bni_2_Str(nums.amountOut);
+//         internalIn = bni_2_Str(nums.internalIn);
+//         internalOut = bni_2_Str(nums.internalOut);
+//         selfDestructIn = bni_2_Str(nums.selfDestructIn);
+//         selfDestructOut = bni_2_Str(nums.selfDestructOut);
+//         minerBaseRewardIn = bni_2_Str(nums.minerBaseRewardIn);
+//         minerNephewRewardIn = bni_2_Str(nums.minerNephewRewardIn);
+//         minerTxFeeIn = bni_2_Str(nums.minerTxFeeIn);
+//         minerUncleRewardIn = bni_2_Str(nums.minerUncleRewardIn);
+//         prefundIn = bni_2_Str(nums.prefundIn);
+//         gasCostOut = bni_2_Str(nums.gasCostOut);
+//         endBal = bni_2_Str(nums.endBal);
+//         endBalCalc = bni_2_Str(nums.endBalCalc);
+//         endBalDiff = bni_2_Str(nums.endBalDiff);
+//         amountNet = bni_2_Str(nums.amountNet);
+//     }
+// }
+
+string_q bni_2_Export(const timestamp_t& ts, const bigint_t& num) {
+    if (num == 0)
+        return "\"\"";
+    if (expContext().asEther) {
+        return "\"" + bni_2_Ether(num) + "\"";
+    } else if (expContext().asDollars) {
+        return "\"" + bni_2_Dollars(ts, num) + "\"";
+    } else {
+        return "\"" + bni_2_Str(num) + "\"";
+    }
 }
 // EXISTING_CODE
 }  // namespace qblocks

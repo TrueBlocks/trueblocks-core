@@ -7,16 +7,16 @@ fields = blknum blockNumber|\
         int256 begBal|\
         int256 begBalDiff|\
         int256 amountIn|\
+        int256 amountOut|\
         int256 internalIn|\
+        int256 internalOut|\
         int256 selfDestructIn|\
+        int256 selfDestructOut|\
         int256 minerBaseRewardIn|\
         int256 minerNephewRewardIn|\
         int256 minerTxFeeIn|\
         int256 minerUncleRewardIn|\
         int256 prefundIn|\
-        int256 amountOut|\
-        int256 internalOut|\
-        int256 selfDestructOut|\
         int256 gasCostOut|\
         int256 endBal|\
         int256 endBalCalc|\

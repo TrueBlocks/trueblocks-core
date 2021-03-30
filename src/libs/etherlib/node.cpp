@@ -66,7 +66,6 @@ void etherlib_init(QUITHANDLER qh) {
     CFunction::registerClass();
     CParameter::registerClass();
 
-    CReconciliationOutput::registerClass();
     CReconciliation::registerClass();
     CEthState::registerClass();
     CEthCall::registerClass();
