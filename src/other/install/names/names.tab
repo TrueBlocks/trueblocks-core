@@ -3046,6 +3046,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 31-Gitcoin Grants:Friends	0x67201cb74b974b43f8083d32e290dca1eacd9382	askeluv		Gitcoin Website			false	false	false	false	false	false
 50-Tokens:ERC20	0x672a1ad4f667fb18a333af13667aa0af1f5b5bdd	Verify Token	CRED	On chain	18	A distributed reputation protocol built on the Ethereum blockchain.	false	false	false	true	true	false
 55-Defi	0x673b95d277ef022e5efaf9f167ffdfab36991738	Float Protocol: YAM Phase 2 Pool					false	false	false	true	false	false
+30-Contracts	0x673f0dec1416803a39d50760c697fb26f4c539b0	Proof of Email					false	false	false	true	false	false
 50-Tokens:ERC20	0x6745fab6801e376cd24f03572b9c9b0d4edddccf	Sense	SENSE	On chain	8	Sense creates blockchain based smart contracts in chat and rewards humans for the contributions they make to one another conversationally, across Sensay and other messenger applications.	false	false	false	true	true	false
 81-Other:DAO Related	0x674f70f8a9628ade117ccf7b6bc25df152d2e63c	Control_Account_0x674f70		The DAO			false	false	false	false	false	false
 50-Tokens:ERC20	0x6758b7d441a9739b98552b373703d8d3d14f9e62	POA ERC20 on Foundation	POA20	On chain	18	POA Network is an Ethereum-based platform that offers an open-source framework for smart contracts.	false	false	false	true	true	false
