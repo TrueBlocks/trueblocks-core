@@ -17,7 +17,7 @@ static const COption params[] = {
     COption("details", "d", "", OPT_SWITCH, "include details about items found in monitors, slurps, abis, or price caches"),  // NOLINT
     COption("types", "t", "list<enum[blocks|transactions|traces|slurps|prices|all*]>", OPT_FLAG, "for cache mode only, which type(s) of cache to report"),  // NOLINT
     COption("depth", "p", "<uint64>", OPT_HIDDEN | OPT_FLAG, "for cache mode only, number of levels deep to report"),
-    COption("report", "r", "<boolean>", OPT_HIDDEN | OPT_DEPRECATED, "show a summary of the current status of TrueBlocks"),  // NOLINT
+    COption("report", "r", "", OPT_HIDDEN | OPT_SWITCH, "show a summary of the current status of TrueBlocks (deprecated)"),  // NOLINT
     COption("terse", "e", "", OPT_HIDDEN | OPT_SWITCH, "show a terse summary report"),
     COption("get_config", "g", "", OPT_HIDDEN | OPT_SWITCH, "returns JSON data of the editable configuration file items"),  // NOLINT
     COption("set_config", "s", "", OPT_HIDDEN | OPT_SWITCH, "accepts JSON in an env variable and writes it to configuration files"),  // NOLINT
@@ -65,9 +65,8 @@ bool COptions::parseArguments(string_q& command) {
             if (!confirmUint("depth", depth, arg))
                 return false;
 
-        } else if (startsWith(arg, "-r:") || startsWith(arg, "--report:")) {
-            if (!confirmUint("report", report, arg))
-                return false;
+        } else if (arg == "-r" || arg == "--report") {
+            report = true;
 
         } else if (arg == "-e" || arg == "--terse") {
             terse = true;
@@ -107,6 +106,7 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST_BOOL("details", details);
     // LOG_TEST("types", types, (types == ""));
     LOG_TEST("depth", depth, (depth == NOPOS));
+    LOG_TEST_BOOL("report", report);
     LOG_TEST_BOOL("terse", terse);
     LOG_TEST_BOOL("get_config", get_config);
     LOG_TEST_BOOL("set_config", set_config);
