@@ -13,7 +13,7 @@ getTrans 1301011.0 1301672.0 1301324.0 --uniq_tx --fmt json
 	-u  (--uniq)          display a list of uniq addresses found in this transaction
 
 	#### Hidden options
-	-o  (--force)         force the results into the tx cache
+	-o  (--cache)         force the results into the tx cache
 	#### Hidden options
 
 	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]

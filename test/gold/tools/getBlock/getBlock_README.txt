@@ -17,7 +17,7 @@ getBlock -th
 | -c | --count | display counts of appearances (for --apps, --uniq, or --uniq_tx) or transactions |
 | -U | --uncles | display uncle blocks (if any) instead of the requested block |
 |####|Hidden options||
-| -o | --force | force a re-write of the block to the cache |
+| -o | --cache | force a re-write of the block to the cache |
 | -t | --trace | export the traces from the block as opposed to the block data |
 |####|Hidden options||
 | -x | --fmt <val> | export format, one of [none&#124;json*&#124;txt&#124;csv&#124;api] |

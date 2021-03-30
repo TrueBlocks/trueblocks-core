@@ -1,6 +1,6 @@
-getBlock argc: 6 [1:1590000] [2:4000001-4000002] [3:1001001] [4:1234567] [5:--force] 
-getBlock 1590000 4000001-4000002 1001001 1234567 --force 
-TIME ~ CLOCK - <INFO>  : force: true
+getBlock argc: 6 [1:1590000] [2:4000001-4000002] [3:1001001] [4:1234567] [5:--cache] 
+getBlock 1590000 4000001-4000002 1001001 1234567 --cache 
+TIME ~ CLOCK - <INFO>  : cache: true
 { "data": [
 {
   "gasLimit": 6712392,

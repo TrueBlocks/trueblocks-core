@@ -48,7 +48,7 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,customizeable,c
 10720,apps,Admin,status,cacheStatus,details,d,,false,false,true,true,header,switch,<boolean>,include details about items found in monitors&#44; slurps&#44; abis&#44;|or price caches
 10730,apps,Admin,status,cacheStatus,types,t,,false,false,true,false,local,flag,list<enum[blocks|transactions|traces|slurps|prices|all*]>,for cache mode only&#44; which type(s) of cache to report
 10735,apps,Admin,status,cacheStatus,depth,p,,false,false,false,false,header,flag,<uint64>,for cache mode only&#44; number of levels deep to report
-10760,apps,Admin,status,cacheStatus,report,r,,false,false,false,true,local,switch,<boolean>,show a summary of the current status of TrueBlocks (deprecated)
+10760,apps,Admin,status,cacheStatus,report,r,,false,false,false,true,local,deprecated,<boolean>,show a summary of the current status of TrueBlocks
 10770,apps,Admin,status,cacheStatus,terse,e,,false,false,false,true,header,switch,<boolean>,show a terse summary report
 10780,apps,Admin,status,cacheStatus,get_config,g,,false,false,false,false,local,switch,<boolean>,returns JSON data of the editable configuration file items
 10800,apps,Admin,status,cacheStatus,set_config,s,,false,false,false,false,local,switch,<boolean>,accepts JSON in an env variable and writes it to configuration|files
@@ -142,7 +142,7 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,customizeable,c
 12580,tools,Data,blocks,getBlock,uniq_tx,n,,false,false,true,true,local,switch,<boolean>,display only uniq addresses found per transaction
 12600,tools,Data,blocks,getBlock,count,c,,false,false,true,true,header,switch,<boolean>,display counts of appearances (for --apps&#44; --uniq&#44; or --uniq_tx)|or transactions
 12610,tools,Data,blocks,getBlock,uncles,U,,false,false,true,true,header,switch,<boolean>,display uncle blocks (if any) instead of the requested block
-12620,tools,Data,blocks,getBlock,force,o,,false,false,false,false,header,switch,<boolean>,force a re-write of the block to the cache
+12620,tools,Data,blocks,getBlock,cache,o,,false,false,false,false,header,switch,<boolean>,force a re-write of the block to the cache
 12625,tools,Data,blocks,getBlock,trace,t,,false,false,false,false,header,switch,<boolean>,export the traces from the block as opposed to the block data
 12640,tools,Data,blocks,getBlock,,,,false,false,true,true,--,description,,Returns block(s) from local cache or directly from a running node.
 12882,tools,Data,blocks,getBlock,,,,false,false,false,false,--,note,,`blocks` is a space-separated list of values&#44; a start-end range&#44; a `special`&#44; or any combination.
@@ -203,7 +203,7 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,customizeable,c
 13540,tools,Data,transactions,getTrans,transactions,,,true,false,true,true,local,positional,list<tx_id>,a space-separated list of one or more transaction identifiers|(tx_hash&#44; bn.txID&#44; blk_hash.txID)
 13560,tools,Data,transactions,getTrans,articulate,a,,false,false,true,true,header,switch,<boolean>,articulate the transactions if an ABI is found for the 'to' address
 13580,tools,Data,transactions,getTrans,trace,t,,false,false,true,true,header,switch,<boolean>,display the transaction's trace
-13600,tools,Data,transactions,getTrans,force,o,,false,false,false,false,header,switch,<boolean>,force the results into the tx cache
+13600,tools,Data,transactions,getTrans,cache,o,,false,false,false,false,header,switch,<boolean>,force the results into the tx cache
 13605,tools,Data,transactions,getTrans,uniq,u,,false,false,true,true,header,switch,<boolean>,display a list of uniq addresses found in this transaction
 13620,tools,Data,transactions,getTrans,,,,false,false,true,true,--,description,,Retrieve a transaction from the cache or the node.
 13622,tools,Data,transactions,getTrans,,,,false,false,false,false,--,note,,`transactions` is one or more space-separated identifiers which may be either a transaction hash&#44;|a blockNumber.transactionID pair&#44; or a blockHash.transactionID pair&#44; or any combination.

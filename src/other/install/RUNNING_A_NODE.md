@@ -16,9 +16,9 @@ We store our TrueBlocks cache on an external SSD hard drive. We've found [this S
 
 You may use a remote node if you wish or a testnet node by changing the rpcProvider option in the configuration file. The caching capabilities of TrueBlocks really shines in the remote scenario. Using TrueBlocks, we've seen performance increases of nearly two orders of magnitude over requesting the same data repeatedly from Infura. 
 
-By default, so as to not over burden your hard drive, TrueBlocks does not cache every request. For example, the `getBlock` command only caches if you tell it to with the [currently undocumented] `--force` option:
+By default, so as to not over burden your hard drive, TrueBlocks does not cache every request. For example, the `getBlock` command only caches if you tell it to with the [currently undocumented] `--cache` option:
 
-    getBlock 1001001 --force
+    getBlock 1001001 --cache
     
 You may check where a block is with the `whereBlock` command:
 

@@ -14,7 +14,7 @@ getTrans -th
 | -t | --trace | display the transaction's trace |
 | -u | --uniq | display a list of uniq addresses found in this transaction |
 |####|Hidden options||
-| -o | --force | force the results into the tx cache |
+| -o | --cache | force the results into the tx cache |
 |####|Hidden options||
 | -x | --fmt <val> | export format, one of [none&#124;json*&#124;txt&#124;csv&#124;api] |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |

@@ -26,7 +26,7 @@ class COptions : public CAbiOptions {
     // BEG_CODE_DECLARE
     bool articulate;
     bool trace;
-    bool force;
+    bool cache;
     bool uniq;
     // END_CODE_DECLARE
 

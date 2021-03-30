@@ -1,6 +1,6 @@
 enabled,mode,speed,route,path/tool,filename,post,options,opt_cmd,has_env
-on,both,fast,blocks,tools/whereBlock,preload,y,blocks = 1001001 & force,getBlock
-on,both,fast,blocks,tools/whereBlock,preload2,y,blocks = 1001010 & force,getBlock
+on,both,fast,blocks,tools/whereBlock,preload,y,blocks = 1001001 & cache,getBlock
+on,both,fast,blocks,tools/whereBlock,preload2,y,blocks = 1001010 & cache,getBlock
 on,cmd,fast,where,tools/whereBlock,README,n,@th
 on,cmd,fast,where,tools/whereBlock,help,n,@h
 on,cmd,fast,where,tools/whereBlock,long_help,n,help

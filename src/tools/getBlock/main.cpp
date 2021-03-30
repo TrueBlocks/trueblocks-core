@@ -94,7 +94,7 @@ string_q doOneBlock(blknum_t num, COptions& opt) {
                 replaceReverse(result, "\n", "");
 
             // The query worked. If user wants us to write the block to cache, do so...
-            if (opt.force) {  // turn this on to force a write of the block to the disc
+            if (opt.cache) {  // turn this on to force a write of the block to the disc
                 CRPCResult generic;
                 generic.parseJson3(result);
                 result = generic.result;
@@ -128,7 +128,7 @@ string_q doOneBlock(blknum_t num, COptions& opt) {
             result = doOneLightBlock(num);
         } else {
             result = doOneHeavyBlock(gold, num, opt);
-            if (opt.force) {  // turn this on to force a write of the block to the disc
+            if (opt.cache) {  // turn this on to force a write of the block to the disc
                 LOG2("writeBlockToBinary(" + uint_2_Str(gold.blockNumber) + ", " + fileName + ": " +
                      bool_2_Str(fileExists(fileName)));
                 writeBlockToBinary(gold, fileName);

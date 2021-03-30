@@ -1,6 +1,6 @@
-getBlock argc: 4 [1:0x2e7721] [2:--force] [3:--parity] 
-getBlock 0x2e7721 --force --parity 
-TIME ~ CLOCK - <INFO>  : force: true
+getBlock argc: 4 [1:0x2e7721] [2:--cache] [3:--parity] 
+getBlock 0x2e7721 --cache --parity 
+TIME ~ CLOCK - <INFO>  : cache: true
 { "data": [
 {
   "difficulty": "0x62f79fffb26f",
