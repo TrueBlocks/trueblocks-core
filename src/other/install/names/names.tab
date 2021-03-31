@@ -1090,7 +1090,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 31-Gitcoin Grants:Friends	0x229c02d41b02c299eb635e2e630e05e709bfa922	kpii		Gitcoin Website			false	false	false	false	false	false
 31-Gitcoin Grants:Grant	0x229e63b972f476b75987b03b3dc96be5dd0cf80b	Grant 1574 Gas Price Extension		https://gitcoin.co/grants/1574/gas-price-extension			false	false	false	false	false	false
 31-Gitcoin Grants:Grant	0x22b5de197d8a8ca13e361c268f58baf088ac4dc0	Grant 0443 Cretter - Solving Critical Thinking and Debates on the Internet		https://gitcoin.co/grants/443/cretter-solving-critical-thinking-and-debates-on-		https://cretter.org	false	false	false	false	false	false
-50-Tokens:ERC20	0x22c1f6050e56d2876009903609a2cc3fef83b415	POAP	The Proof of Attendance Protocol	On chain			false	false	false	true	true	false
+50-Tokens:ERC20	0x22c1f6050e56d2876009903609a2cc3fef83b415	The Proof of Attendance Protocol	POAP	On chain			false	false	false	true	true	false
 30-Contracts:Humanity DAO	0x22c3534a948c1504fa765e67f1aaf3d2a2494116	chrisdotn		https://www.humanitydao.org/humans			false	false	false	false	false	false
 90-DevCon2:Individual	0x22dc622df269e140a85ab8268b49f82f84713558	Jeff Lau		DevCon2 Token Contract			false	false	false	false	false	false
 31-Gitcoin Grants:Grant	0x22de936854e40350d01f47724fd047d4de0f26a1	Grant 1010 Synergy of Serra		https://gitcoin.co/grants/1010/synergy-of-serra			false	false	false	false	false	false
@@ -5457,7 +5457,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 81-Other	0xbb9854bfd082c48b4d426ac6a2a152b01326f46f	X3		EtherScan.io			false	false	false	true	false	false
 31-Gitcoin Grants:Friends	0xbb9a5f5c112f6ed889b1c3f0ace6bf0d34d3cea1	a0114301		Gitcoin Website			false	false	false	false	false	false
 81-Other	0xbb9aa47ea51695591a0b1c44c74d17a33ffde5b4	SkillBeatsLuck_id223_cnt19_2mo		Ether Camp			false	false	false	true	false	false
-50-Tokens:ERC20	0xbb9bc244d798123fde783fcc1c72d3bb8c189413	The DAO Original		On chain	1		false	false	false	true	true	false
+50-Tokens:ERC20	0xbb9bc244d798123fde783fcc1c72d3bb8c189413	The DAO Original	DAO	On chain	1		false	false	false	true	true	false
 90-DevCon2:Individual	0xbbaf41e872901aa00be9dd48365b4e87d2933d23	dotnetjunkie		DevCon2 Token Contract			false	false	false	false	false	false
 31-Gitcoin Grants:Friends	0xbbba14a63a97d30d4b1e2fd221ee97bb068fad40	junthebug		Gitcoin Website			false	false	false	false	false	false
 50-Tokens:ERC20	0xbbbbca6a901c926f240b89eacb641d8aec7aeafd	LoopringCoin V2	LRC	On chain	18		false	false	false	true	true	false
