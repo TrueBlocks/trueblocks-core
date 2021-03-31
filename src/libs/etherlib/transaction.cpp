@@ -145,19 +145,6 @@ string_q CTransaction::getValueByName(const string_q& fieldName) const {
                     return "{}";
                 return receipt.Format();
             }
-            if (fieldName % "reconciliations" || fieldName % "reconciliationsCnt") {
-                size_t cnt = reconciliations.size();
-                if (endsWith(toLower(fieldName), "cnt"))
-                    return uint_2_Str(cnt);
-                if (!cnt)
-                    return "";
-                string_q retS;
-                for (size_t i = 0; i < cnt; i++) {
-                    retS += reconciliations[i].Format();
-                    retS += ((i < cnt - 1) ? ",\n" : "\n");
-                }
-                return retS;
-            }
             break;
         case 's':
             if (fieldName % "statements" || fieldName % "statementsCnt") {
@@ -377,15 +364,6 @@ bool CTransaction::setValueByName(const string_q& fieldNameIn, const string_q& f
             if (fieldName % "receipt") {
                 return receipt.parseJson3(fieldValue);
             }
-            if (fieldName % "reconciliations") {
-                CReconciliation obj;
-                string_q str = fieldValue;
-                while (obj.parseJson3(str)) {
-                    reconciliations.push_back(obj);
-                    obj = CReconciliation();  // reset
-                }
-                return true;
-            }
             break;
         case 's':
             if (fieldName % "statements") {
@@ -472,7 +450,6 @@ bool CTransaction::Serialize(CArchive& archive) {
     archive >> receipt;
     archive >> traces;
     archive >> articulatedTx;
-    // archive >> reconciliations;
     // archive >> compressedTx;
     // archive >> statements;
     // archive >> finalized;
@@ -506,7 +483,6 @@ bool CTransaction::SerializeC(CArchive& archive) const {
     archive << receipt;
     archive << traces;
     archive << articulatedTx;
-    // archive << reconciliations;
     // archive << compressedTx;
     // archive << statements;
     // archive << finalized;
@@ -565,8 +541,6 @@ void CTransaction::registerClass(void) {
     ADD_OBJECT(CTransaction, "receipt", T_OBJECT | TS_OMITEMPTY, ++fieldNum, GETRUNTIME_CLASS(CReceipt));
     ADD_FIELD(CTransaction, "traces", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
     ADD_OBJECT(CTransaction, "articulatedTx", T_OBJECT | TS_OMITEMPTY, ++fieldNum, GETRUNTIME_CLASS(CFunction));
-    ADD_FIELD(CTransaction, "reconciliations", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
-    HIDE_FIELD(CTransaction, "reconciliations");
     ADD_FIELD(CTransaction, "compressedTx", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CTransaction, "compressedTx");
     ADD_FIELD(CTransaction, "statements", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
@@ -896,7 +870,8 @@ bool CTransaction::readBackLevel(CArchive& archive) {
         archive >> receipt;
         archive >> traces;
         archive >> articulatedTx;
-        archive >> reconciliations;
+        CReconciliationArray unused;
+        archive >> unused;
         // archive >> compressedTx;
         // archive >> statements;
         // archive >> finalized;
@@ -947,16 +922,6 @@ const CBaseNode* CTransaction::getObjectAt(const string_q& fieldName, size_t ind
 
     if (fieldName % "articulatedTx")
         return &articulatedTx;
-
-    if (fieldName % "reconciliations") {
-        if (index == NOPOS) {
-            CReconciliation empty;
-            ((CTransaction*)this)->reconciliations.push_back(empty);  // NOLINT
-            index = reconciliations.size() - 1;
-        }
-        if (index < reconciliations.size())
-            return &reconciliations[index];
-    }
 
     if (fieldName % "statements") {
         if (index == NOPOS) {

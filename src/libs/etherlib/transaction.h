@@ -53,7 +53,6 @@ class CTransaction : public CBaseNode {
     CReceipt receipt;
     CTraceArray traces;
     CFunction articulatedTx;
-    CReconciliationArray reconciliations;
     string_q compressedTx;
     CReconciliationArray statements;
     bool finalized;
@@ -148,7 +147,6 @@ inline void CTransaction::initialize(void) {
     receipt = CReceipt();
     traces.clear();
     articulatedTx = CFunction();
-    reconciliations.clear();
     compressedTx = "";
     statements.clear();
     finalized = false;
@@ -182,7 +180,6 @@ inline void CTransaction::duplicate(const CTransaction& tr) {
     receipt = tr.receipt;
     traces = tr.traces;
     articulatedTx = tr.articulatedTx;
-    reconciliations = tr.reconciliations;
     compressedTx = tr.compressedTx;
     statements = tr.statements;
     finalized = tr.finalized;

@@ -6,40 +6,44 @@
 #include "options.h"
 
 //-----------------------------------------------------------------------
-bool handle_reconciliation(COptions* options, CTransaction& trans, CReconciliation& prev, blknum_t next, bool tokens) {
+bool handle_reconciliation(COptions* options, CTransaction& trans, CReconciliationMap& prev, blknum_t next,
+                           bool tokens) {
     CReconciliation nums;
     nums.blockNumber = trans.blockNumber;
     nums.transactionIndex = trans.transactionIndex;
     nums.timestamp = trans.timestamp;
     CStringArray corrections;
-    nums.reconcileEth(corrections, prev.blockNumber, prev.endBal, prev.endBalCalc, next, &trans);
-    trans.reconciliations.push_back(nums);
+    nums.reconcileEth(corrections, prev, next, &trans);
     trans.statements.clear();
     trans.statements.push_back(nums);
-    // if (tokens) {
-    //     CAddressBoolMap done;
-    //     for (auto log : trans.receipt.logs) {
-    //         const CAccountName& name = options->tokenMap[log.address];
-    //         if (name.address == log.address && !done[log.address]) {
-    //             st = C ReconciliationOutput();
-    //             nums.blockNumber = trans.blockNumber;
-    //             nums.transactionIndex = trans.transactionIndex;
-    //             nums.timestamp = trans.timestamp;
-    //             CStringArray corrections;
-    //             nums.reconcileToken(corrections, const CReconciliation& lastStatement, blknum_t nextBlock,
-    //                                 const CAccountName& token, const address_t& accountedFor);
-    //             // nums.reconcileToken(name, expContext().accountedFor);
-    //             // st.asset = name.symbol.empty() ? name.name : name.symbol;
-    //             // st.begBal = "1200";
-    //             // st.endBal = "1300";
-    //             // st.amountIn = "100";
-    //             // CRec onciliationOutput st(nums);
-    //             // trans.statements.push_back(st);
-    //             // done[log.address] = true;
-    //         }
-    //     }
-    // }
-    prev = nums;
+    prev[expContext().accountedFor + "_eth"] = nums;
+    if (tokens) {
+        CAddressBoolMap done;
+        for (auto log : trans.receipt.logs) {
+            const CAccountName& name = options->tokenMap[log.address];
+            if (name.address == log.address && !done[log.address]) {
+                nums.reset();
+                nums.asset = name.symbol.empty() ? name.name.substr(0, 4) : name.symbol;
+                CMonitor m;
+                m.address = log.address;
+                string key = expContext().accountedFor + "_" + log.address;
+                CReconciliation p = prev[key];
+                nums.begBal = prev[key].endBal;
+                nums.endBal = str_2_BigInt(getTokenBalanceOf(m, expContext().accountedFor, trans.blockNumber));
+                if (nums.begBal > nums.endBal) {
+                    nums.amountOut = (nums.begBal - nums.endBal);
+                } else {
+                    nums.amountIn = (nums.endBal - nums.begBal);
+                }
+                nums.amountNet = nums.amountIn - nums.amountOut;
+                nums.reconciled = true;
+                done[log.address] = true;
+                if (nums.amountNet != 0)
+                    trans.statements.push_back(nums);
+                prev[key] = nums;
+            }
+        }
+    }
     return true;
 }
 
@@ -51,9 +55,12 @@ bool COptions::handle_accounting(void) {
 
     bool shouldDisplay = !freshen;
 
-    CReconciliation prev;
+    CReconciliationMap prev;
     if (apps.size() > 0 && first_record != 0) {
-        prev.endBal = getBalanceAt(expContext().accountedFor, apps[0].blk - 1);
+        CReconciliation eth;
+        eth.blockNumber = apps[0].blk - 1;
+        eth.endBal = getBalanceAt(expContext().accountedFor, apps[0].blk - 1);
+        prev[expContext().accountedFor + "_eth"] = eth;
     }
 
     bool first = true;

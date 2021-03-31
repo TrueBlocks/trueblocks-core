@@ -199,4 +199,4 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0x2260fac5e5542a773aa44fbcfedf7c193bc2c599	Wrapped BTC	WBTC		8
 50-Tokens:ERC20	0x226bb599a12c826476e3a771454697ea52e9e220	Propy	PRO		8
 50-Tokens:ERC20	0x228ba514309ffdf03a81a205a6d040e429d6e80c	Global Social Chain	GSC		18
-50-Tokens:ERC20	0x22c1f6050e56d2876009903609a2cc3fef83b415	POAP	The Proof of Attendance Protocol
+50-Tokens:ERC20	0x22c1f6050e56d2876009903609a2cc3fef83b415	The Proof of Attendance Protocol	POAP

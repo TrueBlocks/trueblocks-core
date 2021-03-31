@@ -19,7 +19,6 @@ fields = hash hash|\
         CReceipt receipt|\
         CTraceArray traces|\
         CFunction articulatedTx|\
-        CReconciliationArray reconciliations (nowrite)|\
         string compressedTx (nowrite)|\
         CReconciliationArray statements (nowrite)|\
         sbool finalized (nowrite)

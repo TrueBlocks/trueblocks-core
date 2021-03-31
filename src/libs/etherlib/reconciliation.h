@@ -60,12 +60,20 @@ class CReconciliation : public CBaseNode {
     DECLARE_NODE(CReconciliation);
 
     // EXISTING_CODE
-    bool reconcileEth(const CStringArray& corrections, blknum_t lastBn, bigint_t lastEndBal, bigint_t lastEndBalCalc,
-                      blknum_t nextBlock, const CTransaction* trans);
+    bool reconcileEth(const CStringArray& corrections, map<string, CReconciliation>& last, blknum_t nextBlock,
+                      const CTransaction* trans);
     bool reconcileToken(const CStringArray& corrections, blknum_t lastBn, bigint_t lastEndBal, bigint_t lastEndBalCalc,
                         blknum_t nextBlock, const CAccountName& token, const address_t& accountedFor);
     bool reconcileUsingTraces(blknum_t lastBn, bigint_t lastEndBal, bigint_t lastEndBalCalc, blknum_t nextBlock,
                               const CTransaction* trans);
+    void reset(void) {
+        blknum_t b = blockNumber, tr = transactionIndex;
+        timestamp_t ts = timestamp;
+        initialize();
+        blockNumber = b;
+        transactionIndex = tr;
+        timestamp = ts;
+    }
     // EXISTING_CODE
     bool operator==(const CReconciliation& it) const;
     bool operator!=(const CReconciliation& it) const {
@@ -223,5 +231,6 @@ extern CReconciliation operator+(const CReconciliation& a, const CReconciliation
 extern string_q bni_2_Ether(const bigint_t& num);
 extern string_q bni_2_Dollars(const timestamp_t& ts, const bigint_t& num);
 extern string_q bni_2_Export(const timestamp_t& ts, const bigint_t& num);
+typedef map<string, CReconciliation> CReconciliationMap;
 // EXISTING_CODE
 }  // namespace qblocks
