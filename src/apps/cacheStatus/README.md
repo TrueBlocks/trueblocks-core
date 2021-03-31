@@ -4,7 +4,7 @@ The `cacheStatus` program allows one to  manage and explore [monitor cache files
 
 #### Usage
 
-`Usage:`    cacheStatus [-d|-t|-v|-h] &lt;mode&gt; [mode...]  
+`Usage:`    chifra status [-d|-t|-v|-h] &lt;mode&gt; [mode...]  
 `Purpose:`  Report on status of one or more TrueBlocks caches.
 
 `Where:`  

@@ -4,7 +4,7 @@ The `getTrans` tool retrieves transactions from the running Ethereum node (using
 
 #### Usage
 
-`Usage:`    getTrans [-a|-t|-u|-v|-h] &lt;tx_id&gt; [tx_id...]  
+`Usage:`    chifra transactions [-a|-t|-u|-v|-h] &lt;tx_id&gt; [tx_id...]  
 `Purpose:`  Retrieve a transaction from the cache or the node.
 
 `Where:`  

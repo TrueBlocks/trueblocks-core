@@ -2,7 +2,7 @@ ethslurp argc: 2 [1:-th]
 ethslurp -th 
 #### Usage
 
-`Usage:`    ethslurp [-t|-p|-v|-h] &lt;address&gt; [address...] [block...]  
+`Usage:`    chifra slurp [-t|-p|-v|-h] &lt;address&gt; [address...] [block...]  
 `Purpose:`  Fetches data from EtherScan for an arbitrary address.
 
 `Where:`  

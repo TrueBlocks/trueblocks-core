@@ -20,7 +20,7 @@ Here is a screen shot of an interaction with Chifra building a smart contract mo
 
 <img src=docs/image.png>
 
-00009612 (   9612)- <ERROR> : Exit(chifra,call_command): 
+00006417 (   6417)- <ERROR> : Exit(chifra,call_command): 
 #### Usage
 
 `Usage:`    chifra command  

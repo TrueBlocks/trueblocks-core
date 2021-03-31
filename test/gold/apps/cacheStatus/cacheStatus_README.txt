@@ -2,7 +2,7 @@ cacheStatus argc: 2 [1:-th]
 cacheStatus -th 
 #### Usage
 
-`Usage:`    cacheStatus [-d|-t|-v|-h] &lt;mode&gt; [mode...]  
+`Usage:`    chifra status [-d|-t|-v|-h] &lt;mode&gt; [mode...]  
 `Purpose:`  Report on status of one or more TrueBlocks caches.
 
 `Where:`  

@@ -2,7 +2,7 @@ whenBlock argc: 2 [1:-th]
 whenBlock -th 
 #### Usage
 
-`Usage:`    whenBlock [-l|-t|-s|-v|-h] &lt; block | date &gt; [ block... | date... ]  
+`Usage:`    chifra when [-l|-t|-s|-v|-h] &lt; block | date &gt; [ block... | date... ]  
 `Purpose:`  Finds block based on date, blockNum, timestamp, or 'special'.
 
 `Where:`  

@@ -2,7 +2,7 @@ pinMan argc: 2 [1:-th]
 pinMan -th 
 #### Usage
 
-`Usage:`    pinMan [-a|-p|-u|-i|-v|-h] mode  
+`Usage:`    chifra pins [-a|-p|-u|-i|-v|-h] mode  
 `Purpose:`  Report on and manage the pinned appearance index chunks and associated bloom filters.
 
 `Where:`  

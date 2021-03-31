@@ -2,7 +2,7 @@ ethQuote argc: 2 [1:-th]
 ethQuote -th 
 #### Usage
 
-`Usage:`    ethQuote [-f|-p|-a|-e|-v|-h]  
+`Usage:`    chifra quotes [-f|-p|-a|-e|-v|-h]  
 `Purpose:`  Freshen and/or display Ethereum price data.
 
 `Where:`  

@@ -2,7 +2,7 @@ getState argc: 2 [1:-th]
 getState -th 
 #### Usage
 
-`Usage:`    getState [-p|-c|-n|-v|-h] &lt;address&gt; [address...] [block...]  
+`Usage:`    chifra state [-p|-c|-n|-v|-h] &lt;address&gt; [address...] [block...]  
 `Purpose:`  Retrieve the balance of one or more address at the given block(s).
 
 `Where:`  

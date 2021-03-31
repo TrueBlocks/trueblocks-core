@@ -2,7 +2,7 @@ blockScrape argc: 2 [1:-th]
 blockScrape -th 
 #### Usage
 
-`Usage:`    blockScrape [-t|-n|-p|-u|-s|-i|-R|-v|-h] mode  
+`Usage:`    chifra scrape [-t|-n|-p|-u|-s|-i|-R|-v|-h] mode  
 `Purpose:`  Decentralized blockchain scraper and block cache.
 
 `Where:`  

@@ -8,7 +8,7 @@ This tool is intended mostly as an aid in developing and debugging TrueBlocks to
 
 #### Usage
 
-`Usage:`    whereBlock [-v|-h] &lt;block&gt; [block...]  
+`Usage:`    chifra where [-v|-h] &lt;block&gt; [block...]  
 `Purpose:`  Reports in which cache (if any) a block is found.
 
 `Where:`  

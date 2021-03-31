@@ -2,7 +2,7 @@ grabABI argc: 2 [1:-th]
 grabABI -th 
 #### Usage
 
-`Usage:`    grabABI [-c|-k|-f|-v|-h] &lt;address&gt; [address...]  
+`Usage:`    chifra abis [-c|-k|-f|-v|-h] &lt;address&gt; [address...]  
 `Purpose:`  Fetches the ABI for a smart contract.
 
 `Where:`  

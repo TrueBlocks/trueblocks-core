@@ -3,7 +3,7 @@
 The `ethQuote` tool provides Ethereum price data to various tools or for other purposes. Currently, `ethQuote` retrieves data using the Poloniex API. In future versions, we intend to add other sources of pricing data and provide a mechanism to specify an averaging calculate given multiple price sources. Ultimately, we hope Ethereum/fiat price data appears under consensus, but until that time, **TrueBlocks** uses `ethQuote`. Powered, in part, by Poloniex<sup>&reg;<sup>
 #### Usage
 
-`Usage:`    ethQuote [-f|-p|-a|-e|-v|-h]  
+`Usage:`    chifra quotes [-f|-p|-a|-e|-v|-h]  
 `Purpose:`  Freshen and/or display Ethereum price data.
 
 `Where:`  

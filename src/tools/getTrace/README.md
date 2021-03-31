@@ -4,7 +4,7 @@
 
 #### Usage
 
-`Usage:`    getTrace [-a|-c|-v|-h] &lt;tx_id&gt; [tx_id...]  
+`Usage:`    chifra traces [-a|-d|-c|-v|-h] &lt;tx_id&gt; [tx_id...]  
 `Purpose:`  Retrieve a transaction's traces from the cache or the node.
 
 `Where:`  
@@ -13,6 +13,7 @@
 | -------: | :------- | :------- |
 |  | transactions | a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID) (required) |
 | -a | --articulate | articulate the transactions if an ABI is found for the 'to' address |
+| -d | --statediff | export stateDiff traces for the transaction(s) |
 | -c | --count | show the number of traces for the transaction only (fast) |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |

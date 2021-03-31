@@ -6,7 +6,7 @@ Using operating system tools such as Linux's `cron` you can easily maintain a  c
 
 #### Usage
 
-`Usage:`    blockScrape [-t|-n|-p|-u|-s|-v|-h] mode  
+`Usage:`    chifra scrape [-t|-n|-p|-u|-s|-i|-R|-v|-h] mode  
 `Purpose:`  Decentralized blockchain scraper and block cache.
 
 `Where:`  
@@ -19,6 +19,8 @@ Using operating system tools such as Linux's `cron` you can easily maintain a  c
 | -p | --pin | pin new chunks (and blooms) to IPFS (requires Pinata key and running IPFS node) |
 | -u | --publish | publish the hash of the pin manifest to the UnchainedIndex smart contract |
 | -s | --sleep <double> | the number of seconds to sleep between passes (default 14) |
+| -i | --cache_txs | write transactions to the cache (see notes) |
+| -R | --cache_traces | write traces to the cache (see notes) |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 

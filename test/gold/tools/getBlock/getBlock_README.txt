@@ -2,7 +2,7 @@ getBlock argc: 2 [1:-th]
 getBlock -th 
 #### Usage
 
-`Usage:`    getBlock [-e|-a|-u|-n|-c|-U|-v|-h] &lt;block&gt; [block...]  
+`Usage:`    chifra blocks [-e|-a|-u|-n|-c|-U|-v|-h] &lt;block&gt; [block...]  
 `Purpose:`  Returns block(s) from local cache or directly from a running node.
 
 `Where:`  

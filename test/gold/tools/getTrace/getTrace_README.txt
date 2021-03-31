@@ -2,7 +2,7 @@ getTrace argc: 2 [1:-th]
 getTrace -th 
 #### Usage
 
-`Usage:`    getTrace [-a|-d|-c|-v|-h] &lt;tx_id&gt; [tx_id...]  
+`Usage:`    chifra traces [-a|-d|-c|-v|-h] &lt;tx_id&gt; [tx_id...]  
 `Purpose:`  Retrieve a transaction's traces from the cache or the node.
 
 `Where:`  

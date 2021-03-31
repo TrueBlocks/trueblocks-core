@@ -26,7 +26,7 @@ Using ethName to find Singular's address, list tokens held by other token accoun
 
 #### Usage
 
-`Usage:`    ethNames [-e|-m|-l|-o|-c|-p|-n|-a|-s|-g|-v|-h] &lt;term&gt; [term...]  
+`Usage:`    chifra names [-e|-m|-l|-o|-c|-p|-n|-a|-s|-g|-v|-h] &lt;term&gt; [term...]  
 `Purpose:`  Query addresses and/or names of well known accounts.
 
 `Where:`  
@@ -54,7 +54,7 @@ Using ethName to find Singular's address, list tokens held by other token accoun
 - When there are two search terms, both must match.
 - The `--match_case` option requires case sensitive matching. It works with all other options.
 - To customize the list of names add a `custom` section to the config file (see documentation).
-- Name file: `~/.quickBlocks/names/names.tab` (1153506)
+- Name file: `~/.quickBlocks/names/names.tab` (1166021)
 
 #### Other Options
 

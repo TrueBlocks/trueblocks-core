@@ -2,7 +2,7 @@ whereBlock argc: 2 [1:-th]
 whereBlock -th 
 #### Usage
 
-`Usage:`    whereBlock [-v|-h] &lt;block&gt; [block...]  
+`Usage:`    chifra where [-v|-h] &lt;block&gt; [block...]  
 `Purpose:`  Reports in which cache (if any) a block is found.
 
 `Where:`  
