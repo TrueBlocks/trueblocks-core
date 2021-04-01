@@ -103,6 +103,7 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0x111111125434b319222cdbf8c261674adb56f3ae	1inch.exchange v2
 50-Tokens:ERC20	0x11111254369792b2ca5d084ab5eea397ca8fa48b	1inch.exchange
 50-Tokens:ERC20	0x1122b6a0e00dce0563082b6e2953f3a943855c1f	Centrality Token	CENNZ		18
+50-Tokens:ERC20	0x11613b1f840bb5a40f8866d857e24da126b79d73	CAPP Token	CAPP		2
 50-Tokens:ERC20	0x1183f92a5624d68e85ffb9170f16bf0443b4c242	QVT	QVT		18
 50-Tokens:ERC20	0x122a86b5dff2d085afb49600b4cd7375d0d94a5f	ITL (Italian Lira)	ITL		8
 50-Tokens:ERC20	0x123ab195dd38b1b40510d467a6a359b201af056f	LGO Token	LGO		8
@@ -152,6 +153,7 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0x1966d718a565566e8e202792658d7b5ff4ece469	nDEX	NDX		18
 50-Tokens:ERC20	0x1985365e9f78359a9b6ad760e32412f4a445e862	Reputation	REP		18
 50-Tokens:ERC20	0x19b67f79f8c5d49e950a8754f95aaea93309dcae	HackerGold	HKG		3
+50-Tokens:ERC20	0x19d97d8fa813ee2f51ad4b4e04ea08baf4dffc28	Badger Sett Badger	bBADGER		18
 50-Tokens:ERC20	0x19ea630bcbc1a511a16e65b6ecd447c92e1c087c	Carats Token	CARAT		18
 50-Tokens:ERC20	0x1a0f2ab46ec630f9fd638029027b552afa64b94c	Aston X	ATX		18
 50-Tokens:ERC20	0x1a2277c83930b7a64c3e3d5544eaa8c4f946b1b7	ECHAT TOKEN	ECHT		18
@@ -198,5 +200,3 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0x2233799ee2683d75dfefacbcd2a26c78d34b470d	Network Token	NTWK		18
 50-Tokens:ERC20	0x2260fac5e5542a773aa44fbcfedf7c193bc2c599	Wrapped BTC	WBTC		8
 50-Tokens:ERC20	0x226bb599a12c826476e3a771454697ea52e9e220	Propy	PRO		8
-50-Tokens:ERC20	0x228ba514309ffdf03a81a205a6d040e429d6e80c	Global Social Chain	GSC		18
-50-Tokens:ERC20	0x22c1f6050e56d2876009903609a2cc3fef83b415	The Proof of Attendance Protocol	POAP
