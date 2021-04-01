@@ -92,6 +92,7 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
         } else if (fld.type == "uint16")          { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_UNUMBER";
         } else if (fld.type == "uint32")          { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_UNUMBER";
         } else if (fld.type == "uint64")          { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_UNUMBER";
+        } else if (fld.type == "suint32")         { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_UNUMBER | TS_OMITEMPTY"; fld.type = "uint32";
         } else if (fld.type == "suint64")         { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_UNUMBER | TS_OMITEMPTY"; fld.type = "uint64";
         } else if (fld.type == "uint256")         { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_UINT256";
         } else if (fld.type == "bool")            { setFmt = "`[{NAME}] = [{DEFB}];\n";   regType = "T_BOOL | TS_OMITEMPTY";
@@ -395,7 +396,7 @@ string_q getCaseGetCode(const CParameterArray& fieldsIn) {
                 } else if (p.type == "uint8" || p.type == "uint16" || p.type == "uint32" || p.type == "uint64") {
                     outStream << ("return uint_2_Str([{PTR}]" + p.name + ");");
 
-                } else if (p.type == "suint64") {
+                } else if (p.type == "suint64" || p.type == "suint32") {
                     outStream << ("return " + p.name + " == 0 ? \"\" : uint_2_Str([{PTR}]" + p.name + ");");
 
                 } else if (p.type == "blknum") {
@@ -545,7 +546,7 @@ string_q getCaseSetCode(const CParameterArray& fieldsIn) {
                 } else if (p.type == "int8" || p.type == "int16" || p.type == "int32") {
                     outStream << (p.name + " = (int32_t)str_2_Uint(fieldValue);\n````return true;");
 
-                } else if (p.type == "uint8" || p.type == "uint16" || p.type == "uint32") {
+                } else if (p.type == "uint8" || p.type == "uint16" || p.type == "uint32" || p.type == "suint32") {
                     outStream << (p.name + " = (uint32_t)str_2_Uint(fieldValue);\n````return true;");
 
                 } else if (startsWith(p.type, "bytes")) {
