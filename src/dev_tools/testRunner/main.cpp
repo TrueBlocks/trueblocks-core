@@ -79,8 +79,19 @@ int main(int argc, const char* argv[]) {
                 }
 
                 if (line.empty() || ignore1 || ignore2 || ignore3 || ignore4) {
-                    if (ignore2 && !options.ignoreOff)
+                    if (ignore2 && !options.ignoreOff) {
                         cerr << iBlue << "   # " << line.substr(0, 120) << cOff << endl;
+                        CTestCase test(line, 0);
+                        test.goldPath = substitute(getCWD(), "/test/gold/dev_tools/testRunner/",
+                                                   "/test/gold/" + test.path + "/" + test.tool + "/" + test.fileName);
+                        // if the gold file exists, copy the test case back to working (it may have been removed)
+                        if (fileExist(test.goldPath)) {
+                            test.workPath =
+                                substitute(getCWD(), "/test/gold/dev_tools/testRunner/",
+                                           "/test/working/" + test.path + "/" + test.tool + "/" + test.fileName);
+                            copyFile(test.goldPath, test.workPath);
+                        }
+                    }
                     // do nothing
 
                 } else {
