@@ -48,15 +48,15 @@ string_q uint_2_Hex(uint64_t num) {
 }
 
 //--------------------------------------------------------------------------------
-string_q wei_2_Ether(const string_q& _value) {
-    // Make sure the wei number is at least 18 characters long. Once it is,
-    // reverse it, put a decimal at the 18th position, reverse it back,
+string_q str_2_Ether(const string_q& _value, uint64_t decimals) {
+    // Make sure the wei number is at least 'decimals' characters long. Once it is,
+    // reverse it, put a decimal at the 'decimals'th position, reverse it back,
     // trim leading '0's except the tens digit.
     string_q ret = _value;
-    if (ret.length() < 18)
-        ret = substitute(padLeft(_value, 18), " ", "0");
+    if (ret.length() < decimals)
+        ret = substitute(padLeft(_value, decimals), " ", "0");
     reverse(ret);
-    ret = extract(ret, 0, 18) + "." + extract(ret, 18);
+    ret = extract(ret, 0, decimals) + "." + extract(ret, decimals);
     reverse(ret);
     ret = trimLeading(ret, '0');
     if (startsWith(ret, '.'))
@@ -69,8 +69,8 @@ string_q wei_2_Ether(const string_q& _value) {
 }
 
 //-----------------------------------------------------------------------
-string_q wei_2_Ether(biguint_t in) {
-    string_q ret = wei_2_Ether(bnu_2_Str(in));
+string_q wei_2_Ether(biguint_t in, uint64_t decimals) {
+    string_q ret = str_2_Ether(bnu_2_Str(in), decimals);
     if (contains(ret, "."))
         ret = trimTrailing(ret, '0');
     return trimTrailing(ret, '.');

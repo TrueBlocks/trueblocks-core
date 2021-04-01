@@ -332,7 +332,7 @@ string_q nextEthstateChunk_custom(const string_q& fieldIn, const void* dataPtr) 
                 break;
             case 'e':
                 if (fieldIn % "ether")
-                    return wei_2_Ether(bnu_2_Str(eth->balance));
+                    return str_2_Ether(bnu_2_Str(eth->balance), 18);
                 break;
             // EXISTING_CODE
             case 'p':

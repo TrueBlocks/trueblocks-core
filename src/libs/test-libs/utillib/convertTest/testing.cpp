@@ -146,10 +146,10 @@ TEST_F(CThisTest, TestConverts_2) {
     ASSERT_EQ("wei2", two, 1030000000);
     ASSERT_EQ("wei3", three, 1004000001);
     ASSERT_EQ("wei4", bnu_2_Str(val), "1240944001236000000000000001");
-    ASSERT_EQ("eth1", wei_2_Ether(val), "1240944001.236000000000000001");
-    ASSERT_EQ("eth2", wei_2_Ether(val / 1000000), "1240.944001236");
-    ASSERT_EQ("eth2", wei_2_Ether(bnu_2_Str(val)), "1240944001.236000000000000001");
-    ASSERT_EQ("eth2", wei_2_Ether(bnu_2_Str(val / 1000000)), "1240.944001236000000000");
+    ASSERT_EQ("eth1", wei_2_Ether(val, 18), "1240944001.236000000000000001");
+    ASSERT_EQ("eth2", wei_2_Ether(val / 1000000, 18), "1240.944001236");
+    ASSERT_EQ("eth2", str_2_Ether(bnu_2_Str(val), 18), "1240944001.236000000000000001");
+    ASSERT_EQ("eth2", str_2_Ether(bnu_2_Str(val / 1000000), 18), "1240.944001236000000000");
 
     return true;
 }

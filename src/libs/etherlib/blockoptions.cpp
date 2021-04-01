@@ -70,7 +70,7 @@ string_q getDispBal(blknum_t bn, biguint_t bal) {
     }
     ostringstream os;
     if (expContext().asEther) {
-        os << wei_2_Ether(bal);
+        os << wei_2_Ether(bal, 18);
     } else if (expContext().asDollars) {
         os << padLeft("$" + displayDollars(timestampMap[bn], bal), 14);
     } else {

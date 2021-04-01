@@ -228,9 +228,9 @@ extern const char* STR_DISPLAY_RECONCILIATION;
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 extern CReconciliation operator+(const CReconciliation& a, const CReconciliation& b);
-extern string_q bni_2_Ether(const bigint_t& num);
-extern string_q bni_2_Dollars(const timestamp_t& ts, const bigint_t& num);
-extern string_q bni_2_Export(const timestamp_t& ts, const bigint_t& num);
+extern string_q bni_2_Ether(const bigint_t& num, uint64_t decimals);
+extern string_q bni_2_Dollars(const timestamp_t& ts, const bigint_t& num, uint64_t decimals);
+extern string_q bni_2_Export(const timestamp_t& ts, const bigint_t& num, uint64_t decimals);
 typedef map<string, CReconciliation> CReconciliationMap;
 // EXISTING_CODE
 }  // namespace qblocks

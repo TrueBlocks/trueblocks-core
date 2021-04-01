@@ -103,8 +103,8 @@ extern address_t bytes_2_Addr(uint8_t const bytes[20]);
 extern string_q chr_2_HexStr(const string_q& str);
 extern string_q bnu_2_Hex(const biguint_t& bu);
 extern string_q uint_2_Hex(uint64_t num);
-extern string_q wei_2_Ether(const string_q& str);
-extern string_q wei_2_Ether(biguint_t val);
+extern string_q str_2_Ether(const string_q& str, uint64_t decimals);
+extern string_q wei_2_Ether(biguint_t val, uint64_t decimals);
 extern string_q byte_2_Bits(uint8_t ch);
 
 //--------------------------------------------------------------------

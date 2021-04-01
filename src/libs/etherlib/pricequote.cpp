@@ -301,7 +301,7 @@ static string_q getWeiQuote(const CPriceQuoteArray& quotes, timestamp_t ts, bigu
     double price = quotes[index].close * 100.0;
     weiIn *= ((uint64_t)price);
     weiIn /= 100;
-    return wei_2_Ether(bnu_2_Str(weiIn));
+    return str_2_Ether(bnu_2_Str(weiIn), 18);
 }
 
 //-----------------------------------------------------------------------

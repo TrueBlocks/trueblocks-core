@@ -297,7 +297,7 @@ string_q nextMonitorChunk_custom(const string_q& fieldIn, const void* dataPtr) {
                 if (startsWith(fieldIn, "cur") && mon->curBalance == str_2_Wei(uint_2_Str(NOPOS)))
                     return "\"n/a\"";
                 if (fieldIn % "curEther")
-                    return "\"" + wei_2_Ether(wei_2_Str(mon->curBalance)) + "\"";
+                    return "\"" + str_2_Ether(wei_2_Str(mon->curBalance), 18) + "\"";
                 if (fieldIn % "curDollars")
                     return "not-implemented";
                 break;
@@ -589,8 +589,22 @@ string_q getTokenBalanceOf(const CMonitor& token, const address_t& holder, blknu
     cmd << "\"data\": \"0x70a08231" << padLeft(substitute(holder, "0x", ""), 64, '0') << "\"";
     cmd << "}, \"" << uint_2_Hex(blockNum) << "\"]";
     string_q ret = callRPC("eth_call", cmd.str(), false);
-    ret = bnu_2_Str(str_2_BigUint(ret, 256));
-    return ret;
+    if (startsWith(ret, "0x"))
+        return bnu_2_Str(str_2_BigUint(ret, 256));
+    return "0";
+}
+
+//-------------------------------------------------------------------------
+string_q getTokenSymbol(const CMonitor& token, blknum_t blockNum) {
+    ostringstream cmd;
+    cmd << "[{";
+    cmd << "\"to\": \"" << token.address << "\", ";
+    cmd << "\"data\": \"0x95d89b41\"";
+    cmd << "}, \"" << uint_2_Hex(blockNum) << "\"]";
+    string_q ret = callRPC("eth_call", cmd.str(), false);
+    if (!contains(ret, "error") && !startsWith(ret, "0x"))
+        return ret;
+    return "";
 }
 
 //-------------------------------------------------------------------------
