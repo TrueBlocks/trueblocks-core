@@ -20,12 +20,23 @@ bool handle_reconciliation(COptions* options, CTransaction& trans, CReconciliati
     if (tokens) {
         CAddressBoolMap done;
         for (auto log : trans.receipt.logs) {
-            const CAccountName& name = options->tokenMap[log.address];
-            if (name.address == log.address && !done[log.address]) {
-                nums.reset();
-                nums.asset = name.symbol.empty() ? name.name.substr(0, 4) : name.symbol;
+            CAccountName tokenName = options->tokenMap[log.address];
+            bool isToken = tokenName.address == log.address;
+            bool isAirdrop = options->airdropMap[log.address];
+            bool isDone = done[log.address];
+            if ((isToken || trans.hasToken || isAirdrop) && !isDone) {
                 CMonitor m;
                 m.address = log.address;
+                nums.reset();
+                nums.asset = tokenName.symbol.empty() ? tokenName.name.substr(0, 4) : tokenName.symbol;
+                if (nums.asset.empty())
+                    nums.asset = getTokenSymbol(m, trans.blockNumber);
+                if (isAirdrop && nums.asset.empty()) {
+                    options->getNamedAccount(tokenName, log.address);
+                    nums.asset = tokenName.symbol.empty() ? tokenName.name.substr(0, 4) : tokenName.symbol;
+                }
+                if (nums.asset.empty())
+                    nums.asset = "---";
                 string key = expContext().accountedFor + "_" + log.address;
                 CReconciliation p = prev[key];
                 nums.begBal = prev[key].endBal;
@@ -37,6 +48,7 @@ bool handle_reconciliation(COptions* options, CTransaction& trans, CReconciliati
                 }
                 nums.amountNet = nums.amountIn - nums.amountOut;
                 nums.reconciled = true;
+                nums.reconciliationType = "";
                 done[log.address] = true;
                 if (nums.amountNet != 0)
                     trans.statements.push_back(nums);
@@ -85,13 +97,13 @@ bool COptions::handle_accounting(void) {
                 trans.pBlock = &block;
                 block.timestamp = trans.timestamp = (timestamp_t)expContext().tsMemMap[(app->blk * 2) + 1];
 
-                // This data isn't stored, so we need to recreate it
+                markNeighbors(trans);
+                articulateAll(trans);
+                // Order matters -- this data isn't stored, so we need to recreate it
                 if (accounting) {
                     blknum_t next = i < apps.size() - 1 ? apps[i + 1].blk : NOPOS;
                     handle_reconciliation(this, trans, prev, next, tokens);
                 }
-                markNeighbors(trans);
-                articulateAll(trans);
 
                 HIDE_FIELD(CFunction, "message");
                 if (!isTestMode() && !(nProcessed % 5)) {
@@ -128,13 +140,13 @@ bool COptions::handle_accounting(void) {
                 trans.pBlock = &block;
                 block.timestamp = trans.timestamp = (timestamp_t)expContext().tsMemMap[(app->blk * 2) + 1];
 
-                // This data isn't stored, so we need to recreate it
+                markNeighbors(trans);
+                articulateAll(trans);
+                // Order matters -- this data isn't stored, so we need to recreate it
                 if (accounting) {
                     blknum_t next = i < apps.size() - 1 ? apps[i + 1].blk : NOPOS;
                     handle_reconciliation(this, trans, prev, next, tokens);
                 }
-                markNeighbors(trans);
-                articulateAll(trans);
 
                 HIDE_FIELD(CFunction, "message");
                 if (!isTestMode() && !(nProcessed % 5)) {

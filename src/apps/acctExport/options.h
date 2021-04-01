@@ -111,7 +111,8 @@ class COptions : public CAbiOptions {
 extern bool visitFinalIndexFiles(const string_q& path, void* data);
 extern bool visitStagingIndexFiles(const string_q& path, void* data);
 extern bool visitUnripeIndexFiles(const string_q& path, void* data);
-
+extern bool isTokenFunc(const string_q& input);
+extern bool isTokenTopic(const topic_t& topic);
 //--------------------------------------------------------------------------------
 inline string_q plural(const string_q& in) {
     return substitute(toLower(in).substr(1, 1000) + "s", "logentrys", "logs");

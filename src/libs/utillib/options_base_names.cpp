@@ -253,7 +253,9 @@ bool COptionsBase::loadNames(void) {
                     maliciousMap[item.second.address] = true;
                 if (contains(item.second.tags, "Airdrop"))
                     airdropMap[item.second.address] = true;
-                if (contains(item.second.tags, ":ERC20"))
+                bool isToken = !item.second.symbol.empty() || contains(item.second.tags, "Tokens") ||
+                               contains(item.second.tags, "Airdrop");
+                if (isToken)
                     tokenMap[item.second.address] = item.second;
             }
             nameCache.Release();
@@ -281,7 +283,9 @@ bool COptionsBase::loadNames(void) {
             maliciousMap[item.second.address] = true;
         if (contains(item.second.tags, "Airdrop"))
             airdropMap[item.second.address] = true;
-        if (contains(item.second.tags, ":ERC20"))
+        bool isToken = !item.second.symbol.empty() || contains(item.second.tags, "Tokens") ||
+                       contains(item.second.tags, "Airdrop");
+        if (isToken)
             tokenMap[item.second.address] = item.second;
     }
 
