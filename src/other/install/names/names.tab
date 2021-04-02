@@ -125,6 +125,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 30-Contracts:Humanity DAO	0x029aa343c7a26282e35d8cf1879700c7aeab4823	fufufu54996943		https://www.humanitydao.org/humans			false	false	false	false	false	false
 30-Contracts:Humanity DAO	0x029b26298def18fcb009e709375f091da8d07d36	blockdata_		https://www.humanitydao.org/humans			false	false	false	false	false	false
 30-Contracts:Humanity DAO	0x029b7169bec70c5190965c686950667bd0786763	VinyasAlex		https://www.humanitydao.org/humans			false	false	false	false	false	false
+30-Contracts	0x02a522d98ec2d2c3bbe91acc29ee7fd32ab880ab	Mintable: Deployer					false	false	false	false	false	false
 81-Other	0x02ad1b2f88d37825a311045663a0bf97d0dcd845	YoutubeViews_id13		Ether Camp			false	false	false	true	false	false
 81-Other	0x02b2101903eb6a51518e63e84b785180859fda9d	Thewhalegame		EtherScan.io			false	false	false	true	false	false
 34-Twitter:Friends	0x02bbea9326048fb2bd96664adc3ef47bbe3e02b6	Adeniyi		Twitter		Sodunke	false	false	false	false	false	false

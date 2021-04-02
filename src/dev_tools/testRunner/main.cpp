@@ -85,7 +85,7 @@ int main(int argc, const char* argv[]) {
                         test.goldPath = substitute(getCWD(), "/test/gold/dev_tools/testRunner/",
                                                    "/test/gold/" + test.path + "/" + test.tool + "/" + test.fileName);
                         // if the gold file exists, copy the test case back to working (it may have been removed)
-                        if (fileExist(test.goldPath)) {
+                        if (fileExists(test.goldPath)) {
                             test.workPath =
                                 substitute(getCWD(), "/test/gold/dev_tools/testRunner/",
                                            "/test/working/" + test.path + "/" + test.tool + "/" + test.fileName);
