@@ -4,6 +4,7 @@ fields = blknum blockNumber|\
         blknum transactionIndex|\
         timestamp timestamp|\
         string asset|\
+        uint64 decimals=18|\
         int256 begBal|\
         int256 begBalDiff|\
         int256 amountIn|\

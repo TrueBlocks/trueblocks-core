@@ -37,8 +37,8 @@ bool handle_reconciliation(COptions* options, CTransaction& trans, CReconciliati
                 }
                 if (nums.asset.empty())
                     nums.asset = "---";
+                nums.decimals = tokenName.decimals != 0 ? tokenName.decimals : 18;
                 string key = expContext().accountedFor + "_" + log.address;
-                CReconciliation p = prev[key];
                 nums.begBal = prev[key].endBal;
                 nums.endBal = str_2_BigInt(getTokenBalanceOf(m, expContext().accountedFor, trans.blockNumber));
                 if (nums.begBal > nums.endBal) {

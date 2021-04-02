@@ -30,6 +30,7 @@ class CReconciliation : public CBaseNode {
     blknum_t transactionIndex;
     timestamp_t timestamp;
     string_q asset;
+    uint64_t decimals;
     bigint_t begBal;
     bigint_t begBalDiff;
     bigint_t amountIn;
@@ -130,6 +131,7 @@ inline void CReconciliation::initialize(void) {
     transactionIndex = 0;
     timestamp = 0;
     asset = "";
+    decimals = 18;
     begBal = 0;
     begBalDiff = 0;
     amountIn = 0;
@@ -164,6 +166,7 @@ inline void CReconciliation::duplicate(const CReconciliation& re) {
     transactionIndex = re.transactionIndex;
     timestamp = re.timestamp;
     asset = re.asset;
+    decimals = re.decimals;
     begBal = re.begBal;
     begBalDiff = re.begBalDiff;
     amountIn = re.amountIn;

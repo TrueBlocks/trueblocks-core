@@ -99,6 +99,11 @@ string_q CReconciliation::getValueByName(const string_q& fieldName) const {
                 return bni_2_Str(begBalDiff);
             }
             break;
+        case 'd':
+            if (fieldName % "decimals") {
+                return uint_2_Str(decimals);
+            }
+            break;
         case 'e':
             if (fieldName % "endBal") {
                 return bni_2_Str(endBal);
@@ -218,6 +223,12 @@ bool CReconciliation::setValueByName(const string_q& fieldNameIn, const string_q
                 return true;
             }
             break;
+        case 'd':
+            if (fieldName % "decimals") {
+                decimals = str_2_Uint(fieldValue);
+                return true;
+            }
+            break;
         case 'e':
             if (fieldName % "endBal") {
                 endBal = str_2_Wei(fieldValue);
@@ -331,6 +342,7 @@ bool CReconciliation::Serialize(CArchive& archive) {
     archive >> transactionIndex;
     archive >> timestamp;
     archive >> asset;
+    archive >> decimals;
     archive >> begBal;
     archive >> begBalDiff;
     archive >> amountIn;
@@ -366,6 +378,7 @@ bool CReconciliation::SerializeC(CArchive& archive) const {
     archive << transactionIndex;
     archive << timestamp;
     archive << asset;
+    archive << decimals;
     archive << begBal;
     archive << begBalDiff;
     archive << amountIn;
@@ -426,6 +439,7 @@ void CReconciliation::registerClass(void) {
     ADD_FIELD(CReconciliation, "transactionIndex", T_BLOCKNUM, ++fieldNum);
     ADD_FIELD(CReconciliation, "timestamp", T_TIMESTAMP, ++fieldNum);
     ADD_FIELD(CReconciliation, "asset", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CReconciliation, "decimals", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CReconciliation, "begBal", T_INT256, ++fieldNum);
     ADD_FIELD(CReconciliation, "begBalDiff", T_INT256, ++fieldNum);
     ADD_FIELD(CReconciliation, "amountIn", T_INT256, ++fieldNum);
@@ -477,21 +491,21 @@ string_q nextReconciliationChunk_custom(const string_q& fieldIn, const void* dat
                     return "WEI";
                 }
                 if (fieldIn % "amountIn") {
-                    return bni_2_Export(rec->timestamp, rec->amountIn, 18);
+                    return bni_2_Export(rec->timestamp, rec->amountIn, rec->decimals);
                 }
                 if (fieldIn % "amountOut") {
-                    return bni_2_Export(rec->timestamp, rec->amountOut, 18);
+                    return bni_2_Export(rec->timestamp, rec->amountOut, rec->decimals);
                 }
                 if (fieldIn % "amountNet") {
-                    return bni_2_Export(rec->timestamp, rec->amountNet, 18);
+                    return bni_2_Export(rec->timestamp, rec->amountNet, rec->decimals);
                 }
                 break;
             case 'b':
                 if (fieldIn % "begBal") {
-                    return bni_2_Export(rec->timestamp, rec->begBal, 18);
+                    return bni_2_Export(rec->timestamp, rec->begBal, rec->decimals);
                 }
                 if (fieldIn % "begBalDiff") {
-                    return bni_2_Export(rec->timestamp, rec->begBalDiff, 18);
+                    return bni_2_Export(rec->timestamp, rec->begBalDiff, rec->decimals);
                 }
                 break;
             case 'd':
@@ -501,18 +515,18 @@ string_q nextReconciliationChunk_custom(const string_q& fieldIn, const void* dat
                 break;
             case 'e':
                 if (fieldIn % "endBal") {
-                    return bni_2_Export(rec->timestamp, rec->endBal, 18);
+                    return bni_2_Export(rec->timestamp, rec->endBal, rec->decimals);
                 }
                 if (fieldIn % "endBalCalc") {
-                    return bni_2_Export(rec->timestamp, rec->endBalCalc, 18);
+                    return bni_2_Export(rec->timestamp, rec->endBalCalc, rec->decimals);
                 }
                 if (fieldIn % "endBalDiff") {
-                    return bni_2_Export(rec->timestamp, rec->endBalDiff, 18);
+                    return bni_2_Export(rec->timestamp, rec->endBalDiff, rec->decimals);
                 }
                 break;
             case 'g':
                 if (fieldIn % "gasCostOut") {
-                    return bni_2_Export(rec->timestamp, rec->gasCostOut, 18);
+                    return bni_2_Export(rec->timestamp, rec->gasCostOut, rec->decimals);
                 }
                 break;
             case 'h':
@@ -522,10 +536,10 @@ string_q nextReconciliationChunk_custom(const string_q& fieldIn, const void* dat
                 break;
             case 'i':
                 if (fieldIn % "internalIn") {
-                    return bni_2_Export(rec->timestamp, rec->internalIn, 18);
+                    return bni_2_Export(rec->timestamp, rec->internalIn, rec->decimals);
                 }
                 if (fieldIn % "internalOut") {
-                    return bni_2_Export(rec->timestamp, rec->internalOut, 18);
+                    return bni_2_Export(rec->timestamp, rec->internalOut, rec->decimals);
                 }
                 if (fieldIn % "issuance") {
                     return bni_2_Export(rec->timestamp,
@@ -535,30 +549,31 @@ string_q nextReconciliationChunk_custom(const string_q& fieldIn, const void* dat
                 break;
             case 'm':
                 if (fieldIn % "minerBaseRewardIn") {
-                    return bni_2_Export(rec->timestamp, rec->minerBaseRewardIn, 18);
+                    return bni_2_Export(rec->timestamp, rec->minerBaseRewardIn, rec->decimals);
                 }
                 if (fieldIn % "minerNephewRewardIn") {
-                    return bni_2_Export(rec->timestamp, rec->minerNephewRewardIn, 18);
+                    return bni_2_Export(rec->timestamp, rec->minerNephewRewardIn, rec->decimals);
                 }
                 if (fieldIn % "minerTxFeeIn") {
-                    return bni_2_Export(rec->timestamp, rec->minerTxFeeIn, 18);
+                    return bni_2_Export(rec->timestamp, rec->minerTxFeeIn, rec->decimals);
                 }
                 if (fieldIn % "minerUncleRewardIn") {
-                    return bni_2_Export(rec->timestamp, rec->minerUncleRewardIn, 18);
+                    return bni_2_Export(rec->timestamp, rec->minerUncleRewardIn, rec->decimals);
                 }
                 if (fieldIn % "month") {
                     return ts_2_Date(rec->timestamp).Format(FMT_EXPORT).substr(0, 7);
                 }
                 if (fieldIn % "minerissuance") {
-                    return bni_2_Export(rec->timestamp, rec->minerBaseRewardIn + rec->minerNephewRewardIn, 18);
+                    return bni_2_Export(rec->timestamp, rec->minerBaseRewardIn + rec->minerNephewRewardIn,
+                                        rec->decimals);
                 }
                 break;
             case 's':
                 if (fieldIn % "selfDestructIn") {
-                    return bni_2_Export(rec->timestamp, rec->selfDestructIn, 18);
+                    return bni_2_Export(rec->timestamp, rec->selfDestructIn, rec->decimals);
                 }
                 if (fieldIn % "selfDestructOut") {
-                    return bni_2_Export(rec->timestamp, rec->selfDestructOut, 18);
+                    return bni_2_Export(rec->timestamp, rec->selfDestructOut, rec->decimals);
                 }
                 break;
             case 'w':
@@ -578,7 +593,7 @@ string_q nextReconciliationChunk_custom(const string_q& fieldIn, const void* dat
                     return nextBasenodeChunk(fieldIn, rec);
                 // EXISTING_CODE
                 if (fieldIn % "prefundIn") {
-                    return bni_2_Export(rec->timestamp, rec->prefundIn, 18);
+                    return bni_2_Export(rec->timestamp, rec->prefundIn, rec->decimals);
                 }
                 // EXISTING_CODE
                 break;
