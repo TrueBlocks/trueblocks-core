@@ -7,9 +7,9 @@
 #include "consolidator.h"
 
 //--------------------------------------------------------------------------
-bool CConsolidator::finalize_chunks(void) {
+bool CConsolidator::stage_chunks(void) {
     LOG8("");
-    ENTER("finalize_chunks");
+    ENTER("stage_chunks");
 
     // 'blaze' is finished scraping (and extracting addresses from) new blocks from the chain.
     // Those appearance records are stored in a file called "XXX"; The file 'oldStage' contains
@@ -43,6 +43,7 @@ bool CConsolidator::finalize_chunks(void) {
 
     // We always want the stage to contain a file with perfectly valid data. We do this by working in
     // a temporary file. Once we're ready, we move the temp file to newStage and only then delete oldStage.
+    // The next time we run, if we didn't create a newStage file, it will start at oldStage
     tmpFile = getIndexPath("temp.txt");
     LOG_FN8(tmpFile);
 
@@ -80,9 +81,5 @@ bool CConsolidator::finalize_chunks(void) {
     ::remove(tmp_fn.c_str());
     unlockSection();
 
-    // Did user hit control+c?
-    if (shouldQuit())
-        EXIT_NOMSG(true);
-
-    EXIT_NOMSG(consolidate_chunks());
+    EXIT_NOMSG(true);
 }

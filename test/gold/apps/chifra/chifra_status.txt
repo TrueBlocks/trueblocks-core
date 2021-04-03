@@ -17,7 +17,6 @@ PROG_NAME = [chifra status]
   "is_archive": true,
   "is_tracing": true,
   "has_eskey": true,
-  "has_pinkey": true,
   "caches": [
     {
       "type": "CIndexCache",

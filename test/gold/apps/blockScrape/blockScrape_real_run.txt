@@ -107,6 +107,9 @@ blaze.verbose:      8
 : 8------0x0193d941b50d91be6567c7ee1c0fe7af498b4137	000000015	99999
 : 8------0x19dafe19f11e960e4ccfc6a5aa8890ebd748ca1e	000000016	99999
 : 8------
+: 8------nRecords: 19
+: 8------chunkSize: 13
+: 8------Distance to head: -6
 <INFO>  : 
 <INFO>  : Consolidation pass 0
 <INFO>  :   Starting search at record 12 of 19
@@ -124,8 +127,9 @@ blaze.verbose:      8
 : 4-----Starting pin
 : 4-----Finishing pin
 <ERROR> : Could not pin index for blocks file to Pinata. Quitting...
+<INFO>  : Found a chunk at [000000001-000000010] (inclusive)
 <INFO>  :   Wrote 13 records to $FINAL/000000001-000000010.bin
-: 4-----  Extracting records 13 to 19 of 19
+: 4-----  Rewriting records 13 to 19 of 19 back to stage
 : 4-----	13: 0x19dafe19f11e960e4ccfc6a5aa8890ebd748ca1e	000000011	99999
 : 4-----	14: 0x0193d941b50d91be6567c7ee1c0fe7af498b4137	000000012	99999
 : 4-----	12: 0x0193d941b50d91be6567c7ee1c0fe7af498b4137	000000010	99999
@@ -141,6 +145,7 @@ blaze.verbose:      8
 : 8------0x19dafe19f11e960e4ccfc6a5aa8890ebd748ca1e	000000016	99999
 : 8------
 <INFO>  :   ...pass completed. Running again in 0.5 seconds... 
+<INFO>  : 
 : 8------Current state running.
 <INFO>  : Block scraper is running...
 : 8------ 
@@ -256,6 +261,9 @@ blaze.verbose:      8
 : 8------0xacc8decdfdcbed202b8632947c60487494f5d2c7	000000031	99999
 : 8------0x9ab9f7a4b85412bfbe2f4f63b1c98808851c4f32	000000032	99999
 : 8------
+: 8------nRecords: 23
+: 8------chunkSize: 13
+: 8------Distance to head: -10
 <INFO>  : 
 <INFO>  : Consolidation pass 0
 <INFO>  :   Starting search at record 12 of 23
@@ -273,8 +281,9 @@ blaze.verbose:      8
 : 4-----Starting pin
 : 4-----Finishing pin
 <ERROR> : Could not pin index for blocks file to Pinata. Quitting...
+<INFO>  : Found a chunk at [000000011-000000022] (inclusive)
 <INFO>  :   Wrote 13 records to $FINAL/000000011-000000022.bin
-: 4-----  Extracting records 13 to 23 of 23
+: 4-----  Rewriting records 13 to 23 of 23 back to stage
 : 4-----	13: 0x0193d941b50d91be6567c7ee1c0fe7af498b4137	000000023	99999
 : 4-----	14: 0x1b7047b4338acf65be94c1a3e8c5c9338ad7d67c	000000024	99999
 : 4-----	12: 0xd7e30ae310c1d1800f5b641baa7af95b2e1fd98c	000000022	99999
@@ -294,6 +303,7 @@ blaze.verbose:      8
 : 8------0x9ab9f7a4b85412bfbe2f4f63b1c98808851c4f32	000000032	99999
 : 8------
 <INFO>  :   ...pass completed. Running again in 0.5 seconds... 
+<INFO>  : 
 : 8------Current state running.
 <INFO>  : Block scraper is running...
 : 8------ 
@@ -429,6 +439,9 @@ blaze.verbose:      8
 : 8------0x1b7047b4338acf65be94c1a3e8c5c9338ad7d67c	000000047	99999
 : 8------0x1b7047b4338acf65be94c1a3e8c5c9338ad7d67c	000000048	99999
 : 8------
+: 8------nRecords: 29
+: 8------chunkSize: 13
+: 8------Distance to head: -16
 <INFO>  : 
 <INFO>  : Consolidation pass 0
 <INFO>  :   Starting search at record 12 of 29
@@ -446,8 +459,9 @@ blaze.verbose:      8
 : 4-----Starting pin
 : 4-----Finishing pin
 <ERROR> : Could not pin index for blocks file to Pinata. Quitting...
+<INFO>  : Found a chunk at [000000023-000000034] (inclusive)
 <INFO>  :   Wrote 13 records to $FINAL/000000023-000000034.bin
-: 4-----  Extracting records 13 to 29 of 29
+: 4-----  Rewriting records 13 to 29 of 29 back to stage
 : 4-----	13: 0x1b7047b4338acf65be94c1a3e8c5c9338ad7d67c	000000035	99999
 : 4-----	14: 0x26350da68d694a2ced5cd7a1309baa782966a039	000000036	99998
 : 4-----	12: 0x1b7047b4338acf65be94c1a3e8c5c9338ad7d67c	000000034	99999
@@ -470,8 +484,9 @@ blaze.verbose:      8
 : 4-----Starting pin
 : 4-----Finishing pin
 <ERROR> : Could not pin index for blocks file to Pinata. Quitting...
+<INFO>  : Found a chunk at [000000035-000000045] (inclusive)
 <INFO>  :   Wrote 13 records to $FINAL/000000035-000000045.bin
-: 4-----  Extracting records 13 to 16 of 16
+: 4-----  Rewriting records 13 to 16 of 16 back to stage
 : 4-----	13: 0xd8030bb90dfc593e614ef0aed456bfe342ad45f5	000000046	99999
 : 4-----	14: 0x1b7047b4338acf65be94c1a3e8c5c9338ad7d67c	000000047	99999
 : 4-----	12: 0x1b7047b4338acf65be94c1a3e8c5c9338ad7d67c	000000045	99999
@@ -484,6 +499,7 @@ blaze.verbose:      8
 : 8------0x1b7047b4338acf65be94c1a3e8c5c9338ad7d67c	000000048	99999
 : 8------
 <INFO>  :   ...pass completed. Running again in 0.5 seconds... 
+<INFO>  : 
 : 8------Current state running.
 <INFO>  : Block scraper is running...
 : 8------ 
@@ -573,6 +589,9 @@ blaze.verbose:      8
 : 8------0x05a56e2d52c817161883f50c441c3228cfe54d9f	000000056	99998
 : 8------0x2f85b3bf062769b2a2672200afb21e3f4067a86d	000000056	99999
 : 8------
+: 8------nRecords: 13
+: 8------chunkSize: 13
+: 8------Distance to head: 0
 <INFO>  : 
 <INFO>  : Consolidation not ready...
 <INFO>  :   Have 13 records of 13. Need 0 more.
@@ -593,6 +612,7 @@ blaze.verbose:      8
 : 8------0x2f85b3bf062769b2a2672200afb21e3f4067a86d	000000056	99999
 : 8------
 <INFO>  :   ...pass completed. Running again in 0.5 seconds... 
+<INFO>  : 
 : 8------Current state running.
 <INFO>  : Block scraper is running...
 : 8------ 
@@ -613,6 +633,7 @@ blaze.verbose:      8
 Finishing work...
 <WARNG> : The user hit control+C...
 <INFO>  :   ...pass did not complete. Running again in 0.5 seconds... 
+<INFO>  : 
 : 8------Current state stopped.
 : 8------Current state stopped.
 { "status": "stopped" }

@@ -383,6 +383,7 @@ bool COptions::changeState(void) {
                 LOG4("changing state: running --> stopped");
             } else if (mode == "run") {
                 LOG_ERR("blockScrape is already ", stateStr, ". Cannot ", mode, ".");
+                LOG_ERR("If this is in error, remove the file ", controlFile);
                 // state = STATE_RUNNING; // redunant, but okay
             } else if (mode == "restart") {
                 LOG_ERR("blockScrape is ", stateStr, ". Cannot ", mode, ".");
@@ -432,3 +433,8 @@ bool addNewPin(CPinnedChunk& pin, void* data) {
     // TODO(tjayrush): Note...
     return !isTestMode();
 }
+
+// TODO(tjayrush): There is code in this folder noted as "The weird edge case"
+// TODO(tjayrush): Can reproduce by removing every folder but blooms and finialized. Removing every
+// TODO(tjayrush): chunk and bloom after 12,000,000 and quit at block 12,003,500. Capture
+// TODO(tjayrush): the output in a log file. One of the records will say "The weird edge case."

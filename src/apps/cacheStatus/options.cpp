@@ -246,6 +246,8 @@ void COptions::Init(void) {
     status.has_eskey = getGlobalConfig("")->getConfigStr("settings", "etherscan_key", "<not_set>") != "<not_set>";
     status.has_pinkey =
         getGlobalConfig("blockScrape")->getConfigStr("settings", "pinata_api_key", "<not_set>") != "<not_set>";
+    if (isTestMode())
+        status.has_pinkey = false;
 }
 
 //---------------------------------------------------------------------------------------------------

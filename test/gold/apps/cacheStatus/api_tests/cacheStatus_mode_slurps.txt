@@ -16,7 +16,7 @@
       "is_archive": true,
       "is_tracing": true,
       "has_eskey": true,
-      "has_pinkey": true,
+      "has_pinkey": false,
       "caches": [
         {
           "type": "CSlurpCache",

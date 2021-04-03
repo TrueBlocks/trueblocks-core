@@ -13,7 +13,6 @@ cacheStatus caches --types traces
   "is_archive": true,
   "is_tracing": true,
   "has_eskey": true,
-  "has_pinkey": true,
   "caches": [
     {
       "type": "CChainCache",

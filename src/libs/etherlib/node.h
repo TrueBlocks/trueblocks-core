@@ -202,6 +202,17 @@ inline string_q relativize(const string_q& path) {
     return ret;
 }
 //--------------------------------------------------------------------------
+#define LOG_FN3(fn)                                                                                                    \
+    {                                                                                                                  \
+        string_q lfn8 = relativize((fn));                                                                              \
+        LOG3(padRight((string_q(#fn) + ":"), 25), lfn8, " ", fileSize((fn)));                                          \
+    }
+#define LOG_DIR3(dir)                                                                                                  \
+    {                                                                                                                  \
+        string_q lfn8 = relativize((dir));                                                                             \
+        LOG3(padRight((string_q(#dir) + ":"), 25), lfn8);                                                              \
+    }
+//--------------------------------------------------------------------------
 #define LOG_FN8(fn)                                                                                                    \
     {                                                                                                                  \
         string_q lfn8 = relativize((fn));                                                                              \
@@ -213,6 +224,8 @@ inline string_q relativize(const string_q& path) {
         LOG8(padRight((string_q(#dir) + ":"), 25), lfn8);                                                              \
     }
 #else
+#define LOG_FN3(fn)
+#define LOG_DIR3(dir)
 #define LOG_FN8(fn)
 #define LOG_DIR8(dir)
 #endif

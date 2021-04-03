@@ -8,31 +8,44 @@
 
 //--------------------------------------------------------------------------
 bool CConsolidator::consolidate_chunks(void) {
-    ENTER("consolidate");
+    ENTER("consolidate_chunks");
+
+    // We are now in a valid state. All records that have not yet been consolidated
+    // are in newStage. Count how many lines we have...
+    blknum_t nRecords = fileSize(newStage) / 59;
+    blknum_t chunkSize = MAX_ROWS;
+    int64_t distToHead = (int64_t(chunkSize) - int64_t(nRecords));
 
     LOG_INDEX8(tmpFile, " staging completed");
     LOG_INDEX8(tmp_fn, " staging completed");
     LOG_INDEX8(oldStage, " staging completed");
     LOG_INDEX8(newStage, " staging completed not yet consolidated");
-
-    // We are now in a valid state. All records that have not yet been consolidated
-    // are in newStage. Count how many lines we have...
-    blknum_t nRecords = fileSize(newStage) / 59;
+    LOG8("nRecords: ", nRecords);
+    LOG8("chunkSize: ", chunkSize);
+    LOG8("Distance to head: ", distToHead);
 
     // ...if we don't have enough, return and get more...
-    if (nRecords <= MAX_ROWS) {
-        blknum_t distToHead = (MAX_ROWS - nRecords);
+    if (nRecords <= chunkSize) {
         LOG_INFO("");
         LOG_INFO(bBlue, "Consolidation not ready...", cOff);
-        LOG_INFO(cYellow, "  Have ", nRecords, " records of ", MAX_ROWS, ". Need ", distToHead, " more.", cOff);
+        LOG_INFO(cYellow, "  Have ", nRecords, " records of ", chunkSize, ". Need ", distToHead, " more.", cOff);
         LOG_INDEX8(newStage, " consolidation not ready");
         EXIT_NOMSG(true);
     }
 
-    // We have enough records to consolidate. Process chunks (of size MAX_ROWS) until done.
+    EXIT_NOMSG(write_chunks(chunkSize));
+}
+
+//---------------------------------------------------------------------------------------------------
+bool CConsolidator::write_chunks(blknum_t chunkSize) {
+    ENTER("write_chunks");
+
+    blknum_t nRecords = fileSize(newStage) / 59;
+
+    // We have enough records to consolidate. Process chunks (of size 'chunkSize') until done.
     // This may take more than one pass. Check for user input control+C at each pass.
     size_t pass = 0;
-    while (nRecords > MAX_ROWS && !shouldQuit()) {
+    while (nRecords > chunkSize && !shouldQuit()) {
         lockSection();
 
         LOG_INFO("");
@@ -41,13 +54,13 @@ bool CConsolidator::consolidate_chunks(void) {
         lines.reserve(nRecords + 100);
         asciiFileToLines(newStage, lines);
 
-        LOG_INFO(cWhite, "  Starting search at record ", (MAX_ROWS - 1), " of ", lines.size(), cOff);
-        LOG4(cGreen, "\t", (MAX_ROWS - 1), ": ", lines[MAX_ROWS - 1], cOff);
-        LOG4(cGreen, "\t", (MAX_ROWS), ": ", lines[MAX_ROWS], cOff);
+        LOG_INFO(cWhite, "  Starting search at record ", (chunkSize - 1), " of ", lines.size(), cOff);
+        LOG4(cGreen, "\t", (chunkSize - 1), ": ", lines[chunkSize - 1], cOff);
+        LOG4(cGreen, "\t", (chunkSize), ": ", lines[chunkSize], cOff);
 
         size_t where = 0;
         string_q prev;
-        for (uint64_t record = (MAX_ROWS - 1); record < lines.size() && where == 0; record++) {
+        for (uint64_t record = (chunkSize - 1); record < lines.size() && where == 0; record++) {
             CStringArray pParts;
             explode(pParts, lines[record], '\t');
             if (verbose > 2 && (record == lines.size() - 2)) {
@@ -94,19 +107,20 @@ bool CConsolidator::consolidate_chunks(void) {
 
         writeIndexAsBinary(chunkPath, consolidatedLines, (pin ? visitToPin : nullptr), &pinList);
 
+        LOG_INFO("Found a chunk at [", chunkId, "] (inclusive)");
         LOG_INFO(cWhite, "  Wrote ", consolidatedLines.size(), " records to ",
                  substitute(chunkPath, indexFolder_finalized, "$FINAL/"), cOff);
 
         where += 1;
-        CStringArray remainingLines;
-        remainingLines.reserve(MAX_ROWS + 100);
 
-        LOG4(cWhite, "  Extracting records ", where, " to ", lines.size(), " of ", lines.size(), cOff);
+        LOG4(cWhite, "  Rewriting records ", where, " to ", lines.size(), " of ", lines.size(), " back to stage", cOff);
         LOG4(cGreen, "\t", where, ": ", lines[where], cOff);
         LOG4(cGreen, "\t", (where + 1), ": ", (lines.size() > (where + 1) ? lines[where + 1] : "-end-of-file-"), cOff);
         LOG4(bBlue, "\t", (where - 1), ": ", lines[where - 1], cOff);
         LOG4(bTeal, "\t", (where), ": ", lines[where], cOff);
 
+        CStringArray remainingLines;
+        remainingLines.reserve(chunkSize + 100);
         for (uint64_t record = where; record < lines.size(); record++)
             remainingLines.push_back(lines[record]);
 

@@ -50,6 +50,20 @@ bool visitCopyRipeToStage(const string_q& path, void* data) {
         ::remove(path.c_str());
         con->prevBlock = bn;
         unlockSection();
+
+        //#error
+        //        if (!(bn % SNAP_TO_GRID_BLKS)) {
+        //            LOG_INDEX3(path, " path");
+        //            LOG3(bYellow, "This is a snap to grid file", cOff);
+        //             string chunkId = padNum9(con->blazeStart) + "-" + padNum9(bn);
+        //            string_q bloomPath = getIndexPath("blooms/" + chunkId + ".bloom");
+        //            LOG_INFO(doCommand("touch " + bloomPath), " ", bloomPath, ": ", fileExists(bloomPath));
+        //            string_q chunkPath = getIndexPath("finalized/" + chunkId + ".bin");
+        //            LOG_INFO(doCommand("touch " + chunkPath), " ", chunkPath, ": ", fileExists(chunkPath));
+        //            cerr << "bn: " << bn << endl;
+        //            cerr << con->Format() << endl;
+        //            // getchar();
+        //        }
     }
 
     return !shouldQuit();
@@ -73,4 +87,20 @@ bool appendFile(const string_q& toFile, const string_q& fromFile) {
     input.close();
 
     return true;
+}
+
+//--------------------------------------------------------------------------
+string_q CConsolidator::Format(void) {
+    ostringstream os;
+    os << "pin: " << pin << endl;
+    os << "distFromHead: " << distFromHead << endl;
+    os << "prevBlock: " << prevBlock << endl;
+    os << "blazeStart: " << blazeStart << endl;
+    os << "blazeRipe: " << blazeRipe << endl;
+    os << "blazeCnt: " << blazeCnt << endl;
+    os << "oldStage: " << oldStage << endl;
+    os << "newStage: " << newStage << endl;
+    os << "tmpFile: " << tmpFile << endl;
+    os << "tmp_fn: " << tmp_fn << endl;
+    return os.str();
 }

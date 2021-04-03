@@ -28,8 +28,10 @@ class CConsolidator : public CBlockProgress {
     CPinnedChunkArray pinList;
 
     explicit CConsolidator(const CBlockProgress& prog);
-    bool finalize_chunks(void);
+    bool stage_chunks(void);
     bool consolidate_chunks(void);
+    bool write_chunks(blknum_t chunkSize);
+    string_q Format(void);
 
   private:
     CConsolidator(void) {
@@ -41,7 +43,12 @@ class CConsolidator : public CBlockProgress {
 #define CLIENT (isLiveTest() ? (80 + (runs)) : (cons.client))
 #define N_BLOCKS (isLiveTest() ? 16 : cons.blazeCnt)
 #define MAX_ROWS (isLiveTest() ? 13 : 2000000)
-#define SNAP_TO_GRID (isLiveTest() ? 12 : 100000)
+#define SNAP_TO_GRID_BLKS (isLiveTest() ? 12 : 100000)
+//#error
+//#undef MAX_ROWS
+//#undef SNAP_TO_GRID_BLKS
+//#define MAX_ROWS (isLiveTest() ? 13 : 100000)
+//#define SNAP_TO_GRID_BLKS (isLiveTest() ? 12 : 1500)
 #define TEST_RUNS 3
 
 //--------------------------------------------------------------------------
@@ -50,4 +57,12 @@ class CConsolidator : public CBlockProgress {
     if (isLiveTest()) {                                                                                                \
         LOG8(string_q("Contents of ") + (#fn) + (extra) + ":");                                                        \
         LOG8(substitute(asciiFileToString(fn), "\n", "\n: 8------"));                                                  \
+    }
+
+//--------------------------------------------------------------------------
+#define LOG_INDEX3(fn, extra)                                                                                          \
+    LOG_FN3(fn);                                                                                                       \
+    if (isLiveTest()) {                                                                                                \
+        LOG3(string_q("Contents of ") + (#fn) + (extra) + ":");                                                        \
+        LOG3(substitute(asciiFileToString(fn), "\n", "\n: 3------"));                                                  \
     }

@@ -23,38 +23,36 @@ bool COptions::scrape_blocks(void) {
     // block) of the client and the each of index caches.
     CConsolidator cons(getBlockProgress());
 
-    if (true) {  // !isLiveTest()
-        // From there, we can determine where to start the scraper (one more than the largest cache)
-        cons.blazeStart = max(cons.ripe, max(cons.staging, cons.finalized)) + 1;
+    // From there, we can determine where to start the scraper (one more than the largest cache)
+    cons.blazeStart = max(cons.ripe, max(cons.staging, cons.finalized)) + 1;
 
-        cons.client = CLIENT;
-        cons.blazeCnt = n_blocks;
+    cons.client = CLIENT;
+    cons.blazeCnt = n_blocks;
 
-        // Make a few adjustments here in the non-docker case to speed things up a bit
-        if (!isDockerMode()) {
-            if (cons.blazeStart < 450000) {
-                cons.blazeCnt = max((blknum_t)4000, cons.blazeCnt);
+    // Make a few adjustments here in the non-docker case to speed things up a bit
+    if (!isDockerMode()) {
+        if (cons.blazeStart < 450000) {
+            cons.blazeCnt = max((blknum_t)4000, cons.blazeCnt);
 
-            } else if (ddosRange(cons.blazeStart)) {
-                // ...or slow things down...
-                cons.blazeCnt = getGlobalConfig("blockScrape")->getConfigInt("settings", "n_blocks_fallback", 200);
-            }
+        } else if (ddosRange(cons.blazeStart)) {
+            // ...or slow things down...
+            cons.blazeCnt = getGlobalConfig("blockScrape")->getConfigInt("settings", "n_blocks_fallback", 200);
         }
-        cons.blazeCnt = N_BLOCKS;
+    }
+    cons.blazeCnt = N_BLOCKS;
 
-        // If a block is more than 28 blocks from the head we consider it 'ripe.' Once a block goes
-        // ripe, we no longer ask the node about it. We try to move it to staging. Staging means the
-        // block is ready to be consolidated (finalized). 28 blocks is an arbitrarily chosen value,
-        // but is a bit more than six minutes under normal operation ((14 * 28) / 60 == 6.5). If the
-        // index is near the head of the chain and the difficulty level is high (the time bomb is
-        // exploding), the time will extend, but the final nature of the operation is the same.
-        cons.blazeRipe = (cons.client < 28 ? 0 : cons.client - 28);
+    // If a block is more than 28 blocks from the head we consider it 'ripe.' Once a block goes
+    // ripe, we no longer ask the node about it. We try to move it to staging. Staging means the
+    // block is ready to be consolidated (finalized). 28 blocks is an arbitrarily chosen value,
+    // but is a bit more than six minutes under normal operation ((14 * 28) / 60 == 6.5). If the
+    // index is near the head of the chain and the difficulty level is high (the time bomb is
+    // exploding), the time will extend, but the final nature of the operation is the same.
+    cons.blazeRipe = (cons.client < 28 ? 0 : cons.client - 28);
 
-        // One final adjustment to nBlocks so we don't run past the tip of the chain
-        if ((cons.blazeStart + cons.blazeCnt) > cons.client) {
-            ASSERT(blazeStart <= cons.client);  // see above
-            cons.blazeCnt = (cons.client - cons.blazeStart);
-        }
+    // One final adjustment to nBlocks so we don't run past the tip of the chain
+    if ((cons.blazeStart + cons.blazeCnt) > cons.client) {
+        ASSERT(blazeStart <= cons.client);  // see above
+        cons.blazeCnt = (cons.client - cons.blazeStart);
     }
 
     LOG8("bs.unripe:         ", cons.unripe);
@@ -152,7 +150,9 @@ bool COptions::scrape_blocks(void) {
 
     // Spin through 'ripe' files in order and process each one as we go. Note: it's okay to allow the
     // timestamp file to get ahead of the staged blocks. We only write when the block number is a new
-    // one not already in the file.
+    // one not already in the file. Also note that at some points during this copy (when we hit a grid
+    // boundary) we will consolidate short of the MAX_ROWS boundary. We do this so make recovering from
+    // incorrect chunking easier.)
     if (!forEveryFileInFolder(indexFolder_ripe, visitCopyRipeToStage, &cons)) {
         // Something went wrong with copying one of the ripe blocks into staging. (i.e. the user hit
         // Control+C or we encountered a non-sequential list of files). We clean up and start over the
@@ -172,14 +172,19 @@ bool COptions::scrape_blocks(void) {
     // them to a binary relational table), and re-write any unfinalized records back onto the stage.
     // Again, if anything goes wrong we need clean up and leave the data in a recoverable state.
     cons.pin = pin;
-    if (!cons.finalize_chunks()) {
+    if (!cons.stage_chunks()) {
         cleanFolder(indexFolder_unripe);
         cleanFolder(indexFolder_ripe);
         ::remove(cons.tmp_fn.c_str());
     }
 
-    // We completed one scrape and can now go to sleep
-    EXIT_NOMSG(true);
-}
+    // Did user hit control+c?
+    if (shouldQuit())
+        EXIT_NOMSG(true);
 
-// TODO(tjayrush): We should try to scrape timestamps with blaze while we're doing this scan
+    bool ret = cons.consolidate_chunks();
+    //#error
+
+    // We completed one scrape and can now go to sleep
+    EXIT_NOMSG(ret);
+}

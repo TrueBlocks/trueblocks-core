@@ -3,6 +3,7 @@ blockScrape run
 TIME ~ CLOCK - <INFO>  : mode: run
 TIME ~ CLOCK - : 8------Current state running.
 TIME ~ CLOCK - <ERROR> : blockScrape is already running. Cannot run.
+TIME ~ CLOCK - <ERROR> : If this is in error, remove the file /Users/jrush/.quickBlocks/cache/tmp/scraper-state.txt
 { "status": "running" }
 TIME ~ CLOCK - : 8------Current state running.
 {

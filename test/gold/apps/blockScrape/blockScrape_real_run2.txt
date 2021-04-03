@@ -14,9 +14,11 @@ LIVE_TEST = [true]
 <INFO>  :   Starting search at record 12 of 19
 <INFO>  :   Break at line 12. Extracting [0 to 12] of 19
 <INFO>  :   Extracting addresses...extracting appearances...exporting...finalizing...binary file created ✓
+<INFO>  : Found a chunk at [000000001-000000010] (inclusive)
 <INFO>  :   Wrote 13 records to $FINAL/000000001-000000010.bin
 <INFO>  :   Wrote 6 records to $STAGING/000000016.txt
 <INFO>  :   ...pass completed. Running again in 0.5 seconds... 
+<INFO>  : 
 <INFO>  : Block scraper is running...
 <INFO>  : blaze scrape (65 blocks from head)
 ................
@@ -25,9 +27,11 @@ LIVE_TEST = [true]
 <INFO>  :   Starting search at record 12 of 23
 <INFO>  :   Break at line 12. Extracting [0 to 12] of 23
 <INFO>  :   Extracting addresses...extracting appearances...exporting...finalizing...binary file created ✓
+<INFO>  : Found a chunk at [000000011-000000022] (inclusive)
 <INFO>  :   Wrote 13 records to $FINAL/000000011-000000022.bin
 <INFO>  :   Wrote 10 records to $STAGING/000000032.txt
 <INFO>  :   ...pass completed. Running again in 0.5 seconds... 
+<INFO>  : 
 <INFO>  : Block scraper is running...
 <INFO>  : blaze scrape (50 blocks from head)
 ................
@@ -36,6 +40,7 @@ LIVE_TEST = [true]
 <INFO>  :   Starting search at record 12 of 29
 <INFO>  :   Break at line 12. Extracting [0 to 12] of 29
 <INFO>  :   Extracting addresses...extracting appearances...exporting...finalizing...binary file created ✓
+<INFO>  : Found a chunk at [000000023-000000034] (inclusive)
 <INFO>  :   Wrote 13 records to $FINAL/000000023-000000034.bin
 <INFO>  :   Wrote 16 records to $STAGING/000000048.txt
 <INFO>  : 
@@ -43,9 +48,11 @@ LIVE_TEST = [true]
 <INFO>  :   Starting search at record 12 of 16
 <INFO>  :   Break at line 12. Extracting [0 to 12] of 16
 <INFO>  :   Extracting addresses...extracting appearances...exporting...finalizing...binary file created ✓
+<INFO>  : Found a chunk at [000000035-000000045] (inclusive)
 <INFO>  :   Wrote 13 records to $FINAL/000000035-000000045.bin
 <INFO>  :   Wrote 3 records to $STAGING/000000048.txt
 <INFO>  :   ...pass completed. Running again in 0.5 seconds... 
+<INFO>  : 
 <INFO>  : Block scraper is running...
 <INFO>  : blaze scrape (35 blocks from head)
 ................
@@ -53,9 +60,11 @@ LIVE_TEST = [true]
 <INFO>  : Consolidation not ready...
 <INFO>  :   Have 13 records of 13. Need 0 more.
 <INFO>  :   ...pass completed. Running again in 0.5 seconds... 
+<INFO>  : 
 <INFO>  : Block scraper is running...
 
 Finishing work...
 <WARNG> : The user hit control+C...
 <INFO>  :   ...pass did not complete. Running again in 0.5 seconds... 
+<INFO>  : 
 { "status": "stopped" }

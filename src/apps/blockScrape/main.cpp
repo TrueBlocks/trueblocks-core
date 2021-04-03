@@ -36,22 +36,25 @@ int main(int argc, const char* argv[]) {
             LOG_INFO("Block scraper is paused: ", Now().Format(FMT_EXPORT), "\r");
 
         } else {
-            bool ret = false;
+            bool ret1 = true;
             if (options.tools & TOOL_INDEX) {
                 LOG_INFO(cYellow, "Block scraper is running...", cOff);
-                ret = options.scrape_blocks();
+                ret1 = options.scrape_blocks();
             }
 
+            bool ret2 = true;
             if (options.tools & TOOL_MONITORS) {
                 LOG_INFO(cYellow, "Monitor scraper is running...", cOff);
-                ret = options.scrape_monitors();
+                ret2 = options.scrape_monitors();
                 LOG_INFO(cYellow, "   finished...", cOff);
             }
 
-            LOG_INFO((ret ? "  ...pass completed" : "  ...pass did not complete"), ". Running again in ", options.sleep,
-                     " seconds... ");
+            LOG_INFO((ret1 && ret2 ? "  ...pass completed" : "  ...pass did not complete"), ". Running again in ",
+                     options.sleep, " seconds... ");
+            LOG_INFO("");
 
-            // TODO(tjayrush): FIX_THIS_CODE
+            // TODO(tjayrush): We should try to scrape timestamps with blaze while we're doing this scan
+            // TODO(tjayrush): FIX_THIS_CODE try to capture timestamps during blaze scraping
             freshenTimestamps(getBlockProgress(BP_RIPE).ripe);
         }
 

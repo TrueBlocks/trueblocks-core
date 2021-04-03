@@ -20,7 +20,6 @@ TIME ~ CLOCK - <INFO>  : end: 2000000
   "is_archive": true,
   "is_tracing": true,
   "has_eskey": true,
-  "has_pinkey": true,
   "caches": [
     {
       "items": [
