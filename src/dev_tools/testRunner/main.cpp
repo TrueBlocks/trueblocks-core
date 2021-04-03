@@ -91,6 +91,13 @@ int main(int argc, const char* argv[]) {
                                            "/test/working/" + test.path + "/" + test.tool + "/" + test.fileName);
                             copyFile(test.goldPath, test.workPath);
                         }
+                        replace(test.goldPath, "/" + test.tool + "/", "/" + test.tool + "/api_tests/");
+                        if (fileExists(test.goldPath)) {
+                            test.workPath = substitute(
+                                getCWD(), "/test/gold/dev_tools/testRunner/",
+                                "/test/working/" + test.path + "/" + test.tool + "/api_tests/" + test.fileName);
+                            copyFile(test.goldPath, test.workPath);
+                        }
                     }
                     // do nothing
 

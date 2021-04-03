@@ -793,6 +793,15 @@
       "description": "Payments solutions for the travel industry."
     },
     {
+      "tags": "30-Contracts",
+      "address": "0x02a522d98ec2d2c3bbe91acc29ee7fd32ab880ab",
+      "name": "Mintable: Deployer",
+      "symbol": "",
+      "source": "",
+      "decimals": 0,
+      "description": ""
+    },
+    {
       "tags": "34-Twitter:Friends",
       "address": "0x02bbea9326048fb2bd96664adc3ef47bbe3e02b6",
       "name": "Name 0x02bbea93",
@@ -1799,15 +1808,6 @@
       "source": "On chain",
       "decimals": 18,
       "description": "Revolutionizing the way of Financial Transactions"
-    },
-    {
-      "tags": "30-Contracts:dAppNode",
-      "address": "0x077d271a3e4c3b45358417142490bd21172c81b5",
-      "name": "dAddNode Package 003",
-      "symbol": "",
-      "source": "TrueBlocks.io",
-      "decimals": 0,
-      "description": ""
     }
   ]
 }

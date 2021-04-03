@@ -606,6 +606,11 @@ TIME ~ CLOCK - <INFO>  : named: true
     "description": "Payments solutions for the travel industry."
   },
   {
+    "tags": "30-Contracts",
+    "address": "0x02a522d98ec2d2c3bbe91acc29ee7fd32ab880ab",
+    "name": "Mintable: Deployer"
+  },
+  {
     "tags": "34-Twitter:Friends",
     "address": "0x02bbea9326048fb2bd96664adc3ef47bbe3e02b6",
     "name": "Name 0x02bbea93",
@@ -1330,14 +1335,6 @@ TIME ~ CLOCK - <INFO>  : named: true
     "address": "0x076641af1b8f06b7f8c92587156143c109002cbe",
     "name": "SoPay",
     "symbol": "SOP",
-    "source": "On chain",
-    "decimals": 18
-  },
-  {
-    "tags": "50-Tokens:ERC20",
-    "address": "0x0766e79a6fd74469733e8330b3b461c0320ff059",
-    "name": "EXN",
-    "symbol": "EXN",
     "source": "On chain",
     "decimals": 18
   }] }
