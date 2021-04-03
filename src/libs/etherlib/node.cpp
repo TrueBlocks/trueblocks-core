@@ -1294,7 +1294,6 @@ bool establishTsFile(void) {
         ostringstream cmd;
         cmd << "cd \"" << indexFolder << "\" ; ";
         cmd << "cp \"" << zipFile << "\" . ; ";
-        cmd << "ls -l ts* ; ";
         cmd << "gunzip ts.bin.gz";
         string_q result = doCommand(cmd.str());
         LOG_INFO(result);
