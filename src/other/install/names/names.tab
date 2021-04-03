@@ -3561,6 +3561,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x78a73b6cbc5d183ce56e786f6e905cadec63547b	Fabric Token	FT	On chain	18	The Fabric Token FT ecosystem aims to empower individuals and businesses with easy access to blockchain technology and smart contracts by providing a bundle of user-friendly software.	false	false	false	true	true	false
 50-Tokens:ERC20	0x78b039921e84e726eb72e7b1212bb35504c645ca	Sether	SETH	On chain	18		false	false	false	true	true	false
 81-Other	0x78b058ccda93816487c655367dcb79664a216ad2	Simpledice		EtherScan.io			false	false	false	true	false	false
+20-Friends	0x78b58e4197c04d320a33c582ecc3e7e885f26a58	Some Whale Who Bought CyrptoPunk					false	false	false	false	false	false
 50-Tokens:ERC20	0x78b7fada55a64dd895d8c8c35779dd8b67fa8a05	ATLANT Token	ATL	On chain	18	Real Estate Blockchain Platform.	false	false	false	true	true	false
 50-Tokens:ERC20	0x78c292d1445e6b9558bf42e8bc369271ded062ea	CyberMusic	CYMT	On chain	8	Cyber Music will be the new point of reference for the music market and will be fully developed using the technologies that the blockchain has available.	false	false	false	true	true	false
 81-Other	0x78d4f849aab2b0a5a66f76b9b1ff47da5a9ae492	Dividendprofit		EtherScan.io			false	false	false	true	false	false
