@@ -89,7 +89,8 @@ bool COptions::scrape_blocks(void) {
     }
 
     // Tell the user what's going on...
-    LOG_INFO(cGreen, "blaze scrape (", (cons.distFromHead), " blocks from head)", cOff);
+    LOG_INFO(cGreen, "blaze scrape ", cons.blazeStart, "-", (cons.blazeStart + cons.blazeCnt), " (",
+             (cons.distFromHead), " blocks from head)", cOff);
 
     // We're ready to scrape, so build the blaze command line...
     ostringstream os;
@@ -148,11 +149,17 @@ bool COptions::scrape_blocks(void) {
         EXIT_NOMSG(false);
     }
 
+    // We want this to apply if the user told us to
+    cons.pin = pin;
+
     // Spin through 'ripe' files in order and process each one as we go. Note: it's okay to allow the
     // timestamp file to get ahead of the staged blocks. We only write when the block number is a new
     // one not already in the file. Also note that at some points during this copy (when we hit a grid
     // boundary) we will consolidate short of the MAX_ROWS boundary. We do this so make recovering from
     // incorrect chunking easier.)
+    LOG8("Prior to visitCopyRipeToStage");
+    LOG8(cons.Format());
+
     if (!forEveryFileInFolder(indexFolder_ripe, visitCopyRipeToStage, &cons)) {
         // Something went wrong with copying one of the ripe blocks into staging. (i.e. the user hit
         // Control+C or we encountered a non-sequential list of files). We clean up and start over the
@@ -164,6 +171,8 @@ bool COptions::scrape_blocks(void) {
         EXIT_NOMSG(false);
     }
     cons.tmp_stream.close();
+    LOG8("After visitCopyRipeToStage");
+    LOG8(cons.Format());
 
     // The stage (which is a single text file of fixed-width records of un-finalized blocks) now
     // contains all non-consolidated records. The ripe folder is empty. All files are closed.
@@ -171,7 +180,6 @@ bool COptions::scrape_blocks(void) {
     // Next, we try to create one or more chunks. Creating a chunk means consolidating them (writing
     // them to a binary relational table), and re-write any unfinalized records back onto the stage.
     // Again, if anything goes wrong we need clean up and leave the data in a recoverable state.
-    cons.pin = pin;
     if (!cons.stage_chunks()) {
         cleanFolder(indexFolder_unripe);
         cleanFolder(indexFolder_ripe);
@@ -183,7 +191,6 @@ bool COptions::scrape_blocks(void) {
         EXIT_NOMSG(true);
 
     bool ret = cons.consolidate_chunks();
-    //#error
 
     // We completed one scrape and can now go to sleep
     EXIT_NOMSG(ret);

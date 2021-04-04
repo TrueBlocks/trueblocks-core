@@ -51,19 +51,36 @@ bool visitCopyRipeToStage(const string_q& path, void* data) {
         con->prevBlock = bn;
         unlockSection();
 
-        //#error
-        //        if (!(bn % SNAP_TO_GRID_BLKS)) {
-        //            LOG_INDEX3(path, " path");
-        //            LOG3(bYellow, "This is a snap to grid file", cOff);
-        //             string chunkId = padNum9(con->blazeStart) + "-" + padNum9(bn);
-        //            string_q bloomPath = getIndexPath("blooms/" + chunkId + ".bloom");
-        //            LOG_INFO(doCommand("touch " + bloomPath), " ", bloomPath, ": ", fileExists(bloomPath));
-        //            string_q chunkPath = getIndexPath("finalized/" + chunkId + ".bin");
-        //            LOG_INFO(doCommand("touch " + chunkPath), " ", chunkPath, ": ", fileExists(chunkPath));
-        //            cerr << "bn: " << bn << endl;
-        //            cerr << con->Format() << endl;
-        //            // getchar();
-        //        }
+        if (bn > FIRST_SNAP_TO_GRID && !(bn % SNAP_TO_GRID_BLKS)) {
+            LOG_INDEX3(path, " path");
+            LOG3(bYellow, "We want to write the snap-to-grid file here", cOff);
+
+            // Next, we try to create one or more chunks. Creating a chunk means consolidating them (writing
+            // them to a binary relational table), and re-write any unfinalized records back onto the stage.
+            // Again, if anything goes wrong we need clean up and leave the data in a recoverable state.
+            if (!con->stage_chunks()) {
+                cleanFolder(indexFolder_unripe);
+                cleanFolder(indexFolder_ripe);
+                ::remove(con->tmp_fn.c_str());
+            }
+
+            // Did user hit control+c?
+            if (shouldQuit())
+                return true;
+
+            blknum_t nRecords = fileSize(con->newStage) / 59;
+            blknum_t chunkSize = nRecords;
+
+            LOG_INDEX8(con->tmpFile, " staging completed");
+            LOG_INDEX8(con->tmp_fn, " staging completed");
+            LOG_INDEX8(con->oldStage, " staging completed");
+            LOG_INDEX8(con->newStage, " staging completed not yet consolidated");
+            LOG8("nRecords: ", nRecords);
+            LOG8("chunkSize: ", chunkSize);
+            bool ret = con->write_chunks(chunkSize, true);
+            con->blazeStart = bn;
+            return ret;
+        }
     }
 
     return !shouldQuit();

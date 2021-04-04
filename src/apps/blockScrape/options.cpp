@@ -415,13 +415,13 @@ bool COptions::changeState(void) {
 }
 
 //----------------------------------------------------------------
-bool addNewPin(CPinnedChunk& pin, void* data) {
+bool addNewPin(CPinnedChunk& newPin, void* data) {
     CPinManifest* manifestPtr = (CPinManifest*)data;  // NOLINT
-    manifestPtr->newPins.push_back(pin);
+    manifestPtr->newPins.push_back(newPin);
 
     timestamp_t unused;
     blknum_t newEnd;
-    blknum_t newStart = bnFromPath(pin.fileName, newEnd, unused);
+    blknum_t newStart = bnFromPath(newPin.fileName, newEnd, unused);
 
     if (manifestPtr->newBlockRange.empty()) {
         manifestPtr->newBlockRange = padNum9(newStart) + "-" + padNum9(newEnd);

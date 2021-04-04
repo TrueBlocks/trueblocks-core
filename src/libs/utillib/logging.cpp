@@ -45,7 +45,6 @@ string_q _logExit(const string_q& func) {
 template <>
 string_q logger<log_policy_i>::get_logline_header(void) {
     stringstream header;
-//#error
 #define LOG_TIMING !isLiveTest()
     if (LOG_TIMING) {
         if (isTestMode()) {
