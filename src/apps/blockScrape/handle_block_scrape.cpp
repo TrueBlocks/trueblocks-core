@@ -11,9 +11,7 @@
 bool COptions::scrape_blocks(void) {
     ENTER("scrape_blocks");
 
-    LOG8(" ");
-    LOG8(string_q(120, '-'));
-    LOG8(string_q(120, '-'));
+    LOG4(string_q(80, '-'));
 
     static blknum_t runs = 0;  // this counter is used for texting purposes only
     if (isLiveTest() && runs++ > TEST_RUNS)
@@ -57,15 +55,15 @@ bool COptions::scrape_blocks(void) {
 
     LOG8("bs.unripe:         ", cons.unripe);
     LOG8("bs.ripe:           ", cons.ripe);
-    LOG8("bs.staging:        ", cons.staging);
-    LOG8("bs.finalized:      ", cons.finalized);
-    LOG8("bs.client:         ", cons.client);
-    LOG8("bs.blazeStart:     ", cons.blazeStart);
-    LOG8("bs.blazeCnt:       ", cons.blazeCnt);
-    LOG8("bs.n_block_procs:  ", n_block_procs);
-    LOG8("bs.n_addr_procs:   ", n_addr_procs);
-    LOG8("bs.blazeRipe:      ", cons.blazeRipe);
-    LOG8("bs.MAX_ROWS:       ", MAX_ROWS);
+    LOG4("bs.staging:        ", cons.staging);
+    LOG4("bs.finalized:      ", cons.finalized);
+    LOG4("bs.client:         ", cons.client);
+    LOG4("bs.blazeStart:     ", cons.blazeStart);
+    LOG4("bs.blazeCnt:       ", cons.blazeCnt);
+    LOG4("bs.n_block_procs:  ", n_block_procs);
+    LOG4("bs.n_addr_procs:   ", n_addr_procs);
+    LOG4("bs.blazeRipe:      ", cons.blazeRipe);
+    LOG4("bs.MAX_ROWS:       ", MAX_ROWS);
 
     // How far are we from the head?
     cons.distFromHead = (cons.client > cons.blazeStart ? cons.client - cons.blazeStart : 0);
@@ -99,10 +97,12 @@ bool COptions::scrape_blocks(void) {
     os << "--startBlock " << cons.blazeStart << " ";
     os << "--nBlocks " << cons.blazeCnt << " ";
     os << "--nBlockProcs " << n_block_procs << " ";
+    os << "--nBlockProcs " << n_block_procs << " ";
+    os << "--nAddrProcs " << n_addr_procs << " ";
     os << "--nAddrProcs " << n_addr_procs << " ";
     os << "--ripeBlock " << cons.blazeRipe << " ";
-    os << (verbose ? ("--verbose " + uint_2_Str(verbose)) : "");
-    LOG_CALL(substitute(os.str(), getIndexPath(""), "$INDEX/"));
+    // os << (verbose ? ("--verbose " + uint_2_Str(verbose)) : "");
+    // LOG_CALL(substitute(os.str(), getIndexPath(""), "$INDEX/"));
     if (system(os.str().c_str()) != 0) {
         // Blaze returns non-zero if it fails. In this case, we need to remove files in the 'ripe'
         // folder because they're inconsistent (blaze's runs in parallel, so the block sequence
