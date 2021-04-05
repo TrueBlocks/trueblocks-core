@@ -361,9 +361,7 @@ bool CCache::needsRefresh(const string_q& cacheType, bool details) {
         return true;
     string_q lPath = getCachePath(cacheType) + "/";
     if (cacheType == "index")
-        lPath = getCachePath("addr_index/finalized/");
-    if (cacheType == "names")
-        lPath = configPath("names/");
+        lPath = indexFolder_finalized;
     fileInfo ret = getNewestFileInFolder(lPath);
     string_q fn = getCachePath("tmp/" + cacheType + (details ? "_det" : "") + ".bin");
     bool res = fileLastModifyDate(fn) < ret.fileTime;

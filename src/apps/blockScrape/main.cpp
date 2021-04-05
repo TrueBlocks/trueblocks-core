@@ -51,7 +51,6 @@ int main(int argc, const char* argv[]) {
 
             LOG_INFO((ret1 && ret2 ? "  ...pass completed" : "  ...pass did not complete"), ". Running again in ",
                      options.sleep, " seconds... ");
-            LOG_INFO("");
 
             // TODO(tjayrush): We should try to scrape timestamps with blaze while we're doing this scan
             // TODO(tjayrush): FIX_THIS_CODE try to capture timestamps during blaze scraping
