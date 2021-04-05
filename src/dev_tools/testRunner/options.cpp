@@ -151,6 +151,8 @@ bool COptions::parseArguments(string_q& command) {
     // END_DEBUG_DISPLAY
 
     modes = (mode == "both" ? BOTH : (mode == "api" ? API : CMD));
+    if (!isNodeRunning())
+        return usage("Ethereum at " + getCurlContext()->baseURL + " was not found. All tests will fail.");
 
     if (filter.empty())
         filter = "fast";

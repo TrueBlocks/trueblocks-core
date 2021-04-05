@@ -7,38 +7,36 @@ LIVE_TEST = [true]
 <INFO>  :   Extracting addresses...extracting appearances...exporting...finalizing...binary file created ✓
 <INFO>  : Done...
 <INFO>  : Block scraper is running...
-<INFO>  : blaze scrape (80 blocks from head)
+<INFO>  : blaze scrape 1+16=17 (80 blocks from head)
 ................
 <INFO>  : 
 <INFO>  : Consolidation pass 0
 <INFO>  :   Starting search at record 12 of 19
-<INFO>  :   Break at line 12. Extracting [0 to 12] of 19
+<INFO>  :   Break line 12 of 19. [0 to 12 of 13]
 <INFO>  :   Extracting addresses...extracting appearances...exporting...finalizing...binary file created ✓
 <INFO>  : Found a chunk at [000000001-000000010] (inclusive)
 <INFO>  :   Wrote 13 records to $FINAL/000000001-000000010.bin
 <INFO>  :   Wrote 6 records to $STAGING/000000016.txt
 <INFO>  :   ...pass completed. Running again in 0.5 seconds... 
-<INFO>  : 
 <INFO>  : Block scraper is running...
-<INFO>  : blaze scrape (65 blocks from head)
+<INFO>  : blaze scrape 17+16=33 (65 blocks from head)
 ................
 <INFO>  : 
 <INFO>  : Consolidation pass 0
 <INFO>  :   Starting search at record 12 of 23
-<INFO>  :   Break at line 12. Extracting [0 to 12] of 23
+<INFO>  :   Break line 12 of 23. [0 to 12 of 13]
 <INFO>  :   Extracting addresses...extracting appearances...exporting...finalizing...binary file created ✓
 <INFO>  : Found a chunk at [000000011-000000022] (inclusive)
 <INFO>  :   Wrote 13 records to $FINAL/000000011-000000022.bin
 <INFO>  :   Wrote 10 records to $STAGING/000000032.txt
 <INFO>  :   ...pass completed. Running again in 0.5 seconds... 
-<INFO>  : 
 <INFO>  : Block scraper is running...
-<INFO>  : blaze scrape (50 blocks from head)
+<INFO>  : blaze scrape 33+16=49 (50 blocks from head)
 ................
 <INFO>  : 
 <INFO>  : Consolidation pass 0
 <INFO>  :   Starting search at record 12 of 29
-<INFO>  :   Break at line 12. Extracting [0 to 12] of 29
+<INFO>  :   Break line 12 of 29. [0 to 12 of 13]
 <INFO>  :   Extracting addresses...extracting appearances...exporting...finalizing...binary file created ✓
 <INFO>  : Found a chunk at [000000023-000000034] (inclusive)
 <INFO>  :   Wrote 13 records to $FINAL/000000023-000000034.bin
@@ -46,25 +44,22 @@ LIVE_TEST = [true]
 <INFO>  : 
 <INFO>  : Consolidation pass 1
 <INFO>  :   Starting search at record 12 of 16
-<INFO>  :   Break at line 12. Extracting [0 to 12] of 16
+<INFO>  :   Break line 12 of 16. [0 to 12 of 13]
 <INFO>  :   Extracting addresses...extracting appearances...exporting...finalizing...binary file created ✓
 <INFO>  : Found a chunk at [000000035-000000045] (inclusive)
 <INFO>  :   Wrote 13 records to $FINAL/000000035-000000045.bin
 <INFO>  :   Wrote 3 records to $STAGING/000000048.txt
 <INFO>  :   ...pass completed. Running again in 0.5 seconds... 
-<INFO>  : 
 <INFO>  : Block scraper is running...
-<INFO>  : blaze scrape (35 blocks from head)
+<INFO>  : blaze scrape 49+16=65 (35 blocks from head)
 ................
 <INFO>  : 
 <INFO>  : Consolidation not ready...
 <INFO>  :   Have 13 records of 13. Need 0 more.
 <INFO>  :   ...pass completed. Running again in 0.5 seconds... 
-<INFO>  : 
 <INFO>  : Block scraper is running...
 
 Finishing work...
 <WARNG> : The user hit control+C...
 <INFO>  :   ...pass did not complete. Running again in 0.5 seconds... 
-<INFO>  : 
 { "status": "stopped" }

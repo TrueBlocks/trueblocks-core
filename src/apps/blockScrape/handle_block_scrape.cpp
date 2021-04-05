@@ -103,8 +103,8 @@ bool COptions::scrape_blocks(void) {
     os << "--nAddrProcs " << n_addr_procs << " ";
     os << "--nAddrProcs " << n_addr_procs << " ";
     os << "--ripeBlock " << cons.blazeRipe << " ";
-    // os << (verbose ? ("--verbose " + uint_2_Str(verbose)) : "");
-    // LOG_CALL(substitute(os.str(), getIndexPath(""), "$INDEX/"));
+    os << (verbose ? ("--verbose " + uint_2_Str(verbose)) : "");
+    LOG_CALL(substitute(os.str(), getIndexPath(""), "$INDEX/"));
     if (system(os.str().c_str()) != 0) {
         // Blaze returns non-zero if it fails. In this case, we need to remove files in the 'ripe'
         // folder because they're inconsistent (blaze's runs in parallel, so the block sequence
