@@ -39,6 +39,13 @@ LIVE_TEST = [true]
 : 4-----bs.SNAP:          12
 : 4-----bs.FIRST_SNAP:    2286910
 <INFO>  : blaze scrape 1+16=17 (80 blocks from head)
+: 4-----scrape_blocks ----> env TB_INDEXPATH="$INDEX/" blaze scrape --startBlock 1 --nBlocks 16 --nBlockProcs 10 --nBlockProcs 10 --nAddrProcs 20 --nAddrProcs 20 --ripeBlock 53 --verbose 8
+blaze.startBlock:   1
+blaze.nBlocks:      16
+blaze.nBlockProcs:  10
+blaze.nAddrProcs:   20
+blaze.ripeBlock:    53
+blaze.verbose:      8
 ................
 : 8------Prior to visitCopyRipeToStage
 : 8------pin: 1
@@ -181,6 +188,13 @@ tmp_fn: /Users/jrush/.quickBlocks/mocked/addr_index/staging/000000000-temp.txt
 : 4-----bs.SNAP:          12
 : 4-----bs.FIRST_SNAP:    2286910
 <INFO>  : blaze scrape 17+16=33 (65 blocks from head)
+: 4-----scrape_blocks ----> env TB_INDEXPATH="$INDEX/" blaze scrape --startBlock 17 --nBlocks 16 --nBlockProcs 10 --nBlockProcs 10 --nAddrProcs 20 --nAddrProcs 20 --ripeBlock 54 --verbose 8
+blaze.startBlock:   17
+blaze.nBlocks:      16
+blaze.nBlockProcs:  10
+blaze.nAddrProcs:   20
+blaze.ripeBlock:    54
+blaze.verbose:      8
 ................
 : 8------Prior to visitCopyRipeToStage
 : 8------pin: 1
@@ -357,6 +371,13 @@ tmp_fn: /Users/jrush/.quickBlocks/mocked/addr_index/staging/000000000-temp.txt
 : 4-----bs.SNAP:          12
 : 4-----bs.FIRST_SNAP:    2286910
 <INFO>  : blaze scrape 33+16=49 (50 blocks from head)
+: 4-----scrape_blocks ----> env TB_INDEXPATH="$INDEX/" blaze scrape --startBlock 33 --nBlocks 16 --nBlockProcs 10 --nBlockProcs 10 --nAddrProcs 20 --nAddrProcs 20 --ripeBlock 55 --verbose 8
+blaze.startBlock:   33
+blaze.nBlocks:      16
+blaze.nBlockProcs:  10
+blaze.nAddrProcs:   20
+blaze.ripeBlock:    55
+blaze.verbose:      8
 ................
 : 8------Prior to visitCopyRipeToStage
 : 8------pin: 1
@@ -573,6 +594,13 @@ tmp_fn: /Users/jrush/.quickBlocks/mocked/addr_index/staging/000000000-temp.txt
 : 4-----bs.SNAP:          12
 : 4-----bs.FIRST_SNAP:    2286910
 <INFO>  : blaze scrape 49+16=65 (35 blocks from head)
+: 4-----scrape_blocks ----> env TB_INDEXPATH="$INDEX/" blaze scrape --startBlock 49 --nBlocks 16 --nBlockProcs 10 --nBlockProcs 10 --nAddrProcs 20 --nAddrProcs 20 --ripeBlock 56 --verbose 8
+blaze.startBlock:   49
+blaze.nBlocks:      16
+blaze.nBlockProcs:  10
+blaze.nAddrProcs:   20
+blaze.ripeBlock:    56
+blaze.verbose:      8
 ................
 : 8------Prior to visitCopyRipeToStage
 : 8------pin: 1
