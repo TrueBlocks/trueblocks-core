@@ -34,7 +34,7 @@ bool COptions::scrape_blocks(void) {
 
         } else if (ddosRange(cons.blazeStart)) {
             // ...or slow things down...
-            cons.blazeCnt = getGlobalConfig("blockScrape")->getConfigInt("settings", "n_blocks_fallback", 200);
+            cons.blazeCnt = getGlobalConfig("blockScrape")->getConfigInt("settings", "n_blocks_fallback", 500);
         }
     }
     cons.blazeCnt = N_BLOCKS;
@@ -53,17 +53,19 @@ bool COptions::scrape_blocks(void) {
         cons.blazeCnt = (cons.client - cons.blazeStart);
     }
 
-    LOG8("bs.unripe:         ", cons.unripe);
-    LOG8("bs.ripe:           ", cons.ripe);
-    LOG4("bs.staging:        ", cons.staging);
-    LOG4("bs.finalized:      ", cons.finalized);
-    LOG4("bs.client:         ", cons.client);
-    LOG4("bs.blazeStart:     ", cons.blazeStart);
-    LOG4("bs.blazeCnt:       ", cons.blazeCnt);
-    LOG4("bs.n_block_procs:  ", n_block_procs);
-    LOG4("bs.n_addr_procs:   ", n_addr_procs);
-    LOG4("bs.blazeRipe:      ", cons.blazeRipe);
-    LOG4("bs.MAX_ROWS:       ", MAX_ROWS);
+    LOG8("bs.unripe:        ", cons.unripe);
+    LOG8("bs.ripe:          ", cons.ripe);
+    LOG4("bs.staging:       ", cons.staging);
+    LOG4("bs.finalized:     ", cons.finalized);
+    LOG4("bs.client:        ", cons.client);
+    LOG4("bs.blazeStart:    ", cons.blazeStart);
+    LOG4("bs.blazeCnt:      ", cons.blazeCnt);
+    LOG4("bs.n_block_procs: ", n_block_procs);
+    LOG4("bs.n_addr_procs:  ", n_addr_procs);
+    LOG4("bs.blazeRipe:     ", cons.blazeRipe);
+    LOG4("bs.MAX_ROWS:      ", MAX_ROWS);
+    LOG4("bs.SNAP:          ", SNAP_TO_GRID_BLKS);
+    LOG4("bs.FIRST_SNAP:    ", FIRST_SNAP_TO_GRID);
 
     // How far are we from the head?
     cons.distFromHead = (cons.client > cons.blazeStart ? cons.client - cons.blazeStart : 0);
@@ -87,8 +89,8 @@ bool COptions::scrape_blocks(void) {
     }
 
     // Tell the user what's going on...
-    LOG_INFO(cGreen, "blaze scrape ", cons.blazeStart, "-", (cons.blazeStart + cons.blazeCnt), "-",
-             cons.blazeCnt, " (", cons.distFromHead, " blocks from head)", cOff);
+    LOG_INFO(cGreen, "blaze scrape ", cons.blazeStart, "+", cons.blazeCnt, "=", 
+             (cons.blazeStart + cons.blazeCnt), " (", cons.distFromHead, " blocks from head)", cOff);
 
     // We're ready to scrape, so build the blaze command line...
     ostringstream os;

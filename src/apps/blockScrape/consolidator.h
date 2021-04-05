@@ -44,7 +44,8 @@ class CConsolidator : public CBlockProgress {
 #define N_BLOCKS (isLiveTest() ? 16 : cons.blazeCnt)
 #define MAX_ROWS (isLiveTest() ? 13 : 2000000)
 #define SNAP_TO_GRID_BLKS (isLiveTest() ? 12 : 100000)
-#define FIRST_SNAP_TO_GRID 2250000
+// Dont' start snapping to grid until the 2016 DDos and then do so for the rest of the chain
+#define FIRST_SNAP_TO_GRID 2286910
 #define TEST_RUNS 3
 
 //--------------------------------------------------------------------------
