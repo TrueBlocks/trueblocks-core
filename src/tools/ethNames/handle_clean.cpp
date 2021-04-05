@@ -34,7 +34,8 @@ void COptions::finishClean(CAccountName& account) {
     if (account.decimals > 0 || !account.symbol.empty()) {
         account.is_erc721 = contains(toLower(account.tags), "erc721");
         account.is_erc20 = true;
-        account.tags = account.tags.empty() || contains(toLower(account.tags), "token")
+        account.tags = (account.tags.empty() || contains(toLower(account.tags), "token") ||
+                        contains(account.tags, "30-Contracts") || contains(account.tags, "55-Defi"))
                            ? (account.is_erc721 ? "51-Tokens:ERC721" : "50-Tokens:ERC20")
                            : account.tags;
     }
@@ -89,7 +90,9 @@ bool COptions::cleanNames(const string_q& sourceIn, const string_q& destIn) {
     CAccountName name;
     CAccountNameArray names;
     while (name.parseText(fields, contents)) {
+        bool isContract = name.is_contract;
         finishClean(name);
+        name.is_contract = isContract;
         names.push_back(name);
     }
     sort(names.begin(), names.end());
@@ -118,17 +121,18 @@ bool COptions::handle_clean(void) {
     string_q mainDest = configPath("names/names.tab");
     if (!cleanNames(mainSource, mainDest))
         EXIT_USAGE("This installation of TrueBlocks may not clean the names file. Primary names file was not set.");
+    LOG_WARN("The primary names file was cleaned.", string_q(50, ' '));
 
-    string_q customSource = getGlobalConfig("ethNames")->getConfigStr("settings", "custom", "<UNSET>");
-    string_q customDest = configPath("names/names_custom.tab");
-    if (!cleanNames(customSource, customDest))
-        EXIT_USAGE("This installation of TrueBlocks may not clean the names file. Customized names file was not set.");
+    //    string_q customSource = getGlobalConfig("ethNames")->getConfigStr("settings", "custom", "<UNSET>");
+    //    string_q customDest = configPath("names/names_custom.tab");
+    //    if (!cleanNames(customSource, customDest))
+    //        EXIT_USAGE("This installation of TrueBlocks may not clean the names file. Customized names file was not
+    //        set.");
+    LOG_WARN("The custom names file was NOT cleaned.", string_q(50, ' '));
 
     ::remove(getCachePath("names/names.bin").c_str());
     CAccountName acct;
     getNamedAccount(acct, "0x0");  // reloads
-
-    LOG_WARN("The names files were cleaned, but not copied back to thier sources. Do this to preserve the cleaning.");
 
     return false;  // don't proceed
 }

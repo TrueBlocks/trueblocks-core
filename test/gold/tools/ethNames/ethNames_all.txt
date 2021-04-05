@@ -10,8 +10,8 @@ tags	address	name	symbol	decimals
 0x0000000000000000000000000000000000000003	Account_3
 0x0000000000000000000000000000000000000004	Account_4
 55-Defi	0x000000000000000000000000000000000000dead	ENS: Burn Address
-30-Contracts	0x0000000000001b84b1cb32787b0d64758d019317	HomeWork 🏠🛠️	HWK
-50-Tokens:ERC20	0x0000000000004946c0e9f43f4dee607b0ef1fa1c	1inch.exchange v2	CHI
+50-Tokens:ERC20	0x0000000000001b84b1cb32787b0d64758d019317	HomeWork 🏠🛠️	HWK		18
+50-Tokens:ERC20	0x0000000000004946c0e9f43f4dee607b0ef1fa1c	1inch.exchange v2	CHI		18
 50-Tokens:ERC20	0x0000000000085d4780b73119b644ae5ecd22b376	TrueUSD	TUSD		18
 34-ENS	0x00000000000c2e074ec69a0dfb2997ba6c7d2e1e	ENS: Registry with Fallback
 30-Contracts	0x0000000000c90bc353314b6911180ed7e06019a9	Arbitrage Bot
@@ -34,11 +34,11 @@ tags	address	name	symbol	decimals
 31-Gitcoin Grants:Friends	0x00158a74921620b39e5c3afe4dca79feb2c2c143	Name 0x00158a74
 30-Contracts	0x0015f3c39221b20016cebdbf8b19eb5acedca901	Hacker Gold Sender
 50-Tokens:ERC20	0x001f0aa5da15585e5b2305dbab2bac425ea71007	IPSX	IPSX		18
-55-Defi	0x001f751cdfee02e2f0714831be2f8384db0f71a2	GenericLevCompFarm
+55-Defi	0x001f751cdfee02e2f0714831be2f8384db0f71a2	GenericLevCompFarm			18
 31-Gitcoin Grants:Grant	0x00216505799d9e3117b40b94a24dc0fa286a57a4	Grant 1168 Flowerpatch Emojis & Artwork Fund
 31-Gitcoin Grants:Friends	0x0029dc8d8ef8c287ad395732dbe5d5bf951da820	Name 0x0029dc8d
 31-Gitcoin Grants:Friends	0x002c83ebc32d18ff4f74852565402cf7bde35ccc	Name 0x002c83eb
-30-Contracts	0x00319f722bd546182cb2c701ca254146d3f084fc	Democracy Earth	HOUR		18
+50-Tokens:ERC20	0x00319f722bd546182cb2c701ca254146d3f084fc	Democracy Earth	HOUR		18
 35-Pool Together	0x0034ea9808e620a0ef79261c51af20614b742b24	Pool Usdc MCDAwarePool v0.2.12
 31-Gitcoin Grants:Friends	0x0035fc5208ef989c28d47e552e92b0c507d2b318	Name 0x0035fc52
 75-Early Actors	0x0037ce3d4b7f8729c8607d8d0248252be68202c0	Miner_0027_260
@@ -86,7 +86,7 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0x0198f46f520f33cd4329bd4be380a25a90536cd5	PlayChip	PLA		18
 31-Gitcoin Grants:Friends	0x01a24c6a87ee7a19d54c98ffae76755f24fdf637	Name 0x01a24c6a
 30-Contracts	0x01da73c4ec1355f953ad0aaca3ef20e342aea92a	Arbitrage Bot
-55-Defi	0x01da76dea59703578040012357b81ffe62015c2d	Cream yETH	crYETH		8
+55-Defi	0x01da76dea59703578040012357b81ffe62015c2d	Cream yETH	crYETH		18
 31-Gitcoin Grants:Friends	0x01e6fd0ae73d9194b19f9b376065577927a0d5f5	Name 0x01e6fd0a
 31-Gitcoin Grants:Grant	0x01f1e9319982ab828203c0276727cf48065434d3	Grant 0602 Realitylearn: Teaching the World About Blockchain
 31-Gitcoin Grants:Friends	0x01f7700c13707eee8349f9800e70a940168812e3	Name 0x01f7700c
@@ -142,7 +142,7 @@ tags	address	name	symbol	decimals
 30-Contracts	0x04a487afd662c4f9deacc07a7b10cfb686b682a4	Kyber Oasis Reserve
 31-Gitcoin Grants:Grant	0x04b7f60169fe048b7806a7e5fe731a37be23111e	Grant 0650 Kodadot: Polkadot and Substrate Wallet
 31-Gitcoin Grants:Grant	0x04bb33c3a8c2d018836a1f938054ebb59e0036b2	Grant 0104 Wallets.review
-30-Contracts	0x04d702ebd0a77503b154865fe3e8da97255b931b	Commons Stack Org Membership	CSOM
+50-Tokens:ERC20	0x04d702ebd0a77503b154865fe3e8da97255b931b	Commons Stack Org Membership	CSOM
 50-Tokens:ERC20	0x04f2e7221fdb1b52a68169b25793e51478ff0329	Cappasity	CAPP		2
 31-Gitcoin Grants:Friends	0x051ac9d0442d5c689e6a301bebc82821f42fc93a	Name 0x051ac9d0
 31-Gitcoin Grants:Grant	0x05267b74523dd09a7a316d83760a09e5a710fbf7	Grant 1726 Pinpals Crypto
@@ -171,7 +171,7 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0x05d412ce18f24040bb3fa45cf2c69e506586d8e8	MFTU	MFTU		18
 50-Tokens:ERC20	0x05f4a42e251f2d52b8ed15e9fedaacfcef1fad27	Zilliqa	ZIL		12
 31-Gitcoin Grants:Grant	0x05f9f39e372bbe8cd2f73736ae0441ab8052dbb6	Grant 1979 Vusd Stablecoin
-30-Contracts	0x06012c8cf97bead5deae237070f9587f8e7a266d	CryptoKitties	CK
+50-Tokens:ERC20	0x06012c8cf97bead5deae237070f9587f8e7a266d	CryptoKitties	CK
 31-Gitcoin Grants:Grant	0x06044b5359d8df7886366c22c61c7ecd29becac7	Grant 0336 Dhack - a Decentralized Hackathon Model
 31-Gitcoin Grants:Friends	0x060a24a6c7a493d2bc58db7b03bece9e67d2bd53	Name 0x060a24a6
 90-DevCon2:Individual	0x06105042f9e891ad291a39f49be2eaa94f796945	bernard lin

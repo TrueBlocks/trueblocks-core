@@ -27,18 +27,20 @@ TIME ~ CLOCK - <INFO>  : named: true
     "source": "EtherScan.io"
   },
   {
-    "tags": "30-Contracts",
+    "tags": "50-Tokens:ERC20",
     "address": "0x0000000000001b84b1cb32787b0d64758d019317",
     "name": "HomeWork 🏠🛠️",
     "symbol": "HWK",
-    "source": "On chain"
+    "source": "On chain",
+    "decimals": 18
   },
   {
     "tags": "50-Tokens:ERC20",
     "address": "0x0000000000004946c0e9f43f4dee607b0ef1fa1c",
     "name": "1inch.exchange v2",
     "symbol": "CHI",
-    "source": "On chain"
+    "source": "On chain",
+    "decimals": 18
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -190,7 +192,8 @@ TIME ~ CLOCK - <INFO>  : named: true
     "tags": "55-Defi",
     "address": "0x001f751cdfee02e2f0714831be2f8384db0f71a2",
     "name": "GenericLevCompFarm",
-    "source": "On chain"
+    "source": "On chain",
+    "decimals": 18
   },
   {
     "tags": "31-Gitcoin Grants:Grant",
@@ -211,7 +214,7 @@ TIME ~ CLOCK - <INFO>  : named: true
     "source": "Gitcoin Website"
   },
   {
-    "tags": "30-Contracts",
+    "tags": "50-Tokens:ERC20",
     "address": "0x00319f722bd546182cb2c701ca254146d3f084fc",
     "name": "Democracy Earth",
     "symbol": "HOUR",
@@ -532,7 +535,7 @@ TIME ~ CLOCK - <INFO>  : named: true
     "name": "Cream yETH",
     "symbol": "crYETH",
     "source": "On chain",
-    "decimals": 8
+    "decimals": 18
   },
   {
     "tags": "31-Gitcoin Grants:Friends",
@@ -910,7 +913,7 @@ TIME ~ CLOCK - <INFO>  : named: true
     "source": "https://gitcoin.co/grants/104/walletsreview"
   },
   {
-    "tags": "30-Contracts",
+    "tags": "50-Tokens:ERC20",
     "address": "0x04d702ebd0a77503b154865fe3e8da97255b931b",
     "name": "Commons Stack Org Membership",
     "symbol": "CSOM",
@@ -1112,7 +1115,7 @@ TIME ~ CLOCK - <INFO>  : named: true
     "source": "https://gitcoin.co/grants/1979/vusd-stablecoin"
   },
   {
-    "tags": "30-Contracts",
+    "tags": "50-Tokens:ERC20",
     "address": "0x06012c8cf97bead5deae237070f9587f8e7a266d",
     "name": "CryptoKitties",
     "symbol": "CK",
