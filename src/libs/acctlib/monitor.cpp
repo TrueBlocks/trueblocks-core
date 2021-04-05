@@ -588,7 +588,7 @@ string_q getTokenBalanceOf(const CMonitor& token, const address_t& holder, blknu
     cmd << "\"to\": \"" << token.address << "\", ";
     cmd << "\"data\": \"0x70a08231" << padLeft(substitute(holder, "0x", ""), 64, '0') << "\"";
     cmd << "}, \"" << uint_2_Hex(blockNum) << "\"]";
-    string_q ret = callRPC("eth_call", cmd.str(), false).substr(0, 66); // take only the first 32 bytes
+    string_q ret = callRPC("eth_call", cmd.str(), false).substr(0, 66);  // take only the first 32 bytes
     if (startsWith(ret, "0x"))
         return bnu_2_Str(str_2_BigUint(ret, 256));
     return "0";
