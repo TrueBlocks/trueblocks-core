@@ -89,8 +89,8 @@ bool COptions::scrape_blocks(void) {
     }
 
     // Tell the user what's going on...
-    LOG_INFO(cGreen, "blaze scrape ", cons.blazeStart, "+", cons.blazeCnt, "=", 
-             (cons.blazeStart + cons.blazeCnt), " (", cons.distFromHead, " blocks from head)", cOff);
+    LOG_INFO(cGreen, "blaze scrape ", cons.blazeStart, "+", cons.blazeCnt, "=", (cons.blazeStart + cons.blazeCnt), " (",
+             cons.distFromHead, " blocks from head)", cOff);
 
     // We're ready to scrape, so build the blaze command line...
     ostringstream os;
