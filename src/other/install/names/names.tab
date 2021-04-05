@@ -4928,6 +4928,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 81-Other	0xa9e4e3b1da2462752aea980698c335e70e9ab26c	DynamicPyramid		Ether Camp			false	false	false	true	false	false
 30-Contracts:Humanity DAO	0xa9eb0e4da3e799a162d3e8459c8f386ef841ceba	nttung163		https://www.humanitydao.org/humans			false	false	false	false	false	false
 32-Kickback:Friends	0xa9ec750066b4ebd9f966d949c515ff1bd33db015	jbunce		https://kickback.events/			false	false	false	false	false	false
+50-Tokens:ERC20	0xa9fe4601811213c340e850ea305481aff02f5b28	WETH yVault	yvWETH	On chain	18		false	false	false	true	true	false
 90-DevCon2:Individual	0xaa004af47346703796554e9ba39742fcf92a1b7c	PatrikVoelker		DevCon2 Token Contract			false	false	false	false	false	false
 31-Gitcoin Grants:Friends	0xaa017bc54e5b34184e36daafbd8e20c1bb59c0e7	arun2596		Gitcoin Website			false	false	false	false	false	false
 31-Gitcoin Grants:Friends	0xaa01dec5307cf17f20881a3286dcaa062578cea7	philh		Gitcoin Website			false	false	false	false	false	false

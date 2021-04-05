@@ -19,7 +19,7 @@ void COptions::finishClean(CAccountName& account) {
     account.is_contract = isContractAt(account.address, latestBlock);
     account.is_erc20 = isTokenContract(account);
     if (account.is_contract && account.is_erc20) {
-        account.decimals = standards.decimals;
+        account.decimals = standards.decimals ? standards.decimals : 18;
         account.symbol = standards.symbol;
         bool isEtherscan = contains(toLower(account.source), "etherscan");
         bool isTrueblocks = contains(toLower(account.source), "trueblocks");
