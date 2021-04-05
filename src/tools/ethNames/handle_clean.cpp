@@ -117,16 +117,18 @@ bool COptions::handle_clean(void) {
     string_q mainSource = getGlobalConfig("ethNames")->getConfigStr("settings", "source", "<UNSET>");
     string_q mainDest = configPath("names/names.tab");
     if (!cleanNames(mainSource, mainDest))
-        EXIT_USAGE("Primary names file (" + mainSource + ") not found.");
+        EXIT_USAGE("This installation of TrueBlocks may not clean the names file. Primary names file was not set.");
 
     string_q customSource = getGlobalConfig("ethNames")->getConfigStr("settings", "custom", "<UNSET>");
     string_q customDest = configPath("names/names_custom.tab");
     if (!cleanNames(customSource, customDest))
-        EXIT_USAGE("Custom names file (" + customSource + ") not found.");
+        EXIT_USAGE("This installation of TrueBlocks may not clean the names file. Customized names file was not set.");
 
     ::remove(getCachePath("names/names.bin").c_str());
     CAccountName acct;
     getNamedAccount(acct, "0x0");  // reloads
+
+    LOG_WARN("The names files were cleaned, but not copied back to thier sources. Do this to preserve the cleaning.");
 
     return false;  // don't proceed
 }
