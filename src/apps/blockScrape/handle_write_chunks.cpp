@@ -15,7 +15,7 @@ bool CConsolidator::write_chunks(blknum_t chunkSize, bool once) {
     // We have enough records to consolidate. Process chunks (of size 'chunkSize') until done.
     // This may take more than one pass. Check for user input control+C at each pass.
     size_t pass = 0;
-    while (nRecords > chunkSize && !shouldQuit()) {
+    while ((once || nRecords > chunkSize) && !shouldQuit()) {
         lockSection();
 
         LOG_INFO("");
@@ -133,8 +133,9 @@ bool CConsolidator::write_chunks(blknum_t chunkSize, bool once) {
 
         nRecords = fileSize(newStage) / 59;
         unlockSection();
-        once = false;
-        chunkSize = MAX_ROWS;
+        if (once)
+            once = nRecords > 0;
+        chunkSize = min(blknum_t(MAX_ROWS), blknum_t(nRecords));
     }
 
     LOG_INDEX8(newStage, " after consolidation");
