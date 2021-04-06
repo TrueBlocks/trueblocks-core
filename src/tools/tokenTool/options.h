@@ -12,6 +12,7 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 #include "etherlib.h"
+#if 0
 #include "stake.h"
 
 // #define DEBUGGING 1
@@ -57,3 +58,4 @@ class COptions : public CAbiOptions {
 //-----------------------------------------------------------------------------
 extern string_q pad(wei_t in);
 extern const string_q fmtOut;
+#endif

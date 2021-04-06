@@ -1,3 +1,4 @@
+#if 0
 #pragma once
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
@@ -150,3 +151,4 @@ extern const char* STR_DISPLAY_LMDBVAL;
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks
+#endif

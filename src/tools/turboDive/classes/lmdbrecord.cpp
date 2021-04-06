@@ -1,3 +1,4 @@
+#if 0
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
@@ -304,3 +305,4 @@ CLmdbRecord::CLmdbRecord(const MDB_val& k, const MDB_val& v) {
 }
 // EXISTING_CODE
 }  // namespace qblocks
+#endif

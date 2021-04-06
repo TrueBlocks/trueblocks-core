@@ -9,6 +9,7 @@
 # argv[1] The root of the source tree
 # argv[1] The source code folder
 # argv[2] The tool name
+# argv[3] The chifra route
 #
 #########################################################################################################################################
 
@@ -20,7 +21,6 @@ import sys
 # Print to standard error
 # -------------------------------------------------------
 
-
 def printe(*args, **kwargs):
     print(*args, file=sys.stderr, **kwargs)
 
@@ -31,12 +31,11 @@ def printe(*args, **kwargs):
 # Debugging input array
 # printe(sys.argv)
 
-
 # Check input parameters number
 param_number = len(sys.argv)
 
 # Need at least four parameters
-if param_number != 4:
+if param_number < 4:
     printe("ERROR: Invalid parameters number, 4 expected, got ", param_number)
     exit(1)
 
@@ -44,6 +43,9 @@ if param_number != 4:
 srcFolder = sys.argv[1]
 toolFolder = sys.argv[2]
 toolName = sys.argv[3]
+routeStr = "chifra"
+if param_number > 3:
+    routeStr = "chifra " + sys.argv[4]
 templateFile = toolFolder + "/docs/README.tmpl.md"
 footerFile = srcFolder + "/other/docs/README.footer.md"
 usageFile = "help.txt"
@@ -93,7 +95,7 @@ with open(usageFile, 'r') as file:
 
 # Do the replacements
 outputData = templateData.replace("[{USAGE_TABLE}]", usageData).replace(
-    "[{FOOTER}]", footerData).replace("[{NAME}]", toolName)
+    "[{FOOTER}]", footerData).replace("[{NAME}]", routeStr)
 
 #printe('outputData: ', outputData)
 

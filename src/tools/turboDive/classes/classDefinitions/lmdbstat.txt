@@ -11,3 +11,4 @@ cpp_includes =
 scope = extern
 serializable = true
 display_str = psize, depth, branch_pages, leaf_pages, overflow_pages, entries
+disabled = true

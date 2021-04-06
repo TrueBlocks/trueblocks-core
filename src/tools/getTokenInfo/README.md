@@ -1,4 +1,4 @@
-## getTokenInfo
+## chifra tokens
 
 Given the address of an ERC20 token contract, report token balances for one or more accounts. Alternatively, report token balances for multiple ERC20 contracts for a single account.
 

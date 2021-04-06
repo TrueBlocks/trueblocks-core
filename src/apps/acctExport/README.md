@@ -1,4 +1,4 @@
-## acctExport
+## chifra export
 
 This folder contains a TrueBlocks monitor. TrueBlocks monitors pull transactions from the Ethereum blockchain for a given (or a series of) Ethereum addresses.
 

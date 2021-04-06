@@ -11,18 +11,19 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 #include "options.h"
-#include "silkworm/chain/config.hpp"
-#include "silkworm/db/chaindb.hpp"
-#include "silkworm/db/tables.hpp"
-#include "silkworm/db/util.hpp"
-#include "silkworm/types/block.hpp"
-#include "classes/tableentry.h"
+// #include "silkworm/chain/config.hpp"
+// #include "silkworm/db/chaindb.hpp"
+// #include "silkworm/db/tables.hpp"
+// #include "silkworm/db/util.hpp"
+// #include "silkworm/types/block.hpp"
+// #include "classes/tableentry.h"
 
-using namespace silkworm;
-using namespace silkworm::db::table;
+// using namespace silkworm;
+// using namespace silkworm::db::table;
 
 //-----------------------------------------------------------------------
 int main(int argc, const char* argv[]) {
+#if 0
     etherlib_init(quickQuitHandler);
 
     COptions options;
@@ -51,9 +52,11 @@ int main(int argc, const char* argv[]) {
     }
 
     etherlib_cleanup();
+#endif
     return 0;
 }
 
+#if 0
 //-----------------------------------------------------------------------
 const char* STR_DISPLAY_MDBSTAT_VERBOSE =
     "\n"
@@ -177,3 +180,4 @@ bool COptions::handle_dump(void) {
 
     return true;
 }
+#endif

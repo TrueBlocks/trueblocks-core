@@ -4,11 +4,12 @@
  *-------------------------------------------------------------------------------------------*/
 #include "etherlib.h"
 #include "options.h"
-#include "stake.h"
+//#include "stake.h"
 
-extern bool build_cap_table(COptions& options, int argc, const char* argv[]);
+//extern bool build_cap_table(COptions& options, int argc, const char* argv[]);
 //--------------------------------------------------------------
 int main(int argc, const char* argv[]) {
+#if 0
     etherlib_init("binary", quickQuitHandler);
 
     COptions options;
@@ -28,9 +29,11 @@ int main(int argc, const char* argv[]) {
     }
 
     etherlib_cleanup();
+#endif
     return 0;
 }
 
+#if 0
 //--------------------------------------------------------------
 bool build_cap_table(COptions& options, int argc, const char* argv[]) {
     // We need to be able to open the cache
@@ -290,3 +293,4 @@ string_q COptions::report(void) {
     return os.str();
 #endif
 }
+#endif

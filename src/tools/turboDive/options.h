@@ -16,6 +16,7 @@
  * outside of the BEG_CODE/END_CODE sections
  */
 #include "etherlib.h"
+#if 0
 #include "silkworm/db/chaindb.hpp"
 #include "classes/tableentry.h"
 
@@ -52,3 +53,4 @@ class COptions : public CBlockOptions {
     bool handle_tables(void);
     bool handle_dump(void);
 };
+#endif

@@ -1,6 +1,6 @@
 ## pinMan
 
-The `pinMan` program allows one to manage and view the status of TrueBlocks's IPFS pins.
+The `pinMan` is not ready for prime time. Please return late.
 
 ## Building
 

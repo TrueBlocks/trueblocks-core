@@ -6,3 +6,4 @@ includes = utillib.h|silkworm/db/lmdbval.h
 cpp_includes =
 serializable = true
 display_str = key, value
+disabled = true

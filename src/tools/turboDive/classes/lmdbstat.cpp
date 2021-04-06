@@ -1,3 +1,4 @@
+#if 0
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
@@ -404,3 +405,4 @@ const char* STR_DISPLAY_LMDBSTAT =
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks
+#endif

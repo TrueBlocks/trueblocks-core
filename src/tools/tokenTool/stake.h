@@ -17,6 +17,7 @@
  */
 #include "etherlib.h"
 
+#if 0
 namespace qblocks {
 
 // EXISTING_CODE
@@ -157,3 +158,4 @@ inline bool reverseSort(const CStake& v1, const CStake& v2) {
 }
 // EXISTING_CODE
 }  // namespace qblocks
+#endif

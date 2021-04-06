@@ -1,3 +1,4 @@
+#if 0
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
@@ -446,3 +447,4 @@ const char* STR_DISPLAY_TURBO =
     "[{r:15:STAT::ENTRIES}]\t"
     "[{r:15:STAT::TOTAL}]\t"
     "[{r:15:STAT::AVG}]";
+#endif
