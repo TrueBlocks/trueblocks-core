@@ -69,7 +69,7 @@ bool visitCopyRipeToStage(const string_q& path, void* data) {
                 return true;
 
             blknum_t nRecords = fileSize(con->newStage) / 59;
-            blknum_t chunkSize = nRecords;
+            blknum_t chunkSize = min(blknum_t(nRecords), blknum_t(MAX_ROWS));
 
             LOG_INDEX8(con->tmpFile, " staging completed");
             LOG_INDEX8(con->tmp_fn, " staging completed");
@@ -77,9 +77,15 @@ bool visitCopyRipeToStage(const string_q& path, void* data) {
             LOG_INDEX8(con->newStage, " staging completed not yet consolidated");
             LOG8("nRecords: ", nRecords);
             LOG8("chunkSize: ", chunkSize);
-            bool ret = con->write_chunks(chunkSize, true);
-            con->blazeStart = bn;
-            return ret;
+            con->write_chunks(chunkSize, true);
+
+            //            cerr << "WE WROTE THE FILE AND WILL NOW RETURN FALSE. HIT ENTER";
+            //            getchar();
+
+            // We act as if we didn't complete scanning, but we have in fact created and written a chunk.
+            // Returning false here will cause the caller to clean up the unripe and ripe folders and
+            // next time we will start at the next block after the snap
+            return false;
         }
     }
 

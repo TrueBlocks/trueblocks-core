@@ -117,6 +117,16 @@ bool COptions::scrape_blocks(void) {
     }
     cerr << endl;
 
+    //{
+    //    static bool been_here = false;
+    //    if (been_here) {
+    //        cerr << cons.Format() << endl;
+    //        cerr << "APRES BLAZE. HIT ENTER TO CONTINUE.";
+    //        getchar();
+    //    }
+    //    been_here = true;
+    //}
+
     // Blaze succeeded, but the user may have started `acctExport` during the time blaze was running.
     // We don't want acctExport to get incorrect results, so we bail out knowing that the ripe
     // folder is in a consistant state, and the next scrape will pick up where it left off.
@@ -170,6 +180,8 @@ bool COptions::scrape_blocks(void) {
         cleanFolder(indexFolder_ripe);
         cons.tmp_stream.close();
         ::remove(cons.tmp_fn.c_str());
+        //        cerr << "I JUST CLEANED UP. HIT ENTER";
+        //        getchar();
         EXIT_NOMSG(false);
     }
     cons.tmp_stream.close();
