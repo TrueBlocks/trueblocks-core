@@ -17,8 +17,9 @@ make -j 8
 
 test-api.sh --filter all --mode both --clean --report $@
 
-cp $NAMES_FOLDER/names.tab $HOME/.quickBlocks/names/
+cp -f $NAMES_FOLDER/names.tab $HOME/.quickBlocks/names/
 touch $HOME/.quickBlocks/names/names.tab
+rm -fR $HOME/.quickBlocks/cache/names
 
 cd $BUILD_FOLDER
 echo "Done..."
