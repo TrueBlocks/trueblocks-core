@@ -41,6 +41,7 @@ class COptions : public CAbiOptions {
 
     bool parseArguments(string_q& command) override;
     void Init(void) override;
+    bool Mocked(void);
 
     bool extractBlocksFromFilter(blknum_t& b1, const string_q& p1, blknum_t& b2, const string_q& p2);
 };

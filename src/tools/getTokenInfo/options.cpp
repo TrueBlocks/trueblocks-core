@@ -87,6 +87,9 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST_BOOL("no_zero", no_zero);
     // END_DEBUG_DISPLAY
 
+    if (Mocked())
+        return false;
+
     bool userBlocks = true;
     if (!blocks.hasBlocks()) {
         blocks.numList.push_back(newestBlock);  // use 'latest'
@@ -278,4 +281,9 @@ COptions::COptions(void) : CHistoryOptions() {
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
+}
+
+//--------------------------------------------------------------------------------
+bool COptions::Mocked(void) {
+    return false;
 }

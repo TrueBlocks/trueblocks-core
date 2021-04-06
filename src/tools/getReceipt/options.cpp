@@ -69,6 +69,9 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST_BOOL("logs", logs);
     // END_DEBUG_DISPLAY
 
+    if (Mocked())
+        return false;
+
     // Data wrangling
     if (!transList.hasTrans())
         return usage("Please specify at least one transaction identifier.");
@@ -130,4 +133,9 @@ COptions::COptions(void) {
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
+}
+
+//--------------------------------------------------------------------------------
+bool COptions::Mocked(void) {
+    return false;
 }

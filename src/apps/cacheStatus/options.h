@@ -45,6 +45,7 @@ class COptions : public CAbiOptions {
 
     bool parseArguments(string_q& command) override;
     void Init(void) override;
+    bool Mocked(void);
 
     bool handle_status(ostream& os);
     bool handle_config(ostream& os);

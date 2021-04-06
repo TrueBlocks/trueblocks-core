@@ -81,6 +81,9 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST_BOOL("appearances", appearances);
     // END_DEBUG_DISPLAY
 
+    if (Mocked())
+        return false;
+
     // This will fail if we don't have a key. Let's fail early.
     getApiKey("Etherscan", "http://api.etherscan.io/apis");
 
@@ -176,6 +179,11 @@ COptions::COptions(void) {
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
+}
+
+//--------------------------------------------------------------------------------
+bool COptions::Mocked(void) {
+    return false;
 }
 
 //---------------------------------------------------------------------------------------------------

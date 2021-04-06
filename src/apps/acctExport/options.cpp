@@ -206,6 +206,9 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST_BOOL("unripe", unripe);
     // END_DEBUG_DISPLAY
 
+    if (Mocked())
+        EXIT_NOMSG(false);
+
     if (!bloomsAreInitalized()) {
         EXIT_USAGE("You must run 'chifra init' before running this command.")
     }
@@ -431,6 +434,11 @@ COptions::COptions(void) {
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
+}
+
+//--------------------------------------------------------------------------------
+bool COptions::Mocked(void) {
+    return false;
 }
 
 //--------------------------------------------------------------------------------

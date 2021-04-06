@@ -34,6 +34,7 @@ class COptions : public CBlockOptions {
 
     bool parseArguments(string_q& command) override;
     void Init(void) override;
+    bool Mocked(void);
 
     void applyFilter(void);
 };

@@ -39,6 +39,7 @@ class COptions : public CBlockOptions {
 
     bool parseArguments(string_q& command) override;
     void Init(void) override;
+    bool Mocked(void);
 
     bool getFormatString(const string_q& name, bool ignoreBlank, string_q& fmtOut);
     bool buildDisplayStrings(void);

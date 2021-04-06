@@ -76,6 +76,9 @@ bool COptions::parseArguments(string_q& command) {
     // BEG_DEBUG_DISPLAY
     // END_DEBUG_DISPLAY
 
+    if (Mocked())
+        return false;
+
     if (token.empty())
         return usage("Please supply a single ERC20 token address.");
 
@@ -135,4 +138,9 @@ COptions::COptions(void) {
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
+}
+
+//--------------------------------------------------------------------------------
+bool COptions::Mocked(void) {
+    return false;
 }

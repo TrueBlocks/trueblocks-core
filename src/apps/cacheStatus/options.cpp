@@ -114,6 +114,9 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST("end", end, (end == NOPOS));
     // END_DEBUG_DISPLAY
 
+    if (Mocked())
+        EXIT_NOMSG(false);
+
     // removes warning on Ubuntu 20.04
     if (report)
         cerr << "";
@@ -292,6 +295,11 @@ COptions::COptions(void) {
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
+}
+
+//--------------------------------------------------------------------------------
+bool COptions::Mocked(void) {
+    return false;
 }
 
 //--------------------------------------------------------------------------------

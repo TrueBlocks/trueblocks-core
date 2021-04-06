@@ -81,6 +81,9 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST_BOOL("license", license);
     // END_DEBUG_DISPLAY
 
+    if (Mocked())
+        return false;
+
     if (!pinlib_getApiKeys(lic))
         return usage("You need a pinata license to proceed.");
 
@@ -120,6 +123,11 @@ COptions::COptions(void) {
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
+}
+
+//--------------------------------------------------------------------------------
+bool COptions::Mocked(void) {
+    return false;
 }
 
 //----------------------------------------------------------------

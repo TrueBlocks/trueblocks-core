@@ -53,6 +53,9 @@ bool COptions::call_command(int argc, const char* argv[]) {
     LOG_TEST("mode", mode, mode == "");
     // END_DEBUG_DISPLAY
 
+    if (Mocked())
+        EXIT_NOMSG(false);
+
     setProgName("chifra");
 
     // show chifra's help in limited cases, the tool's help otherwise
@@ -119,6 +122,11 @@ COptions::COptions(void) {
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
+}
+
+//--------------------------------------------------------------------------------
+bool COptions::Mocked(void) {
+    return false;
 }
 
 //------------------------------------------------------------------------------------------------

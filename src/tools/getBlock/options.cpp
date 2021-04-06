@@ -111,6 +111,9 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST_BOOL("trace", trace);
     // END_DEBUG_DISPLAY
 
+    if (Mocked())
+        return false;
+
     if (cache)
         etherlib_init(defaultQuitHandler);
 
@@ -236,6 +239,11 @@ COptions::COptions(void) {
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
+}
+
+//--------------------------------------------------------------------------------
+bool COptions::Mocked(void) {
+    return false;
 }
 
 //--------------------------------------------------------------------------------

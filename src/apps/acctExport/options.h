@@ -81,6 +81,7 @@ class COptions : public CAbiOptions {
 
     bool parseArguments(string_q& command);
     void Init(void);
+    bool Mocked(void);
 
     bool setDisplayFormatting(void);
     bool loadOneAddress(const CMonitor& monitor, CAppearanceArray_base& arrayOut);

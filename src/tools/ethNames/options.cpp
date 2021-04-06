@@ -143,6 +143,9 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST_BOOL("clean", clean);
     // END_DEBUG_DISPLAY
 
+    if (Mocked())
+        return false;
+
     // for (auto& term : terms)
     //     if (endsWith(term, ".eth"))
     //         term = addressFromENSName(term);
@@ -323,6 +326,11 @@ COptions::COptions(void) {
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
+}
+
+//--------------------------------------------------------------------------------
+bool COptions::Mocked(void) {
+    return false;
 }
 
 //-----------------------------------------------------------------------

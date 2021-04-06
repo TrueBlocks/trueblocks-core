@@ -85,6 +85,9 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST("find", find, (find == ""));
     // END_DEBUG_DISPLAY
 
+    if (Mocked())
+        return false;
+
     if (!find.empty()) {
         ostringstream os;
         os << "findSig " << find;
@@ -196,6 +199,11 @@ COptions::COptions(void) {
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
+}
+
+//--------------------------------------------------------------------------------
+bool COptions::Mocked(void) {
+    return false;
 }
 
 //-----------------------------------------------------------------------
