@@ -51,6 +51,9 @@ bool visitCopyRipeToStage(const string_q& path, void* data) {
         con->prevBlock = bn;
         unlockSection();
 
+//        LOG4("bn: ", bn, con->tmpFile, ": ", fileSize(con->tmpFile) / 59);
+//        LOG4("bn: ", bn, con->tmp_fn, ": ", fileSize(con->tmp_fn) / 59);
+//        LOG4("bn: ", bn, " fileSize: ", fileSize(con->newStage) / 59);
         if (bn > FIRST_SNAP_TO_GRID && !(bn % SNAP_TO_GRID_BLKS)) {
             LOG_INDEX3(path, " path");
             LOG3(bYellow, "We want to write the snap-to-grid file here", cOff);
@@ -69,7 +72,7 @@ bool visitCopyRipeToStage(const string_q& path, void* data) {
                 return true;
 
             blknum_t nRecords = fileSize(con->newStage) / 59;
-            blknum_t chunkSize = nRecords;
+            blknum_t chunkSize = min(size_t(nRecords), size_t(MAX_ROWS));
 
             LOG_INDEX8(con->tmpFile, " staging completed");
             LOG_INDEX8(con->tmp_fn, " staging completed");
@@ -77,6 +80,11 @@ bool visitCopyRipeToStage(const string_q& path, void* data) {
             LOG_INDEX8(con->newStage, " staging completed not yet consolidated");
             LOG8("nRecords: ", nRecords);
             LOG8("chunkSize: ", chunkSize);
+            if (nRecords > MAX_ROWS) {
+                cerr << "There is a problem here. Press enter";
+                char ch = getchar();
+                if (ch == 'q') quickQuitHandler(-1);
+            }
             bool ret = con->write_chunks(chunkSize, true);
             con->blazeStart = bn;
             return ret;
