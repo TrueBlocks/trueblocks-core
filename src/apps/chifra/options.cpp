@@ -14,6 +14,12 @@ static const size_t nParams = sizeof(params) / sizeof(COption);
 
 //------------------------------------------------------------------------------------------------
 bool COptions::call_command(int argc, const char* argv[]) {
+    string_q command;
+    for (int i = 0 ; i < argc ; i++)
+        command += (string_q(argv[i]) + " ");
+    if (!standardOptions(command))
+        return false;
+
     ENTER("call_command");
 
     CStringArray unused;
