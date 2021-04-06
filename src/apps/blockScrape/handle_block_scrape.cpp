@@ -66,7 +66,7 @@ bool COptions::scrape_blocks(void) {
     // How far are we from the head? This is useful for telling how long to sleep the next time.
     cons.distFromHead = (cons.client > cons.blazeStart ? cons.client - cons.blazeStart : 0);
     if (sleep < 13 && cons.distFromHead <= cons.blazeCnt)
-        sleep = 13; // we're basically caught up, so we can sleep until the next expected block
+        sleep = 13;  // we're basically caught up, so we can sleep until the next expected block
 
     // Let the user know what's going on
     cerr << cons;
@@ -83,10 +83,6 @@ bool COptions::scrape_blocks(void) {
         LOG_WARN("The user hit control+C...");
         EXIT_NOMSG(false);
     }
-
-    // Tell the user what's going on...
-//    LOG_INFO(cGreen, "blaze scrape ", cons.blazeStart, "+", cons.blazeCnt, "=", (cons.blazeStart + cons.blazeCnt), " (",
-//             cons.distFromHead, " blocks from head)", cOff);
 
     // We're ready to scrape, so build the blaze command line...
     ostringstream os;

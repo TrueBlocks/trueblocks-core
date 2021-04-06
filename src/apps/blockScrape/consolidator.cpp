@@ -53,17 +53,17 @@ bool appendFile(const string_q& toFile, const string_q& fromFile) {
     output.open(toFile, ios::out | ios::app);
     if (!output.is_open())
         return false;
-    
+
     ifstream input(fromFile, ios::in);
     if (!input.is_open()) {
         output.close();
         return false;
     }
-    
+
     output << input.rdbuf();
     output.flush();
     input.close();
-    
+
     return true;
 }
 
@@ -79,7 +79,7 @@ bool copyRipeToStage(const string_q& path, void* data) {
 
         // If we're not one behind, we have a problem
         CConsolidator* con = reinterpret_cast<CConsolidator*>(data);
-        if (!isLiveTest() && (con->prevBlock + 1) != bn) {
+        if ((con->prevBlock + 1) != bn) {
             // For some reason, we're missing a file. Quit and try again next time
             LOG_WARN("Current file (", path, ") does not sequentially follow previous file ", con->prevBlock, ".");
             return false;
@@ -108,7 +108,7 @@ bool copyRipeToStage(const string_q& path, void* data) {
             // We write a short chunk here. We do this in order to make correcting errors in the
             // index easier. As we do during normal processing, we clean up of the chunking does
             // not complete properly. 'stage_chunks' creates the newStage.
-            
+
             // First, we complete the staging at the current progress. Cleanup and quit if something
             // goes wrong. Quit the scan and start over later...
             if (!con->stage_chunks()) {
@@ -124,10 +124,10 @@ bool copyRipeToStage(const string_q& path, void* data) {
 
             // This may be less than a single chunk or larger. We want to do at most MAX_ROWS records
             // but we want to do a chunk no matter what (since we've snapped to grid).
-            
+
             // How many records are there?
             blknum_t nRecords = fileSize(con->newStage) / 59;
-            
+
             // How big are we going to make this chunk?
             blknum_t chunkSize = min(nRecords, MAX_ROWS);
 

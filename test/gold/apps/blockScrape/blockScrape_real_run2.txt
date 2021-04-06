@@ -1,65 +1,24 @@
 blockScrape argc: 5 [1:--tool] [2:index] [3:--sleep] [4:.5] 
 blockScrape --tool index --sleep .5 
-LIVE_TEST = [true]
-<INFO>  : sleep: 0.5
+TIME ~ CLOCK - <INFO>  : sleep: 0.5
+TIME ~ CLOCK - : 8------Current state stopped.
 { "status": "running" }
-<INFO>  : Index for block zero was not found. Building it from 8893 prefunds.
-<INFO>  :   Extracting addresses...extracting appearances...exporting...finalizing...binary file created ✓
-<INFO>  : Done...
-<INFO>  : Block scraper is running...
-<INFO>  : blaze scrape 1+16=17 (80 blocks from head)
-................
-<INFO>  : 
-<INFO>  : Consolidation pass 0
-<INFO>  :   Starting search at record 12 of 19
-<INFO>  :   Break line 12 of 19. [0 to 12 of 13]
-<INFO>  :   Extracting addresses...extracting appearances...exporting...finalizing...binary file created ✓
-<INFO>  : Found a chunk at [000000001-000000010] (inclusive)
-<INFO>  :   Wrote 13 records to $FINAL/000000001-000000010.bin
-<INFO>  :   Wrote 6 records to $STAGING/000000016.txt
-<INFO>  :   ...pass completed. Running again in 0.5 seconds... 
-<INFO>  : Block scraper is running...
-<INFO>  : blaze scrape 17+16=33 (65 blocks from head)
-................
-<INFO>  : 
-<INFO>  : Consolidation pass 0
-<INFO>  :   Starting search at record 12 of 23
-<INFO>  :   Break line 12 of 23. [0 to 12 of 13]
-<INFO>  :   Extracting addresses...extracting appearances...exporting...finalizing...binary file created ✓
-<INFO>  : Found a chunk at [000000011-000000022] (inclusive)
-<INFO>  :   Wrote 13 records to $FINAL/000000011-000000022.bin
-<INFO>  :   Wrote 10 records to $STAGING/000000032.txt
-<INFO>  :   ...pass completed. Running again in 0.5 seconds... 
-<INFO>  : Block scraper is running...
-<INFO>  : blaze scrape 33+16=49 (50 blocks from head)
-................
-<INFO>  : 
-<INFO>  : Consolidation pass 0
-<INFO>  :   Starting search at record 12 of 29
-<INFO>  :   Break line 12 of 29. [0 to 12 of 13]
-<INFO>  :   Extracting addresses...extracting appearances...exporting...finalizing...binary file created ✓
-<INFO>  : Found a chunk at [000000023-000000034] (inclusive)
-<INFO>  :   Wrote 13 records to $FINAL/000000023-000000034.bin
-<INFO>  :   Wrote 16 records to $STAGING/000000048.txt
-<INFO>  : 
-<INFO>  : Consolidation pass 1
-<INFO>  :   Starting search at record 12 of 16
-<INFO>  :   Break line 12 of 16. [0 to 12 of 13]
-<INFO>  :   Extracting addresses...extracting appearances...exporting...finalizing...binary file created ✓
-<INFO>  : Found a chunk at [000000035-000000045] (inclusive)
-<INFO>  :   Wrote 13 records to $FINAL/000000035-000000045.bin
-<INFO>  :   Wrote 3 records to $STAGING/000000048.txt
-<INFO>  :   ...pass completed. Running again in 0.5 seconds... 
-<INFO>  : Block scraper is running...
-<INFO>  : blaze scrape 49+16=65 (35 blocks from head)
-................
-<INFO>  : 
-<INFO>  : Consolidation not ready...
-<INFO>  :   Have 13 records of 13. Need 0 more.
-<INFO>  :   ...pass completed. Running again in 0.5 seconds... 
-<INFO>  : Block scraper is running...
-
-Finishing work...
-<WARNG> : The user hit control+C...
-<INFO>  :   ...pass did not complete. Running again in 0.5 seconds... 
+TIME ~ CLOCK - : 4-----changing state: stopped --> running
+TIME ~ CLOCK - : 8------Current state running.
+{
+  "message": "Testing only",
+  "mode": "run",
+  "tool": "index",
+  "tools": 2,
+  "n_blocks": 2000,
+  "n_block_procs": 10,
+  "n_addr_procs": 20,
+  "pin": 0,
+  "publish": 0,
+  "current": running,
+}
+TIME ~ CLOCK - : 8------Current state running.
+TIME ~ CLOCK - : 4-----changing state: running --> stopped
 { "status": "stopped" }
+TIME ~ CLOCK - : 8------Current state stopped.
+TIME ~ CLOCK - <INFO>  : file contents: 

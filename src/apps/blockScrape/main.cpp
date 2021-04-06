@@ -9,8 +9,6 @@
 int main(int argc, const char* argv[]) {
     pinlib_init(defaultQuitHandler);
 
-    ::remove("/Users/jrush/.quickBlocks/cache/tmp/scraper-state.txt");
-
     COptions options;
     if (!options.prepareArguments(argc, argv))
         return 0;

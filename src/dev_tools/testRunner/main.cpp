@@ -200,10 +200,15 @@ bool COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, cons
         } else {
             ostringstream cmd;
 
-            CStringArray envLines;
+            CStringArray fileLines;
             string_q envFile = substitute(test.goldPath, "/api_tests", "") + test.name + ".env";
             if (fileExists(envFile))
-                asciiFileToLines(envFile, envLines);
+                asciiFileToLines(envFile, fileLines);
+
+            CStringArray envLines;
+            for (auto f : fileLines)
+                if (!startsWith(f, "#"))
+                    envLines.push_back(f);
 
             if (cmdTests) {
                 string_q env = substitute(substitute(linesToString(envLines, '|'), " ", ""), "|", " ");

@@ -51,8 +51,7 @@ class CConsolidator : public CBlockProgress {
 #define TEST_RUNS blknum_t(isLiveTest() ? 8 : NOPOS)
 
 //--------------------------------------------------------------------------
-#define LOG_INDEX8(fn, extra)                                                                                          \
-    LOG_FN8(fn);
+#define LOG_INDEX8(fn, extra) LOG_FN8(fn);
 
 //\
 //    if (isLiveTest()) {                                                                                                \

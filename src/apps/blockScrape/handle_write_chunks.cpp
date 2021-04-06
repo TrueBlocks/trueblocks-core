@@ -94,9 +94,7 @@ bool CConsolidator::write_chunks(blknum_t chunkSize, bool once) {
                 writeIndexAsBinary(chunkPath, consolidatedLines, (pin ? visitToPin : nullptr), &pinList);
 
                 LOG_INFO("Found a chunk at [", chunkId, "] (inclusive)");
-                LOG_INFO(cWhite, "  Wrote ", consolidatedLines.size(), " records to ",
-                        chunkPath, cOff);
-                        //  substitute(chunkPath, indexFolder_finalized, "$FINAL/"), cOff);
+                LOG_INFO(cWhite, "  Wrote ", consolidatedLines.size(), " records to ", chunkPath, cOff);
 
                 loc++;
                 LOG4(cWhite, "  Rewriting records ", loc, " to ", lines.size(), " of ", lines.size(), " back to stage",
@@ -125,9 +123,7 @@ bool CConsolidator::write_chunks(blknum_t chunkSize, bool once) {
 
         if (remainingLines.size()) {
             linesToAsciiFile(newStage, remainingLines);
-            LOG_INFO(cWhite, "  Wrote ", remainingLines.size(), " records to ",
-                     newStage, cOff);
-                    //  substitute(newStage, indexFolder_staging, "$STAGING/"), cOff);
+            LOG_INFO(cWhite, "  Wrote ", remainingLines.size(), " records to ", newStage, cOff);
         } else {
             LOG_INFO(cWhite, "  No records remain. ", substitute(newStage, indexFolder_staging, "$STAGING/"),
                      " not written.", cOff);
