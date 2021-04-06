@@ -9,11 +9,7 @@
 int main(int argc, const char* argv[]) {
     pinlib_init(defaultQuitHandler);
 
-    if (isLiveTest()) {
-        // clean up if we're in live testing
-        cleanFolder(getCachePath("tmp/"));
-        cleanFolder(configPath("mocked/addr_index"));
-    }
+    ::remove("/Users/jrush/.quickBlocks/cache/tmp/scraper-state.txt");
 
     COptions options;
     if (!options.prepareArguments(argc, argv))

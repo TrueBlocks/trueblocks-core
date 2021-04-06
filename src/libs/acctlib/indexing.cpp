@@ -30,8 +30,7 @@ void writeIndexAsAscii(const string_q& outFn, const CStringArray& lines) {
     uint32_t offset = 0, nAddrs = 0, cnt = 0;
     CAppearanceArray_base blockTable;
 
-    if (!isLiveTest())
-        LOG_INFO(cYellow, STR_STEP1, cOff, "\r");
+    LOG_INFO(cYellow, STR_STEP1, cOff, "\r");
 
     // We want to notify 12 times
     uint64_t notifyCnt = lines.size() / 12;
@@ -40,7 +39,7 @@ void writeIndexAsAscii(const string_q& outFn, const CStringArray& lines) {
     string_q msg = "";
     ostringstream addrStream;
     for (const auto& line : lines) {
-        if (!isLiveTest() && !(++progress % notifyCnt)) {
+        if (!(++progress % notifyCnt)) {
             msg += ".";
             LOG_INFO(cYellow, STR_STEP1, msg, cOff, "\r");
         }
@@ -65,24 +64,21 @@ void writeIndexAsAscii(const string_q& outFn, const CStringArray& lines) {
     addrStream << padNum6(cnt) << endl;
     nAddrs++;
 
-    if (!isLiveTest())
-        LOG_INFO(cYellow, STR_STEP2, cOff, "\r");
+    LOG_INFO(cYellow, STR_STEP2, cOff, "\r");
     ostringstream blockStream;
     for (auto record : blockTable) {
         blockStream << padNum9(record.blk) << "\t";
         blockStream << padNum5(record.txid) << endl;
     }
 
-    if (!isLiveTest())
-        LOG_INFO(cYellow, STR_STEP3, cOff, "\r");
+    LOG_INFO(cYellow, STR_STEP3, cOff, "\r");
     ostringstream headerStream;
     headerStream << padNum7(MAGIC_NUMBER) << "\t";
     headerStream << versionHash << "\t";
     headerStream << padNum7(nAddrs) << "\t";
     headerStream << padNum7((uint32_t)blockTable.size()) << endl;
 
-    if (!isLiveTest())
-        LOG_INFO(cYellow, STR_STEP4, cOff, "\r");
+    LOG_INFO(cYellow, STR_STEP4, cOff, "\r");
     lockSection();
     stringToAsciiFile(outFn, headerStream.str() + addrStream.str() + blockStream.str());
     unlockSection();
@@ -110,8 +106,7 @@ bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines, FILEVI
     uint64_t notifyCnt = lines.size() / 12;
     uint64_t progress = 0;
 
-    if (!isLiveTest())
-        LOG_INFO(cYellow, STR_STEP1, cOff, "\r");
+    LOG_INFO(cYellow, STR_STEP1, cOff, "\r");
 
     CArchive archive(WRITING_ARCHIVE);
     archive.Lock(tmpFile, modeWriteCreate, LOCK_NOWAIT);
@@ -122,7 +117,7 @@ bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines, FILEVI
     archive.Write((uint32_t)blockTable.size());  // not accurate yet
     string_q msg = "";
     for (size_t l = 0; l < lines.size(); l++) {
-        if (!isLiveTest() && !(++progress % notifyCnt)) {
+        if (!(++progress % notifyCnt)) {
             msg += ".";
             LOG_INFO(cYellow, STR_STEP1, msg, cOff, "\r");
         }
@@ -154,15 +149,13 @@ bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines, FILEVI
     archive.Write(cnt);
     nAddrs++;
 
-    if (!isLiveTest())
-        LOG_INFO(cYellow, STR_STEP2, cOff, "\r");
+    LOG_INFO(cYellow, STR_STEP2, cOff, "\r");
     for (auto record : blockTable) {
         archive.Write(record.blk);
         archive.Write(record.txid);
     }
 
-    if (!isLiveTest())
-        LOG_INFO(cYellow, STR_STEP3, cOff, "\r");
+    LOG_INFO(cYellow, STR_STEP3, cOff, "\r");
     archive.Seek(0, SEEK_SET);  // re-write the header now that we have full data
     archive.Write(MAGIC_NUMBER);
     archive.Write(hash.data(), hash.size(), sizeof(uint8_t));
@@ -172,8 +165,7 @@ bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines, FILEVI
 
     // We've built the data in a temporary file. We do this in case we're interrupted during the building of the
     // data so it's not corrupted. In this way, we only move the data to its final resting place once. It's safer.
-    if (!isLiveTest())
-        LOG_INFO(cYellow, STR_STEP4, cOff, "\r");
+    LOG_INFO(cYellow, STR_STEP4, cOff, "\r");
     string_q bloomFile = substitute(substitute(outFn, "/finalized/", "/blooms/"), ".bin", ".bloom");
     lockSection();                          // disallow control+c
     writeBloomToBinary(bloomFile, blooms);  // write the bloom file

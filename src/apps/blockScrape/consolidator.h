@@ -27,34 +27,38 @@ class CConsolidator : public CBlockProgress {
     ofstream tmp_stream;
     CPinnedChunkArray pinList;
 
-    explicit CConsolidator(const CBlockProgress& prog);
+    explicit CConsolidator(void);
     bool stage_chunks(void);
     bool consolidate_chunks(void);
     bool write_chunks(blknum_t chunkSize, bool once);
-    string_q Format(void);
-
-  private:
-    CConsolidator(void) {
+    void Format(ostream& os) const;
+    string_q Format(void) const {
+        ostringstream os;
+        Format(os);
+        return os.str();
     }
+    friend ostream& operator<<(ostream& os, const CConsolidator& it);
 };
 
 //--------------------------------------------------------------------------
-// These defines give us control over the scrape when we're testing. A bit cludgy, but effective.
-#define CLIENT (isLiveTest() ? (80 + (runs)) : (cons.client))
-#define N_BLOCKS (isLiveTest() ? 16 : cons.blazeCnt)
-#define MAX_ROWS (isLiveTest() ? 13 : 2000000)
-#define SNAP_TO_GRID_BLKS (isLiveTest() ? 12 : 100000)
-// Dont' start snapping to grid until the 2016 DDos and then do so for the rest of the chain
-#define FIRST_SNAP_TO_GRID 2250000
-#define TEST_RUNS 3
+// These defines give us control over blockScrape while testing. This is  VERY
+// hacky. Snap-to-grid allows for corrections to the data without repbulishing
+// the entire index (we can the broken files between snaps). We don't start until
+// the Sept. 2016 dDos attacks and the continue to end of chain
+#define MAX_ROWS blknum_t(isLiveTest() ? 2000 : 2000000)
+#define SNAP_TO_GRID_BLKS blknum_t(isLiveTest() ? 30 : 100000)
+#define FIRST_SNAP_TO_GRID blknum_t(isLiveTest() ? 0 : 2250000)
+#define TEST_RUNS blknum_t(isLiveTest() ? 8 : NOPOS)
 
 //--------------------------------------------------------------------------
 #define LOG_INDEX8(fn, extra)                                                                                          \
-    LOG_FN8(fn);                                                                                                       \
-    if (isLiveTest()) {                                                                                                \
-        LOG8(string_q("Contents of ") + (#fn) + (extra) + ":");                                                        \
-        LOG8(substitute(asciiFileToString(fn), "\n", "\n: 8------"));                                                  \
-    }
+    LOG_FN8(fn);
+
+//\
+//    if (isLiveTest()) {                                                                                                \
+//        LOG8(string_q("Contents of ") + (#fn) + (extra) + ":");                                                        \
+//        LOG8(substitute(asciiFileToString(fn), "\n", "\n: 8------"));                                                  \
+//    }
 
 //--------------------------------------------------------------------------
 #define LOG_INDEX3(fn, extra)                                                                                          \
@@ -63,3 +67,10 @@ class CConsolidator : public CBlockProgress {
         LOG3(string_q("Contents of ") + (#fn) + (extra) + ":");                                                        \
         LOG3(substitute(asciiFileToString(fn), "\n", "\n: 3------"));                                                  \
     }
+
+//-------------------------------------------------------------------------
+inline ostream& operator<<(ostream& os, const CConsolidator& it) {
+    it.Format(os);
+    os << endl;
+    return os;
+}

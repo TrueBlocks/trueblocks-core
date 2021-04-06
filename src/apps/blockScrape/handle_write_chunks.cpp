@@ -95,7 +95,8 @@ bool CConsolidator::write_chunks(blknum_t chunkSize, bool once) {
 
                 LOG_INFO("Found a chunk at [", chunkId, "] (inclusive)");
                 LOG_INFO(cWhite, "  Wrote ", consolidatedLines.size(), " records to ",
-                         substitute(chunkPath, indexFolder_finalized, "$FINAL/"), cOff);
+                        chunkPath, cOff);
+                        //  substitute(chunkPath, indexFolder_finalized, "$FINAL/"), cOff);
 
                 loc++;
                 LOG4(cWhite, "  Rewriting records ", loc, " to ", lines.size(), " of ", lines.size(), " back to stage",
@@ -125,7 +126,8 @@ bool CConsolidator::write_chunks(blknum_t chunkSize, bool once) {
         if (remainingLines.size()) {
             linesToAsciiFile(newStage, remainingLines);
             LOG_INFO(cWhite, "  Wrote ", remainingLines.size(), " records to ",
-                     substitute(newStage, indexFolder_staging, "$STAGING/"), cOff);
+                     newStage, cOff);
+                    //  substitute(newStage, indexFolder_staging, "$STAGING/"), cOff);
         } else {
             LOG_INFO(cWhite, "  No records remain. ", substitute(newStage, indexFolder_staging, "$STAGING/"),
                      " not written.", cOff);
@@ -135,7 +137,7 @@ bool CConsolidator::write_chunks(blknum_t chunkSize, bool once) {
         unlockSection();
         if (once)
             once = nRecords > 0;
-        chunkSize = min(blknum_t(MAX_ROWS), blknum_t(nRecords));
+        chunkSize = min(MAX_ROWS, nRecords);
     }
 
     LOG_INDEX8(newStage, " after consolidation");

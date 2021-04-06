@@ -1041,16 +1041,35 @@ bool forEveryTransactionInList(TRANSVISITFUNC func, void* data, const string_q& 
 }
 
 //-------------------------------------------------------------------------
+void guardLiveTest(const string_q& path) {
+    static bool been_here = false;
+    if (!isLiveTest() || been_here)
+        return;
+    if (contains(path, "junk"))
+        return;
+    been_here = true;
+    cerr << "IF YOU CONTINUE, YOU WILL DAMAGE DATA HERE: " << path;
+    getchar();
+    if (shouldQuit())
+        quickQuitHandler(-1);
+    cerr << "CHANGE THE LOCATION OF INDEX_PATH IN THE CONFIG FILE. ARE YOU SURE?";
+    getchar();
+    if (shouldQuit())
+        quickQuitHandler(-1);
+}
+
+//-------------------------------------------------------------------------
 string_q getIndexPath(const string_q& _part) {
-    if (isLiveTest())
-        return configPath("mocked/addr_index/" + _part);
     string_q indexPath = getGlobalConfig()->getConfigStr("settings", "indexPath", "<not-set>");
-    if (indexPath == "<not-set>" || !folderExists(indexPath))
+    if (indexPath == "<not-set>" || !folderExists(indexPath)) {
+        guardLiveTest(indexPath + _part);
         return getCachePath("addr_index/" + _part);
+    }
     indexPath += (!endsWith(indexPath, '/') ? "/" : "");
     if (!folderExists(indexPath)) {
         LOG_WARN("Index path '" + indexPath + "' not found.");
     }
+    guardLiveTest(indexPath + _part);
     return indexPath + _part;
 }
 

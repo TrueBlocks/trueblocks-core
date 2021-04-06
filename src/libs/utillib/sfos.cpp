@@ -283,7 +283,7 @@ string_q listProcesses(const string_q& progName) {
             }
         }
     }
-    if (isTestMode() && !isLiveTest())
+    if (isTestMode())
         LOG4("\n", cmd, "\n", result, " ", !result.empty());
     return result;
 }
