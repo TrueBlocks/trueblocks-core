@@ -635,3 +635,40 @@ bool COptions::freshen_internal(void) {
 // TODO(tjayrush): (1) store the number of records in monitor file, (2) freshen monitor file, (3) only --freshen if the
 // TODO(tjayrush): We used to check to see if the monitor file was locked. That may have gotten lost. Don't spin. Just
 // die right away if it's locked.
+
+// TODO(tjayrush): Re-enable mocked data
+// if (mocked) {
+//     string_q which = origMode;
+//     } else if (origMode == "status") {
+//         if (contains(tool_flags, "monitors")) {
+//             origMode = "monitors";
+//         }
+//     }
+//     uint64_t nMocked = getGlobalConfig("")->getConfigInt("dev", "n_mocked", 100);
+//     string_q path = configPath("mocked/" + origMode + ".json");
+//     if (fileExists(path)) {
+//         if (origMode == "export") {
+//             for (size_t i = 0; i < nMocked; i++) {
+//                 LOG_PROGRESS("Extracting", i, nMocked, "\r");
+//                 usleep(30000);
+//             }
+//             CStringArray lines;
+//             asciiFileToLines(path, lines);
+//             size_t cnt = 0;
+//             size_t record = 0;
+//             size_t recordSize = lines.size() / nMocked;
+//             for (auto line : lines) {
+//                 cout << line << endl;
+//                 if (!(++cnt % recordSize)) {
+//                     LOG_PROGRESS("Displaying", record++, nMocked, "\r");
+//                     usleep(10000);
+//                 }
+//             }
+//             return false;
+//         } else {
+//             cout << asciiFileToString(path);
+//             return false;
+//         }
+//     }
+//     tool_flags += " --mocked ";
+// }
