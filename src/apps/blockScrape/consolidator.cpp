@@ -51,6 +51,9 @@ bool visitCopyRipeToStage(const string_q& path, void* data) {
         con->prevBlock = bn;
         unlockSection();
 
+//        LOG4("bn: ", bn, con->tmpFile, ": ", fileSize(con->tmpFile) / 59);
+//        LOG4("bn: ", bn, con->tmp_fn, ": ", fileSize(con->tmp_fn) / 59);
+//        LOG4("bn: ", bn, " fileSize: ", fileSize(con->newStage) / 59);
         if (bn > FIRST_SNAP_TO_GRID && !(bn % SNAP_TO_GRID_BLKS)) {
             LOG_INDEX3(path, " path");
             LOG3(bYellow, "We want to write the snap-to-grid file here", cOff);
