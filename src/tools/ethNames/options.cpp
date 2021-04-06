@@ -330,6 +330,18 @@ COptions::~COptions(void) {
 
 //--------------------------------------------------------------------------------
 bool COptions::Mocked(void) {
+    if (mocked) {
+        if (tags && fileExists(configPath("mocked/mocks/tags.json"))) {
+            cout << asciiFileToString(configPath("mocked/mocks/tags.json"));
+            return true;
+        } else if (entities && fileExists(configPath("mocked/mocks/entities.json"))) {
+            cout << asciiFileToString(configPath("mocked/mocks/entities.json"));
+            return true;
+        } else if (fileExists(configPath("mocked/mocks/names.json"))) {
+            cout << asciiFileToString(configPath("mocked/mocks/names.json"));
+            return true;
+        }
+    }
     return false;
 }
 

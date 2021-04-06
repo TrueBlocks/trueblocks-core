@@ -191,12 +191,6 @@ const char* STR_FULL_HELP =
 // TODO(tjayrush): Re-enable mocked data
 // if (mocked) {
 //     string_q which = origMode;
-//     if (origMode == "names") {
-//         if (contains(tool_flags, "tags")) {
-//             origMode = "tags";
-//         } else if (contains(tool_flags, "entities")) {
-//             origMode = "entities";
-//         }
 //     } else if (origMode == "status") {
 //         if (contains(tool_flags, "monitors")) {
 //             origMode = "monitors";
