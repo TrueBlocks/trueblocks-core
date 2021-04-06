@@ -33,7 +33,6 @@ class COptions : public CAbiOptions {
 
     bool parseArguments(string_q& command) override;
     void Init(void) override;
-    bool Mocked(void);
 
     hash_t getCurrentManifest(void);
     bool freshenBlooms(bool download, const string_q& currManifest);

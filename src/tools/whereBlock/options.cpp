@@ -65,7 +65,7 @@ bool COptions::parseArguments(string_q& command) {
     // LOG_TEST("blocks", blocks, (blocks == NOPOS));
     // END_DEBUG_DISPLAY
 
-    if (Mocked())
+    if (Mocked(""))
         return false;
 
     // Data verifiction
@@ -113,11 +113,6 @@ COptions::COptions(void) {
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
-}
-
-//--------------------------------------------------------------------------------
-bool COptions::Mocked(void) {
-    return false;
 }
 
 //--------------------------------------------------------------------------------

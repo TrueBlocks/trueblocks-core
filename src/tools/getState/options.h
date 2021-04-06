@@ -43,7 +43,6 @@ class COptions : public CHistoryOptions {
 
     bool parseArguments(string_q& command) override;
     void Init(void) override;
-    bool Mocked(void);
 
     bool handle_call(void);
 };

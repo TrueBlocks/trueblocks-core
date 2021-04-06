@@ -37,7 +37,6 @@ class COptions : public COptionsBase {
 
     bool parseArguments(string_q& command) override;
     void Init(void) override;
-    bool Mocked(void);
 };
 
 //-----------------------------------------------------------------------------

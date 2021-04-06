@@ -92,7 +92,7 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST("call", call, (call == ""));
     // END_DEBUG_DISPLAY
 
-    if (Mocked())
+    if (Mocked(""))
         return false;
 
     // Data wrangling
@@ -228,9 +228,4 @@ COptions::COptions(void) : CHistoryOptions() {
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
-}
-
-//--------------------------------------------------------------------------------
-bool COptions::Mocked(void) {
-    return false;
 }

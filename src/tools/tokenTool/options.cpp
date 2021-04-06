@@ -76,7 +76,7 @@ bool COptions::parseArguments(string_q& command) {
     // BEG_DEBUG_DISPLAY
     // END_DEBUG_DISPLAY
 
-    if (Mocked())
+    if (Mocked(""))
         return false;
 
     if (token.empty())
@@ -138,9 +138,4 @@ COptions::COptions(void) {
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
-}
-
-//--------------------------------------------------------------------------------
-bool COptions::Mocked(void) {
-    return false;
 }

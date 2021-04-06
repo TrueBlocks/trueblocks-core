@@ -89,7 +89,7 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST("skip", skip, (skip == NOPOS));
     // END_DEBUG_DISPLAY
 
-    if (Mocked())
+    if (Mocked("when"))
         return false;
 
     if (skip != NOPOS && !skip)
@@ -199,11 +199,6 @@ COptions::COptions(void) {
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
-}
-
-//--------------------------------------------------------------------------------
-bool COptions::Mocked(void) {
-    return false;
 }
 
 //--------------------------------------------------------------------------------

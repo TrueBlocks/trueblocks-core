@@ -90,7 +90,7 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST("filter", filter, (filter == ""));
     // END_DEBUG_DISPLAY
 
-    if (Mocked())
+    if (Mocked("traces"))
         return false;
 
     if (!isTracingNode())
@@ -220,11 +220,6 @@ COptions::COptions(void) {
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
-}
-
-//--------------------------------------------------------------------------------
-bool COptions::Mocked(void) {
-    return false;
 }
 
 //--------------------------------------------------------------------------------

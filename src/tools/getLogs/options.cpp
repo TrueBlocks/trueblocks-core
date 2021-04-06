@@ -64,7 +64,7 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST_BOOL("articulate", articulate);
     // END_DEBUG_DISPLAY
 
-    if (Mocked())
+    if (Mocked("logs"))
         return false;
 
     // Data wrangling
@@ -135,9 +135,4 @@ COptions::COptions(void) {
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
-}
-
-//--------------------------------------------------------------------------------
-bool COptions::Mocked(void) {
-    return false;
 }

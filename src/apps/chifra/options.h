@@ -19,7 +19,6 @@ class COptions : public COptionsBase {
         return true;
     }
     void Init(void);
-    bool Mocked(void);
 
     bool call_command(int argc, const char* argv[]);
 };

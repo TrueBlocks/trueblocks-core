@@ -43,7 +43,6 @@ class COptions : public CBlockOptions {
 
     bool parseArguments(string_q& command) override;
     void Init(void) override;
-    bool Mocked(void);
 
     bool isMulti(void) const;
     void handle_appearances(blknum_t num, void* data);

@@ -114,7 +114,10 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST("end", end, (end == NOPOS));
     // END_DEBUG_DISPLAY
 
-    if (Mocked())
+    bool cs = false;
+    for (auto mode : modes)
+        cs |= (mode == "caches");
+    if (Mocked(cs ? "caches" : "status"))
         EXIT_NOMSG(false);
 
     // removes warning on Ubuntu 20.04
@@ -295,11 +298,6 @@ COptions::COptions(void) {
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
-}
-
-//--------------------------------------------------------------------------------
-bool COptions::Mocked(void) {
-    return false;
 }
 
 //--------------------------------------------------------------------------------

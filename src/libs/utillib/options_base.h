@@ -152,6 +152,7 @@ class COptionsBase {
     string_q hiDown;
 
     virtual void Init(void) = 0;
+    virtual bool Mocked(const string_q& which);
     void configureDisplay(const string_q& tool, const string_q& dataType, const string_q& defFormat,
                           const string_q& meta = "");
     void registerOptions(size_t nP, COption const* pP);

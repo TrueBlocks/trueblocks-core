@@ -81,7 +81,7 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST("feed", feed, (feed == ""));
     // END_DEBUG_DISPLAY
 
-    if (Mocked())
+    if (Mocked(""))
         return false;
 
     // Data wrangling
@@ -138,9 +138,4 @@ COptions::COptions(void) : source(STR_PRICE_URL, "USDT_ETH", parsePoloniex) {
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
-}
-
-//--------------------------------------------------------------------------------
-bool COptions::Mocked(void) {
-    return false;
 }

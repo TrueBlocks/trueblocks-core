@@ -69,7 +69,7 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST_BOOL("logs", logs);
     // END_DEBUG_DISPLAY
 
-    if (Mocked())
+    if (Mocked("receipts"))
         return false;
 
     // Data wrangling
@@ -133,9 +133,4 @@ COptions::COptions(void) {
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
-}
-
-//--------------------------------------------------------------------------------
-bool COptions::Mocked(void) {
-    return false;
 }

@@ -81,7 +81,7 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST_BOOL("license", license);
     // END_DEBUG_DISPLAY
 
-    if (Mocked())
+    if (Mocked(""))
         return false;
 
     if (!pinlib_getApiKeys(lic))
@@ -123,11 +123,6 @@ COptions::COptions(void) {
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
-}
-
-//--------------------------------------------------------------------------------
-bool COptions::Mocked(void) {
-    return false;
 }
 
 //----------------------------------------------------------------

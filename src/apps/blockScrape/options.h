@@ -48,7 +48,6 @@ class COptions : public COptionsBase {
 
     bool parseArguments(string_q& command);
     void Init(void);
-    bool Mocked(void);
 
     bool start_scraper(void);
     bool scrape_blocks(void);

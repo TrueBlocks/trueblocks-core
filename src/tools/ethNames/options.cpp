@@ -143,7 +143,7 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST_BOOL("clean", clean);
     // END_DEBUG_DISPLAY
 
-    if (Mocked())
+    if (Mocked((tags ? "tags" : entities ? "entities" : "names")))
         return false;
 
     // for (auto& term : terms)
@@ -326,23 +326,6 @@ COptions::COptions(void) {
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
-}
-
-//--------------------------------------------------------------------------------
-bool COptions::Mocked(void) {
-    if (mocked) {
-        if (tags && fileExists(configPath("mocked/mocks/tags.json"))) {
-            cout << asciiFileToString(configPath("mocked/mocks/tags.json"));
-            return true;
-        } else if (entities && fileExists(configPath("mocked/mocks/entities.json"))) {
-            cout << asciiFileToString(configPath("mocked/mocks/entities.json"));
-            return true;
-        } else if (fileExists(configPath("mocked/mocks/names.json"))) {
-            cout << asciiFileToString(configPath("mocked/mocks/names.json"));
-            return true;
-        }
-    }
-    return false;
 }
 
 //-----------------------------------------------------------------------

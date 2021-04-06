@@ -206,7 +206,7 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST_BOOL("unripe", unripe);
     // END_DEBUG_DISPLAY
 
-    if (Mocked())
+    if (Mocked(""))
         EXIT_NOMSG(false);
 
     if (!bloomsAreInitalized()) {
@@ -434,11 +434,6 @@ COptions::COptions(void) {
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
-}
-
-//--------------------------------------------------------------------------------
-bool COptions::Mocked(void) {
-    return false;
 }
 
 //--------------------------------------------------------------------------------
