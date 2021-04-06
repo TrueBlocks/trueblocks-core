@@ -1,4 +1,4 @@
-= TrueBlocks CLI
+= TrueBlocks Core
 :reproducible:
 :toc:
 

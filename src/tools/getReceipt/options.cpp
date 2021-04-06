@@ -69,6 +69,9 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST_BOOL("logs", logs);
     // END_DEBUG_DISPLAY
 
+    if (Mocked("receipts"))
+        return false;
+
     // Data wrangling
     if (!transList.hasTrans())
         return usage("Please specify at least one transaction identifier.");

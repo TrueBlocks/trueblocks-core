@@ -1585,7 +1585,7 @@
       "description": ""
     },
     {
-      "tags": "30-Contracts",
+      "tags": "50-Tokens:ERC20",
       "address": "0x1820a4b7618bde71dce8cdc73aab6c95905fad24",
       "name": "1820 Registry",
       "symbol": "REG",

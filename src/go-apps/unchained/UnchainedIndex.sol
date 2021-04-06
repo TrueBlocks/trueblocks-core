@@ -1,3 +1,8 @@
+/*
+NOTE -- ADD THE ABILITY TO TELL WHERE THE NEW CONTACT IS AFTER AN UPGRADE
+*/
+
+
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.6.0 <0.7.0;
 

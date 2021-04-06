@@ -79,6 +79,9 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST_BOOL("uniq", uniq);
     // END_DEBUG_DISPLAY
 
+    if (Mocked("transactions"))
+        return false;
+
     // Data wrangling
     if (!transList.hasTrans())
         return usage("Please specify at least one transaction identifier.");

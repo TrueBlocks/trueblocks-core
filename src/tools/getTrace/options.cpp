@@ -90,6 +90,9 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST("filter", filter, (filter == ""));
     // END_DEBUG_DISPLAY
 
+    if (Mocked("traces"))
+        return false;
+
     if (!isTracingNode())
         return usage("Tracing is required for this program to work properly.");
 

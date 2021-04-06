@@ -10,12 +10,12 @@
       "description": ""
     },
     {
-      "tags": "30-Contracts",
+      "tags": "50-Tokens:ERC20",
       "address": "0x0000000000001b84b1cb32787b0d64758d019317",
       "name": "HomeWork 🏠🛠️",
       "symbol": "HWK",
       "source": "On chain",
-      "decimals": 0,
+      "decimals": 18,
       "description": ""
     },
     {
@@ -24,7 +24,7 @@
       "name": "1inch.exchange v2",
       "symbol": "CHI",
       "source": "On chain",
-      "decimals": 0,
+      "decimals": 18,
       "description": ""
     },
     {
@@ -231,7 +231,7 @@
       "name": "GenericLevCompFarm",
       "symbol": "",
       "source": "On chain",
-      "decimals": 0,
+      "decimals": 18,
       "description": ""
     },
     {
@@ -262,7 +262,7 @@
       "description": ""
     },
     {
-      "tags": "30-Contracts",
+      "tags": "50-Tokens:ERC20",
       "address": "0x00319f722bd546182cb2c701ca254146d3f084fc",
       "name": "Democracy Earth",
       "symbol": "HOUR",
@@ -699,7 +699,7 @@
       "name": "Cream yETH",
       "symbol": "crYETH",
       "source": "On chain",
-      "decimals": 8,
+      "decimals": 18,
       "description": ""
     },
     {
@@ -1198,7 +1198,7 @@
       "description": ""
     },
     {
-      "tags": "30-Contracts",
+      "tags": "50-Tokens:ERC20",
       "address": "0x04d702ebd0a77503b154865fe3e8da97255b931b",
       "name": "Commons Stack Org Membership",
       "symbol": "CSOM",
@@ -1459,7 +1459,7 @@
       "description": ""
     },
     {
-      "tags": "30-Contracts",
+      "tags": "50-Tokens:ERC20",
       "address": "0x06012c8cf97bead5deae237070f9587f8e7a266d",
       "name": "CryptoKitties",
       "symbol": "CK",

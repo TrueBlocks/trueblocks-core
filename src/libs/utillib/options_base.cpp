@@ -1133,6 +1133,17 @@ const CToml* getGlobalConfig(const string_q& name) {
     return toml;
 }
 
+//--------------------------------------------------------------------------------
+bool COptionsBase::Mocked(const string_q& which) {
+    if (!mocked)
+        return false;
+    string_q path = configPath("mocked/mocks/" + which + ".json");
+    if (!fileExists(path))
+        return false;
+    cout << asciiFileToString(path);
+    return true;
+}
+
 //-----------------------------------------------------------------------
 static bool sortByValue(const CNameValue& p1, const CNameValue& p2) {
     blknum_t b1 = str_2_Uint(p1.second);

@@ -65,6 +65,9 @@ bool COptions::parseArguments(string_q& command) {
     // LOG_TEST("blocks", blocks, (blocks == NOPOS));
     // END_DEBUG_DISPLAY
 
+    if (Mocked(""))
+        return false;
+
     // Data verifiction
     if (!blocks.hasBlocks())
         return usage("You must enter a valid block number.");

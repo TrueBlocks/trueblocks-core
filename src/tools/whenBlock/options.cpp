@@ -89,6 +89,9 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST("skip", skip, (skip == NOPOS));
     // END_DEBUG_DISPLAY
 
+    if (Mocked("when"))
+        return false;
+
     if (skip != NOPOS && !skip)
         return usage("--skip value must be larger than zero.");
 

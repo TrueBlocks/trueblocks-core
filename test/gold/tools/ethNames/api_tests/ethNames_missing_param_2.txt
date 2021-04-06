@@ -6,11 +6,11 @@
     },
     {
       "address": "0x0000000000001b84b1cb32787b0d64758d019317",
-      "decimals": 0
+      "decimals": 18
     },
     {
       "address": "0x0000000000004946c0e9f43f4dee607b0ef1fa1c",
-      "decimals": 0
+      "decimals": 18
     },
     {
       "address": "0x0000000000085d4780b73119b644ae5ecd22b376",
@@ -102,7 +102,7 @@
     },
     {
       "address": "0x001f751cdfee02e2f0714831be2f8384db0f71a2",
-      "decimals": 0
+      "decimals": 18
     },
     {
       "address": "0x00216505799d9e3117b40b94a24dc0fa286a57a4",
@@ -310,7 +310,7 @@
     },
     {
       "address": "0x01da76dea59703578040012357b81ffe62015c2d",
-      "decimals": 8
+      "decimals": 18
     },
     {
       "address": "0x01e6fd0ae73d9194b19f9b376065577927a0d5f5",

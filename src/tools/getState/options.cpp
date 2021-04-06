@@ -92,6 +92,9 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST("call", call, (call == ""));
     // END_DEBUG_DISPLAY
 
+    if (Mocked(""))
+        return false;
+
     // Data wrangling
     if (!blocks.hasBlocks())
         blocks.numList.push_back(newestBlock);  // use 'latest'

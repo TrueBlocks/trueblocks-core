@@ -48,6 +48,7 @@ class COptions : public CAbiOptions {
 
     bool parseArguments(string_q& command) override;
     void Init(void) override;
+
     void updateHolder(const CTransaction& trans, const address_t& addr, const wei_t& stake);
     wei_t getTokenBalance(const address_t& holder, blknum_t blockNum);
     string_q getTotalSupply(blknum_t blockNum);

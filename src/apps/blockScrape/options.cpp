@@ -113,6 +113,9 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST_BOOL("cache_traces", cache_traces);
     // END_DEBUG_DISPLAY
 
+    if (Mocked(""))
+        return false;
+
     if (mode.empty())
         mode = "run";
 

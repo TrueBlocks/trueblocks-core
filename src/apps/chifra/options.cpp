@@ -14,6 +14,12 @@ static const size_t nParams = sizeof(params) / sizeof(COption);
 
 //------------------------------------------------------------------------------------------------
 bool COptions::call_command(int argc, const char* argv[]) {
+    string_q command;
+    for (int i = 0 ; i < argc ; i++)
+        command += (string_q(argv[i]) + " ");
+    if (!standardOptions(command))
+        return false;
+
     ENTER("call_command");
 
     CStringArray unused;
@@ -52,6 +58,9 @@ bool COptions::call_command(int argc, const char* argv[]) {
     // BEG_DEBUG_DISPLAY
     LOG_TEST("mode", mode, mode == "");
     // END_DEBUG_DISPLAY
+
+    if (Mocked(""))
+        EXIT_NOMSG(false);
 
     setProgName("chifra");
 
@@ -179,46 +188,3 @@ const char* STR_FULL_HELP =
     "  slurp         export details by querying EtherScan (note: will not return as many appearances as --list)|"
     "  quotes        return prices collected from configured remote API|"
     "  where         determine the location of block(s), either local or remote cache, or on-chain";
-
-// TODO(tjayrush): Re-enable mocked data
-// if (mocked) {
-//     string_q which = origMode;
-//     if (origMode == "names") {
-//         if (contains(tool_flags, "tags")) {
-//             origMode = "tags";
-//         } else if (contains(tool_flags, "entities")) {
-//             origMode = "entities";
-//         }
-//     } else if (origMode == "status") {
-//         if (contains(tool_flags, "monitors")) {
-//             origMode = "monitors";
-//         }
-//     }
-//     uint64_t nMocked = getGlobalConfig("")->getConfigInt("dev", "n_mocked", 100);
-//     string_q path = configPath("mocked/" + origMode + ".json");
-//     if (fileExists(path)) {
-//         if (origMode == "export") {
-//             for (size_t i = 0; i < nMocked; i++) {
-//                 LOG_PROGRESS("Extracting", i, nMocked, "\r");
-//                 usleep(30000);
-//             }
-//             CStringArray lines;
-//             asciiFileToLines(path, lines);
-//             size_t cnt = 0;
-//             size_t record = 0;
-//             size_t recordSize = lines.size() / nMocked;
-//             for (auto line : lines) {
-//                 cout << line << endl;
-//                 if (!(++cnt % recordSize)) {
-//                     LOG_PROGRESS("Displaying", record++, nMocked, "\r");
-//                     usleep(10000);
-//                 }
-//             }
-//             return false;
-//         } else {
-//             cout << asciiFileToString(path);
-//             return false;
-//         }
-//     }
-//     tool_flags += " --mocked ";
-// }
