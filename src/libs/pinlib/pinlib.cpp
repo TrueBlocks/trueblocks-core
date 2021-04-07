@@ -63,7 +63,10 @@ bool pinlib_pinChunk(CPinnedChunkArray& pList, const string_q& fileName, CPinned
     CPinataPin index;
     index.parseJson3(indexStr);
     item.indexHash = index.ipfs_pin_hash;
-    LOG_INFO(bRed, "  Pinned index to blocks ", substitute(fileName, "-", " "), " to: ", item.indexHash, cOff);
+    blknum_t end;
+    timestamp_t ts;
+    blknum_t start = bnFromPath(fileName, end, ts);
+    LOG_INFO(bBlue, "  Pinned index for blocks ", start, " to ", end, " at ", item.indexHash, cOff);
 
     string_q bloomStr = pinlib_pinOneFile(fileName, "blooms");
     if (!contains(bloomStr, "IpfsHash")) {
@@ -77,8 +80,7 @@ bool pinlib_pinChunk(CPinnedChunkArray& pList, const string_q& fileName, CPinned
     CPinataPin bloom;
     bloom.parseJson3(bloomStr);
     item.bloomHash = bloom.ipfs_pin_hash;
-    LOG_INFO(bRed, "  Pinned bloom for index to blocks ", substitute(fileName, "-", " "), " to: ", item.bloomHash,
-             cOff);
+    LOG_INFO(bBlue, "  Pinned bloom for blocks ", start, " to ", end, " at ", item.bloomHash, cOff);
 
     // add it to the array
     pList.push_back(item);

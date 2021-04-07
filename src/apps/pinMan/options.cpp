@@ -16,7 +16,7 @@ static const COption params[] = {
     COption("mode", "", "enum[local*|remote|onchain]", OPT_REQUIRED | OPT_POSITIONAL, "the source from which to pin, unpin, or display the index hashes"),  // NOLINT
     COption("hash", "a", "", OPT_SWITCH, "display the hash instead of contents of manifest"),
     COption("pin", "p", "<string>", OPT_FLAG, "pin items either locally or remotely ('all' to all items in a folder)"),
-    COption("unpin", "u", "<string>", OPT_FLAG, "unpin previously pinned items give a hash, a filename, or 'all'"),
+    COption("unpin", "u", "<string>", OPT_FLAG, "unpin previously pinned items given a hash, a filename, or 'all'"),
     COption("init", "i", "", OPT_SWITCH, "initialize the TrueBlocks appearance index by downloading the bloom filters"),
     COption("license", "l", "", OPT_HIDDEN | OPT_SWITCH, "show the current pinata license information"),
     COption("", "", "", OPT_DESCRIPTION, "Report on and manage the pinned appearance index chunks and associated bloom filters."),  // NOLINT
@@ -83,6 +83,9 @@ bool COptions::parseArguments(string_q& command) {
 
     if (Mocked(""))
         return false;
+
+    if (!pin.empty() && !unpin.empty())
+        return usage("Please specify only one of --pin or --unpin.");
 
     if (!pinlib_getApiKeys(lic))
         return usage("You need a pinata license to proceed.");

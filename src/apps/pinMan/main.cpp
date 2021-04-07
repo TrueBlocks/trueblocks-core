@@ -32,7 +32,24 @@ int main(int argc, const char* argv[]) {
             LOG_INFO("latestBlock:\t", cGreen,
                      (isTestMode() ? "--latest--" : uint_2_Str(getBlockProgress(BP_CLIENT).client)), cOff);
             LOG_INFO("unchainedIndexAddr:\t", cGreen, unchainedIndexAddr, cOff);
-            options.handle_pin();
+            if (!options.unpin.empty()) {
+                options.handle_unpin();
+
+            } else if (!options.pin.empty()) {
+                options.handle_pin();
+
+            } else {
+                if (options.mode == "onchain") {
+                    cout << doCommand("env DICT_MODE=true chifra state --call " + unchainedIndexAddr + "!" +
+                                      manifestHashEncoding);
+
+                } else if (options.mode == "local") {
+                    cout << asciiFileToString(configPath("manifest/initial-manifest.json"));
+
+                } else {
+                    options.handle_pin();
+                }
+            }
         }
 
         once = false;

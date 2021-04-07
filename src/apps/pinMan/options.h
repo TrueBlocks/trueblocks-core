@@ -41,5 +41,5 @@ class COptions : public CAbiOptions {
 };
 
 //-------------------------------------------------------------------------
-#define unchainedIndexAddr "0xcfd7f3b24f3551741f922fd8c4381aa4e00fc8fd"
-#define manifestHashEncoding "0x337f3f32"
+#define unchainedIndexAddr string_q("0xcfd7f3b24f3551741f922fd8c4381aa4e00fc8fd")
+#define manifestHashEncoding string_q("0x337f3f32")
