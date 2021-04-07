@@ -1,10 +1,23 @@
 {
   "data": [
     {
-      "error": {
-        "reason": "INVALID_API_KEYS",
-        "details": "Invalid API key provided"
-      }
+      "data": [
+        {
+          "blockNumber": 10092000,
+          "encoding": "0x337f3f32",
+          "bytes": "",
+          "result": {
+            "name": "manifestHash",
+            "signature": "manifestHash()",
+            "encoding": "0x337f3f32",
+            "outputs": {
+              "manifestHash": ""
+            }
+          },
+          "balance": 0,
+          "address": "0xcfd7f3b24f3551741f922fd8c4381aa4e00fc8fd"
+        }
+      ]
     }
   ],
   "types": [

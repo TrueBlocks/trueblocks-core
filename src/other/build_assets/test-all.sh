@@ -9,6 +9,7 @@ export NAMES_FOLDER=$QUICKBLOCKS/src/other/install/names/
 #echo "Making..."
 cd $BUILD_FOLDER/
 cmake ../src
+make finish
 cd dev_tools
 make -j 8
 cd ..

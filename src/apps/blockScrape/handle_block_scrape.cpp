@@ -11,7 +11,7 @@
 bool COptions::scrape_blocks(void) {
     ENTER("scrape_blocks");
 
-    LOG_INFO(string_q(40, '-'), " Starting Scrape ", string_q(40, '-'));
+    LOG_INFO(string_q(30, '-'), " Starting Scrape ", string_q(30, '-'));
 
     static blknum_t runs = 0;  // this counter is used for texting purposes only
     if (isLiveTest() && runs++ > TEST_RUNS)
@@ -69,7 +69,8 @@ bool COptions::scrape_blocks(void) {
         sleep = 13;  // we're basically caught up, so we can sleep until the next expected block
 
     // Let the user know what's going on
-    cerr << cons;
+    if (verbose >= 8)
+        cerr << cons;
 
     // If the index is ahead of the tip of the chain (for example, the node is re-syncing)...do nothing...
     // Returning false only means this round didn't complete, the loop will continue.

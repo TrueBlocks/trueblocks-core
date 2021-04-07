@@ -45,10 +45,10 @@ class CConsolidator : public CBlockProgress {
 // hacky. Snap-to-grid allows for corrections to the data without repbulishing
 // the entire index (we can the broken files between snaps). We don't start until
 // the Sept. 2016 dDos attacks and the continue to end of chain
-#define MAX_ROWS blknum_t(isLiveTest() ? 2000 : 2000000)
+#define MAX_ROWS blknum_t(isLiveTest() ? 6000 : 2000000)
 #define SNAP_TO_GRID_BLKS blknum_t(isLiveTest() ? 30 : 100000)
 #define FIRST_SNAP_TO_GRID blknum_t(isLiveTest() ? 0 : 2250000)
-#define TEST_RUNS blknum_t(isLiveTest() ? 8 : NOPOS)
+#define TEST_RUNS blknum_t(isLiveTest() ? 10 : NOPOS)
 
 //--------------------------------------------------------------------------
 #define LOG_INDEX8(fn, extra) LOG_FN8(fn);

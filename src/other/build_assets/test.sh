@@ -8,6 +8,7 @@ export TEST_FOLDER=$QUICKBLOCKS/test/
 #echo "Making..."
 cd $BUILD_FOLDER/
 cmake ../src
+make finish
 cd dev_tools
 make -j 8
 cd ..

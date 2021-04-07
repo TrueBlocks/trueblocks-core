@@ -55,7 +55,7 @@ bool CConsolidator::write_chunks(blknum_t chunkSize, bool once) {
         // The weird edge case is fixed -- close the issue
         if (loc == NOPOS) {
             loc = lines.size() ? lines.size() - 1 : 0;
-            LOG_INFO("Last full block is last line in file: ", nRecords, " loc: ", loc);
+            LOG8("  Last full block is last line in file: ", nRecords, " loc: ", loc);
         }
 
         LOG_INFO(cWhite, "  Break line ", loc, " of ", lines.size(), ". [0 to ", loc, " of ", (loc - 0 + 1), "]", cOff);
@@ -93,7 +93,7 @@ bool CConsolidator::write_chunks(blknum_t chunkSize, bool once) {
 
                 writeIndexAsBinary(chunkPath, consolidatedLines, (pin ? visitToPin : nullptr), &pinList);
 
-                LOG_INFO("Found a chunk at [", chunkId, "] (inclusive)");
+                LOG8("  Found a chunk at [", chunkId, "] (inclusive)");
                 LOG_INFO(cWhite, "  Wrote ", consolidatedLines.size(), " records to ", chunkPath, cOff);
 
                 loc++;

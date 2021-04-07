@@ -6,7 +6,7 @@
 #include "options.h"
 //#include "stake.h"
 
-//extern bool build_cap_table(COptions& options, int argc, const char* argv[]);
+// extern bool build_cap_table(COptions& options, int argc, const char* argv[]);
 //--------------------------------------------------------------
 int main(int argc, const char* argv[]) {
 #if 0
