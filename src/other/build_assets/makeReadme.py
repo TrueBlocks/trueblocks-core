@@ -95,7 +95,7 @@ with open(usageFile, 'r') as file:
 
 # Do the replacements
 outputData = templateData.replace("[{USAGE_TABLE}]", usageData).replace(
-    "[{FOOTER}]", footerData).replace("[{NAME}]", routeStr)
+    "[{FOOTER}]", footerData).replace("[{NAME}]", routeStr).replace("chifra chifra", "chifra")
 
 #printe('outputData: ', outputData)
 

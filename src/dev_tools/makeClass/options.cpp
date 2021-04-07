@@ -120,6 +120,24 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
+    // BEG_DEBUG_DISPLAY
+    // LOG_TEST("files", files, (files == NOPOS));
+    LOG_TEST_BOOL("run", run);
+    LOG_TEST_BOOL("edit", edit);
+    LOG_TEST_BOOL("all", all);
+    LOG_TEST_BOOL("js", js);
+    LOG_TEST_BOOL("options", options);
+    LOG_TEST_BOOL("format", format);
+    LOG_TEST_BOOL("lint", lint);
+    LOG_TEST_BOOL("dump", dump);
+    LOG_TEST("nspace", nspace, (nspace == "qblocks"));
+    LOG_TEST("filter", filter, (filter == ""));
+    LOG_TEST_BOOL("test", test);
+    LOG_TEST_BOOL("force", force);
+    LOG_TEST_BOOL("api", api);
+    LOG_TEST_BOOL("openapi", openapi);
+    // END_DEBUG_DISPLAY
+
     // If the user has explicitly specified a classDef, use that
     LOG8("pwd: ", getCWD());
     for (auto file : files) {

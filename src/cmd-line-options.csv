@@ -189,6 +189,14 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,customizeable,c
 13370,tools,State,tokens,getTokenInfo,,,,false,false,false,false,--,note,,If the queried node does not store historical state&#44; the results are undefined.
 13372,tools,State,tokens,getTokenInfo,,,,false,false,false,false,--,note,,`special` blocks are detailed under `whenBlock --list`.
 
+13700,tools,State,toktools,tokenTool,tokens,,,true,false,true,true,header,positional,list<addr>,an ERC20 token addresses
+13705,tools,State,toktools,tokenTool,reverse,r,,false,false,true,true,header,switch,<boolean>,present the cap table in reverse order by holding
+13710,tools,State,toktools,tokenTool,start,s,0,false,false,true,true,header,flag,<blknum>,block on which to start the analysis
+13715,tools,State,toktools,tokenTool,bucket,b,100,false,false,true,true,header,flag,<uint64>,number of block to process between cap table reports (default = 100)
+13720,tools,State,toktools,tokenTool,n_rows,n,30,false,false,true,true,header,flag,<uint64>,show this many rows of the cap table (default = 30)
+13725,tools,State,toktools,tokenTool,show_errs,r,,false,false,true,true,header,switch,<boolean>,in verbose mode&#44; print out in-error transactions (never affects accounting)
+13730,tools,State,toktools,tokenTool,,,,false,false,true,true,--,description,,Show ERC20 token cap tables with various options.
+
 13400,tools,Data,traces,getTrace,transactions,,,true,false,true,true,local,positional,list<tx_id>,a space-separated list of one or more transaction identifiers|(tx_hash&#44; bn.txID&#44; blk_hash.txID)
 13420,tools,Data,traces,getTrace,articulate,a,,false,false,true,true,header,switch,<boolean>,articulate the transactions if an ABI is found for the 'to' address
 13420,tools,Data,traces,getTrace,statediff,d,,false,false,true,true,header,switch,<boolean>,export stateDiff traces for the transaction(s)

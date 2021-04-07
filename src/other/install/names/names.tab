@@ -6530,6 +6530,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0xe13ef257cf4d5df928ca11d230427c037666d466	WIT	WIT	On chain	6	Digital Token Development and Value Management Service for Individual and Enterprise	false	false	false	true	true	false
 36-Chainlink	0xe1407bfaa6b5965bad1c9f38316a3b655a09d8a6	Chainlink JPY-USD Aggregator		EtherScan.io			false	false	false	true	false	false
 50-Tokens:ERC20	0xe14a603f7c77d4101a87859b8736a04cfd85c688	TENA	TENA	On chain	18		false	false	false	true	true	false
+50-Tokens:ERC20	0xe14d13d8b3b85af791b2aadd661cdbd5e6097db1	YFI yVault	yvYFI	On chain	18		false	false	false	true	true	false
 31-Gitcoin Grants:Friends	0xe14e985c466fbb49fde0894aa75cb625a9713f24	neil-lowry		Gitcoin Website			false	false	false	false	false	false
 31-Gitcoin Grants:Friends	0xe155ff05efa34884b17ca5564bf1c04878492349	jjmstark		Gitcoin Website			false	false	false	false	false	false
 31-Gitcoin Grants:Grant	0xe195e22df55cbc7aaa8cd2384424afe1f0c26e20	Grant 0357 Test This This And		https://gitcoin.co/grants/357/test-this-this-and			false	false	false	false	false	false

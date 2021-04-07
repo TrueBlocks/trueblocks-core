@@ -1,4 +1,3 @@
-#if 0
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2018 Great Hill Corporation (http://greathill.com)
@@ -15,13 +14,17 @@
 
 //---------------------------------------------------------------------------------------------------
 static COption params[] = {
-    COption("~token_address", "an ERC20 token addresses"),
-    COption("-reverse", "present the cap table in reverse order by holding"),
-    COption("-start:<num>", "block on which to start the analysis"),
-    COption("-bucket:<num>", "number of block to process between cap table reports"),
-    COption("-nRows:<num>", "show this many rows of the cap table (default = 30)"),
-    COption("-showErrors", "in verbose mode, print out in-error transactions (never effects accounting)"),
-    COption("", OPT_DESCRIPTION, "Show ERC20 token cap tables with various options.\n"),
+    // BEG_CODE_OPTIONS
+    // clang-format off
+    COption("tokens", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "an ERC20 token addresses"),
+    COption("reverse", "r", "", OPT_SWITCH, "present the cap table in reverse order by holding"),
+    COption("start", "s", "<blknum>", OPT_FLAG, "block on which to start the analysis"),
+    COption("bucket", "b", "<uint64>", OPT_FLAG, "number of block to process between cap table reports (default = 100)"),  // NOLINT
+    COption("n_rows", "n", "<uint64>", OPT_FLAG, "show this many rows of the cap table (default = 30)"),
+    COption("show_errs", "r", "", OPT_SWITCH, "in verbose mode, print out in-error transactions (never affects accounting)"),  // NOLINT
+    COption("", "", "", OPT_DESCRIPTION, "Show ERC20 token cap tables with various options."),
+    // clang-format on
+    // END_CODE_OPTIONS
 };
 static size_t nParams = sizeof(params) / sizeof(COption);
 
@@ -30,38 +33,34 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         return false;
 
+    // BEG_CODE_LOCAL_INIT
+    // END_CODE_LOCAL_INIT
+
+    blknum_t latest = getBlockProgress(BP_CLIENT).client;
     Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
         string_q orig = arg;
-        if (arg == "-s" || arg == "--showErrors") {
-            showErrors = true;
-
+        if (false) {
+            // do nothing -- make auto code generation easier
+            // BEG_CODE_AUTO
         } else if (arg == "-r" || arg == "--reverse") {
             reverse = true;
 
-        } else if (startsWith(arg, "-s") || startsWith(arg, "--s tart")) {
-            arg = substitute(substitute(arg, "-s:", ""), "--s tart:", "");
-            if (!isNumeral(arg))
-                return usage("Start option must be a numeral.");
-            start = str_2_Uint(arg);
+        } else if (startsWith(arg, "-s:") || startsWith(arg, "--start:")) {
+            if (!confirmBlockNum("start", start, arg, latest))
+                return false;
 
-        } else if (startsWith(arg, "-n") || startsWith(arg, "--nRows")) {
-            arg = substitute(substitute(arg, "-n:", ""), "--nRows:", "");
-            if (!isNumeral(arg))
-                return usage("nRows option must be a numeral.");
-            nRows = str_2_Uint(arg);
+        } else if (startsWith(arg, "-b:") || startsWith(arg, "--bucket:")) {
+            if (!confirmUint("bucket", bucket, arg))
+                return false;
 
-        } else if (startsWith(arg, "-b") || startsWith(arg, "--bucket")) {
-            arg = substitute(substitute(arg, "-b:", ""), "--bucket:", "");
-            if (!isNumeral(arg))
-                return usage("Please specify a numeral with the --bucket option.");
-            bucketSize = str_2_Uint(arg);
+        } else if (startsWith(arg, "-n:") || startsWith(arg, "--n_rows:")) {
+            if (!confirmUint("n_rows", n_rows, arg))
+                return false;
 
-        } else if (startsWith(arg, "0x")) {
-            if (!isAddress(arg))
-                return usage(arg + " does not appear to be a valid Ethereum address.");
-            token = toLower(arg);
+        } else if (arg == "-r" || arg == "--show_errs") {
+            show_errs = true;
 
         } else if (startsWith(arg, '-')) {  // do not collapse
 
@@ -70,17 +69,26 @@ bool COptions::parseArguments(string_q& command) {
             }
 
         } else {
-            return usage("Invalid option: " + arg);
+            if (!parseAddressList(this, tokens, arg))
+                return false;
+
+            // END_CODE_AUTO
         }
     }
 
     // BEG_DEBUG_DISPLAY
+    // LOG_TEST("tokens", tokens, (tokens == NOPOS));
+    LOG_TEST_BOOL("reverse", reverse);
+    LOG_TEST("start", start, (start == 0));
+    LOG_TEST("bucket", bucket, (bucket == 100));
+    LOG_TEST("n_rows", n_rows, (n_rows == 30));
+    LOG_TEST_BOOL("show_errs", show_errs);
     // END_DEBUG_DISPLAY
 
     if (Mocked(""))
         return false;
 
-    if (token.empty())
+    if (tokens.empty() || tokens.size() > 1)
         return usage("Please supply a single ERC20 token address.");
 
     // We need a locally running node
@@ -89,12 +97,13 @@ bool COptions::parseArguments(string_q& command) {
 
 #ifndef DEBUGGING
     // We need a locally running >> archive << node
-    if (!nodeHasBalances())
+    if (!nodeHasBalances(false))
         return usage("This command only runs if the node has balances.");
 #endif
 
     // We need to find the cache
-    cacheFile = getMonitorPath(token);
+    CMonitor m;
+    cacheFile = m.getMonitorPath(tokens[0]);
     if (!fileExists(cacheFile))
         return usage("Could not find cache file: " + cacheFile);
 
@@ -107,8 +116,8 @@ bool COptions::parseArguments(string_q& command) {
             cacheFile + ".lck'.");
 
     // We need an ABI (although we could run without it)
-    if (!abi_spec.loadAbiFromEtherscan(token))
-        return usage("Could not find the ABI. Run grabABI " + token + " to retrieve it.");
+    if (!abi_spec.loadAbiFromEtherscan(tokens[0]))
+        return usage("Could not find the ABI. Run grabABI " + tokens[0] + " to retrieve it.");
 
     return true;
 }
@@ -117,13 +126,16 @@ bool COptions::parseArguments(string_q& command) {
 void COptions::Init(void) {
     registerOptions(nParams, params);
 
-    getBlock(latest, "latest");
-    showErrors = false;
+    // BEG_CODE_INIT
     reverse = false;
     start = 0;
+    bucket = 100;
+    n_rows = 30;
+    show_errs = false;
+    // END_CODE_INIT
+
+    // getBlock(latest, "latest");
     cacheFile = "";
-    bucketSize = 100;
-    nRows = 30;
     capTable.pOptions = this;
 }
 
@@ -135,9 +147,16 @@ COptions::COptions(void) {
     expContext().quoteNums = false;
 
     Init();
+
+    // BEG_CODE_NOTES
+    // clang-format off
+    // clang-format on
+    // END_CODE_NOTES
+
+    // BEG_ERROR_MSG
+    // END_ERROR_MSG
 }
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
 }
-#endif

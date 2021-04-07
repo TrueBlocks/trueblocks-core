@@ -347,7 +347,6 @@ size_t decodeAnObject(CParameterArray& params, const CStringArray& dataArray, si
 }
 
 #define SPEEDY1
-#define SPEEDY2
 #define right(s, r) (s.length() >= r ? s.substr(s.length() - r) : "")  // NOLINT
 #define middle(str, s, e) (str.length() >= s ? str.substr(s, e) : "")  // NOLINT
 typedef map<string_q, NEXTCHUNKFUNC> parse_map_t;
@@ -381,17 +380,13 @@ string_q parse_i64_(const string_q& input, const void* data = NULL) {
 }
 static const string_q leads48 = "000000000000000000000000000000000000000000000000";
 string_q parse_i128(const string_q& input, const void* data = NULL) {
-#ifdef SPEEDY2
     if (startsWith(input, leads48))
-        return parse_i64_(substitute(input, leads48, ""));
-#endif
+        return parse_i64_("0x" + substitute(input, leads48, ""));
     return bni_2_Str(str_2_BigInt("0x" + input, 128));
 }
 string_q parse_i256(const string_q& input, const void* data = NULL) {
-#ifdef SPEEDY2
     if (startsWith(input, leads48))
         return parse_i64_(substitute(input, leads48, ""));
-#endif
     return bni_2_Str(str_2_BigInt("0x" + input, 256));
 }
 string_q parse_u8__(const string_q& input, const void* data = NULL) {
@@ -407,18 +402,14 @@ string_q parse_u64_(const string_q& input, const void* data = NULL) {
     return uint_2_Str(str_2_Uint("0x" + middle(input, input.length() - (64 / 4), string::npos)));
 }
 string_q parse_u128(const string_q& input, const void* data = NULL) {
-#ifdef SPEEDY2
     if (startsWith(input, "000000000000000000000000000000000000000000000000"))
-        return parse_u64_(input);
-#endif
-    return bnu_2_Str(str_2_BigUint("0x" + input, 128));
+        return parse_u64_("0x" + middle(input, 0, 64));
+    return bnu_2_Str(str_2_BigUint("0x" + middle(input, 0, 64), 128));
 }
 string_q parse_u256(const string_q& input, const void* data = NULL) {
-#ifdef SPEEDY2
     if (startsWith(input, "000000000000000000000000000000000000000000000000"))
-        return parse_u64_(input);
-#endif
-    return bnu_2_Str(str_2_BigUint("0x" + input, 256));
+        return parse_u64_("0x" + middle(input, 0, 64));
+    return bnu_2_Str(str_2_BigUint("0x" + middle(input, 0, 64), 256));
 }
 string_q parse_by32(const string_q& input, const void* data = NULL) {
     string_q ret;

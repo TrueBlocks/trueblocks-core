@@ -11,8 +11,7 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-#include "etherlib.h"
-#if 0
+#include "acctlib.h"
 #include "stake.h"
 
 // #define DEBUGGING 1
@@ -26,22 +25,28 @@ class CCapTable : public map<address_t, CStake> {
     }
 };
 
+// BEG_ERROR_DEFINES
+// END_ERROR_DEFINES
+
 //-----------------------------------------------------------------------------
 class COptions : public CAbiOptions {
   public:
+    // BEG_CODE_DECLARE
+    CAddressArray tokens;
+    bool reverse;
+    blknum_t start;
+    uint64_t bucket;
+    uint64_t n_rows;
+    bool show_errs;
+    // END_CODE_DECLARE
+
     blknum_t curBucket = NOPOS;
     string_q totSupply;
     timestamp_t ts;
     string_q report(void);
     uint64_t countNonZero(void);
-    uint64_t nRows;
-    address_t token;
-    bool reverse;
-    bool showErrors;
-    uint64_t bucketSize;
-    CBlock latest;
+    // CBlock latest;
     CCapTable capTable;
-    blknum_t start;
     string_q cacheFile;
 
     COptions(void);
@@ -58,4 +63,3 @@ class COptions : public CAbiOptions {
 //-----------------------------------------------------------------------------
 extern string_q pad(wei_t in);
 extern const string_q fmtOut;
-#endif

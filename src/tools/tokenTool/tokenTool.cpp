@@ -4,13 +4,12 @@
  *-------------------------------------------------------------------------------------------*/
 #include "etherlib.h"
 #include "options.h"
-//#include "stake.h"
+#include "stake.h"
 
-// extern bool build_cap_table(COptions& options, int argc, const char* argv[]);
+extern bool build_cap_table(COptions& options, int argc, const char* argv[]);
 //--------------------------------------------------------------
 int main(int argc, const char* argv[]) {
-#if 0
-    etherlib_init("binary", quickQuitHandler);
+    etherlib_init(quickQuitHandler);
 
     COptions options;
     if (!options.prepareArguments(argc, argv))
@@ -29,11 +28,9 @@ int main(int argc, const char* argv[]) {
     }
 
     etherlib_cleanup();
-#endif
     return 0;
 }
 
-#if 0
 //--------------------------------------------------------------
 bool build_cap_table(COptions& options, int argc, const char* argv[]) {
     // We need to be able to open the cache
@@ -56,7 +53,7 @@ bool build_cap_table(COptions& options, int argc, const char* argv[]) {
                 getBlock(block, blockNum);
                 trans.pBlock = &block;
                 options.abi_spec.articulateTransaction(&trans);
-                if (!verbose && !(counter % 13)) {
+                if (!verbose && !(counter % 3)) {
                     cerr << cTeal << "Processing: " << cOff;
                     cerr << blockNum << " : ";
                     cerr << ts_2_Date(block.timestamp) << " ";
@@ -126,10 +123,10 @@ bool build_cap_table(COptions& options, int argc, const char* argv[]) {
                             cout << endl;
                         }
                     }
-                    if (!verbose && !(counter % 13))
+                    if (!verbose && !(counter % 3))
                         cerr << log.articulatedLog.name << "-";
                 }
-                if (!verbose && !(counter % 13)) {
+                if (!verbose && !(counter % 3)) {
                     cerr << "                              \r";
                     cerr.flush();
                 }
@@ -153,11 +150,14 @@ string_q COptions::getTotalSupply(blknum_t blockNum) {
     string_q encoding = "0x18160ddd";
     string_q cmd = "[{\"to\": \"[TOKEN]\", \"data\": \"[CMD]\"}, \"[BLOCK]\"]";
     replace(cmd, "[CMD]", encoding);
-    replace(cmd, "[TOKEN]", token);
+    replace(cmd, "[TOKEN]", tokens[0]);
     replace(cmd, "[BLOCK]", uint_2_Hex(blockNum));
 
     CFunction ret;
-    if (!abi_spec.articulateOutputs(encoding, callRPC("eth_call", cmd, false), ret))
+    string_q output = callRPC("eth_call", cmd, false);
+    if (contains(output, "error"))
+        return "";
+    if (!abi_spec.articulateOutputs(encoding, output, ret))
         return "";
     return ret.outputs[0].value;
 #endif
@@ -173,7 +173,7 @@ wei_t COptions::getTokenBalance(const address_t& holder, blknum_t blockNum) {
     string_q encoding = "0x70a08231";
     string_q cmd = "[{\"to\": \"[TOKEN]\", \"data\": \"[CMD][HOLDER]\"}, \"[BLOCK]\"]";
     replace(cmd, "[CMD]", encoding);
-    replace(cmd, "[TOKEN]", token);
+    replace(cmd, "[TOKEN]", tokens[0]);
     replace(cmd, "[HOLDER]", padLeft(extract(holder, 2), 64, '0'));  // encoded data (may be empty)
     replace(cmd, "[BLOCK]", uint_2_Hex(blockNum));
 
@@ -197,13 +197,13 @@ const string_q fmtOut =
 //-------------------------------------------------------------------------
 void COptions::updateHolder(const CTransaction& trans, const address_t& addr, const wei_t& amt) {
     ASSERT(trans.pBlock);
-    blknum_t bucket = (trans.pBlock->blockNumber / bucketSize) * bucketSize + 1;
+    blknum_t buck = (trans.pBlock->blockNumber / bucket) * bucket + 1;
 
-    if (bucket != capTable.pOptions->curBucket) {
+    if (buck != capTable.pOptions->curBucket) {
         // create a new table since we're at a new block
         blknum_t prev = capTable.pOptions->curBucket;
         capTable.pOptions->totSupply = getTotalSupply(capTable.pOptions->curBucket);
-        capTable.pOptions->curBucket = bucket;
+        capTable.pOptions->curBucket = buck;
         capTable.pOptions->ts = trans.pBlock->timestamp;
         if (prev != NOPOS)
             cout << capTable.pOptions->report() << endl;
@@ -261,15 +261,15 @@ string_q COptions::report(void) {
 
     string_q fmt =
         "Block:   [{BN}]  Date:   [{DATE}]\n"
-        "Bucket:  [{BK}]  nRows:  [{ROWS}]\n"
+        "Bucket:  [{BK}]  nRows:  [{N_ROWS}]\n"
         "Holders: [{HL}]  Supply: [{SUPPLY}]\n";
     string_q ret = fmt;
     replaceAll(ret, "[{", cYellow);
     replaceAll(ret, "}]", cOff);
     replace(ret, "BN", padNum9T(curBucket - 1));
     replace(ret, "DATE", ts_2_Date(ts).Format(FMT_EXPORT));
-    replace(ret, "BK", padNum9T(bucketSize));
-    replace(ret, "ROWS", uint_2_Str(nRows));
+    replace(ret, "BK", padNum9T(bucket));
+    replace(ret, "ROWS", uint_2_Str(n_rows));
     replace(ret, "HL", padNum9T(countNonZero()));
     replace(ret, "SUPPLY", wei_2_Str(total));
 
@@ -281,7 +281,7 @@ string_q COptions::report(void) {
     uint64_t cnt = 0;
     for (auto& stake : stakes) {
         cnt++;
-        if (cnt < nRows) {
+        if (cnt < n_rows) {
             os << stake.display(cnt) << endl;
         } else {
             stake.pMapItem->lastPos = cnt;
@@ -293,4 +293,3 @@ string_q COptions::report(void) {
     return os.str();
 #endif
 }
-#endif

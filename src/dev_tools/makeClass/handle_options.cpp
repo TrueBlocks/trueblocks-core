@@ -410,6 +410,13 @@ bool COptions::writeCode(const string_q& fn) {
     string_q orig = asciiFileToString(fn);
     string_q converted = orig;
     if (endsWith(fn, ".cpp")) {
+        CStringArray tokens = {
+            "_CODE_OPTIONS", "_CODE_LOCAL_INIT", "_CODE_AUTO", "_DEBUG_DISPLAY",
+            "_CODE_INIT",    "_CODE_NOTES",      "_ERROR_MSG",
+        };
+        for (auto tok : tokens)
+            if (!contains(orig, tok))
+                LOG_WARN(fn, " does not contain token ", tok);
         converted = replaceCode(converted, "CODE_AUTO", auto_stream.str());
         converted = replaceCode(converted, "CODE_OPTIONS", option_stream.str());
         converted = replaceCode(converted, "CODE_LOCAL_INIT", local_stream.str());
@@ -422,6 +429,10 @@ bool COptions::writeCode(const string_q& fn) {
         converted = replaceCode(converted, "ROUTE_CODE", apiStream.str());
         converted = replaceCode(converted, "ROUTE_ITEMS", goRouteStream.str());
     } else {
+        CStringArray tokens = {"_ERROR_DEFINES", "_CODE_DECLARE"};
+        for (auto tok : tokens)
+            if (!contains(orig, tok))
+                LOG_WARN(fn, " does not contain token ", tok);
         converted = replaceCode(converted, "CODE_DECLARE", header_stream.str());
     }
 
