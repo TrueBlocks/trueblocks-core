@@ -44,5 +44,12 @@ bool visitToPin(const string_q& chunkId, void* data) {
     CPinnedChunkArray& pinList = *(CPinnedChunkArray*)data;  // NO_LINT
     CPinnedChunk pinRecord;
     pinlib_pinChunk(pinList, chunkId, pinRecord);
+    string_q ci = substitute(pinRecord.fileName, indexFolder_finalized, "");
+    ci = substitute(ci, indexFolder_blooms, "");
+    ci = substitute(ci, ".bin", "");
+    ostringstream os;
+    os << ci << "\t" << pinRecord.bloomHash << "\t" << pinRecord.indexHash << endl;
+    os << asciiFileToString(configPath("manifest/manifest.txt"));
+    stringToAsciiFile(configPath("manifest/manifest.txt"), os.str());
     return !shouldQuit();
 }
