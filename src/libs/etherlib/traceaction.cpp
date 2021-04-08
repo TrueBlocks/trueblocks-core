@@ -16,6 +16,7 @@
  */
 #include "traceaction.h"
 #include "trace.h"
+#include "reconciliation.h"
 
 namespace qblocks {
 
@@ -327,7 +328,7 @@ string_q nextTraceactionChunk_custom(const string_q& fieldIn, const void* dataPt
             // EXISTING_CODE
             case 'e':
                 if (fieldIn % "ether")
-                    return str_2_Ether(bnu_2_Str(tra->value), 18);
+                    return wei_2_Ether(tra->value, 18);
                 break;
             // EXISTING_CODE
             case 'p':

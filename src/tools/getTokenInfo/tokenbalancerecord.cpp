@@ -185,6 +185,8 @@ bool CTokenBalanceRecord::setValueByName(const string_q& fieldNameIn, const stri
 //---------------------------------------------------------------------------------------------------
 void CTokenBalanceRecord::finishParse() {
     // EXISTING_CODE
+    if (!decimals)
+        decimals = 18;
     // EXISTING_CODE
 }
 
@@ -294,12 +296,38 @@ string_q nextTokenbalancerecordChunk_custom(const string_q& fieldIn, const void*
     if (tok) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
+            case 'b':
+                if (fieldIn % "balance") {
+                    CExportContext save = expContext();
+                    expContext().asEther = true;
+                    string_q ret = wei_2_Export(tok->blockNumber, tok->balance, tok->decimals ? tok->decimals : 18);
+                    expContext() = save;
+                    return ret;
+                }
+                break;
+            case 't':
+                if (fieldIn % "totalSupply") {
+                    CExportContext save = expContext();
+                    expContext().asEther = true;
+                    string_q ret = wei_2_Export(tok->blockNumber, tok->totalSupply, tok->decimals ? tok->decimals : 18);
+                    expContext() = save;
+                    return ret;
+                }
+                break;
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if (fieldIn % "parsed")
                     return nextBasenodeChunk(fieldIn, tok);
                 // EXISTING_CODE
+                if (fieldIn % "priorBalance") {
+                    CExportContext save = expContext();
+                    expContext().asEther = true;
+                    string_q ret =
+                        wei_2_Export(tok->blockNumber, tok->priorBalance, tok->decimals ? tok->decimals : 18);
+                    expContext() = save;
+                    return ret;
+                }
                 // EXISTING_CODE
                 break;
 

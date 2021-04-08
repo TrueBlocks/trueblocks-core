@@ -722,5 +722,5 @@ TIME ~ CLOCK - <INFO>  : Parse func found: : bool
     "gasCost": 19899285000000000,
     "gasUsed": 947585,
     "date": "2018-12-13 01:26:32 UTC",
-    "ether": 0.000000000000000000
+    "ether": 0
   }] }

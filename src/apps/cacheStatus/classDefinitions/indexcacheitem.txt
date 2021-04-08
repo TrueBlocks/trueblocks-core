@@ -8,6 +8,7 @@ fields = string type|\
         timestamp firstTs|\
         timestamp latestTs|\
         string filename|\
+        datetime fileDate|\
         uint32 indexSizeBytes|\
         ipfshash index_hash|\
         uint32 bloomSizeBytes|\

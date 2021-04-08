@@ -136,6 +136,6 @@ bool CConsolidator::write_chunks(blknum_t chunkSize, bool once) {
         chunkSize = min(MAX_ROWS, nRecords);
     }
 
-    LOG_INDEX8(newStage, " after consolidation");
+    LOG_FN8(newStage);
     EXIT_NOMSG(true);
 }

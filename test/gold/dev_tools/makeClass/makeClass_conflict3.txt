@@ -1,5 +1,7 @@
 makeClass argc: 3 [1:-r] [2:--edit] 
 makeClass -r --edit 
+TIME ~ CLOCK - <INFO>  : run: true
+TIME ~ CLOCK - <INFO>  : edit: true
 
   Please chose exactly one of --run, --list, or --edit. Quitting...
 

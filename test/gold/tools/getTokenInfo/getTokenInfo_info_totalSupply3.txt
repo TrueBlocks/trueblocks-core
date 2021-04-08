@@ -7,7 +7,7 @@ TIME ~ CLOCK - <INFO>  : inputStr: : 0x00000000000000000000000000000000000000000
 TIME ~ CLOCK - <INFO>  : Parse func found: : uint256
   {
     "blockNumber": 4001001,
-    "totalSupply": 140245398245132780789239631,
+    "totalSupply": "140245398.245132780789239631",
     "address": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07"
   }TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
 TIME ~ CLOCK - <INFO>  : typeList: : 
@@ -16,6 +16,6 @@ TIME ~ CLOCK - <INFO>  : Parse func found: : uint256
 ,
   {
     "blockNumber": 4001001,
-    "totalSupply": 7367049360614191258780045,
+    "totalSupply": "7367049.360614191258780045",
     "address": "0xb9e7f8568e08d5659f5d29c4997173d84cdf2607"
   }] }

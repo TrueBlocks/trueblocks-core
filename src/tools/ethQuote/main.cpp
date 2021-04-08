@@ -17,10 +17,6 @@
 int main(int argc, const char* argv[]) {
     etherlib_init(defaultQuitHandler);
 
-    //    for (blknum_t bl = 3684349 ; bl < getBlockProgress(BP_CLIENT).client ; bl = bl + 5000)
-    //        cout << bl << "\t" << bn_2_Date(bl).Format(FMT_JSON) << "\t" << wei_2_Ether(getUsdFromMakerAt(bl)) <<
-    //        endl;
-
     COptions options;
     if (!options.prepareArguments(argc, argv))
         return 0;

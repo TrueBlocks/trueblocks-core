@@ -84,6 +84,11 @@ CArchive& CArchive::operator<<(const bigint_t& bn) {
     return *this;
 }
 
+CArchive& CArchive::operator<<(const time_q& date) {
+    *this << date_2_Ts(date);
+    return *this;
+}
+
 CArchive& operator<<(CArchive& archive, const CStringArray& array) {
     uint64_t count = array.size();
     archive << count;
@@ -226,6 +231,13 @@ CArchive& operator>>(CArchive& archive, CIntArray& array) {
         array.push_back(num);
     }
     return archive;
+}
+
+CArchive& CArchive::operator>>(time_q& date) {
+    timestamp_t ts;
+    *this >> ts;
+    date = ts_2_Date(ts);
+    return *this;
 }
 
 //----------------------------------------------------------------------

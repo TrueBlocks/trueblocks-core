@@ -16,10 +16,10 @@ bool CConsolidator::consolidate_chunks(void) {
     blknum_t chunkSize = MAX_ROWS;
     int64_t distToHead = (int64_t(chunkSize) - int64_t(nRecords));
 
-    LOG_INDEX8(tmpFile, " staging completed");
-    LOG_INDEX8(tmp_fn, " staging completed");
-    LOG_INDEX8(oldStage, " staging completed");
-    LOG_INDEX8(newStage, " staging completed not yet consolidated");
+    LOG_FN8(tmpFile);
+    LOG_FN8(tmp_fn);
+    LOG_FN8(oldStage);
+    LOG_FN8(newStage);
     LOG8("nRecords: ", nRecords);
     LOG8("chunkSize: ", chunkSize);
     LOG8("Distance to head: ", distToHead);
@@ -29,7 +29,7 @@ bool CConsolidator::consolidate_chunks(void) {
         LOG_INFO("");
         LOG_INFO(bBlue, "Consolidation not ready...", cOff);
         LOG_INFO(cYellow, "  Have ", nRecords, " records of ", chunkSize, ". Need ", distToHead, " more.", cOff);
-        LOG_INDEX8(newStage, " consolidation not ready");
+        LOG_FN8(newStage);
         EXIT_NOMSG(true);
     }
 

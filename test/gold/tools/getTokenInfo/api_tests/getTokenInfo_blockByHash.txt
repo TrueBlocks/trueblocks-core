@@ -2,7 +2,7 @@
   {
     "blockNumber": 3001001,
     "holder": "0xcfb98637bcae43c13323eaa1731ced2b716962fd",
-    "balance": 0,
+    "balance": "",
     "address": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07",
     "name": "OMGToken Airdrop",
     "symbol": "OMG",
@@ -14,7 +14,7 @@
   {
     "blockNumber": 4401001,
     "holder": "0xcfb98637bcae43c13323eaa1731ced2b716962fd",
-    "balance": 4088288264252975075913,
+    "balance": "4088.288264252975075913",
     "address": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07",
     "name": "OMGToken Airdrop",
     "symbol": "OMG",

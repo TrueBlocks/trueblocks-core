@@ -68,14 +68,6 @@ string_q str_2_Ether(const string_q& _value, uint64_t decimals) {
     return ret;
 }
 
-//-----------------------------------------------------------------------
-string_q wei_2_Ether(biguint_t in, uint64_t decimals) {
-    string_q ret = str_2_Ether(bnu_2_Str(in), decimals);
-    if (contains(ret, "."))
-        ret = trimTrailing(ret, '0');
-    return trimTrailing(ret, '.');
-}
-
 //--------------------------------------------------------------------------------
 string_q byte_2_Bits(uint8_t ch) {
     bitset<8> bits(ch);
@@ -335,11 +327,6 @@ string_q double_2_Str(double f, size_t nDecimals) {
 }
 
 //--------------------------------------------------------------------------------
-string_q bni_2_Str(const bigint_t& num) {
-    return (num.isNegative() ? string("-") : "") + bnu_2_Str(num.getMagnitude());
-}
-
-//--------------------------------------------------------------------------------
 string_q bnu_2_Str(const biguint_t& num) {
     return string(BigUnsignedInABase(num, 10));
 }
@@ -352,11 +339,6 @@ string_q addr_2_Str(const address_t& addr) {
 //--------------------------------------------------------------------------------
 string_q hash_2_Str(const hash_t& hash) {
     return (hash.empty() ? "0x0" : hash);
-}
-
-//--------------------------------------------------------------------------------
-string_q wei_2_Str(const wei_t& wei) {
-    return bnu_2_Str(wei);
 }
 
 //--------------------------------------------------------------------------------

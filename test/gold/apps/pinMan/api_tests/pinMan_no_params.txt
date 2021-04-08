@@ -1,5 +1,56 @@
 {
-  "errors": [
-    "chifra pins - Not enough arguments presented."
-  ]
+  "data": [
+    {
+      "error": {
+        "reason": "INVALID_API_KEYS",
+        "details": "Invalid API key provided"
+      }
+    }
+  ],
+  "types": [
+    {
+      "type": "CPinManifest",
+      "fields": [
+        {
+          "name": "fileName",
+          "type": "text"
+        },
+        {
+          "name": "indexFormat",
+          "type": "text"
+        },
+        {
+          "name": "bloomFormat",
+          "type": "text"
+        },
+        {
+          "name": "prevHash",
+          "type": "hash"
+        },
+        {
+          "name": "newBlockRange",
+          "type": "text"
+        },
+        {
+          "name": "newPins",
+          "type": "object|ts_array"
+        },
+        {
+          "name": "prevBlockRange",
+          "type": "text"
+        },
+        {
+          "name": "prevPins",
+          "type": "object|ts_array"
+        }
+      ]
+    }
+  ],
+  "meta": {
+    "unripe": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "client": "0xdeadbeef"
+  }
 }

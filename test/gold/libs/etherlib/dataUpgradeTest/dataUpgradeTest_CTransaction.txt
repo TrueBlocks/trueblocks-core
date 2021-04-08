@@ -171,7 +171,7 @@ hour                	1045	0	12582937	T_NUMBER TS_NUMERAL TS_OMITEMPTY
 minute              	1046	0	12582937	T_NUMBER TS_NUMERAL TS_OMITEMPTY
 second              	1047	0	12582937	T_NUMBER TS_NUMERAL TS_OMITEMPTY
 {
-  "schema": 8004,
+  "schema": 8005,
   "deleted": false,
   "showing": true,
   "cname": "Transaction",
@@ -193,14 +193,14 @@ second              	1047	0	12582937	T_NUMBER TS_NUMERAL TS_OMITEMPTY
   "compressedTx": "0x ( )",
   "confirmations": 0,
   "gasCost": 0,
-  "etherGasCost": 0.000000000000000000,
-  "price": "1.400000000000000000",
+  "etherGasCost": 0,
+  "price": "1.4",
   "gasUsed": 0,
   "date": "1970-01-01 00:00:00 UTC",
   "datesh": "1970-01-01",
   "time": "0:00:00 UTC",
   "age": "100",
-  "ether": 0.000000000000000000,
+  "ether": 0,
   "year": 1970,
   "month": 01,
   "day": 01,

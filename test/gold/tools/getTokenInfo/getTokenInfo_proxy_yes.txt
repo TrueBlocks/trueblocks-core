@@ -55,7 +55,7 @@ TIME ~ CLOCK - <INFO>  : inputStr: : 0x00000000000000000000000000000000000000000
 TIME ~ CLOCK - <INFO>  : Parse func found: : uint256
   {
     "blockNumber": 8000000,
-    "totalSupply": 1080020890000000000000000,
+    "totalSupply": "1080020.89",
     "address": "0x00000000441378008ea67f4284a57932b1c000a5",
     "name": "TrueGBP",
     "symbol": "TGBP",
