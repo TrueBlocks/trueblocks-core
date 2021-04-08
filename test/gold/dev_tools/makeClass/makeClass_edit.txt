@@ -1,5 +1,8 @@
 makeClass argc: 5 [1:--edit] [2:-a] [3:--filter] [4:function] 
 makeClass --edit -a --filter function 
+TIME ~ CLOCK - <INFO>  : edit: true
+TIME ~ CLOCK - <INFO>  : all: true
+TIME ~ CLOCK - <INFO>  : filter: function
 TIME ~ CLOCK - <INFO>  : handling generate...
 Testing editFile: function.txt
 [settings]

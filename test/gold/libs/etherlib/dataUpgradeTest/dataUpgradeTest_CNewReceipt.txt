@@ -45,7 +45,7 @@ logs                	1007	0	205520971	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OM
 logsBloom           	1008	0	20971570	T_TEXT TS_STRING TS_OMITEMPTY
 isError             	1009	0	12582932	T_BOOL TS_NUMERAL TS_OMITEMPTY
 {
-  "schema": 8004,
+  "schema": 8005,
   "deleted": false,
   "showing": true,
   "cname": "NewReceipt",

@@ -148,7 +148,5 @@ extern const char* STR_DISPLAY_PRICEQUOTE;
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 extern uint64_t indexFromTimeStamp(const CPriceQuoteArray& quotes, timestamp_t ts);
-extern string_q wei_2_Dollars(timestamp_t ts, biguint_t weiIn);
-extern string_q displayDollars(timestamp_t ts, biguint_t weiIn);
 // EXISTING_CODE
 }  // namespace qblocks

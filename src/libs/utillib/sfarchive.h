@@ -82,6 +82,7 @@ class CArchive : public CSharedResource {
     CArchive& operator<<(const biguint_t& bn);
     CArchive& operator<<(const bigint_t& bn);
     CArchive& operator<<(const char* str);
+    CArchive& operator<<(const time_q& date);
 
     CArchive& operator>>(bool& b);
     CArchive& operator>>(char& c);
@@ -94,6 +95,7 @@ class CArchive : public CSharedResource {
     CArchive& operator>>(string_q& str);
     CArchive& operator>>(biguint_t& bn);
     CArchive& operator>>(bigint_t& bn);
+    CArchive& operator>>(time_q& date);
 };
 
 extern CArchive& operator<<(CArchive& archive, const CStringArray& array);

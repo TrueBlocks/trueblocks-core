@@ -45,7 +45,6 @@ class COptions : public CAbiOptions {
     timestamp_t ts;
     string_q report(void);
     uint64_t countNonZero(void);
-    // CBlock latest;
     CCapTable capTable;
     string_q cacheFile;
 

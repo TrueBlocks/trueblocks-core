@@ -710,7 +710,7 @@ string_q nextTransactionChunk_custom(const string_q& fieldIn, const void* dataPt
                 }
             case 'e':
                 if (fieldIn % "ether")
-                    return str_2_Ether(bnu_2_Str(tra->value), 18);
+                    return wei_2_Ether(tra->value, 18);
                 if (fieldIn % "encoding")
                     return extract(tra->input, 0, 10);
                 if (fieldIn % "events" || fieldIn % "eventnames") {
@@ -744,10 +744,10 @@ string_q nextTransactionChunk_custom(const string_q& fieldIn, const void* dataPt
                 if (fieldIn % "etherGasCost") {
                     biguint_t used = tra->receipt.gasUsed;
                     biguint_t price = tra->gasPrice;
-                    return str_2_Ether(bnu_2_Str(used * price), 18);
+                    return wei_2_Ether(used * price, 18);
                 }
                 if (fieldIn % "etherGasPrice") {
-                    return str_2_Ether(bnu_2_Str(tra->gasPrice), 18);
+                    return wei_2_Ether(tra->gasPrice, 18);
                 }
                 break;
             case 'f':
@@ -812,7 +812,7 @@ string_q nextTransactionChunk_custom(const string_q& fieldIn, const void* dataPt
                     if (!IS_HIDDEN(CTransaction, "price")) {
                         // this has huge performance implications because it loads a big file
                         timestamp_t ts = str_2_Ts(tra->Format("[{TIMESTAMP}]"));  // it may only be on the block
-                        return wei_2_Dollars(ts, weiPerEther());
+                        return wei_2_Dollars(ts, weiPerEther(), 18);
                     }
                 }
                 // EXISTING_CODE

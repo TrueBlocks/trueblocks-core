@@ -13,7 +13,7 @@
 static const COption params[] = {
     // BEG_CODE_OPTIONS
     // clang-format off
-    COption("mode", "", "enum[local*|remote|onchain]", OPT_REQUIRED | OPT_POSITIONAL, "the source from which to pin, unpin, or display the index hashes"),  // NOLINT
+    COption("mode", "", "enum[local|remote*|onchain]", OPT_REQUIRED | OPT_POSITIONAL, "the source from which to pin, unpin, or display the index hashes"),  // NOLINT
     COption("hash", "a", "", OPT_SWITCH, "display the hash instead of contents of manifest"),
     COption("pin", "p", "<string>", OPT_FLAG, "pin items either locally or remotely ('all' to all items in a folder)"),
     COption("unpin", "u", "<string>", OPT_FLAG, "unpin previously pinned items given a hash, a filename, or 'all'"),
@@ -84,6 +84,9 @@ bool COptions::parseArguments(string_q& command) {
     if (Mocked(""))
         return false;
 
+    if (mode.empty())
+        mode = "remote";
+
     if (!pin.empty() && !unpin.empty())
         return usage("Please specify only one of --pin or --unpin.");
 
@@ -114,6 +117,7 @@ void COptions::Init(void) {
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
     Init();
+    minArgs = 0;
 
     // BEG_CODE_NOTES
     // clang-format off

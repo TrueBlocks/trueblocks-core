@@ -2,7 +2,7 @@ tomlTest2 argc: 2 [1:getBlock.toml]
 tomlTest2 getBlock.toml 
 tests/getBlock.toml
 [version]
-current = "0.8.4-alpha"
+current = "0.8.5-alpha"
 
 [settings]
 # secs_when_final = 300

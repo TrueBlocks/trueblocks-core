@@ -3,5 +3,5 @@ class = CPriceQuote
 fields = timestamp timestamp|\
         double close
 includes = utillib.h|abi.h
-cpp_includes = pricesource.h
+cpp_includes = pricesource.h|reconciliation.h
 display_str = timestamp, date, close

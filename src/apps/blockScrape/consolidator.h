@@ -50,23 +50,6 @@ class CConsolidator : public CBlockProgress {
 #define FIRST_SNAP_TO_GRID blknum_t(isLiveTest() ? 0 : 2250000)
 #define TEST_RUNS blknum_t(isLiveTest() ? 10 : NOPOS)
 
-//--------------------------------------------------------------------------
-#define LOG_INDEX8(fn, extra) LOG_FN8(fn);
-
-//\
-//    if (isLiveTest()) {                                                                                                \
-//        LOG8(string_q("Contents of ") + (#fn) + (extra) + ":");                                                        \
-//        LOG8(substitute(asciiFileToString(fn), "\n", "\n: 8------"));                                                  \
-//    }
-
-//--------------------------------------------------------------------------
-#define LOG_INDEX3(fn, extra)                                                                                          \
-    LOG_FN3(fn);                                                                                                       \
-    if (isLiveTest()) {                                                                                                \
-        LOG3(string_q("Contents of ") + (#fn) + (extra) + ":");                                                        \
-        LOG3(substitute(asciiFileToString(fn), "\n", "\n: 3------"));                                                  \
-    }
-
 //-------------------------------------------------------------------------
 inline ostream& operator<<(ostream& os, const CConsolidator& it) {
     it.Format(os);

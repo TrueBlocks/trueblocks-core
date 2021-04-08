@@ -2,7 +2,7 @@ tomlTest2 argc: 2 [1:getTrans.toml]
 tomlTest2 getTrans.toml 
 tests/getTrans.toml
 [version]
-current = "0.8.4-alpha"
+current = "0.8.5-alpha"
 
 [display]
 # format = "[{EVENTS}]"

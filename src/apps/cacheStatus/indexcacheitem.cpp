@@ -91,6 +91,9 @@ string_q CIndexCacheItem::getValueByName(const string_q& fieldName) const {
             if (fieldName % "filename") {
                 return filename;
             }
+            if (fieldName % "fileDate") {
+                return fileDate.Format(FMT_JSON);
+            }
             break;
         case 'i':
             if (fieldName % "indexSizeBytes") {
@@ -164,6 +167,10 @@ bool CIndexCacheItem::setValueByName(const string_q& fieldNameIn, const string_q
                 filename = fieldValue;
                 return true;
             }
+            if (fieldName % "fileDate") {
+                fileDate = str_2_Date(fieldValue);
+                return true;
+            }
             break;
         case 'i':
             if (fieldName % "indexSizeBytes") {
@@ -210,6 +217,7 @@ bool CIndexCacheItem::setValueByName(const string_q& fieldNameIn, const string_q
 //---------------------------------------------------------------------------------------------------
 void CIndexCacheItem::finishParse() {
     // EXISTING_CODE
+    fileDate = fileLastModifyDate(getIndexPath("finalized/" + filename));
     // EXISTING_CODE
 }
 
@@ -234,6 +242,7 @@ bool CIndexCacheItem::Serialize(CArchive& archive) {
     archive >> firstTs;
     archive >> latestTs;
     archive >> filename;
+    archive >> fileDate;
     archive >> indexSizeBytes;
     archive >> index_hash;
     archive >> bloomSizeBytes;
@@ -257,6 +266,7 @@ bool CIndexCacheItem::SerializeC(CArchive& archive) const {
     archive << firstTs;
     archive << latestTs;
     archive << filename;
+    archive << fileDate;
     archive << indexSizeBytes;
     archive << index_hash;
     archive << bloomSizeBytes;
@@ -305,6 +315,7 @@ void CIndexCacheItem::registerClass(void) {
     ADD_FIELD(CIndexCacheItem, "firstTs", T_TIMESTAMP, ++fieldNum);
     ADD_FIELD(CIndexCacheItem, "latestTs", T_TIMESTAMP, ++fieldNum);
     ADD_FIELD(CIndexCacheItem, "filename", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CIndexCacheItem, "fileDate", T_DATE, ++fieldNum);
     ADD_FIELD(CIndexCacheItem, "indexSizeBytes", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CIndexCacheItem, "index_hash", T_IPFSHASH | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CIndexCacheItem, "bloomSizeBytes", T_UNUMBER, ++fieldNum);
@@ -349,6 +360,23 @@ string_q nextIndexcacheitemChunk_custom(const string_q& fieldIn, const void* dat
 bool CIndexCacheItem::readBackLevel(CArchive& archive) {
     bool done = false;
     // EXISTING_CODE
+    if (m_schema <= getVersionNum(0, 8, 4)) {
+        archive >> type;
+        archive >> nAddresses;
+        archive >> nAppearances;
+        archive >> firstAppearance;
+        archive >> latestAppearance;
+        archive >> firstTs;
+        archive >> latestTs;
+        archive >> filename;
+        fileDate = fileLastModifyDate(getIndexPath("finalized/" + filename));
+        archive >> indexSizeBytes;
+        archive >> index_hash;
+        archive >> bloomSizeBytes;
+        archive >> bloom_hash;
+        finishParse();
+        done = true;
+    }
     // EXISTING_CODE
     return done;
 }

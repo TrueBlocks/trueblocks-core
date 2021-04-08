@@ -115,8 +115,8 @@ bool COptions::parseArguments(string_q& command) {
     // END_DEBUG_DISPLAY
 
     bool cs = false;
-    for (auto mode : modes)
-        cs |= (mode == "caches");
+    for (auto m : modes)
+        cs |= (m == "caches");
     if (Mocked(cs ? "caches" : "status"))
         EXIT_NOMSG(false);
 

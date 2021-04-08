@@ -60,26 +60,6 @@ bool CHistoryOptions::requestsHistory(void) const {
 }
 
 //--------------------------------------------------------------------------------
-string_q getDispBal(blknum_t bn, biguint_t bal) {
-    // Makes finding the dollar value quicker (if we call into this more than once)
-    static map<blknum_t, timestamp_t> timestampMap;
-    if (expContext().asDollars && (timestampMap[bn] == (timestamp_t)0)) {
-        CBlock blk;
-        getBlock(blk, bn);
-        timestampMap[bn] = blk.timestamp;
-    }
-    ostringstream os;
-    if (expContext().asEther) {
-        os << wei_2_Ether(bal, 18);
-    } else if (expContext().asDollars) {
-        os << padLeft("$" + displayDollars(timestampMap[bn], bal), 14);
-    } else {
-        os << bal;
-    }
-    return os.str();
-}
-
-//--------------------------------------------------------------------------------
 bool wrangleTxId(string_q& argOut, string_q& errorMsg) {
     if (contains(argOut, "0x"))
         return true;

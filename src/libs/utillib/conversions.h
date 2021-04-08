@@ -81,11 +81,9 @@ extern string_q int_2_Str(int64_t num);
 extern string_q uint_2_Str(uint64_t num);
 extern string_q gas_2_Str(const gas_t& gas);
 extern string_q double_2_Str(double f, size_t nDecimals = NOPOS);
-extern string_q bni_2_Str(const bigint_t& bn);
 extern string_q bnu_2_Str(const biguint_t& bu);
 extern string_q addr_2_Str(const address_t& addr);
 extern string_q hash_2_Str(const hash_t& hash);
-extern string_q wei_2_Str(const wei_t& wei);
 inline string_q topic_2_Str(const topic_t& topic) {
     return topic;
 }
@@ -104,7 +102,6 @@ extern string_q chr_2_HexStr(const string_q& str);
 extern string_q bnu_2_Hex(const biguint_t& bu);
 extern string_q uint_2_Hex(uint64_t num);
 extern string_q str_2_Ether(const string_q& str, uint64_t decimals);
-extern string_q wei_2_Ether(biguint_t val, uint64_t decimals);
 extern string_q byte_2_Bits(uint8_t ch);
 
 //--------------------------------------------------------------------
@@ -171,6 +168,20 @@ inline bool isLiveTest(void) {
     if (test_mode == NOPOS)
         test_mode = getEnvStr("LIVE_TEST") == "true";
     return test_mode;
+}
+
+//-----------------------------------------------------------------------
+inline string_q insertCommas(const string_q& dIn) {
+    string_q d = dIn;
+    reverse(d);
+    string_q ret;
+    while (!d.empty()) {
+        string_q three = extract(d, 0, 3);
+        d = extract(d, 3);
+        reverse(three);
+        ret = (d.empty() ? "" : ",") + three + ret;
+    }
+    return ret;
 }
 
 }  // namespace qblocks

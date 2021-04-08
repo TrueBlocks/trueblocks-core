@@ -77,6 +77,7 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
         } else if (fld.type == "wei")             { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_WEI";
         } else if (fld.type == "gas")             { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_GAS";
         } else if (fld.type == "timestamp")       { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_TIMESTAMP";
+        } else if (fld.type == "datetime")        { setFmt = "`[{NAME}] = [{DEFT}];\n";   regType = "T_DATE";
         } else if (fld.type == "blknum")          { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_BLOCKNUM";
         } else if (fld.type == "string")          { setFmt = "`[{NAME}] = [{DEFS}];\n";   regType = "T_TEXT | TS_OMITEMPTY";
         } else if (fld.type == "addr")            { setFmt = "`[{NAME}] = [{DEFS}];\n";   regType = "T_ADDRESS | TS_OMITEMPTY";
@@ -384,6 +385,9 @@ string_q getCaseGetCode(const CParameterArray& fieldsIn) {
                 } else if (p.type == "timestamp") {
                     outStream << ("return ts_2_Str([{PTR}]" + p.name + ");");
 
+                } else if (p.type == "datetime") {
+                    outStream << ("return [{PTR}]" + p.name + ".Format(FMT_JSON);");
+
                 } else if (p.type == "addr" || p.type == "address") {
                     outStream << ("return addr_2_Str([{PTR}]" + p.name + ");");
 
@@ -516,6 +520,9 @@ string_q getCaseSetCode(const CParameterArray& fieldsIn) {
                 } else if (p.type == "timestamp") {
                     outStream << (p.name + " = str_2_Ts(fieldValue);\n````return true;");
 
+                } else if (p.type == "datetime") {
+                    outStream << (p.name + " = str_2_Date(fieldValue);\n````return true;");
+
                 } else if (p.type == "address") {
                     outStream << (p.name + " = str_2_Addr(fieldValue);\n````return true;");
 
@@ -641,6 +648,7 @@ string_q convertTypes(const string_q& inStr) {
     replaceAll(outStr, "string ", "string_q ");
     replaceAll(outStr, "blknum ", "blknum_t ");
     replaceAll(outStr, "timestamp ", "timestamp_t ");
+    replaceAll(outStr, "datetime ", "time_q ");
     replaceAll(outStr, "bool ", "bool ");
     replaceAll(outStr, "sbool ", "bool ");
 

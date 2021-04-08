@@ -1,5 +1,6 @@
 makeClass argc: 4 [1:--dump] [2:function] [3:--verbose] 
 makeClass --dump function --verbose 
+TIME ~ CLOCK - <INFO>  : dump: true
 {
   "class_name": "CFunction",
   "class_base": "Function",

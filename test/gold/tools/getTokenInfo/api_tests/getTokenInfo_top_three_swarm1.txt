@@ -2,7 +2,7 @@
   {
     "blockNumber": 4285364,
     "holder": "0xa25d04fa348f107428708ba19c95d1c79b3744bf",
-    "balance": 435000000000000000000000,
+    "balance": "435000",
     "address": "0xb9e7f8568e08d5659f5d29c4997173d84cdf2607",
     "name": "Swarm City Token",
     "symbol": "SWT",
@@ -14,7 +14,7 @@
   {
     "blockNumber": 3510999,
     "holder": "0xa25d04fa348f107428708ba19c95d1c79b3744bf",
-    "balance": 0,
+    "balance": "",
     "address": "0xb9e7f8568e08d5659f5d29c4997173d84cdf2607",
     "name": "Swarm City Token",
     "symbol": "SWT",
@@ -26,7 +26,7 @@
   {
     "blockNumber": 2510010,
     "holder": "0xa25d04fa348f107428708ba19c95d1c79b3744bf",
-    "balance": 0,
+    "balance": "",
     "address": "0xb9e7f8568e08d5659f5d29c4997173d84cdf2607",
     "name": "Swarm City Token",
     "symbol": "SWT",

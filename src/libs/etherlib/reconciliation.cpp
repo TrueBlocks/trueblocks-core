@@ -897,6 +897,24 @@ CReconciliation operator+(const CReconciliation& a, const CReconciliation& b) {
     return rec;
 }
 
+//--------------------------------------------------------------------------------
+string_q wei_2_Str(const wei_t& weiIn) {
+    return bnu_2_Str(weiIn);
+}
+
+//--------------------------------------------------------------------------------
+string_q bni_2_Str(const bigint_t& num) {
+    return (num.isNegative() ? string("-") : "") + bnu_2_Str(num.getMagnitude());
+}
+
+//-----------------------------------------------------------------------
+string_q wei_2_Ether(const wei_t& weiIn, uint64_t decimals) {
+    string_q ret = str_2_Ether(bnu_2_Str(weiIn), decimals);
+    if (contains(ret, "."))
+        ret = trimTrailing(ret, '0');
+    return trimTrailing(ret, '.');
+}
+
 //---------------------------------------------------------------------------
 string_q bni_2_Ether(const bigint_t& num, uint64_t decimals) {
     if (num == 0)
@@ -925,27 +943,56 @@ string_q bni_2_Ether(const bigint_t& num, uint64_t decimals) {
 }
 
 //---------------------------------------------------------------------------
-string_q bni_2_Dollars(const timestamp_t& ts, const bigint_t& num, uint64_t decimals) {
-    if (num == 0)
+string_q wei_2_Dollars(const timestamp_t& ts, const wei_t& weiIn, uint64_t decimals);  // see pricequote.cpp
+
+//---------------------------------------------------------------------------
+string_q bni_2_Dollars(const timestamp_t& ts, const bigint_t& numIn, uint64_t decimals) {
+    if (numIn == 0)
         return "";
-    bigint_t n = num;
+    bigint_t n = numIn;
     bool negative = false;
     if (n < 0) {
         negative = true;
         n = n * -1;
     }
-    return (negative ? "-" : "") + wei_2_Dollars(ts, str_2_Wei(bni_2_Str(n)));
+    return (negative ? "-" : "") + wei_2_Dollars(ts, str_2_Wei(bni_2_Str(n)), decimals);
 }
 
-string_q bni_2_Export(const timestamp_t& ts, const bigint_t& num, uint64_t decimals) {
-    if (num == 0)
+//---------------------------------------------------------------------------
+string_q wei_2_Export(const timestamp_t& ts, const wei_t& weiIn, uint64_t decimals) {
+    if (weiIn == 0)
         return "\"\"";
     if (expContext().asEther) {
-        return "\"" + bni_2_Ether(num, decimals) + "\"";
+        return "\"" + wei_2_Ether(weiIn, decimals) + "\"";
     } else if (expContext().asDollars) {
-        return "\"" + bni_2_Dollars(ts, num, decimals) + "\"";
+        return "\"" + wei_2_Dollars(ts, weiIn, decimals) + "\"";
     } else {
-        return "\"" + bni_2_Str(num) + "\"";
+        return "\"" + wei_2_Str(weiIn) + "\"";
+    }
+}
+
+//--------------------------------------------------------------------------------
+string_q wei_2_Export(blknum_t bn, const wei_t& weiIn, uint64_t decimals) {
+    // Makes finding the dollar value quicker (if we call into this more than once)
+    static map<blknum_t, timestamp_t> timestampMap;
+    if (expContext().asDollars && (timestampMap[bn] == (timestamp_t)0)) {
+        CBlock blk;
+        getBlock(blk, bn);
+        timestampMap[bn] = blk.timestamp;
+    }
+    return wei_2_Export(timestampMap[bn], weiIn, decimals);
+}
+
+//---------------------------------------------------------------------------
+string_q bni_2_Export(const timestamp_t& ts, const bigint_t& numIn, uint64_t decimals) {
+    if (numIn == 0)
+        return "\"\"";
+    if (expContext().asEther) {
+        return "\"" + bni_2_Ether(numIn, decimals) + "\"";
+    } else if (expContext().asDollars) {
+        return "\"" + bni_2_Dollars(ts, numIn, decimals) + "\"";
+    } else {
+        return "\"" + bni_2_Str(numIn) + "\"";
     }
 }
 // EXISTING_CODE

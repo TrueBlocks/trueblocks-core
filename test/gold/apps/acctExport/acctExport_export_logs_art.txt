@@ -4,13 +4,13 @@ TIME ~ CLOCK - <INFO>  : logs: true
 TIME ~ CLOCK - <INFO>  : articulate: true
 TIME ~ CLOCK - <INFO>  : skip_ddos: true
 TIME ~ CLOCK - <INFO>  : Monitor found for: 0xbb9bc244d798123fde783fcc1c72d3bb8c189413
-TIME ~ CLOCK - <INFO>  : Last visited block: 4996422
+TIME ~ CLOCK - <INFO>  : Last visited block: 5000001
 TIME ~ CLOCK - <INFO>  : stats.nFiles: --value--
 TIME ~ CLOCK - <INFO>  : stats.nSkipped: --value--
 TIME ~ CLOCK - <INFO>  : nMonitors: 1
 TIME ~ CLOCK - <INFO>  : exportRange.first: 1429283
 TIME ~ CLOCK - <INFO>  : exportRange.second: 1429468
-TIME ~ CLOCK - <INFO>  : listRange.first: 4996422
+TIME ~ CLOCK - <INFO>  : listRange.first: 5000001
 TIME ~ CLOCK - <INFO>  : listRange.second: --latest--
 { "data": [
 TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 

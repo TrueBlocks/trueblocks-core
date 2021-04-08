@@ -3,7 +3,7 @@
     {
       "client_version": "Client version",
       "client_ids": "chainId: 1 networkId: 1",
-      "trueblocks_version": "GHC-TrueBlocks//0.8.4-alpha--git-hash---git-ts-",
+      "trueblocks_version": "GHC-TrueBlocks//0.8.5-alpha--git-hash---git-ts-",
       "rpc_provider": "--providers--",
       "balance_provider": "--providers--",
       "cache_path": "--paths--",
@@ -29,6 +29,7 @@
               "firstTs": 1461196999,
               "latestTs": 1463094697,
               "filename": "/--index-path--/001374121-001506407.bin",
+              "fileDate": "1700-01-01 00:00:01 UTC",
               "indexSizeBytes": 18205776,
               "index_hash": "",
               "bloomSizeBytes": 262156,
@@ -43,6 +44,7 @@
               "firstTs": 1463094706,
               "latestTs": 1464681676,
               "filename": "/--index-path--/001506408-001616999.bin",
+              "fileDate": "1700-01-01 00:00:01 UTC",
               "indexSizeBytes": 19290844,
               "index_hash": "",
               "bloomSizeBytes": 393232,
@@ -57,6 +59,7 @@
               "firstTs": 1464681699,
               "latestTs": 1466345904,
               "filename": "/--index-path--/001617000-001733038.bin",
+              "fileDate": "1700-01-01 00:00:01 UTC",
               "indexSizeBytes": 19833524,
               "index_hash": "",
               "bloomSizeBytes": 393232,
@@ -71,6 +74,7 @@
               "firstTs": 1466345908,
               "latestTs": 1468064730,
               "filename": "/--index-path--/001733039-001853082.bin",
+              "fileDate": "1700-01-01 00:00:01 UTC",
               "indexSizeBytes": 19446032,
               "index_hash": "",
               "bloomSizeBytes": 393232,
@@ -85,6 +89,7 @@
               "firstTs": 1468064738,
               "latestTs": 1469717272,
               "filename": "/--index-path--/001853083-001968428.bin",
+              "fileDate": "1700-01-01 00:00:01 UTC",
               "indexSizeBytes": 19860020,
               "index_hash": "",
               "bloomSizeBytes": 393232,
@@ -99,6 +104,7 @@
               "firstTs": 1469717309,
               "latestTs": 1471230427,
               "filename": "/--index-path--/001968429-002074047.bin",
+              "fileDate": "1700-01-01 00:00:01 UTC",
               "indexSizeBytes": 18863416,
               "index_hash": "",
               "bloomSizeBytes": 393232,
@@ -290,6 +296,10 @@
         {
           "name": "filename",
           "type": "text"
+        },
+        {
+          "name": "fileDate",
+          "type": "date"
         },
         {
           "name": "indexSizeBytes",

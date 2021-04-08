@@ -1,10 +1,12 @@
 makeClass argc: 3 [1:-d] [2:--run] 
 makeClass -d --run 
+TIME ~ CLOCK - <INFO>  : run: true
+TIME ~ CLOCK - <INFO>  : dump: true
 ------------------------------------------------------------------------------------------------------------------------
 ./classDefinitions/block.txt
 ------------------------------------------------------------------------------------------------------------------------
 [version]
-current = "0.8.4-alpha"
+current = "0.8.5-alpha"
 
 [settings]
 class = "CBlock"
@@ -43,7 +45,7 @@ serialize = true
 ./classDefinitions/function.txt
 ------------------------------------------------------------------------------------------------------------------------
 [version]
-current = "0.8.4-alpha"
+current = "0.8.5-alpha"
 
 [settings]
 class = "CFunction"
@@ -54,7 +56,7 @@ includes = "utillib.h|parameter.h"
 ./classDefinitions/status.txt
 ------------------------------------------------------------------------------------------------------------------------
 [version]
-current = "0.8.4-alpha"
+current = "0.8.5-alpha"
 
 [settings]
 class = "CStatus"

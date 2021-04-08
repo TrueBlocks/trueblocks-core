@@ -1,2 +1,2 @@
 blocknumber	transactionindex	traceaddress	action::calltype	error	action::from	action::to	action::value	action::ether	action::gas	result::gasused	action::input	compressedtrace	result::output
-3657480	3	null	call		0x64014a5817e05a205bca161a6763e945659b50b0	0x0699c7874bc28fa9d8b1a17e4dd385fe5aa17614	306329900000000000	0.306329900000000000	0	0	0x		0x
+3657480	3	null	call		0x64014a5817e05a205bca161a6763e945659b50b0	0x0699c7874bc28fa9d8b1a17e4dd385fe5aa17614	306329900000000000	0.3063299	0	0	0x		0x

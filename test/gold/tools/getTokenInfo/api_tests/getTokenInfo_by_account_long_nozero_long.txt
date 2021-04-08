@@ -3,7 +3,7 @@
     {
       "blockNumber": 4000000,
       "holder": "0xa25d04fa348f107428708ba19c95d1c79b3744bf",
-      "balance": 4.35e+23,
+      "balance": "435000",
       "address": "0xb9e7f8568e08d5659f5d29c4997173d84cdf2607",
       "name": "Swarm City Token",
       "symbol": "SWT",

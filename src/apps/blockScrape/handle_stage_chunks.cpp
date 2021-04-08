@@ -58,8 +58,8 @@ bool CConsolidator::stage_chunks(void) {
             EXIT_NOMSG(false);
         }
         LOG8("Appended oldStage to tmpFile");
-        LOG_INDEX8(oldStage, "");
-        LOG_INDEX8(tmpFile, " after appending oldStage");
+        LOG_FN8(oldStage);
+        LOG_FN8(tmpFile);
     }
 
     // ...next we append the new ripe records if we can...
@@ -70,7 +70,7 @@ bool CConsolidator::stage_chunks(void) {
         EXIT_NOMSG(false);
     }
     LOG8("Appended con->tmp_fn to tmpFile");
-    LOG_INDEX8(tmpFile, " after appending tmp_fn");
+    LOG_FN8(tmpFile);
 
     // ...finally, we move the temp file to the new stage without allowing user to hit control+c
     LOG8("We're done appending. Next, move records from tmpFile to newStage...");

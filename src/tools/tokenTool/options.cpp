@@ -134,7 +134,6 @@ void COptions::Init(void) {
     show_errs = false;
     // END_CODE_INIT
 
-    // getBlock(latest, "latest");
     cacheFile = "";
     capTable.pOptions = this;
 }
