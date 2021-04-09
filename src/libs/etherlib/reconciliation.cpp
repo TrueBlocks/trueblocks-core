@@ -897,27 +897,49 @@ CReconciliation operator+(const CReconciliation& a, const CReconciliation& b) {
     return rec;
 }
 
+//-----------------------------------------------------------------------
+static string_q wei_2_Ether_local(const wei_t& weiIn, uint64_t decimals) {
+    string_q ret = str_2_Ether(bnu_2_Str(weiIn), decimals);
+    if (contains(ret, "."))
+        ret = trimTrailing(ret, '0');
+    return trimTrailing(ret, '.');
+}
+
 //--------------------------------------------------------------------------------
 string_q wei_2_Str(const wei_t& weiIn) {
     return bnu_2_Str(weiIn);
 }
 
+//-----------------------------------------------------------------------
+string_q wei_2_Ether(const wei_t& weiIn, uint64_t decimals) {
+    return str_2_Ether(bnu_2_Str(weiIn), decimals);
+}
+
+//---------------------------------------------------------------------------
+extern string_q wei_2_Dollars(const timestamp_t& ts, const wei_t& weiIn, uint64_t decimals);  // see pricequote.cpp
+
+//--------------------------------------------------------------------------------
+string_q wei_2_Export(const blknum_t& bn, const wei_t& weiIn, uint64_t decimals) {
+    // Makes finding the dollar value quicker (if we call into this more than once)
+    static map<blknum_t, timestamp_t> timestampMap;
+    if (expContext().asDollars && (timestampMap[bn] == (timestamp_t)0)) {
+        CBlock blk;
+        getBlock(blk, bn);
+        timestampMap[bn] = blk.timestamp;
+    }
+    if (weiIn == 0)
+        return "\"\"";
+    if (expContext().asEther) {
+        return "\"" + wei_2_Ether_local(weiIn, decimals) + "\"";
+    } else if (expContext().asDollars) {
+        return "\"" + wei_2_Dollars(timestampMap[bn], weiIn, decimals) + "\"";
+    }
+    return "\"" + wei_2_Str(weiIn) + "\"";
+}
+
 //--------------------------------------------------------------------------------
 string_q bni_2_Str(const bigint_t& num) {
     return (num.isNegative() ? string("-") : "") + bnu_2_Str(num.getMagnitude());
-}
-
-//-----------------------------------------------------------------------
-string_q wei_2_Ether2(biguint_t in, uint64_t decimals) {
-    return str_2_Ether(bnu_2_Str(in), decimals);
-}
-
-//-----------------------------------------------------------------------
-string_q wei_2_Ether(const wei_t& weiIn, uint64_t decimals) {
-    string_q ret = str_2_Ether(bnu_2_Str(weiIn), decimals);
-    if (contains(ret, "."))
-        ret = trimTrailing(ret, '0');
-    return trimTrailing(ret, '.');
 }
 
 //---------------------------------------------------------------------------
@@ -936,7 +958,7 @@ string_q bni_2_Ether(const bigint_t& num, uint64_t decimals) {
     if (round == NOPOS) {
         round = getGlobalConfig("acctExport")->getConfigInt("settings", "ether_rounding", 18);
     }
-    string_q ret = wei_2_Ether(str_2_Wei(bni_2_Str(n)), decimals);
+    string_q ret = wei_2_Ether_local(str_2_Wei(bni_2_Str(n)), decimals);
     CStringArray parts;
     explode(parts, ret, '.');
     ret = parts[0] + ".";
@@ -946,9 +968,6 @@ string_q bni_2_Ether(const bigint_t& num, uint64_t decimals) {
         return (negative ? "-" : "") + ret + parts[1].substr(0, round);
     return (negative ? "-" : "") + ret + parts[1] + string_q(round - parts[1].length(), '0');
 }
-
-//---------------------------------------------------------------------------
-extern string_q wei_2_Dollars(const timestamp_t& ts, const wei_t& weiIn, uint64_t decimals);  // see pricequote.cpp
 
 //---------------------------------------------------------------------------
 string_q bni_2_Dollars(const timestamp_t& ts, const bigint_t& numIn, uint64_t decimals) {
@@ -961,31 +980,6 @@ string_q bni_2_Dollars(const timestamp_t& ts, const bigint_t& numIn, uint64_t de
         n = n * -1;
     }
     return (negative ? "-" : "") + wei_2_Dollars(ts, str_2_Wei(bni_2_Str(n)), decimals);
-}
-
-//---------------------------------------------------------------------------
-string_q wei_2_Export(const timestamp_t& ts, const wei_t& weiIn, uint64_t decimals) {
-    if (weiIn == 0)
-        return "\"\"";
-    if (expContext().asEther) {
-        return "\"" + wei_2_Ether(weiIn, decimals) + "\"";
-    } else if (expContext().asDollars) {
-        return "\"" + wei_2_Dollars(ts, weiIn, decimals) + "\"";
-    } else {
-        return "\"" + wei_2_Str(weiIn) + "\"";
-    }
-}
-
-//--------------------------------------------------------------------------------
-string_q wei_2_Export(blknum_t bn, const wei_t& weiIn, uint64_t decimals) {
-    // Makes finding the dollar value quicker (if we call into this more than once)
-    static map<blknum_t, timestamp_t> timestampMap;
-    if (expContext().asDollars && (timestampMap[bn] == (timestamp_t)0)) {
-        CBlock blk;
-        getBlock(blk, bn);
-        timestampMap[bn] = blk.timestamp;
-    }
-    return wei_2_Export(timestampMap[bn], weiIn, decimals);
 }
 
 //---------------------------------------------------------------------------

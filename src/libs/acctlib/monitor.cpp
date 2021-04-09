@@ -297,7 +297,7 @@ string_q nextMonitorChunk_custom(const string_q& fieldIn, const void* dataPtr) {
                 if (startsWith(fieldIn, "cur") && mon->curBalance == str_2_Wei(uint_2_Str(NOPOS)))
                     return "\"n/a\"";
                 if (fieldIn % "curEther")
-                    return "\"" + wei_2_Ether2(mon->curBalance, 18) + "\"";
+                    return "\"" + wei_2_Ether(mon->curBalance, 18) + "\"";
                 if (fieldIn % "curDollars")
                     return "not-implemented";
                 break;

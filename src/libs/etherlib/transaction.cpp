@@ -710,7 +710,7 @@ string_q nextTransactionChunk_custom(const string_q& fieldIn, const void* dataPt
                 }
             case 'e':
                 if (fieldIn % "ether")
-                    return wei_2_Ether2(tra->value, 18);
+                    return wei_2_Ether(tra->value, 18);
                 if (fieldIn % "encoding")
                     return extract(tra->input, 0, 10);
                 if (fieldIn % "events" || fieldIn % "eventnames") {
@@ -744,10 +744,10 @@ string_q nextTransactionChunk_custom(const string_q& fieldIn, const void* dataPt
                 if (fieldIn % "etherGasCost") {
                     biguint_t used = tra->receipt.gasUsed;
                     biguint_t price = tra->gasPrice;
-                    return wei_2_Ether2(used * price, 18);
+                    return wei_2_Ether(used * price, 18);
                 }
                 if (fieldIn % "etherGasPrice") {
-                    return wei_2_Ether2(tra->gasPrice, 18);
+                    return wei_2_Ether(tra->gasPrice, 18);
                 }
                 break;
             case 'f':

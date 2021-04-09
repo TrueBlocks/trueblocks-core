@@ -237,14 +237,12 @@ extern string_q wei_2_Str(const wei_t& weiIn);
 extern string_q bni_2_Str(const bigint_t& numIn);
 
 extern string_q wei_2_Ether(const wei_t& weiIn, uint64_t decimals);
-extern string_q wei_2_Ether2(biguint_t val, uint64_t decimals);
 extern string_q bni_2_Ether(const bigint_t& numIn, uint64_t decimals);
 
 extern string_q wei_2_Dollars(const timestamp_t& ts, const wei_t& weiIn, uint64_t decimals);
 extern string_q bni_2_Dollars(const timestamp_t& ts, const bigint_t& numIn, uint64_t decimals);
 
-extern string_q wei_2_Export(const timestamp_t& ts, const wei_t& weiIn, uint64_t decimals);
-extern string_q wei_2_Export(blknum_t bn, const wei_t& weiIn, uint64_t decimals);
+extern string_q wei_2_Export(const blknum_t& bn, const wei_t& weiIn, uint64_t decimals);
 extern string_q bni_2_Export(const timestamp_t& ts, const bigint_t& numIn, uint64_t decimals);
 // EXISTING_CODE
 }  // namespace qblocks

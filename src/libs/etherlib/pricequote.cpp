@@ -304,7 +304,7 @@ static string_q getWeiQuote(const CPriceQuoteArray& quotes, const timestamp_t& t
     wei_t wei = weiIn;
     wei *= ((uint64_t)price);
     wei /= 100;
-    return wei_2_Ether2(wei, decimals);
+    return wei_2_Ether(wei, decimals);
 }
 
 //-----------------------------------------------------------------------

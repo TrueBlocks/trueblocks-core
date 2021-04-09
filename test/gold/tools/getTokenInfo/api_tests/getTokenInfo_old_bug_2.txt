@@ -1,7 +1,8 @@
 {
   "data": [
     {
-      "totalSupply": "36838.526036685327321725",
+      "blockNumber": 12000000,
+      "totalSupply": "10359.022508923948006858",
       "address": "0xa9fe4601811213c340e850ea305481aff02f5b28",
       "name": "WETH yVault",
       "symbol": "yvWETH",
@@ -15,6 +16,10 @@
     {
       "type": "CTokenBalanceRecord",
       "fields": [
+        {
+          "name": "blockNumber",
+          "type": "blocknum"
+        },
         {
           "name": "totalSupply",
           "type": "wei"

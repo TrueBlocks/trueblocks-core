@@ -1,8 +1,9 @@
 {
   "data": [
     {
-      "holder": "0x597568694fe6ee1b701ec8578bd57102c9a29abd",
-      "balance": "4974.816187362196511036",
+      "blockNumber": 11963059,
+      "holder": "0x99c961738786e8f5f3fee109f4d49f5901826b8c",
+      "balance": "0.219996879142647489",
       "address": "0xa9fe4601811213c340e850ea305481aff02f5b28",
       "name": "WETH yVault",
       "symbol": "yvWETH",
@@ -16,6 +17,10 @@
     {
       "type": "CTokenBalanceRecord",
       "fields": [
+        {
+          "name": "blockNumber",
+          "type": "blocknum"
+        },
         {
           "name": "holder",
           "type": "address"
