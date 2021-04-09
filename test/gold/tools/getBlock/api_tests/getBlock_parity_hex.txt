@@ -97,7 +97,7 @@
           "datesh": "2017-01-22",
           "time": "1:16:55 UTC",
           "age": "100",
-          "ether": "0x2"
+          "ether": 2
         },
         {
           "hash": "0x40de1696de9a6586c30ddd72199e70520bba3a3f297d38ec1b4d5f4061ee4ecb",

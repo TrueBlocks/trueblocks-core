@@ -908,6 +908,11 @@ string_q bni_2_Str(const bigint_t& num) {
 }
 
 //-----------------------------------------------------------------------
+string_q wei_2_Ether2(biguint_t in, uint64_t decimals) {
+    return str_2_Ether(bnu_2_Str(in), decimals);
+}
+
+//-----------------------------------------------------------------------
 string_q wei_2_Ether(const wei_t& weiIn, uint64_t decimals) {
     string_q ret = str_2_Ether(bnu_2_Str(weiIn), decimals);
     if (contains(ret, "."))
@@ -943,7 +948,7 @@ string_q bni_2_Ether(const bigint_t& num, uint64_t decimals) {
 }
 
 //---------------------------------------------------------------------------
-string_q wei_2_Dollars(const timestamp_t& ts, const wei_t& weiIn, uint64_t decimals);  // see pricequote.cpp
+extern string_q wei_2_Dollars(const timestamp_t& ts, const wei_t& weiIn, uint64_t decimals);  // see pricequote.cpp
 
 //---------------------------------------------------------------------------
 string_q bni_2_Dollars(const timestamp_t& ts, const bigint_t& numIn, uint64_t decimals) {

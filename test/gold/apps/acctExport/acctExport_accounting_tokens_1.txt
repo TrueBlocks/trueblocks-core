@@ -221,7 +221,7 @@ TIME ~ CLOCK - <INFO>  : listRange.second: --latest--
   "gasCost": 2743600000000000,
   "gasUsed": 68590,
   "date": "2020-06-16 16:09:04 UTC",
-  "ether": 0
+  "ether": 0.000000000000000000
 }
 , {
   "hash": "0x4bbabbb0cf842635caea3dcc46107ca3dbf88fcb096ae7feaabcd6c039cafa65",
@@ -321,7 +321,7 @@ TIME ~ CLOCK - <INFO>  : listRange.second: --latest--
   "gasCost": 1188918000000000,
   "gasUsed": 44034,
   "date": "2020-06-16 21:46:15 UTC",
-  "ether": 0
+  "ether": 0.000000000000000000
 }
 , {
   "hash": "0x2f83088fa87f6054779a5511ec4f6b64f1e773e9bd7ec97956d6e04910d59303",
@@ -532,7 +532,7 @@ TIME ~ CLOCK - <INFO>  : listRange.second: --latest--
   "gasCost": 1922570000000000,
   "gasUsed": 83590,
   "date": "2020-06-16 21:50:17 UTC",
-  "ether": 0
+  "ether": 0.000000000000000000
 }
 , {
   "hash": "0xc670a40b06e179b459f8bb7ae8e3d9cf985abb325b355ea2ea8b4822e66c1f55",
@@ -743,7 +743,7 @@ TIME ~ CLOCK - <INFO>  : listRange.second: --latest--
   "gasCost": 1416580000000000,
   "gasUsed": 64390,
   "date": "2020-06-16 23:04:31 UTC",
-  "ether": 0
+  "ether": 0.000000000000000000
 }
 , {
   "hash": "0x39654adb110500924d5693d1cff285e6a7196cfc1a7b833eeb7583df4efab098",
@@ -849,17 +849,7 @@ TIME ~ CLOCK - <INFO>  : listRange.second: --latest--
         "newContract": "0x0",
         "gasUsed": 35466,
         "output": "0x"
-      },
-      "articulatedTrace": {
-        "name": "donate",
-        "inputs": [
-          {
-            "name": "_donations",
-            "value": [{"token":"0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", "amount":"38000000000000000", "dest":"0xf503017d7baf7fbc0fff7492b751025c6a78179b"}, {"token":"0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", "amount":"2000000000000000", "dest":"0x00de4b13153673bcae2616b67bf822500d325fc3"}]
-          }
-        ]
-      },
-      "compressedTrace": donate([{\"token\":\"0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee\", \"amount\":\"38000000000000000\", \"dest\":\"0xf503017d7baf7fbc0fff7492b751025c6a78179b\"}, {\"token\":\"0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee\", \"amount\":\"2000000000000000\", \"dest\":\"0x00de4b13153673bcae2616b67bf822500d325fc3\"}]); 
+      }
     },
     {
       "type": "call",
@@ -941,7 +931,7 @@ TIME ~ CLOCK - <INFO>  : listRange.second: --latest--
   "gasCost": 1175774400000000,
   "gasUsed": 54434,
   "date": "2020-06-17 00:05:54 UTC",
-  "ether": 0.04
+  "ether": 0.040000000000000000
 }
 , {
   "hash": "0xe60db84c0133325d44a41a0de0b5b41b56693437f098e4394a9608ea7d4398f7",
@@ -2372,7 +2362,7 @@ TIME ~ CLOCK - <INFO>  : listRange.second: --latest--
   "gasCost": 13489203800000000,
   "gasUsed": 559718,
   "date": "2020-06-17 02:23:26 UTC",
-  "ether": 0
+  "ether": 0.000000000000000000
 }
 , {
   "hash": "0x6e6bbba83b32bf9e0c42cb82433dfee65d47f287a5b7756cdc8f057ab879fbb3",
@@ -3437,7 +3427,7 @@ TIME ~ CLOCK - <INFO>  : listRange.second: --latest--
   "gasCost": 13501005000000000,
   "gasUsed": 385743,
   "date": "2020-06-17 03:33:24 UTC",
-  "ether": 0
+  "ether": 0.000000000000000000
 }
 , {
   "hash": "0xd7ded45b123006b183f73adbab5d58478e41dae2715ea6986a96fa954a6f15c5",
@@ -3648,7 +3638,7 @@ TIME ~ CLOCK - <INFO>  : listRange.second: --latest--
   "gasCost": 3223730000000000,
   "gasUsed": 68590,
   "date": "2020-06-17 13:50:29 UTC",
-  "ether": 0
+  "ether": 0.000000000000000000
 }
 , {
   "hash": "0x83e221d1132253c902bbc35126752031256640e01206573c4961f879055b97c5",
@@ -4713,7 +4703,7 @@ TIME ~ CLOCK - <INFO>  : listRange.second: --latest--
   "gasCost": 16919093400000000,
   "gasUsed": 404763,
   "date": "2020-06-17 14:13:58 UTC",
-  "ether": 0
+  "ether": 0.000000000000000000
 }
 , {
   "hash": "0xad8410eead2eb335e7ce3462d71023a1f73ad62521385154d583b8fd794fc92f",
@@ -6205,7 +6195,7 @@ TIME ~ CLOCK - <INFO>  : listRange.second: --latest--
   "gasCost": 22634573500000000,
   "gasUsed": 587911,
   "date": "2020-06-18 13:33:25 UTC",
-  "ether": 0
+  "ether": 0.000000000000000000
 }
 , {
   "hash": "0xf2efaad8c0842881ef6c04ee17ba6b4c308c1daa1cdc55d5afa6eefd2c9d43e2",
@@ -7148,7 +7138,7 @@ TIME ~ CLOCK - <INFO>  : listRange.second: --latest--
   "gasCost": 14869160000000000,
   "gasUsed": 371729,
   "date": "2020-06-18 14:01:48 UTC",
-  "ether": 0
+  "ether": 0.000000000000000000
 }
 , {
   "hash": "0x717d21a307469b781a8231f177fcb2b2a683d537ddeea2da6eec69f4b12b1c42",
@@ -7275,7 +7265,7 @@ TIME ~ CLOCK - <INFO>  : listRange.second: --latest--
   "gasCost": 1739343000000000,
   "gasUsed": 44034,
   "date": "2020-06-18 14:47:23 UTC",
-  "ether": 0
+  "ether": 0.000000000000000000
 }
 , {
   "hash": "0x1ff4ec58cb6aaa757257bc26b957501de46b0f3aa9708813a40626585cd52b41",
@@ -7400,7 +7390,7 @@ TIME ~ CLOCK - <INFO>  : listRange.second: --latest--
   "gasCost": 1761265500000000,
   "gasUsed": 44589,
   "date": "2020-06-18 14:47:23 UTC",
-  "ether": 0
+  "ether": 0.000000000000000000
 }
 , {
   "hash": "0x4c34ffa20e28f1e53254c6165e5a211665c9936c88cb6ee478015ddc0d5f89f7",
@@ -7794,7 +7784,7 @@ TIME ~ CLOCK - <INFO>  : listRange.second: --latest--
   "gasCost": 4980192000000000,
   "gasUsed": 155631,
   "date": "2020-06-18 20:04:05 UTC",
-  "ether": 0
+  "ether": 0.000000000000000000
 }
 , {
   "hash": "0x54df753f5a53c2ee4ef08e6b03e5e44cf1ceab98459b9bacd6f3c7aeee5d54d8",
@@ -7921,7 +7911,7 @@ TIME ~ CLOCK - <INFO>  : listRange.second: --latest--
   "gasCost": 1232952000000000,
   "gasUsed": 44034,
   "date": "2020-06-18 21:07:17 UTC",
-  "ether": 0
+  "ether": 0.000000000000000000
 }
 , {
   "hash": "0x845ee9238e7b0c4507cb5998ea859666498c8bea1ccd5fc6633631ce962f3959",
@@ -8107,7 +8097,7 @@ TIME ~ CLOCK - <INFO>  : listRange.second: --latest--
   "gasCost": 1920520000000000,
   "gasUsed": 68590,
   "date": "2020-06-18 21:07:17 UTC",
-  "ether": 0
+  "ether": 0.000000000000000000
 }
 , {
   "hash": "0x6ad90f7ebfa375681129804ab2c525e3702312dfd1691ef26352bd8f0485b6ff",
@@ -8213,17 +8203,7 @@ TIME ~ CLOCK - <INFO>  : listRange.second: --latest--
         "newContract": "0x0",
         "gasUsed": 35466,
         "output": "0x"
-      },
-      "articulatedTrace": {
-        "name": "donate",
-        "inputs": [
-          {
-            "name": "_donations",
-            "value": [{"token":"0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", "amount":"190000000000000000", "dest":"0xf503017d7baf7fbc0fff7492b751025c6a78179b"}, {"token":"0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", "amount":"10000000000000002", "dest":"0x00de4b13153673bcae2616b67bf822500d325fc3"}]
-          }
-        ]
-      },
-      "compressedTrace": donate([{\"token\":\"0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee\", \"amount\":\"190000000000000000\", \"dest\":\"0xf503017d7baf7fbc0fff7492b751025c6a78179b\"}, {\"token\":\"0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee\", \"amount\":\"10000000000000002\", \"dest\":\"0x00de4b13153673bcae2616b67bf822500d325fc3\"}]); 
+      }
     },
     {
       "type": "call",
@@ -8516,7 +8496,7 @@ TIME ~ CLOCK - <INFO>  : listRange.second: --latest--
   "gasCost": 1852254000000000,
   "gasUsed": 68602,
   "date": "2020-06-18 21:33:11 UTC",
-  "ether": 0
+  "ether": 0.000000000000000000
 }
 , {
   "hash": "0x510acf20070895b13a5e7fe050e4756a22c0f274ae7d6416a175a863c7cdcb23",
@@ -8643,7 +8623,7 @@ TIME ~ CLOCK - <INFO>  : listRange.second: --latest--
   "gasCost": 1321460340000000,
   "gasUsed": 44034,
   "date": "2020-06-19 02:52:22 UTC",
-  "ether": 0
+  "ether": 0.000000000000000000
 }
 , {
   "hash": "0x13cb17bca242f05bbff17e240a3e554c97888f850059ce3f40b845fe736043e6",
@@ -8829,7 +8809,7 @@ TIME ~ CLOCK - <INFO>  : listRange.second: --latest--
   "gasCost": 2058385900000000,
   "gasUsed": 68590,
   "date": "2020-06-19 02:52:22 UTC",
-  "ether": 0
+  "ether": 0.000000000000000000
 }
 , {
   "hash": "0x0e3bd37010ef2c371f26a6059e1cd22f7fbc9e009dc01896ce97ad636d914202",

@@ -58,7 +58,7 @@ TIME ~ CLOCK - <INFO>  : listRange.second: --latest--
   "gasCost": 0,
   "gasUsed": 0,
   "date": "2015-07-30 15:26:28 UTC",
-  "ether": 5
+  "ether": 5.000000000000000000
 }
 , {
   "hash": "0x0",
@@ -105,7 +105,7 @@ TIME ~ CLOCK - <INFO>  : listRange.second: --latest--
   "gasCost": 0,
   "gasUsed": 0,
   "date": "2015-07-30 15:28:03 UTC",
-  "ether": 5
+  "ether": 5.000000000000000000
 }
 , {
   "hash": "0x0",
@@ -152,7 +152,7 @@ TIME ~ CLOCK - <INFO>  : listRange.second: --latest--
   "gasCost": 0,
   "gasUsed": 0,
   "date": "2015-07-30 15:32:02 UTC",
-  "ether": 3.75
+  "ether": 3.750000000000000000
 }
 , {
   "hash": "0x0",
@@ -199,7 +199,7 @@ TIME ~ CLOCK - <INFO>  : listRange.second: --latest--
   "gasCost": 0,
   "gasUsed": 0,
   "date": "2015-07-30 15:38:33 UTC",
-  "ether": 5
+  "ether": 5.000000000000000000
 }
 , {
   "hash": "0x0",
@@ -246,7 +246,7 @@ TIME ~ CLOCK - <INFO>  : listRange.second: --latest--
   "gasCost": 0,
   "gasUsed": 0,
   "date": "2015-07-30 15:38:59 UTC",
-  "ether": 3.125
+  "ether": 3.125000000000000000
 }
 ], "types": [
 { "type": "CTransaction", "fields": [{ "name": "hash", "type": "hash" }, { "name": "blockHash", "type": "hash" }, { "name": "blockNumber", "type": "blocknum" }, { "name": "transactionIndex", "type": "blocknum" }, { "name": "timestamp", "type": "timestamp" }, { "name": "from", "type": "address" }, { "name": "to", "type": "address" }, { "name": "value", "type": "wei" }, { "name": "gas", "type": "gas" }, { "name": "gasPrice", "type": "gas" }, { "name": "isError", "type": "unumber" }, { "name": "hasToken", "type": "unumber" }, { "name": "receipt", "type": "object" }, { "name": "traces", "type": "object|ts_array" }, { "name": "articulatedTx", "type": "object" }, { "name": "compressedTx", "type": "text" }, { "name": "statements", "type": "object|ts_array" }, { "name": "gasCost", "type": "wei" }, { "name": "gasUsed", "type": "gas" }, { "name": "date", "type": "date" }, { "name": "ether", "type": "ether" }] }

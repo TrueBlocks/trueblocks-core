@@ -268,7 +268,7 @@ curDollars          	1011	0	545259565	T_ETHER TS_NUMERAL TS_BIGNUM
   "curBalance": 0,
   "enabled": true,
   "fm_mode": 0,
-  "curEther": "0",
+  "curEther": "0.000000000000000000",
   "curDollars": not-implemented,
   "address": "0x0"
 }
@@ -800,7 +800,7 @@ ether               	1015	0	545259565	T_ETHER TS_NUMERAL TS_BIGNUM
   "refundAddress": "0x0",
   "to": "0x0",
   "value": 0,
-  "ether": 0
+  "ether": 0.000000000000000000
 }
 
 --------------------------------------------------------------------------------
@@ -1046,14 +1046,14 @@ second              	1047	0	12582937	T_NUMBER TS_NUMERAL TS_OMITEMPTY
   "compressedTx": "0x ( )",
   "confirmations": 0,
   "gasCost": 0,
-  "etherGasCost": 0,
-  "price": "1.4",
+  "etherGasCost": 0.000000000000000000,
+  "price": "1.400000000000000000",
   "gasUsed": 0,
   "date": "1970-01-01 00:00:00 UTC",
   "datesh": "1970-01-01",
   "time": "0:00:00 UTC",
   "age": "100",
-  "ether": 0,
+  "ether": 0.000000000000000000,
   "year": 1970,
   "month": 01,
   "day": 01,

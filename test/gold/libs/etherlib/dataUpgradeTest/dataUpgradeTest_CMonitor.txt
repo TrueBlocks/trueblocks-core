@@ -60,7 +60,7 @@ curDollars          	1011	0	545259565	T_ETHER TS_NUMERAL TS_BIGNUM
   "curBalance": 0,
   "enabled": true,
   "fm_mode": 0,
-  "curEther": "0",
+  "curEther": "0.000000000000000000",
   "curDollars": not-implemented,
   "address": "0x0"
 }

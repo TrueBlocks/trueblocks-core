@@ -328,7 +328,7 @@ string_q nextTraceactionChunk_custom(const string_q& fieldIn, const void* dataPt
             // EXISTING_CODE
             case 'e':
                 if (fieldIn % "ether")
-                    return wei_2_Ether(tra->value, 18);
+                    return wei_2_Ether2(tra->value, 18);
                 break;
             // EXISTING_CODE
             case 'p':

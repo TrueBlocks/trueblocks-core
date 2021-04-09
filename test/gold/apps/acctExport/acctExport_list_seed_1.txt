@@ -33,7 +33,7 @@ TIME ~ CLOCK - <INFO>  : listRange.second: --latest--
   "gasCost": 210000000000000,
   "gasUsed": 21000,
   "date": "2019-11-01 20:18:58 UTC",
-  "ether": 5
+  "ether": 5.000000000000000000
 }
 , {
   "hash": "0xecfbe561392a3b0ca8cd7557c7856a9202919d6bc8543538670736db159f1929",
@@ -77,7 +77,7 @@ TIME ~ CLOCK - <INFO>  : listRange.second: --latest--
   "gasCost": 55144000000000,
   "gasUsed": 55144,
   "date": "2019-11-01 23:31:45 UTC",
-  "ether": 0
+  "ether": 0.000000000000000000
 }
 , {
   "hash": "0xb7d80298ad62d68f47a9e3faeaa78ca7888e33dc714707a83eb4dfbbcdc01b09",
@@ -101,7 +101,7 @@ TIME ~ CLOCK - <INFO>  : listRange.second: --latest--
   "gasCost": 210000000000000,
   "gasUsed": 21000,
   "date": "2019-11-02 02:16:06 UTC",
-  "ether": 0.01
+  "ether": 0.010000000000000000
 }
 , {
   "hash": "0x6d62aaef0653a83fd9c876f58f04aaf1ce6a750699d34ed870dd171e3de2d80a",
@@ -125,7 +125,7 @@ TIME ~ CLOCK - <INFO>  : listRange.second: --latest--
   "gasCost": 210000000000000,
   "gasUsed": 21000,
   "date": "2019-11-02 02:19:35 UTC",
-  "ether": 0.01
+  "ether": 0.010000000000000000
 }
 , {
   "hash": "0x118f8d42e6b858427f6b54c1636a6ec1f72e0cf8941da03deffa55a3c2357204",
@@ -161,7 +161,7 @@ TIME ~ CLOCK - <INFO>  : listRange.second: --latest--
   "gasCost": 149192000000000,
   "gasUsed": 37298,
   "date": "2019-11-02 02:56:10 UTC",
-  "ether": 0
+  "ether": 0.000000000000000000
 }
 , {
   "hash": "0x973699ddd12186570c957369788e0128b1acc66c994685c5d3f52ef6b3b84fed",
@@ -197,7 +197,7 @@ TIME ~ CLOCK - <INFO>  : listRange.second: --latest--
   "gasCost": 112130000000000,
   "gasUsed": 22426,
   "date": "2019-11-02 03:04:19 UTC",
-  "ether": 0
+  "ether": 0.000000000000000000
 }
 , {
   "hash": "0xf411e204daf3b005c251d506bbbf421de482ea468b1c3b76289e76d33459a083",
@@ -233,7 +233,7 @@ TIME ~ CLOCK - <INFO>  : listRange.second: --latest--
   "gasCost": 223620000000000,
   "gasUsed": 22362,
   "date": "2019-11-02 18:23:31 UTC",
-  "ether": 0
+  "ether": 0.000000000000000000
 }
 , {
   "hash": "0xc36909ffb8335811e5b92d662f39c5e5c0e75394bb9638d7136ab4a4bb2b6951",
@@ -269,7 +269,7 @@ TIME ~ CLOCK - <INFO>  : listRange.second: --latest--
   "gasCost": 45985000000000,
   "gasUsed": 45985,
   "date": "2019-11-02 18:41:43 UTC",
-  "ether": 0
+  "ether": 0.000000000000000000
 }
 , {
   "hash": "0xd5a49ef68f77357a5202ca09499b343b27cd02c1172c4ace3050a494dc218d8a",
@@ -313,7 +313,7 @@ TIME ~ CLOCK - <INFO>  : listRange.second: --latest--
   "gasCost": 34017000000000,
   "gasUsed": 34017,
   "date": "2019-11-02 18:42:30 UTC",
-  "ether": 0
+  "ether": 0.000000000000000000
 }
 , {
   "hash": "0x3af5419098b5510f39ec64d6eb8ee08f3fe5cb538469fa9ef263cf7ebd4b607d",
@@ -349,7 +349,7 @@ TIME ~ CLOCK - <INFO>  : listRange.second: --latest--
   "gasCost": 46049000000000,
   "gasUsed": 46049,
   "date": "2019-11-02 18:45:58 UTC",
-  "ether": 0
+  "ether": 0.000000000000000000
 }
 , {
   "hash": "0x1cdbe0fcca2ee3f9e4504f25e6f2a485835caa920496d20b10fa6241cbfdb124",
@@ -393,7 +393,7 @@ TIME ~ CLOCK - <INFO>  : listRange.second: --latest--
   "gasCost": 24541000000000,
   "gasUsed": 24541,
   "date": "2019-11-02 18:46:01 UTC",
-  "ether": 0
+  "ether": 0.000000000000000000
 }
 , {
   "hash": "0xbf2b254e62f24f10e59281aca2e04204228a9fef109363881286677ca206ab91",
@@ -438,7 +438,7 @@ TIME ~ CLOCK - <INFO>  : listRange.second: --latest--
   "gasCost": 105208000000000,
   "gasUsed": 105208,
   "date": "2019-11-03 22:52:17 UTC",
-  "ether": 0
+  "ether": 0.000000000000000000
 }
 , {
   "hash": "0xf020b6020263950b3c2b6916b4f6ca4277302301a902997b7ab89202a0620b9b",
@@ -494,7 +494,7 @@ TIME ~ CLOCK - <INFO>  : listRange.second: --latest--
   "gasCost": 769653000000000,
   "gasUsed": 256551,
   "date": "2019-11-05 05:13:50 UTC",
-  "ether": 0
+  "ether": 0.000000000000000000
 }
 , {
   "hash": "0x389e24356a19c24cac14e99574553a33662099559921691fb592fba3232748fa",
@@ -569,6 +569,6 @@ TIME ~ CLOCK - <INFO>  : listRange.second: --latest--
   "gasCost": 560859000000000,
   "gasUsed": 186953,
   "date": "2019-11-05 07:18:48 UTC",
-  "ether": 0
+  "ether": 0.000000000000000000
 }
 ] }

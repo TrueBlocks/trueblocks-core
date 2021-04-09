@@ -920,28 +920,7 @@
             "gasUsed": 35466,
             "output": "0x"
           },
-          "articulatedTrace": {
-            "name": "donate",
-            "inputs": [
-              {
-                "name": "_donations",
-                "value": [
-                  {
-                    "token": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-                    "amount": "38000000000000000",
-                    "dest": "0xf503017d7baf7fbc0fff7492b751025c6a78179b"
-                  },
-                  {
-                    "token": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-                    "amount": "2000000000000000",
-                    "dest": "0x00de4b13153673bcae2616b67bf822500d325fc3"
-                  }
-                ]
-              }
-            ],
-            "outputs": []
-          },
-          "compressedTrace": "donate ( _donations: [{\"token\":\"0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee\", \"amount\":\"38000000000000000\", \"dest\":\"0xf503017d7baf7fbc0fff7492b751025c6a78179b\"}, {\"token\":\"0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee\", \"amount\":\"2000000000000000\", \"dest\":\"0x00de4b13153673bcae2616b67bf822500d325fc3\"}] )"
+          "compressedTrace": ""
         },
         {
           "traceAddress": "0",
@@ -9123,28 +9102,7 @@
             "gasUsed": 35466,
             "output": "0x"
           },
-          "articulatedTrace": {
-            "name": "donate",
-            "inputs": [
-              {
-                "name": "_donations",
-                "value": [
-                  {
-                    "token": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-                    "amount": "190000000000000000",
-                    "dest": "0xf503017d7baf7fbc0fff7492b751025c6a78179b"
-                  },
-                  {
-                    "token": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-                    "amount": "10000000000000002",
-                    "dest": "0x00de4b13153673bcae2616b67bf822500d325fc3"
-                  }
-                ]
-              }
-            ],
-            "outputs": []
-          },
-          "compressedTrace": "donate ( _donations: [{\"token\":\"0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee\", \"amount\":\"190000000000000000\", \"dest\":\"0xf503017d7baf7fbc0fff7492b751025c6a78179b\"}, {\"token\":\"0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee\", \"amount\":\"10000000000000002\", \"dest\":\"0x00de4b13153673bcae2616b67bf822500d325fc3\"}] )"
+          "compressedTrace": ""
         },
         {
           "traceAddress": "0",

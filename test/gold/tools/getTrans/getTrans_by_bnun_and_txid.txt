@@ -2,4 +2,4 @@ getTrans argc: 5 [1:4000002.5] [2:--trace] [3:--fmt] [4:txt]
 getTrans 4000002.5 --trace --fmt txt 
 TIME ~ CLOCK - <INFO>  : trace: true
 blocknumber	transactionindex	date	timestamp	from	to	ether	ethergasprice	gasused	hash	iserror	encoding	compressedtx	tracescnt
-4000002	5	2017-07-09 20:52:54 UTC	1499633574	0xd5f1eaa0be5f7b15b062b82a54eadaaa5a16e90f	0x904b7190718aa2d025b2aded0f20a0a0fe6e6bd5	15	0.000000021	21000	0x9ba401a48e378440f90e8d50feac2331f38a39fd9f33e3c6c213302cef3e5887	0	0x	0x ( )	1
+4000002	5	2017-07-09 20:52:54 UTC	1499633574	0xd5f1eaa0be5f7b15b062b82a54eadaaa5a16e90f	0x904b7190718aa2d025b2aded0f20a0a0fe6e6bd5	15.000000000000000000	0.000000021000000000	21000	0x9ba401a48e378440f90e8d50feac2331f38a39fd9f33e3c6c213302cef3e5887	0	0x	0x ( )	1

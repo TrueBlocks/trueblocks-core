@@ -1,7 +1,7 @@
 {
   "data": [
     {
-      "totalSupply": "36300.583781114609985733",
+      "totalSupply": "36838.526036685327321725",
       "address": "0xa9fe4601811213c340e850ea305481aff02f5b28",
       "name": "WETH yVault",
       "symbol": "yvWETH",
