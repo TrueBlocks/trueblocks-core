@@ -584,6 +584,8 @@ bool COptions::freshen_internal(void) {
     LOG_TEST_VAL("stats.nBloomHits", stats.nBloomHits);
     LOG_TEST_VAL("stats.nFalsePositive", stats.nFalsePositive);
     LOG_TEST_VAL("stats.nPositive", stats.nPositive);
+    LOG_TEST_VAL("stats.nStageChecked", stats.nStageChecked);
+    LOG_TEST_VAL("stats.nStageHits", stats.nStageHits);
     LOG_TEST_VAL("stats.nRecords", stats.nRecords);
 
     // Clean the monitor stage of previously unfinished scrapes
@@ -610,6 +612,8 @@ bool COptions::freshen_internal(void) {
     LOG_TEST_VAL("stats.nBloomHits", stats.nBloomHits);
     LOG_TEST_VAL("stats.nFalsePositive", stats.nFalsePositive);
     LOG_TEST_VAL("stats.nPositive", stats.nPositive);
+    LOG_TEST_VAL("stats.nStageChecked", stats.nStageChecked);
+    LOG_TEST_VAL("stats.nStageHits", stats.nStageHits);
     LOG_TEST_VAL("stats.nRecords", stats.nRecords);
 
     EXIT_NOMSG(true);

@@ -95,6 +95,12 @@ string_q CAcctScrapeStats::getValueByName(const string_q& fieldName) const {
             if (fieldName % "nPositive") {
                 return uint_2_Str(nPositive);
             }
+            if (fieldName % "nStageChecked") {
+                return uint_2_Str(nStageChecked);
+            }
+            if (fieldName % "nStageHits") {
+                return uint_2_Str(nStageHits);
+            }
             if (fieldName % "nRecords") {
                 return uint_2_Str(nRecords);
             }
@@ -148,6 +154,14 @@ bool CAcctScrapeStats::setValueByName(const string_q& fieldNameIn, const string_
                 nPositive = str_2_Uint(fieldValue);
                 return true;
             }
+            if (fieldName % "nStageChecked") {
+                nStageChecked = str_2_Uint(fieldValue);
+                return true;
+            }
+            if (fieldName % "nStageHits") {
+                nStageHits = str_2_Uint(fieldValue);
+                return true;
+            }
             if (fieldName % "nRecords") {
                 nRecords = str_2_Uint(fieldValue);
                 return true;
@@ -185,6 +199,8 @@ bool CAcctScrapeStats::Serialize(CArchive& archive) {
     archive >> nBloomHits;
     archive >> nFalsePositive;
     archive >> nPositive;
+    archive >> nStageChecked;
+    archive >> nStageHits;
     archive >> nRecords;
     finishParse();
     return true;
@@ -204,6 +220,8 @@ bool CAcctScrapeStats::SerializeC(CArchive& archive) const {
     archive << nBloomHits;
     archive << nFalsePositive;
     archive << nPositive;
+    archive << nStageChecked;
+    archive << nStageHits;
     archive << nRecords;
 
     return true;
@@ -248,6 +266,8 @@ void CAcctScrapeStats::registerClass(void) {
     ADD_FIELD(CAcctScrapeStats, "nBloomHits", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CAcctScrapeStats, "nFalsePositive", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CAcctScrapeStats, "nPositive", T_UNUMBER, ++fieldNum);
+    ADD_FIELD(CAcctScrapeStats, "nStageChecked", T_UNUMBER, ++fieldNum);
+    ADD_FIELD(CAcctScrapeStats, "nStageHits", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CAcctScrapeStats, "nRecords", T_UNUMBER, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
