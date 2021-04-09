@@ -101,7 +101,8 @@ bool visitStagingIndexFiles(const string_q& path, void* data) {
             }
         }
 
-        LOG_PROGRESS("Scanning", options->fileRange.first, options->listRange.second, " stage " + string_q(items.size() ? " hit" : " miss"));
+        LOG_PROGRESS("Scanning", options->fileRange.first, options->listRange.second,
+                     " stage " + string_q(items.size() ? " hit" : " miss"));
 
         stage.Release();
         delete rawData;
