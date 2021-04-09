@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-	conn, err := ethclient.Dial("https://mainnet.infura.io/v3/bd294519b16b4967b4d647071088f473")
+	conn, err := ethclient.Dial("http://localhost:36963")
 	if err != nil {
 		log.Fatalf("Failed to connect: %v", err)
 	}
@@ -19,6 +19,10 @@ func main() {
 		log.Fatalf("Could not connect to contract: %v", err)
 	}
 
+    // contract.PublishHash(nil, "0x12")
+	value1, _ := contract.Owner(nil)
+	fmt.Printf("Owner: 0x%x\n", value1)
+
 	value, _ := contract.ManifestHash(nil)
-	fmt.Println(value)
+	fmt.Printf("Latest Hash: %s\n", value)
 }
