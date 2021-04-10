@@ -1045,26 +1045,33 @@ void guardLiveTest(const string_q& path) {
     static bool been_here = false;
     if (!isLiveTest() || been_here)
         return;
-    if (contains(path, "junk"))
-        return;
+    if (!contains(path, "mocked")) {
+        cerr << "You may only do a live test if your indexPath (" << path << ") contains the word 'mocked'." << endl;
+        cerr << "Quitting..." << endl;
+        quickQuitHandler(1);
+    }
     been_here = true;
-    cerr << "IF YOU CONTINUE, YOU WILL DAMAGE DATA HERE: " << path;
+    cerr << "Completing a live test using indexFolder: " << path << endl;
+    cerr << "Continue?";
     getchar();
     if (shouldQuit())
-        quickQuitHandler(-1);
-    cerr << "CHANGE THE LOCATION OF INDEX_PATH IN THE CONFIG FILE. ARE YOU SURE?";
-    getchar();
-    if (shouldQuit())
-        quickQuitHandler(-1);
+        quickQuitHandler(1);
 }
 
 //-------------------------------------------------------------------------
 string_q getIndexPath(const string_q& _part) {
     string_q indexPath = getGlobalConfig()->getConfigStr("settings", "indexPath", "<not-set>");
-    if (indexPath == "<not-set>" || !folderExists(indexPath)) {
+    if (indexPath == "<not-set>") {
         guardLiveTest(indexPath + _part);
         return getCachePath("addr_index/" + _part);
     }
+    if (!folderExists(indexPath)) {
+        cerr << "Attempt to create customized indexPath (" << indexPath << ") failed." << endl;
+        cerr << "Please adjust it by editing ~/.quickBlocks/quickBlocks.toml." << endl;
+        cerr << "Quitting...";
+        quickQuitHandler(1);
+    }
+
     indexPath += (!endsWith(indexPath, '/') ? "/" : "");
     if (!folderExists(indexPath)) {
         LOG_WARN("Index path '" + indexPath + "' not found.");

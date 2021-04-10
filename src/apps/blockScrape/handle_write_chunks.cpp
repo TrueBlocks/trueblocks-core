@@ -52,7 +52,6 @@ bool CConsolidator::write_chunks(blknum_t chunkSize, bool once) {
         // Now we know where the break happens. We want to put all records up to and including
         // the break in the new chunk and put all the records after the break to the end of
         // the array back into newStage
-        // The weird edge case is fixed -- close the issue
         if (loc == NOPOS) {
             loc = lines.size() ? lines.size() - 1 : 0;
             LOG8("  Last full block is last line in file: ", nRecords, " loc: ", loc);

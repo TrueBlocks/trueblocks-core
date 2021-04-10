@@ -208,7 +208,7 @@ size_t decodeAnObject(CParameterArray& params, const CStringArray& dataArray, si
                 return true;  // we can just skip this
             }
             LOG_ERR("Should never happen at line ", __LINE__, " of file ", __FILE__);
-            quickQuitHandler(-1);
+            quickQuitHandler(1);
 
         } else {
             if (param.type == "string" || param.type == "bytes") {
@@ -338,7 +338,7 @@ size_t decodeAnObject(CParameterArray& params, const CStringArray& dataArray, si
                 return true;  // we can just skip this
             }
             LOG_ERR("Should never happen at line ", __LINE__, " of file ", __FILE__);
-            quickQuitHandler(-1);
+            quickQuitHandler(1);
         }
     }
 

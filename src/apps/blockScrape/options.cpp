@@ -436,8 +436,3 @@ bool addNewPin(CPinnedChunk& newPin, void* data) {
     // TODO(tjayrush): Note...
     return !isTestMode();
 }
-
-// TODO(tjayrush): There is code in this folder noted as "The weird edge case"
-// TODO(tjayrush): Can reproduce by removing every folder but blooms and finialized. Removing every
-// TODO(tjayrush): chunk and bloom after 12,000,000 and quit at block 12,003,500. Capture
-// TODO(tjayrush): the output in a log file. One of the records will say "The weird edge case."
