@@ -27,7 +27,7 @@ bool COptions::handle_appearances(void) {
         if (shouldQuit() || app->blk >= expContext().tsCnt)
             break;
 
-        if (inRange((blknum_t)app->blk, exportRange.first, exportRange.second)) {
+        if (inRange((blknum_t)app->blk, scanRange.first, scanRange.second)) {
             nProcessed++;
             if (shouldDisplay) {
                 CAppearanceDisplay dapp(hackAppAddr, hackAppName, app->blk, app->txid);
@@ -35,7 +35,7 @@ bool COptions::handle_appearances(void) {
                 cout << dapp.Format() << endl;
                 first = false;
             }
-        } else if (app->blk > exportRange.second) {
+        } else if (app->blk > scanRange.second) {
             break;
         }
     }

@@ -63,8 +63,13 @@ bool cleanMonitorFile(const string_q& path, void* data) {
             first = false;
             CMonitor m;
             size_t sizeNow = (fileSize(path) / sizeof(CAppearance_base));
-            cout << "{ \"path\": \"" << substitute(path, m.getMonitorPath(""), "$CACHE/")
-                 << "\", \"sizeThen\": " << sizeThen << ", \"sizeNow\": " << sizeNow << "}" << endl;
+            cout << "{ ";
+            cout << "\"path\": \"" << substitute(path, m.getMonitorPath(""), "$CACHE/") << "\", ";
+            cout << "\"sizeThen\": " << sizeThen << ", ";
+            cout << "\"sizeNow\": " << sizeNow;
+            if (sizeThen > sizeNow)
+                cout << ", \"dupsRemoved\": " << (sizeThen - sizeNow);
+            cout << " }" << endl;
         }
     }
 
@@ -74,8 +79,8 @@ bool cleanMonitorFile(const string_q& path, void* data) {
 //---------------------------------------------------------------
 bool COptions::handle_clean(void) {
     CMonitor m;
-    cout << (isTestMode() ? "[" : "");
+    cout << "[";
     bool ret = forEveryFileInFolder(m.getMonitorPath(""), cleanMonitorFile, NULL);
-    cout << (isTestMode() ? "]" : "");
+    cout << "]";
     return ret;
 }

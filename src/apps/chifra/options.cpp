@@ -153,7 +153,7 @@ map<string, string> cmdMap = {{"monitor", "acctExport --appearances"},
                               {"explore", "ethscan.py"},
                               {"slurp", "ethslurp"},
                               {"quotes", "ethQuote"},
-                              {"where", "whereBlock"},
+                              {"where", "env DICT_MODE=true whereBlock"},
                               {"list", "acctExport --appearances"},
                               {"dive", "turboDive"}};
 

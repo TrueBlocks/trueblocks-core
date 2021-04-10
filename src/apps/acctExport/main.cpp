@@ -67,8 +67,8 @@ int main(int argc, const char* argv[]) {
     }
 
     ostringstream os;
-    os << ", \"start\": " << (isTestMode() ? "\"0xdeadbeef\"" : uint_2_Str(options.exportRange.first)) << endl;
-    os << ", \"end\": " << (isTestMode() ? "\"0xdeadbeef\"" : uint_2_Str(options.exportRange.second)) << endl;
+    os << ", \"start\": " << (isTestMode() ? "\"0xdeadbeef\"" : uint_2_Str(options.scanRange.first)) << endl;
+    os << ", \"end\": " << (isTestMode() ? "\"0xdeadbeef\"" : uint_2_Str(options.scanRange.second)) << endl;
     if (!options.count && options.allMonitors.size() == 1) {
         options.getNamedAccount(options.allMonitors[0], options.allMonitors[0].address);
         HIDE_FIELD(CMonitor, "summaryStatement");

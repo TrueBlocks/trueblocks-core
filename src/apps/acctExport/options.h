@@ -45,6 +45,7 @@ class COptions : public CAbiOptions {
     CMonitorArray possibles;
     blkrange_t fileRange;
     size_t visitTypes;
+    CBlockProgress bp;
 
     CMonitorCountArray counts;
     CAppearanceArray_base apps;
@@ -126,5 +127,3 @@ inline bool isJson(void) {
 #define VIS_FINAL (1 << 1)
 #define VIS_STAGING (1 << 2)
 #define VIS_UNRIPE (1 << 3)
-
-#define exportRange scanRange

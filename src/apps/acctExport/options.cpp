@@ -61,13 +61,7 @@ bool COptions::parseArguments(string_q& command) {
     bool unripe = false;
     // END_CODE_LOCAL_INIT
 
-    CBlockProgress progress = getBlockProgress();
-    blknum_t unripeBlk = progress.unripe;
-    // blknum_t ripeBlk = progress.ripe;
-    blknum_t stagingBlk = progress.staging;
-    blknum_t finalizedBlk = progress.finalized;
-    latestBlock = progress.client;
-
+    latestBlock = bp.client;
     blknum_t latest = latestBlock;
     string_q origCmd = command;
 
@@ -219,6 +213,13 @@ bool COptions::parseArguments(string_q& command) {
         EXIT_NOMSG(false);
     }
 
+    if (staging && count)
+        EXIT_USAGE("Please choose either --staging or --count, not both.");
+
+    if (staging && end != NOPOS && end >= bp.finalized)
+        EXIT_USAGE("--end value (" + uint_2_Str(end) + ") must be greater than finalized value (" +
+                   uint_2_Str(bp.finalized) + ").");
+
     // Handle the easy cases first...
     if (isCrudCommand())
         EXIT_NOMSG(handle_rm(addrs));
@@ -305,9 +306,11 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     // Last block depends on scrape type or user input `end` option (with appropriate check)
-    blknum_t lastBlockToVisit = max((blknum_t)1, (visitTypes & VIS_UNRIPE)    ? unripeBlk
-                                                 : (visitTypes & VIS_STAGING) ? stagingBlk
-                                                                              : finalizedBlk);
+    blknum_t lastBlockToVisit = max((blknum_t)1, (visitTypes & VIS_UNRIPE)    ? bp.unripe
+                                                 : (visitTypes & VIS_STAGING) ? bp.staging
+                                                                              : bp.finalized);
+    if (isTestMode())
+        lastBlockToVisit = min(blknum_t(12000000), lastBlockToVisit);
 
     // Mark the range...
     listRange = make_pair((firstBlockToVisit == NOPOS ? 0 : firstBlockToVisit), lastBlockToVisit);
@@ -327,13 +330,13 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     if (start != NOPOS)
-        exportRange.first = start;
+        scanRange.first = start;
     if (end != NOPOS)
-        exportRange.second = end;
+        scanRange.second = end;
 
     LOG_TEST("nMonitors", allMonitors.size(), false);
-    LOG_TEST("exportRange.first", exportRange.first, false);
-    LOG_TEST("exportRange.second", exportRange.second, false);
+    LOG_TEST("exportRange.first", scanRange.first, false);
+    LOG_TEST("exportRange.second", scanRange.second, false);
     LOG_TEST("listRange.first", listRange.first, false);
     LOG_TEST("listRange.second", "--latest--", false);
 
@@ -380,7 +383,8 @@ void COptions::Init(void) {
     nTransactions = 0;
     nCacheItemsRead = 0;
     nCacheItemsWritten = 0;
-    listRange.second = getBlockProgress(BP_RIPE).ripe;
+    bp = getBlockProgress(BP_ALL);
+    listRange.second = bp.ripe;
 
     allMonitors.clear();
     counts.clear();

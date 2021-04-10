@@ -11,6 +11,8 @@ extern int sortByAddress(const void* v1, const void* v2);
 extern bool isHit(char* s, const CMonitorArray& monitors);
 //---------------------------------------------------------------
 bool visitStagingIndexFiles(const string_q& path, void* data) {
+    return !shouldQuit();
+#if 0
     ENTER("visitStagingIndexFile");
 
     if (endsWith(path, "/")) {
@@ -41,6 +43,9 @@ bool visitStagingIndexFiles(const string_q& path, void* data) {
             options->stats.nSkipped++;
             EXIT_NOMSG(!shouldQuit());
         }
+
+        if (isTestMode() && options->fileRange.first > 12000000)
+            EXIT_NOMSG(!shouldQuit());
 
         char* rawData = NULL;
 
@@ -112,8 +117,10 @@ bool visitStagingIndexFiles(const string_q& path, void* data) {
     }
     ASSERT(0);  // should not happen
     return !shouldQuit();
+#endif
 }
 
+#if 0
 //---------------------------------------------------------------
 int sortByAddress(const void* v1, const void* v2) {
     char* s1 = (char*)v1;
@@ -133,3 +140,4 @@ bool isHit(char* s, const CMonitorArray& monitors) {
 int findAppearance2(const void* v1, const void* v2) {
     return sortByAddress(v1, v2) == 0;
 }
+#endif

@@ -25,7 +25,7 @@ bool COptions::handle_logs(void) {
         if (shouldQuit() || app->blk >= expContext().tsCnt)
             break;
 
-        if (inRange((blknum_t)app->blk, exportRange.first, exportRange.second)) {
+        if (inRange((blknum_t)app->blk, scanRange.first, scanRange.second)) {
             CBlock block;  // do not move this from this scope
             block.blockNumber = app->blk;
             CTransaction trans;
@@ -113,7 +113,7 @@ bool COptions::handle_logs(void) {
                     first = false;
                 }
             }
-        } else if (app->blk > exportRange.second) {
+        } else if (app->blk > scanRange.second) {
             break;
         }
     }
