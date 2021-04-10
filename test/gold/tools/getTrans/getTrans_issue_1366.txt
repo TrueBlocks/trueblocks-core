@@ -1,0 +1,110 @@
+getTrans argc: 6 [1:0x557c3e14a8e86cd0b947d5c7790d332bbe52bb6ec8cba0aa532ddc717ffd0abe] [2:--fmt] [3:json] [4:--trace] [5:--articulate] 
+getTrans 0x557c3e14a8e86cd0b947d5c7790d332bbe52bb6ec8cba0aa532ddc717ffd0abe --fmt json --trace --articulate 
+TIME ~ CLOCK - <INFO>  : articulate: true
+TIME ~ CLOCK - <INFO>  : trace: true
+{ "data": [
+TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
+TIME ~ CLOCK - <INFO>  : typeList: : 
+TIME ~ CLOCK - <INFO>  : inputStr: : 0x0000000000000000000000000000000000000000000000000de0b6b3a7640000
+TIME ~ CLOCK - <INFO>  : Parse func found: : address,uint256
+TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
+TIME ~ CLOCK - <INFO>  : typeList: : 
+TIME ~ CLOCK - <INFO>  : inputStr: : 
+params.size: 0
+==================================================
+
+TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
+TIME ~ CLOCK - <INFO>  : typeList: : 
+TIME ~ CLOCK - <INFO>  : inputStr: : 0x0000000000000000000000000000000000000000000000000000000000000001
+TIME ~ CLOCK - <INFO>  : Parse func found: : uint256
+TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
+TIME ~ CLOCK - <INFO>  : typeList: : 
+TIME ~ CLOCK - <INFO>  : inputStr: : 
+params.size: 0
+==================================================
+
+TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
+TIME ~ CLOCK - <INFO>  : typeList: : 
+TIME ~ CLOCK - <INFO>  : inputStr: : 0x0000000000000000000000000000000000000000000000000000000000000001
+TIME ~ CLOCK - <INFO>  : Parse func found: : uint256
+  {
+    "hash": "0x557c3e14a8e86cd0b947d5c7790d332bbe52bb6ec8cba0aa532ddc717ffd0abe",
+    "blockHash": "0x12804134060126a2b62a3db6d37facc47622624dd055e98f309fd624f1a12ae8",
+    "blockNumber": 1545347,
+    "transactionIndex": 3,
+    "timestamp": 1463653193,
+    "from": "0xd8da6bf26964af9d7eed9e03e53415d37aa96045",
+    "to": "0xd654bdd32fc99471455e86c2e7f7d7b6437e9179",
+    "value": 1000000000000000000,
+    "gas": 150000,
+    "gasPrice": 20000000000,
+    "input": "0xd0e30db0",
+    "isError": 0,
+    "hasToken": 0,
+    "receipt": {
+      "contractAddress": "0x0",
+      "gasUsed": 43210,
+      "logs": [
+        {
+          "address": "0xd654bdd32fc99471455e86c2e7f7d7b6437e9179",
+          "logIndex": 0,
+          "topics": [
+            "0xe1fffcc4923d04b559f4d29a8bfc6cda04eb5b0d3c460751c2402c5c5cc9109c",
+            "0x000000000000000000000000d8da6bf26964af9d7eed9e03e53415d37aa96045"
+          ],
+          "data": "0x0000000000000000000000000000000000000000000000000de0b6b3a7640000",
+          "articulatedLog": {
+            "name": "Deposit",
+            "stateMutability": "nonpayable",
+            "inputs": {
+              "from": "0x0000000000000000000000000de0b6b3a7640000",
+              "value": "0"
+            }
+          },
+          "compressedLog": "Deposit(0x0000000000000000000000000de0b6b3a7640000, 0); "
+        }
+      ],
+      "status": null
+    },
+    "traces": [
+      {
+        "type": "call",
+        "action": {
+          "selfDestructed": "0x0",
+          "balance": 0,
+          "callType": "call",
+          "from": "0xd8da6bf26964af9d7eed9e03e53415d37aa96045",
+          "gas": 128728,
+          "input": "0xd0e30db0",
+          "refundAddress": "0x0",
+          "to": "0xd654bdd32fc99471455e86c2e7f7d7b6437e9179",
+          "value": 1000000000000000000
+        },
+        "result": {
+          "newContract": "0x0",
+          "gasUsed": 21938,
+          "output": "0x0000000000000000000000000000000000000000000000000000000000000001"
+        },
+        "articulatedTrace": {
+          "name": "deposit",
+          "stateMutability": "nonpayable",
+          "outputs": {
+            "ret_0": "1"
+          }
+        },
+        "compressedTrace": "deposit(); "
+      }
+    ],
+    "articulatedTx": {
+      "name": "deposit",
+      "stateMutability": "nonpayable",
+      "outputs": {
+        "ret_0": "1"
+      }
+    },
+    "compressedTx": "deposit(); ",
+    "gasCost": 864200000000000,
+    "gasUsed": 43210,
+    "date": "2016-05-19 10:19:53 UTC",
+    "ether": 1.000000000000000000
+  }] }
