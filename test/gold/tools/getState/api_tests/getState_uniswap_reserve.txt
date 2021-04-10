@@ -8,21 +8,11 @@
         "name": "getReserves",
         "signature": "getReserves()",
         "encoding": "0x0902f1ac",
-        "inputs": [],
-        "outputs": [
-          {
-            "name": "_reserve0",
-            "value": "11186797"
-          },
-          {
-            "name": "_reserve1",
-            "value": "5095051840848895862"
-          },
-          {
-            "name": "_blockTimestampLast",
-            "value": "1589829395"
-          }
-        ]
+        "outputs": {
+          "_blockTimestampLast": "1589829395",
+          "_reserve0": "11186797",
+          "_reserve1": "5095051840848895862"
+        }
       },
       "balance": 0,
       "address": "0xbb2b8038a1640196fbe3e38816f3e67cba72d940"

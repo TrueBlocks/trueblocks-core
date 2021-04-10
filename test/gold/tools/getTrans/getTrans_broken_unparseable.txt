@@ -3969,20 +3969,11 @@ params.size: 3
           "data": "0x000000000000000000000000000000000000000000001839654ece58dcc40000",
           "articulatedLog": {
             "name": "Transfer",
-            "inputs": [
-              {
-                "name": "_from",
-                "value": "0x00de4b13153673bcae2616b67bf822500d325fc3"
-              },
-              {
-                "name": "_to",
-                "value": "0xe069cb01d06ba617bcdf789bf2ff0d5e5ca20c71"
-              },
-              {
-                "name": "_amount",
-                "value": "114395560000000000000000"
-              }
-            ]
+            "inputs": {
+              "_amount": "114395560000000000000000",
+              "_from": "0x00de4b13153673bcae2616b67bf822500d325fc3",
+              "_to": "0xe069cb01d06ba617bcdf789bf2ff0d5e5ca20c71"
+            }
           },
           "compressedLog": "Transfer(0x00de4b13153673bcae2616b67bf822500d325fc3, 0xe069cb01d06ba617bcdf789bf2ff0d5e5ca20c71, 114395560000000000000000); "
         },
@@ -3997,20 +3988,11 @@ params.size: 3
           "data": "0x000000000000000000000000000000000000000000001839654ece58dcc40000",
           "articulatedLog": {
             "name": "Approval",
-            "inputs": [
-              {
-                "name": "_owner",
-                "value": "0xe069cb01d06ba617bcdf789bf2ff0d5e5ca20c71"
-              },
-              {
-                "name": "_spender",
-                "value": "0x9aab3f75489902f3a48495025729a0af77d4b11e"
-              },
-              {
-                "name": "_amount",
-                "value": "114395560000000000000000"
-              }
-            ]
+            "inputs": {
+              "_amount": "114395560000000000000000",
+              "_owner": "0xe069cb01d06ba617bcdf789bf2ff0d5e5ca20c71",
+              "_spender": "0x9aab3f75489902f3a48495025729a0af77d4b11e"
+            }
           },
           "compressedLog": "Approval(0xe069cb01d06ba617bcdf789bf2ff0d5e5ca20c71, 0x9aab3f75489902f3a48495025729a0af77d4b11e, 114395560000000000000000); "
         },
@@ -4025,20 +4007,11 @@ params.size: 3
           "data": "0x000000000000000000000000000000000000000000001839654ece58dcc40000",
           "articulatedLog": {
             "name": "Transfer",
-            "inputs": [
-              {
-                "name": "_from",
-                "value": "0xe069cb01d06ba617bcdf789bf2ff0d5e5ca20c71"
-              },
-              {
-                "name": "_to",
-                "value": "0x7c66550c9c730b6fdd4c03bc2e73c5462c5f7acc"
-              },
-              {
-                "name": "_amount",
-                "value": "114395560000000000000000"
-              }
-            ]
+            "inputs": {
+              "_amount": "114395560000000000000000",
+              "_from": "0xe069cb01d06ba617bcdf789bf2ff0d5e5ca20c71",
+              "_to": "0x7c66550c9c730b6fdd4c03bc2e73c5462c5f7acc"
+            }
           },
           "compressedLog": "Transfer(0xe069cb01d06ba617bcdf789bf2ff0d5e5ca20c71, 0x7c66550c9c730b6fdd4c03bc2e73c5462c5f7acc, 114395560000000000000000); "
         },
@@ -4053,20 +4026,11 @@ params.size: 3
           "data": "0x000000000000000000000000000000000000000000001839654ece58dcc40000",
           "articulatedLog": {
             "name": "Transfer",
-            "inputs": [
-              {
-                "name": "_from",
-                "value": "0x7c66550c9c730b6fdd4c03bc2e73c5462c5f7acc"
-              },
-              {
-                "name": "_to",
-                "value": "0xaa448eff88b1e752d50b87220b543d79eac15a0e"
-              },
-              {
-                "name": "_amount",
-                "value": "114395560000000000000000"
-              }
-            ]
+            "inputs": {
+              "_amount": "114395560000000000000000",
+              "_from": "0x7c66550c9c730b6fdd4c03bc2e73c5462c5f7acc",
+              "_to": "0xaa448eff88b1e752d50b87220b543d79eac15a0e"
+            }
           },
           "compressedLog": "Transfer(0x7c66550c9c730b6fdd4c03bc2e73c5462c5f7acc, 0xaa448eff88b1e752d50b87220b543d79eac15a0e, 114395560000000000000000); "
         },
@@ -4081,18 +4045,10 @@ params.size: 3
           "articulatedLog": {
             "name": "EtherReceival",
             "stateMutability": "nonpayable",
-            "inputs": [
-              {
-                "name": "sender",
-                "value": "0xaa448eff88b1e752d50b87220b543d79eac15a0e",
-                "internalType": "address"
-              },
-              {
-                "name": "amount",
-                "value": "7666038077839988828",
-                "internalType": "uint256"
-              }
-            ]
+            "inputs": {
+              "amount": "7666038077839988828",
+              "sender": "0xaa448eff88b1e752d50b87220b543d79eac15a0e"
+            }
           },
           "compressedLog": "EtherReceival(0xaa448eff88b1e752d50b87220b543d79eac15a0e, 7666038077839988828); "
         },
@@ -4109,38 +4065,14 @@ params.size: 3
           "articulatedLog": {
             "name": "TradeExecute",
             "stateMutability": "nonpayable",
-            "inputs": [
-              {
-                "name": "origin",
-                "value": "0x7c66550c9c730b6fdd4c03bc2e73c5462c5f7acc",
-                "internalType": "address"
-              },
-              {
-                "name": "src",
-                "value": "0x5732046a883704404f284ce41ffadd5b007fd668",
-                "internalType": "contract IERC20Ext"
-              },
-              {
-                "name": "srcAmount",
-                "value": "114395560000000000000000",
-                "internalType": "uint256"
-              },
-              {
-                "name": "destToken",
-                "value": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-                "internalType": "contract IERC20Ext"
-              },
-              {
-                "name": "destAmount",
-                "value": "7666038077839988828",
-                "internalType": "uint256"
-              },
-              {
-                "name": "destAddress",
-                "value": "0x7c66550c9c730b6fdd4c03bc2e73c5462c5f7acc",
-                "internalType": "address payable"
-              }
-            ]
+            "inputs": {
+              "destAddress": "0x7c66550c9c730b6fdd4c03bc2e73c5462c5f7acc",
+              "destAmount": "7666038077839988828",
+              "destToken": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+              "origin": "0x7c66550c9c730b6fdd4c03bc2e73c5462c5f7acc",
+              "src": "0x5732046a883704404f284ce41ffadd5b007fd668",
+              "srcAmount": "114395560000000000000000"
+            }
           },
           "compressedLog": "TradeExecute(0x7c66550c9c730b6fdd4c03bc2e73c5462c5f7acc, 0x5732046a883704404f284ce41ffadd5b007fd668, 114395560000000000000000, 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee, 7666038077839988828, 0x7c66550c9c730b6fdd4c03bc2e73c5462c5f7acc); "
         },
@@ -4156,48 +4088,16 @@ params.size: 3
           "articulatedLog": {
             "name": "FeeDistributed",
             "stateMutability": "nonpayable",
-            "inputs": [
-              {
-                "name": "token",
-                "value": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-                "internalType": "contract IERC20"
-              },
-              {
-                "name": "platformWallet",
-                "value": "0x910bf2d50fa5e014fd06666f456182d4ab7c8bd2",
-                "internalType": "address"
-              },
-              {
-                "name": "platformFeeWei",
-                "value": "0",
-                "internalType": "uint256"
-              },
-              {
-                "name": "rewardWei",
-                "value": "5160776834001879",
-                "internalType": "uint256"
-              },
-              {
-                "name": "rebateWei",
-                "value": "2029966883012028",
-                "internalType": "uint256"
-              },
-              {
-                "name": "rebateWallets",
-                "value": "[0xbc33a1f908612640f2849b56b67a4de4d179c151]",
-                "internalType": "address[]"
-              },
-              {
-                "name": "rebatePercentBpsPerWallet",
-                "value": "[10000]",
-                "internalType": "uint256[]"
-              },
-              {
-                "name": "burnAmtWei",
-                "value": "475294360826081",
-                "internalType": "uint256"
-              }
-            ]
+            "inputs": {
+              "burnAmtWei": "475294360826081",
+              "platformFeeWei": "0",
+              "platformWallet": "0x910bf2d50fa5e014fd06666f456182d4ab7c8bd2",
+              "rebatePercentBpsPerWallet": "[10000]",
+              "rebateWallets": "[0xbc33a1f908612640f2849b56b67a4de4d179c151]",
+              "rebateWei": "2029966883012028",
+              "rewardWei": "5160776834001879",
+              "token": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+            }
           },
           "compressedLog": "FeeDistributed(0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee, 0x910bf2d50fa5e014fd06666f456182d4ab7c8bd2, 0, 5160776834001879, 2029966883012028, [0xbc33a1f908612640f2849b56b67a4de4d179c151], [10000], 475294360826081); "
         },
@@ -4213,60 +4113,19 @@ params.size: 3
           "articulatedLog": {
             "name": "KyberTrade",
             "stateMutability": "nonpayable",
-            "inputs": [
-              {
-                "name": "src",
-                "value": "0x5732046a883704404f284ce41ffadd5b007fd668",
-                "internalType": "contract IERC20"
-              },
-              {
-                "name": "dest",
-                "value": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-                "internalType": "contract IERC20"
-              },
-              {
-                "name": "ethWeiValue",
-                "value": "7666038077839988828",
-                "internalType": "uint256"
-              },
-              {
-                "name": "networkFeeWei",
-                "value": "7666038077839988",
-                "internalType": "uint256"
-              },
-              {
-                "name": "customPlatformFeeWei",
-                "value": "0",
-                "internalType": "uint256"
-              },
-              {
-                "name": "t2eIds",
-                "value": "[0xff4b796265722046707256320000000000000000000000000000000000000000]",
-                "internalType": "bytes32[]"
-              },
-              {
-                "name": "e2tIds",
-                "internalType": "bytes32[]"
-              },
-              {
-                "name": "t2eSrcAmounts",
-                "value": "[114395560000000000000000]",
-                "internalType": "uint256[]"
-              },
-              {
-                "name": "e2tSrcAmounts",
-                "internalType": "uint256[]"
-              },
-              {
-                "name": "t2eRates",
-                "value": "[67013423229363]",
-                "internalType": "uint256[]"
-              },
-              {
-                "name": "e2tRates",
-                "internalType": "uint256[]"
-              }
-            ]
+            "inputs": {
+              "customPlatformFeeWei": "0",
+              "dest": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+              "e2tIds": "",
+              "e2tRates": "",
+              "e2tSrcAmounts": "",
+              "ethWeiValue": "7666038077839988828",
+              "networkFeeWei": "7666038077839988",
+              "src": "0x5732046a883704404f284ce41ffadd5b007fd668",
+              "t2eIds": "[0xff4b796265722046707256320000000000000000000000000000000000000000]",
+              "t2eRates": "[67013423229363]",
+              "t2eSrcAmounts": "[114395560000000000000000]"
+            }
           },
           "compressedLog": "KyberTrade(0x5732046a883704404f284ce41ffadd5b007fd668, 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee, 7666038077839988828, 7666038077839988, 0, [0xff4b796265722046707256320000000000000000000000000000000000000000], , [114395560000000000000000], , [67013423229363], ); "
         },
@@ -4281,48 +4140,16 @@ params.size: 3
           "articulatedLog": {
             "name": "ExecuteTrade",
             "stateMutability": "nonpayable",
-            "inputs": [
-              {
-                "name": "trader",
-                "value": "0xe069cb01d06ba617bcdf789bf2ff0d5e5ca20c71",
-                "internalType": "address"
-              },
-              {
-                "name": "src",
-                "value": "0x5732046a883704404f284ce41ffadd5b007fd668",
-                "internalType": "contract IERC20"
-              },
-              {
-                "name": "dest",
-                "value": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-                "internalType": "contract IERC20"
-              },
-              {
-                "name": "destAddress",
-                "value": "0xe069cb01d06ba617bcdf789bf2ff0d5e5ca20c71",
-                "internalType": "address"
-              },
-              {
-                "name": "actualSrcAmount",
-                "value": "114395560000000000000000",
-                "internalType": "uint256"
-              },
-              {
-                "name": "actualDestAmount",
-                "value": "7658372039762148840",
-                "internalType": "uint256"
-              },
-              {
-                "name": "platformWallet",
-                "value": "0x910bf2d50fa5e014fd06666f456182d4ab7c8bd2",
-                "internalType": "address"
-              },
-              {
-                "name": "platformFeeBps",
-                "value": "0",
-                "internalType": "uint256"
-              }
-            ]
+            "inputs": {
+              "actualDestAmount": "7658372039762148840",
+              "actualSrcAmount": "114395560000000000000000",
+              "dest": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+              "destAddress": "0xe069cb01d06ba617bcdf789bf2ff0d5e5ca20c71",
+              "platformFeeBps": "0",
+              "platformWallet": "0x910bf2d50fa5e014fd06666f456182d4ab7c8bd2",
+              "src": "0x5732046a883704404f284ce41ffadd5b007fd668",
+              "trader": "0xe069cb01d06ba617bcdf789bf2ff0d5e5ca20c71"
+            }
           },
           "compressedLog": "ExecuteTrade(0xe069cb01d06ba617bcdf789bf2ff0d5e5ca20c71, 0x5732046a883704404f284ce41ffadd5b007fd668, 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee, 0xe069cb01d06ba617bcdf789bf2ff0d5e5ca20c71, 114395560000000000000000, 7658372039762148840, 0x910bf2d50fa5e014fd06666f456182d4ab7c8bd2, 0); "
         },
@@ -4337,18 +4164,10 @@ params.size: 3
           "articulatedLog": {
             "name": "Deposit",
             "stateMutability": "nonpayable",
-            "inputs": [
-              {
-                "name": "from",
-                "value": "0x0000000000000000000000006a4800cb5bce7de8",
-                "internalType": "address"
-              },
-              {
-                "name": "value",
-                "value": "0",
-                "internalType": "uint256"
-              }
-            ]
+            "inputs": {
+              "from": "0x0000000000000000000000006a4800cb5bce7de8",
+              "value": "0"
+            }
           },
           "compressedLog": "Deposit(0x0000000000000000000000006a4800cb5bce7de8, 0); "
         },
@@ -4363,20 +4182,11 @@ params.size: 3
           "data": "0x0000000000000000000000000000000000000000000000006a4800cb5bce7de8",
           "articulatedLog": {
             "name": "Transfer",
-            "inputs": [
-              {
-                "name": "_from",
-                "value": "0xe069cb01d06ba617bcdf789bf2ff0d5e5ca20c71"
-              },
-              {
-                "name": "_to",
-                "value": "0xa478c2975ab1ea89e8196811f51a7b7ade33eb11"
-              },
-              {
-                "name": "_amount",
-                "value": "7658372039762148840"
-              }
-            ]
+            "inputs": {
+              "_amount": "7658372039762148840",
+              "_from": "0xe069cb01d06ba617bcdf789bf2ff0d5e5ca20c71",
+              "_to": "0xa478c2975ab1ea89e8196811f51a7b7ade33eb11"
+            }
           },
           "compressedLog": "Transfer(0xe069cb01d06ba617bcdf789bf2ff0d5e5ca20c71, 0xa478c2975ab1ea89e8196811f51a7b7ade33eb11, 7658372039762148840); "
         },
@@ -4391,20 +4201,11 @@ params.size: 3
           "data": "0x0000000000000000000000000000000000000000000001ab0355d4bb85c44bdb",
           "articulatedLog": {
             "name": "Transfer",
-            "inputs": [
-              {
-                "name": "_from",
-                "value": "0xa478c2975ab1ea89e8196811f51a7b7ade33eb11"
-              },
-              {
-                "name": "_to",
-                "value": "0xe069cb01d06ba617bcdf789bf2ff0d5e5ca20c71"
-              },
-              {
-                "name": "_amount",
-                "value": "7877000051530980936667"
-              }
-            ]
+            "inputs": {
+              "_amount": "7877000051530980936667",
+              "_from": "0xa478c2975ab1ea89e8196811f51a7b7ade33eb11",
+              "_to": "0xe069cb01d06ba617bcdf789bf2ff0d5e5ca20c71"
+            }
           },
           "compressedLog": "Transfer(0xa478c2975ab1ea89e8196811f51a7b7ade33eb11, 0xe069cb01d06ba617bcdf789bf2ff0d5e5ca20c71, 7877000051530980936667); "
         },
@@ -4418,18 +4219,10 @@ params.size: 3
           "articulatedLog": {
             "name": "Sync",
             "stateMutability": "nonpayable",
-            "inputs": [
-              {
-                "name": "reserve0",
-                "value": "88521288926425696234629898",
-                "internalType": "uint112"
-              },
-              {
-                "name": "reserve1",
-                "value": "85813824770929671650113",
-                "internalType": "uint112"
-              }
-            ]
+            "inputs": {
+              "reserve0": "88521288926425696234629898",
+              "reserve1": "85813824770929671650113"
+            }
           },
           "compressedLog": "Sync(88521288926425696234629898, 85813824770929671650113); "
         },
@@ -4445,38 +4238,14 @@ params.size: 3
           "articulatedLog": {
             "name": "Swap",
             "stateMutability": "nonpayable",
-            "inputs": [
-              {
-                "name": "sender",
-                "value": "0xe069cb01d06ba617bcdf789bf2ff0d5e5ca20c71",
-                "internalType": "address"
-              },
-              {
-                "name": "amount0In",
-                "value": "0",
-                "internalType": "uint256"
-              },
-              {
-                "name": "amount1In",
-                "value": "7658372039762148840",
-                "internalType": "uint256"
-              },
-              {
-                "name": "amount0Out",
-                "value": "7877000051530980936667",
-                "internalType": "uint256"
-              },
-              {
-                "name": "amount1Out",
-                "value": "0",
-                "internalType": "uint256"
-              },
-              {
-                "name": "to",
-                "value": "0xe069cb01d06ba617bcdf789bf2ff0d5e5ca20c71",
-                "internalType": "address"
-              }
-            ]
+            "inputs": {
+              "amount0In": "0",
+              "amount0Out": "7877000051530980936667",
+              "amount1In": "7658372039762148840",
+              "amount1Out": "0",
+              "sender": "0xe069cb01d06ba617bcdf789bf2ff0d5e5ca20c71",
+              "to": "0xe069cb01d06ba617bcdf789bf2ff0d5e5ca20c71"
+            }
           },
           "compressedLog": "Swap(0xe069cb01d06ba617bcdf789bf2ff0d5e5ca20c71, 0, 7658372039762148840, 7877000051530980936667, 0, 0xe069cb01d06ba617bcdf789bf2ff0d5e5ca20c71); "
         },
@@ -4491,20 +4260,11 @@ params.size: 3
           "data": "0x0000000000000000000000000000000000000000000000007f98de3a67ee5ec3",
           "articulatedLog": {
             "name": "Transfer",
-            "inputs": [
-              {
-                "name": "_from",
-                "value": "0xe069cb01d06ba617bcdf789bf2ff0d5e5ca20c71"
-              },
-              {
-                "name": "_to",
-                "value": "0x910bf2d50fa5e014fd06666f456182d4ab7c8bd2"
-              },
-              {
-                "name": "_amount",
-                "value": "9194342981710012099"
-              }
-            ]
+            "inputs": {
+              "_amount": "9194342981710012099",
+              "_from": "0xe069cb01d06ba617bcdf789bf2ff0d5e5ca20c71",
+              "_to": "0x910bf2d50fa5e014fd06666f456182d4ab7c8bd2"
+            }
           },
           "compressedLog": "Transfer(0xe069cb01d06ba617bcdf789bf2ff0d5e5ca20c71, 0x910bf2d50fa5e014fd06666f456182d4ab7c8bd2, 9194342981710012099); "
         },
@@ -4519,20 +4279,11 @@ params.size: 3
           "data": "0x0000000000000000000000000000000000000000000001aa83bcf6811dd5ed18",
           "articulatedLog": {
             "name": "Transfer",
-            "inputs": [
-              {
-                "name": "_from",
-                "value": "0xe069cb01d06ba617bcdf789bf2ff0d5e5ca20c71"
-              },
-              {
-                "name": "_to",
-                "value": "0x00de4b13153673bcae2616b67bf822500d325fc3"
-              },
-              {
-                "name": "_amount",
-                "value": "7867805708549270924568"
-              }
-            ]
+            "inputs": {
+              "_amount": "7867805708549270924568",
+              "_from": "0xe069cb01d06ba617bcdf789bf2ff0d5e5ca20c71",
+              "_to": "0x00de4b13153673bcae2616b67bf822500d325fc3"
+            }
           },
           "compressedLog": "Transfer(0xe069cb01d06ba617bcdf789bf2ff0d5e5ca20c71, 0x00de4b13153673bcae2616b67bf822500d325fc3, 7867805708549270924568); "
         },
@@ -4549,58 +4300,18 @@ params.size: 3
           "articulatedLog": {
             "name": "Swapped",
             "stateMutability": "nonpayable",
-            "inputs": [
-              {
-                "name": "sender",
-                "value": "0x00de4b13153673bcae2616b67bf822500d325fc3",
-                "internalType": "address"
-              },
-              {
-                "name": "srcToken",
-                "value": "0x5732046a883704404f284ce41ffadd5b007fd668",
-                "internalType": "contract IERC20"
-              },
-              {
-                "name": "dstToken",
-                "value": "0x6b175474e89094c44da98b954eedeac495271d0f",
-                "internalType": "contract IERC20"
-              },
-              {
-                "name": "dstReceiver",
-                "value": "0x00de4b13153673bcae2616b67bf822500d325fc3",
-                "internalType": "address"
-              },
-              {
-                "name": "amount",
-                "value": "114395560000000000000000",
-                "internalType": "uint256"
-              },
-              {
-                "name": "spentAmount",
-                "value": "114395560000000000000000",
-                "internalType": "uint256"
-              },
-              {
-                "name": "returnAmount",
-                "value": "7867805708549270924568",
-                "internalType": "uint256"
-              },
-              {
-                "name": "minReturnAmount",
-                "value": "7631771537292792796830",
-                "internalType": "uint256"
-              },
-              {
-                "name": "guaranteedAmount",
-                "value": "7867805708549270924568",
-                "internalType": "uint256"
-              },
-              {
-                "name": "referrer",
-                "value": "0x0000000000000000000000000000000000000000",
-                "internalType": "address"
-              }
-            ]
+            "inputs": {
+              "amount": "114395560000000000000000",
+              "dstReceiver": "0x00de4b13153673bcae2616b67bf822500d325fc3",
+              "dstToken": "0x6b175474e89094c44da98b954eedeac495271d0f",
+              "guaranteedAmount": "7867805708549270924568",
+              "minReturnAmount": "7631771537292792796830",
+              "referrer": "0x0000000000000000000000000000000000000000",
+              "returnAmount": "7867805708549270924568",
+              "sender": "0x00de4b13153673bcae2616b67bf822500d325fc3",
+              "spentAmount": "114395560000000000000000",
+              "srcToken": "0x5732046a883704404f284ce41ffadd5b007fd668"
+            }
           },
           "compressedLog": "Swapped(0x00de4b13153673bcae2616b67bf822500d325fc3, 0x5732046a883704404f284ce41ffadd5b007fd668, 0x6b175474e89094c44da98b954eedeac495271d0f, 0x00de4b13153673bcae2616b67bf822500d325fc3, 114395560000000000000000, 114395560000000000000000, 7867805708549270924568, 7631771537292792796830, 7867805708549270924568, 0x0000000000000000000000000000000000000000); "
         }
@@ -4610,98 +4321,14 @@ params.size: 3
     "articulatedTx": {
       "name": "swap",
       "stateMutability": "payable",
-      "inputs": [
-        {
-          "name": "caller",
-          "value": "0xe069cb01d06ba617bcdf789bf2ff0d5e5ca20c71",
-          "internalType": "contract IOneInchCaller"
-        },
-        {
-          "name": "desc",
-          "value": {"srcToken":"0x0000000000000000000000000000000000000060", "dstToken":"0x00000000000000000000000000000000000001c0", "srcReceiver":"0x5732046a883704404f284ce41ffadd5b007fd668", "dstReceiver":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"1281173195321750650756914221150884052843809082481", "minReturnAmount":"4957305349080171221489756848185353997596647363", "guaranteedAmount":"114395560000000000000000", "flags":"7631771537292792796830", "referrer":"0x0000000000000000000001aa83bcf6811dd5ed18", "permit":""},
-          "internalType": "struct OneInchExchange.SwapDescription",
-          "components": [
-            {
-              "name": "srcToken",
-              "value": "0x0000000000000000000000000000000000000060",
-              "internalType": "contract IERC20"
-            },
-            {
-              "name": "dstToken",
-              "value": "0x00000000000000000000000000000000000001c0",
-              "internalType": "contract IERC20"
-            },
-            {
-              "name": "srcReceiver",
-              "value": "0x5732046a883704404f284ce41ffadd5b007fd668",
-              "internalType": "address"
-            },
-            {
-              "name": "dstReceiver",
-              "value": "0x6b175474e89094c44da98b954eedeac495271d0f",
-              "internalType": "address"
-            },
-            {
-              "name": "amount",
-              "value": "1281173195321750650756914221150884052843809082481",
-              "internalType": "uint256"
-            },
-            {
-              "name": "minReturnAmount",
-              "value": "4957305349080171221489756848185353997596647363",
-              "internalType": "uint256"
-            },
-            {
-              "name": "guaranteedAmount",
-              "value": "114395560000000000000000",
-              "internalType": "uint256"
-            },
-            {
-              "name": "flags",
-              "value": "7631771537292792796830",
-              "internalType": "uint256"
-            },
-            {
-              "name": "referrer",
-              "value": "0x0000000000000000000001aa83bcf6811dd5ed18",
-              "internalType": "address"
-            },
-            {
-              "name": "permit",
-              "internalType": "bytes"
-            }
-          ]
-        },
-        {
-          "name": "calls",
-          "value": "--unparsable--",
-          "internalType": "struct IOneInchCaller.CallDescription[]",
-          "components": [
-            {
-              "name": "targetWithMandatory",
-              "internalType": "uint256"
-            },
-            {
-              "name": "gasLimit",
-              "internalType": "uint256"
-            },
-            {
-              "name": "value",
-              "internalType": "uint256"
-            },
-            {
-              "name": "data",
-              "internalType": "bytes"
-            }
-          ]
-        }
-      ],
-      "outputs": [
-        {
-          "name": "returnAmount",
-          "internalType": "uint256"
-        }
-      ]
+      "inputs": {
+        "caller": "0xe069cb01d06ba617bcdf789bf2ff0d5e5ca20c71",
+        "calls": "",
+        "desc": "{\"srcToken\":\"0x0000000000000000000000000000000000000060\", \"dstToken\":\"0x00000000000000000000000000000000000001c0\", \"srcReceiver\":\"0x5732046a883704404f284ce41ffadd5b007fd668\", \"dstReceiver\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"1281173195321750650756914221150884052843809082481\", \"minReturnAmount\":\"4957305349080171221489756848185353997596647363\", \"guaranteedAmount\":\"114395560000000000000000\", \"flags\":\"7631771537292792796830\", \"referrer\":\"0x0000000000000000000001aa83bcf6811dd5ed18\", \"permit\":\"\"}"
+      },
+      "outputs": {
+        "returnAmount": ""
+      }
     },
     "compressedTx": swap(0xe069cb01d06ba617bcdf789bf2ff0d5e5ca20c71, {\"srcToken\":\"0x0000000000000000000000000000000000000060\", \"dstToken\":\"0x00000000000000000000000000000000000001c0\", \"srcReceiver\":\"0x5732046a883704404f284ce41ffadd5b007fd668\", \"dstReceiver\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"1281173195321750650756914221150884052843809082481\", \"minReturnAmount\":\"4957305349080171221489756848185353997596647363\", \"guaranteedAmount\":\"114395560000000000000000\", \"flags\":\"7631771537292792796830\", \"referrer\":\"0x0000000000000000000001aa83bcf6811dd5ed18\", \"permit\":\"\"}--tuple--, ); ,
     "gasCost": 47543461000000000,

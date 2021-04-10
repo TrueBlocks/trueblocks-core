@@ -19,36 +19,24 @@ TIME ~ CLOCK - <INFO>  : Parse func found: : address,uint256
         "address": "0x6b175474e89094c44da98b954eedeac495271d0f",
         "articulatedLog": {
           "name": "Approval",
-          "inputs": [
-            {
-              "name": "_owner",
-              "value": "0xf503017d7baf7fbc0fff7492b751025c6a78179b"
-            },
-            {
-              "name": "_spender",
-              "value": "0x7d655c57f71464b6f83811c55d84009cd9f5221c"
-            },
-            {
-              "name": "_amount",
-              "value": "5000000000000000000"
-            }
-          ]
+          "inputs": {
+            "_amount": "5000000000000000000",
+            "_owner": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+            "_spender": "0x7d655c57f71464b6f83811c55d84009cd9f5221c"
+          }
         }
       }
     ]
   },
   "articulatedTx": {
     "name": "approve",
-    "inputs": [
-      {
-        "name": "_spender",
-        "value": "0x7d655c57f71464b6f83811c55d84009cd9f5221c"
-      },
-      {
-        "name": "_amount",
-        "value": "5000000000000000000"
-      }
-    ]
+    "inputs": {
+      "_amount": "5000000000000000000",
+      "_spender": "0x7d655c57f71464b6f83811c55d84009cd9f5221c"
+    },
+    "outputs": {
+      "success": ""
+    }
   }
 }
 
@@ -402,70 +390,41 @@ TIME ~ CLOCK - <INFO>  : Parse func found: : address
         "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
         "articulatedLog": {
           "name": "DonationSent",
-          "inputs": [
-            {
-              "name": "token",
-              "value": "0x6b175474e89094c44da98b954eedeac495271d0f"
-            },
-            {
-              "name": "amount",
-              "value": "580000000000000000000"
-            },
-            {
-              "name": "dest",
-              "value": "0x1719c7dc8216ce67f96171e1a817195ae075d78d"
-            },
-            {
-              "name": "donor",
-              "value": "0x00de4b13153673bcae2616b67bf822500d325fc3"
-            }
-          ]
+          "inputs": {
+            "amount": "580000000000000000000",
+            "dest": "0x1719c7dc8216ce67f96171e1a817195ae075d78d",
+            "donor": "0x00de4b13153673bcae2616b67bf822500d325fc3",
+            "token": "0x6b175474e89094c44da98b954eedeac495271d0f"
+          }
         }
       },
       {
         "address": "0x6b175474e89094c44da98b954eedeac495271d0f",
         "articulatedLog": {
           "name": "Transfer",
-          "inputs": [
-            {
-              "name": "_from",
-              "value": "0x00de4b13153673bcae2616b67bf822500d325fc3"
-            },
-            {
-              "name": "_to",
-              "value": "0x1719c7dc8216ce67f96171e1a817195ae075d78d"
-            },
-            {
-              "name": "_amount",
-              "value": "580000000000000000000"
-            }
-          ]
+          "inputs": {
+            "_amount": "580000000000000000000",
+            "_from": "0x00de4b13153673bcae2616b67bf822500d325fc3",
+            "_to": "0x1719c7dc8216ce67f96171e1a817195ae075d78d"
+          }
         }
       }
     ]
   },
   "articulatedTx": {
     "name": "donate",
-    "inputs": [
-      {
-        "name": "donations",
-        "value": [{"token":"0x6b175474e89094c44da98b954eedeac495271d0e", "amount":"580000000000000000001", "recipient":"0x1719c7dc8216ce67f96171e1a817195ae075d78e"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"580000000000000000000", "recipient":"0x1719c7dc8216ce67f96171e1a817195ae075d78d"}]
-      }
-    ]
+    "inputs": {
+      "donations": "[{\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0e\", \"amount\":\"580000000000000000001\", \"recipient\":\"0x1719c7dc8216ce67f96171e1a817195ae075d78e\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"580000000000000000000\", \"recipient\":\"0x1719c7dc8216ce67f96171e1a817195ae075d78d\"}]"
+    }
   }
 }
 
 ][{
   "name": "baz",
-  "inputs": [
-    {
-      "name": "val_0",
-      "is_array": true
-    },
-    {
-      "name": "val_1"
-    }
-  ]
+  "inputs": {
+    "val_0": "",
+    "val_1": ""
+  }
 }
 
 , {
@@ -473,294 +432,228 @@ TIME ~ CLOCK - <INFO>  : Parse func found: : address
 
 , {
   "name": "donate",
-  "inputs": [
-    {
-      "name": "token"
-    },
-    {
-      "name": "amt"
-    },
-    {
-      "name": "recip)[]"
-    }
-  ]
+  "inputs": {
+    "amt": "",
+    "recip)[]": "",
+    "token": ""
+  },
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
   "name": "ABI",
   "constant": true,
-  "inputs": [
-    {
-      "name": "node"
-    },
-    {
-      "name": "contentTypes"
-    }
-  ]
+  "inputs": {
+    "contentTypes": "",
+    "node": ""
+  },
+  "outputs": {
+    "contentType": "",
+    "data": ""
+  }
 }
 
 , {
   "name": "G",
   "constant": true,
-  "inputs": [
-    {
-      "name": "v",
-      "is_array": true
-    },
-    {
-      "name": "a"
-    },
-    {
-      "name": "b"
-    },
-    {
-      "name": "c"
-    },
-    {
-      "name": "d"
-    },
-    {
-      "name": "x"
-    },
-    {
-      "name": "y"
-    }
-  ]
+  "inputs": {
+    "a": "",
+    "b": "",
+    "c": "",
+    "d": "",
+    "v": "",
+    "x": "",
+    "y": ""
+  }
 }
 
 , {
   "name": "ReverseRegistrar",
-  "inputs": [
-    {
-      "name": "ensAddr"
-    },
-    {
-      "name": "node"
-    }
-  ]
+  "inputs": {
+    "ensAddr": "",
+    "node": ""
+  }
 }
 
 , {
   "name": "_addCapper",
-  "inputs": [
-    {
-      "name": "account"
-    }
-  ]
+  "inputs": {
+    "account": ""
+  }
 }
 
 , {
   "name": "_addTokenToAllTokensEnumeration",
-  "inputs": [
-    {
-      "name": "tokenId"
-    }
-  ]
+  "inputs": {
+    "tokenId": ""
+  }
 }
 
 , {
   "name": "_appendTagged",
-  "inputs": [
-    {
-      "name": "tagged0"
-    },
-    {
-      "name": "tagged1"
-    },
-    {
-      "name": "str"
-    }
-  ]
+  "inputs": {
+    "str": "",
+    "tagged0": "",
+    "tagged1": ""
+  },
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
   "name": "_approve",
-  "inputs": [
-    {
-      "name": "to"
-    },
-    {
-      "name": "tokenId"
-    }
-  ]
+  "inputs": {
+    "to": "",
+    "tokenId": ""
+  }
 }
 
 , {
   "name": "_asyncTransfer",
-  "inputs": [
-    {
-      "name": "dest"
-    },
-    {
-      "name": "amount"
-    }
-  ]
+  "inputs": {
+    "amount": "",
+    "dest": ""
+  }
 }
 
 , {
   "name": "_beforeTokenTransfer",
-  "inputs": [
-    {
-      "name": "from"
-    },
-    {
-      "name": "to"
-    },
-    {
-      "name": "amount"
-    }
-  ]
+  "inputs": {
+    "amount": "",
+    "from": "",
+    "to": ""
+  }
 }
 
 , {
   "name": "_burn",
-  "inputs": [
-    {
-      "name": "_owner"
-    },
-    {
-      "name": "_tokenId"
-    }
-  ]
+  "inputs": {
+    "_owner": "",
+    "_tokenId": ""
+  }
 }
 
 , {
   "name": "_burn",
-  "inputs": [
-    {
-      "name": "account"
-    },
-    {
-      "name": "value"
-    }
-  ]
+  "inputs": {
+    "account": "",
+    "value": ""
+  }
 }
 
 , {
   "name": "_burnFrom",
-  "inputs": [
-    {
-      "name": "account"
-    },
-    {
-      "name": "amount"
-    }
-  ]
+  "inputs": {
+    "account": "",
+    "amount": ""
+  }
 }
 
 , {
   "name": "_callTokensToSend",
-  "inputs": [
-    {
-      "name": "operator"
-    },
-    {
-      "name": "from"
-    },
-    {
-      "name": "to"
-    },
-    {
-      "name": "amount"
-    },
-    {
-      "name": "userData"
-    },
-    {
-      "name": "operatorData"
-    }
-  ]
+  "inputs": {
+    "amount": "",
+    "from": "",
+    "operator": "",
+    "operatorData": "",
+    "to": "",
+    "userData": ""
+  }
 }
 
 , {
   "name": "_contains",
   "constant": true,
-  "inputs": [
-    {
-      "name": "storage set"
-    },
-    {
-      "name": "value"
-    }
-  ]
+  "inputs": {
+    "storage set": "",
+    "value": ""
+  },
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
   "name": "_extendTime",
-  "inputs": [
-    {
-      "name": "newClosingTime"
-    }
-  ]
+  "inputs": {
+    "newClosingTime": ""
+  }
 }
 
 , {
   "name": "_getAccountInfo",
-  "constant": true
+  "constant": true,
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
   "name": "_getTokenAmount",
   "constant": true,
-  "inputs": [
-    {
-      "name": "weiAmount"
-    }
-  ]
+  "inputs": {
+    "weiAmount": ""
+  },
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
   "name": "_getUniswapExchange",
   "constant": true,
-  "inputs": [
-    {
-      "name": "tokenAddress"
-    }
-  ]
+  "inputs": {
+    "tokenAddress": ""
+  },
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
   "name": "_length",
   "constant": true,
-  "inputs": [
-    {
-      "name": "storage map"
-    }
-  ]
+  "inputs": {
+    "storage map": ""
+  },
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
   "name": "_mint",
-  "inputs": [
-    {
-      "name": "account"
-    },
-    {
-      "name": "amount"
-    }
-  ]
+  "inputs": {
+    "account": "",
+    "amount": ""
+  }
 }
 
 , {
   "name": "_mint",
-  "inputs": [
-    {
-      "name": "to"
-    },
-    {
-      "name": "tokenId"
-    }
-  ]
+  "inputs": {
+    "to": "",
+    "tokenId": ""
+  }
 }
 
 , {
   "name": "_msgData",
-  "constant": true
+  "constant": true,
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
   "name": "_msgSender",
-  "constant": true
+  "constant": true,
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
@@ -769,364 +662,275 @@ TIME ~ CLOCK - <INFO>  : Parse func found: : address
 
 , {
   "name": "_postRelayedCall",
-  "inputs": [
-    {
-      "name": "val_0"
-    },
-    {
-      "name": "val_1"
-    },
-    {
-      "name": "val_2"
-    },
-    {
-      "name": "val_3"
-    }
-  ]
+  "inputs": {
+    "val_0": "",
+    "val_1": "",
+    "val_2": "",
+    "val_3": ""
+  }
 }
 
 , {
   "name": "_preRelayedCall",
-  "inputs": [
-    {
-      "name": "val_0"
-    }
-  ]
+  "inputs": {
+    "val_0": ""
+  },
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
   "name": "_preValidatePurchase",
   "constant": true,
-  "inputs": [
-    {
-      "name": "beneficiary"
-    },
-    {
-      "name": "weiAmount"
-    }
-  ]
+  "inputs": {
+    "beneficiary": "",
+    "weiAmount": ""
+  }
 }
 
 , {
   "name": "_registerInterface",
-  "inputs": [
-    {
-      "name": "interfaceId"
-    }
-  ]
+  "inputs": {
+    "interfaceId": ""
+  }
 }
 
 , {
   "name": "_remove",
-  "inputs": [
-    {
-      "name": "storage map"
-    },
-    {
-      "name": "key"
-    }
-  ]
+  "inputs": {
+    "key": "",
+    "storage map": ""
+  },
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
   "name": "_removeSigner",
-  "inputs": [
-    {
-      "name": "account"
-    }
-  ]
+  "inputs": {
+    "account": ""
+  }
 }
 
 , {
   "name": "_report",
-  "inputs": [
-    {
-      "name": "result"
-    },
-    {
-      "name": "message"
-    }
-  ]
+  "inputs": {
+    "message": "",
+    "result": ""
+  }
 }
 
 , {
   "name": "_safeMint",
-  "inputs": [
-    {
-      "name": "to"
-    },
-    {
-      "name": "tokenId"
-    },
-    {
-      "name": "_data"
-    }
-  ]
+  "inputs": {
+    "_data": "",
+    "to": "",
+    "tokenId": ""
+  }
 }
 
 , {
   "name": "_sendLogPayload",
   "constant": true,
-  "inputs": [
-    {
-      "name": "payload"
-    }
-  ]
+  "inputs": {
+    "payload": ""
+  }
 }
 
 , {
   "name": "_setTokenURI",
-  "inputs": [
-    {
-      "name": "tokenURI_"
-    }
-  ]
+  "inputs": {
+    "tokenURI_": ""
+  }
 }
 
 , {
   "name": "_setupRole",
-  "inputs": [
-    {
-      "name": "role"
-    },
-    {
-      "name": "account"
-    }
-  ]
+  "inputs": {
+    "account": "",
+    "role": ""
+  }
 }
 
 , {
   "name": "_supportsERC165Interface",
   "constant": true,
-  "inputs": [
-    {
-      "name": "account"
-    },
-    {
-      "name": "interfaceId"
-    }
-  ]
+  "inputs": {
+    "account": "",
+    "interfaceId": ""
+  },
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
   "name": "_swapEthToTokenInputV2",
-  "inputs": [
-    {
-      "name": "tokenAddress"
-    },
-    {
-      "name": "ethAmount"
-    }
-  ]
+  "inputs": {
+    "ethAmount": "",
+    "tokenAddress": ""
+  },
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
   "name": "_swapTokenToTokenInputV2",
-  "inputs": [
-    {
-      "name": "from"
-    },
-    {
-      "name": "to"
-    },
-    {
-      "name": "sellAmount"
-    }
-  ]
+  "inputs": {
+    "from": "",
+    "sellAmount": "",
+    "to": ""
+  },
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
   "name": "_tag",
-  "inputs": [
-    {
-      "name": "value"
-    },
-    {
-      "name": "tag"
-    }
-  ]
+  "inputs": {
+    "tag": "",
+    "value": ""
+  },
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
   "name": "_transfer",
-  "inputs": [
-    {
-      "name": "from"
-    },
-    {
-      "name": "to"
-    },
-    {
-      "name": "value"
-    }
-  ]
+  "inputs": {
+    "from": "",
+    "to": "",
+    "value": ""
+  }
 }
 
 , {
   "name": "_transferOwnership",
-  "inputs": [
-    {
-      "name": "_newOwner"
-    }
-  ]
+  "inputs": {
+    "_newOwner": ""
+  }
 }
 
 , {
   "name": "_updateSnapshot",
-  "inputs": [
-    {
-      "name": "storage snapshots"
-    },
-    {
-      "name": "currentValue"
-    }
-  ]
+  "inputs": {
+    "currentValue": "",
+    "storage snapshots": ""
+  }
 }
 
 , {
   "name": "_utoa",
-  "inputs": [
-    {
-      "name": "u"
-    }
-  ]
+  "inputs": {
+    "u": ""
+  },
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
   "name": "_withdrawBalance",
-  "inputs": [
-    {
-      "name": "token"
-    },
-    {
-      "name": "amount"
-    }
-  ]
+  "inputs": {
+    "amount": "",
+    "token": ""
+  }
 }
 
 , {
   "name": "acceptRelayedCall",
   "constant": true,
-  "inputs": [
-    {
-      "name": "val_0"
-    },
-    {
-      "name": "val_1"
-    },
-    {
-      "name": "val_2"
-    },
-    {
-      "name": "val_3"
-    },
-    {
-      "name": "val_4"
-    },
-    {
-      "name": "val_5"
-    },
-    {
-      "name": "val_6"
-    },
-    {
-      "name": "val_7"
-    },
-    {
-      "name": "val_8"
-    }
-  ]
+  "inputs": {
+    "val_0": "",
+    "val_1": "",
+    "val_2": "",
+    "val_3": "",
+    "val_4": "",
+    "val_5": "",
+    "val_6": "",
+    "val_7": "",
+    "val_8": ""
+  },
+  "outputs": {
+    "ret_0": "",
+    "ret_1": ""
+  }
 }
 
 , {
   "name": "activate",
-  "inputs": [
-    {
-      "name": "initialTokens"
-    },
-    {
-      "name": "initialPoolShares"
-    }
-  ]
+  "inputs": {
+    "initialPoolShares": "",
+    "initialTokens": ""
+  }
 }
 
 , {
   "name": "add",
-  "inputs": [
-    {
-      "name": "value"
-    }
-  ]
+  "inputs": {
+    "value": ""
+  }
 }
 
 , {
   "name": "add",
-  "inputs": [
-    {
-      "name": "a"
-    },
-    {
-      "name": "b"
-    }
-  ]
+  "inputs": {
+    "a": "",
+    "b": ""
+  },
+  "outputs": {
+    "c": ""
+  }
 }
 
 , {
   "name": "add",
-  "inputs": [
-    {
-      "name": "a"
-    },
-    {
-      "name": "b"
-    }
-  ]
+  "inputs": {
+    "a": "",
+    "b": ""
+  },
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
   "name": "addBytes",
-  "inputs": [
-    {
-      "name": "_key"
-    },
-    {
-      "name": "_value"
-    }
-  ]
+  "inputs": {
+    "_key": "",
+    "_value": ""
+  }
 }
 
 , {
   "name": "addInt",
-  "inputs": [
-    {
-      "name": "_key"
-    },
-    {
-      "name": "_value"
-    }
-  ]
+  "inputs": {
+    "_key": "",
+    "_value": ""
+  }
 }
 
 , {
   "name": "addOne",
-  "inputs": [
-    {
-      "name": "n"
-    }
-  ]
+  "inputs": {
+    "n": ""
+  },
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
   "name": "addStringArray",
-  "inputs": [
-    {
-      "name": "_key"
-    },
-    {
-      "name": "_values",
-      "is_array": true
-    }
-  ]
+  "inputs": {
+    "_key": "",
+    "_values": ""
+  }
 }
 
 , {
@@ -1135,184 +939,168 @@ TIME ~ CLOCK - <INFO>  : Parse func found: : address
 
 , {
   "name": "addWhitelisted",
-  "inputs": [
-    {
-      "name": "account"
-    }
-  ]
-}
-
-, {
-  "name": "allowance",
-  "constant": true
+  "inputs": {
+    "account": ""
+  }
 }
 
 , {
   "name": "allowance",
   "constant": true,
-  "inputs": [
-    {
-      "name": "owner"
-    },
-    {
-      "name": "spender"
-    }
-  ]
+  "outputs": {
+    "ret_0": ""
+  }
+}
+
+, {
+  "name": "allowance",
+  "constant": true,
+  "inputs": {
+    "owner": "",
+    "spender": ""
+  },
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
   "name": "append",
-  "inputs": [
-    {
-      "name": "buf"
-    },
-    {
-      "name": "data"
-    }
-  ]
+  "inputs": {
+    "buf": "",
+    "data": ""
+  },
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
   "name": "appendUint8",
-  "inputs": [
-    {
-      "name": "buf"
-    },
-    {
-      "name": "data"
-    }
-  ]
+  "inputs": {
+    "buf": "",
+    "data": ""
+  },
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
   "name": "approve",
-  "inputs": [
-    {
-      "name": "_spender"
-    },
-    {
-      "name": "_value"
-    }
-  ]
+  "inputs": {
+    "_spender": "",
+    "_value": ""
+  },
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
   "name": "approve",
-  "inputs": [
-    {
-      "name": "spender"
-    },
-    {
-      "name": "value"
-    }
-  ]
+  "inputs": {
+    "spender": "",
+    "value": ""
+  },
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
   "name": "approve",
-  "inputs": [
-    {
-      "name": "val_0"
-    },
-    {
-      "name": "val_1"
-    }
-  ]
+  "inputs": {
+    "val_0": "",
+    "val_1": ""
+  }
 }
 
 , {
   "name": "assertFail",
-  "inputs": [
-    {
-      "name": "val_0"
-    },
-    {
-      "name": "val_1"
-    }
-  ]
+  "inputs": {
+    "val_0": "",
+    "val_1": ""
+  }
 }
 
 , {
   "name": "at",
   "constant": true,
-  "inputs": [
-    {
-      "name": "index"
-    }
-  ]
+  "inputs": {
+    "index": ""
+  },
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
   "name": "authorizeOperator",
-  "inputs": [
-    {
-      "name": "operator"
-    }
-  ]
+  "inputs": {
+    "operator": ""
+  }
 }
 
 , {
   "name": "balanceEqual",
-  "inputs": [
-    {
-      "name": "a"
-    },
-    {
-      "name": "b"
-    },
-    {
-      "name": "message"
-    }
-  ]
+  "inputs": {
+    "a": "",
+    "b": "",
+    "message": ""
+  },
+  "outputs": {
+    "result": ""
+  }
 }
 
 , {
   "name": "balanceNotEqual",
-  "inputs": [
-    {
-      "name": "a"
-    },
-    {
-      "name": "b"
-    },
-    {
-      "name": "message"
-    }
-  ]
+  "inputs": {
+    "a": "",
+    "b": "",
+    "message": ""
+  },
+  "outputs": {
+    "result": ""
+  }
 }
 
 , {
   "name": "balanceOf",
   "constant": true,
-  "inputs": [
-    {
-      "name": "account"
-    }
-  ]
+  "inputs": {
+    "account": ""
+  },
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
   "name": "balanceOf",
   "constant": true,
-  "inputs": [
-    {
-      "name": "tokenHolder"
-    }
-  ]
+  "inputs": {
+    "tokenHolder": ""
+  },
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
   "name": "baseURI",
-  "constant": true
+  "constant": true,
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
   "name": "beginMigration",
-  "inputs": [
-    {
-      "name": "newToken_"
-    }
-  ]
+  "inputs": {
+    "newToken_": ""
+  }
 }
 
 , {
@@ -1321,129 +1109,104 @@ TIME ~ CLOCK - <INFO>  : Parse func found: : address
 
 , {
   "name": "burn",
-  "inputs": [
-    {
-      "name": "_value"
-    }
-  ]
+  "inputs": {
+    "_value": ""
+  }
 }
 
 , {
   "name": "burn",
-  "inputs": [
-    {
-      "name": "tokenId"
-    }
-  ]
+  "inputs": {
+    "tokenId": ""
+  }
 }
 
 , {
   "name": "burnTokens",
-  "inputs": [
-    {
-      "name": "_amount"
-    }
-  ]
+  "inputs": {
+    "_amount": ""
+  },
+  "outputs": {
+    "success": ""
+  }
 }
 
 , {
   "name": "bytes32ToString",
-  "inputs": [
-    {
-      "name": "x"
-    }
-  ]
+  "inputs": {
+    "x": ""
+  },
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
   "name": "callOptionalReturn",
-  "inputs": [
-    {
-      "name": "token"
-    },
-    {
-      "name": "data"
-    }
-  ]
+  "inputs": {
+    "data": "",
+    "token": ""
+  }
 }
 
 , {
   "name": "canImplementInterfaceForAddress",
   "constant": true,
-  "inputs": [
-    {
-      "name": "interfaceHash"
-    },
-    {
-      "name": "account"
-    }
-  ]
+  "inputs": {
+    "account": "",
+    "interfaceHash": ""
+  },
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
   "name": "cancelOracleRequest",
-  "inputs": [
-    {
-      "name": "val_0"
-    },
-    {
-      "name": "val_1"
-    },
-    {
-      "name": "val_2"
-    },
-    {
-      "name": "val_3"
-    }
-  ]
+  "inputs": {
+    "val_0": "",
+    "val_1": "",
+    "val_2": "",
+    "val_3": ""
+  }
 }
 
 , {
   "name": "cap",
-  "constant": true
+  "constant": true,
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
   "name": "changeId",
-  "inputs": [
-    {
-      "name": "domain"
-    },
-    {
-      "name": "name"
-    },
-    {
-      "name": "value"
-    }
-  ]
+  "inputs": {
+    "domain": "",
+    "name": "",
+    "value": ""
+  }
 }
 
 , {
   "name": "changeProposalDeposit",
-  "inputs": [
-    {
-      "name": "_proposalDeposit"
-    }
-  ]
+  "inputs": {
+    "_proposalDeposit": ""
+  }
 }
 
 , {
   "name": "checkProposalCode",
   "constant": true,
-  "inputs": [
-    {
-      "name": "_proposalID"
-    },
-    {
-      "name": "_recipient"
-    },
-    {
-      "name": "_amount"
-    },
-    {
-      "name": "_transactionData"
-    }
-  ]
+  "inputs": {
+    "_amount": "",
+    "_proposalID": "",
+    "_recipient": "",
+    "_transactionData": ""
+  },
+  "outputs": {
+    "_codeChecksOut": ""
+  }
 }
 
 , {
@@ -1452,14 +1215,10 @@ TIME ~ CLOCK - <INFO>  : Parse func found: : address
 
 , {
   "name": "clearApproval",
-  "inputs": [
-    {
-      "name": "_owner"
-    },
-    {
-      "name": "_tokenId"
-    }
-  ]
+  "inputs": {
+    "_owner": "",
+    "_tokenId": ""
+  }
 }
 
 , {
@@ -1469,26 +1228,24 @@ TIME ~ CLOCK - <INFO>  : Parse func found: : address
 , {
   "name": "codeAt",
   "constant": true,
-  "inputs": [
-    {
-      "name": "_addr"
-    }
-  ]
+  "inputs": {
+    "_addr": ""
+  },
+  "outputs": {
+    "o_code": ""
+  }
 }
 
 , {
   "name": "computeAddress",
-  "inputs": [
-    {
-      "name": "salt"
-    },
-    {
-      "name": "bytecodeHash"
-    },
-    {
-      "name": "deployer"
-    }
-  ]
+  "inputs": {
+    "bytecodeHash": "",
+    "deployer": "",
+    "salt": ""
+  },
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
@@ -1498,120 +1255,106 @@ TIME ~ CLOCK - <INFO>  : Parse func found: : address
 , {
   "name": "contains",
   "constant": true,
-  "inputs": [
-    {
-      "name": "key"
-    }
-  ]
+  "inputs": {
+    "key": ""
+  },
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
   "name": "countThisRecursive",
-  "inputs": [
-    {
-      "name": "n"
-    }
-  ]
+  "inputs": {
+    "n": ""
+  }
 }
 
 , {
   "name": "createAndException",
-  "inputs": [
-    {
-      "name": "newBalance"
-    }
-  ]
+  "inputs": {
+    "newBalance": ""
+  }
 }
 
 , {
   "name": "createEIP20",
-  "inputs": [
-    {
-      "name": "_initialAmount"
-    },
-    {
-      "name": "_name"
-    },
-    {
-      "name": "_decimals"
-    },
-    {
-      "name": "_symbol"
-    }
-  ]
+  "inputs": {
+    "_decimals": "",
+    "_initialAmount": "",
+    "_name": "",
+    "_symbol": ""
+  },
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
   "name": "createTokenProxy",
-  "inputs": [
-    {
-      "name": "_tokenHolder"
-    }
-  ]
+  "inputs": {
+    "_tokenHolder": ""
+  },
+  "outputs": {
+    "success": ""
+  }
 }
 
 , {
-  "name": "decimals"
+  "name": "decimals",
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
   "name": "decreaseAllowance",
-  "inputs": [
-    {
-      "name": "amount"
-    }
-  ]
+  "inputs": {
+    "amount": ""
+  }
 }
 
 , {
   "name": "defaultOperators",
-  "constant": true
+  "constant": true,
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
   "name": "deploy",
-  "inputs": [
-    {
-      "name": "val_0"
-    },
-    {
-      "name": "val_1"
-    },
-    {
-      "name": "val_2"
-    },
-    {
-      "name": "val_3"
-    }
-  ]
+  "inputs": {
+    "val_0": "",
+    "val_1": "",
+    "val_2": "",
+    "val_3": ""
+  }
 }
 
 , {
   "name": "deposit",
-  "inputs": [
-    {
-      "name": "_payee"
-    }
-  ]
+  "inputs": {
+    "_payee": ""
+  }
 }
 
 , {
   "name": "deposit",
-  "inputs": [
-    {
-      "name": "refundee"
-    }
-  ]
+  "inputs": {
+    "refundee": ""
+  }
 }
 
 , {
   "name": "depositsOf",
   "constant": true,
-  "inputs": [
-    {
-      "name": "payee"
-    }
-  ]
+  "inputs": {
+    "payee": ""
+  },
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
@@ -1620,69 +1363,56 @@ TIME ~ CLOCK - <INFO>  : Parse func found: : address
 
 , {
   "name": "diamondCut",
-  "inputs": [
-    {
-      "name": "_diamondCut",
-      "is_array": true
-    },
-    {
-      "name": "_init"
-    },
-    {
-      "name": "_"
-    }
-  ]
+  "inputs": {
+    "_": "",
+    "_diamondCut": "",
+    "_init": ""
+  }
 }
 
 , {
   "name": "div",
-  "inputs": [
-    {
-      "name": "a"
-    },
-    {
-      "name": "b"
-    }
-  ]
+  "inputs": {
+    "a": "",
+    "b": ""
+  },
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
   "name": "div",
-  "inputs": [
-    {
-      "name": "a"
-    },
-    {
-      "name": "b"
-    }
-  ]
+  "inputs": {
+    "a": "",
+    "b": ""
+  },
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
   "name": "divisor",
-  "constant": true
+  "constant": true,
+  "outputs": {
+    "divisor": ""
+  }
 }
 
 , {
   "name": "doWithdraw",
-  "inputs": [
-    {
-      "name": "participant"
-    },
-    {
-      "name": "amount"
-    }
-  ]
+  "inputs": {
+    "amount": "",
+    "participant": ""
+  }
 }
 
 , {
   "name": "donate",
-  "inputs": [
-    {
-      "name": "_donations",
-      "is_array": true
-    }
-  ]
+  "inputs": {
+    "_donations": ""
+  }
 }
 
 , {
@@ -1691,135 +1421,104 @@ TIME ~ CLOCK - <INFO>  : Parse func found: : address
 
 , {
   "name": "encodeIndefiniteLengthType",
-  "inputs": [
-    {
-      "name": "buf"
-    },
-    {
-      "name": "major"
-    }
-  ]
+  "inputs": {
+    "buf": "",
+    "major": ""
+  }
 }
 
 , {
   "name": "encodeUInt",
-  "inputs": [
-    {
-      "name": "buf"
-    },
-    {
-      "name": "value"
-    }
-  ]
+  "inputs": {
+    "buf": "",
+    "value": ""
+  }
 }
 
 , {
   "name": "equal",
-  "inputs": [
-    {
-      "name": "a"
-    },
-    {
-      "name": "b"
-    },
-    {
-      "name": "message"
-    }
-  ]
+  "inputs": {
+    "a": "",
+    "b": "",
+    "message": ""
+  },
+  "outputs": {
+    "result": ""
+  }
 }
 
 , {
   "name": "equal",
-  "inputs": [
-    {
-      "name": "a"
-    },
-    {
-      "name": "b"
-    },
-    {
-      "name": "message"
-    }
-  ]
+  "inputs": {
+    "a": "",
+    "b": "",
+    "message": ""
+  },
+  "outputs": {
+    "result": ""
+  }
 }
 
 , {
   "name": "equal",
-  "inputs": [
-    {
-      "name": "a"
-    },
-    {
-      "name": "b"
-    },
-    {
-      "name": "message"
-    }
-  ]
+  "inputs": {
+    "a": "",
+    "b": "",
+    "message": ""
+  },
+  "outputs": {
+    "result": ""
+  }
 }
 
 , {
   "name": "equal",
-  "inputs": [
-    {
-      "name": "a"
-    },
-    {
-      "name": "b"
-    },
-    {
-      "name": "message"
-    }
-  ]
+  "inputs": {
+    "a": "",
+    "b": "",
+    "message": ""
+  },
+  "outputs": {
+    "result": ""
+  }
 }
 
 , {
   "name": "ethJoin_join",
-  "inputs": [
-    {
-      "name": "apt"
-    },
-    {
-      "name": "urn"
-    }
-  ]
+  "inputs": {
+    "apt": "",
+    "urn": ""
+  }
 }
 
 , {
   "name": "execute",
-  "inputs": [
-    {
-      "name": "_to"
-    },
-    {
-      "name": "_value"
-    },
-    {
-      "name": "_data"
-    }
-  ]
+  "inputs": {
+    "_data": "",
+    "_to": "",
+    "_value": ""
+  },
+  "outputs": {
+    "_r": ""
+  }
 }
 
 , {
   "name": "executeProposal",
-  "inputs": [
-    {
-      "name": "_proposalID"
-    },
-    {
-      "name": "_transactionData"
-    }
-  ]
+  "inputs": {
+    "_proposalID": "",
+    "_transactionData": ""
+  },
+  "outputs": {
+    "_success": ""
+  }
 }
 
 , {
   "name": "externalCut",
-  "inputs": [
-    {
-      "name": "_diamondCut",
-      "is_array": true
-    }
-  ]
+  "inputs": {
+    "_diamondCut": ""
+  }
 }
 
 , {
@@ -1838,11 +1537,12 @@ TIME ~ CLOCK - <INFO>  : Parse func found: : address
 , {
   "name": "facetFunctionSelectors",
   "constant": true,
-  "inputs": [
-    {
-      "name": "_facet"
-    }
-  ]
+  "inputs": {
+    "_facet": ""
+  },
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
@@ -1851,20 +1551,16 @@ TIME ~ CLOCK - <INFO>  : Parse func found: : address
 
 , {
   "name": "fail",
-  "inputs": [
-    {
-      "name": "d"
-    }
-  ]
+  "inputs": {
+    "d": ""
+  }
 }
 
 , {
   "name": "fail2",
-  "inputs": [
-    {
-      "name": "i"
-    }
-  ]
+  "inputs": {
+    "i": ""
+  }
 }
 
 , {
@@ -1872,7 +1568,10 @@ TIME ~ CLOCK - <INFO>  : Parse func found: : address
 }
 
 , {
-  "name": "finishMinting"
+  "name": "finishMinting",
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
@@ -1890,11 +1589,12 @@ TIME ~ CLOCK - <INFO>  : Parse func found: : address
 , {
   "name": "fromSharkToken",
   "constant": true,
-  "inputs": [
-    {
-      "name": "amount"
-    }
-  ]
+  "inputs": {
+    "amount": ""
+  },
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
@@ -1903,374 +1603,376 @@ TIME ~ CLOCK - <INFO>  : Parse func found: : address
 
 , {
   "name": "fun",
-  "inputs": [
-    {
-      "name": "a"
-    }
-  ]
+  "inputs": {
+    "a": ""
+  }
 }
 
 , {
   "name": "functionName",
-  "inputs": [
-    {
-      "name": "input"
-    }
-  ]
+  "inputs": {
+    "input": ""
+  },
+  "outputs": {
+    "out": ""
+  }
 }
 
 , {
   "name": "get",
   "constant": true,
-  "inputs": [
-    {
-      "name": "key"
-    }
-  ]
+  "inputs": {
+    "key": ""
+  },
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
   "name": "getAdmins",
-  "constant": true
+  "constant": true,
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
   "name": "getAssetsPrices",
   "constant": true,
-  "inputs": [
-    {
-      "name": "_assets",
-      "is_array": true
-    }
-  ]
+  "inputs": {
+    "_assets": ""
+  },
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
-  "name": "getBool"
+  "name": "getBool",
+  "outputs": {
+    "ret": ""
+  }
 }
 
 , {
   "name": "getCount",
-  "constant": true
+  "constant": true,
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
   "name": "getHubAddr",
-  "constant": true
+  "constant": true,
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
   "name": "getMolochCount",
-  "constant": true
+  "constant": true,
+  "outputs": {
+    "MolochCount": ""
+  }
 }
 
 , {
   "name": "getOracles",
-  "constant": true
+  "constant": true,
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
   "name": "getRoleMember",
   "constant": true,
-  "inputs": [
-    {
-      "name": "role"
-    },
-    {
-      "name": "index"
-    }
-  ]
+  "inputs": {
+    "index": "",
+    "role": ""
+  },
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
-  "name": "getUint256"
+  "name": "getUint256",
+  "outputs": {
+    "ret": ""
+  }
 }
 
 , {
   "name": "getValuePlus",
   "constant": true,
-  "inputs": [
-    {
-      "name": "toAdd"
-    }
-  ]
+  "inputs": {
+    "toAdd": ""
+  },
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
   "name": "grantRole",
-  "inputs": [
-    {
-      "name": "role"
-    },
-    {
-      "name": "account"
-    }
-  ]
+  "inputs": {
+    "account": "",
+    "role": ""
+  }
 }
 
 , {
-  "name": "halfWad"
+  "name": "halfWad",
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
   "name": "hasConfirmed",
   "constant": true,
-  "inputs": [
-    {
-      "name": "_operation"
-    },
-    {
-      "name": "_owner"
-    }
-  ]
+  "inputs": {
+    "_operation": "",
+    "_owner": ""
+  },
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
   "name": "heir",
-  "constant": true
+  "constant": true,
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
   "name": "increaseAllowance",
-  "inputs": [
-    {
-      "name": "spender"
-    },
-    {
-      "name": "addedValue"
-    }
-  ]
+  "inputs": {
+    "addedValue": "",
+    "spender": ""
+  },
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
   "name": "init",
-  "inputs": [
-    {
-      "name": "buf"
-    },
-    {
-      "name": "capacity"
-    }
-  ]
+  "inputs": {
+    "buf": "",
+    "capacity": ""
+  },
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
   "name": "isAbove",
-  "inputs": [
-    {
-      "name": "a"
-    },
-    {
-      "name": "b"
-    },
-    {
-      "name": "message"
-    }
-  ]
+  "inputs": {
+    "a": "",
+    "b": "",
+    "message": ""
+  },
+  "outputs": {
+    "result": ""
+  }
 }
 
 , {
   "name": "isApprovedForAll",
   "constant": true,
-  "inputs": [
-    {
-      "name": "owner"
-    },
-    {
-      "name": "operator"
-    }
-  ]
+  "inputs": {
+    "operator": "",
+    "owner": ""
+  },
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
   "name": "isAtMost",
-  "inputs": [
-    {
-      "name": "a"
-    },
-    {
-      "name": "b"
-    },
-    {
-      "name": "message"
-    }
-  ]
+  "inputs": {
+    "a": "",
+    "b": "",
+    "message": ""
+  },
+  "outputs": {
+    "result": ""
+  }
 }
 
 , {
   "name": "isAuthorized",
   "constant": true,
-  "inputs": [
-    {
-      "name": "src"
-    },
-    {
-      "name": "sig"
-    }
-  ]
+  "inputs": {
+    "sig": "",
+    "src": ""
+  },
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
   "name": "isBlocked",
-  "inputs": [
-    {
-      "name": "_account"
-    }
-  ]
+  "inputs": {
+    "_account": ""
+  },
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
   "name": "isDeployed",
-  "constant": true
+  "constant": true,
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
   "name": "isExpensive",
-  "inputs": [
-    {
-      "name": "val"
-    }
-  ]
+  "inputs": {
+    "val": ""
+  }
 }
 
 , {
   "name": "isNotEmpty",
-  "inputs": [
-    {
-      "name": "str"
-    },
-    {
-      "name": "message"
-    }
-  ]
+  "inputs": {
+    "message": "",
+    "str": ""
+  },
+  "outputs": {
+    "result": ""
+  }
 }
 
 , {
   "name": "isNotZero",
-  "inputs": [
-    {
-      "name": "bts"
-    },
-    {
-      "name": "message"
-    }
-  ]
+  "inputs": {
+    "bts": "",
+    "message": ""
+  },
+  "outputs": {
+    "result": ""
+  }
 }
 
 , {
   "name": "isOpen",
-  "constant": true
+  "constant": true,
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
   "name": "isPauser",
   "constant": true,
-  "inputs": [
-    {
-      "name": "account"
-    }
-  ]
+  "inputs": {
+    "account": ""
+  },
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
   "name": "isSigner",
   "constant": true,
-  "inputs": [
-    {
-      "name": "account"
-    }
-  ]
+  "inputs": {
+    "account": ""
+  },
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
   "name": "isZero",
-  "inputs": [
-    {
-      "name": "addr"
-    },
-    {
-      "name": "message"
-    }
-  ]
+  "inputs": {
+    "addr": "",
+    "message": ""
+  },
+  "outputs": {
+    "result": ""
+  }
 }
 
 , {
   "name": "isZero",
-  "inputs": [
-    {
-      "name": "number"
-    },
-    {
-      "name": "message"
-    }
-  ]
+  "inputs": {
+    "message": "",
+    "number": ""
+  },
+  "outputs": {
+    "result": ""
+  }
 }
 
 , {
   "name": "killBounty",
-  "inputs": [
-    {
-      "name": "_bountyID"
-    }
-  ]
+  "inputs": {
+    "_bountyID": ""
+  }
 }
 
 , {
   "name": "length",
   "constant": true,
-  "inputs": [
-    {
-      "name": "storage set"
-    }
-  ]
+  "inputs": {
+    "storage set": ""
+  },
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
   "name": "lengthEqual",
-  "inputs": [
-    {
-      "name": "arr",
-      "is_array": true
-    },
-    {
-      "name": "length"
-    },
-    {
-      "name": "message"
-    }
-  ]
+  "inputs": {
+    "arr": "",
+    "length": "",
+    "message": ""
+  },
+  "outputs": {
+    "result": ""
+  }
 }
 
 , {
   "name": "lengthEqual",
-  "inputs": [
-    {
-      "name": "arr",
-      "is_array": true
-    },
-    {
-      "name": "length"
-    },
-    {
-      "name": "message"
-    }
-  ]
+  "inputs": {
+    "arr": "",
+    "length": "",
+    "message": ""
+  },
+  "outputs": {
+    "result": ""
+  }
 }
 
 , {
   "name": "lengthNotEqual",
-  "inputs": [
-    {
-      "name": "arr",
-      "is_array": true
-    },
-    {
-      "name": "length"
-    },
-    {
-      "name": "message"
-    }
-  ]
+  "inputs": {
+    "arr": "",
+    "length": "",
+    "message": ""
+  },
+  "outputs": {
+    "result": ""
+  }
 }
 
 , {
@@ -2281,1390 +1983,865 @@ TIME ~ CLOCK - <INFO>  : Parse func found: : address
 , {
   "name": "log",
   "constant": true,
-  "inputs": [
-    {
-      "name": "p0"
-    },
-    {
-      "name": "p1"
-    },
-    {
-      "name": "p2"
-    },
-    {
-      "name": "p3"
-    }
-  ]
+  "inputs": {
+    "p0": "",
+    "p1": "",
+    "p2": "",
+    "p3": ""
+  }
 }
 
 , {
   "name": "log",
   "constant": true,
-  "inputs": [
-    {
-      "name": "p0"
-    },
-    {
-      "name": "p1"
-    },
-    {
-      "name": "p2"
-    },
-    {
-      "name": "p3"
-    }
-  ]
+  "inputs": {
+    "p0": "",
+    "p1": "",
+    "p2": "",
+    "p3": ""
+  }
 }
 
 , {
   "name": "log",
   "constant": true,
-  "inputs": [
-    {
-      "name": "p0"
-    },
-    {
-      "name": "p1"
-    },
-    {
-      "name": "p2"
-    },
-    {
-      "name": "p3"
-    }
-  ]
+  "inputs": {
+    "p0": "",
+    "p1": "",
+    "p2": "",
+    "p3": ""
+  }
 }
 
 , {
   "name": "log",
   "constant": true,
-  "inputs": [
-    {
-      "name": "p0"
-    },
-    {
-      "name": "p1"
-    },
-    {
-      "name": "p2"
-    },
-    {
-      "name": "p3"
-    }
-  ]
+  "inputs": {
+    "p0": "",
+    "p1": "",
+    "p2": "",
+    "p3": ""
+  }
 }
 
 , {
   "name": "log",
   "constant": true,
-  "inputs": [
-    {
-      "name": "p0"
-    },
-    {
-      "name": "p1"
-    },
-    {
-      "name": "p2"
-    }
-  ]
+  "inputs": {
+    "p0": "",
+    "p1": "",
+    "p2": ""
+  }
 }
 
 , {
   "name": "log",
   "constant": true,
-  "inputs": [
-    {
-      "name": "p0"
-    },
-    {
-      "name": "p1"
-    },
-    {
-      "name": "p2"
-    }
-  ]
+  "inputs": {
+    "p0": "",
+    "p1": "",
+    "p2": ""
+  }
 }
 
 , {
   "name": "log",
   "constant": true,
-  "inputs": [
-    {
-      "name": "p0"
-    },
-    {
-      "name": "p1"
-    },
-    {
-      "name": "p2"
-    }
-  ]
+  "inputs": {
+    "p0": "",
+    "p1": "",
+    "p2": ""
+  }
 }
 
 , {
   "name": "log",
   "constant": true,
-  "inputs": [
-    {
-      "name": "p0"
-    },
-    {
-      "name": "p1"
-    },
-    {
-      "name": "p2"
-    }
-  ]
+  "inputs": {
+    "p0": "",
+    "p1": "",
+    "p2": ""
+  }
 }
 
 , {
   "name": "log",
   "constant": true,
-  "inputs": [
-    {
-      "name": "p0"
-    },
-    {
-      "name": "p1"
-    }
-  ]
+  "inputs": {
+    "p0": "",
+    "p1": ""
+  }
 }
 
 , {
   "name": "log",
   "constant": true,
-  "inputs": [
-    {
-      "name": "p0"
-    },
-    {
-      "name": "p1"
-    },
-    {
-      "name": "p2"
-    },
-    {
-      "name": "p3"
-    }
-  ]
+  "inputs": {
+    "p0": "",
+    "p1": "",
+    "p2": "",
+    "p3": ""
+  }
 }
 
 , {
   "name": "log",
   "constant": true,
-  "inputs": [
-    {
-      "name": "p0"
-    },
-    {
-      "name": "p1"
-    },
-    {
-      "name": "p2"
-    },
-    {
-      "name": "p3"
-    }
-  ]
+  "inputs": {
+    "p0": "",
+    "p1": "",
+    "p2": "",
+    "p3": ""
+  }
 }
 
 , {
   "name": "log",
   "constant": true,
-  "inputs": [
-    {
-      "name": "p0"
-    },
-    {
-      "name": "p1"
-    },
-    {
-      "name": "p2"
-    },
-    {
-      "name": "p3"
-    }
-  ]
+  "inputs": {
+    "p0": "",
+    "p1": "",
+    "p2": "",
+    "p3": ""
+  }
 }
 
 , {
   "name": "log",
   "constant": true,
-  "inputs": [
-    {
-      "name": "p0"
-    },
-    {
-      "name": "p1"
-    },
-    {
-      "name": "p2"
-    },
-    {
-      "name": "p3"
-    }
-  ]
+  "inputs": {
+    "p0": "",
+    "p1": "",
+    "p2": "",
+    "p3": ""
+  }
 }
 
 , {
   "name": "log",
   "constant": true,
-  "inputs": [
-    {
-      "name": "p0"
-    },
-    {
-      "name": "p1"
-    },
-    {
-      "name": "p2"
-    },
-    {
-      "name": "p3"
-    }
-  ]
+  "inputs": {
+    "p0": "",
+    "p1": "",
+    "p2": "",
+    "p3": ""
+  }
 }
 
 , {
   "name": "log",
   "constant": true,
-  "inputs": [
-    {
-      "name": "p0"
-    },
-    {
-      "name": "p1"
-    },
-    {
-      "name": "p2"
-    },
-    {
-      "name": "p3"
-    }
-  ]
+  "inputs": {
+    "p0": "",
+    "p1": "",
+    "p2": "",
+    "p3": ""
+  }
 }
 
 , {
   "name": "log",
   "constant": true,
-  "inputs": [
-    {
-      "name": "p0"
-    },
-    {
-      "name": "p1"
-    },
-    {
-      "name": "p2"
-    },
-    {
-      "name": "p3"
-    }
-  ]
+  "inputs": {
+    "p0": "",
+    "p1": "",
+    "p2": "",
+    "p3": ""
+  }
 }
 
 , {
   "name": "log",
   "constant": true,
-  "inputs": [
-    {
-      "name": "p0"
-    },
-    {
-      "name": "p1"
-    },
-    {
-      "name": "p2"
-    },
-    {
-      "name": "p3"
-    }
-  ]
+  "inputs": {
+    "p0": "",
+    "p1": "",
+    "p2": "",
+    "p3": ""
+  }
 }
 
 , {
   "name": "log",
   "constant": true,
-  "inputs": [
-    {
-      "name": "p0"
-    },
-    {
-      "name": "p1"
-    },
-    {
-      "name": "p2"
-    },
-    {
-      "name": "p3"
-    }
-  ]
+  "inputs": {
+    "p0": "",
+    "p1": "",
+    "p2": "",
+    "p3": ""
+  }
 }
 
 , {
   "name": "log",
   "constant": true,
-  "inputs": [
-    {
-      "name": "p0"
-    },
-    {
-      "name": "p1"
-    },
-    {
-      "name": "p2"
-    },
-    {
-      "name": "p3"
-    }
-  ]
+  "inputs": {
+    "p0": "",
+    "p1": "",
+    "p2": "",
+    "p3": ""
+  }
 }
 
 , {
   "name": "log",
   "constant": true,
-  "inputs": [
-    {
-      "name": "p0"
-    },
-    {
-      "name": "p1"
-    },
-    {
-      "name": "p2"
-    },
-    {
-      "name": "p3"
-    }
-  ]
+  "inputs": {
+    "p0": "",
+    "p1": "",
+    "p2": "",
+    "p3": ""
+  }
 }
 
 , {
   "name": "log",
   "constant": true,
-  "inputs": [
-    {
-      "name": "p0"
-    },
-    {
-      "name": "p1"
-    },
-    {
-      "name": "p2"
-    },
-    {
-      "name": "p3"
-    }
-  ]
+  "inputs": {
+    "p0": "",
+    "p1": "",
+    "p2": "",
+    "p3": ""
+  }
 }
 
 , {
   "name": "log",
   "constant": true,
-  "inputs": [
-    {
-      "name": "p0"
-    },
-    {
-      "name": "p1"
-    },
-    {
-      "name": "p2"
-    }
-  ]
+  "inputs": {
+    "p0": "",
+    "p1": "",
+    "p2": ""
+  }
 }
 
 , {
   "name": "log",
   "constant": true,
-  "inputs": [
-    {
-      "name": "p0"
-    },
-    {
-      "name": "p1"
-    },
-    {
-      "name": "p2"
-    }
-  ]
+  "inputs": {
+    "p0": "",
+    "p1": "",
+    "p2": ""
+  }
 }
 
 , {
   "name": "log",
   "constant": true,
-  "inputs": [
-    {
-      "name": "p0"
-    },
-    {
-      "name": "p1"
-    },
-    {
-      "name": "p2"
-    }
-  ]
+  "inputs": {
+    "p0": "",
+    "p1": "",
+    "p2": ""
+  }
 }
 
 , {
   "name": "log",
   "constant": true,
-  "inputs": [
-    {
-      "name": "p0"
-    },
-    {
-      "name": "p1"
-    },
-    {
-      "name": "p2"
-    }
-  ]
+  "inputs": {
+    "p0": "",
+    "p1": "",
+    "p2": ""
+  }
 }
 
 , {
   "name": "log",
   "constant": true,
-  "inputs": [
-    {
-      "name": "p0"
-    },
-    {
-      "name": "p1"
-    }
-  ]
+  "inputs": {
+    "p0": "",
+    "p1": ""
+  }
 }
 
 , {
   "name": "log",
   "constant": true,
-  "inputs": [
-    {
-      "name": "p0"
-    },
-    {
-      "name": "p1"
-    },
-    {
-      "name": "p2"
-    },
-    {
-      "name": "p3"
-    }
-  ]
+  "inputs": {
+    "p0": "",
+    "p1": "",
+    "p2": "",
+    "p3": ""
+  }
 }
 
 , {
   "name": "log",
   "constant": true,
-  "inputs": [
-    {
-      "name": "p0"
-    },
-    {
-      "name": "p1"
-    },
-    {
-      "name": "p2"
-    },
-    {
-      "name": "p3"
-    }
-  ]
+  "inputs": {
+    "p0": "",
+    "p1": "",
+    "p2": "",
+    "p3": ""
+  }
 }
 
 , {
   "name": "log",
   "constant": true,
-  "inputs": [
-    {
-      "name": "p0"
-    },
-    {
-      "name": "p1"
-    },
-    {
-      "name": "p2"
-    },
-    {
-      "name": "p3"
-    }
-  ]
+  "inputs": {
+    "p0": "",
+    "p1": "",
+    "p2": "",
+    "p3": ""
+  }
 }
 
 , {
   "name": "log",
   "constant": true,
-  "inputs": [
-    {
-      "name": "p0"
-    },
-    {
-      "name": "p1"
-    },
-    {
-      "name": "p2"
-    },
-    {
-      "name": "p3"
-    }
-  ]
+  "inputs": {
+    "p0": "",
+    "p1": "",
+    "p2": "",
+    "p3": ""
+  }
 }
 
 , {
   "name": "log",
   "constant": true,
-  "inputs": [
-    {
-      "name": "p0"
-    },
-    {
-      "name": "p1"
-    },
-    {
-      "name": "p2"
-    },
-    {
-      "name": "p3"
-    }
-  ]
+  "inputs": {
+    "p0": "",
+    "p1": "",
+    "p2": "",
+    "p3": ""
+  }
 }
 
 , {
   "name": "log",
   "constant": true,
-  "inputs": [
-    {
-      "name": "p0"
-    },
-    {
-      "name": "p1"
-    },
-    {
-      "name": "p2"
-    },
-    {
-      "name": "p3"
-    }
-  ]
+  "inputs": {
+    "p0": "",
+    "p1": "",
+    "p2": "",
+    "p3": ""
+  }
 }
 
 , {
   "name": "log",
   "constant": true,
-  "inputs": [
-    {
-      "name": "p0"
-    },
-    {
-      "name": "p1"
-    },
-    {
-      "name": "p2"
-    },
-    {
-      "name": "p3"
-    }
-  ]
+  "inputs": {
+    "p0": "",
+    "p1": "",
+    "p2": "",
+    "p3": ""
+  }
 }
 
 , {
   "name": "log",
   "constant": true,
-  "inputs": [
-    {
-      "name": "p0"
-    },
-    {
-      "name": "p1"
-    },
-    {
-      "name": "p2"
-    },
-    {
-      "name": "p3"
-    }
-  ]
+  "inputs": {
+    "p0": "",
+    "p1": "",
+    "p2": "",
+    "p3": ""
+  }
 }
 
 , {
   "name": "log",
   "constant": true,
-  "inputs": [
-    {
-      "name": "p0"
-    },
-    {
-      "name": "p1"
-    },
-    {
-      "name": "p2"
-    },
-    {
-      "name": "p3"
-    }
-  ]
+  "inputs": {
+    "p0": "",
+    "p1": "",
+    "p2": "",
+    "p3": ""
+  }
 }
 
 , {
   "name": "log",
   "constant": true,
-  "inputs": [
-    {
-      "name": "p0"
-    },
-    {
-      "name": "p1"
-    },
-    {
-      "name": "p2"
-    },
-    {
-      "name": "p3"
-    }
-  ]
+  "inputs": {
+    "p0": "",
+    "p1": "",
+    "p2": "",
+    "p3": ""
+  }
 }
 
 , {
   "name": "log",
   "constant": true,
-  "inputs": [
-    {
-      "name": "p0"
-    },
-    {
-      "name": "p1"
-    },
-    {
-      "name": "p2"
-    },
-    {
-      "name": "p3"
-    }
-  ]
+  "inputs": {
+    "p0": "",
+    "p1": "",
+    "p2": "",
+    "p3": ""
+  }
 }
 
 , {
   "name": "log",
   "constant": true,
-  "inputs": [
-    {
-      "name": "p0"
-    },
-    {
-      "name": "p1"
-    },
-    {
-      "name": "p2"
-    },
-    {
-      "name": "p3"
-    }
-  ]
+  "inputs": {
+    "p0": "",
+    "p1": "",
+    "p2": "",
+    "p3": ""
+  }
 }
 
 , {
   "name": "log",
   "constant": true,
-  "inputs": [
-    {
-      "name": "p0"
-    },
-    {
-      "name": "p1"
-    },
-    {
-      "name": "p2"
-    }
-  ]
+  "inputs": {
+    "p0": "",
+    "p1": "",
+    "p2": ""
+  }
 }
 
 , {
   "name": "log",
   "constant": true,
-  "inputs": [
-    {
-      "name": "p0"
-    },
-    {
-      "name": "p1"
-    },
-    {
-      "name": "p2"
-    }
-  ]
+  "inputs": {
+    "p0": "",
+    "p1": "",
+    "p2": ""
+  }
 }
 
 , {
   "name": "log",
   "constant": true,
-  "inputs": [
-    {
-      "name": "p0"
-    },
-    {
-      "name": "p1"
-    },
-    {
-      "name": "p2"
-    }
-  ]
+  "inputs": {
+    "p0": "",
+    "p1": "",
+    "p2": ""
+  }
 }
 
 , {
   "name": "log",
   "constant": true,
-  "inputs": [
-    {
-      "name": "p0"
-    },
-    {
-      "name": "p1"
-    },
-    {
-      "name": "p2"
-    }
-  ]
+  "inputs": {
+    "p0": "",
+    "p1": "",
+    "p2": ""
+  }
 }
 
 , {
   "name": "log",
   "constant": true,
-  "inputs": [
-    {
-      "name": "p0"
-    },
-    {
-      "name": "p1"
-    }
-  ]
+  "inputs": {
+    "p0": "",
+    "p1": ""
+  }
 }
 
 , {
   "name": "log",
   "constant": true,
-  "inputs": [
-    {
-      "name": "p0"
-    },
-    {
-      "name": "p1"
-    },
-    {
-      "name": "p2"
-    },
-    {
-      "name": "p3"
-    }
-  ]
+  "inputs": {
+    "p0": "",
+    "p1": "",
+    "p2": "",
+    "p3": ""
+  }
 }
 
 , {
   "name": "log",
   "constant": true,
-  "inputs": [
-    {
-      "name": "p0"
-    },
-    {
-      "name": "p1"
-    },
-    {
-      "name": "p2"
-    },
-    {
-      "name": "p3"
-    }
-  ]
+  "inputs": {
+    "p0": "",
+    "p1": "",
+    "p2": "",
+    "p3": ""
+  }
 }
 
 , {
   "name": "log",
   "constant": true,
-  "inputs": [
-    {
-      "name": "p0"
-    },
-    {
-      "name": "p1"
-    },
-    {
-      "name": "p2"
-    },
-    {
-      "name": "p3"
-    }
-  ]
+  "inputs": {
+    "p0": "",
+    "p1": "",
+    "p2": "",
+    "p3": ""
+  }
 }
 
 , {
   "name": "log",
   "constant": true,
-  "inputs": [
-    {
-      "name": "p0"
-    },
-    {
-      "name": "p1"
-    },
-    {
-      "name": "p2"
-    },
-    {
-      "name": "p3"
-    }
-  ]
+  "inputs": {
+    "p0": "",
+    "p1": "",
+    "p2": "",
+    "p3": ""
+  }
 }
 
 , {
   "name": "log",
   "constant": true,
-  "inputs": [
-    {
-      "name": "p0"
-    },
-    {
-      "name": "p1"
-    },
-    {
-      "name": "p2"
-    },
-    {
-      "name": "p3"
-    }
-  ]
+  "inputs": {
+    "p0": "",
+    "p1": "",
+    "p2": "",
+    "p3": ""
+  }
 }
 
 , {
   "name": "log",
   "constant": true,
-  "inputs": [
-    {
-      "name": "p0"
-    },
-    {
-      "name": "p1"
-    },
-    {
-      "name": "p2"
-    },
-    {
-      "name": "p3"
-    }
-  ]
+  "inputs": {
+    "p0": "",
+    "p1": "",
+    "p2": "",
+    "p3": ""
+  }
 }
 
 , {
   "name": "log",
   "constant": true,
-  "inputs": [
-    {
-      "name": "p0"
-    },
-    {
-      "name": "p1"
-    },
-    {
-      "name": "p2"
-    },
-    {
-      "name": "p3"
-    }
-  ]
+  "inputs": {
+    "p0": "",
+    "p1": "",
+    "p2": "",
+    "p3": ""
+  }
 }
 
 , {
   "name": "log",
   "constant": true,
-  "inputs": [
-    {
-      "name": "p0"
-    },
-    {
-      "name": "p1"
-    },
-    {
-      "name": "p2"
-    },
-    {
-      "name": "p3"
-    }
-  ]
+  "inputs": {
+    "p0": "",
+    "p1": "",
+    "p2": "",
+    "p3": ""
+  }
 }
 
 , {
   "name": "log",
   "constant": true,
-  "inputs": [
-    {
-      "name": "p0"
-    },
-    {
-      "name": "p1"
-    },
-    {
-      "name": "p2"
-    },
-    {
-      "name": "p3"
-    }
-  ]
+  "inputs": {
+    "p0": "",
+    "p1": "",
+    "p2": "",
+    "p3": ""
+  }
 }
 
 , {
   "name": "log",
   "constant": true,
-  "inputs": [
-    {
-      "name": "p0"
-    },
-    {
-      "name": "p1"
-    },
-    {
-      "name": "p2"
-    },
-    {
-      "name": "p3"
-    }
-  ]
+  "inputs": {
+    "p0": "",
+    "p1": "",
+    "p2": "",
+    "p3": ""
+  }
 }
 
 , {
   "name": "log",
   "constant": true,
-  "inputs": [
-    {
-      "name": "p0"
-    },
-    {
-      "name": "p1"
-    },
-    {
-      "name": "p2"
-    },
-    {
-      "name": "p3"
-    }
-  ]
+  "inputs": {
+    "p0": "",
+    "p1": "",
+    "p2": "",
+    "p3": ""
+  }
 }
 
 , {
   "name": "log",
   "constant": true,
-  "inputs": [
-    {
-      "name": "p0"
-    },
-    {
-      "name": "p1"
-    },
-    {
-      "name": "p2"
-    },
-    {
-      "name": "p3"
-    }
-  ]
+  "inputs": {
+    "p0": "",
+    "p1": "",
+    "p2": "",
+    "p3": ""
+  }
 }
 
 , {
   "name": "log",
   "constant": true,
-  "inputs": [
-    {
-      "name": "p0"
-    },
-    {
-      "name": "p1"
-    },
-    {
-      "name": "p2"
-    }
-  ]
+  "inputs": {
+    "p0": "",
+    "p1": "",
+    "p2": ""
+  }
 }
 
 , {
   "name": "log",
   "constant": true,
-  "inputs": [
-    {
-      "name": "p0"
-    },
-    {
-      "name": "p1"
-    },
-    {
-      "name": "p2"
-    }
-  ]
+  "inputs": {
+    "p0": "",
+    "p1": "",
+    "p2": ""
+  }
 }
 
 , {
   "name": "log",
   "constant": true,
-  "inputs": [
-    {
-      "name": "p0"
-    },
-    {
-      "name": "p1"
-    },
-    {
-      "name": "p2"
-    }
-  ]
+  "inputs": {
+    "p0": "",
+    "p1": "",
+    "p2": ""
+  }
 }
 
 , {
   "name": "log",
   "constant": true,
-  "inputs": [
-    {
-      "name": "p0"
-    },
-    {
-      "name": "p1"
-    },
-    {
-      "name": "p2"
-    }
-  ]
+  "inputs": {
+    "p0": "",
+    "p1": "",
+    "p2": ""
+  }
 }
 
 , {
   "name": "log",
   "constant": true,
-  "inputs": [
-    {
-      "name": "p0"
-    },
-    {
-      "name": "p1"
-    }
-  ]
+  "inputs": {
+    "p0": "",
+    "p1": ""
+  }
 }
 
 , {
   "name": "log",
   "constant": true,
-  "inputs": [
-    {
-      "name": "p0"
-    },
-    {
-      "name": "p1"
-    },
-    {
-      "name": "p2"
-    },
-    {
-      "name": "p3"
-    }
-  ]
+  "inputs": {
+    "p0": "",
+    "p1": "",
+    "p2": "",
+    "p3": ""
+  }
 }
 
 , {
   "name": "log",
   "constant": true,
-  "inputs": [
-    {
-      "name": "p0"
-    },
-    {
-      "name": "p1"
-    },
-    {
-      "name": "p2"
-    },
-    {
-      "name": "p3"
-    }
-  ]
+  "inputs": {
+    "p0": "",
+    "p1": "",
+    "p2": "",
+    "p3": ""
+  }
 }
 
 , {
   "name": "log",
   "constant": true,
-  "inputs": [
-    {
-      "name": "p0"
-    },
-    {
-      "name": "p1"
-    },
-    {
-      "name": "p2"
-    },
-    {
-      "name": "p3"
-    }
-  ]
+  "inputs": {
+    "p0": "",
+    "p1": "",
+    "p2": "",
+    "p3": ""
+  }
 }
 
 , {
   "name": "log",
   "constant": true,
-  "inputs": [
-    {
-      "name": "p0"
-    },
-    {
-      "name": "p1"
-    },
-    {
-      "name": "p2"
-    },
-    {
-      "name": "p3"
-    }
-  ]
+  "inputs": {
+    "p0": "",
+    "p1": "",
+    "p2": "",
+    "p3": ""
+  }
 }
 
 , {
   "name": "log",
   "constant": true,
-  "inputs": [
-    {
-      "name": "p0"
-    },
-    {
-      "name": "p1"
-    },
-    {
-      "name": "p2"
-    },
-    {
-      "name": "p3"
-    }
-  ]
+  "inputs": {
+    "p0": "",
+    "p1": "",
+    "p2": "",
+    "p3": ""
+  }
 }
 
 , {
   "name": "log",
   "constant": true,
-  "inputs": [
-    {
-      "name": "p0"
-    },
-    {
-      "name": "p1"
-    },
-    {
-      "name": "p2"
-    },
-    {
-      "name": "p3"
-    }
-  ]
+  "inputs": {
+    "p0": "",
+    "p1": "",
+    "p2": "",
+    "p3": ""
+  }
 }
 
 , {
   "name": "log",
   "constant": true,
-  "inputs": [
-    {
-      "name": "p0"
-    },
-    {
-      "name": "p1"
-    },
-    {
-      "name": "p2"
-    },
-    {
-      "name": "p3"
-    }
-  ]
+  "inputs": {
+    "p0": "",
+    "p1": "",
+    "p2": "",
+    "p3": ""
+  }
 }
 
 , {
   "name": "log",
   "constant": true,
-  "inputs": [
-    {
-      "name": "p0"
-    },
-    {
-      "name": "p1"
-    },
-    {
-      "name": "p2"
-    },
-    {
-      "name": "p3"
-    }
-  ]
+  "inputs": {
+    "p0": "",
+    "p1": "",
+    "p2": "",
+    "p3": ""
+  }
 }
 
 , {
   "name": "logBytes",
   "constant": true,
-  "inputs": [
-    {
-      "name": "p0"
-    }
-  ]
+  "inputs": {
+    "p0": ""
+  }
 }
 
 , {
   "name": "logBytes13",
   "constant": true,
-  "inputs": [
-    {
-      "name": "p0"
-    }
-  ]
+  "inputs": {
+    "p0": ""
+  }
 }
 
 , {
   "name": "logBytes18",
   "constant": true,
-  "inputs": [
-    {
-      "name": "p0"
-    }
-  ]
+  "inputs": {
+    "p0": ""
+  }
 }
 
 , {
   "name": "logBytes22",
   "constant": true,
-  "inputs": [
-    {
-      "name": "p0"
-    }
-  ]
+  "inputs": {
+    "p0": ""
+  }
 }
 
 , {
   "name": "logBytes27",
   "constant": true,
-  "inputs": [
-    {
-      "name": "p0"
-    }
-  ]
+  "inputs": {
+    "p0": ""
+  }
 }
 
 , {
   "name": "logBytes31",
   "constant": true,
-  "inputs": [
-    {
-      "name": "p0"
-    }
-  ]
+  "inputs": {
+    "p0": ""
+  }
 }
 
 , {
   "name": "logBytes7",
   "constant": true,
-  "inputs": [
-    {
-      "name": "p0"
-    }
-  ]
+  "inputs": {
+    "p0": ""
+  }
 }
 
 , {
   "name": "logUint",
   "constant": true,
-  "inputs": [
-    {
-      "name": "p0"
-    }
-  ]
+  "inputs": {
+    "p0": ""
+  }
 }
 
 , {
   "name": "maliciousPrice",
-  "inputs": [
-    {
-      "name": "_id"
-    }
-  ]
+  "inputs": {
+    "_id": ""
+  },
+  "outputs": {
+    "requestId": ""
+  }
 }
 
 , {
   "name": "max",
-  "inputs": [
-    {
-      "name": "a"
-    },
-    {
-      "name": "b"
-    }
-  ]
+  "inputs": {
+    "a": "",
+    "b": ""
+  },
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
   "name": "max64",
-  "inputs": [
-    {
-      "name": "_a"
-    },
-    {
-      "name": "_b"
-    }
-  ]
+  "inputs": {
+    "_a": "",
+    "_b": ""
+  },
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
   "name": "min",
-  "inputs": [
-    {
-      "name": "a"
-    },
-    {
-      "name": "b"
-    }
-  ]
+  "inputs": {
+    "a": "",
+    "b": ""
+  },
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
   "name": "mint",
-  "inputs": [
-    {
-      "name": "account"
-    },
-    {
-      "name": "amount"
-    }
-  ]
+  "inputs": {
+    "account": "",
+    "amount": ""
+  }
 }
 
 , {
   "name": "mint",
-  "inputs": [
-    {
-      "name": "to"
-    }
-  ]
+  "inputs": {
+    "to": ""
+  }
 }
 
 , {
   "name": "mintBatchFrozenTokens",
-  "inputs": [
-    {
-      "name": "accounts",
-      "is_array": true
-    },
-    {
-      "name": "amounts",
-      "is_array": true
-    }
-  ]
+  "inputs": {
+    "accounts": "",
+    "amounts": ""
+  }
 }
 
 , {
   "name": "mintTokens",
-  "inputs": [
-    {
-      "name": "_amount"
-    }
-  ]
+  "inputs": {
+    "_amount": ""
+  },
+  "outputs": {
+    "success": ""
+  }
 }
 
 , {
@@ -3673,196 +2850,160 @@ TIME ~ CLOCK - <INFO>  : Parse func found: : address
 
 , {
   "name": "mod",
-  "inputs": [
-    {
-      "name": "a"
-    },
-    {
-      "name": "b"
-    }
-  ]
+  "inputs": {
+    "a": "",
+    "b": ""
+  },
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
   "name": "mul",
-  "inputs": [
-    {
-      "name": "a"
-    },
-    {
-      "name": "b"
-    }
-  ]
+  "inputs": {
+    "a": "",
+    "b": ""
+  },
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
   "name": "mul",
-  "inputs": [
-    {
-      "name": "a"
-    },
-    {
-      "name": "b"
-    }
-  ]
+  "inputs": {
+    "a": "",
+    "b": ""
+  },
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
   "name": "multiGenerate",
-  "inputs": [
-    {
-      "name": "_merkleMineContract"
-    },
-    {
-      "name": "_recipients",
-      "is_array": true
-    },
-    {
-      "name": "_merkleProofs"
-    }
-  ]
+  "inputs": {
+    "_merkleMineContract": "",
+    "_merkleProofs": "",
+    "_recipients": ""
+  }
 }
 
 , {
   "name": "multisend",
-  "inputs": [
-    {
-      "name": "_holders",
-      "is_array": true
-    },
-    {
-      "name": "_amts",
-      "is_array": true
-    }
-  ]
+  "inputs": {
+    "_amts": "",
+    "_holders": ""
+  }
 }
 
 , {
   "name": "name",
-  "constant": true
+  "constant": true,
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
   "name": "newToken",
-  "constant": true
+  "constant": true,
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
   "name": "notEqual",
-  "inputs": [
-    {
-      "name": "a"
-    },
-    {
-      "name": "b"
-    },
-    {
-      "name": "message"
-    }
-  ]
+  "inputs": {
+    "a": "",
+    "b": "",
+    "message": ""
+  },
+  "outputs": {
+    "result": ""
+  }
 }
 
 , {
   "name": "notEqual",
-  "inputs": [
-    {
-      "name": "a"
-    },
-    {
-      "name": "b"
-    },
-    {
-      "name": "message"
-    }
-  ]
+  "inputs": {
+    "a": "",
+    "b": "",
+    "message": ""
+  },
+  "outputs": {
+    "result": ""
+  }
 }
 
 , {
   "name": "notEqual",
-  "inputs": [
-    {
-      "name": "a"
-    },
-    {
-      "name": "b"
-    },
-    {
-      "name": "message"
-    }
-  ]
+  "inputs": {
+    "a": "",
+    "b": "",
+    "message": ""
+  },
+  "outputs": {
+    "result": ""
+  }
 }
 
 , {
   "name": "notEqual",
-  "inputs": [
-    {
-      "name": "a"
-    },
-    {
-      "name": "b"
-    },
-    {
-      "name": "message"
-    }
-  ]
+  "inputs": {
+    "a": "",
+    "b": "",
+    "message": ""
+  },
+  "outputs": {
+    "result": ""
+  }
 }
 
 , {
   "name": "numOfAdmins",
-  "constant": true
+  "constant": true,
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
   "name": "onTokenTransfer",
-  "inputs": [
-    {
-      "name": "val_0"
-    },
-    {
-      "name": "val_1"
-    },
-    {
-      "name": "val_2"
-    }
-  ]
+  "inputs": {
+    "val_0": "",
+    "val_1": "",
+    "val_2": ""
+  }
 }
 
 , {
   "name": "operatorSend",
-  "inputs": [
-    {
-      "name": "sender"
-    },
-    {
-      "name": "recipient"
-    },
-    {
-      "name": "amount"
-    },
-    {
-      "name": "data"
-    },
-    {
-      "name": "operatorData"
-    }
-  ]
+  "inputs": {
+    "amount": "",
+    "data": "",
+    "operatorData": "",
+    "recipient": "",
+    "sender": ""
+  }
 }
 
 , {
   "name": "overloadedSet",
-  "inputs": [
-    {
-      "name": "h"
-    },
-    {
-      "name": "val"
-    }
-  ]
+  "inputs": {
+    "h": "",
+    "val": ""
+  }
 }
 
 , {
   "name": "ownerLives",
-  "constant": true
+  "constant": true,
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
@@ -3871,7 +3012,10 @@ TIME ~ CLOCK - <INFO>  : Parse func found: : address
 
 , {
   "name": "paused",
-  "constant": true
+  "constant": true,
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
@@ -3880,23 +3024,20 @@ TIME ~ CLOCK - <INFO>  : Parse func found: : address
 
 , {
   "name": "plusTen",
-  "inputs": [
-    {
-      "name": "_value"
-    }
-  ]
+  "inputs": {
+    "_value": ""
+  },
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
   "name": "power",
-  "inputs": [
-    {
-      "name": "val_0"
-    },
-    {
-      "name": "val_1"
-    }
-  ]
+  "inputs": {
+    "val_0": "",
+    "val_1": ""
+  }
 }
 
 , {
@@ -3905,41 +3046,42 @@ TIME ~ CLOCK - <INFO>  : Parse func found: : address
 
 , {
   "name": "processProposal",
-  "inputs": [
-    {
-      "name": "proposalIndex"
-    }
-  ]
+  "inputs": {
+    "proposalIndex": ""
+  }
 }
 
 , {
-  "name": "proxyRuntimeCode"
+  "name": "proxyRuntimeCode",
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
   "name": "publicOracleAddress",
-  "constant": true
+  "constant": true,
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
   "name": "ragequit",
-  "inputs": [
-    {
-      "name": "sharesToBurn"
-    }
-  ]
+  "inputs": {
+    "sharesToBurn": ""
+  }
 }
 
 , {
   "name": "rayDiv",
-  "inputs": [
-    {
-      "name": "a"
-    },
-    {
-      "name": "b"
-    }
-  ]
+  "inputs": {
+    "a": "",
+    "b": ""
+  },
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
@@ -3948,68 +3090,61 @@ TIME ~ CLOCK - <INFO>  : Parse func found: : address
 
 , {
   "name": "reclaimContract",
-  "inputs": [
-    {
-      "name": "_contractAddr"
-    }
-  ]
+  "inputs": {
+    "_contractAddr": ""
+  }
 }
 
 , {
   "name": "recover",
-  "inputs": [
-    {
-      "name": "hash"
-    },
-    {
-      "name": "signature"
-    }
-  ]
+  "inputs": {
+    "hash": "",
+    "signature": ""
+  },
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
   "name": "registerInterface",
-  "inputs": [
-    {
-      "name": "interfaceId"
-    }
-  ]
+  "inputs": {
+    "interfaceId": ""
+  }
 }
 
 , {
   "name": "relayHubVersion",
-  "constant": true
+  "constant": true,
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
   "name": "release",
-  "inputs": [
-    {
-      "name": "token"
-    }
-  ]
+  "inputs": {
+    "token": ""
+  }
 }
 
 , {
   "name": "released",
   "constant": true,
-  "inputs": [
-    {
-      "name": "account"
-    }
-  ]
+  "inputs": {
+    "account": ""
+  },
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
   "name": "remove",
-  "inputs": [
-    {
-      "name": "storage role"
-    },
-    {
-      "name": "account"
-    }
-  ]
+  "inputs": {
+    "account": "",
+    "storage role": ""
+  }
 }
 
 , {
@@ -4018,11 +3153,9 @@ TIME ~ CLOCK - <INFO>  : Parse func found: : address
 
 , {
   "name": "removeMinter",
-  "inputs": [
-    {
-      "name": "_minter"
-    }
-  ]
+  "inputs": {
+    "_minter": ""
+  }
 }
 
 , {
@@ -4031,14 +3164,10 @@ TIME ~ CLOCK - <INFO>  : Parse func found: : address
 
 , {
   "name": "renounceRole",
-  "inputs": [
-    {
-      "name": "role"
-    },
-    {
-      "name": "account"
-    }
-  ]
+  "inputs": {
+    "account": "",
+    "role": ""
+  }
 }
 
 , {
@@ -4047,47 +3176,43 @@ TIME ~ CLOCK - <INFO>  : Parse func found: : address
 
 , {
   "name": "requestEthereumPrice",
-  "inputs": [
-    {
-      "name": "_currency"
-    }
-  ]
+  "inputs": {
+    "_currency": ""
+  }
 }
 
 , {
   "name": "requestedBytes",
-  "inputs": [
-    {
-      "name": "_requestId"
-    },
-    {
-      "name": "_value"
-    }
-  ]
+  "inputs": {
+    "_requestId": "",
+    "_value": ""
+  }
 }
 
 , {
   "name": "resolver",
   "constant": true,
-  "inputs": [
-    {
-      "name": "node"
-    }
-  ]
+  "inputs": {
+    "node": ""
+  },
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
   "name": "|Int",
-  "constant": true
+  "constant": true,
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
   "name": "revoke",
-  "inputs": [
-    {
-      "name": "_operation"
-    }
-  ]
+  "inputs": {
+    "_operation": ""
+  }
 }
 
 , {
@@ -4096,236 +3221,173 @@ TIME ~ CLOCK - <INFO>  : Parse func found: : address
 
 , {
   "name": "safeDecreaseAllowance",
-  "inputs": [
-    {
-      "name": "token"
-    },
-    {
-      "name": "spender"
-    },
-    {
-      "name": "value"
-    }
-  ]
+  "inputs": {
+    "spender": "",
+    "token": "",
+    "value": ""
+  }
 }
 
 , {
   "name": "safeMint",
-  "inputs": [
-    {
-      "name": "to"
-    },
-    {
-      "name": "tokenId"
-    },
-    {
-      "name": "_data"
-    }
-  ]
+  "inputs": {
+    "_data": "",
+    "to": "",
+    "tokenId": ""
+  },
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
   "name": "safeTransferFrom",
-  "inputs": [
-    {
-      "name": "from"
-    },
-    {
-      "name": "to"
-    },
-    {
-      "name": "tokenId"
-    }
-  ]
+  "inputs": {
+    "from": "",
+    "to": "",
+    "tokenId": ""
+  }
 }
 
 , {
   "name": "send",
-  "inputs": [
-    {
-      "name": "recipient"
-    },
-    {
-      "name": "amount"
-    },
-    {
-      "name": "data"
-    }
-  ]
+  "inputs": {
+    "amount": "",
+    "data": "",
+    "recipient": ""
+  }
 }
 
 , {
   "name": "sendHalf",
-  "inputs": [
-    {
-      "name": "addr"
-    }
-  ]
+  "inputs": {
+    "addr": ""
+  },
+  "outputs": {
+    "balance": ""
+  }
 }
 
 , {
   "name": "senderFor",
-  "inputs": [
-    {
-      "name": "account"
-    }
-  ]
+  "inputs": {
+    "account": ""
+  }
 }
 
 , {
   "name": "setAcceptEther",
-  "inputs": [
-    {
-      "name": "acceptEther"
-    }
-  ]
+  "inputs": {
+    "acceptEther": ""
+  }
 }
 
 , {
   "name": "setAdminAddress",
-  "inputs": [
-    {
-      "name": "_address"
-    }
-  ]
+  "inputs": {
+    "_address": ""
+  },
+  "outputs": {
+    "success": ""
+  }
 }
 
 , {
   "name": "setApprovalForAll",
-  "inputs": [
-    {
-      "name": "to"
-    },
-    {
-      "name": "approved"
-    }
-  ]
+  "inputs": {
+    "approved": "",
+    "to": ""
+  }
 }
 
 , {
   "name": "setBuffer",
-  "inputs": [
-    {
-      "name": "data"
-    }
-  ]
+  "inputs": {
+    "data": ""
+  }
 }
 
 , {
   "name": "setCap",
-  "inputs": [
-    {
-      "name": "beneficiary"
-    },
-    {
-      "name": "cap"
-    }
-  ]
+  "inputs": {
+    "beneficiary": "",
+    "cap": ""
+  }
 }
 
 , {
   "name": "setCompleted",
-  "inputs": [
-    {
-      "name": "completed"
-    }
-  ]
+  "inputs": {
+    "completed": ""
+  }
 }
 
 , {
   "name": "setDailyCosts",
-  "inputs": [
-    {
-      "name": "_dailyCosts"
-    }
-  ]
+  "inputs": {
+    "_dailyCosts": ""
+  }
 }
 
 , {
   "name": "setFulfillmentPermission",
-  "inputs": [
-    {
-      "name": "val_0"
-    },
-    {
-      "name": "val_1"
-    }
-  ]
+  "inputs": {
+    "val_0": "",
+    "val_1": ""
+  }
 }
 
 , {
   "name": "setLimitOfParticipants",
-  "inputs": [
-    {
-      "name": "_limitOfParticipants"
-    }
-  ]
+  "inputs": {
+    "_limitOfParticipants": ""
+  }
 }
 
 , {
   "name": "setName",
-  "inputs": [
-    {
-      "name": "node"
-    },
-    {
-      "name": "name"
-    }
-  ]
+  "inputs": {
+    "name": "",
+    "node": ""
+  }
 }
 
 , {
   "name": "setOwner",
-  "inputs": [
-    {
-      "name": "node"
-    },
-    {
-      "name": "owner"
-    }
-  ]
+  "inputs": {
+    "node": "",
+    "owner": ""
+  }
 }
 
 , {
   "name": "setResolver",
-  "inputs": [
-    {
-      "name": "node"
-    },
-    {
-      "name": "resolver"
-    }
-  ]
+  "inputs": {
+    "node": "",
+    "resolver": ""
+  }
 }
 
 , {
   "name": "setShouldRevertSend",
-  "inputs": [
-    {
-      "name": "shouldRevert"
-    }
-  ]
+  "inputs": {
+    "shouldRevert": ""
+  }
 }
 
 , {
   "name": "setTokenURI",
-  "inputs": [
-    {
-      "name": "tokenId"
-    },
-    {
-      "name": "uri"
-    }
-  ]
+  "inputs": {
+    "tokenId": "",
+    "uri": ""
+  }
 }
 
 , {
   "name": "setValue",
-  "inputs": [
-    {
-      "name": "val"
-    }
-  ]
+  "inputs": {
+    "val": ""
+  }
 }
 
 , {
@@ -4334,23 +3396,20 @@ TIME ~ CLOCK - <INFO>  : Parse func found: : address
 
 , {
   "name": "splitDAO",
-  "inputs": [
-    {
-      "name": "_proposalID"
-    },
-    {
-      "name": "_newCurator"
-    }
-  ]
+  "inputs": {
+    "_newCurator": "",
+    "_proposalID": ""
+  },
+  "outputs": {
+    "_success": ""
+  }
 }
 
 , {
   "name": "sponsorProposal",
-  "inputs": [
-    {
-      "name": "proposalId"
-    }
-  ]
+  "inputs": {
+    "proposalId": ""
+  }
 }
 
 , {
@@ -4363,92 +3422,78 @@ TIME ~ CLOCK - <INFO>  : Parse func found: : address
 
 , {
   "name": "sub",
-  "inputs": [
-    {
-      "name": "_a"
-    },
-    {
-      "name": "_b"
-    }
-  ]
+  "inputs": {
+    "_a": "",
+    "_b": ""
+  },
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
   "name": "sub",
-  "inputs": [
-    {
-      "name": "x"
-    },
-    {
-      "name": "y"
-    }
-  ]
+  "inputs": {
+    "x": "",
+    "y": ""
+  },
+  "outputs": {
+    "z": ""
+  }
 }
 
 , {
   "name": "submitProposal",
-  "inputs": [
-    {
-      "name": "applicant"
-    },
-    {
-      "name": "sharesRequested"
-    },
-    {
-      "name": "lootRequested"
-    },
-    {
-      "name": "tributeOffered"
-    },
-    {
-      "name": "tributeToken"
-    },
-    {
-      "name": "paymentRequested"
-    },
-    {
-      "name": "paymentToken"
-    },
-    {
-      "name": "details"
-    }
-  ]
+  "inputs": {
+    "applicant": "",
+    "details": "",
+    "lootRequested": "",
+    "paymentRequested": "",
+    "paymentToken": "",
+    "sharesRequested": "",
+    "tributeOffered": "",
+    "tributeToken": ""
+  }
 }
 
 , {
   "name": "submitWhitelistProposal",
-  "inputs": [
-    {
-      "name": "tokenToWhitelist"
-    },
-    {
-      "name": "details"
-    }
-  ]
+  "inputs": {
+    "details": "",
+    "tokenToWhitelist": ""
+  },
+  "outputs": {
+    "proposalId": ""
+  }
 }
 
 , {
   "name": "supportsERC165",
   "constant": true,
-  "inputs": [
-    {
-      "name": "account"
-    }
-  ]
+  "inputs": {
+    "account": ""
+  },
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
   "name": "supportsInterface",
-  "inputs": [
-    {
-      "name": "interfaceID"
-    }
-  ]
+  "inputs": {
+    "interfaceID": ""
+  },
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
   "name": "symbol",
-  "constant": true
+  "constant": true,
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
@@ -4465,20 +3510,16 @@ TIME ~ CLOCK - <INFO>  : Parse func found: : address
 
 , {
   "name": "test",
-  "inputs": [
-    {
-      "name": "b"
-    }
-  ]
+  "inputs": {
+    "b": ""
+  }
 }
 
 , {
   "name": "test",
-  "inputs": [
-    {
-      "name": "i"
-    }
-  ]
+  "inputs": {
+    "i": ""
+  }
 }
 
 , {
@@ -4523,11 +3564,12 @@ TIME ~ CLOCK - <INFO>  : Parse func found: : address
 
 , {
   "name": "testV2",
-  "inputs": [
-    {
-      "name": "p0"
-    }
-  ]
+  "inputs": {
+    "p0": ""
+  },
+  "outputs": {
+    "result": ""
+  }
 }
 
 , {
@@ -4536,249 +3578,200 @@ TIME ~ CLOCK - <INFO>  : Parse func found: : address
 
 , {
   "name": "toInt256",
-  "inputs": [
-    {
-      "name": "a"
-    }
-  ]
+  "inputs": {
+    "a": ""
+  },
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
   "name": "toString",
-  "inputs": [
-    {
-      "name": "value"
-    }
-  ]
+  "inputs": {
+    "value": ""
+  },
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
   "name": "toUint256",
-  "inputs": [
-    {
-      "name": "a"
-    }
-  ]
+  "inputs": {
+    "a": ""
+  },
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
   "name": "toUint64",
-  "inputs": [
-    {
-      "name": "value"
-    }
-  ]
+  "inputs": {
+    "value": ""
+  },
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
   "name": "toggleTrustedVerifier",
-  "inputs": [
-    {
-      "name": "_verifier"
-    }
-  ]
+  "inputs": {
+    "_verifier": ""
+  },
+  "outputs": {
+    "success": ""
+  }
 }
 
 , {
   "name": "tokenByIndex",
   "constant": true,
-  "inputs": [
-    {
-      "name": "index"
-    }
-  ]
+  "inputs": {
+    "index": ""
+  },
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
   "name": "tokenURI",
   "constant": true,
-  "inputs": [
-    {
-      "name": "_tokenId"
-    }
-  ]
+  "inputs": {
+    "_tokenId": ""
+  },
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
   "name": "tokensToSend",
-  "inputs": [
-    {
-      "name": "operator"
-    },
-    {
-      "name": "from"
-    },
-    {
-      "name": "to"
-    },
-    {
-      "name": "amount"
-    },
-    {
-      "name": "userData"
-    },
-    {
-      "name": "operatorData"
-    }
-  ]
+  "inputs": {
+    "amount": "",
+    "from": "",
+    "operator": "",
+    "operatorData": "",
+    "to": "",
+    "userData": ""
+  }
 }
 
 , {
   "name": "totalSupply",
-  "constant": true
+  "constant": true,
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
   "name": "trade",
-  "inputs": [
-    {
-      "name": "tokenGet"
-    },
-    {
-      "name": "amountGet"
-    },
-    {
-      "name": "tokenGive"
-    },
-    {
-      "name": "amountGive"
-    },
-    {
-      "name": "expires"
-    },
-    {
-      "name": "nonce"
-    },
-    {
-      "name": "user"
-    },
-    {
-      "name": "v"
-    },
-    {
-      "name": "r"
-    },
-    {
-      "name": "s"
-    },
-    {
-      "name": "amount"
-    }
-  ]
+  "inputs": {
+    "amount": "",
+    "amountGet": "",
+    "amountGive": "",
+    "expires": "",
+    "nonce": "",
+    "r": "",
+    "s": "",
+    "tokenGet": "",
+    "tokenGive": "",
+    "user": "",
+    "v": ""
+  }
 }
 
 , {
   "name": "transfer",
-  "inputs": [
-    {
-      "name": "_to"
-    },
-    {
-      "name": "_value"
-    }
-  ]
+  "inputs": {
+    "_to": "",
+    "_value": ""
+  },
+  "outputs": {
+    "success": ""
+  }
 }
 
 , {
   "name": "transfer",
-  "inputs": [
-    {
-      "name": "recipient"
-    },
-    {
-      "name": "amount"
-    }
-  ]
+  "inputs": {
+    "amount": "",
+    "recipient": ""
+  },
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
   "name": "transfer",
-  "inputs": [
-    {
-      "name": "val_0"
-    },
-    {
-      "name": "val_1"
-    }
-  ]
+  "inputs": {
+    "val_0": "",
+    "val_1": ""
+  }
 }
 
 , {
   "name": "transferFrom",
-  "inputs": [
-    {
-      "name": "_from"
-    },
-    {
-      "name": "_to"
-    },
-    {
-      "name": "_amount"
-    }
-  ]
+  "inputs": {
+    "_amount": "",
+    "_from": "",
+    "_to": ""
+  },
+  "outputs": {
+    "success": ""
+  }
 }
 
 , {
   "name": "transferFrom",
-  "inputs": [
-    {
-      "name": "from"
-    },
-    {
-      "name": "to"
-    },
-    {
-      "name": "tokenId"
-    }
-  ]
+  "inputs": {
+    "from": "",
+    "to": "",
+    "tokenId": ""
+  }
 }
 
 , {
   "name": "transferFrom",
-  "inputs": [
-    {
-      "name": "sender"
-    },
-    {
-      "name": "recipient"
-    },
-    {
-      "name": "amount"
-    }
-  ]
+  "inputs": {
+    "amount": "",
+    "recipient": "",
+    "sender": ""
+  },
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
   "name": "transferFromWithoutReward",
-  "inputs": [
-    {
-      "name": "_from"
-    },
-    {
-      "name": "_to"
-    },
-    {
-      "name": "_value"
-    }
-  ]
+  "inputs": {
+    "_from": "",
+    "_to": "",
+    "_value": ""
+  },
+  "outputs": {
+    "success": ""
+  }
 }
 
 , {
   "name": "transferOwnership",
-  "inputs": [
-    {
-      "name": "newOwner"
-    }
-  ]
+  "inputs": {
+    "newOwner": ""
+  }
 }
 
 , {
   "name": "transferPrimary",
-  "inputs": [
-    {
-      "name": "recipient"
-    }
-  ]
+  "inputs": {
+    "recipient": ""
+  }
 }
 
 , {
@@ -4792,11 +3785,12 @@ TIME ~ CLOCK - <INFO>  : Parse func found: : address
 , {
   "name": "ttl",
   "constant": true,
-  "inputs": [
-    {
-      "name": "node"
-    }
-  ]
+  "inputs": {
+    "node": ""
+  },
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
@@ -4805,104 +3799,81 @@ TIME ~ CLOCK - <INFO>  : Parse func found: : address
 
 , {
   "name": "unsafeAddToBalance",
-  "inputs": [
-    {
-      "name": "user"
-    },
-    {
-      "name": "token"
-    },
-    {
-      "name": "amount"
-    }
-  ]
+  "inputs": {
+    "amount": "",
+    "token": "",
+    "user": ""
+  }
 }
 
 , {
   "name": "updateAndRevert",
-  "inputs": [
-    {
-      "name": "newBalance"
-    }
-  ]
+  "inputs": {
+    "newBalance": ""
+  }
 }
 
 , {
   "name": "updateOwner",
-  "inputs": [
-    {
-      "name": "newOwner"
-    }
-  ]
+  "inputs": {
+    "newOwner": ""
+  }
 }
 
 , {
   "name": "upgradeRelayHub",
-  "inputs": [
-    {
-      "name": "newRelayHub"
-    }
-  ]
+  "inputs": {
+    "newRelayHub": ""
+  }
 }
 
 , {
   "name": "verify",
-  "inputs": [
-    {
-      "name": "proof",
-      "is_array": true
-    },
-    {
-      "name": "root"
-    },
-    {
-      "name": "leaf"
-    }
-  ]
+  "inputs": {
+    "leaf": "",
+    "proof": "",
+    "root": ""
+  },
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
   "name": "vote",
-  "inputs": [
-    {
-      "name": "videoID"
-    }
-  ]
+  "inputs": {
+    "videoID": ""
+  }
 }
 
 , {
   "name": "wallet",
-  "constant": true
+  "constant": true,
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
   "name": "withdraw",
-  "inputs": [
-    {
-      "name": "_payee"
-    }
-  ]
+  "inputs": {
+    "_payee": ""
+  }
 }
 
 , {
   "name": "withdraw",
-  "inputs": [
-    {
-      "name": "payee"
-    }
-  ]
+  "inputs": {
+    "payee": ""
+  }
 }
 
 , {
   "name": "withdrawBalance",
-  "inputs": [
-    {
-      "name": "token"
-    },
-    {
-      "name": "amount"
-    }
-  ]
+  "inputs": {
+    "amount": "",
+    "token": ""
+  }
 }
 
 , {
@@ -4915,57 +3886,50 @@ TIME ~ CLOCK - <INFO>  : Parse func found: : address
 
 , {
   "name": "withdrawPaymentsWithGas",
-  "inputs": [
-    {
-      "name": "payee"
-    }
-  ]
+  "inputs": {
+    "payee": ""
+  }
 }
 
 , {
   "name": "withdrawTokens",
-  "inputs": [
-    {
-      "name": "beneficiary"
-    }
-  ]
+  "inputs": {
+    "beneficiary": ""
+  }
 }
 
 , {
   "name": "withdrawalAllowed",
   "constant": true,
-  "inputs": [
-    {
-      "name": "payee"
-    }
-  ]
+  "inputs": {
+    "payee": ""
+  },
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
   "name": "writeBytes20",
-  "inputs": [
-    {
-      "name": "buf"
-    },
-    {
-      "name": "off"
-    },
-    {
-      "name": "data"
-    }
-  ]
+  "inputs": {
+    "buf": "",
+    "data": "",
+    "off": ""
+  },
+  "outputs": {
+    "ret_0": ""
+  }
 }
 
 , {
   "name": "zqHash",
-  "inputs": [
-    {
-      "name": "q"
-    },
-    {
-      "name": "x"
-    }
-  ]
+  "inputs": {
+    "q": "",
+    "x": ""
+  },
+  "outputs": {
+    "x_": ""
+  }
 }
 
 , {
@@ -4973,573 +3937,347 @@ TIME ~ CLOCK - <INFO>  : Parse func found: : address
 
 , {
   "name": "AffirmStatus",
-  "inputs": [
-    {
-      "name": "_sender"
-    },
-    {
-      "name": "_account"
-    },
-    {
-      "name": "_affirmDate"
-    },
-    {
-      "name": "_value"
-    }
-  ]
+  "inputs": {
+    "_account": "",
+    "_affirmDate": "",
+    "_sender": "",
+    "_value": ""
+  }
 }
 
 , {
   "name": "MakeRequest",
-  "inputs": [
-    {
-      "name": "_key"
-    },
-    {
-      "name": "_date"
-    },
-    {
-      "name": "_tokenAmount"
-    },
-    {
-      "name": "_dollarPrice"
-    },
-    {
-      "name": "_requestType"
-    },
-    {
-      "name": "_requester"
-    }
-  ]
+  "inputs": {
+    "_date": "",
+    "_dollarPrice": "",
+    "_key": "",
+    "_requestType": "",
+    "_requester": "",
+    "_tokenAmount": ""
+  }
 }
 
 , {
   "name": "SettingChange",
-  "inputs": [
-    {
-      "name": "_admin"
-    },
-    {
-      "name": "_setting"
-    },
-    {
-      "name": "_value"
-    }
-  ]
+  "inputs": {
+    "_admin": "",
+    "_setting": "",
+    "_value": ""
+  }
 }
 
 , {
   "name": "Transfer",
-  "inputs": [
-    {
-      "name": "from"
-    },
-    {
-      "name": "to"
-    },
-    {
-      "name": "tokens"
-    }
-  ]
+  "inputs": {
+    "from": "",
+    "to": "",
+    "tokens": ""
+  }
 }
 
 , {
   "name": "AddedOwner",
-  "inputs": [
-    {
-      "name": "owner"
-    }
-  ]
+  "inputs": {
+    "owner": ""
+  }
 }
 
 , {
   "name": "Approval",
-  "inputs": [
-    {
-      "name": "owner"
-    },
-    {
-      "name": "approved"
-    },
-    {
-      "name": "tokenId"
-    }
-  ]
+  "inputs": {
+    "approved": "",
+    "owner": "",
+    "tokenId": ""
+  }
 }
 
 , {
   "name": "CanRelayFailed",
-  "inputs": [
-    {
-      "name": "relay"
-    },
-    {
-      "name": "from"
-    },
-    {
-      "name": "to"
-    },
-    {
-      "name": "selector"
-    },
-    {
-      "name": "reason"
-    }
-  ]
+  "inputs": {
+    "from": "",
+    "reason": "",
+    "relay": "",
+    "selector": "",
+    "to": ""
+  }
 }
 
 , {
   "name": "CapperRemoved",
-  "inputs": [
-    {
-      "name": "account"
-    }
-  ]
+  "inputs": {
+    "account": ""
+  }
 }
 
 , {
   "name": "Data",
-  "inputs": [
-    {
-      "name": "data"
-    },
-    {
-      "name": "integerValue"
-    },
-    {
-      "name": "stringValue"
-    }
-  ]
+  "inputs": {
+    "data": "",
+    "integerValue": "",
+    "stringValue": ""
+  }
 }
 
 , {
   "name": "Deposited",
-  "inputs": [
-    {
-      "name": "recipient"
-    },
-    {
-      "name": "from"
-    },
-    {
-      "name": "amount"
-    }
-  ]
+  "inputs": {
+    "amount": "",
+    "from": "",
+    "recipient": ""
+  }
 }
 
 , {
   "name": "FinalizeEvent",
-  "inputs": [
-    {
-      "name": "maps",
-      "is_array": true
-    },
-    {
-      "name": "payout"
-    },
-    {
-      "name": "endedAt"
-    }
-  ]
+  "inputs": {
+    "endedAt": "",
+    "maps": "",
+    "payout": ""
+  }
 }
 
 , {
   "name": "Log0Anonym",
-  "inputs": [
-    {
-      "name": "value"
-    }
-  ]
+  "inputs": {
+    "value": ""
+  }
 }
 
 , {
   "name": "Log3",
-  "inputs": [
-    {
-      "name": "aBool"
-    },
-    {
-      "name": "aAddress"
-    },
-    {
-      "name": "aBytes32"
-    },
-    {
-      "name": "value"
-    }
-  ]
+  "inputs": {
+    "aAddress": "",
+    "aBool": "",
+    "aBytes32": "",
+    "value": ""
+  }
 }
 
 , {
   "name": "LogSetOwner",
-  "inputs": [
-    {
-      "name": "owner"
-    }
-  ]
+  "inputs": {
+    "owner": ""
+  }
 }
 
 , {
   "name": "MinterRemoved",
-  "inputs": [
-    {
-      "name": "account"
-    }
-  ]
+  "inputs": {
+    "account": ""
+  }
 }
 
 , {
   "name": "NewCheckpointVote",
-  "inputs": [
-    {
-      "name": "index"
-    },
-    {
-      "name": "checkpointHash"
-    },
-    {
-      "name": "v"
-    },
-    {
-      "name": "r"
-    },
-    {
-      "name": "s"
-    }
-  ]
+  "inputs": {
+    "checkpointHash": "",
+    "index": "",
+    "r": "",
+    "s": "",
+    "v": ""
+  }
 }
 
 , {
   "name": "OwnerChanged",
-  "inputs": [
-    {
-      "name": "oldOwner"
-    },
-    {
-      "name": "newOwner"
-    }
-  ]
+  "inputs": {
+    "newOwner": "",
+    "oldOwner": ""
+  }
 }
 
 , {
   "name": "PayeeAdded",
-  "inputs": [
-    {
-      "name": "account"
-    },
-    {
-      "name": "shares"
-    }
-  ]
+  "inputs": {
+    "account": "",
+    "shares": ""
+  }
 }
 
 , {
   "name": "ProcessProposal",
-  "inputs": [
-    {
-      "name": "proposalIndex"
-    },
-    {
-      "name": "applicant"
-    },
-    {
-      "name": "memberAddress"
-    },
-    {
-      "name": "tokenTribute"
-    },
-    {
-      "name": "sharesRequested"
-    },
-    {
-      "name": "didPass"
-    }
-  ]
+  "inputs": {
+    "applicant": "",
+    "didPass": "",
+    "memberAddress": "",
+    "proposalIndex": "",
+    "sharesRequested": "",
+    "tokenTribute": ""
+  }
 }
 
 , {
   "name": "Ragequit",
-  "inputs": [
-    {
-      "name": "memberAddress"
-    },
-    {
-      "name": "sharesToBurn"
-    }
-  ]
+  "inputs": {
+    "memberAddress": "",
+    "sharesToBurn": ""
+  }
 }
 
 , {
   "name": "RegisterEvent",
-  "inputs": [
-    {
-      "name": "addr"
-    },
-    {
-      "name": "index"
-    }
-  ]
+  "inputs": {
+    "addr": "",
+    "index": ""
+  }
 }
 
 , {
   "name": "RevokedOperator",
-  "inputs": [
-    {
-      "name": "operator"
-    },
-    {
-      "name": "tokenHolder"
-    }
-  ]
+  "inputs": {
+    "operator": "",
+    "tokenHolder": ""
+  }
 }
 
 , {
   "name": "Sent",
-  "inputs": [
-    {
-      "name": "operator"
-    },
-    {
-      "name": "from"
-    },
-    {
-      "name": "to"
-    },
-    {
-      "name": "amount"
-    },
-    {
-      "name": "data"
-    },
-    {
-      "name": "operatorData"
-    }
-  ]
+  "inputs": {
+    "amount": "",
+    "data": "",
+    "from": "",
+    "operator": "",
+    "operatorData": "",
+    "to": ""
+  }
 }
 
 , {
   "name": "Staked",
-  "inputs": [
-    {
-      "name": "relay"
-    },
-    {
-      "name": "stake"
-    },
-    {
-      "name": "unstakeDelay"
-    }
-  ]
+  "inputs": {
+    "relay": "",
+    "stake": "",
+    "unstakeDelay": ""
+  }
 }
 
 , {
   "name": "SubmitVote",
-  "inputs": [
-    {
-      "name": "proposalId"
-    },
-    {
-      "name": "proposalIndex"
-    },
-    {
-      "name": "delegateKey"
-    },
-    {
-      "name": "memberAddress"
-    },
-    {
-      "name": "uintVote"
-    }
-  ]
+  "inputs": {
+    "delegateKey": "",
+    "memberAddress": "",
+    "proposalId": "",
+    "proposalIndex": "",
+    "uintVote": ""
+  }
 }
 
 , {
   "name": "TestAnon",
-  "inputs": [
-    {
-      "name": "p0"
-    },
-    {
-      "name": "p2"
-    }
-  ]
+  "inputs": {
+    "p0": "",
+    "p2": ""
+  }
 }
 
 , {
   "name": "TestIndexedString",
-  "inputs": [
-    {
-      "name": "p2"
-    },
-    {
-      "name": "p1"
-    }
-  ]
+  "inputs": {
+    "p1": "",
+    "p2": ""
+  }
 }
 
 , {
   "name": "TestV2DynamicArray",
-  "inputs": [
-    {
-      "name": "p0[]"
-    },
-    {
-      "name": "p1[]"
-    }
-  ]
+  "inputs": {
+    "p0[]": "",
+    "p1[]": ""
+  }
 }
 
 , {
   "name": "TokenVestingRevoked",
-  "inputs": [
-    {
-      "name": "token"
-    }
-  ]
+  "inputs": {
+    "token": ""
+  }
 }
 
 , {
   "name": "TokensToSendCalled",
-  "inputs": [
-    {
-      "name": "operator"
-    },
-    {
-      "name": "from"
-    },
-    {
-      "name": "to"
-    },
-    {
-      "name": "amount"
-    },
-    {
-      "name": "data"
-    },
-    {
-      "name": "operatorData"
-    },
-    {
-      "name": "token"
-    },
-    {
-      "name": "fromBalance"
-    },
-    {
-      "name": "toBalance"
-    }
-  ]
+  "inputs": {
+    "amount": "",
+    "data": "",
+    "from": "",
+    "fromBalance": "",
+    "operator": "",
+    "operatorData": "",
+    "to": "",
+    "toBalance": "",
+    "token": ""
+  }
 }
 
 , {
   "name": "Transfer",
-  "inputs": [
-    {
-      "name": "node"
-    },
-    {
-      "name": "owner"
-    }
-  ]
+  "inputs": {
+    "node": "",
+    "owner": ""
+  }
 }
 
 , {
   "name": "UpdatedCount",
-  "inputs": [
-    {
-      "name": "count"
-    }
-  ]
+  "inputs": {
+    "count": ""
+  }
 }
 
 , {
   "name": "Withdraw",
-  "inputs": [
-    {
-      "name": "memberAddress"
-    },
-    {
-      "name": "token"
-    },
-    {
-      "name": "amount"
-    }
-  ]
+  "inputs": {
+    "amount": "",
+    "memberAddress": "",
+    "token": ""
+  }
 }
 
 , {
   "name": "Withdrawn",
-  "inputs": [
-    {
-      "name": "payee"
-    },
-    {
-      "name": "weiAmount"
-    }
-  ]
+  "inputs": {
+    "payee": "",
+    "weiAmount": ""
+  }
 }
 
 , {
   "name": "e",
-  "inputs": [
-    {
-      "name": "a",
-      "is_array": true
-    },
-    {
-      "name": "b",
-      "is_array": true
-    },
-    {
-      "name": "x",
-      "is_array": true
-    }
-  ]
+  "inputs": {
+    "a": "",
+    "b": "",
+    "x": ""
+  }
 }
 
 , {
   "name": "Approval",
-  "inputs": [
-    {
-      "name": "owner"
-    },
-    {
-      "name": "spender"
-    },
-    {
-      "name": "value"
-    }
-  ]
+  "inputs": {
+    "owner": "",
+    "spender": "",
+    "value": ""
+  }
 }
 
 , {
   "name": "ChainlinkFulfilled",
-  "inputs": [
-    {
-      "name": "id"
-    }
-  ]
+  "inputs": {
+    "id": ""
+  }
 }
 
 , {
   "name": "Deposited",
-  "inputs": [
-    {
-      "name": "payee"
-    },
-    {
-      "name": "weiAmount"
-    }
-  ]
+  "inputs": {
+    "payee": "",
+    "weiAmount": ""
+  }
 }
 
 , {
   "name": "InitiatedJob",
-  "inputs": [
-    {
-      "name": "said"
-    }
-  ]
+  "inputs": {
+    "said": ""
+  }
 }
 
 , {
@@ -5548,149 +4286,103 @@ TIME ~ CLOCK - <INFO>  : Parse func found: : address
 
 , {
   "name": "NewRound",
-  "inputs": [
-    {
-      "name": "roundId"
-    },
-    {
-      "name": "startedBy"
-    }
-  ]
+  "inputs": {
+    "roundId": "",
+    "startedBy": ""
+  }
 }
 
 , {
   "name": "OracleAdded",
-  "inputs": [
-    {
-      "name": "oracle"
-    }
-  ]
+  "inputs": {
+    "oracle": ""
+  }
 }
 
 , {
   "name": "OwnershipTransferred",
-  "inputs": [
-    {
-      "name": "previousOwner"
-    },
-    {
-      "name": "newOwner"
-    }
-  ]
+  "inputs": {
+    "newOwner": "",
+    "previousOwner": ""
+  }
 }
 
 , {
   "name": "Released",
-  "inputs": [
-    {
-      "name": "amount"
-    }
-  ]
+  "inputs": {
+    "amount": ""
+  }
 }
 
 , {
   "name": "RoleAdded",
-  "inputs": [
-    {
-      "name": "operator"
-    },
-    {
-      "name": "role"
-    }
-  ]
+  "inputs": {
+    "operator": "",
+    "role": ""
+  }
 }
 
 , {
   "name": "ServiceAgreementResponseReceived",
-  "inputs": [
-    {
-      "name": "saId"
-    },
-    {
-      "name": "requestId"
-    },
-    {
-      "name": "oracle"
-    },
-    {
-      "name": "answer"
-    }
-  ]
+  "inputs": {
+    "answer": "",
+    "oracle": "",
+    "requestId": "",
+    "saId": ""
+  }
 }
 
 , {
   "name": "Submit",
-  "inputs": [
-    {
-      "name": "proposalId"
-    }
-  ]
+  "inputs": {
+    "proposalId": ""
+  }
 }
 
 , {
   "name": "Transfer",
-  "inputs": [
-    {
-      "name": "from"
-    },
-    {
-      "name": "to"
-    },
-    {
-      "name": "value"
-    }
-  ]
+  "inputs": {
+    "from": "",
+    "to": "",
+    "value": ""
+  }
 }
 
 , {
   "name": "UserAdded",
-  "inputs": [
-    {
-      "name": "addr"
-    },
-    {
-      "name": "user"
-    }
-  ]
+  "inputs": {
+    "addr": "",
+    "user": ""
+  }
 }
 
 , {
   "name": "Confirmation",
-  "inputs": [
-    {
-      "name": "owner"
-    },
-    {
-      "name": "operation"
-    }
-  ]
+  "inputs": {
+    "operation": "",
+    "owner": ""
+  }
 }
 
 , {
   "name": "FuelingToDate",
-  "inputs": [
-    {
-      "name": "value"
-    }
-  ]
+  "inputs": {
+    "value": ""
+  }
 }
 
 , {
   "name": "OwnerRemoved",
-  "inputs": [
-    {
-      "name": "oldOwner"
-    }
-  ]
+  "inputs": {
+    "oldOwner": ""
+  }
 }
 
 , {
   "name": "RequirementChanged",
-  "inputs": [
-    {
-      "name": "newRequirement"
-    }
-  ]
+  "inputs": {
+    "newRequirement": ""
+  }
 }
 
 ]

@@ -40,8 +40,7 @@ int main(int argc, const char* argv[]) {
 
             } else {
                 if (options.mode == "onchain") {
-                    cout << doCommand("env DICT_MODE=true chifra state --call " + unchainedIndexAddr + "!" +
-                                      manifestHashEncoding);
+                    cout << doCommand("chifra state --call " + unchainedIndexAddr + "!" + manifestHashEncoding);
 
                 } else if (options.mode == "local") {
                     cout << asciiFileToString(configPath("manifest/initial-manifest.json"));

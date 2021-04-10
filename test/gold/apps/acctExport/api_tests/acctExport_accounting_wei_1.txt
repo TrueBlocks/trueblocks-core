@@ -81,9 +81,7 @@
       },
       "traces": [],
       "articulatedTx": {
-        "name": "",
-        "inputs": [],
-        "outputs": []
+        "name": ""
       },
       "compressedTx": "message:EN4V1GTB8",
       "statements": [

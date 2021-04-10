@@ -13,12 +13,9 @@ TIME ~ CLOCK - <INFO>  : Parse func found: : uint256
     "name": "getBalance",
     "signature": "getBalance()",
     "encoding": "0x12065fe0",
-    "outputs": [
-      {
-        "name": "balance",
-        "value": "0"
-      }
-    ]
+    "outputs": {
+      "balance": "0"
+    }
   },
   "balance": 0,
   "address": "0xa4f29fc548856180f6b1e319ee4d86715875cce4"

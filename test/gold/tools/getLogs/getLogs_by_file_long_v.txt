@@ -17,20 +17,11 @@ TIME ~ CLOCK - <INFO>  : Parse func found: : address,address,uint256
     "data": "0x000000000000000000000000000000000000000000000000094079cd16496a00",
     "articulatedLog": {
       "name": "Transfer",
-      "inputs": [
-        {
-          "name": "_from",
-          "value": "0x306b79fc32fb1561480102e032844bb36ea97102"
-        },
-        {
-          "name": "_to",
-          "value": "0xdf21fa922215b1a56f5a6d6294e6e36c85a0acfb"
-        },
-        {
-          "name": "_amount",
-          "value": "666666666600000000"
-        }
-      ]
+      "inputs": {
+        "_amount": "666666666600000000",
+        "_from": "0x306b79fc32fb1561480102e032844bb36ea97102",
+        "_to": "0xdf21fa922215b1a56f5a6d6294e6e36c85a0acfb"
+      }
     },
     "compressedLog": "Transfer(0x306b79fc32fb1561480102e032844bb36ea97102 /*_from*/, 0xdf21fa922215b1a56f5a6d6294e6e36c85a0acfb /*_to*/, 666666666600000000 /*_amount*/); "
   }TIME ~ CLOCK - <INFO>  : articulate: true
@@ -58,18 +49,10 @@ TIME ~ CLOCK - <INFO>  : Parse func found: : address,uint256
     "articulatedLog": {
       "name": "ProfitWithdrawn",
       "stateMutability": "nonpayable",
-      "inputs": [
-        {
-          "name": "tokenHolder",
-          "value": "0x63585740143301cf0163f6448fd8a63c3b376fd3",
-          "internalType": "address"
-        },
-        {
-          "name": "amountPaidOut",
-          "value": "87810925078238973",
-          "internalType": "uint256"
-        }
-      ]
+      "inputs": {
+        "amountPaidOut": "87810925078238973",
+        "tokenHolder": "0x63585740143301cf0163f6448fd8a63c3b376fd3"
+      }
     },
     "compressedLog": "ProfitWithdrawn(0x63585740143301cf0163f6448fd8a63c3b376fd3 /*tokenHolder*/, 87810925078238973 /*amountPaidOut*/); "
   }] }

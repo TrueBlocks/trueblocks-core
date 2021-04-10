@@ -195,8 +195,9 @@ inline bool sortByFunctionName(const CFunction& f1, const CFunction& f2) {
 }
 inline bool useDict(void) {
     static uint64_t dict_mode = NOPOS;
-    if (dict_mode == NOPOS)
-        dict_mode = getEnvStr("DICT_MODE") == "true";
+    if (dict_mode == NOPOS) {
+        dict_mode = !(getEnvStr("DICT_MODE") == "false");  // defaults to true
+    }
     return dict_mode;
 }
 // EXISTING_CODE

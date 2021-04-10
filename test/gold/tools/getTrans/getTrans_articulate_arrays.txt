@@ -712,33 +712,13 @@ params.size: 0
           "articulatedLog": {
             "name": "AcceptRequest",
             "stateMutability": "nonpayable",
-            "inputs": [
-              {
-                "name": "_key",
-                "value": "6",
-                "internalType": "uint256"
-              },
-              {
-                "name": "_etherAmount",
-                "value": "236159796400000000",
-                "internalType": "uint256"
-              },
-              {
-                "name": "_tokenAmount",
-                "value": "25000000000000000000",
-                "internalType": "uint256"
-              },
-              {
-                "name": "_dollarPrice",
-                "value": "2000000000000000000",
-                "internalType": "uint256"
-              },
-              {
-                "name": "_acceptor",
-                "value": "0xd503d263de9092232d28492d60c5a956ad754a83",
-                "internalType": "address"
-              }
-            ]
+            "inputs": {
+              "_acceptor": "0xd503d263de9092232d28492d60c5a956ad754a83",
+              "_dollarPrice": "2000000000000000000",
+              "_etherAmount": "236159796400000000",
+              "_key": "6",
+              "_tokenAmount": "25000000000000000000"
+            }
           },
           "compressedLog": "AcceptRequest(6, 236159796400000000, 25000000000000000000, 2000000000000000000, 0xd503d263de9092232d28492d60c5a956ad754a83); "
         },
@@ -753,33 +733,13 @@ params.size: 0
           "articulatedLog": {
             "name": "AcceptRequest",
             "stateMutability": "nonpayable",
-            "inputs": [
-              {
-                "name": "_key",
-                "value": "5",
-                "internalType": "uint256"
-              },
-              {
-                "name": "_etherAmount",
-                "value": "236159796400000000",
-                "internalType": "uint256"
-              },
-              {
-                "name": "_tokenAmount",
-                "value": "25000000000000000000",
-                "internalType": "uint256"
-              },
-              {
-                "name": "_dollarPrice",
-                "value": "2000000000000000000",
-                "internalType": "uint256"
-              },
-              {
-                "name": "_acceptor",
-                "value": "0xd503d263de9092232d28492d60c5a956ad754a83",
-                "internalType": "address"
-              }
-            ]
+            "inputs": {
+              "_acceptor": "0xd503d263de9092232d28492d60c5a956ad754a83",
+              "_dollarPrice": "2000000000000000000",
+              "_etherAmount": "236159796400000000",
+              "_key": "5",
+              "_tokenAmount": "25000000000000000000"
+            }
           },
           "compressedLog": "AcceptRequest(5, 236159796400000000, 25000000000000000000, 2000000000000000000, 0xd503d263de9092232d28492d60c5a956ad754a83); "
         }
@@ -808,23 +768,11 @@ params.size: 0
         "articulatedTrace": {
           "name": "acceptTheseAskRequestsAndBUY",
           "stateMutability": "nonpayable",
-          "inputs": [
-            {
-              "name": "_keys",
-              "value": "[6, 5]",
-              "internalType": "uint256[]"
-            },
-            {
-              "name": "_tokenAmounts",
-              "value": "[25000000000000000000, 25000000000000000000]",
-              "internalType": "uint256[]"
-            },
-            {
-              "name": "_dollarPrices",
-              "value": "[2000000000000000000, 2000000000000000000]",
-              "internalType": "uint256[]"
-            }
-          ]
+          "inputs": {
+            "_dollarPrices": "[2000000000000000000, 2000000000000000000]",
+            "_keys": "[6, 5]",
+            "_tokenAmounts": "[25000000000000000000, 25000000000000000000]"
+          }
         },
         "compressedTrace": "acceptTheseAskRequestsAndBUY([6, 5], [25000000000000000000, 25000000000000000000], [2000000000000000000, 2000000000000000000]); "
       },
@@ -849,20 +797,12 @@ params.size: 0
         "articulatedTrace": {
           "name": "USD",
           "stateMutability": "nonpayable",
-          "inputs": [
-            {
-              "name": "_id",
-              "value": "0",
-              "internalType": "uint256"
-            }
-          ],
-          "outputs": [
-            {
-              "name": "ret_0",
-              "value": "47231959280000",
-              "internalType": "uint256"
-            }
-          ]
+          "inputs": {
+            "_id": "0"
+          },
+          "outputs": {
+            "ret_0": "47231959280000"
+          }
         },
         "compressedTrace": "USD(0); "
       },
@@ -887,20 +827,12 @@ params.size: 0
         "articulatedTrace": {
           "name": "USD",
           "stateMutability": "nonpayable",
-          "inputs": [
-            {
-              "name": "_id",
-              "value": "0",
-              "internalType": "uint256"
-            }
-          ],
-          "outputs": [
-            {
-              "name": "ret_0",
-              "value": "47231959280000",
-              "internalType": "uint256"
-            }
-          ]
+          "inputs": {
+            "_id": "0"
+          },
+          "outputs": {
+            "ret_0": "47231959280000"
+          }
         },
         "compressedTrace": "USD(0); "
       }
@@ -908,23 +840,11 @@ params.size: 0
     "articulatedTx": {
       "name": "acceptTheseAskRequestsAndBUY",
       "stateMutability": "nonpayable",
-      "inputs": [
-        {
-          "name": "_keys",
-          "value": "[6, 5]",
-          "internalType": "uint256[]"
-        },
-        {
-          "name": "_tokenAmounts",
-          "value": "[25000000000000000000, 25000000000000000000]",
-          "internalType": "uint256[]"
-        },
-        {
-          "name": "_dollarPrices",
-          "value": "[2000000000000000000, 2000000000000000000]",
-          "internalType": "uint256[]"
-        }
-      ]
+      "inputs": {
+        "_dollarPrices": "[2000000000000000000, 2000000000000000000]",
+        "_keys": "[6, 5]",
+        "_tokenAmounts": "[25000000000000000000, 25000000000000000000]"
+      }
     },
     "compressedTx": "acceptTheseAskRequestsAndBUY([6, 5], [25000000000000000000, 25000000000000000000], [2000000000000000000, 2000000000000000000]); ",
     "gasCost": 10470350000000000,

@@ -23,28 +23,13 @@
       "articulatedTx": {
         "name": "multiTransfer",
         "stateMutability": "nonpayable",
-        "inputs": [
-          {
-            "name": "destinations",
-            "value": "",
-            "internalType": "address[]",
-            "components": []
-          },
-          {
-            "name": "tokens",
-            "value": "",
-            "internalType": "uint256[]",
-            "components": []
-          }
-        ],
-        "outputs": [
-          {
-            "name": "success",
-            "value": "",
-            "internalType": "bool",
-            "components": []
-          }
-        ]
+        "inputs": {
+          "destinations": "",
+          "tokens": ""
+        },
+        "outputs": {
+          "success": ""
+        }
       },
       "compressedTx": "multiTransfer ( destinations: , tokens:  )",
       "gasCost": 486000000000000,

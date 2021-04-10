@@ -209,23 +209,11 @@ params.size: 0
           "articulatedLog": {
             "name": "DataDumped",
             "stateMutability": "nonpayable",
-            "inputs": [
-              {
-                "name": "_recipient",
-                "value": "0xd31f381ad54386895852f311fc3be2008c88cb27",
-                "internalType": "address"
-              },
-              {
-                "name": "_topic",
-                "value": "0xf31b5730bd294639c67fa143fca1dad2c7aa05644f8d8b0e104aad5922d2f866",
-                "internalType": "string"
-              },
-              {
-                "name": "_dataHash",
-                "value": "QmQ4N388Lsnw8NHnJrRoY2uagmPqsm3S",
-                "internalType": "bytes32"
-              }
-            ]
+            "inputs": {
+              "_dataHash": "QmQ4N388Lsnw8NHnJrRoY2uagmPqsm3S",
+              "_recipient": "0xd31f381ad54386895852f311fc3be2008c88cb27",
+              "_topic": "0xf31b5730bd294639c67fa143fca1dad2c7aa05644f8d8b0e104aad5922d2f866"
+            }
           },
           "compressedLog": "DataDumped(0xd31f381ad54386895852f311fc3be2008c88cb27 /*_recipient*/, 0xf31b5730bd294639c67fa143fca1dad2c7aa05644f8d8b0e104aad5922d2f866 /*_topic*/, QmQ4N388Lsnw8NHnJrRoY2uagmPqsm3S /*_dataHash*/); "
         }
@@ -254,23 +242,11 @@ params.size: 0
         "articulatedTrace": {
           "name": "postData",
           "stateMutability": "nonpayable",
-          "inputs": [
-            {
-              "name": "recipient",
-              "value": "0xd31f381ad54386895852f311fc3be2008c88cb27",
-              "internalType": "address"
-            },
-            {
-              "name": "topic",
-              "value": "This is the string that represents the type of data being posted",
-              "internalType": "string"
-            },
-            {
-              "name": "data",
-              "value": "0x516d51344e3338384c736e77384e486e4a72526f59327561676d5071736d3353",
-              "internalType": "bytes32"
-            }
-          ]
+          "inputs": {
+            "data": "0x516d51344e3338384c736e77384e486e4a72526f59327561676d5071736d3353",
+            "recipient": "0xd31f381ad54386895852f311fc3be2008c88cb27",
+            "topic": "This is the string that represents the type of data being posted"
+          }
         },
         "compressedTrace": "postData(0xd31f381ad54386895852f311fc3be2008c88cb27 /*recipient*/, This is the string that represents the type of data being posted /*topic*/, 0x516d51344e3338384c736e77384e486e4a72526f59327561676d5071736d3353 /*data*/); "
       }
@@ -278,23 +254,11 @@ params.size: 0
     "articulatedTx": {
       "name": "postData",
       "stateMutability": "nonpayable",
-      "inputs": [
-        {
-          "name": "recipient",
-          "value": "0xd31f381ad54386895852f311fc3be2008c88cb27",
-          "internalType": "address"
-        },
-        {
-          "name": "topic",
-          "value": "This is the string that represents the type of data being posted",
-          "internalType": "string"
-        },
-        {
-          "name": "data",
-          "value": "0x516d51344e3338384c736e77384e486e4a72526f59327561676d5071736d3353",
-          "internalType": "bytes32"
-        }
-      ]
+      "inputs": {
+        "data": "0x516d51344e3338384c736e77384e486e4a72526f59327561676d5071736d3353",
+        "recipient": "0xd31f381ad54386895852f311fc3be2008c88cb27",
+        "topic": "This is the string that represents the type of data being posted"
+      }
     },
     "compressedTx": "postData(0xd31f381ad54386895852f311fc3be2008c88cb27 /*recipient*/, This is the string that represents the type of data being posted /*topic*/, 0x516d51344e3338384c736e77384e486e4a72526f59327561676d5071736d3353 /*data*/); ",
     "gasCost": 73459170000000,

@@ -1,17 +1,9 @@
 {
   "encoding": "0xbecc5a20",
-  "inputs": [
-    {
-      "internalType": "IERC20",
-      "name": "token",
-      "type": "IERC20"
-    },
-    {
-      "internalType": "bytes",
-      "name": "data",
-      "type": "bytes"
-    }
-  ],
+  "inputs": {
+    "data": "",
+    "token": ""
+  },
   "name": "_callOptionalReturn",
   "signature": "_callOptionalReturn(IERC20,bytes)",
   "stateMutability": "nonpayable",
@@ -21,13 +13,9 @@
   "constant": true,
   "encoding": "0x8b49d47e",
   "name": "_msgData",
-  "outputs": [
-    {
-      "internalType": "bytes",
-      "name": "ret_0",
-      "type": "bytes"
-    }
-  ],
+  "outputs": {
+    "ret_0": ""
+  },
   "signature": "_msgData()",
   "stateMutability": "view",
   "type": "function"
@@ -36,13 +24,9 @@
   "constant": true,
   "encoding": "0x119df25f",
   "name": "_msgSender",
-  "outputs": [
-    {
-      "internalType": "address",
-      "name": "ret_0",
-      "type": "address"
-    }
-  ],
+  "outputs": {
+    "ret_0": ""
+  },
   "signature": "_msgSender()",
   "stateMutability": "view",
   "type": "function"
@@ -63,26 +47,14 @@
 }
 {
   "encoding": "0x771602f7",
-  "inputs": [
-    {
-      "internalType": "uint256",
-      "name": "a",
-      "type": "uint256"
-    },
-    {
-      "internalType": "uint256",
-      "name": "b",
-      "type": "uint256"
-    }
-  ],
+  "inputs": {
+    "a": "",
+    "b": ""
+  },
   "name": "add",
-  "outputs": [
-    {
-      "internalType": "uint256",
-      "name": "ret_0",
-      "type": "uint256"
-    }
-  ],
+  "outputs": {
+    "ret_0": ""
+  },
   "signature": "add(uint256,uint256)",
   "stateMutability": "nonpayable",
   "type": "function"
@@ -90,52 +62,28 @@
 {
   "constant": true,
   "encoding": "0xdd62ed3e",
-  "inputs": [
-    {
-      "internalType": "address",
-      "name": "owner",
-      "type": "address"
-    },
-    {
-      "internalType": "address",
-      "name": "spender",
-      "type": "address"
-    }
-  ],
+  "inputs": {
+    "owner": "",
+    "spender": ""
+  },
   "name": "allowance",
-  "outputs": [
-    {
-      "internalType": "uint256",
-      "name": "ret_0",
-      "type": "uint256"
-    }
-  ],
+  "outputs": {
+    "ret_0": ""
+  },
   "signature": "allowance(address,address)",
   "stateMutability": "view",
   "type": "function"
 }
 {
   "encoding": "0x095ea7b3",
-  "inputs": [
-    {
-      "internalType": "address",
-      "name": "spender",
-      "type": "address"
-    },
-    {
-      "internalType": "uint256",
-      "name": "amount",
-      "type": "uint256"
-    }
-  ],
+  "inputs": {
+    "amount": "",
+    "spender": ""
+  },
   "name": "approve",
-  "outputs": [
-    {
-      "internalType": "bool",
-      "name": "ret_0",
-      "type": "bool"
-    }
-  ],
+  "outputs": {
+    "ret_0": ""
+  },
   "signature": "approve(address,uint256)",
   "stateMutability": "nonpayable",
   "type": "function"
@@ -143,91 +91,51 @@
 {
   "constant": true,
   "encoding": "0x70a08231",
-  "inputs": [
-    {
-      "internalType": "address",
-      "name": "account",
-      "type": "address"
-    }
-  ],
+  "inputs": {
+    "account": ""
+  },
   "name": "balanceOf",
-  "outputs": [
-    {
-      "internalType": "uint256",
-      "name": "ret_0",
-      "type": "uint256"
-    }
-  ],
+  "outputs": {
+    "ret_0": ""
+  },
   "signature": "balanceOf(address)",
   "stateMutability": "view",
   "type": "function"
 }
 {
   "encoding": "0xa391c15b",
-  "inputs": [
-    {
-      "internalType": "uint256",
-      "name": "a",
-      "type": "uint256"
-    },
-    {
-      "internalType": "uint256",
-      "name": "b",
-      "type": "uint256"
-    }
-  ],
+  "inputs": {
+    "a": "",
+    "b": ""
+  },
   "name": "div",
-  "outputs": [
-    {
-      "internalType": "uint256",
-      "name": "ret_0",
-      "type": "uint256"
-    }
-  ],
+  "outputs": {
+    "ret_0": ""
+  },
   "signature": "div(uint256,uint256)",
   "stateMutability": "nonpayable",
   "type": "function"
 }
 {
   "encoding": "0xb745d336",
-  "inputs": [
-    {
-      "internalType": "uint256",
-      "name": "a",
-      "type": "uint256"
-    },
-    {
-      "internalType": "uint256",
-      "name": "b",
-      "type": "uint256"
-    },
-    {
-      "internalType": "string",
-      "name": "errorMessage",
-      "type": "string"
-    }
-  ],
+  "inputs": {
+    "a": "",
+    "b": "",
+    "errorMessage": ""
+  },
   "name": "div",
-  "outputs": [
-    {
-      "internalType": "uint256",
-      "name": "ret_0",
-      "type": "uint256"
-    }
-  ],
+  "outputs": {
+    "ret_0": ""
+  },
   "signature": "div(uint256,uint256,string)",
   "stateMutability": "nonpayable",
   "type": "function"
 }
 {
   "encoding": "0xe1acd927",
-  "inputs": [
-    {
-      "internalType": "Donation[]",
-      "name": "_donations",
-      "type": "Donation[]"
-    }
-  ],
+  "inputs": {
+    "_donations": ""
+  },
   "name": "donate",
   "signature": "donate(Donation[])",
   "stateMutability": "payable",
@@ -236,104 +144,56 @@
 {
   "constant": true,
   "encoding": "0x16279055",
-  "inputs": [
-    {
-      "internalType": "address",
-      "name": "account",
-      "type": "address"
-    }
-  ],
+  "inputs": {
+    "account": ""
+  },
   "name": "isContract",
-  "outputs": [
-    {
-      "internalType": "bool",
-      "name": "ret_0",
-      "type": "bool"
-    }
-  ],
+  "outputs": {
+    "ret_0": ""
+  },
   "signature": "isContract(address)",
   "stateMutability": "view",
   "type": "function"
 }
 {
   "encoding": "0x71af23e8",
-  "inputs": [
-    {
-      "internalType": "uint256",
-      "name": "a",
-      "type": "uint256"
-    },
-    {
-      "internalType": "uint256",
-      "name": "b",
-      "type": "uint256"
-    },
-    {
-      "internalType": "string",
-      "name": "errorMessage",
-      "type": "string"
-    }
-  ],
+  "inputs": {
+    "a": "",
+    "b": "",
+    "errorMessage": ""
+  },
   "name": "mod",
-  "outputs": [
-    {
-      "internalType": "uint256",
-      "name": "ret_0",
-      "type": "uint256"
-    }
-  ],
+  "outputs": {
+    "ret_0": ""
+  },
   "signature": "mod(uint256,uint256,string)",
   "stateMutability": "nonpayable",
   "type": "function"
 }
 {
   "encoding": "0xf43f523a",
-  "inputs": [
-    {
-      "internalType": "uint256",
-      "name": "a",
-      "type": "uint256"
-    },
-    {
-      "internalType": "uint256",
-      "name": "b",
-      "type": "uint256"
-    }
-  ],
+  "inputs": {
+    "a": "",
+    "b": ""
+  },
   "name": "mod",
-  "outputs": [
-    {
-      "internalType": "uint256",
-      "name": "ret_0",
-      "type": "uint256"
-    }
-  ],
+  "outputs": {
+    "ret_0": ""
+  },
   "signature": "mod(uint256,uint256)",
   "stateMutability": "nonpayable",
   "type": "function"
 }
 {
   "encoding": "0xc8a4ac9c",
-  "inputs": [
-    {
-      "internalType": "uint256",
-      "name": "a",
-      "type": "uint256"
-    },
-    {
-      "internalType": "uint256",
-      "name": "b",
-      "type": "uint256"
-    }
-  ],
+  "inputs": {
+    "a": "",
+    "b": ""
+  },
   "name": "mul",
-  "outputs": [
-    {
-      "internalType": "uint256",
-      "name": "ret_0",
-      "type": "uint256"
-    }
-  ],
+  "outputs": {
+    "ret_0": ""
+  },
   "signature": "mul(uint256,uint256)",
   "stateMutability": "nonpayable",
   "type": "function"
@@ -342,13 +202,9 @@
   "constant": true,
   "encoding": "0x8da5cb5b",
   "name": "owner",
-  "outputs": [
-    {
-      "internalType": "address",
-      "name": "ret_0",
-      "type": "address"
-    }
-  ],
+  "outputs": {
+    "ret_0": ""
+  },
   "signature": "owner()",
   "stateMutability": "view",
   "type": "function"
@@ -364,13 +220,9 @@
   "constant": true,
   "encoding": "0x5c975abb",
   "name": "paused",
-  "outputs": [
-    {
-      "internalType": "bool",
-      "name": "ret_0",
-      "type": "bool"
-    }
-  ],
+  "outputs": {
+    "ret_0": ""
+  },
   "signature": "paused()",
   "stateMutability": "view",
   "type": "function"
@@ -384,23 +236,11 @@
 }
 {
   "encoding": "0xd6dcec8d",
-  "inputs": [
-    {
-      "internalType": "IERC20",
-      "name": "token",
-      "type": "IERC20"
-    },
-    {
-      "internalType": "address",
-      "name": "spender",
-      "type": "address"
-    },
-    {
-      "internalType": "uint256",
-      "name": "value",
-      "type": "uint256"
-    }
-  ],
+  "inputs": {
+    "spender": "",
+    "token": "",
+    "value": ""
+  },
   "name": "safeApprove",
   "signature": "safeApprove(IERC20,address,uint256)",
   "stateMutability": "nonpayable",
@@ -408,23 +248,11 @@
 }
 {
   "encoding": "0x5164ffed",
-  "inputs": [
-    {
-      "internalType": "IERC20",
-      "name": "token",
-      "type": "IERC20"
-    },
-    {
-      "internalType": "address",
-      "name": "spender",
-      "type": "address"
-    },
-    {
-      "internalType": "uint256",
-      "name": "value",
-      "type": "uint256"
-    }
-  ],
+  "inputs": {
+    "spender": "",
+    "token": "",
+    "value": ""
+  },
   "name": "safeDecreaseAllowance",
   "signature": "safeDecreaseAllowance(IERC20,address,uint256)",
   "stateMutability": "nonpayable",
@@ -432,23 +260,11 @@
 }
 {
   "encoding": "0x390cc046",
-  "inputs": [
-    {
-      "internalType": "IERC20",
-      "name": "token",
-      "type": "IERC20"
-    },
-    {
-      "internalType": "address",
-      "name": "spender",
-      "type": "address"
-    },
-    {
-      "internalType": "uint256",
-      "name": "value",
-      "type": "uint256"
-    }
-  ],
+  "inputs": {
+    "spender": "",
+    "token": "",
+    "value": ""
+  },
   "name": "safeIncreaseAllowance",
   "signature": "safeIncreaseAllowance(IERC20,address,uint256)",
   "stateMutability": "nonpayable",
@@ -456,23 +272,11 @@
 }
 {
   "encoding": "0xd0c407e1",
-  "inputs": [
-    {
-      "internalType": "IERC20",
-      "name": "token",
-      "type": "IERC20"
-    },
-    {
-      "internalType": "address",
-      "name": "to",
-      "type": "address"
-    },
-    {
-      "internalType": "uint256",
-      "name": "value",
-      "type": "uint256"
-    }
-  ],
+  "inputs": {
+    "to": "",
+    "token": "",
+    "value": ""
+  },
   "name": "safeTransfer",
   "signature": "safeTransfer(IERC20,address,uint256)",
   "stateMutability": "nonpayable",
@@ -480,28 +284,12 @@
 }
 {
   "encoding": "0x5beae096",
-  "inputs": [
-    {
-      "internalType": "IERC20",
-      "name": "token",
-      "type": "IERC20"
-    },
-    {
-      "internalType": "address",
-      "name": "from",
-      "type": "address"
-    },
-    {
-      "internalType": "address",
-      "name": "to",
-      "type": "address"
-    },
-    {
-      "internalType": "uint256",
-      "name": "value",
-      "type": "uint256"
-    }
-  ],
+  "inputs": {
+    "from": "",
+    "to": "",
+    "token": "",
+    "value": ""
+  },
   "name": "safeTransferFrom",
   "signature": "safeTransferFrom(IERC20,address,address,uint256)",
   "stateMutability": "nonpayable",
@@ -509,18 +297,10 @@
 }
 {
   "encoding": "0x24a084df",
-  "inputs": [
-    {
-      "internalType": "address",
-      "name": "recipient",
-      "type": "address"
-    },
-    {
-      "internalType": "uint256",
-      "name": "amount",
-      "type": "uint256"
-    }
-  ],
+  "inputs": {
+    "amount": "",
+    "recipient": ""
+  },
   "name": "sendValue",
   "signature": "sendValue(address,uint256)",
   "stateMutability": "nonpayable",
@@ -528,57 +308,29 @@
 }
 {
   "encoding": "0xb67d77c5",
-  "inputs": [
-    {
-      "internalType": "uint256",
-      "name": "a",
-      "type": "uint256"
-    },
-    {
-      "internalType": "uint256",
-      "name": "b",
-      "type": "uint256"
-    }
-  ],
+  "inputs": {
+    "a": "",
+    "b": ""
+  },
   "name": "sub",
-  "outputs": [
-    {
-      "internalType": "uint256",
-      "name": "ret_0",
-      "type": "uint256"
-    }
-  ],
+  "outputs": {
+    "ret_0": ""
+  },
   "signature": "sub(uint256,uint256)",
   "stateMutability": "nonpayable",
   "type": "function"
 }
 {
   "encoding": "0xe31bdc0a",
-  "inputs": [
-    {
-      "internalType": "uint256",
-      "name": "a",
-      "type": "uint256"
-    },
-    {
-      "internalType": "uint256",
-      "name": "b",
-      "type": "uint256"
-    },
-    {
-      "internalType": "string",
-      "name": "errorMessage",
-      "type": "string"
-    }
-  ],
+  "inputs": {
+    "a": "",
+    "b": "",
+    "errorMessage": ""
+  },
   "name": "sub",
-  "outputs": [
-    {
-      "internalType": "uint256",
-      "name": "ret_0",
-      "type": "uint256"
-    }
-  ],
+  "outputs": {
+    "ret_0": ""
+  },
   "signature": "sub(uint256,uint256,string)",
   "stateMutability": "nonpayable",
   "type": "function"
@@ -587,83 +339,47 @@
   "constant": true,
   "encoding": "0x18160ddd",
   "name": "totalSupply",
-  "outputs": [
-    {
-      "internalType": "uint256",
-      "name": "ret_0",
-      "type": "uint256"
-    }
-  ],
+  "outputs": {
+    "ret_0": ""
+  },
   "signature": "totalSupply()",
   "stateMutability": "view",
   "type": "function"
 }
 {
   "encoding": "0xa9059cbb",
-  "inputs": [
-    {
-      "internalType": "address",
-      "name": "recipient",
-      "type": "address"
-    },
-    {
-      "internalType": "uint256",
-      "name": "amount",
-      "type": "uint256"
-    }
-  ],
+  "inputs": {
+    "amount": "",
+    "recipient": ""
+  },
   "name": "transfer",
-  "outputs": [
-    {
-      "internalType": "bool",
-      "name": "ret_0",
-      "type": "bool"
-    }
-  ],
+  "outputs": {
+    "ret_0": ""
+  },
   "signature": "transfer(address,uint256)",
   "stateMutability": "nonpayable",
   "type": "function"
 }
 {
   "encoding": "0x23b872dd",
-  "inputs": [
-    {
-      "internalType": "address",
-      "name": "sender",
-      "type": "address"
-    },
-    {
-      "internalType": "address",
-      "name": "recipient",
-      "type": "address"
-    },
-    {
-      "internalType": "uint256",
-      "name": "amount",
-      "type": "uint256"
-    }
-  ],
+  "inputs": {
+    "amount": "",
+    "recipient": "",
+    "sender": ""
+  },
   "name": "transferFrom",
-  "outputs": [
-    {
-      "internalType": "bool",
-      "name": "ret_0",
-      "type": "bool"
-    }
-  ],
+  "outputs": {
+    "ret_0": ""
+  },
   "signature": "transferFrom(address,address,uint256)",
   "stateMutability": "nonpayable",
   "type": "function"
 }
 {
   "encoding": "0xf2fde38b",
-  "inputs": [
-    {
-      "internalType": "address",
-      "name": "newOwner",
-      "type": "address"
-    }
-  ],
+  "inputs": {
+    "newOwner": ""
+  },
   "name": "transferOwnership",
   "signature": "transferOwnership(address)",
   "stateMutability": "nonpayable",
@@ -678,13 +394,9 @@
 }
 {
   "encoding": "0xaf933b57",
-  "inputs": [
-    {
-      "internalType": "address",
-      "name": "_dest",
-      "type": "address"
-    }
-  ],
+  "inputs": {
+    "_dest": ""
+  },
   "name": "withdrawEther",
   "signature": "withdrawEther(address)",
   "stateMutability": "nonpayable",
@@ -692,18 +404,10 @@
 }
 {
   "encoding": "0x3aeac4e1",
-  "inputs": [
-    {
-      "internalType": "address",
-      "name": "_tokenAddress",
-      "type": "address"
-    },
-    {
-      "internalType": "address",
-      "name": "_dest",
-      "type": "address"
-    }
-  ],
+  "inputs": {
+    "_dest": "",
+    "_tokenAddress": ""
+  },
   "name": "withdrawToken",
   "signature": "withdrawToken(address,address)",
   "stateMutability": "nonpayable",
@@ -711,25 +415,11 @@
 }
 {
   "encoding": "0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925",
-  "inputs": [
-    {
-      "indexed": true,
-      "internalType": "address",
-      "name": "owner",
-      "type": "address"
-    },
-    {
-      "indexed": true,
-      "internalType": "address",
-      "name": "spender",
-      "type": "address"
-    },
-    {
-      "internalType": "uint256",
-      "name": "value",
-      "type": "uint256"
-    }
-  ],
+  "inputs": {
+    "owner": "",
+    "spender": "",
+    "value": ""
+  },
   "name": "Approval",
   "signature": "Approval(address,address,uint256)",
   "stateMutability": "nonpayable",
@@ -737,31 +427,12 @@
 }
 {
   "encoding": "0x3bb7428b25f9bdad9bd2faa4c6a7a9e5d5882657e96c1d24cc41c1d6c1910a98",
-  "inputs": [
-    {
-      "indexed": true,
-      "internalType": "address",
-      "name": "token",
-      "type": "address"
-    },
-    {
-      "indexed": true,
-      "internalType": "uint256",
-      "name": "amount",
-      "type": "uint256"
-    },
-    {
-      "internalType": "address",
-      "name": "dest",
-      "type": "address"
-    },
-    {
-      "indexed": true,
-      "internalType": "address",
-      "name": "donor",
-      "type": "address"
-    }
-  ],
+  "inputs": {
+    "amount": "",
+    "dest": "",
+    "donor": "",
+    "token": ""
+  },
   "name": "DonationSent",
   "signature": "DonationSent(address,uint256,address,address)",
   "stateMutability": "nonpayable",
@@ -769,20 +440,10 @@
 }
 {
   "encoding": "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0",
-  "inputs": [
-    {
-      "indexed": true,
-      "internalType": "address",
-      "name": "previousOwner",
-      "type": "address"
-    },
-    {
-      "indexed": true,
-      "internalType": "address",
-      "name": "newOwner",
-      "type": "address"
-    }
-  ],
+  "inputs": {
+    "newOwner": "",
+    "previousOwner": ""
+  },
   "name": "OwnershipTransferred",
   "signature": "OwnershipTransferred(address,address)",
   "stateMutability": "nonpayable",
@@ -790,13 +451,9 @@
 }
 {
   "encoding": "0x62e78cea01bee320cd4e420270b5ea74000d11b0c9f74754ebdbfc544b05a258",
-  "inputs": [
-    {
-      "internalType": "address",
-      "name": "account",
-      "type": "address"
-    }
-  ],
+  "inputs": {
+    "account": ""
+  },
   "name": "Paused",
   "signature": "Paused(address)",
   "stateMutability": "nonpayable",
@@ -804,26 +461,11 @@
 }
 {
   "encoding": "0xa0524ee0fd8662d6c046d199da2a6d3dc49445182cec055873a5bb9c2843c8e0",
-  "inputs": [
-    {
-      "indexed": true,
-      "internalType": "address",
-      "name": "token",
-      "type": "address"
-    },
-    {
-      "indexed": true,
-      "internalType": "uint256",
-      "name": "amount",
-      "type": "uint256"
-    },
-    {
-      "indexed": true,
-      "internalType": "address",
-      "name": "dest",
-      "type": "address"
-    }
-  ],
+  "inputs": {
+    "amount": "",
+    "dest": "",
+    "token": ""
+  },
   "name": "TokenWithdrawn",
   "signature": "TokenWithdrawn(address,uint256,address)",
   "stateMutability": "nonpayable",
@@ -831,25 +473,11 @@
 }
 {
   "encoding": "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
-  "inputs": [
-    {
-      "indexed": true,
-      "internalType": "address",
-      "name": "from",
-      "type": "address"
-    },
-    {
-      "indexed": true,
-      "internalType": "address",
-      "name": "to",
-      "type": "address"
-    },
-    {
-      "internalType": "uint256",
-      "name": "value",
-      "type": "uint256"
-    }
-  ],
+  "inputs": {
+    "from": "",
+    "to": "",
+    "value": ""
+  },
   "name": "Transfer",
   "signature": "Transfer(address,address,uint256)",
   "stateMutability": "nonpayable",
@@ -857,13 +485,9 @@
 }
 {
   "encoding": "0x5db9ee0a495bf2e6ff9c91a7834c1ba4fdd244a5e8aa4e537bd38aeae4b073aa",
-  "inputs": [
-    {
-      "internalType": "address",
-      "name": "account",
-      "type": "address"
-    }
-  ],
+  "inputs": {
+    "account": ""
+  },
   "name": "Unpaused",
   "signature": "Unpaused(address)",
   "stateMutability": "nonpayable",
