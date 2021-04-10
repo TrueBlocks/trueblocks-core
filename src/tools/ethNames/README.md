@@ -54,7 +54,7 @@ Using chifra names to find Singular's address, list tokens held by other token a
 - When there are two search terms, both must match.
 - The `--match_case` option requires case sensitive matching. It works with all other options.
 - To customize the list of names add a `custom` section to the config file (see documentation).
-- Name file: `~/.quickBlocks/names/names.tab` (1159226)
+- Name file: `~/.quickBlocks/names/names.tab` (1159349)
 
 #### Other Options
 
@@ -75,7 +75,4 @@ All **TrueBlocks** command-line tools support the following commands (although i
     --file:fn   |   specify multiple sets of command line options in a file.
 
 <small>*For the `--file:fn` option, place a series of valid command lines in a file and use the above options. In some cases, this option may significantly improve performance. A semi-colon at the start of a line makes that line a comment.*</small>
-
-**Powered by TrueBlocks<sup>&trade;</sup>**
-
 

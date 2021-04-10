@@ -16,7 +16,7 @@ Here is a screen shot of an interaction with Chifra building a smart contract mo
 
 <img src=docs/image.png>
 
-00007361 (   7361)- <ERROR> : Exit(chifra,call_command): 
+00005873 (   5873)- <ERROR> : Exit(chifra,call_command): 
 #### Usage
 
 `Usage:`    chifra command  
@@ -74,7 +74,4 @@ All **TrueBlocks** command-line tools support the following commands (although i
     --file:fn   |   specify multiple sets of command line options in a file.
 
 <small>*For the `--file:fn` option, place a series of valid command lines in a file and use the above options. In some cases, this option may significantly improve performance. A semi-colon at the start of a line makes that line a comment.*</small>
-
-**Powered by TrueBlocks<sup>&trade;</sup>**
-
 
