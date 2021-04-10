@@ -32,14 +32,19 @@ func main() {
 	log.Printf("Starting TrueBlocks API server on port " + tb.Options.Port)
 	out, err := exec.Command("cacheStatus", "--terse").Output()
 	if err != nil {
-		fmt.Printf("%s", err)
+		fmt.Printf("There was an error with the RPC server: %s", err)
+
+	} else if len(out) == 0 {
+		log.Printf("The RPC server sent an empty response. Quitting...")
+
 	} else {
 		log.Printf(string(out[:]))
+
+		// Start listening on web sockets
+		tb.RunWebsocketPool()
+
+		// Start listening for requests
+		log.Fatal(http.ListenAndServe(tb.Options.Port, tb.NewRouter()))
+
 	}
-
-	// Start listening on web sockets
-	tb.RunWebsocketPool()
-
-	// Start listening for requests
-	log.Fatal(http.ListenAndServe(tb.Options.Port, tb.NewRouter()))
 }
