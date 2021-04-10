@@ -54,6 +54,7 @@ Using chifra names to find Singular's address, list tokens held by other token a
 - When there are two search terms, both must match.
 - The `--match_case` option requires case sensitive matching. It works with all other options.
 - To customize the list of names add a `custom` section to the config file (see documentation).
+- Name file: `~/.quickBlocks/names/names.tab`
 
 #### Other Options
 

@@ -15,7 +15,7 @@ static const size_t nParams = sizeof(params) / sizeof(COption);
 //------------------------------------------------------------------------------------------------
 bool COptions::call_command(int argc, const char* argv[]) {
     string_q command;
-    for (int i = 0; i < argc; i++)
+    for (int i = 1; i < argc; i++)
         command += (string_q(argv[i]) + " ");
     if (!standardOptions(command))
         return false;
@@ -25,6 +25,8 @@ bool COptions::call_command(int argc, const char* argv[]) {
     CStringArray unused;
     prePrepareArguments(unused, argc, argv);
 
+    setProgName("chifra");
+
     string_q mode;
     bool has_help = false;
     for (int i = 1; i < argc; i++) {
@@ -33,8 +35,10 @@ bool COptions::call_command(int argc, const char* argv[]) {
             has_help = true;
 
         } else if (arg == "-th" || arg == "-ht") {
+            has_help = true;
             isReadme = true;
             hiUp1 = hiUp2 = hiDown = '`';
+            return usage("");
 
         } else if (!cmdMap[arg].empty()) {
             if (mode == "status") {
@@ -61,8 +65,6 @@ bool COptions::call_command(int argc, const char* argv[]) {
 
     if (Mocked(""))
         EXIT_NOMSG(false);
-
-    setProgName("chifra");
 
     // show chifra's help in limited cases, the tool's help otherwise
     if (has_help && (argc == 2 || mode == "serve"))

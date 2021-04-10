@@ -316,8 +316,7 @@ COptions::COptions(void) {
     // clang-format on
     // END_CODE_NOTES
     ostringstream os;
-    os << "Name file: `" << configPathRelative("names/names.tab") << "` (";
-    os << (isTestMode() ? "--size--" : uint_2_Str(fileSize(configPath("names/names.tab")))) << ")";
+    os << "Name file: `" << configPathRelative("names/names.tab") << "`";
     notes.push_back(os.str());
 
     // BEG_ERROR_MSG
