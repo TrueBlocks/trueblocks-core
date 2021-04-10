@@ -213,13 +213,6 @@ bool COptions::parseArguments(string_q& command) {
         EXIT_NOMSG(false);
     }
 
-    if (staging && count)
-        EXIT_USAGE("Please choose either --staging or --count, not both.");
-
-    if (staging && end != NOPOS && end >= bp.finalized)
-        EXIT_USAGE("--end value (" + uint_2_Str(end) + ") must be greater than finalized value (" +
-                   uint_2_Str(bp.finalized) + ").");
-
     // Handle the easy cases first...
     if (isCrudCommand())
         EXIT_NOMSG(handle_rm(addrs));
@@ -309,8 +302,6 @@ bool COptions::parseArguments(string_q& command) {
     blknum_t lastBlockToVisit = max((blknum_t)1, (visitTypes & VIS_UNRIPE)    ? bp.unripe
                                                  : (visitTypes & VIS_STAGING) ? bp.staging
                                                                               : bp.finalized);
-    if (isTestMode())
-        lastBlockToVisit = min(blknum_t(12000000), lastBlockToVisit);
 
     // Mark the range...
     listRange = make_pair((firstBlockToVisit == NOPOS ? 0 : firstBlockToVisit), lastBlockToVisit);

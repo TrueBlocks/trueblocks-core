@@ -16,7 +16,6 @@ Here is a screen shot of an interaction with Chifra building a smart contract mo
 
 <img src=docs/image.png>
 
-00005873 (   5873)- <ERROR> : Exit(chifra,call_command): 
 #### Usage
 
 `Usage:`    chifra command  

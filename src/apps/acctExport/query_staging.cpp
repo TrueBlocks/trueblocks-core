@@ -44,9 +44,6 @@ bool visitStagingIndexFiles(const string_q& path, void* data) {
             EXIT_NOMSG(!shouldQuit());
         }
 
-        if (isTestMode() && options->fileRange.first > 12000000)
-            EXIT_NOMSG(!shouldQuit());
-
         char* rawData = NULL;
 
         options->stats.nStageChecked++;
