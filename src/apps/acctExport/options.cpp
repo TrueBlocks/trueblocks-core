@@ -326,6 +326,12 @@ bool COptions::parseArguments(string_q& command) {
     if (end != NOPOS)
         scanRange.second = end;
 
+    if (receipts) {
+        SHOW_FIELD(CReceipt, "blockNumber");
+        SHOW_FIELD(CReceipt, "transactionIndex");
+        SHOW_FIELD(CReceipt, "isError");
+    }
+
     LOG_TEST("nMonitors", allMonitors.size(), false);
     LOG_TEST("exportRange.first", scanRange.first, false);
     LOG_TEST("exportRange.second", scanRange.second, false);

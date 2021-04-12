@@ -65,7 +65,15 @@ bool rangeFilter(CTraverser* trav, void* data) {
 }
 
 //-----------------------------------------------------------------------
-bool defPostFunc(CTraverser* trav, void* data) {
+bool pre_Func(CTraverser* trav, void* data) {
+    COptions* opt = (COptions*)trav->options;
+    opt->firstOut = true;
+    start_Log(trav, data);
+    return true;
+}
+
+//-----------------------------------------------------------------------
+bool post_Func(CTraverser* trav, void* data) {
     COptions* opt = (COptions*)trav->options;
 
     if (trav->lastExpBlock != NOPOS)

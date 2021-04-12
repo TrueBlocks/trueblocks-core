@@ -25,7 +25,8 @@ extern bool loadData(CTraverser* trav, void* data);
 inline bool noopFunc(CTraverser* trav, void* data) {
     return true;
 }
-extern bool defPostFunc(CTraverser* trav, void* data);
+extern bool pre_Func(CTraverser* trav, void* data);
+extern bool post_Func(CTraverser* trav, void* data);
 
 //-----------------------------------------------------------------------
 class CTraverser {
@@ -44,10 +45,10 @@ class CTraverser {
     }
 
   public:
-    TRAVERSERFUNC preFunc = noopFunc;
+    TRAVERSERFUNC preFunc = pre_Func;
     TRAVERSERFUNC filterFunc = rangeFilter;
     TRAVERSERFUNC displayFunc = noopFunc;
-    TRAVERSERFUNC postFunc = defPostFunc;
+    TRAVERSERFUNC postFunc = post_Func;
     TRAVERSERFUNC dataFunc = noopFunc;
     const CAppearance_base* app = nullptr;
     CBlock block1;

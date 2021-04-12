@@ -6,12 +6,10 @@
 #include "options.h"
 
 //-----------------------------------------------------------------------
-extern bool receipts_Pre(CTraverser* trav, void* data);
 extern bool receipts_Display(CTraverser* trav, void* data);
 //-----------------------------------------------------------------------
 bool COptions::handle_receipts(void) {
     CTraverser trav(this, cout, "receipts");
-    trav.preFunc = receipts_Pre;
     trav.displayFunc = receipts_Display;
     trav.dataFunc = loadData;
 
@@ -39,17 +37,4 @@ bool receipts_Display(CTraverser* trav, void* data) {
 
     prog_Log(trav, data, trav->inCache1 ? TR_PROGRESS_CACHE : TR_PROGRESS_NODE);
     return !shouldQuit();
-}
-
-//-----------------------------------------------------------------------
-bool receipts_Pre(CTraverser* trav, void* data) {
-    COptions* opt = (COptions*)trav->options;
-    opt->firstOut = true;
-
-    SHOW_FIELD(CReceipt, "blockNumber");
-    SHOW_FIELD(CReceipt, "transactionIndex");
-    SHOW_FIELD(CReceipt, "isError");
-
-    start_Log(trav, data);
-    return true;
 }

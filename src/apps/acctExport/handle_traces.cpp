@@ -6,12 +6,10 @@
 #include "options.h"
 
 //-----------------------------------------------------------------------
-extern bool traces_Pre(CTraverser* trav, void* data);
 extern bool traces_Display(CTraverser* trav, void* data);
 //-----------------------------------------------------------------------
 bool COptions::handle_traces(void) {
     CTraverser trav(this, cout, "traces");
-    trav.preFunc = traces_Pre;
     trav.displayFunc = traces_Display;
     trav.dataFunc = loadData;
 
@@ -103,13 +101,4 @@ bool traces_Display(CTraverser* trav, void* data) {
 
     prog_Log(trav, data, trav->inCache1 ? TR_PROGRESS_CACHE : TR_PROGRESS_NODE);
     return !shouldQuit();
-}
-
-//-----------------------------------------------------------------------
-bool traces_Pre(CTraverser* trav, void* data) {
-    COptions* opt = (COptions*)trav->options;
-    opt->firstOut = true;
-
-    start_Log(trav, data);
-    return true;
 }
