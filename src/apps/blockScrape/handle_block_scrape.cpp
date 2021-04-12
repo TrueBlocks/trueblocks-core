@@ -11,8 +11,6 @@
 bool COptions::scrape_blocks(void) {
     ENTER("scrape_blocks");
 
-    LOG_INFO(string_q(30, '-'), " Starting Scrape ", string_q(30, '-'));
-
     static blknum_t runs = 0;  // this counter is used for texting purposes only
     if (isLiveTest() && runs++ > TEST_RUNS)
         defaultQuitHandler(0);
@@ -68,6 +66,12 @@ bool COptions::scrape_blocks(void) {
     if (sleep < 13 && cons.distFromHead <= cons.blazeCnt)
         sleep = 13;  // we're basically caught up, so we can sleep until the next expected block
 
+    cerr << endl;
+    ostringstream os;
+    os << string_q(5, '-') << " Scraping " << cons.blazeStart << " of " << cons.client;
+    os << " (" << (cons.distFromHead) << " from head) " << string_q(30, '-');
+    LOG_INFO(os.str());
+
     // Let the user know what's going on
     if (verbose >= 8)
         cerr << cons;
@@ -86,7 +90,8 @@ bool COptions::scrape_blocks(void) {
     }
 
     // We're ready to scrape, so build the blaze command line...
-    ostringstream os;
+    os.clear();
+    os.str("");
     os << "blaze scrape ";
     os << "--startBlock " << cons.blazeStart << " ";
     os << "--nBlocks " << cons.blazeCnt << " ";
@@ -108,6 +113,11 @@ bool COptions::scrape_blocks(void) {
         LOG_WARN("Blaze quit without finishing. Reprocessing...");
         defaultQuitHandler(1);  // this does not quit, but only notifies the caller that the user quit blaze early
         EXIT_NOMSG(false);
+    }
+
+    if (!verbose) {
+        cerr << '\r' << string_q(120, ' ') << '\r';
+        cerr.flush();
     }
 
     // Blaze succeeded, but the user may have started `acctExport` during the time blaze started and finished.
