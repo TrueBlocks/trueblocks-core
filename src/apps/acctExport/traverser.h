@@ -10,25 +10,21 @@
  */
 #include "pinlib.h"
 
-typedef enum { TR_START = 1, TR_PROGRESS = 2, TR_END = 3 } TraverserLog;
 class COptions;
 class CTraverser;
 //-----------------------------------------------------------------------
 typedef bool (*TRAVERSERFUNC)(const CTraverser* trav, void* data);
-typedef void (*TRAVERSERLOGFUNC)(const CTraverser* trav, void* data, TraverserLog mode);
+typedef enum { TR_PROGRESS_CACHE = 1, TR_PROGRESS_NODE = 2 } TraverserLog;
 
 //-----------------------------------------------------------------------
-// clang-format: off
+extern void start_Log(const CTraverser* trav, void* data);
+extern void prog_Log(const CTraverser* trav, void* data, TraverserLog mode);
+extern void end_Log(const CTraverser* trav, void* data);
+extern bool rangeFilter(const CTraverser* trav, void* data);
 inline bool noopFunc(const CTraverser* trav, void* data) {
     return true;
 }
-inline void noopLogFunc(const CTraverser* trav, void* data, TraverserLog mode) {
-    return;
-}
-// clang-format: on
-extern bool rangeFilter(const CTraverser* trav, void* data);
-extern void prog_Log(const CTraverser* trav, void* data, TraverserLog mode);
-extern void end_Log(const CTraverser* trav, void* data, TraverserLog mode);
+extern bool defPostFunc(const CTraverser* trav, void* data);
 
 //-----------------------------------------------------------------------
 class CTraverser {
@@ -37,16 +33,18 @@ class CTraverser {
     ostream& os;
     string_q op;
     blknum_t lastExpBlock;
+    size_t index;
+    bool logging;
     CTraverser(const COptions* opt, ostream& osIn, const string_q& o)
-        : options(opt), os(osIn), op(o), lastExpBlock(NOPOS) {
+        : options(opt), os(osIn), op(o), lastExpBlock(NOPOS), index(0) {
+        logging = !isTestMode() || getEnvStr("FORCE_LOGGING") == "true";
     }
 
   public:
     TRAVERSERFUNC preFunc = noopFunc;
     TRAVERSERFUNC filterFunc = rangeFilter;
     TRAVERSERFUNC displayFunc = noopFunc;
-    TRAVERSERFUNC postFunc = noopFunc;
-    TRAVERSERLOGFUNC logFunc = noopLogFunc;
+    TRAVERSERFUNC postFunc = defPostFunc;
     const CAppearance_base* app = nullptr;
     const CTransaction* trans = nullptr;
 

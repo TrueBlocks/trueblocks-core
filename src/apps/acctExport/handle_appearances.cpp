@@ -9,7 +9,6 @@
 extern bool app_Pre(const CTraverser* trav, void* data);
 extern bool app_Display(const CTraverser* trav, void* data);
 extern bool app_Post(const CTraverser* trav, void* data);
-extern void app_Log(const CTraverser* trav, void* data, TraverserLog mode);
 //-----------------------------------------------------------------------
 bool COptions::handle_appearances(void) {
     CTraverser trav(this, cout, "appearances");
@@ -17,7 +16,6 @@ bool COptions::handle_appearances(void) {
     trav.filterFunc = rangeFilter;
     trav.displayFunc = app_Display;
     trav.postFunc = app_Post;
-    trav.logFunc = app_Log;
 
     CTraverserArray traversers;
     traversers.push_back(trav);
@@ -30,28 +28,22 @@ bool COptions::handle_appearances(void) {
 
 //-----------------------------------------------------------------------
 bool app_Display(const CTraverser* trav, void* data) {
-    const COptions* opt = trav->options;
+    COptions* opt = (COptions*)trav->options;
+    opt->nProcessed++;
     if (opt->freshen)
         return true;
 
+    bool inCache = true;
     CAppearanceDisplay* dapp = (CAppearanceDisplay*)data;
     dapp->blockNumber = trav->app->blk;
     dapp->transactionIndex = trav->app->txid;
 
     cout << ((isJson() && !opt->firstOut) ? ", " : "");
     cout << dapp->Format() << endl;
+    opt->firstOut = false;
 
+    prog_Log(trav, data, inCache ? TR_PROGRESS_CACHE : TR_PROGRESS_NODE);
     return !shouldQuit();
-}
-
-//-----------------------------------------------------------------------
-void app_Log(const CTraverser* trav, void* data, TraverserLog mode) {
-    if (mode == TR_END) {
-        end_Log(trav, data, mode);
-
-    } else if (mode == TR_PROGRESS) {
-        // prog_Log(trav, data, mode);
-    }
 }
 
 //-----------------------------------------------------------------------
@@ -66,7 +58,8 @@ const char* APP_FIELDS_HIDE =
 bool app_Pre(const CTraverser* trav, void* data) {
     manageFields(APP_FIELDS_ALL, false);
     manageFields(verbose ? APP_FIELDS_DISP_V : APP_FIELDS_DISP, true);
-    // (*trav->logFunc)(at, data, TR_START);
+
+    start_Log(trav, data);
     return true;
 }
 
@@ -74,6 +67,7 @@ bool app_Pre(const CTraverser* trav, void* data) {
 bool app_Post(const CTraverser* trav, void* data) {
     manageFields(APP_FIELDS_ALL, true);
     manageFields(APP_FIELDS_HIDE, false);
-    // (*trav->logFunc)(at, data, TR_END);
+
+    end_Log(trav, data);
     return true;
 }

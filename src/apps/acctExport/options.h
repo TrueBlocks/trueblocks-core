@@ -78,9 +78,6 @@ class COptions : public CAbiOptions {
     uint64_t nCacheItemsWritten;
 
     blkrange_t listRange;
-
-    blknum_t firstBlock;
-    blknum_t lastBlock;
     CReconciliation lastStatement;
     CReconciliationMap prevStatements;
 
@@ -136,5 +133,5 @@ inline bool isJson(void) {
 #define VIS_UNRIPE (1 << 3)
 
 //-----------------------------------------------------------------------
-extern bool handle_reconciliation(COptions* options, CTransaction& trans, CReconciliationMap& prev, blknum_t next,
-                                  bool tokens);
+extern bool process_reconciliation(COptions* options, CTransaction& trans, CReconciliationMap& prev, blknum_t next,
+                                   bool tokens);

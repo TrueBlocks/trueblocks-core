@@ -416,6 +416,109 @@
     "staging": "0xdeadbeef",
     "finalized": "0xdeadbeef",
     "client": "0xdeadbeef",
+    "namedFrom": {
+      "0xdf21fa922215b1a56f5a6d6294e6e36c85a0acfb": {
+        "tags": "81-Other:Consensys",
+        "name": "Probable_Exchange, oloniex's DAO Wallet",
+        "count": 1
+      }
+    },
+    "unNamedFrom": {
+      "0xed059bc543141c8c93031d545079b3da0233b27f": 238,
+      "0xee057a76e2f321a9200c6539648af30d709075a1": 3
+    },
+    "namedTo": {
+      "0x8b3b3b624c3c0397d3da8fd861512393d51dcbac": {
+        "tags": "81-Other:DAO Related",
+        "name": "TheOhEightAccount",
+        "count": 236
+      },
+      "0xbb9bc244d798123fde783fcc1c72d3bb8c189413": {
+        "tags": "50-Tokens:ERC20",
+        "name": "The DAO Original",
+        "is_contract": true,
+        "is_erc20": true,
+        "count": 4
+      }
+    },
+    "unNamedTo": {},
+    "namedCreations": {
+      "0x8b3b3b624c3c0397d3da8fd861512393d51dcbac": {
+        "tags": "81-Other:DAO Related",
+        "name": "TheOhEightAccount",
+        "count": 2
+      }
+    },
+    "unNamedCreations": {
+      "": 724,
+      "0x25a94c918500c8fbcc9e340d8db8fdbd19e563cf": 3,
+      "0x3c20199c2ca76b2d74508df90394b7f5477f859c": 3,
+      "0x3ea5a7c881ca1ccf8b090d4465f0c9f47863bb1b": 3,
+      "0x53d2e99857fd426e8204aa9d5b51ab2bcf3d7a55": 3,
+      "0x58669f55fc4162830887823cee1e9da1731f5173": 3,
+      "0x6d4e427e35c8daffe77719e166f51cc1e4d68a4c": 3,
+      "0xa63d5adefb4424901c7904106d55df61b2f90e07": 3,
+      "0xa8eced73b863886478a81b411868fbac8ffbd334": 3,
+      "0xb1fa9e33e9684a08718076047569ec87ddfb2963": 3,
+      "0xc6f58fd005c95a75622f5bbe091f77c2e8c07bf1": 3,
+      "0xc743bf777427f917f0c910f96232e00ee4c6fc34": 3,
+      "0xcfe771fe863e4d6fe5f21348980b4329f59ead8a": 3,
+      "0xe754bb3f679303aa3086170a2ca4a434a1842d4c": 3,
+      "0xef436dc387093904792b08cbc62691457bef5dfb": 3,
+      "0xf4d0a0814621b22e80d7d0767213f94c7644bbab": 3,
+      "0xfb26a5474e91db31cbad68933e7726422c1ddc1d": 3
+    },
+    "namedTraceFrom": {
+      "0x8b3b3b624c3c0397d3da8fd861512393d51dcbac": {
+        "tags": "81-Other:DAO Related",
+        "name": "TheOhEightAccount",
+        "count": 236
+      },
+      "0xdf21fa922215b1a56f5a6d6294e6e36c85a0acfb": {
+        "tags": "81-Other:Consensys",
+        "name": "Probable_Exchange, oloniex's DAO Wallet",
+        "count": 1
+      }
+    },
+    "unNamedTraceFrom": {
+      "0xed059bc543141c8c93031d545079b3da0233b27f": 238,
+      "0xb1fa9e33e9684a08718076047569ec87ddfb2963": 64,
+      "0x3c20199c2ca76b2d74508df90394b7f5477f859c": 48,
+      "0xc743bf777427f917f0c910f96232e00ee4c6fc34": 40,
+      "0xcfe771fe863e4d6fe5f21348980b4329f59ead8a": 40,
+      "0x53d2e99857fd426e8204aa9d5b51ab2bcf3d7a55": 32,
+      "0x25a94c918500c8fbcc9e340d8db8fdbd19e563cf": 24,
+      "0x6d4e427e35c8daffe77719e166f51cc1e4d68a4c": 16,
+      "0xa63d5adefb4424901c7904106d55df61b2f90e07": 16,
+      "0xe754bb3f679303aa3086170a2ca4a434a1842d4c": 16,
+      "0xee057a76e2f321a9200c6539648af30d709075a1": 3
+    },
+    "namedTraceTo": {
+      "0xbb9bc244d798123fde783fcc1c72d3bb8c189413": {
+        "tags": "50-Tokens:ERC20",
+        "name": "The DAO Original",
+        "is_contract": true,
+        "is_erc20": true,
+        "count": 340
+      },
+      "0x8b3b3b624c3c0397d3da8fd861512393d51dcbac": {
+        "tags": "81-Other:DAO Related",
+        "name": "TheOhEightAccount",
+        "count": 236
+      }
+    },
+    "unNamedTraceTo": {
+      "": 50,
+      "0xb1fa9e33e9684a08718076047569ec87ddfb2963": 32,
+      "0x3c20199c2ca76b2d74508df90394b7f5477f859c": 24,
+      "0xc743bf777427f917f0c910f96232e00ee4c6fc34": 20,
+      "0xcfe771fe863e4d6fe5f21348980b4329f59ead8a": 20,
+      "0x53d2e99857fd426e8204aa9d5b51ab2bcf3d7a55": 16,
+      "0x25a94c918500c8fbcc9e340d8db8fdbd19e563cf": 12,
+      "0x6d4e427e35c8daffe77719e166f51cc1e4d68a4c": 8,
+      "0xa63d5adefb4424901c7904106d55df61b2f90e07": 8,
+      "0xe754bb3f679303aa3086170a2ca4a434a1842d4c": 8
+    },
     "start": "0xdeadbeef",
     "end": "0xdeadbeef",
     "accountedFor": {

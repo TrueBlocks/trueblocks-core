@@ -8,156 +8,105 @@
 //-----------------------------------------------------------------------
 extern bool logs_Pre(const CTraverser* trav, void* data);
 extern bool logs_Display(const CTraverser* trav, void* data);
-extern bool logs_Post(const CTraverser* trav, void* data);
-extern void logs_Log(const CTraverser* trav, void* data, TraverserLog mode);
 //-----------------------------------------------------------------------
 bool COptions::handle_logs(void) {
-    CTraverser trav(this, cout, "txs");
-    logs_Pre(&trav, nullptr);
+    CTraverser trav(this, cout, "logs");
+    trav.preFunc = logs_Pre;
+    trav.filterFunc = rangeFilter;
+    trav.displayFunc = logs_Display;
 
-    for (size_t i = 0; i < apps.size() && (!freshen || (nProcessed < 5000)); i++) {
-        const CAppearance_base* app = &apps[i];
-        if (shouldQuit() || app->blk >= expContext().tsCnt)
-            break;
+    CTraverserArray traversers;
+    traversers.push_back(trav);
 
-        if (inRange((blknum_t)app->blk, scanRange.first, scanRange.second)) {
-            CBlock block;  // do not move this from this scope
-            block.blockNumber = app->blk;
-            CTransaction trans;
-            trans.pBlock = &block;
+    forEveryAppearance(traversers, apps, nullptr);
 
-            string_q txFilename = getBinaryCacheFilename(CT_TXS, app->blk, app->txid);
-            bool inCache = app->blk != 0 && fileExists(txFilename);
-            if (inCache) {
-                // we read the data, if we find it, but....
-                readTransFromBinary(trans, txFilename);
-                trans.finishParse();
-                trans.pBlock = &block;
-                block.timestamp = trans.timestamp = (timestamp_t)expContext().tsMemMap[(app->blk * 2) + 1];
+    return !shouldQuit();
+}
 
-                markNeighbors(trans);
-                articulateAll(trans);
+//-----------------------------------------------------------------------
+bool logs_Display(const CTraverser* trav, void* data) {
+    COptions* opt = (COptions*)trav->options;
 
-            } else {
-                if (app->blk == 0) {
-                    address_t addr = prefundAddrMap[app->txid];
-                    trans.loadTransAsPrefund(app->blk, app->txid, addr, expContext().prefundMap[addr]);
+    CBlock block;  // do not move this from this scope
+    block.blockNumber = trav->app->blk;
+    CTransaction trans;
+    trans.pBlock = &block;
 
-                } else if (app->txid == 99997 || app->txid == 99999) {
-                    trans.loadTransAsBlockReward(app->blk, app->txid, blkRewardMap[app->blk]);
+    string_q txFilename = getBinaryCacheFilename(CT_TXS, trav->app->blk, trav->app->txid);
+    bool inCache = trav->app->blk != 0 && fileExists(txFilename);
+    if (inCache) {
+        // we read the data, if we find it, but....
+        readTransFromBinary(trans, txFilename);
+        trans.finishParse();
+        trans.pBlock = &block;
+        block.timestamp = trans.timestamp = (timestamp_t)expContext().tsMemMap[(trav->app->blk * 2) + 1];
 
-                } else if (app->txid == 99998) {
-                    uint64_t nUncles = getUncleCount(app->blk);
-                    for (size_t u = 0; u < nUncles; u++) {
-                        CBlock uncle;
-                        getUncle(uncle, app->blk, u);
-                        if (uncle.miner == blkRewardMap[app->blk]) {
-                            trans.loadTransAsUncleReward(app->blk, uncle.blockNumber, uncle.miner);
-                        }
-                    }
+    } else {
+        if (trav->app->blk == 0) {
+            address_t addr = opt->prefundAddrMap[trav->app->txid];
+            trans.loadTransAsPrefund(trav->app->blk, trav->app->txid, addr, expContext().prefundMap[addr]);
 
-                } else {
-                    getTransaction(trans, app->blk, app->txid);
-                    getFullReceipt(&trans, true);
-                }
+        } else if (trav->app->txid == 99997 || trav->app->txid == 99999) {
+            trans.loadTransAsBlockReward(trav->app->blk, trav->app->txid, opt->blkRewardMap[trav->app->blk]);
 
-                trans.pBlock = &block;
-                trans.timestamp = block.timestamp = (timestamp_t)expContext().tsMemMap[(app->blk * 2) + 1];
-
-                markNeighbors(trans);
-                articulateAll(trans);
-
-                if (cache_txs)
-                    writeTransToBinary(trans, txFilename);
-            }
-
-            for (auto log : trans.receipt.logs) {
-                bool showMe = true;
-                if (relevant) {
-                    showMe = isRelevant(log);
-                    if (showMe && !emitted_by.empty())
-                        showMe = wasEmittedBy(log.address);
-                } else if (!emitted_by.empty()) {
-                    showMe = wasEmittedBy(log.address);
-                } else if (emitter) {
-                    showMe = isEmitter(log.address);
-                }
-                nProcessed++;
-                if (showMe && !freshen) {
-                    cout << ((isJson() && !firstOut) ? ", " : "");
-                    cout << log.Format() << endl;
-                    firstOut = false;
+        } else if (trav->app->txid == 99998) {
+            uint64_t nUncles = getUncleCount(trav->app->blk);
+            for (size_t u = 0; u < nUncles; u++) {
+                CBlock uncle;
+                getUncle(uncle, trav->app->blk, u);
+                if (uncle.miner == opt->blkRewardMap[trav->app->blk]) {
+                    trans.loadTransAsUncleReward(trav->app->blk, uncle.blockNumber, uncle.miner);
                 }
             }
 
-            if (!isTestMode() && (isApiMode() || !(nProcessed % 3))) {
-                logs_Log(&trav, nullptr, TR_PROGRESS);
+        } else {
+            getTransaction(trans, trav->app->blk, trav->app->txid);
+            getFullReceipt(&trans, true);
+        }
+
+        trans.pBlock = &block;
+        trans.timestamp = block.timestamp = (timestamp_t)expContext().tsMemMap[(trav->app->blk * 2) + 1];
+
+        // TODO: Must we write this data if the data has not changed?
+        if (opt->cache_txs)
+            writeTransToBinary(trans, txFilename);
+    }
+
+    opt->nProcessed++;
+    if (!opt->freshen) {
+        opt->markNeighbors(trans);
+        opt->articulateAll(trans);
+        for (auto log : trans.receipt.logs) {
+            bool showMe = true;
+            if (opt->relevant) {
+                showMe = opt->isRelevant(log);
+                if (showMe && !opt->emitted_by.empty())
+                    showMe = opt->wasEmittedBy(log.address);
+            } else if (!opt->emitted_by.empty()) {
+                showMe = opt->wasEmittedBy(log.address);
+            } else if (opt->emitter) {
+                showMe = opt->isEmitter(log.address);
             }
-        } else if (app->blk > scanRange.second) {
-            break;
+            if (showMe) {
+                cout << ((isJson() && !opt->firstOut) ? ", " : "");
+                cout << log.Format() << endl;
+                opt->firstOut = false;
+            }
         }
     }
 
-    logs_Post(&trav, nullptr);
-    return true;
-}
-
-//-----------------------------------------------------------------------
-bool COptions::isEmitter(const address_t& test) const {
-    for (auto monitor : allMonitors)
-        if (monitor.address == test)
-            return true;
-    return false;
-}
-
-//-----------------------------------------------------------------------
-bool COptions::wasEmittedBy(const address_t& test) const {
-    for (auto e : emitted_by)
-        if (e == test)
-            return true;
-    return false;
-}
-
-//-----------------------------------------------------------------------
-bool COptions::isRelevant(const CLogEntry& log) const {
-    string_q str = toLower(log.Format(STR_DISPLAY_LOGENTRY));
-    for (auto monitor : allMonitors)
-        if (contains(str, monitor.address.substr(2)))
-            return true;
-    return false;
+    prog_Log(trav, data, inCache ? TR_PROGRESS_CACHE : TR_PROGRESS_NODE);
+    return !shouldQuit();
 }
 
 //-----------------------------------------------------------------------
 bool logs_Pre(const CTraverser* trav, void* data) {
     COptions* opt = (COptions*)trav->options;
     opt->firstOut = true;
+
     if (opt->apps.size() > 0 && opt->first_record != 0)
         opt->lastStatement.endBal = getBalanceAt(opt->accountedFor, opt->apps[0].blk - 1);
+
+    start_Log(trav, data);
     return true;
-}
-
-//-----------------------------------------------------------------------
-bool logs_Post(const CTraverser* trav, void* data) {
-    COptions* opt = (COptions*)trav->options;
-
-    if (trav->lastExpBlock != NOPOS)
-        for (auto monitor : opt->allMonitors)
-            monitor.writeLastExport(trav->lastExpBlock);
-
-    opt->reportNeighbors();
-
-    if (!isTestMode())
-        logs_Log(trav, data, TR_END);
-
-    return true;
-}
-
-//-----------------------------------------------------------------------
-void logs_Log(const CTraverser* trav, void* data, TraverserLog mode) {
-    if (mode == TR_END) {
-        end_Log(trav, data, mode);
-
-    } else if (mode == TR_PROGRESS) {
-        prog_Log(trav, data, mode);
-    }
 }

@@ -377,9 +377,6 @@ void COptions::Init(void) {
     bp = getBlockProgress(BP_ALL);
     listRange.second = bp.ripe;
 
-    firstBlock = NOPOS;
-    lastBlock = NOPOS;
-
     allMonitors.clear();
     counts.clear();
     apps.clear();
@@ -674,3 +671,28 @@ bool COptions::freshen_internal(void) {
 //     }
 //     tool_flags += " --mocked ";
 // }
+
+//-----------------------------------------------------------------------
+bool COptions::isEmitter(const address_t& test) const {
+    for (auto monitor : allMonitors)
+        if (monitor.address == test)
+            return true;
+    return false;
+}
+
+//-----------------------------------------------------------------------
+bool COptions::wasEmittedBy(const address_t& test) const {
+    for (auto e : emitted_by)
+        if (e == test)
+            return true;
+    return false;
+}
+
+//-----------------------------------------------------------------------
+bool COptions::isRelevant(const CLogEntry& log) const {
+    string_q str = toLower(log.Format(STR_DISPLAY_LOGENTRY));
+    for (auto monitor : allMonitors)
+        if (contains(str, monitor.address.substr(2)))
+            return true;
+    return false;
+}

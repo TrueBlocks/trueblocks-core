@@ -8,20 +8,17 @@
 //-----------------------------------------------------------------------
 extern bool receipts_Pre(const CTraverser* trav, void* data);
 extern bool receipts_Display(const CTraverser* trav, void* data);
-extern bool receipts_Post(const CTraverser* trav, void* data);
-extern void receipts_Log(const CTraverser* trav, void* data, TraverserLog mode);
 //-----------------------------------------------------------------------
 bool COptions::handle_receipts(void) {
     CTraverser trav(this, cout, "receipts");
     trav.preFunc = receipts_Pre;
     trav.filterFunc = rangeFilter;
     trav.displayFunc = receipts_Display;
-    trav.postFunc = receipts_Post;
-    trav.logFunc = receipts_Log;
 
     CTraverserArray traversers;
     traversers.push_back(trav);
 
+    cache_txs = false;  // no need
     forEveryAppearance(traversers, apps, nullptr);
 
     return !shouldQuit();
@@ -37,7 +34,8 @@ bool receipts_Display(const CTraverser* trav, void* data) {
     trans.pBlock = &block;
 
     string_q txFilename = getBinaryCacheFilename(CT_TXS, trav->app->blk, trav->app->txid);
-    if (trav->app->blk != 0 && fileExists(txFilename)) {
+    bool inCache = trav->app->blk != 0 && fileExists(txFilename);
+    if (inCache) {
         // we read the data, if we find it, but....
         readTransFromBinary(trans, txFilename);
         trans.finishParse();
@@ -70,23 +68,21 @@ bool receipts_Display(const CTraverser* trav, void* data) {
         trans.pBlock = &block;
         trans.timestamp = block.timestamp = (timestamp_t)expContext().tsMemMap[(trav->app->blk * 2) + 1];
 
-        // ... we don't write the data here since it will not be complete.
-        // if (false) // (cache_txs && !fileExists(txFilename))
-        //    writeTransToBinary(trans, txFilename);
+        // TODO: Must we write this data if the data has not changed?
+        if (opt->cache_txs)
+            writeTransToBinary(trans, txFilename);
     }
 
-    if (opt->articulate)
-        opt->abi_spec.articulateTransaction(&trans);
-
+    opt->nProcessed++;
     if (!opt->freshen) {
+        opt->markNeighbors(trans);
+        opt->articulateAll(trans);
         cout << ((isJson() && !opt->firstOut) ? ", " : "");
         cout << trans.receipt.Format() << endl;
+        opt->firstOut = false;
     }
 
-    if (!isTestMode() && (isApiMode() || !(opt->nProcessed % 3))) {
-        receipts_Log(trav, nullptr, TR_PROGRESS);
-    }
-
+    prog_Log(trav, data, inCache ? TR_PROGRESS_CACHE : TR_PROGRESS_NODE);
     return !shouldQuit();
 }
 
@@ -99,32 +95,6 @@ bool receipts_Pre(const CTraverser* trav, void* data) {
     SHOW_FIELD(CReceipt, "transactionIndex");
     SHOW_FIELD(CReceipt, "isError");
 
-    receipts_Log(trav, nullptr, TR_START);
-
+    start_Log(trav, data);
     return true;
-}
-
-//-----------------------------------------------------------------------
-bool receipts_Post(const CTraverser* trav, void* data) {
-    COptions* opt = (COptions*)trav->options;
-
-    if (trav->lastExpBlock != NOPOS)
-        for (auto monitor : opt->allMonitors)
-            monitor.writeLastExport(trav->lastExpBlock);
-    opt->reportNeighbors();
-
-    if (!isTestMode())
-        receipts_Log(trav, data, TR_END);
-
-    return true;
-}
-
-//-----------------------------------------------------------------------
-void receipts_Log(const CTraverser* trav, void* data, TraverserLog mode) {
-    if (mode == TR_END) {
-        end_Log(trav, data, mode);
-
-    } else if (mode == TR_PROGRESS) {
-        prog_Log(trav, data, mode);
-    }
 }
