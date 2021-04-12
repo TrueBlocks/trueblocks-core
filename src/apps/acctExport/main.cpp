@@ -83,7 +83,7 @@ int main(int argc, const char* argv[]) {
 
     if (!isTestMode() && !options.freshen && !options.count && !options.accounting && !options.logs) {
         ostringstream oss;
-        oss << "Exported " << padNum6T(options.nProcessed) << " ";
+        oss << "Exported " << padNum6T(options.nTransactions) << " ";
         oss << (!options.className.empty() ? (plural(options.className) + " from ") : "of ");
         oss << padNum6T(options.nTransactions) << " transactions for address "
             << (options.allMonitors.size() ? options.hackAppAddr : "");

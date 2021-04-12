@@ -50,7 +50,6 @@ class COptions : public CAbiOptions {
 
     CMonitorCountArray counts;
     CAppearanceArray_base apps;
-    uint64_t nProcessed;
     string_q className;
     address_t hackAppAddr;
     string_q hackAppName;

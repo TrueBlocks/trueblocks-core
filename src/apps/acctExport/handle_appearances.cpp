@@ -6,14 +6,13 @@
 #include "options.h"
 
 //-----------------------------------------------------------------------
-extern bool app_Pre(const CTraverser* trav, void* data);
-extern bool app_Display(const CTraverser* trav, void* data);
-extern bool app_Post(const CTraverser* trav, void* data);
+extern bool app_Pre(CTraverser* trav, void* data);
+extern bool app_Display(CTraverser* trav, void* data);
+extern bool app_Post(CTraverser* trav, void* data);
 //-----------------------------------------------------------------------
 bool COptions::handle_appearances(void) {
     CTraverser trav(this, cout, "appearances");
     trav.preFunc = app_Pre;
-    trav.filterFunc = rangeFilter;
     trav.displayFunc = app_Display;
     trav.postFunc = app_Post;
 
@@ -27,9 +26,9 @@ bool COptions::handle_appearances(void) {
 }
 
 //-----------------------------------------------------------------------
-bool app_Display(const CTraverser* trav, void* data) {
+bool app_Display(CTraverser* trav, void* data) {
     COptions* opt = (COptions*)trav->options;
-    opt->nProcessed++;
+    trav->nProcessed++;
     if (opt->freshen)
         return true;
 
@@ -55,7 +54,7 @@ const char* APP_FIELDS_HIDE =
     "sizeInBytes";
 
 //-----------------------------------------------------------------------
-bool app_Pre(const CTraverser* trav, void* data) {
+bool app_Pre(CTraverser* trav, void* data) {
     manageFields(APP_FIELDS_ALL, false);
     manageFields(verbose ? APP_FIELDS_DISP_V : APP_FIELDS_DISP, true);
 
@@ -64,7 +63,7 @@ bool app_Pre(const CTraverser* trav, void* data) {
 }
 
 //-----------------------------------------------------------------------
-bool app_Post(const CTraverser* trav, void* data) {
+bool app_Post(CTraverser* trav, void* data) {
     manageFields(APP_FIELDS_ALL, true);
     manageFields(APP_FIELDS_HIDE, false);
 

@@ -369,7 +369,6 @@ void COptions::Init(void) {
     clean = false;
     // END_CODE_INIT
 
-    nProcessed = 0;
     nProcessing = 0;
     nTransactions = 0;
     nCacheItemsRead = 0;

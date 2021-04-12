@@ -6,14 +6,14 @@
 #include "options.h"
 
 //-----------------------------------------------------------------------
-extern bool traces_Pre(const CTraverser* trav, void* data);
-extern bool traces_Display(const CTraverser* trav, void* data);
+extern bool traces_Pre(CTraverser* trav, void* data);
+extern bool traces_Display(CTraverser* trav, void* data);
 //-----------------------------------------------------------------------
 bool COptions::handle_traces(void) {
     CTraverser trav(this, cout, "traces");
     trav.preFunc = traces_Pre;
-    trav.filterFunc = rangeFilter;
     trav.displayFunc = traces_Display;
+    trav.dataFunc = loadData;
 
     CTraverserArray traversers;
     traversers.push_back(trav);
@@ -25,70 +25,25 @@ bool COptions::handle_traces(void) {
 }
 
 //-----------------------------------------------------------------------
-bool traces_Display(const CTraverser* trav, void* data) {
+bool traces_Display(CTraverser* trav, void* data) {
     COptions* opt = (COptions*)trav->options;
 
-    CBlock block;  // do not move this from this scope
-    block.blockNumber = trav->app->blk;
-    CTransaction trans;
-    trans.pBlock = &block;
+    loadTraces(trav->trans1, trav->app->blk, trav->app->txid, opt->cache_traces,
+               (opt->skip_ddos && excludeTrace(&trav->trans1, opt->max_traces)));
 
-    string_q txFilename = getBinaryCacheFilename(CT_TXS, trav->app->blk, trav->app->txid);
-    bool inCache = trav->app->blk != 0 && fileExists(txFilename);
-    if (inCache) {
-        // we read the data, if we find it, but....
-        readTransFromBinary(trans, txFilename);
-        trans.finishParse();
-        trans.pBlock = &block;
-        block.timestamp = trans.timestamp = (timestamp_t)expContext().tsMemMap[(trav->app->blk * 2) + 1];
-
-    } else {
-        if (trav->app->blk == 0) {
-            address_t addr = opt->prefundAddrMap[trav->app->txid];
-            trans.loadTransAsPrefund(trav->app->blk, trav->app->txid, addr, expContext().prefundMap[addr]);
-
-        } else if (trav->app->txid == 99997 || trav->app->txid == 99999) {
-            trans.loadTransAsBlockReward(trav->app->blk, trav->app->txid, opt->blkRewardMap[trav->app->blk]);
-
-        } else if (trav->app->txid == 99998) {
-            uint64_t nUncles = getUncleCount(trav->app->blk);
-            for (size_t u = 0; u < nUncles; u++) {
-                CBlock uncle;
-                getUncle(uncle, trav->app->blk, u);
-                if (uncle.miner == opt->blkRewardMap[trav->app->blk]) {
-                    trans.loadTransAsUncleReward(trav->app->blk, uncle.blockNumber, uncle.miner);
-                }
-            }
-
-        } else {
-            getTransaction(trans, trav->app->blk, trav->app->txid);
-            getFullReceipt(&trans, true);
-        }
-
-        trans.pBlock = &block;
-        trans.timestamp = block.timestamp = (timestamp_t)expContext().tsMemMap[(trav->app->blk * 2) + 1];
-
-        // TODO: Must we write this data if the data has not changed?
-        if (opt->cache_txs)
-            writeTransToBinary(trans, txFilename);
-    }
-
-    loadTraces(trans, trav->app->blk, trav->app->txid, opt->cache_traces,
-               (opt->skip_ddos && excludeTrace(&trans, opt->max_traces)));
-
-    for (auto trace : trans.traces) {
-        opt->nProcessed++;
+    for (auto trace : trav->trans1.traces) {
+        trav->nProcessed++;
         bool isSuicide = trace.action.selfDestructed != "";
         bool isCreation = trace.result.newContract != "";
 
         if (!isSuicide) {
             if (!isTestMode() && isApiMode()) {
                 qblocks::eLogger->setEndline('\r');
-                LOG_INFO("\t\t\t\t\t\tGetting trace ", trans.blockNumber, ".", trans.transactionIndex, "-",
-                         trace.getValueByName("traceAddress"), string_q(50, ' '));
+                LOG_INFO("\t\t\t\t\t\tGetting trace ", trav->trans1.blockNumber, ".", trav->trans1.transactionIndex,
+                         "-", trace.getValueByName("traceAddress"), string_q(50, ' '));
                 qblocks::eLogger->setEndline('\n');
             }
-            opt->markNeighbors(trans);
+            opt->markNeighbors(trav->trans1);
             if (opt->articulate)
                 opt->abi_spec.articulateTrace(&trace);
             if (!opt->freshen && !opt->factory) {
@@ -108,7 +63,7 @@ bool traces_Display(const CTraverser* trav, void* data) {
             copy.transactionHash = uint_2_Hex(trace.blockNumber * 100000 + trace.transactionIndex);
             copy.action.input = "0x";
             if (!opt->freshen && !opt->factory) {
-                opt->markNeighbors(trans);
+                opt->markNeighbors(trav->trans1);
                 if (opt->articulate)
                     opt->abi_spec.articulateTrace(&trace);
                 cout << ((isJson() && !opt->firstOut) ? ", " : "");
@@ -129,14 +84,14 @@ bool traces_Display(const CTraverser* trav, void* data) {
             copy.transactionHash = uint_2_Hex(trace.blockNumber * 100000 + trace.transactionIndex);
             copy.action.input = trace.action.input;
             if (!opt->freshen && !opt->factory) {
-                opt->markNeighbors(trans);
+                opt->markNeighbors(trav->trans1);
                 if (opt->articulate)
                     opt->abi_spec.articulateTrace(&trace);
                 cout << ((isJson() && !opt->firstOut) ? ", " : "");
                 cout << copy.Format() << endl;
                 opt->firstOut = false;
             } else if (opt->factory) {
-                opt->markNeighbors(trans);
+                opt->markNeighbors(trav->trans1);
                 if (opt->articulate)
                     opt->abi_spec.articulateTrace(&trace);
                 cout << ((isJson() && !opt->firstOut) ? ", " : "");
@@ -146,12 +101,12 @@ bool traces_Display(const CTraverser* trav, void* data) {
         }
     }
 
-    prog_Log(trav, data, inCache ? TR_PROGRESS_CACHE : TR_PROGRESS_NODE);
+    prog_Log(trav, data, trav->inCache1 ? TR_PROGRESS_CACHE : TR_PROGRESS_NODE);
     return !shouldQuit();
 }
 
 //-----------------------------------------------------------------------
-bool traces_Pre(const CTraverser* trav, void* data) {
+bool traces_Pre(CTraverser* trav, void* data) {
     COptions* opt = (COptions*)trav->options;
     opt->firstOut = true;
 

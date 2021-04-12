@@ -17,8 +17,10 @@ bool forEveryAppearance(const CTraverserArray& traversers, const CAppearanceArra
             break;
 
         // Make sure we have something to work with...
+        trav.filterFunc = trav.filterFunc ? trav.filterFunc : rangeFilter;
         trav.preFunc = trav.preFunc ? trav.preFunc : noopFunc;
         trav.postFunc = trav.postFunc ? trav.postFunc : noopFunc;
+        trav.dataFunc = trav.dataFunc ? trav.dataFunc : noopFunc;
 
         // Prepare the export...
         if (!(*trav.preFunc)(&trav, data))
@@ -32,11 +34,13 @@ bool forEveryAppearance(const CTraverserArray& traversers, const CAppearanceArra
                 if (trav.displayFunc) {
                     COptions* opt = (COptions*)trav.options;  // makes code clearer
                     // We freshen at most 5,000 new transactions to stay responsive
-                    if (opt->freshen && opt->nProcessed > 5000)
+                    if (opt->freshen && trav.nProcessed > 5000)
                         break;
 
-                    bool ret = (*trav.displayFunc)(&trav, data);
-                    if (!ret)
+                    if (!(*trav.dataFunc)(&trav, data))
+                        return (*trav.postFunc)(&trav, data) && false;
+
+                    if (!(*trav.displayFunc)(&trav, data))
                         return (*trav.postFunc)(&trav, data) && false;
                 }
             }
@@ -51,15 +55,17 @@ bool forEveryAppearance(const CTraverserArray& traversers, const CAppearanceArra
 };
 
 //-----------------------------------------------------------------------
-bool rangeFilter(const CTraverser* trav, void* data) {
-    if (trav->app->blk > trav->options->scanRange.second || trav->app->blk >= expContext().tsCnt || shouldQuit())
+bool rangeFilter(CTraverser* trav, void* data) {
+    COptions* opt = (COptions*)trav->options;
+
+    if (trav->app->blk > opt->scanRange.second || trav->app->blk >= expContext().tsCnt || shouldQuit())
         return false;
 
-    return inRange(blknum_t(trav->app->blk), trav->options->scanRange.first, trav->options->scanRange.second);
+    return inRange(blknum_t(trav->app->blk), opt->scanRange.first, opt->scanRange.second);
 }
 
 //-----------------------------------------------------------------------
-bool defPostFunc(const CTraverser* trav, void* data) {
+bool defPostFunc(CTraverser* trav, void* data) {
     COptions* opt = (COptions*)trav->options;
 
     if (trav->lastExpBlock != NOPOS)
@@ -74,17 +80,17 @@ bool defPostFunc(const CTraverser* trav, void* data) {
 
 #define REPORT_FREQ 5
 //-----------------------------------------------------------------------
-void prog_Log(const CTraverser* trav, void* data, TraverserLog mode) {
+void prog_Log(CTraverser* trav, void* data, TraverserLog mode) {
+    ASSERT(mode == TR_PROGRESS_CACHE || mode == TR_PROGRESS_NODE);
     if (!trav->logging)
         return;
-    ASSERT(mode == TR_PROGRESS_CACHE || mode == TR_PROGRESS_NODE);
 
     const COptions* opt = trav->options;
-    if (opt->nProcessed % REPORT_FREQ)
+    if (trav->nProcessed % REPORT_FREQ)
         return;
 
     // TODO: Use inCache to distinguish between Reading and Fetching
-    blknum_t prog = opt->first_record + opt->nProcessed;
+    blknum_t prog = opt->first_record + trav->nProcessed;
     blknum_t goal = opt->nTransactions;
     ostringstream post;
     post << " " << trav->op << " (max " << goal << ") for address " << opt->hackAppAddr;
@@ -93,12 +99,12 @@ void prog_Log(const CTraverser* trav, void* data, TraverserLog mode) {
 }
 
 //-----------------------------------------------------------------------
-void end_Log(const CTraverser* trav, void* data) {
+void end_Log(CTraverser* trav, void* data) {
     if (!trav->logging)
         return;
 
     const COptions* opt = trav->options;
-    blknum_t prog = opt->first_record + opt->nProcessed;
+    blknum_t prog = opt->first_record + trav->nProcessed;
     blknum_t goal = opt->nTransactions;
     if (prog == goal) {
         string_q msg = opt->freshen ? "Finished updating" : "Finished reporting on";
@@ -109,8 +115,60 @@ void end_Log(const CTraverser* trav, void* data) {
 }
 
 //-----------------------------------------------------------------------
-void start_Log(const CTraverser* trav, void* data) {
+void start_Log(CTraverser* trav, void* data) {
     if (!trav->logging)
         return;
     return;
+}
+
+//-----------------------------------------------------------------------
+bool loadData(CTraverser* trav, void* data) {
+    COptions* opt = (COptions*)trav->options;
+
+    trav->block1 = CBlock();
+    trav->trans1 = CTransaction();
+
+    trav->block1.blockNumber = trav->app->blk;
+    trav->trans1.pBlock = &trav->block1;
+
+    string_q txFilename = getBinaryCacheFilename(CT_TXS, trav->app->blk, trav->app->txid);
+    trav->inCache1 = trav->app->blk != 0 && fileExists(txFilename);
+    if (trav->inCache1) {
+        // we read the data, if we find it, but....
+        readTransFromBinary(trav->trans1, txFilename);
+        trav->trans1.finishParse();
+        trav->trans1.pBlock = &trav->block1;
+        trav->block1.timestamp = trav->trans1.timestamp = (timestamp_t)expContext().tsMemMap[(trav->app->blk * 2) + 1];
+
+    } else {
+        if (trav->app->blk == 0) {
+            address_t addr = opt->prefundAddrMap[trav->app->txid];
+            trav->trans1.loadTransAsPrefund(trav->app->blk, trav->app->txid, addr, expContext().prefundMap[addr]);
+
+        } else if (trav->app->txid == 99997 || trav->app->txid == 99999) {
+            trav->trans1.loadTransAsBlockReward(trav->app->blk, trav->app->txid, opt->blkRewardMap[trav->app->blk]);
+
+        } else if (trav->app->txid == 99998) {
+            uint64_t nUncles = getUncleCount(trav->app->blk);
+            for (size_t u = 0; u < nUncles; u++) {
+                CBlock uncle;
+                getUncle(uncle, trav->app->blk, u);
+                if (uncle.miner == opt->blkRewardMap[trav->app->blk]) {
+                    trav->trans1.loadTransAsUncleReward(trav->app->blk, uncle.blockNumber, uncle.miner);
+                }
+            }
+
+        } else {
+            getTransaction(trav->trans1, trav->app->blk, trav->app->txid);
+            getFullReceipt(&trav->trans1, true);
+        }
+
+        trav->trans1.pBlock = &trav->block1;
+        trav->trans1.timestamp = trav->block1.timestamp = (timestamp_t)expContext().tsMemMap[(trav->app->blk * 2) + 1];
+
+        // TODO: Must we write this data if the data has not changed?
+        if (opt->cache_txs)
+            writeTransToBinary(trav->trans1, txFilename);
+    }
+    return true;
 }

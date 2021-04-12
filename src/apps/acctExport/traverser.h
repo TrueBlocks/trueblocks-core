@@ -13,18 +13,19 @@
 class COptions;
 class CTraverser;
 //-----------------------------------------------------------------------
-typedef bool (*TRAVERSERFUNC)(const CTraverser* trav, void* data);
+typedef bool (*TRAVERSERFUNC)(CTraverser* trav, void* data);
 typedef enum { TR_PROGRESS_CACHE = 1, TR_PROGRESS_NODE = 2 } TraverserLog;
 
 //-----------------------------------------------------------------------
-extern void start_Log(const CTraverser* trav, void* data);
-extern void prog_Log(const CTraverser* trav, void* data, TraverserLog mode);
-extern void end_Log(const CTraverser* trav, void* data);
-extern bool rangeFilter(const CTraverser* trav, void* data);
-inline bool noopFunc(const CTraverser* trav, void* data) {
+extern void start_Log(CTraverser* trav, void* data);
+extern void prog_Log(CTraverser* trav, void* data, TraverserLog mode);
+extern void end_Log(CTraverser* trav, void* data);
+extern bool rangeFilter(CTraverser* trav, void* data);
+extern bool loadData(CTraverser* trav, void* data);
+inline bool noopFunc(CTraverser* trav, void* data) {
     return true;
 }
-extern bool defPostFunc(const CTraverser* trav, void* data);
+extern bool defPostFunc(CTraverser* trav, void* data);
 
 //-----------------------------------------------------------------------
 class CTraverser {
@@ -35,8 +36,10 @@ class CTraverser {
     blknum_t lastExpBlock;
     size_t index;
     bool logging;
+    size_t nProcessed;
+    bool inCache1;
     CTraverser(const COptions* opt, ostream& osIn, const string_q& o)
-        : options(opt), os(osIn), op(o), lastExpBlock(NOPOS), index(0) {
+        : options(opt), os(osIn), op(o), lastExpBlock(NOPOS), index(0), nProcessed(0), inCache1(false) {
         logging = !isTestMode() || getEnvStr("FORCE_LOGGING") == "true";
     }
 
@@ -45,8 +48,10 @@ class CTraverser {
     TRAVERSERFUNC filterFunc = rangeFilter;
     TRAVERSERFUNC displayFunc = noopFunc;
     TRAVERSERFUNC postFunc = defPostFunc;
+    TRAVERSERFUNC dataFunc = noopFunc;
     const CAppearance_base* app = nullptr;
-    const CTransaction* trans = nullptr;
+    CBlock block1;
+    CTransaction trans1;
 
   private:
     CTraverser(void) = delete;
