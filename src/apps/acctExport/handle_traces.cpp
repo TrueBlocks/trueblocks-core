@@ -7,11 +7,12 @@
 
 //-----------------------------------------------------------------------
 extern bool traces_Display(CTraverser* trav, void* data);
+extern bool traces_Data(CTraverser* trav, void* data);
 //-----------------------------------------------------------------------
 bool COptions::handle_traces(void) {
     CTraverser trav(this, cout, "traces");
     trav.displayFunc = traces_Display;
-    trav.dataFunc = loadData;
+    trav.dataFunc = traces_Data;
 
     CTraverserArray traversers;
     traversers.push_back(trav);
@@ -26,22 +27,16 @@ bool COptions::handle_traces(void) {
 bool traces_Display(CTraverser* trav, void* data) {
     COptions* opt = (COptions*)trav->options;
 
-    loadTraces(trav->trans1, trav->app->blk, trav->app->txid, opt->cache_traces,
-               (opt->skip_ddos && excludeTrace(&trav->trans1, opt->max_traces)));
+    trav->nProcessed += trav->trans.traces.size();
+    if (opt->freshen)
+        return true;
 
-    for (auto trace : trav->trans1.traces) {
-        trav->nProcessed++;
+    for (auto trace : trav->trans.traces) {
         bool isSuicide = trace.action.selfDestructed != "";
         bool isCreation = trace.result.newContract != "";
 
         if (!isSuicide) {
-            if (!isTestMode() && isApiMode()) {
-                qblocks::eLogger->setEndline('\r');
-                LOG_INFO("\t\t\t\t\t\tGetting trace ", trav->trans1.blockNumber, ".", trav->trans1.transactionIndex,
-                         "-", trace.getValueByName("traceAddress"), string_q(50, ' '));
-                qblocks::eLogger->setEndline('\n');
-            }
-            opt->markNeighbors(trav->trans1);
+            opt->markNeighbors(trav->trans);
             if (opt->articulate)
                 opt->abi_spec.articulateTrace(&trace);
             if (!opt->freshen && !opt->factory) {
@@ -60,10 +55,10 @@ bool traces_Display(CTraverser* trav, void* data) {
             copy.traceAddress.push_back("s");
             copy.transactionHash = uint_2_Hex(trace.blockNumber * 100000 + trace.transactionIndex);
             copy.action.input = "0x";
+            opt->markNeighbors(trav->trans);
+            if (opt->articulate)
+                opt->abi_spec.articulateTrace(&copy);
             if (!opt->freshen && !opt->factory) {
-                opt->markNeighbors(trav->trans1);
-                if (opt->articulate)
-                    opt->abi_spec.articulateTrace(&trace);
                 cout << ((isJson() && !opt->firstOut) ? ", " : "");
                 cout << copy.Format() << endl;
                 opt->firstOut = false;
@@ -81,24 +76,40 @@ bool traces_Display(CTraverser* trav, void* data) {
             copy.traceAddress.push_back("s");
             copy.transactionHash = uint_2_Hex(trace.blockNumber * 100000 + trace.transactionIndex);
             copy.action.input = trace.action.input;
+            opt->markNeighbors(trav->trans);
+            if (opt->articulate)
+                opt->abi_spec.articulateTrace(&copy);
             if (!opt->freshen && !opt->factory) {
-                opt->markNeighbors(trav->trans1);
-                if (opt->articulate)
-                    opt->abi_spec.articulateTrace(&trace);
                 cout << ((isJson() && !opt->firstOut) ? ", " : "");
                 cout << copy.Format() << endl;
                 opt->firstOut = false;
             } else if (opt->factory) {
-                opt->markNeighbors(trav->trans1);
-                if (opt->articulate)
-                    opt->abi_spec.articulateTrace(&trace);
                 cout << ((isJson() && !opt->firstOut) ? ", " : "");
                 cout << copy.Format() << endl;
                 opt->firstOut = false;
             }
         }
+        // if (!isTestMode() && isApiMode()) {
+        //     qblocks::eLogger->setEndline('\r');
+        //     LOG_INFO("\t\t\t\t\t\tGetting trace ", trav->trans.blockNumber, ".", trav->trans.transactionIndex,
+        //     "-",
+        //              trace.getValueByName("traceAddress"), string_q(50, ' '));
+        //     qblocks::eLogger->setEndline('\n');
+        // }
     }
 
-    prog_Log(trav, data, trav->inCache1 ? TR_PROGRESS_CACHE : TR_PROGRESS_NODE);
+    prog_Log(trav, data, trav->inCache ? TR_PROGRESS_CACHE : TR_PROGRESS_NODE);
+    return !shouldQuit();
+}
+
+//-----------------------------------------------------------------------
+bool traces_Data(CTraverser* trav, void* data) {
+    COptions* opt = (COptions*)trav->options;
+    if (loadData(trav, data)) {
+        if (!loadTraces(trav->trans, trav->app->blk, trav->app->txid, opt->cache_traces,
+                        (opt->skip_ddos && excludeTrace(&trav->trans, opt->max_traces)))) {
+            return false;
+        }
+    }
     return !shouldQuit();
 }

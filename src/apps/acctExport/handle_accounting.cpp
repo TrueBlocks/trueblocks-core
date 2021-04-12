@@ -13,7 +13,6 @@ bool COptions::handle_accounting(void) {
     CTraverser trav(this, cout, "txs");
     trav.preFunc = acct_Pre;
     trav.displayFunc = acct_Display;
-    trav.dataFunc = loadData;
 
     CTraverserArray traversers;
     traversers.push_back(trav);
@@ -28,19 +27,20 @@ bool acct_Display(CTraverser* trav, void* data) {
     COptions* opt = (COptions*)trav->options;
 
     trav->nProcessed++;
-    if (!opt->freshen) {
-        opt->markNeighbors(trav->trans1);
-        opt->articulateAll(trav->trans1);
-        if (opt->accounting) {
-            blknum_t next = trav->index < opt->apps.size() - 1 ? opt->apps[trav->index + 1].blk : NOPOS;
-            process_reconciliation(opt, trav->trans1, opt->prevStatements, next, opt->tokens);
-        }
-        cout << ((isJson() && !opt->firstOut) ? ", " : "");
-        cout << trav->trans1.Format() << endl;
-        opt->firstOut = false;
-    }
+    if (opt->freshen)
+        return true;
 
-    prog_Log(trav, data, trav->inCache1 ? TR_PROGRESS_CACHE : TR_PROGRESS_NODE);
+    opt->markNeighbors(trav->trans);
+    opt->articulateAll(trav->trans);
+    if (opt->accounting) {
+        blknum_t next = trav->index < opt->apps.size() - 1 ? opt->apps[trav->index + 1].blk : NOPOS;
+        process_reconciliation(opt, trav->trans, opt->prevStatements, next, opt->tokens);
+    }
+    cout << ((isJson() && !opt->firstOut) ? ", " : "");
+    cout << trav->trans.Format() << endl;
+    opt->firstOut = false;
+
+    prog_Log(trav, data, trav->inCache ? TR_PROGRESS_CACHE : TR_PROGRESS_NODE);
     return !shouldQuit();
 }
 

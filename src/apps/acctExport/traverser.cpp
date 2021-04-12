@@ -18,9 +18,9 @@ bool forEveryAppearance(const CTraverserArray& traversers, const CAppearanceArra
 
         // Make sure we have something to work with...
         trav.filterFunc = trav.filterFunc ? trav.filterFunc : rangeFilter;
+        trav.dataFunc = trav.dataFunc ? trav.dataFunc : noopFunc;
         trav.preFunc = trav.preFunc ? trav.preFunc : noopFunc;
         trav.postFunc = trav.postFunc ? trav.postFunc : noopFunc;
-        trav.dataFunc = trav.dataFunc ? trav.dataFunc : noopFunc;
 
         // Prepare the export...
         if (!(*trav.preFunc)(&trav, data))
@@ -38,10 +38,10 @@ bool forEveryAppearance(const CTraverserArray& traversers, const CAppearanceArra
                         break;
 
                     if (!(*trav.dataFunc)(&trav, data))
-                        return (*trav.postFunc)(&trav, data) && false;
+                        return ((*trav.postFunc)(&trav, data)) && false;
 
                     if (!(*trav.displayFunc)(&trav, data))
-                        return (*trav.postFunc)(&trav, data) && false;
+                        return ((*trav.postFunc)(&trav, data)) && false;
                 }
             }
         }
@@ -97,7 +97,6 @@ void prog_Log(CTraverser* trav, void* data, TraverserLog mode) {
     if (trav->nProcessed % REPORT_FREQ)
         return;
 
-    // TODO: Use inCache to distinguish between Reading and Fetching
     blknum_t prog = opt->first_record + trav->nProcessed;
     blknum_t goal = opt->nTransactions;
     ostringstream post;
@@ -133,28 +132,26 @@ void start_Log(CTraverser* trav, void* data) {
 bool loadData(CTraverser* trav, void* data) {
     COptions* opt = (COptions*)trav->options;
 
-    trav->block1 = CBlock();
-    trav->trans1 = CTransaction();
+    trav->block = CBlock();
+    trav->trans = CTransaction();
 
-    trav->block1.blockNumber = trav->app->blk;
-    trav->trans1.pBlock = &trav->block1;
+    trav->block.blockNumber = trav->app->blk;
+    trav->trans.pBlock = &trav->block;
 
     string_q txFilename = getBinaryCacheFilename(CT_TXS, trav->app->blk, trav->app->txid);
-    trav->inCache1 = trav->app->blk != 0 && fileExists(txFilename);
-    if (trav->inCache1) {
+    trav->inCache = trav->app->blk != 0 && fileExists(txFilename);
+    if (trav->inCache) {
         // we read the data, if we find it, but....
-        readTransFromBinary(trav->trans1, txFilename);
-        trav->trans1.finishParse();
-        trav->trans1.pBlock = &trav->block1;
-        trav->block1.timestamp = trav->trans1.timestamp = (timestamp_t)expContext().tsMemMap[(trav->app->blk * 2) + 1];
+        readTransFromBinary(trav->trans, txFilename);
+        trav->trans.finishParse();
 
     } else {
         if (trav->app->blk == 0) {
             address_t addr = opt->prefundAddrMap[trav->app->txid];
-            trav->trans1.loadTransAsPrefund(trav->app->blk, trav->app->txid, addr, expContext().prefundMap[addr]);
+            trav->trans.loadTransAsPrefund(trav->app->blk, trav->app->txid, addr, expContext().prefundMap[addr]);
 
         } else if (trav->app->txid == 99997 || trav->app->txid == 99999) {
-            trav->trans1.loadTransAsBlockReward(trav->app->blk, trav->app->txid, opt->blkRewardMap[trav->app->blk]);
+            trav->trans.loadTransAsBlockReward(trav->app->blk, trav->app->txid, opt->blkRewardMap[trav->app->blk]);
 
         } else if (trav->app->txid == 99998) {
             uint64_t nUncles = getUncleCount(trav->app->blk);
@@ -162,21 +159,22 @@ bool loadData(CTraverser* trav, void* data) {
                 CBlock uncle;
                 getUncle(uncle, trav->app->blk, u);
                 if (uncle.miner == opt->blkRewardMap[trav->app->blk]) {
-                    trav->trans1.loadTransAsUncleReward(trav->app->blk, uncle.blockNumber, uncle.miner);
+                    trav->trans.loadTransAsUncleReward(trav->app->blk, uncle.blockNumber, uncle.miner);
                 }
             }
 
         } else {
-            getTransaction(trav->trans1, trav->app->blk, trav->app->txid);
-            getFullReceipt(&trav->trans1, true);
+            getTransaction(trav->trans, trav->app->blk, trav->app->txid);
+            getFullReceipt(&trav->trans, true);
         }
-
-        trav->trans1.pBlock = &trav->block1;
-        trav->trans1.timestamp = trav->block1.timestamp = (timestamp_t)expContext().tsMemMap[(trav->app->blk * 2) + 1];
 
         // TODO: Must we write this data if the data has not changed?
         if (opt->cache_txs)
-            writeTransToBinary(trav->trans1, txFilename);
+            writeTransToBinary(trav->trans, txFilename);
     }
+
+    trav->trans.pBlock = &trav->block;
+    trav->trans.timestamp = trav->block.timestamp = (timestamp_t)expContext().tsMemMap[(trav->app->blk * 2) + 1];
+
     return true;
 }

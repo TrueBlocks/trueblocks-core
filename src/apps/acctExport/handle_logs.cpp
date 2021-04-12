@@ -13,7 +13,6 @@ bool COptions::handle_logs(void) {
     CTraverser trav(this, cout, "logs");
     trav.preFunc = logs_Pre;
     trav.displayFunc = logs_Display;
-    trav.dataFunc = loadData;
 
     CTraverserArray traversers;
     traversers.push_back(trav);
@@ -27,30 +26,31 @@ bool COptions::handle_logs(void) {
 bool logs_Display(CTraverser* trav, void* data) {
     COptions* opt = (COptions*)trav->options;
 
-    trav->nProcessed++;
-    if (!opt->freshen) {
-        opt->markNeighbors(trav->trans1);
-        opt->articulateAll(trav->trans1);
-        for (auto log : trav->trans1.receipt.logs) {
-            bool showMe = true;
-            if (opt->relevant) {
-                showMe = opt->isRelevant(log);
-                if (showMe && !opt->emitted_by.empty())
-                    showMe = opt->wasEmittedBy(log.address);
-            } else if (!opt->emitted_by.empty()) {
+    trav->nProcessed += trav->trans.receipt.logs.size();
+    if (opt->freshen)
+        return true;
+
+    opt->markNeighbors(trav->trans);
+    opt->articulateAll(trav->trans);
+    for (auto log : trav->trans.receipt.logs) {
+        bool showMe = true;
+        if (opt->relevant) {
+            showMe = opt->isRelevant(log);
+            if (showMe && !opt->emitted_by.empty())
                 showMe = opt->wasEmittedBy(log.address);
-            } else if (opt->emitter) {
-                showMe = opt->isEmitter(log.address);
-            }
-            if (showMe) {
-                cout << ((isJson() && !opt->firstOut) ? ", " : "");
-                cout << log.Format() << endl;
-                opt->firstOut = false;
-            }
+        } else if (!opt->emitted_by.empty()) {
+            showMe = opt->wasEmittedBy(log.address);
+        } else if (opt->emitter) {
+            showMe = opt->isEmitter(log.address);
+        }
+        if (showMe) {
+            cout << ((isJson() && !opt->firstOut) ? ", " : "");
+            cout << log.Format() << endl;
+            opt->firstOut = false;
         }
     }
 
-    prog_Log(trav, data, trav->inCache1 ? TR_PROGRESS_CACHE : TR_PROGRESS_NODE);
+    prog_Log(trav, data, trav->inCache ? TR_PROGRESS_CACHE : TR_PROGRESS_NODE);
     return !shouldQuit();
 }
 

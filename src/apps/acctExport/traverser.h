@@ -34,25 +34,25 @@ class CTraverser {
     const COptions* options = nullptr;
     ostream& os;
     string_q op;
-    blknum_t lastExpBlock;
     size_t index;
     bool logging;
+    blknum_t lastExpBlock;
     size_t nProcessed;
-    bool inCache1;
+    bool inCache;
     CTraverser(const COptions* opt, ostream& osIn, const string_q& o)
-        : options(opt), os(osIn), op(o), lastExpBlock(NOPOS), index(0), nProcessed(0), inCache1(false) {
+        : options(opt), os(osIn), op(o), index(0), lastExpBlock(NOPOS), nProcessed(0), inCache(false) {
         logging = !isTestMode() || getEnvStr("FORCE_LOGGING") == "true";
     }
 
   public:
-    TRAVERSERFUNC preFunc = pre_Func;
     TRAVERSERFUNC filterFunc = rangeFilter;
-    TRAVERSERFUNC displayFunc = noopFunc;
+    TRAVERSERFUNC preFunc = pre_Func;
     TRAVERSERFUNC postFunc = post_Func;
-    TRAVERSERFUNC dataFunc = noopFunc;
+    TRAVERSERFUNC displayFunc = noopFunc;
+    TRAVERSERFUNC dataFunc = loadData;
     const CAppearance_base* app = nullptr;
-    CBlock block1;
-    CTransaction trans1;
+    CBlock block;
+    CTransaction trans;
 
   private:
     CTraverser(void) = delete;

@@ -15,6 +15,7 @@ bool COptions::handle_appearances(void) {
     trav.preFunc = app_Pre;
     trav.displayFunc = app_Display;
     trav.postFunc = app_Post;
+    trav.dataFunc = noopFunc;
 
     CTraverserArray traversers;
     traversers.push_back(trav);
@@ -28,11 +29,12 @@ bool COptions::handle_appearances(void) {
 //-----------------------------------------------------------------------
 bool app_Display(CTraverser* trav, void* data) {
     COptions* opt = (COptions*)trav->options;
+
     trav->nProcessed++;
     if (opt->freshen)
         return true;
 
-    bool inCache = true;
+    trav->inCache = true;
     CAppearanceDisplay* dapp = (CAppearanceDisplay*)data;
     dapp->blockNumber = trav->app->blk;
     dapp->transactionIndex = trav->app->txid;
@@ -41,7 +43,7 @@ bool app_Display(CTraverser* trav, void* data) {
     cout << dapp->Format() << endl;
     opt->firstOut = false;
 
-    prog_Log(trav, data, inCache ? TR_PROGRESS_CACHE : TR_PROGRESS_NODE);
+    prog_Log(trav, data, trav->inCache ? TR_PROGRESS_CACHE : TR_PROGRESS_NODE);
     return !shouldQuit();
 }
 
