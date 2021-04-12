@@ -6,23 +6,6 @@
 #include "options.h"
 
 //-----------------------------------------------------------------------
-extern bool acct_Pre(CTraverser* trav, void* data);
-extern bool acct_Display(CTraverser* trav, void* data);
-//-----------------------------------------------------------------------
-bool COptions::handle_accounting(void) {
-    CTraverser trav(this, cout, "txs");
-    trav.preFunc = acct_Pre;
-    trav.displayFunc = acct_Display;
-
-    CTraverserArray traversers;
-    traversers.push_back(trav);
-
-    forEveryAppearance(traversers, apps, nullptr);
-
-    return !shouldQuit();
-}
-
-//-----------------------------------------------------------------------
 bool acct_Display(CTraverser* trav, void* data) {
     COptions* opt = (COptions*)trav->options;
 
@@ -56,4 +39,18 @@ bool acct_Pre(CTraverser* trav, void* data) {
         opt->prevStatements[opt->accountedFor + "_eth"] = eth;
     }
     return true;
+}
+
+//-----------------------------------------------------------------------
+bool COptions::handle_accounting(void) {
+    CTraverser trav(this, cout, "txs");
+    trav.preFunc = acct_Pre;
+    trav.displayFunc = acct_Display;
+
+    CTraverserArray traversers;
+    traversers.push_back(trav);
+
+    forEveryAppearance(traversers, apps, nullptr);
+
+    return !shouldQuit();
 }

@@ -6,24 +6,6 @@
 #include "options.h"
 
 //-----------------------------------------------------------------------
-extern bool traces_Display(CTraverser* trav, void* data);
-extern bool traces_Data(CTraverser* trav, void* data);
-//-----------------------------------------------------------------------
-bool COptions::handle_traces(void) {
-    CTraverser trav(this, cout, "traces");
-    trav.displayFunc = traces_Display;
-    trav.dataFunc = traces_Data;
-
-    CTraverserArray traversers;
-    traversers.push_back(trav);
-
-    cache_txs = false;
-    forEveryAppearance(traversers, apps, nullptr);
-
-    return !shouldQuit();
-}
-
-//-----------------------------------------------------------------------
 bool traces_Display(CTraverser* trav, void* data) {
     COptions* opt = (COptions*)trav->options;
 
@@ -111,5 +93,20 @@ bool traces_Data(CTraverser* trav, void* data) {
             return false;
         }
     }
+    return !shouldQuit();
+}
+
+//-----------------------------------------------------------------------
+bool COptions::handle_traces(void) {
+    CTraverser trav(this, cout, "traces");
+    trav.displayFunc = traces_Display;
+    trav.dataFunc = traces_Data;
+
+    CTraverserArray traversers;
+    traversers.push_back(trav);
+
+    cache_txs = false;
+    forEveryAppearance(traversers, apps, nullptr);
+
     return !shouldQuit();
 }

@@ -330,6 +330,9 @@ bool COptions::parseArguments(string_q& command) {
         SHOW_FIELD(CReceipt, "blockNumber");
         SHOW_FIELD(CReceipt, "transactionIndex");
         SHOW_FIELD(CReceipt, "isError");
+    } else if (appearances) {
+        manageFields("CAccountName:all", false);
+        manageFields(verbose ? "CAccountName:address,name" : "CAccountName:address,name,timestamp,date", true);
     }
 
     LOG_TEST("nMonitors", allMonitors.size(), false);

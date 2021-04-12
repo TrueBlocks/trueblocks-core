@@ -6,22 +6,6 @@
 #include "options.h"
 
 //-----------------------------------------------------------------------
-extern bool receipts_Display(CTraverser* trav, void* data);
-//-----------------------------------------------------------------------
-bool COptions::handle_receipts(void) {
-    CTraverser trav(this, cout, "receipts");
-    trav.displayFunc = receipts_Display;
-
-    CTraverserArray traversers;
-    traversers.push_back(trav);
-
-    cache_txs = false;  // no need
-    forEveryAppearance(traversers, apps, nullptr);
-
-    return !shouldQuit();
-}
-
-//-----------------------------------------------------------------------
 bool receipts_Display(CTraverser* trav, void* data) {
     COptions* opt = (COptions*)trav->options;
 
@@ -36,5 +20,19 @@ bool receipts_Display(CTraverser* trav, void* data) {
     opt->firstOut = false;
 
     prog_Log(trav, data, trav->inCache ? TR_PROGRESS_CACHE : TR_PROGRESS_NODE);
+    return !shouldQuit();
+}
+
+//-----------------------------------------------------------------------
+bool COptions::handle_receipts(void) {
+    CTraverser trav(this, cout, "receipts");
+    trav.displayFunc = receipts_Display;
+
+    CTraverserArray traversers;
+    traversers.push_back(trav);
+
+    cache_txs = false;  // no need
+    forEveryAppearance(traversers, apps, nullptr);
+
     return !shouldQuit();
 }

@@ -6,23 +6,6 @@
 #include "options.h"
 
 //-----------------------------------------------------------------------
-extern bool logs_Pre(CTraverser* trav, void* data);
-extern bool logs_Display(CTraverser* trav, void* data);
-//-----------------------------------------------------------------------
-bool COptions::handle_logs(void) {
-    CTraverser trav(this, cout, "logs");
-    trav.preFunc = logs_Pre;
-    trav.displayFunc = logs_Display;
-
-    CTraverserArray traversers;
-    traversers.push_back(trav);
-
-    forEveryAppearance(traversers, apps, nullptr);
-
-    return !shouldQuit();
-}
-
-//-----------------------------------------------------------------------
 bool logs_Display(CTraverser* trav, void* data) {
     COptions* opt = (COptions*)trav->options;
 
@@ -64,4 +47,18 @@ bool logs_Pre(CTraverser* trav, void* data) {
 
     start_Log(trav, data);
     return true;
+}
+
+//-----------------------------------------------------------------------
+bool COptions::handle_logs(void) {
+    CTraverser trav(this, cout, "logs");
+    trav.preFunc = logs_Pre;
+    trav.displayFunc = logs_Display;
+
+    CTraverserArray traversers;
+    traversers.push_back(trav);
+
+    forEveryAppearance(traversers, apps, nullptr);
+
+    return !shouldQuit();
 }
