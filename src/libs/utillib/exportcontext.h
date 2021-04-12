@@ -39,7 +39,6 @@ class CExportContext {
     size_t tsCnt;
     format_t exportFmt;
     CNameValueMap fmtMap;
-    address_t accountedFor;
     map<string_q, const CRuntimeClass*> types;
     CAddressWeiMap prefundMap;
 

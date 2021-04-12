@@ -6,82 +6,19 @@
 #include "options.h"
 
 //-----------------------------------------------------------------------
-bool handle_reconciliation(COptions* options, CTransaction& trans, CReconciliationMap& prev, blknum_t next,
-                           bool tokens) {
-    CReconciliation nums;
-    nums.blockNumber = trans.blockNumber;
-    nums.transactionIndex = trans.transactionIndex;
-    nums.timestamp = trans.timestamp;
-    CStringArray corrections;
-    nums.reconcileEth(corrections, prev, next, &trans);
-    trans.statements.clear();
-    trans.statements.push_back(nums);
-    prev[expContext().accountedFor + "_eth"] = nums;
-    if (tokens) {
-        CAddressBoolMap done;
-        for (auto log : trans.receipt.logs) {
-            CAccountName tokenName = options->tokenMap[log.address];
-            bool isToken = tokenName.address == log.address;
-            bool isAirdrop = options->airdropMap[log.address];
-            bool isDone = done[log.address];
-            if ((isToken || trans.hasToken || isAirdrop) && !isDone) {
-                CMonitor m;
-                m.address = log.address;
-                nums.reset();
-                nums.asset = tokenName.symbol.empty() ? tokenName.name.substr(0, 4) : tokenName.symbol;
-                if (nums.asset.empty())
-                    nums.asset = getTokenSymbol(m, trans.blockNumber);
-                if (isAirdrop && nums.asset.empty()) {
-                    options->getNamedAccount(tokenName, log.address);
-                    nums.asset = tokenName.symbol.empty() ? tokenName.name.substr(0, 4) : tokenName.symbol;
-                }
-                if (nums.asset.empty())
-                    nums.asset = "---";
-                nums.decimals = tokenName.decimals != 0 ? tokenName.decimals : 18;
-                string key = expContext().accountedFor + "_" + log.address;
-                nums.begBal = prev[key].endBal;
-                nums.endBal = str_2_BigInt(getTokenBalanceOf(m, expContext().accountedFor, trans.blockNumber));
-                if (nums.begBal > nums.endBal) {
-                    nums.amountOut = (nums.begBal - nums.endBal);
-                } else {
-                    nums.amountIn = (nums.endBal - nums.begBal);
-                }
-                nums.amountNet = nums.amountIn - nums.amountOut;
-                nums.reconciled = true;
-                nums.reconciliationType = "";
-                done[log.address] = true;
-                if (nums.amountNet != 0)
-                    trans.statements.push_back(nums);
-                prev[key] = nums;
-            }
-        }
-    }
-    return true;
-}
-
+extern bool acct_Pre(const CTraverser* trav, void* data);
+extern bool acct_Display(const CTraverser* trav, void* data);
+extern bool acct_Post(const CTraverser* trav, void* data);
+extern void acct_Log(const CTraverser* trav, void* data, TraverserLog mode);
 //-----------------------------------------------------------------------
 bool COptions::handle_accounting(void) {
-    ENTER("handle_accounting");
+    CTraverser trav(this, cout, "txs");
+    acct_Pre(&trav, nullptr);
 
-    ASSERT(nodeHasBalances(false));
-
-    bool shouldDisplay = !freshen;
-
-    CReconciliationMap prev;
-    if (apps.size() > 0 && first_record != 0) {
-        CReconciliation eth;
-        eth.blockNumber = apps[0].blk - 1;
-        eth.endBal = getBalanceAt(expContext().accountedFor, apps[0].blk - 1);
-        prev[expContext().accountedFor + "_eth"] = eth;
-    }
-
-    bool first = true;
-    blknum_t lastExportedBlock = NOPOS;
-    for (size_t i = 0; i < apps.size() && (!freshen || (nProcessed < freshen_max)); i++) {
+    for (size_t i = 0; i < apps.size() && (!freshen || (nProcessed < 5000)); i++) {
         const CAppearance_base* app = &apps[i];
         if (shouldQuit() || app->blk >= expContext().tsCnt)
             break;
-
         if (inRange((blknum_t)app->blk, scanRange.first, scanRange.second)) {
             CBlock block;  // do not move this from this scope
             block.blockNumber = app->blk;
@@ -89,7 +26,8 @@ bool COptions::handle_accounting(void) {
             trans.pBlock = &block;
 
             string_q txFilename = getBinaryCacheFilename(CT_TXS, app->blk, app->txid);
-            if (app->blk != 0 && fileExists(txFilename)) {
+            bool inCache = app->blk != 0 && fileExists(txFilename);
+            if (inCache) {
                 // we read the data, if we find it, but....
                 readTransFromBinary(trans, txFilename);
                 trans.finishParse();
@@ -102,16 +40,7 @@ bool COptions::handle_accounting(void) {
                 // Order matters -- this data isn't stored, so we need to recreate it
                 if (accounting) {
                     blknum_t next = i < apps.size() - 1 ? apps[i + 1].blk : NOPOS;
-                    handle_reconciliation(this, trans, prev, next, tokens);
-                }
-
-                HIDE_FIELD(CFunction, "message");
-                if (!isTestMode() && !(nProcessed % 5)) {
-                    blknum_t current = first_record + i;
-                    ostringstream post;
-                    post << " txs for address " << allMonitors[0].address;
-                    post << " " << first_record << " " << nProcessed << " " << i << " " << nTransactions << "\r";
-                    LOG_PROGRESS("Reading ", current, nTransactions, post.str());
+                    handle_reconciliation(this, trans, prevStatements, next, tokens);
                 }
 
             } else {
@@ -145,16 +74,7 @@ bool COptions::handle_accounting(void) {
                 // Order matters -- this data isn't stored, so we need to recreate it
                 if (accounting) {
                     blknum_t next = i < apps.size() - 1 ? apps[i + 1].blk : NOPOS;
-                    handle_reconciliation(this, trans, prev, next, tokens);
-                }
-
-                HIDE_FIELD(CFunction, "message");
-                if (!isTestMode() && !(nProcessed % 5)) {
-                    blknum_t current = first_record + i;
-                    ostringstream post;
-                    post << " txs for address " << allMonitors[0].address;
-                    post << " " << first_record << " " << nProcessed << " " << i << " " << nTransactions << "\r";
-                    LOG_PROGRESS("Extracting ", current, nTransactions, post.str());
+                    handle_reconciliation(this, trans, prevStatements, next, tokens);
                 }
 
                 if (cache_txs)
@@ -162,27 +82,116 @@ bool COptions::handle_accounting(void) {
             }
 
             nProcessed++;
-            if (shouldDisplay) {
-                cout << ((isJson() && !first) ? ", " : "");
+            if (!freshen) {
+                cout << ((isJson() && !firstOut) ? ", " : "");
                 cout << trans.Format() << endl;
-                first = false;
+                firstOut = false;
             }
+
+            if (!isTestMode() && !(nProcessed % 5)) {
+                // Use inCache to distinguish between Reading and Fetching
+                acct_Log(&trav, nullptr, TR_PROGRESS);
+            }
+
         } else if (app->blk > scanRange.second) {
             break;
         }
     }
 
-    if (!isTestMode()) {
-        if ((first_record + nProcessed) == nTransactions)
-            LOG_PROGRESS((freshen ? "Finished updating" : "Finished reporting on"), (first_record + nProcessed),
-                         nTransactions, " txs for address " + allMonitors[0].address);
+    acct_Post(&trav, nullptr);
+    return true;
+}
+
+//-----------------------------------------------------------------------
+bool acct_Pre(const CTraverser* trav, void* data) {
+    COptions* opt = (COptions*)trav->options;
+    opt->firstOut = true;
+
+    if (opt->apps.size() > 0 && opt->first_record != 0) {
+        CReconciliation eth;
+        eth.blockNumber = opt->apps[0].blk - 1;
+        eth.endBal = getBalanceAt(opt->accountedFor, opt->apps[0].blk - 1);
+        opt->prevStatements[opt->accountedFor + "_eth"] = eth;
     }
+    return true;
+}
 
-    if (lastExportedBlock != NOPOS)
-        for (auto monitor : allMonitors)
-            monitor.writeLastExport(lastExportedBlock);
+//-----------------------------------------------------------------------
+bool acct_Post(const CTraverser* trav, void* data) {
+    COptions* opt = (COptions*)trav->options;
 
-    reportNeighbors();
+    if (trav->lastExpBlock != NOPOS)
+        for (auto monitor : opt->allMonitors)
+            monitor.writeLastExport(trav->lastExpBlock);
 
-    EXIT_NOMSG(true);
+    opt->reportNeighbors();
+
+    if (!isTestMode())
+        acct_Log(trav, data, TR_END);
+
+    return true;
+}
+
+//-----------------------------------------------------------------------
+void acct_Log(const CTraverser* trav, void* data, TraverserLog mode) {
+    if (mode == TR_END) {
+        end_Log(trav, data, mode);
+
+    } else if (mode == TR_PROGRESS) {
+        prog_Log(trav, data, mode);
+    }
+}
+
+//-----------------------------------------------------------------------
+bool handle_reconciliation(COptions* options, CTransaction& trans, CReconciliationMap& prevStatements, blknum_t next,
+                           bool tokens) {
+    CReconciliation nums;
+    nums.blockNumber = trans.blockNumber;
+    nums.transactionIndex = trans.transactionIndex;
+    nums.timestamp = trans.timestamp;
+    CStringArray corrections;
+    nums.reconcileEth(corrections, prevStatements, next, &trans, options->accountedFor);
+    trans.statements.clear();
+    trans.statements.push_back(nums);
+    prevStatements[options->accountedFor + "_eth"] = nums;
+    if (tokens) {
+        CAddressBoolMap done;
+        for (auto log : trans.receipt.logs) {
+            CAccountName tokenName = options->tokenMap[log.address];
+            bool isToken = tokenName.address == log.address;
+            bool isAirdrop = options->airdropMap[log.address];
+            bool isDone = done[log.address];
+            if ((isToken || trans.hasToken || isAirdrop) && !isDone) {
+                CMonitor m;
+                m.address = log.address;
+                nums.reset();
+                nums.asset = tokenName.symbol.empty() ? tokenName.name.substr(0, 4) : tokenName.symbol;
+                if (nums.asset.empty())
+                    nums.asset = getTokenSymbol(m, trans.blockNumber);
+                if (isAirdrop && nums.asset.empty()) {
+                    options->getNamedAccount(tokenName, log.address);
+                    nums.asset = tokenName.symbol.empty() ? tokenName.name.substr(0, 4) : tokenName.symbol;
+                }
+                if (nums.asset.empty())
+                    nums.asset = "---";
+                nums.decimals = tokenName.decimals != 0 ? tokenName.decimals : 18;
+                string key = options->accountedFor + "_" + log.address;
+                nums.begBal = prevStatements[key].endBal;
+                nums.endBal = str_2_BigInt(getTokenBalanceOf(m, options->accountedFor, trans.blockNumber));
+                if (nums.begBal > nums.endBal) {
+                    nums.amountOut = (nums.begBal - nums.endBal);
+                } else {
+                    nums.amountIn = (nums.endBal - nums.begBal);
+                }
+                nums.amountNet = nums.amountIn - nums.amountOut;
+                nums.reconciled = true;
+                nums.reconciliationType = "";
+                done[log.address] = true;
+                if (nums.amountNet != 0)
+                    trans.statements.push_back(nums);
+                prevStatements[key] = nums;
+            }
+        }
+    }
+    return true;
 }

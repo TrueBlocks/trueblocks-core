@@ -35,14 +35,14 @@ int main(int argc, const char* argv[]) {
             cout << exportPreamble(expContext().fmtMap["header"], options.className);
 
         if (options.loadAllAppearances()) {
+            options.firstOut = true;
             if (options.count) {
-                bool first = true;
                 for (auto cnt : options.counts) {
                     if (shouldQuit())
                         break;
-                    cout << ((isJson() && !first) ? ", " : "");
+                    cout << ((isJson() && !options.firstOut) ? ", " : "");
                     cout << cnt.Format() << endl;
-                    first = false;
+                    options.firstOut = false;
                 }
 
             } else if (options.appearances) {
@@ -70,7 +70,7 @@ int main(int argc, const char* argv[]) {
     os << ", \"start\": " << (isTestMode() ? "\"0xdeadbeef\"" : uint_2_Str(options.scanRange.first)) << endl;
     os << ", \"end\": " << (isTestMode() ? "\"0xdeadbeef\"" : uint_2_Str(options.scanRange.second)) << endl;
     if (!options.count && options.allMonitors.size() == 1) {
-        options.getNamedAccount(options.allMonitors[0], options.allMonitors[0].address);
+        options.getNamedAccount(options.allMonitors[0], options.hackAppAddr);
         HIDE_FIELD(CMonitor, "summaryStatement");
         if (options.abi_spec.nInterfaces() == 0) {
             HIDE_FIELD(CMonitor, "abi_spec");
@@ -86,7 +86,7 @@ int main(int argc, const char* argv[]) {
         oss << "Exported " << padNum6T(options.nProcessed) << " ";
         oss << (!options.className.empty() ? (plural(options.className) + " from ") : "of ");
         oss << padNum6T(options.nTransactions) << " transactions for address "
-            << (options.allMonitors.size() ? options.allMonitors[0].address : "");
+            << (options.allMonitors.size() ? options.hackAppAddr : "");
         LOG_INFO(oss.str());
     }
 

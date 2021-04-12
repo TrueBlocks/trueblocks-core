@@ -190,14 +190,14 @@
       "articulatedTx": {
         "name": "approve",
         "inputs": {
-          "usr": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
-          "wad": "5000000000000000000"
+          "_spender": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
+          "_value": "5000000000000000000"
         },
         "outputs": {
-          "val_0": ""
+          "_success": ""
         }
       },
-      "compressedTx": "approve ( usr: 0x7d655c57f71464b6f83811c55d84009cd9f5221c, wad: 5000000000000000000 )",
+      "compressedTx": "approve ( _spender: 0x7d655c57f71464b6f83811c55d84009cd9f5221c, _value: 5000000000000000000 )",
       "statements": [
         {
           "blockNumber": 10279295,
@@ -611,13 +611,7 @@
             "gasUsed": 35466,
             "output": "0x"
           },
-          "articulatedTrace": {
-            "name": "donate",
-            "inputs": {
-              "_donations": "[{\"token\":\"0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee\", \"amount\":\"38000000000000000\", \"dest\":\"0xf503017d7baf7fbc0fff7492b751025c6a78179b\"}, {\"token\":\"0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee\", \"amount\":\"2000000000000000\", \"dest\":\"0x00de4b13153673bcae2616b67bf822500d325fc3\"}]"
-            }
-          },
-          "compressedTrace": "donate ( _donations: [{\"token\":\"0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee\", \"amount\":\"38000000000000000\", \"dest\":\"0xf503017d7baf7fbc0fff7492b751025c6a78179b\"}, {\"token\":\"0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee\", \"amount\":\"2000000000000000\", \"dest\":\"0x00de4b13153673bcae2616b67bf822500d325fc3\"}] )"
+          "compressedTrace": ""
         },
         {
           "traceAddress": "0",
@@ -4868,14 +4862,14 @@
       "articulatedTx": {
         "name": "approve",
         "inputs": {
-          "usr": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
-          "wad": "5000000000000000000"
+          "_spender": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
+          "_value": "5000000000000000000"
         },
         "outputs": {
-          "val_0": ""
+          "_success": ""
         }
       },
-      "compressedTx": "approve ( usr: 0x7d655c57f71464b6f83811c55d84009cd9f5221c, wad: 5000000000000000000 )",
+      "compressedTx": "approve ( _spender: 0x7d655c57f71464b6f83811c55d84009cd9f5221c, _value: 5000000000000000000 )",
       "statements": [
         {
           "blockNumber": 10290317,
@@ -5329,14 +5323,14 @@
       "articulatedTx": {
         "name": "approve",
         "inputs": {
-          "usr": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
-          "wad": "5000000000000000000"
+          "_spender": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
+          "_value": "5000000000000000000"
         },
         "outputs": {
-          "val_0": ""
+          "_success": ""
         }
       },
-      "compressedTx": "approve ( usr: 0x7d655c57f71464b6f83811c55d84009cd9f5221c, wad: 5000000000000000000 )",
+      "compressedTx": "approve ( _spender: 0x7d655c57f71464b6f83811c55d84009cd9f5221c, _value: 5000000000000000000 )",
       "statements": [
         {
           "blockNumber": 10292014,
@@ -5604,13 +5598,7 @@
             "gasUsed": 35466,
             "output": "0x"
           },
-          "articulatedTrace": {
-            "name": "donate",
-            "inputs": {
-              "_donations": "[{\"token\":\"0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee\", \"amount\":\"190000000000000000\", \"dest\":\"0xf503017d7baf7fbc0fff7492b751025c6a78179b\"}, {\"token\":\"0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee\", \"amount\":\"10000000000000002\", \"dest\":\"0x00de4b13153673bcae2616b67bf822500d325fc3\"}]"
-            }
-          },
-          "compressedTrace": "donate ( _donations: [{\"token\":\"0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee\", \"amount\":\"190000000000000000\", \"dest\":\"0xf503017d7baf7fbc0fff7492b751025c6a78179b\"}, {\"token\":\"0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee\", \"amount\":\"10000000000000002\", \"dest\":\"0x00de4b13153673bcae2616b67bf822500d325fc3\"}] )"
+          "compressedTrace": ""
         },
         {
           "traceAddress": "0",
@@ -5891,14 +5879,14 @@
       "articulatedTx": {
         "name": "approve",
         "inputs": {
-          "usr": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
-          "wad": "5000000000000000000"
+          "_spender": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
+          "_value": "5000000000000000000"
         },
         "outputs": {
-          "val_0": ""
+          "_success": ""
         }
       },
-      "compressedTx": "approve ( usr: 0x7d655c57f71464b6f83811c55d84009cd9f5221c, wad: 5000000000000000000 )",
+      "compressedTx": "approve ( _spender: 0x7d655c57f71464b6f83811c55d84009cd9f5221c, _value: 5000000000000000000 )",
       "statements": [
         {
           "blockNumber": 10293554,

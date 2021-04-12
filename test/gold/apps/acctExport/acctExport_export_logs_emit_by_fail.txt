@@ -1,5 +1,6 @@
-acctExport argc: 8 [1:0xf503017d7baf7fbc0fff7492b751025c6a78179b] [2:--start] [3:10277780] [4:--end] [5:10279650] [6:--emitted_by] [7:0x7d655c57f71464b6f83811c55d84009cd9f5221c] 
-acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --start 10277780 --end 10279650 --emitted_by 0x7d655c57f71464b6f83811c55d84009cd9f5221c 
+acctExport argc: 9 [1:0xf503017d7baf7fbc0fff7492b751025c6a78179b] [2:--start] [3:10277780] [4:--end] [5:10279650] [6:--articulate] [7:--emitted_by] [8:0x7d655c57f71464b6f83811c55d84009cd9f5221c] 
+acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --start 10277780 --end 10279650 --articulate --emitted_by 0x7d655c57f71464b6f83811c55d84009cd9f5221c 
+TIME ~ CLOCK - <INFO>  : articulate: true
 TIME ~ CLOCK - <INFO>  : skip_ddos: true
 TIME ~ CLOCK - <ERROR> : Exit(acctExport,parseArguments): 
 
@@ -26,7 +27,6 @@ TIME ~ CLOCK - <ERROR> : Exit(acctExport,parseArguments):
 	-d  (--skip_ddos)     toggle skipping over 2016 dDos transactions ('on' by default)
 	-m  (--max_traces <num>)if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250)
 	-f  (--freshen)       freshen but do not print the exported data
-	-F  (--freshen_max <num>)maximum number of records to process for --freshen option
 	-y  (--factory)       scan for contract creations from the given address(es) and report address of those contracts
 	    (--emitter)       for log export only, export only if one of the given export addresses emitted the event
 	    (--emitted_by list<addr>)for log export only, export only one of these addresses emitted the event

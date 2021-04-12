@@ -9,6 +9,7 @@
  * outside of the BEG_CODE/END_CODE sections
  */
 #include "pinlib.h"
+#include "traverser.h"
 
 // BEG_ERROR_DEFINES
 // END_ERROR_DEFINES
@@ -29,7 +30,6 @@ class COptions : public CAbiOptions {
     bool skip_ddos;
     uint64_t max_traces;
     bool freshen;
-    uint64_t freshen_max;
     bool factory;
     bool emitter;
     CAddressArray emitted_by;
@@ -46,6 +46,7 @@ class COptions : public CAbiOptions {
     blkrange_t fileRange;
     size_t visitTypes;
     CBlockProgress bp;
+    bool firstOut;
 
     CMonitorCountArray counts;
     CAppearanceArray_base apps;
@@ -65,6 +66,7 @@ class COptions : public CAbiOptions {
     CAddressUintMap fromTraceAddrMap;
     CAddressUintMap abiMap;
 
+    address_t accountedFor;
     blknum_t latestBlock;
     time_q oldestMonitor;
 
@@ -76,6 +78,11 @@ class COptions : public CAbiOptions {
     uint64_t nCacheItemsWritten;
 
     blkrange_t listRange;
+
+    blknum_t firstBlock;
+    blknum_t lastBlock;
+    CReconciliation lastStatement;
+    CReconciliationMap prevStatements;
 
     COptions(void);
     ~COptions(void);
@@ -127,3 +134,7 @@ inline bool isJson(void) {
 #define VIS_FINAL (1 << 1)
 #define VIS_STAGING (1 << 2)
 #define VIS_UNRIPE (1 << 3)
+
+//-----------------------------------------------------------------------
+extern bool handle_reconciliation(COptions* options, CTransaction& trans, CReconciliationMap& prev, blknum_t next,
+                                  bool tokens);

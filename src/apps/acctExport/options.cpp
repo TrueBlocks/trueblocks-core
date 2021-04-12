@@ -27,7 +27,6 @@ static const COption params[] = {
     COption("skip_ddos", "d", "", OPT_HIDDEN | OPT_TOGGLE, "toggle skipping over 2016 dDos transactions ('on' by default)"),  // NOLINT
     COption("max_traces", "m", "<uint64>", OPT_HIDDEN | OPT_FLAG, "if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250)"),  // NOLINT
     COption("freshen", "f", "", OPT_HIDDEN | OPT_SWITCH, "freshen but do not print the exported data"),
-    COption("freshen_max", "F", "<uint64>", OPT_HIDDEN | OPT_FLAG, "maximum number of records to process for --freshen option"),  // NOLINT
     COption("factory", "y", "", OPT_HIDDEN | OPT_SWITCH, "scan for contract creations from the given address(es) and report address of those contracts"),  // NOLINT
     COption("emitter", "", "", OPT_HIDDEN | OPT_SWITCH, "for log export only, export only if one of the given export addresses emitted the event"),  // NOLINT
     COption("emitted_by", "", "list<addr>", OPT_HIDDEN | OPT_FLAG, "for log export only, export only one of these addresses emitted the event"),  // NOLINT
@@ -108,10 +107,6 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-f" || arg == "--freshen") {
             freshen = true;
 
-        } else if (startsWith(arg, "-F:") || startsWith(arg, "--freshen_max:")) {
-            if (!confirmUint("freshen_max", freshen_max, arg))
-                return false;
-
         } else if (arg == "-y" || arg == "--factory") {
             factory = true;
 
@@ -187,7 +182,6 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST_BOOL("skip_ddos", skip_ddos);
     LOG_TEST("max_traces", max_traces, (max_traces == 250));
     LOG_TEST_BOOL("freshen", freshen);
-    LOG_TEST("freshen_max", freshen_max, (freshen_max == 5000));
     LOG_TEST_BOOL("factory", factory);
     LOG_TEST_BOOL("emitter", emitter);
     // LOG_TEST("emitted_by", emitted_by, (emitted_by == NOPOS));
@@ -272,6 +266,13 @@ bool COptions::parseArguments(string_q& command) {
             LOG_TEST("Last visited block", monitor.getLastVisitedBlock(), false);
         } else {
             LOG_TEST("Monitor not found for", addr + ". Continuing anyway.", false);
+        }
+        if (hackAppAddr.empty()) {
+            CAccountName acct;
+            acct.address = monitor.address;
+            getNamedAccount(acct, monitor.address);
+            hackAppName = acct.name;
+            hackAppAddr = acct.address;
         }
         allMonitors.push_back(monitor);
     }
@@ -358,7 +359,6 @@ void COptions::Init(void) {
     max_traces = getGlobalConfig("acctExport")->getConfigInt("settings", "max_traces", 250);
     // clang-format on
     freshen = false;
-    freshen_max = 5000;
     factory = false;
     emitter = false;
     emitted_by.clear();
@@ -377,11 +377,14 @@ void COptions::Init(void) {
     bp = getBlockProgress(BP_ALL);
     listRange.second = bp.ripe;
 
+    firstBlock = NOPOS;
+    lastBlock = NOPOS;
+
     allMonitors.clear();
     counts.clear();
     apps.clear();
 
-    expContext().accountedFor = "";
+    accountedFor = "";
     bytesOnly = "";
 
     // We don't clear these because they are part of meta data
@@ -528,8 +531,8 @@ bool COptions::setDisplayFormatting(void) {
             expContext().exportFmt = NONE1;
 
         if (accounting) {
-            expContext().accountedFor = allMonitors[0].address;
-            bytesOnly = substitute(expContext().accountedFor, "0x", "");
+            accountedFor = hackAppAddr;
+            bytesOnly = substitute(accountedFor, "0x", "");
             articulate = true;
             manageFields("CTransaction:statements", true);
             manageFields("CTransaction:reconciliations", false);

@@ -6,33 +6,28 @@
 #include "options.h"
 
 //-----------------------------------------------------------------------
+extern bool traces_Pre(const CTraverser* trav, void* data);
+extern bool traces_Display(const CTraverser* trav, void* data);
+extern bool traces_Post(const CTraverser* trav, void* data);
+extern void traces_Log(const CTraverser* trav, void* data, TraverserLog mode);
+//-----------------------------------------------------------------------
 bool COptions::handle_traces(void) {
-    ENTER("handle_traces");
+    CTraverser trav(this, cout, "traces");
+    traces_Pre(&trav, nullptr);
 
-    ASSERT(traces);
-    ASSERT(nodeHasBalances(false));
-
-    bool shouldDisplay = !freshen;
-
-    blknum_t firstBlock = apps.size() ? apps[0].blk : 0;
-    blknum_t lastBlock = apps.size() ? apps[apps.size() - 1].blk : latestBlock;
-
-    bool first = true;
-    blknum_t lastExportedBlock = NOPOS;
-    for (size_t i = 0; i < apps.size() && (!freshen || (nProcessed < freshen_max)); i++) {
+    for (size_t i = 0; i < apps.size() && (!freshen || (nProcessed < 5000)); i++) {
         const CAppearance_base* app = &apps[i];
         if (shouldQuit() || app->blk >= expContext().tsCnt)
             break;
-
-        // LOG_TEST("passes", inRange((blknum_t)app->blk, scanRange.first, scanRange.second) ? "true" : "false");
-        if (inRange((blknum_t)app->blk, scanRange.first, scanRange.second)) {
+        if (inRange(blknum_t(app->blk), scanRange.first, scanRange.second)) {
             CBlock block;  // do not move this from this scope
             block.blockNumber = app->blk;
             CTransaction trans;
             trans.pBlock = &block;
 
             string_q txFilename = getBinaryCacheFilename(CT_TXS, app->blk, app->txid);
-            if (app->blk != 0 && fileExists(txFilename)) {
+            bool inCache = app->blk != 0 && fileExists(txFilename);
+            if (inCache) {
                 // we read the data, if we find it, but....
                 readTransFromBinary(trans, txFilename);
                 trans.finishParse();
@@ -86,10 +81,10 @@ bool COptions::handle_traces(void) {
                     if (articulate)
                         abi_spec.articulateTrace(&trace);
                     nProcessed++;
-                    if (shouldDisplay && !factory) {
-                        cout << ((isJson() && !first) ? ", " : "");
+                    if (!freshen && !factory) {
+                        cout << ((isJson() && !firstOut) ? ", " : "");
                         cout << trace.Format() << endl;
-                        first = false;
+                        firstOut = false;
                     }
                 }
 
@@ -103,10 +98,10 @@ bool COptions::handle_traces(void) {
                     copy.transactionHash = uint_2_Hex(trace.blockNumber * 100000 + trace.transactionIndex);
                     copy.action.input = "0x";
                     nProcessed++;
-                    if (shouldDisplay && !factory) {
-                        cout << ((isJson() && !first) ? ", " : "");
+                    if (!freshen && !factory) {
+                        cout << ((isJson() && !firstOut) ? ", " : "");
                         cout << copy.Format() << endl;
-                        first = false;
+                        firstOut = false;
                     }
                 }
 
@@ -122,46 +117,64 @@ bool COptions::handle_traces(void) {
                     copy.transactionHash = uint_2_Hex(trace.blockNumber * 100000 + trace.transactionIndex);
                     copy.action.input = trace.action.input;
                     nProcessed++;
-                    if (shouldDisplay && !factory) {
-                        cout << ((isJson() && !first) ? ", " : "");
+                    if (!freshen && !factory) {
+                        cout << ((isJson() && !firstOut) ? ", " : "");
                         cout << copy.Format() << endl;
-                        first = false;
+                        firstOut = false;
                     } else if (factory) {
-                        cout << ((isJson() && !first) ? ", " : "");
+                        cout << ((isJson() && !firstOut) ? ", " : "");
                         cout << copy.Format() << endl;
-                        first = false;
+                        firstOut = false;
                     }
                 }
             }
 
-            HIDE_FIELD(CFunction, "message");
             if (!isTestMode() && (isApiMode() || !(i % 3))) {
-                ostringstream os;
-                os << "Exported " << nProcessed << " ";
-                os << plural(className) << " from ";
-                os << nProcessing << " txs (blocks: ";
-                os << firstBlock << "-[" << cGreen;
-                os << app->blk << cOff << "]-";
-                os << lastBlock << " ";
-                os << "for address " << allMonitors[0].address;
-                LOG_INFO(os.str() + "\r");
+                traces_Log(&trav, nullptr, TR_END);
             }
+
         } else if (app->blk > scanRange.second) {
             break;
         }
     }
 
-    if (!isTestMode()) {
-        if ((first_record + nProcessed) == nTransactions)
-            LOG_PROGRESS((freshen ? "Finished updating" : "Finished reporting on"), (first_record + nProcessed),
-                         nTransactions, " traces for address " + allMonitors[0].address);
+    traces_Post(&trav, nullptr);
+    return !shouldQuit();
+}
+
+//-----------------------------------------------------------------------
+bool traces_Pre(const CTraverser* trav, void* data) {
+    COptions* opt = (COptions*)trav->options;
+    opt->firstOut = true;
+
+    opt->firstBlock = opt->apps.size() ? opt->apps[0].blk : 0;
+    opt->lastBlock = opt->apps.size() ? opt->apps[opt->apps.size() - 1].blk : opt->latestBlock;
+
+    return true;
+}
+
+//-----------------------------------------------------------------------
+bool traces_Post(const CTraverser* trav, void* data) {
+    COptions* opt = (COptions*)trav->options;
+
+    if (trav->lastExpBlock != NOPOS)
+        for (auto monitor : opt->allMonitors)
+            monitor.writeLastExport(trav->lastExpBlock);
+
+    opt->reportNeighbors();
+
+    if (!isTestMode())
+        traces_Log(trav, data, TR_END);
+
+    return true;
+}
+
+//-----------------------------------------------------------------------
+void traces_Log(const CTraverser* trav, void* data, TraverserLog mode) {
+    if (mode == TR_END) {
+        end_Log(trav, data, mode);
+
+    } else if (mode == TR_PROGRESS) {
+        prog_Log(trav, data, mode);
     }
-
-    if (lastExportedBlock != NOPOS)
-        for (auto monitor : allMonitors)
-            monitor.writeLastExport(lastExportedBlock);
-
-    reportNeighbors();
-
-    EXIT_NOMSG(true);
 }

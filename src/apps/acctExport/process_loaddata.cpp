@@ -54,13 +54,6 @@ bool COptions::loadAllAppearances(void) {
 
     CAppearanceArray_base tmp;
     for (auto monitor : allMonitors) {
-        if (hackAppAddr.empty()) {
-            CAccountName acct;
-            acct.address = monitor.address;
-            getNamedAccount(acct, monitor.address);
-            hackAppName = acct.name;
-            hackAppAddr = acct.address;
-        }
         if (!loadOneAddress(monitor, tmp))
             EXIT_FAIL("Could not load monitor for address " + monitor.address);
         if (freshen) {
@@ -75,7 +68,7 @@ bool COptions::loadAllAppearances(void) {
 
     if (tmp.size() == 0) {
         if (!freshen)
-            LOG4("Nothing to export" + (allMonitors.size() ? (" from " + allMonitors[0].address) : "") + ".");
+            LOG4("Nothing to export" + (allMonitors.size() ? (" from " + hackAppAddr) : "") + ".");
         return false;
     }
 

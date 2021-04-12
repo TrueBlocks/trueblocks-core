@@ -6,21 +6,16 @@
 #include "options.h"
 
 //-----------------------------------------------------------------------
+extern bool logs_Pre(const CTraverser* trav, void* data);
+extern bool logs_Display(const CTraverser* trav, void* data);
+extern bool logs_Post(const CTraverser* trav, void* data);
+extern void logs_Log(const CTraverser* trav, void* data, TraverserLog mode);
+//-----------------------------------------------------------------------
 bool COptions::handle_logs(void) {
-    ENTER("handle_logs");
+    CTraverser trav(this, cout, "txs");
+    logs_Pre(&trav, nullptr);
 
-    ASSERT(logs && !(accounting || balances));
-    ASSERT(nodeHasBalances(false));
-
-    bool shouldDisplay = !freshen;
-
-    CReconciliation lastStatement;
-    if (apps.size() > 0 && first_record != 0)
-        lastStatement.endBal = getBalanceAt(expContext().accountedFor, apps[0].blk - 1);
-
-    bool first = true;
-    blknum_t lastExportedBlock = NOPOS;
-    for (size_t i = 0; i < apps.size() && (!freshen || (nProcessed < freshen_max)); i++) {
+    for (size_t i = 0; i < apps.size() && (!freshen || (nProcessed < 5000)); i++) {
         const CAppearance_base* app = &apps[i];
         if (shouldQuit() || app->blk >= expContext().tsCnt)
             break;
@@ -32,7 +27,8 @@ bool COptions::handle_logs(void) {
             trans.pBlock = &block;
 
             string_q txFilename = getBinaryCacheFilename(CT_TXS, app->blk, app->txid);
-            if (app->blk != 0 && fileExists(txFilename)) {
+            bool inCache = app->blk != 0 && fileExists(txFilename);
+            if (inCache) {
                 // we read the data, if we find it, but....
                 readTransFromBinary(trans, txFilename);
                 trans.finishParse();
@@ -41,15 +37,6 @@ bool COptions::handle_logs(void) {
 
                 markNeighbors(trans);
                 articulateAll(trans);
-
-                HIDE_FIELD(CFunction, "message");
-                if (!isTestMode() && !(i % 5)) {
-                    blknum_t current = first_record + nProcessed;
-                    blknum_t goal = min(first_record + max_records, nTransactions);
-                    ostringstream post;
-                    post << " txs (max " << goal << ") for address " << allMonitors[0].address << "\r";
-                    LOG_PROGRESS("Reading", current, nTransactions, post.str());
-                }
 
             } else {
                 if (app->blk == 0) {
@@ -82,17 +69,6 @@ bool COptions::handle_logs(void) {
 
                 if (cache_txs)
                     writeTransToBinary(trans, txFilename);
-
-                HIDE_FIELD(CFunction, "message");
-                if (!isTestMode() && !(i % 5)) {
-                    blknum_t current = first_record + nProcessed;
-                    blknum_t goal = min(first_record + max_records, nTransactions);
-                    ostringstream post;
-                    post << " txs (max " << goal << ") for address " << allMonitors[0].address;
-                    if (!isApiMode())
-                        post << " " << app->blk;
-                    LOG_PROGRESS("Extracting", current, nTransactions, post.str() + "\r");
-                }
             }
 
             for (auto log : trans.receipt.logs) {
@@ -107,30 +83,23 @@ bool COptions::handle_logs(void) {
                     showMe = isEmitter(log.address);
                 }
                 nProcessed++;
-                if (showMe && shouldDisplay) {
-                    cout << ((isJson() && !first) ? ", " : "");
+                if (showMe && !freshen) {
+                    cout << ((isJson() && !firstOut) ? ", " : "");
                     cout << log.Format() << endl;
-                    first = false;
+                    firstOut = false;
                 }
+            }
+
+            if (!isTestMode() && (isApiMode() || !(nProcessed % 3))) {
+                logs_Log(&trav, nullptr, TR_PROGRESS);
             }
         } else if (app->blk > scanRange.second) {
             break;
         }
     }
 
-    if (!isTestMode()) {
-        if ((first_record + nProcessed) == nTransactions)
-            LOG_PROGRESS((freshen ? "Finished updating" : "Finished reporting on"), (first_record + nProcessed),
-                         nTransactions, " transactions for address " + allMonitors[0].address);
-    }
-
-    if (lastExportedBlock != NOPOS)
-        for (auto monitor : allMonitors)
-            monitor.writeLastExport(lastExportedBlock);
-
-    reportNeighbors();
-
-    EXIT_NOMSG(true);
+    logs_Post(&trav, nullptr);
+    return true;
 }
 
 //-----------------------------------------------------------------------
@@ -156,4 +125,39 @@ bool COptions::isRelevant(const CLogEntry& log) const {
         if (contains(str, monitor.address.substr(2)))
             return true;
     return false;
+}
+
+//-----------------------------------------------------------------------
+bool logs_Pre(const CTraverser* trav, void* data) {
+    COptions* opt = (COptions*)trav->options;
+    opt->firstOut = true;
+    if (opt->apps.size() > 0 && opt->first_record != 0)
+        opt->lastStatement.endBal = getBalanceAt(opt->accountedFor, opt->apps[0].blk - 1);
+    return true;
+}
+
+//-----------------------------------------------------------------------
+bool logs_Post(const CTraverser* trav, void* data) {
+    COptions* opt = (COptions*)trav->options;
+
+    if (trav->lastExpBlock != NOPOS)
+        for (auto monitor : opt->allMonitors)
+            monitor.writeLastExport(trav->lastExpBlock);
+
+    opt->reportNeighbors();
+
+    if (!isTestMode())
+        logs_Log(trav, data, TR_END);
+
+    return true;
+}
+
+//-----------------------------------------------------------------------
+void logs_Log(const CTraverser* trav, void* data, TraverserLog mode) {
+    if (mode == TR_END) {
+        end_Log(trav, data, mode);
+
+    } else if (mode == TR_PROGRESS) {
+        prog_Log(trav, data, mode);
+    }
 }

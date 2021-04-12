@@ -67,12 +67,12 @@ bool COptions::handle_rm(const CAddressArray& addrs) {
         expContext().exportFmt = JSON1;
         cout << exportPreamble("", "");
         string_q msg;
-        bool first = true;
+        firstOut = true;
         for (auto result : results) {
-            if (!first)
+            if (!firstOut)
                 msg += ",";
             msg += ("\"" + result + "\"");
-            first = false;
+            firstOut = false;
         }
         if (msg.empty())
             msg = "{ \"msg\": \"nothing was removed\" }";

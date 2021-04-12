@@ -643,11 +643,11 @@ const char* STR_DISPLAY_RECONCILIATION = "";
 // EXISTING_CODE
 //---------------------------------------------------------------------------
 bool CReconciliation::reconcileEth(const CStringArray& corrections, CReconciliationMap& last, blknum_t nextBlock,
-                                   const CTransaction* trans) {
+                                   const CTransaction* trans, const address_t& acctFor) {
     // LOG4(lastStatement.Format());
     // LOG4(Format());
 
-    CReconciliation prev = last[expContext().accountedFor + "_eth"];
+    CReconciliation prev = last[acctFor + "_eth"];
     asset = "ETH";
 
     // Note: In the case of an error, we need to account for gas usage if the account is the transaction's sender
@@ -659,13 +659,13 @@ bool CReconciliation::reconcileEth(const CStringArray& corrections, CReconciliat
     reconciliationType = "";
 
     // We need to account for both the case where the account is the sender...
-    if (trans->from == expContext().accountedFor) {
+    if (trans->from == acctFor) {
         amountOut = trans->isError ? 0 : trans->value;
         gasCostOut = str_2_BigInt(trans->getValueByName("gasCost"));
     }
 
     // ... and/or the receiver...
-    if (trans->to == expContext().accountedFor) {
+    if (trans->to == acctFor) {
         if (trans->from == "0xPrefund") {
             prefundIn = trans->value;
         } else if (trans->from == "0xBlockReward") {
@@ -680,8 +680,8 @@ bool CReconciliation::reconcileEth(const CStringArray& corrections, CReconciliat
     }
 
     // Ask the node what it thinks the balances are...
-    begBal = getBalanceAt(expContext().accountedFor, blockNumber == 0 ? 0 : blockNumber - 1);
-    endBal = getBalanceAt(expContext().accountedFor, blockNumber);
+    begBal = getBalanceAt(acctFor, blockNumber == 0 ? 0 : blockNumber - 1);
+    endBal = getBalanceAt(acctFor, blockNumber);
 
     // If the user has given us corrections, use them...
     if (corrections.size() > 0) {
@@ -711,7 +711,7 @@ bool CReconciliation::reconcileEth(const CStringArray& corrections, CReconciliat
     // ...otherwise, we try to recover
     // Case 4: We need to dig into the traces (Note: this is the first place where we dig into the traces...
     // doing so without having been forced to causes a huge performance penalty.)
-    if (reconcileUsingTraces(prev.blockNumber, prev.endBal, prev.endBalCalc, nextBlock, trans))
+    if (reconcileUsingTraces(prev.blockNumber, prev.endBal, prev.endBalCalc, nextBlock, trans, acctFor))
         return true;
 
     // Case 2: The blockchain only returns balances PER block. This means that if two value changing transactions
@@ -742,7 +742,7 @@ bool CReconciliation::reconcileEth(const CStringArray& corrections, CReconciliat
         // that case.
 
         // Ending balance at the previous block should be the same as beginning balance at this block...
-        begBal = getBalanceAt(expContext().accountedFor, blockNumber == 0 ? 0 : blockNumber - 1);
+        begBal = getBalanceAt(acctFor, blockNumber == 0 ? 0 : blockNumber - 1);
         begBalDiff = trans->blockNumber == 0 ? 0 : begBal - prev.endBal;
 
         // We use the same "in-transaction" data to arrive at...
@@ -773,7 +773,7 @@ bool CReconciliation::reconcileEth(const CStringArray& corrections, CReconciliat
 
         // the true ending balance (since we know that the next transaction on this account is in a different
         // block, we can use the balance from the node, and it should reconcile.
-        endBal = getBalanceAt(expContext().accountedFor, blockNumber);
+        endBal = getBalanceAt(acctFor, blockNumber);
         endBalDiff = endBal - endBalCalc;
         reconciliationType = trans->blockNumber == 0 ? "" : "nextdiff-partial";
 
@@ -807,7 +807,7 @@ bool CReconciliation::reconcileEth(const CStringArray& corrections, CReconciliat
 extern bool loadTraces(CTransaction& trans, blknum_t bn, blknum_t txid, bool useCache, bool skipDdos);
 //---------------------------------------------------------------------------
 bool CReconciliation::reconcileUsingTraces(blknum_t lastBn, bigint_t lastEndBal, bigint_t lastEndBalCalc,
-                                           blknum_t nextBlock, const CTransaction* trans) {
+                                           blknum_t nextBlock, const CTransaction* trans, const address_t& acctFor) {
     amountOut = amountIn = 0;  // we will store it in the internal values
     prefundIn = minerBaseRewardIn = minerNephewRewardIn = minerTxFeeIn + minerUncleRewardIn = 0;
 
@@ -820,25 +820,25 @@ bool CReconciliation::reconcileUsingTraces(blknum_t lastBn, bigint_t lastEndBal,
     for (auto trace : trans->traces) {
         bool isSelfDestruct = trace.action.selfDestructed != "";
         if (isSelfDestruct) {
-            if (trace.action.refundAddress == expContext().accountedFor) {
+            if (trace.action.refundAddress == acctFor) {
                 // receives self destructed ether
                 selfDestructIn += trace.action.balance;
             }
 
             // do not collapse. It may be both
-            if (trace.action.selfDestructed == expContext().accountedFor) {
+            if (trace.action.selfDestructed == acctFor) {
                 // the smart contract that is being killed and thereby loses the eth
                 selfDestructOut += trace.action.balance;
             }
 
         } else {
-            if (trace.action.from == expContext().accountedFor) {
+            if (trace.action.from == acctFor) {
                 internalOut += trans->isError ? 0 : trace.action.value;
                 // gasCostOutflow = str_2_BigInt(trans->getValueByName("gasCost"));
             }
 
             // do not collapse. It may be both
-            if (trace.action.to == expContext().accountedFor) {
+            if (trace.action.to == acctFor) {
                 if (trans->from == "0xPrefund") {
                     prefundIn = trans->value;
                 } else if (trans->from == "0xBlockReward") {

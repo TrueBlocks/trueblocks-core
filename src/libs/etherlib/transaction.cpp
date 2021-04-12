@@ -566,8 +566,6 @@ void CTransaction::registerClass(void) {
     SHOW_FIELD(CTransaction, "reconciliations");
 
     // Add custom fields
-    ADD_FIELD(CTransaction, "classification1", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CTransaction, "classification2", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CTransaction, "gasCost", T_WEI, ++fieldNum);
     ADD_FIELD(CTransaction, "etherGasCost", T_WEI, ++fieldNum);
     ADD_FIELD(CTransaction, "function", T_TEXT | TS_OMITEMPTY, ++fieldNum);
@@ -592,8 +590,6 @@ void CTransaction::registerClass(void) {
     HIDE_FIELD(CTransaction, "events");
     HIDE_FIELD(CTransaction, "price");
     HIDE_FIELD(CTransaction, "encoding");
-    HIDE_FIELD(CTransaction, "classification1");
-    HIDE_FIELD(CTransaction, "classification2");
     HIDE_FIELD(CTransaction, "gasCost");
     HIDE_FIELD(CTransaction, "etherGasCost");
     HIDE_FIELD(CTransaction, "isError");
@@ -663,16 +659,6 @@ string_q nextTransactionChunk_custom(const string_q& fieldIn, const void* dataPt
                         return compressInput(tra->input);
                     }
                     return stripWhitespace(ret);
-                }
-                if (fieldIn % "classification1") {
-                    if (expContext().accountedFor.empty())
-                        return "";
-                    return (expContext().accountedFor == tra->to ? "Income" : "Expense");
-                }
-                if (fieldIn % "classification2") {
-                    if (expContext().accountedFor.empty())
-                        return "";
-                    return (expContext().accountedFor == tra->to ? "incoming" : "outgoing");
                 }
                 break;
             case 'd':

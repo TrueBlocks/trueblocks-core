@@ -6,104 +6,125 @@
 #include "options.h"
 
 //-----------------------------------------------------------------------
+extern bool receipts_Pre(const CTraverser* trav, void* data);
+extern bool receipts_Display(const CTraverser* trav, void* data);
+extern bool receipts_Post(const CTraverser* trav, void* data);
+extern void receipts_Log(const CTraverser* trav, void* data, TraverserLog mode);
+//-----------------------------------------------------------------------
 bool COptions::handle_receipts(void) {
-    ENTER("handle_receipts");
+    CTraverser trav(this, cout, "receipts");
+    trav.preFunc = receipts_Pre;
+    trav.filterFunc = rangeFilter;
+    trav.displayFunc = receipts_Display;
+    trav.postFunc = receipts_Post;
+    trav.logFunc = receipts_Log;
 
-    ASSERT(receipts);
-    ASSERT(nodeHasBalances(false));
+    CTraverserArray traversers;
+    traversers.push_back(trav);
 
-    bool shouldDisplay = !freshen;
+    forEveryAppearance(traversers, apps, nullptr);
+
+    return !shouldQuit();
+}
+
+//-----------------------------------------------------------------------
+bool receipts_Display(const CTraverser* trav, void* data) {
+    COptions* opt = (COptions*)trav->options;
+
+    CBlock block;  // do not move this from this scope
+    block.blockNumber = trav->app->blk;
+    CTransaction trans;
+    trans.pBlock = &block;
+
+    string_q txFilename = getBinaryCacheFilename(CT_TXS, trav->app->blk, trav->app->txid);
+    if (trav->app->blk != 0 && fileExists(txFilename)) {
+        // we read the data, if we find it, but....
+        readTransFromBinary(trans, txFilename);
+        trans.finishParse();
+        trans.pBlock = &block;
+        block.timestamp = trans.timestamp = (timestamp_t)expContext().tsMemMap[(trav->app->blk * 2) + 1];
+
+    } else {
+        if (trav->app->blk == 0) {
+            address_t addr = opt->prefundAddrMap[trav->app->txid];
+            trans.loadTransAsPrefund(trav->app->blk, trav->app->txid, addr, expContext().prefundMap[addr]);
+
+        } else if (trav->app->txid == 99997 || trav->app->txid == 99999) {
+            trans.loadTransAsBlockReward(trav->app->blk, trav->app->txid, opt->blkRewardMap[trav->app->blk]);
+
+        } else if (trav->app->txid == 99998) {
+            uint64_t nUncles = getUncleCount(trav->app->blk);
+            for (size_t u = 0; u < nUncles; u++) {
+                CBlock uncle;
+                getUncle(uncle, trav->app->blk, u);
+                if (uncle.miner == opt->blkRewardMap[trav->app->blk]) {
+                    trans.loadTransAsUncleReward(trav->app->blk, uncle.blockNumber, uncle.miner);
+                }
+            }
+
+        } else {
+            getTransaction(trans, trav->app->blk, trav->app->txid);
+            getFullReceipt(&trans, true);
+        }
+
+        trans.pBlock = &block;
+        trans.timestamp = block.timestamp = (timestamp_t)expContext().tsMemMap[(trav->app->blk * 2) + 1];
+
+        // ... we don't write the data here since it will not be complete.
+        // if (false) // (cache_txs && !fileExists(txFilename))
+        //    writeTransToBinary(trans, txFilename);
+    }
+
+    if (opt->articulate)
+        opt->abi_spec.articulateTransaction(&trans);
+
+    if (!opt->freshen) {
+        cout << ((isJson() && !opt->firstOut) ? ", " : "");
+        cout << trans.receipt.Format() << endl;
+    }
+
+    if (!isTestMode() && (isApiMode() || !(opt->nProcessed % 3))) {
+        receipts_Log(trav, nullptr, TR_PROGRESS);
+    }
+
+    return !shouldQuit();
+}
+
+//-----------------------------------------------------------------------
+bool receipts_Pre(const CTraverser* trav, void* data) {
+    COptions* opt = (COptions*)trav->options;
+    opt->firstOut = true;
 
     SHOW_FIELD(CReceipt, "blockNumber");
     SHOW_FIELD(CReceipt, "transactionIndex");
     SHOW_FIELD(CReceipt, "isError");
 
-    bool first = true;
-    blknum_t lastExportedBlock = NOPOS;
-    for (size_t i = 0; i < apps.size() && (!freshen || (nProcessed < freshen_max)); i++) {
-        const CAppearance_base* app = &apps[i];
-        if (shouldQuit() || app->blk >= expContext().tsCnt)
-            break;
+    receipts_Log(trav, nullptr, TR_START);
 
-        // LOG_TEST("passes", inRange((blknum_t)app->blk, scanRange.first, scanRange.second) ? "true" : "false");
-        if (inRange((blknum_t)app->blk, scanRange.first, scanRange.second)) {
-            CBlock block;  // do not move this from this scope
-            block.blockNumber = app->blk;
-            CTransaction trans;
-            trans.pBlock = &block;
+    return true;
+}
 
-            string_q txFilename = getBinaryCacheFilename(CT_TXS, app->blk, app->txid);
-            if (app->blk != 0 && fileExists(txFilename)) {
-                // we read the data, if we find it, but....
-                readTransFromBinary(trans, txFilename);
-                trans.finishParse();
-                trans.pBlock = &block;
-                block.timestamp = trans.timestamp = (timestamp_t)expContext().tsMemMap[(app->blk * 2) + 1];
+//-----------------------------------------------------------------------
+bool receipts_Post(const CTraverser* trav, void* data) {
+    COptions* opt = (COptions*)trav->options;
 
-            } else {
-                if (app->blk == 0) {
-                    address_t addr = prefundAddrMap[app->txid];
-                    trans.loadTransAsPrefund(app->blk, app->txid, addr, expContext().prefundMap[addr]);
+    if (trav->lastExpBlock != NOPOS)
+        for (auto monitor : opt->allMonitors)
+            monitor.writeLastExport(trav->lastExpBlock);
+    opt->reportNeighbors();
 
-                } else if (app->txid == 99997 || app->txid == 99999) {
-                    trans.loadTransAsBlockReward(app->blk, app->txid, blkRewardMap[app->blk]);
+    if (!isTestMode())
+        receipts_Log(trav, data, TR_END);
 
-                } else if (app->txid == 99998) {
-                    uint64_t nUncles = getUncleCount(app->blk);
-                    for (size_t u = 0; u < nUncles; u++) {
-                        CBlock uncle;
-                        getUncle(uncle, app->blk, u);
-                        if (uncle.miner == blkRewardMap[app->blk]) {
-                            trans.loadTransAsUncleReward(app->blk, uncle.blockNumber, uncle.miner);
-                        }
-                    }
+    return true;
+}
 
-                } else {
-                    getTransaction(trans, app->blk, app->txid);
-                    getFullReceipt(&trans, true);
-                }
+//-----------------------------------------------------------------------
+void receipts_Log(const CTraverser* trav, void* data, TraverserLog mode) {
+    if (mode == TR_END) {
+        end_Log(trav, data, mode);
 
-                trans.pBlock = &block;
-                trans.timestamp = block.timestamp = (timestamp_t)expContext().tsMemMap[(app->blk * 2) + 1];
-
-                // ... we don't write the data here since it will not be complete.
-                // if (false) // (cache_txs && !fileExists(txFilename))
-                //    writeTransToBinary(trans, txFilename);
-            }
-
-            if (articulate)
-                abi_spec.articulateTransaction(&trans);
-            nProcessed++;
-            if (shouldDisplay) {
-                cout << ((isJson() && !first) ? ", " : "");
-                cout << trans.receipt.Format() << endl;
-                first = false;
-            }
-
-            HIDE_FIELD(CFunction, "message");
-            if (!isTestMode() && (isApiMode() || !(i % 3))) {
-                ostringstream os;
-                os << "Exporting " << nProcessed << " ";
-                os << plural(className) << " of ";
-                os << nTransactions << " (max " << nProcessing << ") txs for address " << allMonitors[0].address;
-                LOG_INFO(os.str() + "\r");
-            }
-        } else if (app->blk > scanRange.second) {
-            break;
-        }
+    } else if (mode == TR_PROGRESS) {
+        prog_Log(trav, data, mode);
     }
-
-    if (!isTestMode()) {
-        if ((first_record + nProcessed) == nTransactions)
-            LOG_PROGRESS((freshen ? "Finished updating" : "Finished reporting on"), (first_record + nProcessed),
-                         nTransactions, " receipts for address " + allMonitors[0].address);
-    }
-
-    if (lastExportedBlock != NOPOS)
-        for (auto monitor : allMonitors)
-            monitor.writeLastExport(lastExportedBlock);
-
-    reportNeighbors();
-
-    EXIT_NOMSG(true);
 }
