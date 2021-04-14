@@ -1,7 +1,11 @@
 acctExport argc: 9 [1:0xf503017d7baf7fbc0fff7492b751025c6a78179b] [2:--start] [3:10277780] [4:--end] [5:10279650] [6:--articulate] [7:--emitted_by] [8:0x7d655c57f71464b6f83811c55d84009cd9f5221c] 
 acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --start 10277780 --end 10279650 --articulate --emitted_by 0x7d655c57f71464b6f83811c55d84009cd9f5221c 
+TIME ~ CLOCK - <INFO>  : addrs
+TIME ~ CLOCK - <INFO>  :   0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TIME ~ CLOCK - <INFO>  : articulate: true
 TIME ~ CLOCK - <INFO>  : skip_ddos: true
+TIME ~ CLOCK - <INFO>  : emitted_by
+TIME ~ CLOCK - <INFO>  :   0x7d655c57f71464b6f83811c55d84009cd9f5221c
 TIME ~ CLOCK - <ERROR> : Exit(acctExport,parseArguments): 
 
   The --emitted_by option is only available when exporting logs. Quitting...

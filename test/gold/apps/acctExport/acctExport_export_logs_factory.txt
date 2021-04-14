@@ -1,5 +1,7 @@
 acctExport argc: 6 [1:0x8b3b3b624c3c0397d3da8fd861512393d51dcbac] [2:--factory] [3:--traces] [4:--end] [5:1603174] 
 acctExport 0x8b3b3b624c3c0397d3da8fd861512393d51dcbac --factory --traces --end 1603174 
+TIME ~ CLOCK - <INFO>  : addrs
+TIME ~ CLOCK - <INFO>  :   0x8b3b3b624c3c0397d3da8fd861512393d51dcbac
 TIME ~ CLOCK - <INFO>  : traces: true
 TIME ~ CLOCK - <INFO>  : skip_ddos: true
 TIME ~ CLOCK - <INFO>  : factory: true

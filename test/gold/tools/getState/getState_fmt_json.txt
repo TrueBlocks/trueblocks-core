@@ -1,5 +1,7 @@
 getState argc: 6 [1:0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98] [2:--fmt] [3:json] [4:2000000] [5:--dollars] 
 getState 0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98 --fmt json 2000000 --dollars 
+TIME ~ CLOCK - <INFO>  : addrs
+TIME ~ CLOCK - <INFO>  :   0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98
 { "data": [
   {
     "blockNumber": 2000000,

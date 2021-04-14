@@ -4,6 +4,8 @@ TIME ~ CLOCK - <INFO>  : mode: abis
 chifra abis argc: 2 [1:0xbb9bc244d798123fde783fcc1c72d3bb8c189413] 
 chifra abis 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 
 PROG_NAME = [chifra abis]
+TIME ~ CLOCK - <INFO>  : addrs
+TIME ~ CLOCK - <INFO>  :   0xbb9bc244d798123fde783fcc1c72d3bb8c189413
 encoding	type	name	signature	input_names	output_names
 	constructor		(address,address,uint256,uint256,uint256,address)	_curator,_daoCreator,_proposalDeposit,_minTokensToCreate,_closingTime,_privateCreation,	,
 0x643f7cdd	function	DAOpaidOut	DAOpaidOut(address)	val_0,	val_0,,

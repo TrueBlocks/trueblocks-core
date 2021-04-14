@@ -1,4 +1,6 @@
 getState argc: 4 [1:0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359] [2:4000000] [3:--wei] 
 getState 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 4000000 --wei 
+TIME ~ CLOCK - <INFO>  : addrs
+TIME ~ CLOCK - <INFO>  :   0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359
 blocknumber	address	balance
 4000000	0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359	4098334073083150747787

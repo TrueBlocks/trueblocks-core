@@ -1,5 +1,7 @@
 getTokenInfo argc: 5 [1:0xa9fe4601811213c340e850ea305481aff02f5b28] [2:--parts] [3:all] [4:12000000] 
 getTokenInfo 0xa9fe4601811213c340e850ea305481aff02f5b28 --parts all 12000000 
+TIME ~ CLOCK - <INFO>  : addrs
+TIME ~ CLOCK - <INFO>  :   0xa9fe4601811213c340e850ea305481aff02f5b28
 TIME ~ CLOCK - <INFO>  : parts
 TIME ~ CLOCK - <INFO>  :   all
 blocknumber	address	name	symbol	decimals	totalsupply

@@ -1,4 +1,6 @@
 getState argc: 6 [1:0xbb9bc244d798123fde783fcc1c72d3bb8c189413] [2:1500000] [3:--ether] [4:--fmt] [5:txt] 
 getState 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 1500000 --ether --fmt txt 
+TIME ~ CLOCK - <INFO>  : addrs
+TIME ~ CLOCK - <INFO>  :   0xbb9bc244d798123fde783fcc1c72d3bb8c189413
 blocknumber	address	ether
 1500000	0xbb9bc244d798123fde783fcc1c72d3bb8c189413	4420466.920675732108465682

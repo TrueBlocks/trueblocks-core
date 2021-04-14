@@ -1,5 +1,7 @@
 acctExport argc: 6 [1:0x001d14804b399c6ef80e64576f657660804fec0b] [2:--fmt] [3:txt] [4:--max_records] [5:2] 
 acctExport 0x001d14804b399c6ef80e64576f657660804fec0b --fmt txt --max_records 2 
+TIME ~ CLOCK - <INFO>  : addrs
+TIME ~ CLOCK - <INFO>  :   0x001d14804b399c6ef80e64576f657660804fec0b
 TIME ~ CLOCK - <INFO>  : skip_ddos: true
 TIME ~ CLOCK - <INFO>  : max_records: 2
 TIME ~ CLOCK - <INFO>  : Monitor found for: 0x001d14804b399c6ef80e64576f657660804fec0b

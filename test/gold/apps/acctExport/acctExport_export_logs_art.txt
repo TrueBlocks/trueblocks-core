@@ -1,5 +1,7 @@
 acctExport argc: 10 [1:0xbb9bc244d798123fde783fcc1c72d3bb8c189413] [2:--logs] [3:--fmt] [4:json] [5:--start] [6:1429283] [7:--end] [8:1429468] [9:--articulate] 
 acctExport 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 --logs --fmt json --start 1429283 --end 1429468 --articulate 
+TIME ~ CLOCK - <INFO>  : addrs
+TIME ~ CLOCK - <INFO>  :   0xbb9bc244d798123fde783fcc1c72d3bb8c189413
 TIME ~ CLOCK - <INFO>  : logs: true
 TIME ~ CLOCK - <INFO>  : articulate: true
 TIME ~ CLOCK - <INFO>  : skip_ddos: true

@@ -1,5 +1,8 @@
 getTokenInfo argc: 7 [1:0xd26114cd6ee289accf82350c8d8487fedb8a0c07] [2:0xb9e7f8568e08d5659f5d29c4997173d84cdf2607] [3:--parts] [4:decimals] [5:--fmt] [6:csv] 
 getTokenInfo 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 --parts decimals --fmt csv 
+TIME ~ CLOCK - <INFO>  : addrs
+TIME ~ CLOCK - <INFO>  :   0xd26114cd6ee289accf82350c8d8487fedb8a0c07
+TIME ~ CLOCK - <INFO>  :   0xb9e7f8568e08d5659f5d29c4997173d84cdf2607
 TIME ~ CLOCK - <INFO>  : parts
 TIME ~ CLOCK - <INFO>  :   decimals
 "address","decimals"

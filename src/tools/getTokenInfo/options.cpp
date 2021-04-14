@@ -80,7 +80,7 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     // BEG_DEBUG_DISPLAY
-    // LOG_TEST_LIST("addrs2", addrs2, addrs2.empty());
+    LOG_TEST_LIST("addrs", addrs, addrs.empty());
     // LOG_TEST_LIST("blocks", blocks, blocks.empty());
     LOG_TEST_LIST("parts", parts, parts.empty());
     LOG_TEST_BOOL("by_acct", by_acct);

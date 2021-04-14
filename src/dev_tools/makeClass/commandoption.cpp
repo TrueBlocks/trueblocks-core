@@ -647,13 +647,15 @@ extern const char* STR_DEBUG_DISPLAY_LIST;
 //---------------------------------------------------------------------------------------------------
 string_q CCommandOption::debugCode(void) const {
     string_q fmt = isBool ? STR_DEBUG_DISPLAY_BOOL : isList ? STR_DEBUG_DISPLAY_LIST : STR_DEBUG_DISPLAY;
-    if (data_type == "list<addr>")
-        replaceAll(fmt, "LOG_", "// LOG_");
     // if (contains(data_type, "list<blknum>"))
     //     replaceAll(fmt, "[{COMMAND}]", "blocks");
     // if (contains(data_type, "list<tx_id>"))
     //     replaceAll(fmt, "[{COMMAND}]", "transList");
-    if (contains(data_type, "list<blknum>") || contains(data_type, "list<tx_id>"))
+    if (command == "addrs2")
+        replaceAll(fmt, "[{COMMAND}]", "addrs");
+    if (contains(data_type, "list<blknum>"))
+        replaceAll(fmt, "LOG_", "// LOG_");
+    if (contains(data_type, "list<tx_id>"))
         replaceAll(fmt, "LOG_", "// LOG_");
     return Format(fmt);
 }

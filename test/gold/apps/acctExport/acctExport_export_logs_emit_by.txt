@@ -1,8 +1,12 @@
 acctExport argc: 12 [1:0xf503017d7baf7fbc0fff7492b751025c6a78179b] [2:--logs] [3:--fmt] [4:csv] [5:--start] [6:10277780] [7:--end] [8:10279650] [9:--articulate] [10:--emitted_by] [11:0x7d655c57f71464b6f83811c55d84009cd9f5221c] 
 acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --logs --fmt csv --start 10277780 --end 10279650 --articulate --emitted_by 0x7d655c57f71464b6f83811c55d84009cd9f5221c 
+TIME ~ CLOCK - <INFO>  : addrs
+TIME ~ CLOCK - <INFO>  :   0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TIME ~ CLOCK - <INFO>  : logs: true
 TIME ~ CLOCK - <INFO>  : articulate: true
 TIME ~ CLOCK - <INFO>  : skip_ddos: true
+TIME ~ CLOCK - <INFO>  : emitted_by
+TIME ~ CLOCK - <INFO>  :   0x7d655c57f71464b6f83811c55d84009cd9f5221c
 TIME ~ CLOCK - <INFO>  : Monitor found for: 0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TIME ~ CLOCK - <INFO>  : Last visited block: 11854827
 TIME ~ CLOCK - <INFO>  : stats.nFiles: --value--

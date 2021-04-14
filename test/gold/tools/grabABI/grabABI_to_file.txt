@@ -1,3 +1,5 @@
 grabABI argc: 5 [1:0xe94327d07fc17907b4db788e5adf2ed424addff6] [2:--fmt] [3:json] [4:--to_file] 
 grabABI 0xe94327d07fc17907b4db788e5adf2ed424addff6 --fmt json --to_file 
+TIME ~ CLOCK - <INFO>  : addrs
+TIME ~ CLOCK - <INFO>  :   0xe94327d07fc17907b4db788e5adf2ed424addff6
 { "outputFilename": "--output_filename--" }

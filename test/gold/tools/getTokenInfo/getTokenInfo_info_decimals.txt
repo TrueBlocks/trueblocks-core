@@ -1,5 +1,7 @@
 getTokenInfo argc: 4 [1:0xd26114cd6ee289accf82350c8d8487fedb8a0c07] [2:--parts] [3:decimals] 
 getTokenInfo 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 --parts decimals 
+TIME ~ CLOCK - <INFO>  : addrs
+TIME ~ CLOCK - <INFO>  :   0xd26114cd6ee289accf82350c8d8487fedb8a0c07
 TIME ~ CLOCK - <INFO>  : parts
 TIME ~ CLOCK - <INFO>  :   decimals
 address	decimals

@@ -1,5 +1,7 @@
 ethslurp argc: 5 [1:0x00a3819199113fc6a6e6ba1298afde7377e2009b] [2:--types] [3:nfts] [4:0-8500000] 
 ethslurp 0x00a3819199113fc6a6e6ba1298afde7377e2009b --types nfts 0-8500000 
+TIME ~ CLOCK - <INFO>  : addrs
+TIME ~ CLOCK - <INFO>  :   0x00a3819199113fc6a6e6ba1298afde7377e2009b
 TIME ~ CLOCK - <INFO>  : types
 TIME ~ CLOCK - <INFO>  :   nfts
 Processing: 0x00a3819199113fc6a6e6ba1298afde7377e2009b --types:nfts 0-8500000
