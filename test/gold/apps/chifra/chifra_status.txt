@@ -4,6 +4,8 @@ TIME ~ CLOCK - <INFO>  : mode: status
 chifra status argc: 2 [1:all] 
 chifra status all 
 PROG_NAME = [chifra status]
+TIME ~ CLOCK - <INFO>  : modes
+TIME ~ CLOCK - <INFO>  :   all
 {
   "client_version": "Client version",
   "client_ids": "chainId: 1 networkId: 1",

@@ -1,5 +1,7 @@
 whenBlock argc: 5 [1:23123] [2:--list] [3:--fmt] [4:txt] 
 whenBlock 23123 --list --fmt txt 
+TIME ~ CLOCK - <INFO>  : block_list
+TIME ~ CLOCK - <INFO>  :   23123
 TIME ~ CLOCK - <INFO>  : list: true
 blocknumber	timestamp	date	name
 23123	1438539649	2015-08-02 18:20:49 UTC

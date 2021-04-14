@@ -1,6 +1,12 @@
 cacheStatus argc: 7 [1:--details] [2:abis] [3:caches] [4:monitors] [5:--types] [6:slurps] 
 cacheStatus --details abis caches monitors --types slurps 
+TIME ~ CLOCK - <INFO>  : modes
+TIME ~ CLOCK - <INFO>  :   abis
+TIME ~ CLOCK - <INFO>  :   caches
+TIME ~ CLOCK - <INFO>  :   monitors
 TIME ~ CLOCK - <INFO>  : details: true
+TIME ~ CLOCK - <INFO>  : types
+TIME ~ CLOCK - <INFO>  :   slurps
 {
   "client_version": "Client version",
   "client_ids": "chainId: 1 networkId: 1",

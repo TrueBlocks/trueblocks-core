@@ -208,6 +208,11 @@ typedef enum { UNTIMED = 0, HOURLY, DAILY, WEEKLY, MONTHLY, QUARTERLY, ANNUALLY 
 class CToml;
 extern const CToml* getGlobalConfig(const string_q& name = "");
 
+inline bool listBlocks(uint64_t bn, void* data) {
+    CUintArray* array = (CUintArray*)data;
+    array->push_back(bn);
+    return true;
+}
 class COptionsBlockList {
   public:
     CBlockNumArray numList;
@@ -224,8 +229,18 @@ class COptionsBlockList {
     string_q parseBlockList_inner(const string_q& arg, blknum_t latest);
     COptionsBlockList(void);
     bool forEveryBlockNumber(UINT64VISITFUNC func, void*) const;
-    bool hasBlocks(void) const {
-        return (hashList.size() || numList.size() || (start != stop));
+    bool empty(void) const {
+        return !(hashList.size() || numList.size() || (start != stop));
+    }
+    size_t size(void) const {
+        CUintArray nums;
+        forEveryBlockNumber(listBlocks, &nums);
+        return nums.size();
+    }
+    uint64_t operator[](size_t offset) const {
+        CUintArray nums;
+        forEveryBlockNumber(listBlocks, &nums);
+        return nums[offset];
     }
     bool isInRange(blknum_t bn) const;
     blknum_t parseBlockOption(string_q& msg, blknum_t lastBlock, direction_t offset, bool& hasZero) const;
@@ -238,9 +253,17 @@ class COptionsTransList {
     string_q parseTransList(const string_q& arg);
     COptionsTransList(void);
     string_q int_2_Str(void) const;
-    bool hasTrans(void) const {
-        return !queries.empty();
+    bool empty(void) const {
+        return queries.empty();
     }
+    size_t size(void) const {
+        return countOf(queries, '|');
+    }
+    string_q operator[](size_t offset) const {
+        CStringArray parts;
+        explode(parts, queries, '|');
+        return parts[offset];
+    };
 };
 
 extern bool prepareEnv(int argc, const char* argv[]);

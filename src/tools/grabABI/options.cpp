@@ -78,7 +78,7 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     // BEG_DEBUG_DISPLAY
-    // LOG_TEST("addrs", addrs, (addrs == NOPOS));
+    // LOG_TEST_LIST("addrs", addrs, addrs.empty());
     LOG_TEST_BOOL("canonical", canonical);
     LOG_TEST_BOOL("known", known);
     LOG_TEST("sol", sol, (sol == ""));

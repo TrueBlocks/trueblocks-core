@@ -233,6 +233,17 @@ extern logger<log_policy_i>* eLogger;
         if ((b))                                                                                                       \
             LOG_TEST((a), "true", false)                                                                               \
     }
+#define LOG_TEST_LIST(a, b, is_default)                                                                                \
+    {                                                                                                                  \
+        if (isTestMode() && !(is_default)) {                                                                           \
+            LOG_INFO((a));                                                                                             \
+            for (size_t i = 0; i < (b).size(); i++) {                                                                  \
+                ostringstream os;                                                                                      \
+                os << (b)[i];                                                                                          \
+                LOG_INFO("  " + (os.str()));                                                                           \
+            }                                                                                                          \
+        }                                                                                                              \
+    }
 #define LOG_MARKER(l)                                                                                                  \
     LOG_INFO("\n");                                                                                                    \
     LOG_INFO(string_q((l), '-'));
@@ -256,6 +267,7 @@ extern logger<log_policy_i>* eLogger;
 #define LOG_CALL(a)
 #define LOG_TEST(a, b)
 #define LOG_TEST_BOOL(a, b)
+#define LOG_TEST_LIST(a, b, is_default)
 #define LOG_MARKER(l)
 #endif
 

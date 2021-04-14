@@ -83,7 +83,7 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     // BEG_DEBUG_DISPLAY
-    // LOG_TEST("block_list", block_list, (block_list == NOPOS));
+    LOG_TEST_LIST("block_list", block_list, block_list.empty());
     LOG_TEST_BOOL("list", list);
     LOG_TEST_BOOL("timestamps", timestamps);
     LOG_TEST("skip", skip, (skip == NOPOS));

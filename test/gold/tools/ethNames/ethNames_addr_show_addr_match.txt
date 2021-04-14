@@ -1,5 +1,7 @@
 ethNames argc: 3 [1:0xb6] [2:--addr] 
 ethNames 0xb6 --addr 
+TIME ~ CLOCK - <INFO>  : terms
+TIME ~ CLOCK - <INFO>  :   0xb6
 TIME ~ CLOCK - <INFO>  : addr: true
 0xb618f903ad1d00d6f7b92f5b0954dcdc056fc533
 0xb61a98a0e542dcea1da7c44c2e8017373b95d350

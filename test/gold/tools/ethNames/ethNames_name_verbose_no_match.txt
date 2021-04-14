@@ -1,3 +1,5 @@
 ethNames argc: 5 [1:no_torj] [2:--verbose] [3:--fmt] [4:txt] 
 ethNames no_torj --verbose --fmt txt 
+TIME ~ CLOCK - <INFO>  : terms
+TIME ~ CLOCK - <INFO>  :   no_torj
 No results for no_torj --verbose:1

@@ -1,5 +1,8 @@
 whenBlock argc: 3 [1:2017-03-02] [2:123123] 
 whenBlock 2017-03-02 123123 
+TIME ~ CLOCK - <INFO>  : block_list
+TIME ~ CLOCK - <INFO>  :   2017-03-02
+TIME ~ CLOCK - <INFO>  :   123123
 blocknumber	timestamp	date	name
 3275145	1488412793	2017-03-01 23:59:53 UTC
 123123	1440206412	2015-08-22 01:20:12 UTC

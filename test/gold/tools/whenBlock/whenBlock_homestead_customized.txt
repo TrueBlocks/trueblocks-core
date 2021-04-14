@@ -1,5 +1,7 @@
 whenBlock argc: 5 [1:homestead] [2:--verbose] [3:--fmt] [4:json] 
 whenBlock homestead --verbose --fmt json 
+TIME ~ CLOCK - <INFO>  : block_list
+TIME ~ CLOCK - <INFO>  :   homestead
 { "data": [
   {
     "blockNumber": 1150000,

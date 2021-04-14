@@ -100,7 +100,7 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     // BEG_DEBUG_DISPLAY
-    // LOG_TEST("blocks", blocks, (blocks == NOPOS));
+    // LOG_TEST_LIST("blocks", blocks, blocks.empty());
     LOG_TEST_BOOL("hashes_only", hashes_only);
     LOG_TEST_BOOL("apps", apps);
     LOG_TEST_BOOL("uniq", uniq);
@@ -134,7 +134,7 @@ bool COptions::parseArguments(string_q& command) {
     if (trace && hashes_only)
         return usage("The --hashes_only and --trace options are exclusive.");
 
-    if (!blocks.hasBlocks())
+    if (blocks.empty())
         return usage("You must specify at least one block.");
 
     secsFinal =

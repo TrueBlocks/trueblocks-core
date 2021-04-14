@@ -121,7 +121,7 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     // BEG_DEBUG_DISPLAY
-    // LOG_TEST("files", files, (files == NOPOS));
+    LOG_TEST_LIST("files", files, files.empty());
     LOG_TEST_BOOL("run", run);
     LOG_TEST_BOOL("edit", edit);
     LOG_TEST_BOOL("all", all);

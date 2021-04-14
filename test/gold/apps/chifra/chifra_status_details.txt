@@ -4,6 +4,8 @@ TIME ~ CLOCK - <INFO>  : mode: status
 chifra status argc: 7 [1:all] [2:--details] [3:--start] [4:1400000] [5:--end] [6:2000000] 
 chifra status all --details --start 1400000 --end 2000000 
 PROG_NAME = [chifra status]
+TIME ~ CLOCK - <INFO>  : modes
+TIME ~ CLOCK - <INFO>  :   all
 TIME ~ CLOCK - <INFO>  : details: true
 TIME ~ CLOCK - <INFO>  : start: 1400000
 TIME ~ CLOCK - <INFO>  : end: 2000000

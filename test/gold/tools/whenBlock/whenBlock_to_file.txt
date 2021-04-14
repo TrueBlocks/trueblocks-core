@@ -1,3 +1,5 @@
 whenBlock argc: 5 [1:1001001] [2:--fmt] [3:json] [4:--to_file] 
 whenBlock 1001001 --fmt json --to_file 
+TIME ~ CLOCK - <INFO>  : block_list
+TIME ~ CLOCK - <INFO>  :   1001001
 { "outputFilename": "--output_filename--" }

@@ -1,5 +1,7 @@
 getTokenInfo argc: 8 [1:0xd26114cd6ee289accf82350c8d8487fedb8a0c07] [2:0xb9e7f8568e08d5659f5d29c4997173d84cdf2607] [3:--parts] [4:symbol] [5:4001001-4001002] [6:--fmt] [7:json] 
 getTokenInfo 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 --parts symbol 4001001-4001002 --fmt json 
+TIME ~ CLOCK - <INFO>  : parts
+TIME ~ CLOCK - <INFO>  :   symbol
 { "data": [
   {
     "blockNumber": 4001001,

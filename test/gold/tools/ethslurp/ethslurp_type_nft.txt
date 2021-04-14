@@ -1,5 +1,7 @@
 ethslurp argc: 5 [1:0x00a3819199113fc6a6e6ba1298afde7377e2009b] [2:--types] [3:nfts] [4:0-8500000] 
 ethslurp 0x00a3819199113fc6a6e6ba1298afde7377e2009b --types nfts 0-8500000 
+TIME ~ CLOCK - <INFO>  : types
+TIME ~ CLOCK - <INFO>  :   nfts
 Processing: 0x00a3819199113fc6a6e6ba1298afde7377e2009b --types:nfts 0-8500000
 	Slurping 0x00a3819199113fc6a6e6ba1298afde7377e2009b
                                                                                                                         0x6a5b97eaab251f4ced6858004f701b70a6a8244cca0eb5b7899f9d3ad3539b70	0x8bf4c00ee96191ad067f09f01a0d95a4c67b114dee00d8b7990a706cc76935b8	8302300	211	58	1565164861	0x0	0x00a3819199113fc6a6e6ba1298afde7377e2009b	0	171980	5000000000	deprecated	0	1	85990	2019-08-07 08:01:01 UTC	0.000000000000000000

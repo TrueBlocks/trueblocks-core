@@ -102,7 +102,7 @@ bool COptions::parseArguments(string_q& command) {
 
     // BEG_DEBUG_DISPLAY
     LOG_TEST("mode", mode, (mode == ""));
-    // LOG_TEST("tool", tool, (tool == ""));
+    LOG_TEST_LIST("tool", tool, tool.empty());
     LOG_TEST("n_blocks", n_blocks, (n_blocks == (isDockerMode() ? 100 : 2000)));
     LOG_TEST("n_block_procs", n_block_procs, (n_block_procs == (isDockerMode() ? 5 : 10)));
     LOG_TEST("n_addr_procs", n_addr_procs, (n_addr_procs == (isDockerMode() ? 10 : 20)));

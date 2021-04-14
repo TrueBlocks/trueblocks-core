@@ -1,5 +1,7 @@
 whenBlock argc: 2 [1:idonotexist] 
 whenBlock idonotexist 
+TIME ~ CLOCK - <INFO>  : block_list
+TIME ~ CLOCK - <INFO>  :   idonotexist
 
   The given value 'idonotexist' is not a numeral or a special named block.
 

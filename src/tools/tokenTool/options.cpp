@@ -77,7 +77,7 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     // BEG_DEBUG_DISPLAY
-    // LOG_TEST("tokens", tokens, (tokens == NOPOS));
+    // LOG_TEST_LIST("tokens", tokens, tokens.empty());
     LOG_TEST_BOOL("reverse", reverse);
     LOG_TEST("start", start, (start == 0));
     LOG_TEST("bucket", bucket, (bucket == 100));

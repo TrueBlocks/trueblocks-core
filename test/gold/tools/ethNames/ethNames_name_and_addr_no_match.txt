@@ -1,3 +1,6 @@
 ethNames argc: 5 [1:0x01] [2:torj] [3:--fmt] [4:txt] 
 ethNames 0x01 torj --fmt txt 
+TIME ~ CLOCK - <INFO>  : terms
+TIME ~ CLOCK - <INFO>  :   0x01
+TIME ~ CLOCK - <INFO>  :   torj
 No results for 0x01 torj

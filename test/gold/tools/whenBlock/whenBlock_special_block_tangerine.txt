@@ -1,4 +1,6 @@
 whenBlock argc: 3 [1:tangerine] [2:--verbose] 
 whenBlock tangerine --verbose 
+TIME ~ CLOCK - <INFO>  : block_list
+TIME ~ CLOCK - <INFO>  :   tangerine
 blocknumber	timestamp	date	name
 2463000	1476796771	2016-10-18 13:19:31 UTC	tangerine

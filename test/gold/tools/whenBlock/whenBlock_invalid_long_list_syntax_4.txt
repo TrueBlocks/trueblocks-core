@@ -1,5 +1,7 @@
 whenBlock argc: 3 [1:2015-03-02] [2:--list] 
 whenBlock 2015-03-02 --list 
+TIME ~ CLOCK - <INFO>  : block_list
+TIME ~ CLOCK - <INFO>  :   2015-03-02
 TIME ~ CLOCK - <INFO>  : list: true
 
   The date you specified (2015-03-02) is before the first block. Quitting...

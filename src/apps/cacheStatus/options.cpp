@@ -102,9 +102,9 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     // BEG_DEBUG_DISPLAY
-    // LOG_TEST("modes", modes, (modes == ""));
+    LOG_TEST_LIST("modes", modes, modes.empty());
     LOG_TEST_BOOL("details", details);
-    // LOG_TEST("types", types, (types == ""));
+    LOG_TEST_LIST("types", types, types.empty());
     LOG_TEST("depth", depth, (depth == NOPOS));
     LOG_TEST_BOOL("report", report);
     LOG_TEST_BOOL("terse", terse);

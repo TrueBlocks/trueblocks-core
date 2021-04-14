@@ -1,3 +1,5 @@
 cacheStatus argc: 3 [1:names] [2:--to_file] 
 cacheStatus names --to_file 
+TIME ~ CLOCK - <INFO>  : modes
+TIME ~ CLOCK - <INFO>  :   names
 --output_filename--

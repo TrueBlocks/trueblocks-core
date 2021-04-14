@@ -1,5 +1,7 @@
 blockScrape argc: 5 [1:--tool] [2:index] [3:--sleep] [4:.5] 
 blockScrape --tool index --sleep .5 
+TIME ~ CLOCK - <INFO>  : tool
+TIME ~ CLOCK - <INFO>  :   index
 TIME ~ CLOCK - <INFO>  : sleep: 0.5
 TIME ~ CLOCK - : 8------Current state stopped.
 { "status": "running" }

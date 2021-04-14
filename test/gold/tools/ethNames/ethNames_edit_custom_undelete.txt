@@ -1,5 +1,7 @@
 ethNames argc: 8 [1:--undelete] [2:0xbc62985faabed27a8f174cbd5ea1ee7b1ed8fc12] [3:--expand] [4:--verbose] [5:10] [6:--to_custom] [7:--all] 
 ethNames --undelete 0xbc62985faabed27a8f174cbd5ea1ee7b1ed8fc12 --expand --verbose 10 --to_custom --all 
+TIME ~ CLOCK - <INFO>  : terms
+TIME ~ CLOCK - <INFO>  :   0xbc62985faabed27a8f174cbd5ea1ee7b1ed8fc12
 TIME ~ CLOCK - <INFO>  : expand: true
 TIME ~ CLOCK - <INFO>  : all: true
 TIME ~ CLOCK - <INFO>  : to_custom: true

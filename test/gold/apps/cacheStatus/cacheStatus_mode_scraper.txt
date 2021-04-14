@@ -1,5 +1,7 @@
 cacheStatus argc: 2 [1:index] 
 cacheStatus index 
+TIME ~ CLOCK - <INFO>  : modes
+TIME ~ CLOCK - <INFO>  :   index
 {
   "client_version": "Client version",
   "client_ids": "chainId: 1 networkId: 1",

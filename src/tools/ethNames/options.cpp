@@ -127,7 +127,7 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     // BEG_DEBUG_DISPLAY
-    // LOG_TEST("terms", terms, (terms == NOPOS));
+    LOG_TEST_LIST("terms", terms, terms.empty());
     LOG_TEST_BOOL("expand", expand);
     LOG_TEST_BOOL("match_case", match_case);
     LOG_TEST_BOOL("all", all);

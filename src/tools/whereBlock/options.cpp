@@ -62,14 +62,14 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     // BEG_DEBUG_DISPLAY
-    // LOG_TEST("blocks", blocks, (blocks == NOPOS));
+    // LOG_TEST_LIST("blocks", blocks, blocks.empty());
     // END_DEBUG_DISPLAY
 
     if (Mocked(""))
         return false;
 
     // Data verifiction
-    if (!blocks.hasBlocks())
+    if (blocks.empty())
         return usage("You must enter a valid block number.");
 
     // Display formatting

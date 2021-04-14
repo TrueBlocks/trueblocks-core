@@ -80,9 +80,9 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     // BEG_DEBUG_DISPLAY
-    // LOG_TEST("addrs2", addrs2, (addrs2 == NOPOS));
-    // LOG_TEST("blocks", blocks, (blocks == NOPOS));
-    // LOG_TEST("parts", parts, (parts == ""));
+    // LOG_TEST_LIST("addrs2", addrs2, addrs2.empty());
+    // LOG_TEST_LIST("blocks", blocks, blocks.empty());
+    LOG_TEST_LIST("parts", parts, parts.empty());
     LOG_TEST_BOOL("by_acct", by_acct);
     LOG_TEST_BOOL("no_zero", no_zero);
     // END_DEBUG_DISPLAY
@@ -91,7 +91,7 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
     bool userBlocks = true;
-    if (!blocks.hasBlocks()) {
+    if (blocks.empty()) {
         blocks.numList.push_back(newestBlock);  // use 'latest'
         userBlocks = false;
     }

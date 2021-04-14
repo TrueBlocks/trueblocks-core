@@ -1,4 +1,6 @@
 ethNames argc: 7 [1:0x0000000000000000000000000000000010101010] [2:--expand] [3:--verbose] [4:10] [5:--fmt] [6:api] 
 ethNames 0x0000000000000000000000000000000010101010 --expand --verbose 10 --fmt api 
+TIME ~ CLOCK - <INFO>  : terms
+TIME ~ CLOCK - <INFO>  :   0x0000000000000000000000000000000010101010
 TIME ~ CLOCK - <INFO>  : expand: true
 { "data": [ ], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef", "namePath": "--" } }

@@ -1,4 +1,6 @@
 whenBlock argc: 3 [1:10000] [2:--verbose] 
 whenBlock 10000 --verbose 
+TIME ~ CLOCK - <INFO>  : block_list
+TIME ~ CLOCK - <INFO>  :   10000
 blocknumber	timestamp	date	name
 10000	1438334627	2015-07-31 09:23:47 UTC

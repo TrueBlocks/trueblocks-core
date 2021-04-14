@@ -1,5 +1,7 @@
 blockScrape argc: 3 [1:--tool] [2:both] 
 blockScrape --tool both 
+TIME ~ CLOCK - <INFO>  : tool
+TIME ~ CLOCK - <INFO>  :   both
 TIME ~ CLOCK - : 8------Current state stopped.
 { "status": "running" }
 TIME ~ CLOCK - : 4-----changing state: stopped --> running

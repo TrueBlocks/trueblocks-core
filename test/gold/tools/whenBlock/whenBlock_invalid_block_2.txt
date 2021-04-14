@@ -1,5 +1,7 @@
 whenBlock argc: 2 [1:1ppppppp] 
 whenBlock 1ppppppp 
+TIME ~ CLOCK - <INFO>  : block_list
+TIME ~ CLOCK - <INFO>  :   1ppppppp
 
   The given value '1ppppppp' is not a numeral or a special named block.
 

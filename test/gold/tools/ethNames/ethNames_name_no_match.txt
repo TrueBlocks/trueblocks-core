@@ -1,3 +1,5 @@
 ethNames argc: 4 [1:torj_no_found] [2:--fmt] [3:txt] 
 ethNames torj_no_found --fmt txt 
+TIME ~ CLOCK - <INFO>  : terms
+TIME ~ CLOCK - <INFO>  :   torj_no_found
 No results for torj_no_found

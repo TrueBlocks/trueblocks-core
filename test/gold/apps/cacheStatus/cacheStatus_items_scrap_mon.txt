@@ -1,5 +1,7 @@
 cacheStatus argc: 7 [1:--details] [2:index] [3:--start] [4:1000000] [5:--end] [6:2200000] 
 cacheStatus --details index --start 1000000 --end 2200000 
+TIME ~ CLOCK - <INFO>  : modes
+TIME ~ CLOCK - <INFO>  :   index
 TIME ~ CLOCK - <INFO>  : details: true
 TIME ~ CLOCK - <INFO>  : start: 1000000
 TIME ~ CLOCK - <INFO>  : end: 2200000

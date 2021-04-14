@@ -75,9 +75,9 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     // BEG_DEBUG_DISPLAY
-    // LOG_TEST("addrs", addrs, (addrs == NOPOS));
-    // LOG_TEST("blocks", blocks, (blocks == NOPOS));
-    // LOG_TEST("types", types, (types == ""));
+    // LOG_TEST_LIST("addrs", addrs, addrs.empty());
+    // LOG_TEST_LIST("blocks", blocks, blocks.empty());
+    LOG_TEST_LIST("types", types, types.empty());
     LOG_TEST_BOOL("appearances", appearances);
     // END_DEBUG_DISPLAY
 

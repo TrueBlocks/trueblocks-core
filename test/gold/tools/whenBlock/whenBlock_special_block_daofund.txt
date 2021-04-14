@@ -1,4 +1,6 @@
 whenBlock argc: 3 [1:daofund] [2:--verbose] 
 whenBlock daofund --verbose 
+TIME ~ CLOCK - <INFO>  : block_list
+TIME ~ CLOCK - <INFO>  :   daofund
 blocknumber	timestamp	date	name
 1428756	1461980573	2016-04-30 01:42:53 UTC	daofund

@@ -168,8 +168,8 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     // BEG_DEBUG_DISPLAY
-    // LOG_TEST("addrs", addrs, (addrs == NOPOS));
-    // LOG_TEST("topics", topics, (topics == NOPOS));
+    // LOG_TEST_LIST("addrs", addrs, addrs.empty());
+    LOG_TEST_LIST("topics", topics, topics.empty());
     LOG_TEST_BOOL("appearances", appearances);
     LOG_TEST_BOOL("receipts", receipts);
     LOG_TEST_BOOL("logs", logs);
@@ -184,7 +184,7 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST_BOOL("freshen", freshen);
     LOG_TEST_BOOL("factory", factory);
     LOG_TEST_BOOL("emitter", emitter);
-    // LOG_TEST("emitted_by", emitted_by, (emitted_by == NOPOS));
+    // LOG_TEST_LIST("emitted_by", emitted_by, emitted_by.empty());
     LOG_TEST_BOOL("relevant", relevant);
     LOG_TEST_BOOL("count", count);
     LOG_TEST("first_record", first_record, (first_record == 0));

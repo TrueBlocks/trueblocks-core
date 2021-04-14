@@ -1,5 +1,7 @@
 getTokenInfo argc: 4 [1:0xd26114cd6ee289accf82350c8d8487fedb8a0c07] [2:--parts] [3:totalSupply] 
 getTokenInfo 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 --parts totalSupply 
+TIME ~ CLOCK - <INFO>  : parts
+TIME ~ CLOCK - <INFO>  :   totalSupply
 address	totalsupply
 TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
 TIME ~ CLOCK - <INFO>  : typeList: : 

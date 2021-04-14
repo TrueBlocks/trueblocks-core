@@ -84,9 +84,9 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     // BEG_DEBUG_DISPLAY
-    // LOG_TEST("addrs", addrs, (addrs == NOPOS));
-    // LOG_TEST("blocks", blocks, (blocks == NOPOS));
-    // LOG_TEST("parts", parts, (parts == ""));
+    // LOG_TEST_LIST("addrs", addrs, addrs.empty());
+    // LOG_TEST_LIST("blocks", blocks, blocks.empty());
+    LOG_TEST_LIST("parts", parts, parts.empty());
     LOG_TEST_BOOL("changes", changes);
     LOG_TEST_BOOL("no_zero", no_zero);
     LOG_TEST("call", call, (call == ""));
@@ -96,7 +96,7 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
     // Data wrangling
-    if (!blocks.hasBlocks())
+    if (blocks.empty())
         blocks.numList.push_back(newestBlock);  // use 'latest'
 
     if (!call.empty() && !parts.empty())

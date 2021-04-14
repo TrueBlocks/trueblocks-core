@@ -1,3 +1,6 @@
 ethNames argc: 6 [1:cbCD] [2:an.io] [3:--verbose] [4:--fmt] [5:txt] 
 ethNames cbCD an.io --verbose --fmt txt 
+TIME ~ CLOCK - <INFO>  : terms
+TIME ~ CLOCK - <INFO>  :   cbCD
+TIME ~ CLOCK - <INFO>  :   an.io
 No results for cbCD an.io --verbose:1

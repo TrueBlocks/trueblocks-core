@@ -1,5 +1,7 @@
 ethNames argc: 3 [1:tip] [2:--expand] 
 ethNames tip --expand 
+TIME ~ CLOCK - <INFO>  : terms
+TIME ~ CLOCK - <INFO>  :   tip
 TIME ~ CLOCK - <INFO>  : expand: true
 tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefund	is_contract	is_erc20	is_erc721
 31-Gitcoin Grants:Grant	0x133d705a9696882228f6bb7fe008745aef7cdc93	Grant 0160 @antiprosynth | Antiprosynthesis.eth ⟠ Twitter Account Activity		https://gitcoin.co/grants/160/antiprosynth-antiprosynthesiseth-twitter-account-			false	false	false	false	false	false

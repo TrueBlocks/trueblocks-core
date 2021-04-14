@@ -1,5 +1,7 @@
 cacheStatus argc: 4 [1:index] [2:--start] [3:100] 
 cacheStatus index --start 100 
+TIME ~ CLOCK - <INFO>  : modes
+TIME ~ CLOCK - <INFO>  :   index
 TIME ~ CLOCK - <INFO>  : start: 100
 {
   "client_version": "Client version",

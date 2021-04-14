@@ -1,5 +1,7 @@
 getTokenInfo argc: 7 [1:0x00000000441378008ea67f4284a57932b1c000a5] [2:--fmt] [3:json] [4:7442048] [5:--parts] [6:all] 
 getTokenInfo 0x00000000441378008ea67f4284a57932b1c000a5 --fmt json 7442048 --parts all 
+TIME ~ CLOCK - <INFO>  : parts
+TIME ~ CLOCK - <INFO>  :   all
 { "data": [
 TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
 TIME ~ CLOCK - <INFO>  : typeList: : 

@@ -1,4 +1,6 @@
 whenBlock argc: 2 [1:iceage] 
 whenBlock iceage 
+TIME ~ CLOCK - <INFO>  : block_list
+TIME ~ CLOCK - <INFO>  :   iceage
 blocknumber	timestamp	date	name
 200000	1441661589	2015-09-07 21:33:09 UTC	iceage
