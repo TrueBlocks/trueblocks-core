@@ -1,5 +1,11 @@
 whereBlock argc: 5 [1:1001001] [2:0xabcd] [3:2001001-2001005] [4:0xd19bc98080cd70951fad3951cef2d512e6334aa3c7e64a38985c955d4d2e273b] 
 whereBlock 1001001 0xabcd 2001001-2001005 0xd19bc98080cd70951fad3951cef2d512e6334aa3c7e64a38985c955d4d2e273b 
+TIME ~ CLOCK - <INFO>  : blocks
+TIME ~ CLOCK - <INFO>  :   2001001
+TIME ~ CLOCK - <INFO>  :   2001002
+TIME ~ CLOCK - <INFO>  :   2001003
+TIME ~ CLOCK - <INFO>  :   2001004
+TIME ~ CLOCK - <INFO>  :   more...
 blocknumber	path	cached
 43981	--nodeVersion--	false
 1001001	./blocks/00/10/01/001001001.bin	true

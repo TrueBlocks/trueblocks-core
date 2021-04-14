@@ -3,6 +3,9 @@ getTokenInfo 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xcfb98637bcae43c13323ea
 TIME ~ CLOCK - <INFO>  : addrs
 TIME ~ CLOCK - <INFO>  :   0xd26114cd6ee289accf82350c8d8487fedb8a0c07
 TIME ~ CLOCK - <INFO>  :   0xcfb98637bcae43c13323eaa1731ced2b716962fd
+TIME ~ CLOCK - <INFO>  : blocks
+TIME ~ CLOCK - <INFO>  :   3001001
+TIME ~ CLOCK - <INFO>  :   4401001
 blocknumber	holder	address	name	symbol	decimals	balance
 3001001	0xcfb98637bcae43c13323eaa1731ced2b716962fd	0xd26114cd6ee289accf82350c8d8487fedb8a0c07	OMGToken Airdrop	OMG	18	""
 4401001	0xcfb98637bcae43c13323eaa1731ced2b716962fd	0xd26114cd6ee289accf82350c8d8487fedb8a0c07	OMGToken Airdrop	OMG	18	"4088.288264252975075913"

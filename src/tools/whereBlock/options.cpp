@@ -62,7 +62,7 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     // BEG_DEBUG_DISPLAY
-    // LOG_TEST_LIST("blocks", blocks, blocks.empty());
+    LOG_TEST_LIST("blocks", blocks, blocks.empty());
     // END_DEBUG_DISPLAY
 
     if (Mocked(""))

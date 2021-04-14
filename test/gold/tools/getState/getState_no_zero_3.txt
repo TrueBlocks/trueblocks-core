@@ -2,6 +2,9 @@ getState argc: 5 [1:0xf27daff52c38b2c373ad2b9392652ddf433303c4] [2:0] [3:4000000
 getState 0xf27daff52c38b2c373ad2b9392652ddf433303c4 0 4000000 --no_zero 
 TIME ~ CLOCK - <INFO>  : addrs
 TIME ~ CLOCK - <INFO>  :   0xf27daff52c38b2c373ad2b9392652ddf433303c4
+TIME ~ CLOCK - <INFO>  : blocks
+TIME ~ CLOCK - <INFO>  :   0
+TIME ~ CLOCK - <INFO>  :   4000000
 TIME ~ CLOCK - <INFO>  : no_zero: true
 blocknumber	address	balance
 4000000	0xf27daff52c38b2c373ad2b9392652ddf433303c4	672784612482328644707614

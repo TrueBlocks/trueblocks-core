@@ -2,6 +2,12 @@ ethslurp argc: 5 [1:0x05a56e2d52c817161883f50c441c3228cfe54d9f] [2:--types] [3:m
 ethslurp 0x05a56e2d52c817161883f50c441c3228cfe54d9f --types miner 1-1000 
 TIME ~ CLOCK - <INFO>  : addrs
 TIME ~ CLOCK - <INFO>  :   0x05a56e2d52c817161883f50c441c3228cfe54d9f
+TIME ~ CLOCK - <INFO>  : blocks
+TIME ~ CLOCK - <INFO>  :   1
+TIME ~ CLOCK - <INFO>  :   2
+TIME ~ CLOCK - <INFO>  :   3
+TIME ~ CLOCK - <INFO>  :   4
+TIME ~ CLOCK - <INFO>  :   more...
 TIME ~ CLOCK - <INFO>  : types
 TIME ~ CLOCK - <INFO>  :   miner
 Processing: 0x05a56e2d52c817161883f50c441c3228cfe54d9f --types:miner 1-1000

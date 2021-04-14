@@ -81,7 +81,7 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     // BEG_DEBUG_DISPLAY
-    // LOG_TEST_LIST("transactions", transactions, transactions.empty());
+    LOG_TEST_LIST("transList", transList, transList.empty());
     LOG_TEST_BOOL("articulate", articulate);
     LOG_TEST_BOOL("statediff", statediff);
     LOG_TEST_BOOL("count", count);

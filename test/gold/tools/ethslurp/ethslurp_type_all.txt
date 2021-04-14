@@ -2,6 +2,12 @@ ethslurp argc: 5 [1:0x1324e7b922b30B49Ab8EA81086341cc41C249346] [2:--types] [3:a
 ethslurp 0x1324e7b922b30B49Ab8EA81086341cc41C249346 --types all 0-3793420 
 TIME ~ CLOCK - <INFO>  : addrs
 TIME ~ CLOCK - <INFO>  :   0x1324e7b922b30b49ab8ea81086341cc41c249346
+TIME ~ CLOCK - <INFO>  : blocks
+TIME ~ CLOCK - <INFO>  :   0
+TIME ~ CLOCK - <INFO>  :   1
+TIME ~ CLOCK - <INFO>  :   2
+TIME ~ CLOCK - <INFO>  :   3
+TIME ~ CLOCK - <INFO>  :   more...
 TIME ~ CLOCK - <INFO>  : types
 TIME ~ CLOCK - <INFO>  :   all
 Processing: 0x1324e7b922b30B49Ab8EA81086341cc41C249346 --types:all 0-3793420

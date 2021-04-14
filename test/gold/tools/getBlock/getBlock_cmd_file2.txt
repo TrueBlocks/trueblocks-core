@@ -1,5 +1,7 @@
 getBlock argc: 3 [1:--file:cmd_file2] [2:--cache] 
 getBlock --file:cmd_file2 --cache 
+TIME ~ CLOCK - <INFO>  : blocks
+TIME ~ CLOCK - <INFO>  :   92590
 TIME ~ CLOCK - <INFO>  : cache: true
 { "data": [
 {
@@ -12,7 +14,9 @@ TIME ~ CLOCK - <INFO>  : cache: true
   "difficulty": 3535435273529,
   "finalized": true,
   "timestamp": 1439674369
-}TIME ~ CLOCK - <INFO>  : cache: true
+}TIME ~ CLOCK - <INFO>  : blocks
+TIME ~ CLOCK - <INFO>  :   141245
+TIME ~ CLOCK - <INFO>  : cache: true
 ,
 {
   "gasLimit": 3141592,
@@ -24,7 +28,9 @@ TIME ~ CLOCK - <INFO>  : cache: true
   "difficulty": 5027618839306,
   "finalized": true,
   "timestamp": 1440511996
-}TIME ~ CLOCK - <INFO>  : cache: true
+}TIME ~ CLOCK - <INFO>  : blocks
+TIME ~ CLOCK - <INFO>  :   158858
+TIME ~ CLOCK - <INFO>  : cache: true
 ,
 {
   "gasLimit": 3141592,
@@ -36,7 +42,9 @@ TIME ~ CLOCK - <INFO>  : cache: true
   "difficulty": 6585165874233,
   "finalized": true,
   "timestamp": 1440826383
-}TIME ~ CLOCK - <INFO>  : cache: true
+}TIME ~ CLOCK - <INFO>  : blocks
+TIME ~ CLOCK - <INFO>  :   289897
+TIME ~ CLOCK - <INFO>  : cache: true
 ,
 {
   "gasLimit": 3141592,
@@ -48,7 +56,9 @@ TIME ~ CLOCK - <INFO>  : cache: true
   "difficulty": 7089068477500,
   "finalized": true,
   "timestamp": 1443211927
-}TIME ~ CLOCK - <INFO>  : cache: true
+}TIME ~ CLOCK - <INFO>  : blocks
+TIME ~ CLOCK - <INFO>  :   381094
+TIME ~ CLOCK - <INFO>  : cache: true
 ,
 {
   "gasLimit": 3141592,
@@ -60,7 +70,9 @@ TIME ~ CLOCK - <INFO>  : cache: true
   "difficulty": 6494932654393,
   "finalized": true,
   "timestamp": 1444799304
-}TIME ~ CLOCK - <INFO>  : cache: true
+}TIME ~ CLOCK - <INFO>  : blocks
+TIME ~ CLOCK - <INFO>  :   394557
+TIME ~ CLOCK - <INFO>  : cache: true
 ,
 {
   "gasLimit": 3141592,
@@ -72,7 +84,9 @@ TIME ~ CLOCK - <INFO>  : cache: true
   "difficulty": 5792849968684,
   "finalized": true,
   "timestamp": 1445036868
-}TIME ~ CLOCK - <INFO>  : cache: true
+}TIME ~ CLOCK - <INFO>  : blocks
+TIME ~ CLOCK - <INFO>  :   442738
+TIME ~ CLOCK - <INFO>  : cache: true
 ,
 {
   "gasLimit": 3141592,
@@ -84,7 +98,9 @@ TIME ~ CLOCK - <INFO>  : cache: true
   "difficulty": 6510650687506,
   "finalized": true,
   "timestamp": 1445864379
-}TIME ~ CLOCK - <INFO>  : cache: true
+}TIME ~ CLOCK - <INFO>  : blocks
+TIME ~ CLOCK - <INFO>  :   477644
+TIME ~ CLOCK - <INFO>  : cache: true
 ,
 {
   "gasLimit": 3141592,
@@ -96,7 +112,9 @@ TIME ~ CLOCK - <INFO>  : cache: true
   "difficulty": 7828374427132,
   "finalized": true,
   "timestamp": 1446452690
-}TIME ~ CLOCK - <INFO>  : cache: true
+}TIME ~ CLOCK - <INFO>  : blocks
+TIME ~ CLOCK - <INFO>  :   599852
+TIME ~ CLOCK - <INFO>  : cache: true
 ,
 {
   "gasLimit": 3141592,
@@ -132,7 +150,9 @@ TIME ~ CLOCK - <INFO>  : cache: true
       "gasUsed": 21000
     }
   ]
-}TIME ~ CLOCK - <INFO>  : cache: true
+}TIME ~ CLOCK - <INFO>  : blocks
+TIME ~ CLOCK - <INFO>  :   635557
+TIME ~ CLOCK - <INFO>  : cache: true
 ,
 {
   "gasLimit": 3141592,
@@ -168,7 +188,9 @@ TIME ~ CLOCK - <INFO>  : cache: true
       "gasUsed": 21000
     }
   ]
-}TIME ~ CLOCK - <INFO>  : cache: true
+}TIME ~ CLOCK - <INFO>  : blocks
+TIME ~ CLOCK - <INFO>  :   640798
+TIME ~ CLOCK - <INFO>  : cache: true
 ,
 {
   "gasLimit": 3141592,
@@ -180,7 +202,9 @@ TIME ~ CLOCK - <INFO>  : cache: true
   "difficulty": 7760507970649,
   "finalized": true,
   "timestamp": 1449247432
-}TIME ~ CLOCK - <INFO>  : cache: true
+}TIME ~ CLOCK - <INFO>  : blocks
+TIME ~ CLOCK - <INFO>  :   723006
+TIME ~ CLOCK - <INFO>  : cache: true
 ,
 {
   "gasLimit": 3141592,
@@ -192,7 +216,9 @@ TIME ~ CLOCK - <INFO>  : cache: true
   "difficulty": 8640284807276,
   "finalized": true,
   "timestamp": 1450655797
-}TIME ~ CLOCK - <INFO>  : cache: true
+}TIME ~ CLOCK - <INFO>  : blocks
+TIME ~ CLOCK - <INFO>  :   798397
+TIME ~ CLOCK - <INFO>  : cache: true
 ,
 {
   "gasLimit": 3141592,
@@ -228,7 +254,9 @@ TIME ~ CLOCK - <INFO>  : cache: true
       "gasUsed": 21000
     }
   ]
-}TIME ~ CLOCK - <INFO>  : cache: true
+}TIME ~ CLOCK - <INFO>  : blocks
+TIME ~ CLOCK - <INFO>  :   851731
+TIME ~ CLOCK - <INFO>  : cache: true
 ,
 {
   "gasLimit": 3141592,
@@ -264,7 +292,9 @@ TIME ~ CLOCK - <INFO>  : cache: true
       "gasUsed": 21000
     }
   ]
-}TIME ~ CLOCK - <INFO>  : cache: true
+}TIME ~ CLOCK - <INFO>  : blocks
+TIME ~ CLOCK - <INFO>  :   1025677
+TIME ~ CLOCK - <INFO>  : cache: true
 ,
 {
   "gasLimit": 3141592,
@@ -322,7 +352,9 @@ TIME ~ CLOCK - <INFO>  : cache: true
       "gasUsed": 21000
     }
   ]
-}TIME ~ CLOCK - <INFO>  : cache: true
+}TIME ~ CLOCK - <INFO>  : blocks
+TIME ~ CLOCK - <INFO>  :   1026962
+TIME ~ CLOCK - <INFO>  : cache: true
 ,
 {
   "gasLimit": 3141592,
@@ -577,7 +609,9 @@ TIME ~ CLOCK - <INFO>  : cache: true
       "gasUsed": 165222
     }
   ]
-}TIME ~ CLOCK - <INFO>  : cache: true
+}TIME ~ CLOCK - <INFO>  : blocks
+TIME ~ CLOCK - <INFO>  :   1078767
+TIME ~ CLOCK - <INFO>  : cache: true
 ,
 {
   "gasLimit": 3141592,
@@ -711,7 +745,9 @@ TIME ~ CLOCK - <INFO>  : cache: true
       "gasUsed": 21000
     }
   ]
-}TIME ~ CLOCK - <INFO>  : cache: true
+}TIME ~ CLOCK - <INFO>  : blocks
+TIME ~ CLOCK - <INFO>  :   1152642
+TIME ~ CLOCK - <INFO>  : cache: true
 ,
 {
   "gasLimit": 4712388,
@@ -769,7 +805,13 @@ TIME ~ CLOCK - <INFO>  : cache: true
       "gasUsed": 21000
     }
   ]
-}TIME ~ CLOCK - <INFO>  : cache: true
+}TIME ~ CLOCK - <INFO>  : blocks
+TIME ~ CLOCK - <INFO>  :   1000000
+TIME ~ CLOCK - <INFO>  :   1000100
+TIME ~ CLOCK - <INFO>  :   1000200
+TIME ~ CLOCK - <INFO>  :   1000300
+TIME ~ CLOCK - <INFO>  :   more...
+TIME ~ CLOCK - <INFO>  : cache: true
 ,
 {
   "gasLimit": 3141592,

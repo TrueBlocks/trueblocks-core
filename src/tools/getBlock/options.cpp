@@ -100,7 +100,7 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     // BEG_DEBUG_DISPLAY
-    // LOG_TEST_LIST("blocks", blocks, blocks.empty());
+    LOG_TEST_LIST("blocks", blocks, blocks.empty());
     LOG_TEST_BOOL("hashes_only", hashes_only);
     LOG_TEST_BOOL("apps", apps);
     LOG_TEST_BOOL("uniq", uniq);

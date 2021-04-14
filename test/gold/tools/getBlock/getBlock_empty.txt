@@ -1,5 +1,7 @@
 getBlock argc: 2 [1:1001001] 
 getBlock 1001001 
+TIME ~ CLOCK - <INFO>  : blocks
+TIME ~ CLOCK - <INFO>  :   1001001
 { "data": [
 {
   "gasLimit": 3141592,

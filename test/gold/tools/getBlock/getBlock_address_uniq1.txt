@@ -1,5 +1,7 @@
 getBlock argc: 3 [1:3982128] [2:--uniq] 
 getBlock 3982128 --uniq 
+TIME ~ CLOCK - <INFO>  : blocks
+TIME ~ CLOCK - <INFO>  :   3982128
 TIME ~ CLOCK - <INFO>  : uniq: true
 bn	tx	tc	addr	reason
 3982128	99999		0x1e9939daaad6924ad004c2560e90804164900341	miner

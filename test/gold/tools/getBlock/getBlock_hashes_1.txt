@@ -1,5 +1,7 @@
 getBlock argc: 3 [1:4001001] [2:--hashes_only] 
 getBlock 4001001 --hashes_only 
+TIME ~ CLOCK - <INFO>  : blocks
+TIME ~ CLOCK - <INFO>  :   4001001
 TIME ~ CLOCK - <INFO>  : hashes_only: true
 { "data": [
 {

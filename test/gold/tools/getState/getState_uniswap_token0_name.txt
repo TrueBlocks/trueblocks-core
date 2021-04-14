@@ -1,5 +1,7 @@
 getState argc: 4 [1:--call] [2:0x2260fac5e5542a773aa44fbcfedf7c193bc2c599!0x06fdde03] [3:10092000] 
 getState --call 0x2260fac5e5542a773aa44fbcfedf7c193bc2c599!0x06fdde03 10092000 
+TIME ~ CLOCK - <INFO>  : blocks
+TIME ~ CLOCK - <INFO>  :   10092000
 TIME ~ CLOCK - <INFO>  : call: 0x2260fac5e5542a773aa44fbcfedf7c193bc2c599!0x06fdde03
 TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
 TIME ~ CLOCK - <INFO>  : typeList: : 

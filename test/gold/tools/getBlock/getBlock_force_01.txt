@@ -1,5 +1,9 @@
 getBlock argc: 5 [1:2768801] [2:1995314] [3:1958017] [4:--cache] 
 getBlock 2768801 1995314 1958017 --cache 
+TIME ~ CLOCK - <INFO>  : blocks
+TIME ~ CLOCK - <INFO>  :   2768801
+TIME ~ CLOCK - <INFO>  :   1995314
+TIME ~ CLOCK - <INFO>  :   1958017
 TIME ~ CLOCK - <INFO>  : cache: true
 { "data": [
 {

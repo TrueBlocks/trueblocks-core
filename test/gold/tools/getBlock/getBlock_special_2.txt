@@ -1,5 +1,7 @@
 getBlock argc: 3 [1:daofork] [2:--cache] 
 getBlock daofork --cache 
+TIME ~ CLOCK - <INFO>  : blocks
+TIME ~ CLOCK - <INFO>  :   1920000
 TIME ~ CLOCK - <INFO>  : cache: true
 { "data": [
 {

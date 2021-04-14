@@ -1,5 +1,7 @@
 getBlock argc: 3 [1:3982128] [2:--count] 
 getBlock 3982128 --count 
+TIME ~ CLOCK - <INFO>  : blocks
+TIME ~ CLOCK - <INFO>  :   3982128
 TIME ~ CLOCK - <INFO>  : count: true
 { "data": [
 { "blockNumber": 3982128, "transactionsCnt": 91}] }

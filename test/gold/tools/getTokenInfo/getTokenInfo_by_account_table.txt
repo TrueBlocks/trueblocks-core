@@ -4,6 +4,8 @@ TIME ~ CLOCK - <INFO>  : addrs
 TIME ~ CLOCK - <INFO>  :   0xb9e7f8568e08d5659f5d29c4997173d84cdf2607
 TIME ~ CLOCK - <INFO>  :   0x6b65353ac052f6c3a0c9688911b078bd025d6ab3
 TIME ~ CLOCK - <INFO>  :   0xa25d04fa348f107428708ba19c95d1c79b3744bf
+TIME ~ CLOCK - <INFO>  : blocks
+TIME ~ CLOCK - <INFO>  :   4000000
 TIME ~ CLOCK - <INFO>  : by_acct: true
 blocknumber	holder	address	name	symbol	decimals	balance
 4000000	0xa25d04fa348f107428708ba19c95d1c79b3744bf	0xb9e7f8568e08d5659f5d29c4997173d84cdf2607	Swarm City Token	SWT	18	"435000"

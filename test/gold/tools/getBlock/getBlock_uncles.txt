@@ -1,5 +1,8 @@
 getBlock argc: 4 [1:3] [2:469] [3:--uncles] 
 getBlock 3 469 --uncles 
+TIME ~ CLOCK - <INFO>  : blocks
+TIME ~ CLOCK - <INFO>  :   3
+TIME ~ CLOCK - <INFO>  :   469
 TIME ~ CLOCK - <INFO>  : uncles: true
 { "data": [
 {

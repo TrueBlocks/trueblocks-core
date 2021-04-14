@@ -2,6 +2,12 @@ ethslurp argc: 5 [1:0x9519afbc60719a83c470ceec41e32d3e4b8b262e] [2:--types] [3:t
 ethslurp 0x9519afbc60719a83c470ceec41e32d3e4b8b262e --types token 0-1500000 
 TIME ~ CLOCK - <INFO>  : addrs
 TIME ~ CLOCK - <INFO>  :   0x9519afbc60719a83c470ceec41e32d3e4b8b262e
+TIME ~ CLOCK - <INFO>  : blocks
+TIME ~ CLOCK - <INFO>  :   0
+TIME ~ CLOCK - <INFO>  :   1
+TIME ~ CLOCK - <INFO>  :   2
+TIME ~ CLOCK - <INFO>  :   3
+TIME ~ CLOCK - <INFO>  :   more...
 TIME ~ CLOCK - <INFO>  : types
 TIME ~ CLOCK - <INFO>  :   token
 Processing: 0x9519afbc60719a83c470ceec41e32d3e4b8b262e --types:token 0-1500000

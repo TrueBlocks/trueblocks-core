@@ -2,6 +2,12 @@ getState argc: 6 [1:0xbb9bc244d798123fde783fcc1c72d3bb8c189413] [2:1430957-14309
 getState 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 1430957-1430966 --changes --fmt txt 
 TIME ~ CLOCK - <INFO>  : addrs
 TIME ~ CLOCK - <INFO>  :   0xbb9bc244d798123fde783fcc1c72d3bb8c189413
+TIME ~ CLOCK - <INFO>  : blocks
+TIME ~ CLOCK - <INFO>  :   1430957
+TIME ~ CLOCK - <INFO>  :   1430958
+TIME ~ CLOCK - <INFO>  :   1430959
+TIME ~ CLOCK - <INFO>  :   1430960
+TIME ~ CLOCK - <INFO>  :   more...
 TIME ~ CLOCK - <INFO>  : changes: true
 blocknumber	address	balance
 1430957	0xbb9bc244d798123fde783fcc1c72d3bb8c189413	956077579120000000000

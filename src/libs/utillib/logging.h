@@ -237,10 +237,13 @@ extern logger<log_policy_i>* eLogger;
     {                                                                                                                  \
         if (isTestMode() && !(is_default)) {                                                                           \
             LOG_INFO((a));                                                                                             \
-            for (size_t i = 0; i < (b).size(); i++) {                                                                  \
+            for (size_t i = 0; i < min(size_t(4), (b).size()); i++) {                                                  \
                 ostringstream os;                                                                                      \
                 os << (b)[i];                                                                                          \
                 LOG_INFO("  " + (os.str()));                                                                           \
+            }                                                                                                          \
+            if ((b).size() > 4) {                                                                                      \
+                LOG_INFO("  more...");                                                                                 \
             }                                                                                                          \
         }                                                                                                              \
     }

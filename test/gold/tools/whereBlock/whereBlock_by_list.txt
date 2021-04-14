@@ -1,5 +1,9 @@
 whereBlock argc: 4 [1:1001001] [2:2002002] [3:3003003] 
 whereBlock 1001001 2002002 3003003 
+TIME ~ CLOCK - <INFO>  : blocks
+TIME ~ CLOCK - <INFO>  :   1001001
+TIME ~ CLOCK - <INFO>  :   2002002
+TIME ~ CLOCK - <INFO>  :   3003003
 blocknumber	path	cached
 1001001	./blocks/00/10/01/001001001.bin	true
 2002002	--nodeVersion--	false

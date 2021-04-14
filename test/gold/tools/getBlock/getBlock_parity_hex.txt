@@ -1,5 +1,7 @@
 getBlock argc: 4 [1:0x2e7721] [2:--cache] [3:--parity] 
 getBlock 0x2e7721 --cache --parity 
+TIME ~ CLOCK - <INFO>  : blocks
+TIME ~ CLOCK - <INFO>  :   3045153
 TIME ~ CLOCK - <INFO>  : cache: true
 { "data": [
 {

@@ -2,6 +2,8 @@ getState argc: 5 [1:0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359] [2:--parts] [3:b
 getState 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 --parts balance 2500000 
 TIME ~ CLOCK - <INFO>  : addrs
 TIME ~ CLOCK - <INFO>  :   0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359
+TIME ~ CLOCK - <INFO>  : blocks
+TIME ~ CLOCK - <INFO>  :   2500000
 TIME ~ CLOCK - <INFO>  : parts
 TIME ~ CLOCK - <INFO>  :   balance
 blocknumber	address	balance
