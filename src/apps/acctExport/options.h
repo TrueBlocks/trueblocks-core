@@ -96,6 +96,7 @@ class COptions : public CAbiOptions {
     bool handle_logs(void);
     bool handle_receipts(void);
     bool handle_traces(void);
+    bool handle_counts(void);
     bool handle_clean(void);
     bool handle_rm(const CAddressArray& addrs);
 

@@ -37,13 +37,7 @@ int main(int argc, const char* argv[]) {
         if (options.loadAllAppearances()) {
             options.firstOut = true;
             if (options.count) {
-                for (auto cnt : options.counts) {
-                    if (shouldQuit())
-                        break;
-                    cout << ((isJson() && !options.firstOut) ? ", " : "");
-                    cout << cnt;
-                    options.firstOut = false;
-                }
+                options.handle_counts();
 
             } else if (options.appearances) {
                 options.handle_appearances();
@@ -109,4 +103,16 @@ int main(int argc, const char* argv[]) {
 
     pinlib_cleanup();
     return 0;
+}
+
+//-----------------------------------------------------------------------
+bool COptions::handle_counts(void) {
+    for (auto cnt : counts) {
+        if (shouldQuit())
+            break;
+        cout << ((isJson() && !firstOut) ? ", " : "");
+        cout << cnt;
+        firstOut = false;
+    }
+    return true;
 }

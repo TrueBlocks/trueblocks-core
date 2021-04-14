@@ -13,8 +13,8 @@
  *-------------------------------------------------------------------------------------------*/
 #include <algorithm>
 #include "etherlib.h"
-#include "account.h"
+#include "cachedaccount.h"
 #include "esresult.h"
 #include "options.h"
 
-bool Slurp(CAccount& theAccount, COptions& options);
+bool Slurp(CCachedAccount& theAccount, COptions& options);

@@ -18,34 +18,27 @@ bool traces_Display(CTraverser* trav, void* data) {
         opt->articulateAll(trav->trans);
 
     for (auto trace : trav->trans.traces) {
-        bool isSuicide = trace.action.selfDestructed != "";
-        bool isCreation = trace.result.newContract != "";
-
         CTrace copy = trace;
-        if (!isSuicide) {
-            if (!opt->factory) {
-                cout << ((isJson() && !opt->firstOut) ? ", " : "");
-                cout << copy;
-                opt->firstOut = false;
+
+        // Do not collapse with the following code block...both (create and suicide) can be true in a single trace
+        if (!opt->factory) {
+            bool isSuicide = trace.action.selfDestructed != "";
+            if (isSuicide) {
+                copy.action.from = trace.action.selfDestructed;
+                copy.action.to = trace.action.refundAddress;
+                copy.action.callType = "suicide";
+                copy.action.value = trace.action.balance;
+                copy.traceAddress.push_back("s");
+                copy.transactionHash = uint_2_Hex(trace.blockNumber * 100000 + trace.transactionIndex);
+                copy.action.input = "0x";
             }
+            cout << ((isJson() && !opt->firstOut) ? ", " : "");
+            cout << copy;
+            opt->firstOut = false;
         }
 
-        if (isSuicide) {  // suicide
-            copy.action.from = trace.action.selfDestructed;
-            copy.action.to = trace.action.refundAddress;
-            copy.action.callType = "suicide";
-            copy.action.value = trace.action.balance;
-            copy.traceAddress.push_back("s");
-            copy.transactionHash = uint_2_Hex(trace.blockNumber * 100000 + trace.transactionIndex);
-            copy.action.input = "0x";
-            if (!opt->factory) {
-                cout << ((isJson() && !opt->firstOut) ? ", " : "");
-                cout << copy;
-                opt->firstOut = false;
-            }
-        }
-
-        if (isCreation) {  // contract creation
+        bool isCreation = trace.result.newContract != "";
+        if (isCreation) {
             copy.action.from = "0x0";
             copy.action.to = trace.result.newContract;
             copy.action.callType = "creation";

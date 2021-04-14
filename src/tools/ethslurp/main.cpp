@@ -23,7 +23,7 @@ int main(int argc, const char* argv[]) {
     if (!options.prepareArguments(argc, argv))
         return 0;
 
-    CAccount theAccount;
+    CCachedAccount theAccount;
     for (auto command : options.commandLines) {
         if (!options.parseArguments(command))
             return 0;
@@ -60,9 +60,9 @@ int main(int argc, const char* argv[]) {
 }
 
 //--------------------------------------------------------------------------------
-bool Slurp(CAccount& theAccount, COptions& options) {
+bool Slurp(CCachedAccount& theAccount, COptions& options) {
     theAccount.transactions.clear();
-    theAccount = CAccount();
+    theAccount = CCachedAccount();
     theAccount.addr = options.addrs[0];
     cerr << "\t"
          << "Slurping " << theAccount.addr << "\n";

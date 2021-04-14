@@ -14,26 +14,26 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
-#include "account.h"
+#include "cachedaccount.h"
 
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CAccount, CBaseNode);
+IMPLEMENT_NODE(CCachedAccount, CBaseNode);
 
 //---------------------------------------------------------------------------
-static string_q nextAccountChunk(const string_q& fieldIn, const void* dataPtr);
-static string_q nextAccountChunk_custom(const string_q& fieldIn, const void* dataPtr);
+static string_q nextCachedaccountChunk(const string_q& fieldIn, const void* dataPtr);
+static string_q nextCachedaccountChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
-void CAccount::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
+void CCachedAccount::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
     if (!m_showing)
         return;
 
     // EXISTING_CODE
     // EXISTING_CODE
 
-    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["account_fmt"] : fmtIn);
+    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["cachedaccount_fmt"] : fmtIn);
     if (fmt.empty()) {
         if (expContext().exportFmt == YAML1) {
             toYaml(ctx);
@@ -49,13 +49,13 @@ void CAccount::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const 
     // EXISTING_CODE
 
     while (!fmt.empty())
-        ctx << getNextChunk(fmt, nextAccountChunk, this);
+        ctx << getNextChunk(fmt, nextCachedaccountChunk, this);
 }
 
 //---------------------------------------------------------------------------
-string_q nextAccountChunk(const string_q& fieldIn, const void* dataPtr) {
+string_q nextCachedaccountChunk(const string_q& fieldIn, const void* dataPtr) {
     if (dataPtr)
-        return reinterpret_cast<const CAccount*>(dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CCachedAccount*>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -64,9 +64,9 @@ string_q nextAccountChunk(const string_q& fieldIn, const void* dataPtr) {
 }
 
 //---------------------------------------------------------------------------
-string_q CAccount::getValueByName(const string_q& fieldName) const {
+string_q CCachedAccount::getValueByName(const string_q& fieldName) const {
     // Give customized code a chance to override first
-    string_q ret = nextAccountChunk_custom(fieldName, this);
+    string_q ret = nextCachedaccountChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
@@ -126,7 +126,7 @@ string_q CAccount::getValueByName(const string_q& fieldName) const {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CAccount::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
+bool CCachedAccount::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
     string_q fieldName = fieldNameIn;
     string_q fieldValue = fieldValueIn;
 
@@ -171,13 +171,13 @@ bool CAccount::setValueByName(const string_q& fieldNameIn, const string_q& field
 }
 
 //---------------------------------------------------------------------------------------------------
-void CAccount::finishParse() {
+void CCachedAccount::finishParse() {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CAccount::Serialize(CArchive& archive) {
+bool CCachedAccount::Serialize(CArchive& archive) {
     if (archive.isWriting())
         return SerializeC(archive);
 
@@ -198,7 +198,7 @@ bool CAccount::Serialize(CArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CAccount::SerializeC(CArchive& archive) const {
+bool CCachedAccount::SerializeC(CArchive& archive) const {
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
 
@@ -213,7 +213,7 @@ bool CAccount::SerializeC(CArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, CAccountArray& array) {
+CArchive& operator>>(CArchive& archive, CCachedAccountArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -225,7 +225,7 @@ CArchive& operator>>(CArchive& archive, CAccountArray& array) {
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator<<(CArchive& archive, const CAccountArray& array) {
+CArchive& operator<<(CArchive& archive, const CCachedAccountArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0; i < array.size(); i++)
@@ -234,37 +234,37 @@ CArchive& operator<<(CArchive& archive, const CAccountArray& array) {
 }
 
 //---------------------------------------------------------------------------
-void CAccount::registerClass(void) {
+void CCachedAccount::registerClass(void) {
     // only do this once
-    if (HAS_FIELD(CAccount, "schema"))
+    if (HAS_FIELD(CCachedAccount, "schema"))
         return;
 
     size_t fieldNum = 1000;
-    ADD_FIELD(CAccount, "schema", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CAccount, "deleted", T_BOOL, ++fieldNum);
-    ADD_FIELD(CAccount, "showing", T_BOOL, ++fieldNum);
-    ADD_FIELD(CAccount, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CAccount, "addr", T_ADDRESS | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CAccount, "latestPage", T_UNUMBER, ++fieldNum);
-    ADD_OBJECT(CAccount, "latestTx", T_OBJECT | TS_OMITEMPTY, ++fieldNum, GETRUNTIME_CLASS(CTransaction));
-    ADD_FIELD(CAccount, "transactions", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CCachedAccount, "schema", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CCachedAccount, "deleted", T_BOOL, ++fieldNum);
+    ADD_FIELD(CCachedAccount, "showing", T_BOOL, ++fieldNum);
+    ADD_FIELD(CCachedAccount, "cname", T_TEXT, ++fieldNum);
+    ADD_FIELD(CCachedAccount, "addr", T_ADDRESS | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CCachedAccount, "latestPage", T_UNUMBER, ++fieldNum);
+    ADD_OBJECT(CCachedAccount, "latestTx", T_OBJECT | TS_OMITEMPTY, ++fieldNum, GETRUNTIME_CLASS(CTransaction));
+    ADD_FIELD(CCachedAccount, "transactions", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
-    HIDE_FIELD(CAccount, "schema");
-    HIDE_FIELD(CAccount, "deleted");
-    HIDE_FIELD(CAccount, "showing");
-    HIDE_FIELD(CAccount, "cname");
+    HIDE_FIELD(CCachedAccount, "schema");
+    HIDE_FIELD(CCachedAccount, "deleted");
+    HIDE_FIELD(CCachedAccount, "showing");
+    HIDE_FIELD(CCachedAccount, "cname");
 
-    builtIns.push_back(_biCAccount);
+    builtIns.push_back(_biCCachedAccount);
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------
-string_q nextAccountChunk_custom(const string_q& fieldIn, const void* dataPtr) {
-    const CAccount* acc = reinterpret_cast<const CAccount*>(dataPtr);
-    if (acc) {
+string_q nextCachedaccountChunk_custom(const string_q& fieldIn, const void* dataPtr) {
+    const CCachedAccount* cac = reinterpret_cast<const CCachedAccount*>(dataPtr);
+    if (cac) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             case 'n':
@@ -273,13 +273,13 @@ string_q nextAccountChunk_custom(const string_q& fieldIn, const void* dataPtr) {
                 break;
             case 'r':
                 if (fieldIn % "records")
-                    return (acc->transactions.size() == 0 ? "No records" : "");
+                    return (cac->transactions.size() == 0 ? "No records" : "");
                 break;
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if (fieldIn % "parsed")
-                    return nextBasenodeChunk(fieldIn, acc);
+                    return nextBasenodeChunk(fieldIn, cac);
                 // EXISTING_CODE
                 // EXISTING_CODE
                 break;
@@ -293,7 +293,7 @@ string_q nextAccountChunk_custom(const string_q& fieldIn, const void* dataPtr) {
 }
 
 //---------------------------------------------------------------------------
-bool CAccount::readBackLevel(CArchive& archive) {
+bool CCachedAccount::readBackLevel(CArchive& archive) {
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -301,7 +301,7 @@ bool CAccount::readBackLevel(CArchive& archive) {
 }
 
 //-------------------------------------------------------------------------
-ostream& operator<<(ostream& os, const CAccount& it) {
+ostream& operator<<(ostream& os, const CCachedAccount& it) {
     // EXISTING_CODE
     // EXISTING_CODE
 
@@ -311,14 +311,14 @@ ostream& operator<<(ostream& os, const CAccount& it) {
 }
 
 //---------------------------------------------------------------------------
-const CBaseNode* CAccount::getObjectAt(const string_q& fieldName, size_t index) const {
+const CBaseNode* CCachedAccount::getObjectAt(const string_q& fieldName, size_t index) const {
     if (fieldName % "latestTx")
         return &latestTx;
 
     if (fieldName % "transactions") {
         if (index == NOPOS) {
             CTransaction empty;
-            ((CAccount*)this)->transactions.push_back(empty);  // NOLINT
+            ((CCachedAccount*)this)->transactions.push_back(empty);  // NOLINT
             index = transactions.size() - 1;
         }
         if (index < transactions.size())
@@ -329,12 +329,12 @@ const CBaseNode* CAccount::getObjectAt(const string_q& fieldName, size_t index) 
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_ACCOUNT = "";
+const char* STR_DISPLAY_CACHEDACCOUNT = "";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 //---------------------------------------------------------------------------
-bool CAccount::handleCustomFormat(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
+bool CCachedAccount::handleCustomFormat(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
     // Split the format string into three parts: pre, post and records.
     // If no records, just process as normal. We do this because it's so slow
     // copying the records into a string, so we write it directly to the
@@ -343,7 +343,7 @@ bool CAccount::handleCustomFormat(ostream& ctx, const string_q& fmtIn, void* dat
         string_q fmt = fmtIn;
 
         while (!fmt.empty())
-            ctx << getNextChunk(fmt, nextAccountChunk, this);
+            ctx << getNextChunk(fmt, nextCachedaccountChunk, this);
 
     } else {
         string_q postFmt = fmtIn;
@@ -359,7 +359,7 @@ bool CAccount::handleCustomFormat(ostream& ctx, const string_q& fmtIn, void* dat
         // to avoid building the entire record list into an ever-growing and
         // ever-slowing string
         while (!preFmt.empty())
-            ctx << getNextChunk(preFmt, nextAccountChunk, this);
+            ctx << getNextChunk(preFmt, nextCachedaccountChunk, this);
         size_t cnt = 0;
         for (size_t i = 0; i < transactions.size(); i++) {
             cnt += transactions[i].m_showing;
@@ -371,12 +371,13 @@ bool CAccount::handleCustomFormat(ostream& ctx, const string_q& fmtIn, void* dat
         }
         ctx << "\n";
         while (!postFmt.empty())
-            ctx << getNextChunk(postFmt, nextAccountChunk, this);
+            ctx << getNextChunk(postFmt, nextCachedaccountChunk, this);
     }
     return true;
 }
 
-void CAccount::markLatest(const CTransaction& trans) {
+//---------------------------------------------------------------------------
+void CCachedAccount::markLatest(const CTransaction& trans) {
     if (trans.blockNumber < latestTx.blockNumber)
         return;
     if (trans.blockNumber > latestTx.blockNumber) {

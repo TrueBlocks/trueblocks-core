@@ -207,7 +207,7 @@ is_enabled          	1020	0	12582932	T_BOOL TS_NUMERAL TS_OMITEMPTY
   "is_enabled": true
 }
 
-Unknown node of type CAccount not created.
+Unknown node of type CCachedAccount not created.
 --------------------------------------------------------------------------------
 className: CMonitor
 baseClass: CAccountName

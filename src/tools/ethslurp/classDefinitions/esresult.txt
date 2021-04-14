@@ -1,4 +1,7 @@
 [settings]
 class = CESResult
-fields = string status|string message|string result
+fields = \
+    string status|\
+    string message|\
+    string result
 includes = utillib.h

@@ -16,7 +16,6 @@
  * of 'EXISTING_CODE' tags.
  */
 #include "etherlib.h"
-#include "transaction.h"
 
 namespace qblocks {
 
@@ -24,7 +23,7 @@ namespace qblocks {
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class CAccount : public CBaseNode {
+class CCachedAccount : public CBaseNode {
   public:
     address_t addr;
     uint64_t latestPage;
@@ -32,12 +31,12 @@ class CAccount : public CBaseNode {
     CTransactionArray transactions;
 
   public:
-    CAccount(void);
-    CAccount(const CAccount& ac);
-    virtual ~CAccount(void);
-    CAccount& operator=(const CAccount& ac);
+    CCachedAccount(void);
+    CCachedAccount(const CCachedAccount& ca);
+    virtual ~CCachedAccount(void);
+    CCachedAccount& operator=(const CCachedAccount& ca);
 
-    DECLARE_NODE(CAccount);
+    DECLARE_NODE(CCachedAccount);
 
     const CBaseNode* getObjectAt(const string_q& fieldName, size_t index) const override;
 
@@ -46,17 +45,17 @@ class CAccount : public CBaseNode {
     bool handleCustomFormat(ostream& ctx, const string_q& fmtIn, void* data = NULL) const;
     void markLatest(const CTransaction& trans);
     // EXISTING_CODE
-    bool operator==(const CAccount& it) const;
-    bool operator!=(const CAccount& it) const {
+    bool operator==(const CCachedAccount& it) const;
+    bool operator!=(const CCachedAccount& it) const {
         return !operator==(it);
     }
-    friend bool operator<(const CAccount& v1, const CAccount& v2);
-    friend ostream& operator<<(ostream& os, const CAccount& it);
+    friend bool operator<(const CCachedAccount& v1, const CCachedAccount& v2);
+    friend ostream& operator<<(ostream& os, const CCachedAccount& it);
 
   protected:
     void clear(void);
     void initialize(void);
-    void duplicate(const CAccount& ac);
+    void duplicate(const CCachedAccount& ca);
     bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
@@ -64,37 +63,37 @@ class CAccount : public CBaseNode {
 };
 
 //--------------------------------------------------------------------------
-inline CAccount::CAccount(void) {
+inline CCachedAccount::CCachedAccount(void) {
     initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CAccount::CAccount(const CAccount& ac) {
+inline CCachedAccount::CCachedAccount(const CCachedAccount& ca) {
     // EXISTING_CODE
     // EXISTING_CODE
-    duplicate(ac);
+    duplicate(ca);
 }
 
 // EXISTING_CODE
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline CAccount::~CAccount(void) {
+inline CCachedAccount::~CCachedAccount(void) {
     clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CAccount::clear(void) {
+inline void CCachedAccount::clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CAccount::initialize(void) {
+inline void CCachedAccount::initialize(void) {
     CBaseNode::initialize();
 
     addr = "";
@@ -107,29 +106,29 @@ inline void CAccount::initialize(void) {
 }
 
 //--------------------------------------------------------------------------
-inline void CAccount::duplicate(const CAccount& ac) {
+inline void CCachedAccount::duplicate(const CCachedAccount& ca) {
     clear();
-    CBaseNode::duplicate(ac);
+    CBaseNode::duplicate(ca);
 
-    addr = ac.addr;
-    latestPage = ac.latestPage;
-    latestTx = ac.latestTx;
-    transactions = ac.transactions;
+    addr = ca.addr;
+    latestPage = ca.latestPage;
+    latestTx = ca.latestTx;
+    transactions = ca.transactions;
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CAccount& CAccount::operator=(const CAccount& ac) {
-    duplicate(ac);
+inline CCachedAccount& CCachedAccount::operator=(const CCachedAccount& ca) {
+    duplicate(ca);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
 //-------------------------------------------------------------------------
-inline bool CAccount::operator==(const CAccount& it) const {
+inline bool CCachedAccount::operator==(const CCachedAccount& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)
@@ -137,7 +136,7 @@ inline bool CAccount::operator==(const CAccount& it) const {
 }
 
 //-------------------------------------------------------------------------
-inline bool operator<(const CAccount& v1, const CAccount& v2) {
+inline bool operator<(const CCachedAccount& v1, const CCachedAccount& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default sort defined in class definition, assume already sorted, preserve ordering
@@ -145,12 +144,12 @@ inline bool operator<(const CAccount& v1, const CAccount& v2) {
 }
 
 //---------------------------------------------------------------------------
-typedef vector<CAccount> CAccountArray;
-extern CArchive& operator>>(CArchive& archive, CAccountArray& array);
-extern CArchive& operator<<(CArchive& archive, const CAccountArray& array);
+typedef vector<CCachedAccount> CCachedAccountArray;
+extern CArchive& operator>>(CArchive& archive, CCachedAccountArray& array);
+extern CArchive& operator<<(CArchive& archive, const CCachedAccountArray& array);
 
 //---------------------------------------------------------------------------
-extern const char* STR_DISPLAY_ACCOUNT;
+extern const char* STR_DISPLAY_CACHEDACCOUNT;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

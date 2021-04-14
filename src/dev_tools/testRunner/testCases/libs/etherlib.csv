@@ -32,7 +32,7 @@ on,cmd,fast,null,etherlib/dataUpgradeTest,04,n,val = 4
 on,cmd,fast,null,etherlib/dataUpgradeTest,05,n,val = 5
 on,cmd,fast,null,etherlib/dataUpgradeTest,06,n,file:cmd_file1
 on,cmd,fast,null,etherlib/dataUpgradeTest,CAbi,n,val = CAbi
-on,cmd,fast,null,etherlib/dataUpgradeTest,CAccount,n,val = CAccount
+on,cmd,fast,null,etherlib/dataUpgradeTest,CCachedAccount,n,val = CCachedAccount
 on,cmd,fast,null,etherlib/dataUpgradeTest,CMonitor,n,val = CMonitor
 on,cmd,fast,null,etherlib/dataUpgradeTest,CApiSpec,n,val = CApiSpec
 on,cmd,fast,null,etherlib/dataUpgradeTest,CBlock,n,val = CBlock
