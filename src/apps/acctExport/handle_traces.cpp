@@ -13,23 +13,24 @@ bool traces_Display(CTraverser* trav, void* data) {
     if (opt->freshen)
         return true;
 
+    opt->markNeighbors(trav->trans);
+    if (opt->articulate)
+        opt->articulateAll(trav->trans);
+
     for (auto trace : trav->trans.traces) {
         bool isSuicide = trace.action.selfDestructed != "";
         bool isCreation = trace.result.newContract != "";
 
+        CTrace copy = trace;
         if (!isSuicide) {
-            opt->markNeighbors(trav->trans);
-            if (opt->articulate)
-                opt->abi_spec.articulateTrace(&trace);
-            if (!opt->freshen && !opt->factory) {
+            if (!opt->factory) {
                 cout << ((isJson() && !opt->firstOut) ? ", " : "");
-                cout << trace.Format() << endl;
+                cout << copy;
                 opt->firstOut = false;
             }
         }
 
         if (isSuicide) {  // suicide
-            CTrace copy = trace;
             copy.action.from = trace.action.selfDestructed;
             copy.action.to = trace.action.refundAddress;
             copy.action.callType = "suicide";
@@ -37,18 +38,14 @@ bool traces_Display(CTraverser* trav, void* data) {
             copy.traceAddress.push_back("s");
             copy.transactionHash = uint_2_Hex(trace.blockNumber * 100000 + trace.transactionIndex);
             copy.action.input = "0x";
-            opt->markNeighbors(trav->trans);
-            if (opt->articulate)
-                opt->abi_spec.articulateTrace(&copy);
-            if (!opt->freshen && !opt->factory) {
+            if (!opt->factory) {
                 cout << ((isJson() && !opt->firstOut) ? ", " : "");
-                cout << copy.Format() << endl;
+                cout << copy;
                 opt->firstOut = false;
             }
         }
 
         if (isCreation) {  // contract creation
-            CTrace copy = trace;
             copy.action.from = "0x0";
             copy.action.to = trace.result.newContract;
             copy.action.callType = "creation";
@@ -58,18 +55,9 @@ bool traces_Display(CTraverser* trav, void* data) {
             copy.traceAddress.push_back("s");
             copy.transactionHash = uint_2_Hex(trace.blockNumber * 100000 + trace.transactionIndex);
             copy.action.input = trace.action.input;
-            opt->markNeighbors(trav->trans);
-            if (opt->articulate)
-                opt->abi_spec.articulateTrace(&copy);
-            if (!opt->freshen && !opt->factory) {
-                cout << ((isJson() && !opt->firstOut) ? ", " : "");
-                cout << copy.Format() << endl;
-                opt->firstOut = false;
-            } else if (opt->factory) {
-                cout << ((isJson() && !opt->firstOut) ? ", " : "");
-                cout << copy.Format() << endl;
-                opt->firstOut = false;
-            }
+            cout << ((isJson() && !opt->firstOut) ? ", " : "");
+            cout << copy;
+            opt->firstOut = false;
         }
         // if (!isTestMode() && isApiMode()) {
         //     qblocks::eLogger->setEndline('\r');

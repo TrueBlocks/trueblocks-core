@@ -16,7 +16,7 @@ bool receipts_Display(CTraverser* trav, void* data) {
     opt->markNeighbors(trav->trans);
     opt->articulateAll(trav->trans);
     cout << ((isJson() && !opt->firstOut) ? ", " : "");
-    cout << trav->trans.receipt.Format() << endl;
+    cout << trav->trans.receipt;
     opt->firstOut = false;
 
     prog_Log(trav, data, trav->inCache ? TR_PROGRESS_CACHE : TR_PROGRESS_NODE);

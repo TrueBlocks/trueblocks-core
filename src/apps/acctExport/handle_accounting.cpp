@@ -20,7 +20,7 @@ bool acct_Display(CTraverser* trav, void* data) {
         process_reconciliation(opt, trav->trans, opt->prevStatements, next, opt->tokens);
     }
     cout << ((isJson() && !opt->firstOut) ? ", " : "");
-    cout << trav->trans.Format() << endl;
+    cout << trav->trans;
     opt->firstOut = false;
 
     prog_Log(trav, data, trav->inCache ? TR_PROGRESS_CACHE : TR_PROGRESS_NODE);

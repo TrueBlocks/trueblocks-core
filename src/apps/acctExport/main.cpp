@@ -41,7 +41,7 @@ int main(int argc, const char* argv[]) {
                     if (shouldQuit())
                         break;
                     cout << ((isJson() && !options.firstOut) ? ", " : "");
-                    cout << cnt.Format() << endl;
+                    cout << cnt;
                     options.firstOut = false;
                 }
 

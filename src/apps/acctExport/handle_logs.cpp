@@ -28,7 +28,7 @@ bool logs_Display(CTraverser* trav, void* data) {
         }
         if (showMe) {
             cout << ((isJson() && !opt->firstOut) ? ", " : "");
-            cout << log.Format() << endl;
+            cout << log;
             opt->firstOut = false;
         }
     }

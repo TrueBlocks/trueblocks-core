@@ -19,7 +19,7 @@ bool app_Display(CTraverser* trav, void* data) {
     dapp->transactionIndex = trav->app->txid;
 
     cout << ((isJson() && !opt->firstOut) ? ", " : "");
-    cout << dapp->Format() << endl;
+    cout << *dapp;
     opt->firstOut = false;
 
     prog_Log(trav, data, trav->inCache ? TR_PROGRESS_CACHE : TR_PROGRESS_NODE);
