@@ -1,8 +1,5 @@
 getBlock argc: 3 [1:0] [2:--uniq_tx] 
 getBlock 0 --uniq_tx 
-TIME ~ CLOCK - <INFO>  : blocks
-TIME ~ CLOCK - <INFO>  :   0
-TIME ~ CLOCK - <INFO>  : uniq_tx: true
 bn	tx	tc	addr	reason
 0	0		0x000d836201318ec6899a67540690382780743280	genesis
 0	1		0x001762430ea9c3a26e5749afdb70da5f78ddbb8c	genesis

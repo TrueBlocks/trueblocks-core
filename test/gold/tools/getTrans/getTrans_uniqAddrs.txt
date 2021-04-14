@@ -1,6 +1,5 @@
 getTrans argc: 7 [1:1301011.0] [2:1301672.0] [3:1301324.0] [4:--uniq] [5:--fmt] [6:json] 
 getTrans 1301011.0 1301672.0 1301324.0 --uniq --fmt json 
-TIME ~ CLOCK - <INFO>  : uniq: true
 { "data": [
   {
     "bn": 1301011,

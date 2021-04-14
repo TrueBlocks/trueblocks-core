@@ -1,7 +1,5 @@
 grabABI argc: 4 [1:0xef638b4305b8a1620f4e0e562e127f1181ae16d2] [2:--fmt] [3:json] 
 grabABI 0xef638b4305b8a1620f4e0e562e127f1181ae16d2 --fmt json 
-TIME ~ CLOCK - <INFO>  : addrs
-TIME ~ CLOCK - <INFO>  :   0xef638b4305b8a1620f4e0e562e127f1181ae16d2
 { "data": [
 {
   "type": "constructor",

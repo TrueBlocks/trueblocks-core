@@ -1,8 +1,5 @@
 makeClass argc: 6 [1:--dump] [2:-a] [3:-i] [4:CStatus] [5:--verbose] 
 makeClass --dump -a -i CStatus --verbose 
-TIME ~ CLOCK - <INFO>  : all: true
-TIME ~ CLOCK - <INFO>  : dump: true
-TIME ~ CLOCK - <INFO>  : filter: CStatus
 {
   "class_name": "CStatus",
   "class_base": "Status",

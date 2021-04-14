@@ -1,6 +1,3 @@
 ethNames argc: 5 [1:torJ] [2:--match_case] [3:--fmt] [4:txt] 
 ethNames torJ --match_case --fmt txt 
-TIME ~ CLOCK - <INFO>  : terms
-TIME ~ CLOCK - <INFO>  :   torJ
-TIME ~ CLOCK - <INFO>  : match_case: true
 No results for torJ --match_case

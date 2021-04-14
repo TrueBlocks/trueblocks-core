@@ -1,15 +1,6 @@
 getTokenInfo argc: 7 [1:0x00000000441378008ea67f4284a57932b1c000a5] [2:--fmt] [3:json] [4:8000000] [5:--parts] [6:all] 
 getTokenInfo 0x00000000441378008ea67f4284a57932b1c000a5 --fmt json 8000000 --parts all 
-TIME ~ CLOCK - <INFO>  : addrs
-TIME ~ CLOCK - <INFO>  :   0x00000000441378008ea67f4284a57932b1c000a5
-TIME ~ CLOCK - <INFO>  : blocks
-TIME ~ CLOCK - <INFO>  :   8000000
-TIME ~ CLOCK - <INFO>  : parts
-TIME ~ CLOCK - <INFO>  :   all
 { "data": [
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : 
-TIME ~ CLOCK - <INFO>  : inputStr: : 0x000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000075472756547425000000000000000000000000000000000000000000000000000
 
 level: 1
 readOffset: 0
@@ -22,16 +13,12 @@ dataArray.size: 3
   2 (0x040) 5472756547425000...00000000000000000000000000000000
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-08:(string): string
 params.size: 1
   0: string _name = TrueGBP
 params.size: 1
   0: string _name = TrueGBP
 ==================================================
 
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : 
-TIME ~ CLOCK - <INFO>  : inputStr: : 0x000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000045447425000000000000000000000000000000000000000000000000000000000
 
 level: 1
 readOffset: 0
@@ -44,21 +31,12 @@ dataArray.size: 3
   2 (0x040) 5447425000000000...00000000000000000000000000000000
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-08:(string): string
 params.size: 1
   0: string _symbol = TGBP
 params.size: 1
   0: string _symbol = TGBP
 ==================================================
 
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : 
-TIME ~ CLOCK - <INFO>  : inputStr: : 0x0000000000000000000000000000000000000000000000000000000000000012
-TIME ~ CLOCK - <INFO>  : Parse func found: : uint8
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : 
-TIME ~ CLOCK - <INFO>  : inputStr: : 0x00000000000000000000000000000000000000000000e4b40cbd4b1520e90000
-TIME ~ CLOCK - <INFO>  : Parse func found: : uint256
   {
     "blockNumber": 8000000,
     "totalSupply": "1080020.89",

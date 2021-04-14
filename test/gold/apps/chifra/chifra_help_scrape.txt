@@ -1,6 +1,5 @@
 chifra argc: 3 [1:scrape] [2:--help] 
 chifra scrape --help 
-TIME ~ CLOCK - <INFO>  : mode: scrape
 chifra scrape argc: 2 [1:--help] 
 chifra scrape --help 
 PROG_NAME = [chifra scrape]

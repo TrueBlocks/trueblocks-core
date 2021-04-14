@@ -1,8 +1,5 @@
 ethNames argc: 3 [1:tip] [2:--addr] 
 ethNames tip --addr 
-TIME ~ CLOCK - <INFO>  : terms
-TIME ~ CLOCK - <INFO>  :   tip
-TIME ~ CLOCK - <INFO>  : addr: true
 0x133d705a9696882228f6bb7fe008745aef7cdc93
 0x68821f2943a218f7dfa9c4b1c788f007940fc2f3
 0x7cb57b5a97eabe94205c07890be4c1ad31e486a8

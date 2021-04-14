@@ -1,7 +1,5 @@
 whenBlock argc: 4 [1:1001001] [2:--fmt] [3:api] 
 whenBlock 1001001 --fmt api 
-TIME ~ CLOCK - <INFO>  : block_list
-TIME ~ CLOCK - <INFO>  :   1001001
 {"data": [
   {
     "blockNumber": 1001001,

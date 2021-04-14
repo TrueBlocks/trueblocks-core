@@ -1,6 +1,4 @@
 whenBlock argc: 3 [1:first] [2:--verbose] 
 whenBlock first --verbose 
-TIME ~ CLOCK - <INFO>  : block_list
-TIME ~ CLOCK - <INFO>  :   first
 blocknumber	timestamp	date	name
 0	1438269960	2015-07-30 15:26:00 UTC	first

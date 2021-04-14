@@ -1,8 +1,5 @@
 grabABI argc: 3 [1:0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359] [2:--known] 
 grabABI 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 --known 
-TIME ~ CLOCK - <INFO>  : addrs
-TIME ~ CLOCK - <INFO>  :   0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359
-TIME ~ CLOCK - <INFO>  : known: true
 encoding	type	name	signature	input_names	output_names
 0x2203ab56		ABI	ABI(bytes32,uint256)	node,contentTypes,	contentType,data,,
 0x3ffb58fc		AddEmployee	AddEmployee(uint256,address,uint256,uint64,string)	employeeId,accountAddress,initialDenominationSalary,startDate,role,	,

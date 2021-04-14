@@ -1,6 +1,5 @@
 ethNames argc: 2 [1:--tags] 
 ethNames --tags 
-TIME ~ CLOCK - <INFO>  : tags: true
 tags
 
 30-Contracts

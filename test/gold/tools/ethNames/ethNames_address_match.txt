@@ -1,7 +1,5 @@
 ethNames argc: 4 [1:0x1] [2:--fmt] [3:api] 
 ethNames 0x1 --fmt api 
-TIME ~ CLOCK - <INFO>  : terms
-TIME ~ CLOCK - <INFO>  :   0x1
 {"data": [
   {
     "tags": "31-Gitcoin Grants:Friends",

@@ -1,7 +1,5 @@
 cacheStatus argc: 2 [1:abis] 
 cacheStatus abis 
-TIME ~ CLOCK - <INFO>  : modes
-TIME ~ CLOCK - <INFO>  :   abis
 {
   "client_version": "Client version",
   "client_ids": "chainId: 1 networkId: 1",

@@ -1,7 +1,5 @@
 ethNames argc: 5 [1:etwork] [2:--verbose] [3:--fmt] [4:txt] 
 ethNames etwork --verbose --fmt txt 
-TIME ~ CLOCK - <INFO>  : terms
-TIME ~ CLOCK - <INFO>  :   etwork
 tags	address	name	symbol	decimals	source
 31-Gitcoin Grants:Grant	0x067f2bef6a1f929544253b9fb95f99bae77b2518	Grant 1753 Resetdao ― Web 3.0 Programmable Social Network				https://gitcoin.co/grants/1753/resetdao-web-30-programmable-social-network
 50-Tokens:ERC20	0x08f5a9235b08173b7569f83645d2c7fb55e8ccd8	Tierion Network Token	TNT		8	On chain

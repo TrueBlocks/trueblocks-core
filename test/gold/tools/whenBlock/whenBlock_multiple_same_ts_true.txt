@@ -1,11 +1,5 @@
 whenBlock argc: 6 [1:12345] [2:54321] [3:2016-12-01] [4:2016-12-01-01] [5:--timestamps] 
 whenBlock 12345 54321 2016-12-01 2016-12-01-01 --timestamps 
-TIME ~ CLOCK - <INFO>  : block_list
-TIME ~ CLOCK - <INFO>  :   12345
-TIME ~ CLOCK - <INFO>  :   54321
-TIME ~ CLOCK - <INFO>  :   2016-12-01
-TIME ~ CLOCK - <INFO>  :   2016-12-01-01
-TIME ~ CLOCK - <INFO>  : timestamps: true
 blocknumber	timestamp
 12345	1438367030
 54321	1439052185

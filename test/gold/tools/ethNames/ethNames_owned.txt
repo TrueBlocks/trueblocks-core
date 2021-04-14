@@ -1,6 +1,5 @@
 ethNames argc: 2 [1:--owned] 
 ethNames --owned 
-TIME ~ CLOCK - <INFO>  : owned: true
 tags	address	name	symbol	decimals
 0x0000000000000000000000000000000000000001
 0x0000000000000000000000000000000000000002

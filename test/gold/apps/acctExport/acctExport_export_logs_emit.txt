@@ -1,19 +1,5 @@
 acctExport argc: 10 [1:0xbb9bc244d798123fde783fcc1c72d3bb8c189413] [2:--logs] [3:--fmt] [4:csv] [5:--start] [6:1429283] [7:--end] [8:1429468] [9:--emitter] 
 acctExport 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 --logs --fmt csv --start 1429283 --end 1429468 --emitter 
-TIME ~ CLOCK - <INFO>  : addrs
-TIME ~ CLOCK - <INFO>  :   0xbb9bc244d798123fde783fcc1c72d3bb8c189413
-TIME ~ CLOCK - <INFO>  : logs: true
-TIME ~ CLOCK - <INFO>  : skip_ddos: true
-TIME ~ CLOCK - <INFO>  : emitter: true
-TIME ~ CLOCK - <INFO>  : Monitor found for: 0xbb9bc244d798123fde783fcc1c72d3bb8c189413
-TIME ~ CLOCK - <INFO>  : Last visited block: 5000001
-TIME ~ CLOCK - <INFO>  : stats.nFiles: --value--
-TIME ~ CLOCK - <INFO>  : stats.nSkipped: --value--
-TIME ~ CLOCK - <INFO>  : nMonitors: 1
-TIME ~ CLOCK - <INFO>  : exportRange.first: 1429283
-TIME ~ CLOCK - <INFO>  : exportRange.second: 1429468
-TIME ~ CLOCK - <INFO>  : listRange.first: 5000001
-TIME ~ CLOCK - <INFO>  : listRange.second: --latest--
 "blocknumber","transactionindex","logindex","address","topic0","topic1","topic2","topic3","data","type","compressedlog"
 "1429283","0","0","0xbb9bc244d798123fde783fcc1c72d3bb8c189413","0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925","0x000000000000000000000000ac039da3add6efb42d47b6ea21f7feca82091236","0x000000000000000000000000fbb1b73c4f0bda4f67dca266ce6ef42f520fbb98","","0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff","",""
 "1429283","2","1","0xbb9bc244d798123fde783fcc1c72d3bb8c189413","0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925","0x0000000000000000000000000faf56cad156ac317ff5c3f352e83999e4e30f12","0x000000000000000000000000fbb1b73c4f0bda4f67dca266ce6ef42f520fbb98","","0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff","",""

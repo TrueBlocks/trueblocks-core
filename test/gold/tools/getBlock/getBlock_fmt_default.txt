@@ -1,8 +1,5 @@
 getBlock argc: 3 [1:2222222] [2:2332332] 
 getBlock 2222222 2332332 
-TIME ~ CLOCK - <INFO>  : blocks
-TIME ~ CLOCK - <INFO>  :   2222222
-TIME ~ CLOCK - <INFO>  :   2332332
 { "data": [
 {
   "gasLimit": 4704588,

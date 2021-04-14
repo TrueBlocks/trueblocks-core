@@ -1,6 +1,4 @@
 whenBlock argc: 2 [1:0xd19bc98080cd70951fad3951cef2d512e6334aa3c7e64a38985c955d4d2e273b] 
 whenBlock 0xd19bc98080cd70951fad3951cef2d512e6334aa3c7e64a38985c955d4d2e273b 
-TIME ~ CLOCK - <INFO>  : block_list
-TIME ~ CLOCK - <INFO>  :   0xd19bc98080cd70951fad3951cef2d512e6334aa3c7e64a38985c955d4d2e273b
 blocknumber	timestamp	date	name
 1001010	1455422019	2016-02-14 03:53:39 UTC

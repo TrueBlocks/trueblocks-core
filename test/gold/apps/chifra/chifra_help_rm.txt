@@ -1,6 +1,5 @@
 chifra argc: 4 [1:monitor] [2:--delete] [3:--help] 
 chifra monitor --delete --help 
-TIME ~ CLOCK - <INFO>  : mode: monitor
 chifra monitor argc: 4 [1:--appearances] [2:--delete] [3:--help] 
 chifra monitor --appearances --delete --help 
 PROG_NAME = [chifra monitor]

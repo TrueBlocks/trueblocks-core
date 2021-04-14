@@ -1,10 +1,5 @@
 cacheStatus argc: 5 [1:--details] [2:caches] [3:--types] [4:slurps] 
 cacheStatus --details caches --types slurps 
-TIME ~ CLOCK - <INFO>  : modes
-TIME ~ CLOCK - <INFO>  :   caches
-TIME ~ CLOCK - <INFO>  : details: true
-TIME ~ CLOCK - <INFO>  : types
-TIME ~ CLOCK - <INFO>  :   slurps
 {
   "client_version": "Client version",
   "client_ids": "chainId: 1 networkId: 1",

@@ -1,6 +1,5 @@
 ethQuote argc: 7 [1:--period] [2:240] [3:--verbose] [4:2] [5:--fmt] [6:csv] 
 ethQuote --period 240 --verbose 2 --fmt csv 
-TIME ~ CLOCK - <INFO>  : period: 240
 Read cnt existing price quotes (lastRead: Now)
 "timestamp","date","close"
 "1439078400","2015-08-09 00:00:00 UTC","1.40000"

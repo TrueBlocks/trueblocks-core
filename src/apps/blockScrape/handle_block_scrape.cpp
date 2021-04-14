@@ -97,7 +97,7 @@ bool COptions::scrape_blocks(void) {
     os << "--nBlocks " << cons.blazeCnt << " ";
     os << "--ripeBlock " << cons.blazeRipe << " ";
     os << (verbose ? ("--verbose " + uint_2_Str(verbose)) : "");
-    LOG_CALL(os.str());
+    LOG_TEST_CALL(os.str());
 
     ostringstream cmd;
     cmd << "env TB_INDEXPATH=\"" << getIndexPath("") << "\" ";

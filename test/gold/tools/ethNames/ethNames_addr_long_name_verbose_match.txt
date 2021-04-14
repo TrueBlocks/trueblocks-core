@@ -1,7 +1,4 @@
 ethNames argc: 6 [1:0xb6] [2:torj] [3:--verbose] [4:--fmt] [5:txt] 
 ethNames 0xb6 torj --verbose --fmt txt 
-TIME ~ CLOCK - <INFO>  : terms
-TIME ~ CLOCK - <INFO>  :   0xb6
-TIME ~ CLOCK - <INFO>  :   torj
 tags	address	name	symbol	decimals	source
 50-Tokens:ERC20	0xb64ef51c888972c908cfacf59b47c1afbc0ab8ac	StorjToken	STORJ		8	On chain

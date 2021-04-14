@@ -1,7 +1,5 @@
 acctExport argc: 2 [1:--clean] 
 acctExport --clean 
-TIME ~ CLOCK - <INFO>  : skip_ddos: true
-TIME ~ CLOCK - <INFO>  : clean: true
 [{ "path": "$CACHE/0x001d14804b399c6ef80e64576f657660804fec0b.acct.bin", "sizeThen": 3, "sizeNow": 3 }
 ,{ "path": "$CACHE/0x05a56e2d52c817161883f50c441c3228cfe54d9f.acct.bin", "sizeThen": 260, "sizeNow": 260 }
 ,{ "path": "$CACHE/0x0ece224fbc24d40b446c6a94a142dc41fae76f2d.acct.bin", "sizeThen": 15085, "sizeNow": 15085 }

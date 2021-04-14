@@ -1,10 +1,5 @@
 getBlock argc: 5 [1:1590000] [2:4000001] [3:4000002] [4:--cache] 
 getBlock 1590000 4000001 4000002 --cache 
-TIME ~ CLOCK - <INFO>  : blocks
-TIME ~ CLOCK - <INFO>  :   1590000
-TIME ~ CLOCK - <INFO>  :   4000001
-TIME ~ CLOCK - <INFO>  :   4000002
-TIME ~ CLOCK - <INFO>  : cache: true
 { "data": [
 {
   "gasLimit": 4712388,

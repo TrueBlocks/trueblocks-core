@@ -1,7 +1,5 @@
 whereBlock argc: 4 [1:1001001] [2:--fmt] [3:json] 
 whereBlock 1001001 --fmt json 
-TIME ~ CLOCK - <INFO>  : blocks
-TIME ~ CLOCK - <INFO>  :   1001001
 { "data": [
   {
     "blockNumber": "1001001",

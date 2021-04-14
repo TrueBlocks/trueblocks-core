@@ -1,12 +1,5 @@
 getBlock argc: 4 [1:358450-0x5785a] [2:--cache] [3:--parity] 
 getBlock 358450-0x5785a --cache --parity 
-TIME ~ CLOCK - <INFO>  : blocks
-TIME ~ CLOCK - <INFO>  :   358450
-TIME ~ CLOCK - <INFO>  :   358451
-TIME ~ CLOCK - <INFO>  :   358452
-TIME ~ CLOCK - <INFO>  :   358453
-TIME ~ CLOCK - <INFO>  :   more...
-TIME ~ CLOCK - <INFO>  : cache: true
 { "data": [
 {
   "difficulty": "0x5a5753781c6",

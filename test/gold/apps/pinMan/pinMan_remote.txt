@@ -1,6 +1,5 @@
 pinMan argc: 2 [1:remote] 
 pinMan remote 
-TIME ~ CLOCK - <INFO>  : mode: remote
 TIME ~ CLOCK - <INFO>  : latestBlock:	--latest--
 TIME ~ CLOCK - <INFO>  : unchainedIndexAddr:	0xcfd7f3b24f3551741f922fd8c4381aa4e00fc8fd
 {"error":{"reason":"INVALID_API_KEYS","details":"Invalid API key provided"}}

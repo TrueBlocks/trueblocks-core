@@ -1,17 +1,5 @@
 acctExport argc: 6 [1:0xf503017d7baf7fbc0fff7492b751025c6a78179b] [2:--end] [3:9000000] [4:--fmt] [5:json] 
 acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --end 9000000 --fmt json 
-TIME ~ CLOCK - <INFO>  : addrs
-TIME ~ CLOCK - <INFO>  :   0xf503017d7baf7fbc0fff7492b751025c6a78179b
-TIME ~ CLOCK - <INFO>  : skip_ddos: true
-TIME ~ CLOCK - <INFO>  : Monitor found for: 0xf503017d7baf7fbc0fff7492b751025c6a78179b
-TIME ~ CLOCK - <INFO>  : Last visited block: 11854827
-TIME ~ CLOCK - <INFO>  : stats.nFiles: --value--
-TIME ~ CLOCK - <INFO>  : stats.nSkipped: --value--
-TIME ~ CLOCK - <INFO>  : nMonitors: 1
-TIME ~ CLOCK - <INFO>  : exportRange.first: 0
-TIME ~ CLOCK - <INFO>  : exportRange.second: 9000000
-TIME ~ CLOCK - <INFO>  : listRange.first: 11854827
-TIME ~ CLOCK - <INFO>  : listRange.second: --latest--
 { "data": [
 {
   "hash": "0x1a898c5448b37f693343917ea40b7ad1c43b28a4ddd37af1bd6d0bb4a0c99891",

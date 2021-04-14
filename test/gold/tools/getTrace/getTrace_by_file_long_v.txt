@@ -1,6 +1,5 @@
 getTrace argc: 6 [1:--file:cmd_file] [2:--verbose] [3:--parity] [4:--fmt] [5:api] 
 getTrace --file:cmd_file --verbose --parity --fmt api 
-TIME ~ CLOCK - <INFO>  : skip_ddos: true
 {"data": [
   {
     "blockHash": "0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9",
@@ -26,8 +25,7 @@ TIME ~ CLOCK - <INFO>  : skip_ddos: true
       "gasUsed": "0x0",
       "output": "0x"
     }
-  }TIME ~ CLOCK - <INFO>  : skip_ddos: true
-,  {
+  },  {
     "blockHash": "0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9",
     "blockNumber": "0x37cf08",
     "subtraces": "0x0",
@@ -51,8 +49,7 @@ TIME ~ CLOCK - <INFO>  : skip_ddos: true
       "gasUsed": "0x0",
       "output": "0x"
     }
-  }TIME ~ CLOCK - <INFO>  : skip_ddos: true
-,  {
+  },  {
     "blockHash": "0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9",
     "blockNumber": "0x37cf08",
     "subtraces": "0x0",

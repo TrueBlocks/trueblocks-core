@@ -1,5 +1,4 @@
 whereBlock argc: 2 [1:0xd19bc98080cd70951fad3951cef2d512e6334aa3c7e64a38985c955d4d2e273b] 
 whereBlock 0xd19bc98080cd70951fad3951cef2d512e6334aa3c7e64a38985c955d4d2e273b 
-TIME ~ CLOCK - <INFO>  : blocks
 blocknumber	path	cached
 1001010	./blocks/00/10/01/001001010.bin	true

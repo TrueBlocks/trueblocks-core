@@ -1,4 +1,3 @@
 getTrace argc: 6 [1:2222222.0] [2:2332332.0] [3:--fmt] [4:json] [5:--to_file] 
 getTrace 2222222.0 2332332.0 --fmt json --to_file 
-TIME ~ CLOCK - <INFO>  : skip_ddos: true
 { "outputFilename": "--output_filename--" }

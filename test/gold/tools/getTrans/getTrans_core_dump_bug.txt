@@ -1,19 +1,6 @@
 getTrans argc: 5 [1:0xa5c9c1a65f998be86dc2131d57d0de0c418bb534d8d2b37b46c99888ccef8d10] [2:-avt] [3:--fmt] [4:api] 
 getTrans 0xa5c9c1a65f998be86dc2131d57d0de0c418bb534d8d2b37b46c99888ccef8d10 -avt --fmt api 
-TIME ~ CLOCK - <INFO>  : articulate: true
-TIME ~ CLOCK - <INFO>  : trace: true
 {"data": [
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : address
-TIME ~ CLOCK - <INFO>  : inputStr: : 0x000000000000000000000000d31f381ad54386895852f311fc3be2008c88cb27
-TIME ~ CLOCK - <INFO>  : Parse func found: : address
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : 
-TIME ~ CLOCK - <INFO>  : inputStr: : 0x516d51344e3338384c736e77384e486e4a72526f59327561676d5071736d3353
-TIME ~ CLOCK - <INFO>  : Parse func found: : bytes32
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : 
-TIME ~ CLOCK - <INFO>  : inputStr: : 000000000000000000000000d31f381ad54386895852f311fc3be2008c88cb270000000000000000000000000000000000000000000000000000000000000080516d51344e3338384c736e77384e486e4a72526f59327561676d5071736d33533641436955616645364b6b32506f0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000040546869732069732074686520737472696e67207468617420726570726573656e7473207468652074797065206f662064617461206265696e6720706f73746564
 
 level: 1
 readOffset: 0
@@ -32,7 +19,6 @@ dataArray.size: 7
   6 (0x0c0) 7473207468652074...617461206265696e6720706f73746564
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-03:(address): address
 params.size: 3
   0: address recipient = 0xd31f381ad54386895852f311fc3be2008c88cb27
   1: string topic = <>
@@ -55,7 +41,6 @@ dataArray.size: 7
   6 (0x0c0) 7473207468652074...617461206265696e6720706f73746564
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-08:(string): string
 params.size: 3
   0: address recipient = 0xd31f381ad54386895852f311fc3be2008c88cb27
   1: string topic = This is the string that represents the type of data being posted
@@ -78,7 +63,6 @@ dataArray.size: 7
   6 (0x0c0) 7473207468652074...617461206265696e6720706f73746564
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-06:(bytes<M>): bytes32
 params.size: 3
   0: address recipient = 0xd31f381ad54386895852f311fc3be2008c88cb27
   1: string topic = This is the string that represents the type of data being posted
@@ -89,15 +73,9 @@ params.size: 3
   2: bytes32 data = 0x516d51344e3338384c736e77384e486e4a72526f59327561676d5071736d3353
 ==================================================
 
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : 
-TIME ~ CLOCK - <INFO>  : inputStr: : 
 params.size: 0
 ==================================================
 
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : 
-TIME ~ CLOCK - <INFO>  : inputStr: : 000000000000000000000000d31f381ad54386895852f311fc3be2008c88cb270000000000000000000000000000000000000000000000000000000000000080516d51344e3338384c736e77384e486e4a72526f59327561676d5071736d33533641436955616645364b6b32506f0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000040546869732069732074686520737472696e67207468617420726570726573656e7473207468652074797065206f662064617461206265696e6720706f73746564
 
 level: 1
 readOffset: 0
@@ -116,7 +94,6 @@ dataArray.size: 7
   6 (0x0c0) 7473207468652074...617461206265696e6720706f73746564
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-03:(address): address
 params.size: 3
   0: address recipient = 0xd31f381ad54386895852f311fc3be2008c88cb27
   1: string topic = <>
@@ -139,7 +116,6 @@ dataArray.size: 7
   6 (0x0c0) 7473207468652074...617461206265696e6720706f73746564
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-08:(string): string
 params.size: 3
   0: address recipient = 0xd31f381ad54386895852f311fc3be2008c88cb27
   1: string topic = This is the string that represents the type of data being posted
@@ -162,7 +138,6 @@ dataArray.size: 7
   6 (0x0c0) 7473207468652074...617461206265696e6720706f73746564
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-06:(bytes<M>): bytes32
 params.size: 3
   0: address recipient = 0xd31f381ad54386895852f311fc3be2008c88cb27
   1: string topic = This is the string that represents the type of data being posted
@@ -173,9 +148,6 @@ params.size: 3
   2: bytes32 data = 0x516d51344e3338384c736e77384e486e4a72526f59327561676d5071736d3353
 ==================================================
 
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : 
-TIME ~ CLOCK - <INFO>  : inputStr: : 
 params.size: 0
 ==================================================
 

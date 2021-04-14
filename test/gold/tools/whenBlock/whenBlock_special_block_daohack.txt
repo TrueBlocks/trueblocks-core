@@ -1,6 +1,4 @@
 whenBlock argc: 3 [1:daohack] [2:-v] 
 whenBlock daohack -v 
-TIME ~ CLOCK - <INFO>  : block_list
-TIME ~ CLOCK - <INFO>  :   daohack
 blocknumber	timestamp	date	name
 1718497	1466134488	2016-06-17 03:34:48 UTC	daohack

@@ -1,7 +1,5 @@
 ethNames argc: 4 [1:tip] [2:--fmt] [3:api] 
 ethNames tip --fmt api 
-TIME ~ CLOCK - <INFO>  : terms
-TIME ~ CLOCK - <INFO>  :   tip
 {"data": [
   {
     "tags": "31-Gitcoin Grants:Grant",

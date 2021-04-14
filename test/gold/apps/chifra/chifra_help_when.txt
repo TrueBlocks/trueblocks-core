@@ -1,6 +1,5 @@
 chifra argc: 3 [1:when] [2:--help] 
 chifra when --help 
-TIME ~ CLOCK - <INFO>  : mode: when
 chifra when argc: 2 [1:--help] 
 chifra when --help 
 PROG_NAME = [chifra when]

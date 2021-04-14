@@ -1,6 +1,5 @@
 chifra argc: 3 [1:quotes] [2:--help] 
 chifra quotes --help 
-TIME ~ CLOCK - <INFO>  : mode: quotes
 chifra quotes argc: 2 [1:--help] 
 chifra quotes --help 
 PROG_NAME = [chifra quotes]

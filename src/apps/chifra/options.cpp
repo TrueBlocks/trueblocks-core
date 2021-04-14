@@ -105,7 +105,7 @@ bool COptions::call_command(int argc, const char* argv[]) {
         }
     }
 
-    LOG_CALL(os.str());
+    LOG_TEST_CALL(os.str());
 
     // Make the actual system call and return the result
     EXIT_NOMSG(system(os.str().c_str()));

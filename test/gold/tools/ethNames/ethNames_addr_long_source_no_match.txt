@@ -1,6 +1,3 @@
 ethNames argc: 6 [1:Ether] [2:1e17] [3:--verbose] [4:--fmt] [5:txt] 
 ethNames Ether 1e17 --verbose --fmt txt 
-TIME ~ CLOCK - <INFO>  : terms
-TIME ~ CLOCK - <INFO>  :   Ether
-TIME ~ CLOCK - <INFO>  :   1e17
 No results for Ether 1e17 --verbose:1

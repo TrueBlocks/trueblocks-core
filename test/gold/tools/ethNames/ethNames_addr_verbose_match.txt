@@ -1,7 +1,5 @@
 ethNames argc: 5 [1:0xb6] [2:--verbose] [3:--fmt] [4:txt] 
 ethNames 0xb6 --verbose --fmt txt 
-TIME ~ CLOCK - <INFO>  : terms
-TIME ~ CLOCK - <INFO>  :   0xb6
 tags	address	name	symbol	decimals	source
 36-Balancer	0xb618f903ad1d00d6f7b92f5b0954dcdc056fc533	Balancer DAO
 31-Gitcoin Grants:Grant	0xb61a98a0e542dcea1da7c44c2e8017373b95d350	Grant 1250 Borderless Basic Income -- Decentralized Ubi and Distributions				https://gitcoin.co/grants/1250/borderless-basic-income-decentralized-ubi-and-dis

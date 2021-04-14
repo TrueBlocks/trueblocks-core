@@ -1,7 +1,5 @@
 grabABI argc: 2 [1:0xffa93aacf49297d51e211817452839052fdfb961] 
 grabABI 0xffa93aacf49297d51e211817452839052fdfb961 
-TIME ~ CLOCK - <INFO>  : addrs
-TIME ~ CLOCK - <INFO>  :   0xffa93aacf49297d51e211817452839052fdfb961
 encoding	type	name	signature	input_names	output_names
 	constructor		()		,
 0x983b2d56	function	addMinter	addMinter(address)	_addr,	,

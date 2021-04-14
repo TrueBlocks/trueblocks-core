@@ -1,11 +1,5 @@
 getState argc: 4 [1:--call] [2:0x2260fac5e5542a773aa44fbcfedf7c193bc2c599!0x06fdde03] [3:10092000] 
 getState --call 0x2260fac5e5542a773aa44fbcfedf7c193bc2c599!0x06fdde03 10092000 
-TIME ~ CLOCK - <INFO>  : blocks
-TIME ~ CLOCK - <INFO>  :   10092000
-TIME ~ CLOCK - <INFO>  : call: 0x2260fac5e5542a773aa44fbcfedf7c193bc2c599!0x06fdde03
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : 
-TIME ~ CLOCK - <INFO>  : inputStr: : 0x0000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000000b5772617070656420425443000000000000000000000000000000000000000000
 
 level: 1
 readOffset: 0
@@ -18,7 +12,6 @@ dataArray.size: 3
   2 (0x040) 5772617070656420...00000000000000000000000000000000
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-08:(string): string
 params.size: 1
   0: string _name = Wrapped BTC
 params.size: 1

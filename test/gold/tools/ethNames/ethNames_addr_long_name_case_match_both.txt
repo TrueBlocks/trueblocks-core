@@ -1,8 +1,4 @@
 ethNames argc: 6 [1:0xcb] [2:Humaniq] [3:--match_case] [4:--fmt] [5:txt] 
 ethNames 0xcb Humaniq --match_case --fmt txt 
-TIME ~ CLOCK - <INFO>  : terms
-TIME ~ CLOCK - <INFO>  :   0xcb
-TIME ~ CLOCK - <INFO>  :   Humaniq
-TIME ~ CLOCK - <INFO>  : match_case: true
 tags	address	name	symbol	decimals
 50-Tokens:ERC20	0xcbcc0f036ed4788f63fc0fee32873d6a7487b908	Humaniq	HMQ		8

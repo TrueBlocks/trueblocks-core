@@ -1,6 +1,5 @@
 chifra argc: 3 [1:slurp] [2:--help] 
 chifra slurp --help 
-TIME ~ CLOCK - <INFO>  : mode: slurp
 chifra slurp argc: 2 [1:--help] 
 chifra slurp --help 
 PROG_NAME = [chifra slurp]

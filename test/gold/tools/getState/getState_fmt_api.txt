@@ -1,9 +1,5 @@
 getState argc: 5 [1:0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98] [2:--fmt] [3:api] [4:2000000] 
 getState 0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98 --fmt api 2000000 
-TIME ~ CLOCK - <INFO>  : addrs
-TIME ~ CLOCK - <INFO>  :   0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98
-TIME ~ CLOCK - <INFO>  : blocks
-TIME ~ CLOCK - <INFO>  :   2000000
 {"data": [
   {
     "blockNumber": 2000000,

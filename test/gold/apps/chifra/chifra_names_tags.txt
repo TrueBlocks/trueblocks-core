@@ -1,10 +1,8 @@
 chifra argc: 3 [1:names] [2:--tags] 
 chifra names --tags 
-TIME ~ CLOCK - <INFO>  : mode: names
 chifra names argc: 2 [1:--tags] 
 chifra names --tags 
 PROG_NAME = [chifra names]
-TIME ~ CLOCK - <INFO>  : tags: true
 tags
 
 30-Contracts

@@ -1,19 +1,5 @@
 acctExport argc: 6 [1:0x8b3b3b624c3c0397d3da8fd861512393d51dcbac] [2:--factory] [3:--traces] [4:--end] [5:1603174] 
 acctExport 0x8b3b3b624c3c0397d3da8fd861512393d51dcbac --factory --traces --end 1603174 
-TIME ~ CLOCK - <INFO>  : addrs
-TIME ~ CLOCK - <INFO>  :   0x8b3b3b624c3c0397d3da8fd861512393d51dcbac
-TIME ~ CLOCK - <INFO>  : traces: true
-TIME ~ CLOCK - <INFO>  : skip_ddos: true
-TIME ~ CLOCK - <INFO>  : factory: true
-TIME ~ CLOCK - <INFO>  : Monitor found for: 0x8b3b3b624c3c0397d3da8fd861512393d51dcbac
-TIME ~ CLOCK - <INFO>  : Last visited block: 5000001
-TIME ~ CLOCK - <INFO>  : stats.nFiles: --value--
-TIME ~ CLOCK - <INFO>  : stats.nSkipped: --value--
-TIME ~ CLOCK - <INFO>  : nMonitors: 1
-TIME ~ CLOCK - <INFO>  : exportRange.first: 0
-TIME ~ CLOCK - <INFO>  : exportRange.second: 1603174
-TIME ~ CLOCK - <INFO>  : listRange.first: 5000001
-TIME ~ CLOCK - <INFO>  : listRange.second: --latest--
 blocknumber	transactionindex	traceaddress	action::calltype	error	action::from	action::to	action::value	action::ether	action::gas	result::gasused	action::input	compressedtrace	result::output
 1600495	9	null-s	creation		0x0	0x8b3b3b624c3c0397d3da8fd861512393d51dcbac	0	0.000000000000000000	2192168	823600			
 1600546	15	0-s	creation		0x0	0xa8eced73b863886478a81b411868fbac8ffbd334	0	0.000000000000000000	195789	155966			

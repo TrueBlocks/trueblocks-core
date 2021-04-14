@@ -1,7 +1,5 @@
 getBlock argc: 3 [1:728708] [2:--parity] 
 getBlock 728708 --parity 
-TIME ~ CLOCK - <INFO>  : blocks
-TIME ~ CLOCK - <INFO>  :   728708
 { "data": [
 {
   "difficulty": "0x80001821ea8",

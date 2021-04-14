@@ -1,13 +1,6 @@
 getTokenInfo argc: 4 [1:0xd26114cd6ee289accf82350c8d8487fedb8a0c07] [2:--parts] [3:all] 
 getTokenInfo 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 --parts all 
-TIME ~ CLOCK - <INFO>  : addrs
-TIME ~ CLOCK - <INFO>  :   0xd26114cd6ee289accf82350c8d8487fedb8a0c07
-TIME ~ CLOCK - <INFO>  : parts
-TIME ~ CLOCK - <INFO>  :   all
 address	name	symbol	decimals	totalsupply
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : 
-TIME ~ CLOCK - <INFO>  : inputStr: : 0x000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000084f4d47546f6b656e000000000000000000000000000000000000000000000000
 
 level: 1
 readOffset: 0
@@ -20,16 +13,12 @@ dataArray.size: 3
   2 (0x040) 4f4d47546f6b656e...00000000000000000000000000000000
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-08:(string): string
 params.size: 1
   0: string _name = OMGToken
 params.size: 1
   0: string _name = OMGToken
 ==================================================
 
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : 
-TIME ~ CLOCK - <INFO>  : inputStr: : 0x000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000034f4d470000000000000000000000000000000000000000000000000000000000
 
 level: 1
 readOffset: 0
@@ -42,19 +31,10 @@ dataArray.size: 3
   2 (0x040) 4f4d470000000000...00000000000000000000000000000000
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-08:(string): string
 params.size: 1
   0: string _symbol = OMG
 params.size: 1
   0: string _symbol = OMG
 ==================================================
 
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : 
-TIME ~ CLOCK - <INFO>  : inputStr: : 0x0000000000000000000000000000000000000000000000000000000000000012
-TIME ~ CLOCK - <INFO>  : Parse func found: : uint8
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : 
-TIME ~ CLOCK - <INFO>  : inputStr: : 0x00000000000000000000000000000000000000000074021e45de4e977a570f4f
-TIME ~ CLOCK - <INFO>  : Parse func found: : uint256
 0xd26114cd6ee289accf82350c8d8487fedb8a0c07	OMGToken	OMG	18	"140245398.245132780789239631"

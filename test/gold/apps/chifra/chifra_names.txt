@@ -1,12 +1,8 @@
 chifra argc: 5 [1:names] [2:--names] [3:50-Tokens] [4:--expand] 
 chifra names --names 50-Tokens --expand 
-TIME ~ CLOCK - <INFO>  : mode: names
 chifra names argc: 3 [1:50-Tokens] [2:--expand] 
 chifra names 50-Tokens --expand 
 PROG_NAME = [chifra names]
-TIME ~ CLOCK - <INFO>  : terms
-TIME ~ CLOCK - <INFO>  :   50-Tokens
-TIME ~ CLOCK - <INFO>  : expand: true
 tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefund	is_contract	is_erc20	is_erc721
 50-Tokens:ERC20	0x0000000000001b84b1cb32787b0d64758d019317	HomeWork 🏠🛠️	HWK	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x0000000000004946c0e9f43f4dee607b0ef1fa1c	1inch.exchange v2	CHI	On chain	18		false	false	false	true	true	false

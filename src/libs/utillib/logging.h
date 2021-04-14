@@ -220,8 +220,27 @@ extern logger<log_policy_i>* eLogger;
 #define SEP8(a) LOG8(cTeal + string_q(10, '-') + (a) + string_q(10, '-') + cOff)
 #define LOG_PROGRESS(op, progress, goal, post)                                                                         \
     LOG_PROG((op), " ", padNum6T(uint64_t(progress)), " of ", padNum6T(uint64_t(goal)), (post))
-#define LOG_CALL(a)                                                                                                    \
-    { LOG4(bWhite, l_funcName, " ----> ", (isTestMode() ? substitute((a), getCachePath(""), "$CACHE/") : (a)), cOff); }
+#else
+#define LOG0(...)
+#define LOG1(...)
+#define LOG2(...)
+#define LOG3(...)
+#define LOG4(...)
+#define LOG8(...)
+#define LOG_INFO(...)
+#define LOG_WARN(...)
+#define LOG_ERR(...)
+#define LOG_FATAL(...)
+#define SEP1(...)
+#define SEP2(...)
+#define SEP3(...)
+#define SEP4(...)
+#define SEP5(...)
+#define LOG_PROGRESS(...)
+#endif
+
+// #ifdef LOGGING_LEVEL_TEST Turn the on before include in individual files if needed
+#ifdef LOGGING_LEVEL_TEST
 #define LOG_TEST(a, b, is_default)                                                                                     \
     {                                                                                                                  \
         if (isTestMode() && !(is_default)) {                                                                           \
@@ -247,31 +266,13 @@ extern logger<log_policy_i>* eLogger;
             }                                                                                                          \
         }                                                                                                              \
     }
-#define LOG_MARKER(l)                                                                                                  \
-    LOG_INFO("\n");                                                                                                    \
-    LOG_INFO(string_q((l), '-'));
+#define LOG_TEST_CALL(a)                                                                                               \
+    { LOG4(bWhite, l_funcName, " ----> ", (isTestMode() ? substitute((a), getCachePath(""), "$CACHE/") : (a)), cOff); }
 #else
-#define LOG0(...)
-#define LOG1(...)
-#define LOG2(...)
-#define LOG3(...)
-#define LOG4(...)
-#define LOG8(...)
-#define LOG_INFO(...)
-#define LOG_WARN(...)
-#define LOG_ERR(...)
-#define LOG_FATAL(...)
-#define SEP1(...)
-#define SEP2(...)
-#define SEP3(...)
-#define SEP4(...)
-#define SEP5(...)
-#define LOG_PROGRESS(...)
-#define LOG_CALL(a)
-#define LOG_TEST(a, b)
+#define LOG_TEST(a, b, is_default)
 #define LOG_TEST_BOOL(a, b)
 #define LOG_TEST_LIST(a, b, is_default)
-#define LOG_MARKER(l)
+#define LOG_TEST_CALL(a)
 #endif
 
 // The LOG parts of these routines disappear if turned off, but they still do their work because of the returns

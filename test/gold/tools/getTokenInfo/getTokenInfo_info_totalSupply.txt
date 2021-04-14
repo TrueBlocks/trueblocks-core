@@ -1,12 +1,4 @@
 getTokenInfo argc: 4 [1:0xd26114cd6ee289accf82350c8d8487fedb8a0c07] [2:--parts] [3:totalSupply] 
 getTokenInfo 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 --parts totalSupply 
-TIME ~ CLOCK - <INFO>  : addrs
-TIME ~ CLOCK - <INFO>  :   0xd26114cd6ee289accf82350c8d8487fedb8a0c07
-TIME ~ CLOCK - <INFO>  : parts
-TIME ~ CLOCK - <INFO>  :   totalSupply
 address	totalsupply
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : 
-TIME ~ CLOCK - <INFO>  : inputStr: : 0x00000000000000000000000000000000000000000074021e45de4e977a570f4f
-TIME ~ CLOCK - <INFO>  : Parse func found: : uint256
 0xd26114cd6ee289accf82350c8d8487fedb8a0c07	"140245398.245132780789239631"

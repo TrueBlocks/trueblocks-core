@@ -1,6 +1,4 @@
 whenBlock argc: 2 [1:spurious] 
 whenBlock spurious 
-TIME ~ CLOCK - <INFO>  : block_list
-TIME ~ CLOCK - <INFO>  :   spurious
 blocknumber	timestamp	date	name
 2675000	1479831344	2016-11-22 16:15:44 UTC	spurious

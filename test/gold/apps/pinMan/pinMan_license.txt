@@ -1,5 +1,4 @@
 pinMan argc: 2 [1:--license] 
 pinMan --license 
-TIME ~ CLOCK - <INFO>  : license: true
 apikey	secretkey
 --license_codes--	--license_codes--

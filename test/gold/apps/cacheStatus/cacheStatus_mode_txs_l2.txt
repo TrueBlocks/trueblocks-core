@@ -1,11 +1,5 @@
 cacheStatus argc: 7 [1:caches] [2:--types] [3:transactions] [4:--details] [5:--depth] [6:2] 
 cacheStatus caches --types transactions --details --depth 2 
-TIME ~ CLOCK - <INFO>  : modes
-TIME ~ CLOCK - <INFO>  :   caches
-TIME ~ CLOCK - <INFO>  : details: true
-TIME ~ CLOCK - <INFO>  : types
-TIME ~ CLOCK - <INFO>  :   transactions
-TIME ~ CLOCK - <INFO>  : depth: 2
 {
   "client_version": "Client version",
   "client_ids": "chainId: 1 networkId: 1",

@@ -1,6 +1,5 @@
 getTrace argc: 5 [1:2222222.0] [2:2332332.0] [3:--fmt] [4:json] 
 getTrace 2222222.0 2332332.0 --fmt json 
-TIME ~ CLOCK - <INFO>  : skip_ddos: true
 { "data": [
   {
     "blockHash": "0xc65ac7164218ff90ca8101c360f717c465da10bd63007b071c26dd7dedd41324",

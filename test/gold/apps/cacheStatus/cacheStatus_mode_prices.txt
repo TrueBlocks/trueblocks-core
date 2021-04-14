@@ -1,9 +1,5 @@
 cacheStatus argc: 4 [1:caches] [2:--types] [3:prices] 
 cacheStatus caches --types prices 
-TIME ~ CLOCK - <INFO>  : modes
-TIME ~ CLOCK - <INFO>  :   caches
-TIME ~ CLOCK - <INFO>  : types
-TIME ~ CLOCK - <INFO>  :   prices
 {
   "client_version": "Client version",
   "client_ids": "chainId: 1 networkId: 1",

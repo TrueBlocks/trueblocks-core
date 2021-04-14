@@ -1,6 +1,4 @@
 whereBlock argc: 2 [1:1001001] 
 whereBlock 1001001 
-TIME ~ CLOCK - <INFO>  : blocks
-TIME ~ CLOCK - <INFO>  :   1001001
 blocknumber	path	cached
 1001001	./blocks/00/10/01/001001001.bin	true

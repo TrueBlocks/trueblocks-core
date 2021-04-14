@@ -1,11 +1,5 @@
 getState argc: 4 [1:--call] [2:0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2!0x06fdde03] [3:10092000] 
 getState --call 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2!0x06fdde03 10092000 
-TIME ~ CLOCK - <INFO>  : blocks
-TIME ~ CLOCK - <INFO>  :   10092000
-TIME ~ CLOCK - <INFO>  : call: 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2!0x06fdde03
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : 
-TIME ~ CLOCK - <INFO>  : inputStr: : 0x0000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000000d5772617070656420457468657200000000000000000000000000000000000000
 
 level: 1
 readOffset: 0
@@ -18,7 +12,6 @@ dataArray.size: 3
   2 (0x040) 5772617070656420...00000000000000000000000000000000
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-08:(string): string
 params.size: 1
   0: string _name = Wrapped Ether
 params.size: 1

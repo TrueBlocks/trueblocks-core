@@ -1,7 +1,5 @@
 whenBlock argc: 2 [1:myblock] 
 whenBlock myblock 
-TIME ~ CLOCK - <INFO>  : block_list
-TIME ~ CLOCK - <INFO>  :   myblock
 
   The given value 'myblock' is not a numeral or a special named block.
 

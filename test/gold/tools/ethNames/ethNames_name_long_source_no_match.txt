@@ -1,5 +1,3 @@
 ethNames argc: 5 [1:no_ETHER] [2:--verbose] [3:--fmt] [4:txt] 
 ethNames no_ETHER --verbose --fmt txt 
-TIME ~ CLOCK - <INFO>  : terms
-TIME ~ CLOCK - <INFO>  :   no_ETHER
 No results for no_ETHER --verbose:1

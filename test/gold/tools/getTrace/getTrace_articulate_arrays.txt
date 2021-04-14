@@ -1,11 +1,6 @@
 getTrace argc: 6 [1:0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f] [2:--articulate] [3:--fmt] [4:api] [5:--verbose] 
 getTrace 0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f --articulate --fmt api --verbose 
-TIME ~ CLOCK - <INFO>  : articulate: true
-TIME ~ CLOCK - <INFO>  : skip_ddos: true
 {"data": [
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : 
-TIME ~ CLOCK - <INFO>  : inputStr: : 000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000c0000000000000000000000000000000000000000000000000000000000000012000000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000500000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000015af1d78b58c400000000000000000000000000000000000000000000000000015af1d78b58c4000000000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000001bc16d674ec800000000000000000000000000000000000000000000000000001bc16d674ec80000
 
 level: 1
 readOffset: 0
@@ -29,7 +24,6 @@ dataArray.size: 12
  11 (0x160) 0000000000000000...00000000000000001bc16d674ec80000
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-09:([]): uint256[]
  level: 2
  readOffset: 4
  objectStart: 3
@@ -51,7 +45,6 @@ TIME ~ CLOCK - <INFO>  : Section-09:([]): uint256[]
   11 (0x160) 0000000000000000...00000000000000001bc16d674ec80000
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint256[2]
   level: 3
   readOffset: 4
   objectStart: 3
@@ -73,7 +66,6 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint256[2]
    11 (0x160) 0000000000000000...00000000000000001bc16d674ec80000
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
   params.size: 2
     0: uint256 = 6
     1: uint256 = <>
@@ -98,7 +90,6 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
    11 (0x160) 0000000000000000...00000000000000001bc16d674ec80000
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
   params.size: 2
     0: uint256 = 6
     1: uint256 = 5
@@ -132,7 +123,6 @@ dataArray.size: 12
  11 (0x160) 0000000000000000...00000000000000001bc16d674ec80000
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-09:([]): uint256[]
  level: 2
  readOffset: 7
  objectStart: 6
@@ -154,7 +144,6 @@ TIME ~ CLOCK - <INFO>  : Section-09:([]): uint256[]
   11 (0x160) 0000000000000000...00000000000000001bc16d674ec80000
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint256[2]
   level: 3
   readOffset: 7
   objectStart: 6
@@ -176,7 +165,6 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint256[2]
    11 (0x160) 0000000000000000...00000000000000001bc16d674ec80000
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
   params.size: 2
     0: uint256 = 25000000000000000000
     1: uint256 = <>
@@ -201,7 +189,6 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
    11 (0x160) 0000000000000000...00000000000000001bc16d674ec80000
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
   params.size: 2
     0: uint256 = 25000000000000000000
     1: uint256 = 25000000000000000000
@@ -235,7 +222,6 @@ dataArray.size: 12
  11 (0x160) 0000000000000000...00000000000000001bc16d674ec80000
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-09:([]): uint256[]
  level: 2
  readOffset: 10
  objectStart: 9
@@ -257,7 +243,6 @@ TIME ~ CLOCK - <INFO>  : Section-09:([]): uint256[]
   11 (0x160) 0000000000000000...00000000000000001bc16d674ec80000
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint256[2]
   level: 3
   readOffset: 10
   objectStart: 9
@@ -279,7 +264,6 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint256[2]
    11 (0x160) 0000000000000000...00000000000000001bc16d674ec80000
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
   params.size: 2
     0: uint256 = 2000000000000000000
     1: uint256 = <>
@@ -304,7 +288,6 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
    11 (0x160) 0000000000000000...00000000000000001bc16d674ec80000 <-r
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
   params.size: 2
     0: uint256 = 2000000000000000000
     1: uint256 = 2000000000000000000
@@ -321,9 +304,6 @@ params.size: 3
   2: uint256[] _dollarPrices = [2000000000000000000, 2000000000000000000]
 ==================================================
 
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : 
-TIME ~ CLOCK - <INFO>  : inputStr: : 
 params.size: 0
 ==================================================
 
@@ -367,15 +347,7 @@ params.size: 0
       ]
     },
     "compressedTrace": "acceptTheseAskRequestsAndBUY([6, 5] /*_keys*/, [25000000000000000000, 25000000000000000000] /*_tokenAmounts*/, [2000000000000000000, 2000000000000000000] /*_dollarPrices*/); "
-  }TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : 
-TIME ~ CLOCK - <INFO>  : inputStr: : 0000000000000000000000000000000000000000000000000000000000000000
-TIME ~ CLOCK - <INFO>  : Parse func found: : uint256
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : 
-TIME ~ CLOCK - <INFO>  : inputStr: : 0x00000000000000000000000000000000000000000000000000002af50c27a980
-TIME ~ CLOCK - <INFO>  : Parse func found: : uint256
-,  {
+  },  {
     "type": "call",
     "action": {
       "selfDestructed": "0x0",
@@ -412,15 +384,7 @@ TIME ~ CLOCK - <INFO>  : Parse func found: : uint256
       ]
     },
     "compressedTrace": "USD(0 /*_id*/); "
-  }TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : 
-TIME ~ CLOCK - <INFO>  : inputStr: : 0000000000000000000000000000000000000000000000000000000000000000
-TIME ~ CLOCK - <INFO>  : Parse func found: : uint256
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : 
-TIME ~ CLOCK - <INFO>  : inputStr: : 0x00000000000000000000000000000000000000000000000000002af50c27a980
-TIME ~ CLOCK - <INFO>  : Parse func found: : uint256
-,  {
+  },  {
     "type": "call",
     "action": {
       "selfDestructed": "0x0",

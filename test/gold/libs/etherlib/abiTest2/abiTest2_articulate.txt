@@ -1,10 +1,6 @@
 abiTest2 argc: 1 
 abiTest2 
-[TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : 
-TIME ~ CLOCK - <INFO>  : inputStr: : 0000000000000000000000007d655c57f71464b6f83811c55d84009cd9f5221c0000000000000000000000000000000000000000000000004563918244f40000
-TIME ~ CLOCK - <INFO>  : Parse func found: : address,uint256
-{
+[{
   "blockNumber": 10293554,
   "transactionIndex": 109,
   "from": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
@@ -40,26 +36,7 @@ TIME ~ CLOCK - <INFO>  : Parse func found: : address,uint256
   }
 }
 
-,TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : address
-TIME ~ CLOCK - <INFO>  : inputStr: : 0x0000000000000000000000006b175474e89094c44da98b954eedeac495271d0f
-TIME ~ CLOCK - <INFO>  : Parse func found: : address
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : uint256
-TIME ~ CLOCK - <INFO>  : inputStr: : 0x00000000000000000000000000000000000000000000001f711def073e900000
-TIME ~ CLOCK - <INFO>  : Parse func found: : uint256
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : address
-TIME ~ CLOCK - <INFO>  : inputStr: : 0x00000000000000000000000000de4b13153673bcae2616b67bf822500d325fc3
-TIME ~ CLOCK - <INFO>  : Parse func found: : address
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : 
-TIME ~ CLOCK - <INFO>  : inputStr: : 0x0000000000000000000000001719c7dc8216ce67f96171e1a817195ae075d78d
-TIME ~ CLOCK - <INFO>  : Parse func found: : address
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : 
-TIME ~ CLOCK - <INFO>  : inputStr: : 000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000020000000000000000000000006b175474e89094c44da98b954eedeac495271d0e00000000000000000000000000000000000000000000001f711def073e9000010000000000000000000000001719c7dc8216ce67f96171e1a817195ae075d78e0000000000000000000000006b175474e89094c44da98b954eedeac495271d0f00000000000000000000000000000000000000000000001f711def073e9000000000000000000000000000001719c7dc8216ce67f96171e1a817195ae075d78d
-
+,
 level: 1
 readOffset: 0
 objectStart: 0
@@ -81,7 +58,6 @@ dataArray.size: 8
   7 (0x0e0) 0000000000000000...8216ce67f96171e1a817195ae075d78d
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-09:([]): tuple[]
  level: 2
  readOffset: 2
  objectStart: 1
@@ -103,7 +79,6 @@ TIME ~ CLOCK - <INFO>  : Section-09:([]): tuple[]
    7 (0x0e0) 0000000000000000...8216ce67f96171e1a817195ae075d78d
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-10:([M]): tuple[2]
   level: 3
   readOffset: 2
   objectStart: 1
@@ -131,7 +106,6 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): tuple[2]
     7 (0x0e0) 0000000000000000...8216ce67f96171e1a817195ae075d78d
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-01:(tuple): tuple
    level: 4
    readOffset: 2
    objectStart: 1
@@ -151,7 +125,6 @@ TIME ~ CLOCK - <INFO>  : Section-01:(tuple): tuple
      7 (0x0e0) 0000000000000000...8216ce67f96171e1a817195ae075d78d
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-03:(address): address
    params.size: 3
      0: address token = 0x6b175474e89094c44da98b954eedeac495271d0e
      1: uint256 amount = <>
@@ -176,7 +149,6 @@ TIME ~ CLOCK - <INFO>  : Section-03:(address): address
      7 (0x0e0) 0000000000000000...8216ce67f96171e1a817195ae075d78d
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
    params.size: 3
      0: address token = 0x6b175474e89094c44da98b954eedeac495271d0e
      1: uint256 amount = 580000000000000000001
@@ -201,7 +173,6 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
      7 (0x0e0) 0000000000000000...8216ce67f96171e1a817195ae075d78d
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-03:(address): address
    params.size: 3
      0: address token = 0x6b175474e89094c44da98b954eedeac495271d0e
      1: uint256 amount = 580000000000000000001
@@ -247,7 +218,6 @@ TIME ~ CLOCK - <INFO>  : Section-03:(address): address
     7 (0x0e0) 0000000000000000...8216ce67f96171e1a817195ae075d78d
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-01:(tuple): tuple
    level: 4
    readOffset: 5
    objectStart: 1
@@ -267,7 +237,6 @@ TIME ~ CLOCK - <INFO>  : Section-01:(tuple): tuple
      7 (0x0e0) 0000000000000000...8216ce67f96171e1a817195ae075d78d
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-03:(address): address
    params.size: 3
      0: address token = 0x6b175474e89094c44da98b954eedeac495271d0f
      1: uint256 amount = <>
@@ -292,7 +261,6 @@ TIME ~ CLOCK - <INFO>  : Section-03:(address): address
      7 (0x0e0) 0000000000000000...8216ce67f96171e1a817195ae075d78d
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
    params.size: 3
      0: address token = 0x6b175474e89094c44da98b954eedeac495271d0f
      1: uint256 amount = 580000000000000000000
@@ -317,7 +285,6 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
      7 (0x0e0) 0000000000000000...8216ce67f96171e1a817195ae075d78d <-r
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-03:(address): address
    params.size: 3
      0: address token = 0x6b175474e89094c44da98b954eedeac495271d0f
      1: uint256 amount = 580000000000000000000
@@ -359,22 +326,6 @@ params.size: 1
     address recipient
 ==================================================
 
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : address
-TIME ~ CLOCK - <INFO>  : inputStr: : 0x0000000000000000000000006b175474e89094c44da98b954eedeac495271d0f
-TIME ~ CLOCK - <INFO>  : Parse func found: : address
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : uint256
-TIME ~ CLOCK - <INFO>  : inputStr: : 0x00000000000000000000000000000000000000000000001f711def073e900000
-TIME ~ CLOCK - <INFO>  : Parse func found: : uint256
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : address
-TIME ~ CLOCK - <INFO>  : inputStr: : 0x00000000000000000000000000de4b13153673bcae2616b67bf822500d325fc3
-TIME ~ CLOCK - <INFO>  : Parse func found: : address
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : 
-TIME ~ CLOCK - <INFO>  : inputStr: : 0x0000000000000000000000001719c7dc8216ce67f96171e1a817195ae075d78d
-TIME ~ CLOCK - <INFO>  : Parse func found: : address
 {
   "blockNumber": 10419885,
   "transactionIndex": 115,

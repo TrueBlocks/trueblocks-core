@@ -1,11 +1,8 @@
 chifra argc: 3 [1:blocks] [2:12] 
 chifra blocks 12 
-TIME ~ CLOCK - <INFO>  : mode: blocks
 chifra blocks argc: 2 [1:12] 
 chifra blocks 12 
 PROG_NAME = [chifra blocks]
-TIME ~ CLOCK - <INFO>  : blocks
-TIME ~ CLOCK - <INFO>  :   12
 { "data": [
 {
   "gasLimit": 5000,

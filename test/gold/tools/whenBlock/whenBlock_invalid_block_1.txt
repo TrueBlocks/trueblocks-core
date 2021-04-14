@@ -1,6 +1,4 @@
 whenBlock argc: 2 [1:0x0a] 
 whenBlock 0x0a 
-TIME ~ CLOCK - <INFO>  : block_list
-TIME ~ CLOCK - <INFO>  :   0x0a
 blocknumber	timestamp	date	name
 10	1438270128	2015-07-30 15:28:48 UTC

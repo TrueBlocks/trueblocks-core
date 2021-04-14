@@ -1,9 +1,5 @@
 blockScrape argc: 8 [1:--tool] [2:index] [3:--sleep] [4:.5] [5:--pin] [6:--verbose] [7:8] 
 blockScrape --tool index --sleep .5 --pin --verbose 8 
-TIME ~ CLOCK - <INFO>  : tool
-TIME ~ CLOCK - <INFO>  :   index
-TIME ~ CLOCK - <INFO>  : pin: true
-TIME ~ CLOCK - <INFO>  : sleep: 0.5
 TIME ~ CLOCK - : 4-----
 pgrep -lfa "blockScrape"
 blockScrape --tool index --sleep .5 --pin --verbose 8

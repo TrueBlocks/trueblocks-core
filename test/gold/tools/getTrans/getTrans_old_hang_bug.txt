@@ -1,10 +1,6 @@
 getTrans argc: 5 [1:6409270.108] [2:--articulate] [3:--fmt] [4:json] 
 getTrans 6409270.108 --articulate --fmt json 
-TIME ~ CLOCK - <INFO>  : articulate: true
 { "data": [
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : 
-TIME ~ CLOCK - <INFO>  : inputStr: : dd2f1e6e498202e86d8f5442af596580a4f03c2c5088d623ba0fcf0131e0897a91734a4d83596aa0000000000000000000000000000000000000000000000000000000000bebc2000000000000000000000000000000000000000000000000000000000011e1a300
 
 level: 1
 readOffset: 0
@@ -19,7 +15,6 @@ dataArray.size: 4
   3 (0x060) 0000000011e1a300...0000000011e1a300
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-09:([]): address[]
 TIME ~ CLOCK - <WARNG> : { "error8": "decodeAnObject: countLoc(418973819366999115) > dataArray.size(4)"},
 params.size: 2
   0: address[] destinations = <>

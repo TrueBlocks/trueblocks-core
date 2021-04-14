@@ -1,6 +1,5 @@
 chifra argc: 3 [1:traces] [2:--help] 
 chifra traces --help 
-TIME ~ CLOCK - <INFO>  : mode: traces
 chifra traces argc: 2 [1:--help] 
 chifra traces --help 
 PROG_NAME = [chifra traces]

@@ -649,6 +649,8 @@ string_q CCommandOption::debugCode(void) const {
     string_q fmt = isBool ? STR_DEBUG_DISPLAY_BOOL : isList ? STR_DEBUG_DISPLAY_LIST : STR_DEBUG_DISPLAY;
     if (command == "addrs2")
         replaceAll(fmt, "[{COMMAND}]", "addrs");
+    if (command == "transactions")
+        replaceAll(fmt, "[{COMMAND}]", "transList");
     return Format(fmt);
 }
 

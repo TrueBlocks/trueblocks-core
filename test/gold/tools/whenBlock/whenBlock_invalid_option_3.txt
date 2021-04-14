@@ -1,7 +1,5 @@
 whenBlock argc: 2 [1:0-0] 
 whenBlock 0-0 
-TIME ~ CLOCK - <INFO>  : block_list
-TIME ~ CLOCK - <INFO>  :   0-0
 
   'stop' must be strictly larger than 'start' Quitting...
 

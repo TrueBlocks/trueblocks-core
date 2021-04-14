@@ -1,12 +1,5 @@
 getState argc: 4 [1:--call] [2:0xbb2b8038a1640196fbe3e38816f3e67cba72d940!0x0dfe1681] [3:10092000] 
 getState --call 0xbb2b8038a1640196fbe3e38816f3e67cba72d940!0x0dfe1681 10092000 
-TIME ~ CLOCK - <INFO>  : blocks
-TIME ~ CLOCK - <INFO>  :   10092000
-TIME ~ CLOCK - <INFO>  : call: 0xbb2b8038a1640196fbe3e38816f3e67cba72d940!0x0dfe1681
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : 
-TIME ~ CLOCK - <INFO>  : inputStr: : 0x0000000000000000000000002260fac5e5542a773aa44fbcfedf7c193bc2c599
-TIME ~ CLOCK - <INFO>  : Parse func found: : address
 { "data": [
 {
   "blockNumber": 10092000,

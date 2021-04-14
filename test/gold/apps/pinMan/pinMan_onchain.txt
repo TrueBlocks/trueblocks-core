@@ -1,18 +1,12 @@
 pinMan argc: 2 [1:onchain] 
 pinMan onchain 
-TIME ~ CLOCK - <INFO>  : mode: onchain
 TIME ~ CLOCK - <INFO>  : latestBlock:	--latest--
 TIME ~ CLOCK - <INFO>  : unchainedIndexAddr:	0xcfd7f3b24f3551741f922fd8c4381aa4e00fc8fd
 chifra argc: 4 [1:state] [2:--call] [3:0xcfd7f3b24f3551741f922fd8c4381aa4e00fc8fd!0x337f3f32] 
 chifra state --call 0xcfd7f3b24f3551741f922fd8c4381aa4e00fc8fd!0x337f3f32 
-TIME ~ CLOCK - <INFO>  : mode: state
 chifra state argc: 3 [1:--call] [2:0xcfd7f3b24f3551741f922fd8c4381aa4e00fc8fd!0x337f3f32] 
 chifra state --call 0xcfd7f3b24f3551741f922fd8c4381aa4e00fc8fd!0x337f3f32 
 PROG_NAME = [chifra state]
-TIME ~ CLOCK - <INFO>  : call: 0xcfd7f3b24f3551741f922fd8c4381aa4e00fc8fd!0x337f3f32
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : 
-TIME ~ CLOCK - <INFO>  : inputStr: : 
 
 level: 1
 readOffset: 0
@@ -23,7 +17,6 @@ dataArray.size: 1
   0 (0x000) 0000000000000000...00000000000000000000000000000000 <=o <-r
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-08:(string): string
 params.size: 1
   0: string manifestHash = <>
 params.size: 1

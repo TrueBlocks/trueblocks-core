@@ -9,9 +9,6 @@ testName: decoding (uint[][3], uint) three sets of two
 testSig: function baz(uint[][3],uint) --> baz(uint256[][3],uint256)
 
 --------------------------------------------------
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : baz(uint256[][3],uint256)
-TIME ~ CLOCK - <INFO>  : inputStr: : 0x000000000000000000000000000000000000000000000000000000000000008000000000000000000000000000000000000000000000000000000000000000e00000000000000000000000000000000000000000000000000000000000000140000000000000000000000000000000000000000000000000000000000000000a000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000030000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000050000000000000000000000000000000000000000000000000000000000000006
 
 level: 1
 readOffset: 0
@@ -35,7 +32,6 @@ dataArray.size: 13
  12 (0x180) 0000000000000000...00000000000000000000000000000006
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint256[][3]
  level: 2
  readOffset: 0
  objectStart: 0
@@ -59,7 +55,6 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint256[][3]
   12 (0x180) 0000000000000000...00000000000000000000000000000006
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-09:([]): uint256[]
   level: 3
   readOffset: 5
   objectStart: 4
@@ -82,7 +77,6 @@ TIME ~ CLOCK - <INFO>  : Section-09:([]): uint256[]
    12 (0x180) 0000000000000000...00000000000000000000000000000006
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint256[2]
    level: 4
    readOffset: 5
    objectStart: 4
@@ -105,7 +99,6 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint256[2]
     12 (0x180) 0000000000000000...00000000000000000000000000000006
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
    params.size: 2
      0: uint256 = 1
      1: uint256 = <>
@@ -131,7 +124,6 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
     12 (0x180) 0000000000000000...00000000000000000000000000000006
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
    params.size: 2
      0: uint256 = 1
      1: uint256 = 2
@@ -165,7 +157,6 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
   12 (0x180) 0000000000000000...00000000000000000000000000000006
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-09:([]): uint256[]
   level: 3
   readOffset: 8
   objectStart: 7
@@ -188,7 +179,6 @@ TIME ~ CLOCK - <INFO>  : Section-09:([]): uint256[]
    12 (0x180) 0000000000000000...00000000000000000000000000000006
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint256[2]
    level: 4
    readOffset: 8
    objectStart: 7
@@ -211,7 +201,6 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint256[2]
     12 (0x180) 0000000000000000...00000000000000000000000000000006
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
    params.size: 2
      0: uint256 = 3
      1: uint256 = <>
@@ -237,7 +226,6 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
     12 (0x180) 0000000000000000...00000000000000000000000000000006
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
    params.size: 2
      0: uint256 = 3
      1: uint256 = 4
@@ -271,7 +259,6 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
   12 (0x180) 0000000000000000...00000000000000000000000000000006
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-09:([]): uint256[]
   level: 3
   readOffset: 11
   objectStart: 10
@@ -294,7 +281,6 @@ TIME ~ CLOCK - <INFO>  : Section-09:([]): uint256[]
    12 (0x180) 0000000000000000...00000000000000000000000000000006
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint256[2]
    level: 4
    readOffset: 11
    objectStart: 10
@@ -317,7 +303,6 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint256[2]
     12 (0x180) 0000000000000000...00000000000000000000000000000006
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
    params.size: 2
      0: uint256 = 5
      1: uint256 = <>
@@ -343,7 +328,6 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
     12 (0x180) 0000000000000000...00000000000000000000000000000006 <-r
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
    params.size: 2
      0: uint256 = 5
      1: uint256 = 6
@@ -380,7 +364,6 @@ dataArray.size: 13
  12 (0x180) 0000000000000000...00000000000000000000000000000006
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
 params.size: 2
   0: uint256[][3] val_0 = [[1, 2], [3, 4], [5, 6]]
   1: uint256 val_1 = 10
@@ -401,9 +384,6 @@ testName: decoding (uint[3][], uint) two sets of three
 testSig: function baz(uint[3][], uint) --> baz(uint256[3][],uint256)
 
 --------------------------------------------------
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : baz(uint256[3][],uint256)
-TIME ~ CLOCK - <INFO>  : inputStr: : 0x0000000000000000000000000000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000000000000a0000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000003000000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000050000000000000000000000000000000000000000000000000000000000000006
 
 level: 1
 readOffset: 0
@@ -423,7 +403,6 @@ dataArray.size: 9
   8 (0x100) 0000000000000000...00000000000000000000000000000006
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-09:([]): uint256[3][]
  level: 2
  readOffset: 3
  objectStart: 2
@@ -442,7 +421,6 @@ TIME ~ CLOCK - <INFO>  : Section-09:([]): uint256[3][]
    8 (0x100) 0000000000000000...00000000000000000000000000000006
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint256[3][2]
   level: 3
   readOffset: 3
   objectStart: 2
@@ -461,7 +439,6 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint256[3][2]
     8 (0x100) 0000000000000000...00000000000000000000000000000006
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint256[3]
    level: 4
    readOffset: 3
    objectStart: 2
@@ -481,7 +458,6 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint256[3]
      8 (0x100) 0000000000000000...00000000000000000000000000000006
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
    params.size: 3
      0: uint256 = 1
      1: uint256 = <>
@@ -505,7 +481,6 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
      8 (0x100) 0000000000000000...00000000000000000000000000000006
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
    params.size: 3
      0: uint256 = 1
      1: uint256 = 2
@@ -529,7 +504,6 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
      8 (0x100) 0000000000000000...00000000000000000000000000000006
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
    params.size: 3
      0: uint256 = 1
      1: uint256 = 2
@@ -555,7 +529,6 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
     8 (0x100) 0000000000000000...00000000000000000000000000000006
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint256[3]
    level: 4
    readOffset: 6
    objectStart: 2
@@ -575,7 +548,6 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint256[3]
      8 (0x100) 0000000000000000...00000000000000000000000000000006
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
    params.size: 3
      0: uint256 = 4
      1: uint256 = <>
@@ -599,7 +571,6 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
      8 (0x100) 0000000000000000...00000000000000000000000000000006
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
    params.size: 3
      0: uint256 = 4
      1: uint256 = 5
@@ -623,7 +594,6 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
      8 (0x100) 0000000000000000...00000000000000000000000000000006 <-r
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
    params.size: 3
      0: uint256 = 4
      1: uint256 = 5
@@ -656,7 +626,6 @@ dataArray.size: 9
   8 (0x100) 0000000000000000...00000000000000000000000000000006
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
 params.size: 2
   0: uint256[3][] val_0 = [[1, 2, 3], [4, 5, 6]]
   1: uint256 val_1 = 10
@@ -677,9 +646,6 @@ testName: Purposefully bogus data used to core dump, now ignores bad data
 testSig: function baz(address _from, address _to, uint256 _value, string _transferData) --> baz(address,address,uint256,string)
 
 --------------------------------------------------
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : baz(address,address,uint256,string)
-TIME ~ CLOCK - <INFO>  : inputStr: : 0x000000000000000000000000f3c9c5719eb4f26a3ab45cb86771827629f9a99900000000000000000000000071d402ac181de4a8739a15f5a56141f64fc522f80000000000000000000000000000000000000000000000190b89b8381678000000000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000025486920426f6220476c617365722d2d20486572652061726520796f757220746f6b656e7321
 
 level: 1
 readOffset: 0
@@ -699,7 +665,6 @@ dataArray.size: 7
   6 (0x0c0) 6b656e7321...6b656e7321
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-03:(address): address
 params.size: 4
   0: address _from = 0xf3c9c5719eb4f26a3ab45cb86771827629f9a999
   1: address _to = <>
@@ -724,7 +689,6 @@ dataArray.size: 7
   6 (0x0c0) 6b656e7321...6b656e7321
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-03:(address): address
 params.size: 4
   0: address _from = 0xf3c9c5719eb4f26a3ab45cb86771827629f9a999
   1: address _to = 0x71d402ac181de4a8739a15f5a56141f64fc522f8
@@ -749,7 +713,6 @@ dataArray.size: 7
   6 (0x0c0) 6b656e7321...6b656e7321
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
 params.size: 4
   0: address _from = 0xf3c9c5719eb4f26a3ab45cb86771827629f9a999
   1: address _to = 0x71d402ac181de4a8739a15f5a56141f64fc522f8
@@ -774,7 +737,6 @@ dataArray.size: 7
   6 (0x0c0) 6b656e7321...6b656e7321
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-08:(string): string
 TIME ~ CLOCK - <WARNG> : { "error4": "decodeAnObject: nItems(25981192414412801) > dataArray.size(7)"},
 params.size: 4
   0: address _from = 0xf3c9c5719eb4f26a3ab45cb86771827629f9a999
@@ -800,9 +762,6 @@ testName: Corrected data from above (fifth row was bogus above)
 testSig: function baz(address _from, address _to, uint256 _value, string _transferData) --> baz(address,address,uint256,string)
 
 --------------------------------------------------
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : baz(address,address,uint256,string)
-TIME ~ CLOCK - <INFO>  : inputStr: : 0x000000000000000000000000f3c9c5719eb4f26a3ab45cb86771827629f9a99900000000000000000000000071d402ac181de4a8739a15f5a56141f64fc522f80000000000000000000000000000000000000000000000190b89b8381678000000000000000000000000000000000000000000000000000000000000000000800000000000000000000000000000000000000000000000000000000000000025486920426f6220476c617365722d2d20486572652061726520796f757220746f6b656e7321
 
 level: 1
 readOffset: 0
@@ -822,7 +781,6 @@ dataArray.size: 7
   6 (0x0c0) 6b656e7321...6b656e7321
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-03:(address): address
 params.size: 4
   0: address _from = 0xf3c9c5719eb4f26a3ab45cb86771827629f9a999
   1: address _to = <>
@@ -847,7 +805,6 @@ dataArray.size: 7
   6 (0x0c0) 6b656e7321...6b656e7321
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-03:(address): address
 params.size: 4
   0: address _from = 0xf3c9c5719eb4f26a3ab45cb86771827629f9a999
   1: address _to = 0x71d402ac181de4a8739a15f5a56141f64fc522f8
@@ -872,7 +829,6 @@ dataArray.size: 7
   6 (0x0c0) 6b656e7321...6b656e7321
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
 params.size: 4
   0: address _from = 0xf3c9c5719eb4f26a3ab45cb86771827629f9a999
   1: address _to = 0x71d402ac181de4a8739a15f5a56141f64fc522f8
@@ -897,7 +853,6 @@ dataArray.size: 7
   6 (0x0c0) 6b656e7321...6b656e7321
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-08:(string): string
 params.size: 4
   0: address _from = 0xf3c9c5719eb4f26a3ab45cb86771827629f9a999
   1: address _to = 0x71d402ac181de4a8739a15f5a56141f64fc522f8
@@ -922,9 +877,6 @@ testName: decoding void
 testSig: function baz() --> baz()
 
 --------------------------------------------------
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : baz()
-TIME ~ CLOCK - <INFO>  : inputStr: : 0x0000000000000000000000000000000000000000000000000000000000000000
 params.size: 0
 ==================================================
 
@@ -940,10 +892,6 @@ testName: decoding int8
 testSig: function baz(int8) --> baz(int8)
 
 --------------------------------------------------
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : baz(int8)
-TIME ~ CLOCK - <INFO>  : inputStr: : 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe
-TIME ~ CLOCK - <INFO>  : Parse func found: : int8
 expected: -2 ?
 result:   -2 ? 1
 testName: decoding int8
@@ -956,10 +904,6 @@ testName: decoding int16
 testSig: function baz(int16) --> baz(int16)
 
 --------------------------------------------------
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : baz(int16)
-TIME ~ CLOCK - <INFO>  : inputStr: : 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe
-TIME ~ CLOCK - <INFO>  : Parse func found: : int16
 expected: -2 ?
 result:   -2 ? 1
 testName: decoding int16
@@ -972,10 +916,6 @@ testName: decoding int32
 testSig: function baz(int32) --> baz(int32)
 
 --------------------------------------------------
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : baz(int32)
-TIME ~ CLOCK - <INFO>  : inputStr: : 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe
-TIME ~ CLOCK - <INFO>  : Parse func found: : int32
 expected: -2 ?
 result:   -2 ? 1
 testName: decoding int32
@@ -988,9 +928,6 @@ testName: decoding int40
 testSig: function baz(int40) --> baz(int40)
 
 --------------------------------------------------
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : baz(int40)
-TIME ~ CLOCK - <INFO>  : inputStr: : 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe
 
 level: 1
 readOffset: 0
@@ -1001,7 +938,6 @@ dataArray.size: 1
   0 (0x000) ffffffffffffffff...fffffffffffffffffffffffffffffffe <=o <-r
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-05:(int): int40
 params.size: 1
   0: int40 val_0 = -2
 params.size: 1
@@ -1020,9 +956,6 @@ testName: decoding int48
 testSig: function baz(int48) --> baz(int48)
 
 --------------------------------------------------
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : baz(int48)
-TIME ~ CLOCK - <INFO>  : inputStr: : 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe
 
 level: 1
 readOffset: 0
@@ -1033,7 +966,6 @@ dataArray.size: 1
   0 (0x000) ffffffffffffffff...fffffffffffffffffffffffffffffffe <=o <-r
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-05:(int): int48
 params.size: 1
   0: int48 val_0 = -2
 params.size: 1
@@ -1052,9 +984,6 @@ testName: decoding int56
 testSig: function baz(int56) --> baz(int56)
 
 --------------------------------------------------
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : baz(int56)
-TIME ~ CLOCK - <INFO>  : inputStr: : 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe
 
 level: 1
 readOffset: 0
@@ -1065,7 +994,6 @@ dataArray.size: 1
   0 (0x000) ffffffffffffffff...fffffffffffffffffffffffffffffffe <=o <-r
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-05:(int): int56
 params.size: 1
   0: int56 val_0 = -2
 params.size: 1
@@ -1084,10 +1012,6 @@ testName: decoding int64
 testSig: function baz(int64) --> baz(int64)
 
 --------------------------------------------------
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : baz(int64)
-TIME ~ CLOCK - <INFO>  : inputStr: : 0xffffffffffffffffffffffffffffffffffffffffffffffffffffb29c26f344fe
-TIME ~ CLOCK - <INFO>  : Parse func found: : int64
 expected: -85091238591234 ?
 result:   -85091238591234 ? 1
 testName: decoding int64
@@ -1100,10 +1024,6 @@ testName: decoding int8
 testSig: function baz(int8) --> baz(int8)
 
 --------------------------------------------------
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : baz(int8)
-TIME ~ CLOCK - <INFO>  : inputStr: : 0x0000000000000000000000000000000000000000000000000000000000000002
-TIME ~ CLOCK - <INFO>  : Parse func found: : int8
 expected: 2 ?
 result:   2 ? 1
 testName: decoding int8
@@ -1116,10 +1036,6 @@ testName: decoding int16
 testSig: function baz(int16) --> baz(int16)
 
 --------------------------------------------------
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : baz(int16)
-TIME ~ CLOCK - <INFO>  : inputStr: : 0x0000000000000000000000000000000000000000000000000000000000000002
-TIME ~ CLOCK - <INFO>  : Parse func found: : int16
 expected: 2 ?
 result:   2 ? 1
 testName: decoding int16
@@ -1132,10 +1048,6 @@ testName: decoding int32
 testSig: function baz(int32) --> baz(int32)
 
 --------------------------------------------------
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : baz(int32)
-TIME ~ CLOCK - <INFO>  : inputStr: : 0x0000000000000000000000000000000000000000000000000000000000000002
-TIME ~ CLOCK - <INFO>  : Parse func found: : int32
 expected: 2 ?
 result:   2 ? 1
 testName: decoding int32
@@ -1148,9 +1060,6 @@ testName: decoding int40
 testSig: function baz(int40) --> baz(int40)
 
 --------------------------------------------------
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : baz(int40)
-TIME ~ CLOCK - <INFO>  : inputStr: : 0x0000000000000000000000000000000000000000000000000000000000000002
 
 level: 1
 readOffset: 0
@@ -1161,7 +1070,6 @@ dataArray.size: 1
   0 (0x000) 0000000000000000...00000000000000000000000000000002 <=o <-r
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-05:(int): int40
 params.size: 1
   0: int40 val_0 = 2
 params.size: 1
@@ -1180,9 +1088,6 @@ testName: decoding int48
 testSig: function baz(int48) --> baz(int48)
 
 --------------------------------------------------
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : baz(int48)
-TIME ~ CLOCK - <INFO>  : inputStr: : 0x0000000000000000000000000000000000000000000000000000000000000002
 
 level: 1
 readOffset: 0
@@ -1193,7 +1098,6 @@ dataArray.size: 1
   0 (0x000) 0000000000000000...00000000000000000000000000000002 <=o <-r
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-05:(int): int48
 params.size: 1
   0: int48 val_0 = 2
 params.size: 1
@@ -1212,9 +1116,6 @@ testName: decoding int56
 testSig: function baz(int56) --> baz(int56)
 
 --------------------------------------------------
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : baz(int56)
-TIME ~ CLOCK - <INFO>  : inputStr: : 0x0000000000000000000000000000000000000000000000000000000000000002
 
 level: 1
 readOffset: 0
@@ -1225,7 +1126,6 @@ dataArray.size: 1
   0 (0x000) 0000000000000000...00000000000000000000000000000002 <=o <-r
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-05:(int): int56
 params.size: 1
   0: int56 val_0 = 2
 params.size: 1
@@ -1244,10 +1144,6 @@ testName: decoding int64
 testSig: function baz(int64) --> baz(int64)
 
 --------------------------------------------------
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : baz(int64)
-TIME ~ CLOCK - <INFO>  : inputStr: : 0x0000000000000000000000000000000000000000000000000000000000000002
-TIME ~ CLOCK - <INFO>  : Parse func found: : int64
 expected: 2 ?
 result:   2 ? 1
 testName: decoding int64
@@ -1260,9 +1156,6 @@ testName: decoding int72
 testSig: function baz(int72) --> baz(int72)
 
 --------------------------------------------------
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : baz(int72)
-TIME ~ CLOCK - <INFO>  : inputStr: : 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe
 
 level: 1
 readOffset: 0
@@ -1273,7 +1166,6 @@ dataArray.size: 1
   0 (0x000) ffffffffffffffff...fffffffffffffffffffffffffffffffe <=o <-r
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-05:(int): int72
 params.size: 1
   0: int72 val_0 = -2
 params.size: 1
@@ -1292,9 +1184,6 @@ testName: decoding int80
 testSig: function baz(int80) --> baz(int80)
 
 --------------------------------------------------
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : baz(int80)
-TIME ~ CLOCK - <INFO>  : inputStr: : 0x0000000000000000000000000000000000000000000000000000b29c26f344fe
 
 level: 1
 readOffset: 0
@@ -1305,7 +1194,6 @@ dataArray.size: 1
   0 (0x000) 0000000000000000...00000000000000000000b29c26f344fe <=o <-r
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-05:(int): int80
 params.size: 1
   0: int80 val_0 = 196383738119422
 params.size: 1
@@ -1324,9 +1212,6 @@ testName: decoding int88
 testSig: function baz(int88) --> baz(int88)
 
 --------------------------------------------------
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : baz(int88)
-TIME ~ CLOCK - <INFO>  : inputStr: : 0x0000000000000000000000000000000000000000000000000000000000000002
 
 level: 1
 readOffset: 0
@@ -1337,7 +1222,6 @@ dataArray.size: 1
   0 (0x000) 0000000000000000...00000000000000000000000000000002 <=o <-r
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-05:(int): int88
 params.size: 1
   0: int88 val_0 = 2
 params.size: 1
@@ -1356,9 +1240,6 @@ testName: decoding int96
 testSig: function baz(int96) --> baz(int96)
 
 --------------------------------------------------
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : baz(int96)
-TIME ~ CLOCK - <INFO>  : inputStr: : 0x0000000000000000000000000000000000000000000000000000000000000002
 
 level: 1
 readOffset: 0
@@ -1369,7 +1250,6 @@ dataArray.size: 1
   0 (0x000) 0000000000000000...00000000000000000000000000000002 <=o <-r
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-05:(int): int96
 params.size: 1
   0: int96 val_0 = 2
 params.size: 1
@@ -1388,9 +1268,6 @@ testName: decoding int104
 testSig: function baz(int104) --> baz(int104)
 
 --------------------------------------------------
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : baz(int104)
-TIME ~ CLOCK - <INFO>  : inputStr: : 0x0000000000000000000000000000000000000000000000000000000000000002
 
 level: 1
 readOffset: 0
@@ -1401,7 +1278,6 @@ dataArray.size: 1
   0 (0x000) 0000000000000000...00000000000000000000000000000002 <=o <-r
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-05:(int): int104
 params.size: 1
   0: int104 val_0 = 2
 params.size: 1
@@ -1420,9 +1296,6 @@ testName: decoding int112
 testSig: function baz(int112) --> baz(int112)
 
 --------------------------------------------------
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : baz(int112)
-TIME ~ CLOCK - <INFO>  : inputStr: : 0x0000000000000000000000000000000000000000000000000000000000000002
 
 level: 1
 readOffset: 0
@@ -1433,7 +1306,6 @@ dataArray.size: 1
   0 (0x000) 0000000000000000...00000000000000000000000000000002 <=o <-r
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-05:(int): int112
 params.size: 1
   0: int112 val_0 = 2
 params.size: 1
@@ -1452,9 +1324,6 @@ testName: decoding int120
 testSig: function baz(int120) --> baz(int120)
 
 --------------------------------------------------
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : baz(int120)
-TIME ~ CLOCK - <INFO>  : inputStr: : 0x0000000000000000000000000000000000000000000000000000000000000002
 
 level: 1
 readOffset: 0
@@ -1465,7 +1334,6 @@ dataArray.size: 1
   0 (0x000) 0000000000000000...00000000000000000000000000000002 <=o <-r
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-05:(int): int120
 params.size: 1
   0: int120 val_0 = 2
 params.size: 1
@@ -1484,10 +1352,6 @@ testName: decoding uint8
 testSig: function baz(uint8) --> baz(uint8)
 
 --------------------------------------------------
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : baz(uint8)
-TIME ~ CLOCK - <INFO>  : inputStr: : 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe
-TIME ~ CLOCK - <INFO>  : Parse func found: : uint8
 expected: 254 ?
 result:   254 ? 1
 testName: decoding uint8
@@ -1500,10 +1364,6 @@ testName: decoding uint16
 testSig: function baz(uint16) --> baz(uint16)
 
 --------------------------------------------------
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : baz(uint16)
-TIME ~ CLOCK - <INFO>  : inputStr: : 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe
-TIME ~ CLOCK - <INFO>  : Parse func found: : uint16
 expected: 65534 ?
 result:   65534 ? 1
 testName: decoding uint16
@@ -1516,10 +1376,6 @@ testName: decoding uint32
 testSig: function baz(uint32) --> baz(uint32)
 
 --------------------------------------------------
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : baz(uint32)
-TIME ~ CLOCK - <INFO>  : inputStr: : 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe
-TIME ~ CLOCK - <INFO>  : Parse func found: : uint32
 expected: 4294967294 ?
 result:   4294967294 ? 1
 testName: decoding uint32
@@ -1532,9 +1388,6 @@ testName: decoding uint40
 testSig: function baz(uint40) --> baz(uint40)
 
 --------------------------------------------------
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : baz(uint40)
-TIME ~ CLOCK - <INFO>  : inputStr: : 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe
 
 level: 1
 readOffset: 0
@@ -1545,7 +1398,6 @@ dataArray.size: 1
   0 (0x000) ffffffffffffffff...fffffffffffffffffffffffffffffffe <=o <-r
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint40
 params.size: 1
   0: uint40 val_0 = 1099511627774
 params.size: 1
@@ -1564,9 +1416,6 @@ testName: decoding uint48
 testSig: function baz(uint48) --> baz(uint48)
 
 --------------------------------------------------
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : baz(uint48)
-TIME ~ CLOCK - <INFO>  : inputStr: : 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe
 
 level: 1
 readOffset: 0
@@ -1577,7 +1426,6 @@ dataArray.size: 1
   0 (0x000) ffffffffffffffff...fffffffffffffffffffffffffffffffe <=o <-r
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint48
 params.size: 1
   0: uint48 val_0 = 281474976710654
 params.size: 1
@@ -1596,9 +1444,6 @@ testName: decoding uint56
 testSig: function baz(uint56) --> baz(uint56)
 
 --------------------------------------------------
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : baz(uint56)
-TIME ~ CLOCK - <INFO>  : inputStr: : 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe
 
 level: 1
 readOffset: 0
@@ -1609,7 +1454,6 @@ dataArray.size: 1
   0 (0x000) ffffffffffffffff...fffffffffffffffffffffffffffffffe <=o <-r
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint56
 params.size: 1
   0: uint56 val_0 = 72057594037927934
 params.size: 1
@@ -1628,10 +1472,6 @@ testName: decoding uint64
 testSig: function baz(uint64) --> baz(uint64)
 
 --------------------------------------------------
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : baz(uint64)
-TIME ~ CLOCK - <INFO>  : inputStr: : 0xffffffffffffffffffffffffffffffffffffffffffffffffffffb29c26f344fe
-TIME ~ CLOCK - <INFO>  : Parse func found: : uint64
 expected: 18446658982470960382 ?
 result:   18446658982470960382 ? 1
 testName: decoding uint64
@@ -1644,10 +1484,6 @@ testName: decoding uint8
 testSig: function baz(uint8) --> baz(uint8)
 
 --------------------------------------------------
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : baz(uint8)
-TIME ~ CLOCK - <INFO>  : inputStr: : 0x0000000000000000000000000000000000000000000000000000000000000002
-TIME ~ CLOCK - <INFO>  : Parse func found: : uint8
 expected: 2 ?
 result:   2 ? 1
 testName: decoding uint8
@@ -1660,10 +1496,6 @@ testName: decoding uint16
 testSig: function baz(uint16) --> baz(uint16)
 
 --------------------------------------------------
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : baz(uint16)
-TIME ~ CLOCK - <INFO>  : inputStr: : 0x0000000000000000000000000000000000000000000000000000000000000002
-TIME ~ CLOCK - <INFO>  : Parse func found: : uint16
 expected: 2 ?
 result:   2 ? 1
 testName: decoding uint16
@@ -1676,10 +1508,6 @@ testName: decoding uint32
 testSig: function baz(uint32) --> baz(uint32)
 
 --------------------------------------------------
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : baz(uint32)
-TIME ~ CLOCK - <INFO>  : inputStr: : 0x0000000000000000000000000000000000000000000000000000000000000002
-TIME ~ CLOCK - <INFO>  : Parse func found: : uint32
 expected: 2 ?
 result:   2 ? 1
 testName: decoding uint32
@@ -1692,9 +1520,6 @@ testName: decoding uint40
 testSig: function baz(uint40) --> baz(uint40)
 
 --------------------------------------------------
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : baz(uint40)
-TIME ~ CLOCK - <INFO>  : inputStr: : 0x0000000000000000000000000000000000000000000000000000000000000002
 
 level: 1
 readOffset: 0
@@ -1705,7 +1530,6 @@ dataArray.size: 1
   0 (0x000) 0000000000000000...00000000000000000000000000000002 <=o <-r
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint40
 params.size: 1
   0: uint40 val_0 = 2
 params.size: 1
@@ -1724,9 +1548,6 @@ testName: decoding uint48
 testSig: function baz(uint48) --> baz(uint48)
 
 --------------------------------------------------
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : baz(uint48)
-TIME ~ CLOCK - <INFO>  : inputStr: : 0x0000000000000000000000000000000000000000000000000000000000000002
 
 level: 1
 readOffset: 0
@@ -1737,7 +1558,6 @@ dataArray.size: 1
   0 (0x000) 0000000000000000...00000000000000000000000000000002 <=o <-r
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint48
 params.size: 1
   0: uint48 val_0 = 2
 params.size: 1
@@ -1756,9 +1576,6 @@ testName: decoding uint56
 testSig: function baz(uint56) --> baz(uint56)
 
 --------------------------------------------------
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : baz(uint56)
-TIME ~ CLOCK - <INFO>  : inputStr: : 0x0000000000000000000000000000000000000000000000000000000000000002
 
 level: 1
 readOffset: 0
@@ -1769,7 +1586,6 @@ dataArray.size: 1
   0 (0x000) 0000000000000000...00000000000000000000000000000002 <=o <-r
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint56
 params.size: 1
   0: uint56 val_0 = 2
 params.size: 1
@@ -1788,10 +1604,6 @@ testName: decoding uint64
 testSig: function baz(uint64) --> baz(uint64)
 
 --------------------------------------------------
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : baz(uint64)
-TIME ~ CLOCK - <INFO>  : inputStr: : 0x0000000000000000000000000000000000000000000000000000000000000002
-TIME ~ CLOCK - <INFO>  : Parse func found: : uint64
 expected: 2 ?
 result:   2 ? 1
 testName: decoding uint64
@@ -1804,9 +1616,6 @@ testName: decoding uint72
 testSig: function baz(uint72) --> baz(uint72)
 
 --------------------------------------------------
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : baz(uint72)
-TIME ~ CLOCK - <INFO>  : inputStr: : 0x0000000000000000000000000000000000000000000000000000000000000002
 
 level: 1
 readOffset: 0
@@ -1817,7 +1626,6 @@ dataArray.size: 1
   0 (0x000) 0000000000000000...00000000000000000000000000000002 <=o <-r
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint72
 params.size: 1
   0: uint72 val_0 = 2
 params.size: 1
@@ -1836,9 +1644,6 @@ testName: decoding uint80
 testSig: function baz(uint80) --> baz(uint80)
 
 --------------------------------------------------
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : baz(uint80)
-TIME ~ CLOCK - <INFO>  : inputStr: : 0x0000000000000000000000000000000000000000000000000000b29c26f344fe
 
 level: 1
 readOffset: 0
@@ -1849,7 +1654,6 @@ dataArray.size: 1
   0 (0x000) 0000000000000000...00000000000000000000b29c26f344fe <=o <-r
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint80
 params.size: 1
   0: uint80 val_0 = 196383738119422
 params.size: 1
@@ -1868,9 +1672,6 @@ testName: decoding uint88
 testSig: function baz(uint88) --> baz(uint88)
 
 --------------------------------------------------
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : baz(uint88)
-TIME ~ CLOCK - <INFO>  : inputStr: : 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe
 
 level: 1
 readOffset: 0
@@ -1881,7 +1682,6 @@ dataArray.size: 1
   0 (0x000) ffffffffffffffff...fffffffffffffffffffffffffffffffe <=o <-r
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint88
 params.size: 1
   0: uint88 val_0 = 309485009821345068724781054
 params.size: 1
@@ -1900,9 +1700,6 @@ testName: decoding uint96
 testSig: function baz(uint96) --> baz(uint96)
 
 --------------------------------------------------
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : baz(uint96)
-TIME ~ CLOCK - <INFO>  : inputStr: : 0x0000000000000000000000000000000000000000000000000000000000000002
 
 level: 1
 readOffset: 0
@@ -1913,7 +1710,6 @@ dataArray.size: 1
   0 (0x000) 0000000000000000...00000000000000000000000000000002 <=o <-r
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint96
 params.size: 1
   0: uint96 val_0 = 2
 params.size: 1
@@ -1932,9 +1728,6 @@ testName: decoding uint104
 testSig: function baz(uint104) --> baz(uint104)
 
 --------------------------------------------------
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : baz(uint104)
-TIME ~ CLOCK - <INFO>  : inputStr: : 0x0000000000000000000000000000000000000000000000000000000000000002
 
 level: 1
 readOffset: 0
@@ -1945,7 +1738,6 @@ dataArray.size: 1
   0 (0x000) 0000000000000000...00000000000000000000000000000002 <=o <-r
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint104
 params.size: 1
   0: uint104 val_0 = 2
 params.size: 1
@@ -1964,9 +1756,6 @@ testName: decoding uint112
 testSig: function baz(uint112) --> baz(uint112)
 
 --------------------------------------------------
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : baz(uint112)
-TIME ~ CLOCK - <INFO>  : inputStr: : 0x0000000000000000000000000000000000000000000000000000000000000002
 
 level: 1
 readOffset: 0
@@ -1977,7 +1766,6 @@ dataArray.size: 1
   0 (0x000) 0000000000000000...00000000000000000000000000000002 <=o <-r
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint112
 params.size: 1
   0: uint112 val_0 = 2
 params.size: 1
@@ -1996,9 +1784,6 @@ testName: decoding uint120
 testSig: function baz(uint120) --> baz(uint120)
 
 --------------------------------------------------
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : baz(uint120)
-TIME ~ CLOCK - <INFO>  : inputStr: : 0x0000000000000000000000000000000000000000000000000000000000000002
 
 level: 1
 readOffset: 0
@@ -2009,7 +1794,6 @@ dataArray.size: 1
   0 (0x000) 0000000000000000...00000000000000000000000000000002 <=o <-r
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint120
 params.size: 1
   0: uint120 val_0 = 2
 params.size: 1
@@ -2028,10 +1812,6 @@ testName: decoding uint32
 testSig: function baz(uint32) --> baz(uint32)
 
 --------------------------------------------------
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : baz(uint32)
-TIME ~ CLOCK - <INFO>  : inputStr: : 0x000000000000000000000000000000000000000000000000000000000000002a
-TIME ~ CLOCK - <INFO>  : Parse func found: : uint32
 expected: 42 ?
 result:   42 ? 1
 testName: decoding uint32
@@ -2044,9 +1824,6 @@ testName: decoding string
 testSig: function baz(string) --> baz(string)
 
 --------------------------------------------------
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : baz(string)
-TIME ~ CLOCK - <INFO>  : inputStr: : 0x0000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000000b68656c6c6f20776f726c64000000000000000000000000000000000000000000
 
 level: 1
 readOffset: 0
@@ -2059,7 +1836,6 @@ dataArray.size: 3
   2 (0x040) 68656c6c6f20776f...00000000000000000000000000000000
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-08:(string): string
 params.size: 1
   0: string val_0 = hello world
 params.size: 1
@@ -2078,9 +1854,6 @@ testName: decoding bool,uint32
 testSig: function baz(bool,uint32) --> baz(bool,uint32)
 
 --------------------------------------------------
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : baz(bool,uint32)
-TIME ~ CLOCK - <INFO>  : inputStr: : 0x0000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000002a
 
 level: 1
 readOffset: 0
@@ -2093,7 +1866,6 @@ dataArray.size: 2
   1 (0x020) 0000000000000000...0000000000000000000000000000002a
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-02:(bool): bool
 params.size: 2
   0: bool val_0 = true
   1: uint32 val_1 = <>
@@ -2109,7 +1881,6 @@ dataArray.size: 2
   1 (0x020) 0000000000000000...0000000000000000000000000000002a <-r
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint32
 params.size: 2
   0: bool val_0 = true
   1: uint32 val_1 = 42
@@ -2130,9 +1901,6 @@ testName: decoding bytes
 testSig: function baz(bytes) --> baz(bytes)
 
 --------------------------------------------------
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : baz(bytes)
-TIME ~ CLOCK - <INFO>  : inputStr: : 0x0000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000002c68656c6c6f20776f726c6468656c6c6f20776f726c6468656c6c6f20776f726c6468656c6c6f20776f726c640000000000000000000000000000000000000000
 
 level: 1
 readOffset: 0
@@ -2146,7 +1914,6 @@ dataArray.size: 4
   3 (0x060) 6468656c6c6f2077...00000000000000000000000000000000
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-08:(bytes): bytes
 params.size: 1
   0: bytes val_0 = 0x68656c6c6f20776f726c6468656c6c6f20776f726c6468656c6c6f20776f726c6468656c6c6f20776f726c64
 params.size: 1
@@ -2165,9 +1932,6 @@ testName: decode bytes[] and bytes32 three byte32s in array and extra bytes32
 testSig: function baz(bytes[] a, bytes32 b) --> baz(bytes[],bytes32)
 
 --------------------------------------------------
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : baz(bytes[],bytes32)
-TIME ~ CLOCK - <INFO>  : inputStr: : 0x0000000000000000000000000000000000000000000000000000000000000040cb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb898110000000000000000000000000000000000000000000000000000000000000003000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573
 
 level: 1
 readOffset: 0
@@ -2184,7 +1948,6 @@ dataArray.size: 6
   5 (0x0a0) 00120aa407bdbff1...56b589b427167ec414bccbe0cfdfd573
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-09:([]): bytes[]
  level: 2
  readOffset: 3
  objectStart: 2
@@ -2200,7 +1963,6 @@ TIME ~ CLOCK - <INFO>  : Section-09:([]): bytes[]
    5 (0x0a0) 00120aa407bdbff1...56b589b427167ec414bccbe0cfdfd573
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-10:([M]): bytes32[3]
   level: 3
   readOffset: 3
   objectStart: 2
@@ -2217,7 +1979,6 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): bytes32[3]
     5 (0x0a0) 00120aa407bdbff1...56b589b427167ec414bccbe0cfdfd573
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-06:(bytes<M>): bytes32
   params.size: 3
     0: bytes32 = 0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c
     1: bytes32 = <>
@@ -2238,7 +1999,6 @@ TIME ~ CLOCK - <INFO>  : Section-06:(bytes<M>): bytes32
     5 (0x0a0) 00120aa407bdbff1...56b589b427167ec414bccbe0cfdfd573
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-06:(bytes<M>): bytes32
   params.size: 3
     0: bytes32 = 0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c
     1: bytes32 = 0x0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc
@@ -2259,7 +2019,6 @@ TIME ~ CLOCK - <INFO>  : Section-06:(bytes<M>): bytes32
     5 (0x0a0) 00120aa407bdbff1...56b589b427167ec414bccbe0cfdfd573 <-r
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-06:(bytes<M>): bytes32
   params.size: 3
     0: bytes32 = 0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c
     1: bytes32 = 0x0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc
@@ -2286,7 +2045,6 @@ dataArray.size: 6
   5 (0x0a0) 00120aa407bdbff1...56b589b427167ec414bccbe0cfdfd573
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-06:(bytes<M>): bytes32
 params.size: 2
   0: bytes[] a = [0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c, 0x0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc, 0x00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573]
   1: bytes32 b = 0xcb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811
@@ -2307,9 +2065,6 @@ testName: decoding bool, uint256[] one bool and one uint256
 testSig: function bz(bool, uint256[]) --> bz(bool,uint256[])
 
 --------------------------------------------------
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : bz(bool,uint256[])
-TIME ~ CLOCK - <INFO>  : inputStr: : 0x000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000002a
 
 level: 1
 readOffset: 0
@@ -2324,7 +2079,6 @@ dataArray.size: 4
   3 (0x060) 0000000000000000...0000000000000000000000000000002a
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-02:(bool): bool
 params.size: 2
   0: bool val_0 = true
   1: uint256[] val_1 = <>
@@ -2342,7 +2096,6 @@ dataArray.size: 4
   3 (0x060) 0000000000000000...0000000000000000000000000000002a
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-09:([]): uint256[]
  level: 2
  readOffset: 3
  objectStart: 2
@@ -2356,7 +2109,6 @@ TIME ~ CLOCK - <INFO>  : Section-09:([]): uint256[]
    3 (0x060) 0000000000000000...0000000000000000000000000000002a <-r
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint256[1]
   level: 3
   readOffset: 3
   objectStart: 2
@@ -2369,7 +2121,6 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint256[1]
     3 (0x060) 0000000000000000...0000000000000000000000000000002a <-r
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
   params.size: 1
     0: uint256 = 42
  params.size: 1
@@ -2395,9 +2146,6 @@ testName: decoding uint256[], bool one uint256 and one bool
 testSig: function baz(uint256[], bool) --> baz(uint256[],bool)
 
 --------------------------------------------------
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : baz(uint256[],bool)
-TIME ~ CLOCK - <INFO>  : inputStr: : 0x000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000002a
 
 level: 1
 readOffset: 0
@@ -2412,7 +2160,6 @@ dataArray.size: 4
   3 (0x060) 0000000000000000...0000000000000000000000000000002a
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-09:([]): uint256[]
  level: 2
  readOffset: 3
  objectStart: 2
@@ -2426,7 +2173,6 @@ TIME ~ CLOCK - <INFO>  : Section-09:([]): uint256[]
    3 (0x060) 0000000000000000...0000000000000000000000000000002a <-r
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint256[1]
   level: 3
   readOffset: 3
   objectStart: 2
@@ -2439,7 +2185,6 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint256[1]
     3 (0x060) 0000000000000000...0000000000000000000000000000002a <-r
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
   params.size: 1
     0: uint256 = 42
  params.size: 1
@@ -2462,7 +2207,6 @@ dataArray.size: 4
   3 (0x060) 0000000000000000...0000000000000000000000000000002a
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-02:(bool): bool
 params.size: 2
   0: uint256[] val_0 = [42]
   1: bool val_1 = true
@@ -2483,9 +2227,6 @@ testName: decoding uint256[] three uint256s
 testSig: function baz(uint256[]) --> baz(uint256[])
 
 --------------------------------------------------
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : baz(uint256[])
-TIME ~ CLOCK - <INFO>  : inputStr: : 0x00000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000003000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000003
 
 level: 1
 readOffset: 0
@@ -2500,7 +2241,6 @@ dataArray.size: 5
   4 (0x080) 0000000000000000...00000000000000000000000000000003
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-09:([]): uint256[]
  level: 2
  readOffset: 2
  objectStart: 1
@@ -2515,7 +2255,6 @@ TIME ~ CLOCK - <INFO>  : Section-09:([]): uint256[]
    4 (0x080) 0000000000000000...00000000000000000000000000000003
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint256[3]
   level: 3
   readOffset: 2
   objectStart: 1
@@ -2531,7 +2270,6 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint256[3]
     4 (0x080) 0000000000000000...00000000000000000000000000000003
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
   params.size: 3
     0: uint256 = 1
     1: uint256 = <>
@@ -2551,7 +2289,6 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
     4 (0x080) 0000000000000000...00000000000000000000000000000003
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
   params.size: 3
     0: uint256 = 1
     1: uint256 = 2
@@ -2571,7 +2308,6 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
     4 (0x080) 0000000000000000...00000000000000000000000000000003 <-r
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
   params.size: 3
     0: uint256 = 1
     1: uint256 = 2
@@ -2597,9 +2333,6 @@ testName: decoding uint32 array three uint256s
 testSig: function baz(uint32[3]) --> baz(uint32[3])
 
 --------------------------------------------------
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : baz(uint32[3])
-TIME ~ CLOCK - <INFO>  : inputStr: : 0x000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000003
 
 level: 1
 readOffset: 0
@@ -2612,7 +2345,6 @@ dataArray.size: 3
   2 (0x040) 0000000000000000...00000000000000000000000000000003
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint32[3]
  level: 2
  readOffset: 0
  objectStart: 0
@@ -2626,7 +2358,6 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint32[3]
    2 (0x040) 0000000000000000...00000000000000000000000000000003
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint32
  params.size: 3
    0: uint32 = 1
    1: uint32 = <>
@@ -2644,7 +2375,6 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint32
    2 (0x040) 0000000000000000...00000000000000000000000000000003
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint32
  params.size: 3
    0: uint32 = 1
    1: uint32 = 2
@@ -2662,7 +2392,6 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint32
    2 (0x040) 0000000000000000...00000000000000000000000000000003 <-r
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint32
  params.size: 3
    0: uint32 = 1
    1: uint32 = 2
@@ -2685,9 +2414,6 @@ testName: decoding uint array three uint256s
 testSig: function baz(uint[3]) --> baz(uint256[3])
 
 --------------------------------------------------
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : baz(uint256[3])
-TIME ~ CLOCK - <INFO>  : inputStr: : 0x000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000003
 
 level: 1
 readOffset: 0
@@ -2700,7 +2426,6 @@ dataArray.size: 3
   2 (0x040) 0000000000000000...00000000000000000000000000000003
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint256[3]
  level: 2
  readOffset: 0
  objectStart: 0
@@ -2714,7 +2439,6 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint256[3]
    2 (0x040) 0000000000000000...00000000000000000000000000000003
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
  params.size: 3
    0: uint256 = 1
    1: uint256 = <>
@@ -2732,7 +2456,6 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
    2 (0x040) 0000000000000000...00000000000000000000000000000003
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
  params.size: 3
    0: uint256 = 1
    1: uint256 = 2
@@ -2750,7 +2473,6 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
    2 (0x040) 0000000000000000...00000000000000000000000000000003 <-r
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
  params.size: 3
    0: uint256 = 1
    1: uint256 = 2
@@ -2773,9 +2495,6 @@ testName: decoding int32 array three uint32s
 testSig: function baz(int32[3]) --> baz(int32[3])
 
 --------------------------------------------------
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : baz(int32[3])
-TIME ~ CLOCK - <INFO>  : inputStr: : 0x000000000000000000000000000000000000000000000000000000000000002a00000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000003
 
 level: 1
 readOffset: 0
@@ -2788,7 +2507,6 @@ dataArray.size: 3
   2 (0x040) 0000000000000000...00000000000000000000000000000003
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-10:([M]): int32[3]
  level: 2
  readOffset: 0
  objectStart: 0
@@ -2802,7 +2520,6 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): int32[3]
    2 (0x040) 0000000000000000...00000000000000000000000000000003
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-05:(int): int32
  params.size: 3
    0: int32 = 42
    1: int32 = <>
@@ -2820,7 +2537,6 @@ TIME ~ CLOCK - <INFO>  : Section-05:(int): int32
    2 (0x040) 0000000000000000...00000000000000000000000000000003
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-05:(int): int32
  params.size: 3
    0: int32 = 42
    1: int32 = 2
@@ -2838,7 +2554,6 @@ TIME ~ CLOCK - <INFO>  : Section-05:(int): int32
    2 (0x040) 0000000000000000...00000000000000000000000000000003 <-r
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-05:(int): int32
  params.size: 3
    0: int32 = 42
    1: int32 = 2
@@ -2861,9 +2576,6 @@ testName: decode int[3] three int256s
 testSig: function baz(int[3]) --> baz(int256[3])
 
 --------------------------------------------------
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : baz(int256[3])
-TIME ~ CLOCK - <INFO>  : inputStr: : 0x000000000000000000000000000000000000000000000000000000000000002afffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffdfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffb
 
 level: 1
 readOffset: 0
@@ -2876,7 +2588,6 @@ dataArray.size: 3
   2 (0x040) ffffffffffffffff...fffffffffffffffffffffffffffffffb
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-10:([M]): int256[3]
  level: 2
  readOffset: 0
  objectStart: 0
@@ -2890,7 +2601,6 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): int256[3]
    2 (0x040) ffffffffffffffff...fffffffffffffffffffffffffffffffb
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-05:(int): int256
  params.size: 3
    0: int256 = 42
    1: int256 = <>
@@ -2908,7 +2618,6 @@ TIME ~ CLOCK - <INFO>  : Section-05:(int): int256
    2 (0x040) ffffffffffffffff...fffffffffffffffffffffffffffffffb
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-05:(int): int256
  params.size: 3
    0: int256 = 42
    1: int256 = -3
@@ -2926,7 +2635,6 @@ TIME ~ CLOCK - <INFO>  : Section-05:(int): int256
    2 (0x040) ffffffffffffffff...fffffffffffffffffffffffffffffffb <-r
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-05:(int): int256
  params.size: 3
    0: int256 = 42
    1: int256 = -3
@@ -2949,9 +2657,6 @@ testName: decoding (uint[2], uint) two uint256s and a uint256
 testSig: function baz(uint[2],       uint) --> baz(uint256[2],uint256)
 
 --------------------------------------------------
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : baz(uint256[2],uint256)
-TIME ~ CLOCK - <INFO>  : inputStr: : 0x0000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000005c0000000000000000000000000000000000000000000000000000000000000003
 
 level: 1
 readOffset: 0
@@ -2965,7 +2670,6 @@ dataArray.size: 3
   2 (0x040) 0000000000000000...00000000000000000000000000000003
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint256[2]
  level: 2
  readOffset: 0
  objectStart: 0
@@ -2978,7 +2682,6 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint256[2]
    2 (0x040) 0000000000000000...00000000000000000000000000000003
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
  params.size: 2
    0: uint256 = 1
    1: uint256 = <>
@@ -2994,7 +2697,6 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
    2 (0x040) 0000000000000000...00000000000000000000000000000003
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
  params.size: 2
    0: uint256 = 1
    1: uint256 = 92
@@ -3014,7 +2716,6 @@ dataArray.size: 3
   2 (0x040) 0000000000000000...00000000000000000000000000000003 <-r
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
 params.size: 2
   0: uint256[2] val_0 = [1, 92]
   1: uint256 val_1 = 3
@@ -3035,9 +2736,6 @@ testName: should decode latin and extensions
 testSig: function baz(string) --> baz(string)
 
 --------------------------------------------------
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : baz(string)
-TIME ~ CLOCK - <INFO>  : inputStr: : 0x00000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000017657468657265756d20737ac3a16dc3ad74c3b367c3a970000000000000000000
 
 level: 1
 readOffset: 0
@@ -3050,7 +2748,6 @@ dataArray.size: 3
   2 (0x040) 657468657265756d...74c3b367c3a970000000000000000000
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-08:(string): string
 params.size: 1
   0: string val_0 = ethereum számítógép
 params.size: 1
@@ -3069,9 +2766,6 @@ testName: should decode non-latin characters
 testSig: function baz(string) --> baz(string)
 
 --------------------------------------------------
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : baz(string)
-TIME ~ CLOCK - <INFO>  : inputStr: : 0x00000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000018e4b8bae4bb80e4b988e982a3e4b988e8aea4e79c9fefbc9f0000000000000000
 
 level: 1
 readOffset: 0
@@ -3084,7 +2778,6 @@ dataArray.size: 3
   2 (0x040) e4b8bae4bb80e4b9...aea4e79c9fefbc9f0000000000000000
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-08:(string): string
 params.size: 1
   0: string val_0 = 为什么那么认真？
 params.size: 1
@@ -3103,9 +2796,6 @@ testName: decoding (uint[2][2]) two sets of two
 testSig: function baz(uint[2][2]) --> baz(uint256[2][2])
 
 --------------------------------------------------
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : baz(uint256[2][2])
-TIME ~ CLOCK - <INFO>  : inputStr: : 0x0000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000000000008
 
 level: 1
 readOffset: 0
@@ -3119,7 +2809,6 @@ dataArray.size: 4
   3 (0x060) 0000000000000000...00000000000000000000000000000008
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint256[2][2]
  level: 2
  readOffset: 0
  objectStart: 0
@@ -3133,7 +2822,6 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint256[2][2]
    3 (0x060) 0000000000000000...00000000000000000000000000000008
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint256[2]
   level: 3
   readOffset: 0
   objectStart: 0
@@ -3147,7 +2835,6 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint256[2]
     3 (0x060) 0000000000000000...00000000000000000000000000000008
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
   params.size: 2
     0: uint256 = 1
     1: uint256 = <>
@@ -3164,7 +2851,6 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
     3 (0x060) 0000000000000000...00000000000000000000000000000008
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
   params.size: 2
     0: uint256 = 1
     1: uint256 = 2
@@ -3184,7 +2870,6 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
    3 (0x060) 0000000000000000...00000000000000000000000000000008
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint256[2]
   level: 3
   readOffset: 2
   objectStart: 0
@@ -3198,7 +2883,6 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint256[2]
     3 (0x060) 0000000000000000...00000000000000000000000000000008
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
   params.size: 2
     0: uint256 = 4
     1: uint256 = <>
@@ -3215,7 +2899,6 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
     3 (0x060) 0000000000000000...00000000000000000000000000000008 <-r
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
   params.size: 2
     0: uint256 = 4
     1: uint256 = 8
@@ -3240,9 +2923,6 @@ testName: decoding (uint128[2]      [3 ], uint) three sets of two
 testSig: function baz(uint128[2  ]       [3],uint) --> baz(uint128[2][3],uint256)
 
 --------------------------------------------------
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : baz(uint128[2][3],uint256)
-TIME ~ CLOCK - <INFO>  : inputStr: : 0x000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000003000000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000050000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000a
 
 level: 1
 readOffset: 0
@@ -3260,7 +2940,6 @@ dataArray.size: 7
   6 (0x0c0) 0000000000000000...0000000000000000000000000000000a
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint128[2][3]
  level: 2
  readOffset: 0
  objectStart: 0
@@ -3278,7 +2957,6 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint128[2][3]
    6 (0x0c0) 0000000000000000...0000000000000000000000000000000a
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint128[2]
   level: 3
   readOffset: 0
   objectStart: 0
@@ -3295,7 +2973,6 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint128[2]
     6 (0x0c0) 0000000000000000...0000000000000000000000000000000a
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
   params.size: 2
     0: uint128 = 1
     1: uint128 = <>
@@ -3315,7 +2992,6 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
     6 (0x0c0) 0000000000000000...0000000000000000000000000000000a
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
   params.size: 2
     0: uint128 = 1
     1: uint128 = 2
@@ -3340,7 +3016,6 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
    6 (0x0c0) 0000000000000000...0000000000000000000000000000000a
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint128[2]
   level: 3
   readOffset: 2
   objectStart: 0
@@ -3357,7 +3032,6 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint128[2]
     6 (0x0c0) 0000000000000000...0000000000000000000000000000000a
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
   params.size: 2
     0: uint128 = 3
     1: uint128 = <>
@@ -3377,7 +3051,6 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
     6 (0x0c0) 0000000000000000...0000000000000000000000000000000a
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
   params.size: 2
     0: uint128 = 3
     1: uint128 = 4
@@ -3402,7 +3075,6 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
    6 (0x0c0) 0000000000000000...0000000000000000000000000000000a
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint128[2]
   level: 3
   readOffset: 4
   objectStart: 0
@@ -3419,7 +3091,6 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint128[2]
     6 (0x0c0) 0000000000000000...0000000000000000000000000000000a
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
   params.size: 2
     0: uint128 = 5
     1: uint128 = <>
@@ -3439,7 +3110,6 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
     6 (0x0c0) 0000000000000000...0000000000000000000000000000000a
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
   params.size: 2
     0: uint128 = 5
     1: uint128 = 6
@@ -3467,7 +3137,6 @@ dataArray.size: 7
   6 (0x0c0) 0000000000000000...0000000000000000000000000000000a <-r
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
 params.size: 2
   0: uint128[2][3] val_0 = [[1, 2], [3, 4], [5, 6]]
   1: uint256 val_1 = 10
@@ -3488,9 +3157,6 @@ testName: decoding (uint128[2][3][2], uint) two sets of three sets of two
 testSig: function baz(uint128[2]  [3][2], uint) --> baz(uint128[2][3][2],uint256)
 
 --------------------------------------------------
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : baz(uint128[2][3][2],uint256)
-TIME ~ CLOCK - <INFO>  : inputStr: : 0x000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000003000000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000050000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000003000000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000050000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000a
 
 level: 1
 readOffset: 0
@@ -3514,7 +3180,6 @@ dataArray.size: 13
  12 (0x180) 0000000000000000...0000000000000000000000000000000a
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint128[2][3][2]
  level: 2
  readOffset: 0
  objectStart: 0
@@ -3537,7 +3202,6 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint128[2][3][2]
   12 (0x180) 0000000000000000...0000000000000000000000000000000a
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint128[2][3]
   level: 3
   readOffset: 0
   objectStart: 0
@@ -3561,7 +3225,6 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint128[2][3]
    12 (0x180) 0000000000000000...0000000000000000000000000000000a
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint128[2]
    level: 4
    readOffset: 0
    objectStart: 0
@@ -3584,7 +3247,6 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint128[2]
     12 (0x180) 0000000000000000...0000000000000000000000000000000a
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
    params.size: 2
      0: uint128 = 1
      1: uint128 = <>
@@ -3610,7 +3272,6 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
     12 (0x180) 0000000000000000...0000000000000000000000000000000a
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
    params.size: 2
      0: uint128 = 1
      1: uint128 = 2
@@ -3641,7 +3302,6 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
    12 (0x180) 0000000000000000...0000000000000000000000000000000a
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint128[2]
    level: 4
    readOffset: 2
    objectStart: 0
@@ -3664,7 +3324,6 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint128[2]
     12 (0x180) 0000000000000000...0000000000000000000000000000000a
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
    params.size: 2
      0: uint128 = 3
      1: uint128 = <>
@@ -3690,7 +3349,6 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
     12 (0x180) 0000000000000000...0000000000000000000000000000000a
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
    params.size: 2
      0: uint128 = 3
      1: uint128 = 4
@@ -3721,7 +3379,6 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
    12 (0x180) 0000000000000000...0000000000000000000000000000000a
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint128[2]
    level: 4
    readOffset: 4
    objectStart: 0
@@ -3744,7 +3401,6 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint128[2]
     12 (0x180) 0000000000000000...0000000000000000000000000000000a
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
    params.size: 2
      0: uint128 = 5
      1: uint128 = <>
@@ -3770,7 +3426,6 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
     12 (0x180) 0000000000000000...0000000000000000000000000000000a
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
    params.size: 2
      0: uint128 = 5
      1: uint128 = 6
@@ -3803,7 +3458,6 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
   12 (0x180) 0000000000000000...0000000000000000000000000000000a
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint128[2][3]
   level: 3
   readOffset: 6
   objectStart: 0
@@ -3827,7 +3481,6 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint128[2][3]
    12 (0x180) 0000000000000000...0000000000000000000000000000000a
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint128[2]
    level: 4
    readOffset: 6
    objectStart: 0
@@ -3850,7 +3503,6 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint128[2]
     12 (0x180) 0000000000000000...0000000000000000000000000000000a
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
    params.size: 2
      0: uint128 = 1
      1: uint128 = <>
@@ -3876,7 +3528,6 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
     12 (0x180) 0000000000000000...0000000000000000000000000000000a
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
    params.size: 2
      0: uint128 = 1
      1: uint128 = 2
@@ -3907,7 +3558,6 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
    12 (0x180) 0000000000000000...0000000000000000000000000000000a
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint128[2]
    level: 4
    readOffset: 8
    objectStart: 0
@@ -3930,7 +3580,6 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint128[2]
     12 (0x180) 0000000000000000...0000000000000000000000000000000a
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
    params.size: 2
      0: uint128 = 3
      1: uint128 = <>
@@ -3956,7 +3605,6 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
     12 (0x180) 0000000000000000...0000000000000000000000000000000a
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
    params.size: 2
      0: uint128 = 3
      1: uint128 = 4
@@ -3987,7 +3635,6 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
    12 (0x180) 0000000000000000...0000000000000000000000000000000a
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint128[2]
    level: 4
    readOffset: 10
    objectStart: 0
@@ -4010,7 +3657,6 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint128[2]
     12 (0x180) 0000000000000000...0000000000000000000000000000000a
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
    params.size: 2
      0: uint128 = 5
      1: uint128 = <>
@@ -4036,7 +3682,6 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
     12 (0x180) 0000000000000000...0000000000000000000000000000000a
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
    params.size: 2
      0: uint128 = 5
      1: uint128 = 6
@@ -4073,7 +3718,6 @@ dataArray.size: 13
  12 (0x180) 0000000000000000...0000000000000000000000000000000a <-r
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
 params.size: 2
   0: uint128[2][3][2] val_0 = [[[1, 2], [3, 4], [5, 6]], [[1, 2], [3, 4], [5, 6]]]
   1: uint256 val_1 = 10
@@ -4094,9 +3738,6 @@ testName: decoding uint[2] one set of two
 testSig: function baz(uint[2]     ) --> baz(uint256[2])
 
 --------------------------------------------------
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : baz(uint256[2])
-TIME ~ CLOCK - <INFO>  : inputStr: : 0x000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000003
 
 level: 1
 readOffset: 0
@@ -4109,7 +3750,6 @@ dataArray.size: 3
   2 (0x040) 0000000000000000...00000000000000000000000000000003
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint256[2]
  level: 2
  readOffset: 0
  objectStart: 0
@@ -4122,7 +3762,6 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint256[2]
    2 (0x040) 0000000000000000...00000000000000000000000000000003
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
  params.size: 2
    0: uint256 = 1
    1: uint256 = <>
@@ -4138,7 +3777,6 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
    2 (0x040) 0000000000000000...00000000000000000000000000000003
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
  params.size: 2
    0: uint256 = 1
    1: uint256 = 2
@@ -4160,10 +3798,6 @@ testName: decoding address
 testSig: function baz(address) --> baz(address)
 
 --------------------------------------------------
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : baz(address)
-TIME ~ CLOCK - <INFO>  : inputStr: : 0x000000000000000000000000bb9bc244d798123fde783fcc1c72d3bb8c189413
-TIME ~ CLOCK - <INFO>  : Parse func found: : address
 expected: 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 ?
 result:   0xbb9bc244d798123fde783fcc1c72d3bb8c189413 ? 1
 testName: decoding address
@@ -4176,10 +3810,6 @@ testName: decoding address,address
 testSig: function baz(  address,address ) --> baz(address,address)
 
 --------------------------------------------------
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : baz(address,address)
-TIME ~ CLOCK - <INFO>  : inputStr: : 0x000000000000000000000000bb9bc244d798123fde783fcc1c72d3bb8c189413000000000000000000000000b9e7f8568e08d5659f5d29c4997173d84cdf2607
-TIME ~ CLOCK - <INFO>  : Parse func found: : address,address
 expected: 0xbb9bc244d798123fde783fcc1c72d3bb8c189413, 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 ?
 result:   0xbb9bc244d798123fde783fcc1c72d3bb8c189413, 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 ? 1
 testName: decoding address,address
@@ -4192,9 +3822,6 @@ testName: decoding address[] one set of two addresses
 testSig: function baz(address[]) --> baz(address[])
 
 --------------------------------------------------
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : baz(address[])
-TIME ~ CLOCK - <INFO>  : inputStr: : 0x00000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000002000000000000000000000000bb9bc244d798123fde783fcc1c72d3bb8c189413000000000000000000000000b9e7f8568e08d5659f5d29c4997173d84cdf2607
 
 level: 1
 readOffset: 0
@@ -4208,7 +3835,6 @@ dataArray.size: 4
   3 (0x060) 0000000000000000...8e08d5659f5d29c4997173d84cdf2607
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-09:([]): address[]
  level: 2
  readOffset: 2
  objectStart: 1
@@ -4222,7 +3848,6 @@ TIME ~ CLOCK - <INFO>  : Section-09:([]): address[]
    3 (0x060) 0000000000000000...8e08d5659f5d29c4997173d84cdf2607
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-10:([M]): address[2]
   level: 3
   readOffset: 2
   objectStart: 1
@@ -4236,7 +3861,6 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): address[2]
     3 (0x060) 0000000000000000...8e08d5659f5d29c4997173d84cdf2607
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-03:(address): address
   params.size: 2
     0: address = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413
     1: address = <>
@@ -4253,7 +3877,6 @@ TIME ~ CLOCK - <INFO>  : Section-03:(address): address
     3 (0x060) 0000000000000000...8e08d5659f5d29c4997173d84cdf2607 <-r
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-03:(address): address
   params.size: 2
     0: address = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413
     1: address = 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607
@@ -4278,9 +3901,6 @@ testName: decoding address[2] one set of two addresses
 testSig: function baz(address[2]) --> baz(address[2])
 
 --------------------------------------------------
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : baz(address[2])
-TIME ~ CLOCK - <INFO>  : inputStr: : 0x000000000000000000000000bb9bc244d798123fde783fcc1c72d3bb8c189413000000000000000000000000b9e7f8568e08d5659f5d29c4997173d84cdf2607
 
 level: 1
 readOffset: 0
@@ -4292,7 +3912,6 @@ dataArray.size: 2
   1 (0x020) 0000000000000000...8e08d5659f5d29c4997173d84cdf2607
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-10:([M]): address[2]
  level: 2
  readOffset: 0
  objectStart: 0
@@ -4304,7 +3923,6 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): address[2]
    1 (0x020) 0000000000000000...8e08d5659f5d29c4997173d84cdf2607
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-03:(address): address
  params.size: 2
    0: address = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413
    1: address = <>
@@ -4319,7 +3937,6 @@ TIME ~ CLOCK - <INFO>  : Section-03:(address): address
    1 (0x020) 0000000000000000...8e08d5659f5d29c4997173d84cdf2607 <-r
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-03:(address): address
  params.size: 2
    0: address = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413
    1: address = 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607
@@ -4341,9 +3958,6 @@ testName: decoding uint256[], uint[], uint256[] three sets of two items each
 testSig: function baz(uint256[] a,uint[] b,uint256[] c) --> baz(uint256[],uint256[],uint256[])
 
 --------------------------------------------------
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : baz(uint256[],uint256[],uint256[])
-TIME ~ CLOCK - <INFO>  : inputStr: : 0x000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000c0000000000000000000000000000000000000000000000000000000000000012000000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000500000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000015af1d78b58c400000000000000000000000000000000000000000000000000015af1d78b58c4000000000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000001bc16d674ec800000000000000000000000000000000000000000000000000001bc16d674ec80000
 
 level: 1
 readOffset: 0
@@ -4367,7 +3981,6 @@ dataArray.size: 12
  11 (0x160) 0000000000000000...00000000000000001bc16d674ec80000
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-09:([]): uint256[]
  level: 2
  readOffset: 4
  objectStart: 3
@@ -4389,7 +4002,6 @@ TIME ~ CLOCK - <INFO>  : Section-09:([]): uint256[]
   11 (0x160) 0000000000000000...00000000000000001bc16d674ec80000
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint256[2]
   level: 3
   readOffset: 4
   objectStart: 3
@@ -4411,7 +4023,6 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint256[2]
    11 (0x160) 0000000000000000...00000000000000001bc16d674ec80000
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
   params.size: 2
     0: uint256 = 6
     1: uint256 = <>
@@ -4436,7 +4047,6 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
    11 (0x160) 0000000000000000...00000000000000001bc16d674ec80000
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
   params.size: 2
     0: uint256 = 6
     1: uint256 = 5
@@ -4470,7 +4080,6 @@ dataArray.size: 12
  11 (0x160) 0000000000000000...00000000000000001bc16d674ec80000
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-09:([]): uint256[]
  level: 2
  readOffset: 7
  objectStart: 6
@@ -4492,7 +4101,6 @@ TIME ~ CLOCK - <INFO>  : Section-09:([]): uint256[]
   11 (0x160) 0000000000000000...00000000000000001bc16d674ec80000
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint256[2]
   level: 3
   readOffset: 7
   objectStart: 6
@@ -4514,7 +4122,6 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint256[2]
    11 (0x160) 0000000000000000...00000000000000001bc16d674ec80000
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
   params.size: 2
     0: uint256 = 25000000000000000000
     1: uint256 = <>
@@ -4539,7 +4146,6 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
    11 (0x160) 0000000000000000...00000000000000001bc16d674ec80000
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
   params.size: 2
     0: uint256 = 25000000000000000000
     1: uint256 = 25000000000000000000
@@ -4573,7 +4179,6 @@ dataArray.size: 12
  11 (0x160) 0000000000000000...00000000000000001bc16d674ec80000
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-09:([]): uint256[]
  level: 2
  readOffset: 10
  objectStart: 9
@@ -4595,7 +4200,6 @@ TIME ~ CLOCK - <INFO>  : Section-09:([]): uint256[]
   11 (0x160) 0000000000000000...00000000000000001bc16d674ec80000
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint256[2]
   level: 3
   readOffset: 10
   objectStart: 9
@@ -4617,7 +4221,6 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint256[2]
    11 (0x160) 0000000000000000...00000000000000001bc16d674ec80000
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
   params.size: 2
     0: uint256 = 2000000000000000000
     1: uint256 = <>
@@ -4642,7 +4245,6 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
    11 (0x160) 0000000000000000...00000000000000001bc16d674ec80000 <-r
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
   params.size: 2
     0: uint256 = 2000000000000000000
     1: uint256 = 2000000000000000000
@@ -4671,9 +4273,6 @@ testName: decoding bool[] one set of two
 testSig: function baz(bool[]) --> baz(bool[])
 
 --------------------------------------------------
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : baz(bool[])
-TIME ~ CLOCK - <INFO>  : inputStr: : 0x0000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001
 
 level: 1
 readOffset: 0
@@ -4687,7 +4286,6 @@ dataArray.size: 4
   3 (0x060) 0000000000000000...00000000000000000000000000000001
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-09:([]): bool[]
  level: 2
  readOffset: 2
  objectStart: 1
@@ -4701,7 +4299,6 @@ TIME ~ CLOCK - <INFO>  : Section-09:([]): bool[]
    3 (0x060) 0000000000000000...00000000000000000000000000000001
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-10:([M]): bool[2]
   level: 3
   readOffset: 2
   objectStart: 1
@@ -4715,7 +4312,6 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): bool[2]
     3 (0x060) 0000000000000000...00000000000000000000000000000001
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-02:(bool): bool
   params.size: 2
     0: bool = false
     1: bool = <>
@@ -4732,7 +4328,6 @@ TIME ~ CLOCK - <INFO>  : Section-02:(bool): bool
     3 (0x060) 0000000000000000...00000000000000000000000000000001 <-r
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-02:(bool): bool
   params.size: 2
     0: bool = false
     1: bool = true
@@ -4757,9 +4352,6 @@ testName: decoding bool[], address[] one set of two bools and one set of three a
 testSig: function baz(bool[], address[]) --> baz(bool[],address[])
 
 --------------------------------------------------
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : baz(bool[],address[])
-TIME ~ CLOCK - <INFO>  : inputStr: : 0x000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000a00000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000003000000000000000000000000bb9bc244d798123fde783fcc1c72d3bb8c189413000000000000000000000000b9e7f8568e08d5659f5d29c4997173d84cdf2607000000000000000000000000bb9bc244d798123fde783fcc1c72d3bb8c189413
 
 level: 1
 readOffset: 0
@@ -4779,7 +4371,6 @@ dataArray.size: 9
   8 (0x100) 0000000000000000...d798123fde783fcc1c72d3bb8c189413
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-09:([]): bool[]
  level: 2
  readOffset: 3
  objectStart: 2
@@ -4798,7 +4389,6 @@ TIME ~ CLOCK - <INFO>  : Section-09:([]): bool[]
    8 (0x100) 0000000000000000...d798123fde783fcc1c72d3bb8c189413
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-10:([M]): bool[2]
   level: 3
   readOffset: 3
   objectStart: 2
@@ -4817,7 +4407,6 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): bool[2]
     8 (0x100) 0000000000000000...d798123fde783fcc1c72d3bb8c189413
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-02:(bool): bool
   params.size: 2
     0: bool = false
     1: bool = <>
@@ -4839,7 +4428,6 @@ TIME ~ CLOCK - <INFO>  : Section-02:(bool): bool
     8 (0x100) 0000000000000000...d798123fde783fcc1c72d3bb8c189413
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-02:(bool): bool
   params.size: 2
     0: bool = false
     1: bool = true
@@ -4868,7 +4456,6 @@ dataArray.size: 9
   8 (0x100) 0000000000000000...d798123fde783fcc1c72d3bb8c189413
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-09:([]): address[]
  level: 2
  readOffset: 6
  objectStart: 5
@@ -4887,7 +4474,6 @@ TIME ~ CLOCK - <INFO>  : Section-09:([]): address[]
    8 (0x100) 0000000000000000...d798123fde783fcc1c72d3bb8c189413
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-10:([M]): address[3]
   level: 3
   readOffset: 6
   objectStart: 5
@@ -4907,7 +4493,6 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): address[3]
     8 (0x100) 0000000000000000...d798123fde783fcc1c72d3bb8c189413
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-03:(address): address
   params.size: 3
     0: address = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413
     1: address = <>
@@ -4931,7 +4516,6 @@ TIME ~ CLOCK - <INFO>  : Section-03:(address): address
     8 (0x100) 0000000000000000...d798123fde783fcc1c72d3bb8c189413
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-03:(address): address
   params.size: 3
     0: address = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413
     1: address = 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607
@@ -4955,7 +4539,6 @@ TIME ~ CLOCK - <INFO>  : Section-03:(address): address
     8 (0x100) 0000000000000000...d798123fde783fcc1c72d3bb8c189413 <-r
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-03:(address): address
   params.size: 3
     0: address = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413
     1: address = 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607
@@ -4983,9 +4566,6 @@ testName: decoding address,address,uint256,string (see issue #1013)
 testSig: function baz(address,address,uint256,string) --> baz(address,address,uint256,string)
 
 --------------------------------------------------
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : baz(address,address,uint256,string)
-TIME ~ CLOCK - <INFO>  : inputStr: : 0x000000000000000000000000f3c9c5719eb4f26a3ab45cb86771827629f9a99900000000000000000000000071d402ac181de4a8739a15f5a56141f64fc522f80000000000000000000000000000000000000000000000190b89b838167800000000000000000000000000000000000000000000000000000000000000000080000000000000000000000000000000000000000000000000000000000000001f486920426f62202d2d20486572652061726520796f757220746f6b656e732100
 
 level: 1
 readOffset: 0
@@ -5004,7 +4584,6 @@ dataArray.size: 6
   5 (0x0a0) 486920426f62202d...726520796f757220746f6b656e732100
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-03:(address): address
 params.size: 4
   0: address val_0 = 0xf3c9c5719eb4f26a3ab45cb86771827629f9a999
   1: address val_1 = <>
@@ -5028,7 +4607,6 @@ dataArray.size: 6
   5 (0x0a0) 486920426f62202d...726520796f757220746f6b656e732100
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-03:(address): address
 params.size: 4
   0: address val_0 = 0xf3c9c5719eb4f26a3ab45cb86771827629f9a999
   1: address val_1 = 0x71d402ac181de4a8739a15f5a56141f64fc522f8
@@ -5052,7 +4630,6 @@ dataArray.size: 6
   5 (0x0a0) 486920426f62202d...726520796f757220746f6b656e732100
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
 params.size: 4
   0: address val_0 = 0xf3c9c5719eb4f26a3ab45cb86771827629f9a999
   1: address val_1 = 0x71d402ac181de4a8739a15f5a56141f64fc522f8
@@ -5076,7 +4653,6 @@ dataArray.size: 6
   5 (0x0a0) 486920426f62202d...726520796f757220746f6b656e732100
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-08:(string): string
 params.size: 4
   0: address val_0 = 0xf3c9c5719eb4f26a3ab45cb86771827629f9a999
   1: address val_1 = 0x71d402ac181de4a8739a15f5a56141f64fc522f8
@@ -5101,9 +4677,6 @@ testName: decode uint8, uint32, uin64, uint128
 testSig: function baz(uint8, uint32, uint64, uint128) --> baz(uint8,uint32,uint64,uint128)
 
 --------------------------------------------------
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : baz(uint8,uint32,uint64,uint128)
-TIME ~ CLOCK - <INFO>  : inputStr: : 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe
 
 level: 1
 readOffset: 0
@@ -5120,7 +4693,6 @@ dataArray.size: 4
   3 (0x060) ffffffffffffffff...fffffffffffffffffffffffffffffffe
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint8
 params.size: 4
   0: uint8 val_0 = 254
   1: uint32 val_1 = <>
@@ -5142,7 +4714,6 @@ dataArray.size: 4
   3 (0x060) ffffffffffffffff...fffffffffffffffffffffffffffffffe
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint32
 params.size: 4
   0: uint8 val_0 = 254
   1: uint32 val_1 = 4294967294
@@ -5164,7 +4735,6 @@ dataArray.size: 4
   3 (0x060) ffffffffffffffff...fffffffffffffffffffffffffffffffe
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint64
 params.size: 4
   0: uint8 val_0 = 254
   1: uint32 val_1 = 4294967294
@@ -5186,7 +4756,6 @@ dataArray.size: 4
   3 (0x060) ffffffffffffffff...fffffffffffffffffffffffffffffffe <-r
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
 params.size: 4
   0: uint8 val_0 = 254
   1: uint32 val_1 = 4294967294
@@ -5211,9 +4780,6 @@ testName: decode int8, int32, int64, int128, int256
 testSig: function baz(int8, int32, int64, int128, int256) --> baz(int8,int32,int64,int128,int256)
 
 --------------------------------------------------
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : baz(int8,int32,int64,int128,int256)
-TIME ~ CLOCK - <INFO>  : inputStr: : 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe
 
 level: 1
 readOffset: 0
@@ -5232,7 +4798,6 @@ dataArray.size: 5
   4 (0x080) ffffffffffffffff...fffffffffffffffffffffffffffffffe
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-05:(int): int8
 params.size: 5
   0: int8 val_0 = -2
   1: int32 val_1 = <>
@@ -5257,7 +4822,6 @@ dataArray.size: 5
   4 (0x080) ffffffffffffffff...fffffffffffffffffffffffffffffffe
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-05:(int): int32
 params.size: 5
   0: int8 val_0 = -2
   1: int32 val_1 = -2
@@ -5282,7 +4846,6 @@ dataArray.size: 5
   4 (0x080) ffffffffffffffff...fffffffffffffffffffffffffffffffe
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-05:(int): int64
 params.size: 5
   0: int8 val_0 = -2
   1: int32 val_1 = -2
@@ -5307,7 +4870,6 @@ dataArray.size: 5
   4 (0x080) ffffffffffffffff...fffffffffffffffffffffffffffffffe
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-05:(int): int128
 params.size: 5
   0: int8 val_0 = -2
   1: int32 val_1 = -2
@@ -5332,7 +4894,6 @@ dataArray.size: 5
   4 (0x080) ffffffffffffffff...fffffffffffffffffffffffffffffffe <-r
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-05:(int): int256
 params.size: 5
   0: int8 val_0 = -2
   1: int32 val_1 = -2
@@ -5359,9 +4920,6 @@ testName: decode uint128[2][3], uint three sets of two
 testSig: function baz(uint128[2][3], uint) --> baz(uint128[2][3],uint256)
 
 --------------------------------------------------
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : baz(uint128[2][3],uint256)
-TIME ~ CLOCK - <INFO>  : inputStr: : 0x000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000003000000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000050000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000a
 
 level: 1
 readOffset: 0
@@ -5379,7 +4937,6 @@ dataArray.size: 7
   6 (0x0c0) 0000000000000000...0000000000000000000000000000000a
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint128[2][3]
  level: 2
  readOffset: 0
  objectStart: 0
@@ -5397,7 +4954,6 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint128[2][3]
    6 (0x0c0) 0000000000000000...0000000000000000000000000000000a
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint128[2]
   level: 3
   readOffset: 0
   objectStart: 0
@@ -5414,7 +4970,6 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint128[2]
     6 (0x0c0) 0000000000000000...0000000000000000000000000000000a
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
   params.size: 2
     0: uint128 = 1
     1: uint128 = <>
@@ -5434,7 +4989,6 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
     6 (0x0c0) 0000000000000000...0000000000000000000000000000000a
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
   params.size: 2
     0: uint128 = 1
     1: uint128 = 2
@@ -5459,7 +5013,6 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
    6 (0x0c0) 0000000000000000...0000000000000000000000000000000a
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint128[2]
   level: 3
   readOffset: 2
   objectStart: 0
@@ -5476,7 +5029,6 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint128[2]
     6 (0x0c0) 0000000000000000...0000000000000000000000000000000a
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
   params.size: 2
     0: uint128 = 3
     1: uint128 = <>
@@ -5496,7 +5048,6 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
     6 (0x0c0) 0000000000000000...0000000000000000000000000000000a
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
   params.size: 2
     0: uint128 = 3
     1: uint128 = 4
@@ -5521,7 +5072,6 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
    6 (0x0c0) 0000000000000000...0000000000000000000000000000000a
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint128[2]
   level: 3
   readOffset: 4
   objectStart: 0
@@ -5538,7 +5088,6 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint128[2]
     6 (0x0c0) 0000000000000000...0000000000000000000000000000000a
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
   params.size: 2
     0: uint128 = 5
     1: uint128 = <>
@@ -5558,7 +5107,6 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
     6 (0x0c0) 0000000000000000...0000000000000000000000000000000a
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
   params.size: 2
     0: uint128 = 5
     1: uint128 = 6
@@ -5586,7 +5134,6 @@ dataArray.size: 7
   6 (0x0c0) 0000000000000000...0000000000000000000000000000000a <-r
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
 params.size: 2
   0: uint128[2][3] val_0 = [[1, 2], [3, 4], [5, 6]]
   1: uint256 val_1 = 10
@@ -5607,9 +5154,6 @@ testName: decode uint128[2][3][2], uint two sets of three sets of two
 testSig: function baz(uint128[2][3][2], uint) --> baz(uint128[2][3][2],uint256)
 
 --------------------------------------------------
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : baz(uint128[2][3][2],uint256)
-TIME ~ CLOCK - <INFO>  : inputStr: : 0x000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000003000000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000050000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000003000000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000050000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000a
 
 level: 1
 readOffset: 0
@@ -5633,7 +5177,6 @@ dataArray.size: 13
  12 (0x180) 0000000000000000...0000000000000000000000000000000a
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint128[2][3][2]
  level: 2
  readOffset: 0
  objectStart: 0
@@ -5656,7 +5199,6 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint128[2][3][2]
   12 (0x180) 0000000000000000...0000000000000000000000000000000a
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint128[2][3]
   level: 3
   readOffset: 0
   objectStart: 0
@@ -5680,7 +5222,6 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint128[2][3]
    12 (0x180) 0000000000000000...0000000000000000000000000000000a
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint128[2]
    level: 4
    readOffset: 0
    objectStart: 0
@@ -5703,7 +5244,6 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint128[2]
     12 (0x180) 0000000000000000...0000000000000000000000000000000a
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
    params.size: 2
      0: uint128 = 1
      1: uint128 = <>
@@ -5729,7 +5269,6 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
     12 (0x180) 0000000000000000...0000000000000000000000000000000a
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
    params.size: 2
      0: uint128 = 1
      1: uint128 = 2
@@ -5760,7 +5299,6 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
    12 (0x180) 0000000000000000...0000000000000000000000000000000a
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint128[2]
    level: 4
    readOffset: 2
    objectStart: 0
@@ -5783,7 +5321,6 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint128[2]
     12 (0x180) 0000000000000000...0000000000000000000000000000000a
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
    params.size: 2
      0: uint128 = 3
      1: uint128 = <>
@@ -5809,7 +5346,6 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
     12 (0x180) 0000000000000000...0000000000000000000000000000000a
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
    params.size: 2
      0: uint128 = 3
      1: uint128 = 4
@@ -5840,7 +5376,6 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
    12 (0x180) 0000000000000000...0000000000000000000000000000000a
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint128[2]
    level: 4
    readOffset: 4
    objectStart: 0
@@ -5863,7 +5398,6 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint128[2]
     12 (0x180) 0000000000000000...0000000000000000000000000000000a
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
    params.size: 2
      0: uint128 = 5
      1: uint128 = <>
@@ -5889,7 +5423,6 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
     12 (0x180) 0000000000000000...0000000000000000000000000000000a
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
    params.size: 2
      0: uint128 = 5
      1: uint128 = 6
@@ -5922,7 +5455,6 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
   12 (0x180) 0000000000000000...0000000000000000000000000000000a
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint128[2][3]
   level: 3
   readOffset: 6
   objectStart: 0
@@ -5946,7 +5478,6 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint128[2][3]
    12 (0x180) 0000000000000000...0000000000000000000000000000000a
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint128[2]
    level: 4
    readOffset: 6
    objectStart: 0
@@ -5969,7 +5500,6 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint128[2]
     12 (0x180) 0000000000000000...0000000000000000000000000000000a
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
    params.size: 2
      0: uint128 = 1
      1: uint128 = <>
@@ -5995,7 +5525,6 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
     12 (0x180) 0000000000000000...0000000000000000000000000000000a
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
    params.size: 2
      0: uint128 = 1
      1: uint128 = 2
@@ -6026,7 +5555,6 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
    12 (0x180) 0000000000000000...0000000000000000000000000000000a
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint128[2]
    level: 4
    readOffset: 8
    objectStart: 0
@@ -6049,7 +5577,6 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint128[2]
     12 (0x180) 0000000000000000...0000000000000000000000000000000a
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
    params.size: 2
      0: uint128 = 3
      1: uint128 = <>
@@ -6075,7 +5602,6 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
     12 (0x180) 0000000000000000...0000000000000000000000000000000a
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
    params.size: 2
      0: uint128 = 3
      1: uint128 = 4
@@ -6106,7 +5632,6 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
    12 (0x180) 0000000000000000...0000000000000000000000000000000a
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint128[2]
    level: 4
    readOffset: 10
    objectStart: 0
@@ -6129,7 +5654,6 @@ TIME ~ CLOCK - <INFO>  : Section-10:([M]): uint128[2]
     12 (0x180) 0000000000000000...0000000000000000000000000000000a
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
    params.size: 2
      0: uint128 = 5
      1: uint128 = <>
@@ -6155,7 +5679,6 @@ TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
     12 (0x180) 0000000000000000...0000000000000000000000000000000a
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint128
    params.size: 2
      0: uint128 = 5
      1: uint128 = 6
@@ -6192,7 +5715,6 @@ dataArray.size: 13
  12 (0x180) 0000000000000000...0000000000000000000000000000000a <-r
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint256
 params.size: 2
   0: uint128[2][3][2] val_0 = [[[1, 2], [3, 4], [5, 6]], [[1, 2], [3, 4], [5, 6]]]
   1: uint256 val_1 = 10

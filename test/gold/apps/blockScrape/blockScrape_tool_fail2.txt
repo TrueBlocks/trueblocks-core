@@ -1,8 +1,5 @@
 blockScrape argc: 5 [1:--tool] [2:monitors] [3:--tool] [4:index] 
 blockScrape --tool monitors --tool index 
-TIME ~ CLOCK - <INFO>  : tool
-TIME ~ CLOCK - <INFO>  :   monitors
-TIME ~ CLOCK - <INFO>  :   index
 
   Please specify only one of [ none | index | monitors | both]. Quitting...
 

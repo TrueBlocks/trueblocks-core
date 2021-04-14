@@ -1,7 +1,5 @@
 cacheStatus argc: 2 [1:entities] 
 cacheStatus entities 
-TIME ~ CLOCK - <INFO>  : modes
-TIME ~ CLOCK - <INFO>  :   entities
 {
   "client_version": "Client version",
   "client_ids": "chainId: 1 networkId: 1",

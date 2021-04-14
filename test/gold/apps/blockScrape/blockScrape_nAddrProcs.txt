@@ -1,6 +1,5 @@
 blockScrape argc: 3 [1:--n_addr_procs] [2:12] 
 blockScrape --n_addr_procs 12 
-TIME ~ CLOCK - <INFO>  : n_addr_procs: 12
 TIME ~ CLOCK - : 8------Current state stopped.
 { "status": "running" }
 TIME ~ CLOCK - : 4-----changing state: stopped --> running

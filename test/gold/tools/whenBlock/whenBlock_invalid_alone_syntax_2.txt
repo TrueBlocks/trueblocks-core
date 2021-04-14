@@ -1,7 +1,5 @@
 whenBlock argc: 2 [1:2015-03-02] 
 whenBlock 2015-03-02 
-TIME ~ CLOCK - <INFO>  : block_list
-TIME ~ CLOCK - <INFO>  :   2015-03-02
 
   The date you specified (2015-03-02) is before the first block. Quitting...
 

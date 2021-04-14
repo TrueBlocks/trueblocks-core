@@ -1,6 +1,5 @@
 chifra argc: 3 [1:tags] [2:--help] 
 chifra tags --help 
-TIME ~ CLOCK - <INFO>  : mode: tags
 chifra tags argc: 3 [1:--tags] [2:--help] 
 chifra tags --tags --help 
 PROG_NAME = [chifra tags]

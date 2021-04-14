@@ -1,13 +1,5 @@
 ethslurp argc: 6 [1:0x1324e7b922b30B49Ab8EA81086341cc41C249346] [2:3750000-4000000] [3:--fmt] [4:json] [5:--to_file] 
 ethslurp 0x1324e7b922b30B49Ab8EA81086341cc41C249346 3750000-4000000 --fmt json --to_file 
-TIME ~ CLOCK - <INFO>  : addrs
-TIME ~ CLOCK - <INFO>  :   0x1324e7b922b30b49ab8ea81086341cc41c249346
-TIME ~ CLOCK - <INFO>  : blocks
-TIME ~ CLOCK - <INFO>  :   3750000
-TIME ~ CLOCK - <INFO>  :   3750001
-TIME ~ CLOCK - <INFO>  :   3750002
-TIME ~ CLOCK - <INFO>  :   3750003
-TIME ~ CLOCK - <INFO>  :   more...
 Processing: 0x1324e7b922b30B49Ab8EA81086341cc41C249346 3750000-4000000 --output:--output_filename--
 	Slurping 0x1324e7b922b30b49ab8ea81086341cc41c249346
                                                                                                                         { "outputFilename": "--output_filename--" }

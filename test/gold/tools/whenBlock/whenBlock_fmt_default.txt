@@ -1,6 +1,4 @@
 whenBlock argc: 2 [1:1001001] 
 whenBlock 1001001 
-TIME ~ CLOCK - <INFO>  : block_list
-TIME ~ CLOCK - <INFO>  :   1001001
 blocknumber	timestamp	date	name
 1001001	1455421883	2016-02-14 03:51:23 UTC

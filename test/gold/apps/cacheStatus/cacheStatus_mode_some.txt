@@ -1,7 +1,5 @@
 cacheStatus argc: 2 [1:some] 
 cacheStatus some 
-TIME ~ CLOCK - <INFO>  : modes
-TIME ~ CLOCK - <INFO>  :   some
 {
   "client_version": "Client version",
   "client_ids": "chainId: 1 networkId: 1",

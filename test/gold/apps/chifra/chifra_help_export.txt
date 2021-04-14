@@ -1,6 +1,5 @@
 chifra argc: 3 [1:export] [2:--help] 
 chifra export --help 
-TIME ~ CLOCK - <INFO>  : mode: export
 chifra export argc: 2 [1:--help] 
 chifra export --help 
 PROG_NAME = [chifra export]

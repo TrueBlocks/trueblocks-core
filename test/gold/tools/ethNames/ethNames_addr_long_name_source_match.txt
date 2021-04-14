@@ -1,7 +1,3 @@
 ethNames argc: 7 [1:Humaniq] [2:1e17] [3:Ether] [4:--verbose] [5:--fmt] [6:txt] 
 ethNames Humaniq 1e17 Ether --verbose --fmt txt 
-TIME ~ CLOCK - <INFO>  : terms
-TIME ~ CLOCK - <INFO>  :   Humaniq
-TIME ~ CLOCK - <INFO>  :   1e17
-TIME ~ CLOCK - <INFO>  :   Ether
 No results for Humaniq 1e17 Ether --verbose:1

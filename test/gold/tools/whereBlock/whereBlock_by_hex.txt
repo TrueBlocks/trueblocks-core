@@ -1,6 +1,4 @@
 whereBlock argc: 2 [1:0xabcd] 
 whereBlock 0xabcd 
-TIME ~ CLOCK - <INFO>  : blocks
-TIME ~ CLOCK - <INFO>  :   43981
 blocknumber	path	cached
 43981	--nodeVersion--	false

@@ -573,7 +573,7 @@ bool COptions::setDisplayFormatting(void) {
 #define LOG_TEST_VAL(a, b)                                                                                             \
     {                                                                                                                  \
         if (b != 0)                                                                                                    \
-            LOG_TEST(a, "--value--", false)                                                                            \
+            LOG_TEST(a, "--value--", false);                                                                           \
     }
 
 //------------------------------------------------------------------------------------------------

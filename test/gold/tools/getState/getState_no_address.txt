@@ -1,7 +1,5 @@
 getState argc: 2 [1:12] 
 getState 12 
-TIME ~ CLOCK - <INFO>  : blocks
-TIME ~ CLOCK - <INFO>  :   12
 
   You must provide at least one Ethereum address. Quitting...
 

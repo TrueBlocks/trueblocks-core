@@ -1,11 +1,5 @@
 getState argc: 4 [1:--call] [2:0xbb2b8038a1640196fbe3e38816f3e67cba72d940!0x0902f1ac] [3:10092000] 
 getState --call 0xbb2b8038a1640196fbe3e38816f3e67cba72d940!0x0902f1ac 10092000 
-TIME ~ CLOCK - <INFO>  : blocks
-TIME ~ CLOCK - <INFO>  :   10092000
-TIME ~ CLOCK - <INFO>  : call: 0xbb2b8038a1640196fbe3e38816f3e67cba72d940!0x0902f1ac
-TIME ~ CLOCK - <INFO>  : decodeRLP--------------------------------------: 
-TIME ~ CLOCK - <INFO>  : typeList: : 
-TIME ~ CLOCK - <INFO>  : inputStr: : 0x0000000000000000000000000000000000000000000000000000000000aab26d00000000000000000000000000000000000000000000000046b542a78dff9f76000000000000000000000000000000000000000000000000000000005ec2df13
 
 level: 1
 readOffset: 0
@@ -20,7 +14,6 @@ dataArray.size: 3
   2 (0x040) 0000000000000000...0000000000000000000000005ec2df13
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint112
 params.size: 3
   0: uint112 _reserve0 = 11186797
   1: uint112 _reserve1 = <>
@@ -39,7 +32,6 @@ dataArray.size: 3
   2 (0x040) 0000000000000000...0000000000000000000000005ec2df13
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint112
 params.size: 3
   0: uint112 _reserve0 = 11186797
   1: uint112 _reserve1 = 5095051840848895862
@@ -58,7 +50,6 @@ dataArray.size: 3
   2 (0x040) 0000000000000000...0000000000000000000000005ec2df13 <-r
 
 ==================================================
-TIME ~ CLOCK - <INFO>  : Section-04:(uint): uint32
 params.size: 3
   0: uint112 _reserve0 = 11186797
   1: uint112 _reserve1 = 5095051840848895862

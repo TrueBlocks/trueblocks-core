@@ -1,7 +1,4 @@
 makeClass argc: 5 [1:-n] [2:qblocks] [3:--run] [4:function] 
 makeClass -n qblocks --run function 
-TIME ~ CLOCK - <INFO>  : files
-TIME ~ CLOCK - <INFO>  :   function
-TIME ~ CLOCK - <INFO>  : run: true
 TIME ~ CLOCK - <INFO>  : handling generate...
 TIME ~ CLOCK - <INFO>  : makeClass --run processed 1 files (changed 2).                                        
