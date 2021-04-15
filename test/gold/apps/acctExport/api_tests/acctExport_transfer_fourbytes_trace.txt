@@ -1,0 +1,70 @@
+{
+  "data": [
+    {
+      "traceAddress": null,
+      "type": "call",
+      "error": "",
+      "action": {
+        "selfDestructed": "0x0",
+        "balance": 0,
+        "callType": "call",
+        "from": "0xeba60d324c2546459e1e9dd4c7e740ca80134588",
+        "gas": 176808,
+        "input": "0xa9059cbb000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b0000000000000000000000000000000000000000000000000de0b6b3a7640000",
+        "refundAddress": "0x0",
+        "to": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
+        "value": 0
+      },
+      "result": {
+        "newContract": "0x0",
+        "gasUsed": 29106,
+        "output": "0x0000000000000000000000000000000000000000000000000000000000000001"
+      },
+      "compressedTrace": ""
+    },
+    {
+      "traceAddress": null,
+      "type": "call",
+      "error": "",
+      "action": {
+        "selfDestructed": "0x0",
+        "balance": 0,
+        "callType": "call",
+        "from": "0x8c492d5f763841767362d716e3e69511f0527791",
+        "gas": 176680,
+        "input": "0xa9059cbb000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b00000000000000000000000000000000000000000000010eff0fae29b1bc0000",
+        "refundAddress": "0x0",
+        "to": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
+        "value": 0
+      },
+      "result": {
+        "newContract": "0x0",
+        "gasUsed": 14106,
+        "output": "0x0000000000000000000000000000000000000000000000000000000000000001"
+      },
+      "compressedTrace": ""
+    },
+    {
+      "traceAddress": null,
+      "type": "call",
+      "error": "",
+      "action": {
+        "selfDestructed": "0x0",
+        "balance": 0,
+        "callType": "call",
+        "from": "0x3f1c1e14fd919415010c03f9de29cbafd5866e81",
+        "gas": 176744,
+        "input": "0xa9059cbb000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b0000000000000000000000000000000000000000000000878678326eac900000",
+        "refundAddress": "0x0",
+        "to": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
+        "value": 0
+      },
+      "result": {
+        "newContract": "0x0",
+        "gasUsed": 14106,
+        "output": "0x0000000000000000000000000000000000000000000000000000000000000001"
+      },
+      "compressedTrace": ""
+    }
+  ]
+}

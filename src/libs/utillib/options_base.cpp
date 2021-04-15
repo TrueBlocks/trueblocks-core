@@ -776,6 +776,7 @@ string_q COptionsBase::options(void) const {
     replaceAll(positional, "block_list", "< block | date > [ block... | date... ]");
     replaceAll(positional, "transactions", "<tx_id> [tx_id...]");
     replaceAll(positional, "blocks", "<block> [block...]");
+    replaceAll(positional, "addrs topics fourbytes", "<address> [address...] [topics] [fourbytes]");
     replaceAll(positional, "addrs", "<address> [address...]");
     replaceAll(positional, "files", "<file> [file...]");
     replaceAll(positional, "terms", "<term> [term...]");

@@ -15,6 +15,7 @@ static const COption params[] = {
     // clang-format off
     COption("addrs", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "one or more addresses (0x...) to export"),
     COption("topics", "", "list<topic>", OPT_POSITIONAL, "filter by one or more logs topics (only for --logs option)"),
+    COption("fourbytes", "", "list<fourbyte>", OPT_POSITIONAL, "filter by one or more fourbytes (only for transactions and trace options)"),  // NOLINT
     COption("appearances", "p", "", OPT_SWITCH, "export a list of appearances"),
     COption("receipts", "r", "", OPT_SWITCH, "export receipts instead of transaction list"),
     COption("logs", "l", "", OPT_SWITCH, "export logs instead of transaction list"),
@@ -53,7 +54,6 @@ bool COptions::parseArguments(string_q& command) {
 
     // BEG_CODE_LOCAL_INIT
     CAddressArray addrs;
-    CTopicArray topics;
     blknum_t start = NOPOS;
     blknum_t end = NOPOS;
     bool staging = false;
@@ -159,8 +159,12 @@ bool COptions::parseArguments(string_q& command) {
             if (!parseAddressList(this, addrs, arg))
                 return false;
 
-        } else {
+        } else if (isTopic(arg)) {
             if (!parseTopicList2(this, topics, arg))
+                return false;
+
+        } else {
+            if (!parseFourbyteList(this, fourbytes, arg))
                 return false;
 
             // END_CODE_AUTO
@@ -170,6 +174,7 @@ bool COptions::parseArguments(string_q& command) {
     // BEG_DEBUG_DISPLAY
     LOG_TEST_LIST("addrs", addrs, addrs.empty());
     LOG_TEST_LIST("topics", topics, topics.empty());
+    LOG_TEST_LIST("fourbytes", fourbytes, fourbytes.empty());
     LOG_TEST_BOOL("appearances", appearances);
     LOG_TEST_BOOL("receipts", receipts);
     LOG_TEST_BOOL("logs", logs);
@@ -214,6 +219,12 @@ bool COptions::parseArguments(string_q& command) {
     // We need at least one address to scrape...
     if (addrs.size() == 0)
         EXIT_USAGE("You must provide at least one Ethereum address.");
+
+    if (topics.size() && !logs)
+        return usage("Use the topics option only with --logs.");
+
+    if (fourbytes.size() && (logs || receipts || appearances))
+        return usage("Use the fourbytes option only with non-logs commands.");
 
     if ((appearances + receipts + logs + traces) > 1)
         EXIT_USAGE("Please export only one of list, receipts, logs, or traces.");

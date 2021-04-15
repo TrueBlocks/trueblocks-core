@@ -51,6 +51,7 @@ extern bool parseBlockList2(COptionsBase* opts, COptionsBlockList& blocks, const
 extern bool parseTransList2(COptionsBase* opt, COptionsTransList& transList, const string_q& argIn);
 extern bool parseAddressList(COptionsBase* opt, CAddressArray& addrs, const string_q& argIn);
 extern bool parseTopicList2(COptionsBase* opt, CTopicArray& topics, const string_q& argIn);
+extern bool parseFourbyteList(COptionsBase* opt, CFourbyteArray& fourbytes, const string_q& argIn);
 extern bool parseStringList2(COptionsBase* opt, CStringArray& strings, const string_q& argIn);
 extern bool getDirectionalTxId(blknum_t bn, txnum_t txid, const string_q& dir, string_q& argOut, string_q& errorMsg);
 extern bool wrangleTxId(string_q& argIn, string_q& errorMsg);

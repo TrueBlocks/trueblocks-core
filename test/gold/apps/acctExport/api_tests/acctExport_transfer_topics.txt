@@ -1,0 +1,191 @@
+{
+  "data": [
+    {
+      "address": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
+      "blockNumber": 8856476,
+      "logIndex": 40,
+      "topics": [
+        "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+        "0x000000000000000000000000eba60d324c2546459e1e9dd4c7e740ca80134588",
+        "0x000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b"
+      ],
+      "data": "0x0000000000000000000000000000000000000000000000000de0b6b3a7640000",
+      "compressedLog": "",
+      "transactionIndex": 55
+    },
+    {
+      "address": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
+      "blockNumber": 8856511,
+      "logIndex": 94,
+      "topics": [
+        "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+        "0x0000000000000000000000008c492d5f763841767362d716e3e69511f0527791",
+        "0x000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b"
+      ],
+      "data": "0x00000000000000000000000000000000000000000000010eff0fae29b1bc0000",
+      "compressedLog": "",
+      "transactionIndex": 161
+    },
+    {
+      "address": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
+      "blockNumber": 8860434,
+      "logIndex": 19,
+      "topics": [
+        "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+        "0x0000000000000000000000003f1c1e14fd919415010c03f9de29cbafd5866e81",
+        "0x000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b"
+      ],
+      "data": "0x0000000000000000000000000000000000000000000000878678326eac900000",
+      "compressedLog": "",
+      "transactionIndex": 21
+    },
+    {
+      "address": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
+      "blockNumber": 8860513,
+      "logIndex": 84,
+      "topics": [
+        "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+        "0x000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b",
+        "0x00000000000000000000000030f938fed5de6e06a9a7cd2ac3517131c317b1e7"
+      ],
+      "data": "0x00000000000000000000000000000000000000000000001b1ae4d6e2ef500000",
+      "compressedLog": "",
+      "transactionIndex": 85
+    }
+  ],
+  "types": [
+    {
+      "type": "CLogEntry",
+      "fields": [
+        {
+          "name": "address",
+          "type": "address"
+        },
+        {
+          "name": "blockNumber",
+          "type": "blocknum"
+        },
+        {
+          "name": "logIndex",
+          "type": "blocknum"
+        },
+        {
+          "name": "topics",
+          "type": "object|ts_array"
+        },
+        {
+          "name": "data",
+          "type": "text"
+        },
+        {
+          "name": "articulatedLog",
+          "type": "object"
+        },
+        {
+          "name": "compressedLog",
+          "type": "text"
+        },
+        {
+          "name": "transactionIndex",
+          "type": "blocknum"
+        }
+      ]
+    }
+  ],
+  "meta": {
+    "unripe": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "client": "0xdeadbeef",
+    "namedFrom": {
+      "0xf503017d7baf7fbc0fff7492b751025c6a78179b": {
+        "tags": "00-Active",
+        "name": "Name 0xf503017d",
+        "count": 4
+      },
+      "0x3b161d57f482cd2dfbb626f0307ef92b3b094fce": {
+        "tags": "00-Active",
+        "name": "Name 0x3b161d57",
+        "count": 1
+      },
+      "0x3f1c1e14fd919415010c03f9de29cbafd5866e81": {
+        "tags": "25-Exchanges",
+        "name": "Name 0x3f1c1e14",
+        "count": 1
+      },
+      "0x8c492d5f763841767362d716e3e69511f0527791": {
+        "tags": "25-Exchanges",
+        "name": "Name 0x8c492d5f",
+        "count": 1
+      },
+      "0xb97073b754660bb356dfe12f78ae366d77dbc80f": {
+        "tags": "00-Active",
+        "name": "Name 0xb97073b7",
+        "count": 1
+      },
+      "0xbb984f85bd52d78eb2fbf2c5598bae7abb98c5bc": {
+        "tags": "25-Exchanges",
+        "name": "Name 0xbb984f85",
+        "count": 1
+      },
+      "0xeba60d324c2546459e1e9dd4c7e740ca80134588": {
+        "tags": "25-Exchanges",
+        "name": "Name 0xeba60d32",
+        "count": 1
+      }
+    },
+    "unNamedFrom": {},
+    "namedTo": {
+      "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359": {
+        "tags": "50-Tokens:ERC20",
+        "name": "Sai Stablecoin v1.0",
+        "is_contract": true,
+        "is_erc20": true,
+        "count": 5
+      },
+      "0xf503017d7baf7fbc0fff7492b751025c6a78179b": {
+        "tags": "00-Active",
+        "name": "Name 0xf503017d",
+        "count": 2
+      },
+      "0x226159d592e2b063810a10ebf6dcbada94ed68b8": {
+        "tags": "34-ENS",
+        "name": "ENS: Old Public Resolver 2",
+        "is_contract": true,
+        "count": 1
+      },
+      "0x30f938fed5de6e06a9a7cd2ac3517131c317b1e7": {
+        "tags": "30-Contracts",
+        "name": "Giveth Bridge",
+        "is_contract": true,
+        "count": 1
+      },
+      "0xb97073b754660bb356dfe12f78ae366d77dbc80f": {
+        "tags": "00-Active",
+        "name": "Name 0xb97073b7",
+        "count": 1
+      }
+    },
+    "unNamedTo": {},
+    "start": "0xdeadbeef",
+    "end": "0xdeadbeef",
+    "accountedFor": {
+      "stateHistory": [],
+      "curBalance": 0,
+      "enabled": true,
+      "tags": "00-Active",
+      "address": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+      "name": "Name 0xf503017d",
+      "symbol": "",
+      "source": "",
+      "decimals": 0,
+      "description": "",
+      "is_custom": true,
+      "is_prefund": false,
+      "is_contract": false,
+      "is_erc20": false,
+      "is_erc721": false
+    }
+  }
+}

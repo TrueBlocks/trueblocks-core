@@ -5,6 +5,7 @@
  *------------------------------------------------------------------------*/
 #include "options.h"
 
+bool inputFilter(const string_q& input, const COptions* opt);
 //-----------------------------------------------------------------------
 bool acct_Display(CTraverser* trav, void* data) {
     COptions* opt = (COptions*)trav->options;
@@ -13,15 +14,17 @@ bool acct_Display(CTraverser* trav, void* data) {
     if (opt->freshen)
         return true;
 
-    opt->markNeighbors(trav->trans);
-    opt->articulateAll(trav->trans);
-    if (opt->accounting) {
-        blknum_t next = trav->index < opt->apps.size() - 1 ? opt->apps[trav->index + 1].blk : NOPOS;
-        process_reconciliation(opt, trav->trans, opt->prevStatements, next, opt->tokens);
+    if (inputFilter(trav->trans.input, opt)) {
+        opt->markNeighbors(trav->trans);
+        opt->articulateAll(trav->trans);
+        if (opt->accounting) {
+            blknum_t next = trav->index < opt->apps.size() - 1 ? opt->apps[trav->index + 1].blk : NOPOS;
+            process_reconciliation(opt, trav->trans, opt->prevStatements, next, opt->tokens);
+        }
+        cout << ((isJson() && !opt->firstOut) ? ", " : "");
+        cout << trav->trans;
+        opt->firstOut = false;
     }
-    cout << ((isJson() && !opt->firstOut) ? ", " : "");
-    cout << trav->trans;
-    opt->firstOut = false;
 
     prog_Log(trav, data, trav->inCache ? TR_PROGRESS_CACHE : TR_PROGRESS_NODE);
     return !shouldQuit();
@@ -39,6 +42,16 @@ bool acct_Pre(CTraverser* trav, void* data) {
         opt->prevStatements[opt->accountedFor + "_eth"] = eth;
     }
     return true;
+}
+
+//-----------------------------------------------------------------------
+bool inputFilter(const string_q& input, const COptions* opt) {
+    if (opt->fourbytes.empty())
+        return true;
+    for (auto four : opt->fourbytes)
+        if (startsWith(input, four))
+            return true;
+    return false;
 }
 
 //-----------------------------------------------------------------------

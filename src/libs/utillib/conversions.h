@@ -30,6 +30,7 @@ using hash_t = string_q;
 using ipfshash_t = string_q;
 using wei_t = biguint_t;
 using topic_t = string_q;
+using fourbyte_t = string_q;
 using uchar_t = unsigned char;
 using addrbytes_t = vector<uint8_t>;
 using hashbytes_t = vector<uint8_t>;
@@ -44,6 +45,7 @@ using CBigUintArray = vector<biguint_t>;
 using CBigIntArray = vector<bigint_t>;
 using CAddressArray = vector<address_t>;
 using CTopicArray = vector<topic_t>;
+using CFourbyteArray = vector<fourbyte_t>;
 
 //-------------------------------------------------------------------------
 using CAddressWeiMap = map<address_t, wei_t>;
@@ -69,6 +71,9 @@ extern address_t str_2_Addr(const string_q& str);
 extern hash_t str_2_Hash(const string_q& str);
 extern biguint_t str_2_Wei(const string_q& str);
 inline topic_t str_2_Topic(const string_q& str) {
+    return str;
+}
+inline fourbyte_t str_2_Fourbyte(const string_q& str) {
     return str;
 }
 extern timestamp_t str_2_Ts(const string_q& str);
@@ -122,6 +127,12 @@ extern bool isDate(const string_q& date);
 extern bool isTimestamp(const string_q& ts);
 extern bool isHash(const hash_t& hashIn);
 extern bool isUnsigned(const string_q& in);
+inline bool isTopic(const string_q& topic) {
+    return isHash(topic);
+};
+inline bool isFourbyte(const string_q& fourbyte) {
+    return (fourbyte.length() == 10 && isHexStr(fourbyte));
+};
 
 //--------------------------------------------------------------------
 extern bool rangesIntersect(const blkrange_t& r1, const blkrange_t& r2);

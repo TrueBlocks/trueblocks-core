@@ -278,6 +278,15 @@ bool parseTopicList2(COptionsBase* opt, CTopicArray& topics, const string_q& arg
 }
 
 //--------------------------------------------------------------------------------
+bool parseFourbyteList(COptionsBase* opt, CFourbyteArray& fourbytes, const string_q& argIn) {
+    if (!isFourbyte(argIn))
+        return opt->usage("Invalid fourbyte '" + argIn + "'. Length (" + uint_2_Str(argIn.length()) +
+                          ") is not equal to 8 characters (4 bytes).");
+    fourbytes.push_back(toLower(str_2_Fourbyte(argIn)));
+    return true;
+}
+
+//--------------------------------------------------------------------------------
 bool parseStringList2(COptionsBase* opt, CStringArray& strings, const string& argIn) {
     strings.push_back(argIn);
     return true;

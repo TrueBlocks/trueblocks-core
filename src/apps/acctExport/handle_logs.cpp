@@ -5,6 +5,7 @@
  *------------------------------------------------------------------------*/
 #include "options.h"
 
+bool logFilter(const CLogEntry& log, const COptions* opt);
 //-----------------------------------------------------------------------
 bool logs_Display(CTraverser* trav, void* data) {
     COptions* opt = (COptions*)trav->options;
@@ -16,17 +17,7 @@ bool logs_Display(CTraverser* trav, void* data) {
     opt->markNeighbors(trav->trans);
     opt->articulateAll(trav->trans);
     for (auto log : trav->trans.receipt.logs) {
-        bool showMe = true;
-        if (opt->relevant) {
-            showMe = opt->isRelevant(log);
-            if (showMe && !opt->emitted_by.empty())
-                showMe = opt->wasEmittedBy(log.address);
-        } else if (!opt->emitted_by.empty()) {
-            showMe = opt->wasEmittedBy(log.address);
-        } else if (opt->emitter) {
-            showMe = opt->isEmitter(log.address);
-        }
-        if (showMe) {
+        if (logFilter(log, opt)) {
             cout << ((isJson() && !opt->firstOut) ? ", " : "");
             cout << log;
             opt->firstOut = false;
@@ -46,6 +37,29 @@ bool logs_Pre(CTraverser* trav, void* data) {
         opt->lastStatement.endBal = getBalanceAt(opt->accountedFor, opt->apps[0].blk - 1);
 
     start_Log(trav, data);
+    return true;
+}
+
+//-----------------------------------------------------------------------
+bool logFilter(const CLogEntry& log, const COptions* opt) {
+    if (!opt->emitted_by.empty()) {
+        if (!opt->wasEmittedBy(log.address))
+            return false;
+        return !opt->relevant || opt->isRelevant(log);
+    }
+
+    if (opt->emitter) {
+        return opt->isEmitter(log.address);
+    }
+
+    if (opt->topics.size() && log.topics.size()) {
+        for (auto topic : opt->topics) {
+            if (topic == log.topics[0])
+                return true;
+        }
+        return false;
+    }
+
     return true;
 }
 

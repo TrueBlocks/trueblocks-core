@@ -32,6 +32,7 @@ extern const char* STR_BLOCKLIST_PROCESSOR;
 extern const char* STR_TXLIST_PROCESSOR;
 extern const char* STR_ADDRLIST_PROCESSOR;
 extern const char* STR_TOPICLIST_PROCESSOR;
+extern const char* STR_FOURBYTELIST_PROCESSOR;
 extern const char* STR_STRINGLIST_PROCESSOR;
 extern const char* STR_ENUMLIST_PROCESSOR;
 extern const char* STR_ENUM_PROCESSOR;
@@ -142,9 +143,31 @@ bool COptions::handle_options(void) {
                         auto_stream.clear();
                         auto_stream << str;
                         pos = "";
+                        // } else if (cnt == 1) {
+                        //     // adjust the first positional to seperate addresses or dates from blocks
+                        //     string_q str = auto_stream.str();
+                        //     replaceReverse(str, "else {\n",
+                        //                    "else if (isTopic(arg)) {\n            if (!parseTopicList2(this, "
+                        //                    "topics, arg))\n                return false;\n\n");
+                        //     auto_stream.str("");
+                        //     auto_stream.clear();
+                        //     auto_stream << str;
+                        //     pos = "";
                     } else {
-                        replace(pos, "} else if", "if");
-                        auto_stream << pos;
+                        if (contains(pos, "Topic")) {
+                            // adjust the first positional to seperate addresses or dates from blocks
+                            string_q str = auto_stream.str();
+                            replaceReverse(str, "else {\n",
+                                           "else if (isTopic(arg)) {\n            if (!parseTopicList2(this, "
+                                           "topics, arg))\n                return false;\n\n");
+                            auto_stream.str("");
+                            auto_stream.clear();
+                            auto_stream << str;
+                            pos = "";
+                        } else {
+                            replace(pos, "} else if", "if");
+                            auto_stream << pos;
+                        }
                     }
                     cnt++;
                 } else {
@@ -328,6 +351,10 @@ void COptions::generate_positional(const CCommandOption& option) {
             local_stream << option.Format("    CTopicArray [{COMMAND}];") << endl;
             pos_stream << option.Format(STR_TOPICLIST_PROCESSOR) << endl;
 
+        } else if (option.data_type == "list<fourbyte>") {
+            local_stream << option.Format("    CFourbyteArray [{COMMAND}];") << endl;
+            pos_stream << option.Format(STR_FOURBYTELIST_PROCESSOR) << endl;
+
         } else if (startsWith(option.data_type, "list<enum[")) {
             local_stream << option.Format("    CStringArray [{COMMAND}];") << endl;
             pos_stream << option.Format(STR_ENUMLIST_PROCESSOR) << endl;
@@ -364,6 +391,10 @@ void COptions::generate_positional(const CCommandOption& option) {
         } else if (option.data_type == "list<topic>") {
             header_stream << option.Format("    CTopicArray [{COMMAND}];") << endl;
             pos_stream << option.Format(STR_TOPICLIST_PROCESSOR) << endl;
+
+        } else if (option.data_type == "list<fourbyte>") {
+            header_stream << option.Format("    CFourbyteArray [{COMMAND}];") << endl;
+            pos_stream << option.Format(STR_FOURBYTELIST_PROCESSOR) << endl;
 
         } else if (startsWith(option.data_type, "list<enum[")) {
             header_stream << option.Format("    CStringArray [{COMMAND}];") << endl;
@@ -543,6 +574,11 @@ const char* STR_ADDRLIST_PROCESSOR =
 //---------------------------------------------------------------------------------------------------
 const char* STR_TOPICLIST_PROCESSOR =
     "            } else if (!parseTopicList2(this, [{COMMAND}], arg))\n"
+    "                return false;\n";
+
+//---------------------------------------------------------------------------------------------------
+const char* STR_FOURBYTELIST_PROCESSOR =
+    "            } else if (!parseFourbyteList(this, [{COMMAND}], arg))\n"
     "                return false;\n";
 
 //---------------------------------------------------------------------------------------------------
