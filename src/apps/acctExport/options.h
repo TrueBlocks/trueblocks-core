@@ -42,22 +42,19 @@ class COptions : public CAbiOptions {
     bool clean;
     // END_CODE_DECLARE
 
-    CAcctScrapeStats stats;
+    CAppearanceArray_base apps;
     CMonitorArray allMonitors;
     CMonitorArray possibles;
-    blkrange_t fileRange;
-    size_t visitTypes;
-    CBlockProgress bp;
-    bool firstOut;
+    address_t accountedFor;
+    string_q accountedForName;
 
+    CReconciliation lastStatement;
+    CReconciliationMap prevStatements;
     CMonitorCountArray counts;
-    CAppearanceArray_base apps;
-    string_q className;
-    address_t hackAppAddr;
-    string_q hackAppName;
+    CPinnedChunkArray pinList;
+
     CBlockAddressMap prefundAddrMap;
     CBlockAddressMap blkRewardMap;
-    CPinnedChunkArray pinList;
 
     CAddressUintMap toAddrMap;
     CAddressUintMap fromAddrMap;
@@ -67,20 +64,15 @@ class COptions : public CAbiOptions {
     CAddressUintMap fromTraceAddrMap;
     CAddressUintMap abiMap;
 
-    address_t accountedFor;
-    blknum_t latestBlock;
-    time_q oldestMonitor;
+    CAcctScrapeStats stats;
 
-    string_q bytesOnly;
-
-    uint64_t nProcessing;
-    uint64_t nTransactions;
-    uint64_t nCacheItemsRead;
-    uint64_t nCacheItemsWritten;
-
+    blkrange_t fileRange;
     blkrange_t listRange;
-    CReconciliation lastStatement;
-    CReconciliationMap prevStatements;
+    size_t visitTypes;
+
+    string_q className;
+    CBlockProgress bp;
+    bool firstOut;
 
     COptions(void);
     ~COptions(void);

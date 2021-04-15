@@ -428,11 +428,6 @@
       "0xee057a76e2f321a9200c6539648af30d709075a1": 3
     },
     "namedTo": {
-      "0x8b3b3b624c3c0397d3da8fd861512393d51dcbac": {
-        "tags": "81-Other:DAO Related",
-        "name": "TheOhEightAccount",
-        "count": 73
-      },
       "0xbb9bc244d798123fde783fcc1c72d3bb8c189413": {
         "tags": "50-Tokens:ERC20",
         "name": "The DAO Original",

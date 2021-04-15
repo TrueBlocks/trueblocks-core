@@ -60,8 +60,7 @@ bool COptions::parseArguments(string_q& command) {
     bool unripe = false;
     // END_CODE_LOCAL_INIT
 
-    latestBlock = bp.client;
-    blknum_t latest = latestBlock;
+    blknum_t latest = bp.client;
     string_q origCmd = command;
 
     Init();
@@ -278,12 +277,12 @@ bool COptions::parseArguments(string_q& command) {
         } else {
             LOG_TEST("Monitor not found for", addr + ". Continuing anyway.", false);
         }
-        if (hackAppAddr.empty()) {
+        if (accountedFor.empty()) {
             CAccountName acct;
             acct.address = monitor.address;
             getNamedAccount(acct, monitor.address);
-            hackAppName = acct.name;
-            hackAppAddr = acct.address;
+            accountedForName = acct.name;
+            accountedFor = acct.address;
         }
         allMonitors.push_back(monitor);
     }
@@ -293,7 +292,7 @@ bool COptions::parseArguments(string_q& command) {
     if (articulate) {
         abi_spec.loadAbisFromKnown();
         for (auto monitor : allMonitors) {
-            if (isContractAt(monitor.address, latestBlock))
+            if (isContractAt(monitor.address, bp.client))
                 abi_spec.loadAbiFromEtherscan(monitor.address);
         }
     }
@@ -389,10 +388,6 @@ void COptions::Init(void) {
     clean = false;
     // END_CODE_INIT
 
-    nProcessing = 0;
-    nTransactions = 0;
-    nCacheItemsRead = 0;
-    nCacheItemsWritten = 0;
     bp = getBlockProgress(BP_ALL);
     listRange.second = bp.ripe;
 
@@ -401,7 +396,6 @@ void COptions::Init(void) {
     apps.clear();
 
     accountedFor = "";
-    bytesOnly = "";
 
     // We don't clear these because they are part of meta data
     // prefundAddrMap.clear();
@@ -409,8 +403,6 @@ void COptions::Init(void) {
     // toNameExistsMap.clear();
     // fromNameExistsMap.clear();
     // abiMap.clear();
-
-    oldestMonitor = latestDate;
 
     minArgs = 0;
     fileRange = make_pair(NOPOS, NOPOS);
@@ -547,8 +539,6 @@ bool COptions::setDisplayFormatting(void) {
             expContext().exportFmt = NONE1;
 
         if (accounting) {
-            accountedFor = hackAppAddr;
-            bytesOnly = substitute(accountedFor, "0x", "");
             articulate = true;
             manageFields("CTransaction:statements", true);
             manageFields("CTransaction:reconciliations", false);
@@ -600,7 +590,7 @@ bool COptions::freshen_internal(void) {
     LOG_TEST_VAL("stats.nPositive", stats.nPositive);
     LOG_TEST_VAL("stats.nStageChecked", stats.nStageChecked);
     LOG_TEST_VAL("stats.nStageHits", stats.nStageHits);
-    LOG_TEST_VAL("stats.nRecords", stats.nRecords);
+    LOG_TEST_VAL("stats.nTotalHits", stats.nTotalHits);
 
     // Clean the monitor stage of previously unfinished scrapes
     cleanMonitorStage();
@@ -628,7 +618,7 @@ bool COptions::freshen_internal(void) {
     LOG_TEST_VAL("stats.nPositive", stats.nPositive);
     LOG_TEST_VAL("stats.nStageChecked", stats.nStageChecked);
     LOG_TEST_VAL("stats.nStageHits", stats.nStageHits);
-    LOG_TEST_VAL("stats.nRecords", stats.nRecords);
+    LOG_TEST_VAL("stats.nTotalHits", stats.nTotalHits);
 
     EXIT_NOMSG(true);
 }

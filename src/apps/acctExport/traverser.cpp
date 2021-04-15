@@ -98,9 +98,9 @@ void prog_Log(CTraverser* trav, void* data, TraverserLog mode) {
         return;
 
     blknum_t prog = opt->first_record + trav->nProcessed;
-    blknum_t goal = opt->nTransactions;
+    blknum_t goal = opt->stats.nFileRecords;
     ostringstream post;
-    post << " " << trav->op << " (max " << goal << ") for address " << opt->hackAppAddr;
+    post << " " << trav->op << " (max " << goal << ") for address " << opt->accountedFor;
     LOG_PROGRESS((mode == TR_PROGRESS_CACHE ? "Reading" : "Extracting"), prog, goal, post.str() + "\r");
     return;
 }
@@ -112,10 +112,10 @@ void end_Log(CTraverser* trav, void* data) {
 
     const COptions* opt = trav->options;
     blknum_t prog = opt->first_record + trav->nProcessed;
-    blknum_t goal = opt->nTransactions;
+    blknum_t goal = opt->stats.nFileRecords;
     if (prog == goal) {
         string_q msg = opt->freshen ? "Finished updating" : "Finished reporting on";
-        string_q endMsg = " " + trav->op + " for address " + opt->hackAppAddr;
+        string_q endMsg = " " + trav->op + " for address " + opt->accountedFor;
         LOG_PROGRESS(msg, prog, goal, endMsg);
     }
     return;

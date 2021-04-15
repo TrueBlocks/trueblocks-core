@@ -34,7 +34,8 @@ class CAcctScrapeStats : public CBaseNode {
     uint64_t nPositive;
     uint64_t nStageChecked;
     uint64_t nStageHits;
-    uint64_t nRecords;
+    uint64_t nTotalHits;
+    uint64_t nFileRecords;
 
   public:
     CAcctScrapeStats(void);
@@ -106,7 +107,8 @@ inline void CAcctScrapeStats::initialize(void) {
     nPositive = 0;
     nStageChecked = 0;
     nStageHits = 0;
-    nRecords = 0;
+    nTotalHits = 0;
+    nFileRecords = 0;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -126,7 +128,8 @@ inline void CAcctScrapeStats::duplicate(const CAcctScrapeStats& ac) {
     nPositive = ac.nPositive;
     nStageChecked = ac.nStageChecked;
     nStageHits = ac.nStageHits;
-    nRecords = ac.nRecords;
+    nTotalHits = ac.nTotalHits;
+    nFileRecords = ac.nFileRecords;
 
     // EXISTING_CODE
     // EXISTING_CODE

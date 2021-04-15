@@ -58,6 +58,7 @@ void COptions::articulateAll(CTransaction& trans) {
         abi_spec.articulateTransaction(&trans);
         trans.hasToken |= isTokenFunc(trans.input);
 
+        string_q bytesOnly = substitute(accountedFor, "0x", "");
         for (size_t j = 0; j < trans.receipt.logs.size(); j++) {
             CLogEntry* log = (CLogEntry*)&trans.receipt.logs[j];  // NOLINT
             trans.hasToken |= isTokenTopic(log->topics[0]);

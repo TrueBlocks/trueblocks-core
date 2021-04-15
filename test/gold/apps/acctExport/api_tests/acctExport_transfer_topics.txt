@@ -99,11 +99,6 @@
     "finalized": "0xdeadbeef",
     "client": "0xdeadbeef",
     "namedFrom": {
-      "0xf503017d7baf7fbc0fff7492b751025c6a78179b": {
-        "tags": "00-Active",
-        "name": "Name 0xf503017d",
-        "count": 4
-      },
       "0x3b161d57f482cd2dfbb626f0307ef92b3b094fce": {
         "tags": "00-Active",
         "name": "Name 0x3b161d57",
@@ -143,11 +138,6 @@
         "is_contract": true,
         "is_erc20": true,
         "count": 5
-      },
-      "0xf503017d7baf7fbc0fff7492b751025c6a78179b": {
-        "tags": "00-Active",
-        "name": "Name 0xf503017d",
-        "count": 2
       },
       "0x226159d592e2b063810a10ebf6dcbada94ed68b8": {
         "tags": "34-ENS",

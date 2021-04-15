@@ -47,7 +47,7 @@ bool COptions::handle_appearances(void) {
     CTraverserArray traversers;
     traversers.push_back(trav);
 
-    CAppearanceDisplay dapp(hackAppAddr, hackAppName, NOPOS, NOPOS);
+    CAppearanceDisplay dapp(accountedFor, accountedForName, NOPOS, NOPOS);
     forEveryAppearance(traversers, apps, &dapp);
 
     return !shouldQuit();

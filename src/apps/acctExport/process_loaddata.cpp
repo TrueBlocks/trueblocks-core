@@ -12,7 +12,7 @@ bool COptions::loadOneAddress(const CMonitor& monitor, CAppearanceArray_base& ar
     string_q path = monitor.getMonitorPath(monitor.address);
     size_t nRecords = (fileSize(path) / sizeof(CAppearance_base));
     ASSERT(nRecords);
-    nTransactions += nRecords;
+    stats.nFileRecords += nRecords;
 
     CAppearance_base* buffer = new CAppearance_base[nRecords];
     if (buffer) {
@@ -68,7 +68,7 @@ bool COptions::loadAllAppearances(void) {
 
     if (tmp.size() == 0) {
         if (!freshen)
-            LOG4("Nothing to export" + (allMonitors.size() ? (" from " + hackAppAddr) : "") + ".");
+            LOG4("Nothing to export" + (allMonitors.size() ? (" from " + accountedFor) : "") + ".");
         return false;
     }
 
@@ -80,7 +80,7 @@ bool COptions::loadAllAppearances(void) {
         CAppearance_base* prev = &apps[apps.size() - 1];
         // TODO(tjayrush): I think this removes dups. Is it really necessary?
         if (app.blk != prev->blk || app.txid != prev->txid) {
-            if (app.blk > latestBlock) {
+            if (app.blk > bp.client) {
                 static bool hasFuture = false;
                 if (!hasFuture) {
                     if (!isTestMode())
@@ -97,7 +97,6 @@ bool COptions::loadAllAppearances(void) {
         // TODO: We should re-write the file here to remove the dups
         // Make sure to preserve lastVisited (but only if later than what already exists)
     }
-    nProcessing = apps.size();
 
     // Make sure the timestamps column is at least as up to date as this monitor
     if (apps.size()) {

@@ -86,22 +86,11 @@
     "staging": "0xdeadbeef",
     "finalized": "0xdeadbeef",
     "client": "0xdeadbeef",
-    "namedFrom": {
-      "0x001d14804b399c6ef80e64576f657660804fec0b": {
-        "tags": "80-Prefund",
-        "name": "Prefund_0002",
-        "count": 2
-      }
-    },
+    "namedFrom": {},
     "unNamedFrom": {
       "0xPrefund": 1
     },
     "namedTo": {
-      "0x001d14804b399c6ef80e64576f657660804fec0b": {
-        "tags": "80-Prefund",
-        "name": "Prefund_0002",
-        "count": 1
-      },
       "0x2910543af39aba0cd09dbb2d50200b3e800a63d2": {
         "tags": "40-Exchanges",
         "name": "Kraken Exchange",

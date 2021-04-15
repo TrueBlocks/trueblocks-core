@@ -159,7 +159,7 @@ bool COptions::visitBinaryFile(const string_q& path, void* data) {
                 CAddressRecord_base* addrsOnFile =
                     reinterpret_cast<CAddressRecord_base*>(rawData + sizeof(CHeaderRecord_base));
                 CAppearance_base* blocksOnFile = reinterpret_cast<CAppearance_base*>(&addrsOnFile[nAddrs]);
-                options->stats.nRecords += found->cnt;
+                options->stats.nTotalHits += found->cnt;
                 for (size_t i = found->offset; i < found->offset + found->cnt; i++) {
                     CAppearance_base item(blocksOnFile[i].blk, blocksOnFile[i].txid);
                     items.push_back(item);

@@ -64,7 +64,7 @@ int main(int argc, const char* argv[]) {
     os << ", \"start\": " << (isTestMode() ? "\"0xdeadbeef\"" : uint_2_Str(options.scanRange.first)) << endl;
     os << ", \"end\": " << (isTestMode() ? "\"0xdeadbeef\"" : uint_2_Str(options.scanRange.second)) << endl;
     if (!options.count && options.allMonitors.size() == 1) {
-        options.getNamedAccount(options.allMonitors[0], options.hackAppAddr);
+        options.getNamedAccount(options.allMonitors[0], options.accountedFor);
         HIDE_FIELD(CMonitor, "summaryStatement");
         if (options.abi_spec.nInterfaces() == 0) {
             HIDE_FIELD(CMonitor, "abi_spec");
@@ -77,10 +77,10 @@ int main(int argc, const char* argv[]) {
 
     if (!isTestMode() && !options.freshen && !options.count && !options.accounting && !options.logs) {
         ostringstream oss;
-        oss << "Exported " << padNum6T(options.nTransactions) << " ";
+        oss << "Exported " << padNum6T(options.stats.nFileRecords) << " ";
         oss << (!options.className.empty() ? (plural(options.className) + " from ") : "of ");
-        oss << padNum6T(options.nTransactions) << " transactions for address "
-            << (options.allMonitors.size() ? options.hackAppAddr : "");
+        oss << padNum6T(options.stats.nFileRecords) << " transactions for address "
+            << (options.allMonitors.size() ? options.accountedFor : "");
         LOG_INFO(oss.str());
     }
 
