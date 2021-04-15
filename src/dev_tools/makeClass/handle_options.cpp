@@ -143,16 +143,6 @@ bool COptions::handle_options(void) {
                         auto_stream.clear();
                         auto_stream << str;
                         pos = "";
-                        // } else if (cnt == 1) {
-                        //     // adjust the first positional to seperate addresses or dates from blocks
-                        //     string_q str = auto_stream.str();
-                        //     replaceReverse(str, "else {\n",
-                        //                    "else if (isTopic(arg)) {\n            if (!parseTopicList2(this, "
-                        //                    "topics, arg))\n                return false;\n\n");
-                        //     auto_stream.str("");
-                        //     auto_stream.clear();
-                        //     auto_stream << str;
-                        //     pos = "";
                     } else {
                         if (contains(pos, "Topic")) {
                             // adjust the first positional to seperate addresses or dates from blocks
