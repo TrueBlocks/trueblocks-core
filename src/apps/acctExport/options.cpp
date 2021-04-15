@@ -206,14 +206,14 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     if (clean) {
-        if (!handle_clean())
+        if (!process_clean())
             EXIT_USAGE("Clean function returned false.");
         EXIT_NOMSG(false);
     }
 
     // Handle the easy cases first...
     if (isCrudCommand())
-        EXIT_NOMSG(handle_rm(addrs));
+        EXIT_NOMSG(process_rm(addrs));
 
     // We need at least one address to scrape...
     if (addrs.size() == 0)
@@ -273,7 +273,7 @@ bool COptions::parseArguments(string_q& command) {
                 EXIT_USAGE(msg);
             firstBlockToVisit = min(firstBlockToVisit, monitor.getLastVisited());
             LOG_TEST("Monitor found for", addr, false);
-            LOG_TEST("Last visited block", monitor.getLastVisitedBlock(), false);
+            LOG_TEST("Last block in monitor", monitor.getLastBlockInMonitor(), false);
         } else {
             LOG_TEST("Monitor not found for", addr + ". Continuing anyway.", false);
         }
@@ -317,8 +317,8 @@ bool COptions::parseArguments(string_q& command) {
     // Mark the range...
     listRange = make_pair((firstBlockToVisit == NOPOS ? 0 : firstBlockToVisit), lastBlockToVisit);
 
-    if (!freshen_internal())  // getEnvStr("FRESHEN_FLAG S")))
-        EXIT_USAGE("'freshen_internal' returned false.");
+    if (!process_freshen())  // getEnvStr("FRESHEN_FLAG S")))
+        EXIT_USAGE("'process_freshen' returned false.");
 
     if (count) {
         for (auto monitor : allMonitors) {
@@ -571,58 +571,6 @@ bool COptions::setDisplayFormatting(void) {
     EXIT_NOMSG(true);
 }
 
-#define LOG_TEST_VAL(a, b)                                                                                             \
-    {                                                                                                                  \
-        if (b != 0)                                                                                                    \
-            LOG_TEST(a, "--value--", false);                                                                           \
-    }
-
-//------------------------------------------------------------------------------------------------
-bool COptions::freshen_internal(void) {
-    ENTER("freshen_internal");
-
-    LOG_TEST_VAL("stats.nFiles", stats.nFiles);
-    LOG_TEST_VAL("stats.nSkipped", stats.nSkipped);
-    LOG_TEST_VAL("stats.nChecked", stats.nChecked);
-    LOG_TEST_VAL("stats.nBloomMisses", stats.nBloomMisses);
-    LOG_TEST_VAL("stats.nBloomHits", stats.nBloomHits);
-    LOG_TEST_VAL("stats.nFalsePositive", stats.nFalsePositive);
-    LOG_TEST_VAL("stats.nPositive", stats.nPositive);
-    LOG_TEST_VAL("stats.nStageChecked", stats.nStageChecked);
-    LOG_TEST_VAL("stats.nStageHits", stats.nStageHits);
-    LOG_TEST_VAL("stats.nTotalHits", stats.nTotalHits);
-
-    // Clean the monitor stage of previously unfinished scrapes
-    cleanMonitorStage();
-
-    if (visitTypes & VIS_FINAL)
-        forEveryFileInFolder(indexFolder_blooms, visitFinalIndexFiles, this);
-
-    if (visitTypes & VIS_STAGING)
-        forEveryFileInFolder(indexFolder_staging, visitStagingIndexFiles, this);
-
-    if (visitTypes & VIS_UNRIPE)
-        forEveryFileInFolder(indexFolder_unripe, visitUnripeIndexFiles, this);
-
-    for (auto monitor : allMonitors) {
-        monitor.moveToProduction();
-        LOG4(monitor.address, " freshened to ", monitor.getLastVisited(true /* fresh */));
-    }
-
-    LOG_TEST_VAL("stats.nFiles", stats.nFiles);
-    LOG_TEST_VAL("stats.nSkipped", stats.nSkipped);
-    LOG_TEST_VAL("stats.nChecked", stats.nChecked);
-    LOG_TEST_VAL("stats.nBloomMisses", stats.nBloomMisses);
-    LOG_TEST_VAL("stats.nBloomHits", stats.nBloomHits);
-    LOG_TEST_VAL("stats.nFalsePositive", stats.nFalsePositive);
-    LOG_TEST_VAL("stats.nPositive", stats.nPositive);
-    LOG_TEST_VAL("stats.nStageChecked", stats.nStageChecked);
-    LOG_TEST_VAL("stats.nStageHits", stats.nStageHits);
-    LOG_TEST_VAL("stats.nTotalHits", stats.nTotalHits);
-
-    EXIT_NOMSG(true);
-}
-
 // TODO(tjayrush): If an abi file is changed, we should re-articulate.
 // TODO(tjayrush): accounting can not be freshen, appearances, logs, receipts, traces, but must be articulate - why?
 // TODO(tjayrush): accounting must be exportFmt API1 - why?
@@ -632,8 +580,8 @@ bool COptions::freshen_internal(void) {
 // TODO(tjayrush): What does prefundAddrMap and prefundMap do? Needs testing
 // TODO(tjayrush): What does blkRewardMap do? Needs testing
 // TODO(tjayrush): Reconciliation loads traces -- plus it reduplicates the isSuicide, isGeneration, isUncle shit
-// TODO(tjayrush): writeLastExport is really weird
-// TODO(tjayrush): writeLastBlock is really weird
+// TODO(tjayrush): writeLastEncountered is really weird
+// TODO(tjayrush): writeLastBlockInMonitor is really weird
 // TODO(tjayrush): We used to write traces sometimes
 // TODO(tjayrush): We used to cache the monitored txs - I think it was pretty fast (we used the monitor staging folder)
 // TODO(tjayrush): We used to do a ten address thing that would scan the index for ten addrs at a time and then

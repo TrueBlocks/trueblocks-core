@@ -18,7 +18,7 @@ const char* STR_DELETEFIRST = "Monitor [{ADDRESS}] must be deleted first";
 const char* STR_ALREADYDELETED = "Monitor [{ADDRESS}] is already deleted";
 
 //------------------------------------------------------------------------------------------------
-bool COptions::handle_rm(const CAddressArray& addrs) {
+bool COptions::process_rm(const CAddressArray& addrs) {
     CStringArray results;
     for (auto crudCmd : crudCommands) {
         for (auto addr : addrs) {

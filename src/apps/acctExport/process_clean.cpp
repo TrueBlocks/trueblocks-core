@@ -77,7 +77,7 @@ bool cleanMonitorFile(const string_q& path, void* data) {
 }
 
 //---------------------------------------------------------------
-bool COptions::handle_clean(void) {
+bool COptions::process_clean(void) {
     CMonitor m;
     cout << "[";
     bool ret = forEveryFileInFolder(m.getMonitorPath(""), cleanMonitorFile, NULL);

@@ -14,8 +14,6 @@ bool logs_Display(CTraverser* trav, void* data) {
     if (opt->freshen)
         return true;
 
-    opt->markNeighbors(trav->trans);
-    opt->articulateAll(trav->trans);
     for (auto log : trav->trans.receipt.logs) {
         if (logFilter(log, opt)) {
             cout << ((isJson() && !opt->firstOut) ? ", " : "");

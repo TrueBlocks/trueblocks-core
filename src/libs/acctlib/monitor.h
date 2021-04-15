@@ -46,6 +46,7 @@ class CMonitor : public CAccountName {
     const CBaseNode* getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
+  public:
     bloom_t bloom;
     CArchive* tx_cache;
     bool needsRefresh;
@@ -57,18 +58,18 @@ class CMonitor : public CAccountName {
     bool openForWriting(void);
 
     void writeMonitorArray(const CAppearanceArray_base& array);
-    void writeLastBlock(blknum_t bn);
-    void writeLastExport(blknum_t bn);
+    void writeLastBlockInMonitor(blknum_t bn);
+    void writeLastEncountered(blknum_t bn);
+
+    blknum_t getLastVisited(bool fresh = false) const;
+    blknum_t getLastBlockInMonitor(void) const;
+    blknum_t getLastEncountered(void) const;
 
     string_q getMonitorPath(const address_t& addr, freshen_e mode = FM_PRODUCTION) const;
     string_q getMonitorLast(const address_t& addr, freshen_e mode = FM_PRODUCTION) const;
-    string_q getMonitorExpt(const address_t& addr, freshen_e mode = FM_PRODUCTION) const;
+    string_q getMonitorEnct(const address_t& addr, freshen_e mode = FM_PRODUCTION) const;
     string_q getMonitorDels(const address_t& addr, freshen_e mode = FM_PRODUCTION) const;
     string_q getMonitorCach(const address_t& addr, freshen_e mode = FM_PRODUCTION) const;
-
-    blknum_t getLastVisited(bool fresh = false) const;
-    blknum_t getLastVisitedBlock(void) const;
-    blknum_t getLastExportedBlock(void) const;
 
     bool monitorExists(void) const;
     bool isMonitorLocked(string_q& msg) const;

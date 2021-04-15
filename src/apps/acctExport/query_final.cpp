@@ -37,7 +37,7 @@ bool visitFinalIndexFiles(const string_q& path, void* data) {
 
         options->possibles.clear();
         for (auto m : options->allMonitors) {
-            if (m.getLastVisitedBlock() == 0 || m.getLastVisitedBlock() < options->fileRange.first)
+            if (m.getLastBlockInMonitor() == 0 || m.getLastBlockInMonitor() < options->fileRange.first)
                 options->possibles.push_back(m);
         }
 
@@ -87,7 +87,7 @@ bool COptions::visitBinaryFile(const string_q& path, void* data) {
         if (!hit) {
             // none of them hit, so write last block for each of them
             for (auto monitor : possibles) {
-                monitor.writeLastBlock(fileRange.second + 1);
+                monitor.writeLastBlockInMonitor(fileRange.second + 1);
             }
             options->stats.nBloomMisses++;
             LOG_PROGRESS("Skipping", options->fileRange.first, options->listRange.second, " bloom miss\r");
@@ -177,7 +177,7 @@ bool COptions::visitBinaryFile(const string_q& path, void* data) {
     }
 
     for (auto monitor : possibles)
-        monitor.writeLastBlock(fileRange.second + 1);
+        monitor.writeLastBlockInMonitor(fileRange.second + 1);
 
     if (chunk) {
         chunk->Release();

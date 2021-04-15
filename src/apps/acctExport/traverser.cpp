@@ -78,7 +78,7 @@ bool post_Func(CTraverser* trav, void* data) {
 
     if (trav->lastExpBlock != NOPOS)
         for (auto monitor : opt->allMonitors)
-            monitor.writeLastExport(trav->lastExpBlock);
+            monitor.writeLastEncountered(trav->lastExpBlock);
 
     opt->reportNeighbors();
 
@@ -175,6 +175,14 @@ bool loadData(CTraverser* trav, void* data) {
 
     trav->trans.pBlock = &trav->block;
     trav->trans.timestamp = trav->block.timestamp = (timestamp_t)expContext().tsMemMap[(trav->app->blk * 2) + 1];
+
+    if (opt->traces) {
+        loadTraces(trav->trans, trav->app->blk, trav->app->txid, opt->cache_traces,
+                   (opt->skip_ddos && excludeTrace(&trav->trans, opt->max_traces)));
+    }
+
+    opt->markNeighbors(trav->trans);
+    opt->articulateAll(trav->trans);
 
     return true;
 }

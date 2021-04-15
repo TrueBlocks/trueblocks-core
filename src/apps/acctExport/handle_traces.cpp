@@ -14,15 +14,11 @@ bool traces_Display(CTraverser* trav, void* data) {
     if (opt->freshen)
         return true;
 
-    opt->markNeighbors(trav->trans);
-    if (opt->articulate)
-        opt->articulateAll(trav->trans);
-
     for (auto trace : trav->trans.traces) {
         CTrace copy = trace;
-
         if (inputFilter(trace.action.input, opt)) {
-            // Do not collapse with the following code block...both (create and suicide) can be true in a single trace
+            // Do not collapse with the following code block...both (create and (suicide|regular)) can be true in a
+            // single trace
             if (!opt->factory) {
                 bool isSuicide = trace.action.selfDestructed != "";
                 if (isSuicide) {
@@ -54,13 +50,6 @@ bool traces_Display(CTraverser* trav, void* data) {
                 cout << copy;
                 opt->firstOut = false;
             }
-            // if (!isTestMode() && isApiMode()) {
-            //     qblocks::eLogger->setEndline('\r');
-            //     LOG_INFO("\t\t\t\t\t\tGetting trace ", trav->trans.blockNumber, ".", trav->trans.transactionIndex,
-            //     "-",
-            //              trace.getValueByName("traceAddress"), string_q(50, ' '));
-            //     qblocks::eLogger->setEndline('\n');
-            // }
         }
     }
 
@@ -69,22 +58,9 @@ bool traces_Display(CTraverser* trav, void* data) {
 }
 
 //-----------------------------------------------------------------------
-bool traces_Data(CTraverser* trav, void* data) {
-    COptions* opt = (COptions*)trav->options;
-    if (loadData(trav, data)) {
-        if (!loadTraces(trav->trans, trav->app->blk, trav->app->txid, opt->cache_traces,
-                        (opt->skip_ddos && excludeTrace(&trav->trans, opt->max_traces)))) {
-            return false;
-        }
-    }
-    return !shouldQuit();
-}
-
-//-----------------------------------------------------------------------
 bool COptions::handle_traces(void) {
     CTraverser trav(this, cout, "traces");
     trav.displayFunc = traces_Display;
-    trav.dataFunc = traces_Data;
 
     CTraverserArray traversers;
     traversers.push_back(trav);

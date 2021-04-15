@@ -58,7 +58,7 @@ bool COptions::loadAllAppearances(void) {
             EXIT_FAIL("Could not load monitor for address " + monitor.address);
         if (freshen) {
             // If we're freshening...
-            blknum_t lastExport = monitor.getLastExportedBlock();
+            blknum_t lastExport = monitor.getLastEncountered();
             if (scanRange.first == 0)  // we can start where the last export happened on any address...
                 scanRange.first = lastExport;
             if (lastExport < scanRange.first)  // ...but the eariest of the last exports is where we start

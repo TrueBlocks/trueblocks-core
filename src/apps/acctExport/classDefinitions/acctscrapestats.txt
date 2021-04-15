@@ -12,4 +12,4 @@ fields = uint64 nFiles|\
         uint64 nTotalHits|\
         uint64 nFileRecords
 includes = etherlib.h
-display_str = nFiles, nSkipped, nChecked, nBloomMisses, nBloomHits, nFalsePositive, nPositive, nRecords, nFileRecords
+display_str = nFiles, nSkipped, nChecked, nBloomMisses, nBloomHits, nFalsePositive, nPositive, nTotalHits, nFileRecords

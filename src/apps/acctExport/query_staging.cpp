@@ -98,7 +98,7 @@ bool visitStagingIndexFiles(const string_q& path, void* data) {
             if (items.size()) {
                 lockSection();
                 monitor->writeMonitorArray(items);
-                monitor->writeLastBlock(options->fileRange.first + 1);
+                monitor->writeLastBlockInMonitor(options->fileRange.first + 1);
                 unlockSection();
             }
         }

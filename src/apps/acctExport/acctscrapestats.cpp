@@ -342,7 +342,7 @@ const char* STR_DISPLAY_ACCTSCRAPESTATS =
     "[{NBLOOMHITS}]\t"
     "[{NFALSEPOSITIVE}]\t"
     "[{NPOSITIVE}]\t"
-    "[{NRECORDS}]\t"
+    "[{NTOTALHITS}]\t"
     "[{NFILERECORDS}]";
 
 //---------------------------------------------------------------------------

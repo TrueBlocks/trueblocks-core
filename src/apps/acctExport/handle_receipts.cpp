@@ -13,8 +13,6 @@ bool receipts_Display(CTraverser* trav, void* data) {
     if (opt->freshen)
         return true;
 
-    opt->markNeighbors(trav->trans);
-    opt->articulateAll(trav->trans);
     cout << ((isJson() && !opt->firstOut) ? ", " : "");
     cout << trav->trans.receipt;
     opt->firstOut = false;

@@ -9,6 +9,7 @@
  * outside of the BEG_CODE/END_CODE sections
  */
 #include "pinlib.h"
+#include "acctscrapestats.h"
 #include "traverser.h"
 
 // BEG_ERROR_DEFINES
@@ -56,12 +57,15 @@ class COptions : public CAbiOptions {
     CBlockAddressMap prefundAddrMap;
     CBlockAddressMap blkRewardMap;
 
+    // neighbor maps
     CAddressUintMap toAddrMap;
     CAddressUintMap fromAddrMap;
     CAddressUintMap emitterAddrMap;
     CAddressUintMap creationMap;
     CAddressUintMap toTraceAddrMap;
     CAddressUintMap fromTraceAddrMap;
+
+    // abiMap allows fast access to abis
     CAddressUintMap abiMap;
 
     CAcctScrapeStats stats;
@@ -83,7 +87,6 @@ class COptions : public CAbiOptions {
     bool setDisplayFormatting(void);
     bool loadOneAddress(const CMonitor& monitor, CAppearanceArray_base& arrayOut);
     bool loadAllAppearances(void);
-    bool freshen_internal(void);
 
     bool handle_accounting(void);
     bool handle_appearances(void);
@@ -91,8 +94,9 @@ class COptions : public CAbiOptions {
     bool handle_receipts(void);
     bool handle_traces(void);
     bool handle_counts(void);
-    bool handle_clean(void);
-    bool handle_rm(const CAddressArray& addrs);
+    bool process_clean(void);
+    bool process_rm(const CAddressArray& addrs);
+    bool process_freshen(void);
 
     bool visitBinaryFile(const string_q& path, void* data);
     void addNeighbor(CAddressUintMap& map, const address_t& addr);

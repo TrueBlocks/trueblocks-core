@@ -15,8 +15,6 @@ bool acct_Display(CTraverser* trav, void* data) {
         return true;
 
     if (inputFilter(trav->trans.input, opt)) {
-        opt->markNeighbors(trav->trans);
-        opt->articulateAll(trav->trans);
         if (opt->accounting) {
             blknum_t next = trav->index < opt->apps.size() - 1 ? opt->apps[trav->index + 1].blk : NOPOS;
             process_reconciliation(opt, trav->trans, opt->prevStatements, next, opt->tokens);
