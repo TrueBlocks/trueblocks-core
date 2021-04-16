@@ -8,7 +8,7 @@ Please contact us at [sales@greathill.com](mailto:sales@greathill.com) for more 
 
 #### Usage
 
-`Usage:`    chifra export [-p|-r|-l|-t|-C|-O|-a|-i|-R|-U|-v|-h] &lt;address&gt; [address...] topics  
+`Usage:`    chifra export [-p|-r|-l|-t|-C|-O|-a|-i|-R|-U|-v|-h] &lt;address&gt; [address...] [topics] [fourbytes]  
 `Purpose:`  Export full detail of transactions for one or more Ethereum addresses.
 
 `Where:`  
@@ -17,6 +17,7 @@ Please contact us at [sales@greathill.com](mailto:sales@greathill.com) for more 
 | -------: | :------- | :------- |
 |  | addrs | one or more addresses (0x...) to export (required) |
 |  | topics | filter by one or more logs topics (only for --logs option) |
+|  | fourbytes | filter by one or more fourbytes (only for transactions and trace options) |
 | -p | --appearances | export a list of appearances |
 | -r | --receipts | export receipts instead of transaction list |
 | -l | --logs | export logs instead of transaction list |

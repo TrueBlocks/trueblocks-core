@@ -80,18 +80,17 @@ Seeding source: os-specific
 
 #### Usage
 
-`Usage:`    chifra pins [-a|-p|-u|-i|-v|-h] mode  
-`Purpose:`  Report on and manage the pinned appearance index chunks and associated bloom filters.
+`Usage:`    chifra pins [-l|-f|-c|-i|-v|-h]  
+`Purpose:`  Report on and manage the remotely pinned appearance index and associated bloom filters.
 
 `Where:`  
 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
-|  | mode | the source from which to pin, unpin, or display the index hashes, one of [local&#124;remote*&#124;onchain] (required) |
-| -a | --hash | display the hash instead of contents of manifest |
-| -p | --pin <str> | pin items either locally or remotely ('all' to all items in a folder) |
-| -u | --unpin <str> | unpin previously pinned items given a hash, a filename, or 'all' |
-| -i | --init | initialize the TrueBlocks appearance index by downloading the bloom filters |
+| -l | --list <val> | list all pins either locally or at the pinning service, one of [local*&#124;remote] |
+| -f | --freshen | push files from the local index to the pinning service and update manifest |
+| -c | --compare | report differences between the manifest and the pinning service |
+| -i | --init | initialize the local index by downloading bloom filters from the pinning service |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 
