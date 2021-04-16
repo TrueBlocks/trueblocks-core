@@ -34,29 +34,26 @@ int main(int argc, const char* argv[]) {
         if (once)
             cout << exportPreamble(expContext().fmtMap["header"], options.className);
 
-        if (options.loadAllAppearances()) {
-            options.firstOut = true;
-            if (options.count) {
-                options.handle_counts();
+        options.firstOut = true;
+        if (options.count) {
+            options.handle_counts();
 
-            } else if (options.appearances) {
-                options.handle_appearances();
+        } else if (options.appearances) {
+            options.handle_appearances();
 
-            } else if (options.receipts) {
-                options.handle_receipts();
+        } else if (options.receipts) {
+            options.handle_receipts();
 
-            } else if (options.traces) {
-                options.handle_traces();
+        } else if (options.traces) {
+            options.handle_traces();
 
-            } else if (options.logs) {
-                options.handle_logs();
+        } else if (options.logs) {
+            options.handle_logs();
 
-            } else {
-                ASSERT(accounting);
-                options.handle_accounting();
-            }
+        } else {
+            ASSERT(accounting);
+            options.handle_accounting();
         }
-
         once = false;
     }
 

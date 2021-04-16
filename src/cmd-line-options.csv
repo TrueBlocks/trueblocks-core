@@ -56,13 +56,11 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,customizeable,c
 10840,apps,Admin,status,cacheStatus,end,E,,false,false,false,false,header,flag,<blknum>,last block to process (inclusive)
 10860,apps,Admin,status,cacheStatus,,,,false,false,true,true,--,description,,Report on status of one or more TrueBlocks caches.
 
-10900,apps,Admin,pins,pinMan,mode,,,true,false,true,true,header,positional,enum[local|remote*|onchain],the source from which to pin&#44; unpin&#44; or display the index hashes
-10900,apps,Admin,pins,pinMan,hash,a,,false,false,true,true,header,switch,<boolean>,display the hash instead of contents of manifest
-10900,apps,Admin,pins,pinMan,pin,p,,false,false,true,true,header,flag,<string>,pin items either locally or remotely ('all' to all items in a folder)
-10900,apps,Admin,pins,pinMan,unpin,u,,false,false,true,true,header,flag,<string>,unpin previously pinned items given a hash&#44; a filename&#44; or 'all'
-10900,apps,Admin,pins,pinMan,init,i,,false,false,true,true,header,switch,<boolean>,initialize the TrueBlocks appearance index by downloading the bloom filters
-10900,apps,Admin,pins,pinMan,license,l,,false,false,false,false,header,switch,<boolean>,show the current pinata license information
-10910,apps,Admin,pins,pinMan,,,,false,false,true,true,--,description,,Report on and manage the pinned appearance index chunks and associated bloom filters.
+10920,apps,Admin,pins,pinMan,list,l,,false,false,true,true,header,flag,enum[local*|remote],list all pins either locally or at the pinning service
+10960,apps,Admin,pins,pinMan,freshen,f,,false,false,true,true,header,switch,<boolean>,push files from the local index to the pinning service and update manifest
+10960,apps,Admin,pins,pinMan,compare,c,,false,false,true,true,header,switch,<boolean>,report differences between the manifest and the pinning service
+10950,apps,Admin,pins,pinMan,init,i,,false,false,true,true,header,switch,<boolean>,initialize the local index by downloading bloom filters from the pinning service
+10980,apps,Admin,pins,pinMan,,,,false,false,true,true,--,description,,Report on and manage the remotely pinned appearance index and associated bloom filters.
 
 11660,dev_tools,,,makeClass,files,,,true,false,true,false,local,positional,list<path>,one or more class definition files
 11700,dev_tools,,,makeClass,run,r,,false,false,true,false,local,switch,<boolean>,run the class maker on associated <class_name(s)>

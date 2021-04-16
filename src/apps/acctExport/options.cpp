@@ -275,7 +275,8 @@ bool COptions::parseArguments(string_q& command) {
             LOG_TEST("Monitor found for", addr, false);
             LOG_TEST("Last block in monitor", monitor.getLastBlockInMonitor(), false);
         } else {
-            LOG_TEST("Monitor not found for", addr + ". Continuing anyway.", false);
+            LOG_WARN("Monitor not found for ", addr + ". Continuing anyway.", false);
+            firstBlockToVisit = 0;
         }
         if (accountedFor.empty()) {
             CAccountName acct;
@@ -305,7 +306,7 @@ bool COptions::parseArguments(string_q& command) {
         visitTypes |= VIS_STAGING;
     if (unripe) {
         if (!(visitTypes & VIS_STAGING))
-            EXIT_USAGE("You must also specify --staging when using --unripe.");
+            EXIT_USAGE("If you wish to use the --unripe option, you must also use --staging.");
         visitTypes |= VIS_UNRIPE;
     }
 
@@ -313,12 +314,15 @@ bool COptions::parseArguments(string_q& command) {
     blknum_t lastBlockToVisit = max((blknum_t)1, (visitTypes & VIS_UNRIPE)    ? bp.unripe
                                                  : (visitTypes & VIS_STAGING) ? bp.staging
                                                                               : bp.finalized);
-
-    // Mark the range...
     listRange = make_pair((firstBlockToVisit == NOPOS ? 0 : firstBlockToVisit), lastBlockToVisit);
 
-    if (!process_freshen())  // getEnvStr("FRESHEN_FLAG S")))
-        EXIT_USAGE("'process_freshen' returned false.");
+    if (!process_freshen())
+        EXIT_USAGE("freshen returns false.");
+
+    if (start != NOPOS)
+        scanRange.first = start;
+    if (end != NOPOS)
+        scanRange.second = end;
 
     if (count) {
         for (auto monitor : allMonitors) {
@@ -329,27 +333,10 @@ bool COptions::parseArguments(string_q& command) {
             monCount.nRecords = fileSize(path) / sizeof(CAppearance_base);
             counts.push_back(monCount);
         }
+    } else {
+        if (!loadAllAppearances())
+            return false;
     }
-
-    if (start != NOPOS)
-        scanRange.first = start;
-    if (end != NOPOS)
-        scanRange.second = end;
-
-    if (receipts) {
-        SHOW_FIELD(CReceipt, "blockNumber");
-        SHOW_FIELD(CReceipt, "transactionIndex");
-        SHOW_FIELD(CReceipt, "isError");
-    } else if (appearances) {
-        manageFields("CAccountName:all", false);
-        manageFields(verbose ? "CAccountName:address,name" : "CAccountName:address,name,timestamp,date", true);
-    }
-
-    LOG_TEST("nMonitors", allMonitors.size(), false);
-    LOG_TEST("exportRange.first", scanRange.first, false);
-    LOG_TEST("exportRange.second", scanRange.second, false);
-    LOG_TEST("listRange.first", listRange.first, false);
-    LOG_TEST("listRange.second", "--latest--", false);
 
     EXIT_NOMSG(true);
 }
@@ -389,7 +376,7 @@ void COptions::Init(void) {
     // END_CODE_INIT
 
     bp = getBlockProgress(BP_ALL);
-    listRange.second = bp.ripe;
+    listRange = make_pair(0, NOPOS);
 
     allMonitors.clear();
     counts.clear();
@@ -567,6 +554,15 @@ bool COptions::setDisplayFormatting(void) {
     // TODO(tjayrush): This doesn't work for some reason (see test case acctExport_export_logs.txt)
     if (!articulate)
         HIDE_FIELD(CLogEntry, "compressedTx");
+
+    if (receipts) {
+        SHOW_FIELD(CReceipt, "blockNumber");
+        SHOW_FIELD(CReceipt, "transactionIndex");
+        SHOW_FIELD(CReceipt, "isError");
+    } else if (appearances) {
+        manageFields("CAccountName:all", false);
+        manageFields(verbose ? "CAccountName:address,name" : "CAccountName:address,name,timestamp,date", true);
+    }
 
     EXIT_NOMSG(true);
 }

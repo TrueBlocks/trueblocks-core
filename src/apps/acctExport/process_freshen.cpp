@@ -7,8 +7,6 @@
 
 //------------------------------------------------------------------------------------------------
 bool COptions::process_freshen(void) {
-    ENTER("process_freshen");
-
     // Clean the monitor stage of previously unfinished scrapes
     cleanMonitorStage();
 
@@ -26,5 +24,5 @@ bool COptions::process_freshen(void) {
         LOG4(monitor.address, " freshened to ", monitor.getLastVisited(true /* fresh */));
     }
 
-    EXIT_NOMSG(true);
+    return true;
 }

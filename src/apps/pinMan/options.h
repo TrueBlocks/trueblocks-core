@@ -17,15 +17,12 @@
 class COptions : public CAbiOptions {
   public:
     // BEG_CODE_DECLARE
-    string_q mode;
-    bool hash;
-    string_q pin;
-    string_q unpin;
+    string_q list;
+    bool freshen;
+    bool compare;
     bool init;
-    bool license;
     // END_CODE_DECLARE
 
-    CPinApiLicense lic;
     CPinnedChunkArray pList;
 
     COptions(void);

@@ -47,15 +47,16 @@ bool COptions::loadOneAddress(const CMonitor& monitor, CAppearanceArray_base& ar
 
 //-----------------------------------------------------------------------
 bool COptions::loadAllAppearances(void) {
-    ENTER("loadAllAppearances");
-
     if (count)
         return true;
 
     CAppearanceArray_base tmp;
     for (auto monitor : allMonitors) {
-        if (!loadOneAddress(monitor, tmp))
-            EXIT_FAIL("Could not load monitor for address " + monitor.address);
+        if (!loadOneAddress(monitor, tmp)) {
+            LOG_ERR("Could not load monitor for address " + monitor.address);
+            return false;
+        }
+
         if (freshen) {
             // If we're freshening...
             blknum_t lastExport = monitor.getLastEncountered();
@@ -102,9 +103,11 @@ bool COptions::loadAllAppearances(void) {
     if (apps.size()) {
         // it's okay to not be able to freshen this. We'll just report less txs
         freshenTimestamps(apps[apps.size() - 1].blk);
-        if (!loadTimestamps(&expContext().tsMemMap, expContext().tsCnt))
-            EXIT_FAIL("Could not open timestamp file.");
+        if (!loadTimestamps(&expContext().tsMemMap, expContext().tsCnt)) {
+            LOG_ERR("Could not open timestamp file.");
+            return false;
+        }
     }
 
-    EXIT_NOMSG(true);
+    return true;
 }
