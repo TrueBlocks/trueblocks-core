@@ -55,6 +55,8 @@ bool COptions::parseArguments(string_q& command) {
             if (!confirmEnum("parts", parts_tmp, arg))
                 return false;
             parts.push_back(parts_tmp);
+        } else if (arg == "-p" || arg == "--parts") {
+            return usage("The --parts option requires a value.");
 
         } else if (arg == "-c" || arg == "--changes") {
             changes = true;
@@ -64,6 +66,8 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (startsWith(arg, "-a:") || startsWith(arg, "--call:")) {
             call = substitute(substitute(arg, "-a:", ""), "--call:", "");
+        } else if (arg == "-a" || arg == "--call") {
+            return usage("The --call option requires a value.");
 
         } else if (startsWith(arg, '-')) {  // do not collapse
 

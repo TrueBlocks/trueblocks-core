@@ -1,5 +1,5 @@
 {
   "errors": [
-    "chifra quotes - Invalid option: --period"
+    "chifra quotes - The --period option requires a value."
   ]
 }

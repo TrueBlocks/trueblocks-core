@@ -54,13 +54,19 @@ bool COptions::parseArguments(string_q& command) {
         } else if (startsWith(arg, "-p:") || startsWith(arg, "--period:")) {
             if (!confirmEnum("period", period, arg))
                 return false;
+        } else if (arg == "-p" || arg == "--period") {
+            return usage("The --period option requires a value.");
 
         } else if (startsWith(arg, "-a:") || startsWith(arg, "--pair:")) {
             pair = substitute(substitute(arg, "-a:", ""), "--pair:", "");
+        } else if (arg == "-a" || arg == "--pair") {
+            return usage("The --pair option requires a value.");
 
         } else if (startsWith(arg, "-e:") || startsWith(arg, "--feed:")) {
             if (!confirmEnum("feed", feed, arg))
                 return false;
+        } else if (arg == "-e" || arg == "--feed") {
+            return usage("The --feed option requires a value.");
 
         } else if (startsWith(arg, '-')) {  // do not collapse
 

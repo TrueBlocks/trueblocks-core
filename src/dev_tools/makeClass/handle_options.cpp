@@ -491,13 +491,17 @@ const char* STR_AUTO_TOGGLE =
 //---------------------------------------------------------------------------------------------------
 const char* STR_AUTO_FLAG =
     "        } else if ([startsWith(arg, \"-{HOTKEY}:\") || ]startsWith(arg, \"--[{COMMAND}]:\")) {\n"
-    "            [{COMMAND}] = substitute(substitute(arg, \"-[{HOTKEY}]:\", \"\"), \"--[{COMMAND}]:\", \"\");\n";
+    "            [{COMMAND}] = substitute(substitute(arg, \"-[{HOTKEY}]:\", \"\"), \"--[{COMMAND}]:\", \"\");\n"
+    "        } else if ([arg == \"-{HOTKEY}\" || ]arg == \"--[{COMMAND}]\") {\n"
+    "            return usage(\"The --[{COMMAND}] option requires a value.\");\n";
 
 //---------------------------------------------------------------------------------------------------
 const char* STR_AUTO_FLAG_ENUM =
     "        } else if ([startsWith(arg, \"-{HOTKEY}:\") || ]startsWith(arg, \"--[{COMMAND}]:\")) {\n"
     "            if (!confirmEnum(\"[{COMMAND}]\", [{COMMAND}], arg))\n"
-    "                return false;\n";
+    "                return false;\n"
+    "        } else if ([arg == \"-{HOTKEY}\" || ]arg == \"--[{COMMAND}]\") {\n"
+    "            return usage(\"The --[{COMMAND}] option requires a value.\");\n";
 
 //---------------------------------------------------------------------------------------------------
 const char* STR_AUTO_FLAG_ENUM_LIST =
@@ -505,38 +509,50 @@ const char* STR_AUTO_FLAG_ENUM_LIST =
     "            string_q [{COMMAND}_tmp];\n"
     "            if (!confirmEnum(\"[{COMMAND}]\", [{COMMAND}]_tmp, arg))\n"
     "                return false;\n"
-    "            [{COMMAND}].push_back([{COMMAND}]_tmp);\n";
+    "            [{COMMAND}].push_back([{COMMAND}]_tmp);\n"
+    "        } else if ([arg == \"-{HOTKEY}\" || ]arg == \"--[{COMMAND}]\") {\n"
+    "            return usage(\"The --[{COMMAND}] option requires a value.\");\n";
 
 //---------------------------------------------------------------------------------------------------
 const char* STR_AUTO_FLAG_STRING_LIST =
     "        } else if ([startsWith(arg, \"-{HOTKEY}:\") || ]startsWith(arg, \"--[{COMMAND}]:\")) {\n"
     "            arg = substitute(substitute(arg, \"-[{HOTKEY}]:\", \"\"), \"--[{COMMAND}]:\", \"\");\n"
-    "            [{COMMAND}].push_back(arg);\n";
+    "            [{COMMAND}].push_back(arg);\n"
+    "        } else if ([arg == \"-{HOTKEY}\" || ]arg == \"--[{COMMAND}]\") {\n"
+    "            return usage(\"The --[{COMMAND}] option requires a value.\");\n";
 
 //---------------------------------------------------------------------------------------------------
 const char* STR_AUTO_FLAG_ADDRESS_LIST =
     "        } else if ([startsWith(arg, \"-{HOTKEY}:\") || ]startsWith(arg, \"--[{COMMAND}]:\")) {\n"
     "            arg = substitute(substitute(arg, \"-[{HOTKEY}]:\", \"\"), \"--[{COMMAND}]:\", \"\");\n"
     "            if (!parseAddressList(this, [{COMMAND}], arg))\n"
-    "                return false;\n";
+    "                return false;\n"
+    "        } else if ([arg == \"-{HOTKEY}\" || ]arg == \"--[{COMMAND}]\") {\n"
+    "            return usage(\"The --[{COMMAND}] option requires a value.\");\n";
 
 //---------------------------------------------------------------------------------------------------
 const char* STR_AUTO_FLAG_BLOCKNUM =
     "        } else if ([startsWith(arg, \"-{HOTKEY}:\") || ]startsWith(arg, \"--[{COMMAND}]:\")) {\n"
     "            if (!confirmBlockNum(\"[{COMMAND}]\", [{COMMAND}], arg, latest))\n"
-    "                return false;\n";
+    "                return false;\n"
+    "        } else if ([arg == \"-{HOTKEY}\" || ]arg == \"--[{COMMAND}]\") {\n"
+    "            return usage(\"The --[{COMMAND}] option requires a value.\");\n";
 
 //---------------------------------------------------------------------------------------------------
 const char* STR_AUTO_FLAG_UINT =
     "        } else if ([startsWith(arg, \"-{HOTKEY}:\") || ]startsWith(arg, \"--[{COMMAND}]:\")) {\n"
     "            if (!confirmUint(\"[{COMMAND}]\", [{COMMAND}], arg))\n"
-    "                return false;\n";
+    "                return false;\n"
+    "        } else if ([arg == \"-{HOTKEY}\" || ]arg == \"--[{COMMAND}]\") {\n"
+    "            return usage(\"The --[{COMMAND}] option requires a value.\");\n";
 
 //---------------------------------------------------------------------------------------------------
 const char* STR_AUTO_FLAG_DOUBLE =
     "        } else if ([startsWith(arg, \"-{HOTKEY}:\") || ]startsWith(arg, \"--[{COMMAND}]:\")) {\n"
     "            if (!confirmDouble(\"[{COMMAND}]\", [{COMMAND}], arg))\n"
-    "                return false;\n";
+    "                return false;\n"
+    "        } else if ([arg == \"-{HOTKEY}\" || ]arg == \"--[{COMMAND}]\") {\n"
+    "            return usage(\"The --[{COMMAND}] option requires a value.\");\n";
 
 //---------------------------------------------------------------------------------------------------
 const char* STR_CHECK_BUILTIN =

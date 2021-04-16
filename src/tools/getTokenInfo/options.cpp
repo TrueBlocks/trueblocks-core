@@ -54,6 +54,8 @@ bool COptions::parseArguments(string_q& command) {
             if (!confirmEnum("parts", parts_tmp, arg))
                 return false;
             parts.push_back(parts_tmp);
+        } else if (arg == "-p" || arg == "--parts") {
+            return usage("The --parts option requires a value.");
 
         } else if (arg == "-b" || arg == "--by_acct") {
             by_acct = true;

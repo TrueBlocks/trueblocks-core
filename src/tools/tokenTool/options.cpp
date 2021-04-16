@@ -50,14 +50,20 @@ bool COptions::parseArguments(string_q& command) {
         } else if (startsWith(arg, "-s:") || startsWith(arg, "--start:")) {
             if (!confirmBlockNum("start", start, arg, latest))
                 return false;
+        } else if (arg == "-s" || arg == "--start") {
+            return usage("The --start option requires a value.");
 
         } else if (startsWith(arg, "-b:") || startsWith(arg, "--bucket:")) {
             if (!confirmUint("bucket", bucket, arg))
                 return false;
+        } else if (arg == "-b" || arg == "--bucket") {
+            return usage("The --bucket option requires a value.");
 
         } else if (startsWith(arg, "-n:") || startsWith(arg, "--n_rows:")) {
             if (!confirmUint("n_rows", n_rows, arg))
                 return false;
+        } else if (arg == "-n" || arg == "--n_rows") {
+            return usage("The --n_rows option requires a value.");
 
         } else if (arg == "-r" || arg == "--show_errs") {
             show_errs = true;

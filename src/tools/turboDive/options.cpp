@@ -58,12 +58,18 @@ bool COptions::parseArguments(string_q& command) {
         } else if (startsWith(arg, "-m:") || startsWith(arg, "--mode:")) {
             if (!confirmEnum("mode", mode, arg))
                 return false;
+        } else if (arg == "-m" || arg == "--mode") {
+            return usage("The --mode option requires a value.");
 
         } else if (startsWith(arg, "-d:") || startsWith(arg, "--datadir:")) {
             datadir = substitute(substitute(arg, "-d:", ""), "--datadir:", "");
+        } else if (arg == "-d" || arg == "--datadir") {
+            return usage("The --datadir option requires a value.");
 
         } else if (startsWith(arg, "-n:") || startsWith(arg, "--name:")) {
             name = substitute(substitute(arg, "-n:", ""), "--name:", "");
+        } else if (arg == "-n" || arg == "--name") {
+            return usage("The --name option requires a value.");
 
         } else if (arg == "-g" || arg == "--goerli") {
             goerli = true;

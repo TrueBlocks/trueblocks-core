@@ -102,6 +102,8 @@ bool COptions::parseArguments(string_q& command) {
         } else if (startsWith(arg, "-m:") || startsWith(arg, "--max_traces:")) {
             if (!confirmUint("max_traces", max_traces, arg))
                 return false;
+        } else if (arg == "-m" || arg == "--max_traces") {
+            return usage("The --max_traces option requires a value.");
 
         } else if (arg == "-f" || arg == "--freshen") {
             freshen = true;
@@ -116,6 +118,8 @@ bool COptions::parseArguments(string_q& command) {
             arg = substitute(substitute(arg, "-:", ""), "--emitted_by:", "");
             if (!parseAddressList(this, emitted_by, arg))
                 return false;
+        } else if (arg == "--emitted_by") {
+            return usage("The --emitted_by option requires a value.");
 
         } else if (arg == "--relevant") {
             relevant = true;
@@ -126,18 +130,26 @@ bool COptions::parseArguments(string_q& command) {
         } else if (startsWith(arg, "-S:") || startsWith(arg, "--start:")) {
             if (!confirmUint("start", start, arg))
                 return false;
+        } else if (arg == "-S" || arg == "--start") {
+            return usage("The --start option requires a value.");
 
         } else if (startsWith(arg, "-E:") || startsWith(arg, "--end:")) {
             if (!confirmUint("end", end, arg))
                 return false;
+        } else if (arg == "-E" || arg == "--end") {
+            return usage("The --end option requires a value.");
 
         } else if (startsWith(arg, "-c:") || startsWith(arg, "--first_record:")) {
             if (!confirmBlockNum("first_record", first_record, arg, latest))
                 return false;
+        } else if (arg == "-c" || arg == "--first_record") {
+            return usage("The --first_record option requires a value.");
 
         } else if (startsWith(arg, "-e:") || startsWith(arg, "--max_records:")) {
             if (!confirmBlockNum("max_records", max_records, arg, latest))
                 return false;
+        } else if (arg == "-e" || arg == "--max_records") {
+            return usage("The --max_records option requires a value.");
 
         } else if (arg == "--clean") {
             clean = true;

@@ -1,30 +1,30 @@
 enabled ,mode ,speed ,route ,path/tool      ,filename        ,post ,options                        ,opt_cmd ,has_env
-on      ,cmd  ,fast  ,pins  ,apps/pinMan ,README          ,n    ,@th
-on      ,cmd  ,fast  ,pins  ,apps/pinMan ,help            ,n    ,@h
-on      ,cmd  ,fast  ,pins  ,apps/pinMan ,help_long       ,n    ,help
-on      ,both ,fast  ,pins  ,apps/pinMan ,no_params       ,y    ,
-on      ,both ,fast  ,pins  ,apps/pinMan ,invalid_param_1 ,y    ,junk
+off      ,cmd  ,fast  ,pins  ,apps/pinMan ,README          ,n    ,@th
+off     ,cmd  ,fast  ,pins  ,apps/pinMan ,help            ,n    ,@h
+off     ,cmd  ,fast  ,pins  ,apps/pinMan ,help_long       ,n    ,help
+off     ,both ,fast  ,pins  ,apps/pinMan ,no_params       ,y    ,
+off     ,both ,fast  ,pins  ,apps/pinMan ,invalid_param_1 ,y    ,junk
 
-on      ,both ,fast  ,pins  ,apps/pinMan ,local           ,y    ,mode = local
-on      ,both ,fast  ,pins  ,apps/pinMan ,local_as_hash   ,y    ,mode = local & hash
-on      ,both ,fast  ,pins  ,apps/pinMan ,remote          ,y    ,mode = remote
-on      ,both ,fast  ,pins  ,apps/pinMan ,remote_as_hash  ,y    ,mode = remote & hash
-on      ,both ,fast  ,pins  ,apps/pinMan ,onchain         ,y    ,mode = onchain
-on      ,both ,fast  ,pins  ,apps/pinMan ,onchain_as_hash ,y    ,mode = onchain & hash
+off     ,both ,fast  ,pins  ,apps/pinMan ,local           ,y    ,mode = local
+off     ,both ,fast  ,pins  ,apps/pinMan ,local_as_hash   ,y    ,mode = local & hash
+off     ,both ,fast  ,pins  ,apps/pinMan ,remote          ,y    ,mode = remote
+off     ,both ,fast  ,pins  ,apps/pinMan ,remote_as_hash  ,y    ,mode = remote & hash
+off     ,both ,fast  ,pins  ,apps/pinMan ,onchain         ,y    ,mode = onchain
+off     ,both ,fast  ,pins  ,apps/pinMan ,onchain_as_hash ,y    ,mode = onchain & hash
 
-on      ,both ,fast  ,pins  ,apps/pinMan ,pin_local       ,y    ,mode = local & pin empty_file
-on      ,both ,fast  ,pins  ,apps/pinMan ,unpin_local     ,y    ,mode = local & unpin empty_file
-on      ,both ,fast  ,pins  ,apps/pinMan ,pin_remote      ,y    ,mode = remote & pin empty_file
-on      ,both ,fast  ,pins  ,apps/pinMan ,unpin_remote    ,y    ,mode = remote & unpin empty_file
+off     ,both ,fast  ,pins  ,apps/pinMan ,pin_local       ,y    ,mode = local & pin empty_file
+off     ,both ,fast  ,pins  ,apps/pinMan ,unpin_local     ,y    ,mode = local & unpin empty_file
+off     ,both ,fast  ,pins  ,apps/pinMan ,pin_remote      ,y    ,mode = remote & pin empty_file
+off     ,both ,fast  ,pins  ,apps/pinMan ,unpin_remote    ,y    ,mode = remote & unpin empty_file
 
-on      ,both ,fast  ,pins  ,apps/pinMan ,license         ,y    ,keys
-on      ,both ,fast  ,pins  ,apps/pinMan ,fmt_default     ,n    ,keys
-on      ,both ,slow  ,pins  ,apps/pinMan ,fmt_txt         ,n    ,keys & fmt = txt
-on      ,both ,fast  ,pins  ,apps/pinMan ,fmt_csv         ,n    ,keys & fmt = csv
-on      ,both ,fast  ,pins  ,apps/pinMan ,fmt_json        ,y    ,keys & fmt = json
-on      ,both ,fast  ,pins  ,apps/pinMan ,fmt_api         ,y    ,keys & fmt = api
-on      ,both ,fast  ,pins  ,apps/pinMan ,fmt_junk        ,y    ,keys & fmt = junk
-on      ,both ,fast  ,pins  ,apps/pinMan ,to_file         ,y    ,keys & fmt = json & to_file
+off     ,both ,fast  ,pins  ,apps/pinMan ,license         ,y    ,keys
+off     ,both ,fast  ,pins  ,apps/pinMan ,fmt_default     ,n    ,keys
+off     ,both ,slow  ,pins  ,apps/pinMan ,fmt_txt         ,n    ,keys & fmt = txt
+off     ,both ,fast  ,pins  ,apps/pinMan ,fmt_csv         ,n    ,keys & fmt = csv
+off     ,both ,fast  ,pins  ,apps/pinMan ,fmt_json        ,y    ,keys & fmt = json
+off     ,both ,fast  ,pins  ,apps/pinMan ,fmt_api         ,y    ,keys & fmt = api
+off     ,both ,fast  ,pins  ,apps/pinMan ,fmt_junk        ,y    ,keys & fmt = junk
+off     ,both ,fast  ,pins  ,apps/pinMan ,to_file         ,y    ,keys & fmt = json & to_file
 
 # list,   l,,false,false,true ,true ,header,flag  ,enum[local|remote*], list all pins (either from the local manifest or pinning service)
 # pin,    p,,false,false,true ,true ,header,flag  ,<string>,            pin an item to the pinning service and update local manifest

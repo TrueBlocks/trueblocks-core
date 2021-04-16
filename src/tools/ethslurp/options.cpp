@@ -52,6 +52,8 @@ bool COptions::parseArguments(string_q& command) {
             if (!confirmEnum("types", types_tmp, arg))
                 return false;
             types.push_back(types_tmp);
+        } else if (arg == "-t" || arg == "--types") {
+            return usage("The --types option requires a value.");
 
         } else if (arg == "-p" || arg == "--appearances") {
             appearances = true;

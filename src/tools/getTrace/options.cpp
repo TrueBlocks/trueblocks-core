@@ -62,9 +62,13 @@ bool COptions::parseArguments(string_q& command) {
         } else if (startsWith(arg, "-m:") || startsWith(arg, "--max_traces:")) {
             if (!confirmUint("max_traces", max_traces, arg))
                 return false;
+        } else if (arg == "-m" || arg == "--max_traces") {
+            return usage("The --max_traces option requires a value.");
 
         } else if (startsWith(arg, "-f:") || startsWith(arg, "--filter:")) {
             filter = substitute(substitute(arg, "-f:", ""), "--filter:", "");
+        } else if (arg == "-f" || arg == "--filter") {
+            return usage("The --filter option requires a value.");
 
         } else if (startsWith(arg, '-')) {  // do not collapse
 

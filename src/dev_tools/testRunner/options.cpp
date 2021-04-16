@@ -54,10 +54,14 @@ bool COptions::parseArguments(string_q& command) {
         } else if (startsWith(arg, "-m:") || startsWith(arg, "--mode:")) {
             if (!confirmEnum("mode", mode, arg))
                 return false;
+        } else if (arg == "-m" || arg == "--mode") {
+            return usage("The --mode option requires a value.");
 
         } else if (startsWith(arg, "-f:") || startsWith(arg, "--filter:")) {
             if (!confirmEnum("filter", filter, arg))
                 return false;
+        } else if (arg == "-f" || arg == "--filter") {
+            return usage("The --filter option requires a value.");
 
         } else if (arg == "-c" || arg == "--clean") {
             clean = true;
@@ -65,6 +69,8 @@ bool COptions::parseArguments(string_q& command) {
         } else if (startsWith(arg, "-s:") || startsWith(arg, "--skip:")) {
             if (!confirmUint("skip", skip, arg))
                 return false;
+        } else if (arg == "-s" || arg == "--skip") {
+            return usage("The --skip option requires a value.");
 
         } else if (arg == "-n" || arg == "--no_quit") {
             no_quit = true;

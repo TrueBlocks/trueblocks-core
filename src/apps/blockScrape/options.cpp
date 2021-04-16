@@ -55,18 +55,26 @@ bool COptions::parseArguments(string_q& command) {
             if (!confirmEnum("tool", tool_tmp, arg))
                 return false;
             tool.push_back(tool_tmp);
+        } else if (arg == "-t" || arg == "--tool") {
+            return usage("The --tool option requires a value.");
 
         } else if (startsWith(arg, "-n:") || startsWith(arg, "--n_blocks:")) {
             if (!confirmUint("n_blocks", n_blocks, arg))
                 return false;
+        } else if (arg == "-n" || arg == "--n_blocks") {
+            return usage("The --n_blocks option requires a value.");
 
         } else if (startsWith(arg, "-b:") || startsWith(arg, "--n_block_procs:")) {
             if (!confirmUint("n_block_procs", n_block_procs, arg))
                 return false;
+        } else if (arg == "-b" || arg == "--n_block_procs") {
+            return usage("The --n_block_procs option requires a value.");
 
         } else if (startsWith(arg, "-a:") || startsWith(arg, "--n_addr_procs:")) {
             if (!confirmUint("n_addr_procs", n_addr_procs, arg))
                 return false;
+        } else if (arg == "-a" || arg == "--n_addr_procs") {
+            return usage("The --n_addr_procs option requires a value.");
 
         } else if (arg == "-p" || arg == "--pin") {
             pin = true;
@@ -77,6 +85,8 @@ bool COptions::parseArguments(string_q& command) {
         } else if (startsWith(arg, "-s:") || startsWith(arg, "--sleep:")) {
             if (!confirmDouble("sleep", sleep, arg))
                 return false;
+        } else if (arg == "-s" || arg == "--sleep") {
+            return usage("The --sleep option requires a value.");
 
         } else if (arg == "-i" || arg == "--cache_txs") {
             cache_txs = true;

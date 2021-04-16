@@ -60,10 +60,14 @@ bool COptions::parseArguments(string_q& command) {
             if (!confirmEnum("types", types_tmp, arg))
                 return false;
             types.push_back(types_tmp);
+        } else if (arg == "-t" || arg == "--types") {
+            return usage("The --types option requires a value.");
 
         } else if (startsWith(arg, "-p:") || startsWith(arg, "--depth:")) {
             if (!confirmUint("depth", depth, arg))
                 return false;
+        } else if (arg == "-p" || arg == "--depth") {
+            return usage("The --depth option requires a value.");
 
         } else if (arg == "-r" || arg == "--report") {
             report = true;
@@ -80,10 +84,14 @@ bool COptions::parseArguments(string_q& command) {
         } else if (startsWith(arg, "-S:") || startsWith(arg, "--start:")) {
             if (!confirmBlockNum("start", start, arg, latest))
                 return false;
+        } else if (arg == "-S" || arg == "--start") {
+            return usage("The --start option requires a value.");
 
         } else if (startsWith(arg, "-E:") || startsWith(arg, "--end:")) {
             if (!confirmBlockNum("end", end, arg, latest))
                 return false;
+        } else if (arg == "-E" || arg == "--end") {
+            return usage("The --end option requires a value.");
 
         } else if (startsWith(arg, '-')) {  // do not collapse
 

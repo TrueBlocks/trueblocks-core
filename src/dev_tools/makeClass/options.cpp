@@ -90,9 +90,13 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (startsWith(arg, "-n:") || startsWith(arg, "--nspace:")) {
             nspace = substitute(substitute(arg, "-n:", ""), "--nspace:", "");
+        } else if (arg == "-n" || arg == "--nspace") {
+            return usage("The --nspace option requires a value.");
 
         } else if (startsWith(arg, "-i:") || startsWith(arg, "--filter:")) {
             filter = substitute(substitute(arg, "-i:", ""), "--filter:", "");
+        } else if (arg == "-i" || arg == "--filter") {
+            return usage("The --filter option requires a value.");
 
         } else if (arg == "-t" || arg == "--test") {
             test = true;

@@ -1,7 +1,7 @@
 ethQuote argc: 2 [1:--period] 
 ethQuote --period 
 
-  Invalid option: --period
+  The --period option requires a value. Quitting...
 
   Usage:    ethQuote [-f|-p|-a|-e|-v|-h]  
   Purpose:  Freshen and/or display Ethereum price data.

@@ -67,6 +67,8 @@ bool COptions::parseArguments(string_q& command) {
         } else if (startsWith(arg, "-s:") || startsWith(arg, "--skip:")) {
             if (!confirmUint("skip", skip, arg))
                 return false;
+        } else if (arg == "-s" || arg == "--skip") {
+            return usage("The --skip option requires a value.");
 
         } else if (startsWith(arg, '-')) {  // do not collapse
 

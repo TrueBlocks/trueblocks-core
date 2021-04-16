@@ -40,6 +40,8 @@ bool COptions::parseArguments(string_q& command) {
         } else if (startsWith(arg, "-l:") || startsWith(arg, "--list:")) {
             if (!confirmEnum("list", list, arg))
                 return false;
+        } else if (arg == "-l" || arg == "--list") {
+            return usage("The --list option requires a value.");
 
         } else if (arg == "-f" || arg == "--freshen") {
             freshen = true;

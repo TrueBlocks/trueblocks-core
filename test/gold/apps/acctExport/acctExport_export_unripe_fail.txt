@@ -2,7 +2,7 @@ acctExport argc: 7 [1:0x001d14804b399c6ef80e64576f657660804fec0b] [2:--start] [3
 acctExport 0x001d14804b399c6ef80e64576f657660804fec0b --start 100000 --end 2000000 --unripe 
 TIME ~ CLOCK - <ERROR> : Exit(acctExport,parseArguments): 
 
-  You must also specify --staging when using --unripe. Quitting...
+  If you wish to use the --unripe option, you must also use --staging. Quitting...
 
   Usage:    acctExport [-p|-r|-l|-t|-C|-O|-a|-i|-R|-U|-v|-h] <address> [address...] [topics] [fourbytes]  
   Purpose:  Export full detail of transactions for one or more Ethereum addresses.
