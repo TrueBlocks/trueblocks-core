@@ -1,2 +1,1 @@
-"apikey","secretkey"
-"--license_codes--","--license_codes--"
+"filename","indexformat","bloomformat","firstpin","lastpin","pins"

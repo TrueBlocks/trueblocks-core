@@ -7,6 +7,7 @@
  * Parts of this file were generated with makeClass. Edit only those parts of the code
  * outside of the BEG_CODE/END_CODE sections
  */
+#define LOGGING_LEVEL_TEST
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
@@ -14,8 +15,7 @@ static const COption params[] = {
     // BEG_CODE_OPTIONS
     // clang-format off
     COption("list", "l", "enum[local*|remote]", OPT_FLAG, "list all pins either locally or at the pinning service"),
-    COption("freshen", "f", "", OPT_SWITCH, "push files from the local index to the pinning service and update manifest"),  // NOLINT
-    COption("compare", "c", "", OPT_SWITCH, "report differences between the manifest and the pinning service"),
+    COption("compare", "c", "", OPT_SWITCH, "report differences (if any) between the manifest and pinning service"),
     COption("init", "i", "", OPT_SWITCH, "initialize the local index by downloading bloom filters from the pinning service"),  // NOLINT
     COption("", "", "", OPT_DESCRIPTION, "Report on and manage the remotely pinned appearance index and associated bloom filters."),  // NOLINT
     // clang-format on
@@ -43,9 +43,6 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-l" || arg == "--list") {
             return usage("The --list option requires a value.");
 
-        } else if (arg == "-f" || arg == "--freshen") {
-            freshen = true;
-
         } else if (arg == "-c" || arg == "--compare") {
             compare = true;
 
@@ -64,7 +61,6 @@ bool COptions::parseArguments(string_q& command) {
 
     // BEG_DEBUG_DISPLAY
     LOG_TEST("list", list, (list == ""));
-    LOG_TEST_BOOL("freshen", freshen);
     LOG_TEST_BOOL("compare", compare);
     LOG_TEST_BOOL("init", init);
     // END_DEBUG_DISPLAY
@@ -72,10 +68,25 @@ bool COptions::parseArguments(string_q& command) {
     if (Mocked(""))
         return false;
 
-    if (freshen + compare + init > 1)
+    if (!list.empty() + compare + init > 1)
         return usage("Please choose only a single option.");
 
-    configureDisplay("pinMan", "CPinManifest", STR_DISPLAY_PINMANIFEST);
+    if (!list.empty() + compare + init == 0)
+        return usage("You must specify at least one option.");
+
+    if (init) {
+        return handle_init();
+    }
+
+    if (expContext().exportFmt == TXT1 || expContext().exportFmt == CSV1)
+        configureDisplay("pinMan", "CPinManifest", STR_DISPLAY_PINNEDCHUNK);
+    else
+        configureDisplay("pinMan", "CPinManifest", STR_DISPLAY_PINMANIFEST);
+
+    LOG_INFO("hashToIndexFormatFile:\t", cGreen, hashToIndexFormatFile, cOff);
+    LOG_INFO("hashToBloomFormatFile:\t", cGreen, hashToBloomFormatFile, cOff);
+    LOG_INFO("unchainedIndexAddr:\t", cGreen, unchainedIndexAddr, cOff);
+    LOG_INFO("manifestHashEncoding:\t", cGreen, manifestHashEncoding, cOff);
 
     return true;
 }
@@ -86,7 +97,6 @@ void COptions::Init(void) {
 
     // BEG_CODE_INIT
     list = "";
-    freshen = false;
     compare = false;
     init = false;
     // END_CODE_INIT
@@ -145,7 +155,7 @@ bool COptions::freshenBlooms(bool download, const string_q& currManifest) {
         stringToAsciiFile(configPath("ipfs-hashes/lastHash.txt"), currManifest);
         string_q contents = getFileContentsByHash(currManifest);
         if (contents != "empty file") {
-            stringToAsciiFile(configPath("manifest/initial-manifest.json"), contents);
+            stringToAsciiFile(configPath("manifest/manifest.txt"), contents);
             pList.clear();
         }
     } else {
@@ -158,3 +168,40 @@ bool COptions::freshenBlooms(bool download, const string_q& currManifest) {
 
     return true;
 }
+
+/*
+ if (publish && pin)
+ return usage("The --publish option is not available when using the --pin option.");
+ LOG_TEST_BOOL("publish", publish);
+ } else if (arg == "-u" || arg == "--publish") {
+ publish = true;
+ COption("publish", "u", "", OPT_SWITCH, "publish the hash of the pin manifest to the UnchainedIndex smart contract"),
+// NOLINT
+ // Is the user asking to publish the pin manifest to the smart contract?
+ if (publish) {
+ CPinManifest manifest;
+ manifest.fileName = "manifest.txt";
+ manifest.indexFormat = hashToIndexFormatFile;
+ manifest.bloomFormat = hashToBloomFormatFile;
+
+ CPinnedChunkArray pList;
+ pinlib_readPinList(pList, true);
+ pinlib_forEveryPin(pList, addNewPin, &manifest);
+ manifest.toJson(cout);
+
+ return true;
+ }
+ //----------------------------------------------------------------
+bool addNewPin(CPinnedChunk& newPin, void* data) {
+    CPinManifest* manifestPtr = (CPinManifest*)data;  // NOLINT
+    manifestPtr->pins.push_back(newPin);
+
+    timestamp_t unused;
+    blknum_t newEnd;
+    blknum_t newStart = bnFromPath(newPin.fileName, newEnd, unused);
+
+    manifestPtr->firstPin = min(manifestPtr->firstPin, newStart);
+    manifestPtr->lastPin = min(manifestPtr->lastPin, newEnd);
+    return !isTestMode();
+}
+ */

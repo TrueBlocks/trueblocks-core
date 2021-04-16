@@ -1,1 +1,1 @@
-{ "errors": [ "chifra scrape - The --publish option is not available when using the --pin option." ] }
+{ "errors": [ "chifra scrape - Invalid option: --publish" ] }

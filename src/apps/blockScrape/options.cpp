@@ -13,13 +13,12 @@
 static const COption params[] = {
     // BEG_CODE_OPTIONS
     // clang-format off
-    COption("mode", "", "enum[run*|quit|pause|restart]", OPT_REQUIRED | OPT_POSITIONAL, "control the block and account scrapers"),  // NOLINT
+    COption("mode", "", "enum[run|quit|pause|restart]", OPT_REQUIRED | OPT_POSITIONAL, "control the block and account scrapers"),  // NOLINT
     COption("tool", "t", "list<enum[monitors|index*|none|both]>", OPT_FLAG, "process the index, monitors, or both (none means process timestamps only)"),  // NOLINT
     COption("n_blocks", "n", "<uint64>", OPT_FLAG, "maximum number of blocks to process (defaults to 5000)"),
     COption("n_block_procs", "b", "<uint64>", OPT_HIDDEN | OPT_FLAG, "number of block channels for blaze"),
     COption("n_addr_procs", "a", "<uint64>", OPT_HIDDEN | OPT_FLAG, "number of address channels for blaze"),
     COption("pin", "p", "", OPT_SWITCH, "pin new chunks (and blooms) to IPFS (requires Pinata key and running IPFS node)"),  // NOLINT
-    COption("publish", "u", "", OPT_SWITCH, "publish the hash of the pin manifest to the UnchainedIndex smart contract"),  // NOLINT
     COption("sleep", "s", "<double>", OPT_FLAG, "the number of seconds to sleep between passes (default 14)"),
     COption("cache_txs", "i", "", OPT_SWITCH, "write transactions to the cache (see notes)"),
     COption("cache_traces", "R", "", OPT_SWITCH, "write traces to the cache (see notes)"),
@@ -79,9 +78,6 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-p" || arg == "--pin") {
             pin = true;
 
-        } else if (arg == "-u" || arg == "--publish") {
-            publish = true;
-
         } else if (startsWith(arg, "-s:") || startsWith(arg, "--sleep:")) {
             if (!confirmDouble("sleep", sleep, arg))
                 return false;
@@ -117,7 +113,6 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST("n_block_procs", n_block_procs, (n_block_procs == (isDockerMode() ? 5 : 10)));
     LOG_TEST("n_addr_procs", n_addr_procs, (n_addr_procs == (isDockerMode() ? 10 : 20)));
     LOG_TEST_BOOL("pin", pin);
-    LOG_TEST_BOOL("publish", publish);
     LOG_TEST("sleep", sleep, (sleep == 14));
     LOG_TEST_BOOL("cache_txs", cache_txs);
     LOG_TEST_BOOL("cache_traces", cache_traces);
@@ -148,33 +143,12 @@ bool COptions::parseArguments(string_q& command) {
     if (sleep < .5)
         sleep = .5;
 
-    if (publish && pin)
-        return usage("The --publish option is not available when using the --pin option.");
-
-    if ((pin || publish) && !pinlib_getApiKeys(lic)) {
+    if (pin && !pinlib_getApiKeys(lic)) {
         if (!isTestMode()) {
             ostringstream os;
-            os << "The " << (pin ? "--pin" : "--publish") << " option requires you to have a Pinata key.";
+            os << "The --pin option requires you to have a Pinata key.";
             return usage(os.str());
         }
-    }
-
-    // Is the user asking to publish the pin manifest to the smart contract?
-#define hashToIndexFormatFile "Qmart6XP9XjL43p72PGR93QKytbK8jWWcMguhFgxATTya2"
-#define hashToBloomFormatFile "QmNhPk39DUFoEdhUmtGARqiFECUHeghyeryxZM9kyRxzHD"
-    if (publish) {
-        CPinManifest manifest;
-        manifest.fileName = "initial-manifest.json";
-        manifest.indexFormat = hashToIndexFormatFile;
-        manifest.bloomFormat = hashToBloomFormatFile;
-        manifest.prevHash = "";  // (prevHash == "" ? hashToEmptyFile : prevHash);
-
-        CPinnedChunkArray pList;
-        pinlib_readPinList(pList, true);
-        pinlib_forEveryPin(pList, addNewPin, &manifest);
-        manifest.toJson(cout);
-
-        return true;
     }
 
     // We shouldn't run if we're already running...
@@ -206,7 +180,6 @@ bool COptions::parseArguments(string_q& command) {
         os << "  \"n_block_procs\": " << n_block_procs << "," << endl;
         os << "  \"n_addr_procs\": " << n_addr_procs << "," << endl;
         os << "  \"pin\": " << pin << "," << endl;
-        os << "  \"publish\": " << publish << "," << endl;
         os << "  \"current\": " << current << "," << endl;
         os << "}" << endl;
         cout << os.str();
@@ -310,15 +283,12 @@ void COptions::Init(void) {
     n_addr_procs = getGlobalConfig("blockScrape")->getConfigInt("settings", "n_addr_procs", (isDockerMode() ? 10 : 20));
     // clang-format on
     pin = false;
-    publish = false;
     sleep = 14;
     // clang-format off
     cache_txs = getGlobalConfig("blockScrape")->getConfigBool("settings", "cache_txs", false);
     cache_traces = getGlobalConfig("blockScrape")->getConfigBool("settings", "cache_traces", false);
     // clang-format on
     // END_CODE_INIT
-
-    minArgs = 0;
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -425,24 +395,4 @@ bool COptions::changeState(void) {
     }
     cout << "{ \"status\": \"" << stateStr << "\" }" << endl;
     return true;
-}
-
-//----------------------------------------------------------------
-bool addNewPin(CPinnedChunk& newPin, void* data) {
-    CPinManifest* manifestPtr = (CPinManifest*)data;  // NOLINT
-    manifestPtr->newPins.push_back(newPin);
-
-    timestamp_t unused;
-    blknum_t newEnd;
-    blknum_t newStart = bnFromPath(newPin.fileName, newEnd, unused);
-
-    if (manifestPtr->newBlockRange.empty()) {
-        manifestPtr->newBlockRange = padNum9(newStart) + "-" + padNum9(newEnd);
-    } else {
-        blknum_t oldEnd;
-        blknum_t oldStart = bnFromPath(manifestPtr->newBlockRange, oldEnd, unused);
-        manifestPtr->newBlockRange = padNum9(min(oldStart, newStart)) + "-" + padNum9(max(oldEnd, newEnd));
-    }
-    // TODO(tjayrush): Note...
-    return !isTestMode();
 }

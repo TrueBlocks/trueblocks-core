@@ -82,46 +82,30 @@ string_q CPinManifest::getValueByName(const string_q& fieldName) const {
             if (fieldName % "fileName") {
                 return fileName;
             }
+            if (fieldName % "firstPin") {
+                return uint_2_Str(firstPin);
+            }
             break;
         case 'i':
             if (fieldName % "indexFormat") {
                 return indexFormat;
             }
             break;
-        case 'n':
-            if (fieldName % "newBlockRange") {
-                return newBlockRange;
-            }
-            if (fieldName % "newPins" || fieldName % "newPinsCnt") {
-                size_t cnt = newPins.size();
-                if (endsWith(toLower(fieldName), "cnt"))
-                    return uint_2_Str(cnt);
-                if (!cnt)
-                    return "";
-                string_q retS;
-                for (size_t i = 0; i < cnt; i++) {
-                    retS += newPins[i].Format();
-                    retS += ((i < cnt - 1) ? ",\n" : "\n");
-                }
-                return retS;
+        case 'l':
+            if (fieldName % "lastPin") {
+                return uint_2_Str(lastPin);
             }
             break;
         case 'p':
-            if (fieldName % "prevHash") {
-                return hash_2_Str(prevHash);
-            }
-            if (fieldName % "prevBlockRange") {
-                return prevBlockRange;
-            }
-            if (fieldName % "prevPins" || fieldName % "prevPinsCnt") {
-                size_t cnt = prevPins.size();
+            if (fieldName % "pins" || fieldName % "pinsCnt") {
+                size_t cnt = pins.size();
                 if (endsWith(toLower(fieldName), "cnt"))
                     return uint_2_Str(cnt);
                 if (!cnt)
                     return "";
                 string_q retS;
                 for (size_t i = 0; i < cnt; i++) {
-                    retS += prevPins[i].Format();
+                    retS += pins[i].Format();
                     retS += ((i < cnt - 1) ? ",\n" : "\n");
                 }
                 return retS;
@@ -158,6 +142,10 @@ bool CPinManifest::setValueByName(const string_q& fieldNameIn, const string_q& f
                 fileName = fieldValue;
                 return true;
             }
+            if (fieldName % "firstPin") {
+                firstPin = str_2_Uint(fieldValue);
+                return true;
+            }
             break;
         case 'i':
             if (fieldName % "indexFormat") {
@@ -165,35 +153,18 @@ bool CPinManifest::setValueByName(const string_q& fieldNameIn, const string_q& f
                 return true;
             }
             break;
-        case 'n':
-            if (fieldName % "newBlockRange") {
-                newBlockRange = fieldValue;
-                return true;
-            }
-            if (fieldName % "newPins") {
-                CPinnedChunk obj;
-                string_q str = fieldValue;
-                while (obj.parseJson3(str)) {
-                    newPins.push_back(obj);
-                    obj = CPinnedChunk();  // reset
-                }
+        case 'l':
+            if (fieldName % "lastPin") {
+                lastPin = str_2_Uint(fieldValue);
                 return true;
             }
             break;
         case 'p':
-            if (fieldName % "prevHash") {
-                prevHash = str_2_Hash(fieldValue);
-                return true;
-            }
-            if (fieldName % "prevBlockRange") {
-                prevBlockRange = fieldValue;
-                return true;
-            }
-            if (fieldName % "prevPins") {
+            if (fieldName % "pins") {
                 CPinnedChunk obj;
                 string_q str = fieldValue;
                 while (obj.parseJson3(str)) {
-                    prevPins.push_back(obj);
+                    pins.push_back(obj);
                     obj = CPinnedChunk();  // reset
                 }
                 return true;
@@ -227,11 +198,9 @@ bool CPinManifest::Serialize(CArchive& archive) {
     archive >> fileName;
     archive >> indexFormat;
     archive >> bloomFormat;
-    archive >> prevHash;
-    archive >> newBlockRange;
-    archive >> newPins;
-    archive >> prevBlockRange;
-    archive >> prevPins;
+    archive >> firstPin;
+    archive >> lastPin;
+    archive >> pins;
     finishParse();
     return true;
 }
@@ -246,11 +215,9 @@ bool CPinManifest::SerializeC(CArchive& archive) const {
     archive << fileName;
     archive << indexFormat;
     archive << bloomFormat;
-    archive << prevHash;
-    archive << newBlockRange;
-    archive << newPins;
-    archive << prevBlockRange;
-    archive << prevPins;
+    archive << firstPin;
+    archive << lastPin;
+    archive << pins;
 
     return true;
 }
@@ -290,11 +257,9 @@ void CPinManifest::registerClass(void) {
     ADD_FIELD(CPinManifest, "fileName", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CPinManifest, "indexFormat", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CPinManifest, "bloomFormat", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CPinManifest, "prevHash", T_HASH | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CPinManifest, "newBlockRange", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CPinManifest, "newPins", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CPinManifest, "prevBlockRange", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CPinManifest, "prevPins", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CPinManifest, "firstPin", T_BLOCKNUM, ++fieldNum);
+    ADD_FIELD(CPinManifest, "lastPin", T_BLOCKNUM, ++fieldNum);
+    ADD_FIELD(CPinManifest, "pins", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CPinManifest, "schema");
@@ -363,24 +328,14 @@ ostream& operator<<(ostream& os, const CPinManifest& it) {
 
 //---------------------------------------------------------------------------
 const CBaseNode* CPinManifest::getObjectAt(const string_q& fieldName, size_t index) const {
-    if (fieldName % "newPins") {
+    if (fieldName % "pins") {
         if (index == NOPOS) {
             CPinnedChunk empty;
-            ((CPinManifest*)this)->newPins.push_back(empty);  // NOLINT
-            index = newPins.size() - 1;
+            ((CPinManifest*)this)->pins.push_back(empty);  // NOLINT
+            index = pins.size() - 1;
         }
-        if (index < newPins.size())
-            return &newPins[index];
-    }
-
-    if (fieldName % "prevPins") {
-        if (index == NOPOS) {
-            CPinnedChunk empty;
-            ((CPinManifest*)this)->prevPins.push_back(empty);  // NOLINT
-            index = prevPins.size() - 1;
-        }
-        if (index < prevPins.size())
-            return &prevPins[index];
+        if (index < pins.size())
+            return &pins[index];
     }
 
     return NULL;

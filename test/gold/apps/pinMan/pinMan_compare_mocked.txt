@@ -1,7 +1,7 @@
-pinMan argc: 2 [1:--junk] 
-pinMan --junk 
+pinMan argc: 2 [1:local] 
+pinMan local 
 
-  Invalid option: --junk
+  You must specify at least one option. Quitting...
 
   Usage:    pinMan [-l|-c|-i|-v|-h]  
   Purpose:  Report on and manage the remotely pinned appearance index and associated bloom filters.

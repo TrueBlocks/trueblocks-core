@@ -46,9 +46,9 @@
               "filename": "/--index-path--/001076299-001229769.bin",
               "fileDate": "1700-01-01 00:00:01 UTC",
               "indexSizeBytes": 18376332,
-              "index_hash": "QmQR...CBVR",
+              "index_hash": "",
               "bloomSizeBytes": 262156,
-              "bloom_hash": "Qmah...b3z5"
+              "bloom_hash": ""
             },
             {
               "type": "CIndexCacheItem",

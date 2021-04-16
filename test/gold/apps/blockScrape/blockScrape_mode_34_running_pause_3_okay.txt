@@ -13,7 +13,6 @@ TIME ~ CLOCK - : 8------Current state paused.
   "n_block_procs": 10,
   "n_addr_procs": 20,
   "pin": 0,
-  "publish": 0,
   "current": paused,
 }
 TIME ~ CLOCK - : 8------Current state paused.

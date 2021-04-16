@@ -2,18 +2,17 @@ blockScrape argc: 2 [1:-th]
 blockScrape -th 
 #### Usage
 
-`Usage:`    chifra scrape [-t|-n|-p|-u|-s|-i|-R|-v|-h] mode  
+`Usage:`    chifra scrape [-t|-n|-p|-s|-i|-R|-v|-h] mode  
 `Purpose:`  Decentralized blockchain scraper and block cache.
 
 `Where:`  
 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
-|  | mode | control the block and account scrapers, one of [run*&#124;quit&#124;pause&#124;restart] (required) |
+|  | mode | control the block and account scrapers, one of [run&#124;quit&#124;pause&#124;restart] (required) |
 | -t | --tool <val> | process the index, monitors, or both (none means process timestamps only), one or more of [monitors&#124;index*&#124;none&#124;both] |
 | -n | --n_blocks <num> | maximum number of blocks to process (defaults to 5000) |
 | -p | --pin | pin new chunks (and blooms) to IPFS (requires Pinata key and running IPFS node) |
-| -u | --publish | publish the hash of the pin manifest to the UnchainedIndex smart contract |
 | -s | --sleep <double> | the number of seconds to sleep between passes (default 14) |
 | -i | --cache_txs | write transactions to the cache (see notes) |
 | -R | --cache_traces | write traces to the cache (see notes) |

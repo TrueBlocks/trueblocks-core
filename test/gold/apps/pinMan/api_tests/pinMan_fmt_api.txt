@@ -1,21 +1,32 @@
 {
-  "data": [
-    {
-      "apiKey": "--license_codes--",
-      "secretKey": "--license_codes--"
-    }
-  ],
+  "data": [],
   "types": [
     {
-      "type": "CPinApiLicense",
+      "type": "CPinManifest",
       "fields": [
         {
-          "name": "apiKey",
+          "name": "fileName",
           "type": "text"
         },
         {
-          "name": "secretKey",
+          "name": "indexFormat",
           "type": "text"
+        },
+        {
+          "name": "bloomFormat",
+          "type": "text"
+        },
+        {
+          "name": "firstPin",
+          "type": "blocknum"
+        },
+        {
+          "name": "lastPin",
+          "type": "blocknum"
+        },
+        {
+          "name": "pins",
+          "type": "object|ts_array"
         }
       ]
     }

@@ -29,11 +29,9 @@ class CPinManifest : public CBaseNode {
     string_q fileName;
     string_q indexFormat;
     string_q bloomFormat;
-    hash_t prevHash;
-    string_q newBlockRange;
-    CPinnedChunkArray newPins;
-    string_q prevBlockRange;
-    CPinnedChunkArray prevPins;
+    blknum_t firstPin;
+    blknum_t lastPin;
+    CPinnedChunkArray pins;
 
   public:
     CPinManifest(void);
@@ -101,11 +99,9 @@ inline void CPinManifest::initialize(void) {
     fileName = "";
     indexFormat = "";
     bloomFormat = "";
-    prevHash = "";
-    newBlockRange = "";
-    newPins.clear();
-    prevBlockRange = "";
-    prevPins.clear();
+    firstPin = 0;
+    lastPin = 0;
+    pins.clear();
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -119,11 +115,9 @@ inline void CPinManifest::duplicate(const CPinManifest& pi) {
     fileName = pi.fileName;
     indexFormat = pi.indexFormat;
     bloomFormat = pi.bloomFormat;
-    prevHash = pi.prevHash;
-    newBlockRange = pi.newBlockRange;
-    newPins = pi.newPins;
-    prevBlockRange = pi.prevBlockRange;
-    prevPins = pi.prevPins;
+    firstPin = pi.firstPin;
+    lastPin = pi.lastPin;
+    pins = pi.pins;
 
     // EXISTING_CODE
     // EXISTING_CODE

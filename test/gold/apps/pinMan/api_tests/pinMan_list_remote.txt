@@ -1,12 +1,5 @@
 {
-  "data": [
-    {
-      "error": {
-        "reason": "INVALID_API_KEYS",
-        "details": "Invalid API key provided"
-      }
-    }
-  ],
+  "data": [],
   "types": [
     {
       "type": "CPinManifest",
@@ -24,23 +17,15 @@
           "type": "text"
         },
         {
-          "name": "prevHash",
-          "type": "hash"
+          "name": "firstPin",
+          "type": "blocknum"
         },
         {
-          "name": "newBlockRange",
-          "type": "text"
+          "name": "lastPin",
+          "type": "blocknum"
         },
         {
-          "name": "newPins",
-          "type": "object|ts_array"
-        },
-        {
-          "name": "prevBlockRange",
-          "type": "text"
-        },
-        {
-          "name": "prevPins",
+          "name": "pins",
           "type": "object|ts_array"
         }
       ]

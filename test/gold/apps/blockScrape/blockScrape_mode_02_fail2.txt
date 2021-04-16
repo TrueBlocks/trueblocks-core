@@ -3,15 +3,14 @@ blockScrape run quit
 
   Please specify only one mode. Quitting...
 
-  Usage:    blockScrape [-t|-n|-p|-u|-s|-i|-R|-v|-h] mode  
+  Usage:    blockScrape [-t|-n|-p|-s|-i|-R|-v|-h] mode  
   Purpose:  Decentralized blockchain scraper and block cache.
 
   Where:  
-	mode                  control the block and account scrapers, one of [run*|quit|pause|restart] (required)
+	mode                  control the block and account scrapers, one of [run|quit|pause|restart] (required)
 	-t  (--tool <val>)    process the index, monitors, or both (none means process timestamps only), one or more of [monitors|index*|none|both]
 	-n  (--n_blocks <num>)maximum number of blocks to process (defaults to 5000)
 	-p  (--pin)           pin new chunks (and blooms) to IPFS (requires Pinata key and running IPFS node)
-	-u  (--publish)       publish the hash of the pin manifest to the UnchainedIndex smart contract
 	-s  (--sleep <double>)the number of seconds to sleep between passes (default 14)
 	-i  (--cache_txs)     write transactions to the cache (see notes)
 	-R  (--cache_traces)  write traces to the cache (see notes)

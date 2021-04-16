@@ -181,7 +181,7 @@ bool pinlib_readPinList(CPinnedChunkArray& pinArray, bool required) {
         return true;
 
     string_q binFile = getCachePath("tmp/pins.bin");
-    string_q textFile = configPath("manifest/initial-manifest.json");
+    string_q textFile = configPath("manifest/manifest.txt");
 
     time_q binDate = fileLastModifyDate(binFile);
     time_q textDate = fileLastModifyDate(textFile);
@@ -210,9 +210,7 @@ bool pinlib_readPinList(CPinnedChunkArray& pinArray, bool required) {
         string_q contents = asciiFileToString(textFile);
         CPinManifest report;
         report.parseJson3(contents);
-        for (auto pin : report.prevPins)
-            pinArray.push_back(pin);
-        for (auto pin : report.newPins)
+        for (auto pin : report.pins)
             pinArray.push_back(pin);
         LOG4("Done Loading pins");
         sort(pinArray.begin(), pinArray.end());

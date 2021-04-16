@@ -1,4 +1,5 @@
-pinMan argc: 4 [1:remote] [2:--unpin] [3:empty_file] 
-pinMan remote --unpin empty_file 
+pinMan argc: 3 [1:--list] [2:remote] 
+pinMan --list remote 
+filename	indexformat	bloomformat	firstpin	lastpin	pins
 TIME ~ CLOCK - <INFO>  : latestBlock:	--latest--
 TIME ~ CLOCK - <INFO>  : unchainedIndexAddr:	0xcfd7f3b24f3551741f922fd8c4381aa4e00fc8fd

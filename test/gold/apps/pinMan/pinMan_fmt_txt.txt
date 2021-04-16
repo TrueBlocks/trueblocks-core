@@ -1,4 +1,5 @@
-pinMan argc: 4 [1:--license] [2:--fmt] [3:txt] 
-pinMan --license --fmt txt 
-apikey	secretkey
---license_codes--	--license_codes--
+pinMan argc: 5 [1:--list] [2:local] [3:--fmt] [4:txt] 
+pinMan --list local --fmt txt 
+filename	indexformat	bloomformat	firstpin	lastpin	pins
+TIME ~ CLOCK - <INFO>  : latestBlock:	--latest--
+TIME ~ CLOCK - <INFO>  : unchainedIndexAddr:	0xcfd7f3b24f3551741f922fd8c4381aa4e00fc8fd

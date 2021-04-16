@@ -40,9 +40,7 @@ cacheStatus --details index --start 1000000 --end 2200000
           "filename": "/--index-path--/001076299-001229769.bin",
           "fileDate": "1700-01-01 00:00:01 UTC",
           "indexSizeBytes": 18376332,
-          "index_hash": "QmQR...CBVR",
-          "bloomSizeBytes": 262156,
-          "bloom_hash": "Qmah...b3z5"
+          "bloomSizeBytes": 262156
         },
         {
           "type": "CIndexCacheItem",

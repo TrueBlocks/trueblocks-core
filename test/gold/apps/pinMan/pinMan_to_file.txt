@@ -1,3 +1,8 @@
-pinMan argc: 5 [1:--license] [2:--fmt] [3:json] [4:--to_file] 
-pinMan --license --fmt json --to_file 
+pinMan argc: 6 [1:--list] [2:local] [3:--fmt] [4:json] [5:--to_file] 
+pinMan --list local --fmt json --to_file 
+TIME ~ CLOCK - <INFO>  : list: local
+TIME ~ CLOCK - <INFO>  : hashToIndexFormatFile:	Qmart6XP9XjL43p72PGR93QKytbK8jWWcMguhFgxATTya2
+TIME ~ CLOCK - <INFO>  : hashToBloomFormatFile:	QmNhPk39DUFoEdhUmtGARqiFECUHeghyeryxZM9kyRxzHD
+TIME ~ CLOCK - <INFO>  : unchainedIndexAddr:	0xcfd7f3b24f3551741f922fd8c4381aa4e00fc8fd
+TIME ~ CLOCK - <INFO>  : manifestHashEncoding:	0x337f3f32
 { "outputFilename": "--output_filename--" }

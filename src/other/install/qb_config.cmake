@@ -151,7 +151,7 @@ endforeach( FILE )
 #---------------------------------------------------------------
 message(STATUS "Seeding initial manifest ${DEST_PATH}/manifest/")
 file(COPY "${SOURCE_PATH}/manifest/empty-manifest.json" DESTINATION "${DEST_PATH}/manifest/" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
-file(COPY "${SOURCE_PATH}/manifest/initial-manifest.json" DESTINATION "${DEST_PATH}/manifest/" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
+file(COPY "${SOURCE_PATH}/manifest/manifest.txt" DESTINATION "${DEST_PATH}/manifest/" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
 
 #---------------------------------------------------------------
 # Copy the prices files

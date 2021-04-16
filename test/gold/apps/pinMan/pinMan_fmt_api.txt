@@ -1,9 +1,8 @@
-pinMan argc: 4 [1:--license] [2:--fmt] [3:api] 
-pinMan --license --fmt api 
+pinMan argc: 5 [1:--list] [2:local] [3:--fmt] [4:api] 
+pinMan --list local --fmt api 
 {"data": [
-{
-    "apiKey": "--license_codes--",
-    "secretKey": "--license_codes--"
-  }], "types": [
-{ "type": "CPinApiLicense", "fields": [{ "name": "apiKey", "type": "text" }, { "name": "secretKey", "type": "text" }] }
+TIME ~ CLOCK - <INFO>  : latestBlock:	--latest--
+TIME ~ CLOCK - <INFO>  : unchainedIndexAddr:	0xcfd7f3b24f3551741f922fd8c4381aa4e00fc8fd
+], "types": [
+{ "type": "CPinManifest", "fields": [{ "name": "fileName", "type": "text" }, { "name": "indexFormat", "type": "text" }, { "name": "bloomFormat", "type": "text" }, { "name": "firstPin", "type": "blocknum" }, { "name": "lastPin", "type": "blocknum" }, { "name": "pins", "type": "object|ts_array" }] }
 ], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }

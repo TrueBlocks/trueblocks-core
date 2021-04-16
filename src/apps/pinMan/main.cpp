@@ -18,25 +18,12 @@ int main(int argc, const char* argv[]) {
         if (once)
             cout << exportPreamble(expContext().fmtMap["header"], "CPinManifest");
 
-        LOG_INFO("latestBlock:\t", cGreen,
-                 (isTestMode() ? "--latest--" : uint_2_Str(getBlockProgress(BP_CLIENT).client)), cOff);
-        LOG_INFO("unchainedIndexAddr:\t", cGreen, unchainedIndexAddr, cOff);
-        // if (!options.unpin.empty()) {
-        //     options.handle_unpin();
+        // if (options.mode == "onchain") {
+        //     cout << doCommand("chifra state --call " + unchainedIndexAddr + "!" + manifestHashEncoding);
 
-        // } else if (!options.pin.empty()) {
-        //     options.handle_pin();
+        // } else if (options.mode == "local") {
+        cout << asciiFileToString(configPath("manifest/manifest.txt"));
 
-        // } else {
-        //     //                if (options.mode == "onchain") {
-        //     //                    cout << doCommand("chifra state --call " + unchainedIndexAddr + "!" +
-        //     //                    manifestHashEncoding);
-        //     //
-        //     //                } else if (options.mode == "local") {
-        //     //                    cout << asciiFileToString(configPath("manifest/initial-manifest.json"));
-        //     //
-        //     //                } else
-        //     { options.handle_pin(); }
         // }
 
         once = false;
@@ -48,41 +35,41 @@ int main(int argc, const char* argv[]) {
 }
 
 //----------------------------------------------------------------
-void COptions::handle_pin(void) {
-    // LOG8("Handle pin: ", pin);
+// void COptions::handle_pin(void) {
+// LOG8("Handle pin: ", pin);
 
-    // string_q pins;
-    // if (!pinlib_getPinList(lic, pins)) {
-    //     usageStr(pins + ".");
-    //     return;
-    // }
-    // cout << pins << endl;
-}
+// string_q pins;
+// if (!pinlib_getPinList(lic, pins)) {
+//     usageStr(pins + ".");
+//     return;
+// }
+// cout << pins << endl;
+// }
 
 //----------------------------------------------------------------
-void COptions::handle_unpin(void) {
-    // LOG8("Handle unpin: ", unpin);
+// void COptions::handle_unpin(void) {
+// LOG8("Handle unpin: ", unpin);
 
-    // string_q pins;
-    // if (!pinlib_getPinList(lic, pins)) {
-    //     usageStr(pins + ".");
-    //     return;
-    // }
+// string_q pins;
+// if (!pinlib_getPinList(lic, pins)) {
+//     usageStr(pins + ".");
+//     return;
+// }
 
-    // CPinataPinlist pinList;
-    // pinList.parseJson3(pins);
-    // while (str_2_Uint(pinList.count) != 0) {
-    //     cout << pinList.count << endl;
-    //     for (auto thePin : pinList.rows) {
-    //         cout << "Unpinning " << thePin.metadata.name << ": " << thePin.ipfs_pin_hash << " ";
-    //         pinlib_unpinOneFile(thePin.ipfs_pin_hash);
-    //         usleep(1000000);
-    //     }
-    //     usleep(300000);
-    //     pins = "";
-    //     pins.clear();
-    //     pinlib_getPinList(lic, pins);
-    //     pinList = CPinataPinlist();
-    //     pinList.parseJson3(pins);
-    // }
-}
+// CPinataPinlist pinList;
+// pinList.parseJson3(pins);
+// while (str_2_Uint(pinList.count) != 0) {
+//     cout << pinList.count << endl;
+//     for (auto thePin : pinList.rows) {
+//         cout << "Unpinning " << thePin.metadata.name << ": " << thePin.ipfs_pin_hash << " ";
+//         pinlib_unpinOneFile(thePin.ipfs_pin_hash);
+//         usleep(1000000);
+//     }
+//     usleep(300000);
+//     pins = "";
+//     pins.clear();
+//     pinlib_getPinList(lic, pins);
+//     pinList = CPinataPinlist();
+//     pinList.parseJson3(pins);
+// }
+// }

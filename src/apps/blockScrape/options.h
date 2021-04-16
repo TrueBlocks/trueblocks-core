@@ -28,7 +28,6 @@ class COptions : public COptionsBase {
     uint64_t n_block_procs;
     uint64_t n_addr_procs;
     bool pin;
-    bool publish;
     double sleep;
     bool cache_txs;
     bool cache_traces;
@@ -66,4 +65,3 @@ extern bool copyRipeToStage(const string_q& path, void* data);
 extern bool appendFile(const string_q& toFile, const string_q& fromFile);
 extern bool prepareMonitors(const string_q& path, void* data);
 extern bool visitToPin(const string_q& chunkId, void* data);
-extern bool addNewPin(CPinnedChunk& newPin, void* data);

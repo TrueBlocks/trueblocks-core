@@ -3,10 +3,8 @@ class = CPinManifest
 fields = string fileName|\
         string indexFormat|\
         string bloomFormat|\
-        hash prevHash|\
-        string newBlockRange|\
-        CPinnedChunkArray newPins|\
-        string prevBlockRange|\
-        CPinnedChunkArray prevPins
+        blknum firstPin|\
+        blknum lastPin|\
+        CPinnedChunkArray pins
 includes = etherlib.h|pinnedchunk.h
 serializable = true

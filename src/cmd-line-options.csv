@@ -32,13 +32,12 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,customizeable,c
 10460,apps,Accounts,export,acctExport,,,,false,false,true,true,--,description,,Export full detail of transactions for one or more Ethereum addresses.
 10470,apps,Accounts,export,acctExport,,,,false,false,false,false,--,note,,`addresses` must start with '0x' and be forty two characters long.
 
-10600,apps,Admin,scrape,blockScrape,mode,,,true,false,true,true,header,positional,enum[run*|quit|pause|restart],control the block and account scrapers
+10600,apps,Admin,scrape,blockScrape,mode,,,true,false,true,true,header,positional,enum[run|quit|pause|restart],control the block and account scrapers
 10610,apps,Admin,scrape,blockScrape,tool,t,,false,false,true,true,header,flag,list<enum[monitors|index*|none|both]>,process the index&#44; monitors&#44; or both (none means process timestamps|only)
 10615,apps,Admin,scrape,blockScrape,n_blocks,n,(isDockerMode() ? 100 : 2000),false,true,true,true,header,flag,<uint64>,maximum number of blocks to process (defaults to 5000)
 10620,apps,Admin,scrape,blockScrape,n_block_procs,b,(isDockerMode() ? 5 : 10),false,true,false,false,header,flag,<uint64>,number of block channels for blaze
 10640,apps,Admin,scrape,blockScrape,n_addr_procs,a,(isDockerMode() ? 10 : 20),false,true,false,false,header,flag,<uint64>,number of address channels for blaze
 10645,apps,Admin,scrape,blockScrape,pin,p,,false,false,true,true,header,switch,<boolean>,pin new chunks (and blooms) to IPFS (requires Pinata key and running IPFS node)
-10648,apps,Admin,scrape,blockScrape,publish,u,,false,false,true,true,header,switch,<boolean>,publish the hash of the pin manifest to the UnchainedIndex smart|contract
 10650,apps,Admin,scrape,blockScrape,sleep,s,14,false,false,true,false,header,flag,<double>,the number of seconds to sleep between passes (default [{DEF}])
 10655,apps,Admin,scrape,blockScrape,cache_txs,i,false,false,true,true,false,header,switch,<boolean>,write transactions to the cache (see notes)
 10658,apps,Admin,scrape,blockScrape,cache_traces,R,false,false,true,true,false,header,switch,<boolean>,write traces to the cache (see notes)
@@ -57,8 +56,7 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,customizeable,c
 10860,apps,Admin,status,cacheStatus,,,,false,false,true,true,--,description,,Report on status of one or more TrueBlocks caches.
 
 10920,apps,Admin,pins,pinMan,list,l,,false,false,true,true,header,flag,enum[local*|remote],list all pins either locally or at the pinning service
-10960,apps,Admin,pins,pinMan,freshen,f,,false,false,true,true,header,switch,<boolean>,push files from the local index to the pinning service and update manifest
-10960,apps,Admin,pins,pinMan,compare,c,,false,false,true,true,header,switch,<boolean>,report differences between the manifest and the pinning service
+10960,apps,Admin,pins,pinMan,compare,c,,false,false,true,true,header,switch,<boolean>,report differences (if any) between the manifest and pinning service
 10950,apps,Admin,pins,pinMan,init,i,,false,false,true,true,header,switch,<boolean>,initialize the local index by downloading bloom filters from the pinning service
 10980,apps,Admin,pins,pinMan,,,,false,false,true,true,--,description,,Report on and manage the remotely pinned appearance index and associated bloom filters.
 
