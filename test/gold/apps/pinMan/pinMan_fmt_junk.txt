@@ -3,13 +3,12 @@ pinMan --list local --fmt junk
 
   Export format (junk) must be one of [ json | txt | csv | api ]. Quitting...
 
-  Usage:    pinMan [-l|-f|-c|-i|-v|-h]  
+  Usage:    pinMan [-l|-c|-i|-v|-h]  
   Purpose:  Report on and manage the remotely pinned appearance index and associated bloom filters.
 
   Where:  
 	-l  (--list <val>)    list all pins either locally or at the pinning service, one of [local*|remote]
-	-f  (--freshen)       push files from the local index to the pinning service and update manifest
-	-c  (--compare)       report differences between the manifest and the pinning service
+	-c  (--compare)       report differences (if any) between the manifest and pinning service
 	-i  (--init)          initialize the local index by downloading bloom filters from the pinning service
 	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
 	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level

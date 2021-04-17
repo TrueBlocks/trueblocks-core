@@ -191,7 +191,8 @@ bool COptions::parseArguments(string_q& command) {
         HIDE_FIELD(CAbiCache, "items");
         HIDE_FIELD(CChainCache, "items");
     } else {
-        loadPinMaps(bloomHashes, indexHashes);
+        CIndexStringMap unused;
+        pinlib_loadPinMaps(unused, bloomHashes, indexHashes);
     }
     HIDE_FIELD(CChainCache, "max_depth");
 
@@ -306,17 +307,4 @@ COptions::COptions(void) {
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
-}
-
-//--------------------------------------------------------------------------------
-void loadPinMaps(CIndexHashMap& bloomMap, CIndexHashMap& indexMap) {
-    CPinnedChunkArray pinList;
-    if (!pinlib_readPinList(pinList, false))
-        return;
-
-    for (auto pin : pinList) {
-        blknum_t num = str_2_Uint(pin.fileName);
-        bloomMap[num] = pin.bloomHash;
-        indexMap[num] = pin.indexHash;
-    }
 }

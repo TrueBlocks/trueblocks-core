@@ -2,31 +2,19 @@
   "data": [],
   "types": [
     {
-      "type": "CPinManifest",
+      "type": "CPinnedChunk",
       "fields": [
         {
           "name": "fileName",
           "type": "text"
         },
         {
-          "name": "indexFormat",
+          "name": "bloomHash",
           "type": "text"
         },
         {
-          "name": "bloomFormat",
+          "name": "indexHash",
           "type": "text"
-        },
-        {
-          "name": "firstPin",
-          "type": "blocknum"
-        },
-        {
-          "name": "lastPin",
-          "type": "blocknum"
-        },
-        {
-          "name": "pins",
-          "type": "object|ts_array"
         }
       ]
     }

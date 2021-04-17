@@ -13,21 +13,32 @@ int main(int argc, const char* argv[]) {
     bool once = true;
     for (auto command : options.commandLines) {
         if (!options.parseArguments(command))
-            break;
+            return 0;
+
+        pinlib_readPinList(options.localPins, true);
 
         if (once)
-            cout << exportPreamble(expContext().fmtMap["header"], "CPinManifest");
+            cout << exportPreamble(expContext().fmtMap["header"], "CPinnedChunk");
 
-        // if (options.mode == "onchain") {
-        //     cout << doCommand("chifra state --call " + unchainedIndexAddr + "!" + manifestHashEncoding);
+        if (options.init) {
+            return options.handle_init();
 
-        // } else if (options.mode == "local") {
-        cout << asciiFileToString(configPath("manifest/manifest.txt"));
+        } else if (options.compare) {
+            options.handle_compare();
 
-        // }
+        } else {
+            ASSERT(!options.list.empty());
+            if (options.list == "local") {
+                options.handle_list_local();
 
+            } else {
+                ASSERT(options.list == "remote");
+                options.handle_list_remote();
+            }
+        }
         once = false;
     }
+
     cout << exportPostamble(options.errors, expContext().fmtMap["meta"]);
     pinlib_cleanup();
 

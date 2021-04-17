@@ -52,4 +52,9 @@ extern void indent(void);
 extern void unindent(void);
 extern string_q indentStr(void);
 
+//--------------------------------------------------------------------------------
+inline bool isJson(void) {
+    return (expContext().exportFmt == JSON1 || expContext().exportFmt == API1 || expContext().exportFmt == NONE1);
+}
+
 }  // namespace qblocks

@@ -74,14 +74,7 @@ bool COptions::parseArguments(string_q& command) {
     if (!list.empty() + compare + init == 0)
         return usage("You must specify at least one option.");
 
-    if (init) {
-        return handle_init();
-    }
-
-    if (expContext().exportFmt == TXT1 || expContext().exportFmt == CSV1)
-        configureDisplay("pinMan", "CPinManifest", STR_DISPLAY_PINNEDCHUNK);
-    else
-        configureDisplay("pinMan", "CPinManifest", STR_DISPLAY_PINMANIFEST);
+    configureDisplay("pinMan", "CPinnedChunk", STR_DISPLAY_PINNEDCHUNK);
 
     LOG_INFO("hashToIndexFormatFile:\t", cGreen, hashToIndexFormatFile, cOff);
     LOG_INFO("hashToBloomFormatFile:\t", cGreen, hashToBloomFormatFile, cOff);
@@ -105,6 +98,7 @@ void COptions::Init(void) {
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
     Init();
+    firstOut = true;
 
     // BEG_CODE_NOTES
     // clang-format off
@@ -156,15 +150,14 @@ bool COptions::freshenBlooms(bool download, const string_q& currManifest) {
         string_q contents = getFileContentsByHash(currManifest);
         if (contents != "empty file") {
             stringToAsciiFile(configPath("manifest/manifest.txt"), contents);
-            pList.clear();
+            localPins.clear();
         }
     } else {
         LOG_INFO("Manifest is up to data at: ", currManifest);
     }
 
-    pinlib_readPinList(pList, false);
     if (download)
-        pinlib_forEveryPin(pList, checkOnDisc, NULL);
+        pinlib_forEveryPin(localPins, checkOnDisc, NULL);
 
     return true;
 }
@@ -185,7 +178,7 @@ bool COptions::freshenBlooms(bool download, const string_q& currManifest) {
  manifest.bloomFormat = hashToBloomFormatFile;
 
  CPinnedChunkArray pList;
- pinlib_readPinList(pList, true);
+ pinlib_r eadPinList(pList, true);
  pinlib_forEveryPin(pList, addNewPin, &manifest);
  manifest.toJson(cout);
 

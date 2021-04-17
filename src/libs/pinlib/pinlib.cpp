@@ -175,6 +175,39 @@ bool pinlib_forEveryPin(CPinnedChunkArray& pList, PINFUNC func, void* data) {
     return true;
 }
 
+//--------------------------------------------------------------------------------
+void pinlib_loadPinMaps(CIndexStringMap& fnMap, CIndexHashMap& bloomMap, CIndexHashMap& indexMap) {
+    CPinnedChunkArray pinList;
+    if (!pinlib_readPinList(pinList, false))
+        return;
+
+    for (auto pin : pinList) {
+        blknum_t num = str_2_Uint(pin.fileName);
+        fnMap[num] = pin.fileName;
+        bloomMap[num] = pin.bloomHash;
+        indexMap[num] = pin.indexHash;
+    }
+}
+
+//---------------------------------------------------------------------------
+bool parseOneLine(const char* line, void* data) {
+    if (isTestMode() && line > string_q("005000000"))
+        return true;
+
+    CPinnedChunkArray* pins = (CPinnedChunkArray*)data;
+    static CStringArray fields;
+    if (fields.empty()) {
+        string_q flds = "fileName,bloomHash,indexHash";
+        explode(fields, flds, ',');
+    }
+
+    CPinnedChunk pin;
+    string_q ln(line);
+    pin.parseCSV(fields, ln);
+    pins->push_back(pin);
+    return true;
+}
+
 //---------------------------------------------------------------------------
 bool pinlib_readPinList(CPinnedChunkArray& pinArray, bool required) {
     if (!pinArray.empty())
@@ -207,14 +240,11 @@ bool pinlib_readPinList(CPinnedChunkArray& pinArray, bool required) {
 
     } else {
         pinArray.clear();  // redundant, but fine
-        string_q contents = asciiFileToString(textFile);
-        CPinManifest report;
-        report.parseJson3(contents);
-        for (auto pin : report.pins)
-            pinArray.push_back(pin);
+        forEveryLineInAsciiFile(configPath("manifest/manifest.txt"), parseOneLine, &pinArray);
         LOG4("Done Loading pins");
         sort(pinArray.begin(), pinArray.end());
-        pinlib_writePinList(pinArray);
+        if (!isTestMode())
+            pinlib_writePinList(pinArray);
     }
     return true;
 }

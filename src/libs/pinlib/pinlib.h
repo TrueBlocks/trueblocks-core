@@ -27,6 +27,7 @@ extern void pinlib_cleanup(void);
 extern bool pinlib_getApiKeys(CPinApiLicense& lic);
 extern bool pinlib_getPinList(const CPinApiLicense& lic, string_q& result);
 extern bool pinlib_readPinList(CPinnedChunkArray& pList, bool required);
+extern void pinlib_loadPinMaps(CIndexStringMap& fnMap, CIndexHashMap& bloomMap, CIndexHashMap& indexMap);
 extern bool pinlib_writePinList(CPinnedChunkArray& pList);
 
 typedef bool (*PINFUNC)(CPinnedChunk& pin, void* data);

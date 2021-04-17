@@ -22,7 +22,8 @@ class COptions : public CAbiOptions {
     bool init;
     // END_CODE_DECLARE
 
-    CPinnedChunkArray pList;
+    CPinnedChunkArray localPins;
+    bool firstOut;
 
     COptions(void);
     ~COptions(void);
@@ -32,7 +33,11 @@ class COptions : public CAbiOptions {
 
     hash_t getCurrentManifest(void);
     bool freshenBlooms(bool download, const string_q& currManifest);
+
     bool handle_init(void);
+    bool handle_compare(void);
+    bool handle_list_local(void);
+    bool handle_list_remote(void);
 };
 
 //-------------------------------------------------------------------------

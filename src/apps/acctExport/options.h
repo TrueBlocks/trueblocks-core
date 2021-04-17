@@ -121,11 +121,6 @@ inline string_q plural(const string_q& in) {
     return substitute(toLower(in).substr(1, 1000) + "s", "logentrys", "logs");
 }
 
-//--------------------------------------------------------------------------------
-inline bool isJson(void) {
-    return (expContext().exportFmt == JSON1 || expContext().exportFmt == API1 || expContext().exportFmt == NONE1);
-}
-
 #define VIS_FINAL (1 << 1)
 #define VIS_STAGING (1 << 2)
 #define VIS_UNRIPE (1 << 3)

@@ -56,6 +56,7 @@ using CAddressUintMap = map<address_t, uint64_t>;
 using CAddressBoolMap = map<address_t, bool>;
 using CErrorStringMap = map<size_t, string_q>;
 using CIndexHashMap = map<blknum_t, string_q>;
+using CIndexStringMap = CIndexHashMap;
 
 //-------------------------------------------------------------------------
 extern bool str_2_Bool(const string_q& str);
