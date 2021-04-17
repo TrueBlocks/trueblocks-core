@@ -214,7 +214,7 @@ bool COptions::parseArguments(string_q& command) {
         EXIT_NOMSG(false);
 
     if (!bloomsAreInitalized()) {
-        EXIT_USAGE("You must run 'chifra init' before running this command.")
+        EXIT_USAGE("Bloom filters not found. You must run 'chifra init' before running this command.")
     }
 
     if (clean) {

@@ -205,7 +205,7 @@ bool getIndexChunkFromIPFS(const string_q& chunk) {
 bool COptions::establishIndexChunk(const string_q& fileName) {
     ENTER("establishIndexChunk")
     if (!fileExists(fileName)) {
-        LOG_INFO(bRed, fileName, " not found.", bGreen, " Retreiving from IPFS.", cOff);
+        LOG_PROGRESS("Unchaining-chunk", fileRange.first, listRange.second, " from IPFS");
         CPinnedChunk pin;
         if (!pinlib_getChunkByHash(pinList, substitute(substitute(fileName, indexFolder_finalized, ""), ".bin", ""),
                                    pin)) {

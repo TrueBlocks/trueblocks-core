@@ -26,9 +26,9 @@ extern void pinlib_cleanup(void);
 
 extern bool pinlib_getApiKeys(CPinApiLicense& lic);
 extern bool pinlib_getPinList(const CPinApiLicense& lic, string_q& result);
-extern bool pinlib_readPinList(CPinnedChunkArray& pList, bool required);
+extern bool pinlib_readPinList(CPinnedChunkArray& pList, bool required, bool local);
 extern void pinlib_loadPinMaps(CIndexStringMap& fnMap, CIndexHashMap& bloomMap, CIndexHashMap& indexMap);
-extern bool pinlib_writePinList(CPinnedChunkArray& pList);
+extern bool pinlib_writePinList(CPinnedChunkArray& pList, bool local);
 
 typedef bool (*PINFUNC)(CPinnedChunk& pin, void* data);
 extern bool pinlib_forEveryPin(CPinnedChunkArray& pList, PINFUNC func, void* data);

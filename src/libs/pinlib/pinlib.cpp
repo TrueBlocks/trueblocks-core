@@ -37,7 +37,7 @@ void pinlib_cleanup(void) {
 
 //----------------------------------------------------------------
 bool pinlib_pinChunk(CPinnedChunkArray& pList, const string_q& fileName, CPinnedChunk& item) {
-    if (!pinlib_readPinList(pList, false)) {
+    if (!pinlib_readPinList(pList, false, true)) {
         return false;
     }
 
@@ -87,12 +87,12 @@ bool pinlib_pinChunk(CPinnedChunkArray& pList, const string_q& fileName, CPinned
 
     // write the array (after sorting it) to the database
     sort(pList.begin(), pList.end());
-    return pinlib_writePinList(pList);
+    return pinlib_writePinList(pList, true);
 }
 
 //---------------------------------------------------------------------------
 bool pinlib_unpinChunk(CPinnedChunkArray& pList, const string_q& fileName, CPinnedChunk& item) {
-    if (!pinlib_readPinList(pList, false))
+    if (!pinlib_readPinList(pList, false, true))
         return false;
 
     // If we don't think it's pinned, Pinata may, so proceed even if not found
@@ -121,12 +121,12 @@ bool pinlib_unpinChunk(CPinnedChunkArray& pList, const string_q& fileName, CPinn
     pList.clear();
     pList = array;
     sort(pList.begin(), pList.end());
-    return pinlib_writePinList(pList);
+    return pinlib_writePinList(pList, true);
 }
 
 //-------------------------------------------------------------------------
 bool pinlib_getChunkByHash(CPinnedChunkArray& pList, const string_q& fileName, CPinnedChunk& item) {
-    if (!pinlib_readPinList(pList, true))
+    if (!pinlib_readPinList(pList, true, true))
         return false;
 
     // If we don't think it's pinned, Pinata may, so proceed even if not found
@@ -147,7 +147,7 @@ bool pinlib_getChunkByHash(CPinnedChunkArray& pList, const string_q& fileName, C
 
 //---------------------------------------------------------------------------
 bool pinlib_findChunk(CPinnedChunkArray& pList, const string_q& fileName, CPinnedChunk& item) {
-    if (!pinlib_readPinList(pList, false))
+    if (!pinlib_readPinList(pList, false, true))
         return false;
 
     CPinnedChunk search;
@@ -165,7 +165,7 @@ bool pinlib_forEveryPin(CPinnedChunkArray& pList, PINFUNC func, void* data) {
     if (!func)
         return false;
 
-    if (!pinlib_readPinList(pList, true))
+    if (!pinlib_readPinList(pList, true, true))
         return false;
 
     for (auto pin : pList) {
@@ -178,7 +178,7 @@ bool pinlib_forEveryPin(CPinnedChunkArray& pList, PINFUNC func, void* data) {
 //--------------------------------------------------------------------------------
 void pinlib_loadPinMaps(CIndexStringMap& fnMap, CIndexHashMap& bloomMap, CIndexHashMap& indexMap) {
     CPinnedChunkArray pinList;
-    if (!pinlib_readPinList(pinList, false))
+    if (!pinlib_readPinList(pinList, false, true))
         return;
 
     for (auto pin : pinList) {
@@ -209,18 +209,19 @@ bool parseOneLine(const char* line, void* data) {
 }
 
 //---------------------------------------------------------------------------
-bool pinlib_readPinList(CPinnedChunkArray& pinArray, bool required) {
+bool pinlib_readPinList(CPinnedChunkArray& pinArray, bool required, bool local) {
     if (!pinArray.empty())
         return true;
-
+    
     string_q binFile = getCachePath("tmp/pins.bin");
     string_q textFile = configPath("manifest/manifest.txt");
+    if (!local) {
+        binFile = getCachePath("tmp/pins_remote.bin");
+        textFile = configPath("manifest/manifest_remote.txt");
+    }
 
     time_q binDate = fileLastModifyDate(binFile);
     time_q textDate = fileLastModifyDate(textFile);
-
-    // LOG8("binDate: ", binDate.Format(FMT_JSON));
-    // LOG8("textDate: ", textDate.Format(FMT_JSON));
 
     if (binDate > textDate && fileExists(binFile)) {
         CArchive pinFile(READING_ARCHIVE);
@@ -240,18 +241,20 @@ bool pinlib_readPinList(CPinnedChunkArray& pinArray, bool required) {
 
     } else {
         pinArray.clear();  // redundant, but fine
-        forEveryLineInAsciiFile(configPath("manifest/manifest.txt"), parseOneLine, &pinArray);
-        LOG4("Done Loading pins");
+        forEveryLineInAsciiFile(textFile, parseOneLine, &pinArray);
+        LOG4("Done loading ", (local ? "local" : "remote"), " pins");
         sort(pinArray.begin(), pinArray.end());
         if (!isTestMode())
-            pinlib_writePinList(pinArray);
+            pinlib_writePinList(pinArray, local);
     }
     return true;
 }
 
 //---------------------------------------------------------------------------
-bool pinlib_writePinList(CPinnedChunkArray& pList) {
+bool pinlib_writePinList(CPinnedChunkArray& pList, bool local) {
     string_q binFile = getCachePath("tmp/pins.bin");
+    if (!local)
+        binFile = getCachePath("tmp/pins_remote.bin");
     establishFolder(binFile);
 
     lockSection();  // disallow control+C until we write both files

@@ -5476,7 +5476,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 81-Other	0xbb9854bfd082c48b4d426ac6a2a152b01326f46f	X3		EtherScan.io			false	false	false	true	false	false
 31-Gitcoin Grants:Friends	0xbb9a5f5c112f6ed889b1c3f0ace6bf0d34d3cea1	a0114301		Gitcoin Website			false	false	false	false	false	false
 81-Other	0xbb9aa47ea51695591a0b1c44c74d17a33ffde5b4	SkillBeatsLuck_id223_cnt19_2mo		Ether Camp			false	false	false	true	false	false
-50-Tokens:ERC20	0xbb9bc244d798123fde783fcc1c72d3bb8c189413	The DAO Original	DAO	On chain	1		false	false	false	true	true	false
+50-Tokens:ERC20	0xbb9bc244d798123fde783fcc1c72d3bb8c189413	The DAO Original		On chain	1		false	false	false	true	true	false
 90-DevCon2:Individual	0xbbaf41e872901aa00be9dd48365b4e87d2933d23	dotnetjunkie		DevCon2 Token Contract			false	false	false	false	false	false
 31-Gitcoin Grants:Friends	0xbbba14a63a97d30d4b1e2fd221ee97bb068fad40	junthebug		Gitcoin Website			false	false	false	false	false	false
 50-Tokens:ERC20	0xbbbbca6a901c926f240b89eacb641d8aec7aeafd	LoopringCoin V2	LRC	On chain	18		false	false	false	true	true	false

@@ -1,6 +1,5 @@
 #include "options.h"
 
-extern bool readLine(const char* line, void* data);
 //----------------------------------------------------------------
 bool COptions::handle_list_local(void) {
     ASSERT(localPins.size());  // local pins have already been loaded

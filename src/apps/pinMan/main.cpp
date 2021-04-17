@@ -15,7 +15,7 @@ int main(int argc, const char* argv[]) {
         if (!options.parseArguments(command))
             return 0;
 
-        pinlib_readPinList(options.localPins, true);
+        pinlib_readPinList(options.localPins, true, options.list.empty() || options.list == "local");
 
         if (once)
             cout << exportPreamble(expContext().fmtMap["header"], "CPinnedChunk");

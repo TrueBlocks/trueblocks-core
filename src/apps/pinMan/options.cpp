@@ -68,6 +68,12 @@ bool COptions::parseArguments(string_q& command) {
     if (Mocked(""))
         return false;
 
+    LOG_INFO("hashToIndexFormatFile:\t", cGreen, hashToIndexFormatFile, cOff);
+    LOG_INFO("hashToBloomFormatFile:\t", cGreen, hashToBloomFormatFile, cOff);
+    LOG_INFO("unchainedIndexAddrV3:\t", cGreen, unchainedIndexAddrV3, cOff);
+    LOG_INFO("unchainedIndexAddr:\t", cGreen, unchainedIndexAddr, cOff);
+    LOG_INFO("manifestHashEncoding:\t", cGreen, manifestHashEncoding, cOff);
+
     if (!list.empty() + compare + init > 1)
         return usage("Please choose only a single option.");
 
@@ -75,11 +81,6 @@ bool COptions::parseArguments(string_q& command) {
         return usage("You must specify at least one option.");
 
     configureDisplay("pinMan", "CPinnedChunk", STR_DISPLAY_PINNEDCHUNK);
-
-    LOG_INFO("hashToIndexFormatFile:\t", cGreen, hashToIndexFormatFile, cOff);
-    LOG_INFO("hashToBloomFormatFile:\t", cGreen, hashToBloomFormatFile, cOff);
-    LOG_INFO("unchainedIndexAddr:\t", cGreen, unchainedIndexAddr, cOff);
-    LOG_INFO("manifestHashEncoding:\t", cGreen, manifestHashEncoding, cOff);
 
     return true;
 }
