@@ -23,6 +23,8 @@ sudo apt install build-essential git cmake python python-dev libcurl3-dev clang-
 ----
 +
 **For Mac**:
+
+We recommend that you run MacOS Big Sur or later for best results.
 +
 [shell]
 ----
