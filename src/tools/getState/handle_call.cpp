@@ -48,11 +48,13 @@ bool COptions::handle_call(void) {
         expContext().exportFmt = JSON1;
         string_q format = STR_DISPLAY_FUNCTION;
         configureDisplay("getState", "CEthState", format.empty() ? STR_DISPLAY_ETHSTATE : format);
-        manageFields(
-            "CParameter:str_default,indexed,internalType,components,no_write,is_pointer,is_array,is_object,is_"
-            "builtin,"
-            "is_minimal,type|CFunction:stateMutability,type,constant|CEthCall:abi_spec",
-            FLD_HIDE);
+
+        string_q paramFields =
+            "str_default,indexed,internalType,components,no_write,is_pointer,is_array,is_object,is_builtin,is_minimal,"
+            "type";
+        manageFields("CParameter:" + paramFields, FLD_HIDE);
+        manageFields("CFunction:stateMutability,type,constant", FLD_HIDE);
+        manageFields("CEthCall:abi_spec", FLD_HIDE);
         manageFields("CFunction:address|CEthState:result,address", FLD_SHOW);
 
         return true;

@@ -212,7 +212,7 @@ bool parseOneLine(const char* line, void* data) {
 bool pinlib_readPinList(CPinnedChunkArray& pinArray, bool required, bool local) {
     if (!pinArray.empty())
         return true;
-    
+
     string_q binFile = getCachePath("tmp/pins.bin");
     string_q textFile = configPath("manifest/manifest.txt");
     if (!local) {

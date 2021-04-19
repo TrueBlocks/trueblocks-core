@@ -14,7 +14,8 @@ bool COptions::handle_init(void) {
             if (!fileExists(getIndexPath(zipFile))) {
                 // download from ipfs gateway
                 ostringstream cmd;
-                cmd << "curl -o " << getIndexPath(zipFile) << " \"http://gateway.ipfs.io/ipfs/" << pin.bloomHash << "\" ";
+                cmd << "curl -o " << getIndexPath(zipFile) << " \"http://gateway.ipfs.io/ipfs/" << pin.bloomHash
+                    << "\" ";
                 // LOG_INFO("Downloading " + zipFile);
                 LOG_INFO("Downloading " + cmd.str());
                 doCommand(cmd.str());
