@@ -6,7 +6,7 @@ on      ,both ,fast  ,pins  ,apps/pinMan ,no_params       ,y    ,
 on      ,both ,fast  ,pins  ,apps/pinMan ,invalid_param_1 ,y    ,junk
 
 on      ,both ,fast  ,pins  ,apps/pinMan ,list_local      ,y    ,list = local
-on      ,both ,fast  ,pins  ,apps/pinMan ,list_remote     ,y    ,list = remote
+off     ,both ,fast  ,pins  ,apps/pinMan ,list_remote     ,y    ,list = remote
 on      ,both ,fast  ,pins  ,apps/pinMan ,freshen_mocked  ,y    ,freshen
 on      ,both ,fast  ,pins  ,apps/pinMan ,compare_mocked  ,y    ,compare
 
