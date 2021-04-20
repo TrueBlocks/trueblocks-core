@@ -34,7 +34,7 @@
 #include "memmap.h"
 #include "rpcresult.h"
 #include "logging.h"
-#include "webapi.h"
 #include "keccak.h"
+#include "apikey.h"
 
 using namespace qblocks;  // NOLINT

@@ -12,10 +12,14 @@
  *-------------------------------------------------------------------------------------------*/
 
 #include "pinlib.h"
+#include "classes/pinatalist.h"
+#include "classes/pinatapin.h"
 
 namespace qblocks {
 
-extern bool pinlib_getFileByHash(const hash_t& hash, const string_q& outFilename);
+extern string_q pinOneFile(const string_q& fileName, const string_q& type);
+extern string_q unpinOneFile(const string_q& hash);
+extern bool parseOneLine(const char* line, void* data);
 #define hashToEmptyFile "QmP4i6ihnVrj8Tx7cTFw4aY6ungpaPYxDJEZ7Vg1RSNSdm"
 
 //-------------------------------------------------------------------------
@@ -24,7 +28,7 @@ void pinlib_init(QUITHANDLER qh) {
     CPinnedChunk::registerClass();
     CPinataPin::registerClass();
     CPinataPinlist::registerClass();
-    CPinApiLicense::registerClass();
+    CApiKey::registerClass();
     CPinataMetadata::registerClass();
     CPinataRegion::registerClass();
     CPinManifest::registerClass();
@@ -35,181 +39,8 @@ void pinlib_cleanup(void) {
     acctlib_cleanup();
 }
 
-//----------------------------------------------------------------
-bool pinlib_pinChunk(CPinnedChunkArray& pList, const string_q& fileName, CPinnedChunk& item) {
-    if (!pinlib_readPinList(pList, false, true)) {
-        return false;
-    }
-
-    // If already pinned, no reason to pin it again...
-    CPinnedChunk copy;
-    if (pinlib_findChunk(pList, fileName, copy)) {
-        LOG_WARN("Pin for blocks ", fileName, " already exists.");
-        item = copy;
-        return true;
-    }
-
-    item.fileName = fileName;
-    string_q indexStr = pinlib_pinOneFile(fileName, "finalized");
-    if (!contains(indexStr, "IpfsHash")) {
-        // LOG_ERR("Could not pin index for blocks ", fileName, " file to Pinata. Quitting...");
-        LOG_ERR("Could not pin index for blocks file to Pinata. Quitting...");
-        return false;
-    }
-
-    replace(indexStr, "IpfsHash", "ipfs_pin_hash");
-    replace(indexStr, "PinSize", "size");
-    replace(indexStr, "Timestamp", "date_pinned");
-    CPinataPin index;
-    index.parseJson3(indexStr);
-    item.indexHash = index.ipfs_pin_hash;
-    blknum_t end;
-    timestamp_t ts;
-    blknum_t start = bnFromPath(fileName, end, ts);
-    LOG_INFO(bBlue, "  Pinned index for blocks ", start, " to ", end, " at ", item.indexHash, cOff);
-
-    string_q bloomStr = pinlib_pinOneFile(fileName, "blooms");
-    if (!contains(bloomStr, "IpfsHash")) {
-        LOG_ERR("Could not pin bloom for blocks ", fileName, " file to Pinata. Quitting...");
-        return false;
-    }
-
-    replace(bloomStr, "IpfsHash", "ipfs_pin_hash");
-    replace(bloomStr, "PinSize", "size");
-    replace(bloomStr, "Timestamp", "date_pinned");
-    CPinataPin bloom;
-    bloom.parseJson3(bloomStr);
-    item.bloomHash = bloom.ipfs_pin_hash;
-    LOG_INFO(bBlue, "  Pinned bloom for blocks ", start, " to ", end, " at ", item.bloomHash, cOff);
-
-    // add it to the array
-    pList.push_back(item);
-
-    // write the array (after sorting it) to the database
-    sort(pList.begin(), pList.end());
-    return pinlib_writePinList(pList, true);
-}
-
 //---------------------------------------------------------------------------
-bool pinlib_unpinChunk(CPinnedChunkArray& pList, const string_q& fileName, CPinnedChunk& item) {
-    if (!pinlib_readPinList(pList, false, true))
-        return false;
-
-    // If we don't think it's pinned, Pinata may, so proceed even if not found
-    CPinnedChunk copy;
-    if (!pinlib_findChunk(pList, fileName, copy)) {
-        item = copy;
-        item.fileName = fileName;
-        // return true;
-    }
-
-    CPinnedChunkArray array;
-    for (auto pin : pList) {
-        if (pin.fileName == fileName) {
-            cout << "Unpinning: " << pin.fileName << endl;
-            pinlib_unpinOneFile(pin.indexHash);
-            pinlib_unpinOneFile(pin.bloomHash);
-            item = pin;
-        } else {
-            cout << "Keeping " << pin.fileName << "\r";
-            cout.flush();
-            array.push_back(pin);
-        }
-    }
-    cout << endl;
-
-    pList.clear();
-    pList = array;
-    sort(pList.begin(), pList.end());
-    return pinlib_writePinList(pList, true);
-}
-
-//-------------------------------------------------------------------------
-bool pinlib_getChunkByHash(CPinnedChunkArray& pList, const string_q& fileName, CPinnedChunk& item) {
-    if (!pinlib_readPinList(pList, true, true))
-        return false;
-
-    // If we don't think it's pinned, Pinata may, so proceed even if not found
-    if (!pinlib_findChunk(pList, fileName, item)) {
-        // return true;
-    }
-
-    // clang-format off
-    string_q fn = fileName + ".bin";
-    pinlib_getFileByHash(item.indexHash, fn + ".gz");
-
-    string_q cmd = "mv " + getCachePath("tmp/" + fn) + " " + indexFolder_finalized + fn;
-    if (system(cmd.c_str())) {}  // Don't remove cruft. Silences compiler warnings
-    // clang-format on
-
-    return true;
-}
-
-//---------------------------------------------------------------------------
-bool pinlib_findChunk(CPinnedChunkArray& pList, const string_q& fileName, CPinnedChunk& item) {
-    if (!pinlib_readPinList(pList, false, true))
-        return false;
-
-    CPinnedChunk search;
-    search.fileName = fileName;
-    const vector<CPinnedChunk>::iterator it = find(pList.begin(), pList.end(), search);
-    if (it != pList.end()) {
-        item = *it;
-        return true;
-    }
-    return false;
-}
-
-//-------------------------------------------------------------------------
-bool pinlib_forEveryPin(CPinnedChunkArray& pList, PINFUNC func, void* data) {
-    if (!func)
-        return false;
-
-    if (!pinlib_readPinList(pList, true, true))
-        return false;
-
-    for (auto pin : pList) {
-        if (!(*func)(pin, data))
-            return false;
-    }
-    return true;
-}
-
-//--------------------------------------------------------------------------------
-void pinlib_loadPinMaps(CIndexStringMap& fnMap, CIndexHashMap& bloomMap, CIndexHashMap& indexMap) {
-    CPinnedChunkArray pinList;
-    if (!pinlib_readPinList(pinList, false, true))
-        return;
-
-    for (auto pin : pinList) {
-        blknum_t num = str_2_Uint(pin.fileName);
-        fnMap[num] = pin.fileName;
-        bloomMap[num] = pin.bloomHash;
-        indexMap[num] = pin.indexHash;
-    }
-}
-
-//---------------------------------------------------------------------------
-bool parseOneLine(const char* line, void* data) {
-    if (isTestMode() && line > string_q("005000000"))
-        return true;
-
-    CPinnedChunkArray* pins = (CPinnedChunkArray*)data;
-    static CStringArray fields;
-    if (fields.empty()) {
-        string_q flds = "fileName,bloomHash,indexHash";
-        explode(fields, flds, ',');
-    }
-
-    CPinnedChunk pin;
-    string_q ln(line);
-    pin.parseCSV(fields, ln);
-    pins->push_back(pin);
-    return true;
-}
-
-//---------------------------------------------------------------------------
-bool pinlib_readPinList(CPinnedChunkArray& pinArray, bool required, bool local) {
+bool pinlib_readPinList(CPinnedChunkArray& pinArray, bool local) {
     if (!pinArray.empty())
         return true;
 
@@ -226,18 +57,15 @@ bool pinlib_readPinList(CPinnedChunkArray& pinArray, bool required, bool local) 
     if (binDate > textDate && fileExists(binFile)) {
         CArchive pinFile(READING_ARCHIVE);
         if (!pinFile.Lock(binFile, modeReadOnly, LOCK_NOWAIT)) {
-            LOG_ERR("Could not open pin file for reading. Quitting...");
+            LOG_ERR("Could not open pin file for reading.");
             return false;
         }
         pinFile >> pinArray;
         pinFile.Release();
 
     } else if (!fileExists(textFile)) {
-        if (required) {
-            LOG_ERR("Pins file is required, but not found. Quitting...");
-            return false;
-        }
-        return true;
+        LOG_ERR("Pins file is required, but not found.");
+        return false;
 
     } else {
         pinArray.clear();  // redundant, but fine
@@ -271,6 +99,167 @@ bool pinlib_writePinList(CPinnedChunkArray& pList, bool local) {
     return true;
 }
 
+//----------------------------------------------------------------
+bool pinlib_pinChunk(CPinnedChunkArray& pList, const string_q& fileName, CPinnedChunk& item) {
+    // If already pinned, no reason to pin it again...
+    CPinnedChunk copy;
+    if (pinlib_findChunk(pList, fileName, copy)) {
+        LOG_WARN("Pin for blocks ", fileName, " already exists.");
+        item = copy;
+        return true;
+    }
+
+    item.fileName = fileName;
+    string_q indexStr = pinOneFile(fileName, "finalized");
+    if (!contains(indexStr, "IpfsHash")) {
+        // LOG_ERR("Could not pin index for blocks ", fileName, " file to Pinata. Quitting...");
+        LOG_ERR("Could not pin index for blocks file to Pinata. Quitting...");
+        return false;
+    }
+
+    replace(indexStr, "IpfsHash", "ipfs_pin_hash");
+    replace(indexStr, "PinSize", "size");
+    replace(indexStr, "Timestamp", "date_pinned");
+    CPinataPin index;
+    index.parseJson3(indexStr);
+    item.indexHash = index.ipfs_pin_hash;
+    blknum_t end;
+    timestamp_t ts;
+    blknum_t start = bnFromPath(fileName, end, ts);
+    LOG_INFO(bBlue, "  Pinned index for blocks ", start, " to ", end, " at ", item.indexHash, cOff);
+
+    string_q bloomStr = pinOneFile(fileName, "blooms");
+    if (!contains(bloomStr, "IpfsHash")) {
+        LOG_ERR("Could not pin bloom for blocks ", fileName, " file to Pinata. Quitting...");
+        return false;
+    }
+
+    replace(bloomStr, "IpfsHash", "ipfs_pin_hash");
+    replace(bloomStr, "PinSize", "size");
+    replace(bloomStr, "Timestamp", "date_pinned");
+    CPinataPin bloom;
+    bloom.parseJson3(bloomStr);
+    item.bloomHash = bloom.ipfs_pin_hash;
+    LOG_INFO(bBlue, "  Pinned bloom for blocks ", start, " to ", end, " at ", item.bloomHash, cOff);
+
+    // add it to the array
+    pList.push_back(item);
+
+    // write the array (after sorting it) to the database
+    sort(pList.begin(), pList.end());
+    return pinlib_writePinList(pList, true);
+}
+
+//---------------------------------------------------------------------------
+bool pinlib_unpinChunk(CPinnedChunkArray& pList, const string_q& fileName, CPinnedChunk& item) {
+    // If we don't think it's pinned, Pinata may, so proceed even if not found
+    CPinnedChunk copy;
+    if (!pinlib_findChunk(pList, fileName, copy)) {
+        item = copy;
+        item.fileName = fileName;
+        // return true;
+    }
+
+    CPinnedChunkArray array;
+    for (auto pin : pList) {
+        if (pin.fileName == fileName) {
+            cout << "Unpinning: " << pin.fileName << endl;
+            unpinOneFile(pin.indexHash);
+            unpinOneFile(pin.bloomHash);
+            item = pin;
+        } else {
+            cout << "Keeping " << pin.fileName << "\r";
+            cout.flush();
+            array.push_back(pin);
+        }
+    }
+    cout << endl;
+
+    pList.clear();
+    pList = array;
+    sort(pList.begin(), pList.end());
+    return pinlib_writePinList(pList, true);
+}
+
+//-------------------------------------------------------------------------
+bool pinlib_getChunkByHash(CPinnedChunkArray& pList, const string_q& fileName, CPinnedChunk& item) {
+    // If we don't think it's pinned, Pinata may, so proceed even if not found
+    if (!pinlib_findChunk(pList, fileName, item)) {
+        // return true;
+    }
+
+    // clang-format off
+    string_q fn = fileName + ".bin";
+
+    ostringstream cmd;
+    cmd << "curl -s ";
+    cmd << "\"https://ipfs.io/ipfs/" << item.indexHash << "\" ";
+    cmd << "--output " << getCachePath("tmp/") << fn << ".gz ; ";
+    if (system(cmd.str().c_str())) {  // NOLINT
+    }                           // Don't remove cruft. Silences compiler warnings
+    cmd.clear();
+    cmd.str("");
+    cmd << "cd " << getCachePath("tmp/") + " ; gunzip *.gz";
+    if (system(cmd.str().c_str())) {  // NOLINT
+    }                           // Don't remove cruft. Silences compiler warnings
+    cmd.clear();
+    cmd.str("");
+    cmd << "mv " << getCachePath("tmp/") << fn << " \"" << indexFolder_finalized << fn << "\"";
+    if (system(cmd.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings
+    // clang-format on
+
+    return true;
+}
+
+//---------------------------------------------------------------------------
+bool pinlib_findChunk(CPinnedChunkArray& pList, const string_q& fileName, CPinnedChunk& item) {
+    if (!pinlib_readPinList(pList, true /* local */))
+        return false;
+
+    CPinnedChunk search;
+    search.fileName = fileName;
+    const vector<CPinnedChunk>::iterator it = find(pList.begin(), pList.end(), search);
+    if (it != pList.end()) {
+        item = *it;
+        return true;
+    }
+    return false;
+}
+
+//-------------------------------------------------------------------------
+bool pinlib_forEveryPin(CPinnedChunkArray& pList, PINFUNC func, void* data) {
+    if (!func)
+        return false;
+
+    if (!pinlib_readPinList(pList, true /* local */))
+        return false;
+
+    for (auto pin : pList) {
+        if (!(*func)(pin, data))
+            return false;
+    }
+    return true;
+}
+
+//---------------------------------------------------------------------------
+bool parseOneLine(const char* line, void* data) {
+    if (isTestMode() && line > string_q("005000000"))
+        return true;
+
+    CPinnedChunkArray* pins = (CPinnedChunkArray*)data;
+    static CStringArray fields;
+    if (fields.empty()) {
+        string_q flds = "fileName,bloomHash,indexHash";
+        explode(fields, flds, ',');
+    }
+
+    CPinnedChunk pin;
+    string_q ln(line);
+    pin.parseCSV(fields, ln);
+    pins->push_back(pin);
+    return true;
+}
+
 //-------------------------------------------------------------------------
 static size_t curlCallback(char* ptr, size_t size, size_t nmemb, void* userdata) {
     string_q part;
@@ -285,11 +274,11 @@ static size_t curlCallback(char* ptr, size_t size, size_t nmemb, void* userdata)
 }
 
 //----------------------------------------------------------------
-string_q pinlib_pinOneFile(const string_q& fileName, const string_q& type) {
+string_q pinOneFile(const string_q& fileName, const string_q& type) {
     LOG4("Starting pin");
 
-    CPinApiLicense lic;
-    if (!pinlib_getApiKeys(lic)) {
+    CApiKey lic;
+    if (!getApiKey(lic)) {
         cerr << "You need to put Pinata API keys in ~/.quickBlocks/blockScrape.toml" << endl;
         return "";
     }
@@ -314,8 +303,8 @@ string_q pinlib_pinOneFile(const string_q& fileName, const string_q& type) {
         curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
         curl_easy_setopt(curl, CURLOPT_DEFAULT_PROTOCOL, "https");
         struct curl_slist* headers = NULL;
-        headers = curl_slist_append(headers, ("pinata_api_key: " + lic.apiKey).c_str());
-        headers = curl_slist_append(headers, ("pinata_secret_api_key: " + lic.secretKey).c_str());
+        headers = curl_slist_append(headers, ("pinata_api_key: " + lic.key).c_str());
+        headers = curl_slist_append(headers, ("pinata_secret_api_key: " + lic.secret).c_str());
         headers = curl_slist_append(headers, "Content-Type: multipart/form-data");
         curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, &result);
@@ -347,11 +336,11 @@ string_q pinlib_pinOneFile(const string_q& fileName, const string_q& type) {
 }
 
 //----------------------------------------------------------------
-string_q pinlib_unpinOneFile(const string_q& hash) {
+string_q unpinOneFile(const string_q& hash) {
     LOG4("Starting unpin");
 
-    CPinApiLicense lic;
-    if (!pinlib_getApiKeys(lic)) {
+    CApiKey lic;
+    if (!getApiKey(lic)) {
         cerr << "You need to put Pinata API keys in ~/.quickBlocks/blockScrape.toml" << endl;
         return "";
     }
@@ -365,8 +354,8 @@ string_q pinlib_unpinOneFile(const string_q& hash) {
         curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
         curl_easy_setopt(curl, CURLOPT_DEFAULT_PROTOCOL, "https");
         struct curl_slist* headers = NULL;
-        headers = curl_slist_append(headers, ("pinata_api_key: " + lic.apiKey).c_str());
-        headers = curl_slist_append(headers, ("pinata_secret_api_key: " + lic.secretKey).c_str());
+        headers = curl_slist_append(headers, ("pinata_api_key: " + lic.key).c_str());
+        headers = curl_slist_append(headers, ("pinata_secret_api_key: " + lic.secret).c_str());
         headers = curl_slist_append(headers, "Content-Type: application/json");
         curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, &result);
@@ -382,77 +371,6 @@ string_q pinlib_unpinOneFile(const string_q& hash) {
     else
         LOG_INFO("Finishing unpin: ", result);
     return result;
-}
-
-//----------------------------------------------------------------
-bool pinlib_getApiKeys(CPinApiLicense& lic) {
-    lic.apiKey = getGlobalConfig("blockScrape")->getConfigStr("settings", "pinata_api_key", "<notset>");
-    lic.secretKey = getGlobalConfig("blockScrape")->getConfigStr("settings", "pinata_secret_api_key", "<notset>");
-    if (isTestMode())
-        lic.apiKey = lic.secretKey = "--license_codes--";
-    return (lic.apiKey != "<notset>" && lic.secretKey != "<notset>");
-}
-
-//---------------------------------------------------------------------------
-// Assumes the license is valid
-bool pinlib_getPinList(const CPinApiLicense& lic, string& result) {
-    result = "";
-    result.clear();
-
-    bool ret = true;  // assume success
-
-    CURL* curl;
-    curl = curl_easy_init();  // TODO(tjayrush): Creating and destroying curl context is slow
-    if (!curl) {
-        curl_easy_cleanup(curl);
-        result = "Could not open curl context";
-        ret = false;
-    } else {
-        curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST, "GET");
-        // TODO(tjayrush): This has pagination, I just didn't notice it
-        curl_easy_setopt(curl, CURLOPT_URL, "https://api.pinata.cloud/data/pinList?status=pinned");
-        curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
-        curl_easy_setopt(curl, CURLOPT_DEFAULT_PROTOCOL, "https");
-        struct curl_slist* headers = NULL;
-        headers = curl_slist_append(headers, ("pinata_api_key: " + lic.apiKey).c_str());
-        headers = curl_slist_append(headers, ("pinata_secret_api_key: " + lic.secretKey).c_str());
-        curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
-        curl_easy_setopt(curl, CURLOPT_WRITEDATA, &result);
-        curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, curlCallback);
-        CURLcode res = curl_easy_perform(curl);
-        if (res != 0) {
-            curl_easy_cleanup(curl);
-            result = curl_easy_strerror(res);
-            ret = false;
-        }
-    }
-    curl_easy_cleanup(curl);
-    if (!ret)  // if we already have an error
-        return ret;
-
-    if (result.empty()) {
-        result = "No result";
-        return false;
-    }
-
-    return true;
-}
-
-//-------------------------------------------------------------------------
-bool pinlib_getFileByHash(const hash_t& hash,
-                          const string_q& outFilename) {  // also unzips if the file is zipped
-    string_q cmd = "curl -s ";
-    cmd += "\"https://ipfs.io/ipfs/" + hash + "\" ";
-    cmd += "--output " + getCachePath("tmp/") + outFilename + " ; ";
-    if (system(cmd.c_str())) {  // NOLINT
-    }                           // Don't remove cruft. Silences compiler warnings
-    if (endsWith(outFilename, ".gz")) {
-        cmd = "cd " + getCachePath("tmp/") + " ; gunzip *.gz";
-        if (system(cmd.c_str())) {  // NOLINT
-        }                           // Don't remove cruft. Silences compiler warnings
-    }
-
-    return fileExists(substitute(outFilename, ".gz", ""));
 }
 
 }  // namespace qblocks

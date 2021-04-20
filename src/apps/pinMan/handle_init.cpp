@@ -6,7 +6,7 @@ bool COptions::handle_init(void) {
         return usage("Could not freshen remote pin data");
 
     CPinnedChunkArray remotePins;
-    pinlib_readPinList(remotePins, true, false);
+    pinlib_readPinList(remotePins, false /* local */);
     for (auto pin : remotePins) {
         string_q outFile = "blooms/" + pin.fileName + ".bloom";
         if (!fileExists(getIndexPath(outFile))) {

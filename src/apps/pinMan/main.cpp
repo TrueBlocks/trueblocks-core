@@ -1,4 +1,3 @@
-#include "pinlib.h"
 #include "options.h"
 
 //----------------------------------------------------------------
@@ -15,7 +14,7 @@ int main(int argc, const char* argv[]) {
         if (!options.parseArguments(command))
             return 0;
 
-        pinlib_readPinList(options.localPins, true, options.list.empty() || options.list == "local");
+        pinlib_readPinList(options.localPins, options.list.empty() || options.list == "local");
 
         if (once)
             cout << exportPreamble(expContext().fmtMap["header"], "CPinnedChunk");
@@ -44,43 +43,3 @@ int main(int argc, const char* argv[]) {
 
     return 0;
 }
-
-//----------------------------------------------------------------
-// void COptions::handle_pin(void) {
-// LOG8("Handle pin: ", pin);
-
-// string_q pins;
-// if (!pinlib_getPinList(lic, pins)) {
-//     usageStr(pins + ".");
-//     return;
-// }
-// cout << pins << endl;
-// }
-
-//----------------------------------------------------------------
-// void COptions::handle_unpin(void) {
-// LOG8("Handle unpin: ", unpin);
-
-// string_q pins;
-// if (!pinlib_getPinList(lic, pins)) {
-//     usageStr(pins + ".");
-//     return;
-// }
-
-// CPinataPinlist pinList;
-// pinList.parseJson3(pins);
-// while (str_2_Uint(pinList.count) != 0) {
-//     cout << pinList.count << endl;
-//     for (auto thePin : pinList.rows) {
-//         cout << "Unpinning " << thePin.metadata.name << ": " << thePin.ipfs_pin_hash << " ";
-//         pinlib_unpinOneFile(thePin.ipfs_pin_hash);
-//         usleep(1000000);
-//     }
-//     usleep(300000);
-//     pins = "";
-//     pins.clear();
-//     pinlib_getPinList(lic, pins);
-//     pinList = CPinataPinlist();
-//     pinList.parseJson3(pins);
-// }
-// }

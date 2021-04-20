@@ -1,9 +1,0 @@
-[settings]
-class = CPinApiLicense
-fields = string apiKey|\
-    string secretKey
-includes = utillib.h
-cpp_includes =
-serializable = true
-equals = (apiKey == it.apiKey)
-display_str = apiKey, secretKey

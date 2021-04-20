@@ -143,7 +143,7 @@ bool COptions::parseArguments(string_q& command) {
     if (sleep < .5)
         sleep = .5;
 
-    if (pin && !pinlib_getApiKeys(lic)) {
+    if (pin && !getApiKey(lic)) {
         if (!isTestMode()) {
             ostringstream os;
             os << "The --pin option requires you to have a Pinata key.";

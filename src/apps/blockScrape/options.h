@@ -40,7 +40,7 @@ class COptions : public COptionsBase {
     timestamp_t latestBlockTs;
     blknum_t latestBlockNum;
     CPinnedChunkArray pinList;
-    CPinApiLicense lic;
+    CApiKey lic;
 
     COptions(void);
     ~COptions(void);

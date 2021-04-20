@@ -14,26 +14,26 @@
  * This file was generated with makeClass. Edit only those parts of the code inside
  * of 'EXISTING_CODE' tags.
  */
-#include "pinapilicense.h"
+#include "apikey.h"
 
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CPinApiLicense, CBaseNode);
+IMPLEMENT_NODE(CApiKey, CBaseNode);
 
 //---------------------------------------------------------------------------
-static string_q nextPinapilicenseChunk(const string_q& fieldIn, const void* dataPtr);
-static string_q nextPinapilicenseChunk_custom(const string_q& fieldIn, const void* dataPtr);
+static string_q nextApikeyChunk(const string_q& fieldIn, const void* dataPtr);
+static string_q nextApikeyChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
-void CPinApiLicense::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
+void CApiKey::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
     if (!m_showing)
         return;
 
     // EXISTING_CODE
     // EXISTING_CODE
 
-    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["pinapilicense_fmt"] : fmtIn);
+    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["apikey_fmt"] : fmtIn);
     if (fmt.empty()) {
         if (expContext().exportFmt == YAML1) {
             toYaml(ctx);
@@ -47,13 +47,13 @@ void CPinApiLicense::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) 
     // EXISTING_CODE
 
     while (!fmt.empty())
-        ctx << getNextChunk(fmt, nextPinapilicenseChunk, this);
+        ctx << getNextChunk(fmt, nextApikeyChunk, this);
 }
 
 //---------------------------------------------------------------------------
-string_q nextPinapilicenseChunk(const string_q& fieldIn, const void* dataPtr) {
+string_q nextApikeyChunk(const string_q& fieldIn, const void* dataPtr) {
     if (dataPtr)
-        return reinterpret_cast<const CPinApiLicense*>(dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CApiKey*>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -62,9 +62,9 @@ string_q nextPinapilicenseChunk(const string_q& fieldIn, const void* dataPtr) {
 }
 
 //---------------------------------------------------------------------------
-string_q CPinApiLicense::getValueByName(const string_q& fieldName) const {
+string_q CApiKey::getValueByName(const string_q& fieldName) const {
     // Give customized code a chance to override first
-    string_q ret = nextPinapilicenseChunk_custom(fieldName, this);
+    string_q ret = nextApikeyChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
@@ -73,14 +73,14 @@ string_q CPinApiLicense::getValueByName(const string_q& fieldName) const {
 
     // Return field values
     switch (tolower(fieldName[0])) {
-        case 'a':
-            if (fieldName % "apiKey") {
-                return apiKey;
+        case 'k':
+            if (fieldName % "key") {
+                return key;
             }
             break;
         case 's':
-            if (fieldName % "secretKey") {
-                return secretKey;
+            if (fieldName % "secret") {
+                return secret;
             }
             break;
         default:
@@ -95,7 +95,7 @@ string_q CPinApiLicense::getValueByName(const string_q& fieldName) const {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CPinApiLicense::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
+bool CApiKey::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
     string_q fieldName = fieldNameIn;
     string_q fieldValue = fieldValueIn;
 
@@ -103,15 +103,15 @@ bool CPinApiLicense::setValueByName(const string_q& fieldNameIn, const string_q&
     // EXISTING_CODE
 
     switch (tolower(fieldName[0])) {
-        case 'a':
-            if (fieldName % "apiKey") {
-                apiKey = fieldValue;
+        case 'k':
+            if (fieldName % "key") {
+                key = fieldValue;
                 return true;
             }
             break;
         case 's':
-            if (fieldName % "secretKey") {
-                secretKey = fieldValue;
+            if (fieldName % "secret") {
+                secret = fieldValue;
                 return true;
             }
             break;
@@ -122,13 +122,13 @@ bool CPinApiLicense::setValueByName(const string_q& fieldNameIn, const string_q&
 }
 
 //---------------------------------------------------------------------------------------------------
-void CPinApiLicense::finishParse() {
+void CApiKey::finishParse() {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CPinApiLicense::Serialize(CArchive& archive) {
+bool CApiKey::Serialize(CArchive& archive) {
     if (archive.isWriting())
         return SerializeC(archive);
 
@@ -140,27 +140,27 @@ bool CPinApiLicense::Serialize(CArchive& archive) {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive >> apiKey;
-    archive >> secretKey;
+    archive >> key;
+    archive >> secret;
     finishParse();
     return true;
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CPinApiLicense::SerializeC(CArchive& archive) const {
+bool CApiKey::SerializeC(CArchive& archive) const {
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive << apiKey;
-    archive << secretKey;
+    archive << key;
+    archive << secret;
 
     return true;
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, CPinApiLicenseArray& array) {
+CArchive& operator>>(CArchive& archive, CApiKeyArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -172,7 +172,7 @@ CArchive& operator>>(CArchive& archive, CPinApiLicenseArray& array) {
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator<<(CArchive& archive, const CPinApiLicenseArray& array) {
+CArchive& operator<<(CArchive& archive, const CApiKeyArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0; i < array.size(); i++)
@@ -181,42 +181,42 @@ CArchive& operator<<(CArchive& archive, const CPinApiLicenseArray& array) {
 }
 
 //---------------------------------------------------------------------------
-void CPinApiLicense::registerClass(void) {
+void CApiKey::registerClass(void) {
     // only do this once
-    if (HAS_FIELD(CPinApiLicense, "schema"))
+    if (HAS_FIELD(CApiKey, "schema"))
         return;
 
     size_t fieldNum = 1000;
-    ADD_FIELD(CPinApiLicense, "schema", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CPinApiLicense, "deleted", T_BOOL, ++fieldNum);
-    ADD_FIELD(CPinApiLicense, "showing", T_BOOL, ++fieldNum);
-    ADD_FIELD(CPinApiLicense, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CPinApiLicense, "apiKey", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CPinApiLicense, "secretKey", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CApiKey, "schema", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CApiKey, "deleted", T_BOOL, ++fieldNum);
+    ADD_FIELD(CApiKey, "showing", T_BOOL, ++fieldNum);
+    ADD_FIELD(CApiKey, "cname", T_TEXT, ++fieldNum);
+    ADD_FIELD(CApiKey, "key", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CApiKey, "secret", T_TEXT | TS_OMITEMPTY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
-    HIDE_FIELD(CPinApiLicense, "schema");
-    HIDE_FIELD(CPinApiLicense, "deleted");
-    HIDE_FIELD(CPinApiLicense, "showing");
-    HIDE_FIELD(CPinApiLicense, "cname");
+    HIDE_FIELD(CApiKey, "schema");
+    HIDE_FIELD(CApiKey, "deleted");
+    HIDE_FIELD(CApiKey, "showing");
+    HIDE_FIELD(CApiKey, "cname");
 
-    builtIns.push_back(_biCPinApiLicense);
+    builtIns.push_back(_biCApiKey);
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------
-string_q nextPinapilicenseChunk_custom(const string_q& fieldIn, const void* dataPtr) {
-    const CPinApiLicense* pin = reinterpret_cast<const CPinApiLicense*>(dataPtr);
-    if (pin) {
+string_q nextApikeyChunk_custom(const string_q& fieldIn, const void* dataPtr) {
+    const CApiKey* api = reinterpret_cast<const CApiKey*>(dataPtr);
+    if (api) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if (fieldIn % "parsed")
-                    return nextBasenodeChunk(fieldIn, pin);
+                    return nextBasenodeChunk(fieldIn, api);
                 // EXISTING_CODE
                 // EXISTING_CODE
                 break;
@@ -230,7 +230,7 @@ string_q nextPinapilicenseChunk_custom(const string_q& fieldIn, const void* data
 }
 
 //---------------------------------------------------------------------------
-bool CPinApiLicense::readBackLevel(CArchive& archive) {
+bool CApiKey::readBackLevel(CArchive& archive) {
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -238,19 +238,19 @@ bool CPinApiLicense::readBackLevel(CArchive& archive) {
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator<<(CArchive& archive, const CPinApiLicense& pin) {
-    pin.SerializeC(archive);
+CArchive& operator<<(CArchive& archive, const CApiKey& api) {
+    api.SerializeC(archive);
     return archive;
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, CPinApiLicense& pin) {
-    pin.Serialize(archive);
+CArchive& operator>>(CArchive& archive, CApiKey& api) {
+    api.Serialize(archive);
     return archive;
 }
 
 //-------------------------------------------------------------------------
-ostream& operator<<(ostream& os, const CPinApiLicense& it) {
+ostream& operator<<(ostream& os, const CApiKey& it) {
     // EXISTING_CODE
     // EXISTING_CODE
 
@@ -260,11 +260,35 @@ ostream& operator<<(ostream& os, const CPinApiLicense& it) {
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_PINAPILICENSE =
-    "[{APIKEY}]\t"
-    "[{SECRETKEY}]";
+const char* STR_DISPLAY_APIKEY =
+    "[{KEY}]\t"
+    "[{SECRET}]";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
+//--------------------------------------------------------------------------------
+string_q getApiKey(const string_q& apiName, const string_q& signup) {
+    string_q key = getGlobalConfig("")->getConfigStr("settings", toLower(apiName) + "_key", "<NOT_SET>");
+    if (!key.empty() && key != "<NOT_SET>")
+        return key;
+
+    char buffer[256];
+    bzero(buffer, sizeof(buffer));
+
+    const char* STR_ERROR_NOKEY = "This program requires an api_key from `[APINAME]`. See `[SIGNUP]`.";
+    errorMessage(substitute(substitute(STR_ERROR_NOKEY, "[APINAME]", apiName), "[SIGNUP]", signup));
+    quickQuitHandler(0);
+
+    return "";
+}
+
+//--------------------------------------------------------------------------------
+bool getApiKey(CApiKey& lic) {
+    lic.key = getGlobalConfig("blockScrape")->getConfigStr("settings", "pinata_api_key", "<notset>");
+    lic.secret = getGlobalConfig("blockScrape")->getConfigStr("settings", "pinata_secret_api_key", "<notset>");
+    if (isTestMode())
+        lic.key = lic.secret = "--license_codes--";
+    return (lic.key != "<notset>" && lic.secret != "<notset>");
+}
 // EXISTING_CODE
 }  // namespace qblocks

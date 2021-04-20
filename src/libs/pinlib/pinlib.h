@@ -13,33 +13,25 @@
  *-------------------------------------------------------------------------------------------*/
 #include "acctlib.h"
 
-#include "pinapilicense.h"
-#include "pinnedchunk.h"
-#include "pinatalist.h"
-#include "pinatapin.h"
-#include "manifest.h"
+#include "classes/pinnedchunk.h"
+#include "classes/manifest.h"
 
 namespace qblocks {
 
 extern void pinlib_init(QUITHANDLER qh);
 extern void pinlib_cleanup(void);
 
-extern bool pinlib_getApiKeys(CPinApiLicense& lic);
-extern bool pinlib_getPinList(const CPinApiLicense& lic, string_q& result);
-extern bool pinlib_readPinList(CPinnedChunkArray& pList, bool required, bool local);
-extern void pinlib_loadPinMaps(CIndexStringMap& fnMap, CIndexHashMap& bloomMap, CIndexHashMap& indexMap);
+extern bool pinlib_readPinList(CPinnedChunkArray& pList, bool local);
 extern bool pinlib_writePinList(CPinnedChunkArray& pList, bool local);
+
+extern bool pinlib_pinChunk(CPinnedChunkArray& pList, const string_q& fn, CPinnedChunk& item);
+extern bool pinlib_unpinChunk(CPinnedChunkArray& pList, const string_q& fn, CPinnedChunk& item);
+
+extern bool pinlib_getChunkByHash(CPinnedChunkArray& pList, const string_q& fn, CPinnedChunk& item);
+extern bool pinlib_findChunk(CPinnedChunkArray& pList, const string_q& fn, CPinnedChunk& item);
 
 typedef bool (*PINFUNC)(CPinnedChunk& pin, void* data);
 extern bool pinlib_forEveryPin(CPinnedChunkArray& pList, PINFUNC func, void* data);
-
-extern bool pinlib_pinChunk(CPinnedChunkArray& pList, const string_q& fileName, CPinnedChunk& item);
-extern bool pinlib_unpinChunk(CPinnedChunkArray& pList, const string_q& fileName, CPinnedChunk& item);
-extern bool pinlib_getChunkByHash(CPinnedChunkArray& pList, const string_q& fileName, CPinnedChunk& item);
-extern bool pinlib_findChunk(CPinnedChunkArray& pList, const string_q& fileName, CPinnedChunk& item);
-
-extern string_q pinlib_pinOneFile(const string_q& fileName, const string_q& type);
-extern string_q pinlib_unpinOneFile(const string_q& hash);
 
 }  // namespace qblocks
 

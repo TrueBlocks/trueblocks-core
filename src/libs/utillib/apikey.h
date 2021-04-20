@@ -23,32 +23,32 @@ namespace qblocks {
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class CPinApiLicense : public CBaseNode {
+class CApiKey : public CBaseNode {
   public:
-    string_q apiKey;
-    string_q secretKey;
+    string_q key;
+    string_q secret;
 
   public:
-    CPinApiLicense(void);
-    CPinApiLicense(const CPinApiLicense& pi);
-    virtual ~CPinApiLicense(void);
-    CPinApiLicense& operator=(const CPinApiLicense& pi);
+    CApiKey(void);
+    CApiKey(const CApiKey& ap);
+    virtual ~CApiKey(void);
+    CApiKey& operator=(const CApiKey& ap);
 
-    DECLARE_NODE(CPinApiLicense);
+    DECLARE_NODE(CApiKey);
 
     // EXISTING_CODE
     // EXISTING_CODE
-    bool operator==(const CPinApiLicense& it) const;
-    bool operator!=(const CPinApiLicense& it) const {
+    bool operator==(const CApiKey& it) const;
+    bool operator!=(const CApiKey& it) const {
         return !operator==(it);
     }
-    friend bool operator<(const CPinApiLicense& v1, const CPinApiLicense& v2);
-    friend ostream& operator<<(ostream& os, const CPinApiLicense& it);
+    friend bool operator<(const CApiKey& v1, const CApiKey& v2);
+    friend ostream& operator<<(ostream& os, const CApiKey& it);
 
   protected:
     void clear(void);
     void initialize(void);
-    void duplicate(const CPinApiLicense& pi);
+    void duplicate(const CApiKey& ap);
     bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
@@ -56,76 +56,76 @@ class CPinApiLicense : public CBaseNode {
 };
 
 //--------------------------------------------------------------------------
-inline CPinApiLicense::CPinApiLicense(void) {
+inline CApiKey::CApiKey(void) {
     initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CPinApiLicense::CPinApiLicense(const CPinApiLicense& pi) {
+inline CApiKey::CApiKey(const CApiKey& ap) {
     // EXISTING_CODE
     // EXISTING_CODE
-    duplicate(pi);
+    duplicate(ap);
 }
 
 // EXISTING_CODE
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline CPinApiLicense::~CPinApiLicense(void) {
+inline CApiKey::~CApiKey(void) {
     clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CPinApiLicense::clear(void) {
+inline void CApiKey::clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CPinApiLicense::initialize(void) {
+inline void CApiKey::initialize(void) {
     CBaseNode::initialize();
 
-    apiKey = "";
-    secretKey = "";
+    key = "";
+    secret = "";
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CPinApiLicense::duplicate(const CPinApiLicense& pi) {
+inline void CApiKey::duplicate(const CApiKey& ap) {
     clear();
-    CBaseNode::duplicate(pi);
+    CBaseNode::duplicate(ap);
 
-    apiKey = pi.apiKey;
-    secretKey = pi.secretKey;
+    key = ap.key;
+    secret = ap.secret;
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CPinApiLicense& CPinApiLicense::operator=(const CPinApiLicense& pi) {
-    duplicate(pi);
+inline CApiKey& CApiKey::operator=(const CApiKey& ap) {
+    duplicate(ap);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
 //-------------------------------------------------------------------------
-inline bool CPinApiLicense::operator==(const CPinApiLicense& it) const {
+inline bool CApiKey::operator==(const CApiKey& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // Equality operator as defined in class definition
-    return (apiKey == it.apiKey);
+    return (key == it.key);
 }
 
 //-------------------------------------------------------------------------
-inline bool operator<(const CPinApiLicense& v1, const CPinApiLicense& v2) {
+inline bool operator<(const CApiKey& v1, const CApiKey& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default sort defined in class definition, assume already sorted, preserve ordering
@@ -133,18 +133,21 @@ inline bool operator<(const CPinApiLicense& v1, const CPinApiLicense& v2) {
 }
 
 //---------------------------------------------------------------------------
-typedef vector<CPinApiLicense> CPinApiLicenseArray;
-extern CArchive& operator>>(CArchive& archive, CPinApiLicenseArray& array);
-extern CArchive& operator<<(CArchive& archive, const CPinApiLicenseArray& array);
+typedef vector<CApiKey> CApiKeyArray;
+extern CArchive& operator>>(CArchive& archive, CApiKeyArray& array);
+extern CArchive& operator<<(CArchive& archive, const CApiKeyArray& array);
 
 //---------------------------------------------------------------------------
-extern CArchive& operator<<(CArchive& archive, const CPinApiLicense& pin);
-extern CArchive& operator>>(CArchive& archive, CPinApiLicense& pin);
+extern CArchive& operator<<(CArchive& archive, const CApiKey& api);
+extern CArchive& operator>>(CArchive& archive, CApiKey& api);
 
 //---------------------------------------------------------------------------
-extern const char* STR_DISPLAY_PINAPILICENSE;
+extern const char* STR_DISPLAY_APIKEY;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
+//----------------------------------------------------------------
+extern bool getApiKey(CApiKey& lic);
+extern string_q getApiKey(const string_q& apiName, const string_q& signup);
 // EXISTING_CODE
 }  // namespace qblocks
