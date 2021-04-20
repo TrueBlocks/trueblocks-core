@@ -76,6 +76,9 @@
       "tags": "35-Pool Together"
     },
     {
+      "tags": "35-TheCyber:Friends"
+    },
+    {
       "tags": "36-Balancer"
     },
     {

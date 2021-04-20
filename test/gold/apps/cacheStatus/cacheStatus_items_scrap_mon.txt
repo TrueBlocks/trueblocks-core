@@ -27,7 +27,9 @@ cacheStatus --details index --start 1000000 --end 2200000
           "filename": "/--index-path--/000864333-001076298.bin",
           "fileDate": "1700-01-01 00:00:01 UTC",
           "indexSizeBytes": 18268376,
-          "bloomSizeBytes": 262156
+          "index_hash": "QmU3...hCqv",
+          "bloomSizeBytes": 262156,
+          "bloom_hash": "QmTD...vHVv"
         },
         {
           "type": "CIndexCacheItem",
@@ -40,7 +42,9 @@ cacheStatus --details index --start 1000000 --end 2200000
           "filename": "/--index-path--/001076299-001229769.bin",
           "fileDate": "1700-01-01 00:00:01 UTC",
           "indexSizeBytes": 18376332,
-          "bloomSizeBytes": 262156
+          "index_hash": "QmUy...Es7j",
+          "bloomSizeBytes": 262156,
+          "bloom_hash": "Qmb5...mxyQ"
         },
         {
           "type": "CIndexCacheItem",
@@ -53,7 +57,9 @@ cacheStatus --details index --start 1000000 --end 2200000
           "filename": "/--index-path--/001229770-001371352.bin",
           "fileDate": "1700-01-01 00:00:01 UTC",
           "indexSizeBytes": 17737464,
-          "bloomSizeBytes": 262156
+          "index_hash": "QmV6...2tjE",
+          "bloomSizeBytes": 262156,
+          "bloom_hash": "QmW8...h7CP"
         },
         {
           "type": "CIndexCacheItem",
@@ -66,7 +72,9 @@ cacheStatus --details index --start 1000000 --end 2200000
           "filename": "/--index-path--/001371353-001504328.bin",
           "fileDate": "1700-01-01 00:00:01 UTC",
           "indexSizeBytes": 18186200,
-          "bloomSizeBytes": 262156
+          "index_hash": "QmeH...pTF5",
+          "bloomSizeBytes": 262156,
+          "bloom_hash": "QmSE...DN2B"
         },
         {
           "type": "CIndexCacheItem",
@@ -79,7 +87,9 @@ cacheStatus --details index --start 1000000 --end 2200000
           "filename": "/--index-path--/001504329-001613033.bin",
           "fileDate": "1700-01-01 00:00:01 UTC",
           "indexSizeBytes": 19273504,
-          "bloomSizeBytes": 393232
+          "index_hash": "QmTX...MnNL",
+          "bloomSizeBytes": 393232,
+          "bloom_hash": "QmSW...XFk7"
         },
         {
           "type": "CIndexCacheItem",
@@ -92,7 +102,9 @@ cacheStatus --details index --start 1000000 --end 2200000
           "filename": "/--index-path--/001613034-001729008.bin",
           "fileDate": "1700-01-01 00:00:01 UTC",
           "indexSizeBytes": 19733288,
-          "bloomSizeBytes": 393232
+          "index_hash": "Qmf9...M1i8",
+          "bloomSizeBytes": 393232,
+          "bloom_hash": "Qma5...E3UF"
         },
         {
           "type": "CIndexCacheItem",
@@ -105,7 +117,9 @@ cacheStatus --details index --start 1000000 --end 2200000
           "filename": "/--index-path--/001729009-001848054.bin",
           "fileDate": "1700-01-01 00:00:01 UTC",
           "indexSizeBytes": 19451020,
-          "bloomSizeBytes": 393232
+          "index_hash": "QmQb...jay8",
+          "bloomSizeBytes": 393232,
+          "bloom_hash": "Qmcr...ir91"
         },
         {
           "type": "CIndexCacheItem",
@@ -118,7 +132,9 @@ cacheStatus --details index --start 1000000 --end 2200000
           "filename": "/--index-path--/001848055-001963090.bin",
           "fileDate": "1700-01-01 00:00:01 UTC",
           "indexSizeBytes": 19880132,
-          "bloomSizeBytes": 393232
+          "index_hash": "QmeD...WvHV",
+          "bloomSizeBytes": 393232,
+          "bloom_hash": "QmQZ...4464"
         },
         {
           "type": "CIndexCacheItem",
@@ -131,7 +147,9 @@ cacheStatus --details index --start 1000000 --end 2200000
           "filename": "/--index-path--/001963091-002067748.bin",
           "fileDate": "1700-01-01 00:00:01 UTC",
           "indexSizeBytes": 18933576,
-          "bloomSizeBytes": 393232
+          "index_hash": "QmYH...eQhv",
+          "bloomSizeBytes": 393232,
+          "bloom_hash": "QmVW...XzyW"
         },
         {
           "type": "CIndexCacheItem",
@@ -144,7 +162,9 @@ cacheStatus --details index --start 1000000 --end 2200000
           "filename": "/--index-path--/002067749-002172337.bin",
           "fileDate": "1700-01-01 00:00:01 UTC",
           "indexSizeBytes": 18301884,
-          "bloomSizeBytes": 262156
+          "index_hash": "QmdS...Be58",
+          "bloomSizeBytes": 262156,
+          "bloom_hash": "QmQW...aM4g"
         },
         {
           "type": "CIndexCacheItem",
@@ -157,7 +177,9 @@ cacheStatus --details index --start 1000000 --end 2200000
           "filename": "/--index-path--/002172338-002269847.bin",
           "fileDate": "1700-01-01 00:00:01 UTC",
           "indexSizeBytes": 18536336,
-          "bloomSizeBytes": 262156
+          "index_hash": "QmSZ...BEHU",
+          "bloomSizeBytes": 262156,
+          "bloom_hash": "QmXi...Ss3E"
         }
       ],
       "type": "CIndexCache",

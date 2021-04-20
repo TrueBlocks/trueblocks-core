@@ -31,9 +31,9 @@
               "filename": "/--index-path--/002900001-003000000.bin",
               "fileDate": "1700-01-01 00:00:01 UTC",
               "indexSizeBytes": 17687356,
-              "index_hash": "",
+              "index_hash": "QmUh...YPjK",
               "bloomSizeBytes": 262156,
-              "bloom_hash": ""
+              "bloom_hash": "QmUd...oSQ9"
             },
             {
               "type": "CIndexCacheItem",
@@ -46,9 +46,9 @@
               "filename": "/--index-path--/003000001-003100000.bin",
               "fileDate": "1700-01-01 00:00:01 UTC",
               "indexSizeBytes": 17844020,
-              "index_hash": "",
+              "index_hash": "QmQ8...J25a",
               "bloomSizeBytes": 262156,
-              "bloom_hash": ""
+              "bloom_hash": "QmYP...2MMS"
             }
           ],
           "type": "CIndexCache",

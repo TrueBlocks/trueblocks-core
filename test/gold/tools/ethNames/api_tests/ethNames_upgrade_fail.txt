@@ -397,6 +397,15 @@
       "description": ""
     },
     {
+      "tags": "35-TheCyber:Friends",
+      "address": "0x008f82676a606a6783716037c256a7df23746145",
+      "name": "Name 0x008f8267",
+      "symbol": "",
+      "source": "Solidity Code",
+      "decimals": 0,
+      "description": ""
+    },
+    {
       "tags": "50-Tokens:ERC20",
       "address": "0x009e864923b49263c7f10d19b7f8ab7a9a5aad33",
       "name": "Knoxstertoken",
@@ -404,6 +413,15 @@
       "source": "On chain",
       "decimals": 18,
       "description": "FortKnoxster offers end-to-end encrypted inbox, chat, decentralized storage, calling, video conferencing, voice messages and much more."
+    },
+    {
+      "tags": "35-TheCyber:Friends",
+      "address": "0x00aa972319ddf819140ffe2a991c49a1bff54bad",
+      "name": "Name 0x00aa9723",
+      "symbol": "",
+      "source": "Solidity Code",
+      "decimals": 0,
+      "description": ""
     },
     {
       "tags": "31-Gitcoin Grants:Grant",
@@ -1045,6 +1063,15 @@
       "description": "Biotron is a fully transparent personal data analytics platform on blockchain."
     },
     {
+      "tags": "35-TheCyber:Friends",
+      "address": "0x03d47eca8d1d4c29a73318c3b1373614b3fe14bc",
+      "name": "Name 0x03d47eca",
+      "symbol": "",
+      "source": "Solidity Code",
+      "decimals": 0,
+      "description": ""
+    },
+    {
       "tags": "31-Gitcoin Grants:Friends",
       "address": "0x03ea9f51913a2a40a2c37e70700102486acf6c40",
       "name": "Name 0x03ea9f51",
@@ -1131,6 +1158,15 @@
       "name": "Totle Bancor Wrapper",
       "symbol": "",
       "source": "0xTracker",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "35-TheCyber:Friends",
+      "address": "0x047f57b4fe5f5f8f536f48d7ee464893b4411e92",
+      "name": "Name 0x047f57b4",
+      "symbol": "",
+      "source": "Solidity Code",
       "decimals": 0,
       "description": ""
     },
@@ -1772,42 +1808,6 @@
       "source": "On chain",
       "decimals": 18,
       "description": ""
-    },
-    {
-      "tags": "50-Tokens:ERC20",
-      "address": "0x0766e79a6fd74469733e8330b3b461c0320ff059",
-      "name": "EXN",
-      "symbol": "EXN",
-      "source": "On chain",
-      "decimals": 18,
-      "description": ""
-    },
-    {
-      "tags": "50-Tokens:ERC20",
-      "address": "0x076a93a40bf9e0d21d3f75dd1e0584ddbe0f9d1a",
-      "name": "Qurito",
-      "symbol": "QURO",
-      "source": "On chain",
-      "decimals": 18,
-      "description": "The online community where you earn for sharing knowledge ideas."
-    },
-    {
-      "tags": "50-Tokens:ERC20",
-      "address": "0x076c97e1c869072ee22f8c91978c99b4bcb02591",
-      "name": "CommerceBlock Token",
-      "symbol": "CBT",
-      "source": "On chain",
-      "decimals": 18,
-      "description": "Infrastructure company that provides a suite of tools for traditional asset markets to leverage the highly flexible and powerful qualities of blockchain based digital asset protocols"
-    },
-    {
-      "tags": "50-Tokens:ERC20",
-      "address": "0x0775c81a273b355e6a5b76e240bf708701f00279",
-      "name": "Bulleon",
-      "symbol": "BUL",
-      "source": "On chain",
-      "decimals": 18,
-      "description": "Revolutionizing the way of Financial Transactions"
     }
   ]
 }

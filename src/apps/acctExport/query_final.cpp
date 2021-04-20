@@ -207,8 +207,8 @@ bool COptions::establishIndexChunk(const string_q& fullPathToChunk) {
     if (!fileExists(fullPathToChunk)) {
         LOG_PROGRESS("Unchaining-chunk", fileRange.first, listRange.second, " from IPFS");
         CPinnedChunk pin;
-        if (!pinlib_getChunkByHash(pinList, substitute(substitute(fullPathToChunk, indexFolder_finalized, ""), ".bin", ""),
-                                   pin)) {
+        if (!pinlib_getChunkByHash(
+                pinList, substitute(substitute(fullPathToChunk, indexFolder_finalized, ""), ".bin", ""), pin)) {
             cerr << "Could not retrieve file from IPFS: " << fullPathToChunk << endl;
         }
     }
