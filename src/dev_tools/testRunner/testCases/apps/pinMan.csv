@@ -1,19 +1,18 @@
 enabled ,mode ,speed ,route ,path/tool   ,filename        ,post ,options                             ,opt_cmd ,has_env
-off      ,cmd  ,fast  ,pins  ,apps/pinMan ,README          ,n    ,@th
-off      ,cmd  ,fast  ,pins  ,apps/pinMan ,help            ,n    ,@h
-off      ,cmd  ,fast  ,pins  ,apps/pinMan ,help_long       ,n    ,help
-off      ,both ,fast  ,pins  ,apps/pinMan ,no_params       ,y    ,
-off      ,both ,fast  ,pins  ,apps/pinMan ,invalid_param_1 ,y    ,junk
+on      ,cmd  ,fast  ,pins  ,apps/pinMan ,README          ,n    ,@th
+on      ,cmd  ,fast  ,pins  ,apps/pinMan ,help            ,n    ,@h
+on      ,cmd  ,fast  ,pins  ,apps/pinMan ,help_long       ,n    ,help
+on      ,both ,fast  ,pins  ,apps/pinMan ,no_params       ,y    ,
+on      ,both ,fast  ,pins  ,apps/pinMan ,invalid_param_1 ,y    ,junk
 
-off      ,both ,fast  ,pins  ,apps/pinMan ,list_local      ,y    ,list = local
-off     ,both ,fast  ,pins  ,apps/pinMan ,list_remote     ,y    ,list = remote
-off      ,both ,fast  ,pins  ,apps/pinMan ,freshen_mocked  ,y    ,freshen
-off      ,both ,fast  ,pins  ,apps/pinMan ,compare_mocked  ,y    ,compare
+on      ,both ,fast  ,pins  ,apps/pinMan ,list_local      ,y    ,
+on      ,both ,fast  ,pins  ,apps/pinMan ,freshen_mocked  ,y    ,freshen
+on      ,both ,fast  ,pins  ,apps/pinMan ,compare_mocked  ,y    ,compare
 
-off      ,both ,fast  ,pins  ,apps/pinMan ,fmt_default     ,y    ,list = local
-off      ,both ,slow  ,pins  ,apps/pinMan ,fmt_txt         ,n    ,list = local & fmt = txt
-off      ,both ,fast  ,pins  ,apps/pinMan ,fmt_csv         ,n    ,list = local & fmt = csv
-off      ,both ,fast  ,pins  ,apps/pinMan ,fmt_json        ,y    ,list = local & fmt = json
-off      ,both ,fast  ,pins  ,apps/pinMan ,fmt_api         ,y    ,list = local & fmt = api
-off      ,both ,fast  ,pins  ,apps/pinMan ,fmt_junk        ,y    ,list = local & fmt = junk
-off      ,both ,fast  ,pins  ,apps/pinMan ,to_file         ,y    ,list = local & fmt = json & to_file
+on      ,both ,fast  ,pins  ,apps/pinMan ,fmt_default     ,y    ,
+on      ,both ,slow  ,pins  ,apps/pinMan ,fmt_txt         ,n    ,fmt = txt
+on      ,both ,fast  ,pins  ,apps/pinMan ,fmt_csv         ,n    ,fmt = csv
+on      ,both ,fast  ,pins  ,apps/pinMan ,fmt_json        ,y    ,fmt = json
+on      ,both ,fast  ,pins  ,apps/pinMan ,fmt_api         ,y    ,fmt = api
+on      ,both ,fast  ,pins  ,apps/pinMan ,fmt_junk        ,y    ,fmt = junk
+on      ,both ,fast  ,pins  ,apps/pinMan ,to_file         ,y    ,fmt = json & to_file

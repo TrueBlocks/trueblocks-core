@@ -1,9 +1,7 @@
-pinMan argc: 5 [1:--list] [2:local] [3:--fmt] [4:api] 
-pinMan --list local --fmt api 
-TIME ~ CLOCK - <INFO>  : list: local
+pinMan argc: 3 [1:--fmt] [2:api] 
+pinMan --fmt api 
 TIME ~ CLOCK - <INFO>  : hashToIndexFormatFile:	Qmart6XP9XjL43p72PGR93QKytbK8jWWcMguhFgxATTya2
 TIME ~ CLOCK - <INFO>  : hashToBloomFormatFile:	QmNhPk39DUFoEdhUmtGARqiFECUHeghyeryxZM9kyRxzHD
-TIME ~ CLOCK - <INFO>  : unchainedIndexAddrV3:	0xcfd7f3b24f3551741f922fd8c4381aa4e00fc8fd
 TIME ~ CLOCK - <INFO>  : unchainedIndexAddr:	0xcfd7f3b24f3551741f922fd8c4381aa4e00fc8fd
 TIME ~ CLOCK - <INFO>  : manifestHashEncoding:	0x337f3f32
 {"data": [

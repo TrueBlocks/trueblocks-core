@@ -3,7 +3,6 @@ pinMan --compare
 TIME ~ CLOCK - <INFO>  : compare: true
 TIME ~ CLOCK - <INFO>  : hashToIndexFormatFile:	Qmart6XP9XjL43p72PGR93QKytbK8jWWcMguhFgxATTya2
 TIME ~ CLOCK - <INFO>  : hashToBloomFormatFile:	QmNhPk39DUFoEdhUmtGARqiFECUHeghyeryxZM9kyRxzHD
-TIME ~ CLOCK - <INFO>  : unchainedIndexAddrV3:	0xcfd7f3b24f3551741f922fd8c4381aa4e00fc8fd
 TIME ~ CLOCK - <INFO>  : unchainedIndexAddr:	0xcfd7f3b24f3551741f922fd8c4381aa4e00fc8fd
 TIME ~ CLOCK - <INFO>  : manifestHashEncoding:	0x337f3f32
 filename	bloomhash	indexhash
