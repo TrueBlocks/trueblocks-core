@@ -14,7 +14,7 @@ int main(int argc, const char* argv[]) {
         if (!options.parseArguments(command))
             return 0;
 
-        pinlib_readPinList(options.localPins, options.list.empty() || options.list == "local");
+        pinlib_readPinList(options.pins);
 
         if (once)
             cout << exportPreamble(expContext().fmtMap["header"], "CPinnedChunk");
@@ -26,14 +26,7 @@ int main(int argc, const char* argv[]) {
             options.handle_compare();
 
         } else {
-            ASSERT(!options.list.empty());
-            if (options.list == "local") {
-                options.handle_list_local();
-
-            } else {
-                ASSERT(options.list == "remote");
-                options.handle_list_remote();
-            }
+            options.handle_list();
         }
         once = false;
     }

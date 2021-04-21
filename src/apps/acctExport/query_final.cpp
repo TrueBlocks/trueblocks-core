@@ -205,12 +205,12 @@ bool getIndexChunkFromIPFS(const string_q& chunk) {
 bool COptions::establishIndexChunk(const string_q& fullPathToChunk) {
     ENTER("establishIndexChunk")
     if (!fileExists(fullPathToChunk)) {
-        LOG_PROGRESS("Unchaining-chunk", fileRange.first, listRange.second, " from IPFS");
+        string_q fileName = substitute(substitute(fullPathToChunk, indexFolder_finalized, ""), ".bin", "");
         CPinnedChunk pin;
-        if (!pinlib_getChunkByHash(
-                pinList, substitute(substitute(fullPathToChunk, indexFolder_finalized, ""), ".bin", ""), pin)) {
+        if (!pinlib_getChunkByHash(pinList, fileName, pin))
             cerr << "Could not retrieve file from IPFS: " << fullPathToChunk << endl;
-        }
+        else
+            LOG_PROGRESS(cGreen + "Unchaining-index", fileRange.first, listRange.second, " from IPFS" + cOff);
     }
     EXIT_NOMSG(fileExists(fullPathToChunk));
 }

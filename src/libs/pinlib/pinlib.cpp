@@ -28,7 +28,6 @@ void pinlib_init(QUITHANDLER qh) {
     CPinnedChunk::registerClass();
     CPinataPin::registerClass();
     CPinataPinlist::registerClass();
-    CApiKey::registerClass();
     CPinataMetadata::registerClass();
     CPinataRegion::registerClass();
     CPinManifest::registerClass();
@@ -40,16 +39,12 @@ void pinlib_cleanup(void) {
 }
 
 //---------------------------------------------------------------------------
-bool pinlib_readPinList(CPinnedChunkArray& pinArray, bool local) {
+bool pinlib_readPinList(CPinnedChunkArray& pinArray) {
     if (!pinArray.empty())
         return true;
 
     string_q binFile = getCachePath("tmp/pins.bin");
     string_q textFile = configPath("manifest/manifest.txt");
-    if (!local) {
-        binFile = getCachePath("tmp/pins_remote.bin");
-        textFile = configPath("manifest/manifest_remote.txt");
-    }
 
     time_q binDate = fileLastModifyDate(binFile);
     time_q textDate = fileLastModifyDate(textFile);
@@ -70,19 +65,17 @@ bool pinlib_readPinList(CPinnedChunkArray& pinArray, bool local) {
     } else {
         pinArray.clear();  // redundant, but fine
         forEveryLineInAsciiFile(textFile, parseOneLine, &pinArray);
-        LOG4("Done loading ", (local ? "local" : "remote"), " pins");
+        LOG4("Done loading pins");
         sort(pinArray.begin(), pinArray.end());
         if (!isTestMode())
-            pinlib_writePinList(pinArray, local);
+            pinlib_writePinList(pinArray);
     }
     return true;
 }
 
 //---------------------------------------------------------------------------
-bool pinlib_writePinList(CPinnedChunkArray& pList, bool local) {
+bool pinlib_writePinList(CPinnedChunkArray& pList) {
     string_q binFile = getCachePath("tmp/pins.bin");
-    if (!local)
-        binFile = getCachePath("tmp/pins_remote.bin");
     establishFolder(binFile);
 
     lockSection();  // disallow control+C until we write both files
@@ -147,7 +140,7 @@ bool pinlib_pinChunk(CPinnedChunkArray& pList, const string_q& fileName, CPinned
 
     // write the array (after sorting it) to the database
     sort(pList.begin(), pList.end());
-    return pinlib_writePinList(pList, true);
+    return pinlib_writePinList(pList);
 }
 
 //---------------------------------------------------------------------------
@@ -178,42 +171,93 @@ bool pinlib_unpinChunk(CPinnedChunkArray& pList, const string_q& fileName, CPinn
     pList.clear();
     pList = array;
     sort(pList.begin(), pList.end());
-    return pinlib_writePinList(pList, true);
+    return pinlib_writePinList(pList);
+}
+
+//---------------------------------------------------------------------------
+bool pinlib_getFileFromIPFS(CPinnedChunk& pin, ipfsdown_t which) {
+    string_q outFile = "blooms/" + pin.fileName + ".bloom";
+    ipfshash_t ipfshash = pin.bloomHash;
+    if (which != BLOOM_TYPE) {
+        outFile = "finalized/" + pin.fileName + ".bin";
+        ipfshash = pin.indexHash;
+    }
+
+    if (!fileExists(getIndexPath(outFile))) {
+        string_q zipFile = outFile + ".gz";
+        if (!fileExists(getIndexPath(zipFile))) {
+            // download from ipfs gateway
+            ostringstream cmd;
+            cmd << "curl -s -o ";
+            cmd << "\"" << getIndexPath(zipFile) << "\" ";
+            cmd << "\"http://gateway.ipfs.io/ipfs/" << ipfshash << "\"";
+            LOG_INFO(bBlue, "Downloading ", ipfshash, " to ", pin.fileName, cOff);
+            int ret = system(cmd.str().c_str());
+            // cerr << "result: " << ret << endl;
+            if (ret != 0) {
+                // clean up on failure
+                if (ret == 2)
+                    defaultQuitHandler(-1);  // user hit control+c, let ourselves know
+                LOG_WARN("Could not download zip file ", zipFile);
+                ::remove(getIndexPath(zipFile).c_str());
+            }
+        }
+
+        if (fileExists(getIndexPath(zipFile))) {
+            ostringstream cmd;
+            cmd << "cd " << getIndexPath("") << " && gunzip --keep " << zipFile;
+            int ret = system(cmd.str().c_str());
+            // cerr << "result: " << ret << endl;
+            if (ret != 0) {
+                // clean up on failure
+                if (ret == 2)
+                    defaultQuitHandler(-1);  // user hit control+c, let ourselves know
+                LOG_WARN("Could not download file ", outFile);
+                ::remove(getIndexPath(zipFile).c_str());
+                ::remove(getIndexPath(outFile).c_str());
+            }
+        } else {
+            LOG_INFO("File ", outFile, " exists.");
+        }
+
+    } else {
+        LOG_INFO("File ", outFile, " exists.");
+    }
+    return true;
 }
 
 //-------------------------------------------------------------------------
-bool pinlib_getChunkByHash(CPinnedChunkArray& pList, const string_q& fileName, CPinnedChunk& item) {
-    // If we don't think it's pinned, Pinata may, so proceed even if not found
-    if (!pinlib_findChunk(pList, fileName, item)) {
-        // return true;
-    }
+bool pinlib_getChunkByHash(CPinnedChunkArray& pList, const string_q& fileName, CPinnedChunk& pin) {
+    if (pinlib_findChunk(pList, fileName, pin))
+        return pinlib_getFileFromIPFS(pin, BIN_TYPE);
+    return false;
 
-    // clang-format off
-    string_q fn = fileName + ".bin";
+    // // clang-format off
+    // string_q fn = fileName + ".bin";
 
-    ostringstream cmd;
-    cmd << "curl -s ";
-    cmd << "\"https://ipfs.io/ipfs/" << item.indexHash << "\" ";
-    cmd << "--output " << getCachePath("tmp/") << fn << ".gz ; ";
-    if (system(cmd.str().c_str())) {  // NOLINT
-    }                           // Don't remove cruft. Silences compiler warnings
-    cmd.clear();
-    cmd.str("");
-    cmd << "cd " << getCachePath("tmp/") + " ; gunzip *.gz";
-    if (system(cmd.str().c_str())) {  // NOLINT
-    }                           // Don't remove cruft. Silences compiler warnings
-    cmd.clear();
-    cmd.str("");
-    cmd << "mv " << getCachePath("tmp/") << fn << " \"" << indexFolder_finalized << fn << "\"";
-    if (system(cmd.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings
-    // clang-format on
+    // ostringstream cmd;
+    // cmd << "curl -s ";
+    // cmd << "\"https://ipfs.io/ipfs/" << item.indexHash << "\" ";
+    // cmd << "--output " << getCachePath("tmp/") << fn << ".gz ; ";
+    // if (system(cmd.str().c_str())) {  // NOLINT
+    // }                           // Don't remove cruft. Silences compiler warnings
+    // cmd.clear();
+    // cmd.str("");
+    // cmd << "cd " << getCachePath("tmp/") + " ; gunzip *.gz";
+    // if (system(cmd.str().c_str())) {  // NOLINT
+    // }                           // Don't remove cruft. Silences compiler warnings
+    // cmd.clear();
+    // cmd.str("");
+    // cmd << "mv " << getCachePath("tmp/") << fn << " \"" << indexFolder_finalized << fn << "\"";
+    // if (system(cmd.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings
+    // // clang-format on
 
-    return true;
+    // return true;
 }
 
 //---------------------------------------------------------------------------
 bool pinlib_findChunk(CPinnedChunkArray& pList, const string_q& fileName, CPinnedChunk& item) {
-    if (!pinlib_readPinList(pList, true /* local */))
+    if (!pinlib_readPinList(pList))
         return false;
 
     CPinnedChunk search;
@@ -231,7 +275,7 @@ bool pinlib_forEveryPin(CPinnedChunkArray& pList, PINFUNC func, void* data) {
     if (!func)
         return false;
 
-    if (!pinlib_readPinList(pList, true /* local */))
+    if (!pinlib_readPinList(pList))
         return false;
 
     for (auto pin : pList) {

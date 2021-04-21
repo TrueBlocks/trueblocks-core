@@ -21,12 +21,14 @@ namespace qblocks {
 extern void pinlib_init(QUITHANDLER qh);
 extern void pinlib_cleanup(void);
 
-extern bool pinlib_readPinList(CPinnedChunkArray& pList, bool local);
-extern bool pinlib_writePinList(CPinnedChunkArray& pList, bool local);
+extern bool pinlib_readPinList(CPinnedChunkArray& pList);
+extern bool pinlib_writePinList(CPinnedChunkArray& pList);
 
 extern bool pinlib_pinChunk(CPinnedChunkArray& pList, const string_q& fn, CPinnedChunk& item);
 extern bool pinlib_unpinChunk(CPinnedChunkArray& pList, const string_q& fn, CPinnedChunk& item);
 
+typedef enum { NO_TYPE = 0, BLOOM_TYPE = 1, BIN_TYPE = 2 } ipfsdown_t;
+extern bool pinlib_getFileFromIPFS(CPinnedChunk& pin, ipfsdown_t which);
 extern bool pinlib_getChunkByHash(CPinnedChunkArray& pList, const string_q& fn, CPinnedChunk& item);
 extern bool pinlib_findChunk(CPinnedChunkArray& pList, const string_q& fn, CPinnedChunk& item);
 

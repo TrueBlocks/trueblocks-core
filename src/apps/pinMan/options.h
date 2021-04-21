@@ -17,12 +17,12 @@
 class COptions : public CAbiOptions {
   public:
     // BEG_CODE_DECLARE
-    string_q list;
     bool compare;
     bool init;
+    bool freshen;
     // END_CODE_DECLARE
 
-    CPinnedChunkArray localPins;
+    CPinnedChunkArray pins;
     bool firstOut;
 
     COptions(void);
@@ -31,13 +31,9 @@ class COptions : public CAbiOptions {
     bool parseArguments(string_q& command) override;
     void Init(void) override;
 
-    hash_t getCurrentManifest(void);
-    bool freshenBlooms(bool download, const string_q& currManifest);
-
     bool handle_init(void);
     bool handle_compare(void);
-    bool handle_list_local(void);
-    bool handle_list_remote(void);
+    bool handle_list(void);
 
     bool freshen_from_remote(void);
 };
@@ -45,6 +41,5 @@ class COptions : public CAbiOptions {
 //-------------------------------------------------------------------------
 #define hashToIndexFormatFile string_q("Qmart6XP9XjL43p72PGR93QKytbK8jWWcMguhFgxATTya2")
 #define hashToBloomFormatFile string_q("QmNhPk39DUFoEdhUmtGARqiFECUHeghyeryxZM9kyRxzHD")
-#define unchainedIndexAddrV3 string_q("0xcfd7f3b24f3551741f922fd8c4381aa4e00fc8fd")
 #define unchainedIndexAddr string_q("0xcfd7f3b24f3551741f922fd8c4381aa4e00fc8fd")
 #define manifestHashEncoding string_q("0x337f3f32")
