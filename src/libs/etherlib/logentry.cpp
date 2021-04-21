@@ -371,7 +371,7 @@ string_q nextLogentryChunk_custom(const string_q& fieldIn, const void* dataPtr) 
             // EXISTING_CODE
             case 'c':
                 if (fieldIn % "compressedLog")
-                    return stripWhitespace(log->articulatedLog.compressed());
+                    return log->articulatedLog.compressed("");
                 break;
             case 't':
                 if (fieldIn % "topic0") {

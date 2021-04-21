@@ -21,7 +21,7 @@
         "status": null
       },
       "traces": [],
-      "compressedTx": "0x ( )",
+      "compressedTx": "",
       "statements": [
         {
           "blockNumber": 0,

@@ -58,7 +58,7 @@ class CFunction : public CBaseNode {
     friend class CTransaction;
     friend class CLogEntry;
     friend class CTrace;
-    string_q compressed(void) const;
+    string_q compressed(const string_q& def) const;
     bool isDefault(const CBaseNode* obj) const override;
     // EXISTING_CODE
     bool operator==(const CFunction& it) const;

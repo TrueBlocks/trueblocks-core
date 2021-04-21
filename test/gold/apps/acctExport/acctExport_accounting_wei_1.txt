@@ -14,7 +14,6 @@ acctExport 0x001d14804b399c6ef80e64576f657660804fec0b --accounting --fmt api --m
   "gasPrice": 0,
   "isError": 0,
   "hasToken": 0,
-  "compressedTx": "0x ( )",
   "statements": [
     {
       "blockNumber": 0,

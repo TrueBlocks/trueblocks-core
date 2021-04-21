@@ -650,16 +650,8 @@ string_q nextTransactionChunk_custom(const string_q& fieldIn, const void* dataPt
             case 'c':
                 if (fieldIn % "contractAddress")
                     return addr_2_Str(tra->receipt.contractAddress);
-                if (fieldIn % "compressedTx") {
-                    if (!tra->articulatedTx.message.empty())
-                        return "message:" + tra->articulatedTx.message;
-                    string ret = tra->articulatedTx.compressed();
-                    if (ret.empty()) {
-                        extern string_q compressInput(const string_q& input);
-                        return compressInput(tra->input);
-                    }
-                    return stripWhitespace(ret);
-                }
+                if (fieldIn % "compressedTx")
+                    return tra->articulatedTx.compressed(tra->input);
                 break;
             case 'd':
                 if (fieldIn % "date" || fieldIn % "datesh") {
@@ -949,22 +941,6 @@ bool sortTransactionsForWrite(const CTransaction& t1, const CTransaction& t2) {
     else if (t1.transactionIndex != t2.transactionIndex)
         return t1.transactionIndex < t2.transactionIndex;
     return t1.hash < t2.hash;
-}
-
-//-------------------------------------------------------------------------
-string_q compressInput(const string_q& inputIn) {
-    string_q input = (startsWith(inputIn, "0x") ? "" : "0x") + inputIn;
-    string_q name = input.substr(0, 10);
-    replace(input, name, "");
-    string_q ret = name + " ( ";
-    while (!input.empty()) {
-        string_q chunk = input.substr(0, 364);
-        replace(input, chunk, "");
-        ret += ("stub: " + chunk + ", ");
-    }
-    ret = trim(trim(ret, ' '), ',');
-    ret += " )";
-    return ret;
 }
 // EXISTING_CODE
 }  // namespace qblocks

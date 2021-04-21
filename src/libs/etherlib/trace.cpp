@@ -396,7 +396,7 @@ string_q nextTraceChunk_custom(const string_q& fieldIn, const void* dataPtr) {
                 break;
             case 'c':
                 if (fieldIn % "compressedTrace")
-                    return stripWhitespace(tra->articulatedTrace.compressed());
+                    return tra->articulatedTrace.compressed("");
                 break;
             case 'd':
                 if (tra->pTrans) {

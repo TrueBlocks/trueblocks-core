@@ -628,31 +628,58 @@ string_q CFunction::encodeItem(void) const {
     return (type == "event" ? ret : extract(ret, 0, 10));
 }
 
+//-------------------------------------------------------------------------
+string_q compressInput(const string_q& inputIn) {
+    if (inputIn.empty())
+        return "";
+    string_q input = (startsWith(inputIn, "0x") ? "" : "0x") + inputIn;
+    string_q name = input.substr(0, 10);
+    replace(input, name, "");
+    string_q ret = name + " ( ";
+    while (!input.empty()) {
+        string_q chunk = input.substr(0, 364);
+        replace(input, chunk, "");
+        ret += ("stub: " + chunk + ", ");
+    }
+    ret = trim(trim(ret, ' '), ',');
+    ret += " )";
+    return ret;
+}
+
 //-----------------------------------------------------------------------
 const char* STR_COMPRESSED_FMT = "[{NAME}](++INPUTS++);";
 const char* STR_COMPRESSED_INPUT_QUOTED = "\"[{VALUE}]\" /*[{NAME}]*/, ";
 const char* STR_COMPRESSED_INPUT = "[{VALUE}] /*[{NAME}]*/, ";
 
-string_q CFunction::compressed(void) const {
-    if (name.empty())
-        return "";
+//-----------------------------------------------------------------------
+string_q CFunction::compressed(const string_q& def) const {
+    if (!message.empty())
+        return "message:" + message;
 
+    if (name.empty())
+        return compressInput(def);
+
+    string_q ret;
     if (isApiMode()) {
-        string_q ret = name + " ( ";
+        ret = name + " ( ";
         for (auto input : inputs)
             ret += (input.name + ": " + input.value + ", ");
         ret = trim(trim(ret, ' '), ',');
         ret += " )";
-        return ret;
+        replaceAll(ret, "--tuple--", "");
+        return stripWhitespace(ret);
     }
 
     ostringstream func, inp;
     func << Format(STR_COMPRESSED_FMT) << endl;
     for (auto input : inputs)
         inp << input.Format(substitute(STR_COMPRESSED_INPUT, " /*[{NAME}]*/", (verbose ? " /*[{NAME}]*/" : "")));
-    string_q ret = func.str();
+    ret = func.str();
     replace(ret, "++INPUTS++", trim(trim(inp.str(), ' '), ','));
-    return ret;
+    if (ret.empty())
+        return compressInput(def);
+    replaceAll(ret, "--tuple--", "");
+    return stripWhitespace(ret);
 }
 
 //-----------------------------------------------------------------------

@@ -14,7 +14,6 @@ acctExport 0x05a56e2d52c817161883f50c441c3228cfe54d9f --accounting --fmt api --m
   "gasPrice": 0,
   "isError": 0,
   "hasToken": 0,
-  "compressedTx": "0x ( )",
   "statements": [
     {
       "blockNumber": 1,
@@ -61,7 +60,6 @@ acctExport 0x05a56e2d52c817161883f50c441c3228cfe54d9f --accounting --fmt api --m
   "gasPrice": 0,
   "isError": 0,
   "hasToken": 0,
-  "compressedTx": "0x ( )",
   "statements": [
     {
       "blockNumber": 5,
@@ -108,7 +106,6 @@ acctExport 0x05a56e2d52c817161883f50c441c3228cfe54d9f --accounting --fmt api --m
   "gasPrice": 0,
   "isError": 0,
   "hasToken": 0,
-  "compressedTx": "0x ( )",
   "statements": [
     {
       "blockNumber": 56,
@@ -155,7 +152,6 @@ acctExport 0x05a56e2d52c817161883f50c441c3228cfe54d9f --accounting --fmt api --m
   "gasPrice": 0,
   "isError": 0,
   "hasToken": 0,
-  "compressedTx": "0x ( )",
   "statements": [
     {
       "blockNumber": 235,
@@ -202,7 +198,6 @@ acctExport 0x05a56e2d52c817161883f50c441c3228cfe54d9f --accounting --fmt api --m
   "gasPrice": 0,
   "isError": 0,
   "hasToken": 0,
-  "compressedTx": "0x ( )",
   "statements": [
     {
       "blockNumber": 247,
@@ -249,7 +244,6 @@ TIME ~ CLOCK - <PROG>  : Extracting      5 of    260 txs (max 260) for address 0
   "gasPrice": 0,
   "isError": 0,
   "hasToken": 0,
-  "compressedTx": "0x ( )",
   "statements": [
     {
       "blockNumber": 348,
@@ -296,7 +290,6 @@ TIME ~ CLOCK - <PROG>  : Extracting      5 of    260 txs (max 260) for address 0
   "gasPrice": 0,
   "isError": 0,
   "hasToken": 0,
-  "compressedTx": "0x ( )",
   "statements": [
     {
       "blockNumber": 500,
@@ -343,7 +336,6 @@ TIME ~ CLOCK - <PROG>  : Extracting      5 of    260 txs (max 260) for address 0
   "gasPrice": 0,
   "isError": 0,
   "hasToken": 0,
-  "compressedTx": "0x ( )",
   "statements": [
     {
       "blockNumber": 563,
@@ -390,7 +382,6 @@ TIME ~ CLOCK - <PROG>  : Extracting      5 of    260 txs (max 260) for address 0
   "gasPrice": 0,
   "isError": 0,
   "hasToken": 0,
-  "compressedTx": "0x ( )",
   "statements": [
     {
       "blockNumber": 987,
@@ -437,7 +428,6 @@ TIME ~ CLOCK - <PROG>  : Extracting      5 of    260 txs (max 260) for address 0
   "gasPrice": 0,
   "isError": 0,
   "hasToken": 0,
-  "compressedTx": "0x ( )",
   "statements": [
     {
       "blockNumber": 1450,
@@ -484,7 +474,6 @@ TIME ~ CLOCK - <PROG>  : Extracting     10 of    260 txs (max 260) for address 0
   "gasPrice": 0,
   "isError": 0,
   "hasToken": 0,
-  "compressedTx": "0x ( )",
   "statements": [
     {
       "blockNumber": 1580,
@@ -531,7 +520,6 @@ TIME ~ CLOCK - <PROG>  : Extracting     10 of    260 txs (max 260) for address 0
   "gasPrice": 0,
   "isError": 0,
   "hasToken": 0,
-  "compressedTx": "0x ( )",
   "statements": [
     {
       "blockNumber": 1586,
@@ -578,7 +566,6 @@ TIME ~ CLOCK - <PROG>  : Extracting     10 of    260 txs (max 260) for address 0
   "gasPrice": 0,
   "isError": 0,
   "hasToken": 0,
-  "compressedTx": "0x ( )",
   "statements": [
     {
       "blockNumber": 1861,
@@ -625,7 +612,6 @@ TIME ~ CLOCK - <PROG>  : Extracting     10 of    260 txs (max 260) for address 0
   "gasPrice": 0,
   "isError": 0,
   "hasToken": 0,
-  "compressedTx": "0x ( )",
   "statements": [
     {
       "blockNumber": 1912,
@@ -672,7 +658,6 @@ TIME ~ CLOCK - <PROG>  : Extracting     10 of    260 txs (max 260) for address 0
   "gasPrice": 0,
   "isError": 0,
   "hasToken": 0,
-  "compressedTx": "0x ( )",
   "statements": [
     {
       "blockNumber": 2057,

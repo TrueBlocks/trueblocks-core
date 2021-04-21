@@ -21,7 +21,7 @@
         "status": null
       },
       "traces": [],
-      "compressedTx": "0x ( )",
+      "compressedTx": "",
       "statements": [
         {
           "blockNumber": 1,
@@ -80,7 +80,7 @@
         "status": null
       },
       "traces": [],
-      "compressedTx": "0x ( )",
+      "compressedTx": "",
       "statements": [
         {
           "blockNumber": 5,
@@ -139,7 +139,7 @@
         "status": null
       },
       "traces": [],
-      "compressedTx": "0x ( )",
+      "compressedTx": "",
       "statements": [
         {
           "blockNumber": 56,
@@ -198,7 +198,7 @@
         "status": null
       },
       "traces": [],
-      "compressedTx": "0x ( )",
+      "compressedTx": "",
       "statements": [
         {
           "blockNumber": 235,
@@ -257,7 +257,7 @@
         "status": null
       },
       "traces": [],
-      "compressedTx": "0x ( )",
+      "compressedTx": "",
       "statements": [
         {
           "blockNumber": 247,
@@ -316,7 +316,7 @@
         "status": null
       },
       "traces": [],
-      "compressedTx": "0x ( )",
+      "compressedTx": "",
       "statements": [
         {
           "blockNumber": 348,
@@ -375,7 +375,7 @@
         "status": null
       },
       "traces": [],
-      "compressedTx": "0x ( )",
+      "compressedTx": "",
       "statements": [
         {
           "blockNumber": 500,
@@ -434,7 +434,7 @@
         "status": null
       },
       "traces": [],
-      "compressedTx": "0x ( )",
+      "compressedTx": "",
       "statements": [
         {
           "blockNumber": 563,
@@ -493,7 +493,7 @@
         "status": null
       },
       "traces": [],
-      "compressedTx": "0x ( )",
+      "compressedTx": "",
       "statements": [
         {
           "blockNumber": 987,
@@ -552,7 +552,7 @@
         "status": null
       },
       "traces": [],
-      "compressedTx": "0x ( )",
+      "compressedTx": "",
       "statements": [
         {
           "blockNumber": 1450,
@@ -611,7 +611,7 @@
         "status": null
       },
       "traces": [],
-      "compressedTx": "0x ( )",
+      "compressedTx": "",
       "statements": [
         {
           "blockNumber": 1580,
@@ -670,7 +670,7 @@
         "status": null
       },
       "traces": [],
-      "compressedTx": "0x ( )",
+      "compressedTx": "",
       "statements": [
         {
           "blockNumber": 1586,
@@ -729,7 +729,7 @@
         "status": null
       },
       "traces": [],
-      "compressedTx": "0x ( )",
+      "compressedTx": "",
       "statements": [
         {
           "blockNumber": 1861,
@@ -788,7 +788,7 @@
         "status": null
       },
       "traces": [],
-      "compressedTx": "0x ( )",
+      "compressedTx": "",
       "statements": [
         {
           "blockNumber": 1912,
@@ -847,7 +847,7 @@
         "status": null
       },
       "traces": [],
-      "compressedTx": "0x ( )",
+      "compressedTx": "",
       "statements": [
         {
           "blockNumber": 2057,
