@@ -62,7 +62,6 @@ int main(int argc, const char* argv[]) {
     os << ", \"end\": " << (isTestMode() ? "\"0xdeadbeef\"" : uint_2_Str(options.scanRange.second)) << endl;
     if (!options.count && options.allMonitors.size() == 1) {
         options.getNamedAccount(options.allMonitors[0], options.accountedFor);
-        HIDE_FIELD(CMonitor, "summaryStatement");
         if (options.abi_spec.nInterfaces() == 0) {
             HIDE_FIELD(CMonitor, "abi_spec");
         }

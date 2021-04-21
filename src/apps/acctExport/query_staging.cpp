@@ -74,7 +74,7 @@ bool visitStagingIndexFiles(const string_q& path, void* data) {
             if (!monitor->openForWriting()) {
                 delete rawData;
                 rawData = NULL;
-                EXIT_FAIL("Could not open cache file " + monitor->getMonitorPath(monitor->address, monitor->fm_mode) +
+                EXIT_FAIL("Could not open cache file " + monitor->getMonitorPath(monitor->address, monitor->fm _mode) +
                           ".");
             }
             char search[70];

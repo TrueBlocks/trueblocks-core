@@ -215,16 +215,8 @@ schema              	1001	1	8388633	T_NUMBER TS_NUMERAL
 deleted             	1002	1	8388628	T_BOOL TS_NUMERAL
 showing             	1003	1	8388628	T_BOOL TS_NUMERAL
 cname               	1004	1	16777266	T_TEXT TS_STRING
-summaryStatement    	1005	0	138412107	T_OBJECT TS_OBJECT TS_OMITEMPTY
-stateHistory        	1006	0	205520971	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
-curBalance          	1007	0	545259555	T_WEI TS_NUMERAL TS_BIGNUM
-enabled             	1008	0	12582932	T_BOOL TS_NUMERAL TS_OMITEMPTY
-fm_mode             	1009	1	8388633	T_NUMBER TS_NUMERAL
-curEther            	1010	1	545259565	T_ETHER TS_NUMERAL TS_BIGNUM
-curDollars          	1011	1	545259565	T_ETHER TS_NUMERAL TS_BIGNUM
+fm_mode             	1005	1	8388633	T_NUMBER TS_NUMERAL
 {
-  "curBalance": 0,
-  "enabled": true,
   "address": "0x0"
 }
 
@@ -235,13 +227,7 @@ schema              	1001	1	8388633	T_NUMBER TS_NUMERAL
 deleted             	1002	1	8388628	T_BOOL TS_NUMERAL
 showing             	1003	1	8388628	T_BOOL TS_NUMERAL
 cname               	1004	1	16777266	T_TEXT TS_STRING
-summaryStatement    	1005	1	138412107	T_OBJECT TS_OBJECT TS_OMITEMPTY
-stateHistory        	1006	1	205520971	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
-curBalance          	1007	1	545259555	T_WEI TS_NUMERAL TS_BIGNUM
-enabled             	1008	1	12582932	T_BOOL TS_NUMERAL TS_OMITEMPTY
-fm_mode             	1009	1	8388633	T_NUMBER TS_NUMERAL
-curEther            	1010	1	545259565	T_ETHER TS_NUMERAL TS_BIGNUM
-curDollars          	1011	1	545259565	T_ETHER TS_NUMERAL TS_BIGNUM
+fm_mode             	1005	1	8388633	T_NUMBER TS_NUMERAL
 {
   "address": "0x0"
 }
@@ -253,23 +239,13 @@ schema              	1001	0	8388633	T_NUMBER TS_NUMERAL
 deleted             	1002	0	8388628	T_BOOL TS_NUMERAL
 showing             	1003	0	8388628	T_BOOL TS_NUMERAL
 cname               	1004	0	16777266	T_TEXT TS_STRING
-summaryStatement    	1005	0	138412107	T_OBJECT TS_OBJECT TS_OMITEMPTY
-stateHistory        	1006	0	205520971	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
-curBalance          	1007	0	545259555	T_WEI TS_NUMERAL TS_BIGNUM
-enabled             	1008	0	12582932	T_BOOL TS_NUMERAL TS_OMITEMPTY
-fm_mode             	1009	0	8388633	T_NUMBER TS_NUMERAL
-curEther            	1010	0	545259565	T_ETHER TS_NUMERAL TS_BIGNUM
-curDollars          	1011	0	545259565	T_ETHER TS_NUMERAL TS_BIGNUM
+fm_mode             	1005	0	8388633	T_NUMBER TS_NUMERAL
 {
   "schema": 8005,
   "deleted": false,
   "showing": true,
   "cname": "Monitor",
-  "curBalance": 0,
-  "enabled": true,
   "fm_mode": 0,
-  "curEther": "0.000000000000000000",
-  "curDollars": not-implemented,
   "address": "0x0"
 }
 

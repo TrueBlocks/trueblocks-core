@@ -213,13 +213,11 @@ bool importTabFile(CAddressNameMap& theMap, const string_q& tabFilename) {
 
 //-----------------------------------------------------------------------
 bool COptionsBase::loadNames(void) {
-    ENTER8("loadNames");
-
     if (getEnvStr("NO_NAMES") == "true")
-        EXIT_NOMSG8(true);
+        return true;
 
     if (namesMap.size() > 0)
-        EXIT_NOMSG8(true);
+        return true;
 
     LOG8("Entering loadNames...");
     establishFolder(getCachePath("names/"));
@@ -231,7 +229,7 @@ bool COptionsBase::loadNames(void) {
     // A final set of options that do not have command line options
     if (isEnabled(OPT_PREFUND)) {
         if (!loadPrefunds(prefundFile)) {
-            EXIT_USAGE("Could not open prefunds data.");
+            return usage("Could not open prefunds data.");
         }
     }
 
@@ -259,21 +257,21 @@ bool COptionsBase::loadNames(void) {
                     tokenMap[item.second.address] = item.second;
             }
             nameCache.Release();
-            EXIT_NOMSG8(true);
+            return true;
         }
     }
 
     CAddressNameMap theMap;
     if (!importTabFile(theMap, txtFile))
-        EXIT_USAGE("Could not open names database...");
+        return usage("Could not open names database...");
     LOG8("Finished adding names from regular database...");
 
     if (!importTabFile(theMap, customFile))
-        EXIT_USAGE("Could not open custom names database...");
+        return usage("Could not open custom names database...");
     LOG8("Finished adding names from custom database...");
 
     if (!importTabFile(theMap, prefundFile))
-        EXIT_USAGE("Could not open prefunds database...");
+        return usage("Could not open prefunds database...");
     LOG8("Finished adding names from prefunds database...");
 
     // theMap is already sorted by address, so simply copy it into the array
@@ -297,7 +295,13 @@ bool COptionsBase::loadNames(void) {
     }
     LOG8("Finished writing binary cache...");
 
-    EXIT_NOMSG8(true);
+    return true;
+}
+
+//-----------------------------------------------------------------------
+bool COptionsBase::findToken(CAccountName& acct, const address_t& addr) {
+    acct = tokenMap[addr];
+    return acct.address == addr;
 }
 
 //-----------------------------------------------------------------------

@@ -275,8 +275,7 @@ const char* STR_DISPLAY_MONITORCACHEITEM =
     "[{NRECORDS}]\t"
     "[{APPEARANCEINTERVAL}]\t"
     "[{SIZEINBYTES}]\t"
-    "[{SIZEINBYTES2}]\t"
-    "[{CURETHER}]";
+    "[{SIZEINBYTES2}]";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

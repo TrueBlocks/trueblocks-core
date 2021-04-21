@@ -517,9 +517,6 @@
     "start": "0xdeadbeef",
     "end": "0xdeadbeef",
     "accountedFor": {
-      "stateHistory": [],
-      "curBalance": 0,
-      "enabled": true,
       "tags": "81-Other:DAO Related",
       "address": "0x8b3b3b624c3c0397d3da8fd861512393d51dcbac",
       "name": "TheOhEightAccount",

@@ -303,14 +303,6 @@ extern bool silenceExit;
         return false;                                                                                                  \
     }
 
-#define EXIT_MSG(a, b)                                                                                                 \
-    {                                                                                                                  \
-        if (!silenceExit)                                                                                              \
-            LOG4(_logExit(l_funcName));                                                                                \
-        cerr << (a);                                                                                                   \
-        return (b);                                                                                                    \
-    }
-
 #define EXIT_NOMSG(b)                                                                                                  \
     {                                                                                                                  \
         if (!silenceExit)                                                                                              \
@@ -323,26 +315,4 @@ extern bool silenceExit;
         if (!silenceExit)                                                                                              \
             LOG4(_logExit(l_funcName));                                                                                \
         return;                                                                                                        \
-    }
-
-#define ENTER8(a)                                                                                                      \
-    {                                                                                                                  \
-        if (!silenceEnter)                                                                                             \
-            LOG8(_logEnter(a));                                                                                        \
-    }                                                                                                                  \
-    string_q l_funcName = (a);
-
-#define EXIT_MSG8(a, b)                                                                                                \
-    {                                                                                                                  \
-        if (!silenceExit)                                                                                              \
-            LOG8(_logExit(l_funcName));                                                                                \
-        cerr << a;                                                                                                     \
-        return (b);                                                                                                    \
-    }
-
-#define EXIT_NOMSG8(b)                                                                                                 \
-    {                                                                                                                  \
-        if (!silenceExit)                                                                                              \
-            LOG8(_logExit(l_funcName));                                                                                \
-        return (b);                                                                                                    \
     }

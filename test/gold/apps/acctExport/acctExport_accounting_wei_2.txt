@@ -697,8 +697,6 @@ TIME ~ CLOCK - <PROG>  : Extracting     15 of    260 txs (max 260) for address 0
 , "unNamedFrom": {"0xUncleReward": 8,"0xBlockReward": 7}, "start": "0xdeadbeef"
 , "end": "0xdeadbeef"
 , "accountedFor": {
-  "curBalance": 0,
-  "enabled": true,
   "address": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
   "name": "0x05a56e2d52c817161883f50c441c3228cfe54d9f"
 }

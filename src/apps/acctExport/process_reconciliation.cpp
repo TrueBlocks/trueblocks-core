@@ -20,8 +20,8 @@ bool process_reconciliation(COptions* options, CTransaction& trans, CReconciliat
     if (tokens) {
         CAddressBoolMap done;
         for (auto log : trans.receipt.logs) {
-            CAccountName tokenName = options->tokenMap[log.address];
-            bool isToken = tokenName.address == log.address;
+            CAccountName tokenName;
+            bool isToken = options->findToken(tokenName, log.address);
             bool isAirdrop = options->airdropMap[log.address];
             bool isDone = done[log.address];
             if ((isToken || trans.hasToken || isAirdrop) && !isDone) {

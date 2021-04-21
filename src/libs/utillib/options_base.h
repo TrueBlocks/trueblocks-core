@@ -58,6 +58,8 @@ typedef map<address_t, CAccountName> CAddressNameMap;
 
 //-----------------------------------------------------------------------------
 class COptionsBase {
+    CAddressNameMap tokenMap;
+
   public:
     blkrange_t scanRange;
 
@@ -65,7 +67,6 @@ class COptionsBase {
     // TODO(tjayrush): than options. See fmtMap and tsMemMap for examples
     CAddressBoolMap maliciousMap;
     CAddressBoolMap airdropMap;
-    CAddressNameMap tokenMap;
     CAddressNameMap namesMap;
 
     CStringArray commandLines;
@@ -143,6 +144,8 @@ class COptionsBase {
     string_q getOutputFn(void) const {
         return rd_outputFilename;
     }
+
+    bool findToken(CAccountName& acct, const address_t& addr);
 
   protected:
     const COption* pParams;

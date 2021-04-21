@@ -29,10 +29,6 @@ typedef enum { FM_PRODUCTION, FM_STAGING } freshen_e;
 //--------------------------------------------------------------------------
 class CMonitor : public CAccountName {
   public:
-    CReconciliation summaryStatement;
-    CEthStateArray stateHistory;
-    wei_t curBalance;
-    bool enabled;
     freshen_e fm_mode;
 
   public:
@@ -42,8 +38,6 @@ class CMonitor : public CAccountName {
     CMonitor& operator=(const CMonitor& mo);
 
     DECLARE_NODE(CMonitor);
-
-    const CBaseNode* getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
   public:
@@ -161,10 +155,6 @@ inline void CMonitor::clear(void) {
 inline void CMonitor::initialize(void) {
     CAccountName::initialize();
 
-    summaryStatement = CReconciliation();
-    stateHistory.clear();
-    curBalance = 0;
-    enabled = true;
     fm_mode = FM_PRODUCTION;
 
     // EXISTING_CODE
@@ -182,10 +172,6 @@ inline void CMonitor::duplicate(const CMonitor& mo) {
     clear();
     CAccountName::duplicate(mo);
 
-    summaryStatement = mo.summaryStatement;
-    stateHistory = mo.stateHistory;
-    curBalance = mo.curBalance;
-    enabled = mo.enabled;
     fm_mode = mo.fm_mode;
 
     // EXISTING_CODE

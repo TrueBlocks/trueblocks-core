@@ -73,39 +73,9 @@ string_q CMonitor::getValueByName(const string_q& fieldName) const {
 
     // Return field values
     switch (tolower(fieldName[0])) {
-        case 'c':
-            if (fieldName % "curBalance") {
-                return wei_2_Str(curBalance);
-            }
-            break;
-        case 'e':
-            if (fieldName % "enabled") {
-                return bool_2_Str(enabled);
-            }
-            break;
         case 'f':
             if (fieldName % "fm_mode") {
                 return uint_2_Str(fm_mode);
-            }
-            break;
-        case 's':
-            if (fieldName % "summaryStatement") {
-                if (summaryStatement == CReconciliation())
-                    return "{}";
-                return summaryStatement.Format();
-            }
-            if (fieldName % "stateHistory" || fieldName % "stateHistoryCnt") {
-                size_t cnt = stateHistory.size();
-                if (endsWith(toLower(fieldName), "cnt"))
-                    return uint_2_Str(cnt);
-                if (!cnt)
-                    return "";
-                string_q retS;
-                for (size_t i = 0; i < cnt; i++) {
-                    retS += stateHistory[i].Format();
-                    retS += ((i < cnt - 1) ? ",\n" : "\n");
-                }
-                return retS;
             }
             break;
         default:
@@ -114,15 +84,6 @@ string_q CMonitor::getValueByName(const string_q& fieldName) const {
 
     // EXISTING_CODE
     // EXISTING_CODE
-
-    string_q s;
-    s = toUpper(string_q("summaryStatement")) + "::";
-    if (contains(fieldName, s)) {
-        string_q f = fieldName;
-        replaceAll(f, s, "");
-        f = summaryStatement.getValueByName(f);
-        return f;
-    }
 
     // Finally, give the parent class a chance
     return CAccountName::getValueByName(fieldName);
@@ -134,49 +95,15 @@ bool CMonitor::setValueByName(const string_q& fieldNameIn, const string_q& field
     string_q fieldValue = fieldValueIn;
 
     // EXISTING_CODE
-    if (fieldName % "summaryStatement") {
-        string_q str = fieldValue;
-        return summaryStatement.parseJson3(str);
-    }
-    if (fieldName % "balance") {
-        summaryStatement.endBal = summaryStatement.begBal = str_2_Wei(fieldValue);
-        return true;
-    }
     // EXISTING_CODE
 
     if (CAccountName::setValueByName(fieldName, fieldValue))
         return true;
 
     switch (tolower(fieldName[0])) {
-        case 'c':
-            if (fieldName % "curBalance") {
-                curBalance = str_2_Wei(fieldValue);
-                return true;
-            }
-            break;
-        case 'e':
-            if (fieldName % "enabled") {
-                enabled = str_2_Bool(fieldValue);
-                return true;
-            }
-            break;
         case 'f':
             if (fieldName % "fm_mode") {
                 fm_mode = str_2_Enum(freshen_e, fieldValue);
-                return true;
-            }
-            break;
-        case 's':
-            if (fieldName % "summaryStatement") {
-                return summaryStatement.parseJson3(fieldValue);
-            }
-            if (fieldName % "stateHistory") {
-                CEthState obj;
-                string_q str = fieldValue;
-                while (obj.parseJson3(str)) {
-                    stateHistory.push_back(obj);
-                    obj = CEthState();  // reset
-                }
                 return true;
             }
             break;
@@ -205,10 +132,6 @@ bool CMonitor::Serialize(CArchive& archive) {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive >> summaryStatement;
-    archive >> stateHistory;
-    archive >> curBalance;
-    archive >> enabled;
     // archive >> fm_mode;
     finishParse();
     return true;
@@ -221,10 +144,6 @@ bool CMonitor::SerializeC(CArchive& archive) const {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive << summaryStatement;
-    archive << stateHistory;
-    archive << curBalance;
-    archive << enabled;
     // archive << fm_mode;
 
     return true;
@@ -264,10 +183,6 @@ void CMonitor::registerClass(void) {
     ADD_FIELD(CMonitor, "deleted", T_BOOL, ++fieldNum);
     ADD_FIELD(CMonitor, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CMonitor, "cname", T_TEXT, ++fieldNum);
-    ADD_OBJECT(CMonitor, "summaryStatement", T_OBJECT | TS_OMITEMPTY, ++fieldNum, GETRUNTIME_CLASS(CReconciliation));
-    ADD_FIELD(CMonitor, "stateHistory", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CMonitor, "curBalance", T_WEI, ++fieldNum);
-    ADD_FIELD(CMonitor, "enabled", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CMonitor, "fm_mode", T_NUMBER, ++fieldNum);
     HIDE_FIELD(CMonitor, "fm_mode");
 
@@ -280,10 +195,6 @@ void CMonitor::registerClass(void) {
     builtIns.push_back(_biCMonitor);
 
     // EXISTING_CODE
-    ADD_FIELD(CMonitor, "curEther", T_ETHER, ++fieldNum);
-    HIDE_FIELD(CMonitor, "curEther");
-    ADD_FIELD(CMonitor, "curDollars", T_ETHER, ++fieldNum);
-    HIDE_FIELD(CMonitor, "curDollars");
     // EXISTING_CODE
 }
 
@@ -293,14 +204,6 @@ string_q nextMonitorChunk_custom(const string_q& fieldIn, const void* dataPtr) {
     if (mon) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
-            case 'c':
-                if (startsWith(fieldIn, "cur") && mon->curBalance == str_2_Wei(uint_2_Str(NOPOS)))
-                    return "\"n/a\"";
-                if (fieldIn % "curEther")
-                    return "\"" + wei_2_Ether(mon->curBalance, 18) + "\"";
-                if (fieldIn % "curDollars")
-                    return "not-implemented";
-                break;
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
@@ -334,24 +237,6 @@ ostream& operator<<(ostream& os, const CMonitor& it) {
     it.Format(os, "", nullptr);
     os << "\n";
     return os;
-}
-
-//---------------------------------------------------------------------------
-const CBaseNode* CMonitor::getObjectAt(const string_q& fieldName, size_t index) const {
-    if (fieldName % "summaryStatement")
-        return &summaryStatement;
-
-    if (fieldName % "stateHistory") {
-        if (index == NOPOS) {
-            CEthState empty;
-            ((CMonitor*)this)->stateHistory.push_back(empty);  // NOLINT
-            index = stateHistory.size() - 1;
-        }
-        if (index < stateHistory.size())
-            return &stateHistory[index];
-    }
-
-    return NULL;
 }
 
 //---------------------------------------------------------------------------
@@ -609,14 +494,16 @@ string_q getTokenSymbol(const CMonitor& token, blknum_t blockNum) {
 
 //-------------------------------------------------------------------------
 string_q getTokenState(const string_q& what, const CAbi& abi_spec, const CMonitor& token, blknum_t blockNum) {
-    map<string_q, string_q> sigMap;
-    sigMap["totalSupply"] = "0x18160ddd";
-    sigMap["decimals"] = "0x313ce567";
-    sigMap["symbol"] = "0x95d89b41";
-    sigMap["name"] = "0x06fdde03";
-    if (sigMap[what].empty()) {
-        return "";
+    static map<string_q, string_q> sigMap;
+    if (sigMap.size() == 0) {
+        sigMap["totalSupply"] = "0x18160ddd";
+        sigMap["decimals"] = "0x313ce567";
+        sigMap["symbol"] = "0x95d89b41";
+        sigMap["name"] = "0x06fdde03";
     }
+
+    if (sigMap[what].empty())
+        return "";
 
     CFunction result;
     if (!doEthCall(token.address, sigMap[what], "", blockNum, abi_spec, result)) {
