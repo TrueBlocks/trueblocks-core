@@ -34,12 +34,4 @@ class COptions : public CAbiOptions {
     bool handle_init(void);
     bool handle_compare(void);
     bool handle_list(void);
-
-    bool freshen_from_remote(void);
 };
-
-//-------------------------------------------------------------------------
-#define hashToIndexFormatFile string_q("Qmart6XP9XjL43p72PGR93QKytbK8jWWcMguhFgxATTya2")
-#define hashToBloomFormatFile string_q("QmNhPk39DUFoEdhUmtGARqiFECUHeghyeryxZM9kyRxzHD")
-#define unchainedIndexAddr string_q("0xcfd7f3b24f3551741f922fd8c4381aa4e00fc8fd")
-#define manifestHashEncoding string_q("0x337f3f32")

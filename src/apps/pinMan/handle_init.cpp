@@ -2,8 +2,10 @@
 
 //----------------------------------------------------------------
 bool COptions::handle_init() {
-    if (freshen && !freshen_from_remote())
-        return usage("Could not freshen remote pin data");
+    if (freshen) {
+        if (!pinlib_downloadManifest())
+            return usage("Could not freshen manifest from smart contract");
+    }
 
     if (!folderExists(getIndexPath("")))
         return false;
@@ -11,10 +13,11 @@ bool COptions::handle_init() {
     establishFolder(getIndexPath("blooms/"));
     establishFolder(getIndexPath("finalized/"));
 
-    CPinnedChunkArray remotePins;
-    pinlib_readPinList(remotePins);
-    for (auto pin : remotePins) {
-        if (!pinlib_getFileFromIPFS(pin, BLOOM_TYPE) || shouldQuit())
+    // If the user is calling here, she wants a fresh read even if we've not just freshened.
+    pins.clear();
+    pinlib_readManifest(pins);
+    for (auto pin : pins) {
+        if (!pinlib_getChunkFromRemote(pin, BLOOM_TYPE) || shouldQuit())
             break;
         usleep(2500);  // do not remove cruft - stays responsive to control+C
     }

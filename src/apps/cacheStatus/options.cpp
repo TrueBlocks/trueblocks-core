@@ -313,7 +313,7 @@ COptions::~COptions(void) {
 //--------------------------------------------------------------------------------
 void loadPinMaps(CIndexStringMap& filenameMap, CIndexHashMap& bloomMap, CIndexHashMap& indexMap) {
     CPinnedChunkArray pinList;
-    if (!pinlib_readPinList(pinList))
+    if (!pinlib_readManifest(pinList))
         return;
 
     for (auto pin : pinList) {

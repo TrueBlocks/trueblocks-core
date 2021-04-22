@@ -15,6 +15,7 @@
 "30-Contracts:Set Protocol Wrapers"
 "30-Contracts:Set Protocol Wrappers"
 "30-Contracts:Set Prototcol"
+"30-Contracts:TheGraph"
 "30-Contracts:dAppNode"
 "31-Gitcoin Grants:Admin"
 "31-Gitcoin Grants:Contracts"

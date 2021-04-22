@@ -49,6 +49,9 @@
       "tags": "30-Contracts:Set Prototcol"
     },
     {
+      "tags": "30-Contracts:TheGraph"
+    },
+    {
       "tags": "30-Contracts:dAppNode"
     },
     {

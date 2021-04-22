@@ -1559,6 +1559,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 30-Contracts:Humanity DAO	0x33286a584fe912db883cdb9003011bfe6619ad6e	DigixOrg		https://www.humanitydao.org/humans			false	false	false	false	false	false
 31-Gitcoin Grants:Grant	0x332d87209f7c8296389c307eae170c2440830a47	Grant 0584 88mph		https://gitcoin.co/grants/584/88mph		https://88mph.app/	false	false	false	true	false	false
 31-Gitcoin Grants:Grant	0x333ee98d84b087208353038e10e1b4600a0a3967	Grant 1014 Akashick | Interactive Art Installation - Immutable Uncensored Messages/images/files		https://gitcoin.co/grants/1014/akashick-interactive-art-installation-immutable-u			false	false	false	false	false	false
+31-Gitcoin Grants:Core	0x3342e3737732d879743f2682a3953a730ae4f47c	GitCoin Rnd 9 MatchPayouts		https://github.com/gitcoinco/matching_contracts			false	false	false	true	false	false
 90-DevCon2:Individual	0x33473541f36e795e469f69a20b95fbdd1218d757	Thessy		DevCon2 Token Contract			false	false	false	false	false	false
 31-Gitcoin Grants:Grant	0x335bee461cbbab5bd574e0767f1ead25bd5e0001	Grant 0308 cadCAD: Computer Aided Design for Complex Systems		https://gitcoin.co/grants/308/cadcad-computer-aided-design-for-complex-systems		https://cadcad.org/	false	false	false	true	false	false
 31-Gitcoin Grants:Grant	0x335d6cec3668f9951c3aa90600986ab350b3d059	Grant 0477 Friendsfingers		https://gitcoin.co/grants/477/friendsfingers		https://app.friendsfingers.com	false	false	false	false	false	false

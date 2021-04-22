@@ -203,14 +203,26 @@ bool getIndexChunkFromIPFS(const string_q& chunk) {
 
 //---------------------------------------------------------------
 bool COptions::establishIndexChunk(const string_q& fullPathToChunk) {
-    ENTER("establishIndexChunk")
-    if (!fileExists(fullPathToChunk)) {
-        string_q fileName = substitute(substitute(fullPathToChunk, indexFolder_finalized, ""), ".bin", "");
-        CPinnedChunk pin;
-        if (!pinlib_getChunkByHash(pinList, fileName, pin))
-            cerr << "Could not retrieve file from IPFS: " << fullPathToChunk << endl;
-        else
-            LOG_PROGRESS(cGreen + "Unchaining-index", fileRange.first, listRange.second, " from IPFS" + cOff);
+    if (fileExists(fullPathToChunk))
+        return true;
+
+    string_q fileName = substitute(substitute(fullPathToChunk, indexFolder_finalized, ""), ".bin", "");
+    static CPinnedChunkArray pins;
+    if (pins.size() == 0) {
+        if (!pinlib_readManifest(pins)) {
+            LOG_ERR("Could not read the manifest.");
+            return false;
+        }
     }
-    EXIT_NOMSG(fileExists(fullPathToChunk));
+    CPinnedChunk pin;
+    if (pinlib_findChunk(pins, fileName, pin)) {
+        if (pinlib_getChunkFromRemote(pin, BIN_TYPE))
+            LOG_PROGRESS(cGreen + "Unchaining-index", fileRange.first, listRange.second, " from IPFS" + cOff);
+        else
+            LOG_ERR("Could not retrieve file from IPFS: ", fullPathToChunk);
+    } else {
+        LOG_ERR("Could not find file in manifest: ", fullPathToChunk);
+    }
+
+    return fileExists(fullPathToChunk);
 }
