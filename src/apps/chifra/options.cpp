@@ -20,8 +20,6 @@ bool COptions::call_command(int argc, const char* argv[]) {
     if (!standardOptions(command))
         return false;
 
-    ENTER("call_command");
-
     CStringArray unused;
     prePrepareArguments(unused, argc, argv);
 
@@ -64,18 +62,18 @@ bool COptions::call_command(int argc, const char* argv[]) {
     // END_DEBUG_DISPLAY
 
     if (Mocked(""))
-        EXIT_NOMSG(false);
+        return false;
 
     // show chifra's help in limited cases, the tool's help otherwise
     if (has_help && (argc == 2 || mode == "serve"))
-        EXIT_USAGE("");
+        return usage("");
 
     // Make sure user sent a real subcommand
     if (argc > 1 && cmdMap[argv[1]].empty())
-        EXIT_USAGE("Unknown subcommand '" + string_q(argv[1]) + "'.");
+        return usage("Unknown subcommand '" + string_q(argv[1]) + "'.");
 
     if (mode.empty())
-        EXIT_USAGE("The first argument you provide must be a chifra subcommand.");
+        return usage("");
 
     // We want the help screen to display 'chifra subcommand' and not the program's name
     if (!mode.empty() && mode != "serve")
@@ -108,7 +106,7 @@ bool COptions::call_command(int argc, const char* argv[]) {
     LOG_TEST_CALL(os.str());
 
     // Make the actual system call and return the result
-    EXIT_NOMSG(system(os.str().c_str()));
+    return system(os.str().c_str());
 }
 
 //---------------------------------------------------------------------------------------------------

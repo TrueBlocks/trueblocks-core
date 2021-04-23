@@ -1,8 +1,5 @@
 chifra argc: 1 
 chifra 
-TIME ~ CLOCK - <ERROR> : Exit(chifra,call_command): 
-
-  The first argument you provide must be a chifra subcommand. Quitting...
 
   Usage:    chifra command  
   Purpose:  Access to all TrueBlocks tools (chifra <cmd> --help for more).

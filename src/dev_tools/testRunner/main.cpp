@@ -281,7 +281,7 @@ bool COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, cons
             if (contains(oldText, "\"id\":") && contains(oldFn, "/tools/")) {
                 // This crazy shit is because we want to pass tests when running against different nodes (Parity,
                 // TurboGeth, etc.) so we have to remove some stuff and then sort the data (after deliniating it)
-                // soit matches more easily
+                // so it matches more easily
                 while (contains(oldText, "sealFields")) {
                     replaceAll(oldText, "\"sealFields\":", "|");
                     string_q pre = nextTokenClear(oldText, '|');
@@ -308,6 +308,7 @@ bool COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, cons
                                                 "root",
                                                 "mined",
                                                 "\"type\":\"\"",
+                                                "\"type\":\"0x0\"",
                                                 "\"status\":\"0x1\"",
                                                 "\"status\": \"0x1\""};
                         for (auto r : removes)
