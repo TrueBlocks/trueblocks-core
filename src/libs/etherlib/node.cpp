@@ -1022,12 +1022,11 @@ bool forEveryTransactionInList(TRANSVISITFUNC func, void* data, const string_q& 
             CBlock block;
             trans.pBlock = &block;
             if (isHash(trans.hash)) {
-                // Note: at this point, we are not fully formed, we have to ask the node for the receipt
-                getBlock(block, trans.blockNumber);
-                if (block.transactions.size() > trans.transactionIndex)
-                    trans.isError = block.transactions[trans.transactionIndex].isError;
+                // Note: at this point, we are not fully formed, we need the receipt and the timestamp
+                getBlock_light(block, trans.blockNumber);
+                getFullReceipt(&trans, true);
+                trans.timestamp = block.timestamp;
                 trans.receipt.pTrans = &trans;
-                getReceipt(trans.receipt, trans.getValueByName("hash"));
                 trans.finishParse();
             } else {
                 // If the transaction has no hash here, there was a problem. Let the caller know
