@@ -15,6 +15,12 @@ bool cleanMonitorFile(const string_q& path, void* data) {
 
     } else {
         if (endsWith(path, "acct.bin")) {
+            if (isTestMode()) {
+                CMonitor m;
+                if (path > m.getMonitorPath("0x9"))
+                    return false;
+            }
+
             size_t sizeThen = (fileSize(path) / sizeof(CAppearance_base));
             blknum_t nRecords = (fileSize(path) / sizeof(CAppearance_base));
             if (!nRecords)
