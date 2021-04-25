@@ -193,7 +193,7 @@ bool pinlib_unpinChunk(CPinnedChunkArray& pList, const string_q& fileName, CPinn
 }
 
 //---------------------------------------------------------------------------
-bool pinlib_getChunkFromRemote(CPinnedChunk& pin, ipfsdown_t which) {
+bool pinlib_getChunkFromRemote(CPinnedChunk& pin, ipfsdown_t which, double sleep) {
     string_q outFile = "blooms/" + pin.fileName + ".bloom";
     ipfshash_t ipfshash = pin.bloomHash;
     if (which != BLOOM_TYPE) {
@@ -209,7 +209,7 @@ bool pinlib_getChunkFromRemote(CPinnedChunk& pin, ipfsdown_t which) {
             cmd << "curl --silent -o ";
             cmd << "\"" << getIndexPath(zipFile) << "\" ";
             cmd << "\"http://gateway.ipfs.io/ipfs/" << ipfshash << "\"";
-            LOG_INFO(bBlue, "Downloading ", ipfshash, " to ", pin.fileName, cOff);
+            LOG_INFO(bBlue, "Unchaining bloom ", ipfshash, " to ", pin.fileName, cOff);
             int ret = system(cmd.str().c_str());
             // cerr << "result: " << ret << endl;
             if (ret != 0) {
@@ -218,6 +218,8 @@ bool pinlib_getChunkFromRemote(CPinnedChunk& pin, ipfsdown_t which) {
                     defaultQuitHandler(-1);  // user hit control+c, let ourselves know
                 LOG_WARN("Could not download zip file ", zipFile);
                 ::remove(getIndexPath(zipFile).c_str());
+            } else {
+                usleep((useconds_t)(sleep * 1000000)); // do not remove cruft - stays responsive to control+C
             }
         }
 
@@ -235,7 +237,7 @@ bool pinlib_getChunkFromRemote(CPinnedChunk& pin, ipfsdown_t which) {
                 ::remove(getIndexPath(outFile).c_str());
             }
         } else {
-            LOG_INFO("File ", outFile, " exists.");
+            LOG_INFO("File ", outFile, " does not exist.");
         }
 
     } else {

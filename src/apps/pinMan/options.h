@@ -20,6 +20,7 @@ class COptions : public CAbiOptions {
     bool compare;
     bool init;
     bool freshen;
+    double sleep;
     // END_CODE_DECLARE
 
     CPinnedChunkArray pins;
