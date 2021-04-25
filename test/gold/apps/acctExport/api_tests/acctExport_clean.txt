@@ -53,5 +53,10 @@
     "path": "$CACHE/0xfd6c5ac853391486d25ddd5cefb1f7040ee31c2c.acct.bin",
     "sizeThen": 47,
     "sizeNow": 47
+  },
+  {
+    "path": "$CACHE/0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3.acct.bin",
+    "sizeThen": 20,
+    "sizeNow": 20
   }
 ]
