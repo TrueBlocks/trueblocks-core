@@ -206,7 +206,7 @@ bool pinlib_getChunkFromRemote(CPinnedChunk& pin, ipfsdown_t which) {
         if (!fileExists(getIndexPath(zipFile))) {
             // download from ipfs gateway
             ostringstream cmd;
-            cmd << "curl -s -o ";
+            cmd << "curl --silent -o ";
             cmd << "\"" << getIndexPath(zipFile) << "\" ";
             cmd << "\"http://gateway.ipfs.io/ipfs/" << ipfshash << "\"";
             LOG_INFO(bBlue, "Downloading ", ipfshash, " to ", pin.fileName, cOff);

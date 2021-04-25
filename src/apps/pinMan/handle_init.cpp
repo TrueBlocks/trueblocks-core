@@ -19,7 +19,7 @@ bool COptions::handle_init() {
     for (auto pin : pins) {
         if (!pinlib_getChunkFromRemote(pin, BLOOM_TYPE) || shouldQuit())
             break;
-        usleep(2500);  // do not remove cruft - stays responsive to control+C
+        usleep((useconds_t)(250000)); // do not remove cruft - stays responsive to control+C
     }
 
     return true;  // do not continue
