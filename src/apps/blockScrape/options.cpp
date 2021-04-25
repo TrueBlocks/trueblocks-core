@@ -366,7 +366,7 @@ bool COptions::changeState(void) {
                 LOG4("changing state: running --> stopped");
             } else if (mode == "run") {
                 LOG_ERR("blockScrape is already ", stateStr, ". Cannot ", mode, ".");
-                LOG_ERR("If this is in error, remove the file ", controlFile);
+                LOG_ERR("If this is in error, remove the file ", (isTestMode() ? "--controlFile--" : controlFile));
                 // state = STATE_RUNNING; // redunant, but okay
             } else if (mode == "restart") {
                 LOG_ERR("blockScrape is ", stateStr, ". Cannot ", mode, ".");

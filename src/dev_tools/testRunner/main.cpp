@@ -298,9 +298,10 @@ bool COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, cons
                     if (last != line) {
                         bool has = false;
                         CStringArray removes = {"author",
+                                                "sealFields",
                                                 "chainId",
-                                                "creates",
                                                 "condition",
+                                                "creates",
                                                 "publicKey",
                                                 "raw",
                                                 "standardV",
@@ -309,6 +310,7 @@ bool COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, cons
                                                 "mined",
                                                 "\"type\":\"\"",
                                                 "\"type\":\"0x0\"",
+                                                "\"type\": \"0x0\"",
                                                 "\"status\":\"0x1\"",
                                                 "\"status\": \"0x1\""};
                         for (auto r : removes)

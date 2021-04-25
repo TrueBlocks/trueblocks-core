@@ -15,38 +15,6 @@ cacheStatus --details some --start 3000000 --end 3100000
   "has_eskey": true,
   "caches": [
     {
-      "items": [
-        {
-          "type": "CIndexCacheItem",
-          "nAddresses": 95628,
-          "nAppearances": 1876216,
-          "firstAppearance": 2900001,
-          "latestAppearance": 3000000,
-          "firstTs": 1483051094,
-          "latestTs": 1484475035,
-          "filename": "/--index-path--/002900001-003000000.bin",
-          "fileDate": "1700-01-01 00:00:01 UTC",
-          "indexSizeBytes": 17687356,
-          "index_hash": "QmUh...YPjK",
-          "bloomSizeBytes": 262156,
-          "bloom_hash": "QmUd...oSQ9"
-        },
-        {
-          "type": "CIndexCacheItem",
-          "nAddresses": 89322,
-          "nAppearances": 1917870,
-          "firstAppearance": 3000001,
-          "latestAppearance": 3100000,
-          "firstTs": 1484475055,
-          "latestTs": 1485904756,
-          "filename": "/--index-path--/003000001-003100000.bin",
-          "fileDate": "1700-01-01 00:00:01 UTC",
-          "indexSizeBytes": 17844020,
-          "index_hash": "QmQ8...J25a",
-          "bloomSizeBytes": 262156,
-          "bloom_hash": "QmYP...2MMS"
-        }
-      ],
       "type": "CIndexCache",
       "path": "indexPath",
       "nFiles": 0,

@@ -19,38 +19,7 @@
       "has_pinkey": false,
       "caches": [
         {
-          "items": [
-            {
-              "type": "CIndexCacheItem",
-              "nAddresses": 95628,
-              "nAppearances": 1876216,
-              "firstAppearance": 2900001,
-              "latestAppearance": 3000000,
-              "firstTs": 1483051094,
-              "latestTs": 1484475035,
-              "filename": "/--index-path--/002900001-003000000.bin",
-              "fileDate": "1700-01-01 00:00:01 UTC",
-              "indexSizeBytes": 17687356,
-              "index_hash": "QmUh...YPjK",
-              "bloomSizeBytes": 262156,
-              "bloom_hash": "QmUd...oSQ9"
-            },
-            {
-              "type": "CIndexCacheItem",
-              "nAddresses": 89322,
-              "nAppearances": 1917870,
-              "firstAppearance": 3000001,
-              "latestAppearance": 3100000,
-              "firstTs": 1484475055,
-              "latestTs": 1485904756,
-              "filename": "/--index-path--/003000001-003100000.bin",
-              "fileDate": "1700-01-01 00:00:01 UTC",
-              "indexSizeBytes": 17844020,
-              "index_hash": "QmQ8...J25a",
-              "bloomSizeBytes": 262156,
-              "bloom_hash": "QmYP...2MMS"
-            }
-          ],
+          "items": [],
           "type": "CIndexCache",
           "path": "indexPath",
           "nFiles": 0,
@@ -199,63 +168,6 @@
         {
           "name": "is_valid",
           "type": "bool"
-        }
-      ]
-    },
-    {
-      "type": "CIndexCacheItem",
-      "fields": [
-        {
-          "name": "type",
-          "type": "text"
-        },
-        {
-          "name": "nAddresses",
-          "type": "unumber"
-        },
-        {
-          "name": "nAppearances",
-          "type": "unumber"
-        },
-        {
-          "name": "firstAppearance",
-          "type": "blocknum"
-        },
-        {
-          "name": "latestAppearance",
-          "type": "blocknum"
-        },
-        {
-          "name": "firstTs",
-          "type": "timestamp"
-        },
-        {
-          "name": "latestTs",
-          "type": "timestamp"
-        },
-        {
-          "name": "filename",
-          "type": "text"
-        },
-        {
-          "name": "fileDate",
-          "type": "date"
-        },
-        {
-          "name": "indexSizeBytes",
-          "type": "unumber"
-        },
-        {
-          "name": "index_hash",
-          "type": "ipfshash"
-        },
-        {
-          "name": "bloomSizeBytes",
-          "type": "unumber"
-        },
-        {
-          "name": "bloom_hash",
-          "type": "ipfshash"
         }
       ]
     },

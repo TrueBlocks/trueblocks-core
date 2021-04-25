@@ -419,6 +419,12 @@ bool noteIndex(const string_q& path, void* data) {
         return forEveryFileInFolder(path + "*", noteIndex, data);
 
     } else {
+        if (isTestMode() && !contains(path, "000000000")) {
+            // In some cases, the installation may have no index chunks
+            // so we report only on block zero (which will be there always)
+            return false;
+        }
+
         CItemCounter* counter = reinterpret_cast<CItemCounter*>(data);
 
         timestamp_t unused;
