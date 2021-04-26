@@ -209,7 +209,7 @@ bool pinlib_getChunkFromRemote(CPinnedChunk& pin, ipfsdown_t which, double sleep
             cmd << "curl --silent -o ";
             cmd << "\"" << getIndexPath(zipFile) << "\" ";
             cmd << "\"http://gateway.ipfs.io/ipfs/" << ipfshash << "\"";
-            LOG_INFO(bBlue, "Unchaining bloom ", ipfshash, " to ", pin.fileName, cOff);
+            LOG_INFO(bBlue, "Unchaining ", (contains(pin.fileName, "bloom") ? "bloom" : "index"), " ", ipfshash, " to ", pin.fileName, cOff);
             int ret = system(cmd.str().c_str());
             // cerr << "result: " << ret << endl;
             if (ret != 0) {
