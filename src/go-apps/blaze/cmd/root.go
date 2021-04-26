@@ -59,7 +59,7 @@ func init() {
 	cobra.OnInitialize(initConfig)
 
 	rootCmd.PersistentFlags().StringVarP(&Options.rpcProvider, "rpcProvider", "r", "http://localhost:8545", "URL to the node's RPC")
-	rootCmd.PersistentFlags().StringVarP(&Options.indexPath, "indexPath", "c", "", "The location of TrueBlocks' appearance cache (default \"~/.quickBlocks/cache/addr_index\")")
+	rootCmd.PersistentFlags().StringVarP(&Options.indexPath, "indexPath", "c", "", "The location of TrueBlocks' appearance cache (default \"~/.quickBlocks/unchained\")")
 	rootCmd.PersistentFlags().IntVarP(&Options.startBlock, "startBlock", "s", 0, "First block to visit (required)")
 	rootCmd.PersistentFlags().IntVarP(&Options.nBlocks, "nBlocks", "n", 0, "The number of blocks to scrape (required)")
 	rootCmd.PersistentFlags().IntVarP(&Options.nBlockProcs, "nBlockProcs", "b", 20, "The number of block processors to create (required)")
@@ -110,10 +110,7 @@ func initConfig() {
 
 	Options.indexPath = viper.GetString("settings.indexPath")
 	if Options.indexPath == "" {
-		Options.indexPath = viper.GetString("settings.cachePath") + "addr_index"
-		if Options.indexPath == "" {
-			Options.indexPath = home + "/.quickBlocks/cache/addr_index/"
-		}
+		Options.indexPath = home + "/.quickBlocks/unchained/"
 	}
 	if Options.indexPath[len(Options.indexPath)-1] != '/' {
 		Options.indexPath += "/"

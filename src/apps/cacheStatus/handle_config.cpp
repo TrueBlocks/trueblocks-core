@@ -35,7 +35,7 @@ bool COptions::handle_config_get(ostream& os) {
         values.push_back(isTestMode() ? "--cache Path--"
                                       : cc->getConfigStr(g1_2.name, "cachePath", defFolder + "cache/"));
         values.push_back(isTestMode() ? "--index Path--"
-                                      : cc->getConfigStr(g1_2.name, "indexPath", defFolder + "cache/addr_index/"));
+                                      : cc->getConfigStr(g1_2.name, "indexPath", defFolder + "unchained/"));
 
         size_t cnt = 0;
         CConfigItemArray items;

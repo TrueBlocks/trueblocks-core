@@ -12,7 +12,7 @@ rpcProvider = "http://localhost:36963/"
 # rpcProvider = "http://localhost:8515"
 balanceProvider = "http://localhost:36963/"
 cachePath = "/Users/what/.quickBlocks/cache/"
-indexPath = "/Users/what/.quickBlocks/cache/addr_index/"
+indexPath = "/Users/what/.quickBlocks/unchained/"
 
 # [dev]
 # debug_curl = true

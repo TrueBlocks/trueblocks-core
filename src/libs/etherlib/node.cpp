@@ -1062,7 +1062,7 @@ string_q getIndexPath(const string_q& _part) {
     string_q indexPath = getGlobalConfig()->getConfigStr("settings", "indexPath", "<not-set>");
     if (indexPath == "<not-set>") {
         guardLiveTest(indexPath + _part);
-        return getCachePath("addr_index/" + _part);
+        return configPath("unchained/" + _part);
     }
     if (!folderExists(indexPath)) {
         cerr << "Attempt to create customized indexPath (" << indexPath << ") failed." << endl;

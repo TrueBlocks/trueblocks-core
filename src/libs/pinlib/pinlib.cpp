@@ -219,7 +219,7 @@ bool pinlib_getChunkFromRemote(CPinnedChunk& pin, ipfsdown_t which, double sleep
                 LOG_WARN("Could not download zip file ", zipFile);
                 ::remove(getIndexPath(zipFile).c_str());
             } else {
-                usleep((useconds_t)(sleep * 1000000)); // do not remove cruft - stays responsive to control+C
+                usleep((useconds_t)(sleep * 1000000));  // do not remove cruft - stays responsive to control+C
             }
         }
 

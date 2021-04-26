@@ -24,6 +24,7 @@ file(MAKE_DIRECTORY "${DEST_PATH}/abis/known-010")
 file(MAKE_DIRECTORY "${DEST_PATH}/abis/known-015")
 file(MAKE_DIRECTORY "${DEST_PATH}/manifest")
 file(MAKE_DIRECTORY "${DEST_PATH}/mocked")
+file(MAKE_DIRECTORY "${DEST_PATH}/unchained")
 
 #---------------------------------------------------------------
 # Create main config file, if it does not already exist
