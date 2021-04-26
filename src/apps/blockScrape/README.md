@@ -6,18 +6,17 @@ Using operating system tools such as Linux's `cron` you can easily maintain a  c
 
 #### Usage
 
-`Usage:`    chifra scrape [-t|-n|-p|-u|-s|-i|-R|-v|-h] mode  
+`Usage:`    chifra scrape [-t|-n|-p|-s|-i|-R|-v|-h] mode  
 `Purpose:`  Decentralized blockchain scraper and block cache.
 
 `Where:`  
 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
-|  | mode | control the block and account scrapers, one of [run*&#124;quit&#124;pause&#124;restart] (required) |
+|  | mode | control the block and account scrapers, one of [run&#124;quit&#124;pause&#124;restart] (required) |
 | -t | --tool <val> | process the index, monitors, or both (none means process timestamps only), one or more of [monitors&#124;index*&#124;none&#124;both] |
 | -n | --n_blocks <num> | maximum number of blocks to process (defaults to 5000) |
 | -p | --pin | pin new chunks (and blooms) to IPFS (requires Pinata key and running IPFS node) |
-| -u | --publish | publish the hash of the pin manifest to the UnchainedIndex smart contract |
 | -s | --sleep <double> | the number of seconds to sleep between passes (default 14) |
 | -i | --cache_txs | write transactions to the cache (see notes) |
 | -R | --cache_traces | write traces to the cache (see notes) |
@@ -43,4 +42,6 @@ All **TrueBlocks** command-line tools support the following commands (although i
     --file:fn   |   specify multiple sets of command line options in a file.
 
 <small>*For the `--file:fn` option, place a series of valid command lines in a file and use the above options. In some cases, this option may significantly improve performance. A semi-colon at the start of a line makes that line a comment.*</small>
+
+**Source**: [`apps/blockScrape`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/blockScrape)
 

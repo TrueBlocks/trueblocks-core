@@ -10,6 +10,7 @@
 # argv[1] The source code folder
 # argv[2] The tool name
 # argv[3] The chifra route
+# argv[4] The project directory
 #
 #########################################################################################################################################
 
@@ -46,6 +47,10 @@ toolName = sys.argv[3]
 routeStr = "chifra"
 if param_number > 3:
     routeStr = "chifra " + sys.argv[4]
+projName = ""
+if param_number > 4:
+    projName = sys.argv[5]
+    
 templateFile = toolFolder + "/docs/README.tmpl.md"
 footerFile = srcFolder + "/other/docs/README.footer.md"
 usageFile = "help.txt"
@@ -94,8 +99,11 @@ with open(usageFile, 'r') as file:
     usageData = file.read()
 
 # Do the replacements
-outputData = templateData.replace("[{USAGE_TABLE}]", usageData).replace(
-    "[{FOOTER}]", footerData).replace("[{NAME}]", routeStr).replace("chifra chifra", "chifra")
+outputData = templateData.replace("[{USAGE_TABLE}]", usageData)
+outputData = outputData.replace("[{FOOTER}]", footerData)
+outputData = outputData.replace("[{NAME}]", routeStr)
+outputData = outputData.replace("[{TOOL_PATH}]", projName + "/" + toolName)
+outputData = outputData.replace("chifra chifra", "chifra")
 
 #printe('outputData: ', outputData)
 
