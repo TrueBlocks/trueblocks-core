@@ -65,7 +65,7 @@ mv ./cache/addr_index ./unchained
 
 There should be a file called `./trueBlocks.toml` at the top of this folder.
 
-Edit that file and clean up any dangling paths. Change `~/.quickBlocks` to the new configuration folder throughout.
+Edit that file and clean up any dangling paths. Change references to the old configuration folder to the new configuration folder throughout.
 
 ## You're Migrated
 
