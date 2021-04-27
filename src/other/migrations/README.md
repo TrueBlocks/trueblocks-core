@@ -40,7 +40,9 @@ cd ~/.local/share/trueblocks
 
 On Windows:
 
+```[bash]
 You're out of luck. TrueBlocks does not support Windows.
+```
 
 ## Moving the Configuration File
 
