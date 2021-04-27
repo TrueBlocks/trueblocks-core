@@ -57,6 +57,7 @@ mv quickBlocks.toml trueBlocks.toml
 In the new configuration folder, check to see if a folder called `./cache/addr_index` exits (`ls -l ./cache`). If it does, move it to its new location:
 
 ```[bash]
+# Ignore if the folder does not exist or is configured elsewhere.
 mv ./cache/addr_index ./unchained
 ```
 
