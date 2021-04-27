@@ -506,12 +506,12 @@ bool noteABI(const string_q& path, void* data) {
         abii.address = "0x" + nextTokenClear(addr, '.');
         CAccountName n;
         counter->options->getNamedAccount(n, abii.address);
-        if (isTestMode())
-            abii.address = "---address---";
-        abii.name = n.name;
         if (isTestMode()) {
+            abii.address = "---address---";
+            abii.name = "--name--";
             abii.nFunctions = abii.nEvents = abii.nOther = abii.sizeInBytes = 36963;
         } else {
+            abii.name = n.name;
             counter->options->abi_spec = CAbi();  // reset
             loadAbiFile(path, &counter->options->abi_spec);
             abii.nFunctions = counter->options->abi_spec.nFunctions();

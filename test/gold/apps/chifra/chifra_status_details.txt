@@ -62,7 +62,7 @@ PROG_NAME = [chifra status]
           "nEvents": 36963,
           "nOther": 36963,
           "address": "---address---",
-          "name": "1inch.exchange v2",
+          "name": "--name--",
           "nAppearances": 0,
           "firstAppearance": 0,
           "latestAppearance": 0,
