@@ -69,4 +69,8 @@ The new configuration folder should look something like this (the `cache` folder
 
 There should be a file called `./trueBlocks.toml` at the top of this folder.
 
-Edit that file and clean up any dangling paths. If any the settings reference the old configuration paths (`~/.quickBlocks`), change those paths to reference the new configuration folder.
+Edit that file and clean up any dangling paths. Change `~/.quickBlocks` to the new configuration folder throughout.
+
+## You're Migrated
+
+TrueBlocks version 0.9.0 should now work. Please report any problems by creating an issue.
