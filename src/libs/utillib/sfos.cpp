@@ -55,7 +55,6 @@ int moveFile(const string_q& from, const string_q& to) {
 //------------------------------------------------------------------
 static string_q escapePath(const string_q& nameIn) {
     string_q name = nameIn;
-    replaceAll(name, " ", "\\ ");
     replaceAll(name, "&", "\\&");
     replaceAll(name, "(", "\\(");
     replaceAll(name, ")", "\\)");
