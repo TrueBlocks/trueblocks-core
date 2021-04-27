@@ -15,7 +15,7 @@ else()
         set(TB_INSTALL_FOLDER "$ENV{HOME}/.local/share/trueblocks")
     endif()
 endif()
-message(STATUS "TB_INSTALL_FOLDER set to [" ${TB_INSTALL_FOLDER} "]")
+message(STATUS "Installing to [" ${TB_INSTALL_FOLDER} "]")
 set(DEST_PATH ${TB_INSTALL_FOLDER})
 set(SOURCE_PATH "${CMAKE_SOURCE_DIR}/../../../src/other/install")
 

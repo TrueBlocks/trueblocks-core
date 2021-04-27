@@ -20,6 +20,3 @@ target_link_libraries (${TOOL_NAME} ${BASE_LIBS})
 
 # Additional target to make the README.md
 build_readme(${CMAKE_CURRENT_SOURCE_DIR} ${PROJ_NAME} ${TOOL_NAME} "traces")
-
-# Installation steps
-install(TARGETS ${TOOL_NAME} RUNTIME DESTINATION bin)
