@@ -1,6 +1,33 @@
-The data is in the tokenomics repo which contains all the data into difficulty.tar.gz -- about 113 MB
+# Migrating from versions prior to 0.9.0
 
-See ~/src.GitHub/tokenomics/R/block-difficulty/
+On Apple:
 
-Use this command in R to read gzip csv files
-read.table(gzfile("/tmp/foo.csv.gz"))
+```[bash]
+mv ~/.quickBlocks "~/Library/Application Support/TrueBlocks"
+cd "~/Library/Application Support/TrueBlocks"
+```
+
+On Linux:
+
+```[bash]
+mv ~/.quickBlocks ~/.local/share/trueblocks
+cd ~/.local/share/trueblocks
+```
+
+Then...
+
+```[bash]
+mv quickBlocks.toml trueBlocks.toml
+```
+
+If ./cache/addr_index is present on your machine
+
+```[bash]
+mv ./cache/addr_index ./unchained
+```
+
+Now, edit ./trueBlocks.toml and adjust any paths in this file to point to the new locations.
+
+Prior to your change, the configuration folder is called `~/.quickBlocks` and has this structure:
+
+<img src="https://github.com/TrueBlocks/trueblocks-core/blob/new-default-dir/src/other/migrations/folders.jpg" width="640" />
