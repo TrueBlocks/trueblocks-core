@@ -51,7 +51,7 @@ mv ./cache/addr_index ./unchained
 
 # Editing the Configuration TOML file
 
-You should now be in the destination folder created above. The folders should look like this:
+You should now be in the destination folder created above. The folders should look something like this (the `cache` folder may be different):
 
 <img alt="Folders" src="https://github.com/TrueBlocks/trueblocks-core/blob/new-default-dir/src/other/migrations/folders.png" width="250px" />
 
