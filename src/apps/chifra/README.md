@@ -44,7 +44,7 @@ Here is a screen shot of an interaction with Chifra building a smart contract mo
  ADMIN
    init          initialize TrueBlocks databases by downloading pinned bloom filters
    scrape        scrape the chain and build an index of address appearances (aka digests)
-   serve         serve the TrueBlocks API via tbServer
+   serve         serve the TrueBlocks API via the flame server
    pins          query the status of the pinning system
    status        query the status of the system
  OTHER
