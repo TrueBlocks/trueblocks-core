@@ -23,7 +23,7 @@ First, we must move the existing configuration folder which exists at `$HOME/.qu
 On Apple:
 
 ```[bash]
-mkdir -p "~/Library/Application Support/TrueBlocks/"
+rm -fR "~/Library/Application Support/TrueBlocks/*"               # be careful here!
 mv ~/.quickBlocks/* "~/Library/Application Support/TrueBlocks/"
 rmdir ~/.quickBlocks
 cd "~/Library/Application Support/TrueBlocks/"
@@ -32,7 +32,7 @@ cd "~/Library/Application Support/TrueBlocks/"
 On Linux:
 
 ```[bash]
-mkdir -p ~/.local/share/trueblocks/
+rm -fR ~/.local/share/trueblocks/*                               # be careful here!
 mv ~/.quickBlocks/* ~/.local/share/trueblocks/
 rmdir ~/.quickBlocks
 cd ~/.local/share/trueblocks
