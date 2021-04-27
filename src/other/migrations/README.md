@@ -30,4 +30,4 @@ Now, edit ./trueBlocks.toml and adjust any paths in this file to point to the ne
 
 Prior to your change, the configuration folder is called `~/.quickBlocks` and has this structure:
 
-<img src="https://github.com/TrueBlocks/trueblocks-core/blob/new-default-dir/src/other/migrations/folders.jpg" width="640" />
+<img src="https://github.com/TrueBlocks/trueblocks-core/blob/new-default-dir/src/other/migrations/folders.png" width="640" />
