@@ -1,4 +1,4 @@
-# Configuration File Migration
+# v0.9.0 Configuration File Migration
 
 **Warning:** If you're not confident using the command line, please contact us prior to proceeding. If you make a mistake and delete the wrong files, you may damage your computer.
 
