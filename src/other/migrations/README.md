@@ -61,16 +61,16 @@ In the new configuration folder, check to see if a folder called `./cache/addr_i
 mv ./cache/addr_index ./unchained
 ```
 
-## Edit the Configuration File
-
-The new configuration folder should look something like this (the `cache` folder may be different):
-
-<img alt="Folders" src="https://github.com/TrueBlocks/trueblocks-core/blob/new-default-dir/src/other/migrations/folders.png" width="250px" />
+## Edit the Configuration File (important)
 
 There should be a file called `./trueBlocks.toml` at the top of this folder.
 
 Edit that file and clean up any dangling paths. Change `~/.quickBlocks` to the new configuration folder throughout.
 
 ## You're Migrated
+
+The new configuration folder should look something like this (the `cache` and `unchained` folders may be slightly different):
+
+<img alt="Folders" src="https://github.com/TrueBlocks/trueblocks-core/blob/new-default-dir/src/other/migrations/folders.png" width="250px" />
 
 TrueBlocks version 0.9.0 should now work. Please report any problems by creating an issue.
