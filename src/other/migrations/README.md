@@ -53,7 +53,7 @@ mv ./cache/addr_index ./unchained
 
 You should now be in the destination folder created above. The folders should look like this:
 
-![Folders](https://github.com/TrueBlocks/trueblocks-core/blob/new-default-dir/src/other/migrations/folders.png)
+![Folders](https://github.com/TrueBlocks/trueblocks-core/blob/new-default-dir/src/other/migrations/folders.png?s=200)
 
 There should be a file called `./trueBlocks.toml` at the top of the new configuration folder.
 
