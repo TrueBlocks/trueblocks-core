@@ -52,7 +52,7 @@ After moving the folder, we need to move the configuration file. The following a
 mv quickBlocks.toml trueBlocks.toml
 ```
 
-## Moving the Unchained Index if it Exists
+## Moving the Unchained Index
 
 In the new configuration folder, check to see if a folder called `./cache/addr_index` exits (`ls -l ./cache`). If it does, move it to its new location:
 
