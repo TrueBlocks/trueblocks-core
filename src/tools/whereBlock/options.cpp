@@ -103,7 +103,7 @@ COptions::COptions(void) {
     Init();
     // BEG_CODE_NOTES
     // clang-format off
-    notes.push_back("Customize the location of the cache in the configuration file [{CONFIG}]quickBlocks.toml.");
+    notes.push_back("Customize the location of the cache in the configuration file [{CONFIG}]trueBlocks.toml.");
     // clang-format on
     // END_CODE_NOTES
 

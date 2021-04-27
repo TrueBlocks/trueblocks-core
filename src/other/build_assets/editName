@@ -71,5 +71,5 @@ export TB_NAME_SYMBOL=$SYMBOL
 export TB_NAME_DECIMALS=$DECIMALS
 export TB_NAME_DESCR=$DESCR
 chifra names --update
-cp -pf /Users/jrush/.quickBlocks/names/names.tab /Users/jrush/Development/trueblocks-core/src/other/install/names/names.tab
+cp -pf "$HOME/Library/Application Support/TrueBlocks/names/names.tab" $HOME/Development/trueblocks-core/src/other/install/names/names.tab
 chifra names --all --expand $ADDRESS

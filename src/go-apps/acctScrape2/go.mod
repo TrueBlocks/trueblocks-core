@@ -1,4 +1,4 @@
-module github.com/Great-Hill-Corporation/trueblocks-core/src/go-apps/acctScrape2
+module github.com/TrueBlocks/trueblocks-core/src/go-apps/acctScrape2
 
 go 1.15
 

@@ -225,7 +225,7 @@ bool COptions::parseArguments(string_q& command) {
     bool needsParity = config->getConfigBool("requires", "parity", true);
     if (needsParity && !isParity())
         return usage(
-            "This tool requires Parity. Add [requires]\\nparity=false to ~/.quickBlocks/blockScrape.toml to turn "
+            "This tool requires Parity. Add [requires]\\nparity=false to $CONFIG/blockScrape.toml to turn "
             "this "
             "restriction off.");
 

@@ -3,7 +3,7 @@ cacheStatus --get_config
 {
   "files": [
     {
-      "name": "quickBlocks.toml",
+      "name": "trueBlocks.toml",
       "sections": [
         {
           "section": "Providers",

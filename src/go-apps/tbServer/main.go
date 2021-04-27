@@ -14,7 +14,7 @@ import (
 	"os/exec"
 	"strings"
 
-	tb "github.com/Great-Hill-Corporation/trueblocks-core/src/go-apps/goServer/cmd"
+	tb "github.com/TrueBlocks/trueblocks-core/src/go-apps/goServer/cmd"
 )
 
 func main() {

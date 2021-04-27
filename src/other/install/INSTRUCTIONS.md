@@ -1,13 +1,13 @@
-#### Make a backup copy of `~/.quickBlocks`, then
+#### Make a backup copy of `~/Library/Application Support/TrueBlocks/`, then
 
 ```bash
-    rm -fR ~/.quickBlocks
+    rm -fR "~/Library/Application Support/TrueBlocks"
 ```
 
 #### From your development folder clone the master branch:
 
 ```bash
-    git clone https://github.com/Great-Hill-Corporation/trueblocks-explorer
+    git clone https://github.com/TrueBlocks/trueblocks-explorer
 ```
 
 #### In a new terminal window:
@@ -29,7 +29,7 @@
 #### In another new terminal window:<br><small><i>(assumes c++ and go build environments)</i></small>
 
 ```bash
-    git clone --branch develop https://github.com/Great-Hill-Corporation/trueblocks-core
+    git clone --branch develop https://github.com/TrueBlocks/trueblocks-core
     cd trueblocks-core
     mkdir build && cd build
     cmake ../src

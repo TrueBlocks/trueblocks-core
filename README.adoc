@@ -45,12 +45,12 @@ cmake ../src
 make -j
 ----
 . Add the `./bin` and `./bin/tests` folders to your PATH
-. If needed, add keys for RPC and EtherScan (for `chifra slurp`). In `~/.quickBlocks/quickBlocks.toml`, add these lines. Be sure they're under `[settings]`:
+. If needed, add keys for RPC and EtherScan (for `chifra slurp`). In `$CONFIG/trueBlocks.toml`, add these lines. $CONFIG is different depending on your OS. Be sure they're under `[settings]`:
 +
 [toml]
 ----
 [settings]
-rpcProvider = "<url>/<key>
+rpcProvider = "<url-to-rpc-endpoint>"
 etherscan_key = "<key>"
 ----
 

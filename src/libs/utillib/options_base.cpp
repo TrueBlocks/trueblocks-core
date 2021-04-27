@@ -31,7 +31,7 @@ void COptionsBase::registerOptions(size_t nP, COption const* pP) {
 
 //--------------------------------------------------------------------------------
 // TODO(tjayrush): global data - but okay, a program only has one name
-string_q COptionsBase::g_progName = "quickBlocks";
+string_q COptionsBase::g_progName = "trueBlocks";
 
 //--------------------------------------------------------------------------------
 void COptionsBase::setProgName(const string_q& name) {
@@ -283,7 +283,7 @@ bool COptionsBase::prepareArguments(int argCountIn, const char* argvIn[]) {
 }
 
 //---------------------------------------------------------------------------------------
-static const char* CHR_VALID_NAME = "\t\n\r()<>[]{}`\\|;'!$^*~@?&#+%,:=\"";
+static const char* CHR_VALID_NAME = "\t\n\r()<>[]{}`|;'!$^*~@?&#+%,:=\"";
 //---------------------------------------------------------------------------------------
 bool isValidName(const string_q& fn) {
     if (fn.empty() || isdigit(fn[0]))
@@ -297,7 +297,8 @@ bool isValidName(const string_q& fn) {
 bool COptionsBase::standardOptions(string_q& cmdLine) {
     if (contains(cmdLine, "--to_file")) {
         ostringstream rep;
-        rep << "--output:" << configPath("cache/tmp/" + makeValidName(Now().Format(FMT_EXPORT)));
+        rep << "--output:"
+            << "/tmp/" + makeValidName(Now().Format(FMT_EXPORT));
         rep << (expContext().exportFmt == CSV1    ? ".csv"
                 : expContext().exportFmt == TXT1  ? ".txt"
                 : expContext().exportFmt == YAML1 ? ".yaml"
@@ -842,6 +843,8 @@ string_q COptionsBase::format_notes(const CStringArray& strs) const {
     string_q nn;
     for (auto n : strs) {
         string_q s = substitute(n, "[{CONFIG}]", configPathRelative(""));
+        if (isTestMode())
+            s = substitute(n, "[{CONFIG}]", "$CONFIG/");
         nn += (s + "\n");
     }
     while (!isReadme && contains(nn, '`')) {
@@ -1029,7 +1032,13 @@ uint64_t verbose = false;
 
 //---------------------------------------------------------------------------------------------------
 string_q configPath(const string_q& part) {
-    return getHomeFolder() + ".quickBlocks/" + part;
+#if defined(__linux) || defined(__linux__) || defined(linux)
+    return getHomeFolder() + ".local/share/trueblocks/" + part;
+#elif defined(__APPLE__)
+    return getHomeFolder() + "Library/Application Support/TrueBlocks/" + part;
+#elif defined(_WIN32) || defined(__WIN32__) || defined(WIN32) || defined(_WIN64)
+#error-- This source code does not compile on Windows
+#endif
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -1039,7 +1048,7 @@ string_q configPathRelative(const string_q& part) {
 
 //------------------------------------------------------------------
 void editFile(const string_q& fileName) {
-    CToml toml(configPath("quickBlocks.toml"));
+    CToml toml(configPath("trueBlocks.toml"));
     string_q editor = toml.getConfigStr("dev", "editor", "<NOT_SET>");
     if (!isTestMode() && editor == "<NOT_SET>") {
         editor = getEnvStr("EDITOR");
@@ -1050,7 +1059,7 @@ void editFile(const string_q& fileName) {
     }
 
     CFilename fn(fileName);
-    string_q cmd = "cd " + fn.getPath() + " ; " + editor + " \"" + fn.getFilename() + "\"";
+    string_q cmd = "cd \"" + fn.getPath() + "\" ; " + editor + " \"" + fn.getFilename() + "\"";
     if (isTestMode()) {
         cerr << "Testing editFile: " << fn.getFilename() << "\n";
         string_q contents;
@@ -1096,7 +1105,7 @@ int sortByBlockNum(const void* v1, const void* v2) {
 //-----------------------------------------------------------------------
 const CToml* getGlobalConfig(const string_q& name) {
     static CToml* toml = NULL;
-    static string_q components = "quickBlocks|";
+    static string_q components = "trueBlocks|";
 
     if (name == "reload" && toml) {
         toml->clear();
@@ -1108,8 +1117,8 @@ const CToml* getGlobalConfig(const string_q& name) {
 
         // Forces a reload
         theToml.clear();
-        theToml.setFilename(configPath("quickBlocks.toml"));
-        theToml.readFile(configPath("quickBlocks.toml"));
+        theToml.setFilename(configPath("trueBlocks.toml"));
+        theToml.readFile(configPath("trueBlocks.toml"));
         toml = &theToml;
 
         // Always load the program's custom config if it exists

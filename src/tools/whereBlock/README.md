@@ -21,7 +21,7 @@ This tool is intended mostly as an aid in developing and debugging TrueBlocks to
 
 `Notes:`
 
-- Customize the location of the cache in the configuration file ~/.quickBlocks/quickBlocks.toml.
+- Customize the location of the cache in the configuration file $CONFIG/trueBlocks.toml.
 
 #### Other Options
 
