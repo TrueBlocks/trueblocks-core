@@ -12,14 +12,15 @@
 
 With version 0.9.0, we made two primary changes to the way we store configuration and cached data on your computer. Those changes are:
 
-1. We now support the [BaseDir Spec](https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html) which describes where to store local configuration files on various operating systems, and
-2. We chose to separate the primary TrueBlocks cache from the TrueBlocks index of appearances cache (the Unchained Index). This allows our users to remove the primary cache without removing the Unchained Index. Because the Unchained Index is immutable, there's no real reason to ever remove it.
+1. We now support the [BaseDir Spec](https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html) which describes where to store local configuration files, and
 
-## Migrating TrueBlocks Configuration Files
+2. We separated our primary cache from our index of appearances (that is, the Unchained Index). This allows you to remove the primary cache without removing the much larger and longer to create Unchained Index.
 
-We begin by moving the existing configuration folder which previously existed at `$HOME/.quickBlocks`. If the first `mv` command fail because the destination folder exists, add `-f` to the `mv` command or remove the destination folder.
+## Migrating Configuration Files
 
-On Apple computers:
+First, we must move the existing configuration folder which exists at `$HOME/.quickBlocks`. Note that If the first `mv` command fails because the destination folder exists, you may add `-f` to the `mv` command or remove the destination folder.
+
+On Apple:
 
 ```[bash]
 mkdir -p "~/Library/Application Support/TrueBlocks/"
@@ -37,24 +38,32 @@ rmdir ~/.quickBlocks
 cd ~/.local/share/trueblocks
 ```
 
-After moving the folder, rename the default configuration file. This assumes you are in the new default config folder created above.
+On Windows:
+
+You're out of luck. TrueBlocks does not support Windows.
+
+## Moving the Configuration File
+
+After moving the folder, we need to move the configuration file. The following assumes you are in the new configuration folder created above.
 
 ```[bash]
 mv quickBlocks.toml trueBlocks.toml
 ```
 
-In the new configuration folder, check to see if a folder called `./cache/addr_index` exitss (`ls -l ./cache`). If it is present, move it to its new location:
+## Moving the Unchained Index if it Exists
+
+In the new configuration folder, check to see if a folder called `./cache/addr_index` exits (`ls -l ./cache`). If it does, move it to its new location:
 
 ```[bash]
 mv ./cache/addr_index ./unchained
 ```
 
-# Editing the Configuration TOML file
+## Edit the Configuration File
 
-You should now be in the destination folder created above. The folders should look something like this (the `cache` folder may be different):
+The new configuration folder should look something like this (the `cache` folder may be different):
 
 <img alt="Folders" src="https://github.com/TrueBlocks/trueblocks-core/blob/new-default-dir/src/other/migrations/folders.png" width="250px" />
 
-There should be a file called `./trueBlocks.toml` at the top of the new configuration folder.
+There should be a file called `./trueBlocks.toml` at the top of this folder.
 
-Edit the file to clean up any dangling paths. If any settings reference the old configuration paths (`~/.quickBlocks`), change those paths to reference the new folder.
+Edit that file and clean up any dangling paths. If any the settings reference the old configuration paths (`~/.quickBlocks`), change those paths to reference the new configuration folder.
