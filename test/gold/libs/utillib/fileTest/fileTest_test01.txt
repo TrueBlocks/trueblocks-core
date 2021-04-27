@@ -105,7 +105,7 @@ Found 120 (120) files
 ../tomlTest2/tests/getState.toml
 ../tomlTest2/tests/getTrans.toml
 ../tomlTest2/tests/grabABI.toml
-../tomlTest2/tests/quickBlocks.toml
+../tomlTest2/tests/trueBlocks.toml
 ../tomlTest2/tests/whenBlock.toml
 ../tomlTest2/tomlTest2_acctExport.txt
 ../tomlTest2/tomlTest2_blockScrape.txt

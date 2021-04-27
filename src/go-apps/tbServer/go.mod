@@ -1,4 +1,4 @@
-module github.com/Great-Hill-Corporation/trueblocks-core/src/go-apps/goServer
+module github.com/TrueBlocks/trueblocks-core/src/go-apps/goServer
 
 go 1.15
 

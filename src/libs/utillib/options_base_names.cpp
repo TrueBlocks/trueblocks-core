@@ -38,7 +38,7 @@ string_q getCachePath(const string_q& _part) {
             return substitute((g_cachePath + _part), "//", "/");
 
         // Otherwise, fill the value
-        CToml toml(configPath("quickBlocks.toml"));
+        CToml toml(configPath("trueBlocks.toml"));
         string_q path = toml.getConfigStr("settings", "cachePath", "<NOT_SET>");
         if (path == "<NOT_SET>") {
             // May have been an old installation, so try to upgrade

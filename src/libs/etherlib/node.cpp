@@ -1066,7 +1066,7 @@ string_q getIndexPath(const string_q& _part) {
     }
     if (!folderExists(indexPath)) {
         cerr << "Attempt to create customized indexPath (" << indexPath << ") failed." << endl;
-        cerr << "Please create the folder or adjust the setting by editing ~/.quickBlocks/quickBlocks.toml." << endl;
+        cerr << "Please create the folder or adjust the setting by editing $CONFIG/trueBlocks.toml." << endl;
         cerr << "Quitting...";
         quickQuitHandler(1);
     }

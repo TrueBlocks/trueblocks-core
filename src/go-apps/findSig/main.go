@@ -3,7 +3,7 @@ package main
 import (
 	"os"
 
-	"github.com/Great-Hill-Corporation/trueblocks-core/src/go-apps/findSig/cmd"
+	"github.com/TrueBlocks/trueblocks-core/src/go-apps/findSig/cmd"
 )
 
 func main() {

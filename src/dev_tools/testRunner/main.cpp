@@ -236,9 +236,9 @@ bool COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, cons
             // To run the test, we cd into the gold path (so we find the test files), but we send results to working
             // folder
             string_q goldApiPath = substitute(test.goldPath, "/api_tests", "");
-            string_q theCmd = "cd " + goldApiPath + " ; " + cmd.str();
+            string_q theCmd = "cd \"" + goldApiPath + "\" ; " + cmd.str();
             if (test.builtin)
-                theCmd = "cd " + goldApiPath + " ; " + test.options;
+                theCmd = "cd \"" + goldApiPath + "\" ; " + test.options;
             LOG4(theCmd);
 
             string_q customized =

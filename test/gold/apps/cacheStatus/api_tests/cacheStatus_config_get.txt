@@ -2,7 +2,7 @@
 {
   "files": [
     {
-      "name": "quickBlocks.toml",
+      "name": "trueBlocks.toml",
       "sections": [
         {
           "section": "Providers",

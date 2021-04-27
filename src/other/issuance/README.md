@@ -11,7 +11,7 @@ These are the two articles:
 
 ## Building and Using the Code
 
-To get started, you must download, build and get running the [TrueBlocks core libraries and tools](https://github.com/Great-Hill-Corporation/trueblocks-core/blob/master/src/other/install/INSTALL.md). Do that now, and return when you're done.
+To get started, you must download, build and get running the [TrueBlocks core libraries and tools](https://github.com/TrueBlocks/trueblocks-core/blob/master/src/other/install/INSTALL.md). Do that now, and return when you're done.
 
 Next, follow these instructions to build the code in this repo (from the ./build folder):
 
@@ -93,7 +93,7 @@ It's important to realize that the data created in this step is a modeling of th
 
 It's beneficial for the archive node to be under your own control, as the process described here queries the node as quickly as possible. Trying this process against a shared archive node, such as Infura, would probably bump up against the limits of that service.
 
-To run the `--audit` process, first build the index [as described here](https://github.com/Great-Hill-Corporation/trueblocks-core/tree/master/src/apps/blockScrape) (or acquire it [as described here](https://hack.ethglobal.co/showcase/unchained-index-recXXu2R9nwwkhH3L)) and do this:
+To run the `--audit` process, first build the index [as described here](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/blockScrape) (or acquire it [as described here](https://hack.ethglobal.co/showcase/unchained-index-recXXu2R9nwwkhH3L)) and do this:
 
     bin/issuance --audit | tee data/audit_results.txt
 

@@ -450,7 +450,7 @@ void establishTestMonitors(void) {
     }
 
     const char* STR_UNZIP_CMD =
-        "cd [{PATH}] && "
+        "cd \"[{PATH}]\" && "
         "rm -fR mocks && "
         "rm -fR monitors && "
         "gunzip --keep *.gz && "

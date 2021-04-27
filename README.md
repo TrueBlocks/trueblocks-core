@@ -2,8 +2,8 @@
 
 ![GitHub repo size](https://img.shields.io/github/repo-size/scottydocs/README-template.md)
 ![GitHub contributors](https://img.shields.io/github/contributors/scottydocs/README-template.md)
-![GitHub stars](https://img.shields.io/github/stars/Great-Hill-Corporation/trueblocks-core?style%3Dsocial)
-![GitHub forks](https://img.shields.io/github/forks/Great-Hill-Corporation/trueblocks-core?style=social)
+![GitHub stars](https://img.shields.io/github/stars/TrueBlocks/trueblocks-core?style%3Dsocial)
+![GitHub forks](https://img.shields.io/github/forks/TrueBlocks/trueblocks-core?style=social)
 ![Twitter Follow](https://img.shields.io/twitter/follow/trueblocks?style=social)
 
 TrueBlocks allows you to build local-first, fully-decentralized applications using data directly from an Ethereum node. It does this through two mechanisms:
@@ -81,7 +81,7 @@ This should return valid JSON data for block 1,000 (type `getBlock --help` for m
 Warning: The Ethereum RPC: 'http://localhost:8545' was not found. Quitting...
 ```
 
-You need to edit the file `~/.quickBlocks/quickBlocks.toml` to provide the URL of an available Ethereum RPC provider. Enter this text (adding the `settings` sections if it's not present):
+You need to edit the file `$CONFIG/trueBlocks.toml` to provide the URL of an available Ethereum RPC provider. Enter this text (adding the `settings` sections if it's not present):
 
 ```[toml]
 [settings]

@@ -226,7 +226,7 @@ bool pinlib_getChunkFromRemote(CPinnedChunk& pin, ipfsdown_t which, double sleep
 
         if (fileExists(getIndexPath(zipFile))) {
             ostringstream cmd;
-            cmd << "cd " << getIndexPath("") << " && gunzip --keep " << zipFile;
+            cmd << "cd \"" << getIndexPath("") << "\" && gunzip --keep " << zipFile;
             int ret = system(cmd.str().c_str());
             // cerr << "result: " << ret << endl;
             if (ret != 0) {
@@ -328,7 +328,7 @@ string_q pinOneChunk(const string_q& fileName, const string_q& type) {
     if (curl) {
         CApiKey lic;
         if (!getApiKey(lic)) {
-            cerr << "You need to put Pinata API keys in ~/.quickBlocks/blockScrape.toml" << endl;
+            cerr << "You need to put Pinata API keys in $CONFIG/blockScrape.toml" << endl;
             return "";
         }
         curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST, "POST");
@@ -364,7 +364,7 @@ string_q pinOneChunk(const string_q& fileName, const string_q& type) {
 string_q pinlib_unpinByHash(const string_q& hash) {
     CApiKey lic;
     if (!getApiKey(lic)) {
-        cerr << "You need to put Pinata API keys in ~/.quickBlocks/blockScrape.toml" << endl;
+        cerr << "You need to put Pinata API keys in $CONFIG/blockScrape.toml" << endl;
         return "";
     }
 

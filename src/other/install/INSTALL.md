@@ -86,7 +86,7 @@ Additionally, please [install Go](https://golang.org/doc/install).
 Open a terminal and change to whatever folder you normally store GitHub repos. Then:
 
 ```bash
-git clone https://github.com/Great-Hill-Corporation/trueblocks-core.git
+git clone https://github.com/TrueBlocks/trueblocks-core.git
 cd trueblocks-core
 mkdir build
 cd build

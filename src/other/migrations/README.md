@@ -23,7 +23,7 @@ First, we must move the existing configuration folder which exists at `$HOME/.qu
 On Apple:
 
 ```[bash]
-mkdir -p "~/Library/Application Support/TrueBlocks/"
+rm -fR "~/Library/Application Support/TrueBlocks/*"               # be careful here!
 mv ~/.quickBlocks/* "~/Library/Application Support/TrueBlocks/"
 rmdir ~/.quickBlocks
 cd "~/Library/Application Support/TrueBlocks/"
@@ -32,7 +32,7 @@ cd "~/Library/Application Support/TrueBlocks/"
 On Linux:
 
 ```[bash]
-mkdir -p ~/.local/share/trueblocks/
+rm -fR ~/.local/share/trueblocks/*                               # be careful here!
 mv ~/.quickBlocks/* ~/.local/share/trueblocks/
 rmdir ~/.quickBlocks
 cd ~/.local/share/trueblocks
@@ -61,16 +61,16 @@ In the new configuration folder, check to see if a folder called `./cache/addr_i
 mv ./cache/addr_index ./unchained
 ```
 
-## Edit the Configuration File
-
-The new configuration folder should look something like this (the `cache` folder may be different):
-
-<img alt="Folders" src="https://github.com/TrueBlocks/trueblocks-core/blob/new-default-dir/src/other/migrations/folders.png" width="250px" />
+## Edit the Configuration File (important)
 
 There should be a file called `./trueBlocks.toml` at the top of this folder.
 
-Edit that file and clean up any dangling paths. Change `~/.quickBlocks` to the new configuration folder throughout.
+Edit that file and clean up any dangling paths. Change references to the old configuration folder to the new configuration folder throughout.
 
 ## You're Migrated
+
+The new configuration folder should look something like this (the `cache` and `unchained` folders may be slightly different):
+
+<img alt="Folders" src="https://github.com/TrueBlocks/trueblocks-core/blob/new-default-dir/src/other/migrations/folders.png" width="250px" />
 
 TrueBlocks version 0.9.0 should now work. Please report any problems by creating an issue.

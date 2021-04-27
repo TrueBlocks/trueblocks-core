@@ -6,6 +6,6 @@ In the first case, one simply supplies a block number and the date and time of t
 
 The values for `date` and `time` are specified in JSON format. The `hour`/`minute`/`second` portions of the date are optional, and if omitted, default to zero in each case. Block numbers may be specified as either integers or hexidecimal values. You may specify any number of dates or blocks per invocation.
 
-You may name your own blocks (for example, to denote the start of an ICO perhaps) by editing '~/.quickBlocks/quickBlocks.toml' and placing `name=blockNum` pairs under the `[special]` section of that file (create the file if it is not already present, create the section if needed). Special blocks are detailed below.
+You may name your own blocks (for example, to denote the start of an ICO perhaps) by editing '$CONFIG/trueBlocks.toml' and placing `name=blockNum` pairs under the `[special]` section of that file (create the file if it is not already present, create the section if needed). Special blocks are detailed below.
 
 [{USAGE_TABLE}][{FOOTER}]

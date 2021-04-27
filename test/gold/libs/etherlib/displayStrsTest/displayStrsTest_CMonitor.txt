@@ -2,7 +2,7 @@ displayStrsTest argc: 2 [1:CMonitor]
 displayStrsTest CMonitor 
 ------------------------------CMonitor------------------------------
 {
-  "schema": 8005,
+  "schema": 9000,
   "deleted": false,
   "showing": true,
   "cname": "Monitor",

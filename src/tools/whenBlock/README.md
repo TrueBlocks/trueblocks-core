@@ -6,7 +6,7 @@ In the first case, one simply supplies a block number and the date and time of t
 
 The values for `date` and `time` are specified in JSON format. The `hour`/`minute`/`second` portions of the date are optional, and if omitted, default to zero in each case. Block numbers may be specified as either integers or hexidecimal values. You may specify any number of dates or blocks per invocation.
 
-You may name your own blocks (for example, to denote the start of an ICO perhaps) by editing '~/.quickBlocks/quickBlocks.toml' and placing `name=blockNum` pairs under the `[special]` section of that file (create the file if it is not already present, create the section if needed). Special blocks are detailed below.
+You may name your own blocks (for example, to denote the start of an ICO perhaps) by editing '$CONFIG/trueBlocks.toml' and placing `name=blockNum` pairs under the `[special]` section of that file (create the file if it is not already present, create the section if needed). Special blocks are detailed below.
 
 #### Usage
 
@@ -28,7 +28,7 @@ You may name your own blocks (for example, to denote the start of an ICO perhaps
 
 - The block list may contain any combination of `number`, `hash`, `date`, special `named` blocks.
 - Dates must be formatted in JSON format: YYYY-MM-DD[THH[:MM[:SS]]].
-- You may customize the list of named blocks by editing ~/.quickBlocks/whenBlock.toml.
+- You may customize the list of named blocks by editing $CONFIG/whenBlock.toml.
 - The following `named` blocks are currently configured:
   - first (`0`), firstTrans (`46147`), firstContract (`50111`), iceage (`200000`)
   - devcon1 (`543626`), homestead (`1150000`), daofund (`1428756`), daohack (`1718497`)
