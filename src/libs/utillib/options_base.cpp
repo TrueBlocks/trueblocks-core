@@ -1030,8 +1030,17 @@ int sortParams(const void* c1, const void* c2) {
 //--------------------------------------------------------------------------------
 uint64_t verbose = false;
 
+extern const char* STR_OLD_FOLDER_ERROR;
 //---------------------------------------------------------------------------------------------------
 string_q configPath(const string_q& part) {
+    static bool been_here = false;
+    if (!been_here) {
+        if (folderExists(getHomeFolder() + ".quickBlocks")) {
+            cerr << bBlue << STR_OLD_FOLDER_ERROR << cOff << endl;
+            quickQuitHandler(1);
+        }
+        been_here = true;
+    }
 #if defined(__linux) || defined(__linux__) || defined(linux)
     return getHomeFolder() + ".local/share/trueblocks/" + part;
 #elif defined(__APPLE__)
@@ -1334,4 +1343,11 @@ const char* STR_DEFAULT_WHENBLOCKS =
     "{ name: \"muirglacier\", value: 9200000 },"
     "{ name: \"latest\", value:\"\" }"
     "]";
+
+//-----------------------------------------------------------------------
+const char* STR_OLD_FOLDER_ERROR =
+    "\n"
+    "  You must complete the migration process before proceeding:\n\n"
+    "      https://github.com/TrueBlocks/trueblocks-core/tree/master/src/other/migrations\n";
+
 }  // namespace qblocks
