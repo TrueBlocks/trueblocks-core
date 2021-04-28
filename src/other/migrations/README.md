@@ -23,7 +23,8 @@ First, we must move the existing configuration folder which exists at `$HOME/.qu
 On Apple:
 
 ```[bash]
-rm -fR "~/Library/Application Support/TrueBlocks/*"               # be careful here!
+rm -fR "~/Library/Application Support/TrueBlocks/*"               # clean up just in case. Be careful here!
+mkdir -p "~/Library/Application Support/TrueBlocks/"              # make the directory
 mv ~/.quickBlocks/* "~/Library/Application Support/TrueBlocks/"
 rmdir ~/.quickBlocks
 cd "~/Library/Application Support/TrueBlocks/"
@@ -32,7 +33,8 @@ cd "~/Library/Application Support/TrueBlocks/"
 On Linux:
 
 ```[bash]
-rm -fR ~/.local/share/trueblocks/*                               # be careful here!
+rm -fR ~/.local/share/trueblocks/*                                # clean up just in case. Be careful here!
+mkdir -p "~/.local/share/trueblocks/"                             # make the directory
 mv ~/.quickBlocks/* ~/.local/share/trueblocks/
 rmdir ~/.quickBlocks
 cd ~/.local/share/trueblocks
@@ -44,28 +46,30 @@ On Windows:
 You're out of luck. TrueBlocks does not support Windows.
 ```
 
-## Moving the Configuration File
-
-After moving the folder, we need to move the configuration file. The following assumes you are in the new configuration folder created above.
-
-```[bash]
-mv quickBlocks.toml trueBlocks.toml
-```
+Make sure to remove the old ~/.quickBlocks folder when you're done. `chifra` will continue to complain about needing a migration until that folder no long exists.
 
 ## Moving the Unchained Index
 
-In the new configuration folder, check to see if a folder called `./cache/addr_index` exits (`ls -l ./cache`). If it does, move it to its new location:
+In the new configuration folder, check to see if a folder called `./cache/addr_index` exits (`ls -l ./cache/addr_index/`). If that folder exists, move it to its new location:
 
 ```[bash]
 # Ignore if the folder does not exist or is configured elsewhere.
 mv ./cache/addr_index ./unchained
 ```
 
+## Moving the Configuration File
+
+After moving the folders, we need to move the configuration file. The following assumes you are in the new configuration folder.
+
+```[bash]
+mv quickBlocks.toml trueBlocks.toml
+```
+
 ## Edit the Configuration File (important)
 
-There should be a file called `./trueBlocks.toml` at the top of this folder.
+The final step is to edit the configuration file (now called `./trueBlocks.toml`).
 
-Edit that file and clean up any dangling paths. Change references to the old configuration folder to the new configuration folder throughout.
+Open it with any editor and change any references to the old path (~/.quickBlocks) to the new path as per your operating system. While you're at it, verify that any other settings in this file are correct.
 
 ## You're Migrated
 
