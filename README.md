@@ -2,8 +2,6 @@
 
 Ethereum as it was meant to be: local-first, P2P, and accurate queries to all the data you’ll ever need.
 
-![1min to 5s. Video is at double speed because we type slow](./chifra-lists.gif)
-
 ## Installing
 
 <div class="note">
@@ -115,17 +113,13 @@ The largest remaining open issue is the TrueBlocks scraper, which extracts an in
 
 We are very open to your comments/questions. If you have fixes and ideas, see [How can I help?](#_how_can_i_help).
 
-## How can I help?
+## Contributing
 
-We’re really grateful for all commits and issues, from typos to major optimizations.
+We’re really grateful for all commits and issues.
+If you find a bug, please do make an isssue.
+You probably found something we don't know about.
 
-For some easier ways to help, here are a few things we’re trying to fix.
-
--   Coding
-
-    -   ❏ \[LINK TO FILE\]
-
-    -   ❏ \[LINK TO FILE\]
+We're also grateful for every PR, including simple typo fixes.
 
 For some harder ways to help, see our [full issues board.](https://app.zenhub.com/workspaces/trueblocks-workspace-5d680eb2a00eda0001a1bd65/board?repos=167762980,87072460,289506578)
 
