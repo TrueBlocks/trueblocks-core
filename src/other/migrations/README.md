@@ -10,21 +10,36 @@
 
 ## Why the Change?
 
-With version 0.9.0, we made two primary changes to the way we store configuration and cached data on your computer. Those changes are:
+With version 0.9.0, we made two changes to the way we store configuration and cache data. Those changes are:
 
 1. We now support the [BaseDir Spec](https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html) which describes where to store local configuration files, and
 
-2. We separated our primary cache from our index of appearances (that is, the Unchained Index). This allows you to remove the primary cache without removing the much larger and longer to create Unchained Index.
+2. We separated the primary cache from the index of appearances (also called the Unchained Index). This allows you to remove the primary cache without removing the Unchained Index (which is immutable anyway and takes longer to create).
+
+## Preliminaries
+
+If you haven't already done so, make sure to pull the latest code and re-build it. From the `./trueblocks-core` folder (see the main README for more information):
+
+```[bash]
+git checkout develop
+git pull
+cd build
+cmake ../src
+make clean         # this is optional, but more explicit
+make -j <nprocs>
+```
+
+where **nprocs** is the number of processors on your machine (or '1' if you're unsure).
 
 ## Migrating Configuration Files
 
-First, we must move the existing configuration folder which exists at `$HOME/.quickBlocks`. Note that If the first `mv` command fails because the destination folder exists, you may add `-f` to the `mv` command or remove the destination folder.
+After rebuilding, the first thing to do is move the existing configuration folder which previously existed at `$HOME/.quickBlocks`.
 
 On Apple:
 
 ```[bash]
-rm -fR "~/Library/Application Support/TrueBlocks/*"               # clean up just in case. Be careful here!
-mkdir -p "~/Library/Application Support/TrueBlocks/"              # make the directory
+rm -fR "~/Library/Application Support/TrueBlocks/*"               # clean up in case it exists. Be careful here!
+mkdir -p "~/Library/Application Support/TrueBlocks/"              # re-establish the folder
 mv ~/.quickBlocks/* "~/Library/Application Support/TrueBlocks/"
 rmdir ~/.quickBlocks
 cd "~/Library/Application Support/TrueBlocks/"
@@ -33,8 +48,8 @@ cd "~/Library/Application Support/TrueBlocks/"
 On Linux:
 
 ```[bash]
-rm -fR ~/.local/share/trueblocks/*                                # clean up just in case. Be careful here!
-mkdir -p "~/.local/share/trueblocks/"                             # make the directory
+rm -fR ~/.local/share/trueblocks/*                                # clean up in case it exists. Be careful here!
+mkdir -p "~/.local/share/trueblocks/"                             # re-establish the folder
 mv ~/.quickBlocks/* ~/.local/share/trueblocks/
 rmdir ~/.quickBlocks
 cd ~/.local/share/trueblocks
@@ -46,7 +61,7 @@ On Windows:
 You're out of luck. TrueBlocks does not support Windows.
 ```
 
-Make sure to remove the old ~/.quickBlocks folder when you're done. `chifra` will continue to complain about needing a migration until that folder no long exists.
+Make sure to remove the old `~/.quickBlocks` folder when you're done. `chifra` will continue to complain about needing a migration until that folder no long exists.
 
 ## Moving the Unchained Index
 
@@ -59,19 +74,19 @@ mv ./cache/addr_index ./unchained
 
 ## Moving the Configuration File
 
-After moving the folders, we need to move the configuration file. The following assumes you are in the new configuration folder.
+After moving the folders, the next thing to do is move the configuration file. The following assumes you are in the new configuration folder.
 
 ```[bash]
 mv quickBlocks.toml trueBlocks.toml
 ```
 
-## Edit the Configuration File (important)
+## Edit the Configuration File (important!)
 
 The final step is to edit the configuration file (now called `./trueBlocks.toml`).
 
-Open it with any editor and change any references to the old path (~/.quickBlocks) to the new path as per your operating system. While you're at it, verify that any other settings in this file are correct.
+Open it with any editor and change any references to the old path (`~/.quickBlocks`) to the new path. While you're at it, verify that any other settings in this file are correct.
 
-## You're Migrated
+## You're Done
 
 The new configuration folder should look something like this (the `cache` and `unchained` folders may be slightly different):
 
