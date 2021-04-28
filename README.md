@@ -1,136 +1,148 @@
 # TrueBlocks Core
 
-![GitHub repo size](https://img.shields.io/github/repo-size/scottydocs/README-template.md)
-![GitHub contributors](https://img.shields.io/github/contributors/scottydocs/README-template.md)
-![GitHub stars](https://img.shields.io/github/stars/TrueBlocks/trueblocks-core?style%3Dsocial)
-![GitHub forks](https://img.shields.io/github/forks/TrueBlocks/trueblocks-core?style=social)
-![Twitter Follow](https://img.shields.io/twitter/follow/trueblocks?style=social)
+Ethereum as it was meant to be: local-first, P2P, and accurate queries to all the data you’ll ever need.
 
-TrueBlocks allows you to build local-first, fully-decentralized applications using data directly from an Ethereum node. It does this through two mechanisms:
+![1min to 5s. Video is at double speed because we type slow](./chifra-lists.gif)
 
-1. A lightning-fast index of every appearance of every addresses on the chain, and
-2. A binary cache of only the data your application extracts. 
+## Installing
 
-Local-first means your application is **private by default**, the client-side cache means your application is **fast**, and *extraction-on-demand* means your application will remain **minimal**.
+<div class="note">
 
-[How does TrueBlocks Work?](./docs/FAQ.md#how-it-works)
+This is a work in progress. See [What works now?](#_what_works_now) for known issues.
 
-## Prerequisites
----
+</div>
 
-Before building TrueBlocks, you need to make sure you have `git`, `cmake`, `clang-format`, and `go` available.
+The following instructions help you compile the `core` tools from the TrueBlocks github repo. If you want to use our browser front-end, see [TrueBlocks Explorer.](https://github.com/TrueBlocks/trueblocks-explorer) For a docker image, see [TrueBlocks Docker](https://github.com/TrueBlocks/trueblocks-docker)
 
-Follow [these instructions](https://golang.org/doc/install) for installing `golang` on your system.
+1.  Install dependencies
 
-Complete these commands to install `git`, `cmake`, and `clang-format`:
+    **For Linux**:
 
-#### On Linux:
+        sudo apt install build-essential git cmake python python-dev libcurl3-dev clang-format jq
 
-```[shell]
-sudo apt install build-essential git cmake python python-dev libcurl3-dev clang-format jq
-```
+    **For Mac**:
 
-#### On Mac:
+We recommend that you run MacOS Big Sur or later for best results.
 
-```[shell]
-brew install cmake
-brew install git
-brew install clang-format
-brew install jq
-```
-## Building TrueBlocks
+\+
 
-Currently, you must build TrueBlocks from source:
+    brew install cmake
+    brew install git
+    brew install clang-format
+    brew install jq
 
-```[shell]
-git clone git@github.com:TrueBlocks/trueblocks-core.git
-cd trueblocks-core
-mkdir build && cd build
-cmake ../src
-make
-```
+1.  Compile
 
-This will create a series of executables in the `./bin` folder at the top of the repo. The following instructions assume you've added this folder to your `$PATH`.
+        git clone -b develop git@github.com:TrueBlocks/trueblocks-core.git
+        cd trueblocks-core
+        mkdir build && cd build
+        cmake ../src
+        make -j
 
-[Does TrueBlocks Work on Windows?](./docs/FAQ.md-windows)
+2.  Add the `./bin` and `./bin/tests` folders to your PATH
 
-## Testing Installation
----
+3.  If needed, add keys for RPC and EtherScan (for `chifra slurp`). In `$CONFIG/trueBlocks.toml`, add these lines. $CONFIG is different depending on your OS. Be sure they’re under `[settings]`:
 
-After building TrueBlocks, you may test your configuration with this command:
+        [settings]
+        rpcProvider = "<url-to-rpc-endpoint>"
+        etherscan_key = "<key>"
 
-```[shell]
-chifra --version
-```
+4.  Test your install.
 
-For a complete list of available commands, run this command:
+        chifra blocks 14560
 
-```[shell]
-chifra --help
-```
+## What even is this?
 
-Next, let's see if you can get a block from your Ethereum node. Enter this command:
+TrueBlocks creates an index that lets you access the entire Ethereum chain directly from your local machine. It ships with a large number of tools that let you chain together queries on all types of Ethereum data: transaction numbers, addresses, blocks, ABIs, et cetera.
 
-```[shell]
-chifra blocks 1000
-```
+Trueblocks works by capturing the chain at any point in time on an index. Although it lets you query the entire chain, the index occupies only about 50gb of space (for comparison, the unindexed chain occupies about six terrabytes). We distribute the index over the [Interplanetary file system](https://ipfs.io/), letting you avoid centralized cloud node services.
 
-This should return valid JSON data for block 1,000 (type `getBlock --help` for more options on this tool.) If you get an error, such as this:
+Through a binary cache, TrueBlocks can make your repeated queries *very fast*. For large complex queries, this cache can reduce query times from minutes to seconds.
 
-```[shell]
-Warning: The Ethereum RPC: 'http://localhost:8545' was not found. Quitting...
-```
+If they want privacy, speed, and data quality, TrueBlocks might be helpful to:
 
-You need to edit the file `$CONFIG/trueBlocks.toml` to provide the URL of an available Ethereum RPC provider. Enter this text (adding the `settings` sections if it's not present):
+-   Data scientists
 
-```[toml]
-[settings]
-rpcProvider="<url-to-your-rpc-provider>
-```
+-   Investigators who want to track addresses and accounts
 
-Once you get `chifra blocks` to return JSON data, you are ready to test your installtion. While optional, one of the tools (`ethslurp`) requires an Etherscan key. Get an EtherScan API key now, then run:
+-   Organizations like charities who may need to process restricted donations.
 
-```[shell]
-make tests
-```
+-   Any Ethereum-head. If you have a cool idea, let us know!
 
-## Using TrueBlocks
----
+### The catch
 
-The `chifra` tool is the basis for everything related to TrueBlocks. (`chifra` is derived from the Arabic word for `chipher`.) It helps you decipher chain data.
+Unfortunately, while the index is already working on some test accounts, it’s not quite ready for widespread public release. However, this repo does offer some tools that should work on any Mac or Linux machine. If you want to see what’s currently working, check out [What works now?](#_what_works_now):
 
-[Running the API](./docs/FAQ.md#running-the-api)
+## Background: Promise vs. Reality
 
-[Using the Command Line](./docs/FAQ.md#using-the-command-line)
+Back in late 2015, we become obsessed with Ethereum. Not because of 'price go up', but because of the amazing promise that shared, global data has to change the world:
 
-[Using the Libraries](./docs/FAQ.md#using-the-library)
+-   Permissionless data
 
-[Where to Go from Here...](./docs/FAQ.md#where-to-go-from-here)
+-   World-wide consented-to data
 
-[Full Documentation...](./docs/FAQ.md#full-documentation)
+-   Cryptographically secured data
 
-## Contributing to TrueBlocks
----
-Please see information about our [work flow](./docs/BRANCHING.md) before proceeding.
+-   Distributed data
 
-1. Fork this repository into your own repo.
-2. Create a branch: `git checkout -b <branch_name>`.
-3. Make changes and commit them: `git commit -m '<commit_message>'`
-4. Push to the original branch: `git push origin TrueBlocks/trueblocks-core`
-5. Create the pull request.
+-   Immutable data
 
-## Contributors
----
-Thanks to the following people who have contributed to this project:
+Sound enticing, but be honest: things haven’t worked out exactly as we thought.
 
-* [@tjayrush](https://github.com/tjayrush)
-* [@crodnun](https://github.com/crodnun)
-* [@wildmolasses](https://github.com/wildmolasses)
+The reality is that there are many hard engineering problems left to solve:
 
-## Contact
----
-If you have specific requests, contact us here <info@quickblocks.io>.
+-   Heavy computational requirements means Ethereum nodes are difficult to run on your own
 
-## License
----
-This project licensed under the [Apache License Version 2.0](LICENSE.md).
+-   Extracting meaningful data from the node is slow, error-prone, and confusing
+
+-   Current methods of accessing Ethereum data rely on third-party providers and APIs which will lead to:
+
+    -   Privacy invasion
+
+    -   Winner-take-all market dominance by a small number of providers(if not just one!)
+
+    -   Unnecessary costs, rate-limiting, sharing of services for remote data
+
+Moreover, using an Ethereum node ─ especially a remote node ─ is REALLY slow!
+
+TrueBlocks tries to mitigate some of these issues. For the heavy computing problem, the index gives you access to the entire chain, without running a node. For validation, our articulation tool lets you translate the transaction bytes into human-readable data. Accessing this index through the IPFS ensures immutability(as changing anything would change the address hash). The index is local-first and distributed over IPFS, ensuring decentralization. The cache ensure its fast.
+
+## What works now?
+
+All of the [TrueBlocks tools](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/tools) currently work and are passing more than 1,000 test cases. Some tools work better than others.
+
+The largest remaining open issue is the TrueBlocks scraper, which extracts an index of address appearances from the chain. Currently, this index may be built from scratch, a process that takes two days and is free if you have your own archive node. Unfortunately, this process takes significantly longer and, if you do not have your own archive node, it will cost money. We’re working on processes (using IPFS) to get you the index in the later case.
+
+We are very open to your comments/questions. If you have fixes and ideas, see [How can I help?](#_how_can_i_help).
+
+## How can I help?
+
+We’re really grateful for all commits and issues, from typos to major optimizations.
+
+For some easier ways to help, here are a few things we’re trying to fix.
+
+-   Coding
+
+    -   ❏ \[LINK TO FILE\]
+
+    -   ❏ \[LINK TO FILE\]
+
+For some harder ways to help, see our [full issues board.](https://app.zenhub.com/workspaces/trueblocks-workspace-5d680eb2a00eda0001a1bd65/board?repos=167762980,87072460,289506578)
+
+If you want to make a PR, here’s our preferred workflow:
+
+1.  Clone whichever repo you’re interested in (trueblocks-core, trueblocks-docker, or trueblocks-explorer).
+
+2.  Checkout the develop branch (git checkout develop).
+
+3.  Create a branch from the develop branch (git checkout -b whatever).
+
+4.  Create a PR against the develop branch
+
+5.  Once your PR is merged, your remote branch will be deleted (to keep the number of stale branches low)
+
+## What if I just have a question?
+
+Chat with us on our discord! [Invite link](https://discord.gg/kS6WNk4d).
+
+Or send an email to <info@quickblocks.io>.
