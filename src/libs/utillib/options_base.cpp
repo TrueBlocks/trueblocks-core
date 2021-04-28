@@ -109,6 +109,25 @@ bool COptionsBase::prePrepareArguments(CStringArray& separatedArgs_, int argCoun
 }
 
 //--------------------------------------------------------------------------------
+bool COptionsBase::isBadSingleDash(const string_q& arg) const {
+    for (size_t j = 0; j < cntParams; j++) {
+        string_q cmd = substitute(arg, "-", "");
+        if (cmd == pParams[j].longName)
+            return true;
+    }
+
+    CStringArray builtInCmds = {"verbose", "fmt",     "ether",  "output",  "raw",     "very_raw", "mocked",
+                                "wei",     "dollars", "parity", "version", "nocolor", "noop"};
+
+    for (auto bi : builtInCmds) {
+        if (arg == ("-" + bi))
+            return true;
+    }
+
+    return false;
+}
+
+//--------------------------------------------------------------------------------
 bool COptionsBase::prepareArguments(int argCountIn, const char* argvIn[]) {
     CStringArray separatedArgs_;
     prePrepareArguments(separatedArgs_, argCountIn, argvIn);
@@ -117,6 +136,8 @@ bool COptionsBase::prepareArguments(int argCountIn, const char* argvIn[]) {
     for (auto arg : separatedArgs_) {
         replace(arg, "--verbose", "-v");
         while (!arg.empty()) {
+            if (startsWith(arg, "-") && !contains(arg, "--") && isBadSingleDash(arg))
+                return invalid_option(arg + ". Did you mean -" + arg + "?");
             string_q opt = expandOption(arg);  // handles case of -rf for example
             if (isReadme && isEnabled(OPT_HELP))
                 return usage();
@@ -680,6 +701,13 @@ bool COptionsBase::usage(const string_q& errMsg) const {
         cerr << usageStr(errMsg + " Quitting...");
     }
     return false;
+}
+
+//--------------------------------------------------------------------------------
+bool COptionsBase::invalid_option(const string_q& arg) const {
+    if (startsWith(arg, "-") && !contains(arg, "--") && isBadSingleDash(arg))
+        return invalid_option(arg + ". Did you mean -" + arg + "?");
+    return usage("Invalid option: " + arg);
 }
 
 //--------------------------------------------------------------------------------

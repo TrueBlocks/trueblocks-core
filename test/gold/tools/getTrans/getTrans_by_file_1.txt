@@ -4,3 +4,24 @@ getTrans --file:cmd_file --fmt csv
 "3657480","78","2017-05-06 00:43:39 UTC","1494031419","0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5","0x8c222fb428f9f44715cf85349f79a18761c8e53c","0.233602441535478432","0.000000020000000000","21000","0x1e4e4d62951733dea1cce59eca0ffaf89a7881f13c9bb8558d61f6a9e0928c4b","0","0x","0x ( )"
 "3657480","78","2017-05-06 00:43:39 UTC","1494031419","0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5","0x8c222fb428f9f44715cf85349f79a18761c8e53c","0.233602441535478432","0.000000020000000000","21000","0x1e4e4d62951733dea1cce59eca0ffaf89a7881f13c9bb8558d61f6a9e0928c4b","0","0x","0x ( )"
 "3657480","79","2017-05-06 00:43:39 UTC","1494031419","0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5","0x85ac33fe36a146ca3651693c16fbb45b3832b3f6","0.207260709928115808","0.000000020000000000","21000","0xda2f27fffb36c90c74fc53bd8b721074e87203c727640c95c4c802296e3bf8ad","0","0x","0x ( )"
+
+  Invalid option: -fmt. Did you mean --fmt?
+
+  Usage:    getTrans [-a|-t|-u|-v|-h] <tx_id> [tx_id...]  
+  Purpose:  Retrieve a transaction from the cache or the node.
+
+  Where:  
+	transactions          a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID) (required)
+	-a  (--articulate)    articulate the transactions if an ABI is found for the 'to' address
+	-t  (--trace)         display the transaction's trace
+	-u  (--uniq)          display a list of uniq addresses found in this transaction
+
+	#### Hidden options
+	-o  (--cache)         force the results into the tx cache
+	#### Hidden options
+
+	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
+	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
+	-h  (--help)          display this help screen
+
+  Powered by TrueBlocks
