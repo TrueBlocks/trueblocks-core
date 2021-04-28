@@ -44,7 +44,7 @@ Here is a screen shot of an interaction with Chifra building a smart contract mo
  ADMIN
    init          initialize TrueBlocks databases by downloading pinned bloom filters
    scrape        scrape the chain and build an index of address appearances (aka digests)
-   serve         serve the TrueBlocks API via tbServer
+   serve         serve the TrueBlocks API via the flame server
    pins          query the status of the pinning system
    status        query the status of the system
  OTHER
@@ -73,4 +73,6 @@ All **TrueBlocks** command-line tools support the following commands (although i
     --file:fn   |   specify multiple sets of command line options in a file.
 
 <small>*For the `--file:fn` option, place a series of valid command lines in a file and use the above options. In some cases, this option may significantly improve performance. A semi-colon at the start of a line makes that line a comment.*</small>
+
+**Source**: [`apps/chifra`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra)
 

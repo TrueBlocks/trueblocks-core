@@ -21,7 +21,7 @@ This tool is intended mostly as an aid in developing and debugging TrueBlocks to
 
 `Notes:`
 
-- Customize the location of the cache in the configuration file ~/.quickBlocks/quickBlocks.toml.
+- Customize the location of the cache in the configuration file $CONFIG/trueBlocks.toml.
 
 #### Other Options
 
@@ -42,4 +42,6 @@ All **TrueBlocks** command-line tools support the following commands (although i
     --file:fn   |   specify multiple sets of command line options in a file.
 
 <small>*For the `--file:fn` option, place a series of valid command lines in a file and use the above options. In some cases, this option may significantly improve performance. A semi-colon at the start of a line makes that line a comment.*</small>
+
+**Source**: [`tools/whereBlock`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/tools/whereBlock)
 

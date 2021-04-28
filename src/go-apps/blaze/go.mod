@@ -1,4 +1,4 @@
-module github.com/Great-Hill-Corporation/trueblocks-core/src/go-apps/blaze
+module github.com/TrueBlocks/trueblocks-core/src/go-apps/blaze
 
 go 1.15
 

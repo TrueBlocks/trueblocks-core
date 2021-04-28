@@ -18,7 +18,7 @@ whenBlock 1000 --verbose:j
   Notes:
 	- The block list may contain any combination of number, hash, date, special named blocks.
 	- Dates must be formatted in JSON format: YYYY-MM-DD[THH[:MM[:SS]]].
-	- You may customize the list of named blocks by editing ~/.quickBlocks/whenBlock.toml.
+	- You may customize the list of named blocks by editing $CONFIG/whenBlock.toml.
 	- The following named blocks are currently configured:
 	  - first (0), firstTrans (46147), firstContract (50111), iceage (200000)
 	  - devcon1 (543626), homestead (1150000), daofund (1428756), daohack (1718497)

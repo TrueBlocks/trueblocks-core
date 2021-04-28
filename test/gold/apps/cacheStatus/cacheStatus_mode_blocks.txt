@@ -3,7 +3,7 @@ cacheStatus caches --types blocks
 {
   "client_version": "Client version",
   "client_ids": "chainId: 1 networkId: 1",
-  "trueblocks_version": "GHC-TrueBlocks//0.8.5-alpha--git-hash---git-ts-",
+  "trueblocks_version": "GHC-TrueBlocks//0.9.0-alpha--git-hash---git-ts-",
   "rpc_provider": "--providers--",
   "balance_provider": "--providers--",
   "cache_path": "--paths--",

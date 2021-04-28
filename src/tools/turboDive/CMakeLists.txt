@@ -30,7 +30,4 @@ endif()
 include_directories(${BASE_INCLUDE} ${CMAKE_CURRENT_SOURCE_DIR})
 
 # Additional target to make the README.md
-build_readme(${CMAKE_CURRENT_SOURCE_DIR} ${TOOL_NAME} "dive")
-
-# Installation steps
-install(TARGETS ${TOOL_NAME} RUNTIME DESTINATION bin)
+build_readme(${CMAKE_CURRENT_SOURCE_DIR} ${PROJ_NAME} ${TOOL_NAME} "dive")

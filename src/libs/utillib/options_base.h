@@ -128,6 +128,7 @@ class COptionsBase {
 
     // usage related
     bool usage(const string_q& errMsg = "") const;
+    bool invalid_option(const string_q& arg) const;
     string_q usageStr(const string_q& errMsg = "") const;
     string_q purpose(void) const;
     string_q options(void) const;
@@ -139,6 +140,7 @@ class COptionsBase {
 
     const COption* findParam(const string_q& name) const;
     string_q expandOption(string_q& arg);
+    bool isBadSingleDash(const string_q& arg) const;
 
     bool isRedirected(void) const;
     string_q getOutputFn(void) const {

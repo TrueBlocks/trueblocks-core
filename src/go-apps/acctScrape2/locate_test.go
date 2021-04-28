@@ -5,7 +5,7 @@ package main
 // 	"os"
 // 	"testing"
 
-// 	"github.com/Great-Hill-Corporation/trueblocks-core/src/go-apps/acctScrape2/cmd"
+// 	"github.com/TrueBlocks/trueblocks-core/src/go-apps/acctScrape2/cmd"
 // )
 
 // func getAddressRecords(t *testing.T, f *os.File, count uint32) (records []addressRecord) {

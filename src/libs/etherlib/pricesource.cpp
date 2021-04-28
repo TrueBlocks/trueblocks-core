@@ -49,8 +49,8 @@ bool loadPriceData(const CPriceSource& source, CPriceQuoteArray& quotes, bool fr
         if (fileExists(zipFile)) {  // zipFile != cacheFile + ".gz") {
             ostringstream cmd;
             if (zipFile != cacheFile + ".gz")
-                cmd << "cp -f " << zipFile << " " << cacheFile << ".gz ; ";
-            cmd << "cd " << getCachePath("prices/") << " ; ";
+                cmd << "cp -f \"" << zipFile << "\" \"" << cacheFile << ".gz\" ; ";
+            cmd << "cd \"" << getCachePath("prices/") << "\" ; ";
             cmd << "gunzip *.gz";
             doCommand(cmd.str());
         }

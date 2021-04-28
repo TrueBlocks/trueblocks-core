@@ -58,6 +58,7 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,customizeable,c
 10930,apps,Admin,pins,pinMan,compare,c,,false,false,true,true,header,switch,<boolean>,report differences (if any) between the manifest and pinning service
 10950,apps,Admin,pins,pinMan,init,i,,false,false,true,true,header,switch,<boolean>,initialize the local index by downloading bloom filters from the pinning service
 10970,apps,Admin,pins,pinMan,freshen,f,,false,false,true,true,header,switch,<boolean>,freshen the manifest from the hash found at the smart contract
+10980,apps,Admin,pins,pinMan,sleep,s,.25,false,false,true,false,header,flag,<double>,the number of seconds to sleep between requests during init (default [{DEF}])
 10980,apps,Admin,pins,pinMan,,,,false,false,true,true,--,description,,Report on and manage the remotely pinned appearance index and associated bloom filters.
 
 11660,dev_tools,,,makeClass,files,,,true,false,true,false,local,positional,list<path>,one or more class definition files
@@ -235,7 +236,7 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,customizeable,c
 
 14020,tools,Other,where,whereBlock,blocks,,,true,false,true,false,local,positional,list<blknum>,a space-separated list of one or more blocks to search for
 14040,tools,Other,where,whereBlock,,,,false,false,true,false,--,description,,Reports in which cache (if any) a block is found.
-14050,tools,Other,where,whereBlock,,,,false,false,false,false,--,note,,Customize the location of the cache in the configuration file [{CONFIG}]quickBlocks.toml.
+14050,tools,Other,where,whereBlock,,,,false,false,false,false,--,note,,Customize the location of the cache in the configuration file [{CONFIG}]trueBlocks.toml.
 
 14010,tools,Other,dive,turboDive,mode,m,,false,false,true,false,header,flag,enum[tables*|dump],the command to run
 14020,tools,Other,dive,turboDive,datadir,d,,false,false,true,true,header,flag,<string>,folder containing TurboGeth data file (data.mdb)

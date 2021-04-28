@@ -84,7 +84,7 @@ bool COptions::parseArguments(string_q& command) {
         } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
-                return usage("Invalid option: " + arg);
+                return invalid_option(arg);
             }
 
             // END_CODE_AUTO
@@ -265,7 +265,7 @@ bool COptions::cleanTest(const string_q& path, const string_q& testName) {
 //---------------------------------------------------------------------------------------------------
 void establishTestData(void) {
     cleanFolder(getCachePath("tmp/"));
-    cleanFolder(configPath("mocked/addr_index"));
+    cleanFolder(configPath("mocked/unchained"));
 
     // TODO(tjayrush): This code is a hack to make test cases pass. We should fix the underlyign reason
     // TODO(tjayrush): these tests fail. To reproduce, delete the entire cache, comment the lines below
@@ -284,6 +284,7 @@ void establishTestData(void) {
     doCommand("grabABI 0x226159d592e2b063810a10ebf6dcbada94ed68b8");
     doCommand("grabABI 0x17996cbddd23c2a912de8477c37d43a1b79770b8");
     doCommand("grabABI 0x0000000000004946c0e9f43f4dee607b0ef1fa1c");
+    doCommand("grabABI 0x7c66550c9c730b6fdd4c03bc2e73c5462c5f7acc");
 
 // TODO(tjayrush): FIX_THIS_CODE
 #if 1

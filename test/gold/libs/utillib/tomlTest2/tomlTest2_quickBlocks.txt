@@ -1,6 +1,6 @@
-tomlTest2 argc: 2 [1:quickBlocks.toml] 
-tomlTest2 quickBlocks.toml 
-tests/quickBlocks.toml
+tomlTest2 argc: 2 [1:trueBlocks.toml] 
+tomlTest2 trueBlocks.toml 
+tests/trueBlocks.toml
 [version]
 current = "0.5.5-alpha"
 
@@ -11,8 +11,8 @@ rpcProvider = "http://localhost:36963/"
 # rpcProvider = "http://localhost:23456/"
 # rpcProvider = "http://localhost:8515"
 balanceProvider = "http://localhost:36963/"
-cachePath = "/Users/what/.quickBlocks/cache/"
-indexPath = "/Users/what/.quickBlocks/cache/addr_index/"
+cachePath = "$CONFIG/cache/"
+indexPath = "$CONFIG/unchained/"
 
 # [dev]
 # debug_curl = true

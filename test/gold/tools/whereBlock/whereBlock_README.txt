@@ -16,5 +16,5 @@ whereBlock -th
 
 `Notes:`
 
-- Customize the location of the cache in the configuration file ~/.quickBlocks/quickBlocks.toml.
+- Customize the location of the cache in the configuration file $CONFIG/trueBlocks.toml.
 

@@ -61,7 +61,7 @@ bool COptions::parseArguments(string_q& command) {
         } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
-                return usage("Invalid option: " + arg);
+                return invalid_option(arg);
             }
 
         } else if (isAddress(arg)) {
@@ -217,12 +217,8 @@ bool COptions::getFormatString(const string_q& which, bool ignoreBlank, string_q
         errors.push_back("Mismatched brackets in display string '" + formatName + "': '" + ret + "'.\n");
 
     } else if (ret.empty() && !ignoreBlank) {
-        const char* ERR_NO_DISPLAY_STR =
-            "You entered an empty display string with the --format (-f) option. The format string 'fmt_[{FMT}]_file'\n"
-            "  was not found in the configuration file (which is stored here: [{CONFIG}]).\n"
-            "  Please see the full documentation for more information on display strings.";
-        errors.push_back(substitute(substitute(ERR_NO_DISPLAY_STR, "[{FMT}]", exportFormat), "[{CONFIG}]",
-                                    configPathRelative("quickBlocks.toml")));
+        const char* ERR_NO_DISPLAY_STR = "Your configuration file contains an empty display string 'fmt_[{FMT}]_file'.";
+        errors.push_back(substitute(ERR_NO_DISPLAY_STR, "[{FMT}]", exportFormat));
     }
 
     fmtOut = ret;

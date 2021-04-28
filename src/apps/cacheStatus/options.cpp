@@ -97,7 +97,7 @@ bool COptions::parseArguments(string_q& command) {
         } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
-                return usage("Invalid option: " + arg);
+                return invalid_option(arg);
             }
 
         } else {

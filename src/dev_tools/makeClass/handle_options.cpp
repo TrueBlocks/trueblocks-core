@@ -559,7 +559,7 @@ const char* STR_CHECK_BUILTIN =
     "        } else if (startsWith(arg, '-')) {  // do not collapse\n"
     "\n"
     "            if (!builtInCmd(arg)) {\n"
-    "                return usage(\"Invalid option: \" + arg);\n"
+    "                return invalid_option(arg);\n"
     "            }\n";
 
 //---------------------------------------------------------------------------------------------------

@@ -70,5 +70,5 @@ export TB_NAME_DECIMALS=$DECIMALS
 export TB_NAME_DESCR=$DESCR
 export TB_NAME_CUSTOM=true
 chifra names --update
-cp -pf /Users/jrush/.quickBlocks/names/names_custom.tab /Users/jrush/Desktop/names_custom.tab
+cp -pf "$HOME/Library/Application Support/TrueBlocks/names/names_custom.tab" /Users/jrush/Desktop/names_custom.tab
 chifra names --all --expand $ADDRESS

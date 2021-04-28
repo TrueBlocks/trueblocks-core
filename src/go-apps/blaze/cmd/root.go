@@ -3,6 +3,7 @@ package cmd
 import (
 	"fmt"
 	"os"
+	"runtime"
 	"strings"
 
 	"github.com/spf13/cobra"
@@ -59,7 +60,7 @@ func init() {
 	cobra.OnInitialize(initConfig)
 
 	rootCmd.PersistentFlags().StringVarP(&Options.rpcProvider, "rpcProvider", "r", "http://localhost:8545", "URL to the node's RPC")
-	rootCmd.PersistentFlags().StringVarP(&Options.indexPath, "indexPath", "c", "", "The location of TrueBlocks' appearance cache (default \"~/.quickBlocks/cache/addr_index\")")
+	rootCmd.PersistentFlags().StringVarP(&Options.indexPath, "indexPath", "c", "", "The location of TrueBlocks' appearance cache (default \"$CONFIG/unchained\")")
 	rootCmd.PersistentFlags().IntVarP(&Options.startBlock, "startBlock", "s", 0, "First block to visit (required)")
 	rootCmd.PersistentFlags().IntVarP(&Options.nBlocks, "nBlocks", "n", 0, "The number of blocks to scrape (required)")
 	rootCmd.PersistentFlags().IntVarP(&Options.nBlockProcs, "nBlockProcs", "b", 20, "The number of block processors to create (required)")
@@ -80,8 +81,16 @@ func initConfig() {
 		os.Exit(1)
 	}
 
-	viper.AddConfigPath(home + "/.quickBlocks")
-	viper.SetConfigName("quickBlocks")
+	configPath := "<unset>"
+	if (runtime.GOOS == "darwin") {
+		configPath = home + "/Library/Application Support/TrueBlocks"
+	} else if (runtime.GOOS == "linux") {
+		configPath = home + "/.local/share/trueblocks"
+	} else {
+		fmt.Println("Windows not supported.")
+	}
+	viper.AddConfigPath(configPath)
+	viper.SetConfigName("trueBlocks")
 	viper.SetConfigType("toml")
 	err = viper.ReadInConfig()
 	if err != nil {
@@ -110,10 +119,7 @@ func initConfig() {
 
 	Options.indexPath = viper.GetString("settings.indexPath")
 	if Options.indexPath == "" {
-		Options.indexPath = viper.GetString("settings.cachePath") + "addr_index"
-		if Options.indexPath == "" {
-			Options.indexPath = home + "/.quickBlocks/cache/addr_index/"
-		}
+		Options.indexPath = configPath + "/unchained/"
 	}
 	if Options.indexPath[len(Options.indexPath)-1] != '/' {
 		Options.indexPath += "/"

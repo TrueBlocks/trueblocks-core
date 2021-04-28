@@ -115,7 +115,7 @@ bool COptions::parseArguments(string_q& command) {
         } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
-                return usage("Invalid option: " + arg);
+                return invalid_option(arg);
             }
 
         } else {
@@ -315,8 +315,13 @@ COptions::COptions(void) {
     notes.push_back("To customize the list of names add a `custom` section to the config file (see documentation).");
     // clang-format on
     // END_CODE_NOTES
+
+    string_q namesPath = configPathRelative("names/names.tab");
+    if (isTestMode())
+        namesPath = substitute(configPath("names/names.tab"), configPath(""), "$CONFIG/");
+
     ostringstream os;
-    os << "Name file: `" << configPathRelative("names/names.tab") << "`";
+    os << "Name file: `" << namesPath << "`";
     notes.push_back(os.str());
 
     // BEG_ERROR_MSG

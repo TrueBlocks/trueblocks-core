@@ -15,16 +15,8 @@ message(STATUS "Using c++ standard c++${CMAKE_CXX_STANDARD}")
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # ----------------------------------------------------------------------------------------
-# Define default installation PATH
-if(NOT WIN32)
-    set(CMAKE_INSTALL_PREFIX "/usr/local/qblocks/" CACHE PATH "Default install directory")
-else()
-    message(ERROR "Windows build is not supported yet")
-endif()
-
-# ----------------------------------------------------------------------------------------
 # folder project
-project (quickBlocks)
+project (trueBlocks)
 
 # ----------------------------------------------------------------------------------------
 # Debug msg

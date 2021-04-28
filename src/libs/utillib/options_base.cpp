@@ -31,7 +31,7 @@ void COptionsBase::registerOptions(size_t nP, COption const* pP) {
 
 //--------------------------------------------------------------------------------
 // TODO(tjayrush): global data - but okay, a program only has one name
-string_q COptionsBase::g_progName = "quickBlocks";
+string_q COptionsBase::g_progName = "trueBlocks";
 
 //--------------------------------------------------------------------------------
 void COptionsBase::setProgName(const string_q& name) {
@@ -109,6 +109,25 @@ bool COptionsBase::prePrepareArguments(CStringArray& separatedArgs_, int argCoun
 }
 
 //--------------------------------------------------------------------------------
+bool COptionsBase::isBadSingleDash(const string_q& arg) const {
+    for (size_t j = 0; j < cntParams; j++) {
+        string_q cmd = substitute(arg, "-", "");
+        if (cmd == pParams[j].longName)
+            return true;
+    }
+
+    CStringArray builtInCmds = {"verbose", "fmt",     "ether",  "output",  "raw",     "very_raw", "mocked",
+                                "wei",     "dollars", "parity", "version", "nocolor", "noop"};
+
+    for (auto bi : builtInCmds) {
+        if (arg == ("-" + bi))
+            return true;
+    }
+
+    return false;
+}
+
+//--------------------------------------------------------------------------------
 bool COptionsBase::prepareArguments(int argCountIn, const char* argvIn[]) {
     CStringArray separatedArgs_;
     prePrepareArguments(separatedArgs_, argCountIn, argvIn);
@@ -117,6 +136,8 @@ bool COptionsBase::prepareArguments(int argCountIn, const char* argvIn[]) {
     for (auto arg : separatedArgs_) {
         replace(arg, "--verbose", "-v");
         while (!arg.empty()) {
+            if (startsWith(arg, "-") && !contains(arg, "--") && isBadSingleDash(arg))
+                return invalid_option(arg + ". Did you mean -" + arg + "?");
             string_q opt = expandOption(arg);  // handles case of -rf for example
             if (isReadme && isEnabled(OPT_HELP))
                 return usage();
@@ -283,7 +304,7 @@ bool COptionsBase::prepareArguments(int argCountIn, const char* argvIn[]) {
 }
 
 //---------------------------------------------------------------------------------------
-static const char* CHR_VALID_NAME = "\t\n\r()<>[]{}`\\|;'!$^*~@?&#+%,:=\"";
+static const char* CHR_VALID_NAME = "\t\n\r()<>[]{}`|;'!$^*~@?&#+%,:=\"";
 //---------------------------------------------------------------------------------------
 bool isValidName(const string_q& fn) {
     if (fn.empty() || isdigit(fn[0]))
@@ -297,7 +318,8 @@ bool isValidName(const string_q& fn) {
 bool COptionsBase::standardOptions(string_q& cmdLine) {
     if (contains(cmdLine, "--to_file")) {
         ostringstream rep;
-        rep << "--output:" << configPath("cache/tmp/" + makeValidName(Now().Format(FMT_EXPORT)));
+        rep << "--output:"
+            << "/tmp/" + makeValidName(Now().Format(FMT_EXPORT));
         rep << (expContext().exportFmt == CSV1    ? ".csv"
                 : expContext().exportFmt == TXT1  ? ".txt"
                 : expContext().exportFmt == YAML1 ? ".yaml"
@@ -682,6 +704,13 @@ bool COptionsBase::usage(const string_q& errMsg) const {
 }
 
 //--------------------------------------------------------------------------------
+bool COptionsBase::invalid_option(const string_q& arg) const {
+    if (startsWith(arg, "-") && !contains(arg, "--") && isBadSingleDash(arg))
+        return invalid_option(arg + ". Did you mean -" + arg + "?");
+    return usage("Invalid option: " + arg);
+}
+
+//--------------------------------------------------------------------------------
 void errorMessage(const string_q& msg) {
     if (isApiMode()) {
         const char* STR_ERROR_JSON = "{ \"errors\": [ \"[ERRORS]\" ] }\n";
@@ -842,6 +871,8 @@ string_q COptionsBase::format_notes(const CStringArray& strs) const {
     string_q nn;
     for (auto n : strs) {
         string_q s = substitute(n, "[{CONFIG}]", configPathRelative(""));
+        if (isTestMode())
+            s = substitute(n, "[{CONFIG}]", "$CONFIG/");
         nn += (s + "\n");
     }
     while (!isReadme && contains(nn, '`')) {
@@ -1027,9 +1058,24 @@ int sortParams(const void* c1, const void* c2) {
 //--------------------------------------------------------------------------------
 uint64_t verbose = false;
 
+extern const char* STR_OLD_FOLDER_ERROR;
 //---------------------------------------------------------------------------------------------------
 string_q configPath(const string_q& part) {
-    return getHomeFolder() + ".quickBlocks/" + part;
+    static bool been_here = false;
+    if (!been_here) {
+        if (folderExists(getHomeFolder() + ".quickBlocks")) {
+            cerr << bBlue << STR_OLD_FOLDER_ERROR << cOff << endl;
+            quickQuitHandler(1);
+        }
+        been_here = true;
+    }
+#if defined(__linux) || defined(__linux__) || defined(linux)
+    return getHomeFolder() + ".local/share/trueblocks/" + part;
+#elif defined(__APPLE__)
+    return getHomeFolder() + "Library/Application Support/TrueBlocks/" + part;
+#elif defined(_WIN32) || defined(__WIN32__) || defined(WIN32) || defined(_WIN64)
+#error-- This source code does not compile on Windows
+#endif
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -1039,7 +1085,7 @@ string_q configPathRelative(const string_q& part) {
 
 //------------------------------------------------------------------
 void editFile(const string_q& fileName) {
-    CToml toml(configPath("quickBlocks.toml"));
+    CToml toml(configPath("trueBlocks.toml"));
     string_q editor = toml.getConfigStr("dev", "editor", "<NOT_SET>");
     if (!isTestMode() && editor == "<NOT_SET>") {
         editor = getEnvStr("EDITOR");
@@ -1050,7 +1096,7 @@ void editFile(const string_q& fileName) {
     }
 
     CFilename fn(fileName);
-    string_q cmd = "cd " + fn.getPath() + " ; " + editor + " \"" + fn.getFilename() + "\"";
+    string_q cmd = "cd \"" + fn.getPath() + "\" ; " + editor + " \"" + fn.getFilename() + "\"";
     if (isTestMode()) {
         cerr << "Testing editFile: " << fn.getFilename() << "\n";
         string_q contents;
@@ -1096,7 +1142,7 @@ int sortByBlockNum(const void* v1, const void* v2) {
 //-----------------------------------------------------------------------
 const CToml* getGlobalConfig(const string_q& name) {
     static CToml* toml = NULL;
-    static string_q components = "quickBlocks|";
+    static string_q components = "trueBlocks|";
 
     if (name == "reload" && toml) {
         toml->clear();
@@ -1108,8 +1154,8 @@ const CToml* getGlobalConfig(const string_q& name) {
 
         // Forces a reload
         theToml.clear();
-        theToml.setFilename(configPath("quickBlocks.toml"));
-        theToml.readFile(configPath("quickBlocks.toml"));
+        theToml.setFilename(configPath("trueBlocks.toml"));
+        theToml.readFile(configPath("trueBlocks.toml"));
         toml = &theToml;
 
         // Always load the program's custom config if it exists
@@ -1325,4 +1371,11 @@ const char* STR_DEFAULT_WHENBLOCKS =
     "{ name: \"muirglacier\", value: 9200000 },"
     "{ name: \"latest\", value:\"\" }"
     "]";
+
+//-----------------------------------------------------------------------
+const char* STR_OLD_FOLDER_ERROR =
+    "\n"
+    "  You must complete the migration process before proceeding:\n\n"
+    "      https://github.com/TrueBlocks/trueblocks-core/tree/master/src/other/migrations\n";
+
 }  // namespace qblocks

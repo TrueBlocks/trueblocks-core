@@ -9,6 +9,7 @@ import (
 func goodAddr(addr string) bool {
 	// As per EIP 1352, all addresses less or equal to the following
 	// value are reserved for pre-compiles. We don't index precompiles.
+	// https://eips.ethereum.org/EIPS/eip-1352
 	if addr <= "0x000000000000000000000000000000000000ffff" {
 		return false
 	}

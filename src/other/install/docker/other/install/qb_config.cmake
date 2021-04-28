@@ -1,9 +1,22 @@
-# Deploy basic configuration and directories structure for quickblocks
+# Deploy basic configuration and directories structure for trueblocks
 
 #---------------------------------------------------------------
 # setup some paths
 #---------------------------------------------------------------
-set(DEST_PATH "$ENV{HOME}/.quickBlocks")
+set(TB_INSTALL_FOLDER "$ENV{XDG_DATA_HOME}")
+if(WIN32)
+    message(STATUS "Windows build is not supported yet")
+elseif(APPLE)
+    if ("${TB_INSTALL_FOLDER}" STREQUAL "")
+        set(TB_INSTALL_FOLDER "$ENV{HOME}/Library/Application Support/TrueBlocks")
+    endif()
+else()
+    if ("${TB_INSTALL_FOLDER}" STREQUAL "")
+        set(TB_INSTALL_FOLDER "$ENV{HOME}/.local/share/trueblocks")
+    endif()
+endif()
+message(STATUS "TB_INSTALL_FOLDER set to [" ${TB_INSTALL_FOLDER} "]")
+set(DEST_PATH ${TB_INSTALL_FOLDER})
 set(SOURCE_PATH "${CMAKE_SOURCE_DIR}/../../../src/other/install")
 
 #---------------------------------------------------------------
@@ -28,10 +41,10 @@ file(MAKE_DIRECTORY "${DEST_PATH}/mocked")
 #---------------------------------------------------------------
 # Create main config file, if it does not already exist
 #---------------------------------------------------------------
-set(MAIN_CONFIG "${DEST_PATH}/quickBlocks.toml")
+set(MAIN_CONFIG "${DEST_PATH}/trueBlocks.toml")
 if (NOT EXISTS "${MAIN_CONFIG}")
 	message(STATUS "Copying configuration files ${MAIN_CONFIG}")
-	file(COPY "${SOURCE_PATH}/quickBlocks.toml" DESTINATION "${DEST_PATH}" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
+	file(COPY "${SOURCE_PATH}/trueBlocks.toml" DESTINATION "${DEST_PATH}" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
 endif()
 
 #---------------------------------------------------------------

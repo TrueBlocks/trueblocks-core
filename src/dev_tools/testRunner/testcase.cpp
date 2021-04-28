@@ -450,7 +450,7 @@ void establishTestMonitors(void) {
     }
 
     const char* STR_UNZIP_CMD =
-        "cd [{PATH}] && "
+        "cd \"[{PATH}]\" && "
         "rm -fR mocks && "
         "rm -fR monitors && "
         "gunzip --keep *.gz && "
@@ -475,7 +475,7 @@ bool prepareBuiltIn(string_q& options) {
             if (match == "RESET") {
                 establishTestMonitors();
                 cleanFolder(getCachePath("tmp/"));
-                cleanFolder(configPath("mocked/addr_index"));
+                cleanFolder(configPath("mocked/unchained"));
                 options = "";
                 if (debug)
                     os << "Cleanup" << endl;

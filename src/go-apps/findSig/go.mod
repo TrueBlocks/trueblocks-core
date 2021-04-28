@@ -1,4 +1,4 @@
-module github.com/Great-Hill-Corporation/trueblocks-core/src/go-apps/findSig
+module github.com/TrueBlocks/trueblocks-core/src/go-apps/findSig
 
 go 1.15
 

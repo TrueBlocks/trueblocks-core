@@ -127,7 +127,7 @@ void COptions::writeOpenApiFile(void) {
         }
     }
 
-    writeCode("../src/go-apps/tbServer/cmd/routes.go");
+    writeCode("../src/go-apps/flame/cmd/routes.go");
 
     // string_q html = STR_HTML_CODE;
     // replace(html, "[{SPEC}]", specStream.str());
