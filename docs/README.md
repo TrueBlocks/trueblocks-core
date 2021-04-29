@@ -1,4 +1,0 @@
-# Documentation
----
-
-Work in progress
