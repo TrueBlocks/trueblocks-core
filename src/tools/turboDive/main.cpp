@@ -23,7 +23,6 @@
 
 //-----------------------------------------------------------------------
 int main(int argc, const char* argv[]) {
-#if 0
     etherlib_init(quickQuitHandler);
 
     COptions options;
@@ -35,24 +34,22 @@ int main(int argc, const char* argv[]) {
         if (!options.parseArguments(command))
             return 0;
 
-        CRuntimeClass* pClass = GETRUNTIME_CLASS(CTableEntry);
-
+        // CRuntimeClass* pClass = GETRUNTIME_CLASS(CTableEntry);
         if (options.first)
-            cout << exportPreamble(expContext().fmtMap["header"], pClass);
+            cout << exportPreamble(expContext().fmtMap["header"], nullptr);  // pClass);
 
-        if (options.mode == "tables") {
-            options.handle_tables();
+        // if (options.mode == "tables") {
+        //     options.handle_tables();
 
-        } else {
-            ASSERT(options.mode == "dump");
-            options.handle_dump();
-        }
+        // } else {
+        //     ASSERT(options.mode == "dump");
+        //     options.handle_dump();
+        // }
 
         cout << exportPostamble(options.errors, expContext().fmtMap["meta"]);
     }
 
     etherlib_cleanup();
-#endif
     return 0;
 }
 

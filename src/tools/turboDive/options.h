@@ -16,11 +16,11 @@
  * outside of the BEG_CODE/END_CODE sections
  */
 #include "etherlib.h"
-#if 0
-#include "silkworm/db/chaindb.hpp"
-#include "classes/tableentry.h"
 
-using namespace silkworm;
+// #include "silkworm/db/chaindb.hpp"
+// #include "classes/tableentry.h"
+
+// using namespace silkworm;
 
 // BEG_ERROR_DEFINES
 // END_ERROR_DEFINES
@@ -34,14 +34,15 @@ class COptions : public CBlockOptions {
     string_q name;
     bool goerli;
     bool no_zero;
+    bool test;
     // END_CODE_DECLARE
 
-    shared_ptr<lmdb::Environment> lmdb_env{nullptr};
-    unique_ptr<lmdb::Transaction> lmdb_txn{nullptr};
+    // shared_ptr<lmdb::Environment> lmdb_env{nullptr};
+    // unique_ptr<lmdb::Transaction> lmdb_txn{nullptr};
 
     bool first{false};
-    CTableEntryArray tables12;
-    map<string_q, CTableEntry> tableMap;
+    // CTableEntryArray tables12;
+    // map<string_q, CTableEntry> tableMap;
 
     COptions(void);
     ~COptions(void);
@@ -52,5 +53,5 @@ class COptions : public CBlockOptions {
     bool loadTables(void);
     bool handle_tables(void);
     bool handle_dump(void);
+    bool handle_testing(void);
 };
-#endif

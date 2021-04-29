@@ -243,6 +243,7 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,customizeable,c
 14030,tools,Other,dive,turboDive,name,n,,false,false,true,true,header,flag,<string>,for 'dump' command only&#44; the name of the table to dump
 14035,tools,Other,dive,turboDive,goerli,g,,false,false,true,true,header,switch,<boolean>,run against the goerli testnet
 14040,tools,Other,dive,turboDive,no_zero,z,,false,false,true,true,header,switch,<boolean>,suppress the display of tables with zero records
+14060,tools,Other,dive,turboDive,test,t,,false,false,true,true,header,switch,<boolean>,do tracing tests against turbo geth (and other nodes)
 14050,tools,Other,dive,turboDive,,,,false,false,true,false,--,description,,Dive deeply into the turboGeth database.
 
 14400,all,,all,all,version,,,false,false,true,false,--,switch,<boolean>,display the current version of the tool

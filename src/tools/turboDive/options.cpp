@@ -1,4 +1,3 @@
-#if 0
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
@@ -16,12 +15,14 @@
  * outside of the BEG_CODE/END_CODE sections
  */
 #include "options.h"
-#include "silkworm/db/chaindb.hpp"
-#include "silkworm/db/tables.hpp"
-#include "classes/tableentry.h"
+#include "traceTest.h"
 
-using namespace silkworm;
-using namespace silkworm::db::table;
+// #include "silkworm/db/chaindb.hpp"
+// #include "silkworm/db/tables.hpp"
+// #include "classes/tableentry.h"
+
+// using namespace silkworm;
+// using namespace silkworm::db::table;
 
 extern map<string_q, string_q> nameMap;
 extern const char* STR_DISPLAY_TURBO;
@@ -34,6 +35,7 @@ static const COption params[] = {
     COption("name", "n", "<string>", OPT_FLAG, "for 'dump' command only, the name of the table to dump"),
     COption("goerli", "g", "", OPT_SWITCH, "run against the goerli testnet"),
     COption("no_zero", "z", "", OPT_SWITCH, "suppress the display of tables with zero records"),
+    COption("test", "t", "", OPT_SWITCH, "do tracing tests against turbo geth (and other nodes)"),
     COption("", "", "", OPT_DESCRIPTION, "Dive deeply into the turboGeth database."),
     // clang-format on
     // END_CODE_OPTIONS
@@ -77,6 +79,9 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-z" || arg == "--no_zero") {
             no_zero = true;
 
+        } else if (arg == "-t" || arg == "--test") {
+            test = true;
+
         } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
@@ -93,40 +98,44 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST("name", name, (name == ""));
     LOG_TEST_BOOL("goerli", goerli);
     LOG_TEST_BOOL("no_zero", no_zero);
+    LOG_TEST_BOOL("test", test);
     // END_DEBUG_DISPLAY
 
-    if (Mocked(""))
-        return false;
-
-    // Data verification
-    if (goerli) {
-        datadir = substitute(datadir, "/TurboGeth/tg/chaindata/", "/TurboGeth/goerli/tg/chaindata/");
+    if (test) {
+        return handle_testing();
     }
 
-    if (mode.empty())
-        return usage("You must provide a mode of operation.");
+    // if (Mocked(""))
+    //     return false;
 
-    if (!folderExists(datadir))
-        return usage("Folder '" + datadir + "' does not exist.");
+    // // Data verification
+    //     datadir = substitute(datadir, "/TurboGeth/tg/chaindata/", "/TurboGeth/goerli/tg/chaindata/");
+    // }
 
-    if (mode == "dump" && name.empty())
-        return usage("You must provide a table name for the dump command.");
+    // if (mode.empty())
+    //     return usage("You must provide a mode of operation.");
 
-    if (!loadTables())
-        return false;
+    // if (!folderExists(datadir))
+    //     return usage("Folder '" + datadir + "' does not exist.");
 
-    // Display formatting
-    configureDisplay("turboDive", "CTableEntry", STR_DISPLAY_TURBO);
-    if (expContext().exportFmt != NONE1)
-        configureDisplay("turboDive", "CTableEntry", substitute(STR_DISPLAY_TABLEENTRY, "[{DESCRIPTION}]\t", ""));
-    else
-        expContext().exportFmt = TXT1;
+    // if (mode == "dump" && name.empty())
+    //     return usage("You must provide a table name for the dump command.");
 
-    if (mode == "dump") {
-        CTableEntry table = tableMap[name];
-        if (table.name != name)
-            return usage("Table name '" + name + "' not found.");
-    }
+    // if (!loadTables())
+    //     return false;
+
+    // // Display formatting
+    // configureDisplay("turboDive", "CTableEntry", STR_DISPLAY_TURBO);
+    // if (expContext().exportFmt != NONE1)
+    //     configureDisplay("turboDive", "CTableEntry", substitute(STR_DISPLAY_TABLEENTRY, "[{DESCRIPTION}]\t", ""));
+    // else
+    //     expContext().exportFmt = TXT1;
+
+    // if (mode == "dump") {
+    //     CTableEntry table = tableMap[name];
+    //     if (table.name != name)
+    //         return usage("Table name '" + name + "' not found.");
+    // }
 
     return true;
 }
@@ -142,6 +151,7 @@ void COptions::Init(void) {
     name = "";
     goerli = false;
     no_zero = false;
+    test = false;
     // END_CODE_INIT
     datadir = "/Users/jrush/Library/TurboGeth/tg/chaindata/";
     blocks.Init();
@@ -160,10 +170,10 @@ COptions::COptions(void) {
 
     expContext().exportFmt = NONE1;
 
-    CTableEntry::registerClass();
-    CLmdbStat::registerClass();
-    CLmdbRecord::registerClass();
-    CLmdbVal::registerClass();
+    // CTableEntry::registerClass();
+    // CLmdbStat::registerClass();
+    // CLmdbRecord::registerClass();
+    // CLmdbVal::registerClass();
 }
 
 //--------------------------------------------------------------------------------
@@ -172,102 +182,102 @@ COptions::~COptions(void) {
 
 //--------------------------------------------------------------------------------
 bool COptions::loadTables(void) {
-    map<string_q, uint32_t> silkyMap;
-    uint64_t nTables = (sizeof(kTables) / sizeof(silkworm::lmdb::TableConfig));
-    for (size_t i{0}; i < nTables; i++)
-        silkyMap[kTables[i].name] = 1;
+    // map<string_q, uint32_t> silkyMap;
+    // uint64_t nTables = (sizeof(kTables) / sizeof(silkworm::lmdb::TableConfig));
+    // for (size_t i{0}; i < nTables; i++)
+    //     silkyMap[kTables[i].name] = 1;
 
-    size_t page_size = 4096;
+    // size_t page_size = 4096;
 
-    // Try to load the database
-    lmdb::options opts{};
-    opts.map_size = ((fileSize(datadir + "data.mdb") + page_size - 1) / page_size) * page_size;
-    opts.read_only = true;
-    lmdb_env = lmdb::get_env(datadir.c_str(), opts);
-    lmdb_txn = lmdb_env->begin_ro_transaction();
+    // // Try to load the database
+    // lmdb::options opts{};
+    // opts.map_size = ((fileSize(datadir + "data.mdb") + page_size - 1) / page_size) * page_size;
+    // opts.read_only = true;
+    // lmdb_env = lmdb::get_env(datadir.c_str(), opts);
+    // lmdb_txn = lmdb_env->begin_ro_transaction();
 
-    MDB_stat stat;
+    // MDB_stat stat;
 
-    auto unnamed = lmdb_txn->open(lmdb::FREE_DBI);
-    unnamed->get_stat(&stat);
+    // auto unnamed = lmdb_txn->open(lmdb::FREE_DBI);
+    // unnamed->get_stat(&stat);
 
-    CTableEntry e;
-    e.id = unnamed->get_dbi();
-    e.name = unnamed->get_name();
-    e.description = nameMap[e.name];
-    e.longName = nextTokenClear(e.description, '|');
-    e.silky = silkyMap[e.name];
-    e.stat.psize = stat.ms_psize;
-    e.stat.depth = stat.ms_depth;
-    e.stat.branch_pages = stat.ms_branch_pages;
-    e.stat.leaf_pages = stat.ms_leaf_pages;
-    e.stat.overflow_pages = stat.ms_overflow_pages;
-    e.stat.entries = stat.ms_entries;
-    tables12.push_back(e);
-    tableMap[e.name] = e;
+    // CTableEntry e;
+    // e.id = unnamed->get_dbi();
+    // e.name = unnamed->get_name();
+    // e.description = nameMap[e.name];
+    // e.longName = nextTokenClear(e.description, '|');
+    // e.silky = silkyMap[e.name];
+    // e.stat.psize = stat.ms_psize;
+    // e.stat.depth = stat.ms_depth;
+    // e.stat.branch_pages = stat.ms_branch_pages;
+    // e.stat.leaf_pages = stat.ms_leaf_pages;
+    // e.stat.overflow_pages = stat.ms_overflow_pages;
+    // e.stat.entries = stat.ms_entries;
+    // tables12.push_back(e);
+    // tableMap[e.name] = e;
 
-    unnamed.reset();
-    unnamed = lmdb_txn->open(lmdb::MAIN_DBI);
-    unnamed->get_stat(&stat);
+    // unnamed.reset();
+    // unnamed = lmdb_txn->open(lmdb::MAIN_DBI);
+    // unnamed->get_stat(&stat);
 
-    e = CTableEntry();
-    e.id = unnamed->get_dbi();
-    e.name = unnamed->get_name();
-    e.description = nameMap[e.name];
-    e.longName = nextTokenClear(e.description, '|');
-    e.silky = silkyMap[e.name];
-    e.stat.psize = stat.ms_psize;
-    e.stat.depth = stat.ms_depth;
-    e.stat.branch_pages = stat.ms_branch_pages;
-    e.stat.leaf_pages = stat.ms_leaf_pages;
-    e.stat.overflow_pages = stat.ms_overflow_pages;
-    e.stat.entries = stat.ms_entries;
-    tables12.push_back(e);
-    tableMap[e.name] = e;
+    // e = CTableEntry();
+    // e.id = unnamed->get_dbi();
+    // e.name = unnamed->get_name();
+    // e.description = nameMap[e.name];
+    // e.longName = nextTokenClear(e.description, '|');
+    // e.silky = silkyMap[e.name];
+    // e.stat.psize = stat.ms_psize;
+    // e.stat.depth = stat.ms_depth;
+    // e.stat.branch_pages = stat.ms_branch_pages;
+    // e.stat.leaf_pages = stat.ms_leaf_pages;
+    // e.stat.overflow_pages = stat.ms_overflow_pages;
+    // e.stat.entries = stat.ms_entries;
+    // tables12.push_back(e);
+    // tableMap[e.name] = e;
 
-    if (!stat.ms_entries)
-        return usage("No tables found in " + datadir + "data.mdb.");
+    // if (!stat.ms_entries)
+    //     return usage("No tables found in " + datadir + "data.mdb.");
 
-    MDB_val key, value;
-    int rc = unnamed->get_first(&key, &value);
-    if (rc != MDB_SUCCESS) {
-        LOG_WARN("Something went wrong reading values from database: ", rc);
-        return usage(".");
-    }
+    // MDB_val key, value;
+    // int rc = unnamed->get_first(&key, &value);
+    // if (rc != MDB_SUCCESS) {
+    //     LOG_WARN("Something went wrong reading values from database: ", rc);
+    //     return usage(".");
+    // }
 
-    while (rc != MDB_NOTFOUND) {
-        if (value.mv_size < sizeof(size_t)) {
-            LOG_WARN("Sizes disagree when reading database: ", value.mv_size, sizeof(size_t), MDB_INVALID);
-            return usage(".");
-        }
+    // while (rc != MDB_NOTFOUND) {
+    //     if (value.mv_size < sizeof(size_t)) {
+    //         LOG_WARN("Sizes disagree when reading database: ", value.mv_size, sizeof(size_t), MDB_INVALID);
+    //         return usage(".");
+    //     }
 
-        // auto p_data = static_cast<uint8_t*>(value.mv_data);
-        auto named = lmdb_txn->open({(const char*)key.mv_data});
-        named->get_stat(&stat);
+    //     // auto p_data = static_cast<uint8_t*>(value.mv_data);
+    //     auto named = lmdb_txn->open({(const char*)key.mv_data});
+    //     named->get_stat(&stat);
 
-        if (!no_zero || stat.ms_entries) {
-            e = CTableEntry();
-            e.id = named->get_dbi();
-            e.name = named->get_name();
-            e.description = nameMap[e.name];
-            e.longName = nextTokenClear(e.description, '|');
-            e.silky = silkyMap[e.name];
-            e.stat.psize = stat.ms_psize;
-            e.stat.depth = stat.ms_depth;
-            e.stat.branch_pages = stat.ms_branch_pages;
-            e.stat.leaf_pages = stat.ms_leaf_pages;
-            e.stat.overflow_pages = stat.ms_overflow_pages;
-            e.stat.entries = stat.ms_entries;
-            tables12.push_back(e);
-            tableMap[e.name] = e;
-        }
+    //     if (!no_zero || stat.ms_entries) {
+    //         e = CTableEntry();
+    //         e.id = named->get_dbi();
+    //         e.name = named->get_name();
+    //         e.description = nameMap[e.name];
+    //         e.longName = nextTokenClear(e.description, '|');
+    //         e.silky = silkyMap[e.name];
+    //         e.stat.psize = stat.ms_psize;
+    //         e.stat.depth = stat.ms_depth;
+    //         e.stat.branch_pages = stat.ms_branch_pages;
+    //         e.stat.leaf_pages = stat.ms_leaf_pages;
+    //         e.stat.overflow_pages = stat.ms_overflow_pages;
+    //         e.stat.entries = stat.ms_entries;
+    //         tables12.push_back(e);
+    //         tableMap[e.name] = e;
+    //     }
 
-        rc = unnamed->get_next(&key, &value);
-        if (rc != MDB_NOTFOUND)
-            lmdb::err_handler(rc);
-    }
-    lmdb_txn.reset();
-    lmdb_env.reset();
+    //     rc = unnamed->get_next(&key, &value);
+    //     if (rc != MDB_NOTFOUND)
+    //         lmdb::err_handler(rc);
+    // }
+    // lmdb_txn.reset();
+    // lmdb_env.reset();
 
     return true;
 }
@@ -453,4 +463,87 @@ const char* STR_DISPLAY_TURBO =
     "[{r:15:STAT::ENTRIES}]\t"
     "[{r:15:STAT::TOTAL}]\t"
     "[{r:15:STAT::AVG}]";
-#endif
+
+extern bool loadTests(CTraceTestArray& tests);
+//-----------------------------------------------------------------------
+bool COptions::handle_testing(void) {
+    CTraceTestArray tests;
+    loadTests(tests);
+
+    CStringArray providers = {"23456|tg", "36963|parity"};
+    for (auto provider : providers) {
+        CStringArray parts;
+        explode(parts, provider, '|');
+        string_q port = parts[0];
+        string_q folder = parts[1];
+        for (auto test : tests) {
+            if (test.enabled == "off")
+                continue;
+
+            test.fileName = string_q(folder) + "/" + test.method + "_" + test.number + "_" + test.name + ".txt";
+
+            ostringstream curl;
+            curl << "curl -s --data '{";
+            curl << "\"method\": \"" << test.method << "\", ";
+            curl << "\"params\": \"" << test.params << "\", ";
+            curl << "\"id\":\"1\",";
+            curl << "\"jsonrpc\":\"2.0\"";
+            curl << "}' ";
+            curl << "-H \"Content-Type: application/json\" ";
+            curl << "-X POST ";
+            curl << "http://localhost:" << port << " ";
+            curl << "| jq -S ";
+            curl << "| grep -v \"message\"";
+            string_q curlCmd = curl.str();
+            replace(curlCmd, "\"[", "[");
+            replace(curlCmd, "]\"", "]");
+
+            string_q display = curlCmd;
+            replace(display, "localhost:" + port, "localhost:PORT");
+            replace(display, " | grep -v \"message\"", "");
+            ostringstream header;
+            header << string_q(125, '-') << endl;
+            header << display << endl;
+            header << string_q(125, '-') << endl;
+
+            curlCmd += (" >" + test.fileName);
+            if (system(curlCmd.c_str()) == 2) {
+                // user hit control+c
+                return false;
+            }
+
+            string_q results = asciiFileToString(test.fileName);
+            ostringstream out;
+            out << header.str() << endl;
+            out << results << endl;
+
+            stringToAsciiFile(test.fileName, out.str());
+            cout << out.str() << endl;
+            first = false;
+            usleep(10000);
+        }
+    }
+
+    return false;
+}
+
+//-----------------------------------------------------------------------
+bool loadTests(CTraceTestArray& tests) {
+    CTraceTest::registerClass();
+    CStringArray lines;
+    asciiFileToLines("/Users/jrush/Development/trueblocks-core/src/tools/turboDive/trace_test/trace_tests.tsv", lines);
+    CStringArray fields;
+    bool ff = true;
+    for (auto line : lines) {
+        if (!ff) {
+            CTraceTest tt;
+            tt.parseText(fields, line);
+            replaceAll(tt.params, "'", "\"");
+            tests.push_back(tt);
+        } else {
+            explode(fields, line, '\t');
+        }
+        ff = false;
+    }
+    return true;
+}
