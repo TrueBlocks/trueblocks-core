@@ -554,10 +554,23 @@ void getTracesByFilter(CTraceArray& traces, const CTraceFilter& filter) {
 
 //-------------------------------------------------------------------------
 string_q getVersionFromClient(void) {
-    static string_q clientVersion;
-    if (clientVersion.empty())
-        clientVersion = callRPC("web3_clientVersion", "[]", false);
-    return clientVersion;
+    string_q clientVersionFn = getCachePath("tmp/clientVersion.txt");
+    string_q contents = asciiFileToString(clientVersionFn);
+
+    timestamp_t lastUpdate = date_2_Ts(fileLastModifyDate(clientVersionFn));
+    timestamp_t now = date_2_Ts(Now());
+    timestamp_t diff = now - lastUpdate;
+    if (diff > 20 || !contains(contents, getCurlContext()->baseURL)) {
+        // We do this to avoid constantly hitting the node just to see if it's there.
+        // If the rpcProvider changed or we haven't checked for a while, check it again.
+        string_q clientVersion = callRPC("web3_clientVersion", "[]", false);
+        stringToAsciiFile(clientVersionFn, getCurlContext()->baseURL + "\t" + clientVersion);
+        return clientVersion;
+    }
+
+    CStringArray parts;
+    explode(parts, contents, '\t');
+    return parts[1];
 }
 
 //-------------------------------------------------------------------------
@@ -645,7 +658,7 @@ blknum_t getLatestBlock_client(void) {
 CBlockProgress getBlockProgress(size_t which) {
     CBlockProgress ret;
     if (which & BP_CLIENT)
-        ret.client = (isNodeRunning() ? getLatestBlock_client() : NOPOS);
+        ret.client = getLatestBlock_client();
 
     if (which & BP_FINAL)
         ret.finalized = getLatestBlock_cache_final();
