@@ -2,7 +2,7 @@ printFloatTest argc: 2 [1:-th]
 printFloatTest -th 
 ### Usage
 
-`Usage:`    printFloatTest [-t|-v|-h]  
+`Usage:`     [-t|-v|-h]  
 `Purpose:`  This program tests floating point printing and conversions.
         
 `Where:`  

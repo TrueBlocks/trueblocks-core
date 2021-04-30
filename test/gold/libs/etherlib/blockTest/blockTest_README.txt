@@ -2,7 +2,7 @@ blockTest argc: 2 [1:-th]
 blockTest -th 
 ### Usage
 
-`Usage:`    blockTest [-v|-h] mode  
+`Usage:`     [-v|-h] mode  
 `Purpose:`  Test 'c' library strings against TrueBlocks strings.
         
 `Where:`  

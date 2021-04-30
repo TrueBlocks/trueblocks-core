@@ -5,5 +5,5 @@
 The format of the classDefinition file is described below.
 
 [{USAGE_TABLE}]
-
 [{FOOTER}]
+[{SOURCE}]

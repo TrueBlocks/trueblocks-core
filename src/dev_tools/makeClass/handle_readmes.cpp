@@ -13,176 +13,91 @@
 #include "acctlib.h"
 #include "options.h"
 
+extern bool writeIfDifferent(const string_q& path, const string_q& code);
 //------------------------------------------------------------------------------------------------------------
-bool visitReadme(const string_q& templatePath, void *data) {
+bool visitReadme(const string_q& templatePath, void* data) {
     if (endsWith(templatePath, "/")) {
         return forEveryFileInFolder(templatePath + "*", visitReadme, data);
 
     } else {
-        if (!endsWith(templatePath, ".tmpl.md"))
+        if (!endsWith(templatePath, ".md") || contains(templatePath, "README"))
             return true;
 
-        string_q docPath = substitute(substitute(templatePath, "docs/readme_templates/", "docs/readmes/"), "tmpl.md", "md");
-        string_q sourcePath = substitute(docPath, "docs/readmes/", "src/");
+        COptions* opts = (COptions*)data;
 
         CStringArray parts;
         explode(parts, templatePath, '/');
-        int i = 0;
-        for (auto part : parts)
-            cout << (i++) << " " << part << endl;
-        cout << endl;
-        // string_q template = asciiFileToString(templatePath);
+        string_q folder = parts[3];
+        string_q tool = substitute(parts[4], ".md", "");
+        string_q docPath = "../docs/readmes/" + folder + "/" + tool + "/README.md";
+        string_q srcPath = "../src/" + folder + "/" + tool + "/README.md";
+
+        string_q source = asciiFileToString(templatePath);
+        system((tool + " -th >file 2>&1").c_str());
+        string_q usage = trim(asciiFileToString("./file"), '\n');
+        ::remove("./file");
+        replace(source, "[{USAGE_TABLE}]", usage);
+
+        string_q docCode = source;
+        string_q srcCode = source;
+        for (auto rep : opts->counter.replacements) {
+            CStringArray parts2;
+            explode(parts2, rep, '/');
+            string_q token = substitute(substitute(parts2[parts2.size() - 1], "README.", ""), ".md", "");
+            string_q code = trim(asciiFileToString(rep), '\n');
+            if (token != "footer")
+                replace(docCode, "[{" + toUpper(token) + "}]", "\n" + code);
+            else
+                replace(docCode, "[{" + toUpper(token) + "}]\n", "");
+            replace(srcCode, "[{" + toUpper(token) + "}]", "\n" + code);
+        }
+        replaceAll(docCode, "[{TOOL_PATH}]", folder + "/" + tool);
+        replaceAll(srcCode, "[{TOOL_PATH}]", folder + "/" + tool);
+        replaceAll(docCode, "~/Library/Application Support/TrueBlocks/", "$CONFIG/");
+        replaceAll(srcCode, "~/Library/Application Support/TrueBlocks/", "$CONFIG/");
+        replaceAll(docCode, "[{NAME}]", progNameMap[tool].empty() ? opts->getProgName() : progNameMap[tool]);
+        replaceAll(srcCode, "[{NAME}]", progNameMap[tool].empty() ? opts->getProgName() : progNameMap[tool]);
+
+        bool c1 = writeIfDifferent(docPath, docCode + "\n");
+        bool c2 = writeIfDifferent(srcPath, srcCode + "\n");
+        opts->counter.nVisited++;
+        opts->counter.nProcessed += (c1 || c2);
+    }
+    return true;
+}
+
+//------------------------------------------------------------------------------------------------------------
+bool writeIfDifferent(const string_q& path, const string_q& code) {
+    string_q existing = asciiFileToString(path);
+    if (existing != code) {
+        stringToAsciiFile(path, existing);
+        cerr << cGreen << "\tProcessed " << cOff << path << endl;
+        return true;
+    }
+    return false;
+}
+
+//------------------------------------------------------------------------------------------------------------
+bool findReplacements(const string_q& templatePath, void* data) {
+    if (endsWith(templatePath, "/")) {
+        return forEveryFileInFolder(templatePath + "*", findReplacements, data);
+
+    } else {
+        if (contains(templatePath, "README") && endsWith(templatePath, ".md")) {
+            COptions* opts = (COptions*)data;
+            opts->counter.replacements.push_back(templatePath);
+        }
     }
     return true;
 }
 
 //------------------------------------------------------------------------------------------------------------
 bool COptions::handle_readmes(void) {
-    forEveryFileInFolder("../docs/readme_templates", visitReadme, nullptr);
+    LOG_INFO(cYellow, "handling readmes...", cOff);
+    counter = CCounter();  // reset
+    forEveryFileInFolder("../docs/readme_templates", findReplacements, this);
+    forEveryFileInFolder("../docs/readme_templates", visitReadme, this);
+    LOG_INFO(cYellow, "makeClass --readmes", cOff, " processed ", counter.nVisited, " files (changed ",
+             counter.nProcessed, ").", string_q(40, ' '));
     return true;
 }
-
-#if 0
-srcFolder = sys.argv[1]
-toolFolder = sys.argv[2]
-toolName = sys.argv[3]
-routeStr = "chifra"
-
-templateFile = toolFolder + "/docs/README.tmpl.md"
-footerFile = srcFolder + "/other/docs/README.footer.md"
-usageFile = "help.txt"
-outputFile = toolFolder + "/README.md"
-
-#printe('templateFile: ', templateFile)
-#printe('footerFile: ', footerFile)
-#printe('toolName: ', toolName)
-#printe('usageFile: ', usageFile)
-#printe('outputFile: ', outputFile)
-#printe('toolName: ', toolName)
-#printe('srcFolder: ', srcFolder)
-#printe('toolFolder: ', toolFolder)
-
-#Check that input file is present
-if os.path.isfile(templateFile) == False:
-    printe("ERROR: Could not find input file %s" % templateFile)
-    exit(1)
-
-#Check that footer file is present
-if os.path.isfile(footerFile) == False:
-    printe("ERROR: Could not find input file %s" % footerFile)
-    exit(1)
-
-#Check that content file is present
-if os.path.isfile(usageFile) == False:
-    printe("ERROR: Could not find content file %s" % usageFile)
-    exit(1)
-
-#Check that output file is NOT present, remove it otherwise
-if os.path.isfile(outputFile) == True:
-#printe("WARNING: Output file already present %s (removed)" % outputFile)
-    os.remove(outputFile)
-
-if os.path.isfile(outputFile) == True:
-    printe("Weird")
-
-#Get some data to use
-with open(templateFile, 'r') as file:
-    templateData = file.read()
-
-with open(footerFile, 'r') as file:
-    footerData = file.read()
-
-with open(usageFile, 'r') as file:
-    usageData = file.read()
-
-#Do the replacements
-outputData = templateData.replace("[{USAGE_TABLE}]", usageData)
-outputData = outputData.replace("[{FOOTER}]", footerData)
-outputData = outputData.replace("[{NAME}]", routeStr)
-outputData = outputData.replace("[{TOOL_PATH}]", projName + "/" + toolName)
-outputData = outputData.replace("chifra chifra", "chifra")
-
-#printe('outputData: ', outputData)
-
-#Generate output file
-with open(outputFile, 'w') as file:
-    printe("Wrote file %s" % outputFile)
-    file.write(outputData)
-
-map<string, string> cmdMap = {
-    {"list", "acctExport --appearances"},
-    {"export", "acctExport"},
-    {"monitor", "acctExport --appearances"},
-    {"names", "ethNames"},
-//    {"entities", "ethNames --entities"},
-//    {"tags", "ethNames --tags"},
-    {"abis", "grabABI"},
-
-    {"blocks", "getBlock"},
-    {"transactions", "getTrans"},
-    {"receipts", "getReceipts"},
-    {"logs", "getLogs"},
-    {"traces", "getTrace"},
-    {"when", "whenBlock"},
-
-    {"state", "getState"},
-    {"tokens", "getTokens"},
-
-    {"init", "pinMan local --init"},
-    {"status", "cacheStatus"},
-    {"scrape", "blockScrape"},
-    {"serve", "flame"},
-    {"pins", "pinMan"},
-
-    {"explore", "ethscan.py"},
-    {"slurp", "ethslurp"},
-    {"quotes", "getQuotes"},
-};
-
-"ACCOUNTS|"
-"  list          list every appearance of an address anywhere on the chain|"
-"  export        export details for each appearance (as txs, logs, traces, balances, reconciliations, etc.)|"
-"  monitor       add, remove, clean, and list appearances of address(es) on the chain|"
-"  names         list and/or share named addresses|"
-"  abis          list and/or share abi signatures|"
-"DATA|"
-"  blocks        export block-related data|"
-"  transactions  export transaction-related data|"
-"  receipts      export receipt-related data|"
-"  logs          export log-related data|"
-"  traces        export trace-related data|"
-"  when          return a date given a block number or a block number given a date|"
-"STATE|"
-"  state         export parts of the state for given address(es)|"
-"  tokens        export data related to ERC20 and/or ERC721 token(s)|"
-"ADMIN|"
-"  init          initialize TrueBlocks databases by downloading pinned bloom filters|"
-"  status        query the status of the system|"
-"  scrape        scrape the chain and build an index of address appearances (aka digests)|"
-"  serve         serve the TrueBlocks API via the flame server|"
-"  pins          query the status of the pinning system|"
-"OTHER|"
-"  explore       open the configured block explorer for the given address|"
-"  slurp         export details by querying EtherScan (note: will not return as many appearances as --list)|"
-"  quotes        return prices collected from configured remote API"
-
-num   ,group     ,tags     ,api_route    ,tool         ,command,hotkey,def_val,is_required,customizeable,core_visible,docs_visible, generate, option_kind, data_type, description
-10460 ,apps      ,Accounts ,export       ,acctExport   ,,,, false, false, true, true  ,-- ,description, ,Export full detail of transactions for one or more Ethereum addresses.
-13880 ,tools     ,Accounts ,abis         ,grabABI      ,,,, false, false, true, true  ,-- ,description, ,Fetches the ABI for a smart contract.
-12460 ,tools     ,Accounts ,names        ,ethNames     ,,,, false, false, true, true  ,-- ,description, ,Query addresses and/or names of well known accounts.
-10660 ,apps      ,Admin    ,scrape       ,blockScrape  ,,,, false, false, true, true  ,-- ,description, ,Decentralized blockchain scraper and block cache.
-10860 ,apps      ,Admin    ,status       ,cacheStatus  ,,,, false, false, true, true  ,-- ,description, ,Report on status of one or more TrueBlocks caches.
-10980 ,apps      ,Admin    ,pins         ,pinMan       ,,,, false, false, true, true  ,-- ,description, ,Report on and manage the remotely pinned appearance index and associated bloom filters.
-12640 ,tools     ,Data     ,blocks       ,getBlock     ,,,, false, false, true, true  ,-- ,description, ,Returns block(s) from local cache or directly from a running node.
-12960 ,tools     ,Data     ,logs         ,getLogs      ,,,, false, false, true, true  ,-- ,description, ,Retrieve a transaction's logs from the cache or the node.
-13060 ,tools     ,Data     ,receipts     ,getReceipts   ,,,, false, false, true, true  ,-- ,description, ,Retrieve a transaction's receipt from the cache or the node.
-13500 ,tools     ,Data     ,traces       ,getTrace     ,,,, false, false, true, true  ,-- ,description, ,Retrieve a transaction's traces from the cache or the node.
-13620 ,tools     ,Data     ,transactions ,getTrans     ,,,, false, false, true, true  ,-- ,description, ,Retrieve a transaction from the cache or the node.
-13980 ,tools     ,Data     ,when         ,whenBlock    ,,,, false, false, true, false ,-- ,description, ,Finds block based on date&#44; blockNum&#44; timestamp&#44; or 'special'.
-13220 ,tools     ,State    ,state        ,getState     ,,,, false, false, true, true  ,-- ,description, ,Retrieve the balance of one or more address at the given block(s).
-13360 ,tools     ,State    ,tokens       ,getTokens ,,,, false, false, true, true  ,-- ,description, ,Retrieve token balances for one or more address at given block(s).
-12080 ,tools     ,Other    ,quotes       ,getQuotes     ,,,, false, false, true, true  ,-- ,description, ,Freshen and/or display Ethereum price data.
-12220 ,tools     ,Other    ,slurp        ,ethslurp     ,,,, false, false, true, true  ,-- ,description, ,Fetches data from EtherScan for an arbitrary address.
-11824 ,dev_tools ,         ,             ,makeClass    ,,,, false, false, true, false ,-- ,description, ,Automatically writes C++ for various purposes.
-11980 ,dev_tools ,         ,             ,testRunner   ,,,, false, false, true, false ,-- ,description, ,Run TrueBlocks' test cases with options.
-#endif

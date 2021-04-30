@@ -17,5 +17,5 @@ Here is a screen shot of an interaction with Chifra building a smart contract mo
 <img src=docs/image.png>
 
 [{USAGE_TABLE}]
-
 [{FOOTER}]
+[{SOURCE}]

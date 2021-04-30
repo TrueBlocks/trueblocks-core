@@ -7,5 +7,5 @@ Below we present the command line interface to this tool, although the tool itse
 Please contact us at [sales@greathill.com](mailto:sales@greathill.com) for more information.
 
 [{USAGE_TABLE}]
-
 [{FOOTER}]
+[{SOURCE}]

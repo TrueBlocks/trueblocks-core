@@ -27,7 +27,7 @@ static const COption params[] = {
     COption("all", "a", "", OPT_SWITCH, "list, or run all class definitions found in the local folder"),
     COption("js", "j", "", OPT_SWITCH, "export javaScript code from the class definition"),
     COption("options", "o", "", OPT_SWITCH, "export options code (check validity in the process)"),
-    COption("readmes", "r", "", OPT_SWITCH, "create readme files for each tool and app"),
+    COption("readmes", "m", "", OPT_SWITCH, "create readme files for each tool and app"),
     COption("format", "f", "", OPT_SWITCH, "format source code files (.cpp and .h) found in local folder and below"),
     COption("lint", "l", "", OPT_SWITCH, "lint source code files (.cpp and .h) found in local folder and below"),
     COption("dump", "d", "", OPT_HIDDEN | OPT_SWITCH, "dump any classDefinition config tomls to screen and quit"),
@@ -81,7 +81,7 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-o" || arg == "--options") {
             options = true;
 
-        } else if (arg == "-r" || arg == "--readmes") {
+        } else if (arg == "-m" || arg == "--readmes") {
             readmes = true;
 
         } else if (arg == "-f" || arg == "--format") {
@@ -180,8 +180,8 @@ bool COptions::parseArguments(string_q& command) {
         return usage(usageErrs[ERR_EMPTYJSFILE]);
 
     // Ignoring classDefs for a moment, process special options. Note: order matters
-    if (readmes)
-        return !handle_readmes();
+    if (readmes && !handle_readmes())
+        return false;
     if (options && !handle_options())
         return false;
     if (format && !handle_format())

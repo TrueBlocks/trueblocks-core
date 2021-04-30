@@ -1,4 +1,4 @@
-## chifra makeClass
+## makeClass
 
 `makeClass` is the heart of [chifra](../chifra). It builds C++ class and header files from a classDefinition files. Class definitions files are placed in a folder called classDefinition in the folder one wishes the resulting C++ code to appear.
 
@@ -6,7 +6,7 @@ The format of the classDefinition file is described below.
 
 ### Usage
 
-`Usage:`    makeClass [-r|-a|-j|-o|-f|-l|-n|-i|-t|-c|-v|-h] &lt;file&gt; [file...]  
+`Usage:`    makeClass [-r|-a|-j|-o|-m|-f|-l|-n|-i|-t|-c|-v|-h] &lt;file&gt; [file...]  
 `Purpose:`  Automatically writes C++ for various purposes.
 
 `Where:`  
@@ -18,6 +18,7 @@ The format of the classDefinition file is described below.
 | -a | --all | list, or run all class definitions found in the local folder |
 | -j | --js | export javaScript code from the class definition |
 | -o | --options | export options code (check validity in the process) |
+| -m | --readmes | create readme files for each tool and app |
 | -f | --format | format source code files (.cpp and .h) found in local folder and below |
 | -l | --lint | lint source code files (.cpp and .h) found in local folder and below |
 | -n | --nspace <str> | surround generated c++ code with a namespace |

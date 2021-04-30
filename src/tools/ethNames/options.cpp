@@ -320,9 +320,11 @@ COptions::COptions(void) {
     if (isTestMode())
         namesPath = substitute(configPath("names/names.tab"), configPath(""), "$CONFIG/");
 
-    ostringstream os;
-    os << "Name file: `" << namesPath << "`";
-    notes.push_back(os.str());
+    if (!isReadme && !isTestMode()) {
+        ostringstream os;
+        os << "Name file: `" << namesPath << "`";
+        notes.push_back(os.str());
+    }
 
     // BEG_ERROR_MSG
     // END_ERROR_MSG

@@ -2,7 +2,7 @@ abiTest argc: 2 [1:-th]
 abiTest -th 
 ### Usage
 
-`Usage:`    abiTest [-s|-v|-h] &lt;mode&gt; [mode...]  
+`Usage:`     [-s|-v|-h] &lt;mode&gt; [mode...]  
 `Purpose:`  Simple program to illustrate how to encode function and event signatures.
 
 `Where:`  

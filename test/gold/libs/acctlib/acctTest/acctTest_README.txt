@@ -2,7 +2,7 @@ acctTest argc: 2 [1:-th]
 acctTest -th 
 ### Usage
 
-`Usage:`    acctTest [-a|-f|-l|-n|-v|-h]  
+`Usage:`     [-a|-f|-l|-n|-v|-h]  
 `Purpose:`  Build an account tree listing first transaction, latest transaction, and node balance for each account.
         
 `Where:`  

@@ -25,5 +25,5 @@ Using [{NAME}] to find Singular's address, list tokens held by other token accou
     chifra tokens `[{NAME}] -a singular` `[{NAME}] -n | xargs`
 
 [{USAGE_TABLE}]
-
 [{FOOTER}]
+[{SOURCE}]

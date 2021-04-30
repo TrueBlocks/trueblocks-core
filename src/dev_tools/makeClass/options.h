@@ -39,6 +39,7 @@ class CCounter {
     size_t nVisited;
     size_t nProcessed;
     bool is_counting;
+    CStringArray replacements;
     CCounter(void) : fileCount(0), nVisited(0), nProcessed(0), is_counting(true) {
     }
 };

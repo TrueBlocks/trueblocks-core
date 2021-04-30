@@ -2,7 +2,7 @@ serializeTest argc: 2 [1:-th]
 serializeTest -th 
 ### Usage
 
-`Usage:`    serializeTest [-t|-v|-h]  
+`Usage:`     [-t|-v|-h]  
 `Purpose:`  This program tests floating point printing and conversions.
         
 `Where:`  

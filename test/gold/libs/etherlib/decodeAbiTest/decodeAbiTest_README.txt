@@ -2,7 +2,7 @@ decodeAbiTest argc: 2 [1:-th]
 decodeAbiTest -th 
 ### Usage
 
-`Usage:`    decodeAbiTest [-v|-h]  
+`Usage:`     [-v|-h]  
 `Purpose:`  Test abi decoding.
         
 `Where:`  

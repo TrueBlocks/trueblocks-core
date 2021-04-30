@@ -5,5 +5,5 @@ The `[{NAME}]` tool retrieves Ethereum block data from a running node or, if pre
 The tool may also be used to double check that the results produced from the TrueBlocks cache and the results as retrieved directly from the running node are identical (modulo the fact that TrueBlocks does not store every data field from the node). You may accomplish this `check` with the --check option.
 
 [{USAGE_TABLE}]
-
 [{FOOTER}]
+[{SOURCE}]

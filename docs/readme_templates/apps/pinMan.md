@@ -79,5 +79,5 @@ Seeding source: os-specific
 ```
 
 [{USAGE_TABLE}]
-
 [{FOOTER}]
+[{SOURCE}]

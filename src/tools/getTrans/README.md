@@ -25,11 +25,6 @@ The `chifra transactions` tool retrieves transactions from the running Ethereum 
 - This tool checks for valid input syntax, but does not check that the transaction requested exists.
 - If the queried node does not store historical state, the results are undefined.
 
-*See Also*: This command-line tool implements these RPC interfaces:
-[eth_getTransactionByHash](https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_gettransactionbyhash),
-[eth_getTransactionByBlockNumberAndIndex](https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_gettransactionbyblocknumberandindex),
-[eth_getTransactionByBlockHashAndIndex](https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_gettransactionbyblockhashandindex).
-
 #### Other Options
 
 All **TrueBlocks** command-line tools support the following commands (although in some case, they have no meaning):

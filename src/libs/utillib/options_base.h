@@ -280,4 +280,6 @@ inline bool isReserved(const string_q& command) {
         "wei|ether|dollars|parity|cmd|mocked|api_mode|to_file|file|";
     return contains(STR_RESERVED, "|" + command + "|");
 }
+extern map<string_q, string_q> progNameMap;
+
 }  // namespace qblocks
