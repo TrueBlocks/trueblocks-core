@@ -115,8 +115,6 @@ map<string, string> cmdMap = {
     {"slurp", "ethslurp"},
     {"quotes", "getQuotes"},
     {"where", "whereBlock"},
-
-//    {"dive", "turboDive"}
 };
 
 "ACCOUNTS|"
@@ -162,11 +160,9 @@ num   ,group     ,tags     ,api_route    ,tool         ,command,hotkey,def_val,i
 13980 ,tools     ,Data     ,when         ,whenBlock    ,,,, false, false, true, false ,-- ,description, ,Finds block based on date&#44; blockNum&#44; timestamp&#44; or 'special'.
 13220 ,tools     ,State    ,state        ,getState     ,,,, false, false, true, true  ,-- ,description, ,Retrieve the balance of one or more address at the given block(s).
 13360 ,tools     ,State    ,tokens       ,getTokenInfo ,,,, false, false, true, true  ,-- ,description, ,Retrieve token balances for one or more address at given block(s).
-13730 ,tools     ,State    ,toktools     ,tokenTool    ,,,, false, false, true, true  ,-- ,description, ,Show ERC20 token cap tables with various options.
 12080 ,tools     ,Other    ,quotes       ,getQuotes     ,,,, false, false, true, true  ,-- ,description, ,Freshen and/or display Ethereum price data.
 12220 ,tools     ,Other    ,slurp        ,ethslurp     ,,,, false, false, true, true  ,-- ,description, ,Fetches data from EtherScan for an arbitrary address.
 14040 ,tools     ,Other    ,where        ,whereBlock   ,,,, false, false, true, false ,-- ,description, ,Reports in which cache (if any) a block is found.
-14050 ,tools     ,Other    ,dive         ,turboDive    ,,,, false, false, true, false ,-- ,description, ,Dive deeply into the turboGeth database.
 11824 ,dev_tools ,         ,             ,makeClass    ,,,, false, false, true, false ,-- ,description, ,Automatically writes C++ for various purposes.
 11980 ,dev_tools ,         ,             ,testRunner   ,,,, false, false, true, false ,-- ,description, ,Run TrueBlocks' test cases with options.
 #endif

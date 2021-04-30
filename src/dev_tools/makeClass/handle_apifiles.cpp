@@ -36,7 +36,7 @@ void COptions::writeOpenApiFile(void) {
         "Admin|Control the scraper and build the index|status,scrape,pins",
         "Data|Access and cache blockchain-related data|blocks,transactions,receipts,logs,traces,when",
         "State|Access to account and token state|state,tokens",
-        "Other|Access to other and external data|quotes,slurp,where,dive"};
+        "Other|Access to other and external data|quotes,slurp,where"};
 
     ostringstream tagStream;
     ostringstream pathStream;

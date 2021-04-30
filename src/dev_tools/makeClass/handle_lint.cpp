@@ -45,7 +45,7 @@ bool lintFiles(const string_q& path, void* data) {
         forEveryFileInFolder(path + "*", lintFiles, data);
 
     } else {
-        CStringArray skips = {"/other/", "/blank", "sqlite3", "utillib/json_", "turboDive"};
+        CStringArray skips = {"/other/", "/blank", "sqlite3", "utillib/json_"};
         for (auto skip : skips)
             if (contains(path, skip))
                 return !shouldQuit();

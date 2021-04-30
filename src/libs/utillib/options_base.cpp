@@ -750,16 +750,16 @@ string_q COptionsBase::usageStr(const string_q& errMsgIn) const {
     string_q progName = getProgName();
     if (isReadme && !contains(progName, "chifra") && !contains(progName, "Test")) {
         map<string_q, string_q> nameMap = {
-            make_pair("grabABI", "chifra abis"),        make_pair("getBlock", "chifra blocks"),
-            make_pair("turboDive", "chifra dive"),      make_pair("acctExport", "chifra export"),
-            make_pair("getLogs", "chifra logs"),        make_pair("ethNames", "chifra names"),
-            make_pair("pinMan", "chifra pins"),         make_pair("getQuotes", "chifra quotes"),
-            make_pair("getReceipt", "chifra receipts"), make_pair("blockScrape", "chifra scrape"),
-            make_pair("ethslurp", "chifra slurp"),      make_pair("getState", "chifra state"),
-            make_pair("cacheStatus", "chifra status"),  make_pair("getTokenInfo", "chifra tokens"),
-            make_pair("getTrace", "chifra traces"),     make_pair("getTrans", "chifra transactions"),
-            make_pair("whenBlock", "chifra when"),      make_pair("whereBlock", "chifra where"),
-            make_pair("makeClass", "makeClass"),        make_pair("testRunner", "testRunner"),
+            make_pair("grabABI", "chifra abis"),          make_pair("getBlock", "chifra blocks"),
+            make_pair("acctExport", "chifra export"),     make_pair("getLogs", "chifra logs"),
+            make_pair("ethNames", "chifra names"),        make_pair("pinMan", "chifra pins"),
+            make_pair("getQuotes", "chifra quotes"),      make_pair("getReceipt", "chifra receipts"),
+            make_pair("blockScrape", "chifra scrape"),    make_pair("ethslurp", "chifra slurp"),
+            make_pair("getState", "chifra state"),        make_pair("cacheStatus", "chifra status"),
+            make_pair("getTokenInfo", "chifra tokens"),   make_pair("getTrace", "chifra traces"),
+            make_pair("getTrans", "chifra transactions"), make_pair("whenBlock", "chifra when"),
+            make_pair("whereBlock", "chifra where"),      make_pair("makeClass", "makeClass"),
+            make_pair("testRunner", "testRunner"),
         };
         progName = nameMap[progName];
     }

@@ -1502,69 +1502,6 @@ paths:
                 x-content-type: application/json
         "400":
           description: bad input parameter
-  /dive:
-    get:
-      tags:
-      - Other
-      summary: Dive deeply into the turboGeth database.
-      description: Dive deeply into the turboGeth database.
-      operationId: other-dive
-      parameters:
-      - name: mode
-        in: query
-        description: the command to run
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-          enum:
-          - tables
-          - dump
-      - name: datadir
-        in: query
-        description: folder containing TurboGeth data file (data.mdb)
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-      - name: name
-        in: query
-        description: for 'dump' command only, the name of the table to dump
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-      - name: goerli
-        in: query
-        description: run against the goerli testnet
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: no_zero
-        in: query
-        description: suppress the display of tables with zero records
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      responses:
-        "200":
-          description: status of the scraper
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/response'
-                x-content-type: application/json
-        "400":
-          description: bad input parameter
 components:
   schemas:
     response:

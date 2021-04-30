@@ -152,11 +152,6 @@ func OtherSlurp(w http.ResponseWriter, r *http.Request) {
 func OtherWhere(w http.ResponseWriter, r *http.Request) {
 	CallOne(w, r, "whereBlock", "where")
 }
-
-// OtherDive help text todo
-func OtherDive(w http.ResponseWriter, r *http.Request) {
-	CallOne(w, r, "turboDive", "dive")
-}
 // END_ROUTE_CODE
 
 var routes = Routes{
@@ -323,13 +318,6 @@ var routes = Routes{
 		"GET",
 		"/where",
 		OtherWhere,
-	},
-
-	Route{
-		"OtherDive",
-		"GET",
-		"/dive",
-		OtherDive,
 	},
 	// END_ROUTE_ITEMS
 }

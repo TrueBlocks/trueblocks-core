@@ -154,8 +154,7 @@ map<string, string> cmdMap = {{"monitor", "acctExport --appearances"},
                               {"slurp", "ethslurp"},
                               {"quotes", "getQuotes"},
                               {"where", "whereBlock"},
-                              {"list", "acctExport --appearances"},
-                              {"dive", "turboDive"}};
+                              {"list", "acctExport --appearances"}};
 
 //------------------------------------------------------------------------------------------------
 const char* STR_FULL_HELP =
