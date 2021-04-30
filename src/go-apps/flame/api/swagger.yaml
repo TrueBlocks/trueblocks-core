@@ -1472,36 +1472,6 @@ paths:
                 x-content-type: application/json
         "400":
           description: bad input parameter
-  /where:
-    get:
-      tags:
-      - Other
-      summary: Reports in which cache (if any) a block is found.
-      description: Reports in which cache (if any) a block is found.
-      operationId: other-where
-      parameters:
-      - name: blocks
-        in: query
-        description: a space-separated list of one or more blocks to search for
-        required: true
-        style: form
-        explode: true
-        schema:
-          type: array
-          items:
-            type: string
-      responses:
-        "200":
-          description: status of the scraper
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/response'
-                x-content-type: application/json
-        "400":
-          description: bad input parameter
 components:
   schemas:
     response:

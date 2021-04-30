@@ -1,2 +1,0 @@
-"blocknumber","path","cached"
-"1001001","./blocks/00/10/01/001001001.bin","true"

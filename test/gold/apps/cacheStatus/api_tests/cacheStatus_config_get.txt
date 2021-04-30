@@ -139,14 +139,6 @@
               "tip": "",
               "required": false,
               "read_only": false
-            },
-            {
-              "name": "whereblock",
-              "value": "--where block--",
-              "type": "display string",
-              "tip": "",
-              "required": false,
-              "read_only": false
             }
           ]
         },

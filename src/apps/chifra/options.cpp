@@ -153,7 +153,6 @@ map<string, string> cmdMap = {{"monitor", "acctExport --appearances"},
                               {"explore", "ethscan.py"},
                               {"slurp", "ethslurp"},
                               {"quotes", "getQuotes"},
-                              {"where", "whereBlock"},
                               {"list", "acctExport --appearances"}};
 
 //------------------------------------------------------------------------------------------------
@@ -183,5 +182,4 @@ const char* STR_FULL_HELP =
     "OTHER|"
     "  explore       open the configured block explorer for the given address|"
     "  slurp         export details by querying EtherScan (note: will not return as many appearances as --list)|"
-    "  quotes        return prices collected from configured remote API|"
-    "  where         determine the location of block(s), either local or remote cache, or on-chain";
+    "  quotes        return prices collected from configured remote API";

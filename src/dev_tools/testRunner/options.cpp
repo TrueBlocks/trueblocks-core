@@ -124,7 +124,6 @@ bool COptions::parseArguments(string_q& command) {
                 tests.push_back("tools/getTrans");
                 tests.push_back("tools/grabABI");
                 tests.push_back("tools/whenBlock");
-                tests.push_back("tools/whereBlock");
 
             } else if (arg == "apps" || arg == "apps/") {
                 static bool been_here = false;
@@ -191,7 +190,6 @@ bool COptions::parseArguments(string_q& command) {
         tests.push_back("tools/getTrans");
         tests.push_back("tools/grabABI");
         tests.push_back("tools/whenBlock");
-        tests.push_back("tools/whereBlock");
         tests.push_back("apps/acctExport");
         tests.push_back("apps/blockScrape");
         tests.push_back("apps/cacheStatus");

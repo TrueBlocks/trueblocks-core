@@ -147,11 +147,6 @@ func OtherQuotes(w http.ResponseWriter, r *http.Request) {
 func OtherSlurp(w http.ResponseWriter, r *http.Request) {
 	CallOne(w, r, "ethslurp", "slurp")
 }
-
-// OtherWhere help text todo
-func OtherWhere(w http.ResponseWriter, r *http.Request) {
-	CallOne(w, r, "whereBlock", "where")
-}
 // END_ROUTE_CODE
 
 var routes = Routes{
@@ -311,13 +306,6 @@ var routes = Routes{
 		"GET",
 		"/slurp",
 		OtherSlurp,
-	},
-
-	Route{
-		"OtherWhere",
-		"GET",
-		"/where",
-		OtherWhere,
 	},
 	// END_ROUTE_ITEMS
 }

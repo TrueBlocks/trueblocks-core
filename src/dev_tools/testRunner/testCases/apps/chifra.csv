@@ -24,7 +24,6 @@ on,cmd,fast,null,apps/chifra,help_server,n,modes = serve & help
 on,cmd,fast,null,apps/chifra,help_status,n,modes = status & help
 on,cmd,fast,null,apps/chifra,help_quotes,n,modes = quotes & help
 on,cmd,fast,null,apps/chifra,help_when,n,modes = when & help
-on,cmd,fast,null,apps/chifra,help_where,n,modes = where & help
 on,cmd,fast,null,apps/chifra,no_params,n,
 on,cmd,fast,null,apps/chifra,invalid_option,n,modes = not_a_mode
 

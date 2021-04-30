@@ -114,7 +114,6 @@ map<string, string> cmdMap = {
     {"explore", "ethscan.py"},
     {"slurp", "ethslurp"},
     {"quotes", "getQuotes"},
-    {"where", "whereBlock"},
 };
 
 "ACCOUNTS|"
@@ -142,8 +141,7 @@ map<string, string> cmdMap = {
 "OTHER|"
 "  explore       open the configured block explorer for the given address|"
 "  slurp         export details by querying EtherScan (note: will not return as many appearances as --list)|"
-"  quotes        return prices collected from configured remote API|"
-"  where         determine the location of block(s), either local or remote cache, or on-chain";
+"  quotes        return prices collected from configured remote API"
 
 num   ,group     ,tags     ,api_route    ,tool         ,command,hotkey,def_val,is_required,customizeable,core_visible,docs_visible, generate, option_kind, data_type, description
 10460 ,apps      ,Accounts ,export       ,acctExport   ,,,, false, false, true, true  ,-- ,description, ,Export full detail of transactions for one or more Ethereum addresses.
@@ -162,7 +160,6 @@ num   ,group     ,tags     ,api_route    ,tool         ,command,hotkey,def_val,i
 13360 ,tools     ,State    ,tokens       ,getTokens ,,,, false, false, true, true  ,-- ,description, ,Retrieve token balances for one or more address at given block(s).
 12080 ,tools     ,Other    ,quotes       ,getQuotes     ,,,, false, false, true, true  ,-- ,description, ,Freshen and/or display Ethereum price data.
 12220 ,tools     ,Other    ,slurp        ,ethslurp     ,,,, false, false, true, true  ,-- ,description, ,Fetches data from EtherScan for an arbitrary address.
-14040 ,tools     ,Other    ,where        ,whereBlock   ,,,, false, false, true, false ,-- ,description, ,Reports in which cache (if any) a block is found.
 11824 ,dev_tools ,         ,             ,makeClass    ,,,, false, false, true, false ,-- ,description, ,Automatically writes C++ for various purposes.
 11980 ,dev_tools ,         ,             ,testRunner   ,,,, false, false, true, false ,-- ,description, ,Run TrueBlocks' test cases with options.
 #endif

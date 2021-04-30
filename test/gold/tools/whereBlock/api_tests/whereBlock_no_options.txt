@@ -1,5 +1,0 @@
-{
-  "errors": [
-    "chifra where - Not enough arguments presented."
-  ]
-}

@@ -103,11 +103,6 @@ cacheStatus --get_config
               "name": "whenblock",
               "value": "--when block--",
               "type": "display string"
-            },
-            {
-              "name": "whereblock",
-              "value": "--where block--",
-              "type": "display string"
             }
           ]
         },

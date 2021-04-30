@@ -1,4 +1,0 @@
-whereBlock argc: 2 [1:0xabcd] 
-whereBlock 0xabcd 
-blocknumber	path	cached
-43981	--nodeVersion--	false

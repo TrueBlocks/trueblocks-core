@@ -227,10 +227,6 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,customizeable,c
 13982,tools,Data,when,whenBlock,,,,false,false,false,false,--,note,,You may customize the list of named blocks by editing [{CONFIG}]whenBlock.toml.
 13982,tools,Data,when,whenBlock,,,,false,false,false,false,--,note,,The following `named` blocks are currently configured:
 
-14020,tools,Other,where,whereBlock,blocks,,,true,false,true,false,local,positional,list<blknum>,a space-separated list of one or more blocks to search for
-14040,tools,Other,where,whereBlock,,,,false,false,true,false,--,description,,Reports in which cache (if any) a block is found.
-14050,tools,Other,where,whereBlock,,,,false,false,false,false,--,note,,Customize the location of the cache in the configuration file [{CONFIG}]trueBlocks.toml.
-
 14400,all,,all,all,version,,,false,false,true,false,--,switch,<boolean>,display the current version of the tool
 14420,all,,all,all,nocolor,,,false,false,true,false,--,switch,<boolean>,turn off colored display
 14430,all,,all,all,mocked,,,false,false,true,false,--,switch,<boolean>,useful for testing&#44; instead of generating real data simulate the data

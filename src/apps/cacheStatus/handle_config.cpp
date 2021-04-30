@@ -60,7 +60,6 @@ bool COptions::handle_config_get(ostream& os) {
         f.sections.push_back(g1_2);
 
         extern const char* STR_DISPLAY_WHEN;
-        extern const char* STR_DISPLAY_WHERE;
 
         CStringArray values2;
         CConfigItemArray items2;
@@ -77,7 +76,6 @@ bool COptions::handle_config_get(ostream& os) {
         values2.push_back(isTestMode() ? "--trace--" : cc->getConfigStr(g2.section, "", STR_DISPLAY_TRACE));
         values2.push_back(isTestMode() ? "--transaction--" : cc->getConfigStr(g2.section, "", STR_DISPLAY_TRANSACTION));
         values2.push_back(isTestMode() ? "--when block--" : cc->getConfigStr(g2.section, "", STR_DISPLAY_WHEN));
-        values2.push_back(isTestMode() ? "--where block--" : cc->getConfigStr(g2.section, "", STR_DISPLAY_WHERE));
         extern string_q convertDisplayStr(const string_q& in);
         items2.push_back(
             CConfigItem("accountName", convertDisplayStr(values2[cnt++]), "display string", "", false, false));
@@ -96,8 +94,6 @@ bool COptions::handle_config_get(ostream& os) {
             CConfigItem("transaction", convertDisplayStr(values2[cnt++]), "display string", "", false, false));
         items2.push_back(
             CConfigItem("whenblock", convertDisplayStr(values2[cnt++]), "display string", "", false, false));
-        items2.push_back(
-            CConfigItem("whereblock", convertDisplayStr(values2[cnt++]), "display string", "", false, false));
         for (auto item : items2)
             g2.keys.push_back(item);
         if (verbose || isTestMode())
@@ -198,4 +194,3 @@ string_q convertDisplayStr(const string_q& in) {
 
 //--------------------------------------------------------------------------------
 const char* STR_DISPLAY_WHEN = "[{BLOCKNUMBER}]\t[{TIMESTAMP}]\t[{DATE}]\t[{NAME}]";
-const char* STR_DISPLAY_WHERE = "[{BLOCKNUMBER}]\t[{PATH}]\t[{CACHED}]";
