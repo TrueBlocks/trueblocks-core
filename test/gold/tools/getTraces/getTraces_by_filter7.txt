@@ -1,0 +1,38 @@
+getTraces argc: 5 [1:--fmt] [2:json] [3:--filter] [4:0x42ae50!4370002!!0xc42209accc14029c1012fb5680d95fbd6036e2a0] 
+getTraces --fmt json --filter 0x42ae50!4370002!!0xc42209accc14029c1012fb5680d95fbd6036e2a0 
+TIME ~ CLOCK - <INFO>  : {
+  "fromBlock": 4370000,
+  "toBlock": 4370002,
+  "toAddress": [
+    "0xc42209accc14029c1012fb5680d95fbd6036e2a0"
+  ],
+  "after": 0,
+  "count": 0
+}
+
+
+{ "data": [
+{"fromBlock":"0x42ae50","toBlock":"0x42ae52","toAddress":["0xc42209accc14029c1012fb5680d95fbd6036e2a0"]}
+{
+  "action": {
+    "callType": "call",
+    "from": "0x8c3064d32441f0190e8b3fa1ef9fc81fccb06111",
+    "gas": 76618,
+    "input": "0xa9059cbb000000000000000000000000e66a5d335d627c309587aaea85ab67dd1f491fab00000000000000000000000000000000000000000000044121182b6872fa8000",
+    "to": "0xc42209accc14029c1012fb5680d95fbd6036e2a0",
+    "value": 0
+  },
+  "blockHash": "0x40996e904604226a5c252f496238d4c70270e0a05c4cb5588987b32fe1c4a7f2",
+  "blockNumber": 4370001,
+  "result": {
+    "gasUsed": 29002,
+    "output": "0x0000000000000000000000000000000000000000000000000000000000000001"
+  },
+  "subtraces": 0,
+  "traceAddress": null,
+  "transactionHash": "0xed0457a347c8b69d9acf18511ccc90008b68685704d9fe1f1047a97302e7d07c",
+  "transactionIndex": 0,
+  "type": "call"
+}
+
+] }

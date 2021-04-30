@@ -1,0 +1,25 @@
+getTraces argc: 2 [1:0x0012] 
+getTraces 0x0012 
+
+  The argument '0x0012' is not properly formatted. Is it the right length? Quitting...
+
+  Usage:    getTraces [-a|-d|-c|-v|-h] <tx_id> [tx_id...]  
+  Purpose:  Retrieve a transaction's traces from the cache or the node.
+
+  Where:  
+	transactions          a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID) (required)
+	-a  (--articulate)    articulate the transactions if an ABI is found for the 'to' address
+	-d  (--statediff)     export stateDiff traces for the transaction(s)
+	-c  (--count)         show the number of traces for the transaction only (fast)
+
+	#### Hidden options
+	-s  (--skip_ddos)     skip over 2018 ddos during export ('on' by default)
+	-m  (--max_traces <num>)if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250)
+	-f  (--filter <str>)  Call trace_filter with bang-seperated string fromBlk!toBlk[!fromAddr[!toAddr[!after[!count]]]]
+	#### Hidden options
+
+	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
+	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
+	-h  (--help)          display this help screen
+
+  Powered by TrueBlocks

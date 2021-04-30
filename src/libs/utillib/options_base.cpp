@@ -742,7 +742,7 @@ map<string_q, string_q> progNameMap = {
     make_pair("getState", "chifra state"),
     make_pair("cacheStatus", "chifra status"),
     make_pair("getTokens", "chifra tokens"),
-    make_pair("getTrace", "chifra traces"),
+    make_pair("getTraces", "chifra traces"),
     make_pair("getTrans", "chifra transactions"),
     make_pair("whenBlock", "chifra when"),
     make_pair("makeClass", "makeClass"),

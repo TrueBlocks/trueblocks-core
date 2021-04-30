@@ -1,6 +1,0 @@
-getTrace argc: 2 [1:--file:cmd_file] 
-getTrace --file:cmd_file 
-blocknumber	transactionindex	traceaddress	action::calltype	error	action::from	action::to	action::value	action::ether	action::gas	result::gasused	action::input	compressedtrace	result::output
-3657480	78	null	call		0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5	0x8c222fb428f9f44715cf85349f79a18761c8e53c	233602441535478432	0.233602441535478432	29000	0	0x		0x
-3657480	78	null	call		0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5	0x8c222fb428f9f44715cf85349f79a18761c8e53c	233602441535478432	0.233602441535478432	29000	0	0x		0x
-3657480	79	null	call		0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5	0x85ac33fe36a146ca3651693c16fbb45b3832b3f6	207260709928115808	0.207260709928115808	29000	0	0x		0x

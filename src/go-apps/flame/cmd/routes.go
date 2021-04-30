@@ -120,7 +120,7 @@ func DataLogs(w http.ResponseWriter, r *http.Request) {
 
 // DataTraces help text todo
 func DataTraces(w http.ResponseWriter, r *http.Request) {
-	CallOne(w, r, "getTrace", "traces")
+	CallOne(w, r, "getTraces", "traces")
 }
 
 // DataWhen help text todo

@@ -187,17 +187,17 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,customizeable,c
 13370,tools,State,tokens,getTokens,,,,false,false,false,false,--,note,,If the queried node does not store historical state&#44; the results are undefined.
 13372,tools,State,tokens,getTokens,,,,false,false,false,false,--,note,,`special` blocks are detailed under `whenBlock --list`.
 
-13400,tools,Data,traces,getTrace,transactions,,,true,false,true,true,local,positional,list<tx_id>,a space-separated list of one or more transaction identifiers|(tx_hash&#44; bn.txID&#44; blk_hash.txID)
-13420,tools,Data,traces,getTrace,articulate,a,,false,false,true,true,header,switch,<boolean>,articulate the transactions if an ABI is found for the 'to' address
-13420,tools,Data,traces,getTrace,statediff,d,,false,false,true,true,header,switch,<boolean>,export stateDiff traces for the transaction(s)
-13440,tools,Data,traces,getTrace,count,c,,false,false,true,true,header,switch,<boolean>,show the number of traces for the transaction only (fast)
-13460,tools,Data,traces,getTrace,skip_ddos,s,true,false,true,false,false,header,toggle,<boolean>,skip over 2018 ddos during export ([{DEF}] by default)
-13480,tools,Data,traces,getTrace,max_traces,m,250,false,true,false,false,header,flag,<uint64>,if --skip_ddos is on&#44; this many traces defines what a ddos transaction|is (default = [{DEF}])
-13490,tools,Data,traces,getTrace,filter,f,,false,false,false,false,header,flag,<string>,Call trace_filter with bang-seperated string fromBlk!toBlk[!fromAddr[!toAddr[!after[!count]]]]
-13500,tools,Data,traces,getTrace,,,,false,false,true,true,--,description,,Retrieve a transaction's traces from the cache or the node.
-13622,tools,Data,traces,getTrace,,,,false,false,false,false,--,note,,`transactions` is one or more space-separated identifiers which may be either a transaction hash&#44;|a blockNumber.transactionID pair&#44; or a blockHash.transactionID pair&#44; or any combination.
-13624,tools,Data,traces,getTrace,,,,false,false,false,false,--,note,,This tool checks for valid input syntax&#44; but does not check that the transaction requested exists.
-13629,tools,Data,traces,getTrace,,,,false,false,false,false,--,note,,If the queried node does not store historical state&#44; the results are undefined.
+13400,tools,Data,traces,getTraces,transactions,,,true,false,true,true,local,positional,list<tx_id>,a space-separated list of one or more transaction identifiers|(tx_hash&#44; bn.txID&#44; blk_hash.txID)
+13420,tools,Data,traces,getTraces,articulate,a,,false,false,true,true,header,switch,<boolean>,articulate the transactions if an ABI is found for the 'to' address
+13420,tools,Data,traces,getTraces,statediff,d,,false,false,true,true,header,switch,<boolean>,export stateDiff traces for the transaction(s)
+13440,tools,Data,traces,getTraces,count,c,,false,false,true,true,header,switch,<boolean>,show the number of traces for the transaction only (fast)
+13460,tools,Data,traces,getTraces,skip_ddos,s,true,false,true,false,false,header,toggle,<boolean>,skip over 2018 ddos during export ([{DEF}] by default)
+13480,tools,Data,traces,getTraces,max_traces,m,250,false,true,false,false,header,flag,<uint64>,if --skip_ddos is on&#44; this many traces defines what a ddos transaction|is (default = [{DEF}])
+13490,tools,Data,traces,getTraces,filter,f,,false,false,false,false,header,flag,<string>,Call trace_filter with bang-seperated string fromBlk!toBlk[!fromAddr[!toAddr[!after[!count]]]]
+13500,tools,Data,traces,getTraces,,,,false,false,true,true,--,description,,Retrieve a transaction's traces from the cache or the node.
+13622,tools,Data,traces,getTraces,,,,false,false,false,false,--,note,,`transactions` is one or more space-separated identifiers which may be either a transaction hash&#44;|a blockNumber.transactionID pair&#44; or a blockHash.transactionID pair&#44; or any combination.
+13624,tools,Data,traces,getTraces,,,,false,false,false,false,--,note,,This tool checks for valid input syntax&#44; but does not check that the transaction requested exists.
+13629,tools,Data,traces,getTraces,,,,false,false,false,false,--,note,,If the queried node does not store historical state&#44; the results are undefined.
 
 13540,tools,Data,transactions,getTrans,transactions,,,true,false,true,true,local,positional,list<tx_id>,a space-separated list of one or more transaction identifiers|(tx_hash&#44; bn.txID&#44; blk_hash.txID)
 13560,tools,Data,transactions,getTrans,articulate,a,,false,false,true,true,header,switch,<boolean>,articulate the transactions if an ABI is found for the 'to' address
