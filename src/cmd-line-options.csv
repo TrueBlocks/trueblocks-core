@@ -67,6 +67,7 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,customizeable,c
 11740,dev_tools,,,makeClass,all,a,,false,false,true,false,header,switch,<boolean>,list&#44; or run all class definitions found in the local folder
 11760,dev_tools,,,makeClass,js,j,,false,false,true,false,local,switch,<boolean>,export javaScript code from the class definition
 11780,dev_tools,,,makeClass,options,o,,false,false,true,false,local,switch,<boolean>,export options code (check validity in the process)
+11780,dev_tools,,,makeClass,readmes,r,,false,false,true,false,local,switch,<boolean>,create readme files for each tool and app
 11782,dev_tools,,,makeClass,format,f,,false,false,true,false,local,switch,<boolean>,format source code files (.cpp and .h) found in local folder and below
 11784,dev_tools,,,makeClass,lint,l,,false,false,true,false,local,switch,<boolean>,lint source code files (.cpp and .h) found in local folder and below
 11784,dev_tools,,,makeClass,dump,d,,false,false,false,false,local,switch,<boolean>,dump any classDefinition config tomls to screen and quit

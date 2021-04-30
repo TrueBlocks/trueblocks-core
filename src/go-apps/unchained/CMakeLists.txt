@@ -28,6 +28,3 @@ set(PROJ_NAME "go-apps")
 set(TEST_EXE "${EXECUTABLE_OUTPUT_PATH}/${TOOL_NAME}")
 set(TEST_PATH "${TEST_PATH}/${PROJ_NAME}/${TOOL_NAME}")
 set(GOLD_PATH "${GOLD_PATH}/${PROJ_NAME}/${TOOL_NAME}")
-
-# Additional target to make the README.md
-# build_readme(${CMAKE_CURRENT_SOURCE_DIR} ${PROJ_NAME} ${TOOL_NAME} "unchained")
