@@ -194,7 +194,7 @@ bool COptions::parseArguments(string_q& command) {
         run = true;
 
     // Maybe the user only wants to generate code, format, or lint...
-    if ((run + edit + dump) == 0 && (options + format + lint) > 0)
+    if ((run + edit + dump) == 0 && (options + format + lint + readmes) > 0)
         return false;
 
     // If not, we need classDefs to work with...

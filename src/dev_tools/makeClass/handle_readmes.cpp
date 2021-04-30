@@ -70,7 +70,7 @@ bool visitReadme(const string_q& templatePath, void* data) {
 bool writeIfDifferent(const string_q& path, const string_q& code) {
     string_q existing = asciiFileToString(path);
     if (existing != code) {
-        stringToAsciiFile(path, existing);
+        stringToAsciiFile(path, code);
         cerr << cGreen << "\tProcessed " << cOff << path << endl;
         return true;
     }
