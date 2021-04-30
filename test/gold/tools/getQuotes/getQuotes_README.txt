@@ -1,5 +1,5 @@
-ethQuote argc: 2 [1:-th] 
-ethQuote -th 
+getQuotes argc: 2 [1:-th] 
+getQuotes -th 
 #### Usage
 
 `Usage:`    chifra quotes [-f|-p|-a|-e|-v|-h]  

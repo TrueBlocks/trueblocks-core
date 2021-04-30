@@ -97,13 +97,13 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,customizeable,c
 11960,dev_tools,,,testRunner,report,r,,false,false,true,false,header,switch,<boolean>,display performance report to screen
 11980,dev_tools,,,testRunner,,,,false,false,true,false,--,description,,Run TrueBlocks' test cases with options.
 
-12020,tools,Other,quotes,ethQuote,freshen,f,,false,false,true,true,header,switch,<boolean>,Freshen price database (append new data)
-12040,tools,Other,quotes,ethQuote,period,p,,false,false,true,true,local,flag,enum[5|15|30|60|120*|240|1440|10080|hourly|daily|weekly],increment of display
-12060,tools,Other,quotes,ethQuote,pair,a,,false,false,true,true,local,flag,<string>,which price pair to freshen or list (see Poloniex)
-12060,tools,Other,quotes,ethQuote,feed,e,,false,false,true,true,header,flag,enum[poloniex*|maker|tellor],the feed for the price data
-12080,tools,Other,quotes,ethQuote,,,,false,false,true,true,--,description,,Freshen and/or display Ethereum price data.
-12082,tools,Other,quotes,ethQuote,,,,false,false,false,false,--,note,,Valid pairs include any pair from the public Poloniex's API here:|https://poloniex.com/public?command=returnCurrencies.
-12082,tools,Other,quotes,ethQuote,,,,false,false,false,false,--,note,,`Note`: Due to restrictions from Poloniex&#44; this tool retrieves only 30 days of data|at a time. You must repeatedly run this command until the data is up-to-date.
+12020,tools,Other,quotes,getQuotes,freshen,f,,false,false,true,true,header,switch,<boolean>,Freshen price database (append new data)
+12040,tools,Other,quotes,getQuotes,period,p,,false,false,true,true,local,flag,enum[5|15|30|60|120*|240|1440|10080|hourly|daily|weekly],increment of display
+12060,tools,Other,quotes,getQuotes,pair,a,,false,false,true,true,local,flag,<string>,which price pair to freshen or list (see Poloniex)
+12060,tools,Other,quotes,getQuotes,feed,e,,false,false,true,true,header,flag,enum[poloniex*|maker|tellor],the feed for the price data
+12080,tools,Other,quotes,getQuotes,,,,false,false,true,true,--,description,,Freshen and/or display Ethereum price data.
+12082,tools,Other,quotes,getQuotes,,,,false,false,false,false,--,note,,Valid pairs include any pair from the public Poloniex's API here:|https://poloniex.com/public?command=returnCurrencies.
+12082,tools,Other,quotes,getQuotes,,,,false,false,false,false,--,note,,`Note`: Due to restrictions from Poloniex&#44; this tool retrieves only 30 days of data|at a time. You must repeatedly run this command until the data is up-to-date.
 
 12120,tools,Other,slurp,ethslurp,addrs,,,true,false,true,true,header,positional,list<addr>,one or more addresses to slurp from Etherscan
 12140,tools,Other,slurp,ethslurp,blocks,,,false,false,true,true,header,positional,list<blknum>,an optional range of blocks to slurp

@@ -2,7 +2,7 @@
 cmake_minimum_required (VERSION 3.0)
 
 # application project
-project (ethQuote)
+project (getQuotes)
 
 # The sources to be used
 file(GLOB SOURCE_FILES "*.cpp")
@@ -11,7 +11,7 @@ file(GLOB SOURCE_FILES "*.cpp")
 set(EXECUTABLE_OUTPUT_PATH "${CMAKE_SOURCE_DIR}/../bin")
 
 # Define the executable to be generated
-set(TOOL_NAME "ethQuote")
+set(TOOL_NAME "getQuotes")
 set(PROJ_NAME "tools")
 add_executable(${TOOL_NAME} ${SOURCE_FILES})
 

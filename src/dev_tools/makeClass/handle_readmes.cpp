@@ -20,59 +20,11 @@ bool COptions::handle_readmes(void) {
 }
 
 #if 0
-#!/ usr / bin / env python
-
-#########################################################################################################################################
-#This script receives parameters to do the replacement of a given tag within a text file
-#
-#USAGE : makeReadme.py README.tmpl.md README.footer.md toolName usageFile README.md
-#
-#argv[0] This script
-#argv[1] The root of the source tree
-#argv[1] The source code folder
-#argv[2] The tool name
-#argv[3] The chifra route
-#argv[4] The project directory
-#
-#########################################################################################################################################
-
-from __future__ import print_function
-import os
-import sys
-
-#-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
-#Print to standard error
-#-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
-
-def printe(*args, **kwargs):
-    print(*args, file=sys.stderr, **kwargs)
-
-#-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
-#Main program
-#-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
-
-#Debugging input array
-#printe(sys.argv)
-
-#Check input parameters number
-param_number = len(sys.argv)
-
-#Need at least four parameters
-if param_number < 4:
-    printe("ERROR: Invalid parameters number, 4 expected, got ", param_number)
-    exit(1)
-
-#Get the input parameters once checked that they are present
 srcFolder = sys.argv[1]
 toolFolder = sys.argv[2]
 toolName = sys.argv[3]
 routeStr = "chifra"
-if param_number > 3:
-    routeStr = "chifra " + sys.argv[4]
-projName = ""
-if param_number > 4:
-    projName = sys.argv[5]
-    
+
 templateFile = toolFolder + "/docs/README.tmpl.md"
 footerFile = srcFolder + "/other/docs/README.footer.md"
 usageFile = "help.txt"
@@ -133,4 +85,88 @@ outputData = outputData.replace("chifra chifra", "chifra")
 with open(outputFile, 'w') as file:
     printe("Wrote file %s" % outputFile)
     file.write(outputData)
+
+map<string, string> cmdMap = {
+    {"list", "acctExport --appearances"},
+    {"export", "acctExport"},
+    {"monitor", "acctExport --appearances"},
+    {"names", "ethNames"},
+//    {"entities", "ethNames --entities"},
+//    {"tags", "ethNames --tags"},
+    {"abis", "grabABI"},
+
+    {"blocks", "getBlock"},
+    {"transactions", "getTrans"},
+    {"receipts", "getReceipt"},
+    {"logs", "getLogs"},
+    {"traces", "getTrace"},
+    {"when", "whenBlock"},
+
+    {"state", "getState"},
+    {"tokens", "getTokenInfo"},
+
+    {"init", "pinMan local --init"},
+    {"status", "cacheStatus"},
+    {"scrape", "blockScrape"},
+    {"serve", "flame"},
+    {"pins", "pinMan"},
+
+    {"explore", "ethscan.py"},
+    {"slurp", "ethslurp"},
+    {"quotes", "getQuotes"},
+    {"where", "whereBlock"},
+
+//    {"dive", "turboDive"}
+};
+
+"ACCOUNTS|"
+"  list          list every appearance of an address anywhere on the chain|"
+"  export        export details for each appearance (as txs, logs, traces, balances, reconciliations, etc.)|"
+"  monitor       add, remove, clean, and list appearances of address(es) on the chain|"
+"  names         list and/or share named addresses|"
+"  abis          list and/or share abi signatures|"
+"DATA|"
+"  blocks        export block-related data|"
+"  transactions  export transaction-related data|"
+"  receipts      export receipt-related data|"
+"  logs          export log-related data|"
+"  traces        export trace-related data|"
+"  when          return a date given a block number or a block number given a date|"
+"STATE|"
+"  state         export parts of the state for given address(es)|"
+"  tokens        export data related to ERC20 and/or ERC721 token(s)|"
+"ADMIN|"
+"  init          initialize TrueBlocks databases by downloading pinned bloom filters|"
+"  status        query the status of the system|"
+"  scrape        scrape the chain and build an index of address appearances (aka digests)|"
+"  serve         serve the TrueBlocks API via the flame server|"
+"  pins          query the status of the pinning system|"
+"OTHER|"
+"  explore       open the configured block explorer for the given address|"
+"  slurp         export details by querying EtherScan (note: will not return as many appearances as --list)|"
+"  quotes        return prices collected from configured remote API|"
+"  where         determine the location of block(s), either local or remote cache, or on-chain";
+
+num   ,group     ,tags     ,api_route    ,tool         ,command,hotkey,def_val,is_required,customizeable,core_visible,docs_visible, generate, option_kind, data_type, description
+10460 ,apps      ,Accounts ,export       ,acctExport   ,,,, false, false, true, true  ,-- ,description, ,Export full detail of transactions for one or more Ethereum addresses.
+13880 ,tools     ,Accounts ,abis         ,grabABI      ,,,, false, false, true, true  ,-- ,description, ,Fetches the ABI for a smart contract.
+12460 ,tools     ,Accounts ,names        ,ethNames     ,,,, false, false, true, true  ,-- ,description, ,Query addresses and/or names of well known accounts.
+10660 ,apps      ,Admin    ,scrape       ,blockScrape  ,,,, false, false, true, true  ,-- ,description, ,Decentralized blockchain scraper and block cache.
+10860 ,apps      ,Admin    ,status       ,cacheStatus  ,,,, false, false, true, true  ,-- ,description, ,Report on status of one or more TrueBlocks caches.
+10980 ,apps      ,Admin    ,pins         ,pinMan       ,,,, false, false, true, true  ,-- ,description, ,Report on and manage the remotely pinned appearance index and associated bloom filters.
+12640 ,tools     ,Data     ,blocks       ,getBlock     ,,,, false, false, true, true  ,-- ,description, ,Returns block(s) from local cache or directly from a running node.
+12960 ,tools     ,Data     ,logs         ,getLogs      ,,,, false, false, true, true  ,-- ,description, ,Retrieve a transaction's logs from the cache or the node.
+13060 ,tools     ,Data     ,receipts     ,getReceipt   ,,,, false, false, true, true  ,-- ,description, ,Retrieve a transaction's receipt from the cache or the node.
+13500 ,tools     ,Data     ,traces       ,getTrace     ,,,, false, false, true, true  ,-- ,description, ,Retrieve a transaction's traces from the cache or the node.
+13620 ,tools     ,Data     ,transactions ,getTrans     ,,,, false, false, true, true  ,-- ,description, ,Retrieve a transaction from the cache or the node.
+13980 ,tools     ,Data     ,when         ,whenBlock    ,,,, false, false, true, false ,-- ,description, ,Finds block based on date&#44; blockNum&#44; timestamp&#44; or 'special'.
+13220 ,tools     ,State    ,state        ,getState     ,,,, false, false, true, true  ,-- ,description, ,Retrieve the balance of one or more address at the given block(s).
+13360 ,tools     ,State    ,tokens       ,getTokenInfo ,,,, false, false, true, true  ,-- ,description, ,Retrieve token balances for one or more address at given block(s).
+13730 ,tools     ,State    ,toktools     ,tokenTool    ,,,, false, false, true, true  ,-- ,description, ,Show ERC20 token cap tables with various options.
+12080 ,tools     ,Other    ,quotes       ,getQuotes     ,,,, false, false, true, true  ,-- ,description, ,Freshen and/or display Ethereum price data.
+12220 ,tools     ,Other    ,slurp        ,ethslurp     ,,,, false, false, true, true  ,-- ,description, ,Fetches data from EtherScan for an arbitrary address.
+14040 ,tools     ,Other    ,where        ,whereBlock   ,,,, false, false, true, false ,-- ,description, ,Reports in which cache (if any) a block is found.
+14050 ,tools     ,Other    ,dive         ,turboDive    ,,,, false, false, true, false ,-- ,description, ,Dive deeply into the turboGeth database.
+11824 ,dev_tools ,         ,             ,makeClass    ,,,, false, false, true, false ,-- ,description, ,Automatically writes C++ for various purposes.
+11980 ,dev_tools ,         ,             ,testRunner   ,,,, false, false, true, false ,-- ,description, ,Run TrueBlocks' test cases with options.
 #endif

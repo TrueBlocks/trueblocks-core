@@ -8,7 +8,7 @@ blockScrape
 cacheStatus
 chifra
 ethNames
-ethQuote
+getQuotes
 ethscan.py
 ethslurp
 fromES

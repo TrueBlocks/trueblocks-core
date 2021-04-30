@@ -140,7 +140,7 @@ func StateTokens(w http.ResponseWriter, r *http.Request) {
 
 // OtherQuotes help text todo
 func OtherQuotes(w http.ResponseWriter, r *http.Request) {
-	CallOne(w, r, "ethQuote", "quotes")
+	CallOne(w, r, "getQuotes", "quotes")
 }
 
 // OtherSlurp help text todo

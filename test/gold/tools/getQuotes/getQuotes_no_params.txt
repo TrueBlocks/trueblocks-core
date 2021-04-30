@@ -1,9 +1,9 @@
-ethQuote argc: 2 [1:--junk] 
-ethQuote --junk 
+getQuotes argc: 1 
+getQuotes 
 
-  Invalid option: --junk
+  Not enough arguments presented. Quitting...
 
-  Usage:    ethQuote [-f|-p|-a|-e|-v|-h]  
+  Usage:    getQuotes [-f|-p|-a|-e|-v|-h]  
   Purpose:  Freshen and/or display Ethereum price data.
 
   Where:  

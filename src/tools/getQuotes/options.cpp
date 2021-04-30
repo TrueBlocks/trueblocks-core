@@ -108,7 +108,7 @@ bool COptions::parseArguments(string_q& command) {
     establishFolder(source.getDatabasePath(unused));
 
     // Display formatting
-    configureDisplay("ethQuote", "CPriceQuote", STR_DISPLAY_PRICEQUOTE);
+    configureDisplay("getQuotes", "CPriceQuote", STR_DISPLAY_PRICEQUOTE);
 
     return true;
 }

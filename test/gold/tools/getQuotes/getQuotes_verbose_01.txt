@@ -1,7 +1,7 @@
-ethQuote argc: 4 [1:--verbose] [2:--fmt] [3:json] 
-ethQuote --verbose --fmt json 
+getQuotes argc: 5 [1:--verbose] [2:1] [3:--fmt] [4:api] 
+getQuotes --verbose 1 --fmt api 
 Read cnt existing price quotes (lastRead: Now)
-{ "data": [
+{"data": [
   {
     "timestamp": 1439078400,
     "close": 1.40000,
@@ -35382,4 +35382,6 @@ Read cnt existing price quotes (lastRead: Now)
     "timestamp": 1502755200,
     "close": 298.05590,
     "date": "2017-08-15 00:00:00 UTC"
-  }] }
+  }], "types": [
+{ "type": "CPriceQuote", "fields": [{ "name": "timestamp", "type": "timestamp" }, { "name": "close", "type": "double" }, { "name": "date", "type": "date" }] }
+], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }

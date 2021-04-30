@@ -1,9 +1,9 @@
-ethQuote argc: 3 [1:--fmt] [2:junk] 
-ethQuote --fmt junk 
+getQuotes argc: 3 [1:--fmt] [2:junk] 
+getQuotes --fmt junk 
 
   Export format (junk) must be one of [ json | txt | csv | api ]. Quitting...
 
-  Usage:    ethQuote [-f|-p|-a|-e|-v|-h]  
+  Usage:    getQuotes [-f|-p|-a|-e|-v|-h]  
   Purpose:  Freshen and/or display Ethereum price data.
 
   Where:  

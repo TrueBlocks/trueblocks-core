@@ -1,5 +1,5 @@
-ethQuote argc: 3 [1:--fmt] [2:api] 
-ethQuote --fmt api 
+getQuotes argc: 3 [1:--fmt] [2:api] 
+getQuotes --fmt api 
 {"data": [
   {
     "timestamp": 1439078400,
