@@ -14,8 +14,31 @@
 #include "options.h"
 
 //------------------------------------------------------------------------------------------------------------
+bool visitReadme(const string_q& templatePath, void *data) {
+    if (endsWith(templatePath, "/")) {
+        return forEveryFileInFolder(templatePath + "*", visitReadme, data);
+
+    } else {
+        if (!endsWith(templatePath, ".tmpl.md"))
+            return true;
+
+        string_q docPath = substitute(substitute(templatePath, "docs/readme_templates/", "docs/readmes/"), "tmpl.md", "md");
+        string_q sourcePath = substitute(docPath, "docs/readmes/", "src/");
+
+        CStringArray parts;
+        explode(parts, templatePath, '/');
+        int i = 0;
+        for (auto part : parts)
+            cout << (i++) << " " << part << endl;
+        cout << endl;
+        // string_q template = asciiFileToString(templatePath);
+    }
+    return true;
+}
+
+//------------------------------------------------------------------------------------------------------------
 bool COptions::handle_readmes(void) {
-    cerr << "Handling READMEs" << endl;
+    forEveryFileInFolder("../docs/readme_templates", visitReadme, nullptr);
     return true;
 }
 
