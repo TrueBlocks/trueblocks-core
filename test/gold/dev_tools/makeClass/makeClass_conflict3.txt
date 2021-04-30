@@ -3,7 +3,7 @@ makeClass -r --edit
 
   Please chose exactly one of --run, --list, or --edit. Quitting...
 
-  Usage:    makeClass [-r|-a|-j|-o|-f|-l|-n|-i|-t|-c|-v|-h] <file> [file...]  
+  Usage:    makeClass [-r|-a|-j|-o|-r|-f|-l|-n|-i|-t|-c|-v|-h] <file> [file...]  
   Purpose:  Automatically writes C++ for various purposes.
 
   Where:  
@@ -12,6 +12,7 @@ makeClass -r --edit
 	-a  (--all)           list, or run all class definitions found in the local folder
 	-j  (--js)            export javaScript code from the class definition
 	-o  (--options)       export options code (check validity in the process)
+	-r  (--readmes)       create readme files for each tool and app
 	-f  (--format)        format source code files (.cpp and .h) found in local folder and below
 	-l  (--lint)          lint source code files (.cpp and .h) found in local folder and below
 	-n  (--nspace <str>)  surround generated c++ code with a namespace
