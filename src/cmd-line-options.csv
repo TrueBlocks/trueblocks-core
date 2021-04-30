@@ -153,13 +153,13 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,customizeable,c
 12964,tools,Data,logs,getLogs,,,,false,false,false,false,--,note,,This tool checks for valid input syntax&#44; but does not check that the transaction requested exists.
 12968,tools,Data,logs,getLogs,,,,false,false,false,false,--,note,,If the queried node does not store historical state&#44; the results may be undefined.
 
-13000,tools,Data,receipts,getReceipt,transactions,,,true,false,true,true,local,positional,list<tx_id>,a space-separated list of one or more transaction identifiers|(tx_hash&#44; bn.txID&#44; blk_hash.txID)
-13020,tools,Data,receipts,getReceipt,articulate,a,,false,false,true,true,header,switch,<boolean>,articulate the transactions if an ABI is found for the 'to' address
-13040,tools,Data,receipts,getReceipt,logs,l,,false,false,true,true,header,switch,<boolean>,display the receipt's logs
-13060,tools,Data,receipts,getReceipt,,,,false,false,true,true,--,description,,Retrieve a transaction's receipt from the cache or the node.
-13062,tools,Data,receipts,getReceipt,,,,false,false,false,false,--,note,,`transactions` is one or more space-separated identifiers which may be either a transaction hash&#44;|a blockNumber.transactionID pair&#44; or a blockHash.transactionID pair&#44; or any combination.
-13066,tools,Data,receipts,getReceipt,,,,false,false,false,false,--,note,,This tool checks for valid input syntax&#44; but does not check that the transaction requested exists.
-13070,tools,Data,receipts,getReceipt,,,,false,false,false,false,--,note,,If the queried node does not store historical state&#44; the results may be undefined.
+13000,tools,Data,receipts,getReceipts,transactions,,,true,false,true,true,local,positional,list<tx_id>,a space-separated list of one or more transaction identifiers|(tx_hash&#44; bn.txID&#44; blk_hash.txID)
+13020,tools,Data,receipts,getReceipts,articulate,a,,false,false,true,true,header,switch,<boolean>,articulate the transactions if an ABI is found for the 'to' address
+13040,tools,Data,receipts,getReceipts,logs,l,,false,false,true,true,header,switch,<boolean>,display the receipt's logs
+13060,tools,Data,receipts,getReceipts,,,,false,false,true,true,--,description,,Retrieve a transaction's receipt from the cache or the node.
+13062,tools,Data,receipts,getReceipts,,,,false,false,false,false,--,note,,`transactions` is one or more space-separated identifiers which may be either a transaction hash&#44;|a blockNumber.transactionID pair&#44; or a blockHash.transactionID pair&#44; or any combination.
+13066,tools,Data,receipts,getReceipts,,,,false,false,false,false,--,note,,This tool checks for valid input syntax&#44; but does not check that the transaction requested exists.
+13070,tools,Data,receipts,getReceipts,,,,false,false,false,false,--,note,,If the queried node does not store historical state&#44; the results may be undefined.
 
 13100,tools,State,state,getState,addrs,,,true,false,true,true,header,positional,list<addr>,one or more addresses (0x...) from which to retrieve balances
 13120,tools,State,state,getState,blocks,,,false,false,true,true,header,positional,list<blknum>,an optional list of one or more blocks at which to report balances&#44;|defaults to 'latest'

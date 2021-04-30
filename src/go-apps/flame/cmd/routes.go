@@ -110,7 +110,7 @@ func DataTransactions(w http.ResponseWriter, r *http.Request) {
 
 // DataReceipts help text todo
 func DataReceipts(w http.ResponseWriter, r *http.Request) {
-	CallOne(w, r, "getReceipt", "receipts")
+	CallOne(w, r, "getReceipts", "receipts")
 }
 
 // DataLogs help text todo

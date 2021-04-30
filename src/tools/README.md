@@ -8,7 +8,7 @@ While primarily illustrative, these tools are also useful. For example, you may 
 
 #### Tools
 
-+ [getBlock](getBlock) / [getTrans](getTrans) / [getReceipt](getReceipt) / [getLogs](getLogs): These programs allow you to retrieve primary data structures of the Ethereum blockchain. By default, each tool retrieves its data from the running node, but you may instruct the tool to cache the blockchain data leading to significantly faster access on subsequent requests. We use these tools in various testing and scripting scenarios.
++ [getBlock](getBlock) / [getTrans](getTrans) / [getReceipts](getReceipts) / [getLogs](getLogs): These programs allow you to retrieve primary data structures of the Ethereum blockchain. By default, each tool retrieves its data from the running node, but you may instruct the tool to cache the blockchain data leading to significantly faster access on subsequent requests. We use these tools in various testing and scripting scenarios.
 
 + [getTrace](getTrace): Similar to the previous but give you access to much a lower level of Ethereum's data structures.
 

@@ -113,11 +113,11 @@ bool COptions::parseArguments(string_q& command) {
                     break;
                 been_here = true;
                 tests.push_back("tools/ethNames");
-                tests.push_back("tools/getQuotes");
                 tests.push_back("tools/ethslurp");
                 tests.push_back("tools/getBlock");
                 tests.push_back("tools/getLogs");
-                tests.push_back("tools/getReceipt");
+                tests.push_back("tools/getQuotes");
+                tests.push_back("tools/getReceipts");
                 tests.push_back("tools/getState");
                 tests.push_back("tools/getTokens");
                 tests.push_back("tools/getTrace");
@@ -180,11 +180,11 @@ bool COptions::parseArguments(string_q& command) {
         tests.push_back("libs/pinlib");
         tests.push_back("dev_tools/makeClass");
         tests.push_back("tools/ethNames");
-        tests.push_back("tools/getQuotes");
         tests.push_back("tools/ethslurp");
         tests.push_back("tools/getBlock");
         tests.push_back("tools/getLogs");
-        tests.push_back("tools/getReceipt");
+        tests.push_back("tools/getQuotes");
+        tests.push_back("tools/getReceipts");
         tests.push_back("tools/getState");
         tests.push_back("tools/getTokens");
         tests.push_back("tools/getTrace");

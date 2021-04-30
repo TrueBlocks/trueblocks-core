@@ -97,7 +97,7 @@ map<string, string> cmdMap = {
 
     {"blocks", "getBlock"},
     {"transactions", "getTrans"},
-    {"receipts", "getReceipt"},
+    {"receipts", "getReceipts"},
     {"logs", "getLogs"},
     {"traces", "getTrace"},
     {"when", "whenBlock"},
@@ -154,7 +154,7 @@ num   ,group     ,tags     ,api_route    ,tool         ,command,hotkey,def_val,i
 10980 ,apps      ,Admin    ,pins         ,pinMan       ,,,, false, false, true, true  ,-- ,description, ,Report on and manage the remotely pinned appearance index and associated bloom filters.
 12640 ,tools     ,Data     ,blocks       ,getBlock     ,,,, false, false, true, true  ,-- ,description, ,Returns block(s) from local cache or directly from a running node.
 12960 ,tools     ,Data     ,logs         ,getLogs      ,,,, false, false, true, true  ,-- ,description, ,Retrieve a transaction's logs from the cache or the node.
-13060 ,tools     ,Data     ,receipts     ,getReceipt   ,,,, false, false, true, true  ,-- ,description, ,Retrieve a transaction's receipt from the cache or the node.
+13060 ,tools     ,Data     ,receipts     ,getReceipts   ,,,, false, false, true, true  ,-- ,description, ,Retrieve a transaction's receipt from the cache or the node.
 13500 ,tools     ,Data     ,traces       ,getTrace     ,,,, false, false, true, true  ,-- ,description, ,Retrieve a transaction's traces from the cache or the node.
 13620 ,tools     ,Data     ,transactions ,getTrans     ,,,, false, false, true, true  ,-- ,description, ,Retrieve a transaction from the cache or the node.
 13980 ,tools     ,Data     ,when         ,whenBlock    ,,,, false, false, true, false ,-- ,description, ,Finds block based on date&#44; blockNum&#44; timestamp&#44; or 'special'.

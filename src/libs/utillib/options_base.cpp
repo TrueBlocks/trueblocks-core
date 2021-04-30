@@ -741,7 +741,7 @@ string_q COptionsBase::usageStr(const string_q& errMsgIn) const {
     ostringstream os;
     if (isReadme) {
         colorsOff();
-        os << "#### Usage\n";
+        os << "### Usage\n";
     }
 
     os << "\n";
@@ -753,7 +753,7 @@ string_q COptionsBase::usageStr(const string_q& errMsgIn) const {
             make_pair("grabABI", "chifra abis"),          make_pair("getBlock", "chifra blocks"),
             make_pair("acctExport", "chifra export"),     make_pair("getLogs", "chifra logs"),
             make_pair("ethNames", "chifra names"),        make_pair("pinMan", "chifra pins"),
-            make_pair("getQuotes", "chifra quotes"),      make_pair("getReceipt", "chifra receipts"),
+            make_pair("getQuotes", "chifra quotes"),      make_pair("getReceipts", "chifra receipts"),
             make_pair("blockScrape", "chifra scrape"),    make_pair("ethslurp", "chifra slurp"),
             make_pair("getState", "chifra state"),        make_pair("cacheStatus", "chifra status"),
             make_pair("getTokens", "chifra tokens"),      make_pair("getTrace", "chifra traces"),
