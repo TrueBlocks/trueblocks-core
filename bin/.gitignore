@@ -17,7 +17,7 @@ getBlock
 getLogs
 getReceipt
 getState
-getTokenInfo
+getTokens
 getTrace
 getTrans
 grabABI

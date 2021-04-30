@@ -2,7 +2,7 @@
 
 `chifra names` lists the addresses found in your local node's keystore. It can be used to report your ether holdings, for example. It also lists known, named accounts from [chifra names](../ethName/README.md).
 
-One way to use this tool is to feed its output through the [chifra state](../getState/README.md) or [chifra tokens](../getTokenInfo/README.md). This will give you the balances of your ether holdings or token holings. For example, you can do these commands:
+One way to use this tool is to feed its output through the [chifra state](../getState/README.md) or [chifra tokens](../getTokens/README.md). This will give you the balances of your ether holdings or token holings. For example, you can do these commands:
 
 List accounts held in the local node's keystore:
 

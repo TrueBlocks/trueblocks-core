@@ -1,4 +1,0 @@
-getTokenInfo argc: 4 [1:0xd26114cd6ee289accf82350c8d8487fedb8a0c07] [2:--parts] [3:totalSupply] 
-getTokenInfo 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 --parts totalSupply 
-address	totalsupply
-0xd26114cd6ee289accf82350c8d8487fedb8a0c07	"140245398.245132780789239631"

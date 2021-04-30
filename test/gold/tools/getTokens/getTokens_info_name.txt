@@ -1,0 +1,4 @@
+getTokens argc: 4 [1:0xd26114cd6ee289accf82350c8d8487fedb8a0c07] [2:--parts] [3:name] 
+getTokens 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 --parts name 
+address	name
+0xd26114cd6ee289accf82350c8d8487fedb8a0c07	OMGToken Airdrop

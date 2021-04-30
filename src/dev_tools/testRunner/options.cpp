@@ -119,7 +119,7 @@ bool COptions::parseArguments(string_q& command) {
                 tests.push_back("tools/getLogs");
                 tests.push_back("tools/getReceipt");
                 tests.push_back("tools/getState");
-                tests.push_back("tools/getTokenInfo");
+                tests.push_back("tools/getTokens");
                 tests.push_back("tools/getTrace");
                 tests.push_back("tools/getTrans");
                 tests.push_back("tools/grabABI");
@@ -186,7 +186,7 @@ bool COptions::parseArguments(string_q& command) {
         tests.push_back("tools/getLogs");
         tests.push_back("tools/getReceipt");
         tests.push_back("tools/getState");
-        tests.push_back("tools/getTokenInfo");
+        tests.push_back("tools/getTokens");
         tests.push_back("tools/getTrace");
         tests.push_back("tools/getTrans");
         tests.push_back("tools/grabABI");

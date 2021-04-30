@@ -135,7 +135,7 @@ func StateState(w http.ResponseWriter, r *http.Request) {
 
 // StateTokens help text todo
 func StateTokens(w http.ResponseWriter, r *http.Request) {
-	CallOne(w, r, "getTokenInfo", "tokens")
+	CallOne(w, r, "getTokens", "tokens")
 }
 
 // OtherQuotes help text todo

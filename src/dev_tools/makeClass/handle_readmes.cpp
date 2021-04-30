@@ -103,7 +103,7 @@ map<string, string> cmdMap = {
     {"when", "whenBlock"},
 
     {"state", "getState"},
-    {"tokens", "getTokenInfo"},
+    {"tokens", "getTokens"},
 
     {"init", "pinMan local --init"},
     {"status", "cacheStatus"},
@@ -159,7 +159,7 @@ num   ,group     ,tags     ,api_route    ,tool         ,command,hotkey,def_val,i
 13620 ,tools     ,Data     ,transactions ,getTrans     ,,,, false, false, true, true  ,-- ,description, ,Retrieve a transaction from the cache or the node.
 13980 ,tools     ,Data     ,when         ,whenBlock    ,,,, false, false, true, false ,-- ,description, ,Finds block based on date&#44; blockNum&#44; timestamp&#44; or 'special'.
 13220 ,tools     ,State    ,state        ,getState     ,,,, false, false, true, true  ,-- ,description, ,Retrieve the balance of one or more address at the given block(s).
-13360 ,tools     ,State    ,tokens       ,getTokenInfo ,,,, false, false, true, true  ,-- ,description, ,Retrieve token balances for one or more address at given block(s).
+13360 ,tools     ,State    ,tokens       ,getTokens ,,,, false, false, true, true  ,-- ,description, ,Retrieve token balances for one or more address at given block(s).
 12080 ,tools     ,Other    ,quotes       ,getQuotes     ,,,, false, false, true, true  ,-- ,description, ,Freshen and/or display Ethereum price data.
 12220 ,tools     ,Other    ,slurp        ,ethslurp     ,,,, false, false, true, true  ,-- ,description, ,Fetches data from EtherScan for an arbitrary address.
 14040 ,tools     ,Other    ,where        ,whereBlock   ,,,, false, false, true, false ,-- ,description, ,Reports in which cache (if any) a block is found.

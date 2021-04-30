@@ -175,17 +175,17 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,customizeable,c
 13232,tools,State,state,getState,,,,false,false,false,false,--,note,,`balance` is the default mode. To select a single mode use `none` first&#44; followed by that mode.
 13234,tools,State,state,getState,,,,false,false,false,false,--,note,,You may specify multiple `modes` on a single line.
 
-13260,tools,State,tokens,getTokenInfo,addrs2,,,true,false,true,true,header,positional,list<addr>,two or more addresses (0x...)&#44; the first is an ERC20 token&#44; balances|for the rest are reported
-13280,tools,State,tokens,getTokenInfo,blocks,,,false,false,true,true,header,positional,list<blknum>,an optional list of one or more blocks at which to report balances&#44;|defaults to 'latest'
-13300,tools,State,tokens,getTokenInfo,parts,p,,false,false,true,true,local,flag,list<enum[name|symbol|decimals|totalSupply|version|none|all*]>,one or more parts of the token information to retreive
-13320,tools,State,tokens,getTokenInfo,by_acct,b,,false,false,true,true,header,switch,<boolean>,consider each address an ERC20 token except the last&#44; whose balance|is reported for each token
-13340,tools,State,tokens,getTokenInfo,no_zero,n,,false,false,true,true,header,switch,<boolean>,suppress the display of zero balance accounts
-13360,tools,State,tokens,getTokenInfo,,,,false,false,true,true,--,description,,Retrieve token balances for one or more address at given block(s).
-13362,tools,State,tokens,getTokenInfo,,,,false,false,false,false,--,note,,`addresses` must start with '0x' and be forty two characters long.
-13364,tools,State,tokens,getTokenInfo,,,,false,false,false,false,--,note,,`blocks` may be a space-separated list of values&#44; a start-end range&#44; a `special`&#44; or any combination.
-13368,tools,State,tokens,getTokenInfo,,,,false,false,false,false,--,note,,If the token contract(s) from which you request balances are not ERC20 compliant&#44; the results are undefined.
-13370,tools,State,tokens,getTokenInfo,,,,false,false,false,false,--,note,,If the queried node does not store historical state&#44; the results are undefined.
-13372,tools,State,tokens,getTokenInfo,,,,false,false,false,false,--,note,,`special` blocks are detailed under `whenBlock --list`.
+13260,tools,State,tokens,getTokens,addrs2,,,true,false,true,true,header,positional,list<addr>,two or more addresses (0x...)&#44; the first is an ERC20 token&#44; balances|for the rest are reported
+13280,tools,State,tokens,getTokens,blocks,,,false,false,true,true,header,positional,list<blknum>,an optional list of one or more blocks at which to report balances&#44;|defaults to 'latest'
+13300,tools,State,tokens,getTokens,parts,p,,false,false,true,true,local,flag,list<enum[name|symbol|decimals|totalSupply|version|none|all*]>,one or more parts of the token information to retreive
+13320,tools,State,tokens,getTokens,by_acct,b,,false,false,true,true,header,switch,<boolean>,consider each address an ERC20 token except the last&#44; whose balance|is reported for each token
+13340,tools,State,tokens,getTokens,no_zero,n,,false,false,true,true,header,switch,<boolean>,suppress the display of zero balance accounts
+13360,tools,State,tokens,getTokens,,,,false,false,true,true,--,description,,Retrieve token balances for one or more address at given block(s).
+13362,tools,State,tokens,getTokens,,,,false,false,false,false,--,note,,`addresses` must start with '0x' and be forty two characters long.
+13364,tools,State,tokens,getTokens,,,,false,false,false,false,--,note,,`blocks` may be a space-separated list of values&#44; a start-end range&#44; a `special`&#44; or any combination.
+13368,tools,State,tokens,getTokens,,,,false,false,false,false,--,note,,If the token contract(s) from which you request balances are not ERC20 compliant&#44; the results are undefined.
+13370,tools,State,tokens,getTokens,,,,false,false,false,false,--,note,,If the queried node does not store historical state&#44; the results are undefined.
+13372,tools,State,tokens,getTokens,,,,false,false,false,false,--,note,,`special` blocks are detailed under `whenBlock --list`.
 
 13400,tools,Data,traces,getTrace,transactions,,,true,false,true,true,local,positional,list<tx_id>,a space-separated list of one or more transaction identifiers|(tx_hash&#44; bn.txID&#44; blk_hash.txID)
 13420,tools,Data,traces,getTrace,articulate,a,,false,false,true,true,header,switch,<boolean>,articulate the transactions if an ABI is found for the 'to' address

@@ -24,4 +24,4 @@ You may check where a block is with the `whereBlock` command:
 
     whereBlock 1001001
 
-The Infura platform does not run their nodes with `--tracing on` nor `--pruning archive`; therefore, the behavior of operations such as getState, getTokenInfo and getTrace, which are dependant on either tracing or archiving, is undefined.
+The Infura platform does not run their nodes with `--tracing on` nor `--pruning archive`; therefore, the behavior of operations such as getState, getTokens and getTrace, which are dependant on either tracing or archiving, is undefined.
