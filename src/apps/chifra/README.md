@@ -16,7 +16,7 @@ Here is a screen shot of an interaction with Chifra building a smart contract mo
 
 <img src=docs/image.png>
 
-#### Usage
+### Usage
 
 `Usage:`    chifra command  
 `Purpose:`  Access to all TrueBlocks tools (`chifra <cmd> --help` for more).

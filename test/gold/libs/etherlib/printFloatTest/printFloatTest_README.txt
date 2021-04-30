@@ -1,6 +1,6 @@
 printFloatTest argc: 2 [1:-th] 
 printFloatTest -th 
-#### Usage
+### Usage
 
 `Usage:`    printFloatTest [-t|-v|-h]  
 `Purpose:`  This program tests floating point printing and conversions.

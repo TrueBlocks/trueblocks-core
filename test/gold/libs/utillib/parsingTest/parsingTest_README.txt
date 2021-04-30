@@ -1,6 +1,6 @@
 parsingTest argc: 2 [1:-th] 
 parsingTest -th 
-#### Usage
+### Usage
 
 `Usage:`    parsingTest [-v|-h] mode  
 `Purpose:`  Test 'c' library strings against TrueBlocks strings.

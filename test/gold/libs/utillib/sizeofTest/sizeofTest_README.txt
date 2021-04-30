@@ -1,6 +1,6 @@
 sizeofTest argc: 2 [1:-th] 
 sizeofTest -th 
-#### Usage
+### Usage
 
 `Usage:`    sizeofTest [-v|-h] mode  
 `Purpose:`  Test 'c' library strings against TrueBlocks strings.

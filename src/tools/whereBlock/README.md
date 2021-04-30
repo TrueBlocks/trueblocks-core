@@ -6,7 +6,7 @@ If `chifra where` finds the block in the TrueBlocks cache, it reports the path t
 
 This tool is intended mostly as an aid in developing and debugging TrueBlocks tools.
 
-#### Usage
+### Usage
 
 `Usage:`    chifra where [-v|-h] &lt;block&gt; [block...]  
 `Purpose:`  Reports in which cache (if any) a block is found.

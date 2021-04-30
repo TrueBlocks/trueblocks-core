@@ -24,7 +24,7 @@ Using chifra names to find Singular's address, list tokens held by other token a
 
     chifra tokens `chifra names -a singular` `chifra names -n | xargs`
 
-#### Usage
+### Usage
 
 `Usage:`    chifra names [-e|-m|-l|-o|-c|-p|-n|-a|-s|-g|-v|-h] &lt;term&gt; [term...]  
 `Purpose:`  Query addresses and/or names of well known accounts.

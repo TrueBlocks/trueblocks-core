@@ -1,6 +1,6 @@
 stringTest argc: 2 [1:-th] 
 stringTest -th 
-#### Usage
+### Usage
 
 `Usage:`    stringTest [-v|-h] mode  
 `Purpose:`  Test 'c' library strings against TrueBlocks strings.

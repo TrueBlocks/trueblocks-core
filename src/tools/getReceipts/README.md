@@ -1,28 +1,28 @@
-## chifra quotes
+## chifra receipts
 
-The `chifra quotes` tool provides Ethereum price data to various tools or for other purposes. Currently, `chifra quotes` retrieves data using the Poloniex API. In future versions, we intend to add other sources of pricing data and provide a mechanism to specify an averaging calculate given multiple price sources. Ultimately, we hope Ethereum/fiat price data appears under consensus, but until that time, **TrueBlocks** uses `chifra quotes`. Powered, in part, by Poloniex<sup>&reg;<sup>
+`chifra receipts` returns a transaction's receipt. You may specify the logs you want using either a transaction hash (trans\_hash), a block hash plus transaction index (block\_hash.trans\_id), or a block number plus transaction index (block\_num.trans\_id).  
+
 ### Usage
 
-`Usage:`    chifra quotes [-f|-p|-a|-e|-v|-h]  
-`Purpose:`  Freshen and/or display Ethereum price data.
+`Usage:`    chifra receipts [-a|-l|-v|-h] &lt;tx_id&gt; [tx_id...]  
+`Purpose:`  Retrieve a transaction's receipt from the cache or the node.
 
 `Where:`  
 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
-| -f | --freshen | Freshen price database (append new data) |
-| -p | --period <val> | increment of display, one of [5&#124;15&#124;30&#124;60&#124;120*&#124;240&#124;1440&#124;10080&#124;hourly&#124;daily&#124;weekly] |
-| -a | --pair <str> | which price pair to freshen or list (see Poloniex) |
-| -e | --feed <val> | the feed for the price data, one of [poloniex*&#124;maker&#124;tellor] |
+|  | transactions | a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID) (required) |
+| -a | --articulate | articulate the transactions if an ABI is found for the 'to' address |
+| -l | --logs | display the receipt's logs |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 
 `Notes:`
 
-- Valid pairs include any pair from the public Poloniex's API here: 
-  https://poloniex.com/public?command=returnCurrencies.
-- `Note`: Due to restrictions from Poloniex, this tool retrieves only 30 days of data 
-  at a time. You must repeatedly run this command until the data is up-to-date.
+- `transactions` is one or more space-separated identifiers which may be either a transaction hash, 
+  a blockNumber.transactionID pair, or a blockHash.transactionID pair, or any combination.
+- This tool checks for valid input syntax, but does not check that the transaction requested exists.
+- If the queried node does not store historical state, the results may be undefined.
 
 #### Other Options
 
@@ -44,5 +44,5 @@ All **TrueBlocks** command-line tools support the following commands (although i
 
 <small>*For the `--file:fn` option, place a series of valid command lines in a file and use the above options. In some cases, this option may significantly improve performance. A semi-colon at the start of a line makes that line a comment.*</small>
 
-**Source**: [`tools/getQuotes`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/tools/getQuotes)
+**Source**: [`tools/getReceipts`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/tools/getReceipts)
 

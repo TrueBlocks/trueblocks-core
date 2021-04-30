@@ -1,6 +1,6 @@
 forEveryTest argc: 2 [1:-th] 
 forEveryTest -th 
-#### Usage
+### Usage
 
 `Usage:`    forEveryTest [-v|-h] mode  
 `Purpose:`  Test 'c' library strings against TrueBlocks strings.

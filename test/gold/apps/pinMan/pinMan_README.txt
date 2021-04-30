@@ -1,6 +1,6 @@
 pinMan argc: 2 [1:-th] 
 pinMan -th 
-#### Usage
+### Usage
 
 `Usage:`    chifra pins [-c|-i|-f|-s|-v|-h]  
 `Purpose:`  Report on and manage the remotely pinned appearance index and associated bloom filters.

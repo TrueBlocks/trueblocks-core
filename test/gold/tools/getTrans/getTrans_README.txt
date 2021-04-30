@@ -1,6 +1,6 @@
 getTrans argc: 2 [1:-th] 
 getTrans -th 
-#### Usage
+### Usage
 
 `Usage:`    chifra transactions [-a|-t|-u|-v|-h] &lt;tx_id&gt; [tx_id...]  
 `Purpose:`  Retrieve a transaction from the cache or the node.

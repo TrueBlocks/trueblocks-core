@@ -1,6 +1,6 @@
 makeClass argc: 2 [1:-th] 
 makeClass -th 
-#### Usage
+### Usage
 
 `Usage:`    makeClass [-r|-a|-j|-o|-r|-f|-l|-n|-i|-t|-c|-v|-h] &lt;file&gt; [file...]  
 `Purpose:`  Automatically writes C++ for various purposes.

@@ -1,6 +1,6 @@
 cmdLineTest argc: 2 [1:-th] 
 cmdLineTest -th 
-#### Usage
+### Usage
 
 `Usage:`    cmdLineTest [-b|-i|-u|-s|-r|-l|-v|-h] testNum optionalMode  
 `Purpose:`  Tests various command line behavior.

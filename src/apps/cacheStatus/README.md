@@ -2,7 +2,7 @@
 
 The `chifra status` program allows one to  manage and explore [monitor cache files](../../monitors/README.md). You may list cache entries, check for duplicate or invalid cache entries (and optionally remove them). Use the tool with caution and please make sure to backup your data before proceeding.
 
-#### Usage
+### Usage
 
 `Usage:`    chifra status [-d|-t|-v|-h] &lt;mode&gt; [mode...]  
 `Purpose:`  Report on status of one or more TrueBlocks caches.

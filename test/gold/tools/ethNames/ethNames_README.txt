@@ -1,6 +1,6 @@
 ethNames argc: 2 [1:-th] 
 ethNames -th 
-#### Usage
+### Usage
 
 `Usage:`    chifra names [-e|-m|-l|-o|-c|-p|-n|-a|-s|-g|-v|-h] &lt;term&gt; [term...]  
 `Purpose:`  Query addresses and/or names of well known accounts.
