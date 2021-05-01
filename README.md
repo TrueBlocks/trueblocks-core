@@ -18,107 +18,111 @@ TrueBlocks is a collection of libraries, tools, and applications that improve ac
 
 ---
 
-Before building TrueBlocks, please make sure you have `git`, `cmake`, `clang-format`, and `go` available.
+### Golang
 
 Follow [these instructions](https://golang.org/doc/install) for installing `golang` on your system.
 
+### CMake and the C++ Build Enviornment
+
 Complete these commands to install `git`, `cmake`, and `clang-format`:
 
-### For Linux:
+#### On Linux:
 
     sudo apt install build-essential git cmake python python-dev libcurl3-dev clang-format jq
 
-### For Mac:
-
-We recommend that you run MacOS Big Sur or later for best results.
+#### On Mac:
 
     brew install cmake
     brew install git
     brew install clang-format
     brew install jq
 
-### For Windows:
+We recommend that you run MacOS Big Sur or later for best results on the Mac.
 
-Currently, we have no plans to support Windows builds.
+#### On Windows:
+
+TrueBlocks does not currently support Windows builds.
 
 ## Building TrueBlocks
 
 ---
 
-In order to use TrueBlocks, you must build it from source. (There is no binary installer.) Complete the pre-requisites above, and then follow these instructions:
+You must build TrueBlocks from source in order to use it. (There is no installer.) Complete the pre-requisites above, and then follow these instructions:
 
     git clone -b develop git@github.com:TrueBlocks/trueblocks-core.git
     cd trueblocks-core
     mkdir build && cd build
     cmake ../src
-    make -j <nproc>
+    make
 
-Where &lt;nprocs&gt; is the number of cores on your machine.
-
-This will create a collection of executables in the `./trueblocks-core/bin` folder. Add this path to your environment's `$PATH` for best results. (The instructions below assume the executables are in your `$PATH`.)
+The above commands create a collection of executables in the `./trueblocks-core/bin` folder. Add this path to your shell's `$PATH`. (The following instructions assume you've done this.)
 
 ## Testing Your Installation
 
 ---
 
-4.  Test your install.
+Run this command to test your installation:
 
-        chifra blocks 14560
+    chifra --version
 
-## What even is this?
+If this returns a valid version string, your installation is properly installed.
 
-TrueBlocks creates an index that lets you access the entire Ethereum chain directly from your local machine. It ships with a large number of tools that let you chain together queries on all types of Ethereum data: transaction numbers, addresses, blocks, ABIs, et cetera.
+If the above command does not return a valid version string, you most likely skipped adding the `./bin` folder to your $PATH.
 
-Next, let's see if you can use TrueBlocks to extract a block from your Ethereum node. Enter this command:
+Make sure the above command works before proceeding.
 
-Through a binary cache, TrueBlocks can make your repeated queries *very fast*. For large complex queries, this cache can reduce query times from minutes to seconds.
+## Connecting to an Ethereum Node
 
-This should return valid JSON data for block 1,000 (type `getBlocks --help` for more options on this tool.) If you get an error, such as:
+---
 
--   Data scientists
+The next step is to try to retrieve data from your Ethereum Node. Type this command:
 
-To fix this problem, first identify the location of your configuration files. On Mac, your configuration files are at `~/Library/Application Support/TrueBlocks`. On Linux, your configuration files are at `~/.local/share/trueblocks`. We call the configruation folder $CONFIG below.
+    chifra blocks 100
 
-To fix the missing RPC Provider issue above, edit `$CONFIG/trueBlocks.toml` and insert a valid provider. You can get a provider from various places including Infura, however, we think running your own node is best.
+If the command returns valid JSON data, you're system is working correctly.
 
-Enter the following text to specify a provider (add the section header if it doesn't already exist):
+If not, you may see a message similar to the following:
 
--   Organizations like charities who may need to process restricted donations.
+    **Warning:** Your RPC endpoint (http://localhost :8545) was not found. To fix this problem edit a file...
 
-Returning to your terminal, this command should now produce data:
+Follow the instruction in that message to configure TrueBlocks to use your RPC provider (such as Infura, QuickNode, or your own dAppNode).
 
-```[shell]
-chifra blocks 1000
-```
-
-You may test more thouroughly by running the following command:
-
-### The catch
-
-You may find that the above command show many broken tests. While not required, one of the tools (`ethslurp`) requires an API key from Etherscan. Get an EtherScan API key and add it to the same file above under the `[settings]` section thus:
+When completed, your configuration file should contain entries similar to this:
 
 ```[toml]
-...
-etherscan_key = "<your key>"
+[settings]
+rpcProvider = "http://localhost:8545"
+# Make sure to use your own RPC provider
 ```
+
+Continue until the above `chifra blocks` command returns valid JSON data.
+
+## Building the TrueBlocks Index of Appearances
+
+---
+
+The primary data structure produced by TrueBlocks is an index of address appearances. This index provides very quick access to transaction histories for a given address.
+
+You may either build the entire index from scratch (requires a tracing, archive node), or you may download part of the index and build it from there on.
+
+This process is described in the TrueBlocks Recipe.
+
+## What Exactly is TrueBlocks?
+
+---
+
+TrueBlocks creates an index of address appearances that allows you access the Ethereum data much more quickly. It also includes a large number of tools and examples that let you chain together queries on Ethereum data including transaction, addresses, blocks, ABIs, et cetera.
+
+TrueBlocks also provides a heavy binary cache on your local machine. This makes repeated queries for the same data *very fast*. For large complex queries, this cache can reduce query times from minutes to seconds.
 
 ## Using TrueBlocks
 
 ---
 
-`chifra` is the basis for everything related to TrueBlocks. (The word `chifra` is derived from the Arabic word for `chipher`.) Chifra helps you decipher chain data as well as manage various aspects of the system.
+The `chifra` tool is the basis for all other parts of TrueBlocks.
+`chifra` helps you decipher chain data as well as manage various aspects of the system.
 
-For further information, please see these articles:
-
-Back in late 2015, we become obsessed with Ethereum. Not because of 'price go up', but because of the amazing promise that shared, global data has to change the world:
-
--   Permissionless data
-
--   World-wide consented-to data
-
--   Cryptographically secured data
-
--   Distributed data
+Please see the `chifra` README for more information.
 
 ## Contributing to TrueBlocks
 
