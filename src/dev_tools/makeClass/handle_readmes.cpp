@@ -33,7 +33,8 @@ bool visitReadme(const string_q& templatePath, void* data) {
         string_q srcPath = "../src/" + folder + "/" + tool + "/README.md";
 
         string_q source = asciiFileToString(templatePath);
-        if (system((tool + " -th >file 2>&1").c_str())) {}  // Don't remove cruft. Silences compiler warnings
+        if (system((tool + " -th >file 2>&1").c_str())) {
+        }  // Don't remove cruft. Silences compiler warnings
         string_q usage = trim(asciiFileToString("./file"), '\n');
         ::remove("./file");
         replace(source, "[{USAGE_TABLE}]", usage);
@@ -93,6 +94,13 @@ bool findReplacements(const string_q& templatePath, void* data) {
 
 //------------------------------------------------------------------------------------------------------------
 bool COptions::handle_readmes(void) {
+    CToml config(configPath("makeClass.toml"));
+    bool enabled = config.getConfigBool("enabled", "readmes", false);
+    if (!enabled) {
+        LOG_WARN("Skipping readmes...");
+        return true;
+    }
+
     LOG_INFO(cYellow, "handling readmes...", cOff);
     counter = CCounter();  // reset
     forEveryFileInFolder("../docs/readme_templates", findReplacements, this);
