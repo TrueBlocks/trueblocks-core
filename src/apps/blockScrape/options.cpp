@@ -217,22 +217,27 @@ bool COptions::parseArguments(string_q& command) {
         string_q errMsg = "Tracing is required for this program to work properly.";
         if (isDockerMode())
             errMsg += " If you're running docker, enable remote RPC endpoints.";
+        cleanupAndQuit();
         return usage(errMsg);
     }
 
     // Parity traces are much better (and easier to use) than Geth's. But, in some
     // cases, the user may not care and tells us she doesn't need parity
     bool needsParity = config->getConfigBool("requires", "parity", true);
-    if (needsParity && !isParity())
+    if (needsParity && !isParity()) {
+        cleanupAndQuit();
         return usage(
             "This tool requires Parity. Add [requires]\\nparity=false to $CONFIG/blockScrape.toml to turn "
             "this "
             "restriction off.");
+    }
 
     // Balances are needed to make reconcilations. The user may not need that, so we allow it
     bool needsBalances = config->getConfigBool("requires", "balances", false);
-    if (needsBalances && !nodeHasBalances(true))
+    if (needsBalances && !nodeHasBalances(true)) {
+        cleanupAndQuit();
         return usage("This tool requires an --archive node with historical balances.");
+    }
 
     // This may be the first time we've ever run. In that case, we need to build the zero block index file...
     string chunkId = padNum9(0) + "-" + padNum9(0);
