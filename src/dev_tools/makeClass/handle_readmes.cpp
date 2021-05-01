@@ -33,7 +33,7 @@ bool visitReadme(const string_q& templatePath, void* data) {
         string_q srcPath = "../src/" + folder + "/" + tool + "/README.md";
 
         string_q source = asciiFileToString(templatePath);
-        system((tool + " -th >file 2>&1").c_str());
+        if (system((tool + " -th >file 2>&1").c_str())) {}  // Don't remove cruft. Silences compiler warnings
         string_q usage = trim(asciiFileToString("./file"), '\n');
         ::remove("./file");
         replace(source, "[{USAGE_TABLE}]", usage);
