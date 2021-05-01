@@ -24,5 +24,5 @@ While `chifra slurp` does have its shortcomings, it also provides some nice feat
 
 - Portions of this software are Powered by Etherscan.io APIs.
 
-**Source**: [`tools/ethslurp`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/tools/ethslurp)
+**Source code**: [`tools/ethslurp`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/tools/ethslurp)
 

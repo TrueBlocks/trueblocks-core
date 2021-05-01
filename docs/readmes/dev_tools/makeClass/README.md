@@ -34,5 +34,5 @@ The format of the classDefinition file is described below.
 - The `--class` flag generates c++ code for each definition found in the local folder.
 - More information on class definition files is found in the documentation.
 
-**Source**: [`dev_tools/makeClass`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/dev_tools/makeClass)
+**Source code**: [`dev_tools/makeClass`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/dev_tools/makeClass)
 

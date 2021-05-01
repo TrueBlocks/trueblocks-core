@@ -51,5 +51,5 @@ Here is a screen shot of an interaction with Chifra building a smart contract mo
    quotes        return prices collected from configured remote API
 ```
 
-**Source**: [`apps/chifra`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra)
+**Source code**: [`apps/chifra`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra)
 

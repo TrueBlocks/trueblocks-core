@@ -25,5 +25,5 @@ The `chifra transactions` tool retrieves transactions from the running Ethereum 
 - This tool checks for valid input syntax, but does not check that the transaction requested exists.
 - If the queried node does not store historical state, the results are undefined.
 
-**Source**: [`tools/getTrans`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/tools/getTrans)
+**Source code**: [`tools/getTrans`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/tools/getTrans)
 

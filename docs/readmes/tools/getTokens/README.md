@@ -33,5 +33,5 @@ You may optionally specify one or more blocks at which to report.
 - If the queried node does not store historical state, the results are undefined.
 - `special` blocks are detailed under `whenBlock --list`.
 
-**Source**: [`tools/getTokens`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/tools/getTokens)
+**Source code**: [`tools/getTokens`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/tools/getTokens)
 

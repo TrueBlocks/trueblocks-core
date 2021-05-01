@@ -30,5 +30,5 @@ This simple program may be used to query an Ethereum address to determine if it 
 - `balance` is the default mode. To select a single mode use `none` first, followed by that mode.
 - You may specify multiple `modes` on a single line.
 
-**Source**: [`tools/getState`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/tools/getState)
+**Source code**: [`tools/getState`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/tools/getState)
 

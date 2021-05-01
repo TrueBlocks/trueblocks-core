@@ -28,5 +28,5 @@ The tool may also be used to double check that the results produced from the Tru
 - `blocks` is a space-separated list of values, a start-end range, a `special`, or any combination.
 - `special` blocks are detailed under `whenBlock --list`.
 
-**Source**: [`tools/getBlock`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/tools/getBlock)
+**Source code**: [`tools/getBlock`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/tools/getBlock)
 

@@ -25,5 +25,5 @@ The `chifra quotes` tool provides Ethereum price data to various tools or for ot
 - `Note`: Due to restrictions from Poloniex, this tool retrieves only 30 days of data 
   at a time. You must repeatedly run this command until the data is up-to-date.
 
-**Source**: [`tools/getQuotes`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/tools/getQuotes)
+**Source code**: [`tools/getQuotes`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/tools/getQuotes)
 

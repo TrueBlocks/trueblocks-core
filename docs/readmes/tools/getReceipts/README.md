@@ -24,5 +24,5 @@
 - This tool checks for valid input syntax, but does not check that the transaction requested exists.
 - If the queried node does not store historical state, the results may be undefined.
 
-**Source**: [`tools/getReceipts`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/tools/getReceipts)
+**Source code**: [`tools/getReceipts`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/tools/getReceipts)
 

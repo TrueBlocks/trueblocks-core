@@ -56,5 +56,5 @@ Using chifra names to find Singular's address, list tokens held by other token a
 - To customize the list of names add a `custom` section to the config file (see documentation).
 - Name file: `$CONFIG/names/names.tab`
 
-**Source**: [`tools/ethNames`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/tools/ethNames)
+**Source code**: [`tools/ethNames`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/tools/ethNames)
 
