@@ -100,7 +100,7 @@ func AdminPins(w http.ResponseWriter, r *http.Request) {
 
 // DataBlocks help text todo
 func DataBlocks(w http.ResponseWriter, r *http.Request) {
-	CallOne(w, r, "getBlock", "blocks")
+	CallOne(w, r, "getBlocks", "blocks")
 }
 
 // DataTransactions help text todo

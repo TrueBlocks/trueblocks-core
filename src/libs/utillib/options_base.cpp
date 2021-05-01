@@ -730,7 +730,7 @@ void errorMessage(const string_q& msg) {
 //--------------------------------------------------------------------------------
 map<string_q, string_q> progNameMap = {
     make_pair("grabABI", "chifra abis"),
-    make_pair("getBlock", "chifra blocks"),
+    make_pair("getBlocks", "chifra blocks"),
     make_pair("acctExport", "chifra export"),
     make_pair("getLogs", "chifra logs"),
     make_pair("ethNames", "chifra names"),

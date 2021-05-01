@@ -1,4 +1,0 @@
-getBlock argc: 3 [1:3982128] [2:--count] 
-getBlock 3982128 --count 
-{ "data": [
-{ "blockNumber": 3982128, "transactionsCnt": 91}] }

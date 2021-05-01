@@ -133,18 +133,18 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,customizeable,c
 12468,tools,Accounts,names,ethNames,,,,false,false,false,false,--,note,,The `--match_case` option requires case sensitive matching. It works with all other options.
 12470,tools,Accounts,names,ethNames,,,,false,false,false,false,--,note,,To customize the list of names add a `custom` section to the config file (see documentation).
 
-12500,tools,Data,blocks,getBlock,blocks,,,true,false,true,true,local,positional,list<blknum>,a space-separated list of one or more blocks to retrieve
-12520,tools,Data,blocks,getBlock,hashes_only,e,,false,false,true,true,header,switch,<boolean>,display only transaction hashes&#44; default is to display full transaction|detail
-12540,tools,Data,blocks,getBlock,apps,a,,false,false,true,true,local,switch,<boolean>,display all address appearances included in the block
-12560,tools,Data,blocks,getBlock,uniq,u,,false,false,true,true,local,switch,<boolean>,display only uniq addresses found per block
-12580,tools,Data,blocks,getBlock,uniq_tx,n,,false,false,true,true,local,switch,<boolean>,display only uniq addresses found per transaction
-12600,tools,Data,blocks,getBlock,count,c,,false,false,true,true,header,switch,<boolean>,display counts of appearances (for --apps&#44; --uniq&#44; or --uniq_tx)|or transactions
-12610,tools,Data,blocks,getBlock,uncles,U,,false,false,true,true,header,switch,<boolean>,display uncle blocks (if any) instead of the requested block
-12620,tools,Data,blocks,getBlock,cache,o,,false,false,false,false,header,switch,<boolean>,force a re-write of the block to the cache
-12625,tools,Data,blocks,getBlock,trace,t,,false,false,false,false,header,switch,<boolean>,export the traces from the block as opposed to the block data
-12640,tools,Data,blocks,getBlock,,,,false,false,true,true,--,description,,Returns block(s) from local cache or directly from a running node.
-12882,tools,Data,blocks,getBlock,,,,false,false,false,false,--,note,,`blocks` is a space-separated list of values&#44; a start-end range&#44; a `special`&#44; or any combination.
-12886,tools,Data,blocks,getBlock,,,,false,false,false,false,--,note,,`special` blocks are detailed under `whenBlock --list`.
+12500,tools,Data,blocks,getBlocks,blocks,,,true,false,true,true,local,positional,list<blknum>,a space-separated list of one or more blocks to retrieve
+12520,tools,Data,blocks,getBlocks,hashes_only,e,,false,false,true,true,header,switch,<boolean>,display only transaction hashes&#44; default is to display full transaction|detail
+12540,tools,Data,blocks,getBlocks,apps,a,,false,false,true,true,local,switch,<boolean>,display all address appearances included in the block
+12560,tools,Data,blocks,getBlocks,uniq,u,,false,false,true,true,local,switch,<boolean>,display only uniq addresses found per block
+12580,tools,Data,blocks,getBlocks,uniq_tx,n,,false,false,true,true,local,switch,<boolean>,display only uniq addresses found per transaction
+12600,tools,Data,blocks,getBlocks,count,c,,false,false,true,true,header,switch,<boolean>,display counts of appearances (for --apps&#44; --uniq&#44; or --uniq_tx)|or transactions
+12610,tools,Data,blocks,getBlocks,uncles,U,,false,false,true,true,header,switch,<boolean>,display uncle blocks (if any) instead of the requested block
+12620,tools,Data,blocks,getBlocks,cache,o,,false,false,false,false,header,switch,<boolean>,force a re-write of the block to the cache
+12625,tools,Data,blocks,getBlocks,trace,t,,false,false,false,false,header,switch,<boolean>,export the traces from the block as opposed to the block data
+12640,tools,Data,blocks,getBlocks,,,,false,false,true,true,--,description,,Returns block(s) from local cache or directly from a running node.
+12882,tools,Data,blocks,getBlocks,,,,false,false,false,false,--,note,,`blocks` is a space-separated list of values&#44; a start-end range&#44; a `special`&#44; or any combination.
+12886,tools,Data,blocks,getBlocks,,,,false,false,false,false,--,note,,`special` blocks are detailed under `whenBlock --list`.
 
 12920,tools,Data,logs,getLogs,transactions,,,true,false,true,true,local,positional,list<tx_id>,a space-separated list of one or more transaction identifiers|(tx_hash&#44; bn.txID&#44; blk_hash.txID)
 12940,tools,Data,logs,getLogs,articulate,a,,false,false,true,true,header,switch,<boolean>,articulate the transactions if an ABI is found for the 'to' address

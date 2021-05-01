@@ -3,7 +3,7 @@
 etherlib is at the heart of the entire system and consists of four  primary functionalities: (1) communication with the blockchain node, (2) mirroring and caching the received blockchain data, (3) parsing of both transactional input data and receipt logs addresses and topics (it is this function that underpins the tokenlib and per-smart-contract libraries), (4) a series of convenience functions for traversing all or part of the blocks and the transactions and accounts encountered while traversing the blocks. A final functionality is the acquisition and application of the currency’s price data.
 
 ### Communication with the node
-Using either the RPC via the curl libraries or inter-process communication, the etherlib communicates with the node using functions similarly named to those found in the RPC. For example, functions getBlock, getTrans, getReceipts, traceTransaction, latestBlock, and getState mirror names from the node’s RPC.
+Using either the RPC via the curl libraries or inter-process communication, the etherlib communicates with the node using functions similarly named to those found in the RPC. For example, functions getBlocks, getTrans, getReceipts, traceTransaction, latestBlock, and getState mirror names from the node’s RPC.
 
 Many of the interfaces provided by the RPC for retrieving data are mimicked by etherlib. We do not provide interfaces for communicating back to the node to do things such as sign or initiate transactions. We feel that this type of interaction is best handled by secured wallet software or some other means where there has been a much heavier focus on security. While having done everything we can to make our code secure, our system is dealing only with immutable data extraction from the blockchain.
 

@@ -114,7 +114,7 @@ bool COptions::parseArguments(string_q& command) {
                 been_here = true;
                 tests.push_back("tools/ethNames");
                 tests.push_back("tools/ethslurp");
-                tests.push_back("tools/getBlock");
+                tests.push_back("tools/getBlocks");
                 tests.push_back("tools/getLogs");
                 tests.push_back("tools/getQuotes");
                 tests.push_back("tools/getReceipts");
@@ -180,7 +180,7 @@ bool COptions::parseArguments(string_q& command) {
         tests.push_back("dev_tools/makeClass");
         tests.push_back("tools/ethNames");
         tests.push_back("tools/ethslurp");
-        tests.push_back("tools/getBlock");
+        tests.push_back("tools/getBlocks");
         tests.push_back("tools/getLogs");
         tests.push_back("tools/getQuotes");
         tests.push_back("tools/getReceipts");
@@ -270,8 +270,8 @@ void establishTestData(void) {
     // TODO(tjayrush): and re-run. You will see the tests that fail.
 
     // Forces a few blocks into the cache
-    doCommand("getBlock --uniq_tx 0");
-    doCommand("getBlock --cache 4369999");
+    doCommand("getBlocks --uniq_tx 0");
+    doCommand("getBlocks --cache 4369999");
     doCommand("getTrans --cache 47055.0");
     doCommand("getTrans --cache 46147.0");
 

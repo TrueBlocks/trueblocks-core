@@ -13,7 +13,7 @@ ethscan.py
 ethslurp
 fromES
 findSig
-getBlock
+getBlocks
 getLogs
 getReceipts
 getState

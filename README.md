@@ -84,7 +84,7 @@ Next, let's see if you can use TrueBlocks to extract a block from your Ethereum 
 chifra blocks 1000
 ```
 
-This should return valid JSON data for block 1,000 (type `getBlock --help` for more options on this tool.) If you get an error, such as:
+This should return valid JSON data for block 1,000 (type `getBlocks --help` for more options on this tool.) If you get an error, such as:
 
 ```[shell]
 Warning: The Ethereum RPC: 'http://localhost:8545' was not found. Quitting...

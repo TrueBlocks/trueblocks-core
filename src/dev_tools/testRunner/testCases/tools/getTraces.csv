@@ -1,5 +1,5 @@
 enabled,mode,speed,route,path/tool,filename,post,options,opt_cmd,has_env
-on,cmd,fast,blocks,tools/getTraces,preload,n,transactions = 3657480 & cache,getBlock
+on,cmd,fast,blocks,tools/getTraces,preload,n,transactions = 3657480 & cache,getBlocks
 on,cmd,fast,traces,tools/getTraces,README,n,@th
 on,cmd,fast,traces,tools/getTraces,help,n,@h
 on,cmd,fast,traces,tools/getTraces,help_long,n,help

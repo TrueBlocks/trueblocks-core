@@ -1,4 +1,0 @@
-getBlock argc: 6 [1:3982128] [2:--uniq_tx] [3:--count] [4:--fmt] [5:json] 
-getBlock 3982128 --uniq_tx --count --fmt json 
-{ "data": [
-{ "blockNumber": 3982128, "transactionsCnt": 91, "uniq_tx": 253}] }
