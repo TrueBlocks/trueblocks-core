@@ -1,60 +1,53 @@
 # TrueBlocks Core
 
-Ethereum as it was meant to be: local-first, P2P, and accurate queries to all the data you’ll ever need.
+TrueBlocks is a collection of libraries, tools, and applications that improve access to the Ethereum data while remaining fully local. The data access is similar to the Ethereum RPC, but offers a number of improvements:
 
-## Installing
+1) TrueBlocks scrapes the chain and builds a shareable index of address appearances. This index allows very fast access to transactional histories for a give address (something that is not available from the node itself),
 
-1. A lightning-fast index of every appearance of every addresses on the chain, and
+2) TrueBlocks provides a blindingly-fast binary cache of data previously queried from the node. This speeds up subsequent access to the same data by an order of magintude. This speedup allows for a much better user experience for dApps including the [TrueBlocks Explorer](https://github.com/TrueBlocks/trueblocks-explorer),
 
-2. A binary cache of only the data your application extracts.
-
-This is a work in progress. See [What works now?](#_what_works_now) for known issues.
-
-</div>
+3) TrueBlocks extends Ethereum's RPC interfaces. For example, you may query blocks and transactions by date, by range, by hashes and other identifiers. Furthermore, two additional endpoints are provided for extracting and listing historical transactions per address.
 
 ## Prerequisites
 
 ---
 
-Before building TrueBlocks, make sure you have `git`, `cmake`, `clang-format`, and `go` available.
+Before building TrueBlocks, please make sure you have `git`, `cmake`, `clang-format`, and `go` available.
 
-    **For Linux**:
+### For Linux:
 
-        sudo apt install build-essential git cmake python python-dev libcurl3-dev clang-format jq
+    sudo apt install build-essential git cmake python python-dev libcurl3-dev clang-format jq
 
-### On Linux:
+### For Mac:
 
 We recommend that you run MacOS Big Sur or later for best results.
 
-### On Mac:
+    brew install cmake
+    brew install git
+    brew install clang-format
+    brew install jq
 
-```[shell]
-brew install cmake
-brew install git
-brew install clang-format
-brew install jq
-```
+### For Windows:
 
-### On Windows:
-
-We currently have no plans to support Windows builds. You may use an emulated linux system on Windows to accomplish the build. [Does TrueBlocks Work on Windows?](./docs/FAQ.md-windows)
-
+Currently, we have no plans to support Windows builds.
 
 ## Building TrueBlocks
 
 ---
 
-The only way to install TrueBlocks is to build it yourself. Follow the pre-requisites above, and then follow these instructions:
+In order to use TrueBlocks, you must build it from source. (There is no binary installer.) Complete the pre-requisites above, and then follow these instructions:
 
-        git clone -b develop git@github.com:TrueBlocks/trueblocks-core.git
-        cd trueblocks-core
-        mkdir build && cd build
-        cmake ../src
-        make -j
+    git clone -b develop git@github.com:TrueBlocks/trueblocks-core.git
+    cd trueblocks-core
+    mkdir build && cd build
+    cmake ../src
+    make -j <nproc>
 
-This will create executables in the `./bin` folder at the top of the repo. Please make sure to add that path to your environment's `$PATH`.
+Where &lt;nprocs&gt; is the number of cores on your machine.
 
-## Testing Installation
+This will create a collection of executables in the `./trueblocks-core/bin` folder. Add this path to your environment's `$PATH` for best results. (The instructions below assume the executables are in your `$PATH`.)
+
+## Testing Your Installation
 
 ---
 
