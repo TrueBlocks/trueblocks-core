@@ -359,16 +359,24 @@ bool CCache::writeBinaryCache(const string_q& cacheType, bool details) {
 bool CCache::needsRefresh(const string_q& cacheType, bool details) {
     if (isTestMode())
         return true;
-    string_q lPath = getCachePath(cacheType) + "/";
+
+    string_q cachePath = getCachePath(cacheType) + "/";
     if (cacheType == "index")
-        lPath = indexFolder_finalized;
-    fileInfo ret = getNewestFileInFolder(lPath);
-    string_q fn = getCachePath("tmp/" + cacheType + (details ? "_det" : "") + ".bin");
-    bool res = fileLastModifyDate(fn) < ret.fileTime;
-    LOG4("cache date:  ", fileLastModifyDate(fn).Format(FMT_EXPORT), " - ", fn);
-    LOG4("fileInfo:    ", ret.fileTime.Format(FMT_EXPORT), " - ", ret.fileName);
-    LOG4("needsRefresh:", res);
-    return (res);
+        cachePath = indexFolder_finalized;
+
+    string_q tmpFn = getCachePath("tmp/" + cacheType + (details ? "_det" : "") + ".bin");
+    LOG4("cache date:  ", fileLastModifyDate(tmpFn).Format(FMT_EXPORT), " - ", tmpFn);
+
+    fileInfo cacheInfo = getNewestFileInFolder(cachePath);
+    LOG4("cacheInfo:   ", cacheInfo.fileTime.Format(FMT_EXPORT), " - ", cacheInfo.fileName);
+
+    bool nR = fileLastModifyDate(tmpFn) < cacheInfo.fileTime;
+    if (!nR) {
+        string_q configFn = configPath("trueblocks.toml");
+        nR = fileLastModifyDate(tmpFn) < fileLastModifyDate(configFn);
+    }
+    LOG4("needsRefresh:", nR);
+    return nR;
 }
 // EXISTING_CODE
 }  // namespace qblocks

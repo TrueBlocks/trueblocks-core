@@ -44,6 +44,16 @@ bool COptions::handle_status(ostream& os) {
         return true;
     }
 
+    establishFolder(getCachePath("abis/"));
+    establishFolder(getCachePath("blocks/"));
+    establishFolder(getCachePath("monitors/"));
+    establishFolder(getCachePath("names/"));
+    establishFolder(getCachePath("prices/"));
+    establishFolder(getCachePath("slurps/"));
+    establishFolder(getCachePath("tmp/"));
+    establishFolder(getCachePath("traces/"));
+    establishFolder(getCachePath("txs/"));
+
     CIndexCache index;
     if (contains(mode, "|index|")) {
         LOG8("Reporting on index");

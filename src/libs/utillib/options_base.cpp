@@ -716,7 +716,7 @@ void errorMessage(const string_q& msg) {
         const char* STR_ERROR_JSON = "{ \"errors\": [ \"[ERRORS]\" ] }\n";
         cout << substitute(substitute(STR_ERROR_JSON, "[ERRORS]", msg), "`", "");
     } else {
-        string_q message = substitute(msg, "|", "\n  ");
+        string_q message = substitute(substitute(msg, "|", "\n  "), "$CONFIG", configPath("trueblocks.toml"));
         while (contains(message, '`')) {
             replace(message, "`", bTeal);
             replace(message, "`", cOff);

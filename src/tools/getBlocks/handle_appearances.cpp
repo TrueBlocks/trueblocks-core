@@ -15,7 +15,7 @@
 //---------------------------------------------------------------------------
 void COptions::handle_appearances(blknum_t num, void* data) {
     CBlock block;
-    getBlock12(block, num);
+    getBlock(block, num);
 
     addrCounter = 0;
     if (filterType == "uniq")
