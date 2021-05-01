@@ -1,20 +1,16 @@
 # TrueBlocks Core
 
-![GitHub repo size](https://img.shields.io/github/repo-size/scottydocs/README-template.md)
-![GitHub contributors](https://img.shields.io/github/contributors/scottydocs/README-template.md)
-![GitHub stars](https://img.shields.io/github/stars/TrueBlocks/trueblocks-core?style%3Dsocial)
-![GitHub forks](https://img.shields.io/github/forks/TrueBlocks/trueblocks-core?style=social)
-![Twitter Follow](https://img.shields.io/twitter/follow/trueblocks?style=social)
+Ethereum as it was meant to be: local-first, P2P, and accurate queries to all the data you’ll ever need.
 
-TrueBlocks allows you to build local-first, fully-decentralized applications using data directly from an Ethereum node. It does this through two mechanisms:
+## Installing
 
 1. A lightning-fast index of every appearance of every addresses on the chain, and
 
 2. A binary cache of only the data your application extracts.
 
-Local-first means your application is **private by default**, the client-side cache means your application is **fast**, and *extraction-on-demand* means your application will remain **minimal**.
+This is a work in progress. See [What works now?](#_what_works_now) for known issues.
 
-[How does TrueBlocks Work?](./docs/FAQ.md#how-it-works)
+</div>
 
 ## Prerequisites
 
@@ -22,15 +18,13 @@ Local-first means your application is **private by default**, the client-side ca
 
 Before building TrueBlocks, make sure you have `git`, `cmake`, `clang-format`, and `go` available.
 
-Follow [these instructions](https://golang.org/doc/install) for installing `golang` on your system.
+    **For Linux**:
 
-Complete these commands to install `git`, `cmake`, and `clang-format`:
+        sudo apt install build-essential git cmake python python-dev libcurl3-dev clang-format jq
 
 ### On Linux:
 
-```[shell]
-sudo apt install build-essential git cmake python python-dev libcurl3-dev clang-format jq
-```
+We recommend that you run MacOS Big Sur or later for best results.
 
 ### On Mac:
 
@@ -52,13 +46,11 @@ We currently have no plans to support Windows builds. You may use an emulated li
 
 The only way to install TrueBlocks is to build it yourself. Follow the pre-requisites above, and then follow these instructions:
 
-```[shell]
-git clone git@github.com:TrueBlocks/trueblocks-core.git
-cd trueblocks-core
-mkdir build && cd build
-cmake ../src
-make
-```
+        git clone -b develop git@github.com:TrueBlocks/trueblocks-core.git
+        cd trueblocks-core
+        mkdir build && cd build
+        cmake ../src
+        make -j
 
 This will create executables in the `./bin` folder at the top of the repo. Please make sure to add that path to your environment's `$PATH`.
 
@@ -66,29 +58,21 @@ This will create executables in the `./bin` folder at the top of the repo. Pleas
 
 ---
 
-After building TrueBlocks, you may test your configuration with this command:
+4.  Test your install.
 
-```[shell]
-chifra --version
-```
+        chifra blocks 14560
 
-For a complete list of available commands, run this command:
+## What even is this?
 
-```[shell]
-chifra --help
-```
+TrueBlocks creates an index that lets you access the entire Ethereum chain directly from your local machine. It ships with a large number of tools that let you chain together queries on all types of Ethereum data: transaction numbers, addresses, blocks, ABIs, et cetera.
 
 Next, let's see if you can use TrueBlocks to extract a block from your Ethereum node. Enter this command:
 
-```[shell]
-chifra blocks 1000
-```
+Through a binary cache, TrueBlocks can make your repeated queries *very fast*. For large complex queries, this cache can reduce query times from minutes to seconds.
 
 This should return valid JSON data for block 1,000 (type `getBlocks --help` for more options on this tool.) If you get an error, such as:
 
-```[shell]
-Warning: The Ethereum RPC: 'http://localhost:8545' was not found. Quitting...
-```
+-   Data scientists
 
 To fix this problem, first identify the location of your configuration files. On Mac, your configuration files are at `~/Library/Application Support/TrueBlocks`. On Linux, your configuration files are at `~/.local/share/trueblocks`. We call the configruation folder $CONFIG below.
 
@@ -96,10 +80,7 @@ To fix the missing RPC Provider issue above, edit `$CONFIG/trueBlocks.toml` and 
 
 Enter the following text to specify a provider (add the section header if it doesn't already exist):
 
-```[toml]
-[settings]
-rpcProvider="<url-to-your-rpc-provider>
-```
+-   Organizations like charities who may need to process restricted donations.
 
 Returning to your terminal, this command should now produce data:
 
@@ -109,9 +90,7 @@ chifra blocks 1000
 
 You may test more thouroughly by running the following command:
 
-```[shell]
-make tests
-```
+### The catch
 
 You may find that the above command show many broken tests. While not required, one of the tools (`ethslurp`) requires an API key from Etherscan. Get an EtherScan API key and add it to the same file above under the `[settings]` section thus:
 
@@ -128,15 +107,15 @@ etherscan_key = "<your key>"
 
 For further information, please see these articles:
 
-[Running the API](./docs/FAQ.md#running-the-api)
+Back in late 2015, we become obsessed with Ethereum. Not because of 'price go up', but because of the amazing promise that shared, global data has to change the world:
 
-[Using the Command Line](./docs/FAQ.md#using-the-command-line)
+-   Permissionless data
 
-[Using the Libraries](./docs/FAQ.md#using-the-library)
+-   World-wide consented-to data
 
-[Where to Go from Here...](./docs/FAQ.md#where-to-go-from-here)
+-   Cryptographically secured data
 
-[Full Documentation...](./docs/FAQ.md#full-documentation)
+-   Distributed data
 
 ## Contributing to TrueBlocks
 
