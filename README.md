@@ -1,5 +1,11 @@
 # TrueBlocks Core
 
+![GitHub repo size](https://img.shields.io/github/repo-size/scottydocs/README-template.md)
+![GitHub contributors](https://img.shields.io/github/contributors/scottydocs/README-template.md)
+![GitHub stars](https://img.shields.io/github/stars/TrueBlocks/trueblocks-core?style%3Dsocial)
+![GitHub forks](https://img.shields.io/github/forks/TrueBlocks/trueblocks-core?style=social)
+![Twitter Follow](https://img.shields.io/twitter/follow/trueblocks?style=social)
+
 TrueBlocks is a collection of libraries, tools, and applications that improve access to the Ethereum data while remaining fully local. The data access is similar to the Ethereum RPC, but offers a number of improvements:
 
 1) TrueBlocks scrapes the chain and builds a shareable index of address appearances. This index allows very fast access to transactional histories for a give address (something that is not available from the node itself),
@@ -13,6 +19,10 @@ TrueBlocks is a collection of libraries, tools, and applications that improve ac
 ---
 
 Before building TrueBlocks, please make sure you have `git`, `cmake`, `clang-format`, and `go` available.
+
+Follow [these instructions](https://golang.org/doc/install) for installing `golang` on your system.
+
+Complete these commands to install `git`, `cmake`, and `clang-format`:
 
 ### For Linux:
 
@@ -135,8 +145,3 @@ Thanks to the following people who have contributed to this project:
 
 ---
 If you have specific requests, contact us here <info@quickblocks.io>.
-
-## License
-
----
-Parts of this project licensed under the [Apache License Version 3.0](LICENSE.md).
