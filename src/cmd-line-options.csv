@@ -116,7 +116,6 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,customizeable,c
 12280,tools,Accounts,names,ethNames,expand,e,,false,false,true,true,local,switch,<boolean>,expand search to include all fields (default searches name&#44; address&#44;|and symbol only)
 12300,tools,Accounts,names,ethNames,match_case,m,,false,false,true,true,header,switch,<boolean>,do case-sensitive search
 12315,tools,Accounts,names,ethNames,all,l,,false,false,true,true,local,switch,<boolean>,include all accounts in the search
-12320,tools,Accounts,names,ethNames,owned,o,,false,false,true,true,local,switch,<boolean>,include personal accounts in the search
 12340,tools,Accounts,names,ethNames,custom,c,,false,false,true,true,local,switch,<boolean>,include your custom named accounts
 12360,tools,Accounts,names,ethNames,prefund,p,,false,false,true,true,local,switch,<boolean>,include prefund accounts
 12380,tools,Accounts,names,ethNames,named,n,,false,false,true,true,local,switch,<boolean>,include well know token and airdrop addresses in the search

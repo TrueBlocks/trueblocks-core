@@ -31,13 +31,13 @@ off     ,cmd  ,fast  ,null  ,tools/ethNames ,nosave_touch                      ,
 off     ,both ,medi  ,names ,tools/ethNames ,upgrade_to_067                    ,y    ,fmt = json
 off     ,cmd  ,fast  ,null  ,tools/ethNames ,nosave_remove                     ,n    ,RMFILE -f $CONFIG/names/names.bin
 off     ,cmd  ,fast  ,null  ,tools/ethNames ,nosave_restore                    ,n    ,MOVEFILE -f ./testing_data/backup/names.bin $CONFIG/names/
-on      ,both ,fast  ,names ,tools/ethNames ,verbose                           ,n    ,verbose & owned & fmt = txt
+on      ,both ,fast  ,names ,tools/ethNames ,verbose                           ,n    ,verbose & named & fmt = txt
 on      ,both ,fast  ,names ,tools/ethNames ,list                              ,y    ,fmt = json
 on      ,both ,medi  ,names ,tools/ethNames ,long_list                         ,n    ,fmt = txt
-on      ,both ,medi  ,names ,tools/ethNames ,all                               ,y    ,named & custom & owned & prefund
-on      ,both ,fast  ,names ,tools/ethNames ,all_addrOnly                      ,y    ,named & custom & owned & prefund & addr
+on      ,both ,medi  ,names ,tools/ethNames ,all                               ,y    ,named & custom & prefund
+on      ,both ,fast  ,names ,tools/ethNames ,all_addrOnly                      ,y    ,named & custom & prefund & addr
 on      ,both ,fast  ,names ,tools/ethNames ,named_custom                      ,n    ,named & custom & fmt = csv
-on      ,both ,medi  ,names ,tools/ethNames ,named_custom_owned                ,n    ,named & custom & owned & fmt = csv & no_header
+on      ,both ,medi  ,names ,tools/ethNames ,named_custom_owned                ,n    ,named & custom & fmt = csv & no_header
 on      ,both ,medi  ,names ,tools/ethNames ,named                             ,n    ,named & fmt = txt & no_header
 on      ,both ,fast  ,names ,tools/ethNames ,custom                            ,n    ,custom & fmt = txt
 on      ,both ,medi  ,names ,tools/ethNames ,addr_name_case_match_both         ,y    ,terms = 0xcb Humaniq & match_case
@@ -112,12 +112,12 @@ on      ,both ,medi  ,names ,tools/ethNames ,w_source                          ,
 on      ,both ,medi  ,names ,tools/ethNames ,addr_show_addr_match              ,y    ,terms = 0xb6 & addr
 on      ,cmd  ,fast  ,names ,tools/ethNames ,show_version                      ,n    ,version
 on      ,both ,medi  ,names ,tools/ethNames ,fmt_default                       ,y    ,terms = tip & expand
-on      ,both ,medi  ,names ,tools/ethNames ,fmt_txt                           ,n    ,named & custom & owned & fmt = txt
-on      ,both ,medi  ,names ,tools/ethNames ,fmt_csv                           ,n    ,named & custom & owned & fmt = csv
-on      ,both ,medi  ,names ,tools/ethNames ,fmt_api                           ,y    ,named & custom & owned & fmt = api
-on      ,both ,medi  ,names ,tools/ethNames ,fmt_json                          ,y    ,named & custom & owned & fmt = json
+on      ,both ,medi  ,names ,tools/ethNames ,fmt_txt                           ,n    ,named & custom & fmt = txt
+on      ,both ,medi  ,names ,tools/ethNames ,fmt_csv                           ,n    ,named & custom & fmt = csv
+on      ,both ,medi  ,names ,tools/ethNames ,fmt_api                           ,y    ,named & custom & fmt = api
+on      ,both ,medi  ,names ,tools/ethNames ,fmt_json                          ,y    ,named & custom & fmt = json
 on      ,cmd  ,fast  ,names ,tools/ethNames ,fmt_junk                          ,y    ,terms = tip & expand & fmt = junk
-on      ,both ,medi  ,names ,tools/ethNames ,to_file                           ,n    ,named & custom & owned & fmt = json & to_file
+on      ,both ,medi  ,names ,tools/ethNames ,to_file                           ,n    ,named & custom & fmt = json & to_file
 on      ,cmd  ,slow  ,names ,tools/ethNames ,fromFile                          ,n    ,file:names.txt
 on      ,cmd  ,fast  ,names ,tools/ethNames ,prefund_output                    ,n    ,output = test_file & prefund
 on      ,both ,fast  ,names ,tools/ethNames ,tags                              ,y    ,tags

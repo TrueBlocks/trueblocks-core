@@ -46,6 +46,7 @@ class CAcctScrapeStats : public CBaseNode {
     DECLARE_NODE(CAcctScrapeStats);
 
     // EXISTING_CODE
+    string_q Header(const string_q& fmt) const;
     // EXISTING_CODE
     bool operator==(const CAcctScrapeStats& it) const;
     bool operator!=(const CAcctScrapeStats& it) const {

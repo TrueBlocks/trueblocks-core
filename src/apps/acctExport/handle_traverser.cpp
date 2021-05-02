@@ -88,8 +88,7 @@ bool post_Func(CTraverser* trav, void* data) {
 
 #define REPORT_FREQ 5
 //-----------------------------------------------------------------------
-void prog_Log(CTraverser* trav, void* data, TraverserLog mode) {
-    ASSERT(mode == TR_PROGRESS_CACHE || mode == TR_PROGRESS_NODE);
+void prog_Log(CTraverser* trav, void* data) {
     if (!trav->logging)
         return;
 
@@ -97,8 +96,10 @@ void prog_Log(CTraverser* trav, void* data, TraverserLog mode) {
     if (trav->nProcessed % REPORT_FREQ)
         return;
 
+    TraverserLog mode = trav->inCache ? TR_PROGRESS_CACHE : TR_PROGRESS_NODE;
     blknum_t prog = opt->first_record + trav->nProcessed;
     blknum_t goal = opt->stats.nFileRecords;
+
     ostringstream post;
     post << " " << trav->op << " (max " << goal << ") for address " << opt->accountedFor;
     LOG_PROGRESS((mode == TR_PROGRESS_CACHE ? "Reading" : "Extracting"), prog, goal, post.str() + "\r");

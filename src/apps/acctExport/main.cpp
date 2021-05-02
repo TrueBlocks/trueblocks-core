@@ -71,44 +71,17 @@ int main(int argc, const char* argv[]) {
 
     cout << exportPostamble(options.errors, expContext().fmtMap["meta"]);
 
-    if (!isTestMode() && !options.freshen && !options.count && !options.accounting && !options.logs) {
-        ostringstream oss;
-        oss << "Exported " << padNum6T(options.stats.nFileRecords) << " ";
-        oss << (!options.className.empty() ? (plural(options.className) + " from ") : "of ");
-        oss << padNum6T(options.stats.nFileRecords) << " transactions for address "
-            << (options.allMonitors.size() ? options.accountedFor : "");
-        LOG_INFO(oss.str());
-    }
+    // if (!isTestMode() && !options.freshen && !options.count && !options.accounting && !options.logs) {
+    //     ostringstream oss;
+    //     oss << "Exported " << padNum6T(options.stats.nFileRecords) << " ";
+    //     oss << (!options.className.empty() ? (plural(options.className) + " from ") : "of ");
+    //     oss << padNum6T(options.stats.nFileRecords) << " transactions for address "
+    //         << (options.allMonitors.size() ? options.accountedFor : "");
+    //     LOG_INFO(oss.str());
+    // }
 
-    if (options.stats.nFiles != options.stats.nSkipped) {
-        ostringstream header;
-        header << options.stats.Format(substitute(substitute(STR_DISPLAY_ACCTSCRAPESTATS, "\t", ","), "{", "{p:"));
-        LOG4(header.str());
-        header << endl;
-
-        ostringstream data;
-        data << options.stats.Format(substitute(STR_DISPLAY_ACCTSCRAPESTATS, "\t", ","));
-        LOG4(data.str());
-        data << endl;
-
-        string_q statsFile = configPath("performance_scraper.csv");
-        if (!fileExists(statsFile))
-            stringToAsciiFile(statsFile, header.str());
-        appendToAsciiFile(statsFile, data.str());
-    }
+    options.writePerformanceData();
 
     pinlib_cleanup();
     return 0;
-}
-
-//-----------------------------------------------------------------------
-bool COptions::handle_counts(void) {
-    for (auto cnt : counts) {
-        if (shouldQuit())
-            break;
-        cout << ((isJson() && !firstOut) ? ", " : "");
-        cout << cnt;
-        firstOut = false;
-    }
-    return true;
 }

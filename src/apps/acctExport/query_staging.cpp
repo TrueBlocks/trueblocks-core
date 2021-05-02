@@ -3,7 +3,6 @@
  * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
  * All Rights Reserved
  *------------------------------------------------------------------------*/
-#include "acctlib.h"
 #include "options.h"
 
 extern int findAppearance2(const void* v1, const void* v2);

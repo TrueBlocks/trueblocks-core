@@ -5,7 +5,14 @@
  *------------------------------------------------------------------------*/
 #include "options.h"
 
-//---------------------------------------------------------------
-bool visitUnripeIndexFiles(const string_q& path, void* data) {
-    return !shouldQuit();
+//-----------------------------------------------------------------------
+bool COptions::handle_counts(void) {
+    for (auto cnt : counts) {
+        if (shouldQuit())
+            break;
+        cout << ((isJson() && !firstOut) ? ", " : "");
+        cout << cnt;
+        firstOut = false;
+    }
+    return true;
 }

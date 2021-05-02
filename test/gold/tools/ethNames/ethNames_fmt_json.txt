@@ -1,21 +1,33 @@
-ethNames argc: 6 [1:--named] [2:--custom] [3:--owned] [4:--fmt] [5:json] 
-ethNames --named --custom --owned --fmt json 
+ethNames argc: 5 [1:--named] [2:--custom] [3:--fmt] [4:json] 
+ethNames --named --custom --fmt json 
 { "data": [
   {
+    "tags": "81-Custom",
     "address": "0x0000000000000000000000000000000000000001",
-    "name": "Account_1"
+    "name": "Account_1",
+    "source": "Testing"
   },
   {
+    "tags": "81-Custom",
     "address": "0x0000000000000000000000000000000000000002",
-    "name": "Account_2"
+    "name": "Account_2",
+    "symbol": "AC_2",
+    "source": "Testing",
+    "decimals": 2
   },
   {
+    "tags": "81-Custom",
     "address": "0x0000000000000000000000000000000000000003",
-    "name": "Account_3"
+    "name": "Account_3",
+    "source": "Testing"
   },
   {
+    "tags": "81-Custom",
     "address": "0x0000000000000000000000000000000000000004",
-    "name": "Account_4"
+    "name": "Account_4",
+    "symbol": "AC_4",
+    "source": "Testing",
+    "decimals": 4
   },
   {
     "tags": "55-Defi",

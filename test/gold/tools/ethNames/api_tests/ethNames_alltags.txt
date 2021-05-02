@@ -1,39 +1,39 @@
 {
   "data": [
     {
-      "tags": "",
+      "tags": "81-Custom",
       "address": "0x0000000000000000000000000000000000000001",
       "name": "Account_1",
       "symbol": "",
-      "source": "",
+      "source": "Testing",
       "decimals": 0,
       "description": ""
     },
     {
-      "tags": "",
+      "tags": "81-Custom",
       "address": "0x0000000000000000000000000000000000000002",
       "name": "Account_2",
-      "symbol": "",
-      "source": "",
-      "decimals": 0,
+      "symbol": "AC_2",
+      "source": "Testing",
+      "decimals": 2,
       "description": ""
     },
     {
-      "tags": "",
+      "tags": "81-Custom",
       "address": "0x0000000000000000000000000000000000000003",
       "name": "Account_3",
       "symbol": "",
-      "source": "",
+      "source": "Testing",
       "decimals": 0,
       "description": ""
     },
     {
-      "tags": "",
+      "tags": "81-Custom",
       "address": "0x0000000000000000000000000000000000000004",
       "name": "Account_4",
-      "symbol": "",
-      "source": "",
-      "decimals": 0,
+      "symbol": "AC_4",
+      "source": "Testing",
+      "decimals": 4,
       "description": ""
     },
     {

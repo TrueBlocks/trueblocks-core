@@ -5,6 +5,24 @@
  *------------------------------------------------------------------------*/
 #include "options.h"
 
+extern bool app_Display(CTraverser* trav, void* data);
+extern bool app_Post(CTraverser* trav, void* data);
+//-----------------------------------------------------------------------
+bool COptions::handle_appearances(void) {
+    CTraverser trav(this, cout, "appearances");
+    trav.displayFunc = app_Display;
+    trav.postFunc = app_Post;
+    trav.dataFunc = noopFunc;
+
+    CTraverserArray traversers;
+    traversers.push_back(trav);
+
+    CAppearanceDisplay dapp(accountedFor, accountedForName, NOPOS, NOPOS);
+    forEveryAppearance(traversers, apps, &dapp);
+
+    return !shouldQuit();
+}
+
 //-----------------------------------------------------------------------
 bool app_Display(CTraverser* trav, void* data) {
     COptions* opt = (COptions*)trav->options;
@@ -22,7 +40,7 @@ bool app_Display(CTraverser* trav, void* data) {
     cout << *dapp;
     opt->firstOut = false;
 
-    prog_Log(trav, data, trav->inCache ? TR_PROGRESS_CACHE : TR_PROGRESS_NODE);
+    // prog_Log(trav, data);
     return !shouldQuit();
 }
 
@@ -35,22 +53,6 @@ bool app_Post(CTraverser* trav, void* data) {
 
     end_Log(trav, data);
     return true;
-}
-
-//-----------------------------------------------------------------------
-bool COptions::handle_appearances(void) {
-    CTraverser trav(this, cout, "appearances");
-    trav.displayFunc = app_Display;
-    trav.postFunc = app_Post;
-    trav.dataFunc = noopFunc;
-
-    CTraverserArray traversers;
-    traversers.push_back(trav);
-
-    CAppearanceDisplay dapp(accountedFor, accountedForName, NOPOS, NOPOS);
-    forEveryAppearance(traversers, apps, &dapp);
-
-    return !shouldQuit();
 }
 
 //-----------------------------------------------------------------------

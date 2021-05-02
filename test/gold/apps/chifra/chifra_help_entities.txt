@@ -4,7 +4,7 @@ chifra entities argc: 3 [1:--entities] [2:--help]
 chifra entities --entities --help 
 PROG_NAME = [chifra entities]
 
-  Usage:    chifra entities [-e|-m|-l|-o|-c|-p|-n|-a|-s|-g|-v|-h] <term> [term...]  
+  Usage:    chifra entities [-e|-m|-l|-c|-p|-n|-a|-s|-g|-v|-h] <term> [term...]  
   Purpose:  Query addresses and/or names of well known accounts.
 
   Where:  
@@ -12,7 +12,6 @@ PROG_NAME = [chifra entities]
 	-e  (--expand)        expand search to include all fields (default searches name, address, and symbol only)
 	-m  (--match_case)    do case-sensitive search
 	-l  (--all)           include all accounts in the search
-	-o  (--owned)         include personal accounts in the search
 	-c  (--custom)        include your custom named accounts
 	-p  (--prefund)       include prefund accounts
 	-n  (--named)         include well know token and airdrop addresses in the search

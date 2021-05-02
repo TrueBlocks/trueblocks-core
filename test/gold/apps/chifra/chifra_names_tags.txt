@@ -4,7 +4,6 @@ chifra names argc: 2 [1:--tags]
 chifra names --tags 
 PROG_NAME = [chifra names]
 tags
-
 30-Contracts
 30-Contracts:Giveth
 30-Contracts:Kyber Network

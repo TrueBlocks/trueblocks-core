@@ -10,7 +10,7 @@
  */
 #include "pinlib.h"
 #include "acctscrapestats.h"
-#include "traverser.h"
+#include "handle_traverser.h"
 
 // BEG_ERROR_DEFINES
 // END_ERROR_DEFINES
@@ -108,6 +108,8 @@ class COptions : public CAbiOptions {
     bool isEmitter(const address_t& test) const;
     bool wasEmittedBy(const address_t& test) const;
     bool isRelevant(const CLogEntry& log) const;
+
+    void writePerformanceData(void);
 };
 
 //--------------------------------------------------------------------------------

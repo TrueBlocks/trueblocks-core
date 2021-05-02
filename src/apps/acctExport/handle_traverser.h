@@ -18,7 +18,7 @@ typedef enum { TR_PROGRESS_CACHE = 1, TR_PROGRESS_NODE = 2 } TraverserLog;
 
 //-----------------------------------------------------------------------
 extern void start_Log(CTraverser* trav, void* data);
-extern void prog_Log(CTraverser* trav, void* data, TraverserLog mode);
+extern void prog_Log(CTraverser* trav, void* data);
 extern void end_Log(CTraverser* trav, void* data);
 extern bool rangeFilter(CTraverser* trav, void* data);
 extern bool loadData(CTraverser* trav, void* data);

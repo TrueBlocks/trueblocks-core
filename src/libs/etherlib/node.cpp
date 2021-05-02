@@ -589,14 +589,6 @@ bool isParity(void) {
            contains(toLower(getVersionFromClient()), "openethereum");
 }
 
-//-------------------------------------------------------------------------
-bool getAccounts(CAddressArray& addrs) {
-    string_q results = callRPC("eth_accounts", "[]", false);
-    while (!results.empty())
-        addrs.push_back(toLower(nextTokenClear(results, ',')));
-    return true;
-}
-
 //--------------------------------------------------------------------------
 blknum_t getLatestBlock_cache_final(void) {
     string_q finLast = getLastFileInFolder(indexFolder_blooms, false);

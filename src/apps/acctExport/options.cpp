@@ -661,3 +661,27 @@ bool COptions::isRelevant(const CLogEntry& log) const {
             return true;
     return false;
 }
+
+//-----------------------------------------------------------------------
+string_q CAcctScrapeStats::Header(const string_q& fmt) const {
+    return Format(substitute(fmt, "{", "{p:"));
+}
+
+//-----------------------------------------------------------------------
+void COptions::writePerformanceData(void) {
+    if (stats.nFiles == stats.nSkipped)
+        return;
+
+    string_q statsFile = configPath("performance_scraper.csv");
+
+    string_q fmt = substitute(STR_DISPLAY_ACCTSCRAPESTATS, "\t", ",");
+    if (!fileExists(statsFile)) {
+        ostringstream header;
+        header << stats.Header(fmt) << endl;
+        stringToAsciiFile(statsFile, header.str());
+    }
+
+    ostringstream data;
+    data << stats.Format(fmt) << endl;
+    appendToAsciiFile(statsFile, data.str());
+}

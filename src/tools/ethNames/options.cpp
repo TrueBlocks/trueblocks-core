@@ -24,7 +24,6 @@ static const COption params[] = {
     COption("expand", "e", "", OPT_SWITCH, "expand search to include all fields (default searches name, address, and symbol only)"),  // NOLINT
     COption("match_case", "m", "", OPT_SWITCH, "do case-sensitive search"),
     COption("all", "l", "", OPT_SWITCH, "include all accounts in the search"),
-    COption("owned", "o", "", OPT_SWITCH, "include personal accounts in the search"),
     COption("custom", "c", "", OPT_SWITCH, "include your custom named accounts"),
     COption("prefund", "p", "", OPT_SWITCH, "include prefund accounts"),
     COption("named", "n", "", OPT_SWITCH, "include well know token and airdrop addresses in the search"),
@@ -51,7 +50,6 @@ bool COptions::parseArguments(string_q& command) {
     CStringArray terms;
     bool expand = false;
     bool all = false;
-    bool owned = false;
     bool custom = false;
     bool prefund = false;
     bool named = false;
@@ -81,9 +79,6 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-l" || arg == "--all") {
             all = true;
-
-        } else if (arg == "-o" || arg == "--owned") {
-            owned = true;
 
         } else if (arg == "-c" || arg == "--custom") {
             custom = true;
@@ -131,7 +126,6 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST_BOOL("expand", expand);
     LOG_TEST_BOOL("match_case", match_case);
     LOG_TEST_BOOL("all", all);
-    LOG_TEST_BOOL("owned", owned);
     LOG_TEST_BOOL("custom", custom);
     LOG_TEST_BOOL("prefund", prefund);
     LOG_TEST_BOOL("named", named);
@@ -204,13 +198,6 @@ bool COptions::parseArguments(string_q& command) {
         }
         types |= CUSTOM;
     }
-    if (owned) {
-        if (deflt) {
-            types = 0;
-            deflt = false;
-        }
-        types |= OWNED;
-    }
     if (other) {
         if (deflt) {
             types = 0;
@@ -237,7 +224,6 @@ bool COptions::parseArguments(string_q& command) {
         types |= NAMED;
         types |= PREFUND;
         types |= CUSTOM;
-        types |= OWNED;
         types |= OTHER;
     }
 
@@ -397,29 +383,6 @@ bool COptions::addIfUnique(const CAccountName& item) {
 
 //-----------------------------------------------------------------------
 void COptions::applyFilter() {
-    //------------------------
-    if (types & OWNED) {
-        if (isTestMode()) {
-            for (uint32_t i = 1; i < 5; i++) {
-                CAccountName item;
-                item.address = "0x000000000000000000000000000000000000000" + uint_2_Str(i);
-                addIfUnique(item);
-            }
-        } else {
-            nodeRequired();
-            CStringArray addrs;
-            getAccounts(addrs);
-            uint32_t cnt = 0;
-            for (auto addr : addrs) {
-                CAccountName item;
-                item.tags = "00-Active";
-                item.address = addr;
-                item.name = "Owned_" + padNum4(cnt++);
-                addIfUnique(item);
-            }
-        }
-    }
-
     //------------------------
     if (types & CUSTOM) {
         if (isTestMode() && !isCrudCommand()) {

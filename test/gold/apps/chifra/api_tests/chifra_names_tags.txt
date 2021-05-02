@@ -1,9 +1,6 @@
 {
   "data": [
     {
-      "tags": ""
-    },
-    {
       "tags": "30-Contracts"
     },
     {

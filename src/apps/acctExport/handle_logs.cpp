@@ -22,7 +22,7 @@ bool logs_Display(CTraverser* trav, void* data) {
         }
     }
 
-    prog_Log(trav, data, trav->inCache ? TR_PROGRESS_CACHE : TR_PROGRESS_NODE);
+    prog_Log(trav, data);
     return !shouldQuit();
 }
 

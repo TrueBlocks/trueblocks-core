@@ -84,7 +84,8 @@ bool findReplacements(const string_q& templatePath, void* data) {
         return forEveryFileInFolder(templatePath + "*", findReplacements, data);
 
     } else {
-        if (contains(templatePath, "README.") && endsWith(templatePath, ".md") && !contains(templatePath, "README.md")) {
+        if (contains(templatePath, "README.") && endsWith(templatePath, ".md") &&
+            !contains(templatePath, "README.md")) {
             COptions* opts = (COptions*)data;
             opts->counter.replacements.push_back(templatePath);
         }

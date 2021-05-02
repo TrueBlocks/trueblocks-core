@@ -2,7 +2,7 @@ ethNames argc: 2 [1:-th]
 ethNames -th 
 ### Usage
 
-`Usage:`    chifra names [-e|-m|-l|-o|-c|-p|-n|-a|-s|-g|-v|-h] &lt;term&gt; [term...]  
+`Usage:`    chifra names [-e|-m|-l|-c|-p|-n|-a|-s|-g|-v|-h] &lt;term&gt; [term...]  
 `Purpose:`  Query addresses and/or names of well known accounts.
 
 `Where:`  
@@ -13,7 +13,6 @@ ethNames -th
 | -e | --expand | expand search to include all fields (default searches name, address, and symbol only) |
 | -m | --match_case | do case-sensitive search |
 | -l | --all | include all accounts in the search |
-| -o | --owned | include personal accounts in the search |
 | -c | --custom | include your custom named accounts |
 | -p | --prefund | include prefund accounts |
 | -n | --named | include well know token and airdrop addresses in the search |

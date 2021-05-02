@@ -1,3 +1,3 @@
-ethNames argc: 7 [1:--named] [2:--custom] [3:--owned] [4:--fmt] [5:json] [6:--to_file] 
-ethNames --named --custom --owned --fmt json --to_file 
+ethNames argc: 6 [1:--named] [2:--custom] [3:--fmt] [4:json] [5:--to_file] 
+ethNames --named --custom --fmt json --to_file 
 { "outputFilename": "--output_filename--" }

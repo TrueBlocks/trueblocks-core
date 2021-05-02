@@ -17,7 +17,7 @@ bool receipts_Display(CTraverser* trav, void* data) {
     cout << trav->trans.receipt;
     opt->firstOut = false;
 
-    prog_Log(trav, data, trav->inCache ? TR_PROGRESS_CACHE : TR_PROGRESS_NODE);
+    prog_Log(trav, data);
     return !shouldQuit();
 }
 
