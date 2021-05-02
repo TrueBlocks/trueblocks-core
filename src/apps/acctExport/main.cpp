@@ -71,15 +71,6 @@ int main(int argc, const char* argv[]) {
 
     cout << exportPostamble(options.errors, expContext().fmtMap["meta"]);
 
-    // if (!isTestMode() && !options.freshen && !options.count && !options.accounting && !options.logs) {
-    //     ostringstream oss;
-    //     oss << "Exported " << padNum6T(options.stats.nFileRecords) << " ";
-    //     oss << (!options.className.empty() ? (plural(options.className) + " from ") : "of ");
-    //     oss << padNum6T(options.stats.nFileRecords) << " transactions for address "
-    //         << (options.allMonitors.size() ? options.accountedFor : "");
-    //     LOG_INFO(oss.str());
-    // }
-
     options.writePerformanceData();
 
     pinlib_cleanup();
