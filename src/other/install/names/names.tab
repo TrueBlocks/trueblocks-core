@@ -6051,6 +6051,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 31-Gitcoin Grants:Grant	0xcfbb0c8a2c292b7c45cbade5ac6a25d2580dcb94	Grant 0271 Jelly Swap - Cross-chain Atomic Swap		https://gitcoin.co/grants/271/jelly-swap-cross-chain-atomic-swap			false	false	false	false	false	false
 31-Gitcoin Grants:Friends	0xcfca8f21f164c29f87b5cb06d5ad938ae565ca11	apguerrera		Gitcoin Website			false	false	false	false	false	false
 31-Gitcoin Grants:Grant	0xcfd38669d8cbdb7c933740db35bc83f64ff8b251	Grant 1175 Eth Gas.watch		https://gitcoin.co/grants/1175/eth-gaswatch			false	false	false	false	false	false
+30-Contracts	0xcfd7f3b24f3551741f922fd8c4381aa4e00fc8fd	Unchained Index (v0.3-live)		On chain			false	false	false	true	false	false
 32-Kickback:Friends	0xcfeb7bd11cc63932afa1204814e3e21cd07e49c8	ilblackdragon		https://kickback.events/			false	false	false	false	false	false
 81-Other	0xcfec6a28cf84b338d84dd9ccb0f147f9fc24cd40	Early_Partners_038		Ether Camp			false	false	false	false	false	false
 31-Gitcoin Grants:Friends	0xcff1ccb95dac9ed781c4d39de9e2ffd86837f5ad	ianphilips		Gitcoin Website			false	false	false	false	false	false
