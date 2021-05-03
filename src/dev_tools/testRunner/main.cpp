@@ -20,6 +20,7 @@ ostringstream slow;
 CMeasure total("all", "all", "all");
 CStringArray fails;
 extern const char* STR_SCREEN_REPORT;
+string_q perf_fmt;
 
 //-----------------------------------------------------------------------
 int main(int argc, const char* argv[]) {
@@ -118,6 +119,8 @@ int main(int argc, const char* argv[]) {
             }
             sort(testArray.begin(), testArray.end());
 
+            expContext().exportFmt = CSV1;
+            perf_fmt = substitute(cleanFmt(STR_DISPLAY_MEASURE), "\"", "");
             if (!options.doTests(testArray, path, testName, API))
                 return 1;
             if (!options.doTests(testArray, path, testName, CMD))
@@ -134,32 +137,33 @@ int main(int argc, const char* argv[]) {
     }
 
     if (options.report && options.skip == 1) {
-        bool allPassed = total.nTests == total.nPassed;
-        perf << total.Format(options.perf_format) << endl;
-        string_q perf_result = perf.str();
-        replaceAll(perf_result, ",E-", "," + toLower(getHostName()) + "," + (allPassed ? "E" : "F") + "-");
-        cerr << "    " << substitute(perf_result, "\n", "\n    ") << endl;
+        total.allPassed = total.nTests == total.nPassed;
+        perf << total.Format(perf_fmt) << endl;
+        cerr << "    " << substitute(perf.str(), "\n", "\n    ") << endl;
         if (options.full_test && options.report) {
-            appendToAsciiFile(configPath(string_q("performance") + (allPassed ? "" : "_failed") + ".csv"), perf_result);
+            string_q perfFile = configPath(string_q("performance") + (total.allPassed ? "" : "_failed") + ".csv");
+            appendToAsciiFile(perfFile, perf.str());
             appendToAsciiFile(configPath("performance_slow.csv"), slow.str());
-            string_q copyPath = getGlobalConfig()->getConfigStr("settings", "copyPath", "<NOT_SET>");
-            if (folderExists(copyPath)) {
-                CStringArray files = {"performance.csv", "performance_failed.csv", "performance_slow.csv",
-                                      "performance_scraper.csv"};
-                for (auto file : files) {
-                    if (fileExists(configPath(file))) {
-                        ostringstream copyCmd;
-                        copyCmd << "cp -f \"";
-                        copyCmd << configPath(file) << "\" \"" << copyPath << "\"";
-                        // clang-format off
-                    if (system(copyCmd.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings
-                        // clang-format on
-                        // cerr << copyCmd.str() << endl;
-                    }
-                }
-            }
         } else {
             LOG_WARN(cRed, "Performance results not written because not full test", cOff);
+        }
+    }
+
+    string_q copyPath = getGlobalConfig("testRunner")->getConfigStr("settings", "copyPath", "<NOT_SET>");
+    if (folderExists(copyPath)) {
+        CStringArray files = {"performance.csv", "performance_failed.csv", "performance_slow.csv",
+                              "performance_scraper.csv"};
+        for (auto file : files) {
+            if (fileExists(configPath(file))) {
+                if (fileExists(configPath(file))) {
+                    ostringstream copyCmd;
+                    copyCmd << "cp -f \"";
+                    copyCmd << configPath(file) << "\" \"" << copyPath << "\"";
+                    // clang-format off
+                    if (system(copyCmd.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings
+                    // clang-format on
+                }
+            }
         }
     }
 
@@ -382,7 +386,7 @@ bool COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, cons
     total += measure;
     if (measure.nTests) {
         cerr << measure.Format(STR_SCREEN_REPORT) << endl;
-        perf << measure.Format(perf_format) << endl;
+        perf << measure.Format(perf_fmt) << endl;
     }
 
     return true;

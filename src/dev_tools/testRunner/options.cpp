@@ -199,9 +199,6 @@ bool COptions::parseArguments(string_q& command) {
 
     SHOW_FIELD(CTestCase, "test_id");
 
-    expContext().exportFmt = CSV1;
-    perf_format = substitute(cleanFmt(STR_DISPLAY_MEASURE), "\"", "");
-
     apiProvider = getGlobalConfig("testRunner")->getConfigStr("settings", "apiProvider", "http://localhost:8080");
     if (!endsWith(apiProvider, '/'))
         apiProvider += "/";

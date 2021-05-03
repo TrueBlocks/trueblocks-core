@@ -96,7 +96,15 @@ string_q CMeasure::getValueByName(const string_q& fieldName) const {
                 return group;
             }
             break;
+        case 'm':
+            if (fieldName % "machine") {
+                return machine;
+            }
+            break;
         case 'n':
+            if (fieldName % "node") {
+                return node;
+            }
             if (fieldName % "nTests") {
                 return uint_2_Str(nTests);
             }
@@ -160,7 +168,17 @@ bool CMeasure::setValueByName(const string_q& fieldNameIn, const string_q& field
                 return true;
             }
             break;
+        case 'm':
+            if (fieldName % "machine") {
+                machine = fieldValue;
+                return true;
+            }
+            break;
         case 'n':
+            if (fieldName % "node") {
+                node = fieldValue;
+                return true;
+            }
             if (fieldName % "nTests") {
                 nTests = str_2_Uint(fieldValue);
                 return true;
@@ -207,6 +225,8 @@ bool CMeasure::Serialize(CArchive& archive) {
     // EXISTING_CODE
     archive >> git_hash;
     archive >> date;
+    archive >> machine;
+    archive >> node;
     archive >> epoch;
     archive >> group;
     archive >> cmd;
@@ -227,6 +247,8 @@ bool CMeasure::SerializeC(CArchive& archive) const {
     // EXISTING_CODE
     archive << git_hash;
     archive << date;
+    archive << machine;
+    archive << node;
     archive << epoch;
     archive << group;
     archive << cmd;
@@ -272,6 +294,8 @@ void CMeasure::registerClass(void) {
     ADD_FIELD(CMeasure, "cname", T_TEXT, ++fieldNum);
     ADD_FIELD(CMeasure, "git_hash", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CMeasure, "date", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CMeasure, "machine", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CMeasure, "node", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CMeasure, "epoch", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CMeasure, "group", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CMeasure, "cmd", T_TEXT | TS_OMITEMPTY, ++fieldNum);
@@ -308,6 +332,10 @@ string_q nextMeasureChunk_custom(const string_q& fieldIn, const void* dataPtr) {
             case 'c':
                 if (fieldIn % "check")
                     return (mea->nPassed == mea->nTests ? greenCheck : "");
+                break;
+            case 'e':
+                if (fieldIn % "epoch")
+                    return substitute(mea->epoch, "E-", (mea->allPassed ? "E-" : "F-"));
                 break;
             case 'f':
                 if (fieldIn % "failed")
@@ -352,6 +380,8 @@ ostream& operator<<(ostream& os, const CMeasure& it) {
 const char* STR_DISPLAY_MEASURE =
     "[{GIT_HASH}]\t"
     "[{DATE}]\t"
+    "[{MACHINE}]\t"
+    "[{NODE}]\t"
     "[{EPOCH}]\t"
     "[{GROUP}]\t"
     "[{CMD}]\t"
@@ -363,5 +393,16 @@ const char* STR_DISPLAY_MEASURE =
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
+CMeasure::CMeasure(const string_q& g, const string_q& c, const string_q& t) {
+    initialize();
+    git_hash = "git_" + string_q(GIT_COMMIT_HASH).substr(0, 10);
+    date = Now().Format(FMT_EXPORT);
+    machine = toLower(getHostName());
+    node = isTurboGeth() ? "TG" : isParity() ? "OE" : "OT";
+    epoch = getGlobalConfig("testRunner")->getConfigStr("settings", "test_epoch", "E-12");
+    group = g;
+    cmd = c;
+    type = t;
+}
 // EXISTING_CODE
 }  // namespace qblocks

@@ -41,7 +41,6 @@ class COptions : public COptionsBase {
     bool ignoreOff = false;
     CStringArray tests;
     bool full_test;
-    string_q perf_format;
     string_q apiProvider;
     uint64_t nRun = 0;
 
