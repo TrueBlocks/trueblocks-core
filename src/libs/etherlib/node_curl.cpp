@@ -211,21 +211,25 @@ bool isNodeRunning(void) {
 }
 
 //-------------------------------------------------------------------------
-static const char* STR_CURLERROR =
-    "The request to the Ethereum node ([{METHOD}]:[{PARAMS}]) resulted|in following error message: [VAL].";
+static const char* STR_ERROR_CURLERR =
+    "A request to your Ethereum node (`[{PROVIDER}]`) resulted in the|following error `[[{CURLERR}]]`. "
+    "Specify a valid rpcProvider by editing|`$CONFIG`.";
 
 //-------------------------------------------------------------------------
-static const char* STR_CURLRESEMPTY = "The Ethereum node returned an empty response.";
-
-static const char* STR_ERROR_NODEREQUIRED =
-    "Your RPC endpoint ([RPC]) was not found. To fix this problem edit\n"
-    "  a file called `$CONFIG` and add an\n"
-    "  entry under the `[settings]` group specifying the `rpcProvider=<your-rpc-provider>`.";
+static const char* STR_ERROR_CURLEMPTY =
+    "The Ethereum node (`[{PROVIDER}]`) returned an empty response.";
 
 //-------------------------------------------------------------------------
-void displayCurlError(const string_q& msg, const string_q& val) {
-    errorMessage(substitute(substitute(msg, "[VAL]", val), "[RPC]", getCurlContext()->baseURL));
+void curlErrorAndExit(const string_q& msgIn, const string_q& curlErr, const string& method, const string& params) {
+    string_q errMsg = msgIn;
+    replaceAll(errMsg, "[{METHOD}]", method);
+    replaceAll(errMsg, "[{PARAMS}]", params);
+    replaceAll(errMsg, "[{CURLERR}]", curlErr);
+    replaceAll(errMsg, "[{PROVIDER}]", getCurlContext()->baseURL);
+
+    errorMessage(errMsg);
     quickQuitHandler(EXIT_FAILURE);
+
     return;
 }
 
@@ -244,13 +248,12 @@ string_q CCurlContext::perform(const string_q& method, const string_q& params, b
     CURLcode res = curl_easy_perform(curlHandle);
     if (res != CURLE_OK && !earlyAbort) {
         PRINT("CURL returned an error: ! CURLE_OK")
-        displayCurlError(substitute(substitute(STR_CURLERROR, "[{METHOD}]", method), "[{PARAMS}]", params),
-                         curl_easy_strerror(res));
+        curlErrorAndExit(STR_ERROR_CURLERR, curl_easy_strerror(res), method, params);
     }
 
     PRINT("CURL returned CURLE_OK")
     if (result.empty()) {
-        displayCurlError(STR_CURLRESEMPTY);
+        curlErrorAndExit(STR_ERROR_CURLEMPTY, "", method, params);
 
     } else if (contains(result, "error")) {
         if (reportErrors) {
@@ -285,10 +288,12 @@ void checkNodeRequired(void) {
     if (!getCurlContext()->nodeRequired)
         return;
 
+    // Note -- this only tests if it's running. It does not quit on failure
     if (isNodeRunning())
         return;
 
-    displayCurlError(STR_ERROR_NODEREQUIRED);
+    // This reports the error and quits
+    curlErrorAndExit(STR_ERROR_CURLERR, "Could not connect to server", "web3_clientVersion", "");
 }
 
 //-------------------------------------------------------------------------
