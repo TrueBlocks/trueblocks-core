@@ -72,7 +72,7 @@ void COptions::writeOpenApiFile(void) {
             for (auto param : params) {
                 string_q p = STR_PATH_PARAM;
                 replace(p, "[{NAME}]", param.command);
-                replace(p, "[{IN}]", (param.option_kind == "positional" ? "query" : "query"));
+                replace(p, "[{IN}]", (param.option_type == "positional" ? "query" : "query"));
                 replace(p, "[{DESCR}]", param.swagger_descr);
                 replace(p, "[{REQ}]", param.is_required ? "true" : "false");
                 replace(p, "[{TYPE}]", getTypeStr(param, "          "));
@@ -162,7 +162,7 @@ void COptions::writeApiFile(void) {
         routeStream << "  \"" << route.route << "\": {" << endl;
         bool firstCmd = true;
         for (auto command : route.commands) {
-            if (command.option_kind != "note") {
+            if (command.option_type != "note") {
                 counter.cmdCount++;
                 if (command.hotkey.empty())
                     command.hotkey = "<not-set>";
@@ -226,13 +226,13 @@ void COptions::select_commands(const string_q& cmd, CCommandOptionArray& cmds, C
                                CCommandOptionArray& errors, CCommandOptionArray& descr) {
     for (auto option : optionArray) {
         if (option.api_route == cmd) {
-            if (option.option_kind == "description") {
+            if (option.option_type == "description") {
                 descr.push_back(option);
-            } else if (option.option_kind == "note") {
+            } else if (option.option_type == "note") {
                 notes.push_back(option);
-            } else if (option.option_kind == "error") {
+            } else if (option.option_type == "error") {
                 errors.push_back(option);
-            } else if (option.option_kind != "deprecated") {
+            } else if (option.option_type != "deprecated") {
                 cmds.push_back(option);
             }
         }

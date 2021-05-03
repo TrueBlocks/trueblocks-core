@@ -1,4 +1,4 @@
-num,group,tags,api_route,tool,command,hotkey,def_val,is_required,customizeable,core_visible,docs_visible,generate,option_kind,data_type,description
+num,group,tags,api_route,tool,command,hotkey,def_val,is_required,is_customizable,is_visible,is_visible_docs,generate,option_type,data_type,description
 
 10200,apps,Accounts,export,acctExport,addrs,,,true,false,true,true,local,positional,list<addr>,one or more addresses (0x...) to export
 10205,apps,Accounts,export,acctExport,topics,,,false,false,true,true,header,positional,list<topic>,filter by one or more logs topics (only for --logs option)

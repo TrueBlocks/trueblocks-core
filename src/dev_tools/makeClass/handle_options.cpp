@@ -106,19 +106,19 @@ bool COptions::handle_options(void) {
                                                                                : "Int"));
                 // clang-format on
 
-                if (option.option_kind == "switch") {
+                if (option.option_type == "switch") {
                     generate_switch(option);
 
-                } else if (option.option_kind == "toggle") {
+                } else if (option.option_type == "toggle") {
                     generate_toggle(option);
 
-                } else if (option.option_kind == "flag") {
+                } else if (option.option_type == "flag") {
                     generate_flag(option);
 
-                } else if (option.option_kind == "deprecated") {
+                } else if (option.option_type == "deprecated") {
                     generate_deprecated(option);
 
-                } else if (option.option_kind == "positional") {
+                } else if (option.option_type == "positional") {
                     generate_positional(option);
                 }
             }
@@ -421,7 +421,7 @@ void COptions::generate_positional(const CCommandOption& option) {
 
 //---------------------------------------------------------------------------------------------------
 void COptions::generate_deprecated(const CCommandOption& option) {
-    if (option.option_kind == "deprecated") {
+    if (option.option_type == "deprecated") {
         local_stream << option.Format(STR_DEFAULT_ASSIGNMENT) << endl;
         auto_stream << option.Format(STR_AUTO_FLAG_UINT) << endl;
     }

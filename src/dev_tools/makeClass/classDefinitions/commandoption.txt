@@ -2,7 +2,7 @@
 class = CCommandOption
 fields = string num|\
         string group|\
-        string tags|\
+        string api_group|\
         string api_route|\
         string tool|\
         string command|\
@@ -10,10 +10,10 @@ fields = string num|\
         string def_val|\
         bool is_required|\
         bool is_customizable|\
-        bool core_visible|\
-        bool docs_visible|\
+        bool is_visible|\
+        bool is_visible_docs|\
         string generate|\
-        string option_kind|\
+        string option_type|\
         string data_type|\
         string real_type|\
         string description

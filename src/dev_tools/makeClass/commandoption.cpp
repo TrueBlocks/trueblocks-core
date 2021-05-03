@@ -74,6 +74,9 @@ string_q CCommandOption::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'a':
+            if (fieldName % "api_group") {
+                return api_group;
+            }
             if (fieldName % "api_route") {
                 return api_route;
             }
@@ -82,16 +85,10 @@ string_q CCommandOption::getValueByName(const string_q& fieldName) const {
             if (fieldName % "command") {
                 return command;
             }
-            if (fieldName % "core_visible") {
-                return bool_2_Str(core_visible);
-            }
             break;
         case 'd':
             if (fieldName % "def_val") {
                 return def_val;
-            }
-            if (fieldName % "docs_visible") {
-                return bool_2_Str(docs_visible);
             }
             if (fieldName % "data_type") {
                 return data_type;
@@ -120,6 +117,12 @@ string_q CCommandOption::getValueByName(const string_q& fieldName) const {
             if (fieldName % "is_customizable") {
                 return bool_2_Str(is_customizable);
             }
+            if (fieldName % "is_visible") {
+                return bool_2_Str(is_visible);
+            }
+            if (fieldName % "is_visible_docs") {
+                return bool_2_Str(is_visible_docs);
+            }
             break;
         case 'n':
             if (fieldName % "num") {
@@ -127,8 +130,8 @@ string_q CCommandOption::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 'o':
-            if (fieldName % "option_kind") {
-                return option_kind;
+            if (fieldName % "option_type") {
+                return option_type;
             }
             break;
         case 'r':
@@ -137,9 +140,6 @@ string_q CCommandOption::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 't':
-            if (fieldName % "tags") {
-                return tags;
-            }
             if (fieldName % "tool") {
                 return tool;
             }
@@ -165,6 +165,10 @@ bool CCommandOption::setValueByName(const string_q& fieldNameIn, const string_q&
 
     switch (tolower(fieldName[0])) {
         case 'a':
+            if (fieldName % "api_group") {
+                api_group = fieldValue;
+                return true;
+            }
             if (fieldName % "api_route") {
                 api_route = fieldValue;
                 return true;
@@ -175,18 +179,10 @@ bool CCommandOption::setValueByName(const string_q& fieldNameIn, const string_q&
                 command = fieldValue;
                 return true;
             }
-            if (fieldName % "core_visible") {
-                core_visible = str_2_Bool(fieldValue);
-                return true;
-            }
             break;
         case 'd':
             if (fieldName % "def_val") {
                 def_val = fieldValue;
-                return true;
-            }
-            if (fieldName % "docs_visible") {
-                docs_visible = str_2_Bool(fieldValue);
                 return true;
             }
             if (fieldName % "data_type") {
@@ -223,6 +219,14 @@ bool CCommandOption::setValueByName(const string_q& fieldNameIn, const string_q&
                 is_customizable = str_2_Bool(fieldValue);
                 return true;
             }
+            if (fieldName % "is_visible") {
+                is_visible = str_2_Bool(fieldValue);
+                return true;
+            }
+            if (fieldName % "is_visible_docs") {
+                is_visible_docs = str_2_Bool(fieldValue);
+                return true;
+            }
             break;
         case 'n':
             if (fieldName % "num") {
@@ -231,8 +235,8 @@ bool CCommandOption::setValueByName(const string_q& fieldNameIn, const string_q&
             }
             break;
         case 'o':
-            if (fieldName % "option_kind") {
-                option_kind = fieldValue;
+            if (fieldName % "option_type") {
+                option_type = fieldValue;
                 return true;
             }
             break;
@@ -243,10 +247,6 @@ bool CCommandOption::setValueByName(const string_q& fieldNameIn, const string_q&
             }
             break;
         case 't':
-            if (fieldName % "tags") {
-                tags = fieldValue;
-                return true;
-            }
             if (fieldName % "tool") {
                 tool = fieldValue;
                 return true;
@@ -279,7 +279,7 @@ bool CCommandOption::Serialize(CArchive& archive) {
     // EXISTING_CODE
     archive >> num;
     archive >> group;
-    archive >> tags;
+    archive >> api_group;
     archive >> api_route;
     archive >> tool;
     archive >> command;
@@ -287,10 +287,10 @@ bool CCommandOption::Serialize(CArchive& archive) {
     archive >> def_val;
     archive >> is_required;
     archive >> is_customizable;
-    archive >> core_visible;
-    archive >> docs_visible;
+    archive >> is_visible;
+    archive >> is_visible_docs;
     archive >> generate;
-    archive >> option_kind;
+    archive >> option_type;
     archive >> data_type;
     archive >> real_type;
     archive >> description;
@@ -307,7 +307,7 @@ bool CCommandOption::SerializeC(CArchive& archive) const {
     // EXISTING_CODE
     archive << num;
     archive << group;
-    archive << tags;
+    archive << api_group;
     archive << api_route;
     archive << tool;
     archive << command;
@@ -315,10 +315,10 @@ bool CCommandOption::SerializeC(CArchive& archive) const {
     archive << def_val;
     archive << is_required;
     archive << is_customizable;
-    archive << core_visible;
-    archive << docs_visible;
+    archive << is_visible;
+    archive << is_visible_docs;
     archive << generate;
-    archive << option_kind;
+    archive << option_type;
     archive << data_type;
     archive << real_type;
     archive << description;
@@ -360,7 +360,7 @@ void CCommandOption::registerClass(void) {
     ADD_FIELD(CCommandOption, "cname", T_TEXT, ++fieldNum);
     ADD_FIELD(CCommandOption, "num", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CCommandOption, "group", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CCommandOption, "tags", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CCommandOption, "api_group", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CCommandOption, "api_route", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CCommandOption, "tool", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CCommandOption, "command", T_TEXT | TS_OMITEMPTY, ++fieldNum);
@@ -368,10 +368,10 @@ void CCommandOption::registerClass(void) {
     ADD_FIELD(CCommandOption, "def_val", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CCommandOption, "is_required", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CCommandOption, "is_customizable", T_BOOL | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CCommandOption, "core_visible", T_BOOL | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CCommandOption, "docs_visible", T_BOOL | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CCommandOption, "is_visible", T_BOOL | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CCommandOption, "is_visible_docs", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CCommandOption, "generate", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CCommandOption, "option_kind", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CCommandOption, "option_type", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CCommandOption, "data_type", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CCommandOption, "real_type", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CCommandOption, "description", T_TEXT | TS_OMITEMPTY, ++fieldNum);
@@ -396,7 +396,7 @@ string_q nextCommandoptionChunk_custom(const string_q& fieldIn, const void* data
             // EXISTING_CODE
             case 'd':
                 if (fieldIn % "datatype") {
-                    if (com->option_kind == "switch" || com->option_kind == "toggle")
+                    if (com->option_type == "switch" || com->option_type == "toggle")
                         return "";
                     return (startsWith(com->data_type, "opt_") ? "\"+" + com->data_type + "+\"" : com->data_type);
                 }
@@ -407,22 +407,22 @@ string_q nextCommandoptionChunk_custom(const string_q& fieldIn, const void* data
                     if (com->is_required)
                         ret += ("|OPT_REQUIRED");
 
-                    if (!(com->core_visible))
+                    if (!(com->is_visible))
                         ret += ("|OPT_HIDDEN");
 
-                    if (com->option_kind == "switch")
+                    if (com->option_type == "switch")
                         ret += ("|OPT_SWITCH");
-                    else if (com->option_kind == "toggle")
+                    else if (com->option_type == "toggle")
                         ret += ("|OPT_TOGGLE");
-                    else if (com->option_kind == "flag")
+                    else if (com->option_type == "flag")
                         ret += ("|OPT_FLAG");
-                    else if (startsWith(com->option_kind, "deprecated"))
+                    else if (startsWith(com->option_type, "deprecated"))
                         ret += ("|OPT_DEPRECATED");
-                    else if (com->option_kind == "positional")
+                    else if (com->option_type == "positional")
                         ret += ("|OPT_POSITIONAL");
-                    else if (com->option_kind == "note")
+                    else if (com->option_type == "note")
                         ret = com->description;
-                    else if (com->option_kind == "error")
+                    else if (com->option_type == "error")
                         ret = com->description;
                     else
                         ret += ("|OPT_DESCRIPTION");
@@ -478,7 +478,7 @@ CCommandOption::CCommandOption(const string_q& line) {
     if (parts.size() > 1)
         group = parts[1];
     if (parts.size() > 2)
-        tags = parts[2];
+        api_group = parts[2];
     if (parts.size() > 3)
         api_route = parts[3];
     if (parts.size() > 4)
@@ -494,13 +494,13 @@ CCommandOption::CCommandOption(const string_q& line) {
     if (parts.size() > 9)
         is_customizable = str_2_Bool(parts[9]);
     if (parts.size() > 10)
-        core_visible = str_2_Bool(parts[10]);
+        is_visible = str_2_Bool(parts[10]);
     if (parts.size() > 11)
-        docs_visible = str_2_Bool(parts[11]);
+        is_visible_docs = str_2_Bool(parts[11]);
     if (parts.size() > 12)
         generate = parts[12];
     if (parts.size() > 13)
-        option_kind = parts[13];
+        option_type = parts[13];
     if (parts.size() > 14)
         data_type = parts[14];
     if (parts.size() > 15)
@@ -510,7 +510,7 @@ CCommandOption::CCommandOption(const string_q& line) {
         def_val = "\"" + def_val + "\"";
 
     description = substitute(description, "[{DEF}]",
-                             (option_kind == "toggle" ? (def_val == "true" ? "'on'" : "'off'") : def_val));
+                             (option_type == "toggle" ? (def_val == "true" ? "'on'" : "'off'") : def_val));
     if (def_val.empty() && !generate.empty()) {
         if (data_type == "<boolean>") {
             def_val = "false";
@@ -520,12 +520,12 @@ CCommandOption::CCommandOption(const string_q& line) {
             def_val = "NOPOS";
         }
     }
-    if (option_kind == "description") {
+    if (option_type == "description") {
         swagger_descr = trim(substitute(description, "|", "\n        "));
-    } else if (option_kind != "note" && option_kind != "error") {
+    } else if (option_type != "note" && option_type != "error") {
         swagger_descr = trim(substitute(description, "|", "\n          "));
     }
-    if (option_kind != "note" && option_kind != "error") {
+    if (option_type != "note" && option_type != "error") {
         description = trim(substitute(description, "|", " "));
     }
 
@@ -539,8 +539,8 @@ CCommandOption::CCommandOption(const string_q& line) {
     isUint32 = contains(data_type, "uint32");
     isUint64 = contains(data_type, "uint64");
     isDouble = contains(data_type, "double");
-    isNote = option_kind == "note";
-    isError = option_kind == "error";
+    isNote = option_type == "note";
+    isError = option_type == "error";
 
     real_type = substituteAny(substitute(data_type, "boolean", "bool"), "<>", "");
     if (contains(data_type, "enum"))
@@ -559,13 +559,13 @@ void CCommandOption::verifyOptions(CStringArray& warnings) {
     };
     bool valid_kind = false;
     for (auto kind : validKinds) {
-        if (kind == option_kind) {
+        if (kind == option_type) {
             valid_kind = true;
         }
     }
     ostringstream warnstream;
     if (!valid_kind)
-        warnstream << "Skipping option kind '" << option_kind << "' for option '" << command << "'|";
+        warnstream << "Skipping option kind '" << option_type << "' for option '" << command << "'|";
 
     // Check valid data types
     CStringArray validTypes = {
@@ -585,7 +585,7 @@ void CCommandOption::verifyOptions(CStringArray& warnings) {
         if (startsWith(data_type, "list"))
             valid_type = true;
     }
-    if (!valid_type && (option_kind == "description" || option_kind == "note" || option_kind == "error") &&
+    if (!valid_type && (option_type == "description" || option_type == "note" || option_type == "error") &&
         data_type.empty())
         valid_type = true;
     if (!valid_type && startsWith(data_type, "opt_"))
@@ -593,13 +593,13 @@ void CCommandOption::verifyOptions(CStringArray& warnings) {
 
     if (!valid_type)
         warnstream << "Unknown type '" << data_type << "' for option '" << command << "'|";
-    if (option_kind == "description" && !endsWith(description, ".") && !endsWith(description, ":"))
+    if (option_type == "description" && !endsWith(description, ".") && !endsWith(description, ":"))
         warnstream << "Description '" << description << "' should end with a period or colon.|";
-    if (option_kind == "note" && !endsWith(description, ".") && !endsWith(description, ":"))
+    if (option_type == "note" && !endsWith(description, ".") && !endsWith(description, ":"))
         warnstream << "Note '" << description << "' should end with a period or colon.|";
-    if (option_kind == "error" && !endsWith(description, ".") && !endsWith(description, ":"))
+    if (option_type == "error" && !endsWith(description, ".") && !endsWith(description, ":"))
         warnstream << "Error string '" << description << "' should end with a period or colon.|";
-    if ((option_kind != "description" && option_kind != "note" && option_kind != "error") && endsWith(description, "."))
+    if ((option_type != "description" && option_type != "note" && option_type != "error") && endsWith(description, "."))
         warnstream << "Option '" << description << "' should not end with a period.|";
     if (isReserved(command))
         warnstream << "Option '" << command << "' is a reserved word.|";
@@ -609,8 +609,8 @@ void CCommandOption::verifyOptions(CStringArray& warnings) {
 
 //---------------------------------------------------------------------------------------------------
 void CCommandOption::verifyHotkey(CStringArray& warnings) {
-    if (hotkey.empty() || contains(option_kind, "positional") || contains(option_kind, "description") ||
-        contains(option_kind, "note") || !contains(option_kind, "error")) {
+    if (hotkey.empty() || contains(option_type, "positional") || contains(option_type, "description") ||
+        contains(option_type, "note") || !contains(option_type, "error")) {
         return;
     }
 
