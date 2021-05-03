@@ -216,8 +216,7 @@ static const char* STR_ERROR_CURLERR =
     "Specify a valid rpcProvider by editing|`$CONFIG`.";
 
 //-------------------------------------------------------------------------
-static const char* STR_ERROR_CURLEMPTY =
-    "The Ethereum node (`[{PROVIDER}]`) returned an empty response.";
+static const char* STR_ERROR_CURLEMPTY = "The Ethereum node (`[{PROVIDER}]`) returned an empty response.";
 
 //-------------------------------------------------------------------------
 void curlErrorAndExit(const string_q& msgIn, const string_q& curlErr, const string& method, const string& params) {
