@@ -1,6 +1,35 @@
 [version]
+# Do not edit this value
 current = "0.5.5-alpha"
 
 [settings]
+# The 'rpcProvider' value points to a valid RPC endpoint. TrueBlocks will not
+# work without it. If you're running your own local node, this will default to
+# http://localhost:8545, however in many cases, you will need to point this
+# elsewhere such as to Infura or QuickNodes, or (if the world is just) your
+# dAppNode.
 rpcProvider = "http://localhost:8545"
+
+# ******
+# The following descriptions reference a value called $(configPath). This value
+# is not customizable and defaults to $HOME/Library/Application Support/TrueBlocks
+# on Mac and $HOME/.local/share/trueblocks on Linux.
+# ******
+
+# The 'cachePath' points to the location of the TrueBlocks cache. Data from
+# the node will be cached only if you query it directly (lazy extraction). 
+# The cache stores ABI files, named addresses, block data, transaction data,
+# traces, logs, etc. Some items are cached by default (ABIs, names). Others
+# (such as blocks, transactions, and traces) are only cached if you specify 
+# so via the command line.
+#
+# This value defaults to "$(configPath)/cache/". If the value is empty or 
+# "<NOT_SET>", it will default to the above.
 cachePath = "<NOT_SET>"
+
+# The 'indexPath' value defaults to "$(configPath)/unchained/". If you wish
+# to modify it, uncomment the line below and set it to your own path. By default,
+# the unchained index (which is what we call the index of appearances) takes up
+# about 2 GB on of disc space, however if you build the entire index, it may take
+# up to 80 GB. You may wish to point this value to an external drive in that case.
+# indexPath = "<NOT_SET>"
