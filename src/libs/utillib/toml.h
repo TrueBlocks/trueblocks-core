@@ -104,11 +104,14 @@ class CToml : public CSharedResource {
     void setConfigBool(const string_q& section, const string_q& key, bool value);
 
     bool writeFile(void);
-    bool readFile(const string_q& filename);
     void mergeFile(CToml* tomlIn);
 
     bool isBackLevel(void) const;
     friend ostream& operator<<(ostream& os, const CToml& tomlIn);
+    friend const CToml* getGlobalConfig(const string_q& name);
+
+  private:
+    bool readFile(const string_q& filename);
 };
 
 //-------------------------------------------------------------------------
