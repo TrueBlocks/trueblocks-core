@@ -74,7 +74,8 @@ class COptions : public COptionsBase {
     timestamp_t lastLint;
     ostringstream option_stream, init_stream, local_stream, auto_stream;
     ostringstream header_stream, notes_stream, errors_stream, debug_stream;
-    ostringstream apiStream, routeStream, goRouteStream;
+    ostringstream routeStream;
+    ostringstream goCallStream, goRouteStream;
     void clearStreams(void) {
         auto_stream.str("");
         option_stream.str("");
@@ -84,7 +85,7 @@ class COptions : public COptionsBase {
         errors_stream.str("");
         header_stream.str("");
         debug_stream.str("");
-        apiStream.str("");
+        goCallStream.str("");
         routeStream.str("");
         goRouteStream.str("");
 
@@ -96,7 +97,7 @@ class COptions : public COptionsBase {
         errors_stream.clear();
         header_stream.clear();
         debug_stream.clear();
-        apiStream.clear();
+        goCallStream.clear();
         routeStream.clear();
         goRouteStream.clear();
 
@@ -130,7 +131,7 @@ class COptions : public COptionsBase {
     void generate_deprecated(const CCommandOption& option);
 
     bool writeCode(const string_q& fn);
-    void writeApiFile(void);
+    void old_writeJSApiFile(void);
     void writeOpenApiFile(void);
 
     void options_2_Commands(CCommands& commands);

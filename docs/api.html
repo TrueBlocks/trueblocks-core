@@ -3,15 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <title>Swagger UI</title>
-    <link
-      href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Source+Code+Pro:300,600|Titillium+Web:400,600,700"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/3.24.2/swagger-ui.css"
-    />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Source+Code+Pro:300,600|Titillium+Web:400,600,700" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/3.24.2/swagger-ui.css" />
     <style>
       html {
         box-sizing: border-box;
@@ -177,8 +170,7 @@
                   {
                     name: 'max_traces',
                     in: 'query',
-                    description:
-                      'if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250)',
+                    description: 'if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250)',
                     required: false,
                     style: 'form',
                     explode: true,
@@ -205,8 +197,7 @@
                   {
                     name: 'factory',
                     in: 'query',
-                    description:
-                      'scan for contract creations from the given address(es) and report address of those contracts',
+                    description: 'scan for contract creations from the given address(es) and report address of those contracts',
                     required: false,
                     style: 'form',
                     explode: true,
@@ -215,8 +206,7 @@
                   {
                     name: 'emitter',
                     in: 'query',
-                    description:
-                      'available for --logs option only, export will only export if the address emitted the event',
+                    description: 'available for --logs option only, export will only export if the address emitted the event',
                     required: false,
                     style: 'form',
                     explode: true,
@@ -271,9 +261,7 @@
                 responses: {
                   '200': {
                     description: 'status of the scraper',
-                    content: {
-                      'application/json': {schema: {type: 'array', items: {$ref: '#/components/schemas/response'}}},
-                    },
+                    content: { 'application/json': {schema: {type: 'array', items: {$ref: '#/components/schemas/response'}}} },
                   },
                   '400': {description: 'bad input parameter'},
                 },
@@ -316,8 +304,7 @@
                   {
                     name: 'blooms',
                     in: 'query',
-                    description:
-                      'process query by first using bloom filter and, if hit, downloading index chunk from remote',
+                    description: 'process query by first using bloom filter and, if hit, downloading index chunk from remote',
                     required: false,
                     style: 'form',
                     explode: true,
@@ -345,10 +332,7 @@
                 responses: {
                   '200': {
                     description: 'status of the scraper',
-                    content: {
-                      'application/json': {schema: {type: 'array', items: {$ref: '#/components/schemas/response'}}},
-                    },
-                  },
+                    content: { 'application/json': {schema: {type: 'array', items: {$ref: '#/components/schemas/response'}}} }, },
                   '400': {description: 'bad input parameter'},
                 },
               },
@@ -371,9 +355,7 @@
                 responses: {
                   '200': {
                     description: 'status of the scraper',
-                    content: {
-                      'application/json': {schema: {type: 'array', items: {$ref: '#/components/schemas/response'}}},
-                    },
+                    content: { 'application/json': {schema: {type: 'array', items: {$ref: '#/components/schemas/response'}}} },
                   },
                   '400': {description: 'bad input parameter'},
                 },
@@ -398,8 +380,7 @@
                   {
                     name: 'expand',
                     in: 'query',
-                    description:
-                      'expand search to include all fields (default searches name, address, and symbol only)',
+                    description: 'expand search to include all fields (default searches name, address, and symbol only)',
                     required: false,
                     style: 'form',
                     explode: true,
@@ -490,9 +471,7 @@
                 responses: {
                   '200': {
                     description: 'status of the scraper',
-                    content: {
-                      'application/json': {schema: {type: 'array', items: {$ref: '#/components/schemas/response'}}},
-                    },
+                    content: { 'application/json': {schema: {type: 'array', items: {$ref: '#/components/schemas/response'}}} },
                   },
                   '400': {description: 'bad input parameter'},
                 },
@@ -516,9 +495,7 @@
                 responses: {
                   '200': {
                     description: 'status of the scraper',
-                    content: {
-                      'application/json': {schema: {type: 'array', items: {$ref: '#/components/schemas/response'}}},
-                    },
+                    content: { 'application/json': {schema: {type: 'array', items: {$ref: '#/components/schemas/response'}}} },
                   },
                   '400': {description: 'bad input parameter'},
                 },
@@ -543,8 +520,7 @@
                   {
                     name: 'canonical',
                     in: 'query',
-                    description:
-                      'convert all types to their canonical represenation and remove all spaces from display',
+                    description: 'convert all types to their canonical represenation and remove all spaces from display',
                     required: false,
                     style: 'form',
                     explode: true,
@@ -581,9 +557,7 @@
                 responses: {
                   '200': {
                     description: 'status of the scraper',
-                    content: {
-                      'application/json': {schema: {type: 'array', items: {$ref: '#/components/schemas/response'}}},
-                    },
+                    content: { 'application/json': {schema: {type: 'array', items: {$ref: '#/components/schemas/response'}}} },
                   },
                   '400': {description: 'bad input parameter'},
                 },
@@ -607,9 +581,7 @@
                 responses: {
                   '200': {
                     description: 'status of the scraper',
-                    content: {
-                      'application/json': {schema: {type: 'array', items: {$ref: '#/components/schemas/response'}}},
-                    },
+                    content: { 'application/json': {schema: {type: 'array', items: {$ref: '#/components/schemas/response'}}} },
                   },
                   '400': {description: 'bad input parameter'},
                 },
@@ -629,12 +601,7 @@
                     required: false,
                     style: 'form',
                     explode: true,
-                    schema: {
-                      type: 'array',
-                      items: {
-                        type: 'string',
-                        enum: ['index', 'monitors', 'collections', 'names', 'abis', 'caches', 'some', 'all'],
-                      },
+                    schema: { type: 'array', items: {type: 'string', enum: ['index', 'monitors', 'collections', 'names', 'abis', 'caches', 'some', 'all'] }
                     },
                   },
                   {
@@ -653,10 +620,7 @@
                     required: false,
                     style: 'form',
                     explode: true,
-                    schema: {
-                      type: 'array',
-                      items: {type: 'string', enum: ['blocks', 'transactions', 'traces', 'slurps', 'prices', 'all']},
-                    },
+                    schema: { type: 'array', items: {type: 'string', enum: ['blocks', 'transactions', 'traces', 'slurps', 'prices', 'all']}},
                   },
                   {
                     name: 'depth',
@@ -725,9 +689,7 @@
                 responses: {
                   '200': {
                     description: 'status of the scraper',
-                    content: {
-                      'application/json': {schema: {type: 'array', items: {$ref: '#/components/schemas/response'}}},
-                    },
+                    content: { 'application/json': {schema: {type: 'array', items: {$ref: '#/components/schemas/response'}}} },
                   },
                   '400': {description: 'bad input parameter'},
                 },
@@ -747,7 +709,7 @@
                     required: true,
                     style: 'form',
                     explode: true,
-                    schema: {type: 'string', enum: ['run', 'quit', 'pause', 'restart']},
+                    schema: { type: 'string', enum: ['run', 'quit', 'pause', 'restart'] }
                   },
                   {
                     name: 'tool',
@@ -756,7 +718,7 @@
                     required: false,
                     style: 'form',
                     explode: true,
-                    schema: {type: 'array', items: {type: 'string', enum: ['monitors', 'index', 'none', 'both']}},
+                    schema: { type: 'array', items: {type: 'string', enum: ['monitors', 'index', 'none', 'both']}},
                   },
                   {
                     name: 'n_blocks',
@@ -816,9 +778,7 @@
                 responses: {
                   '200': {
                     description: 'status of the scraper',
-                    content: {
-                      'application/json': {schema: {type: 'array', items: {$ref: '#/components/schemas/response'}}},
-                    },
+                    content: { 'application/json': {schema: {type: 'array', items: {$ref: '#/components/schemas/response'}}} },
                   },
                   '400': {description: 'bad input parameter'},
                 },
@@ -916,9 +876,7 @@
                 responses: {
                   '200': {
                     description: 'status of the scraper',
-                    content: {
-                      'application/json': {schema: {type: 'array', items: {$ref: '#/components/schemas/response'}}},
-                    },
+                    content: { 'application/json': {schema: {type: 'array', items: {$ref: '#/components/schemas/response'}}} },
                   },
                   '400': {description: 'bad input parameter'},
                 },
@@ -934,8 +892,7 @@
                   {
                     name: 'transactions',
                     in: 'query',
-                    description:
-                      'a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)',
+                    description: 'a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)',
                     required: true,
                     style: 'form',
                     explode: true,
@@ -981,9 +938,7 @@
                 responses: {
                   '200': {
                     description: 'status of the scraper',
-                    content: {
-                      'application/json': {schema: {type: 'array', items: {$ref: '#/components/schemas/response'}}},
-                    },
+                    content: { 'application/json': {schema: {type: 'array', items: {$ref: '#/components/schemas/response'}}} },
                   },
                   '400': {description: 'bad input parameter'},
                 },
@@ -999,8 +954,7 @@
                   {
                     name: 'transactions',
                     in: 'query',
-                    description:
-                      'a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)',
+                    description: 'a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)',
                     required: true,
                     style: 'form',
                     explode: true,
@@ -1028,9 +982,7 @@
                 responses: {
                   '200': {
                     description: 'status of the scraper',
-                    content: {
-                      'application/json': {schema: {type: 'array', items: {$ref: '#/components/schemas/response'}}},
-                    },
+                    content: { 'application/json': {schema: {type: 'array', items: {$ref: '#/components/schemas/response'}}} },
                   },
                   '400': {description: 'bad input parameter'},
                 },
@@ -1046,8 +998,7 @@
                   {
                     name: 'transactions',
                     in: 'query',
-                    description:
-                      'a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)',
+                    description: 'a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)',
                     required: true,
                     style: 'form',
                     explode: true,
@@ -1066,9 +1017,7 @@
                 responses: {
                   '200': {
                     description: 'status of the scraper',
-                    content: {
-                      'application/json': {schema: {type: 'array', items: {$ref: '#/components/schemas/response'}}},
-                    },
+                    content: { 'application/json': {schema: {type: 'array', items: {$ref: '#/components/schemas/response'}}} },
                   },
                   '400': {description: 'bad input parameter'},
                 },
@@ -1084,8 +1033,7 @@
                   {
                     name: 'transactions',
                     in: 'query',
-                    description:
-                      'a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)',
+                    description: 'a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)',
                     required: true,
                     style: 'form',
                     explode: true,
@@ -1121,8 +1069,7 @@
                   {
                     name: 'max_traces',
                     in: 'query',
-                    description:
-                      'if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250)',
+                    description: 'if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250)',
                     required: false,
                     style: 'form',
                     explode: true,
@@ -1131,8 +1078,7 @@
                   {
                     name: 'filter',
                     in: 'query',
-                    description:
-                      'Call trace_filter with bang-seperated string fromBlk!toBlk[!fromAddr[!toAddr[!after[!count]]]]',
+                    description: 'Call trace_filter with bang-seperated string fromBlk!toBlk[!fromAddr[!toAddr[!after[!count]]]]',
                     required: false,
                     style: 'form',
                     explode: true,
@@ -1142,9 +1088,7 @@
                 responses: {
                   '200': {
                     description: 'status of the scraper',
-                    content: {
-                      'application/json': {schema: {type: 'array', items: {$ref: '#/components/schemas/response'}}},
-                    },
+                    content: { 'application/json': {schema: {type: 'array', items: {$ref: '#/components/schemas/response'}}} },
                   },
                   '400': {description: 'bad input parameter'},
                 },
@@ -1197,9 +1141,7 @@
                 responses: {
                   '200': {
                     description: 'status of the scraper',
-                    content: {
-                      'application/json': {schema: {type: 'array', items: {$ref: '#/components/schemas/response'}}},
-                    },
+                    content: { 'application/json': {schema: {type: 'array', items: {$ref: '#/components/schemas/response'}}} },
                   },
                   '400': {description: 'bad input parameter'},
                 },
@@ -1224,8 +1166,7 @@
                   {
                     name: 'blocks',
                     in: 'query',
-                    description:
-                      "an optional list of one or more blocks at which to report balances, defaults to 'latest'",
+                    description: "an optional list of one or more blocks at which to report balances, defaults to 'latest'",
                     required: false,
                     style: 'form',
                     explode: true,
@@ -1238,12 +1179,7 @@
                     required: false,
                     style: 'form',
                     explode: true,
-                    schema: {
-                      type: 'array',
-                      items: {
-                        type: 'string',
-                        enum: ['none', 'some', 'all', 'balance', 'nonce', 'code', 'storage', 'deployed', 'accttype'],
-                      },
+                    schema: { type: 'array',items: {type: 'string', enum: ['none', 'some', 'all', 'balance', 'nonce', 'code', 'storage', 'deployed', 'accttype'] }
                     },
                   },
                   {
@@ -1277,9 +1213,7 @@
                 responses: {
                   '200': {
                     description: 'status of the scraper',
-                    content: {
-                      'application/json': {schema: {type: 'array', items: {$ref: '#/components/schemas/response'}}},
-                    },
+                    content: { 'application/json': {schema: {type: 'array', items: {$ref: '#/components/schemas/response'}}} },
                   },
                   '400': {description: 'bad input parameter'},
                 },
@@ -1295,8 +1229,7 @@
                   {
                     name: 'addrs2',
                     in: 'query',
-                    description:
-                      'two or more addresses (0x...), the first is an ERC20 token, balances for the rest are reported',
+                    description: 'two or more addresses (0x...), the first is an ERC20 token, balances for the rest are reported',
                     required: true,
                     style: 'form',
                     explode: true,
@@ -1305,8 +1238,7 @@
                   {
                     name: 'blocks',
                     in: 'query',
-                    description:
-                      "an optional list of one or more blocks at which to report balances, defaults to 'latest'",
+                    description: "an optional list of one or more blocks at which to report balances, defaults to 'latest'",
                     required: false,
                     style: 'form',
                     explode: true,
@@ -1319,19 +1251,13 @@
                     required: false,
                     style: 'form',
                     explode: true,
-                    schema: {
-                      type: 'array',
-                      items: {
-                        type: 'string',
-                        enum: ['name', 'symbol', 'decimals', 'totalSupply', 'version', 'none', 'all'],
-                      },
+                    schema: { type: 'array',items: {type: 'string', enum: ['name', 'symbol', 'decimals', 'totalSupply', 'version', 'none', 'all'] }
                     },
                   },
                   {
                     name: 'by_acct',
                     in: 'query',
-                    description:
-                      'consider each address an ERC20 token except the last, whose balance is reported for each token',
+                    description: 'consider each address an ERC20 token except the last, whose balance is reported for each token',
                     required: false,
                     style: 'form',
                     explode: true,
@@ -1350,9 +1276,7 @@
                 responses: {
                   '200': {
                     description: 'status of the scraper',
-                    content: {
-                      'application/json': {schema: {type: 'array', items: {$ref: '#/components/schemas/response'}}},
-                    },
+                    content: { 'application/json': {schema: {type: 'array', items: {$ref: '#/components/schemas/response'}}} },
                   },
                   '400': {description: 'bad input parameter'},
                 },
@@ -1381,10 +1305,7 @@
                     required: false,
                     style: 'form',
                     explode: true,
-                    schema: {
-                      type: 'string',
-                      enum: ['5', '15', '30', '60', '120', '240', '1440', '10080', 'hourly', 'daily', 'weekly'],
-                    },
+                    schema: { type: 'string', enum: ['5', '15', '30', '60', '120', '240', '1440', '10080', 'hourly', 'daily', 'weekly'],},
                   },
                   {
                     name: 'pair',
@@ -1402,15 +1323,13 @@
                     required: false,
                     style: 'form',
                     explode: true,
-                    schema: {type: 'string', enum: ['poloniex', 'maker', 'tellor']},
+                    schema: { type: 'string', enum: ['poloniex', 'maker', 'tellor'] }
                   },
                 ],
                 responses: {
                   '200': {
                     description: 'status of the scraper',
-                    content: {
-                      'application/json': {schema: {type: 'array', items: {$ref: '#/components/schemas/response'}}},
-                    },
+                    content: { 'application/json': {schema: {type: 'array', items: {$ref: '#/components/schemas/response'}}} },
                   },
                   '400': {description: 'bad input parameter'},
                 },
@@ -1448,10 +1367,7 @@
                     required: false,
                     style: 'form',
                     explode: true,
-                    schema: {
-                      type: 'array',
-                      items: {type: 'string', enum: ['ext', 'int', 'token', 'nfts', 'miner', 'all']},
-                    },
+                    schema: { type: 'array',items: {type: 'string', enum: ['ext', 'int', 'token', 'nfts', 'miner', 'all'] } },
                   },
                   {
                     name: 'appearances',
@@ -1466,9 +1382,7 @@
                 responses: {
                   '200': {
                     description: 'status of the scraper',
-                    content: {
-                      'application/json': {schema: {type: 'array', items: {$ref: '#/components/schemas/response'}}},
-                    },
+                    content: { 'application/json': {schema: {type: 'array', items: {$ref: '#/components/schemas/response'}}} },
                   },
                   '400': {description: 'bad input parameter'},
                 },

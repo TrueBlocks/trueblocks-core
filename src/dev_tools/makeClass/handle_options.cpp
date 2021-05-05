@@ -48,7 +48,7 @@ bool COptions::handle_options(void) {
         cmdFile = "../src/cmd-line-options.csv";
 
     if (!fileExists(cmdFile))
-        return usage("Could not find cmd-line-options.csv file: " + cmdFile);
+        return usage("Could not find cmd-line-options.csv file at " + cmdFile);
 
     // read in and prepare the options for all tools
     CStringBoolMap tools;
@@ -172,6 +172,7 @@ bool COptions::handle_options(void) {
         if (warnings.size() > 0) {
             for (auto warning : warnings)
                 LOG_WARN(warning);
+
         } else {
             string_q fn = "../src/" + tool.first + "/options.cpp";
             if (tool.first == "/./")
@@ -181,8 +182,10 @@ bool COptions::handle_options(void) {
                 writeCode(fn);
             }
         }
+
         clearStreams();
     }
+
     if (test) {
         counter.nProcessed = 0;
         LOG_WARN("Testing only - no files written");
@@ -190,8 +193,7 @@ bool COptions::handle_options(void) {
     LOG_INFO(cYellow, "makeClass --options", cOff, " processed ", counter.nVisited, " files (changed ",
              counter.nProcessed, ").", string_q(40, ' '));
 
-    writeApiFile();
-    writeOpenApiFile();
+    old_writeJSApiFile();
 
     return true;
 }
@@ -447,7 +449,7 @@ bool COptions::writeCode(const string_q& fn) {
         converted = replaceCode(converted, "DEBUG_DISPLAY", debug_stream.str());
         replaceAll(converted, "    // clang-format on\n    // clang-format off\n", "");
     } else if (endsWith(fn, ".go")) {
-        converted = replaceCode(converted, "ROUTE_CODE", apiStream.str());
+        converted = replaceCode(converted, "ROUTE_CODE", goCallStream.str());
         converted = replaceCode(converted, "ROUTE_ITEMS", goRouteStream.str());
     } else {
         CStringArray tokens = {"_ERROR_DEFINES", "_CODE_DECLARE"};
