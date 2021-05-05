@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------
  * This source code is confidential proprietary information which is
- * copyright (c) 2018, 2021 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  * All Rights Reserved
  *------------------------------------------------------------------------*/
 package trueblocks
