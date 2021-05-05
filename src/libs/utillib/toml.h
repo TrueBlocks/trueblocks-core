@@ -108,7 +108,6 @@ class CToml : public CSharedResource {
 
     bool isBackLevel(void) const;
     friend ostream& operator<<(ostream& os, const CToml& tomlIn);
-    friend const CToml* getGlobalConfig(const string_q& name);
 
   private:
     bool readFile(const string_q& filename);

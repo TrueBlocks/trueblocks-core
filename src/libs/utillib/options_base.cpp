@@ -1154,21 +1154,9 @@ const CToml* getGlobalConfig(const string_q& name) {
     static CToml* toml = NULL;
     static string_q components = "trueBlocks|";
 
-    if (name == "reload" && toml) {
-        toml->clear();
-        toml = NULL;
-    }
-
     if (!toml) {
-        static CToml theToml("");
-
-        // Forces a reload
-        theToml.clear();
-        theToml.setFilename(configPath("trueBlocks.toml"));
-        theToml.readFile(configPath("trueBlocks.toml"));
+        static CToml theToml(configPath("trueBlocks.toml"));
         toml = &theToml;
-
-        // Always load the program's custom config if it exists
         string_q fileName = configPath(COptionsBase::g_progName + ".toml");
         if (fileExists(fileName) && !contains(components, COptionsBase::g_progName + "|")) {
             components += COptionsBase::g_progName + "|";
@@ -1177,8 +1165,8 @@ const CToml* getGlobalConfig(const string_q& name) {
         }
     }
 
-    // If we're told explicitly to load another config, do that here
-    if (!name.empty() && name != "reload") {
+    // If we're told explicitly to load another config, do that as well
+    if (!name.empty()) {
         string_q fileName = configPath(name + ".toml");
         if (fileExists(fileName) && !contains(components, name + "|")) {
             components += name + "|";
