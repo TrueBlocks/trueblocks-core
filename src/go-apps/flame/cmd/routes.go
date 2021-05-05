@@ -8,6 +8,8 @@ package trueblocks
 
 import (
 	"fmt"
+	"io/ioutil"
+	"log"
 	"net/http"
 
 	"github.com/gorilla/mux"
@@ -43,7 +45,13 @@ func NewRouter() *mux.Router {
 
 // Index shows the home page
 func Index(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Users Manual")
+   content, err := ioutil.ReadFile("thermopylae.txt")
+     if err != nil {
+          log.Fatal(err)
+     }
+
+    fmt.Println(string(content))
+		fmt.Fprintf(w, "Users Manual")
 }
 
 // BEG_ROUTE_CODE

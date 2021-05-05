@@ -20,6 +20,8 @@ extern const char* STR_TAG_ENTRY_YAML;
 extern const char* STR_PATH_ENTRY_YAML;
 extern const char* STR_PATH_PARAM_YAML;
 extern const char* STR_HTML_CODE;
+extern const char* STR_HTML_CODE_HEADER;
+extern const char* STR_HTML_CODE_FOOTER;
 extern string_q getTypeStr(const CCommandOption& opt, const string_q& lead);
 //---------------------------------------------------------------------------------------------------
 void COptions::writeOpenApiFile(void) {
@@ -122,7 +124,8 @@ void COptions::writeOpenApiFile(void) {
         }
     }
 
-    string_q html = STR_HTML_CODE;
+    string_q html =
+        substitute(substitute(STR_HTML_CODE, "[{HEADER}]", STR_HTML_CODE_HEADER), "[{FOOTER}]", STR_HTML_CODE_FOOTER);
     for (size_t i = 12; i > 4; i--)
         replaceAll(html, string_q(i, '-'), string_q((i * 2), ' '));
     stringToAsciiFile("../docs/api.html", html);
@@ -344,7 +347,7 @@ const char* STR_PATH_PARAM_YAML =
 
 //---------------------------------------------------------------------------------------------------
 // clang-format off
-const char* STR_HTML_CODE =
+const char* STR_HTML_CODE_HEADER =
     "<!DOCTYPE html>\n"
     "<html lang=\"en\">\n"
     "  <head>\n"
@@ -397,7 +400,10 @@ const char* STR_HTML_CODE =
     "            {name: 'Data', description: 'Access and cache blockchain-related data'},\n"
     "            {name: 'State', description: 'Access to account and token state'},\n"
     "            {name: 'Other', description: 'Access to other and external data'},\n"
-    "          ],\n"
+    "          ],\n";
+
+const char* STR_HTML_CODE =
+    "[{HEADER}]"
     "-----paths: {\n"
     "------'/export': {\n"
     "-------get: {\n"
@@ -1735,6 +1741,9 @@ const char* STR_HTML_CODE =
     "--------},\n"
     "-------},\n"
     "------},\n"
+    "[{FOOTER}]";
+
+const char* STR_HTML_CODE_FOOTER =
     "          },\n"
     "          components: {\n"
     "            schemas: {\n"
@@ -1744,16 +1753,11 @@ const char* STR_HTML_CODE =
     "                properties: {\n"
     "                  data: {\n"
     "                    type: 'object',\n"
-    "                    example: [\n"
-    "                      {$ref: '#/components/schemas/scrape_response'},\n"
-    "                      {$ref: '#/components/schemas/trans_response'},\n"
-    "                    ],\n"
+    "                    example: [],\n"
     "                  },\n"
     "                  error: {type: 'array', example: ['error 1', 'error 2'], items: {type: 'string'}},\n"
     "                },\n"
     "              },\n"
-    "              scrape_response: {type: 'string', example: 'Scrape response'},\n"
-    "              trans_response: {type: 'string', example: 'Trans response'},\n"
     "            },\n"
     "          },\n"
     "        };\n"
@@ -1771,4 +1775,5 @@ const char* STR_HTML_CODE =
     "    </script>\n"
     "  </body>\n"
     "</html>\n";
+
 // clang-format on
