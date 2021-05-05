@@ -12,8 +12,8 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 /*
- * Parts of this file were generated with makeClass. Edit only those parts of the code
- * outside of the BEG_CODE/END_CODE sections
+ * Parts of this file were generated with makeClass --options. Edit only those parts of
+ * the code outside of the BEG_CODE/END_CODE sections
  */
 #include "acctlib.h"
 

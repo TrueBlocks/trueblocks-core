@@ -12,8 +12,8 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 /*
- * This file was generated with makeClass. Edit only those parts of the code inside
- * of 'EXISTING_CODE' tags.
+ * Parts of this file were generated with makeClass --run. Edit only those parts of
+ *  the code inside of 'EXISTING_CODE' tags.
  */
 #include "cache.h"
 

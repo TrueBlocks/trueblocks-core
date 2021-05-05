@@ -5,6 +5,10 @@ package trueblocks
  * copyright (c) 2018, 2021 TrueBlocks, LLC (http://trueblocks.io)
  * All Rights Reserved
  *------------------------------------------------------------------------*/
+/*
+ * Parts of this file were generated with makeClass --openapi. Edit only those parts of
+ * the code outside of 'BEG_ROUTE/END_ROUTE' tags.
+ */
 
 import (
 	"fmt"

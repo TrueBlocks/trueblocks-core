@@ -4,8 +4,8 @@
  * All Rights Reserved
  *------------------------------------------------------------------------*/
 /*
- * Parts of this file were generated with makeClass. Edit only those parts of the code
- * outside of the BEG_CODE/END_CODE sections
+ * Parts of this file were generated with makeClass --options. Edit only those parts of
+ * the code outside of the BEG_CODE/END_CODE sections
  */
 #define LOGGING_LEVEL_TEST
 #include "options.h"
