@@ -12,7 +12,7 @@
  *-------------------------------------------------------------------------------------------*/
 /*
  * Parts of this file were generated with makeClass --run. Edit only those parts of
- *  the code inside of 'EXISTING_CODE' tags.
+ * the code inside of 'EXISTING_CODE' tags.
  */
 #include "monitor.h"
 
