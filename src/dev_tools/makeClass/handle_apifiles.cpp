@@ -119,7 +119,6 @@ void COptions::writeOpenApiFile(void) {
         if (origYamlCode != newYamlCode) {
             counter.nChanged++;
             stringToAsciiFile(origYaml, newYamlCode);
-            // LOG_INFO("New yaml code written to ", origYaml);
         }
     }
 
