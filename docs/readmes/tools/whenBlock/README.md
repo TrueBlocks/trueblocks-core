@@ -8,7 +8,7 @@ The values for `date` and `time` are specified in JSON format. The `hour`/`minut
 
 You may name your own blocks (for example, to denote the start of an ICO perhaps) by editing '$CONFIG/trueBlocks.toml' and placing `name=blockNum` pairs under the `[special]` section of that file (create the file if it is not already present, create the section if needed). Special blocks are detailed below.
 
-### Usage
+### usage
 
 `Usage:`    chifra when [-l|-t|-s|-v|-h] &lt; block | date &gt; [ block... | date... ]  
 `Purpose:`  Finds block based on date, blockNum, timestamp, or 'special'.

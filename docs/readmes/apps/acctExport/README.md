@@ -6,7 +6,7 @@ Below we present the command line interface to this tool, although the tool itse
 
 Please contact us at [sales@greathill.com](mailto:sales@greathill.com) for more information.
 
-### Usage
+### usage
 
 `Usage:`    chifra export [-p|-r|-l|-t|-C|-O|-a|-i|-R|-U|-v|-h] &lt;address&gt; [address...] [topics] [fourbytes]  
 `Purpose:`  Export full detail of transactions for one or more Ethereum addresses.

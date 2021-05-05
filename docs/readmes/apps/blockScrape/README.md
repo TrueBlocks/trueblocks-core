@@ -4,7 +4,7 @@ The `chifra scrape` app queries the rpcProvider you specify (or your local node 
 
 Using operating system tools such as Linux's `cron` you can easily maintain a  constantly fresh TrueBlocks database. Using TrueBlocks `display strings` technology, it is even easy to populate a regular web 2.0 database and from there a full featured website representing the full state of your smart contract.
 
-### Usage
+### usage
 
 `Usage:`    chifra scrape [-t|-n|-p|-s|-i|-R|-v|-h] mode  
 `Purpose:`  Decentralized blockchain scraper and block cache.

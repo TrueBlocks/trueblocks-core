@@ -2,7 +2,7 @@
 
 The `chifra pins` is not ready for prime time. Please return late.
 
-### Usage
+### usage
 
 `Usage:`    chifra pins [-c|-i|-f|-s|-v|-h]  
 `Purpose:`  Report on and manage the remotely pinned appearance index and associated bloom filters.

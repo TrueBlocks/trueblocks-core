@@ -2,7 +2,7 @@
 
 `chifra logs` returns a transaction's logs. You may specify the logs you want using either a transaction hash (trans\_hash), a block hash plus transaction index (block\_hash.trans\_id), or a block number plus transaction index (block\_num.trans\_id).  
 
-### Usage
+### usage
 
 `Usage:`    chifra logs [-a|-v|-h] &lt;tx_id&gt; [tx_id...]  
 `Purpose:`  Retrieve a transaction's logs from the cache or the node.

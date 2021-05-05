@@ -18,7 +18,7 @@ Test cases contain the following fields:
 
 You may run all tests from the `./build` folder by entering `make test-all` (or `make tests` to run only the `cmd/fast` cases).
 
-### Usage
+### usage
 
 `Usage:`    testRunner [-m|-f|-c|-n|-o|-r|-v|-h]  
 `Purpose:`  Run TrueBlocks' test cases with options.

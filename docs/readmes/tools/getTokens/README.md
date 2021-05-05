@@ -8,7 +8,7 @@ In `--byAcct` mode, **all items** in the `address_list` are assumed to be token 
 
 You may optionally specify one or more blocks at which to report.
 
-### Usage
+### usage
 
 `Usage:`    chifra tokens [-p|-b|-n|-v|-h] &lt;address&gt; &lt;address&gt; [address...] [block...]  
 `Purpose:`  Retrieve token balances for one or more address at given block(s).
