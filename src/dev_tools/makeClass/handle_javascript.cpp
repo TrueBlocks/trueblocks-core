@@ -16,8 +16,7 @@
 //---------------------------------------------------------------------------------------------------
 bool COptions::handle_export_js(void) {
     for (auto classDef : classDefs) {
-        CToml toml("");
-        toml.readFile(classDef.input_path);
+        CToml toml(classDef.input_path);
         classDef = CClassDefinition(toml);
         handle_initialize_js(toml, classDef);
     }

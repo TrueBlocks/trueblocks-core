@@ -205,7 +205,6 @@ bool COptions::parseArguments(string_q& command) {
     if (dump) {
         for (auto cl : classDefs) {
             CToml toml(cl.input_path);
-            toml.readFile(cl.input_path);
             if (verbose) {
                 SHOW_FIELD(CClassDefinition, "fieldArray");
                 HIDE_FIELD(CClassDefinition, "field_str");

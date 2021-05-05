@@ -32,7 +32,6 @@ int main(int argc, const char* argv[]) {
         LOG_INFO(cYellow, "handling generate...", cOff);
         for (auto classDef : options.classDefs) {
             CToml toml(classDef.input_path);
-            toml.readFile(classDef.input_path);
             if (options.mode & EDIT) {
                 editFile(classDef.input_path);
 
