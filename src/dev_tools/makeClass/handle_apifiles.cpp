@@ -75,7 +75,11 @@ void COptions::writeOpenApiFile(void) {
                 yamlParamStream << yp << endl;
                 counter.cmdCount++;
             }
-            replace(yamlEntry, "[{PARAMS}]", yamlParamStream.str());
+            if (yamlParamStream.str().empty()) {
+                replace(yamlEntry, "      parameters:\n[{PARAMS}]", "");
+            } else {
+                replace(yamlEntry, "[{PARAMS}]", yamlParamStream.str());
+            }
             yamlPathStream << yamlEntry;
             counter.routeCount++;
 
@@ -121,6 +125,9 @@ void COptions::writeOpenApiFile(void) {
         if (origYamlCode != newYamlCode) {
             counter.nChanged++;
             stringToAsciiFile(origYaml, newYamlCode);
+            if (fileExists("../docs/swagger.yaml")) {
+                stringToAsciiFile("../docs/swagger.yaml", newYamlCode);
+            }
         }
     }
 

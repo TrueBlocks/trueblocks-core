@@ -53,6 +53,16 @@ paths:
           type: array
           items:
             type: string
+      - name: fourbytes
+        in: query
+        description: filter by one or more fourbytes (only for transactions and trace options)
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
       - name: appearances
         in: query
         description: export a list of appearances
@@ -85,17 +95,17 @@ paths:
         explode: true
         schema:
           type: boolean
-      - name: statements
+      - name: accounting
         in: query
-        description: export reconcilations instead of transaction list
+        description: export accounting records instead of transaction list
         required: false
         style: form
         explode: true
         schema:
           type: boolean
-      - name: accounting
+      - name: tokens
         in: query
-        description: export accounting records instead of transaction list
+        description: export accounting for ERC 20 tokens (assumes ETH accounting as above)
         required: false
         style: form
         explode: true
@@ -150,14 +160,6 @@ paths:
         explode: true
         schema:
           type: boolean
-      - name: freshen_max
-        in: query
-        description: maximum number of records to process for --freshen option
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: number
       - name: factory
         in: query
         description: scan for contract creations from the given address(es) and report
@@ -169,8 +171,25 @@ paths:
           type: boolean
       - name: emitter
         in: query
-        description: available for --logs option only, export will only export if
-          the address emitted the event
+        description: for log export only, export only if one of the given export addresses emitted the event
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
+      - name: emitted_by
+        in: query
+        description: for log export only, export only one of these addresses emitted the event
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: relevant
+        in: query
+        description: for log export only, if true export only logs relevant to one of the given export addresses
         required: false
         style: form
         explode: true
@@ -242,7 +261,22 @@ paths:
       tags:
       - Accounts
       operationId: accounts-list
-      parameters:
+      responses:
+        "200":
+          description: status of the scraper
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/response'
+        "400":
+          description: bad input parameter
+  /monitor:
+    get:
+      tags:
+      - Accounts
+      operationId: accounts-monitor
       responses:
         "200":
           description: status of the scraper
@@ -477,23 +511,6 @@ paths:
                   $ref: '#/components/schemas/response'
         "400":
           description: bad input parameter
-  /rm:
-    get:
-      tags:
-      - Accounts
-      operationId: accounts-rm
-      parameters:
-      responses:
-        "200":
-          description: status of the scraper
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/response'
-        "400":
-          description: bad input parameter
   /status:
     get:
       tags:
@@ -684,10 +701,68 @@ paths:
         explode: true
         schema:
           type: boolean
-      - name: publish
+      - name: sleep
         in: query
-        description: publish the hash of the pin manifest to the UnchainedIndex smart
-          contract
+        description: the number of seconds to sleep between passes (default 14)
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: number
+      - name: cache_txs
+        in: query
+        description: write transactions to the cache (see notes)
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
+      - name: cache_traces
+        in: query
+        description: write traces to the cache (see notes)
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
+      responses:
+        "200":
+          description: status of the scraper
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/response'
+        "400":
+          description: bad input parameter
+  /pins:
+    get:
+      tags:
+      - Admin
+      summary: Report on and manage the remotely pinned appearance index and associated bloom filters.
+      description: Report on and manage the remotely pinned appearance index and associated bloom filters.
+      operationId: admin-pins
+      parameters:
+      - name: compare
+        in: query
+        description: report differences (if any) between the manifest and pinning service
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
+      - name: init
+        in: query
+        description: initialize the local index by downloading bloom filters from the pinning service
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
+      - name: freshen
+        in: query
+        description: freshen the manifest from the hash found at the smart contract
         required: false
         style: form
         explode: true
@@ -695,7 +770,7 @@ paths:
           type: boolean
       - name: sleep
         in: query
-        description: the number of seconds to sleep between passes (default 14)
+        description: the number of seconds to sleep between requests during init (default .25)
         required: false
         style: form
         explode: true
@@ -780,7 +855,7 @@ paths:
         explode: true
         schema:
           type: boolean
-      - name: force
+      - name: cache
         in: query
         description: force a re-write of the block to the cache
         required: false
@@ -842,7 +917,7 @@ paths:
         explode: true
         schema:
           type: boolean
-      - name: force
+      - name: cache
         in: query
         description: force the results into the tx cache
         required: false
@@ -975,6 +1050,14 @@ paths:
       - name: articulate
         in: query
         description: articulate the transactions if an ABI is found for the 'to' address
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
+      - name: statediff
+        in: query
+        description: export stateDiff traces for the transaction(s)
         required: false
         style: form
         explode: true
