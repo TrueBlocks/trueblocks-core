@@ -25,17 +25,33 @@ bool COptions::handle_config_get(ostream& os) {
         CConfigSection g1_1("Providers", "settings");
         CConfigSection g1_2("Paths", "settings");
 
-        string_q defFolder = configPathRelative("");
         CStringArray values;
-        values.push_back(isTestMode() ? "--rpc Provider--"
-                                      : cc->getConfigStr(g1_1.name, "rpcProvider", "http://localhost:8545"));
-        values.push_back(isTestMode() ? "--balance Prov--"
-                                      : cc->getConfigStr(g1_1.name, "balanceProvider", "http://localhost:8545"));
-        values.push_back(isTestMode() ? "--config Path--" : cc->getConfigStr(g1_2.name, "configPath", defFolder));
-        values.push_back(isTestMode() ? "--cache Path--"
-                                      : cc->getConfigStr(g1_2.name, "cachePath", defFolder + "cache/"));
-        values.push_back(isTestMode() ? "--index Path--"
-                                      : cc->getConfigStr(g1_2.name, "indexPath", defFolder + "unchained/"));
+
+        string_q prov = cc->getConfigStr(g1_1.name, "rpcProvider", "http://localhost:8545");
+        if (isTestMode())
+            prov = "--rpc Provider--";
+        values.push_back(prov);
+
+        string_q bal = cc->getConfigStr(g1_1.name, "balanceProvider", "http://localhost:8545");
+        if (isTestMode())
+            bal = "--balance Prov--";
+        values.push_back(bal);
+
+        string_q defFolder = configPathRelative("");
+        string_q conf = cc->getConfigStr(g1_2.name, "configPath", defFolder);
+        if (isTestMode())
+            conf = "--config Path--";
+        values.push_back(conf);
+
+        string_q cache = cc->getConfigStr(g1_2.name, "cachePath", defFolder + "cache/");
+        if (isTestMode())
+            cache = "--cache Path--";
+        values.push_back(cache);
+
+        string_q index = cc->getConfigStr(g1_2.name, "indexPath", defFolder + "unchained/");
+        if (isTestMode())
+            index = "--index Path--";
+        values.push_back(index);
 
         size_t cnt = 0;
         CConfigItemArray items;
@@ -146,7 +162,7 @@ bool COptions::handle_config_get(ostream& os) {
     {
         manageFields("CAccountName:firstAppearance,latestAppearance,nAppearances,sizeInBytes", false);
 
-        const CToml* cc = getGlobalConfig("ethNames");
+        // const CToml* cc = getGlobalConfig("ethNames");
         CConfigFile f("ethNames.toml");
         CConfigSection g1("Names", "custom");
 
@@ -165,12 +181,7 @@ bool COptions::handle_config_get(ostream& os) {
             i1.named.push_back(test2);
 
         } else {
-            string_q customStr = cc->getConfigJson("custom", "list", "");
-            CAccountName item;
-            while (item.parseJson3(customStr)) {
-                i1.named.push_back(item);
-                item = CAccountName();
-            }
+            cerr << "Not implemented" << endl;
         }
 
         g1.keys.push_back(i1);

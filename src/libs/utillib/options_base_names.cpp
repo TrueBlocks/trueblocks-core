@@ -41,12 +41,8 @@ string_q getCachePath(const string_q& _part) {
         CToml toml(configPath("trueBlocks.toml"));
         string_q path = toml.getConfigStr("settings", "cachePath", "<NOT_SET>");
         if (path == "<NOT_SET>") {
-            // May have been an old installation, so try to upgrade
-            path = toml.getConfigStr("settings", "blockCachePath", "<NOT_SET>");
-            if (path == "<NOT_SET>")
-                path = configPath("cache/");
+            path = configPath("cache/");
             toml.setConfigStr("settings", "cachePath", path);
-            toml.deleteKey("settings", "blockCachePath");
             toml.writeFile();
         }
 

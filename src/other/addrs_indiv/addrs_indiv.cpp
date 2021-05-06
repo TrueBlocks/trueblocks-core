@@ -26,10 +26,10 @@ int main(int argc, const char* argv[]) {
     loadHashes(thing.hashes, "finalized");
     loadHashes(thing.blooms, "blooms");
 
-    string_q indexPath = getIndexPath("finalized");
-    thing.outPath = contains(indexPath, "JUNK") ? "./report.1/" : "./report.2/";
+    string_q index Path = getIndexPath("finalized");
+    thing.outPath = contains(index Path, "JUNK") ? "./report.1/" : "./report.2/";
 
-    forEveryFileInFolder(indexPath, visitFile, &thing);
+    forEveryFileInFolder(index Path, visitFile, &thing);
 
     etherlib_cleanup();
     return 1;

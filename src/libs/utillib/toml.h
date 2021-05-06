@@ -32,17 +32,37 @@ class CToml : public CSharedResource {
     //-------------------------------------------------------------------------
     // support class for toml file
     class CTomlKey {
-      public:
         string_q keyName;
         string_q value;
-        bool comment;
-        bool deleted;
 
+      public:
         CTomlKey(void);
-        CTomlKey(const string_q& n, const string_q& v, bool c) : keyName(n), value(v), comment(c), deleted(false) {
+        CTomlKey(const string_q& n, const string_q& v) : keyName(n), value(v) {
         }
         CTomlKey(const CTomlKey& key);
         CTomlKey& operator=(const CTomlKey& key);
+        string_q getValue(void) const {
+            return value;
+        }
+        void setValue(const string_q& v) {
+            value = v;
+        }
+        string_q getKey(void) const {
+            return keyName;
+        }
+        void setKey(const string_q& k) {
+            keyName = k;
+        }
+    };
+
+    //-------------------------------------------------------------------------
+    // support class for toml file
+    class CTomlComment : public CTomlKey {
+      public:
+        CTomlComment(void);
+        CTomlComment(const string_q& v) {
+            setValue(v);
+        }
     };
 
     //-------------------------------------------------------------------------
@@ -50,18 +70,18 @@ class CToml : public CSharedResource {
     class CTomlSection {
       public:
         string_q sectionName;
-        bool isComment;
         vector<CTomlKey> keys;
 
         CTomlSection(void);
-        CTomlSection(const string_q& n, bool c) : sectionName(n), isComment(c) {
+        CTomlSection(const string_q& n) : sectionName(n) {
         }
         CTomlSection(const CTomlSection& section);
 
         ~CTomlSection(void);
 
         CTomlSection& operator=(const CTomlSection& section);
-        void addKey(const string_q& keyName, const string_q& val, bool commented);
+        void addKey(const string_q& keyName, const string_q& val);
+        void addComment(const string_q& val);
 
       private:
         void clear(void);
@@ -69,14 +89,12 @@ class CToml : public CSharedResource {
     };
 
   protected:
-    void addSection(const string_q& section, bool commented);
-    void addKey(const string_q& section, const string_q& key, const string_q& val, bool commented);
+    string_q addSection(const string_q& section);
+    void addKey(const string_q& section, const string_q& key, const string_q& val);
+    void addComment(const string_q& section, const string_q& val);
 
     CTomlSection* findSection(const string_q& section) const;
     CTomlKey* findKey(const string_q& section, const string_q& key) const;
-
-  public:
-    void deleteKey(const string_q& section, const string_q& key);
 
   public:
     vector<CTomlSection> sections;

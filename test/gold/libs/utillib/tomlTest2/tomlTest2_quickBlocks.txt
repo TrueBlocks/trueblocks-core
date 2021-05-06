@@ -6,14 +6,13 @@ current = "0.5.5-alpha"
 
 [settings]
 # rpcProvider = "http://my.ethchain.dnp.dappnode.eth:8545/"
-# rpcProvider = "http://127.0.0.1:7545"
+# rpcProvider="http://127.0.0.1:7545"
 rpcProvider = "http://localhost:36963/"
 # rpcProvider = "http://localhost:23456/"
 # rpcProvider = "http://localhost:8515"
 balanceProvider = "http://localhost:36963/"
 cachePath = "$CONFIG/cache/"
 indexPath = "$CONFIG/unchained/"
-
 # [dev]
-# debug_curl = true
-# debug_ethscan = true
+# debug_curl=true
+# debug_ethscan=true
