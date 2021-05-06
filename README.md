@@ -73,7 +73,7 @@ If not, review the above commands and make sure you didn't miss something. [Crea
 
 ## Adding ./bin to your $PATH
 
-`chifra` will only work if its underlying tools are found in your $PATH.
+`chifra` only works if its underlying tools are found in your $PATH.
 
 Add the full path to `./trueblocks-core/bin` to your shell's default environment. To find the full path, do this
 
