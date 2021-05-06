@@ -6,6 +6,22 @@
 ![GitHub forks](https://img.shields.io/github/forks/TrueBlocks/trueblocks-core?style=social)
 ![Twitter Follow](https://img.shields.io/twitter/follow/trueblocks?style=social)
 
+## Table of Contents
+  - [Introduction](#introduction)
+  - [Prerequisites](#prerequisites)
+  - [Compiling TrueBlocks](#compiling-trueblocks)
+  - [Adding ./bin to your $PATH](#adding-bin-to-your-path)
+  - [Introducing chifra](#introducing-chifra)
+    - [Getting status](#getting-status)
+    - [-- Troubleshooting](#---troubleshooting)
+  - [Using chifra](#using-chifra)
+  - [Building the TrueBlocks Index of Appearances](#building-the-trueblocks-index-of-appearances)
+  - [Contributing to TrueBlocks](#contributing-to-trueblocks)
+  - [Contributors](#contributors)
+  - [Contact](#contact)
+
+## Introduction
+
 TrueBlocks is a collection of libraries, tools, and applications that improve access to the Ethereum data while remaining fully local. The interface is similar to the Ethereum RPC, but offers a number of improvements:
 
 1) TrueBlocks allows you to scrape the chain to build an index of address appearances. This index enables lightning-fast access to transactional histories for a given address (something not available from the node itself),
