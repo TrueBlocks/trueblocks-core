@@ -281,7 +281,7 @@ void establishTestData(void) {
     doCommand("grabABI 0x0000000000004946c0e9f43f4dee607b0ef1fa1c");
     doCommand("grabABI 0x7c66550c9c730b6fdd4c03bc2e73c5462c5f7acc");
 
-// TODO(tjayrush): FIX_THIS_CODE
+// TODO(tjayrush): Not sure what this is about.
 #if 1
     // Hard to explain, but this removes a few transactions from the cache
     ::remove(getBinaryCacheFilename(CT_TXS, 8854723, 61).c_str());

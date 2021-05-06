@@ -1367,6 +1367,7 @@ const char* STR_DEFAULT_WHENBLOCKS =
     "{ name: \"mcdai\", value: 8928158 },"
     "{ name: \"istanbul\", value: 9069000 },"
     "{ name: \"muirglacier\", value: 9200000 },"
+    "{ name: \"berlin\", value: 12244000 },"
     "{ name: \"latest\", value:\"\" }"
     "]";
 

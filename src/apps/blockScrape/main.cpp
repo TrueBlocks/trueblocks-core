@@ -47,7 +47,7 @@ int main(int argc, const char* argv[]) {
                      options.sleep, " seconds... ");
 
             // TODO(tjayrush): We should try to scrape timestamps with blaze while we're doing this scan
-            // TODO(tjayrush): FIX_THIS_CODE try to capture timestamps during blaze scraping
+            // TODO(tjayrush): try to capture timestamps during blaze scraping
             freshenTimestamps(getBlockProgress(BP_RIPE).ripe);
         }
 
