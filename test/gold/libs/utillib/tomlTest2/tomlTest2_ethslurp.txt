@@ -9,6 +9,7 @@ api_provider = "EtherScan"
 api_url = "http://etherscan.io/apis"
 api_key = "<NOT_SET>"
 
+
 [display]
 fmt_fieldList = ""
 fmt_txt_file = "[{HEADER}]\n[{RECORDS}]"

@@ -4,11 +4,13 @@ test00.toml
 [version]
 version = "0:9:0"
 
+
 [settings]
 api_provider = "EtherScan"
 api_url = "http://etherscan.io/apis"
 update_freq = 300
 rerun = "0xbf4ed7b27f1d666546e30d74d50d173d20bca754"
+
 
 [display]
 fmt_fieldList = "timestamp|date|from|nonce|value|ether|input|gasUsed|gas|gasPrice|blockNumber|transactionIndex|cumulativeGasUsed|blockHash|hash|confirmations"
@@ -110,11 +112,13 @@ File contents after write
 [version]
 version = "0:9:0"
 
+
 [settings]
 api_provider = "EtherScan"
 api_url = "http://etherscan.io/apis"
 update_freq = 300
 rerun = "0xbf4ed7b27f1d666546e30d74d50d173d20bca754"
+
 
 [display]
 fmt_fieldList = "timestamp|date|from|nonce|value|ether|input|gasUsed|gas|gasPrice|blockNumber|transactionIndex|cumulativeGasUsed|blockHash|hash|confirmations"

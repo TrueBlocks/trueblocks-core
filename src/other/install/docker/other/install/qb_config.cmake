@@ -108,7 +108,7 @@ file(COPY "${SOURCE_PATH}/mocked/monitors.tar.gz" DESTINATION "${DEST_PATH}/mock
 # 	#message(STATUS "  Copied file to ${DEST_PATH}/makeClass")
 # 	file(COPY "${FILE}" DESTINATION "${DEST_PATH}/makeClass")
 # endforeach( FILE )
-# file(GLOB TARGET_FILES "${CMAKE_SOURCE_DIR}/../../../docs/swagger.yaml")
+# file(GLOB TARGET_FILES "${CMAKE_SOURCE_DIR}/../../../docs/openapi.yaml")
 # foreach(FILE ${TARGET_FILES} )
 # 	#message(STATUS "  Copied file to ${DEST_PATH}/makeClass")
 # 	file(COPY "${FILE}" DESTINATION "${DEST_PATH}/makeClass")

@@ -114,19 +114,19 @@ void COptions::writeOpenApiFile(void) {
         return;
     }
 
-    string_q yamlTemplate = configPath("makeClass/blank_swagger.yaml");
+    string_q yamlTemplate = configPath("makeClass/blank_openapi.yaml");
     string_q newYamlCode = asciiFileToString(yamlTemplate);
     if (!newYamlCode.empty()) {
         // LOG_INFO("Generating new yaml code");
         replace(newYamlCode, "[{PATHS}]", yamlPathStream.str());
         replace(newYamlCode, "[{TAGS}]", yamlTagStream.str());
-        string_q origYaml = configPath("makeClass/swagger.yaml");
+        string_q origYaml = configPath("makeClass/openapi.yaml");
         string_q origYamlCode = asciiFileToString(origYaml);
         if (origYamlCode != newYamlCode) {
             counter.nChanged++;
             stringToAsciiFile(origYaml, newYamlCode);
-            if (fileExists("../docs/swagger.yaml")) {
-                stringToAsciiFile("../docs/swagger.yaml", newYamlCode);
+            if (fileExists("../docs/openapi.yaml")) {
+                stringToAsciiFile("../docs/openapi.yaml", newYamlCode);
             }
         }
     }
