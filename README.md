@@ -154,7 +154,7 @@ The primary data structure produced by TrueBlocks is an index of address appeara
 
 You may either build the entire index from scratch (requires a tracing, archive node), or you may download part of the index and build it from there on.
 
-This process is described in this article [Indexing Addresses](/docs/prologue/indexing/).
+This process is described in this article [Indexing Addresses](https://trueblocks.netlify.app/docs/prologue/indexing/).
 
 ## Contributing to TrueBlocks
 
