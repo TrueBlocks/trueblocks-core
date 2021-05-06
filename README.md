@@ -12,12 +12,10 @@
   - [Compiling TrueBlocks](#compiling-trueblocks)
   - [Adding ./bin to your $PATH](#adding-bin-to-your-path)
   - [Introducing chifra](#introducing-chifra)
-    - [Getting status](#getting-status)
-    - [-- Troubleshooting](#---troubleshooting)
   - [Using chifra](#using-chifra)
-  - [Building the TrueBlocks Index of Appearances](#building-the-trueblocks-index-of-appearances)
-  - [Contributing to TrueBlocks](#contributing-to-trueblocks)
-  - [Contributors](#contributors)
+  - [Building the Index of Appearances](#building-the-trueblocks-index-of-appearances)
+  - [Contributing](#contributing-to-trueblocks)
+  - [List of Contributors](#contributors)
   - [Contact](#contact)
 
 ## Introduction
