@@ -117,17 +117,6 @@ bool COptions::parseArguments(string_q& command) {
     if (!establishFolder(getCachePath("slurps/")))
         return usage("Unable to create data folders at " + getCachePath("slurps/"));
 
-    // Load per address configurations if any
-    // string_q customConfig = getCachePath("slurps/" + addrs[0] + ".toml");
-    // if (fileExists(customConfig)) {
-    //     CToml perAddr("");
-    //     perAddr.setFilename(customConfig);
-    //     if (fileExists(customConfig)) {
-    //         perAddr.readFile(customConfig);
-    //         ((CToml*)getGlobalConfig("ethslurp"))->mergeFile(&perAddr);  // NOLINT
-    //     }
-    // }
-
     if (blocks.start == 0 && blocks.stop == 0)
         blocks.stop = INT_MAX;
 

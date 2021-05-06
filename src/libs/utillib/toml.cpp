@@ -38,10 +38,10 @@ void CToml::clear(void) {
 }
 
 //-------------------------------------------------------------------------
-void CToml::addSection(const string_q& section, bool commented, bool array) {
+void CToml::addSection(const string_q& section, bool commented) {
     if (findSection(section))
         return;
-    CTomlSection newSection(section, array, commented);
+    CTomlSection newSection(section, commented);
     sections.push_back(newSection);
 }
 
@@ -88,8 +88,6 @@ bool CToml::getConfigBool(const string_q& section, const string_q& key, bool def
 }
 
 //---------------------------------------------------------------------------------------
-extern string_q stripFullLineComments(const string_q& inStr);
-extern string_q collapseArrays(const string_q& inStr);
 bool CToml::readFile(const string_q& filename) {
     string_q curSection;
     clear();
@@ -103,17 +101,15 @@ bool CToml::readFile(const string_q& filename) {
     replaceAll(contents, "\\\n ", "\\\n");  // if ends with '\' + '\n' + space, make it just '\' + '\n'
     replaceAll(contents, "\\\n", "");       // if ends with '\' + '\n', its a continuation, so fold in
     replaceAll(contents, "\\\r\n", "");     // same for \r\n
-    contents = collapseArrays(stripFullLineComments(contents));
     while (!contents.empty()) {
         string_q value = trimWhitespace(nextTokenClear(contents, '\n'));
         bool comment = startsWith(value, '#');
         if (comment)
             value = trim(extract(value, 1));
         if (!value.empty()) {
-            bool isArray = contains(value, "[[");
             if (startsWith(value, '[')) {  // it's a section
                 value = trim(trimWhitespace(substitute(substitute(value, "[", ""), "]", "")), '\"');
-                addSection(value, comment, isArray);
+                addSection(value, comment);
                 curSection = value;
 
             } else {
@@ -241,14 +237,6 @@ void CToml::setConfigBool(const string_q& section, const string_q& key, bool val
 }
 
 //-------------------------------------------------------------------------
-void CToml::setConfigArray(const string_q& section, const string_q& key, const string& value) {
-    setConfigStr(section, key, value);
-    CToml::CTomlSection* grp = findSection(section);
-    if (grp)
-        grp->isArray = true;
-}
-
-//-------------------------------------------------------------------------
 void CToml::setConfigStr(const string_q& section, const string_q& keyIn, const string_q& value) {
     bool comment = startsWith(keyIn, '#');
     string_q key = (comment ? extract(keyIn, 1) : keyIn);
@@ -276,9 +264,9 @@ ostream& operator<<(ostream& os, const CToml& tomlIn) {
         if (!first)
             os << endl;
         os << (section.isComment ? "# " : "");
-        os << (section.isArray ? "[[" : "[");
+        os << "[";
         os << section.sectionName;
-        os << (section.isArray ? "]]" : "]");
+        os << "]";
         os << endl;
         for (auto key : section.keys) {
             os << (key.comment || section.isComment || key.deleted ? "# " : "");
@@ -355,7 +343,6 @@ CToml::CTomlSection& CToml::CTomlSection::operator=(const CTomlSection& section)
 void CToml::CTomlSection::clear(void) {
     sectionName = "";
     isComment = false;
-    isArray = false;
     keys.clear();
 }
 
@@ -365,7 +352,6 @@ void CToml::CTomlSection::copy(const CTomlSection& section) {
 
     sectionName = section.sectionName;
     isComment = section.isComment;
-    isArray = section.isArray;
     keys.clear();
     for (auto key : section.keys)
         keys.push_back(key);
@@ -391,48 +377,5 @@ void CToml::deleteKey(const string_q& section, const string_q& key) {
     CToml::CTomlKey* kPtr = findKey(section, key);
     if (kPtr)
         kPtr->deleted = true;
-}
-
-//---------------------------------------------------------------------------------------
-string_q stripFullLineComments(const string_q& inStr) {
-    string_q str = inStr;
-    string_q ret;
-    while (!str.empty()) {
-        string_q line = trimWhitespace(nextTokenClear(str, '\n'));
-        if (contains(line, '=') || contains(line, '[') || (line.length() && line[0] != '#'))
-            ret += (line + "\n");
-    }
-    return ret;
-}
-
-//---------------------------------------------------------------------------------------
-string_q collapseArrays(const string_q& inStr) {
-    if (!contains(inStr, "[[") && !contains(inStr, "]]"))
-        return inStr;
-
-    string_q ret;
-    string_q str = substitute(inStr, "  ", " ");
-    replace(str, "[[", "`");
-    string_q front = nextTokenClear(str, '`');
-    str = "[[" + str;
-    str = substitute(str, "[[", "<array>");
-    str = substitute(str, "]]", "</array>\n<name>");
-    str = substitute(str, "[", "</name>\n<value>");
-    str = substitute(str, "]", "</value>\n<name>");
-    replaceReverse(str, "<name>", "");
-    replaceAll(str, "<name>\n", "<name>");
-    replaceAll(str, " = </name>", "</name>");
-    while (contains(str, "</array>")) {
-        string_q array = snagFieldClear(str, "array");
-        string_q vals;
-        while (contains(str, "</value>")) {
-            string_q name = substitute(substitute(snagFieldClear(str, "name"), "=", ""), "\n", "");
-            string_q value = substitute(substitute(snagFieldClear(str, "value"), "\n", ""), "=", ":");
-            vals += name + " = [ " + value + " ]\n";
-        }
-        string_q line = "[[" + array + "]]\n" + vals;
-        ret += line;
-    }
-    return front + ret;
 }
 }  // namespace qblocks

@@ -17,7 +17,7 @@ export_fmt = "[{TIMESTAMP}]\t[{DATE}]\t[{FROM}]\t[{TO}]\t[{VALUE}]\t[{ETHER}]\t[
 export_fmt2 = "insert into transactions values ('[{HASH}]','[{FROM}]','[{FUNCTION}]',[{ETHER}]);\n"
 
 [formats]
-screen_fmt = "[{CONTRACT}] [{BLOCKNUMBER}].[{TRANSACTIONINDEX}].[{DATE}] [{FROM}] [{ETHER}] [{FUNCTION}]\n\tinput: [{INPUT}]\n\thash: [{HASH}]\n"
+screen_fmt = "[{CONTRACT}]  [{BLOCKNUMBER}].[{TRANSACTIONINDEX}].[{DATE}]  [{FROM}]  [{ETHER}]  [{FUNCTION}]\n\tinput: [{INPUT}]\n\thash: [{HASH}]\n"
 screen_fmt12 = "[{DATE}]\t[{FROM}]\t[{TO}]\t[{ETHER}]\t[{FUNCTION}]\t[{ISERROR}]\t[{BLOCKNUMBER}]\t[{HASH}]\n"
 screen_fmt2 = "[{HEAD}]\n\tdate: @[{DATE}]# timestamp: @[{TIMESTAMP}]# from: @[{w:20:FROM}...]# to: @[{w:20:TO}...]# value: @[{w:30:VALUE}]# \n\thash: @[{HASH}]# blockNumber: @[{BLOCKNUMBER}]# txIndex: @[{TRANSACTIONINDEX}]#\n\tinput: @[{INPUT}]#\n[{P}]"
 
@@ -46,14 +46,6 @@ disabled_3 = false
 
 [master]
 startBlock = 1718250
-
-[[watches2]]
-list = [
-    { address = "bb9bc244d798123fde783fcc1c72d3bb8c189413", name = "DAO", firstBlock = 1428757, color = "white_b", disabled = false },
-    { address = "Bf4eD7b27F1d666546E30D74d50d173d20bca754", name = "Withdraw", firstBlock = 1883496, color = "blue_b", disabled = false },
-    { address = "c0ee9db1a9e07ca63e4ff0d5fb6f86bf68d47b89", name = "Attacker 1", firstBlock = 1706608, color = "teal_b", disabled = false },
-    { address = "f835a0247b0063c04ef22006ebe57c5f11977cc4", name = "Attacker 2", firstBlock = 1706609, color = "green_b", disabled = false }
-]
 
 name: 		NONAME
 max_width: 	180
@@ -111,12 +103,6 @@ disabled_3   = "false"
 [master]
 startBlock = 1718250
 
-[[watches2]]
-list=[{ address = "bb9bc244d798123fde783fcc1c72d3bb8c189413", name = "DAO", firstBlock = 1428757, color = "white_b", disabled = false },
-{ address = "Bf4eD7b27F1d666546E30D74d50d173d20bca754", name = "Withdraw", firstBlock = 1883496, color = "blue_b", disabled = false },
-{ address = "c0ee9db1a9e07ca63e4ff0d5fb6f86bf68d47b89", name = "Attacker 1", firstBlock = 1706608, color = "teal_b", disabled = false },
-{ address = "f835a0247b0063c04ef22006ebe57c5f11977cc4", name = "Attacker 2", firstBlock = 1706609, color = "green_b", disabled = false }]
-
 
 File contents after write
 [version]
@@ -135,7 +121,7 @@ export_fmt = "[{TIMESTAMP}]\t[{DATE}]\t[{FROM}]\t[{TO}]\t[{VALUE}]\t[{ETHER}]\t[
 export_fmt2 = "insert into transactions values ('[{HASH}]','[{FROM}]','[{FUNCTION}]',[{ETHER}]);\n"
 
 [formats]
-screen_fmt = "[{CONTRACT}] [{BLOCKNUMBER}].[{TRANSACTIONINDEX}].[{DATE}] [{FROM}] [{ETHER}] [{FUNCTION}]\n\tinput: [{INPUT}]\n\thash: [{HASH}]\n"
+screen_fmt = "[{CONTRACT}]  [{BLOCKNUMBER}].[{TRANSACTIONINDEX}].[{DATE}]  [{FROM}]  [{ETHER}]  [{FUNCTION}]\n\tinput: [{INPUT}]\n\thash: [{HASH}]\n"
 screen_fmt12 = "[{DATE}]\t[{FROM}]\t[{TO}]\t[{ETHER}]\t[{FUNCTION}]\t[{ISERROR}]\t[{BLOCKNUMBER}]\t[{HASH}]\n"
 screen_fmt2 = "[{HEAD}]\n\tdate: @[{DATE}]# timestamp: @[{TIMESTAMP}]# from: @[{w:20:FROM}...]# to: @[{w:20:TO}...]# value: @[{w:30:VALUE}]# \n\thash: @[{HASH}]# blockNumber: @[{BLOCKNUMBER}]# txIndex: @[{TRANSACTIONINDEX}]#\n\tinput: @[{INPUT}]#\n[{P}]"
 
@@ -164,12 +150,4 @@ disabled_3 = false
 
 [master]
 startBlock = 1718250
-
-[[watches2]]
-list = [
-    { address = "bb9bc244d798123fde783fcc1c72d3bb8c189413", name = "DAO", firstBlock = 1428757, color = "white_b", disabled = false },
-    { address = "Bf4eD7b27F1d666546E30D74d50d173d20bca754", name = "Withdraw", firstBlock = 1883496, color = "blue_b", disabled = false },
-    { address = "c0ee9db1a9e07ca63e4ff0d5fb6f86bf68d47b89", name = "Attacker 1", firstBlock = 1706608, color = "teal_b", disabled = false },
-    { address = "f835a0247b0063c04ef22006ebe57c5f11977cc4", name = "Attacker 2", firstBlock = 1706609, color = "green_b", disabled = false }
-]
 

@@ -48,9 +48,3 @@ disabled_3   = "false"
 
 [master]
 startBlock = 1718250
-
-[[watches2]]
-list=[{ address = "bb9bc244d798123fde783fcc1c72d3bb8c189413", name = "DAO", firstBlock = 1428757, color = "white_b", disabled = false },
-{ address = "Bf4eD7b27F1d666546E30D74d50d173d20bca754", name = "Withdraw", firstBlock = 1883496, color = "blue_b", disabled = false },
-{ address = "c0ee9db1a9e07ca63e4ff0d5fb6f86bf68d47b89", name = "Attacker 1", firstBlock = 1706608, color = "teal_b", disabled = false },
-{ address = "f835a0247b0063c04ef22006ebe57c5f11977cc4", name = "Attacker 2", firstBlock = 1706609, color = "green_b", disabled = false }]

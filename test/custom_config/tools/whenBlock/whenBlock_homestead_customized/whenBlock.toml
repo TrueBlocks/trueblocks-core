@@ -3,26 +3,3 @@ current = "0.3.0"
 
 [display]
 format "[bn: {BLOCKNUMBER}\t][date: {DATE}\t][ts: {TIMESTAMP}\t][gasLimit: {GASLIMIT}]"
-
-[[specials]]
-list = [
-	{ name = "first",          value = "0"       },
-	{ name = "iceage",         value = "200000"  },
-	{ name = "devcon1",        value = "543626"  },
-	{ name = "homestead",      value = "1150000" },
-	{ name = "daofund",        value = "1428756" },
-	{ name = "daohack",        value = "1718497" },
-	{ name = "daofork",        value = "1920000" },
-	{ name = "devcon2",        value = "2286910" },
-	{ name = "tangerine",      value = "2463000" },
-	{ name = "spurious",       value = "2675000" },
-	{ name = "stateclear",     value = "2718436" },
-	{ name = "eea",            value = "3265360" },
-	{ name = "ens2",           value = "3327417" },
-	{ name = "parityhack1",    value = "4041179" },
-	{ name = "byzantium",      value = "4370000" },
-	{ name = "devcon3",        value = "4469339" },
-	{ name = "parityhack2",    value = "4501969" },
-	{ name = "constantinople", value = "tbd"     },
-	{ name = "latest",         value = ""        }
-]

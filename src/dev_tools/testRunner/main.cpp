@@ -385,6 +385,7 @@ bool COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, cons
 
     total += measure;
     if (measure.nTests) {
+        measure.allPassed = measure.nTests == measure.nPassed;
         cerr << measure.Format(STR_SCREEN_REPORT) << endl;
         perf << measure.Format(perf_fmt) << endl;
     }

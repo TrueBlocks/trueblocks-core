@@ -50,12 +50,11 @@ class CToml : public CSharedResource {
     class CTomlSection {
       public:
         string_q sectionName;
-        bool isArray;
         bool isComment;
         vector<CTomlKey> keys;
 
         CTomlSection(void);
-        CTomlSection(const string_q& n, bool a, bool c) : sectionName(n), isArray(a), isComment(c) {
+        CTomlSection(const string_q& n, bool c) : sectionName(n), isComment(c) {
         }
         CTomlSection(const CTomlSection& section);
 
@@ -70,7 +69,7 @@ class CToml : public CSharedResource {
     };
 
   protected:
-    void addSection(const string_q& section, bool commented, bool array);
+    void addSection(const string_q& section, bool commented);
     void addKey(const string_q& section, const string_q& key, const string_q& val, bool commented);
 
     CTomlSection* findSection(const string_q& section) const;
@@ -98,7 +97,6 @@ class CToml : public CSharedResource {
     bool getConfigBool(const string_q& section, const string_q& key, bool def) const;
     uint64_t getVersion(void) const;
 
-    void setConfigArray(const string_q& section, const string_q& key, const string_q& value);
     void setConfigStr(const string_q& section, const string_q& key, const string_q& value);
     void setConfigInt(const string_q& section, const string_q& key, uint64_t value);
     void setConfigBool(const string_q& section, const string_q& key, bool value);

@@ -1,82 +1,82 @@
-enabled,mode,speed,route,path/tool,filename,post,options,opt_cmd,has_env
-on,cmd,fast,null,utillib/arrayTest,README,n,@th
-on,cmd,fast,null,utillib/arrayTest,Insertion,n,val = 0
-on,cmd,fast,null,utillib/bigIntTest,00,n,
-on,cmd,fast,null,utillib/cmdLineTest,README,n,@th
-on,cmd,fast,null,utillib/cmdLineTest,bool1,n,file:cmd_file_bool1
-on,cmd,fast,null,utillib/cmdLineTest,bool2,n,file:cmd_file_bool2
-on,cmd,fast,null,utillib/cmdLineTest,other1,n,file:cmd_file_other1
-on,cmd,fast,null,utillib/cmdLineTest,other2,n,file:cmd_file_other2
-on,cmd,fast,null,utillib/cmdLineTest,other3,n,val = 2 & bool 1 & val = optionalMode & hiddenOption
-on,cmd,fast,null,utillib/colorTest,01,n,val = 0
-on,cmd,fast,null,utillib/convertTest,00,n,val = 0
-on,cmd,fast,null,utillib/convertTest,01,n,val = 1
-on,cmd,fast,null,utillib/convertTest,02,n,val = 2
-on,cmd,fast,null,utillib/convertTest,03,n,val = 3
-on,cmd,fast,null,utillib/convertTest,04,n,val = 4
-off,cmd,fast,null,utillib/curlTest,test00,n,
-on,cmd,fast,null,utillib/fileTest,test00,n,
-on,cmd,fast,null,utillib/fileTest,test01,n,val = recurse
-on,cmd,fast,null,utillib/fileTest,test02,n,val = first
-on,cmd,fast,null,utillib/fileTest,test03,n,val = last
-on,cmd,fast,null,utillib/fileTest,test04,n,val = first-recurse
-on,cmd,fast,null,utillib/fileTest,test05,n,val = last-recurse
-on,cmd,fast,null,utillib/fileTest,test06,n,val = copy
-on,cmd,fast,null,utillib/fileTest,test08,n,val = newest
-on,cmd,fast,null,utillib/fileTest,test07,n,val = rm
-on,cmd,fast,null,utillib/jsonTest,nothing,n,
-on,cmd,fast,null,utillib/jsonTest,test_blocks,n,val = blocks
-on,cmd,fast,null,utillib/jsonTest,test_escaped,n,val = escaped
-on,cmd,fast,null,utillib/jsonTest,test_random,n,val = random & parity
-on,cmd,fast,null,utillib/jsonTest,test_spaces,n,val = spaces
-on,cmd,fast,null,utillib/jsonTest,test_traces,n,val = traces
-on,cmd,fast,null,utillib/loggingTest,test_logging,n,
-on,cmd,fast,null,utillib/parsingTest,README,n,@th
-on,cmd,fast,null,utillib/parsingTest,00,n,val = 0
-on,cmd,fast,null,utillib/parsingTest,01,n,val = 1
-on,cmd,fast,null,utillib/parsingTest,02,n,val = 2
-on,cmd,fast,null,utillib/parsingTest,03,n,val = 3
-on,cmd,fast,null,utillib/parsingTest,04,n,val = 4
-on,cmd,fast,null,utillib/sizeofTest,README,n,@th
-on,cmd,fast,null,utillib/sizeofTest,00,n,
-on,cmd,fast,null,utillib/stringTest,README,n,@th
-on,cmd,fast,null,utillib/stringTest,Assignment,n,val = 2
-on,cmd,fast,null,utillib/stringTest,CStr,n,val = 3
-on,cmd,fast,null,utillib/stringTest,Clean,n,val = 5
-on,cmd,fast,null,utillib/stringTest,Compare,n,val = 1
-on,cmd,fast,null,utillib/stringTest,Extract,n,val = 4
-on,cmd,fast,null,utillib/stringTest,Relational,n,val = 0
-on,cmd,fast,null,utillib/timeTest,test00,n,val = 0
-on,cmd,fast,null,utillib/timeTest,test01,n,val = 1
-on,cmd,fast,null,utillib/timeTest,test02,n,val = 2
-on,cmd,fast,null,utillib/tomlTest,empty,n,val = empty.toml
-on,cmd,fast,null,utillib/tomlTest,test00,n,val = test00.toml
-on,cmd,fast,null,utillib/tomlTest,test01,n,val = test01.toml
-on,cmd,fast,null,utillib/tomlTest,test02,n,val = test02.toml
-on,cmd,fast,null,utillib/tomlTest,test03,n,val = test03.toml
-on,cmd,fast,null,utillib/tomlTest,test04,n,val = test04.toml
-on,cmd,fast,null,utillib/tomlTest,test05,n,val = test05.toml
-on,cmd,fast,null,utillib/tomlTest,test06,n,val = test06.toml
-on,cmd,fast,null,utillib/tomlTest,test07,n,val = test07.toml
-on,cmd,fast,null,utillib/tomlTest,test08,n,val = test08.toml
-on,cmd,fast,null,utillib/tomlTest,test09,n,val = test09.toml
-on,cmd,fast,null,utillib/tomlTest,test10,n,val = test10.toml
-on,cmd,fast,null,utillib/tomlTest,test11,n,val = test11.toml
-on,cmd,fast,null,utillib/tomlTest,test12,n,val = test12.toml
-on,cmd,fast,null,utillib/tomlTest,test13,n,val = test13.toml
-on,cmd,fast,null,utillib/tomlTest,test14,n,val = test14.toml
-on,cmd,fast,null,utillib/tomlTest2,acctExport,n,val = acctExport.toml
-on,cmd,fast,null,utillib/tomlTest2,blockScrape,n,val = blockScrape.toml
-on,cmd,fast,null,utillib/tomlTest2,chifra,n,val = chifra.toml
-on,cmd,fast,null,utillib/tomlTest2,ethslurp,n,val = ethslurp.toml
-on,cmd,fast,null,utillib/tomlTest2,ethNames,n,val = ethNames.toml
-on,cmd,fast,null,utillib/tomlTest2,getBlocks,n,val = getBlocks.toml
-on,cmd,fast,null,utillib/tomlTest2,getState,n,val = getState.toml
-on,cmd,fast,null,utillib/tomlTest2,getTrans,n,val = getTrans.toml
-on,cmd,fast,null,utillib/tomlTest2,grabABI,n,val = grabABI.toml
-on,cmd,fast,null,utillib/tomlTest2,quickBlocks,n,val = trueBlocks.toml
-on,cmd,fast,null,utillib/tomlTest2,whenBlock,n,val = whenBlock.toml
-on,cmd,fast,null,utillib/typesTest,README,n,@th
-on,cmd,fast,null,utillib/typesTest,01,n,val = 0
-off,cmd,fast,null,utillib/runningTest,01,n,val = 0
-on,cmd,fast,null,utillib/yamlTest,01,n,val = 0
+enabled ,mode ,speed ,route ,path/tool           ,filename     ,post ,options                                              ,opt_cmd ,has_env
+on      ,cmd  ,fast  ,null  ,utillib/arrayTest   ,README       ,n    ,@th
+on      ,cmd  ,fast  ,null  ,utillib/arrayTest   ,Insertion    ,n    ,val = 0
+on      ,cmd  ,fast  ,null  ,utillib/bigIntTest  ,00           ,n    ,
+on      ,cmd  ,fast  ,null  ,utillib/cmdLineTest ,README       ,n    ,@th
+on      ,cmd  ,fast  ,null  ,utillib/cmdLineTest ,bool1        ,n    ,file:cmd_file_bool1
+on      ,cmd  ,fast  ,null  ,utillib/cmdLineTest ,bool2        ,n    ,file:cmd_file_bool2
+on      ,cmd  ,fast  ,null  ,utillib/cmdLineTest ,other1       ,n    ,file:cmd_file_other1
+on      ,cmd  ,fast  ,null  ,utillib/cmdLineTest ,other2       ,n    ,file:cmd_file_other2
+on      ,cmd  ,fast  ,null  ,utillib/cmdLineTest ,other3       ,n    ,val = 2 & bool 1 & val = optionalMode & hiddenOption
+on      ,cmd  ,fast  ,null  ,utillib/colorTest   ,01           ,n    ,val = 0
+on      ,cmd  ,fast  ,null  ,utillib/convertTest ,00           ,n    ,val = 0
+on      ,cmd  ,fast  ,null  ,utillib/convertTest ,01           ,n    ,val = 1
+on      ,cmd  ,fast  ,null  ,utillib/convertTest ,02           ,n    ,val = 2
+on      ,cmd  ,fast  ,null  ,utillib/convertTest ,03           ,n    ,val = 3
+on      ,cmd  ,fast  ,null  ,utillib/convertTest ,04           ,n    ,val = 4
+off     ,cmd  ,fast  ,null  ,utillib/curlTest    ,test00       ,n    ,
+on      ,cmd  ,fast  ,null  ,utillib/fileTest    ,test00       ,n    ,
+on      ,cmd  ,fast  ,null  ,utillib/fileTest    ,test01       ,n    ,val = recurse
+on      ,cmd  ,fast  ,null  ,utillib/fileTest    ,test02       ,n    ,val = first
+on      ,cmd  ,fast  ,null  ,utillib/fileTest    ,test03       ,n    ,val = last
+on      ,cmd  ,fast  ,null  ,utillib/fileTest    ,test04       ,n    ,val = first-recurse
+on      ,cmd  ,fast  ,null  ,utillib/fileTest    ,test05       ,n    ,val = last-recurse
+on      ,cmd  ,fast  ,null  ,utillib/fileTest    ,test06       ,n    ,val = copy
+on      ,cmd  ,fast  ,null  ,utillib/fileTest    ,test08       ,n    ,val = newest
+on      ,cmd  ,fast  ,null  ,utillib/fileTest    ,test07       ,n    ,val = rm
+on      ,cmd  ,fast  ,null  ,utillib/jsonTest    ,nothing      ,n    ,
+on      ,cmd  ,fast  ,null  ,utillib/jsonTest    ,test_blocks  ,n    ,val = blocks
+on      ,cmd  ,fast  ,null  ,utillib/jsonTest    ,test_escaped ,n    ,val = escaped
+on      ,cmd  ,fast  ,null  ,utillib/jsonTest    ,test_random  ,n    ,val = random & parity
+on      ,cmd  ,fast  ,null  ,utillib/jsonTest    ,test_spaces  ,n    ,val = spaces
+on      ,cmd  ,fast  ,null  ,utillib/jsonTest    ,test_traces  ,n    ,val = traces
+on      ,cmd  ,fast  ,null  ,utillib/loggingTest ,test_logging ,n    ,
+on      ,cmd  ,fast  ,null  ,utillib/parsingTest ,README       ,n    ,@th
+on      ,cmd  ,fast  ,null  ,utillib/parsingTest ,00           ,n    ,val = 0
+on      ,cmd  ,fast  ,null  ,utillib/parsingTest ,01           ,n    ,val = 1
+on      ,cmd  ,fast  ,null  ,utillib/parsingTest ,02           ,n    ,val = 2
+on      ,cmd  ,fast  ,null  ,utillib/parsingTest ,03           ,n    ,val = 3
+on      ,cmd  ,fast  ,null  ,utillib/parsingTest ,04           ,n    ,val = 4
+on      ,cmd  ,fast  ,null  ,utillib/sizeofTest  ,README       ,n    ,@th
+on      ,cmd  ,fast  ,null  ,utillib/sizeofTest  ,00           ,n    ,
+on      ,cmd  ,fast  ,null  ,utillib/stringTest  ,README       ,n    ,@th
+on      ,cmd  ,fast  ,null  ,utillib/stringTest  ,Assignment   ,n    ,val = 2
+on      ,cmd  ,fast  ,null  ,utillib/stringTest  ,CStr         ,n    ,val = 3
+on      ,cmd  ,fast  ,null  ,utillib/stringTest  ,Clean        ,n    ,val = 5
+on      ,cmd  ,fast  ,null  ,utillib/stringTest  ,Compare      ,n    ,val = 1
+on      ,cmd  ,fast  ,null  ,utillib/stringTest  ,Extract      ,n    ,val = 4
+on      ,cmd  ,fast  ,null  ,utillib/stringTest  ,Relational   ,n    ,val = 0
+on      ,cmd  ,fast  ,null  ,utillib/timeTest    ,test00       ,n    ,val = 0
+on      ,cmd  ,fast  ,null  ,utillib/timeTest    ,test01       ,n    ,val = 1
+on      ,cmd  ,fast  ,null  ,utillib/timeTest    ,test02       ,n    ,val = 2
+on      ,cmd  ,fast  ,null  ,utillib/tomlTest    ,empty        ,n    ,val = empty.toml
+on      ,cmd  ,fast  ,null  ,utillib/tomlTest    ,test00       ,n    ,val = test00.toml
+on      ,cmd  ,fast  ,null  ,utillib/tomlTest    ,test01       ,n    ,val = test01.toml
+on      ,cmd  ,fast  ,null  ,utillib/tomlTest    ,test02       ,n    ,val = test02.toml
+on      ,cmd  ,fast  ,null  ,utillib/tomlTest    ,test03       ,n    ,val = test03.toml
+on      ,cmd  ,fast  ,null  ,utillib/tomlTest    ,test04       ,n    ,val = test04.toml
+on      ,cmd  ,fast  ,null  ,utillib/tomlTest    ,test05       ,n    ,val = test05.toml
+on      ,cmd  ,fast  ,null  ,utillib/tomlTest    ,test06       ,n    ,val = test06.toml
+on      ,cmd  ,fast  ,null  ,utillib/tomlTest    ,test07       ,n    ,val = test07.toml
+on      ,cmd  ,fast  ,null  ,utillib/tomlTest    ,test08       ,n    ,val = test08.toml
+on      ,cmd  ,fast  ,null  ,utillib/tomlTest    ,test09       ,n    ,val = test09.toml
+on      ,cmd  ,fast  ,null  ,utillib/tomlTest    ,test10       ,n    ,val = test10.toml
+on      ,cmd  ,fast  ,null  ,utillib/tomlTest    ,test11       ,n    ,val = test11.toml
+on      ,cmd  ,fast  ,null  ,utillib/tomlTest    ,test12       ,n    ,val = test12.toml
+on      ,cmd  ,fast  ,null  ,utillib/tomlTest    ,test13       ,n    ,val = test13.toml
+on      ,cmd  ,fast  ,null  ,utillib/tomlTest    ,test14       ,n    ,val = test14.toml
+on      ,cmd  ,fast  ,null  ,utillib/tomlTest2   ,acctExport   ,n    ,val = acctExport.toml
+on      ,cmd  ,fast  ,null  ,utillib/tomlTest2   ,blockScrape  ,n    ,val = blockScrape.toml
+on      ,cmd  ,fast  ,null  ,utillib/tomlTest2   ,chifra       ,n    ,val = chifra.toml
+on      ,cmd  ,fast  ,null  ,utillib/tomlTest2   ,ethslurp     ,n    ,val = ethslurp.toml
+on      ,cmd  ,fast  ,null  ,utillib/tomlTest2   ,ethNames     ,n    ,val = ethNames.toml
+on      ,cmd  ,fast  ,null  ,utillib/tomlTest2   ,getBlocks    ,n    ,val = getBlocks.toml
+on      ,cmd  ,fast  ,null  ,utillib/tomlTest2   ,getState     ,n    ,val = getState.toml
+on      ,cmd  ,fast  ,null  ,utillib/tomlTest2   ,getTrans     ,n    ,val = getTrans.toml
+on      ,cmd  ,fast  ,null  ,utillib/tomlTest2   ,grabABI      ,n    ,val = grabABI.toml
+on      ,cmd  ,fast  ,null  ,utillib/tomlTest2   ,quickBlocks  ,n    ,val = trueBlocks.toml
+on      ,cmd  ,fast  ,null  ,utillib/tomlTest2   ,whenBlock    ,n    ,val = whenBlock.toml
+on      ,cmd  ,fast  ,null  ,utillib/typesTest   ,README       ,n    ,@th
+on      ,cmd  ,fast  ,null  ,utillib/typesTest   ,01           ,n    ,val = 0
+off     ,cmd  ,fast  ,null  ,utillib/runningTest ,01           ,n    ,val = 0
+on      ,cmd  ,fast  ,null  ,utillib/yamlTest    ,01           ,n    ,val = 0
