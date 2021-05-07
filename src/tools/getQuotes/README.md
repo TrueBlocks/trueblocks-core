@@ -9,8 +9,8 @@ The `chifra quotes` tool provides Ethereum price data to various tools or for ot
 
 `Where:`  
 
-| Short Cut | Option | Description |
-| -------: | :------- | :------- |
+| Hotkey | Option | Description |
+| :----- | :----- | :---------- |
 | -f | --freshen | Freshen price database (append new data) |
 | -p | --period <val> | increment of display, one of [5&#124;15&#124;30&#124;60&#124;120*&#124;240&#124;1440&#124;10080&#124;hourly&#124;daily&#124;weekly] |
 | -a | --pair <str> | which price pair to freshen or list (see Poloniex) |

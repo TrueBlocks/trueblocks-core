@@ -7,8 +7,8 @@ pinMan -th
 
 `Where:`  
 
-| Short Cut | Option | Description |
-| -------: | :------- | :------- |
+| Hotkey | Option | Description |
+| :----- | :----- | :---------- |
 | -c | --compare | report differences (if any) between the manifest and pinning service |
 | -i | --init | initialize the local index by downloading bloom filters from the pinning service |
 | -f | --freshen | freshen the manifest from the hash found at the smart contract |

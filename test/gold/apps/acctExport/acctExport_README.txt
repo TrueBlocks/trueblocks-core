@@ -7,8 +7,8 @@ acctExport -th
 
 `Where:`  
 
-| Short Cut | Option | Description |
-| -------: | :------- | :------- |
+| Hotkey | Option | Description |
+| :----- | :----- | :---------- |
 |  | addrs | one or more addresses (0x...) to export (required) |
 |  | topics | filter by one or more logs topics (only for --logs option) |
 |  | fourbytes | filter by one or more fourbytes (only for transactions and trace options) |

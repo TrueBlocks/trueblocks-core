@@ -7,8 +7,8 @@ acctTest -th
         
 `Where:`  
 
-| Short Cut | Option | Description |
-| -------: | :------- | :------- |
+| Hotkey | Option | Description |
+| :----- | :----- | :---------- |
 | -a | --all | process all transactions from start of chain to latest block |
 | -f | --first <uint> | the first block to process |
 | -l | --last <uint> | the last block (less one) to process |

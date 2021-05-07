@@ -1,4 +1,4 @@
-## chifra export
+## chifra monitors
 
 This folder contains a TrueBlocks monitor. TrueBlocks monitors pull transactions from the Ethereum blockchain for a given (or a series of) Ethereum addresses.
 
@@ -6,15 +6,15 @@ Below we present the command line interface to this tool, although the tool itse
 
 Please contact us at [sales@greathill.com](mailto:sales@greathill.com) for more information.
 
-### Usage
+### usage
 
 `Usage:`    chifra export [-p|-r|-l|-t|-C|-O|-a|-i|-R|-U|-v|-h] &lt;address&gt; [address...] [topics] [fourbytes]  
 `Purpose:`  Export full detail of transactions for one or more Ethereum addresses.
 
 `Where:`  
 
-| Hotkey | Option | Description |
-| :----- | :----- | :---------- |
+| Short Cut | Option | Description |
+| -------: | :------- | :------- |
 |  | addrs | one or more addresses (0x...) to export (required) |
 |  | topics | filter by one or more logs topics (only for --logs option) |
 |  | fourbytes | filter by one or more fourbytes (only for transactions and trace options) |
@@ -34,26 +34,6 @@ Please contact us at [sales@greathill.com](mailto:sales@greathill.com) for more 
 `Notes:`
 
 - `addresses` must start with '0x' and be forty two characters long.
-
-#### Other Options
-
-All **TrueBlocks** command-line tools support the following commands (although in some case, they have no meaning):
-
-| Command     | Description                                                                                     |
-| ----------- | ----------------------------------------------------------------------------------------------- |
-| --version   | display the current version of the tool                                                         |
-| --nocolor   | turn off colored display                                                                        |
-| --wei       | specify value in wei (the default)                                                              |
-| --ether     | specify value in ether                                                                          |
-| --dollars   | specify value in US dollars                                                                     |
-| --raw       | report JSON data from the node with minimal processing                                          |
-| --very_raw  | report JSON data from node with zero processing                                                 |
-| --fmt       | export format (where appropriate). One of [ none &#124; txt &#124; csv &#124; json &#124; api ] |
-| --to_file   | write the results to a temporary file and return the filename                                   |
-| --output:fn | write the results to file 'fn' and return the filename                                          |
-| --file:fn   | specify multiple sets of command line options in a file.                                        |
-
-<small>*For the `--file:fn` option, place a series of valid command lines in a file and use the above options. In some cases, this option may significantly improve performance. A semi-colon at the start of a line makes that line a comment.*</small>
 
 **Source code**: [`apps/acctExport`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/acctExport)
 

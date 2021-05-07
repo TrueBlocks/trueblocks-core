@@ -7,8 +7,8 @@ makeClass -th
 
 `Where:`  
 
-| Short Cut | Option | Description |
-| -------: | :------- | :------- |
+| Hotkey | Option | Description |
+| :----- | :----- | :---------- |
 |  | files | one or more class definition files (required) |
 | -r | --run | run the class maker on associated <class_name(s)> |
 | -a | --all | list, or run all class definitions found in the local folder |

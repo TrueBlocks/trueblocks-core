@@ -15,8 +15,8 @@ You may optionally specify one or more blocks at which to report.
 
 `Where:`  
 
-| Short Cut | Option | Description |
-| -------: | :------- | :------- |
+| Hotkey | Option | Description |
+| :----- | :----- | :---------- |
 |  | addrs | two or more addresses (0x...), the first is an ERC20 token, balances for the rest are reported (required) |
 |  | blocks | an optional list of one or more blocks at which to report balances, defaults to 'latest' |
 | -p | --parts <val> | one or more parts of the token information to retreive, one or more of [name&#124;symbol&#124;decimals&#124;totalSupply&#124;version&#124;none&#124;all*] |

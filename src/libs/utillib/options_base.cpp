@@ -929,8 +929,8 @@ string_q COptionsBase::descriptions(void) const {
     } else {
         if (isReadme) {
             os << "\n";
-            os << "| Short Cut | Option | Description |\n";
-            os << "| -------: | :------- | :------- |\n";
+            os << "| Hotkey | Option | Description |\n";
+            os << "| :----- | :----- | :---------- |\n";
         }
 
         size_t nHidden = 0;

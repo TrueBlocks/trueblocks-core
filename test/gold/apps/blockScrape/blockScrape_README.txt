@@ -7,8 +7,8 @@ blockScrape -th
 
 `Where:`  
 
-| Short Cut | Option | Description |
-| -------: | :------- | :------- |
+| Hotkey | Option | Description |
+| :----- | :----- | :---------- |
 |  | mode | control the block and account scrapers, one of [run&#124;quit&#124;pause&#124;restart] (required) |
 | -t | --tool <val> | process the index, monitors, or both (none means process timestamps only), one or more of [monitors&#124;index*&#124;none&#124;both] |
 | -n | --n_blocks <num> | maximum number of blocks to process (defaults to 5000) |

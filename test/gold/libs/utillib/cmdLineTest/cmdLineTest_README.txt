@@ -7,8 +7,8 @@ cmdLineTest -th
         
 `Where:`  
 
-| Short Cut | Option | Description |
-| -------: | :------- | :------- |
+| Hotkey | Option | Description |
+| :----- | :----- | :---------- |
 |  | testNum | the number of the test to run (required) |
 |  | optionalMode | an optional mode with ~! start |
 | -b | --bool <bool> | enter a boolean value (either '0', '1', 'false', or 'true') |

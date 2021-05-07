@@ -7,8 +7,8 @@ getBlocks -th
 
 `Where:`  
 
-| Short Cut | Option | Description |
-| -------: | :------- | :------- |
+| Hotkey | Option | Description |
+| :----- | :----- | :---------- |
 |  | blocks | a space-separated list of one or more blocks to retrieve (required) |
 | -e | --hashes_only | display only transaction hashes, default is to display full transaction detail |
 | -a | --apps | display all address appearances included in the block |
