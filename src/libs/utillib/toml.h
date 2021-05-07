@@ -96,24 +96,25 @@ class CToml : public CSharedResource {
     CTomlSection* findSection(const string_q& section) const;
     CTomlKey* findKey(const string_q& section, const string_q& key) const;
 
-  public:
     vector<CTomlSection> sections;
 
-    explicit CToml(const string_q& fileName);
-    ~CToml(void);
-
     void clear(void);
-
     string_q getType(void) const override {
         return "CToml";
     }
+
+    bool readFile(const string_q& filename);
+
+  public:
+    explicit CToml(const string_q& fileName);
+    ~CToml(void);
 
     string_q getConfigStr(const string_q& section, const string_q& key, const string_q& def) const;
     string_q getConfigJson(const string_q& section, const string_q& key, const string_q& def) const;
     uint64_t getConfigInt(const string_q& section, const string_q& key, uint64_t def) const;
     biguint_t getConfigBigInt(const string_q& section, const string_q& key, biguint_t def) const;
-    bool getConfigBool(const string_q& section, const string_q& key, bool def) const;
     uint64_t getVersion(void) const;
+    bool getConfigBool(const string_q& section, const string_q& key, bool def) const;
 
     void setConfigStr(const string_q& section, const string_q& key, const string_q& value);
     void setConfigInt(const string_q& section, const string_q& key, uint64_t value);
@@ -124,9 +125,6 @@ class CToml : public CSharedResource {
 
     bool isBackLevel(void) const;
     friend ostream& operator<<(ostream& os, const CToml& tomlIn);
-
-  private:
-    bool readFile(const string_q& filename);
 };
 
 //-------------------------------------------------------------------------
