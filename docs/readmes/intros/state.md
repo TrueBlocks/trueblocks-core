@@ -1,1 +1,1 @@
-This is the state topic.
+We separate out these few commands into a section called Chain State to distinguish it from blockchain data such as blocks and transactions. Chain state is what changes when blocks and transactions are processed. If you're running a non-archive node, you can query things such as balance and the byte code for smart contracts. If you have an archive node (such as TurboGeth), you can query historical state which comes in very handily when doing reconciliations.

@@ -13,14 +13,14 @@ chifra -th
    monitor       add, remove, clean, and list appearances of address(es) on the chain
    names         list and/or share named addresses
    abis          list and/or share abi signatures
- DATA
+ CHAIN DATA
    blocks        export block-related data
    transactions  export transaction-related data
    receipts      export receipt-related data
    logs          export log-related data
    traces        export trace-related data
    when          return a date given a block number or a block number given a date
- STATE
+ CHAIN STATE
    state         export parts of the state for given address(es)
    tokens        export data related to ERC20 and/or ERC721 token(s)
  ADMIN

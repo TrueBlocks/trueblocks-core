@@ -65,7 +65,6 @@ generalTest
 jsonTest
 lastBlockTest
 loggingTest
-makeReadme.py
 parsingTest
 pinTest
 printFloatTest

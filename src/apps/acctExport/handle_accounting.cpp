@@ -31,6 +31,7 @@ bool acct_Display(CTraverser* trav, void* data) {
 //-----------------------------------------------------------------------
 bool acct_Pre(CTraverser* trav, void* data) {
     COptions* opt = (COptions*)trav->options;
+
     opt->firstOut = true;
 
     if (opt->apps.size() > 0 && opt->first_record != 0) {
@@ -46,6 +47,8 @@ bool acct_Pre(CTraverser* trav, void* data) {
 bool inputFilter(const string_q& input, const COptions* opt) {
     if (opt->fourbytes.empty())
         return true;
+    if (opt->freshen)
+        return true;
     for (auto four : opt->fourbytes)
         if (startsWith(input, four))
             return true;
@@ -55,8 +58,16 @@ bool inputFilter(const string_q& input, const COptions* opt) {
 //-----------------------------------------------------------------------
 bool COptions::handle_accounting(void) {
     CTraverser trav(this, cout, "txs");
-    trav.preFunc = acct_Pre;
-    trav.displayFunc = acct_Display;
+    if (freshen) {
+        trav.filterFunc = noopFunc;
+        trav.preFunc = noopFunc;
+        //        trav.postFunc = noopFunc;
+        trav.displayFunc = noopFunc;
+        trav.dataFunc = noopFunc;
+    } else {
+        trav.preFunc = acct_Pre;
+        trav.displayFunc = acct_Display;
+    }
 
     CTraverserArray traversers;
     traversers.push_back(trav);
