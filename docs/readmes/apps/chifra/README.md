@@ -46,9 +46,9 @@ Here is a screen shot of an interaction with Chifra building a smart contract mo
    serve         serve the TrueBlocks API via the flame server
    pins          query the status of the pinning system
  OTHER
-   explore       open the configured block explorer for the given address
+   quotes        return prices collected from configured remote API  explore       open the configured block explorer for the given address
    slurp         export details by querying EtherScan (note: will not return as many appearances as --list)
-   quotes        return prices collected from configured remote API
+ 
 ```
 
 **Source code**: [`apps/chifra`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra)

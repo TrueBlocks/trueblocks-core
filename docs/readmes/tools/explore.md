@@ -1,24 +1,23 @@
 ## chifra explore
 
-`chifra list` takes one or more addresses, queries the index of appearances, and builds a TrueBlocks 'monitor'. A monitor is a file that represents your interest in those particular addresses. The first time you create a monitor takes a few minutes, but the information is cached, so subsequent queries are much faster.
-
-Note that `chifra list` does not extract transactional data from the chain. This is accomplished with `chifra export`. In fact, `chifra list` is just a shortcut of the command `chifra export --appearances` and may be used interchangably.
+`chifra explore` opens Etherscan (and later other explorers - including our own) to the block, transaction hash, or Ethereum address you specify. It's a handy way to open EtherScan from the command line, nothing more.
 
 ### usage
 
-`Usage:`    chifra list &lt;address&gt; [address...]  
-`Purpose:`  List appearances for the given address(es).
+`Usage:`    chifra explore [ address | tx_hash | block_num ]  
+`Purpose:`  Opens Etherscan to either an address, a transaction hash, or a block number.
 
 `Where:`  
 
 | Hotkey | Option | Description |
 | -------: | :------- | :------- |
-|  | addrs | one or more addresses (0x...) to export (required) |
-| -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
+|  | addrs | an Ethereum address |
+|  | tx_hash | a 32-byte transaction hash |
+|  | block_num | a block number |
 | -h | --help | display this help screen |
 
 `Notes:`
 
-- `addresses` must start with '0x' and be forty two characters long.
-
-**Source code**: [`apps/acctExport`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/acctExport)
+- An `addresses` must start with '0x' and be forty-two characters long.
+- A `tx_hash` must start with '0x' and be sixty-six characters long.
+- If a hash is provided, it is assumed to be a transaction hash.

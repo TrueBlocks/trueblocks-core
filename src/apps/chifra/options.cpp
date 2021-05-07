@@ -180,6 +180,6 @@ const char* STR_FULL_HELP =
     "  serve         serve the TrueBlocks API via the flame server|"
     "  pins          query the status of the pinning system|"
     "OTHER|"
+    "  quotes        return prices collected from configured remote API"
     "  explore       open the configured block explorer for the given address|"
-    "  slurp         export details by querying EtherScan (note: will not return as many appearances as --list)|"
-    "  quotes        return prices collected from configured remote API";
+    "  slurp         export details by querying EtherScan (note: will not return as many appearances as --list)|";
