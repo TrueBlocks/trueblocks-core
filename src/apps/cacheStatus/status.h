@@ -13,7 +13,7 @@
  *-------------------------------------------------------------------------------------------*/
 /*
  * Parts of this file were generated with makeClass --run. Edit only those parts of
- *  the code inside of 'EXISTING_CODE' tags.
+ * the code inside of 'EXISTING_CODE' tags.
  */
 #include "etherlib.h"
 #include "cache.h"
@@ -32,6 +32,7 @@ class CStatus : public CBaseNode {
     string_q trueblocks_version;
     string_q rpc_provider;
     string_q balance_provider;
+    string_q config_path;
     string_q cache_path;
     string_q index_path;
     string_q host;
@@ -114,6 +115,7 @@ inline void CStatus::initialize(void) {
     trueblocks_version = "";
     rpc_provider = "";
     balance_provider = "";
+    config_path = "";
     cache_path = "";
     index_path = "";
     host = "";
@@ -148,6 +150,7 @@ inline void CStatus::duplicate(const CStatus& st) {
     trueblocks_version = st.trueblocks_version;
     rpc_provider = st.rpc_provider;
     balance_provider = st.balance_provider;
+    config_path = st.config_path;
     cache_path = st.cache_path;
     index_path = st.index_path;
     host = st.host;

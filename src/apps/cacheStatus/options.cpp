@@ -15,7 +15,7 @@ static const COption params[] = {
     // clang-format off
     COption("modes", "", "list<enum[index|monitors|entities|names|abis|caches|some*|all]>", OPT_POSITIONAL, "the type of status info to retrieve"),  // NOLINT
     COption("details", "d", "", OPT_SWITCH, "include details about items found in monitors, slurps, abis, or price caches"),  // NOLINT
-    COption("types", "t", "list<enum[blocks|transactions|traces|slurps|prices|all*]>", OPT_FLAG, "for cache mode only, which type(s) of cache to report"),  // NOLINT
+    COption("types", "t", "list<enum[blocks|transactions|traces|slurps|prices|all*]>", OPT_FLAG, "for caches mode only, which type(s) of cache to report"),  // NOLINT
     COption("depth", "p", "<uint64>", OPT_HIDDEN | OPT_FLAG, "for cache mode only, number of levels deep to report"),
     COption("report", "r", "", OPT_HIDDEN | OPT_SWITCH, "show a summary of the current status of TrueBlocks (deprecated)"),  // NOLINT
     COption("terse", "e", "", OPT_HIDDEN | OPT_SWITCH, "show a terse summary report"),
@@ -235,11 +235,12 @@ void COptions::Init(void) {
     if (isTestMode()) {
         status.host = "--hostname-- (--username--)";
         status.rpc_provider = status.balance_provider = "--providers--";
-        status.cache_path = status.index_path = "--paths--";
+        status.config_path = status.cache_path = status.index_path = "--paths--";
     } else {
         status.host = string_q(hostname) + " (" + username + ")";
         status.rpc_provider = getGlobalConfig()->getConfigStr("settings", "rpcProvider", "http://localhost:8545");
         status.balance_provider = getGlobalConfig()->getConfigStr("settings", "balanceProvider", status.rpc_provider);
+        status.config_path = configPath("");
         status.cache_path = getGlobalConfig()->getConfigStr("settings", "cachePath", getCachePath(""));
         status.index_path = getGlobalConfig()->getConfigStr("settings", "indexPath", getIndexPath(""));
     }

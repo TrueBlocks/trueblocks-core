@@ -42,5 +42,5 @@ acctExport -th
 
 `Notes:`
 
-- `addresses` must start with '0x' and be forty two characters long.
+- An `address` must start with '0x' and be forty-two characters long.
 

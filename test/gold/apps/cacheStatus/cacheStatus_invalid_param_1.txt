@@ -9,7 +9,7 @@ cacheStatus --junk
   Where:  
 	modes                 the type of status info to retrieve, one or more of [index|monitors|entities|names|abis|caches|some*|all]
 	-d  (--details)       include details about items found in monitors, slurps, abis, or price caches
-	-t  (--types <val>)   for cache mode only, which type(s) of cache to report, one or more of [blocks|transactions|traces|slurps|prices|all*]
+	-t  (--types <val>)   for caches mode only, which type(s) of cache to report, one or more of [blocks|transactions|traces|slurps|prices|all*]
 
 	#### Hidden options
 	-p  (--depth <num>)   for cache mode only, number of levels deep to report

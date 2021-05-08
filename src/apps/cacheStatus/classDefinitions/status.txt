@@ -5,6 +5,7 @@ fields = string client_version|\
         string trueblocks_version|\
         string rpc_provider|\
         string balance_provider|\
+        string config_path (nowrite)|\
         string cache_path|\
         string index_path|\
         string host|\

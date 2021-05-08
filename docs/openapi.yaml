@@ -1084,7 +1084,7 @@ paths:
           type: boolean
       - name: types
         in: query
-        description: for cache mode only, which type(s) of cache to report
+        description: for caches mode only, which type(s) of cache to report
         required: false
         style: form
         explode: true

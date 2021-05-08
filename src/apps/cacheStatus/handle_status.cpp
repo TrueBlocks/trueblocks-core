@@ -16,6 +16,7 @@ bool COptions::handle_status(ostream& os) {
         const char* STR_TERSE_REPORT =
             "client: [{CLIENT_VER}][{MODES1}]\n"
             "[{TIME}] trueblocks: [{TB_VER}][{MODES2}]\n"
+            "[{TIME}] configPath: [{CONFIG_PATH}]\n"
             "[{TIME}] cachePath: [{CACHE_PATH}]\n"
             "[{TIME}] indexPath: [{INDEX_PATH}]\n"
             "[{TIME}] rpcProvider: [{PROVIDER}]";
@@ -36,6 +37,7 @@ bool COptions::handle_status(ostream& os) {
         replaceAll(report, "[{CLIENT_VER}]",
                    (status.client_version.empty() ? "--no rpc server--" : status.client_version));
         replaceAll(report, "[{TB_VER}]", status.trueblocks_version);
+        replaceAll(report, "[{CONFIG_PATH}]", status.config_path);
         replaceAll(report, "[{CACHE_PATH}]", status.cache_path);
         replaceAll(report, "[{INDEX_PATH}]", status.index_path);
         replaceAll(report, "[{PROVIDER}]", status.rpc_provider);

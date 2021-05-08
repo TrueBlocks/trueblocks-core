@@ -68,7 +68,7 @@ bool COptions::call_command(int argc, const char* argv[]) {
         return false;
 
     // show chifra's help in limited cases, the tool's help otherwise
-    if (has_help && (argc == 2 || mode == "serve"))
+    if (has_help && (argc == 2))
         return usage("");
 
     // Make sure user sent a real subcommand

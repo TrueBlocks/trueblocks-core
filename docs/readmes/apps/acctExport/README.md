@@ -33,7 +33,7 @@ Please contact us at [sales@greathill.com](mailto:sales@greathill.com) for more 
 
 `Notes:`
 
-- `addresses` must start with '0x' and be forty two characters long.
+- An `address` must start with '0x' and be forty-two characters long.
 
 **Source code**: [`apps/acctExport`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/acctExport)
 

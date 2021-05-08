@@ -23,7 +23,7 @@ This simple program may be used to query an Ethereum address to determine if it 
 
 `Notes:`
 
-- `addresses` must start with '0x' and be forty two characters long.
+- An `address` must start with '0x' and be forty-two characters long.
 - `blocks` may be a space-separated list of values, a start-end range, a `special`, or any combination.
 - If the queried node does not store historical state, the results are undefined.
 - `special` blocks are detailed under `whenBlock --list`.

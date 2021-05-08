@@ -429,7 +429,7 @@ COptions::COptions(void) {
 
     // BEG_CODE_NOTES
     // clang-format off
-    notes.push_back("`addresses` must start with '0x' and be forty two characters long.");
+    notes.push_back("An `address` must start with '0x' and be forty-two characters long.");
     // clang-format on
     // END_CODE_NOTES
 
