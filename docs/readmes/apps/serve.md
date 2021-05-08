@@ -2,7 +2,9 @@
 
 `chifra serve` delivers all of the `chifra` commands, along with all of their options, as a JSON api using the GoLang program we call `flame`.
 
-The easiest way to get help on the API is to run the `chifra` command help to see all the routes and specific help for a given tool to see all the options. See below for an example of converting a command line to an API url.
+
+You may get help on the [API here](https://www.tokenomics.io/api.html
+). Although another way to get help to simply run `chifra --help` or `chifra <cmd> --help` to see routes and all the options for each route. See below for an example of converting a command line to an API url.
 
 ### usage
 
