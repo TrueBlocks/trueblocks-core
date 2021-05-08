@@ -1,10 +1,11 @@
 ## chifra serve
 
-`chifra serve` delivers all of the `chifra` commands, along with all of their options, as a JSON api using the GoLang program we call `flame`.
+`chifra serve` delivers a JSON API for each of the `chifra` commands along with each of its options. It does this through `flame` server which is written in Go.
 
+[Get help with the API here](https://www.tokenomics.io/api.html
+).
 
-You may get help on the [API here](https://www.tokenomics.io/api.html
-). Although another way to get help to simply run `chifra --help` or `chifra <cmd> --help` to see routes and all the options for each route. See below for an example of converting a command line to an API url.
+Another way to get help to run `chifra --help` or `chifra <cmd> --help` on your command line. See below for an example of converting command line options to a call to the API. There's a one-to-one correspondence between the command line tools and options and the API routes and their options.
 
 ### usage
 
@@ -16,7 +17,7 @@ You may get help on the [API here](https://www.tokenomics.io/api.html
 | Short Cut | Option    | Description                                 |
 | --------: | :-------- | :------------------------------------------ |
 |           | --port    | specify the server's port (default ":8080") |
-|        -v | --verbose | verbose level (between 0 and 10 inclusive)  |
+|        -v | --verbose | set verbose level (optional level defaults to 1)  |
 |        -h | --help    | display this help screen                    |
 
 `Notes:`

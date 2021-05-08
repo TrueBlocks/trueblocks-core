@@ -1006,8 +1006,7 @@ string_q COptionsBase::descriptions(void) const {
         if (isEnabled(OPT_FMT) && (verbose || isTestMode()))
             os << oneDescription("-x", "--fmt <val>", "export format, one of [none|json*|txt|csv|api]");
         if (isEnabled(OPT_VERBOSE))
-            os << oneDescription("-v", "--verbose",
-                                 "set verbose level. Either -v, --verbose or -v:n where 'n' is level");
+            os << oneDescription("-v", "--verbose", "set verbose level (optional level defaults to 1)");
         if (isEnabled(OPT_HELP))
             os << oneDescription("-h", "--help", "display this help screen");
     }

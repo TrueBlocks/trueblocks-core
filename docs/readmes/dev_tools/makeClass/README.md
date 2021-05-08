@@ -23,7 +23,7 @@
 | -i | --filter <str> | process only files whose filename or contents contain 'filter' |
 | -t | --test | for both code generation and options generation, process but do not write changes |
 | -c | --force | for both code generation and options generation, force writing of changes |
-| -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
+| -v | --verbose | set verbose level (optional level defaults to 1) |
 | -h | --help | display this help screen |
 
 `Notes:`

@@ -22,7 +22,7 @@ You may optionally specify one or more blocks at which to report.
 | -p | --parts <val> | one or more parts of the token information to retreive, one or more of *[ name \| symbol \| decimals \| totalSupply \| version \| none \| all\* ]* |
 | -b | --by_acct | consider each address an ERC20 token except the last, whose balance is reported for each token |
 | -n | --no_zero | suppress the display of zero balance accounts |
-| -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
+| -v | --verbose | set verbose level (optional level defaults to 1) |
 | -h | --help | display this help screen |
 
 `Notes:`

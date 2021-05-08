@@ -1,6 +1,8 @@
 ## chifra status
 
-The `chifra status` program allows you to manage and explore the various TrueBlock caches. You may list all, some, or individual cache entries either as a summary or in full detail. The cache types are described in the `modes` option. There are caches for the address index, named addresses, abi files, as well as other things including blockchain data, address monitors and groups of address monitors called entities.
+The `chifra status` program allows you to manage the various TrueBlock caches. You may list all of the caches, some of the cache, or even individual caches either in terse or full detail. The cache of interest is specified with the `modes` option.
+
+TrueBlocks maintains caches for the index of address appearances, named addresses, abi files, as well as other data including blockchain data, address monitors, and groups of address monitors called entities.
 
 ### Usage
 
@@ -14,7 +16,7 @@ The `chifra status` program allows you to manage and explore the various TrueBlo
 |  | modes | the type of status info to retrieve, one or more of *[ index \| monitors \| entities \| names \| abis \| caches \| some\* \| all ]* |
 | -d | --details | include details about items found in monitors, slurps, abis, or price caches |
 | -t | --types <val> | for caches mode only, which type(s) of cache to report, one or more of *[ blocks \| transactions \| traces \| slurps \| prices \| all\* ]* |
-| -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
+| -v | --verbose | set verbose level (optional level defaults to 1) |
 | -h | --help | display this help screen |
 
 #### Other Options

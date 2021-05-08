@@ -18,7 +18,7 @@ This simple program may be used to query an Ethereum address to determine if it 
 | -p | --parts <val> | control which state to export, one or more of *[ none \| some\* \| all \| balance \| nonce \| code \| storage \| deployed \| accttype ]* |
 | -c | --changes | only report a balance when it changes from one block to the next |
 | -n | --no_zero | suppress the display of zero balance accounts |
-| -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
+| -v | --verbose | set verbose level (optional level defaults to 1) |
 | -h | --help | display this help screen |
 
 `Notes:`

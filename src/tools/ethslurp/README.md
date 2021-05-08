@@ -19,7 +19,7 @@ While `chifra slurp` has its shortcomings, it does provides some nice features. 
 |  | blocks | an optional range of blocks to slurp |
 | -t | --types <val> | one or more types of transactions to request, one or more of *[ ext\* \| int \| token \| nfts \| miner \| all ]* |
 | -p | --appearances | show only the blocknumer.tx_id appearances of the exported transactions |
-| -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
+| -v | --verbose | set verbose level (optional level defaults to 1) |
 | -h | --help | display this help screen |
 
 `Notes:`

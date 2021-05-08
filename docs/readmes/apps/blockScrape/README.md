@@ -20,7 +20,7 @@ Using operating system tools such as Linux's `cron` you can easily maintain a  c
 | -s | --sleep <double> | the number of seconds to sleep between passes (default 14) |
 | -i | --cache_txs | write transactions to the cache (see notes) |
 | -R | --cache_traces | write traces to the cache (see notes) |
-| -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
+| -v | --verbose | set verbose level (optional level defaults to 1) |
 | -h | --help | display this help screen |
 
 **Source code**: [`apps/blockScrape`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/blockScrape)

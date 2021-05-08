@@ -15,7 +15,7 @@ The `chifra transactions` tool retrieves transactions from the running Ethereum 
 | -a | --articulate | articulate the transactions if an ABI is found for the 'to' address |
 | -t | --trace | display the transaction's trace |
 | -u | --uniq | display a list of uniq addresses found in this transaction |
-| -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
+| -v | --verbose | set verbose level (optional level defaults to 1) |
 | -h | --help | display this help screen |
 
 `Notes:`

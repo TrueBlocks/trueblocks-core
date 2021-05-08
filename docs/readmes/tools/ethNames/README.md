@@ -43,7 +43,7 @@ Using chifra names to find Singular's address, list tokens held by other token a
 | -a | --addr | display only addresses in the results (useful for scripting) |
 | -s | --entities | display entity data |
 | -g | --tags | export the list of tags and subtags only |
-| -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
+| -v | --verbose | set verbose level (optional level defaults to 1) |
 | -h | --help | display this help screen |
 
 `Notes:`

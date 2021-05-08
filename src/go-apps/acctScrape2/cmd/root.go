@@ -222,7 +222,7 @@ func usage(s string) {
 	fmt.Println(" ", colr("yellow", "Where:"))
 	fmt.Println("        addrs                 one or more Ethereum addresses (required)")
 	fmt.Println("        -m  (--max)           set maximum number of parallel threads")
-	fmt.Println("        -v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level")
+	fmt.Println("        -v  (--verbose)       set verbose level (optional level defaults to 1)")
 	fmt.Println("        -h  (--help)          display this help screen")
 	fmt.Println("")
 	fmt.Println(" ", colr("blue", "Powered by TrueBlocks (GHC-TrueBlocks//0.8.3-alpha-8af508185-20210126)"))

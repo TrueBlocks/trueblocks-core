@@ -15,7 +15,7 @@
 | -a | --articulate | articulate the transactions if an ABI is found for the 'to' address |
 | -d | --statediff | export stateDiff traces for the transaction(s) |
 | -c | --count | show the number of traces for the transaction only (fast) |
-| -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
+| -v | --verbose | set verbose level (optional level defaults to 1) |
 | -h | --help | display this help screen |
 
 `Notes:`

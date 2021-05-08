@@ -20,7 +20,7 @@ The tool may also be used to double check that the results produced from the Tru
 | -n | --uniq_tx | display only uniq addresses found per transaction |
 | -c | --count | display counts of appearances (for --apps, --uniq, or --uniq_tx) or transactions |
 | -U | --uncles | display uncle blocks (if any) instead of the requested block |
-| -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
+| -v | --verbose | set verbose level (optional level defaults to 1) |
 | -h | --help | display this help screen |
 
 `Notes:`

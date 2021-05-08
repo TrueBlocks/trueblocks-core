@@ -28,7 +28,7 @@ Please contact us at [sales@greathill.com](mailto:sales@greathill.com) for more 
 | -i | --cache_txs | write transactions to the cache (see notes) |
 | -R | --cache_traces | write traces to the cache (see notes) |
 | -U | --count | only available for --appearances mode, if present return only the number of records |
-| -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
+| -v | --verbose | set verbose level (optional level defaults to 1) |
 | -h | --help | display this help screen |
 
 `Notes:`

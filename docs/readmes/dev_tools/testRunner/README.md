@@ -33,7 +33,7 @@ You may run all tests from the `./build` folder by entering `make test-all` (or 
 | -n | --no_quit | do not quit testing on first error |
 | -o | --no_post | do not complete the post processing step |
 | -r | --report | display performance report to screen |
-| -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
+| -v | --verbose | set verbose level (optional level defaults to 1) |
 | -h | --help | display this help screen |
 
 **Source code**: [`dev_tools/testRunner`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/dev_tools/testRunner)

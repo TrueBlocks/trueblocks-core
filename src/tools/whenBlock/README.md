@@ -19,7 +19,7 @@ The values for `date` and `time` are specified in JSON format. `hour`/`minute`/`
 | -l | --list | export a list of the 'special' blocks |
 | -t | --timestamps | ignore other options and generate timestamps only |
 | -s | --skip <num> | only applicable if --timestamps is on, the step between block numbers in the export |
-| -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
+| -v | --verbose | set verbose level (optional level defaults to 1) |
 | -h | --help | display this help screen |
 
 `Notes:`

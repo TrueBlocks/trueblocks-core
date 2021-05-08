@@ -1,6 +1,8 @@
 ## [{NAME}]
 
-The `[{NAME}]` program allows you to manage and explore the various TrueBlock caches. You may list all, some, or individual cache entries either as a summary or in full detail. The cache types are described in the `modes` option. There are caches for the address index, named addresses, abi files, as well as other things including blockchain data, address monitors and groups of address monitors called entities.
+The `[{NAME}]` program allows you to manage the various TrueBlock caches. You may list all of the caches, some of the cache, or even individual caches either in terse or full detail. The cache of interest is specified with the `modes` option.
+
+TrueBlocks maintains caches for the index of address appearances, named addresses, abi files, as well as other data including blockchain data, address monitors, and groups of address monitors called entities.
 
 [{USAGE_TABLE}]
 [{FOOTER}]

@@ -15,7 +15,7 @@ The `chifra pins` is not ready for prime time. Please return late.
 | -i | --init | initialize the local index by downloading bloom filters from the pinning service |
 | -f | --freshen | freshen the manifest from the hash found at the smart contract |
 | -s | --sleep <double> | the number of seconds to sleep between requests during init (default .25) |
-| -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
+| -v | --verbose | set verbose level (optional level defaults to 1) |
 | -h | --help | display this help screen |
 
 #### Other Options

@@ -20,7 +20,7 @@ import (
 func main() {
 	// handle some command line options
 	flag.StringVar(&tb.Options.Port, "port", ":8080", "specify the server's port")
-    flag.IntVar(&tb.Options.Verbose, "verbose", 0, "verbose level (between 0 and 10 inclusive)")
+    flag.IntVar(&tb.Options.Verbose, "verbose", 0, "set verbose level (optional level defaults to 1)")
 	flag.Parse()
 
 	// Cleanup user input

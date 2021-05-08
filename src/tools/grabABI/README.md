@@ -15,7 +15,7 @@
 | -c | --canonical | convert all types to their canonical represenation and remove all spaces from display |
 | -k | --known | load common 'known' ABIs from cache |
 | -f | --find <str> | try to search for a function declaration given a four byte code |
-| -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
+| -v | --verbose | set verbose level (optional level defaults to 1) |
 | -h | --help | display this help screen |
 
 `Notes:`
