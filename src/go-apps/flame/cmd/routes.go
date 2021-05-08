@@ -70,9 +70,9 @@ func AccountsExport(w http.ResponseWriter, r *http.Request) {
 	CallOne(w, r, "acctExport", "export")
 }
 
-// AccountsMonitor help text todo
-func AccountsMonitor(w http.ResponseWriter, r *http.Request) {
-	CallOneExtra(w, r, "chifra", "monitor", "monitor")
+// AccountsMonitors help text todo
+func AccountsMonitors(w http.ResponseWriter, r *http.Request) {
+	CallOneExtra(w, r, "chifra", "monitors", "monitors")
 }
 
 // AccountsNames help text todo
@@ -195,10 +195,10 @@ var routes = Routes{
 	},
 
 	Route{
-		"AccountsMonitor",
+		"AccountsMonitors",
 		"GET",
-		"/monitor",
-		AccountsMonitor,
+		"/monitors",
+		AccountsMonitors,
 	},
 
 	Route{

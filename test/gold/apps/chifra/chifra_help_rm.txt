@@ -1,10 +1,10 @@
-chifra argc: 4 [1:monitor] [2:--delete] [3:--help] 
-chifra monitor --delete --help 
-chifra monitor argc: 4 [1:--appearances] [2:--delete] [3:--help] 
-chifra monitor --appearances --delete --help 
-PROG_NAME = [chifra monitor]
+chifra argc: 4 [1:monitors] [2:--delete] [3:--help] 
+chifra monitors --delete --help 
+chifra monitors argc: 4 [1:--appearances] [2:--delete] [3:--help] 
+chifra monitors --appearances --delete --help 
+PROG_NAME = [chifra monitors]
 
-  Usage:    chifra monitor [-p|-r|-l|-t|-C|-O|-a|-i|-R|-U|-v|-h] <address> [address...] [topics] [fourbytes]  
+  Usage:    chifra monitors [-p|-r|-l|-t|-C|-O|-a|-i|-R|-U|-v|-h] <address> [address...] [topics] [fourbytes]  
   Purpose:  Export full detail of transactions for one or more Ethereum addresses.
 
   Where:  

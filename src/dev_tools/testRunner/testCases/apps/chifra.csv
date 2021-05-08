@@ -4,10 +4,10 @@ on,cmd,fast,null,apps/chifra,README,n,@th
 on,cmd,fast,null,apps/chifra,help,n,@h
 on,cmd,fast,null,apps/chifra,help_long,n,help
 on,cmd,fast,null,apps/chifra,chifra_help,n,help
-on,cmd,fast,null,apps/chifra,help_list,n,modes = monitor & help
+on,cmd,fast,null,apps/chifra,help_list,n,modes = monitors & help
 on,cmd,fast,null,apps/chifra,help_export,n,modes = export & help
 on,cmd,fast,null,apps/chifra,help_slurp,n,modes = slurp & help
-on,cmd,fast,null,apps/chifra,help_rm,n,modes = monitor & delete & help
+on,cmd,fast,null,apps/chifra,help_rm,n,modes = monitors & delete & help
 on,cmd,fast,null,apps/chifra,help_entities,n,modes = entities & help
 on,cmd,fast,null,apps/chifra,help_names,n,modes = names & help
 on,cmd,fast,null,apps/chifra,help_tags,n,modes = tags & help
@@ -27,8 +27,8 @@ on,cmd,fast,null,apps/chifra,help_when,n,modes = when & help
 on,cmd,fast,null,apps/chifra,no_params,n,
 on,cmd,fast,null,apps/chifra,invalid_option,n,modes = not_a_mode
 
-#on,both,fast,export,apps/chifra,list,y,modes = monitor & addrs = 0xfb744b951d094b310262c8f986c860df9ab1de65 & end = 10000
-on,both,fast,export,apps/chifra,rm,y,modes = monitor & addrs = 0x807640a13483f8ac783c557fcdf27be11ea4ac7a & remove
+#on,both,fast,export,apps/chifra,list,y,modes = monitors & addrs = 0xfb744b951d094b310262c8f986c860df9ab1de65 & end = 10000
+on,both,fast,export,apps/chifra,rm,y,modes = monitors & addrs = 0x807640a13483f8ac783c557fcdf27be11ea4ac7a & remove
 on,both,fast,names,apps/chifra,names,y,modes = names & names = 50-Tokens & expand
 on,both,fast,names,apps/chifra,names_noparams,n,modes = names & names = 50-Tokens & fmt = txt
 on,both,fast,names,apps/chifra,names_badparams,y,modes = names & not_an_option

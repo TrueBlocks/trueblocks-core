@@ -2,7 +2,7 @@ num,group,is_visible,command,tool,description
 01,Accounts,false,,,Access and cache transactional data
 01,Accounts,true,list,acctExport --appearances,list every appearance of an address anywhere on the chain
 01,Accounts,true,export,acctExport,export details for each appearance (as txs&#44; logs&#44; traces&#44; balances&#44; reconciliations&#44; etc.)
-01,Accounts,true,monitor,acctExport --appearances,add&#44; remove&#44; clean&#44; and list appearances of address(es) on the chain
+01,Accounts,true,monitors,acctExport --appearances,add&#44; remove&#44; clean&#44; and list appearances of address(es) on the chain
 01,Accounts,true,names,ethNames,list and/or share named addresses
 01,Accounts,true,abis,grabABI,list and/or share abi signatures
 01,Accounts,true,entities,ethNames --entities,

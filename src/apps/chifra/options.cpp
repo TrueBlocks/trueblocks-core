@@ -138,7 +138,7 @@ map<string, string> chifraCmdMap = {
     // -- Accounts
     {"list", "acctExport --appearances"},
     {"export", "acctExport"},
-    {"monitor", "acctExport --appearances"},
+    {"monitors", "acctExport --appearances"},
     {"names", "ethNames"},
     {"abis", "grabABI"},
     {"entities", "ethNames --entities"},
@@ -172,7 +172,7 @@ const char* STR_CHIFRA_HELP =
     "ACCOUNTS|"
     "  list          list every appearance of an address anywhere on the chain|"
     "  export        export details for each appearance (as txs, logs, traces, balances, reconciliations, etc.)|"
-    "  monitor       add, remove, clean, and list appearances of address(es) on the chain|"
+    "  monitors      add, remove, clean, and list appearances of address(es) on the chain|"
     "  names         list and/or share named addresses|"
     "  abis          list and/or share abi signatures|"
     "CHAIN DATA|"

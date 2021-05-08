@@ -49,8 +49,8 @@ void COptions::writeOpenApiFile(void) {
             chifra_stream_a << "    // -- " << co.group << endl;
             chifra_stream_b << "    \"" << substitute(toUpper(co.group), " ", "") << "|\"" << endl;
         } else {
-            chifra_stream_a << "{\"" << co.command << "\", \"" << co.tool << "\"}," << endl;
-            chifra_stream_b << "\"  " << padRight(co.command, 20) << co.description << "|\"" << endl;
+            chifra_stream_a << "    {\"" << co.command << "\", \"" << co.tool << "\"}," << endl;
+            chifra_stream_b << "    \"  " << padRight(co.command, 20) << co.description << "|\"" << endl;
         }
 
         if (co.is_visible) {

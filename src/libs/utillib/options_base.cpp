@@ -737,7 +737,7 @@ map<string_q, string_q> progNameMap = {
     // -- Accounts
     // list
     make_pair("acctExport", "chifra export"),
-    // monitor
+    // monitors
     make_pair("ethNames", "chifra names"),
     make_pair("grabABI", "chifra abis"),
     // entities

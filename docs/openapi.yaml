@@ -272,11 +272,11 @@ paths:
                   $ref: '#/components/schemas/response'
         "400":
           description: bad input parameter
-  /monitor:
+  /monitors:
     get:
       tags:
       - Accounts
-      operationId: accounts-monitor
+      operationId: accounts-monitors
       responses:
         "200":
           description: status of the scraper
