@@ -15,7 +15,7 @@ This simple program may be used to query an Ethereum address to determine if it 
 | :----- | :----- | :---------- |
 |  | addrs | one or more addresses (0x...) from which to retrieve balances (required) |
 |  | blocks | an optional list of one or more blocks at which to report balances, defaults to 'latest' |
-| -p | --parts <val> | control which state to export, one or more of [none&#124;some*&#124;all&#124;balance&#124;nonce&#124;code&#124;storage&#124;deployed&#124;accttype] |
+| -p | --parts <val> | control which state to export, one or more of *[ none \| some\* \| all \| balance \| nonce \| code \| storage \| deployed \| accttype ]* |
 | -c | --changes | only report a balance when it changes from one block to the next |
 | -n | --no_zero | suppress the display of zero balance accounts |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |

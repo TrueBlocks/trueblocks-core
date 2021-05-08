@@ -13,7 +13,7 @@ whenBlock -th
 | -l | --list | export a list of the 'special' blocks |
 | -t | --timestamps | ignore other options and generate timestamps only |
 | -s | --skip <num> | only applicable if --timestamps is on, the step between block numbers in the export |
-| -x | --fmt <val> | export format, one of [none&#124;json*&#124;txt&#124;csv&#124;api] |
+| -x | --fmt <val> | export format, one of *[ none \| json\* \| txt \| csv \| api ]* |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 

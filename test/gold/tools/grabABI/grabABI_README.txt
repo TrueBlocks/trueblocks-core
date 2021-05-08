@@ -16,7 +16,7 @@ grabABI -th
 |####|Hidden options||
 | -s | --sol <str> | file name of .sol file from which to create a new known abi (without .sol) |
 |####|Hidden options||
-| -x | --fmt <val> | export format, one of [none&#124;json*&#124;txt&#124;csv&#124;api] |
+| -x | --fmt <val> | export format, one of *[ none \| json\* \| txt \| csv \| api ]* |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 

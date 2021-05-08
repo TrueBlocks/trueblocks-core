@@ -1,6 +1,6 @@
 ## chifra explore
 
-`chifra explore` opens Etherscan (and later other explorers - including our own) to the block, transaction hash, or Ethereum address you specify. It's a handy way to open EtherScan from the command line, nothing more.
+`chifra explore` opens Etherscan (and other explorers -- including our own) to the block, transaction hash, or address you specify. It's a handy way to open EtherScan from the command line, nothing more.
 
 ### usage
 
@@ -18,6 +18,6 @@
 
 `Notes:`
 
-- An `addresses` must start with '0x' and be forty-two characters long.
+- An `address` must start with '0x' and be forty-two characters long.
 - A `tx_hash` must start with '0x' and be sixty-six characters long.
 - If a hash is provided, it is assumed to be a transaction hash.

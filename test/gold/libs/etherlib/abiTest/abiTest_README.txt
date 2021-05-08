@@ -9,7 +9,7 @@ abiTest -th
 
 | Hotkey | Option | Description |
 | :----- | :----- | :---------- |
-|  | modes | mode of operation, one or more of [encoding&#124;generation] (required) |
+|  | modes | mode of operation, one or more of *[ encoding \| generation ]* (required) |
 | -s | --sub <num> | sub mode |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |

@@ -10,6 +10,10 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
+/*
+ * Parts of this file were generated with makeClass --options. Edit only those parts of
+ * the code outside of the BEG_CODE/END_CODE sections
+ */
 #include "basetypes.h"
 #include "database.h"
 #include "exportcontext.h"
@@ -729,22 +733,37 @@ void errorMessage(const string_q& msg) {
 
 //--------------------------------------------------------------------------------
 map<string_q, string_q> progNameMap = {
-    make_pair("grabABI", "chifra abis"),
-    make_pair("getBlocks", "chifra blocks"),
+    // BEG_CODE_CHIFRA_PM
+    // -- Accounts
+    // list
     make_pair("acctExport", "chifra export"),
-    make_pair("getLogs", "chifra logs"),
+    // monitor
     make_pair("ethNames", "chifra names"),
-    make_pair("pinMan", "chifra pins"),
-    make_pair("getQuotes", "chifra quotes"),
-    make_pair("getReceipts", "chifra receipts"),
-    make_pair("blockScrape", "chifra scrape"),
-    make_pair("ethslurp", "chifra slurp"),
-    make_pair("getState", "chifra state"),
-    make_pair("cacheStatus", "chifra status"),
-    make_pair("getTokens", "chifra tokens"),
-    make_pair("getTraces", "chifra traces"),
+    make_pair("grabABI", "chifra abis"),
+    // entities
+    // tags
+    // -- Chain Data
+    make_pair("getBlocks", "chifra blocks"),
     make_pair("getTrans", "chifra transactions"),
+    make_pair("getReceipts", "chifra receipts"),
+    make_pair("getLogs", "chifra logs"),
+    make_pair("getTraces", "chifra traces"),
     make_pair("whenBlock", "chifra when"),
+    // -- Chain State
+    make_pair("getState", "chifra state"),
+    make_pair("getTokens", "chifra tokens"),
+    // -- Admin
+    make_pair("cacheStatus", "chifra status"),
+    // serve
+    make_pair("blockScrape", "chifra scrape"),
+    // init
+    make_pair("pinMan", "chifra pins"),
+    // -- Other
+    make_pair("getQuotes", "chifra quotes"),
+    // explore
+    make_pair("ethslurp", "chifra slurp"),
+    // END_CODE_CHIFRA_PM
+    //
     make_pair("makeClass", "makeClass"),
     make_pair("testRunner", "testRunner"),
     make_pair("chifra", "chifra"),
@@ -849,16 +868,21 @@ string_q COptionsBase::purpose(void) const {
 
 //--------------------------------------------------------------------------------
 const char* STR_ONE_LINE = "| {S} | {L} | {D} |\n";
-
 string_q COptionsBase::oneDescription(const string_q& sN, const string_q& lN, const string_q& d, bool isPositional,
                                       bool required) const {
     ostringstream os;
     if (isReadme) {
+        string_q dd = (d + (required && isPositional ? " (required)" : ""));
+        replaceAll(dd, "|", " \\| ");
+        replace(dd, "*", "\\*");
+        replaceAll(dd, "[", "*[ ");
+        replaceAll(dd, "]", " ]*");
+
         // When we are writing the readme file...
         string_q line = STR_ONE_LINE;
         replace(line, "{S}", sN);
         replace(line, "{L}", lN);
-        replace(line, "{D}", substitute((d + (required && isPositional ? " (required)" : "")), "|", "&#124;"));
+        replace(line, "{D}", dd);
         os << line;
 
     } else {

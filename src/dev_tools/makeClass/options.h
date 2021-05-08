@@ -76,6 +76,7 @@ class COptions : public COptionsBase {
     ostringstream header_stream, notes_stream, errors_stream, debug_stream;
     ostringstream routeStream;
     ostringstream goCallStream, goRouteStream;
+    ostringstream chifra_stream_a, chifra_stream_b, chifra_stream_pm;
     void clearStreams(void) {
         auto_stream.str("");
         option_stream.str("");
@@ -88,6 +89,9 @@ class COptions : public COptionsBase {
         goCallStream.str("");
         routeStream.str("");
         goRouteStream.str("");
+        chifra_stream_a.str("");
+        chifra_stream_b.str("");
+        chifra_stream_pm.str("");
 
         auto_stream.clear();
         option_stream.clear();
@@ -100,6 +104,9 @@ class COptions : public COptionsBase {
         goCallStream.clear();
         routeStream.clear();
         goRouteStream.clear();
+        chifra_stream_a.clear();
+        chifra_stream_b.clear();
+        chifra_stream_pm.clear();
 
         positionals.clear();
     }

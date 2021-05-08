@@ -1,8 +1,10 @@
 ## chifra slurp
 
-`chifra slurp` is one of our older command line tools. It even has its [own website](http://ethslurp.com) and [video tutorial](https://www.youtube.com/w atch?v=ZZDV1yAgces). While this tool is very useful, it has two significant flaws. First, it is not decentralized--in fact it is fully centralized, pulling its data from [http://etherscan.io](http://etherscan.io) as it does. The tool's second major flaw is that it does not pull every transaction from the chain for a given account as our [account monitors](../../monitors/README.md) do. This is because of `internal transactions` which, believe us, is too complicated to be worth taking the time to explain.
+`chifra slurp` is the first tool we built in the Ethereum space. It even has its [own website](http://ethslurp.com).
 
-While `chifra slurp` does have its shortcomings, it also provides some nice features. You can use it to pull all externally generated transactions against an account. You may also use the tool's fully customizable formatting options to export data into any format you wish. Visit the above referenced website for more information.
+While it's useful, it has two shortcomings. First, it is fully centralized, pulling its data from [http://etherscan.io](http://etherscan.io). Second, is that it does not report every transaction for a given account. This is actually a shortcoming with EtherScan. It's too complicated to explain here, but see our blog.
+
+While `chifra slurp` has its shortcomings, it does provides some nice features. You may use it to pull any transaction initiated by an EOA for example or to explore mining rewards. Visit the above referenced website for more information.
 
 ### Usage
 
@@ -15,7 +17,7 @@ While `chifra slurp` does have its shortcomings, it also provides some nice feat
 | :----- | :----- | :---------- |
 |  | addrs | one or more addresses to slurp from Etherscan (required) |
 |  | blocks | an optional range of blocks to slurp |
-| -t | --types <val> | one or more types of transactions to request, one or more of [ext*&#124;int&#124;token&#124;nfts&#124;miner&#124;all] |
+| -t | --types <val> | one or more types of transactions to request, one or more of *[ ext\* \| int \| token \| nfts \| miner \| all ]* |
 | -p | --appearances | show only the blocknumer.tx_id appearances of the exported transactions |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |

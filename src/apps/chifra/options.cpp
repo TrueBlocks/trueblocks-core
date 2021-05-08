@@ -3,6 +3,10 @@
  * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  * All Rights Reserved
  *------------------------------------------------------------------------*/
+/*
+ * Parts of this file were generated with makeClass --options. Edit only those parts of
+ * the code outside of the BEG_CODE/END_CODE sections
+ */
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
@@ -38,7 +42,7 @@ bool COptions::call_command(int argc, const char* argv[]) {
             hiUp1 = hiUp2 = hiDown = '`';
             return usage("");
 
-        } else if (!cmdMap[arg].empty()) {
+        } else if (!chifraCmdMap[arg].empty()) {
             if (mode == "status") {
                 string_q validModes = "|index|monitors|entities|names|abis|caches|some|all|";
                 if (!contains(validModes, arg)) {
@@ -58,7 +62,6 @@ bool COptions::call_command(int argc, const char* argv[]) {
     }
 
     // BEG_DEBUG_DISPLAY
-    LOG_TEST("mode", mode, mode == "");
     // END_DEBUG_DISPLAY
 
     if (Mocked(""))
@@ -69,7 +72,7 @@ bool COptions::call_command(int argc, const char* argv[]) {
         return usage("");
 
     // Make sure user sent a real subcommand
-    if (argc > 1 && cmdMap[argv[1]].empty())
+    if (argc > 1 && chifraCmdMap[argv[1]].empty())
         return usage("Unknown subcommand '" + string_q(argv[1]) + "'.");
 
     if (mode.empty())
@@ -89,7 +92,7 @@ bool COptions::call_command(int argc, const char* argv[]) {
 
     string_q prev;
     ostringstream os;
-    os << cmdMap[mode];
+    os << chifraCmdMap[mode];
     for (int i = 2; i < argc; i++) {
         // If we're not removing it...
         if (!removeMap[argv[i]]) {
@@ -119,11 +122,10 @@ void COptions::Init(void) {
     // END_CODE_INIT
 }
 
-extern const char* STR_FULL_HELP;
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
     Init();
-    overrideStr = STR_FULL_HELP;
+    overrideStr = STR_CHIFRA_HELP;
 }
 
 //--------------------------------------------------------------------------------
@@ -131,32 +133,42 @@ COptions::~COptions(void) {
 }
 
 //------------------------------------------------------------------------------------------------
-map<string, string> cmdMap = {{"monitor", "acctExport --appearances"},
-                              {"export", "acctExport"},
-                              {"entities", "ethNames --entities"},
-                              {"names", "ethNames"},
-                              {"tags", "ethNames --tags"},
-                              {"abis", "grabABI"},
-                              {"blocks", "getBlocks"},
-                              {"transactions", "getTrans"},
-                              {"receipts", "getReceipts"},
-                              {"logs", "getLogs"},
-                              {"traces", "getTraces"},
-                              {"state", "getState"},
-                              {"tokens", "getTokens"},
-                              {"when", "whenBlock"},
-                              {"init", "pinMan local --init"},
-                              {"scrape", "blockScrape"},
-                              {"serve", "flame"},
-                              {"pins", "pinMan"},
-                              {"status", "cacheStatus"},
-                              {"explore", "ethscan.py"},
-                              {"slurp", "ethslurp"},
-                              {"quotes", "getQuotes"},
-                              {"list", "acctExport --appearances"}};
+map<string, string> chifraCmdMap = {
+    // BEG_CODE_CHIFRA_A
+    // -- Accounts
+    {"list", "acctExport --appearances"},
+    {"export", "acctExport"},
+    {"monitor", "acctExport --appearances"},
+    {"names", "ethNames"},
+    {"abis", "grabABI"},
+    {"entities", "ethNames --entities"},
+    {"tags", "ethNames --tags"},
+    // -- Chain Data
+    {"blocks", "getBlocks"},
+    {"transactions", "getTrans"},
+    {"receipts", "getReceipts"},
+    {"logs", "getLogs"},
+    {"traces", "getTraces"},
+    {"when", "whenBlock"},
+    // -- Chain State
+    {"state", "getState"},
+    {"tokens", "getTokens"},
+    // -- Admin
+    {"status", "cacheStatus"},
+    {"serve", "flame"},
+    {"scrape", "blockScrape"},
+    {"init", "pinMan local --init"},
+    {"pins", "pinMan"},
+    // -- Other
+    {"quotes", "getQuotes"},
+    {"explore", "ethscan.py"},
+    {"slurp", "ethslurp"},
+    // END_CODE_CHIFRA_A
+};
 
 //------------------------------------------------------------------------------------------------
-const char* STR_FULL_HELP =
+// BEG_CODE_ CHIFRA_B
+const char* STR_CHIFRA_HELP =
     "ACCOUNTS|"
     "  list          list every appearance of an address anywhere on the chain|"
     "  export        export details for each appearance (as txs, logs, traces, balances, reconciliations, etc.)|"
@@ -174,12 +186,13 @@ const char* STR_FULL_HELP =
     "  state         export parts of the state for given address(es)|"
     "  tokens        export data related to ERC20 and/or ERC721 token(s)|"
     "ADMIN|"
-    "  init          initialize TrueBlocks databases by downloading pinned bloom filters|"
     "  status        query the status of the system|"
-    "  scrape        scrape the chain and build an index of address appearances (aka digests)|"
     "  serve         serve the TrueBlocks API via the flame server|"
+    "  scrape        scrape the chain and build an index of address appearances (aka digests)|"
+    "  init          initialize TrueBlocks databases by downloading pinned bloom filters|"
     "  pins          query the status of the pinning system|"
     "OTHER|"
-    "  quotes        return prices collected from configured remote API"
+    "  quotes        return prices collected from configured remote API|"
     "  explore       open the configured block explorer for the given address|"
     "  slurp         export details by querying EtherScan (note: will not return as many appearances as --list)|";
+// END_CODE_ CHIFRA_B

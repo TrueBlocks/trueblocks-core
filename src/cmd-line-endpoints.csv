@@ -1,0 +1,29 @@
+num,group,is_visible,command,tool,description
+01,Accounts,false,,,Access and cache transactional data
+01,Accounts,true,list,acctExport --appearances,list every appearance of an address anywhere on the chain
+01,Accounts,true,export,acctExport,export details for each appearance (as txs&#44; logs&#44; traces&#44; balances&#44; reconciliations&#44; etc.)
+01,Accounts,true,monitor,acctExport --appearances,add&#44; remove&#44; clean&#44; and list appearances of address(es) on the chain
+01,Accounts,true,names,ethNames,list and/or share named addresses
+01,Accounts,true,abis,grabABI,list and/or share abi signatures
+01,Accounts,true,entities,ethNames --entities,
+01,Accounts,true,tags,ethNames --tags,
+02,Chain Data,false,,,Access and cache blockchain-related data
+02,Chain Data,true,blocks,getBlocks,export block-related data
+02,Chain Data,true,transactions,getTrans,export transaction-related data
+02,Chain Data,true,receipts,getReceipts,export receipt-related data
+02,Chain Data,true,logs,getLogs,export log-related data
+02,Chain Data,true,traces,getTraces,export trace-related data
+02,Chain Data,true,when,whenBlock,return a date given a block number or a block number given a date
+03,Chain State,false,,,Access to account and token state
+03,Chain State,true,state,getState,export parts of the state for given address(es)
+03,Chain State,true,tokens,getTokens,export data related to ERC20 and/or ERC721 token(s)
+04,Admin,false,,,Control the scraper and build the index
+04,Admin,true,status,cacheStatus,query the status of the system
+04,Admin,false,serve,flame,serve the TrueBlocks API via the flame server
+04,Admin,true,scrape,blockScrape,scrape the chain and build an index of address appearances (aka digests)
+04,Admin,false,init,pinMan local --init,initialize TrueBlocks databases by downloading pinned bloom filters
+04,Admin,true,pins,pinMan,query the status of the pinning system
+05,Other,false,,,Access to other and external data
+05,Other,true,quotes,getQuotes,return prices collected from configured remote API
+05,Other,false,explore,ethscan.py,open the configured block explorer for the given address
+05,Other,true,slurp,ethslurp,export details by querying EtherScan (note: will not return as many appearances as --list)

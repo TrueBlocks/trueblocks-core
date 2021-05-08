@@ -13,7 +13,7 @@ pinMan -th
 | -i | --init | initialize the local index by downloading bloom filters from the pinning service |
 | -f | --freshen | freshen the manifest from the hash found at the smart contract |
 | -s | --sleep <double> | the number of seconds to sleep between requests during init (default .25) |
-| -x | --fmt <val> | export format, one of [none&#124;json*&#124;txt&#124;csv&#124;api] |
+| -x | --fmt <val> | export format, one of *[ none \| json\* \| txt \| csv \| api ]* |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 

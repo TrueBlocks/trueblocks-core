@@ -1,4 +1,3 @@
 ## intro
-This section of commands collects together other useful tools such as a rudimentary pricing tool, a quick 
-way to open a blockchain explorer, and an older tool we used to build called EthSlurp which may be used 
-to compare our results (favorabily, by the way) to EtherScan.
+
+This section of commands provides other useful tools such as a rudimentary pricing tool, a quick way to open a blockchain explorer, and an older tool called `ethslurp` which can help you compare our results (favorabily) with EtherScan's.

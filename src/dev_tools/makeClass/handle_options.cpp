@@ -205,6 +205,7 @@ string_q replaceCode(const string_q& orig, const string_q& which, const string_q
     converted = substitute(converted, "\n// END_" + which, "</remove>\nX// END_" + which);
     converted = substitute(converted, "\n\t// END_" + which, "</remove>\nY// END_" + which);
     converted = substitute(converted, "\n    // END_" + which, "</remove>\n+// END_" + which);
+    converted = substitute(converted, "\n        // END_" + which, "</remove>\n-// END_" + which);
     converted = substitute(converted, "\n            // END_" + which, "</remove>\n-// END_" + which);
     snagFieldClear(converted, "remove");
     replace(converted, "[{NEW_CODE}]\n\n", new_code);
@@ -433,24 +434,28 @@ bool COptions::writeCode(const string_q& fn) {
     string_q orig = asciiFileToString(fn);
     string_q converted = orig;
     if (endsWith(fn, ".cpp")) {
-        CStringArray tokens = {
-            "_CODE_OPTIONS", "_CODE_LOCAL_INIT", "_CODE_AUTO", "_DEBUG_DISPLAY",
-            "_CODE_INIT",    "_CODE_NOTES",      "_ERROR_MSG",
-        };
+        CStringArray tokens = {"_CODE_OPTIONS", "_CODE_LOCAL_INIT", "_CODE_AUTO", "_DEBUG_DISPLAY",
+                               "_CODE_INIT",    "_CODE_NOTES",      "_ERROR_MSG"};
         for (auto tok : tokens)
-            if (!contains(orig, tok))
+            if (!contains(orig, tok) && !contains(orig, "_CHIFRA"))
                 LOG_WARN(fn, " does not contain token ", tok);
+
         converted = replaceCode(converted, "CODE_AUTO", auto_stream.str());
         converted = replaceCode(converted, "CODE_OPTIONS", option_stream.str());
         converted = replaceCode(converted, "CODE_LOCAL_INIT", local_stream.str());
         converted = replaceCode(converted, "CODE_INIT", init_stream.str());
         converted = replaceCode(converted, "CODE_NOTES", notes_stream.str());
         converted = replaceCode(converted, "CODE_ERROR_MSG", errors_stream.str());
+        converted = replaceCode(converted, "CODE_CHIFRA_A", chifra_stream_a.str());
+        converted = replaceCode(converted, "CODE_CHIFRA_B", chifra_stream_b.str());
+        converted = replaceCode(converted, "CODE_CHIFRA_PM", chifra_stream_pm.str());
         converted = replaceCode(converted, "DEBUG_DISPLAY", debug_stream.str());
         replaceAll(converted, "    // clang-format on\n    // clang-format off\n", "");
+
     } else if (endsWith(fn, ".go")) {
         converted = replaceCode(converted, "ROUTE_CODE", goCallStream.str());
         converted = replaceCode(converted, "ROUTE_ITEMS", goRouteStream.str());
+
     } else {
         CStringArray tokens = {"_ERROR_DEFINES", "_CODE_DECLARE"};
         for (auto tok : tokens)

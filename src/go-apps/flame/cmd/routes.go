@@ -60,14 +60,14 @@ func Index(w http.ResponseWriter, r *http.Request) {
 
 // BEG_ROUTE_CODE
 
-// AccountsExport help text todo
-func AccountsExport(w http.ResponseWriter, r *http.Request) {
-	CallOne(w, r, "acctExport", "export")
-}
-
 // AccountsList help text todo
 func AccountsList(w http.ResponseWriter, r *http.Request) {
 	CallOneExtra(w, r, "chifra", "list", "list")
+}
+
+// AccountsExport help text todo
+func AccountsExport(w http.ResponseWriter, r *http.Request) {
+	CallOne(w, r, "acctExport", "export")
 }
 
 // AccountsMonitor help text todo
@@ -75,14 +75,14 @@ func AccountsMonitor(w http.ResponseWriter, r *http.Request) {
 	CallOneExtra(w, r, "chifra", "monitor", "monitor")
 }
 
-// AccountsTags help text todo
-func AccountsTags(w http.ResponseWriter, r *http.Request) {
-	CallOne(w, r, "ethNames", "tags")
-}
-
 // AccountsNames help text todo
 func AccountsNames(w http.ResponseWriter, r *http.Request) {
 	CallOne(w, r, "ethNames", "names")
+}
+
+// AccountsAbis help text todo
+func AccountsAbis(w http.ResponseWriter, r *http.Request) {
+	CallOne(w, r, "grabABI", "abis")
 }
 
 // AccountsEntities help text todo
@@ -90,9 +90,49 @@ func AccountsEntities(w http.ResponseWriter, r *http.Request) {
 	CallOne(w, r, "ethNames", "entities")
 }
 
-// AccountsAbis help text todo
-func AccountsAbis(w http.ResponseWriter, r *http.Request) {
-	CallOne(w, r, "grabABI", "abis")
+// AccountsTags help text todo
+func AccountsTags(w http.ResponseWriter, r *http.Request) {
+	CallOne(w, r, "ethNames", "tags")
+}
+
+// ChainDataBlocks help text todo
+func ChainDataBlocks(w http.ResponseWriter, r *http.Request) {
+	CallOne(w, r, "getBlocks", "blocks")
+}
+
+// ChainDataTransactions help text todo
+func ChainDataTransactions(w http.ResponseWriter, r *http.Request) {
+	CallOne(w, r, "getTrans", "transactions")
+}
+
+// ChainDataReceipts help text todo
+func ChainDataReceipts(w http.ResponseWriter, r *http.Request) {
+	CallOne(w, r, "getReceipts", "receipts")
+}
+
+// ChainDataLogs help text todo
+func ChainDataLogs(w http.ResponseWriter, r *http.Request) {
+	CallOne(w, r, "getLogs", "logs")
+}
+
+// ChainDataTraces help text todo
+func ChainDataTraces(w http.ResponseWriter, r *http.Request) {
+	CallOne(w, r, "getTraces", "traces")
+}
+
+// ChainDataWhen help text todo
+func ChainDataWhen(w http.ResponseWriter, r *http.Request) {
+	CallOne(w, r, "whenBlock", "when")
+}
+
+// ChainStateState help text todo
+func ChainStateState(w http.ResponseWriter, r *http.Request) {
+	CallOne(w, r, "getState", "state")
+}
+
+// ChainStateTokens help text todo
+func ChainStateTokens(w http.ResponseWriter, r *http.Request) {
+	CallOne(w, r, "getTokens", "tokens")
 }
 
 // AdminStatus help text todo
@@ -108,46 +148,6 @@ func AdminScrape(w http.ResponseWriter, r *http.Request) {
 // AdminPins help text todo
 func AdminPins(w http.ResponseWriter, r *http.Request) {
 	CallOne(w, r, "pinMan", "pins")
-}
-
-// DataBlocks help text todo
-func DataBlocks(w http.ResponseWriter, r *http.Request) {
-	CallOne(w, r, "getBlocks", "blocks")
-}
-
-// DataTransactions help text todo
-func DataTransactions(w http.ResponseWriter, r *http.Request) {
-	CallOne(w, r, "getTrans", "transactions")
-}
-
-// DataReceipts help text todo
-func DataReceipts(w http.ResponseWriter, r *http.Request) {
-	CallOne(w, r, "getReceipts", "receipts")
-}
-
-// DataLogs help text todo
-func DataLogs(w http.ResponseWriter, r *http.Request) {
-	CallOne(w, r, "getLogs", "logs")
-}
-
-// DataTraces help text todo
-func DataTraces(w http.ResponseWriter, r *http.Request) {
-	CallOne(w, r, "getTraces", "traces")
-}
-
-// DataWhen help text todo
-func DataWhen(w http.ResponseWriter, r *http.Request) {
-	CallOne(w, r, "whenBlock", "when")
-}
-
-// StateState help text todo
-func StateState(w http.ResponseWriter, r *http.Request) {
-	CallOne(w, r, "getState", "state")
-}
-
-// StateTokens help text todo
-func StateTokens(w http.ResponseWriter, r *http.Request) {
-	CallOne(w, r, "getTokens", "tokens")
 }
 
 // OtherQuotes help text todo
@@ -181,17 +181,17 @@ var routes = Routes{
 	// BEG_ROUTE_ITEMS
 
 	Route{
-		"AccountsExport",
-		"GET",
-		"/export",
-		AccountsExport,
-	},
-
-	Route{
 		"AccountsList",
 		"GET",
 		"/list",
 		AccountsList,
+	},
+
+	Route{
+		"AccountsExport",
+		"GET",
+		"/export",
+		AccountsExport,
 	},
 
 	Route{
@@ -202,17 +202,17 @@ var routes = Routes{
 	},
 
 	Route{
-		"AccountsTags",
-		"GET",
-		"/tags",
-		AccountsTags,
-	},
-
-	Route{
 		"AccountsNames",
 		"GET",
 		"/names",
 		AccountsNames,
+	},
+
+	Route{
+		"AccountsAbis",
+		"GET",
+		"/abis",
+		AccountsAbis,
 	},
 
 	Route{
@@ -223,10 +223,66 @@ var routes = Routes{
 	},
 
 	Route{
-		"AccountsAbis",
+		"AccountsTags",
 		"GET",
-		"/abis",
-		AccountsAbis,
+		"/tags",
+		AccountsTags,
+	},
+
+	Route{
+		"ChainDataBlocks",
+		"GET",
+		"/blocks",
+		ChainDataBlocks,
+	},
+
+	Route{
+		"ChainDataTransactions",
+		"GET",
+		"/transactions",
+		ChainDataTransactions,
+	},
+
+	Route{
+		"ChainDataReceipts",
+		"GET",
+		"/receipts",
+		ChainDataReceipts,
+	},
+
+	Route{
+		"ChainDataLogs",
+		"GET",
+		"/logs",
+		ChainDataLogs,
+	},
+
+	Route{
+		"ChainDataTraces",
+		"GET",
+		"/traces",
+		ChainDataTraces,
+	},
+
+	Route{
+		"ChainDataWhen",
+		"GET",
+		"/when",
+		ChainDataWhen,
+	},
+
+	Route{
+		"ChainStateState",
+		"GET",
+		"/state",
+		ChainStateState,
+	},
+
+	Route{
+		"ChainStateTokens",
+		"GET",
+		"/tokens",
+		ChainStateTokens,
 	},
 
 	Route{
@@ -248,62 +304,6 @@ var routes = Routes{
 		"GET",
 		"/pins",
 		AdminPins,
-	},
-
-	Route{
-		"DataBlocks",
-		"GET",
-		"/blocks",
-		DataBlocks,
-	},
-
-	Route{
-		"DataTransactions",
-		"GET",
-		"/transactions",
-		DataTransactions,
-	},
-
-	Route{
-		"DataReceipts",
-		"GET",
-		"/receipts",
-		DataReceipts,
-	},
-
-	Route{
-		"DataLogs",
-		"GET",
-		"/logs",
-		DataLogs,
-	},
-
-	Route{
-		"DataTraces",
-		"GET",
-		"/traces",
-		DataTraces,
-	},
-
-	Route{
-		"DataWhen",
-		"GET",
-		"/when",
-		DataWhen,
-	},
-
-	Route{
-		"StateState",
-		"GET",
-		"/state",
-		StateState,
-	},
-
-	Route{
-		"StateTokens",
-		"GET",
-		"/tokens",
-		StateTokens,
 	},
 
 	Route{

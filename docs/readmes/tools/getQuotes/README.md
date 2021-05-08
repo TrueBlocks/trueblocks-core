@@ -1,6 +1,6 @@
 ## chifra quotes
 
-The `chifra quotes` tool provides Ethereum price data to various tools or for other purposes. Currently, `chifra quotes` retrieves data using the Poloniex API. In future versions, we intend to add other sources of pricing data and provide a mechanism to specify an averaging calculate given multiple price sources. Ultimately, we hope Ethereum/fiat price data appears under consensus, but until that time, **TrueBlocks** uses `chifra quotes`. Powered, in part, by Poloniex<sup>&reg;<sup>
+The `chifra quotes` tool provides USD ($) price data to other tools and to the command line. Currently, `chifra quotes` retrieves its price data from the Poloniex API. In future versions, we will add other sources and provide a mechanism for fair averaging. Ultimately, as more of this type of price data becomes available on chain, we will use those source, but this is not yet implemented.
 
 ### usage
 
@@ -12,9 +12,9 @@ The `chifra quotes` tool provides Ethereum price data to various tools or for ot
 | Hotkey | Option | Description |
 | :----- | :----- | :---------- |
 | -f | --freshen | Freshen price database (append new data) |
-| -p | --period <val> | increment of display, one of [5&#124;15&#124;30&#124;60&#124;120*&#124;240&#124;1440&#124;10080&#124;hourly&#124;daily&#124;weekly] |
+| -p | --period <val> | increment of display, one of *[ 5 \| 15 \| 30 \| 60 \| 120\* \| 240 \| 1440 \| 10080 \| hourly \| daily \| weekly ]* |
 | -a | --pair <str> | which price pair to freshen or list (see Poloniex) |
-| -e | --feed <val> | the feed for the price data, one of [poloniex*&#124;maker&#124;tellor] |
+| -e | --feed <val> | the feed for the price data, one of *[ poloniex\* \| maker \| tellor ]* |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 
@@ -22,7 +22,7 @@ The `chifra quotes` tool provides Ethereum price data to various tools or for ot
 
 - Valid pairs include any pair from the public Poloniex's API here: 
   https://poloniex.com/public?command=returnCurrencies.
-- `Note`: Due to restrictions from Poloniex, this tool retrieves only 30 days of data 
+- Due to restrictions from Poloniex, this tool retrieves only 30 days of data 
   at a time. You must repeatedly run this command until the data is up-to-date.
 
 **Source code**: [`tools/getQuotes`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/tools/getQuotes)

@@ -20,7 +20,7 @@ getBlocks -th
 | -o | --cache | force a re-write of the block to the cache |
 | -t | --trace | export the traces from the block as opposed to the block data |
 |####|Hidden options||
-| -x | --fmt <val> | export format, one of [none&#124;json*&#124;txt&#124;csv&#124;api] |
+| -x | --fmt <val> | export format, one of *[ none \| json\* \| txt \| csv \| api ]* |
 | -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
 | -h | --help | display this help screen |
 

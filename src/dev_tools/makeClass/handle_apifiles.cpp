@@ -10,6 +10,10 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
+/*
+ * Parts of this file were generated with makeClass --options. Edit only those parts of
+ * the code outside of the BEG_CODE/END_CODE sections
+ */
 #include "options.h"
 
 #define routeCount fileCount
@@ -23,6 +27,9 @@ extern const char* STR_HTML_CODE;
 extern const char* STR_HTML_CODE_HEADER;
 extern const char* STR_HTML_CODE_FOOTER;
 extern string_q getTypeStr(const CCommandOption& opt, const string_q& lead);
+
+typedef map<string, CCommandOption> CEndpointMap;
+extern bool loadEndpoints(CEndpointMap& endpointMap, CCommandOptionArray& endpointArray);
 //---------------------------------------------------------------------------------------------------
 void COptions::writeOpenApiFile(void) {
     if (!openapi)
@@ -33,24 +40,50 @@ void COptions::writeOpenApiFile(void) {
     CCommands commands;
     options_2_Commands(commands);
 
-    CStringArray endpoints = {
-        "Accounts|Access and cache transactional data|export,list,monitor,tags,names,entities,abis",
-        "Admin|Control the scraper and build the index|status,scrape,pins",
-        "Data|Access and cache blockchain-related data|blocks,transactions,receipts,logs,traces,when",
-        "State|Access to account and token state|state,tokens", "Other|Access to other and external data|quotes,slurp"};
+    CEndpointMap endpointMap;
+    CCommandOptionArray endpointArray;
+    loadEndpoints(endpointMap, endpointArray);
+
+    for (auto co : endpointArray) {
+        if (co.command.empty()) {
+            chifra_stream_a << "    // -- " << co.group << endl;
+            chifra_stream_b << "    \"" << substitute(toUpper(co.group), " ", "") << "|\"" << endl;
+        } else {
+            chifra_stream_a << "{\"" << co.command << "\", \"" << co.tool << "\"}," << endl;
+            chifra_stream_b << "\"  " << padRight(co.command, 20) << co.description << "|\"" << endl;
+        }
+
+        if (co.is_visible) {
+            if (!contains(co.tool, " ")) {
+                chifra_stream_pm << "    ";
+                chifra_stream_pm << "make_pair(\"" << co.tool << "\", \"chifra " << co.command << "\")," << endl;
+            } else {
+                chifra_stream_pm << "    // " << co.command << endl;
+            }
+        } else {
+            if (co.command.empty()) {
+                chifra_stream_pm << "    // -- " << co.group << endl;
+            } else {
+                chifra_stream_pm << "    // " << co.command << endl;
+            }
+        }
+    }
 
     ostringstream yamlTagStream;
     ostringstream yamlPathStream;
-    for (auto ep : endpoints) {
-        CStringArray parts;
-        explode(parts, ep, '|');
-        yamlTagStream << substitute(substitute(STR_TAG_ENTRY_YAML, "[{NAME}]", parts[0]), "[{DESCR}]", parts[1]);
+    for (auto ep : endpointMap) {
+        string_q group = ep.second.group;
+        string_q tool = ep.second.tool;
+        string_q command = ep.second.command;
+        string_q description = ep.second.description;
+
+        yamlTagStream << substitute(substitute(STR_TAG_ENTRY_YAML, "[{NAME}]", group), "[{DESCR}]", description);
 
         CStringArray cmds;
-        explode(cmds, parts[2], ',');
+        explode(cmds, ep.second.command, ',');
         for (auto cmd : cmds) {
             string_q yamlEntry = STR_PATH_ENTRY_YAML;
-            replace(yamlEntry, "[{TAGS}]", parts[0]);
+            replace(yamlEntry, "[{TAGS}]", group);
             replace(yamlEntry, "[{PATH}]", cmd);
             CCommandOptionArray params;
             CCommandOptionArray notes;
@@ -63,7 +96,7 @@ void COptions::writeOpenApiFile(void) {
             }
             replace(yamlEntry, "      summary: [{SUMMARY}]\n", "");
             replace(yamlEntry, "      description: [{DESCR}]\n", "");
-            replace(yamlEntry, "[{ID}]", toLower(parts[0] + "-" + cmd));
+            replace(yamlEntry, "[{ID}]", toLower(group + "-" + cmd));
             ostringstream yamlParamStream;
             for (auto param : params) {
                 string_q yp = STR_PATH_PARAM_YAML;
@@ -83,7 +116,7 @@ void COptions::writeOpenApiFile(void) {
             yamlPathStream << yamlEntry;
             counter.routeCount++;
 
-            string_q route = parts[0] + toProper(cmd);
+            string_q route = group + toProper(cmd);
             goCallStream << endl;
             goCallStream << "// " << route << " help text todo" << endl;
             goCallStream << "func " << route << "(w http.ResponseWriter, r *http.Request) {" << endl;
@@ -107,6 +140,8 @@ void COptions::writeOpenApiFile(void) {
     }
 
     writeCode("../src/go-apps/flame/cmd/routes.go");
+    writeCode("../src/apps/chifra/options.cpp");
+    writeCode("../src/libs/utillib/options_base.cpp");
 
     string_q explFolder = "../../trueblocks-explorer/";
     if (!folderExists(explFolder)) {
@@ -148,65 +183,64 @@ void COptions::writeOpenApiFile(void) {
 
 //---------------------------------------------------------------------------------------------------
 void COptions::old_writeJSApiFile(void) {
-    if (!api)
-        return;
+    if (api) {
+        LOG_INFO(cYellow, "handling api file...", cOff);
+        counter = CCounter();  // reset
 
-    LOG_INFO(cYellow, "handling api file...", cOff);
-    counter = CCounter();  // reset
+        CCommands commands;
+        options_2_Commands(commands);
 
-    CCommands commands;
-    options_2_Commands(commands);
+        bool firstRoute = true;
+        routeStream << "{" << endl;
+        for (auto route : commands.routes) {
+            counter.routeCount++;
+            if (!firstRoute)
+                routeStream << "," << endl;
+            routeStream << "  \"" << route.route << "\": {" << endl;
+            bool firstCmd = true;
+            for (auto command : route.commands) {
+                if (command.option_type != "note") {
+                    counter.cmdCount++;
+                    if (command.hotkey.empty())
+                        command.hotkey = "<not-set>";
+                    if (command.command.empty())
+                        command.command = "<not-set>";
+                    if (command.data_type.empty())
+                        command.data_type = "<not-set>";
 
-    bool firstRoute = true;
-    routeStream << "{" << endl;
-    for (auto route : commands.routes) {
-        counter.routeCount++;
-        if (!firstRoute)
-            routeStream << "," << endl;
-        routeStream << "  \"" << route.route << "\": {" << endl;
-        bool firstCmd = true;
-        for (auto command : route.commands) {
-            if (command.option_type != "note") {
-                counter.cmdCount++;
-                if (command.hotkey.empty())
-                    command.hotkey = "<not-set>";
-                if (command.command.empty())
-                    command.command = "<not-set>";
-                if (command.data_type.empty())
-                    command.data_type = "<not-set>";
+                    ostringstream commandStream;
+                    if (!firstCmd)
+                        commandStream << "," << endl;
+                    commandStream << "    ";
+                    commandStream << "\"" << command.command << "\": " << command;
 
-                ostringstream commandStream;
-                if (!firstCmd)
-                    commandStream << "," << endl;
-                commandStream << "    ";
-                commandStream << "\"" << command.command << "\": " << command;
-
-                string_q str = commandStream.str();
-                replaceAll(str, "\"true\"", "true");
-                replaceAll(str, "\"false\"", "false");
-                replaceAll(str, "NOPOS", "");
-                replaceAll(str, "\"def_val\": false,", "\"def_val\": \"\",");
-                replaceAll(str, "\"def_val\": true,", "\"def_val\": \"true\",");
-                replaceAll(str, "\"def_val\": \"\"\"\",", "\"def_val\": \"\",");
-                replaceAll(str, "<not-set>", "");
-                replaceReverse(str, "\n", "");
-                routeStream << str;
-                firstCmd = false;
+                    string_q str = commandStream.str();
+                    replaceAll(str, "\"true\"", "true");
+                    replaceAll(str, "\"false\"", "false");
+                    replaceAll(str, "NOPOS", "");
+                    replaceAll(str, "\"def_val\": false,", "\"def_val\": \"\",");
+                    replaceAll(str, "\"def_val\": true,", "\"def_val\": \"true\",");
+                    replaceAll(str, "\"def_val\": \"\"\"\",", "\"def_val\": \"\",");
+                    replaceAll(str, "<not-set>", "");
+                    replaceReverse(str, "\n", "");
+                    routeStream << str;
+                    firstCmd = false;
+                }
             }
+            routeStream << endl << "  }";
+            firstRoute = false;
         }
-        routeStream << endl << "  }";
-        firstRoute = false;
-    }
-    routeStream << endl << "}" << endl;
-    if (!test && folderExists("../../trueblocks-explorer/api/"))
-        stringToAsciiFile("../../trueblocks-explorer/api/api_options.json", routeStream.str());
+        routeStream << endl << "}" << endl;
+        if (!test && folderExists("../../trueblocks-explorer/api/"))
+            stringToAsciiFile("../../trueblocks-explorer/api/api_options.json", routeStream.str());
 
-    if (test) {
-        counter.routeCount = 0;
-        LOG_WARN("Testing only - api file not written");
+        if (test) {
+            counter.routeCount = 0;
+            LOG_WARN("Testing only - api file not written");
+        }
+        LOG_INFO(cYellow, "makeClass --api", cOff, " processed ", counter.routeCount, " routes and ", counter.cmdCount,
+                 " commands.", string_q(40, ' '));
     }
-    LOG_INFO(cYellow, "makeClass --api", cOff, " processed ", counter.routeCount, " routes and ", counter.cmdCount,
-             " commands.", string_q(40, ' '));
 
     writeOpenApiFile();
 }
@@ -255,14 +289,6 @@ string_q getTypeStr(const CCommandOption& opt, const string& lead) {
 
     if (contains(opt.data_type, "list")) {
         if (contains(opt.data_type, "enum")) {
-            /*
-             list<enum[blocks|transactions|traces|slurps|prices|all*]>
-             list<enum[ext*|int|token|nfts|miner|all]>
-             list<enum[index|monitors|entities|names|abis|caches|some*|all]>
-             list<enum[monitors|index*|none|both]>
-             list<enum[name|symbol|decimals|totalSupply|version|none|all*]>
-             list<enum[none|some*|all|balance|nonce|code|storage|deployed|accttype]>
-             */
             string_q e = substitute(substitute(opt.data_type, "list<", ""), ">", "");
             string_q str = substitute(substitute(substitute(e, "*", ""), "enum[", ""), "]", "");
             CStringArray opts;
@@ -311,6 +337,42 @@ string_q getTypeStr(const CCommandOption& opt, const string& lead) {
         return enum_head + trim(os.str(), '\n');
     }
     return str_head;
+}
+
+static CStringArray header;
+//---------------------------------------------------------------------------------------------------
+bool getGroups(const char* str, void* data) {
+    string_q line = str;
+    replaceAny(line, "\n\r", "");
+    if (header.empty()) {
+        explode(header, line, ',');
+        return true;
+    }
+
+    CCommandOptionArray* array = (CCommandOptionArray*)data;
+    CCommandOption option;
+    option.parseCSV(header, line);
+    array->push_back(option);
+
+    return true;
+}
+
+//---------------------------------------------------------------------------------------------------
+bool loadEndpoints(CEndpointMap& endpointMap, CCommandOptionArray& endpointArray) {
+    forEveryLineInAsciiFile("../src/cmd-line-endpoints.csv", getGroups, &endpointArray);
+
+    for (auto g : endpointArray) {
+        endpointMap[g.num].group = substitute(g.group, " ", "");
+        if (g.is_visible) {
+            if (!endpointMap[g.num].command.empty())
+                endpointMap[g.num].command += ",";
+            endpointMap[g.num].command += trim(g.command);
+        }
+        if (endpointMap[g.num].description.empty())
+            endpointMap[g.num].description = trim(g.description);
+    }
+
+    return true;
 }
 
 //---------------------------------------------------------------------------------------------------

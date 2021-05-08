@@ -24,4 +24,5 @@ class COptions : public COptionsBase {
 };
 
 //-----------------------------------------------------------------------------
-extern map<string, string> cmdMap;
+extern map<string, string> chifraCmdMap;
+extern const char* STR_CHIFRA_HELP;
