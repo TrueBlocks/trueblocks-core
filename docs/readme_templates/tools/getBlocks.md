@@ -1,8 +1,10 @@
 ## [{NAME}]
 
-The `[{NAME}]` tool retrieves Ethereum block data from a running node or, if previously retrieved, the TrueBlocks cache. It optionally retrieves the hashes that denote the transactions in the block or the full transactional data as a default.
+The `[{NAME}]` tool retrieves block data from your Ethereum node or, if previously cached, from the TrueBlocks cache. You may specify multiple blocks per invocation.
 
-The tool may also be used to double check that the results produced from the TrueBlocks cache and the results as retrieved directly from the running node are identical (modulo the fact that TrueBlocks does not store every data field from the node). You may accomplish this `check` with the --check option.
+By default, `[{NAME}]` queries the full transactional details of the block (including receipts) for all transactions. You may optionally retreive only the transaction hashes in the block (which is signifcantly faster). You may also use this tool to retrieve uncle blocks at a give height.
+
+Another very useful feature of `[{NAME}]` is the ability to extract all address appearances from a block. TrueBlocks uses a similar feature internally to build its index of appearances. This data proves to be very insightful into end user behaviour and adoption analysis.
 
 [{USAGE_TABLE}]
 [{FOOTER}]

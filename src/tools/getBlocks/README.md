@@ -1,12 +1,14 @@
 ## chifra blocks
 
-The `chifra blocks` tool retrieves Ethereum block data from a running node or, if previously retrieved, the TrueBlocks cache. It optionally retrieves the hashes that denote the transactions in the block or the full transactional data as a default.
+The `chifra blocks` tool retrieves block data from your Ethereum node or, if previously cached, from the TrueBlocks cache. You may specify multiple blocks per invocation.
 
-The tool may also be used to double check that the results produced from the TrueBlocks cache and the results as retrieved directly from the running node are identical (modulo the fact that TrueBlocks does not store every data field from the node). You may accomplish this `check` with the --check option.
+By default, `chifra blocks` queries the full transactional details of the block (including receipts) for all transactions. You may optionally retreive only the transaction hashes in the block (which is signifcantly faster). You may also use this tool to retrieve uncle blocks at a give height.
+
+Another very useful feature of `chifra blocks` is the ability to extract all address appearances from a block. TrueBlocks uses a similar feature internally to build its index of appearances. This data proves to be very insightful into end user behaviour and adoption analysis.
 
 ### Usage
 
-`Usage:`    chifra blocks [-e|-a|-u|-n|-c|-U|-v|-h] &lt;block&gt; [block...]  
+`Usage:`    chifra blocks [-e|-U|-a|-u|-n|-c|-v|-h] &lt;block&gt; [block...]  
 `Purpose:`  Returns block(s) from local cache or directly from a running node.
 
 `Where:`  
@@ -14,18 +16,19 @@ The tool may also be used to double check that the results produced from the Tru
 | Hotkey | Option | Description |
 | :----- | :----- | :---------- |
 |  | blocks | a space-separated list of one or more blocks to retrieve (required) |
-| -e | --hashes_only | display only transaction hashes, default is to display full transaction detail |
-| -a | --apps | display all address appearances included in the block |
-| -u | --uniq | display only uniq addresses found per block |
-| -n | --uniq_tx | display only uniq addresses found per transaction |
-| -c | --count | display counts of appearances (for --apps, --uniq, or --uniq_tx) or transactions |
+| -e | --hashes | display only transaction hashes, default is to display full transaction detail |
 | -U | --uncles | display uncle blocks (if any) instead of the requested block |
+| -a | --apps | display all address appearances in the block |
+| -u | --uniq | display only uniq addresses appearances in the block |
+| -n | --uniq_tx | display only uniq addresses per transaction in the block |
+| -c | --count | display counts of appearances (for --apps, --uniq, or --uniq_tx) or transactions |
 | -v | --verbose | set verbose level (optional level defaults to 1) |
 | -h | --help | display this help screen |
 
 `Notes:`
 
 - `blocks` is a space-separated list of values, a start-end range, a `special`, or any combination.
+- `blocks` may be specified as either numbers or hashes.
 - `special` blocks are detailed under `chifra when --list`.
 
 #### Other Options

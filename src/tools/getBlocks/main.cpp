@@ -86,7 +86,7 @@ string_q doOneBlock(blknum_t num, COptions& opt) {
     gold.blockNumber = num;
     string_q result;
     if (opt.isRaw || opt.isVeryRaw) {
-        if (!queryRawBlock(result, uint_2_Str(num), true, opt.hashes_only)) {
+        if (!queryRawBlock(result, uint_2_Str(num), true, opt.hashes)) {
             result = "Could not query raw block " + uint_2_Str(num) + ". Is an Ethereum node running?";
 
         } else {
@@ -124,7 +124,7 @@ string_q doOneBlock(blknum_t num, COptions& opt) {
             opt.first = false;
         }
     } else {
-        if (opt.hashes_only) {
+        if (opt.hashes) {
             result = doOneLightBlock(num);
         } else {
             result = doOneHeavyBlock(gold, num, opt);

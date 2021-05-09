@@ -1223,7 +1223,7 @@ const char* STR_HTML_CODE =
     "----------schema: {type: 'array', items: {type: 'string'}},\n"
     "---------},\n"
     "---------{\n"
-    "----------name: 'hashes_only',\n"
+    "----------name: 'hashes',\n"
     "----------in: 'query',\n"
     "----------description: 'display only transaction hashes, default is to display full transaction detail',\n"
     "----------required: false,\n"

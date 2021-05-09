@@ -1,2 +1,3 @@
 ## intro
-This group of commands focuses on extracting the various bit of blockchain data directly from the node. You may extract blocks, transactions, receipts, logs, and traces. Each tool has it own options, making getting exactly the data you want easy. You can even figure out when an Ethereum block occurred.
+
+The commands in this group of tools focus on extracting raw blockchain data directly from the node. You may extract block data, transactional data, receipts, logs, and traces. Each tool has it own set of options, making getting exactly the data you want easy.

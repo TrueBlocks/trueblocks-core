@@ -529,7 +529,7 @@ paths:
           type: array
           items:
             type: string
-      - name: hashes_only
+      - name: hashes
         in: query
         description: display only transaction hashes, default is to display full transaction
           detail
@@ -538,9 +538,25 @@ paths:
         explode: true
         schema:
           type: boolean
+      - name: uncles
+        in: query
+        description: display uncle blocks (if any) instead of the requested block
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
+      - name: trace
+        in: query
+        description: export the traces from the block as opposed to the block data
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
       - name: apps
         in: query
-        description: display all address appearances included in the block
+        description: display all address appearances in the block
         required: false
         style: form
         explode: true
@@ -548,7 +564,7 @@ paths:
           type: boolean
       - name: uniq
         in: query
-        description: display only uniq addresses found per block
+        description: display only uniq addresses appearances in the block
         required: false
         style: form
         explode: true
@@ -556,7 +572,7 @@ paths:
           type: boolean
       - name: uniq_tx
         in: query
-        description: display only uniq addresses found per transaction
+        description: display only uniq addresses per transaction in the block
         required: false
         style: form
         explode: true
@@ -571,25 +587,9 @@ paths:
         explode: true
         schema:
           type: boolean
-      - name: uncles
-        in: query
-        description: display uncle blocks (if any) instead of the requested block
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
       - name: cache
         in: query
-        description: force a re-write of the block to the cache
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: trace
-        in: query
-        description: export the traces from the block as opposed to the block data
+        description: force a write of the block to the cache
         required: false
         style: form
         explode: true

@@ -27,9 +27,9 @@ on,both,fast,blocks,tools/getBlocks,force_02,y,blocks = 2769609 2799895 2872831 
 on,both,fast,blocks,tools/getBlocks,force_fail,y,blocks = 2769609 2799895 2872831 3076260 & cache & uniq_tx
 on,both,fast,blocks,tools/getBlocks,multi1,y,blocks = 2769609 2799895 2872831 3076260 & parity & raw
 on,both,fast,blocks,tools/getBlocks,multi2,y,blocks = 2769609 2799895 2872831 3076260 & raw & parity
-on,both,slow,blocks,tools/getBlocks,terse_no_raw,y,blocks = 4001001-4001003 & hashes_only
-on,both,fast,blocks,tools/getBlocks,terse_yes_raw,y,blocks = 4001001 & hashes_only & raw
-on,both,medi,blocks,tools/getBlocks,hashes_1,y,blocks = 4001001 & hashes_only
+on,both,slow,blocks,tools/getBlocks,terse_no_raw,y,blocks = 4001001-4001003 & hashes
+on,both,fast,blocks,tools/getBlocks,terse_yes_raw,y,blocks = 4001001 & hashes & raw
+on,both,medi,blocks,tools/getBlocks,hashes_1,y,blocks = 4001001 & hashes
 on,both,medi,blocks,tools/getBlocks,address_addrs1,n,blocks = 3982128 & apps & fmt = csv
 on,both,medi,blocks,tools/getBlocks,address_addrsv,n,blocks = 3982128 & apps & verbose = 1 & fmt = txt
 on,both,medi,blocks,tools/getBlocks,address_uniq1,n,blocks = 3982128 & uniq

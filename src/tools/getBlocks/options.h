@@ -24,11 +24,11 @@
 class COptions : public CBlockOptions {
   public:
     // BEG_CODE_DECLARE
-    bool hashes_only;
-    bool count;
+    bool hashes;
     bool uncles;
-    bool cache;
     bool trace;
+    bool count;
+    bool cache;
     // END_CODE_DECLARE
 
     uint64_t nProcessed{0};

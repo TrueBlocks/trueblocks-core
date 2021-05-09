@@ -1,7 +1,7 @@
 ## intro
 
-The two tools in this group deal with the Ethereum Chain State which may be distinquished from Ethereum Chain Data such as blocks, transactions, or traces.
+The two tools in this group deal with the Chain State such as balances and byte code which may be distinquished from Chain Data such as blocks, transactions, or traces.
 
-There are two tools, `chifra state` and `chifra tokens`. The first allows you to query account balances, the byte code of a smart contract (if available), the nonce and other information about any address. The second tool, `chifra tokens`, deals with token balances and ERC20 tokens information (and soon ERC721 tokens).
+The two tools are `chifra state` and `chifra tokens`. The first allows you to query account balances, the byte code of a smart contract (if available), the nonce and other information about an address. The second tool, `chifra tokens`, deals with ERC20 and ERC721 token balances and other data.
 
-The amount of information you can retrieve from the node depends on what type of node you're running (`--tracing`, `archive`, `--tracing archive` or `full node`). Archive nodes and tracing allow you to query historical data and balances. Non-archive nodes work, but are much less informative.
+**Note:** The amount of information available for retrieval depends on the type of node you run (`--tracing`, `archive`, `--tracing archive` or `full node`). Archive nodes and tracing allow you to query historical state (that is, state all the way back to the genesis block). TrueBlocks works with non-archive nodes, but they are much less informative.

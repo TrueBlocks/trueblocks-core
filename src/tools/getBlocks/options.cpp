@@ -21,14 +21,14 @@ static const COption params[] = {
     // BEG_CODE_OPTIONS
     // clang-format off
     COption("blocks", "", "list<blknum>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more blocks to retrieve"),  // NOLINT
-    COption("hashes_only", "e", "", OPT_SWITCH, "display only transaction hashes, default is to display full transaction detail"),  // NOLINT
-    COption("apps", "a", "", OPT_SWITCH, "display all address appearances included in the block"),
-    COption("uniq", "u", "", OPT_SWITCH, "display only uniq addresses found per block"),
-    COption("uniq_tx", "n", "", OPT_SWITCH, "display only uniq addresses found per transaction"),
-    COption("count", "c", "", OPT_SWITCH, "display counts of appearances (for --apps, --uniq, or --uniq_tx) or transactions"),  // NOLINT
+    COption("hashes", "e", "", OPT_SWITCH, "display only transaction hashes, default is to display full transaction detail"),  // NOLINT
     COption("uncles", "U", "", OPT_SWITCH, "display uncle blocks (if any) instead of the requested block"),
-    COption("cache", "o", "", OPT_HIDDEN | OPT_SWITCH, "force a re-write of the block to the cache"),
     COption("trace", "t", "", OPT_HIDDEN | OPT_SWITCH, "export the traces from the block as opposed to the block data"),
+    COption("apps", "a", "", OPT_SWITCH, "display all address appearances in the block"),
+    COption("uniq", "u", "", OPT_SWITCH, "display only uniq addresses appearances in the block"),
+    COption("uniq_tx", "n", "", OPT_SWITCH, "display only uniq addresses per transaction in the block"),
+    COption("count", "c", "", OPT_SWITCH, "display counts of appearances (for --apps, --uniq, or --uniq_tx) or transactions"),  // NOLINT
+    COption("cache", "o", "", OPT_HIDDEN | OPT_SWITCH, "force a write of the block to the cache"),
     COption("", "", "", OPT_DESCRIPTION, "Returns block(s) from local cache or directly from a running node."),
     // clang-format on
     // END_CODE_OPTIONS
@@ -61,8 +61,14 @@ bool COptions::parseArguments(string_q& command) {
         if (false) {
             // do nothing -- make auto code generation easier
             // BEG_CODE_AUTO
-        } else if (arg == "-e" || arg == "--hashes_only") {
-            hashes_only = true;
+        } else if (arg == "-e" || arg == "--hashes") {
+            hashes = true;
+
+        } else if (arg == "-U" || arg == "--uncles") {
+            uncles = true;
+
+        } else if (arg == "-t" || arg == "--trace") {
+            trace = true;
 
         } else if (arg == "-a" || arg == "--apps") {
             apps = true;
@@ -76,14 +82,8 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-c" || arg == "--count") {
             count = true;
 
-        } else if (arg == "-U" || arg == "--uncles") {
-            uncles = true;
-
         } else if (arg == "-o" || arg == "--cache") {
             cache = true;
-
-        } else if (arg == "-t" || arg == "--trace") {
-            trace = true;
 
         } else if (startsWith(arg, '-')) {  // do not collapse
 
@@ -101,14 +101,14 @@ bool COptions::parseArguments(string_q& command) {
 
     // BEG_DEBUG_DISPLAY
     LOG_TEST_LIST("blocks", blocks, blocks.empty());
-    LOG_TEST_BOOL("hashes_only", hashes_only);
+    LOG_TEST_BOOL("hashes", hashes);
+    LOG_TEST_BOOL("uncles", uncles);
+    LOG_TEST_BOOL("trace", trace);
     LOG_TEST_BOOL("apps", apps);
     LOG_TEST_BOOL("uniq", uniq);
     LOG_TEST_BOOL("uniq_tx", uniq_tx);
     LOG_TEST_BOOL("count", count);
-    LOG_TEST_BOOL("uncles", uncles);
     LOG_TEST_BOOL("cache", cache);
-    LOG_TEST_BOOL("trace", trace);
     // END_DEBUG_DISPLAY
 
     if (Mocked("blocks"))
@@ -131,8 +131,8 @@ bool COptions::parseArguments(string_q& command) {
     if (trace && !filterType.empty())
         return usage("The --trace option is not available when using one of the address options.");
 
-    if (trace && hashes_only)
-        return usage("The --hashes_only and --trace options are exclusive.");
+    if (trace && hashes)
+        return usage("The --hashes and --trace options are exclusive.");
 
     if (blocks.empty())
         return usage("You must specify at least one block.");
@@ -146,7 +146,7 @@ bool COptions::parseArguments(string_q& command) {
         GETRUNTIME_CLASS(CBlock)->sortFieldList();
     }
 
-    if (hashes_only) {
+    if (hashes) {
         manageFields("CTransaction:all", FLD_HIDE);
         manageFields("CBlock:all", FLD_HIDE);
 
@@ -207,11 +207,11 @@ void COptions::Init(void) {
     optionOn(OPT_RAW);
 
     // BEG_CODE_INIT
-    hashes_only = false;
-    count = false;
+    hashes = false;
     uncles = false;
-    cache = false;
     trace = false;
+    count = false;
+    cache = false;
     // END_CODE_INIT
 
     filterType = "";
@@ -229,6 +229,7 @@ COptions::COptions(void) {
     // BEG_CODE_NOTES
     // clang-format off
     notes.push_back("`blocks` is a space-separated list of values, a start-end range, a `special`, or any combination.");  // NOLINT
+    notes.push_back("`blocks` may be specified as either numbers or hashes.");
     notes.push_back("`special` blocks are detailed under `chifra when --list`.");
     // clang-format on
     // END_CODE_NOTES
