@@ -13,7 +13,7 @@ Please contact us at [sales@greathill.com](mailto:sales@greathill.com) for more 
 
 `Where:`  
 
-| Hotkey | Option | Description |
+| | Option | Description |
 | :----- | :----- | :---------- |
 |  | addrs | one or more addresses (0x...) to export (required) |
 |  | topics | filter by one or more logs topics (only for --logs option) |

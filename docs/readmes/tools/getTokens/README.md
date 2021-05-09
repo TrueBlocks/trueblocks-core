@@ -15,7 +15,7 @@ You may optionally specify one or more blocks at which to report. If no block is
 
 `Where:`  
 
-| Hotkey | Option | Description |
+| | Option | Description |
 | :----- | :----- | :---------- |
 |  | addrs | two or more addresses (0x...), the first is an ERC20 token, balances for the rest are reported (required) |
 |  | blocks | an optional list of one or more blocks at which to report balances, defaults to 'latest' |

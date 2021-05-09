@@ -9,7 +9,7 @@ The `chifra quotes` tool provides USD ($) price data to other tools and to the c
 
 `Where:`  
 
-| Hotkey | Option | Description |
+| | Option | Description |
 | :----- | :----- | :---------- |
 | -f | --freshen | Freshen price database (append new data) |
 | -p | --period <val> | increment of display, one of *[ 5 \| 15 \| 30 \| 60 \| 120\* \| 240 \| 1440 \| 10080 \| hourly \| daily \| weekly ]* |

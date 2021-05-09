@@ -13,7 +13,7 @@ The scraper can scrape either the index only, previously created monitors only, 
 
 `Where:`  
 
-| Hotkey | Option | Description |
+| | Option | Description |
 | :----- | :----- | :---------- |
 |  | mode | control the block and account scrapers, one of *[ run \| quit \| pause \| restart ]* (required) |
 | -t | --tool <val> | process the index, monitors, or both (none means process timestamps only), one or more of *[ monitors \| index\* \| none \| both ]* |

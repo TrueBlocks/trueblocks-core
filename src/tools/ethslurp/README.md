@@ -13,7 +13,7 @@ While `chifra slurp` has its shortcomings, it does provides some nice features. 
 
 `Where:`  
 
-| Hotkey | Option | Description |
+| | Option | Description |
 | :----- | :----- | :---------- |
 |  | addrs | one or more addresses to slurp from Etherscan (required) |
 |  | blocks | an optional range of blocks to slurp |

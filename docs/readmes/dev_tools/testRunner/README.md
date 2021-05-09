@@ -25,7 +25,7 @@ You may run all tests from the `./build` folder by entering `make test-all` (or 
 
 `Where:`  
 
-| Hotkey | Option | Description |
+| | Option | Description |
 | :----- | :----- | :---------- |
 | -m | --mode <val> | determine which set of tests to run, one of *[ cmd\* \| api \| both ]* |
 | -f | --filter <val> | determine how long it takes to run tests, one of *[ fast\* \| medi \| slow \| all ]* |

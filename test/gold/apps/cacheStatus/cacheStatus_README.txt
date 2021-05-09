@@ -7,7 +7,7 @@ cacheStatus -th
 
 `Where:`  
 
-| Hotkey | Option | Description |
+| | Option | Description |
 | :----- | :----- | :---------- |
 |  | modes | the type of status info to retrieve, one or more of *[ index \| monitors \| entities \| names \| abis \| caches \| some\* \| all ]* |
 | -d | --details | include details about items found in monitors, slurps, abis, or price caches |

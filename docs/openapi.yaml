@@ -564,7 +564,7 @@ paths:
           type: boolean
       - name: uniq
         in: query
-        description: display only uniq addresses appearances in the block
+        description: display only uniq address appearances per block
         required: false
         style: form
         explode: true
@@ -572,7 +572,7 @@ paths:
           type: boolean
       - name: uniq_tx
         in: query
-        description: display only uniq addresses per transaction in the block
+        description: display only uniq address appearances per transaction
         required: false
         style: form
         explode: true

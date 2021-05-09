@@ -953,7 +953,7 @@ string_q COptionsBase::descriptions(void) const {
     } else {
         if (isReadme) {
             os << "\n";
-            os << "| Hotkey | Option | Description |\n";
+            os << "| | Option | Description |\n";
             os << "| :----- | :----- | :---------- |\n";
         }
 

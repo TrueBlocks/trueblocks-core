@@ -9,7 +9,7 @@ This tool is not yet ready for production use. Please return to this page later.
 
 `Where:`  
 
-| Hotkey | Option | Description |
+| | Option | Description |
 | :----- | :----- | :---------- |
 | -c | --compare | report differences (if any) between the manifest and pinning service |
 | -i | --init | initialize the local index by downloading bloom filters from the pinning service |

@@ -11,7 +11,7 @@ You may also query to see if an address is a smart contract as well as retrieve 
 
 `Where:`  
 
-| Hotkey | Option | Description |
+| | Option | Description |
 | :----- | :----- | :---------- |
 |  | addrs | one or more addresses (0x...) from which to retrieve balances (required) |
 |  | blocks | an optional list of one or more blocks at which to report balances, defaults to 'latest' |

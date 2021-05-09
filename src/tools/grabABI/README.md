@@ -9,7 +9,7 @@
 
 `Where:`  
 
-| Hotkey | Option | Description |
+| | Option | Description |
 | :----- | :----- | :---------- |
 |  | addrs | list of one or more smart contracts whose ABI to grab from EtherScan (required) |
 | -c | --canonical | convert all types to their canonical represenation and remove all spaces from display |

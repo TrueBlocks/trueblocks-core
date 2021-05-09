@@ -7,7 +7,7 @@ acctExport -th
 
 `Where:`  
 
-| Hotkey | Option | Description |
+| | Option | Description |
 | :----- | :----- | :---------- |
 |  | addrs | one or more addresses (0x...) to export (required) |
 |  | topics | filter by one or more logs topics (only for --logs option) |

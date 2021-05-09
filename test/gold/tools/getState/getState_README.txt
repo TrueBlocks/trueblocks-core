@@ -7,7 +7,7 @@ getState -th
 
 `Where:`  
 
-| Hotkey | Option | Description |
+| | Option | Description |
 | :----- | :----- | :---------- |
 |  | addrs | one or more addresses (0x...) from which to retrieve balances (required) |
 |  | blocks | an optional list of one or more blocks at which to report balances, defaults to 'latest' |

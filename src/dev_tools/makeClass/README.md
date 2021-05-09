@@ -9,7 +9,7 @@
 
 `Where:`  
 
-| Hotkey | Option | Description |
+| | Option | Description |
 | :----- | :----- | :---------- |
 |  | files | one or more class definition files (required) |
 | -r | --run | run the class maker on associated <class_name(s)> |

@@ -7,7 +7,7 @@ getTrans -th
 
 `Where:`  
 
-| Hotkey | Option | Description |
+| | Option | Description |
 | :----- | :----- | :---------- |
 |  | transactions | a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID) (required) |
 | -a | --articulate | articulate the transactions if an ABI is found for the 'to' address |
