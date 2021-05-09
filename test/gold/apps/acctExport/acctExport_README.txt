@@ -37,7 +37,7 @@ acctExport -th
 | -u | --unripe | enable search of unripe (neither staged nor finalized) folder (assumes --staging) |
 |####|Hidden options||
 | -x | --fmt <val> | export format, one of *[ none \| json\* \| txt \| csv \| api ]* |
-| -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
+| -v | --verbose | set verbose level (optional level defaults to 1) |
 | -h | --help | display this help screen |
 
 `Notes:`

@@ -13,6 +13,6 @@ acctTest -th
 | -f | --first <uint> | the first block to process |
 | -l | --last <uint> | the last block (less one) to process |
 | -n | --nblocks <uint> | the number of blocks to visit (ignored for -a) |
-| -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
+| -v | --verbose | set verbose level (optional level defaults to 1) |
 | -h | --help | display this help screen |
 

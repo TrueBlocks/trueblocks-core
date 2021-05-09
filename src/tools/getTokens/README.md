@@ -1,12 +1,12 @@
 ## chifra tokens
 
-Given the address of an ERC20 token contract, report token balances for one or more accounts. Alternatively, report token balances for multiple ERC20 contracts for a single account.
+Given the address of an ERC20 token contract, this tool reports token balances for one or more additional addresses. Alternatively, the tool can report the token balances for multiple ERC20 tokens for a single addresses.
 
-In normal operation the **first item** in the `address_list` is considered to be an ERC20 token contract whose balances are queried, whereas the remainder of the list is assumed to be accounts on which to report.
+In normal operation the **first item** in the `address_list` is assumed to be an ERC20 token contract whose balances are being queried, whereas the remainder of the list is assumed to be addresses on which to report.
 
-In `--byAcct` mode, **all items** in the `address_list` are assumed to be token contracts, except the last which is the account whose token balances are reported.
+In `--byAcct` mode, **all addresses** in the `address_list` are assumed to be ERC20 token contracts, except the final one which is the account whose token balances are reported.
 
-You may optionally specify one or more blocks at which to report.
+You may optionally specify one or more blocks at which to report. If no block is specified, the latest block is assumed. You may also optionally specify which parts of the token data to extract.
 
 ### Usage
 
@@ -31,7 +31,7 @@ You may optionally specify one or more blocks at which to report.
 - `blocks` may be a space-separated list of values, a start-end range, a `special`, or any combination.
 - If the token contract(s) from which you request balances are not ERC20 compliant, the results are undefined.
 - If the queried node does not store historical state, the results are undefined.
-- `special` blocks are detailed under `whenBlock --list`.
+- `special` blocks are detailed under `chifra when --list`.
 
 #### Other Options
 

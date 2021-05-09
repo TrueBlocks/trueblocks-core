@@ -229,7 +229,7 @@ COptions::COptions(void) {
     // BEG_CODE_NOTES
     // clang-format off
     notes.push_back("`blocks` is a space-separated list of values, a start-end range, a `special`, or any combination.");  // NOLINT
-    notes.push_back("`special` blocks are detailed under `whenBlock --list`.");
+    notes.push_back("`special` blocks are detailed under `chifra when --list`.");
     // clang-format on
     // END_CODE_NOTES
 

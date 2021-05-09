@@ -273,7 +273,7 @@ COptions::COptions(void) : CHistoryOptions() {
     notes.push_back("`blocks` may be a space-separated list of values, a start-end range, a `special`, or any combination.");  // NOLINT
     notes.push_back("If the token contract(s) from which you request balances are not ERC20 compliant, the results are undefined.");  // NOLINT
     notes.push_back("If the queried node does not store historical state, the results are undefined.");
-    notes.push_back("`special` blocks are detailed under `whenBlock --list`.");
+    notes.push_back("`special` blocks are detailed under `chifra when --list`.");
     // clang-format on
     // END_CODE_NOTES
 

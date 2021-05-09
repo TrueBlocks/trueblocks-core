@@ -1,8 +1,8 @@
 ## chifra state
 
-Retrieve the balance (in wei) of an address (or list of addresses) at a given block(s). You may specify multiple addresses and/or multiple blocks, but you must specify at least one address.
+Use this tool to retrieve the balance of an address (or list of addresses) at the given block (or blocks). Specify multiple addresses and/or multiple blocks if you wish, but you must specify at least one address. If no block is specified, the latest block is reported.
 
-This simple program may be used to query an Ethereum address to determine if it is a `smart contract` or simply a regular `external account`. It may also be used to retrieve the byte-code from an address (if present). Finally, it may be used to compare the byte code found at two addresses to determine if they hold identical code. You may specify multiple addresses on a line.
+You may also query to see if an address is a smart contract as well as retrieve a contract's byte code.
 
 ### usage
 
@@ -26,7 +26,7 @@ This simple program may be used to query an Ethereum address to determine if it 
 - An `address` must start with '0x' and be forty-two characters long.
 - `blocks` may be a space-separated list of values, a start-end range, a `special`, or any combination.
 - If the queried node does not store historical state, the results are undefined.
-- `special` blocks are detailed under `whenBlock --list`.
+- `special` blocks are detailed under `chifra when --list`.
 - `balance` is the default mode. To select a single mode use `none` first, followed by that mode.
 - You may specify multiple `modes` on a single line.
 

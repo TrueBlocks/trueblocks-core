@@ -143,7 +143,7 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,is_customizable
 12625,tools,ChainData,blocks,getBlocks,trace,t,,false,false,false,false,header,switch,<boolean>,export the traces from the block as opposed to the block data
 12640,tools,ChainData,blocks,getBlocks,,,,false,false,true,true,--,description,,Returns block(s) from local cache or directly from a running node.
 12882,tools,ChainData,blocks,getBlocks,,,,false,false,false,false,--,note,,`blocks` is a space-separated list of values&#44; a start-end range&#44; a `special`&#44; or any combination.
-12886,tools,ChainData,blocks,getBlocks,,,,false,false,false,false,--,note,,`special` blocks are detailed under `whenBlock --list`.
+12886,tools,ChainData,blocks,getBlocks,,,,false,false,false,false,--,note,,`special` blocks are detailed under `chifra when --list`.
 
 12920,tools,ChainData,logs,getLogs,transactions,,,true,false,true,true,local,positional,list<tx_id>,a space-separated list of one or more transaction identifiers|(tx_hash&#44; bn.txID&#44; blk_hash.txID)
 12940,tools,ChainData,logs,getLogs,articulate,a,,false,false,true,true,header,switch,<boolean>,articulate the transactions if an ABI is found for the 'to' address
@@ -170,7 +170,7 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,is_customizable
 13222,tools,ChainState,state,getState,,,,false,false,false,false,--,note,,An `address` must start with '0x' and be forty-two characters long.
 13224,tools,ChainState,state,getState,,,,false,false,false,false,--,note,,`blocks` may be a space-separated list of values&#44; a start-end range&#44; a `special`&#44; or any combination.
 13228,tools,ChainState,state,getState,,,,false,false,false,false,--,note,,If the queried node does not store historical state&#44; the results are undefined.
-13230,tools,ChainState,state,getState,,,,false,false,false,false,--,note,,`special` blocks are detailed under `whenBlock --list`.
+13230,tools,ChainState,state,getState,,,,false,false,false,false,--,note,,`special` blocks are detailed under `chifra when --list`.
 13232,tools,ChainState,state,getState,,,,false,false,false,false,--,note,,`balance` is the default mode. To select a single mode use `none` first&#44; followed by that mode.
 13234,tools,ChainState,state,getState,,,,false,false,false,false,--,note,,You may specify multiple `modes` on a single line.
 
@@ -184,7 +184,7 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,is_customizable
 13364,tools,ChainState,tokens,getTokens,,,,false,false,false,false,--,note,,`blocks` may be a space-separated list of values&#44; a start-end range&#44; a `special`&#44; or any combination.
 13368,tools,ChainState,tokens,getTokens,,,,false,false,false,false,--,note,,If the token contract(s) from which you request balances are not ERC20 compliant&#44; the results are undefined.
 13370,tools,ChainState,tokens,getTokens,,,,false,false,false,false,--,note,,If the queried node does not store historical state&#44; the results are undefined.
-13372,tools,ChainState,tokens,getTokens,,,,false,false,false,false,--,note,,`special` blocks are detailed under `whenBlock --list`.
+13372,tools,ChainState,tokens,getTokens,,,,false,false,false,false,--,note,,`special` blocks are detailed under `chifra when --list`.
 
 13400,tools,ChainData,traces,getTraces,transactions,,,true,false,true,true,local,positional,list<tx_id>,a space-separated list of one or more transaction identifiers|(tx_hash&#44; bn.txID&#44; blk_hash.txID)
 13420,tools,ChainData,traces,getTraces,articulate,a,,false,false,true,true,header,switch,<boolean>,articulate the transactions if an ABI is found for the 'to' address

@@ -14,7 +14,7 @@ getTokens -th
 | -p | --parts <val> | one or more parts of the token information to retreive, one or more of *[ name \| symbol \| decimals \| totalSupply \| version \| none \| all\* ]* |
 | -b | --by_acct | consider each address an ERC20 token except the last, whose balance is reported for each token |
 | -n | --no_zero | suppress the display of zero balance accounts |
-| -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
+| -v | --verbose | set verbose level (optional level defaults to 1) |
 | -h | --help | display this help screen |
 
 `Notes:`
@@ -23,5 +23,5 @@ getTokens -th
 - `blocks` may be a space-separated list of values, a start-end range, a `special`, or any combination.
 - If the token contract(s) from which you request balances are not ERC20 compliant, the results are undefined.
 - If the queried node does not store historical state, the results are undefined.
-- `special` blocks are detailed under `whenBlock --list`.
+- `special` blocks are detailed under `chifra when --list`.
 

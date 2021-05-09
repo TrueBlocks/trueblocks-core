@@ -1,6 +1,6 @@
 ## chifra pins
 
-The `chifra pins` is not ready for prime time. Please return late.
+This tool is not yet ready for production use. Please return to this page later.
 
 ### Usage
 

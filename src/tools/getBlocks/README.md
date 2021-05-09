@@ -26,7 +26,7 @@ The tool may also be used to double check that the results produced from the Tru
 `Notes:`
 
 - `blocks` is a space-separated list of values, a start-end range, a `special`, or any combination.
-- `special` blocks are detailed under `whenBlock --list`.
+- `special` blocks are detailed under `chifra when --list`.
 
 #### Other Options
 

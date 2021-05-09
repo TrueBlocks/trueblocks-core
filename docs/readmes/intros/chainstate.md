@@ -1,2 +1,7 @@
 ## intro
-We separate out these few commands into a section called Chain State to distinguish it from blockchain data such as blocks and transactions. Chain state is what changes when blocks and transactions are processed. If you're running a non-archive node, you can query things such as balance and the byte code for smart contracts. If you have an archive node (such as TurboGeth), you can query historical state which comes in very handily when doing reconciliations.
+
+The two tools in this group deal with the Ethereum Chain State which may be distinquished from Ethereum Chain Data such as blocks, transactions, or traces.
+
+There are two tools, `chifra state` and `chifra tokens`. The first allows you to query account balances, the byte code of a smart contract (if available), the nonce and other information about any address. The second tool, `chifra tokens`, deals with token balances and ERC20 tokens information (and soon ERC721 tokens).
+
+The amount of information you can retrieve from the node depends on what type of node you're running (`--tracing`, `archive`, `--tracing archive` or `full node`). Archive nodes and tracing allow you to query historical data and balances. Non-archive nodes work, but are much less informative.
