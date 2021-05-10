@@ -533,6 +533,7 @@ CCommandOption::CCommandOption(const string_q& line) {
     isEnumList = contains(data_type, "list<enum");
     isStringList = contains(data_type, "list<string");
     isAddressList = contains(data_type, "list<addr");
+    isTopicList = contains(data_type, "list<topic");
     isEnum = contains(data_type, "enum") && !isEnumList;
     isBool = contains(data_type, "boolean");
     isBlockNum = contains(data_type, "blknum");

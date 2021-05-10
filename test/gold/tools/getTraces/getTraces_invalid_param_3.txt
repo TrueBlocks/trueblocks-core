@@ -3,19 +3,19 @@ getTraces 1233123
 
   1233123 does not appear to be a valid transaction index. Quitting...
 
-  Usage:    getTraces [-a|-d|-c|-v|-h] <tx_id> [tx_id...]  
+  Usage:    getTraces [-a|-f|-d|-c|-v|-h] <tx_id> [tx_id...]  
   Purpose:  Retrieve a transaction's traces from the cache or the node.
 
   Where:  
-	transactions          a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID) (required)
-	-a  (--articulate)    articulate the transactions if an ABI is found for the 'to' address
-	-d  (--statediff)     export stateDiff traces for the transaction(s)
+	transactions          a space-separated list of one or more transaction identifiers (required)
+	-a  (--articulate)    articulate the retrieved data if ABIs can be found
+	-f  (--filter <str>)  call the node's `trace_filter` routine with bang-seperated filter
+	-d  (--statediff)     export state diff traces (not implemented)
 	-c  (--count)         show the number of traces for the transaction only (fast)
 
 	#### Hidden options
-	-s  (--skip_ddos)     skip over 2018 ddos during export ('on' by default)
-	-m  (--max_traces <num>)if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250)
-	-f  (--filter <str>)  Call trace_filter with bang-seperated string fromBlk!toBlk[!fromAddr[!toAddr[!after[!count]]]]
+	-s  (--skip_ddos)     skip over the 2016 ddos during export ('on' by default)
+	-m  (--max <num>)     if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250)
 	#### Hidden options
 
 	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]

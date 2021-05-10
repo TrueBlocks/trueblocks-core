@@ -7,10 +7,10 @@ abiTest -th
 
 `Where:`  
 
-| Hotkey | Option | Description |
+| | Option | Description |
 | :----- | :----- | :---------- |
 |  | modes | mode of operation, one or more of *[ encoding \| generation ]* (required) |
-| -s | --sub <num> | sub mode |
+| -s | --sub &lt;num&gt; | sub mode |
 | -v | --verbose | set verbose level (optional level defaults to 1) |
 | -h | --help | display this help screen |
 

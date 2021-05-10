@@ -61,7 +61,7 @@ paths:
             type: string
       - name: topics
         in: query
-        description: filter by one or more logs topics (only for --logs option)
+        description: filter by one or more log topics (only for --logs option)
         required: false
         style: form
         explode: true
@@ -193,7 +193,7 @@ paths:
         explode: true
         schema:
           type: boolean
-      - name: emitted_by
+      - name: source
         in: query
         description: for log export only, export only one of these addresses emitted the event
         required: false
@@ -610,14 +610,13 @@ paths:
     get:
       tags:
       - ChainData
-      summary: Retrieve a transaction from the cache or the node.
-      description: Retrieve a transaction from the cache or the node.
+      summary: Retrieves one or more transactions from the cache or the node.
+      description: Retrieves one or more transactions from the cache or the node.
       operationId: chaindata-transactions
       parameters:
       - name: transactions
         in: query
         description: a space-separated list of one or more transaction identifiers
-          (tx_hash, bn.txID, blk_hash.txID)
         required: true
         style: form
         explode: true
@@ -627,7 +626,7 @@ paths:
             type: string
       - name: articulate
         in: query
-        description: articulate the transactions if an ABI is found for the 'to' address
+        description: articulate the retrieved data if ABIs can be found
         required: false
         style: form
         explode: true
@@ -635,15 +634,7 @@ paths:
           type: boolean
       - name: trace
         in: query
-        description: display the transaction's trace
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: cache
-        in: query
-        description: force the results into the tx cache
+        description: include the transaction's traces in the results
         required: false
         style: form
         explode: true
@@ -651,7 +642,15 @@ paths:
           type: boolean
       - name: uniq
         in: query
-        description: display a list of uniq addresses found in this transaction
+        description: display a list of uniq addresses found in the transaction instead of the underlying data
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
+      - name: cache
+        in: query
+        description: force the results of the query into the tx cache (and the trace cache if applicable)
         required: false
         style: form
         explode: true
@@ -679,7 +678,6 @@ paths:
       - name: transactions
         in: query
         description: a space-separated list of one or more transaction identifiers
-          (tx_hash, bn.txID, blk_hash.txID)
         required: true
         style: form
         explode: true
@@ -689,15 +687,7 @@ paths:
             type: string
       - name: articulate
         in: query
-        description: articulate the transactions if an ABI is found for the 'to' address
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: logs
-        in: query
-        description: display the receipt's logs
+        description: articulate the retrieved data if ABIs can be found
         required: false
         style: form
         explode: true
@@ -725,8 +715,27 @@ paths:
       - name: transactions
         in: query
         description: a space-separated list of one or more transaction identifiers
-          (tx_hash, bn.txID, blk_hash.txID)
         required: true
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: topic
+        in: query
+        description: filter by one or more log topics (not implemented)
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: source
+        in: query
+        description: export only if the given address emitted the event (not implemented)
+        required: false
         style: form
         explode: true
         schema:
@@ -735,7 +744,7 @@ paths:
             type: string
       - name: articulate
         in: query
-        description: articulate the transactions if an ABI is found for the 'to' address
+        description: articulate the retrieved data if ABIs can be found
         required: false
         style: form
         explode: true
@@ -763,7 +772,6 @@ paths:
       - name: transactions
         in: query
         description: a space-separated list of one or more transaction identifiers
-          (tx_hash, bn.txID, blk_hash.txID)
         required: true
         style: form
         explode: true
@@ -773,15 +781,23 @@ paths:
             type: string
       - name: articulate
         in: query
-        description: articulate the transactions if an ABI is found for the 'to' address
+        description: articulate the retrieved data if ABIs can be found
         required: false
         style: form
         explode: true
         schema:
           type: boolean
+      - name: filter
+        in: query
+        description: call the node's `trace_filter` routine with bang-seperated filter
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
       - name: statediff
         in: query
-        description: export stateDiff traces for the transaction(s)
+        description: export state diff traces (not implemented)
         required: false
         style: form
         explode: true
@@ -797,13 +813,13 @@ paths:
           type: boolean
       - name: skip_ddos
         in: query
-        description: skip over 2018 ddos during export ('on' by default)
+        description: skip over the 2016 ddos during export ('on' by default)
         required: false
         style: form
         explode: true
         schema:
           type: boolean
-      - name: max_traces
+      - name: max
         in: query
         description: if --skip_ddos is on, this many traces defines what a ddos transaction
           is (default = 250)
@@ -812,14 +828,6 @@ paths:
         explode: true
         schema:
           type: number
-      - name: filter
-        in: query
-        description: Call trace_filter with bang-seperated string fromBlk!toBlk[!fromAddr[!toAddr[!after[!count]]]]
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
       responses:
         "200":
           description: status of the scraper

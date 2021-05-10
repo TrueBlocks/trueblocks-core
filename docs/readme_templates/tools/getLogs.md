@@ -1,6 +1,8 @@
 ## [{NAME}]
 
-`[{NAME}]` returns a transaction's logs. You may specify the logs you want using either a transaction hash (trans\_hash), a block hash plus transaction index (block\_hash.trans\_id), or a block number plus transaction index (block\_num.trans\_id).  
+`[{NAME}]` returns the given transaction's logs. You may specify multiple transaction identifiers per invocation.
+
+The `--articulate` option fetches the ABI from each encountered smart contract to better describe the reported data. The `--topic` and `--source` options allow you to filter your results.
 
 [{USAGE_TABLE}]
 [{FOOTER}]

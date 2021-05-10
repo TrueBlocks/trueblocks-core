@@ -15,7 +15,7 @@ You may also query to see if an address is a smart contract as well as retrieve 
 | :----- | :----- | :---------- |
 |  | addrs | one or more addresses (0x...) from which to retrieve balances (required) |
 |  | blocks | an optional list of one or more blocks at which to report balances, defaults to 'latest' |
-| -p | --parts <val> | control which state to export, one or more of *[ none \| some\* \| all \| balance \| nonce \| code \| storage \| deployed \| accttype ]* |
+| -p | --parts &lt;val&gt; | control which state to export, one or more of *[ none \| some\* \| all \| balance \| nonce \| code \| storage \| deployed \| accttype ]* |
 | -c | --changes | only report a balance when it changes from one block to the next |
 | -n | --no_zero | suppress the display of zero balance accounts |
 | -v | --verbose | set verbose level (optional level defaults to 1) |

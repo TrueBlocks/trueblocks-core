@@ -7,7 +7,7 @@ ethNames -th
 
 `Where:`  
 
-| Hotkey | Option | Description |
+| | Option | Description |
 | :----- | :----- | :---------- |
 |  | terms | a space separated list of one or more search terms (required) |
 | -e | --expand | expand search to include all fields (default searches name, address, and symbol only) |
@@ -24,7 +24,7 @@ ethNames -th
 | -u | --to_custom | for editCmd only, is the edited name a custom name or not |
 | -C | --clean | clean the data (addrs to lower case, sort by addr) |
 |####|Hidden options||
-| -x | --fmt <val> | export format, one of *[ none \| json\* \| txt \| csv \| api ]* |
+| -x | --fmt &lt;val&gt; | export format, one of *[ none \| json\* \| txt \| csv \| api ]* |
 | -v | --verbose | set verbose level (optional level defaults to 1) |
 | -h | --help | display this help screen |
 

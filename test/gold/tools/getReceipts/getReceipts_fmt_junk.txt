@@ -3,13 +3,12 @@ getReceipts 2222222.0 2332332.0 --fmt junk
 
   Export format (junk) must be one of [ json | txt | csv | api ]. Quitting...
 
-  Usage:    getReceipts [-a|-l|-v|-h] <tx_id> [tx_id...]  
+  Usage:    getReceipts [-a|-v|-h] <tx_id> [tx_id...]  
   Purpose:  Retrieve a transaction's receipt from the cache or the node.
 
   Where:  
-	transactions          a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID) (required)
-	-a  (--articulate)    articulate the transactions if an ABI is found for the 'to' address
-	-l  (--logs)          display the receipt's logs
+	transactions          a space-separated list of one or more transaction identifiers (required)
+	-a  (--articulate)    articulate the retrieved data if ABIs can be found
 	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
 	-v  (--verbose)       set verbose level (optional level defaults to 1)
 	-h  (--help)          display this help screen

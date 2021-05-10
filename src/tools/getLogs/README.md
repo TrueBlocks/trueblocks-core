@@ -1,27 +1,33 @@
 ## chifra logs
 
-`chifra logs` returns a transaction's logs. You may specify the logs you want using either a transaction hash (trans\_hash), a block hash plus transaction index (block\_hash.trans\_id), or a block number plus transaction index (block\_num.trans\_id).  
+`chifra logs` returns the given transaction's logs. You may specify multiple transaction identifiers per invocation.
+
+The `--articulate` option fetches the ABI from each encountered smart contract to better describe the reported data. The `--topic` and `--source` options allow you to filter your results.
 
 ### Usage
 
-`Usage:`    chifra logs [-a|-v|-h] &lt;tx_id&gt; [tx_id...]  
+`Usage:`    chifra logs [-t|-s|-a|-v|-h] &lt;tx_id&gt; [tx_id...]  
 `Purpose:`  Retrieve a transaction's logs from the cache or the node.
 
 `Where:`  
 
 | | Option | Description |
 | :----- | :----- | :---------- |
-|  | transactions | a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID) (required) |
-| -a | --articulate | articulate the transactions if an ABI is found for the 'to' address |
+|  | transactions | a space-separated list of one or more transaction identifiers (required) |
+| -t | --topic &lt;hash&gt; | filter by one or more log topics (not implemented) |
+| -s | --source &lt;addr&gt; | export only if the given address emitted the event (not implemented) |
+| -a | --articulate | articulate the retrieved data if ABIs can be found |
 | -v | --verbose | set verbose level (optional level defaults to 1) |
 | -h | --help | display this help screen |
 
 `Notes:`
 
-- `transactions` is one or more space-separated identifiers which may be either a transaction hash, 
+- The `transactions` list may be one or more space-separated identifiers which are either a transaction hash, 
   a blockNumber.transactionID pair, or a blockHash.transactionID pair, or any combination.
-- This tool checks for valid input syntax, but does not check that the transaction requested exists.
-- If the queried node does not store historical state, the results may be undefined.
+- This tool checks for valid input syntax, but does not check that the transaction requested actually exists.
+- If the queried node does not store historical state, the results for most older transactions are undefined.
+- If you specify a 32-byte hash, it will be assumed to be a transaction hash, if the transaction is 
+  not found, it will be used as a topic.
 
 #### Other Options
 

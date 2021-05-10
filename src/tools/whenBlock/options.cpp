@@ -42,7 +42,8 @@ size_t nTimestamps(void) {
 extern const char* STR_DISPLAY_WHEN;
 extern const char* STR_DISPLAY_TIMESTAMP;
 //---------------------------------------------------------------------------------------------------
-bool COptions::parseArguments(string_q& command) {
+bool COptions::parseArguments(string_q& commandIn) {
+    string_q command = commandIn;
     if (!standardOptions(command))
         return false;
 
@@ -50,6 +51,7 @@ bool COptions::parseArguments(string_q& command) {
     CStringArray block_list;
     // END_CODE_LOCAL_INIT
 
+    hasHelp = contains(command, "-h") || contains(command, "-th");
     Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
@@ -173,6 +175,7 @@ void COptions::Init(void) {
     skip = NOPOS;
     isText = false;
     cnt = 0;
+    hasHelp = false;
     requests.clear();
     blocks.Init();
 }
@@ -189,11 +192,8 @@ COptions::COptions(void) {
     // clang-format off
     notes.push_back("The block list may contain any combination of `number`, `hash`, `date`, special `named` blocks.");
     notes.push_back("Dates must be formatted in JSON format: YYYY-MM-DD[THH[:MM[:SS]]].");
-    notes.push_back("You may customize the list of named blocks by editing [{CONFIG}]whenBlock.toml.");
-    notes.push_back("The following `named` blocks are currently configured:");
     // clang-format on
     // END_CODE_NOTES
-    notes.push_back("  " + listSpecials(NONE1));
 
     // BEG_ERROR_MSG
     // END_ERROR_MSG
@@ -211,39 +211,6 @@ bool showSpecials(CNameValue& pair, void* data) {
     CNameValue nv("block", pair.second + "|" + pair.first);
     array->push_back(nv);
     return true;
-}
-
-//--------------------------------------------------------------------------------
-string_q COptions::listSpecials(format_t fmt) const {
-    if (specials.size() == 0)
-        ((COptionsBase*)this)->loadSpecials();  // NOLINT
-
-    ostringstream os;
-    string_q extra;
-    for (size_t i = 0; i < specials.size(); i++) {
-        string_q name = specials[i].first;
-        string_q bn = specials[i].second;
-        if (name == "latest") {
-            if (isTestMode()) {
-                bn = "";
-            } else if (COptionsBase::isReadme) {
-                bn = "--";
-            } else if (i > 0 && str_2_Uint(bn) >= getBlockProgress(BP_CLIENT).client) {
-                extra = " (syncing)";
-            }
-        }
-
-#define N_PER_LINE 4
-        os << name;
-        os << " (`" << bn << extra << "`)";
-        if (!((i + 1) % N_PER_LINE)) {
-            if (i < specials.size() - 1)
-                os << "\n  ";
-        } else if (i < specials.size() - 1) {
-            os << ", ";
-        }
-    }
-    return os.str().c_str();
 }
 
 //-----------------------------------------------------------------------

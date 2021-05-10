@@ -34,6 +34,7 @@ class COptions : public CBlockOptions {
     blknum_t stop;
     bool first;
     blknum_t cnt;
+    bool hasHelp;
 
     COptions(void);
     ~COptions(void);
@@ -42,7 +43,6 @@ class COptions : public CBlockOptions {
     void Init(void) override;
 
     void applyFilter(void);
-    string_q listSpecials(format_t fmt) const;
 };
 
 extern bool showSpecials(CNameValue& pair, void* data);

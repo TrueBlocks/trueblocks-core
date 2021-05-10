@@ -433,6 +433,7 @@ const char* STR_DISPLAY_RECEIPT =
     "[{BLOCKNUMBER}]\t"
     "[{TRANSACTIONINDEX}]\t"
     "[{HASH}]\t"
+    "[{LOGSCNT}]\t"
     "[{GASUSED}]\t"
     "[{STATUS}]\t"
     "[{ISERROR}]";

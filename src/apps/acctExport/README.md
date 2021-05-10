@@ -1,10 +1,12 @@
 ## chifra export
 
-This folder contains a TrueBlocks monitor. TrueBlocks monitors pull transactions from the Ethereum blockchain for a given (or a series of) Ethereum addresses.
+The `chifra export` tools provides a major part of the functionality of the TrueBlocks system. Using the index of appearances created with `chifra scrape` and the list of transaction identifiers created with `chifra list`, `chifra export` completes the actual extraction of an address's transactional history from the node.
 
-Below we present the command line interface to this tool, although the tool itself is not available under open source. While the tool is in active development, TrueBlocks monitors already produce very useful results. For example, we use TrueBlocks monitors to account for and analyze all transactions on a given smart contract. We present [this example](http://dao.quickblocks.io).
+You may use a log's `topics`, the `fourbyte` values at the head of a transaction's input data, and/or a log's `source address` in order to filter your results.
 
-Please contact us at [sales@greathill.com](mailto:sales@greathill.com) for more information.
+You may also choose which portions of the Ethereum data structures (transactions, logs, traces, etc.) as you wish.
+
+By default, the results of the extraction are delivered to your console, however, you may export the results to any database (with a little bit of work). The format of the data, its content and its destination are up to you.
 
 ### Usage
 
@@ -16,7 +18,7 @@ Please contact us at [sales@greathill.com](mailto:sales@greathill.com) for more 
 | | Option | Description |
 | :----- | :----- | :---------- |
 |  | addrs | one or more addresses (0x...) to export (required) |
-|  | topics | filter by one or more logs topics (only for --logs option) |
+|  | topics | filter by one or more log topics (only for --logs option) |
 |  | fourbytes | filter by one or more fourbytes (only for transactions and trace options) |
 | -p | --appearances | export a list of appearances |
 | -r | --receipts | export receipts instead of transaction list |

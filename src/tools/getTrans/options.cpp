@@ -20,12 +20,12 @@
 static const COption params[] = {
     // BEG_CODE_OPTIONS
     // clang-format off
-    COption("transactions", "", "list<tx_id>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)"),  // NOLINT
-    COption("articulate", "a", "", OPT_SWITCH, "articulate the transactions if an ABI is found for the 'to' address"),
-    COption("trace", "t", "", OPT_SWITCH, "display the transaction's trace"),
-    COption("cache", "o", "", OPT_HIDDEN | OPT_SWITCH, "force the results into the tx cache"),
-    COption("uniq", "u", "", OPT_SWITCH, "display a list of uniq addresses found in this transaction"),
-    COption("", "", "", OPT_DESCRIPTION, "Retrieve a transaction from the cache or the node."),
+    COption("transactions", "", "list<tx_id>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more transaction identifiers"),  // NOLINT
+    COption("articulate", "a", "", OPT_SWITCH, "articulate the retrieved data if ABIs can be found"),
+    COption("trace", "t", "", OPT_SWITCH, "include the transaction's traces in the results"),
+    COption("uniq", "u", "", OPT_SWITCH, "display a list of uniq addresses found in the transaction instead of the underlying data"),  // NOLINT
+    COption("cache", "o", "", OPT_SWITCH, "force the results of the query into the tx cache (and the trace cache if applicable)"),  // NOLINT
+    COption("", "", "", OPT_DESCRIPTION, "Retrieves one or more transactions from the cache or the node."),
     // clang-format on
     // END_CODE_OPTIONS
 };
@@ -51,11 +51,11 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-t" || arg == "--trace") {
             trace = true;
 
-        } else if (arg == "-o" || arg == "--cache") {
-            cache = true;
-
         } else if (arg == "-u" || arg == "--uniq") {
             uniq = true;
+
+        } else if (arg == "-o" || arg == "--cache") {
+            cache = true;
 
         } else if (startsWith(arg, '-')) {  // do not collapse
 
@@ -75,8 +75,8 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST_LIST("transList", transList, transList.empty());
     LOG_TEST_BOOL("articulate", articulate);
     LOG_TEST_BOOL("trace", trace);
-    LOG_TEST_BOOL("cache", cache);
     LOG_TEST_BOOL("uniq", uniq);
+    LOG_TEST_BOOL("cache", cache);
     // END_DEBUG_DISPLAY
 
     if (Mocked("transactions"))
@@ -128,8 +128,8 @@ void COptions::Init(void) {
     // BEG_CODE_INIT
     articulate = false;
     trace = false;
-    cache = false;
     uniq = false;
+    cache = false;
     // END_CODE_INIT
 
     transList.Init();
@@ -141,9 +141,9 @@ COptions::COptions(void) {
     first = true;
     // BEG_CODE_NOTES
     // clang-format off
-    notes.push_back("`transactions` is one or more space-separated identifiers which may be either a transaction hash, | a blockNumber.transactionID pair, or a blockHash.transactionID pair, or any combination.");  // NOLINT
-    notes.push_back("This tool checks for valid input syntax, but does not check that the transaction requested exists.");  // NOLINT
-    notes.push_back("If the queried node does not store historical state, the results are undefined.");
+    notes.push_back("The `transactions` list may be one or more space-separated identifiers which are either a transaction hash, | a blockNumber.transactionID pair, or a blockHash.transactionID pair, or any combination.");  // NOLINT
+    notes.push_back("This tool checks for valid input syntax, but does not check that the transaction requested actually exists.");  // NOLINT
+    notes.push_back("If the queried node does not store historical state, the results for most older transactions are undefined.");  // NOLINT
     // clang-format on
     // END_CODE_NOTES
 

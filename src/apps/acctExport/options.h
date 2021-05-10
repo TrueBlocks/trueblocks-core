@@ -35,7 +35,7 @@ class COptions : public CAbiOptions {
     bool freshen;
     bool factory;
     bool emitter;
-    CAddressArray emitted_by;
+    CAddressArray source;
     bool relevant;
     bool count;
     blknum_t first_record;

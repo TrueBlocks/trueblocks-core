@@ -1,3 +1,16 @@
 getReceipts argc: 6 [1:4000000.5] [2:--logs] [3:--fmt] [4:txt] [5:--no_header] 
 getReceipts 4000000.5 --logs --fmt txt --no_header 
-4000000	5	0xfe52da8afe135e14a0855240e1ef4b44a0b4ebe374bd39de307cf0f3fabf0ff1	52616	null	0	1
+
+  Invalid option: --logs
+
+  Usage:    getReceipts [-a|-v|-h] <tx_id> [tx_id...]  
+  Purpose:  Retrieve a transaction's receipt from the cache or the node.
+
+  Where:  
+	transactions          a space-separated list of one or more transaction identifiers (required)
+	-a  (--articulate)    articulate the retrieved data if ABIs can be found
+	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
+	-v  (--verbose)       set verbose level (optional level defaults to 1)
+	-h  (--help)          display this help screen
+
+  Powered by TrueBlocks

@@ -11,7 +11,7 @@ getTokens -th
 | :----- | :----- | :---------- |
 |  | addrs | two or more addresses (0x...), the first is an ERC20 token, balances for the rest are reported (required) |
 |  | blocks | an optional list of one or more blocks at which to report balances, defaults to 'latest' |
-| -p | --parts <val> | one or more parts of the token information to retreive, one or more of *[ name \| symbol \| decimals \| totalSupply \| version \| none \| all\* ]* |
+| -p | --parts &lt;val&gt; | one or more parts of the token information to retreive, one or more of *[ name \| symbol \| decimals \| totalSupply \| version \| none \| all\* ]* |
 | -b | --by_acct | consider each address an ERC20 token except the last, whose balance is reported for each token |
 | -n | --no_zero | suppress the display of zero balance accounts |
 | -v | --verbose | set verbose level (optional level defaults to 1) |

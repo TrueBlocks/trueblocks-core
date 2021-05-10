@@ -14,7 +14,7 @@ static const COption params[] = {
     // BEG_CODE_OPTIONS
     // clang-format off
     COption("addrs", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "one or more addresses (0x...) to export"),
-    COption("topics", "", "list<topic>", OPT_POSITIONAL, "filter by one or more logs topics (only for --logs option)"),
+    COption("topics", "", "list<topic>", OPT_POSITIONAL, "filter by one or more log topics (only for --logs option)"),
     COption("fourbytes", "", "list<fourbyte>", OPT_POSITIONAL, "filter by one or more fourbytes (only for transactions and trace options)"),  // NOLINT
     COption("appearances", "p", "", OPT_SWITCH, "export a list of appearances"),
     COption("receipts", "r", "", OPT_SWITCH, "export receipts instead of transaction list"),
@@ -30,7 +30,7 @@ static const COption params[] = {
     COption("freshen", "f", "", OPT_HIDDEN | OPT_SWITCH, "freshen but do not print the exported data"),
     COption("factory", "y", "", OPT_HIDDEN | OPT_SWITCH, "scan for contract creations from the given address(es) and report address of those contracts"),  // NOLINT
     COption("emitter", "", "", OPT_HIDDEN | OPT_SWITCH, "for log export only, export only if one of the given export addresses emitted the event"),  // NOLINT
-    COption("emitted_by", "", "list<addr>", OPT_HIDDEN | OPT_FLAG, "for log export only, export only one of these addresses emitted the event"),  // NOLINT
+    COption("source", "", "list<addr>", OPT_HIDDEN | OPT_FLAG, "for log export only, export only one of these addresses emitted the event"),  // NOLINT
     COption("relevant", "", "", OPT_HIDDEN | OPT_SWITCH, "for log export only, if true export only logs relevant to one of the given export addresses"),  // NOLINT
     COption("count", "U", "", OPT_SWITCH, "only available for --appearances mode, if present return only the number of records"),  // NOLINT
     COption("start", "S", "<blknum>", OPT_HIDDEN | OPT_DEPRECATED, "first block to process (inclusive)"),
@@ -114,12 +114,12 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "--emitter") {
             emitter = true;
 
-        } else if (startsWith(arg, "--emitted_by:")) {
-            arg = substitute(substitute(arg, "-:", ""), "--emitted_by:", "");
-            if (!parseAddressList(this, emitted_by, arg))
+        } else if (startsWith(arg, "--source:")) {
+            arg = substitute(substitute(arg, "-:", ""), "--source:", "");
+            if (!parseAddressList(this, source, arg))
                 return false;
-        } else if (arg == "--emitted_by") {
-            return usage("The --emitted_by option requires a value.");
+        } else if (arg == "--source") {
+            return usage("The --source option requires a value.");
 
         } else if (arg == "--relevant") {
             relevant = true;
@@ -200,7 +200,7 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST_BOOL("freshen", freshen);
     LOG_TEST_BOOL("factory", factory);
     LOG_TEST_BOOL("emitter", emitter);
-    LOG_TEST_LIST("emitted_by", emitted_by, emitted_by.empty());
+    LOG_TEST_LIST("source", source, source.empty());
     LOG_TEST_BOOL("relevant", relevant);
     LOG_TEST_BOOL("count", count);
     LOG_TEST("first_record", first_record, (first_record == 0));
@@ -243,8 +243,8 @@ bool COptions::parseArguments(string_q& command) {
     if (emitter && !logs)
         EXIT_USAGE("The --emitter option is only available when exporting logs.");
 
-    if (!emitted_by.empty() && !logs)
-        EXIT_USAGE("The --emitted_by option is only available when exporting logs.");
+    if (!source.empty() && !logs)
+        EXIT_USAGE("The --source option is only available when exporting logs.");
 
     if (factory && !traces)
         EXIT_USAGE("The --factory option is only available when exporting traces.");
@@ -379,7 +379,7 @@ void COptions::Init(void) {
     freshen = false;
     factory = false;
     emitter = false;
-    emitted_by.clear();
+    source.clear();
     relevant = false;
     count = false;
     first_record = 0;
@@ -647,7 +647,7 @@ bool COptions::isEmitter(const address_t& test) const {
 
 //-----------------------------------------------------------------------
 bool COptions::wasEmittedBy(const address_t& test) const {
-    for (auto e : emitted_by)
+    for (auto e : source)
         if (e == test)
             return true;
     return false;

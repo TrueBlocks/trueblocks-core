@@ -685,6 +685,8 @@ COption::COption(const string_q& ln, const string_q& sn, const string_q& t, size
     permitted = substitute(permitted, "<uint64>", "<num>");
     permitted = substitute(permitted, "<blknum>", "<num>");
     permitted = substitute(permitted, "<string>", "<str>");
+    permitted = substitute(permitted, "list<topic>", "<hash>");
+    permitted = substitute(permitted, "list<addr>", "<addr>");
     if (contains(type, "enum")) {
         description += ", one [X] of " + substitute(substitute(substitute(type, "list<", ""), ">", ""), "enum", "");
         replace(description, " [X]", (contains(type, "list") ? " or more" : ""));
@@ -881,7 +883,7 @@ string_q COptionsBase::oneDescription(const string_q& sN, const string_q& lN, co
         // When we are writing the readme file...
         string_q line = STR_ONE_LINE;
         replace(line, "{S}", sN);
-        replace(line, "{L}", lN);
+        replace(line, "{L}", substitute(substitute(lN, "<", "&lt;"), ">", "&gt;"));
         replace(line, "{D}", dd);
         os << line;
 

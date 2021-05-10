@@ -20,13 +20,13 @@
 static const COption params[] = {
     // BEG_CODE_OPTIONS
     // clang-format off
-    COption("transactions", "", "list<tx_id>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)"),  // NOLINT
-    COption("articulate", "a", "", OPT_SWITCH, "articulate the transactions if an ABI is found for the 'to' address"),
-    COption("statediff", "d", "", OPT_SWITCH, "export stateDiff traces for the transaction(s)"),
+    COption("transactions", "", "list<tx_id>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more transaction identifiers"),  // NOLINT
+    COption("articulate", "a", "", OPT_SWITCH, "articulate the retrieved data if ABIs can be found"),
+    COption("filter", "f", "<string>", OPT_FLAG, "call the node's `trace_filter` routine with bang-seperated filter"),
+    COption("statediff", "d", "", OPT_SWITCH, "export state diff traces (not implemented)"),
     COption("count", "c", "", OPT_SWITCH, "show the number of traces for the transaction only (fast)"),
-    COption("skip_ddos", "s", "", OPT_HIDDEN | OPT_TOGGLE, "skip over 2018 ddos during export ('on' by default)"),
-    COption("max_traces", "m", "<uint64>", OPT_HIDDEN | OPT_FLAG, "if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250)"),  // NOLINT
-    COption("filter", "f", "<string>", OPT_HIDDEN | OPT_FLAG, "Call trace_filter with bang-seperated string fromBlk!toBlk[!fromAddr[!toAddr[!after[!count]]]]"),  // NOLINT
+    COption("skip_ddos", "s", "", OPT_HIDDEN | OPT_TOGGLE, "skip over the 2016 ddos during export ('on' by default)"),
+    COption("max", "m", "<uint64>", OPT_HIDDEN | OPT_FLAG, "if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250)"),  // NOLINT
     COption("", "", "", OPT_DESCRIPTION, "Retrieve a transaction's traces from the cache or the node."),
     // clang-format on
     // END_CODE_OPTIONS
@@ -50,6 +50,11 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-a" || arg == "--articulate") {
             articulate = true;
 
+        } else if (startsWith(arg, "-f:") || startsWith(arg, "--filter:")) {
+            filter = substitute(substitute(arg, "-f:", ""), "--filter:", "");
+        } else if (arg == "-f" || arg == "--filter") {
+            return usage("The --filter option requires a value.");
+
         } else if (arg == "-d" || arg == "--statediff") {
             statediff = true;
 
@@ -59,16 +64,11 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-s" || arg == "--skip_ddos") {
             skip_ddos = !skip_ddos;
 
-        } else if (startsWith(arg, "-m:") || startsWith(arg, "--max_traces:")) {
-            if (!confirmUint("max_traces", max_traces, arg))
+        } else if (startsWith(arg, "-m:") || startsWith(arg, "--max:")) {
+            if (!confirmUint("max", max, arg))
                 return false;
-        } else if (arg == "-m" || arg == "--max_traces") {
-            return usage("The --max_traces option requires a value.");
-
-        } else if (startsWith(arg, "-f:") || startsWith(arg, "--filter:")) {
-            filter = substitute(substitute(arg, "-f:", ""), "--filter:", "");
-        } else if (arg == "-f" || arg == "--filter") {
-            return usage("The --filter option requires a value.");
+        } else if (arg == "-m" || arg == "--max") {
+            return usage("The --max option requires a value.");
 
         } else if (startsWith(arg, '-')) {  // do not collapse
 
@@ -87,11 +87,11 @@ bool COptions::parseArguments(string_q& command) {
     // BEG_DEBUG_DISPLAY
     LOG_TEST_LIST("transList", transList, transList.empty());
     LOG_TEST_BOOL("articulate", articulate);
+    LOG_TEST("filter", filter, (filter == ""));
     LOG_TEST_BOOL("statediff", statediff);
     LOG_TEST_BOOL("count", count);
     LOG_TEST_BOOL("skip_ddos", skip_ddos);
-    LOG_TEST("max_traces", max_traces, (max_traces == 250));
-    LOG_TEST("filter", filter, (filter == ""));
+    LOG_TEST("max", max, (max == 250));
     // END_DEBUG_DISPLAY
 
     if (Mocked("traces"))
@@ -194,13 +194,13 @@ void COptions::Init(void) {
 
     // BEG_CODE_INIT
     articulate = false;
+    filter = "";
     statediff = false;
     count = false;
     // clang-format off
     skip_ddos = getGlobalConfig("getTraces")->getConfigBool("settings", "skip_ddos", true);
-    max_traces = getGlobalConfig("getTraces")->getConfigInt("settings", "max_traces", 250);
+    max = getGlobalConfig("getTraces")->getConfigInt("settings", "max", 250);
     // clang-format on
-    filter = "";
     // END_CODE_INIT
 
     transList.Init();
@@ -212,9 +212,11 @@ COptions::COptions(void) {
     first = true;
     // BEG_CODE_NOTES
     // clang-format off
-    notes.push_back("`transactions` is one or more space-separated identifiers which may be either a transaction hash, | a blockNumber.transactionID pair, or a blockHash.transactionID pair, or any combination.");  // NOLINT
-    notes.push_back("This tool checks for valid input syntax, but does not check that the transaction requested exists.");  // NOLINT
-    notes.push_back("If the queried node does not store historical state, the results are undefined.");
+    notes.push_back("The `transactions` list may be one or more space-separated identifiers which are either a transaction hash, | a blockNumber.transactionID pair, or a blockHash.transactionID pair, or any combination.");  // NOLINT
+    notes.push_back("This tool checks for valid input syntax, but does not check that the transaction requested actually exists.");  // NOLINT
+    notes.push_back("If the queried node does not store historical state, the results for most older transactions are undefined.");  // NOLINT
+    notes.push_back("A bang seperated filter has the following fields (at least one of which is required) and is separated | with a bang (!): fromBlk, toBlk, fromAddr, toAddr, after, count.");  // NOLINT
+    notes.push_back("A state diff trace describes, for each modified address, what changed during that trace.");
     // clang-format on
     // END_CODE_NOTES
 

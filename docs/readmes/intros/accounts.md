@@ -1,2 +1,5 @@
 ## intro
-This group of commands is the heart of TrueBlocks. They allow you to work with Ethereum addresses (or, as we call them, accounts). You may name addresses; grab the ABI file for an address; add, delete, clean or delete accounts, and especially list or export the transactions related to an address.
+
+This group of commands is at the heart of TrueBlocks. They allow you to produce and analyze transactional histories for a given Ethereum address.
+
+You may also name addresses; grab the ABI file for a given address; add, delete, and remove monitors, and, most importantly, export transactional histories to various formats including re-directing the output to remote or local databases.

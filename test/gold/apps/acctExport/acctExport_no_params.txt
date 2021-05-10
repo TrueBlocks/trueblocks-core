@@ -9,7 +9,7 @@ TIME ~ CLOCK - <ERROR> : Exit(acctExport,parseArguments):
 
   Where:  
 	addrs                 one or more addresses (0x...) to export (required)
-	topics                filter by one or more logs topics (only for --logs option)
+	topics                filter by one or more log topics (only for --logs option)
 	fourbytes             filter by one or more fourbytes (only for transactions and trace options)
 	-p  (--appearances)   export a list of appearances
 	-r  (--receipts)      export receipts instead of transaction list
@@ -28,7 +28,7 @@ TIME ~ CLOCK - <ERROR> : Exit(acctExport,parseArguments):
 	-f  (--freshen)       freshen but do not print the exported data
 	-y  (--factory)       scan for contract creations from the given address(es) and report address of those contracts
 	    (--emitter)       for log export only, export only if one of the given export addresses emitted the event
-	    (--emitted_by list<addr>)for log export only, export only one of these addresses emitted the event
+	    (--source <addr>) for log export only, export only one of these addresses emitted the event
 	    (--relevant)      for log export only, if true export only logs relevant to one of the given export addresses
 	-c  (--first_record <num>)the first record to process
 	-e  (--max_records <num>)the maximum number of records to process before reporting

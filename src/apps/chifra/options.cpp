@@ -100,7 +100,7 @@ bool COptions::call_command(int argc, const char* argv[]) {
             // ... and it's either not an address or not already in the map, pass it through
             if (!isAddress(arg) || !addressMap[arg])
                 os << " " << argv[i];
-            if (prev != "--emitted_by" && prev != "--emitter" && prev != "--relevant")
+            if (prev != "--source" && prev != "--emitter" && prev != "--relevant")
                 addressMap[arg] = isAddress(arg);
             prev = arg;
         }

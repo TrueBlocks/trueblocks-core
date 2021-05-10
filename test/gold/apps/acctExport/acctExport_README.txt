@@ -10,7 +10,7 @@ acctExport -th
 | | Option | Description |
 | :----- | :----- | :---------- |
 |  | addrs | one or more addresses (0x...) to export (required) |
-|  | topics | filter by one or more logs topics (only for --logs option) |
+|  | topics | filter by one or more log topics (only for --logs option) |
 |  | fourbytes | filter by one or more fourbytes (only for transactions and trace options) |
 | -p | --appearances | export a list of appearances |
 | -r | --receipts | export receipts instead of transaction list |
@@ -24,19 +24,19 @@ acctExport -th
 | -U | --count | only available for --appearances mode, if present return only the number of records |
 |####|Hidden options||
 | -d | --skip_ddos | toggle skipping over 2016 dDos transactions ('on' by default) |
-| -m | --max_traces <num> | if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250) |
+| -m | --max_traces &lt;num&gt; | if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250) |
 | -f | --freshen | freshen but do not print the exported data |
 | -y | --factory | scan for contract creations from the given address(es) and report address of those contracts |
 |  | --emitter | for log export only, export only if one of the given export addresses emitted the event |
-|  | --emitted_by list<addr> | for log export only, export only one of these addresses emitted the event |
+|  | --source &lt;addr&gt; | for log export only, export only one of these addresses emitted the event |
 |  | --relevant | for log export only, if true export only logs relevant to one of the given export addresses |
-| -c | --first_record <num> | the first record to process |
-| -e | --max_records <num> | the maximum number of records to process before reporting |
+| -c | --first_record &lt;num&gt; | the first record to process |
+| -e | --max_records &lt;num&gt; | the maximum number of records to process before reporting |
 |  | --clean | clean (i.e. remove duplicate appearances) from all existing monitors |
 | -s | --staging | enable search of staging (not yet finalized) folder |
 | -u | --unripe | enable search of unripe (neither staged nor finalized) folder (assumes --staging) |
 |####|Hidden options||
-| -x | --fmt <val> | export format, one of *[ none \| json\* \| txt \| csv \| api ]* |
+| -x | --fmt &lt;val&gt; | export format, one of *[ none \| json\* \| txt \| csv \| api ]* |
 | -v | --verbose | set verbose level (optional level defaults to 1) |
 | -h | --help | display this help screen |
 

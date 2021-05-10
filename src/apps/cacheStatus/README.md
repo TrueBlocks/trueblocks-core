@@ -15,7 +15,7 @@ TrueBlocks maintains caches for the index of address appearances, named addresse
 | :----- | :----- | :---------- |
 |  | modes | the type of status info to retrieve, one or more of *[ index \| monitors \| entities \| names \| abis \| caches \| some\* \| all ]* |
 | -d | --details | include details about items found in monitors, slurps, abis, or price caches |
-| -t | --types <val> | for caches mode only, which type(s) of cache to report, one or more of *[ blocks \| transactions \| traces \| slurps \| prices \| all\* ]* |
+| -t | --types &lt;val&gt; | for caches mode only, which type(s) of cache to report, one or more of *[ blocks \| transactions \| traces \| slurps \| prices \| all\* ]* |
 | -v | --verbose | set verbose level (optional level defaults to 1) |
 | -h | --help | display this help screen |
 

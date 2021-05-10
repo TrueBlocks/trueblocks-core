@@ -20,9 +20,8 @@
 static const COption params[] = {
     // BEG_CODE_OPTIONS
     // clang-format off
-    COption("transactions", "", "list<tx_id>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)"),  // NOLINT
-    COption("articulate", "a", "", OPT_SWITCH, "articulate the transactions if an ABI is found for the 'to' address"),
-    COption("logs", "l", "", OPT_SWITCH, "display the receipt's logs"),
+    COption("transactions", "", "list<tx_id>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more transaction identifiers"),  // NOLINT
+    COption("articulate", "a", "", OPT_SWITCH, "articulate the retrieved data if ABIs can be found"),
     COption("", "", "", OPT_DESCRIPTION, "Retrieve a transaction's receipt from the cache or the node."),
     // clang-format on
     // END_CODE_OPTIONS
@@ -46,9 +45,6 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-a" || arg == "--articulate") {
             articulate = true;
 
-        } else if (arg == "-l" || arg == "--logs") {
-            logs = true;
-
         } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
@@ -66,7 +62,6 @@ bool COptions::parseArguments(string_q& command) {
     // BEG_DEBUG_DISPLAY
     LOG_TEST_LIST("transList", transList, transList.empty());
     LOG_TEST_BOOL("articulate", articulate);
-    LOG_TEST_BOOL("logs", logs);
     // END_DEBUG_DISPLAY
 
     if (Mocked("receipts"))
@@ -76,9 +71,7 @@ bool COptions::parseArguments(string_q& command) {
     if (transList.empty())
         return usage("Please specify at least one transaction identifier.");
 
-    if (logs)
-        SHOW_FIELD(CReceipt, "logs");
-
+    SHOW_FIELD(CReceipt, "logs");
     if (isRaw)
         expContext().exportFmt = JSON1;
 
@@ -96,7 +89,7 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     // Display formatting
-    string_q format = STR_DISPLAY_RECEIPT + string_q(logs ? "\t[{LOGSCNT}]" : "");
+    string_q format = STR_DISPLAY_RECEIPT;
     configureDisplay("getReceipts", "CReceipt", format);
 
     return true;
@@ -109,7 +102,6 @@ void COptions::Init(void) {
 
     // BEG_CODE_INIT
     articulate = false;
-    logs = false;
     // END_CODE_INIT
 
     transList.Init();
@@ -121,9 +113,9 @@ COptions::COptions(void) {
     first = true;
     // BEG_CODE_NOTES
     // clang-format off
-    notes.push_back("`transactions` is one or more space-separated identifiers which may be either a transaction hash, | a blockNumber.transactionID pair, or a blockHash.transactionID pair, or any combination.");  // NOLINT
-    notes.push_back("This tool checks for valid input syntax, but does not check that the transaction requested exists.");  // NOLINT
-    notes.push_back("If the queried node does not store historical state, the results may be undefined.");
+    notes.push_back("The `transactions` list may be one or more space-separated identifiers which are either a transaction hash, | a blockNumber.transactionID pair, or a blockHash.transactionID pair, or any combination.");  // NOLINT
+    notes.push_back("This tool checks for valid input syntax, but does not check that the transaction requested actually exists.");  // NOLINT
+    notes.push_back("If the queried node does not store historical state, the results for most older transactions are undefined.");  // NOLINT
     // clang-format on
     // END_CODE_NOTES
 

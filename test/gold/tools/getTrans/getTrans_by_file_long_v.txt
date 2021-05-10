@@ -67,19 +67,15 @@ getTrans --file:cmd_file --fmt json --parity
   }
   Invalid option: -fmt. Did you mean --fmt?
 
-  Usage:    getTrans [-a|-t|-u|-v|-h] <tx_id> [tx_id...]  
-  Purpose:  Retrieve a transaction from the cache or the node.
+  Usage:    getTrans [-a|-t|-u|-o|-v|-h] <tx_id> [tx_id...]  
+  Purpose:  Retrieves one or more transactions from the cache or the node.
 
   Where:  
-	transactions          a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID) (required)
-	-a  (--articulate)    articulate the transactions if an ABI is found for the 'to' address
-	-t  (--trace)         display the transaction's trace
-	-u  (--uniq)          display a list of uniq addresses found in this transaction
-
-	#### Hidden options
-	-o  (--cache)         force the results into the tx cache
-	#### Hidden options
-
+	transactions          a space-separated list of one or more transaction identifiers (required)
+	-a  (--articulate)    articulate the retrieved data if ABIs can be found
+	-t  (--trace)         include the transaction's traces in the results
+	-u  (--uniq)          display a list of uniq addresses found in the transaction instead of the underlying data
+	-o  (--cache)         force the results of the query into the tx cache (and the trace cache if applicable)
 	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
 	-v  (--verbose)       set verbose level (optional level defaults to 1)
 	-h  (--help)          display this help screen

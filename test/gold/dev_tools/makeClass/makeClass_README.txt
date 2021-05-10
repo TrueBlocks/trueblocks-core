@@ -7,7 +7,7 @@ makeClass -th
 
 `Where:`  
 
-| Hotkey | Option | Description |
+| | Option | Description |
 | :----- | :----- | :---------- |
 |  | files | one or more class definition files (required) |
 | -r | --run | run the class maker on associated <class_name(s)> |
@@ -17,8 +17,8 @@ makeClass -th
 | -m | --readmes | create readme files for each tool and app |
 | -f | --format | format source code files (.cpp and .h) found in local folder and below |
 | -l | --lint | lint source code files (.cpp and .h) found in local folder and below |
-| -n | --nspace <str> | surround generated c++ code with a namespace |
-| -i | --filter <str> | process only files whose filename or contents contain 'filter' |
+| -n | --nspace &lt;str&gt; | surround generated c++ code with a namespace |
+| -i | --filter &lt;str&gt; | process only files whose filename or contents contain 'filter' |
 | -t | --test | for both code generation and options generation, process but do not write changes |
 | -c | --force | for both code generation and options generation, force writing of changes |
 |####|Hidden options||

@@ -97,11 +97,13 @@ bool COptions::handle_options(void) {
                     option_stream << opt << endl;
                 }
 
+                bool oneOfEm = (option.isEnum || option.isEnumList || option.isStringList || option.isAddressList ||
+                                option.isTopicList);
                 // clang-format off
                 string_q initFmt = "    [{COMMAND}] = [{DEF_VAL}];";
                 if (option.is_customizable)
                     initFmt = substitute(STR_CUSTOM_INIT, "[CTYPE]",
-                                         ((option.isEnum || option.isEnumList || option.isStringList || option.isAddressList) ? "String"
+                                         (oneOfEm ? "String"
                                           : (option.isBool)                    ? "Bool"
                                                                                : "Int"));
                 // clang-format on
@@ -219,10 +221,12 @@ string_q replaceCode(const string_q& orig, const string_q& which, const string_q
 //---------------------------------------------------------------------------------------------------
 void COptions::generate_toggle(const CCommandOption& option) {
     string_q initFmt = "    [{COMMAND}] = [{DEF_VAL}];";
+    bool oneOfEm =
+        (option.isEnum || option.isEnumList || option.isStringList || option.isAddressList || option.isTopicList);
     // clang-format off
     if (option.is_customizable)
         initFmt = substitute(STR_CUSTOM_INIT, "[CTYPE]",
-                             ((option.isEnum || option.isEnumList || option.isStringList || option.isAddressList) ? "String"
+                             (oneOfEm ? "String"
                               : (option.isBool)                    ? "Bool"
                                                                    : "Int"));
     // clang-format on
@@ -242,10 +246,12 @@ void COptions::generate_toggle(const CCommandOption& option) {
 //---------------------------------------------------------------------------------------------------
 void COptions::generate_switch(const CCommandOption& option) {
     string_q initFmt = "    [{COMMAND}] = [{DEF_VAL}];";
+    bool oneOfEm =
+        (option.isEnum || option.isEnumList || option.isStringList || option.isAddressList || option.isTopicList);
     // clang-format off
     if (option.is_customizable)
         initFmt = substitute(STR_CUSTOM_INIT, "[CTYPE]",
-                             ((option.isEnum || option.isEnumList | option.isStringList || option.isAddressList) ? "String"
+                             (oneOfEm ? "String"
                               : (option.isBool)                    ? "Bool"
                                                                    : "Int"));
     // clang-format on
@@ -265,10 +271,12 @@ void COptions::generate_switch(const CCommandOption& option) {
 //---------------------------------------------------------------------------------------------------
 void COptions::generate_flag(const CCommandOption& option) {
     string_q initFmt = "    [{COMMAND}] = [{DEF_VAL}];";
+    bool oneOfEm =
+        (option.isEnum || option.isEnumList || option.isStringList || option.isAddressList || option.isTopicList);
     // clang-format off
     if (option.is_customizable)
         initFmt = substitute(STR_CUSTOM_INIT, "[CTYPE]",
-                             ((option.isEnum || option.isEnumList || option.isStringList || option.isAddressList) ? "String"
+                             (oneOfEm ? "String"
                               : (option.isBool)                    ? "Bool"
                                                                    : "Int"));
     // clang-format on
@@ -278,6 +286,9 @@ void COptions::generate_flag(const CCommandOption& option) {
             local_stream << option.Format("    CStringArray [{COMMAND}];") << endl;
             auto_stream << option.Format(STR_AUTO_FLAG_ENUM_LIST) << endl;
         } else if (option.isStringList) {
+            local_stream << option.Format("    CStringArray [{COMMAND}];") << endl;
+            auto_stream << option.Format(STR_AUTO_FLAG_STRING_LIST) << endl;
+        } else if (option.isTopicList) {
             local_stream << option.Format("    CStringArray [{COMMAND}];") << endl;
             auto_stream << option.Format(STR_AUTO_FLAG_STRING_LIST) << endl;
         } else if (option.isAddressList) {
@@ -307,6 +318,10 @@ void COptions::generate_flag(const CCommandOption& option) {
         } else if (option.isStringList) {
             init_stream << option.Format("    [{COMMAND}].clear();") << endl;
             header_stream << option.Format("    CStringArray [{COMMAND}];") << endl;
+            auto_stream << option.Format(STR_AUTO_FLAG_STRING_LIST) << endl;
+        } else if (option.isTopicList) {
+            init_stream << option.Format("    [{COMMAND}].clear();") << endl;
+            header_stream << option.Format("    CTopicArray [{COMMAND}];") << endl;
             auto_stream << option.Format(STR_AUTO_FLAG_STRING_LIST) << endl;
         } else if (option.isAddressList) {
             init_stream << option.Format("    [{COMMAND}].clear();") << endl;

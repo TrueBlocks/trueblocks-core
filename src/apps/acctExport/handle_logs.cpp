@@ -40,7 +40,7 @@ bool logs_Pre(CTraverser* trav, void* data) {
 
 //-----------------------------------------------------------------------
 bool logFilter(const CLogEntry& log, const COptions* opt) {
-    if (!opt->emitted_by.empty()) {
+    if (!opt->source.empty()) {
         if (!opt->wasEmittedBy(log.address))
             return false;
         return !opt->relevant || opt->isRelevant(log);

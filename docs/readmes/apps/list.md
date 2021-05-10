@@ -1,8 +1,10 @@
 ## chifra list
 
-`chifra list` takes one or more addresses, queries the index of appearances, and builds a TrueBlocks 'monitor'. A monitor is a file that represents your interest in those particular addresses. The first time you create a monitor takes a few minutes, but the information is cached, so subsequent queries are much faster.
+`chifra list` takes one or more addresses, queries the index of appearances, and builds TrueBlocks monitors. A TrueBlocks monitor is a file that contains blockNumber.transactionId pairs (transaction identifiers) representing the history of the address.
 
-Note that `chifra list` does not extract transactional data from the chain. This is accomplished with `chifra export`. In fact, `chifra list` is just a shortcut of the command `chifra export --appearances` and may be used interchangably.
+Becuase TrueBlocks only extracts data from the Ethereum node when it's requested, the first time you list an address it takes about a minute. Subsequent queries are much faster because TrueBlocks caches the results.
+
+Note that `chifra list` only queries the index, it does not extract the full transactional details. You may use `chifra export` for that.
 
 ### usage
 

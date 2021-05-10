@@ -19,8 +19,8 @@
 | -m | --readmes | create readme files for each tool and app |
 | -f | --format | format source code files (.cpp and .h) found in local folder and below |
 | -l | --lint | lint source code files (.cpp and .h) found in local folder and below |
-| -n | --nspace <str> | surround generated c++ code with a namespace |
-| -i | --filter <str> | process only files whose filename or contents contain 'filter' |
+| -n | --nspace &lt;str&gt; | surround generated c++ code with a namespace |
+| -i | --filter &lt;str&gt; | process only files whose filename or contents contain 'filter' |
 | -t | --test | for both code generation and options generation, process but do not write changes |
 | -c | --force | for both code generation and options generation, force writing of changes |
 | -v | --verbose | set verbose level (optional level defaults to 1) |

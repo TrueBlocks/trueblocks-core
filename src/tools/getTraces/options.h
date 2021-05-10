@@ -25,11 +25,11 @@ class COptions : public CAbiOptions {
   public:
     // BEG_CODE_DECLARE
     bool articulate;
+    string_q filter;
     bool statediff;
     bool count;
     bool skip_ddos;
-    uint64_t max_traces;
-    string_q filter;
+    uint64_t max;
     // END_CODE_DECLARE
 
     CTraceFilterArray filters;

@@ -7,7 +7,7 @@ forEveryTest -th
         
 `Where:`  
 
-| Hotkey | Option | Description |
+| | Option | Description |
 | :----- | :----- | :---------- |
 |  | mode | a number between 0 and 2 inclusive (required) |
 | -v | --verbose | set verbose level (optional level defaults to 1) |

@@ -93,7 +93,7 @@ bool visitTransaction(CTransaction& trans, void* data) {
     if (getEnvStr("NO_CACHE") == "true")
         useCache = false;
     loadTraces(trans, trans.blockNumber, trans.transactionIndex, useCache,
-               (opt->skip_ddos && excludeTrace(&trans, opt->max_traces)));
+               (opt->skip_ddos && excludeTrace(&trans, opt->max)));
 
     //////////////////////////////////////////////////////
 

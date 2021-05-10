@@ -25,7 +25,6 @@ class COptions : public CAbiOptions {
   public:
     // BEG_CODE_DECLARE
     bool articulate;
-    bool logs;
     // END_CODE_DECLARE
 
     COptionsTransList transList;

@@ -1,29 +1,34 @@
 ## chifra transactions
 
-The `chifra transactions` tool retrieves transactions from the running Ethereum node (using the `--raw` option) or from TrueBlocks (the default). You may provide a transaction `hash`, a `blockNumber.transactionID` pair, or a `blockHash.transactionID` pair (or any combination) to specify the transaction(s).
+The `chifra transactions` tool retrieves transactions directly from the Ethereum node (using the `--raw` option) or from the TrueBlocks cache (if present). You may specify multiple transaction identifiers per invocation. Unlike the Ethereum RPC, the reported transactions include the transaction's receipt and generated logs.
+
+The `--articulate` option fetches the ABI from each encountered smart contract (including those encountered in a trace--if the `--trace` option is enabled) to better describe the reported data.
+
+The `--trace` option attachs an array transaction traces to the output (if the node you're querying has --tracing enabled), while the `--uniq` option displays a list of uniq address appearances instead of the underlying data (including uniq addresses in traces if enabled).
 
 ### Usage
 
-`Usage:`    chifra transactions [-a|-t|-u|-v|-h] &lt;tx_id&gt; [tx_id...]  
-`Purpose:`  Retrieve a transaction from the cache or the node.
+`Usage:`    chifra transactions [-a|-t|-u|-o|-v|-h] &lt;tx_id&gt; [tx_id...]  
+`Purpose:`  Retrieves one or more transactions from the cache or the node.
 
 `Where:`  
 
 | | Option | Description |
 | :----- | :----- | :---------- |
-|  | transactions | a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID) (required) |
-| -a | --articulate | articulate the transactions if an ABI is found for the 'to' address |
-| -t | --trace | display the transaction's trace |
-| -u | --uniq | display a list of uniq addresses found in this transaction |
+|  | transactions | a space-separated list of one or more transaction identifiers (required) |
+| -a | --articulate | articulate the retrieved data if ABIs can be found |
+| -t | --trace | include the transaction's traces in the results |
+| -u | --uniq | display a list of uniq addresses found in the transaction instead of the underlying data |
+| -o | --cache | force the results of the query into the tx cache (and the trace cache if applicable) |
 | -v | --verbose | set verbose level (optional level defaults to 1) |
 | -h | --help | display this help screen |
 
 `Notes:`
 
-- `transactions` is one or more space-separated identifiers which may be either a transaction hash, 
+- The `transactions` list may be one or more space-separated identifiers which are either a transaction hash, 
   a blockNumber.transactionID pair, or a blockHash.transactionID pair, or any combination.
-- This tool checks for valid input syntax, but does not check that the transaction requested exists.
-- If the queried node does not store historical state, the results are undefined.
+- This tool checks for valid input syntax, but does not check that the transaction requested actually exists.
+- If the queried node does not store historical state, the results for most older transactions are undefined.
 
 #### Other Options
 

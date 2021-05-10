@@ -1,7 +1,7 @@
 num,group,tags,api_route,tool,command,hotkey,def_val,is_required,is_customizable,is_visible,is_visible_docs,generate,option_type,data_type,description
 
 10200,apps,Accounts,export,acctExport,addrs,,,true,false,true,true,local,positional,list<addr>,one or more addresses (0x...) to export
-10205,apps,Accounts,export,acctExport,topics,,,false,false,true,true,header,positional,list<topic>,filter by one or more logs topics (only for --logs option)
+10205,apps,Accounts,export,acctExport,topics,,,false,false,true,true,header,positional,list<topic>,filter by one or more log topics (only for --logs option)
 10207,apps,Accounts,export,acctExport,fourbytes,,,false,false,true,true,header,positional,list<fourbyte>,filter by one or more fourbytes (only for transactions and trace options)
 10210,apps,Accounts,export,acctExport,appearances,p,,false,false,true,true,header,switch,<boolean>,export a list of appearances
 10220,apps,Accounts,export,acctExport,receipts,r,,false,false,true,true,header,switch,<boolean>,export receipts instead of transaction list
@@ -17,7 +17,7 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,is_customizable
 10380,apps,Accounts,export,acctExport,freshen,f,,false,false,false,false,header,switch,<boolean>,freshen but do not print the exported data
 10395,apps,Accounts,export,acctExport,factory,y,false,false,false,false,false,header,switch,<boolean>,scan for contract creations from the given address(es) and report|address of those contracts
 10430,apps,Accounts,export,acctExport,emitter,,,false,false,false,true,header,switch,<boolean>,for log export only&#44; export only if one of the given export addresses emitted the event
-10431,apps,Accounts,export,acctExport,emitted_by,,,false,false,false,true,header,flag,list<addr>,for log export only&#44; export only one of these addresses emitted the event
+10431,apps,Accounts,export,acctExport,source,,,false,false,false,true,header,flag,list<addr>,for log export only&#44; export only one of these addresses emitted the event
 10433,apps,Accounts,export,acctExport,relevant,,,false,false,false,true,header,switch,<boolean>,for log export only&#44; if true export only logs relevant to one of the given export addresses
 #10435,apps,Accounts,export,acctExport,to,,,false,false,false,true,header,switch,<boolean>,show only export lines where the address appears in the tx's (or trace action's) `to` field
 #10437,apps,Accounts,export,acctExport,from,,,false,false,false,true,header,switch,<boolean>,show only export lines where the address appears in the tx's (or trace action's) `from` field
@@ -146,20 +146,46 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,is_customizable
 12610,tools,ChainData,blocks,getBlocks,,,,false,false,false,false,--,note,,`blocks` may be specified as either numbers or hashes.
 12620,tools,ChainData,blocks,getBlocks,,,,false,false,false,false,--,note,,`special` blocks are detailed under `chifra when --list`.
 
-12920,tools,ChainData,logs,getLogs,transactions,,,true,false,true,true,local,positional,list<tx_id>,a space-separated list of one or more transaction identifiers|(tx_hash&#44; bn.txID&#44; blk_hash.txID)
-12940,tools,ChainData,logs,getLogs,articulate,a,,false,false,true,true,header,switch,<boolean>,articulate the transactions if an ABI is found for the 'to' address
-12960,tools,ChainData,logs,getLogs,,,,false,false,true,true,--,description,,Retrieve a transaction's logs from the cache or the node.
-12960,tools,ChainData,logs,getLogs,,,,false,false,false,false,--,note,,`transactions` is one or more space-separated identifiers which may be either a transaction hash&#44;|a blockNumber.transactionID pair&#44; or a blockHash.transactionID pair&#44; or any combination.
-12964,tools,ChainData,logs,getLogs,,,,false,false,false,false,--,note,,This tool checks for valid input syntax&#44; but does not check that the transaction requested exists.
-12968,tools,ChainData,logs,getLogs,,,,false,false,false,false,--,note,,If the queried node does not store historical state&#44; the results may be undefined.
+13540,tools,ChainData,transactions,getTrans,transactions,,,true,false,true,true,local,positional,list<tx_id>,a space-separated list of one or more transaction identifiers
+13560,tools,ChainData,transactions,getTrans,articulate,a,,false,false,true,true,header,switch,<boolean>,articulate the retrieved data if ABIs can be found
+13580,tools,ChainData,transactions,getTrans,trace,t,,false,false,true,true,header,switch,<boolean>,include the transaction's traces in the results
+13605,tools,ChainData,transactions,getTrans,uniq,u,,false,false,true,true,header,switch,<boolean>,display a list of uniq addresses found in the transaction instead of the underlying data
+13600,tools,ChainData,transactions,getTrans,cache,o,,false,false,true,true,header,switch,<boolean>,force the results of the query into the tx cache (and the trace cache if applicable)
+13620,tools,ChainData,transactions,getTrans,,,,false,false,true,true,--,description,,Retrieves one or more transactions from the cache or the node.
+13622,tools,ChainData,transactions,getTrans,,,,false,false,false,false,--,note,,The `transactions` list may be one or more space-separated identifiers which are either a transaction hash&#44;|a blockNumber.transactionID pair&#44; or a blockHash.transactionID pair&#44; or any combination.
+13624,tools,ChainData,transactions,getTrans,,,,false,false,false,false,--,note,,This tool checks for valid input syntax&#44; but does not check that the transaction requested actually exists.
+13629,tools,ChainData,transactions,getTrans,,,,false,false,false,false,--,note,,If the queried node does not store historical state&#44; the results for most older transactions are undefined.
 
-13000,tools,ChainData,receipts,getReceipts,transactions,,,true,false,true,true,local,positional,list<tx_id>,a space-separated list of one or more transaction identifiers|(tx_hash&#44; bn.txID&#44; blk_hash.txID)
-13020,tools,ChainData,receipts,getReceipts,articulate,a,,false,false,true,true,header,switch,<boolean>,articulate the transactions if an ABI is found for the 'to' address
-13040,tools,ChainData,receipts,getReceipts,logs,l,,false,false,true,true,header,switch,<boolean>,display the receipt's logs
+13000,tools,ChainData,receipts,getReceipts,transactions,,,true,false,true,true,local,positional,list<tx_id>,a space-separated list of one or more transaction identifiers
+13020,tools,ChainData,receipts,getReceipts,articulate,a,,false,false,true,true,header,switch,<boolean>,articulate the retrieved data if ABIs can be found
 13060,tools,ChainData,receipts,getReceipts,,,,false,false,true,true,--,description,,Retrieve a transaction's receipt from the cache or the node.
-13062,tools,ChainData,receipts,getReceipts,,,,false,false,false,false,--,note,,`transactions` is one or more space-separated identifiers which may be either a transaction hash&#44;|a blockNumber.transactionID pair&#44; or a blockHash.transactionID pair&#44; or any combination.
-13066,tools,ChainData,receipts,getReceipts,,,,false,false,false,false,--,note,,This tool checks for valid input syntax&#44; but does not check that the transaction requested exists.
-13070,tools,ChainData,receipts,getReceipts,,,,false,false,false,false,--,note,,If the queried node does not store historical state&#44; the results may be undefined.
+13062,tools,ChainData,receipts,getReceipts,,,,false,false,false,false,--,note,,The `transactions` list may be one or more space-separated identifiers which are either a transaction hash&#44;|a blockNumber.transactionID pair&#44; or a blockHash.transactionID pair&#44; or any combination.
+13066,tools,ChainData,receipts,getReceipts,,,,false,false,false,false,--,note,,This tool checks for valid input syntax&#44; but does not check that the transaction requested actually exists.
+13070,tools,ChainData,receipts,getReceipts,,,,false,false,false,false,--,note,,If the queried node does not store historical state&#44; the results for most older transactions are undefined.
+
+12920,tools,ChainData,logs,getLogs,transactions,,,true,false,true,true,local,positional,list<tx_id>,a space-separated list of one or more transaction identifiers
+12930,tools,ChainData,logs,getLogs,topic,t,,false,false,true,true,header,flag,list<topic>,filter by one or more log topics (not implemented)
+12950,tools,ChainData,logs,getLogs,source,s,,false,false,true,true,header,flag,list<addr>,export only if the given address emitted the event (not implemented)
+12940,tools,ChainData,logs,getLogs,articulate,a,,false,false,true,true,header,switch,<boolean>,articulate the retrieved data if ABIs can be found
+12960,tools,ChainData,logs,getLogs,,,,false,false,true,true,--,description,,Retrieve a transaction's logs from the cache or the node.
+12962,tools,ChainData,logs,getLogs,,,,false,false,false,false,--,note,,The `transactions` list may be one or more space-separated identifiers which are either a transaction hash&#44;|a blockNumber.transactionID pair&#44; or a blockHash.transactionID pair&#44; or any combination.
+12964,tools,ChainData,logs,getLogs,,,,false,false,false,false,--,note,,This tool checks for valid input syntax&#44; but does not check that the transaction requested actually exists.
+12966,tools,ChainData,logs,getLogs,,,,false,false,false,false,--,note,,If the queried node does not store historical state&#44; the results for most older transactions are undefined.
+12968,tools,ChainData,logs,getLogs,,,,false,false,false,false,--,note,,If you specify a 32-byte hash&#44; it will be assumed to be a transaction hash&#44; if the transaction is|not found&#44; it will be used as a topic.
+
+13400,tools,ChainData,traces,getTraces,transactions,,,true,false,true,true,local,positional,list<tx_id>,a space-separated list of one or more transaction identifiers
+13420,tools,ChainData,traces,getTraces,articulate,a,,false,false,true,true,header,switch,<boolean>,articulate the retrieved data if ABIs can be found
+13490,tools,ChainData,traces,getTraces,filter,f,,false,false,true,true,header,flag,<string>,call the node's `trace_filter` routine with bang-seperated filter
+13420,tools,ChainData,traces,getTraces,statediff,d,,false,false,true,true,header,switch,<boolean>,export state diff traces (not implemented)
+13440,tools,ChainData,traces,getTraces,count,c,,false,false,true,true,header,switch,<boolean>,show the number of traces for the transaction only (fast)
+13460,tools,ChainData,traces,getTraces,skip_ddos,s,true,false,true,false,false,header,toggle,<boolean>,skip over the 2016 ddos during export ([{DEF}] by default)
+13480,tools,ChainData,traces,getTraces,max,m,250,false,true,false,false,header,flag,<uint64>,if --skip_ddos is on&#44; this many traces defines what a ddos transaction|is (default = [{DEF}])
+13500,tools,ChainData,traces,getTraces,,,,false,false,true,true,--,description,,Retrieve a transaction's traces from the cache or the node.
+13622,tools,ChainData,traces,getTraces,,,,false,false,false,false,--,note,,The `transactions` list may be one or more space-separated identifiers which are either a transaction hash&#44;|a blockNumber.transactionID pair&#44; or a blockHash.transactionID pair&#44; or any combination.
+13624,tools,ChainData,traces,getTraces,,,,false,false,false,false,--,note,,This tool checks for valid input syntax&#44; but does not check that the transaction requested actually exists.
+13626,tools,ChainData,traces,getTraces,,,,false,false,false,false,--,note,,If the queried node does not store historical state&#44; the results for most older transactions are undefined.
+13627,tools,ChainData,traces,getTraces,,,,false,false,false,false,--,note,,A bang seperated filter has the following fields (at least one of which is required) and is separated|with a bang (!): fromBlk&#44; toBlk&#44; fromAddr&#44; toAddr&#44; after&#44; count.
+13628,tools,ChainData,traces,getTraces,,,,false,false,false,false,--,note,,A state diff trace describes&#44; for each modified address&#44; what changed during that trace.
 
 13100,tools,ChainState,state,getState,addrs,,,true,false,true,true,header,positional,list<addr>,one or more addresses (0x...) from which to retrieve balances
 13120,tools,ChainState,state,getState,blocks,,,false,false,true,true,header,positional,list<blknum>,an optional list of one or more blocks at which to report balances&#44;|defaults to 'latest'
@@ -187,28 +213,6 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,is_customizable
 13370,tools,ChainState,tokens,getTokens,,,,false,false,false,false,--,note,,If the queried node does not store historical state&#44; the results are undefined.
 13372,tools,ChainState,tokens,getTokens,,,,false,false,false,false,--,note,,`special` blocks are detailed under `chifra when --list`.
 
-13400,tools,ChainData,traces,getTraces,transactions,,,true,false,true,true,local,positional,list<tx_id>,a space-separated list of one or more transaction identifiers|(tx_hash&#44; bn.txID&#44; blk_hash.txID)
-13420,tools,ChainData,traces,getTraces,articulate,a,,false,false,true,true,header,switch,<boolean>,articulate the transactions if an ABI is found for the 'to' address
-13420,tools,ChainData,traces,getTraces,statediff,d,,false,false,true,true,header,switch,<boolean>,export stateDiff traces for the transaction(s)
-13440,tools,ChainData,traces,getTraces,count,c,,false,false,true,true,header,switch,<boolean>,show the number of traces for the transaction only (fast)
-13460,tools,ChainData,traces,getTraces,skip_ddos,s,true,false,true,false,false,header,toggle,<boolean>,skip over 2018 ddos during export ([{DEF}] by default)
-13480,tools,ChainData,traces,getTraces,max_traces,m,250,false,true,false,false,header,flag,<uint64>,if --skip_ddos is on&#44; this many traces defines what a ddos transaction|is (default = [{DEF}])
-13490,tools,ChainData,traces,getTraces,filter,f,,false,false,false,false,header,flag,<string>,Call trace_filter with bang-seperated string fromBlk!toBlk[!fromAddr[!toAddr[!after[!count]]]]
-13500,tools,ChainData,traces,getTraces,,,,false,false,true,true,--,description,,Retrieve a transaction's traces from the cache or the node.
-13622,tools,ChainData,traces,getTraces,,,,false,false,false,false,--,note,,`transactions` is one or more space-separated identifiers which may be either a transaction hash&#44;|a blockNumber.transactionID pair&#44; or a blockHash.transactionID pair&#44; or any combination.
-13624,tools,ChainData,traces,getTraces,,,,false,false,false,false,--,note,,This tool checks for valid input syntax&#44; but does not check that the transaction requested exists.
-13629,tools,ChainData,traces,getTraces,,,,false,false,false,false,--,note,,If the queried node does not store historical state&#44; the results are undefined.
-
-13540,tools,ChainData,transactions,getTrans,transactions,,,true,false,true,true,local,positional,list<tx_id>,a space-separated list of one or more transaction identifiers|(tx_hash&#44; bn.txID&#44; blk_hash.txID)
-13560,tools,ChainData,transactions,getTrans,articulate,a,,false,false,true,true,header,switch,<boolean>,articulate the transactions if an ABI is found for the 'to' address
-13580,tools,ChainData,transactions,getTrans,trace,t,,false,false,true,true,header,switch,<boolean>,display the transaction's trace
-13600,tools,ChainData,transactions,getTrans,cache,o,,false,false,false,false,header,switch,<boolean>,force the results into the tx cache
-13605,tools,ChainData,transactions,getTrans,uniq,u,,false,false,true,true,header,switch,<boolean>,display a list of uniq addresses found in this transaction
-13620,tools,ChainData,transactions,getTrans,,,,false,false,true,true,--,description,,Retrieve a transaction from the cache or the node.
-13622,tools,ChainData,transactions,getTrans,,,,false,false,false,false,--,note,,`transactions` is one or more space-separated identifiers which may be either a transaction hash&#44;|a blockNumber.transactionID pair&#44; or a blockHash.transactionID pair&#44; or any combination.
-13624,tools,ChainData,transactions,getTrans,,,,false,false,false,false,--,note,,This tool checks for valid input syntax&#44; but does not check that the transaction requested exists.
-13629,tools,ChainData,transactions,getTrans,,,,false,false,false,false,--,note,,If the queried node does not store historical state&#44; the results are undefined.
-
 13660,tools,Accounts,abis,grabABI,addrs,,,true,false,true,true,header,positional,list<addr>,list of one or more smart contracts whose ABI to grab from EtherScan
 13680,tools,Accounts,abis,grabABI,canonical,c,,false,false,true,true,local,switch,<boolean>,convert all types to their canonical represenation and remove|all spaces from display
 13850,tools,Accounts,abis,grabABI,known,k,,false,false,true,false,local,switch,<boolean>,load common 'known' ABIs from cache
@@ -224,8 +228,6 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,is_customizable
 13980,tools,ChainData,when,whenBlock,,,,false,false,true,false,--,description,,Finds block based on date&#44; blockNum&#44; timestamp&#44; or 'special'.
 13982,tools,ChainData,when,whenBlock,,,,false,false,false,false,--,note,,The block list may contain any combination of `number`&#44; `hash`&#44; `date`&#44; special `named` blocks.
 13982,tools,ChainData,when,whenBlock,,,,false,false,false,false,--,note,,Dates must be formatted in JSON format: YYYY-MM-DD[THH[:MM[:SS]]].
-13982,tools,ChainData,when,whenBlock,,,,false,false,false,false,--,note,,You may customize the list of named blocks by editing [{CONFIG}]whenBlock.toml.
-13982,tools,ChainData,when,whenBlock,,,,false,false,false,false,--,note,,The following `named` blocks are currently configured:
 
 14400,all,,all,all,version,,,false,false,true,false,--,switch,<boolean>,display the current version of the tool
 14420,all,,all,all,nocolor,,,false,false,true,false,--,switch,<boolean>,turn off colored display
