@@ -1,28 +1,14 @@
 ## chifra names
 
-`chifra names` lists the addresses found in your local node's keystore. It can be used to report your ether holdings, for example. It also lists known, named accounts from [chifra names](../ethName/README.md).
+`chifra names` is a surprisingly useful tool. It allows one to associate textual names with Ethereum addresses. One may ask why this is necessary given that ENS exists. The answer is a single word: "privacy". ENS names are public. In many cases, users desire to keep personal addresses private. Try to do this on a website.
 
-One way to use this tool is to feed its output through the [chifra state](../getState/README.md) or [chifra tokens](../getTokens/README.md). This will give you the balances of your ether holdings or token holings. For example, you can do these commands:
+Like `chifra abis`, this tool is useful from the command line but is primarily used in support of other tools, especially `chifra export` where naming addresses becomes the single best way to turn unintellagable blockchain data into understandable information.
 
-List accounts held in the local node's keystore:
+The various options allow you to search and filter the results. The `entities` and `tags` options are in support of the TrueBlocks explorer.
 
-    chifra names
+You may use the `chifra monitors` tool and the TrueBlocks explorer to manage (add, edit, delete) address-name associations.
 
-List balances of those accounts (note 'xargs' puts the results on a single line):
-
-    chifra state --mode balance `chifra names -a | xargs`
-    
-List balances of the local node's accounts in US dollars:
-
-    chifra state --mode balance `chifra names -a | xargs` --dollars
-
-Using chifra names to find Singular's address, list token balances held by your accounts:
-
-    chifra tokens `chifra names -a singular` `chifra names | xargs`
-
-Using chifra names to find Singular's address, list tokens held by other token accounts:
-
-    chifra tokens `chifra names -a singular` `chifra names -n | xargs`
+A large collection of more than 7,500 names, gleened from various public sources, is installed with the software for your convienience. To see these publically exposed names, run `chifra names` with no options.
 
 ### usage
 
@@ -48,11 +34,8 @@ Using chifra names to find Singular's address, list tokens held by other token a
 
 `Notes:`
 
-- With a single search term, the tool searches both `name` and `address`.
-- With two search terms, the first term must match the `address` field, and the second term must match the `name` field.
-- When there are two search terms, both must match.
-- The `--match_case` option requires case sensitive matching. It works with all other options.
-- To customize the list of names add a `custom` section to the config file (see documentation).
+- The tool will accept up to three terms, each of which must match against any field in the database.
+- The `--match_case` option enables case sensitive matching.
 - Name file: `$CONFIG/names/names.tab`
 
 **Source code**: [`tools/ethNames`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/tools/ethNames)

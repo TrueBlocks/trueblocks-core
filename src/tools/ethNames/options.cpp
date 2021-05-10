@@ -294,11 +294,8 @@ COptions::COptions(void) {
     Init();
     // BEG_CODE_NOTES
     // clang-format off
-    notes.push_back("With a single search term, the tool searches both `name` and `address`.");
-    notes.push_back("With two search terms, the first term must match the `address` field, and the second term must match the `name` field.");  // NOLINT
-    notes.push_back("When there are two search terms, both must match.");
-    notes.push_back("The `--match_case` option requires case sensitive matching. It works with all other options.");
-    notes.push_back("To customize the list of names add a `custom` section to the config file (see documentation).");
+    notes.push_back("The tool will accept up to three terms, each of which must match against any field in the database.");  // NOLINT
+    notes.push_back("The `--match_case` option enables case sensitive matching.");
     // clang-format on
     // END_CODE_NOTES
 

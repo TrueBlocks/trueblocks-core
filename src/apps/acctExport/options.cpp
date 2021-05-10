@@ -25,21 +25,21 @@ static const COption params[] = {
     COption("articulate", "a", "", OPT_SWITCH, "articulate transactions, traces, logs, and outputs"),
     COption("cache_txs", "i", "", OPT_SWITCH, "write transactions to the cache (see notes)"),
     COption("cache_traces", "R", "", OPT_SWITCH, "write traces to the cache (see notes)"),
-    COption("skip_ddos", "d", "", OPT_HIDDEN | OPT_TOGGLE, "toggle skipping over 2016 dDos transactions ('on' by default)"),  // NOLINT
-    COption("max_traces", "m", "<uint64>", OPT_HIDDEN | OPT_FLAG, "if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250)"),  // NOLINT
-    COption("freshen", "f", "", OPT_HIDDEN | OPT_SWITCH, "freshen but do not print the exported data"),
-    COption("factory", "y", "", OPT_HIDDEN | OPT_SWITCH, "scan for contract creations from the given address(es) and report address of those contracts"),  // NOLINT
-    COption("emitter", "", "", OPT_HIDDEN | OPT_SWITCH, "for log export only, export only if one of the given export addresses emitted the event"),  // NOLINT
-    COption("source", "", "list<addr>", OPT_HIDDEN | OPT_FLAG, "for log export only, export only one of these addresses emitted the event"),  // NOLINT
-    COption("relevant", "", "", OPT_HIDDEN | OPT_SWITCH, "for log export only, if true export only logs relevant to one of the given export addresses"),  // NOLINT
+    COption("skip_ddos", "d", "", OPT_TOGGLE, "toggle skipping over 2016 dDos transactions ('on' by default)"),
+    COption("max_traces", "m", "<uint64>", OPT_FLAG, "if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250)"),  // NOLINT
+    COption("freshen", "f", "", OPT_SWITCH, "freshen but do not print the exported data"),
+    COption("factory", "y", "", OPT_SWITCH, "scan for contract creations from the given address(es) and report address of those contracts"),  // NOLINT
+    COption("emitter", "", "", OPT_SWITCH, "for log export only, export only if one of the given export addresses emitted the event"),  // NOLINT
+    COption("source", "", "list<addr>", OPT_FLAG, "for log export only, export only one of these addresses emitted the event"),  // NOLINT
+    COption("relevant", "", "", OPT_SWITCH, "for log export only, if true export only logs relevant to one of the given export addresses"),  // NOLINT
     COption("count", "U", "", OPT_SWITCH, "only available for --appearances mode, if present return only the number of records"),  // NOLINT
-    COption("start", "S", "<blknum>", OPT_HIDDEN | OPT_DEPRECATED, "first block to process (inclusive)"),
-    COption("end", "E", "<blknum>", OPT_HIDDEN | OPT_DEPRECATED, "last block to process (inclusive)"),
-    COption("first_record", "c", "<blknum>", OPT_HIDDEN | OPT_FLAG, "the first record to process"),
-    COption("max_records", "e", "<blknum>", OPT_HIDDEN | OPT_FLAG, "the maximum number of records to process before reporting"),  // NOLINT
-    COption("clean", "", "", OPT_HIDDEN | OPT_SWITCH, "clean (i.e. remove duplicate appearances) from all existing monitors"),  // NOLINT
-    COption("staging", "s", "", OPT_HIDDEN | OPT_SWITCH, "enable search of staging (not yet finalized) folder"),
-    COption("unripe", "u", "", OPT_HIDDEN | OPT_SWITCH, "enable search of unripe (neither staged nor finalized) folder (assumes --staging)"),  // NOLINT
+    COption("start", "S", "<blknum>", OPT_DEPRECATED, "first block to process (inclusive)"),
+    COption("end", "E", "<blknum>", OPT_DEPRECATED, "last block to process (inclusive)"),
+    COption("first_record", "c", "<blknum>", OPT_FLAG, "the first record to process"),
+    COption("max_records", "e", "<blknum>", OPT_FLAG, "the maximum number of records to process before reporting"),
+    COption("clean", "", "", OPT_SWITCH, "clean (i.e. remove duplicate appearances) from all existing monitors"),
+    COption("staging", "s", "", OPT_SWITCH, "enable search of staging (not yet finalized) folder"),
+    COption("unripe", "u", "", OPT_SWITCH, "enable search of unripe (neither staged nor finalized) folder (assumes --staging)"),  // NOLINT
     COption("", "", "", OPT_DESCRIPTION, "Export full detail of transactions for one or more Ethereum addresses."),
     // clang-format on
     // END_CODE_OPTIONS
@@ -377,7 +377,9 @@ void COptions::Init(void) {
     max_traces = getGlobalConfig("acctExport")->getConfigInt("settings", "max_traces", 250);
     // clang-format on
     freshen = false;
-    factory = false;
+    // clang-format off
+    factory = getGlobalConfig("acctExport")->getConfigBool("settings", "factory", false);
+    // clang-format on
     emitter = false;
     source.clear();
     relevant = false;

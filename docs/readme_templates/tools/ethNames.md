@@ -1,28 +1,14 @@
 ## [{NAME}]
 
-`[{NAME}]` lists the addresses found in your local node's keystore. It can be used to report your ether holdings, for example. It also lists known, named accounts from [chifra names](../ethName/README.md).
+`[{NAME}]` is a surprisingly useful tool. It allows one to associate textual names with Ethereum addresses. One may ask why this is necessary given that ENS exists. The answer is a single word: "privacy". ENS names are public. In many cases, users desire to keep personal addresses private. Try to do this on a website.
 
-One way to use this tool is to feed its output through the [chifra state](../getState/README.md) or [chifra tokens](../getTokens/README.md). This will give you the balances of your ether holdings or token holings. For example, you can do these commands:
+Like `chifra abis`, this tool is useful from the command line but is primarily used in support of other tools, especially `chifra export` where naming addresses becomes the single best way to turn unintellagable blockchain data into understandable information.
 
-List accounts held in the local node's keystore:
+The various options allow you to search and filter the results. The `entities` and `tags` options are in support of the TrueBlocks explorer.
 
-    [{NAME}]
+You may use the `chifra monitors` tool and the TrueBlocks explorer to manage (add, edit, delete) address-name associations.
 
-List balances of those accounts (note 'xargs' puts the results on a single line):
-
-    chifra state --mode balance `[{NAME}] -a | xargs`
-    
-List balances of the local node's accounts in US dollars:
-
-    chifra state --mode balance `[{NAME}] -a | xargs` --dollars
-
-Using [{NAME}] to find Singular's address, list token balances held by your accounts:
-
-    chifra tokens `[{NAME}] -a singular` `[{NAME}] | xargs`
-
-Using [{NAME}] to find Singular's address, list tokens held by other token accounts:
-
-    chifra tokens `[{NAME}] -a singular` `[{NAME}] -n | xargs`
+A large collection of more than 7,500 names, gleened from various public sources, is installed with the software for your convienience. To see these publically exposed names, run `[{NAME}]` with no options.
 
 [{USAGE_TABLE}]
 [{FOOTER}]

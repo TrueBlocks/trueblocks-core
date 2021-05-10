@@ -2,7 +2,7 @@ grabABI argc: 2 [1:-th]
 grabABI -th 
 ### Usage
 
-`Usage:`    chifra abis [-c|-k|-f|-v|-h] &lt;address&gt; [address...]  
+`Usage:`    chifra abis [-k|-s|-f|-v|-h] &lt;address&gt; [address...]  
 `Purpose:`  Fetches the ABI for a smart contract.
 
 `Where:`  
@@ -10,12 +10,9 @@ grabABI -th
 | | Option | Description |
 | :----- | :----- | :---------- |
 |  | addrs | list of one or more smart contracts whose ABI to grab from EtherScan (required) |
-| -c | --canonical | convert all types to their canonical represenation and remove all spaces from display |
 | -k | --known | load common 'known' ABIs from cache |
-| -f | --find &lt;str&gt; | try to search for a function declaration given a four byte code |
-|####|Hidden options||
 | -s | --sol &lt;str&gt; | file name of .sol file from which to create a new known abi (without .sol) |
-|####|Hidden options||
+| -f | --find &lt;str&gt; | try to search for a function declaration given a four byte code |
 | -x | --fmt &lt;val&gt; | export format, one of *[ none \| json\* \| txt \| csv \| api ]* |
 | -v | --verbose | set verbose level (optional level defaults to 1) |
 | -h | --help | display this help screen |

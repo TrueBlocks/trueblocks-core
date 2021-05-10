@@ -10,25 +10,25 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,is_customizable
 10280,apps,Accounts,export,acctExport,accounting,C,,false,false,true,true,header,switch,<boolean>,export accounting records instead of transaction list
 10290,apps,Accounts,export,acctExport,tokens,O,,false,false,true,true,header,switch,<boolean>,export accounting for ERC 20 tokens (assumes ETH accounting as above)
 10310,apps,Accounts,export,acctExport,articulate,a,,false,false,true,true,header,switch,<boolean>,articulate transactions&#44; traces&#44; logs&#44; and outputs
-10320,apps,Accounts,export,acctExport,cache_txs,i,false,false,true,true,false,header,switch,<boolean>,write transactions to the cache (see notes)
-10330,apps,Accounts,export,acctExport,cache_traces,R,false,false,true,true,false,header,switch,<boolean>,write traces to the cache (see notes)
-10340,apps,Accounts,export,acctExport,skip_ddos,d,true,false,true,false,false,header,toggle,<boolean>,toggle skipping over 2016 dDos transactions ([{DEF}] by default)
-10350,apps,Accounts,export,acctExport,max_traces,m,250,false,true,false,false,header,flag,<uint64>,if --skip_ddos is on&#44; this many traces defines what a ddos transaction|is (default = [{DEF}])
-10380,apps,Accounts,export,acctExport,freshen,f,,false,false,false,false,header,switch,<boolean>,freshen but do not print the exported data
-10395,apps,Accounts,export,acctExport,factory,y,false,false,false,false,false,header,switch,<boolean>,scan for contract creations from the given address(es) and report|address of those contracts
-10430,apps,Accounts,export,acctExport,emitter,,,false,false,false,true,header,switch,<boolean>,for log export only&#44; export only if one of the given export addresses emitted the event
-10431,apps,Accounts,export,acctExport,source,,,false,false,false,true,header,flag,list<addr>,for log export only&#44; export only one of these addresses emitted the event
-10433,apps,Accounts,export,acctExport,relevant,,,false,false,false,true,header,switch,<boolean>,for log export only&#44; if true export only logs relevant to one of the given export addresses
-#10435,apps,Accounts,export,acctExport,to,,,false,false,false,true,header,switch,<boolean>,show only export lines where the address appears in the tx's (or trace action's) `to` field
-#10437,apps,Accounts,export,acctExport,from,,,false,false,false,true,header,switch,<boolean>,show only export lines where the address appears in the tx's (or trace action's) `from` field
+10320,apps,Accounts,export,acctExport,cache_txs,i,false,false,true,true,true,header,switch,<boolean>,write transactions to the cache (see notes)
+10330,apps,Accounts,export,acctExport,cache_traces,R,false,false,true,true,true,header,switch,<boolean>,write traces to the cache (see notes)
+10340,apps,Accounts,export,acctExport,skip_ddos,d,true,false,true,true,true,header,toggle,<boolean>,toggle skipping over 2016 dDos transactions ([{DEF}] by default)
+10350,apps,Accounts,export,acctExport,max_traces,m,250,false,true,true,true,header,flag,<uint64>,if --skip_ddos is on&#44; this many traces defines what a ddos transaction|is (default = [{DEF}])
+10380,apps,Accounts,export,acctExport,freshen,f,,false,false,true,true,header,switch,<boolean>,freshen but do not print the exported data
+10395,apps,Accounts,export,acctExport,factory,y,false,false,true,true,false,header,switch,<boolean>,scan for contract creations from the given address(es) and report|address of those contracts
+10430,apps,Accounts,export,acctExport,emitter,,,false,false,true,true,header,switch,<boolean>,for log export only&#44; export only if one of the given export addresses emitted the event
+10431,apps,Accounts,export,acctExport,source,,,false,false,true,true,header,flag,list<addr>,for log export only&#44; export only one of these addresses emitted the event
+10433,apps,Accounts,export,acctExport,relevant,,,false,false,true,true,header,switch,<boolean>,for log export only&#44; if true export only logs relevant to one of the given export addresses
+#10435,apps,Accounts,export,acctExport,to,,,false,false,true,true,header,switch,<boolean>,show only export lines where the address appears in the tx's (or trace action's) `to` field
+#10437,apps,Accounts,export,acctExport,from,,,false,false,true,true,header,switch,<boolean>,show only export lines where the address appears in the tx's (or trace action's) `from` field
 10439,apps,Accounts,export,acctExport,count,U,,false,false,true,true,header,switch,<boolean>,only available for --appearances mode&#44; if present return only|the number of records
-10440,apps,Accounts,export,acctExport,start,S,,false,false,false,false,local,deprecated,<blknum>,first block to process (inclusive)
-10450,apps,Accounts,export,acctExport,end,E,,false,false,false,false,local,deprecated,<blknum>,last block to process (inclusive)
-10453,apps,Accounts,export,acctExport,first_record,c,0,false,false,false,false,header,flag,<blknum>,the first record to process
-10457,apps,Accounts,export,acctExport,max_records,e,(isApiMode() ? 250 : NOPOS),false,false,false,false,header,flag,<blknum>,the maximum number of records to process before reporting
-10085,apps,Accounts,export,acctExport,clean,,false,false,false,false,false,header,switch,<boolean>,clean (i.e. remove duplicate appearances) from all existing monitors
-10060,apps,Accounts,export,acctExport,staging,s,,false,false,false,false,local,switch,<boolean>,enable search of staging (not yet finalized) folder
-10080,apps,Accounts,export,acctExport,unripe,u,,false,false,false,false,local,switch,<boolean>,enable search of unripe (neither staged nor finalized) folder|(assumes --staging)
+10440,apps,Accounts,export,acctExport,start,S,,false,false,true,true,local,deprecated,<blknum>,first block to process (inclusive)
+10450,apps,Accounts,export,acctExport,end,E,,false,false,true,true,local,deprecated,<blknum>,last block to process (inclusive)
+10453,apps,Accounts,export,acctExport,first_record,c,0,false,false,true,true,header,flag,<blknum>,the first record to process
+10457,apps,Accounts,export,acctExport,max_records,e,(isApiMode() ? 250 : NOPOS),false,false,true,true,header,flag,<blknum>,the maximum number of records to process before reporting
+10085,apps,Accounts,export,acctExport,clean,,false,false,false,true,true,header,switch,<boolean>,clean (i.e. remove duplicate appearances) from all existing monitors
+10060,apps,Accounts,export,acctExport,staging,s,,false,false,true,true,local,switch,<boolean>,enable search of staging (not yet finalized) folder
+10080,apps,Accounts,export,acctExport,unripe,u,,false,false,true,true,local,switch,<boolean>,enable search of unripe (neither staged nor finalized) folder|(assumes --staging)
 10460,apps,Accounts,export,acctExport,,,,false,false,true,true,--,description,,Export full detail of transactions for one or more Ethereum addresses.
 10470,apps,Accounts,export,acctExport,,,,false,false,false,false,--,note,,An `address` must start with '0x' and be forty-two characters long.
 
@@ -126,11 +126,8 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,is_customizable
 12450,tools,Accounts,names,ethNames,to_custom,u,,false,false,false,false,local,switch,<boolean>,for editCmd only&#44; is the edited name a custom name or not
 12455,tools,Accounts,names,ethNames,clean,C,,false,false,false,false,local,switch,<boolean>,clean the data (addrs to lower case&#44; sort by addr)
 12460,tools,Accounts,names,ethNames,,,,false,false,true,true,--,description,,Query addresses and/or names of well known accounts.
-12462,tools,Accounts,names,ethNames,,,,false,false,false,false,--,note,,With a single search term&#44; the tool searches both `name` and `address`.
-12464,tools,Accounts,names,ethNames,,,,false,false,false,false,--,note,,With two search terms&#44; the first term must match the `address` field&#44; and the second term must match the `name` field.
-12466,tools,Accounts,names,ethNames,,,,false,false,false,false,--,note,,When there are two search terms&#44; both must match.
-12468,tools,Accounts,names,ethNames,,,,false,false,false,false,--,note,,The `--match_case` option requires case sensitive matching. It works with all other options.
-12470,tools,Accounts,names,ethNames,,,,false,false,false,false,--,note,,To customize the list of names add a `custom` section to the config file (see documentation).
+12462,tools,Accounts,names,ethNames,,,,false,false,false,false,--,note,,The tool will accept up to three terms&#44; each of which must match against any field in the database.
+12468,tools,Accounts,names,ethNames,,,,false,false,false,false,--,note,,The `--match_case` option enables case sensitive matching.
 
 12500,tools,ChainData,blocks,getBlocks,blocks,,,true,false,true,true,local,positional,list<blknum>,a space-separated list of one or more blocks to retrieve
 12510,tools,ChainData,blocks,getBlocks,hashes,e,,false,false,true,true,header,switch,<boolean>,display only transaction hashes&#44; default is to display full transaction|detail
@@ -214,10 +211,9 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,is_customizable
 13372,tools,ChainState,tokens,getTokens,,,,false,false,false,false,--,note,,`special` blocks are detailed under `chifra when --list`.
 
 13660,tools,Accounts,abis,grabABI,addrs,,,true,false,true,true,header,positional,list<addr>,list of one or more smart contracts whose ABI to grab from EtherScan
-13680,tools,Accounts,abis,grabABI,canonical,c,,false,false,true,true,local,switch,<boolean>,convert all types to their canonical represenation and remove|all spaces from display
 13850,tools,Accounts,abis,grabABI,known,k,,false,false,true,false,local,switch,<boolean>,load common 'known' ABIs from cache
-13860,tools,Accounts,abis,grabABI,sol,s,,false,false,false,false,local,flag,<string>,file name of .sol file from which to create a new known abi (without|.sol)
-13865,tools,Accounts,abis,grabABI,find,f,,false,false,true,false,local,flag,<string>,try to search for a function declaration given a four byte code
+13860,tools,Accounts,abis,grabABI,sol,s,,false,false,true,true,local,flag,<string>,file name of .sol file from which to create a new known abi (without|.sol)
+13865,tools,Accounts,abis,grabABI,find,f,,false,false,true,true,local,flag,<string>,try to search for a function declaration given a four byte code
 13880,tools,Accounts,abis,grabABI,,,,false,false,true,true,--,description,,Fetches the ABI for a smart contract.
 13885,tools,Accounts,abis,grabABI,,,,false,false,false,false,--,note,,Solidity files found in the local folder with the name '<address>.sol' are converted to an ABI prior to processing (and then removed).
 

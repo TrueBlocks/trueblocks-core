@@ -65,9 +65,9 @@ func findEncoding() {
 
 	// Create thread pool with number of concurrent threads equal to 'runtime.NumCPU()'
 	var wait sync.WaitGroup
-	checkOne, _ := ants.NewPoolWithFunc(runtime.NumCPU(), func(canonical interface{}) {
+	checkOne, _ := ants.NewPoolWithFunc(runtime.NumCPU(), func(signature interface{}) {
 		// Calculate 4-byte form
-		res := crypto.Keccak256([]byte(canonical.(string)))[:4]
+		res := crypto.Keccak256([]byte(signature.(string)))[:4]
 		// Go through queries and compare
 		for i := 0; i < len(search); i++ {
 			cur := search[i]
@@ -75,11 +75,11 @@ func findEncoding() {
 				if !testmode {
 					fmt.Fprintf(os.Stderr, "                                                                        \r")
 				}
-				prettyPrint(hex.EncodeToString(res), canonical)
+				prettyPrint(hex.EncodeToString(res), signature)
 				os.Exit(0)
 			}
 			if !testmode {
-				fmt.Fprintf(os.Stderr, "\033[2KScanning: %s\r", canonical)
+				fmt.Fprintf(os.Stderr, "\033[2KScanning: %s\r", signature)
 			}
 		}
 		wait.Done()

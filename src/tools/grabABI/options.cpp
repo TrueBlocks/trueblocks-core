@@ -21,9 +21,8 @@ static const COption params[] = {
     // BEG_CODE_OPTIONS
     // clang-format off
     COption("addrs", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "list of one or more smart contracts whose ABI to grab from EtherScan"),  // NOLINT
-    COption("canonical", "c", "", OPT_SWITCH, "convert all types to their canonical represenation and remove all spaces from display"),  // NOLINT
     COption("known", "k", "", OPT_SWITCH, "load common 'known' ABIs from cache"),
-    COption("sol", "s", "<string>", OPT_HIDDEN | OPT_FLAG, "file name of .sol file from which to create a new known abi (without .sol)"),  // NOLINT
+    COption("sol", "s", "<string>", OPT_FLAG, "file name of .sol file from which to create a new known abi (without .sol)"),  // NOLINT
     COption("find", "f", "<string>", OPT_FLAG, "try to search for a function declaration given a four byte code"),
     COption("", "", "", OPT_DESCRIPTION, "Fetches the ABI for a smart contract."),
     // clang-format on
@@ -38,7 +37,6 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
     // BEG_CODE_LOCAL_INIT
-    bool canonical = false;
     bool known = false;
     string_q sol = "";
     string_q find = "";
@@ -51,9 +49,6 @@ bool COptions::parseArguments(string_q& command) {
         if (false) {
             // do nothing -- make auto code generation easier
             // BEG_CODE_AUTO
-        } else if (arg == "-c" || arg == "--canonical") {
-            canonical = true;
-
         } else if (arg == "-k" || arg == "--known") {
             known = true;
 
@@ -83,7 +78,6 @@ bool COptions::parseArguments(string_q& command) {
 
     // BEG_DEBUG_DISPLAY
     LOG_TEST_LIST("addrs", addrs, addrs.empty());
-    LOG_TEST_BOOL("canonical", canonical);
     LOG_TEST_BOOL("known", known);
     LOG_TEST("sol", sol, (sol == ""));
     LOG_TEST("find", find, (find == ""));
@@ -127,9 +121,6 @@ bool COptions::parseArguments(string_q& command) {
 
     if (!addrs.size() && !known)
         return usage("Please supply at least one Ethereum address.\n");
-
-    if (canonical)
-        parts |= SIG_CANONICAL;
 
     if (parts == 0)
         parts = SIG_DEFAULT;

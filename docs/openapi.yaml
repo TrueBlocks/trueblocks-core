@@ -416,15 +416,6 @@ paths:
           type: array
           items:
             type: string
-      - name: canonical
-        in: query
-        description: convert all types to their canonical represenation and remove
-          all spaces from display
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
       - name: known
         in: query
         description: load common 'known' ABIs from cache

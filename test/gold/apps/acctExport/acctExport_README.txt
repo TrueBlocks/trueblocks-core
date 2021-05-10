@@ -2,7 +2,7 @@ acctExport argc: 2 [1:-th]
 acctExport -th 
 ### Usage
 
-`Usage:`    chifra export [-p|-r|-l|-t|-C|-O|-a|-i|-R|-U|-v|-h] &lt;address&gt; [address...] [topics] [fourbytes]  
+`Usage:`    chifra export [-p|-r|-l|-t|-C|-O|-a|-i|-R|-d|-m|-f|-y|-U|-c|-e|-s|-u|-v|-h] &lt;address&gt; [address...] [topics] [fourbytes]  
 `Purpose:`  Export full detail of transactions for one or more Ethereum addresses.
 
 `Where:`  
@@ -21,8 +21,6 @@ acctExport -th
 | -a | --articulate | articulate transactions, traces, logs, and outputs |
 | -i | --cache_txs | write transactions to the cache (see notes) |
 | -R | --cache_traces | write traces to the cache (see notes) |
-| -U | --count | only available for --appearances mode, if present return only the number of records |
-|####|Hidden options||
 | -d | --skip_ddos | toggle skipping over 2016 dDos transactions ('on' by default) |
 | -m | --max_traces &lt;num&gt; | if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250) |
 | -f | --freshen | freshen but do not print the exported data |
@@ -30,11 +28,13 @@ acctExport -th
 |  | --emitter | for log export only, export only if one of the given export addresses emitted the event |
 |  | --source &lt;addr&gt; | for log export only, export only one of these addresses emitted the event |
 |  | --relevant | for log export only, if true export only logs relevant to one of the given export addresses |
+| -U | --count | only available for --appearances mode, if present return only the number of records |
 | -c | --first_record &lt;num&gt; | the first record to process |
 | -e | --max_records &lt;num&gt; | the maximum number of records to process before reporting |
 |  | --clean | clean (i.e. remove duplicate appearances) from all existing monitors |
 | -s | --staging | enable search of staging (not yet finalized) folder |
 | -u | --unripe | enable search of unripe (neither staged nor finalized) folder (assumes --staging) |
+|####|Hidden options||
 |####|Hidden options||
 | -x | --fmt &lt;val&gt; | export format, one of *[ none \| json\* \| txt \| csv \| api ]* |
 | -v | --verbose | set verbose level (optional level defaults to 1) |
