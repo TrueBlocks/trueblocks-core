@@ -33,3 +33,10 @@ cachePath = "<NOT_SET>"
 # about 2 GB on of disc space, however if you build the entire index, it may take
 # up to 80 GB. You may wish to point this value to an external drive in that case.
 # indexPath = "<NOT_SET>"
+
+# The 'etherscan_key' value is optional but if not provided will disable your
+# ability to use the articulate feature in various places. We apologize profusely
+# for this centralization cancer, but the community must decide what it wants
+# to share with private companies and what it does not wish to share. Go to
+# the EtherScan website, tell them who you are, get an etherscan_key are enter it here.
+etherescan_key = ""

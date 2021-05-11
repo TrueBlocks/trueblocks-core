@@ -320,7 +320,7 @@ bool COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, cons
                         for (auto r : removes)
                             has = (has || contains(line, r));
                         if (!has && startsWith(line, "\"") && !startsWith(line, "\"0x"))
-                            os << line << endl;
+                            os << substitute(line, "\": \"", "\":\"") << endl;
                     }
                     last = line;
                 }

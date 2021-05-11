@@ -2,15 +2,15 @@
 
 The `chifra export` tools provides a major part of the functionality of the TrueBlocks system. Using the index of appearances created with `chifra scrape` and the list of transaction identifiers created with `chifra list`, `chifra export` completes the actual extraction of an address's transactional history from the node.
 
-You may use a log's `topics`, the `fourbyte` values at the head of a transaction's input data, and/or a log's `source address` in order to filter your results.
+You may use `topics`, `fourbyte` values at the start of a transaction's input data, and/or a log's `source address` or `emitter` to filter the results.
 
-You may also choose which portions of the Ethereum data structures (transactions, logs, traces, etc.) as you wish.
+You may also choose which portions of the Ethereum data structures (`--transactions`, `--logs`, `--traces`, etc.) as you wish.
 
 By default, the results of the extraction are delivered to your console, however, you may export the results to any database (with a little bit of work). The format of the data, its content and its destination are up to you.
 
 ### usage
 
-`Usage:`    chifra export [-p|-r|-l|-t|-C|-O|-a|-i|-R|-d|-m|-f|-y|-U|-c|-e|-s|-u|-v|-h] &lt;address&gt; [address...] [topics] [fourbytes]  
+`Usage:`    chifra export [-p|-r|-l|-t|-C|-O|-a|-i|-R|-y|-U|-c|-e|-v|-h] &lt;address&gt; [address...] [topics] [fourbytes]  
 `Purpose:`  Export full detail of transactions for one or more Ethereum addresses.
 
 `Where:`  
@@ -29,9 +29,6 @@ By default, the results of the extraction are delivered to your console, however
 | -a | --articulate | articulate transactions, traces, logs, and outputs |
 | -i | --cache_txs | write transactions to the cache (see notes) |
 | -R | --cache_traces | write traces to the cache (see notes) |
-| -d | --skip_ddos | toggle skipping over 2016 dDos transactions ('on' by default) |
-| -m | --max_traces &lt;num&gt; | if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250) |
-| -f | --freshen | freshen but do not print the exported data |
 | -y | --factory | scan for contract creations from the given address(es) and report address of those contracts |
 |  | --emitter | for log export only, export only if one of the given export addresses emitted the event |
 |  | --source &lt;addr&gt; | for log export only, export only one of these addresses emitted the event |
@@ -40,8 +37,6 @@ By default, the results of the extraction are delivered to your console, however
 | -c | --first_record &lt;num&gt; | the first record to process |
 | -e | --max_records &lt;num&gt; | the maximum number of records to process before reporting |
 |  | --clean | clean (i.e. remove duplicate appearances) from all existing monitors |
-| -s | --staging | enable search of staging (not yet finalized) folder |
-| -u | --unripe | enable search of unripe (neither staged nor finalized) folder (assumes --staging) |
 | -v | --verbose | set verbose level (optional level defaults to 1) |
 | -h | --help | display this help screen |
 

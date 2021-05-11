@@ -1,33 +1,23 @@
 ## chifra monitors
 
-This folder contains a TrueBlocks monitor. TrueBlocks monitors pull transactions from the Ethereum blockchain for a given (or a series of) Ethereum addresses.
+A TrueBlock monitor is simply a file on your computer that represents the transactional history of a given Ethereum address. Monitors do not exist until you indicate your interest in a certain address. (See `chifra list`.)
 
-Below we present the command line interface to this tool, although the tool itself is not available under open source. While the tool is in active development, TrueBlocks monitors already produce very useful results. For example, we use TrueBlocks monitors to account for and analyze all transactions on a given smart contract. We present [this example](http://dao.quickblocks.io).
+You may use the `--delete` command to delete (or undelete if already deleted) an address. The monitor is not removed from your computer if you delete it. It is just marked as deleted making it invisible to the TrueBlocks explorer.
 
-Please contact us at [sales@greathill.com](mailto:sales@greathill.com) for more information.
+Use the `--remove` command to permanently remove a monitor from your computer. This is an irreversable operation.
 
 ### usage
 
-`Usage:`    chifra export [-p|-r|-l|-t|-C|-O|-a|-i|-R|-U|-v|-h] &lt;address&gt; [address...] [topics] [fourbytes]  
-`Purpose:`  Export full detail of transactions for one or more Ethereum addresses.
+`Usage:`    chifra montiors [-d|-r|-v|-h] &lt;address&gt; [address...]  
+`Purpose:`  Delete, undelete, and remove previously created monitors.
 
 `Where:`  
 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |
 |  | addrs | one or more addresses (0x...) to export (required) |
-|  | topics | filter by one or more logs topics (only for --logs option) |
-|  | fourbytes | filter by one or more fourbytes (only for transactions and trace options) |
-| -p | --appearances | export a list of appearances |
-| -r | --receipts | export receipts instead of transaction list |
-| -l | --logs | export logs instead of transaction list |
-| -t | --traces | export traces instead of transaction list |
-| -C | --accounting | export accounting records instead of transaction list |
-| -O | --tokens | export accounting for ERC 20 tokens (assumes ETH accounting as above) |
-| -a | --articulate | articulate transactions, traces, logs, and outputs |
-| -i | --cache_txs | write transactions to the cache (see notes) |
-| -R | --cache_traces | write traces to the cache (see notes) |
-| -U | --count | only available for --appearances mode, if present return only the number of records |
+|  | --delete | delete a previously created monitor (or undelete if already deleted) |
+|  | --remove | remove a previously deleted monitor |
 | -v | --verbose | set verbose level (optional level defaults to 1) |
 | -h | --help | display this help screen |
 
@@ -36,4 +26,3 @@ Please contact us at [sales@greathill.com](mailto:sales@greathill.com) for more 
 - `addresses` must start with '0x' and be forty two characters long.
 
 **Source code**: [`apps/acctExport`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/acctExport)
-

@@ -12,23 +12,21 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,is_customizable
 10310,apps,Accounts,export,acctExport,articulate,a,,false,false,true,true,header,switch,<boolean>,articulate transactions&#44; traces&#44; logs&#44; and outputs
 10320,apps,Accounts,export,acctExport,cache_txs,i,false,false,true,true,true,header,switch,<boolean>,write transactions to the cache (see notes)
 10330,apps,Accounts,export,acctExport,cache_traces,R,false,false,true,true,true,header,switch,<boolean>,write traces to the cache (see notes)
-10340,apps,Accounts,export,acctExport,skip_ddos,d,true,false,true,true,true,header,toggle,<boolean>,toggle skipping over 2016 dDos transactions ([{DEF}] by default)
-10350,apps,Accounts,export,acctExport,max_traces,m,250,false,true,true,true,header,flag,<uint64>,if --skip_ddos is on&#44; this many traces defines what a ddos transaction|is (default = [{DEF}])
-10380,apps,Accounts,export,acctExport,freshen,f,,false,false,true,true,header,switch,<boolean>,freshen but do not print the exported data
+10340,apps,Accounts,export,acctExport,skip_ddos,d,true,false,true,false,false,header,toggle,<boolean>,toggle skipping over 2016 dDos transactions ([{DEF}] by default)
+10350,apps,Accounts,export,acctExport,max_traces,m,250,false,true,false,false,header,flag,<uint64>,if --skip_ddos is on&#44; this many traces defines what a ddos transaction|is (default = [{DEF}])
+10380,apps,Accounts,export,acctExport,freshen,f,,false,false,false,false,header,switch,<boolean>,freshen but do not print the exported data
 10395,apps,Accounts,export,acctExport,factory,y,false,false,true,true,false,header,switch,<boolean>,scan for contract creations from the given address(es) and report|address of those contracts
 10430,apps,Accounts,export,acctExport,emitter,,,false,false,true,true,header,switch,<boolean>,for log export only&#44; export only if one of the given export addresses emitted the event
 10431,apps,Accounts,export,acctExport,source,,,false,false,true,true,header,flag,list<addr>,for log export only&#44; export only one of these addresses emitted the event
 10433,apps,Accounts,export,acctExport,relevant,,,false,false,true,true,header,switch,<boolean>,for log export only&#44; if true export only logs relevant to one of the given export addresses
-#10435,apps,Accounts,export,acctExport,to,,,false,false,true,true,header,switch,<boolean>,show only export lines where the address appears in the tx's (or trace action's) `to` field
-#10437,apps,Accounts,export,acctExport,from,,,false,false,true,true,header,switch,<boolean>,show only export lines where the address appears in the tx's (or trace action's) `from` field
 10439,apps,Accounts,export,acctExport,count,U,,false,false,true,true,header,switch,<boolean>,only available for --appearances mode&#44; if present return only|the number of records
-10440,apps,Accounts,export,acctExport,start,S,,false,false,true,true,local,deprecated,<blknum>,first block to process (inclusive)
-10450,apps,Accounts,export,acctExport,end,E,,false,false,true,true,local,deprecated,<blknum>,last block to process (inclusive)
+10440,apps,Accounts,export,acctExport,start,S,,false,false,false,false,local,deprecated,<blknum>,first block to process (inclusive)
+10450,apps,Accounts,export,acctExport,end,E,,false,false,false,false,local,deprecated,<blknum>,last block to process (inclusive)
 10453,apps,Accounts,export,acctExport,first_record,c,0,false,false,true,true,header,flag,<blknum>,the first record to process
 10457,apps,Accounts,export,acctExport,max_records,e,(isApiMode() ? 250 : NOPOS),false,false,true,true,header,flag,<blknum>,the maximum number of records to process before reporting
 10085,apps,Accounts,export,acctExport,clean,,false,false,false,true,true,header,switch,<boolean>,clean (i.e. remove duplicate appearances) from all existing monitors
-10060,apps,Accounts,export,acctExport,staging,s,,false,false,true,true,local,switch,<boolean>,enable search of staging (not yet finalized) folder
-10080,apps,Accounts,export,acctExport,unripe,u,,false,false,true,true,local,switch,<boolean>,enable search of unripe (neither staged nor finalized) folder|(assumes --staging)
+10060,apps,Accounts,export,acctExport,staging,s,,false,false,false,false,local,switch,<boolean>,enable search of staging (not yet finalized) folder
+10080,apps,Accounts,export,acctExport,unripe,u,,false,false,false,false,local,switch,<boolean>,enable search of unripe (neither staged nor finalized) folder|(assumes --staging)
 10460,apps,Accounts,export,acctExport,,,,false,false,true,true,--,description,,Export full detail of transactions for one or more Ethereum addresses.
 10470,apps,Accounts,export,acctExport,,,,false,false,false,false,--,note,,An `address` must start with '0x' and be forty-two characters long.
 

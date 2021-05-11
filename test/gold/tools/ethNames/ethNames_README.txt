@@ -30,9 +30,6 @@ ethNames -th
 
 `Notes:`
 
-- With a single search term, the tool searches both `name` and `address`.
-- With two search terms, the first term must match the `address` field, and the second term must match the `name` field.
-- When there are two search terms, both must match.
-- The `--match_case` option requires case sensitive matching. It works with all other options.
-- To customize the list of names add a `custom` section to the config file (see documentation).
+- The tool will accept up to three terms, each of which must match against any field in the database.
+- The `--match_case` option enables case sensitive matching.
 
