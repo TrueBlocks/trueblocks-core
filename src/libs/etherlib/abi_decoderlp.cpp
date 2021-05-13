@@ -633,14 +633,7 @@ bool decodeRLP(CParameterArray& params, const string_q& typeListIn, const string
     // We did not find a parsing function. Here we clean up the input to work with the
     // provided params -- one input row per 32 bytes (64 chars).
     CStringArray inputs;
-    if (inputStr.empty() || inputStr == "0x") {
-        // There is nothing to stop the user from providing an ABI that disagrees with the actual data on
-        // chain. We try to handle that where we can, such as here, where we insert '0' value strings to
-        // accomodate whatever params we are given.
-        for (auto unused : params)
-            inputs.push_back(string_q(64, '0'));
-
-    } else {
+    if (!(inputStr.empty() || inputStr == "0x")) {
         // Put each 32-byte segment into it's own string in the array
         string_q str = trim(substitute(inputStr, "0x", ""), ' ');
         ASSERT(!(str.size() % 64));
@@ -651,6 +644,12 @@ bool decodeRLP(CParameterArray& params, const string_q& typeListIn, const string
             inputs.push_back(item);
         }
     }
+
+    // The caller could provide an ABI that disagrees with the actual data on chain. We
+    // try to handle that where we can, such as here, where we insert '0' value strings
+    // to accomodate however many params we are given.
+    while (inputs.size() < params.size())
+        inputs.push_back(string_q(64, '0'));
 
     size_t readOffset = 0;
     size_t objectStart = 0;
