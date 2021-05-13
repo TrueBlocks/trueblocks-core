@@ -1,4 +1,4 @@
-num,group,is_visible,command,tool,description
+num,group,is_visible,api_route,tool,description
 01,Accounts,false,,,Access and cache transactional data
 01,Accounts,true,list,acctExport --appearances,list every appearance of an address anywhere on the chain
 01,Accounts,true,export,acctExport,export details for each appearance (as txs&#44; logs&#44; traces&#44; balances&#44; reconciliations&#44; etc.)

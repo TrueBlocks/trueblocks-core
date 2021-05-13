@@ -45,26 +45,26 @@ void COptions::writeOpenApiFile(void) {
     loadEndpoints(endpointMap, endpointArray);
 
     for (auto co : endpointArray) {
-        if (co.command.empty()) {
+        if (co.api_route.empty()) {
             chifra_stream_a << "    // -- " << co.group << endl;
             chifra_stream_b << "    \"" << substitute(toUpper(co.group), " ", "") << "|\"" << endl;
         } else {
-            chifra_stream_a << "    {\"" << co.command << "\", \"" << co.tool << "\"}," << endl;
-            chifra_stream_b << "    \"  " << padRight(co.command, 20) << co.description << "|\"" << endl;
+            chifra_stream_a << "    {\"" << co.api_route << "\", \"" << co.tool << "\"}," << endl;
+            chifra_stream_b << "    \"  " << padRight(co.api_route, 20) << co.description << "|\"" << endl;
         }
 
         if (co.is_visible) {
             if (!contains(co.tool, " ")) {
                 chifra_stream_pm << "    ";
-                chifra_stream_pm << "make_pair(\"" << co.tool << "\", \"chifra " << co.command << "\")," << endl;
+                chifra_stream_pm << "make_pair(\"" << co.tool << "\", \"chifra " << co.api_route << "\")," << endl;
             } else {
-                chifra_stream_pm << "    // " << co.command << endl;
+                chifra_stream_pm << "    // " << co.api_route << endl;
             }
         } else {
-            if (co.command.empty()) {
+            if (co.api_route.empty()) {
                 chifra_stream_pm << "    // -- " << co.group << endl;
             } else {
-                chifra_stream_pm << "    // " << co.command << endl;
+                chifra_stream_pm << "    // " << co.api_route << endl;
             }
         }
     }
@@ -74,13 +74,13 @@ void COptions::writeOpenApiFile(void) {
     for (auto ep : endpointMap) {
         string_q group = ep.second.group;
         string_q tool = ep.second.tool;
-        string_q command = ep.second.command;
+        string_q command = ep.second.api_route;
         string_q description = ep.second.description;
 
         yamlTagStream << substitute(substitute(STR_TAG_ENTRY_YAML, "[{NAME}]", group), "[{DESCR}]", description);
 
         CStringArray cmds;
-        explode(cmds, ep.second.command, ',');
+        explode(cmds, ep.second.api_route, ',');
         for (auto cmd : cmds) {
             string_q yamlEntry = STR_PATH_ENTRY_YAML;
             replace(yamlEntry, "[{TAGS}]", group);
@@ -364,9 +364,9 @@ bool loadEndpoints(CEndpointMap& endpointMap, CCommandOptionArray& endpointArray
     for (auto g : endpointArray) {
         endpointMap[g.num].group = substitute(g.group, " ", "");
         if (g.is_visible) {
-            if (!endpointMap[g.num].command.empty())
-                endpointMap[g.num].command += ",";
-            endpointMap[g.num].command += trim(g.command);
+            if (!endpointMap[g.num].api_route.empty())
+                endpointMap[g.num].api_route += ",";
+            endpointMap[g.num].api_route += trim(g.api_route);
         }
         if (endpointMap[g.num].description.empty())
             endpointMap[g.num].description = trim(g.description);
