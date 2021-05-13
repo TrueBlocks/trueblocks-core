@@ -70,6 +70,7 @@ class CCommandOption : public CBaseNode {
     void verifyHotkey(CStringArray& warnings);
     string_q debugCode(void) const;
     string_q swagger_descr;
+    string_q route_list;
     // EXISTING_CODE
     bool operator==(const CCommandOption& it) const;
     bool operator!=(const CCommandOption& it) const {
@@ -155,6 +156,7 @@ inline void CCommandOption::initialize(void) {
     isNote = false;
     isError = false;
     swagger_descr = "";
+    route_list = "";
     // EXISTING_CODE
 }
 
@@ -196,6 +198,7 @@ inline void CCommandOption::duplicate(const CCommandOption& co) {
     isNote = co.isNote;
     isError = co.isError;
     swagger_descr = co.swagger_descr;
+    route_list = co.route_list;
     // EXISTING_CODE
 }
 
