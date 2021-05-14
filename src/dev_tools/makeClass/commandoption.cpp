@@ -661,5 +661,50 @@ string_q CCommandOption::debugCode(void) const {
 const char* STR_DEBUG_DISPLAY = "    LOG_TEST(\"[{COMMAND}]\", [{COMMAND}], ([{COMMAND}] == [{DEF_VAL}]));";
 const char* STR_DEBUG_DISPLAY_BOOL = "    LOG_TEST_BOOL(\"[{COMMAND}]\", [{COMMAND}]);";
 const char* STR_DEBUG_DISPLAY_LIST = "    LOG_TEST_LIST(\"[{COMMAND}]\", [{COMMAND}], [{COMMAND}].empty());";
+
+//---------------------------------------------------------------------------------------------------
+string_q CCommandOption::toChifraCmd(void) const {
+    if (api_route.empty())
+        return Format("    // -- [{GROUP}]");
+    return Format("    {\"[{API_ROUTE}]\", \"[{TOOL}]\"},");
+}
+
+//---------------------------------------------------------------------------------------------------
+string_q CCommandOption::toChifraHelp(void) const {
+    if (description.empty() && !api_route.empty())
+        return "";
+    if (api_route.empty())
+        return toUpper(Format("    \"[{GROUP}]|\""));
+    return Format("    \"  [{w:14:API_ROUTE}][{DESCRIPTION}]|\"");
+}
+
+//---------------------------------------------------------------------------------------------------
+string_q CCommandOption::toPairMap(void) const {
+    if (is_visible) {
+        if (!contains(tool, " "))
+            return Format("    make_pair(\"[{TOOL}]\", \"chifra [{API_ROUTE}]\"),");
+        return Format("    // [{API_ROUTE}]");
+
+    } else {
+        if (api_route.empty())
+            return Format("    // -- [{GROUP}]");
+        return Format("    // [{API_ROUTE}]");
+    }
+
+    return "";
+}
+
+//---------------------------------------------------------------------------------------------------
+string_q CCommandOption::toApiTag(void) const {
+    if (!tool.empty())
+        return "";
+
+    const char* STR_TAG_YAML =
+        "- name: [{GROUP}]\n"
+        "  description: [{DESCRIPTION}]\n";
+    CCommandOption ret = *this;
+    replaceAll(ret.group, " ", "");
+    return ret.Format(STR_TAG_YAML);
+}
 // EXISTING_CODE
 }  // namespace qblocks

@@ -446,6 +446,9 @@ void COptions::generate_deprecated(const CCommandOption& option) {
 }
 //---------------------------------------------------------------------------------------------------
 bool COptions::writeCode(const string_q& fn) {
+    if (contains(fn, "/stub/"))
+        return true;
+
     string_q orig = asciiFileToString(fn);
     string_q converted = orig;
     if (endsWith(fn, ".cpp")) {
@@ -463,8 +466,8 @@ bool COptions::writeCode(const string_q& fn) {
         converted = replaceCode(converted, "CODE_NOTES", notes_stream.str());
         converted = replaceCode(converted, "CODE_ERROR_MSG", errors_stream.str());
         converted = replaceCode(converted, "DEBUG_DISPLAY", debug_stream.str());
-        converted = replaceCode(converted, "CODE_CHIFRA_CMDMAP", cmdMapStream.str());
-        converted = replaceCode(converted, "CODE_CHIFRA_HELP", helpStream.str());
+        converted = replaceCode(converted, "CODE_CHIFRA_CMDMAP", chifraCmdStream.str());
+        converted = replaceCode(converted, "CODE_CHIFRA_HELP", chifraHelpStream.str());
         converted = replaceCode(converted, "CODE_CHIFRA_PAIRMAP", pairMapStream.str());
         replaceAll(converted, "    // clang-format on\n    // clang-format off\n", "");
 

@@ -20,7 +20,6 @@
 #define cmdCount nVisited
 #define nChanged nProcessed
 
-extern const char* STR_TAG_YAML;
 extern const char* STR_PATH_YAML;
 extern const char* STR_PARAM_YAML;
 extern const char* STR_CODE_HEADER_HTML;
@@ -31,7 +30,7 @@ extern const char* STR_PARAM_HTML;
 extern string_q getTypeStr(const CCommandOption& opt, const string_q& lead, const string_q& trail);
 
 //---------------------------------------------------------------------------------------------------
-extern bool getGroups(const char* str, void* data);
+extern bool parseEndpoints(const char* str, void* data);
 
 extern string_q getHtmlPath(const string_q& group, const string_q& cmd, const CCommandOptionArray& params,
                             const CCommandOptionArray& descr, CCounter& counter);
@@ -39,8 +38,9 @@ extern string_q getApiPath(const string_q& group, const string_q& cmd, const CCo
                            const CCommandOptionArray& descr, CCounter& counter);
 extern string_q getGoRoute(const string_q& goFunc, const string_q& cmd);
 extern string_q getGoCall(const string_q& goFunc, const string_q& cmd, const string_q& tool);
-extern void select_commands(const CCommandOptionArray& optionArray, const string_q& cmd, CCommandOptionArray& cmds,
-                            CCommandOptionArray& notes, CCommandOptionArray& errors, CCommandOptionArray& descr);
+extern void select_commands(const CCommandOptionArray& optionsArray, const string_q& route, CCommandOptionArray& cmds,
+                            CCommandOptionArray& descrs);
+
 //---------------------------------------------------------------------------------------------------
 void COptions::writeOpenApiFile(void) {
     if (!openapi)
@@ -53,73 +53,43 @@ void COptions::writeOpenApiFile(void) {
     options_2_Commands(commands);
 
     CCommandOptionArray endpointArray;
-    forEveryLineInAsciiFile("../src/cmd-line-endpoints.csv", getGroups, &endpointArray);
+    forEveryLineInAsciiFile("../src/cmd-line-endpoints.csv", parseEndpoints, &endpointArray);
 
-    ostringstream apiTagStream, htmlTagStream;
-    ostringstream apiPathStream, htmlPathStream;
     for (auto ep : endpointArray) {
-        if (ep.api_route.empty()) {
-            cmdMapStream << "    // -- " << ep.group << endl;
-            helpStream << "    \"" << toUpper(ep.group) << "|\"" << endl;
+        CCommandOptionArray params, descr;
+        select_commands(optionArray, ep.api_route, params, descr);
 
-        } else {
-            cmdMapStream << "    {\"" << ep.api_route << "\", \"" << ep.tool << "\"}," << endl;
-            if (!ep.description.empty())
-                helpStream << "    \"  " << padRight(ep.api_route, 14) << ep.description << "|\"" << endl;
-        }
-
-        if (ep.is_visible) {
-            if (!contains(ep.tool, " ")) {
-                pairMapStream << "    ";
-                pairMapStream << "make_pair(\"" << ep.tool << "\", \"chifra " << ep.api_route << "\")," << endl;
-            } else {
-                pairMapStream << "    // " << ep.api_route << endl;
-            }
-
-        } else {
-            if (ep.api_route.empty()) {
-                pairMapStream << "    // -- " << ep.group << endl;
-            } else {
-                pairMapStream << "    // " << ep.api_route << endl;
-            }
-        }
+        chifraCmdStream << ep.toChifraCmd() << endl;
+        chifraHelpStream << ep.toChifraHelp() << endl;
+        pairMapStream << ep.toPairMap() << endl;
+        apiTagStream << ep.toApiTag();
 
         if (ep.tool.empty()) {
-            string_q tag = STR_TAG_YAML;
-            replace(tag, "[{NAME}]", substitute(ep.group, " ", ""));
-            replace(tag, "[{DESCR}]", ep.description);
-            apiTagStream << tag;
-
-            tag = STR_TAG_HTML;
+            string_q tag = STR_TAG_HTML;
             replace(tag, "[{NAME}]", substitute(ep.group, " ", ""));
             replace(tag, "[{DESCR}]", ep.description);
             htmlTagStream << tag;
         }
 
-        string_q group = substitute(ep.group, " ", "");
-        string_q cmd = ep.api_route;
-        if (cmd.empty())
-            continue;
-        CCommandOptionArray params, unused1, unused2, descr;
-        select_commands(optionArray, cmd, params, unused1, unused2, descr);
+        if (ep.api_route != "serve" && ep.api_route != "init" && ep.api_route != "explore") {
+            if (ep.api_route.empty())
+                continue;
 
-        if (cmd != "serve" && cmd != "init" && cmd != "explore") {
-            string_q goFunc = group + toProper(cmd);
+            replaceAll(ep.group, " ", "");
             string_q tTool = descr.size() ? descr[0].tool : "";
 
             // Create the route handlers for the flame server
-            goCallStream << getGoCall(goFunc, cmd, tTool);
+            goCallStream << getGoCall(ep.group + toProper(ep.api_route), ep.api_route, tTool);
 
             // Create the routes for the flame server
-            goRouteStream << getGoRoute(goFunc, cmd);
+            goRouteStream << getGoRoute(ep.group + toProper(ep.api_route), ep.api_route);
 
             // Code for one openapi path
-            apiPathStream << getApiPath(group, cmd, params, descr, counter);
+            apiPathStream << getApiPath(ep.group, ep.api_route, params, descr, counter);
 
             // Code for one htmlpath
-            htmlPathStream << getHtmlPath(group, cmd, params, descr, counter);
+            htmlPathStream << getHtmlPath(ep.group, ep.api_route, params, descr, counter);
         }
-
         counter.routeCount++;
     }
 
@@ -151,7 +121,7 @@ void COptions::writeOpenApiFile(void) {
         string_q newCode = header + body + footer;
         for (size_t i = 12; i > 4; i--)
             replaceAll(newCode, string_q(i, '-'), string_q((i * 2), ' '));
-        if (false) {  // existingCode != newCode) {
+        if (existingCode != newCode) {
             stringToAsciiFile(existingFile, newCode);
             cerr << cGreen << "wrote " << newCode.size() << " bytes...to";
             cerr << existingFile << string_q(40, ' ') << cOff << endl;
@@ -173,7 +143,9 @@ string_q getGoCall(const string_q& goFunc, const string_q& cmd, const string_q& 
     out << endl;
     out << "// " << goFunc << " help text todo" << endl;
     out << "func " << goFunc << "(w http.ResponseWriter, r *http.Request) {" << endl;
-    if (!tool.empty()) {
+    if (tool == "stub") {
+        out << "\tCallOneExtra(w, r, \"chifra\", \"" << cmd << "\", \"" << cmd << "\")" << endl;
+    } else if (!tool.empty()) {
         out << "\tCallOne(w, r, \"" << tool << "\", \"" << cmd << "\")" << endl;
     } else if (goFunc == "AccountsTags" || goFunc == "AccountsEntities") {
         out << "\tCallOne(w, r, \"ethNames\", \"" << cmd << "\")" << endl;
@@ -205,6 +177,8 @@ string_q getApiPath(const string_q& group, const string_q& cmd, const CCommandOp
     replace(ret, "[{PATH}]", cmd);
     ostringstream paramStream;
     for (auto param : params) {
+        if (param.command.empty())
+            continue;
         string_q yp = STR_PARAM_YAML;
         replace(yp, "[{NAME}]", param.command);
         replace(yp, "[{DESCR}]", param.swagger_descr);
@@ -237,6 +211,8 @@ string_q getHtmlPath(const string_q& group, const string_q& cmd, const CCommandO
     replace(ret, "[{PATH}]", cmd);
     ostringstream paramStream;
     for (auto param : params) {
+        if (param.command.empty())
+            continue;
         string_q yp = STR_PARAM_HTML;
         replace(yp, "[{NAME}]", param.command);
         string_q d = substitute(substitute(param.swagger_descr, "'", "\\'"), "\n         ", "");
@@ -285,19 +261,14 @@ void COptions::options_2_Commands(CCommands& commands) {
 }
 
 //---------------------------------------------------------------------------------------------------
-void select_commands(const CCommandOptionArray& optionArray, const string_q& cmd, CCommandOptionArray& cmds,
-                     CCommandOptionArray& notes, CCommandOptionArray& errors, CCommandOptionArray& descr) {
-    for (auto option : optionArray) {
-        if (option.api_route == cmd) {
-            if (option.option_type == "description") {
-                descr.push_back(option);
-            } else if (option.option_type == "note") {
-                notes.push_back(option);
-            } else if (option.option_type == "error") {
-                errors.push_back(option);
-            } else if (option.option_type != "deprecated") {
+void select_commands(const CCommandOptionArray& optionsArray, const string_q& route, CCommandOptionArray& cmds,
+                     CCommandOptionArray& descrs) {
+    for (auto option : optionsArray) {
+        if (option.api_route == route) {
+            if (option.option_type == "description")
+                descrs.push_back(option);
+            else if (option.option_type != "deprecated")
                 cmds.push_back(option);
-            }
         }
     }
 }
@@ -391,7 +362,7 @@ string_q getTypeStr(const CCommandOption& opt, const string_q& lead, const strin
 
 static CStringArray header;
 //---------------------------------------------------------------------------------------------------
-bool getGroups(const char* str, void* data) {
+bool parseEndpoints(const char* str, void* data) {
     string_q line = str;
     replaceAny(line, "\n\r", "");
     if (header.empty()) {
@@ -406,11 +377,6 @@ bool getGroups(const char* str, void* data) {
 
     return true;
 }
-
-//---------------------------------------------------------------------------------------------------
-const char* STR_TAG_YAML =
-    "- name: [{NAME}]\n"
-    "  description: [{DESCR}]\n";
 
 //---------------------------------------------------------------------------------------------------
 const char* STR_PATH_YAML =

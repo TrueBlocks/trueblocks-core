@@ -29,7 +29,20 @@ paths:
     get:
       tags:
       - Accounts
+      summary: List every appearance of an address anywhere on the chain.
+      description: List every appearance of an address anywhere on the chain.
       operationId: accounts-list
+      parameters:
+      - name: addrs
+        in: query
+        description: one or more addresses (0x...) to list
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
       responses:
         "200":
           description: status of the scraper
@@ -276,7 +289,36 @@ paths:
     get:
       tags:
       - Accounts
+      summary: add, remove, clean, and list appearances of address(es).
+      description: add, remove, clean, and list appearances of address(es).
       operationId: accounts-monitors
+      parameters:
+      - name: addrs
+        in: query
+        description: one or more addresses (0x...) to list
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: delete
+        in: query
+        description: delete a previously created monitor (or undelete if already deleted)
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
+      - name: remove
+        in: query
+        description: remove a previously deleted monitor
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
       responses:
         "200":
           description: status of the scraper

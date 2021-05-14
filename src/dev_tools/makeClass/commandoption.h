@@ -71,6 +71,10 @@ class CCommandOption : public CBaseNode {
     string_q debugCode(void) const;
     string_q swagger_descr;
     string_q route_list;
+    string_q toChifraCmd(void) const;
+    string_q toChifraHelp(void) const;
+    string_q toPairMap(void) const;
+    string_q toApiTag(void) const;
     // EXISTING_CODE
     bool operator==(const CCommandOption& it) const;
     bool operator!=(const CCommandOption& it) const {

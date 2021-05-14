@@ -72,38 +72,50 @@ class COptions : public COptionsBase {
     CCounter counter;
     timestamp_t lastFormat;
     timestamp_t lastLint;
+
     ostringstream option_stream, init_stream, local_stream, auto_stream;
     ostringstream header_stream, notes_stream, errors_stream, debug_stream;
     ostringstream goCallStream, goRouteStream;
-    ostringstream cmdMapStream, helpStream, pairMapStream;
+    ostringstream chifraCmdStream, chifraHelpStream, pairMapStream;
+    ostringstream apiTagStream, htmlTagStream;
+    ostringstream apiPathStream, htmlPathStream;
+
     void clearStreams(void) {
-        auto_stream.str("");
         option_stream.str("");
-        local_stream.str("");
         init_stream.str("");
+        local_stream.str("");
+        auto_stream.str("");
+        header_stream.str("");
         notes_stream.str("");
         errors_stream.str("");
-        header_stream.str("");
         debug_stream.str("");
         goCallStream.str("");
         goRouteStream.str("");
-        cmdMapStream.str("");
-        helpStream.str("");
+        chifraCmdStream.str("");
+        chifraHelpStream.str("");
         pairMapStream.str("");
+        apiTagStream.str("");
+        htmlTagStream.str("");
+        apiPathStream.str("");
+        htmlPathStream.str("");
 
-        auto_stream.clear();
         option_stream.clear();
-        local_stream.clear();
         init_stream.clear();
+        local_stream.clear();
+        auto_stream.clear();
+        header_stream.clear();
         notes_stream.clear();
         errors_stream.clear();
-        header_stream.clear();
         debug_stream.clear();
         goCallStream.clear();
         goRouteStream.clear();
-        cmdMapStream.clear();
-        helpStream.clear();
+        chifraCmdStream.clear();
+        chifraHelpStream.clear();
         pairMapStream.clear();
+        apiTagStream.clear();
+        htmlTagStream.clear();
+        apiPathStream.clear();
+        htmlPathStream.clear();
 
         positionals.clear();
     }
