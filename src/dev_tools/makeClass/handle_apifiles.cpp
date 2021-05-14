@@ -31,8 +31,7 @@ extern const char* STR_PARAM_HTML;
 extern string_q getTypeStr(const CCommandOption& opt, const string_q& lead, const string_q& trail);
 
 //---------------------------------------------------------------------------------------------------
-typedef map<string, CCommandOption> CEndpointMap;
-extern bool loadEndpoints(CEndpointMap& endpointMap, CCommandOptionArray& endpointArray);
+extern bool getGroups(const char* str, void* data);
 
 extern string_q getHtmlPath(const string_q& group, const string_q& cmd, const CCommandOptionArray& params,
                             const CCommandOptionArray& descr, CCounter& counter);
@@ -53,59 +52,58 @@ void COptions::writeOpenApiFile(void) {
     CCommands commands;
     options_2_Commands(commands);
 
-    CEndpointMap endpointMap;
     CCommandOptionArray endpointArray;
-    loadEndpoints(endpointMap, endpointArray);
+    forEveryLineInAsciiFile("../src/cmd-line-endpoints.csv", getGroups, &endpointArray);
 
     ostringstream apiTagStream, htmlTagStream;
     ostringstream apiPathStream, htmlPathStream;
-    for (auto co : endpointArray) {
-        if (co.api_route.empty()) {
-            cmdMapStream << "    // -- " << co.group << endl;
-            helpStream << "    \"" << toUpper(co.group) << "|\"" << endl;
+    for (auto ep : endpointArray) {
+        if (ep.api_route.empty()) {
+            cmdMapStream << "    // -- " << ep.group << endl;
+            helpStream << "    \"" << toUpper(ep.group) << "|\"" << endl;
+
         } else {
-            cmdMapStream << "    {\"" << co.api_route << "\", \"" << co.tool << "\"}," << endl;
-            if (!co.description.empty())
-                helpStream << "    \"  " << padRight(co.api_route, 14) << co.description << "|\"" << endl;
+            cmdMapStream << "    {\"" << ep.api_route << "\", \"" << ep.tool << "\"}," << endl;
+            if (!ep.description.empty())
+                helpStream << "    \"  " << padRight(ep.api_route, 14) << ep.description << "|\"" << endl;
         }
 
-        if (co.is_visible) {
-            if (!contains(co.tool, " ")) {
+        if (ep.is_visible) {
+            if (!contains(ep.tool, " ")) {
                 pairMapStream << "    ";
-                pairMapStream << "make_pair(\"" << co.tool << "\", \"chifra " << co.api_route << "\")," << endl;
+                pairMapStream << "make_pair(\"" << ep.tool << "\", \"chifra " << ep.api_route << "\")," << endl;
             } else {
-                pairMapStream << "    // " << co.api_route << endl;
+                pairMapStream << "    // " << ep.api_route << endl;
             }
+
         } else {
-            if (co.api_route.empty()) {
-                pairMapStream << "    // -- " << co.group << endl;
+            if (ep.api_route.empty()) {
+                pairMapStream << "    // -- " << ep.group << endl;
             } else {
-                pairMapStream << "    // " << co.api_route << endl;
+                pairMapStream << "    // " << ep.api_route << endl;
             }
         }
 
-        if (co.tool.empty()) {
+        if (ep.tool.empty()) {
             string_q tag = STR_TAG_YAML;
-            replace(tag, "[{NAME}]", substitute(co.group, " ", ""));
-            replace(tag, "[{DESCR}]", co.description);
+            replace(tag, "[{NAME}]", substitute(ep.group, " ", ""));
+            replace(tag, "[{DESCR}]", ep.description);
             apiTagStream << tag;
 
             tag = STR_TAG_HTML;
-            replace(tag, "[{NAME}]", substitute(co.group, " ", ""));
-            replace(tag, "[{DESCR}]", co.description);
+            replace(tag, "[{NAME}]", substitute(ep.group, " ", ""));
+            replace(tag, "[{DESCR}]", ep.description);
             htmlTagStream << tag;
         }
-    }
 
-    for (auto ep : endpointMap) {
-        string_q group = ep.second.group;
+        string_q group = substitute(ep.group, " ", "");
+        string_q cmd = ep.api_route;
+        if (cmd.empty())
+            continue;
+        CCommandOptionArray params, unused1, unused2, descr;
+        select_commands(optionArray, cmd, params, unused1, unused2, descr);
 
-        CStringArray cmds;
-        explode(cmds, ep.second.route_list, ',');
-        for (auto cmd : cmds) {
-            CCommandOptionArray params, unused1, unused2, descr;
-            select_commands(optionArray, cmd, params, unused1, unused2, descr);
-
+        if (cmd != "serve" && cmd != "init" && cmd != "explore") {
             string_q goFunc = group + toProper(cmd);
             string_q tTool = descr.size() ? descr[0].tool : "";
 
@@ -120,9 +118,9 @@ void COptions::writeOpenApiFile(void) {
 
             // Code for one htmlpath
             htmlPathStream << getHtmlPath(group, cmd, params, descr, counter);
-
-            counter.routeCount++;
         }
+
+        counter.routeCount++;
     }
 
     writeCode("../src/apps/chifra/options.cpp");
@@ -405,23 +403,6 @@ bool getGroups(const char* str, void* data) {
     CCommandOption option;
     option.parseCSV(header, line);
     array->push_back(option);
-
-    return true;
-}
-
-//---------------------------------------------------------------------------------------------------
-bool loadEndpoints(CEndpointMap& endpointMap, CCommandOptionArray& endpointArray) {
-    forEveryLineInAsciiFile("../src/cmd-line-endpoints.csv", getGroups, &endpointArray);
-    for (auto g : endpointArray) {
-        endpointMap[g.num].group = substitute(g.group, " ", "");
-        if (g.is_visible) {
-            if (!endpointMap[g.num].route_list.empty())
-                endpointMap[g.num].route_list += ",";
-            endpointMap[g.num].route_list += trim(g.api_route);
-        }
-        if (endpointMap[g.num].description.empty())
-            endpointMap[g.num].description = trim(g.description);
-    }
 
     return true;
 }

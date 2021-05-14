@@ -77,16 +77,6 @@ func AccountsAbis(w http.ResponseWriter, r *http.Request) {
 	CallOne(w, r, "grabABI", "abis")
 }
 
-// AccountsEntities help text todo
-func AccountsEntities(w http.ResponseWriter, r *http.Request) {
-	CallOne(w, r, "ethNames", "entities")
-}
-
-// AccountsTags help text todo
-func AccountsTags(w http.ResponseWriter, r *http.Request) {
-	CallOne(w, r, "ethNames", "tags")
-}
-
 // ChainDataBlocks help text todo
 func ChainDataBlocks(w http.ResponseWriter, r *http.Request) {
 	CallOne(w, r, "getBlocks", "blocks")
@@ -205,20 +195,6 @@ var routes = Routes{
 		"GET",
 		"/abis",
 		AccountsAbis,
-	},
-
-	Route{
-		"AccountsEntities",
-		"GET",
-		"/entities",
-		AccountsEntities,
-	},
-
-	Route{
-		"AccountsTags",
-		"GET",
-		"/tags",
-		AccountsTags,
 	},
 
 	Route{

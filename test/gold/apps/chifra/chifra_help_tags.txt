@@ -1,32 +1,38 @@
 chifra argc: 3 [1:tags] [2:--help] 
 chifra tags --help 
-chifra tags argc: 3 [1:--tags] [2:--help] 
-chifra tags --tags --help 
-PROG_NAME = [chifra tags]
 
-  Usage:    chifra tags [-e|-m|-l|-c|-p|-n|-a|-s|-g|-v|-h] <term> [term...]  
-  Purpose:  Query addresses and/or names of well known accounts.
+  Unknown subcommand 'tags'. Quitting...
+
+  Usage:    chifra command  
+  Purpose:  Access to all TrueBlocks tools (chifra <cmd> --help for more).
 
   Where:  
-	terms                 a space separated list of one or more search terms (required)
-	-e  (--expand)        expand search to include all fields (default searches name, address, and symbol only)
-	-m  (--match_case)    do case-sensitive search
-	-l  (--all)           include all accounts in the search
-	-c  (--custom)        include your custom named accounts
-	-p  (--prefund)       include prefund accounts
-	-n  (--named)         include well know token and airdrop addresses in the search
-	-a  (--addr)          display only addresses in the results (useful for scripting)
-	-s  (--entities)      display entity data
-	-g  (--tags)          export the list of tags and subtags only
-
-	#### Hidden options
-	-t  (--other)         export other addresses if found
-	-u  (--to_custom)     for editCmd only, is the edited name a custom name or not
-	-C  (--clean)         clean the data (addrs to lower case, sort by addr)
-	#### Hidden options
-
-	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
-	-v  (--verbose)       set verbose level (optional level defaults to 1)
-	-h  (--help)          display this help screen
+	 ACCOUNTS
+	   list          list every appearance of an address anywhere on the chain
+	   export        export details for each appearance (as txs, logs, traces, etc.)
+	   monitors      add, remove, clean, and list appearances of address(es)
+	   names         list and/or share named addresses
+	   abis          list and/or share abi signatures
+	 CHAIN DATA
+	   blocks        export block-related data
+	   transactions  export transaction-related data
+	   receipts      export receipt-related data
+	   logs          export log-related data
+	   traces        export trace-related data
+	   when          return a date given a block number or a block number given a date
+	 CHAIN STATE
+	   state         export parts of the state for given address(es)
+	   tokens        export data related to ERC20 and/or ERC721 token(s)
+	 ADMIN
+	   status        query the status of the system
+	   serve         serve the TrueBlocks API via the flame server
+	   scrape        scrape the chain and build an index of address appearances (aka digests)
+	   init          initialize TrueBlocks databases by downloading pinned bloom filters
+	   pins          query the status of the pinning system
+	 OTHER
+	   quotes        return prices collected from configured remote API
+	   explore       open the configured block explorer for the given address
+	   slurp         export details by querying EtherScan
+	 
 
   Powered by TrueBlocks

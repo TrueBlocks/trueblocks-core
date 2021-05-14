@@ -742,8 +742,6 @@ map<string_q, string_q> progNameMap = {
     // monitors
     make_pair("ethNames", "chifra names"),
     make_pair("grabABI", "chifra abis"),
-    // entities
-    // tags
     // -- Chain Data
     make_pair("getBlocks", "chifra blocks"),
     make_pair("getTrans", "chifra transactions"),

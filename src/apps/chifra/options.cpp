@@ -141,8 +141,6 @@ map<string, string> chifraCmdMap = {
     {"monitors", "acctExport --appearances"},
     {"names", "ethNames"},
     {"abis", "grabABI"},
-    {"entities", "ethNames --entities"},
-    {"tags", "ethNames --tags"},
     // -- Chain Data
     {"blocks", "getBlocks"},
     {"transactions", "getTrans"},

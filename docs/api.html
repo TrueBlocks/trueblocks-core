@@ -430,6 +430,24 @@
                     schema: {type: 'boolean'},
                   },
                   {
+                    name: 'entities',
+                    in: 'query',
+                    description: 'display entity data',
+                    required: false,
+                    style: 'form',
+                    explode: true,
+                    schema: {type: 'boolean'},
+                  },
+                  {
+                    name: 'tags',
+                    in: 'query',
+                    description: 'export the list of tags and subtags only',
+                    required: false,
+                    style: 'form',
+                    explode: true,
+                    schema: {type: 'boolean'},
+                  },
+                  {
                     name: 'to_custom',
                     in: 'query',
                     description: 'for editCmd only, is the edited name a custom name or not',
@@ -498,52 +516,6 @@
                     style: 'form',
                     explode: true,
                     schema: {type: 'string'},
-                  },
-                ],
-                responses: {
-                  '200': {
-                    description: 'status of the scraper',
-                    content: { 'application/json': {schema: {type: 'array', items: {$ref: '#/components/schemas/response'}}} }, },
-                  '400': {description: 'bad input parameter'},
-                },
-              },
-            },
-            '/entities': {
-              get: {
-                tags: ['Accounts'],
-                operationId: 'accounts-entities',
-                parameters: [
-                  {
-                    name: 'entities',
-                    in: 'query',
-                    description: 'display entity data',
-                    required: false,
-                    style: 'form',
-                    explode: true,
-                    schema: {type: 'boolean'},
-                  },
-                ],
-                responses: {
-                  '200': {
-                    description: 'status of the scraper',
-                    content: { 'application/json': {schema: {type: 'array', items: {$ref: '#/components/schemas/response'}}} }, },
-                  '400': {description: 'bad input parameter'},
-                },
-              },
-            },
-            '/tags': {
-              get: {
-                tags: ['Accounts'],
-                operationId: 'accounts-tags',
-                parameters: [
-                  {
-                    name: 'tags',
-                    in: 'query',
-                    description: 'export the list of tags and subtags only',
-                    required: false,
-                    style: 'form',
-                    explode: true,
-                    schema: {type: 'boolean'},
                   },
                 ],
                 responses: {
@@ -1166,8 +1138,6 @@
                 },
               },
             },
-            '/serve': {
-            },
             '/scrape': {
               get: {
                 tags: ['Admin'],
@@ -1264,8 +1234,6 @@
                   '400': {description: 'bad input parameter'},
                 },
               },
-            },
-            '/init': {
             },
             '/pins': {
               get: {
@@ -1370,8 +1338,6 @@
                   '400': {description: 'bad input parameter'},
                 },
               },
-            },
-            '/explore': {
             },
             '/slurp': {
               get: {

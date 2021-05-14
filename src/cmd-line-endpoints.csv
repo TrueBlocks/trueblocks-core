@@ -5,8 +5,6 @@ num,group,is_visible,api_route,tool,description
 01,Accounts,true,monitors,acctExport --appearances,add&#44; remove&#44; clean&#44; and list appearances of address(es)
 01,Accounts,true,names,ethNames,list and/or share named addresses
 01,Accounts,true,abis,grabABI,list and/or share abi signatures
-01,Accounts,true,entities,ethNames --entities,
-01,Accounts,true,tags,ethNames --tags,
 02,Chain Data,false,,,Access and cache blockchain-related data
 02,Chain Data,true,blocks,getBlocks,export block-related data
 02,Chain Data,true,transactions,getTrans,export transaction-related data
