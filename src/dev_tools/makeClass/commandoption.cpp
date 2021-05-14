@@ -706,5 +706,16 @@ string_q CCommandOption::toApiTag(void) const {
     replaceAll(ret.group, " ", "");
     return ret.Format(STR_TAG_YAML);
 }
+
+//---------------------------------------------------------------------------------------------------
+string_q CCommandOption::toHtmlTag(void) const {
+    if (!tool.empty())
+        return "";
+
+    const char* STR_TAG_HTML = "            {name: '[{GROUP}]', description: '[{DESCRIPTION}]'},\n";
+    CCommandOption ret = *this;
+    replaceAll(ret.group, " ", "");
+    return ret.Format(STR_TAG_HTML);
+}
 // EXISTING_CODE
 }  // namespace qblocks

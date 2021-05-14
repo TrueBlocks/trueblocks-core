@@ -203,3 +203,18 @@ extern const char* STR_DEFAULT_TAGS;
 
 //------------------------------------------------------------------------------------------------------------
 void doReplace(string_q& str, const string_q& type, const string_q& rep, const string_q& spaces);
+
+//---------------------------------------------------------------------------------------------------
+extern void select_commands(const CCommandOptionArray& optionsArray, const string_q& route, CCommandOptionArray& cmds,
+                            CCommandOptionArray& descrs);
+extern bool parseEndpoints(const char* str, void* data);
+extern string_q getGoRoute(const string_q& goFunc, const string_q& cmd);
+extern string_q getGoCall(const string_q& goFunc, const string_q& cmd, const string_q& tool);
+extern string_q getHtmlPath(const string_q& group, const string_q& cmd, const CCommandOptionArray& params,
+                            const CCommandOptionArray& descr, CCounter& counter);
+extern string_q getApiPath(const string_q& group, const string_q& cmd, const CCommandOptionArray& params,
+                           const CCommandOptionArray& descr, CCounter& counter);
+
+//---------------------------------------------------------------------------------------------------
+#define routeCount fileCount
+#define cmdCount nVisited

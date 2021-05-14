@@ -477,13 +477,25 @@ bool COptions::writeCode(const string_q& fn) {
         converted = replaceCode(converted, "ROUTE_CODE", goCallStream.str());
         converted = replaceCode(converted, "ROUTE_ITEMS", goRouteStream.str());
 
-    } else {
+    } else if (endsWith(fn, ".yaml")) {
+        converted = asciiFileToString(configPath("makeClass/blank_openapi.yaml"));
+        replace(converted, "[{TAGS}]", apiTagStream.str());
+        replace(converted, "[{PATHS}]", apiPathStream.str());
+
+    } else if (endsWith(fn, ".html")) {
+        converted = asciiFileToString(configPath("makeClass/blank_api.html"));
+        replace(converted, "[{TAGS}]", htmlTagStream.str());
+        replace(converted, "[{PATHS}]", htmlPathStream.str());
+
+    } else if (endsWith(fn, ".h")) {
         CStringArray tokens = {"ERROR_DEFINES", "_CODE_DECLARE"};
         for (auto tok : tokens)
             if (!contains(orig, tok))
                 LOG_WARN(fn, " does not contain token ", tok);
         converted = replaceCode(converted, "CODE_DECLARE", header_stream.str());
         converted = replaceCode(converted, "ERROR_DEFINES", error_defines_stream.str());
+    } else {
+        cerr << "Unkown file type for " << fn << endl;
     }
 
     cerr << bBlue << "Processing " << cOff << fn << " ";

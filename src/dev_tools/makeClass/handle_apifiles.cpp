@@ -16,31 +16,10 @@
  */
 #include "options.h"
 
-#define routeCount fileCount
-#define cmdCount nVisited
-#define nChanged nProcessed
-
 extern const char* STR_PATH_YAML;
 extern const char* STR_PARAM_YAML;
-extern const char* STR_CODE_HEADER_HTML;
-extern const char* STR_CODE_FOOTER_HTML;
-extern const char* STR_TAG_HTML;
 extern const char* STR_PATH_HTML;
 extern const char* STR_PARAM_HTML;
-extern string_q getTypeStr(const CCommandOption& opt, const string_q& lead, const string_q& trail);
-
-//---------------------------------------------------------------------------------------------------
-extern bool parseEndpoints(const char* str, void* data);
-
-extern string_q getHtmlPath(const string_q& group, const string_q& cmd, const CCommandOptionArray& params,
-                            const CCommandOptionArray& descr, CCounter& counter);
-extern string_q getApiPath(const string_q& group, const string_q& cmd, const CCommandOptionArray& params,
-                           const CCommandOptionArray& descr, CCounter& counter);
-extern string_q getGoRoute(const string_q& goFunc, const string_q& cmd);
-extern string_q getGoCall(const string_q& goFunc, const string_q& cmd, const string_q& tool);
-extern void select_commands(const CCommandOptionArray& optionsArray, const string_q& route, CCommandOptionArray& cmds,
-                            CCommandOptionArray& descrs);
-
 //---------------------------------------------------------------------------------------------------
 void COptions::writeOpenApiFile(void) {
     if (!openapi)
@@ -63,13 +42,7 @@ void COptions::writeOpenApiFile(void) {
         chifraHelpStream << ep.toChifraHelp() << endl;
         pairMapStream << ep.toPairMap() << endl;
         apiTagStream << ep.toApiTag();
-
-        if (ep.tool.empty()) {
-            string_q tag = STR_TAG_HTML;
-            replace(tag, "[{NAME}]", substitute(ep.group, " ", ""));
-            replace(tag, "[{DESCR}]", ep.description);
-            htmlTagStream << tag;
-        }
+        htmlTagStream << ep.toHtmlTag();
 
         if (ep.api_route != "serve" && ep.api_route != "init" && ep.api_route != "explore") {
             if (ep.api_route.empty())
@@ -93,48 +66,105 @@ void COptions::writeOpenApiFile(void) {
         counter.routeCount++;
     }
 
+    writeCode("../docs/api.html");
+    writeCode("../docs/openapi.yaml");
+    writeCode("../src/go-apps/flame/cmd/routes.go");
     writeCode("../src/apps/chifra/options.cpp");
     writeCode("../src/libs/utillib/options_base.cpp");
-    writeCode("../src/go-apps/flame/cmd/routes.go");
-
-    {
-        string_q existingFile = "../docs/openapi.yaml";
-        string_q existingCode = asciiFileToString(existingFile);
-        string_q templateFile = configPath("makeClass/blank_openapi.yaml");
-        string_q newCode = asciiFileToString(templateFile);
-        replace(newCode, "[{PATHS}]", apiPathStream.str());
-        replace(newCode, "[{TAGS}]", apiTagStream.str());
-        if (existingCode != newCode) {
-            stringToAsciiFile(existingFile, newCode);
-            cerr << cGreen << "wrote " << newCode.size() << " bytes...to";
-            cerr << existingFile << string_q(40, ' ') << cOff << endl;
-            counter.nChanged++;
-        }
-    }
-
-    {
-        string_q existingFile = "../docs/api.html";
-        string_q existingCode = asciiFileToString(existingFile);
-        string_q body = htmlPathStream.str();
-        string_q header = substitute(STR_CODE_HEADER_HTML, "[{TAGS}]", htmlTagStream.str());
-        string_q footer = STR_CODE_FOOTER_HTML;
-        string_q newCode = header + body + footer;
-        for (size_t i = 12; i > 4; i--)
-            replaceAll(newCode, string_q(i, '-'), string_q((i * 2), ' '));
-        if (existingCode != newCode) {
-            stringToAsciiFile(existingFile, newCode);
-            cerr << cGreen << "wrote " << newCode.size() << " bytes...to";
-            cerr << existingFile << string_q(40, ' ') << cOff << endl;
-            counter.nChanged++;
-        }
-    }
 
     if (test) {
         counter.routeCount = 0;
         LOG_WARN("Testing only - openapi file not written");
     }
     LOG_INFO(cYellow, "makeClass --openapi", cOff, " processed ", counter.routeCount, "/", counter.cmdCount,
-             " routes/cmds ", " (changed ", counter.nChanged, ").", string_q(40, ' '));
+             " routes/cmds ", " (changed ", counter.nProcessed, ").", string_q(40, ' '));
+}
+
+//---------------------------------------------------------------------------------------------------
+string_q getTypeStr(const CCommandOption& opt, const string_q& lead, const string_q& trail) {
+    if (contains(opt.data_type, "list")) {
+        if (trail == "}") {
+            if (contains(opt.data_type, "enum")) {
+                string_q e = substitute(substitute(opt.data_type, "list<", ""), ">", "");
+                string_q str = substitute(substitute(substitute(e, "*", ""), "enum[", ""), "]", "");
+                CStringArray opts;
+                explode(opts, str, '|');
+                ostringstream os;
+                bool first = true;
+                for (auto o : opts) {
+                    if (!first)
+                        os << ", ";
+                    os << "'" << o << "'";
+                    first = false;
+                }
+                string_q str_array_enum = "{ type: 'array', items: { type: 'string', enum: [";
+                return str_array_enum + os.str() + "] } }";
+            } else {
+                return "{type: 'array', items: {type: 'string'}}";
+            }
+        } else {
+            if (contains(opt.data_type, "enum")) {
+                string_q e = substitute(substitute(opt.data_type, "list<", ""), ">", "");
+                string_q str = substitute(substitute(substitute(e, "*", ""), "enum[", ""), "]", "");
+                CStringArray opts;
+                explode(opts, str, '|');
+                ostringstream os;
+                for (auto o : opts) {
+                    if (isNumeral(o)) {
+                        os << substitute("            - \"[{VAL}]\"\n", "[{VAL}]", o);
+                    } else {
+                        os << substitute("            - [{VAL}]\n", "[{VAL}]", o);
+                    }
+                }
+                string_q str_array_enum =
+                    "          type: array\n"
+                    "          items:\n"
+                    "            type: string\n"
+                    "            enum:\n";
+                return str_array_enum + trim(os.str(), '\n');
+            } else {
+                return "          type: array\n          items:\n            type: string";
+            }
+        }
+    }
+
+    if (contains(opt.data_type, "boolean")) {
+        return lead + "type: boolean" + trail;
+
+    } else if (contains(opt.data_type, "uint") || contains(opt.data_type, "double")) {
+        return lead + "type: number" + trail;
+
+    } else if (contains(opt.data_type, "enum")) {
+        if (trail == "}") {
+            string_q str = substitute(substitute(substitute(opt.data_type, "*", ""), "enum[", ""), "]", "");
+            CStringArray opts;
+            explode(opts, str, '|');
+            ostringstream os;
+            bool first = true;
+            for (auto o : opts) {
+                if (!first)
+                    os << ", ";
+                os << "'" << o << "'";
+                first = false;
+            }
+            return lead + "type: string, enum: [" + os.str() + "] }";
+        } else {
+            string_q str = substitute(substitute(substitute(opt.data_type, "*", ""), "enum[", ""), "]", "");
+            CStringArray opts;
+            explode(opts, str, '|');
+            ostringstream os;
+            for (auto o : opts) {
+                if (isNumeral(o)) {
+                    os << substitute(lead + "- \"[{VAL}]\"\n", "[{VAL}]", o);
+                } else {
+                    os << substitute(lead + "- [{VAL}]\n", "[{VAL}]", o);
+                }
+            }
+            string_q enum_head = lead + "type: string\n" + lead + "enum:\n" + trail;
+            return enum_head + trim(os.str(), '\n');
+        }
+    }
+    return lead + "type: string" + trail;
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -276,93 +306,6 @@ void select_commands(const CCommandOptionArray& optionsArray, const string_q& ro
     }
 }
 
-//---------------------------------------------------------------------------------------------------
-string_q getTypeStr(const CCommandOption& opt, const string_q& lead, const string_q& trail) {
-    if (contains(opt.data_type, "list")) {
-        if (trail == "}") {
-            if (contains(opt.data_type, "enum")) {
-                string_q e = substitute(substitute(opt.data_type, "list<", ""), ">", "");
-                string_q str = substitute(substitute(substitute(e, "*", ""), "enum[", ""), "]", "");
-                CStringArray opts;
-                explode(opts, str, '|');
-                ostringstream os;
-                bool first = true;
-                for (auto o : opts) {
-                    if (!first)
-                        os << ", ";
-                    os << "'" << o << "'";
-                    first = false;
-                }
-                string_q str_array_enum = "{ type: 'array', items: { type: 'string', enum: [";
-                return str_array_enum + os.str() + "] } }";
-            } else {
-                return "{type: 'array', items: {type: 'string'}}";
-            }
-        } else {
-            if (contains(opt.data_type, "enum")) {
-                string_q e = substitute(substitute(opt.data_type, "list<", ""), ">", "");
-                string_q str = substitute(substitute(substitute(e, "*", ""), "enum[", ""), "]", "");
-                CStringArray opts;
-                explode(opts, str, '|');
-                ostringstream os;
-                for (auto o : opts) {
-                    if (isNumeral(o)) {
-                        os << substitute("            - \"[{VAL}]\"\n", "[{VAL}]", o);
-                    } else {
-                        os << substitute("            - [{VAL}]\n", "[{VAL}]", o);
-                    }
-                }
-                string_q str_array_enum =
-                    "          type: array\n"
-                    "          items:\n"
-                    "            type: string\n"
-                    "            enum:\n";
-                return str_array_enum + trim(os.str(), '\n');
-            } else {
-                return "          type: array\n          items:\n            type: string";
-            }
-        }
-    }
-
-    if (contains(opt.data_type, "boolean")) {
-        return lead + "type: boolean" + trail;
-
-    } else if (contains(opt.data_type, "uint") || contains(opt.data_type, "double")) {
-        return lead + "type: number" + trail;
-
-    } else if (contains(opt.data_type, "enum")) {
-        if (trail == "}") {
-            string_q str = substitute(substitute(substitute(opt.data_type, "*", ""), "enum[", ""), "]", "");
-            CStringArray opts;
-            explode(opts, str, '|');
-            ostringstream os;
-            bool first = true;
-            for (auto o : opts) {
-                if (!first)
-                    os << ", ";
-                os << "'" << o << "'";
-                first = false;
-            }
-            return lead + "type: string, enum: [" + os.str() + "] }";
-        } else {
-            string_q str = substitute(substitute(substitute(opt.data_type, "*", ""), "enum[", ""), "]", "");
-            CStringArray opts;
-            explode(opts, str, '|');
-            ostringstream os;
-            for (auto o : opts) {
-                if (isNumeral(o)) {
-                    os << substitute(lead + "- \"[{VAL}]\"\n", "[{VAL}]", o);
-                } else {
-                    os << substitute(lead + "- [{VAL}]\n", "[{VAL}]", o);
-                }
-            }
-            string_q enum_head = lead + "type: string\n" + lead + "enum:\n" + trail;
-            return enum_head + trim(os.str(), '\n');
-        }
-    }
-    return lead + "type: string" + trail;
-}
-
 static CStringArray header;
 //---------------------------------------------------------------------------------------------------
 bool parseEndpoints(const char* str, void* data) {
@@ -417,124 +360,32 @@ const char* STR_PARAM_YAML =
 
 //---------------------------------------------------------------------------------------------------
 const char* STR_PATH_HTML =
-    "------'/[{PATH}]': {\n"
-    "-------get: {\n"
-    "--------tags: ['[{TAGS}]'],\n"
-    "--------summary: '[{SUMMARY}]',\n"
-    "--------description: '[{DESCR}]',\n"
-    "--------operationId: '[{ID}]',\n"
-    "--------parameters: [\n[{PARAMS}]"
-    "--------],\n"
-    "--------responses: {\n"
-    "---------'200': {\n"
-    "----------description: 'status of the scraper',\n"
-    "----------content: { 'application/json': {schema: {type: 'array', items: {$ref: "
+    "            '/[{PATH}]': {\n"
+    "              get: {\n"
+    "                tags: ['[{TAGS}]'],\n"
+    "                summary: '[{SUMMARY}]',\n"
+    "                description: '[{DESCR}]',\n"
+    "                operationId: '[{ID}]',\n"
+    "                parameters: [\n[{PARAMS}]"
+    "                ],\n"
+    "                responses: {\n"
+    "                  '200': {\n"
+    "                    description: 'status of the scraper',\n"
+    "                    content: { 'application/json': {schema: {type: 'array', items: {$ref: "
     "'#/components/schemas/response'}}} }, },\n"
-    "---------'400': {description: 'bad input parameter'},\n"
-    "--------},\n"
-    "-------},\n"
-    "------},\n";
+    "                  '400': {description: 'bad input parameter'},\n"
+    "                },\n"
+    "              },\n"
+    "            },\n";
 
 //---------------------------------------------------------------------------------------------------
 const char* STR_PARAM_HTML =
-    "---------{\n"
-    "----------name: '[{NAME}]',\n"
-    "----------in: 'query',\n"
-    "----------description: '[{DESCR}]',\n"
-    "----------required: [{REQ}],\n"
-    "----------style: 'form',\n"
-    "----------explode: true,\n"
-    "----------schema: [{TYPE}],\n"
-    "---------},";
-
-//---------------------------------------------------------------------------------------------------
-// clang-format off
-const char* STR_CODE_HEADER_HTML =
-    "<!DOCTYPE html>\n"
-    "<html lang=\"en\">\n"
-    "  <head>\n"
-    "    <meta charset=\"UTF-8\" />\n"
-    "    <title>Swagger UI</title>\n"
-    "    <link href=\"https://fonts.googleapis.com/css?family=Open+Sans:400,700|Source+Code+Pro:300,600|Titillium+Web:400,600,700\" rel=\"stylesheet\" />\n"
-    "    <link rel=\"stylesheet\" type=\"text/css\" href=\"https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/3.24.2/swagger-ui.css\" />\n"
-    "    <style>\n"
-    "      html {\n"
-    "        box-sizing: border-box;\n"
-    "        overflow: -moz-scrollbars-vertical;\n"
-    "        overflow-y: scroll;\n"
-    "      }\n"
-    "      *,\n"
-    "      *:before,\n"
-    "      *:after {\n"
-    "        box-sizing: inherit;\n"
-    "      }\n"
-    "      body {\n"
-    "        margin: 0;\n"
-    "        background: #fafafa;\n"
-    "      }\n"
-    "    </style>\n"
-    "  </head>\n"
-    "  <body>\n"
-    "    <div id=\"swagger-ui\"></div>\n"
-    "    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/3.24.2/swagger-ui-bundle.js\"></script>\n"
-    "    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/3.24.2/swagger-ui-standalone-preset.js\"></script>\n"
-    "    <script>\n"
-    "      window.onload = function () {\n"
-    "        var spec = {\n"
-    "          openapi: '3.0.0',\n"
-    "          info: {\n"
-    "            title: 'TrueBlocks API',\n"
-    "            description: 'An API for accessing cached Ethereum blockchain data and accounts',\n"
-    "            contact: {email: 'jrush@quickblocks.io'},\n"
-    "            license: {name: 'Apache 2.0', url: 'http://www.apache.org/licenses/LICENSE-2.0.html'},\n"
-    "            version: '0.8.04',\n"
-    "          },\n"
-    "          servers: [\n"
-    "            {url: 'http://localhost:8080', description: 'Local endpoints'},\n"
-    "            {\n"
-    "              url: 'https://virtserver.swaggerhub.com/trueblocks/TrueBlocks/0.8.04',\n"
-    "              description: 'SwaggerHub API Auto Mocking',\n"
-    "            },\n"
-    "          ],\n"
-    "          tags: [\n[{TAGS}]"
-    "          ],\n"
-    "-----paths: {\n";
-
-const char* STR_CODE_FOOTER_HTML =
-    "-----},\n"
-    "          components: {\n"
-    "            schemas: {\n"
-    "              response: {\n"
-    "                required: ['result'],\n"
-    "                type: 'object',\n"
-    "                properties: {\n"
-    "                  data: {\n"
-    "                    type: 'object',\n"
-    "                    example: [],\n"
-    "                  },\n"
-    "                  error: {type: 'array', example: ['error 1', 'error 2'], items: {type: 'string'}},\n"
-    "                },\n"
-    "              },\n"
-    "            },\n"
-    "          },\n"
-    "        };\n"
-    "        // Build a system\n"
-    "        const ui = SwaggerUIBundle({\n"
-    "          spec: spec,\n"
-    "          dom_id: '#swagger-ui',\n"
-    "          deepLinking: true,\n"
-    "          presets: [SwaggerUIBundle.presets.apis, SwaggerUIStandalonePreset],\n"
-    "          plugins: [SwaggerUIBundle.plugins.DownloadUrl],\n"
-    "          layout: 'StandaloneLayout',\n"
-    "        });\n"
-    "        window.ui = ui;\n"
-    "      };\n"
-    "    </script>\n"
-    "  </body>\n"
-    "</html>\n";
-
-//---------------------------------------------------------------------------------------------------
-const char* STR_TAG_HTML =
-    "            {name: '[{NAME}]', description: '[{DESCR}]'},\n";
-
-// clang-format on
+    "                  {\n"
+    "                    name: '[{NAME}]',\n"
+    "                    in: 'query',\n"
+    "                    description: '[{DESCR}]',\n"
+    "                    required: [{REQ}],\n"
+    "                    style: 'form',\n"
+    "                    explode: true,\n"
+    "                    schema: [{TYPE}],\n"
+    "                  },";
