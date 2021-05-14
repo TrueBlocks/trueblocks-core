@@ -74,9 +74,8 @@ class COptions : public COptionsBase {
     timestamp_t lastLint;
     ostringstream option_stream, init_stream, local_stream, auto_stream;
     ostringstream header_stream, notes_stream, errors_stream, debug_stream;
-    ostringstream routeStream;
     ostringstream goCallStream, goRouteStream;
-    ostringstream chifra_stream_a, chifra_stream_b, chifra_stream_pm;
+    ostringstream cmdMapStream, helpStream, pairMapStream;
     void clearStreams(void) {
         auto_stream.str("");
         option_stream.str("");
@@ -87,11 +86,10 @@ class COptions : public COptionsBase {
         header_stream.str("");
         debug_stream.str("");
         goCallStream.str("");
-        routeStream.str("");
         goRouteStream.str("");
-        chifra_stream_a.str("");
-        chifra_stream_b.str("");
-        chifra_stream_pm.str("");
+        cmdMapStream.str("");
+        helpStream.str("");
+        pairMapStream.str("");
 
         auto_stream.clear();
         option_stream.clear();
@@ -102,11 +100,10 @@ class COptions : public COptionsBase {
         header_stream.clear();
         debug_stream.clear();
         goCallStream.clear();
-        routeStream.clear();
         goRouteStream.clear();
-        chifra_stream_a.clear();
-        chifra_stream_b.clear();
-        chifra_stream_pm.clear();
+        cmdMapStream.clear();
+        helpStream.clear();
+        pairMapStream.clear();
 
         positionals.clear();
     }
@@ -138,12 +135,9 @@ class COptions : public COptionsBase {
     void generate_deprecated(const CCommandOption& option);
 
     bool writeCode(const string_q& fn);
-    void old_writeJSApiFile(void);
     void writeOpenApiFile(void);
 
     void options_2_Commands(CCommands& commands);
-    void select_commands(const string_q& cmd, CCommandOptionArray& cmds, CCommandOptionArray& notes,
-                         CCommandOptionArray& errors, CCommandOptionArray& descr);
 };
 
 //-------------------------------------------------------------------

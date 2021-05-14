@@ -195,7 +195,7 @@ bool COptions::handle_options(void) {
     LOG_INFO(cYellow, "makeClass --options", cOff, " processed ", counter.nVisited, " files (changed ",
              counter.nProcessed, ").", string_q(40, ' '));
 
-    old_writeJSApiFile();
+    writeOpenApiFile();
 
     return true;
 }
@@ -449,8 +449,9 @@ bool COptions::writeCode(const string_q& fn) {
     string_q orig = asciiFileToString(fn);
     string_q converted = orig;
     if (endsWith(fn, ".cpp")) {
-        CStringArray tokens = {"_CODE_OPTIONS", "_CODE_LOCAL_INIT", "_CODE_AUTO", "_DEBUG_DISPLAY",
-                               "_CODE_INIT",    "_CODE_NOTES",      "_ERROR_MSG"};
+        CStringArray tokens = {"_CODE_AUTO",  "_CODE_OPTIONS", "_CODE_LOCAL_INIT", "_CODE_INIT",
+                               "_CODE_NOTES", "_ERROR_MSG",    "_DEBUG_DISPLAY"};
+
         for (auto tok : tokens)
             if (!contains(orig, tok) && !contains(orig, "_CHIFRA"))
                 LOG_WARN(fn, " does not contain token ", tok);
@@ -461,10 +462,10 @@ bool COptions::writeCode(const string_q& fn) {
         converted = replaceCode(converted, "CODE_INIT", init_stream.str());
         converted = replaceCode(converted, "CODE_NOTES", notes_stream.str());
         converted = replaceCode(converted, "CODE_ERROR_MSG", errors_stream.str());
-        converted = replaceCode(converted, "CODE_CHIFRA_A", chifra_stream_a.str());
-        converted = replaceCode(converted, "CODE_CHIFRA_B", chifra_stream_b.str());
-        converted = replaceCode(converted, "CODE_CHIFRA_PM", chifra_stream_pm.str());
         converted = replaceCode(converted, "DEBUG_DISPLAY", debug_stream.str());
+        converted = replaceCode(converted, "CODE_CHIFRA_CMDMAP", cmdMapStream.str());
+        converted = replaceCode(converted, "CODE_CHIFRA_HELP", helpStream.str());
+        converted = replaceCode(converted, "CODE_CHIFRA_PAIRMAP", pairMapStream.str());
         replaceAll(converted, "    // clang-format on\n    // clang-format off\n", "");
 
     } else if (endsWith(fn, ".go")) {

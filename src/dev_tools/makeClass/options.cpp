@@ -354,14 +354,15 @@ void copyIfNewer(const string_q& src, const string_q& dest) {
 }
 
 //--------------------------------------------------------------------------------
-string_q getSourcePath(const string_q& part) {
+string_q sourcePath(const string_q& part) {
     // TODO(tjayrush) hard coded path
-    return "/Users/jrush/src.GitHub/trueblocks-core/src/" + part;
+    return "/Users/jrush/src.GitHub/trueblocks-core/src/dev_tools/makeClass/" + part;
 }
 
 //--------------------------------------------------------------------------------
 void updateTemplates(void) {
     // TODO(tjayrush): hard coded path
-    copyIfNewer(getSourcePath("dev_tools/makeClass/templates/blank.cpp"), configPath("makeClass/blank.cpp"));
-    copyIfNewer(getSourcePath("dev_tools/makeClass/templates/blank.h"), configPath("makeClass/blank.h"));
+    copyIfNewer(sourcePath("templates/blank.cpp"), configPath("makeClass/blank.cpp"));
+    copyIfNewer(sourcePath("templates/blank.h"), configPath("makeClass/blank.h"));
+    copyIfNewer(sourcePath("templates/blank_openapi.yaml"), configPath("makeClass/blank_openapi.yaml"));
 }

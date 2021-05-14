@@ -735,7 +735,7 @@ void errorMessage(const string_q& msg) {
 
 //--------------------------------------------------------------------------------
 map<string_q, string_q> progNameMap = {
-    // BEG_CODE_CHIFRA_PM
+    // BEG_CODE_CHIFRA_PAIRMAP
     // -- Accounts
     // list
     make_pair("acctExport", "chifra export"),
@@ -764,7 +764,7 @@ map<string_q, string_q> progNameMap = {
     make_pair("getQuotes", "chifra quotes"),
     // explore
     make_pair("ethslurp", "chifra slurp"),
-    // END_CODE_CHIFRA_PM
+    // END_CODE_CHIFRA_PAIRMAP
     //
     make_pair("makeClass", "makeClass"),
     make_pair("testRunner", "testRunner"),

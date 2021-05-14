@@ -134,7 +134,7 @@ COptions::~COptions(void) {
 
 //------------------------------------------------------------------------------------------------
 map<string, string> chifraCmdMap = {
-    // BEG_CODE_CHIFRA_A
+    // BEG_CODE_CHIFRA_CMDMAP
     // -- Accounts
     {"list", "acctExport --appearances"},
     {"export", "acctExport"},
@@ -163,16 +163,16 @@ map<string, string> chifraCmdMap = {
     {"quotes", "getQuotes"},
     {"explore", "ethscan.py"},
     {"slurp", "ethslurp"},
-    // END_CODE_CHIFRA_A
+    // END_CODE_CHIFRA_CMDMAP
 };
 
 //------------------------------------------------------------------------------------------------
-// BEG_CODE_ CHIFRA_B
 const char* STR_CHIFRA_HELP =
+    // BEG_CODE_CHIFRA_HELP
     "ACCOUNTS|"
     "  list          list every appearance of an address anywhere on the chain|"
-    "  export        export details for each appearance (as txs, logs, traces, balances, reconciliations, etc.)|"
-    "  monitors      add, remove, clean, and list appearances of address(es) on the chain|"
+    "  export        export details for each appearance (as txs, logs, traces, etc.)|"
+    "  monitors      add, remove, clean, and list appearances of address(es)|"
     "  names         list and/or share named addresses|"
     "  abis          list and/or share abi signatures|"
     "CHAIN DATA|"
@@ -194,5 +194,6 @@ const char* STR_CHIFRA_HELP =
     "OTHER|"
     "  quotes        return prices collected from configured remote API|"
     "  explore       open the configured block explorer for the given address|"
-    "  slurp         export details by querying EtherScan (note: will not return as many appearances as --list)|";
-// END_CODE_ CHIFRA_B
+    "  slurp         export details by querying EtherScan|"
+    // END_CODE_CHIFRA_HELP
+    ;

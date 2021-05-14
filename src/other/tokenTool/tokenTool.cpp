@@ -294,10 +294,10 @@ string_q COptions::report(void) {
 #endif
 }
 
-13700,tools,State,toktools,tokenTool,tokens,,,true,false,true,true,header,positional,list<addr>,an ERC20 token addresses
-13705,tools,State,toktools,tokenTool,reverse,r,,false,false,true,true,header,switch,<boolean>,present the cap table in reverse order by holding
-13710,tools,State,toktools,tokenTool,start,s,0,false,false,true,true,header,flag,<blknum>,block on which to start the analysis
-13715,tools,State,toktools,tokenTool,bucket,b,100,false,false,true,true,header,flag,<uint64>,number of block to process between cap table reports (default = 100)
-13720,tools,State,toktools,tokenTool,n_rows,n,30,false,false,true,true,header,flag,<uint64>,show this many rows of the cap table (default = 30)
-13725,tools,State,toktools,tokenTool,show_errs,r,,false,false,true,true,header,switch,<boolean>,in verbose mode&#44; print out in-error transactions (never affects accounting)
-13730,tools,State,toktools,tokenTool,,,,false,false,true,true,--,description,,Show ERC20 token cap tables with various options.
+// 13700,tools,State,toktools,tokenTool,tokens,,,true,false,true,true,header,positional,list<addr>,an ERC20 token addresses
+// 13705,tools,State,toktools,tokenTool,reverse,r,,false,false,true,true,header,switch,<boolean>,present the cap table in reverse order by holding
+// 13710,tools,State,toktools,tokenTool,start,s,0,false,false,true,true,header,flag,<blknum>,block on which to start the analysis
+// 13715,tools,State,toktools,tokenTool,bucket,b,100,false,false,true,true,header,flag,<uint64>,number of block to process between cap table reports (default = 100)
+// 13720,tools,State,toktools,tokenTool,n_rows,n,30,false,false,true,true,header,flag,<uint64>,show this many rows of the cap table (default = 30)
+// 13725,tools,State,toktools,tokenTool,show_errs,r,,false,false,true,true,header,switch,<boolean>,in verbose mode & # 4 4 ; print out in-error transactions (never affects accounting)
+// 13730,tools,State,toktools,tokenTool,,,,false,false,true,true,--,description,,Show ERC20 token cap tables with various options.
