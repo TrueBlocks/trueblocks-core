@@ -158,8 +158,8 @@ COptions::COptions(void) {
     // clang-format on
     // END_CODE_NOTES
 
-    // BEG_ERROR_MSG
-    // END_ERROR_MSG
+    // BEG_ERROR_STRINGS
+    // END_ERROR_STRINGS
 }
 
 //--------------------------------------------------------------------------------

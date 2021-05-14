@@ -48,9 +48,8 @@ static const size_t nParams = sizeof(params) / sizeof(COption);
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
-    ENTER("parseArguments");
     if (!standardOptions(command))
-        EXIT_NOMSG(false);
+        return false;
 
     // BEG_CODE_LOCAL_INIT
     CAddressArray addrs;
@@ -103,7 +102,7 @@ bool COptions::parseArguments(string_q& command) {
             if (!confirmUint("max_traces", max_traces, arg))
                 return false;
         } else if (arg == "-m" || arg == "--max_traces") {
-            return usage("The --max_traces option requires a value.");
+            return flag_required("max_traces");
 
         } else if (arg == "-f" || arg == "--freshen") {
             freshen = true;
@@ -119,7 +118,7 @@ bool COptions::parseArguments(string_q& command) {
             if (!parseAddressList(this, source, arg))
                 return false;
         } else if (arg == "--source") {
-            return usage("The --source option requires a value.");
+            return flag_required("source");
 
         } else if (arg == "--relevant") {
             relevant = true;
@@ -131,25 +130,25 @@ bool COptions::parseArguments(string_q& command) {
             if (!confirmUint("start", start, arg))
                 return false;
         } else if (arg == "-S" || arg == "--start") {
-            return usage("The --start option requires a value.");
+            return flag_required("start");
 
         } else if (startsWith(arg, "-E:") || startsWith(arg, "--end:")) {
             if (!confirmUint("end", end, arg))
                 return false;
         } else if (arg == "-E" || arg == "--end") {
-            return usage("The --end option requires a value.");
+            return flag_required("end");
 
         } else if (startsWith(arg, "-c:") || startsWith(arg, "--first_record:")) {
             if (!confirmBlockNum("first_record", first_record, arg, latest))
                 return false;
         } else if (arg == "-c" || arg == "--first_record") {
-            return usage("The --first_record option requires a value.");
+            return flag_required("first_record");
 
         } else if (startsWith(arg, "-e:") || startsWith(arg, "--max_records:")) {
             if (!confirmBlockNum("max_records", max_records, arg, latest))
                 return false;
         } else if (arg == "-e" || arg == "--max_records") {
-            return usage("The --max_records option requires a value.");
+            return flag_required("max_records");
 
         } else if (arg == "--clean") {
             clean = true;
@@ -211,25 +210,24 @@ bool COptions::parseArguments(string_q& command) {
     // END_DEBUG_DISPLAY
 
     if (Mocked(""))
-        EXIT_NOMSG(false);
+        return false;
 
-    if (!bloomsAreInitalized()) {
-        EXIT_USAGE("Bloom filters not found. You must run 'chifra init' before running this command.")
-    }
+    if (!bloomsAreInitalized())
+        return usage("Bloom filters not found. You must run 'chifra init' before running this command.");
 
     if (clean) {
         if (!process_clean())
-            EXIT_USAGE("Clean function returned false.");
-        EXIT_NOMSG(false);
+            return usage("Clean function returned false.");
+        return false;
     }
 
     // Handle the easy cases first...
     if (isCrudCommand())
-        EXIT_NOMSG(process_rm(addrs));
+        return process_rm(addrs);
 
     // We need at least one address to scrape...
     if (addrs.size() == 0)
-        EXIT_USAGE("You must provide at least one Ethereum address.");
+        return usage("You must provide at least one Ethereum address.");
 
     if (topics.size() && !logs)
         return usage("Use the topics option only with --logs.");
@@ -238,28 +236,28 @@ bool COptions::parseArguments(string_q& command) {
         return usage("Use the fourbytes option only with non-logs commands.");
 
     if ((appearances + receipts + logs + traces) > 1)
-        EXIT_USAGE("Please export only one of list, receipts, logs, or traces.");
+        return usage("Please export only one of list, receipts, logs, or traces.");
 
     if (emitter && !logs)
-        EXIT_USAGE("The --emitter option is only available when exporting logs.");
+        return usage("The --emitter option is only available when exporting logs.");
 
     if (!source.empty() && !logs)
-        EXIT_USAGE("The --source option is only available when exporting logs.");
+        return usage("The --source option is only available when exporting logs.");
 
     if (factory && !traces)
-        EXIT_USAGE("The --factory option is only available when exporting traces.");
+        return usage("The --factory option is only available when exporting traces.");
 
     if (count && (receipts || logs || traces || emitter || factory))
-        EXIT_USAGE("--count option is only available with --appearances option.");
+        return usage("--count option is only available with --appearances option.");
 
     if ((accounting) && (addrs.size() != 1))
-        EXIT_USAGE("You may only use --accounting option with a single address.");
+        return usage("You may only use --accounting option with a single address.");
 
     if ((accounting) && freshen)
-        EXIT_USAGE("Do not use the --accounting option with --freshen.");
+        return usage("Do not use the --accounting option with --freshen.");
 
     if ((accounting) && (appearances || logs || traces || receipts))
-        EXIT_USAGE("Do not use the --accounting option with other options.");
+        return usage("Do not use the --accounting option with other options.");
 
     // Where will we start?
     blknum_t firstBlockToVisit = NOPOS;
@@ -282,7 +280,7 @@ bool COptions::parseArguments(string_q& command) {
                     monitor.getMonitorPath(addr) + +".lck'. Proceeding anyway...");
             string_q msg;
             if (monitor.isMonitorLocked(msg))  // If locked, we fail
-                EXIT_USAGE(msg);
+                return usage(msg);
             firstBlockToVisit = min(firstBlockToVisit, monitor.getLastVisited());
             LOG_TEST("Monitor found for", addr, false);
             LOG_TEST("Last block in monitor", monitor.getLastBlockInMonitor(), false);
@@ -311,14 +309,14 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     if (!setDisplayFormatting())
-        EXIT_NOMSG(false);
+        return false;
 
     // Are we visiting unripe and/or staging in our search?
     if (staging)
         visitTypes |= VIS_STAGING;
     if (unripe) {
         if (!(visitTypes & VIS_STAGING))
-            EXIT_USAGE("If you wish to use the --unripe option, you must also use --staging.");
+            return usage("If you wish to use the --unripe option, you must also use --staging.");
         visitTypes |= VIS_UNRIPE;
     }
 
@@ -329,7 +327,7 @@ bool COptions::parseArguments(string_q& command) {
     listRange = make_pair((firstBlockToVisit == NOPOS ? 0 : firstBlockToVisit), lastBlockToVisit);
 
     if (!process_freshen())
-        EXIT_USAGE("freshen returns false.");
+        return usage("freshen returns false.");
 
     if (start != NOPOS)
         scanRange.first = start;
@@ -350,7 +348,7 @@ bool COptions::parseArguments(string_q& command) {
             return false;
     }
 
-    EXIT_NOMSG(true);
+    return true;
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -435,8 +433,8 @@ COptions::COptions(void) {
     // clang-format on
     // END_CODE_NOTES
 
-    // BEG_ERROR_MSG
-    // END_ERROR_MSG
+    // BEG_ERROR_STRINGS
+    // END_ERROR_STRINGS
 }
 
 //--------------------------------------------------------------------------------
@@ -445,8 +443,6 @@ COptions::~COptions(void) {
 
 //--------------------------------------------------------------------------------
 bool COptions::setDisplayFormatting(void) {
-    ENTER("setDisplayFormatting");
-
     if (count) {
         bool isText = expContext().exportFmt != JSON1 && expContext().exportFmt != API1;
         string_q format =
@@ -468,7 +464,7 @@ bool COptions::setDisplayFormatting(void) {
             manageFields("CTransaction:" + format);
 
             if (format.empty())
-                EXIT_USAGE("For non-json export a 'trans_fmt' string is required. Check your config file.");
+                return usage("For non-json export a 'trans_fmt' string is required. Check your config file.");
             if (!contains(toLower(format), "trace"))
                 HIDE_FIELD(CTransaction, "traces");
 
@@ -548,10 +544,10 @@ bool COptions::setDisplayFormatting(void) {
             if (!nodeHasBals) {
                 string_q balanceProvider = getGlobalConfig()->getConfigStr("settings", "balanceProvider", rpcProvider);
                 if (rpcProvider == balanceProvider || balanceProvider.empty())
-                    EXIT_USAGE("--accounting requires historical balances. The RPC server does not have them.");
+                    return usage("--accounting requires historical balances. The RPC server does not have them.");
                 setRpcProvider(balanceProvider);
                 if (!nodeHasBalances(false))
-                    EXIT_USAGE("balanceServer is set, but it does not have historical state.");
+                    return usage("balanceServer is set, but it does not have historical state.");
             }
         }
 
@@ -578,7 +574,7 @@ bool COptions::setDisplayFormatting(void) {
         manageFields(verbose ? "CAccountName:address,name" : "CAccountName:address,name,timestamp,date", true);
     }
 
-    EXIT_NOMSG(true);
+    return true;
 }
 
 // TODO(tjayrush): If an abi file is changed, we should re-articulate.

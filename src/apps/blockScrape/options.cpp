@@ -55,25 +55,25 @@ bool COptions::parseArguments(string_q& command) {
                 return false;
             tool.push_back(tool_tmp);
         } else if (arg == "-t" || arg == "--tool") {
-            return usage("The --tool option requires a value.");
+            return flag_required("tool");
 
         } else if (startsWith(arg, "-n:") || startsWith(arg, "--n_blocks:")) {
             if (!confirmUint("n_blocks", n_blocks, arg))
                 return false;
         } else if (arg == "-n" || arg == "--n_blocks") {
-            return usage("The --n_blocks option requires a value.");
+            return flag_required("n_blocks");
 
         } else if (startsWith(arg, "-b:") || startsWith(arg, "--n_block_procs:")) {
             if (!confirmUint("n_block_procs", n_block_procs, arg))
                 return false;
         } else if (arg == "-b" || arg == "--n_block_procs") {
-            return usage("The --n_block_procs option requires a value.");
+            return flag_required("n_block_procs");
 
         } else if (startsWith(arg, "-a:") || startsWith(arg, "--n_addr_procs:")) {
             if (!confirmUint("n_addr_procs", n_addr_procs, arg))
                 return false;
         } else if (arg == "-a" || arg == "--n_addr_procs") {
-            return usage("The --n_addr_procs option requires a value.");
+            return flag_required("n_addr_procs");
 
         } else if (arg == "-p" || arg == "--pin") {
             pin = true;
@@ -82,7 +82,7 @@ bool COptions::parseArguments(string_q& command) {
             if (!confirmDouble("sleep", sleep, arg))
                 return false;
         } else if (arg == "-s" || arg == "--sleep") {
-            return usage("The --sleep option requires a value.");
+            return flag_required("sleep");
 
         } else if (arg == "-i" || arg == "--cache_txs") {
             cache_txs = true;
@@ -304,8 +304,8 @@ COptions::COptions(void) {
     // clang-format on
     // END_CODE_NOTES
 
-    // BEG_ERROR_MSG
-    // END_ERROR_MSG
+    // BEG_ERROR_STRINGS
+    // END_ERROR_STRINGS
 
     // Establish the folders that hold the data...
     establishMonitorFolders();

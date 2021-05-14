@@ -56,7 +56,7 @@ bool COptions::parseArguments(string_q& command) {
                 return false;
             parts.push_back(parts_tmp);
         } else if (arg == "-p" || arg == "--parts") {
-            return usage("The --parts option requires a value.");
+            return flag_required("parts");
 
         } else if (arg == "-c" || arg == "--changes") {
             changes = true;
@@ -67,7 +67,7 @@ bool COptions::parseArguments(string_q& command) {
         } else if (startsWith(arg, "-a:") || startsWith(arg, "--call:")) {
             call = substitute(substitute(arg, "-a:", ""), "--call:", "");
         } else if (arg == "-a" || arg == "--call") {
-            return usage("The --call option requires a value.");
+            return flag_required("call");
 
         } else if (startsWith(arg, '-')) {  // do not collapse
 
@@ -226,8 +226,8 @@ COptions::COptions(void) : CHistoryOptions() {
     // clang-format on
     // END_CODE_NOTES
 
-    // BEG_ERROR_MSG
-    // END_ERROR_MSG
+    // BEG_ERROR_STRINGS
+    // END_ERROR_STRINGS
 }
 
 //--------------------------------------------------------------------------------

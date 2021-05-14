@@ -717,6 +717,12 @@ bool COptionsBase::invalid_option(const string_q& arg) const {
 }
 
 //--------------------------------------------------------------------------------
+bool COptionsBase::flag_required(const string_q& command) const {
+    string_q req = "The --[{COMMAND}] option requires a value.";
+    return usage(substitute(req, "[{COMMAND}]", command));
+}
+
+//--------------------------------------------------------------------------------
 void errorMessage(const string_q& msg) {
     if (isApiMode()) {
         const char* STR_ERROR_JSON = "{ \"errors\": [ \"[ERRORS]\" ] }\n";

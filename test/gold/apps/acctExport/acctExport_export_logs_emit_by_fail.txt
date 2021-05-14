@@ -1,6 +1,5 @@
 acctExport argc: 9 [1:0xf503017d7baf7fbc0fff7492b751025c6a78179b] [2:--start] [3:10277780] [4:--end] [5:10279650] [6:--articulate] [7:--source] [8:0x7d655c57f71464b6f83811c55d84009cd9f5221c] 
 acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --start 10277780 --end 10279650 --articulate --source 0x7d655c57f71464b6f83811c55d84009cd9f5221c 
-TIME ~ CLOCK - <ERROR> : Exit(acctExport,parseArguments): 
 
   The --source option is only available when exporting logs. Quitting...
 

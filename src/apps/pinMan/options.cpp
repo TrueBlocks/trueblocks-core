@@ -51,7 +51,7 @@ bool COptions::parseArguments(string_q& command) {
             if (!confirmDouble("sleep", sleep, arg))
                 return false;
         } else if (arg == "-s" || arg == "--sleep") {
-            return usage("The --sleep option requires a value.");
+            return flag_required("sleep");
 
         } else if (startsWith(arg, '-')) {  // do not collapse
 
@@ -109,8 +109,8 @@ COptions::COptions(void) {
     // clang-format on
     // END_CODE_NOTES
 
-    // BEG_ERROR_MSG
-    // END_ERROR_MSG
+    // BEG_ERROR_STRINGS
+    // END_ERROR_STRINGS
 }
 
 //--------------------------------------------------------------------------------

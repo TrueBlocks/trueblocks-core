@@ -2,7 +2,7 @@ makeClass argc: 2 [1:-th]
 makeClass -th 
 ### Usage
 
-`Usage:`    makeClass [-r|-a|-j|-o|-m|-f|-l|-n|-i|-t|-c|-v|-h] &lt;file&gt; [file...]  
+`Usage:`    makeClass [-r|-a|-o|-m|-f|-l|-n|-i|-t|-c|-v|-h] &lt;file&gt; [file...]  
 `Purpose:`  Automatically writes C++ for various purposes.
 
 `Where:`  
@@ -12,7 +12,6 @@ makeClass -th
 |  | files | one or more class definition files (required) |
 | -r | --run | run the class maker on associated <class_name(s)> |
 | -a | --all | list, or run all class definitions found in the local folder |
-| -j | --js | export javaScript code from the class definition |
 | -o | --options | export options code (check validity in the process) |
 | -m | --readmes | create readme files for each tool and app |
 | -f | --format | format source code files (.cpp and .h) found in local folder and below |

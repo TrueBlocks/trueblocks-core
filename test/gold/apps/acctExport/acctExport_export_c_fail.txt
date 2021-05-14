@@ -1,6 +1,5 @@
 acctExport argc: 4 [1:0x001d14804b399c6ef80e64576f657660804fec0b] [2:--count] [3:--logs] 
 acctExport 0x001d14804b399c6ef80e64576f657660804fec0b --count --logs 
-TIME ~ CLOCK - <ERROR> : Exit(acctExport,parseArguments): 
 
   --count option is only available with --appearances option. Quitting...
 

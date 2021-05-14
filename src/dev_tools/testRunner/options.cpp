@@ -55,13 +55,13 @@ bool COptions::parseArguments(string_q& command) {
             if (!confirmEnum("mode", mode, arg))
                 return false;
         } else if (arg == "-m" || arg == "--mode") {
-            return usage("The --mode option requires a value.");
+            return flag_required("mode");
 
         } else if (startsWith(arg, "-f:") || startsWith(arg, "--filter:")) {
             if (!confirmEnum("filter", filter, arg))
                 return false;
         } else if (arg == "-f" || arg == "--filter") {
-            return usage("The --filter option requires a value.");
+            return flag_required("filter");
 
         } else if (arg == "-c" || arg == "--clean") {
             clean = true;
@@ -70,7 +70,7 @@ bool COptions::parseArguments(string_q& command) {
             if (!confirmUint("skip", skip, arg))
                 return false;
         } else if (arg == "-s" || arg == "--skip") {
-            return usage("The --skip option requires a value.");
+            return flag_required("skip");
 
         } else if (arg == "-n" || arg == "--no_quit") {
             no_quit = true;
@@ -235,8 +235,8 @@ COptions::COptions(void) {
     // clang-format on
     // END_CODE_NOTES
 
-    // BEG_ERROR_MSG
-    // END_ERROR_MSG
+    // BEG_ERROR_STRINGS
+    // END_ERROR_STRINGS
     establishTestMonitors();
 }
 

@@ -53,7 +53,7 @@ bool COptions::parseArguments(string_q& command) {
         } else if (startsWith(arg, "-f:") || startsWith(arg, "--filter:")) {
             filter = substitute(substitute(arg, "-f:", ""), "--filter:", "");
         } else if (arg == "-f" || arg == "--filter") {
-            return usage("The --filter option requires a value.");
+            return flag_required("filter");
 
         } else if (arg == "-d" || arg == "--statediff") {
             statediff = true;
@@ -68,7 +68,7 @@ bool COptions::parseArguments(string_q& command) {
             if (!confirmUint("max", max, arg))
                 return false;
         } else if (arg == "-m" || arg == "--max") {
-            return usage("The --max option requires a value.");
+            return flag_required("max");
 
         } else if (startsWith(arg, '-')) {  // do not collapse
 
@@ -220,8 +220,8 @@ COptions::COptions(void) {
     // clang-format on
     // END_CODE_NOTES
 
-    // BEG_ERROR_MSG
-    // END_ERROR_MSG
+    // BEG_ERROR_STRINGS
+    // END_ERROR_STRINGS
 }
 
 //--------------------------------------------------------------------------------

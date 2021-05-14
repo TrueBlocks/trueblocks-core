@@ -309,8 +309,8 @@ COptions::COptions(void) {
         notes.push_back(os.str());
     }
 
-    // BEG_ERROR_MSG
-    // END_ERROR_MSG
+    // BEG_ERROR_STRINGS
+    // END_ERROR_STRINGS
 }
 
 //--------------------------------------------------------------------------------

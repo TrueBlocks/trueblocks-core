@@ -55,12 +55,12 @@ bool COptions::parseArguments(string_q& command) {
         } else if (startsWith(arg, "-s:") || startsWith(arg, "--sol:")) {
             sol = substitute(substitute(arg, "-s:", ""), "--sol:", "");
         } else if (arg == "-s" || arg == "--sol") {
-            return usage("The --sol option requires a value.");
+            return flag_required("sol");
 
         } else if (startsWith(arg, "-f:") || startsWith(arg, "--find:")) {
             find = substitute(substitute(arg, "-f:", ""), "--find:", "");
         } else if (arg == "-f" || arg == "--find") {
-            return usage("The --find option requires a value.");
+            return flag_required("find");
 
         } else if (startsWith(arg, '-')) {  // do not collapse
 
@@ -188,8 +188,8 @@ COptions::COptions(void) {
     // clang-format on
     // END_CODE_NOTES
 
-    // BEG_ERROR_MSG
-    // END_ERROR_MSG
+    // BEG_ERROR_STRINGS
+    // END_ERROR_STRINGS
 }
 
 //--------------------------------------------------------------------------------

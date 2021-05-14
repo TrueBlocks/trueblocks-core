@@ -18,6 +18,7 @@
 #include "etherlib.h"
 
 // BEG_ERROR_DEFINES
+#define ERR_INVALIDSKIPVAL 1
 // END_ERROR_DEFINES
 
 //-----------------------------------------------------------------------------

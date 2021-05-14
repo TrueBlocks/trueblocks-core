@@ -265,10 +265,13 @@ void select_commands(const CCommandOptionArray& optionsArray, const string_q& ro
                      CCommandOptionArray& descrs) {
     for (auto option : optionsArray) {
         if (option.api_route == route) {
-            if (option.option_type == "description")
+            if (option.option_type == "description") {
                 descrs.push_back(option);
-            else if (option.option_type != "deprecated")
+            } else if (option.option_type == "note" || option.option_type == "error") {
+                // do nothing
+            } else if (option.option_type != "deprecated") {
                 cmds.push_back(option);
+            }
         }
     }
 }

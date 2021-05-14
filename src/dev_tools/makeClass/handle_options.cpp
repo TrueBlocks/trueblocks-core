@@ -14,7 +14,6 @@
 
 extern const char* STR_DECLARATION;
 extern const char* STR_DEFAULT_ASSIGNMENT;
-extern const char* STR_OPTION_ERRSTR;
 extern const char* STR_OPTION_NOTESTR;
 extern const char* STR_OPTION_STR;
 extern const char* STR_AUTO_SWITCH;
@@ -65,9 +64,11 @@ bool COptions::handle_options(void) {
     }
 
     // For each tool...
+    size_t errCnt = 1;
     for (auto tool : tools) {
         bool allAuto = true;
 
+        errCnt = 1;
         option_stream << "    // clang-format off" << endl;
         notes_stream << "    // clang-format off" << endl;
         CStringArray warnings;
@@ -85,10 +86,11 @@ bool COptions::handle_options(void) {
                     notes_stream << note << endl;
 
                 } else if (option.isError) {
-                    string_q err = option.Format(STR_OPTION_ERRSTR);
+                    string_q err = option.Format("    usageErrs[[{COMMAND}]] = \"[{DESCRIPTION}]\";");
                     if (err.length() > 120)
                         err += "  // NOLINT";
-                    errors_stream << err << endl;
+                    error_strings_stream << err << endl;
+                    error_defines_stream << option.Format("#define [{COMMAND}] " + uint_2_Str(errCnt++)) << endl;
 
                 } else {
                     string_q opt = option.Format(STR_OPTION_STR);
@@ -453,7 +455,7 @@ bool COptions::writeCode(const string_q& fn) {
     string_q converted = orig;
     if (endsWith(fn, ".cpp")) {
         CStringArray tokens = {"_CODE_AUTO",  "_CODE_OPTIONS", "_CODE_LOCAL_INIT", "_CODE_INIT",
-                               "_CODE_NOTES", "_ERROR_MSG",    "_DEBUG_DISPLAY"};
+                               "_CODE_NOTES", "ERROR_STRINGS", "_DEBUG_DISPLAY"};
 
         for (auto tok : tokens)
             if (!contains(orig, tok) && !contains(orig, "_CHIFRA"))
@@ -464,7 +466,7 @@ bool COptions::writeCode(const string_q& fn) {
         converted = replaceCode(converted, "CODE_LOCAL_INIT", local_stream.str());
         converted = replaceCode(converted, "CODE_INIT", init_stream.str());
         converted = replaceCode(converted, "CODE_NOTES", notes_stream.str());
-        converted = replaceCode(converted, "CODE_ERROR_MSG", errors_stream.str());
+        converted = replaceCode(converted, "ERROR_STRINGS", error_strings_stream.str());
         converted = replaceCode(converted, "DEBUG_DISPLAY", debug_stream.str());
         converted = replaceCode(converted, "CODE_CHIFRA_CMDMAP", chifraCmdStream.str());
         converted = replaceCode(converted, "CODE_CHIFRA_HELP", chifraHelpStream.str());
@@ -476,11 +478,12 @@ bool COptions::writeCode(const string_q& fn) {
         converted = replaceCode(converted, "ROUTE_ITEMS", goRouteStream.str());
 
     } else {
-        CStringArray tokens = {"_ERROR_DEFINES", "_CODE_DECLARE"};
+        CStringArray tokens = {"ERROR_DEFINES", "_CODE_DECLARE"};
         for (auto tok : tokens)
             if (!contains(orig, tok))
                 LOG_WARN(fn, " does not contain token ", tok);
         converted = replaceCode(converted, "CODE_DECLARE", header_stream.str());
+        converted = replaceCode(converted, "ERROR_DEFINES", error_defines_stream.str());
     }
 
     cerr << bBlue << "Processing " << cOff << fn << " ";
@@ -497,7 +500,6 @@ bool COptions::writeCode(const string_q& fn) {
 }
 
 //---------------------------------------------------------------------------------------------------
-const char* STR_OPTION_ERRSTR = "    errorStrs[[{COMMAND]] = \"[{OPTS}]\";";
 const char* STR_OPTION_NOTESTR = "    notes.push_back(\"[{OPTS}]\");";
 
 //---------------------------------------------------------------------------------------------------
@@ -519,7 +521,7 @@ const char* STR_AUTO_FLAG =
     "        } else if ([startsWith(arg, \"-{HOTKEY}:\") || ]startsWith(arg, \"--[{COMMAND}]:\")) {\n"
     "            [{COMMAND}] = substitute(substitute(arg, \"-[{HOTKEY}]:\", \"\"), \"--[{COMMAND}]:\", \"\");\n"
     "        } else if ([arg == \"-{HOTKEY}\" || ]arg == \"--[{COMMAND}]\") {\n"
-    "            return usage(\"The --[{COMMAND}] option requires a value.\");\n";
+    "            return flag_required(\"[{COMMAND}]\");\n";
 
 //---------------------------------------------------------------------------------------------------
 const char* STR_AUTO_FLAG_ENUM =
@@ -527,7 +529,7 @@ const char* STR_AUTO_FLAG_ENUM =
     "            if (!confirmEnum(\"[{COMMAND}]\", [{COMMAND}], arg))\n"
     "                return false;\n"
     "        } else if ([arg == \"-{HOTKEY}\" || ]arg == \"--[{COMMAND}]\") {\n"
-    "            return usage(\"The --[{COMMAND}] option requires a value.\");\n";
+    "            return flag_required(\"[{COMMAND}]\");\n";
 
 //---------------------------------------------------------------------------------------------------
 const char* STR_AUTO_FLAG_ENUM_LIST =
@@ -537,7 +539,7 @@ const char* STR_AUTO_FLAG_ENUM_LIST =
     "                return false;\n"
     "            [{COMMAND}].push_back([{COMMAND}]_tmp);\n"
     "        } else if ([arg == \"-{HOTKEY}\" || ]arg == \"--[{COMMAND}]\") {\n"
-    "            return usage(\"The --[{COMMAND}] option requires a value.\");\n";
+    "            return flag_required(\"[{COMMAND}]\");\n";
 
 //---------------------------------------------------------------------------------------------------
 const char* STR_AUTO_FLAG_STRING_LIST =
@@ -545,7 +547,7 @@ const char* STR_AUTO_FLAG_STRING_LIST =
     "            arg = substitute(substitute(arg, \"-[{HOTKEY}]:\", \"\"), \"--[{COMMAND}]:\", \"\");\n"
     "            [{COMMAND}].push_back(arg);\n"
     "        } else if ([arg == \"-{HOTKEY}\" || ]arg == \"--[{COMMAND}]\") {\n"
-    "            return usage(\"The --[{COMMAND}] option requires a value.\");\n";
+    "            return flag_required(\"[{COMMAND}]\");\n";
 
 //---------------------------------------------------------------------------------------------------
 const char* STR_AUTO_FLAG_ADDRESS_LIST =
@@ -554,7 +556,7 @@ const char* STR_AUTO_FLAG_ADDRESS_LIST =
     "            if (!parseAddressList(this, [{COMMAND}], arg))\n"
     "                return false;\n"
     "        } else if ([arg == \"-{HOTKEY}\" || ]arg == \"--[{COMMAND}]\") {\n"
-    "            return usage(\"The --[{COMMAND}] option requires a value.\");\n";
+    "            return flag_required(\"[{COMMAND}]\");\n";
 
 //---------------------------------------------------------------------------------------------------
 const char* STR_AUTO_FLAG_BLOCKNUM =
@@ -562,7 +564,7 @@ const char* STR_AUTO_FLAG_BLOCKNUM =
     "            if (!confirmBlockNum(\"[{COMMAND}]\", [{COMMAND}], arg, latest))\n"
     "                return false;\n"
     "        } else if ([arg == \"-{HOTKEY}\" || ]arg == \"--[{COMMAND}]\") {\n"
-    "            return usage(\"The --[{COMMAND}] option requires a value.\");\n";
+    "            return flag_required(\"[{COMMAND}]\");\n";
 
 //---------------------------------------------------------------------------------------------------
 const char* STR_AUTO_FLAG_UINT =
@@ -570,7 +572,7 @@ const char* STR_AUTO_FLAG_UINT =
     "            if (!confirmUint(\"[{COMMAND}]\", [{COMMAND}], arg))\n"
     "                return false;\n"
     "        } else if ([arg == \"-{HOTKEY}\" || ]arg == \"--[{COMMAND}]\") {\n"
-    "            return usage(\"The --[{COMMAND}] option requires a value.\");\n";
+    "            return flag_required(\"[{COMMAND}]\");\n";
 
 //---------------------------------------------------------------------------------------------------
 const char* STR_AUTO_FLAG_DOUBLE =
@@ -578,7 +580,7 @@ const char* STR_AUTO_FLAG_DOUBLE =
     "            if (!confirmDouble(\"[{COMMAND}]\", [{COMMAND}], arg))\n"
     "                return false;\n"
     "        } else if ([arg == \"-{HOTKEY}\" || ]arg == \"--[{COMMAND}]\") {\n"
-    "            return usage(\"The --[{COMMAND}] option requires a value.\");\n";
+    "            return flag_required(\"[{COMMAND}]\");\n";
 
 //---------------------------------------------------------------------------------------------------
 const char* STR_CHECK_BUILTIN =

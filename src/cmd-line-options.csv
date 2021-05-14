@@ -123,7 +123,8 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,is_customizable
 13962,tools,ChainData,when,whenBlock,skip,s,,false,false,true,true,header,flag,<uint64>,only applicable if --timestamps is on&#44; the step between block|numbers in the export
 13980,tools,ChainData,when,whenBlock,,,,false,false,true,false,--,description,,Finds block based on date&#44; blockNum&#44; timestamp&#44; or 'special'.
 13982,tools,ChainData,when,whenBlock,,,,false,false,false,false,--,note,,The block list may contain any combination of `number`&#44; `hash`&#44; `date`&#44; special `named` blocks.
-13982,tools,ChainData,when,whenBlock,,,,false,false,false,false,--,note,,Dates must be formatted in JSON format: YYYY-MM-DD[THH[:MM[:SS]]].
+13984,tools,ChainData,when,whenBlock,,,,false,false,false,false,--,note,,Dates must be formatted in JSON format: YYYY-MM-DD[THH[:MM[:SS]]].
+13986,tools,ChainData,when,whenBlock,ERR_INVALIDSKIPVAL,,,false,false,false,false,--,error,,--skip value must be larger than zero.
 
 13100,tools,ChainState,state,getState,addrs,,,true,false,true,true,header,positional,list<addr>,one or more addresses (0x...) from which to retrieve balances
 13120,tools,ChainState,state,getState,blocks,,,false,false,true,true,header,positional,list<blknum>,an optional list of one or more blocks at which to report balances&#44;|defaults to 'latest'
@@ -199,7 +200,6 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,is_customizable
 11700,dev_tools,,,makeClass,run,r,,false,false,true,false,local,switch,<boolean>,run the class maker on associated <class_name(s)>
 11720,dev_tools,,,makeClass,edit,e,,false,false,false,false,local,switch,<boolean>,edit <class_name(s)> definition file in local folder
 11740,dev_tools,,,makeClass,all,a,,false,false,true,false,header,switch,<boolean>,list&#44; or run all class definitions found in the local folder
-11760,dev_tools,,,makeClass,js,j,,false,false,true,false,local,switch,<boolean>,export javaScript code from the class definition
 11780,dev_tools,,,makeClass,options,o,,false,false,true,false,local,switch,<boolean>,export options code (check validity in the process)
 11780,dev_tools,,,makeClass,readmes,m,,false,false,true,false,local,switch,<boolean>,create readme files for each tool and app
 11782,dev_tools,,,makeClass,format,f,,false,false,true,false,local,switch,<boolean>,format source code files (.cpp and .h) found in local folder and below
@@ -217,7 +217,6 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,is_customizable
 11830,dev_tools,,,makeClass,,,,false,false,false,false,--,note,,More information on class definition files is found in the documentation.
 11832,dev_tools,,,makeClass,ERR_CLASSDEFNOTEXIST,,,false,false,false,false,--,error,,./classDefinitions folder does not exist.
 11834,dev_tools,,,makeClass,ERR_CONFIGMISSING,,,false,false,false,false,--,error,,[{CONFIG_FOLDER}]makeClass/ folder does not exist.
-11836,dev_tools,,,makeClass,ERR_EMPTYJSFILE,,,false,false,false,false,--,error,,Cannot export javscript for an empty class.
 11838,dev_tools,,,makeClass,ERR_CHOOSEONE,,,false,false,false,false,--,error,,Please chose exactly one of --run&#44; --list&#44; or --edit.
 11840,dev_tools,,,makeClass,ERR_NOFILTERMATCH,,,false,false,false,false,--,error,,No definitions found that matched the filter: [{FILTER}].
 11842,dev_tools,,,makeClass,ERR_NEEDONECLASS,,,false,false,false,false,--,error,,Please specify at least one className.

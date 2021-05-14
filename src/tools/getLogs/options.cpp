@@ -48,14 +48,14 @@ bool COptions::parseArguments(string_q& command) {
             arg = substitute(substitute(arg, "-t:", ""), "--topic:", "");
             topic.push_back(arg);
         } else if (arg == "-t" || arg == "--topic") {
-            return usage("The --topic option requires a value.");
+            return flag_required("topic");
 
         } else if (startsWith(arg, "-s:") || startsWith(arg, "--source:")) {
             arg = substitute(substitute(arg, "-s:", ""), "--source:", "");
             if (!parseAddressList(this, source, arg))
                 return false;
         } else if (arg == "-s" || arg == "--source") {
-            return usage("The --source option requires a value.");
+            return flag_required("source");
 
         } else if (arg == "-a" || arg == "--articulate") {
             articulate = true;
@@ -149,8 +149,8 @@ COptions::COptions(void) {
     // clang-format on
     // END_CODE_NOTES
 
-    // BEG_ERROR_MSG
-    // END_ERROR_MSG
+    // BEG_ERROR_STRINGS
+    // END_ERROR_STRINGS
 }
 
 //--------------------------------------------------------------------------------

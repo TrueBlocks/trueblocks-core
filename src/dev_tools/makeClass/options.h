@@ -26,10 +26,9 @@
 // BEG_ERROR_DEFINES
 #define ERR_CLASSDEFNOTEXIST 1
 #define ERR_CONFIGMISSING 2
-#define ERR_EMPTYJSFILE 3
-#define ERR_CHOOSEONE 4
-#define ERR_NOFILTERMATCH 5
-#define ERR_NEEDONECLASS 6
+#define ERR_CHOOSEONE 3
+#define ERR_NOFILTERMATCH 4
+#define ERR_NEEDONECLASS 5
 // END_ERROR_DEFINES
 
 //-------------------------------------------------------------------
@@ -74,7 +73,7 @@ class COptions : public COptionsBase {
     timestamp_t lastLint;
 
     ostringstream option_stream, init_stream, local_stream, auto_stream;
-    ostringstream header_stream, notes_stream, errors_stream, debug_stream;
+    ostringstream header_stream, notes_stream, error_strings_stream, error_defines_stream, debug_stream;
     ostringstream goCallStream, goRouteStream;
     ostringstream chifraCmdStream, chifraHelpStream, pairMapStream;
     ostringstream apiTagStream, htmlTagStream;
@@ -87,7 +86,8 @@ class COptions : public COptionsBase {
         auto_stream.str("");
         header_stream.str("");
         notes_stream.str("");
-        errors_stream.str("");
+        error_strings_stream.str("");
+        error_defines_stream.str("");
         debug_stream.str("");
         goCallStream.str("");
         goRouteStream.str("");
@@ -105,7 +105,8 @@ class COptions : public COptionsBase {
         auto_stream.clear();
         header_stream.clear();
         notes_stream.clear();
-        errors_stream.clear();
+        error_strings_stream.clear();
+        error_defines_stream.clear();
         debug_stream.clear();
         goCallStream.clear();
         goRouteStream.clear();
@@ -132,14 +133,6 @@ class COptions : public COptionsBase {
     bool handle_lint(void);
     bool handle_format(void);
     bool handle_generate(CToml& toml, const CClassDefinition& classDef, const string_q& namespc, bool asJs);
-    bool handle_export_js(void);
-
-    bool handle_initialize_js(CToml& toml, const CClassDefinition& classDef);
-    bool handle_generate_js_menus(void);
-    bool handle_generate_js_help(void);
-    bool handle_generate_js_skins(void);
-    bool handle_generate_js_pages(void);
-
     void generate_switch(const CCommandOption& option);
     void generate_toggle(const CCommandOption& option);
     void generate_flag(const CCommandOption& option);

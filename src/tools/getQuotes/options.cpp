@@ -55,18 +55,18 @@ bool COptions::parseArguments(string_q& command) {
             if (!confirmEnum("period", period, arg))
                 return false;
         } else if (arg == "-p" || arg == "--period") {
-            return usage("The --period option requires a value.");
+            return flag_required("period");
 
         } else if (startsWith(arg, "-a:") || startsWith(arg, "--pair:")) {
             pair = substitute(substitute(arg, "-a:", ""), "--pair:", "");
         } else if (arg == "-a" || arg == "--pair") {
-            return usage("The --pair option requires a value.");
+            return flag_required("pair");
 
         } else if (startsWith(arg, "-e:") || startsWith(arg, "--feed:")) {
             if (!confirmEnum("feed", feed, arg))
                 return false;
         } else if (arg == "-e" || arg == "--feed") {
-            return usage("The --feed option requires a value.");
+            return flag_required("feed");
 
         } else if (startsWith(arg, '-')) {  // do not collapse
 
@@ -138,8 +138,8 @@ COptions::COptions(void) : source(STR_PRICE_URL, "USDT_ETH", parsePoloniex) {
     // clang-format on
     // END_CODE_NOTES
 
-    // BEG_ERROR_MSG
-    // END_ERROR_MSG
+    // BEG_ERROR_STRINGS
+    // END_ERROR_STRINGS
 }
 
 //--------------------------------------------------------------------------------

@@ -128,6 +128,7 @@ class COptionsBase {
 
     // usage related
     bool usage(const string_q& errMsg = "") const;
+    bool flag_required(const string_q& command) const;
     bool invalid_option(const string_q& arg) const;
     string_q usageStr(const string_q& errMsg = "") const;
     string_q purpose(void) const;

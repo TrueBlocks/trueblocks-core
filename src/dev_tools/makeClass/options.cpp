@@ -25,7 +25,6 @@ static const COption params[] = {
     COption("run", "r", "", OPT_SWITCH, "run the class maker on associated <class_name(s)>"),
     COption("edit", "e", "", OPT_HIDDEN | OPT_SWITCH, "edit <class_name(s)> definition file in local folder"),
     COption("all", "a", "", OPT_SWITCH, "list, or run all class definitions found in the local folder"),
-    COption("js", "j", "", OPT_SWITCH, "export javaScript code from the class definition"),
     COption("options", "o", "", OPT_SWITCH, "export options code (check validity in the process)"),
     COption("readmes", "m", "", OPT_SWITCH, "create readme files for each tool and app"),
     COption("format", "f", "", OPT_SWITCH, "format source code files (.cpp and .h) found in local folder and below"),
@@ -52,7 +51,6 @@ bool COptions::parseArguments(string_q& command) {
     CStringArray files;
     bool run = false;
     bool edit = false;
-    bool js = false;
     bool options = false;
     bool readmes = false;
     bool format = false;
@@ -75,9 +73,6 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-a" || arg == "--all") {
             all = true;
 
-        } else if (arg == "-j" || arg == "--js") {
-            js = true;
-
         } else if (arg == "-o" || arg == "--options") {
             options = true;
 
@@ -96,12 +91,12 @@ bool COptions::parseArguments(string_q& command) {
         } else if (startsWith(arg, "-n:") || startsWith(arg, "--nspace:")) {
             nspace = substitute(substitute(arg, "-n:", ""), "--nspace:", "");
         } else if (arg == "-n" || arg == "--nspace") {
-            return usage("The --nspace option requires a value.");
+            return flag_required("nspace");
 
         } else if (startsWith(arg, "-i:") || startsWith(arg, "--filter:")) {
             filter = substitute(substitute(arg, "-i:", ""), "--filter:", "");
         } else if (arg == "-i" || arg == "--filter") {
-            return usage("The --filter option requires a value.");
+            return flag_required("filter");
 
         } else if (arg == "-t" || arg == "--test") {
             test = true;
@@ -134,7 +129,6 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST_BOOL("run", run);
     LOG_TEST_BOOL("edit", edit);
     LOG_TEST_BOOL("all", all);
-    LOG_TEST_BOOL("js", js);
     LOG_TEST_BOOL("options", options);
     LOG_TEST_BOOL("readmes", readmes);
     LOG_TEST_BOOL("format", format);
@@ -172,12 +166,6 @@ bool COptions::parseArguments(string_q& command) {
             forEveryFileInFolder("./classDefinitions/", listClasses, this);
         }
     }
-
-    // Handle the weird javaScript code export first just to get it out of the way
-    if (js)
-        return handle_export_js();
-    if (contains(command, "-j"))
-        return usage(usageErrs[ERR_EMPTYJSFILE]);
 
     // Ignoring classDefs for a moment, process special options. Note: order matters
     if (readmes && !handle_readmes())
@@ -278,15 +266,14 @@ COptions::COptions(void) : classFile("") {
     // clang-format on
     // END_CODE_NOTES
 
-    // BEG_ERROR_MSG
     usageErrs[ERR_NOERROR] = "No error";
+    // ERROR_STRINGS
     usageErrs[ERR_CLASSDEFNOTEXIST] = "./classDefinitions folder does not exist.";
     usageErrs[ERR_CONFIGMISSING] = "[{CONFIG_FOLDER}]makeClass/ folder does not exist.";
-    usageErrs[ERR_EMPTYJSFILE] = "Cannot export javscript for an empty class.";
     usageErrs[ERR_CHOOSEONE] = "Please chose exactly one of --run, --list, or --edit.";
     usageErrs[ERR_NOFILTERMATCH] = "No definitions found that matched the filter: [{FILTER}].";
     usageErrs[ERR_NEEDONECLASS] = "Please specify at least one className.";
-    // END_ERROR_MSG
+    // ERROR_STRINGS
 
     updateTemplates();
 

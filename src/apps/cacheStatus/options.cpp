@@ -62,13 +62,13 @@ bool COptions::parseArguments(string_q& command) {
                 return false;
             types.push_back(types_tmp);
         } else if (arg == "-t" || arg == "--types") {
-            return usage("The --types option requires a value.");
+            return flag_required("types");
 
         } else if (startsWith(arg, "-p:") || startsWith(arg, "--depth:")) {
             if (!confirmUint("depth", depth, arg))
                 return false;
         } else if (arg == "-p" || arg == "--depth") {
-            return usage("The --depth option requires a value.");
+            return flag_required("depth");
 
         } else if (arg == "-r" || arg == "--report") {
             report = true;
@@ -86,13 +86,13 @@ bool COptions::parseArguments(string_q& command) {
             if (!confirmBlockNum("start", start, arg, latest))
                 return false;
         } else if (arg == "-S" || arg == "--start") {
-            return usage("The --start option requires a value.");
+            return flag_required("start");
 
         } else if (startsWith(arg, "-E:") || startsWith(arg, "--end:")) {
             if (!confirmBlockNum("end", end, arg, latest))
                 return false;
         } else if (arg == "-E" || arg == "--end") {
-            return usage("The --end option requires a value.");
+            return flag_required("end");
 
         } else if (startsWith(arg, '-')) {  // do not collapse
 
@@ -303,8 +303,8 @@ COptions::COptions(void) {
     // clang-format on
     // END_CODE_NOTES
 
-    // BEG_ERROR_MSG
-    // END_ERROR_MSG
+    // BEG_ERROR_STRINGS
+    // END_ERROR_STRINGS
 }
 
 //--------------------------------------------------------------------------------

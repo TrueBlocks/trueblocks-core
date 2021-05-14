@@ -70,7 +70,7 @@ bool COptions::parseArguments(string_q& commandIn) {
             if (!confirmUint("skip", skip, arg))
                 return false;
         } else if (arg == "-s" || arg == "--skip") {
-            return usage("The --skip option requires a value.");
+            return flag_required("skip");
 
         } else if (startsWith(arg, '-')) {  // do not collapse
 
@@ -97,7 +97,7 @@ bool COptions::parseArguments(string_q& commandIn) {
         return false;
 
     if (skip != NOPOS && !skip)
-        return usage("--skip value must be larger than zero.");
+        return usage("");  // ERR_INVALIDSKIPVAL);
 
     blknum_t latest = getBlockProgress(BP_CLIENT).client;
     for (auto item : block_list) {
@@ -195,8 +195,9 @@ COptions::COptions(void) {
     // clang-format on
     // END_CODE_NOTES
 
-    // BEG_ERROR_MSG
-    // END_ERROR_MSG
+    // BEG_ERROR_STRINGS
+    usageErrs[ERR_INVALIDSKIPVAL] = "--skip value must be larger than zero.";
+    // END_ERROR_STRINGS
 }
 
 //--------------------------------------------------------------------------------

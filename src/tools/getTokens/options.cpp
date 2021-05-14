@@ -55,7 +55,7 @@ bool COptions::parseArguments(string_q& command) {
                 return false;
             parts.push_back(parts_tmp);
         } else if (arg == "-p" || arg == "--parts") {
-            return usage("The --parts option requires a value.");
+            return flag_required("parts");
 
         } else if (arg == "-b" || arg == "--by_acct") {
             by_acct = true;
@@ -277,8 +277,8 @@ COptions::COptions(void) : CHistoryOptions() {
     // clang-format on
     // END_CODE_NOTES
 
-    // BEG_ERROR_MSG
-    // END_ERROR_MSG
+    // BEG_ERROR_STRINGS
+    // END_ERROR_STRINGS
 }
 
 //--------------------------------------------------------------------------------
