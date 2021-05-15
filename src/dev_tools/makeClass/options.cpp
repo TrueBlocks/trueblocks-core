@@ -277,8 +277,6 @@ COptions::COptions(void) : classFile("") {
 
     updateTemplates();
 
-    CCommands::registerClass();
-    CApiRoute::registerClass();
     CCommandOption::registerClass();
     CClassDefinition::registerClass();
     CPage::registerClass();

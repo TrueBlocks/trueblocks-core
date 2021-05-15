@@ -78,6 +78,8 @@ class CCommandOption : public CBaseNode {
     string_q toHtmlTag(void) const;
     string_q toGoCall(void) const;
     string_q toGoRoute(void) const;
+    string_q toApiPath(const string_q& descr, void* params) const;
+    string_q toHtmlPath(const string_q& descr, void* params) const;
     // EXISTING_CODE
     bool operator==(const CCommandOption& it) const;
     bool operator!=(const CCommandOption& it) const {

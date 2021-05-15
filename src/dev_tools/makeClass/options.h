@@ -21,7 +21,6 @@
 #include "page.h"
 #include "skin.h"
 #include "schema.h"
-#include "commands.h"
 
 // BEG_ERROR_DEFINES
 #define ERR_CLASSDEFNOTEXIST 1
@@ -136,11 +135,10 @@ class COptions : public COptionsBase {
     void generate_flag(const CCommandOption& option);
     void generate_positional(const CCommandOption& option);
     void generate_deprecated(const CCommandOption& option);
+    void select_commands(const string_q& route, string_q& descr, CCommandOptionArray& params);
 
     bool writeCode(const string_q& fn);
     void writeOpenApiFile(void);
-
-    void options_2_Commands(CCommands& commands);
 };
 
 //-------------------------------------------------------------------
@@ -203,13 +201,7 @@ extern const char* STR_DEFAULT_TAGS;
 void doReplace(string_q& str, const string_q& type, const string_q& rep, const string_q& spaces);
 
 //---------------------------------------------------------------------------------------------------
-extern void select_commands(const CCommandOptionArray& optionsArray, const string_q& route, CCommandOptionArray& params,
-                            string_q& descrs);
 extern bool parseEndpoints(const char* str, void* data);
-extern string_q getHtmlPath(const string_q& group, const string_q& cmd, const CCommandOptionArray& params,
-                            const string_q& descr);
-extern string_q getApiPath(const string_q& group, const string_q& cmd, const CCommandOptionArray& params,
-                           const string_q& descr);
 
 //---------------------------------------------------------------------------------------------------
 #define routeCount fileCount

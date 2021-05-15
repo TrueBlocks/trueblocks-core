@@ -1,5 +1,0 @@
-[settings]
-class = CApiRoute
-fields = string route|\
-        CCommandOptionArray commands
-includes = etherlib.h|commandoption.h
