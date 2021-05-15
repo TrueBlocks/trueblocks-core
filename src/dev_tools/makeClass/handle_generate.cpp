@@ -31,11 +31,11 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
     classDef.input_path = classDefIn.input_path;
 
     //------------------------------------------------------------------------------------------------
-    ostringstream lheader_stream, clear_stream, copy_stream;
-    ostringstream ar_read_stream, ar_write_stream;
-    ostringstream src_inc_stream, head_inc_stream;
-    ostringstream child_obj_stream, add_field_stream, hide_field_stream;
-    ostringstream defaults_stream;
+    ostringstream lheaderStream, clearStream, copyStream;
+    ostringstream ar_readStream, ar_writeStream;
+    ostringstream src_incStream, head_incStream;
+    ostringstream child_objStream, add_fieldStream, hide_fieldStream;
+    ostringstream defaultsStream;
 
     //------------------------------------------------------------------------------------------------
     string_q fieldGetObj, fieldGetStr;
@@ -44,13 +44,13 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
     CStringArray h_incs;
     explode(h_incs, classDef.head_includes, '|');
     for (auto inc : h_incs)
-        head_inc_stream << ("#include \"" + inc + "\"\n");
+        head_incStream << ("#include \"" + inc + "\"\n");
 
     //------------------------------------------------------------------------------------------------
     CStringArray c_inc;
     explode(c_inc, classDef.src_includes, '|');
     for (auto inc : c_inc)
-        src_inc_stream << ("#include \"" + inc + "\"\n");
+        src_incStream << ("#include \"" + inc + "\"\n");
 
     //------------------------------------------------------------------------------------------------
     bool isBase = (classDef.base_class == "CBaseNode");
@@ -167,32 +167,31 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
             replaceAll(fieldAddLine, "++fieldNum);\n", "++fieldNum, GETRUNTIME_CLASS(" + fld.type + "));\n");
         }
 
-        add_field_stream << fieldAddLine;
+        add_fieldStream << fieldAddLine;
         if (fld.no_write)
-            add_field_stream << substitute(fld.Format(regHideFmt), "CL_NM", "[{CLASS_NAME}]");
+            add_fieldStream << substitute(fld.Format(regHideFmt), "CL_NM", "[{CLASS_NAME}]");
 
         // minimal means that a field is part of the object's data (such as CReceipt::blockNumber) but should not be
         // part of the 'class' proper -- i.e. it gets its value from its containing class (in this case the block it
         // belongs to).
         if (!(fld.is_flags & IS_MINIMAL)) {
-            lheader_stream << convertTypes(fld.Format(declareFmt)) << endl;
-            copy_stream << substitute(substitute(fld.Format(copyFmt), "++SHORT++", "[{SHORT}]"), "++CLASS++",
-                                      "[{CLASS_NAME}]");
-            defaults_stream << fld.Format(setFmt);
-            clear_stream << (((fld.is_flags & IS_POINTER) && !(fld.is_flags & IS_ARRAY)) ? fld.Format(ptrClearFmt)
-                                                                                         : "");
+            lheaderStream << convertTypes(fld.Format(declareFmt)) << endl;
+            copyStream << substitute(substitute(fld.Format(copyFmt), "++SHORT++", "[{SHORT}]"), "++CLASS++",
+                                     "[{CLASS_NAME}]");
+            defaultsStream << fld.Format(setFmt);
+            clearStream << (((fld.is_flags & IS_POINTER) && !(fld.is_flags & IS_ARRAY)) ? fld.Format(ptrClearFmt) : "");
             if (fld.no_write) {
-                ar_read_stream << substitute(fld.Format(STR_READFMT), "`archive", "`// archive");
-                ar_write_stream << substitute(fld.Format(STR_WRITEFMT), "`archive", "`// archive");
+                ar_readStream << substitute(fld.Format(STR_READFMT), "`archive", "`// archive");
+                ar_writeStream << substitute(fld.Format(STR_WRITEFMT), "`archive", "`// archive");
             } else {
-                ar_read_stream << fld.Format((fld.is_flags & IS_POINTER) ? STR_PRTREADFMT : STR_READFMT);
-                ar_write_stream << fld.Format((fld.is_flags & IS_POINTER) ? STR_PTRWRITEFMT : STR_WRITEFMT);
+                ar_readStream << fld.Format((fld.is_flags & IS_POINTER) ? STR_PRTREADFMT : STR_READFMT);
+                ar_writeStream << fld.Format((fld.is_flags & IS_POINTER) ? STR_PTRWRITEFMT : STR_WRITEFMT);
             }
 
             if ((fld.is_flags & IS_OBJECT) && !(fld.is_flags & IS_POINTER) && !contains(fld.type, "Array")) {
-                if (child_obj_stream.str().empty())
-                    child_obj_stream << "\n`string_q s;\n";
-                child_obj_stream << fld.Format(STR_CHILD_OBJS) << endl;
+                if (child_objStream.str().empty())
+                    child_objStream << "\n`string_q s;\n";
+                child_objStream << fld.Format(STR_CHILD_OBJS) << endl;
             }
         }
     }
@@ -231,11 +230,11 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
 
     replaceAll(headSource, "[{GET_OBJ}]", (hasObjGetter ? string_q(STR_GETOBJ_HEAD) + (hasStrGetter ? "" : "\n") : ""));
     replaceAll(headSource, "[{GET_STR}]", (hasStrGetter ? string_q(STR_GETSTR_HEAD) + "\n" : ""));
-    replaceAll(headSource, "[FIELD_COPY]", copy_stream.str());
-    replaceAll(headSource, "[FIELD_DEC]", lheader_stream.str());
-    replaceAll(headSource, "[FIELD_CLEAR]", clear_stream.str());
-    replaceAll(headSource, "[H_INCLUDES]", head_inc_stream.str());
-    replaceAll(headSource, "[INIT_DEFAULTS]", defaults_stream.str());
+    replaceAll(headSource, "[FIELD_COPY]", copyStream.str());
+    replaceAll(headSource, "[FIELD_DEC]", lheaderStream.str());
+    replaceAll(headSource, "[FIELD_CLEAR]", clearStream.str());
+    replaceAll(headSource, "[H_INCLUDES]", head_incStream.str());
+    replaceAll(headSource, "[INIT_DEFAULTS]", defaultsStream.str());
     replaceAll(headSource, "[OPERATORS_DECL]", operators_decl);
     replaceAll(headSource, "[{COMMENT_LINE}]", STR_COMMENT_LINE);
     replaceAll(headSource, "[{BASE_CLASS}]", classDef.base_class);
@@ -283,12 +282,12 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
         replace(srcSource, "version of the data\n", STR_UPGRADE_CODE);
     replaceAll(srcSource, "[{GET_OBJ}]", fieldGetObj);
     replaceAll(srcSource, "[{GET_STR}]", fieldGetStr);
-    replaceAll(srcSource, "[ARCHIVE_READ]", ar_read_stream.str());
-    replaceAll(srcSource, "[ARCHIVE_WRITE]", ar_write_stream.str());
-    replaceAll(srcSource, "[OTHER_INCS]", src_inc_stream.str());
-    replaceAll(srcSource, "[CHILD_OBJ_GETTER]", child_obj_stream.str());
-    replaceAll(srcSource, "[ADD_FIELDS]", add_field_stream.str());
-    replaceAll(srcSource, "[HIDE_FIELDS]", hide_field_stream.str());
+    replaceAll(srcSource, "[ARCHIVE_READ]", ar_readStream.str());
+    replaceAll(srcSource, "[ARCHIVE_WRITE]", ar_writeStream.str());
+    replaceAll(srcSource, "[OTHER_INCS]", src_incStream.str());
+    replaceAll(srcSource, "[CHILD_OBJ_GETTER]", child_objStream.str());
+    replaceAll(srcSource, "[ADD_FIELDS]", add_fieldStream.str());
+    replaceAll(srcSource, "[HIDE_FIELDS]", hide_fieldStream.str());
     replaceAll(srcSource, "[SET_CASE_CODE]", getCaseSetCode(classDef.fieldArray));
     replaceAll(srcSource, "[GET_CASE_CODE]", getCaseGetCode(classDef.fieldArray));
     replaceAll(srcSource, "[SCOPE_CODE]", classDef.scope_str);

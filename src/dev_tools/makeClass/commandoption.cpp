@@ -717,5 +717,51 @@ string_q CCommandOption::toHtmlTag(void) const {
     replaceAll(ret.group, " ", "");
     return ret.Format(STR_TAG_HTML);
 }
+
+//---------------------------------------------------------------------------------------------------
+string_q CCommandOption::toGoCall(void) const {
+    if (api_route == "serve" || api_route == "init" || api_route == "explore")
+        return "";
+
+    if (api_route.empty())
+        return "";
+
+    string_q goFunc = substitute(group, " ", "") + toProper(api_route);
+    ostringstream out;
+    out << endl;
+    out << "// " << goFunc << " help text todo" << endl;
+    out << "func " << goFunc << "(w http.ResponseWriter, r *http.Request) {" << endl;
+    if (contains(tool, " ")) {
+        out << "\tCallOneExtra(w, r, \"chifra\", \"" << api_route << "\", \"" << api_route << "\")" << endl;
+    } else if (!tool.empty()) {
+        out << "\tCallOne(w, r, \"" << tool << "\", \"" << api_route << "\")" << endl;
+    } else if (goFunc == "AccountsTags" || goFunc == "AccountsEntities") {
+        out << "\tCallOne(w, r, \"ethNames\", \"" << api_route << "\")" << endl;
+    } else {
+        out << "\tCallOneExtra(w, r, \"chifra\", \"" << api_route << "\", \"" << api_route << "\")" << endl;
+    }
+    out << "}" << endl;
+    return out.str();
+}
+
+//---------------------------------------------------------------------------------------------------
+string_q CCommandOption::toGoRoute(void) const {
+    if (api_route == "serve" || api_route == "init" || api_route == "explore")
+        return "";
+
+    if (api_route.empty())
+        return "";
+
+    string_q goFunc = substitute(group, " ", "") + toProper(api_route);
+    ostringstream out;
+    out << endl;
+    out << "\tRoute{" << endl;
+    out << "\t\t\"" << goFunc << "\"," << endl;
+    out << "\t\t\"GET\"," << endl;
+    out << "\t\t\"/" << api_route << "\"," << endl;
+    out << "\t\t" << goFunc << "," << endl;
+    out << "\t}," << endl;
+    return out.str();
+}
 // EXISTING_CODE
 }  // namespace qblocks

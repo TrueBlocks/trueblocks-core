@@ -72,23 +72,21 @@ class COptions : public COptionsBase {
     timestamp_t lastFormat;
     timestamp_t lastLint;
 
-    ostringstream option_stream, init_stream, local_stream, auto_stream;
-    ostringstream header_stream, notes_stream, error_strings_stream, error_defines_stream, debug_stream;
-    ostringstream goCallStream, goRouteStream;
-    ostringstream chifraCmdStream, chifraHelpStream, pairMapStream;
-    ostringstream apiTagStream, htmlTagStream;
-    ostringstream apiPathStream, htmlPathStream;
+    ostringstream optionStream, initStream, localStream, autoStream, headerStream;
+    ostringstream notesStream, errorStrStream, errorDefStream, debugStream, goCallStream;
+    ostringstream goRouteStream, chifraCmdStream, chifraHelpStream, pairMapStream;
+    ostringstream apiTagStream, htmlTagStream, apiPathStream, htmlPathStream;
 
     void clearStreams(void) {
-        option_stream.str("");
-        init_stream.str("");
-        local_stream.str("");
-        auto_stream.str("");
-        header_stream.str("");
-        notes_stream.str("");
-        error_strings_stream.str("");
-        error_defines_stream.str("");
-        debug_stream.str("");
+        optionStream.str("");
+        initStream.str("");
+        localStream.str("");
+        autoStream.str("");
+        headerStream.str("");
+        notesStream.str("");
+        errorStrStream.str("");
+        errorDefStream.str("");
+        debugStream.str("");
         goCallStream.str("");
         goRouteStream.str("");
         chifraCmdStream.str("");
@@ -99,15 +97,15 @@ class COptions : public COptionsBase {
         apiPathStream.str("");
         htmlPathStream.str("");
 
-        option_stream.clear();
-        init_stream.clear();
-        local_stream.clear();
-        auto_stream.clear();
-        header_stream.clear();
-        notes_stream.clear();
-        error_strings_stream.clear();
-        error_defines_stream.clear();
-        debug_stream.clear();
+        optionStream.clear();
+        initStream.clear();
+        localStream.clear();
+        autoStream.clear();
+        headerStream.clear();
+        notesStream.clear();
+        errorStrStream.clear();
+        errorDefStream.clear();
+        debugStream.clear();
         goCallStream.clear();
         goRouteStream.clear();
         chifraCmdStream.clear();
@@ -205,15 +203,13 @@ extern const char* STR_DEFAULT_TAGS;
 void doReplace(string_q& str, const string_q& type, const string_q& rep, const string_q& spaces);
 
 //---------------------------------------------------------------------------------------------------
-extern void select_commands(const CCommandOptionArray& optionsArray, const string_q& route, CCommandOptionArray& cmds,
-                            CCommandOptionArray& descrs);
+extern void select_commands(const CCommandOptionArray& optionsArray, const string_q& route, CCommandOptionArray& params,
+                            string_q& descrs);
 extern bool parseEndpoints(const char* str, void* data);
-extern string_q getGoRoute(const string_q& goFunc, const string_q& cmd);
-extern string_q getGoCall(const string_q& goFunc, const string_q& cmd, const string_q& tool);
 extern string_q getHtmlPath(const string_q& group, const string_q& cmd, const CCommandOptionArray& params,
-                            const CCommandOptionArray& descr, CCounter& counter);
+                            const string_q& descr);
 extern string_q getApiPath(const string_q& group, const string_q& cmd, const CCommandOptionArray& params,
-                           const CCommandOptionArray& descr, CCounter& counter);
+                           const string_q& descr);
 
 //---------------------------------------------------------------------------------------------------
 #define routeCount fileCount
