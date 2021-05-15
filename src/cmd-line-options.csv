@@ -30,13 +30,13 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,is_customizable
 10085,apps,Accounts,export,acctExport,clean,,false,false,false,true,true,header,switch,<boolean>,clean (i.e. remove duplicate appearances) from all existing monitors
 10060,apps,Accounts,export,acctExport,staging,s,,false,false,false,false,local,switch,<boolean>,enable search of staging (not yet finalized) folder
 10080,apps,Accounts,export,acctExport,unripe,u,,false,false,false,false,local,switch,<boolean>,enable search of unripe (neither staged nor finalized) folder|(assumes --staging)
-10460,apps,Accounts,export,acctExport,,,,false,false,true,true,--,description,,Export full detail of transactions for one or more Ethereum addresses.
+10460,apps,Accounts,export,acctExport,,,,false,false,true,true,--,description,,Export full detail of transactions for one or more addresses.
 10470,apps,Accounts,export,acctExport,,,,false,false,false,false,--,note,,An `address` must start with '0x' and be forty-two characters long.
 
 10100,apps,Accounts,monitors,stub,addrs,,,true,false,true,true,local,positional,list<addr>,one or more addresses (0x...) to list
 10230,apps,Accounts,monitors,stub,delete,,,false,false,true,true,header,switch,<boolean>,delete a previously created monitor (or undelete if already deleted)
 10240,apps,Accounts,monitors,stub,remove,,,false,false,true,true,header,switch,<boolean>,remove a previously deleted monitor
-10120,apps,Accounts,monitors,stub,,,,false,false,true,true,--,description,,add&#44; remove&#44; clean&#44; and list appearances of address(es).
+10120,apps,Accounts,monitors,stub,,,,false,false,true,true,--,description,,Add&#44; remove&#44; clean&#44; and list address monitors.
 
 12260,tools,Accounts,names,ethNames,terms,,,true,false,true,true,local,positional,list<string>,a space separated list of one or more search terms
 12280,tools,Accounts,names,ethNames,expand,e,,false,false,true,true,local,switch,<boolean>,expand search to include all fields (default searches name&#44; address&#44;|and symbol only)
@@ -51,7 +51,7 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,is_customizable
 12445,tools,Accounts,names,ethNames,tags,g,,false,false,true,true,header,switch,<boolean>,export the list of tags and subtags only
 12450,tools,Accounts,names,ethNames,to_custom,u,,false,false,false,false,local,switch,<boolean>,for editCmd only&#44; is the edited name a custom name or not
 12455,tools,Accounts,names,ethNames,clean,C,,false,false,false,false,local,switch,<boolean>,clean the data (addrs to lower case&#44; sort by addr)
-12460,tools,Accounts,names,ethNames,,,,false,false,true,true,--,description,,Query addresses and/or names of well known accounts.
+12460,tools,Accounts,names,ethNames,,,,false,false,true,true,--,description,,Query addresses or names of well known accounts.
 12462,tools,Accounts,names,ethNames,,,,false,false,false,false,--,note,,The tool will accept up to three terms&#44; each of which must match against any field in the database.
 12468,tools,Accounts,names,ethNames,,,,false,false,false,false,--,note,,The `--match_case` option enables case sensitive matching.
 
@@ -71,7 +71,7 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,is_customizable
 12560,tools,ChainData,blocks,getBlocks,uniq_tx,n,,false,false,true,true,local,switch,<boolean>,display only uniq address appearances per transaction
 12570,tools,ChainData,blocks,getBlocks,count,c,,false,false,true,true,header,switch,<boolean>,display counts of appearances (for --apps&#44; --uniq&#44; or --uniq_tx)|or transactions
 12580,tools,ChainData,blocks,getBlocks,cache,o,,false,false,true,true,header,switch,<boolean>,force a write of the block to the cache
-12590,tools,ChainData,blocks,getBlocks,,,,false,false,true,true,--,description,,Returns block(s) from local cache or directly from a running node.
+12590,tools,ChainData,blocks,getBlocks,,,,false,false,true,true,--,description,,Retrieve one or more blocks from the chain or local cache.
 12600,tools,ChainData,blocks,getBlocks,,,,false,false,false,false,--,note,,`blocks` is a space-separated list of values&#44; a start-end range&#44; a `special`&#44; or any combination.
 12610,tools,ChainData,blocks,getBlocks,,,,false,false,false,false,--,note,,`blocks` may be specified as either numbers or hashes.
 12620,tools,ChainData,blocks,getBlocks,,,,false,false,false,false,--,note,,`special` blocks are detailed under `chifra when --list`.
@@ -81,14 +81,14 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,is_customizable
 13580,tools,ChainData,transactions,getTrans,trace,t,,false,false,true,true,header,switch,<boolean>,include the transaction's traces in the results
 13605,tools,ChainData,transactions,getTrans,uniq,u,,false,false,true,true,header,switch,<boolean>,display a list of uniq addresses found in the transaction instead of the underlying data
 13600,tools,ChainData,transactions,getTrans,cache,o,,false,false,true,true,header,switch,<boolean>,force the results of the query into the tx cache (and the trace cache if applicable)
-13620,tools,ChainData,transactions,getTrans,,,,false,false,true,true,--,description,,Retrieves one or more transactions from the cache or the node.
+13620,tools,ChainData,transactions,getTrans,,,,false,false,true,true,--,description,,Retrieve one or more transactions from the chain or local cache.
 13622,tools,ChainData,transactions,getTrans,,,,false,false,false,false,--,note,,The `transactions` list may be one or more space-separated identifiers which are either a transaction hash&#44;|a blockNumber.transactionID pair&#44; or a blockHash.transactionID pair&#44; or any combination.
 13624,tools,ChainData,transactions,getTrans,,,,false,false,false,false,--,note,,This tool checks for valid input syntax&#44; but does not check that the transaction requested actually exists.
 13629,tools,ChainData,transactions,getTrans,,,,false,false,false,false,--,note,,If the queried node does not store historical state&#44; the results for most older transactions are undefined.
 
 13000,tools,ChainData,receipts,getReceipts,transactions,,,true,false,true,true,local,positional,list<tx_id>,a space-separated list of one or more transaction identifiers
 13020,tools,ChainData,receipts,getReceipts,articulate,a,,false,false,true,true,header,switch,<boolean>,articulate the retrieved data if ABIs can be found
-13060,tools,ChainData,receipts,getReceipts,,,,false,false,true,true,--,description,,Retrieve a transaction's receipt from the cache or the node.
+13060,tools,ChainData,receipts,getReceipts,,,,false,false,true,true,--,description,,Retrieve receipts for the given transaction(s).
 13062,tools,ChainData,receipts,getReceipts,,,,false,false,false,false,--,note,,The `transactions` list may be one or more space-separated identifiers which are either a transaction hash&#44;|a blockNumber.transactionID pair&#44; or a blockHash.transactionID pair&#44; or any combination.
 13066,tools,ChainData,receipts,getReceipts,,,,false,false,false,false,--,note,,This tool checks for valid input syntax&#44; but does not check that the transaction requested actually exists.
 13070,tools,ChainData,receipts,getReceipts,,,,false,false,false,false,--,note,,If the queried node does not store historical state&#44; the results for most older transactions are undefined.
@@ -97,7 +97,7 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,is_customizable
 12930,tools,ChainData,logs,getLogs,topic,t,,false,false,true,true,header,flag,list<topic>,filter by one or more log topics (not implemented)
 12950,tools,ChainData,logs,getLogs,source,s,,false,false,true,true,header,flag,list<addr>,export only if the given address emitted the event (not implemented)
 12940,tools,ChainData,logs,getLogs,articulate,a,,false,false,true,true,header,switch,<boolean>,articulate the retrieved data if ABIs can be found
-12960,tools,ChainData,logs,getLogs,,,,false,false,true,true,--,description,,Retrieve a transaction's logs from the cache or the node.
+12960,tools,ChainData,logs,getLogs,,,,false,false,true,true,--,description,,Retrieve logs for the given transaction(s).
 12962,tools,ChainData,logs,getLogs,,,,false,false,false,false,--,note,,The `transactions` list may be one or more space-separated identifiers which are either a transaction hash&#44;|a blockNumber.transactionID pair&#44; or a blockHash.transactionID pair&#44; or any combination.
 12964,tools,ChainData,logs,getLogs,,,,false,false,false,false,--,note,,This tool checks for valid input syntax&#44; but does not check that the transaction requested actually exists.
 12966,tools,ChainData,logs,getLogs,,,,false,false,false,false,--,note,,If the queried node does not store historical state&#44; the results for most older transactions are undefined.
@@ -110,7 +110,7 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,is_customizable
 13440,tools,ChainData,traces,getTraces,count,c,,false,false,true,true,header,switch,<boolean>,show the number of traces for the transaction only (fast)
 13460,tools,ChainData,traces,getTraces,skip_ddos,s,true,false,true,false,false,header,toggle,<boolean>,skip over the 2016 ddos during export ([{DEF}] by default)
 13480,tools,ChainData,traces,getTraces,max,m,250,false,true,false,false,header,flag,<uint64>,if --skip_ddos is on&#44; this many traces defines what a ddos transaction|is (default = [{DEF}])
-13500,tools,ChainData,traces,getTraces,,,,false,false,true,true,--,description,,Retrieve a transaction's traces from the cache or the node.
+13500,tools,ChainData,traces,getTraces,,,,false,false,true,true,--,description,,Retrieve traces for the given transaction(s).
 13622,tools,ChainData,traces,getTraces,,,,false,false,false,false,--,note,,The `transactions` list may be one or more space-separated identifiers which are either a transaction hash&#44;|a blockNumber.transactionID pair&#44; or a blockHash.transactionID pair&#44; or any combination.
 13624,tools,ChainData,traces,getTraces,,,,false,false,false,false,--,note,,This tool checks for valid input syntax&#44; but does not check that the transaction requested actually exists.
 13626,tools,ChainData,traces,getTraces,,,,false,false,false,false,--,note,,If the queried node does not store historical state&#44; the results for most older transactions are undefined.
@@ -121,7 +121,7 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,is_customizable
 13960,tools,ChainData,when,whenBlock,list,l,,false,false,true,false,header,switch,<boolean>,export a list of the 'special' blocks
 13962,tools,ChainData,when,whenBlock,timestamps,t,,false,false,true,true,header,switch,<boolean>,ignore other options and generate timestamps only
 13962,tools,ChainData,when,whenBlock,skip,s,,false,false,true,true,header,flag,<uint64>,only applicable if --timestamps is on&#44; the step between block|numbers in the export
-13980,tools,ChainData,when,whenBlock,,,,false,false,true,false,--,description,,Finds block based on date&#44; blockNum&#44; timestamp&#44; or 'special'.
+13980,tools,ChainData,when,whenBlock,,,,false,false,true,false,--,description,,Find block(s) based on date&#44; blockNum&#44; timestamp&#44; or 'special'.
 13982,tools,ChainData,when,whenBlock,,,,false,false,false,false,--,note,,The block list may contain any combination of `number`&#44; `hash`&#44; `date`&#44; special `named` blocks.
 13984,tools,ChainData,when,whenBlock,,,,false,false,false,false,--,note,,Dates must be formatted in JSON format: YYYY-MM-DD[THH[:MM[:SS]]].
 13986,tools,ChainData,when,whenBlock,ERR_INVALIDSKIPVAL,,,false,false,false,false,--,error,,--skip value must be larger than zero.
@@ -132,7 +132,7 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,is_customizable
 13160,tools,ChainState,state,getState,changes,c,,false,false,true,true,header,switch,<boolean>,only report a balance when it changes from one block to the next
 13180,tools,ChainState,state,getState,no_zero,n,,false,false,true,true,header,switch,<boolean>,suppress the display of zero balance accounts
 13190,tools,ChainState,state,getState,call,a,,false,false,false,true,header,flag,<string>,a bang-separated string consisting of address!4-byte!bytes
-13220,tools,ChainState,state,getState,,,,false,false,true,true,--,description,,Retrieve the balance of one or more address at the given block(s).
+13220,tools,ChainState,state,getState,,,,false,false,true,true,--,description,,Retrieve account balance(s) for one or more addresses at given block(s).
 13222,tools,ChainState,state,getState,,,,false,false,false,false,--,note,,An `address` must start with '0x' and be forty-two characters long.
 13224,tools,ChainState,state,getState,,,,false,false,false,false,--,note,,`blocks` may be a space-separated list of values&#44; a start-end range&#44; a `special`&#44; or any combination.
 13228,tools,ChainState,state,getState,,,,false,false,false,false,--,note,,If the queried node does not store historical state&#44; the results are undefined.
@@ -145,7 +145,7 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,is_customizable
 13300,tools,ChainState,tokens,getTokens,parts,p,,false,false,true,true,local,flag,list<enum[name|symbol|decimals|totalSupply|version|none|all*]>,one or more parts of the token information to retreive
 13320,tools,ChainState,tokens,getTokens,by_acct,b,,false,false,true,true,header,switch,<boolean>,consider each address an ERC20 token except the last&#44; whose balance|is reported for each token
 13340,tools,ChainState,tokens,getTokens,no_zero,n,,false,false,true,true,header,switch,<boolean>,suppress the display of zero balance accounts
-13360,tools,ChainState,tokens,getTokens,,,,false,false,true,true,--,description,,Retrieve token balances for one or more address at given block(s).
+13360,tools,ChainState,tokens,getTokens,,,,false,false,true,true,--,description,,Retrieve token balance(s) for one or more addresses at given block(s).
 13362,tools,ChainState,tokens,getTokens,,,,false,false,false,false,--,note,,An `address` must start with '0x' and be forty-two characters long.
 13364,tools,ChainState,tokens,getTokens,,,,false,false,false,false,--,note,,`blocks` may be a space-separated list of values&#44; a start-end range&#44; a `special`&#44; or any combination.
 13368,tools,ChainState,tokens,getTokens,,,,false,false,false,false,--,note,,If the token contract(s) from which you request balances are not ERC20 compliant&#44; the results are undefined.
@@ -161,7 +161,7 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,is_customizable
 10650,apps,Admin,scrape,blockScrape,sleep,s,14,false,false,true,false,header,flag,<double>,the number of seconds to sleep between passes (default [{DEF}])
 10655,apps,Admin,scrape,blockScrape,cache_txs,i,false,false,true,true,false,header,switch,<boolean>,write transactions to the cache (see notes)
 10658,apps,Admin,scrape,blockScrape,cache_traces,R,false,false,true,true,false,header,switch,<boolean>,write traces to the cache (see notes)
-10660,apps,Admin,scrape,blockScrape,,,,false,false,true,true,--,description,,Decentralized blockchain scraper and block cache.
+10660,apps,Admin,scrape,blockScrape,,,,false,false,true,true,--,description,,Scan the chain and update the TrueBlocks index of appearances.
 
 10700,apps,Admin,status,cacheStatus,modes,,,false,false,true,true,local,positional,list<enum[index|monitors|entities|names|abis|caches|some*|all]>,the type of status info to retrieve
 10720,apps,Admin,status,cacheStatus,details,d,,false,false,true,true,header,switch,<boolean>,include details about items found in monitors&#44; slurps&#44; abis&#44;|or price caches
@@ -173,13 +173,13 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,is_customizable
 10800,apps,Admin,status,cacheStatus,set_config,s,,false,false,false,false,local,switch,<boolean>,accepts JSON in an env variable and writes it to configuration|files
 10820,apps,Admin,status,cacheStatus,start,S,,false,false,false,false,header,flag,<blknum>,first block to process (inclusive)
 10840,apps,Admin,status,cacheStatus,end,E,,false,false,false,false,header,flag,<blknum>,last block to process (inclusive)
-10860,apps,Admin,status,cacheStatus,,,,false,false,true,true,--,description,,Report on status of one or more TrueBlocks caches.
+10860,apps,Admin,status,cacheStatus,,,,false,false,true,true,--,description,,Report on the status of the TrueBlocks system.
 
 10930,apps,Admin,pins,pinMan,compare,c,,false,false,true,true,header,switch,<boolean>,report differences (if any) between the manifest and pinning service
 10950,apps,Admin,pins,pinMan,init,i,,false,false,true,true,header,switch,<boolean>,initialize the local index by downloading bloom filters from the pinning service
 10970,apps,Admin,pins,pinMan,freshen,f,,false,false,true,true,header,switch,<boolean>,freshen the manifest from the hash found at the smart contract
 10980,apps,Admin,pins,pinMan,sleep,s,.25,false,false,true,false,header,flag,<double>,the number of seconds to sleep between requests during init (default [{DEF}])
-10980,apps,Admin,pins,pinMan,,,,false,false,true,true,--,description,,Report on and manage the remotely pinned appearance index and associated bloom filters.
+10980,apps,Admin,pins,pinMan,,,,false,false,true,true,--,description,,Manage pinned index of appearances and associated bloom filters.
 
 12020,tools,Other,quotes,getQuotes,freshen,f,,false,false,true,true,header,switch,<boolean>,Freshen price database (append new data)
 12040,tools,Other,quotes,getQuotes,period,p,,false,false,true,true,local,flag,enum[5|15|30|60|120*|240|1440|10080|hourly|daily|weekly],increment of display
@@ -193,7 +193,7 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,is_customizable
 12140,tools,Other,slurp,ethslurp,blocks,,,false,false,true,true,header,positional,list<blknum>,an optional range of blocks to slurp
 12160,tools,Other,slurp,ethslurp,types,t,,false,false,true,true,local,flag,list<enum[ext*|int|token|nfts|miner|all]>,one or more types of transactions to request
 12180,tools,Other,slurp,ethslurp,appearances,p,,false,false,true,true,header,switch,<boolean>,show only the blocknumer.tx_id appearances of the exported transactions
-12220,tools,Other,slurp,ethslurp,,,,false,false,true,true,--,description,,Fetches data from EtherScan for an arbitrary address.
+12220,tools,Other,slurp,ethslurp,,,,false,false,true,true,--,description,,Fetch data from EtherScan for any address.
 12222,tools,Other,slurp,ethslurp,,,,false,false,false,false,--,note,,Portions of this software are Powered by Etherscan.io APIs.
 
 11660,dev_tools,,,makeClass,files,,,true,false,true,false,local,positional,list<path>,one or more class definition files

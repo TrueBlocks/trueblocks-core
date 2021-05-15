@@ -29,7 +29,7 @@ static const COption params[] = {
     COption("uniq_tx", "n", "", OPT_SWITCH, "display only uniq address appearances per transaction"),
     COption("count", "c", "", OPT_SWITCH, "display counts of appearances (for --apps, --uniq, or --uniq_tx) or transactions"),  // NOLINT
     COption("cache", "o", "", OPT_SWITCH, "force a write of the block to the cache"),
-    COption("", "", "", OPT_DESCRIPTION, "Returns block(s) from local cache or directly from a running node."),
+    COption("", "", "", OPT_DESCRIPTION, "Retrieve one or more blocks from the chain or local cache."),
     // clang-format on
     // END_CODE_OPTIONS
 };

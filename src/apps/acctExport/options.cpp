@@ -40,7 +40,7 @@ static const COption params[] = {
     COption("clean", "", "", OPT_SWITCH, "clean (i.e. remove duplicate appearances) from all existing monitors"),
     COption("staging", "s", "", OPT_HIDDEN | OPT_SWITCH, "enable search of staging (not yet finalized) folder"),
     COption("unripe", "u", "", OPT_HIDDEN | OPT_SWITCH, "enable search of unripe (neither staged nor finalized) folder (assumes --staging)"),  // NOLINT
-    COption("", "", "", OPT_DESCRIPTION, "Export full detail of transactions for one or more Ethereum addresses."),
+    COption("", "", "", OPT_DESCRIPTION, "Export full detail of transactions for one or more addresses."),
     // clang-format on
     // END_CODE_OPTIONS
 };

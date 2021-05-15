@@ -135,7 +135,6 @@ class COptions : public COptionsBase {
     void generate_flag(const CCommandOption& option);
     void generate_positional(const CCommandOption& option);
     void generate_deprecated(const CCommandOption& option);
-    void select_commands(const string_q& route, string_q& descr, CCommandOptionArray& params);
 
     bool writeCode(const string_q& fn);
     void writeOpenApiFile(void);

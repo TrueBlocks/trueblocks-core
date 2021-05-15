@@ -23,7 +23,7 @@ static const COption params[] = {
     COption("set_config", "s", "", OPT_HIDDEN | OPT_SWITCH, "accepts JSON in an env variable and writes it to configuration files"),  // NOLINT
     COption("start", "S", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to process (inclusive)"),
     COption("end", "E", "<blknum>", OPT_HIDDEN | OPT_FLAG, "last block to process (inclusive)"),
-    COption("", "", "", OPT_DESCRIPTION, "Report on status of one or more TrueBlocks caches."),
+    COption("", "", "", OPT_DESCRIPTION, "Report on the status of the TrueBlocks system."),
     // clang-format on
     // END_CODE_OPTIONS
 };

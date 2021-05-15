@@ -18,7 +18,7 @@ static const COption params[] = {
     COption("init", "i", "", OPT_SWITCH, "initialize the local index by downloading bloom filters from the pinning service"),  // NOLINT
     COption("freshen", "f", "", OPT_SWITCH, "freshen the manifest from the hash found at the smart contract"),
     COption("sleep", "s", "<double>", OPT_FLAG, "the number of seconds to sleep between requests during init (default .25)"),  // NOLINT
-    COption("", "", "", OPT_DESCRIPTION, "Report on and manage the remotely pinned appearance index and associated bloom filters."),  // NOLINT
+    COption("", "", "", OPT_DESCRIPTION, "Manage pinned index of appearances and associated bloom filters."),
     // clang-format on
     // END_CODE_OPTIONS
 };

@@ -1,8 +1,6 @@
 getBlocks argc: 1 
 getBlocks 
 
-  Not enough arguments presented. Quitting...
-
   Usage:    getBlocks [-e|-U|-t|-a|-u|-n|-c|-o|-v|-h] <block> [block...]  
   Purpose:  Returns block(s) from local cache or directly from a running node.
 

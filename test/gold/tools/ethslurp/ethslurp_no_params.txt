@@ -1,8 +1,6 @@
 ethslurp argc: 1 
 ethslurp 
 
-  Not enough arguments presented. Quitting...
-
   Usage:    ethslurp [-t|-p|-v|-h] <address> [address...] [block...]  
   Purpose:  Fetches data from EtherScan for an arbitrary address.
 

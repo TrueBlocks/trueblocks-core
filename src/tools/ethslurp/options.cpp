@@ -24,7 +24,7 @@ static const COption params[] = {
     COption("blocks", "", "list<blknum>", OPT_POSITIONAL, "an optional range of blocks to slurp"),
     COption("types", "t", "list<enum[ext*|int|token|nfts|miner|all]>", OPT_FLAG, "one or more types of transactions to request"),  // NOLINT
     COption("appearances", "p", "", OPT_SWITCH, "show only the blocknumer.tx_id appearances of the exported transactions"),  // NOLINT
-    COption("", "", "", OPT_DESCRIPTION, "Fetches data from EtherScan for an arbitrary address."),
+    COption("", "", "", OPT_DESCRIPTION, "Fetch data from EtherScan for any address."),
     // clang-format on
     // END_CODE_OPTIONS
 };

@@ -27,7 +27,7 @@ static const COption params[] = {
     COption("count", "c", "", OPT_SWITCH, "show the number of traces for the transaction only (fast)"),
     COption("skip_ddos", "s", "", OPT_HIDDEN | OPT_TOGGLE, "skip over the 2016 ddos during export ('on' by default)"),
     COption("max", "m", "<uint64>", OPT_HIDDEN | OPT_FLAG, "if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250)"),  // NOLINT
-    COption("", "", "", OPT_DESCRIPTION, "Retrieve a transaction's traces from the cache or the node."),
+    COption("", "", "", OPT_DESCRIPTION, "Retrieve traces for the given transaction(s)."),
     // clang-format on
     // END_CODE_OPTIONS
 };

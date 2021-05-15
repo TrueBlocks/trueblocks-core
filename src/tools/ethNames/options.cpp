@@ -33,7 +33,7 @@ static const COption params[] = {
     COption("tags", "g", "", OPT_SWITCH, "export the list of tags and subtags only"),
     COption("to_custom", "u", "", OPT_HIDDEN | OPT_SWITCH, "for editCmd only, is the edited name a custom name or not"),
     COption("clean", "C", "", OPT_HIDDEN | OPT_SWITCH, "clean the data (addrs to lower case, sort by addr)"),
-    COption("", "", "", OPT_DESCRIPTION, "Query addresses and/or names of well known accounts."),
+    COption("", "", "", OPT_DESCRIPTION, "Query addresses or names of well known accounts."),
     // clang-format on
     // END_CODE_OPTIONS
 };

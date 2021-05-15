@@ -26,7 +26,7 @@ static const COption params[] = {
     COption("changes", "c", "", OPT_SWITCH, "only report a balance when it changes from one block to the next"),
     COption("no_zero", "n", "", OPT_SWITCH, "suppress the display of zero balance accounts"),
     COption("call", "a", "<string>", OPT_HIDDEN | OPT_FLAG, "a bang-separated string consisting of address!4-byte!bytes"),  // NOLINT
-    COption("", "", "", OPT_DESCRIPTION, "Retrieve the balance of one or more address at the given block(s)."),
+    COption("", "", "", OPT_DESCRIPTION, "Retrieve account balance(s) for one or more addresses at given block(s)."),
     // clang-format on
     // END_CODE_OPTIONS
 };

@@ -1,8 +1,6 @@
 getTokens argc: 1 
 getTokens 
 
-  Not enough arguments presented. Quitting...
-
   Usage:    getTokens [-p|-b|-n|-v|-h] <address> <address> [address...] [block...]  
   Purpose:  Retrieve token balances for one or more address at given block(s).
 

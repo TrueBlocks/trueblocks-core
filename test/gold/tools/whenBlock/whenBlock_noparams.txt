@@ -1,8 +1,6 @@
 whenBlock argc: 1 
 whenBlock 
 
-  Not enough arguments presented. Quitting...
-
   Usage:    whenBlock [-l|-t|-s|-v|-h] < block | date > [ block... | date... ]  
   Purpose:  Finds block based on date, blockNum, timestamp, or 'special'.
 

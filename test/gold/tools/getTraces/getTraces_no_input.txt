@@ -1,8 +1,6 @@
 getTraces argc: 1 
 getTraces 
 
-  Not enough arguments presented. Quitting...
-
   Usage:    getTraces [-a|-f|-d|-c|-v|-h] <tx_id> [tx_id...]  
   Purpose:  Retrieve a transaction's traces from the cache or the node.
 

@@ -22,7 +22,7 @@ static const COption params[] = {
     // clang-format off
     COption("transactions", "", "list<tx_id>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more transaction identifiers"),  // NOLINT
     COption("articulate", "a", "", OPT_SWITCH, "articulate the retrieved data if ABIs can be found"),
-    COption("", "", "", OPT_DESCRIPTION, "Retrieve a transaction's receipt from the cache or the node."),
+    COption("", "", "", OPT_DESCRIPTION, "Retrieve receipts for the given transaction(s)."),
     // clang-format on
     // END_CODE_OPTIONS
 };

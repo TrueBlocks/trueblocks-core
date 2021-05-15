@@ -153,7 +153,7 @@ bool COptionsBase::prepareArguments(int argCountIn, const char* argvIn[]) {
         }
     }
     if (argumentsIn.size() < minArgs)  // the first arg is the program's name, so we use <=
-        return usage("Not enough arguments presented.");
+        return (argumentsIn.size() == 0 && !isApiMode()) ? usage("") : usage("Not enough arguments presented.");
 
     //        string_q stdInCmds;
     //        if (hasStdIn) {

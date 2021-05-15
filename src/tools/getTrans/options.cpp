@@ -25,7 +25,7 @@ static const COption params[] = {
     COption("trace", "t", "", OPT_SWITCH, "include the transaction's traces in the results"),
     COption("uniq", "u", "", OPT_SWITCH, "display a list of uniq addresses found in the transaction instead of the underlying data"),  // NOLINT
     COption("cache", "o", "", OPT_SWITCH, "force the results of the query into the tx cache (and the trace cache if applicable)"),  // NOLINT
-    COption("", "", "", OPT_DESCRIPTION, "Retrieves one or more transactions from the cache or the node."),
+    COption("", "", "", OPT_DESCRIPTION, "Retrieve one or more transactions from the chain or local cache."),
     // clang-format on
     // END_CODE_OPTIONS
 };

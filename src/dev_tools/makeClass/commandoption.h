@@ -65,6 +65,7 @@ class CCommandOption : public CBaseNode {
     bool isDouble;
     bool isNote;
     bool isError;
+    void* params{nullptr};
     explicit CCommandOption(const string_q& line);
     void verifyOptions(CStringArray& warnings);
     void verifyHotkey(CStringArray& warnings);
@@ -78,8 +79,9 @@ class CCommandOption : public CBaseNode {
     string_q toHtmlTag(void) const;
     string_q toGoCall(void) const;
     string_q toGoRoute(void) const;
-    string_q toApiPath(const string_q& descr, void* params) const;
-    string_q toHtmlPath(const string_q& descr, void* params) const;
+    string_q toApiPath(void) const;
+    string_q toHtmlPath(void) const;
+    bool isChifraRoute(void) const;
     // EXISTING_CODE
     bool operator==(const CCommandOption& it) const;
     bool operator!=(const CCommandOption& it) const {

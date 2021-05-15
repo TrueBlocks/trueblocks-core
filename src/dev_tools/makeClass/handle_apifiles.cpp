@@ -28,9 +28,10 @@ void COptions::writeOpenApiFile(void) {
     forEveryLineInAsciiFile("../src/cmd-line-endpoints.csv", parseEndpoints, &endpointArray);
 
     for (auto ep : endpointArray) {
-        string_q descr;
         CCommandOptionArray params;
-        select_commands(ep.api_route, descr, params);
+        for (auto option : optionArray)
+            if (option.api_route == ep.api_route && option.isChifraRoute())
+                params.push_back(option);
 
         chifraCmdStream << ep.toChifraCmd() << endl;
         chifraHelpStream << ep.toChifraHelp() << endl;
@@ -39,8 +40,9 @@ void COptions::writeOpenApiFile(void) {
         htmlTagStream << ep.toHtmlTag();
         goCallStream << ep.toGoCall();
         goRouteStream << ep.toGoRoute();
-        apiPathStream << ep.toApiPath(descr, &params);
-        htmlPathStream << ep.toHtmlPath(descr, &params);
+        ep.params = &params;
+        apiPathStream << ep.toApiPath();
+        htmlPathStream << ep.toHtmlPath();
 
         counter.cmdCount += params.size();
         counter.routeCount++;
@@ -58,21 +60,6 @@ void COptions::writeOpenApiFile(void) {
     }
     LOG_INFO(cYellow, "makeClass --openapi", cOff, " processed ", counter.routeCount, "/", counter.cmdCount,
              " routes/cmds ", " (changed ", counter.nProcessed, ").", string_q(40, ' '));
-}
-
-//---------------------------------------------------------------------------------------------------
-void COptions::select_commands(const string_q& route, string_q& descr, CCommandOptionArray& cmds) {
-    for (auto option : optionArray) {
-        if (option.api_route == route) {
-            if (option.option_type == "description" && descr.empty()) {
-                descr = option.swagger_descr;
-            } else if (option.option_type == "note" || option.option_type == "error") {
-                // do nothing
-            } else if (option.option_type != "deprecated") {
-                cmds.push_back(option);
-            }
-        }
-    }
 }
 
 static CStringArray header;

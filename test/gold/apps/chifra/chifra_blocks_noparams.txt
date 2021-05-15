@@ -4,8 +4,6 @@ chifra blocks argc: 1
 chifra blocks 
 PROG_NAME = [chifra blocks]
 
-  Not enough arguments presented. Quitting...
-
   Usage:    chifra blocks [-e|-U|-t|-a|-u|-n|-c|-o|-v|-h] <block> [block...]  
   Purpose:  Returns block(s) from local cache or directly from a running node.
 

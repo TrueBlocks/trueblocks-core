@@ -24,7 +24,7 @@ static const COption params[] = {
     COption("topic", "t", "list<topic>", OPT_FLAG, "filter by one or more log topics (not implemented)"),
     COption("source", "s", "list<addr>", OPT_FLAG, "export only if the given address emitted the event (not implemented)"),  // NOLINT
     COption("articulate", "a", "", OPT_SWITCH, "articulate the retrieved data if ABIs can be found"),
-    COption("", "", "", OPT_DESCRIPTION, "Retrieve a transaction's logs from the cache or the node."),
+    COption("", "", "", OPT_DESCRIPTION, "Retrieve logs for the given transaction(s)."),
     // clang-format on
     // END_CODE_OPTIONS
 };

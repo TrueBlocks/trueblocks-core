@@ -58,8 +58,8 @@ paths:
     get:
       tags:
       - Accounts
-      summary: Export full detail of transactions for one or more Ethereum addresses.
-      description: Export full detail of transactions for one or more Ethereum addresses.
+      summary: Export full detail of transactions for one or more addresses.
+      description: Export full detail of transactions for one or more addresses.
       operationId: accounts-export
       parameters:
       - name: addrs
@@ -289,8 +289,8 @@ paths:
     get:
       tags:
       - Accounts
-      summary: add, remove, clean, and list appearances of address(es).
-      description: add, remove, clean, and list appearances of address(es).
+      summary: Add, remove, clean, and list address monitors.
+      description: Add, remove, clean, and list address monitors.
       operationId: accounts-monitors
       parameters:
       - name: addrs
@@ -334,8 +334,8 @@ paths:
     get:
       tags:
       - Accounts
-      summary: Query addresses and/or names of well known accounts.
-      description: Query addresses and/or names of well known accounts.
+      summary: Query addresses or names of well known accounts.
+      description: Query addresses or names of well known accounts.
       operationId: accounts-names
       parameters:
       - name: terms
@@ -514,8 +514,8 @@ paths:
     get:
       tags:
       - ChainData
-      summary: Returns block(s) from local cache or directly from a running node.
-      description: Returns block(s) from local cache or directly from a running node.
+      summary: Retrieve one or more blocks from the chain or local cache.
+      description: Retrieve one or more blocks from the chain or local cache.
       operationId: chaindata-blocks
       parameters:
       - name: blocks
@@ -609,8 +609,8 @@ paths:
     get:
       tags:
       - ChainData
-      summary: Retrieves one or more transactions from the cache or the node.
-      description: Retrieves one or more transactions from the cache or the node.
+      summary: Retrieve one or more transactions from the chain or local cache.
+      description: Retrieve one or more transactions from the chain or local cache.
       operationId: chaindata-transactions
       parameters:
       - name: transactions
@@ -670,8 +670,8 @@ paths:
     get:
       tags:
       - ChainData
-      summary: Retrieve a transaction's receipt from the cache or the node.
-      description: Retrieve a transaction's receipt from the cache or the node.
+      summary: Retrieve receipts for the given transaction(s).
+      description: Retrieve receipts for the given transaction(s).
       operationId: chaindata-receipts
       parameters:
       - name: transactions
@@ -707,8 +707,8 @@ paths:
     get:
       tags:
       - ChainData
-      summary: Retrieve a transaction's logs from the cache or the node.
-      description: Retrieve a transaction's logs from the cache or the node.
+      summary: Retrieve logs for the given transaction(s).
+      description: Retrieve logs for the given transaction(s).
       operationId: chaindata-logs
       parameters:
       - name: transactions
@@ -764,8 +764,8 @@ paths:
     get:
       tags:
       - ChainData
-      summary: Retrieve a transaction's traces from the cache or the node.
-      description: Retrieve a transaction's traces from the cache or the node.
+      summary: Retrieve traces for the given transaction(s).
+      description: Retrieve traces for the given transaction(s).
       operationId: chaindata-traces
       parameters:
       - name: transactions
@@ -842,8 +842,8 @@ paths:
     get:
       tags:
       - ChainData
-      summary: Finds block based on date, blockNum, timestamp, or 'special'.
-      description: Finds block based on date, blockNum, timestamp, or 'special'.
+      summary: Find block(s) based on date, blockNum, timestamp, or 'special'.
+      description: Find block(s) based on date, blockNum, timestamp, or 'special'.
       operationId: chaindata-when
       parameters:
       - name: block_list
@@ -897,8 +897,8 @@ paths:
     get:
       tags:
       - ChainState
-      summary: Retrieve the balance of one or more address at the given block(s).
-      description: Retrieve the balance of one or more address at the given block(s).
+      summary: Retrieve account balance(s) for one or more addresses at given block(s).
+      description: Retrieve account balance(s) for one or more addresses at given block(s).
       operationId: chainstate-state
       parameters:
       - name: addrs
@@ -981,8 +981,8 @@ paths:
     get:
       tags:
       - ChainState
-      summary: Retrieve token balances for one or more address at given block(s).
-      description: Retrieve token balances for one or more address at given block(s).
+      summary: Retrieve token balance(s) for one or more addresses at given block(s).
+      description: Retrieve token balance(s) for one or more addresses at given block(s).
       operationId: chainstate-tokens
       parameters:
       - name: addrs2
@@ -1057,8 +1057,8 @@ paths:
     get:
       tags:
       - Admin
-      summary: Report on status of one or more TrueBlocks caches.
-      description: Report on status of one or more TrueBlocks caches.
+      summary: Report on the status of the TrueBlocks system.
+      description: Report on the status of the TrueBlocks system.
       operationId: admin-status
       parameters:
       - name: modes
@@ -1178,8 +1178,8 @@ paths:
     get:
       tags:
       - Admin
-      summary: Decentralized blockchain scraper and block cache.
-      description: Decentralized blockchain scraper and block cache.
+      summary: Scan the chain and update the TrueBlocks index of appearances.
+      description: Scan the chain and update the TrueBlocks index of appearances.
       operationId: admin-scrape
       parameters:
       - name: mode
@@ -1282,8 +1282,8 @@ paths:
     get:
       tags:
       - Admin
-      summary: Report on and manage the remotely pinned appearance index and associated bloom filters.
-      description: Report on and manage the remotely pinned appearance index and associated bloom filters.
+      summary: Manage pinned index of appearances and associated bloom filters.
+      description: Manage pinned index of appearances and associated bloom filters.
       operationId: admin-pins
       parameters:
       - name: compare
@@ -1400,8 +1400,8 @@ paths:
     get:
       tags:
       - Other
-      summary: Fetches data from EtherScan for an arbitrary address.
-      description: Fetches data from EtherScan for an arbitrary address.
+      summary: Fetch data from EtherScan for any address.
+      description: Fetch data from EtherScan for any address.
       operationId: other-slurp
       parameters:
       - name: addrs

@@ -1,8 +1,6 @@
 getState argc: 1 
 getState 
 
-  Not enough arguments presented. Quitting...
-
   Usage:    getState [-p|-c|-n|-v|-h] <address> [address...] [block...]  
   Purpose:  Retrieve the balance of one or more address at the given block(s).
 

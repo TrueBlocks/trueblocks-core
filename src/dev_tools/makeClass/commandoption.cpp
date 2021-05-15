@@ -677,6 +677,12 @@ bool isApiRoute(const string_q& route) {
 }
 
 //---------------------------------------------------------------------------------------------------
+bool CCommandOption::isChifraRoute(void) const {
+    return (option_type != "deprecated" && option_type != "description" && option_type != "note" &&
+            option_type != "error");
+}
+
+//---------------------------------------------------------------------------------------------------
 string_q CCommandOption::toChifraCmd(void) const {
     if (api_route.empty())
         return Format("    // -- [{GROUP}]");
@@ -687,9 +693,13 @@ string_q CCommandOption::toChifraCmd(void) const {
 string_q CCommandOption::toChifraHelp(void) const {
     if (description.empty() && !api_route.empty())
         return "";
+
+    CCommandOption ret = *this;
+    replaceAll(ret.description, ".", "");
+    ret.description[0] = (char)tolower(ret.description[0]);
     if (api_route.empty())
-        return toUpper(Format("    \"[{GROUP}]|\""));
-    return Format("    \"  [{w:14:API_ROUTE}][{DESCRIPTION}]|\"");
+        return toUpper(ret.Format("    \"[{GROUP}]|\""));
+    return ret.Format("    \"  [{w:14:API_ROUTE}][{DESCRIPTION}]|\"");
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -771,12 +781,12 @@ string_q CCommandOption::toGoRoute(void) const {
 }
 
 //---------------------------------------------------------------------------------------------------
-string_q CCommandOption::toApiPath(const string_q& descr, void* paramsPtr) const {
+string_q CCommandOption::toApiPath(void) const {
     if (!isApiRoute(api_route))
         return "";
 
     ostringstream paramStream;
-    for (auto param : *(CCommandOptionArray*)paramsPtr) {
+    for (auto param : *(CCommandOptionArray*)params) {
         if (param.command.empty())
             continue;
         string_q yp = STR_PARAM_YAML;
@@ -790,19 +800,19 @@ string_q CCommandOption::toApiPath(const string_q& descr, void* paramsPtr) const
     replace(ret, "[{TAGS}]", substitute(group, " ", ""));
     replace(ret, "[{PATH}]", api_route);
     replace(ret, "[{PARAMS}]", paramStream.str());
-    replace(ret, "[{SUMMARY}]", descr);
-    replace(ret, "[{DESCR}]", descr);
+    replace(ret, "[{SUMMARY}]", description);
+    replace(ret, "[{DESCR}]", description);
     replace(ret, "[{ID}]", toLower(substitute(group, " ", "") + "-" + api_route));
     return ret;
 }
 
 //---------------------------------------------------------------------------------------------------
-string_q CCommandOption::toHtmlPath(const string_q& descr, void* paramsPtr) const {
+string_q CCommandOption::toHtmlPath(void) const {
     if (!isApiRoute(api_route))
         return "";
 
     ostringstream paramStream;
-    for (auto param : *(CCommandOptionArray*)paramsPtr) {
+    for (auto param : *(CCommandOptionArray*)params) {
         if (param.command.empty())
             continue;
         string_q yp = STR_PARAM_HTML;
@@ -816,8 +826,8 @@ string_q CCommandOption::toHtmlPath(const string_q& descr, void* paramsPtr) cons
     replace(ret, "[{TAGS}]", substitute(group, " ", ""));
     replace(ret, "[{PATH}]", api_route);
     replace(ret, "[{PARAMS}]", paramStream.str());
-    replace(ret, "[{SUMMARY}]", substitute(substitute(descr, "'", "\\'"), "\n         ", ""));
-    replace(ret, "[{DESCR}]", substitute(substitute(descr, "'", "\\'"), "\n         ", ""));
+    replace(ret, "[{SUMMARY}]", substitute(substitute(description, "'", "\\'"), "\n         ", ""));
+    replace(ret, "[{DESCR}]", substitute(substitute(description, "'", "\\'"), "\n         ", ""));
     replace(ret, "[{ID}]", toLower(substitute(group, " ", "") + "-" + api_route));
     return ret;
 }

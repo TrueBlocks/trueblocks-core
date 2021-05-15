@@ -1,8 +1,6 @@
 makeClass argc: 1 
 makeClass 
 
-  Not enough arguments presented. Quitting...
-
   Usage:    makeClass [-r|-a|-o|-m|-f|-l|-n|-i|-t|-c|-v|-h] <file> [file...]  
   Purpose:  Automatically writes C++ for various purposes.
 

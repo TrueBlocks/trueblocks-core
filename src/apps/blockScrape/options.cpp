@@ -22,7 +22,7 @@ static const COption params[] = {
     COption("sleep", "s", "<double>", OPT_FLAG, "the number of seconds to sleep between passes (default 14)"),
     COption("cache_txs", "i", "", OPT_SWITCH, "write transactions to the cache (see notes)"),
     COption("cache_traces", "R", "", OPT_SWITCH, "write traces to the cache (see notes)"),
-    COption("", "", "", OPT_DESCRIPTION, "Decentralized blockchain scraper and block cache."),
+    COption("", "", "", OPT_DESCRIPTION, "Scan the chain and update the TrueBlocks index of appearances."),
     // clang-format on
     // END_CODE_OPTIONS
 };
