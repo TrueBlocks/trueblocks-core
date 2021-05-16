@@ -16,5 +16,5 @@ includes = utillib.h|abi.h|logentry.h
 cpp_includes = etherlib.h
 scope = extern
 serializable = true
-display_str = blockNumber, transactionIndex, hash, logscnt, gasUsed, status, isError
+display_str = blockNumber, transactionIndex, hash, gasUsed, status, isError
 equals = (getValueByName("transactionHash") == it.getValueByName("transactionHash"))

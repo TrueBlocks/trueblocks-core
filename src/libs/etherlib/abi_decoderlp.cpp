@@ -646,10 +646,13 @@ bool decodeRLP(CParameterArray& params, const string_q& typeListIn, const string
     }
 
     // The caller could provide an ABI that disagrees with the actual data on chain. We
-    // try to handle that where we can, such as here, where we insert '0' value strings
-    // to accomodate however many params we are given.
-    while (inputs.size() < params.size())
-        inputs.push_back(string_q(64, '0'));
+    // try to handle that where we can, such as here, we shrink params.
+    if (inputs.size() < params.size()) {
+        CParameterArray p;
+        for (size_t i = 0; i < inputs.size(); i++)
+            p.push_back(params[i]);
+        params = p;
+    }
 
     size_t readOffset = 0;
     size_t objectStart = 0;
