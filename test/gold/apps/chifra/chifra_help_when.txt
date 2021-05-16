@@ -5,7 +5,7 @@ chifra when --help
 PROG_NAME = [chifra when]
 
   Usage:    chifra when [-l|-t|-s|-v|-h] < block | date > [ block... | date... ]  
-  Purpose:  Finds block based on date, blockNum, timestamp, or 'special'.
+  Purpose:  Find block(s) based on date, blockNum, timestamp, or 'special'.
 
   Where:  
 	block_list            one or more dates, block numbers, hashes, or special named blocks (see notes)

@@ -3,7 +3,7 @@ getLogs -th
 ### Usage
 
 `Usage:`    chifra logs [-t|-s|-a|-v|-h] &lt;tx_id&gt; [tx_id...]  
-`Purpose:`  Retrieve a transaction's logs from the cache or the node.
+`Purpose:`  Retrieve logs for the given transaction(s).
 
 `Where:`  
 

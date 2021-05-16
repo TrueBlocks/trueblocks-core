@@ -5,7 +5,7 @@ chifra names --help
 PROG_NAME = [chifra names]
 
   Usage:    chifra names [-e|-m|-l|-c|-p|-n|-a|-s|-g|-v|-h] <term> [term...]  
-  Purpose:  Query addresses and/or names of well known accounts.
+  Purpose:  Query addresses or names of well known accounts.
 
   Where:  
 	terms                 a space separated list of one or more search terms (required)

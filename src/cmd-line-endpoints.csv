@@ -23,5 +23,5 @@ num,group,is_visible,api_route,tool,description
 04,Admin,true,pins,pinMan,Manage pinned index of appearances and associated bloom filters.
 05,Other,false,,,Access to other and external data
 05,Other,true,quotes,getQuotes,Freshen and/or display Ethereum price data.
-05,Other,false,explore,ethscan.py,Open an explorer for a given address&#44; block&#44; or transaction., block, or transaction.
+05,Other,false,explore,ethscan.py,Open an explorer for a given address&#44; block&#44; or transaction.
 05,Other,true,slurp,ethslurp,Fetch data from EtherScan for any address.

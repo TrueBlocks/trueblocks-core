@@ -3,7 +3,7 @@ pinMan -th
 ### Usage
 
 `Usage:`    chifra pins [-c|-i|-f|-s|-v|-h]  
-`Purpose:`  Report on and manage the remotely pinned appearance index and associated bloom filters.
+`Purpose:`  Manage pinned index of appearances and associated bloom filters.
 
 `Where:`  
 

@@ -2,7 +2,7 @@ cacheStatus argc: 2 [1:--help]
 cacheStatus --help 
 
   Usage:    cacheStatus [-d|-t|-v|-h] <mode> [mode...]  
-  Purpose:  Report on status of one or more TrueBlocks caches.
+  Purpose:  Report on the status of the TrueBlocks system.
 
   Where:  
 	modes                 the type of status info to retrieve, one or more of [index|monitors|entities|names|abis|caches|some*|all]

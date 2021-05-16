@@ -4,7 +4,7 @@ getReceipts .th
   .th does not appear to be a valid transaction index. Quitting...
 
   Usage:    getReceipts [-a|-v|-h] <tx_id> [tx_id...]  
-  Purpose:  Retrieve a transaction's receipt from the cache or the node.
+  Purpose:  Retrieve receipts for the given transaction(s).
 
   Where:  
 	transactions          a space-separated list of one or more transaction identifiers (required)

@@ -5,7 +5,7 @@ chifra blocks
 PROG_NAME = [chifra blocks]
 
   Usage:    chifra blocks [-e|-U|-t|-a|-u|-n|-c|-o|-v|-h] <block> [block...]  
-  Purpose:  Returns block(s) from local cache or directly from a running node.
+  Purpose:  Retrieve one or more blocks from the chain or local cache.
 
   Where:  
 	blocks                a space-separated list of one or more blocks to retrieve (required)

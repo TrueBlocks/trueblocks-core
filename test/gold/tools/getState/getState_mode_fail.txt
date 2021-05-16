@@ -4,7 +4,7 @@ getState 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 --parts junk 2500000
   Invalid option 'junk' for 'parts'. One or more of [none|some|all|balance|nonce|code|storage|deployed|accttype] required. Quitting...
 
   Usage:    getState [-p|-c|-n|-v|-h] <address> [address...] [block...]  
-  Purpose:  Retrieve the balance of one or more address at the given block(s).
+  Purpose:  Retrieve account balance(s) for one or more addresses at given block(s).
 
   Where:  
 	addrs                 one or more addresses (0x...) from which to retrieve balances (required)

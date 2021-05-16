@@ -2,7 +2,7 @@ blockScrape argc: 2 [1:--help]
 blockScrape --help 
 
   Usage:    blockScrape [-t|-n|-p|-s|-i|-R|-v|-h] mode  
-  Purpose:  Decentralized blockchain scraper and block cache.
+  Purpose:  Scan the chain and update the TrueBlocks index of appearances.
 
   Where:  
 	mode                  control the block and account scrapers, one of [run|quit|pause|restart] (required)

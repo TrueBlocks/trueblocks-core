@@ -4,7 +4,7 @@ getTokens 0xd26114cd6EE289AccF82350c8d84870000000000 0x5e44c3e467a49c9ca0296a9f1
   Address '0xd26114cd6ee289accf82350c8d84870000000000' is not a token contract. You must provide at least one valid token address. Quitting...
 
   Usage:    getTokens [-p|-b|-n|-v|-h] <address> <address> [address...] [block...]  
-  Purpose:  Retrieve token balances for one or more address at given block(s).
+  Purpose:  Retrieve token balance(s) for one or more addresses at given block(s).
 
   Where:  
 	addrs                 two or more addresses (0x...), the first is an ERC20 token, balances for the rest are reported (required)

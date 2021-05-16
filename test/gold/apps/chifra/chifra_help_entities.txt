@@ -9,30 +9,30 @@ chifra entities --help
   Where:  
 	 ACCOUNTS
 	   list          list every appearance of an address anywhere on the chain
-	   export        export details for each appearance (as txs, logs, traces, etc.)
-	   monitors      add, remove, clean, and list appearances of address(es)
-	   names         list and/or share named addresses
-	   abis          list and/or share abi signatures
+	   export        export full detail of transactions for one or more addresses
+	   monitors      add, remove, clean, and list address monitors
+	   names         query addresses or names of well known accounts
+	   abis          fetches the ABI for a smart contract
 	 CHAIN DATA
-	   blocks        export block-related data
-	   transactions  export transaction-related data
-	   receipts      export receipt-related data
-	   logs          export log-related data
-	   traces        export trace-related data
-	   when          return a date given a block number or a block number given a date
+	   blocks        retrieve one or more blocks from the chain or local cache
+	   transactions  retrieve one or more transactions from the chain or local cache
+	   receipts      retrieve receipts for the given transaction(s)
+	   logs          retrieve logs for the given transaction(s)
+	   traces        retrieve traces for the given transaction(s)
+	   when          find block(s) based on date, blockNum, timestamp, or 'special'
 	 CHAIN STATE
-	   state         export parts of the state for given address(es)
-	   tokens        export data related to ERC20 and/or ERC721 token(s)
+	   state         retrieve account balance(s) for one or more addresses at given block(s)
+	   tokens        retrieve token balance(s) for one or more addresses at given block(s)
 	 ADMIN
-	   status        query the status of the system
-	   serve         serve the TrueBlocks API via the flame server
-	   scrape        scrape the chain and build an index of address appearances (aka digests)
-	   init          initialize TrueBlocks databases by downloading pinned bloom filters
-	   pins          query the status of the pinning system
+	   status        report on the status of the TrueBlocks system
+	   serve         serve the TrueBlocks API using the flame server
+	   scrape        scan the chain and update the TrueBlocks index of appearances
+	   init          initialize the index of appearances by downloading bloom filters
+	   pins          manage pinned index of appearances and associated bloom filters
 	 OTHER
-	   quotes        return prices collected from configured remote API
-	   explore       open the configured block explorer for the given address
-	   slurp         export details by querying EtherScan
+	   quotes        freshen and/or display Ethereum price data
+	   explore       open an explorer for a given address, block, or transaction
+	   slurp         fetch data from EtherScan for any address
 	 
 
   Powered by TrueBlocks

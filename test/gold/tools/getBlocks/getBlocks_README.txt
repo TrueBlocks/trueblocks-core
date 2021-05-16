@@ -3,7 +3,7 @@ getBlocks -th
 ### Usage
 
 `Usage:`    chifra blocks [-e|-U|-t|-a|-u|-n|-c|-o|-v|-h] &lt;block&gt; [block...]  
-`Purpose:`  Returns block(s) from local cache or directly from a running node.
+`Purpose:`  Retrieve one or more blocks from the chain or local cache.
 
 `Where:`  
 

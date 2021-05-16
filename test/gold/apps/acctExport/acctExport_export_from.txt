@@ -4,7 +4,7 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --start 10277780 --end 102
   Invalid option: --from
 
   Usage:    acctExport [-p|-r|-l|-t|-C|-O|-a|-i|-R|-y|-U|-c|-e|-v|-h] <address> [address...] [topics] [fourbytes]  
-  Purpose:  Export full detail of transactions for one or more Ethereum addresses.
+  Purpose:  Export full detail of transactions for one or more addresses.
 
   Where:  
 	addrs                 one or more addresses (0x...) to export (required)

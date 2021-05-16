@@ -4,7 +4,7 @@ getTrans 0x0012
   The argument '0x0012' is not properly formatted. Is it the right length? Quitting...
 
   Usage:    getTrans [-a|-t|-u|-o|-v|-h] <tx_id> [tx_id...]  
-  Purpose:  Retrieves one or more transactions from the cache or the node.
+  Purpose:  Retrieve one or more transactions from the chain or local cache.
 
   Where:  
 	transactions          a space-separated list of one or more transaction identifiers (required)

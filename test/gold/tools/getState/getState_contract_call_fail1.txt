@@ -4,7 +4,7 @@ getState --call 0xa4f29fc548856180f6b1e319ee4d86715875!0x12065fe0 6523977-654000
   The first part of the call data to --call must be an address. Quitting...
 
   Usage:    getState [-p|-c|-n|-v|-h] <address> [address...] [block...]  
-  Purpose:  Retrieve the balance of one or more address at the given block(s).
+  Purpose:  Retrieve account balance(s) for one or more addresses at given block(s).
 
   Where:  
 	addrs                 one or more addresses (0x...) from which to retrieve balances (required)

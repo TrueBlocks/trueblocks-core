@@ -3,7 +3,7 @@ cacheStatus -th
 ### Usage
 
 `Usage:`    chifra status [-d|-t|-v|-h] &lt;mode&gt; [mode...]  
-`Purpose:`  Report on status of one or more TrueBlocks caches.
+`Purpose:`  Report on the status of the TrueBlocks system.
 
 `Where:`  
 

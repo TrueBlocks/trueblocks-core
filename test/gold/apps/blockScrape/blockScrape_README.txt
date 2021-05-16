@@ -3,7 +3,7 @@ blockScrape -th
 ### Usage
 
 `Usage:`    chifra scrape [-t|-n|-p|-s|-i|-R|-v|-h] mode  
-`Purpose:`  Decentralized blockchain scraper and block cache.
+`Purpose:`  Scan the chain and update the TrueBlocks index of appearances.
 
 `Where:`  
 

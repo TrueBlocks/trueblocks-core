@@ -2,7 +2,7 @@ ethslurp argc: 2 [1:-h]
 ethslurp -h 
 
   Usage:    ethslurp [-t|-p|-v|-h] <address> [address...] [block...]  
-  Purpose:  Fetches data from EtherScan for an arbitrary address.
+  Purpose:  Fetch data from EtherScan for any address.
 
   Where:  
 	addrs                 one or more addresses to slurp from Etherscan (required)

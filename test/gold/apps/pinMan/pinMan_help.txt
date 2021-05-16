@@ -2,7 +2,7 @@ pinMan argc: 2 [1:-h]
 pinMan -h 
 
   Usage:    pinMan [-c|-i|-f|-s|-v|-h]  
-  Purpose:  Report on and manage the remotely pinned appearance index and associated bloom filters.
+  Purpose:  Manage pinned index of appearances and associated bloom filters.
 
   Where:  
 	-c  (--compare)       report differences (if any) between the manifest and pinning service

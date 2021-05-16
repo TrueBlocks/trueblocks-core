@@ -2,7 +2,7 @@ getLogs argc: 1
 getLogs 
 
   Usage:    getLogs [-t|-s|-a|-v|-h] <tx_id> [tx_id...]  
-  Purpose:  Retrieve a transaction's logs from the cache or the node.
+  Purpose:  Retrieve logs for the given transaction(s).
 
   Where:  
 	transactions          a space-separated list of one or more transaction identifiers (required)

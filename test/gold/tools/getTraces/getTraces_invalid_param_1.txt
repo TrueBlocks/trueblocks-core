@@ -4,7 +4,7 @@ getTraces .th
   .th does not appear to be a valid transaction index. Quitting...
 
   Usage:    getTraces [-a|-f|-d|-c|-v|-h] <tx_id> [tx_id...]  
-  Purpose:  Retrieve a transaction's traces from the cache or the node.
+  Purpose:  Retrieve traces for the given transaction(s).
 
   Where:  
 	transactions          a space-separated list of one or more transaction identifiers (required)

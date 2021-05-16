@@ -11,7 +11,7 @@ By default, the results of the extraction are delivered to your console, however
 ### Usage
 
 `Usage:`    chifra export [-p|-r|-l|-t|-C|-O|-a|-i|-R|-y|-U|-c|-e|-v|-h] &lt;address&gt; [address...] [topics] [fourbytes]  
-`Purpose:`  Export full detail of transactions for one or more Ethereum addresses.
+`Purpose:`  Export full detail of transactions for one or more addresses.
 
 `Where:`  
 

@@ -3,7 +3,7 @@ getTraces -th
 ### Usage
 
 `Usage:`    chifra traces [-a|-f|-d|-c|-v|-h] &lt;tx_id&gt; [tx_id...]  
-`Purpose:`  Retrieve a transaction's traces from the cache or the node.
+`Purpose:`  Retrieve traces for the given transaction(s).
 
 `Where:`  
 

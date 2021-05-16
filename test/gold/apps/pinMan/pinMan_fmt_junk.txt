@@ -4,7 +4,7 @@ pinMan --fmt junk
   Export format (junk) must be one of [ json | txt | csv | api ]. Quitting...
 
   Usage:    pinMan [-c|-i|-f|-s|-v|-h]  
-  Purpose:  Report on and manage the remotely pinned appearance index and associated bloom filters.
+  Purpose:  Manage pinned index of appearances and associated bloom filters.
 
   Where:  
 	-c  (--compare)       report differences (if any) between the manifest and pinning service

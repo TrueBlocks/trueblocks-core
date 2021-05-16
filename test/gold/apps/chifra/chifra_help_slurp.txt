@@ -5,7 +5,7 @@ chifra slurp --help
 PROG_NAME = [chifra slurp]
 
   Usage:    chifra slurp [-t|-p|-v|-h] <address> [address...] [block...]  
-  Purpose:  Fetches data from EtherScan for an arbitrary address.
+  Purpose:  Fetch data from EtherScan for any address.
 
   Where:  
 	addrs                 one or more addresses to slurp from Etherscan (required)

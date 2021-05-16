@@ -4,7 +4,7 @@ ethslurp 0x1324e7b922b30B49Ab8EA81086341cc41C249346 --types
   The --types option requires a value. Quitting...
 
   Usage:    ethslurp [-t|-p|-v|-h] <address> [address...] [block...]  
-  Purpose:  Fetches data from EtherScan for an arbitrary address.
+  Purpose:  Fetch data from EtherScan for any address.
 
   Where:  
 	addrs                 one or more addresses to slurp from Etherscan (required)

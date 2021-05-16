@@ -9,7 +9,7 @@ The values for `date` and `time` are specified in JSON format. `hour`/`minute`/`
 ### usage
 
 `Usage:`    chifra when [-l|-t|-s|-v|-h] &lt; block | date &gt; [ block... | date... ]  
-`Purpose:`  Finds block based on date, blockNum, timestamp, or 'special'.
+`Purpose:`  Find block(s) based on date, blockNum, timestamp, or 'special'.
 
 `Where:`  
 

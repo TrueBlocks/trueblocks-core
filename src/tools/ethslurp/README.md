@@ -9,7 +9,7 @@ While `chifra slurp` has its shortcomings, it does provides some nice features. 
 ### Usage
 
 `Usage:`    chifra slurp [-t|-p|-v|-h] &lt;address&gt; [address...] [block...]  
-`Purpose:`  Fetches data from EtherScan for an arbitrary address.
+`Purpose:`  Fetch data from EtherScan for any address.
 
 `Where:`  
 

@@ -3,7 +3,7 @@ ethNames -th
 ### Usage
 
 `Usage:`    chifra names [-e|-m|-l|-c|-p|-n|-a|-s|-g|-v|-h] &lt;term&gt; [term...]  
-`Purpose:`  Query addresses and/or names of well known accounts.
+`Purpose:`  Query addresses or names of well known accounts.
 
 `Where:`  
 
