@@ -402,10 +402,7 @@ bool writeTheCode(const codewrite_t& cw) {
         replace(codeOut, "::virtual ~Q", "::~Q");
     }
 
-    bool testing = cw.testing;
-    if (isTestMode())
-        testing = true;
-
+    bool testing = isTestMode();
     if (cw.force || orig != codeOut) {
         // Do the actual writing of the data only if we're not testing or the user has told us not to
         if (cw.force || !testing) {

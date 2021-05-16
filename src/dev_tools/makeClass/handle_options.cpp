@@ -181,19 +181,13 @@ bool COptions::handle_options(void) {
             string_q fn = "../src/" + tool.first + "/options.cpp";
             if (tool.first == "/./")
                 fn = "./options.cpp";
-            if (!test) {
-                writeCode(substitute(fn, ".cpp", ".h"));
-                writeCode(fn);
-            }
+            writeCode(substitute(fn, ".cpp", ".h"));
+            writeCode(fn);
         }
 
         clearStreams();
     }
 
-    if (test) {
-        counter.nProcessed = 0;
-        LOG_WARN("Testing only - no files written");
-    }
     LOG_INFO(cYellow, "makeClass --options", cOff, " processed ", counter.nVisited, " files (changed ",
              counter.nProcessed, ").", string_q(40, ' '));
 

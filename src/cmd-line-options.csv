@@ -207,7 +207,6 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,is_customizable
 11784,dev_tools,,,makeClass,dump,d,,false,false,false,false,local,switch,<boolean>,dump any classDefinition config tomls to screen and quit
 11800,dev_tools,,,makeClass,nspace,n,qblocks,false,false,true,false,header,flag,<string>,surround generated c++ code with a namespace
 11820,dev_tools,,,makeClass,filter,i,,false,false,true,false,header,flag,<string>,process only files whose filename or contents contain 'filter'
-11821,dev_tools,,,makeClass,test,t,,false,false,true,false,header,switch,<boolean>,for both code generation and options generation&#44; process but do not write changes
 11822,dev_tools,,,makeClass,force,c,false,false,false,true,false,header,switch,<boolean>,for both code generation and options generation&#44; force writing of changes
 11823,dev_tools,,,makeClass,api,p,,false,false,false,false,header,switch,<boolean>,generate api options file in explorer repo
 11781,dev_tools,,,makeClass,openapi,A,,false,false,false,false,header,switch,<boolean>,export openapi.yaml file for API documentation

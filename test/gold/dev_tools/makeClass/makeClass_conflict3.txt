@@ -3,7 +3,7 @@ makeClass -r --edit
 
   Please chose exactly one of --run, --list, or --edit. Quitting...
 
-  Usage:    makeClass [-r|-a|-o|-m|-f|-l|-n|-i|-t|-c|-v|-h] <file> [file...]  
+  Usage:    makeClass [-r|-a|-o|-m|-f|-l|-n|-i|-c|-v|-h] <file> [file...]  
   Purpose:  Automatically writes C++ for various purposes.
 
   Where:  
@@ -16,7 +16,6 @@ makeClass -r --edit
 	-l  (--lint)          lint source code files (.cpp and .h) found in local folder and below
 	-n  (--nspace <str>)  surround generated c++ code with a namespace
 	-i  (--filter <str>)  process only files whose filename or contents contain 'filter'
-	-t  (--test)          for both code generation and options generation, process but do not write changes
 	-c  (--force)         for both code generation and options generation, force writing of changes
 
 	#### Hidden options

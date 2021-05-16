@@ -165,10 +165,9 @@ class codewrite_t {
   public:
     string_q fileName, codeOutIn, namespc;
     uint32_t nSpaces;
-    bool testing, stripEOFNL, force;
-    codewrite_t(const string_q& fn, const string_q& c, const string_q& n, uint32_t ns, bool t, bool s = true,
-                bool f = false)
-        : fileName(fn), codeOutIn(c), namespc(n), nSpaces(ns), testing(t), stripEOFNL(s), force(f) {
+    bool stripEOFNL, force;
+    codewrite_t(const string_q& fn, const string_q& c, const string_q& n, uint32_t ns, bool s = true, bool f = false)
+        : fileName(fn), codeOutIn(c), namespc(n), nSpaces(ns), stripEOFNL(s), force(f) {
     }
 };
 extern bool shouldQuit(void);

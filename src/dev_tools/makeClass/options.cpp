@@ -32,7 +32,6 @@ static const COption params[] = {
     COption("dump", "d", "", OPT_HIDDEN | OPT_SWITCH, "dump any classDefinition config tomls to screen and quit"),
     COption("nspace", "n", "<string>", OPT_FLAG, "surround generated c++ code with a namespace"),
     COption("filter", "i", "<string>", OPT_FLAG, "process only files whose filename or contents contain 'filter'"),
-    COption("test", "t", "", OPT_SWITCH, "for both code generation and options generation, process but do not write changes"),  // NOLINT
     COption("force", "c", "", OPT_SWITCH, "for both code generation and options generation, force writing of changes"),
     COption("api", "p", "", OPT_HIDDEN | OPT_SWITCH, "generate api options file in explorer repo"),
     COption("openapi", "A", "", OPT_HIDDEN | OPT_SWITCH, "export openapi.yaml file for API documentation"),
@@ -98,9 +97,6 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-i" || arg == "--filter") {
             return flag_required("filter");
 
-        } else if (arg == "-t" || arg == "--test") {
-            test = true;
-
         } else if (arg == "-c" || arg == "--force") {
             force = true;
 
@@ -136,7 +132,6 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST_BOOL("dump", dump);
     LOG_TEST("nspace", nspace, (nspace == "qblocks"));
     LOG_TEST("filter", filter, (filter == ""));
-    LOG_TEST_BOOL("test", test);
     LOG_TEST_BOOL("force", force);
     LOG_TEST_BOOL("api", api);
     LOG_TEST_BOOL("openapi", openapi);
@@ -238,7 +233,6 @@ void COptions::Init(void) {
     all = false;
     nspace = "qblocks";
     filter = "";
-    test = false;
     force = false;
     api = false;
     openapi = false;

@@ -2,7 +2,7 @@ makeClass argc: 2 [1:-th]
 makeClass -th 
 ### Usage
 
-`Usage:`    makeClass [-r|-a|-o|-m|-f|-l|-n|-i|-t|-c|-v|-h] &lt;file&gt; [file...]  
+`Usage:`    makeClass [-r|-a|-o|-m|-f|-l|-n|-i|-c|-v|-h] &lt;file&gt; [file...]  
 `Purpose:`  Automatically writes C++ for various purposes.
 
 `Where:`  
@@ -18,7 +18,6 @@ makeClass -th
 | -l | --lint | lint source code files (.cpp and .h) found in local folder and below |
 | -n | --nspace &lt;str&gt; | surround generated c++ code with a namespace |
 | -i | --filter &lt;str&gt; | process only files whose filename or contents contain 'filter' |
-| -t | --test | for both code generation and options generation, process but do not write changes |
 | -c | --force | for both code generation and options generation, force writing of changes |
 |####|Hidden options||
 | -e | --edit | edit <class_name(s)> definition file in local folder |

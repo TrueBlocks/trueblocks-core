@@ -55,7 +55,6 @@ class COptions : public COptionsBase {
     bool all;
     string_q nspace;
     string_q filter;
-    bool test;
     bool force;
     bool api;
     bool openapi;

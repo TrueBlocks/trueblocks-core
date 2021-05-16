@@ -26,15 +26,13 @@ bool COptions::handle_format(void) {
 
     LOG_INFO(cYellow, "handling formatting...", cOff);
     counter = CCounter();
-    if (!test) {
-        counter.is_counting = true;
-        forEveryFileInFolder("./", formatFiles, this);
-        counter.is_counting = false;
-        forEveryFileInFolder("./", formatFiles, this);
-        config.setConfigStr("settings", "lastFormat", uint_2_Str(static_cast<uint64_t>(date_2_Ts(Now()))));
-        config.writeFile();
-        config.Release();
-    }
+    counter.is_counting = true;
+    forEveryFileInFolder("./", formatFiles, this);
+    counter.is_counting = false;
+    forEveryFileInFolder("./", formatFiles, this);
+    config.setConfigStr("settings", "lastFormat", uint_2_Str(static_cast<uint64_t>(date_2_Ts(Now()))));
+    config.writeFile();
+    config.Release();
     LOG_INFO(cYellow, "makeClass --format", cOff, " processed ", counter.nVisited, " files (changed ",
              counter.nProcessed, ").", string_q(40, ' '));
 

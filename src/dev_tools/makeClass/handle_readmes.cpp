@@ -104,10 +104,8 @@ bool COptions::handle_readmes(void) {
 
     LOG_INFO(cYellow, "handling readmes...", cOff);
     counter = CCounter();  // reset
-    if (!test) {
-        forEveryFileInFolder("../docs/readme_templates", findReplacements, this);
-        forEveryFileInFolder("../docs/readme_templates", visitReadme, this);
-    }
+    forEveryFileInFolder("../docs/readme_templates", findReplacements, this);
+    forEveryFileInFolder("../docs/readme_templates", visitReadme, this);
     LOG_INFO(cYellow, "makeClass --readmes", cOff, " processed ", counter.nVisited, " files (changed ",
              counter.nProcessed, ").", string_q(40, ' '));
     return true;

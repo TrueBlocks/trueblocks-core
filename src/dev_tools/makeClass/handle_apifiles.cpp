@@ -32,6 +32,7 @@ void COptions::writeOpenApiFile(void) {
         for (auto option : optionArray)
             if (option.api_route == ep.api_route && option.isChifraRoute())
                 params.push_back(option);
+        ep.params = &params;
 
         chifraCmdStream << ep.toChifraCmd() << endl;
         chifraHelpStream << ep.toChifraHelp() << endl;
@@ -40,7 +41,6 @@ void COptions::writeOpenApiFile(void) {
         htmlTagStream << ep.toHtmlTag();
         goCallStream << ep.toGoCall();
         goRouteStream << ep.toGoRoute();
-        ep.params = &params;
         apiPathStream << ep.toApiPath();
         htmlPathStream << ep.toHtmlPath();
 
@@ -54,10 +54,6 @@ void COptions::writeOpenApiFile(void) {
     writeCode("../src/apps/chifra/options.cpp");
     writeCode("../src/libs/utillib/options_base.cpp");
 
-    if (test) {
-        counter.routeCount = 0;
-        LOG_WARN("Testing only - openapi file not written");
-    }
     LOG_INFO(cYellow, "makeClass --openapi", cOff, " processed ", counter.routeCount, "/", counter.cmdCount,
              " routes/cmds ", " (changed ", counter.nProcessed, ").", string_q(40, ' '));
 }
