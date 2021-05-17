@@ -766,7 +766,7 @@ map<string_q, string_q> progNameMap = {
     make_pair("pinMan", "chifra pins"),
     // -- Other
     make_pair("getQuotes", "chifra quotes"),
-    // explore
+    make_pair("fireStorm", "chifra explore"),
     make_pair("ethslurp", "chifra slurp"),
     // END_CODE_CHIFRA_PAIRMAP
     //

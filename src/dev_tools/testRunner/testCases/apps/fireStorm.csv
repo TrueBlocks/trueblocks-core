@@ -1,0 +1,6 @@
+enabled ,mode ,speed ,route   ,path/tool      ,filename        ,post ,options ,opt_cmd ,has_env
+on      ,cmd  ,fast  ,explore ,apps/fireStorm ,README          ,n    ,@th
+on      ,cmd  ,fast  ,explore ,apps/fireStorm ,help            ,n    ,@h
+on      ,cmd  ,fast  ,explore ,apps/fireStorm ,help_long       ,n    ,help
+on      ,both ,fast  ,explore ,apps/fireStorm ,no_params       ,y    ,
+on      ,both ,fast  ,explore ,apps/fireStorm ,invalid_param_1 ,y    ,junk

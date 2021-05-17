@@ -36,7 +36,7 @@ bool process_reconciliation(COptions* options, CTransaction& trans, CReconciliat
                     nums.asset = tokenName.symbol.empty() ? tokenName.name.substr(0, 4) : tokenName.symbol;
                 }
                 if (nums.asset.empty()) {
-                    nums.asset = log.address.substr(0,4) + "...";
+                    nums.asset = log.address.substr(0, 4) + "...";
                 }
                 nums.decimals = tokenName.decimals != 0 ? tokenName.decimals : 18;
                 string key = options->accountedFor + "_" + log.address;

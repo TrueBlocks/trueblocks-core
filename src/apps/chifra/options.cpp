@@ -159,7 +159,7 @@ map<string, string> chifraCmdMap = {
     {"pins", "pinMan"},
     // -- Other
     {"quotes", "getQuotes"},
-    {"explore", "ethscan.py"},
+    {"explore", "fireStorm"},
     {"slurp", "ethslurp"},
     // END_CODE_CHIFRA_CMDMAP
 };
