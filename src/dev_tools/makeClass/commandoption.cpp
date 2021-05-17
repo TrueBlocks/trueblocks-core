@@ -667,7 +667,6 @@ extern const char* STR_PATH_YAML;
 extern const char* STR_PARAM_YAML;
 extern const char* STR_PATH_HTML;
 extern const char* STR_PARAM_HTML;
-extern string_q getTypeStr(const CCommandOption& opt, const string_q& lead, const string_q& trail, bool quoted);
 
 //---------------------------------------------------------------------------------------------------
 bool isApiRoute(const string_q& route) {
@@ -793,7 +792,7 @@ string_q CCommandOption::toApiPath(void) const {
         replace(yp, "[{NAME}]", param.command);
         replace(yp, "[{DESCR}]", param.swagger_descr);
         replace(yp, "[{REQ}]", param.is_required ? "true" : "false");
-        replace(yp, "[{TYPE}]", getTypeStr(param, "          ", "", false));
+        replace(yp, "[{TYPE}]", param.getType(false /* forHtml */));
         paramStream << yp << endl;
     }
     string_q ret = STR_PATH_YAML;
@@ -819,7 +818,7 @@ string_q CCommandOption::toHtmlPath(void) const {
         replace(yp, "[{NAME}]", param.command);
         replace(yp, "[{DESCR}]", substitute(substitute(param.swagger_descr, "'", "\\'"), "\n         ", ""));
         replace(yp, "[{REQ}]", param.is_required ? "true" : "false");
-        replace(yp, "[{TYPE}]", getTypeStr(param, "{", "}", true));
+        replace(yp, "[{TYPE}]", param.getType(true /* forHtml */));
         paramStream << yp << endl;
     }
     string_q ret = STR_PATH_HTML;
@@ -833,11 +832,14 @@ string_q CCommandOption::toHtmlPath(void) const {
 }
 
 //---------------------------------------------------------------------------------------------------
-string_q getTypeStr(const CCommandOption& opt, const string_q& lead, const string_q& trail, bool quoted) {
-    if (contains(opt.data_type, "list")) {
+string_q CCommandOption::getType(bool forHtml) const {
+    string_q lead = (forHtml ? "{" : "          ");
+    string_q trail = (forHtml ? "}" : "");
+
+    if (contains(data_type, "list")) {
         if (trail == "}") {
-            if (contains(opt.data_type, "enum")) {
-                string_q e = substitute(substitute(opt.data_type, "list<", ""), ">", "");
+            if (contains(data_type, "enum")) {
+                string_q e = substitute(substitute(data_type, "list<", ""), ">", "");
                 string_q str = substitute(substitute(substitute(e, "*", ""), "enum[", ""), "]", "");
                 CStringArray opts;
                 explode(opts, str, '|');
@@ -855,8 +857,8 @@ string_q getTypeStr(const CCommandOption& opt, const string_q& lead, const strin
                 return "{type: 'array', items: {type: 'string'}}";
             }
         } else {
-            if (contains(opt.data_type, "enum")) {
-                string_q e = substitute(substitute(opt.data_type, "list<", ""), ">", "");
+            if (contains(data_type, "enum")) {
+                string_q e = substitute(substitute(data_type, "list<", ""), ">", "");
                 string_q str = substitute(substitute(substitute(e, "*", ""), "enum[", ""), "]", "");
                 CStringArray opts;
                 explode(opts, str, '|');
@@ -880,15 +882,15 @@ string_q getTypeStr(const CCommandOption& opt, const string_q& lead, const strin
         }
     }
 
-    if (contains(opt.data_type, "boolean")) {
-        return lead + "type: " + (quoted ? "'boolean'" : "boolean") + trail;
+    if (contains(data_type, "boolean")) {
+        return lead + "type: " + (forHtml ? "'boolean'" : "boolean") + trail;
 
-    } else if (contains(opt.data_type, "uint") || contains(opt.data_type, "double")) {
-        return lead + "type: " + (quoted ? "'number'" : "number") + trail;
+    } else if (contains(data_type, "uint") || contains(data_type, "double")) {
+        return lead + "type: " + (forHtml ? "'number'" : "number") + trail;
 
-    } else if (contains(opt.data_type, "enum")) {
+    } else if (contains(data_type, "enum")) {
         if (trail == "}") {
-            string_q str = substitute(substitute(substitute(opt.data_type, "*", ""), "enum[", ""), "]", "");
+            string_q str = substitute(substitute(substitute(data_type, "*", ""), "enum[", ""), "]", "");
             CStringArray opts;
             explode(opts, str, '|');
             ostringstream os;
@@ -901,7 +903,7 @@ string_q getTypeStr(const CCommandOption& opt, const string_q& lead, const strin
             }
             return lead + "type: 'string', enum: [" + os.str() + "] }";
         } else {
-            string_q str = substitute(substitute(substitute(opt.data_type, "*", ""), "enum[", ""), "]", "");
+            string_q str = substitute(substitute(substitute(data_type, "*", ""), "enum[", ""), "]", "");
             CStringArray opts;
             explode(opts, str, '|');
             ostringstream os;
@@ -917,7 +919,7 @@ string_q getTypeStr(const CCommandOption& opt, const string_q& lead, const strin
         }
     }
 
-    return lead + "type: " + (quoted ? "'string'" : "string") + trail;
+    return lead + "type: " + (forHtml ? "'string'" : "string") + trail;
 }
 
 //---------------------------------------------------------------------------------------------------

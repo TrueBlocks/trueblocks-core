@@ -173,7 +173,6 @@ class codewrite_t {
 extern bool shouldQuit(void);
 extern void lockSection(void);
 extern void unlockSection(void);
-extern bool writeTheCode(const codewrite_t& cw);
 
 //----------------------------------------------------------------------
 inline bool isFileLocked(const string_q& fileName) {

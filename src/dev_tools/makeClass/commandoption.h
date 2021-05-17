@@ -82,6 +82,7 @@ class CCommandOption : public CBaseNode {
     string_q toApiPath(void) const;
     string_q toHtmlPath(void) const;
     bool isChifraRoute(void) const;
+    string_q getType(bool quoted) const;
     // EXISTING_CODE
     bool operator==(const CCommandOption& it) const;
     bool operator!=(const CCommandOption& it) const {
