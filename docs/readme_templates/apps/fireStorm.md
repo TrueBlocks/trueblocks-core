@@ -1,6 +1,6 @@
 ## [{NAME}]
 
-This tool is not yet ready for production use. Please return to this page later.
+`[{NAME}]` opens Etherscan (and other explorers -- including our own) to the block, transaction hash, or address you specify. It's a handy (configurable) way to open an explorer from the command line, nothing more.
 
 [{USAGE_TABLE}]
 [{FOOTER}]
