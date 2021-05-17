@@ -163,9 +163,9 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     // Ignoring classDefs for a moment, process special options. Note: order matters
-    if (readmes && !handle_readmes())
-        return false;
     if (options && !handle_options())
+        return false;
+    if (readmes && !handle_readmes())
         return false;
     if (format && !handle_format())
         return false;

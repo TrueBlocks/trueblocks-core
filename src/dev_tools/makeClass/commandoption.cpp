@@ -703,7 +703,7 @@ string_q CCommandOption::toChifraHelp(void) const {
 
 //---------------------------------------------------------------------------------------------------
 string_q CCommandOption::toPairMap(void) const {
-    if (is_visible) {
+    if (is_visible || api_route == "explore") {
         if (!contains(tool, " "))
             return Format("    make_pair(\"[{TOOL}]\", \"chifra [{API_ROUTE}]\"),");
         return Format("    // [{API_ROUTE}]");
