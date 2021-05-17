@@ -35,8 +35,9 @@ bool process_reconciliation(COptions* options, CTransaction& trans, CReconciliat
                     options->getNamedAccount(tokenName, log.address);
                     nums.asset = tokenName.symbol.empty() ? tokenName.name.substr(0, 4) : tokenName.symbol;
                 }
-                if (nums.asset.empty())
-                    nums.asset = "---";
+                if (nums.asset.empty()) {
+                    nums.asset = log.address.substr(0,4) + "...";
+                }
                 nums.decimals = tokenName.decimals != 0 ? tokenName.decimals : 18;
                 string key = options->accountedFor + "_" + log.address;
                 nums.begBal = prevStatements[key].endBal;
