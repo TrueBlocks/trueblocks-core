@@ -275,7 +275,7 @@ string_q getApiKey(const string_q& apiName, const string_q& signup) {
     char buffer[256];
     bzero(buffer, sizeof(buffer));
 
-    const char* STR_ERROR_NOKEY = "This program requires an api_key from `[APINAME]`. See `[SIGNUP]`.";
+    const char* STR_ERROR_NOKEY = "Articulation requires an api_key from `[APINAME]`. See `[SIGNUP]`.";
     errorMessage(substitute(substitute(STR_ERROR_NOKEY, "[APINAME]", apiName), "[SIGNUP]", signup));
     quickQuitHandler(0);
 

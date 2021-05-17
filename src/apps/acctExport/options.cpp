@@ -285,7 +285,7 @@ bool COptions::parseArguments(string_q& command) {
             LOG_TEST("Monitor found for", addr, false);
             LOG_TEST("Last block in monitor", monitor.getLastBlockInMonitor(), false);
         } else {
-            LOG_WARN("Monitor not found for ", addr + ". Continuing anyway.", false);
+            LOG_WARN("Monitor not found for ", addr + ". Continuing anyway.   ", false);
             firstBlockToVisit = 0;
         }
         if (accountedFor.empty()) {
