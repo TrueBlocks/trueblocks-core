@@ -54,25 +54,3 @@ bool inputFilter(const string_q& input, const COptions* opt) {
             return true;
     return false;
 }
-
-//-----------------------------------------------------------------------
-bool COptions::handle_accounting(void) {
-    CTraverser trav(this, cout, "txs");
-    if (freshen) {
-        trav.filterFunc = noopFunc;
-        trav.preFunc = noopFunc;
-        //        trav.postFunc = noopFunc;
-        trav.displayFunc = noopFunc;
-        trav.dataFunc = noopFunc;
-    } else {
-        trav.preFunc = acct_Pre;
-        trav.displayFunc = acct_Display;
-    }
-
-    CTraverserArray traversers;
-    traversers.push_back(trav);
-
-    forEveryAppearance(traversers, apps, nullptr);
-
-    return !shouldQuit();
-}

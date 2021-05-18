@@ -60,17 +60,3 @@ bool logFilter(const CLogEntry& log, const COptions* opt) {
 
     return true;
 }
-
-//-----------------------------------------------------------------------
-bool COptions::handle_logs(void) {
-    CTraverser trav(this, cout, "logs");
-    trav.preFunc = logs_Pre;
-    trav.displayFunc = logs_Display;
-
-    CTraverserArray traversers;
-    traversers.push_back(trav);
-
-    forEveryAppearance(traversers, apps, nullptr);
-
-    return !shouldQuit();
-}

@@ -51,7 +51,6 @@ class COptions : public CAbiOptions {
 
     CReconciliation lastStatement;
     CReconciliationMap prevStatements;
-    CMonitorCountArray counts;
     CPinnedChunkArray pinList;
 
     CBlockAddressMap prefundAddrMap;
@@ -88,12 +87,6 @@ class COptions : public CAbiOptions {
     bool loadOneAddress(const CMonitor& monitor, CAppearanceArray_base& arrayOut);
     bool loadAllAppearances(void);
 
-    bool handle_accounting(void);
-    bool handle_appearances(void);
-    bool handle_logs(void);
-    bool handle_receipts(void);
-    bool handle_traces(void);
-    bool handle_counts(void);
     bool process_clean(void);
     bool process_rm(const CAddressArray& addrs);
     bool process_freshen(void);
@@ -130,3 +123,15 @@ inline string_q plural(const string_q& in) {
 //-----------------------------------------------------------------------
 extern bool process_reconciliation(COptions* options, CTransaction& trans, CReconciliationMap& prev, blknum_t next,
                                    bool tokens);
+
+//-----------------------------------------------------------------------
+extern bool app_Display(CTraverser* trav, void* data);
+extern bool acct_Display(CTraverser* trav, void* data);
+extern bool receipts_Display(CTraverser* trav, void* data);
+extern bool logs_Display(CTraverser* trav, void* data);
+extern bool traces_Display(CTraverser* trav, void* data);
+
+extern bool acct_Pre(CTraverser* trav, void* data);
+extern bool logs_Pre(CTraverser* trav, void* data);
+
+extern bool app_Post(CTraverser* trav, void* data);

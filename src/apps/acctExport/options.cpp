@@ -335,14 +335,23 @@ bool COptions::parseArguments(string_q& command) {
         scanRange.second = end;
 
     if (count) {
+        firstOut = true;
+        cout << exportPreamble(expContext().fmtMap["header"], GETRUNTIME_CLASS(CMonitorCount)->m_ClassName);
         for (auto monitor : allMonitors) {
             string_q path = monitor.getMonitorPath(monitor.address);
             CMonitorCount monCount;
             monCount.address = monitor.address;
             monCount.fileSize = fileSize(path);
             monCount.nRecords = fileSize(path) / sizeof(CAppearance_base);
-            counts.push_back(monCount);
+            cout << ((isJson() && !firstOut) ? ", " : "");
+            cout << monCount;
+            firstOut = false;
+            if (shouldQuit())
+                break;
         }
+        cout << exportPostamble(errors, expContext().fmtMap["meta"]);
+        return false;
+
     } else {
         if (!loadAllAppearances())
             return false;
@@ -391,7 +400,6 @@ void COptions::Init(void) {
     listRange = make_pair(0, NOPOS);
 
     allMonitors.clear();
-    counts.clear();
     apps.clear();
 
     accountedFor = "";

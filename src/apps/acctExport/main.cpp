@@ -34,26 +34,46 @@ int main(int argc, const char* argv[]) {
         if (once)
             cout << exportPreamble(expContext().fmtMap["header"], options.className);
 
-        options.firstOut = true;
-        if (options.count) {
-            options.handle_counts();
-
-        } else if (options.appearances) {
-            options.handle_appearances();
+        CTraverser t(&options, cout, "");
+        CAppearanceDisplay dapp(options.accountedFor, options.accountedForName, NOPOS, NOPOS);
+        CTraverserArray traversers;
+        if (options.appearances) {
+            t.op = "appearances";
+            t.displayFunc = app_Display;
+            t.postFunc = app_Post;
+            t.dataFunc = noopFunc;
+            traversers.push_back(t);
 
         } else if (options.receipts) {
-            options.handle_receipts();
+            t.op = "receipts";
+            t.displayFunc = receipts_Display;
+            traversers.push_back(t);
 
         } else if (options.traces) {
-            options.handle_traces();
+            t.op = "traces";
+            t.displayFunc = traces_Display;
+            traversers.push_back(t);
 
         } else if (options.logs) {
-            options.handle_logs();
+            t.op = "logs";
+            t.preFunc = logs_Pre;
+            t.displayFunc = logs_Display;
+            traversers.push_back(t);
 
         } else {
-            ASSERT(accounting);
-            options.handle_accounting();
+            t.op = "txs";
+            t.filterFunc = (options.freshen ? noopFunc : rangeFilter);
+            t.preFunc = (options.freshen ? noopFunc : acct_Pre);
+            t.postFunc = post_Func;
+            t.displayFunc = (options.freshen ? noopFunc : acct_Display);
+            t.dataFunc = (options.freshen ? noopFunc : loadData);
+            traversers.push_back(t);
         }
+
+        forEveryAppearance(traversers, options.apps, &dapp);
+        if (shouldQuit())
+            break;
+
         once = false;
     }
 

@@ -20,17 +20,3 @@ bool receipts_Display(CTraverser* trav, void* data) {
     prog_Log(trav, data);
     return !shouldQuit();
 }
-
-//-----------------------------------------------------------------------
-bool COptions::handle_receipts(void) {
-    CTraverser trav(this, cout, "receipts");
-    trav.displayFunc = receipts_Display;
-
-    CTraverserArray traversers;
-    traversers.push_back(trav);
-
-    cache_txs = false;  // no need
-    forEveryAppearance(traversers, apps, nullptr);
-
-    return !shouldQuit();
-}

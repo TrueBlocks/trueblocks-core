@@ -56,17 +56,3 @@ bool traces_Display(CTraverser* trav, void* data) {
     prog_Log(trav, data);
     return !shouldQuit();
 }
-
-//-----------------------------------------------------------------------
-bool COptions::handle_traces(void) {
-    CTraverser trav(this, cout, "traces");
-    trav.displayFunc = traces_Display;
-
-    CTraverserArray traversers;
-    traversers.push_back(trav);
-
-    cache_txs = false;
-    forEveryAppearance(traversers, apps, nullptr);
-
-    return !shouldQuit();
-}
