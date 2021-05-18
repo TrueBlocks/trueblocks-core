@@ -212,8 +212,8 @@ bool isNodeRunning(void) {
 
 //-------------------------------------------------------------------------
 static const char* STR_ERROR_CURLERR =
-    "A request to your Ethereum node (`[{PROVIDER}]`) resulted in the|following error `[[{CURLERR}]]`. "
-    "Specify a valid rpcProvider by editing|`$CONFIG`.";
+    "The Ethereum RPC server was not found. To correct the problem, edit `rpcProvider` in|"
+    "the file `$CONFIG`.";
 
 //-------------------------------------------------------------------------
 static const char* STR_ERROR_CURLEMPTY = "The Ethereum node (`[{PROVIDER}]`) returned an empty response.";

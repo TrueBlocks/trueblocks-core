@@ -11,10 +11,13 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 	"os/exec"
+	"runtime"
 	"strings"
 
 	tb "github.com/TrueBlocks/trueblocks-core/src/go-apps/goServer/cmd"
+	homedir "github.com/mitchellh/go-homedir"
 )
 
 func main() {
@@ -35,7 +38,23 @@ func main() {
 		fmt.Printf("There was an error with the RPC server: %s", err)
 
 	} else if len(out) == 0 {
-		log.Printf("The RPC server sent an empty response. Quitting...")
+		// The results of the call to cacheStatus went to stderr. We assume here
+		// that this happened because the RPC server is not running or unavailable.
+		home, err := homedir.Dir()
+		if err != nil {
+			fmt.Println(err)
+			os.Exit(1)
+		}
+		configPath := "<unset>"
+		if (runtime.GOOS == "darwin") {
+			configPath = home + "/Library/Application Support/TrueBlocks"
+		} else if (runtime.GOOS == "linux") {
+			configPath = home + "/.local/share/trueblocks"
+		} else {
+			fmt.Println("Windows not supported.")
+		}
+  		log.Printf("The Ethereum RPC server was not found. To correct the problem, edit rpcProvider")
+  		log.Printf("in the file " + configPath)
 
 	} else {
 		log.Printf(string(out[:]))
@@ -45,6 +64,5 @@ func main() {
 
 		// Start listening for requests
 		log.Fatal(http.ListenAndServe(tb.Options.Port, tb.NewRouter()))
-
 	}
 }
