@@ -1,6 +1,9 @@
 [settings]
 class = CAbiCacheItem
 base_class = CAccountName
-fields = string type|uint64 nFunctions|uint64 nEvents|uint64 nOther
+fields = string type|\
+        uint64 nFunctions|\
+        uint64 nEvents|\
+        uint64 nOther
 includes = etherlib.h
 serialize = true
