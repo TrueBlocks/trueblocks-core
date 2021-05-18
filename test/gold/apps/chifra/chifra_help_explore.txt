@@ -1,9 +1,10 @@
-fireStorm argc: 2 [1:--junk] 
-fireStorm --junk 
+chifra argc: 3 [1:explore] [2:--help] 
+chifra explore --help 
+chifra explore argc: 2 [1:--help] 
+chifra explore --help 
+PROG_NAME = [chifra explore]
 
-  Invalid option: --junk
-
-  Usage:    fireStorm [-l|-v|-h] <term> [term...]  
+  Usage:    chifra explore [-l|-v|-h] <term> [term...]  
   Purpose:  Open an explorer for a given address, block, or transaction.
 
   Where:  

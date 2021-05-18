@@ -22,7 +22,46 @@ int main(int argc, const char* argv[]) {
 
         if (once)
             cout << exportPreamble(expContext().fmtMap["header"], "CPinnedChunk");
-        doCommand("ethscan.py " + command);
+
+        for (auto term : options.terms) {
+            string_q lower = toLower(term);
+            string url = "https://etherscan.io/";
+            if (isAddress(lower)) {
+                url += "address/" + lower;
+            } else if (isHash(lower)) {
+                CTransaction trans;
+                getTransaction(trans, lower);
+                if (trans.hash == lower) {
+                    url += "tx/" + lower;
+                } else {
+                    url += "block/" + lower;
+                }
+            } else {
+                if (endsWith(lower, ".eth")) {
+                    url = "https://etherscan.io/enslookup-search?search=" + lower;
+
+                } else if (contains(lower, ".")) {
+                    CUintArray parts;
+                    explode(parts, lower, '.');
+                    CTransaction trans;
+                    getTransaction(trans, parts[0], parts[1]);
+                    url += "tx/" + trans.hash;
+
+                } else {
+                    url += "block/" + lower;
+                }
+            }
+
+            if (options.local) {
+                // replace(url, "https://etherscan.io/block/", "http://localhost:3002/explorer/blocks/");
+                // replace(url, "https://etherscan.io/tx/", "http://localhost:3002/transactions/");
+                // replace(url, "https://etherscan.io/address/", "http://etherscan.io/address/");
+            }
+
+            cerr << "Opening " << url << endl;
+            if (!isTestMode())
+                doCommand("open " + url);
+        }
         once = false;
     }
 

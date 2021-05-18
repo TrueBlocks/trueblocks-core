@@ -17,6 +17,8 @@
 class COptions : public CAbiOptions {
   public:
     // BEG_CODE_DECLARE
+    CStringArray terms;
+    bool local;
     // END_CODE_DECLARE
 
     COptions(void);

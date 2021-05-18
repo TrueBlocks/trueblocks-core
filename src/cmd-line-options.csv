@@ -189,7 +189,8 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,is_customizable
 12082,tools,Other,quotes,getQuotes,,,,false,false,false,false,--,note,,Valid pairs include any pair from the public Poloniex's API here:|https://poloniex.com/public?command=returnCurrencies.
 12082,tools,Other,quotes,getQuotes,,,,false,false,false,false,--,note,,Due to restrictions from Poloniex&#44; this tool retrieves only 30 days of data|at a time. You must repeatedly run this command until the data is up-to-date.
 
-12001,apps,Other,explore,fireStorm,terms,,,false,false,true,true,local,positional,list<string>,one or more addresses&#44; ENS names&#44; block hashes or number&#44; or transaction identifiers
+12001,apps,Other,explore,fireStorm,terms,,,false,false,true,true,header,positional,list<string>,one or more addresses&#44; names&#44; block&#44; or transaction identifiers
+12001,apps,Other,explore,fireStorm,local,l,,false,false,true,true,header,switch,<boolean>,open the local TrueBlocks explorer
 12002,apps,Other,explore,fireStorm,,,,false,false,true,true,--,description,,Open an explorer for a given address&#44; block&#44; or transaction.
 
 12120,tools,Other,slurp,ethslurp,addrs,,,true,false,true,true,header,positional,list<addr>,one or more addresses to slurp from Etherscan
