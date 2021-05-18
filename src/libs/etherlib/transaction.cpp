@@ -622,7 +622,6 @@ void CTransaction::registerClass(void) {
         UNHIDE_FIELD(CTransaction, "age");
         UNHIDE_FIELD(CTransaction, "ether");
     }
-    //    HIDE_FIELD(CTransaction, "receipt");
     // EXISTING_CODE
 }
 
