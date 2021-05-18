@@ -187,7 +187,7 @@ bool COptions::parseArguments(string_q& command) {
             !contains(command, "pause"))
             cleanupAndQuit();
         getCurrentState(current);
-        LOG_INFO("file contents: ", asciiFileToString(configPath("cache/tmp/scraper-state.txt")));
+        LOG_INFO("file contents: ", asciiFileToString(getCachePath("tmp/scraper-state.txt")));
         return false;
     }
 
@@ -315,7 +315,7 @@ COptions::COptions(void) {
     establishFolder(indexFolder_staging);
     establishFolder(indexFolder_unripe);
     establishFolder(indexFolder_ripe);
-    establishFolder(configPath("cache/tmp/"));
+    establishFolder(getCachePath("tmp/"));
 }
 
 //--------------------------------------------------------------------------------
@@ -325,7 +325,7 @@ COptions::~COptions(void) {
 //--------------------------------------------------------------------------------
 ScrapeState COptions::getCurrentState(string_q& current) {
     if (controlFile.empty())
-        controlFile = configPath("cache/tmp/scraper-state.txt");
+        controlFile = getCachePath("tmp/scraper-state.txt");
     current = asciiFileToString(controlFile);
     if (current == "running") {
         state = STATE_RUNNING;

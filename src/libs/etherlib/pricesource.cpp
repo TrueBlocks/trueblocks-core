@@ -45,7 +45,7 @@ bool loadPriceData(const CPriceSource& source, CPriceQuoteArray& quotes, bool fr
         lastRead = time_q(2009, 1, 1, 0, 0, 0);
 
     if (!fileExists(cacheFile)) {
-        string_q zipFile = configPath("cache/prices/") + theSource + "_" + source.pair + ".bin.gz";
+        string_q zipFile = getCachePath("prices/") + theSource + "_" + source.pair + ".bin.gz";
         if (fileExists(zipFile)) {  // zipFile != cacheFile + ".gz") {
             ostringstream cmd;
             if (zipFile != cacheFile + ".gz")

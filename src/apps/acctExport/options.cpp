@@ -425,7 +425,7 @@ void COptions::Init(void) {
     establishFolder(indexFolder_staging);
     establishFolder(indexFolder_unripe);
     establishFolder(indexFolder_ripe);
-    establishFolder(configPath("cache/tmp/"));
+    establishFolder(getCachePath("tmp/"));
 }
 
 //---------------------------------------------------------------------------------------------------
