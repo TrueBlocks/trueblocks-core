@@ -4,45 +4,27 @@
  * All Rights Reserved
  *------------------------------------------------------------------------*/
 #include "options.h"
+#include "statusterse.h"
 
-inline string_q pathName(const string_q& str, const string_q& path = "") {
-    return (isTestMode() ? str + "Path" : (path.empty() ? getCachePath(str + "/") : path));
-}
+extern const char* STR_TERSE_REPORT;
+extern string_q pathName(const string_q& str, const string_q& path = "");
 //--------------------------------------------------------------------------------
 bool COptions::handle_status(ostream& os) {
     ENTER("handle_status");
 
     if (terse) {
-        const char* STR_TERSE_REPORT =
-            "client: [{CLIENT_VER}][{MODES1}]\n"
-            "[{TIME}] trueblocks: [{TB_VER}][{MODES2}]\n"
-            "[{TIME}] configPath: [{CONFIG_PATH}]\n"
-            "[{TIME}] cachePath: [{CACHE_PATH}]\n"
-            "[{TIME}] indexPath: [{INDEX_PATH}]\n"
-            "[{TIME}] rpcProvider: [{PROVIDER}]";
+        string_q fmt = STR_TERSE_REPORT;
+        replaceAll(fmt, "[{TIME}]",
+                   isTestMode() ? "--TIME--" : substitute(substitute(Now().Format(FMT_EXPORT), "T", " "), "-", "/"));
 
-        string_q modes1;
-        modes1 += string_q(status.is_testing ? "testing|" : "");
-        modes1 += string_q(status.is_archive ? "" : "not ") + "archive|";
-        modes1 += string_q(status.is_tracing ? "" : "not ") + "tracing|";
-        modes1 += string_q(status.is_docker ? "docker|" : "");
-        modes1 = (modes1.empty() ? "" : " (" + substitute(trim(modes1, '|'), "|", ", ") + ")");
-        string_q modes2;
-        modes2 += string_q(status.has_eskey ? "" : "no ") + "eskey|";
-        modes2 += string_q(status.has_pinkey ? "" : "no ") + "pinkey|";
-        modes2 = (modes2.empty() ? "" : " (" + substitute(trim(modes2, '|'), "|", ", ") + ")");
-        string_q report = STR_TERSE_REPORT;
-        replaceAll(report, "[{MODES1}]", modes1);
-        replaceAll(report, "[{MODES2}]", modes2);
-        replaceAll(report, "[{CLIENT_VER}]",
-                   (status.client_version.empty() ? "--no rpc server--" : status.client_version));
-        replaceAll(report, "[{TB_VER}]", status.trueblocks_version);
-        replaceAll(report, "[{CONFIG_PATH}]", status.config_path);
-        replaceAll(report, "[{CACHE_PATH}]", status.cache_path);
-        replaceAll(report, "[{INDEX_PATH}]", status.index_path);
-        replaceAll(report, "[{PROVIDER}]", status.rpc_provider);
-        replaceAll(report, "[{TIME}]", substitute(substitute(Now().Format(FMT_EXPORT), "T", " "), "-", "/"));
-        os << report << endl;
+        CStatusTerse st = status;
+        bool isText = expContext().exportFmt != JSON1 && expContext().exportFmt != API1;
+        if (!isText) {
+            fmt = "";
+            manageFields("CStatusTerse:modes1,modes2", FLD_HIDE);
+            manageFields("CStatus:client_ids,balance_provider,host,is_api,is_scraping,caches", FLD_HIDE);
+        }
+        os << st.Format(fmt) << endl;
         return true;
     }
 
@@ -601,3 +583,17 @@ void getIndexMetrics(const string_q& path, uint32_t& nAppearences, uint32_t& nAd
     nAddresses = header.nAddrs;
     nAppearences = header.nRows;
 }
+
+//--------------------------------------------------------------------------------
+string_q pathName(const string_q& str, const string_q& path) {
+    return (isTestMode() ? str + "Path" : (path.empty() ? getCachePath(str + "/") : path));
+}
+
+//--------------------------------------------------------------------------------
+const char* STR_TERSE_REPORT =
+    "client: [{CLIENT_VERSION}][{MODES1}]\n"
+    "[{TIME}] trueblocks: [{TRUEBLOCKS_VERSION}][{MODES2}]\n"
+    "[{TIME}] configPath: [{CONFIG_PATH}]\n"
+    "[{TIME}] cachePath: [{CACHE_PATH}]\n"
+    "[{TIME}] indexPath: [{INDEX_PATH}]\n"
+    "[{TIME}] rpcProvider: [{RPC_PROVIDER}]";

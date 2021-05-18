@@ -1,0 +1,7 @@
+[settings]
+base_class = CStatus
+class = CStatusTerse
+fields = string modes1|\
+        string modes2
+includes = etherlib.h|status.h
+serialize = true

@@ -272,6 +272,7 @@ COptions::COptions(void) {
     Init();
 
     CStatus::registerClass();
+    CStatusTerse::registerClass();
     CCache::registerClass();
     CEntityCache::registerClass();
     CEntityCacheItem::registerClass();

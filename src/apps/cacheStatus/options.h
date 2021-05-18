@@ -10,6 +10,7 @@
  */
 #include "pinlib.h"
 #include "status.h"
+#include "statusterse.h"
 #include "chaincache.h"
 #include "entitycache.h"
 #include "pricecache.h"
