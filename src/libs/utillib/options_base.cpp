@@ -726,7 +726,10 @@ bool COptionsBase::flag_required(const string_q& command) const {
 void errorMessage(const string_q& msg) {
     if (isApiMode()) {
         const char* STR_ERROR_JSON = "{ \"errors\": [ \"[ERRORS]\" ] }\n";
-        string_q message = substitute(substitute(msg, "|", " "), "$CONFIG", configPath("trueBlocks.toml"));
+        string_q message = substitute(msg, "$CONFIG", configPath("trueBlocks.toml"));
+        if (!contains(message, "[")) {
+            message = substitute(message, "|", " ");
+        }
         cout << substitute(substitute(STR_ERROR_JSON, "[ERRORS]", message), "`", "");
     } else {
         string_q message = substitute(substitute(msg, "|", "\n  "), "$CONFIG", configPath("trueBlocks.toml"));
