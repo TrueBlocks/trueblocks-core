@@ -150,11 +150,11 @@ bool reconcileIssuance(const CAppearance& app) {
     getBlock(block, app.bn);
     for (auto trans : block.transactions) {
         if (trans.from == app.addr) {
-            netTx -= trans.isError ? 0 : trans.value;
+            netTx -= trans.bitSetA ? 0 : trans.value;
             netTx -= str_2_BigInt(trans.getValueByName("gasCost"));
         }
         if (trans.to == app.addr) {
-            netTx += trans.isError ? 0 : trans.value;
+            netTx += trans.bitSetA ? 0 : trans.value;
         }
         expected = begBal + minerReward + nephewReward + minerTxFee + uncleReward1 + uncleReward2 + netTx;
         cerr << expected << " : " << endBal << " : " << (expected - endBal) << string_q(90, ' ') << "\r"; cerr.flush();

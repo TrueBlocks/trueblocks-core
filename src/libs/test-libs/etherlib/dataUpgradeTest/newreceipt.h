@@ -30,7 +30,7 @@ class CNewReceipt : public CBaseNode {
     gas_t gasUsed;
     CLogEntryArray logs;
     string_q logsBloom;
-    bool isError;
+    bool isErr;
 
   public:
     CNewReceipt(void);
@@ -100,7 +100,7 @@ inline void CNewReceipt::initialize(void) {
     gasUsed = 0;
     logs.clear();
     logsBloom = "";
-    isError = false;
+    isErr = false;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -115,7 +115,7 @@ inline void CNewReceipt::duplicate(const CNewReceipt& newr) {
     gasUsed = newr.gasUsed;
     logs = newr.logs;
     logsBloom = newr.logsBloom;
-    isError = newr.isError;
+    isErr = newr.isErr;
 
     // EXISTING_CODE
     // EXISTING_CODE

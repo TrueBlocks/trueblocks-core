@@ -63,7 +63,7 @@ class CTrace : public CBaseNode {
     const string_q getStringAt(const string_q& fieldName, size_t i) const override;
 
     // EXISTING_CODE
-    bool isError(void) const;
+    bool isErr(void) const;
     const CTransaction* pTrans;
     void loadTraceAsBlockReward(const CTransaction& trans, blknum_t bn, blknum_t txid);
     void loadTraceAsUncleReward(const CTransaction& trans, blknum_t bn, blknum_t uncleBn);

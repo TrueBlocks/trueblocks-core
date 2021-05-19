@@ -13,7 +13,7 @@
       "gas": "0x9c40",
       "gasPrice": "0xb96ddd6a4",
       "input": "0x",
-      "isError": "0x0",
+      "bitSetA": "0x0",
       "hasToken": "0x0",
       "receipt": {
         "contractAddress": "0x0",

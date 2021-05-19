@@ -63,7 +63,7 @@
           "type": "text"
         },
         {
-          "name": "isError",
+          "name": "bitSetA",
           "type": "unumber"
         },
         {

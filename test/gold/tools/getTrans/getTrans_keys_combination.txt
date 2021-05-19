@@ -14,7 +14,7 @@ getTrans 0x6afbe0f0ea3613edd6b84b71260836c03bddce81604f05c81a070cd671d3d765 4000
     "gas": 50000,
     "gasPrice": 4000000000,
     "input": "0x",
-    "isError": 0,
+    "bitSetA": 0,
     "hasToken": 0,
     "receipt": {
       "contractAddress": "0x0",
@@ -53,7 +53,7 @@ getTrans 0x6afbe0f0ea3613edd6b84b71260836c03bddce81604f05c81a070cd671d3d765 4000
     "gas": 1000000,
     "gasPrice": 25000000000,
     "input": "0xa9059cbb00000000000000000000000043a4210390998945dc7658a20b43c6c4189ac7d4000000000000000000000000000000000000000000000000000000000a21fe80",
-    "isError": 0,
+    "bitSetA": 0,
     "hasToken": 0,
     "receipt": {
       "contractAddress": "0x0",
@@ -86,7 +86,7 @@ getTrans 0x6afbe0f0ea3613edd6b84b71260836c03bddce81604f05c81a070cd671d3d765 4000
     "gas": 40000,
     "gasPrice": 49775761060,
     "input": "0x",
-    "isError": 0,
+    "bitSetA": 0,
     "hasToken": 0,
     "receipt": {
       "contractAddress": "0x0",

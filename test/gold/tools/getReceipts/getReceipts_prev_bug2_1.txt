@@ -1,4 +1,4 @@
 getReceipts argc: 2 [1:4279119.46] 
 getReceipts 4279119.46 
-blocknumber	transactionindex	hash	gasused	status	iserror
+blocknumber	transactionindex	hash	gasused	status	bitseta
 4279119	46	0xe611769659eac98190fadf0a2205bcdac9fa515245fb3a53702c03e9c96c8b48	48267	null	0

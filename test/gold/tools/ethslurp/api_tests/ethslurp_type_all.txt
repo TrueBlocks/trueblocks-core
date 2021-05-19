@@ -12,7 +12,7 @@
     "gas": "2300",
     "gasPrice": "0",
     "input": "",
-    "isError": "0",
+    "bitSetA": "0",
     "hasToken": "0",
     "gasUsed": "0",
     "date": "2017-05-30 03:00:06 UTC",

@@ -25,7 +25,7 @@ getBlocks 3657480 --cache
       "gas": 21000,
       "gasPrice": 21000000000,
       "input": "0x",
-      "isError": 0,
+      "bitSetA": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -47,7 +47,7 @@ getBlocks 3657480 --cache
       "gas": 21000,
       "gasPrice": 21000000000,
       "input": "0x",
-      "isError": 0,
+      "bitSetA": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -69,7 +69,7 @@ getBlocks 3657480 --cache
       "gas": 21000,
       "gasPrice": 21000000000,
       "input": "0x",
-      "isError": 0,
+      "bitSetA": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -91,7 +91,7 @@ getBlocks 3657480 --cache
       "gas": 21000,
       "gasPrice": 21000000000,
       "input": "0x",
-      "isError": 0,
+      "bitSetA": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -113,7 +113,7 @@ getBlocks 3657480 --cache
       "gas": 150000,
       "gasPrice": 21000000000,
       "input": "0xa9059cbb0000000000000000000000008016385dd7a268e676d7d075174e97db63782980000000000000000000000000000000000000000000000000159a2c9c0fb57c00",
-      "isError": 1,
+      "bitSetA": 1,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -135,7 +135,7 @@ getBlocks 3657480 --cache
       "gas": 250000,
       "gasPrice": 20000000000,
       "input": "0x278b8c0e0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002cbf47faa1a670000000000000000000000000000d8912c10681d8b21fd3742244f44658dba12264e00000000000000000000000000000000000000000000004be4e7267b6ae0000000000000000000000000000000000000000000000000000000000000003913e30000000000000000000000000000000000000000000000000000000085ed34c9000000000000000000000000000000000000000000000000000000000000001cf84d0de8df233a3fe75196e01d73d08c397959ff5b30951a3dc4cd5137351ce90be537e08c0d5feb390e64cdb06f47655e4c2b882a6f749bf4a431f4694d072a",
-      "isError": 0,
+      "bitSetA": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -167,7 +167,7 @@ getBlocks 3657480 --cache
       "gas": 135576,
       "gasPrice": 20000000000,
       "input": "0x665bcc3200000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000029dc",
-      "isError": 0,
+      "bitSetA": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -199,7 +199,7 @@ getBlocks 3657480 --cache
       "gas": 21001,
       "gasPrice": 20000000000,
       "input": "0x",
-      "isError": 0,
+      "bitSetA": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -221,7 +221,7 @@ getBlocks 3657480 --cache
       "gas": 21000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "isError": 0,
+      "bitSetA": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -243,7 +243,7 @@ getBlocks 3657480 --cache
       "gas": 40000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "isError": 0,
+      "bitSetA": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -275,7 +275,7 @@ getBlocks 3657480 --cache
       "gas": 50000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "isError": 0,
+      "bitSetA": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -297,7 +297,7 @@ getBlocks 3657480 --cache
       "gas": 650000,
       "gasPrice": 20000000000,
       "input": "0xfebefd610000000000000000000000000000000000000000000000000000000000000040c0fb860650546303b5e8ecdbe9cf4e1580b6725d27a192cf8e86fb8794092a280000000000000000000000000000000000000000000000000000000000000003029282ab4c531aabc76a999081896ad454437f33169f077b69003a6e5524e8b703406ef81ea53ea92e3adc28af1635562856f4d0bd1f1790b554a215f7757b2303c029bc03638d44a8d5503d34d77113d973199fad541e62fc90a39980b1f176",
-      "isError": 0,
+      "bitSetA": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -358,7 +358,7 @@ getBlocks 3657480 --cache
       "gas": 150000,
       "gasPrice": 20000000000,
       "input": "0xa9059cbb000000000000000000000000733c82c24e0b00219cd3f448e1ca8ae08d38169400000000000000000000000000000000000000000000002b10d76857b3e61000",
-      "isError": 0,
+      "bitSetA": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -392,7 +392,7 @@ getBlocks 3657480 --cache
       "gas": 243081,
       "gasPrice": 20000000000,
       "input": "0xa9b1d507",
-      "isError": 0,
+      "bitSetA": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -424,7 +424,7 @@ getBlocks 3657480 --cache
       "gas": 40000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "isError": 0,
+      "bitSetA": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -456,7 +456,7 @@ getBlocks 3657480 --cache
       "gas": 21000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "isError": 0,
+      "bitSetA": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -478,7 +478,7 @@ getBlocks 3657480 --cache
       "gas": 90000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "isError": 0,
+      "bitSetA": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -512,7 +512,7 @@ getBlocks 3657480 --cache
       "gas": 21000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "isError": 0,
+      "bitSetA": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -534,7 +534,7 @@ getBlocks 3657480 --cache
       "gas": 100000,
       "gasPrice": 20000000000,
       "input": "0xede8acdb071098eb2b532385851cffcb98692a7ccd4921049181fd9ce794106685818fe4",
-      "isError": 0,
+      "bitSetA": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -567,7 +567,7 @@ getBlocks 3657480 --cache
       "gas": 21001,
       "gasPrice": 20000000000,
       "input": "0x",
-      "isError": 0,
+      "bitSetA": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -589,7 +589,7 @@ getBlocks 3657480 --cache
       "gas": 940000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "isError": 0,
+      "bitSetA": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -611,7 +611,7 @@ getBlocks 3657480 --cache
       "gas": 90000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "isError": 0,
+      "bitSetA": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -633,7 +633,7 @@ getBlocks 3657480 --cache
       "gas": 90000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "isError": 0,
+      "bitSetA": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -667,7 +667,7 @@ getBlocks 3657480 --cache
       "gas": 50000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "isError": 0,
+      "bitSetA": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -689,7 +689,7 @@ getBlocks 3657480 --cache
       "gas": 21000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "isError": 0,
+      "bitSetA": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -711,7 +711,7 @@ getBlocks 3657480 --cache
       "gas": 40000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "isError": 0,
+      "bitSetA": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -743,7 +743,7 @@ getBlocks 3657480 --cache
       "gas": 105000,
       "gasPrice": 20000000000,
       "input": "0xa9059cbb000000000000000000000000ea57ca24a223f4075163334c0379c3ec7317c0ad0000000000000000000000000000000000000000000000008ac7230489e80000",
-      "isError": 0,
+      "bitSetA": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -795,7 +795,7 @@ getBlocks 3657480 --cache
       "gas": 400000,
       "gasPrice": 20000000000,
       "input": "0x257bcd6a010000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000000000000000090000000000000000000000000000000000000000000000000000000000000000",
-      "isError": 0,
+      "bitSetA": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -836,7 +836,7 @@ getBlocks 3657480 --cache
       "gas": 50000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "isError": 0,
+      "bitSetA": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -858,7 +858,7 @@ getBlocks 3657480 --cache
       "gas": 500000,
       "gasPrice": 20000000000,
       "input": "0xce92dced4d0eb7d2210b2cf89ed0b297d53f42a8ff2c3bbefe51bc7e27aba01d9d4c402a",
-      "isError": 0,
+      "bitSetA": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -892,7 +892,7 @@ getBlocks 3657480 --cache
       "gas": 50000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "isError": 0,
+      "bitSetA": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -914,7 +914,7 @@ getBlocks 3657480 --cache
       "gas": 100000,
       "gasPrice": 20000000000,
       "input": "0xede8acdb04e39aecdcb3d99ee05a8020ecfbb3fe80451f0cebc5583732282f48727c1007",
-      "isError": 0,
+      "bitSetA": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -947,7 +947,7 @@ getBlocks 3657480 --cache
       "gas": 50000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "isError": 0,
+      "bitSetA": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -969,7 +969,7 @@ getBlocks 3657480 --cache
       "gas": 50000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "isError": 0,
+      "bitSetA": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -991,7 +991,7 @@ getBlocks 3657480 --cache
       "gas": 50000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "isError": 0,
+      "bitSetA": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -1013,7 +1013,7 @@ getBlocks 3657480 --cache
       "gas": 50000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "isError": 0,
+      "bitSetA": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -1035,7 +1035,7 @@ getBlocks 3657480 --cache
       "gas": 500000,
       "gasPrice": 20000000000,
       "input": "0xce92dcedb2c16e803407972d90eeec38de7937a77320f329f450a3e61c4b5bc1dbf6b55a",
-      "isError": 0,
+      "bitSetA": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -1069,7 +1069,7 @@ getBlocks 3657480 --cache
       "gas": 50000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "isError": 0,
+      "bitSetA": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -1091,7 +1091,7 @@ getBlocks 3657480 --cache
       "gas": 50000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "isError": 0,
+      "bitSetA": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -1113,7 +1113,7 @@ getBlocks 3657480 --cache
       "gas": 50000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "isError": 0,
+      "bitSetA": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -1135,7 +1135,7 @@ getBlocks 3657480 --cache
       "gas": 50000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "isError": 0,
+      "bitSetA": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -1157,7 +1157,7 @@ getBlocks 3657480 --cache
       "gas": 50000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "isError": 0,
+      "bitSetA": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -1179,7 +1179,7 @@ getBlocks 3657480 --cache
       "gas": 50000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "isError": 0,
+      "bitSetA": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -1201,7 +1201,7 @@ getBlocks 3657480 --cache
       "gas": 50000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "isError": 0,
+      "bitSetA": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -1223,7 +1223,7 @@ getBlocks 3657480 --cache
       "gas": 50000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "isError": 0,
+      "bitSetA": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -1245,7 +1245,7 @@ getBlocks 3657480 --cache
       "gas": 50000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "isError": 0,
+      "bitSetA": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -1267,7 +1267,7 @@ getBlocks 3657480 --cache
       "gas": 50000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "isError": 0,
+      "bitSetA": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -1289,7 +1289,7 @@ getBlocks 3657480 --cache
       "gas": 50000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "isError": 0,
+      "bitSetA": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -1311,7 +1311,7 @@ getBlocks 3657480 --cache
       "gas": 50000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "isError": 0,
+      "bitSetA": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -1333,7 +1333,7 @@ getBlocks 3657480 --cache
       "gas": 50000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "isError": 0,
+      "bitSetA": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -1355,7 +1355,7 @@ getBlocks 3657480 --cache
       "gas": 50000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "isError": 0,
+      "bitSetA": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -1377,7 +1377,7 @@ getBlocks 3657480 --cache
       "gas": 50000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "isError": 0,
+      "bitSetA": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -1399,7 +1399,7 @@ getBlocks 3657480 --cache
       "gas": 50000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "isError": 0,
+      "bitSetA": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -1421,7 +1421,7 @@ getBlocks 3657480 --cache
       "gas": 50000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "isError": 0,
+      "bitSetA": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -1443,7 +1443,7 @@ getBlocks 3657480 --cache
       "gas": 50000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "isError": 0,
+      "bitSetA": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -1465,7 +1465,7 @@ getBlocks 3657480 --cache
       "gas": 50000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "isError": 0,
+      "bitSetA": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -1487,7 +1487,7 @@ getBlocks 3657480 --cache
       "gas": 50000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "isError": 0,
+      "bitSetA": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -1509,7 +1509,7 @@ getBlocks 3657480 --cache
       "gas": 50000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "isError": 0,
+      "bitSetA": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -1531,7 +1531,7 @@ getBlocks 3657480 --cache
       "gas": 50000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "isError": 0,
+      "bitSetA": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -1553,7 +1553,7 @@ getBlocks 3657480 --cache
       "gas": 50000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "isError": 0,
+      "bitSetA": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -1575,7 +1575,7 @@ getBlocks 3657480 --cache
       "gas": 50000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "isError": 0,
+      "bitSetA": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -1597,7 +1597,7 @@ getBlocks 3657480 --cache
       "gas": 50000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "isError": 0,
+      "bitSetA": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -1619,7 +1619,7 @@ getBlocks 3657480 --cache
       "gas": 50000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "isError": 0,
+      "bitSetA": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -1641,7 +1641,7 @@ getBlocks 3657480 --cache
       "gas": 50000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "isError": 0,
+      "bitSetA": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -1663,7 +1663,7 @@ getBlocks 3657480 --cache
       "gas": 50000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "isError": 0,
+      "bitSetA": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -1685,7 +1685,7 @@ getBlocks 3657480 --cache
       "gas": 50000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "isError": 0,
+      "bitSetA": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -1707,7 +1707,7 @@ getBlocks 3657480 --cache
       "gas": 50000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "isError": 0,
+      "bitSetA": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -1729,7 +1729,7 @@ getBlocks 3657480 --cache
       "gas": 50000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "isError": 0,
+      "bitSetA": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -1751,7 +1751,7 @@ getBlocks 3657480 --cache
       "gas": 50000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "isError": 0,
+      "bitSetA": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -1773,7 +1773,7 @@ getBlocks 3657480 --cache
       "gas": 50000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "isError": 0,
+      "bitSetA": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -1795,7 +1795,7 @@ getBlocks 3657480 --cache
       "gas": 50000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "isError": 0,
+      "bitSetA": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -1817,7 +1817,7 @@ getBlocks 3657480 --cache
       "gas": 50000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "isError": 0,
+      "bitSetA": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -1839,7 +1839,7 @@ getBlocks 3657480 --cache
       "gas": 50000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "isError": 0,
+      "bitSetA": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -1861,7 +1861,7 @@ getBlocks 3657480 --cache
       "gas": 50000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "isError": 0,
+      "bitSetA": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -1883,7 +1883,7 @@ getBlocks 3657480 --cache
       "gas": 50000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "isError": 0,
+      "bitSetA": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -1905,7 +1905,7 @@ getBlocks 3657480 --cache
       "gas": 50000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "isError": 0,
+      "bitSetA": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -1927,7 +1927,7 @@ getBlocks 3657480 --cache
       "gas": 50000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "isError": 0,
+      "bitSetA": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -1949,7 +1949,7 @@ getBlocks 3657480 --cache
       "gas": 50000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "isError": 0,
+      "bitSetA": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -1971,7 +1971,7 @@ getBlocks 3657480 --cache
       "gas": 50000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "isError": 0,
+      "bitSetA": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -1993,7 +1993,7 @@ getBlocks 3657480 --cache
       "gas": 50000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "isError": 0,
+      "bitSetA": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -2015,7 +2015,7 @@ getBlocks 3657480 --cache
       "gas": 50000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "isError": 0,
+      "bitSetA": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",

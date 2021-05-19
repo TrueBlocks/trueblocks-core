@@ -43,7 +43,7 @@ transactions        	1015	0	205520971	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OM
       "gas": 90000,
       "gasPrice": 50000000000,
       "input": "0x",
-      "isError": 0,
+      "bitSetA": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",

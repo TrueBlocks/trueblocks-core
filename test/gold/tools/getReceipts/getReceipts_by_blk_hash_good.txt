@@ -1,4 +1,4 @@
 getReceipts argc: 5 [1:0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f.55] [2:--verbose] [3:--fmt] [4:csv] 
 getReceipts 0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f.55 --verbose --fmt csv 
-"blocknumber","transactionindex","hash","gasused","status","iserror"
+"blocknumber","transactionindex","hash","gasused","status","bitseta"
 "4001001","55","0xe49b9d48866035a82b622e4900791210cbf36905194a7ae3dc38feedf8ca3762","44493","null","0"

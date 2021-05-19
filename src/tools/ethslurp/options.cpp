@@ -149,7 +149,7 @@ void COptions::Init(void) {
 COptions::COptions(void) {
     Init();
 
-    UNHIDE_FIELD(CTransaction, "isError");
+    UNHIDE_FIELD(CTransaction, "bitSetA");
     UNHIDE_FIELD(CTransaction, "date");
     UNHIDE_FIELD(CTransaction, "ether");
 

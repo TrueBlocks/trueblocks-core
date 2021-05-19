@@ -6,13 +6,13 @@ check_balances = false
 
 [export]
 to_export = false
-export_header = "timestamp\tdate\tfrom\tto\tvalue\tether\tfunction\tinput\tisError\tisInternalTx\tgas\tgasUsed\tblockNumber\thash\n"
-export_fmt = "[{TIMESTAMP}]\t[{DATE}]\t[{FROM}]\t[{TO}]\t[{VALUE}]\t[{ETHER}]\t[{FUNCTION}]\t[{INPUT}]\t[{ISERROR}]\t[{ISINTERNALTX}]\t[{GAS}]\t[{GASUSED}]\t[{BLOCKNUMBER}]\t[{HASH}]\n"
+export_header = "timestamp\tdate\tfrom\tto\tvalue\tether\tfunction\tinput\tbitSetA\tisInternalTx\tgas\tgasUsed\tblockNumber\thash\n"
+export_fmt = "[{TIMESTAMP}]\t[{DATE}]\t[{FROM}]\t[{TO}]\t[{VALUE}]\t[{ETHER}]\t[{FUNCTION}]\t[{INPUT}]\t[{BITSETA}]\t[{ISINTERNALTX}]\t[{GAS}]\t[{GASUSED}]\t[{BLOCKNUMBER}]\t[{HASH}]\n"
 export_fmt2 = "insert into transactions values ('[{HASH}]','[{FROM}]','[{FUNCTION}]',[{ETHER}]);\n"
 
 [formats]
 screen_fmt = "[{CONTRACT}]  [{BLOCKNUMBER}].[{TRANSACTIONINDEX}].[{DATE}]  [{FROM}]  [{ETHER}]  [{FUNCTION}]\n\tinput: [{INPUT}]\n\thash: [{HASH}]\n"
-screen_fmt12 = "[{DATE}]\t[{FROM}]\t[{TO}]\t[{ETHER}]\t[{FUNCTION}]\t[{ISERROR}]\t[{BLOCKNUMBER}]\t[{HASH}]\n"
+screen_fmt12 = "[{DATE}]\t[{FROM}]\t[{TO}]\t[{ETHER}]\t[{FUNCTION}]\t[{BITSETA}]\t[{BLOCKNUMBER}]\t[{HASH}]\n"
 screen_fmt2 = """[{HEAD}]\n\
 \tdate: @[{DATE}]\# timestamp: @[{TIMESTAMP}]\# from: @[{w:20:FROM}...]\# to: @[{w:20:TO}...]\# value: @[{w:30:VALUE}]\# \n\
 \thash: @[{HASH}]\# blockNumber: @[{BLOCKNUMBER}]\# txIndex: @[{TRANSACTIONINDEX}]\#\n\

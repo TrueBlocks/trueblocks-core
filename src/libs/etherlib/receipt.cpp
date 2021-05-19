@@ -435,7 +435,7 @@ const char* STR_DISPLAY_RECEIPT =
     "[{HASH}]\t"
     "[{GASUSED}]\t"
     "[{STATUS}]\t"
-    "[{ISERROR}]";
+    "[{BITSETA}]";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

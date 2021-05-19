@@ -14,7 +14,7 @@ getTrans --file:cmd_file --fmt json --parity
     "gas": "0xc350",
     "gasPrice": "0x4a817c800",
     "input": "0x",
-    "isError": "0x0",
+    "bitSetA": "0x0",
     "hasToken": "0x0",
     "receipt": {
       "contractAddress": "0x0",
@@ -35,7 +35,7 @@ getTrans --file:cmd_file --fmt json --parity
     "gas": "0xc350",
     "gasPrice": "0x4a817c800",
     "input": "0x",
-    "isError": "0x0",
+    "bitSetA": "0x0",
     "hasToken": "0x0",
     "receipt": {
       "contractAddress": "0x0",
@@ -56,7 +56,7 @@ getTrans --file:cmd_file --fmt json --parity
     "gas": "0xc350",
     "gasPrice": "0x4a817c800",
     "input": "0x",
-    "isError": "0x0",
+    "bitSetA": "0x0",
     "hasToken": "0x0",
     "receipt": {
       "contractAddress": "0x0",

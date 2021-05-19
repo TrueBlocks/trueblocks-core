@@ -85,7 +85,7 @@ bool COptions::handle_options(void) {
                         note += "  // NOLINT";
                     notesStream << note << endl;
 
-                } else if (option.isError) {
+                } else if (option.isErr) {
                     string_q err = option.Format("    usageErrs[[{COMMAND}]] = \"[{DESCRIPTION}]\";");
                     if (err.length() > 120)
                         err += "  // NOLINT";

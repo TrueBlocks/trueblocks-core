@@ -515,7 +515,7 @@ const char* STR_DISPLAY_TRACE =
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-bool CTrace::isError(void) const {
+bool CTrace::isErr(void) const {
     return !error.empty();
 }
 // EXISTING_CODE

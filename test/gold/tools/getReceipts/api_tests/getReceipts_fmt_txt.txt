@@ -1,3 +1,3 @@
-blocknumber	transactionindex	hash	gasused	status	iserror
+blocknumber	transactionindex	hash	gasused	status	bitseta
 2222222	0	0x9c34ba45c523f75009d279553fe2a7e9a99a991a297439226321bea26ab62bbb	1000000	null	1
 2332332	0	0xa023f79cc26b321111cf051cab92b3a325e00ecfa9d377845a41654f6b2f0ebe	21298	null	0

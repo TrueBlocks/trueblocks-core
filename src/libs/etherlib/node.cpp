@@ -355,14 +355,14 @@ bool loadTraces(CTransaction& trans, blknum_t bn, blknum_t txid, bool useCache, 
 bool getFullReceipt(CTransaction* trans, bool needsTrace) {
     getReceipt(trans->receipt, trans->hash);
     if (trans->blockNumber >= byzantiumBlock || isTurboGeth()) {
-        trans->isError = (trans->receipt.status == 0);
+        trans->setBits(ERROR_BIT, (trans->receipt.status == 0));
 
     } else if (needsTrace && trans->gas == trans->receipt.gasUsed) {
         CURLCALLBACKFUNC prev = getCurlContext()->setCurlCallback(errorCallback);
         getCurlContext()->is_error = false;
         string_q unused;
         queryRawTrace(unused, trans->hash);
-        trans->isError = getCurlContext()->is_error;
+        trans->setBits(ERROR_BIT, getCurlContext()->is_error);
         getCurlContext()->setCurlCallback(prev);
     }
     return true;
@@ -1426,7 +1426,7 @@ const string_q defHide =
     "is_flags";
 
 const string_q defShow =
-    "CTransaction: gasCost, articulatedTx, compressedTx, traces, isError, hasToken, date, ether"
+    "CTransaction: gasCost, articulatedTx, compressedTx, traces, bitSetA, hasToken, date, ether"
     "|CLogEntry: articulatedLog, compressedLog"
     "|CTrace: articulatedTrace, compressedTrace"
     "|CTraceAction: "

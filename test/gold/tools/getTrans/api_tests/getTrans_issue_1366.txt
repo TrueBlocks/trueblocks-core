@@ -12,7 +12,7 @@
       "gas": 150000,
       "gasPrice": 20000000000,
       "input": "0xd0e30db0",
-      "isError": 0,
+      "bitSetA": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",

@@ -564,7 +564,6 @@ bool COptions::setDisplayFormatting(void) {
             SHOW_FIELD(CLogEntry, "transactionIndex");
             SHOW_FIELD(CReceipt, "blockNumber");
             SHOW_FIELD(CReceipt, "transactionIndex");
-            SHOW_FIELD(CReceipt, "isError");
         }
     }
     articulate = (articulate && (!isTestMode() || getEnvStr("TEST_NO_ART") != "true"));
@@ -576,7 +575,6 @@ bool COptions::setDisplayFormatting(void) {
     if (receipts) {
         SHOW_FIELD(CReceipt, "blockNumber");
         SHOW_FIELD(CReceipt, "transactionIndex");
-        SHOW_FIELD(CReceipt, "isError");
     } else if (appearances) {
         manageFields("CAccountName:all", false);
         manageFields(verbose ? "CAccountName:address,name" : "CAccountName:address,name,timestamp,date", true);

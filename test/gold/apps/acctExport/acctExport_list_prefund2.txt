@@ -1,4 +1,4 @@
 acctExport argc: 6 [1:0x001d14804b399c6ef80e64576f657660804fec0b] [2:--start] [3:0] [4:--end] [5:1] 
 acctExport 0x001d14804b399c6ef80e64576f657660804fec0b --start 0 --end 1 
-blocknumber	transactionindex	date	timestamp	from	to	ether	ethergasprice	gasused	hash	iserror	encoding	compressedtx
+blocknumber	transactionindex	date	timestamp	from	to	ether	ethergasprice	gasused	hash	bitseta	encoding	compressedtx
 0	2	2015-07-30 15:26:00 UTC	1438269960	0xPrefund	0x001d14804b399c6ef80e64576f657660804fec0b	4200.000000000000000000	0.000000000000000000	0	0x0	0		

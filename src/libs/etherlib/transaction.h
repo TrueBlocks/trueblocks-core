@@ -29,6 +29,7 @@ class CBlock;
 class CAppearance;
 typedef bool (*APPEARANCEFUNC)(const CAppearance& item, void* data);
 typedef bool (*TRANSFUNC)(const CTransaction* trans, void* data);
+typedef enum { NOTSET = 0, SETA = (1 << 0), ERROR_BIT = (SETA & (1 << 1)) } txbitset_t;
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
@@ -48,7 +49,7 @@ class CTransaction : public CBaseNode {
     gas_t gas;
     gas_t gasPrice;
     string_q input;
-    uint64_t isError;
+    uint64_t bitSetA;
     uint64_t hasToken;
     CReceipt receipt;
     CTraceArray traces;
@@ -75,6 +76,8 @@ class CTransaction : public CBaseNode {
     bool loadTransAsPrefund(blknum_t bn, blknum_t txid, const address_t& addr, const wei_t& amount);
     bool loadTransAsBlockReward(blknum_t bn, blknum_t txid, const address_t& addr);
     bool loadTransAsUncleReward(blknum_t bn, blknum_t uncleBn, const address_t& addr);
+    void setBits(txbitset_t which, bool value);
+    bool isBitSet(txbitset_t which) const;
     // EXISTING_CODE
     bool operator==(const CTransaction& it) const;
     bool operator!=(const CTransaction& it) const {
@@ -142,7 +145,7 @@ inline void CTransaction::initialize(void) {
     gas = 0;
     gasPrice = 0;
     input = "";
-    isError = 0;
+    bitSetA = 0;
     hasToken = 0;
     receipt = CReceipt();
     traces.clear();
@@ -175,7 +178,7 @@ inline void CTransaction::duplicate(const CTransaction& tr) {
     gas = tr.gas;
     gasPrice = tr.gasPrice;
     input = tr.input;
-    isError = tr.isError;
+    bitSetA = tr.bitSetA;
     hasToken = tr.hasToken;
     receipt = tr.receipt;
     traces = tr.traces;

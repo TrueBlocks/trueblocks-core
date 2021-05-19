@@ -543,7 +543,7 @@ CCommandOption::CCommandOption(const string_q& line) {
     isUint64 = contains(data_type, "uint64");
     isDouble = contains(data_type, "double");
     isNote = option_type == "note";
-    isError = option_type == "error";
+    isErr = option_type == "error";
 
     real_type = substituteAny(substitute(data_type, "boolean", "bool"), "<>", "");
     if (contains(data_type, "enum"))

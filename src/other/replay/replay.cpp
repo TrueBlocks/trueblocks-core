@@ -45,7 +45,7 @@ bool visitBlock(CBlock& block, void* data) {
         if (!(block.blockNumber % progress)) {
             cerr << block.blockNumber << "\t" << block.transactions[tr].transactionIndex << "\r";
         }
-        if (block.transactions[tr].isError)
+        if (block.transactions[tr].isBitSet(ERROR_BIT))
             counter->errorsSeen++;
     }
     if (!(block.blockNumber % report)) {

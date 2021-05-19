@@ -64,7 +64,7 @@ class CCommandOption : public CBaseNode {
     bool isUint64;
     bool isDouble;
     bool isNote;
-    bool isError;
+    bool isErr;
     void* params{nullptr};
     explicit CCommandOption(const string_q& line);
     void verifyOptions(CStringArray& warnings);
@@ -166,7 +166,7 @@ inline void CCommandOption::initialize(void) {
     isUint64 = false;
     isDouble = false;
     isNote = false;
-    isError = false;
+    isErr = false;
     swagger_descr = "";
     route_list = "";
     // EXISTING_CODE
@@ -208,7 +208,7 @@ inline void CCommandOption::duplicate(const CCommandOption& co) {
     isUint64 = co.isUint64;
     isDouble = co.isDouble;
     isNote = co.isNote;
-    isError = co.isError;
+    isErr = co.isErr;
     swagger_descr = co.swagger_descr;
     route_list = co.route_list;
     // EXISTING_CODE
