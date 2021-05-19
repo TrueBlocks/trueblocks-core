@@ -14,7 +14,7 @@ getTrans 0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f.55 -
     "gas": 250000,
     "gasPrice": 4000000000,
     "input": "0xd0e30db0",
-    "bitSetA": 0,
+    "isError": 0,
     "hasToken": 0,
     "receipt": {
       "contractAddress": "0x0",

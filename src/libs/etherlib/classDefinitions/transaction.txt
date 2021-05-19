@@ -14,7 +14,7 @@ fields = hash hash|\
         gas gas|\
         gas gasPrice|\
         string input|\
-        uint64 bitSetA|\
+        uint64 isError|\
         uint64 hasToken|\
         CReceipt receipt|\
         CTraceArray traces|\
@@ -26,5 +26,5 @@ includes = utillib.h|abi.h|receipt.h|trace.h|reconciliation.h|ethstate.h
 cpp_includes = etherlib.h
 scope = extern
 serializable = true
-display_str = blockNumber, transactionIndex, date, timestamp, from, to, ether, etherGasPrice, gasUsed, hash, bitSetA, encoding, compressedTx
+display_str = blockNumber, transactionIndex, date, timestamp, from, to, ether, etherGasPrice, gasUsed, hash, isError, encoding, compressedTx
 equals = (hash == it.hash)

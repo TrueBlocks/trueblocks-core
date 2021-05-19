@@ -411,7 +411,7 @@ string_q nextLogentryChunk_custom(const string_q& fieldIn, const void* dataPtr) 
 bool CLogEntry::readBackLevel(CArchive& archive) {
     bool done = false;
     // EXISTING_CODE
-    if (m_schema <= getVersionNum(0, 6, 4)) {
+    if (m_schema < getVersionNum(0, 6, 5)) {
         // topic_t changed from biguint_t to string_q
         archive >> address;
         archive >> data;

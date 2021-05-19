@@ -18,11 +18,11 @@ extern void prog_Log(CTraverser* trav, void* data);
 extern void end_Log(CTraverser* trav, void* data);
 extern bool rangeFilter(CTraverser* trav, void* data);
 extern bool loadData(CTraverser* trav, void* data);
+extern bool pre_Func(CTraverser* trav, void* data);
+extern bool post_Func(CTraverser* trav, void* data);
 inline bool noopFunc(CTraverser* trav, void* data) {
     return true;
 }
-extern bool pre_Func(CTraverser* trav, void* data);
-extern bool post_Func(CTraverser* trav, void* data);
 
 //-----------------------------------------------------------------------
 class CTraverser {

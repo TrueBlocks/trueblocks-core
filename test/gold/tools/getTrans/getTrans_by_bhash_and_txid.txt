@@ -14,7 +14,7 @@ getTrans 0xb8a3f7f5cfc1748f91a684f20fe89031202cbadcd15078c49b85ec2a57f43853.4 --
     "gas": "0x9c40",
     "gasPrice": "0xb96ddd6a4",
     "input": "0x",
-    "bitSetA": "0x0",
+    "isError": "0x0",
     "hasToken": "0x0",
     "receipt": {
       "contractAddress": "0x0",

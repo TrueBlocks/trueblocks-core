@@ -25,7 +25,7 @@ getBlocks daofork --cache
       "gas": 21000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "bitSetA": 0,
+      "isError": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -47,7 +47,7 @@ getBlocks daofork --cache
       "gas": 21000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "bitSetA": 0,
+      "isError": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -69,7 +69,7 @@ getBlocks daofork --cache
       "gas": 21000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "bitSetA": 0,
+      "isError": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -91,7 +91,7 @@ getBlocks daofork --cache
       "gas": 21000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "bitSetA": 0,
+      "isError": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",

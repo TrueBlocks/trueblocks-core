@@ -14,7 +14,7 @@ getTrans 2222222.0 2332332.0 --fmt api
     "gas": 1000000,
     "gasPrice": 20000000000,
     "input": "0xa9059cbb0000000000000000000000009e9d1613f966936f74534ba71614350d1d87c4b100000000000000000000000000000000000000000000002d9614d1e3f1f00000",
-    "bitSetA": 1,
+    "isError": 1,
     "hasToken": 0,
     "receipt": {
       "contractAddress": "0x0",
@@ -35,7 +35,7 @@ getTrans 2222222.0 2332332.0 --fmt api
     "gas": 105000,
     "gasPrice": 53316245930,
     "input": "0xa9059cbb0000000000000000000000007d19317cc81c3ef06039ae5514679f8b12fd28e2000000000000000000000000000000000000000000000000031d958f80134000",
-    "bitSetA": 0,
+    "isError": 0,
     "hasToken": 0,
     "receipt": {
       "contractAddress": "0x0",
@@ -56,5 +56,5 @@ getTrans 2222222.0 2332332.0 --fmt api
     },
     "gasUsed": 21298
   }], "types": [
-{ "type": "CTransaction", "fields": [{ "name": "hash", "type": "hash" }, { "name": "blockHash", "type": "hash" }, { "name": "blockNumber", "type": "blocknum" }, { "name": "transactionIndex", "type": "blocknum" }, { "name": "nonce", "type": "unumber" }, { "name": "timestamp", "type": "timestamp" }, { "name": "from", "type": "address" }, { "name": "to", "type": "address" }, { "name": "value", "type": "wei" }, { "name": "gas", "type": "gas" }, { "name": "gasPrice", "type": "gas" }, { "name": "input", "type": "text" }, { "name": "bitSetA", "type": "unumber" }, { "name": "hasToken", "type": "unumber" }, { "name": "receipt", "type": "object" }, { "name": "gasUsed", "type": "gas" }] }
+{ "type": "CTransaction", "fields": [{ "name": "hash", "type": "hash" }, { "name": "blockHash", "type": "hash" }, { "name": "blockNumber", "type": "blocknum" }, { "name": "transactionIndex", "type": "blocknum" }, { "name": "nonce", "type": "unumber" }, { "name": "timestamp", "type": "timestamp" }, { "name": "from", "type": "address" }, { "name": "to", "type": "address" }, { "name": "value", "type": "wei" }, { "name": "gas", "type": "gas" }, { "name": "gasPrice", "type": "gas" }, { "name": "input", "type": "text" }, { "name": "isError", "type": "unumber" }, { "name": "hasToken", "type": "unumber" }, { "name": "receipt", "type": "object" }, { "name": "gasUsed", "type": "gas" }] }
 ], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }

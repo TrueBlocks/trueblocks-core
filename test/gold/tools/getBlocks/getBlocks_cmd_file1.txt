@@ -25,7 +25,7 @@ getBlocks --file:cmd_file1 --cache
       "gas": 90000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "bitSetA": 0,
+      "isError": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -47,7 +47,7 @@ getBlocks --file:cmd_file1 --cache
       "gas": 90000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "bitSetA": 0,
+      "isError": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -82,7 +82,7 @@ getBlocks --file:cmd_file1 --cache
       "gas": 50000,
       "gasPrice": 30000000000,
       "input": "0x",
-      "bitSetA": 0,
+      "isError": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -104,7 +104,7 @@ getBlocks --file:cmd_file1 --cache
       "gas": 90000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "bitSetA": 0,
+      "isError": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -126,7 +126,7 @@ getBlocks --file:cmd_file1 --cache
       "gas": 90000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "bitSetA": 0,
+      "isError": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -148,7 +148,7 @@ getBlocks --file:cmd_file1 --cache
       "gas": 90000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "bitSetA": 0,
+      "isError": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -170,7 +170,7 @@ getBlocks --file:cmd_file1 --cache
       "gas": 90000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "bitSetA": 0,
+      "isError": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -192,7 +192,7 @@ getBlocks --file:cmd_file1 --cache
       "gas": 90000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "bitSetA": 0,
+      "isError": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -214,7 +214,7 @@ getBlocks --file:cmd_file1 --cache
       "gas": 90000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "bitSetA": 0,
+      "isError": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -236,7 +236,7 @@ getBlocks --file:cmd_file1 --cache
       "gas": 90000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "bitSetA": 0,
+      "isError": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -258,7 +258,7 @@ getBlocks --file:cmd_file1 --cache
       "gas": 90000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "bitSetA": 0,
+      "isError": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -280,7 +280,7 @@ getBlocks --file:cmd_file1 --cache
       "gas": 90000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "bitSetA": 0,
+      "isError": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -302,7 +302,7 @@ getBlocks --file:cmd_file1 --cache
       "gas": 90000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "bitSetA": 0,
+      "isError": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -324,7 +324,7 @@ getBlocks --file:cmd_file1 --cache
       "gas": 90000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "bitSetA": 0,
+      "isError": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -346,7 +346,7 @@ getBlocks --file:cmd_file1 --cache
       "gas": 90000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "bitSetA": 0,
+      "isError": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -368,7 +368,7 @@ getBlocks --file:cmd_file1 --cache
       "gas": 90000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "bitSetA": 0,
+      "isError": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -390,7 +390,7 @@ getBlocks --file:cmd_file1 --cache
       "gas": 90000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "bitSetA": 0,
+      "isError": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -412,7 +412,7 @@ getBlocks --file:cmd_file1 --cache
       "gas": 90000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "bitSetA": 0,
+      "isError": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -434,7 +434,7 @@ getBlocks --file:cmd_file1 --cache
       "gas": 90000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "bitSetA": 0,
+      "isError": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -456,7 +456,7 @@ getBlocks --file:cmd_file1 --cache
       "gas": 90000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "bitSetA": 0,
+      "isError": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -478,7 +478,7 @@ getBlocks --file:cmd_file1 --cache
       "gas": 90000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "bitSetA": 0,
+      "isError": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -500,7 +500,7 @@ getBlocks --file:cmd_file1 --cache
       "gas": 90000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "bitSetA": 0,
+      "isError": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -522,7 +522,7 @@ getBlocks --file:cmd_file1 --cache
       "gas": 90000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "bitSetA": 0,
+      "isError": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -544,7 +544,7 @@ getBlocks --file:cmd_file1 --cache
       "gas": 90000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "bitSetA": 0,
+      "isError": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -566,7 +566,7 @@ getBlocks --file:cmd_file1 --cache
       "gas": 90000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "bitSetA": 0,
+      "isError": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -588,7 +588,7 @@ getBlocks --file:cmd_file1 --cache
       "gas": 90000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "bitSetA": 0,
+      "isError": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -610,7 +610,7 @@ getBlocks --file:cmd_file1 --cache
       "gas": 90000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "bitSetA": 0,
+      "isError": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -632,7 +632,7 @@ getBlocks --file:cmd_file1 --cache
       "gas": 90000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "bitSetA": 0,
+      "isError": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -654,7 +654,7 @@ getBlocks --file:cmd_file1 --cache
       "gas": 90000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "bitSetA": 0,
+      "isError": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -689,7 +689,7 @@ getBlocks --file:cmd_file1 --cache
       "gas": 300000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "bitSetA": 0,
+      "isError": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -735,7 +735,7 @@ getBlocks --file:cmd_file1 --cache
       "gas": 900000,
       "gasPrice": 21000000000,
       "input": "0x",
-      "bitSetA": 0,
+      "isError": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -757,7 +757,7 @@ getBlocks --file:cmd_file1 --cache
       "gas": 100000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "bitSetA": 0,
+      "isError": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -779,7 +779,7 @@ getBlocks --file:cmd_file1 --cache
       "gas": 30000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "bitSetA": 0,
+      "isError": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -811,7 +811,7 @@ getBlocks --file:cmd_file1 --cache
       "gas": 100000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "bitSetA": 0,
+      "isError": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -833,7 +833,7 @@ getBlocks --file:cmd_file1 --cache
       "gas": 21000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "bitSetA": 0,
+      "isError": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -855,7 +855,7 @@ getBlocks --file:cmd_file1 --cache
       "gas": 100000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "bitSetA": 0,
+      "isError": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -877,7 +877,7 @@ getBlocks --file:cmd_file1 --cache
       "gas": 139426,
       "gasPrice": 20000000000,
       "input": "0xb61d27f60000000000000000000000000f5e92ff89ea8ab86e8e2529267a9b1c7aa4e4d000000000000000000000000000000000000000000000003c9fabfaeefe7e2000000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
-      "bitSetA": 0,
+      "isError": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -909,7 +909,7 @@ getBlocks --file:cmd_file1 --cache
       "gas": 21000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "bitSetA": 0,
+      "isError": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -931,7 +931,7 @@ getBlocks --file:cmd_file1 --cache
       "gas": 100000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "bitSetA": 0,
+      "isError": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -953,7 +953,7 @@ getBlocks --file:cmd_file1 --cache
       "gas": 90000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "bitSetA": 0,
+      "isError": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -975,7 +975,7 @@ getBlocks --file:cmd_file1 --cache
       "gas": 90000,
       "gasPrice": 20000000000,
       "input": "0xa9059cbb0000000000000000000000001c5f2fa648b7f60380741224ea4a6c0f72cef99a000000000000000000000000000000000000000000000000000e35fa931a0000",
-      "bitSetA": 0,
+      "isError": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -1009,7 +1009,7 @@ getBlocks --file:cmd_file1 --cache
       "gas": 90000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "bitSetA": 0,
+      "isError": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -1031,7 +1031,7 @@ getBlocks --file:cmd_file1 --cache
       "gas": 100000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "bitSetA": 0,
+      "isError": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -1053,7 +1053,7 @@ getBlocks --file:cmd_file1 --cache
       "gas": 90000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "bitSetA": 0,
+      "isError": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -1110,7 +1110,7 @@ getBlocks --file:cmd_file1 --cache
       "gas": 21000,
       "gasPrice": 40000000000,
       "input": "0x",
-      "bitSetA": 0,
+      "isError": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -1132,7 +1132,7 @@ getBlocks --file:cmd_file1 --cache
       "gas": 35000,
       "gasPrice": 20000000000,
       "input": "0xf7654176",
-      "bitSetA": 0,
+      "isError": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -1166,7 +1166,7 @@ getBlocks --file:cmd_file1 --cache
       "gas": 90000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "bitSetA": 0,
+      "isError": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -1188,7 +1188,7 @@ getBlocks --file:cmd_file1 --cache
       "gas": 156561,
       "gasPrice": 20000000000,
       "input": "0x0f2c9329000000000000000000000000651a022343f978b994b2900d5adbe75737a1c4dc000000000000000000000000119a712333f1d9c8df87287e1df6555f7d6f1262",
-      "bitSetA": 0,
+      "isError": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -1210,7 +1210,7 @@ getBlocks --file:cmd_file1 --cache
       "gas": 90000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "bitSetA": 0,
+      "isError": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -1232,7 +1232,7 @@ getBlocks --file:cmd_file1 --cache
       "gas": 21000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "bitSetA": 0,
+      "isError": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -1254,7 +1254,7 @@ getBlocks --file:cmd_file1 --cache
       "gas": 90000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "bitSetA": 0,
+      "isError": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -1276,7 +1276,7 @@ getBlocks --file:cmd_file1 --cache
       "gas": 1000000,
       "gasPrice": 20000000000,
       "input": "0xa9059cbb000000000000000000000000f8d69eb2112b5abf8b51a27c536e28e0de76c64a0000000000000000000000000000000000000000000000000000000001d97ef8",
-      "bitSetA": 0,
+      "isError": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -1343,7 +1343,7 @@ getBlocks --file:cmd_file1 --cache
       "gas": 90000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "bitSetA": 0,
+      "isError": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -1365,7 +1365,7 @@ getBlocks --file:cmd_file1 --cache
       "gas": 90000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "bitSetA": 0,
+      "isError": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -1387,7 +1387,7 @@ getBlocks --file:cmd_file1 --cache
       "gas": 90000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "bitSetA": 0,
+      "isError": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -1409,7 +1409,7 @@ getBlocks --file:cmd_file1 --cache
       "gas": 90000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "bitSetA": 0,
+      "isError": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -1431,7 +1431,7 @@ getBlocks --file:cmd_file1 --cache
       "gas": 90000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "bitSetA": 0,
+      "isError": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -1453,7 +1453,7 @@ getBlocks --file:cmd_file1 --cache
       "gas": 90000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "bitSetA": 0,
+      "isError": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -1475,7 +1475,7 @@ getBlocks --file:cmd_file1 --cache
       "gas": 90000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "bitSetA": 0,
+      "isError": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -1497,7 +1497,7 @@ getBlocks --file:cmd_file1 --cache
       "gas": 90000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "bitSetA": 0,
+      "isError": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -1519,7 +1519,7 @@ getBlocks --file:cmd_file1 --cache
       "gas": 90000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "bitSetA": 0,
+      "isError": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -1541,7 +1541,7 @@ getBlocks --file:cmd_file1 --cache
       "gas": 90000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "bitSetA": 0,
+      "isError": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -1563,7 +1563,7 @@ getBlocks --file:cmd_file1 --cache
       "gas": 90000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "bitSetA": 0,
+      "isError": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -1585,7 +1585,7 @@ getBlocks --file:cmd_file1 --cache
       "gas": 90000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "bitSetA": 0,
+      "isError": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -1607,7 +1607,7 @@ getBlocks --file:cmd_file1 --cache
       "gas": 90000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "bitSetA": 0,
+      "isError": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -1629,7 +1629,7 @@ getBlocks --file:cmd_file1 --cache
       "gas": 90000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "bitSetA": 0,
+      "isError": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -1651,7 +1651,7 @@ getBlocks --file:cmd_file1 --cache
       "gas": 90000,
       "gasPrice": 20000000000,
       "input": "0x",
-      "bitSetA": 0,
+      "isError": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -1686,7 +1686,7 @@ getBlocks --file:cmd_file1 --cache
       "gas": 121000,
       "gasPrice": 21588125895,
       "input": "0x",
-      "bitSetA": 0,
+      "isError": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -1721,7 +1721,7 @@ getBlocks --file:cmd_file1 --cache
       "gas": 21000,
       "gasPrice": 21000000000,
       "input": "0x",
-      "bitSetA": 0,
+      "isError": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -1756,7 +1756,7 @@ getBlocks --file:cmd_file1 --cache
       "gas": 90000,
       "gasPrice": 50000000000,
       "input": "0x",
-      "bitSetA": 0,
+      "isError": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -1778,7 +1778,7 @@ getBlocks --file:cmd_file1 --cache
       "gas": 90000,
       "gasPrice": 50000000000,
       "input": "0x",
-      "bitSetA": 0,
+      "isError": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -1800,7 +1800,7 @@ getBlocks --file:cmd_file1 --cache
       "gas": 90000,
       "gasPrice": 50000000000,
       "input": "0x",
-      "bitSetA": 0,
+      "isError": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -1822,7 +1822,7 @@ getBlocks --file:cmd_file1 --cache
       "gas": 90000,
       "gasPrice": 50000000000,
       "input": "0x",
-      "bitSetA": 0,
+      "isError": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -1844,7 +1844,7 @@ getBlocks --file:cmd_file1 --cache
       "gas": 90000,
       "gasPrice": 50000000000,
       "input": "0x",
-      "bitSetA": 0,
+      "isError": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -1866,7 +1866,7 @@ getBlocks --file:cmd_file1 --cache
       "gas": 90000,
       "gasPrice": 50000000000,
       "input": "0x",
-      "bitSetA": 0,
+      "isError": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -1912,7 +1912,7 @@ getBlocks --file:cmd_file1 --cache
       "gas": 90000,
       "gasPrice": 200000000000,
       "input": "0x",
-      "bitSetA": 0,
+      "isError": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",

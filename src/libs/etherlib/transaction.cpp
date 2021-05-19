@@ -88,9 +88,6 @@ string_q CTransaction::getValueByName(const string_q& fieldName) const {
             if (fieldName % "blockNumber") {
                 return uint_2_Str(blockNumber);
             }
-            if (fieldName % "bitSetA") {
-                return uint_2_Str(bitSetA);
-            }
             break;
         case 'c':
             if (fieldName % "compressedTx") {
@@ -132,6 +129,9 @@ string_q CTransaction::getValueByName(const string_q& fieldName) const {
         case 'i':
             if (fieldName % "input") {
                 return input;
+            }
+            if (fieldName % "isError") {
+                return uint_2_Str(isError);
             }
             break;
         case 'n':
@@ -280,8 +280,6 @@ bool CTransaction::setValueByName(const string_q& fieldNameIn, const string_q& f
     // Order matters
     if (fieldName == "transactionHash")
         fieldName = "hash";  // NOLINT
-    if (hash == "0x4f0d7ec960fdc69b251214dfa4b6e143eb8a32827c034f1f629e18137e58fce8" && fieldName == "bitSetA")
-        printf("");
     // EXISTING_CODE
 
     switch (tolower(fieldName[0])) {
@@ -297,10 +295,6 @@ bool CTransaction::setValueByName(const string_q& fieldNameIn, const string_q& f
             }
             if (fieldName % "blockNumber") {
                 blockNumber = str_2_Uint(fieldValue);
-                return true;
-            }
-            if (fieldName % "bitSetA") {
-                bitSetA = str_2_Uint(fieldValue);
                 return true;
             }
             break;
@@ -353,6 +347,10 @@ bool CTransaction::setValueByName(const string_q& fieldNameIn, const string_q& f
         case 'i':
             if (fieldName % "input") {
                 input = fieldValue;
+                return true;
+            }
+            if (fieldName % "isError") {
+                isError = str_2_Uint(fieldValue);
                 return true;
             }
             break;
@@ -447,7 +445,7 @@ bool CTransaction::Serialize(CArchive& archive) {
     archive >> gas;
     archive >> gasPrice;
     archive >> input;
-    archive >> bitSetA;
+    archive >> isError;
     archive >> hasToken;
     archive >> receipt;
     archive >> traces;
@@ -480,7 +478,7 @@ bool CTransaction::SerializeC(CArchive& archive) const {
     archive << gas;
     archive << gasPrice;
     archive << input;
-    archive << bitSetA;
+    archive << isError;
     archive << hasToken;
     archive << receipt;
     archive << traces;
@@ -538,7 +536,7 @@ void CTransaction::registerClass(void) {
     ADD_FIELD(CTransaction, "gas", T_GAS, ++fieldNum);
     ADD_FIELD(CTransaction, "gasPrice", T_GAS, ++fieldNum);
     ADD_FIELD(CTransaction, "input", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CTransaction, "bitSetA", T_UNUMBER, ++fieldNum);
+    ADD_FIELD(CTransaction, "isError", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CTransaction, "hasToken", T_UNUMBER, ++fieldNum);
     ADD_OBJECT(CTransaction, "receipt", T_OBJECT | TS_OMITEMPTY, ++fieldNum, GETRUNTIME_CLASS(CReceipt));
     ADD_FIELD(CTransaction, "traces", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
@@ -594,7 +592,7 @@ void CTransaction::registerClass(void) {
     HIDE_FIELD(CTransaction, "encoding");
     HIDE_FIELD(CTransaction, "gasCost");
     HIDE_FIELD(CTransaction, "etherGasCost");
-    HIDE_FIELD(CTransaction, "bitSetA");
+    HIDE_FIELD(CTransaction, "isError");
     HIDE_FIELD(CTransaction, "hasTokens");
     HIDE_FIELD(CTransaction, "date");
     HIDE_FIELD(CTransaction, "datesh");
@@ -614,7 +612,8 @@ void CTransaction::registerClass(void) {
     HIDE_FIELD(CTransaction, "minute");
     HIDE_FIELD(CTransaction, "second");
     if (isTestMode()) {
-        UNHIDE_FIELD(CTransaction, "bitSetA");
+        UNHIDE_FIELD(CTransaction, "isError");
+        UNHIDE_FIELD(CTransaction, "hasToken");
     }
 
     if (isTestMode() && isApiMode()) {
@@ -679,14 +678,6 @@ string_q nextTransactionChunk_custom(const string_q& fieldIn, const void* dataPt
                     return parts[3];
                 }
                 break;
-            case 's':
-                if (fieldIn % "second") {
-                    timestamp_t ts = (tra->pBlock ? tra->pBlock->timestamp : tra->timestamp);
-                    string_q ret = ts_2_Date(ts).Format(FMT_PARTS);
-                    CStringArray parts;
-                    explode(parts, ret, '|');
-                    return parts[5];
-                }
             case 'e':
                 if (fieldIn % "ether")
                     return wei_2_Ether(tra->value, 18);
@@ -748,14 +739,6 @@ string_q nextTransactionChunk_custom(const string_q& fieldIn, const void* dataPt
                     return bnu_2_Str(used * price);
                 }
                 break;
-            case 't':
-                if (fieldIn % "timestamp" && tra->pBlock)
-                    return int_2_Str(tra->pBlock->timestamp);
-                if (fieldIn % "time") {
-                    timestamp_t ts = (tra->pBlock ? tra->pBlock->timestamp : tra->timestamp);
-                    return extract(ts_2_Date(ts).Format(FMT_JSON), 12);
-                }
-                break;
             case 'm':
                 if (fieldIn % "month") {
                     timestamp_t ts = (tra->pBlock ? tra->pBlock->timestamp : tra->timestamp);
@@ -770,6 +753,23 @@ string_q nextTransactionChunk_custom(const string_q& fieldIn, const void* dataPt
                     CStringArray parts;
                     explode(parts, ret, '|');
                     return parts[4];
+                }
+                break;
+            case 's':
+                if (fieldIn % "second") {
+                    timestamp_t ts = (tra->pBlock ? tra->pBlock->timestamp : tra->timestamp);
+                    string_q ret = ts_2_Date(ts).Format(FMT_PARTS);
+                    CStringArray parts;
+                    explode(parts, ret, '|');
+                    return parts[5];
+                }
+                break;
+            case 't':
+                if (fieldIn % "timestamp" && tra->pBlock)
+                    return int_2_Str(tra->pBlock->timestamp);
+                if (fieldIn % "time") {
+                    timestamp_t ts = (tra->pBlock ? tra->pBlock->timestamp : tra->timestamp);
+                    return extract(ts_2_Date(ts).Format(FMT_JSON), 12);
                 }
                 break;
             case 'y':
@@ -809,7 +809,7 @@ string_q nextTransactionChunk_custom(const string_q& fieldIn, const void* dataPt
 bool CTransaction::readBackLevel(CArchive& archive) {
     bool done = false;
     // EXISTING_CODE
-    if (m_schema <= getVersionNum(0, 4, 0)) {
+    if (m_schema < getVersionNum(0, 4, 1)) {
         uint64_t removedInt;  // used to be isInternal
         wei_t removedWei;     // used to be cumulativeGasUsed
         archive >> hash;
@@ -825,13 +825,13 @@ bool CTransaction::readBackLevel(CArchive& archive) {
         archive >> gasPrice;
         archive >> removedWei;
         archive >> input;
-        archive >> bitSetA;
+        archive >> isError;
         archive >> removedInt;
         archive >> receipt;
         hasToken = 0;
         finishParse();
         done = true;
-    } else if (m_schema <= getVersionNum(0, 7, 9)) {
+    } else if (m_schema < getVersionNum(0, 7, 10)) {
         uint64_t removedInt;  // used to be isInternal
         archive >> hash;
         archive >> blockHash;
@@ -845,7 +845,7 @@ bool CTransaction::readBackLevel(CArchive& archive) {
         archive >> gas;
         archive >> gasPrice;
         archive >> input;
-        archive >> bitSetA;
+        archive >> isError;
         archive >> removedInt;
         archive >> receipt;
         archive >> traces;
@@ -928,7 +928,7 @@ const char* STR_DISPLAY_TRANSACTION =
     "[{ETHERGASPRICE}]\t"
     "[{GASUSED}]\t"
     "[{HASH}]\t"
-    "[{BITSETA}]\t"
+    "[{ISERROR}]\t"
     "[{ENCODING}]\t"
     "[{COMPRESSEDTX}]";
 
@@ -943,16 +943,6 @@ bool sortTransactionsForWrite(const CTransaction& t1, const CTransaction& t2) {
     else if (t1.transactionIndex != t2.transactionIndex)
         return t1.transactionIndex < t2.transactionIndex;
     return t1.hash < t2.hash;
-}
-
-//--------------------------------------------------------------------
-void CTransaction::setBits(txbitset_t which, bool value) {
-    bitSetA = value;
-}
-
-//--------------------------------------------------------------------
-bool CTransaction::isBitSet(txbitset_t which) const {
-    return bitSetA;
 }
 // EXISTING_CODE
 }  // namespace qblocks

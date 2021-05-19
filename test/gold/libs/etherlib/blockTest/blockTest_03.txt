@@ -71,7 +71,7 @@ Using Format(fmt) on a derived class QTransferFrom.
   "value": 0,
   "gas": 0,
   "gasPrice": 0,
-  "bitSetA": 0,
+  "isError": 0,
   "hasToken": 0,
   "gasUsed": 0
 }	0xTransferFromFrom	0xTransferFromTo	1002	
@@ -102,7 +102,7 @@ Using Format(fmt) on a derived class derived from QTransferFrom.
   "value": 0,
   "gas": 0,
   "gasPrice": 0,
-  "bitSetA": 0,
+  "isError": 0,
   "hasToken": 0,
   "gasUsed": 0
 }	0xFromTransferFromFrom	0xFromTransferFromTo	1212	

@@ -23,7 +23,7 @@
           "gas": "0xc350",
           "gasPrice": "0x4a817c800",
           "input": "0x",
-          "bitSetA": "0x0",
+          "isError": "0x0",
           "hasToken": "0x0",
           "receipt": {
             "contractAddress": "0x0",
@@ -49,7 +49,7 @@
           "gas": "0xe57e0",
           "gasPrice": "0x4a817c800",
           "input": "0x",
-          "bitSetA": "0x0",
+          "isError": "0x0",
           "hasToken": "0x0",
           "receipt": {
             "contractAddress": "0x0",
@@ -75,7 +75,7 @@
           "gas": "0x249f0",
           "gasPrice": "0x4a817c800",
           "input": "0xd0e30db0",
-          "bitSetA": "0x0",
+          "isError": "0x0",
           "hasToken": "0x0",
           "receipt": {
             "contractAddress": "0x0",
@@ -111,7 +111,7 @@
           "gas": "0xe57e0",
           "gasPrice": "0x4a817c800",
           "input": "0x",
-          "bitSetA": "0x0",
+          "isError": "0x0",
           "hasToken": "0x0",
           "receipt": {
             "contractAddress": "0x0",
@@ -137,7 +137,7 @@
           "gas": "0xc350",
           "gasPrice": "0x4a817c800",
           "input": "0x",
-          "bitSetA": "0x0",
+          "isError": "0x0",
           "hasToken": "0x0",
           "receipt": {
             "contractAddress": "0x0",
@@ -163,7 +163,7 @@
           "gas": "0xc350",
           "gasPrice": "0x4a817c800",
           "input": "0x",
-          "bitSetA": "0x0",
+          "isError": "0x0",
           "hasToken": "0x0",
           "receipt": {
             "contractAddress": "0x0",
@@ -189,7 +189,7 @@
           "gas": "0xe57e0",
           "gasPrice": "0x4a817c800",
           "input": "0x",
-          "bitSetA": "0x0",
+          "isError": "0x0",
           "hasToken": "0x0",
           "receipt": {
             "contractAddress": "0x0",
@@ -215,7 +215,7 @@
           "gas": "0xc350",
           "gasPrice": "0x4a817c800",
           "input": "0x",
-          "bitSetA": "0x0",
+          "isError": "0x0",
           "hasToken": "0x0",
           "receipt": {
             "contractAddress": "0x0",
@@ -241,7 +241,7 @@
           "gas": "0xe57e0",
           "gasPrice": "0x4a817c800",
           "input": "0x",
-          "bitSetA": "0x0",
+          "isError": "0x0",
           "hasToken": "0x0",
           "receipt": {
             "contractAddress": "0x0",
@@ -267,7 +267,7 @@
           "gas": "0xe57e0",
           "gasPrice": "0x4a817c800",
           "input": "0x",
-          "bitSetA": "0x0",
+          "isError": "0x0",
           "hasToken": "0x0",
           "receipt": {
             "contractAddress": "0x0",
@@ -293,7 +293,7 @@
           "gas": "0xc350",
           "gasPrice": "0x4a817c800",
           "input": "0x",
-          "bitSetA": "0x0",
+          "isError": "0x0",
           "hasToken": "0x0",
           "receipt": {
             "contractAddress": "0x0",
@@ -319,7 +319,7 @@
           "gas": "0xc350",
           "gasPrice": "0x4a817c800",
           "input": "0x",
-          "bitSetA": "0x0",
+          "isError": "0x0",
           "hasToken": "0x0",
           "receipt": {
             "contractAddress": "0x0",
@@ -345,7 +345,7 @@
           "gas": "0xe57e0",
           "gasPrice": "0x4a817c800",
           "input": "0x",
-          "bitSetA": "0x0",
+          "isError": "0x0",
           "hasToken": "0x0",
           "receipt": {
             "contractAddress": "0x0",
@@ -371,7 +371,7 @@
           "gas": "0xe57e0",
           "gasPrice": "0x4a817c800",
           "input": "0x",
-          "bitSetA": "0x0",
+          "isError": "0x0",
           "hasToken": "0x0",
           "receipt": {
             "contractAddress": "0x0",
@@ -397,7 +397,7 @@
           "gas": "0xe57e0",
           "gasPrice": "0x4a817c800",
           "input": "0x",
-          "bitSetA": "0x0",
+          "isError": "0x0",
           "hasToken": "0x0",
           "receipt": {
             "contractAddress": "0x0",

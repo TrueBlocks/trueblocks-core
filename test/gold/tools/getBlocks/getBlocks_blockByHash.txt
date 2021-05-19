@@ -25,7 +25,7 @@ getBlocks 0xd19bc98080cd70951fad3951cef2d512e6334aa3c7e64a38985c955d4d2e273b
       "gas": 22050,
       "gasPrice": 50000000000,
       "input": "0x",
-      "bitSetA": 0,
+      "isError": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",
@@ -47,7 +47,7 @@ getBlocks 0xd19bc98080cd70951fad3951cef2d512e6334aa3c7e64a38985c955d4d2e273b
       "gas": 90000,
       "gasPrice": 50000000000,
       "input": "0x",
-      "bitSetA": 0,
+      "isError": 0,
       "hasToken": 0,
       "receipt": {
         "contractAddress": "0x0",

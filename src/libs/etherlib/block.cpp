@@ -474,7 +474,7 @@ bool CBlock::readBackLevel(CArchive& archive) {
     bool done = false;
     // EXISTING_CODE
     biguint_t removed;
-    if (m_schema <= getVersionNum(0, 3, 0)) {
+    if (m_schema < getVersionNum(0, 3, 1)) {
         archive >> gasLimit;
         archive >> gasUsed;
         archive >> hash;
@@ -494,7 +494,7 @@ bool CBlock::readBackLevel(CArchive& archive) {
         finalized = false;
         finishParse();
         done = true;
-    } else if (m_schema <= getVersionNum(0, 4, 0)) {
+    } else if (m_schema < getVersionNum(0, 4, 1)) {
         archive >> gasLimit;
         archive >> gasUsed;
         archive >> hash;

@@ -447,7 +447,7 @@ string_q nextAccountnameChunk_custom(const string_q& fieldIn, const void* dataPt
 bool CAccountName::readBackLevel(CArchive& archive) {
     bool done = false;
     // EXISTING_CODE
-    if (m_schema <= getVersionNum(0, 6, 5)) {
+    if (m_schema < getVersionNum(0, 6, 6)) {
         string_q subtags, unused5;
         bool unused2, unused3, unused4;
         archive >> tags;

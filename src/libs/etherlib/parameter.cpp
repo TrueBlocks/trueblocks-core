@@ -385,7 +385,7 @@ string_q nextParameterChunk_custom(const string_q& fieldIn, const void* dataPtr)
 bool CParameter::readBackLevel(CArchive& archive) {
     bool done = false;
     // EXISTING_CODE
-    if (m_schema <= getVersionNum(0, 8, 2)) {
+    if (m_schema < getVersionNum(0, 8, 3)) {
         archive >> type;
         archive >> name;
         archive >> str_default;

@@ -378,7 +378,7 @@ bool CReceipt::readBackLevel(CArchive& archive) {
         finishParse();
         done = true;
 
-    } else if (m_schema <= getVersionNum(0, 3, 0)) {
+    } else if (m_schema < getVersionNum(0, 3, 1)) {
         archive >> contractAddress;
         archive >> gasUsed;
         archive >> logs;
@@ -435,7 +435,7 @@ const char* STR_DISPLAY_RECEIPT =
     "[{HASH}]\t"
     "[{GASUSED}]\t"
     "[{STATUS}]\t"
-    "[{BITSETA}]";
+    "[{ISERROR}]";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

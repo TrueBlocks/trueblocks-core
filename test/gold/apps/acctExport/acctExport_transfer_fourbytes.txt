@@ -12,7 +12,7 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b 0xa9059cbb --max_records 1
   "value": 0,
   "gas": 200000,
   "gasPrice": 4000000000,
-  "bitSetA": 0,
+  "isError": 0,
   "hasToken": 1,
   "receipt": {
     "contractAddress": "0x0",
@@ -48,7 +48,7 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b 0xa9059cbb --max_records 1
   "value": 0,
   "gas": 200000,
   "gasPrice": 5000000000,
-  "bitSetA": 0,
+  "isError": 0,
   "hasToken": 1,
   "receipt": {
     "contractAddress": "0x0",
@@ -84,7 +84,7 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b 0xa9059cbb --max_records 1
   "value": 0,
   "gas": 200000,
   "gasPrice": 10000000000,
-  "bitSetA": 0,
+  "isError": 0,
   "hasToken": 1,
   "receipt": {
     "contractAddress": "0x0",

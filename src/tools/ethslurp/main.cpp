@@ -97,11 +97,6 @@ bool Slurp(CCachedAccount& theAccount, COptions& options) {
                 done = true;
 
             } else {
-                if (contains(responseStr, "0x227b6fbe6c53aa031e0435ef5677f0225981c6c0a6058cf520766e7db9afb8e5")) {
-                    printf("");
-                }
-                // yes -- this is a hack since we change the name of ES's field in our data
-                replaceAll(responseStr, "isError", "bitSetA");
                 CESResult response;
                 response.parseJson3(responseStr);
                 uint64_t nRecords = countOf(response.result, '}');
@@ -117,7 +112,7 @@ bool Slurp(CCachedAccount& theAccount, COptions& options) {
                     if (type == "int")
                         findInternalTxIndex(trans);
                     if (type == "token" || type == "nfts")
-                        trans.hasToken = 1;
+                        trans.hasToken = true;
                     theAccount.transactions.push_back(trans);
                     theAccount.markLatest(trans);
                     trans = CTransaction();  // reset

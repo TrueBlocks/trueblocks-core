@@ -660,7 +660,7 @@ bool CReconciliation::reconcileEth(const CStringArray& corrections, CReconciliat
 
     // We need to account for both the case where the account is the sender...
     if (trans->from == acctFor) {
-        amountOut = trans->isBitSet(ERROR_BIT) ? 0 : trans->value;
+        amountOut = trans->isError ? 0 : trans->value;
         gasCostOut = str_2_BigInt(trans->getValueByName("gasCost"));
     }
 
@@ -675,7 +675,7 @@ bool CReconciliation::reconcileEth(const CStringArray& corrections, CReconciliat
         } else if (trans->from == "0xUncleReward") {
             minerUncleRewardIn = trans->value;
         } else {
-            amountIn = trans->isBitSet(ERROR_BIT) ? 0 : trans->value;
+            amountIn = trans->isError ? 0 : trans->value;
         }
     }
 
@@ -833,7 +833,7 @@ bool CReconciliation::reconcileUsingTraces(blknum_t lastBn, bigint_t lastEndBal,
 
         } else {
             if (trace.action.from == acctFor) {
-                internalOut += trans->isBitSet(ERROR_BIT) ? 0 : trace.action.value;
+                internalOut += trans->isError ? 0 : trace.action.value;
                 // gasCostOutflow = str_2_BigInt(trans->getValueByName("gasCost"));
             }
 
@@ -848,7 +848,7 @@ bool CReconciliation::reconcileUsingTraces(blknum_t lastBn, bigint_t lastEndBal,
                 } else if (trans->from == "0xUncleReward") {
                     minerUncleRewardIn = trans->value;
                 } else {
-                    internalIn += trans->isBitSet(ERROR_BIT) ? 0 : trace.action.value;
+                    internalIn += trans->isError ? 0 : trace.action.value;
                 }
             }
         }

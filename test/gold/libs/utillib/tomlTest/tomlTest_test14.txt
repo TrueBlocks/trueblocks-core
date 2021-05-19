@@ -5,7 +5,7 @@ test14.toml
 current = "0.9.0-alpha"
 
 [display]
-format = "[{TIMESTAMP}]\t[{DATE}]\t[{FROM}]\t[{TO}]\t[{VALUE}]\t[{ETHER}]\t[{FUNCTION}]\t[{INPUT}]\t[{BITSETA}]\t[{ISINTERNALTX}]\t[{GAS}]\t[{GASUSED}]\t[{BLOCKNUMBER}]\t[{HASH}]\n"
+format = "[{TIMESTAMP}]\t[{DATE}]\t[{FROM}]\t[{TO}]\t[{VALUE}]\t[{ETHER}]\t[{FUNCTION}]\t[{INPUT}]\t[{ISERROR}]\t[{ISINTERNALTX}]\t[{GAS}]\t[{GASUSED}]\t[{BLOCKNUMBER}]\t[{HASH}]\n"
 
 
 [junk]
@@ -26,7 +26,7 @@ version: 		0.0.0
 
 File contents as read
 [display]
-format = "[{TIMESTAMP}]\t[{DATE}]\t[{FROM}]\t[{TO}]\t[{VALUE}]\t[{ETHER}]\t[{FUNCTION}]\t[{INPUT}]\t[{BITSETA}]\t[{ISINTERNALTX}]\t[{GAS}]\t[{GASUSED}]\t[{BLOCKNUMBER}]\t[{HASH}]\n"
+format = "[{TIMESTAMP}]\t[{DATE}]\t[{FROM}]\t[{TO}]\t[{VALUE}]\t[{ETHER}]\t[{FUNCTION}]\t[{INPUT}]\t[{ISERROR}]\t[{ISINTERNALTX}]\t[{GAS}]\t[{GASUSED}]\t[{BLOCKNUMBER}]\t[{HASH}]\n"
 
 [junk]
 format1 = """[{HEAD}]\n\
@@ -49,7 +49,7 @@ File contents after write
 current = "0.9.0-alpha"
 
 [display]
-format = "[{TIMESTAMP}]\t[{DATE}]\t[{FROM}]\t[{TO}]\t[{VALUE}]\t[{ETHER}]\t[{FUNCTION}]\t[{INPUT}]\t[{BITSETA}]\t[{ISINTERNALTX}]\t[{GAS}]\t[{GASUSED}]\t[{BLOCKNUMBER}]\t[{HASH}]\n"
+format = "[{TIMESTAMP}]\t[{DATE}]\t[{FROM}]\t[{TO}]\t[{VALUE}]\t[{ETHER}]\t[{FUNCTION}]\t[{INPUT}]\t[{ISERROR}]\t[{ISINTERNALTX}]\t[{GAS}]\t[{GASUSED}]\t[{BLOCKNUMBER}]\t[{HASH}]\n"
 
 
 [junk]

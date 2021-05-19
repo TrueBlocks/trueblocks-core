@@ -56,7 +56,7 @@
           "type": "text"
         },
         {
-          "name": "bitSetA",
+          "name": "isError",
           "type": "unumber"
         },
         {
