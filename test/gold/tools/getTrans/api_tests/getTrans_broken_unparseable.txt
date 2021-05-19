@@ -201,21 +201,7 @@
               "0x000000000000000000000000e069cb01d06ba617bcdf789bf2ff0d5e5ca20c71"
             ],
             "data": "0x0000000000000000000000005732046a883704404f284ce41ffadd5b007fd668000000000000000000000000eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee000000000000000000000000e069cb01d06ba617bcdf789bf2ff0d5e5ca20c71000000000000000000000000000000000000000000001839654ece58dcc400000000000000000000000000000000000000000000000000006a4800cb5bce7de8000000000000000000000000910bf2d50fa5e014fd06666f456182d4ab7c8bd20000000000000000000000000000000000000000000000000000000000000000",
-            "articulatedLog": {
-              "name": "ExecuteTrade",
-              "stateMutability": "nonpayable",
-              "inputs": {
-                "actualDestAmount": "7658372039762148840",
-                "actualSrcAmount": "114395560000000000000000",
-                "dest": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-                "destAddress": "0xe069cb01d06ba617bcdf789bf2ff0d5e5ca20c71",
-                "platformFeeBps": "0",
-                "platformWallet": "0x910bf2d50fa5e014fd06666f456182d4ab7c8bd2",
-                "src": "0x5732046a883704404f284ce41ffadd5b007fd668",
-                "trader": "0xe069cb01d06ba617bcdf789bf2ff0d5e5ca20c71"
-              }
-            },
-            "compressedLog": "ExecuteTrade ( trader: 0xe069cb01d06ba617bcdf789bf2ff0d5e5ca20c71, src: 0x5732046a883704404f284ce41ffadd5b007fd668, dest: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee, destAddress: 0xe069cb01d06ba617bcdf789bf2ff0d5e5ca20c71, actualSrcAmount: 114395560000000000000000, actualDestAmount: 7658372039762148840, platformWallet: 0x910bf2d50fa5e014fd06666f456182d4ab7c8bd2, platformFeeBps: 0 )"
+            "compressedLog": ""
           },
           {
             "address": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
@@ -282,15 +268,7 @@
               "0x1c411e9a96e071241c2f21f7726b17ae89e3cab4c78be50e062b03a9fffbbad1"
             ],
             "data": "0x00000000000000000000000000000000000000000049391cb031f6c0e2fbeb0a00000000000000000000000000000000000000000000122bfa0d1807efd9bb41",
-            "articulatedLog": {
-              "name": "Sync",
-              "stateMutability": "nonpayable",
-              "inputs": {
-                "reserve0": "88521288926425696234629898",
-                "reserve1": "85813824770929671650113"
-              }
-            },
-            "compressedLog": "Sync ( reserve0: 88521288926425696234629898, reserve1: 85813824770929671650113 )"
+            "compressedLog": ""
           },
           {
             "address": "0xa478c2975ab1ea89e8196811f51a7b7ade33eb11",
@@ -301,19 +279,7 @@
               "0x000000000000000000000000e069cb01d06ba617bcdf789bf2ff0d5e5ca20c71"
             ],
             "data": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000006a4800cb5bce7de80000000000000000000000000000000000000000000001ab0355d4bb85c44bdb0000000000000000000000000000000000000000000000000000000000000000",
-            "articulatedLog": {
-              "name": "Swap",
-              "stateMutability": "nonpayable",
-              "inputs": {
-                "amount0In": "0",
-                "amount0Out": "7877000051530980936667",
-                "amount1In": "7658372039762148840",
-                "amount1Out": "0",
-                "sender": "0xe069cb01d06ba617bcdf789bf2ff0d5e5ca20c71",
-                "to": "0xe069cb01d06ba617bcdf789bf2ff0d5e5ca20c71"
-              }
-            },
-            "compressedLog": "Swap ( sender: 0xe069cb01d06ba617bcdf789bf2ff0d5e5ca20c71, amount0In: 0, amount1In: 7658372039762148840, amount0Out: 7877000051530980936667, amount1Out: 0, to: 0xe069cb01d06ba617bcdf789bf2ff0d5e5ca20c71 )"
+            "compressedLog": ""
           },
           {
             "address": "0x6b175474e89094c44da98b954eedeac495271d0f",
