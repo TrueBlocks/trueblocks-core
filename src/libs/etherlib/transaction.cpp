@@ -90,6 +90,9 @@ string_q CTransaction::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 'c':
+            if (fieldName % "cachebits") {
+                return uint_2_Str(cachebits);
+            }
             if (fieldName % "compressedTx") {
                 return compressedTx;
             }
@@ -140,9 +143,6 @@ string_q CTransaction::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 'r':
-            if (fieldName % "reserved1") {
-                return uint_2_Str(reserved1);
-            }
             if (fieldName % "reserved2") {
                 return uint_2_Str(reserved2);
             }
@@ -305,6 +305,10 @@ bool CTransaction::setValueByName(const string_q& fieldNameIn, const string_q& f
             }
             break;
         case 'c':
+            if (fieldName % "cachebits") {
+                cachebits = (uint8_t)str_2_Uint(fieldValue);
+                return true;
+            }
             if (fieldName % "compressedTx") {
                 compressedTx = fieldValue;
                 return true;
@@ -367,10 +371,6 @@ bool CTransaction::setValueByName(const string_q& fieldNameIn, const string_q& f
             }
             break;
         case 'r':
-            if (fieldName % "reserved1") {
-                reserved1 = (uint8_t)str_2_Uint(fieldValue);
-                return true;
-            }
             if (fieldName % "reserved2") {
                 reserved2 = (uint8_t)str_2_Uint(fieldValue);
                 return true;
@@ -461,7 +461,7 @@ bool CTransaction::Serialize(CArchive& archive) {
     archive >> input;
     archive >> isError;
     archive >> hasToken;
-    archive >> reserved1;
+    archive >> cachebits;
     archive >> reserved2;
     archive >> receipt;
     archive >> traces;
@@ -496,7 +496,7 @@ bool CTransaction::SerializeC(CArchive& archive) const {
     archive << input;
     archive << isError;
     archive << hasToken;
-    archive << reserved1;
+    archive << cachebits;
     archive << reserved2;
     archive << receipt;
     archive << traces;
@@ -556,7 +556,7 @@ void CTransaction::registerClass(void) {
     ADD_FIELD(CTransaction, "input", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CTransaction, "isError", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CTransaction, "hasToken", T_UNUMBER, ++fieldNum);
-    ADD_FIELD(CTransaction, "reserved1", T_UNUMBER, ++fieldNum);
+    ADD_FIELD(CTransaction, "cachebits", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CTransaction, "reserved2", T_UNUMBER, ++fieldNum);
     ADD_OBJECT(CTransaction, "receipt", T_OBJECT | TS_OMITEMPTY, ++fieldNum, GETRUNTIME_CLASS(CReceipt));
     ADD_FIELD(CTransaction, "traces", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
@@ -631,7 +631,7 @@ void CTransaction::registerClass(void) {
     HIDE_FIELD(CTransaction, "hour");
     HIDE_FIELD(CTransaction, "minute");
     HIDE_FIELD(CTransaction, "second");
-    HIDE_FIELD(CTransaction, "reserved1");
+    HIDE_FIELD(CTransaction, "cachebits");
     HIDE_FIELD(CTransaction, "reserved2");
     if (isTestMode()) {
         UNHIDE_FIELD(CTransaction, "isError");
@@ -674,6 +674,8 @@ string_q nextTransactionChunk_custom(const string_q& fieldIn, const void* dataPt
                     return addr_2_Str(tra->receipt.contractAddress);
                 if (fieldIn % "compressedTx")
                     return tra->articulatedTx.compressed(tra->input);
+                if (fieldIn % "cachebits")
+                    return "";
                 break;
             case 'd':
                 if (fieldIn % "date" || fieldIn % "datesh") {
@@ -778,7 +780,7 @@ string_q nextTransactionChunk_custom(const string_q& fieldIn, const void* dataPt
                 }
                 break;
             case 'r':
-                if (fieldIn % "reserved1" || fieldIn % "reserved2")
+                if (fieldIn % "reserved2")
                     return "";
                 break;
             case 's':

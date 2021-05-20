@@ -50,7 +50,7 @@ class CTransaction : public CBaseNode {
     string_q input;
     uint8_t isError;
     uint8_t hasToken;
-    uint8_t reserved1;
+    uint8_t cachebits;
     uint8_t reserved2;
     CReceipt receipt;
     CTraceArray traces;
@@ -146,7 +146,7 @@ inline void CTransaction::initialize(void) {
     input = "";
     isError = 0;
     hasToken = 0;
-    reserved1 = 0;
+    cachebits = 0;
     reserved2 = 0;
     receipt = CReceipt();
     traces.clear();
@@ -181,7 +181,7 @@ inline void CTransaction::duplicate(const CTransaction& tr) {
     input = tr.input;
     isError = tr.isError;
     hasToken = tr.hasToken;
-    reserved1 = tr.reserved1;
+    cachebits = tr.cachebits;
     reserved2 = tr.reserved2;
     receipt = tr.receipt;
     traces = tr.traces;
