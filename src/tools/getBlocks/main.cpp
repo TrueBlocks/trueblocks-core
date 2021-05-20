@@ -57,6 +57,8 @@ string_q doOneLightBlock(blknum_t num) {
     HIDE_FIELD(CTransaction, "date");
     HIDE_FIELD(CTransaction, "age");
     HIDE_FIELD(CTransaction, "ether");
+    for (auto trans : gold.transactions)
+        gold.tx_hashes.push_back(trans.hash);
     return gold.Format(expContext().fmtMap["format"]);
 }
 

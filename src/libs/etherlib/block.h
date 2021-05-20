@@ -38,6 +38,7 @@ class CBlock : public CBaseNode {
     bool finalized;
     timestamp_t timestamp;
     CTransactionArray transactions;
+    CStringArray tx_hashes;
     string_q name;
     bool light;
 
@@ -50,6 +51,7 @@ class CBlock : public CBaseNode {
     DECLARE_NODE(CBlock);
 
     const CBaseNode* getObjectAt(const string_q& fieldName, size_t index) const override;
+    const string_q getStringAt(const string_q& fieldName, size_t i) const override;
 
     // EXISTING_CODE
     bool forEveryAppearanceInBlock(APPEARANCEFUNC func, TRANSFUNC filt = NULL, void* data = NULL);
@@ -118,6 +120,7 @@ inline void CBlock::initialize(void) {
     finalized = false;
     timestamp = 0;
     transactions.clear();
+    tx_hashes.clear();
     name = "";
     light = false;
 
@@ -141,6 +144,7 @@ inline void CBlock::duplicate(const CBlock& bl) {
     finalized = bl.finalized;
     timestamp = bl.timestamp;
     transactions = bl.transactions;
+    tx_hashes = bl.tx_hashes;
     name = bl.name;
     light = bl.light;
 

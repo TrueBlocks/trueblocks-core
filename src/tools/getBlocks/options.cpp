@@ -149,9 +149,7 @@ bool COptions::parseArguments(string_q& command) {
     if (hashes) {
         manageFields("CTransaction:all", FLD_HIDE);
         manageFields("CBlock:all", FLD_HIDE);
-
-        manageFields("CTransaction:hash", FLD_SHOW);
-        manageFields("CBlock:hash,blockNumber,parentHash,timestamp,transactions", FLD_SHOW);
+        manageFields("CBlock:hash,blockNumber,parentHash,timestamp,tx_hashes", FLD_SHOW);
     }
 
     if (expContext().exportFmt == NONE1)

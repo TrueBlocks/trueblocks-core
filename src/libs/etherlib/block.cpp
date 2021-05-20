@@ -142,6 +142,19 @@ string_q CBlock::getValueByName(const string_q& fieldName) const {
                 }
                 return retS;
             }
+            if (fieldName % "tx_hashes" || fieldName % "tx_hashesCnt") {
+                size_t cnt = tx_hashes.size();
+                if (endsWith(toLower(fieldName), "cnt"))
+                    return uint_2_Str(cnt);
+                if (!cnt)
+                    return "";
+                string_q retS;
+                for (size_t i = 0; i < cnt; i++) {
+                    retS += ("\"" + tx_hashes[i] + "\"");
+                    retS += ((i < cnt - 1) ? ",\n" + indentStr() : "\n");
+                }
+                return retS;
+            }
             break;
         default:
             break;
@@ -264,6 +277,13 @@ bool CBlock::setValueByName(const string_q& fieldNameIn, const string_q& fieldVa
                 }
                 return true;
             }
+            if (fieldName % "tx_hashes") {
+                string_q str = fieldValue;
+                while (!str.empty()) {
+                    tx_hashes.push_back(nextTokenClear(str, ','));
+                }
+                return true;
+            }
             break;
         default:
             break;
@@ -313,6 +333,7 @@ bool CBlock::Serialize(CArchive& archive) {
     archive >> finalized;
     archive >> timestamp;
     archive >> transactions;
+    // archive >> tx_hashes;
     // archive >> name;
     // archive >> light;
     finishParse();
@@ -337,6 +358,7 @@ bool CBlock::SerializeC(CArchive& archive) const {
     archive << finalized;
     archive << timestamp;
     archive << transactions;
+    // archive << tx_hashes;
     // archive << name;
     // archive << light;
 
@@ -386,6 +408,8 @@ void CBlock::registerClass(void) {
     ADD_FIELD(CBlock, "finalized", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CBlock, "timestamp", T_TIMESTAMP, ++fieldNum);
     ADD_FIELD(CBlock, "transactions", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CBlock, "tx_hashes", T_TEXT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CBlock, "tx_hashes");
     ADD_FIELD(CBlock, "name", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CBlock, "name");
     ADD_FIELD(CBlock, "light", T_BOOL | TS_OMITEMPTY, ++fieldNum);
@@ -548,6 +572,13 @@ const CBaseNode* CBlock::getObjectAt(const string_q& fieldName, size_t index) co
     }
 
     return NULL;
+}
+
+//---------------------------------------------------------------------------
+const string_q CBlock::getStringAt(const string_q& fieldName, size_t i) const {
+    if (fieldName % "tx_hashes" && i < tx_hashes.size())
+        return (tx_hashes[i]);
+    return "";
 }
 
 //---------------------------------------------------------------------------
