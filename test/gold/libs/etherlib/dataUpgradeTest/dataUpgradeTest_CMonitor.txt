@@ -33,7 +33,7 @@ showing             	1003	0	8388628	T_BOOL TS_NUMERAL
 cname               	1004	0	16777266	T_TEXT TS_STRING
 fm_mode             	1005	0	8388633	T_NUMBER TS_NUMERAL
 {
-  "schema": 9000,
+  "schema": 9003,
   "deleted": false,
   "showing": true,
   "cname": "Monitor",

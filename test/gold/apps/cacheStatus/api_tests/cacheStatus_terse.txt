@@ -2,7 +2,7 @@
   "data": [
     {
       "client_version": "Client version",
-      "trueblocks_version": "GHC-TrueBlocks//0.9.0-alpha--git-hash---git-ts-",
+      "trueblocks_version": "GHC-TrueBlocks//0.9.3-alpha--git-hash---git-ts-",
       "rpc_provider": "--providers--",
       "config_path": "--paths--",
       "cache_path": "--paths--",

@@ -140,6 +140,12 @@ string_q CTransaction::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 'r':
+            if (fieldName % "reserved1") {
+                return uint_2_Str(reserved1);
+            }
+            if (fieldName % "reserved2") {
+                return uint_2_Str(reserved2);
+            }
             if (fieldName % "receipt") {
                 if (receipt == CReceipt())
                     return "{}";
@@ -340,7 +346,7 @@ bool CTransaction::setValueByName(const string_q& fieldNameIn, const string_q& f
                 return true;
             }
             if (fieldName % "hasToken") {
-                hasToken = str_2_Uint(fieldValue);
+                hasToken = (uint8_t)str_2_Uint(fieldValue);
                 return true;
             }
             break;
@@ -350,7 +356,7 @@ bool CTransaction::setValueByName(const string_q& fieldNameIn, const string_q& f
                 return true;
             }
             if (fieldName % "isError") {
-                isError = str_2_Uint(fieldValue);
+                isError = (uint8_t)str_2_Uint(fieldValue);
                 return true;
             }
             break;
@@ -361,6 +367,14 @@ bool CTransaction::setValueByName(const string_q& fieldNameIn, const string_q& f
             }
             break;
         case 'r':
+            if (fieldName % "reserved1") {
+                reserved1 = (uint8_t)str_2_Uint(fieldValue);
+                return true;
+            }
+            if (fieldName % "reserved2") {
+                reserved2 = (uint8_t)str_2_Uint(fieldValue);
+                return true;
+            }
             if (fieldName % "receipt") {
                 return receipt.parseJson3(fieldValue);
             }
@@ -447,6 +461,8 @@ bool CTransaction::Serialize(CArchive& archive) {
     archive >> input;
     archive >> isError;
     archive >> hasToken;
+    archive >> reserved1;
+    archive >> reserved2;
     archive >> receipt;
     archive >> traces;
     archive >> articulatedTx;
@@ -480,6 +496,8 @@ bool CTransaction::SerializeC(CArchive& archive) const {
     archive << input;
     archive << isError;
     archive << hasToken;
+    archive << reserved1;
+    archive << reserved2;
     archive << receipt;
     archive << traces;
     archive << articulatedTx;
@@ -538,6 +556,8 @@ void CTransaction::registerClass(void) {
     ADD_FIELD(CTransaction, "input", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CTransaction, "isError", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CTransaction, "hasToken", T_UNUMBER, ++fieldNum);
+    ADD_FIELD(CTransaction, "reserved1", T_UNUMBER, ++fieldNum);
+    ADD_FIELD(CTransaction, "reserved2", T_UNUMBER, ++fieldNum);
     ADD_OBJECT(CTransaction, "receipt", T_OBJECT | TS_OMITEMPTY, ++fieldNum, GETRUNTIME_CLASS(CReceipt));
     ADD_FIELD(CTransaction, "traces", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
     ADD_OBJECT(CTransaction, "articulatedTx", T_OBJECT | TS_OMITEMPTY, ++fieldNum, GETRUNTIME_CLASS(CFunction));
@@ -611,6 +631,8 @@ void CTransaction::registerClass(void) {
     HIDE_FIELD(CTransaction, "hour");
     HIDE_FIELD(CTransaction, "minute");
     HIDE_FIELD(CTransaction, "second");
+    HIDE_FIELD(CTransaction, "reserved1");
+    HIDE_FIELD(CTransaction, "reserved2");
     if (isTestMode()) {
         UNHIDE_FIELD(CTransaction, "isError");
         UNHIDE_FIELD(CTransaction, "hasToken");
@@ -755,6 +777,10 @@ string_q nextTransactionChunk_custom(const string_q& fieldIn, const void* dataPt
                     return parts[4];
                 }
                 break;
+            case 'r':
+                if (fieldIn % "reserved1" || fieldIn % "reserved2")
+                    return "";
+                break;
             case 's':
                 if (fieldIn % "second") {
                     timestamp_t ts = (tra->pBlock ? tra->pBlock->timestamp : tra->timestamp);
@@ -809,9 +835,11 @@ string_q nextTransactionChunk_custom(const string_q& fieldIn, const void* dataPt
 bool CTransaction::readBackLevel(CArchive& archive) {
     bool done = false;
     // EXISTING_CODE
+    wei_t removedWei;     // used to be cumulativeGasUsed
+    uint64_t removedInt;  // used to be isInternal
+    uint64_t oldError;    // size change
+    uint64_t oldToken;    // size change
     if (m_schema < getVersionNum(0, 4, 1)) {
-        uint64_t removedInt;  // used to be isInternal
-        wei_t removedWei;     // used to be cumulativeGasUsed
         archive >> hash;
         archive >> blockHash;
         archive >> blockNumber;
@@ -825,14 +853,15 @@ bool CTransaction::readBackLevel(CArchive& archive) {
         archive >> gasPrice;
         archive >> removedWei;
         archive >> input;
-        archive >> isError;
+        archive >> oldError;
         archive >> removedInt;
         archive >> receipt;
-        hasToken = 0;
+        hasToken = false;
+        isError = (uint8_t)oldError;
         finishParse();
         done = true;
     } else if (m_schema < getVersionNum(0, 7, 10)) {
-        uint64_t removedInt;  // used to be isInternal
+        CReconciliationArray unused;
         archive >> hash;
         archive >> blockHash;
         archive >> blockNumber;
@@ -845,17 +874,44 @@ bool CTransaction::readBackLevel(CArchive& archive) {
         archive >> gas;
         archive >> gasPrice;
         archive >> input;
-        archive >> isError;
+        archive >> oldError;
         archive >> removedInt;
         archive >> receipt;
         archive >> traces;
         archive >> articulatedTx;
-        CReconciliationArray unused;
         archive >> unused;
         // archive >> compressedTx;
         // archive >> statements;
         // archive >> finalized;
-        hasToken = 0;
+        hasToken = false;
+        isError = (uint8_t)oldError;
+        finishParse();
+        done = true;
+    } else if (m_schema < getVersionNum(0, 9, 3)) {
+        archive >> hash;
+        archive >> blockHash;
+        archive >> blockNumber;
+        archive >> transactionIndex;
+        archive >> nonce;
+        archive >> timestamp;
+        archive >> from;
+        archive >> to;
+        archive >> value;
+        archive >> extraValue1;
+        archive >> extraValue2;
+        archive >> gas;
+        archive >> gasPrice;
+        archive >> input;
+        archive >> oldError;
+        archive >> oldToken;
+        archive >> receipt;
+        archive >> traces;
+        archive >> articulatedTx;
+        // archive >> compressedTx;
+        // archive >> statements;
+        // archive >> finalized;
+        hasToken = (uint8_t)oldToken;
+        isError = (uint8_t)oldError;
         finishParse();
         done = true;
     }

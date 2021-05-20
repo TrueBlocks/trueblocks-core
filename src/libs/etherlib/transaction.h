@@ -48,8 +48,10 @@ class CTransaction : public CBaseNode {
     gas_t gas;
     gas_t gasPrice;
     string_q input;
-    uint64_t isError;
-    uint64_t hasToken;
+    uint8_t isError;
+    uint8_t hasToken;
+    uint8_t reserved1;
+    uint8_t reserved2;
     CReceipt receipt;
     CTraceArray traces;
     CFunction articulatedTx;
@@ -144,6 +146,8 @@ inline void CTransaction::initialize(void) {
     input = "";
     isError = 0;
     hasToken = 0;
+    reserved1 = 0;
+    reserved2 = 0;
     receipt = CReceipt();
     traces.clear();
     articulatedTx = CFunction();
@@ -177,6 +181,8 @@ inline void CTransaction::duplicate(const CTransaction& tr) {
     input = tr.input;
     isError = tr.isError;
     hasToken = tr.hasToken;
+    reserved1 = tr.reserved1;
+    reserved2 = tr.reserved2;
     receipt = tr.receipt;
     traces = tr.traces;
     articulatedTx = tr.articulatedTx;

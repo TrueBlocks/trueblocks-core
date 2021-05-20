@@ -74,6 +74,10 @@ class CArchive : public CSharedResource {
     CArchive& operator<<(char c);
     CArchive& operator<<(int d);
     CArchive& operator<<(unsigned int d);
+    CArchive& operator<<(int8_t dw);
+    CArchive& operator<<(uint8_t dw);
+    CArchive& operator<<(int16_t dw);
+    CArchive& operator<<(uint16_t dw);
     CArchive& operator<<(int64_t dw);
     CArchive& operator<<(uint64_t dw);
     CArchive& operator<<(float f);
@@ -88,6 +92,10 @@ class CArchive : public CSharedResource {
     CArchive& operator>>(char& c);
     CArchive& operator>>(int& d);
     CArchive& operator>>(unsigned int& d);
+    CArchive& operator>>(int8_t& dw);
+    CArchive& operator>>(uint8_t& dw);
+    CArchive& operator>>(int16_t& dw);
+    CArchive& operator>>(uint16_t& dw);
     CArchive& operator>>(int64_t& dw);
     CArchive& operator>>(uint64_t& dw);
     CArchive& operator>>(float& f);

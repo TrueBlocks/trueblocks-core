@@ -100,6 +100,10 @@ class CSharedResource {
     size_t Read(bool& val);
     size_t Read(char& val);
     size_t Read(int& val);
+    size_t Read(int8_t& val);
+    size_t Read(uint8_t& val);
+    size_t Read(int16_t& val);
+    size_t Read(uint16_t& val);
     size_t Read(unsigned int& val);
     size_t Read(long& val);                // NOLINT
     size_t Read(unsigned long& val);       // NOLINT
@@ -112,6 +116,10 @@ class CSharedResource {
     size_t Write(bool val) const;
     size_t Write(char val) const;
     size_t Write(int val) const;
+    size_t Write(int8_t val) const;
+    size_t Write(uint8_t val) const;
+    size_t Write(int16_t val) const;
+    size_t Write(uint16_t val) const;
     size_t Write(unsigned int val) const;
     size_t Write(long val) const;                // NOLINT
     size_t Write(unsigned long val) const;       // NOLINT

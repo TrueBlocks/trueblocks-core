@@ -2,4 +2,4 @@ tomlTest2 argc: 2 [1:whenBlock.toml]
 tomlTest2 whenBlock.toml 
 tests/whenBlock.toml
 [version]
-current = "0.9.0-alpha"
+current = "0.9.3-alpha"

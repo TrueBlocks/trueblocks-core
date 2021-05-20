@@ -39,7 +39,27 @@ CArchive& CArchive::operator<<(unsigned int dw) {
     return *this;
 }
 
+CArchive& CArchive::operator<<(int8_t dw) {
+    Write(dw);
+    return *this;
+}
+
+CArchive& CArchive::operator<<(int16_t dw) {
+    Write(dw);
+    return *this;
+}
+
 CArchive& CArchive::operator<<(int64_t dw) {
+    Write(dw);
+    return *this;
+}
+
+CArchive& CArchive::operator<<(uint8_t dw) {
+    Write(dw);
+    return *this;
+}
+
+CArchive& CArchive::operator<<(uint16_t dw) {
     Write(dw);
     return *this;
 }
@@ -142,7 +162,27 @@ CArchive& CArchive::operator>>(unsigned int& dw) {
     return *this;
 }
 
+CArchive& CArchive::operator>>(int8_t& dw) {
+    Read(dw);
+    return *this;
+}
+
+CArchive& CArchive::operator>>(int16_t& dw) {
+    Read(dw);
+    return *this;
+}
+
 CArchive& CArchive::operator>>(int64_t& dw) {
+    Read(dw);
+    return *this;
+}
+
+CArchive& CArchive::operator>>(uint8_t& dw) {
+    Read(dw);
+    return *this;
+}
+
+CArchive& CArchive::operator>>(uint16_t& dw) {
     Read(dw);
     return *this;
 }

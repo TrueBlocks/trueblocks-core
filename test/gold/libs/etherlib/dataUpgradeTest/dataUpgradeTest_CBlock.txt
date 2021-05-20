@@ -81,7 +81,7 @@ light               	1017	0	12582932	T_BOOL TS_NUMERAL TS_OMITEMPTY
 date                	1018	0	33554437	T_DATE TS_DATE
 age                 	1019	0	33554437	T_DATE TS_DATE
 {
-  "schema": 9000,
+  "schema": 9003,
   "deleted": false,
   "showing": true,
   "cname": "Block",

@@ -379,7 +379,13 @@ string_q getCaseGetCode(const CParameterArray& fieldsIn) {
                 } else if (startsWith(p.type, "bytes")) {
                     outStream << ("return [{PTR}]" + p.name + ";");
 
-                } else if (p.type == "uint8" || p.type == "uint16" || p.type == "uint32" || p.type == "uint64") {
+                } else if (p.type == "uint8") {
+                    outStream << ("return uint_2_Str([{PTR}]" + p.name + ");");
+
+                } else if (p.type == "uint16") {
+                    outStream << ("return uint_2_Str([{PTR}]" + p.name + ");");
+
+                } else if (p.type == "uint32" || p.type == "uint64") {
                     outStream << ("return uint_2_Str([{PTR}]" + p.name + ");");
 
                 } else if (p.type == "suint64" || p.type == "suint32") {
@@ -391,7 +397,13 @@ string_q getCaseGetCode(const CParameterArray& fieldsIn) {
                 } else if (p.type == "uint256") {
                     outStream << ("return bnu_2_Str([{PTR}]" + p.name + ");");
 
-                } else if (p.type == "int8" || p.type == "int16" || p.type == "int32" || p.type == "int64") {
+                } else if (p.type == "int8") {
+                    outStream << ("return int_2_Str([{PTR}]" + p.name + ");");
+
+                } else if (p.type == "int16") {
+                    outStream << ("return int_2_Str([{PTR}]" + p.name + ");");
+
+                } else if (p.type == "int32" || p.type == "int64") {
                     outStream << ("return int_2_Str([{PTR}]" + p.name + ");");
 
                 } else if (p.type == "int256") {
@@ -532,10 +544,22 @@ string_q getCaseSetCode(const CParameterArray& fieldsIn) {
                 } else if (p.type == "uint256") {
                     outStream << (p.name + " = str_2_Wei(fieldValue);\n````return true;");
 
-                } else if (p.type == "int8" || p.type == "int16" || p.type == "int32") {
+                } else if (p.type == "int8") {
+                    outStream << (p.name + " = (int8_t)str_2_Uint(fieldValue);\n````return true;");
+
+                } else if (p.type == "int16") {
+                    outStream << (p.name + " = (int16_t)str_2_Uint(fieldValue);\n````return true;");
+
+                } else if (p.type == "int32") {
                     outStream << (p.name + " = (int32_t)str_2_Uint(fieldValue);\n````return true;");
 
-                } else if (p.type == "uint8" || p.type == "uint16" || p.type == "uint32" || p.type == "suint32") {
+                } else if (p.type == "uint8") {
+                    outStream << (p.name + " = (uint8_t)str_2_Uint(fieldValue);\n````return true;");
+
+                } else if (p.type == "uint16") {
+                    outStream << (p.name + " = (uint16_t)str_2_Uint(fieldValue);\n````return true;");
+
+                } else if (p.type == "uint32" || p.type == "suint32") {
                     outStream << (p.name + " = (uint32_t)str_2_Uint(fieldValue);\n````return true;");
 
                 } else if (startsWith(p.type, "bytes")) {
@@ -638,8 +662,8 @@ string_q convertTypes(const string_q& inStr) {
     replaceAll(outStr, "gas ", "gas_t ");
     replaceAll(outStr, "wei ", "wei_t ");
 
-    replaceAll(outStr, "int8 ", "int32_t ");
-    replaceAll(outStr, "int16 ", "int32_t ");
+    replaceAll(outStr, "int8 ", "int8_t ");
+    replaceAll(outStr, "int16 ", "int16_t ");
     replaceAll(outStr, "int32 ", "int32_t ");
     replaceAll(outStr, "int64 ", "int64_t ");
     replaceAll(outStr, "int256 ", "bigint_t ");
