@@ -29,6 +29,13 @@ class CBlock;
 class CAppearance;
 typedef bool (*APPEARANCEFUNC)(const CAppearance& item, void* data);
 typedef bool (*TRANSFUNC)(const CTransaction* trans, void* data);
+typedef enum {
+    CB_NONE = 0,
+    CB_ARTICULATION = (1 << 0),
+    CB_ETH_ACCOUNTING = (1 << 1),
+    CB_TOK_ACCOUNTING = (1 << 2),
+    CB_TRACES = (1 << 3),
+} cachebits_t;
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
@@ -146,7 +153,7 @@ inline void CTransaction::initialize(void) {
     input = "";
     isError = 0;
     hasToken = 0;
-    cachebits = 0;
+    cachebits = CB_NONE;
     reserved2 = 0;
     receipt = CReceipt();
     traces.clear();

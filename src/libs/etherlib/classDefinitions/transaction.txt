@@ -16,7 +16,7 @@ fields = hash hash|\
         string input|\
         uint8 isError|\
         uint8 hasToken|\
-        uint8 cachebits|\
+        uint8 cachebits=CB_NONE|\
         uint8 reserved2|\
         CReceipt receipt|\
         CTraceArray traces|\
