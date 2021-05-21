@@ -17,8 +17,8 @@
 class COptions : public CAbiOptions {
   public:
     // BEG_CODE_DECLARE
-    bool compare;
     bool init;
+    bool compare;
     bool freshen;
     double sleep;
     // END_CODE_DECLARE

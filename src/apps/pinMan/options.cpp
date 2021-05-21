@@ -14,10 +14,12 @@
 static const COption params[] = {
     // BEG_CODE_OPTIONS
     // clang-format off
-    COption("compare", "c", "", OPT_SWITCH, "report differences (if any) between the manifest and pinning service"),
+    COption("list", "l", "", OPT_SWITCH, "list the index and bloom filter hashes from local manifest or pinning service"),  // NOLINT
     COption("init", "i", "", OPT_SWITCH, "initialize the local index by downloading bloom filters from the pinning service"),  // NOLINT
+    COption("compare", "c", "", OPT_SWITCH, "report differences (if any) between the manifest and pinning service"),
     COption("freshen", "f", "", OPT_SWITCH, "freshen the manifest from the hash found at the smart contract"),
-    COption("sleep", "s", "<double>", OPT_FLAG, "the number of seconds to sleep between requests during init (default .25)"),  // NOLINT
+    COption("sleep", "s", "<double>", OPT_HIDDEN | OPT_FLAG, "the number of seconds to sleep between requests during init (default .25)"),  // NOLINT
+    COption("remote", "r", "", OPT_HIDDEN | OPT_SWITCH, "applicable only to --list mode, recover hash list from pinning service (local otherwise)"),  // NOLINT
     COption("", "", "", OPT_DESCRIPTION, "Manage pinned index of appearances and associated bloom filters."),
     // clang-format on
     // END_CODE_OPTIONS
@@ -30,6 +32,8 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
     // BEG_CODE_LOCAL_INIT
+    bool list = false;
+    bool remote = false;
     // END_CODE_LOCAL_INIT
 
     Init();
@@ -38,11 +42,14 @@ bool COptions::parseArguments(string_q& command) {
         if (false) {
             // do nothing -- make auto code generation easier
             // BEG_CODE_AUTO
-        } else if (arg == "-c" || arg == "--compare") {
-            compare = true;
+        } else if (arg == "-l" || arg == "--list") {
+            list = true;
 
         } else if (arg == "-i" || arg == "--init") {
             init = true;
+
+        } else if (arg == "-c" || arg == "--compare") {
+            compare = true;
 
         } else if (arg == "-f" || arg == "--freshen") {
             freshen = true;
@@ -52,6 +59,9 @@ bool COptions::parseArguments(string_q& command) {
                 return false;
         } else if (arg == "-s" || arg == "--sleep") {
             return flag_required("sleep");
+
+        } else if (arg == "-r" || arg == "--remote") {
+            remote = true;
 
         } else if (startsWith(arg, '-')) {  // do not collapse
 
@@ -64,10 +74,12 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     // BEG_DEBUG_DISPLAY
-    LOG_TEST_BOOL("compare", compare);
+    LOG_TEST_BOOL("list", list);
     LOG_TEST_BOOL("init", init);
+    LOG_TEST_BOOL("compare", compare);
     LOG_TEST_BOOL("freshen", freshen);
     LOG_TEST("sleep", sleep, (sleep == .25));
+    LOG_TEST_BOOL("remote", remote);
     // END_DEBUG_DISPLAY
 
     if (Mocked(""))
@@ -78,8 +90,11 @@ bool COptions::parseArguments(string_q& command) {
     LOG_INFO("unchainedIndexAddr:\t", cGreen, unchainedIndexAddr, cOff);
     LOG_INFO("manifestHashEncoding:\t", cGreen, manifestHashEncoding, cOff);
 
-    if (compare + init > 1)
-        return usage("Please choose either init or compare, not both.");
+    if (list + compare + init > 1)
+        return usage("Please choose either only a single option.");
+
+    if (!list && !compare && !init && !freshen)
+        return usage("You must choose at least one option.");
 
     configureDisplay("pinMan", "CPinnedChunk", STR_DISPLAY_PINNEDCHUNK);
 
@@ -91,8 +106,8 @@ void COptions::Init(void) {
     registerOptions(nParams, params);
 
     // BEG_CODE_INIT
-    compare = false;
     init = false;
+    compare = false;
     freshen = false;
     sleep = .25;
     // END_CODE_INIT
@@ -101,11 +116,11 @@ void COptions::Init(void) {
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
     Init();
-    minArgs = 0;
     firstOut = true;
 
     // BEG_CODE_NOTES
     // clang-format off
+    notes.push_back("One of --list, --init, --compare, or --freshen is required.");
     // clang-format on
     // END_CODE_NOTES
 

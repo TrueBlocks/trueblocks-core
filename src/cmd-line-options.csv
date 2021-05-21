@@ -175,11 +175,14 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,is_customizable
 10840,apps,Admin,status,cacheStatus,end,E,,false,false,false,false,header,flag,<blknum>,last block to process (inclusive)
 10860,apps,Admin,status,cacheStatus,,,,false,false,true,true,--,description,,Report on the status of the TrueBlocks system.
 
-10930,apps,Admin,pins,pinMan,compare,c,,false,false,true,true,header,switch,<boolean>,report differences (if any) between the manifest and pinning service
+10950,apps,Admin,pins,pinMan,list,l,,false,false,true,true,local,switch,<boolean>,list the index and bloom filter hashes from local manifest or pinning service
 10950,apps,Admin,pins,pinMan,init,i,,false,false,true,true,header,switch,<boolean>,initialize the local index by downloading bloom filters from the pinning service
+10930,apps,Admin,pins,pinMan,compare,c,,false,false,true,true,header,switch,<boolean>,report differences (if any) between the manifest and pinning service
 10970,apps,Admin,pins,pinMan,freshen,f,,false,false,true,true,header,switch,<boolean>,freshen the manifest from the hash found at the smart contract
-10980,apps,Admin,pins,pinMan,sleep,s,.25,false,false,true,false,header,flag,<double>,the number of seconds to sleep between requests during init (default [{DEF}])
+10980,apps,Admin,pins,pinMan,sleep,s,.25,false,false,false,false,header,flag,<double>,the number of seconds to sleep between requests during init (default [{DEF}])
+10950,apps,Admin,pins,pinMan,remote,r,,false,false,false,false,local,switch,<boolean>,applicable only to --list mode&#44; recover hash list from pinning service (local otherwise)
 10980,apps,Admin,pins,pinMan,,,,false,false,true,true,--,description,,Manage pinned index of appearances and associated bloom filters.
+10990,apps,Admin,pins,pinMan,,,,false,false,false,false,--,note,,One of --list&#44; --init&#44; --compare&#44; or --freshen is required.
 
 12020,tools,Other,quotes,getQuotes,freshen,f,,false,false,true,true,header,switch,<boolean>,Freshen price database (append new data)
 12040,tools,Other,quotes,getQuotes,period,p,,false,false,true,true,local,flag,enum[5|15|30|60|120*|240|1440|10080|hourly|daily|weekly],increment of display

@@ -1,5 +1,6 @@
-pinMan argc: 3 [1:--fmt] [2:csv] 
-pinMan --fmt csv 
+pinMan argc: 4 [1:--list] [2:--fmt] [3:csv] 
+pinMan --list --fmt csv 
+TIME ~ CLOCK - <INFO>  : list: true
 TIME ~ CLOCK - <INFO>  : hashToIndexFormatFile:	Qmart6XP9XjL43p72PGR93QKytbK8jWWcMguhFgxATTya2
 TIME ~ CLOCK - <INFO>  : hashToBloomFormatFile:	QmNhPk39DUFoEdhUmtGARqiFECUHeghyeryxZM9kyRxzHD
 TIME ~ CLOCK - <INFO>  : unchainedIndexAddr:	0xcfd7f3b24f3551741f922fd8c4381aa4e00fc8fd
