@@ -1263,9 +1263,9 @@
                 operationId: 'admin-pins',
                 parameters: [
                   {
-                    name: 'compare',
+                    name: 'list',
                     in: 'query',
-                    description: 'report differences (if any) between the manifest and pinning service',
+                    description: 'list the index and bloom filter hashes from local manifest or pinning service',
                     required: false,
                     style: 'form',
                     explode: true,
@@ -1275,6 +1275,15 @@
                     name: 'init',
                     in: 'query',
                     description: 'initialize the local index by downloading bloom filters from the pinning service',
+                    required: false,
+                    style: 'form',
+                    explode: true,
+                    schema: {type: 'boolean'},
+                  },
+                  {
+                    name: 'compare',
+                    in: 'query',
+                    description: 'report differences (if any) between the manifest and pinning service',
                     required: false,
                     style: 'form',
                     explode: true,
@@ -1297,6 +1306,15 @@
                     style: 'form',
                     explode: true,
                     schema: {type: 'number'},
+                  },
+                  {
+                    name: 'remote',
+                    in: 'query',
+                    description: 'applicable only to --list mode, recover hash list from pinning service (local otherwise)',
+                    required: false,
+                    style: 'form',
+                    explode: true,
+                    schema: {type: 'boolean'},
                   },
                 ],
                 responses: {

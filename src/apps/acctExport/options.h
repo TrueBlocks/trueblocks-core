@@ -41,6 +41,8 @@ class COptions : public CAbiOptions {
     blknum_t first_record;
     blknum_t max_records;
     bool clean;
+    bool staging;
+    bool unripe;
     // END_CODE_DECLARE
 
     CAppearanceArray_base apps;
@@ -71,7 +73,6 @@ class COptions : public CAbiOptions {
 
     blkrange_t fileRange;
     blkrange_t listRange;
-    size_t visitTypes;
 
     string_q className;
     CBlockProgress bp;
@@ -115,10 +116,6 @@ extern bool isTokenTopic(const topic_t& topic);
 inline string_q plural(const string_q& in) {
     return substitute(toLower(in).substr(1, 1000) + "s", "logentrys", "logs");
 }
-
-#define VIS_FINAL (1 << 1)
-#define VIS_STAGING (1 << 2)
-#define VIS_UNRIPE (1 << 3)
 
 //-----------------------------------------------------------------------
 extern bool process_reconciliation(COptions* options, CTransaction& trans, CReconciliationMap& prev, blknum_t next,
