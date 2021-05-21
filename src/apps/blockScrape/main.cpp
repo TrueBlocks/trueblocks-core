@@ -43,8 +43,7 @@ int main(int argc, const char* argv[]) {
                 LOG_INFO(cYellow, "   finished...", cOff);
             }
 
-            LOG_INFO((ret1 && ret2 ? "  ...pass completed" : "  ...pass did not complete"), ". Running again in ",
-                     options.sleep, " seconds... ");
+            LOG_INFO(ret1 && ret2 ? "  ...pass completed." : "  ...pass did not complete.");
 
             // TODO(tjayrush): We should try to scrape timestamps with blaze while we're doing this scan
             // TODO(tjayrush): try to capture timestamps during blaze scraping
@@ -59,7 +58,10 @@ int main(int argc, const char* argv[]) {
             for (size_t n = 0; n < nHalfSeconds && !shouldQuit() && options.state == prevState; n++) {
                 usleep((useconds_t)(500000));
                 options.state = options.getCurrentState(unused);
+                if (!(n%4))
+                    LOG_INFO("Running again in ", (options.sleep - (n * .5)), ".0 seconds...\r");
             }
+            LOG_INFO("Running again in 0 seconds...    ");
         } else {
             options.state = options.getCurrentState(unused);
         }
