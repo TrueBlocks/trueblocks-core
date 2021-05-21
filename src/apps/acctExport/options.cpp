@@ -55,8 +55,6 @@ bool COptions::parseArguments(string_q& command) {
     CAddressArray addrs;
     blknum_t start = NOPOS;
     blknum_t end = NOPOS;
-    bool staging = false;
-    bool unripe = false;
     // END_CODE_LOCAL_INIT
 
     blknum_t latest = bp.client;
@@ -312,18 +310,11 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
     // Are we visiting unripe and/or staging in our search?
-    if (staging)
-        visitTypes |= VIS_STAGING;
-    if (unripe) {
-        if (!(visitTypes & VIS_STAGING))
-            return usage("If you wish to use the --unripe option, you must also use --staging.");
-        visitTypes |= VIS_UNRIPE;
-    }
+    if (staging && unripe)
+        return usage("Please choose only one of --staging or --unripe.");
 
     // Last block depends on scrape type or user input `end` option (with appropriate check)
-    blknum_t lastBlockToVisit = max((blknum_t)1, (visitTypes & VIS_UNRIPE)    ? bp.unripe
-                                                 : (visitTypes & VIS_STAGING) ? bp.staging
-                                                                              : bp.finalized);
+    blknum_t lastBlockToVisit = max((blknum_t)1, unripe ? bp.unripe : staging ? bp.staging : bp.finalized);
     listRange = make_pair((firstBlockToVisit == NOPOS ? 0 : firstBlockToVisit), lastBlockToVisit);
 
     if (!process_freshen())
@@ -394,6 +385,8 @@ void COptions::Init(void) {
     first_record = 0;
     max_records = (isApiMode() ? 250 : NOPOS);
     clean = false;
+    staging = false;
+    unripe = false;
     // END_CODE_INIT
 
     bp = getBlockProgress(BP_ALL);
@@ -413,7 +406,6 @@ void COptions::Init(void) {
 
     minArgs = 0;
     fileRange = make_pair(NOPOS, NOPOS);
-    visitTypes = VIS_FINAL;
     allMonitors.clear();
     possibles.clear();
 
