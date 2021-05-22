@@ -317,6 +317,10 @@ bool COptions::parseArguments(string_q& command) {
     blknum_t lastBlockToVisit = max((blknum_t)1, unripe ? bp.unripe : staging ? bp.staging : bp.finalized);
     listRange = make_pair((firstBlockToVisit == NOPOS ? 0 : firstBlockToVisit), lastBlockToVisit);
 
+    if (unripe && (cache_txs || cache_traces)) {
+        cache_txs = cache_traces = false;
+        LOG_INFO("Turning off caching for unripe blocks.");
+    }
     if (!process_freshen())
         return usage("freshen returns false.");
 

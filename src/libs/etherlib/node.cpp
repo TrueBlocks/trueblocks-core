@@ -1383,7 +1383,7 @@ bool freshenTimestamps(blknum_t minBlock) {
         post << " (" << block.timestamp << " - " << ts_2_Date(block.timestamp).Format(FMT_EXPORT) << ")"
              << "\r";
         ostringstream pre;
-        pre << "Updating " << (minBlock = block.blockNumber) << " timestamps ";
+        pre << "Updating " << (minBlock - block.blockNumber) << " timestamps ";
         LOG_PROGRESS(pre.str(), block.blockNumber, minBlock, post.str());
     }
     cerr << "\r" << string_q(150, ' ') << "\r";

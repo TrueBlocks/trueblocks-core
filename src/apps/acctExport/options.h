@@ -46,6 +46,7 @@ class COptions : public CAbiOptions {
     // END_CODE_DECLARE
 
     CAppearanceArray_base apps;
+    CAppearanceArray_base tmp;
     CMonitorArray allMonitors;
     CMonitorArray possibles;
     address_t accountedFor;
@@ -104,6 +105,8 @@ class COptions : public CAbiOptions {
     bool isRelevant(const CLogEntry& log) const;
 
     void writePerformanceData(void);
+
+    bool queryFlatFile(const string_q& path, bool sorted);
 };
 
 //--------------------------------------------------------------------------------

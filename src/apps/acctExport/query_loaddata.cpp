@@ -50,20 +50,27 @@ bool COptions::loadAllAppearances(void) {
     if (count)
         return true;
 
-    CAppearanceArray_base tmp;
-    for (auto monitor : allMonitors) {
-        if (!loadOneAddress(monitor, tmp)) {
-            LOG_ERR("Could not load monitor for address " + monitor.address);
-            return false;
-        }
+    if (unripe) {
+        forEveryFileInFolder(indexFolder_unripe, visitUnripeIndexFiles, this);
 
-        if (freshen) {
-            // If we're freshening...
-            blknum_t lastExport = monitor.getLastEncountered();
-            if (scanRange.first == 0)  // we can start where the last export happened on any address...
-                scanRange.first = lastExport;
-            if (lastExport < scanRange.first)  // ...but the eariest of the last exports is where we start
-                scanRange.first = lastExport;
+    } else if (staging) {
+        forEveryFileInFolder(indexFolder_staging, visitStagingIndexFiles, this);
+
+    } else {
+        for (auto monitor : allMonitors) {
+            if (!loadOneAddress(monitor, tmp)) {
+                LOG_ERR("Could not load monitor for address " + monitor.address);
+                return false;
+            }
+
+            if (freshen) {
+                // If we're freshening...
+                blknum_t lastExport = monitor.getLastEncountered();
+                if (scanRange.first == 0)  // we can start where the last export happened on any address...
+                    scanRange.first = lastExport;
+                if (lastExport < scanRange.first)  // ...but the eariest of the last exports is where we start
+                    scanRange.first = lastExport;
+            }
         }
     }
 

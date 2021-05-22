@@ -58,7 +58,7 @@ int main(int argc, const char* argv[]) {
             for (size_t n = 0; n < nHalfSeconds && !shouldQuit() && options.state == prevState; n++) {
                 usleep((useconds_t)(500000));
                 options.state = options.getCurrentState(unused);
-                if (!(n%4))
+                if (!(n % 4))
                     LOG_INFO("Running again in ", (options.sleep - (n * .5)), ".0 seconds...\r");
             }
             LOG_INFO("Running again in 0 seconds...    ");

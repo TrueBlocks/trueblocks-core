@@ -10,18 +10,20 @@ bool COptions::process_freshen(void) {
     // Clean the monitor stage of previously unfinished scrapes
     cleanMonitorStage();
 
-    if (unripe) {
-        forEveryFileInFolder(indexFolder_unripe, visitUnripeIndexFiles, this);
+    if (unripe || staging) {
+        // Note that we used to think we needed to process the unripe here, but since
+        // we changed the meaning of --unripe from "add additional unripe record to the
+        // exported data" to "export only unripe data", we no longer do this here. We
+        // accumulate the unripe data only in the loadAllAppearances routine. In this
+        // way, the caller is responsible to maintain knowledge about the provided export.
+        // Much simpler for the backend.
 
-    } else if (staging) {
-        forEveryFileInFolder(indexFolder_staging, visitStagingIndexFiles, this);
+    } else {
+        forEveryFileInFolder(indexFolder_blooms, visitFinalIndexFiles, this);
         for (auto monitor : allMonitors) {
             monitor.moveToProduction();
             LOG4(monitor.address, " freshened to ", monitor.getLastVisited(true /* fresh */));
         }
-
-    } else {
-        forEveryFileInFolder(indexFolder_blooms, visitFinalIndexFiles, this);
     }
 
     return true;
