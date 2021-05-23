@@ -10,7 +10,7 @@ int main(int argc, const char* argv[]) {
         CBlock block;
         getBlock_light(block, i);
         cout << block.blockNumber << "," << block.timestamp << "," << block.difficulty << endl;
-        cerr << block.blockNumber << " " << (END - block.blockNumber) << "\r"; cerr.flush();
+        cerr << block.blockNumber << " " << (END - block.blockNumber) << "     \r"; cerr.flush();
     }
     return 0;
 }
