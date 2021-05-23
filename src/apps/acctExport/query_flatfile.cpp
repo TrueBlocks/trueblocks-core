@@ -64,7 +64,9 @@ bool COptions::queryFlatFile(const string_q& path, bool sorted) {
         }
     }
 
-    LOG_PROGRESS("Scanning", fileRange.first, listRange.second, " stage " + string_q(tmp.size() ? " hit" : " miss"));
+    if (!isTestMode())
+        LOG_PROGRESS("Scanning", fileRange.first, listRange.second,
+                     " stage " + string_q(tmp.size() ? " hit" : " miss"));
 
     stage.Release();
     delete rawData;
