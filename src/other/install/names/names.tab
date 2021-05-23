@@ -808,6 +808,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 30-Contracts:Set Protocol Other	0x18b739aabc019d9ef160d44ba8a9dd6a717372af	Payable Exchange Issue		https://github.com/SetProtocol/set-protocol-contracts			false	false	false	true	false	false
 30-Contracts:Humanity DAO	0x18c8f1222083997405f2e482338a4650ac02e1d6	jmflatow		https://www.humanitydao.org/humans			false	false	false	false	false	false
 30-Contracts:Humanity DAO	0x18cabad488293433cb1fd94a76a8590ab31579a2	Nadeshot77		https://www.humanitydao.org/humans			false	false	false	false	false	false
+30-Contracts	0x18cedf1071ec25331130c82d7af71d393ccd4446	TrueBit proxied by 0xf65b5c51		EtherScan.io			false	false	false	true	false	false
 32-Kickback:Friends	0x18d32ea483eae1e25788c97cab31e7db7aad50d3	tomteman		https://kickback.events/			false	false	false	false	false	false
 31-Gitcoin Grants:Friends	0x18d7e5bb768c41b6f2f012082767ba0643c4cd6f	mjcronin		Gitcoin Website			false	false	false	false	false	false
 32-Kickback:Friends	0x18d80ffdbd08f70b314f06ae9d1b309135af9405	hans		https://kickback.events/			false	false	false	false	false	false
@@ -1612,6 +1613,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 32-Kickback:Friends	0x34f65d2d9da5022592ba7e921783b9f5b1697333	brenda		https://kickback.events/			false	false	false	false	false	false
 30-Contracts:Humanity DAO	0x35293f45d559487d9e8a26aa8bd06f84a38f3929	catallacticised		https://www.humanitydao.org/humans			false	false	false	false	false	false
 31-Gitcoin Grants:Friends	0x3538638df356320e9d8762ec419a70f7b8992bb0	djrtwo		Gitcoin Website			false	false	false	false	false	false
+30-Contracts	0x353a0b0f8acdcb9d2a481d4435c4127cdfc9d3b9	TrueBit proxied by 0x388a3bd8		EtherScan.io			false	false	false	true	false	false
 50-Tokens:ERC20	0x3543638ed4a9006e4840b105944271bcea15605d	UNetworkToken	UUU	On chain	18	A Decentralized Protocol for Publishing and Valuing Online Content	false	false	false	true	true	false
 31-Gitcoin Grants:Grant	0x354e3e4a33930629e2c491bbaa896128be12640d	Grant 1825 Friends of the Bairro Da Juventude		https://gitcoin.co/grants/1825/friends-of-the-bairro-da-juventude			false	false	false	false	false	false
 50-Tokens:ERC20	0x355a458d555151d3b27f94227960ade1504e526a	StockChain Coin	SCC	On chain	18		false	false	false	true	true	false
@@ -3445,6 +3447,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 31-Gitcoin Grants:Friends	0x74756b75fc77896a88ba3544572ce1595d78d7d9	garrettian		Gitcoin Website			false	false	false	false	false	false
 30-Contracts	0x74758acfce059f503a7e6b0fc2c8737600f9f2c4	Totle Transfer Proxy		0xTracker			false	false	false	true	false	false
 81-Other	0x748defc02aa6221ae4db129bbe7e6a97537a6f45	Lottery		EtherScan.io			false	false	false	true	false	false
+30-Contracts	0x749b6d893b99b161bccd32b224940cde2ecd4c94	TrueBit Deployer		EtherScan.io			false	false	false	false	false	false
 50-Tokens:ERC20	0x749f35ff65932e68267dd82f6cd85eea735d700e	CyClean Token	CCL	On chain	18		false	false	false	true	true	false
 30-Contracts	0x74aa05a2d0c7de90661e3fcf8244019fd41aa996	MultiSig 1		TrueBlocks.io			false	false	false	true	false	false
 30-Contracts:Humanity DAO	0x74b2a7b92e4a44dcccf1038fad9797a4d7397cef	ihepyty		https://www.humanitydao.org/humans			false	false	false	false	false	false
@@ -3930,6 +3933,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x851017523ae205adc9195e7f97d029f4cfe7794c	Social Lending Token	SLT	On chain	9		false	false	false	true	true	false
 30-Contracts:Humanity DAO	0x851a88934b49cee4b0416e96b28be148e2aca2af	missloveable11		https://www.humanitydao.org/humans			false	false	false	false	false	false
 60-Airdrops	0x851ba7347b3d7f873267fe597c8efd187de29a77	Invite Airdrop		TrueBlocks.io			false	false	false	true	false	false
+30-Contracts	0x8527d0d58c51f240fa2ae27279651edec9af4eb1	TrueBit proxied by 0x43c65d12		EtherScan.io			false	false	false	true	false	false
 31-Gitcoin Grants:Grant	0x852ed0af6e186c987727ba9285657688abde38cb	Grant 0628 Arweave Makes Information Permanence Sustainable.		https://gitcoin.co/grants/628/arweave-makes-information-permanence-sustainable		https://www.arweave.org	false	false	false	false	false	false
 81-Other	0x853e92b41bd7d71016391d67b479a88cb8366e03	DynamicToken_id334_cnt4_17da		Ether Camp			false	false	false	true	false	false
 30-Contracts:Humanity DAO	0x854058553df87ef1be2c1d8f24eea8af52a81ff1	Shadowmaster45		https://www.humanitydao.org/humans			false	false	false	false	false	false
@@ -4120,6 +4124,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 31-Gitcoin Grants:Friends	0x8b6af950c33e5208d5f42216f733e913bb28f42f	hexloveseth		Gitcoin Website			false	false	false	false	false	false
 81-Other	0x8b6b36d8bbde2605623d2b3f3b2e25496dc87144	DynamicToken_id320_cnt4_1mo		Ether Camp			false	false	false	true	false	false
 36-Balancer	0x8b6e6e7b5b3801fed2cafd4b22b8a16c2f2db21a	Balancer Pool Token 0x8b6e	BPT	On chain	18		false	false	false	true	true	false
+30-Contracts	0x8b7026e765c3b27656bf483458dd3c2cbc805ce3	TrueBit proxied by 0x74342d38		EtherScan.io			false	false	false	true	false	false
 31-Gitcoin Grants:Friends	0x8b7354f6c2748667da007aa2889045b0fce47e35	souciseehey		Gitcoin Website			false	false	false	false	false	false
 81-Other	0x8b803d9f2bd4aeaa2a7c5265fb5684fe3e68c879	EtherVote_id286_cnt4_2mo		Ether Camp			false	false	false	true	false	false
 30-Contracts:Humanity DAO	0x8b91c0dd24c4fd4f973e49ed8568921e31cf38b7	I'min		https://www.humanitydao.org/humans			false	false	false	false	false	false
@@ -5230,6 +5235,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 30-Contracts:Humanity DAO	0xb2a71d1a099151ea811ba384a9b74d9c11f2edaf	lobelb		https://www.humanitydao.org/humans			false	false	false	false	false	false
 30-Contracts:Set Protocol Libraries	0xb2aa8743633bfcb0bc6aecd6cc0aff96d961f218	Exchange Issue Library		https://github.com/SetProtocol/set-protocol-contracts			false	false	false	true	false	false
 60-Airdrops	0xb2acf47a9d93c207f49761708c07571bec47ff3a	LPT Airdrop Sender		TrueBlocks.io			false	false	false	false	false	false
+30-Contracts	0xb2b147cd4f7599da05457b5a7720fb2e2fae4333	TrueBit proxied by 0xe9f2e05c		EtherScan.io			false	false	false	true	false	false
 32-Kickback:Friends	0xb2bbb75241939e50b5ba6f698415bbb5ca54610d	reqc		https://kickback.events/			false	false	false	false	false	false
 81-Other:DAO Curators	0xb2c1b92f4bed7a173547cc601fb73a1254d10d26	Aeron Buchanan		DAO_Curator			false	false	false	false	false	false
 80-Malicious:DaoDrain	0xb2c6f0dfbb716ac562e2d85d6cb2f8d5ee87603e	DAO Drain 106		GethSource			false	false	false	true	false	false
@@ -5415,6 +5421,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 55-Defi	0xb9098da5f8633999703f86385e3ce3a4564970d0	Yearn: StrategyCurveYBUSDVoterProxy		EtherScan.io			false	false	false	true	false	false
 50-Tokens:ERC20	0xb91318f35bdb262e9423bc7c7c2a3a93dd93c92c	Nuls	NULS	On chain	18	NULS is a global blockchain open-source project which is a highly customizable modular blockchain infrastructure consisting of a microkernel and functional modules.	false	false	false	true	true	false
 30-Contracts	0xb935c3d80229d5d92f3761b17cd81dc2610e3a45	Voting CS		TrueBlocks.io			false	false	false	true	false	false
+30-Contracts	0xb93b0a3ae1981b0c0dd00272b953044cb4a6e494	TrueBit proxied by 0x2e6535e1		EtherScan.io			false	false	false	true	false	false
 32-Kickback:Friends	0xb93f14636678d680dcbbed20c77f2b6220b52c39	jpark		https://kickback.events/			false	false	false	false	false	false
 50-Tokens:ERC20	0xb94c53b0e67fabac3d97173482663ef597d4174a	Giveth Token	GTH	On chain	18		false	false	false	true	true	false
 81-Other	0xb94f85ea35987648bb460a96a34f56ac1a6cc6f7	Pluton	PLU	On chain	8		false	false	false	true	true	false
@@ -5680,6 +5687,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 31-Gitcoin Grants:Friends	0xc170f77189f00a1c09619b22bec62174519dc703	sukhadajoshi		Gitcoin Website			false	false	false	false	false	false
 31-Gitcoin Grants:Grant	0xc172542e7f4f625bb0301f0bafc423092d9cac71	Grant 1424 Pandemic Pods & Distance Learning		https://gitcoin.co/grants/1424/pandemic-pods-distance-learning			false	false	false	false	false	false
 55-Defi	0xc17adf949f524213a540609c386035d7d685b16f	Yearn: StrategyProxy		EtherScan.io			false	false	false	true	false	false
+30-Contracts	0xc186e6f0163e21be057e95aa135edd52508d14d3	TrueBit proxied by 0x764c64b2		EtherScan.io			false	false	false	true	false	false
 81-Other	0xc18a451d4ef2a85e7bf8404131c5f994a98bdb15	SafeInvestments_id52_cnt4_5mo		Ether Camp			false	false	false	true	false	false
 30-Contracts:Humanity DAO	0xc19be75b8b9152d884987e1b58b3f18a94875396	ksintmelody		https://www.humanitydao.org/humans			false	false	false	false	false	false
 80-Malicious	0xc1bfbc44536200b02f92aec4dee08ea390fa0535	HammerBot21		https://blog.blocknative.com/blog/mempool-forensics			false	false	false	false	false	false
