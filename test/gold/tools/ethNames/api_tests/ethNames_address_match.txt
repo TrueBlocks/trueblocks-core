@@ -1720,6 +1720,15 @@
       "description": ""
     },
     {
+      "tags": "30-Contracts",
+      "address": "0x18cedf1071ec25331130c82d7af71d393ccd4446",
+      "name": "TrueBit proxied by Tru (0xf65b5c51)",
+      "symbol": "",
+      "source": "Truebit",
+      "decimals": 0,
+      "description": ""
+    },
+    {
       "tags": "31-Gitcoin Grants:Friends",
       "address": "0x18d7e5bb768c41b6f2f012082767ba0643c4cd6f",
       "name": "Name 0x18d7e5bb",
@@ -1799,15 +1808,6 @@
       "source": "On chain",
       "decimals": 18,
       "description": "The BitDegree platform will offer students the best online courses with a clear and transparent blockchain based reward system and achievement tracking."
-    },
-    {
-      "tags": "50-Tokens:ERC20",
-      "address": "0x1966d718a565566e8e202792658d7b5ff4ece469",
-      "name": "nDEX",
-      "symbol": "NDX",
-      "source": "On chain",
-      "decimals": 18,
-      "description": "nDEX Network is a next generation decentralized ethereum token exchange. Our primary goal is to provide a clean, fast and secure trading environment with lowest service charge."
     }
   ],
   "types": [
