@@ -2,6 +2,7 @@
 class = CFunction
 fields = string name|\
         string type|\
+        string source|\
         bool anonymous|\
         bool constant|\
         string stateMutability|\
@@ -16,4 +17,4 @@ includes = utillib.h|parameter.h
 sort = v1.encoding < v2.encoding
 equals = encoding % it.encoding && message % it.message
 serializable = true
-display_str = name, type, stateMutability, signature, encoding, inputs, outputs
+display_str = source, name, type, stateMutability, signature, encoding, inputs, outputs

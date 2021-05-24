@@ -349,10 +349,18 @@ bool loadAbiString(const string_q& jsonStr, CAbi& abi) {
 }
 
 //---------------------------------------------------------------------------
-bool CAbi::loadAbisFolderAndCache(const string_q& sourcePath, const string_q& binPath) {
+bool CAbi::loadAbisFromKnown(bool tokensOnly) {
+    if (tokensOnly) {
+        bool ret1 = loadAbiFromFile(configPath("abis/known-000/erc_00020.json"));
+        bool ret2 = loadAbiFromFile(configPath("abis/known-000/erc_00721.json"));
+        return (ret1 && ret2);
+    }
+
+    string_q sourcePath = configPath("abis/");
     if (sourcesMap[sourcePath])
         return true;
 
+    string_q binPath = getCachePath("abis/known.bin");
     if (fileExists(binPath)) {
         // If any file is newer, don't use binary cache
         fileInfo info = getNewestFileInFolder(sourcePath);
@@ -394,16 +402,6 @@ bool CAbi::loadAbisFolderAndCache(const string_q& sourcePath, const string_q& bi
 }
 
 //---------------------------------------------------------------------------
-bool CAbi::loadAbisFromKnown(bool tokensOnly) {
-    if (tokensOnly) {
-        bool ret1 = loadAbiFromFile(configPath("abis/known-000/erc_00020.json"));
-        bool ret2 = loadAbiFromFile(configPath("abis/known-000/erc_00721.json"));
-        return (ret1 && ret2);
-    }
-    return loadAbisFolderAndCache(configPath("abis/"), getCachePath("abis/known.bin"));
-}
-
-//---------------------------------------------------------------------------
 bool CAbi::loadAbiFromAddress(const address_t& addr) {
     if (isZeroAddr(addr))
         return false;
@@ -435,6 +433,12 @@ bool CAbi::loadAbiFromFile(const string_q& fileName) {
     LOG_TEST("loadAbiFromFile", dispName(fileName));
 
     if (loadAbiFromString(asciiFileToString(fileName))) {
+        for (auto& interface : interfaces)
+            if (interface.source.empty()) {
+                string_q str = substitute(substitute(fileName, getCachePath("abis/"), ""), configPath("abis/"), "");
+                nextTokenClear(str, '/');
+                interface.source = str;
+            }
         sort(interfaces.begin(), interfaces.end(), sortByFuncName);
         sourcesMap[fileName] = true;
         return true;
@@ -516,8 +520,10 @@ void CAbi::loadAbiAddInterface(const CFunction& func) {
     }
 
     LOG_TEST("Inserting", func.type + "-" + func.signature);
-    interfaces.push_back(func);
-    interfaceMap[func.encoding] = true;
+    if (func.type != "constructor") {
+        interfaces.push_back(func);
+        interfaceMap[func.encoding] = true;
+    }
 }
 
 //---------------------------------------------------------------------------

@@ -75,7 +75,6 @@ class CAbi : public CBaseNode {
     bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
-    bool loadAbisFolderAndCache(const string_q& sourcePath, const string_q& binPath);
     bool loadAbiFromFile(const string_q& fileName);
     bool loadAbiFromAddress(const address_t& addr);
     bool loadAbiFromString(const string_q& str);

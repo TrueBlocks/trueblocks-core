@@ -28,6 +28,7 @@ class CFunction : public CBaseNode {
   public:
     string_q name;
     string_q type;
+    string_q source;
     bool anonymous;
     bool constant;
     string_q stateMutability;
@@ -114,6 +115,7 @@ inline void CFunction::initialize(void) {
 
     name = "";
     type = "";
+    source = "";
     anonymous = false;
     constant = false;
     stateMutability = "";
@@ -136,6 +138,7 @@ inline void CFunction::duplicate(const CFunction& fu) {
 
     name = fu.name;
     type = fu.type;
+    source = fu.source;
     anonymous = fu.anonymous;
     constant = fu.constant;
     stateMutability = fu.stateMutability;

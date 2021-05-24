@@ -151,6 +151,9 @@ string_q CFunction::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 's':
+            if (fieldName % "source") {
+                return source;
+            }
             if (fieldName % "stateMutability") {
                 return stateMutability;
             }
@@ -275,6 +278,10 @@ bool CFunction::setValueByName(const string_q& fieldNameIn, const string_q& fiel
             }
             break;
         case 's':
+            if (fieldName % "source") {
+                source = fieldValue;
+                return true;
+            }
             if (fieldName % "stateMutability") {
                 stateMutability = fieldValue;
                 return true;
@@ -300,7 +307,10 @@ bool CFunction::setValueByName(const string_q& fieldNameIn, const string_q& fiel
 void CFunction::finishParse() {
     // EXISTING_CODE
     signature = getSignature(SIG_CANONICAL);
-    encoding = encodeItem();
+    if (encoding.empty())
+        encoding = encodeItem();
+    if (type.empty())
+        type = encoding.length() == 10 ? "function" : "event";
     if (stateMutability.empty())
         stateMutability = "nonpayable";
     // The parameters need to have a name. If not, we provide one
@@ -334,6 +344,7 @@ bool CFunction::Serialize(CArchive& archive) {
     // EXISTING_CODE
     archive >> name;
     archive >> type;
+    archive >> source;
     archive >> anonymous;
     archive >> constant;
     archive >> stateMutability;
@@ -357,6 +368,7 @@ bool CFunction::SerializeC(CArchive& archive) const {
     // EXISTING_CODE
     archive << name;
     archive << type;
+    archive << source;
     archive << anonymous;
     archive << constant;
     archive << stateMutability;
@@ -405,6 +417,7 @@ void CFunction::registerClass(void) {
     ADD_FIELD(CFunction, "cname", T_TEXT, ++fieldNum);
     ADD_FIELD(CFunction, "name", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CFunction, "type", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CFunction, "source", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CFunction, "anonymous", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CFunction, "constant", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CFunction, "stateMutability", T_TEXT | TS_OMITEMPTY, ++fieldNum);
@@ -511,6 +524,20 @@ string_q nextFunctionChunk_custom(const string_q& fieldIn, const void* dataPtr) 
 bool CFunction::readBackLevel(CArchive& archive) {
     bool done = false;
     // EXISTING_CODE
+    if (m_schema < getVersionNum(0, 9, 4)) {
+        archive >> name;
+        archive >> type;
+        // source did not exist so it's empty
+        archive >> anonymous;
+        archive >> constant;
+        archive >> stateMutability;
+        archive >> signature;
+        archive >> encoding;
+        archive >> inputs;
+        archive >> outputs;
+        finishParse();
+        done = true;
+    }
     // EXISTING_CODE
     return done;
 }
@@ -564,6 +591,7 @@ const CBaseNode* CFunction::getObjectAt(const string_q& fieldName, size_t index)
 
 //---------------------------------------------------------------------------
 const char* STR_DISPLAY_FUNCTION =
+    "[{SOURCE}]\t"
     "[{NAME}]\t"
     "[{TYPE}]\t"
     "[{STATEMUTABILITY}]\t"
