@@ -434,10 +434,10 @@ bool CAbi::loadAbiFromFile(const string_q& fileName) {
 
     if (loadAbiFromString(asciiFileToString(fileName))) {
         for (auto& interface : interfaces)
-            if (interface.source.empty()) {
+            if (interface.abi_source.empty()) {
                 string_q str = substitute(substitute(fileName, getCachePath("abis/"), ""), configPath("abis/"), "");
                 nextTokenClear(str, '/');
-                interface.source = str;
+                interface.abi_source = str;
             }
         sort(interfaces.begin(), interfaces.end(), sortByFuncName);
         sourcesMap[fileName] = true;

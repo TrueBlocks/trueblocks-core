@@ -74,6 +74,9 @@ string_q CFunction::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'a':
+            if (fieldName % "abi_source") {
+                return abi_source;
+            }
             if (fieldName % "anonymous") {
                 return bool_2_Str(anonymous);
             }
@@ -151,9 +154,6 @@ string_q CFunction::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 's':
-            if (fieldName % "source") {
-                return source;
-            }
             if (fieldName % "stateMutability") {
                 return stateMutability;
             }
@@ -218,6 +218,10 @@ bool CFunction::setValueByName(const string_q& fieldNameIn, const string_q& fiel
 
     switch (tolower(fieldName[0])) {
         case 'a':
+            if (fieldName % "abi_source") {
+                abi_source = fieldValue;
+                return true;
+            }
             if (fieldName % "anonymous") {
                 anonymous = str_2_Bool(fieldValue);
                 return true;
@@ -278,10 +282,6 @@ bool CFunction::setValueByName(const string_q& fieldNameIn, const string_q& fiel
             }
             break;
         case 's':
-            if (fieldName % "source") {
-                source = fieldValue;
-                return true;
-            }
             if (fieldName % "stateMutability") {
                 stateMutability = fieldValue;
                 return true;
@@ -344,7 +344,7 @@ bool CFunction::Serialize(CArchive& archive) {
     // EXISTING_CODE
     archive >> name;
     archive >> type;
-    archive >> source;
+    archive >> abi_source;
     archive >> anonymous;
     archive >> constant;
     archive >> stateMutability;
@@ -368,7 +368,7 @@ bool CFunction::SerializeC(CArchive& archive) const {
     // EXISTING_CODE
     archive << name;
     archive << type;
-    archive << source;
+    archive << abi_source;
     archive << anonymous;
     archive << constant;
     archive << stateMutability;
@@ -417,7 +417,7 @@ void CFunction::registerClass(void) {
     ADD_FIELD(CFunction, "cname", T_TEXT, ++fieldNum);
     ADD_FIELD(CFunction, "name", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CFunction, "type", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CFunction, "source", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CFunction, "abi_source", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CFunction, "anonymous", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CFunction, "constant", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CFunction, "stateMutability", T_TEXT | TS_OMITEMPTY, ++fieldNum);
@@ -454,6 +454,7 @@ void CFunction::registerClass(void) {
         HIDE_FIELD(CFunction, "outputs");
         SHOW_FIELD(CFunction, "outputs_dict")
     }
+    HIDE_FIELD(CFunction, "abi_source");
     // EXISTING_CODE
 }
 

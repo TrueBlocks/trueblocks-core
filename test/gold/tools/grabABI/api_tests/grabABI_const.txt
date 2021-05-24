@@ -1,15 +1,6 @@
 {
   "data": [
     {
-      "name": "",
-      "type": "constructor",
-      "stateMutability": "nonpayable",
-      "signature": "(address,address,uint256,uint256,uint256,address)",
-      "encoding": "",
-      "input_names": "_curator,_daoCreator,_proposalDeposit,_minTokensToCreate,_closingTime,_privateCreation,",
-      "output_names": ""
-    },
-    {
       "name": "DAOpaidOut",
       "type": "function",
       "stateMutability": "nonpayable",

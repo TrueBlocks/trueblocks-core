@@ -102,7 +102,7 @@ size_t decodeAnObject(CParameterArray& params, const CStringArray& dataArray, si
     level++;
     for (auto& param : params) {
         prettyPrint(params, dataArray, readOffset, objectStart);
-        if (readOffset > dataArray.size()) {
+        if (readOffset >= dataArray.size()) {
             LOG_DECODE_ERR("3", "readOffset", readOffset, ">=", "dataArray.size", dataArray.size());
             // prettyPrint2(params, dataArray, readOffset, objectStart);
             level--;

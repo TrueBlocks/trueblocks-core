@@ -1,7 +1,6 @@
 grabABI argc: 2 [1:0xbb9bc244d798123fde783fcc1c72d3bb8c189413] 
 grabABI 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 
 encoding	type	name	signature	input_names	output_names
-	constructor		(address,address,uint256,uint256,uint256,address)	_curator,_daoCreator,_proposalDeposit,_minTokensToCreate,_closingTime,_privateCreation,	,
 0x643f7cdd	function	DAOpaidOut	DAOpaidOut(address)	val_0,	val_0,,
 0x82bf6464	function	DAOrewardAccount	DAOrewardAccount()		val_0,,
 0x39d1f908	function	actualBalance	actualBalance()		_actualBalance,,

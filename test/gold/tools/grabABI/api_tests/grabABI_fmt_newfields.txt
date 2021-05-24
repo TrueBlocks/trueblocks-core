@@ -1,15 +1,6 @@
 {
   "data": [
     {
-      "name": "",
-      "type": "constructor",
-      "stateMutability": "nonpayable",
-      "signature": "()",
-      "encoding": "",
-      "input_names": "",
-      "output_names": ""
-    },
-    {
       "name": "addMinter",
       "type": "function",
       "stateMutability": "nonpayable",

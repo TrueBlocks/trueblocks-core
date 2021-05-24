@@ -2,7 +2,7 @@
 class = CFunction
 fields = string name|\
         string type|\
-        string source|\
+        string abi_source|\
         bool anonymous|\
         bool constant|\
         string stateMutability|\

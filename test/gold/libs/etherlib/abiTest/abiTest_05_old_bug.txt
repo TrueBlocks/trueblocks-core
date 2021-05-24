@@ -5,19 +5,6 @@ Old bug test...
 ABI of test1.json
 ------------------------------------------------------------------------------------------------------------------------
 {
-  "type": "constructor",
-  "stateMutability": "nonpayable",
-  "signature": "(address,address,uint256,uint256,uint256,address)",
-  "inputs": {
-    "_closingTime": "",
-    "_curator": "",
-    "_daoCreator": "",
-    "_minTokensToCreate": "",
-    "_privateCreation": "",
-    "_proposalDeposit": ""
-  }
-}
-{
   "name": "DAOpaidOut",
   "type": "function",
   "constant": true,
@@ -753,16 +740,6 @@ ABI of test1.json
 ------------------------------------------------------------------------------------------------------------------------
 ABI of test2.json
 ------------------------------------------------------------------------------------------------------------------------
-{
-  "type": "constructor",
-  "stateMutability": "nonpayable",
-  "signature": "(address,bytes32,uint256)",
-  "inputs": {
-    "val_0": "",
-    "val_1": "",
-    "val_2": ""
-  }
-}
 {
   "name": "cancelBid",
   "type": "function",

@@ -1722,7 +1722,7 @@
     {
       "tags": "30-Contracts",
       "address": "0x18cedf1071ec25331130c82d7af71d393ccd4446",
-      "name": "TrueBit proxied by Tru (0xf65b5c51)",
+      "name": "Tru Implementation",
       "symbol": "",
       "source": "Truebit",
       "decimals": 0,

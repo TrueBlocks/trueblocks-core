@@ -125,7 +125,7 @@ amountNet           	1027	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
 reconciliationType  	1028	0	20971570	T_TEXT TS_STRING TS_OMITEMPTY
 reconciled          	1029	0	12582932	T_BOOL TS_NUMERAL TS_OMITEMPTY
 {
-  "schema": 9003,
+  "schema": 9004,
   "deleted": false,
   "showing": true,
   "cname": "Reconciliation",
