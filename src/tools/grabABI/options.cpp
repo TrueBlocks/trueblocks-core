@@ -24,6 +24,7 @@ static const COption params[] = {
     COption("known", "k", "", OPT_SWITCH, "load common 'known' ABIs from cache"),
     COption("sol", "s", "<string>", OPT_FLAG, "file name of .sol file from which to create a new known abi (without .sol)"),  // NOLINT
     COption("find", "f", "<string>", OPT_FLAG, "try to search for a function declaration given a four byte code"),
+    COption("source", "s", "", OPT_HIDDEN | OPT_SWITCH, "show the source of the ABI information"),
     COption("", "", "", OPT_DESCRIPTION, "Fetches the ABI for a smart contract."),
     // clang-format on
     // END_CODE_OPTIONS
@@ -40,6 +41,7 @@ bool COptions::parseArguments(string_q& command) {
     bool known = false;
     string_q sol = "";
     string_q find = "";
+    bool source = false;
     // END_CODE_LOCAL_INIT
 
     Init();
@@ -62,6 +64,9 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-f" || arg == "--find") {
             return flag_required("find");
 
+        } else if (arg == "-s" || arg == "--source") {
+            source = true;
+
         } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
@@ -81,6 +86,7 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST_BOOL("known", known);
     LOG_TEST("sol", sol, (sol == ""));
     LOG_TEST("find", find, (find == ""));
+    LOG_TEST_BOOL("source", source);
     // END_DEBUG_DISPLAY
 
     if (Mocked(""))
@@ -148,9 +154,12 @@ bool COptions::parseArguments(string_q& command) {
     string_q funcFields = "CFunction:" + ffields;
     if (isTestMode())
         funcFields = "CFunction:" + substitute(ffields, "inputs,outputs", "input_names,output_names");
-
     replace(format, "[{ADDRESS}]\t", "");
     replace(funcFields, "address,", "");
+    if (!source) {
+        replace(format, "[{ABI_SOURCE}]\t", "");
+        replace(funcFields, "abi_source,", "");
+    }
 
     if (verbose && (expContext().exportFmt == JSON1 || expContext().exportFmt == API1)) {
         replaceAll(funcFields, "_name", "");

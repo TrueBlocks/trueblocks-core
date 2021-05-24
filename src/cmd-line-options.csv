@@ -59,6 +59,7 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,is_customizable
 13850,tools,Accounts,abis,grabABI,known,k,,false,false,true,false,local,switch,<boolean>,load common 'known' ABIs from cache
 13860,tools,Accounts,abis,grabABI,sol,s,,false,false,true,true,local,flag,<string>,file name of .sol file from which to create a new known abi (without|.sol)
 13865,tools,Accounts,abis,grabABI,find,f,,false,false,true,true,local,flag,<string>,try to search for a function declaration given a four byte code
+13865,tools,Accounts,abis,grabABI,source,s,,false,false,false,false,local,switch,<boolean>,show the source of the ABI information
 13880,tools,Accounts,abis,grabABI,,,,false,false,true,true,--,description,,Fetches the ABI for a smart contract.
 13885,tools,Accounts,abis,grabABI,,,,false,false,false,false,--,note,,Solidity files found in the local folder with the name '<address>.sol' are converted to an ABI prior to processing (and then removed).
 

@@ -592,7 +592,7 @@ const CBaseNode* CFunction::getObjectAt(const string_q& fieldName, size_t index)
 
 //---------------------------------------------------------------------------
 const char* STR_DISPLAY_FUNCTION =
-    "[{SOURCE}]\t"
+    "[{ABI_SOURCE}]\t"
     "[{NAME}]\t"
     "[{TYPE}]\t"
     "[{STATEMUTABILITY}]\t"

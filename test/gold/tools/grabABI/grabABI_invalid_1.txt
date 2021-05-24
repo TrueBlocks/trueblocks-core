@@ -11,6 +11,11 @@ grabABI 0x00001
 	-k  (--known)         load common 'known' ABIs from cache
 	-s  (--sol <str>)     file name of .sol file from which to create a new known abi (without .sol)
 	-f  (--find <str>)    try to search for a function declaration given a four byte code
+
+	#### Hidden options
+	-s  (--source)        show the source of the ABI information
+	#### Hidden options
+
 	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
 	-v  (--verbose)       set verbose level (optional level defaults to 1)
 	-h  (--help)          display this help screen
