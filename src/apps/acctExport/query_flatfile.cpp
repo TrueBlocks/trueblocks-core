@@ -62,6 +62,12 @@ bool COptions::queryFlatFile(const string_q& path, bool sorted) {
         } else {
             cerr << monitor->address << " not found on stage" << endl;
         }
+        // if (tmp.size()) {
+        //     lockSection();
+        //     monitor->writeMonitorArray(tmp);
+        //     monitor->writeLastBlockInMonitor(fileRange.first + 1);
+        //     unlockSection();
+        // }
     }
 
     if (!isTestMode())

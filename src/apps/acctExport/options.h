@@ -96,7 +96,7 @@ class COptions : public CAbiOptions {
     bool visitBinaryFile(const string_q& path, void* data);
     void addNeighbor(CAddressUintMap& map, const address_t& addr);
     void markNeighbors(const CTransaction& trans);
-    void articulateAll(CTransaction& trans);
+    bool articulateAll(CTransaction& trans);
     bool reportNeighbors(void);
 
     bool establishIndexChunk(const string_q& fileName);

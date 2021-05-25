@@ -49,7 +49,7 @@ bool isTokenTopic(const topic_t& topic) {
 }
 
 //-----------------------------------------------------------------------
-void COptions::articulateAll(CTransaction& trans) {
+bool COptions::articulateAll(CTransaction& trans) {
     if (articulate) {
         abiMap[trans.to]++;
         if (abiMap[trans.to] == 1 || fileExists(getCachePath("abis/" + trans.to))) {
@@ -89,4 +89,5 @@ void COptions::articulateAll(CTransaction& trans) {
             trans.hasToken |= isTokenTopic(log->topics[0]);
         }
     }
+    return true;
 }

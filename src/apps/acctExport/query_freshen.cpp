@@ -10,6 +10,10 @@ bool COptions::process_freshen(void) {
     // Clean the monitor stage of previously unfinished scrapes
     cleanMonitorStage();
 
+    // TODO(tjayrush): Reconisider whether to move scrapes of staging to production here or
+    // TODO(tjayrush): wait until the stage consolidates. By not moving it here, we get repeated scans through
+    // TODO(tjayrush): the stage on blocks that we've already processed for a given monitor even though we
+    // TODO(tjayrush): know that once a block goes on the stage, we won't be rescraping it.
     if (unripe || staging) {
         // Note that we used to think we needed to process the unripe here, but since
         // we changed the meaning of --unripe from "add additional unripe record to the
