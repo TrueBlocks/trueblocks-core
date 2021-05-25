@@ -1941,6 +1941,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 30-Contracts:dAppNode	0x41de16c78bf5266867c6af6e03d278fd1a069177	dAddNode Package 008		TrueBlocks.io			false	false	false	true	false	false
 50-Tokens:ERC20	0x41e5560054824ea6b0732e656e3ad64e20e94e45	Civic	CVC	On chain	8	Giving businesses and individuals the tools to control and protect identities	false	false	false	true	true	false
 81-Other	0x41ea839c0e1e562d60bf9675bf74a9caa6a7b80c	LedgerFund_id206_cnt7_3mo		Ether Camp			false	false	false	true	false	false
+50-Tokens:ERC20	0x41ed7d49292b8fbf9b9311c1cb4d6eb877646c58	For the Public Good	GOOD	On chain	18		false	false	false	true	true	false
 30-Contracts:Humanity DAO	0x41ef5f756187b3cc494a0a45e05e7f9c8747874f	pacellidavide		https://www.humanitydao.org/humans			false	false	false	false	false	false
 60-Airdrops	0x41ef7d9a910150a78e47b1131fafa00b1bc1a04e	TRX Airdrop Sender		TrueBlocks.io			false	false	false	false	false	false
 81-Other	0x41f274c0023f83391de4e0733c609df5a124c3d4	Test_id224_cnt48614_2mo		Ether Camp			false	false	false	true	false	false
