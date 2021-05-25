@@ -141,6 +141,7 @@ bool loadData(CTraverser* trav, void* data) {
 
     string_q txFilename = getBinaryCacheFilename(CT_TXS, trav->app->blk, trav->app->txid);
     trav->inCache = trav->app->blk != 0 && fileExists(txFilename);
+    bool dirty = false;
     if (trav->inCache) {
         // we read the data, if we find it, but....
         readTransFromBinary(trav->trans, txFilename);
@@ -168,22 +169,25 @@ bool loadData(CTraverser* trav, void* data) {
             getTransaction(trav->trans, trav->app->blk, trav->app->txid);
             getFullReceipt(&trav->trans, true);
         }
-
-        // TODO: Must we write this data if the data has not changed?
-        if (opt->cache_txs)
-            writeTransToBinary(trav->trans, txFilename);
+        dirty = true;
     }
 
     trav->trans.pBlock = &trav->block;
     trav->trans.timestamp = trav->block.timestamp = (timestamp_t)expContext().tsMemMap[(trav->app->blk * 2) + 1];
 
-    if (opt->traces) {
+    if (opt->traces && trav->trans.traces.size() == 0) {
         loadTraces(trav->trans, trav->app->blk, trav->app->txid, opt->cache_traces,
                    (opt->skip_ddos && excludeTrace(&trav->trans, opt->max_traces)));
+        dirty = true;
     }
 
+    dirty |= opt->articulateAll(trav->trans);
+
+    // TODO(tjayrush): This could be in post_Func so that _Display can make it dirty
+    if (opt->cache_txs && dirty)
+        writeTransToBinary(trav->trans, txFilename);
+
     opt->markNeighbors(trav->trans);
-    opt->articulateAll(trav->trans);
 
     return true;
 }

@@ -51,6 +51,10 @@ bool isTokenTopic(const topic_t& topic) {
 //-----------------------------------------------------------------------
 bool COptions::articulateAll(CTransaction& trans) {
     if (articulate) {
+        if (!trans.articulatedTx.name.empty()) {
+            // LOG_INFO("Short cuircut");
+            return false;
+        }
         abiMap[trans.to]++;
         if (abiMap[trans.to] == 1 || fileExists(getCachePath("abis/" + trans.to))) {
             abi_spec.loadAbiFromEtherscan(trans.to);
