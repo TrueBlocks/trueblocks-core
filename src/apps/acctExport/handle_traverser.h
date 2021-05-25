@@ -27,16 +27,15 @@ inline bool noopFunc(CTraverser* trav, void* data) {
 //-----------------------------------------------------------------------
 class CTraverser {
   public:
-    const COptions* options = nullptr;
     ostream& os;
-    string_q op;
+    string_q operation;
     size_t index;
     bool logging;
-    blknum_t lastExpBlock;
     size_t nProcessed;
     bool inCache;
+    const COptions* options = nullptr;
     CTraverser(const COptions* opt, ostream& osIn, const string_q& o)
-        : options(opt), os(osIn), op(o), index(0), lastExpBlock(NOPOS), nProcessed(0), inCache(false) {
+        : os(osIn), operation(o), index(0), nProcessed(0), inCache(false), options(opt) {
         logging = !isTestMode() || getEnvStr("FORCE_LOGGING") == "true";
     }
 

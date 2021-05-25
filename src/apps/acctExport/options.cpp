@@ -588,7 +588,7 @@ bool COptions::setDisplayFormatting(void) {
 // TODO(tjayrush): What does prefundAddrMap and prefundMap do? Needs testing
 // TODO(tjayrush): What does blkRewardMap do? Needs testing
 // TODO(tjayrush): Reconciliation loads traces -- plus it reduplicates the isSuicide, isGeneration, isUncle shit
-// TODO(tjayrush): writeLastEncountered is really weird
+// TODO(tjayrush): writeLastEncountered is really weird (in fact removed -- used to keep freshen from revisiting blocks twice)
 // TODO(tjayrush): writeLastBlockInMonitor is really weird
 // TODO(tjayrush): We used to write traces sometimes
 // TODO(tjayrush): We used to cache the monitored txs - I think it was pretty fast (we used the monitor staging folder)

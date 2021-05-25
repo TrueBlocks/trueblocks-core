@@ -38,30 +38,30 @@ int main(int argc, const char* argv[]) {
         CAppearanceDisplay dapp(options.accountedFor, options.accountedForName, NOPOS, NOPOS);
         CTraverserArray traversers;
         if (options.appearances) {
-            t.op = "appearances";
+            t.operation = "appearances";
             t.displayFunc = app_Display;
             t.postFunc = app_Post;
             t.dataFunc = noopFunc;
             traversers.push_back(t);
 
         } else if (options.receipts) {
-            t.op = "receipts";
+            t.operation = "receipts";
             t.displayFunc = receipts_Display;
             traversers.push_back(t);
 
         } else if (options.traces) {
-            t.op = "traces";
+            t.operation = "traces";
             t.displayFunc = traces_Display;
             traversers.push_back(t);
 
         } else if (options.logs) {
-            t.op = "logs";
+            t.operation = "logs";
             t.preFunc = logs_Pre;
             t.displayFunc = logs_Display;
             traversers.push_back(t);
 
         } else {
-            t.op = "txs";
+            t.operation = "txs";
             t.filterFunc = (options.freshen ? noopFunc : rangeFilter);
             t.preFunc = (options.freshen ? noopFunc : acct_Pre);
             t.postFunc = post_Func;

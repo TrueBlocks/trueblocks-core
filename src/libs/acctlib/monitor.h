@@ -53,15 +53,12 @@ class CMonitor : public CAccountName {
 
     void writeMonitorArray(const CAppearanceArray_base& array);
     void writeLastBlockInMonitor(blknum_t bn);
-    void writeLastEncountered(blknum_t bn);
 
     blknum_t getLastVisited(bool fresh = false) const;
     blknum_t getLastBlockInMonitor(void) const;
-    blknum_t getLastEncountered(void) const;
-
+    
     string_q getMonitorPath(const address_t& addr, freshen_e mode = FM_PRODUCTION) const;
     string_q getMonitorLast(const address_t& addr, freshen_e mode = FM_PRODUCTION) const;
-    string_q getMonitorEnct(const address_t& addr, freshen_e mode = FM_PRODUCTION) const;
     string_q getMonitorDels(const address_t& addr, freshen_e mode = FM_PRODUCTION) const;
     string_q getMonitorCach(const address_t& addr, freshen_e mode = FM_PRODUCTION) const;
 

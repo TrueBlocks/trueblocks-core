@@ -76,10 +76,10 @@ bool pre_Func(CTraverser* trav, void* data) {
 bool post_Func(CTraverser* trav, void* data) {
     COptions* opt = (COptions*)trav->options;
 
-    if (trav->lastExpBlock != NOPOS)
-        for (auto monitor : opt->allMonitors)
-            monitor.writeLastEncountered(trav->lastExpBlock);
-
+    // TODO(tjayrush): we used to call writeLastEncountered (since removed) that would
+    // TODO(tjayrush): keep track of the last encountered block to avoid starting
+    // TODO(tjayrush): each freshen cycle at the previous stored block since we
+    // TODO(tjayrush): already processed encountered blocks.
     opt->reportNeighbors();
 
     end_Log(trav, data);
@@ -101,7 +101,7 @@ void prog_Log(CTraverser* trav, void* data) {
     blknum_t goal = opt->stats.nFileRecords;
 
     ostringstream post;
-    post << " " << trav->op << " (max " << goal << ") for address " << opt->accountedFor;
+    post << " " << trav->operation << " (max " << goal << ") for address " << opt->accountedFor;
     LOG_PROGRESS((mode == TR_PROGRESS_CACHE ? "Reading" : "Extracting"), prog, goal, post.str() + "\r");
     return;
 }
@@ -116,7 +116,7 @@ void end_Log(CTraverser* trav, void* data) {
     blknum_t goal = opt->stats.nFileRecords;
     if (prog == goal) {
         string_q msg = opt->freshen ? "Finished updating" : "Finished reporting on";
-        string_q endMsg = " " + trav->op + " for address " + opt->accountedFor;
+        string_q endMsg = " " + trav->operation + " for address " + opt->accountedFor;
         LOG_PROGRESS(msg, prog, goal, endMsg);
     }
     return;

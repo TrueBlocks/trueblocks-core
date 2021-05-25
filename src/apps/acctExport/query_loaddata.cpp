@@ -63,14 +63,14 @@ bool COptions::loadAllAppearances(void) {
                 return false;
             }
 
-            if (freshen) {
-                // If we're freshening...
-                blknum_t lastExport = monitor.getLastEncountered();
-                if (scanRange.first == 0)  // we can start where the last export happened on any address...
-                    scanRange.first = lastExport;
-                if (lastExport < scanRange.first)  // ...but the eariest of the last exports is where we start
-                    scanRange.first = lastExport;
-            }
+            // TODO(tjayrush): This used to set last encountered block (search for writeLastEncountered)
+            // if (freshen) {
+            //     blknum_t lastExport = monitor.getLastEncounter ed();
+            //     if (scanRange.first == 0)  // we can start where the last export happened on any address...
+            //         scanRange.first = lastExport;
+            //     if (lastExport < scanRange.first)  // ...but the eariest of the last exports is where we start
+            //         scanRange.first = lastExport;
+            // }
         }
     }
 

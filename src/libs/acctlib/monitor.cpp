@@ -269,11 +269,6 @@ void CMonitor::writeLastBlockInMonitor(blknum_t bn) {
     stringToAsciiFile(getMonitorLast(address, fm_mode), uint_2_Str(bn) + "\n");
 }
 
-//-------------------------------------------------------------------------
-void CMonitor::writeLastEncountered(blknum_t bn) {
-    stringToAsciiFile(getMonitorEnct(address, fm_mode), uint_2_Str(bn) + "\n");
-}
-
 //---------------------------------------------------------------------------
 string_q CMonitor::getMonitorPath(const address_t& addr, freshen_e mode) const {
     string_q fn = isAddress(addr) ? addr + ".acct.bin" : addr;
@@ -286,11 +281,6 @@ string_q CMonitor::getMonitorPath(const address_t& addr, freshen_e mode) const {
 //---------------------------------------------------------------------------
 string_q CMonitor::getMonitorLast(const address_t& addr, freshen_e mode) const {
     return substitute(getMonitorPath(addr, mode), ".acct.bin", ".last.txt");
-}
-
-//---------------------------------------------------------------------------
-string_q CMonitor::getMonitorEnct(const address_t& addr, freshen_e mode) const {
-    return substitute(getMonitorPath(addr, mode), ".acct.bin", ".expt.txt");
 }
 
 //---------------------------------------------------------------------------
@@ -329,17 +319,10 @@ blknum_t CMonitor::getLastBlockInMonitor(void) const {
 }
 
 //-----------------------------------------------------------------------
-blknum_t CMonitor::getLastEncountered(void) const {
-    return str_2_Uint(asciiFileToString(getMonitorEnct(address)));
-}
-
-//-----------------------------------------------------------------------
 bool CMonitor::monitorExists(void) const {
     if (fileExists(getMonitorPath(address)))
         return true;
     if (fileExists(getMonitorLast(address)))
-        return true;
-    if (fileExists(getMonitorEnct(address)))
         return true;
     if (fileExists(getMonitorDels(address)))
         return true;
@@ -359,7 +342,6 @@ bool CMonitor::monitorExists(void) const {
 bool CMonitor::isMonitorLocked(string_q& msg) const {
     checkLock(getMonitorPath(address), "cache");
     checkLock(getMonitorLast(address), "last block");
-    checkLock(getMonitorEnct(address), "last export");
     checkLock(getMonitorDels(address), "marker");
     checkLock(getMonitorCach(address), "cache");
     return false;
@@ -369,7 +351,6 @@ bool CMonitor::isMonitorLocked(string_q& msg) const {
 bool CMonitor::clearMonitorLocks(void) {
     ::remove((getMonitorPath(address) + ".lck").c_str());
     ::remove((getMonitorLast(address) + ".lck").c_str());
-    ::remove((getMonitorEnct(address) + ".lck").c_str());
     ::remove((getMonitorDels(address) + ".lck").c_str());
     ::remove((getMonitorCach(address) + ".lck").c_str());
     return true;
@@ -401,14 +382,12 @@ void CMonitor::moveToProduction(void) {
     if (binExists || lastExists) {
         doMoveFile(getMonitorPath(address, FM_STAGING), getMonitorPath(address));
         doMoveFile(getMonitorLast(address, FM_STAGING), getMonitorLast(address));
-        doMoveFile(getMonitorEnct(address, FM_STAGING), getMonitorEnct(address));
         doMoveFile(getMonitorCach(address, FM_STAGING), getMonitorCach(address));
     } else {
         // For some reason (user quit, UI switched to adding a different address to monitor, something went
         // wrong...) the binary cache was not created. Cleanup everything. The user will have to start over.
         ::remove(getMonitorPath(address, FM_STAGING).c_str());
         ::remove(getMonitorLast(address, FM_STAGING).c_str());
-        ::remove(getMonitorEnct(address, FM_STAGING).c_str());
         ::remove(getMonitorCach(address, FM_STAGING).c_str());
     }
     unlockSection();
@@ -439,7 +418,6 @@ void removeFile(const string_q& fn) {
 void CMonitor::removeMonitor(void) {
     removeFile(getMonitorPath(address));
     removeFile(getMonitorLast(address));
-    removeFile(getMonitorEnct(address));
     removeFile(getMonitorDels(address));
     removeFile(getMonitorCach(address));
 }
