@@ -7,8 +7,8 @@
 
 bool inputFilter(const string_q& input, const COptions* opt);
 //-----------------------------------------------------------------------
-bool traces_Display(CTraverser* trav, void* data1) {
-    COptions* opt = (COptions*)data1;
+bool traces_Display(CTraverser* trav, void* data) {
+    COptions* opt = (COptions*)data;
 
     trav->nProcessed += trav->trans.traces.size();
     if (opt->freshenOnly)
@@ -53,6 +53,6 @@ bool traces_Display(CTraverser* trav, void* data1) {
         }
     }
 
-    prog_Log(trav, data1);
+    prog_Log(trav, data);
     return !shouldQuit();
 }

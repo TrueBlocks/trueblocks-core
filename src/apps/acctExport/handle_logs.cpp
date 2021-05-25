@@ -7,8 +7,8 @@
 
 bool logFilter(const CLogEntry& log, const COptions* opt);
 //-----------------------------------------------------------------------
-bool logs_Display(CTraverser* trav, void* data1) {
-    COptions* opt = (COptions*)data1;
+bool logs_Display(CTraverser* trav, void* data) {
+    COptions* opt = (COptions*)data;
 
     trav->nProcessed += trav->trans.receipt.logs.size();
     if (opt->freshenOnly)
@@ -22,17 +22,17 @@ bool logs_Display(CTraverser* trav, void* data1) {
         }
     }
 
-    prog_Log(trav, data1);
+    prog_Log(trav, data);
     return !shouldQuit();
 }
 
 //-----------------------------------------------------------------------
-bool logs_Pre(CTraverser* trav, void* data1) {
-    COptions* opt = (COptions*)data1;
+bool logs_Pre(CTraverser* trav, void* data) {
+    COptions* opt = (COptions*)data;
     if (opt->apps.size() > 0 && opt->first_record != 0)
         opt->lastStatement.endBal = getBalanceAt(opt->accountedFor, opt->apps[0].blk - 1);
 
-    start_Log(trav, data1);
+    start_Log(trav, data);
     return true;
 }
 

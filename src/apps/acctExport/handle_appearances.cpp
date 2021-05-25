@@ -6,8 +6,8 @@
 #include "options.h"
 
 //-----------------------------------------------------------------------
-bool app_Display(CTraverser* trav, void* data1) {
-    COptions* opt = (COptions*)data1;
+bool app_Display(CTraverser* trav, void* data) {
+    COptions* opt = (COptions*)data;
 
     trav->nProcessed++;
     if (opt->freshenOnly)
@@ -24,11 +24,11 @@ bool app_Display(CTraverser* trav, void* data1) {
 extern const char* APP_FIELDS_ALL;
 extern const char* APP_FIELDS_HIDE;
 //-----------------------------------------------------------------------
-bool app_Post(CTraverser* trav, void* data1) {
+bool app_Post(CTraverser* trav, void* data) {
     manageFields(APP_FIELDS_ALL, true);
     manageFields(APP_FIELDS_HIDE, false);
 
-    end_Log(trav, data1);
+    end_Log(trav, data);
     return true;
 }
 

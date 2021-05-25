@@ -7,8 +7,8 @@
 
 bool inputFilter(const string_q& input, const COptions* opt);
 //-----------------------------------------------------------------------
-bool acct_Display(CTraverser* trav, void* data1) {
-    COptions* opt = (COptions*)data1;
+bool acct_Display(CTraverser* trav, void* data) {
+    COptions* opt = (COptions*)data;
 
     trav->nProcessed++;
     if (opt->freshenOnly)
@@ -24,13 +24,13 @@ bool acct_Display(CTraverser* trav, void* data1) {
         opt->firstOut = false;
     }
 
-    prog_Log(trav, data1);
+    prog_Log(trav, data);
     return !shouldQuit();
 }
 
 //-----------------------------------------------------------------------
-bool acct_Pre(CTraverser* trav, void* data1) {
-    COptions* opt = (COptions*)data1;
+bool acct_Pre(CTraverser* trav, void* data) {
+    COptions* opt = (COptions*)data;
 
     if (opt->apps.size() > 0 && opt->first_record != 0) {
         CReconciliation eth;

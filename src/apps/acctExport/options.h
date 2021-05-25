@@ -10,7 +10,7 @@
  */
 #include "pinlib.h"
 #include "acctscrapestats.h"
-#include "handle_traverser.h"
+#include "traversers.h"
 
 // BEG_ERROR_DEFINES
 // END_ERROR_DEFINES
@@ -121,15 +121,3 @@ inline string_q plural(const string_q& in) {
 //-----------------------------------------------------------------------
 extern bool process_reconciliation(COptions* options, CTransaction& trans, CReconciliationMap& prev, blknum_t next,
                                    bool tokens);
-
-//-----------------------------------------------------------------------
-extern bool app_Display(CTraverser* trav, void* data1);
-extern bool acct_Display(CTraverser* trav, void* data1);
-extern bool receipts_Display(CTraverser* trav, void* data1);
-extern bool logs_Display(CTraverser* trav, void* data1);
-extern bool traces_Display(CTraverser* trav, void* data1);
-
-extern bool acct_Pre(CTraverser* trav, void* data1);
-extern bool logs_Pre(CTraverser* trav, void* data1);
-
-extern bool app_Post(CTraverser* trav, void* data1);
