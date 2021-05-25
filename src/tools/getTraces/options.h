@@ -34,7 +34,6 @@ class COptions : public CAbiOptions {
 
     CTraceFilterArray filters;
     COptionsTransList transList;
-    bool first;
 
     COptions(void);
     ~COptions(void);

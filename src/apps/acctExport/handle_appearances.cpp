@@ -6,34 +6,29 @@
 #include "options.h"
 
 //-----------------------------------------------------------------------
-bool app_Display(CTraverser* trav, void* data) {
-    COptions* opt = (COptions*)trav->options;
+bool app_Display(CTraverser* trav, void* data1) {
+    COptions* opt = (COptions*)data1;
 
     trav->nProcessed++;
-    if (opt->freshen)
+    if (opt->freshenOnly)
         return true;
 
-    trav->inCache = true;
-    CAppearanceDisplay* dapp = (CAppearanceDisplay*)data;
-    dapp->blockNumber = trav->app->blk;
-    dapp->transactionIndex = trav->app->txid;
-
+    CAppearanceDisplay dapp(opt->accountedFor, opt->accountedForName, trav->app->blk, trav->app->txid);
     cout << ((isJson() && !opt->firstOut) ? ", " : "");
-    cout << *dapp;
+    cout << dapp;
     opt->firstOut = false;
 
-    // prog_Log(trav, data);
     return !shouldQuit();
 }
 
 extern const char* APP_FIELDS_ALL;
 extern const char* APP_FIELDS_HIDE;
 //-----------------------------------------------------------------------
-bool app_Post(CTraverser* trav, void* data) {
+bool app_Post(CTraverser* trav, void* data1) {
     manageFields(APP_FIELDS_ALL, true);
     manageFields(APP_FIELDS_HIDE, false);
 
-    end_Log(trav, data);
+    end_Log(trav, data1);
     return true;
 }
 

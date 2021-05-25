@@ -32,7 +32,6 @@ class COptions : public CAbiOptions {
     bool cache_traces;
     bool skip_ddos;
     uint64_t max_traces;
-    bool freshen;
     bool factory;
     bool emitter;
     CAddressArray source;
@@ -77,7 +76,6 @@ class COptions : public CAbiOptions {
 
     string_q className;
     CBlockProgress bp;
-    bool firstOut;
 
     COptions(void);
     ~COptions(void);
@@ -125,13 +123,13 @@ extern bool process_reconciliation(COptions* options, CTransaction& trans, CReco
                                    bool tokens);
 
 //-----------------------------------------------------------------------
-extern bool app_Display(CTraverser* trav, void* data);
-extern bool acct_Display(CTraverser* trav, void* data);
-extern bool receipts_Display(CTraverser* trav, void* data);
-extern bool logs_Display(CTraverser* trav, void* data);
-extern bool traces_Display(CTraverser* trav, void* data);
+extern bool app_Display(CTraverser* trav, void* data1);
+extern bool acct_Display(CTraverser* trav, void* data1);
+extern bool receipts_Display(CTraverser* trav, void* data1);
+extern bool logs_Display(CTraverser* trav, void* data1);
+extern bool traces_Display(CTraverser* trav, void* data1);
 
-extern bool acct_Pre(CTraverser* trav, void* data);
-extern bool logs_Pre(CTraverser* trav, void* data);
+extern bool acct_Pre(CTraverser* trav, void* data1);
+extern bool logs_Pre(CTraverser* trav, void* data1);
 
-extern bool app_Post(CTraverser* trav, void* data);
+extern bool app_Post(CTraverser* trav, void* data1);

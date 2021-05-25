@@ -184,10 +184,6 @@ void COptions::Init(void) {
 COptions::COptions(void) {
     Init();
 
-    // Differnt default for this software, but only change it if user hasn't already therefor not in Init
-    if (!isApiMode())
-        expContext().exportFmt = TXT1;
-
     // BEG_CODE_NOTES
     // clang-format off
     notes.push_back("The block list may contain any combination of `number`, `hash`, `date`, special `named` blocks.");
@@ -198,6 +194,10 @@ COptions::COptions(void) {
     // BEG_ERROR_STRINGS
     usageErrs[ERR_INVALIDSKIPVAL] = "--skip value must be larger than zero.";
     // END_ERROR_STRINGS
+
+    // Differnt default for this software, but only change it if user hasn't already therefor not in Init
+    if (!isApiMode())
+        expContext().exportFmt = TXT1;
 }
 
 //--------------------------------------------------------------------------------

@@ -51,10 +51,10 @@ bool visitTransaction(CTransaction& trans, void* data) {
         CLogQuery query;
         query.blockHash = trans.blockHash;
         queryRawLogs(result, query);
-        if (!isText && !opt->first)
+        if (!isText && !opt->firstOut)
             cout << ",";
         cout << substitute(result, "mined", "");
-        opt->first = false;
+        opt->firstOut = false;
         return true;
     }
 
@@ -75,13 +75,13 @@ bool visitTransaction(CTransaction& trans, void* data) {
         if (isText) {
             cout << trim(log.Format(expContext().fmtMap["format"]), '\t') << endl;
         } else {
-            if (!opt->first)
+            if (!opt->firstOut)
                 cout << ",";
             cout << "  ";
             indent();
             log.toJson(cout);
             unindent();
-            opt->first = false;
+            opt->firstOut = false;
         }
     }
     return true;

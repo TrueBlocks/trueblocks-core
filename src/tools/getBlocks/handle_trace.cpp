@@ -20,13 +20,13 @@ bool traceBlock(uint64_t num, void* data) {
         string_q results;
         queryRawBlockTrace(results, num);
         bool isText = (expContext().exportFmt & (TXT1 | CSV1));
-        if (!opt->first) {
+        if (!opt->firstOut) {
             if (!isText)
                 cout << ",";
             cout << endl;
         }
         cout << results;
-        opt->first = false;
+        opt->firstOut = false;
         return !shouldQuit();
     } else {
         CBlock block;
@@ -40,12 +40,12 @@ bool traceBlock(uint64_t num, void* data) {
 bool visitTrace(CTrace& trace, void* data) {
     COptions* opt = reinterpret_cast<COptions*>(data);
     bool isText = (expContext().exportFmt & (TXT1 | CSV1));
-    if (!opt->first) {
+    if (!opt->firstOut) {
         if (!isText)
             cout << ",";
         cout << endl;
     }
     cout << trace.Format(expContext().fmtMap["format"]);
-    opt->first = false;
+    opt->firstOut = false;
     return true;
 }

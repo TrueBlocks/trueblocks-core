@@ -1288,6 +1288,8 @@ COptionsBase::COptionsBase(void) {
     isRaw = false;
     isVeryRaw = false;
     mocked = false;
+    firstOut = true;
+    freshenOnly = false;
     noHeader = false;
     enableBits = OPT_DEFAULT;
     scanRange = make_pair(0, NOPOS);

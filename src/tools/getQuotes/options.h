@@ -24,13 +24,11 @@
 class COptions : public COptionsBase {
   public:
     // BEG_CODE_DECLARE
-    bool freshen;
     string_q feed;
     // END_CODE_DECLARE
 
     CPriceSource source;
     uint64_t freq;
-    bool first;
 
     COptions(void);
     ~COptions(void);

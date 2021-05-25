@@ -21,7 +21,6 @@ int main(int argc, const char* argv[]) {
     if (!options.prepareArguments(argc, argv))
         return 0;
 
-    options.first = true;
     for (auto command : options.commandLines) {
         if (!options.parseArguments(command))
             return 0;
@@ -31,7 +30,7 @@ int main(int argc, const char* argv[]) {
             LOG_INFO("No results");
 
         } else {
-            if (options.first)
+            if (options.firstOut)
                 cout << exportPreamble(expContext().fmtMap["header"], GETRUNTIME_CLASS(CBlock));
             if (options.requests.size() > 0) {
                 options.applyFilter();  // for (auto item : options.items)
@@ -56,14 +55,14 @@ bool visitBlock(CBlock& block, void* data) {
         cout << block.Format(expContext().fmtMap["format"]) << endl;
 
     } else {
-        if (!opt->first)
+        if (!opt->firstOut)
             cout << "," << endl;
         cout << "  ";
         indent();
         block.toJson(cout);
         unindent();
     }
-    opt->first = false;
+    opt->firstOut = false;
     if (isTestMode() && (++opt->cnt > 100))
         return false;
     return true;

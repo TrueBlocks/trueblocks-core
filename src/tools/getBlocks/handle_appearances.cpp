@@ -60,7 +60,7 @@ void COptions::handle_appearances(blknum_t num, void* data) {
             oneAppearance(item, data);
         }
     }
-    first = false;
+    firstOut = false;
 }
 
 //----------------------------------------------------------------
@@ -70,13 +70,13 @@ void oneAppearance(const CAppearance& item, void* data) {
     if (isText) {
         cout << trim(item.Format(expContext().fmtMap["format"]), '\t') << endl;
     } else {
-        if (!opt->first)
+        if (!opt->firstOut)
             cout << ",";
         cout << "  ";
         indent();
         item.toJson(cout);
         unindent();
-        opt->first = false;
+        opt->firstOut = false;
     }
 }
 

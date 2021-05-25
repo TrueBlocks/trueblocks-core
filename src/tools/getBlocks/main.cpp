@@ -106,13 +106,13 @@ string_q doOneBlock(blknum_t num, COptions& opt) {
                 }
             }
         }
-        opt.first = false;
+        opt.firstOut = false;
 
     } else if (opt.uncles) {
         uint64_t nUncles = getUncleCount(num);
         if (nUncles == 0) {
             // If we don't do this, we get extra commas
-            opt.first = true;
+            opt.firstOut = true;
         } else {
             for (size_t i = 0; i < nUncles; i++) {
                 result += doOneUncle(num, i, opt);
@@ -121,9 +121,9 @@ string_q doOneBlock(blknum_t num, COptions& opt) {
                         result += ",";
                     result += "\n";
                 }
-                opt.first = false;
+                opt.firstOut = false;
             }
-            opt.first = false;
+            opt.firstOut = false;
         }
     } else {
         if (opt.hashes) {
@@ -136,7 +136,7 @@ string_q doOneBlock(blknum_t num, COptions& opt) {
                 writeBlockToBinary(gold, fileName);
             }
         }
-        opt.first = false;
+        opt.firstOut = false;
     }
 
     return result;
@@ -147,7 +147,7 @@ bool visitBlock(uint64_t num, void* data) {
     COptions* opt = reinterpret_cast<COptions*>(data);
     bool isText = (expContext().exportFmt & (TXT1 | CSV1));
 
-    if (!opt->first) {
+    if (!opt->firstOut) {
         if (!isText)
             cout << ",";
         cout << endl;

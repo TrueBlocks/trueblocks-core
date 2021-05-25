@@ -33,7 +33,6 @@ class COptions : public CBlockOptions {
     CNameValueArray requests;
     bool isText;
     blknum_t stop;
-    bool first;
     blknum_t cnt;
     bool hasHelp;
 

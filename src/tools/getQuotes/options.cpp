@@ -36,6 +36,7 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
     // BEG_CODE_LOCAL_INIT
+    bool freshen = false;
     string_q period = "";
     string_q pair = "";
     // END_CODE_LOCAL_INIT
@@ -90,6 +91,8 @@ bool COptions::parseArguments(string_q& command) {
     if (Mocked(""))
         return false;
 
+    freshenOnly = freshen;
+
     // Data wrangling
     if (!pair.empty())
         source.pair = pair;
@@ -118,12 +121,10 @@ void COptions::Init(void) {
     registerOptions(nParams, params);
 
     // BEG_CODE_INIT
-    freshen = false;
     feed = "";
     // END_CODE_INIT
 
     freq = 120;
-    first = true;
     if (isApiMode())
         minArgs = 0;
 }
@@ -131,6 +132,7 @@ void COptions::Init(void) {
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) : source(STR_PRICE_URL, "USDT_ETH", parsePoloniex) {
     Init();
+
     // BEG_CODE_NOTES
     // clang-format off
     notes.push_back("Valid pairs include any pair from the public Poloniex's API here: | https://poloniex.com/public?command=returnCurrencies.");  // NOLINT

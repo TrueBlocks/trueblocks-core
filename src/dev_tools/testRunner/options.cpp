@@ -230,8 +230,10 @@ void COptions::Init(void) {
 
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
-    Init();
     CMeasure::registerClass();
+
+    Init();
+
     // BEG_CODE_NOTES
     // clang-format off
     // clang-format on

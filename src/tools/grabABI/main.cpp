@@ -36,13 +36,13 @@ int main(int argc, const char* argv[]) {
             cout << expContext().fmtMap["header"] << endl;
 
         for (auto func : options.abi_spec.interfaceArray()) {
-            if (!options.first) {
+            if (!options.firstOut) {
                 if (!isText)
                     cout << ",";
                 cout << endl;
             }
             cout << func.Format(expContext().fmtMap["format"]);
-            options.first = false;
+            options.firstOut = false;
         }
         once = false;
     }

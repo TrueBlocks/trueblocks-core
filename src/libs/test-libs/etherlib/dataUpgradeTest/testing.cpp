@@ -19,10 +19,6 @@
 extern bool testReadWrite(COptions& options);
 extern bool testUpgrade(COptions& options);
 extern void reportNode(CBaseNode* node);
-namespace qblocks {
-extern bool writeNodeToBinary(const CBaseNode& node, const string_q& fileName);
-extern bool readNodeFromBinary(CBaseNode& node, const string_q& fileName);
-};  // namespace qblocks
 //--------------------------------------------------------------
 int main(int argc, const char* argv[]) {
     acctlib_init(quickQuitHandler);

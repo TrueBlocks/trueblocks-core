@@ -75,7 +75,7 @@ bool COptions::loadAllAppearances(void) {
     }
 
     if (tmp.size() == 0) {
-        if (!freshen)
+        if (!freshenOnly)
             LOG4("Nothing to export" + (allMonitors.size() ? (" from " + accountedFor) : "") + ".");
         return false;
     }

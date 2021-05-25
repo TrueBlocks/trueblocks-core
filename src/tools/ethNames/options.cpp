@@ -292,6 +292,7 @@ COptions::COptions(void) {
     CAccountName acct;
     getNamedAccount(acct, "0x0");  // loads names database
     Init();
+
     // BEG_CODE_NOTES
     // clang-format off
     notes.push_back("The tool will accept up to three terms, each of which must match against any field in the database.");  // NOLINT

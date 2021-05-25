@@ -53,6 +53,7 @@ bool COptions::parseArguments(string_q& command) {
 
     // BEG_CODE_LOCAL_INIT
     CAddressArray addrs;
+    bool freshen = false;
     blknum_t start = NOPOS;
     blknum_t end = NOPOS;
     // END_CODE_LOCAL_INIT
@@ -210,6 +211,8 @@ bool COptions::parseArguments(string_q& command) {
     if (Mocked(""))
         return false;
 
+    freshenOnly = freshen;
+
     if (!bloomsAreInitalized())
         return usage("Bloom filters not found. You must run 'chifra init' before running this command.");
 
@@ -251,7 +254,7 @@ bool COptions::parseArguments(string_q& command) {
     if ((accounting) && (addrs.size() != 1))
         return usage("You may only use --accounting option with a single address.");
 
-    if ((accounting) && freshen)
+    if ((accounting) && freshenOnly)
         return usage("Do not use the --accounting option with --freshen.");
 
     if ((accounting) && (appearances || logs || traces || receipts))
@@ -330,7 +333,6 @@ bool COptions::parseArguments(string_q& command) {
         scanRange.second = end;
 
     if (count) {
-        firstOut = true;
         cout << exportPreamble(expContext().fmtMap["header"], GETRUNTIME_CLASS(CMonitorCount)->m_ClassName);
         for (auto monitor : allMonitors) {
             string_q path = monitor.getMonitorPath(monitor.address);
@@ -377,9 +379,6 @@ void COptions::Init(void) {
     cache_traces = getGlobalConfig("acctExport")->getConfigBool("settings", "cache_traces", false);
     skip_ddos = getGlobalConfig("acctExport")->getConfigBool("settings", "skip_ddos", true);
     max_traces = getGlobalConfig("acctExport")->getConfigInt("settings", "max_traces", 250);
-    // clang-format on
-    freshen = false;
-    // clang-format off
     factory = getGlobalConfig("acctExport")->getConfigBool("settings", "factory", false);
     // clang-format on
     emitter = false;
@@ -536,9 +535,6 @@ bool COptions::setDisplayFormatting(void) {
             }
         }
 
-        if (freshen)
-            expContext().exportFmt = NONE1;
-
         if (accounting) {
             articulate = true;
             manageFields("CTransaction:statements", true);
@@ -588,7 +584,8 @@ bool COptions::setDisplayFormatting(void) {
 // TODO(tjayrush): What does prefundAddrMap and prefundMap do? Needs testing
 // TODO(tjayrush): What does blkRewardMap do? Needs testing
 // TODO(tjayrush): Reconciliation loads traces -- plus it reduplicates the isSuicide, isGeneration, isUncle shit
-// TODO(tjayrush): writeLastEncountered is really weird (in fact removed -- used to keep freshen from revisiting blocks twice)
+// TODO(tjayrush): writeLastEncountered is really weird (in fact removed -- used to keep freshen from revisiting blocks
+// twice)
 // TODO(tjayrush): writeLastBlockInMonitor is really weird
 // TODO(tjayrush): We used to write traces sometimes
 // TODO(tjayrush): We used to cache the monitored txs - I think it was pretty fast (we used the monitor staging folder)

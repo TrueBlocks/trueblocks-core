@@ -31,7 +31,6 @@ class COptions : public CAbiOptions {
 
     COptionsTransList transList;
     bool option1;
-    bool first;
 
     COptions(void);
     ~COptions(void);

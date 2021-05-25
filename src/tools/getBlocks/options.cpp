@@ -222,8 +222,8 @@ void COptions::Init(void) {
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
     Init();
-    first = true;
     expContext().exportFmt = NONE1;
+
     // BEG_CODE_NOTES
     // clang-format off
     notes.push_back("`blocks` is a space-separated list of values, a start-end range, a `special`, or any combination.");  // NOLINT

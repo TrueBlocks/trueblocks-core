@@ -26,7 +26,6 @@ class COptions : public CAbiOptions {
     CAddressArray addrs;
     // END_CODE_DECLARE
 
-    bool first;
     uint64_t parts;
 
     COptions(void);

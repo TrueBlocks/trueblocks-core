@@ -63,7 +63,6 @@ bool COptions::process_rm(const CAddressArray& addrs) {
         expContext().exportFmt = JSON1;
         cout << exportPreamble("", "");
         string_q msg;
-        firstOut = true;
         for (auto result : results) {
             if (!firstOut)
                 msg += ",";

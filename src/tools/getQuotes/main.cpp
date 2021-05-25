@@ -28,7 +28,7 @@ int main(int argc, const char* argv[]) {
 
         string_q message;
         CPriceQuoteArray quotes;
-        if (!loadPriceData(options.source, quotes, options.freshen, message) && quotes.size())
+        if (!loadPriceData(options.source, quotes, options.freshenOnly, message) && quotes.size())
             return options.usage(message);
 
         if (once)
@@ -60,13 +60,13 @@ bool visitPrice(CPriceQuote& quote, void* data) {
             cout << trim(quote.Format(expContext().fmtMap["format"]), '\t') << endl;
 
         } else {
-            if (!opt->first)
+            if (!opt->firstOut)
                 cout << ",";
             cout << "  ";
             indent();
             quote.toJson(cout);
             unindent();
-            opt->first = false;
+            opt->firstOut = false;
         }
     }
 

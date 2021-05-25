@@ -28,7 +28,6 @@ class COptions : public CAbiOptions {
     // END_CODE_DECLARE
 
     COptionsTransList transList;
-    bool first;
 
     COptions(void);
     ~COptions(void);

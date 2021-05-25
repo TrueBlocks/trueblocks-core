@@ -34,43 +34,50 @@ int main(int argc, const char* argv[]) {
         if (once)
             cout << exportPreamble(expContext().fmtMap["header"], options.className);
 
-        CTraverser t(&options, cout, "");
-        CAppearanceDisplay dapp(options.accountedFor, options.accountedForName, NOPOS, NOPOS);
+        CTraverser t(cout, "");
+        t.filterFunc = rangeFilter;
+        t.preFunc = pre_Func;
+        t.postFunc = post_Func;
+        t.dataFunc = loadData;
+
         CTraverserArray traversers;
         if (options.appearances) {
             t.operation = "appearances";
-            t.displayFunc = app_Display;
             t.postFunc = app_Post;
+            t.displayFunc = app_Display;
             t.dataFunc = noopFunc;
             traversers.push_back(t);
+        }
 
-        } else if (options.receipts) {
+        if (options.receipts) {
             t.operation = "receipts";
             t.displayFunc = receipts_Display;
             traversers.push_back(t);
+        }
 
-        } else if (options.traces) {
+        if (options.traces) {
             t.operation = "traces";
             t.displayFunc = traces_Display;
             traversers.push_back(t);
+        }
 
-        } else if (options.logs) {
+        if (options.logs) {
             t.operation = "logs";
             t.preFunc = logs_Pre;
             t.displayFunc = logs_Display;
             traversers.push_back(t);
+        }
 
-        } else {
+        if (traversers.empty()) {
             t.operation = "txs";
-            t.filterFunc = (options.freshen ? noopFunc : rangeFilter);
-            t.preFunc = (options.freshen ? noopFunc : acct_Pre);
-            t.postFunc = post_Func;
-            t.displayFunc = (options.freshen ? noopFunc : acct_Display);
-            t.dataFunc = (options.freshen ? noopFunc : loadData);
+            t.filterFunc = (options.freshenOnly ? noopFunc : rangeFilter);
+            t.preFunc = (options.freshenOnly ? noopFunc : acct_Pre);
+            t.displayFunc = (options.freshenOnly ? noopFunc : acct_Display);
+            t.dataFunc = (options.freshenOnly ? noopFunc : loadData);
             traversers.push_back(t);
         }
 
-        forEveryAppearance(traversers, options.apps, &dapp);
+        forEveryAppearance(traversers, options.apps, &options);
         if (shouldQuit())
             break;
 

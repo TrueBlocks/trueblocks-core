@@ -33,6 +33,7 @@ bool COptions::parseArguments(string_q& command) {
 
     // BEG_CODE_LOCAL_INIT
     bool list = false;
+    bool freshen = false;
     bool remote = false;
     // END_CODE_LOCAL_INIT
 
@@ -85,6 +86,8 @@ bool COptions::parseArguments(string_q& command) {
     if (Mocked(""))
         return false;
 
+    freshenOnly = freshen;
+
     LOG_INFO("hashToIndexFormatFile:\t", cGreen, hashToIndexFormatFile, cOff);
     LOG_INFO("hashToBloomFormatFile:\t", cGreen, hashToBloomFormatFile, cOff);
     LOG_INFO("unchainedIndexAddr:\t", cGreen, unchainedIndexAddr, cOff);
@@ -93,7 +96,7 @@ bool COptions::parseArguments(string_q& command) {
     if (list + compare + init > 1)
         return usage("Please choose either only a single option.");
 
-    if (!list && !compare && !init && !freshen)
+    if (!list && !compare && !init && !freshenOnly)
         return usage("You must choose at least one option.");
 
     configureDisplay("pinMan", "CPinnedChunk", STR_DISPLAY_PINNEDCHUNK);
@@ -108,7 +111,6 @@ void COptions::Init(void) {
     // BEG_CODE_INIT
     init = false;
     compare = false;
-    freshen = false;
     sleep = .25;
     // END_CODE_INIT
 }
@@ -116,7 +118,6 @@ void COptions::Init(void) {
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
     Init();
-    firstOut = true;
 
     // BEG_CODE_NOTES
     // clang-format off

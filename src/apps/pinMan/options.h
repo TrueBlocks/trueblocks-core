@@ -19,12 +19,10 @@ class COptions : public CAbiOptions {
     // BEG_CODE_DECLARE
     bool init;
     bool compare;
-    bool freshen;
     double sleep;
     // END_CODE_DECLARE
 
     CPinnedChunkArray pins;
-    bool firstOut;
 
     COptions(void);
     ~COptions(void);

@@ -46,13 +46,13 @@ bool visitAddrs(const CAppearance& item, void* data) {
     if (isText) {
         cout << trim(item.Format(expContext().fmtMap["format"]), '\t') << endl;
     } else {
-        if (!opt->first)
+        if (!opt->firstOut)
             cout << ",";
         cout << "  ";
         indent();
         item.toJson(cout);
         unindent();
-        opt->first = false;
+        opt->firstOut = false;
     }
     return !shouldQuit();
 }
@@ -86,10 +86,10 @@ bool visitTransaction(CTransaction& trans, void* data) {
     if (opt->isRaw || opt->isVeryRaw) {
         string_q result;
         queryRawTransaction(result, trans.getValueByName("hash"));
-        if (!isText && !opt->first)
+        if (!isText && !opt->firstOut)
             cout << ",";
         cout << result;
-        opt->first = false;
+        opt->firstOut = false;
         return true;
     }
 
@@ -110,13 +110,13 @@ bool visitTransaction(CTransaction& trans, void* data) {
         if (isText) {
             cout << trim(trans.Format(expContext().fmtMap["format"]), '\t') << endl;
         } else {
-            if (!opt->first)
+            if (!opt->firstOut)
                 cout << ",";
             cout << "  ";
             indent();
             trans.toJson(cout);
             unindent();
-            opt->first = false;
+            opt->firstOut = false;
         }
     }
 

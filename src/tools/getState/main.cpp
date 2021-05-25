@@ -98,13 +98,13 @@ bool visitBlock(uint64_t blockNum, void* data) {
             cout << state.Format(expContext().fmtMap["format"]) << endl;
 
         } else {
-            if (!opt->first)
+            if (!opt->firstOut)
                 cout << "," << endl;
             cout << "  ";
             indent();
             state.toJson(cout);
             unindent();
-            opt->first = false;
+            opt->firstOut = false;
         }
     }
 

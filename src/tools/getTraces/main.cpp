@@ -31,9 +31,9 @@ int main(int argc, const char* argv[]) {
                 CTraceArray traces;
                 getTracesByFilter(traces, f);
                 for (auto trace : traces) {
-                    cout << (!options.first ? ", " : "");
+                    cout << (!options.firstOut ? ", " : "");
                     cout << trace << endl;
-                    options.first = false;
+                    options.firstOut = false;
                 }
             }
         } else {
@@ -61,10 +61,10 @@ bool visitTransaction(CTransaction& trans, void* data) {
     if (opt->isRaw || opt->isVeryRaw) {
         string_q result;
         queryRawTrace(result, trans.getValueByName("hash"));
-        if (!isText && !opt->first)
+        if (!isText && !opt->firstOut)
             cout << ",";
         cout << result;
-        opt->first = false;
+        opt->firstOut = false;
         return true;
     }
 
@@ -77,7 +77,7 @@ bool visitTransaction(CTransaction& trans, void* data) {
             cout << trans.hash << "\t";
             cout << cnt << endl;
         } else {
-            if (!opt->first)
+            if (!opt->firstOut)
                 cout << ",";
             cout << "{ ";
             cout << "\"bn\": \"" << trans.blockNumber << "\", ";
@@ -85,7 +85,7 @@ bool visitTransaction(CTransaction& trans, void* data) {
             cout << "\"hash\": \"" << trans.hash << "\", ";
             cout << "\"count\": \"" << cnt << "\" }";
         }
-        opt->first = false;
+        opt->firstOut = false;
         return true;
     }
 
@@ -171,13 +171,13 @@ bool displayAsTrace(COptions* opt, const CTrace& trace) {
     if (isText) {
         cout << trim(trace.Format(expContext().fmtMap["format"]), '\t') << endl;
     } else {
-        if (!opt->first)
+        if (!opt->firstOut)
             cout << ",";
         cout << "  ";
         indent();
         trace.toJson(cout);
         unindent();
-        opt->first = false;
+        opt->firstOut = false;
     }
     return true;
 }

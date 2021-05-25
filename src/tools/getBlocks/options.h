@@ -36,7 +36,6 @@ class COptions : public CBlockOptions {
     uint64_t addrCounter;
     string_q filterType;
     timestamp_t secsFinal;
-    bool first;
 
     COptions(void);
     ~COptions(void);

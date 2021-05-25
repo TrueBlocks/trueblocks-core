@@ -6,17 +6,17 @@
 #include "options.h"
 
 //-----------------------------------------------------------------------
-bool receipts_Display(CTraverser* trav, void* data) {
-    COptions* opt = (COptions*)trav->options;
+bool receipts_Display(CTraverser* trav, void* data1) {
+    COptions* opt = (COptions*)data1;
 
     trav->nProcessed++;
-    if (opt->freshen)
+    if (opt->freshenOnly)
         return true;
 
     cout << ((isJson() && !opt->firstOut) ? ", " : "");
     cout << trav->trans.receipt;
     opt->firstOut = false;
 
-    prog_Log(trav, data);
+    prog_Log(trav, data1);
     return !shouldQuit();
 }

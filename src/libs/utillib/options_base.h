@@ -83,6 +83,8 @@ class COptionsBase {
     bool isVeryRaw;
     bool noHeader;
     bool mocked;
+    bool firstOut;
+    bool freshenOnly;
     string_q overrideStr;
     CStringArray crudCommands;
     bool isCrudCommand(void) const {

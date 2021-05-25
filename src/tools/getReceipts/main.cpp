@@ -49,10 +49,10 @@ bool visitTransaction(CTransaction& trans, void* data) {
     if (opt->isRaw || opt->isVeryRaw) {
         string_q result;
         queryRawReceipt(result, trans.getValueByName("hash"));
-        if (!isText && !opt->first)
+        if (!isText && !opt->firstOut)
             cout << ",";
         cout << result;
-        opt->first = false;
+        opt->firstOut = false;
         return true;
     }
 
@@ -69,13 +69,13 @@ bool visitTransaction(CTransaction& trans, void* data) {
         if (isText) {
             cout << trim(trans.receipt.Format(expContext().fmtMap["format"]), '\t') << endl;
         } else {
-            if (!opt->first)
+            if (!opt->firstOut)
                 cout << ",";
             cout << "  ";
             indent();
             trans.receipt.toJson(cout);
             unindent();
-            opt->first = false;
+            opt->firstOut = false;
         }
     }
     return true;

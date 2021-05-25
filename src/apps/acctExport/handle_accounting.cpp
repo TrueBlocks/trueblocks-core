@@ -7,11 +7,11 @@
 
 bool inputFilter(const string_q& input, const COptions* opt);
 //-----------------------------------------------------------------------
-bool acct_Display(CTraverser* trav, void* data) {
-    COptions* opt = (COptions*)trav->options;
+bool acct_Display(CTraverser* trav, void* data1) {
+    COptions* opt = (COptions*)data1;
 
     trav->nProcessed++;
-    if (opt->freshen)
+    if (opt->freshenOnly)
         return true;
 
     if (inputFilter(trav->trans.input, opt)) {
@@ -24,15 +24,13 @@ bool acct_Display(CTraverser* trav, void* data) {
         opt->firstOut = false;
     }
 
-    prog_Log(trav, data);
+    prog_Log(trav, data1);
     return !shouldQuit();
 }
 
 //-----------------------------------------------------------------------
-bool acct_Pre(CTraverser* trav, void* data) {
-    COptions* opt = (COptions*)trav->options;
-
-    opt->firstOut = true;
+bool acct_Pre(CTraverser* trav, void* data1) {
+    COptions* opt = (COptions*)data1;
 
     if (opt->apps.size() > 0 && opt->first_record != 0) {
         CReconciliation eth;
@@ -47,7 +45,7 @@ bool acct_Pre(CTraverser* trav, void* data) {
 bool inputFilter(const string_q& input, const COptions* opt) {
     if (opt->fourbytes.empty())
         return true;
-    if (opt->freshen)
+    if (opt->freshenOnly)
         return true;
     for (auto four : opt->fourbytes)
         if (startsWith(input, four))

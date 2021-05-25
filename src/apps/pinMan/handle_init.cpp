@@ -7,7 +7,7 @@
 
 //----------------------------------------------------------------
 bool COptions::handle_init() {
-    if (freshen) {
+    if (freshenOnly) {
         if (!pinlib_downloadManifest())
             return usage("Could not freshen manifest from smart contract");
     }

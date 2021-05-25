@@ -17,7 +17,7 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,is_customizable
 10330,apps,Accounts,export,acctExport,cache_traces,R,false,false,true,true,true,header,switch,<boolean>,write traces to the cache (see notes)
 10340,apps,Accounts,export,acctExport,skip_ddos,d,true,false,true,false,false,header,toggle,<boolean>,toggle skipping over 2016 dDos transactions ([{DEF}] by default)
 10350,apps,Accounts,export,acctExport,max_traces,m,250,false,true,false,false,header,flag,<uint64>,if --skip_ddos is on&#44; this many traces defines what a ddos transaction|is (default = [{DEF}])
-10380,apps,Accounts,export,acctExport,freshen,f,,false,false,false,false,header,switch,<boolean>,freshen but do not print the exported data
+10380,apps,Accounts,export,acctExport,freshen,f,,false,false,false,false,local,switch,<boolean>,freshen but do not print the exported data
 10395,apps,Accounts,export,acctExport,factory,y,false,false,true,true,false,header,switch,<boolean>,scan for contract creations from the given address(es) and report|address of those contracts
 10430,apps,Accounts,export,acctExport,emitter,,,false,false,true,true,header,switch,<boolean>,for log export only&#44; export only if one of the given export addresses emitted the event
 10431,apps,Accounts,export,acctExport,source,,,false,false,true,true,header,flag,list<addr>,for log export only&#44; export only one of these addresses emitted the event
@@ -179,13 +179,13 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,is_customizable
 10950,apps,Admin,pins,pinMan,list,l,,false,false,true,true,local,switch,<boolean>,list the index and bloom filter hashes from local manifest or pinning service
 10950,apps,Admin,pins,pinMan,init,i,,false,false,true,true,header,switch,<boolean>,initialize the local index by downloading bloom filters from the pinning service
 10930,apps,Admin,pins,pinMan,compare,c,,false,false,true,true,header,switch,<boolean>,report differences (if any) between the manifest and pinning service
-10970,apps,Admin,pins,pinMan,freshen,f,,false,false,true,true,header,switch,<boolean>,freshen the manifest from the hash found at the smart contract
+10970,apps,Admin,pins,pinMan,freshen,f,,false,false,true,true,local,switch,<boolean>,freshen the manifest from the hash found at the smart contract
 10980,apps,Admin,pins,pinMan,sleep,s,.25,false,false,false,false,header,flag,<double>,the number of seconds to sleep between requests during init (default [{DEF}])
 10950,apps,Admin,pins,pinMan,remote,r,,false,false,false,false,local,switch,<boolean>,applicable only to --list mode&#44; recover hash list from pinning service (local otherwise)
 10980,apps,Admin,pins,pinMan,,,,false,false,true,true,--,description,,Manage pinned index of appearances and associated bloom filters.
 10990,apps,Admin,pins,pinMan,,,,false,false,false,false,--,note,,One of --list&#44; --init&#44; --compare&#44; or --freshen is required.
 
-12020,tools,Other,quotes,getQuotes,freshen,f,,false,false,true,true,header,switch,<boolean>,Freshen price database (append new data)
+12020,tools,Other,quotes,getQuotes,freshen,f,,false,false,true,true,local,switch,<boolean>,Freshen price database (append new data)
 12040,tools,Other,quotes,getQuotes,period,p,,false,false,true,true,local,flag,enum[5|15|30|60|120*|240|1440|10080|hourly|daily|weekly],increment of display
 12060,tools,Other,quotes,getQuotes,pair,a,,false,false,true,true,local,flag,<string>,which price pair to freshen or list (see Poloniex)
 12060,tools,Other,quotes,getQuotes,feed,e,,false,false,true,true,header,flag,enum[poloniex*|maker|tellor],the feed for the price data

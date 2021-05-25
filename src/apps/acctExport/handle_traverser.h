@@ -9,34 +9,31 @@
 class COptions;
 class CTraverser;
 //-----------------------------------------------------------------------
-typedef bool (*TRAVERSERFUNC)(CTraverser* trav, void* data);
-typedef enum { TR_PROGRESS_CACHE = 1, TR_PROGRESS_NODE = 2 } TraverserLog;
+typedef bool (*TRAVERSERFUNC)(CTraverser* trav, void* data1);
 
 //-----------------------------------------------------------------------
-extern void start_Log(CTraverser* trav, void* data);
-extern void prog_Log(CTraverser* trav, void* data);
-extern void end_Log(CTraverser* trav, void* data);
-extern bool rangeFilter(CTraverser* trav, void* data);
-extern bool loadData(CTraverser* trav, void* data);
-extern bool pre_Func(CTraverser* trav, void* data);
-extern bool post_Func(CTraverser* trav, void* data);
-inline bool noopFunc(CTraverser* trav, void* data) {
+extern void start_Log(CTraverser* trav, void* data1);
+extern void prog_Log(CTraverser* trav, void* data1);
+extern void end_Log(CTraverser* trav, void* data1);
+extern bool rangeFilter(CTraverser* trav, void* data1);
+extern bool loadData(CTraverser* trav, void* data1);
+extern bool pre_Func(CTraverser* trav, void* data1);
+extern bool post_Func(CTraverser* trav, void* data1);
+inline bool noopFunc(CTraverser* trav, void* data1) {
     return true;
 }
 
 //-----------------------------------------------------------------------
 class CTraverser {
   public:
-    ostream& os;
-    string_q operation;
-    size_t index;
     bool logging;
+    size_t index;
     size_t nProcessed;
-    bool inCache;
-    const COptions* options = nullptr;
-    CTraverser(const COptions* opt, ostream& osIn, const string_q& o)
-        : os(osIn), operation(o), index(0), nProcessed(0), inCache(false), options(opt) {
+    string_q operation;
+    string_q readStatus;
+    CTraverser(ostream& osIn, const string_q& o) : index(0), nProcessed(0), operation(o) {
         logging = !isTestMode() || getEnvStr("FORCE_LOGGING") == "true";
+        readStatus = "Extracting";
     }
 
   public:
