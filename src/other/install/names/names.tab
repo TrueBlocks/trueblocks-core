@@ -160,6 +160,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x039b5649a59967e3e936d7471f9c3700100ee1ab	Kucoin Shares	KCS	On chain	6		false	false	false	true	true	false
 30-Contracts	0x039b739a1e7353878bfb2f2a4ec23502f4885baa	Maker: Oasis		EtherScan.io			false	false	false	true	false	false
 30-Contracts	0x03a99d9235732d94a300bf7013acb11020484bf1	Arbitrage Bot		0xTracker			false	false	false	true	false	false
+50-Tokens:ERC20	0x03ab458634910aad20ef5f1c8ee96f1d6ac54919	Rai Reflex Index	RAI	On chain	18		false	false	false	true	true	false
 30-Contracts:Humanity DAO	0x03b3e02a27d083032bfc5b801d7fe3deb560dc50	loganfeatures		https://www.humanitydao.org/humans			false	false	false	false	false	false
 31-Gitcoin Grants:Friends	0x03b45f0f660adcaa24fbacffd45e171464ec63a8	plur9		Gitcoin Website			false	false	false	false	false	false
 31-Gitcoin Grants:Friends	0x03b85b333c99ec60a6d540e4277d71d3a4c0975d	maneeshrao		Gitcoin Website			false	false	false	false	false	false
@@ -2626,7 +2627,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 81-Other	0x57d90b64a1a57749b0f932f1a3395792e12e7055	Elcoin		EtherScan.io			false	false	false	true	false	false
 50-Tokens:ERC20	0x57e299ee8f1c5a92a9ed54f934acc7ff5f159699	RECORD	RCD	On chain	18		false	false	false	true	true	false
 31-Gitcoin Grants:Grant	0x57ea12a3a8e441f5fe7b1f3af1121097b7d3b6a8	Grant 0821 Umbra: Privacy Preserving Stealth Payments		https://gitcoin.co/grants/821/umbra-privacy-preserving-stealth-payments			false	false	false	false	false	false
-34-ENS	0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85	ENS: Base Registrar Implementation		EtherScan.io			false	false	false	true	false	false
+50-Tokens:ERC721	0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85	ENS: Base Registrar Implementation					false	false	false	true	false	false
 30-Contracts:Kyber Network	0x57f8160e1c59d16c01bbe181fd94db4e56b60495	Kyber Weth Reserve		TrueBlocks.io			false	false	false	true	false	false
 32-Kickback:Friends	0x57f9ef887d17985357db615f3736d697391ae68e	greg		https://kickback.events/			false	false	false	false	false	false
 81-Other	0x580114cbeb41c62f55ff55ca9e6f028ceb92ae91	dEthereumlotteryNet_id218_cnt9_2mo		Ether Camp			false	false	false	true	false	false
@@ -3964,6 +3965,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 81-Other	0x86018025a553d3e88b38dc5409e4b52edeb9ab83	Wallet_id141_cnt13_4mo		Ether Camp			false	false	false	true	false	false
 50-Tokens:ERC20	0x8606a8f28e1e2fd50b9074d65c01548b1f040b32	Cryptrust	CTRT	On chain	8	Cryptrust is a Decentralized Trust-Based social platform for the cryptocurrency ecosystem.	false	false	false	true	true	false
 30-Contracts	0x860bd2dba9cd475a61e6d1b45e16c365f6d78f66	Arbitrage Bot		0xTracker			false	false	false	true	false	false
+50-Tokens:ERC20	0x8619c9194bf7212bcab69b8d58ad6ab872decd5c	betbeb	BEB	On chain	18		false	false	false	true	true	false
 31-Gitcoin Grants:Friends	0x8628d73d3f950abde99739ef34b6cfa10394f579	n3r01n		Gitcoin Website			false	false	false	false	false	false
 60-Airdrops	0x862cb5b6eeaafb26ebb137e0c3c5d7728800439a	OMG Airdrop	OMG	TrueBlocks.io			false	false	false	true	true	false
 50-Tokens:ERC20	0x862da0a691bb0b74038377295f8ff523d0493eb4	MINDOL	MIN	On chain	18		false	false	false	true	true	false
