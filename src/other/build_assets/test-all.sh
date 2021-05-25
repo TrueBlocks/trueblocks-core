@@ -30,7 +30,7 @@ then
     # do nothing
     echo ""
 else
-    export DEST_FOLDER="$HOME/.local/share/TrueBlocks/names"
+    export DEST_FOLDER="$HOME/.local/share/trueblocks/names"
 fi
 
 cp -f "$NAMES_SOURCE" "$DEST_FOLDER"
