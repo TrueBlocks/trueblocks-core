@@ -1018,6 +1018,15 @@
       "description": ""
     },
     {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x03ab458634910aad20ef5f1c8ee96f1d6ac54919",
+      "name": "Rai Reflex Index",
+      "symbol": "RAI",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
       "tags": "31-Gitcoin Grants:Friends",
       "address": "0x03b45f0f660adcaa24fbacffd45e171464ec63a8",
       "name": "Name 0x03b45f0f",
@@ -1796,15 +1805,6 @@
       "address": "0x075b1bb99792c9e1041ba13afef80c91a1e70fb3",
       "name": "Curve.fi renBTC/wBTC/sBTC",
       "symbol": "crvRenWSBTC",
-      "source": "On chain",
-      "decimals": 18,
-      "description": ""
-    },
-    {
-      "tags": "50-Tokens:ERC20",
-      "address": "0x076641af1b8f06b7f8c92587156143c109002cbe",
-      "name": "SoPay",
-      "symbol": "SOP",
       "source": "On chain",
       "decimals": 18,
       "description": ""

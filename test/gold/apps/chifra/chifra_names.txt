@@ -33,6 +33,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x036407f23d5e1c1486f7488332cf54bf06e5f09f	Alphabit	ABC	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x0371a82e4a9d0a4312f3ee2ac9c6958512891372	Student Coin	STU	On chain	18	Student jobs marketplace.	false	false	false	true	true	false
 50-Tokens:ERC20	0x039b5649a59967e3e936d7471f9c3700100ee1ab	Kucoin Shares	KCS	On chain	6		false	false	false	true	true	false
+50-Tokens:ERC20	0x03ab458634910aad20ef5f1c8ee96f1d6ac54919	Rai Reflex Index	RAI	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x03c780cd554598592b97b7256ddaad759945b125	BTRN	BTRN	On chain	18	Biotron is a fully transparent personal data analytics platform on blockchain.	false	false	false	true	true	false
 50-Tokens:ERC20	0x049399a6b048d52971f7d122ae21a1532722285f	Fire Lotto	FLOT	On chain	18	Decentralized lottery platform based on the Ethereum blockchain and managed by smart contracts without any human intervention.	false	false	false	true	true	false
 50-Tokens:ERC20	0x04a020325024f130988782bd5276e53595e8d16e	Herbalist Token	HERB	On chain	8		false	false	false	true	true	false
@@ -204,4 +205,3 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x1fc52f1abade452dd4674477d4711951700b3d27	NOKU	NOKU	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x1fe70be734e473e5721ea57c8b5b01e6caa52686	RNTB Token	RNTB	On chain	18	BitRent is the blockchain platform meant to attract commercial and residential property investments at an early stage of construction in order to gain maximum profit by selling and renting out the acquired property	false	false	false	true	true	false
 50-Tokens:ERC20	0x2008e3057bd734e10ad13c9eae45ff132abc1722	Zebi Coin	ZCO	On chain	8	Blockchaining India‚Äö√Ñ√¥s Big Data	false	false	false	true	true	false
-50-Tokens:ERC20	0x20e94867794dba030ee287f1406e100d03c84cd3	DEW	DEW	On chain	18	DEW is a Decentralized Exchange and also a gateway to the global blockchain securities market, through an almighty account, you can trade Blockchain Assets, Stocks, Futures, Forex, ETF, Bet Contract etc.	false	false	false	true	true	false

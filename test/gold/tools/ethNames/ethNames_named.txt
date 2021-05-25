@@ -113,6 +113,7 @@ ethNames --named --fmt txt --no_header
 50-Tokens:ERC20	0x039b5649a59967e3e936d7471f9c3700100ee1ab	Kucoin Shares	KCS		6
 30-Contracts	0x039b739a1e7353878bfb2f2a4ec23502f4885baa	Maker: Oasis
 30-Contracts	0x03a99d9235732d94a300bf7013acb11020484bf1	Arbitrage Bot
+50-Tokens:ERC20	0x03ab458634910aad20ef5f1c8ee96f1d6ac54919	Rai Reflex Index	RAI		18
 31-Gitcoin Grants:Friends	0x03b45f0f660adcaa24fbacffd45e171464ec63a8	Name 0x03b45f0f
 31-Gitcoin Grants:Friends	0x03b85b333c99ec60a6d540e4277d71d3a4c0975d	Name 0x03b85b33
 80-Malicious:Shanghai	0x03b904c8b912194464ae97eaa0381e5518446d25	Possibly Malicious 0x03b
@@ -200,4 +201,3 @@ ethNames --named --fmt txt --no_header
 31-Gitcoin Grants:Friends	0x073c841e832b7cc2e75d0fb1f8a98dca355bf485	Name 0x073c841e
 50-Tokens:ERC20	0x0743392132d1a03a902c477e5a176f256ba3220c	Coimatic 3.0	CTIC3		18
 55-Defi	0x075b1bb99792c9e1041ba13afef80c91a1e70fb3	Curve.fi renBTC/wBTC/sBTC	crvRenWSBTC		18
-50-Tokens:ERC20	0x076641af1b8f06b7f8c92587156143c109002cbe	SoPay	SOP		18
