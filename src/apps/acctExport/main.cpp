@@ -174,6 +174,7 @@ bool loadTx_Func(CTraverser* trav, void* data) {
         trav->readStatus = "Reading";
 
     } else {
+        trav->readStatus = "Extracting";
         dirty = true;
         if (trav->app->blk == 0) {
             address_t addr = opt->prefundAddrMap[trav->app->txid];
