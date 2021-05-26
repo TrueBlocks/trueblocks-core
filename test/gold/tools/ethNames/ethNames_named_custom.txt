@@ -75,6 +75,7 @@ ethNames --named --custom --fmt csv
 "31-Gitcoin Grants:Grant","0x014ffcf34d8515535b99d6aef654258c237168b6","Grant 1850 Fireth","","",""
 "30-Contracts","0x015531a044bae03bf4dab1ceabfc232a969b7175","GU: Rare Pack","","",""
 "31-Gitcoin Grants:Grant","0x015bf68ef11bd55e43a119b5752c4b3becae7f24","Grant 0627 Veridex","","",""
+"30-Contracts","0x015c7c7a7d65bbdb117c573007219107bd7486f9","Infura Transactions Contract","","",""
 "31-Gitcoin Grants:Friends","0x015f9e50dc7b2a41ab8cc0b2b58763287dd3dd81","Name 0x015f9e50","","",""
 "50-Tokens:ERC20","0x016396044709eb3edc69c44f4d5fa6996917e4e8","KingXChain","KXC","","18"
 "50-Tokens:ERC20","0x0168703872fa06741ecaa9dff7803168e83f7ae0","MIRO Token","MIRO","","8"
@@ -201,4 +202,3 @@ ethNames --named --custom --fmt csv
 "60-Airdrops","0x070f9d09370fd7ae3a583fc22a4e9f50ae1bdc78","RZM Airdrop Sender","","",""
 "31-Gitcoin Grants:Grant","0x07169d3d71dc9c1c7c1656b3436a984d50619860","Grant 1556 Apy.vision","","",""
 "31-Gitcoin Grants:Grant","0x0730fd7d15fa9a40a6c7b2bbb4b8ce9ee6e6d08b","Grant 0141 Metamoneymarket","","",""
-"80-Malicious:DaoDrain","0x0737a6b837f97f46ebade41b9bc3e1c509c85c53","DAO Drain 059","","",""

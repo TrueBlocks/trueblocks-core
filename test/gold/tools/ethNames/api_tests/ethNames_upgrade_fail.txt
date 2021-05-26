@@ -631,6 +631,15 @@
       "description": "https://dex.verisafe.io/"
     },
     {
+      "tags": "30-Contracts",
+      "address": "0x015c7c7a7d65bbdb117c573007219107bd7486f9",
+      "name": "Infura Transactions Contract",
+      "symbol": "",
+      "source": "Infura.io",
+      "decimals": 0,
+      "description": ""
+    },
+    {
       "tags": "31-Gitcoin Grants:Friends",
       "address": "0x015f9e50dc7b2a41ab8cc0b2b58763287dd3dd81",
       "name": "Name 0x015f9e50",
@@ -1799,15 +1808,6 @@
       "source": "On chain",
       "decimals": 18,
       "description": "A global decentralized blockchain deal and discount marketplace."
-    },
-    {
-      "tags": "55-Defi",
-      "address": "0x075b1bb99792c9e1041ba13afef80c91a1e70fb3",
-      "name": "Curve.fi renBTC/wBTC/sBTC",
-      "symbol": "crvRenWSBTC",
-      "source": "On chain",
-      "decimals": 18,
-      "description": ""
     }
   ]
 }

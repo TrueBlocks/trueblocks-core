@@ -71,6 +71,7 @@ tags	address	name	symbol	decimals
 31-Gitcoin Grants:Grant	0x014ffcf34d8515535b99d6aef654258c237168b6	Grant 1850 Fireth
 30-Contracts	0x015531a044bae03bf4dab1ceabfc232a969b7175	GU: Rare Pack
 31-Gitcoin Grants:Grant	0x015bf68ef11bd55e43a119b5752c4b3becae7f24	Grant 0627 Veridex
+30-Contracts	0x015c7c7a7d65bbdb117c573007219107bd7486f9	Infura Transactions Contract
 31-Gitcoin Grants:Friends	0x015f9e50dc7b2a41ab8cc0b2b58763287dd3dd81	Name 0x015f9e50
 50-Tokens:ERC20	0x016396044709eb3edc69c44f4d5fa6996917e4e8	KingXChain	KXC		18
 50-Tokens:ERC20	0x0168703872fa06741ecaa9dff7803168e83f7ae0	MIRO Token	MIRO		8
@@ -201,4 +202,3 @@ tags	address	name	symbol	decimals
 31-Gitcoin Grants:Grant	0x073ab1c0cad3677cde9bdb0cdeedc2085c029579	Grant 0701 Virality: Your Social Accountability App
 31-Gitcoin Grants:Friends	0x073c841e832b7cc2e75d0fb1f8a98dca355bf485	Name 0x073c841e
 50-Tokens:ERC20	0x0743392132d1a03a902c477e5a176f256ba3220c	Coimatic 3.0	CTIC3		18
-55-Defi	0x075b1bb99792c9e1041ba13afef80c91a1e70fb3	Curve.fi renBTC/wBTC/sBTC	crvRenWSBTC		18

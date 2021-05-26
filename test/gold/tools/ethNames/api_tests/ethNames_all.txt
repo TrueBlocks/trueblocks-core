@@ -667,6 +667,15 @@
       "description": "https://dex.verisafe.io/"
     },
     {
+      "tags": "30-Contracts",
+      "address": "0x015c7c7a7d65bbdb117c573007219107bd7486f9",
+      "name": "Infura Transactions Contract",
+      "symbol": "",
+      "source": "Infura.io",
+      "decimals": 0,
+      "description": ""
+    },
+    {
       "tags": "31-Gitcoin Grants:Friends",
       "address": "0x015f9e50dc7b2a41ab8cc0b2b58763287dd3dd81",
       "name": "Name 0x015f9e50",
@@ -1797,15 +1806,6 @@
       "name": "Grant 0141 Metamoneymarket",
       "symbol": "",
       "source": "https://gitcoin.co/grants/141/metamoneymarket",
-      "decimals": 0,
-      "description": ""
-    },
-    {
-      "tags": "80-Malicious:DaoDrain",
-      "address": "0x0737a6b837f97f46ebade41b9bc3e1c509c85c53",
-      "name": "DAO Drain 059",
-      "symbol": "",
-      "source": "GethSource Ether Camp",
       "decimals": 0,
       "description": ""
     }

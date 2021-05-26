@@ -168,8 +168,8 @@ bool loadTx_Func(CTraverser* trav, void* data) {
 
     bool dirty = false;
     string_q txFilename = getBinaryCacheFilename(CT_TXS, trav->app->blk, trav->app->txid);
-    bool inCache = trav->app->blk != 0 && fileExists(txFilename);
-    if (inCache) {
+    // bool inCache = trav->app->blk != 0 && fileExists(txFilename);
+    if (false) {  // inCache) {
         readTransFromBinary(trav->trans, txFilename);
         trav->readStatus = "Reading";
 
@@ -208,6 +208,7 @@ bool loadTx_Func(CTraverser* trav, void* data) {
                    (opt->skip_ddos && excludeTrace(&trav->trans, opt->max_traces)));
     }
 
+    trav->trans.articulatedTx.name = "";
     dirty |= opt->articulateAll(trav->trans);
 
     // TODO(tjayrush): This could be in post_Func so that _Display can also make it dirty
