@@ -1916,6 +1916,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 31-Gitcoin Grants:Grant	0x40e3780e5bec58629ac4c5dc3bca3df2d7fd0c35	Grant 0412 Ethereum Classic Development Team		https://gitcoin.co/grants/412/ethereum-classic-development-team		https://EthereumCore.org	false	false	false	false	false	false
 90-DevCon2:Individual	0x40eae18771c0c33cf2523793f699b6e28c4e979f	Kevin James Allan		DevCon2 Token Contract			false	false	false	false	false	false
 30-Contracts:Humanity DAO	0x40f353f412fd546d572e129c4c7477cb380b5c20	hapsavage		https://www.humanitydao.org/humans			false	false	false	false	false	false
+31-Gitcoin Grants:Core	0x4110d47a5d67ecbdd21e5f97c07db16189670290	Gitcoin Governance Deployer		Gitcoin.co			false	false	false	false	false	false
 36-Balancer	0x41284a88d970d3552a26fae680692ed40b34010c	Balancer Pool Token 0x4128	BPT	On chain	18		false	false	false	true	true	false
 31-Gitcoin Grants:Grant	0x413db04a4d7207cae7a7686639ce68caac137bae	Grant 1692 Dappchaser		https://gitcoin.co/grants/1692/dappchaser			false	false	false	false	false	false
 31-Gitcoin Grants:Grant	0x413ed157a79f9197e2fcc6af89ef89e7da00e5f2	Grant 0674 Pixelart Crypto Portfolio		https://gitcoin.co/grants/674/pixelart-crypto-portfolio		https://twitter.com/Bighands_dev	false	false	false	false	false	false
@@ -6547,6 +6548,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 31-Gitcoin Grants:Grant	0xdff2507a06017b5e27d7615a4c7555c3d8ee05b3	Grant 0493 No Kid Hungry		https://gitcoin.co/grants/493/no-kid-hungry			false	false	false	false	false	false
 30-Contracts	0xdff2aa5689fcbc7f479d8c84ac857563798436dd	1inch Exchange		0xTracker			false	false	false	true	false	false
 30-Contracts:Humanity DAO	0xe0050b0870dcbfd288123bb8ca406ba94dd4d3d5	idlexir		https://www.humanitydao.org/humans			false	false	false	false	false	false
+31-Gitcoin Grants:Core	0xe00abc6686ee8fa5c45161a5fa75fb99a1026b96	Gitcoin Governance Minter		Gitcoin.co			false	false	false	false	false	false
 80-Malicious:Shanghai	0xe00c36815fec7ff523cc6442c54e1f9b21ebfc1f	Possibly Malicious 0xe00		TrueBlocks.io			false	false	false	true	false	false
 31-Gitcoin Grants:Friends	0xe0144fa05a0d32b5b1de10ccee7211616b3e3ef0	wip-abramson		Gitcoin Website			false	false	false	false	false	false
 30-Contracts:Humanity DAO	0xe03942190041b75f27adf3467aa7415832f44548	plor		https://www.humanitydao.org/humans			false	false	false	false	false	false
