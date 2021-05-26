@@ -151,9 +151,12 @@ endforeach( FILE )
 #---------------------------------------------------------------
 # Copy the ipfs hash files (if they don't exist -- user may be building them)
 #---------------------------------------------------------------
-message(STATUS "Seeding initial manifest ${DEST_PATH}/manifest/")
-file(COPY "${SOURCE_PATH}/manifest/empty-manifest.json" DESTINATION "${DEST_PATH}/manifest/" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
-file(COPY "${SOURCE_PATH}/manifest/manifest.txt" DESTINATION "${DEST_PATH}/manifest/" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
+set(MANIFEST "${DEST_PATH}/manifest/manifest.txt")
+if (NOT EXISTS "${MANIFEST}")
+	message(STATUS "Seeding initial manifest ${DEST_PATH}/manifest/")
+	file(COPY "${SOURCE_PATH}/manifest/empty-manifest.json" DESTINATION "${DEST_PATH}/manifest/" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
+	file(COPY "${SOURCE_PATH}/manifest/manifest.txt" DESTINATION "${DEST_PATH}/manifest/" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
+endif()
 
 #---------------------------------------------------------------
 # Copy the prices files

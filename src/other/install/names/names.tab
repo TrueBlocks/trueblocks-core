@@ -92,6 +92,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 31-Gitcoin Grants:Grant	0x014ffcf34d8515535b99d6aef654258c237168b6	Grant 1850 Fireth		https://gitcoin.co/grants/1850/fireth			false	false	false	false	false	false
 30-Contracts	0x015531a044bae03bf4dab1ceabfc232a969b7175	GU: Rare Pack		EtherScan.io			false	false	false	true	false	false
 31-Gitcoin Grants:Grant	0x015bf68ef11bd55e43a119b5752c4b3becae7f24	Grant 0627 Veridex		https://gitcoin.co/grants/627/veridex		https://dex.verisafe.io/	false	false	false	false	false	false
+30-Contracts	0x015c7c7a7d65bbdb117c573007219107bd7486f9	Infura Transactions Contract		Infura.io			false	false	false	true	false	false
 31-Gitcoin Grants:Friends	0x015f9e50dc7b2a41ab8cc0b2b58763287dd3dd81	vgshenoy		Gitcoin Website			false	false	false	false	false	false
 50-Tokens:ERC20	0x016396044709eb3edc69c44f4d5fa6996917e4e8	KingXChain	KXC	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x0168703872fa06741ecaa9dff7803168e83f7ae0	MIRO Token	MIRO	On chain	8		false	false	false	true	true	false
@@ -6487,6 +6488,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 31-Gitcoin Grants:Friends	0xde251fddd5e0994515e3d133e1808dbf0077a500	cinghio		Gitcoin Website			false	false	false	false	false	false
 50-Tokens:ERC20	0xde2f7766c8bf14ca67193128535e5c7454f8387c	Metadium	META	On chain	18	Metadium is the next-generation identiy protocol layer of the internet, powered by blockchain with trustless trust.	false	false	false	true	true	false
 30-Contracts:Humanity DAO	0xde2f8e3c06c42bfe1c4f46741a5089314532b30d	katakoto		https://www.humanitydao.org/humans			false	false	false	false	false	false
+31-Gitcoin Grants:Core	0xde30da39c46104798bb5aa3fe8b9e0e1f348163f	Gitcoin Governance Token	GTC	gitcoin.co	18		false	false	false	true	true	false
 30-Contracts	0xde3a93028f2283cc28756b3674bd657eafb992f4	TokenManager CS		TrueBlocks.io			false	false	false	true	false	false
 36-Chainlink	0xde54467873c3bcaa76421061036053e371721708	Chainlink USDC-ETH Aggregator		EtherScan.io			false	false	false	true	false	false
 81-Other	0xde5ebd0b8879b0a42b23b37e4d76a5e21a0bef4b	Blockchain2Email		EtherScan.io			false	false	false	true	false	false
