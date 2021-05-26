@@ -107,12 +107,12 @@
       },
       "articulatedTx": {
         "name": "donate",
-        "stateMutability": "nonpayable",
+        "stateMutability": "payable",
         "inputs": {
-          "donations": "0x0000000000000000000000000000000000000020"
+          "_donations": "[{\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"4750000000000000000\", \"dest\":\"0xa735cf11ed1228feb7c7bb18673a868455ffb16f\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"250000000000000000\", \"dest\":\"0x00de4b13153673bcae2616b67bf822500d325fc3\"}]"
         }
       },
-      "compressedTx": "donate ( donations: 0x0000000000000000000000000000000000000020 )",
+      "compressedTx": "donate ( _donations: [{\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"4750000000000000000\", \"dest\":\"0xa735cf11ed1228feb7c7bb18673a868455ffb16f\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"250000000000000000\", \"dest\":\"0x00de4b13153673bcae2616b67bf822500d325fc3\"}] )",
       "gasCost": 1922570000000000,
       "gasUsed": 83590,
       "date": "2020-06-16 21:50:17 UTC",

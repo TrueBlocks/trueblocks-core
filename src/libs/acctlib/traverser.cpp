@@ -33,6 +33,7 @@ bool forEveryAppearance(const CTraverserArray& traversers, const CAppearanceArra
         // For each appearance...
         for (trav.index = 0; trav.index < apps.size() && !shouldQuit(); trav.index++) {
             trav.app = &apps[trav.index];
+            trav.trans = CTransaction();  // reset
             bool passedFilter = !trav.filterFunc || (*trav.filterFunc)(&trav, data);
             if (passedFilter) {
                 if (trav.displayFunc) {

@@ -433,12 +433,14 @@ bool CAbi::loadAbiFromFile(const string_q& fileName) {
     LOG_TEST("loadAbiFromFile", dispName(fileName));
 
     if (loadAbiFromString(asciiFileToString(fileName))) {
-        for (auto& interface : interfaces)
-            if (interface.abi_source.empty()) {
-                string_q str = substitute(substitute(fileName, getCachePath("abis/"), ""), configPath("abis/"), "");
-                nextTokenClear(str, '/');
-                interface.abi_source = str;
-            }
+        if (interfaces.size() && interfaces[0].abi_source.empty()) {
+            for (auto& interface : interfaces)
+                if (interface.abi_source.empty()) {
+                    string_q str = substitute(substitute(fileName, getCachePath("abis/"), ""), configPath("abis/"), "");
+                    nextTokenClear(str, '/');
+                    interface.abi_source = str;
+                }
+        }
         sort(interfaces.begin(), interfaces.end(), sortByFuncName);
         sourcesMap[fileName] = true;
         return true;

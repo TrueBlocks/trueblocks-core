@@ -5241,10 +5241,10 @@
     {
       "name": "donate",
       "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "donate((address)",
+      "stateMutability": "payable",
+      "signature": "donate((address,uint256,address)[])",
       "encoding": "0x9120491c",
-      "input_names": "donations,",
+      "input_names": "_donations,",
       "output_names": ""
     },
     {
@@ -8601,7 +8601,7 @@
       "stateMutability": "nonpayable",
       "signature": "mint(address,uint256)",
       "encoding": "0x40c10f19",
-      "input_names": "recipient,amount,",
+      "input_names": "to,tokenId,",
       "output_names": ""
     },
     {
@@ -9363,11 +9363,11 @@
     {
       "name": "owner",
       "type": "function",
-      "stateMutability": "nonpayable",
+      "stateMutability": "view",
       "signature": "owner()",
       "encoding": "0x8da5cb5b",
       "input_names": "",
-      "output_names": "ret_0,"
+      "output_names": "val_0,"
     },
     {
       "name": "ownerOf",
@@ -9426,11 +9426,11 @@
     {
       "name": "paused",
       "type": "function",
-      "stateMutability": "nonpayable",
+      "stateMutability": "view",
       "signature": "paused()",
       "encoding": "0x5c975abb",
       "input_names": "",
-      "output_names": "ret_0,"
+      "output_names": "val_0,"
     },
     {
       "name": "pay",
@@ -14113,6 +14113,15 @@
       "output_names": ""
     },
     {
+      "name": "withdrawEther",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "withdrawEther(address)",
+      "encoding": "0xaf933b57",
+      "input_names": "_dest,",
+      "output_names": ""
+    },
+    {
       "name": "withdrawFromCompoundingStreamInternal",
       "type": "function",
       "stateMutability": "nonpayable",
@@ -14182,6 +14191,15 @@
       "signature": "withdrawTo(address,address,uint256)",
       "encoding": "0xc3b35a7e",
       "input_names": "_token,_to,_quantity,",
+      "output_names": ""
+    },
+    {
+      "name": "withdrawToken",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "withdrawToken(address,address)",
+      "encoding": "0x3aeac4e1",
+      "input_names": "_tokenAddress,_dest,",
       "output_names": ""
     },
     {
@@ -14794,6 +14812,15 @@
       "signature": "DomainTransfersLocked()",
       "encoding": "0xd68bbea4b8d77ea0826a260170e3b50080b57c9ed7420ef5920b1a58e613e179",
       "input_names": "",
+      "output_names": ""
+    },
+    {
+      "name": "DonationSent",
+      "type": "event",
+      "stateMutability": "nonpayable",
+      "signature": "DonationSent(address,uint256,address,address)",
+      "encoding": "0x3bb7428b25f9bdad9bd2faa4c6a7a9e5d5882657e96c1d24cc41c1d6c1910a98",
+      "input_names": "token,amount,dest,donor,",
       "output_names": ""
     },
     {
@@ -16216,6 +16243,15 @@
       "signature": "TokenWithdraw(address,uint256,address,uint256)",
       "encoding": "0xffdaa1b8f229c4f9a0c79b712224a2ad8d3aa3c483c23a125f4b9c179870938d",
       "input_names": "from,value,token,amount,",
+      "output_names": ""
+    },
+    {
+      "name": "TokenWithdrawn",
+      "type": "event",
+      "stateMutability": "nonpayable",
+      "signature": "TokenWithdrawn(address,uint256,address)",
+      "encoding": "0xa0524ee0fd8662d6c046d199da2a6d3dc49445182cec055873a5bb9c2843c8e0",
+      "input_names": "token,amount,dest,",
       "output_names": ""
     },
     {

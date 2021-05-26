@@ -45,6 +45,7 @@
           "transactionIndex": 9,
           "timestamp": 1477346733,
           "asset": "WEI",
+          "decimals": 18,
           "begBal": "10168138615764744464",
           "begBalDiff": "",
           "amountIn": "",
@@ -119,20 +120,21 @@
       "articulatedTx": {
         "name": "transfer",
         "inputs": {
-          "_to": "0xfd6c5ac853391486d25ddd5cefb1f7040ee31c2c",
-          "_value": "9170"
+          "to": "0xfd6c5ac853391486d25ddd5cefb1f7040ee31c2c",
+          "value": "9170"
         },
         "outputs": {
           "success": ""
         }
       },
-      "compressedTx": "transfer ( _to: 0xfd6c5ac853391486d25ddd5cefb1f7040ee31c2c, _value: 9170 )",
+      "compressedTx": "transfer ( to: 0xfd6c5ac853391486d25ddd5cefb1f7040ee31c2c, value: 9170 )",
       "statements": [
         {
           "blockNumber": 2570952,
           "transactionIndex": 2,
           "timestamp": 1478352859,
           "asset": "WEI",
+          "decimals": 18,
           "begBal": "166106035924744464",
           "begBalDiff": "",
           "amountIn": "",
@@ -159,6 +161,7 @@
           "transactionIndex": 2,
           "timestamp": 1478352859,
           "asset": "SNGLS",
+          "decimals": 18,
           "begBal": "",
           "begBalDiff": "",
           "amountIn": "9170",
@@ -233,20 +236,21 @@
       "articulatedTx": {
         "name": "transfer",
         "inputs": {
-          "_to": "0xfd6c5ac853391486d25ddd5cefb1f7040ee31c2c",
-          "_value": "100000000"
+          "to": "0xfd6c5ac853391486d25ddd5cefb1f7040ee31c2c",
+          "value": "100000000"
         },
         "outputs": {
           "success": ""
         }
       },
-      "compressedTx": "transfer ( _to: 0xfd6c5ac853391486d25ddd5cefb1f7040ee31c2c, _value: 100000000 )",
+      "compressedTx": "transfer ( to: 0xfd6c5ac853391486d25ddd5cefb1f7040ee31c2c, value: 100000000 )",
       "statements": [
         {
           "blockNumber": 2607559,
           "transactionIndex": 1,
           "timestamp": 1478873387,
           "asset": "WEI",
+          "decimals": 18,
           "begBal": "166106035924744464",
           "begBalDiff": "",
           "amountIn": "",
@@ -273,6 +277,7 @@
           "transactionIndex": 1,
           "timestamp": 1478873387,
           "asset": "Basi",
+          "decimals": 18,
           "begBal": "",
           "begBalDiff": "",
           "amountIn": "100000000",
@@ -347,21 +352,22 @@
       "articulatedTx": {
         "name": "transferFrom",
         "inputs": {
-          "_from": "0x0015f3c39221b20016cebdbf8b19eb5acedca901",
-          "_to": "0xfd6c5ac853391486d25ddd5cefb1f7040ee31c2c",
-          "_value": "1"
+          "from": "0x0015f3c39221b20016cebdbf8b19eb5acedca901",
+          "to": "0xfd6c5ac853391486d25ddd5cefb1f7040ee31c2c",
+          "value": "1"
         },
         "outputs": {
           "success": ""
         }
       },
-      "compressedTx": "transferFrom ( _from: 0x0015f3c39221b20016cebdbf8b19eb5acedca901, _to: 0xfd6c5ac853391486d25ddd5cefb1f7040ee31c2c, _value: 1 )",
+      "compressedTx": "transferFrom ( from: 0x0015f3c39221b20016cebdbf8b19eb5acedca901, to: 0xfd6c5ac853391486d25ddd5cefb1f7040ee31c2c, value: 1 )",
       "statements": [
         {
           "blockNumber": 2941572,
           "transactionIndex": 62,
           "timestamp": 1483642501,
           "asset": "WEI",
+          "decimals": 18,
           "begBal": "166106035924744464",
           "begBalDiff": "",
           "amountIn": "",
@@ -388,6 +394,7 @@
           "transactionIndex": 62,
           "timestamp": 1483642501,
           "asset": "HKG",
+          "decimals": 3,
           "begBal": "",
           "begBalDiff": "",
           "amountIn": "1",
@@ -462,20 +469,21 @@
       "articulatedTx": {
         "name": "transfer",
         "inputs": {
-          "_to": "0xfd6c5ac853391486d25ddd5cefb1f7040ee31c2c",
-          "_value": "2000000"
+          "to": "0xfd6c5ac853391486d25ddd5cefb1f7040ee31c2c",
+          "value": "2000000"
         },
         "outputs": {
           "success": ""
         }
       },
-      "compressedTx": "transfer ( _to: 0xfd6c5ac853391486d25ddd5cefb1f7040ee31c2c, _value: 2000000 )",
+      "compressedTx": "transfer ( to: 0xfd6c5ac853391486d25ddd5cefb1f7040ee31c2c, value: 2000000 )",
       "statements": [
         {
           "blockNumber": 2957898,
           "transactionIndex": 40,
           "timestamp": 1483875615,
           "asset": "WEI",
+          "decimals": 18,
           "begBal": "166106035924744464",
           "begBalDiff": "",
           "amountIn": "",
@@ -502,6 +510,7 @@
           "transactionIndex": 40,
           "timestamp": 1483875615,
           "asset": "HKG",
+          "decimals": 3,
           "begBal": "",
           "begBalDiff": "",
           "amountIn": "2000000",
@@ -576,20 +585,21 @@
       "articulatedTx": {
         "name": "transfer",
         "inputs": {
-          "_to": "0xfd6c5ac853391486d25ddd5cefb1f7040ee31c2c",
-          "_value": "2000000"
+          "to": "0xfd6c5ac853391486d25ddd5cefb1f7040ee31c2c",
+          "value": "2000000"
         },
         "outputs": {
           "success": ""
         }
       },
-      "compressedTx": "transfer ( _to: 0xfd6c5ac853391486d25ddd5cefb1f7040ee31c2c, _value: 2000000 )",
+      "compressedTx": "transfer ( to: 0xfd6c5ac853391486d25ddd5cefb1f7040ee31c2c, value: 2000000 )",
       "statements": [
         {
           "blockNumber": 2959714,
           "transactionIndex": 1,
           "timestamp": 1483900604,
           "asset": "WEI",
+          "decimals": 18,
           "begBal": "166106035924744464",
           "begBalDiff": "",
           "amountIn": "",
@@ -616,6 +626,7 @@
           "transactionIndex": 1,
           "timestamp": 1483900604,
           "asset": "HKG",
+          "decimals": 3,
           "begBal": "",
           "begBalDiff": "",
           "amountIn": "2000000",
@@ -690,20 +701,21 @@
       "articulatedTx": {
         "name": "transfer",
         "inputs": {
-          "_to": "0xfd6c5ac853391486d25ddd5cefb1f7040ee31c2c",
-          "_value": "2000000"
+          "to": "0xfd6c5ac853391486d25ddd5cefb1f7040ee31c2c",
+          "value": "2000000"
         },
         "outputs": {
           "success": ""
         }
       },
-      "compressedTx": "transfer ( _to: 0xfd6c5ac853391486d25ddd5cefb1f7040ee31c2c, _value: 2000000 )",
+      "compressedTx": "transfer ( to: 0xfd6c5ac853391486d25ddd5cefb1f7040ee31c2c, value: 2000000 )",
       "statements": [
         {
           "blockNumber": 2964866,
           "transactionIndex": 2,
           "timestamp": 1483974670,
           "asset": "WEI",
+          "decimals": 18,
           "begBal": "166106035924744464",
           "begBalDiff": "",
           "amountIn": "",
@@ -730,6 +742,7 @@
           "transactionIndex": 2,
           "timestamp": 1483974670,
           "asset": "HKG",
+          "decimals": 3,
           "begBal": "",
           "begBalDiff": "",
           "amountIn": "2000000",
@@ -789,11 +802,11 @@
             "articulatedLog": {
               "name": "Mint",
               "inputs": {
-                "_id": "0xd6a12d0b81d706a7e8b49a2e7201d354aa155ba602a4c5f824be3fcbbd9aae85",
-                "_to": "0xfd6c5ac853391486d25ddd5cefb1f7040ee31c2c"
+                "_owner": "0xfd6c5ac853391486d25ddd5cefb1f7040ee31c2c",
+                "_tokenID": "0xd6a12d0b81d706a7e8b49a2e7201d354aa155ba602a4c5f824be3fcbbd9aae85"
               }
             },
-            "compressedLog": "Mint ( _to: 0xfd6c5ac853391486d25ddd5cefb1f7040ee31c2c, _id: 0xd6a12d0b81d706a7e8b49a2e7201d354aa155ba602a4c5f824be3fcbbd9aae85 )"
+            "compressedLog": "Mint ( _owner: 0xfd6c5ac853391486d25ddd5cefb1f7040ee31c2c, _tokenID: 0xd6a12d0b81d706a7e8b49a2e7201d354aa155ba602a4c5f824be3fcbbd9aae85 )"
           }
         ],
         "status": null
@@ -812,6 +825,7 @@
           "transactionIndex": 24,
           "timestamp": 1487950088,
           "asset": "WEI",
+          "decimals": 18,
           "begBal": "166106035924744464",
           "begBalDiff": "",
           "amountIn": "",
@@ -838,6 +852,7 @@
           "transactionIndex": 24,
           "timestamp": 1487950088,
           "asset": "Devcon2",
+          "decimals": 18,
           "begBal": "",
           "begBalDiff": "",
           "amountIn": "1",
@@ -912,20 +927,21 @@
       "articulatedTx": {
         "name": "transfer",
         "inputs": {
-          "_to": "0x277e4b7f5dab01c8e4389b930d3bd1c9690ce1e8",
-          "_value": "1000"
+          "to": "0x277e4b7f5dab01c8e4389b930d3bd1c9690ce1e8",
+          "value": "1000"
         },
         "outputs": {
           "success": ""
         }
       },
-      "compressedTx": "transfer ( _to: 0x277e4b7f5dab01c8e4389b930d3bd1c9690ce1e8, _value: 1000 )",
+      "compressedTx": "transfer ( to: 0x277e4b7f5dab01c8e4389b930d3bd1c9690ce1e8, value: 1000 )",
       "statements": [
         {
           "blockNumber": 3722502,
           "transactionIndex": 35,
           "timestamp": 1495038256,
           "asset": "WEI",
+          "decimals": 18,
           "begBal": "164521775924744464",
           "begBalDiff": "",
           "amountIn": "",
@@ -952,6 +968,7 @@
           "transactionIndex": 35,
           "timestamp": 1495038256,
           "asset": "HKG",
+          "decimals": 3,
           "begBal": "2000000",
           "begBalDiff": "",
           "amountIn": "",
@@ -1967,6 +1984,7 @@
           "transactionIndex": 0,
           "timestamp": 1495117250,
           "asset": "WEI",
+          "decimals": 18,
           "begBal": "163494735924744464",
           "begBalDiff": "",
           "amountIn": "",
@@ -1993,6 +2011,7 @@
           "transactionIndex": 0,
           "timestamp": 1495117250,
           "asset": "SGT",
+          "decimals": 1,
           "begBal": "",
           "begBalDiff": "",
           "amountIn": "20833",

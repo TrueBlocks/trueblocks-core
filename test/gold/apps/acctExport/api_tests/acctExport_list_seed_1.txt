@@ -4,85 +4,85 @@
       "blockNumber": 8854723,
       "transactionIndex": 61,
       "address": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "name": "Name 0xf503017d"
+      "name": "TrueBlocks Wallet 0xf503"
     },
     {
       "blockNumber": 8855603,
       "transactionIndex": 121,
       "address": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "name": "Name 0xf503017d"
+      "name": "TrueBlocks Wallet 0xf503"
     },
     {
       "blockNumber": 8856290,
       "transactionIndex": 62,
       "address": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "name": "Name 0xf503017d"
+      "name": "TrueBlocks Wallet 0xf503"
     },
     {
       "blockNumber": 8856316,
       "transactionIndex": 91,
       "address": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "name": "Name 0xf503017d"
+      "name": "TrueBlocks Wallet 0xf503"
     },
     {
       "blockNumber": 8856476,
       "transactionIndex": 55,
       "address": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "name": "Name 0xf503017d"
+      "name": "TrueBlocks Wallet 0xf503"
     },
     {
       "blockNumber": 8856511,
       "transactionIndex": 161,
       "address": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "name": "Name 0xf503017d"
+      "name": "TrueBlocks Wallet 0xf503"
     },
     {
       "blockNumber": 8860434,
       "transactionIndex": 21,
       "address": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "name": "Name 0xf503017d"
+      "name": "TrueBlocks Wallet 0xf503"
     },
     {
       "blockNumber": 8860511,
       "transactionIndex": 47,
       "address": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "name": "Name 0xf503017d"
+      "name": "TrueBlocks Wallet 0xf503"
     },
     {
       "blockNumber": 8860513,
       "transactionIndex": 85,
       "address": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "name": "Name 0xf503017d"
+      "name": "TrueBlocks Wallet 0xf503"
     },
     {
       "blockNumber": 8860529,
       "transactionIndex": 145,
       "address": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "name": "Name 0xf503017d"
+      "name": "TrueBlocks Wallet 0xf503"
     },
     {
       "blockNumber": 8860531,
       "transactionIndex": 152,
       "address": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "name": "Name 0xf503017d"
+      "name": "TrueBlocks Wallet 0xf503"
     },
     {
       "blockNumber": 8867898,
       "transactionIndex": 28,
       "address": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "name": "Name 0xf503017d"
+      "name": "TrueBlocks Wallet 0xf503"
     },
     {
       "blockNumber": 8875684,
       "transactionIndex": 148,
       "address": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "name": "Name 0xf503017d"
+      "name": "TrueBlocks Wallet 0xf503"
     },
     {
       "blockNumber": 8876232,
       "transactionIndex": 84,
       "address": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "name": "Name 0xf503017d"
+      "name": "TrueBlocks Wallet 0xf503"
     }
   ]
 }
