@@ -39,13 +39,13 @@ void pinlib_cleanup(void) {
 
 //----------------------------------------------------------------
 bool pinlib_downloadManifest(void) {
-    CEthCall call;
-    call.address = unchainedIndexAddr;
-    call.encoding = manifestHashEncoding;
-    call.blockNumber = getBlockProgress(BP_CLIENT).client;
-    call.abi_spec.loadAbiFromEtherscan(call.address, false /* raw */);
-    if (doEthCall(call)) {
-        ipfshash_t ipfshash = call.result.outputs[0].value;
+    CEthCall theCall;
+    theCall.address = unchainedIndexAddr;
+    theCall.encoding = manifestHashEncoding;
+    theCall.blockNumber = getBlockProgress(BP_CLIENT).client;
+    theCall.abi_spec.loadAbiFromEtherscan(theCall.address);
+    if (doEthCall(theCall)) {
+        ipfshash_t ipfshash = theCall.result.outputs[0].value;
         LOG_INFO("Found manifest hash at ", ipfshash);
         string_q remoteData = doCommand("curl -s \"http://gateway.ipfs.io/ipfs/" + ipfshash + "\"");
         string fn = configPath("manifest/manifest.txt");

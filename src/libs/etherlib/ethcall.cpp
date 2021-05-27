@@ -335,23 +335,44 @@ const char* STR_DISPLAY_ETHCALL =
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 //-------------------------------------------------------------------------
-//-------------------------------------------------------------------------
-bool doEthCall(const address_t& to, const string_q& enc, const string_q& bytes, blknum_t bn, const CAbi& abi,
-               CFunction& result) {
-    ostringstream cmd;
-    cmd << "[{";
-    cmd << "\"to\": \"" << to << "\", ";
-    cmd << "\"data\": \"" << enc << substitute(bytes, "0x", "") << "\"";
-    cmd << "}, \"" << uint_2_Hex(bn) << "\"]";
-
-    string_q rpcRet = callRPC("eth_call", cmd.str(), false);
-    if (startsWith(rpcRet, "0x"))
-        abi.articulateOutputs(enc, rpcRet, result);
-    return result.outputs.size();
+string_q CEthCall::getResult(void) const {
+    return result.outputs.size() ? result.outputs[0].value : "";
 }
 
-bool doEthCall(CEthCall& call) {
-    return doEthCall(call.address, call.encoding, call.bytes, call.blockNumber, call.abi_spec, call.result);
+//-------------------------------------------------------------------------
+bool doEthCall(CEthCall& theCall) {
+    string_q orig = theCall.encoding;
+
+    ostringstream cmd;
+    cmd << "[";
+    cmd << "{";
+    cmd << "\"to\": \"" << theCall.address << "\", ";
+    cmd << "\"data\": \"" << theCall.encoding << substitute(theCall.bytes, "0x", "") << "\"";
+    cmd << "}, \"" << uint_2_Hex(theCall.blockNumber) << "\"";
+    cmd << "]";
+
+    string_q ret = callRPC("eth_call", cmd.str(), false);
+    // Did we get an answer? If so, return it
+    if (startsWith(ret, "0x")) {
+        theCall.abi_spec.articulateOutputs(theCall.encoding, ret, theCall.result);
+        return true;
+    }
+
+    if (theCall.checkProxy) {
+        theCall.checkProxy = false;       // avoid infinite regress
+        theCall.encoding = "0x5c60da1b";  // implementation()
+        if (doEthCall(theCall)) {
+            // This is a proxy with an implementation...let's
+            // try again against the proxied-to address.
+            theCall.encoding = orig;
+            theCall.address = theCall.getResult();
+            if (isZeroAddr(theCall.address))
+                return false;
+            return doEthCall(theCall);
+        }
+    }
+    theCall.encoding = orig;
+    return false;
 }
 // EXISTING_CODE
 }  // namespace qblocks

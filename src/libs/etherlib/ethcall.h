@@ -43,6 +43,8 @@ class CEthCall : public CEthState {
     const CBaseNode* getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
+    bool checkProxy;
+    string_q getResult(void) const;
     // EXISTING_CODE
     bool operator==(const CEthCall& it) const;
     bool operator!=(const CEthCall& it) const {
@@ -102,6 +104,7 @@ inline void CEthCall::initialize(void) {
     result = CFunction();
 
     // EXISTING_CODE
+    checkProxy = true;
     // EXISTING_CODE
 }
 
@@ -117,6 +120,7 @@ inline void CEthCall::duplicate(const CEthCall& et) {
     result = et.result;
 
     // EXISTING_CODE
+    checkProxy = et.checkProxy;
     // EXISTING_CODE
 }
 
@@ -155,7 +159,5 @@ extern const char* STR_DISPLAY_ETHCALL;
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 extern bool doEthCall(CEthCall& call);
-extern bool doEthCall(const address_t& to, const string_q& encoding, const string_q& bytes, blknum_t blockNum,
-                      const CAbi& abi_spec, CFunction& output);
 // EXISTING_CODE
 }  // namespace qblocks

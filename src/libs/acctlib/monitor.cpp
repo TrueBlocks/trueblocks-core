@@ -483,23 +483,15 @@ string_q getTokenState(const string_q& what, const CAbi& abi_spec, const CMonito
     if (sigMap[what].empty())
         return "";
 
-    CFunction result;
-    if (!doEthCall(token.address, sigMap[what], "", blockNum, abi_spec, result)) {
-        // This may be a proxy contract, so we can try to get its implementation and call back in
-        CMonitor proxy = token;
-        // sigMap["implementation"] = "0x5c60da1b";
-        CFunction proxyResult;
-        if (doEthCall(token.address, "0x5c60da1b", "", blockNum, abi_spec, proxyResult)) {
-            address_t addr = proxyResult.outputs[0].value;
-            if (isZeroAddr(addr))
-                return "";
-            proxy.address = addr;
-            if (doEthCall(proxy.address, sigMap[what], "", blockNum, abi_spec, result))
-                return result.outputs[0].value;
-            return "";
-        }
-    }
-    return result.outputs.size() ? result.outputs[0].value : "";
+    CEthCall theCall;
+    theCall.address = token.address;
+    theCall.encoding = sigMap[what];
+    theCall.bytes = "";
+    theCall.blockNumber = blockNum;
+    theCall.abi_spec = abi_spec;
+    if (doEthCall(theCall))
+        return theCall.getResult();
+    return "";
 }
 // EXISTING_CODE
 }  // namespace qblocks
