@@ -22,7 +22,7 @@ bool header(CTraverser* trav, void* data) {
 
 //-----------------------------------------------------------------------
 bool display(CTraverser* trav, void* data) {
-    CTestTraverser *tt = (CTestTraverser*)trav;
+    CTestTraverser* tt = (CTestTraverser*)trav;
 
     wei_t spent = tt->trans.gasPrice * tt->trans.receipt.gasUsed;
     tt->totalSpent += spent;
@@ -37,12 +37,10 @@ bool display(CTraverser* trav, void* data) {
 }
 
 //-----------------------------------------------------------------------
-extern "C" CTraverser *makeTraverser(void) {
+extern "C" CTraverser* makeTraverser(void) {
     CTestTraverser* trav = new CTestTraverser;
     trav->filterFunc = trav->postFunc = trav->dataFunc = noopFunc;
     trav->preFunc = header;
     trav->displayFunc = display;
     return trav;
 }
-
-

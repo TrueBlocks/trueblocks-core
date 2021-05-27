@@ -44,7 +44,7 @@ class CTraverser {
 
     bool execute(const CAppearanceArray_base& apps, void* data);
 
-private:
+  private:
     CTraverser(void) = delete;
 };
 typedef vector<CTraverser> CTraverserArray;

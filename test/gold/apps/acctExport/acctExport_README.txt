@@ -35,6 +35,7 @@ acctExport -th
 | -f | --freshen | freshen but do not print the exported data |
 | -s | --staging | enable search of staging (not yet finalized) folder |
 | -u | --unripe | enable search of unripe (neither staged nor finalized) folder (assumes --staging) |
+|  | --load &lt;str&gt; | a comma separated list of dynamic traversers to load |
 |####|Hidden options||
 | -x | --fmt &lt;val&gt; | export format, one of *[ none \| json\* \| txt \| csv \| api ]* |
 | -v | --verbose | set verbose level (optional level defaults to 1) |

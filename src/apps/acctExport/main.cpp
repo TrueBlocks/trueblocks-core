@@ -40,18 +40,22 @@ int main(int argc, const char* argv[]) {
                 CAppearanceTraverser at;
                 traversers.push_back(at);
             }
+
             if (options.receipts) {
                 CReceiptTraverser rt;
                 traversers.push_back(rt);
             }
+
             if (options.logs) {
                 CLogTraverser lt;
                 traversers.push_back(lt);
             }
+
             if (options.traces) {
                 CTraceTraverser tt;
                 traversers.push_back(tt);
             }
+
             if (traversers.empty()) {
                 CTransactionTraverser tt;
                 if (options.freshenOnly) {
@@ -62,9 +66,8 @@ int main(int argc, const char* argv[]) {
                 }
                 traversers.push_back(tt);
             }
+
             forEveryAppearance(traversers, options.apps, &options);
-            if (once)
-                cout << exportPreamble(expContext().fmtMap["header"], options.className);
 
         } else {
             string fileName = getCachePath("objs/" + options.load);

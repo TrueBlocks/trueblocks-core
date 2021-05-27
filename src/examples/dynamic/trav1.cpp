@@ -19,7 +19,7 @@ bool display(CTraverser* trav, void* data) {
 
 //-----------------------------------------------------------------------
 // This function creates a new traverser and returns it to the caller.
-extern "C" CTraverser *makeTraverser(void) {
+extern "C" CTraverser* makeTraverser(void) {
     CTraverser* trav = new CTraverser(cout, "testing");
 
     // We attach functions to a traverser. Here we set most functions
@@ -35,8 +35,3 @@ extern "C" CTraverser *makeTraverser(void) {
     // The caller must clean up this memory.
     return trav;
 }
-
-
-
-
-
