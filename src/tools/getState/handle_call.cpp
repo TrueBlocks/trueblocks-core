@@ -36,7 +36,7 @@ bool COptions::handle_call(void) {
     theCall.blockNumber = isTestMode() ? 10092000 : getBlockProgress(BP_CLIENT).client;
     // We load known abis first (so we have something, if possible) then lay over from etherscan to get better names
     theCall.abi_spec.loadAbisFromKnown();
-    theCall.abi_spec.loadAbiFromEtherscan(theCall.address, false);
+    theCall.abi_spec.loadAbiFromEtherscan(theCall.address);
     if (doEthCall(theCall)) {
         CTransaction art;
         art.input = theCall.encoding + theCall.bytes;

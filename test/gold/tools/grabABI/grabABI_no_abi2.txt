@@ -1,23 +1,4 @@
-grabABI argc: 3 [1:0x1728039ce0d18a799c081c5c7fa2090dd365a8d0] [2:--raw] 
-grabABI 0x1728039ce0d18a799c081c5c7fa2090dd365a8d0 --raw 
-
-  ABI for '0x1728039ce0d18a799c081c5c7fa2090dd365a8d0' not found. Quitting...
-
-  Usage:    grabABI [-k|-s|-f|-v|-h] <address> [address...]  
-  Purpose:  Fetches the ABI for a smart contract.
-
-  Where:  
-	addrs                 list of one or more smart contracts whose ABI to grab from EtherScan (required)
-	-k  (--known)         load common 'known' ABIs from cache
-	-s  (--sol <str>)     file name of .sol file from which to create a new known abi (without .sol)
-	-f  (--find <str>)    try to search for a function declaration given a four byte code
-
-	#### Hidden options
-	-s  (--source)        show the source of the ABI information
-	#### Hidden options
-
-	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
-	-v  (--verbose)       set verbose level (optional level defaults to 1)
-	-h  (--help)          display this help screen
-
-  Powered by TrueBlocks
+grabABI argc: 2 [1:0x1728039ce0d18a799c081c5c7fa2090dd365a8d0] 
+grabABI 0x1728039ce0d18a799c081c5c7fa2090dd365a8d0 
+Address 0x1728039ce0d18a799c081c5c7fa2090dd365a8d0 is not a smart contract. Skipping...
+encoding	type	name	signature	input_names	output_names

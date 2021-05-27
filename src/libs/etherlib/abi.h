@@ -52,10 +52,9 @@ class CAbi : public CBaseNode {
     bool articulateOutputs(const string_q& encoding, const string_q& value, CFunction& ret) const;
 
     bool loadAbisFromKnown(bool tokensOnly = false);
-    bool loadAbiFromEtherscan(const address_t& addr, bool raw = false);
+    bool loadAbiFromEtherscan(const address_t& addr);
     bool loadAbiFromSolidity(const string_q& addr);
 
-    const CFunctionArray& interfaceArray(void) const;
     size_t nInterfaces(void) const;
     size_t nFunctions(void) const;
     size_t nEvents(void) const;

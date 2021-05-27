@@ -110,21 +110,6 @@ bool COptions::parseArguments(string_q& command) {
         return false;
     }
 
-    if (isRaw) {
-        for (auto addr : addrs) {
-            string_q fileName = getCachePath("abis/" + addr + ".json");
-            string_q localFile("./" + addr + ".json");
-            if (fileExists(localFile)) {
-                LOG_INFO("Using local ABI file");
-                fileName = localFile;
-            }
-            if (!fileExists(fileName))
-                return usage("ABI for '" + addr + "' not found.");
-            cout << asciiFileToString(fileName) << endl;
-        }
-        return false;
-    }
-
     if (!addrs.size() && !known)
         return usage("Please supply at least one Ethereum address.\n");
 
@@ -143,7 +128,7 @@ bool COptions::parseArguments(string_q& command) {
         if (!testing && !isContractAt(addr, latest) && !fileExists(fileName)) {
             cerr << "Address " << addr << " is not a smart contract. Skipping..." << endl;
         } else {
-            abi_spec.loadAbiFromEtherscan(addr, isRaw);
+            abi_spec.loadAbiFromEtherscan(addr);
             abi_spec.address = addr;
         }
     }
@@ -228,6 +213,4 @@ void COptions::convertFromSol(const address_t& addr) {
     string_q fileName = addr + ".json";
     ::remove(fileName.c_str());
     stringToAsciiFile(fileName, os.str());
-
-    isRaw = false;
 }

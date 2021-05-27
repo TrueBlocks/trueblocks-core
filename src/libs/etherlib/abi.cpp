@@ -322,11 +322,6 @@ const char* STR_DISPLAY_ABI =
 #define LOG_TEST(a, b)
 
 //---------------------------------------------------------------------------
-const CFunctionArray& CAbi::interfaceArray(void) const {
-    return interfaces;
-}
-
-//---------------------------------------------------------------------------
 bool loadAbiFile(const string_q& path, void* data) {
     if (endsWith(path, '/')) {
         forEveryFileInFolder(path + "*", loadAbiFile, data);
@@ -460,17 +455,15 @@ bool CAbi::loadAbiFromString(const string_q& in) {
 }
 
 //-----------------------------------------------------------------------
-bool CAbi::loadAbiFromEtherscan(const address_t& addr, bool raw) {
+bool CAbi::loadAbiFromEtherscan(const address_t& addr) {
     if (isZeroAddr(addr))
         return true;
 
-    if (!raw) {
-        if (sourcesMap[addr])
-            return true;
+    if (sourcesMap[addr])
+        return true;
 
-        if (loadAbiFromAddress(addr))
-            return true;
-    }
+    if (loadAbiFromAddress(addr))
+        return true;
 
     // If this isn't a smart contract, don't bother
     if (!isContractAt(addr, getBlockProgress(BP_CLIENT).client)) {
@@ -506,6 +499,7 @@ bool CAbi::loadAbiFromEtherscan(const address_t& addr, bool raw) {
         return loadAbiFromAddress(addr);
     }
 
+    // Even though we failed to find an ABI, we record that we've checked, so we don't try again.
     sourcesMap[addr] = true;
     return false;
 }
