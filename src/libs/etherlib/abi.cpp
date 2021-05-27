@@ -423,7 +423,7 @@ bool CAbi::loadAbiFromAddress(const address_t& addr, bool recurse) {
     //     if (doEthCall(theCall))
     //         loadAbiFromAddress(theCall.getResult(), false);
     // }
-    
+
     return true;
 }
 
