@@ -43,17 +43,17 @@ class CAbi : public CBaseNode {
     const CBaseNode* getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
-    CStringBoolMap sourcesMap;
-    CStringBoolMap interfaceMap;
+    CStringBoolMap abiSourcesMap;
+    CStringBoolMap abiInterfacesMap;
 
     bool articulateTransaction(CTransaction* p) const;
     bool articulateLog(CLogEntry* l) const;
     bool articulateTrace(CTrace* t) const;
     bool articulateOutputs(const string_q& encoding, const string_q& value, CFunction& ret) const;
 
-    bool loadAbisFromKnown(bool tokensOnly = false);
     bool loadAbiFromEtherscan(const address_t& addr);
-    bool loadAbiFromSolidity(const string_q& addr);
+    bool loadAbiFromSolidity(const address_t& addr);
+    bool loadAbisFromKnown(bool tokensOnly = false);
 
     size_t nInterfaces(void) const;
     size_t nFunctions(void) const;
@@ -74,8 +74,9 @@ class CAbi : public CBaseNode {
     bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
+  private:
     bool loadAbiFromFile(const string_q& fileName);
-    bool loadAbiFromAddress(const address_t& addr);
+    bool loadAbiFromAddress(const address_t& addr, bool recurse);
     bool loadAbiFromString(const string_q& str);
     void loadAbiAddInterface(const CFunction& func);
     friend bool loadAbiFile(const string_q& path, void* data);
@@ -110,8 +111,8 @@ inline CAbi::~CAbi(void) {
 //--------------------------------------------------------------------------
 inline void CAbi::clear(void) {
     // EXISTING_CODE
-    interfaceMap.clear();
-    sourcesMap.clear();
+    abiInterfacesMap.clear();
+    abiSourcesMap.clear();
     // EXISTING_CODE
 }
 
@@ -123,8 +124,8 @@ inline void CAbi::initialize(void) {
     interfaces.clear();
 
     // EXISTING_CODE
-    interfaceMap.clear();
-    sourcesMap.clear();
+    abiInterfacesMap.clear();
+    abiSourcesMap.clear();
     // EXISTING_CODE
 }
 
@@ -137,8 +138,8 @@ inline void CAbi::duplicate(const CAbi& ab) {
     interfaces = ab.interfaces;
 
     // EXISTING_CODE
-    interfaceMap = ab.interfaceMap;
-    sourcesMap = ab.sourcesMap;
+    abiInterfacesMap = ab.abiInterfacesMap;
+    abiSourcesMap = ab.abiSourcesMap;
     // EXISTING_CODE
 }
 

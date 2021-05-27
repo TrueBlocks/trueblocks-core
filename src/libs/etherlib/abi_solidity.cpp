@@ -66,7 +66,7 @@ static string_q removeComments(const string_q& contents) {
 }
 
 //----------------------------------------------------------------
-bool CAbi::loadAbiFromSolidity(const string_q& addr) {
+bool CAbi::loadAbiFromSolidity(const address_t& addr) {
     string_q solFile = addr + ".sol";
     string_q contents = asciiFileToString(solFile);
 
