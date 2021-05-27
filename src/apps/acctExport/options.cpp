@@ -40,6 +40,7 @@ static const COption params[] = {
     COption("clean", "", "", OPT_SWITCH, "clean (i.e. remove duplicate appearances) from all existing monitors"),
     COption("staging", "s", "", OPT_HIDDEN | OPT_SWITCH, "enable search of staging (not yet finalized) folder"),
     COption("unripe", "u", "", OPT_HIDDEN | OPT_SWITCH, "enable search of unripe (neither staged nor finalized) folder (assumes --staging)"),  // NOLINT
+    COption("load", "", "<string>", OPT_HIDDEN | OPT_FLAG, "a comma separated list of dynamic traversers to load"),
     COption("", "", "", OPT_DESCRIPTION, "Export full detail of transactions for one or more addresses."),
     // clang-format on
     // END_CODE_OPTIONS
@@ -158,6 +159,11 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-u" || arg == "--unripe") {
             unripe = true;
 
+        } else if (startsWith(arg, "--load:")) {
+            load = substitute(substitute(arg, "-:", ""), "--load:", "");
+        } else if (arg == "--load") {
+            return flag_required("load");
+
         } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
@@ -206,6 +212,7 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST_BOOL("clean", clean);
     LOG_TEST_BOOL("staging", staging);
     LOG_TEST_BOOL("unripe", unripe);
+    LOG_TEST("load", load, (load == ""));
     // END_DEBUG_DISPLAY
 
     if (Mocked(""))
@@ -393,6 +400,7 @@ void COptions::Init(void) {
     clean = false;
     staging = false;
     unripe = false;
+    load = "";
     // END_CODE_INIT
 
     bp = getBlockProgress(BP_ALL);

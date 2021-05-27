@@ -36,6 +36,5 @@
 #include "logging.h"
 #include "keccak.h"
 #include "apikey.h"
-#include "sharedlib.h"
 
 using namespace qblocks;  // NOLINT

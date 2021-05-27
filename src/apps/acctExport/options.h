@@ -42,6 +42,7 @@ class COptions : public CAbiOptions {
     bool clean;
     bool staging;
     bool unripe;
+    string_q load;
     // END_CODE_DECLARE
 
     CAppearanceArray_base apps;

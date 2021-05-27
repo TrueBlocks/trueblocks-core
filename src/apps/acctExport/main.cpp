@@ -18,55 +18,71 @@ int main(int argc, const char* argv[]) {
         if (!options.parseArguments(command))
             return 0;
 
-        // clang-format off
-        options.className =
+        CTraverserArray traversers;
+        if (options.load.empty()) {
+            // clang-format off
+            options.className =
             (options.count ? GETRUNTIME_CLASS(CMonitorCount)->m_ClassName
              : options.appearances
-                 ? GETRUNTIME_CLASS(CAppearance)->m_ClassName
-                 : (options.traces
-                        ? GETRUNTIME_CLASS(CTrace)->m_ClassName
-                        : (options.receipts
-                               ? GETRUNTIME_CLASS(CReceipt)->m_ClassName
-                               : (options.logs ? GETRUNTIME_CLASS(CLogEntry)->m_ClassName
-                                               : GETRUNTIME_CLASS(CTransaction)->m_ClassName))));
-        // clang-format on
+             ? GETRUNTIME_CLASS(CAppearance)->m_ClassName
+             : (options.traces
+                ? GETRUNTIME_CLASS(CTrace)->m_ClassName
+                : (options.receipts
+                   ? GETRUNTIME_CLASS(CReceipt)->m_ClassName
+                   : (options.logs ? GETRUNTIME_CLASS(CLogEntry)->m_ClassName
+                      : GETRUNTIME_CLASS(CTransaction)->m_ClassName))));
+            // clang-format on
 
-        if (once)
-            cout << exportPreamble(expContext().fmtMap["header"], options.className);
+            if (once)
+                cout << exportPreamble(expContext().fmtMap["header"], options.className);
 
-        CTraverserArray traversers;
-        if (options.appearances) {
-            CAppearanceTraverser at;
-            traversers.push_back(at);
-        }
-
-        if (options.receipts) {
-            CReceiptTraverser rt;
-            traversers.push_back(rt);
-        }
-
-        if (options.logs) {
-            CLogTraverser lt;
-            traversers.push_back(lt);
-        }
-
-        if (options.traces) {
-            CTraceTraverser tt;
-            traversers.push_back(tt);
-        }
-
-        if (traversers.empty()) {
-            CTransactionTraverser tt;
-            if (options.freshenOnly) {
-                tt.filterFunc = noopFunc;
-                tt.preFunc = noopFunc;
-                tt.displayFunc = noopFunc;
-                tt.dataFunc = noopFunc;
+            if (options.appearances) {
+                CAppearanceTraverser at;
+                traversers.push_back(at);
             }
-            traversers.push_back(tt);
+            if (options.receipts) {
+                CReceiptTraverser rt;
+                traversers.push_back(rt);
+            }
+            if (options.logs) {
+                CLogTraverser lt;
+                traversers.push_back(lt);
+            }
+            if (options.traces) {
+                CTraceTraverser tt;
+                traversers.push_back(tt);
+            }
+            if (traversers.empty()) {
+                CTransactionTraverser tt;
+                if (options.freshenOnly) {
+                    tt.filterFunc = noopFunc;
+                    tt.preFunc = noopFunc;
+                    tt.displayFunc = noopFunc;
+                    tt.dataFunc = noopFunc;
+                }
+                traversers.push_back(tt);
+            }
+            forEveryAppearance(traversers, options.apps, &options);
+            if (once)
+                cout << exportPreamble(expContext().fmtMap["header"], options.className);
+
+        } else {
+            string fileName = getCachePath("objs/" + options.load);
+            if (fileExists(fileName)) {
+                CDynamicTraverser lib(fileName);
+                if (lib.is_valid()) {
+                    auto factory = lib.get_function<CTraverser*(void)>("makeTraverser");
+                    CTraverser* trav = factory();
+                    if (trav->dataFunc == noopFunc)
+                        trav->dataFunc = loadTx_Func;
+                    trav->execute(options.apps, &options);
+                }
+
+            } else {
+                LOG_ERR("Could not load dynamic traverser for ", fileName);
+            }
         }
 
-        forEveryAppearance(traversers, options.apps, &options);
         if (shouldQuit())
             break;
 

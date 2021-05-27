@@ -274,6 +274,14 @@ paths:
         explode: true
         schema:
           type: boolean
+      - name: load
+        in: query
+        description: a comma separated list of dynamic traversers to load
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
       responses:
         "200":
           description: status of the scraper
