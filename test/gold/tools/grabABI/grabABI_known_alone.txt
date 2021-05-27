@@ -956,7 +956,7 @@ encoding	type	name	signature	input_names	output_names
 0xf81d6d32	function	minimumProposalPeriod	minimumProposalPeriod()		ret_0,,
 0x81b1c820	function	minimumRebalanceInterval	minimumRebalanceInterval()		ret_0,,
 0x2b135733	function	minimumTimeToPivot	minimumTimeToPivot()		ret_0,,
-0x40c10f19	function	mint	mint(address,uint256)	to,tokenId,	,
+0x40c10f19	function	mint	mint(address,uint256)	recipient,amount,	,
 0x6a627842	function	mint	mint(address)	to,	,
 0xa0712d68	function	mint	mint(uint256)	tokenId,	,
 0xcfa84fc1	function	mint	mint(uint256,address[],uint256[])	_id,_to,_quantities,	,
