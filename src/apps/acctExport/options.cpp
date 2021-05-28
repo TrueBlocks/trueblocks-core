@@ -268,11 +268,9 @@ bool COptions::parseArguments(string_q& command) {
         return usage("Do not use the --accounting option with other options.");
 
 #if defined(__APPLE__)
-#elif define(__linux) || defined(__linux__) || defined(linux)
+#else
     if (!load.empty())
         return usage("--load feature is not enabled on Linux.");
-#elif defined(_WIN32) || defined(__WIN32__) || defined(WIN32) || defined(_WIN64)
-#error-- This source code does not compile on Windows
 #endif
 
     // Where will we start?

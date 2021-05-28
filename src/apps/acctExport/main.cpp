@@ -85,9 +85,7 @@ int main(int argc, const char* argv[]) {
             } else {
                 LOG_ERR("Could not load dynamic traverser for ", fileName);
             }
-#elif define(__linux) || defined(__linux__) || defined(linux)
-#elif defined(_WIN32) || defined(__WIN32__) || defined(WIN32) || defined(_WIN64)
-#error-- This source code does not compile on Windows
+#else
 #endif
         }
 
