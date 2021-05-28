@@ -46,8 +46,10 @@ endif (CURL_FOUND)
 
 # ----------------------------------------------------------------------------------------
 # Globally available C++ settings
+set(DL_LIB "-ldl")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1z -Werror -Wall -O2 -fPIC")
 if(APPLE)
+    set(DL_LIB "")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1z -Werror -Wconversion -Wall -O2 -fPIC")
 endif()
 

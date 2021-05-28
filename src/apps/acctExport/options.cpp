@@ -267,12 +267,6 @@ bool COptions::parseArguments(string_q& command) {
     if ((accounting) && (appearances || logs || traces || receipts))
         return usage("Do not use the --accounting option with other options.");
 
-#if defined(__APPLE__)
-#else
-    if (!load.empty())
-        return usage("--load feature is not enabled on Linux.");
-#endif
-
     // Where will we start?
     blknum_t firstBlockToVisit = NOPOS;
 
