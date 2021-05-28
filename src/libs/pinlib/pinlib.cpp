@@ -17,7 +17,6 @@
 
 namespace qblocks {
 
-extern string_q pinlib_unpinByHash(const string_q& hash);
 extern bool parseOneLine(const char* line, void* data);
 #define hashToEmptyFile "QmP4i6ihnVrj8Tx7cTFw4aY6ungpaPYxDJEZ7Vg1RSNSdm"
 
@@ -44,13 +43,17 @@ bool pinlib_downloadManifest(void) {
     theCall.encoding = manifestHashEncoding;
     theCall.blockNumber = getBlockProgress(BP_CLIENT).client;
     theCall.abi_spec.loadAbiFromEtherscan(theCall.address);
+    LOG_INFO("Calling unchained index smart contract...");
     if (doEthCall(theCall)) {
         ipfshash_t ipfshash = theCall.result.outputs[0].value;
         LOG_INFO("Found manifest hash at ", ipfshash);
         string_q remoteData = doCommand("curl -s \"http://gateway.ipfs.io/ipfs/" + ipfshash + "\"");
         string fn = configPath("manifest/manifest.txt");
         stringToAsciiFile(fn, remoteData);
+        LOG_INFO("Freshened manifest with ", fileSize(fn), " bytes");
         return fileExists(fn);
+    } else {
+        LOG_ERR("Call to unchained index smart contract failed. Could not freshen.");
     }
     return false;
 }
@@ -109,7 +112,108 @@ bool pinlib_updateManifest(CPinnedChunkArray& pList) {
     return true;
 }
 
-extern string_q pinOneChunk(const string_q& fileName, const string_q& type);
+//-------------------------------------------------------------------------
+static size_t curlCallback(char* ptr, size_t size, size_t nmemb, void* userdata) {
+    string_q part;
+    part.reserve(size * nmemb + 1);
+    char* s = (char*)part.c_str();  // NOLINT
+    strncpy(s, ptr, size * nmemb);
+    s[size * nmemb] = '\0';
+    string_q* str = (string_q*)userdata;  // NOLINT
+    ASSERT(str);
+    *str += s;
+    return size * nmemb;
+}
+
+//----------------------------------------------------------------
+static string_q pinOneChunk(const string_q& fileName, const string_q& type) {
+    string_q source =
+        (type == "blooms" ? substitute(substitute(fileName, ".bin", ".bloom"), "/finalized/", "/blooms/") : fileName);
+    string_q zip = source;
+    // LOG4("source: ", source, " ", fileExists(source));
+    zip = source + ".gz";
+    // clang-format off
+    string_q cmd1 = "yes | gzip -n --keep " + source; // + " 2>/dev/null";
+    if (system(cmd1.c_str())) {}  // Don't remove cruft. Silences compiler warnings
+    // clang-format on
+    // LOG4("zip: ", zip, " ", fileExists(zip));
+
+    CApiKey lic;
+    if (!getApiKey(lic)) {
+        cerr << "You need to put Pinata API keys in $CONFIG/blockScrape.toml" << endl;
+        return "";
+    }
+
+    string_q result;
+    CURL* curl;
+    curl = curl_easy_init();
+    if (curl) {
+        curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST, "POST");
+        curl_easy_setopt(curl, CURLOPT_URL, "https://api.pinata.cloud/pinning/pinFileToIPFS");
+        curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
+        curl_easy_setopt(curl, CURLOPT_DEFAULT_PROTOCOL, "https");
+        struct curl_slist* headers = NULL;
+        headers = curl_slist_append(headers, ("pinata_api_key: " + lic.key).c_str());
+        headers = curl_slist_append(headers, ("pinata_secret_api_key: " + lic.secret).c_str());
+        headers = curl_slist_append(headers, "Content-Type: multipart/form-data");
+        curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
+        curl_easy_setopt(curl, CURLOPT_WRITEDATA, &result);
+        curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, curlCallback);
+        curl_mime* mime;
+        curl_mimepart* part;
+        mime = curl_mime_init(curl);
+        part = curl_mime_addpart(mime);
+        curl_mime_name(part, "file");
+        curl_mime_filedata(part, zip.c_str());
+        curl_easy_setopt(curl, CURLOPT_MIMEPOST, mime);
+        CURLcode res = curl_easy_perform(curl);
+        if (res != CURLE_OK) {
+            result += curl_easy_strerror(res);
+        }
+        curl_mime_free(mime);
+        curl_slist_free_all(headers);
+    }
+    curl_easy_cleanup(curl);
+    return result;
+}
+
+//----------------------------------------------------------------
+static string_q unpinOneChunk(const string_q& hash) {
+    CApiKey lic;
+    if (!getApiKey(lic)) {
+        cerr << "You need to put Pinata API keys in $CONFIG/blockScrape.toml" << endl;
+        return "";
+    }
+
+    string_q result;
+    CURL* curl;
+    curl = curl_easy_init();
+    if (curl) {
+        curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST, "DELETE");
+        curl_easy_setopt(curl, CURLOPT_URL, ("https://api.pinata.cloud/pinning/unpin/" + hash).c_str());
+        curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
+        curl_easy_setopt(curl, CURLOPT_DEFAULT_PROTOCOL, "https");
+        struct curl_slist* headers = NULL;
+        headers = curl_slist_append(headers, ("pinata_api_key: " + lic.key).c_str());
+        headers = curl_slist_append(headers, ("pinata_secret_api_key: " + lic.secret).c_str());
+        headers = curl_slist_append(headers, "Content-Type: application/json");
+        curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
+        curl_easy_setopt(curl, CURLOPT_WRITEDATA, &result);
+        curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, curlCallback);
+        CURLcode res = curl_easy_perform(curl);
+        if (res != CURLE_OK) {
+            result += curl_easy_strerror(res);
+        }
+        curl_slist_free_all(headers);
+    }
+    curl_easy_cleanup(curl);
+    if (contains(result, "error"))
+        LOG_WARN("Pinata returned an error: ", result);
+    else
+        LOG_INFO("Finishing unpin: ", result);
+    return result;
+}
+
 //----------------------------------------------------------------
 bool pinlib_pinChunk(CPinnedChunkArray& pList, const string_q& fileName, CPinnedChunk& item) {
     // If already pinned, no reason to pin it again...
@@ -175,8 +279,8 @@ bool pinlib_unpinChunk(CPinnedChunkArray& pList, const string_q& fileName, CPinn
     for (auto pin : pList) {
         if (pin.fileName == fileName) {
             cout << "Unpinning: " << pin.fileName << endl;
-            pinlib_unpinByHash(pin.indexHash);
-            pinlib_unpinByHash(pin.bloomHash);
+            unpinOneChunk(pin.indexHash);
+            unpinOneChunk(pin.bloomHash);
             item = pin;
         } else {
             cout << "Keeping " << pin.fileName << "\r";
@@ -211,7 +315,9 @@ bool pinlib_getChunkFromRemote(CPinnedChunk& pin, ipfsdown_t which, double sleep
             cmd << "\"http://gateway.ipfs.io/ipfs/" << ipfshash << "\"";
             LOG_INFO(bBlue, "Unchaining ", (contains(outFile, "bloom") ? "bloom" : "index"), " ", ipfshash, " to ",
                      pin.fileName, cOff);
+            lockSection();
             int ret = system(cmd.str().c_str());
+            unlockSection();
             // cerr << "result: " << ret << endl;
             if (ret != 0) {
                 // clean up on failure
@@ -294,106 +400,6 @@ bool parseOneLine(const char* line, void* data) {
     pin.parseCSV(fields, ln);
     pins->push_back(pin);
     return true;
-}
-
-//-------------------------------------------------------------------------
-static size_t curlCallback(char* ptr, size_t size, size_t nmemb, void* userdata) {
-    string_q part;
-    part.reserve(size * nmemb + 1);
-    char* s = (char*)part.c_str();  // NOLINT
-    strncpy(s, ptr, size * nmemb);
-    s[size * nmemb] = '\0';
-    string_q* str = (string_q*)userdata;  // NOLINT
-    ASSERT(str);
-    *str += s;
-    return size * nmemb;
-}
-
-//----------------------------------------------------------------
-string_q pinOneChunk(const string_q& fileName, const string_q& type) {
-    string_q source =
-        (type == "blooms" ? substitute(substitute(fileName, ".bin", ".bloom"), "/finalized/", "/blooms/") : fileName);
-    string_q zip = source;
-    // LOG4("source: ", source, " ", fileExists(source));
-    zip = source + ".gz";
-    // clang-format off
-    string_q cmd1 = "yes | gzip -n --keep " + source; // + " 2>/dev/null";
-    if (system(cmd1.c_str())) {}  // Don't remove cruft. Silences compiler warnings
-    // clang-format on
-    // LOG4("zip: ", zip, " ", fileExists(zip));
-
-    string_q result;
-    CURL* curl;
-    curl = curl_easy_init();
-    if (curl) {
-        CApiKey lic;
-        if (!getApiKey(lic)) {
-            cerr << "You need to put Pinata API keys in $CONFIG/blockScrape.toml" << endl;
-            return "";
-        }
-        curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST, "POST");
-        curl_easy_setopt(curl, CURLOPT_URL, "https://api.pinata.cloud/pinning/pinFileToIPFS");
-        curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
-        curl_easy_setopt(curl, CURLOPT_DEFAULT_PROTOCOL, "https");
-        struct curl_slist* headers = NULL;
-        headers = curl_slist_append(headers, ("pinata_api_key: " + lic.key).c_str());
-        headers = curl_slist_append(headers, ("pinata_secret_api_key: " + lic.secret).c_str());
-        headers = curl_slist_append(headers, "Content-Type: multipart/form-data");
-        curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
-        curl_easy_setopt(curl, CURLOPT_WRITEDATA, &result);
-        curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, curlCallback);
-        curl_mime* mime;
-        curl_mimepart* part;
-        mime = curl_mime_init(curl);
-        part = curl_mime_addpart(mime);
-        curl_mime_name(part, "file");
-        curl_mime_filedata(part, zip.c_str());
-        curl_easy_setopt(curl, CURLOPT_MIMEPOST, mime);
-        CURLcode res = curl_easy_perform(curl);
-        if (res != CURLE_OK) {
-            result += curl_easy_strerror(res);
-        }
-        curl_mime_free(mime);
-        curl_slist_free_all(headers);
-    }
-    curl_easy_cleanup(curl);
-    return result;
-}
-
-//----------------------------------------------------------------
-string_q pinlib_unpinByHash(const string_q& hash) {
-    CApiKey lic;
-    if (!getApiKey(lic)) {
-        cerr << "You need to put Pinata API keys in $CONFIG/blockScrape.toml" << endl;
-        return "";
-    }
-
-    string_q result;
-    CURL* curl;
-    curl = curl_easy_init();
-    if (curl) {
-        curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST, "DELETE");
-        curl_easy_setopt(curl, CURLOPT_URL, ("https://api.pinata.cloud/pinning/unpin/" + hash).c_str());
-        curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
-        curl_easy_setopt(curl, CURLOPT_DEFAULT_PROTOCOL, "https");
-        struct curl_slist* headers = NULL;
-        headers = curl_slist_append(headers, ("pinata_api_key: " + lic.key).c_str());
-        headers = curl_slist_append(headers, ("pinata_secret_api_key: " + lic.secret).c_str());
-        headers = curl_slist_append(headers, "Content-Type: application/json");
-        curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
-        curl_easy_setopt(curl, CURLOPT_WRITEDATA, &result);
-        curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, curlCallback);
-        CURLcode res = curl_easy_perform(curl);
-        if (res != 0) {
-            result += curl_easy_strerror(res);
-        }
-    }
-    curl_easy_cleanup(curl);
-    if (contains(result, "error"))
-        LOG_WARN("Pinata returned an error: ", result);
-    else
-        LOG_INFO("Finishing unpin: ", result);
-    return result;
 }
 
 }  // namespace qblocks

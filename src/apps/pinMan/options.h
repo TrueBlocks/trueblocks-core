@@ -18,8 +18,10 @@ class COptions : public CAbiOptions {
   public:
     // BEG_CODE_DECLARE
     bool init;
-    bool compare;
+    bool init_all;
     double sleep;
+    bool remote;
+    bool pin_locally;
     // END_CODE_DECLARE
 
     CPinnedChunkArray pins;
@@ -31,6 +33,5 @@ class COptions : public CAbiOptions {
     void Init(void) override;
 
     bool handle_init(void);
-    bool handle_compare(void);
     bool handle_list(void);
 };

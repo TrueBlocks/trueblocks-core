@@ -26,9 +26,6 @@ int main(int argc, const char* argv[]) {
         if (options.init) {
             return options.handle_init();
 
-        } else if (options.compare) {
-            options.handle_compare();
-
         } else {
             options.handle_list();
         }

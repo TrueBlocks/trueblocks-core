@@ -7,10 +7,8 @@
 
 //----------------------------------------------------------------
 bool COptions::handle_init() {
-    if (freshenOnly) {
-        if (!pinlib_downloadManifest())
-            return usage("Could not freshen manifest from smart contract");
-    }
+    if (!pinlib_downloadManifest())
+        return usage("Could not freshen manifest from smart contract");
 
     if (!folderExists(getIndexPath("")))
         return false;
@@ -24,7 +22,28 @@ bool COptions::handle_init() {
     for (auto pin : pins) {
         if (!pinlib_getChunkFromRemote(pin, BLOOM_TYPE, sleep) || shouldQuit())
             break;
+        if (pin_locally) {
+            ostringstream os;
+            string_q bloomFn = pin.Format(getIndexPath("blooms/[{FILENAME}].bloom.gz"));
+            os << "ipfs add -Q --pin \"" << bloomFn + "\"";
+            string_q newHash = doCommand(os.str());
+            LOG_INFO(cGreen, "Re-pinning ", pin.fileName, cOff, " ==> ", newHash, " ", (pin.bloomHash == newHash ? greenCheck : redX));
+        }
+
+        if (init_all) {
+            if (!pinlib_getChunkFromRemote(pin, CHUNK_TYPE, sleep) || shouldQuit())
+                break;
+            if (pin_locally) {
+                ostringstream os;
+                string_q binFn = pin.Format(getIndexPath("finalized/[{FILENAME}].bin.gz"));
+                os << "ipfs add -Q --pin \"" << binFn + "\"";
+                string_q newHash = doCommand(os.str());
+                LOG_INFO(cGreen, "Re-pinning ", pin.fileName, cOff, " ==> ", newHash, " ", (pin.indexHash == newHash ? greenCheck : redX));
+                usleep(500000);
+            }
+        }
     }
 
+    LOG_INFO(bBlue, "Pins were (re)initialized.                                      ", cOff);
     return true;  // do not continue
 }

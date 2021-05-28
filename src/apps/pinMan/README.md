@@ -4,7 +4,7 @@ This tool is not yet ready for production use. Please return to this page later.
 
 ### Usage
 
-`Usage:`    chifra pins [-l|-i|-c|-f|-v|-h]  
+`Usage:`    chifra pins [-l|-i|-k|-p|-v|-h]  
 `Purpose:`  Manage pinned index of appearances and associated bloom filters.
 
 `Where:`  
@@ -12,15 +12,16 @@ This tool is not yet ready for production use. Please return to this page later.
 | | Option | Description |
 | :----- | :----- | :---------- |
 | -l | --list | list the index and bloom filter hashes from local manifest or pinning service |
-| -i | --init | initialize the local index by downloading bloom filters from the pinning service |
-| -c | --compare | report differences (if any) between the manifest and pinning service |
-| -f | --freshen | freshen the manifest from the hash found at the smart contract |
+| -i | --init | initialize local index by downloading bloom filters from pinning service |
+| -k | --init_all | initialize local index by downloading both bloom filters and index chunks |
+| -p | --pin_locally | pin all local files in the index to an IPFS store (requires IPFS) |
 | -v | --verbose | set verbose level (optional level defaults to 1) |
 | -h | --help | display this help screen |
 
 `Notes:`
 
-- One of --list, --init, --compare, or --freshen is required.
+- One of `--list`, `--init`, or `--init_all` is required.
+- the `--pin_locally` option only works if the IPFS executable is in your path.
 
 #### Other Options
 

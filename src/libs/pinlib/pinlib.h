@@ -28,7 +28,7 @@ extern bool pinlib_updateManifest(CPinnedChunkArray& pList);
 extern bool pinlib_pinChunk(CPinnedChunkArray& pList, const string_q& fn, CPinnedChunk& item);
 extern bool pinlib_unpinChunk(CPinnedChunkArray& pList, const string_q& fn, CPinnedChunk& item);
 
-typedef enum { NO_TYPE = 0, BLOOM_TYPE = 1, BIN_TYPE = 2 } ipfsdown_t;
+typedef enum { NO_TYPE = 0, BLOOM_TYPE = 1, CHUNK_TYPE = 2 } ipfsdown_t;
 extern bool pinlib_getChunkFromRemote(CPinnedChunk& pin, ipfsdown_t which, double sleep);
 extern bool pinlib_getChunkByHash(CPinnedChunkArray& pList, const string_q& fn, CPinnedChunk& item);
 extern bool pinlib_findChunk(CPinnedChunkArray& pList, const string_q& fn, CPinnedChunk& item);
