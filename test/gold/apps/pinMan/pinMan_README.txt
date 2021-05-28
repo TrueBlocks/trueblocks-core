@@ -2,7 +2,7 @@ pinMan argc: 2 [1:-th]
 pinMan -th 
 ### Usage
 
-`Usage:`    chifra pins [-l|-i|-c|-k|-p|-v|-h]  
+`Usage:`    chifra pins [-l|-i|-k|-p|-v|-h]  
 `Purpose:`  Manage pinned index of appearances and associated bloom filters.
 
 `Where:`  
@@ -10,13 +10,12 @@ pinMan -th
 | | Option | Description |
 | :----- | :----- | :---------- |
 | -l | --list | list the index and bloom filter hashes from local manifest or pinning service |
-| -i | --init | initialize the local index by downloading bloom filters from the pinning service |
-| -c | --compare | report differences (if any) between the manifest and pinning service |
-| -k | --chunks | for --init option only, download both blooms (the default) and index chunks |
-| -p | --repin | for --init option only, repin the bloom (or chunk) after downloading |
+| -i | --init | initialize local index by downloading bloom filters from pinning service |
+| -k | --init_all | initialize local index by downloading both bloom filters and index chunks |
+| -p | --pin_locally | pin all local files in the index to an IPFS store (requires IPFS) |
 |####|Hidden options||
 | -s | --sleep &lt;double&gt; | the number of seconds to sleep between requests during init (default .25) |
-| -r | --remote | applicable only to --list mode, recover hash list from pinning service (local otherwise) |
+| -r | --remote | applicable only to --list mode, recover the manifest from pinning service |
 |####|Hidden options||
 | -x | --fmt &lt;val&gt; | export format, one of *[ none \| json\* \| txt \| csv \| api ]* |
 | -v | --verbose | set verbose level (optional level defaults to 1) |
@@ -24,6 +23,6 @@ pinMan -th
 
 `Notes:`
 
-- One of --list, --init, --compare, or --freshen is required.
-- the `repin` option only works if the ipfs executable is in your path.
+- One of `--list`, `--init`, or `--init_all` is required.
+- the `--pin_locally` option only works if the IPFS executable is in your path.
 

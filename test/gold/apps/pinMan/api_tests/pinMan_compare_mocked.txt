@@ -1,29 +1,5 @@
 {
-  "data": [],
-  "types": [
-    {
-      "type": "CPinnedChunk",
-      "fields": [
-        {
-          "name": "fileName",
-          "type": "text"
-        },
-        {
-          "name": "bloomHash",
-          "type": "text"
-        },
-        {
-          "name": "indexHash",
-          "type": "text"
-        }
-      ]
-    }
-  ],
-  "meta": {
-    "unripe": "0xdeadbeef",
-    "ripe": "0xdeadbeef",
-    "staging": "0xdeadbeef",
-    "finalized": "0xdeadbeef",
-    "client": "0xdeadbeef"
-  }
+  "errors": [
+    "chifra pins - Invalid option: --compare"
+  ]
 }

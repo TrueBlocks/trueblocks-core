@@ -1,9 +1,24 @@
 pinMan argc: 2 [1:--compare] 
 pinMan --compare 
-TIME ~ CLOCK - <INFO>  : compare: true
-TIME ~ CLOCK - <INFO>  : hashToIndexFormatFile:	Qmart6XP9XjL43p72PGR93QKytbK8jWWcMguhFgxATTya2
-TIME ~ CLOCK - <INFO>  : hashToBloomFormatFile:	QmNhPk39DUFoEdhUmtGARqiFECUHeghyeryxZM9kyRxzHD
-TIME ~ CLOCK - <INFO>  : unchainedIndexAddr:	0xcfd7f3b24f3551741f922fd8c4381aa4e00fc8fd
-TIME ~ CLOCK - <INFO>  : manifestHashEncoding:	0x337f3f32
-filename	bloomhash	indexhash
-Handling compare
+
+  Invalid option: --compare
+
+  Usage:    pinMan [-l|-i|-k|-p|-v|-h]  
+  Purpose:  Manage pinned index of appearances and associated bloom filters.
+
+  Where:  
+	-l  (--list)          list the index and bloom filter hashes from local manifest or pinning service
+	-i  (--init)          initialize local index by downloading bloom filters from pinning service
+	-k  (--init_all)      initialize local index by downloading both bloom filters and index chunks
+	-p  (--pin_locally)   pin all local files in the index to an IPFS store (requires IPFS)
+
+	#### Hidden options
+	-s  (--sleep <double>)the number of seconds to sleep between requests during init (default .25)
+	-r  (--remote)        applicable only to --list mode, recover the manifest from pinning service
+	#### Hidden options
+
+	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
+	-v  (--verbose)       set verbose level (optional level defaults to 1)
+	-h  (--help)          display this help screen
+
+  Powered by TrueBlocks
