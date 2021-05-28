@@ -101,7 +101,8 @@ bool COptions::parseArguments(string_q& command) {
     if (pin_locally) {
         string_q res = doCommand("which ipfs");
         if (res.empty())
-            return usage("Could not find ipfs in your $PATH. You must install ipfs for the --pin_locally command to work.");
+            return usage(
+                "Could not find ipfs in your $PATH. You must install ipfs for the --pin_locally command to work.");
     }
 
     configureDisplay("pinMan", "CPinnedChunk", STR_DISPLAY_PINNEDCHUNK);

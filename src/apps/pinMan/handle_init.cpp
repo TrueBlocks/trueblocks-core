@@ -27,7 +27,8 @@ bool COptions::handle_init() {
             string_q bloomFn = pin.Format(getIndexPath("blooms/[{FILENAME}].bloom.gz"));
             os << "ipfs add -Q --pin \"" << bloomFn + "\"";
             string_q newHash = doCommand(os.str());
-            LOG_INFO(cGreen, "Re-pinning ", pin.fileName, cOff, " ==> ", newHash, " ", (pin.bloomHash == newHash ? greenCheck : redX));
+            LOG_INFO(cGreen, "Re-pinning ", pin.fileName, cOff, " ==> ", newHash, " ",
+                     (pin.bloomHash == newHash ? greenCheck : redX));
         }
 
         if (init_all) {
@@ -38,7 +39,8 @@ bool COptions::handle_init() {
                 string_q binFn = pin.Format(getIndexPath("finalized/[{FILENAME}].bin.gz"));
                 os << "ipfs add -Q --pin \"" << binFn + "\"";
                 string_q newHash = doCommand(os.str());
-                LOG_INFO(cGreen, "Re-pinning ", pin.fileName, cOff, " ==> ", newHash, " ", (pin.indexHash == newHash ? greenCheck : redX));
+                LOG_INFO(cGreen, "Re-pinning ", pin.fileName, cOff, " ==> ", newHash, " ",
+                         (pin.indexHash == newHash ? greenCheck : redX));
                 usleep(500000);
             }
         }
