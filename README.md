@@ -56,6 +56,8 @@ We recommend that you run MacOS Big Sur or later for best results.
 **For Windows**:
 
 TrueBlocks does not currently support Windows builds.
+Some users have had success with WSL.
+For now, you're own your own!
 
 ## Compiling TrueBlocks
 
@@ -154,7 +156,7 @@ The primary data structure produced by TrueBlocks is an index of address appeara
 
 You may either build the entire index from scratch (requires a tracing, archive node), or you may download part of the index and build it from there on.
 
-This process is described in this article [Indexing Addresses](https://trueblocks.netlify.app/docs/prologue/indexing-addresses/).
+This process is described in this article [Indexing Addresses](https://docs.trueblocks.io/docs/prologue/indexing-addresses/).
 
 ## Contributing to TrueBlocks
 
