@@ -13,13 +13,18 @@ If you run `chifra init` and allow it to complete, the next time you run `chifra
 `Usage:`    chifra init  
 `Purpose:`  Leech the bloom filters from IPFS by first downloading the pin manifest from a smart contract and then downloading the blooms. Optionally `--pin` the resulting download in order to share it with others.
 
-*[The --pin option is currently disabled.]*
-
 `Where:`  
 
-| Short Cut | Option | Description |
-| -------: | :------- | :------- |
+| | Option | Description |
+| :----- | :----- | :---------- |
+| -i | --init | initialize local index by downloading bloom filters from pinning service |
+| -k | --init_all | initialize local index by downloading both bloom filters and index chunks |
+| -p | --pin_locally | pin all local files in the index to an IPFS store (requires IPFS) |
 | -v | --verbose | set verbose level (optional level defaults to 1) |
 | -h | --help | display this help screen |
 
+`Notes:`
+
+- One of `--list`, `--init`, or `--init_all` is required.
+- the `--pin_locally` option only works if the IPFS executable is in your path.
 **Source code**: [`apps/pinMan`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/pinMan)
