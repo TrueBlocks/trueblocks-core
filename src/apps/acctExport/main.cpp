@@ -69,6 +69,7 @@ int main(int argc, const char* argv[]) {
 
             forEveryAppearance(traversers, options.apps, &options);
 
+#if defined(__APPLE__)
         } else {
             string fileName = getCachePath("objs/" + options.load);
             if (fileExists(fileName)) {
@@ -84,6 +85,10 @@ int main(int argc, const char* argv[]) {
             } else {
                 LOG_ERR("Could not load dynamic traverser for ", fileName);
             }
+#elif define(__linux) || defined(__linux__) || defined(linux)
+#elif defined(_WIN32) || defined(__WIN32__) || defined(WIN32) || defined(_WIN64)
+#error-- This source code does not compile on Windows
+#endif
         }
 
         if (shouldQuit())
