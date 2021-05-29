@@ -27,9 +27,11 @@ class CTraverser {
     size_t nProcessed;
     string_q operation;
     string_q readStatus;
+    address_t accountedFor;
     CTraverser(ostream& osIn, const string_q& o) : os(osIn), index(0), nProcessed(0), operation(o) {
         logging = !isTestMode() || getEnvStr("FORCE_LOGGING") == "true";
         readStatus = "Extracting";
+        accountedFor = "";
     }
 
   public:
