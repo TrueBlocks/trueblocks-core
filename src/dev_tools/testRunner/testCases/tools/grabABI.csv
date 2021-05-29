@@ -33,4 +33,4 @@ off     ,cmd  ,fast  ,abis  ,tools/grabABI ,rm_generation      ,n    ,RMFILE -f 
 off     ,cmd  ,fast  ,abis  ,tools/grabABI ,rm_generation2     ,n    ,RMFILE -f generated/classDefinitions/*
 off     ,cmd  ,fast  ,abis  ,tools/grabABI ,generation         ,n    ,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & verbose = 10 & generate
 on      ,both ,fast  ,abis  ,tools/grabABI ,known_trueara      ,y    ,addrs = truebit aragon & fmt json
-on      ,both ,fast  ,abis  ,tools/grabABI ,known_trueclasses  ,y    ,addrs = truebit & classes & fmt json
+off     ,both ,fast  ,abis  ,tools/grabABI ,known_trueclasses  ,y    ,addrs = truebit & classes & fmt json

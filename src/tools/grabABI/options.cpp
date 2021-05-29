@@ -144,9 +144,27 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     if (classes) {
-        for (auto func : abi_spec.interfaces)
-            cout << func << endl;
+        return usage("--classes option is not implemented.");
+#if 0
+        for (auto func : abi_spec.interfaces) {
+            establishFolder("./classes/classDefinitions/");
+            ostringstream os;
+            os << "[settings]" << endl;
+            os << "base_class = CTransaction" << endl;
+            os << "class = C" << toUpper(string_q(1, func.name[0])) << func.name.substr(1,1000) << endl;
+            os << "fields =";
+            bool first = true;
+            for (auto field : func.inputs) {
+                if (!first) os << " |\\" << endl;
+                os << "  " << field.type << " " << field.name;
+                first = false;
+            }
+            cerr << "Writing to ./classes/classDefinitions/" << toLower(func.name) << ".txt" << endl;
+            cerr << substitute(os.str(), "\t", "  ");
+            stringToAsciiFile("./classes/classDefinitions/" + toLower(func.name) + ".txt", os.str());
+        }
         return false;
+#endif
     }
 
     // Display formatting
