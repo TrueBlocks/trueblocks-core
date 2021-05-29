@@ -14,6 +14,7 @@ grabABI 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 -vne
 
 	#### Hidden options
 	-s  (--source)        show the source of the ABI information
+	-c  (--classes)       generate classDefinitions folder and class definitions
 	#### Hidden options
 
 	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]

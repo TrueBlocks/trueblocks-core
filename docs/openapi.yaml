@@ -515,6 +515,14 @@ paths:
         explode: true
         schema:
           type: boolean
+      - name: classes
+        in: query
+        description: generate classDefinitions folder and class definitions
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
       responses:
         "200":
           description: status of the scraper

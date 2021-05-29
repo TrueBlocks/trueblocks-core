@@ -15,6 +15,7 @@ grabABI -th
 | -f | --find &lt;str&gt; | try to search for a function declaration given a four byte code |
 |####|Hidden options||
 | -s | --source | show the source of the ABI information |
+| -c | --classes | generate classDefinitions folder and class definitions |
 |####|Hidden options||
 | -x | --fmt &lt;val&gt; | export format, one of *[ none \| json\* \| txt \| csv \| api ]* |
 | -v | --verbose | set verbose level (optional level defaults to 1) |

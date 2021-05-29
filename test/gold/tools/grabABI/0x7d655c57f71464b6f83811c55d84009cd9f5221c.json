@@ -1,51 +1,4 @@
 {
-  "encoding": "0xbecc5a20",
-  "inputs": {
-    "data": "",
-    "token": ""
-  },
-  "name": "_callOptionalReturn",
-  "signature": "_callOptionalReturn(IERC20,bytes)",
-  "stateMutability": "nonpayable",
-  "type": "function"
-}
-{
-  "constant": true,
-  "encoding": "0x8b49d47e",
-  "name": "_msgData",
-  "outputs": {
-    "ret_0": ""
-  },
-  "signature": "_msgData()",
-  "stateMutability": "view",
-  "type": "function"
-}
-{
-  "constant": true,
-  "encoding": "0x119df25f",
-  "name": "_msgSender",
-  "outputs": {
-    "ret_0": ""
-  },
-  "signature": "_msgSender()",
-  "stateMutability": "view",
-  "type": "function"
-}
-{
-  "encoding": "0x320b2ad9",
-  "name": "_pause",
-  "signature": "_pause()",
-  "stateMutability": "nonpayable",
-  "type": "function"
-}
-{
-  "encoding": "0xfc8234cb",
-  "name": "_unpause",
-  "signature": "_unpause()",
-  "stateMutability": "nonpayable",
-  "type": "function"
-}
-{
   "encoding": "0x771602f7",
   "inputs": {
     "a": "",
@@ -100,6 +53,17 @@
   },
   "signature": "balanceOf(address)",
   "stateMutability": "view",
+  "type": "function"
+}
+{
+  "encoding": "0xbecc5a20",
+  "inputs": {
+    "data": "",
+    "token": ""
+  },
+  "name": "_callOptionalReturn",
+  "signature": "_callOptionalReturn(IERC20,bytes)",
+  "stateMutability": "nonpayable",
   "type": "function"
 }
 {
@@ -185,6 +149,28 @@
   "type": "function"
 }
 {
+  "constant": true,
+  "encoding": "0x8b49d47e",
+  "name": "_msgData",
+  "outputs": {
+    "ret_0": ""
+  },
+  "signature": "_msgData()",
+  "stateMutability": "view",
+  "type": "function"
+}
+{
+  "constant": true,
+  "encoding": "0x119df25f",
+  "name": "_msgSender",
+  "outputs": {
+    "ret_0": ""
+  },
+  "signature": "_msgSender()",
+  "stateMutability": "view",
+  "type": "function"
+}
+{
   "encoding": "0xc8a4ac9c",
   "inputs": {
     "a": "",
@@ -207,6 +193,13 @@
   },
   "signature": "owner()",
   "stateMutability": "view",
+  "type": "function"
+}
+{
+  "encoding": "0x320b2ad9",
+  "name": "_pause",
+  "signature": "_pause()",
+  "stateMutability": "nonpayable",
   "type": "function"
 }
 {
@@ -389,6 +382,13 @@
   "encoding": "0x3f4ba83a",
   "name": "unpause",
   "signature": "unpause()",
+  "stateMutability": "nonpayable",
+  "type": "function"
+}
+{
+  "encoding": "0xfc8234cb",
+  "name": "_unpause",
+  "signature": "_unpause()",
   "stateMutability": "nonpayable",
   "type": "function"
 }

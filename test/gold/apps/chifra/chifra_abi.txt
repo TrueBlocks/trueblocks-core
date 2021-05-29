@@ -4,8 +4,6 @@ chifra abis argc: 2 [1:0xbb9bc244d798123fde783fcc1c72d3bb8c189413]
 chifra abis 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 
 PROG_NAME = [chifra abis]
 encoding	type	name	signature	input_names	output_names
-0x643f7cdd	function	DAOpaidOut	DAOpaidOut(address)	val_0,	val_0,,
-0x82bf6464	function	DAOrewardAccount	DAOrewardAccount()		val_0,,
 0x39d1f908	function	actualBalance	actualBalance()		_actualBalance,,
 0xdd62ed3e	function	allowance	allowance(address,address)	_owner,_spender,	remaining,,
 0x4df6d6cc	function	allowedRecipients	allowedRecipients(address)	val_0,	val_0,,
@@ -19,6 +17,8 @@ encoding	type	name	signature	input_names	output_names
 0xbaac5300	function	createTokenProxy	createTokenProxy(address)	_tokenHolder,	success,,
 0xe66f53b7	function	curator	curator()		val_0,,
 0x149acf9a	function	daoCreator	daoCreator()		val_0,,
+0x643f7cdd	function	DAOpaidOut	DAOpaidOut(address)	val_0,	val_0,,
+0x82bf6464	function	DAOrewardAccount	DAOrewardAccount()		val_0,,
 0x1f2dc5ef	function	divisor	divisor()		divisor,,
 0x237e9492	function	executeProposal	executeProposal(uint256,bytes)	_proposalID,_transactionData,	_success,,
 0x21b5b8dd	function	extraBalance	extraBalance()		val_0,,

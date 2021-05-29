@@ -5,31 +5,6 @@ Old bug test...
 ABI of test1.json
 ------------------------------------------------------------------------------------------------------------------------
 {
-  "name": "DAOpaidOut",
-  "type": "function",
-  "constant": true,
-  "stateMutability": "nonpayable",
-  "signature": "DAOpaidOut(address)",
-  "encoding": "0x643f7cdd",
-  "inputs": {
-    "val_0": ""
-  },
-  "outputs": {
-    "val_0": ""
-  }
-}
-{
-  "name": "DAOrewardAccount",
-  "type": "function",
-  "constant": true,
-  "stateMutability": "nonpayable",
-  "signature": "DAOrewardAccount()",
-  "encoding": "0x82bf6464",
-  "outputs": {
-    "val_0": ""
-  }
-}
-{
   "name": "actualBalance",
   "type": "function",
   "constant": true,
@@ -194,6 +169,31 @@ ABI of test1.json
   "stateMutability": "nonpayable",
   "signature": "daoCreator()",
   "encoding": "0x149acf9a",
+  "outputs": {
+    "val_0": ""
+  }
+}
+{
+  "name": "DAOpaidOut",
+  "type": "function",
+  "constant": true,
+  "stateMutability": "nonpayable",
+  "signature": "DAOpaidOut(address)",
+  "encoding": "0x643f7cdd",
+  "inputs": {
+    "val_0": ""
+  },
+  "outputs": {
+    "val_0": ""
+  }
+}
+{
+  "name": "DAOrewardAccount",
+  "type": "function",
+  "constant": true,
+  "stateMutability": "nonpayable",
+  "signature": "DAOrewardAccount()",
+  "encoding": "0x82bf6464",
   "outputs": {
     "val_0": ""
   }

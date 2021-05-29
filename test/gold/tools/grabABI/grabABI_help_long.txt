@@ -12,6 +12,7 @@ grabABI --help
 
 	#### Hidden options
 	-s  (--source)        show the source of the ABI information
+	-c  (--classes)       generate classDefinitions folder and class definitions
 	#### Hidden options
 
 	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]

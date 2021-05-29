@@ -1,6 +1,4 @@
 encoding	type	name	signature	input_names	output_names
-0xe5b5019a	function	MAX_UINT	MAX_UINT()		val_0,,
-0x3eaaf86b	function	_totalSupply	_totalSupply()		val_0,,
 0x0ecb93c0	function	addBlackList	addBlackList(address)	_evilUser,	,
 0xdd62ed3e	function	allowance	allowance(address,address)	_owner,_spender,	remaining,,
 0x5c658165	function	allowed	allowed(address,address)	val_0,val_1,	val_0,,
@@ -16,6 +14,7 @@ encoding	type	name	signature	input_names	output_names
 0x893d20e8	function	getOwner	getOwner()		val_0,,
 0xe47d6060	function	isBlackListed	isBlackListed(address)	val_0,	val_0,,
 0xcc872b66	function	issue	issue(uint256)	amount,	,
+0xe5b5019a	function	MAX_UINT	MAX_UINT()		val_0,,
 0x35390714	function	maximumFee	maximumFee()		val_0,,
 0x06fdde03	function	name	name()		val_0,,
 0x8da5cb5b	function	owner	owner()		val_0,,
@@ -26,6 +25,7 @@ encoding	type	name	signature	input_names	output_names
 0xc0324c77	function	setParams	setParams(uint256,uint256)	newBasisPoints,newMaxFee,	,
 0x95d89b41	function	symbol	symbol()		val_0,,
 0x18160ddd	function	totalSupply	totalSupply()		val_0,,
+0x3eaaf86b	function	_totalSupply	_totalSupply()		val_0,,
 0xa9059cbb	function	transfer	transfer(address,uint256)	_to,_value,	,
 0x23b872dd	function	transferFrom	transferFrom(address,address,uint256)	_from,_to,_value,	,
 0xf2fde38b	function	transferOwnership	transferOwnership(address)	newOwner,	,

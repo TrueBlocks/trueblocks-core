@@ -282,7 +282,7 @@ bool COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, cons
 
             string_q oldFn = test.workPath + test.fileName;
             string_q oldText = asciiFileToString(oldFn);
-            if (contains(oldText, "\"id\":") && contains(oldFn, "/tools/")) {
+            if (contains(oldText, "\"id\":") && contains(oldFn, "/tools/") && !contains(oldFn, "classes")) {
                 // This crazy shit is because we want to pass tests when running against different nodes (Parity,
                 // TurboGeth, etc.) so we have to remove some stuff and then sort the data (after deliniating it)
                 // so it matches more easily

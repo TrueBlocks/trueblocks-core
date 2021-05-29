@@ -14,6 +14,7 @@ grabABI --sol 0x2234567812345678123456781234567812345678
 
 	#### Hidden options
 	-s  (--source)        show the source of the ABI information
+	-c  (--classes)       generate classDefinitions folder and class definitions
 	#### Hidden options
 
 	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]

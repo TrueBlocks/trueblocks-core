@@ -482,6 +482,11 @@ bool CAbi::loadAbiFromEtherscan(const address_t& addr) {
         return true;
     }
 
+    if (loadAbisOneKnown(addr)) {
+        abiSourcesMap[addr] = true;
+        return true;
+    }
+
     const char* STR_CONTRACT_API =
         "http://api.etherscan.io/api?module=contract&action=getabi&address=[{ADDRESS}]&apikey=[{KEY}]";
     if (!isTestMode())
@@ -572,6 +577,33 @@ bool sortByFuncName(const CFunction& f1, const CFunction& f2) {
     for (auto f : f2.inputs)
         s2 += f.name;
     return s1 < s2;
+}
+
+//-----------------------------------------------------------------------
+bool isKnownAbi(const string_q& addr, string_q& path) {
+    path = configPath("abis/known-000/" + addr + ".json");
+    if (fileExists(path))
+        return true;
+    path = configPath("abis/known-005/" + addr + ".json");
+    if (fileExists(path))
+        return true;
+    path = configPath("abis/known-010/" + addr + ".json");
+    if (fileExists(path))
+        return true;
+    path = configPath("abis/known-015/" + addr + ".json");
+    if (fileExists(path))
+        return true;
+    path = "";
+    return false;
+}
+
+//-----------------------------------------------------------------------
+bool CAbi::loadAbisOneKnown(const string_q& addr) {
+    string_q path;
+    if (!isKnownAbi(addr, path))
+        return false;
+    loadAbiFromFile(path);
+    return true;
 }
 // EXISTING_CODE
 }  // namespace qblocks

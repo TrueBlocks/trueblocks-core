@@ -25,6 +25,7 @@ static const COption params[] = {
     COption("sol", "s", "<string>", OPT_FLAG, "file name of .sol file from which to create a new known abi (without .sol)"),  // NOLINT
     COption("find", "f", "<string>", OPT_FLAG, "try to search for a function declaration given a four byte code"),
     COption("source", "s", "", OPT_HIDDEN | OPT_SWITCH, "show the source of the ABI information"),
+    COption("classes", "c", "", OPT_HIDDEN | OPT_SWITCH, "generate classDefinitions folder and class definitions"),
     COption("", "", "", OPT_DESCRIPTION, "Fetches the ABI for a smart contract."),
     // clang-format on
     // END_CODE_OPTIONS
@@ -42,14 +43,19 @@ bool COptions::parseArguments(string_q& command) {
     string_q sol = "";
     string_q find = "";
     bool source = false;
+    bool classes = false;
     // END_CODE_LOCAL_INIT
 
     Init();
     explode(arguments, command, ' ');
     blknum_t latest = NOPOS;  // getBlockProgress(BP_CLIENT).client;
+    string_q unused;
     for (auto arg : arguments) {
         if (false) {
             // do nothing -- make auto code generation easier
+        } else if (isKnownAbi(arg, unused)) {
+            addrs.push_back(arg);
+
             // BEG_CODE_AUTO
         } else if (arg == "-k" || arg == "--known") {
             known = true;
@@ -66,6 +72,9 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-s" || arg == "--source") {
             source = true;
+
+        } else if (arg == "-c" || arg == "--classes") {
+            classes = true;
 
         } else if (startsWith(arg, '-')) {  // do not collapse
 
@@ -87,6 +96,7 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST("sol", sol, (sol == ""));
     LOG_TEST("find", find, (find == ""));
     LOG_TEST_BOOL("source", source);
+    LOG_TEST_BOOL("classes", classes);
     // END_DEBUG_DISPLAY
 
     if (Mocked(""))
@@ -131,6 +141,12 @@ bool COptions::parseArguments(string_q& command) {
             abi_spec.loadAbiFromEtherscan(addr);
             abi_spec.address = addr;
         }
+    }
+
+    if (classes) {
+        for (auto func : abi_spec.interfaces)
+            cout << func << endl;
+        return false;
     }
 
     // Display formatting

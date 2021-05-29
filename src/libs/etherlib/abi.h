@@ -54,6 +54,7 @@ class CAbi : public CBaseNode {
     bool loadAbiFromEtherscan(const address_t& addr);
     bool loadAbiFromSolidity(const address_t& addr);
     bool loadAbisFromKnown(bool tokensOnly = false);
+    bool loadAbisOneKnown(const string_q& addr);
 
     size_t nInterfaces(void) const;
     size_t nFunctions(void) const;
@@ -188,5 +189,6 @@ extern bool sortByFuncName(const CFunction& f1, const CFunction& f2);
 inline size_t CAbi::nInterfaces(void) const {
     return interfaces.size();
 }
+bool isKnownAbi(const string_q& addr, string_q& path);
 // EXISTING_CODE
 }  // namespace qblocks
