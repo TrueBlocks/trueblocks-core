@@ -558,10 +558,17 @@ size_t CAbi::nOther(void) const {
 
 //-----------------------------------------------------------------------
 bool sortByFuncName(const CFunction& f1, const CFunction& f2) {
-    string_q s1 = (f1.type == "event" ? "zzzevent" : f1.type) + f1.name + f1.encoding;
+    string_q name1 = toLower(f1.name);
+    while (startsWith(name1, '_'))
+        replace(name1, "_", "");
+    string_q s1 = (f1.type == "event" ? "zzzevent" : f1.type) + name1 + f1.encoding;
     for (auto f : f1.inputs)
         s1 += f.name;
-    string_q s2 = (f2.type == "event" ? "zzzevent" : f2.type) + f2.name + f2.encoding;
+
+    string_q name2 = toLower(f2.name);
+    while (startsWith(name2, '_'))
+        replace(name2, "_", "");
+    string_q s2 = (f2.type == "event" ? "zzzevent" : f2.type) + name2 + f2.encoding;
     for (auto f : f2.inputs)
         s2 += f.name;
     return s1 < s2;
