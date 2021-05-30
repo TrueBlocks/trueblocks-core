@@ -915,9 +915,6 @@ string_q wei_2_Ether(const wei_t& weiIn, uint64_t decimals) {
     return str_2_Ether(bnu_2_Str(weiIn), decimals);
 }
 
-//---------------------------------------------------------------------------
-extern string_q wei_2_Dollars(const timestamp_t& ts, const wei_t& weiIn, uint64_t decimals);  // see pricequote.cpp
-
 //--------------------------------------------------------------------------------
 string_q wei_2_Export(const blknum_t& bn, const wei_t& weiIn, uint64_t decimals) {
     // Makes finding the dollar value quicker (if we call into this more than once)

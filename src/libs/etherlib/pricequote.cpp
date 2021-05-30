@@ -308,7 +308,7 @@ static string_q getWeiQuote(const CPriceQuoteArray& quotes, const timestamp_t& t
 }
 
 //-----------------------------------------------------------------------
-string_q wei_2_Dollars(const timestamp_t& ts, const wei_t& weiIn, uint64_t decimals) {
+string_q wei_2_Dollars(const timestamp_t& ts, const wei_t& weiIn, uint64_t decimals, bool silent) {
     if (weiIn == 0)
         return "";
 
@@ -325,7 +325,7 @@ string_q wei_2_Dollars(const timestamp_t& ts, const wei_t& weiIn, uint64_t decim
 
         string_q message;
         CPriceSource source(STR_PRICE_URL, "USDT_ETH", parsePoloniex);
-        if (!loadPriceData(source, quotes, false, message, 1)) {
+        if (!loadPriceData(source, quotes, silent, message, 1)) {
             cerr << "Cannot load price data. Quitting..." << endl;
             quickQuitHandler(EXIT_FAILURE);
         }
