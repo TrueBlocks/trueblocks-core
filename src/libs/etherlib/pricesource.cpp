@@ -34,8 +34,7 @@ string_q CPriceSource::getDatabasePath(string_q& source) const {
 
 extern size_t dotDot(char* ptr, size_t size, size_t nmemb, void* userdata);
 //---------------------------------------------------------------------------
-bool loadPriceData(const CPriceSource& source, CPriceQuoteArray& quotes, bool freshen, string_q& message,
-                   uint64_t step) {
+bool loadPriceData(const CPriceSource& source, CPriceQuoteArray& quotes, bool freshen, string_q& message) {
     string_q theSource;
     string_q cacheFile = source.getDatabasePath(theSource);
 
@@ -204,13 +203,6 @@ bool loadPriceData(const CPriceSource& source, CPriceQuoteArray& quotes, bool fr
         }
         if (!isTestMode())
             cerr << msg << date << " : " << count << " records\n";
-    }
-
-    if (step != 1) {
-        CPriceQuoteArray ret;
-        for (size_t i = 0; i < quotes.size(); i += step)
-            ret.push_back(quotes[i]);  // grows the vector
-        quotes = ret;
     }
 
     return true;

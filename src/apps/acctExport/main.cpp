@@ -9,7 +9,7 @@
 #ifdef LOCAL
 //-----------------------------------------------------------------------
 class CTrueBitsTraverser : public CTraverser {
-public:
+  public:
     CTrueBitsTraverser(void) : CTraverser(cout, "truebit") {
     }
 };
@@ -20,12 +20,12 @@ bool freshen(CTraverser* trav, void* data) {
     string_q dollars = wei_2_Dollars(trav->trans.timestamp, balance, 18);
     if (dollars.empty())
         dollars = "0.00";
-    
+
     cout << ts_2_Date(expContext().tsMemMap[(getBlockProgress(BP_FINAL).finalized * 2) + 1]) << "\t";
     cout << trav->accountedFor << "\t";
     cout << wei_2_Ether(balance, 18) << "\t";
     cout << dollars << endl;
-    
+
     return true;
 }
 
@@ -38,8 +38,10 @@ bool process(CTraverser* trav, void* data) {
 extern "C" CTraverser* makeTraverser(void) {
     freshenTimestamps(getBlockProgress().client);
     if (loadTimestamps(&expContext().tsMemMap, expContext().tsCnt))
-        cout << wei_2_Dollars(expContext().tsMemMap[(getBlockProgress(BP_FINAL).finalized * 2) + 1], str_2_Wei("1000000000000000000"), 18, true) << endl;
-    
+        cout << wei_2_Dollars(expContext().tsMemMap[(getBlockProgress(BP_FINAL).finalized * 2) + 1],
+                              str_2_Wei("1000000000000000000"), 18)
+             << endl;
+
     CTrueBitsTraverser* trav = new CTrueBitsTraverser;
     trav->filterFunc = trav->postFunc = trav->dataFunc = noopFunc;
     trav->preFunc = freshen;
