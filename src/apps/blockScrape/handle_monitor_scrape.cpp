@@ -26,7 +26,8 @@ bool COptions::scrape_monitors(void) {
         os << (load.empty() ? "" : "--load " + load);
         os << (verbose ? ("--verbose " + uint_2_Str(verbose)) : "") << " ";
         os << monitor.address << " --freshen";
-        LOG_INFO("Calling: " + os.str() + string_q(40, ' '));
+        if (load.empty())
+            LOG_INFO("Calling: " + os.str() + string_q(40, ' '));
         if (system(os.str().c_str()) != 0) {
             defaultQuitHandler(1);
             return false;
