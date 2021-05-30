@@ -16,7 +16,6 @@
 //------------------------------------------------------------------------------------------------------------
 bool COptions::handle_format(void) {
     CToml config(configPath("makeClass.toml"));
-
     bool enabled = config.getConfigBool("enabled", "auto_format", false);
     string_q res = doCommand("which clang-format");
     if (!enabled || res.empty()) {
