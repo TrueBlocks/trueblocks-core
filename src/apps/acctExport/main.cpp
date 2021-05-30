@@ -5,6 +5,49 @@
  *------------------------------------------------------------------------*/
 #include "options.h"
 
+#define LOCAL
+#ifdef LOCAL
+//-----------------------------------------------------------------------
+class CTrueBitsTraverser : public CTraverser {
+public:
+    CTrueBitsTraverser(void) : CTraverser(cout, "truebit") {
+    }
+};
+
+//-----------------------------------------------------------------------
+bool freshen(CTraverser* trav, void* data) {
+    wei_t balance = getBalanceAt(trav->accountedFor, getBlockProgress(BP_FINAL).finalized);
+    string_q dollars = wei_2_Dollars(trav->trans.timestamp, balance, 18);
+    if (dollars.empty())
+        dollars = "0.00";
+    
+    cout << ts_2_Date(expContext().tsMemMap[(getBlockProgress(BP_FINAL).finalized * 2) + 1]) << "\t";
+    cout << trav->accountedFor << "\t";
+    cout << wei_2_Ether(balance, 18) << "\t";
+    cout << dollars << endl;
+    
+    return true;
+}
+
+//-----------------------------------------------------------------------
+bool process(CTraverser* trav, void* data) {
+    return false;
+}
+
+//-----------------------------------------------------------------------
+extern "C" CTraverser* makeTraverser(void) {
+    freshenTimestamps(getBlockProgress().client);
+    if (loadTimestamps(&expContext().tsMemMap, expContext().tsCnt))
+        cout << wei_2_Dollars(expContext().tsMemMap[(getBlockProgress(BP_FINAL).finalized * 2) + 1], str_2_Wei("1000000000000000000"), 18, true) << endl;
+    
+    CTrueBitsTraverser* trav = new CTrueBitsTraverser;
+    trav->filterFunc = trav->postFunc = trav->dataFunc = noopFunc;
+    trav->preFunc = freshen;
+    trav->displayFunc = process;
+    return trav;
+}
+#endif
+
 //-----------------------------------------------------------------------
 int main(int argc, const char* argv[]) {
     pinlib_init(quickQuitHandler);
@@ -70,6 +113,18 @@ int main(int argc, const char* argv[]) {
             forEveryAppearance(traversers, options.apps, &options);
 
         } else {
+#ifdef LOCAL
+            auto factory = makeTraverser;
+            CTraverser* trav = factory();
+            if (trav->dataFunc == noopFunc)
+                trav->dataFunc = loadTx_Func;
+            for (auto monitor : options.allMonitors) {
+                trav->accountedFor = monitor.address;
+                options.apps.clear();
+                options.loadOneAddress(monitor, options.apps);
+                trav->execute(options.apps, &options);
+            }
+#else
             string fileName = getCachePath("objs/" + options.load);
             if (fileExists(fileName)) {
                 CDynamicTraverser lib(fileName);
@@ -89,6 +144,7 @@ int main(int argc, const char* argv[]) {
             } else {
                 LOG_ERR("Could not load dynamic traverser for ", fileName);
             }
+#endif
         }
 
         if (shouldQuit())
