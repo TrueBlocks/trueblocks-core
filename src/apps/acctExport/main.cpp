@@ -76,10 +76,14 @@ int main(int argc, const char* argv[]) {
                 if (lib.is_valid()) {
                     auto factory = lib.get_function<CTraverser*(void)>("makeTraverser");
                     CTraverser* trav = factory();
-                    trav->accountedFor = options.accountedFor;
                     if (trav->dataFunc == noopFunc)
                         trav->dataFunc = loadTx_Func;
-                    trav->execute(options.apps, &options);
+                    for (auto monitor : options.allMonitors) {
+                        trav->accountedFor = monitor.address;
+                        options.apps.clear();
+                        options.loadOneAddress(monitor, options.apps);
+                        trav->execute(options.apps, &options);
+                    }
                 }
 
             } else {

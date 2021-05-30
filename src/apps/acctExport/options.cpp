@@ -360,7 +360,7 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
     } else {
-        if (!loadAllAppearances())
+        if (load.empty() && !loadAllAppearances())
             return false;
     }
 
