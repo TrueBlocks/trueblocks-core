@@ -31,6 +31,7 @@ class COptions : public COptionsBase {
     double sleep;
     bool cache_txs;
     bool cache_traces;
+    string_q load;
     // END_CODE_DECLARE
 
     ScrapeState state;

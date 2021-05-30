@@ -23,6 +23,7 @@ bool COptions::scrape_monitors(void) {
         os << "acctExport ";
         os << (cache_txs ? "--cache_txs " : "");
         os << (cache_traces ? "--cache_traces " : "");
+        os << (load.empty() ? "" : "--load " + load);
         os << (verbose ? ("--verbose " + uint_2_Str(verbose)) : "") << " ";
         os << monitor.address << " --freshen";
         LOG_INFO("Calling: " + os.str() + string_q(40, ' '));

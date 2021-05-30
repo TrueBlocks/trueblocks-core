@@ -1277,7 +1277,7 @@ paths:
           type: number
       - name: cache_txs
         in: query
-        description: write transactions to the cache (see notes)
+        description: pass through to chifra export --freshen (see notes)
         required: false
         style: form
         explode: true
@@ -1285,12 +1285,20 @@ paths:
           type: boolean
       - name: cache_traces
         in: query
-        description: write traces to the cache (see notes)
+        description: pass through to chifra export --freshen (see notes)
         required: false
         style: form
         explode: true
         schema:
           type: boolean
+      - name: load
+        in: query
+        description: pass through to chifra export --freshen (see notes)
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
       responses:
         "200":
           description: status of the scraper
