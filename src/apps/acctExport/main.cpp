@@ -33,7 +33,7 @@ int main(int argc, const char* argv[]) {
                       : GETRUNTIME_CLASS(CTransaction)->m_ClassName))));
             // clang-format on
 
-            if (once)
+            if (once && !options.freshenOnly)
                 cout << exportPreamble(expContext().fmtMap["header"], options.className);
 
             if (options.appearances) {
