@@ -35,7 +35,7 @@ bool COptions::scrape_monitors(void) {
 
         string_q unused;
         state = getCurrentState(unused);
-        usleep(50000);  // allows user to get a control+c in edgewise
+        usleep(10000);  // allows user to get a control+c in edgewise
     }
 
     return !shouldQuit();
