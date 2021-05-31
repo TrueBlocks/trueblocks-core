@@ -5,7 +5,7 @@
  *------------------------------------------------------------------------*/
 #include "options.h"
 
-#define LOCAL
+// #define LOCAL
 #ifdef LOCAL
 //-----------------------------------------------------------------------
 class CTrueBitsTraverser : public CTraverser {
@@ -124,13 +124,15 @@ int main(int argc, const char* argv[]) {
                 trav->accountedFor = monitor.address;
                 options.apps.clear();
                 options.loadOneAddress(monitor, options.apps);
-                trav->execute(options.apps, &options);
+                trav->traverse(options.apps, &options);
             }
 #else
             string fileName = getCachePath("objs/" + options.load);
             if (fileExists(fileName)) {
                 CDynamicTraverser lib(fileName);
                 if (lib.is_valid()) {
+                    freshenTimestamps(getBlockProgress().client);
+                    loadTimestamps(&expContext().tsMemMap, expContext().tsCnt);
                     auto factory = lib.get_function<CTraverser*(void)>("makeTraverser");
                     CTraverser* trav = factory();
                     if (trav->dataFunc == noopFunc)
@@ -139,7 +141,7 @@ int main(int argc, const char* argv[]) {
                         trav->accountedFor = monitor.address;
                         options.apps.clear();
                         options.loadOneAddress(monitor, options.apps);
-                        trav->execute(options.apps, &options);
+                        trav->traverse(options.apps, &options);
                     }
                 }
 

@@ -44,7 +44,7 @@ class CTraverser {
     CBlock block;
     CTransaction trans;
 
-    bool execute(const CAppearanceArray_base& apps, void* data);
+    bool traverse(const CAppearanceArray_base& apps, void* data);
 
   private:
     CTraverser(void) = delete;

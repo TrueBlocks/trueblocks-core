@@ -340,6 +340,22 @@ string_q CEthCall::getResult(void) const {
 }
 
 //-------------------------------------------------------------------------
+bool CEthCall::getResults(string_q& out) const {
+    if (result.outputs.size()) {
+        out = result.outputs[0].value;
+        return true;
+    }
+    return false;
+}
+
+//-------------------------------------------------------------------------
+bool CEthCall::getResults(CStringArray& out) const {
+    for (auto output : result.outputs)
+        out.push_back(output.value);
+    return out.size();
+}
+
+//-------------------------------------------------------------------------
 bool doEthCall(CEthCall& theCall) {
     string_q orig = theCall.encoding;
 

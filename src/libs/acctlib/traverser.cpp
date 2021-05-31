@@ -17,7 +17,7 @@ bool forEveryAppearance(const CTraverserArray& traversers, const CAppearanceArra
     for (auto trav : traversers) {
         if (shouldQuit())
             break;
-        if (!trav.execute(apps, data))
+        if (!trav.traverse(apps, data))
             return false;
     }
 
@@ -25,7 +25,7 @@ bool forEveryAppearance(const CTraverserArray& traversers, const CAppearanceArra
 };
 
 //-----------------------------------------------------------------------
-bool CTraverser::execute(const CAppearanceArray_base& apps, void* data) {
+bool CTraverser::traverse(const CAppearanceArray_base& apps, void* data) {
     const COptionsBase* opt = (const COptionsBase*)data;
 
     // Make sure we have something to work with...
