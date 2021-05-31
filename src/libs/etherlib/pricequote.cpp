@@ -308,7 +308,7 @@ static string_q getWeiQuote(const CPriceQuoteArray& quotes, const timestamp_t& t
 }
 
 //-----------------------------------------------------------------------
-string_q wei_2_Dollars(const timestamp_t& ts, const wei_t& weiIn, uint64_t decimals, bool silent) {
+string_q wei_2_Dollars(const timestamp_t& ts, const wei_t& weiIn, uint64_t decimals) {
     if (weiIn == 0)
         return "";
 

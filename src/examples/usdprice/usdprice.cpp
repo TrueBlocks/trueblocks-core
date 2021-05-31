@@ -3,10 +3,11 @@
  *----------------------------------------------------------------------*/
 #include "acctlib.h"
 
-
 string_q uniswapFactory = "0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f";
 string_q getPair = "0xe6a43905";
-string_q pairBytes = "0000000000000000000000006b175474e89094c44da98b954eedeac495271d0f000000000000000000000000c02aaa39b223fe8d0a0e5c4f27ead9083c756cc2";
+string_q pairBytes =
+    "0000000000000000000000006b175474e89094c44da98b954eedeac495271d0f000000000000000000000000c02aaa39b223fe8d0a0e5c4f27"
+    "ead9083c756cc2";
 string_q getReserves = "0x0902f1ac";
 string_q reserveBytes = "";
 //-----------------------------------------------------------------------
@@ -38,8 +39,10 @@ bool header(CTraverser* trav, void* data) {
     cout << "transactionId\t";
     cout << "reserve1\t";
     cout << "reserve2\t";
-    cout << "priceUSD" << "\t";
-    cout << "balEth" << "\t";
+    cout << "priceUSD"
+         << "\t";
+    cout << "balEth"
+         << "\t";
     cout << "balUSD" << endl;
     return true;
 }
@@ -63,7 +66,7 @@ bool display(CTraverser* trav, void* data) {
             cout << double_2_Str(reserve1, 3) << "\t";
             cout << double_2_Str(reserve2, 3) << "\t";
             cout << double_2_Str(price, 2) << "\t";
-            cout << double_2_Str(ethbal, 3)  << "\t";
+            cout << double_2_Str(ethbal, 3) << "\t";
             cout << double_2_Str(usdbal, 2) << endl;
         }
     } else {
@@ -77,7 +80,7 @@ bool display(CTraverser* trav, void* data) {
 //-----------------------------------------------------------------------
 extern "C" CTraverser* makeTraverser(void) {
     acctlib_init(quickQuitHandler);
-    
+
     freshenTimestamps(getBlockProgress().client);
     loadTimestamps(&expContext().tsMemMap, expContext().tsCnt);
 
