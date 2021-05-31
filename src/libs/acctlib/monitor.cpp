@@ -490,7 +490,7 @@ string_q getTokenState(const string_q& what, const CAbi& abi_spec, const CMonito
     theCall.blockNumber = blockNum;
     theCall.abi_spec = abi_spec;
     if (doEthCall(theCall))
-        return theCall.getResult();
+        return theCall.getResults();
     return "";
 }
 // EXISTING_CODE

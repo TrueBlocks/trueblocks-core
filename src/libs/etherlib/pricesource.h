@@ -29,7 +29,6 @@ class CPriceSource {
     string_q getDatabasePath(string& source) const;
 };
 
-extern bool loadPriceData(const CPriceSource& source, CPriceQuoteArray& quotes, bool freshen, string_q& message,
-                          uint64_t step = 1);
+extern bool loadPriceData(const CPriceSource& source, CPriceQuoteArray& quotes, bool freshen, string_q& message);
 
 }  // namespace qblocks

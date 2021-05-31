@@ -3,7 +3,7 @@ blockScrape --publish
 
   Invalid option: --publish
 
-  Usage:    blockScrape [-t|-n|-p|-s|-i|-R|-v|-h] mode  
+  Usage:    blockScrape [-t|-n|-p|-s|-v|-h] mode  
   Purpose:  Scan the chain and update the TrueBlocks index of appearances.
 
   Where:  
@@ -12,12 +12,13 @@ blockScrape --publish
 	-n  (--n_blocks <num>)maximum number of blocks to process (defaults to 5000)
 	-p  (--pin)           pin new chunks (and blooms) to IPFS (requires Pinata key and running IPFS node)
 	-s  (--sleep <double>)the number of seconds to sleep between passes (default 14)
-	-i  (--cache_txs)     write transactions to the cache (see notes)
-	-R  (--cache_traces)  write traces to the cache (see notes)
 
 	#### Hidden options
 	-b  (--n_block_procs <num>)number of block channels for blaze
 	-a  (--n_addr_procs <num>)number of address channels for blaze
+	-i  (--cache_txs)     pass through to chifra export --freshen (see notes)
+	-R  (--cache_traces)  pass through to chifra export --freshen (see notes)
+	    (--load <str>)    pass through to chifra export --freshen (see notes)
 	#### Hidden options
 
 	-v  (--verbose)       set verbose level (optional level defaults to 1)
