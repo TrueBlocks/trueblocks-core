@@ -335,7 +335,7 @@ const char* STR_DISPLAY_ETHCALL =
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 //-------------------------------------------------------------------------
-string_q CEthCall::getResult(void) const {
+string_q CEthCall::getResults(void) const {
     return result.outputs.size() ? result.outputs[0].value : "";
 }
 
@@ -381,7 +381,7 @@ bool doEthCall(CEthCall& theCall) {
             // This is a proxy with an implementation...let's
             // try again against the proxied-to address.
             theCall.encoding = orig;
-            theCall.address = theCall.getResult();
+            theCall.address = theCall.getResults();
             if (isZeroAddr(theCall.address))
                 return false;
             return doEthCall(theCall);
