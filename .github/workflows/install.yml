@@ -19,8 +19,6 @@ jobs:
         run: |
           mkdir build && cd build
           cmake ../src
-          mkdir -p build && cd build
-          cmake ../src
           make -j 4
       - name: Run SSH tunnel
         run: |
