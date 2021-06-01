@@ -4,11 +4,6 @@ jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out repository code
-        uses: actions/checkout@v2
-      - name: Install Prerequistes
-        run: |
-          sudo apt install build-essential git cmake python python-dev libcurl3-dev clang-format jq
       - name: Setup SSH Key
         run: |
           mkdir ~/.ssh
@@ -22,11 +17,4 @@ jobs:
         run: |
           ${{secrets.SSH_COMMAND}}
           ls -la ~/.ssh
-      - name: Build TrueBlocks
-        run: |
-          echo "Ah1"
-      - name: Run SSH Process and Tests
-        run: |
-          ${{secrets.SSH_COMMAND}} &
-      
       - run: echo "🍏 This job's status is ${{ job.status }}."
