@@ -11,11 +11,10 @@ jobs:
           sudo apt install build-essential git cmake python python-dev libcurl3-dev clang-format jq
       - name: Setup SSH Key
         run: |
-          ls -la ~/
           mkdir ~/.ssh
           echo $SSH_PRIVATE_KEY > ~/.ssh/github_action
+          chmod 700 ~/.ssh
           chmod 600 ~/.ssh/github_action
-          chmod 600 ~/.ssh
           ls -la ~/.ssh
         env:
           SSH_PRIVATE_KEY : ${{secrets.SSH_PRIVATE_KEY}}
