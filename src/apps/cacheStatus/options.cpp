@@ -21,8 +21,8 @@ static const COption params[] = {
     COption("terse", "e", "", OPT_HIDDEN | OPT_SWITCH, "show a terse summary report"),
     COption("get_config", "g", "", OPT_HIDDEN | OPT_SWITCH, "returns JSON data of the editable configuration file items"),  // NOLINT
     COption("set_config", "s", "", OPT_HIDDEN | OPT_SWITCH, "accepts JSON in an env variable and writes it to configuration files"),  // NOLINT
-    COption("start", "S", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to process (inclusive)"),
-    COption("end", "E", "<blknum>", OPT_HIDDEN | OPT_FLAG, "last block to process (inclusive)"),
+    COption("test_start", "S", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to process (inclusive -- testing only)"),
+    COption("test_end", "E", "<blknum>", OPT_HIDDEN | OPT_FLAG, "last block to process (inclusive -- testing only)"),
     COption("", "", "", OPT_DESCRIPTION, "Report on the status of the TrueBlocks system."),
     // clang-format on
     // END_CODE_OPTIONS
@@ -43,6 +43,8 @@ bool COptions::parseArguments(string_q& command) {
     bool report = false;
     bool get_config = false;
     bool set_config = false;
+    blknum_t test_start = 0;
+    blknum_t test_end = NOPOS;
     // END_CODE_LOCAL_INIT
 
     blknum_t latest = NOPOS;  // getBlockProgress(BP_CLIENT).client;
@@ -82,17 +84,17 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-s" || arg == "--set_config") {
             set_config = true;
 
-        } else if (startsWith(arg, "-S:") || startsWith(arg, "--start:")) {
-            if (!confirmBlockNum("start", start, arg, latest))
+        } else if (startsWith(arg, "-S:") || startsWith(arg, "--test_start:")) {
+            if (!confirmBlockNum("test_start", test_start, arg, latest))
                 return false;
-        } else if (arg == "-S" || arg == "--start") {
-            return flag_required("start");
+        } else if (arg == "-S" || arg == "--test_start") {
+            return flag_required("test_start");
 
-        } else if (startsWith(arg, "-E:") || startsWith(arg, "--end:")) {
-            if (!confirmBlockNum("end", end, arg, latest))
+        } else if (startsWith(arg, "-E:") || startsWith(arg, "--test_end:")) {
+            if (!confirmBlockNum("test_end", test_end, arg, latest))
                 return false;
-        } else if (arg == "-E" || arg == "--end") {
-            return flag_required("end");
+        } else if (arg == "-E" || arg == "--test_end") {
+            return flag_required("test_end");
 
         } else if (startsWith(arg, '-')) {  // do not collapse
 
@@ -119,8 +121,8 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST_BOOL("terse", terse);
     LOG_TEST_BOOL("get_config", get_config);
     LOG_TEST_BOOL("set_config", set_config);
-    LOG_TEST("start", start, (start == NOPOS));
-    LOG_TEST("end", end, (end == NOPOS));
+    LOG_TEST("test_start", test_start, (test_start == 0));
+    LOG_TEST("test_end", test_end, (test_end == NOPOS));
     // END_DEBUG_DISPLAY
 
     bool cs = false;
@@ -145,8 +147,9 @@ bool COptions::parseArguments(string_q& command) {
     for (auto m : modes)
         mode += (m + "|");
 
-    if (start == NOPOS)
-        start = 0;
+    if (!isTestMode() && (test_start != 0 || test_end != NOPOS))
+        return usage("--test_start and --test_end are only available during testing.");
+    scanRange = make_pair(test_start, test_end);
 
     if (get_config && set_config)
         return usage("Please chose only one of --set_config and --get_config.");
@@ -212,10 +215,9 @@ void COptions::Init(void) {
     details = false;
     depth = NOPOS;
     terse = false;
-    start = NOPOS;
-    end = NOPOS;
     // END_CODE_INIT
 
+    scanRange = make_pair(0, NOPOS);
     isConfig = false;
     mode = "";
 

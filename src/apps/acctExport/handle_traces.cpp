@@ -9,10 +9,6 @@
 bool traces_Display(CTraverser* trav, void* data) {
     COptions* opt = (COptions*)data;
 
-    trav->nProcessed += trav->trans.traces.size();
-    if (opt->freshenOnly)
-        return true;
-
     for (auto trace : trav->trans.traces) {
         CTrace copy = trace;
         if (fourByteFilter(trace.action.input, opt)) {
@@ -54,4 +50,9 @@ bool traces_Display(CTraverser* trav, void* data) {
 
     prog_Log(trav, data);
     return !shouldQuit();
+}
+
+//-----------------------------------------------------------------------
+size_t traces_Count(CTraverser* trav, void* data) {
+    return trav->trans.traces.size();
 }

@@ -10,10 +10,6 @@ bool logFilter(const CLogEntry& log, const COptions* opt);
 bool logs_Display(CTraverser* trav, void* data) {
     COptions* opt = (COptions*)data;
 
-    trav->nProcessed += trav->trans.receipt.logs.size();
-    if (opt->freshenOnly)
-        return true;
-
     for (auto log : trav->trans.receipt.logs) {
         if (logFilter(log, opt)) {
             cout << ((isJson() && !opt->firstOut) ? ", " : "");
@@ -24,6 +20,11 @@ bool logs_Display(CTraverser* trav, void* data) {
 
     prog_Log(trav, data);
     return !shouldQuit();
+}
+
+//-----------------------------------------------------------------------
+size_t logs_Count(CTraverser* trav, void* data) {
+    return trav->trans.receipt.logs.size();
 }
 
 //-----------------------------------------------------------------------

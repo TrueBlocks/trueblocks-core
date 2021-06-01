@@ -18,8 +18,8 @@ cacheStatus -th
 | -e | --terse | show a terse summary report |
 | -g | --get_config | returns JSON data of the editable configuration file items |
 | -s | --set_config | accepts JSON in an env variable and writes it to configuration files |
-| -S | --start &lt;num&gt; | first block to process (inclusive) |
-| -E | --end &lt;num&gt; | last block to process (inclusive) |
+| -S | --test_start &lt;num&gt; | first block to process (inclusive -- testing only) |
+| -E | --test_end &lt;num&gt; | last block to process (inclusive -- testing only) |
 |####|Hidden options||
 | -x | --fmt &lt;val&gt; | export format, one of *[ none \| json\* \| txt \| csv \| api ]* |
 | -v | --verbose | set verbose level (optional level defaults to 1) |

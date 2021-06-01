@@ -9,10 +9,6 @@
 bool app_Display(CTraverser* trav, void* data) {
     COptions* opt = (COptions*)data;
 
-    trav->nProcessed++;
-    if (opt->freshenOnly)
-        return true;
-
     CAppearanceDisplay dapp(opt->accountedFor, opt->accountedForName, trav->app->blk, trav->app->txid);
     cout << ((isJson() && !opt->firstOut) ? ", " : "");
     cout << dapp;

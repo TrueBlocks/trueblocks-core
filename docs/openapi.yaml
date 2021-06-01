@@ -233,6 +233,22 @@ paths:
         explode: true
         schema:
           type: boolean
+      - name: first_block
+        in: query
+        description: first block to process (inclusive)
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: last_block
+        in: query
+        description: last block to process (inclusive)
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
       - name: first_record
         in: query
         description: the first record to process
@@ -1171,17 +1187,17 @@ paths:
         explode: true
         schema:
           type: boolean
-      - name: start
+      - name: test_start
         in: query
-        description: first block to process (inclusive)
+        description: first block to process (inclusive -- testing only)
         required: false
         style: form
         explode: true
         schema:
           type: string
-      - name: end
+      - name: test_end
         in: query
-        description: last block to process (inclusive)
+        description: last block to process (inclusive -- testing only)
         required: false
         style: form
         explode: true

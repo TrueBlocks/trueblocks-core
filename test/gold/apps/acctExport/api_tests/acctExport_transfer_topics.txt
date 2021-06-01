@@ -447,8 +447,8 @@
       "0x6b466f2e9750044a262e54415150b9bafbaf7a62": 1,
       "0xcb04fbb44bb2aa0e3d402d0bde2de60b2de028af": 1
     },
-    "start": "0xdeadbeef",
-    "end": "0xdeadbeef",
+    "first_block": "0xdeadbeef",
+    "last_block": "0xdeadbeef",
     "accountedFor": {
       "tags": "32-Kickback:Friends",
       "address": "0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3",

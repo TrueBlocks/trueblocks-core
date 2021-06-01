@@ -11,9 +11,9 @@ namespace qblocks {
 class CTraverser;
 //-----------------------------------------------------------------------
 typedef bool (*TRAVERSERFUNC)(CTraverser* trav, void* data);
+typedef size_t (*COUNTERFUNC)(CTraverser* trav, void* data);
 
 //-----------------------------------------------------------------------
-extern bool rangeFilter(CTraverser* trav, void* data);
 inline bool noopFunc(CTraverser* trav, void* data) {
     return true;
 }
@@ -35,7 +35,8 @@ class CTraverser {
     }
 
   public:
-    TRAVERSERFUNC filterFunc = rangeFilter;
+    TRAVERSERFUNC filterFunc = nullptr;
+    COUNTERFUNC counterFunc = nullptr;
     TRAVERSERFUNC preFunc = nullptr;
     TRAVERSERFUNC postFunc = nullptr;
     TRAVERSERFUNC displayFunc = nullptr;

@@ -514,8 +514,8 @@
       "0xa63d5adefb4424901c7904106d55df61b2f90e07": 2,
       "0xe754bb3f679303aa3086170a2ca4a434a1842d4c": 2
     },
-    "start": "0xdeadbeef",
-    "end": "0xdeadbeef",
+    "first_block": "0xdeadbeef",
+    "last_block": "0xdeadbeef",
     "accountedFor": {
       "tags": "81-Other:DAO Related",
       "address": "0x8b3b3b624c3c0397d3da8fd861512393d51dcbac",

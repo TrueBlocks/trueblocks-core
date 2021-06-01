@@ -694,8 +694,8 @@ TIME ~ CLOCK - <PROG>  : Extracting     10 of    260 txs (max 260) for address 0
 TIME ~ CLOCK - <PROG>  : Extracting     15 of    260 txs (max 260) for address 0x05a56e2d52c817161883f50c441c3228cfe54d9f], "types": [
 { "type": "CTransaction", "fields": [{ "name": "hash", "type": "hash" }, { "name": "blockHash", "type": "hash" }, { "name": "blockNumber", "type": "blocknum" }, { "name": "transactionIndex", "type": "blocknum" }, { "name": "timestamp", "type": "timestamp" }, { "name": "from", "type": "address" }, { "name": "to", "type": "address" }, { "name": "value", "type": "wei" }, { "name": "gas", "type": "gas" }, { "name": "gasPrice", "type": "gas" }, { "name": "isError", "type": "unumber" }, { "name": "hasToken", "type": "unumber" }, { "name": "receipt", "type": "object" }, { "name": "traces", "type": "object|ts_array" }, { "name": "articulatedTx", "type": "object" }, { "name": "compressedTx", "type": "text" }, { "name": "statements", "type": "object|ts_array" }, { "name": "gasCost", "type": "wei" }, { "name": "gasUsed", "type": "gas" }, { "name": "date", "type": "date" }, { "name": "ether", "type": "ether" }] }
 ], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef", "namedFrom": {}
-, "unNamedFrom": {"0xUncleReward": 8,"0xBlockReward": 7}, "start": "0xdeadbeef"
-, "end": "0xdeadbeef"
+, "unNamedFrom": {"0xUncleReward": 8,"0xBlockReward": 7}, "first_block": "0xdeadbeef"
+, "last_block": "0xdeadbeef"
 , "accountedFor": {
   "address": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
   "name": "0x05a56e2d52c817161883f50c441c3228cfe54d9f"

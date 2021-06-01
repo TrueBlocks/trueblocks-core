@@ -1,5 +1,5 @@
-acctExport argc: 8 [1:0x001d14804b399c6ef80e64576f657660804fec0b] [2:--start] [3:100000] [4:--end] [5:2000000] [6:--staging] [7:--unripe] 
-acctExport 0x001d14804b399c6ef80e64576f657660804fec0b --start 100000 --end 2000000 --staging --unripe 
+acctExport argc: 8 [1:0x001d14804b399c6ef80e64576f657660804fec0b] [2:--first_block] [3:100000] [4:--last_block] [5:2000000] [6:--staging] [7:--unripe] 
+acctExport 0x001d14804b399c6ef80e64576f657660804fec0b --first_block 100000 --last_block 2000000 --staging --unripe 
 
   Please choose only one of --staging or --unripe. Quitting...
 
@@ -32,6 +32,8 @@ acctExport 0x001d14804b399c6ef80e64576f657660804fec0b --start 100000 --end 20000
 	-d  (--skip_ddos)     toggle skipping over 2016 dDos transactions ('on' by default)
 	-m  (--max_traces <num>)if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250)
 	-f  (--freshen)       freshen but do not print the exported data
+	-S  (--first_block <num>)first block to process (inclusive)
+	-E  (--last_block <num>)last block to process (inclusive)
 	-s  (--staging)       enable search of staging (not yet finalized) folder
 	-u  (--unripe)        enable search of unripe (neither staged nor finalized) folder (assumes --staging)
 	    (--load <str>)    a comma separated list of dynamic traversers to load

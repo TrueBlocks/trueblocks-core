@@ -1,5 +1,5 @@
-acctExport argc: 6 [1:0xf503017d7baf7fbc0fff7492b751025c6a78179b] [2:--end] [3:9000000] [4:--fmt] [5:json] 
-acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --end 9000000 --fmt json 
+acctExport argc: 6 [1:0xf503017d7baf7fbc0fff7492b751025c6a78179b] [2:--last_block] [3:9000000] [4:--fmt] [5:json] 
+acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --last_block 9000000 --fmt json 
 { "data": [
 {
   "hash": "0x1a898c5448b37f693343917ea40b7ad1c43b28a4ddd37af1bd6d0bb4a0c99891",

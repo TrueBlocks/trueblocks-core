@@ -23,8 +23,8 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,is_customizable
 10431,apps,Accounts,export,acctExport,source,,,false,false,true,true,header,flag,list<addr>,for log export only&#44; export only one of these addresses emitted the event
 10433,apps,Accounts,export,acctExport,relevant,,,false,false,true,true,header,switch,<boolean>,for log export only&#44; if true export only logs relevant to one of the given export addresses
 10439,apps,Accounts,export,acctExport,count,U,,false,false,true,true,header,switch,<boolean>,only available for --appearances mode&#44; if present return only|the number of records
-10440,apps,Accounts,export,acctExport,start,S,,false,false,false,false,local,deprecated,<blknum>,first block to process (inclusive)
-10450,apps,Accounts,export,acctExport,end,E,,false,false,false,false,local,deprecated,<blknum>,last block to process (inclusive)
+10440,apps,Accounts,export,acctExport,first_block,S,0,false,false,false,false,local,flag,<blknum>,first block to process (inclusive)
+10450,apps,Accounts,export,acctExport,last_block,E,NOPOS,false,false,false,false,local,flag,<blknum>,last block to process (inclusive)
 10453,apps,Accounts,export,acctExport,first_record,c,0,false,false,true,true,header,flag,<blknum>,the first record to process
 10457,apps,Accounts,export,acctExport,max_records,e,(isApiMode() ? 250 : NOPOS),false,false,true,true,header,flag,<blknum>,the maximum number of records to process before reporting
 10085,apps,Accounts,export,acctExport,clean,,false,false,false,true,true,header,switch,<boolean>,clean (i.e. remove duplicate appearances) from all existing monitors
@@ -176,8 +176,8 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,is_customizable
 10770,apps,Admin,status,cacheStatus,terse,e,,false,false,false,true,header,switch,<boolean>,show a terse summary report
 10780,apps,Admin,status,cacheStatus,get_config,g,,false,false,false,false,local,switch,<boolean>,returns JSON data of the editable configuration file items
 10800,apps,Admin,status,cacheStatus,set_config,s,,false,false,false,false,local,switch,<boolean>,accepts JSON in an env variable and writes it to configuration|files
-10820,apps,Admin,status,cacheStatus,start,S,,false,false,false,false,header,flag,<blknum>,first block to process (inclusive)
-10840,apps,Admin,status,cacheStatus,end,E,,false,false,false,false,header,flag,<blknum>,last block to process (inclusive)
+10820,apps,Admin,status,cacheStatus,test_start,S,0,false,false,false,false,local,flag,<blknum>,first block to process (inclusive -- testing only)
+10840,apps,Admin,status,cacheStatus,test_end,E,NOPOS,false,false,false,false,local,flag,<blknum>,last block to process (inclusive -- testing only)
 10860,apps,Admin,status,cacheStatus,,,,false,false,true,true,--,description,,Report on the status of the TrueBlocks system.
 
 10950,apps,Admin,pins,pinMan,list,l,,false,false,true,true,local,switch,<boolean>,list the index and bloom filter hashes from local manifest or pinning service

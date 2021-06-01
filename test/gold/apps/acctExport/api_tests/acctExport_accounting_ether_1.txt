@@ -7696,8 +7696,8 @@
       }
     },
     "unNamedTo": {},
-    "start": "0xdeadbeef",
-    "end": "0xdeadbeef",
+    "first_block": "0xdeadbeef",
+    "last_block": "0xdeadbeef",
     "accountedFor": {
       "tags": "00-Active",
       "address": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",

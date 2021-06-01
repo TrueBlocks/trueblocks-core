@@ -1292,7 +1292,6 @@ COptionsBase::COptionsBase(void) {
     freshenOnly = false;
     noHeader = false;
     enableBits = OPT_DEFAULT;
-    scanRange = make_pair(0, NOPOS);
     hiUp1 = (isTestMode() ? "" : cYellow) + "  ";
     hiUp2 = (isTestMode() ? "" : cTeal);
     hiDown = (isTestMode() ? "" : cOff);

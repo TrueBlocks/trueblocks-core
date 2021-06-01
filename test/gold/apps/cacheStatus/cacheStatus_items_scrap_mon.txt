@@ -1,5 +1,5 @@
-cacheStatus argc: 7 [1:--details] [2:index] [3:--start] [4:1000000] [5:--end] [6:2200000] 
-cacheStatus --details index --start 1000000 --end 2200000 
+cacheStatus argc: 7 [1:--details] [2:index] [3:--test_start] [4:1000000] [5:--test_end] [6:2200000] 
+cacheStatus --details index --test_start 1000000 --test_end 2200000 
 {
   "client_version": "Client version",
   "client_ids": "chainId: 1 networkId: 1",

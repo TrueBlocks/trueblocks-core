@@ -49,7 +49,7 @@ bool COptions::handle_status(ostream& os) {
             index.path = pathName("index", thePath);
             forEveryFileInFolder(thePath, countFiles, &index);
             LOG8("Counted files");
-            CItemCounter counter(this, start, end);
+            CItemCounter counter(this);
             loadTimestamps(&counter.tsMemMap, counter.tsCnt);
             index.path = pathName("index", indexFolder_finalized);
             counter.cachePtr = &index;
@@ -81,7 +81,7 @@ bool COptions::handle_status(ostream& os) {
             LOG4("counting monitors");
             forEveryFileInFolder(thePath, countFiles, &monitors);
             LOG4("done counting monitors");
-            CItemCounter counter(this, start, end);
+            CItemCounter counter(this);
             counter.cachePtr = &monitors;
             counter.monitorArray = &monitors.items;
             LOG4("forEvery monitors");
@@ -108,7 +108,7 @@ bool COptions::handle_status(ostream& os) {
             expContext().types[names.type] = names.getRuntimeClass();
             names.path = pathName("names");
             forEveryFileInFolder(thePath, countFiles, &names);
-            CItemCounter counter(this, start, end);
+            CItemCounter counter(this);
             counter.cachePtr = &names;
             counter.monitorArray = &names.items;
             if (details) {
@@ -133,7 +133,7 @@ bool COptions::handle_status(ostream& os) {
             abi_cache.path = pathName("abis");
             forEveryFileInFolder(thePath, countFiles, &abi_cache);
             if (details) {
-                CItemCounter counter(this, start, end);
+                CItemCounter counter(this);
                 counter.cachePtr = &abi_cache;
                 counter.abiArray = &abi_cache.items;
                 forEveryFileInFolder(thePath, noteABI, &counter);
@@ -204,7 +204,7 @@ bool COptions::handle_status(ostream& os) {
             expContext().types[slurps.type] = slurps.getRuntimeClass();
             slurps.path = pathName("slurps");
             forEveryFileInFolder(thePath, countFiles, &slurps);
-            CItemCounter counter(this, start, end);
+            CItemCounter counter(this);
             counter.cachePtr = &slurps;
             counter.monitorArray = &slurps.items;
             if (details) {
@@ -230,7 +230,7 @@ bool COptions::handle_status(ostream& os) {
             prices.path = pathName("prices");
             forEveryFileInFolder(thePath, countFiles, &prices);
             if (details) {
-                CItemCounter counter(this, start, end);
+                CItemCounter counter(this);
                 counter.cachePtr = &prices;
                 counter.priceArray = &prices.items;
                 forEveryFileInFolder(thePath, notePrice, &counter);
@@ -428,9 +428,9 @@ bool noteIndex(const string_q& path, void* data) {
             LOG_PROGRESS("Scanning", ++counter->fileRange.first, counter->fileRange.second, "\r");
         }
 
-        if (last < counter->scanRange.first)
+        if (last < counter->options->scanRange.first)
             return true;
-        if (first > counter->scanRange.second)
+        if (first > counter->options->scanRange.second)
             return false;  //! contains(path, "finalized");
         if (!endsWith(path, ".bin"))
             return true;

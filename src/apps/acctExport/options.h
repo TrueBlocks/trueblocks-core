@@ -51,6 +51,7 @@ class COptions : public CAbiOptions {
     CMonitorArray possibles;
     address_t accountedFor;
     string_q accountedForName;
+    blkrange_t blockRange;
 
     CReconciliation lastStatement;
     CReconciliationMap prevStatements;

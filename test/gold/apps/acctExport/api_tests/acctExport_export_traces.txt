@@ -118,8 +118,8 @@
     "unNamedTraceTo": {
       "0xcfab9ac2bb2e1dcfc2d50f01f4e61f2f72fb5902": 1
     },
-    "start": "0xdeadbeef",
-    "end": "0xdeadbeef",
+    "first_block": "0xdeadbeef",
+    "last_block": "0xdeadbeef",
     "accountedFor": {
       "tags": "80-Prefund",
       "address": "0x001d14804b399c6ef80e64576f657660804fec0b",

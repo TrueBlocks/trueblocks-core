@@ -17,8 +17,8 @@ cacheStatus caches --types transactions --details --depth 4
 	-e  (--terse)         show a terse summary report
 	-g  (--get_config)    returns JSON data of the editable configuration file items
 	-s  (--set_config)    accepts JSON in an env variable and writes it to configuration files
-	-S  (--start <num>)   first block to process (inclusive)
-	-E  (--end <num>)     last block to process (inclusive)
+	-S  (--test_start <num>)first block to process (inclusive -- testing only)
+	-E  (--test_end <num>)last block to process (inclusive -- testing only)
 	#### Hidden options
 
 	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]

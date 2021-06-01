@@ -9,10 +9,6 @@
 bool acct_Display(CTraverser* trav, void* data) {
     COptions* opt = (COptions*)data;
 
-    trav->nProcessed++;
-    if (opt->freshenOnly)
-        return true;
-
     if (fourByteFilter(trav->trans.input, opt)) {
         if (opt->accounting) {
             blknum_t next = trav->index < opt->apps.size() - 1 ? opt->apps[trav->index + 1].blk : NOPOS;

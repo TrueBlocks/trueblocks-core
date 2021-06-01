@@ -61,8 +61,6 @@ class COptionsBase {
     CAddressNameMap tokenMap;
 
   public:
-    blkrange_t scanRange;
-
     // TODO(tjayrush): All of these can (and should) be moved to expContext as it would be available to things other
     // TODO(tjayrush): than options. See fmtMap and tsMemMap for examples
     CAddressBoolMap maliciousMap;

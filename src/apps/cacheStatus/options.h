@@ -31,8 +31,6 @@ class COptions : public CAbiOptions {
     bool details;
     uint64_t depth;
     bool terse;
-    blknum_t start;
-    blknum_t end;
     // END_CODE_DECLARE
 
     CStatus status;
@@ -40,6 +38,7 @@ class COptions : public CAbiOptions {
     bool isConfig;
     CIndexHashMap bloomHashes;
     CIndexHashMap indexHashes;
+    blkrange_t scanRange;
 
     COptions(void);
     ~COptions(void);
@@ -75,9 +74,8 @@ class CItemCounter : public CCache {
     CEntityCacheItemArray* entityArray;
     uint32_t* tsMemMap;
     size_t tsCnt;
-    blkrange_t scanRange;
     blkrange_t fileRange;
-    CItemCounter(COptions* opt, blknum_t start, blknum_t end) : CCache(), options(opt) {
+    CItemCounter(COptions* opt) : CCache(), options(opt) {
         cachePtr = NULL;
         indexArray = NULL;
         monitorArray = NULL;
@@ -85,8 +83,6 @@ class CItemCounter : public CCache {
         priceArray = NULL;
         tsMemMap = NULL;
         tsCnt = 0;
-        scanRange.first = start;
-        scanRange.second = end;
     }
 
   public:

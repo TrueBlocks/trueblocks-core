@@ -38,10 +38,8 @@ bool CTraverser::traverse(const CAppearanceArray_base& apps, void* data) {
         trans = CTransaction();  // reset
         bool passedFilter = !filterFunc || (*filterFunc)(this, data);
         if (passedFilter) {
-            if (displayFunc) {
-                // We freshen at most 5,000 new transactions to stay responsive
-                if (opt->freshenOnly && nProcessed > 5000)
-                    break;
+            nProcessed += (counterFunc ? (*counterFunc)(this, data) : 1);
+            if (!opt->freshenOnly) {
                 if (dataFunc && !(*dataFunc)(this, data))
                     return (!postFunc || (*postFunc)(this, data)) && false;
                 if (displayFunc && !(*displayFunc)(this, data))
@@ -55,14 +53,6 @@ bool CTraverser::traverse(const CAppearanceArray_base& apps, void* data) {
         return false;
 
     return true;
-}
-
-//-----------------------------------------------------------------------
-bool rangeFilter(CTraverser* trav, void* data) {
-    const COptionsBase* opt = (COptionsBase*)data;
-    if (trav->app->blk > opt->scanRange.second || trav->app->blk >= expContext().tsCnt || shouldQuit())
-        return false;
-    return inRange(blknum_t(trav->app->blk), opt->scanRange.first, opt->scanRange.second);
 }
 
 }  // namespace qblocks

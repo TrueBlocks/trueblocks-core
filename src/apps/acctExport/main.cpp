@@ -33,7 +33,8 @@ int main(int argc, const char* argv[]) {
                       : GETRUNTIME_CLASS(CTransaction)->m_ClassName))));
             // clang-format on
 
-            if (once && !options.freshenOnly)
+            once = once && !options.freshenOnly;
+            if (once)
                 cout << exportPreamble(expContext().fmtMap["header"], options.className);
 
             if (options.appearances) {
@@ -58,13 +59,6 @@ int main(int argc, const char* argv[]) {
 
             if (traversers.empty()) {
                 CTransactionTraverser tt;
-                if (options.freshenOnly) {
-                    tt.filterFunc = noopFunc;
-                    tt.preFunc = noopFunc;
-                    tt.postFunc = noopFunc;
-                    tt.displayFunc = noopFunc;
-                    tt.dataFunc = noopFunc;
-                }
                 traversers.push_back(tt);
             }
 
@@ -101,8 +95,8 @@ int main(int argc, const char* argv[]) {
     }
 
     ostringstream os;
-    os << ", \"start\": " << (isTestMode() ? "\"0xdeadbeef\"" : uint_2_Str(options.scanRange.first)) << endl;
-    os << ", \"end\": " << (isTestMode() ? "\"0xdeadbeef\"" : uint_2_Str(options.scanRange.second)) << endl;
+    os << ", \"first_block\": " << (isTestMode() ? "\"0xdeadbeef\"" : uint_2_Str(options.blockRange.first)) << endl;
+    os << ", \"last_block\": " << (isTestMode() ? "\"0xdeadbeef\"" : uint_2_Str(options.blockRange.second)) << endl;
     if (!options.count && options.allMonitors.size() == 1) {
         options.getNamedAccount(options.allMonitors[0], options.accountedFor);
         if (options.abi_spec.nInterfaces() == 0) {
@@ -118,6 +112,14 @@ int main(int argc, const char* argv[]) {
 
     pinlib_cleanup();
     return 0;
+}
+
+//-----------------------------------------------------------------------
+bool range_Filter(CTraverser* trav, void* data) {
+    const COptions* opt = (COptions*)data;
+    if (trav->app->blk > opt->blockRange.second || trav->app->blk >= expContext().tsCnt || shouldQuit())
+        return false;
+    return inRange(blknum_t(trav->app->blk), opt->blockRange.first, opt->blockRange.second);
 }
 
 //-----------------------------------------------------------------------
@@ -176,9 +178,8 @@ void end_Log(CTraverser* trav, void* data) {
     blknum_t prog = opt->first_record + trav->nProcessed;
     blknum_t goal = opt->stats.nFileRecords;
     if (prog == goal) {
-        string_q msg = opt->freshenOnly ? "Finished updating" : "Finished reporting on";
         string_q endMsg = " " + trav->operation + " for address " + opt->accountedFor;
-        LOG_PROGRESS(msg, prog, goal, endMsg);
+        LOG_PROGRESS("Completed exporting", prog, goal, endMsg);
     }
     return;
 }

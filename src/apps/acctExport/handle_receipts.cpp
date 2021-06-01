@@ -9,10 +9,6 @@
 bool receipts_Display(CTraverser* trav, void* data) {
     COptions* opt = (COptions*)data;
 
-    trav->nProcessed++;
-    if (opt->freshenOnly)
-        return true;
-
     cout << ((isJson() && !opt->firstOut) ? ", " : "");
     cout << trav->trans.receipt;
     opt->firstOut = false;
