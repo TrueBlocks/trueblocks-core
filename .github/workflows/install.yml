@@ -4,9 +4,9 @@ jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out repository code
+      - name: Checkout TrueBlocks repo
         uses: actions/checkout@v2
-      - name: Install Prerequistes
+      - name: Install prerequistes
         run: |
           sudo apt-get install build-essential git cmake python python-dev libcurl3-dev clang-format jq
       - name: Install SSH key
@@ -19,13 +19,14 @@ jobs:
         run: |
           mkdir build && cd build
           cmake ../src
-      - name: Run SSH Process and Tests
-        run: |
-          nohup ssh -i ~/.ssh/github_action -o StrictHostKeyChecking=no -N -v ${{secrets.SSH_COMMAND}} -p 36963 -L 36963:localhost:8545 > foo.out 2> foo.err < /dev/null &
-          cat foo.err
           mkdir -p build && cd build
           cmake ../src
-          make test-all
-          curl --data '{"method":"eth_getBlockByNumber","params":["0x3", true],"id":1,"jsonrpc":"2.0"}' -H "Content-Type: application/json" -X POST localhost:36963
-          ../bin/chifra blocks 12
-      - run: echo "🍏 This job's status is ${{ job.status }}"
+          make -j 4
+      - name: Run SSH tunnel
+        run: |
+          ssh -i ~/.ssh/github_action -o StrictHostKeyChecking=no -N -v ${{secrets.SSH_COMMAND}} -p 36963 -L 36963:localhost:8545 </dev/null &
+          export PATH=$PATH:$HOME/trueblocks-core/bin:$HOME/trueblocks-core/bin/tests
+          chifra blocks 12
+      - name: Finish
+        run: |
+          echo "🍏 This job's status is ${{ job.status }}"
