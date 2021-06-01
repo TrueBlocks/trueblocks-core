@@ -22,6 +22,7 @@ jobs:
       - name: Run SSH Process and Tests
         run: |
           nohup ssh -i ~/.ssh/github_action -o StrictHostKeyChecking=no -N -v ${{secrets.SSH_COMMAND}} -p 36963 -L 36963:localhost:8545 > foo.out 2> foo.err < /dev/null &
+          cat foo.err
           mkdir build && cd build
           cmake ../src
           make test-all
