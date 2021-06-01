@@ -18,7 +18,7 @@ jobs:
           SSH_PRIVATE_KEY : ${{secrets.SSH_PRIVATE_KEY}}
       - name: Run SSH Process and Tests
         run: |
-          ${{secrets.SSH_COMMAND}} &
+          ${{secrets.SSH_COMMAND}}
           ls -la ~/.ssh
       - name: Build TrueBlocks
         run: |
