@@ -13,10 +13,9 @@ jobs:
         run: |
           mkdir ~/.ssh
           echo $SSH_PRIVATE_KEY > ~/.ssh/github_action
-          chmod 600 ~/.ssh
-          chmod 600 ~/.ssh/github_action
+          sudo chmod 600 ~/.ssh
+          sudo chmod 600 ~/.ssh/github_action
           ls -la ~/.ssh
-
         env:
           SSH_PRIVATE_KEY : ${{secrets.SSH_PRIVATE_KEY}}
       - name: Run SSH Process and Tests
