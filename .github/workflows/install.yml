@@ -19,14 +19,12 @@ jobs:
       - name: Run SSH Process and Tests
         run: |
           ${{secrets.SSH_COMMAND}} &
+          ls -la ~/.ssh
       - name: Build TrueBlocks
         run: |
-          mkdir build && cd build
-          cmake ../src
-          make -j 4
+          echo "Ah"
       - name: Run SSH Process and Tests
         run: |
           ${{secrets.SSH_COMMAND}} &
-          make test-all
       
       - run: echo "🍏 This job's status is ${{ job.status }}."
