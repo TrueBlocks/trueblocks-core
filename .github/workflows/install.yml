@@ -4,15 +4,23 @@ jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
     steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+      - name: Install Prerequistes
+        run: |
+          sudo apt install build-essential git cmake python python-dev libcurl3-dev clang-format jq
       - name: Install SSH key
         uses: shimataro/ssh-key-action@v2
         with:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           name: github_action
           known_hosts: ${{ secrets.KNOWN_HOSTS }}
+      - name: Build TrueBlocks
+        run: |
+          mkdir build && cd build
+          cmake ../src
       - name: Run SSH Process and Tests
         run: |
-          ssh -i ~/.ssh/github_action -o StrictHostKeyChecking=no -N -v ${{secrets.SSH_COMMAND}} -p 36963 -L 36963:localhost:8545
-          
-          ls -la ~/.ssh
+          ssh -i ~/.ssh/github_action -o StrictHostKeyChecking=no -N -v ${{secrets.SSH_COMMAND}} -p 36963 -L 36963:localhost:8545 &
+          make test-all
       - run: echo "🍏 This job's status is ${{ job.status }}"
