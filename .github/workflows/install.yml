@@ -23,7 +23,8 @@ jobs:
       - name: Run SSH tunnel
         run: |
           ssh -i ~/.ssh/github_action -o StrictHostKeyChecking=no -N -v ${{secrets.SSH_COMMAND}} -p 36963 -L 36963:localhost:8545 </dev/null &
-          export PATH=$PATH:$HOME/trueblocks-core/bin:$HOME/trueblocks-core/bin/tests
+          export PATH=$PATH:/home/runner/trueblocks-core/bin:/home/runner/trueblocks-core/bin/tests
+          chifra status
           chifra blocks 12
       - name: Finish
         run: |
