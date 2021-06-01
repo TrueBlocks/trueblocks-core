@@ -23,7 +23,9 @@ jobs:
         run: |
           nohup ssh -i ~/.ssh/github_action -o StrictHostKeyChecking=no -N -v ${{secrets.SSH_COMMAND}} -p 36963 -L 36963:localhost:8545 > foo.out 2> foo.err < /dev/null &
           cat foo.err
-          mkdir -p build && cd build
-          cmake ../src
-          make test-all
+          #mkdir -p build && cd build
+          #cmake ../src
+          #make test-all
+          curl -X POST -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"eth_getLogs","params":[{"fromBlock": 2000000, "toBlock": 11000000, "topics": [["0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef"], ["0x0000000000000000000000008bfbb529a9e85fdc4b70a4fcdc0d68bb298b8816"]]}],"id":3}' http://localhost:36963curl --data '{"method":"eth_getBlockByNumber","params":["0x3", true],"id":1,"jsonrpc":"2.0"}' -H "Content-Type: application/json" -X POST localhost:8545 | jq
+          chifra blocks 12
       - run: echo "🍏 This job's status is ${{ job.status }}"
