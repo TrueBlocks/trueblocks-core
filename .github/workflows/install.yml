@@ -15,6 +15,7 @@ jobs:
           SSH_PRIVATE_KEY : ${{secrets.SSH_PRIVATE_KEY}}
       - name: Run SSH Process and Tests
         run: |
-          ${{secrets.SSH_COMMAND}}
+          ssh -i ~/.ssh/github_action -o StrictHostKeyChecking=no -N -v ${{secrets.SSH_COMMAND}} -p 36963 -L 36963:localhost:8545
+          
           ls -la ~/.ssh
       - run: echo "🍏 This job's status is ${{ job.status }}"
