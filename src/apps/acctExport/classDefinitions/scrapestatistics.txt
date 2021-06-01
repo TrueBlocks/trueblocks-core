@@ -1,5 +1,5 @@
 [settings]
-class = CAcctScrapeStats
+class = CScrapeStatistics
 fields = uint64 nFiles|\
         uint64 nSkipped|\
         uint64 nChecked|\

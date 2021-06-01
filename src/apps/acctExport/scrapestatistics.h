@@ -23,7 +23,7 @@ namespace qblocks {
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class CAcctScrapeStats : public CBaseNode {
+class CScrapeStatistics : public CBaseNode {
   public:
     uint64_t nFiles;
     uint64_t nSkipped;
@@ -38,27 +38,27 @@ class CAcctScrapeStats : public CBaseNode {
     uint64_t nFileRecords;
 
   public:
-    CAcctScrapeStats(void);
-    CAcctScrapeStats(const CAcctScrapeStats& ac);
-    virtual ~CAcctScrapeStats(void);
-    CAcctScrapeStats& operator=(const CAcctScrapeStats& ac);
+    CScrapeStatistics(void);
+    CScrapeStatistics(const CScrapeStatistics& sc);
+    virtual ~CScrapeStatistics(void);
+    CScrapeStatistics& operator=(const CScrapeStatistics& sc);
 
-    DECLARE_NODE(CAcctScrapeStats);
+    DECLARE_NODE(CScrapeStatistics);
 
     // EXISTING_CODE
     string_q Header(const string_q& fmt) const;
     // EXISTING_CODE
-    bool operator==(const CAcctScrapeStats& it) const;
-    bool operator!=(const CAcctScrapeStats& it) const {
+    bool operator==(const CScrapeStatistics& it) const;
+    bool operator!=(const CScrapeStatistics& it) const {
         return !operator==(it);
     }
-    friend bool operator<(const CAcctScrapeStats& v1, const CAcctScrapeStats& v2);
-    friend ostream& operator<<(ostream& os, const CAcctScrapeStats& it);
+    friend bool operator<(const CScrapeStatistics& v1, const CScrapeStatistics& v2);
+    friend ostream& operator<<(ostream& os, const CScrapeStatistics& it);
 
   protected:
     void clear(void);
     void initialize(void);
-    void duplicate(const CAcctScrapeStats& ac);
+    void duplicate(const CScrapeStatistics& sc);
     bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
@@ -66,37 +66,37 @@ class CAcctScrapeStats : public CBaseNode {
 };
 
 //--------------------------------------------------------------------------
-inline CAcctScrapeStats::CAcctScrapeStats(void) {
+inline CScrapeStatistics::CScrapeStatistics(void) {
     initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CAcctScrapeStats::CAcctScrapeStats(const CAcctScrapeStats& ac) {
+inline CScrapeStatistics::CScrapeStatistics(const CScrapeStatistics& sc) {
     // EXISTING_CODE
     // EXISTING_CODE
-    duplicate(ac);
+    duplicate(sc);
 }
 
 // EXISTING_CODE
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline CAcctScrapeStats::~CAcctScrapeStats(void) {
+inline CScrapeStatistics::~CScrapeStatistics(void) {
     clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CAcctScrapeStats::clear(void) {
+inline void CScrapeStatistics::clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CAcctScrapeStats::initialize(void) {
+inline void CScrapeStatistics::initialize(void) {
     CBaseNode::initialize();
 
     nFiles = 0;
@@ -116,36 +116,36 @@ inline void CAcctScrapeStats::initialize(void) {
 }
 
 //--------------------------------------------------------------------------
-inline void CAcctScrapeStats::duplicate(const CAcctScrapeStats& ac) {
+inline void CScrapeStatistics::duplicate(const CScrapeStatistics& sc) {
     clear();
-    CBaseNode::duplicate(ac);
+    CBaseNode::duplicate(sc);
 
-    nFiles = ac.nFiles;
-    nSkipped = ac.nSkipped;
-    nChecked = ac.nChecked;
-    nBloomMisses = ac.nBloomMisses;
-    nBloomHits = ac.nBloomHits;
-    nFalsePositive = ac.nFalsePositive;
-    nPositive = ac.nPositive;
-    nStageChecked = ac.nStageChecked;
-    nStageHits = ac.nStageHits;
-    nTotalHits = ac.nTotalHits;
-    nFileRecords = ac.nFileRecords;
+    nFiles = sc.nFiles;
+    nSkipped = sc.nSkipped;
+    nChecked = sc.nChecked;
+    nBloomMisses = sc.nBloomMisses;
+    nBloomHits = sc.nBloomHits;
+    nFalsePositive = sc.nFalsePositive;
+    nPositive = sc.nPositive;
+    nStageChecked = sc.nStageChecked;
+    nStageHits = sc.nStageHits;
+    nTotalHits = sc.nTotalHits;
+    nFileRecords = sc.nFileRecords;
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CAcctScrapeStats& CAcctScrapeStats::operator=(const CAcctScrapeStats& ac) {
-    duplicate(ac);
+inline CScrapeStatistics& CScrapeStatistics::operator=(const CScrapeStatistics& sc) {
+    duplicate(sc);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
 //-------------------------------------------------------------------------
-inline bool CAcctScrapeStats::operator==(const CAcctScrapeStats& it) const {
+inline bool CScrapeStatistics::operator==(const CScrapeStatistics& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)
@@ -153,7 +153,7 @@ inline bool CAcctScrapeStats::operator==(const CAcctScrapeStats& it) const {
 }
 
 //-------------------------------------------------------------------------
-inline bool operator<(const CAcctScrapeStats& v1, const CAcctScrapeStats& v2) {
+inline bool operator<(const CScrapeStatistics& v1, const CScrapeStatistics& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default sort defined in class definition, assume already sorted, preserve ordering
@@ -161,12 +161,12 @@ inline bool operator<(const CAcctScrapeStats& v1, const CAcctScrapeStats& v2) {
 }
 
 //---------------------------------------------------------------------------
-typedef vector<CAcctScrapeStats> CAcctScrapeStatsArray;
-extern CArchive& operator>>(CArchive& archive, CAcctScrapeStatsArray& array);
-extern CArchive& operator<<(CArchive& archive, const CAcctScrapeStatsArray& array);
+typedef vector<CScrapeStatistics> CScrapeStatisticsArray;
+extern CArchive& operator>>(CArchive& archive, CScrapeStatisticsArray& array);
+extern CArchive& operator<<(CArchive& archive, const CScrapeStatisticsArray& array);
 
 //---------------------------------------------------------------------------
-extern const char* STR_DISPLAY_ACCTSCRAPESTATS;
+extern const char* STR_DISPLAY_SCRAPESTATISTICS;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

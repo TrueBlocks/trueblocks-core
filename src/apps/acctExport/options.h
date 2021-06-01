@@ -9,7 +9,7 @@
  * the code outside of the BEG_CODE/END_CODE sections
  */
 #include "pinlib.h"
-#include "acctscrapestats.h"
+#include "scrapestatistics.h"
 #include "traversers.h"
 
 // BEG_ERROR_DEFINES
@@ -70,7 +70,7 @@ class COptions : public CAbiOptions {
     // abiMap allows fast access to abis
     CAddressUintMap abiMap;
 
-    CAcctScrapeStats stats;
+    CScrapeStatistics stats;
 
     blkrange_t fileRange;
     blkrange_t listRange;
@@ -114,6 +114,7 @@ extern bool visitStagingIndexFiles(const string_q& path, void* data);
 extern bool visitUnripeIndexFiles(const string_q& path, void* data);
 extern bool isTokenFunc(const string_q& input);
 extern bool isTokenTopic(const topic_t& topic);
+extern bool fourByteFilter(const string_q& input, const COptions* opt);
 //--------------------------------------------------------------------------------
 inline string_q plural(const string_q& in) {
     return substitute(toLower(in).substr(1, 1000) + "s", "logentrys", "logs");

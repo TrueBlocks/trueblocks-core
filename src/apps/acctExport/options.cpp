@@ -595,8 +595,7 @@ bool COptions::setDisplayFormatting(void) {
 // TODO(tjayrush): What does prefundAddrMap and prefundMap do? Needs testing
 // TODO(tjayrush): What does blkRewardMap do? Needs testing
 // TODO(tjayrush): Reconciliation loads traces -- plus it reduplicates the isSuicide, isGeneration, isUncle shit
-// TODO(tjayrush): writeLastEncountered is really weird (in fact removed -- used to keep freshen from revisiting blocks
-// twice)
+// TODO(tjayrush): writeLastEncountered is weird (in fact removed -- used to keep freshen from revisiting blocks twice
 // TODO(tjayrush): writeLastBlockInMonitor is really weird
 // TODO(tjayrush): We used to write traces sometimes
 // TODO(tjayrush): We used to cache the monitored txs - I think it was pretty fast (we used the monitor staging folder)
@@ -606,7 +605,7 @@ bool COptions::setDisplayFormatting(void) {
 // TODO(tjayrush): While looking into that, make sure to take advantage of 'needsUpdate' which would do this:
 // TODO(tjayrush): (1) store the number of records in monitor file, (2) freshen monitor file, (3) only --freshen if the
 // TODO(tjayrush): We used to check to see if the monitor file was locked. That may have gotten lost. Don't spin. Just
-// die right away if it's locked.
+// TODO(tjayrush): die right away if it's locked.
 
 // TODO(tjayrush): Re-enable mocked data
 // if (mocked) {
@@ -671,7 +670,7 @@ bool COptions::isRelevant(const CLogEntry& log) const {
 }
 
 //-----------------------------------------------------------------------
-string_q CAcctScrapeStats::Header(const string_q& fmt) const {
+string_q CScrapeStatistics::Header(const string_q& fmt) const {
     return Format(substitute(fmt, "{", "{p:"));
 }
 
@@ -682,7 +681,7 @@ void COptions::writePerformanceData(void) {
 
     string_q statsFile = configPath("performance_scraper.csv");
 
-    string_q fmt = substitute(STR_DISPLAY_ACCTSCRAPESTATS, "\t", ",");
+    string_q fmt = substitute(STR_DISPLAY_SCRAPESTATISTICS, "\t", ",");
     if (!fileExists(statsFile)) {
         ostringstream header;
         header << stats.Header(fmt) << endl;
@@ -692,4 +691,17 @@ void COptions::writePerformanceData(void) {
     ostringstream data;
     data << stats.Format(fmt) << endl;
     appendToAsciiFile(statsFile, data.str());
+}
+
+//-----------------------------------------------------------------------
+bool fourByteFilter(const string_q& input, const COptions* opt) {
+    ASSERT(!opt->freshenOnly);
+    if (opt->fourbytes.empty())
+        return true;
+
+    for (auto four : opt->fourbytes)
+        if (startsWith(input, four))
+            return true;
+
+    return false;
 }

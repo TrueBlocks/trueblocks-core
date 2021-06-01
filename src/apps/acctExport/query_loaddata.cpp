@@ -64,7 +64,7 @@ bool COptions::loadAllAppearances(void) {
             }
 
             // TODO(tjayrush): This used to set last encountered block (search for writeLastEncountered)
-            // if (freshen) {
+            // if (freshenOnly) {
             //     blknum_t lastExport = monitor.getLastEncounter ed();
             //     if (scanRange.first == 0)  // we can start where the last export happened on any address...
             //         scanRange.first = lastExport;

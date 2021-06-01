@@ -21,19 +21,17 @@ bool app_Display(CTraverser* trav, void* data) {
     return !shouldQuit();
 }
 
-extern const char* APP_FIELDS_ALL;
-extern const char* APP_FIELDS_HIDE;
-//-----------------------------------------------------------------------
-bool app_Post(CTraverser* trav, void* data) {
-    manageFields(APP_FIELDS_ALL, true);
-    manageFields(APP_FIELDS_HIDE, false);
-
-    end_Log(trav, data);
-    return true;
-}
-
 //-----------------------------------------------------------------------
 const char* APP_FIELDS_ALL = "CAccountName:all";
 const char* APP_FIELDS_HIDE =
     "CAccountName:schema,deleted,showing,cname,nAppearances,lastExport,firstAppearance,latestAppearance,path,"
     "sizeInBytes";
+//-----------------------------------------------------------------------
+bool app_Post(CTraverser* trav, void* data) {
+    // TODO(tjayrush): Oddly, we show different fields with 'appearances' for account names than we do for other
+    // exports. Why?
+    manageFields(APP_FIELDS_ALL, true);
+    manageFields(APP_FIELDS_HIDE, false);
+    end_Log(trav, data);
+    return true;
+}

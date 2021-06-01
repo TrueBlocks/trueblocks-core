@@ -13,10 +13,10 @@ bool visitMonitors(const string_q& path, void* data) {
     CMonitor monitor;
     monitor.address = substitute(substitute(path, monitor.getMonitorPath(""), ""), ".acct.bin", "");
 
-    COptions *opt = (COptions*)data;
+    COptions* opt = (COptions*)data;
     if (opt->state == STATE_STOPPED || shouldQuit())
         return false;
-    
+
     ostringstream os;
     os << "acctExport ";
     os << (opt->cache_txs ? "--cache_txs " : "");
@@ -27,8 +27,8 @@ bool visitMonitors(const string_q& path, void* data) {
     if (opt->load.empty())
         LOG_INFO("Calling: " + os.str() + string_q(40, ' '));
     else
-        os << "--load " + opt->load + " ";
-        
+        os << "--load " + opt->load;
+
     if (system(os.str().c_str()) != 0)
         return false;
 

@@ -22,9 +22,7 @@ bool display(CTraverser* trav, void* data) {
 extern "C" CTraverser* makeTraverser(void) {
     CTraverser* trav = new CTraverser(cout, "testing");
 
-    // We attach functions to a traverser. Here we set most functions
-    // to the noopFunc which simply returns true.
-    trav->filterFunc = trav->postFunc = trav->dataFunc = noopFunc;
+    // Attach custom functions to the traverser.
 
     // preFunc is called before any transactions are encountered.
     trav->preFunc = header;

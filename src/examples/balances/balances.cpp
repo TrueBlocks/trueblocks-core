@@ -37,7 +37,6 @@ bool display(CTraverser* trav, void* data) {
 //-----------------------------------------------------------------------
 extern "C" CTraverser* makeTraverser(void) {
     CTestTraverser* trav = new CTestTraverser;
-    trav->filterFunc = trav->postFunc = trav->dataFunc = noopFunc;
     trav->preFunc = header;
     trav->displayFunc = display;
     return trav;

@@ -5,7 +5,6 @@
  *------------------------------------------------------------------------*/
 #include "options.h"
 
-bool inputFilter(const string_q& input, const COptions* opt);
 //-----------------------------------------------------------------------
 bool traces_Display(CTraverser* trav, void* data) {
     COptions* opt = (COptions*)data;
@@ -16,7 +15,7 @@ bool traces_Display(CTraverser* trav, void* data) {
 
     for (auto trace : trav->trans.traces) {
         CTrace copy = trace;
-        if (inputFilter(trace.action.input, opt)) {
+        if (fourByteFilter(trace.action.input, opt)) {
             // Do not collapse with the following code block...both (create and (suicide|regular)) can be true in a
             // single trace
             if (!opt->factory) {

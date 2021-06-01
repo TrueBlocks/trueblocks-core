@@ -5,7 +5,6 @@
  *------------------------------------------------------------------------*/
 #include "options.h"
 
-bool inputFilter(const string_q& input, const COptions* opt);
 //-----------------------------------------------------------------------
 bool acct_Display(CTraverser* trav, void* data) {
     COptions* opt = (COptions*)data;
@@ -14,7 +13,7 @@ bool acct_Display(CTraverser* trav, void* data) {
     if (opt->freshenOnly)
         return true;
 
-    if (inputFilter(trav->trans.input, opt)) {
+    if (fourByteFilter(trav->trans.input, opt)) {
         if (opt->accounting) {
             blknum_t next = trav->index < opt->apps.size() - 1 ? opt->apps[trav->index + 1].blk : NOPOS;
             process_reconciliation(opt, trav->trans, opt->prevStatements, next, opt->tokens);
@@ -39,16 +38,4 @@ bool acct_Pre(CTraverser* trav, void* data) {
         opt->prevStatements[opt->accountedFor + "_eth"] = eth;
     }
     return true;
-}
-
-//-----------------------------------------------------------------------
-bool inputFilter(const string_q& input, const COptions* opt) {
-    if (opt->fourbytes.empty())
-        return true;
-    if (opt->freshenOnly)
-        return true;
-    for (auto four : opt->fourbytes)
-        if (startsWith(input, four))
-            return true;
-    return false;
 }

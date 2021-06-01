@@ -28,14 +28,8 @@ bool forEveryAppearance(const CTraverserArray& traversers, const CAppearanceArra
 bool CTraverser::traverse(const CAppearanceArray_base& apps, void* data) {
     const COptionsBase* opt = (const COptionsBase*)data;
 
-    // Make sure we have something to work with...
-    if (!filterFunc || !preFunc || !postFunc || !displayFunc || !dataFunc) {
-        LOG_ERR("traverser function is null.");
-        quickQuitHandler(1);
-    }
-
     // Prepare the export...
-    if (!(*preFunc)(this, data))
+    if (preFunc && !(*preFunc)(this, data))
         return false;
 
     // For each appearance...
@@ -48,16 +42,16 @@ bool CTraverser::traverse(const CAppearanceArray_base& apps, void* data) {
                 // We freshen at most 5,000 new transactions to stay responsive
                 if (opt->freshenOnly && nProcessed > 5000)
                     break;
-                if (!(*dataFunc)(this, data))
-                    return ((*postFunc)(this, data)) && false;
-                if (!(*displayFunc)(this, data))
-                    return ((*postFunc)(this, data)) && false;
+                if (dataFunc && !(*dataFunc)(this, data))
+                    return (!postFunc || (*postFunc)(this, data)) && false;
+                if (displayFunc && !(*displayFunc)(this, data))
+                    return (!postFunc || (*postFunc)(this, data)) && false;
             }
         }
     }
 
     // Cleanup the export...
-    if (!(*postFunc)(this, data))
+    if (postFunc && !(*postFunc)(this, data))
         return false;
 
     return true;

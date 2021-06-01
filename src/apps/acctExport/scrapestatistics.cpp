@@ -14,26 +14,26 @@
  * Parts of this file were generated with makeClass --run. Edit only those parts of
  * the code inside of 'EXISTING_CODE' tags.
  */
-#include "acctscrapestats.h"
+#include "scrapestatistics.h"
 
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CAcctScrapeStats, CBaseNode);
+IMPLEMENT_NODE(CScrapeStatistics, CBaseNode);
 
 //---------------------------------------------------------------------------
-static string_q nextAcctscrapestatsChunk(const string_q& fieldIn, const void* dataPtr);
-static string_q nextAcctscrapestatsChunk_custom(const string_q& fieldIn, const void* dataPtr);
+static string_q nextScrapestatisticsChunk(const string_q& fieldIn, const void* dataPtr);
+static string_q nextScrapestatisticsChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
-void CAcctScrapeStats::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
+void CScrapeStatistics::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
     if (!m_showing)
         return;
 
     // EXISTING_CODE
     // EXISTING_CODE
 
-    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["acctscrapestats_fmt"] : fmtIn);
+    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["scrapestatistics_fmt"] : fmtIn);
     if (fmt.empty()) {
         if (expContext().exportFmt == YAML1) {
             toYaml(ctx);
@@ -47,13 +47,13 @@ void CAcctScrapeStats::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr
     // EXISTING_CODE
 
     while (!fmt.empty())
-        ctx << getNextChunk(fmt, nextAcctscrapestatsChunk, this);
+        ctx << getNextChunk(fmt, nextScrapestatisticsChunk, this);
 }
 
 //---------------------------------------------------------------------------
-string_q nextAcctscrapestatsChunk(const string_q& fieldIn, const void* dataPtr) {
+string_q nextScrapestatisticsChunk(const string_q& fieldIn, const void* dataPtr) {
     if (dataPtr)
-        return reinterpret_cast<const CAcctScrapeStats*>(dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CScrapeStatistics*>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -62,9 +62,9 @@ string_q nextAcctscrapestatsChunk(const string_q& fieldIn, const void* dataPtr) 
 }
 
 //---------------------------------------------------------------------------
-string_q CAcctScrapeStats::getValueByName(const string_q& fieldName) const {
+string_q CScrapeStatistics::getValueByName(const string_q& fieldName) const {
     // Give customized code a chance to override first
-    string_q ret = nextAcctscrapestatsChunk_custom(fieldName, this);
+    string_q ret = nextScrapestatisticsChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
@@ -120,7 +120,7 @@ string_q CAcctScrapeStats::getValueByName(const string_q& fieldName) const {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CAcctScrapeStats::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
+bool CScrapeStatistics::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
     string_q fieldName = fieldNameIn;
     string_q fieldValue = fieldValueIn;
 
@@ -181,13 +181,13 @@ bool CAcctScrapeStats::setValueByName(const string_q& fieldNameIn, const string_
 }
 
 //---------------------------------------------------------------------------------------------------
-void CAcctScrapeStats::finishParse() {
+void CScrapeStatistics::finishParse() {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CAcctScrapeStats::Serialize(CArchive& archive) {
+bool CScrapeStatistics::Serialize(CArchive& archive) {
     if (archive.isWriting())
         return SerializeC(archive);
 
@@ -215,7 +215,7 @@ bool CAcctScrapeStats::Serialize(CArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CAcctScrapeStats::SerializeC(CArchive& archive) const {
+bool CScrapeStatistics::SerializeC(CArchive& archive) const {
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
 
@@ -237,7 +237,7 @@ bool CAcctScrapeStats::SerializeC(CArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, CAcctScrapeStatsArray& array) {
+CArchive& operator>>(CArchive& archive, CScrapeStatisticsArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -249,7 +249,7 @@ CArchive& operator>>(CArchive& archive, CAcctScrapeStatsArray& array) {
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator<<(CArchive& archive, const CAcctScrapeStatsArray& array) {
+CArchive& operator<<(CArchive& archive, const CScrapeStatisticsArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0; i < array.size(); i++)
@@ -258,51 +258,51 @@ CArchive& operator<<(CArchive& archive, const CAcctScrapeStatsArray& array) {
 }
 
 //---------------------------------------------------------------------------
-void CAcctScrapeStats::registerClass(void) {
+void CScrapeStatistics::registerClass(void) {
     // only do this once
-    if (HAS_FIELD(CAcctScrapeStats, "schema"))
+    if (HAS_FIELD(CScrapeStatistics, "schema"))
         return;
 
     size_t fieldNum = 1000;
-    ADD_FIELD(CAcctScrapeStats, "schema", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CAcctScrapeStats, "deleted", T_BOOL, ++fieldNum);
-    ADD_FIELD(CAcctScrapeStats, "showing", T_BOOL, ++fieldNum);
-    ADD_FIELD(CAcctScrapeStats, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CAcctScrapeStats, "nFiles", T_UNUMBER, ++fieldNum);
-    ADD_FIELD(CAcctScrapeStats, "nSkipped", T_UNUMBER, ++fieldNum);
-    ADD_FIELD(CAcctScrapeStats, "nChecked", T_UNUMBER, ++fieldNum);
-    ADD_FIELD(CAcctScrapeStats, "nBloomMisses", T_UNUMBER, ++fieldNum);
-    ADD_FIELD(CAcctScrapeStats, "nBloomHits", T_UNUMBER, ++fieldNum);
-    ADD_FIELD(CAcctScrapeStats, "nFalsePositive", T_UNUMBER, ++fieldNum);
-    ADD_FIELD(CAcctScrapeStats, "nPositive", T_UNUMBER, ++fieldNum);
-    ADD_FIELD(CAcctScrapeStats, "nStageChecked", T_UNUMBER, ++fieldNum);
-    ADD_FIELD(CAcctScrapeStats, "nStageHits", T_UNUMBER, ++fieldNum);
-    ADD_FIELD(CAcctScrapeStats, "nTotalHits", T_UNUMBER, ++fieldNum);
-    ADD_FIELD(CAcctScrapeStats, "nFileRecords", T_UNUMBER, ++fieldNum);
+    ADD_FIELD(CScrapeStatistics, "schema", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CScrapeStatistics, "deleted", T_BOOL, ++fieldNum);
+    ADD_FIELD(CScrapeStatistics, "showing", T_BOOL, ++fieldNum);
+    ADD_FIELD(CScrapeStatistics, "cname", T_TEXT, ++fieldNum);
+    ADD_FIELD(CScrapeStatistics, "nFiles", T_UNUMBER, ++fieldNum);
+    ADD_FIELD(CScrapeStatistics, "nSkipped", T_UNUMBER, ++fieldNum);
+    ADD_FIELD(CScrapeStatistics, "nChecked", T_UNUMBER, ++fieldNum);
+    ADD_FIELD(CScrapeStatistics, "nBloomMisses", T_UNUMBER, ++fieldNum);
+    ADD_FIELD(CScrapeStatistics, "nBloomHits", T_UNUMBER, ++fieldNum);
+    ADD_FIELD(CScrapeStatistics, "nFalsePositive", T_UNUMBER, ++fieldNum);
+    ADD_FIELD(CScrapeStatistics, "nPositive", T_UNUMBER, ++fieldNum);
+    ADD_FIELD(CScrapeStatistics, "nStageChecked", T_UNUMBER, ++fieldNum);
+    ADD_FIELD(CScrapeStatistics, "nStageHits", T_UNUMBER, ++fieldNum);
+    ADD_FIELD(CScrapeStatistics, "nTotalHits", T_UNUMBER, ++fieldNum);
+    ADD_FIELD(CScrapeStatistics, "nFileRecords", T_UNUMBER, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
-    HIDE_FIELD(CAcctScrapeStats, "schema");
-    HIDE_FIELD(CAcctScrapeStats, "deleted");
-    HIDE_FIELD(CAcctScrapeStats, "showing");
-    HIDE_FIELD(CAcctScrapeStats, "cname");
+    HIDE_FIELD(CScrapeStatistics, "schema");
+    HIDE_FIELD(CScrapeStatistics, "deleted");
+    HIDE_FIELD(CScrapeStatistics, "showing");
+    HIDE_FIELD(CScrapeStatistics, "cname");
 
-    builtIns.push_back(_biCAcctScrapeStats);
+    builtIns.push_back(_biCScrapeStatistics);
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------
-string_q nextAcctscrapestatsChunk_custom(const string_q& fieldIn, const void* dataPtr) {
-    const CAcctScrapeStats* acc = reinterpret_cast<const CAcctScrapeStats*>(dataPtr);
-    if (acc) {
+string_q nextScrapestatisticsChunk_custom(const string_q& fieldIn, const void* dataPtr) {
+    const CScrapeStatistics* scr = reinterpret_cast<const CScrapeStatistics*>(dataPtr);
+    if (scr) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if (fieldIn % "parsed")
-                    return nextBasenodeChunk(fieldIn, acc);
+                    return nextBasenodeChunk(fieldIn, scr);
                 // EXISTING_CODE
                 // EXISTING_CODE
                 break;
@@ -316,7 +316,7 @@ string_q nextAcctscrapestatsChunk_custom(const string_q& fieldIn, const void* da
 }
 
 //---------------------------------------------------------------------------
-bool CAcctScrapeStats::readBackLevel(CArchive& archive) {
+bool CScrapeStatistics::readBackLevel(CArchive& archive) {
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -324,7 +324,7 @@ bool CAcctScrapeStats::readBackLevel(CArchive& archive) {
 }
 
 //-------------------------------------------------------------------------
-ostream& operator<<(ostream& os, const CAcctScrapeStats& it) {
+ostream& operator<<(ostream& os, const CScrapeStatistics& it) {
     // EXISTING_CODE
     // EXISTING_CODE
 
@@ -334,7 +334,7 @@ ostream& operator<<(ostream& os, const CAcctScrapeStats& it) {
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_ACCTSCRAPESTATS =
+const char* STR_DISPLAY_SCRAPESTATISTICS =
     "[{NFILES}]\t"
     "[{NSKIPPED}]\t"
     "[{NCHECKED}]\t"

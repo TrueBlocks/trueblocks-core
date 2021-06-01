@@ -10,18 +10,8 @@ extern bool loadTx_Func(CTraverser* trav, void* data);
 extern bool pre_Func(CTraverser* trav, void* data);
 extern bool post_Func(CTraverser* trav, void* data);
 
-//-----------------------------------------------------------------------
-extern bool app_Display(CTraverser* trav, void* data);
-extern bool acct_Display(CTraverser* trav, void* data);
-extern bool receipts_Display(CTraverser* trav, void* data);
-extern bool logs_Display(CTraverser* trav, void* data);
-extern bool traces_Display(CTraverser* trav, void* data);
-
-extern bool acct_Pre(CTraverser* trav, void* data);
-extern bool logs_Pre(CTraverser* trav, void* data);
-
 extern bool app_Post(CTraverser* trav, void* data);
-
+extern bool app_Display(CTraverser* trav, void* data);
 class CAppearanceTraverser : public CTraverser {
   public:
     CAppearanceTraverser(void) : CTraverser(cout, "appearances") {
@@ -32,6 +22,7 @@ class CAppearanceTraverser : public CTraverser {
     }
 };
 
+extern bool receipts_Display(CTraverser* trav, void* data);
 class CReceiptTraverser : public CTraverser {
   public:
     CReceiptTraverser(void) : CTraverser(cout, "receipts") {
@@ -42,6 +33,8 @@ class CReceiptTraverser : public CTraverser {
     }
 };
 
+extern bool logs_Pre(CTraverser* trav, void* data);
+extern bool logs_Display(CTraverser* trav, void* data);
 class CLogTraverser : public CTraverser {
   public:
     CLogTraverser(void) : CTraverser(cout, "logs") {
@@ -52,6 +45,7 @@ class CLogTraverser : public CTraverser {
     }
 };
 
+extern bool traces_Display(CTraverser* trav, void* data);
 class CTraceTraverser : public CTraverser {
   public:
     CTraceTraverser(void) : CTraverser(cout, "traces") {
@@ -62,6 +56,8 @@ class CTraceTraverser : public CTraverser {
     }
 };
 
+extern bool acct_Pre(CTraverser* trav, void* data);
+extern bool acct_Display(CTraverser* trav, void* data);
 class CTransactionTraverser : public CTraverser {
   public:
     CTransactionTraverser(void) : CTraverser(cout, "txs") {
