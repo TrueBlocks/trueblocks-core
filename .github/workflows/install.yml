@@ -14,6 +14,8 @@ jobs:
           mkdir ~/.ssh
           echo $SSH_PRIVATE_KEY > ~/.ssh/github_action
           chmod -R og-rwx ~/.ssh
+          ls -la ~/.ssh
+
         env:
           SSH_PRIVATE_KEY : ${{secrets.SSH_PRIVATE_KEY}}
       - name: Run SSH Process and Tests
