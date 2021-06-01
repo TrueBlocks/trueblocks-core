@@ -23,8 +23,8 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,is_customizable
 10431,apps,Accounts,export,acctExport,source,,,false,false,true,true,header,flag,list<addr>,for log export only&#44; export only one of these addresses emitted the event
 10433,apps,Accounts,export,acctExport,relevant,,,false,false,true,true,header,switch,<boolean>,for log export only&#44; if true export only logs relevant to one of the given export addresses
 10439,apps,Accounts,export,acctExport,count,U,,false,false,true,true,header,switch,<boolean>,only available for --appearances mode&#44; if present return only|the number of records
-10440,apps,Accounts,export,acctExport,first_block,S,0,false,false,false,false,local,flag,<blknum>,first block to process (inclusive)
-10450,apps,Accounts,export,acctExport,last_block,E,NOPOS,false,false,false,false,local,flag,<blknum>,last block to process (inclusive)
+10440,apps,Accounts,export,acctExport,first_block,F,0,false,false,false,false,local,flag,<blknum>,first block to process (inclusive)
+10450,apps,Accounts,export,acctExport,last_block,L,NOPOS,false,false,false,false,local,flag,<blknum>,last block to process (inclusive)
 10453,apps,Accounts,export,acctExport,first_record,c,0,false,false,true,true,header,flag,<blknum>,the first record to process
 10457,apps,Accounts,export,acctExport,max_records,e,(isApiMode() ? 250 : NOPOS),false,false,true,true,header,flag,<blknum>,the maximum number of records to process before reporting
 10085,apps,Accounts,export,acctExport,clean,,false,false,false,true,true,header,switch,<boolean>,clean (i.e. remove duplicate appearances) from all existing monitors

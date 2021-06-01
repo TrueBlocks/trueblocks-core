@@ -33,8 +33,8 @@ static const COption params[] = {
     COption("source", "", "list<addr>", OPT_FLAG, "for log export only, export only one of these addresses emitted the event"),  // NOLINT
     COption("relevant", "", "", OPT_SWITCH, "for log export only, if true export only logs relevant to one of the given export addresses"),  // NOLINT
     COption("count", "U", "", OPT_SWITCH, "only available for --appearances mode, if present return only the number of records"),  // NOLINT
-    COption("first_block", "S", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to process (inclusive)"),
-    COption("last_block", "E", "<blknum>", OPT_HIDDEN | OPT_FLAG, "last block to process (inclusive)"),
+    COption("first_block", "F", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to process (inclusive)"),
+    COption("last_block", "L", "<blknum>", OPT_HIDDEN | OPT_FLAG, "last block to process (inclusive)"),
     COption("first_record", "c", "<blknum>", OPT_FLAG, "the first record to process"),
     COption("max_records", "e", "<blknum>", OPT_FLAG, "the maximum number of records to process before reporting"),
     COption("clean", "", "", OPT_SWITCH, "clean (i.e. remove duplicate appearances) from all existing monitors"),
@@ -126,16 +126,16 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-U" || arg == "--count") {
             count = true;
 
-        } else if (startsWith(arg, "-S:") || startsWith(arg, "--first_block:")) {
+        } else if (startsWith(arg, "-F:") || startsWith(arg, "--first_block:")) {
             if (!confirmBlockNum("first_block", first_block, arg, latest))
                 return false;
-        } else if (arg == "-S" || arg == "--first_block") {
+        } else if (arg == "-F" || arg == "--first_block") {
             return flag_required("first_block");
 
-        } else if (startsWith(arg, "-E:") || startsWith(arg, "--last_block:")) {
+        } else if (startsWith(arg, "-L:") || startsWith(arg, "--last_block:")) {
             if (!confirmBlockNum("last_block", last_block, arg, latest))
                 return false;
-        } else if (arg == "-E" || arg == "--last_block") {
+        } else if (arg == "-L" || arg == "--last_block") {
             return flag_required("last_block");
 
         } else if (startsWith(arg, "-c:") || startsWith(arg, "--first_record:")) {
@@ -269,7 +269,7 @@ bool COptions::parseArguments(string_q& command) {
     if ((accounting) && (appearances || logs || traces || receipts))
         return usage("Do not use the --accounting option with other options.");
 
-    if ((freshenOnly) && (appearances || logs || traces || receipts))
+    if (freshenOnly && (appearances || logs || traces || receipts))
         return usage("Do not use the --freshen option with other options.");
 
     // Where will we start?
@@ -340,6 +340,7 @@ bool COptions::parseArguments(string_q& command) {
         LOG_INFO("Turning off caching for unripe blocks.");
     }
 
+    // always freshen (i.e. query blooms) up to every block
     if (!process_freshen())
         return usage("freshen returns false.");
 
