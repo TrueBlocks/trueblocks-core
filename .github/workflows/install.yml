@@ -9,9 +9,16 @@ jobs:
       - name: Install Prerequistes
         run: |
           sudo apt install build-essential git cmake python python-dev libcurl3-dev clang-format jq
+      - name: Setup SSH Key
+        run: |
+          mkdir ~/.ssh
+          echo ${{ secrets.SSH_PRIVATE_KEY }} > ~/.ssh/github_action
+          chmod -R og-rwx ~/.ssh
+          ls -lRa ~/
       - name: Build TrueBlocks
         run: |
           mkdir build && cd build
           cmake ../src
           make
+      
       - run: echo "🍏 This job's status is ${{ job.status }}."
