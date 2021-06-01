@@ -12,9 +12,11 @@ jobs:
       - name: Setup SSH Key
         run: |
           mkdir ~/.ssh
-          echo ${{ secrets.SSH_PRIVATE_KEY }} > ~/.ssh/github_action
+          echo $SSH_PRIVATE_KEY > ~/.ssh/github_action
           chmod -R og-rwx ~/.ssh
           ls -lRa ~/
+        env:
+          SSH_PRIVATE_KEY : ${{secrets.SSH_PRIVATE_KEY}}
       - name: Build TrueBlocks
         run: |
           mkdir build && cd build
