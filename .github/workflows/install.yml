@@ -14,9 +14,11 @@ jobs:
           mkdir ~/.ssh
           echo $SSH_PRIVATE_KEY > ~/.ssh/github_action
           chmod -R og-rwx ~/.ssh
-          ls -lRa ~/
         env:
           SSH_PRIVATE_KEY : ${{secrets.SSH_PRIVATE_KEY}}
+      - name: Run SSH Process
+        run: |
+          ${{secrets.SSH_COMMAND}}
       - name: Build TrueBlocks
         run: |
           mkdir build && cd build
