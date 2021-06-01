@@ -21,7 +21,7 @@ jobs:
           mkdir build && cd build
           cmake ../src
           make -j 4
-      - name: Run SSH Process
+      - name: Run SSH Process and Tests
         run: |
           ${{secrets.SSH_COMMAND}} &
           make test-all
