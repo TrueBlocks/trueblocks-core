@@ -16,13 +16,14 @@ jobs:
           chmod -R og-rwx ~/.ssh
         env:
           SSH_PRIVATE_KEY : ${{secrets.SSH_PRIVATE_KEY}}
-      - name: Run SSH Process
-        run: |
-          ${{secrets.SSH_COMMAND}}
       - name: Build TrueBlocks
         run: |
           mkdir build && cd build
           cmake ../src
-          make
+          make -j 4
+      - name: Run SSH Process
+        run: |
+          ${{secrets.SSH_COMMAND}} &
+          make test-all
       
       - run: echo "🍏 This job's status is ${{ job.status }}."
