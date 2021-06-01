@@ -51,6 +51,14 @@ bool COptions::call_command(int argc, const char* argv[]) {
                     return usage(os.str());
                 }
                 // pass it through
+            } else if (mode == "scrape") {
+                string_q validModes = "|index|monitors|both|";
+                if (!contains(validModes, arg)) {
+                    ostringstream os;
+                    os << "Invalid submode '" << arg << "' provided to scrape mode.";
+                    return usage(os.str());
+                }
+                // pass it through
             } else if (!mode.empty()) {
                 ostringstream os;
                 os << "Provide only a single mode. Encountered both '" << mode << "' and '" << arg << "'.";
