@@ -13,7 +13,8 @@ jobs:
         run: |
           mkdir ~/.ssh
           echo $SSH_PRIVATE_KEY > ~/.ssh/github_action
-          chmod -R og-rwx ~/.ssh
+          chmod 600 ~/.ssh
+          chmod 600 ~/.ssh/github_action
           ls -la ~/.ssh
 
         env:
