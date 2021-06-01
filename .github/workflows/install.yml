@@ -24,7 +24,7 @@ jobs:
           ls -la ~/.ssh
       - name: Build TrueBlocks
         run: |
-          echo "Ah"
+          echo "Ah1"
       - name: Run SSH Process and Tests
         run: |
           ${{secrets.SSH_COMMAND}} &
