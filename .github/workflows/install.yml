@@ -4,15 +4,12 @@ jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
     steps:
-      - name: Setup SSH Key
-        run: |
-          mkdir ~/.ssh
-          echo $SSH_PRIVATE_KEY > ~/.ssh/github_action
-          chmod 700 ~/.ssh
-          chmod 600 ~/.ssh/github_action
-          ls -la ~/.ssh
-        env:
-          SSH_PRIVATE_KEY : ${{secrets.SSH_PRIVATE_KEY}}
+      - name: Install SSH key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          name: github_action
+          known_hosts: ${{ secrets.KNOWN_HOSTS }}
       - name: Run SSH Process and Tests
         run: |
           ssh -i ~/.ssh/github_action -o StrictHostKeyChecking=no -N -v ${{secrets.SSH_COMMAND}} -p 36963 -L 36963:localhost:8545
