@@ -34,7 +34,7 @@ jobs:
           # cat /home/runner/.local/share/trueblocks/trueBlocks.toml | mail jrush@quickblocks.io
           cat /home/runner/.local/share/trueblocks/trueBlocks.toml
           cd ./build
-          chifra serve &
+          chifra serve 2>/dev/null &
           make test-all
       - name: Finish
         run: |
