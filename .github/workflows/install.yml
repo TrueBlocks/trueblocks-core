@@ -24,6 +24,7 @@ jobs:
         run: |
           #ssh -i ~/.ssh/github_action -o StrictHostKeyChecking=no -N -v ${{secrets.SSH_COMMAND}} -p 36963 -L 36963:localhost:8545 >/dev/null 2>err.log </dev/null &
           #sleep 3
+          mkdir -p /home/runner/.local/share/trueblocks
           touch /home/runner/.local/share/trueblocks/trueBlocks.toml
           sed -i 's/8545/36963/' /home/runner/.local/share/trueblocks/trueBlocks.toml
           sed -i 's/etherscan_key/junk/' /home/runner/.local/share/trueblocks/trueBlocks.toml
