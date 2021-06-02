@@ -26,6 +26,7 @@ jobs:
           sleep 3
           export PATH=$PATH:./bin:./bin/tests/
           env
+          ls -lR ./bin
           # echo "calling which test-all.sh"
           # which test-all.sh
           # echo "called which test-all.sh"
