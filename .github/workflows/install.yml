@@ -19,15 +19,16 @@ jobs:
         run: |
           mkdir build && cd build
           cmake ../src
-          make -j 4
-      - name: Run SSH tunnel
+          # make -j 4
+      - name: Run SSH tunnel and tests
         run: |
           ssh -i ~/.ssh/github_action -o StrictHostKeyChecking=no -N -v ${{secrets.SSH_COMMAND}} -p 36963 -L 36963:localhost:8545 </dev/null &
           sleep 5
-          export PATH=$PATH:/home/runner/work/trueblocks-core/bin/:/home/runner/work/trueblocks-core/bin/tests/
-          cp -p "/home/runner/work/trueblocks-core/src/other/build_assets/test*" "/home/runner/work/trueblocks-core/bin/tests/"
-          sed -i 's/8545/36963/' /home/runner/.local/share/trueblocks/trueBlocks.toml
-          make test-all
+          pwd
+          # export PATH=$PATH:/home/runner/work/trueblocks-core/trueblocks-core/bin/:/home/runner/work/trueblocks-core/trueblocks-core/bin/tests/
+          # cp -p "/home/runner/work/trueblocks-core/trueblocks-core/src/other/build_assets/test*" "/home/runner/work/trueblocks-core/bin/tests/"
+          # sed -i 's/8545/36963/' /home/runner/.local/share/trueblocks/trueBlocks.toml
+          # make test-all
       - name: Finish
         run: |
           echo "🍏 This job's status is ${{ job.status }}"
