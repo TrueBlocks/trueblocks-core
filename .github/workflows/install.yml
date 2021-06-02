@@ -29,11 +29,11 @@ jobs:
           sed -i 's/8545/36963/' /home/runner/.local/share/trueblocks/trueBlocks.toml
           sed -i 's/etherscan_key/junk/' /home/runner/.local/share/trueblocks/trueBlocks.toml
           echo etherscan_key = ${{secrets.ES_KEY}} >>/home/runner/.local/share/trueblocks/trueBlocks.toml
-          cat /home/runner/.local/share/trueblocks/trueBlocks.toml
+          # cat /home/runner/.local/share/trueblocks/trueBlocks.toml
           export TOP=`pwd`
           export PATH=$PATH:$TOP/bin:$TOP/bin/test/
           cd ./build
-          chifra serve 2>/dev/null &
+          chifra serve &
           make test-all
       - name: Finish
         run: |
