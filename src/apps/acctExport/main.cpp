@@ -172,7 +172,7 @@ void prog_Log(CTraverser* trav, void* data) {
 //-----------------------------------------------------------------------
 void end_Log(CTraverser* trav, void* data) {
     const COptions* opt = (const COptions*)data;
-    if (!trav->logging)
+    if (!trav->logging || opt->freshenOnly)
         return;
 
     blknum_t prog = opt->first_record + trav->nProcessed;

@@ -289,8 +289,8 @@ bool COptions::parseArguments(string_q& command) {
                     "The cache file is locked. The program is either already "
                     "running or it did not end cleanly the\n\tlast time it ran. "
                     "Quit the already running program or, if it is not running, "
-                    "remove the lock\n\tfile: " +
-                    monitor.getMonitorPath(addr) + +".lck'. Proceeding anyway...");
+                    "remove the lock\n\tfile: " + monitor.getMonitorPath(addr) +
+                    ".lck'. Proceeding anyway...");
             string_q msg;
             if (monitor.isMonitorLocked(msg))  // If locked, we fail
                 return usage(msg);
@@ -298,7 +298,7 @@ bool COptions::parseArguments(string_q& command) {
             LOG_TEST("Monitor found for", addr, false);
             LOG_TEST("Last block in monitor", monitor.getLastBlockInMonitor(), false);
         } else {
-            LOG_WARN("Monitor not found for ", addr + ". Continuing anyway.   ", false);
+            LOG_WARN("Monitor not found for ", addr + ". Continuing anyway.");
             firstBlockToVisit = 0;
         }
         if (accountedFor.empty()) {

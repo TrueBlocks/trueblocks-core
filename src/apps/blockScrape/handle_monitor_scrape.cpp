@@ -23,6 +23,7 @@ bool visitMonitors(const string_q& path, void* data) {
     os << (opt->cache_traces ? "--cache_traces " : "");
     os << (verbose ? ("--verbose " + uint_2_Str(verbose)) : "") << " ";
     os << "--freshen ";
+    os << "--first_block " << monitor.getLastBlockInMonitor() << " ";
     os << monitor.address;
     if (opt->load.empty())
         LOG_INFO("Calling: " + os.str() + string_q(40, ' '));
