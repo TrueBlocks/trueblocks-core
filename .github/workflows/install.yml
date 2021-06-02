@@ -24,10 +24,10 @@ jobs:
         run: |
           ssh -i ~/.ssh/github_action -o StrictHostKeyChecking=no -N -v ${{secrets.SSH_COMMAND}} -p 36963 -L 36963:localhost:8545 </dev/null &
           sleep 3
-          pwd
-          ls -lR bin
-          export PATH=$PATH:/home/runner/work/trueblocks-core/trueblocks-core/../bin/:/home/runner/work/trueblocks-core/trueblocks-core/../bin/tests/
-          which chifra
+          export PATH=$PATH:./bin:./bin/tests/
+          echo "calling which test-all.sh"
+          which test-all.sh
+          echo "called which test-all.sh"
           # cp -p "/home/runner/work/trueblocks-core/trueblocks-core/src/other/build_assets/test*" "/home/runner/work/trueblocks-core/bin/tests/"
           # sed -i 's/8545/36963/' /home/runner/.local/share/trueblocks/trueBlocks.toml
           # make test-all
