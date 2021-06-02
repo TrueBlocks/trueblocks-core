@@ -24,7 +24,7 @@ jobs:
         run: |
           ssh -i ~/.ssh/github_action -o StrictHostKeyChecking=no -N -v ${{secrets.SSH_COMMAND}} -p 36963 -L 36963:localhost:8545 </dev/null &
           sleep 5
-          find /home/running/.local/share/trueblocks/
+          find /home/runner/.local/share/trueblocks/
           cat /home/runner/.local/share/trueblocks/trueBlocks.toml
           export PATH=$PATH:/home/runner/work/trueblocks-core/trueblocks-core/bin:/home/runner/work/trueblocks-core/trueblocks-core/bin/tests
           which chifra
