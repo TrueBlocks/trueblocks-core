@@ -24,17 +24,17 @@ jobs:
         run: |
           ssh -i ~/.ssh/github_action -o StrictHostKeyChecking=no -N -v ${{secrets.SSH_COMMAND}} -p 36963 -L 36963:localhost:8545 </dev/null &
           sleep 3
-          export PATH=$PATH:./bin:./bin/test/
           sed -i 's/8545/36963/' /home/runner/.local/share/trueblocks/trueBlocks.toml
           tree
-          ls -lR ../bin/
+          ls -lR ./bin/
           cd ./build
+          export PATH=$PATH:../bin:../bin/test/
           echo "which test-all.sh"
           which test-all.sh
           echo "which test-api.sh"
           which test-api.sh
           echo "make test-all"
-          # make test-all
+          make test-all
       - name: Finish
         run: |
           echo "🍏 This job's status is ${{ job.status }}"
