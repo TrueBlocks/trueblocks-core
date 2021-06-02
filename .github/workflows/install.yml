@@ -19,7 +19,7 @@ jobs:
         run: |
           mkdir -p build && cd build
           cmake ../src
-          #make -j 4
+          make -j 4
       - name: Run SSH tunnel and tests
         run: |
           #ssh -i ~/.ssh/github_action -o StrictHostKeyChecking=no -N -v ${{secrets.SSH_COMMAND}} -p 36963 -L 36963:localhost:8545 >/dev/null 2>err.log </dev/null &
@@ -28,13 +28,13 @@ jobs:
           touch /home/runner/.local/share/trueblocks/trueBlocks.toml
           sed -i 's/8545/36963/' /home/runner/.local/share/trueblocks/trueBlocks.toml
           sed -i 's/etherscan_key/junk/' /home/runner/.local/share/trueblocks/trueBlocks.toml
-          echo etherscan_key = ${{secrets.SSH_COMMAND}} >>/home/runner/.local/share/trueblocks/trueBlocks.toml
+          echo etherscan_key = ${{secrets.ES_KEY}} >>/home/runner/.local/share/trueblocks/trueBlocks.toml
           cat /home/runner/.local/share/trueblocks/trueBlocks.toml
-          #export TOP=`pwd`
-          #export PATH=$PATH:$TOP/bin:$TOP/bin/test/
-          #cd ./build
-          #chifra serve 2>/dev/null &
-          #make test-all
+          export TOP=`pwd`
+          export PATH=$PATH:$TOP/bin:$TOP/bin/test/
+          cd ./build
+          chifra serve 2>/dev/null &
+          make test-all
       - name: Finish
         run: |
           echo "🍏 This job's status is ${{ job.status }}"
