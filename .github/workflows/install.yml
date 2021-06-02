@@ -27,8 +27,8 @@ jobs:
           mkdir -p /home/runner/.local/share/trueblocks
           touch /home/runner/.local/share/trueblocks/trueBlocks.toml
           sed -i 's/8545/36963/' /home/runner/.local/share/trueblocks/trueBlocks.toml
-          sed -i 's/etherscan_key/junk/' /home/runner/.local/share/trueblocks/trueBlocks.toml
-          echo etherscan_key = ${{secrets.ES_KEY}} >>/home/runner/.local/share/trueblocks/trueBlocks.toml
+          # sed -i 's/etherscan_key/junk/' /home/runner/.local/share/trueblocks/trueBlocks.toml
+          # echo etherscan_key = ${{secrets.ES_KEY}} >>/home/runner/.local/share/trueblocks/trueBlocks.toml
           # cat /home/runner/.local/share/trueblocks/trueBlocks.toml
           export TOP=`pwd`
           export PATH=$PATH:$TOP/bin:$TOP/bin/test/
