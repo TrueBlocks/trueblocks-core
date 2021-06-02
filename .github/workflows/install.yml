@@ -24,13 +24,11 @@ jobs:
         run: |
           ssh -i ~/.ssh/github_action -o StrictHostKeyChecking=no -N -v ${{secrets.SSH_COMMAND}} -p 36963 -L 36963:localhost:8545 </dev/null &
           sleep 5
-          find /home/runner/.local/share/trueblocks/
-          cat /home/runner/.local/share/trueblocks/trueBlocks.toml
-          export PATH=$PATH:/home/runner/work/trueblocks-core/trueblocks-core/bin:/home/runner/work/trueblocks-core/trueblocks-core/bin/tests
-          which chifra
-          which cacheStatus
-          which getBlocks
-          curl --data '{"method":"eth_getBlockByNumber","params":["latest", true],"id":1,"jsonrpc":"2.0"}' -H "Content-Type: application/json" -X POST http://localhost:36963 | jq
+          export PATH=$PATH:/home/runner/work/trueblocks-core/trueblocks-core/bin/:/home/runner/work/trueblocks-core/trueblocks-core/bin/tests/
+          cp -p "/home/runner/work/trueblocks-core/trueblocks-core/src/other/build_assets/test*" "/home/runner/work/trueblocks-core/trueblocks-core/bin/tests/"
+          cat /home/runner/.local/share/trueblocks/trueBlocks.toml | sed 's/8545/36963/' >x
+          cat x >/home/runner/.local/share/trueblocks/trueBlocks.toml
+          chifra blocks 12
       - name: Finish
         run: |
           echo "🍏 This job's status is ${{ job.status }}"
