@@ -22,20 +22,13 @@ jobs:
           make -j 4
       - name: Run SSH tunnel and tests
         run: |
-          ssh -i ~/.ssh/github_action -o StrictHostKeyChecking=no -N -v ${{secrets.SSH_COMMAND}} -p 36963 -L 36963:localhost:8545 </dev/null &
+          ssh -i ~/.ssh/github_action -o StrictHostKeyChecking=no -N -v ${{secrets.SSH_COMMAND}} -p 36963 -L 36963:localhost:8545 >/dev/null 2>err.log </dev/null &
           sleep 3
           sed -i 's/8545/36963/' /home/runner/.local/share/trueblocks/trueBlocks.toml
-          tree -L 2 .
-          ls -lR ./bin/
           export TOP=`pwd`
-          env | grep TOP
           export PATH=$PATH:$TOP/bin:$TOP/bin/test/
           cd ./build
-          echo "which test-all.sh"
-          which test-all.sh
-          echo "which test-api.sh"
-          which test-api.sh
-          echo "make test-all"
+          chifra serve &
           make test-all
       - name: Finish
         run: |
