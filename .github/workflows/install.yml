@@ -25,7 +25,7 @@ jobs:
           ssh -i ~/.ssh/github_action -o StrictHostKeyChecking=no -N -v ${{secrets.SSH_COMMAND}} -p 36963 -L 36963:localhost:8545 </dev/null &
           sleep 5
           pwd
-          export PATH=$PATH:/home/runner/work/trueblocks-core/trueblocks-core/bin/:/home/runner/work/trueblocks-core/trueblocks-core/bin/tests/
+          export PATH=$PATH:/home/runner/work/trueblocks-core/trueblocks-core/../bin/:/home/runner/work/trueblocks-core/trueblocks-core/../bin/tests/
           which chifra
           # cp -p "/home/runner/work/trueblocks-core/trueblocks-core/src/other/build_assets/test*" "/home/runner/work/trueblocks-core/bin/tests/"
           # sed -i 's/8545/36963/' /home/runner/.local/share/trueblocks/trueBlocks.toml
