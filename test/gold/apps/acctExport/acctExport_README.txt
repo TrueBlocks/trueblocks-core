@@ -33,8 +33,8 @@ acctExport -th
 | -d | --skip_ddos | toggle skipping over 2016 dDos transactions ('on' by default) |
 | -m | --max_traces &lt;num&gt; | if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250) |
 | -f | --freshen | freshen but do not print the exported data |
-| -S | --first_block &lt;num&gt; | first block to process (inclusive) |
-| -E | --last_block &lt;num&gt; | last block to process (inclusive) |
+| -F | --first_block &lt;num&gt; | first block to process (inclusive) |
+| -L | --last_block &lt;num&gt; | last block to process (inclusive) |
 | -s | --staging | enable search of staging (not yet finalized) folder |
 | -u | --unripe | enable search of unripe (neither staged nor finalized) folder (assumes --staging) |
 |  | --load &lt;str&gt; | a comma separated list of dynamic traversers to load |
