@@ -22,6 +22,7 @@ namespace qblocks {
 
 // EXISTING_CODE
 typedef bool (*TRANSFUNC)(const CTransaction* trans, void* data);
+typedef bool (*TRANSVISITFUNC)(CTransaction& trans, void* data);
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
@@ -54,6 +55,7 @@ class CBlock : public CBaseNode {
     const string_q getStringAt(const string_q& fieldName, size_t i) const override;
 
     // EXISTING_CODE
+    bool forEveryTransaction(TRANSVISITFUNC func, void* data) const;
     bool forEveryAppearanceInBlock(APPEARANCEFUNC func, TRANSFUNC filt = NULL, void* data = NULL);
     bool forEveryUniqueAppearanceInBlock(APPEARANCEFUNC func, TRANSFUNC filt = NULL, void* data = NULL);
     bool forEveryUniqueAppearanceInBlockPerTx(APPEARANCEFUNC func, TRANSFUNC filt = NULL, void* data = NULL);

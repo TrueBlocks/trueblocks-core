@@ -912,21 +912,6 @@ bool forEveryBlock(BLOCKVISITFUNC func, void* data, const string_q& block_list) 
 }
 
 //-------------------------------------------------------------------------
-bool forEveryBlockOnDisc(BLOCKVISITFUNC func, void* data, uint64_t start, uint64_t count, uint64_t skip) {
-    if (!func)
-        return false;
-
-    // Read every block from number start to start+count
-    for (uint64_t i = start; i < start + count; i = i + skip) {
-        CBlock block;
-        getBlock(block, i);
-        if (!(*func)(block, data))
-            return false;
-    }
-    return true;
-}
-
-//-------------------------------------------------------------------------
 bool forEveryTraceInTransaction(TRACEVISITFUNC func, void* data, const CTransaction& trans) {
     if (!func)
         return false;
@@ -970,20 +955,6 @@ bool forEveryLogInBlock(LOGVISITFUNC func, void* data, const CBlock& block) {
         if (!forEveryLogInTransaction(func, data, block.transactions[i]))
             return false;
     }
-    return true;
-}
-
-//-------------------------------------------------------------------------
-bool forEveryTransactionInBlock(TRANSVISITFUNC func, void* data, const CBlock& block) {
-    if (!func)
-        return false;
-
-    for (size_t i = 0; i < block.transactions.size(); i++) {
-        CTransaction trans = block.transactions[i];
-        if (!(*func)(trans, data))
-            return false;
-    }
-
     return true;
 }
 

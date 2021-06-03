@@ -117,15 +117,12 @@ typedef bool (*ABIVISITFUNC)(CAbi& abi_spec, void* data);
 extern bool forEveryBlock(BLOCKVISITFUNC func, void* data, const string_q& block_list);  // NOLINT
 extern bool forEveryBlock(BLOCKVISITFUNC func, void* data, uint64_t start, uint64_t count,
                           uint64_t skip = 1);  // NOLINT
-extern bool forEveryBlockOnDisc(BLOCKVISITFUNC func, void* data, uint64_t start, uint64_t count,
-                                uint64_t skip = 1);  // NOLINT
 extern bool forEveryBlock_light(BLOCKVISITFUNC func, void* data, uint64_t start, uint64_t count,
                                 uint64_t skip = 1);  // NOLINT
 
 //-------------------------------------------------------------------------
 // forEvery functions
 extern bool forEveryTransactionInList(TRANSVISITFUNC func, void* data, const string_q& trans_list);
-extern bool forEveryTransactionInBlock(TRANSVISITFUNC func, void* data, const CBlock& block);
 
 //-------------------------------------------------------------------------
 // forEvery functions

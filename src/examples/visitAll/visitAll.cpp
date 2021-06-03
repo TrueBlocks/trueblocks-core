@@ -24,11 +24,11 @@ int main(int argc, const char* argv[]) {
 //----------------------------------------------------------------
 // Called by forEveryBlock
 bool visitBlock(CBlock& block, void* data) {
-    return forEveryTransactionInBlock(visitTransaction, data, block);
+    return block.forEveryTransaction(visitTransaction, data);
 }
 
 //----------------------------------------------------------------
-// Called by forEveryTransactionInBlock, prints the transaction to screen
+// Called by forEveryTransaction, prints the transaction to screen
 bool visitTransaction(CTransaction& trans, void* data) {
     cout << trans << endl;
     return true;

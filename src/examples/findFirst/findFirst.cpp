@@ -17,7 +17,7 @@
 // does as it sounds. It visits every item in a given data structure performing a particular
 // function. Here, we're showing an example of showing every address appearance in a block.
 // We're searching for the first transaction in which the infamous The DAO (0xbb9...)
-// appears. There are many forEvery functions such as forEveryTransactionInBlock,
+// appears. There are many forEvery functions such as forEveryTransaction,
 // forEveryTraceInTransaction, forEveryLogInBlock, etc.
 //-----------------------------------------------------------------------------------------------
 
