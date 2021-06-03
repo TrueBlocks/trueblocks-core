@@ -912,15 +912,6 @@ bool forEveryBlock(BLOCKVISITFUNC func, void* data, const string_q& block_list) 
 }
 
 //-------------------------------------------------------------------------
-bool forEveryTraceInBlock(TRACEVISITFUNC func, void* data, const CBlock& block) {
-    for (size_t i = 0; i < block.transactions.size(); i++) {
-        if (!block.transactions[i].forEveryTrace(func, data))
-            return false;
-    }
-    return true;
-}
-
-//-------------------------------------------------------------------------
 bool forEveryTransaction(TRANSVISITFUNC func, void* data, const string_q& trans_list) {
     if (!func)
         return false;

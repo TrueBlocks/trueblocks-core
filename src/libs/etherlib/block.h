@@ -57,6 +57,7 @@ class CBlock : public CBaseNode {
     // EXISTING_CODE
     bool forEveryTransaction(TRANSVISITFUNC func, void* data) const;
     bool forEveryLog(LOGVISITFUNC func, void* data) const;
+    bool forEveryTrace(TRACEVISITFUNC func, void* data) const;
     bool forEveryAppearanceInBlock(APPEARANCEFUNC func, TRANSFUNC filt = NULL, void* data = NULL);
     bool forEveryUniqueAppearanceInBlock(APPEARANCEFUNC func, TRANSFUNC filt = NULL, void* data = NULL);
     bool forEveryUniqueAppearanceInBlockPerTx(APPEARANCEFUNC func, TRANSFUNC filt = NULL, void* data = NULL);

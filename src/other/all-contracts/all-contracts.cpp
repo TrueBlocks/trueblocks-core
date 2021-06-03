@@ -21,11 +21,12 @@ int main(int argc, const char* argv[]) {
     HIDE_FIELD(CTraceAction, "init");
     HIDE_FIELD(CTraceResult, "code");
     blknum_t latest = getBlockProgress(BP_CLIENT).client;
-    for (size_t bn = firstTransactionBlock ; bn < latest ; bn++) {
-        cout << bn << "\r"; cout.flush();
+    for (size_t bn = firstTransactionBlock; bn < latest; bn++) {
+        cout << bn << "\r";
+        cout.flush();
         CBlock block;
         getBlock(block, bn);
-        forEveryTraceInBlock(visitTrace, NULL, block);
+        block.forEveryTrace(visitTrace, NULL);
     }
     return 1;
 }

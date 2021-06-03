@@ -770,5 +770,19 @@ bool CBlock::forEveryLog(LOGVISITFUNC func, void* data) const {
     }
     return true;
 }
+
+//-------------------------------------------------------------------------
+bool CBlock::forEveryTrace(TRACEVISITFUNC func, void* data) const {
+    if (!func)
+        return false;
+
+    for (auto trans : transactions) {
+        if (!trans.forEveryTrace(func, data))
+            return false;
+    }
+
+    return true;
+}
+
 // EXISTING_CODE
 }  // namespace qblocks

@@ -119,14 +119,7 @@ extern bool forEveryBlock(BLOCKVISITFUNC func, void* data, uint64_t start, uint6
                           uint64_t skip = 1);  // NOLINT
 extern bool forEveryBlock_light(BLOCKVISITFUNC func, void* data, uint64_t start, uint64_t count,
                                 uint64_t skip = 1);  // NOLINT
-
-//-------------------------------------------------------------------------
-// forEvery functions
 extern bool forEveryTransaction(TRANSVISITFUNC func, void* data, const string_q& trans_list);
-
-//-------------------------------------------------------------------------
-// forEvery functions
-extern bool forEveryTraceInBlock(TRACEVISITFUNC func, void* data, const CBlock& block);
 
 //-------------------------------------------------------------------------
 // forEvery functions
