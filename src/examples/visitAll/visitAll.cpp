@@ -13,33 +13,24 @@
 #include "etherlib.h"
 
 //----------------------------------------------------------------
+// Visit every 500th block between the first and the 100,000th
 int main(int argc, const char* argv[]) {
-    // Initialize the library
     etherlib_init(quickQuitHandler);
-
-    // Visit every block between the first and the most recent
     forEveryBlock(visitBlock, nullptr, 0, 100000, 500);
-
-    // Clean up
     etherlib_cleanup();
+
     return 0;
 }
 
 //----------------------------------------------------------------
-// For each block
+// Called by forEveryBlock
 bool visitBlock(CBlock& block, void* data) {
-    // Visit each tranaction and show it seperately
-    cerr << block.blockNumber << "\t" << block.transactions.size() << "\r";
-    cerr.flush();
-    for (auto trans : block.transactions)
-        visitTransaction(trans, data);
-    return true;
+    return forEveryTransactionInBlock(visitTransaction, data, block);
 }
 
 //----------------------------------------------------------------
-// For each transaction in the block
+// Called by forEveryTransactionInBlock, prints the transaction to screen
 bool visitTransaction(CTransaction& trans, void* data) {
-    // Simply print the transaction to the screen
     cout << trans << endl;
     return true;
 }
