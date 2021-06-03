@@ -26,7 +26,7 @@ int main(int argc, const char* argv[]) {
             return 0;
         if (once)
             cout << exportPreamble(expContext().fmtMap["header"], GETRUNTIME_CLASS(CTransaction));
-        forEveryTransactionInList(visitTransaction, &options, options.transList.queries);
+        forEveryTransaction(visitTransaction, &options, options.transList.queries);
         once = false;
     }
     cout << exportPostamble(options.errors, expContext().fmtMap["meta"]);

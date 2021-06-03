@@ -122,7 +122,7 @@ extern bool forEveryBlock_light(BLOCKVISITFUNC func, void* data, uint64_t start,
 
 //-------------------------------------------------------------------------
 // forEvery functions
-extern bool forEveryTransactionInList(TRANSVISITFUNC func, void* data, const string_q& trans_list);
+extern bool forEveryTransaction(TRANSVISITFUNC func, void* data, const string_q& trans_list);
 
 //-------------------------------------------------------------------------
 // forEvery functions

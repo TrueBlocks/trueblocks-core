@@ -42,11 +42,11 @@ else if (startsWith(arg, "--belongs:")) {
     if (options.filters.size() > 0) {
         bool on = options.chkAsStr;
         options.chkAsStr = false;
-        forEveryTransactionInList(checkBelongs, &options, options.transList.queries);
+        forEveryTransaction(checkBelongs, &options, options.transList.queries);
         if (!options.belongs) {
             if (on) {
                 options.chkAsStr = on;
-                forEveryTransactionInList(checkBelongsDeep, &options, options.transList.queries);
+                forEveryTransaction(checkBelongsDeep, &options, options.transList.queries);
             }
             if (!options.belongs) {
                 for (auto addr : options.filters) {

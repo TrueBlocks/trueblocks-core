@@ -959,7 +959,7 @@ bool forEveryLogInBlock(LOGVISITFUNC func, void* data, const CBlock& block) {
 }
 
 //-------------------------------------------------------------------------
-bool forEveryTransactionInList(TRANSVISITFUNC func, void* data, const string_q& trans_list) {
+bool forEveryTransaction(TRANSVISITFUNC func, void* data, const string_q& trans_list) {
     if (!func)
         return false;
 

@@ -11,7 +11,7 @@ This example show how to use a few of TrueBlocks' `forEvery` functions.
   - bool `forEveryBlock`(BLOCKVISITFUNC func, void* data, const string_q& block_list)
   - bool `forEveryBlock_light`(BLOCKVISITFUNC func, void* data, uint64_t start, uint64_t count, uint64_t skip)
 - on Transactions
-  - bool `forEveryTransactionInList`(TRANSVISITFUNC func, void* data, const string_q& trans_list)
+  - bool `forEveryTransaction`(TRANSVISITFUNC func, void* data, const string_q& trans_list)
 - on Logs
   - bool `forEveryLogInBlock`(LOGVISITFUNC func, void* data, const CBlock& block)
   - bool `forEveryLogInTransaction`(LOGVISITFUNC func, void* data, const CTransaction& trans)
