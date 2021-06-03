@@ -33,14 +33,14 @@ linux:
 
 objects = $(patsubst %.cpp,objs/%.o,$(src))
 
-$(product)-mac: $(objects) $(libs)
+$(product)-mac: $(objects) $(mac_libs)
 	@mkdir -p objs bin
 	g++ -o $(product) $(objects) $(mac_libs)
 	@strip $(product)
 
 $(product)-linux: $(objects) $(linux_libs)
 	@mkdir -p objs bin
-	g++ -o $(product) $(objects) $(libs)
+	g++ -o $(product) $(objects) $(linux_libs)
 	@strip $(product)
 
 $(objects): | objs
