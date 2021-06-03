@@ -39,7 +39,7 @@ This example show how to use a few of TrueBlocks' `forEvery` functions.
   - bool `forEveryUniqueAppearanceInBlockPerTx`(APPEARANCEFUNC func, TRANSFUNC filter, void* data);
   - bool `forEveryAppearanceInBlock`(APPEARANCEFUNC func, TRANSFUNC filter, void* data);
 - CTransaction
-  - bool `forEveryLogInTransaction`(LOGVISITFUNC func, void* data, const CTransaction& trans)
+  - bool `forEveryLog`(LOGVISITFUNC func, void* data)
   - bool `forEveryAppearanceInTx`(APPEARANCEFUNC func, TRANSFUNC filter, void* data);
   - bool `forEveryUniqueAppearanceInTx`(APPEARANCEFUNC func, TRANSFUNC filter, void* data);
   - bool `forEveryUniqueAppearanceInTxPerTx`(APPEARANCEFUNC func, TRANSFUNC filter, void* data);

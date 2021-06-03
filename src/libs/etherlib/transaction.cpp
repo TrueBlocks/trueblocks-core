@@ -1002,5 +1002,19 @@ bool sortTransactionsForWrite(const CTransaction& t1, const CTransaction& t2) {
         return t1.transactionIndex < t2.transactionIndex;
     return t1.hash < t2.hash;
 }
+
+//-------------------------------------------------------------------------
+bool CTransaction::forEveryLog(LOGVISITFUNC func, void* data) const {
+    if (!func)
+        return false;
+
+    for (auto log : receipt.logs) {
+        if (!(*func)(log, data))
+            return false;
+    }
+
+    return true;
+}
+
 // EXISTING_CODE
 }  // namespace qblocks

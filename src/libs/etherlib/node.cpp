@@ -937,19 +937,6 @@ bool forEveryTraceInBlock(TRACEVISITFUNC func, void* data, const CBlock& block) 
 }
 
 //-------------------------------------------------------------------------
-bool forEveryLogInTransaction(LOGVISITFUNC func, void* data, const CTransaction& trans) {
-    if (!func)
-        return false;
-
-    for (size_t i = 0; i < trans.receipt.logs.size(); i++) {
-        CLogEntry log = trans.receipt.logs[i];
-        if (!(*func)(log, data))
-            return false;
-    }
-    return true;
-}
-
-//-------------------------------------------------------------------------
 bool forEveryTransaction(TRANSVISITFUNC func, void* data, const string_q& trans_list) {
     if (!func)
         return false;

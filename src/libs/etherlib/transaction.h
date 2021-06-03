@@ -36,6 +36,7 @@ typedef enum {
     CB_TOK_ACCOUNTING = (1 << 2),
     CB_TRACES = (1 << 3),
 } cachebits_t;
+typedef bool (*LOGVISITFUNC)(CLogEntry& log, void* data);
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
@@ -78,6 +79,7 @@ class CTransaction : public CBaseNode {
 
     // EXISTING_CODE
     const CBlock* pBlock;
+    bool forEveryLog(LOGVISITFUNC func, void* data) const;
     bool forEveryAppearanceInTx(APPEARANCEFUNC func, TRANSFUNC filt = NULL, void* data = NULL);
     bool forEveryUniqueAppearanceInTx(APPEARANCEFUNC func, TRANSFUNC filt = NULL, void* data = NULL);
     bool forEveryUniqueAppearanceInTxPerTx(APPEARANCEFUNC func, TRANSFUNC filt = NULL, void* data = NULL);

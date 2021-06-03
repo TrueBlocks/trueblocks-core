@@ -765,7 +765,7 @@ bool CBlock::forEveryLog(LOGVISITFUNC func, void* data) const {
         return false;
 
     for (auto trans : transactions) {
-        if (!forEveryLogInTransaction(func, data, trans))
+        if (!trans.forEveryLog(func, data))
             return false;
     }
     return true;

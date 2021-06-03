@@ -23,7 +23,6 @@ namespace qblocks {
 // EXISTING_CODE
 typedef bool (*TRANSFUNC)(const CTransaction* trans, void* data);
 typedef bool (*TRANSVISITFUNC)(CTransaction& trans, void* data);
-typedef bool (*LOGVISITFUNC)(CLogEntry& log, void* data);
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
