@@ -51,7 +51,7 @@ int main(int argc, const char* argv[]) {
     // The address we're searching for
     address_t theDaoAddr("0xbb9bc244d798123fde783fcc1c72d3bb8c189413");
 
-    // Scan each block from the start until we find the address in an appearance
+    // Scan each block from the start until we find the address we're looking for
     for (blknum_t bl = startBlock; bl < getBlockProgress(BP_CLIENT).client; bl++) {
         CBlock block;
         getBlock(block, bl);
