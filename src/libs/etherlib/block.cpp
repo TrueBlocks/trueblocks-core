@@ -758,5 +758,17 @@ bool CBlock::forEveryTransaction(TRANSVISITFUNC func, void* data) const {
 
     return true;
 }
+
+//-------------------------------------------------------------------------
+bool CBlock::forEveryLog(LOGVISITFUNC func, void* data) const {
+    if (!func)
+        return false;
+
+    for (auto trans : transactions) {
+        if (!forEveryLogInTransaction(func, data, trans))
+            return false;
+    }
+    return true;
+}
 // EXISTING_CODE
 }  // namespace qblocks

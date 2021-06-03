@@ -12,9 +12,6 @@ This example show how to use a few of TrueBlocks' `forEvery` functions.
   - bool `forEveryBlock_light`(BLOCKVISITFUNC func, void* data, uint64_t start, uint64_t count, uint64_t skip)
 - on Transactions
   - bool `forEveryTransaction`(TRANSVISITFUNC func, void* data, const string_q& trans_list)
-- on Logs
-  - bool `forEveryLogInBlock`(LOGVISITFUNC func, void* data, const CBlock& block)
-  - bool `forEveryLogInTransaction`(LOGVISITFUNC func, void* data, const CTransaction& trans)
 - on Traces
   - bool `forEveryTraceInBlock`(TRACEVISITFUNC func, void* data, const CBlock& block)
   - bool `forEveryTraceInTransaction`(TRACEVISITFUNC func, void* data, const CTransaction& trans)
@@ -37,10 +34,12 @@ This example show how to use a few of TrueBlocks' `forEvery` functions.
   - bool `forEveryNamedAccount`(NAMEFUNC func, void* data)
 - CBlock
   - bool `forEveryTransaction`(TRANSVISITFUNC func, void* data)
+  - bool `forEveryLog`(LOGVISITFUNC func, void* data)
   - bool `forEveryUniqueAppearanceInBlock`(APPEARANCEFUNC func, TRANSFUNC filter, void* data);
   - bool `forEveryUniqueAppearanceInBlockPerTx`(APPEARANCEFUNC func, TRANSFUNC filter, void* data);
   - bool `forEveryAppearanceInBlock`(APPEARANCEFUNC func, TRANSFUNC filter, void* data);
 - CTransaction
+  - bool `forEveryLogInTransaction`(LOGVISITFUNC func, void* data, const CTransaction& trans)
   - bool `forEveryAppearanceInTx`(APPEARANCEFUNC func, TRANSFUNC filter, void* data);
   - bool `forEveryUniqueAppearanceInTx`(APPEARANCEFUNC func, TRANSFUNC filter, void* data);
   - bool `forEveryUniqueAppearanceInTxPerTx`(APPEARANCEFUNC func, TRANSFUNC filter, void* data);
