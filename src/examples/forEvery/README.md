@@ -1,4 +1,4 @@
-## visitAll example
+## forEvery example
 
 This example show how to use a few of TrueBlocks' `forEvery` functions.
 

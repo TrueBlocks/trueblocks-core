@@ -9,7 +9,7 @@ project (examples)
 
 # Compilation order of the src subdirectories
 add_subdirectory(simple)
-add_subdirectory(visitAll)
+add_subdirectory(forEvery)
 add_subdirectory(txCounter)
 add_subdirectory(findFirst)
 add_subdirectory(dynamic)
