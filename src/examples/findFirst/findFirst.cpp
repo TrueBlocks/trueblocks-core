@@ -18,7 +18,7 @@
 // function. Here, we're showing an example of showing every address appearance in a block.
 // We're searching for the first transaction in which the infamous The DAO (0xbb9...)
 // appears. There are many forEvery functions such as forEveryTransaction,
-// forEveryTraceInTransaction, forEveryLog, etc.
+// forEveryTrace, forEveryLog, etc.
 //-----------------------------------------------------------------------------------------------
 
 //-----------------------------------------------------------------------------------------------

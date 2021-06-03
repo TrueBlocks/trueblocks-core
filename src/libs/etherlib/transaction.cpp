@@ -1016,5 +1016,20 @@ bool CTransaction::forEveryLog(LOGVISITFUNC func, void* data) const {
     return true;
 }
 
+//-------------------------------------------------------------------------
+bool CTransaction::forEveryTrace(TRACEVISITFUNC func, void* data) const {
+    if (!func)
+        return false;
+
+    CTraceArray traceArray;
+    getTraces(traceArray, hash);
+    for (auto trace : traceArray) {
+        if (!(*func)(trace, data))
+            return false;
+    }
+
+    return true;
+}
+
 // EXISTING_CODE
 }  // namespace qblocks

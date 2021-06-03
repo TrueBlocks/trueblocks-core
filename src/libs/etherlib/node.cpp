@@ -912,25 +912,9 @@ bool forEveryBlock(BLOCKVISITFUNC func, void* data, const string_q& block_list) 
 }
 
 //-------------------------------------------------------------------------
-bool forEveryTraceInTransaction(TRACEVISITFUNC func, void* data, const CTransaction& trans) {
-    if (!func)
-        return false;
-
-    CTraceArray traces;
-    getTraces(traces, trans.hash);
-    for (size_t i = 0; i < traces.size(); i++) {
-        CTrace trace = traces[i];
-        if (!(*func)(trace, data))
-            return false;
-    }
-
-    return true;
-}
-
-//-------------------------------------------------------------------------
 bool forEveryTraceInBlock(TRACEVISITFUNC func, void* data, const CBlock& block) {
     for (size_t i = 0; i < block.transactions.size(); i++) {
-        if (!forEveryTraceInTransaction(func, data, block.transactions[i]))
+        if (!block.transactions[i].forEveryTrace(func, data))
             return false;
     }
     return true;

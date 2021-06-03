@@ -126,7 +126,6 @@ extern bool forEveryTransaction(TRANSVISITFUNC func, void* data, const string_q&
 
 //-------------------------------------------------------------------------
 // forEvery functions
-extern bool forEveryTraceInTransaction(TRACEVISITFUNC func, void* data, const CTransaction& trans);
 extern bool forEveryTraceInBlock(TRACEVISITFUNC func, void* data, const CBlock& block);
 
 //-------------------------------------------------------------------------

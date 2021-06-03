@@ -14,7 +14,6 @@ This example show how to use a few of TrueBlocks' `forEvery` functions.
   - bool `forEveryTransaction`(TRANSVISITFUNC func, void* data, const string_q& trans_list)
 - on Traces
   - bool `forEveryTraceInBlock`(TRACEVISITFUNC func, void* data, const CBlock& block)
-  - bool `forEveryTraceInTransaction`(TRACEVISITFUNC func, void* data, const CTransaction& trans)
 - on Index data
   - bool `forEveryIndexChunk`(INDEXCHUNKFUNC func, void* data)
   - bool `forEveryIndexBloom`(INDEXBLOOMFUNC func, void* data)
@@ -40,6 +39,7 @@ This example show how to use a few of TrueBlocks' `forEvery` functions.
   - bool `forEveryAppearanceInBlock`(APPEARANCEFUNC func, TRANSFUNC filter, void* data);
 - CTransaction
   - bool `forEveryLog`(LOGVISITFUNC func, void* data)
+  - bool `forEveryTrace`(TRACEVISITFUNC func, void* data)
   - bool `forEveryAppearanceInTx`(APPEARANCEFUNC func, TRANSFUNC filter, void* data);
   - bool `forEveryUniqueAppearanceInTx`(APPEARANCEFUNC func, TRANSFUNC filter, void* data);
   - bool `forEveryUniqueAppearanceInTxPerTx`(APPEARANCEFUNC func, TRANSFUNC filter, void* data);
