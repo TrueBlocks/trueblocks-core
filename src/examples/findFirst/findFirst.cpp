@@ -18,32 +18,40 @@
 // an example of showing every address appearance in a block. We're searching for the first
 // transaction in which the infamous The DAO (0xbb9...) appears. There are many forEvery functions
 // such as forEveryTransactionInBlock, forEveryTraceInTransaction, forEveryLogInBlock, etc.
+//-----------------------------------------------------------------------------------------------
 
 //-----------------------------------------------------------------------------------------------
-// Every forEvery invocation accepts a void* to a chunk of memory that can be of any type
-// you wish and a function. The function signature of that function differs for each forEvery
-// type. In this case, the signature must be as follows.
+// Each forEvery invocation accepts a pointer to a function and a void* to an arbitrary chunk
+// of memory. This memory may be of any type you wish. The function signature of the provided
+// function differs for each forEvery type. In this case, the signature must be as follows.
+//-----------------------------------------------------------------------------------------------
 bool visitAddress(const CAppearance& item, void* data) {
+    // Have we found the address we're looking for?
     if (item.addr == *reinterpret_cast<address_t*>(data)) {
-        cout << "Found at " << item << "\n";
-        return false;  // return false to stop the scan
+        cout << "Found address at " << item << "\n";
+        // Return false to stop the scan
+        return false;
     }
+
+    // We didn't find it, but let's report progress
     cerr << item << "                    \r";
-    return true;  // return true to continue
+
+    // Return true to continue
+    return true;
 }
 
 //-----------------------------------------------------------------------------------------------
 int main(int argc, const char* argv[]) {
-    // Initialize the library
+    // Initialize the library, provide a control+c handler
     etherlib_init(quickQuitHandler);
 
-    // a best guess place to start the scan
+    // Best guess of where to start the scan
     blknum_t startBlock = 1428000;
 
-    // the address we're searching for
+    // The address we're searching for
     address_t theDaoAddr("0xbb9bc244d798123fde783fcc1c72d3bb8c189413");
 
-    // scan each block from the start until we find the address in an appearance
+    // Scan each block from the start until we find the address in an appearance
     for (blknum_t bl = startBlock; bl < getBlockProgress(BP_CLIENT).client; bl++) {
         CBlock block;
         getBlock(block, bl);
