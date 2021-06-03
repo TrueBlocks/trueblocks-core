@@ -1030,6 +1030,5 @@ bool CTransaction::forEveryTrace(TRACEVISITFUNC func, void* data) const {
 
     return true;
 }
-
 // EXISTING_CODE
 }  // namespace qblocks
