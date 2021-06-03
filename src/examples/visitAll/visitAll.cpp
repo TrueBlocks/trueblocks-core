@@ -18,7 +18,6 @@ int main(int argc, const char* argv[]) {
     etherlib_init(quickQuitHandler);
     forEveryBlock(visitBlock, nullptr, 0, 100000, 500);
     etherlib_cleanup();
-
     return 0;
 }
 
