@@ -14,16 +14,17 @@
 
 //-----------------------------------------------------------------------------------------------
 // The following code shows an example of using one of TrueBlocks' forEvery features. forEvery
-// does as it sounds. It visits every item in a given data structure. Here, we're showing
-// an example of showing every address appearance in a block. We're searching for the first
-// transaction in which the infamous The DAO (0xbb9...) appears. There are many forEvery functions
-// such as forEveryTransactionInBlock, forEveryTraceInTransaction, forEveryLogInBlock, etc.
+// does as it sounds. It visits every item in a given data structure performing a particular
+// function. Here, we're showing an example of showing every address appearance in a block.
+// We're searching for the first transaction in which the infamous The DAO (0xbb9...)
+// appears. There are many forEvery functions such as forEveryTransactionInBlock,
+// forEveryTraceInTransaction, forEveryLogInBlock, etc.
 //-----------------------------------------------------------------------------------------------
 
 //-----------------------------------------------------------------------------------------------
 // Each forEvery invocation accepts a pointer to a function and a void* to an arbitrary chunk
 // of memory. This memory may be of any type you wish. The function signature of the provided
-// function differs for each forEvery type. In this case, the signature must be as follows.
+// function differs for each forEvery type. In this case, the signature is as follows.
 //-----------------------------------------------------------------------------------------------
 bool visitAddress(const CAppearance& item, void* data) {
     // Have we found the address we're looking for?
@@ -34,7 +35,7 @@ bool visitAddress(const CAppearance& item, void* data) {
     }
 
     // We didn't find it, but let's report progress
-    cerr << item << "                    \r";
+    cerr << item.bn << "." << item.tx << " " << item.reason << "                    \r";
 
     // Return true to continue
     return true;
@@ -46,7 +47,7 @@ int main(int argc, const char* argv[]) {
     etherlib_init(quickQuitHandler);
 
     // Best guess of where to start the scan
-    blknum_t startBlock = 1428000;
+    blknum_t startBlock = 1428700;
 
     // The address we're searching for
     address_t theDaoAddr("0xbb9bc244d798123fde783fcc1c72d3bb8c189413");
