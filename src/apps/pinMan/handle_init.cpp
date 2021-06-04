@@ -44,6 +44,7 @@ bool COptions::handle_init() {
                 usleep(500000);
             }
         }
+        // pinlib_pinLocally(pin, pin_locally /* pinBloom */, (pin_locally && init_all) /* pinChunk */);
     }
 
     LOG_INFO(bBlue, "Pins were (re)initialized.                                      ", cOff);

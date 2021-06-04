@@ -26,7 +26,7 @@ bool visitMonitors(const string_q& path, void* data) {
     os << "--first_block " << monitor.getLastBlockInMonitor() << " ";
     os << monitor.address;
     if (opt->load.empty())
-        LOG_INFO("Calling: " + os.str() + string_q(40, ' '));
+        LOG_INFO("Calling: " + substitute(os.str(), "acctExport", "chifra export") + string_q(40, ' '));
     else
         os << "--load " + opt->load;
 
