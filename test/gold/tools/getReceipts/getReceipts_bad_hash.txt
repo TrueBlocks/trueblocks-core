@@ -1,0 +1,16 @@
+getReceipts argc: 2 [1:0x0012] 
+getReceipts 0x0012 
+
+  The argument '0x0012' is not properly formatted. Is it the right length? Quitting...
+
+  Usage:    getReceipts [-a|-v|-h] <tx_id> [tx_id...]  
+  Purpose:  Retrieve receipts for the given transaction(s).
+
+  Where:  
+	transactions          a space-separated list of one or more transaction identifiers (required)
+	-a  (--articulate)    articulate the retrieved data if ABIs can be found
+	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
+	-v  (--verbose)       set verbose level (optional level defaults to 1)
+	-h  (--help)          display this help screen
+
+  Powered by TrueBlocks

@@ -1,0 +1,5 @@
+{
+  "errors": [
+    "chifra traces - Invalid option: --pink"
+  ]
+}

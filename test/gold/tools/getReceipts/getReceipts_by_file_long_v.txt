@@ -1,0 +1,16 @@
+getReceipts argc: 6 [1:--file:cmd_file] [2:--verbose] [3:--parity] [4:--fmt] [5:json] 
+getReceipts --file:cmd_file --verbose --parity --fmt json 
+{ "data": [
+  {
+    "contractAddress": "0x0",
+    "gasUsed": "0x5208",
+    "status": null
+  },  {
+    "contractAddress": "0x0",
+    "gasUsed": "0x5208",
+    "status": null
+  },  {
+    "contractAddress": "0x0",
+    "gasUsed": "0x5208",
+    "status": null
+  }] }

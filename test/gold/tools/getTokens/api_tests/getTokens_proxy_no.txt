@@ -1,0 +1,15 @@
+{
+  "data": [
+    {
+      "blockNumber": 7442048,
+      "totalSupply": "",
+      "address": "0x00000000441378008ea67f4284a57932b1c000a5",
+      "name": "",
+      "symbol": "",
+      "decimals": 0,
+      "is_contract": false,
+      "is_erc20": false,
+      "is_erc721": false
+    }
+  ]
+}

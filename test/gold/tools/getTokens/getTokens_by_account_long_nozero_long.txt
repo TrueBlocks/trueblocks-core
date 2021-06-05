@@ -1,0 +1,4 @@
+getTokens argc: 6 [1:0xb9e7f8568e08d5659f5d29c4997173d84cdf2607] [2:0xa25d04fa348f107428708ba19c95d1c79b3744bf] [3:--by_acct] [4:--no_zero] [5:4000000] 
+getTokens 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 0xa25d04fa348f107428708ba19c95d1c79b3744bf --by_acct --no_zero 4000000 
+blocknumber	holder	address	name	symbol	decimals	balance
+4000000	0xa25d04fa348f107428708ba19c95d1c79b3744bf	0xb9e7f8568e08d5659f5d29c4997173d84cdf2607	Swarm City Token	SWT	18	"435000"

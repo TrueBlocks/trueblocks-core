@@ -1,0 +1,18 @@
+getTokens argc: 9 [1:0xb9e7f8568e08d5659f5d29c4997173d84cdf2607] [2:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98] [3:0x6b65353ac052f6c3a0c9688911b078bd025d6ab3] [4:0xa25d04fa348f107428708ba19c95d1c79b3744bf] [5:4285364] [6:3510999] [7:2510010] [8:--dollars] 
+getTokens 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98 0x6b65353ac052f6c3a0c9688911b078bd025d6ab3 0xa25d04fa348f107428708ba19c95d1c79b3744bf 4285364 3510999 2510010 --dollars 
+
+  Invalid option: --dollars
+
+  Usage:    getTokens [-p|-b|-n|-v|-h] <address> <address> [address...] [block...]  
+  Purpose:  Retrieve token balance(s) for one or more addresses at given block(s).
+
+  Where:  
+	addrs                 two or more addresses (0x...), the first is an ERC20 token, balances for the rest are reported (required)
+	blocks                an optional list of one or more blocks at which to report balances, defaults to 'latest'
+	-p  (--parts <val>)   one or more parts of the token information to retreive, one or more of [name|symbol|decimals|totalSupply|version|none|all*]
+	-b  (--by_acct)       consider each address an ERC20 token except the last, whose balance is reported for each token
+	-n  (--no_zero)       suppress the display of zero balance accounts
+	-v  (--verbose)       set verbose level (optional level defaults to 1)
+	-h  (--help)          display this help screen
+
+  Powered by TrueBlocks

@@ -1,0 +1,13 @@
+[settings]
+class = CPinataPin
+fields = string id|\
+        string ipfs_pin_hash|\
+        uint64 size|\
+        string user_id|\
+        string date_pinned|\
+        string date_unpinned|\
+        CPinataMetadata metadata|\
+        CPinataRegionArray regions
+includes = utillib.h|pinatametadata.h|pinataregion.h
+cpp_includes =
+serializable = true

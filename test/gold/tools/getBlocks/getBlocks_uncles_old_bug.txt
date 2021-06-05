@@ -1,0 +1,36 @@
+getBlocks argc: 5 [1:3] [2:12] [3:469] [4:--uncles] 
+getBlocks 3 12 469 --uncles 
+{ "data": [
+{
+  "gasLimit": 5000,
+  "gasUsed": 0,
+  "hash": "0x5cd50096dbb856a6d1befa6de8f9c20decb299f375154427d90761dc0b101109",
+  "blockNumber": 1,
+  "parentHash": "0xd4e56740f876aef8c010b86a40d5f56745a118d0906a34e69aec8c0db1cb8fa3",
+  "miner": "0xc8ebccc5f5689fa8659d83713341e5ad19349448",
+  "difficulty": 17171480576,
+  "finalized": true,
+  "timestamp": 1438270018
+},
+{
+  "gasLimit": 5000,
+  "gasUsed": 0,
+  "hash": "0x65de5d9e31ace53f370148c8284670b1dff5a1ee4ba18b944c7021c1c7ae1480",
+  "blockNumber": 466,
+  "parentHash": "0x8f266d7906594e639a4c8084284361e27ad1a488f95a355e6c276fe946bad2ee",
+  "miner": "0xbb7b8287f3f0a933474a79eae42cbca977791171",
+  "difficulty": 21421302720,
+  "finalized": true,
+  "timestamp": 1438271149
+},
+{
+  "gasLimit": 5000,
+  "gasUsed": 0,
+  "hash": "0xf45a11f0576b51478195c7f4a38561c81913950b4f6aed517e0227e6ebac0629",
+  "blockNumber": 466,
+  "parentHash": "0x8f266d7906594e639a4c8084284361e27ad1a488f95a355e6c276fe946bad2ee",
+  "miner": "0xbb7b8287f3f0a933474a79eae42cbca977791171",
+  "difficulty": 21421302720,
+  "finalized": true,
+  "timestamp": 1438271149
+}] }

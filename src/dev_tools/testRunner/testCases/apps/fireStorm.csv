@@ -1,0 +1,19 @@
+enabled ,mode ,speed ,route   ,path/tool      ,filename          ,post ,options                                                                            ,opt_cmd ,has_env
+on      ,cmd  ,fast  ,explore ,apps/fireStorm ,README            ,n    ,@th
+on      ,cmd  ,fast  ,explore ,apps/fireStorm ,help              ,n    ,@h
+on      ,cmd  ,fast  ,explore ,apps/fireStorm ,help_long         ,n    ,help
+on      ,cmd  ,fast  ,explore ,apps/fireStorm ,no_params         ,n    ,
+on      ,cmd  ,fast  ,explore ,apps/fireStorm ,invalid_param_1   ,n    ,junk
+on      ,cmd  ,fast  ,explore ,apps/fireStorm ,bad_hash          ,n    ,terms = 0xf503017D7baF7FBC0fff749badha5hfab532aeeecf549be93e358737d0648f50d57083a0
+on      ,cmd  ,fast  ,explore ,apps/fireStorm ,address           ,n    ,terms = 0xf503017D7baF7FBC0fff7492b751025c6A78179b
+on      ,cmd  ,fast  ,explore ,apps/fireStorm ,address_ens       ,n    ,terms = trueblocks.eth
+on      ,cmd  ,fast  ,explore ,apps/fireStorm ,tx_hash           ,n    ,terms = 0x5c504ed432cb51138bcf09aa5e8a410dd4a1e204ef84bfed1be16dfba1b22060
+on      ,cmd  ,fast  ,explore ,apps/fireStorm ,tx_id             ,n    ,terms = 46147.0
+on      ,cmd  ,fast  ,explore ,apps/fireStorm ,block_hash        ,n    ,terms = 0xc63f666315fa1eae17e354fab532aeeecf549be93e358737d0648f50d57083a0
+on      ,cmd  ,fast  ,explore ,apps/fireStorm ,block_id          ,n    ,terms = 12
+on      ,cmd  ,fast  ,explore ,apps/fireStorm ,address_local     ,n    ,terms = 0xf503017D7baF7FBC0fff7492b751025c6A78179b & local
+on      ,cmd  ,fast  ,explore ,apps/fireStorm ,address_ens_local ,n    ,terms = trueblocks.eth & local
+on      ,cmd  ,fast  ,explore ,apps/fireStorm ,tx_hash_local     ,n    ,terms = 0x5c504ed432cb51138bcf09aa5e8a410dd4a1e204ef84bfed1be16dfba1b22060 & local
+on      ,cmd  ,fast  ,explore ,apps/fireStorm ,tx_id_local       ,n    ,terms = 46147.0 & local
+on      ,cmd  ,fast  ,explore ,apps/fireStorm ,block_hash_local  ,n    ,terms = 0xc63f666315fa1eae17e354fab532aeeecf549be93e358737d0648f50d57083a0 & local
+on      ,cmd  ,fast  ,explore ,apps/fireStorm ,block_id_local    ,n    ,terms = 12 & local

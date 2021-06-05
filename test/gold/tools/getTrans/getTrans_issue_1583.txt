@@ -1,0 +1,409 @@
+getTrans argc: 5 [1:0x2f83088fa87f6054779a5511ec4f6b64f1e773e9bd7ec97956d6e04910d59303] [2:--articulate] [3:--fmt] [4:json] 
+getTrans 0x2f83088fa87f6054779a5511ec4f6b64f1e773e9bd7ec97956d6e04910d59303 --articulate --fmt json 
+{ "data": [
+
+level: 1
+readOffset: 0
+objectStart: 0
+params.size: 1
+  0: tuple[] _donations = <>
+  internalType: struct BulkCheckout.Donation[]
+  compont.size: 3
+    address token
+    uint256 amount
+    address dest
+dataArray.size: 8
+  0 (0x000) 0000000000000000...00000000000000000000000000000020 <=o <-r
+  1 (0x020) 0000000000000000...00000000000000000000000000000002
+  2 (0x040) 0000000000000000...e89094c44da98b954eedeac495271d0f
+  3 (0x060) 0000000000000000...000000000000000041eb63d55b1b0000
+  4 (0x080) 0000000000000000...ed1228feb7c7bb18673a868455ffb16f
+  5 (0x0a0) 0000000000000000...e89094c44da98b954eedeac495271d0f
+  6 (0x0c0) 0000000000000000...000000000000000003782dace9d90000
+  7 (0x0e0) 0000000000000000...153673bcae2616b67bf822500d325fc3
+
+==================================================
+ level: 2
+ readOffset: 2
+ objectStart: 1
+ params.size: 1
+   0: tuple[2] = <>
+   internalType: struct BulkCheckout.Donation[]
+   compont.size: 3
+     address token
+     uint256 amount
+     address dest
+ dataArray.size: 8
+   0 (0x000) 0000000000000000...00000000000000000000000000000020
+   1 (0x020) 0000000000000000...00000000000000000000000000000002 <=o
+   2 (0x040) 0000000000000000...e89094c44da98b954eedeac495271d0f <-r
+   3 (0x060) 0000000000000000...000000000000000041eb63d55b1b0000
+   4 (0x080) 0000000000000000...ed1228feb7c7bb18673a868455ffb16f
+   5 (0x0a0) 0000000000000000...e89094c44da98b954eedeac495271d0f
+   6 (0x0c0) 0000000000000000...000000000000000003782dace9d90000
+   7 (0x0e0) 0000000000000000...153673bcae2616b67bf822500d325fc3
+
+==================================================
+  level: 3
+  readOffset: 2
+  objectStart: 1
+  params.size: 2
+    0: tuple = <>
+    internalType: struct BulkCheckout.Donation[]
+    compont.size: 3
+      address token
+      uint256 amount
+      address dest
+    1: tuple = <>
+    internalType: struct BulkCheckout.Donation[]
+    compont.size: 3
+      address token
+      uint256 amount
+      address dest
+  dataArray.size: 8
+    0 (0x000) 0000000000000000...00000000000000000000000000000020
+    1 (0x020) 0000000000000000...00000000000000000000000000000002 <=o
+    2 (0x040) 0000000000000000...e89094c44da98b954eedeac495271d0f <-r
+    3 (0x060) 0000000000000000...000000000000000041eb63d55b1b0000
+    4 (0x080) 0000000000000000...ed1228feb7c7bb18673a868455ffb16f
+    5 (0x0a0) 0000000000000000...e89094c44da98b954eedeac495271d0f
+    6 (0x0c0) 0000000000000000...000000000000000003782dace9d90000
+    7 (0x0e0) 0000000000000000...153673bcae2616b67bf822500d325fc3
+
+==================================================
+   level: 4
+   readOffset: 2
+   objectStart: 1
+   params.size: 3
+     0: address token = <>
+     1: uint256 amount = <>
+     2: address dest = <>
+     internalType: address payable
+   dataArray.size: 8
+     0 (0x000) 0000000000000000...00000000000000000000000000000020
+     1 (0x020) 0000000000000000...00000000000000000000000000000002 <=o
+     2 (0x040) 0000000000000000...e89094c44da98b954eedeac495271d0f <-r
+     3 (0x060) 0000000000000000...000000000000000041eb63d55b1b0000
+     4 (0x080) 0000000000000000...ed1228feb7c7bb18673a868455ffb16f
+     5 (0x0a0) 0000000000000000...e89094c44da98b954eedeac495271d0f
+     6 (0x0c0) 0000000000000000...000000000000000003782dace9d90000
+     7 (0x0e0) 0000000000000000...153673bcae2616b67bf822500d325fc3
+
+==================================================
+   params.size: 3
+     0: address token = 0x6b175474e89094c44da98b954eedeac495271d0f
+     1: uint256 amount = <>
+     2: address dest = <>
+     internalType: address payable
+   level: 4
+   readOffset: 3
+   objectStart: 1
+   params.size: 3
+     0: address token = 0x6b175474e89094c44da98b954eedeac495271d0f
+     1: uint256 amount = <>
+     2: address dest = <>
+     internalType: address payable
+   dataArray.size: 8
+     0 (0x000) 0000000000000000...00000000000000000000000000000020
+     1 (0x020) 0000000000000000...00000000000000000000000000000002 <=o
+     2 (0x040) 0000000000000000...e89094c44da98b954eedeac495271d0f
+     3 (0x060) 0000000000000000...000000000000000041eb63d55b1b0000 <-r
+     4 (0x080) 0000000000000000...ed1228feb7c7bb18673a868455ffb16f
+     5 (0x0a0) 0000000000000000...e89094c44da98b954eedeac495271d0f
+     6 (0x0c0) 0000000000000000...000000000000000003782dace9d90000
+     7 (0x0e0) 0000000000000000...153673bcae2616b67bf822500d325fc3
+
+==================================================
+   params.size: 3
+     0: address token = 0x6b175474e89094c44da98b954eedeac495271d0f
+     1: uint256 amount = 4750000000000000000
+     2: address dest = <>
+     internalType: address payable
+   level: 4
+   readOffset: 4
+   objectStart: 1
+   params.size: 3
+     0: address token = 0x6b175474e89094c44da98b954eedeac495271d0f
+     1: uint256 amount = 4750000000000000000
+     2: address dest = <>
+     internalType: address payable
+   dataArray.size: 8
+     0 (0x000) 0000000000000000...00000000000000000000000000000020
+     1 (0x020) 0000000000000000...00000000000000000000000000000002 <=o
+     2 (0x040) 0000000000000000...e89094c44da98b954eedeac495271d0f
+     3 (0x060) 0000000000000000...000000000000000041eb63d55b1b0000
+     4 (0x080) 0000000000000000...ed1228feb7c7bb18673a868455ffb16f <-r
+     5 (0x0a0) 0000000000000000...e89094c44da98b954eedeac495271d0f
+     6 (0x0c0) 0000000000000000...000000000000000003782dace9d90000
+     7 (0x0e0) 0000000000000000...153673bcae2616b67bf822500d325fc3
+
+==================================================
+   params.size: 3
+     0: address token = 0x6b175474e89094c44da98b954eedeac495271d0f
+     1: uint256 amount = 4750000000000000000
+     2: address dest = 0xa735cf11ed1228feb7c7bb18673a868455ffb16f
+     internalType: address payable
+  params.size: 2
+    0: tuple = {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"4750000000000000000", "dest":"0xa735cf11ed1228feb7c7bb18673a868455ffb16f"}
+    internalType: struct BulkCheckout.Donation[]
+    compont.size: 3
+      address token
+      uint256 amount
+      address dest
+    1: tuple = <>
+    internalType: struct BulkCheckout.Donation[]
+    compont.size: 3
+      address token
+      uint256 amount
+      address dest
+  level: 3
+  readOffset: 5
+  objectStart: 1
+  params.size: 2
+    0: tuple = {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"4750000000000000000", "dest":"0xa735cf11ed1228feb7c7bb18673a868455ffb16f"}
+    internalType: struct BulkCheckout.Donation[]
+    compont.size: 3
+      address token
+      uint256 amount
+      address dest
+    1: tuple = <>
+    internalType: struct BulkCheckout.Donation[]
+    compont.size: 3
+      address token
+      uint256 amount
+      address dest
+  dataArray.size: 8
+    0 (0x000) 0000000000000000...00000000000000000000000000000020
+    1 (0x020) 0000000000000000...00000000000000000000000000000002 <=o
+    2 (0x040) 0000000000000000...e89094c44da98b954eedeac495271d0f
+    3 (0x060) 0000000000000000...000000000000000041eb63d55b1b0000
+    4 (0x080) 0000000000000000...ed1228feb7c7bb18673a868455ffb16f
+    5 (0x0a0) 0000000000000000...e89094c44da98b954eedeac495271d0f <-r
+    6 (0x0c0) 0000000000000000...000000000000000003782dace9d90000
+    7 (0x0e0) 0000000000000000...153673bcae2616b67bf822500d325fc3
+
+==================================================
+   level: 4
+   readOffset: 5
+   objectStart: 1
+   params.size: 3
+     0: address token = <>
+     1: uint256 amount = <>
+     2: address dest = <>
+     internalType: address payable
+   dataArray.size: 8
+     0 (0x000) 0000000000000000...00000000000000000000000000000020
+     1 (0x020) 0000000000000000...00000000000000000000000000000002 <=o
+     2 (0x040) 0000000000000000...e89094c44da98b954eedeac495271d0f
+     3 (0x060) 0000000000000000...000000000000000041eb63d55b1b0000
+     4 (0x080) 0000000000000000...ed1228feb7c7bb18673a868455ffb16f
+     5 (0x0a0) 0000000000000000...e89094c44da98b954eedeac495271d0f <-r
+     6 (0x0c0) 0000000000000000...000000000000000003782dace9d90000
+     7 (0x0e0) 0000000000000000...153673bcae2616b67bf822500d325fc3
+
+==================================================
+   params.size: 3
+     0: address token = 0x6b175474e89094c44da98b954eedeac495271d0f
+     1: uint256 amount = <>
+     2: address dest = <>
+     internalType: address payable
+   level: 4
+   readOffset: 6
+   objectStart: 1
+   params.size: 3
+     0: address token = 0x6b175474e89094c44da98b954eedeac495271d0f
+     1: uint256 amount = <>
+     2: address dest = <>
+     internalType: address payable
+   dataArray.size: 8
+     0 (0x000) 0000000000000000...00000000000000000000000000000020
+     1 (0x020) 0000000000000000...00000000000000000000000000000002 <=o
+     2 (0x040) 0000000000000000...e89094c44da98b954eedeac495271d0f
+     3 (0x060) 0000000000000000...000000000000000041eb63d55b1b0000
+     4 (0x080) 0000000000000000...ed1228feb7c7bb18673a868455ffb16f
+     5 (0x0a0) 0000000000000000...e89094c44da98b954eedeac495271d0f
+     6 (0x0c0) 0000000000000000...000000000000000003782dace9d90000 <-r
+     7 (0x0e0) 0000000000000000...153673bcae2616b67bf822500d325fc3
+
+==================================================
+   params.size: 3
+     0: address token = 0x6b175474e89094c44da98b954eedeac495271d0f
+     1: uint256 amount = 250000000000000000
+     2: address dest = <>
+     internalType: address payable
+   level: 4
+   readOffset: 7
+   objectStart: 1
+   params.size: 3
+     0: address token = 0x6b175474e89094c44da98b954eedeac495271d0f
+     1: uint256 amount = 250000000000000000
+     2: address dest = <>
+     internalType: address payable
+   dataArray.size: 8
+     0 (0x000) 0000000000000000...00000000000000000000000000000020
+     1 (0x020) 0000000000000000...00000000000000000000000000000002 <=o
+     2 (0x040) 0000000000000000...e89094c44da98b954eedeac495271d0f
+     3 (0x060) 0000000000000000...000000000000000041eb63d55b1b0000
+     4 (0x080) 0000000000000000...ed1228feb7c7bb18673a868455ffb16f
+     5 (0x0a0) 0000000000000000...e89094c44da98b954eedeac495271d0f
+     6 (0x0c0) 0000000000000000...000000000000000003782dace9d90000
+     7 (0x0e0) 0000000000000000...153673bcae2616b67bf822500d325fc3 <-r
+
+==================================================
+   params.size: 3
+     0: address token = 0x6b175474e89094c44da98b954eedeac495271d0f
+     1: uint256 amount = 250000000000000000
+     2: address dest = 0x00de4b13153673bcae2616b67bf822500d325fc3
+     internalType: address payable
+  params.size: 2
+    0: tuple = {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"4750000000000000000", "dest":"0xa735cf11ed1228feb7c7bb18673a868455ffb16f"}
+    internalType: struct BulkCheckout.Donation[]
+    compont.size: 3
+      address token
+      uint256 amount
+      address dest
+    1: tuple = {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"250000000000000000", "dest":"0x00de4b13153673bcae2616b67bf822500d325fc3"}
+    internalType: struct BulkCheckout.Donation[]
+    compont.size: 3
+      address token
+      uint256 amount
+      address dest
+ params.size: 1
+   0: tuple[2] = [{"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"4750000000000000000", "dest":"0xa735cf11ed1228feb7c7bb18673a868455ffb16f"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"250000000000000000", "dest":"0x00de4b13153673bcae2616b67bf822500d325fc3"}]
+   internalType: struct BulkCheckout.Donation[]
+   compont.size: 3
+     address token
+     uint256 amount
+     address dest
+params.size: 1
+  0: tuple[] _donations = [{"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"4750000000000000000", "dest":"0xa735cf11ed1228feb7c7bb18673a868455ffb16f"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"250000000000000000", "dest":"0x00de4b13153673bcae2616b67bf822500d325fc3"}]
+  internalType: struct BulkCheckout.Donation[]
+  compont.size: 3
+    address token
+    uint256 amount
+    address dest
+params.size: 1
+  0: tuple[] _donations = [{"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"4750000000000000000", "dest":"0xa735cf11ed1228feb7c7bb18673a868455ffb16f"}, {"token":"0x6b175474e89094c44da98b954eedeac495271d0f", "amount":"250000000000000000", "dest":"0x00de4b13153673bcae2616b67bf822500d325fc3"}]
+  internalType: struct BulkCheckout.Donation[]
+  compont.size: 3
+    address token
+    uint256 amount
+    address dest
+==================================================
+
+  {
+    "hash": "0x2f83088fa87f6054779a5511ec4f6b64f1e773e9bd7ec97956d6e04910d59303",
+    "blockHash": "0x9e3bfcd31fe2aba667980cee5f9a9a834ab7309c04c1387fac457a30b777a0b3",
+    "blockNumber": 10279310,
+    "transactionIndex": 59,
+    "timestamp": 1592344217,
+    "from": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+    "to": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
+    "value": 0,
+    "gas": 200000,
+    "gasPrice": 23000000000,
+    "input": "0x9120491c000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000020000000000000000000000006b175474e89094c44da98b954eedeac495271d0f00000000000000000000000000000000000000000000000041eb63d55b1b0000000000000000000000000000a735cf11ed1228feb7c7bb18673a868455ffb16f0000000000000000000000006b175474e89094c44da98b954eedeac495271d0f00000000000000000000000000000000000000000000000003782dace9d9000000000000000000000000000000de4b13153673bcae2616b67bf822500d325fc3",
+    "isError": 0,
+    "hasToken": 0,
+    "receipt": {
+      "contractAddress": "0x0",
+      "gasUsed": 83590,
+      "logs": [
+        {
+          "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
+          "logIndex": 100,
+          "topics": [
+            "0x3bb7428b25f9bdad9bd2faa4c6a7a9e5d5882657e96c1d24cc41c1d6c1910a98",
+            "0x0000000000000000000000006b175474e89094c44da98b954eedeac495271d0f",
+            "0x00000000000000000000000000000000000000000000000041eb63d55b1b0000",
+            "0x000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b"
+          ],
+          "data": "0x000000000000000000000000a735cf11ed1228feb7c7bb18673a868455ffb16f",
+          "articulatedLog": {
+            "name": "DonationSent",
+            "stateMutability": "nonpayable",
+            "inputs": {
+              "amount": "4750000000000000000",
+              "dest": "0xa735cf11ed1228feb7c7bb18673a868455ffb16f",
+              "donor": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+              "token": "0x6b175474e89094c44da98b954eedeac495271d0f"
+            }
+          },
+          "compressedLog": "DonationSent(0x6b175474e89094c44da98b954eedeac495271d0f, 4750000000000000000, 0xa735cf11ed1228feb7c7bb18673a868455ffb16f, 0xf503017d7baf7fbc0fff7492b751025c6a78179b); "
+        },
+        {
+          "address": "0x6b175474e89094c44da98b954eedeac495271d0f",
+          "logIndex": 101,
+          "topics": [
+            "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+            "0x000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b",
+            "0x000000000000000000000000a735cf11ed1228feb7c7bb18673a868455ffb16f"
+          ],
+          "data": "0x00000000000000000000000000000000000000000000000041eb63d55b1b0000",
+          "articulatedLog": {
+            "name": "Transfer",
+            "inputs": {
+              "_amount": "4750000000000000000",
+              "_from": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+              "_to": "0xa735cf11ed1228feb7c7bb18673a868455ffb16f"
+            }
+          },
+          "compressedLog": "Transfer(0xf503017d7baf7fbc0fff7492b751025c6a78179b, 0xa735cf11ed1228feb7c7bb18673a868455ffb16f, 4750000000000000000); "
+        },
+        {
+          "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
+          "logIndex": 102,
+          "topics": [
+            "0x3bb7428b25f9bdad9bd2faa4c6a7a9e5d5882657e96c1d24cc41c1d6c1910a98",
+            "0x0000000000000000000000006b175474e89094c44da98b954eedeac495271d0f",
+            "0x00000000000000000000000000000000000000000000000003782dace9d90000",
+            "0x000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b"
+          ],
+          "data": "0x00000000000000000000000000de4b13153673bcae2616b67bf822500d325fc3",
+          "articulatedLog": {
+            "name": "DonationSent",
+            "stateMutability": "nonpayable",
+            "inputs": {
+              "amount": "250000000000000000",
+              "dest": "0x00de4b13153673bcae2616b67bf822500d325fc3",
+              "donor": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+              "token": "0x6b175474e89094c44da98b954eedeac495271d0f"
+            }
+          },
+          "compressedLog": "DonationSent(0x6b175474e89094c44da98b954eedeac495271d0f, 250000000000000000, 0x00de4b13153673bcae2616b67bf822500d325fc3, 0xf503017d7baf7fbc0fff7492b751025c6a78179b); "
+        },
+        {
+          "address": "0x6b175474e89094c44da98b954eedeac495271d0f",
+          "logIndex": 103,
+          "topics": [
+            "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+            "0x000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b",
+            "0x00000000000000000000000000de4b13153673bcae2616b67bf822500d325fc3"
+          ],
+          "data": "0x00000000000000000000000000000000000000000000000003782dace9d90000",
+          "articulatedLog": {
+            "name": "Transfer",
+            "inputs": {
+              "_amount": "250000000000000000",
+              "_from": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+              "_to": "0x00de4b13153673bcae2616b67bf822500d325fc3"
+            }
+          },
+          "compressedLog": "Transfer(0xf503017d7baf7fbc0fff7492b751025c6a78179b, 0x00de4b13153673bcae2616b67bf822500d325fc3, 250000000000000000); "
+        }
+      ],
+      "status": 1
+    },
+    "articulatedTx": {
+      "name": "donate",
+      "stateMutability": "payable",
+      "inputs": {
+        "_donations": "[{\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"4750000000000000000\", \"dest\":\"0xa735cf11ed1228feb7c7bb18673a868455ffb16f\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"250000000000000000\", \"dest\":\"0x00de4b13153673bcae2616b67bf822500d325fc3\"}]"
+      }
+    },
+    "compressedTx": "donate([{\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"4750000000000000000\", \"dest\":\"0xa735cf11ed1228feb7c7bb18673a868455ffb16f\"}, {\"token\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"250000000000000000\", \"dest\":\"0x00de4b13153673bcae2616b67bf822500d325fc3\"}]); ",
+    "gasCost": 1922570000000000,
+    "gasUsed": 83590,
+    "date": "2020-06-16 21:50:17 UTC",
+    "ether": 0.000000000000000000
+  }] }

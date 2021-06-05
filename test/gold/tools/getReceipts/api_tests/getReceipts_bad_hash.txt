@@ -1,0 +1,5 @@
+{
+  "errors": [
+    "chifra receipts - The argument '0x0012' is not properly formatted. Is it the right length?"
+  ]
+}

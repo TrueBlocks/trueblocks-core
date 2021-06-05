@@ -1,0 +1,40 @@
+getTokens argc: 4 [1:0xd26114cd6ee289accf82350c8d8487fedb8a0c07] [2:--parts] [3:all] 
+getTokens 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 --parts all 
+address	name	symbol	decimals	totalsupply
+
+level: 1
+readOffset: 0
+objectStart: 0
+params.size: 1
+  0: string _name = <>
+dataArray.size: 3
+  0 (0x000) 0000000000000000...00000000000000000000000000000020 <=o <-r
+  1 (0x020) 0000000000000000...00000000000000000000000000000008
+  2 (0x040) 4f4d47546f6b656e...00000000000000000000000000000000
+
+==================================================
+params.size: 1
+  0: string _name = OMGToken
+params.size: 1
+  0: string _name = OMGToken
+==================================================
+
+
+level: 1
+readOffset: 0
+objectStart: 0
+params.size: 1
+  0: string _symbol = <>
+dataArray.size: 3
+  0 (0x000) 0000000000000000...00000000000000000000000000000020 <=o <-r
+  1 (0x020) 0000000000000000...00000000000000000000000000000003
+  2 (0x040) 4f4d470000000000...00000000000000000000000000000000
+
+==================================================
+params.size: 1
+  0: string _symbol = OMG
+params.size: 1
+  0: string _symbol = OMG
+==================================================
+
+0xd26114cd6ee289accf82350c8d8487fedb8a0c07	OMGToken	OMG	18	"140245398.245132780789239631"

@@ -1,0 +1,1 @@
+{ "errors": [ "chifra receipts - Invalid option: --logs" ] }

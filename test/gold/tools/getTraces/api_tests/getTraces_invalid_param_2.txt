@@ -1,0 +1,5 @@
+{
+  "errors": [
+    "chifra traces - .whatever does not appear to be a valid transaction index."
+  ]
+}

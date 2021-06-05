@@ -1,0 +1,76 @@
+getTraces argc: 4 [1:0x17104ac9d3312d8c136b7f44d4b8b47852618065ebfa534bd2d3b5ef218ca1f3] [2:--fmt] [3:json] 
+getTraces 0x17104ac9d3312d8c136b7f44d4b8b47852618065ebfa534bd2d3b5ef218ca1f3 --fmt json 
+{ "data": [
+  {
+    "blockHash": "0x7eb25504e4c202cf3d62fd585d3e238f592c780cca82dacb2ed3cb5b38883add",
+    "blockNumber": 3068185,
+    "subtraces": 2,
+    "traceAddress": null,
+    "transactionHash": "0x17104ac9d3312d8c136b7f44d4b8b47852618065ebfa534bd2d3b5ef218ca1f3",
+    "transactionIndex": 2,
+    "type": "call",
+    "action": {
+      "selfDestructed": "0x0",
+      "balance": 0,
+      "callType": "call",
+      "from": "0x83806d539d4ea1c140489a06660319c9a303f874",
+      "gas": 107000,
+      "input": "0x",
+      "refundAddress": "0x0",
+      "to": "0x1c39ba39e4735cb65978d4db400ddd70a72dc750",
+      "value": 8797440000000000000
+    },
+    "result": {
+      "newContract": "0x0",
+      "gasUsed": 10626,
+      "output": "0x"
+    }
+  },  {
+    "blockHash": "0x7eb25504e4c202cf3d62fd585d3e238f592c780cca82dacb2ed3cb5b38883add",
+    "blockNumber": 3068185,
+    "subtraces": 0,
+    "traceAddress": "0",
+    "transactionHash": "0x17104ac9d3312d8c136b7f44d4b8b47852618065ebfa534bd2d3b5ef218ca1f3",
+    "transactionIndex": 2,
+    "type": "call",
+    "action": {
+      "selfDestructed": "0x0",
+      "balance": 0,
+      "callType": "call",
+      "from": "0x1c39ba39e4735cb65978d4db400ddd70a72dc750",
+      "gas": 81561,
+      "input": "0x16c72721",
+      "refundAddress": "0x0",
+      "to": "0x2bd2326c993dfaef84f696526064ff22eba5b362",
+      "value": 0
+    },
+    "result": {
+      "newContract": "0x0",
+      "gasUsed": 387,
+      "output": "0x0000000000000000000000000000000000000000000000000000000000000001"
+    }
+  },  {
+    "blockHash": "0x7eb25504e4c202cf3d62fd585d3e238f592c780cca82dacb2ed3cb5b38883add",
+    "blockNumber": 3068185,
+    "subtraces": 0,
+    "traceAddress": "1",
+    "transactionHash": "0x17104ac9d3312d8c136b7f44d4b8b47852618065ebfa534bd2d3b5ef218ca1f3",
+    "transactionIndex": 2,
+    "type": "call",
+    "action": {
+      "selfDestructed": "0x0",
+      "balance": 0,
+      "callType": "call",
+      "from": "0x1c39ba39e4735cb65978d4db400ddd70a72dc750",
+      "gas": 2300,
+      "input": "0x",
+      "refundAddress": "0x0",
+      "to": "0x70faa28a6b8d6829a4b1e649d26ec9a2a39ba413",
+      "value": 8797440000000000000
+    },
+    "result": {
+      "newContract": "0x0",
+      "gasUsed": 0,
+      "output": "0x"
+    }
+  }] }

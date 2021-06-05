@@ -1,0 +1,5 @@
+fireStorm argc: 2 [1:trueblocks.eth] 
+fireStorm trueblocks.eth 
+TIME ~ CLOCK - <INFO>  : terms
+TIME ~ CLOCK - <INFO>  :   trueblocks.eth
+Opening https://etherscan.io/enslookup-search?search=trueblocks.eth

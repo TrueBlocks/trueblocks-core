@@ -1,0 +1,3 @@
+getBlocks argc: 6 [1:2222222] [2:2332332] [3:--fmt] [4:json] [5:--to_file] 
+getBlocks 2222222 2332332 --fmt json --to_file 
+{ "outputFilename": "--output_filename--" }

@@ -1,0 +1,5 @@
+{
+  "errors": [
+    "chifra receipts - Not enough arguments presented."
+  ]
+}

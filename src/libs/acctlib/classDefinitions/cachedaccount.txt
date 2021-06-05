@@ -1,0 +1,8 @@
+[settings]
+class = CCachedAccount
+fields = \
+    address addr|\
+    uint64 latestPage=1|\
+    CTransaction latestTx|\
+    CTransactionArray transactions
+includes = etherlib.h

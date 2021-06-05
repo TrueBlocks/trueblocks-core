@@ -1,0 +1,31 @@
+[version]
+current = "0.5.5-alpha"
+
+[settings]
+rpcProvider = "--new rpc Provider--"
+# rpcProvider = "http://127.0.0.1:7545"
+rpcProvider = "http://localhost:36963/"
+# rpcProvider = "http://localhost:23456/"
+# rpcProvider = "http://localhost:8515"
+balanceProvider = "--new balance Prov--"
+cachePath = "--new cache Path--/"
+indexPath = "--new index Path--/"
+configPath = "--new config Path--/"
+etherscan_key = "--new api_key--"
+
+# [dev]
+# debug_curl = true
+# debug_ethscan = true
+
+[display_strs]
+accountName = "--account name--"
+block = "--block--"
+ethstate = "--eth state--"
+function = "--function--"
+logentry = "--logentry--"
+pricequote = "--pricequote--"
+receipt = "--receipt--"
+trace = "--trace--"
+transaction = "--transaction--"
+whenblock = "--when block--"
+whereblock = "--where block--"

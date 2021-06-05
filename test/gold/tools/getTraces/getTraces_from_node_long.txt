@@ -1,0 +1,4 @@
+getTraces argc: 4 [1:4000000.5] [2:--fmt] [3:csv] 
+getTraces 4000000.5 --fmt csv 
+"blocknumber","transactionindex","traceaddress","action::calltype","error","action::from","action::to","action::value","action::ether","action::gas","result::gasused","action::input","compressedtrace","result::output"
+"4000000","5","null","call","","0x40584168524a928ae43b4e83893f963e467e9d73","0x1a95b271b0535d15fa49932daba31ba612b52946","0","0.000000000000000000","976936","29552","0xa9059cbb00000000000000000000000043a4210390998945dc7658a20b43c6c4189ac7d4000000000000000000000000000000000000000000000000000000000a21fe80","","0x"

@@ -1,0 +1,9 @@
+getTokens argc: 7 [1:0xd26114cd6ee289accf82350c8d8487fedb8a0c07] [2:0x5e44c3e467a49c9ca0296a9f130fc433041aaa28] [3:0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98] [4:stateclear] [5:daofund] [6:byzantium] 
+getTokens 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0x5e44c3e467a49c9ca0296a9f130fc433041aaa28 0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98 stateclear daofund byzantium 
+blocknumber	holder	address	name	symbol	decimals	balance
+2717576	0x5e44c3e467a49c9ca0296a9f130fc433041aaa28	0xd26114cd6ee289accf82350c8d8487fedb8a0c07	OMGToken Airdrop	OMG	18	""
+1428756	0x5e44c3e467a49c9ca0296a9f130fc433041aaa28	0xd26114cd6ee289accf82350c8d8487fedb8a0c07	OMGToken Airdrop	OMG	18	""
+4370000	0x5e44c3e467a49c9ca0296a9f130fc433041aaa28	0xd26114cd6ee289accf82350c8d8487fedb8a0c07	OMGToken Airdrop	OMG	18	"18622.119641743650475474"
+2717576	0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98	0xd26114cd6ee289accf82350c8d8487fedb8a0c07	OMGToken Airdrop	OMG	18	""
+1428756	0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98	0xd26114cd6ee289accf82350c8d8487fedb8a0c07	OMGToken Airdrop	OMG	18	""
+4370000	0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98	0xd26114cd6ee289accf82350c8d8487fedb8a0c07	OMGToken Airdrop	OMG	18	"22961881.657450937415214049"

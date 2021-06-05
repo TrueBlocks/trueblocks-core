@@ -1,0 +1,16 @@
+getReceipts argc: 5 [1:2222222.0] [2:2332332.0] [3:--fmt] [4:junk] 
+getReceipts 2222222.0 2332332.0 --fmt junk 
+
+  Export format (junk) must be one of [ json | txt | csv | api ]. Quitting...
+
+  Usage:    getReceipts [-a|-v|-h] <tx_id> [tx_id...]  
+  Purpose:  Retrieve receipts for the given transaction(s).
+
+  Where:  
+	transactions          a space-separated list of one or more transaction identifiers (required)
+	-a  (--articulate)    articulate the retrieved data if ABIs can be found
+	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
+	-v  (--verbose)       set verbose level (optional level defaults to 1)
+	-h  (--help)          display this help screen
+
+  Powered by TrueBlocks
