@@ -1291,6 +1291,22 @@ paths:
         explode: true
         schema:
           type: number
+      - name: staging
+        in: query
+        description: pass through to chifra export --freshen (see notes)
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
+      - name: unripe
+        in: query
+        description: pass through to chifra export --freshen (see notes)
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
       - name: cache_txs
         in: query
         description: pass through to chifra export --freshen (see notes)

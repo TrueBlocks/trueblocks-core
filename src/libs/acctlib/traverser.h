@@ -19,6 +19,9 @@ inline bool noopFunc(CTraverser* trav, void* data) {
 }
 
 //-----------------------------------------------------------------------
+extern bool filterFunc(CTraverser* trav, void* data);
+
+//-----------------------------------------------------------------------
 class CTraverser {
   public:
     ostream& os;
@@ -28,10 +31,13 @@ class CTraverser {
     string_q operation;
     string_q readStatus;
     address_t accountedFor;
+    blkrange_t travRange;
     CTraverser(ostream& osIn, const string_q& o) : os(osIn), index(0), nProcessed(0), operation(o) {
         logging = !isTestMode() || getEnvStr("FORCE_LOGGING") == "true";
         readStatus = "Extracting";
         accountedFor = "";
+        travRange = make_pair(0, NOPOS);
+        filterFunc = ::filterFunc;
     }
 
   public:

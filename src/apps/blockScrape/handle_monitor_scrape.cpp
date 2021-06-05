@@ -21,6 +21,8 @@ bool visitMonitors(const string_q& path, void* data) {
     os << "acctExport ";
     os << (opt->cache_txs ? "--cache_txs " : "");
     os << (opt->cache_traces ? "--cache_traces " : "");
+    os << (opt->staging ? "--staging " : "");
+    os << (opt->unripe ? "--unripe " : "");
     os << (verbose ? ("--verbose " + uint_2_Str(verbose)) : "") << " ";
     os << "--freshen ";
     os << "--first_block " << monitor.getLastBlockInMonitor() << " ";

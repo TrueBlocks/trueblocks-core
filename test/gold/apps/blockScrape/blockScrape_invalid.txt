@@ -16,6 +16,8 @@ blockScrape --junk
 	#### Hidden options
 	-b  (--n_block_procs <num>)number of block channels for blaze
 	-a  (--n_addr_procs <num>)number of address channels for blaze
+	-s  (--staging)       pass through to chifra export --freshen (see notes)
+	-u  (--unripe)        pass through to chifra export --freshen (see notes)
 	-i  (--cache_txs)     pass through to chifra export --freshen (see notes)
 	-R  (--cache_traces)  pass through to chifra export --freshen (see notes)
 	    (--load <str>)    pass through to chifra export --freshen (see notes)
