@@ -189,7 +189,7 @@ bool COptions::scrape_blocks(void) {
 
     // Did user hit control+c? Just checking...
     if (shouldQuit())
-        EXIT_NOMSG(true);
+        EXIT_NOMSG(false);
 
     // Consolidate...
     bool ret = cons.consolidate_chunks();
