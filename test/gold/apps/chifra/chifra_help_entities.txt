@@ -1,34 +1,38 @@
 chifra argc: 3 [1:entities] [2:--help] 
 chifra entities --help 
-TIME ~ CLOCK - <INFO>  : mode: entities
-chifra entities argc: 3 [1:--entities] [2:--help] 
-chifra entities --entities --help 
-PROG_NAME = [chifra entities]
 
-  Usage:    chifra entities [-e|-m|-l|-o|-c|-p|-n|-a|-s|-g|-v|-h] <term> [term...]  
-  Purpose:  Query addresses and/or names of well known accounts.
+  Unknown subcommand 'entities'. Quitting...
+
+  Usage:    chifra command  
+  Purpose:  Access to all TrueBlocks tools (chifra <cmd> --help for more).
 
   Where:  
-	terms                 a space separated list of one or more search terms (required)
-	-e  (--expand)        expand search to include all fields (default searches name, address, and symbol only)
-	-m  (--match_case)    do case-sensitive search
-	-l  (--all)           include all accounts in the search
-	-o  (--owned)         include personal accounts in the search
-	-c  (--custom)        include your custom named accounts
-	-p  (--prefund)       include prefund accounts
-	-n  (--named)         include well know token and airdrop addresses in the search
-	-a  (--addr)          display only addresses in the results (useful for scripting)
-	-s  (--entities)      display entity data
-	-g  (--tags)          export the list of tags and subtags only
-
-	#### Hidden options
-	-t  (--other)         export other addresses if found
-	-u  (--to_custom)     for editCmd only, is the edited name a custom name or not
-	-C  (--clean)         clean the data (addrs to lower case, sort by addr)
-	#### Hidden options
-
-	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
-	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
-	-h  (--help)          display this help screen
+	 ACCOUNTS
+	   list          list every appearance of an address anywhere on the chain
+	   export        export full detail of transactions for one or more addresses
+	   monitors      add, remove, clean, and list address monitors
+	   names         query addresses or names of well known accounts
+	   abis          fetches the ABI for a smart contract
+	 CHAIN DATA
+	   blocks        retrieve one or more blocks from the chain or local cache
+	   transactions  retrieve one or more transactions from the chain or local cache
+	   receipts      retrieve receipts for the given transaction(s)
+	   logs          retrieve logs for the given transaction(s)
+	   traces        retrieve traces for the given transaction(s)
+	   when          find block(s) based on date, blockNum, timestamp, or 'special'
+	 CHAIN STATE
+	   state         retrieve account balance(s) for one or more addresses at given block(s)
+	   tokens        retrieve token balance(s) for one or more addresses at given block(s)
+	 ADMIN
+	   status        report on the status of the TrueBlocks system
+	   serve         serve the TrueBlocks API using the flame server
+	   scrape        scan the chain and update the TrueBlocks index of appearances
+	   init          initialize the index of appearances by downloading bloom filters
+	   pins          manage pinned index of appearances and associated bloom filters
+	 OTHER
+	   quotes        freshen and/or display Ethereum price data
+	   explore       open an explorer for a given address, block, or transaction
+	   slurp         fetch data from EtherScan for any address
+	 
 
   Powered by TrueBlocks

@@ -1,4 +1,3 @@
 ethNames argc: 4 [1:--output] [2:test_file] [3:--prefund] 
 ethNames --output test_file --prefund 
-TIME ~ CLOCK - <INFO>  : prefund: true
 --output_filename--

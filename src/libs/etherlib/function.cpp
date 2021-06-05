@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -11,8 +11,8 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 /*
- * This file was generated with makeClass. Edit only those parts of the code inside
- * of 'EXISTING_CODE' tags.
+ * Parts of this file were generated with makeClass --run. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
  */
 #include "function.h"
 
@@ -74,6 +74,9 @@ string_q CFunction::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'a':
+            if (fieldName % "abi_source") {
+                return abi_source;
+            }
             if (fieldName % "anonymous") {
                 return bool_2_Str(anonymous);
             }
@@ -102,6 +105,17 @@ string_q CFunction::getValueByName(const string_q& fieldName) const {
                 }
                 return retS;
             }
+            if (fieldName % "inputs_dict") {
+                for (size_t i = 0; i < inputs.size(); i++)
+                    ((CFunction*)this)->inputs_dict[inputs[i].name] = inputs[i].value;
+                ostringstream os;
+                JsonWriter writer;
+                writer.writeJson(os, inputs_dict);
+                string_q str = os.str();
+                while (startsWith(str, '\n') || startsWith(str, ' '))
+                    str = trim(trim(str, '\n'), ' ');
+                return str;
+            }
             break;
         case 'm':
             if (fieldName % "message") {
@@ -126,6 +140,17 @@ string_q CFunction::getValueByName(const string_q& fieldName) const {
                     retS += ((i < cnt - 1) ? ",\n" : "\n");
                 }
                 return retS;
+            }
+            if (fieldName % "outputs_dict") {
+                for (size_t i = 0; i < outputs.size(); i++)
+                    ((CFunction*)this)->outputs_dict[outputs[i].name] = outputs[i].value;
+                ostringstream os;
+                JsonWriter writer;
+                writer.writeJson(os, outputs_dict);
+                string_q str = os.str();
+                while (startsWith(str, '\n') || startsWith(str, ' '))
+                    str = trim(trim(str, '\n'), ' ');
+                return str;
             }
             break;
         case 's':
@@ -193,6 +218,10 @@ bool CFunction::setValueByName(const string_q& fieldNameIn, const string_q& fiel
 
     switch (tolower(fieldName[0])) {
         case 'a':
+            if (fieldName % "abi_source") {
+                abi_source = fieldValue;
+                return true;
+            }
             if (fieldName % "anonymous") {
                 anonymous = str_2_Bool(fieldValue);
                 return true;
@@ -220,6 +249,10 @@ bool CFunction::setValueByName(const string_q& fieldNameIn, const string_q& fiel
                 }
                 return true;
             }
+            if (fieldName % "inputs_dict") {
+                inputs_dict = fieldValue;
+                return true;
+            }
             break;
         case 'm':
             if (fieldName % "message") {
@@ -241,6 +274,10 @@ bool CFunction::setValueByName(const string_q& fieldNameIn, const string_q& fiel
                     outputs.push_back(obj);
                     obj = CParameter();  // reset
                 }
+                return true;
+            }
+            if (fieldName % "outputs_dict") {
+                outputs_dict = fieldValue;
                 return true;
             }
             break;
@@ -270,7 +307,10 @@ bool CFunction::setValueByName(const string_q& fieldNameIn, const string_q& fiel
 void CFunction::finishParse() {
     // EXISTING_CODE
     signature = getSignature(SIG_CANONICAL);
-    encoding = encodeItem();
+    if (encoding.empty())
+        encoding = encodeItem();
+    if (type.empty())
+        type = encoding.length() == 10 ? "function" : "event";
     if (stateMutability.empty())
         stateMutability = "nonpayable";
     // The parameters need to have a name. If not, we provide one
@@ -304,6 +344,7 @@ bool CFunction::Serialize(CArchive& archive) {
     // EXISTING_CODE
     archive >> name;
     archive >> type;
+    archive >> abi_source;
     archive >> anonymous;
     archive >> constant;
     archive >> stateMutability;
@@ -312,6 +353,8 @@ bool CFunction::Serialize(CArchive& archive) {
     // archive >> message;
     archive >> inputs;
     archive >> outputs;
+    // archive >> inputs_dict;
+    // archive >> outputs_dict;
     finishParse();
     return true;
 }
@@ -325,6 +368,7 @@ bool CFunction::SerializeC(CArchive& archive) const {
     // EXISTING_CODE
     archive << name;
     archive << type;
+    archive << abi_source;
     archive << anonymous;
     archive << constant;
     archive << stateMutability;
@@ -333,6 +377,8 @@ bool CFunction::SerializeC(CArchive& archive) const {
     // archive << message;
     archive << inputs;
     archive << outputs;
+    // archive << inputs_dict;
+    // archive << outputs_dict;
 
     return true;
 }
@@ -371,6 +417,7 @@ void CFunction::registerClass(void) {
     ADD_FIELD(CFunction, "cname", T_TEXT, ++fieldNum);
     ADD_FIELD(CFunction, "name", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CFunction, "type", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CFunction, "abi_source", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CFunction, "anonymous", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CFunction, "constant", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CFunction, "stateMutability", T_TEXT | TS_OMITEMPTY, ++fieldNum);
@@ -380,6 +427,10 @@ void CFunction::registerClass(void) {
     HIDE_FIELD(CFunction, "message");
     ADD_FIELD(CFunction, "inputs", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CFunction, "outputs", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CFunction, "inputs_dict", T_JSONVAL | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CFunction, "inputs_dict");
+    ADD_FIELD(CFunction, "outputs_dict", T_JSONVAL | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CFunction, "outputs_dict");
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CFunction, "schema");
@@ -397,6 +448,13 @@ void CFunction::registerClass(void) {
     ADD_FIELD(CFunction, "declaration", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CFunction, "declaration");
     HIDE_FIELD(CFunction, "anonymous");
+    if (useDict()) {
+        HIDE_FIELD(CFunction, "inputs");
+        SHOW_FIELD(CFunction, "inputs_dict")
+        HIDE_FIELD(CFunction, "outputs");
+        SHOW_FIELD(CFunction, "outputs_dict")
+    }
+    HIDE_FIELD(CFunction, "abi_source");
     // EXISTING_CODE
 }
 
@@ -467,6 +525,20 @@ string_q nextFunctionChunk_custom(const string_q& fieldIn, const void* dataPtr) 
 bool CFunction::readBackLevel(CArchive& archive) {
     bool done = false;
     // EXISTING_CODE
+    if (m_schema < getVersionNum(0, 9, 4)) {
+        archive >> name;
+        archive >> type;
+        // source did not exist so it's empty
+        archive >> anonymous;
+        archive >> constant;
+        archive >> stateMutability;
+        archive >> signature;
+        archive >> encoding;
+        archive >> inputs;
+        archive >> outputs;
+        finishParse();
+        done = true;
+    }
     // EXISTING_CODE
     return done;
 }
@@ -520,6 +592,7 @@ const CBaseNode* CFunction::getObjectAt(const string_q& fieldName, size_t index)
 
 //---------------------------------------------------------------------------
 const char* STR_DISPLAY_FUNCTION =
+    "[{ABI_SOURCE}]\t"
     "[{NAME}]\t"
     "[{TYPE}]\t"
     "[{STATEMUTABILITY}]\t"
@@ -584,31 +657,58 @@ string_q CFunction::encodeItem(void) const {
     return (type == "event" ? ret : extract(ret, 0, 10));
 }
 
+//-------------------------------------------------------------------------
+string_q compressInput(const string_q& inputIn) {
+    if (inputIn.empty())
+        return "";
+    string_q input = (startsWith(inputIn, "0x") ? "" : "0x") + inputIn;
+    string_q name = input.substr(0, 10);
+    replace(input, name, "");
+    string_q ret = name + " ( ";
+    while (!input.empty()) {
+        string_q chunk = input.substr(0, 364);
+        replace(input, chunk, "");
+        ret += ("stub: " + chunk + ", ");
+    }
+    ret = trim(trim(ret, ' '), ',');
+    ret += " )";
+    return ret;
+}
+
 //-----------------------------------------------------------------------
 const char* STR_COMPRESSED_FMT = "[{NAME}](++INPUTS++);";
 const char* STR_COMPRESSED_INPUT_QUOTED = "\"[{VALUE}]\" /*[{NAME}]*/, ";
 const char* STR_COMPRESSED_INPUT = "[{VALUE}] /*[{NAME}]*/, ";
 
-string_q CFunction::compressed(void) const {
-    if (name.empty())
-        return "";
+//-----------------------------------------------------------------------
+string_q CFunction::compressed(const string_q& def) const {
+    if (!message.empty())
+        return "message:" + message;
 
+    if (name.empty())
+        return compressInput(def);
+
+    string_q ret;
     if (isApiMode()) {
-        string_q ret = name + " ( ";
+        ret = name + " ( ";
         for (auto input : inputs)
             ret += (input.name + ": " + input.value + ", ");
         ret = trim(trim(ret, ' '), ',');
         ret += " )";
-        return ret;
+        replaceAll(ret, "--tuple--", "");
+        return stripWhitespace(ret);
     }
 
     ostringstream func, inp;
     func << Format(STR_COMPRESSED_FMT) << endl;
     for (auto input : inputs)
         inp << input.Format(substitute(STR_COMPRESSED_INPUT, " /*[{NAME}]*/", (verbose ? " /*[{NAME}]*/" : "")));
-    string_q ret = func.str();
+    ret = func.str();
     replace(ret, "++INPUTS++", trim(trim(inp.str(), ' '), ','));
-    return ret;
+    if (ret.empty())
+        return compressInput(def);
+    replaceAll(ret, "--tuple--", "");
+    return stripWhitespace(ret);
 }
 
 //-----------------------------------------------------------------------

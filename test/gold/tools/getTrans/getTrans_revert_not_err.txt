@@ -1,8 +1,9 @@
 getTrans argc: 6 [1:0x3551dac5e91df7f27c78118daa0da81211ad38acc527c08c74c5a7724397d49c] [2:--articulate] [3:--fmt] [4:json] [5:--trace] 
 getTrans 0x3551dac5e91df7f27c78118daa0da81211ad38acc527c08c74c5a7724397d49c --articulate --fmt json --trace 
-TIME ~ CLOCK - <INFO>  : articulate: true
-TIME ~ CLOCK - <INFO>  : trace: true
 { "data": [
+params.size: 0
+==================================================
+
   {
     "hash": "0x3551dac5e91df7f27c78118daa0da81211ad38acc527c08c74c5a7724397d49c",
     "blockHash": "0xd2b9c8119a1e615046cd83abe333c6cf2c3cfb2773149911339c67ab660c1b06",

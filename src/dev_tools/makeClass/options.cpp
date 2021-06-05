@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -11,8 +11,8 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 /*
- * Parts of this file were generated with makeClass. Edit only those parts of the code
- * outside of the BEG_CODE/END_CODE sections
+ * Parts of this file were generated with makeClass --options. Edit only those parts of
+ * the code outside of the BEG_CODE/END_CODE sections
  */
 #include "utillib.h"
 #include "options.h"
@@ -25,14 +25,13 @@ static const COption params[] = {
     COption("run", "r", "", OPT_SWITCH, "run the class maker on associated <class_name(s)>"),
     COption("edit", "e", "", OPT_HIDDEN | OPT_SWITCH, "edit <class_name(s)> definition file in local folder"),
     COption("all", "a", "", OPT_SWITCH, "list, or run all class definitions found in the local folder"),
-    COption("js", "j", "", OPT_SWITCH, "export javaScript code from the class definition"),
     COption("options", "o", "", OPT_SWITCH, "export options code (check validity in the process)"),
+    COption("readmes", "m", "", OPT_SWITCH, "create readme files for each tool and app"),
     COption("format", "f", "", OPT_SWITCH, "format source code files (.cpp and .h) found in local folder and below"),
     COption("lint", "l", "", OPT_SWITCH, "lint source code files (.cpp and .h) found in local folder and below"),
     COption("dump", "d", "", OPT_HIDDEN | OPT_SWITCH, "dump any classDefinition config tomls to screen and quit"),
     COption("nspace", "n", "<string>", OPT_FLAG, "surround generated c++ code with a namespace"),
     COption("filter", "i", "<string>", OPT_FLAG, "process only files whose filename or contents contain 'filter'"),
-    COption("test", "t", "", OPT_SWITCH, "for both code generation and options generation, process but do not write changes"),  // NOLINT
     COption("force", "c", "", OPT_SWITCH, "for both code generation and options generation, force writing of changes"),
     COption("api", "p", "", OPT_HIDDEN | OPT_SWITCH, "generate api options file in explorer repo"),
     COption("openapi", "A", "", OPT_HIDDEN | OPT_SWITCH, "export openapi.yaml file for API documentation"),
@@ -51,8 +50,8 @@ bool COptions::parseArguments(string_q& command) {
     CStringArray files;
     bool run = false;
     bool edit = false;
-    bool js = false;
     bool options = false;
+    bool readmes = false;
     bool format = false;
     bool lint = false;
     bool dump = false;
@@ -73,11 +72,11 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-a" || arg == "--all") {
             all = true;
 
-        } else if (arg == "-j" || arg == "--js") {
-            js = true;
-
         } else if (arg == "-o" || arg == "--options") {
             options = true;
+
+        } else if (arg == "-m" || arg == "--readmes") {
+            readmes = true;
 
         } else if (arg == "-f" || arg == "--format") {
             format = true;
@@ -90,12 +89,13 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (startsWith(arg, "-n:") || startsWith(arg, "--nspace:")) {
             nspace = substitute(substitute(arg, "-n:", ""), "--nspace:", "");
+        } else if (arg == "-n" || arg == "--nspace") {
+            return flag_required("nspace");
 
         } else if (startsWith(arg, "-i:") || startsWith(arg, "--filter:")) {
             filter = substitute(substitute(arg, "-i:", ""), "--filter:", "");
-
-        } else if (arg == "-t" || arg == "--test") {
-            test = true;
+        } else if (arg == "-i" || arg == "--filter") {
+            return flag_required("filter");
 
         } else if (arg == "-c" || arg == "--force") {
             force = true;
@@ -109,7 +109,7 @@ bool COptions::parseArguments(string_q& command) {
         } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
-                return usage("Invalid option: " + arg);
+                return invalid_option(arg);
             }
 
         } else {
@@ -119,6 +119,23 @@ bool COptions::parseArguments(string_q& command) {
             // END_CODE_AUTO
         }
     }
+
+    // BEG_DEBUG_DISPLAY
+    LOG_TEST_LIST("files", files, files.empty());
+    LOG_TEST_BOOL("run", run);
+    LOG_TEST_BOOL("edit", edit);
+    LOG_TEST_BOOL("all", all);
+    LOG_TEST_BOOL("options", options);
+    LOG_TEST_BOOL("readmes", readmes);
+    LOG_TEST_BOOL("format", format);
+    LOG_TEST_BOOL("lint", lint);
+    LOG_TEST_BOOL("dump", dump);
+    LOG_TEST("nspace", nspace, (nspace == "qblocks"));
+    LOG_TEST("filter", filter, (filter == ""));
+    LOG_TEST_BOOL("force", force);
+    LOG_TEST_BOOL("api", api);
+    LOG_TEST_BOOL("openapi", openapi);
+    // END_DEBUG_DISPLAY
 
     // If the user has explicitly specified a classDef, use that
     LOG8("pwd: ", getCWD());
@@ -145,14 +162,10 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    // Handle the weird javaScript code export first just to get it out of the way
-    if (js)
-        return handle_export_js();
-    if (contains(command, "-j"))
-        return usage(errStrs[ERR_EMPTYJSFILE]);
-
     // Ignoring classDefs for a moment, process special options. Note: order matters
     if (options && !handle_options())
+        return false;
+    if (readmes && !handle_readmes())
         return false;
     if (format && !handle_format())
         return false;
@@ -164,18 +177,17 @@ bool COptions::parseArguments(string_q& command) {
         run = true;
 
     // Maybe the user only wants to generate code, format, or lint...
-    if ((run + edit + dump) == 0 && (options + format + lint) > 0)
+    if ((run + edit + dump) == 0 && (options + format + lint + readmes) > 0)
         return false;
 
     // If not, we need classDefs to work with...
     if (classDefs.empty())
-        return usage(!filter.empty() ? errStrs[ERR_NOFILTERMATCH] : errStrs[ERR_NEEDONECLASS]);
+        return usage(!filter.empty() ? usageErrs[ERR_NOFILTERMATCH] : usageErrs[ERR_NEEDONECLASS]);
 
     // If we're dumping, dump...
     if (dump) {
         for (auto cl : classDefs) {
             CToml toml(cl.input_path);
-            toml.readFile(cl.input_path);
             if (verbose) {
                 SHOW_FIELD(CClassDefinition, "fieldArray");
                 HIDE_FIELD(CClassDefinition, "field_str");
@@ -196,15 +208,15 @@ bool COptions::parseArguments(string_q& command) {
 
     // We need the template files
     if (!folderExists(configPath("makeClass/")))
-        return false;  // usage(errStrs[ERR_CONFIGMISSING]);
+        return false;  // usage(usageErrs[ERR_CONFIGMISSING]);
 
     // If we got this far, user needs to tell us what to do...
     if (!run && !edit)
-        return usage(errStrs[ERR_CHOOSEONE]);
+        return usage(usageErrs[ERR_CHOOSEONE]);
 
     // ..but only one thing to do.
     if ((run + edit) > 1)
-        return usage(errStrs[ERR_CHOOSEONE]);
+        return usage(usageErrs[ERR_CHOOSEONE]);
 
     mode = (edit ? EDIT : RUN);
     LOG8("run: ", run, " edit: ", edit, " classes: ", all, " mode: ", mode);
@@ -221,7 +233,6 @@ void COptions::Init(void) {
     all = false;
     nspace = "qblocks";
     filter = "";
-    test = false;
     force = false;
     api = false;
     openapi = false;
@@ -239,7 +250,6 @@ void COptions::Init(void) {
 
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) : classFile("") {
-    setSorts(GETRUNTIME_CLASS(CBlock), GETRUNTIME_CLASS(CTransaction), GETRUNTIME_CLASS(CReceipt));
     Init();
 
     // BEG_CODE_NOTES
@@ -250,20 +260,17 @@ COptions::COptions(void) : classFile("") {
     // clang-format on
     // END_CODE_NOTES
 
-    // BEG_ERROR_MSG
-    errStrs[ERR_NOERROR] = "No error";
-    errStrs[ERR_CLASSDEFNOTEXIST] = "./classDefinitions folder does not exist.";
-    errStrs[ERR_CONFIGMISSING] = "[{CONFIG_FOLDER}]makeClass/ folder does not exist.";
-    errStrs[ERR_EMPTYJSFILE] = "Cannot export javscript for an empty class.";
-    errStrs[ERR_CHOOSEONE] = "Please chose exactly one of --run, --list, or --edit.";
-    errStrs[ERR_NOFILTERMATCH] = "No definitions found that matched the filter: [{FILTER}].";
-    errStrs[ERR_NEEDONECLASS] = "Please specify at least one className.";
-    // END_ERROR_MSG
+    usageErrs[ERR_NOERROR] = "No error";
+    // ERROR_STRINGS
+    usageErrs[ERR_CLASSDEFNOTEXIST] = "./classDefinitions folder does not exist.";
+    usageErrs[ERR_CONFIGMISSING] = "[{CONFIG_FOLDER}]makeClass/ folder does not exist.";
+    usageErrs[ERR_CHOOSEONE] = "Please chose exactly one of --run, --list, or --edit.";
+    usageErrs[ERR_NOFILTERMATCH] = "No definitions found that matched the filter: [{FILTER}].";
+    usageErrs[ERR_NEEDONECLASS] = "Please specify at least one className.";
+    // ERROR_STRINGS
 
     updateTemplates();
 
-    CCommands::registerClass();
-    CApiRoute::registerClass();
     CCommandOption::registerClass();
     CClassDefinition::registerClass();
     CPage::registerClass();
@@ -326,14 +333,15 @@ void copyIfNewer(const string_q& src, const string_q& dest) {
 }
 
 //--------------------------------------------------------------------------------
-string_q getSourcePath(const string_q& part) {
+string_q sourcePath(const string_q& part) {
     // TODO(tjayrush) hard coded path
-    return "/Users/jrush/src.GitHub/trueblocks-core/src/" + part;
+    return "/Users/jrush/src.GitHub/trueblocks-core/src/dev_tools/makeClass/" + part;
 }
 
 //--------------------------------------------------------------------------------
 void updateTemplates(void) {
     // TODO(tjayrush): hard coded path
-    copyIfNewer(getSourcePath("dev_tools/makeClass/templates/blank.cpp"), configPath("makeClass/blank.cpp"));
-    copyIfNewer(getSourcePath("dev_tools/makeClass/templates/blank.h"), configPath("makeClass/blank.h"));
+    copyIfNewer(sourcePath("templates/blank.cpp"), configPath("makeClass/blank.cpp"));
+    copyIfNewer(sourcePath("templates/blank.h"), configPath("makeClass/blank.h"));
+    copyIfNewer(sourcePath("templates/blank_openapi.yaml"), configPath("makeClass/blank_openapi.yaml"));
 }

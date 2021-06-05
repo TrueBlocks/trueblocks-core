@@ -1,7 +1,7 @@
 #pragma once
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -12,8 +12,8 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 /*
- * This file was generated with makeClass. Edit only those parts of the code inside
- * of 'EXISTING_CODE' tags.
+ * Parts of this file were generated with makeClass --run. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
  */
 #include "etherlib.h"
 #include "transaction.h"
@@ -29,10 +29,6 @@ typedef enum { FM_PRODUCTION, FM_STAGING } freshen_e;
 //--------------------------------------------------------------------------
 class CMonitor : public CAccountName {
   public:
-    CReconciliation summaryStatement;
-    CEthStateArray stateHistory;
-    wei_t curBalance;
-    bool enabled;
     freshen_e fm_mode;
 
   public:
@@ -43,40 +39,40 @@ class CMonitor : public CAccountName {
 
     DECLARE_NODE(CMonitor);
 
-    const CBaseNode* getObjectAt(const string_q& fieldName, size_t index) const override;
-
     // EXISTING_CODE
+  public:
     bloom_t bloom;
-    bloom_t getBloom(void);
-    uint64_t cntBefore;
-    bool needsRefresh;
+    CArchive* tx_cache;
+    bool inBlock;
+
     CMonitor(const string_q& _addr, const string_q& _name, blknum_t fB, blknum_t lB);
     CMonitor(const address_t& _addr, const string_q& _name);
-    bool inBlock;
-    CArchive* tx_cache;
-    void writeLastBlock(blknum_t bn);
-    void updateLastExport(blknum_t bn);
-    void writeAnArray(const CAppearanceArray_base& array);
-    void writeARecord(blknum_t bn, blknum_t tx_id);
-    bool openCacheFile1(void);
+
+    bool openForWriting(void);
+
+    void writeMonitorArray(const CAppearanceArray_base& array);
+    void writeLastBlockInMonitor(blknum_t bn);
+
     blknum_t getLastVisited(bool fresh = false) const;
-    bool isLocked(string_q& msg) const;
-    bool clearLocks(void);
-    void moveToProduction(void);
-    bool loadAndSort(CAppearanceArray& items);
-    uint64_t getRecordCount(void) const;
-    bool exists(void) const;
-    blknum_t getLastVisitedBlock(void) const;
-    blknum_t getLastExportedBlock(void) const;
-    bool isDeleted(void) const;
-    void undeleteMonitor(void);
-    void deleteMonitor(void);
-    void removeMonitor(void);
+    blknum_t getLastBlockInMonitor(void) const;
+
     string_q getMonitorPath(const address_t& addr, freshen_e mode = FM_PRODUCTION) const;
     string_q getMonitorLast(const address_t& addr, freshen_e mode = FM_PRODUCTION) const;
-    string_q getMonitorExpt(const address_t& addr, freshen_e mode = FM_PRODUCTION) const;
     string_q getMonitorDels(const address_t& addr, freshen_e mode = FM_PRODUCTION) const;
     string_q getMonitorCach(const address_t& addr, freshen_e mode = FM_PRODUCTION) const;
+
+    bool monitorExists(void) const;
+    bool isMonitorLocked(string_q& msg) const;
+    bool clearMonitorLocks(void);
+
+    void moveToProduction(void);
+
+    bool isDeleted(void) const;
+    void deleteMonitor(void);
+    void undeleteMonitor(void);
+    void removeMonitor(void);
+
+    bloom_t getBloom(void);
     // EXISTING_CODE
     bool operator==(const CMonitor& it) const;
     bool operator!=(const CMonitor& it) const {
@@ -146,8 +142,6 @@ inline void CMonitor::clear(void) {
         delete tx_cache;
     }
     tx_cache = NULL;
-    cntBefore = 0;
-    needsRefresh = false;
     lastVisitedBlock = NOPOS;
     // EXISTING_CODE
 }
@@ -156,10 +150,6 @@ inline void CMonitor::clear(void) {
 inline void CMonitor::initialize(void) {
     CAccountName::initialize();
 
-    summaryStatement = CReconciliation();
-    stateHistory.clear();
-    curBalance = 0;
-    enabled = true;
     fm_mode = FM_PRODUCTION;
 
     // EXISTING_CODE
@@ -167,8 +157,6 @@ inline void CMonitor::initialize(void) {
     latestAppearance = UINT_MAX;
     inBlock = false;
     tx_cache = NULL;
-    cntBefore = 0;
-    needsRefresh = false;
     lastVisitedBlock = NOPOS;
     // EXISTING_CODE
 }
@@ -178,10 +166,6 @@ inline void CMonitor::duplicate(const CMonitor& mo) {
     clear();
     CAccountName::duplicate(mo);
 
-    summaryStatement = mo.summaryStatement;
-    stateHistory = mo.stateHistory;
-    curBalance = mo.curBalance;
-    enabled = mo.enabled;
     fm_mode = mo.fm_mode;
 
     // EXISTING_CODE
@@ -189,8 +173,6 @@ inline void CMonitor::duplicate(const CMonitor& mo) {
     latestAppearance = mo.latestAppearance;
     inBlock = mo.inBlock;
     tx_cache = NULL;  // we do not copy the tx_cache
-    cntBefore = mo.cntBefore;
-    needsRefresh = mo.needsRefresh;
     lastVisitedBlock = mo.lastVisitedBlock;
     // EXISTING_CODE
 }
@@ -230,11 +212,10 @@ extern const char* STR_DISPLAY_MONITOR;
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 typedef map<address_t, CMonitor> CMonitorMap;  // NOLINT
+extern string_q getTokenBalanceOf(const CMonitor& token, const address_t& holder, blknum_t blockNum);
+extern string_q getTokenSymbol(const CMonitor& token, blknum_t blockNum);
+extern string_q getTokenState(const string_q& what, const CAbi& abi_spec, const CMonitor& token, blknum_t blockNum);
 extern void establishMonitorFolders(void);
 extern void cleanMonitorStage(void);
-extern const char* STR_DISPLAY_TOKENBALANCERECORD2;
-extern string_q getTokenBalanceOf(const CAbi& abi_spec, const CMonitor& token, const address_t& holder,
-                                  blknum_t blockNum);
-extern string_q getTokenState(const string_q& what, const CAbi& abi_spec, const CMonitor& token, blknum_t blockNum);
 // EXISTING_CODE
 }  // namespace qblocks

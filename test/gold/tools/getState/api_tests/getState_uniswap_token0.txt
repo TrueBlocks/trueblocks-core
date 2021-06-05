@@ -8,13 +8,9 @@
         "name": "token0",
         "signature": "token0()",
         "encoding": "0x0dfe1681",
-        "inputs": [],
-        "outputs": [
-          {
-            "name": "val_0",
-            "value": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599"
-          }
-        ]
+        "outputs": {
+          "val_0": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599"
+        }
       },
       "balance": 0,
       "address": "0xbb2b8038a1640196fbe3e38816f3e67cba72d940"

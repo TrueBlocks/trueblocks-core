@@ -1,7 +1,2 @@
 [version]
 current = "0.6.0"
-
-[[specials]]
-list = [
-	{ name = "myblock", value = "1001001" },
-]

@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -106,7 +106,7 @@ bool CBaseNode::setValueByName(const string_q& fieldName, const string_q& fieldV
 //--------------------------------------------------------------------------------
 string_q CBaseNode::getKeyByName(const string_q& fieldName) const {
     if (expContext().quoteKeys)
-        return "\"" + fieldName + "\"" + ": ";
+        return "\"" + substitute(fieldName, "_dict", "") + "\"" + ": ";
     return fieldName + ": ";
 }
 
@@ -439,6 +439,8 @@ CExportContext::CExportContext(void) {
     asDollars = false;
     asWei = true;
     asParity = false;
+    tsMemMap = nullptr;
+    tsCnt = 0;
     exportFmt = (isApiMode() ? API1 : TXT1);
 }
 
@@ -522,6 +524,10 @@ bool CBaseNode::getVisibleFields(CFieldDataArray& visibleFields) const {
                         // avoid generating the value for empty arrays
                         hidden = str_2_Uint(getValueByName(field.getName() + "Cnt")) == 0;
                     }
+
+                } else if (field.m_fieldType == (T_JSONVAL | TS_OMITEMPTY)) {
+                    string_q str = trim(trim(getValueByName(field.getName()), '\n'), ' ');
+                    hidden = (str == "null");
 
                 } else {
                     CBaseNode* defObject = getDefaultObject(field);
@@ -633,8 +639,10 @@ void CBaseNode::toJson(ostream& os) const {
             node->toJson(os);
 
         } else {
-            string_q val = getValueByName(field.getName());
+            string_q nn = field.getName();
+            string_q val = getValueByName(nn);
             bool isTuple = contains(val, "--tuple--");
+            bool isDict = contains(nn, "_dict");
             if (isTuple) {
                 replaceReverse(val, "--tuple--", "");  // hacky
                 val = trim(val, '\"');
@@ -648,6 +656,9 @@ void CBaseNode::toJson(ostream& os) const {
             bool isNum = (field.m_fieldType & TS_NUMERAL);
 
             if (isTuple || val == "null" || field.m_fieldType == T_BOOL || (isNum && contains(val, "."))) {
+                os << val;
+
+            } else if (isDict) {
                 os << val;
 
             } else if (!isNum) {

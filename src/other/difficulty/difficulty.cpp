@@ -1,7 +1,7 @@
 #include "etherlib.h"
 
-#define START 11951568
-#define END 11994368
+#define START 12490949
+#define END 12565071
 
 #if 1
 int main(int argc, const char* argv[]) {
@@ -10,7 +10,7 @@ int main(int argc, const char* argv[]) {
         CBlock block;
         getBlock_light(block, i);
         cout << block.blockNumber << "," << block.timestamp << "," << block.difficulty << endl;
-        cerr << block.blockNumber << "\r"; cerr.flush();
+        cerr << block.blockNumber << " " << (END - block.blockNumber) << "     \r"; cerr.flush();
     }
     return 0;
 }
@@ -62,11 +62,11 @@ int main(int argc, const char* argv[]) {
 #endif
 #if 0
 int main(int argc, const char* argv[]) {
-    uint32_t *ts_array = NULL;
+    uint32_t *tsMemMap = NULL;
     size_t cnt;
-    loadTimestampFile(&ts_array, cnt);
+    loadTimestamps(&tsMemMap, cnt);
     for (size_t i=0 ; i < cnt*2 ; i = i+2) {
-        cout << (i/2) << "\t" << ((i/2)-ts_array[i]) << "\t" << ts_array[i] << "\t" << ts_array[i+1] << endl;
+        cout << (i/2) << "\t" << ((i/2)-tsMemMap[i]) << "\t" << tsMemMap[i] << "\t" << tsMemMap[i+1] << endl;
     }
     return 0;
 }

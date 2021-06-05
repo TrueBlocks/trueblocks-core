@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -11,8 +11,8 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 /*
- * This file was generated with makeClass. Edit only those parts of the code inside
- * of 'EXISTING_CODE' tags.
+ * Parts of this file were generated with makeClass --run. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
  */
 #include "monitor.h"
 
@@ -73,39 +73,9 @@ string_q CMonitor::getValueByName(const string_q& fieldName) const {
 
     // Return field values
     switch (tolower(fieldName[0])) {
-        case 'c':
-            if (fieldName % "curBalance") {
-                return wei_2_Str(curBalance);
-            }
-            break;
-        case 'e':
-            if (fieldName % "enabled") {
-                return bool_2_Str(enabled);
-            }
-            break;
         case 'f':
             if (fieldName % "fm_mode") {
                 return uint_2_Str(fm_mode);
-            }
-            break;
-        case 's':
-            if (fieldName % "summaryStatement") {
-                if (summaryStatement == CReconciliation())
-                    return "{}";
-                return summaryStatement.Format();
-            }
-            if (fieldName % "stateHistory" || fieldName % "stateHistoryCnt") {
-                size_t cnt = stateHistory.size();
-                if (endsWith(toLower(fieldName), "cnt"))
-                    return uint_2_Str(cnt);
-                if (!cnt)
-                    return "";
-                string_q retS;
-                for (size_t i = 0; i < cnt; i++) {
-                    retS += stateHistory[i].Format();
-                    retS += ((i < cnt - 1) ? ",\n" : "\n");
-                }
-                return retS;
             }
             break;
         default:
@@ -114,15 +84,6 @@ string_q CMonitor::getValueByName(const string_q& fieldName) const {
 
     // EXISTING_CODE
     // EXISTING_CODE
-
-    string_q s;
-    s = toUpper(string_q("summaryStatement")) + "::";
-    if (contains(fieldName, s)) {
-        string_q f = fieldName;
-        replaceAll(f, s, "");
-        f = summaryStatement.getValueByName(f);
-        return f;
-    }
 
     // Finally, give the parent class a chance
     return CAccountName::getValueByName(fieldName);
@@ -134,49 +95,15 @@ bool CMonitor::setValueByName(const string_q& fieldNameIn, const string_q& field
     string_q fieldValue = fieldValueIn;
 
     // EXISTING_CODE
-    if (fieldName % "summaryStatement") {
-        string_q str = fieldValue;
-        return summaryStatement.parseJson3(str);
-    }
-    if (fieldName % "balance") {
-        summaryStatement.endBal = summaryStatement.begBal = str_2_Wei(fieldValue);
-        return true;
-    }
     // EXISTING_CODE
 
     if (CAccountName::setValueByName(fieldName, fieldValue))
         return true;
 
     switch (tolower(fieldName[0])) {
-        case 'c':
-            if (fieldName % "curBalance") {
-                curBalance = str_2_Wei(fieldValue);
-                return true;
-            }
-            break;
-        case 'e':
-            if (fieldName % "enabled") {
-                enabled = str_2_Bool(fieldValue);
-                return true;
-            }
-            break;
         case 'f':
             if (fieldName % "fm_mode") {
                 fm_mode = str_2_Enum(freshen_e, fieldValue);
-                return true;
-            }
-            break;
-        case 's':
-            if (fieldName % "summaryStatement") {
-                return summaryStatement.parseJson3(fieldValue);
-            }
-            if (fieldName % "stateHistory") {
-                CEthState obj;
-                string_q str = fieldValue;
-                while (obj.parseJson3(str)) {
-                    stateHistory.push_back(obj);
-                    obj = CEthState();  // reset
-                }
                 return true;
             }
             break;
@@ -205,10 +132,6 @@ bool CMonitor::Serialize(CArchive& archive) {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive >> summaryStatement;
-    archive >> stateHistory;
-    archive >> curBalance;
-    archive >> enabled;
     // archive >> fm_mode;
     finishParse();
     return true;
@@ -221,10 +144,6 @@ bool CMonitor::SerializeC(CArchive& archive) const {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive << summaryStatement;
-    archive << stateHistory;
-    archive << curBalance;
-    archive << enabled;
     // archive << fm_mode;
 
     return true;
@@ -264,10 +183,6 @@ void CMonitor::registerClass(void) {
     ADD_FIELD(CMonitor, "deleted", T_BOOL, ++fieldNum);
     ADD_FIELD(CMonitor, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CMonitor, "cname", T_TEXT, ++fieldNum);
-    ADD_OBJECT(CMonitor, "summaryStatement", T_OBJECT | TS_OMITEMPTY, ++fieldNum, GETRUNTIME_CLASS(CReconciliation));
-    ADD_FIELD(CMonitor, "stateHistory", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CMonitor, "curBalance", T_WEI, ++fieldNum);
-    ADD_FIELD(CMonitor, "enabled", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CMonitor, "fm_mode", T_NUMBER, ++fieldNum);
     HIDE_FIELD(CMonitor, "fm_mode");
 
@@ -280,10 +195,6 @@ void CMonitor::registerClass(void) {
     builtIns.push_back(_biCMonitor);
 
     // EXISTING_CODE
-    ADD_FIELD(CMonitor, "curEther", T_ETHER, ++fieldNum);
-    HIDE_FIELD(CMonitor, "curEther");
-    ADD_FIELD(CMonitor, "curDollars", T_ETHER, ++fieldNum);
-    HIDE_FIELD(CMonitor, "curDollars");
     // EXISTING_CODE
 }
 
@@ -293,14 +204,6 @@ string_q nextMonitorChunk_custom(const string_q& fieldIn, const void* dataPtr) {
     if (mon) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
-            case 'c':
-                if (startsWith(fieldIn, "cur") && mon->curBalance == str_2_Wei(uint_2_Str(NOPOS)))
-                    return "\"n/a\"";
-                if (fieldIn % "curEther")
-                    return "\"" + wei_2_Ether(wei_2_Str(mon->curBalance)) + "\"";
-                if (fieldIn % "curDollars")
-                    return "not-implemented";
-                break;
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
@@ -337,30 +240,12 @@ ostream& operator<<(ostream& os, const CMonitor& it) {
 }
 
 //---------------------------------------------------------------------------
-const CBaseNode* CMonitor::getObjectAt(const string_q& fieldName, size_t index) const {
-    if (fieldName % "summaryStatement")
-        return &summaryStatement;
-
-    if (fieldName % "stateHistory") {
-        if (index == NOPOS) {
-            CEthState empty;
-            ((CMonitor*)this)->stateHistory.push_back(empty);  // NOLINT
-            index = stateHistory.size() - 1;
-        }
-        if (index < stateHistory.size())
-            return &stateHistory[index];
-    }
-
-    return NULL;
-}
-
-//---------------------------------------------------------------------------
 const char* STR_DISPLAY_MONITOR = "";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 //---------------------------------------------------------------------------
-bool CMonitor::openCacheFile1(void) {
+bool CMonitor::openForWriting(void) {
     if (tx_cache != NULL)
         return true;
     tx_cache = new CArchive(WRITING_ARCHIVE);
@@ -370,31 +255,42 @@ bool CMonitor::openCacheFile1(void) {
 }
 
 //-------------------------------------------------------------------------
-void CMonitor::writeLastBlock(blknum_t bn) {
-    lastVisitedBlock = bn;
-    stringToAsciiFile(getMonitorLast(address, fm_mode), uint_2_Str(bn) + "\n");
-}
-
-//-------------------------------------------------------------------------
-void CMonitor::updateLastExport(blknum_t bn) {
-    stringToAsciiFile(getMonitorExpt(address, fm_mode), uint_2_Str(bn) + "\n");
-}
-
-//-------------------------------------------------------------------------
-void CMonitor::writeARecord(blknum_t bn, blknum_t tx_id) {
-    if (tx_cache == NULL)
-        return;
-    *tx_cache << bn << tx_id;
-    tx_cache->flush();
-}
-
-//-------------------------------------------------------------------------
-void CMonitor::writeAnArray(const CAppearanceArray_base& items) {
+void CMonitor::writeMonitorArray(const CAppearanceArray_base& items) {
     if (tx_cache == NULL)
         return;
     for (auto item : items)
         *tx_cache << item.blk << item.txid;
     tx_cache->flush();
+}
+
+//-------------------------------------------------------------------------
+void CMonitor::writeLastBlockInMonitor(blknum_t bn) {
+    lastVisitedBlock = bn;
+    stringToAsciiFile(getMonitorLast(address, fm_mode), uint_2_Str(bn) + "\n");
+}
+
+//---------------------------------------------------------------------------
+string_q CMonitor::getMonitorPath(const address_t& addr, freshen_e mode) const {
+    string_q fn = isAddress(addr) ? addr + ".acct.bin" : addr;
+    string_q base = getCachePath("monitors/") + (mode == FM_STAGING ? "staging/" : "");
+    if (isTestMode())
+        base = configPath("mocked/monitors/") + (mode == FM_STAGING ? "staging/" : "");
+    return base + fn;
+}
+
+//---------------------------------------------------------------------------
+string_q CMonitor::getMonitorLast(const address_t& addr, freshen_e mode) const {
+    return substitute(getMonitorPath(addr, mode), ".acct.bin", ".last.txt");
+}
+
+//---------------------------------------------------------------------------
+string_q CMonitor::getMonitorDels(const address_t& addr, freshen_e mode) const {
+    return getMonitorPath(addr) + ".deleted";
+}
+
+//---------------------------------------------------------------------------
+string_q CMonitor::getMonitorCach(const address_t& addr, freshen_e mode) const {
+    return getMonitorPath(addr + ".txs.bin");
 }
 
 //--------------------------------------------------------------------------------
@@ -417,14 +313,22 @@ blknum_t CMonitor::getLastVisited(bool fresh) const {
     return lastVisitedBlock;
 }
 
-//--------------------------------------------------------------------------------
-bool CMonitor::clearLocks(void) {
-    ::remove((getMonitorPath(address) + ".lck").c_str());
-    ::remove((getMonitorLast(address) + ".lck").c_str());
-    ::remove((getMonitorExpt(address) + ".lck").c_str());
-    ::remove((getMonitorDels(address) + ".lck").c_str());
-    ::remove((getMonitorCach(address) + ".lck").c_str());
-    return true;
+//-----------------------------------------------------------------------
+blknum_t CMonitor::getLastBlockInMonitor(void) const {
+    return str_2_Uint(asciiFileToString(getMonitorLast(address)));
+}
+
+//-----------------------------------------------------------------------
+bool CMonitor::monitorExists(void) const {
+    if (fileExists(getMonitorPath(address)))
+        return true;
+    if (fileExists(getMonitorLast(address)))
+        return true;
+    if (fileExists(getMonitorDels(address)))
+        return true;
+    if (fileExists(getMonitorCach(address)))
+        return true;
+    return false;
 }
 
 //--------------------------------------------------------------------------------
@@ -435,13 +339,21 @@ bool CMonitor::clearLocks(void) {
     }
 
 //--------------------------------------------------------------------------------
-bool CMonitor::isLocked(string_q& msg) const {
+bool CMonitor::isMonitorLocked(string_q& msg) const {
     checkLock(getMonitorPath(address), "cache");
     checkLock(getMonitorLast(address), "last block");
-    checkLock(getMonitorExpt(address), "last export");
     checkLock(getMonitorDels(address), "marker");
     checkLock(getMonitorCach(address), "cache");
     return false;
+}
+
+//--------------------------------------------------------------------------------
+bool CMonitor::clearMonitorLocks(void) {
+    ::remove((getMonitorPath(address) + ".lck").c_str());
+    ::remove((getMonitorLast(address) + ".lck").c_str());
+    ::remove((getMonitorDels(address) + ".lck").c_str());
+    ::remove((getMonitorCach(address) + ".lck").c_str());
+    return true;
 }
 
 //--------------------------------------------------------------------------------
@@ -470,46 +382,53 @@ void CMonitor::moveToProduction(void) {
     if (binExists || lastExists) {
         doMoveFile(getMonitorPath(address, FM_STAGING), getMonitorPath(address));
         doMoveFile(getMonitorLast(address, FM_STAGING), getMonitorLast(address));
-        doMoveFile(getMonitorExpt(address, FM_STAGING), getMonitorExpt(address));
         doMoveFile(getMonitorCach(address, FM_STAGING), getMonitorCach(address));
     } else {
         // For some reason (user quit, UI switched to adding a different address to monitor, something went
         // wrong...) the binary cache was not created. Cleanup everything. The user will have to start over.
         ::remove(getMonitorPath(address, FM_STAGING).c_str());
         ::remove(getMonitorLast(address, FM_STAGING).c_str());
-        ::remove(getMonitorExpt(address, FM_STAGING).c_str());
         ::remove(getMonitorCach(address, FM_STAGING).c_str());
     }
     unlockSection();
 }
 
-//---------------------------------------------------------------------------
-string_q CMonitor::getMonitorPath(const address_t& addr, freshen_e mode) const {
-    string_q fn = isAddress(addr) ? addr + ".acct.bin" : addr;
-    string_q base = getCachePath("monitors/") + (mode == FM_STAGING ? "staging/" : "");
-    if (isTestMode())
-        base = configPath("mocked/monitors/") + (mode == FM_STAGING ? "staging/" : "");
-    return base + fn;
+//-----------------------------------------------------------------------
+bool CMonitor::isDeleted(void) const {
+    return fileExists(getMonitorDels(address));
+}
+
+//-----------------------------------------------------------------------
+void CMonitor::deleteMonitor(void) {
+    stringToAsciiFile(getMonitorDels(address), Now().Format(FMT_EXPORT));
+}
+
+//-----------------------------------------------------------------------
+void CMonitor::undeleteMonitor(void) {
+    ::remove(getMonitorDels(address).c_str());
 }
 
 //---------------------------------------------------------------------------
-string_q CMonitor::getMonitorLast(const address_t& addr, freshen_e mode) const {
-    return substitute(getMonitorPath(addr, mode), ".acct.bin", ".last.txt");
+void removeFile(const string_q& fn) {
+    ::remove(fn.c_str());
+    ::remove((fn + ".lck").c_str());
 }
 
-//---------------------------------------------------------------------------
-string_q CMonitor::getMonitorExpt(const address_t& addr, freshen_e mode) const {
-    return substitute(getMonitorPath(addr, mode), ".acct.bin", ".expt.txt");
+//-----------------------------------------------------------------------
+void CMonitor::removeMonitor(void) {
+    removeFile(getMonitorPath(address));
+    removeFile(getMonitorLast(address));
+    removeFile(getMonitorDels(address));
+    removeFile(getMonitorCach(address));
 }
 
-//---------------------------------------------------------------------------
-string_q CMonitor::getMonitorDels(const address_t& addr, freshen_e mode) const {
-    return getMonitorPath(addr) + ".deleted";
-}
-
-//---------------------------------------------------------------------------
-string_q CMonitor::getMonitorCach(const address_t& addr, freshen_e mode) const {
-    return getMonitorPath(addr + ".txs.bin");
+//-----------------------------------------------------------------------
+bloom_t CMonitor::getBloom(void) {
+    bloom_t not_set;
+    if (bloom == not_set) {
+        bloom = addr_2_Bloom(address);
+    }
+    return bloom;
 }
 
 //----------------------------------------------------------------
@@ -525,161 +444,54 @@ void cleanMonitorStage(void) {
     cleanFolder(m.getMonitorPath("", FM_STAGING));
 }
 
-//-----------------------------------------------------------------------
-bool CMonitor::loadAndSort(CAppearanceArray& items) {
-    ENTER("loadAndSort");
-
-    string_q fn = getMonitorPath(address);
-    size_t nRecords = (fileSize(fn) / sizeof(CAppearance_base));
-    if (!nRecords)
-        EXIT_FAIL("No records found for address '" + address + "'. Quitting...");
-
-    CAppearance_base* buffer = new CAppearance_base[nRecords];
-    if (buffer) {
-        bzero((void*)buffer, nRecords * sizeof(CAppearance_base));  // NOLINT
-        CArchive txCache(READING_ARCHIVE);
-        if (txCache.Lock(fn, modeReadOnly, LOCK_NOWAIT)) {
-            txCache.Read(buffer, sizeof(CAppearance_base), nRecords);
-            txCache.Release();
-        } else {
-            EXIT_FAIL("Could not open cache file'" + fn + "'. Quitting...\n");
-        }
-        // Expand the apps array (which may be non-empty)
-        items.reserve(items.size() + nRecords);
-        for (size_t i = 0; i < nRecords; i++) {
-            CAppearance app;
-            app.bn = buffer[i].blk;
-            app.tx = buffer[i].txid;
-            items.push_back(app);
-        }
-        delete[] buffer;
-    } else {
-        EXIT_FAIL("Could not allocate memory for address " + address + "Quitting...\n");
-    }
-
-    // Sort them, so when we write them later we can remove dups
-    sort(items.begin(), items.end());
-
-    EXIT_NOMSG(true);
-}
-
-//-----------------------------------------------------------------------
-uint64_t CMonitor::getRecordCount(void) const {
-    return fileSize(getMonitorPath(address)) / sizeof(CAppearance_base);
-}
-
-//-----------------------------------------------------------------------
-bool CMonitor::exists(void) const {
-    if (fileExists(getMonitorPath(address)))
-        return true;
-    if (fileExists(getMonitorLast(address)))
-        return true;
-    if (fileExists(getMonitorExpt(address)))
-        return true;
-    if (fileExists(getMonitorDels(address)))
-        return true;
-    if (fileExists(getMonitorCach(address)))
-        return true;
-    return false;
-}
-
-//-----------------------------------------------------------------------
-blknum_t CMonitor::getLastVisitedBlock(void) const {
-    return str_2_Uint(asciiFileToString(getMonitorLast(address)));
-}
-
-//-----------------------------------------------------------------------
-blknum_t CMonitor::getLastExportedBlock(void) const {
-    return str_2_Uint(asciiFileToString(getMonitorExpt(address)));
-}
-
-//-----------------------------------------------------------------------
-bool CMonitor::isDeleted(void) const {
-    return fileExists(getMonitorDels(address));
-}
-
-//-----------------------------------------------------------------------
-void CMonitor::undeleteMonitor(void) {
-    ::remove(getMonitorDels(address).c_str());
-}
-
-//-----------------------------------------------------------------------
-void CMonitor::deleteMonitor(void) {
-    stringToAsciiFile(getMonitorDels(address), Now().Format(FMT_EXPORT));
-}
-
-//---------------------------------------------------------------------------
-void removeFile(const string_q& fn) {
-    ::remove(fn.c_str());
-    ::remove((fn + ".lck").c_str());
-}
-
-//-----------------------------------------------------------------------
-void CMonitor::removeMonitor(void) {
-    removeFile(getMonitorPath(address));
-    removeFile(getMonitorLast(address));
-    removeFile(getMonitorExpt(address));
-    removeFile(getMonitorDels(address));
-    removeFile(getMonitorCach(address));
-}
-
-//-----------------------------------------------------------------------
-bloom_t CMonitor::getBloom(void) {
-    bloom_t not_set;
-    if (bloom == not_set) {
-        bloom = addr_2_Bloom(address);
-    }
-    return bloom;
+//-------------------------------------------------------------------------
+string_q getTokenBalanceOf(const CMonitor& token, const address_t& holder, blknum_t blockNum) {
+    ostringstream cmd;
+    cmd << "[{";
+    cmd << "\"to\": \"" << token.address << "\", ";
+    cmd << "\"data\": \"0x70a08231" << padLeft(substitute(holder, "0x", ""), 64, '0') << "\"";
+    cmd << "}, \"" << uint_2_Hex(blockNum) << "\"]";
+    string_q ret = callRPC("eth_call", cmd.str(), false).substr(0, 66);  // take only the first 32 bytes
+    if (startsWith(ret, "0x"))
+        return bnu_2_Str(str_2_BigUint(ret, 256));
+    return "0";
 }
 
 //-------------------------------------------------------------------------
-const char* STR_DISPLAY_TOKENBALANCERECORD2 =
-    "[{BLOCKNUMBER}]\t"
-    "[{HOLDER}]\t"
-    "[{ADDRESS}]\t"
-    "[{NAME}]\t"
-    "[{SYMBOL}]\t"
-    "[{DECIMALS}]\t"
-    "[{BALANCE}]";
-
-//-------------------------------------------------------------------------
-string_q getTokenBalanceOf(const CAbi& abi_spec, const CMonitor& token, const address_t& holder, blknum_t blockNum) {
-    map<string_q, string_q> sigMap;
-    sigMap["balanceOf"] = "0x70a08231";
-    CFunction result;
-    if (doEthCall(token.address, sigMap["balanceOf"], padLeft(extract(holder, 2), 64, '0'), blockNum, abi_spec, result))
-        return result.outputs[0].value;
+string_q getTokenSymbol(const CMonitor& token, blknum_t blockNum) {
+    ostringstream cmd;
+    cmd << "[{";
+    cmd << "\"to\": \"" << token.address << "\", ";
+    cmd << "\"data\": \"0x95d89b41\"";
+    cmd << "}, \"" << uint_2_Hex(blockNum) << "\"]";
+    string_q ret = callRPC("eth_call", cmd.str(), false);
+    if (!contains(ret, "error") && !startsWith(ret, "0x"))
+        return ret;
     return "";
 }
 
 //-------------------------------------------------------------------------
 string_q getTokenState(const string_q& what, const CAbi& abi_spec, const CMonitor& token, blknum_t blockNum) {
-    map<string_q, string_q> sigMap;
-    sigMap["totalSupply"] = "0x18160ddd";
-    sigMap["decimals"] = "0x313ce567";
-    sigMap["symbol"] = "0x95d89b41";
-    sigMap["name"] = "0x06fdde03";
-    if (sigMap[what].empty()) {
-        return "";
+    static map<string_q, string_q> sigMap;
+    if (sigMap.size() == 0) {
+        sigMap["totalSupply"] = "0x18160ddd";
+        sigMap["decimals"] = "0x313ce567";
+        sigMap["symbol"] = "0x95d89b41";
+        sigMap["name"] = "0x06fdde03";
     }
 
-    CFunction result;
-    if (!doEthCall(token.address, sigMap[what], "", blockNum, abi_spec, result)) {
-        // This may be a proxy contract, so we can try to get its implementation and call back in
-        CMonitor proxy = token;
-        // sigMap["implementation"] = "0x5c60da1b";
-        CFunction proxyResult;
-        if (doEthCall(token.address, "0x5c60da1b", "", blockNum, abi_spec, proxyResult)) {
-            address_t addr = proxyResult.outputs[0].value;
-            if (isZeroAddr(addr))
-                return "";
-            proxy.address = addr;
-            if (doEthCall(proxy.address, sigMap[what], "", blockNum, abi_spec, result))
-                return result.outputs[0].value;
-            return "";
-        }
-    }
-    return result.outputs.size() ? result.outputs[0].value : "";
+    if (sigMap[what].empty())
+        return "";
+
+    CEthCall theCall;
+    theCall.address = token.address;
+    theCall.encoding = sigMap[what];
+    theCall.bytes = "";
+    theCall.blockNumber = blockNum;
+    theCall.abi_spec = abi_spec;
+    if (doEthCall(theCall))
+        return theCall.getResults();
+    return "";
 }
 // EXISTING_CODE
 }  // namespace qblocks

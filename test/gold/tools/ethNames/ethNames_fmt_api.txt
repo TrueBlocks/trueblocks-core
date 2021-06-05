@@ -1,24 +1,33 @@
-ethNames argc: 6 [1:--named] [2:--custom] [3:--owned] [4:--fmt] [5:api] 
-ethNames --named --custom --owned --fmt api 
-TIME ~ CLOCK - <INFO>  : owned: true
-TIME ~ CLOCK - <INFO>  : custom: true
-TIME ~ CLOCK - <INFO>  : named: true
+ethNames argc: 5 [1:--named] [2:--custom] [3:--fmt] [4:api] 
+ethNames --named --custom --fmt api 
 {"data": [
   {
+    "tags": "81-Custom",
     "address": "0x0000000000000000000000000000000000000001",
-    "name": "Account_1"
+    "name": "Account_1",
+    "source": "Testing"
   },
   {
+    "tags": "81-Custom",
     "address": "0x0000000000000000000000000000000000000002",
-    "name": "Account_2"
+    "name": "Account_2",
+    "symbol": "AC_2",
+    "source": "Testing",
+    "decimals": 2
   },
   {
+    "tags": "81-Custom",
     "address": "0x0000000000000000000000000000000000000003",
-    "name": "Account_3"
+    "name": "Account_3",
+    "source": "Testing"
   },
   {
+    "tags": "81-Custom",
     "address": "0x0000000000000000000000000000000000000004",
-    "name": "Account_4"
+    "name": "Account_4",
+    "symbol": "AC_4",
+    "source": "Testing",
+    "decimals": 4
   },
   {
     "tags": "55-Defi",
@@ -27,18 +36,20 @@ TIME ~ CLOCK - <INFO>  : named: true
     "source": "EtherScan.io"
   },
   {
-    "tags": "30-Contracts",
+    "tags": "50-Tokens:ERC20",
     "address": "0x0000000000001b84b1cb32787b0d64758d019317",
     "name": "HomeWork 🏠🛠️",
     "symbol": "HWK",
-    "source": "On chain"
+    "source": "On chain",
+    "decimals": 18
   },
   {
     "tags": "50-Tokens:ERC20",
     "address": "0x0000000000004946c0e9f43f4dee607b0ef1fa1c",
     "name": "1inch.exchange v2",
     "symbol": "CHI",
-    "source": "On chain"
+    "source": "On chain",
+    "decimals": 18
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -190,7 +201,8 @@ TIME ~ CLOCK - <INFO>  : named: true
     "tags": "55-Defi",
     "address": "0x001f751cdfee02e2f0714831be2f8384db0f71a2",
     "name": "GenericLevCompFarm",
-    "source": "On chain"
+    "source": "On chain",
+    "decimals": 18
   },
   {
     "tags": "31-Gitcoin Grants:Grant",
@@ -211,7 +223,7 @@ TIME ~ CLOCK - <INFO>  : named: true
     "source": "Gitcoin Website"
   },
   {
-    "tags": "30-Contracts",
+    "tags": "50-Tokens:ERC20",
     "address": "0x00319f722bd546182cb2c701ca254146d3f084fc",
     "name": "Democracy Earth",
     "symbol": "HOUR",
@@ -308,6 +320,12 @@ TIME ~ CLOCK - <INFO>  : named: true
     "source": "Gitcoin Website"
   },
   {
+    "tags": "35-TheCyber:Friends",
+    "address": "0x008f82676a606a6783716037c256a7df23746145",
+    "name": "Name 0x008f8267",
+    "source": "Solidity Code"
+  },
+  {
     "tags": "50-Tokens:ERC20",
     "address": "0x009e864923b49263c7f10d19b7f8ab7a9a5aad33",
     "name": "Knoxstertoken",
@@ -315,6 +333,12 @@ TIME ~ CLOCK - <INFO>  : named: true
     "source": "On chain",
     "decimals": 18,
     "description": "FortKnoxster offers end-to-end encrypted inbox, chat, decentralized storage, calling, video conferencing, voice messages and much more."
+  },
+  {
+    "tags": "35-TheCyber:Friends",
+    "address": "0x00aa972319ddf819140ffe2a991c49a1bff54bad",
+    "name": "Name 0x00aa9723",
+    "source": "Solidity Code"
   },
   {
     "tags": "31-Gitcoin Grants:Grant",
@@ -467,6 +491,12 @@ TIME ~ CLOCK - <INFO>  : named: true
     "description": "https://dex.verisafe.io/"
   },
   {
+    "tags": "30-Contracts",
+    "address": "0x015c7c7a7d65bbdb117c573007219107bd7486f9",
+    "name": "Infura Transactions Contract",
+    "source": "Infura.io"
+  },
+  {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x015f9e50dc7b2a41ab8cc0b2b58763287dd3dd81",
     "name": "Name 0x015f9e50",
@@ -532,7 +562,7 @@ TIME ~ CLOCK - <INFO>  : named: true
     "name": "Cream yETH",
     "symbol": "crYETH",
     "source": "On chain",
-    "decimals": 8
+    "decimals": 18
   },
   {
     "tags": "31-Gitcoin Grants:Friends",
@@ -604,6 +634,11 @@ TIME ~ CLOCK - <INFO>  : named: true
     "source": "On chain",
     "decimals": 8,
     "description": "Payments solutions for the travel industry."
+  },
+  {
+    "tags": "30-Contracts",
+    "address": "0x02a522d98ec2d2c3bbe91acc29ee7fd32ab880ab",
+    "name": "Mintable: Deployer"
   },
   {
     "tags": "34-Twitter:Friends",
@@ -761,6 +796,14 @@ TIME ~ CLOCK - <INFO>  : named: true
     "source": "0xTracker"
   },
   {
+    "tags": "50-Tokens:ERC20",
+    "address": "0x03ab458634910aad20ef5f1c8ee96f1d6ac54919",
+    "name": "Rai Reflex Index",
+    "symbol": "RAI",
+    "source": "On chain",
+    "decimals": 18
+  },
+  {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x03b45f0f660adcaa24fbacffd45e171464ec63a8",
     "name": "Name 0x03b45f0f",
@@ -793,6 +836,12 @@ TIME ~ CLOCK - <INFO>  : named: true
     "source": "On chain",
     "decimals": 18,
     "description": "Biotron is a fully transparent personal data analytics platform on blockchain."
+  },
+  {
+    "tags": "35-TheCyber:Friends",
+    "address": "0x03d47eca8d1d4c29a73318c3b1373614b3fe14bc",
+    "name": "Name 0x03d47eca",
+    "source": "Solidity Code"
   },
   {
     "tags": "31-Gitcoin Grants:Friends",
@@ -857,6 +906,12 @@ TIME ~ CLOCK - <INFO>  : named: true
     "source": "0xTracker"
   },
   {
+    "tags": "35-TheCyber:Friends",
+    "address": "0x047f57b4fe5f5f8f536f48d7ee464893b4411e92",
+    "name": "Name 0x047f57b4",
+    "source": "Solidity Code"
+  },
+  {
     "tags": "90-DevCon2:Individual",
     "address": "0x0492104bbf24a97deeb64c03377fb8d6d75a711c",
     "name": "Kung Chen-Yalie",
@@ -905,7 +960,7 @@ TIME ~ CLOCK - <INFO>  : named: true
     "source": "https://gitcoin.co/grants/104/walletsreview"
   },
   {
-    "tags": "30-Contracts",
+    "tags": "50-Tokens:ERC20",
     "address": "0x04d702ebd0a77503b154865fe3e8da97255b931b",
     "name": "Commons Stack Org Membership",
     "symbol": "CSOM",
@@ -1107,7 +1162,7 @@ TIME ~ CLOCK - <INFO>  : named: true
     "source": "https://gitcoin.co/grants/1979/vusd-stablecoin"
   },
   {
-    "tags": "30-Contracts",
+    "tags": "50-Tokens:ERC20",
     "address": "0x06012c8cf97bead5deae237070f9587f8e7a266d",
     "name": "CryptoKitties",
     "symbol": "CK",
@@ -1288,58 +1343,6 @@ TIME ~ CLOCK - <INFO>  : named: true
     "address": "0x0730fd7d15fa9a40a6c7b2bbb4b8ce9ee6e6d08b",
     "name": "Grant 0141 Metamoneymarket",
     "source": "https://gitcoin.co/grants/141/metamoneymarket"
-  },
-  {
-    "tags": "80-Malicious:DaoDrain",
-    "address": "0x0737a6b837f97f46ebade41b9bc3e1c509c85c53",
-    "name": "DAO Drain 059",
-    "source": "GethSource Ether Camp"
-  },
-  {
-    "tags": "31-Gitcoin Grants:Grant",
-    "address": "0x073ab1c0cad3677cde9bdb0cdeedc2085c029579",
-    "name": "Grant 0701 Virality: Your Social Accountability App",
-    "source": "https://gitcoin.co/grants/701/virality-your-social-accountability-app",
-    "description": "https://gitcoin.co/grants/268/simpleaswater"
-  },
-  {
-    "tags": "31-Gitcoin Grants:Friends",
-    "address": "0x073c841e832b7cc2e75d0fb1f8a98dca355bf485",
-    "name": "Name 0x073c841e",
-    "source": "Gitcoin Website"
-  },
-  {
-    "tags": "50-Tokens:ERC20",
-    "address": "0x0743392132d1a03a902c477e5a176f256ba3220c",
-    "name": "Coimatic 3.0",
-    "symbol": "CTIC3",
-    "source": "On chain",
-    "decimals": 18,
-    "description": "A global decentralized blockchain deal and discount marketplace."
-  },
-  {
-    "tags": "55-Defi",
-    "address": "0x075b1bb99792c9e1041ba13afef80c91a1e70fb3",
-    "name": "Curve.fi renBTC/wBTC/sBTC",
-    "symbol": "crvRenWSBTC",
-    "source": "On chain",
-    "decimals": 18
-  },
-  {
-    "tags": "50-Tokens:ERC20",
-    "address": "0x076641af1b8f06b7f8c92587156143c109002cbe",
-    "name": "SoPay",
-    "symbol": "SOP",
-    "source": "On chain",
-    "decimals": 18
-  },
-  {
-    "tags": "50-Tokens:ERC20",
-    "address": "0x0766e79a6fd74469733e8330b3b461c0320ff059",
-    "name": "EXN",
-    "symbol": "EXN",
-    "source": "On chain",
-    "decimals": 18
   }], "types": [
 { "type": "CAccountName", "fields": [{ "name": "tags", "type": "text" }, { "name": "address", "type": "address" }, { "name": "name", "type": "text" }, { "name": "symbol", "type": "text" }, { "name": "source", "type": "text" }, { "name": "decimals", "type": "unumber" }, { "name": "description", "type": "text" }] }
 ], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef", "namePath": "--" } }

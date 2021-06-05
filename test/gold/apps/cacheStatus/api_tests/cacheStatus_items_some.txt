@@ -3,9 +3,10 @@
     {
       "client_version": "Client version",
       "client_ids": "chainId: 1 networkId: 1",
-      "trueblocks_version": "GHC-TrueBlocks//0.8.4-alpha--git-hash---git-ts-",
+      "trueblocks_version": "GHC-TrueBlocks//0.9.4-alpha--git-hash---git-ts-",
       "rpc_provider": "--providers--",
       "balance_provider": "--providers--",
+      "config_path": "--paths--",
       "cache_path": "--paths--",
       "index_path": "--paths--",
       "host": "--hostname-- (--username--)",
@@ -16,39 +17,10 @@
       "is_archive": true,
       "is_tracing": true,
       "has_eskey": true,
-      "has_pinkey": true,
+      "has_pinkey": false,
       "caches": [
         {
-          "items": [
-            {
-              "type": "CIndexCacheItem",
-              "nAddresses": 99600,
-              "nAppearances": 2000000,
-              "firstAppearance": 2929550,
-              "latestAppearance": 3033299,
-              "firstTs": 1483473072,
-              "latestTs": 1484950531,
-              "filename": "/--index-path--/002929550-003033299.bin",
-              "indexSizeBytes": 18788844,
-              "index_hash": "",
-              "bloomSizeBytes": 262156,
-              "bloom_hash": ""
-            },
-            {
-              "type": "CIndexCacheItem",
-              "nAddresses": 88048,
-              "nAppearances": 2000207,
-              "firstAppearance": 3033300,
-              "latestAppearance": 3137546,
-              "firstTs": 1484950533,
-              "latestTs": 1486442743,
-              "filename": "/--index-path--/003033300-003137546.bin",
-              "indexSizeBytes": 18467044,
-              "index_hash": "",
-              "bloomSizeBytes": 262156,
-              "bloom_hash": ""
-            }
-          ],
+          "items": [],
           "type": "CIndexCache",
           "path": "indexPath",
           "nFiles": 0,
@@ -197,59 +169,6 @@
         {
           "name": "is_valid",
           "type": "bool"
-        }
-      ]
-    },
-    {
-      "type": "CIndexCacheItem",
-      "fields": [
-        {
-          "name": "type",
-          "type": "text"
-        },
-        {
-          "name": "nAddresses",
-          "type": "unumber"
-        },
-        {
-          "name": "nAppearances",
-          "type": "unumber"
-        },
-        {
-          "name": "firstAppearance",
-          "type": "blocknum"
-        },
-        {
-          "name": "latestAppearance",
-          "type": "blocknum"
-        },
-        {
-          "name": "firstTs",
-          "type": "timestamp"
-        },
-        {
-          "name": "latestTs",
-          "type": "timestamp"
-        },
-        {
-          "name": "filename",
-          "type": "text"
-        },
-        {
-          "name": "indexSizeBytes",
-          "type": "unumber"
-        },
-        {
-          "name": "index_hash",
-          "type": "ipfshash"
-        },
-        {
-          "name": "bloomSizeBytes",
-          "type": "unumber"
-        },
-        {
-          "name": "bloom_hash",
-          "type": "ipfshash"
         }
       ]
     },

@@ -1,25 +1,25 @@
 chifra argc: 3 [1:abis] [2:--help] 
 chifra abis --help 
-TIME ~ CLOCK - <INFO>  : mode: abis
 chifra abis argc: 2 [1:--help] 
 chifra abis --help 
 PROG_NAME = [chifra abis]
 
-  Usage:    chifra abis [-c|-k|-f|-v|-h] <address> [address...]  
+  Usage:    chifra abis [-k|-s|-f|-v|-h] <address> [address...]  
   Purpose:  Fetches the ABI for a smart contract.
 
   Where:  
 	addrs                 list of one or more smart contracts whose ABI to grab from EtherScan (required)
-	-c  (--canonical)     convert all types to their canonical represenation and remove all spaces from display
 	-k  (--known)         load common 'known' ABIs from cache
+	-s  (--sol <str>)     file name of .sol file from which to create a new known abi (without .sol)
 	-f  (--find <str>)    try to search for a function declaration given a four byte code
 
 	#### Hidden options
-	-s  (--sol <str>)     file name of .sol file from which to create a new known abi (without .sol)
+	-s  (--source)        show the source of the ABI information
+	-c  (--classes)       generate classDefinitions folder and class definitions
 	#### Hidden options
 
 	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
-	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
+	-v  (--verbose)       set verbose level (optional level defaults to 1)
 	-h  (--help)          display this help screen
 
   Powered by TrueBlocks

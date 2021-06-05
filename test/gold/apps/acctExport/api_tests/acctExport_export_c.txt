@@ -30,8 +30,6 @@
     "ripe": "0xdeadbeef",
     "staging": "0xdeadbeef",
     "finalized": "0xdeadbeef",
-    "client": "0xdeadbeef",
-    "start": "0xdeadbeef",
-    "end": "0xdeadbeef"
+    "client": "0xdeadbeef"
   }
 }

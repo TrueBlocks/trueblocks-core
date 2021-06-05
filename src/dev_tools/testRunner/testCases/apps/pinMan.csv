@@ -1,26 +1,18 @@
-enabled ,mode ,speed ,route ,path/tool      ,filename        ,post ,options                        ,opt_cmd ,has_env
+enabled ,mode ,speed ,route ,path/tool   ,filename        ,post ,options                             ,opt_cmd ,has_env
 on      ,cmd  ,fast  ,pins  ,apps/pinMan ,README          ,n    ,@th
 on      ,cmd  ,fast  ,pins  ,apps/pinMan ,help            ,n    ,@h
 on      ,cmd  ,fast  ,pins  ,apps/pinMan ,help_long       ,n    ,help
 on      ,both ,fast  ,pins  ,apps/pinMan ,no_params       ,y    ,
 on      ,both ,fast  ,pins  ,apps/pinMan ,invalid_param_1 ,y    ,junk
-on      ,both ,fast  ,pins  ,apps/pinMan ,license         ,y    ,license
-on      ,both ,fast  ,pins  ,apps/pinMan ,fmt_default     ,n    ,license
-on      ,both ,slow  ,pins  ,apps/pinMan ,fmt_txt         ,n    ,license & fmt = txt
-on      ,both ,fast  ,pins  ,apps/pinMan ,fmt_csv         ,n    ,license & fmt = csv
-on      ,both ,fast  ,pins  ,apps/pinMan ,fmt_json        ,y    ,license & fmt = json
-on      ,both ,fast  ,pins  ,apps/pinMan ,fmt_api         ,y    ,license & fmt = api
-on      ,both ,fast  ,pins  ,apps/pinMan ,fmt_junk        ,y    ,license & fmt = junk
-on      ,both ,fast  ,pins  ,apps/pinMan ,to_file         ,y    ,license & fmt = json & to_file
 
-on      ,both ,fast  ,pins  ,apps/pinMan ,local           ,y    ,mode = local
-on      ,both ,fast  ,pins  ,apps/pinMan ,local_as_hash   ,y    ,mode = local & hash
-on      ,both ,fast  ,pins  ,apps/pinMan ,remote          ,y    ,mode = remote
-on      ,both ,fast  ,pins  ,apps/pinMan ,remote_as_hash  ,y    ,mode = remote & hash
-on      ,both ,fast  ,pins  ,apps/pinMan ,onchain         ,y    ,mode = onchain
-on      ,both ,fast  ,pins  ,apps/pinMan ,onchain_as_hash ,y    ,mode = onchain & hash
+on      ,both ,fast  ,pins  ,apps/pinMan ,list_local      ,y    ,list
+on      ,both ,fast  ,pins  ,apps/pinMan ,freshen_mocked  ,y    ,freshen
+on      ,both ,fast  ,pins  ,apps/pinMan ,compare_mocked  ,y    ,compare
 
-on      ,both ,fast  ,pins  ,apps/pinMan ,pin_local       ,y    ,mode = local & pin empty_file
-on      ,both ,fast  ,pins  ,apps/pinMan ,unpin_local     ,y    ,mode = local & unpin empty_file
-on      ,both ,fast  ,pins  ,apps/pinMan ,pin_remote      ,y    ,mode = remote & pin empty_file
-on      ,both ,fast  ,pins  ,apps/pinMan ,unpin_remote    ,y    ,mode = remote & unpin empty_file
+on      ,both ,fast  ,pins  ,apps/pinMan ,fmt_default     ,y    ,list
+on      ,both ,slow  ,pins  ,apps/pinMan ,fmt_txt         ,n    ,list & fmt = txt
+on      ,both ,fast  ,pins  ,apps/pinMan ,fmt_csv         ,n    ,list & fmt = csv
+on      ,both ,fast  ,pins  ,apps/pinMan ,fmt_json        ,y    ,list & fmt = json
+on      ,both ,fast  ,pins  ,apps/pinMan ,fmt_api         ,y    ,list & fmt = api
+on      ,both ,fast  ,pins  ,apps/pinMan ,fmt_junk        ,y    ,list & fmt = junk
+on      ,both ,fast  ,pins  ,apps/pinMan ,to_file         ,y    ,list & fmt = json & to_file

@@ -1,11 +1,23 @@
 getState argc: 4 [1:--call] [2:0xbb2b8038a1640196fbe3e38816f3e67cba72d940!0x06fdde03] [3:10092000] 
 getState --call 0xbb2b8038a1640196fbe3e38816f3e67cba72d940!0x06fdde03 10092000 
-TIME ~ CLOCK - <INFO>  : call: 0xbb2b8038a1640196fbe3e38816f3e67cba72d940!0x06fdde03
---1 : 3 : 0
---  0: _name (string)
---  0: 0000000000000000000000000000000000000000000000000000000000000020 <---
---  1: 000000000000000000000000000000000000000000000000000000000000000a
---  2: 556e697377617020563200000000000000000000000000000000000000000000
+
+level: 1
+readOffset: 0
+objectStart: 0
+params.size: 1
+  0: string _name = <>
+dataArray.size: 3
+  0 (0x000) 0000000000000000...00000000000000000000000000000020 <=o <-r
+  1 (0x020) 0000000000000000...0000000000000000000000000000000a
+  2 (0x040) 556e697377617020...00000000000000000000000000000000
+
+==================================================
+params.size: 1
+  0: string _name = Uniswap V2
+params.size: 1
+  0: string _name = Uniswap V2
+==================================================
+
 { "data": [
 {
   "blockNumber": 10092000,
@@ -14,12 +26,9 @@ TIME ~ CLOCK - <INFO>  : call: 0xbb2b8038a1640196fbe3e38816f3e67cba72d940!0x06fd
     "name": "name",
     "signature": "name()",
     "encoding": "0x06fdde03",
-    "outputs": [
-      {
-        "name": "_name",
-        "value": "Uniswap V2"
-      }
-    ]
+    "outputs": {
+      "_name": "Uniswap V2"
+    }
   },
   "balance": 0,
   "address": "0xbb2b8038a1640196fbe3e38816f3e67cba72d940"

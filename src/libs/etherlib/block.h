@@ -1,7 +1,7 @@
 #pragma once
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -12,8 +12,8 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 /*
- * This file was generated with makeClass. Edit only those parts of the code inside
- * of 'EXISTING_CODE' tags.
+ * Parts of this file were generated with makeClass --run. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
  */
 #include "etherlib.h"
 #include "transaction.h"
@@ -22,6 +22,7 @@ namespace qblocks {
 
 // EXISTING_CODE
 typedef bool (*TRANSFUNC)(const CTransaction* trans, void* data);
+typedef bool (*TRANSVISITFUNC)(CTransaction& trans, void* data);
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
@@ -38,6 +39,7 @@ class CBlock : public CBaseNode {
     bool finalized;
     timestamp_t timestamp;
     CTransactionArray transactions;
+    CStringArray tx_hashes;
     string_q name;
     bool light;
 
@@ -50,8 +52,12 @@ class CBlock : public CBaseNode {
     DECLARE_NODE(CBlock);
 
     const CBaseNode* getObjectAt(const string_q& fieldName, size_t index) const override;
+    const string_q getStringAt(const string_q& fieldName, size_t i) const override;
 
     // EXISTING_CODE
+    bool forEveryTransaction(TRANSVISITFUNC func, void* data) const;
+    bool forEveryLog(LOGVISITFUNC func, void* data) const;
+    bool forEveryTrace(TRACEVISITFUNC func, void* data) const;
     bool forEveryAppearanceInBlock(APPEARANCEFUNC func, TRANSFUNC filt = NULL, void* data = NULL);
     bool forEveryUniqueAppearanceInBlock(APPEARANCEFUNC func, TRANSFUNC filt = NULL, void* data = NULL);
     bool forEveryUniqueAppearanceInBlockPerTx(APPEARANCEFUNC func, TRANSFUNC filt = NULL, void* data = NULL);
@@ -118,6 +124,7 @@ inline void CBlock::initialize(void) {
     finalized = false;
     timestamp = 0;
     transactions.clear();
+    tx_hashes.clear();
     name = "";
     light = false;
 
@@ -141,6 +148,7 @@ inline void CBlock::duplicate(const CBlock& bl) {
     finalized = bl.finalized;
     timestamp = bl.timestamp;
     transactions = bl.transactions;
+    tx_hashes = bl.tx_hashes;
     name = bl.name;
     light = bl.light;
 

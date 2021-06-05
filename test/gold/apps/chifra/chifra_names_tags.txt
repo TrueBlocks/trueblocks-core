@@ -1,12 +1,9 @@
 chifra argc: 3 [1:names] [2:--tags] 
 chifra names --tags 
-TIME ~ CLOCK - <INFO>  : mode: names
 chifra names argc: 2 [1:--tags] 
 chifra names --tags 
 PROG_NAME = [chifra names]
-TIME ~ CLOCK - <INFO>  : tags: true
 tags
-
 30-Contracts
 30-Contracts:Giveth
 30-Contracts:Kyber Network
@@ -22,6 +19,7 @@ tags
 30-Contracts:Set Protocol Wrapers
 30-Contracts:Set Protocol Wrappers
 30-Contracts:Set Prototcol
+30-Contracts:TheGraph
 30-Contracts:dAppNode
 31-Gitcoin Grants:Admin
 31-Gitcoin Grants:Contracts
@@ -31,6 +29,7 @@ tags
 34-ENS
 34-Twitter:Friends
 35-Pool Together
+35-TheCyber:Friends
 36-Balancer
 36-Chainlink
 36-Compound

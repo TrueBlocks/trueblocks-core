@@ -1,12 +1,12 @@
 #pragma once
 /*-------------------------------------------------------------------------
  * This source code is confidential proprietary information which is
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  * All Rights Reserved
  *------------------------------------------------------------------------*/
 /*
- * Parts of this file were generated with makeClass. Edit only those parts of the code
- * outside of the BEG_CODE/END_CODE sections
+ * Parts of this file were generated with makeClass --options. Edit only those parts of
+ * the code outside of the BEG_CODE/END_CODE sections
  */
 #include "pinlib.h"
 
@@ -17,16 +17,14 @@
 class COptions : public CAbiOptions {
   public:
     // BEG_CODE_DECLARE
-    string_q mode;
-    bool hash;
-    string_q pin;
-    string_q unpin;
     bool init;
-    bool license;
+    bool init_all;
+    double sleep;
+    bool remote;
+    bool pin_locally;
     // END_CODE_DECLARE
 
-    CPinApiLicense lic;
-    CPinnedChunkArray pList;
+    CPinnedChunkArray pins;
 
     COptions(void);
     ~COptions(void);
@@ -34,12 +32,6 @@ class COptions : public CAbiOptions {
     bool parseArguments(string_q& command) override;
     void Init(void) override;
 
-    hash_t getCurrentManifest(void);
-    bool freshenBlooms(bool download, const string_q& currManifest);
-    void handle_unpin(void);
-    void handle_pin(void);
+    bool handle_init(void);
+    bool handle_list(void);
 };
-
-//-------------------------------------------------------------------------
-#define unchainedIndexAddr "0xcfd7f3b24f3551741f922fd8c4381aa4e00fc8fd"
-#define manifestHashEncoding "0x337f3f32"

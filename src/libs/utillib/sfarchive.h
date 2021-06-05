@@ -1,7 +1,7 @@
 #pragma once
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -74,6 +74,10 @@ class CArchive : public CSharedResource {
     CArchive& operator<<(char c);
     CArchive& operator<<(int d);
     CArchive& operator<<(unsigned int d);
+    CArchive& operator<<(int8_t dw);
+    CArchive& operator<<(uint8_t dw);
+    CArchive& operator<<(int16_t dw);
+    CArchive& operator<<(uint16_t dw);
     CArchive& operator<<(int64_t dw);
     CArchive& operator<<(uint64_t dw);
     CArchive& operator<<(float f);
@@ -82,11 +86,16 @@ class CArchive : public CSharedResource {
     CArchive& operator<<(const biguint_t& bn);
     CArchive& operator<<(const bigint_t& bn);
     CArchive& operator<<(const char* str);
+    CArchive& operator<<(const time_q& date);
 
     CArchive& operator>>(bool& b);
     CArchive& operator>>(char& c);
     CArchive& operator>>(int& d);
     CArchive& operator>>(unsigned int& d);
+    CArchive& operator>>(int8_t& dw);
+    CArchive& operator>>(uint8_t& dw);
+    CArchive& operator>>(int16_t& dw);
+    CArchive& operator>>(uint16_t& dw);
     CArchive& operator>>(int64_t& dw);
     CArchive& operator>>(uint64_t& dw);
     CArchive& operator>>(float& f);
@@ -94,6 +103,7 @@ class CArchive : public CSharedResource {
     CArchive& operator>>(string_q& str);
     CArchive& operator>>(biguint_t& bn);
     CArchive& operator>>(bigint_t& bn);
+    CArchive& operator>>(time_q& date);
 };
 
 extern CArchive& operator<<(CArchive& archive, const CStringArray& array);

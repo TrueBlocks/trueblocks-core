@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -16,7 +16,7 @@
 int main(int argc, const char* argv[]) {
     etherlib_init(quickQuitHandler);
     forEveryFileInFolder(getCachePath("traces/"), visitFile, NULL);
-    forEveryBlockOnDisc(visitBlock, NULL, 0, getLatestBlock_cache_final());
+    forEveryBlock(visitBlock, NULL, 0, getLatestBlock_cache_final());
     etherlib_cleanup();
     return 1;
 }

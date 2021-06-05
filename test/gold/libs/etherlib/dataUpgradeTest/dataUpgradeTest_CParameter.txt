@@ -76,7 +76,7 @@ is_builtin          	1018	0	12582932	T_BOOL TS_NUMERAL TS_OMITEMPTY
 is_minimal          	1019	0	12582932	T_BOOL TS_NUMERAL TS_OMITEMPTY
 is_enabled          	1020	0	12582932	T_BOOL TS_NUMERAL TS_OMITEMPTY
 {
-  "schema": 8004,
+  "schema": 9004,
   "deleted": false,
   "showing": true,
   "cname": "Parameter",

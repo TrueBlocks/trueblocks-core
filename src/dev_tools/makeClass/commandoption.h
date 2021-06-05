@@ -1,7 +1,7 @@
 #pragma once
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -12,8 +12,8 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 /*
- * This file was generated with makeClass. Edit only those parts of the code inside
- * of 'EXISTING_CODE' tags.
+ * Parts of this file were generated with makeClass --run. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
  */
 #include "etherlib.h"
 
@@ -27,7 +27,7 @@ class CCommandOption : public CBaseNode {
   public:
     string_q num;
     string_q group;
-    string_q tags;
+    string_q api_group;
     string_q api_route;
     string_q tool;
     string_q command;
@@ -35,10 +35,10 @@ class CCommandOption : public CBaseNode {
     string_q def_val;
     bool is_required;
     bool is_customizable;
-    bool core_visible;
-    bool docs_visible;
+    bool is_visible;
+    bool is_visible_docs;
     string_q generate;
-    string_q option_kind;
+    string_q option_type;
     string_q data_type;
     string_q real_type;
     string_q description;
@@ -53,6 +53,9 @@ class CCommandOption : public CBaseNode {
 
     // EXISTING_CODE
     bool isEnumList;
+    bool isStringList;
+    bool isAddressList;
+    bool isTopicList;
     bool isList;
     bool isEnum;
     bool isBool;
@@ -61,12 +64,25 @@ class CCommandOption : public CBaseNode {
     bool isUint64;
     bool isDouble;
     bool isNote;
-    bool isError;
+    bool isErr;
+    void* params{nullptr};
     explicit CCommandOption(const string_q& line);
     void verifyOptions(CStringArray& warnings);
     void verifyHotkey(CStringArray& warnings);
     string_q debugCode(void) const;
     string_q swagger_descr;
+    string_q route_list;
+    string_q toChifraCmd(void) const;
+    string_q toChifraHelp(void) const;
+    string_q toPairMap(void) const;
+    string_q toApiTag(void) const;
+    string_q toHtmlTag(void) const;
+    string_q toGoCall(void) const;
+    string_q toGoRoute(void) const;
+    string_q toApiPath(void) const;
+    string_q toHtmlPath(void) const;
+    bool isChifraRoute(void) const;
+    string_q getType(bool quoted) const;
     // EXISTING_CODE
     bool operator==(const CCommandOption& it) const;
     bool operator!=(const CCommandOption& it) const {
@@ -121,7 +137,7 @@ inline void CCommandOption::initialize(void) {
 
     num = "";
     group = "";
-    tags = "";
+    api_group = "";
     api_route = "";
     tool = "";
     command = "";
@@ -129,16 +145,19 @@ inline void CCommandOption::initialize(void) {
     def_val = "";
     is_required = false;
     is_customizable = false;
-    core_visible = false;
-    docs_visible = false;
+    is_visible = false;
+    is_visible_docs = false;
     generate = "";
-    option_kind = "";
+    option_type = "";
     data_type = "";
     real_type = "";
     description = "";
 
     // EXISTING_CODE
     isEnumList = false;
+    isStringList = false;
+    isAddressList = false;
+    isTopicList = false;
     isList = false;
     isEnum = false;
     isBool = false;
@@ -147,8 +166,9 @@ inline void CCommandOption::initialize(void) {
     isUint64 = false;
     isDouble = false;
     isNote = false;
-    isError = false;
+    isErr = false;
     swagger_descr = "";
+    route_list = "";
     // EXISTING_CODE
 }
 
@@ -159,7 +179,7 @@ inline void CCommandOption::duplicate(const CCommandOption& co) {
 
     num = co.num;
     group = co.group;
-    tags = co.tags;
+    api_group = co.api_group;
     api_route = co.api_route;
     tool = co.tool;
     command = co.command;
@@ -167,10 +187,10 @@ inline void CCommandOption::duplicate(const CCommandOption& co) {
     def_val = co.def_val;
     is_required = co.is_required;
     is_customizable = co.is_customizable;
-    core_visible = co.core_visible;
-    docs_visible = co.docs_visible;
+    is_visible = co.is_visible;
+    is_visible_docs = co.is_visible_docs;
     generate = co.generate;
-    option_kind = co.option_kind;
+    option_type = co.option_type;
     data_type = co.data_type;
     real_type = co.real_type;
     description = co.description;
@@ -178,6 +198,9 @@ inline void CCommandOption::duplicate(const CCommandOption& co) {
     // EXISTING_CODE
     isList = co.isList;
     isEnumList = co.isEnumList;
+    isStringList = co.isStringList;
+    isAddressList = co.isAddressList;
+    isTopicList = co.isTopicList;
     isEnum = co.isEnum;
     isBool = co.isBool;
     isBlockNum = co.isBlockNum;
@@ -185,8 +208,9 @@ inline void CCommandOption::duplicate(const CCommandOption& co) {
     isUint64 = co.isUint64;
     isDouble = co.isDouble;
     isNote = co.isNote;
-    isError = co.isError;
+    isErr = co.isErr;
     swagger_descr = co.swagger_descr;
+    route_list = co.route_list;
     // EXISTING_CODE
 }
 

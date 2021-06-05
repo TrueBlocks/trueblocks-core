@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -11,8 +11,8 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 /*
- * This file was generated with makeClass. Edit only those parts of the code inside
- * of 'EXISTING_CODE' tags.
+ * Parts of this file were generated with makeClass --run. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
  */
 #include "commandoption.h"
 
@@ -74,6 +74,9 @@ string_q CCommandOption::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'a':
+            if (fieldName % "api_group") {
+                return api_group;
+            }
             if (fieldName % "api_route") {
                 return api_route;
             }
@@ -82,16 +85,10 @@ string_q CCommandOption::getValueByName(const string_q& fieldName) const {
             if (fieldName % "command") {
                 return command;
             }
-            if (fieldName % "core_visible") {
-                return bool_2_Str(core_visible);
-            }
             break;
         case 'd':
             if (fieldName % "def_val") {
                 return def_val;
-            }
-            if (fieldName % "docs_visible") {
-                return bool_2_Str(docs_visible);
             }
             if (fieldName % "data_type") {
                 return data_type;
@@ -120,6 +117,12 @@ string_q CCommandOption::getValueByName(const string_q& fieldName) const {
             if (fieldName % "is_customizable") {
                 return bool_2_Str(is_customizable);
             }
+            if (fieldName % "is_visible") {
+                return bool_2_Str(is_visible);
+            }
+            if (fieldName % "is_visible_docs") {
+                return bool_2_Str(is_visible_docs);
+            }
             break;
         case 'n':
             if (fieldName % "num") {
@@ -127,8 +130,8 @@ string_q CCommandOption::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 'o':
-            if (fieldName % "option_kind") {
-                return option_kind;
+            if (fieldName % "option_type") {
+                return option_type;
             }
             break;
         case 'r':
@@ -137,9 +140,6 @@ string_q CCommandOption::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 't':
-            if (fieldName % "tags") {
-                return tags;
-            }
             if (fieldName % "tool") {
                 return tool;
             }
@@ -161,10 +161,16 @@ bool CCommandOption::setValueByName(const string_q& fieldNameIn, const string_q&
     string_q fieldValue = fieldValueIn;
 
     // EXISTING_CODE
+    if (fieldName % "description")
+        fieldValue = substitute(fieldValue, "&#44;", ",");
     // EXISTING_CODE
 
     switch (tolower(fieldName[0])) {
         case 'a':
+            if (fieldName % "api_group") {
+                api_group = fieldValue;
+                return true;
+            }
             if (fieldName % "api_route") {
                 api_route = fieldValue;
                 return true;
@@ -175,18 +181,10 @@ bool CCommandOption::setValueByName(const string_q& fieldNameIn, const string_q&
                 command = fieldValue;
                 return true;
             }
-            if (fieldName % "core_visible") {
-                core_visible = str_2_Bool(fieldValue);
-                return true;
-            }
             break;
         case 'd':
             if (fieldName % "def_val") {
                 def_val = fieldValue;
-                return true;
-            }
-            if (fieldName % "docs_visible") {
-                docs_visible = str_2_Bool(fieldValue);
                 return true;
             }
             if (fieldName % "data_type") {
@@ -223,6 +221,14 @@ bool CCommandOption::setValueByName(const string_q& fieldNameIn, const string_q&
                 is_customizable = str_2_Bool(fieldValue);
                 return true;
             }
+            if (fieldName % "is_visible") {
+                is_visible = str_2_Bool(fieldValue);
+                return true;
+            }
+            if (fieldName % "is_visible_docs") {
+                is_visible_docs = str_2_Bool(fieldValue);
+                return true;
+            }
             break;
         case 'n':
             if (fieldName % "num") {
@@ -231,8 +237,8 @@ bool CCommandOption::setValueByName(const string_q& fieldNameIn, const string_q&
             }
             break;
         case 'o':
-            if (fieldName % "option_kind") {
-                option_kind = fieldValue;
+            if (fieldName % "option_type") {
+                option_type = fieldValue;
                 return true;
             }
             break;
@@ -243,10 +249,6 @@ bool CCommandOption::setValueByName(const string_q& fieldNameIn, const string_q&
             }
             break;
         case 't':
-            if (fieldName % "tags") {
-                tags = fieldValue;
-                return true;
-            }
             if (fieldName % "tool") {
                 tool = fieldValue;
                 return true;
@@ -279,7 +281,7 @@ bool CCommandOption::Serialize(CArchive& archive) {
     // EXISTING_CODE
     archive >> num;
     archive >> group;
-    archive >> tags;
+    archive >> api_group;
     archive >> api_route;
     archive >> tool;
     archive >> command;
@@ -287,10 +289,10 @@ bool CCommandOption::Serialize(CArchive& archive) {
     archive >> def_val;
     archive >> is_required;
     archive >> is_customizable;
-    archive >> core_visible;
-    archive >> docs_visible;
+    archive >> is_visible;
+    archive >> is_visible_docs;
     archive >> generate;
-    archive >> option_kind;
+    archive >> option_type;
     archive >> data_type;
     archive >> real_type;
     archive >> description;
@@ -307,7 +309,7 @@ bool CCommandOption::SerializeC(CArchive& archive) const {
     // EXISTING_CODE
     archive << num;
     archive << group;
-    archive << tags;
+    archive << api_group;
     archive << api_route;
     archive << tool;
     archive << command;
@@ -315,10 +317,10 @@ bool CCommandOption::SerializeC(CArchive& archive) const {
     archive << def_val;
     archive << is_required;
     archive << is_customizable;
-    archive << core_visible;
-    archive << docs_visible;
+    archive << is_visible;
+    archive << is_visible_docs;
     archive << generate;
-    archive << option_kind;
+    archive << option_type;
     archive << data_type;
     archive << real_type;
     archive << description;
@@ -360,7 +362,7 @@ void CCommandOption::registerClass(void) {
     ADD_FIELD(CCommandOption, "cname", T_TEXT, ++fieldNum);
     ADD_FIELD(CCommandOption, "num", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CCommandOption, "group", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CCommandOption, "tags", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CCommandOption, "api_group", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CCommandOption, "api_route", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CCommandOption, "tool", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CCommandOption, "command", T_TEXT | TS_OMITEMPTY, ++fieldNum);
@@ -368,10 +370,10 @@ void CCommandOption::registerClass(void) {
     ADD_FIELD(CCommandOption, "def_val", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CCommandOption, "is_required", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CCommandOption, "is_customizable", T_BOOL | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CCommandOption, "core_visible", T_BOOL | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CCommandOption, "docs_visible", T_BOOL | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CCommandOption, "is_visible", T_BOOL | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CCommandOption, "is_visible_docs", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CCommandOption, "generate", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CCommandOption, "option_kind", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CCommandOption, "option_type", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CCommandOption, "data_type", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CCommandOption, "real_type", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CCommandOption, "description", T_TEXT | TS_OMITEMPTY, ++fieldNum);
@@ -396,7 +398,7 @@ string_q nextCommandoptionChunk_custom(const string_q& fieldIn, const void* data
             // EXISTING_CODE
             case 'd':
                 if (fieldIn % "datatype") {
-                    if (com->option_kind == "switch" || com->option_kind == "toggle")
+                    if (com->option_type == "switch" || com->option_type == "toggle")
                         return "";
                     return (startsWith(com->data_type, "opt_") ? "\"+" + com->data_type + "+\"" : com->data_type);
                 }
@@ -407,22 +409,22 @@ string_q nextCommandoptionChunk_custom(const string_q& fieldIn, const void* data
                     if (com->is_required)
                         ret += ("|OPT_REQUIRED");
 
-                    if (!(com->core_visible))
+                    if (!(com->is_visible))
                         ret += ("|OPT_HIDDEN");
 
-                    if (com->option_kind == "switch")
+                    if (com->option_type == "switch")
                         ret += ("|OPT_SWITCH");
-                    else if (com->option_kind == "toggle")
+                    else if (com->option_type == "toggle")
                         ret += ("|OPT_TOGGLE");
-                    else if (com->option_kind == "flag")
+                    else if (com->option_type == "flag")
                         ret += ("|OPT_FLAG");
-                    else if (startsWith(com->option_kind, "deprecated"))
+                    else if (startsWith(com->option_type, "deprecated"))
                         ret += ("|OPT_DEPRECATED");
-                    else if (com->option_kind == "positional")
+                    else if (com->option_type == "positional")
                         ret += ("|OPT_POSITIONAL");
-                    else if (com->option_kind == "note")
+                    else if (com->option_type == "note")
                         ret = com->description;
-                    else if (com->option_kind == "error")
+                    else if (com->option_type == "error")
                         ret = com->description;
                     else
                         ret += ("|OPT_DESCRIPTION");
@@ -478,7 +480,7 @@ CCommandOption::CCommandOption(const string_q& line) {
     if (parts.size() > 1)
         group = parts[1];
     if (parts.size() > 2)
-        tags = parts[2];
+        api_group = parts[2];
     if (parts.size() > 3)
         api_route = parts[3];
     if (parts.size() > 4)
@@ -494,13 +496,13 @@ CCommandOption::CCommandOption(const string_q& line) {
     if (parts.size() > 9)
         is_customizable = str_2_Bool(parts[9]);
     if (parts.size() > 10)
-        core_visible = str_2_Bool(parts[10]);
+        is_visible = str_2_Bool(parts[10]);
     if (parts.size() > 11)
-        docs_visible = str_2_Bool(parts[11]);
+        is_visible_docs = str_2_Bool(parts[11]);
     if (parts.size() > 12)
         generate = parts[12];
     if (parts.size() > 13)
-        option_kind = parts[13];
+        option_type = parts[13];
     if (parts.size() > 14)
         data_type = parts[14];
     if (parts.size() > 15)
@@ -510,7 +512,7 @@ CCommandOption::CCommandOption(const string_q& line) {
         def_val = "\"" + def_val + "\"";
 
     description = substitute(description, "[{DEF}]",
-                             (option_kind == "toggle" ? (def_val == "true" ? "'on'" : "'off'") : def_val));
+                             (option_type == "toggle" ? (def_val == "true" ? "'on'" : "'off'") : def_val));
     if (def_val.empty() && !generate.empty()) {
         if (data_type == "<boolean>") {
             def_val = "false";
@@ -520,25 +522,28 @@ CCommandOption::CCommandOption(const string_q& line) {
             def_val = "NOPOS";
         }
     }
-    if (option_kind == "description") {
+    if (option_type == "description") {
         swagger_descr = trim(substitute(description, "|", "\n        "));
-    } else if (option_kind != "note" && option_kind != "error") {
+    } else if (option_type != "note" && option_type != "error") {
         swagger_descr = trim(substitute(description, "|", "\n          "));
     }
-    if (option_kind != "note" && option_kind != "error") {
+    if (option_type != "note" && option_type != "error") {
         description = trim(substitute(description, "|", " "));
     }
 
     isList = contains(data_type, "list<");
     isEnumList = contains(data_type, "list<enum");
+    isStringList = contains(data_type, "list<string");
+    isAddressList = contains(data_type, "list<addr");
+    isTopicList = contains(data_type, "list<topic");
     isEnum = contains(data_type, "enum") && !isEnumList;
     isBool = contains(data_type, "boolean");
     isBlockNum = contains(data_type, "blknum");
     isUint32 = contains(data_type, "uint32");
     isUint64 = contains(data_type, "uint64");
     isDouble = contains(data_type, "double");
-    isNote = option_kind == "note";
-    isError = option_kind == "error";
+    isNote = option_type == "note";
+    isErr = option_type == "error";
 
     real_type = substituteAny(substitute(data_type, "boolean", "bool"), "<>", "");
     if (contains(data_type, "enum"))
@@ -557,13 +562,13 @@ void CCommandOption::verifyOptions(CStringArray& warnings) {
     };
     bool valid_kind = false;
     for (auto kind : validKinds) {
-        if (kind == option_kind) {
+        if (kind == option_type) {
             valid_kind = true;
         }
     }
     ostringstream warnstream;
     if (!valid_kind)
-        warnstream << "Skipping option kind '" << option_kind << "' for option '" << command << "'|";
+        warnstream << "Skipping option kind '" << option_type << "' for option '" << command << "'|";
 
     // Check valid data types
     CStringArray validTypes = {
@@ -583,7 +588,7 @@ void CCommandOption::verifyOptions(CStringArray& warnings) {
         if (startsWith(data_type, "list"))
             valid_type = true;
     }
-    if (!valid_type && (option_kind == "description" || option_kind == "note" || option_kind == "error") &&
+    if (!valid_type && (option_type == "description" || option_type == "note" || option_type == "error") &&
         data_type.empty())
         valid_type = true;
     if (!valid_type && startsWith(data_type, "opt_"))
@@ -591,13 +596,13 @@ void CCommandOption::verifyOptions(CStringArray& warnings) {
 
     if (!valid_type)
         warnstream << "Unknown type '" << data_type << "' for option '" << command << "'|";
-    if (option_kind == "description" && !endsWith(description, ".") && !endsWith(description, ":"))
+    if (option_type == "description" && !endsWith(description, ".") && !endsWith(description, ":"))
         warnstream << "Description '" << description << "' should end with a period or colon.|";
-    if (option_kind == "note" && !endsWith(description, ".") && !endsWith(description, ":"))
+    if (option_type == "note" && !endsWith(description, ".") && !endsWith(description, ":"))
         warnstream << "Note '" << description << "' should end with a period or colon.|";
-    if (option_kind == "error" && !endsWith(description, ".") && !endsWith(description, ":"))
+    if (option_type == "error" && !endsWith(description, ".") && !endsWith(description, ":"))
         warnstream << "Error string '" << description << "' should end with a period or colon.|";
-    if ((option_kind != "description" && option_kind != "note" && option_kind != "error") && endsWith(description, "."))
+    if ((option_type != "description" && option_type != "note" && option_type != "error") && endsWith(description, "."))
         warnstream << "Option '" << description << "' should not end with a period.|";
     if (isReserved(command))
         warnstream << "Option '" << command << "' is a reserved word.|";
@@ -607,8 +612,8 @@ void CCommandOption::verifyOptions(CStringArray& warnings) {
 
 //---------------------------------------------------------------------------------------------------
 void CCommandOption::verifyHotkey(CStringArray& warnings) {
-    if (hotkey.empty() || contains(option_kind, "positional") || contains(option_kind, "description") ||
-        contains(option_kind, "note") || !contains(option_kind, "error")) {
+    if (hotkey.empty() || contains(option_type, "positional") || contains(option_type, "description") ||
+        contains(option_type, "note") || !contains(option_type, "error")) {
         return;
     }
 
@@ -641,16 +646,346 @@ void CCommandOption::verifyHotkey(CStringArray& warnings) {
 //---------------------------------------------------------------------------------------------------
 extern const char* STR_DEBUG_DISPLAY;
 extern const char* STR_DEBUG_DISPLAY_BOOL;
+extern const char* STR_DEBUG_DISPLAY_LIST;
 //---------------------------------------------------------------------------------------------------
 string_q CCommandOption::debugCode(void) const {
-    string_q debug = Format(isBool ? STR_DEBUG_DISPLAY_BOOL : STR_DEBUG_DISPLAY);
-    if (isList)
-        replace(debug, "    ", "    // ");
-    return debug;
+    string_q fmt = isBool ? STR_DEBUG_DISPLAY_BOOL : isList ? STR_DEBUG_DISPLAY_LIST : STR_DEBUG_DISPLAY;
+    if (command == "addrs2")
+        replaceAll(fmt, "[{COMMAND}]", "addrs");
+    if (command == "transactions")
+        replaceAll(fmt, "[{COMMAND}]", "transList");
+    return Format(fmt);
 }
 
 //---------------------------------------------------------------------------------------------------
 const char* STR_DEBUG_DISPLAY = "    LOG_TEST(\"[{COMMAND}]\", [{COMMAND}], ([{COMMAND}] == [{DEF_VAL}]));";
 const char* STR_DEBUG_DISPLAY_BOOL = "    LOG_TEST_BOOL(\"[{COMMAND}]\", [{COMMAND}]);";
+const char* STR_DEBUG_DISPLAY_LIST = "    LOG_TEST_LIST(\"[{COMMAND}]\", [{COMMAND}], [{COMMAND}].empty());";
+
+//---------------------------------------------------------------------------------------------------
+extern const char* STR_PATH_YAML;
+extern const char* STR_PARAM_YAML;
+extern const char* STR_PATH_HTML;
+extern const char* STR_PARAM_HTML;
+
+//---------------------------------------------------------------------------------------------------
+bool isApiRoute(const string_q& route) {
+    if (route == "serve" || route == "init" || route == "explore")
+        return false;
+    return !route.empty();
+}
+
+//---------------------------------------------------------------------------------------------------
+bool CCommandOption::isChifraRoute(void) const {
+    return (option_type != "deprecated" && option_type != "description" && option_type != "note" &&
+            option_type != "error");
+}
+
+//---------------------------------------------------------------------------------------------------
+string_q CCommandOption::toChifraCmd(void) const {
+    if (api_route.empty())
+        return Format("    // -- [{GROUP}]");
+    return Format("    {\"[{API_ROUTE}]\", \"[{TOOL}]\"},");
+}
+
+//---------------------------------------------------------------------------------------------------
+string_q CCommandOption::toChifraHelp(void) const {
+    if (description.empty() && !api_route.empty())
+        return "";
+
+    CCommandOption ret = *this;
+    replaceAll(ret.description, ".", "");
+    ret.description[0] = (char)tolower(ret.description[0]);
+    if (api_route.empty())
+        return toUpper(ret.Format("    \"[{GROUP}]|\""));
+    return ret.Format("    \"  [{w:14:API_ROUTE}][{DESCRIPTION}]|\"");
+}
+
+//---------------------------------------------------------------------------------------------------
+string_q CCommandOption::toPairMap(void) const {
+    if (is_visible || api_route == "explore") {
+        if (!contains(tool, " "))
+            return Format("    make_pair(\"[{TOOL}]\", \"chifra [{API_ROUTE}]\"),");
+        return Format("    // [{API_ROUTE}]");
+
+    } else {
+        if (api_route.empty())
+            return Format("    // -- [{GROUP}]");
+        return Format("    // [{API_ROUTE}]");
+    }
+
+    return "";
+}
+
+//---------------------------------------------------------------------------------------------------
+string_q CCommandOption::toApiTag(void) const {
+    if (isApiRoute(tool))
+        return "";
+
+    const char* STR_TAG_YAML =
+        "- name: [{GROUP}]\n"
+        "  description: [{DESCRIPTION}]\n";
+    CCommandOption ret = *this;
+    replaceAll(ret.group, " ", "");
+    return ret.Format(STR_TAG_YAML);
+}
+
+//---------------------------------------------------------------------------------------------------
+string_q CCommandOption::toHtmlTag(void) const {
+    if (isApiRoute(tool))
+        return "";
+
+    const char* STR_TAG_HTML = "            {name: '[{GROUP}]', description: '[{DESCRIPTION}]'},\n";
+    CCommandOption ret = *this;
+    replaceAll(ret.group, " ", "");
+    return ret.Format(STR_TAG_HTML);
+}
+
+//---------------------------------------------------------------------------------------------------
+string_q CCommandOption::toGoCall(void) const {
+    if (!isApiRoute(api_route))
+        return "";
+
+    string_q goFunc = substitute(group, " ", "") + toProper(api_route);
+    ostringstream out;
+    out << endl;
+    out << "// " << goFunc << " help text todo" << endl;
+    out << "func " << goFunc << "(w http.ResponseWriter, r *http.Request) {" << endl;
+    if (!tool.empty() && !contains(tool, " ")) {
+        out << "\tCallOne(w, r, \"" << tool << "\", \"" << api_route << "\")" << endl;
+    } else if (goFunc == "AccountsTags" || goFunc == "AccountsEntities") {
+        out << "\tCallOne(w, r, \"ethNames\", \"" << api_route << "\")" << endl;
+    } else {
+        out << "\tCallOneExtra(w, r, \"chifra\", \"" << api_route << "\", \"" << api_route << "\")" << endl;
+    }
+    out << "}" << endl;
+    return out.str();
+}
+
+//---------------------------------------------------------------------------------------------------
+string_q CCommandOption::toGoRoute(void) const {
+    if (!isApiRoute(api_route))
+        return "";
+
+    string_q goFunc = substitute(group, " ", "") + toProper(api_route);
+    ostringstream out;
+    out << endl;
+    out << "\tRoute{" << endl;
+    out << "\t\t\"" << goFunc << "\"," << endl;
+    out << "\t\t\"GET\"," << endl;
+    out << "\t\t\"/" << api_route << "\"," << endl;
+    out << "\t\t" << goFunc << "," << endl;
+    out << "\t}," << endl;
+    return out.str();
+}
+
+//---------------------------------------------------------------------------------------------------
+string_q CCommandOption::toApiPath(void) const {
+    if (!isApiRoute(api_route))
+        return "";
+
+    ostringstream paramStream;
+    for (auto param : *(CCommandOptionArray*)params) {
+        if (param.command.empty())
+            continue;
+        string_q yp = STR_PARAM_YAML;
+        replace(yp, "[{NAME}]", param.command);
+        replace(yp, "[{DESCR}]", param.swagger_descr);
+        replace(yp, "[{REQ}]", param.is_required ? "true" : "false");
+        replace(yp, "[{TYPE}]", param.getType(false /* forHtml */));
+        paramStream << yp << endl;
+    }
+    string_q ret = STR_PATH_YAML;
+    replace(ret, "[{TAGS}]", substitute(group, " ", ""));
+    replace(ret, "[{PATH}]", api_route);
+    replace(ret, "[{PARAMS}]", paramStream.str());
+    replace(ret, "[{SUMMARY}]", description);
+    replace(ret, "[{DESCR}]", description);
+    replace(ret, "[{ID}]", toLower(substitute(group, " ", "") + "-" + api_route));
+    return ret;
+}
+
+//---------------------------------------------------------------------------------------------------
+string_q CCommandOption::toHtmlPath(void) const {
+    if (!isApiRoute(api_route))
+        return "";
+
+    ostringstream paramStream;
+    for (auto param : *(CCommandOptionArray*)params) {
+        if (param.command.empty())
+            continue;
+        string_q yp = STR_PARAM_HTML;
+        replace(yp, "[{NAME}]", param.command);
+        replace(yp, "[{DESCR}]", substitute(substitute(param.swagger_descr, "'", "\\'"), "\n         ", ""));
+        replace(yp, "[{REQ}]", param.is_required ? "true" : "false");
+        replace(yp, "[{TYPE}]", param.getType(true /* forHtml */));
+        paramStream << yp << endl;
+    }
+    string_q ret = STR_PATH_HTML;
+    replace(ret, "[{TAGS}]", substitute(group, " ", ""));
+    replace(ret, "[{PATH}]", api_route);
+    replace(ret, "[{PARAMS}]", paramStream.str());
+    replace(ret, "[{SUMMARY}]", substitute(substitute(description, "'", "\\'"), "\n         ", ""));
+    replace(ret, "[{DESCR}]", substitute(substitute(description, "'", "\\'"), "\n         ", ""));
+    replace(ret, "[{ID}]", toLower(substitute(group, " ", "") + "-" + api_route));
+    return ret;
+}
+
+//---------------------------------------------------------------------------------------------------
+string_q CCommandOption::getType(bool forHtml) const {
+    string_q lead = (forHtml ? "{" : "          ");
+    string_q trail = (forHtml ? "}" : "");
+
+    if (contains(data_type, "list")) {
+        if (trail == "}") {
+            if (contains(data_type, "enum")) {
+                string_q e = substitute(substitute(data_type, "list<", ""), ">", "");
+                string_q str = substitute(substitute(substitute(e, "*", ""), "enum[", ""), "]", "");
+                CStringArray opts;
+                explode(opts, str, '|');
+                ostringstream os;
+                bool first = true;
+                for (auto o : opts) {
+                    if (!first)
+                        os << ", ";
+                    os << "'" << o << "'";
+                    first = false;
+                }
+                string_q str_array_enum = "{ type: 'array', items: { type: 'string', enum: [";
+                return str_array_enum + os.str() + "] } }";
+            } else {
+                return "{type: 'array', items: {type: 'string'}}";
+            }
+        } else {
+            if (contains(data_type, "enum")) {
+                string_q e = substitute(substitute(data_type, "list<", ""), ">", "");
+                string_q str = substitute(substitute(substitute(e, "*", ""), "enum[", ""), "]", "");
+                CStringArray opts;
+                explode(opts, str, '|');
+                ostringstream os;
+                for (auto o : opts) {
+                    if (isNumeral(o)) {
+                        os << substitute("            - \"[{VAL}]\"\n", "[{VAL}]", o);
+                    } else {
+                        os << substitute("            - [{VAL}]\n", "[{VAL}]", o);
+                    }
+                }
+                string_q str_array_enum =
+                    "          type: array\n"
+                    "          items:\n"
+                    "            type: string\n"
+                    "            enum:\n";
+                return str_array_enum + trim(os.str(), '\n');
+            } else {
+                return "          type: array\n          items:\n            type: string";
+            }
+        }
+    }
+
+    if (contains(data_type, "boolean")) {
+        return lead + "type: " + (forHtml ? "'boolean'" : "boolean") + trail;
+
+    } else if (contains(data_type, "uint") || contains(data_type, "double")) {
+        return lead + "type: " + (forHtml ? "'number'" : "number") + trail;
+
+    } else if (contains(data_type, "enum")) {
+        if (trail == "}") {
+            string_q str = substitute(substitute(substitute(data_type, "*", ""), "enum[", ""), "]", "");
+            CStringArray opts;
+            explode(opts, str, '|');
+            ostringstream os;
+            bool first = true;
+            for (auto o : opts) {
+                if (!first)
+                    os << ", ";
+                os << "'" << o << "'";
+                first = false;
+            }
+            return lead + "type: 'string', enum: [" + os.str() + "] }";
+        } else {
+            string_q str = substitute(substitute(substitute(data_type, "*", ""), "enum[", ""), "]", "");
+            CStringArray opts;
+            explode(opts, str, '|');
+            ostringstream os;
+            for (auto o : opts) {
+                if (isNumeral(o)) {
+                    os << substitute(lead + "- \"[{VAL}]\"\n", "[{VAL}]", o);
+                } else {
+                    os << substitute(lead + "- [{VAL}]\n", "[{VAL}]", o);
+                }
+            }
+            string_q enum_head = lead + "type: string\n" + lead + "enum:\n" + trail;
+            return enum_head + trim(os.str(), '\n');
+        }
+    }
+
+    return lead + "type: " + (forHtml ? "'string'" : "string") + trail;
+}
+
+//---------------------------------------------------------------------------------------------------
+const char* STR_PATH_YAML =
+    "  /[{PATH}]:\n"
+    "    get:\n"
+    "      tags:\n"
+    "      - [{TAGS}]\n"
+    "      summary: [{SUMMARY}]\n"
+    "      description: [{DESCR}]\n"
+    "      operationId: [{ID}]\n"
+    "      parameters:\n"
+    "[{PARAMS}]"
+    "      responses:\n"
+    "        \"200\":\n"
+    "          description: status of the scraper\n"
+    "          content:\n"
+    "            application/json:\n"
+    "              schema:\n"
+    "                type: array\n"
+    "                items:\n"
+    "                  $ref: '#/components/schemas/response'\n"
+    "        \"400\":\n"
+    "          description: bad input parameter\n";
+
+//---------------------------------------------------------------------------------------------------
+const char* STR_PARAM_YAML =
+    "      - name: [{NAME}]\n"
+    "        in: query\n"
+    "        description: [{DESCR}]\n"
+    "        required: [{REQ}]\n"
+    "        style: form\n"
+    "        explode: true\n"
+    "        schema:\n"
+    "[{TYPE}]";
+
+//---------------------------------------------------------------------------------------------------
+const char* STR_PATH_HTML =
+    "            '/[{PATH}]': {\n"
+    "              get: {\n"
+    "                tags: ['[{TAGS}]'],\n"
+    "                summary: '[{SUMMARY}]',\n"
+    "                description: '[{DESCR}]',\n"
+    "                operationId: '[{ID}]',\n"
+    "                parameters: [\n[{PARAMS}]"
+    "                ],\n"
+    "                responses: {\n"
+    "                  '200': {\n"
+    "                    description: 'status of the scraper',\n"
+    "                    content: { 'application/json': {schema: {type: 'array', items: {$ref: "
+    "'#/components/schemas/response'}}} }, },\n"
+    "                  '400': {description: 'bad input parameter'},\n"
+    "                },\n"
+    "              },\n"
+    "            },\n";
+
+//---------------------------------------------------------------------------------------------------
+const char* STR_PARAM_HTML =
+    "                  {\n"
+    "                    name: '[{NAME}]',\n"
+    "                    in: 'query',\n"
+    "                    description: '[{DESCR}]',\n"
+    "                    required: [{REQ}],\n"
+    "                    style: 'form',\n"
+    "                    explode: true,\n"
+    "                    schema: [{TYPE}],\n"
+    "                  },";
 // EXISTING_CODE
 }  // namespace qblocks

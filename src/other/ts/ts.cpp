@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -18,8 +18,6 @@ extern void trunc(void);
 extern void list(void);
 //----------------------------------------------------------------
 int main(int argc, const char* argv[]) {
-    //    cout << (fileSize(configPath("ts.bin")) / sizeof(uint32_t) / 2) << endl;
-
     size_t path = 3;
     switch (path) {
         case 0:
@@ -45,38 +43,38 @@ void regenerate(void) {
 }
 
 void list(void) {
-    string_q fn = configPath("ts.bin");
+    string_q fn = tsIndex;
 
     CArchive file(READING_ARCHIVE);
     if (!file.Lock(fn, modeReadOnly, LOCK_NOWAIT))
         return;
 
-    size_t ts_cnt = ((fileSize(fn) / sizeof(uint32_t)) / 2);
-    uint32_t* ts_array = new uint32_t[ts_cnt * 2];  // blknum - timestamp
+    size_t tsCnt = ((fileSize(fn) / sizeof(uint32_t)) / 2);
+    uint32_t* ts_array = new uint32_t[tsCnt * 2];  // blknum - timestamp
     if (!ts_array)
         return;
 
-    file.Read(ts_array, sizeof(uint32_t) * 2, ts_cnt);
+    file.Read(ts_array, sizeof(uint32_t) * 2, tsCnt);
     file.Release();
 
-    for (size_t i = 0; i < ts_cnt; i++)
+    for (size_t i = 0; i < tsCnt; i++)
         cout << ts_array[2 * i] << "\t" << ts_array[2 * i + 1] << "\t"
              << ts_2_Date(ts_array[2 * i + 1]).Format(FMT_EXPORT) << endl;
 }
 
 void check(void) {
-    string_q fn = configPath("ts.bin");
+    string_q fn = tsIndex;
 
     CArchive file(READING_ARCHIVE);
     if (!file.Lock(fn, modeReadOnly, LOCK_NOWAIT))
         return;
 
-    size_t ts_cnt = ((fileSize(fn) / sizeof(uint32_t)) / 2);
-    uint32_t* ts_array = new uint32_t[ts_cnt * 2];  // blknum - timestamp
+    size_t tsCnt = ((fileSize(fn) / sizeof(uint32_t)) / 2);
+    uint32_t* ts_array = new uint32_t[tsCnt * 2];  // blknum - timestamp
     if (!ts_array)
         return;
 
-    file.Read(ts_array, sizeof(uint32_t) * 2, ts_cnt);
+    file.Read(ts_array, sizeof(uint32_t) * 2, tsCnt);
     file.Release();
 
     cout << "chain:\t";
@@ -92,7 +90,7 @@ void check(void) {
     blknum_t start = 8250000;  // 7264000; //2071099;
 #define skip 1
     //((blknum_t)RandomValue(11,221))
-    for (blknum_t bn = start; bn < ts_cnt; bn = bn + skip) {
+    for (blknum_t bn = start; bn < tsCnt; bn = bn + skip) {
         CBlock block;
         getBlock_header(block, bn);
         cout << "chain:\t";
@@ -114,22 +112,22 @@ void check(void) {
 }
 
 void trunc(void) {
-    string_q fn = configPath("ts.bin");
+    string_q fn = tsIndex;
 
     CArchive file(READING_ARCHIVE);
     if (!file.Lock(fn, modeReadOnly, LOCK_NOWAIT))
         return;
-    size_t ts_cnt = ((fileSize(fn) / sizeof(uint32_t)) / 2);
-    uint32_t* ts_array = new uint32_t[ts_cnt * 2];  // blknum - timestamp
+    size_t tsCnt = ((fileSize(fn) / sizeof(uint32_t)) / 2);
+    uint32_t* ts_array = new uint32_t[tsCnt * 2];  // blknum - timestamp
     if (!ts_array)
         return;
-    file.Read(ts_array, sizeof(uint32_t) * 2, ts_cnt);
+    file.Read(ts_array, sizeof(uint32_t) * 2, tsCnt);
     file.Release();
 
     ts_array[1] = blockZeroTs;
     if (!file.Lock(fn, modeWriteCreate, LOCK_WAIT))
         return;
-    file.Write(ts_array, sizeof(uint32_t) * 2, ts_cnt);  // 8264850);
+    file.Write(ts_array, sizeof(uint32_t) * 2, tsCnt);  // 8264850);
     file.Release();
     delete[] ts_array;
 

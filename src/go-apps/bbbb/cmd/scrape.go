@@ -152,7 +152,7 @@ func extractAddressesFromTraces(addressMap map[string]bool, traces *Trace, block
 			}
 
 			// If it's a top level trace, then the call data is the init,
-			// so to match with quickblocks, we just parse init
+			// so to match with TrueBlocks, we just parse init
 			if len(traces.Result[i].TraceAddress) == 0 {
 				if len(traces.Result[i].Action.Init) > 10 {
 					initData := traces.Result[i].Action.Init[10:]
@@ -360,7 +360,7 @@ type scrapeOptionsT struct {
 	columns2 string
 }
 
-// scrapeOptions carries local command line options related to the scrape command
+// scanOptions carries local command line options related to the scan command
 var scrapeOptions scrapeOptionsT
 
 var scrapeCmd = &cobra.Command{

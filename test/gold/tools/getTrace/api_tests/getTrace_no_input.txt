@@ -1,5 +1,0 @@
-{
-  "errors": [
-    "chifra traces - Not enough arguments presented."
-  ]
-}

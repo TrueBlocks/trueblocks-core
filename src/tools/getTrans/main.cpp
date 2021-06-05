@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -26,7 +26,7 @@ int main(int argc, const char* argv[]) {
             return 0;
         if (once)
             cout << exportPreamble(expContext().fmtMap["header"], GETRUNTIME_CLASS(CTransaction));
-        forEveryTransactionInList(visitTransaction, &options, options.transList.queries);
+        forEveryTransaction(visitTransaction, &options, options.transList.queries);
         once = false;
     }
     cout << exportPostamble(options.errors, expContext().fmtMap["meta"]);
@@ -46,13 +46,13 @@ bool visitAddrs(const CAppearance& item, void* data) {
     if (isText) {
         cout << trim(item.Format(expContext().fmtMap["format"]), '\t') << endl;
     } else {
-        if (!opt->first)
+        if (!opt->firstOut)
             cout << ",";
         cout << "  ";
         indent();
         item.toJson(cout);
         unindent();
-        opt->first = false;
+        opt->firstOut = false;
     }
     return !shouldQuit();
 }
@@ -86,10 +86,10 @@ bool visitTransaction(CTransaction& trans, void* data) {
     if (opt->isRaw || opt->isVeryRaw) {
         string_q result;
         queryRawTransaction(result, trans.getValueByName("hash"));
-        if (!isText && !opt->first)
+        if (!isText && !opt->firstOut)
             cout << ",";
         cout << result;
-        opt->first = false;
+        opt->firstOut = false;
         return true;
     }
 
@@ -110,17 +110,17 @@ bool visitTransaction(CTransaction& trans, void* data) {
         if (isText) {
             cout << trim(trans.Format(expContext().fmtMap["format"]), '\t') << endl;
         } else {
-            if (!opt->first)
+            if (!opt->firstOut)
                 cout << ",";
             cout << "  ";
             indent();
             trans.toJson(cout);
             unindent();
-            opt->first = false;
+            opt->firstOut = false;
         }
     }
 
-    if (opt->force) {
+    if (opt->cache) {
         string_q txFilename = getBinaryCacheFilename(CT_TXS, trans.blockNumber, trans.transactionIndex);
         if (!fileExists(txFilename)) {
             CBlock block;

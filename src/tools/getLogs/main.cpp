@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -26,7 +26,7 @@ int main(int argc, const char* argv[]) {
             return 0;
         if (once)
             cout << exportPreamble(expContext().fmtMap["header"], GETRUNTIME_CLASS(CLogEntry));
-        forEveryTransactionInList(visitTransaction, &options, options.transList.queries);
+        forEveryTransaction(visitTransaction, &options, options.transList.queries);
         once = false;
     }
     cout << exportPostamble(options.errors, expContext().fmtMap["meta"]);
@@ -51,10 +51,10 @@ bool visitTransaction(CTransaction& trans, void* data) {
         CLogQuery query;
         query.blockHash = trans.blockHash;
         queryRawLogs(result, query);
-        if (!isText && !opt->first)
+        if (!isText && !opt->firstOut)
             cout << ",";
         cout << substitute(result, "mined", "");
-        opt->first = false;
+        opt->firstOut = false;
         return true;
     }
 
@@ -75,13 +75,13 @@ bool visitTransaction(CTransaction& trans, void* data) {
         if (isText) {
             cout << trim(log.Format(expContext().fmtMap["format"]), '\t') << endl;
         } else {
-            if (!opt->first)
+            if (!opt->firstOut)
                 cout << ",";
             cout << "  ";
             indent();
             log.toJson(cout);
             unindent();
-            opt->first = false;
+            opt->firstOut = false;
         }
     }
     return true;

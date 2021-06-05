@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -139,7 +139,7 @@ bool test_old_bug(void) {
 }
 
 string_q data12 =
-    "CEthStateArray|CBlockNumArray|CFunctionArray|CReconciliationOutput|CLogEntryArray|CParameterArray|"
+    "CEthStateArray|CBlockNumArray|CFunctionArray|CReconciliation|CLogEntryArray|CParameterArray|"
     "CPerson|CReceipt|CNewReceipt|CNewTransactionArray|CBigUintArray|CTopicArray|address[]|bytes4|time|"
     // note - we leave 'CTreeNode *' here to show it gets fixed - should use 'CTreeNode* ' instead
     "uint8|CStringArray|CTraceAction|CTraceResult|CTransactionArray|CTreeNode *|CTopicArray|address|"
@@ -342,92 +342,94 @@ TEST_F(CThisTest, TestSerpent) {
 //------------------------------------------------------------------------
 class CFunctionTester : public CFunction {
   public:
-    bool doTest(const string_q& line1) {
+    bool doTest(const string_q& lineIn) {
 #if 0
         string_q line;
-        line = ""\
-        "decode|decode donation tuple array (address token, uint256 amount, address recipient)[]|function donate((address+uint256+address)[])|"\
-        "0x"\
-        "0000000000000000000000000000000000000000000000000000000000000020"\
-        "0000000000000000000000000000000000000000000000000000000000000002"\
-        "0000000000000000000000006b175474e89094c44da98b954eedeac495271d0f"\
-        "000000000000000000000000000000000000000000000000869d529b714a0000"\
-        "000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b"\
-        "0000000000000000000000006b175474e89094c44da98b954eedeac495271d0f"\
-        "00000000000000000000000000000000000000000000000003782dace9d90000"\
-        "00000000000000000000000000de4b13153673bcae2616b67bf822500d325fc3"\
-        "|[{\"val_1\":\"0x6b175474e89094c44da98b954eedeac495271d0f\","\
-        "\"val_2\":\"9700000000000000000\","\
-        "\"val_3\":\"0xf503017d7baf7fbc0fff7492b751025c6a78179b\"},"\
-        "{\"val_1\":\"0x6b175474e89094c44da98b954eedeac495271d0f\","\
-        "\"val_2\":\"250000000000000000\","\
-        "\"val_3\":\"0x00de4b13153673bcae2616b67bf822500d325fc3\"}]]";
+        line =
+            "decode|decode donation tuple array (address token, uint256 amount, address recipient)[]|function donate((address+uint256+address)[])|\
+0x\
+0000000000000000000000000000000000000000000000000000000000000020\
+0000000000000000000000000000000000000000000000000000000000000002\
+0000000000000000000000006b175474e89094c44da98b954eedeac495271d0f\
+000000000000000000000000000000000000000000000000869d529b714a0000\
+000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b\
+0000000000000000000000006b175474e89094c44da98b954eedeac495271d0f\
+00000000000000000000000000000000000000000000000003782dace9d90000\
+00000000000000000000000000de4b13153673bcae2616b67bf822500d325fc3\
+|[{\"val_1\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"val_2\":\"9700000000000000000\", \"val_3\":\"0xf503017d7baf7fbc0fff7492b751025c6a78179b\"}, {\"val_1\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"val_2\":\"250000000000000000\", \"val_3\":\"0x00de4b13153673bcae2616b67bf822500d325fc3\"}]";
 #else
-        string_q line = line1;
+        string_q line = lineIn;
 #endif
-        string_q expected, result;
+        string_q result;
         CStringArray parts;
         explode(parts, line, '|');
-        if (parts.size() < 5)
+        if (parts.size() != 5) {
+            cerr << "Invalid test: " << line << endl;
             return false;
-        for (auto& p : parts)
-            p = trim(p);
+        }
+        string_q testType = trim(parts[0]);
+        string_q testName = trim(parts[1]);
+        string_q testSig = trim(parts[2]);
+        string_q inputBytes = trim(parts[3]);
+        string_q expected = trim(substitute(parts[4], "<empty>", ""));
 
-        fromDefinition(*this, parts[2]);
+        fromDefinition(*this, testSig);
         if (type != "function" && type != "event") {
-            cout << "invalid: " << parts[2] << endl;
+            cout << "invalid: " << testSig << endl;
             return false;
         }
 
         cout << endl;
         cout << "line: " << line << endl;
-        cout << "testType: " << parts[0] << endl;
-        cout << "testName: " << parts[1] << endl;
-        cout << "signature: " << parts[2] << " : " << type << " " << getSignature(SIG_CANONICAL) << endl;
+        cout << "testType: " << testType << endl;
+        cout << "testName: " << testName << endl;
+        cout << "testSig: " << testSig << " --> " << getSignature(SIG_CANONICAL) << endl;
         if (startsWith(line, ';')) {
             cout << (expected == result ? bGreen : bRed);
-            cout << "expected: --" << parts[4] << "--?" << endl;
-            cout << "result:   --" << parts[4] << "--? " << (parts[4] == parts[4]) << endl;
-            cout << "testName: " << parts[1] << endl;
+            cout << "expected: " << expected << " ?" << endl;
+            cout << "result:   " << expected << " ? " << (expected == expected) << endl;
+            cout << "testName: " << testName << endl;
             cout << cOff;
             return true;  // report on commented lines, but don't do the test
         }
 
-        if (parts[0] == "signature") {
-            expected = parts[4];
+        if (testType == "signature") {
             result = checkTypes() ? encodeItem() : "fail";
             result = (type == "function" ? result.substr(0, 10) : result);
 
-        } else if (parts[0] == "encode" || parts[0] == "encode_raw") {
-            expected = parts[4];
+        } else if (testType == "encode" || testType == "encode_raw") {
             result = encodeItem();
             result = (type == "function" ? result.substr(0, 10) : result);
 
-        } else if (parts[0] == "decode" || parts[0] == "decode_raw") {
+        } else if (testType == "decode" || testType == "decode_raw") {
             cerr << endl << string_q(50, '-') << endl;
-            decodeRLP(inputs, parts[2], parts[3]);
-            expected = substitute(parts[4], "<empty>", "");
+            bool ret = decodeRLP(inputs, getSignature(SIG_CANONICAL), inputBytes);
             for (auto param : inputs) {
                 if (!result.empty())
                     result += ", ";
                 result += param.value;
             }
             result = trim(result);
+            if (result.empty() && !ret)
+                result = "fail";
             cout << (expected == result ? bGreen : bRed);
-            cout << "expected: --" << expected << "--?" << endl;
-            cout << "result:   --" << result << "--? " << (expected == result) << endl;
-            cout << "testName: " << parts[1] << endl;
+            cout << "expected: " << expected << " ?" << endl;
+            cout << "result:   " << result << " ? " << (expected == result) << endl;
+            cout << "testName: " << testName << endl;
             cout << cOff;
+            // if (!(expected == result))
+            //     cout << "THIS IS AN ERROR, BUT WE DON'T QUIT." << endl;
             return true;  // debugging
 
         } else {
+            cerr << "Unknown test type" << testType << endl;
             return true;  // debugging
         }
 
         cout << (expected == result ? bGreen : bRed);
         cout << "expected: --" << expected << "--?" << endl;
         cout << "result:   --" << result << "--? " << (expected == result) << endl;
-        cout << "testName: " << parts[1] << endl;
+        cout << "testName: " << testName << endl;
         cout << cOff;
         return true;  // debugging
     }
@@ -491,9 +493,28 @@ TEST_F(CThisTest, TestEncodeRaw) {
 }
 
 //------------------------------------------------------------------------
-TEST_F(CThisTest, TestDecode) {
+TEST_F(CThisTest, TestDecode1) {
     string_q contents;
     asciiFileToString("./decode.txt", contents);
+    replaceAll(contents, "\\\n", "");
+    CStringArray lines;
+    explode(lines, contents, '\n');
+    uint64_t cnt = 0;
+    for (auto line : lines) {
+        if (!line.empty() && !startsWith(line, '#')) {
+            CFunctionTester func;
+            cout << string_q(80, '-') << endl;
+            ASSERT_TRUE("test_" + uint_2_Str(cnt++), func.doTest(line));
+        }
+    }
+    return true;
+}
+}
+
+//------------------------------------------------------------------------
+TEST_F(CThisTest, TestDecode2) {
+    string_q contents;
+    asciiFileToString("./decode2.txt", contents);
     replaceAll(contents, "\\\n", "");
     CStringArray lines;
     explode(lines, contents, '\n');
@@ -563,7 +584,10 @@ bool test_eth_tests(uint64_t sub) {
             LOAD_TEST(TestEncodeRaw);
             break;
         case 4:
-            LOAD_TEST(TestDecode);
+            LOAD_TEST(TestDecode1);
+            break;
+        case 7:
+            LOAD_TEST(TestDecode2);
             break;
         case 5:
             LOAD_TEST(TestDecodeRaw);

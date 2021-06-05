@@ -1,8 +1,0 @@
-[settings]
-class = CPinataRegion
-fields = string regionId|\
-        string currentReplicationCount|\
-        string desiredReplicationCount
-includes = utillib.h
-cpp_includes =
-serializable = true

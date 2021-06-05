@@ -1,33 +1,6 @@
 {
   "data": [
     {
-      "name": "",
-      "type": "constructor",
-      "stateMutability": "nonpayable",
-      "signature": "(address,address,uint256,uint256,uint256,address)",
-      "encoding": "",
-      "input_names": "_curator,_daoCreator,_proposalDeposit,_minTokensToCreate,_closingTime,_privateCreation,",
-      "output_names": ""
-    },
-    {
-      "name": "DAOpaidOut",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "DAOpaidOut(address)",
-      "encoding": "0x643f7cdd",
-      "input_names": "val_0,",
-      "output_names": "val_0,"
-    },
-    {
-      "name": "DAOrewardAccount",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "DAOrewardAccount()",
-      "encoding": "0x82bf6464",
-      "input_names": "",
-      "output_names": "val_0,"
-    },
-    {
       "name": "actualBalance",
       "type": "function",
       "stateMutability": "nonpayable",
@@ -141,6 +114,24 @@
       "stateMutability": "nonpayable",
       "signature": "daoCreator()",
       "encoding": "0x149acf9a",
+      "input_names": "",
+      "output_names": "val_0,"
+    },
+    {
+      "name": "DAOpaidOut",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "DAOpaidOut(address)",
+      "encoding": "0x643f7cdd",
+      "input_names": "val_0,",
+      "output_names": "val_0,"
+    },
+    {
+      "name": "DAOrewardAccount",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "DAOrewardAccount()",
+      "encoding": "0x82bf6464",
       "input_names": "",
       "output_names": "val_0,"
     },

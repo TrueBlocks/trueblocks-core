@@ -1,15 +1,6 @@
 {
   "data": [
     {
-      "name": "",
-      "type": "constructor",
-      "stateMutability": "nonpayable",
-      "signature": "(address[],uint256,uint256)",
-      "encoding": "",
-      "input_names": "_owners,_required,_daylimit,",
-      "output_names": ""
-    },
-    {
       "name": "addOwner",
       "type": "function",
       "stateMutability": "nonpayable",

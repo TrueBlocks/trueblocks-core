@@ -3,15 +3,14 @@ ethNames torj --pink --fmt txt
 
   Invalid option: --pink
 
-  Usage:    ethNames [-e|-m|-l|-o|-c|-p|-n|-a|-s|-g|-v|-h] <term> [term...]  
-  Purpose:  Query addresses and/or names of well known accounts.
+  Usage:    ethNames [-e|-m|-l|-c|-p|-n|-a|-s|-g|-v|-h] <term> [term...]  
+  Purpose:  Query addresses or names of well known accounts.
 
   Where:  
 	terms                 a space separated list of one or more search terms (required)
 	-e  (--expand)        expand search to include all fields (default searches name, address, and symbol only)
 	-m  (--match_case)    do case-sensitive search
 	-l  (--all)           include all accounts in the search
-	-o  (--owned)         include personal accounts in the search
 	-c  (--custom)        include your custom named accounts
 	-p  (--prefund)       include prefund accounts
 	-n  (--named)         include well know token and airdrop addresses in the search
@@ -26,7 +25,7 @@ ethNames torj --pink --fmt txt
 	#### Hidden options
 
 	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
-	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
+	-v  (--verbose)       set verbose level (optional level defaults to 1)
 	-h  (--help)          display this help screen
 
   Powered by TrueBlocks

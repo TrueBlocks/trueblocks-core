@@ -1,5 +1,0 @@
-{
-  "errors": [
-    "chifra blocks - The given value 'x400x001' is not a numeral or a special named block."
-  ]
-}

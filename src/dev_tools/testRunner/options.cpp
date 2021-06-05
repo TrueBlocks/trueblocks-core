@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -11,8 +11,8 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 /*
- * Parts of this file were generated with makeClass. Edit only those parts of the code
- * outside of the BEG_CODE/END_CODE sections
+ * Parts of this file were generated with makeClass --options. Edit only those parts of
+ * the code outside of the BEG_CODE/END_CODE sections
  */
 #include "options.h"
 #include "measure.h"
@@ -54,10 +54,14 @@ bool COptions::parseArguments(string_q& command) {
         } else if (startsWith(arg, "-m:") || startsWith(arg, "--mode:")) {
             if (!confirmEnum("mode", mode, arg))
                 return false;
+        } else if (arg == "-m" || arg == "--mode") {
+            return flag_required("mode");
 
         } else if (startsWith(arg, "-f:") || startsWith(arg, "--filter:")) {
             if (!confirmEnum("filter", filter, arg))
                 return false;
+        } else if (arg == "-f" || arg == "--filter") {
+            return flag_required("filter");
 
         } else if (arg == "-c" || arg == "--clean") {
             clean = true;
@@ -65,6 +69,8 @@ bool COptions::parseArguments(string_q& command) {
         } else if (startsWith(arg, "-s:") || startsWith(arg, "--skip:")) {
             if (!confirmUint("skip", skip, arg))
                 return false;
+        } else if (arg == "-s" || arg == "--skip") {
+            return flag_required("skip");
 
         } else if (arg == "-n" || arg == "--no_quit") {
             no_quit = true;
@@ -78,7 +84,7 @@ bool COptions::parseArguments(string_q& command) {
         } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
-                return usage("Invalid option: " + arg);
+                return invalid_option(arg);
             }
 
             // END_CODE_AUTO
@@ -107,18 +113,17 @@ bool COptions::parseArguments(string_q& command) {
                     break;
                 been_here = true;
                 tests.push_back("tools/ethNames");
-                tests.push_back("tools/ethQuote");
                 tests.push_back("tools/ethslurp");
-                tests.push_back("tools/getBlock");
+                tests.push_back("tools/getBlocks");
                 tests.push_back("tools/getLogs");
-                tests.push_back("tools/getReceipt");
+                tests.push_back("tools/getQuotes");
+                tests.push_back("tools/getReceipts");
                 tests.push_back("tools/getState");
-                tests.push_back("tools/getTokenInfo");
-                tests.push_back("tools/getTrace");
+                tests.push_back("tools/getTokens");
+                tests.push_back("tools/getTraces");
                 tests.push_back("tools/getTrans");
                 tests.push_back("tools/grabABI");
                 tests.push_back("tools/whenBlock");
-                tests.push_back("tools/whereBlock");
 
             } else if (arg == "apps" || arg == "apps/") {
                 static bool been_here = false;
@@ -128,6 +133,7 @@ bool COptions::parseArguments(string_q& command) {
                 tests.push_back("apps/acctExport");
                 tests.push_back("apps/blockScrape");
                 tests.push_back("apps/cacheStatus");
+                tests.push_back("apps/fireStorm");
                 tests.push_back("apps/chifra");
                 tests.push_back("apps/pinMan");
 
@@ -137,7 +143,22 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
+    if (getGlobalConfig()->getConfigBool("dev", "debug_curl", false))
+        return usage("[dev]debug_curl is set in config file. All tests will fail.");
+
+    // BEG_DEBUG_DISPLAY
+    LOG_TEST("mode", mode, (mode == ""));
+    LOG_TEST("filter", filter, (filter == ""));
+    LOG_TEST_BOOL("clean", clean);
+    LOG_TEST("skip", skip, (skip == 1));
+    LOG_TEST_BOOL("no_quit", no_quit);
+    LOG_TEST_BOOL("no_post", no_post);
+    LOG_TEST_BOOL("report", report);
+    // END_DEBUG_DISPLAY
+
     modes = (mode == "both" ? BOTH : (mode == "api" ? API : CMD));
+    if (!isNodeRunning())
+        return usage("Ethereum at " + getCurlContext()->baseURL + " was not found. All tests will fail.");
 
     if (filter.empty())
         filter = "fast";
@@ -159,37 +180,26 @@ bool COptions::parseArguments(string_q& command) {
         tests.push_back("libs/pinlib");
         tests.push_back("dev_tools/makeClass");
         tests.push_back("tools/ethNames");
-        tests.push_back("tools/ethQuote");
         tests.push_back("tools/ethslurp");
-        tests.push_back("tools/getBlock");
+        tests.push_back("tools/getBlocks");
         tests.push_back("tools/getLogs");
-        tests.push_back("tools/getReceipt");
+        tests.push_back("tools/getQuotes");
+        tests.push_back("tools/getReceipts");
         tests.push_back("tools/getState");
-        tests.push_back("tools/getTokenInfo");
-        tests.push_back("tools/getTrace");
+        tests.push_back("tools/getTokens");
+        tests.push_back("tools/getTraces");
         tests.push_back("tools/getTrans");
         tests.push_back("tools/grabABI");
         tests.push_back("tools/whenBlock");
-        tests.push_back("tools/whereBlock");
         tests.push_back("apps/acctExport");
         tests.push_back("apps/blockScrape");
         tests.push_back("apps/cacheStatus");
+        tests.push_back("apps/fireStorm");
         tests.push_back("apps/chifra");
         tests.push_back("apps/pinMan");
     }
 
     SHOW_FIELD(CTestCase, "test_id");
-
-    // If there are tests in libs, we do NOT need to sleep so the API can set up, otherwise, we do need to sleep
-    bool hasLibs = false;
-    for (auto test : tests)
-        if (contains(test, "/libs/"))
-            hasLibs = true;
-    if (!hasLibs)
-        sleep(1.);
-
-    expContext().exportFmt = CSV1;
-    perf_format = substitute(cleanFmt(STR_DISPLAY_MEASURE), "\"", "");
 
     apiProvider = getGlobalConfig("testRunner")->getConfigStr("settings", "apiProvider", "http://localhost:8080");
     if (!endsWith(apiProvider, '/'))
@@ -220,15 +230,17 @@ void COptions::Init(void) {
 
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
-    Init();
     CMeasure::registerClass();
+
+    Init();
+
     // BEG_CODE_NOTES
     // clang-format off
     // clang-format on
     // END_CODE_NOTES
 
-    // BEG_ERROR_MSG
-    // END_ERROR_MSG
+    // BEG_ERROR_STRINGS
+    // END_ERROR_STRINGS
     establishTestMonitors();
 }
 
@@ -241,15 +253,9 @@ bool COptions::cleanTest(const string_q& path, const string_q& testName) {
     if (!clean)
         return true;
     ostringstream os;
-    os << "find ../../../working/" << path << "/" << testName;
-    os << "/ -maxdepth 1 -name \"get*.txt\" -exec rm '{}' ';' 2>/dev/null ; ";
-    os << "find ../../../working/" << path << "/" << testName;
-    os << "/ -maxdepth 1 -name \"eth*.txt\" -exec rm '{}' ';' 2>/dev/null ; ";
-    os << "find ../../../working/" << path << "/" << testName;
-    os << "/ -maxdepth 1 -name \"grab*.txt\" -exec rm '{}' ';' 2>/dev/null ; ";
-    os << "find ../../../working/" << path << "/" << testName;
-    os << "/ -maxdepth 1 -name \"*Block*.txt\" -exec rm '{}' ';' 2>/dev/null ; ";
     // clang-format off
+    os << "find ../../../working/" << path << "/" << testName << "/ -maxdepth 1 -name \"" << testName << "_*.txt\" -exec rm '{}' ';' 2>/dev/null ; ";
+    os << "find ../../../working/" << path << "/" << testName << "/api_tests/ -maxdepth 1 -name \"" << testName << "_*.txt\" -exec rm '{}' ';' 2>/dev/null ; ";
     if (system(os.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings
     // clang-format on
     return true;
@@ -258,17 +264,17 @@ bool COptions::cleanTest(const string_q& path, const string_q& testName) {
 //---------------------------------------------------------------------------------------------------
 void establishTestData(void) {
     cleanFolder(getCachePath("tmp/"));
-    cleanFolder(configPath("mocked/addr_index"));
+    cleanFolder(configPath("mocked/unchained"));
 
     // TODO(tjayrush): This code is a hack to make test cases pass. We should fix the underlyign reason
     // TODO(tjayrush): these tests fail. To reproduce, delete the entire cache, comment the lines below
     // TODO(tjayrush): and re-run. You will see the tests that fail.
 
     // Forces a few blocks into the cache
-    doCommand("getBlock --uniq_tx 0");
-    doCommand("getBlock --force 4369999");
-    doCommand("getTrans --force 47055.0");
-    doCommand("getTrans --force 46147.0");
+    doCommand("getBlocks --uniq_tx 0");
+    doCommand("getBlocks --cache 4369999");
+    doCommand("getTrans --cache 47055.0");
+    doCommand("getTrans --cache 46147.0");
 
     // Forces the retreival of a few ABI files without which some tests will fail
     doCommand("grabABI 0x45f783cce6b7ff23b2ab2d70e416cdb7d6055f51");
@@ -277,8 +283,10 @@ void establishTestData(void) {
     doCommand("grabABI 0x226159d592e2b063810a10ebf6dcbada94ed68b8");
     doCommand("grabABI 0x17996cbddd23c2a912de8477c37d43a1b79770b8");
     doCommand("grabABI 0x0000000000004946c0e9f43f4dee607b0ef1fa1c");
+    doCommand("grabABI 0x7c66550c9c730b6fdd4c03bc2e73c5462c5f7acc");
+    doCommand("grabABI 0xa478c2975ab1ea89e8196811f51a7b7ade33eb11");
 
-// TODO(tjayrush): FIX_THIS_CODE
+// TODO(tjayrush): Not sure what this is about.
 #if 1
     // Hard to explain, but this removes a few transactions from the cache
     ::remove(getBinaryCacheFilename(CT_TXS, 8854723, 61).c_str());

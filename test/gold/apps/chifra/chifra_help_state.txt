@@ -1,12 +1,11 @@
 chifra argc: 3 [1:state] [2:--help] 
 chifra state --help 
-TIME ~ CLOCK - <INFO>  : mode: state
 chifra state argc: 2 [1:--help] 
 chifra state --help 
 PROG_NAME = [chifra state]
 
   Usage:    chifra state [-p|-c|-n|-v|-h] <address> [address...] [block...]  
-  Purpose:  Retrieve the balance of one or more address at the given block(s).
+  Purpose:  Retrieve account balance(s) for one or more addresses at given block(s).
 
   Where:  
 	addrs                 one or more addresses (0x...) from which to retrieve balances (required)
@@ -20,7 +19,7 @@ PROG_NAME = [chifra state]
 	#### Hidden options
 
 	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
-	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
+	-v  (--verbose)       set verbose level (optional level defaults to 1)
 	-h  (--help)          display this help screen
 
   Powered by TrueBlocks

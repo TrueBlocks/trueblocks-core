@@ -11,6 +11,6 @@ fields = address selfDestructed|\
         address to|\
         wei value
 includes = utillib.h|abi.h
-cpp_includes = trace.h
+cpp_includes = trace.h|reconciliation.h
 serializable = true
 equals = ((selfDestructed == it.selfDestructed) && (balance == it.balance) && (callType == it.callType) &&|(from == it.from) && (gas == it.gas) && (init == it.init) && (input == it.input) &&|(refundAddress == it.refundAddress) && (to == it.to) && (value == it.value))

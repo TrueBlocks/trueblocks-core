@@ -4,6 +4,7 @@ test05.toml
 [version]
 version = "0:9:0"
 
+
 [settings]
 name = "data/098_Baddies"
 
@@ -22,6 +23,7 @@ name = "data/098_Baddies"
 File contents after write
 [version]
 version = "0:9:0"
+
 
 [settings]
 name = "data/098_Baddies"

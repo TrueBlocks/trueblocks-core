@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -229,6 +229,10 @@ size_t CSharedResource::Read(void* buff, size_t size, size_t cnt) {
 size_t CSharedResource::Read(bool& val) { return Read(&val, sizeof(bool), 1); }
 size_t CSharedResource::Read(char& val) { return Read(&val, sizeof(char), 1); }
 size_t CSharedResource::Read(int& val) { return Read(&val, sizeof(int), 1); }
+size_t CSharedResource::Read(int8_t& val) { return Read(&val, sizeof(int8_t), 1); }
+size_t CSharedResource::Read(uint8_t& val) { return Read(&val, sizeof(uint8_t), 1); }
+size_t CSharedResource::Read(int16_t& val) { return Read(&val, sizeof(int16_t), 1); }
+size_t CSharedResource::Read(uint16_t& val) { return Read(&val, sizeof(uint16_t), 1); }
 size_t CSharedResource::Read(unsigned int& val) { return Read(&val, sizeof(int), 1); }
 size_t CSharedResource::Read(long& val) { return Read(&val, sizeof(long), 1); }  // NOLINT
 size_t CSharedResource::Read(unsigned long& val) { return Read(&val, sizeof(long), 1); }  // NOLINT
@@ -278,6 +282,10 @@ size_t CSharedResource::Write(const void* buff, size_t size, size_t cnt) const {
 size_t CSharedResource::Write(bool val) const { return Write(&val, sizeof(bool), 1); }
 size_t CSharedResource::Write(char val) const { return Write(&val, sizeof(char), 1); }
 size_t CSharedResource::Write(int val) const { return Write(&val, sizeof(int), 1); }
+size_t CSharedResource::Write(int8_t val) const { return Write(&val, sizeof(int8_t), 1); }
+size_t CSharedResource::Write(uint8_t val) const { return Write(&val, sizeof(uint8_t), 1); }
+size_t CSharedResource::Write(int16_t val) const { return Write(&val, sizeof(int16_t), 1); }
+size_t CSharedResource::Write(uint16_t val) const { return Write(&val, sizeof(uint16_t), 1); }
 size_t CSharedResource::Write(unsigned int val) const { return Write(&val, sizeof(int), 1); }
 size_t CSharedResource::Write(long val) const { return Write(&val, sizeof(long), 1); }  // NOLINT
 size_t CSharedResource::Write(unsigned long val) const { return Write(&val, sizeof(long), 1); }  // NOLINT
@@ -304,122 +312,43 @@ void CSharedResource::WriteLine(const string_q& str) {
 
 //----------------------------------------------------------------------
 string_q excelFileToString(const string_q& excelFilename) {
-    if (contains(excelFilename, ".xlsx"))
-        return "Only .xls Excel files are supported";
-    return doCommand("exportExcel " + excelFilename);
+    // if (contains(excelFilename, ".xlsx"))
+    //     return "Only .xls Excel files are supported";
+    // return do Command("exportExcel " + excelFilename);
+    return "";
 }
 
 //----------------------------------------------------------------------
 string_q docxToString(const string_q& filename) {
-    if (!contains(filename, ".docx"))
-        return "Only .docx files are supported";
-    return doCommand(getHomeFolder() + "source/docx2txt.pl " +
-                     substitute(substitute(filename, " ", "\\ "), "'", "\\'") + " -");
+    // if (!contains(filename, ".docx"))
+    //     return "Only .docx files are supported";
+    // return do Command(getHomeFolder() + "source/docx2txt.pl " +
+    //                  substitute(substitute(filename, " ", "\\ "), "'", "\\'") + " -");
+    return "";
 }
 
 //----------------------------------------------------------------------
 size_t stringToDocxFile(const string_q& fileName, const string_q& contents) {
-    string_q cmd =
-        getHomeFolder() + "source/createDocx \"" + fileName + "\" \"" + substitute(contents, "\"", "''") + "\"";
-    doCommand(cmd);
+    // string_q cmd =
+    //     getHomeFolder() + "source/createDocx \"" + fileName + "\" \"" + substitute(contents, "\"", "''") + "\"";
+    // do Command(cmd);
     return true;
 }
 
 //----------------------------------------------------------------------
 size_t stringToPDF(const string_q& fileName, const string_q& contents) {
-    string_q tmpName = "/tmp/toPDF.txt";
-    string_q pdfName = "/tmp/toPDF.pdf";
-    stringToAsciiFile(tmpName, contents);
+    // string_q tmpName = "/tmp/toPDF.txt";
+    // string_q pdfName = "/tmp/toPDF.pdf";
+    // stringToAsciiFile(tmpName, contents);
 
-    string_q cmd = getHomeFolder() + "source/toPDF \"" + tmpName + "\" \"" + pdfName + "\" 2>/dev/null";
-    doCommand(cmd);
-    copyFile(pdfName, fileName);
+    // string_q cmd = getHomeFolder() + "source/toPDF \"" + tmpName + "\" \"" + pdfName + "\" 2>/dev/null";
+    // do Command(cmd);
+    // copyFile(pdfName, fileName);
 
-    remove(tmpName.c_str());
-    remove(pdfName.c_str());
+    // remove(tmpName.c_str());
+    // remove(pdfName.c_str());
 
     return true;
-}
-
-//------------------------------------------------------------------------------------------------------------
-bool writeTheCode(const codewrite_t& cw) {
-    string_q codeOut = cw.codeOutIn;
-    string_q orig;
-    asciiFileToString(cw.fileName, orig);
-    string_q existingCode = substitute(orig, "//EXISTING_CODE", "// EXISTING_CODE");
-
-    string_q checkCode = existingCode;
-    uint64_t cnt = 0;
-    while (contains(checkCode, "// EXISTING_CODE")) {
-        replace(checkCode, "// EXISTING_CODE", "");
-        cnt++;
-    }
-    if ((cnt % 2))
-        codeOut = "#error \"Uneven number of EXISTING_CODE blocks in the file.\"\n" + codeOut;
-    if (cw.nSpaces) {
-        replaceAll(existingCode, string_q(cw.nSpaces, ' '), "\t");
-        replaceAll(codeOut, string_q(cw.nSpaces, ' '), "\t");
-    }
-
-    string_q tabs;
-    int nTabs = 6;
-    while (nTabs >= 0) {
-        tabs = string_q((size_t)nTabs, '\t');
-        nTabs--;
-        //--------------------------------------------------------------------------------------
-        while (contains(existingCode, tabs + "// EXISTING_CODE")) {
-            replace(existingCode, tabs + "// EXISTING_CODE", "<code>");
-            replace(existingCode, tabs + "// EXISTING_CODE", "</code>");
-        }
-        while (contains(existingCode, "</code>")) {
-            string_q snipit = trim(snagFieldClear(existingCode, "code"), '\n');
-            string_q r1 = tabs + "// EXISTING_CODE\n" + tabs + "// EXISTING_CODE";
-            string_q r2 = tabs + "// EXISTING_CODE\n" + snipit + "\n" + tabs + "// EXISTING_CODE";
-            replace(codeOut, r1, r2);
-        }
-
-        replaceAll(codeOut, "// EXISTING_CODE\n\n" + tabs + "// EXISTING_CODE",
-                   "// EXISTING_CODE\n" + tabs + "// EXISTING_CODE");
-        //--------------------------------------------------------------------------------------
-    }
-
-    // One final cleanup
-    replaceAll(codeOut, "\n\n}", "\n}");
-    replaceAll(codeOut, "\n\n\n", "\n\n");
-    if (cw.stripEOFNL) {
-        if (endsWith(codeOut, "\n"))
-            replaceReverse(codeOut, "\n", "");
-    }
-
-    if (cw.nSpaces)
-        replaceAll(codeOut, "\t", string_q(cw.nSpaces, ' '));
-    replaceAll(codeOut, "[PTAB]", "\\t");
-
-    if (contains(codeOut, "virtual") || contains(codeOut, "override")) {
-        replace(codeOut, "~C", "virtual ~C");
-        replace(codeOut, "~Q", "virtual ~Q");
-        replace(codeOut, "::virtual ~C", "::~C");
-        replace(codeOut, "::virtual ~Q", "::~Q");
-    }
-
-    bool testing = cw.testing;
-    if (isTestMode())
-        testing = true;
-
-    if (cw.force || orig != codeOut) {
-        // Do the actual writing of the data only if we're not testing or the user has told us not to
-        if (cw.force || !testing) {
-            LOG_INFO("Writing: ", cTeal, substitute(cw.fileName, getCWD(), "$TEST/"), cOff);
-            stringToAsciiFile(cw.fileName, codeOut);
-        } else {
-            LOG8("Not writing: ", cw.fileName);
-        }
-        // We return 'true' if we WOULD HAVE have written the file (even if we didn't).
-        return true;
-    }
-
-    // We return 'false' if we would NOT have written the file (not if we actually did).
-    return false;
 }
 
 //-----------------------------------------------------------------------
@@ -475,7 +404,7 @@ void cleanFileLocks(void) {
     explode(files, list, '|');
     for (auto file : files) {
         remove(file.c_str());
-        if (!isTestMode() && !isLiveTest())
+        if (!isTestMode())
             LOG_INFO("Removing file: ", file);
     }
     manageRemoveList("clear");

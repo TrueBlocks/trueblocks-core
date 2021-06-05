@@ -1,5 +1,5 @@
 {
   "errors": [
-    "chifra export - You must also specify --staging when using --unripe."
+    "chifra export - --staging and --unripe are disabled for testing."
   ]
 }

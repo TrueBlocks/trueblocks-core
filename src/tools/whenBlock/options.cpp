@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -11,8 +11,8 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 /*
- * Parts of this file were generated with makeClass. Edit only those parts of the code
- * outside of the BEG_CODE/END_CODE sections
+ * Parts of this file were generated with makeClass --options. Edit only those parts of
+ * the code outside of the BEG_CODE/END_CODE sections
  */
 #include "options.h"
 
@@ -26,7 +26,7 @@ static const COption params[] = {
     COption("list", "l", "", OPT_SWITCH, "export a list of the 'special' blocks"),
     COption("timestamps", "t", "", OPT_SWITCH, "ignore other options and generate timestamps only"),
     COption("skip", "s", "<uint64>", OPT_FLAG, "only applicable if --timestamps is on, the step between block numbers in the export"),  // NOLINT
-    COption("", "", "", OPT_DESCRIPTION, "Finds block based on date, blockNum, timestamp, or 'special'."),
+    COption("", "", "", OPT_DESCRIPTION, "Find block(s) based on date, blockNum, timestamp, or 'special'."),
     // clang-format on
     // END_CODE_OPTIONS
 };
@@ -35,14 +35,15 @@ static const size_t nParams = sizeof(params) / sizeof(COption);
 //-------------------------------------------------------------------------
 size_t nTimestamps(void) {
     size_t nTs;
-    loadTimestampFile(NULL, nTs);
+    loadTimestamps(NULL, nTs);
     return nTs;
 }
 
 extern const char* STR_DISPLAY_WHEN;
 extern const char* STR_DISPLAY_TIMESTAMP;
 //---------------------------------------------------------------------------------------------------
-bool COptions::parseArguments(string_q& command) {
+bool COptions::parseArguments(string_q& commandIn) {
+    string_q command = commandIn;
     if (!standardOptions(command))
         return false;
 
@@ -50,6 +51,7 @@ bool COptions::parseArguments(string_q& command) {
     CStringArray block_list;
     // END_CODE_LOCAL_INIT
 
+    hasHelp = contains(command, "-h") || contains(command, "-th");
     Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
@@ -67,11 +69,13 @@ bool COptions::parseArguments(string_q& command) {
         } else if (startsWith(arg, "-s:") || startsWith(arg, "--skip:")) {
             if (!confirmUint("skip", skip, arg))
                 return false;
+        } else if (arg == "-s" || arg == "--skip") {
+            return flag_required("skip");
 
         } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
-                return usage("Invalid option: " + arg);
+                return invalid_option(arg);
             }
 
         } else {
@@ -83,14 +87,17 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     // BEG_DEBUG_DISPLAY
-    // LOG_TEST("block_list", block_list, (block_list == NOPOS));
+    LOG_TEST_LIST("block_list", block_list, block_list.empty());
     LOG_TEST_BOOL("list", list);
     LOG_TEST_BOOL("timestamps", timestamps);
     LOG_TEST("skip", skip, (skip == NOPOS));
     // END_DEBUG_DISPLAY
 
+    if (Mocked("when"))
+        return false;
+
     if (skip != NOPOS && !skip)
-        return usage("--skip value must be larger than zero.");
+        return usage("");  // ERR_INVALIDSKIPVAL);
 
     blknum_t latest = getBlockProgress(BP_CLIENT).client;
     for (auto item : block_list) {
@@ -168,32 +175,29 @@ void COptions::Init(void) {
     skip = NOPOS;
     isText = false;
     cnt = 0;
+    hasHelp = false;
     requests.clear();
     blocks.Init();
 }
 
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
-    setSorts(GETRUNTIME_CLASS(CBlock), GETRUNTIME_CLASS(CTransaction), GETRUNTIME_CLASS(CReceipt));
-
     Init();
-
-    // Differnt default for this software, but only change it if user hasn't already therefor not in Init
-    if (!isApiMode())
-        expContext().exportFmt = TXT1;
 
     // BEG_CODE_NOTES
     // clang-format off
     notes.push_back("The block list may contain any combination of `number`, `hash`, `date`, special `named` blocks.");
     notes.push_back("Dates must be formatted in JSON format: YYYY-MM-DD[THH[:MM[:SS]]].");
-    notes.push_back("You may customize the list of named blocks by editing [{CONFIG}]whenBlock.toml.");
-    notes.push_back("The following `named` blocks are currently configured:");
     // clang-format on
     // END_CODE_NOTES
-    notes.push_back("  " + listSpecials(NONE1));
 
-    // BEG_ERROR_MSG
-    // END_ERROR_MSG
+    // BEG_ERROR_STRINGS
+    usageErrs[ERR_INVALIDSKIPVAL] = "--skip value must be larger than zero.";
+    // END_ERROR_STRINGS
+
+    // Differnt default for this software, but only change it if user hasn't already therefor not in Init
+    if (!isApiMode())
+        expContext().exportFmt = TXT1;
 }
 
 //--------------------------------------------------------------------------------
@@ -208,39 +212,6 @@ bool showSpecials(CNameValue& pair, void* data) {
     CNameValue nv("block", pair.second + "|" + pair.first);
     array->push_back(nv);
     return true;
-}
-
-//--------------------------------------------------------------------------------
-string_q COptions::listSpecials(format_t fmt) const {
-    if (specials.size() == 0)
-        ((COptionsBase*)this)->loadSpecials();  // NOLINT
-
-    ostringstream os;
-    string_q extra;
-    for (size_t i = 0; i < specials.size(); i++) {
-        string_q name = specials[i].first;
-        string_q bn = specials[i].second;
-        if (name == "latest") {
-            if (isTestMode()) {
-                bn = "";
-            } else if (COptionsBase::isReadme) {
-                bn = "--";
-            } else if (i > 0 && str_2_Uint(bn) >= getBlockProgress(BP_CLIENT).client) {
-                extra = " (syncing)";
-            }
-        }
-
-#define N_PER_LINE 4
-        os << name;
-        os << " (`" << bn << extra << "`)";
-        if (!((i + 1) % N_PER_LINE)) {
-            if (i < specials.size() - 1)
-                os << "\n  ";
-        } else if (i < specials.size() - 1) {
-            os << ", ";
-        }
-    }
-    return os.str().c_str();
 }
 
 //-----------------------------------------------------------------------

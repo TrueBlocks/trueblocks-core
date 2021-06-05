@@ -1,5 +1,0 @@
-{
-  "errors": [
-    "chifra blocks - The --force option is not available when using one of the address options."
-  ]
-}

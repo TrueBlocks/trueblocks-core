@@ -2,15 +2,17 @@ tomlTest argc: 2 [1:test14.toml]
 tomlTest test14.toml 
 test14.toml
 [version]
-current = "0.8.4-alpha"
+current = "0.9.4-alpha"
 
 [display]
 format = "[{TIMESTAMP}]\t[{DATE}]\t[{FROM}]\t[{TO}]\t[{VALUE}]\t[{ETHER}]\t[{FUNCTION}]\t[{INPUT}]\t[{ISERROR}]\t[{ISINTERNALTX}]\t[{GAS}]\t[{GASUSED}]\t[{BLOCKNUMBER}]\t[{HASH}]\n"
+
 
 [junk]
 format1 = "[{HEAD}]\n\tdate: @[{DATE}]# timestamp: @[{TIMESTAMP}]# from: @[{w:20:FROM}...]# to: @[{w:20:TO}...]# value: @[{w:30:VALUE}]# \n\thash: @[{HASH}]# blockNumber: @[{BLOCKNUMBER}]# txIndex: @[{TRANSACTIONINDEX}]#\n\tinput: @[{INPUT}]#\n[{P}];"
 format2 = "insert into transactions values ('[{HASH}]','[{FROM}]','[{FUNCTION}]',[{ETHER}])\;\n;"
 value = "Checking spaces between equals sign and "
+
 
 [watches]
 address_0 = "af30d2a7e90d7dc361c8c4585e9bb7d2f6f15bc7"
@@ -44,15 +46,17 @@ color_0      = "bBlue"
 
 File contents after write
 [version]
-current = "0.8.4-alpha"
+current = "0.9.4-alpha"
 
 [display]
 format = "[{TIMESTAMP}]\t[{DATE}]\t[{FROM}]\t[{TO}]\t[{VALUE}]\t[{ETHER}]\t[{FUNCTION}]\t[{INPUT}]\t[{ISERROR}]\t[{ISINTERNALTX}]\t[{GAS}]\t[{GASUSED}]\t[{BLOCKNUMBER}]\t[{HASH}]\n"
+
 
 [junk]
 format1 = "[{HEAD}]\n\tdate: @[{DATE}]# timestamp: @[{TIMESTAMP}]# from: @[{w:20:FROM}...]# to: @[{w:20:TO}...]# value: @[{w:30:VALUE}]# \n\thash: @[{HASH}]# blockNumber: @[{BLOCKNUMBER}]# txIndex: @[{TRANSACTIONINDEX}]#\n\tinput: @[{INPUT}]#\n[{P}];"
 format2 = "insert into transactions values ('[{HASH}]','[{FROM}]','[{FUNCTION}]',[{ETHER}])\;\n;"
 value = "Checking spaces between equals sign and "
+
 
 [watches]
 address_0 = "af30d2a7e90d7dc361c8c4585e9bb7d2f6f15bc7"

@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -11,8 +11,8 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 /*
- * This file was generated with makeClass. Edit only those parts of the code inside
- * of 'EXISTING_CODE' tags.
+ * Parts of this file were generated with makeClass --run. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
  */
 #include "newreceipt.h"
 
@@ -84,8 +84,8 @@ string_q CNewReceipt::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 'i':
-            if (fieldName % "isError") {
-                return bool_2_Str_t(isError);
+            if (fieldName % "isErr") {
+                return bool_2_Str_t(isErr);
             }
             break;
         case 'l':
@@ -139,8 +139,8 @@ bool CNewReceipt::setValueByName(const string_q& fieldNameIn, const string_q& fi
             }
             break;
         case 'i':
-            if (fieldName % "isError") {
-                isError = str_2_Bool(fieldValue);
+            if (fieldName % "isErr") {
+                isErr = str_2_Bool(fieldValue);
                 return true;
             }
             break;
@@ -188,7 +188,7 @@ bool CNewReceipt::Serialize(CArchive& archive) {
     archive >> gasUsed;
     archive >> logs;
     archive >> logsBloom;
-    archive >> isError;
+    archive >> isErr;
     finishParse();
     return true;
 }
@@ -205,7 +205,7 @@ bool CNewReceipt::SerializeC(CArchive& archive) const {
     archive << gasUsed;
     archive << logs;
     archive << logsBloom;
-    archive << isError;
+    archive << isErr;
 
     return true;
 }
@@ -246,7 +246,7 @@ void CNewReceipt::registerClass(void) {
     ADD_FIELD(CNewReceipt, "gasUsed", T_GAS, ++fieldNum);
     ADD_FIELD(CNewReceipt, "logs", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CNewReceipt, "logsBloom", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CNewReceipt, "isError", T_BOOL | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CNewReceipt, "isErr", T_BOOL | TS_OMITEMPTY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CNewReceipt, "schema");

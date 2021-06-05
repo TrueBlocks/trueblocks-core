@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -48,15 +48,15 @@ string_q uint_2_Hex(uint64_t num) {
 }
 
 //--------------------------------------------------------------------------------
-string_q wei_2_Ether(const string_q& _value) {
-    // Make sure the wei number is at least 18 characters long. Once it is,
-    // reverse it, put a decimal at the 18th position, reverse it back,
+string_q str_2_Ether(const string_q& _value, uint64_t decimals) {
+    // Make sure the wei number is at least 'decimals' characters long. Once it is,
+    // reverse it, put a decimal at the 'decimals'th position, reverse it back,
     // trim leading '0's except the tens digit.
     string_q ret = _value;
-    if (ret.length() < 18)
-        ret = substitute(padLeft(_value, 18), " ", "0");
+    if (ret.length() < decimals)
+        ret = substitute(padLeft(_value, decimals), " ", "0");
     reverse(ret);
-    ret = extract(ret, 0, 18) + "." + extract(ret, 18);
+    ret = extract(ret, 0, decimals) + "." + extract(ret, decimals);
     reverse(ret);
     ret = trimLeading(ret, '0');
     if (startsWith(ret, '.'))
@@ -66,14 +66,6 @@ string_q wei_2_Ether(const string_q& _value) {
     }
     ret = substitute(ret, "-.", "-0.");
     return ret;
-}
-
-//-----------------------------------------------------------------------
-string_q wei_2_Ether(biguint_t in) {
-    string_q ret = wei_2_Ether(bnu_2_Str(in));
-    if (contains(ret, "."))
-        ret = trimTrailing(ret, '0');
-    return trimTrailing(ret, '.');
 }
 
 //--------------------------------------------------------------------------------
@@ -335,11 +327,6 @@ string_q double_2_Str(double f, size_t nDecimals) {
 }
 
 //--------------------------------------------------------------------------------
-string_q bni_2_Str(const bigint_t& num) {
-    return (num.isNegative() ? string("-") : "") + bnu_2_Str(num.getMagnitude());
-}
-
-//--------------------------------------------------------------------------------
 string_q bnu_2_Str(const biguint_t& num) {
     return string(BigUnsignedInABase(num, 10));
 }
@@ -352,11 +339,6 @@ string_q addr_2_Str(const address_t& addr) {
 //--------------------------------------------------------------------------------
 string_q hash_2_Str(const hash_t& hash) {
     return (hash.empty() ? "0x0" : hash);
-}
-
-//--------------------------------------------------------------------------------
-string_q wei_2_Str(const wei_t& wei) {
-    return bnu_2_Str(wei);
 }
 
 //--------------------------------------------------------------------------------

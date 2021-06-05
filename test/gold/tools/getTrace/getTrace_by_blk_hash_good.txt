@@ -1,5 +1,0 @@
-getTrace argc: 3 [1:0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f.55] [2:--verbose] 
-getTrace 0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f.55 --verbose 
-TIME ~ CLOCK - <INFO>  : skip_ddos: true
-blocknumber	transactionindex	traceaddress	action::calltype	error	action::from	action::to	action::value	action::ether	action::gas	result::gasused	action::input	compressedtrace	result::output
-4001001	55	null	call		0x4ad64328076e1220333a82a4e602b1aaddd215e3	0x8d12a197cb00d4747a1fe03395095ce2a5cc6819	80000000000000000	0.080000000000000000	228728	23221	0xd0e30db0		0x

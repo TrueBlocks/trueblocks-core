@@ -2,3 +2,4 @@ fileTest argc: 2 [1:copy]
 fileTest copy 
 old file: This is the string - 1
 new file: This is the string - 1
+n w s file: This is the string - 1

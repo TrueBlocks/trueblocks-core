@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -23,7 +23,7 @@ int main(int argc, const char* argv[]) {
     if (!options.prepareArguments(argc, argv))
         return 0;
 
-    CAccount theAccount;
+    CCachedAccount theAccount;
     for (auto command : options.commandLines) {
         if (!options.parseArguments(command))
             return 0;
@@ -60,9 +60,9 @@ int main(int argc, const char* argv[]) {
 }
 
 //--------------------------------------------------------------------------------
-bool Slurp(CAccount& theAccount, COptions& options) {
+bool Slurp(CCachedAccount& theAccount, COptions& options) {
     theAccount.transactions.clear();
-    theAccount = CAccount();
+    theAccount = CCachedAccount();
     theAccount.addr = options.addrs[0];
     cerr << "\t"
          << "Slurping " << theAccount.addr << "\n";
@@ -112,7 +112,7 @@ bool Slurp(CAccount& theAccount, COptions& options) {
                     if (type == "int")
                         findInternalTxIndex(trans);
                     if (type == "token" || type == "nfts")
-                        trans.hasToken = 1;
+                        trans.hasToken = true;
                     theAccount.transactions.push_back(trans);
                     theAccount.markLatest(trans);
                     trans = CTransaction();  // reset

@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------
  * This source code is confidential proprietary information which is
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  * All Rights Reserved
  *------------------------------------------------------------------------*/
 #include "options.h"
@@ -8,12 +8,6 @@
 //----------------------------------------------------------------------------------
 int main(int argc, const char* argv[]) {
     pinlib_init(defaultQuitHandler);
-
-    if (isLiveTest()) {
-        // clean up if we're in live testing
-        cleanFolder(getCachePath("tmp/"));
-        cleanFolder(configPath("mocked/addr_index"));
-    }
 
     COptions options;
     if (!options.prepareArguments(argc, argv))
@@ -36,21 +30,23 @@ int main(int argc, const char* argv[]) {
             LOG_INFO("Block scraper is paused: ", Now().Format(FMT_EXPORT), "\r");
 
         } else {
-            bool ret = false;
+            bool ret1 = true;
             if (options.tools & TOOL_INDEX) {
                 LOG_INFO(cYellow, "Block scraper is running...", cOff);
-                ret = options.scrape_blocks();
+                ret1 = options.scrape_blocks();
             }
 
+            bool ret2 = true;
             if (options.tools & TOOL_MONITORS) {
                 LOG_INFO(cYellow, "Monitor scraper is running...", cOff);
-                ret = options.scrape_monitors();
+                ret2 = options.scrape_monitors();
+                LOG_INFO(cYellow, "   finished...", cOff);
             }
 
-            LOG_INFO((ret ? "  ...pass completed" : "  ...pass did not complete"), ". Running again in ", options.sleep,
-                     " seconds... ");
+            LOG_INFO(ret1 && ret2 ? "  ...pass completed." : "  ...pass did not complete.");
 
-            // TODO(tjayrush): FIX_THIS_CODE
+            // TODO(tjayrush): We should try to scrape timestamps with blaze while we're doing this scan
+            // TODO(tjayrush): try to capture timestamps during blaze scraping
             freshenTimestamps(getBlockProgress(BP_RIPE).ripe);
         }
 
@@ -62,7 +58,10 @@ int main(int argc, const char* argv[]) {
             for (size_t n = 0; n < nHalfSeconds && !shouldQuit() && options.state == prevState; n++) {
                 usleep((useconds_t)(500000));
                 options.state = options.getCurrentState(unused);
+                if (!(n % 4))
+                    LOG_INFO("Running again in ", (options.sleep - (n * .5)), ".0 seconds...\r");
             }
+            LOG_INFO("Running again in 0 seconds...    ");
         } else {
             options.state = options.getCurrentState(unused);
         }

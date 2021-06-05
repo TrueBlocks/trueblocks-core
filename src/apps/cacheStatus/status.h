@@ -1,7 +1,7 @@
 #pragma once
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -12,8 +12,8 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 /*
- * This file was generated with makeClass. Edit only those parts of the code inside
- * of 'EXISTING_CODE' tags.
+ * Parts of this file were generated with makeClass --run. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
  */
 #include "etherlib.h"
 #include "cache.h"
@@ -32,6 +32,7 @@ class CStatus : public CBaseNode {
     string_q trueblocks_version;
     string_q rpc_provider;
     string_q balance_provider;
+    string_q config_path;
     string_q cache_path;
     string_q index_path;
     string_q host;
@@ -114,6 +115,7 @@ inline void CStatus::initialize(void) {
     trueblocks_version = "";
     rpc_provider = "";
     balance_provider = "";
+    config_path = "";
     cache_path = "";
     index_path = "";
     host = "";
@@ -148,6 +150,7 @@ inline void CStatus::duplicate(const CStatus& st) {
     trueblocks_version = st.trueblocks_version;
     rpc_provider = st.rpc_provider;
     balance_provider = st.balance_provider;
+    config_path = st.config_path;
     cache_path = st.cache_path;
     index_path = st.index_path;
     host = st.host;

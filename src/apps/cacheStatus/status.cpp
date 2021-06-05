@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -11,8 +11,8 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 /*
- * This file was generated with makeClass. Edit only those parts of the code inside
- * of 'EXISTING_CODE' tags.
+ * Parts of this file were generated with makeClass --run. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
  */
 #include "status.h"
 
@@ -84,6 +84,9 @@ string_q CStatus::getValueByName(const string_q& fieldName) const {
             }
             if (fieldName % "client_ids") {
                 return client_ids;
+            }
+            if (fieldName % "config_path") {
+                return config_path;
             }
             if (fieldName % "cache_path") {
                 return cache_path;
@@ -182,6 +185,10 @@ bool CStatus::setValueByName(const string_q& fieldNameIn, const string_q& fieldV
             }
             if (fieldName % "client_ids") {
                 client_ids = fieldValue;
+                return true;
+            }
+            if (fieldName % "config_path") {
+                config_path = fieldValue;
                 return true;
             }
             if (fieldName % "cache_path") {
@@ -289,6 +296,7 @@ bool CStatus::Serialize(CArchive& archive) {
     archive >> trueblocks_version;
     archive >> rpc_provider;
     archive >> balance_provider;
+    // archive >> config_path;
     archive >> cache_path;
     archive >> index_path;
     archive >> host;
@@ -330,6 +338,7 @@ bool CStatus::SerializeC(CArchive& archive) const {
     archive << trueblocks_version;
     archive << rpc_provider;
     archive << balance_provider;
+    // archive << config_path;
     archive << cache_path;
     archive << index_path;
     archive << host;
@@ -388,6 +397,8 @@ void CStatus::registerClass(void) {
     ADD_FIELD(CStatus, "trueblocks_version", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CStatus, "rpc_provider", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CStatus, "balance_provider", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CStatus, "config_path", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CStatus, "config_path");
     ADD_FIELD(CStatus, "cache_path", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CStatus, "index_path", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CStatus, "host", T_TEXT | TS_OMITEMPTY, ++fieldNum);
@@ -416,6 +427,7 @@ void CStatus::registerClass(void) {
     HIDE_FIELD(CStatus, "ts");
     ADD_FIELD(CStatus, "date", T_DATE, ++fieldNum);
     SHOW_FIELD(CStatus, "date");
+    SHOW_FIELD(CStatus, "config_path");
     // EXISTING_CODE
 }
 
@@ -468,7 +480,7 @@ ostream& operator<<(ostream& os, const CStatus& it) {
 const CBaseNode* CStatus::getObjectAt(const string_q& fieldName, size_t index) const {
     if (fieldName % "caches") {
         if (index == NOPOS) {
-            CCache* empty;
+            CCache* empty = nullptr;
             ((CStatus*)this)->caches.push_back(empty);  // NOLINT
             index = caches.size() - 1;
         }

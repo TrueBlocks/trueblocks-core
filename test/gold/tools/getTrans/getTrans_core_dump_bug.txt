@@ -1,74 +1,156 @@
 getTrans argc: 5 [1:0xa5c9c1a65f998be86dc2131d57d0de0c418bb534d8d2b37b46c99888ccef8d10] [2:-avt] [3:--fmt] [4:api] 
 getTrans 0xa5c9c1a65f998be86dc2131d57d0de0c418bb534d8d2b37b46c99888ccef8d10 -avt --fmt api 
-TIME ~ CLOCK - <INFO>  : articulate: true
-TIME ~ CLOCK - <INFO>  : trace: true
 {"data": [
---3 : 7 : 0
---  0: recipient (address)
---  1: topic (string)
---  2: data (bytes32)
---  0: 000000000000000000000000d31f381ad54386895852f311fc3be2008c88cb27 <---
---  1: 0000000000000000000000000000000000000000000000000000000000000080
---  2: 516d51344e3338384c736e77384e486e4a72526f59327561676d5071736d3353
---  3: 3641436955616645364b6b32506f000000000000000000000000000000000000
---  4: 0000000000000000000000000000000000000000000000000000000000000040
---  5: 546869732069732074686520737472696e67207468617420726570726573656e
---  6: 7473207468652074797065206f662064617461206265696e6720706f73746564
---3 : 7 : 1
---  0: recipient (address) = 0xd31f381ad54386895852f311fc3be2008c88cb27
---  1: topic (string)
---  2: data (bytes32)
---  0: 000000000000000000000000d31f381ad54386895852f311fc3be2008c88cb27
---  1: 0000000000000000000000000000000000000000000000000000000000000080 <---
---  2: 516d51344e3338384c736e77384e486e4a72526f59327561676d5071736d3353
---  3: 3641436955616645364b6b32506f000000000000000000000000000000000000
---  4: 0000000000000000000000000000000000000000000000000000000000000040
---  5: 546869732069732074686520737472696e67207468617420726570726573656e
---  6: 7473207468652074797065206f662064617461206265696e6720706f73746564
---3 : 7 : 2
---  0: recipient (address) = 0xd31f381ad54386895852f311fc3be2008c88cb27
---  1: topic (string) = This is the string that represents the type of data being posted
---  2: data (bytes32)
---  0: 000000000000000000000000d31f381ad54386895852f311fc3be2008c88cb27
---  1: 0000000000000000000000000000000000000000000000000000000000000080
---  2: 516d51344e3338384c736e77384e486e4a72526f59327561676d5071736d3353 <---
---  3: 3641436955616645364b6b32506f000000000000000000000000000000000000
---  4: 0000000000000000000000000000000000000000000000000000000000000040
---  5: 546869732069732074686520737472696e67207468617420726570726573656e
---  6: 7473207468652074797065206f662064617461206265696e6720706f73746564
---3 : 7 : 0
---  0: recipient (address)
---  1: topic (string)
---  2: data (bytes32)
---  0: 000000000000000000000000d31f381ad54386895852f311fc3be2008c88cb27 <---
---  1: 0000000000000000000000000000000000000000000000000000000000000080
---  2: 516d51344e3338384c736e77384e486e4a72526f59327561676d5071736d3353
---  3: 3641436955616645364b6b32506f000000000000000000000000000000000000
---  4: 0000000000000000000000000000000000000000000000000000000000000040
---  5: 546869732069732074686520737472696e67207468617420726570726573656e
---  6: 7473207468652074797065206f662064617461206265696e6720706f73746564
---3 : 7 : 1
---  0: recipient (address) = 0xd31f381ad54386895852f311fc3be2008c88cb27
---  1: topic (string)
---  2: data (bytes32)
---  0: 000000000000000000000000d31f381ad54386895852f311fc3be2008c88cb27
---  1: 0000000000000000000000000000000000000000000000000000000000000080 <---
---  2: 516d51344e3338384c736e77384e486e4a72526f59327561676d5071736d3353
---  3: 3641436955616645364b6b32506f000000000000000000000000000000000000
---  4: 0000000000000000000000000000000000000000000000000000000000000040
---  5: 546869732069732074686520737472696e67207468617420726570726573656e
---  6: 7473207468652074797065206f662064617461206265696e6720706f73746564
---3 : 7 : 2
---  0: recipient (address) = 0xd31f381ad54386895852f311fc3be2008c88cb27
---  1: topic (string) = This is the string that represents the type of data being posted
---  2: data (bytes32)
---  0: 000000000000000000000000d31f381ad54386895852f311fc3be2008c88cb27
---  1: 0000000000000000000000000000000000000000000000000000000000000080
---  2: 516d51344e3338384c736e77384e486e4a72526f59327561676d5071736d3353 <---
---  3: 3641436955616645364b6b32506f000000000000000000000000000000000000
---  4: 0000000000000000000000000000000000000000000000000000000000000040
---  5: 546869732069732074686520737472696e67207468617420726570726573656e
---  6: 7473207468652074797065206f662064617461206265696e6720706f73746564
+
+level: 1
+readOffset: 0
+objectStart: 0
+params.size: 3
+  0: address recipient = <>
+  1: string topic = <>
+  2: bytes32 data = <>
+dataArray.size: 7
+  0 (0x000) 0000000000000000...d54386895852f311fc3be2008c88cb27 <=o <-r
+  1 (0x020) 0000000000000000...00000000000000000000000000000080
+  2 (0x040) 516d51344e333838...4a72526f59327561676d5071736d3353
+  3 (0x060) 3641436955616645...00000000000000000000000000000000
+  4 (0x080) 0000000000000000...00000000000000000000000000000040
+  5 (0x0a0) 5468697320697320...6e67207468617420726570726573656e
+  6 (0x0c0) 7473207468652074...617461206265696e6720706f73746564
+
+==================================================
+params.size: 3
+  0: address recipient = 0xd31f381ad54386895852f311fc3be2008c88cb27
+  1: string topic = <>
+  2: bytes32 data = <>
+
+level: 1
+readOffset: 1
+objectStart: 0
+params.size: 3
+  0: address recipient = 0xd31f381ad54386895852f311fc3be2008c88cb27
+  1: string topic = <>
+  2: bytes32 data = <>
+dataArray.size: 7
+  0 (0x000) 0000000000000000...d54386895852f311fc3be2008c88cb27 <=o
+  1 (0x020) 0000000000000000...00000000000000000000000000000080 <-r
+  2 (0x040) 516d51344e333838...4a72526f59327561676d5071736d3353
+  3 (0x060) 3641436955616645...00000000000000000000000000000000
+  4 (0x080) 0000000000000000...00000000000000000000000000000040
+  5 (0x0a0) 5468697320697320...6e67207468617420726570726573656e
+  6 (0x0c0) 7473207468652074...617461206265696e6720706f73746564
+
+==================================================
+params.size: 3
+  0: address recipient = 0xd31f381ad54386895852f311fc3be2008c88cb27
+  1: string topic = This is the string that represents the type of data being posted
+  2: bytes32 data = <>
+
+level: 1
+readOffset: 2
+objectStart: 0
+params.size: 3
+  0: address recipient = 0xd31f381ad54386895852f311fc3be2008c88cb27
+  1: string topic = This is the string that represents the type of data being posted
+  2: bytes32 data = <>
+dataArray.size: 7
+  0 (0x000) 0000000000000000...d54386895852f311fc3be2008c88cb27 <=o
+  1 (0x020) 0000000000000000...00000000000000000000000000000080
+  2 (0x040) 516d51344e333838...4a72526f59327561676d5071736d3353 <-r
+  3 (0x060) 3641436955616645...00000000000000000000000000000000
+  4 (0x080) 0000000000000000...00000000000000000000000000000040
+  5 (0x0a0) 5468697320697320...6e67207468617420726570726573656e
+  6 (0x0c0) 7473207468652074...617461206265696e6720706f73746564
+
+==================================================
+params.size: 3
+  0: address recipient = 0xd31f381ad54386895852f311fc3be2008c88cb27
+  1: string topic = This is the string that represents the type of data being posted
+  2: bytes32 data = 0x516d51344e3338384c736e77384e486e4a72526f59327561676d5071736d3353
+params.size: 3
+  0: address recipient = 0xd31f381ad54386895852f311fc3be2008c88cb27
+  1: string topic = This is the string that represents the type of data being posted
+  2: bytes32 data = 0x516d51344e3338384c736e77384e486e4a72526f59327561676d5071736d3353
+==================================================
+
+params.size: 0
+==================================================
+
+
+level: 1
+readOffset: 0
+objectStart: 0
+params.size: 3
+  0: address recipient = <>
+  1: string topic = <>
+  2: bytes32 data = <>
+dataArray.size: 7
+  0 (0x000) 0000000000000000...d54386895852f311fc3be2008c88cb27 <=o <-r
+  1 (0x020) 0000000000000000...00000000000000000000000000000080
+  2 (0x040) 516d51344e333838...4a72526f59327561676d5071736d3353
+  3 (0x060) 3641436955616645...00000000000000000000000000000000
+  4 (0x080) 0000000000000000...00000000000000000000000000000040
+  5 (0x0a0) 5468697320697320...6e67207468617420726570726573656e
+  6 (0x0c0) 7473207468652074...617461206265696e6720706f73746564
+
+==================================================
+params.size: 3
+  0: address recipient = 0xd31f381ad54386895852f311fc3be2008c88cb27
+  1: string topic = <>
+  2: bytes32 data = <>
+
+level: 1
+readOffset: 1
+objectStart: 0
+params.size: 3
+  0: address recipient = 0xd31f381ad54386895852f311fc3be2008c88cb27
+  1: string topic = <>
+  2: bytes32 data = <>
+dataArray.size: 7
+  0 (0x000) 0000000000000000...d54386895852f311fc3be2008c88cb27 <=o
+  1 (0x020) 0000000000000000...00000000000000000000000000000080 <-r
+  2 (0x040) 516d51344e333838...4a72526f59327561676d5071736d3353
+  3 (0x060) 3641436955616645...00000000000000000000000000000000
+  4 (0x080) 0000000000000000...00000000000000000000000000000040
+  5 (0x0a0) 5468697320697320...6e67207468617420726570726573656e
+  6 (0x0c0) 7473207468652074...617461206265696e6720706f73746564
+
+==================================================
+params.size: 3
+  0: address recipient = 0xd31f381ad54386895852f311fc3be2008c88cb27
+  1: string topic = This is the string that represents the type of data being posted
+  2: bytes32 data = <>
+
+level: 1
+readOffset: 2
+objectStart: 0
+params.size: 3
+  0: address recipient = 0xd31f381ad54386895852f311fc3be2008c88cb27
+  1: string topic = This is the string that represents the type of data being posted
+  2: bytes32 data = <>
+dataArray.size: 7
+  0 (0x000) 0000000000000000...d54386895852f311fc3be2008c88cb27 <=o
+  1 (0x020) 0000000000000000...00000000000000000000000000000080
+  2 (0x040) 516d51344e333838...4a72526f59327561676d5071736d3353 <-r
+  3 (0x060) 3641436955616645...00000000000000000000000000000000
+  4 (0x080) 0000000000000000...00000000000000000000000000000040
+  5 (0x0a0) 5468697320697320...6e67207468617420726570726573656e
+  6 (0x0c0) 7473207468652074...617461206265696e6720706f73746564
+
+==================================================
+params.size: 3
+  0: address recipient = 0xd31f381ad54386895852f311fc3be2008c88cb27
+  1: string topic = This is the string that represents the type of data being posted
+  2: bytes32 data = 0x516d51344e3338384c736e77384e486e4a72526f59327561676d5071736d3353
+params.size: 3
+  0: address recipient = 0xd31f381ad54386895852f311fc3be2008c88cb27
+  1: string topic = This is the string that represents the type of data being posted
+  2: bytes32 data = 0x516d51344e3338384c736e77384e486e4a72526f59327561676d5071736d3353
+==================================================
+
+params.size: 0
+==================================================
+
   {
     "hash": "0xa5c9c1a65f998be86dc2131d57d0de0c418bb534d8d2b37b46c99888ccef8d10",
     "blockHash": "0xf41643281a0a58e45254b6a7e3a53db51deeef05a80ebcbb1c1314a754aefbf9",
@@ -99,23 +181,11 @@ TIME ~ CLOCK - <INFO>  : trace: true
           "articulatedLog": {
             "name": "DataDumped",
             "stateMutability": "nonpayable",
-            "inputs": [
-              {
-                "name": "_recipient",
-                "value": "0xd31f381ad54386895852f311fc3be2008c88cb27",
-                "internalType": "address"
-              },
-              {
-                "name": "_topic",
-                "value": "0xf31b5730bd294639c67fa143fca1dad2c7aa05644f8d8b0e104aad5922d2f866",
-                "internalType": "string"
-              },
-              {
-                "name": "_dataHash",
-                "value": "QmQ4N388Lsnw8NHnJrRoY2uagmPqsm3S",
-                "internalType": "bytes32"
-              }
-            ]
+            "inputs": {
+              "_dataHash": "QmQ4N388Lsnw8NHnJrRoY2uagmPqsm3S",
+              "_recipient": "0xd31f381ad54386895852f311fc3be2008c88cb27",
+              "_topic": "0xf31b5730bd294639c67fa143fca1dad2c7aa05644f8d8b0e104aad5922d2f866"
+            }
           },
           "compressedLog": "DataDumped(0xd31f381ad54386895852f311fc3be2008c88cb27 /*_recipient*/, 0xf31b5730bd294639c67fa143fca1dad2c7aa05644f8d8b0e104aad5922d2f866 /*_topic*/, QmQ4N388Lsnw8NHnJrRoY2uagmPqsm3S /*_dataHash*/); "
         }
@@ -144,23 +214,11 @@ TIME ~ CLOCK - <INFO>  : trace: true
         "articulatedTrace": {
           "name": "postData",
           "stateMutability": "nonpayable",
-          "inputs": [
-            {
-              "name": "recipient",
-              "value": "0xd31f381ad54386895852f311fc3be2008c88cb27",
-              "internalType": "address"
-            },
-            {
-              "name": "topic",
-              "value": "This is the string that represents the type of data being posted",
-              "internalType": "string"
-            },
-            {
-              "name": "data",
-              "value": "0x516d51344e3338384c736e77384e486e4a72526f59327561676d5071736d3353",
-              "internalType": "bytes32"
-            }
-          ]
+          "inputs": {
+            "data": "0x516d51344e3338384c736e77384e486e4a72526f59327561676d5071736d3353",
+            "recipient": "0xd31f381ad54386895852f311fc3be2008c88cb27",
+            "topic": "This is the string that represents the type of data being posted"
+          }
         },
         "compressedTrace": "postData(0xd31f381ad54386895852f311fc3be2008c88cb27 /*recipient*/, This is the string that represents the type of data being posted /*topic*/, 0x516d51344e3338384c736e77384e486e4a72526f59327561676d5071736d3353 /*data*/); "
       }
@@ -168,23 +226,11 @@ TIME ~ CLOCK - <INFO>  : trace: true
     "articulatedTx": {
       "name": "postData",
       "stateMutability": "nonpayable",
-      "inputs": [
-        {
-          "name": "recipient",
-          "value": "0xd31f381ad54386895852f311fc3be2008c88cb27",
-          "internalType": "address"
-        },
-        {
-          "name": "topic",
-          "value": "This is the string that represents the type of data being posted",
-          "internalType": "string"
-        },
-        {
-          "name": "data",
-          "value": "0x516d51344e3338384c736e77384e486e4a72526f59327561676d5071736d3353",
-          "internalType": "bytes32"
-        }
-      ]
+      "inputs": {
+        "data": "0x516d51344e3338384c736e77384e486e4a72526f59327561676d5071736d3353",
+        "recipient": "0xd31f381ad54386895852f311fc3be2008c88cb27",
+        "topic": "This is the string that represents the type of data being posted"
+      }
     },
     "compressedTx": "postData(0xd31f381ad54386895852f311fc3be2008c88cb27 /*recipient*/, This is the string that represents the type of data being posted /*topic*/, 0x516d51344e3338384c736e77384e486e4a72526f59327561676d5071736d3353 /*data*/); ",
     "gasCost": 73459170000000,

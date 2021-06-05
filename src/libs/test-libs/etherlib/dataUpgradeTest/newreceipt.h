@@ -1,7 +1,7 @@
 #pragma once
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -12,8 +12,8 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 /*
- * This file was generated with makeClass. Edit only those parts of the code inside
- * of 'EXISTING_CODE' tags.
+ * Parts of this file were generated with makeClass --run. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
  */
 #include "etherlib.h"
 #include "logentry.h"
@@ -30,7 +30,7 @@ class CNewReceipt : public CBaseNode {
     gas_t gasUsed;
     CLogEntryArray logs;
     string_q logsBloom;
-    bool isError;
+    bool isErr;
 
   public:
     CNewReceipt(void);
@@ -100,7 +100,7 @@ inline void CNewReceipt::initialize(void) {
     gasUsed = 0;
     logs.clear();
     logsBloom = "";
-    isError = false;
+    isErr = false;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -115,7 +115,7 @@ inline void CNewReceipt::duplicate(const CNewReceipt& newr) {
     gasUsed = newr.gasUsed;
     logs = newr.logs;
     logsBloom = newr.logsBloom;
-    isError = newr.isError;
+    isErr = newr.isErr;
 
     // EXISTING_CODE
     // EXISTING_CODE

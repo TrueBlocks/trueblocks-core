@@ -15,16 +15,8 @@ message(STATUS "Using c++ standard c++${CMAKE_CXX_STANDARD}")
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # ----------------------------------------------------------------------------------------
-# Define default installation PATH
-if(NOT WIN32)
-    set(CMAKE_INSTALL_PREFIX "/usr/local/qblocks/" CACHE PATH "Default install directory")
-else()
-    message(ERROR "Windows build is not supported yet")
-endif()
-
-# ----------------------------------------------------------------------------------------
 # folder project
-project (quickBlocks)
+project (trueBlocks)
 
 # ----------------------------------------------------------------------------------------
 # Debug msg
@@ -74,13 +66,6 @@ set (BASE_INCLUDE
 # ----------------------------------------------------------------------------------------
 # Enable testing
 # enable_testing()
-
-# ----------------------------------------------------------------------------------------
-# Builds the README.md file in the given folder
-function(build_readme sourcePath toolName)
-    add_custom_command(OUTPUT help.txt COMMAND ${toolName} "-th" ">" help.txt "2>&1")
-    add_custom_target(readme COMMAND "${CMAKE_SOURCE_DIR}/../bin/test/makeReadme.py" "${CMAKE_SOURCE_DIR}" "${sourcePath}" "${toolName}" DEPENDS help.txt)
-endfunction(build_readme)
 
 add_custom_target(lint COMMAND "${CMAKE_SOURCE_DIR}/../bin/makeClass" "--lint" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
 add_custom_target(format COMMAND "${CMAKE_SOURCE_DIR}/../bin/makeClass" "--format" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")

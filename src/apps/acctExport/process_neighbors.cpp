@@ -1,17 +1,13 @@
 /*-------------------------------------------------------------------------
  * This source code is confidential proprietary information which is
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  * All Rights Reserved
  *------------------------------------------------------------------------*/
-/*
- * Parts of this file were generated with makeClass. Edit only those parts of the code
- * outside of the BEG_CODE/END_CODE sections
- */
 #include "options.h"
 
 //-----------------------------------------------------------------------
 void COptions::addNeighbor(CAddressUintMap& map, const address_t& addr) {
-    if ((addr == expContext().accountedFor || isZeroAddr(addr)))
+    if ((addr == accountedFor || isZeroAddr(addr)))
         return;
     map[addr]++;
 }

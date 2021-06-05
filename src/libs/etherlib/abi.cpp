@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -11,8 +11,8 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 /*
- * This file was generated with makeClass. Edit only those parts of the code inside
- * of 'EXISTING_CODE' tags.
+ * Parts of this file were generated with makeClass --run. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
  */
 #include "abi.h"
 #include "node.h"
@@ -322,14 +322,9 @@ const char* STR_DISPLAY_ABI =
 #define LOG_TEST(a, b)
 
 //---------------------------------------------------------------------------
-const CFunctionArray& CAbi::interfaceArray(void) const {
-    return interfaces;
-}
-
-//---------------------------------------------------------------------------
 bool loadAbiFile(const string_q& path, void* data) {
     if (endsWith(path, '/')) {
-        forEveryFileInFolder(path + "*", loadAbiFile, data);
+        return forEveryFileInFolder(path + "*", loadAbiFile, data);
     } else {
         if (endsWith(path, ".json")) {
             CAbi* abi = (CAbi*)data;  // NOLINT
@@ -349,15 +344,23 @@ bool loadAbiString(const string_q& jsonStr, CAbi& abi) {
 }
 
 //---------------------------------------------------------------------------
-bool CAbi::loadAbisFolderAndCache(const string_q& sourcePath, const string_q& binPath) {
-    if (sourcesMap[sourcePath])
+bool CAbi::loadAbisFromKnown(bool tokensOnly) {
+    if (tokensOnly) {
+        bool ret1 = loadAbiFromFile(configPath("abis/known-000/erc_00020.json"));
+        bool ret2 = loadAbiFromFile(configPath("abis/known-000/erc_00721.json"));
+        return (ret1 && ret2);
+    }
+
+    string_q sourcePath = configPath("abis/");
+    if (abiSourcesMap[sourcePath])
         return true;
 
+    string_q binPath = getCachePath("abis/known.bin");
     if (fileExists(binPath)) {
         // If any file is newer, don't use binary cache
         fileInfo info = getNewestFileInFolder(sourcePath);
         if (info.fileName == binPath || fileLastModifyDate(binPath) > info.fileTime) {
-            interfaceMap.clear();
+            abiInterfacesMap.clear();
             CArchive archive(READING_ARCHIVE);
             if (archive.Lock(binPath, modeReadOnly, LOCK_NOWAIT)) {
                 archive >> *this;
@@ -365,10 +368,10 @@ bool CAbi::loadAbisFolderAndCache(const string_q& sourcePath, const string_q& bi
                 LOG_TEST("Loaded " + uint_2_Str(interfaces.size()) + " interfaces from",
                          substitute(substitute(binPath, getCachePath(""), "$CACHE/"), configPath(""), "$CONFIG/"));
                 for (auto func : interfaces) {
-                    interfaceMap[func.encoding] = true;
+                    abiInterfacesMap[func.encoding] = true;
                     LOG_TEST("Inserting", func.type + "-" + func.signature);
                 }
-                sourcesMap[sourcePath] = true;
+                abiSourcesMap[sourcePath] = true;
                 return true;
             }
         }
@@ -379,7 +382,7 @@ bool CAbi::loadAbisFolderAndCache(const string_q& sourcePath, const string_q& bi
         return false;
 
     sort(interfaces.begin(), interfaces.end(), sortByFuncName);
-    sourcesMap[sourcePath] = true;
+    abiSourcesMap[sourcePath] = true;
 
     CArchive archive(WRITING_ARCHIVE);
     if (archive.Lock(binPath, modeWriteCreate, LOCK_NOWAIT)) {
@@ -394,19 +397,8 @@ bool CAbi::loadAbisFolderAndCache(const string_q& sourcePath, const string_q& bi
 }
 
 //---------------------------------------------------------------------------
-bool CAbi::loadAbisFromKnown(bool tokensOnly) {
-    if (tokensOnly) {
-        bool ret1 = loadAbiFromFile(configPath("abis/known-000/erc_00020.json"));
-        bool ret2 = loadAbiFromFile(configPath("abis/known-000/erc_00721.json"));
-        return (ret1 && ret2);
-    }
-    return loadAbisFolderAndCache(configPath("abis/"), getCachePath("abis/known.bin"));
-}
-
-//---------------------------------------------------------------------------
-bool CAbi::loadAbiFromAddress(const address_t& addr) {
-    if (isZeroAddr(addr))
-        return false;
+bool CAbi::loadAbiFromAddress(const address_t& addr, bool recurse) {
+    ASSERT(!isZeroAddr(addr));
 
     string_q fileName = getCachePath("abis/" + addr + ".json");
     string_q localFile = (getCWD() + addr + ".json");
@@ -415,17 +407,29 @@ bool CAbi::loadAbiFromAddress(const address_t& addr) {
         copyFile(localFile, fileName);
     }
 
-    return loadAbiFromFile(fileName);
+    if (!loadAbiFromFile(fileName))
+        return false;
+    abiSourcesMap[addr] = true;
+
+    // if (abiInterfacesMap["0x59679b0f"]) {
+    //     cerr << addr << endl;
+    //     // This is a proxy. Load the ABI from the proxied-to address as well
+    //     CEthCall theCall;
+    //     theCall.address = addr;
+    //     theCall.encoding = "0x59679b0f";  // implementation()
+    //     theCall.bytes = "";
+    //     theCall.blockNumber = getBlockProgress(BP_CLIENT).client;
+    //     theCall.checkProxy = false;
+    //     if (doEthCall(theCall))
+    //         loadAbiFromAddress(theCall.getResult(), false);
+    // }
+
+    return true;
 }
 
 //---------------------------------------------------------------------------
-// static string_q dispName(const string_q& fileName) {
-//     return substitute(substitute(fileName, getCachePath(""), "$CACHE/"), configPath(""), "$CONFIG/");
-// }
-
-//---------------------------------------------------------------------------
 bool CAbi::loadAbiFromFile(const string_q& fileName) {
-    if (sourcesMap[fileName])
+    if (abiSourcesMap[fileName])
         return true;
 
     if (!fileExists(fileName)) {
@@ -435,8 +439,16 @@ bool CAbi::loadAbiFromFile(const string_q& fileName) {
     LOG_TEST("loadAbiFromFile", dispName(fileName));
 
     if (loadAbiFromString(asciiFileToString(fileName))) {
+        if (interfaces.size() && interfaces[0].abi_source.empty()) {
+            for (auto& interface : interfaces)
+                if (interface.abi_source.empty()) {
+                    string_q str = substitute(substitute(fileName, getCachePath("abis/"), ""), configPath("abis/"), "");
+                    nextTokenClear(str, '/');
+                    interface.abi_source = str;
+                }
+        }
         sort(interfaces.begin(), interfaces.end(), sortByFuncName);
-        sourcesMap[fileName] = true;
+        abiSourcesMap[fileName] = true;
         return true;
     }
     return false;
@@ -454,21 +466,24 @@ bool CAbi::loadAbiFromString(const string_q& in) {
 }
 
 //-----------------------------------------------------------------------
-bool CAbi::loadAbiFromEtherscan(const address_t& addr, bool raw) {
+bool CAbi::loadAbiFromEtherscan(const address_t& addr) {
     if (isZeroAddr(addr))
         return true;
 
-    if (!raw) {
-        if (sourcesMap[addr])
-            return true;
+    if (abiSourcesMap[addr])
+        return true;
 
-        if (loadAbiFromAddress(addr))
-            return true;
-    }
+    if (loadAbiFromAddress(addr, true))
+        return true;
 
     // If this isn't a smart contract, don't bother
     if (!isContractAt(addr, getBlockProgress(BP_CLIENT).client)) {
-        sourcesMap[addr] = true;
+        abiSourcesMap[addr] = true;
+        return true;
+    }
+
+    if (loadAbisOneKnown(addr)) {
+        abiSourcesMap[addr] = true;
         return true;
     }
 
@@ -497,10 +512,11 @@ bool CAbi::loadAbiFromEtherscan(const address_t& addr, bool raw) {
         string_q fileName = getCachePath("abis/" + addr + ".json");
         establishFolder(fileName);
         stringToAsciiFile(fileName, results);
-        return loadAbiFromAddress(addr);
+        return loadAbiFromAddress(addr, true);
     }
 
-    sourcesMap[addr] = true;
+    // Even though we failed to find an ABI, we record that we've checked, so we don't try again.
+    abiSourcesMap[addr] = true;
     return false;
 }
 
@@ -510,14 +526,16 @@ void CAbi::loadAbiAddInterface(const CFunction& func) {
         return;
 
     // first in wins
-    if (interfaceMap[func.encoding]) {
+    if (abiInterfacesMap[func.encoding]) {
         LOG_TEST("Skipping", func.type + "-" + func.signature);
         return;
     }
 
     LOG_TEST("Inserting", func.type + "-" + func.signature);
-    interfaces.push_back(func);
-    interfaceMap[func.encoding] = true;
+    if (func.type != "constructor") {
+        interfaces.push_back(func);
+        abiInterfacesMap[func.encoding] = true;
+    }
 }
 
 //---------------------------------------------------------------------------
@@ -545,13 +563,47 @@ size_t CAbi::nOther(void) const {
 
 //-----------------------------------------------------------------------
 bool sortByFuncName(const CFunction& f1, const CFunction& f2) {
-    string_q s1 = (f1.type == "event" ? "zzzevent" : f1.type) + f1.name + f1.encoding;
+    string_q name1 = toLower(f1.name);
+    while (startsWith(name1, '_'))
+        replace(name1, "_", "");
+    string_q s1 = (f1.type == "event" ? "zzzevent" : f1.type) + name1 + f1.encoding;
     for (auto f : f1.inputs)
         s1 += f.name;
-    string_q s2 = (f2.type == "event" ? "zzzevent" : f2.type) + f2.name + f2.encoding;
+
+    string_q name2 = toLower(f2.name);
+    while (startsWith(name2, '_'))
+        replace(name2, "_", "");
+    string_q s2 = (f2.type == "event" ? "zzzevent" : f2.type) + name2 + f2.encoding;
     for (auto f : f2.inputs)
         s2 += f.name;
     return s1 < s2;
+}
+
+//-----------------------------------------------------------------------
+bool isKnownAbi(const string_q& addr, string_q& path) {
+    path = configPath("abis/known-000/" + addr + ".json");
+    if (fileExists(path))
+        return true;
+    path = configPath("abis/known-005/" + addr + ".json");
+    if (fileExists(path))
+        return true;
+    path = configPath("abis/known-010/" + addr + ".json");
+    if (fileExists(path))
+        return true;
+    path = configPath("abis/known-015/" + addr + ".json");
+    if (fileExists(path))
+        return true;
+    path = "";
+    return false;
+}
+
+//-----------------------------------------------------------------------
+bool CAbi::loadAbisOneKnown(const string_q& addr) {
+    string_q path;
+    if (!isKnownAbi(addr, path))
+        return false;
+    loadAbiFromFile(path);
+    return true;
 }
 // EXISTING_CODE
 }  // namespace qblocks

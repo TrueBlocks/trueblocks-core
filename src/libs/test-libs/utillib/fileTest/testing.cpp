@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -26,6 +26,10 @@ int main(int argc, const char* argv[]) {
     size_t rm = (argc == 2 && contains(string_q(argv[1]), "rm"));
     size_t newest = (argc == 2 && contains(string_q(argv[1]), "newest"));
 
+    string_q newFilename = "./new.txt";
+    string_q oldFilename = "./old.txt";
+    string_q nwsFilename = "./new with spaces.txt";
+
     if (last) {
         string_q lastFile = getLastFileInFolder("../", recurse);
         cout << "Last file in folder: " << lastFile << endl;
@@ -35,30 +39,34 @@ int main(int argc, const char* argv[]) {
         cout << "First file in folder: " << firstFile << endl;
 
     } else if (copy) {
-        stringToAsciiFile("old.txt", "This is the string");
-        copyFile("old.txt", "new.txt");
-        cout << "old file: " << asciiFileToString("old.txt") << " - " << fileExists("old.txt") << endl;
-        cout << "new file: " << asciiFileToString("new.txt") << " - " << fileExists("new.txt") << endl;
+        stringToAsciiFile(oldFilename, "This is the string");
+        copyFile(oldFilename, newFilename);
+        copyFile(oldFilename, nwsFilename);
+        cout << "old file: " << asciiFileToString(oldFilename) << " - " << fileExists(oldFilename) << endl;
+        cout << "new file: " << asciiFileToString(newFilename) << " - " << fileExists(newFilename) << endl;
+        cout << "n w s file: " << asciiFileToString(nwsFilename) << " - " << fileExists(nwsFilename) << endl;
 
     } else if (rm) {
-        ::remove("old.txt");
-        ::remove("new.txt");
-        cout << "old file: " << asciiFileToString("old.txt") << " - " << fileExists("old.txt") << endl;
-        cout << "new file: " << asciiFileToString("new.txt") << " - " << fileExists("new.txt") << endl;
+        ::remove(oldFilename.c_str());
+        ::remove(newFilename.c_str());
+        ::remove(nwsFilename.c_str());
+        cout << "old file: " << asciiFileToString(oldFilename) << " - " << fileExists(oldFilename) << endl;
+        cout << "new file: " << asciiFileToString(newFilename) << " - " << fileExists(newFilename) << endl;
+        cout << "n w s file: " << asciiFileToString(nwsFilename) << " - " << fileExists(nwsFilename) << endl;
 
     } else if (newest) {
-        stringToAsciiFile("./old.txt", "oldText");
+        stringToAsciiFile(oldFilename, "oldText");
         sleep(1.);
-        stringToAsciiFile("./new.txt", "oldText");
+        stringToAsciiFile(newFilename, "oldText");
         fileInfo info = getNewestFileInFolder("./");
-        cout << "old file: " << asciiFileToString("old.txt") << " - " << fileExists("old.txt") << endl;
-        cout << "new file: " << asciiFileToString("new.txt") << " - " << fileExists("new.txt") << endl;
+        cout << "old file: " << asciiFileToString(oldFilename) << " - " << fileExists(oldFilename) << endl;
+        cout << "new file: " << asciiFileToString(newFilename) << " - " << fileExists(newFilename) << endl;
         cout << info.fileName << endl;
         sleep(1.);
         stringToAsciiFile("./old.txt", "oldText");
         info = getNewestFileInFolder("./");
-        cout << "old file: " << asciiFileToString("old.txt") << " - " << fileExists("old.txt") << endl;
-        cout << "new file: " << asciiFileToString("new.txt") << " - " << fileExists("new.txt") << endl;
+        cout << "old file: " << asciiFileToString(oldFilename) << " - " << fileExists(oldFilename) << endl;
+        cout << "new file: " << asciiFileToString(newFilename) << " - " << fileExists(newFilename) << endl;
         cout << info.fileName << endl;
 
     } else {

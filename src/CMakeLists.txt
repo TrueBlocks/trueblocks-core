@@ -15,16 +15,8 @@ message(STATUS "Using c++ standard c++${CMAKE_CXX_STANDARD}")
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # ----------------------------------------------------------------------------------------
-# Define default installation PATH
-if(NOT WIN32)
-    set(CMAKE_INSTALL_PREFIX "/usr/local/qblocks/" CACHE PATH "Default install directory")
-else()
-    message(ERROR "Windows build is not supported yet")
-endif()
-
-# ----------------------------------------------------------------------------------------
 # folder project
-project (quickBlocks)
+project (trueBlocks)
 
 # ----------------------------------------------------------------------------------------
 # Debug msg
@@ -54,8 +46,10 @@ endif (CURL_FOUND)
 
 # ----------------------------------------------------------------------------------------
 # Globally available C++ settings
+set(DL_LIB "-ldl")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1z -Werror -Wall -O2 -fPIC")
 if(APPLE)
+    set(DL_LIB "")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1z -Werror -Wconversion -Wall -O2 -fPIC")
 endif()
 
@@ -75,17 +69,11 @@ set (BASE_INCLUDE
 # Enable testing
 # enable_testing()
 
-# ----------------------------------------------------------------------------------------
-# Builds the README.md file in the given folder
-function(build_readme sourcePath toolName)
-    add_custom_command(OUTPUT help.txt COMMAND ${toolName} "-th" ">" help.txt "2>&1")
-    add_custom_target(readme COMMAND "${CMAKE_SOURCE_DIR}/../bin/test/makeReadme.py" "${CMAKE_SOURCE_DIR}" "${sourcePath}" "${toolName}" DEPENDS help.txt)
-endfunction(build_readme)
-
 add_custom_target(lint COMMAND "${CMAKE_SOURCE_DIR}/../bin/makeClass" "--lint" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
 add_custom_target(format COMMAND "${CMAKE_SOURCE_DIR}/../bin/makeClass" "--format" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
 add_custom_target(options COMMAND "${CMAKE_SOURCE_DIR}/../bin/makeClass" "--options --api" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
-add_custom_target(generate COMMAND "${CMAKE_SOURCE_DIR}/../bin/makeClass" "-aopA" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
+add_custom_target(generate COMMAND "${CMAKE_SOURCE_DIR}/../bin/makeClass" "-Aaopm" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
+add_custom_target(readmes COMMAND "${CMAKE_SOURCE_DIR}/../bin/makeClass" "--readmes" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
 add_custom_target(finish COMMAND "${CMAKE_SOURCE_DIR}/../bin/makeClass" "-lf" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
 add_custom_target(tests COMMAND "${CMAKE_SOURCE_DIR}/../bin/test/test.sh" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/../build")
 add_custom_target(test-all COMMAND "${CMAKE_SOURCE_DIR}/../bin/test/test-all.sh" "--no_quit" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/../build")

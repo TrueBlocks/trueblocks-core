@@ -2,6 +2,7 @@
 class = CFunction
 fields = string name|\
         string type|\
+        string abi_source|\
         bool anonymous|\
         bool constant|\
         string stateMutability|\
@@ -9,9 +10,11 @@ fields = string name|\
         string encoding|\
         string message (nowrite)|\
         CParameterArray inputs|\
-        CParameterArray outputs
+        CParameterArray outputs|\
+        Value inputs_dict (nowrite)|\
+        Value outputs_dict (nowrite)
 includes = utillib.h|parameter.h
 sort = v1.encoding < v2.encoding
 equals = encoding % it.encoding && message % it.message
 serializable = true
-display_str = name, type, stateMutability, signature, encoding, inputs, outputs
+display_str = abi_source, name, type, stateMutability, signature, encoding, inputs, outputs

@@ -1,52 +1,50 @@
 /*-------------------------------------------------------------------------
  * This source code is confidential proprietary information which is
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  * All Rights Reserved
  *------------------------------------------------------------------------*/
 #include "options.h"
 
-//------------------------------------------------------------------------------------------------
-bool COptions::scrape_monitors(void) {
-    ENTER("scrape_monitors");
+//---------------------------------------------------------------------------
+bool visitMonitors(const string_q& path, void* data) {
+    if (!endsWith(path, ".acct.bin"))
+        return !shouldQuit();
 
-    CMonitor m;
-    CMonitorArray monitors;
-    forEveryFileInFolder(m.getMonitorPath("") + "*", prepareMonitors, &monitors);
+    CMonitor monitor;
+    monitor.address = substitute(substitute(path, monitor.getMonitorPath(""), ""), ".acct.bin", "");
 
-    for (auto monitor : monitors) {
-        // We check frequently if the user has told us to quit (either by sending
-        // a direct command to pause or by hitting control+C)
-        if (state == STATE_STOPPED || shouldQuit())
-            break;
+    COptions* opt = (COptions*)data;
+    if (opt->state == STATE_STOPPED || shouldQuit())
+        return false;
 
-        ostringstream os;
-        os << "acctExport " << monitor.address << " --freshen";
-        LOG4("Calling: ", os.str() + string_q(40, ' ') + "\r");
-        // clang-format off
-        if (system(os.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings
-        // clang-format on
+    ostringstream os;
+    os << "acctExport ";
+    os << (opt->cache_txs ? "--cache_txs " : "");
+    os << (opt->cache_traces ? "--cache_traces " : "");
+    os << (opt->staging ? "--staging " : "");
+    os << (opt->unripe ? "--unripe " : "");
+    os << (verbose ? ("--verbose " + uint_2_Str(verbose)) : "") << " ";
+    os << "--freshen ";
+    os << "--first_block " << monitor.getLastBlockInMonitor() << " ";
+    os << monitor.address;
+    if (opt->load.empty())
+        LOG_INFO("Calling: " + substitute(os.str(), "acctExport", "chifra export") + string_q(40, ' '));
+    else
+        os << "--load " + opt->load;
 
-        string_q unused;
-        state = getCurrentState(unused);
-        usleep(50000);  // allows user to get a control+c in edgewise
-    }
+    if (system(os.str().c_str()) != 0)
+        return false;
 
-    return true;
+    usleep(10000);  // allows user to get a control+c in edgewise
+
+    string_q unused;
+    opt->state = opt->getCurrentState(unused);
+
+    return (opt->state != STATE_STOPPED && !shouldQuit());
 }
 
-//---------------------------------------------------------------------------
-bool prepareMonitors(const string_q& path, void* data) {
-    if (!endsWith(path, ".acct.bin"))  // we only want to process monitor files
-        return true;
-
+//------------------------------------------------------------------------------------------------
+bool COptions::scrape_monitors(void) {
     CMonitor m;
-    m.address = substitute(substitute(path, m.getMonitorPath(""), ""), ".acct.bin", "");
-    if (isAddress(m.address)) {
-        m.cntBefore = m.getRecordCount();
-        m.needsRefresh = false;
-        CMonitorArray* array = (CMonitorArray*)data;  // NOLINT
-        array->push_back(m);
-    }
-
-    return true;
+    return forEveryFileInFolder(m.getMonitorPath("") + "*", visitMonitors, this);
 }

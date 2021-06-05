@@ -1,9 +1,0 @@
-ln -s $1/ascii
-ln -s $1/ascii.zips
-ln -s $1/blooms
-ln -s $1/blooms.zips
-ln -s $1/finalized
-ln -s $1/finalized.zips
-ln -s $1/raw
-ln -s $1/sorted
-ln -s $1/staging

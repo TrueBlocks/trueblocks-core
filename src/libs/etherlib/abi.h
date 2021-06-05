@@ -1,7 +1,7 @@
 #pragma once
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -12,8 +12,8 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 /*
- * This file was generated with makeClass. Edit only those parts of the code inside
- * of 'EXISTING_CODE' tags.
+ * Parts of this file were generated with makeClass --run. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
  */
 #include "function.h"
 
@@ -43,19 +43,19 @@ class CAbi : public CBaseNode {
     const CBaseNode* getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
-    CStringBoolMap sourcesMap;
-    CStringBoolMap interfaceMap;
+    CStringBoolMap abiSourcesMap;
+    CStringBoolMap abiInterfacesMap;
 
     bool articulateTransaction(CTransaction* p) const;
     bool articulateLog(CLogEntry* l) const;
     bool articulateTrace(CTrace* t) const;
     bool articulateOutputs(const string_q& encoding, const string_q& value, CFunction& ret) const;
 
+    bool loadAbiFromEtherscan(const address_t& addr);
+    bool loadAbiFromSolidity(const address_t& addr);
     bool loadAbisFromKnown(bool tokensOnly = false);
-    bool loadAbiFromEtherscan(const address_t& addr, bool raw = false);
-    bool loadAbiFromSolidity(const string_q& addr);
+    bool loadAbisOneKnown(const string_q& addr);
 
-    const CFunctionArray& interfaceArray(void) const;
     size_t nInterfaces(void) const;
     size_t nFunctions(void) const;
     size_t nEvents(void) const;
@@ -75,9 +75,9 @@ class CAbi : public CBaseNode {
     bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
-    bool loadAbisFolderAndCache(const string_q& sourcePath, const string_q& binPath);
+  private:
     bool loadAbiFromFile(const string_q& fileName);
-    bool loadAbiFromAddress(const address_t& addr);
+    bool loadAbiFromAddress(const address_t& addr, bool recurse);
     bool loadAbiFromString(const string_q& str);
     void loadAbiAddInterface(const CFunction& func);
     friend bool loadAbiFile(const string_q& path, void* data);
@@ -112,8 +112,8 @@ inline CAbi::~CAbi(void) {
 //--------------------------------------------------------------------------
 inline void CAbi::clear(void) {
     // EXISTING_CODE
-    interfaceMap.clear();
-    sourcesMap.clear();
+    abiInterfacesMap.clear();
+    abiSourcesMap.clear();
     // EXISTING_CODE
 }
 
@@ -125,8 +125,8 @@ inline void CAbi::initialize(void) {
     interfaces.clear();
 
     // EXISTING_CODE
-    interfaceMap.clear();
-    sourcesMap.clear();
+    abiInterfacesMap.clear();
+    abiSourcesMap.clear();
     // EXISTING_CODE
 }
 
@@ -139,8 +139,8 @@ inline void CAbi::duplicate(const CAbi& ab) {
     interfaces = ab.interfaces;
 
     // EXISTING_CODE
-    interfaceMap = ab.interfaceMap;
-    sourcesMap = ab.sourcesMap;
+    abiInterfacesMap = ab.abiInterfacesMap;
+    abiSourcesMap = ab.abiSourcesMap;
     // EXISTING_CODE
 }
 
@@ -189,5 +189,6 @@ extern bool sortByFuncName(const CFunction& f1, const CFunction& f2);
 inline size_t CAbi::nInterfaces(void) const {
     return interfaces.size();
 }
+bool isKnownAbi(const string_q& addr, string_q& path);
 // EXISTING_CODE
 }  // namespace qblocks

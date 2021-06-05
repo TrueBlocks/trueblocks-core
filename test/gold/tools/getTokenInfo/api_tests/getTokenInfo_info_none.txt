@@ -1,5 +1,0 @@
-{
-  "errors": [
-    "chifra tokens - The given value 'none' is not a numeral or a special named block."
-  ]
-}

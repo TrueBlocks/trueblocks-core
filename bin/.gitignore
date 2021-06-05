@@ -4,30 +4,29 @@ acctExport
 acctScrape
 acctScrape2
 blaze
-bbbb
 blockScrape
 cacheStatus
+fireStorm
 chifra
 ethNames
-ethQuote
+getQuotes
 ethscan.py
 ethslurp
 fromES
 findSig
-getBlock
+getBlocks
 getLogs
-getReceipt
+getReceipts
 getState
-getTokenInfo
-getTrace
+getTokens
+getTraces
 getTrans
 grabABI
 makeClass
 pinMan
+flame
 testRunner
-turboDive
 whenBlock
-whereBlock
 unchained
 
 # some visual studio stuff
@@ -67,7 +66,6 @@ generalTest
 jsonTest
 lastBlockTest
 loggingTest
-makeReadme.py
 parsingTest
 pinTest
 printFloatTest

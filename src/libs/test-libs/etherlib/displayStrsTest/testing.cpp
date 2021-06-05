@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -37,27 +37,10 @@ bool testDisplayStr(COptions& options) {
     cout << string_q(30, '-') << options.className << string_q(30, '-') << endl;
     if (options.className == "CMonitor") {
         CMonitor monitor;
-        SHOW_FIELD(CMonitor, "abi_spec");
         monitor.name = "monitor";
+        manageFields("CMonitor:all", FLD_SHOW);
 
-        CEthState es;
-        es.address = "0x1234567890123456789012345678901234567890";
-        es.balance = str_2_Wei("6000000000000000000");
-        es.nonce = 1001234;
-        es.code = "0xTHIS_IS_BOGUS_CODE";
-        es.storage = "0xTHIS_IS_BOGUS_STORAGE_DATA";
-        monitor.stateHistory.push_back(es);
-
-        CReconciliation is;
-        is.amountIn = str_2_Wei("2000000000000000000");
-        monitor.summaryStatement = is;
-
-        cout << monitor.Format("[{p:STATEMENT::AMOUNTIN}]: [{STATEMENT::AMOUNTIN}]") << endl;
-        cout << monitor.stateHistory[0].Format("[{p:ADDRESS}]: [{ADDRESS}]") << endl;
-        cout << monitor.stateHistory[0].Format("[{p:BALANCE}]: [{BALANCE}]") << endl;
-        cout << monitor.stateHistory[0].Format("[{p:NONCE}]: [{NONCE}]") << endl;
-        cout << monitor.stateHistory[0].Format("[{p:CODE}]: [{CODE}]") << endl;
-        cout << monitor.stateHistory[0].Format("[{p:STORAGE}]: [{STORAGE}]") << endl;
+        cout << monitor << endl;
 
     } else if (options.className == "CBlock") {
         CTraceResult tr;
@@ -110,13 +93,5 @@ bool testDisplayStr(COptions& options) {
         return false;
     }
 
-#if 0
-    CBaseNode *node = getNode(options.className);
-    if (!node) {
-    } else {
-        reportNode(node);
-    }
-    delete node;
-#endif
     return true;
 }

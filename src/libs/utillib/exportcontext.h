@@ -1,7 +1,7 @@
 #pragma once
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -18,6 +18,7 @@
 
 namespace qblocks {
 
+//----------------------------------------------------------------------------
 enum format_t { NONE1 = 0, JSON1 = (1 << 1), TXT1 = (1 << 2), CSV1 = (1 << 3), API1 = (1 << 4), YAML1 = (1 << 5) };
 
 //----------------------------------------------------------------------------
@@ -34,14 +35,26 @@ class CExportContext {
     bool asDollars;
     bool asWei;
     bool asParity;
+    uint32_t* tsMemMap;
+    size_t tsCnt;
     format_t exportFmt;
     CNameValueMap fmtMap;
-    address_t accountedFor;
     map<string_q, const CRuntimeClass*> types;
+    CAddressWeiMap prefundMap;
+
+  public:
     CExportContext(void);
 };
+
+//----------------------------------------------------------------------------
 extern CExportContext& expContext(void);
 extern void indent(void);
 extern void unindent(void);
 extern string_q indentStr(void);
+
+//--------------------------------------------------------------------------------
+inline bool isJson(void) {
+    return (expContext().exportFmt == JSON1 || expContext().exportFmt == API1 || expContext().exportFmt == NONE1);
+}
+
 }  // namespace qblocks

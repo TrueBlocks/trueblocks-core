@@ -44,24 +44,40 @@ getTrans --file:cmd_file --fmt json
     },
     "gasUsed": 21000
   },  {
+    "hash": "0xda2f27fffb36c90c74fc53bd8b721074e87203c727640c95c4c802296e3bf8ad",
     "blockHash": "0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9",
     "blockNumber": "0x37cf08",
+    "transactionIndex": "0x4f",
+    "nonce": "0x1aac8e",
+    "timestamp": "0x590d1c3b",
     "from": "0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5",
+    "to": "0x85ac33fe36a146ca3651693c16fbb45b3832b3f6",
+    "value": "0x2e056847f291e60",
     "gas": "0xc350",
     "gasPrice": "0x4a817c800",
-    "gasUsed": "0x5208",
-    "hasToken": "0x0",
-    "hash": "0xda2f27fffb36c90c74fc53bd8b721074e87203c727640c95c4c802296e3bf8ad",
     "input": "0x",
     "isError": "0x0",
-    "nonce": "0x1aac8e",
+    "hasToken": "0x0",
     "receipt": {
       "contractAddress": "0x0",
       "gasUsed": "0x5208",
       "status": null
     },
-    "timestamp": "0x590d1c3b",
-    "to": "0x85ac33fe36a146ca3651693c16fbb45b3832b3f6",
-    "transactionIndex": "0x4f",
-    "value": "0x2e056847f291e60"
-  }] }
+    "gasUsed": "0x5208"
+  }
+  Invalid option: -fmt. Did you mean --fmt?
+
+  Usage:    getTrans [-a|-t|-u|-o|-v|-h] <tx_id> [tx_id...]  
+  Purpose:  Retrieve one or more transactions from the chain or local cache.
+
+  Where:  
+	transactions          a space-separated list of one or more transaction identifiers (required)
+	-a  (--articulate)    articulate the retrieved data if ABIs can be found
+	-t  (--trace)         include the transaction's traces in the results
+	-u  (--uniq)          display a list of uniq addresses found in the transaction instead of the underlying data
+	-o  (--cache)         force the results of the query into the tx cache (and the trace cache if applicable)
+	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
+	-v  (--verbose)       set verbose level (optional level defaults to 1)
+	-h  (--help)          display this help screen
+
+  Powered by TrueBlocks

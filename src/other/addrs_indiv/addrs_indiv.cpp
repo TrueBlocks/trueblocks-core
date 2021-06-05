@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -10,7 +10,7 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-#include "pinlib.h"
+#include "pin lib.h"
 
 typedef struct {
     CIndexHashMap hashes;
@@ -26,10 +26,10 @@ int main(int argc, const char* argv[]) {
     loadHashes(thing.hashes, "finalized");
     loadHashes(thing.blooms, "blooms");
 
-    string_q indexPath = getIndexPath("finalized");
-    thing.outPath = contains(indexPath, "JUNK") ? "./report.1/" : "./report.2/";
+    string_q index Path = getIndexPath("finalized");
+    thing.outPath = contains(index Path, "JUNK") ? "./report.1/" : "./report.2/";
 
-    forEveryFileInFolder(indexPath, visitFile, &thing);
+    forEveryFileInFolder(index Path, visitFile, &thing);
 
     etherlib_cleanup();
     return 1;

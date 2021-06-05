@@ -8,18 +8,20 @@ ethNames --fmt json
     "source": "EtherScan.io"
   },
   {
-    "tags": "30-Contracts",
+    "tags": "50-Tokens:ERC20",
     "address": "0x0000000000001b84b1cb32787b0d64758d019317",
     "name": "HomeWork 🏠🛠️",
     "symbol": "HWK",
-    "source": "On chain"
+    "source": "On chain",
+    "decimals": 18
   },
   {
     "tags": "50-Tokens:ERC20",
     "address": "0x0000000000004946c0e9f43f4dee607b0ef1fa1c",
     "name": "1inch.exchange v2",
     "symbol": "CHI",
-    "source": "On chain"
+    "source": "On chain",
+    "decimals": 18
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -171,7 +173,8 @@ ethNames --fmt json
     "tags": "55-Defi",
     "address": "0x001f751cdfee02e2f0714831be2f8384db0f71a2",
     "name": "GenericLevCompFarm",
-    "source": "On chain"
+    "source": "On chain",
+    "decimals": 18
   },
   {
     "tags": "31-Gitcoin Grants:Grant",
@@ -192,7 +195,7 @@ ethNames --fmt json
     "source": "Gitcoin Website"
   },
   {
-    "tags": "30-Contracts",
+    "tags": "50-Tokens:ERC20",
     "address": "0x00319f722bd546182cb2c701ca254146d3f084fc",
     "name": "Democracy Earth",
     "symbol": "HOUR",
@@ -289,6 +292,12 @@ ethNames --fmt json
     "source": "Gitcoin Website"
   },
   {
+    "tags": "35-TheCyber:Friends",
+    "address": "0x008f82676a606a6783716037c256a7df23746145",
+    "name": "Name 0x008f8267",
+    "source": "Solidity Code"
+  },
+  {
     "tags": "50-Tokens:ERC20",
     "address": "0x009e864923b49263c7f10d19b7f8ab7a9a5aad33",
     "name": "Knoxstertoken",
@@ -296,6 +305,12 @@ ethNames --fmt json
     "source": "On chain",
     "decimals": 18,
     "description": "FortKnoxster offers end-to-end encrypted inbox, chat, decentralized storage, calling, video conferencing, voice messages and much more."
+  },
+  {
+    "tags": "35-TheCyber:Friends",
+    "address": "0x00aa972319ddf819140ffe2a991c49a1bff54bad",
+    "name": "Name 0x00aa9723",
+    "source": "Solidity Code"
   },
   {
     "tags": "31-Gitcoin Grants:Grant",
@@ -448,6 +463,12 @@ ethNames --fmt json
     "description": "https://dex.verisafe.io/"
   },
   {
+    "tags": "30-Contracts",
+    "address": "0x015c7c7a7d65bbdb117c573007219107bd7486f9",
+    "name": "Infura Transactions Contract",
+    "source": "Infura.io"
+  },
+  {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x015f9e50dc7b2a41ab8cc0b2b58763287dd3dd81",
     "name": "Name 0x015f9e50",
@@ -513,7 +534,7 @@ ethNames --fmt json
     "name": "Cream yETH",
     "symbol": "crYETH",
     "source": "On chain",
-    "decimals": 8
+    "decimals": 18
   },
   {
     "tags": "31-Gitcoin Grants:Friends",
@@ -585,6 +606,11 @@ ethNames --fmt json
     "source": "On chain",
     "decimals": 8,
     "description": "Payments solutions for the travel industry."
+  },
+  {
+    "tags": "30-Contracts",
+    "address": "0x02a522d98ec2d2c3bbe91acc29ee7fd32ab880ab",
+    "name": "Mintable: Deployer"
   },
   {
     "tags": "34-Twitter:Friends",
@@ -742,6 +768,14 @@ ethNames --fmt json
     "source": "0xTracker"
   },
   {
+    "tags": "50-Tokens:ERC20",
+    "address": "0x03ab458634910aad20ef5f1c8ee96f1d6ac54919",
+    "name": "Rai Reflex Index",
+    "symbol": "RAI",
+    "source": "On chain",
+    "decimals": 18
+  },
+  {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x03b45f0f660adcaa24fbacffd45e171464ec63a8",
     "name": "Name 0x03b45f0f",
@@ -774,6 +808,12 @@ ethNames --fmt json
     "source": "On chain",
     "decimals": 18,
     "description": "Biotron is a fully transparent personal data analytics platform on blockchain."
+  },
+  {
+    "tags": "35-TheCyber:Friends",
+    "address": "0x03d47eca8d1d4c29a73318c3b1373614b3fe14bc",
+    "name": "Name 0x03d47eca",
+    "source": "Solidity Code"
   },
   {
     "tags": "31-Gitcoin Grants:Friends",
@@ -838,6 +878,12 @@ ethNames --fmt json
     "source": "0xTracker"
   },
   {
+    "tags": "35-TheCyber:Friends",
+    "address": "0x047f57b4fe5f5f8f536f48d7ee464893b4411e92",
+    "name": "Name 0x047f57b4",
+    "source": "Solidity Code"
+  },
+  {
     "tags": "90-DevCon2:Individual",
     "address": "0x0492104bbf24a97deeb64c03377fb8d6d75a711c",
     "name": "Kung Chen-Yalie",
@@ -886,7 +932,7 @@ ethNames --fmt json
     "source": "https://gitcoin.co/grants/104/walletsreview"
   },
   {
-    "tags": "30-Contracts",
+    "tags": "50-Tokens:ERC20",
     "address": "0x04d702ebd0a77503b154865fe3e8da97255b931b",
     "name": "Commons Stack Org Membership",
     "symbol": "CSOM",
@@ -1088,7 +1134,7 @@ ethNames --fmt json
     "source": "https://gitcoin.co/grants/1979/vusd-stablecoin"
   },
   {
-    "tags": "30-Contracts",
+    "tags": "50-Tokens:ERC20",
     "address": "0x06012c8cf97bead5deae237070f9587f8e7a266d",
     "name": "CryptoKitties",
     "symbol": "CK",
@@ -1297,61 +1343,4 @@ ethNames --fmt json
     "source": "On chain",
     "decimals": 18,
     "description": "A global decentralized blockchain deal and discount marketplace."
-  },
-  {
-    "tags": "55-Defi",
-    "address": "0x075b1bb99792c9e1041ba13afef80c91a1e70fb3",
-    "name": "Curve.fi renBTC/wBTC/sBTC",
-    "symbol": "crvRenWSBTC",
-    "source": "On chain",
-    "decimals": 18
-  },
-  {
-    "tags": "50-Tokens:ERC20",
-    "address": "0x076641af1b8f06b7f8c92587156143c109002cbe",
-    "name": "SoPay",
-    "symbol": "SOP",
-    "source": "On chain",
-    "decimals": 18
-  },
-  {
-    "tags": "50-Tokens:ERC20",
-    "address": "0x0766e79a6fd74469733e8330b3b461c0320ff059",
-    "name": "EXN",
-    "symbol": "EXN",
-    "source": "On chain",
-    "decimals": 18
-  },
-  {
-    "tags": "50-Tokens:ERC20",
-    "address": "0x076a93a40bf9e0d21d3f75dd1e0584ddbe0f9d1a",
-    "name": "Qurito",
-    "symbol": "QURO",
-    "source": "On chain",
-    "decimals": 18,
-    "description": "The online community where you earn for sharing knowledge ideas."
-  },
-  {
-    "tags": "50-Tokens:ERC20",
-    "address": "0x076c97e1c869072ee22f8c91978c99b4bcb02591",
-    "name": "CommerceBlock Token",
-    "symbol": "CBT",
-    "source": "On chain",
-    "decimals": 18,
-    "description": "Infrastructure company that provides a suite of tools for traditional asset markets to leverage the highly flexible and powerful qualities of blockchain based digital asset protocols"
-  },
-  {
-    "tags": "50-Tokens:ERC20",
-    "address": "0x0775c81a273b355e6a5b76e240bf708701f00279",
-    "name": "Bulleon",
-    "symbol": "BUL",
-    "source": "On chain",
-    "decimals": 18,
-    "description": "Revolutionizing the way of Financial Transactions"
-  },
-  {
-    "tags": "30-Contracts:dAppNode",
-    "address": "0x077d271a3e4c3b45358417142490bd21172c81b5",
-    "name": "dAddNode Package 003",
-    "source": "TrueBlocks.io"
   }] }

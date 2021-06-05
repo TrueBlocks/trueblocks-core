@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -42,11 +42,11 @@ else if (startsWith(arg, "--belongs:")) {
     if (options.filters.size() > 0) {
         bool on = options.chkAsStr;
         options.chkAsStr = false;
-        forEveryTransactionInList(checkBelongs, &options, options.transList.queries);
+        forEveryTransaction(checkBelongs, &options, options.transList.queries);
         if (!options.belongs) {
             if (on) {
                 options.chkAsStr = on;
-                forEveryTransactionInList(checkBelongsDeep, &options, options.transList.queries);
+                forEveryTransaction(checkBelongsDeep, &options, options.transList.queries);
             }
             if (!options.belongs) {
                 for (auto addr : options.filters) {

@@ -1,6 +1,5 @@
 ethNames argc: 6 [1:Ether] [2:--expand] [3:--verbose] [4:--fmt] [5:json] 
 ethNames Ether --expand --verbose --fmt json 
-TIME ~ CLOCK - <INFO>  : expand: true
 { "data": [
   {
     "deleted": false,
@@ -575,7 +574,7 @@ TIME ~ CLOCK - <INFO>  : expand: true
   },
   {
     "deleted": false,
-    "tags": "30-Contracts",
+    "tags": "50-Tokens:ERC20",
     "address": "0x1820a4b7618bde71dce8cdc73aab6c95905fad24",
     "name": "1820 Registry",
     "symbol": "REG",

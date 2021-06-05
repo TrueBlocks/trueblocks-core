@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -11,8 +11,8 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 /*
- * This file was generated with makeClass. Edit only those parts of the code inside
- * of 'EXISTING_CODE' tags.
+ * Parts of this file were generated with makeClass --run. Edit only those parts of
+ *  the code inside of 'EXISTING_CODE' tags.
  */
 #include "etherlib.h"
 
@@ -34,8 +34,7 @@ string_q CPriceSource::getDatabasePath(string_q& source) const {
 
 extern size_t dotDot(char* ptr, size_t size, size_t nmemb, void* userdata);
 //---------------------------------------------------------------------------
-bool loadPriceData(const CPriceSource& source, CPriceQuoteArray& quotes, bool freshen, string_q& message,
-                   uint64_t step) {
+bool loadPriceData(const CPriceSource& source, CPriceQuoteArray& quotes, bool freshen, string_q& message) {
     string_q theSource;
     string_q cacheFile = source.getDatabasePath(theSource);
 
@@ -45,12 +44,12 @@ bool loadPriceData(const CPriceSource& source, CPriceQuoteArray& quotes, bool fr
         lastRead = time_q(2009, 1, 1, 0, 0, 0);
 
     if (!fileExists(cacheFile)) {
-        string_q zipFile = configPath("cache/prices/") + theSource + "_" + source.pair + ".bin.gz";
+        string_q zipFile = getCachePath("prices/") + theSource + "_" + source.pair + ".bin.gz";
         if (fileExists(zipFile)) {  // zipFile != cacheFile + ".gz") {
             ostringstream cmd;
             if (zipFile != cacheFile + ".gz")
-                cmd << "cp -f " << zipFile << " " << cacheFile << ".gz ; ";
-            cmd << "cd " << getCachePath("prices/") << " ; ";
+                cmd << "cp -f \"" << zipFile << "\" \"" << cacheFile << ".gz\" ; ";
+            cmd << "cd \"" << getCachePath("prices/") << "\" ; ";
             cmd << "gunzip *.gz";
             doCommand(cmd.str());
         }
@@ -204,13 +203,6 @@ bool loadPriceData(const CPriceSource& source, CPriceQuoteArray& quotes, bool fr
         }
         if (!isTestMode())
             cerr << msg << date << " : " << count << " records\n";
-    }
-
-    if (step != 1) {
-        CPriceQuoteArray ret;
-        for (size_t i = 0; i < quotes.size(); i += step)
-            ret.push_back(quotes[i]);  // grows the vector
-        quotes = ret;
     }
 
     return true;

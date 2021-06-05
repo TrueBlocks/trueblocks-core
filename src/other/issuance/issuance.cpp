@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -58,7 +58,7 @@ timestamp_t getBlockTimestamp(blknum_t bn) {
     static uint32_t* timestamps = NULL;
     static size_t nTimestamps = 0;
     if (nTimestamps == 0) {
-        loadTimestampFile(&timestamps, nTimestamps);
+        loadTimestamps(&timestamps, nTimestamps);
         cerr << "Timestamps loaded..." << endl;
     }
     return bn < nTimestamps ? timestamps[(bn * 2) + 1] : 0;

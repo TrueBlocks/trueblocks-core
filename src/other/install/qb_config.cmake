@@ -1,9 +1,22 @@
-# Deploy basic configuration and directories structure for quickblocks
+# Deploy basic configuration and directories structure for trueblocks
 
 #---------------------------------------------------------------
 # setup some paths
 #---------------------------------------------------------------
-set(DEST_PATH "$ENV{HOME}/.quickBlocks")
+set(TB_INSTALL_FOLDER "$ENV{XDG_DATA_HOME}")
+if(WIN32)
+    message(STATUS "Windows build is not supported yet")
+elseif(APPLE)
+    if ("${TB_INSTALL_FOLDER}" STREQUAL "")
+        set(TB_INSTALL_FOLDER "$ENV{HOME}/Library/Application Support/TrueBlocks")
+    endif()
+else()
+    if ("${TB_INSTALL_FOLDER}" STREQUAL "")
+        set(TB_INSTALL_FOLDER "$ENV{HOME}/.local/share/trueblocks")
+    endif()
+endif()
+message(STATUS "Installing to [" ${TB_INSTALL_FOLDER} "]")
+set(DEST_PATH ${TB_INSTALL_FOLDER})
 set(SOURCE_PATH "${CMAKE_SOURCE_DIR}/../../../src/other/install")
 
 #---------------------------------------------------------------
@@ -15,6 +28,7 @@ file(MAKE_DIRECTORY "${DEST_PATH}/cache")
 file(MAKE_DIRECTORY "${DEST_PATH}/cache/abis")
 file(MAKE_DIRECTORY "${DEST_PATH}/cache/prices")
 file(MAKE_DIRECTORY "${DEST_PATH}/cache/tmp")
+file(MAKE_DIRECTORY "${DEST_PATH}/cache/objs")
 file(MAKE_DIRECTORY "${DEST_PATH}/names")
 file(MAKE_DIRECTORY "${DEST_PATH}/makeClass")
 file(MAKE_DIRECTORY "${DEST_PATH}/abis")
@@ -24,14 +38,15 @@ file(MAKE_DIRECTORY "${DEST_PATH}/abis/known-010")
 file(MAKE_DIRECTORY "${DEST_PATH}/abis/known-015")
 file(MAKE_DIRECTORY "${DEST_PATH}/manifest")
 file(MAKE_DIRECTORY "${DEST_PATH}/mocked")
+file(MAKE_DIRECTORY "${DEST_PATH}/unchained")
 
 #---------------------------------------------------------------
 # Create main config file, if it does not already exist
 #---------------------------------------------------------------
-set(MAIN_CONFIG "${DEST_PATH}/quickBlocks.toml")
+set(MAIN_CONFIG "${DEST_PATH}/trueBlocks.toml")
 if (NOT EXISTS "${MAIN_CONFIG}")
 	message(STATUS "Copying configuration files ${MAIN_CONFIG}")
-	file(COPY "${SOURCE_PATH}/quickBlocks.toml" DESTINATION "${DEST_PATH}" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
+	file(COPY "${SOURCE_PATH}/trueBlocks.toml" DESTINATION "${DEST_PATH}" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
 endif()
 
 #---------------------------------------------------------------
@@ -92,17 +107,6 @@ file(COPY "${SOURCE_PATH}/mocked/monitors.tar.gz" DESTINATION "${DEST_PATH}/mock
 message(STATUS "Copying makeClass templates to ${DEST_PATH}/makeClass")
 file(GLOB TARGET_FILES "${CMAKE_SOURCE_DIR}/../../../src/dev_tools/makeClass/templates/*")
 foreach(FILE ${TARGET_FILES} )
-	#message(STATUS "  Copied file to ${DEST_PATH}/makeClass")
-	file(COPY "${FILE}" DESTINATION "${DEST_PATH}/makeClass")
-endforeach( FILE )
-file(GLOB TARGET_FILES "${CMAKE_SOURCE_DIR}/../../../docs/swagger.yaml")
-foreach(FILE ${TARGET_FILES} )
-	#message(STATUS "  Copied file to ${DEST_PATH}/makeClass")
-	file(COPY "${FILE}" DESTINATION "${DEST_PATH}/makeClass")
-endforeach( FILE )
-file(GLOB TARGET_FILES "${CMAKE_SOURCE_DIR}/../../../docs/api.html")
-foreach(FILE ${TARGET_FILES} )
-	#message(STATUS "  Copied file to ${DEST_PATH}/makeClass")
 	file(COPY "${FILE}" DESTINATION "${DEST_PATH}/makeClass")
 endforeach( FILE )
 
@@ -149,9 +153,12 @@ endforeach( FILE )
 #---------------------------------------------------------------
 # Copy the ipfs hash files (if they don't exist -- user may be building them)
 #---------------------------------------------------------------
-message(STATUS "Seeding initial manifest ${DEST_PATH}/manifest/")
-file(COPY "${SOURCE_PATH}/manifest/empty-manifest.json" DESTINATION "${DEST_PATH}/manifest/" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
-file(COPY "${SOURCE_PATH}/manifest/initial-manifest.json" DESTINATION "${DEST_PATH}/manifest/" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
+set(MANIFEST "${DEST_PATH}/manifest/manifest.txt")
+if (NOT EXISTS "${MANIFEST}")
+	message(STATUS "Seeding initial manifest ${DEST_PATH}/manifest/")
+	file(COPY "${SOURCE_PATH}/manifest/empty-manifest.json" DESTINATION "${DEST_PATH}/manifest/" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
+	file(COPY "${SOURCE_PATH}/manifest/manifest.txt" DESTINATION "${DEST_PATH}/manifest/" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
+endif()
 
 #---------------------------------------------------------------
 # Copy the prices files
@@ -165,11 +172,8 @@ endif()
 #---------------------------------------------------------------
 # Copy the ts files
 #---------------------------------------------------------------
-set(TS_FILE "${DEST_PATH}/ts.bin")
-if (NOT EXISTS "${TS_FILE}")
-	message(STATUS "Copying ts file to ${DEST_PATH}")
-	file(COPY "${SOURCE_PATH}/prices/ts.bin.gz" DESTINATION "${DEST_PATH}" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
-endif()
+message(STATUS "Copying ts.bin.gz file to ${DEST_PATH}")
+file(COPY "${SOURCE_PATH}/prices/ts.bin.gz" DESTINATION "${DEST_PATH}" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
 
 #---------------------------------------------------------------
 # Clear a few bin files, so they get regenerated for each build

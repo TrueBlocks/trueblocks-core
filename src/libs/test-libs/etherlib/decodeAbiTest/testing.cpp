@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -29,7 +29,6 @@ int main(int argc, const char* argv[]) {
     } else {
         padTest();
         hexUtilTest();
-        decodeTest();
     }
 
     return 0;
@@ -83,12 +82,6 @@ size_t extractParams(CParameterArray& paramArray, const string_q& paramStr) {
 }
 
 //-----------------------------------------------------------------------------------------
-namespace qblocks {
-extern string_q params_2_Str(CParameterArray& params);
-extern size_t decodeTheData(CParameterArray& params, const CStringArray& dataArray, size_t& readIndex);
-}  // namespace qblocks
-
-//-----------------------------------------------------------------------------------------
 string_q cleanIt(const string_q& in) {
     string_q out = in;
     nextTokenClear(out, '(');
@@ -131,37 +124,6 @@ void speedTest(void) {
     }
     timepoint_t stop = qbNow2();
     cout << double_2_Str(std::chrono::duration_cast<duration_t>(stop - start).count(), 5);  // NOLINT
-}
-
-//-----------------------------------------------------------------------------------------
-void decodeTest(void) {
-    cout << cTeal << "decodeTest:" << cOff << endl;
-    string_q contents;
-    asciiFileToString("./decode.txt", contents);
-    contents = substitute(contents, "\\\n", "");
-    contents = substitute(contents, "\n\n", "\n");
-    CStringArray tests;
-    explode(tests, contents, '\n');
-    for (auto testcase : tests) {
-        if (!startsWith(testcase, '#') && !startsWith(testcase, ';')) {
-            cout << string_q(80, '-') << endl;
-            if (verbose > 1)
-                cout << endl << testcase.substr(0, 200) << endl;
-            CStringArray parts;
-            explode(parts, testcase, '|');
-            T test;
-            test.desc = parts[2];
-            test.input = parts[3];
-            test.expected = parts[4];
-            CParameterArray params;
-            extractParams(params, test.desc);
-            string_q cleaned = cleanIt(test.desc);
-            decodeRLP(params, cleaned, test.input);
-            cout << test.check(params_2_Str(params));
-        } else if (startsWith(testcase, "#end")) {
-            return;
-        }
-    }
 }
 
 //-----------------------------------------------------------------------------------------

@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -11,11 +11,12 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 /*
- * This file was generated with makeClass. Edit only those parts of the code inside
- * of 'EXISTING_CODE' tags.
+ * Parts of this file were generated with makeClass --run. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
  */
 #include "traceaction.h"
 #include "trace.h"
+#include "reconciliation.h"
 
 namespace qblocks {
 
@@ -327,7 +328,7 @@ string_q nextTraceactionChunk_custom(const string_q& fieldIn, const void* dataPt
             // EXISTING_CODE
             case 'e':
                 if (fieldIn % "ether")
-                    return wei_2_Ether(bnu_2_Str(tra->value));
+                    return wei_2_Ether(tra->value, 18);
                 break;
             // EXISTING_CODE
             case 'p':

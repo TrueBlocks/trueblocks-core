@@ -1,7 +1,7 @@
 #pragma once
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -39,6 +39,7 @@ extern bool getTransaction(CTransaction& trans, const hash_t& blockHash, txnum_t
 extern bool getReceipt(CReceipt& receipt, const hash_t& txHash);
 extern bool getLogEntry(CLogEntry& log, const hash_t& txHash);
 extern void getTraces(CTraceArray& traces, const hash_t& txHash);
+extern void getStateDiffAddrs(CAddressArray& addrs, const hash_t& txHash);
 extern void getTracesByFilter(CTraceArray& traces, const CTraceFilter& filter);
 extern size_t getTraceCount(const hash_t& hashIn);
 extern bool loadTraces(CTransaction& trans, blknum_t bn, blknum_t txid, bool useCache, bool skipDdos);
@@ -60,6 +61,7 @@ extern bool queryRawUncle(string_q& results, const string_q& blockNum, uint64_t 
 extern bool queryRawTransaction(string_q& results, const hash_t& txHash);
 extern bool queryRawReceipt(string_q& results, const hash_t& txHash);
 extern bool queryRawTrace(string_q& results, const hash_t& hashIn);
+extern bool queryRawStateDiff(string_q& results, const hash_t& hashIn);
 extern bool queryRawLogs(string_q& results, const CLogQuery& query);
 
 //-----------------------------------------------------------------------
@@ -91,8 +93,6 @@ extern string_q getVersionFromClient(void);
 extern bool isTurboGeth(void);
 extern bool isGeth(void);
 extern bool isParity(void);
-extern bool getAccounts(CAddressArray& addrs);
-extern bool getChainHead(void);
 extern bool getNodeIds(uint64_t& clientId, uint64_t& networkId);
 
 //-------------------------------------------------------------------------
@@ -117,22 +117,9 @@ typedef bool (*ABIVISITFUNC)(CAbi& abi_spec, void* data);
 extern bool forEveryBlock(BLOCKVISITFUNC func, void* data, const string_q& block_list);  // NOLINT
 extern bool forEveryBlock(BLOCKVISITFUNC func, void* data, uint64_t start, uint64_t count,
                           uint64_t skip = 1);  // NOLINT
-extern bool forEveryBlockOnDisc(BLOCKVISITFUNC func, void* data, uint64_t start, uint64_t count,
-                                uint64_t skip = 1);  // NOLINT
 extern bool forEveryBlock_light(BLOCKVISITFUNC func, void* data, uint64_t start, uint64_t count,
                                 uint64_t skip = 1);  // NOLINT
-
-//-------------------------------------------------------------------------
-// forEvery functions
-extern bool forEveryTransactionInList(TRANSVISITFUNC func, void* data, const string_q& trans_list);
-extern bool forEveryTransactionInBlock(TRANSVISITFUNC func, void* data, const CBlock& block);
-
-//-------------------------------------------------------------------------
-// forEvery functions
-extern bool forEveryTraceInTransaction(TRACEVISITFUNC func, void* data, const CTransaction& trans);
-extern bool forEveryTraceInBlock(TRACEVISITFUNC func, void* data, const CBlock& block);
-extern bool forEveryLogInTransaction(LOGVISITFUNC func, void* data, const CTransaction& trans);
-extern bool forEveryLogInBlock(LOGVISITFUNC func, void* data, const CBlock& block);
+extern bool forEveryTransaction(TRANSVISITFUNC func, void* data, const string_q& trans_list);
 
 //-------------------------------------------------------------------------
 // forEvery functions
@@ -164,6 +151,7 @@ extern string_q getIndexPath(const string_q& _part);
 #define indexFolder_ripe (getIndexPath("ripe/"))
 #define indexFolder_finalized (getIndexPath("finalized/"))
 #define indexFolder_blooms (getIndexPath("blooms/"))
+#define tsIndex getIndexPath("ts.bin")
 
 //-------------------------------------------------------------------------
 extern biguint_t weiPerEther(void);
@@ -182,7 +170,7 @@ string_q exportPostamble(const CStringArray& errors, const string_q& extra);
 //-------------------------------------------------------------------------
 extern bool findTimestamp_binarySearch(CBlock& block, size_t first, size_t last, bool progress = false);
 extern bool freshenTimestamps(blknum_t minBlock);
-extern bool loadTimestampFile(uint32_t** theArray, size_t& cnt);
+extern bool loadTimestamps(uint32_t** theArray, size_t& cnt);
 
 //-------------------------------------------------------------------------
 extern bool excludeTrace(const CTransaction* trans, size_t maxTraces);
@@ -200,6 +188,17 @@ inline string_q relativize(const string_q& path) {
     return ret;
 }
 //--------------------------------------------------------------------------
+#define LOG_FN3(fn)                                                                                                    \
+    {                                                                                                                  \
+        string_q lfn8 = relativize((fn));                                                                              \
+        LOG3(padRight((string_q(#fn) + ":"), 25), lfn8, " ", fileSize((fn)));                                          \
+    }
+#define LOG_DIR3(dir)                                                                                                  \
+    {                                                                                                                  \
+        string_q lfn8 = relativize((dir));                                                                             \
+        LOG3(padRight((string_q(#dir) + ":"), 25), lfn8);                                                              \
+    }
+//--------------------------------------------------------------------------
 #define LOG_FN8(fn)                                                                                                    \
     {                                                                                                                  \
         string_q lfn8 = relativize((fn));                                                                              \
@@ -211,6 +210,8 @@ inline string_q relativize(const string_q& path) {
         LOG8(padRight((string_q(#dir) + ":"), 25), lfn8);                                                              \
     }
 #else
+#define LOG_FN3(fn)
+#define LOG_DIR3(dir)
 #define LOG_FN8(fn)
 #define LOG_DIR8(dir)
 #endif

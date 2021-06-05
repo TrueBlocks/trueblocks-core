@@ -1,13 +1,3 @@
-acctExport argc: 7 [1:0x001d14804b399c6ef80e64576f657660804fec0b] [2:--start] [3:100000] [4:--end] [5:2000000] [6:--to_file] 
-acctExport 0x001d14804b399c6ef80e64576f657660804fec0b --start 100000 --end 2000000 --to_file 
-TIME ~ CLOCK - <INFO>  : skip_ddos: true
-TIME ~ CLOCK - <INFO>  : Monitor found for: 0x001d14804b399c6ef80e64576f657660804fec0b
-TIME ~ CLOCK - <INFO>  : Last visited block: 11854827
-TIME ~ CLOCK - <INFO>  : stats.nFiles: --value--
-TIME ~ CLOCK - <INFO>  : stats.nSkipped: --value--
-TIME ~ CLOCK - <INFO>  : nMonitors: 1
-TIME ~ CLOCK - <INFO>  : exportRange.first: 100000
-TIME ~ CLOCK - <INFO>  : exportRange.second: 2000000
-TIME ~ CLOCK - <INFO>  : listRange.first: 11854827
-TIME ~ CLOCK - <INFO>  : listRange.second: --latest--
+acctExport argc: 7 [1:0x001d14804b399c6ef80e64576f657660804fec0b] [2:--first_block] [3:100000] [4:--last_block] [5:2000000] [6:--to_file] 
+acctExport 0x001d14804b399c6ef80e64576f657660804fec0b --first_block 100000 --last_block 2000000 --to_file 
 --output_filename--

@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -19,10 +19,6 @@
 extern bool testReadWrite(COptions& options);
 extern bool testUpgrade(COptions& options);
 extern void reportNode(CBaseNode* node);
-namespace qblocks {
-extern bool writeNodeToBinary(const CBaseNode& node, const string_q& fileName);
-extern bool readNodeFromBinary(CBaseNode& node, const string_q& fileName);
-};  // namespace qblocks
 //--------------------------------------------------------------
 int main(int argc, const char* argv[]) {
     acctlib_init(quickQuitHandler);
@@ -172,8 +168,8 @@ CBaseNode* getNode(const string_q& nodeType) {
         node = CApiSpec::createObject();
     else if (nodeType == "CBlock")
         node = CBlock::createObject();
-    else if (nodeType == "CReconciliationOutput")
-        node = CReconciliationOutput::createObject();
+    else if (nodeType == "CReconciliation")
+        node = CReconciliation::createObject();
     else if (nodeType == "CLogEntry")
         node = CLogEntry::createObject();
     else if (nodeType == "CPriceQuote")

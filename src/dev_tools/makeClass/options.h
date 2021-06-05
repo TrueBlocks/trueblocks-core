@@ -1,7 +1,7 @@
 #pragma once
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -12,8 +12,8 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 /*
- * Parts of this file were generated with makeClass. Edit only those parts of the code
- * outside of the BEG_CODE/END_CODE sections
+ * Parts of this file were generated with makeClass --options. Edit only those parts of
+ * the code outside of the BEG_CODE/END_CODE sections
  */
 #include "etherlib.h"
 #include "commandoption.h"
@@ -21,15 +21,13 @@
 #include "page.h"
 #include "skin.h"
 #include "schema.h"
-#include "commands.h"
 
 // BEG_ERROR_DEFINES
 #define ERR_CLASSDEFNOTEXIST 1
 #define ERR_CONFIGMISSING 2
-#define ERR_EMPTYJSFILE 3
-#define ERR_CHOOSEONE 4
-#define ERR_NOFILTERMATCH 5
-#define ERR_NEEDONECLASS 6
+#define ERR_CHOOSEONE 3
+#define ERR_NOFILTERMATCH 4
+#define ERR_NEEDONECLASS 5
 // END_ERROR_DEFINES
 
 //-------------------------------------------------------------------
@@ -39,6 +37,7 @@ class CCounter {
     size_t nVisited;
     size_t nProcessed;
     bool is_counting;
+    CStringArray replacements;
     CCounter(void) : fileCount(0), nVisited(0), nProcessed(0), is_counting(true) {
     }
 };
@@ -56,7 +55,6 @@ class COptions : public COptionsBase {
     bool all;
     string_q nspace;
     string_q filter;
-    bool test;
     bool force;
     bool api;
     bool openapi;
@@ -71,33 +69,50 @@ class COptions : public COptionsBase {
     CCounter counter;
     timestamp_t lastFormat;
     timestamp_t lastLint;
-    ostringstream option_stream, init_stream, local_stream, auto_stream;
-    ostringstream header_stream, notes_stream, errors_stream, debug_stream;
-    ostringstream apiStream, routeStream, goRouteStream;
-    void clearStreams(void) {
-        auto_stream.str("");
-        option_stream.str("");
-        local_stream.str("");
-        init_stream.str("");
-        notes_stream.str("");
-        errors_stream.str("");
-        header_stream.str("");
-        debug_stream.str("");
-        apiStream.str("");
-        routeStream.str("");
-        goRouteStream.str("");
 
-        auto_stream.clear();
-        option_stream.clear();
-        local_stream.clear();
-        init_stream.clear();
-        notes_stream.clear();
-        errors_stream.clear();
-        header_stream.clear();
-        debug_stream.clear();
-        apiStream.clear();
-        routeStream.clear();
+    ostringstream optionStream, initStream, localStream, autoStream, headerStream;
+    ostringstream notesStream, errorStrStream, errorDefStream, debugStream, goCallStream;
+    ostringstream goRouteStream, chifraCmdStream, chifraHelpStream, pairMapStream;
+    ostringstream apiTagStream, htmlTagStream, apiPathStream, htmlPathStream;
+
+    void clearStreams(void) {
+        optionStream.str("");
+        initStream.str("");
+        localStream.str("");
+        autoStream.str("");
+        headerStream.str("");
+        notesStream.str("");
+        errorStrStream.str("");
+        errorDefStream.str("");
+        debugStream.str("");
+        goCallStream.str("");
+        goRouteStream.str("");
+        chifraCmdStream.str("");
+        chifraHelpStream.str("");
+        pairMapStream.str("");
+        apiTagStream.str("");
+        htmlTagStream.str("");
+        apiPathStream.str("");
+        htmlPathStream.str("");
+
+        optionStream.clear();
+        initStream.clear();
+        localStream.clear();
+        autoStream.clear();
+        headerStream.clear();
+        notesStream.clear();
+        errorStrStream.clear();
+        errorDefStream.clear();
+        debugStream.clear();
+        goCallStream.clear();
         goRouteStream.clear();
+        chifraCmdStream.clear();
+        chifraHelpStream.clear();
+        pairMapStream.clear();
+        apiTagStream.clear();
+        htmlTagStream.clear();
+        apiPathStream.clear();
+        htmlPathStream.clear();
 
         positionals.clear();
     }
@@ -108,19 +123,12 @@ class COptions : public COptionsBase {
     bool parseArguments(string_q& command);
     void Init(void);
 
+    bool handle_readmes(void);
     bool handle_options(void);
     bool handle_apifiles(void);
     bool handle_lint(void);
     bool handle_format(void);
     bool handle_generate(CToml& toml, const CClassDefinition& classDef, const string_q& namespc, bool asJs);
-    bool handle_export_js(void);
-
-    bool handle_initialize_js(CToml& toml, const CClassDefinition& classDef);
-    bool handle_generate_js_menus(void);
-    bool handle_generate_js_help(void);
-    bool handle_generate_js_skins(void);
-    bool handle_generate_js_pages(void);
-
     void generate_switch(const CCommandOption& option);
     void generate_toggle(const CCommandOption& option);
     void generate_flag(const CCommandOption& option);
@@ -128,12 +136,7 @@ class COptions : public COptionsBase {
     void generate_deprecated(const CCommandOption& option);
 
     bool writeCode(const string_q& fn);
-    void writeApiFile(void);
     void writeOpenApiFile(void);
-
-    void options_2_Commands(CCommands& commands);
-    void select_commands(const string_q& cmd, CCommandOptionArray& cmds, CCommandOptionArray& notes,
-                         CCommandOptionArray& errors, CCommandOptionArray& descr);
 };
 
 //-------------------------------------------------------------------
@@ -194,3 +197,10 @@ extern const char* STR_DEFAULT_TAGS;
 
 //------------------------------------------------------------------------------------------------------------
 void doReplace(string_q& str, const string_q& type, const string_q& rep, const string_q& spaces);
+
+//---------------------------------------------------------------------------------------------------
+extern bool parseEndpoints(const char* str, void* data);
+
+//---------------------------------------------------------------------------------------------------
+#define routeCount fileCount
+#define cmdCount nVisited

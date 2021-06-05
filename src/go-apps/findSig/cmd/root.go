@@ -65,9 +65,9 @@ func findEncoding() {
 
 	// Create thread pool with number of concurrent threads equal to 'runtime.NumCPU()'
 	var wait sync.WaitGroup
-	checkOne, _ := ants.NewPoolWithFunc(runtime.NumCPU(), func(canonical interface{}) {
+	checkOne, _ := ants.NewPoolWithFunc(runtime.NumCPU(), func(signature interface{}) {
 		// Calculate 4-byte form
-		res := crypto.Keccak256([]byte(canonical.(string)))[:4]
+		res := crypto.Keccak256([]byte(signature.(string)))[:4]
 		// Go through queries and compare
 		for i := 0; i < len(search); i++ {
 			cur := search[i]
@@ -75,11 +75,11 @@ func findEncoding() {
 				if !testmode {
 					fmt.Fprintf(os.Stderr, "                                                                        \r")
 				}
-				prettyPrint(hex.EncodeToString(res), canonical)
+				prettyPrint(hex.EncodeToString(res), signature)
 				os.Exit(0)
 			}
 			if !testmode {
-				fmt.Fprintf(os.Stderr, "\033[2KScanning: %s\r", canonical)
+				fmt.Fprintf(os.Stderr, "\033[2KScanning: %s\r", signature)
 			}
 		}
 		wait.Done()
@@ -153,8 +153,16 @@ func initConfig() {
 		os.Exit(1)
 	}
 
-	viper.AddConfigPath(home + "/.quickBlocks")
-	viper.SetConfigName("quickBlocks")
+	configPath := "<unset>"
+	if (runtime.GOOS == "darwin") {
+		configPath = home + "/Library/Application Support/TrueBlocks"
+	} else if (runtime.GOOS == "linux") {
+		configPath = home + "/.local/share/trueblocks"
+	} else {
+		fmt.Println("Windows not supported.")
+	}
+	viper.AddConfigPath(configPath)
+	viper.SetConfigName("trueBlocks")
 	viper.SetConfigType("toml")
 	err = viper.ReadInConfig()
 	if err != nil {
@@ -166,5 +174,5 @@ func initConfig() {
 	viper.SetEnvKeyReplacer(strings.NewReplacer("SETTINGS.", ""))
 	viper.AutomaticEnv()
 
-	Options.signaturesPath = home + "/.quickBlocks/abis/known-000/"
+	Options.signaturesPath = configPath + "/abis/known-000/"
 }

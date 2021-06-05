@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -46,8 +46,8 @@ class COptions {
 public:
     size_t nThreads;
     blknum_t lastBlockInFile;
-    blkrange_t scanRange;
-    COptions(void) : nThreads(N_THREADS), lastBlockInFile(0), scanRange(0,NOPOS) {}
+    blkrange_t scanR ange;
+    COptions(void) : nThreads(N_THREADS), lastBlockInFile(0), scanR ange(0,NOPOS) {}
 };
 COptions opts;
 
@@ -73,11 +73,11 @@ bool visitFinalIndexFiles(const string_q& path, void* data) {
         ASSERT(options->lastBlockInFile != NOPOS);
 
         // If the user told us to start late, start late
-        if (options->lastBlockInFile != 0 && options->lastBlockInFile < options->scanRange.first)
+        if (options->lastBlockInFile != 0 && options->lastBlockInFile < options->scanR ange.first)
             return !shouldQuit();
 
         // If the user told us to end early, end early
-        if (options->scanRange.second != NOPOS && firstBlock > options->scanRange.second)
+        if (options->scanR ange.second != NOPOS && firstBlock > options->scanR ange.second)
             return !shouldQuit();
 
         if (isTestMode() && options->lastBlockInFile > 5000000)

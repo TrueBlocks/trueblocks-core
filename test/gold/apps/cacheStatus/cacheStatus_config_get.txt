@@ -1,10 +1,9 @@
 cacheStatus argc: 2 [1:--get_config] 
 cacheStatus --get_config 
-TIME ~ CLOCK - <INFO>  : get_config: true
 {
   "files": [
     {
-      "name": "quickBlocks.toml",
+      "name": "trueBlocks.toml",
       "sections": [
         {
           "section": "Providers",
@@ -104,11 +103,6 @@ TIME ~ CLOCK - <INFO>  : get_config: true
               "name": "whenblock",
               "value": "--when block--",
               "type": "display string"
-            },
-            {
-              "name": "whereblock",
-              "value": "--where block--",
-              "type": "display string"
             }
           ]
         },
@@ -137,7 +131,7 @@ TIME ~ CLOCK - <INFO>  : get_config: true
               "name": "n_blocks",
               "value": "--n Blocks--",
               "type": "uint",
-              "tip": "number of blocks to process per scrape (> 50)",
+              "tip": "number of blocks to process per invocation of blaze (> 50)",
               "required": true
             },
             {

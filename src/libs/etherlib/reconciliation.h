@@ -1,7 +1,7 @@
 #pragma once
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -12,8 +12,8 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 /*
- * This file was generated with makeClass. Edit only those parts of the code inside
- * of 'EXISTING_CODE' tags.
+ * Parts of this file were generated with makeClass --run. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
  */
 #include "utillib.h"
 #include "abi.h"
@@ -30,19 +30,20 @@ class CReconciliation : public CBaseNode {
     blknum_t transactionIndex;
     timestamp_t timestamp;
     string_q asset;
+    uint64_t decimals;
     bigint_t begBal;
     bigint_t begBalDiff;
     bigint_t amountIn;
+    bigint_t amountOut;
     bigint_t internalIn;
+    bigint_t internalOut;
     bigint_t selfDestructIn;
+    bigint_t selfDestructOut;
     bigint_t minerBaseRewardIn;
     bigint_t minerNephewRewardIn;
     bigint_t minerTxFeeIn;
     bigint_t minerUncleRewardIn;
     bigint_t prefundIn;
-    bigint_t amountOut;
-    bigint_t internalOut;
-    bigint_t selfDestructOut;
     bigint_t gasCostOut;
     bigint_t endBal;
     bigint_t endBalCalc;
@@ -60,9 +61,18 @@ class CReconciliation : public CBaseNode {
     DECLARE_NODE(CReconciliation);
 
     // EXISTING_CODE
-    bool reconcile(const CStringArray& corrections, const CReconciliation& lastStatement, blknum_t nextBlock,
-                   const CTransaction* trans);
-    bool reconcileUsingTraces(const CReconciliation& lastStatement, blknum_t nextBlock, const CTransaction* trans);
+    bool reconcileEth(const CStringArray& corrections, map<string, CReconciliation>& last, blknum_t nextBlock,
+                      const CTransaction* trans, const address_t& acctFor);
+    bool reconcileUsingTraces(blknum_t lastBn, bigint_t lastEndBal, bigint_t lastEndBalCalc, blknum_t nextBlock,
+                              const CTransaction* trans, const address_t& acctFor);
+    void reset(void) {
+        blknum_t b = blockNumber, tr = transactionIndex;
+        timestamp_t ts = timestamp;
+        initialize();
+        blockNumber = b;
+        transactionIndex = tr;
+        timestamp = ts;
+    }
     // EXISTING_CODE
     bool operator==(const CReconciliation& it) const;
     bool operator!=(const CReconciliation& it) const {
@@ -119,19 +129,20 @@ inline void CReconciliation::initialize(void) {
     transactionIndex = 0;
     timestamp = 0;
     asset = "";
+    decimals = 18;
     begBal = 0;
     begBalDiff = 0;
     amountIn = 0;
+    amountOut = 0;
     internalIn = 0;
+    internalOut = 0;
     selfDestructIn = 0;
+    selfDestructOut = 0;
     minerBaseRewardIn = 0;
     minerNephewRewardIn = 0;
     minerTxFeeIn = 0;
     minerUncleRewardIn = 0;
     prefundIn = 0;
-    amountOut = 0;
-    internalOut = 0;
-    selfDestructOut = 0;
     gasCostOut = 0;
     endBal = 0;
     endBalCalc = 0;
@@ -153,19 +164,20 @@ inline void CReconciliation::duplicate(const CReconciliation& re) {
     transactionIndex = re.transactionIndex;
     timestamp = re.timestamp;
     asset = re.asset;
+    decimals = re.decimals;
     begBal = re.begBal;
     begBalDiff = re.begBalDiff;
     amountIn = re.amountIn;
+    amountOut = re.amountOut;
     internalIn = re.internalIn;
+    internalOut = re.internalOut;
     selfDestructIn = re.selfDestructIn;
+    selfDestructOut = re.selfDestructOut;
     minerBaseRewardIn = re.minerBaseRewardIn;
     minerNephewRewardIn = re.minerNephewRewardIn;
     minerTxFeeIn = re.minerTxFeeIn;
     minerUncleRewardIn = re.minerUncleRewardIn;
     prefundIn = re.prefundIn;
-    amountOut = re.amountOut;
-    internalOut = re.internalOut;
-    selfDestructOut = re.selfDestructOut;
     gasCostOut = re.gasCostOut;
     endBal = re.endBal;
     endBalCalc = re.endBalCalc;
@@ -217,5 +229,18 @@ extern const char* STR_DISPLAY_RECONCILIATION;
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 extern CReconciliation operator+(const CReconciliation& a, const CReconciliation& b);
+typedef map<string, CReconciliation> CReconciliationMap;
+
+extern string_q wei_2_Str(const wei_t& weiIn);
+extern string_q bni_2_Str(const bigint_t& numIn);
+
+extern string_q wei_2_Ether(const wei_t& weiIn, uint64_t decimals);
+extern string_q bni_2_Ether(const bigint_t& numIn, uint64_t decimals);
+
+extern string_q wei_2_Dollars(const timestamp_t& ts, const wei_t& weiIn, uint64_t decimals);
+extern string_q bni_2_Dollars(const timestamp_t& ts, const bigint_t& numIn, uint64_t decimals);
+
+extern string_q wei_2_Export(const blknum_t& bn, const wei_t& weiIn, uint64_t decimals);
+extern string_q bni_2_Export(const timestamp_t& ts, const bigint_t& numIn, uint64_t decimals);
 // EXISTING_CODE
 }  // namespace qblocks

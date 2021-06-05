@@ -29,21 +29,10 @@
             "articulatedLog": {
               "name": "AuctionStarted",
               "stateMutability": "nonpayable",
-              "inputs": [
-                {
-                  "name": "hash",
-                  "value": "0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c",
-                  "internalType": "bytes32",
-                  "components": []
-                },
-                {
-                  "name": "registrationDate",
-                  "value": "1494329242",
-                  "internalType": "uint256",
-                  "components": []
-                }
-              ],
-              "outputs": []
+              "inputs": {
+                "hash": "0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c",
+                "registrationDate": "1494329242"
+              }
             },
             "compressedLog": "AuctionStarted ( hash: 0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c, registrationDate: 1494329242 )"
           },
@@ -58,21 +47,10 @@
             "articulatedLog": {
               "name": "AuctionStarted",
               "stateMutability": "nonpayable",
-              "inputs": [
-                {
-                  "name": "hash",
-                  "value": "0x0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc",
-                  "internalType": "bytes32",
-                  "components": []
-                },
-                {
-                  "name": "registrationDate",
-                  "value": "1494329242",
-                  "internalType": "uint256",
-                  "components": []
-                }
-              ],
-              "outputs": []
+              "inputs": {
+                "hash": "0x0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc",
+                "registrationDate": "1494329242"
+              }
             },
             "compressedLog": "AuctionStarted ( hash: 0x0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc, registrationDate: 1494329242 )"
           },
@@ -87,21 +65,10 @@
             "articulatedLog": {
               "name": "AuctionStarted",
               "stateMutability": "nonpayable",
-              "inputs": [
-                {
-                  "name": "hash",
-                  "value": "0x00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573",
-                  "internalType": "bytes32",
-                  "components": []
-                },
-                {
-                  "name": "registrationDate",
-                  "value": "1494329242",
-                  "internalType": "uint256",
-                  "components": []
-                }
-              ],
-              "outputs": []
+              "inputs": {
+                "hash": "0x00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573",
+                "registrationDate": "1494329242"
+              }
             },
             "compressedLog": "AuctionStarted ( hash: 0x00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573, registrationDate: 1494329242 )"
           },
@@ -117,27 +84,11 @@
             "articulatedLog": {
               "name": "NewBid",
               "stateMutability": "nonpayable",
-              "inputs": [
-                {
-                  "name": "hash",
-                  "value": "0xcb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811",
-                  "internalType": "bytes32",
-                  "components": []
-                },
-                {
-                  "name": "bidder",
-                  "value": "0xd1220a0cf47c7b9be7a2e6ba89f429762e7b9adb",
-                  "internalType": "address",
-                  "components": []
-                },
-                {
-                  "name": "deposit",
-                  "value": "10000000000000000",
-                  "internalType": "uint256",
-                  "components": []
-                }
-              ],
-              "outputs": []
+              "inputs": {
+                "bidder": "0xd1220a0cf47c7b9be7a2e6ba89f429762e7b9adb",
+                "deposit": "10000000000000000",
+                "hash": "0xcb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811"
+              }
             },
             "compressedLog": "NewBid ( hash: 0xcb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811, bidder: 0xd1220a0cf47c7b9be7a2e6ba89f429762e7b9adb, deposit: 10000000000000000 )"
           }
@@ -167,21 +118,10 @@
           "articulatedTrace": {
             "name": "startAuctionsAndBid",
             "stateMutability": "payable",
-            "inputs": [
-              {
-                "name": "hashes",
-                "value": "[0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c, 0x0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc, 0x00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573]",
-                "internalType": "bytes32[]",
-                "components": []
-              },
-              {
-                "name": "sealedBid",
-                "value": "0xcb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811",
-                "internalType": "bytes32",
-                "components": []
-              }
-            ],
-            "outputs": []
+            "inputs": {
+              "hashes": "[0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c, 0x0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc, 0x00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573]",
+              "sealedBid": "0xcb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811"
+            }
           },
           "compressedTrace": "startAuctionsAndBid ( hashes: [0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c, 0x0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc, 0x00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573], sealedBid: 0xcb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811 )"
         },
@@ -207,22 +147,12 @@
           "articulatedTrace": {
             "name": "owner",
             "stateMutability": "nonpayable",
-            "inputs": [
-              {
-                "name": "_node",
-                "value": "0x93cdeb708b7545dc668eb9280176169d1c33cfd8ed6f04690a0bcc88a93fc4ae",
-                "internalType": "bytes32",
-                "components": []
-              }
-            ],
-            "outputs": [
-              {
-                "name": "ret_0",
-                "value": "0x6090a6e47849629b7245dfa1ca21d94cd15878ef",
-                "internalType": "address",
-                "components": []
-              }
-            ]
+            "inputs": {
+              "_node": "0x93cdeb708b7545dc668eb9280176169d1c33cfd8ed6f04690a0bcc88a93fc4ae"
+            },
+            "outputs": {
+              "ret_0": "0x6090a6e47849629b7245dfa1ca21d94cd15878ef"
+            }
           },
           "compressedTrace": "owner ( _node: 0x93cdeb708b7545dc668eb9280176169d1c33cfd8ed6f04690a0bcc88a93fc4ae )"
         },
@@ -248,22 +178,12 @@
           "articulatedTrace": {
             "name": "owner",
             "stateMutability": "nonpayable",
-            "inputs": [
-              {
-                "name": "_node",
-                "value": "0x93cdeb708b7545dc668eb9280176169d1c33cfd8ed6f04690a0bcc88a93fc4ae",
-                "internalType": "bytes32",
-                "components": []
-              }
-            ],
-            "outputs": [
-              {
-                "name": "ret_0",
-                "value": "0x6090a6e47849629b7245dfa1ca21d94cd15878ef",
-                "internalType": "address",
-                "components": []
-              }
-            ]
+            "inputs": {
+              "_node": "0x93cdeb708b7545dc668eb9280176169d1c33cfd8ed6f04690a0bcc88a93fc4ae"
+            },
+            "outputs": {
+              "ret_0": "0x6090a6e47849629b7245dfa1ca21d94cd15878ef"
+            }
           },
           "compressedTrace": "owner ( _node: 0x93cdeb708b7545dc668eb9280176169d1c33cfd8ed6f04690a0bcc88a93fc4ae )"
         },
@@ -289,22 +209,12 @@
           "articulatedTrace": {
             "name": "owner",
             "stateMutability": "nonpayable",
-            "inputs": [
-              {
-                "name": "_node",
-                "value": "0x93cdeb708b7545dc668eb9280176169d1c33cfd8ed6f04690a0bcc88a93fc4ae",
-                "internalType": "bytes32",
-                "components": []
-              }
-            ],
-            "outputs": [
-              {
-                "name": "ret_0",
-                "value": "0x6090a6e47849629b7245dfa1ca21d94cd15878ef",
-                "internalType": "address",
-                "components": []
-              }
-            ]
+            "inputs": {
+              "_node": "0x93cdeb708b7545dc668eb9280176169d1c33cfd8ed6f04690a0bcc88a93fc4ae"
+            },
+            "outputs": {
+              "ret_0": "0x6090a6e47849629b7245dfa1ca21d94cd15878ef"
+            }
           },
           "compressedTrace": "owner ( _node: 0x93cdeb708b7545dc668eb9280176169d1c33cfd8ed6f04690a0bcc88a93fc4ae )"
         },
@@ -333,21 +243,10 @@
       "articulatedTx": {
         "name": "startAuctionsAndBid",
         "stateMutability": "payable",
-        "inputs": [
-          {
-            "name": "hashes",
-            "value": "[0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c, 0x0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc, 0x00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573]",
-            "internalType": "bytes32[]",
-            "components": []
-          },
-          {
-            "name": "sealedBid",
-            "value": "0xcb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811",
-            "internalType": "bytes32",
-            "components": []
-          }
-        ],
-        "outputs": []
+        "inputs": {
+          "hashes": "[0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c, 0x0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc, 0x00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573]",
+          "sealedBid": "0xcb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811"
+        }
       },
       "compressedTx": "startAuctionsAndBid ( hashes: [0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c, 0x0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc, 0x00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573], sealedBid: 0xcb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811 )",
       "gasCost": 10849501969331552,

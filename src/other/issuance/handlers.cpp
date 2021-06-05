@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -75,7 +75,7 @@ CStringArray header;
 //
 //    CTransaction trans;
 //    trans.l oadTransAsBlockReward(rec.blockNum, 99999, block.miner);
-//    expContext().accountedFor = block.miner;
+//    expContext().account edFor = block.miner;
 //    if (rec.reconcileIssuance(rec.blockNum, &trans)) {
 //        cout << "Block " << rec.blockNum << " balances" << endl;
 //    } else {
@@ -341,7 +341,7 @@ bool visitLine(const char* str, void* data) {
 
     bool same = acc->isSamePeriod(rec);
     if (!same) {
-        CReconciliationOutput out(acc->sum);
+        CReconciliation out(acc->sum);
         cout << out.Format(acc->fmt) << endl;
         if (acc->discrete) {
             CReconciliation reset;
@@ -368,7 +368,7 @@ bool COptions::summary_by_period(void) {
     accumulator.start = startBlock;
     accumulator.end = endBlock;
     forEveryLineInAsciiFile(resultsFile, visitLine, &accumulator);
-    CReconciliationOutput out(accumulator.sum);
+    CReconciliation out(accumulator.sum);
     cout << out.Format(accumulator.fmt) << endl;
 
     return true;

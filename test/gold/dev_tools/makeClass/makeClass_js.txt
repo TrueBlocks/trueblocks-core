@@ -1,12 +1,31 @@
 makeClass argc: 3 [1:--js] [2:CBlock] 
 makeClass --js CBlock 
 
-Generating Pages...
+  Invalid option: --js
 
-Generating Schemas...
-Generating Menus...                                                          
+  Usage:    makeClass [-r|-a|-o|-m|-f|-l|-n|-i|-c|-v|-h] <file> [file...]  
+  Purpose:  Automatically writes C++ for various purposes.
 
-Checking help files...
-	Extraneous files: none
-	Missing files: none
+  Where:  
+	files                 one or more class definition files (required)
+	-r  (--run)           run the class maker on associated <class_name(s)>
+	-a  (--all)           list, or run all class definitions found in the local folder
+	-o  (--options)       export options code (check validity in the process)
+	-m  (--readmes)       create readme files for each tool and app
+	-f  (--format)        format source code files (.cpp and .h) found in local folder and below
+	-l  (--lint)          lint source code files (.cpp and .h) found in local folder and below
+	-n  (--nspace <str>)  surround generated c++ code with a namespace
+	-i  (--filter <str>)  process only files whose filename or contents contain 'filter'
+	-c  (--force)         for both code generation and options generation, force writing of changes
 
+	#### Hidden options
+	-e  (--edit)          edit <class_name(s)> definition file in local folder
+	-d  (--dump)          dump any classDefinition config tomls to screen and quit
+	-p  (--api)           generate api options file in explorer repo
+	-A  (--openapi)       export openapi.yaml file for API documentation
+	#### Hidden options
+
+	-v  (--verbose)       set verbose level (optional level defaults to 1)
+	-h  (--help)          display this help screen
+
+  Powered by TrueBlocks

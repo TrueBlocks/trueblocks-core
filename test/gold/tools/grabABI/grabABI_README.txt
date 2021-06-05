@@ -1,23 +1,24 @@
 grabABI argc: 2 [1:-th] 
 grabABI -th 
-#### Usage
+### Usage
 
-`Usage:`    grabABI [-c|-k|-f|-v|-h] &lt;address&gt; [address...]  
+`Usage:`    chifra abis [-k|-s|-f|-v|-h] &lt;address&gt; [address...]  
 `Purpose:`  Fetches the ABI for a smart contract.
 
 `Where:`  
 
-| Short Cut | Option | Description |
-| -------: | :------- | :------- |
+| | Option | Description |
+| :----- | :----- | :---------- |
 |  | addrs | list of one or more smart contracts whose ABI to grab from EtherScan (required) |
-| -c | --canonical | convert all types to their canonical represenation and remove all spaces from display |
 | -k | --known | load common 'known' ABIs from cache |
-| -f | --find <str> | try to search for a function declaration given a four byte code |
+| -s | --sol &lt;str&gt; | file name of .sol file from which to create a new known abi (without .sol) |
+| -f | --find &lt;str&gt; | try to search for a function declaration given a four byte code |
 |####|Hidden options||
-| -s | --sol <str> | file name of .sol file from which to create a new known abi (without .sol) |
+| -s | --source | show the source of the ABI information |
+| -c | --classes | generate classDefinitions folder and class definitions |
 |####|Hidden options||
-| -x | --fmt <val> | export format, one of [none&#124;json*&#124;txt&#124;csv&#124;api] |
-| -v | --verbose | set verbose level. Either -v, --verbose or -v:n where 'n' is level |
+| -x | --fmt &lt;val&gt; | export format, one of *[ none \| json\* \| txt \| csv \| api ]* |
+| -v | --verbose | set verbose level (optional level defaults to 1) |
 | -h | --help | display this help screen |
 
 `Notes:`

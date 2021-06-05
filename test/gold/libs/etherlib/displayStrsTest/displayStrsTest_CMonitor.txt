@@ -1,9 +1,13 @@
 displayStrsTest argc: 2 [1:CMonitor] 
 displayStrsTest CMonitor 
 ------------------------------CMonitor------------------------------
-STATEMENT::AMOUNTIN: 
-ADDRESS: 0x1234567890123456789012345678901234567890
-BALANCE: 6000000000000000000
-NONCE: 1001234
-CODE: 0xTHIS_IS_BOGUS_CODE
-STORAGE: 0xTHIS_IS_BOGUS_STORAGE_DATA
+{
+  "schema": 9004,
+  "deleted": false,
+  "showing": true,
+  "cname": "Monitor",
+  "fm_mode": 0,
+  "address": "0x0",
+  "name": "monitor"
+}
+

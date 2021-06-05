@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -30,12 +30,12 @@ bool COptions::handle_lint(void) {
     forEveryFileInFolder("./", lintFiles, this);
     counter.is_counting = false;
     forEveryFileInFolder("./", lintFiles, this);
-    LOG_INFO(cYellow, "makeClass --lint", cOff, " processed ", counter.nVisited, " files (", counter.nProcessed,
-             " lints).", string_q(40, ' '));
-
     config.setConfigStr("settings", "lastLint", uint_2_Str(static_cast<uint64_t>(date_2_Ts(Now()))));
     config.writeFile();
     config.Release();
+    LOG_INFO(cYellow, "makeClass --lint", cOff, " processed ", counter.nVisited, " files (", counter.nProcessed,
+             " lints).", string_q(40, ' '));
+
     return true;
 }
 
@@ -45,7 +45,7 @@ bool lintFiles(const string_q& path, void* data) {
         forEveryFileInFolder(path + "*", lintFiles, data);
 
     } else {
-        CStringArray skips = {"/other/", "/blank", "sqlite3", "utillib/json_", "turboDive"};
+        CStringArray skips = {"/other/", "/blank", "sqlite3", "utillib/json_"};
         for (auto skip : skips)
             if (contains(path, skip))
                 return !shouldQuit();

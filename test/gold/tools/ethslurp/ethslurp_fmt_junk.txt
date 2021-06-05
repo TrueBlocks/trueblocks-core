@@ -4,7 +4,7 @@ ethslurp 0x1324e7b922b30B49Ab8EA81086341cc41C249346 3750000-4000000 --fmt junk
   Export format (junk) must be one of [ json | txt | csv | api ]. Quitting...
 
   Usage:    ethslurp [-t|-p|-v|-h] <address> [address...] [block...]  
-  Purpose:  Fetches data from EtherScan for an arbitrary address.
+  Purpose:  Fetch data from EtherScan for any address.
 
   Where:  
 	addrs                 one or more addresses to slurp from Etherscan (required)
@@ -12,7 +12,7 @@ ethslurp 0x1324e7b922b30B49Ab8EA81086341cc41C249346 3750000-4000000 --fmt junk
 	-t  (--types <val>)   one or more types of transactions to request, one or more of [ext*|int|token|nfts|miner|all]
 	-p  (--appearances)   show only the blocknumer.tx_id appearances of the exported transactions
 	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
-	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
+	-v  (--verbose)       set verbose level (optional level defaults to 1)
 	-h  (--help)          display this help screen
 
   Powered by TrueBlocks

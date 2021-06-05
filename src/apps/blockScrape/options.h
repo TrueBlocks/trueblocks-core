@@ -1,12 +1,12 @@
 #pragma once
 /*-------------------------------------------------------------------------
  * This source code is confidential proprietary information which is
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  * All Rights Reserved.
  *------------------------------------------------------------------------*/
 /*
- * Parts of this file were generated with makeClass. Edit only those parts of the code
- * outside of the BEG_CODE/END_CODE sections
+ * Parts of this file were generated with makeClass --options. Edit only those parts of
+ * the code outside of the BEG_CODE/END_CODE sections
  */
 #include "pinlib.h"
 #include "acctlib.h"
@@ -28,8 +28,12 @@ class COptions : public COptionsBase {
     uint64_t n_block_procs;
     uint64_t n_addr_procs;
     bool pin;
-    bool publish;
     double sleep;
+    bool staging;
+    bool unripe;
+    bool cache_txs;
+    bool cache_traces;
+    string_q load;
     // END_CODE_DECLARE
 
     ScrapeState state;
@@ -39,7 +43,7 @@ class COptions : public COptionsBase {
     timestamp_t latestBlockTs;
     blknum_t latestBlockNum;
     CPinnedChunkArray pinList;
-    CPinApiLicense lic;
+    CApiKey lic;
 
     COptions(void);
     ~COptions(void);
@@ -47,6 +51,7 @@ class COptions : public COptionsBase {
     bool parseArguments(string_q& command);
     void Init(void);
 
+    bool start_scraper(void);
     bool scrape_blocks(void);
     bool scrape_monitors(void);
 
@@ -59,7 +64,7 @@ class COptions : public COptionsBase {
 };
 
 //-----------------------------------------------------------------------------
-extern bool visitCopyRipeToStage(const string_q& path, void* data);
+extern bool copyRipeToStage(const string_q& path, void* data);
+extern bool appendFile(const string_q& toFile, const string_q& fromFile);
 extern bool prepareMonitors(const string_q& path, void* data);
 extern bool visitToPin(const string_q& chunkId, void* data);
-extern bool addNewPin(CPinnedChunk& pin, void* data);

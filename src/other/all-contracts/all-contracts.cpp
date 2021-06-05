@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -21,11 +21,12 @@ int main(int argc, const char* argv[]) {
     HIDE_FIELD(CTraceAction, "init");
     HIDE_FIELD(CTraceResult, "code");
     blknum_t latest = getBlockProgress(BP_CLIENT).client;
-    for (size_t bn = firstTransactionBlock ; bn < latest ; bn++) {
-        cout << bn << "\r"; cout.flush();
+    for (size_t bn = firstTransactionBlock; bn < latest; bn++) {
+        cout << bn << "\r";
+        cout.flush();
         CBlock block;
         getBlock(block, bn);
-        forEveryTraceInBlock(visitTrace, NULL, block);
+        block.forEveryTrace(visitTrace, NULL);
     }
     return 1;
 }

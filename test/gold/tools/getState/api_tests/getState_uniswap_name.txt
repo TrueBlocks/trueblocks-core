@@ -8,13 +8,9 @@
         "name": "name",
         "signature": "name()",
         "encoding": "0x06fdde03",
-        "inputs": [],
-        "outputs": [
-          {
-            "name": "_name",
-            "value": "Uniswap V2"
-          }
-        ]
+        "outputs": {
+          "_name": "Uniswap V2"
+        }
       },
       "balance": 0,
       "address": "0xbb2b8038a1640196fbe3e38816f3e67cba72d940"

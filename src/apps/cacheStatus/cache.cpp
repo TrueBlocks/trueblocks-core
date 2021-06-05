@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -11,8 +11,8 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 /*
- * This file was generated with makeClass. Edit only those parts of the code inside
- * of 'EXISTING_CODE' tags.
+ * Parts of this file were generated with makeClass --run. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
  */
 #include "cache.h"
 #include "status.h"
@@ -359,18 +359,24 @@ bool CCache::writeBinaryCache(const string_q& cacheType, bool details) {
 bool CCache::needsRefresh(const string_q& cacheType, bool details) {
     if (isTestMode())
         return true;
-    string_q lPath = getCachePath(cacheType) + "/";
+
+    string_q cachePath = getCachePath(cacheType) + "/";
     if (cacheType == "index")
-        lPath = getCachePath("addr_index/finalized/");
-    if (cacheType == "names")
-        lPath = configPath("names/");
-    fileInfo ret = getNewestFileInFolder(lPath);
-    string_q fn = getCachePath("tmp/" + cacheType + (details ? "_det" : "") + ".bin");
-    bool res = fileLastModifyDate(fn) < ret.fileTime;
-    LOG4("cache date:  ", fileLastModifyDate(fn).Format(FMT_EXPORT), " - ", fn);
-    LOG4("fileInfo:    ", ret.fileTime.Format(FMT_EXPORT), " - ", ret.fileName);
-    LOG4("needsRefresh:", res);
-    return (res);
+        cachePath = indexFolder_finalized;
+
+    string_q tmpFn = getCachePath("tmp/" + cacheType + (details ? "_det" : "") + ".bin");
+    LOG4("cache date:  ", fileLastModifyDate(tmpFn).Format(FMT_EXPORT), " - ", tmpFn);
+
+    fileInfo cacheInfo = getNewestFileInFolder(cachePath);
+    LOG4("cacheInfo:   ", cacheInfo.fileTime.Format(FMT_EXPORT), " - ", cacheInfo.fileName);
+
+    bool nR = fileLastModifyDate(tmpFn) < cacheInfo.fileTime;
+    if (!nR) {
+        string_q configFn = configPath("trueblocks.toml");
+        nR = fileLastModifyDate(tmpFn) < fileLastModifyDate(configFn);
+    }
+    LOG4("needsRefresh:", nR);
+    return nR;
 }
 // EXISTING_CODE
 }  // namespace qblocks

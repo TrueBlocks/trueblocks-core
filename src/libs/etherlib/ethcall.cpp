@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -11,8 +11,8 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 /*
- * This file was generated with makeClass. Edit only those parts of the code inside
- * of 'EXISTING_CODE' tags.
+ * Parts of this file were generated with makeClass --run. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
  */
 #include "ethcall.h"
 #include "etherlib.h"
@@ -335,23 +335,60 @@ const char* STR_DISPLAY_ETHCALL =
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 //-------------------------------------------------------------------------
-//-------------------------------------------------------------------------
-bool doEthCall(const address_t& to, const string_q& encoding, const string_q& bytes, blknum_t blockNum, const CAbi& abi,
-               CFunction& result) {
-    ostringstream cmd;
-    cmd << "[{";
-    cmd << "\"to\": \"" << to << "\", ";
-    cmd << "\"data\": \"" << encoding << substitute(bytes, "0x", "") << "\"";
-    cmd << "}, \"" << uint_2_Hex(blockNum) << "\"]";
-
-    string_q rpcRet = callRPC("eth_call", cmd.str(), false);
-    if (startsWith(rpcRet, "0x"))
-        abi.articulateOutputs(encoding, rpcRet, result);
-    return result.outputs.size();
+string_q CEthCall::getResults(void) const {
+    return result.outputs.size() ? result.outputs[0].value : "";
 }
 
-bool doEthCall(CEthCall& call) {
-    return doEthCall(call.address, call.encoding, call.bytes, call.blockNumber, call.abi_spec, call.result);
+//-------------------------------------------------------------------------
+bool CEthCall::getResults(string_q& out) const {
+    if (result.outputs.size()) {
+        out = result.outputs[0].value;
+        return true;
+    }
+    return false;
+}
+
+//-------------------------------------------------------------------------
+bool CEthCall::getResults(CStringArray& out) const {
+    for (auto output : result.outputs)
+        out.push_back(output.value);
+    return out.size();
+}
+
+//-------------------------------------------------------------------------
+bool doEthCall(CEthCall& theCall) {
+    string_q orig = theCall.encoding;
+
+    ostringstream cmd;
+    cmd << "[";
+    cmd << "{";
+    cmd << "\"to\": \"" << theCall.address << "\", ";
+    cmd << "\"data\": \"" << theCall.encoding << substitute(theCall.bytes, "0x", "") << "\"";
+    cmd << "}, \"" << uint_2_Hex(theCall.blockNumber) << "\"";
+    cmd << "]";
+
+    string_q ret = callRPC("eth_call", cmd.str(), false);
+    // Did we get an answer? If so, return it
+    if (startsWith(ret, "0x")) {
+        theCall.abi_spec.articulateOutputs(theCall.encoding, ret, theCall.result);
+        return true;
+    }
+
+    if (theCall.checkProxy) {
+        theCall.checkProxy = false;       // avoid infinite regress
+        theCall.encoding = "0x5c60da1b";  // implementation()
+        if (doEthCall(theCall)) {
+            // This is a proxy with an implementation...let's
+            // try again against the proxied-to address.
+            theCall.encoding = orig;
+            theCall.address = theCall.getResults();
+            if (isZeroAddr(theCall.address))
+                return false;
+            return doEthCall(theCall);
+        }
+    }
+    theCall.encoding = orig;
+    return false;
 }
 // EXISTING_CODE
 }  // namespace qblocks

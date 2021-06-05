@@ -1,15 +1,16 @@
 #pragma once
 /*-------------------------------------------------------------------------
  * This source code is confidential proprietary information which is
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  * All Rights Reserved
  *------------------------------------------------------------------------*/
 /*
- * Parts of this file were generated with makeClass. Edit only those parts of the code
- * outside of the BEG_CODE/END_CODE sections
+ * Parts of this file were generated with makeClass --options. Edit only those parts of
+ * the code outside of the BEG_CODE/END_CODE sections
  */
 #include "pinlib.h"
 #include "status.h"
+#include "statusterse.h"
 #include "chaincache.h"
 #include "entitycache.h"
 #include "pricecache.h"
@@ -30,8 +31,6 @@ class COptions : public CAbiOptions {
     bool details;
     uint64_t depth;
     bool terse;
-    blknum_t start;
-    blknum_t end;
     // END_CODE_DECLARE
 
     CStatus status;
@@ -39,6 +38,7 @@ class COptions : public CAbiOptions {
     bool isConfig;
     CIndexHashMap bloomHashes;
     CIndexHashMap indexHashes;
+    blkrange_t scanRange;
 
     COptions(void);
     ~COptions(void);
@@ -72,26 +72,20 @@ class CItemCounter : public CCache {
     CAbiCacheItemArray* abiArray;
     CPriceCacheItemArray* priceArray;
     CEntityCacheItemArray* entityArray;
-    uint32_t* ts_array;
-    size_t ts_cnt;
-    blkrange_t scanRange;
+    uint32_t* tsMemMap;
+    size_t tsCnt;
     blkrange_t fileRange;
-    CItemCounter(COptions* opt, blknum_t start, blknum_t end) : CCache(), options(opt) {
+    CItemCounter(COptions* opt) : CCache(), options(opt) {
         cachePtr = NULL;
         indexArray = NULL;
         monitorArray = NULL;
         abiArray = NULL;
         priceArray = NULL;
-        ts_array = NULL;
-        ts_cnt = 0;
-        scanRange.first = start;
-        scanRange.second = end;
+        tsMemMap = NULL;
+        tsCnt = 0;
     }
 
   public:
     CItemCounter(void) : CCache() {
     }
 };
-
-//--------------------------------------------------------------------------------
-extern void loadPinMaps(CIndexHashMap& bloomMap, CIndexHashMap& indexMap);

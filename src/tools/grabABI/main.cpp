@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -32,17 +32,17 @@ int main(int argc, const char* argv[]) {
             cout << exportPreamble(expContext().fmtMap["header"],
                                    isApiMode() ? GETRUNTIME_CLASS(CFunction) : GETRUNTIME_CLASS(CAbi));
         bool isText = (expContext().exportFmt == (TXT1 | CSV1));
-        if (isText && !options.isNoHeader)
+        if (isText && !options.noHeader)
             cout << expContext().fmtMap["header"] << endl;
 
-        for (auto func : options.abi_spec.interfaceArray()) {
-            if (!options.first) {
+        for (auto func : options.abi_spec.interfaces) {
+            if (!options.firstOut) {
                 if (!isText)
                     cout << ",";
                 cout << endl;
             }
             cout << func.Format(expContext().fmtMap["format"]);
-            options.first = false;
+            options.firstOut = false;
         }
         once = false;
     }

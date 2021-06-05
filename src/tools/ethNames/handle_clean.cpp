@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -15,11 +15,11 @@
 //--------------------------------------------------------------------
 void COptions::finishClean(CAccountName& account) {
     LOG_INFO("Cleaning ", account.address, "                                  \r");
-    account.is_prefund = prefundWeiMap[account.address] > 0;
+    account.is_prefund = expContext().prefundMap[account.address] > 0;
     account.is_contract = isContractAt(account.address, latestBlock);
     account.is_erc20 = isTokenContract(account);
     if (account.is_contract && account.is_erc20) {
-        account.decimals = standards.decimals;
+        account.decimals = standards.decimals ? standards.decimals : 18;
         account.symbol = standards.symbol;
         bool isEtherscan = contains(toLower(account.source), "etherscan");
         bool isTrueblocks = contains(toLower(account.source), "trueblocks");
@@ -34,7 +34,8 @@ void COptions::finishClean(CAccountName& account) {
     if (account.decimals > 0 || !account.symbol.empty()) {
         account.is_erc721 = contains(toLower(account.tags), "erc721");
         account.is_erc20 = true;
-        account.tags = account.tags.empty() || contains(toLower(account.tags), "token")
+        account.tags = (account.tags.empty() || contains(toLower(account.tags), "token") ||
+                        contains(account.tags, "30-Contracts") || contains(account.tags, "55-Defi"))
                            ? (account.is_erc721 ? "51-Tokens:ERC721" : "50-Tokens:ERC20")
                            : account.tags;
     }
@@ -89,7 +90,9 @@ bool COptions::cleanNames(const string_q& sourceIn, const string_q& destIn) {
     CAccountName name;
     CAccountNameArray names;
     while (name.parseText(fields, contents)) {
+        bool isContract = name.is_contract;
         finishClean(name);
+        name.is_contract = isContract;
         names.push_back(name);
     }
     sort(names.begin(), names.end());
@@ -117,12 +120,15 @@ bool COptions::handle_clean(void) {
     string_q mainSource = getGlobalConfig("ethNames")->getConfigStr("settings", "source", "<UNSET>");
     string_q mainDest = configPath("names/names.tab");
     if (!cleanNames(mainSource, mainDest))
-        EXIT_USAGE("Primary names file (" + mainSource + ") not found.");
+        EXIT_USAGE("This installation of TrueBlocks may not clean the names file. Primary names file was not set.");
+    LOG_WARN("The primary names file was cleaned.", string_q(50, ' '));
 
-    string_q customSource = getGlobalConfig("ethNames")->getConfigStr("settings", "custom", "<UNSET>");
-    string_q customDest = configPath("names/names_custom.tab");
-    if (!cleanNames(customSource, customDest))
-        EXIT_USAGE("Custom names file (" + customSource + ") not found.");
+    //    string_q customSource = getGlobalConfig("ethNames")->getConfigStr("settings", "custom", "<UNSET>");
+    //    string_q customDest = configPath("names/names_custom.tab");
+    //    if (!cleanNames(customSource, customDest))
+    //        EXIT_USAGE("This installation of TrueBlocks may not clean the names file. Customized names file was not
+    //        set.");
+    LOG_WARN("The custom names file was NOT cleaned.", string_q(50, ' '));
 
     ::remove(getCachePath("names/names.bin").c_str());
     CAccountName acct;

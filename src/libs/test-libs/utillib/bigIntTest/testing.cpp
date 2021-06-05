@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -13,7 +13,7 @@
 #include <string>
 #include <iostream>
 #include <sstream>
-#include "utillib.h"
+#include "etherlib.h"
 
 //----------------------------------------------------------------------
 #define TEST(expr, exp)                                                                                                \
@@ -160,7 +160,7 @@ void contentTest(void) {
         biguint_t aa = check(biguint_t(314159265) * 358979323);
         biguint_t bb;
         biguint_t bbb(314);
-        biguint_t bbdb(25);
+        biguint_t bbbb(25);
 
         biguint_t ss1 = str_2_BigUint(string_q("314159265358979323"));
         biguint_t ss2 = str_2_BigUint(string_q("314159265358979324"));
@@ -173,7 +173,7 @@ void contentTest(void) {
         bigint_t zero(0), three(3), ans;
         bigint_t fff = 4;
         fff *= 3;
-        biguint_t aaaaa(0), bbbdb(3);
+        biguint_t aaaaa(0), bbbbb(3);
         biguint_t four(4), eight(8), sixteen(16);
 
         TEST2(a, "0");
@@ -347,17 +347,17 @@ void contentTest(void) {
         TEST(biguint_t(4095).bitLength(), "12");
         TEST(biguint_t(4096).bitLength(), "13");
         TEST(str_2_BigUint(string_q("5000000000")).bitLength(), "33");
-        TEST(bbdb.getBit(4), "1");
-        TEST(bbdb.getBit(3), "1");
-        TEST(bbdb.getBit(2), "0");
-        TEST(bbdb.getBit(1), "0");
-        TEST(bbdb.getBit(0), "1");
-        TEST(bbdb.bitLength(), "5");
-        bbdb.setBit(32, true);  // NOLINT
-        TEST(bbdb, "4294967321");
+        TEST(bbbb.getBit(4), "1");
+        TEST(bbbb.getBit(3), "1");
+        TEST(bbbb.getBit(2), "0");
+        TEST(bbbb.getBit(1), "0");
+        TEST(bbbb.getBit(0), "1");
+        TEST(bbbb.bitLength(), "5");
+        bbbb.setBit(32, true);  // NOLINT
+        TEST(bbbb, "4294967321");
         bbb.setBit(31, true);
         bbb.setBit(32, false);  // NOLINT
-        TEST(check(bbdb), "2147483673");
+        TEST(check(bbbb), "2147483673");
         TEST(p1, "15");
         TEST2(p2, "-15");
         TEST2((num.divide(denom, quotient), check(quotient)), "2");
@@ -366,7 +366,7 @@ void contentTest(void) {
         ans = zero - three;
         TEST2(check(ans).sign, "-1");
         TEST2(check(fff), "12");
-        ans = aaaaa ^ bbbdb;
+        ans = aaaaa ^ bbbbb;
         TEST2(ans, "3");
         num = 5;
         num *= num;

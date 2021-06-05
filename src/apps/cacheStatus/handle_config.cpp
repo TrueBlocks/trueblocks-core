@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------
  * This source code is confidential proprietary information which is
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  * All Rights Reserved
  *------------------------------------------------------------------------*/
 #include "options.h"
@@ -20,22 +20,38 @@ bool COptions::handle_config_get(ostream& os) {
     CConfiguration config;
     {
         const CToml* cc = getGlobalConfig();
-        CConfigFile f("quickBlocks.toml");
+        CConfigFile f("trueBlocks.toml");
 
         CConfigSection g1_1("Providers", "settings");
         CConfigSection g1_2("Paths", "settings");
 
-        string_q defFolder = configPathRelative("");
         CStringArray values;
-        values.push_back(isTestMode() ? "--rpc Provider--"
-                                      : cc->getConfigStr(g1_1.name, "rpcProvider", "http://localhost:8545"));
-        values.push_back(isTestMode() ? "--balance Prov--"
-                                      : cc->getConfigStr(g1_1.name, "balanceProvider", "http://localhost:8545"));
-        values.push_back(isTestMode() ? "--config Path--" : cc->getConfigStr(g1_2.name, "configPath", defFolder));
-        values.push_back(isTestMode() ? "--cache Path--"
-                                      : cc->getConfigStr(g1_2.name, "cachePath", defFolder + "cache/"));
-        values.push_back(isTestMode() ? "--index Path--"
-                                      : cc->getConfigStr(g1_2.name, "indexPath", defFolder + "cache/addr_index/"));
+
+        string_q prov = cc->getConfigStr(g1_1.name, "rpcProvider", "http://localhost:8545");
+        if (isTestMode())
+            prov = "--rpc Provider--";
+        values.push_back(prov);
+
+        string_q bal = cc->getConfigStr(g1_1.name, "balanceProvider", "http://localhost:8545");
+        if (isTestMode())
+            bal = "--balance Prov--";
+        values.push_back(bal);
+
+        string_q defFolder = configPathRelative("");
+        string_q conf = cc->getConfigStr(g1_2.name, "configPath", defFolder);
+        if (isTestMode())
+            conf = "--config Path--";
+        values.push_back(conf);
+
+        string_q cache = cc->getConfigStr(g1_2.name, "cachePath", defFolder + "cache/");
+        if (isTestMode())
+            cache = "--cache Path--";
+        values.push_back(cache);
+
+        string_q index = cc->getConfigStr(g1_2.name, "indexPath", defFolder + "unchained/");
+        if (isTestMode())
+            index = "--index Path--";
+        values.push_back(index);
 
         size_t cnt = 0;
         CConfigItemArray items;
@@ -60,7 +76,6 @@ bool COptions::handle_config_get(ostream& os) {
         f.sections.push_back(g1_2);
 
         extern const char* STR_DISPLAY_WHEN;
-        extern const char* STR_DISPLAY_WHERE;
 
         CStringArray values2;
         CConfigItemArray items2;
@@ -77,7 +92,6 @@ bool COptions::handle_config_get(ostream& os) {
         values2.push_back(isTestMode() ? "--trace--" : cc->getConfigStr(g2.section, "", STR_DISPLAY_TRACE));
         values2.push_back(isTestMode() ? "--transaction--" : cc->getConfigStr(g2.section, "", STR_DISPLAY_TRANSACTION));
         values2.push_back(isTestMode() ? "--when block--" : cc->getConfigStr(g2.section, "", STR_DISPLAY_WHEN));
-        values2.push_back(isTestMode() ? "--where block--" : cc->getConfigStr(g2.section, "", STR_DISPLAY_WHERE));
         extern string_q convertDisplayStr(const string_q& in);
         items2.push_back(
             CConfigItem("accountName", convertDisplayStr(values2[cnt++]), "display string", "", false, false));
@@ -96,8 +110,6 @@ bool COptions::handle_config_get(ostream& os) {
             CConfigItem("transaction", convertDisplayStr(values2[cnt++]), "display string", "", false, false));
         items2.push_back(
             CConfigItem("whenblock", convertDisplayStr(values2[cnt++]), "display string", "", false, false));
-        items2.push_back(
-            CConfigItem("whereblock", convertDisplayStr(values2[cnt++]), "display string", "", false, false));
         for (auto item : items2)
             g2.keys.push_back(item);
         if (verbose || isTestMode())
@@ -120,7 +132,8 @@ bool COptions::handle_config_get(ostream& os) {
         string_q v1 = (isTestMode() ? "--n Blocks--" : cc->getConfigStr(g1.name, "n_blocks", "2000"));
         string_q v2 = (isTestMode() ? "--n Addr Procs--" : cc->getConfigStr(g1.name, "n_addr_procs", "20"));
         string_q v3 = (isTestMode() ? "--n Block Procs--" : cc->getConfigStr(g1.name, "n_block_procs", "10"));
-        CConfigItem i1("n_blocks", v1, "uint", "number of blocks to process per scrape (> 50)", true, false);
+        CConfigItem i1("n_blocks", v1, "uint", "number of blocks to process per invocation of blaze (> 50)", true,
+                       false);
         g1.keys.push_back(i1);
         CConfigItem i2("n_addr_procs", v2, "uint", "number of parallel go processes to use to process addresses (> 0)",
                        true, false);
@@ -149,7 +162,7 @@ bool COptions::handle_config_get(ostream& os) {
     {
         manageFields("CAccountName:firstAppearance,latestAppearance,nAppearances,sizeInBytes", false);
 
-        const CToml* cc = getGlobalConfig("ethNames");
+        // const CToml* cc = getGlobalConfig("ethNames");
         CConfigFile f("ethNames.toml");
         CConfigSection g1("Names", "custom");
 
@@ -168,12 +181,7 @@ bool COptions::handle_config_get(ostream& os) {
             i1.named.push_back(test2);
 
         } else {
-            string_q customStr = cc->getConfigJson("custom", "list", "");
-            CAccountName item;
-            while (item.parseJson3(customStr)) {
-                i1.named.push_back(item);
-                item = CAccountName();
-            }
+            cerr << "Not implemented" << endl;
         }
 
         g1.keys.push_back(i1);
@@ -197,4 +205,3 @@ string_q convertDisplayStr(const string_q& in) {
 
 //--------------------------------------------------------------------------------
 const char* STR_DISPLAY_WHEN = "[{BLOCKNUMBER}]\t[{TIMESTAMP}]\t[{DATE}]\t[{NAME}]";
-const char* STR_DISPLAY_WHERE = "[{BLOCKNUMBER}]\t[{PATH}]\t[{CACHED}]";

@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -55,7 +55,6 @@ int moveFile(const string_q& from, const string_q& to) {
 //------------------------------------------------------------------
 static string_q escapePath(const string_q& nameIn) {
     string_q name = nameIn;
-    replaceAll(name, " ", "\\ ");
     replaceAll(name, "&", "\\&");
     replaceAll(name, "(", "\\(");
     replaceAll(name, ")", "\\)");
@@ -283,7 +282,7 @@ string_q listProcesses(const string_q& progName) {
             }
         }
     }
-    if (isTestMode() && !isLiveTest())
+    if (isTestMode())
         LOG4("\n", cmd, "\n", result, " ", !result.empty());
     return result;
 }

@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -21,7 +21,6 @@ int main(int argc, const char* argv[]) {
     if (!options.prepareArguments(argc, argv))
         return 0;
 
-    options.first = true;
     for (auto command : options.commandLines) {
         if (!options.parseArguments(command))
             return 0;
@@ -31,7 +30,7 @@ int main(int argc, const char* argv[]) {
             LOG_INFO("No results");
 
         } else {
-            if (options.first)
+            if (options.firstOut)
                 cout << exportPreamble(expContext().fmtMap["header"], GETRUNTIME_CLASS(CBlock));
             if (options.requests.size() > 0) {
                 options.applyFilter();  // for (auto item : options.items)
@@ -56,14 +55,14 @@ bool visitBlock(CBlock& block, void* data) {
         cout << block.Format(expContext().fmtMap["format"]) << endl;
 
     } else {
-        if (!opt->first)
+        if (!opt->firstOut)
             cout << "," << endl;
         cout << "  ";
         indent();
         block.toJson(cout);
         unindent();
     }
-    opt->first = false;
+    opt->firstOut = false;
     if (isTestMode() && (++opt->cnt > 100))
         return false;
     return true;
@@ -76,7 +75,7 @@ bool forEveryTimestamp(BLOCKVISITFUNC func, void* data, uint64_t start, uint64_t
 
     uint32_t* tsArray = NULL;
     size_t nItems;
-    if (!loadTimestampFile(&tsArray, nItems))
+    if (!loadTimestamps(&tsArray, nItems))
         return false;
     if (!tsArray)  // it may not have failed, but there may be no timestamps
         return false;
@@ -87,7 +86,7 @@ bool forEveryTimestamp(BLOCKVISITFUNC func, void* data, uint64_t start, uint64_t
         block.timestamp = tsArray[bn + 1];
         bool ret = (*func)(block, data);
         if (!ret) {
-            // IMPORTANT NOTE - loadTimestampFile does not return a pointer that's been allocated. It returns
+            // IMPORTANT NOTE - loadTimestamps does not return a pointer that's been allocated. It returns
             // a pointer to a memory mapped file, so we can't delete it. We leave this here as documentation.
             // ASSERT(tsArray)
             // delete[] tsArray;
@@ -95,7 +94,7 @@ bool forEveryTimestamp(BLOCKVISITFUNC func, void* data, uint64_t start, uint64_t
         }
     }
 
-    // IMPORTANT NOTE - loadTimestampFile does not return a pointer that's been allocated. It returns
+    // IMPORTANT NOTE - loadTimestamps does not return a pointer that's been allocated. It returns
     // a pointer to a memory mapped file, so we can't delete it. We leave this here as documentation.
     // ASSERT(tsArray)
     // delete[] tsArray;

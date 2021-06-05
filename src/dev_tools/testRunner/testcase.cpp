@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -11,8 +11,8 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 /*
- * This file was generated with makeClass. Edit only those parts of the code inside
- * of 'EXISTING_CODE' tags.
+ * Parts of this file were generated with makeClass --run. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
  */
 #include "testcase.h"
 
@@ -450,7 +450,7 @@ void establishTestMonitors(void) {
     }
 
     const char* STR_UNZIP_CMD =
-        "cd [{PATH}] && "
+        "cd \"[{PATH}]\" && "
         "rm -fR mocks && "
         "rm -fR monitors && "
         "gunzip --keep *.gz && "
@@ -475,7 +475,7 @@ bool prepareBuiltIn(string_q& options) {
             if (match == "RESET") {
                 establishTestMonitors();
                 cleanFolder(getCachePath("tmp/"));
-                cleanFolder(configPath("mocked/addr_index"));
+                cleanFolder(configPath("mocked/unchained"));
                 options = "";
                 if (debug)
                     os << "Cleanup" << endl;
@@ -547,10 +547,8 @@ void CTestCase::prepareTest(bool cmdLine, bool removeWorking) {
 
     if (!builtin) {  // order matters
         if (cmdLine) {
-            CStringArray opts = {
-                "val",   "addrs",        "addrs2", "blocks",    "block_list", "files",
-                "dates", "transactions", "terms",  "functions", "modes",      "mode",
-            };
+            CStringArray opts = {"val",          "addrs", "addrs2",    "blocks", "block_list", "files",  "dates",
+                                 "transactions", "terms", "functions", "modes",  "mode",       "topics", "fourbytes"};
             options = "&" + options;
             for (auto opt : opts)
                 replaceAll(options, "&" + opt + "=", " ");

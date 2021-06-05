@@ -1,12 +1,11 @@
 chifra argc: 3 [1:slurp] [2:--help] 
 chifra slurp --help 
-TIME ~ CLOCK - <INFO>  : mode: slurp
 chifra slurp argc: 2 [1:--help] 
 chifra slurp --help 
 PROG_NAME = [chifra slurp]
 
   Usage:    chifra slurp [-t|-p|-v|-h] <address> [address...] [block...]  
-  Purpose:  Fetches data from EtherScan for an arbitrary address.
+  Purpose:  Fetch data from EtherScan for any address.
 
   Where:  
 	addrs                 one or more addresses to slurp from Etherscan (required)
@@ -14,7 +13,7 @@ PROG_NAME = [chifra slurp]
 	-t  (--types <val>)   one or more types of transactions to request, one or more of [ext*|int|token|nfts|miner|all]
 	-p  (--appearances)   show only the blocknumer.tx_id appearances of the exported transactions
 	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
-	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
+	-v  (--verbose)       set verbose level (optional level defaults to 1)
 	-h  (--help)          display this help screen
 
   Powered by TrueBlocks

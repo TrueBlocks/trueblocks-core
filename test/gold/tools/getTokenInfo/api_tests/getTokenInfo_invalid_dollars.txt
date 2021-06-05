@@ -1,1 +1,0 @@
-{ "errors": [ "chifra tokens - Invalid option: --dollars" ] }

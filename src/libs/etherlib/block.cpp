@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -11,8 +11,8 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 /*
- * This file was generated with makeClass. Edit only those parts of the code inside
- * of 'EXISTING_CODE' tags.
+ * Parts of this file were generated with makeClass --run. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
  */
 #include "block.h"
 #include "appearance.h"
@@ -142,6 +142,19 @@ string_q CBlock::getValueByName(const string_q& fieldName) const {
                 }
                 return retS;
             }
+            if (fieldName % "tx_hashes" || fieldName % "tx_hashesCnt") {
+                size_t cnt = tx_hashes.size();
+                if (endsWith(toLower(fieldName), "cnt"))
+                    return uint_2_Str(cnt);
+                if (!cnt)
+                    return "";
+                string_q retS;
+                for (size_t i = 0; i < cnt; i++) {
+                    retS += ("\"" + tx_hashes[i] + "\"");
+                    retS += ((i < cnt - 1) ? ",\n" + indentStr() : "\n");
+                }
+                return retS;
+            }
             break;
         default:
             break;
@@ -264,6 +277,13 @@ bool CBlock::setValueByName(const string_q& fieldNameIn, const string_q& fieldVa
                 }
                 return true;
             }
+            if (fieldName % "tx_hashes") {
+                string_q str = fieldValue;
+                while (!str.empty()) {
+                    tx_hashes.push_back(nextTokenClear(str, ','));
+                }
+                return true;
+            }
             break;
         default:
             break;
@@ -313,6 +333,7 @@ bool CBlock::Serialize(CArchive& archive) {
     archive >> finalized;
     archive >> timestamp;
     archive >> transactions;
+    // archive >> tx_hashes;
     // archive >> name;
     // archive >> light;
     finishParse();
@@ -337,6 +358,7 @@ bool CBlock::SerializeC(CArchive& archive) const {
     archive << finalized;
     archive << timestamp;
     archive << transactions;
+    // archive << tx_hashes;
     // archive << name;
     // archive << light;
 
@@ -386,6 +408,8 @@ void CBlock::registerClass(void) {
     ADD_FIELD(CBlock, "finalized", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CBlock, "timestamp", T_TIMESTAMP, ++fieldNum);
     ADD_FIELD(CBlock, "transactions", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CBlock, "tx_hashes", T_TEXT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CBlock, "tx_hashes");
     ADD_FIELD(CBlock, "name", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CBlock, "name");
     ADD_FIELD(CBlock, "light", T_BOOL | TS_OMITEMPTY, ++fieldNum);
@@ -474,7 +498,7 @@ bool CBlock::readBackLevel(CArchive& archive) {
     bool done = false;
     // EXISTING_CODE
     biguint_t removed;
-    if (m_schema <= getVersionNum(0, 3, 0)) {
+    if (m_schema < getVersionNum(0, 3, 1)) {
         archive >> gasLimit;
         archive >> gasUsed;
         archive >> hash;
@@ -494,7 +518,7 @@ bool CBlock::readBackLevel(CArchive& archive) {
         finalized = false;
         finishParse();
         done = true;
-    } else if (m_schema <= getVersionNum(0, 4, 0)) {
+    } else if (m_schema < getVersionNum(0, 4, 1)) {
         archive >> gasLimit;
         archive >> gasUsed;
         archive >> hash;
@@ -548,6 +572,13 @@ const CBaseNode* CBlock::getObjectAt(const string_q& fieldName, size_t index) co
     }
 
     return NULL;
+}
+
+//---------------------------------------------------------------------------
+const string_q CBlock::getStringAt(const string_q& fieldName, size_t i) const {
+    if (fieldName % "tx_hashes" && i < tx_hashes.size())
+        return (tx_hashes[i]);
+    return "";
 }
 
 //---------------------------------------------------------------------------
@@ -713,6 +744,44 @@ blknum_t bnFromPath(const string_q& path, blknum_t& endOut, timestamp_t& ts) {
     string_q b = nextTokenClear(e, '-');
     endOut = (e.empty() || !isNumeral(e) ? NOPOS : str_2_Uint(e));
     return (b.empty() || !isNumeral(b) ? NOPOS : str_2_Uint(b));
+}
+
+//-------------------------------------------------------------------------
+bool CBlock::forEveryTransaction(TRANSVISITFUNC func, void* data) const {
+    if (!func)
+        return false;
+
+    for (auto trans : transactions) {
+        if (!(*func)(trans, data))
+            return false;
+    }
+
+    return true;
+}
+
+//-------------------------------------------------------------------------
+bool CBlock::forEveryLog(LOGVISITFUNC func, void* data) const {
+    if (!func)
+        return false;
+
+    for (auto trans : transactions) {
+        if (!trans.forEveryLog(func, data))
+            return false;
+    }
+    return true;
+}
+
+//-------------------------------------------------------------------------
+bool CBlock::forEveryTrace(TRACEVISITFUNC func, void* data) const {
+    if (!func)
+        return false;
+
+    for (auto trans : transactions) {
+        if (!trans.forEveryTrace(func, data))
+            return false;
+    }
+
+    return true;
 }
 // EXISTING_CODE
 }  // namespace qblocks

@@ -11,6 +11,7 @@ fields = gas gasLimit|\
         bool finalized|\
         timestamp timestamp|\
         CTransactionArray transactions|\
+        CStringArray tx_hashes (nowrite)|\
         string name (nowrite)|\
         sbool light (nowrite)
 includes = etherlib.h|transaction.h

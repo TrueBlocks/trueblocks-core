@@ -2,12 +2,6 @@ grabABI argc: 4 [1:0xe94327d07fc17907b4db788e5adf2ed424addff6] [2:--fmt] [3:json
 grabABI 0xe94327d07fc17907b4db788e5adf2ed424addff6 --fmt json 
 { "data": [
 {
-  "type": "constructor",
-  "stateMutability": "nonpayable",
-  "signature": "(address,uint256,address)",
-  "input_names": "_legacyRepContract,_amountUsedToFreeze,_accountToSendFrozenRepTo,"
-},
-{
   "name": "allowance",
   "type": "function",
   "stateMutability": "nonpayable",

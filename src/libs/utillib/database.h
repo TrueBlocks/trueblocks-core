@@ -1,7 +1,7 @@
 #pragma once
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -100,6 +100,10 @@ class CSharedResource {
     size_t Read(bool& val);
     size_t Read(char& val);
     size_t Read(int& val);
+    size_t Read(int8_t& val);
+    size_t Read(uint8_t& val);
+    size_t Read(int16_t& val);
+    size_t Read(uint16_t& val);
     size_t Read(unsigned int& val);
     size_t Read(long& val);                // NOLINT
     size_t Read(unsigned long& val);       // NOLINT
@@ -112,6 +116,10 @@ class CSharedResource {
     size_t Write(bool val) const;
     size_t Write(char val) const;
     size_t Write(int val) const;
+    size_t Write(int8_t val) const;
+    size_t Write(uint8_t val) const;
+    size_t Write(int16_t val) const;
+    size_t Write(uint16_t val) const;
     size_t Write(unsigned int val) const;
     size_t Write(long val) const;                // NOLINT
     size_t Write(unsigned long val) const;       // NOLINT
@@ -145,7 +153,6 @@ extern size_t stringToAsciiFile(const string_q& fileName, const string_q& conten
 extern size_t linesToAsciiFile(const string_q& fileName, const CStringArray& lines, char sep = '\n');
 extern string_q linesToString(const CStringArray& lines, char sep = '\n');
 extern size_t appendToAsciiFile(const string_q& fileName, const string_q& addContents);
-extern size_t appendFileToFile(const string_q& toFile, const string_q& fromFile);
 extern bool forEveryLineInAsciiFile(const string_q& filename, CHARPTRFUNC func, void* data);
 
 //----------------------------------------------------------------------
@@ -166,16 +173,14 @@ class codewrite_t {
   public:
     string_q fileName, codeOutIn, namespc;
     uint32_t nSpaces;
-    bool testing, stripEOFNL, force;
-    codewrite_t(const string_q& fn, const string_q& c, const string_q& n, uint32_t ns, bool t, bool s = true,
-                bool f = false)
-        : fileName(fn), codeOutIn(c), namespc(n), nSpaces(ns), testing(t), stripEOFNL(s), force(f) {
+    bool stripEOFNL, force;
+    codewrite_t(const string_q& fn, const string_q& c, const string_q& n, uint32_t ns, bool s = true, bool f = false)
+        : fileName(fn), codeOutIn(c), namespc(n), nSpaces(ns), stripEOFNL(s), force(f) {
     }
 };
 extern bool shouldQuit(void);
 extern void lockSection(void);
 extern void unlockSection(void);
-extern bool writeTheCode(const codewrite_t& cw);
 
 //----------------------------------------------------------------------
 inline bool isFileLocked(const string_q& fileName) {

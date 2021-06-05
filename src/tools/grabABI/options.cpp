@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -11,8 +11,8 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 /*
- * Parts of this file were generated with makeClass. Edit only those parts of the code
- * outside of the BEG_CODE/END_CODE sections
+ * Parts of this file were generated with makeClass --options. Edit only those parts of
+ * the code outside of the BEG_CODE/END_CODE sections
  */
 #include "options.h"
 
@@ -21,10 +21,11 @@ static const COption params[] = {
     // BEG_CODE_OPTIONS
     // clang-format off
     COption("addrs", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "list of one or more smart contracts whose ABI to grab from EtherScan"),  // NOLINT
-    COption("canonical", "c", "", OPT_SWITCH, "convert all types to their canonical represenation and remove all spaces from display"),  // NOLINT
     COption("known", "k", "", OPT_SWITCH, "load common 'known' ABIs from cache"),
-    COption("sol", "s", "<string>", OPT_HIDDEN | OPT_FLAG, "file name of .sol file from which to create a new known abi (without .sol)"),  // NOLINT
+    COption("sol", "s", "<string>", OPT_FLAG, "file name of .sol file from which to create a new known abi (without .sol)"),  // NOLINT
     COption("find", "f", "<string>", OPT_FLAG, "try to search for a function declaration given a four byte code"),
+    COption("source", "s", "", OPT_HIDDEN | OPT_SWITCH, "show the source of the ABI information"),
+    COption("classes", "c", "", OPT_HIDDEN | OPT_SWITCH, "generate classDefinitions folder and class definitions"),
     COption("", "", "", OPT_DESCRIPTION, "Fetches the ABI for a smart contract."),
     // clang-format on
     // END_CODE_OPTIONS
@@ -38,39 +39,51 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
     // BEG_CODE_LOCAL_INIT
-    bool canonical = false;
     bool known = false;
     string_q sol = "";
     string_q find = "";
+    bool source = false;
+    bool classes = false;
     // END_CODE_LOCAL_INIT
 
     Init();
     explode(arguments, command, ' ');
     blknum_t latest = NOPOS;  // getBlockProgress(BP_CLIENT).client;
+    string_q unused;
     for (auto arg : arguments) {
         if (false) {
             // do nothing -- make auto code generation easier
-            // BEG_CODE_AUTO
-        } else if (arg == "-c" || arg == "--canonical") {
-            canonical = true;
+        } else if (isKnownAbi(arg, unused)) {
+            addrs.push_back(arg);
 
+            // BEG_CODE_AUTO
         } else if (arg == "-k" || arg == "--known") {
             known = true;
 
         } else if (startsWith(arg, "-s:") || startsWith(arg, "--sol:")) {
             sol = substitute(substitute(arg, "-s:", ""), "--sol:", "");
+        } else if (arg == "-s" || arg == "--sol") {
+            return flag_required("sol");
 
         } else if (startsWith(arg, "-f:") || startsWith(arg, "--find:")) {
             find = substitute(substitute(arg, "-f:", ""), "--find:", "");
+        } else if (arg == "-f" || arg == "--find") {
+            return flag_required("find");
+
+        } else if (arg == "-s" || arg == "--source") {
+            source = true;
+
+        } else if (arg == "-c" || arg == "--classes") {
+            classes = true;
 
         } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
-                return usage("Invalid option: " + arg);
+                return invalid_option(arg);
             }
 
         } else {
-            if (!parseAddressList2(this, addrs, arg))
+            if (!parseAddressList(this, addrs, arg))
                 return false;
 
             // END_CODE_AUTO
@@ -78,17 +91,21 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     // BEG_DEBUG_DISPLAY
-    // LOG_TEST("addrs", addrs, (addrs == NOPOS));
-    LOG_TEST_BOOL("canonical", canonical);
+    LOG_TEST_LIST("addrs", addrs, addrs.empty());
     LOG_TEST_BOOL("known", known);
     LOG_TEST("sol", sol, (sol == ""));
     LOG_TEST("find", find, (find == ""));
+    LOG_TEST_BOOL("source", source);
+    LOG_TEST_BOOL("classes", classes);
     // END_DEBUG_DISPLAY
+
+    if (Mocked(""))
+        return false;
 
     if (!find.empty()) {
         ostringstream os;
         os << "findSig " << find;
-        LOG_CALL(os.str());
+        LOG_TEST_CALL(os.str());
         // clang-format off
         if (system(os.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings
         // clang-format on
@@ -103,26 +120,8 @@ bool COptions::parseArguments(string_q& command) {
         return false;
     }
 
-    if (isRaw) {
-        for (auto addr : addrs) {
-            string_q fileName = getCachePath("abis/" + addr + ".json");
-            string_q localFile("./" + addr + ".json");
-            if (fileExists(localFile)) {
-                LOG_INFO("Using local ABI file");
-                fileName = localFile;
-            }
-            if (!fileExists(fileName))
-                return usage("ABI for '" + addr + "' not found.");
-            cout << asciiFileToString(fileName) << endl;
-        }
-        return false;
-    }
-
     if (!addrs.size() && !known)
         return usage("Please supply at least one Ethereum address.\n");
-
-    if (canonical)
-        parts |= SIG_CANONICAL;
 
     if (parts == 0)
         parts = SIG_DEFAULT;
@@ -139,9 +138,33 @@ bool COptions::parseArguments(string_q& command) {
         if (!testing && !isContractAt(addr, latest) && !fileExists(fileName)) {
             cerr << "Address " << addr << " is not a smart contract. Skipping..." << endl;
         } else {
-            abi_spec.loadAbiFromEtherscan(addr, isRaw);
+            abi_spec.loadAbiFromEtherscan(addr);
             abi_spec.address = addr;
         }
+    }
+
+    if (classes) {
+        return usage("--classes option is not implemented.");
+#if 0
+        for (auto func : abi_spec.interfaces) {
+            establishFolder("./classes/classDefinitions/");
+            ostringstream os;
+            os << "[settings]" << endl;
+            os << "base_class = CTransaction" << endl;
+            os << "class = C" << toUpper(string_q(1, func.name[0])) << func.name.substr(1,1000) << endl;
+            os << "fields =";
+            bool first = true;
+            for (auto field : func.inputs) {
+                if (!first) os << " |\\" << endl;
+                os << "  " << field.type << " " << field.name;
+                first = false;
+            }
+            cerr << "Writing to ./classes/classDefinitions/" << toLower(func.name) << ".txt" << endl;
+            cerr << substitute(os.str(), "\t", "  ");
+            stringToAsciiFile("./classes/classDefinitions/" + toLower(func.name) + ".txt", os.str());
+        }
+        return false;
+#endif
     }
 
     // Display formatting
@@ -150,9 +173,12 @@ bool COptions::parseArguments(string_q& command) {
     string_q funcFields = "CFunction:" + ffields;
     if (isTestMode())
         funcFields = "CFunction:" + substitute(ffields, "inputs,outputs", "input_names,output_names");
-
     replace(format, "[{ADDRESS}]\t", "");
     replace(funcFields, "address,", "");
+    if (!source) {
+        replace(format, "[{ABI_SOURCE}]\t", "");
+        replace(funcFields, "abi_source,", "");
+    }
 
     if (verbose && (expContext().exportFmt == JSON1 || expContext().exportFmt == API1)) {
         replaceAll(funcFields, "_name", "");
@@ -182,17 +208,16 @@ void COptions::Init(void) {
 
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
-    setSorts(GETRUNTIME_CLASS(CBlock), GETRUNTIME_CLASS(CTransaction), GETRUNTIME_CLASS(CReceipt));
-    first = true;
     Init();
+
     // BEG_CODE_NOTES
     // clang-format off
     notes.push_back("Solidity files found in the local folder with the name '<address>.sol' are converted to an ABI prior to processing (and then removed).");  // NOLINT
     // clang-format on
     // END_CODE_NOTES
 
-    // BEG_ERROR_MSG
-    // END_ERROR_MSG
+    // BEG_ERROR_STRINGS
+    // END_ERROR_STRINGS
 }
 
 //--------------------------------------------------------------------------------
@@ -222,6 +247,4 @@ void COptions::convertFromSol(const address_t& addr) {
     string_q fileName = addr + ".json";
     ::remove(fileName.c_str());
     stringToAsciiFile(fileName, os.str());
-
-    isRaw = false;
 }

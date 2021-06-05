@@ -1,5 +1,4 @@
 encoding	type	name	signature	input_names	output_names
-	constructor		(address,uint256,address)	_legacyRepContract,_amountUsedToFreeze,_accountToSendFrozenRepTo,	,
 0xdd62ed3e	function	allowance	allowance(address,address)	_owner,_spender,	remaining,,
 0x095ea7b3	function	approve	approve(address,uint256)	_spender,_value,	val_0,,
 0x70a08231	function	balanceOf	balanceOf(address)	_owner,	balance,,

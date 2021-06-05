@@ -1,15 +1,6 @@
 {
   "data": [
     {
-      "name": "",
-      "type": "constructor",
-      "stateMutability": "nonpayable",
-      "signature": "(address,uint256,address)",
-      "encoding": "",
-      "input_names": "_legacyRepContract,_amountUsedToFreeze,_accountToSendFrozenRepTo,",
-      "output_names": ""
-    },
-    {
       "name": "allowance",
       "type": "function",
       "stateMutability": "nonpayable",

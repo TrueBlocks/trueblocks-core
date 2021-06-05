@@ -1,12 +1,8 @@
 /*-------------------------------------------------------------------------
  * This source code is confidential proprietary information which is
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  * All Rights Reserved
  *------------------------------------------------------------------------*/
-/*
- * Parts of this file were generated with makeClass. Edit only those parts of the code
- * outside of the BEG_CODE/END_CODE sections
- */
 #include "options.h"
 
 const char* STR_DELETED = "Monitor [{ADDRESS}] was deleted but not removed";
@@ -18,13 +14,13 @@ const char* STR_DELETEFIRST = "Monitor [{ADDRESS}] must be deleted first";
 const char* STR_ALREADYDELETED = "Monitor [{ADDRESS}] is already deleted";
 
 //------------------------------------------------------------------------------------------------
-bool COptions::handle_rm(const CAddressArray& addrs) {
+bool COptions::process_rm(const CAddressArray& addrs) {
     CStringArray results;
     for (auto crudCmd : crudCommands) {
         for (auto addr : addrs) {
             CMonitor monitor;
             monitor.address = addr;
-            if (!monitor.exists()) {
+            if (!monitor.monitorExists()) {
                 results.push_back(monitor.Format(STR_NOTFOUND));
                 LOG_WARN(monitor.Format(STR_NOTFOUND));
             } else {
@@ -67,12 +63,11 @@ bool COptions::handle_rm(const CAddressArray& addrs) {
         expContext().exportFmt = JSON1;
         cout << exportPreamble("", "");
         string_q msg;
-        bool first = true;
         for (auto result : results) {
-            if (!first)
+            if (!firstOut)
                 msg += ",";
             msg += ("\"" + result + "\"");
-            first = false;
+            firstOut = false;
         }
         if (msg.empty())
             msg = "{ \"msg\": \"nothing was removed\" }";

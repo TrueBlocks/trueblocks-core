@@ -1,11 +1,11 @@
 /*-------------------------------------------------------------------------
  * This source code is confidential proprietary information which is
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  * All Rights Reserved
  *------------------------------------------------------------------------*/
 /*
- * Parts of this file were generated with makeClass. Edit only those parts of the code
- * outside of the BEG_CODE/END_CODE sections
+ * Parts of this file were generated with makeClass --options. Edit only those parts of
+ * the code outside of the BEG_CODE/END_CODE sections
  */
 #include "options.h"
 
@@ -15,20 +15,21 @@ static const COption params[] = {
     // clang-format off
     COption("modes", "", "list<enum[index|monitors|entities|names|abis|caches|some*|all]>", OPT_POSITIONAL, "the type of status info to retrieve"),  // NOLINT
     COption("details", "d", "", OPT_SWITCH, "include details about items found in monitors, slurps, abis, or price caches"),  // NOLINT
-    COption("types", "t", "list<enum[blocks|transactions|traces|slurps|prices|all*]>", OPT_FLAG, "for cache mode only, which type(s) of cache to report"),  // NOLINT
+    COption("types", "t", "list<enum[blocks|transactions|traces|slurps|prices|all*]>", OPT_FLAG, "for caches mode only, which type(s) of cache to report"),  // NOLINT
     COption("depth", "p", "<uint64>", OPT_HIDDEN | OPT_FLAG, "for cache mode only, number of levels deep to report"),
     COption("report", "r", "", OPT_HIDDEN | OPT_SWITCH, "show a summary of the current status of TrueBlocks (deprecated)"),  // NOLINT
     COption("terse", "e", "", OPT_HIDDEN | OPT_SWITCH, "show a terse summary report"),
     COption("get_config", "g", "", OPT_HIDDEN | OPT_SWITCH, "returns JSON data of the editable configuration file items"),  // NOLINT
     COption("set_config", "s", "", OPT_HIDDEN | OPT_SWITCH, "accepts JSON in an env variable and writes it to configuration files"),  // NOLINT
-    COption("start", "S", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to process (inclusive)"),
-    COption("end", "E", "<blknum>", OPT_HIDDEN | OPT_FLAG, "last block to process (inclusive)"),
-    COption("", "", "", OPT_DESCRIPTION, "Report on status of one or more TrueBlocks caches."),
+    COption("test_start", "S", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to process (inclusive -- testing only)"),
+    COption("test_end", "E", "<blknum>", OPT_HIDDEN | OPT_FLAG, "last block to process (inclusive -- testing only)"),
+    COption("", "", "", OPT_DESCRIPTION, "Report on the status of the TrueBlocks system."),
     // clang-format on
     // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
+extern void loadPinMaps(CIndexStringMap& filenameMap, CIndexHashMap& bloomMap, CIndexHashMap& indexMap);
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
     ENTER("parseArguments");
@@ -42,6 +43,8 @@ bool COptions::parseArguments(string_q& command) {
     bool report = false;
     bool get_config = false;
     bool set_config = false;
+    blknum_t test_start = 0;
+    blknum_t test_end = NOPOS;
     // END_CODE_LOCAL_INIT
 
     blknum_t latest = NOPOS;  // getBlockProgress(BP_CLIENT).client;
@@ -60,10 +63,14 @@ bool COptions::parseArguments(string_q& command) {
             if (!confirmEnum("types", types_tmp, arg))
                 return false;
             types.push_back(types_tmp);
+        } else if (arg == "-t" || arg == "--types") {
+            return flag_required("types");
 
         } else if (startsWith(arg, "-p:") || startsWith(arg, "--depth:")) {
             if (!confirmUint("depth", depth, arg))
                 return false;
+        } else if (arg == "-p" || arg == "--depth") {
+            return flag_required("depth");
 
         } else if (arg == "-r" || arg == "--report") {
             report = true;
@@ -77,18 +84,22 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-s" || arg == "--set_config") {
             set_config = true;
 
-        } else if (startsWith(arg, "-S:") || startsWith(arg, "--start:")) {
-            if (!confirmBlockNum("start", start, arg, latest))
+        } else if (startsWith(arg, "-S:") || startsWith(arg, "--test_start:")) {
+            if (!confirmBlockNum("test_start", test_start, arg, latest))
                 return false;
+        } else if (arg == "-S" || arg == "--test_start") {
+            return flag_required("test_start");
 
-        } else if (startsWith(arg, "-E:") || startsWith(arg, "--end:")) {
-            if (!confirmBlockNum("end", end, arg, latest))
+        } else if (startsWith(arg, "-E:") || startsWith(arg, "--test_end:")) {
+            if (!confirmBlockNum("test_end", test_end, arg, latest))
                 return false;
+        } else if (arg == "-E" || arg == "--test_end") {
+            return flag_required("test_end");
 
         } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
-                return usage("Invalid option: " + arg);
+                return invalid_option(arg);
             }
 
         } else {
@@ -102,17 +113,23 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     // BEG_DEBUG_DISPLAY
-    // LOG_TEST("modes", modes, (modes == ""));
+    LOG_TEST_LIST("modes", modes, modes.empty());
     LOG_TEST_BOOL("details", details);
-    // LOG_TEST("types", types, (types == ""));
+    LOG_TEST_LIST("types", types, types.empty());
     LOG_TEST("depth", depth, (depth == NOPOS));
     LOG_TEST_BOOL("report", report);
     LOG_TEST_BOOL("terse", terse);
     LOG_TEST_BOOL("get_config", get_config);
     LOG_TEST_BOOL("set_config", set_config);
-    LOG_TEST("start", start, (start == NOPOS));
-    LOG_TEST("end", end, (end == NOPOS));
+    LOG_TEST("test_start", test_start, (test_start == 0));
+    LOG_TEST("test_end", test_end, (test_end == NOPOS));
     // END_DEBUG_DISPLAY
+
+    bool cs = false;
+    for (auto m : modes)
+        cs |= (m == "caches");
+    if (Mocked(cs ? "caches" : "status"))
+        EXIT_NOMSG(false);
 
     // removes warning on Ubuntu 20.04
     if (report)
@@ -130,8 +147,9 @@ bool COptions::parseArguments(string_q& command) {
     for (auto m : modes)
         mode += (m + "|");
 
-    if (start == NOPOS)
-        start = 0;
+    if (!isTestMode() && (test_start != 0 || test_end != NOPOS))
+        return usage("--test_start and --test_end are only available during testing.");
+    scanRange = make_pair(test_start, test_end);
 
     if (get_config && set_config)
         return usage("Please chose only one of --set_config and --get_config.");
@@ -177,7 +195,8 @@ bool COptions::parseArguments(string_q& command) {
         HIDE_FIELD(CAbiCache, "items");
         HIDE_FIELD(CChainCache, "items");
     } else {
-        loadPinMaps(bloomHashes, indexHashes);
+        CIndexStringMap unused;
+        loadPinMaps(unused, bloomHashes, indexHashes);
     }
     HIDE_FIELD(CChainCache, "max_depth");
 
@@ -196,10 +215,9 @@ void COptions::Init(void) {
     details = false;
     depth = NOPOS;
     terse = false;
-    start = NOPOS;
-    end = NOPOS;
     // END_CODE_INIT
 
+    scanRange = make_pair(0, NOPOS);
     isConfig = false;
     mode = "";
 
@@ -219,11 +237,12 @@ void COptions::Init(void) {
     if (isTestMode()) {
         status.host = "--hostname-- (--username--)";
         status.rpc_provider = status.balance_provider = "--providers--";
-        status.cache_path = status.index_path = "--paths--";
+        status.config_path = status.cache_path = status.index_path = "--paths--";
     } else {
         status.host = string_q(hostname) + " (" + username + ")";
         status.rpc_provider = getGlobalConfig()->getConfigStr("settings", "rpcProvider", "http://localhost:8545");
         status.balance_provider = getGlobalConfig()->getConfigStr("settings", "balanceProvider", status.rpc_provider);
+        status.config_path = configPath("");
         status.cache_path = getGlobalConfig()->getConfigStr("settings", "cachePath", getCachePath(""));
         status.index_path = getGlobalConfig()->getConfigStr("settings", "indexPath", getIndexPath(""));
     }
@@ -246,14 +265,16 @@ void COptions::Init(void) {
     status.has_eskey = getGlobalConfig("")->getConfigStr("settings", "etherscan_key", "<not_set>") != "<not_set>";
     status.has_pinkey =
         getGlobalConfig("blockScrape")->getConfigStr("settings", "pinata_api_key", "<not_set>") != "<not_set>";
+    if (isTestMode())
+        status.has_pinkey = false;
 }
 
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
-    setSorts(GETRUNTIME_CLASS(CBlock), GETRUNTIME_CLASS(CTransaction), GETRUNTIME_CLASS(CReceipt));
     Init();
 
     CStatus::registerClass();
+    CStatusTerse::registerClass();
     CCache::registerClass();
     CEntityCache::registerClass();
     CEntityCacheItem::registerClass();
@@ -285,8 +306,8 @@ COptions::COptions(void) {
     // clang-format on
     // END_CODE_NOTES
 
-    // BEG_ERROR_MSG
-    // END_ERROR_MSG
+    // BEG_ERROR_STRINGS
+    // END_ERROR_STRINGS
 }
 
 //--------------------------------------------------------------------------------
@@ -294,13 +315,14 @@ COptions::~COptions(void) {
 }
 
 //--------------------------------------------------------------------------------
-void loadPinMaps(CIndexHashMap& bloomMap, CIndexHashMap& indexMap) {
+void loadPinMaps(CIndexStringMap& filenameMap, CIndexHashMap& bloomMap, CIndexHashMap& indexMap) {
     CPinnedChunkArray pinList;
-    if (!pinlib_readPinList(pinList, false))
+    if (!pinlib_readManifest(pinList))
         return;
 
     for (auto pin : pinList) {
         blknum_t num = str_2_Uint(pin.fileName);
+        filenameMap[num] = pin.fileName;
         bloomMap[num] = pin.bloomHash;
         indexMap[num] = pin.indexHash;
     }

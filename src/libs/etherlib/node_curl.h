@@ -1,7 +1,7 @@
 #pragma once
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -59,7 +59,6 @@ extern void nodeNotRequired(void);
 extern void checkNodeRequired(void);
 extern bool isNodeRunning(void);
 extern bool isTracingNode(void);
-extern void displayCurlError(const string_q& msg, const string_q& val = "");
 extern string_q setDataSource(const string_q& newSrc);
 inline string_q getDataSource(void) {
     return setDataSource("");

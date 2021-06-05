@@ -1,16 +1,5 @@
-acctExport argc: 9 [1:0xbb9bc244d798123fde783fcc1c72d3bb8c189413] [2:--logs] [3:--fmt] [4:json] [5:--start] [6:1429283] [7:--end] [8:1429468] 
-acctExport 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 --logs --fmt json --start 1429283 --end 1429468 
-TIME ~ CLOCK - <INFO>  : logs: true
-TIME ~ CLOCK - <INFO>  : skip_ddos: true
-TIME ~ CLOCK - <INFO>  : Monitor found for: 0xbb9bc244d798123fde783fcc1c72d3bb8c189413
-TIME ~ CLOCK - <INFO>  : Last visited block: 4996422
-TIME ~ CLOCK - <INFO>  : stats.nFiles: --value--
-TIME ~ CLOCK - <INFO>  : stats.nSkipped: --value--
-TIME ~ CLOCK - <INFO>  : nMonitors: 1
-TIME ~ CLOCK - <INFO>  : exportRange.first: 1429283
-TIME ~ CLOCK - <INFO>  : exportRange.second: 1429468
-TIME ~ CLOCK - <INFO>  : listRange.first: 4996422
-TIME ~ CLOCK - <INFO>  : listRange.second: --latest--
+acctExport argc: 9 [1:0xbb9bc244d798123fde783fcc1c72d3bb8c189413] [2:--first_block] [3:1429283] [4:--last_block] [5:1429468] [6:--logs] [7:--fmt] [8:json] 
+acctExport 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 --first_block 1429283 --last_block 1429468 --logs --fmt json 
 { "data": [
 {
   "address": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",

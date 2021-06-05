@@ -1,18 +1,15 @@
-chifra argc: 8 [1:status] [2:all] [3:--details] [4:--start] [5:1400000] [6:--end] [7:2000000] 
-chifra status all --details --start 1400000 --end 2000000 
-TIME ~ CLOCK - <INFO>  : mode: status
-chifra status argc: 7 [1:all] [2:--details] [3:--start] [4:1400000] [5:--end] [6:2000000] 
-chifra status all --details --start 1400000 --end 2000000 
+chifra argc: 8 [1:status] [2:all] [3:--details] [4:--test_start] [5:1400000] [6:--test_end] [7:2000000] 
+chifra status all --details --test_start 1400000 --test_end 2000000 
+chifra status argc: 7 [1:all] [2:--details] [3:--test_start] [4:1400000] [5:--test_end] [6:2000000] 
+chifra status all --details --test_start 1400000 --test_end 2000000 
 PROG_NAME = [chifra status]
-TIME ~ CLOCK - <INFO>  : details: true
-TIME ~ CLOCK - <INFO>  : start: 1400000
-TIME ~ CLOCK - <INFO>  : end: 2000000
 {
   "client_version": "Client version",
   "client_ids": "chainId: 1 networkId: 1",
-  "trueblocks_version": "GHC-TrueBlocks//0.8.4-alpha--git-hash---git-ts-",
+  "trueblocks_version": "GHC-TrueBlocks//0.9.4-alpha--git-hash---git-ts-",
   "rpc_provider": "--providers--",
   "balance_provider": "--providers--",
+  "config_path": "--paths--",
   "cache_path": "--paths--",
   "index_path": "--paths--",
   "host": "--hostname-- (--username--)",
@@ -20,83 +17,8 @@ TIME ~ CLOCK - <INFO>  : end: 2000000
   "is_archive": true,
   "is_tracing": true,
   "has_eskey": true,
-  "has_pinkey": true,
   "caches": [
     {
-      "items": [
-        {
-          "type": "CIndexCacheItem",
-          "nAddresses": 78767,
-          "nAppearances": 2000032,
-          "firstAppearance": 1374121,
-          "latestAppearance": 1506407,
-          "firstTs": 1461196999,
-          "latestTs": 1463094697,
-          "filename": "/--index-path--/001374121-001506407.bin",
-          "indexSizeBytes": 18205776,
-          "bloomSizeBytes": 262156
-        },
-        {
-          "type": "CIndexCacheItem",
-          "nAddresses": 117442,
-          "nAppearances": 2000303,
-          "firstAppearance": 1506408,
-          "latestAppearance": 1616999,
-          "firstTs": 1463094706,
-          "latestTs": 1464681676,
-          "filename": "/--index-path--/001506408-001616999.bin",
-          "indexSizeBytes": 19290844,
-          "bloomSizeBytes": 393232
-        },
-        {
-          "type": "CIndexCacheItem",
-          "nAddresses": 136906,
-          "nAppearances": 2000014,
-          "firstAppearance": 1617000,
-          "latestAppearance": 1733038,
-          "firstTs": 1464681699,
-          "latestTs": 1466345904,
-          "filename": "/--index-path--/001617000-001733038.bin",
-          "indexSizeBytes": 19833524,
-          "bloomSizeBytes": 393232
-        },
-        {
-          "type": "CIndexCacheItem",
-          "nAddresses": 123069,
-          "nAppearances": 2000007,
-          "firstAppearance": 1733039,
-          "latestAppearance": 1853082,
-          "firstTs": 1466345908,
-          "latestTs": 1468064730,
-          "filename": "/--index-path--/001733039-001853082.bin",
-          "indexSizeBytes": 19446032,
-          "bloomSizeBytes": 393232
-        },
-        {
-          "type": "CIndexCacheItem",
-          "nAddresses": 137856,
-          "nAppearances": 2000001,
-          "firstAppearance": 1853083,
-          "latestAppearance": 1968428,
-          "firstTs": 1468064738,
-          "latestTs": 1469717272,
-          "filename": "/--index-path--/001853083-001968428.bin",
-          "indexSizeBytes": 19860020,
-          "bloomSizeBytes": 393232
-        },
-        {
-          "type": "CIndexCacheItem",
-          "nAddresses": 102157,
-          "nAppearances": 2000372,
-          "firstAppearance": 1968429,
-          "latestAppearance": 2074047,
-          "firstTs": 1469717309,
-          "latestTs": 1471230427,
-          "filename": "/--index-path--/001968429-002074047.bin",
-          "indexSizeBytes": 18863416,
-          "bloomSizeBytes": 393232
-        }
-      ],
       "type": "CIndexCache",
       "path": "indexPath",
       "nFiles": 0,
@@ -141,7 +63,7 @@ TIME ~ CLOCK - <INFO>  : end: 2000000
           "nEvents": 36963,
           "nOther": 36963,
           "address": "---address---",
-          "name": "1inch.exchange v2",
+          "name": "--name--",
           "nAppearances": 0,
           "firstAppearance": 0,
           "latestAppearance": 0,

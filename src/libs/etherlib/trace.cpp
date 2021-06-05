@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -11,8 +11,8 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 /*
- * This file was generated with makeClass. Edit only those parts of the code inside
- * of 'EXISTING_CODE' tags.
+ * Parts of this file were generated with makeClass --run. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
  */
 #include "trace.h"
 #include "transaction.h"
@@ -396,7 +396,7 @@ string_q nextTraceChunk_custom(const string_q& fieldIn, const void* dataPtr) {
                 break;
             case 'c':
                 if (fieldIn % "compressedTrace")
-                    return stripWhitespace(tra->articulatedTrace.compressed());
+                    return tra->articulatedTrace.compressed("");
                 break;
             case 'd':
                 if (tra->pTrans) {
@@ -515,7 +515,7 @@ const char* STR_DISPLAY_TRACE =
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-bool CTrace::isError(void) const {
+bool CTrace::isErr(void) const {
     return !error.empty();
 }
 // EXISTING_CODE

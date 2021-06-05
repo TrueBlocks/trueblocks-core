@@ -1,7 +1,4 @@
 ;raw_decode|decoding ufixed128x128|function baz(ufixed128x128)|0x0000000000000000000000000000000100000000000000000000000000000000|1
-
 ;raw_decode|decoding fixed128x128|function baz(fixed128x128)|0xffffffffffffffffffffffffffffffff00000000000000000000000000000000|-1
-
 ;raw_decode|decimals should fail|function baz(ufixed128x128)|0x0000000000000000000000000000000100000000000000000000000000000001|fail
-
 ;raw_decode|decimals should fail|function baz(ufixed128x128)|0xffffffffffffffffffffffffffffffff00000000000000000000000000000001|fail

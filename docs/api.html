@@ -3,15 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <title>Swagger UI</title>
-    <link
-      href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Source+Code+Pro:300,600|Titillium+Web:400,600,700"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/3.24.2/swagger-ui.css"
-    />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Source+Code+Pro:300,600|Titillium+Web:400,600,700" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/3.24.2/swagger-ui.css" />
     <style>
       html {
         box-sizing: border-box;
@@ -53,17 +46,42 @@
           ],
           tags: [
             {name: 'Accounts', description: 'Access and cache transactional data'},
+            {name: 'ChainData', description: 'Access and cache blockchain-related data'},
+            {name: 'ChainState', description: 'Access to account and token state'},
             {name: 'Admin', description: 'Control the scraper and build the index'},
-            {name: 'Data', description: 'Access and cache blockchain-related data'},
-            {name: 'State', description: 'Access to account and token state'},
             {name: 'Other', description: 'Access to other and external data'},
           ],
           paths: {
+            '/list': {
+              get: {
+                tags: ['Accounts'],
+                summary: 'List every appearance of an address anywhere on the chain.',
+                description: 'List every appearance of an address anywhere on the chain.',
+                operationId: 'accounts-list',
+                parameters: [
+                  {
+                    name: 'addrs',
+                    in: 'query',
+                    description: 'one or more addresses (0x...) to list',
+                    required: true,
+                    style: 'form',
+                    explode: true,
+                    schema: {type: 'array', items: {type: 'string'}},
+                  },
+                ],
+                responses: {
+                  '200': {
+                    description: 'status of the scraper',
+                    content: { 'application/json': {schema: {type: 'array', items: {$ref: '#/components/schemas/response'}}} }, },
+                  '400': {description: 'bad input parameter'},
+                },
+              },
+            },
             '/export': {
               get: {
                 tags: ['Accounts'],
-                summary: 'Export full detail of transactions for one or more Ethereum addresses.',
-                description: 'Export full detail of transactions for one or more Ethereum addresses.',
+                summary: 'Export full detail of transactions for one or more addresses.',
+                description: 'Export full detail of transactions for one or more addresses.',
                 operationId: 'accounts-export',
                 parameters: [
                   {
@@ -78,7 +96,16 @@
                   {
                     name: 'topics',
                     in: 'query',
-                    description: 'filter by one or more logs topics (only for --logs option)',
+                    description: 'filter by one or more log topics (only for --logs option)',
+                    required: false,
+                    style: 'form',
+                    explode: true,
+                    schema: {type: 'array', items: {type: 'string'}},
+                  },
+                  {
+                    name: 'fourbytes',
+                    in: 'query',
+                    description: 'filter by one or more fourbytes (only for transactions and trace options)',
                     required: false,
                     style: 'form',
                     explode: true,
@@ -121,18 +148,18 @@
                     schema: {type: 'boolean'},
                   },
                   {
-                    name: 'statements',
+                    name: 'accounting',
                     in: 'query',
-                    description: 'export reconcilations instead of transaction list',
+                    description: 'export accounting records instead of transaction list',
                     required: false,
                     style: 'form',
                     explode: true,
                     schema: {type: 'boolean'},
                   },
                   {
-                    name: 'accounting',
+                    name: 'tokens',
                     in: 'query',
-                    description: 'export accounting records instead of transaction list',
+                    description: 'export accounting for ERC 20 tokens (assumes ETH accounting as above)',
                     required: false,
                     style: 'form',
                     explode: true,
@@ -148,7 +175,7 @@
                     schema: {type: 'boolean'},
                   },
                   {
-                    name: 'write_txs',
+                    name: 'cache_txs',
                     in: 'query',
                     description: 'write transactions to the cache (see notes)',
                     required: false,
@@ -157,7 +184,7 @@
                     schema: {type: 'boolean'},
                   },
                   {
-                    name: 'write_traces',
+                    name: 'cache_traces',
                     in: 'query',
                     description: 'write traces to the cache (see notes)',
                     required: false,
@@ -168,7 +195,7 @@
                   {
                     name: 'skip_ddos',
                     in: 'query',
-                    description: "toggle skipping over 2016 dDos transactions ('on' by default)",
+                    description: 'toggle skipping over 2016 dDos transactions (\'on\' by default)',
                     required: false,
                     style: 'form',
                     explode: true,
@@ -177,8 +204,7 @@
                   {
                     name: 'max_traces',
                     in: 'query',
-                    description:
-                      'if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250)',
+                    description: 'if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250)',
                     required: false,
                     style: 'form',
                     explode: true,
@@ -194,19 +220,9 @@
                     schema: {type: 'boolean'},
                   },
                   {
-                    name: 'freshen_max',
-                    in: 'query',
-                    description: 'maximum number of records to process for --freshen option',
-                    required: false,
-                    style: 'form',
-                    explode: true,
-                    schema: {type: 'number'},
-                  },
-                  {
                     name: 'factory',
                     in: 'query',
-                    description:
-                      'scan for contract creations from the given address(es) and report address of those contracts',
+                    description: 'scan for contract creations from the given address(es) and report address of those contracts',
                     required: false,
                     style: 'form',
                     explode: true,
@@ -215,8 +231,25 @@
                   {
                     name: 'emitter',
                     in: 'query',
-                    description:
-                      'available for --logs option only, export will only export if the address emitted the event',
+                    description: 'for log export only, export only if one of the given export addresses emitted the event',
+                    required: false,
+                    style: 'form',
+                    explode: true,
+                    schema: {type: 'boolean'},
+                  },
+                  {
+                    name: 'source',
+                    in: 'query',
+                    description: 'for log export only, export only one of these addresses emitted the event',
+                    required: false,
+                    style: 'form',
+                    explode: true,
+                    schema: {type: 'array', items: {type: 'string'}},
+                  },
+                  {
+                    name: 'relevant',
+                    in: 'query',
+                    description: 'for log export only, if true export only logs relevant to one of the given export addresses',
                     required: false,
                     style: 'form',
                     explode: true,
@@ -230,6 +263,24 @@
                     style: 'form',
                     explode: true,
                     schema: {type: 'boolean'},
+                  },
+                  {
+                    name: 'first_block',
+                    in: 'query',
+                    description: 'first block to process (inclusive)',
+                    required: false,
+                    style: 'form',
+                    explode: true,
+                    schema: {type: 'string'},
+                  },
+                  {
+                    name: 'last_block',
+                    in: 'query',
+                    description: 'last block to process (inclusive)',
+                    required: false,
+                    style: 'form',
+                    explode: true,
+                    schema: {type: 'string'},
                   },
                   {
                     name: 'first_record',
@@ -250,50 +301,13 @@
                     schema: {type: 'string'},
                   },
                   {
-                    name: 'staging',
+                    name: 'clean',
                     in: 'query',
-                    description: 'ignored (preserved for backwards compatibility)',
+                    description: 'clean (i.e. remove duplicate appearances) from all existing monitors',
                     required: false,
                     style: 'form',
                     explode: true,
                     schema: {type: 'boolean'},
-                  },
-                  {
-                    name: 'unripe',
-                    in: 'query',
-                    description: 'ignored (preserved for backwards compatibility)',
-                    required: false,
-                    style: 'form',
-                    explode: true,
-                    schema: {type: 'boolean'},
-                  },
-                ],
-                responses: {
-                  '200': {
-                    description: 'status of the scraper',
-                    content: {
-                      'application/json': {schema: {type: 'array', items: {$ref: '#/components/schemas/response'}}},
-                    },
-                  },
-                  '400': {description: 'bad input parameter'},
-                },
-              },
-            },
-            '/list': {
-              get: {
-                tags: ['Accounts'],
-                summary: 'Add or remove monitors for a given Ethereum address (or collection of addresses).',
-                description: 'Add or remove monitors for a given Ethereum address (or collection of addresses).',
-                operationId: 'accounts-list',
-                parameters: [
-                  {
-                    name: 'addrs',
-                    in: 'query',
-                    description: 'one or more Ethereum addresses',
-                    required: true,
-                    style: 'form',
-                    explode: true,
-                    schema: {type: 'array', items: {type: 'string'}},
                   },
                   {
                     name: 'staging',
@@ -307,35 +321,16 @@
                   {
                     name: 'unripe',
                     in: 'query',
-                    description: 'enable search of unripe (neither staged nor finalized) folder (requires --staging)',
+                    description: 'enable search of unripe (neither staged nor finalized) folder (assumes --staging)',
                     required: false,
                     style: 'form',
                     explode: true,
                     schema: {type: 'boolean'},
                   },
                   {
-                    name: 'blooms',
+                    name: 'load',
                     in: 'query',
-                    description:
-                      'process query by first using bloom filter and, if hit, downloading index chunk from remote',
-                    required: false,
-                    style: 'form',
-                    explode: true,
-                    schema: {type: 'boolean'},
-                  },
-                  {
-                    name: 'start',
-                    in: 'query',
-                    description: 'this value is ignored but remains for backward compatibility',
-                    required: false,
-                    style: 'form',
-                    explode: true,
-                    schema: {type: 'string'},
-                  },
-                  {
-                    name: 'end',
-                    in: 'query',
-                    description: 'this value is ignored but remains for backward compatibility',
+                    description: 'a comma separated list of dynamic traversers to load',
                     required: false,
                     style: 'form',
                     explode: true,
@@ -345,23 +340,40 @@
                 responses: {
                   '200': {
                     description: 'status of the scraper',
-                    content: {
-                      'application/json': {schema: {type: 'array', items: {$ref: '#/components/schemas/response'}}},
-                    },
-                  },
+                    content: { 'application/json': {schema: {type: 'array', items: {$ref: '#/components/schemas/response'}}} }, },
                   '400': {description: 'bad input parameter'},
                 },
               },
             },
-            '/tags': {
+            '/monitors': {
               get: {
                 tags: ['Accounts'],
-                operationId: 'accounts-tags',
+                summary: 'Add, remove, clean, and list address monitors.',
+                description: 'Add, remove, clean, and list address monitors.',
+                operationId: 'accounts-monitors',
                 parameters: [
                   {
-                    name: 'tags',
+                    name: 'addrs',
                     in: 'query',
-                    description: 'export the list of tags and subtags only',
+                    description: 'one or more addresses (0x...) to list',
+                    required: true,
+                    style: 'form',
+                    explode: true,
+                    schema: {type: 'array', items: {type: 'string'}},
+                  },
+                  {
+                    name: 'delete',
+                    in: 'query',
+                    description: 'delete a previously created monitor (or undelete if already deleted)',
+                    required: false,
+                    style: 'form',
+                    explode: true,
+                    schema: {type: 'boolean'},
+                  },
+                  {
+                    name: 'remove',
+                    in: 'query',
+                    description: 'remove a previously deleted monitor',
                     required: false,
                     style: 'form',
                     explode: true,
@@ -371,10 +383,7 @@
                 responses: {
                   '200': {
                     description: 'status of the scraper',
-                    content: {
-                      'application/json': {schema: {type: 'array', items: {$ref: '#/components/schemas/response'}}},
-                    },
-                  },
+                    content: { 'application/json': {schema: {type: 'array', items: {$ref: '#/components/schemas/response'}}} }, },
                   '400': {description: 'bad input parameter'},
                 },
               },
@@ -382,8 +391,8 @@
             '/names': {
               get: {
                 tags: ['Accounts'],
-                summary: 'Query addresses and/or names of well known accounts.',
-                description: 'Query addresses and/or names of well known accounts.',
+                summary: 'Query addresses or names of well known accounts.',
+                description: 'Query addresses or names of well known accounts.',
                 operationId: 'accounts-names',
                 parameters: [
                   {
@@ -398,8 +407,7 @@
                   {
                     name: 'expand',
                     in: 'query',
-                    description:
-                      'expand search to include all fields (default searches name, address, and symbol only)',
+                    description: 'expand search to include all fields (default searches name, address, and symbol only)',
                     required: false,
                     style: 'form',
                     explode: true,
@@ -418,15 +426,6 @@
                     name: 'all',
                     in: 'query',
                     description: 'include all accounts in the search',
-                    required: false,
-                    style: 'form',
-                    explode: true,
-                    schema: {type: 'boolean'},
-                  },
-                  {
-                    name: 'owned',
-                    in: 'query',
-                    description: 'include personal accounts in the search',
                     required: false,
                     style: 'form',
                     explode: true,
@@ -478,6 +477,24 @@
                     schema: {type: 'boolean'},
                   },
                   {
+                    name: 'entities',
+                    in: 'query',
+                    description: 'display entity data',
+                    required: false,
+                    style: 'form',
+                    explode: true,
+                    schema: {type: 'boolean'},
+                  },
+                  {
+                    name: 'tags',
+                    in: 'query',
+                    description: 'export the list of tags and subtags only',
+                    required: false,
+                    style: 'form',
+                    explode: true,
+                    schema: {type: 'boolean'},
+                  },
+                  {
                     name: 'to_custom',
                     in: 'query',
                     description: 'for editCmd only, is the edited name a custom name or not',
@@ -499,36 +516,7 @@
                 responses: {
                   '200': {
                     description: 'status of the scraper',
-                    content: {
-                      'application/json': {schema: {type: 'array', items: {$ref: '#/components/schemas/response'}}},
-                    },
-                  },
-                  '400': {description: 'bad input parameter'},
-                },
-              },
-            },
-            '/collections': {
-              get: {
-                tags: ['Accounts'],
-                operationId: 'accounts-collections',
-                parameters: [
-                  {
-                    name: 'collections',
-                    in: 'query',
-                    description: 'display collections data',
-                    required: false,
-                    style: 'form',
-                    explode: true,
-                    schema: {type: 'boolean'},
-                  },
-                ],
-                responses: {
-                  '200': {
-                    description: 'status of the scraper',
-                    content: {
-                      'application/json': {schema: {type: 'array', items: {$ref: '#/components/schemas/response'}}},
-                    },
-                  },
+                    content: { 'application/json': {schema: {type: 'array', items: {$ref: '#/components/schemas/response'}}} }, },
                   '400': {description: 'bad input parameter'},
                 },
               },
@@ -550,19 +538,9 @@
                     schema: {type: 'array', items: {type: 'string'}},
                   },
                   {
-                    name: 'canonical',
-                    in: 'query',
-                    description:
-                      'convert all types to their canonical represenation and remove all spaces from display',
-                    required: false,
-                    style: 'form',
-                    explode: true,
-                    schema: {type: 'boolean'},
-                  },
-                  {
                     name: 'known',
                     in: 'query',
-                    description: "load common 'known' ABIs from cache",
+                    description: 'load common \'known\' ABIs from cache',
                     required: false,
                     style: 'form',
                     explode: true,
@@ -586,27 +564,19 @@
                     explode: true,
                     schema: {type: 'string'},
                   },
-                ],
-                responses: {
-                  '200': {
-                    description: 'status of the scraper',
-                    content: {
-                      'application/json': {schema: {type: 'array', items: {$ref: '#/components/schemas/response'}}},
-                    },
-                  },
-                  '400': {description: 'bad input parameter'},
-                },
-              },
-            },
-            '/rm': {
-              get: {
-                tags: ['Accounts'],
-                operationId: 'accounts-rm',
-                parameters: [
                   {
-                    name: 'rm',
+                    name: 'source',
                     in: 'query',
-                    description: 'process the request to delete, undelete, or remove monitors',
+                    description: 'show the source of the ABI information',
+                    required: false,
+                    style: 'form',
+                    explode: true,
+                    schema: {type: 'boolean'},
+                  },
+                  {
+                    name: 'classes',
+                    in: 'query',
+                    description: 'generate classDefinitions folder and class definitions',
                     required: false,
                     style: 'form',
                     explode: true,
@@ -616,10 +586,513 @@
                 responses: {
                   '200': {
                     description: 'status of the scraper',
-                    content: {
-                      'application/json': {schema: {type: 'array', items: {$ref: '#/components/schemas/response'}}},
-                    },
+                    content: { 'application/json': {schema: {type: 'array', items: {$ref: '#/components/schemas/response'}}} }, },
+                  '400': {description: 'bad input parameter'},
+                },
+              },
+            },
+            '/blocks': {
+              get: {
+                tags: ['ChainData'],
+                summary: 'Retrieve one or more blocks from the chain or local cache.',
+                description: 'Retrieve one or more blocks from the chain or local cache.',
+                operationId: 'chaindata-blocks',
+                parameters: [
+                  {
+                    name: 'blocks',
+                    in: 'query',
+                    description: 'a space-separated list of one or more blocks to retrieve',
+                    required: true,
+                    style: 'form',
+                    explode: true,
+                    schema: {type: 'array', items: {type: 'string'}},
                   },
+                  {
+                    name: 'hashes',
+                    in: 'query',
+                    description: 'display only transaction hashes, default is to display full transaction detail',
+                    required: false,
+                    style: 'form',
+                    explode: true,
+                    schema: {type: 'boolean'},
+                  },
+                  {
+                    name: 'uncles',
+                    in: 'query',
+                    description: 'display uncle blocks (if any) instead of the requested block',
+                    required: false,
+                    style: 'form',
+                    explode: true,
+                    schema: {type: 'boolean'},
+                  },
+                  {
+                    name: 'trace',
+                    in: 'query',
+                    description: 'export the traces from the block as opposed to the block data',
+                    required: false,
+                    style: 'form',
+                    explode: true,
+                    schema: {type: 'boolean'},
+                  },
+                  {
+                    name: 'apps',
+                    in: 'query',
+                    description: 'display all address appearances in the block',
+                    required: false,
+                    style: 'form',
+                    explode: true,
+                    schema: {type: 'boolean'},
+                  },
+                  {
+                    name: 'uniq',
+                    in: 'query',
+                    description: 'display only uniq address appearances per block',
+                    required: false,
+                    style: 'form',
+                    explode: true,
+                    schema: {type: 'boolean'},
+                  },
+                  {
+                    name: 'uniq_tx',
+                    in: 'query',
+                    description: 'display only uniq address appearances per transaction',
+                    required: false,
+                    style: 'form',
+                    explode: true,
+                    schema: {type: 'boolean'},
+                  },
+                  {
+                    name: 'count',
+                    in: 'query',
+                    description: 'display counts of appearances (for --apps, --uniq, or --uniq_tx) or transactions',
+                    required: false,
+                    style: 'form',
+                    explode: true,
+                    schema: {type: 'boolean'},
+                  },
+                  {
+                    name: 'cache',
+                    in: 'query',
+                    description: 'force a write of the block to the cache',
+                    required: false,
+                    style: 'form',
+                    explode: true,
+                    schema: {type: 'boolean'},
+                  },
+                ],
+                responses: {
+                  '200': {
+                    description: 'status of the scraper',
+                    content: { 'application/json': {schema: {type: 'array', items: {$ref: '#/components/schemas/response'}}} }, },
+                  '400': {description: 'bad input parameter'},
+                },
+              },
+            },
+            '/transactions': {
+              get: {
+                tags: ['ChainData'],
+                summary: 'Retrieve one or more transactions from the chain or local cache.',
+                description: 'Retrieve one or more transactions from the chain or local cache.',
+                operationId: 'chaindata-transactions',
+                parameters: [
+                  {
+                    name: 'transactions',
+                    in: 'query',
+                    description: 'a space-separated list of one or more transaction identifiers',
+                    required: true,
+                    style: 'form',
+                    explode: true,
+                    schema: {type: 'array', items: {type: 'string'}},
+                  },
+                  {
+                    name: 'articulate',
+                    in: 'query',
+                    description: 'articulate the retrieved data if ABIs can be found',
+                    required: false,
+                    style: 'form',
+                    explode: true,
+                    schema: {type: 'boolean'},
+                  },
+                  {
+                    name: 'trace',
+                    in: 'query',
+                    description: 'include the transaction\'s traces in the results',
+                    required: false,
+                    style: 'form',
+                    explode: true,
+                    schema: {type: 'boolean'},
+                  },
+                  {
+                    name: 'uniq',
+                    in: 'query',
+                    description: 'display a list of uniq addresses found in the transaction instead of the underlying data',
+                    required: false,
+                    style: 'form',
+                    explode: true,
+                    schema: {type: 'boolean'},
+                  },
+                  {
+                    name: 'cache',
+                    in: 'query',
+                    description: 'force the results of the query into the tx cache (and the trace cache if applicable)',
+                    required: false,
+                    style: 'form',
+                    explode: true,
+                    schema: {type: 'boolean'},
+                  },
+                ],
+                responses: {
+                  '200': {
+                    description: 'status of the scraper',
+                    content: { 'application/json': {schema: {type: 'array', items: {$ref: '#/components/schemas/response'}}} }, },
+                  '400': {description: 'bad input parameter'},
+                },
+              },
+            },
+            '/receipts': {
+              get: {
+                tags: ['ChainData'],
+                summary: 'Retrieve receipts for the given transaction(s).',
+                description: 'Retrieve receipts for the given transaction(s).',
+                operationId: 'chaindata-receipts',
+                parameters: [
+                  {
+                    name: 'transactions',
+                    in: 'query',
+                    description: 'a space-separated list of one or more transaction identifiers',
+                    required: true,
+                    style: 'form',
+                    explode: true,
+                    schema: {type: 'array', items: {type: 'string'}},
+                  },
+                  {
+                    name: 'articulate',
+                    in: 'query',
+                    description: 'articulate the retrieved data if ABIs can be found',
+                    required: false,
+                    style: 'form',
+                    explode: true,
+                    schema: {type: 'boolean'},
+                  },
+                ],
+                responses: {
+                  '200': {
+                    description: 'status of the scraper',
+                    content: { 'application/json': {schema: {type: 'array', items: {$ref: '#/components/schemas/response'}}} }, },
+                  '400': {description: 'bad input parameter'},
+                },
+              },
+            },
+            '/logs': {
+              get: {
+                tags: ['ChainData'],
+                summary: 'Retrieve logs for the given transaction(s).',
+                description: 'Retrieve logs for the given transaction(s).',
+                operationId: 'chaindata-logs',
+                parameters: [
+                  {
+                    name: 'transactions',
+                    in: 'query',
+                    description: 'a space-separated list of one or more transaction identifiers',
+                    required: true,
+                    style: 'form',
+                    explode: true,
+                    schema: {type: 'array', items: {type: 'string'}},
+                  },
+                  {
+                    name: 'topic',
+                    in: 'query',
+                    description: 'filter by one or more log topics (not implemented)',
+                    required: false,
+                    style: 'form',
+                    explode: true,
+                    schema: {type: 'array', items: {type: 'string'}},
+                  },
+                  {
+                    name: 'source',
+                    in: 'query',
+                    description: 'export only if the given address emitted the event (not implemented)',
+                    required: false,
+                    style: 'form',
+                    explode: true,
+                    schema: {type: 'array', items: {type: 'string'}},
+                  },
+                  {
+                    name: 'articulate',
+                    in: 'query',
+                    description: 'articulate the retrieved data if ABIs can be found',
+                    required: false,
+                    style: 'form',
+                    explode: true,
+                    schema: {type: 'boolean'},
+                  },
+                ],
+                responses: {
+                  '200': {
+                    description: 'status of the scraper',
+                    content: { 'application/json': {schema: {type: 'array', items: {$ref: '#/components/schemas/response'}}} }, },
+                  '400': {description: 'bad input parameter'},
+                },
+              },
+            },
+            '/traces': {
+              get: {
+                tags: ['ChainData'],
+                summary: 'Retrieve traces for the given transaction(s).',
+                description: 'Retrieve traces for the given transaction(s).',
+                operationId: 'chaindata-traces',
+                parameters: [
+                  {
+                    name: 'transactions',
+                    in: 'query',
+                    description: 'a space-separated list of one or more transaction identifiers',
+                    required: true,
+                    style: 'form',
+                    explode: true,
+                    schema: {type: 'array', items: {type: 'string'}},
+                  },
+                  {
+                    name: 'articulate',
+                    in: 'query',
+                    description: 'articulate the retrieved data if ABIs can be found',
+                    required: false,
+                    style: 'form',
+                    explode: true,
+                    schema: {type: 'boolean'},
+                  },
+                  {
+                    name: 'filter',
+                    in: 'query',
+                    description: 'call the node\'s `trace_filter` routine with bang-seperated filter',
+                    required: false,
+                    style: 'form',
+                    explode: true,
+                    schema: {type: 'string'},
+                  },
+                  {
+                    name: 'statediff',
+                    in: 'query',
+                    description: 'export state diff traces (not implemented)',
+                    required: false,
+                    style: 'form',
+                    explode: true,
+                    schema: {type: 'boolean'},
+                  },
+                  {
+                    name: 'count',
+                    in: 'query',
+                    description: 'show the number of traces for the transaction only (fast)',
+                    required: false,
+                    style: 'form',
+                    explode: true,
+                    schema: {type: 'boolean'},
+                  },
+                  {
+                    name: 'skip_ddos',
+                    in: 'query',
+                    description: 'skip over the 2016 ddos during export (\'on\' by default)',
+                    required: false,
+                    style: 'form',
+                    explode: true,
+                    schema: {type: 'boolean'},
+                  },
+                  {
+                    name: 'max',
+                    in: 'query',
+                    description: 'if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250)',
+                    required: false,
+                    style: 'form',
+                    explode: true,
+                    schema: {type: 'number'},
+                  },
+                ],
+                responses: {
+                  '200': {
+                    description: 'status of the scraper',
+                    content: { 'application/json': {schema: {type: 'array', items: {$ref: '#/components/schemas/response'}}} }, },
+                  '400': {description: 'bad input parameter'},
+                },
+              },
+            },
+            '/when': {
+              get: {
+                tags: ['ChainData'],
+                summary: 'Find block(s) based on date, blockNum, timestamp, or \'special\'.',
+                description: 'Find block(s) based on date, blockNum, timestamp, or \'special\'.',
+                operationId: 'chaindata-when',
+                parameters: [
+                  {
+                    name: 'block_list',
+                    in: 'query',
+                    description: 'one or more dates, block numbers, hashes, or special named blocks (see notes)',
+                    required: false,
+                    style: 'form',
+                    explode: true,
+                    schema: {type: 'array', items: {type: 'string'}},
+                  },
+                  {
+                    name: 'list',
+                    in: 'query',
+                    description: 'export a list of the \'special\' blocks',
+                    required: false,
+                    style: 'form',
+                    explode: true,
+                    schema: {type: 'boolean'},
+                  },
+                  {
+                    name: 'timestamps',
+                    in: 'query',
+                    description: 'ignore other options and generate timestamps only',
+                    required: false,
+                    style: 'form',
+                    explode: true,
+                    schema: {type: 'boolean'},
+                  },
+                  {
+                    name: 'skip',
+                    in: 'query',
+                    description: 'only applicable if --timestamps is on, the step between block numbers in the export',
+                    required: false,
+                    style: 'form',
+                    explode: true,
+                    schema: {type: 'number'},
+                  },
+                ],
+                responses: {
+                  '200': {
+                    description: 'status of the scraper',
+                    content: { 'application/json': {schema: {type: 'array', items: {$ref: '#/components/schemas/response'}}} }, },
+                  '400': {description: 'bad input parameter'},
+                },
+              },
+            },
+            '/state': {
+              get: {
+                tags: ['ChainState'],
+                summary: 'Retrieve account balance(s) for one or more addresses at given block(s).',
+                description: 'Retrieve account balance(s) for one or more addresses at given block(s).',
+                operationId: 'chainstate-state',
+                parameters: [
+                  {
+                    name: 'addrs',
+                    in: 'query',
+                    description: 'one or more addresses (0x...) from which to retrieve balances',
+                    required: true,
+                    style: 'form',
+                    explode: true,
+                    schema: {type: 'array', items: {type: 'string'}},
+                  },
+                  {
+                    name: 'blocks',
+                    in: 'query',
+                    description: 'an optional list of one or more blocks at which to report balances, defaults to \'latest\'',
+                    required: false,
+                    style: 'form',
+                    explode: true,
+                    schema: {type: 'array', items: {type: 'string'}},
+                  },
+                  {
+                    name: 'parts',
+                    in: 'query',
+                    description: 'control which state to export',
+                    required: false,
+                    style: 'form',
+                    explode: true,
+                    schema: { type: 'array', items: { type: 'string', enum: ['none', 'some', 'all', 'balance', 'nonce', 'code', 'storage', 'deployed', 'accttype'] } },
+                  },
+                  {
+                    name: 'changes',
+                    in: 'query',
+                    description: 'only report a balance when it changes from one block to the next',
+                    required: false,
+                    style: 'form',
+                    explode: true,
+                    schema: {type: 'boolean'},
+                  },
+                  {
+                    name: 'no_zero',
+                    in: 'query',
+                    description: 'suppress the display of zero balance accounts',
+                    required: false,
+                    style: 'form',
+                    explode: true,
+                    schema: {type: 'boolean'},
+                  },
+                  {
+                    name: 'call',
+                    in: 'query',
+                    description: 'a bang-separated string consisting of address!4-byte!bytes',
+                    required: false,
+                    style: 'form',
+                    explode: true,
+                    schema: {type: 'string'},
+                  },
+                ],
+                responses: {
+                  '200': {
+                    description: 'status of the scraper',
+                    content: { 'application/json': {schema: {type: 'array', items: {$ref: '#/components/schemas/response'}}} }, },
+                  '400': {description: 'bad input parameter'},
+                },
+              },
+            },
+            '/tokens': {
+              get: {
+                tags: ['ChainState'],
+                summary: 'Retrieve token balance(s) for one or more addresses at given block(s).',
+                description: 'Retrieve token balance(s) for one or more addresses at given block(s).',
+                operationId: 'chainstate-tokens',
+                parameters: [
+                  {
+                    name: 'addrs2',
+                    in: 'query',
+                    description: 'two or more addresses (0x...), the first is an ERC20 token, balances for the rest are reported',
+                    required: true,
+                    style: 'form',
+                    explode: true,
+                    schema: {type: 'array', items: {type: 'string'}},
+                  },
+                  {
+                    name: 'blocks',
+                    in: 'query',
+                    description: 'an optional list of one or more blocks at which to report balances, defaults to \'latest\'',
+                    required: false,
+                    style: 'form',
+                    explode: true,
+                    schema: {type: 'array', items: {type: 'string'}},
+                  },
+                  {
+                    name: 'parts',
+                    in: 'query',
+                    description: 'one or more parts of the token information to retreive',
+                    required: false,
+                    style: 'form',
+                    explode: true,
+                    schema: { type: 'array', items: { type: 'string', enum: ['name', 'symbol', 'decimals', 'totalSupply', 'version', 'none', 'all'] } },
+                  },
+                  {
+                    name: 'by_acct',
+                    in: 'query',
+                    description: 'consider each address an ERC20 token except the last, whose balance is reported for each token',
+                    required: false,
+                    style: 'form',
+                    explode: true,
+                    schema: {type: 'boolean'},
+                  },
+                  {
+                    name: 'no_zero',
+                    in: 'query',
+                    description: 'suppress the display of zero balance accounts',
+                    required: false,
+                    style: 'form',
+                    explode: true,
+                    schema: {type: 'boolean'},
+                  },
+                ],
+                responses: {
+                  '200': {
+                    description: 'status of the scraper',
+                    content: { 'application/json': {schema: {type: 'array', items: {$ref: '#/components/schemas/response'}}} }, },
                   '400': {description: 'bad input parameter'},
                 },
               },
@@ -627,8 +1100,8 @@
             '/status': {
               get: {
                 tags: ['Admin'],
-                summary: 'Report on status of one or more TrueBlocks caches.',
-                description: 'Report on status of one or more TrueBlocks caches.',
+                summary: 'Report on the status of the TrueBlocks system.',
+                description: 'Report on the status of the TrueBlocks system.',
                 operationId: 'admin-status',
                 parameters: [
                   {
@@ -638,13 +1111,7 @@
                     required: false,
                     style: 'form',
                     explode: true,
-                    schema: {
-                      type: 'array',
-                      items: {
-                        type: 'string',
-                        enum: ['index', 'monitors', 'collections', 'names', 'abis', 'caches', 'some', 'all'],
-                      },
-                    },
+                    schema: { type: 'array', items: { type: 'string', enum: ['index', 'monitors', 'entities', 'names', 'abis', 'caches', 'some', 'all'] } },
                   },
                   {
                     name: 'details',
@@ -658,14 +1125,11 @@
                   {
                     name: 'types',
                     in: 'query',
-                    description: 'for cache mode only, which type(s) of cache to report',
+                    description: 'for caches mode only, which type(s) of cache to report',
                     required: false,
                     style: 'form',
                     explode: true,
-                    schema: {
-                      type: 'array',
-                      items: {type: 'string', enum: ['blocks', 'transactions', 'traces', 'slurps', 'prices', 'all']},
-                    },
+                    schema: { type: 'array', items: { type: 'string', enum: ['blocks', 'transactions', 'traces', 'slurps', 'prices', 'all'] } },
                   },
                   {
                     name: 'depth',
@@ -713,18 +1177,18 @@
                     schema: {type: 'boolean'},
                   },
                   {
-                    name: 'start',
+                    name: 'test_start',
                     in: 'query',
-                    description: 'first block to process (inclusive)',
+                    description: 'first block to process (inclusive -- testing only)',
                     required: false,
                     style: 'form',
                     explode: true,
                     schema: {type: 'string'},
                   },
                   {
-                    name: 'end',
+                    name: 'test_end',
                     in: 'query',
-                    description: 'last block to process (inclusive)',
+                    description: 'last block to process (inclusive -- testing only)',
                     required: false,
                     style: 'form',
                     explode: true,
@@ -734,10 +1198,7 @@
                 responses: {
                   '200': {
                     description: 'status of the scraper',
-                    content: {
-                      'application/json': {schema: {type: 'array', items: {$ref: '#/components/schemas/response'}}},
-                    },
-                  },
+                    content: { 'application/json': {schema: {type: 'array', items: {$ref: '#/components/schemas/response'}}} }, },
                   '400': {description: 'bad input parameter'},
                 },
               },
@@ -745,8 +1206,8 @@
             '/scrape': {
               get: {
                 tags: ['Admin'],
-                summary: 'Decentralized blockchain scraper and block cache.',
-                description: 'Decentralized blockchain scraper and block cache.',
+                summary: 'Scan the chain and update the TrueBlocks index of appearances.',
+                description: 'Scan the chain and update the TrueBlocks index of appearances.',
                 operationId: 'admin-scrape',
                 parameters: [
                   {
@@ -756,7 +1217,7 @@
                     required: true,
                     style: 'form',
                     explode: true,
-                    schema: {type: 'string', enum: ['run', 'quit', 'pause', 'restart']},
+                    schema: {type: 'string', enum: ['run', 'quit', 'pause', 'restart'] },
                   },
                   {
                     name: 'tool',
@@ -765,7 +1226,7 @@
                     required: false,
                     style: 'form',
                     explode: true,
-                    schema: {type: 'array', items: {type: 'string', enum: ['monitors', 'index', 'none', 'both']}},
+                    schema: { type: 'array', items: { type: 'string', enum: ['monitors', 'index', 'none', 'both'] } },
                   },
                   {
                     name: 'n_blocks',
@@ -779,7 +1240,7 @@
                   {
                     name: 'n_block_procs',
                     in: 'query',
-                    description: 'number of block channels per scrape',
+                    description: 'number of block channels for blaze',
                     required: false,
                     style: 'form',
                     explode: true,
@@ -788,7 +1249,7 @@
                   {
                     name: 'n_addr_procs',
                     in: 'query',
-                    description: 'number of address channels per scrape',
+                    description: 'number of address channels for blaze',
                     required: false,
                     style: 'form',
                     explode: true,
@@ -804,15 +1265,6 @@
                     schema: {type: 'boolean'},
                   },
                   {
-                    name: 'publish',
-                    in: 'query',
-                    description: 'publish the hash of the pin manifest to the UnchainedIndex smart contract',
-                    required: false,
-                    style: 'form',
-                    explode: true,
-                    schema: {type: 'boolean'},
-                  },
-                  {
                     name: 'sleep',
                     in: 'query',
                     description: 'the number of seconds to sleep between passes (default 14)',
@@ -821,327 +1273,46 @@
                     explode: true,
                     schema: {type: 'number'},
                   },
-                ],
-                responses: {
-                  '200': {
-                    description: 'status of the scraper',
-                    content: {
-                      'application/json': {schema: {type: 'array', items: {$ref: '#/components/schemas/response'}}},
-                    },
-                  },
-                  '400': {description: 'bad input parameter'},
-                },
-              },
-            },
-            '/blocks': {
-              get: {
-                tags: ['Data'],
-                summary: 'Returns block(s) from local cache or directly from a running node.',
-                description: 'Returns block(s) from local cache or directly from a running node.',
-                operationId: 'data-blocks',
-                parameters: [
                   {
-                    name: 'blocks',
+                    name: 'staging',
                     in: 'query',
-                    description: 'a space-separated list of one or more blocks to retrieve',
-                    required: true,
-                    style: 'form',
-                    explode: true,
-                    schema: {type: 'array', items: {type: 'string'}},
-                  },
-                  {
-                    name: 'hashes_only',
-                    in: 'query',
-                    description: 'display only transaction hashes, default is to display full transaction detail',
+                    description: 'pass through to chifra export --freshen (see notes)',
                     required: false,
                     style: 'form',
                     explode: true,
                     schema: {type: 'boolean'},
                   },
                   {
-                    name: 'apps',
+                    name: 'unripe',
                     in: 'query',
-                    description: 'display all address appearances included in the block',
+                    description: 'pass through to chifra export --freshen (see notes)',
                     required: false,
                     style: 'form',
                     explode: true,
                     schema: {type: 'boolean'},
                   },
                   {
-                    name: 'uniq',
+                    name: 'cache_txs',
                     in: 'query',
-                    description: 'display only uniq addresses found per block',
+                    description: 'pass through to chifra export --freshen (see notes)',
                     required: false,
                     style: 'form',
                     explode: true,
                     schema: {type: 'boolean'},
                   },
                   {
-                    name: 'uniq_tx',
+                    name: 'cache_traces',
                     in: 'query',
-                    description: 'display only uniq addresses found per transaction',
+                    description: 'pass through to chifra export --freshen (see notes)',
                     required: false,
                     style: 'form',
                     explode: true,
                     schema: {type: 'boolean'},
                   },
                   {
-                    name: 'count',
+                    name: 'load',
                     in: 'query',
-                    description: 'display counts of appearances (for --apps, --uniq, or --uniq_tx) or transactions',
-                    required: false,
-                    style: 'form',
-                    explode: true,
-                    schema: {type: 'boolean'},
-                  },
-                  {
-                    name: 'uncles',
-                    in: 'query',
-                    description: 'display uncle blocks (if any) instead of the requested block',
-                    required: false,
-                    style: 'form',
-                    explode: true,
-                    schema: {type: 'boolean'},
-                  },
-                  {
-                    name: 'force',
-                    in: 'query',
-                    description: 'force a re-write of the block to the cache',
-                    required: false,
-                    style: 'form',
-                    explode: true,
-                    schema: {type: 'boolean'},
-                  },
-                  {
-                    name: 'trace',
-                    in: 'query',
-                    description: 'export the traces from the block as opposed to the block data',
-                    required: false,
-                    style: 'form',
-                    explode: true,
-                    schema: {type: 'boolean'},
-                  },
-                ],
-                responses: {
-                  '200': {
-                    description: 'status of the scraper',
-                    content: {
-                      'application/json': {schema: {type: 'array', items: {$ref: '#/components/schemas/response'}}},
-                    },
-                  },
-                  '400': {description: 'bad input parameter'},
-                },
-              },
-            },
-            '/transactions': {
-              get: {
-                tags: ['Data'],
-                summary: 'Retrieve a transaction from the cache or the node.',
-                description: 'Retrieve a transaction from the cache or the node.',
-                operationId: 'data-transactions',
-                parameters: [
-                  {
-                    name: 'transactions',
-                    in: 'query',
-                    description:
-                      'a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)',
-                    required: true,
-                    style: 'form',
-                    explode: true,
-                    schema: {type: 'array', items: {type: 'string'}},
-                  },
-                  {
-                    name: 'articulate',
-                    in: 'query',
-                    description: "articulate the transactions if an ABI is found for the 'to' address",
-                    required: false,
-                    style: 'form',
-                    explode: true,
-                    schema: {type: 'boolean'},
-                  },
-                  {
-                    name: 'trace',
-                    in: 'query',
-                    description: "display the transaction's trace",
-                    required: false,
-                    style: 'form',
-                    explode: true,
-                    schema: {type: 'boolean'},
-                  },
-                  {
-                    name: 'force',
-                    in: 'query',
-                    description: 'force the results into the tx cache',
-                    required: false,
-                    style: 'form',
-                    explode: true,
-                    schema: {type: 'boolean'},
-                  },
-                  {
-                    name: 'uniq',
-                    in: 'query',
-                    description: 'display a list of uniq addresses found in this transaction',
-                    required: false,
-                    style: 'form',
-                    explode: true,
-                    schema: {type: 'boolean'},
-                  },
-                ],
-                responses: {
-                  '200': {
-                    description: 'status of the scraper',
-                    content: {
-                      'application/json': {schema: {type: 'array', items: {$ref: '#/components/schemas/response'}}},
-                    },
-                  },
-                  '400': {description: 'bad input parameter'},
-                },
-              },
-            },
-            '/receipts': {
-              get: {
-                tags: ['Data'],
-                summary: "Retrieve a transaction's receipt from the cache or the node.",
-                description: "Retrieve a transaction's receipt from the cache or the node.",
-                operationId: 'data-receipts',
-                parameters: [
-                  {
-                    name: 'transactions',
-                    in: 'query',
-                    description:
-                      'a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)',
-                    required: true,
-                    style: 'form',
-                    explode: true,
-                    schema: {type: 'array', items: {type: 'string'}},
-                  },
-                  {
-                    name: 'articulate',
-                    in: 'query',
-                    description: "articulate the transactions if an ABI is found for the 'to' address",
-                    required: false,
-                    style: 'form',
-                    explode: true,
-                    schema: {type: 'boolean'},
-                  },
-                  {
-                    name: 'logs',
-                    in: 'query',
-                    description: "display the receipt's logs",
-                    required: false,
-                    style: 'form',
-                    explode: true,
-                    schema: {type: 'boolean'},
-                  },
-                ],
-                responses: {
-                  '200': {
-                    description: 'status of the scraper',
-                    content: {
-                      'application/json': {schema: {type: 'array', items: {$ref: '#/components/schemas/response'}}},
-                    },
-                  },
-                  '400': {description: 'bad input parameter'},
-                },
-              },
-            },
-            '/logs': {
-              get: {
-                tags: ['Data'],
-                summary: "Retrieve a transaction's logs from the cache or the node.",
-                description: "Retrieve a transaction's logs from the cache or the node.",
-                operationId: 'data-logs',
-                parameters: [
-                  {
-                    name: 'transactions',
-                    in: 'query',
-                    description:
-                      'a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)',
-                    required: true,
-                    style: 'form',
-                    explode: true,
-                    schema: {type: 'array', items: {type: 'string'}},
-                  },
-                  {
-                    name: 'articulate',
-                    in: 'query',
-                    description: "articulate the transactions if an ABI is found for the 'to' address",
-                    required: false,
-                    style: 'form',
-                    explode: true,
-                    schema: {type: 'boolean'},
-                  },
-                ],
-                responses: {
-                  '200': {
-                    description: 'status of the scraper',
-                    content: {
-                      'application/json': {schema: {type: 'array', items: {$ref: '#/components/schemas/response'}}},
-                    },
-                  },
-                  '400': {description: 'bad input parameter'},
-                },
-              },
-            },
-            '/traces': {
-              get: {
-                tags: ['Data'],
-                summary: "Retrieve a transaction's traces from the cache or the node.",
-                description: "Retrieve a transaction's traces from the cache or the node.",
-                operationId: 'data-traces',
-                parameters: [
-                  {
-                    name: 'transactions',
-                    in: 'query',
-                    description:
-                      'a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID)',
-                    required: true,
-                    style: 'form',
-                    explode: true,
-                    schema: {type: 'array', items: {type: 'string'}},
-                  },
-                  {
-                    name: 'articulate',
-                    in: 'query',
-                    description: "articulate the transactions if an ABI is found for the 'to' address",
-                    required: false,
-                    style: 'form',
-                    explode: true,
-                    schema: {type: 'boolean'},
-                  },
-                  {
-                    name: 'count',
-                    in: 'query',
-                    description: 'show the number of traces for the transaction only (fast)',
-                    required: false,
-                    style: 'form',
-                    explode: true,
-                    schema: {type: 'boolean'},
-                  },
-                  {
-                    name: 'skip_ddos',
-                    in: 'query',
-                    description: "skip over 2018 ddos during export ('on' by default)",
-                    required: false,
-                    style: 'form',
-                    explode: true,
-                    schema: {type: 'boolean'},
-                  },
-                  {
-                    name: 'max_traces',
-                    in: 'query',
-                    description:
-                      'if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250)',
-                    required: false,
-                    style: 'form',
-                    explode: true,
-                    schema: {type: 'number'},
-                  },
-                  {
-                    name: 'filter',
-                    in: 'query',
-                    description:
-                      'Call trace_filter with bang-seperated string fromBlk!toBlk[!fromAddr[!toAddr[!after[!count]]]]',
+                    description: 'pass through to chifra export --freshen (see notes)',
                     required: false,
                     style: 'form',
                     explode: true,
@@ -1151,205 +1322,67 @@
                 responses: {
                   '200': {
                     description: 'status of the scraper',
-                    content: {
-                      'application/json': {schema: {type: 'array', items: {$ref: '#/components/schemas/response'}}},
-                    },
-                  },
+                    content: { 'application/json': {schema: {type: 'array', items: {$ref: '#/components/schemas/response'}}} }, },
                   '400': {description: 'bad input parameter'},
                 },
               },
             },
-            '/when': {
+            '/pins': {
               get: {
-                tags: ['Data'],
-                summary: "Finds block based on date, blockNum, timestamp, or 'special'.",
-                description: "Finds block based on date, blockNum, timestamp, or 'special'.",
-                operationId: 'data-when',
+                tags: ['Admin'],
+                summary: 'Manage pinned index of appearances and associated bloom filters.',
+                description: 'Manage pinned index of appearances and associated bloom filters.',
+                operationId: 'admin-pins',
                 parameters: [
-                  {
-                    name: 'block_list',
-                    in: 'query',
-                    description: 'one or more dates, block numbers, hashes, or special named blocks (see notes)',
-                    required: false,
-                    style: 'form',
-                    explode: true,
-                    schema: {type: 'array', items: {type: 'string'}},
-                  },
                   {
                     name: 'list',
                     in: 'query',
-                    description: "export a list of the 'special' blocks",
+                    description: 'list the index and bloom filter hashes from local manifest or pinning service',
                     required: false,
                     style: 'form',
                     explode: true,
                     schema: {type: 'boolean'},
                   },
                   {
-                    name: 'timestamps',
+                    name: 'init',
                     in: 'query',
-                    description: 'ignore other options and generate timestamps only',
+                    description: 'initialize local index by downloading bloom filters from pinning service',
                     required: false,
                     style: 'form',
                     explode: true,
                     schema: {type: 'boolean'},
                   },
                   {
-                    name: 'skip',
+                    name: 'init_all',
                     in: 'query',
-                    description: 'only applicable if --timestamps is on, the step between block numbers in the export',
+                    description: 'initialize local index by downloading both bloom filters and index chunks',
+                    required: false,
+                    style: 'form',
+                    explode: true,
+                    schema: {type: 'boolean'},
+                  },
+                  {
+                    name: 'sleep',
+                    in: 'query',
+                    description: 'the number of seconds to sleep between requests during init (default .25)',
                     required: false,
                     style: 'form',
                     explode: true,
                     schema: {type: 'number'},
                   },
-                ],
-                responses: {
-                  '200': {
-                    description: 'status of the scraper',
-                    content: {
-                      'application/json': {schema: {type: 'array', items: {$ref: '#/components/schemas/response'}}},
-                    },
-                  },
-                  '400': {description: 'bad input parameter'},
-                },
-              },
-            },
-            '/state': {
-              get: {
-                tags: ['State'],
-                summary: 'Retrieve the balance of one or more address at the given block(s).',
-                description: 'Retrieve the balance of one or more address at the given block(s).',
-                operationId: 'state-state',
-                parameters: [
                   {
-                    name: 'addrs',
+                    name: 'remote',
                     in: 'query',
-                    description: 'one or more addresses (0x...) from which to retrieve balances',
-                    required: true,
-                    style: 'form',
-                    explode: true,
-                    schema: {type: 'array', items: {type: 'string'}},
-                  },
-                  {
-                    name: 'blocks',
-                    in: 'query',
-                    description:
-                      "an optional list of one or more blocks at which to report balances, defaults to 'latest'",
-                    required: false,
-                    style: 'form',
-                    explode: true,
-                    schema: {type: 'array', items: {type: 'string'}},
-                  },
-                  {
-                    name: 'parts',
-                    in: 'query',
-                    description: 'control which state to export',
-                    required: false,
-                    style: 'form',
-                    explode: true,
-                    schema: {
-                      type: 'array',
-                      items: {
-                        type: 'string',
-                        enum: ['none', 'some', 'all', 'balance', 'nonce', 'code', 'storage', 'deployed', 'accttype'],
-                      },
-                    },
-                  },
-                  {
-                    name: 'changes',
-                    in: 'query',
-                    description: 'only report a balance when it changes from one block to the next',
+                    description: 'applicable only to --list mode, recover the manifest from pinning service',
                     required: false,
                     style: 'form',
                     explode: true,
                     schema: {type: 'boolean'},
                   },
                   {
-                    name: 'no_zero',
+                    name: 'pin_locally',
                     in: 'query',
-                    description: 'suppress the display of zero balance accounts',
-                    required: false,
-                    style: 'form',
-                    explode: true,
-                    schema: {type: 'boolean'},
-                  },
-                  {
-                    name: 'call',
-                    in: 'query',
-                    description: 'a bang-separated string consisting of address!4-byte!bytes',
-                    required: false,
-                    style: 'form',
-                    explode: true,
-                    schema: {type: 'string'},
-                  },
-                ],
-                responses: {
-                  '200': {
-                    description: 'status of the scraper',
-                    content: {
-                      'application/json': {schema: {type: 'array', items: {$ref: '#/components/schemas/response'}}},
-                    },
-                  },
-                  '400': {description: 'bad input parameter'},
-                },
-              },
-            },
-            '/tokens': {
-              get: {
-                tags: ['State'],
-                summary: 'Retrieve token balances for one or more address at given block(s).',
-                description: 'Retrieve token balances for one or more address at given block(s).',
-                operationId: 'state-tokens',
-                parameters: [
-                  {
-                    name: 'addrs2',
-                    in: 'query',
-                    description:
-                      'two or more addresses (0x...), the first is an ERC20 token, balances for the rest are reported',
-                    required: true,
-                    style: 'form',
-                    explode: true,
-                    schema: {type: 'array', items: {type: 'string'}},
-                  },
-                  {
-                    name: 'blocks',
-                    in: 'query',
-                    description:
-                      "an optional list of one or more blocks at which to report balances, defaults to 'latest'",
-                    required: false,
-                    style: 'form',
-                    explode: true,
-                    schema: {type: 'array', items: {type: 'string'}},
-                  },
-                  {
-                    name: 'parts',
-                    in: 'query',
-                    description: 'one or more parts of the token information to retreive',
-                    required: false,
-                    style: 'form',
-                    explode: true,
-                    schema: {
-                      type: 'array',
-                      items: {
-                        type: 'string',
-                        enum: ['name', 'symbol', 'decimals', 'totalSupply', 'version', 'none', 'all'],
-                      },
-                    },
-                  },
-                  {
-                    name: 'by_acct',
-                    in: 'query',
-                    description:
-                      'consider each address an ERC20 token except the last, whose balance is reported for each token',
-                    required: false,
-                    style: 'form',
-                    explode: true,
-                    schema: {type: 'boolean'},
-                  },
-                  {
-                    name: 'no_zero',
-                    in: 'query',
-                    description: 'suppress the display of zero balance accounts',
+                    description: 'pin all local files in the index to an IPFS store (requires IPFS)',
                     required: false,
                     style: 'form',
                     explode: true,
@@ -1359,10 +1392,7 @@
                 responses: {
                   '200': {
                     description: 'status of the scraper',
-                    content: {
-                      'application/json': {schema: {type: 'array', items: {$ref: '#/components/schemas/response'}}},
-                    },
-                  },
+                    content: { 'application/json': {schema: {type: 'array', items: {$ref: '#/components/schemas/response'}}} }, },
                   '400': {description: 'bad input parameter'},
                 },
               },
@@ -1390,10 +1420,7 @@
                     required: false,
                     style: 'form',
                     explode: true,
-                    schema: {
-                      type: 'string',
-                      enum: ['5', '15', '30', '60', '120', '240', '1440', '10080', 'hourly', 'daily', 'weekly'],
-                    },
+                    schema: {type: 'string', enum: ['5', '15', '30', '60', '120', '240', '1440', '10080', 'hourly', 'daily', 'weekly'] },
                   },
                   {
                     name: 'pair',
@@ -1411,16 +1438,13 @@
                     required: false,
                     style: 'form',
                     explode: true,
-                    schema: {type: 'string', enum: ['poloniex', 'maker', 'tellor']},
+                    schema: {type: 'string', enum: ['poloniex', 'maker', 'tellor'] },
                   },
                 ],
                 responses: {
                   '200': {
                     description: 'status of the scraper',
-                    content: {
-                      'application/json': {schema: {type: 'array', items: {$ref: '#/components/schemas/response'}}},
-                    },
-                  },
+                    content: { 'application/json': {schema: {type: 'array', items: {$ref: '#/components/schemas/response'}}} }, },
                   '400': {description: 'bad input parameter'},
                 },
               },
@@ -1428,8 +1452,8 @@
             '/slurp': {
               get: {
                 tags: ['Other'],
-                summary: 'Fetches data from EtherScan for an arbitrary address.',
-                description: 'Fetches data from EtherScan for an arbitrary address.',
+                summary: 'Fetch data from EtherScan for any address.',
+                description: 'Fetch data from EtherScan for any address.',
                 operationId: 'other-slurp',
                 parameters: [
                   {
@@ -1457,10 +1481,7 @@
                     required: false,
                     style: 'form',
                     explode: true,
-                    schema: {
-                      type: 'array',
-                      items: {type: 'string', enum: ['ext', 'int', 'token', 'nfts', 'miner', 'all']},
-                    },
+                    schema: { type: 'array', items: { type: 'string', enum: ['ext', 'int', 'token', 'nfts', 'miner', 'all'] } },
                   },
                   {
                     name: 'appearances',
@@ -1475,102 +1496,7 @@
                 responses: {
                   '200': {
                     description: 'status of the scraper',
-                    content: {
-                      'application/json': {schema: {type: 'array', items: {$ref: '#/components/schemas/response'}}},
-                    },
-                  },
-                  '400': {description: 'bad input parameter'},
-                },
-              },
-            },
-            '/where': {
-              get: {
-                tags: ['Other'],
-                summary: 'Reports in which cache (if any) a block is found.',
-                description: 'Reports in which cache (if any) a block is found.',
-                operationId: 'other-where',
-                parameters: [
-                  {
-                    name: 'blocks',
-                    in: 'query',
-                    description: 'a space-separated list of one or more blocks to search for',
-                    required: true,
-                    style: 'form',
-                    explode: true,
-                    schema: {type: 'array', items: {type: 'string'}},
-                  },
-                ],
-                responses: {
-                  '200': {
-                    description: 'status of the scraper',
-                    content: {
-                      'application/json': {schema: {type: 'array', items: {$ref: '#/components/schemas/response'}}},
-                    },
-                  },
-                  '400': {description: 'bad input parameter'},
-                },
-              },
-            },
-            '/dive': {
-              get: {
-                tags: ['Other'],
-                summary: 'Dive deeply into the turboGeth database.',
-                description: 'Dive deeply into the turboGeth database.',
-                operationId: 'other-dive',
-                parameters: [
-                  {
-                    name: 'mode',
-                    in: 'query',
-                    description: 'the command to run',
-                    required: false,
-                    style: 'form',
-                    explode: true,
-                    schema: {type: 'string', enum: ['tables', 'dump']},
-                  },
-                  {
-                    name: 'datadir',
-                    in: 'query',
-                    description: 'folder containing TurboGeth data file (data.mdb)',
-                    required: false,
-                    style: 'form',
-                    explode: true,
-                    schema: {type: 'string'},
-                  },
-                  {
-                    name: 'name',
-                    in: 'query',
-                    description: "for 'dump' command only, the name of the table to dump",
-                    required: false,
-                    style: 'form',
-                    explode: true,
-                    schema: {type: 'string'},
-                  },
-                  {
-                    name: 'goerli',
-                    in: 'query',
-                    description: 'run against the goerli testnet',
-                    required: false,
-                    style: 'form',
-                    explode: true,
-                    schema: {type: 'boolean'},
-                  },
-                  {
-                    name: 'no_zero',
-                    in: 'query',
-                    description: 'suppress the display of tables with zero records',
-                    required: false,
-                    style: 'form',
-                    explode: true,
-                    schema: {type: 'boolean'},
-                  },
-                ],
-                responses: {
-                  '200': {
-                    description: 'status of the scraper',
-                    content: {
-                      'application/json': {schema: {type: 'array', items: {$ref: '#/components/schemas/response'}}},
-                    },
-                  },
+                    content: { 'application/json': {schema: {type: 'array', items: {$ref: '#/components/schemas/response'}}} }, },
                   '400': {description: 'bad input parameter'},
                 },
               },
@@ -1584,16 +1510,11 @@
                 properties: {
                   data: {
                     type: 'object',
-                    example: [
-                      {$ref: '#/components/schemas/scrape_response'},
-                      {$ref: '#/components/schemas/trans_response'},
-                    ],
+                    example: [],
                   },
                   error: {type: 'array', example: ['error 1', 'error 2'], items: {type: 'string'}},
                 },
               },
-              scrape_response: {type: 'string', example: 'Scrape response'},
-              trans_response: {type: 'string', example: 'Trans response'},
             },
           },
         };

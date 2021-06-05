@@ -1,9 +1,8 @@
 /*-------------------------------------------------------------------------
  * This source code is confidential proprietary information which is
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  * All Rights Reserved
  *------------------------------------------------------------------------*/
-#include "acctlib.h"
 #include "options.h"
 
 //---------------------------------------------------------------
@@ -15,6 +14,12 @@ bool cleanMonitorFile(const string_q& path, void* data) {
 
     } else {
         if (endsWith(path, "acct.bin")) {
+            if (isTestMode()) {
+                CMonitor m;
+                if (path > m.getMonitorPath("0x9"))
+                    return false;
+            }
+
             size_t sizeThen = (fileSize(path) / sizeof(CAppearance_base));
             blknum_t nRecords = (fileSize(path) / sizeof(CAppearance_base));
             if (!nRecords)
@@ -63,8 +68,13 @@ bool cleanMonitorFile(const string_q& path, void* data) {
             first = false;
             CMonitor m;
             size_t sizeNow = (fileSize(path) / sizeof(CAppearance_base));
-            cout << "{ \"path\": \"" << substitute(path, m.getMonitorPath(""), "$CACHE/")
-                 << "\", \"sizeThen\": " << sizeThen << ", \"sizeNow\": " << sizeNow << "}" << endl;
+            cout << "{ ";
+            cout << "\"path\": \"" << substitute(path, m.getMonitorPath(""), "$CACHE/") << "\", ";
+            cout << "\"sizeThen\": " << sizeThen << ", ";
+            cout << "\"sizeNow\": " << sizeNow;
+            if (sizeThen > sizeNow)
+                cout << ", \"dupsRemoved\": " << (sizeThen - sizeNow);
+            cout << " }" << endl;
         }
     }
 
@@ -72,10 +82,10 @@ bool cleanMonitorFile(const string_q& path, void* data) {
 }
 
 //---------------------------------------------------------------
-bool COptions::handle_clean(void) {
+bool COptions::process_clean(void) {
     CMonitor m;
-    cout << (isTestMode() ? "[" : "");
+    cout << "[";
     bool ret = forEveryFileInFolder(m.getMonitorPath(""), cleanMonitorFile, NULL);
-    cout << (isTestMode() ? "]" : "");
+    cout << "]";
     return ret;
 }

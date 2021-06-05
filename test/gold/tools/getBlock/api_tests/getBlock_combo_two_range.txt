@@ -1,5 +1,0 @@
-{
-  "errors": [
-    "chifra blocks - Specify only a single block range at a time."
-  ]
-}

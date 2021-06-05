@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -13,12 +13,13 @@
 #include "etherlib.h"
 
 class CCounter {
-public:
+  public:
     uint64_t blocksSeen{0};
     uint64_t txsSeen{0};
     uint64_t errorsSeen{0};
     uint64_t lastBlock{NOPOS};
-    CCounter(void) {}
+    CCounter(void) {
+    }
 };
 
 blknum_t start = 0;
@@ -31,14 +32,14 @@ blknum_t report = 50000;
 int main(int argc, const char* argv[]) {
     etherlib_init(quickQuitHandler);
     CCounter counter;
-    forEveryBlockOnDisc(visitBlock, &counter, start, n, step);
+    forEveryBlock(visitBlock, &counter, start, n, step);
     etherlib_cleanup();
     cout << counter.blocksSeen << "\t" << counter.txsSeen << "\t" << counter.errorsSeen << endl;
     return 1;
 }
 
 bool visitBlock(CBlock& block, void* data) {
-    CCounter *counter = (CCounter*)data;
+    CCounter* counter = (CCounter*)data;
     counter->blocksSeen++;
     for (uint32_t tr = 0; tr < block.transactions.size(); tr++) {
         counter->txsSeen++;
@@ -49,7 +50,7 @@ bool visitBlock(CBlock& block, void* data) {
             counter->errorsSeen++;
     }
     if (!(block.blockNumber % report)) {
-        cout << block.blockNumber << "," << counter->txsSeen << "," << counter->errorsSeen << string_q(50,' ') << endl;
+        cout << block.blockNumber << "," << counter->txsSeen << "," << counter->errorsSeen << string_q(50, ' ') << endl;
         counter->txsSeen = counter->errorsSeen = 0;
     }
     if (!(block.blockNumber % progress)) {

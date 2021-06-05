@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -66,7 +66,6 @@ void etherlib_init(QUITHANDLER qh) {
     CFunction::registerClass();
     CParameter::registerClass();
 
-    CReconciliationOutput::registerClass();
     CReconciliation::registerClass();
     CEthState::registerClass();
     CEthCall::registerClass();
@@ -133,7 +132,10 @@ bool getBlock_light(CBlock& block, blknum_t num) {
 
 //--------------------------------------------------------------------------------
 bool getBlock_header(CBlock& block, const string_q& val) {
-    getObjectViaRPC(block, "parity_getBlockHeaderByNumber", "[" + quote(val) + "]");
+    if (isParity())
+        getObjectViaRPC(block, "parity_getBlockHeaderByNumber", "[" + quote(val) + "]");
+    else
+        getBlock_light(block, str_2_Uint(val));
     return true;
 }
 
@@ -274,6 +276,22 @@ void getTraces(CTraceArray& traces, const hash_t& hash) {
         traces.push_back(trace);
         trace = CTrace();  // reset
     }
+}
+
+//--------------------------------------------------------------
+void getStateDiffAddrs(CAddressArray& addrs, const hash_t& hash) {
+    string_q str;
+    queryRawStateDiff(str, hash);
+    cout << str << endl;
+    // CRPCResult generic;
+    // generic.parseJson3(str);  // pull out the result
+    // generic.result = cleanUpJson((char*)generic.result.c_str());  // NOLINT
+    // CTrace trace;
+    // diffs.clear();
+    // while (trace.parseJson4(generic.result)) {
+    //     diffs.push_back(trace);
+    //     trace = CTrace();  // reset
+    // }
 }
 
 //-----------------------------------------------------------------------
@@ -476,6 +494,12 @@ bool queryRawTrace(string_q& trace, const string_q& hashIn) {
 }
 
 //-------------------------------------------------------------------------
+bool queryRawStateDiff(string_q& diffs, const string_q& hashIn) {
+    diffs = "[" + callRPC("trace_replayTransaction", "[\"" + str_2_Hash(hashIn) + "\",[\"stateDiff\"]]", true) + "]";
+    return true;
+}
+
+//-------------------------------------------------------------------------
 bool queryRawLogs(string_q& results, const CLogQuery& query) {
     results = callRPC("eth_getLogs", query.toRPC(), true);
     return true;
@@ -530,10 +554,23 @@ void getTracesByFilter(CTraceArray& traces, const CTraceFilter& filter) {
 
 //-------------------------------------------------------------------------
 string_q getVersionFromClient(void) {
-    static string_q clientVersion;
-    if (clientVersion.empty())
-        clientVersion = callRPC("web3_clientVersion", "[]", false);
-    return clientVersion;
+    string_q clientVersionFn = getCachePath("tmp/clientVersion.txt");
+    string_q contents = asciiFileToString(clientVersionFn);
+
+    timestamp_t lastUpdate = date_2_Ts(fileLastModifyDate(clientVersionFn));
+    timestamp_t now = date_2_Ts(Now());
+    timestamp_t diff = now - lastUpdate;
+    if (diff > 20 || !contains(contents, getCurlContext()->baseURL)) {
+        // We do this to avoid constantly hitting the node just to see if it's there.
+        // If the rpcProvider changed or we haven't checked for a while, check it again.
+        string_q clientVersion = callRPC("web3_clientVersion", "[]", false);
+        stringToAsciiFile(clientVersionFn, getCurlContext()->baseURL + "\t" + clientVersion);
+        return clientVersion;
+    }
+
+    CStringArray parts;
+    explode(parts, contents, '\t');
+    return parts[1];
 }
 
 //-------------------------------------------------------------------------
@@ -550,19 +587,6 @@ bool isGeth(void) {
 bool isParity(void) {
     return contains(toLower(getVersionFromClient()), "parity") ||
            contains(toLower(getVersionFromClient()), "openethereum");
-}
-
-//-------------------------------------------------------------------------
-bool getAccounts(CAddressArray& addrs) {
-    string_q results = callRPC("eth_accounts", "[]", false);
-    while (!results.empty())
-        addrs.push_back(toLower(nextTokenClear(results, ',')));
-    return true;
-}
-
-//--------------------------------------------------------------------------
-bool getChainHead(void) {
-    return false;  // callRPC("parity_chainStatus", "[]", false);
 }
 
 //--------------------------------------------------------------------------
@@ -626,7 +650,7 @@ blknum_t getLatestBlock_client(void) {
 CBlockProgress getBlockProgress(size_t which) {
     CBlockProgress ret;
     if (which & BP_CLIENT)
-        ret.client = (isNodeRunning() ? getLatestBlock_client() : NOPOS);
+        ret.client = getLatestBlock_client();
 
     if (which & BP_FINAL)
         ret.finalized = getLatestBlock_cache_final();
@@ -888,83 +912,7 @@ bool forEveryBlock(BLOCKVISITFUNC func, void* data, const string_q& block_list) 
 }
 
 //-------------------------------------------------------------------------
-bool forEveryBlockOnDisc(BLOCKVISITFUNC func, void* data, uint64_t start, uint64_t count, uint64_t skip) {
-    if (!func)
-        return false;
-
-    // Read every block from number start to start+count
-    for (uint64_t i = start; i < start + count; i = i + skip) {
-        CBlock block;
-        getBlock(block, i);
-        if (!(*func)(block, data))
-            return false;
-    }
-    return true;
-}
-
-//-------------------------------------------------------------------------
-bool forEveryTraceInTransaction(TRACEVISITFUNC func, void* data, const CTransaction& trans) {
-    if (!func)
-        return false;
-
-    CTraceArray traces;
-    getTraces(traces, trans.hash);
-    for (size_t i = 0; i < traces.size(); i++) {
-        CTrace trace = traces[i];
-        if (!(*func)(trace, data))
-            return false;
-    }
-
-    return true;
-}
-
-//-------------------------------------------------------------------------
-bool forEveryTraceInBlock(TRACEVISITFUNC func, void* data, const CBlock& block) {
-    for (size_t i = 0; i < block.transactions.size(); i++) {
-        if (!forEveryTraceInTransaction(func, data, block.transactions[i]))
-            return false;
-    }
-    return true;
-}
-
-//-------------------------------------------------------------------------
-bool forEveryLogInTransaction(LOGVISITFUNC func, void* data, const CTransaction& trans) {
-    if (!func)
-        return false;
-
-    for (size_t i = 0; i < trans.receipt.logs.size(); i++) {
-        CLogEntry log = trans.receipt.logs[i];
-        if (!(*func)(log, data))
-            return false;
-    }
-    return true;
-}
-
-//-------------------------------------------------------------------------
-bool forEveryLogInBlock(LOGVISITFUNC func, void* data, const CBlock& block) {
-    for (size_t i = 0; i < block.transactions.size(); i++) {
-        if (!forEveryLogInTransaction(func, data, block.transactions[i]))
-            return false;
-    }
-    return true;
-}
-
-//-------------------------------------------------------------------------
-bool forEveryTransactionInBlock(TRANSVISITFUNC func, void* data, const CBlock& block) {
-    if (!func)
-        return false;
-
-    for (size_t i = 0; i < block.transactions.size(); i++) {
-        CTransaction trans = block.transactions[i];
-        if (!(*func)(trans, data))
-            return false;
-    }
-
-    return true;
-}
-
-//-------------------------------------------------------------------------
-bool forEveryTransactionInList(TRANSVISITFUNC func, void* data, const string_q& trans_list) {
+bool forEveryTransaction(TRANSVISITFUNC func, void* data, const string_q& trans_list) {
     if (!func)
         return false;
 
@@ -1003,12 +951,11 @@ bool forEveryTransactionInList(TRANSVISITFUNC func, void* data, const string_q& 
             CBlock block;
             trans.pBlock = &block;
             if (isHash(trans.hash)) {
-                // Note: at this point, we are not fully formed, we have to ask the node for the receipt
-                getBlock(block, trans.blockNumber);
-                if (block.transactions.size() > trans.transactionIndex)
-                    trans.isError = block.transactions[trans.transactionIndex].isError;
+                // Note: at this point, we are not fully formed, we need the receipt and the timestamp
+                getBlock_light(block, trans.blockNumber);
+                getFullReceipt(&trans, true);
+                trans.timestamp = block.timestamp;
                 trans.receipt.pTrans = &trans;
-                getReceipt(trans.receipt, trans.getValueByName("hash"));
                 trans.finishParse();
             } else {
                 // If the transaction has no hash here, there was a problem. Let the caller know
@@ -1022,16 +969,42 @@ bool forEveryTransactionInList(TRANSVISITFUNC func, void* data, const string_q& 
 }
 
 //-------------------------------------------------------------------------
+void guardLiveTest(const string_q& path) {
+    static bool been_here = false;
+    if (!isLiveTest() || been_here)
+        return;
+    if (!contains(path, "mocked")) {
+        cerr << "You may only do a live test if your indexPath (" << path << ") contains the word 'mocked'." << endl;
+        cerr << "Quitting..." << endl;
+        quickQuitHandler(1);
+    }
+    been_here = true;
+    cerr << "Completing a live test using indexFolder: " << path << endl;
+    cerr << "Continue?";
+    getchar();
+    if (shouldQuit())
+        quickQuitHandler(1);
+}
+
+//-------------------------------------------------------------------------
 string_q getIndexPath(const string_q& _part) {
-    if (isLiveTest())
-        return configPath("mocked/addr_index/" + _part);
     string_q indexPath = getGlobalConfig()->getConfigStr("settings", "indexPath", "<not-set>");
-    if (indexPath == "<not-set>" || !folderExists(indexPath))
-        return getCachePath("addr_index/" + _part);
+    if (indexPath == "<not-set>") {
+        guardLiveTest(indexPath + _part);
+        return configPath("unchained/" + _part);
+    }
+    if (!folderExists(indexPath)) {
+        cerr << "Attempt to create customized indexPath (" << indexPath << ") failed." << endl;
+        cerr << "Please create the folder or adjust the setting by editing $CONFIG/trueBlocks.toml." << endl;
+        cerr << "Quitting...";
+        quickQuitHandler(1);
+    }
+
     indexPath += (!endsWith(indexPath, '/') ? "/" : "");
     if (!folderExists(indexPath)) {
         LOG_WARN("Index path '" + indexPath + "' not found.");
     }
+    guardLiveTest(indexPath + _part);
     return indexPath + _part;
 }
 
@@ -1124,29 +1097,29 @@ string_q exportPostamble(const CStringArray& errorsIn, const string_q& extra) {
     for (auto curlError : getCurlContext()->curlErrors)
         errors.push_back(substitute(substitute(curlError, "\"", ""), "\n", ""));
 
-    ostringstream errStrs;
+    ostringstream errStream;
     bool first = true;
     for (auto error : errors) {
         string_q msg = (isText ? STR_ERROR_MSG_TXT : STR_ERROR_MSG_JSON);
         if (!first) {
             if (isText)
-                errStrs << endl;
+                errStream << endl;
             else
-                errStrs << ", ";
+                errStream << ", ";
         }
-        errStrs << substitute(substitute(substitute(msg, "[MSG]", error), "{", cRed), "}", cOff);
+        errStream << substitute(substitute(substitute(msg, "[MSG]", error), "{", cRed), "}", cOff);
         first = false;
     }
 
     if (isText)
-        return errStrs.str();  // only errors are reported for text or csv
+        return errStream.str();  // only errors are reported for text or csv
     ASSERT(fmt == JSON1 || fmt == API1);
 
     ostringstream os;
     os << "]";  // finish the data array (or the error array)...
 
-    if (!errStrs.str().empty())
-        os << ", \"errors\": [\n" << errStrs.str() << "\n]";
+    if (!errStream.str().empty())
+        os << ", \"errors\": [\n" << errStream.str() << "\n]";
 
     if (fmt == JSON1)
         return os.str() + " }";
@@ -1261,19 +1234,32 @@ bool excludeTrace(const CTransaction* trans, size_t maxTraces) {
 }
 
 //-----------------------------------------------------------------------
-bool establishTsFile(const string_q& fn) {
-    if (fileExists(fn))
+bool establishTsFile(void) {
+    if (fileExists(tsIndex))
         return true;
 
+    establishFolder(indexFolder);
+
     string_q zipFile = configPath("ts.bin.gz");
-    if (fileExists(zipFile)) {  // first run since install? Let's try to get some timestamps
-        string_q cmd = "cd " + configPath("") + " ; gunzip " + zipFile;
-        string_q result = doCommand(cmd);
+    time_q zipDate = fileLastModifyDate(zipFile);
+    time_q tsDate = fileLastModifyDate(tsIndex);
+
+    if (zipDate > tsDate) {
+        ostringstream cmd;
+        cmd << "cd \"" << indexFolder << "\" ; ";
+        cmd << "cp \"" << zipFile << "\" . ; ";
+        cmd << "gunzip ts.bin.gz";
+        string_q result = doCommand(cmd.str());
         LOG_INFO(result);
-        ASSERT(!fileExists(zipFile));
-        ASSERT(fileExists(fn));
-        return !fileExists(zipFile) && fileExists(fn);
+        // The original zip file still exists
+        ASSERT(fileExists(zipFile));
+        // The new timestamp file exists
+        ASSERT(fileExists(tsIndex));
+        // The copy of the zip file does not exist
+        ASSERT(!fileExists(tsIndex + ".gz"));
+        return fileExists(tsIndex);
     }
+
     return false;
 }
 
@@ -1282,22 +1268,25 @@ bool freshenTimestamps(blknum_t minBlock) {
     if (isTestMode())
         return true;
 
-    string_q fn = configPath("ts.bin");
-    if (!establishTsFile(fn))
+    // LOG_INFO("Not test mode. minBlock: ", minBlock);
+    if (!establishTsFile())
         return false;
 
-    size_t nRecords = ((fileSize(fn) / sizeof(uint32_t)) / 2);
+    // LOG_INFO("Established ts file");
+    size_t nRecords = ((fileSize(tsIndex) / sizeof(uint32_t)) / 2);
     if (nRecords >= minBlock)
         return true;
 
-    if (fileExists(fn + ".lck")) {  // it's being updated elsewhere
-        LOG_ERR("Timestamp file (ts.bin) is locked. Cannot update.");
+    // LOG_INFO("Found ", nRecords, " records");
+    if (fileExists(tsIndex + ".lck")) {  // it's being updated elsewhere
+        LOG_ERR("Timestamp file ", tsIndex, " is locked. Cannot update.");
         return false;
     }
 
+    // LOG_INFO("Updating");
     CArchive file(WRITING_ARCHIVE);
-    if (!file.Lock(fn, modeWriteAppend, LOCK_NOWAIT)) {
-        LOG_ERR("Failed to open ts.bin");
+    if (!file.Lock(tsIndex, modeWriteAppend, LOCK_NOWAIT)) {
+        LOG_ERR("Failed to open ", tsIndex);
         return false;
     }
 
@@ -1317,7 +1306,9 @@ bool freshenTimestamps(blknum_t minBlock) {
         ostringstream post;
         post << " (" << block.timestamp << " - " << ts_2_Date(block.timestamp).Format(FMT_EXPORT) << ")"
              << "\r";
-        LOG_PROGRESS("Update timestamps ", block.blockNumber, minBlock, post.str());
+        ostringstream pre;
+        pre << "Updating " << (minBlock - block.blockNumber) << " timestamps ";
+        LOG_PROGRESS(pre.str(), block.blockNumber, minBlock, post.str());
     }
     cerr << "\r" << string_q(150, ' ') << "\r";
     cerr.flush();
@@ -1327,20 +1318,21 @@ bool freshenTimestamps(blknum_t minBlock) {
 }
 
 //-----------------------------------------------------------------------
-bool loadTimestampFile(uint32_t** theArray, size_t& cnt) {
+bool loadTimestamps(uint32_t** theArray, size_t& cnt) {
     static CMemMapFile file;
     if (file.is_open())
         file.close();
 
-    string_q fn = configPath("ts.bin");
-    if (!establishTsFile(fn))
+    if (!establishTsFile())
         return false;
 
-    cnt = ((fileSize(fn) / sizeof(uint32_t)) / 2);
+    // Order matters.
+    // User may call us with a NULL array pointer, but we still want to file 'cnt'
+    cnt = ((fileSize(tsIndex) / sizeof(uint32_t)) / 2);
     if (theArray == NULL)
-        return false;
+        return cnt;
 
-    file.open(configPath("ts.bin"));
+    file.open(tsIndex);
     if (file.isValid())
         *theArray = (uint32_t*)file.getData();  // NOLINT
 

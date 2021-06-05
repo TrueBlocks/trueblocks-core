@@ -1,8 +1,0 @@
-[settings]
-class = CPinataMetadata
-fields = string name|\
-    CKeyValueArray keyvalues
-includes = utillib.h
-cpp_includes =
-serializable = true
-equals = (name == it.name)

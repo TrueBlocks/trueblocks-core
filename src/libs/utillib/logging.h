@@ -1,7 +1,7 @@
 #pragma once
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -220,22 +220,6 @@ extern logger<log_policy_i>* eLogger;
 #define SEP8(a) LOG8(cTeal + string_q(10, '-') + (a) + string_q(10, '-') + cOff)
 #define LOG_PROGRESS(op, progress, goal, post)                                                                         \
     LOG_PROG((op), " ", padNum6T(uint64_t(progress)), " of ", padNum6T(uint64_t(goal)), (post))
-#define LOG_CALL(a)                                                                                                    \
-    { LOG4(bWhite, l_funcName, " ----> ", (isTestMode() ? substitute((a), getCachePath(""), "$CACHE/") : (a)), cOff); }
-#define LOG_TEST(a, b, is_default)                                                                                     \
-    {                                                                                                                  \
-        if (isTestMode() && !(is_default)) {                                                                           \
-            LOG_INFO((string_q(a) + ": "), (b));                                                                       \
-        }                                                                                                              \
-    }
-#define LOG_TEST_BOOL(a, b)                                                                                            \
-    {                                                                                                                  \
-        if ((b))                                                                                                       \
-            LOG_TEST((a), "true", false)                                                                               \
-    }
-#define LOG_MARKER(l)                                                                                                  \
-    LOG_INFO("\n");                                                                                                    \
-    LOG_INFO(string_q((l), '-'));
 #else
 #define LOG0(...)
 #define LOG1(...)
@@ -253,10 +237,42 @@ extern logger<log_policy_i>* eLogger;
 #define SEP4(...)
 #define SEP5(...)
 #define LOG_PROGRESS(...)
-#define LOG_CALL(a)
-#define LOG_TEST(a, b)
+#endif
+
+// #ifdef LOGGING_LEVEL_TEST Turn the on before include in individual files if needed
+#ifdef LOGGING_LEVEL_TEST
+#define LOG_TEST(a, b, is_default)                                                                                     \
+    {                                                                                                                  \
+        if (isTestMode() && !(is_default)) {                                                                           \
+            LOG_INFO((string_q(a) + ": "), (b));                                                                       \
+        }                                                                                                              \
+    }
+#define LOG_TEST_BOOL(a, b)                                                                                            \
+    {                                                                                                                  \
+        if ((b))                                                                                                       \
+            LOG_TEST((a), "true", false)                                                                               \
+    }
+#define LOG_TEST_LIST(a, b, is_default)                                                                                \
+    {                                                                                                                  \
+        if (isTestMode() && !(is_default)) {                                                                           \
+            LOG_INFO((a));                                                                                             \
+            for (size_t i = 0; i < min(size_t(4), (b).size()); i++) {                                                  \
+                ostringstream os;                                                                                      \
+                os << (b)[i];                                                                                          \
+                LOG_INFO("  " + (os.str()));                                                                           \
+            }                                                                                                          \
+            if ((b).size() > 4) {                                                                                      \
+                LOG_INFO("  more...");                                                                                 \
+            }                                                                                                          \
+        }                                                                                                              \
+    }
+#define LOG_TEST_CALL(a)                                                                                               \
+    { LOG4(bWhite, l_funcName, " ----> ", (isTestMode() ? substitute((a), getCachePath(""), "$CACHE/") : (a)), cOff); }
+#else
+#define LOG_TEST(a, b, is_default)
 #define LOG_TEST_BOOL(a, b)
-#define LOG_MARKER(l)
+#define LOG_TEST_LIST(a, b, is_default)
+#define LOG_TEST_CALL(a)
 #endif
 
 // The LOG parts of these routines disappear if turned off, but they still do their work because of the returns
@@ -287,14 +303,6 @@ extern bool silenceExit;
         return false;                                                                                                  \
     }
 
-#define EXIT_MSG(a, b)                                                                                                 \
-    {                                                                                                                  \
-        if (!silenceExit)                                                                                              \
-            LOG4(_logExit(l_funcName));                                                                                \
-        cerr << (a);                                                                                                   \
-        return (b);                                                                                                    \
-    }
-
 #define EXIT_NOMSG(b)                                                                                                  \
     {                                                                                                                  \
         if (!silenceExit)                                                                                              \
@@ -307,26 +315,4 @@ extern bool silenceExit;
         if (!silenceExit)                                                                                              \
             LOG4(_logExit(l_funcName));                                                                                \
         return;                                                                                                        \
-    }
-
-#define ENTER8(a)                                                                                                      \
-    {                                                                                                                  \
-        if (!silenceEnter)                                                                                             \
-            LOG8(_logEnter(a));                                                                                        \
-    }                                                                                                                  \
-    string_q l_funcName = (a);
-
-#define EXIT_MSG8(a, b)                                                                                                \
-    {                                                                                                                  \
-        if (!silenceExit)                                                                                              \
-            LOG8(_logExit(l_funcName));                                                                                \
-        cerr << a;                                                                                                     \
-        return (b);                                                                                                    \
-    }
-
-#define EXIT_NOMSG8(b)                                                                                                 \
-    {                                                                                                                  \
-        if (!silenceExit)                                                                                              \
-            LOG8(_logExit(l_funcName));                                                                                \
-        return (b);                                                                                                    \
     }

@@ -1,3 +1,0 @@
-"address","decimals"
-"0xd26114cd6ee289accf82350c8d8487fedb8a0c07","18"
-"0xb9e7f8568e08d5659f5d29c4997173d84cdf2607","18"

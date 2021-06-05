@@ -2,6 +2,8 @@
 class = CMeasure
 fields = string git_hash|\
         string date|\
+        string machine|\
+        string node|\
         string epoch|\
         string group|\
         string cmd|\
@@ -10,4 +12,4 @@ fields = string git_hash|\
         uint64 nPassed|\
         double totSecs
 includes = etherlib.h
-display_str = git_hash, date, epoch, group, cmd, type, nTests, nPassed, totSecs, avgSecs
+display_str = git_hash, date, machine, node, epoch, group, cmd, type, nTests, nPassed, totSecs, avgSecs

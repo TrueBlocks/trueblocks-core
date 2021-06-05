@@ -1,22 +1,22 @@
 pinMan argc: 2 [1:--help] 
 pinMan --help 
 
-  Usage:    pinMan [-a|-p|-u|-i|-v|-h] mode  
-  Purpose:  Report on and manage the pinned appearance index chunks and associated bloom filters.
+  Usage:    pinMan [-l|-i|-k|-p|-v|-h]  
+  Purpose:  Manage pinned index of appearances and associated bloom filters.
 
   Where:  
-	mode                  the source from which to pin, unpin, or display the index hashes, one of [local*|remote|onchain] (required)
-	-a  (--hash)          display the hash instead of contents of manifest
-	-p  (--pin <str>)     pin items either locally or remotely ('all' to all items in a folder)
-	-u  (--unpin <str>)   unpin previously pinned items give a hash, a filename, or 'all'
-	-i  (--init)          initialize the TrueBlocks appearance index by downloading the bloom filters
+	-l  (--list)          list the index and bloom filter hashes from local manifest or pinning service
+	-i  (--init)          initialize local index by downloading bloom filters from pinning service
+	-k  (--init_all)      initialize local index by downloading both bloom filters and index chunks
+	-p  (--pin_locally)   pin all local files in the index to an IPFS store (requires IPFS)
 
 	#### Hidden options
-	-l  (--license)       show the current pinata license information
+	-s  (--sleep <double>)the number of seconds to sleep between requests during init (default .25)
+	-r  (--remote)        applicable only to --list mode, recover the manifest from pinning service
 	#### Hidden options
 
 	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
-	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
+	-v  (--verbose)       set verbose level (optional level defaults to 1)
 	-h  (--help)          display this help screen
 
   Powered by TrueBlocks

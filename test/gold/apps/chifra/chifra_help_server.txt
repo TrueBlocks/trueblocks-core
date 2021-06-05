@@ -1,10 +1,7 @@
 chifra argc: 3 [1:serve] [2:--help] 
 chifra serve --help 
-TIME ~ CLOCK - <INFO>  : mode: serve
-Usage of blaze:
+Usage of flame:
   -port string
     	specify the server's port (default ":8080")
-  -scrape
-    	enable block scraper mode
   -verbose int
-    	verbose level (between 0 and 10 inclusive)
+    	set verbose level (optional level defaults to 1)

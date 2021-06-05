@@ -3,9 +3,10 @@ cacheStatus monitors
 {
   "client_version": "Client version",
   "client_ids": "chainId: 1 networkId: 1",
-  "trueblocks_version": "GHC-TrueBlocks//0.8.4-alpha--git-hash---git-ts-",
+  "trueblocks_version": "GHC-TrueBlocks//0.9.4-alpha--git-hash---git-ts-",
   "rpc_provider": "--providers--",
   "balance_provider": "--providers--",
+  "config_path": "--paths--",
   "cache_path": "--paths--",
   "index_path": "--paths--",
   "host": "--hostname-- (--username--)",
@@ -13,7 +14,6 @@ cacheStatus monitors
   "is_archive": true,
   "is_tracing": true,
   "has_eskey": true,
-  "has_pinkey": true,
   "caches": [
     {
       "addrs": [

@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -11,11 +11,12 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 /*
- * This file was generated with makeClass. Edit only those parts of the code inside
- * of 'EXISTING_CODE' tags.
+ * Parts of this file were generated with makeClass --run. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
  */
 #include "pricequote.h"
 #include "pricesource.h"
+#include "reconciliation.h"
 
 namespace qblocks {
 
@@ -296,60 +297,40 @@ uint64_t indexFromTimeStamp(const CPriceQuoteArray& quotes, timestamp_t ts) {
 }
 
 //-----------------------------------------------------------------------
-static string_q getWeiQuote(const CPriceQuoteArray& quotes, timestamp_t ts, biguint_t weiIn) {
+static string_q getWeiQuote(const CPriceQuoteArray& quotes, const timestamp_t& ts, const wei_t& weiIn,
+                            uint64_t decimals) {
     uint64_t index = indexFromTimeStamp(quotes, ts);
     double price = quotes[index].close * 100.0;
-    weiIn *= ((uint64_t)price);
-    weiIn /= 100;
-    return wei_2_Ether(bnu_2_Str(weiIn));
+    wei_t wei = weiIn;
+    wei *= ((uint64_t)price);
+    wei /= 100;
+    return wei_2_Ether(wei, decimals);
 }
 
 //-----------------------------------------------------------------------
-string_q wei_2_Dollars(timestamp_t ts, biguint_t weiIn) {
+string_q wei_2_Dollars(const timestamp_t& ts, const wei_t& weiIn, uint64_t decimals) {
     if (weiIn == 0)
         return "";
 
     // TODO(tjayrush): global data
     static CPriceQuoteArray quotes;
     if (quotes.size())  // leave early if we can
-        return getWeiQuote(quotes, ts, weiIn);
+        return getWeiQuote(quotes, ts, weiIn, decimals);
 
     {  // give ourselves a frame to make the mutex
         mutex aMutex;
         lock_guard<mutex> lock(aMutex);
         if (quotes.size())  // leave early if we can (another thread may have filled the array while we were waiting
-            return getWeiQuote(quotes, ts, weiIn);
+            return getWeiQuote(quotes, ts, weiIn, decimals);
 
         string_q message;
         CPriceSource source(STR_PRICE_URL, "USDT_ETH", parsePoloniex);
-        if (!loadPriceData(source, quotes, false, message, 1)) {
+        if (!loadPriceData(source, quotes, false, message)) {
             cerr << "Cannot load price data. Quitting..." << endl;
             quickQuitHandler(EXIT_FAILURE);
         }
     }
-    return getWeiQuote(quotes, ts, weiIn);
-}
-
-//-----------------------------------------------------------------------
-string_q insertCommas(const string_q& dIn) {
-    string_q d = dIn;
-    reverse(d);
-    string_q ret;
-    while (!d.empty()) {
-        string_q three = extract(d, 0, 3);
-        d = extract(d, 3);
-        reverse(three);
-        ret = (d.empty() ? "" : ",") + three + ret;
-    }
-    return ret;
-}
-
-//-----------------------------------------------------------------------
-string_q displayDollars(timestamp_t ts, biguint_t weiIn) {
-    string_q ret = wei_2_Dollars(ts, weiIn);
-    string_q d = nextTokenClear(ret, '.');
-    d = insertCommas(d);
-    return (ret.empty() ? "0.00" : d + "." + extract(ret, 0, 2));
+    return getWeiQuote(quotes, ts, weiIn, decimals);
 }
 // EXISTING_CODE
 }  // namespace qblocks

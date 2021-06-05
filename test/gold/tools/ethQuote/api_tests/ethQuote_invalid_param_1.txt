@@ -1,5 +1,0 @@
-{
-  "errors": [
-    "chifra quotes - Invalid option: --junk"
-  ]
-}

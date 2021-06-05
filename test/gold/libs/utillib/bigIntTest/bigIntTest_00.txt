@@ -135,14 +135,14 @@ Test 131 [--biguint_t(1).bitLength()--]: 1 expected: 1 ✓
 Test 132 [--biguint_t(4095).bitLength()--]: 12 expected: 12 ✓
 Test 133 [--biguint_t(4096).bitLength()--]: 13 expected: 13 ✓
 Test 134 [--str_2_BigUint(string_q("5000000000")).bitLength()--]: 33 expected: 33 ✓
-Test 135 [--bbdb.getBit(4)--]: 1 expected: 1 ✓
-Test 136 [--bbdb.getBit(3)--]: 1 expected: 1 ✓
-Test 137 [--bbdb.getBit(2)--]: 0 expected: 0 ✓
-Test 138 [--bbdb.getBit(1)--]: 0 expected: 0 ✓
-Test 139 [--bbdb.getBit(0)--]: 1 expected: 1 ✓
-Test 140 [--bbdb.bitLength()--]: 5 expected: 5 ✓
-Test 141 [--bbdb--]: 4294967321 expected: 4294967321 ✓
-Test 142 [--check(bbdb)--]: 4294967321 expected: 2147483673 X
+Test 135 [--bbbb.getBit(4)--]: 1 expected: 1 ✓
+Test 136 [--bbbb.getBit(3)--]: 1 expected: 1 ✓
+Test 137 [--bbbb.getBit(2)--]: 0 expected: 0 ✓
+Test 138 [--bbbb.getBit(1)--]: 0 expected: 0 ✓
+Test 139 [--bbbb.getBit(0)--]: 1 expected: 1 ✓
+Test 140 [--bbbb.bitLength()--]: 5 expected: 5 ✓
+Test 141 [--bbbb--]: 4294967321 expected: 4294967321 ✓
+Test 142 [--check(bbbb)--]: 4294967321 expected: 2147483673 X
 Test 143 [--p1--]: 15 expected: 15 ✓
 Test 144 [--p2--]: -15 expected: -15 ✓
 Test 145 [--(num.divide(denom, quotient), check(quotient))--]: 0 expected: 2 X

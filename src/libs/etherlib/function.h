@@ -1,7 +1,7 @@
 #pragma once
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -12,8 +12,8 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 /*
- * This file was generated with makeClass. Edit only those parts of the code inside
- * of 'EXISTING_CODE' tags.
+ * Parts of this file were generated with makeClass --run. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
  */
 #include "utillib.h"
 #include "parameter.h"
@@ -28,6 +28,7 @@ class CFunction : public CBaseNode {
   public:
     string_q name;
     string_q type;
+    string_q abi_source;
     bool anonymous;
     bool constant;
     string_q stateMutability;
@@ -36,6 +37,8 @@ class CFunction : public CBaseNode {
     string_q message;
     CParameterArray inputs;
     CParameterArray outputs;
+    Value inputs_dict;
+    Value outputs_dict;
 
   public:
     CFunction(void);
@@ -56,7 +59,7 @@ class CFunction : public CBaseNode {
     friend class CTransaction;
     friend class CLogEntry;
     friend class CTrace;
-    string_q compressed(void) const;
+    string_q compressed(const string_q& def) const;
     bool isDefault(const CBaseNode* obj) const override;
     // EXISTING_CODE
     bool operator==(const CFunction& it) const;
@@ -112,6 +115,7 @@ inline void CFunction::initialize(void) {
 
     name = "";
     type = "";
+    abi_source = "";
     anonymous = false;
     constant = false;
     stateMutability = "";
@@ -120,6 +124,8 @@ inline void CFunction::initialize(void) {
     message = "";
     inputs.clear();
     outputs.clear();
+    inputs_dict.clear();
+    outputs_dict.clear();
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -132,6 +138,7 @@ inline void CFunction::duplicate(const CFunction& fu) {
 
     name = fu.name;
     type = fu.type;
+    abi_source = fu.abi_source;
     anonymous = fu.anonymous;
     constant = fu.constant;
     stateMutability = fu.stateMutability;
@@ -140,6 +147,8 @@ inline void CFunction::duplicate(const CFunction& fu) {
     message = fu.message;
     inputs = fu.inputs;
     outputs = fu.outputs;
+    inputs_dict = fu.inputs_dict;
+    outputs_dict = fu.outputs_dict;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -186,6 +195,13 @@ extern const char* STR_DISPLAY_FUNCTION;
 //---------------------------------------------------------------------------
 inline bool sortByFunctionName(const CFunction& f1, const CFunction& f2) {
     return f1.name < f2.name;
+}
+inline bool useDict(void) {
+    static uint64_t dict_mode = NOPOS;
+    if (dict_mode == NOPOS) {
+        dict_mode = !(getEnvStr("DICT_MODE") == "false");  // defaults to true
+    }
+    return dict_mode;
 }
 // EXISTING_CODE
 }  // namespace qblocks

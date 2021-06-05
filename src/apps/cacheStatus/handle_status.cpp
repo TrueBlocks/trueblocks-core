@@ -1,52 +1,42 @@
 /*-------------------------------------------------------------------------
  * This source code is confidential proprietary information which is
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  * All Rights Reserved
  *------------------------------------------------------------------------*/
 #include "options.h"
+#include "statusterse.h"
 
-inline string_q pathName(const string_q& str, const string_q& path = "") {
-    return (isTestMode() ? str + "Path" : (path.empty() ? getCachePath(str + "/") : path));
-}
+extern const char* STR_TERSE_REPORT;
+extern string_q pathName(const string_q& str, const string_q& path = "");
 //--------------------------------------------------------------------------------
 bool COptions::handle_status(ostream& os) {
     ENTER("handle_status");
 
     if (terse) {
-        const char* STR_TERSE_REPORT =
-            "client=     [{CLIENT_VER}][{MODES1}]\n"
-            "trueblocks= [{TB_VER}][{MODES2}]\n"
-            "rpcProvider=[{PROVIDER}]\n"
-            "cachePath=  [{CACHE_PATH}]\n"
-            "indexPath=  [{INDEX_PATH}]\n"
-            "progress=   [{PROGRESS}]";
+        string_q fmt = STR_TERSE_REPORT;
+        replaceAll(fmt, "[{TIME}]",
+                   isTestMode() ? "--TIME--" : substitute(substitute(Now().Format(FMT_EXPORT), "T", " "), "-", "/"));
 
-        string_q modes1;
-        modes1 += string_q(status.is_testing ? "testing|" : "");
-        modes1 += string_q(status.is_archive ? "" : "not ") + "archive|";
-        modes1 += string_q(status.is_tracing ? "" : "not ") + "tracing|";
-        modes1 += string_q(status.is_docker ? "docker|" : "");
-        modes1 = (modes1.empty() ? "" : " (" + substitute(trim(modes1, '|'), "|", ", ") + ")");
-        string_q modes2;
-        modes2 += string_q(status.has_eskey ? "" : "no ") + "eskey|";
-        modes2 += string_q(status.has_pinkey ? "" : "no ") + "pinkey|";
-        modes2 = (modes2.empty() ? "" : " (" + substitute(trim(modes2, '|'), "|", ", ") + ")");
-        string_q report = STR_TERSE_REPORT;
-        replaceAll(report, "[{MODES1}]", modes1);
-        replaceAll(report, "[{MODES2}]", modes2);
-        replaceAll(report, "[{CLIENT_VER}]",
-                   (status.client_version.empty() ? "--no rpc server--" : status.client_version));
-        replaceAll(report, "[{TB_VER}]", status.trueblocks_version);
-        replaceAll(report, "[{CACHE_PATH}]", status.cache_path);
-        replaceAll(report, "[{INDEX_PATH}]", status.index_path);
-        replaceAll(report, "[{PROVIDER}]", status.rpc_provider);
-        ostringstream p;
-        CBlockProgress prog = getBlockProgress();
-        p << "[" << prog.unripe << ", " << prog.staging << ", " << prog.finalized << ", " << prog.client << "]";
-        replaceAll(report, "[{PROGRESS}]", p.str());
-        os << report << endl;
+        CStatusTerse st = status;
+        bool isText = expContext().exportFmt != JSON1 && expContext().exportFmt != API1;
+        if (!isText) {
+            fmt = "";
+            manageFields("CStatusTerse:modes1,modes2", FLD_HIDE);
+            manageFields("CStatus:client_ids,balance_provider,host,is_api,is_scraping,caches", FLD_HIDE);
+        }
+        os << st.Format(fmt) << endl;
         return true;
     }
+
+    establishFolder(getCachePath("abis/"));
+    establishFolder(getCachePath("blocks/"));
+    establishFolder(getCachePath("monitors/"));
+    establishFolder(getCachePath("names/"));
+    establishFolder(getCachePath("prices/"));
+    establishFolder(getCachePath("slurps/"));
+    establishFolder(getCachePath("tmp/"));
+    establishFolder(getCachePath("traces/"));
+    establishFolder(getCachePath("txs/"));
 
     CIndexCache index;
     if (contains(mode, "|index|")) {
@@ -59,8 +49,8 @@ bool COptions::handle_status(ostream& os) {
             index.path = pathName("index", thePath);
             forEveryFileInFolder(thePath, countFiles, &index);
             LOG8("Counted files");
-            CItemCounter counter(this, start, end);
-            loadTimestampFile(&counter.ts_array, counter.ts_cnt);
+            CItemCounter counter(this);
+            loadTimestamps(&counter.tsMemMap, counter.tsCnt);
             index.path = pathName("index", indexFolder_finalized);
             counter.cachePtr = &index;
             counter.indexArray = &index.items;
@@ -91,7 +81,7 @@ bool COptions::handle_status(ostream& os) {
             LOG4("counting monitors");
             forEveryFileInFolder(thePath, countFiles, &monitors);
             LOG4("done counting monitors");
-            CItemCounter counter(this, start, end);
+            CItemCounter counter(this);
             counter.cachePtr = &monitors;
             counter.monitorArray = &monitors.items;
             LOG4("forEvery monitors");
@@ -118,7 +108,7 @@ bool COptions::handle_status(ostream& os) {
             expContext().types[names.type] = names.getRuntimeClass();
             names.path = pathName("names");
             forEveryFileInFolder(thePath, countFiles, &names);
-            CItemCounter counter(this, start, end);
+            CItemCounter counter(this);
             counter.cachePtr = &names;
             counter.monitorArray = &names.items;
             if (details) {
@@ -143,7 +133,7 @@ bool COptions::handle_status(ostream& os) {
             abi_cache.path = pathName("abis");
             forEveryFileInFolder(thePath, countFiles, &abi_cache);
             if (details) {
-                CItemCounter counter(this, start, end);
+                CItemCounter counter(this);
                 counter.cachePtr = &abi_cache;
                 counter.abiArray = &abi_cache.items;
                 forEveryFileInFolder(thePath, noteABI, &counter);
@@ -214,7 +204,7 @@ bool COptions::handle_status(ostream& os) {
             expContext().types[slurps.type] = slurps.getRuntimeClass();
             slurps.path = pathName("slurps");
             forEveryFileInFolder(thePath, countFiles, &slurps);
-            CItemCounter counter(this, start, end);
+            CItemCounter counter(this);
             counter.cachePtr = &slurps;
             counter.monitorArray = &slurps.items;
             if (details) {
@@ -240,7 +230,7 @@ bool COptions::handle_status(ostream& os) {
             prices.path = pathName("prices");
             forEveryFileInFolder(thePath, countFiles, &prices);
             if (details) {
-                CItemCounter counter(this, start, end);
+                CItemCounter counter(this);
                 counter.cachePtr = &prices;
                 counter.priceArray = &prices.items;
                 forEveryFileInFolder(thePath, notePrice, &counter);
@@ -423,6 +413,12 @@ bool noteIndex(const string_q& path, void* data) {
         return forEveryFileInFolder(path + "*", noteIndex, data);
 
     } else {
+        if (isTestMode() && !contains(path, "000000000")) {
+            // In some cases, the installation may have no index chunks
+            // so we report only on block zero (which will be there always)
+            return false;
+        }
+
         CItemCounter* counter = reinterpret_cast<CItemCounter*>(data);
 
         timestamp_t unused;
@@ -432,9 +428,9 @@ bool noteIndex(const string_q& path, void* data) {
             LOG_PROGRESS("Scanning", ++counter->fileRange.first, counter->fileRange.second, "\r");
         }
 
-        if (last < counter->scanRange.first)
+        if (last < counter->options->scanRange.first)
             return true;
-        if (first > counter->scanRange.second)
+        if (first > counter->options->scanRange.second)
             return false;  //! contains(path, "finalized");
         if (!endsWith(path, ".bin"))
             return true;
@@ -469,10 +465,10 @@ bool noteIndex(const string_q& path, void* data) {
             aci.indexSizeBytes = (uint32_t)fileSize(path);
         }
 
-        if (counter->ts_array) {
-            if (aci.firstAppearance < counter->ts_cnt && aci.latestAppearance < counter->ts_cnt) {
-                aci.firstTs = (timestamp_t)counter->ts_array[(aci.firstAppearance * 2) + 1];
-                aci.latestTs = (timestamp_t)counter->ts_array[(aci.latestAppearance * 2) + 1];
+        if (counter->tsMemMap) {
+            if (aci.firstAppearance < counter->tsCnt && aci.latestAppearance < counter->tsCnt) {
+                aci.firstTs = (timestamp_t)counter->tsMemMap[(aci.firstAppearance * 2) + 1];
+                aci.latestTs = (timestamp_t)counter->tsMemMap[(aci.latestAppearance * 2) + 1];
             } else {
                 aci.firstTs = (timestamp_t)0;
                 aci.latestTs = (timestamp_t)0;
@@ -504,12 +500,12 @@ bool noteABI(const string_q& path, void* data) {
         abii.address = "0x" + nextTokenClear(addr, '.');
         CAccountName n;
         counter->options->getNamedAccount(n, abii.address);
-        if (isTestMode())
-            abii.address = "---address---";
-        abii.name = n.name;
         if (isTestMode()) {
+            abii.address = "---address---";
+            abii.name = "--name--";
             abii.nFunctions = abii.nEvents = abii.nOther = abii.sizeInBytes = 36963;
         } else {
+            abii.name = n.name;
             counter->options->abi_spec = CAbi();  // reset
             loadAbiFile(path, &counter->options->abi_spec);
             abii.nFunctions = counter->options->abi_spec.nFunctions();
@@ -587,3 +583,17 @@ void getIndexMetrics(const string_q& path, uint32_t& nAppearences, uint32_t& nAd
     nAddresses = header.nAddrs;
     nAppearences = header.nRows;
 }
+
+//--------------------------------------------------------------------------------
+string_q pathName(const string_q& str, const string_q& path) {
+    return (isTestMode() ? str + "Path" : (path.empty() ? getCachePath(str + "/") : path));
+}
+
+//--------------------------------------------------------------------------------
+const char* STR_TERSE_REPORT =
+    "client: [{CLIENT_VERSION}][{MODES1}]\n"
+    "[{TIME}] trueblocks: [{TRUEBLOCKS_VERSION}][{MODES2}]\n"
+    "[{TIME}] configPath: [{CONFIG_PATH}]\n"
+    "[{TIME}] cachePath: [{CACHE_PATH}]\n"
+    "[{TIME}] indexPath: [{INDEX_PATH}]\n"
+    "[{TIME}] rpcProvider: [{RPC_PROVIDER}]";

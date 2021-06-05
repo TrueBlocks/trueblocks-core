@@ -1,7 +1,7 @@
 #pragma once
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -30,6 +30,7 @@ using hash_t = string_q;
 using ipfshash_t = string_q;
 using wei_t = biguint_t;
 using topic_t = string_q;
+using fourbyte_t = string_q;
 using uchar_t = unsigned char;
 using addrbytes_t = vector<uint8_t>;
 using hashbytes_t = vector<uint8_t>;
@@ -44,15 +45,18 @@ using CBigUintArray = vector<biguint_t>;
 using CBigIntArray = vector<bigint_t>;
 using CAddressArray = vector<address_t>;
 using CTopicArray = vector<topic_t>;
+using CFourbyteArray = vector<fourbyte_t>;
 
 //-------------------------------------------------------------------------
 using CAddressWeiMap = map<address_t, wei_t>;
 using CStringBoolMap = map<string_q, bool>;
 using CBlockAddressMap = map<uint32_t, address_t>;
+using CUintBoolMap = map<uint32_t, bool>;
 using CAddressUintMap = map<address_t, uint64_t>;
 using CAddressBoolMap = map<address_t, bool>;
 using CErrorStringMap = map<size_t, string_q>;
 using CIndexHashMap = map<blknum_t, string_q>;
+using CIndexStringMap = CIndexHashMap;
 
 //-------------------------------------------------------------------------
 extern bool str_2_Bool(const string_q& str);
@@ -70,6 +74,9 @@ extern biguint_t str_2_Wei(const string_q& str);
 inline topic_t str_2_Topic(const string_q& str) {
     return str;
 }
+inline fourbyte_t str_2_Fourbyte(const string_q& str) {
+    return str;
+}
 extern timestamp_t str_2_Ts(const string_q& str);
 #define str_2_Enum(en, str) (en) str_2_Uint(str)
 
@@ -80,11 +87,9 @@ extern string_q int_2_Str(int64_t num);
 extern string_q uint_2_Str(uint64_t num);
 extern string_q gas_2_Str(const gas_t& gas);
 extern string_q double_2_Str(double f, size_t nDecimals = NOPOS);
-extern string_q bni_2_Str(const bigint_t& bn);
 extern string_q bnu_2_Str(const biguint_t& bu);
 extern string_q addr_2_Str(const address_t& addr);
 extern string_q hash_2_Str(const hash_t& hash);
-extern string_q wei_2_Str(const wei_t& wei);
 inline string_q topic_2_Str(const topic_t& topic) {
     return topic;
 }
@@ -102,8 +107,7 @@ extern address_t bytes_2_Addr(uint8_t const bytes[20]);
 extern string_q chr_2_HexStr(const string_q& str);
 extern string_q bnu_2_Hex(const biguint_t& bu);
 extern string_q uint_2_Hex(uint64_t num);
-extern string_q wei_2_Ether(const string_q& str);
-extern string_q wei_2_Ether(biguint_t val);
+extern string_q str_2_Ether(const string_q& str, uint64_t decimals);
 extern string_q byte_2_Bits(uint8_t ch);
 
 //--------------------------------------------------------------------
@@ -124,6 +128,12 @@ extern bool isDate(const string_q& date);
 extern bool isTimestamp(const string_q& ts);
 extern bool isHash(const hash_t& hashIn);
 extern bool isUnsigned(const string_q& in);
+inline bool isTopic(const string_q& topic) {
+    return isHash(topic);
+};
+inline bool isFourbyte(const string_q& fourbyte) {
+    return (fourbyte.length() == 10 && isHexStr(fourbyte));
+};
 
 //--------------------------------------------------------------------
 extern bool rangesIntersect(const blkrange_t& r1, const blkrange_t& r2);
@@ -170,6 +180,20 @@ inline bool isLiveTest(void) {
     if (test_mode == NOPOS)
         test_mode = getEnvStr("LIVE_TEST") == "true";
     return test_mode;
+}
+
+//-----------------------------------------------------------------------
+inline string_q insertCommas(const string_q& dIn) {
+    string_q d = dIn;
+    reverse(d);
+    string_q ret;
+    while (!d.empty()) {
+        string_q three = extract(d, 0, 3);
+        d = extract(d, 3);
+        reverse(three);
+        ret = (d.empty() ? "" : ",") + three + ret;
+    }
+    return ret;
 }
 
 }  // namespace qblocks

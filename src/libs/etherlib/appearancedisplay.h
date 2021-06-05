@@ -1,7 +1,7 @@
 #pragma once
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -12,8 +12,8 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 /*
- * This file was generated with makeClass. Edit only those parts of the code inside
- * of 'EXISTING_CODE' tags.
+ * Parts of this file were generated with makeClass --run. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
  */
 #include "etherlib.h"
 
@@ -23,9 +23,8 @@ namespace qblocks {
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class CAppearanceDisplay : public CBaseNode {
+class CAppearanceDisplay : public CAccountName {
   public:
-    address_t address;
     blknum_t blockNumber;
     blknum_t transactionIndex;
 
@@ -38,7 +37,10 @@ class CAppearanceDisplay : public CBaseNode {
     DECLARE_NODE(CAppearanceDisplay);
 
     // EXISTING_CODE
-    CAppearanceDisplay(address_t a, blknum_t b, blknum_t t) : address(a), blockNumber(b), transactionIndex(t) {
+    CAppearanceDisplay(const address_t& a, const string_q& n, blknum_t b, blknum_t t)
+        : blockNumber(b), transactionIndex(t) {
+        name = n;
+        address = a;
     }
     // EXISTING_CODE
     bool operator==(const CAppearanceDisplay& it) const;
@@ -90,9 +92,8 @@ inline void CAppearanceDisplay::clear(void) {
 
 //--------------------------------------------------------------------------
 inline void CAppearanceDisplay::initialize(void) {
-    CBaseNode::initialize();
+    CAccountName::initialize();
 
-    address = "";
     blockNumber = 0;
     transactionIndex = 0;
 
@@ -103,9 +104,8 @@ inline void CAppearanceDisplay::initialize(void) {
 //--------------------------------------------------------------------------
 inline void CAppearanceDisplay::duplicate(const CAppearanceDisplay& ap) {
     clear();
-    CBaseNode::duplicate(ap);
+    CAccountName::duplicate(ap);
 
-    address = ap.address;
     blockNumber = ap.blockNumber;
     transactionIndex = ap.transactionIndex;
 

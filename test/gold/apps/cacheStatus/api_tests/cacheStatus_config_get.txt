@@ -2,7 +2,7 @@
 {
   "files": [
     {
-      "name": "quickBlocks.toml",
+      "name": "trueBlocks.toml",
       "sections": [
         {
           "section": "Providers",
@@ -139,14 +139,6 @@
               "tip": "",
               "required": false,
               "read_only": false
-            },
-            {
-              "name": "whereblock",
-              "value": "--where block--",
-              "type": "display string",
-              "tip": "",
-              "required": false,
-              "read_only": false
             }
           ]
         },
@@ -177,7 +169,7 @@
               "name": "n_blocks",
               "value": "--n Blocks--",
               "type": "uint",
-              "tip": "number of blocks to process per scrape (> 50)",
+              "tip": "number of blocks to process per invocation of blaze (> 50)",
               "required": true,
               "read_only": false
             },

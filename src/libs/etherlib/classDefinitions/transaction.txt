@@ -14,16 +14,17 @@ fields = hash hash|\
         gas gas|\
         gas gasPrice|\
         string input|\
-        uint64 isError|\
-        uint64 hasToken|\
+        uint8 isError|\
+        uint8 hasToken|\
+        uint8 cachebits=CB_NONE|\
+        uint8 reserved2|\
         CReceipt receipt|\
         CTraceArray traces|\
         CFunction articulatedTx|\
-        CReconciliationArray reconciliations (nowrite)|\
         string compressedTx (nowrite)|\
-        CReconciliationOutputArray statements (nowrite)|\
+        CReconciliationArray statements (nowrite)|\
         sbool finalized (nowrite)
-includes = utillib.h|abi.h|receipt.h|trace.h|reconciliation.h|reconciliationoutput.h|ethstate.h
+includes = utillib.h|abi.h|receipt.h|trace.h|reconciliation.h|ethstate.h
 cpp_includes = etherlib.h
 scope = extern
 serializable = true

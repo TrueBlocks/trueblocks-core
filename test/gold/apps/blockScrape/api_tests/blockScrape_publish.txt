@@ -1,16 +1,1 @@
-{
-  "fileName": "initial-manifest.json",
-  "indexFormat": "Qmart6XP9XjL43p72PGR93QKytbK8jWWcMguhFgxATTya2",
-  "bloomFormat": "QmNhPk39DUFoEdhUmtGARqiFECUHeghyeryxZM9kyRxzHD",
-  "prevHash": "0x0",
-  "newBlockRange": "000000000-000000000",
-  "newPins": [
-    {
-      "fileName": "000000000-000000000",
-      "bloomHash": "QmPQEgUm7nzQuW9HYyWp5Ff3aoUwg2rsxDngyuyddJTvrv",
-      "indexHash": "QmZ5Atm8Z7aFLz2EycK4pVMHuH4y3PDGspuFejnE9fx2i5"
-    }
-  ],
-  "prevBlockRange": "",
-  "prevPins": []
-}{ "status": "stopped" }
+{ "errors": [ "chifra scrape - Invalid option: --publish" ] }

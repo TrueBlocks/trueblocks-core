@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -38,15 +38,11 @@ string_q getCachePath(const string_q& _part) {
             return substitute((g_cachePath + _part), "//", "/");
 
         // Otherwise, fill the value
-        CToml toml(configPath("quickBlocks.toml"));
+        CToml toml(configPath("trueBlocks.toml"));
         string_q path = toml.getConfigStr("settings", "cachePath", "<NOT_SET>");
         if (path == "<NOT_SET>") {
-            // May have been an old installation, so try to upgrade
-            path = toml.getConfigStr("settings", "blockCachePath", "<NOT_SET>");
-            if (path == "<NOT_SET>")
-                path = configPath("cache/");
+            path = configPath("cache/");
             toml.setConfigStr("settings", "cachePath", path);
-            toml.deleteKey("settings", "blockCachePath");
             toml.writeFile();
         }
 
@@ -69,9 +65,9 @@ string_q getCachePath(const string_q& _part) {
 }
 
 //-----------------------------------------------------------------------
-bool loadPrefunds(const string_q& prefundFile, COptionsBase& options) {
+bool loadPrefunds(const string_q& prefundFile) {
     // start with a clean slate
-    options.prefundWeiMap.clear();
+    expContext().prefundMap.clear();
 
     // Note: we don't need to check the dates to see if the prefunds.txt file has been updated
     // since it will never change. In that sense, the binary file is always right once it's created.
@@ -86,16 +82,16 @@ bool loadPrefunds(const string_q& prefundFile, COptionsBase& options) {
             if (!first && !startsWith(line, '#')) {
                 CStringArray parts;
                 explode(parts, line, '\t');
-                options.prefundWeiMap[toLower(parts[0])] = str_2_Wei(parts[1]);
+                expContext().prefundMap[toLower(parts[0])] = str_2_Wei(parts[1]);
             }
             first = false;
         }
         CArchive archive(WRITING_ARCHIVE);
         if (!archive.Lock(binFile, modeWriteCreate, LOCK_NOWAIT))
             return false;
-        CAddressWeiMap::iterator it = options.prefundWeiMap.begin();
-        archive << uint64_t(options.prefundWeiMap.size());
-        while (it != options.prefundWeiMap.end()) {
+        CAddressWeiMap::iterator it = expContext().prefundMap.begin();
+        archive << uint64_t(expContext().prefundMap.size());
+        while (it != expContext().prefundMap.end()) {
             archive << it->first << it->second;
             it++;
         }
@@ -112,15 +108,19 @@ bool loadPrefunds(const string_q& prefundFile, COptionsBase& options) {
         string_q key;
         wei_t wei;
         archive >> key >> wei;
-        options.prefundWeiMap[key] = wei;
+        expContext().prefundMap[key] = wei;
     }
     archive.Release();
     return true;
 }
 
-typedef map<address_t, CAccountName> name_map_t;
 //-----------------------------------------------------------------------
-void addToMap(name_map_t& theMap, CAccountName& account, const string_q& tabFilename, uint64_t cnt) {
+void addToMap(CAddressNameMap& theMap, CAccountName& account, const string_q& tabFilename, uint64_t cnt) {
+    if (theMap[account.address].address == account.address) {
+        // first in wins;
+        return;
+    }
+
     if (contains(tabFilename, "_custom")) {
         // From the custom file - store the values found in the file
         account.is_custom = true;
@@ -134,7 +134,7 @@ void addToMap(name_map_t& theMap, CAccountName& account, const string_q& tabFile
         account.tags = account.tags.empty() ? "80-Prefund" : account.tags;
         string_q prefundName = "Prefund_" + padNum4(cnt);
         account.is_prefund = account.name.empty();  // only mark as pre-fund if it didn't exist before
-        // clang-format off
+                                                    // clang-format off
         account.name = account.name.empty()                  ? prefundName
                        : contains(account.name, "(Prefund_") ? account.name
                                                              : account.name + " (" + prefundName + ")";
@@ -149,7 +149,7 @@ void addToMap(name_map_t& theMap, CAccountName& account, const string_q& tabFile
 }
 
 //-----------------------------------------------------------------------
-bool importTabFile(name_map_t& theMap, const string_q& tabFilename) {
+bool importTabFile(CAddressNameMap& theMap, const string_q& tabFilename) {
     string_q prefundBin = getCachePath("names/names_prefunds.bin");
 
     uint64_t cnt = 0;
@@ -209,13 +209,11 @@ bool importTabFile(name_map_t& theMap, const string_q& tabFilename) {
 
 //-----------------------------------------------------------------------
 bool COptionsBase::loadNames(void) {
-    ENTER8("loadNames");
-
     if (getEnvStr("NO_NAMES") == "true")
-        EXIT_NOMSG8(true);
+        return true;
 
-    if (namedAccounts.size() > 0)
-        EXIT_NOMSG8(true);
+    if (namesMap.size() > 0)
+        return true;
 
     LOG8("Entering loadNames...");
     establishFolder(getCachePath("names/"));
@@ -226,8 +224,8 @@ bool COptionsBase::loadNames(void) {
 
     // A final set of options that do not have command line options
     if (isEnabled(OPT_PREFUND)) {
-        if (!loadPrefunds(prefundFile, *this)) {
-            EXIT_USAGE("Could not open prefunds data.");
+        if (!loadPrefunds(prefundFile)) {
+            return usage("Could not open prefunds data.");
         }
     }
 
@@ -243,49 +241,63 @@ bool COptionsBase::loadNames(void) {
         LOG8("Reading names from binary cache");
         CArchive nameCache(READING_ARCHIVE);
         if (nameCache.Lock(binFile, modeReadOnly, LOCK_NOWAIT)) {
-            nameCache >> namedAccounts;
-            for (auto item : namedAccounts) {
-                if (contains(item.tags, "Malicious"))
-                    maliciousMap[item.address] = true;
-                if (contains(item.tags, "Airdrop"))
-                    airdropMap[item.address] = true;
+            nameCache >> namesMap;
+            for (const auto& item : namesMap) {
+                if (contains(item.second.tags, "Malicious"))
+                    maliciousMap[item.second.address] = true;
+                if (contains(item.second.tags, "Airdrop"))
+                    airdropMap[item.second.address] = true;
+                bool isToken = !item.second.symbol.empty() || contains(item.second.tags, "Tokens") ||
+                               contains(item.second.tags, "Airdrop");
+                if (isToken)
+                    tokenMap[item.second.address] = item.second;
             }
             nameCache.Release();
-            EXIT_NOMSG8(true);
+            return true;
         }
     }
 
-    name_map_t theMap;
+    CAddressNameMap theMap;
     if (!importTabFile(theMap, txtFile))
-        EXIT_USAGE("Could not open names database...");
+        return usage("Could not open names database...");
     LOG8("Finished adding names from regular database...");
 
     if (!importTabFile(theMap, customFile))
-        EXIT_USAGE("Could not open custom names database...");
+        return usage("Could not open custom names database...");
     LOG8("Finished adding names from custom database...");
 
     if (!importTabFile(theMap, prefundFile))
-        EXIT_USAGE("Could not open prefunds database...");
+        return usage("Could not open prefunds database...");
     LOG8("Finished adding names from prefunds database...");
 
     // theMap is already sorted by address, so simply copy it into the array
     for (auto item : theMap) {
-        namedAccounts.push_back(item.second);
+        namesMap[item.first] = item.second;
         if (contains(item.second.tags, "Malicious"))
             maliciousMap[item.second.address] = true;
         if (contains(item.second.tags, "Airdrop"))
             airdropMap[item.second.address] = true;
+        bool isToken = !item.second.symbol.empty() || contains(item.second.tags, "Tokens") ||
+                       contains(item.second.tags, "Airdrop");
+        if (isToken)
+            tokenMap[item.second.address] = item.second;
     }
 
     LOG8("Writing binary cache");
     CArchive nameCache(WRITING_ARCHIVE);
     if (nameCache.Lock(binFile, modeWriteCreate, LOCK_CREATE)) {
-        nameCache << namedAccounts;
+        nameCache << namesMap;
         nameCache.Release();
     }
     LOG8("Finished writing binary cache...");
 
-    EXIT_NOMSG8(true);
+    return true;
+}
+
+//-----------------------------------------------------------------------
+bool COptionsBase::findToken(CAccountName& acct, const address_t& addr) {
+    acct = tokenMap[addr];
+    return acct.address == addr;
 }
 
 //-----------------------------------------------------------------------
@@ -296,8 +308,9 @@ bool COptionsBase::forEveryNamedAccount(NAMEFUNC func, void* data) {
     if (!func)
         return false;
 
-    for (auto namedAccount : namedAccounts) {
-        if (!(*func)(namedAccount, data))
+    for (auto mapItem : namesMap) {
+        CAccountName item = mapItem.second;
+        if (!(*func)(item, data))
             return false;
     }
 
@@ -309,13 +322,11 @@ bool COptionsBase::getNamedAccount(CAccountName& acct, const string_q& addr) {
     if (!loadNames())
         return false;
 
-    CAccountName search;
-    search.address = addr;
-    ResultPair range = equal_range(namedAccounts.begin(), namedAccounts.end(), search);
-    if (range.first == namedAccounts.end() || range.first->address != addr)
-        return false;
-    acct = *range.first;
-    return true;
+    if (namesMap[addr].address == addr) {
+        acct = namesMap[addr];
+        return true;
+    }
+    return false;
 }
 
 //-----------------------------------------------------------------------

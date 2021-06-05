@@ -1,5 +1,0 @@
-{
-  "errors": [
-    "chifra receipts - Invalid option: --other"
-  ]
-}

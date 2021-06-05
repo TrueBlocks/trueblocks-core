@@ -1,15 +1,4 @@
 acctExport argc: 3 [1:0x001d14804b399c6ef80e64576f657660804fec0b] [2:--count] 
 acctExport 0x001d14804b399c6ef80e64576f657660804fec0b --count 
-TIME ~ CLOCK - <INFO>  : skip_ddos: true
-TIME ~ CLOCK - <INFO>  : count: true
-TIME ~ CLOCK - <INFO>  : Monitor found for: 0x001d14804b399c6ef80e64576f657660804fec0b
-TIME ~ CLOCK - <INFO>  : Last visited block: 11854827
-TIME ~ CLOCK - <INFO>  : stats.nFiles: --value--
-TIME ~ CLOCK - <INFO>  : stats.nSkipped: --value--
-TIME ~ CLOCK - <INFO>  : nMonitors: 1
-TIME ~ CLOCK - <INFO>  : exportRange.first: 0
-TIME ~ CLOCK - <INFO>  : exportRange.second: 18446744073709551615
-TIME ~ CLOCK - <INFO>  : listRange.first: 11854827
-TIME ~ CLOCK - <INFO>  : listRange.second: --latest--
 address	nrecords	filesize
 0x001d14804b399c6ef80e64576f657660804fec0b	3	24

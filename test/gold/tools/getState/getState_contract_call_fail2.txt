@@ -1,11 +1,10 @@
 getState argc: 4 [1:--call] [2:0xa4f29fc548856180f6b1e319ee4d86715875cce4!12065fe0] [3:6523977-6540000:2000] 
 getState --call 0xa4f29fc548856180f6b1e319ee4d86715875cce4!12065fe0 6523977-6540000:2000 
-TIME ~ CLOCK - <INFO>  : call: 0xa4f29fc548856180f6b1e319ee4d86715875cce4!12065fe0
 
   The four byte must be a hex string. Quitting...
 
   Usage:    getState [-p|-c|-n|-v|-h] <address> [address...] [block...]  
-  Purpose:  Retrieve the balance of one or more address at the given block(s).
+  Purpose:  Retrieve account balance(s) for one or more addresses at given block(s).
 
   Where:  
 	addrs                 one or more addresses (0x...) from which to retrieve balances (required)
@@ -19,7 +18,7 @@ TIME ~ CLOCK - <INFO>  : call: 0xa4f29fc548856180f6b1e319ee4d86715875cce4!12065f
 	#### Hidden options
 
 	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
-	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
+	-v  (--verbose)       set verbose level (optional level defaults to 1)
 	-h  (--help)          display this help screen
 
   Powered by TrueBlocks

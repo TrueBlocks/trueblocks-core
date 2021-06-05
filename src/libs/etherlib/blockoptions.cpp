@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -57,26 +57,6 @@ string_q CBlockOptions::getBlockNumList(void) {
 bool CHistoryOptions::requestsHistory(void) const {
     blknum_t n_blocks = getGlobalConfig()->getConfigInt("dev", "history_cnt", 250);
     return ((newestBlock - oldestBlock) >= n_blocks);
-}
-
-//--------------------------------------------------------------------------------
-string_q getDispBal(blknum_t bn, biguint_t bal) {
-    // Makes finding the dollar value quicker (if we call into this more than once)
-    static map<blknum_t, timestamp_t> timestampMap;
-    if (expContext().asDollars && (timestampMap[bn] == (timestamp_t)0)) {
-        CBlock blk;
-        getBlock(blk, bn);
-        timestampMap[bn] = blk.timestamp;
-    }
-    ostringstream os;
-    if (expContext().asEther) {
-        os << wei_2_Ether(bal);
-    } else if (expContext().asDollars) {
-        os << padLeft("$" + displayDollars(timestampMap[bn], bal), 14);
-    } else {
-        os << bal;
-    }
-    return os.str();
 }
 
 //--------------------------------------------------------------------------------
@@ -273,7 +253,7 @@ bool parseBlockList2(COptionsBase* opt, COptionsBlockList& blocks, const string_
 }
 
 //--------------------------------------------------------------------------------
-bool parseAddressList2(COptionsBase* opt, CAddressArray& addrs, const string_q& argIn) {
+bool parseAddressList(COptionsBase* opt, CAddressArray& addrs, const string_q& argIn) {
     if (!isAddress(argIn))
         return opt->usage("Invalid address '" + argIn + "'. Length (" + uint_2_Str(argIn.length()) +
                           ") is not equal to 40 characters (20 bytes).");
@@ -294,6 +274,15 @@ bool parseTopicList2(COptionsBase* opt, CTopicArray& topics, const string_q& arg
         return opt->usage("Invalid topic '" + argIn + "'. Length (" + uint_2_Str(argIn.length()) +
                           ") is not equal to 64 characters (32 bytes).");
     topics.push_back(toLower(str_2_Topic(argIn)));
+    return true;
+}
+
+//--------------------------------------------------------------------------------
+bool parseFourbyteList(COptionsBase* opt, CFourbyteArray& fourbytes, const string_q& argIn) {
+    if (!isFourbyte(argIn))
+        return opt->usage("Invalid fourbyte '" + argIn + "'. Length (" + uint_2_Str(argIn.length()) +
+                          ") is not equal to 8 characters (4 bytes).");
+    fourbytes.push_back(toLower(str_2_Fourbyte(argIn)));
     return true;
 }
 

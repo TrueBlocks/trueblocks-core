@@ -1,11 +1,11 @@
 /*-------------------------------------------------------------------------
  * This source code is confidential proprietary information which is
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  * All Rights Reserved
  *------------------------------------------------------------------------*/
 /*
- * Parts of this file were generated with makeClass. Edit only those parts of the code
- * outside of the BEG_CODE/END_CODE sections
+ * Parts of this file were generated with makeClass --options. Edit only those parts of
+ * the code outside of the BEG_CODE/END_CODE sections
  */
 #include "options.h"
 
@@ -13,15 +13,19 @@
 static const COption params[] = {
     // BEG_CODE_OPTIONS
     // clang-format off
-    COption("mode", "", "enum[run*|quit|pause|restart]", OPT_REQUIRED | OPT_POSITIONAL, "control the block and account scrapers"),  // NOLINT
+    COption("mode", "", "enum[run|quit|pause|restart]", OPT_REQUIRED | OPT_POSITIONAL, "control the block and account scrapers"),  // NOLINT
     COption("tool", "t", "list<enum[monitors|index*|none|both]>", OPT_FLAG, "process the index, monitors, or both (none means process timestamps only)"),  // NOLINT
     COption("n_blocks", "n", "<uint64>", OPT_FLAG, "maximum number of blocks to process (defaults to 5000)"),
-    COption("n_block_procs", "b", "<uint64>", OPT_HIDDEN | OPT_FLAG, "number of block channels per scrape"),
-    COption("n_addr_procs", "a", "<uint64>", OPT_HIDDEN | OPT_FLAG, "number of address channels per scrape"),
+    COption("n_block_procs", "b", "<uint64>", OPT_HIDDEN | OPT_FLAG, "number of block channels for blaze"),
+    COption("n_addr_procs", "a", "<uint64>", OPT_HIDDEN | OPT_FLAG, "number of address channels for blaze"),
     COption("pin", "p", "", OPT_SWITCH, "pin new chunks (and blooms) to IPFS (requires Pinata key and running IPFS node)"),  // NOLINT
-    COption("publish", "u", "", OPT_SWITCH, "publish the hash of the pin manifest to the UnchainedIndex smart contract"),  // NOLINT
     COption("sleep", "s", "<double>", OPT_FLAG, "the number of seconds to sleep between passes (default 14)"),
-    COption("", "", "", OPT_DESCRIPTION, "Decentralized blockchain scraper and block cache."),
+    COption("staging", "s", "", OPT_HIDDEN | OPT_SWITCH, "pass through to chifra export --freshen (see notes)"),
+    COption("unripe", "u", "", OPT_HIDDEN | OPT_SWITCH, "pass through to chifra export --freshen (see notes)"),
+    COption("cache_txs", "i", "", OPT_HIDDEN | OPT_SWITCH, "pass through to chifra export --freshen (see notes)"),
+    COption("cache_traces", "R", "", OPT_HIDDEN | OPT_SWITCH, "pass through to chifra export --freshen (see notes)"),
+    COption("load", "", "<string>", OPT_HIDDEN | OPT_FLAG, "pass through to chifra export --freshen (see notes)"),
+    COption("", "", "", OPT_DESCRIPTION, "Scan the chain and update the TrueBlocks index of appearances."),
     // clang-format on
     // END_CODE_OPTIONS
 };
@@ -53,33 +57,57 @@ bool COptions::parseArguments(string_q& command) {
             if (!confirmEnum("tool", tool_tmp, arg))
                 return false;
             tool.push_back(tool_tmp);
+        } else if (arg == "-t" || arg == "--tool") {
+            return flag_required("tool");
 
         } else if (startsWith(arg, "-n:") || startsWith(arg, "--n_blocks:")) {
             if (!confirmUint("n_blocks", n_blocks, arg))
                 return false;
+        } else if (arg == "-n" || arg == "--n_blocks") {
+            return flag_required("n_blocks");
 
         } else if (startsWith(arg, "-b:") || startsWith(arg, "--n_block_procs:")) {
             if (!confirmUint("n_block_procs", n_block_procs, arg))
                 return false;
+        } else if (arg == "-b" || arg == "--n_block_procs") {
+            return flag_required("n_block_procs");
 
         } else if (startsWith(arg, "-a:") || startsWith(arg, "--n_addr_procs:")) {
             if (!confirmUint("n_addr_procs", n_addr_procs, arg))
                 return false;
+        } else if (arg == "-a" || arg == "--n_addr_procs") {
+            return flag_required("n_addr_procs");
 
         } else if (arg == "-p" || arg == "--pin") {
             pin = true;
 
-        } else if (arg == "-u" || arg == "--publish") {
-            publish = true;
-
         } else if (startsWith(arg, "-s:") || startsWith(arg, "--sleep:")) {
             if (!confirmDouble("sleep", sleep, arg))
                 return false;
+        } else if (arg == "-s" || arg == "--sleep") {
+            return flag_required("sleep");
+
+        } else if (arg == "-s" || arg == "--staging") {
+            staging = true;
+
+        } else if (arg == "-u" || arg == "--unripe") {
+            unripe = true;
+
+        } else if (arg == "-i" || arg == "--cache_txs") {
+            cache_txs = true;
+
+        } else if (arg == "-R" || arg == "--cache_traces") {
+            cache_traces = true;
+
+        } else if (startsWith(arg, "--load:")) {
+            load = substitute(substitute(arg, "-:", ""), "--load:", "");
+        } else if (arg == "--load") {
+            return flag_required("load");
 
         } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
-                return usage("Invalid option: " + arg);
+                return invalid_option(arg);
             }
 
         } else {
@@ -94,14 +122,21 @@ bool COptions::parseArguments(string_q& command) {
 
     // BEG_DEBUG_DISPLAY
     LOG_TEST("mode", mode, (mode == ""));
-    // LOG_TEST("tool", tool, (tool == ""));
+    LOG_TEST_LIST("tool", tool, tool.empty());
     LOG_TEST("n_blocks", n_blocks, (n_blocks == (isDockerMode() ? 100 : 2000)));
     LOG_TEST("n_block_procs", n_block_procs, (n_block_procs == (isDockerMode() ? 5 : 10)));
     LOG_TEST("n_addr_procs", n_addr_procs, (n_addr_procs == (isDockerMode() ? 10 : 20)));
     LOG_TEST_BOOL("pin", pin);
-    LOG_TEST_BOOL("publish", publish);
     LOG_TEST("sleep", sleep, (sleep == 14));
+    LOG_TEST_BOOL("staging", staging);
+    LOG_TEST_BOOL("unripe", unripe);
+    LOG_TEST_BOOL("cache_txs", cache_txs);
+    LOG_TEST_BOOL("cache_traces", cache_traces);
+    LOG_TEST("load", load, (load == ""));
     // END_DEBUG_DISPLAY
+
+    if (Mocked(""))
+        return false;
 
     if (mode.empty())
         mode = "run";
@@ -125,33 +160,12 @@ bool COptions::parseArguments(string_q& command) {
     if (sleep < .5)
         sleep = .5;
 
-    if (publish && pin)
-        return usage("The --publish option is not available when using the --pin option.");
-
-    if ((pin || publish) && !pinlib_getApiKeys(lic)) {
+    if (pin && !getApiKey(lic)) {
         if (!isTestMode()) {
             ostringstream os;
-            os << "The " << (pin ? "--pin" : "--publish") << " option requires you to have a Pinata key.";
+            os << "The --pin option requires you to have a Pinata key.";
             return usage(os.str());
         }
-    }
-
-    // Is the user asking to publish the pin manifest to the smart contract?
-#define hashToIndexFormatFile "Qmart6XP9XjL43p72PGR93QKytbK8jWWcMguhFgxATTya2"
-#define hashToBloomFormatFile "QmNhPk39DUFoEdhUmtGARqiFECUHeghyeryxZM9kyRxzHD"
-    if (publish) {
-        CPinManifest manifest;
-        manifest.fileName = "initial-manifest.json";
-        manifest.indexFormat = hashToIndexFormatFile;
-        manifest.bloomFormat = hashToBloomFormatFile;
-        manifest.prevHash = "";  // (prevHash == "" ? hashToEmptyFile : prevHash);
-
-        CPinnedChunkArray pList;
-        pinlib_readPinList(pList, true);
-        pinlib_forEveryPin(pList, addNewPin, &manifest);
-        manifest.toJson(cout);
-
-        return true;
     }
 
     // We shouldn't run if we're already running...
@@ -170,7 +184,7 @@ bool COptions::parseArguments(string_q& command) {
     // Control the state of the app (the state is stored in a temporary file). This only returns
     // false if we moved from stopped state to running state. All other state changes end here.
     bool result = changeState();
-    if (isTestMode() && !isLiveTest()) {
+    if (isTestMode()) {
         string_q current;
         getCurrentState(current);
         ostringstream os;
@@ -183,7 +197,6 @@ bool COptions::parseArguments(string_q& command) {
         os << "  \"n_block_procs\": " << n_block_procs << "," << endl;
         os << "  \"n_addr_procs\": " << n_addr_procs << "," << endl;
         os << "  \"pin\": " << pin << "," << endl;
-        os << "  \"publish\": " << publish << "," << endl;
         os << "  \"current\": " << current << "," << endl;
         os << "}" << endl;
         cout << os.str();
@@ -191,7 +204,7 @@ bool COptions::parseArguments(string_q& command) {
             !contains(command, "pause"))
             cleanupAndQuit();
         getCurrentState(current);
-        LOG_INFO("file contents: ", asciiFileToString(configPath("cache/tmp/scraper-state.txt")));
+        LOG_INFO("file contents: ", asciiFileToString(getCachePath("tmp/scraper-state.txt")));
         return false;
     }
 
@@ -221,33 +234,38 @@ bool COptions::parseArguments(string_q& command) {
         string_q errMsg = "Tracing is required for this program to work properly.";
         if (isDockerMode())
             errMsg += " If you're running docker, enable remote RPC endpoints.";
+        cleanupAndQuit();
         return usage(errMsg);
     }
 
     // Parity traces are much better (and easier to use) than Geth's. But, in some
     // cases, the user may not care and tells us she doesn't need parity
     bool needsParity = config->getConfigBool("requires", "parity", true);
-    if (needsParity && !isParity())
+    if (needsParity && !isParity()) {
+        cleanupAndQuit();
         return usage(
-            "This tool requires Parity. Add [requires]\\nparity=false to ~/.quickBlocks/blockScrape.toml to turn "
+            "This tool requires Parity. Add [requires]\\nparity=false to $CONFIG/blockScrape.toml to turn "
             "this "
             "restriction off.");
+    }
 
     // Balances are needed to make reconcilations. The user may not need that, so we allow it
     bool needsBalances = config->getConfigBool("requires", "balances", false);
-    if (needsBalances && !nodeHasBalances(true))
+    if (needsBalances && !nodeHasBalances(true)) {
+        cleanupAndQuit();
         return usage("This tool requires an --archive node with historical balances.");
+    }
 
     // This may be the first time we've ever run. In that case, we need to build the zero block index file...
     string chunkId = padNum9(0) + "-" + padNum9(0);
     string_q bloomPath = getIndexPath("blooms/" + chunkId + ".bloom");
     if (!fileExists(bloomPath)) {
-        ASSERT(prefundWeiMap.size() == 8893);  // This is a known value
-        LOG_INFO("Index for block zero was not found. Building it from ", uint_2_Str(prefundWeiMap.size()),
+        ASSERT(expContext().prefundMap.size() == 8893);  // This is a known value
+        LOG_INFO("Index for block zero was not found. Building it from ", uint_2_Str(expContext().prefundMap.size()),
                  " prefunds.");
 
         CStringArray appearances;
-        for (auto prefund : prefundWeiMap) {
+        for (auto prefund : expContext().prefundMap) {
             // The prefund transactions have 'zero' block numbers and an index into thier location
             // in the list of presale addresses which is sorted by address. We need to do this in order to
             // distinquish each transaction when it is exported.
@@ -287,24 +305,29 @@ void COptions::Init(void) {
     n_addr_procs = getGlobalConfig("blockScrape")->getConfigInt("settings", "n_addr_procs", (isDockerMode() ? 10 : 20));
     // clang-format on
     pin = false;
-    publish = false;
     sleep = 14;
+    staging = false;
+    unripe = false;
+    // clang-format off
+    cache_txs = getGlobalConfig("blockScrape")->getConfigBool("settings", "cache_txs", false);
+    cache_traces = getGlobalConfig("blockScrape")->getConfigBool("settings", "cache_traces", false);
+    // clang-format on
+    load = "";
     // END_CODE_INIT
-
-    minArgs = 0;
 }
 
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
-    setSorts(GETRUNTIME_CLASS(CBlock), GETRUNTIME_CLASS(CTransaction), GETRUNTIME_CLASS(CReceipt));
     Init();
+
     // BEG_CODE_NOTES
     // clang-format off
+    notes.push_back("Certain options (`--cache_txs`, `--cache_traces`, etc.) are passed through to `chifra export` | if `tool` includes `monitors`. See `chifra export --help`.");  // NOLINT
     // clang-format on
     // END_CODE_NOTES
 
-    // BEG_ERROR_MSG
-    // END_ERROR_MSG
+    // BEG_ERROR_STRINGS
+    // END_ERROR_STRINGS
 
     // Establish the folders that hold the data...
     establishMonitorFolders();
@@ -314,7 +337,7 @@ COptions::COptions(void) {
     establishFolder(indexFolder_staging);
     establishFolder(indexFolder_unripe);
     establishFolder(indexFolder_ripe);
-    establishFolder(configPath("cache/tmp/"));
+    establishFolder(getCachePath("tmp/"));
 }
 
 //--------------------------------------------------------------------------------
@@ -324,7 +347,7 @@ COptions::~COptions(void) {
 //--------------------------------------------------------------------------------
 ScrapeState COptions::getCurrentState(string_q& current) {
     if (controlFile.empty())
-        controlFile = configPath("cache/tmp/scraper-state.txt");
+        controlFile = getCachePath("tmp/scraper-state.txt");
     current = asciiFileToString(controlFile);
     if (current == "running") {
         state = STATE_RUNNING;
@@ -340,7 +363,7 @@ ScrapeState COptions::getCurrentState(string_q& current) {
 
 //--------------------------------------------------------------------------------
 bool COptions::changeState(void) {
-    if (isTestMode() && !isLiveTest())
+    if (isTestMode())
         verbose = 10;
     state = getCurrentState(stateStr);
     switch (state) {
@@ -370,6 +393,7 @@ bool COptions::changeState(void) {
                 LOG4("changing state: running --> stopped");
             } else if (mode == "run") {
                 LOG_ERR("blockScrape is already ", stateStr, ". Cannot ", mode, ".");
+                LOG_ERR("If this is in error, remove the file ", (isTestMode() ? "--controlFile--" : controlFile));
                 // state = STATE_RUNNING; // redunant, but okay
             } else if (mode == "restart") {
                 LOG_ERR("blockScrape is ", stateStr, ". Cannot ", mode, ".");
@@ -399,25 +423,3 @@ bool COptions::changeState(void) {
     cout << "{ \"status\": \"" << stateStr << "\" }" << endl;
     return true;
 }
-
-//----------------------------------------------------------------
-bool addNewPin(CPinnedChunk& pin, void* data) {
-    CPinManifest* manifestPtr = (CPinManifest*)data;  // NOLINT
-    manifestPtr->newPins.push_back(pin);
-
-    timestamp_t unused;
-    blknum_t newEnd;
-    blknum_t newStart = bnFromPath(pin.fileName, newEnd, unused);
-
-    if (manifestPtr->newBlockRange.empty()) {
-        manifestPtr->newBlockRange = padNum9(newStart) + "-" + padNum9(newEnd);
-    } else {
-        blknum_t oldEnd;
-        blknum_t oldStart = bnFromPath(manifestPtr->newBlockRange, oldEnd, unused);
-        manifestPtr->newBlockRange = padNum9(min(oldStart, newStart)) + "-" + padNum9(max(oldEnd, newEnd));
-    }
-    // TODO(tjayrush): Note...
-    return !isTestMode();
-}
-
-// TODO(tjayrush): Make sure to update timestamps file as we remove the issue tracking on this

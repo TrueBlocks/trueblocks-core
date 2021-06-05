@@ -2,10 +2,11 @@ tomlTest argc: 2 [1:test12.toml]
 tomlTest test12.toml 
 test12.toml
 [version]
-current = "0.8.4-alpha"
+current = "0.9.4-alpha"
 
 [settings]
 name = "accts"
+
 
 [display]
 accounting = false
@@ -16,23 +17,11 @@ bloom = false
 single = false
 parse = false
 
+
 [formats]
 screen_fmt = "{ \"date\": \"[{DATE}]\", \"position\": \"[{BLOCKNUMBER}].[{r:5:TRANSACTIONINDEX}]\", \"from\": \"[{FROM}]\", \"to\": \"[{w:42:TO}]\", \"ether\": \"[{r:25:ETHER}]\", \"gasCost\": \"[{r:20:GASCOST}]\", \"hash\": \"[{HASH}]\" }"
 verbose_fmt = "[{HEAD}]\n	\tdate: @[{DATE}]# timestamp: @[{TIMESTAMP}]# ether: @[{ETHER}]#\n	\tfrom: @[{FROM}]# to: @[{TO}]# value: @[{w:30:VALUE}]# \n	\thash: @[{HASH}]# \n	\tblockNumber: @[{BLOCKNUMBER}]# txIndex: @[{TRANSACTIONINDEX}]#\n	\tinput: @[{INPUT}]#\n	[{P}]"
 export_fmt = " \"[{DATE}]\",\"[{BLOCKNUMBER}]\",\"[{TRANSACTIONINDEX}]\",\"[{FROM}]\",\"[{TO}]\",\"[{ETHER}]\",\"[{GASCOST}]\",\"[{HASH}]\" "
-
-[[watches]]
-list = [
-    { address = "0x0000000000000000000000100001000010000001", name = "Main Wallet", firstBlock = 1971529, color = "white_b" },
-    { address = "0x0000000000000000000000100001000010000002", name = "Laptop Wallet", firstBlock = 2867899, color = "magenta_b" },
-    { address = "0x0000000000000000000000100001000010000003", name = "Tip Jar", firstBlock = 1986055, color = "blue_b" },
-    { address = "0x0000000000000000000000100001000010000004", name = "Token Holder", firstBlock = 2420364, color = "green_b" },
-    { address = "0x0000000000000000000000100001000010000005", name = "One Ether", firstBlock = 1986062, color = "red_b" },
-    { address = "0x0000000000000000000000100001000010000006", name = "Play Wallet", firstBlock = 2597778, color = "yellow_b" },
-    { address = "0x0000000000000000000000100001000010000007", name = "MetaMask Wallet", firstBlock = 2972204, color = "teal_b" },
-    { address = "0x0000000000000000000000100001000010000008", name = "Nates Wallet", firstBlock = 2593109, color = "white_c" }
-]
-named = "[ { address : \"0x314159265dd8dbb310642f98f50c066173c1259b\", name : \"ENS (Main)\" },{ address : \"0x6090a6e47849629b7245dfa1ca21d94cd15878ef\", name : \"ENS Registrar\" },{ address : \"0x012233b3c8177f0778d910ed88170b82de3bfe57\", name : \"Defunct ENS Regist\" },{ address : \"0xbb9bc244d798123fde783fcc1c72d3bb8c189413\", name : \"The DAO\" },{ address : \"0xbf4ed7b27f1d666546e30d74d50d173d20bca754\", name : \"DAO_Withdrawl\" },{ address : \"0xc7e165ebdad9eeb8e5f5d94eef3e96ea9739fdb2\", name : \"Dao.consider.it\" },{ address : \"0xaa1a6e3e6ef20068f7f8d8c835d2d22fd5116444\", name : \"ReplaySafeSplit\" },{ address : \"0x2910543af39aba0cd09dbb2d50200b3e800a63d2\", name : \"Kraken_Exch_1\" },{ address : \"0x53d284357ec70ce289d6d64134dfac8e511c8a3d\", name : \"Kraken_Exch_2\" },{ address : \"0xfa52274dd61e1643d2205169732f29114bc240b3\", name : \"Kraken_Exch_3\" },{ address : \"0x5f742383b6d1298980030d6af943b76cdd902143\", name : \"Etherplay\" }, ]"
 
 name: 		accts
 max_width: 	10000
@@ -65,38 +54,14 @@ verbose_fmt = """[{HEAD}]\n\
 	[{P}]"""
 export_fmt = " \"[{DATE}]\",\"[{BLOCKNUMBER}]\",\"[{TRANSACTIONINDEX}]\",\"[{FROM}]\",\"[{TO}]\",\"[{ETHER}]\",\"[{GASCOST}]\",\"[{HASH}]\" "
 
-[[watches]]
-list = [
-    { address = "0x0000000000000000000000100001000010000001", name = "Main Wallet",        firstBlock = 1971529, color = "white_b"   },
-    { address = "0x0000000000000000000000100001000010000002", name = "Laptop Wallet",      firstBlock = 2867899, color = "magenta_b" },
-    { address = "0x0000000000000000000000100001000010000003", name = "Tip Jar",            firstBlock = 1986055, color = "blue_b"    },
-    { address = "0x0000000000000000000000100001000010000004", name = "Token Holder",       firstBlock = 2420364, color = "green_b"   },
-    { address = "0x0000000000000000000000100001000010000005", name = "One Ether",          firstBlock = 1986062, color = "red_b"     },
-    { address = "0x0000000000000000000000100001000010000006", name = "Play Wallet",        firstBlock = 2597778, color = "yellow_b"  },
-    { address = "0x0000000000000000000000100001000010000007", name = "MetaMask Wallet",    firstBlock = 2972204, color = "teal_b"    },
-    { address = "0x0000000000000000000000100001000010000008", name = "Nates Wallet",       firstBlock = 2593109, color = "white_c"   }
-]
-named = [
-    { address = "0x314159265dd8dbb310642f98f50c066173c1259b", name = "ENS (Main)"          },
-    { address = "0x6090a6e47849629b7245dfa1ca21d94cd15878ef", name = "ENS Registrar"       },
-    { address = "0x012233b3c8177f0778d910ed88170b82de3bfe57", name = "Defunct ENS Regist"  },
-    { address = "0xbb9bc244d798123fde783fcc1c72d3bb8c189413", name = "The DAO"             },
-    { address = "0xbf4ed7b27f1d666546e30d74d50d173d20bca754", name = "DAO_Withdrawl"       },
-    { address = "0xc7e165ebdad9eeb8e5f5d94eef3e96ea9739fdb2", name = "Dao.consider.it"     },
-    { address = "0xaa1a6e3e6ef20068f7f8d8c835d2d22fd5116444", name = "ReplaySafeSplit"     },
-    { address = "0x2910543af39aba0cd09dbb2d50200b3e800a63d2", name = "Kraken_Exch_1"       },
-    { address = "0x53d284357ec70ce289d6d64134dfac8e511c8a3d", name = "Kraken_Exch_2"       },
-    { address = "0xfa52274dd61e1643d2205169732f29114bc240b3", name = "Kraken_Exch_3"       },
-    { address = "0x5f742383b6d1298980030d6af943b76cdd902143", name = "Etherplay"           },
-]
-
 
 File contents after write
 [version]
-current = "0.8.4-alpha"
+current = "0.9.4-alpha"
 
 [settings]
 name = "accts"
+
 
 [display]
 accounting = false
@@ -107,21 +72,9 @@ bloom = false
 single = false
 parse = false
 
+
 [formats]
 screen_fmt = "{ \"date\": \"[{DATE}]\", \"position\": \"[{BLOCKNUMBER}].[{r:5:TRANSACTIONINDEX}]\", \"from\": \"[{FROM}]\", \"to\": \"[{w:42:TO}]\", \"ether\": \"[{r:25:ETHER}]\", \"gasCost\": \"[{r:20:GASCOST}]\", \"hash\": \"[{HASH}]\" }"
 verbose_fmt = "[{HEAD}]\n	\tdate: @[{DATE}]# timestamp: @[{TIMESTAMP}]# ether: @[{ETHER}]#\n	\tfrom: @[{FROM}]# to: @[{TO}]# value: @[{w:30:VALUE}]# \n	\thash: @[{HASH}]# \n	\tblockNumber: @[{BLOCKNUMBER}]# txIndex: @[{TRANSACTIONINDEX}]#\n	\tinput: @[{INPUT}]#\n	[{P}]"
 export_fmt = " \"[{DATE}]\",\"[{BLOCKNUMBER}]\",\"[{TRANSACTIONINDEX}]\",\"[{FROM}]\",\"[{TO}]\",\"[{ETHER}]\",\"[{GASCOST}]\",\"[{HASH}]\" "
-
-[[watches]]
-list = [
-    { address = "0x0000000000000000000000100001000010000001", name = "Main Wallet", firstBlock = 1971529, color = "white_b" },
-    { address = "0x0000000000000000000000100001000010000002", name = "Laptop Wallet", firstBlock = 2867899, color = "magenta_b" },
-    { address = "0x0000000000000000000000100001000010000003", name = "Tip Jar", firstBlock = 1986055, color = "blue_b" },
-    { address = "0x0000000000000000000000100001000010000004", name = "Token Holder", firstBlock = 2420364, color = "green_b" },
-    { address = "0x0000000000000000000000100001000010000005", name = "One Ether", firstBlock = 1986062, color = "red_b" },
-    { address = "0x0000000000000000000000100001000010000006", name = "Play Wallet", firstBlock = 2597778, color = "yellow_b" },
-    { address = "0x0000000000000000000000100001000010000007", name = "MetaMask Wallet", firstBlock = 2972204, color = "teal_b" },
-    { address = "0x0000000000000000000000100001000010000008", name = "Nates Wallet", firstBlock = 2593109, color = "white_c" }
-]
-named = "[ { address : \"0x314159265dd8dbb310642f98f50c066173c1259b\", name : \"ENS (Main)\" },{ address : \"0x6090a6e47849629b7245dfa1ca21d94cd15878ef\", name : \"ENS Registrar\" },{ address : \"0x012233b3c8177f0778d910ed88170b82de3bfe57\", name : \"Defunct ENS Regist\" },{ address : \"0xbb9bc244d798123fde783fcc1c72d3bb8c189413\", name : \"The DAO\" },{ address : \"0xbf4ed7b27f1d666546e30d74d50d173d20bca754\", name : \"DAO_Withdrawl\" },{ address : \"0xc7e165ebdad9eeb8e5f5d94eef3e96ea9739fdb2\", name : \"Dao.consider.it\" },{ address : \"0xaa1a6e3e6ef20068f7f8d8c835d2d22fd5116444\", name : \"ReplaySafeSplit\" },{ address : \"0x2910543af39aba0cd09dbb2d50200b3e800a63d2\", name : \"Kraken_Exch_1\" },{ address : \"0x53d284357ec70ce289d6d64134dfac8e511c8a3d\", name : \"Kraken_Exch_2\" },{ address : \"0xfa52274dd61e1643d2205169732f29114bc240b3\", name : \"Kraken_Exch_3\" },{ address : \"0x5f742383b6d1298980030d6af943b76cdd902143\", name : \"Etherplay\" }, ]"
 

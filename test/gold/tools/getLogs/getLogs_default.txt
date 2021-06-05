@@ -3,14 +3,16 @@ getLogs --address 0xbb9bc244d798123fde783fcc1c72d3bb8c189413
 
   Invalid option: --address
 
-  Usage:    getLogs [-a|-v|-h] <tx_id> [tx_id...]  
-  Purpose:  Retrieve a transaction's logs from the cache or the node.
+  Usage:    getLogs [-t|-s|-a|-v|-h] <tx_id> [tx_id...]  
+  Purpose:  Retrieve logs for the given transaction(s).
 
   Where:  
-	transactions          a space-separated list of one or more transaction identifiers (tx_hash, bn.txID, blk_hash.txID) (required)
-	-a  (--articulate)    articulate the transactions if an ABI is found for the 'to' address
+	transactions          a space-separated list of one or more transaction identifiers (required)
+	-t  (--topic <hash>)  filter by one or more log topics (not implemented)
+	-s  (--source <addr>) export only if the given address emitted the event (not implemented)
+	-a  (--articulate)    articulate the retrieved data if ABIs can be found
 	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
-	-v  (--verbose)       set verbose level. Either -v, --verbose or -v:n where 'n' is level
+	-v  (--verbose)       set verbose level (optional level defaults to 1)
 	-h  (--help)          display this help screen
 
   Powered by TrueBlocks

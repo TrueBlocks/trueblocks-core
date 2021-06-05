@@ -1,17 +1,5 @@
-acctExport argc: 7 [1:0x001d14804b399c6ef80e64576f657660804fec0b] [2:--receipts] [3:--fmt] [4:json] [5:--max_records] [6:5] 
-acctExport 0x001d14804b399c6ef80e64576f657660804fec0b --receipts --fmt json --max_records 5 
-TIME ~ CLOCK - <INFO>  : receipts: true
-TIME ~ CLOCK - <INFO>  : skip_ddos: true
-TIME ~ CLOCK - <INFO>  : max_records: 5
-TIME ~ CLOCK - <INFO>  : Monitor found for: 0x001d14804b399c6ef80e64576f657660804fec0b
-TIME ~ CLOCK - <INFO>  : Last visited block: 11854827
-TIME ~ CLOCK - <INFO>  : stats.nFiles: --value--
-TIME ~ CLOCK - <INFO>  : stats.nSkipped: --value--
-TIME ~ CLOCK - <INFO>  : nMonitors: 1
-TIME ~ CLOCK - <INFO>  : exportRange.first: 0
-TIME ~ CLOCK - <INFO>  : exportRange.second: 18446744073709551615
-TIME ~ CLOCK - <INFO>  : listRange.first: 11854827
-TIME ~ CLOCK - <INFO>  : listRange.second: --latest--
+acctExport argc: 7 [1:0x001d14804b399c6ef80e64576f657660804fec0b] [2:--max_records] [3:5] [4:--receipts] [5:--fmt] [6:json] 
+acctExport 0x001d14804b399c6ef80e64576f657660804fec0b --max_records 5 --receipts --fmt json 
 { "data": [
 {
   "blockNumber": 0,

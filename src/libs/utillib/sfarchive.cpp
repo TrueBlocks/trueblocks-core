@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -39,7 +39,27 @@ CArchive& CArchive::operator<<(unsigned int dw) {
     return *this;
 }
 
+CArchive& CArchive::operator<<(int8_t dw) {
+    Write(dw);
+    return *this;
+}
+
+CArchive& CArchive::operator<<(int16_t dw) {
+    Write(dw);
+    return *this;
+}
+
 CArchive& CArchive::operator<<(int64_t dw) {
+    Write(dw);
+    return *this;
+}
+
+CArchive& CArchive::operator<<(uint8_t dw) {
+    Write(dw);
+    return *this;
+}
+
+CArchive& CArchive::operator<<(uint16_t dw) {
     Write(dw);
     return *this;
 }
@@ -81,6 +101,11 @@ CArchive& CArchive::operator<<(const biguint_t& bn) {
 CArchive& CArchive::operator<<(const bigint_t& bn) {
     *this << (const unsigned int)bn.sign;
     *this << bn.mag;
+    return *this;
+}
+
+CArchive& CArchive::operator<<(const time_q& date) {
+    *this << date_2_Ts(date);
     return *this;
 }
 
@@ -137,7 +162,27 @@ CArchive& CArchive::operator>>(unsigned int& dw) {
     return *this;
 }
 
+CArchive& CArchive::operator>>(int8_t& dw) {
+    Read(dw);
+    return *this;
+}
+
+CArchive& CArchive::operator>>(int16_t& dw) {
+    Read(dw);
+    return *this;
+}
+
 CArchive& CArchive::operator>>(int64_t& dw) {
+    Read(dw);
+    return *this;
+}
+
+CArchive& CArchive::operator>>(uint8_t& dw) {
+    Read(dw);
+    return *this;
+}
+
+CArchive& CArchive::operator>>(uint16_t& dw) {
     Read(dw);
     return *this;
 }
@@ -228,6 +273,13 @@ CArchive& operator>>(CArchive& archive, CIntArray& array) {
     return archive;
 }
 
+CArchive& CArchive::operator>>(time_q& date) {
+    timestamp_t ts;
+    *this >> ts;
+    date = ts_2_Date(ts);
+    return *this;
+}
+
 //----------------------------------------------------------------------
 bool forEveryLineInAsciiFile(const string_q& filenameIn, CHARPTRFUNC func, void* data) {
     if (!func)
@@ -236,11 +288,12 @@ bool forEveryLineInAsciiFile(const string_q& filenameIn, CHARPTRFUNC func, void*
     CFilename filename(filenameIn);
     CArchive archive(READING_ARCHIVE);
     if (archive.Lock(filename.getFullPath(), modeReadOnly, LOCK_NOWAIT)) {
+#define MAX_LINE (4096 * 1000)
+        char buffer[MAX_LINE];
         bool done = false;
         while (!done) {
-            char buffer[4096];
-            bzero(buffer, 4096);
-            done = (archive.ReadLine(buffer, 4096) == NULL);
+            bzero(buffer, MAX_LINE);
+            done = (archive.ReadLine(buffer, MAX_LINE) == NULL);
             if (!done)
                 done = !(*func)(buffer, data);  // returns true to continue
         }
@@ -308,26 +361,6 @@ size_t stringToAsciiFile(const string_q& fileName, const string_q& contents) {
         return false;
     }
     return true;
-}
-
-//--------------------------------------------------------------------------
-size_t appendFileToFile(const string_q& toFile, const string_q& fromFile) {
-    ofstream output;
-    output.open(toFile, ios::out | ios::app);
-    if (!output.is_open())
-        return false;
-
-    ifstream input(fromFile, ios::in);
-    if (!input.is_open()) {
-        output.close();
-        return false;
-    }
-
-    output << input.rdbuf();
-    output.flush();
-    input.close();
-
-    return fileSize(toFile);
 }
 
 //----------------------------------------------------------------------

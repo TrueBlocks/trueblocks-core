@@ -1,4 +1,0 @@
-whereBlock argc: 2 [1:45000] 
-whereBlock 45000 
-blocknumber	path	cached
-45000	--nodeVersion--	false

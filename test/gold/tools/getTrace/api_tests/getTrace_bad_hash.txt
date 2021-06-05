@@ -1,5 +1,0 @@
-{
-  "errors": [
-    "chifra traces - The argument '0x0012' is not properly formatted. Is it the right length?"
-  ]
-}

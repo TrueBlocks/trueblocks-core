@@ -1,9 +1,0 @@
-[settings]
-class = CLmdbVal
-fields = uint64 size|\
-        const_void_ptr data (nowrite)
-includes = utillib.h|silkworm/db/chaindb.hpp
-cpp_includes =
-serializable = true
-display_str = size, data
-disabled = true

@@ -1,7 +1,7 @@
 #pragma once
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -12,15 +12,14 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 /*
- * This file was generated with makeClass. Edit only those parts of the code inside
- * of 'EXISTING_CODE' tags.
+ * Parts of this file were generated with makeClass --run. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
  */
 #include "utillib.h"
 #include "abi.h"
 #include "receipt.h"
 #include "trace.h"
 #include "reconciliation.h"
-#include "reconciliationoutput.h"
 #include "ethstate.h"
 
 namespace qblocks {
@@ -30,6 +29,15 @@ class CBlock;
 class CAppearance;
 typedef bool (*APPEARANCEFUNC)(const CAppearance& item, void* data);
 typedef bool (*TRANSFUNC)(const CTransaction* trans, void* data);
+typedef bool (*LOGVISITFUNC)(CLogEntry& log, void* data);
+typedef bool (*TRACEVISITFUNC)(CTrace& trace, void* data);
+typedef enum {
+    CB_NONE = 0,
+    CB_ARTICULATION = (1 << 0),
+    CB_ETH_ACCOUNTING = (1 << 1),
+    CB_TOK_ACCOUNTING = (1 << 2),
+    CB_TRACES = (1 << 3),
+} cachebits_t;
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
@@ -49,14 +57,15 @@ class CTransaction : public CBaseNode {
     gas_t gas;
     gas_t gasPrice;
     string_q input;
-    uint64_t isError;
-    uint64_t hasToken;
+    uint8_t isError;
+    uint8_t hasToken;
+    uint8_t cachebits;
+    uint8_t reserved2;
     CReceipt receipt;
     CTraceArray traces;
     CFunction articulatedTx;
-    CReconciliationArray reconciliations;
     string_q compressedTx;
-    CReconciliationOutputArray statements;
+    CReconciliationArray statements;
     bool finalized;
 
   public:
@@ -71,6 +80,8 @@ class CTransaction : public CBaseNode {
 
     // EXISTING_CODE
     const CBlock* pBlock;
+    bool forEveryLog(LOGVISITFUNC func, void* data) const;
+    bool forEveryTrace(TRACEVISITFUNC func, void* data) const;
     bool forEveryAppearanceInTx(APPEARANCEFUNC func, TRANSFUNC filt = NULL, void* data = NULL);
     bool forEveryUniqueAppearanceInTx(APPEARANCEFUNC func, TRANSFUNC filt = NULL, void* data = NULL);
     bool forEveryUniqueAppearanceInTxPerTx(APPEARANCEFUNC func, TRANSFUNC filt = NULL, void* data = NULL);
@@ -92,7 +103,7 @@ class CTransaction : public CBaseNode {
     bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
-    friend class CAccount;
+    friend class CCachedAccount;
     // EXISTING_CODE
 };
 
@@ -146,10 +157,11 @@ inline void CTransaction::initialize(void) {
     input = "";
     isError = 0;
     hasToken = 0;
+    cachebits = CB_NONE;
+    reserved2 = 0;
     receipt = CReceipt();
     traces.clear();
     articulatedTx = CFunction();
-    reconciliations.clear();
     compressedTx = "";
     statements.clear();
     finalized = false;
@@ -180,10 +192,11 @@ inline void CTransaction::duplicate(const CTransaction& tr) {
     input = tr.input;
     isError = tr.isError;
     hasToken = tr.hasToken;
+    cachebits = tr.cachebits;
+    reserved2 = tr.reserved2;
     receipt = tr.receipt;
     traces = tr.traces;
     articulatedTx = tr.articulatedTx;
-    reconciliations = tr.reconciliations;
     compressedTx = tr.compressedTx;
     statements = tr.statements;
     finalized = tr.finalized;

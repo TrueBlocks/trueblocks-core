@@ -1,9 +1,8 @@
 /*-------------------------------------------------------------------------
  * This source code is confidential proprietary information which is
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  * All Rights Reserved
  *------------------------------------------------------------------------*/
-#include "acctlib.h"
 #include "options.h"
 
 //---------------------------------------------------------------
@@ -37,9 +36,7 @@ bool visitFinalIndexFiles(const string_q& path, void* data) {
 
         options->possibles.clear();
         for (auto m : options->allMonitors) {
-            // LOG_TEST("m.getLastVisitedBlock()", m.getLastVisitedBlock(), false);
-            // LOG_TEST("options->fileRange.first", options->fileRange.first, false)
-            if (m.getLastVisitedBlock() == 0 || m.getLastVisitedBlock() < options->fileRange.first)
+            if (m.getLastBlockInMonitor() == 0 || m.getLastBlockInMonitor() < options->fileRange.first)
                 options->possibles.push_back(m);
         }
 
@@ -89,7 +86,7 @@ bool COptions::visitBinaryFile(const string_q& path, void* data) {
         if (!hit) {
             // none of them hit, so write last block for each of them
             for (auto monitor : possibles) {
-                monitor.writeLastBlock(fileRange.second + 1);
+                monitor.writeLastBlockInMonitor(fileRange.second + 1);
             }
             options->stats.nBloomMisses++;
             LOG_PROGRESS("Skipping", options->fileRange.first, options->listRange.second, " bloom miss\r");
@@ -112,7 +109,7 @@ bool COptions::visitBinaryFile(const string_q& path, void* data) {
     for (size_t mo = 0; mo < possibles.size() && !shouldQuit(); mo++) {
         CMonitor* monitor = &possibles[mo];
         if (hitMap[monitor->address]) {
-            if (!monitor->openCacheFile1())
+            if (!monitor->openForWriting())
                 EXIT_FAIL("Could not open cache file " + monitor->getMonitorPath(monitor->address, monitor->fm_mode) +
                           ".");
 
@@ -161,7 +158,7 @@ bool COptions::visitBinaryFile(const string_q& path, void* data) {
                 CAddressRecord_base* addrsOnFile =
                     reinterpret_cast<CAddressRecord_base*>(rawData + sizeof(CHeaderRecord_base));
                 CAppearance_base* blocksOnFile = reinterpret_cast<CAppearance_base*>(&addrsOnFile[nAddrs]);
-                options->stats.nRecords += found->cnt;
+                options->stats.nTotalHits += found->cnt;
                 for (size_t i = found->offset; i < found->offset + found->cnt; i++) {
                     CAppearance_base item(blocksOnFile[i].blk, blocksOnFile[i].txid);
                     items.push_back(item);
@@ -169,7 +166,7 @@ bool COptions::visitBinaryFile(const string_q& path, void* data) {
 
                 if (items.size()) {
                     lockSection();
-                    monitor->writeAnArray(items);
+                    monitor->writeMonitorArray(items);
                     unlockSection();
                 }
             } else {
@@ -179,7 +176,7 @@ bool COptions::visitBinaryFile(const string_q& path, void* data) {
     }
 
     for (auto monitor : possibles)
-        monitor.writeLastBlock(fileRange.second + 1);
+        monitor.writeLastBlockInMonitor(fileRange.second + 1);
 
     if (chunk) {
         chunk->Release();
@@ -204,15 +201,26 @@ bool getIndexChunkFromIPFS(const string_q& chunk) {
 }
 
 //---------------------------------------------------------------
-bool COptions::establishIndexChunk(const string_q& fileName) {
-    ENTER("establishIndexChunk")
-    if (!fileExists(fileName)) {
-        LOG_INFO(bRed, fileName, " not found.", bGreen, " Retreiving from IPFS.", cOff);
-        CPinnedChunk pin;
-        if (!pinlib_getChunkByHash(pinList, substitute(substitute(fileName, indexFolder_finalized, ""), ".bin", ""),
-                                   pin)) {
-            cerr << "Could not retrieve file from IPFS: " << fileName << endl;
+bool COptions::establishIndexChunk(const string_q& fullPathToChunk) {
+    if (fileExists(fullPathToChunk))
+        return true;
+
+    string_q fileName = substitute(substitute(fullPathToChunk, indexFolder_finalized, ""), ".bin", "");
+    static CPinnedChunkArray pins;
+    if (pins.size() == 0) {
+        if (!pinlib_readManifest(pins)) {
+            LOG_ERR("Could not read the manifest.");
+            return false;
         }
     }
-    EXIT_NOMSG(fileExists(fileName));
+    CPinnedChunk pin;
+    if (pinlib_findChunk(pins, fileName, pin)) {
+        LOG_PROGRESS(cGreen + "Unchaining-index", fileRange.first, listRange.second, " from IPFS" + cOff);
+        if (!pinlib_getChunkFromRemote(pin, CHUNK_TYPE, .25))
+            LOG_ERR("Could not retrieve file from IPFS: ", fullPathToChunk);
+    } else {
+        LOG_ERR("Could not find file in manifest: ", fullPathToChunk);
+    }
+
+    return fileExists(fullPathToChunk);
 }

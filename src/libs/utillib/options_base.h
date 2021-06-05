@@ -1,7 +1,7 @@
 #pragma once
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -47,54 +47,49 @@
 //-----------------------------------------------------------------------------
 namespace qblocks {
 
+class COption;
+
+//-----------------------------------------------------------------------------
 typedef bool (*NAMEFUNC)(CAccountName& name, void* data);
 typedef bool (*NAMEVALFUNC)(CNameValue& pair, void* data);
 typedef bool (*UINT64VISITFUNC)(uint64_t num, void* data);
 typedef uint64_t (*HASHFINDFUNC)(const hash_t& hash, void* data);
+typedef map<address_t, CAccountName> CAddressNameMap;
 
-class COption;
+//-----------------------------------------------------------------------------
 class COptionsBase {
+    CAddressNameMap tokenMap;
+
   public:
-    CErrorStringMap errStrs;
-    CAddressWeiMap prefundWeiMap;
+    // TODO(tjayrush): All of these can (and should) be moved to expContext as it would be available to things other
+    // TODO(tjayrush): than options. See fmtMap and tsMemMap for examples
     CAddressBoolMap maliciousMap;
     CAddressBoolMap airdropMap;
+    CAddressNameMap namesMap;
 
+    CStringArray commandLines;
     CStringArray arguments;
+    CStringArray notes;
+    CErrorStringMap usageErrs;
     CStringArray errors;
+
     // TODO(tjayrush): global data
+    uint64_t minArgs;
     uint32_t enableBits;
     bool isReadme;
     bool isRaw;
     bool isVeryRaw;
+    bool noHeader;
     bool mocked;
-    bool isNoHeader;
-    CStringArray crudCommands;
+    bool firstOut;
+    bool freshenOnly;
     string_q overrideStr;
+    CStringArray crudCommands;
     bool isCrudCommand(void) const {
         return crudCommands.size() > 0;
     }
-    blkrange_t scanRange;
-    CStringArray notes;
-
-    bool isRedirected(void) const;
-
-    string_q getOutputFn(void) const {
-        return rd_outputFilename;
-    }
-
-  private:
-    streambuf* coutSaved;   // saves original cout buffer
-    ofstream outputStream;  // the redirected stream (if any)
-    void closeRedirect(void);
-    string_q rd_outputFilename;
-    bool rd_zipOnClose;
 
   public:
-    CStringArray commandLines;
-    uint64_t minArgs;
-    CRuntimeClass* sorts[5];
-
     COptionsBase(void);
     virtual ~COptionsBase(void);
 
@@ -102,11 +97,17 @@ class COptionsBase {
     static string_q g_progName;
     void setProgName(const string_q& name);
     string_q getProgName(void) const;
+
+    virtual bool parseArguments(string_q& command) = 0;
     bool prepareArguments(int argc, const char* argv[]);
     bool prePrepareArguments(CStringArray& separatedArgs_, int argCountIn, const char* argvIn[]);
-    virtual bool parseArguments(string_q& command) = 0;
     bool builtInCmd(const string_q& arg);
     bool standardOptions(string_q& cmdLine);
+    bool confirmEnum(const string_q& name, string_q& value, const string_q& arg) const;
+    bool confirmBlockNum(const string_q& name, blknum_t& value, const string_q& arg, blknum_t latest) const;
+    bool confirmUint(const string_q& name, uint64_t& value, const string_q& arg) const;
+    bool confirmDouble(const string_q& name, double& value, const string_q& arg) const;
+    bool confirmUint(const string_q& name, uint32_t& value, const string_q& arg) const;
 
     // supporting special block names
     static CNameValueArray specials;
@@ -115,7 +116,6 @@ class COptionsBase {
     static bool forEverySpecialBlock(NAMEVALFUNC func, void* data);
 
     // supporting named accounts
-    CAccountNameArray namedAccounts;
     bool getNamedAccount(CAccountName& acct, const string_q& addr);
     bool loadNames(void);
     string_q findNameByAddress(const string_q& addr);
@@ -126,8 +126,10 @@ class COptionsBase {
     void optionOff(uint32_t q);
     void optionOn(uint32_t q);
 
-    string_q expandOption(string_q& arg);
+    // usage related
     bool usage(const string_q& errMsg = "") const;
+    bool flag_required(const string_q& command) const;
+    bool invalid_option(const string_q& arg) const;
     string_q usageStr(const string_q& errMsg = "") const;
     string_q purpose(void) const;
     string_q options(void) const;
@@ -137,31 +139,36 @@ class COptionsBase {
     string_q get_notes(void) const;
     string_q format_notes(const CStringArray& strs) const;
 
-    bool confirmEnum(const string_q& name, string_q& value, const string_q& arg) const;
-    bool confirmBlockNum(const string_q& name, blknum_t& value, const string_q& arg, blknum_t latest) const;
-    bool confirmUint(const string_q& name, uint64_t& value, const string_q& arg) const;
-    bool confirmDouble(const string_q& name, double& value, const string_q& arg) const;
-    inline bool confirmUint(const string_q& name, uint32_t& value, const string_q& arg) const {
-        value = (uint32_t)NOPOS;
-        uint64_t temp;
-        if (!confirmUint(name, temp, arg))
-            return false;
-        value = (uint32_t)temp;
-        return true;
-    }
     const COption* findParam(const string_q& name) const;
-    void setSorts(CRuntimeClass* c1, CRuntimeClass* c2, CRuntimeClass* c3);
+    string_q expandOption(string_q& arg);
+    bool isBadSingleDash(const string_q& arg) const;
+
+    bool isRedirected(void) const;
+    string_q getOutputFn(void) const {
+        return rd_outputFilename;
+    }
+
+    bool findToken(CAccountName& acct, const address_t& addr);
 
   protected:
-    void configureDisplay(const string_q& tool, const string_q& dataType, const string_q& defFormat,
-                          const string_q& meta = "");
-    void registerOptions(size_t nP, COption const* pP);
-    virtual void Init(void) = 0;
     const COption* pParams;
     size_t cntParams;
     string_q hiUp1;
     string_q hiUp2;
     string_q hiDown;
+
+    virtual void Init(void) = 0;
+    virtual bool Mocked(const string_q& which);
+    void configureDisplay(const string_q& tool, const string_q& dataType, const string_q& defFormat,
+                          const string_q& meta = "");
+    void registerOptions(size_t nP, COption const* pP);
+
+  private:
+    streambuf* coutSaved;   // saves original cout buffer
+    ofstream outputStream;  // the redirected stream (if any)
+    void closeRedirect(void);
+    string_q rd_outputFilename;
+    bool rd_zipOnClose;
 };
 
 //--------------------------------------------------------------------------------
@@ -179,7 +186,7 @@ class CDefaultOptions : public COptionsBase {
 //--------------------------------------------------------------------------------
 class COption {
   public:
-    string_q shortName;
+    string_q hotKey;
     string_q longName;
     string_q description;
     string_q permitted;
@@ -207,6 +214,11 @@ typedef enum { UNTIMED = 0, HOURLY, DAILY, WEEKLY, MONTHLY, QUARTERLY, ANNUALLY 
 class CToml;
 extern const CToml* getGlobalConfig(const string_q& name = "");
 
+inline bool listBlocks(uint64_t bn, void* data) {
+    CUintArray* array = (CUintArray*)data;
+    array->push_back(bn);
+    return true;
+}
 class COptionsBlockList {
   public:
     CBlockNumArray numList;
@@ -223,8 +235,18 @@ class COptionsBlockList {
     string_q parseBlockList_inner(const string_q& arg, blknum_t latest);
     COptionsBlockList(void);
     bool forEveryBlockNumber(UINT64VISITFUNC func, void*) const;
-    bool hasBlocks(void) const {
-        return (hashList.size() || numList.size() || (start != stop));
+    bool empty(void) const {
+        return !(hashList.size() || numList.size() || (start != stop));
+    }
+    size_t size(void) const {
+        CUintArray nums;
+        forEveryBlockNumber(listBlocks, &nums);
+        return nums.size();
+    }
+    uint64_t operator[](size_t offset) const {
+        CUintArray nums;
+        forEveryBlockNumber(listBlocks, &nums);
+        return nums[offset];
     }
     bool isInRange(blknum_t bn) const;
     blknum_t parseBlockOption(string_q& msg, blknum_t lastBlock, direction_t offset, bool& hasZero) const;
@@ -237,9 +259,17 @@ class COptionsTransList {
     string_q parseTransList(const string_q& arg);
     COptionsTransList(void);
     string_q int_2_Str(void) const;
-    bool hasTrans(void) const {
-        return !queries.empty();
+    bool empty(void) const {
+        return queries.empty();
     }
+    size_t size(void) const {
+        return countOf(queries, '|');
+    }
+    string_q operator[](size_t offset) const {
+        CStringArray parts;
+        explode(parts, queries, '|');
+        return parts[offset];
+    };
 };
 
 extern bool prepareEnv(int argc, const char* argv[]);
@@ -251,4 +281,6 @@ inline bool isReserved(const string_q& command) {
         "wei|ether|dollars|parity|cmd|mocked|api_mode|to_file|file|";
     return contains(STR_RESERVED, "|" + command + "|");
 }
+extern map<string_q, string_q> progNameMap;
+
 }  // namespace qblocks

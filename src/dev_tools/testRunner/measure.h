@@ -1,7 +1,7 @@
 #pragma once
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -12,8 +12,8 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 /*
- * This file was generated with makeClass. Edit only those parts of the code inside
- * of 'EXISTING_CODE' tags.
+ * Parts of this file were generated with makeClass --run. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
  */
 #include "etherlib.h"
 
@@ -27,6 +27,8 @@ class CMeasure : public CBaseNode {
   public:
     string_q git_hash;
     string_q date;
+    string_q machine;
+    string_q node;
     string_q epoch;
     string_q group;
     string_q cmd;
@@ -44,23 +46,16 @@ class CMeasure : public CBaseNode {
     DECLARE_NODE(CMeasure);
 
     // EXISTING_CODE
-    double avgSecs(void) const {
-        return totSecs / nTests;
-    }
-    CMeasure(const string_q& g, const string_q& c, const string_q& t) {
-        initialize();
-        git_hash = "git_" + string_q(GIT_COMMIT_HASH).substr(0, 10);
-        date = Now().Format(FMT_EXPORT);
-        epoch = getGlobalConfig("testRunner")->getConfigStr("settings", "test_epoch", "E-08");
-        group = g;
-        cmd = c;
-        type = t;
-    }
+    bool allPassed;
+    CMeasure(const string_q& g, const string_q& c, const string_q& t);
     CMeasure& operator+=(const CMeasure& m) {
         nTests += m.nTests;
         nPassed += m.nPassed;
         totSecs += m.totSecs;
         return *this;
+    }
+    double avgSecs(void) const {
+        return totSecs / (double)nTests;
     }
     // EXISTING_CODE
     bool operator==(const CMeasure& it) const;
@@ -116,6 +111,8 @@ inline void CMeasure::initialize(void) {
 
     git_hash = "";
     date = "";
+    machine = "";
+    node = "";
     epoch = "";
     group = "";
     cmd = "";
@@ -125,6 +122,7 @@ inline void CMeasure::initialize(void) {
     totSecs = 0.0;
 
     // EXISTING_CODE
+    allPassed = false;
     // EXISTING_CODE
 }
 
@@ -135,6 +133,8 @@ inline void CMeasure::duplicate(const CMeasure& me) {
 
     git_hash = me.git_hash;
     date = me.date;
+    machine = me.machine;
+    node = me.node;
     epoch = me.epoch;
     group = me.group;
     cmd = me.cmd;
@@ -144,6 +144,7 @@ inline void CMeasure::duplicate(const CMeasure& me) {
     totSecs = me.totSecs;
 
     // EXISTING_CODE
+    allPassed = me.allPassed;
     // EXISTING_CODE
 }
 

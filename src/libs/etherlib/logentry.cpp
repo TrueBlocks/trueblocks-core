@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -11,8 +11,8 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 /*
- * This file was generated with makeClass. Edit only those parts of the code inside
- * of 'EXISTING_CODE' tags.
+ * Parts of this file were generated with makeClass --run. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
  */
 #include "logentry.h"
 #include "etherlib.h"
@@ -371,7 +371,7 @@ string_q nextLogentryChunk_custom(const string_q& fieldIn, const void* dataPtr) 
             // EXISTING_CODE
             case 'c':
                 if (fieldIn % "compressedLog")
-                    return stripWhitespace(log->articulatedLog.compressed());
+                    return log->articulatedLog.compressed("");
                 break;
             case 't':
                 if (fieldIn % "topic0") {
@@ -411,7 +411,7 @@ string_q nextLogentryChunk_custom(const string_q& fieldIn, const void* dataPtr) 
 bool CLogEntry::readBackLevel(CArchive& archive) {
     bool done = false;
     // EXISTING_CODE
-    if (m_schema <= getVersionNum(0, 6, 4)) {
+    if (m_schema < getVersionNum(0, 6, 5)) {
         // topic_t changed from biguint_t to string_q
         archive >> address;
         archive >> data;

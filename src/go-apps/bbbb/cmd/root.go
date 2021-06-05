@@ -3,6 +3,7 @@ package cmd
 import (
 	"fmt"
 	"os"
+	"runtime"
 	"strings"
 
 	"github.com/spf13/cobra"
@@ -13,11 +14,11 @@ import (
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
-	Use:   "bbbb",
+	Use:   "blaze",
 	Short: "Build, query, or share an index of Ethereum addresses per block",
 	Long: `
 Description:
-  Bbbb is an internal-use-only component called by 'blockScrape' to 
+  Blaze is an internal-use-only component called by 'blockScrape' to 
   index blocks from the last visited block (startBlock) to the front
   of the chain (or for nBlocks if specified). It accumulates an index
   of every address as it appears anywhere in the data. You may
@@ -59,7 +60,7 @@ func init() {
 	cobra.OnInitialize(initConfig)
 
 	rootCmd.PersistentFlags().StringVarP(&Options.rpcProvider, "rpcProvider", "r", "http://localhost:8545", "URL to the node's RPC")
-	rootCmd.PersistentFlags().StringVarP(&Options.indexPath, "indexPath", "c", "", "The location of TrueBlocks' appearance cache (default \"~/.quickBlocks/cache/addr_index\")")
+	rootCmd.PersistentFlags().StringVarP(&Options.indexPath, "indexPath", "c", "", "The location of TrueBlocks' appearance cache (default \"$CONFIG/unchained\")")
 	rootCmd.PersistentFlags().IntVarP(&Options.startBlock, "startBlock", "s", 0, "First block to visit (required)")
 	rootCmd.PersistentFlags().IntVarP(&Options.nBlocks, "nBlocks", "n", 0, "The number of blocks to scrape (required)")
 	rootCmd.PersistentFlags().IntVarP(&Options.nBlockProcs, "nBlockProcs", "b", 20, "The number of block processors to create (required)")
@@ -80,8 +81,18 @@ func initConfig() {
 		os.Exit(1)
 	}
 
-	viper.AddConfigPath(home + "/.quickBlocks")
-	viper.SetConfigName("quickBlocks")
+	configPath := "<unset>"
+    // TODO(tjayrush): This should read XDG_DATA_HOME and if the folder exists, use it
+	if (runtime.GOOS == "darwin") {
+		configPath = home + "/Library/Application Support/TrueBlocks"
+	} else if (runtime.GOOS == "linux") {
+		configPath = home + "/.local/share/trueblocks"
+	} else {
+		fmt.Println("Windows not supported.")
+		// TODO(tjayrush): This should fail without proceeding
+	}
+	viper.AddConfigPath(configPath)
+	viper.SetConfigName("trueBlocks")
 	viper.SetConfigType("toml")
 	err = viper.ReadInConfig()
 	if err != nil {
@@ -110,10 +121,7 @@ func initConfig() {
 
 	Options.indexPath = viper.GetString("settings.indexPath")
 	if Options.indexPath == "" {
-		Options.indexPath = viper.GetString("settings.cachePath") + "addr_index"
-		if Options.indexPath == "" {
-			Options.indexPath = home + "/.quickBlocks/cache/addr_index/"
-		}
+		Options.indexPath = configPath + "/unchained/"
 	}
 	if Options.indexPath[len(Options.indexPath)-1] != '/' {
 		Options.indexPath += "/"
@@ -130,18 +138,18 @@ func initConfig() {
 	}
 
 	if (Options.verbose > 8) {
-		fmt.Println("bbbb.rpcProvider: ", Options.rpcProvider);
-		fmt.Println("bbbb.indexPath:   ", Options.indexPath);
-		fmt.Println("bbbb.ripePath:    ", Options.ripePath);
-		fmt.Println("bbbb.unripePath:  ", Options.unripePath);
+		fmt.Println("blaze.rpcProvider: ", Options.rpcProvider);
+		fmt.Println("blaze.indexPath:   ", Options.indexPath);
+		fmt.Println("blaze.ripePath:    ", Options.ripePath);
+		fmt.Println("blaze.unripePath:  ", Options.unripePath);
 	}
 
 	if (Options.verbose > 4) {
-		fmt.Println("bbbb.startBlock:  ", Options.startBlock);
-		fmt.Println("bbbb.nBlocks:     ", Options.nBlocks);
-		fmt.Println("bbbb.nBlockProcs: ", Options.nBlockProcs);
-		fmt.Println("bbbb.nAddrProcs:  ", Options.nAddrProcs);
-		fmt.Println("bbbb.ripeBlock:   ", Options.ripeBlock);
-		fmt.Println("bbbb.verbose:     ", Options.verbose);
+		fmt.Println("blaze.startBlock:  ", Options.startBlock);
+		fmt.Println("blaze.nBlocks:     ", Options.nBlocks);
+		fmt.Println("blaze.nBlockProcs: ", Options.nBlockProcs);
+		fmt.Println("blaze.nAddrProcs:  ", Options.nAddrProcs);
+		fmt.Println("blaze.ripeBlock:   ", Options.ripeBlock);
+		fmt.Println("blaze.verbose:     ", Options.verbose);
 	}
 }

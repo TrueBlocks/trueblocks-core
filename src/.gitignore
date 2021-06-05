@@ -2,7 +2,6 @@ zarchive
 bin
 build
 design.txt
-#makefile
 *.mak
 *.a
 *.twb

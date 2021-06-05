@@ -12,7 +12,3 @@ add_subdirectory(utillib)
 add_subdirectory(etherlib)
 add_subdirectory(acctlib)
 add_subdirectory(pinlib)
-
-# Headers installation steps
-file(GLOB HEADER_FILES "utillib/*.h" "etherlib/*.h" "acctlib/*.h" "pinlib/*.h")
-install (FILES ${HEADER_FILES} DESTINATION include)

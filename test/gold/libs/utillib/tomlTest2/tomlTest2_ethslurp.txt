@@ -2,12 +2,13 @@ tomlTest2 argc: 2 [1:ethslurp.toml]
 tomlTest2 ethslurp.toml 
 tests/ethslurp.toml
 [version]
-current = "0.8.4-alpha"
+current = "0.9.4-alpha"
 
 [settings]
 api_provider = "EtherScan"
 api_url = "http://etherscan.io/apis"
 api_key = "<NOT_SET>"
+
 
 [display]
 fmt_fieldList = ""

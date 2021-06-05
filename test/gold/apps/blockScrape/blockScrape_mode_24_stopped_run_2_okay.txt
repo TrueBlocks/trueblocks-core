@@ -1,6 +1,5 @@
 blockScrape argc: 2 [1:run] 
 blockScrape run 
-TIME ~ CLOCK - <INFO>  : mode: run
 TIME ~ CLOCK - : 8------Current state stopped.
 { "status": "running" }
 TIME ~ CLOCK - : 4-----changing state: stopped --> running
@@ -14,7 +13,6 @@ TIME ~ CLOCK - : 8------Current state running.
   "n_block_procs": 10,
   "n_addr_procs": 20,
   "pin": 0,
-  "publish": 0,
   "current": running,
 }
 TIME ~ CLOCK - : 8------Current state running.

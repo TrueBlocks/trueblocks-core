@@ -1,18 +1,5 @@
-acctExport argc: 11 [1:0x1234567890123456789012345678901234567890] [2:0x001d14804b399c6ef80e64576f657660804fec0b] [3:--appearances] [4:--start] [5:3000000] [6:--end] [7:3375498] [8:--fmt] [9:csv] [10:--no_header] 
-acctExport 0x1234567890123456789012345678901234567890 0x001d14804b399c6ef80e64576f657660804fec0b --appearances --start 3000000 --end 3375498 --fmt csv --no_header 
-TIME ~ CLOCK - <INFO>  : appearances: true
-TIME ~ CLOCK - <INFO>  : skip_ddos: true
-TIME ~ CLOCK - <INFO>  : Monitor found for: 0x1234567890123456789012345678901234567890
-TIME ~ CLOCK - <INFO>  : Last visited block: 11854827
-TIME ~ CLOCK - <INFO>  : Monitor found for: 0x001d14804b399c6ef80e64576f657660804fec0b
-TIME ~ CLOCK - <INFO>  : Last visited block: 11854827
-TIME ~ CLOCK - <INFO>  : stats.nFiles: --value--
-TIME ~ CLOCK - <INFO>  : stats.nSkipped: --value--
-TIME ~ CLOCK - <INFO>  : nMonitors: 2
-TIME ~ CLOCK - <INFO>  : exportRange.first: 3000000
-TIME ~ CLOCK - <INFO>  : exportRange.second: 3375498
-TIME ~ CLOCK - <INFO>  : listRange.first: 11854827
-TIME ~ CLOCK - <INFO>  : listRange.second: --latest--
+acctExport argc: 11 [1:0x1234567890123456789012345678901234567890] [2:0x001d14804b399c6ef80e64576f657660804fec0b] [3:--first_block] [4:3000000] [5:--last_block] [6:3375498] [7:--appearances] [8:--fmt] [9:csv] [10:--no_header] 
+acctExport 0x1234567890123456789012345678901234567890 0x001d14804b399c6ef80e64576f657660804fec0b --first_block 3000000 --last_block 3375498 --appearances --fmt csv --no_header 
 "0x1234567890123456789012345678901234567890","3375495","2"
 "0x1234567890123456789012345678901234567890","3375495","12"
 "0x1234567890123456789012345678901234567890","3375495","13"

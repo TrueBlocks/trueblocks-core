@@ -1,9 +1,6 @@
 {
   "data": [
     {
-      "tags": ""
-    },
-    {
       "tags": "30-Contracts"
     },
     {
@@ -49,6 +46,9 @@
       "tags": "30-Contracts:Set Prototcol"
     },
     {
+      "tags": "30-Contracts:TheGraph"
+    },
+    {
       "tags": "30-Contracts:dAppNode"
     },
     {
@@ -74,6 +74,9 @@
     },
     {
       "tags": "35-Pool Together"
+    },
+    {
+      "tags": "35-TheCyber:Friends"
     },
     {
       "tags": "36-Balancer"

@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -20,6 +20,7 @@ ostringstream slow;
 CMeasure total("all", "all", "all");
 CStringArray fails;
 extern const char* STR_SCREEN_REPORT;
+string_q perf_fmt;
 
 //-----------------------------------------------------------------------
 int main(int argc, const char* argv[]) {
@@ -43,9 +44,12 @@ int main(int argc, const char* argv[]) {
         for (auto testName : options.tests) {
             string_q path = nextTokenClear(testName, '/');
             LOG1("Processing file: ", path);
-            options.cleanTest(path, testName);
-            if (options.modes & API)
-                options.cleanTest(path, testName + "/api_tests");
+            if (options.full_test) {
+                // only clean if we're testing all
+                options.cleanTest(path, testName);
+                if (options.modes & API)
+                    options.cleanTest(path, testName + "/api_tests");
+            }
 
             string_q testFile = testFolder + path + "/" + testName + ".csv";
             if (!fileExists(testFile))
@@ -76,8 +80,26 @@ int main(int argc, const char* argv[]) {
                 }
 
                 if (line.empty() || ignore1 || ignore2 || ignore3 || ignore4) {
-                    if (ignore2 && !options.ignoreOff)
+                    if (ignore2 && !options.ignoreOff) {
                         cerr << iBlue << "   # " << line.substr(0, 120) << cOff << endl;
+                        CTestCase test(line, 0);
+                        test.goldPath = substitute(getCWD(), "/test/gold/dev_tools/testRunner/",
+                                                   "/test/gold/" + test.path + "/" + test.tool + "/" + test.fileName);
+                        // if the gold file exists, copy the test case back to working (it may have been removed)
+                        if (fileExists(test.goldPath)) {
+                            test.workPath =
+                                substitute(getCWD(), "/test/gold/dev_tools/testRunner/",
+                                           "/test/working/" + test.path + "/" + test.tool + "/" + test.fileName);
+                            copyFile(test.goldPath, test.workPath);
+                        }
+                        replace(test.goldPath, "/" + test.tool + "/", "/" + test.tool + "/api_tests/");
+                        if (fileExists(test.goldPath)) {
+                            test.workPath = substitute(
+                                getCWD(), "/test/gold/dev_tools/testRunner/",
+                                "/test/working/" + test.path + "/" + test.tool + "/api_tests/" + test.fileName);
+                            copyFile(test.goldPath, test.workPath);
+                        }
+                    }
                     // do nothing
 
                 } else {
@@ -97,6 +119,8 @@ int main(int argc, const char* argv[]) {
             }
             sort(testArray.begin(), testArray.end());
 
+            expContext().exportFmt = CSV1;
+            perf_fmt = substitute(cleanFmt(STR_DISPLAY_MEASURE), "\"", "");
             if (!options.doTests(testArray, path, testName, API))
                 return 1;
             if (!options.doTests(testArray, path, testName, CMD))
@@ -113,19 +137,24 @@ int main(int argc, const char* argv[]) {
     }
 
     if (options.report && options.skip == 1) {
-        bool allPassed = total.nTests == total.nPassed;
-        perf << total.Format(options.perf_format) << endl;
-        string_q perf_result = perf.str();
-        replaceAll(perf_result, ",E-", "," + toLower(getHostName()) + "," + (allPassed ? "E" : "F") + "-");
-        cerr << "    " << substitute(perf_result, "\n", "\n    ") << endl;
-        if (options.full_test && options.report)
-            appendToAsciiFile(configPath(string_q("performance") + (allPassed ? "" : "_failed") + ".csv"), perf_result);
-        appendToAsciiFile(configPath("performance_slow.csv"), slow.str());
-        string_q copyPath = getGlobalConfig()->getConfigStr("settings", "copyPath", "<NOT_SET>");
-        if (folderExists(copyPath)) {
-            CStringArray files = {"performance.csv", "performance_failed.csv", "performance_slow.csv",
-                                  "performance_scraper.csv"};
-            for (auto file : files) {
+        total.allPassed = total.nTests == total.nPassed;
+        perf << total.Format(perf_fmt) << endl;
+        cerr << "    " << substitute(perf.str(), "\n", "\n    ") << endl;
+        if (options.full_test && options.report) {
+            string_q perfFile = configPath(string_q("performance") + (total.allPassed ? "" : "_failed") + ".csv");
+            appendToAsciiFile(perfFile, perf.str());
+            appendToAsciiFile(configPath("performance_slow.csv"), slow.str());
+        } else {
+            LOG_WARN(cRed, "Performance results not written because not full test", cOff);
+        }
+    }
+
+    string_q copyPath = getGlobalConfig("testRunner")->getConfigStr("settings", "copyPath", "<NOT_SET>");
+    if (folderExists(copyPath)) {
+        CStringArray files = {"performance.csv", "performance_failed.csv", "performance_slow.csv",
+                              "performance_scraper.csv"};
+        for (auto file : files) {
+            if (fileExists(configPath(file))) {
                 if (fileExists(configPath(file))) {
                     ostringstream copyCmd;
                     copyCmd << "cp -f \"";
@@ -133,7 +162,6 @@ int main(int argc, const char* argv[]) {
                     // clang-format off
                     if (system(copyCmd.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings
                     // clang-format on
-                    // cerr << copyCmd.str() << endl;
                 }
             }
         }
@@ -176,10 +204,15 @@ bool COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, cons
         } else {
             ostringstream cmd;
 
-            CStringArray envLines;
+            CStringArray fileLines;
             string_q envFile = substitute(test.goldPath, "/api_tests", "") + test.name + ".env";
             if (fileExists(envFile))
-                asciiFileToLines(envFile, envLines);
+                asciiFileToLines(envFile, fileLines);
+
+            CStringArray envLines;
+            for (auto f : fileLines)
+                if (!startsWith(f, "#"))
+                    envLines.push_back(f);
 
             if (cmdTests) {
                 string_q env = substitute(substitute(linesToString(envLines, '|'), " ", ""), "|", " ");
@@ -207,9 +240,9 @@ bool COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, cons
             // To run the test, we cd into the gold path (so we find the test files), but we send results to working
             // folder
             string_q goldApiPath = substitute(test.goldPath, "/api_tests", "");
-            string_q theCmd = "cd " + goldApiPath + " ; " + cmd.str();
+            string_q theCmd = "cd \"" + goldApiPath + "\" ; " + cmd.str();
             if (test.builtin)
-                theCmd = "cd " + goldApiPath + " ; " + test.options;
+                theCmd = "cd \"" + goldApiPath + "\" ; " + test.options;
             LOG4(theCmd);
 
             string_q customized =
@@ -249,10 +282,10 @@ bool COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, cons
 
             string_q oldFn = test.workPath + test.fileName;
             string_q oldText = asciiFileToString(oldFn);
-            if (contains(oldText, "\"id\":") && contains(oldFn, "/tools/")) {
+            if (contains(oldText, "\"id\":") && contains(oldFn, "/tools/") && !contains(oldFn, "classes")) {
                 // This crazy shit is because we want to pass tests when running against different nodes (Parity,
                 // TurboGeth, etc.) so we have to remove some stuff and then sort the data (after deliniating it)
-                // soit matches more easily
+                // so it matches more easily
                 while (contains(oldText, "sealFields")) {
                     replaceAll(oldText, "\"sealFields\":", "|");
                     string_q pre = nextTokenClear(oldText, '|');
@@ -269,9 +302,10 @@ bool COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, cons
                     if (last != line) {
                         bool has = false;
                         CStringArray removes = {"author",
+                                                "sealFields",
                                                 "chainId",
-                                                "creates",
                                                 "condition",
+                                                "creates",
                                                 "publicKey",
                                                 "raw",
                                                 "standardV",
@@ -279,12 +313,14 @@ bool COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, cons
                                                 "root",
                                                 "mined",
                                                 "\"type\":\"\"",
+                                                "\"type\":\"0x0\"",
+                                                "\"type\": \"0x0\"",
                                                 "\"status\":\"0x1\"",
                                                 "\"status\": \"0x1\""};
                         for (auto r : removes)
                             has = (has || contains(line, r));
                         if (!has && startsWith(line, "\"") && !startsWith(line, "\"0x"))
-                            os << line << endl;
+                            os << substitute(line, "\": ", "\":") << endl;
                     }
                     last = line;
                 }
@@ -349,8 +385,9 @@ bool COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, cons
 
     total += measure;
     if (measure.nTests) {
+        measure.allPassed = measure.nTests == measure.nPassed;
         cerr << measure.Format(STR_SCREEN_REPORT) << endl;
-        perf << measure.Format(perf_format) << endl;
+        perf << measure.Format(perf_fmt) << endl;
     }
 
     return true;

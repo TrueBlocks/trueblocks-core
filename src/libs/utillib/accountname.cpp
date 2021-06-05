@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -11,8 +11,8 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 /*
- * This file was generated with makeClass. Edit only those parts of the code inside
- * of 'EXISTING_CODE' tags.
+ * Parts of this file were generated with makeClass --run. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
  */
 #include "accountname.h"
 #include "options_base.h"
@@ -447,7 +447,7 @@ string_q nextAccountnameChunk_custom(const string_q& fieldIn, const void* dataPt
 bool CAccountName::readBackLevel(CArchive& archive) {
     bool done = false;
     // EXISTING_CODE
-    if (m_schema <= getVersionNum(0, 6, 5)) {
+    if (m_schema < getVersionNum(0, 6, 6)) {
         string_q subtags, unused5;
         bool unused2, unused3, unused4;
         archive >> tags;
@@ -505,5 +505,27 @@ const char* STR_DISPLAY_ACCOUNTNAME =
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
+//---------------------------------------------------------------------------
+extern CArchive& operator>>(CArchive& archive, CAccountNameMap& nameMap) {
+    uint64_t count;
+    archive >> count;
+    for (size_t i = 0; i < count; i++) {
+        ASSERT(i < array.capacity());
+        CAccountName item;
+        item.Serialize(archive);
+        nameMap[item.address] = item;
+    }
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+extern CArchive& operator<<(CArchive& archive, const CAccountNameMap& nameMap) {
+    uint64_t count = nameMap.size();
+    archive << count;
+    for (auto item : nameMap) {
+        item.second.SerializeC(archive);
+    }
+    return archive;
+}
 // EXISTING_CODE
 }  // namespace qblocks

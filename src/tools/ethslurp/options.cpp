@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -11,8 +11,8 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 /*
- * Parts of this file were generated with makeClass. Edit only those parts of the code
- * outside of the BEG_CODE/END_CODE sections
+ * Parts of this file were generated with makeClass --options. Edit only those parts of
+ * the code outside of the BEG_CODE/END_CODE sections
  */
 #include "options.h"
 
@@ -24,7 +24,7 @@ static const COption params[] = {
     COption("blocks", "", "list<blknum>", OPT_POSITIONAL, "an optional range of blocks to slurp"),
     COption("types", "t", "list<enum[ext*|int|token|nfts|miner|all]>", OPT_FLAG, "one or more types of transactions to request"),  // NOLINT
     COption("appearances", "p", "", OPT_SWITCH, "show only the blocknumer.tx_id appearances of the exported transactions"),  // NOLINT
-    COption("", "", "", OPT_DESCRIPTION, "Fetches data from EtherScan for an arbitrary address."),
+    COption("", "", "", OPT_DESCRIPTION, "Fetch data from EtherScan for any address."),
     // clang-format on
     // END_CODE_OPTIONS
 };
@@ -52,6 +52,8 @@ bool COptions::parseArguments(string_q& command) {
             if (!confirmEnum("types", types_tmp, arg))
                 return false;
             types.push_back(types_tmp);
+        } else if (arg == "-t" || arg == "--types") {
+            return flag_required("types");
 
         } else if (arg == "-p" || arg == "--appearances") {
             appearances = true;
@@ -59,11 +61,11 @@ bool COptions::parseArguments(string_q& command) {
         } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
-                return usage("Invalid option: " + arg);
+                return invalid_option(arg);
             }
 
         } else if (isAddress(arg)) {
-            if (!parseAddressList2(this, addrs, arg))
+            if (!parseAddressList(this, addrs, arg))
                 return false;
 
         } else {
@@ -75,11 +77,14 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     // BEG_DEBUG_DISPLAY
-    // LOG_TEST("addrs", addrs, (addrs == NOPOS));
-    // LOG_TEST("blocks", blocks, (blocks == NOPOS));
-    // LOG_TEST("types", types, (types == ""));
+    LOG_TEST_LIST("addrs", addrs, addrs.empty());
+    LOG_TEST_LIST("blocks", blocks, blocks.empty());
+    LOG_TEST_LIST("types", types, types.empty());
     LOG_TEST_BOOL("appearances", appearances);
     // END_DEBUG_DISPLAY
+
+    if (Mocked(""))
+        return false;
 
     // This will fail if we don't have a key. Let's fail early.
     getApiKey("Etherscan", "http://api.etherscan.io/apis");
@@ -112,17 +117,6 @@ bool COptions::parseArguments(string_q& command) {
     if (!establishFolder(getCachePath("slurps/")))
         return usage("Unable to create data folders at " + getCachePath("slurps/"));
 
-    // Load per address configurations if any
-    string_q customConfig = getCachePath("slurps/" + addrs[0] + ".toml");
-    if (fileExists(customConfig)) {
-        CToml perAddr("");
-        perAddr.setFilename(customConfig);
-        if (fileExists(customConfig)) {
-            perAddr.readFile(customConfig);
-            ((CToml*)getGlobalConfig("ethslurp"))->mergeFile(&perAddr);  // NOLINT
-        }
-    }
-
     if (blocks.start == 0 && blocks.stop == 0)
         blocks.stop = INT_MAX;
 
@@ -153,7 +147,6 @@ void COptions::Init(void) {
 
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
-    setSorts(GETRUNTIME_CLASS(CBlock), GETRUNTIME_CLASS(CTransaction), GETRUNTIME_CLASS(CReceipt));
     Init();
 
     UNHIDE_FIELD(CTransaction, "isError");
@@ -171,8 +164,8 @@ COptions::COptions(void) {
     // clang-format on
     // END_CODE_NOTES
 
-    // BEG_ERROR_MSG
-    // END_ERROR_MSG
+    // BEG_ERROR_STRINGS
+    // END_ERROR_STRINGS
 }
 
 //--------------------------------------------------------------------------------
@@ -213,12 +206,8 @@ bool COptions::getFormatString(const string_q& which, bool ignoreBlank, string_q
         errors.push_back("Mismatched brackets in display string '" + formatName + "': '" + ret + "'.\n");
 
     } else if (ret.empty() && !ignoreBlank) {
-        const char* ERR_NO_DISPLAY_STR =
-            "You entered an empty display string with the --format (-f) option. The format string 'fmt_[{FMT}]_file'\n"
-            "  was not found in the configuration file (which is stored here: [{CONFIG}]).\n"
-            "  Please see the full documentation for more information on display strings.";
-        errors.push_back(substitute(substitute(ERR_NO_DISPLAY_STR, "[{FMT}]", exportFormat), "[{CONFIG}]",
-                                    configPathRelative("quickBlocks.toml")));
+        const char* ERR_NO_DISPLAY_STR = "Your configuration file contains an empty display string 'fmt_[{FMT}]_file'.";
+        errors.push_back(substitute(ERR_NO_DISPLAY_STR, "[{FMT}]", exportFormat));
     }
 
     fmtOut = ret;

@@ -1,5 +1,5 @@
 enabled,mode,speed,route,path/tool,filename,post,options,opt_cmd,has_env
-on,cmd,fast,logs,tools/getLogs,preload,y,blocks = 3657480 & force,getBlock
+on,cmd,fast,logs,tools/getLogs,preload,y,blocks = 3657480 & cache,getBlocks
 on,cmd,fast,logs,tools/getLogs,README,y,@th
 on,cmd,fast,logs,tools/getLogs,help,y,@h
 on,cmd,fast,logs,tools/getLogs,help_long,y,help

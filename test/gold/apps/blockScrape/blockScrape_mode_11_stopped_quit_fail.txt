@@ -1,6 +1,5 @@
 blockScrape argc: 2 [1:quit] 
 blockScrape quit 
-TIME ~ CLOCK - <INFO>  : mode: quit
 TIME ~ CLOCK - : 8------Current state stopped.
 { "status": "stopped" }
 TIME ~ CLOCK - : 8------Current state stopped.
@@ -13,7 +12,6 @@ TIME ~ CLOCK - : 8------Current state stopped.
   "n_block_procs": 10,
   "n_addr_procs": 20,
   "pin": 0,
-  "publish": 0,
   "current": stopped,
 }
 TIME ~ CLOCK - : 8------Current state stopped.

@@ -1,7 +1,7 @@
 #pragma once
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -12,8 +12,8 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 /*
- * This file was generated with makeClass. Edit only those parts of the code inside
- * of 'EXISTING_CODE' tags.
+ * Parts of this file were generated with makeClass --run. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
  */
 #include "utillib.h"
 #include "ethstate.h"
@@ -43,6 +43,10 @@ class CEthCall : public CEthState {
     const CBaseNode* getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
+    bool checkProxy;
+    string_q getResults(void) const;
+    bool getResults(string_q& out) const;
+    bool getResults(CStringArray& out) const;
     // EXISTING_CODE
     bool operator==(const CEthCall& it) const;
     bool operator!=(const CEthCall& it) const {
@@ -102,6 +106,7 @@ inline void CEthCall::initialize(void) {
     result = CFunction();
 
     // EXISTING_CODE
+    checkProxy = true;
     // EXISTING_CODE
 }
 
@@ -117,6 +122,7 @@ inline void CEthCall::duplicate(const CEthCall& et) {
     result = et.result;
 
     // EXISTING_CODE
+    checkProxy = et.checkProxy;
     // EXISTING_CODE
 }
 
@@ -155,7 +161,5 @@ extern const char* STR_DISPLAY_ETHCALL;
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 extern bool doEthCall(CEthCall& call);
-extern bool doEthCall(const address_t& to, const string_q& encoding, const string_q& bytes, blknum_t blockNum,
-                      const CAbi& abi_spec, CFunction& output);
 // EXISTING_CODE
 }  // namespace qblocks

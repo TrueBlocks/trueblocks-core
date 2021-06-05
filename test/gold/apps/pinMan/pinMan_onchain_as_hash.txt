@@ -1,7 +1,0 @@
-pinMan argc: 3 [1:onchain] [2:--hash] 
-pinMan onchain --hash 
-TIME ~ CLOCK - <INFO>  : mode: onchain
-TIME ~ CLOCK - <INFO>  : hash: true
-TIME ~ CLOCK - <INFO>  : latestBlock:	--latest--
-TIME ~ CLOCK - <INFO>  : unchainedIndexAddr:	0xcfd7f3b24f3551741f922fd8c4381aa4e00fc8fd
-{"error":{"reason":"INVALID_API_KEYS","details":"Invalid API key provided"}}

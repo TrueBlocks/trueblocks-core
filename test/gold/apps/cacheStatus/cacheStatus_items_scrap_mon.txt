@@ -1,14 +1,12 @@
-cacheStatus argc: 7 [1:--details] [2:index] [3:--start] [4:1000000] [5:--end] [6:2200000] 
-cacheStatus --details index --start 1000000 --end 2200000 
-TIME ~ CLOCK - <INFO>  : details: true
-TIME ~ CLOCK - <INFO>  : start: 1000000
-TIME ~ CLOCK - <INFO>  : end: 2200000
+cacheStatus argc: 7 [1:--details] [2:index] [3:--test_start] [4:1000000] [5:--test_end] [6:2200000] 
+cacheStatus --details index --test_start 1000000 --test_end 2200000 
 {
   "client_version": "Client version",
   "client_ids": "chainId: 1 networkId: 1",
-  "trueblocks_version": "GHC-TrueBlocks//0.8.4-alpha--git-hash---git-ts-",
+  "trueblocks_version": "GHC-TrueBlocks//0.9.4-alpha--git-hash---git-ts-",
   "rpc_provider": "--providers--",
   "balance_provider": "--providers--",
+  "config_path": "--paths--",
   "cache_path": "--paths--",
   "index_path": "--paths--",
   "host": "--hostname-- (--username--)",
@@ -16,143 +14,8 @@ TIME ~ CLOCK - <INFO>  : end: 2200000
   "is_archive": true,
   "is_tracing": true,
   "has_eskey": true,
-  "has_pinkey": true,
   "caches": [
     {
-      "items": [
-        {
-          "type": "CIndexCacheItem",
-          "nAddresses": 81764,
-          "nAppearances": 2000001,
-          "firstAppearance": 865656,
-          "latestAppearance": 1077878,
-          "firstTs": 1453093510,
-          "latestTs": 1456745711,
-          "filename": "/--index-path--/000865656-001077878.bin",
-          "indexSizeBytes": 18289444,
-          "bloomSizeBytes": 262156
-        },
-        {
-          "type": "CIndexCacheItem",
-          "nAddresses": 84613,
-          "nAppearances": 2000018,
-          "firstAppearance": 1077879,
-          "latestAppearance": 1230970,
-          "firstTs": 1456745713,
-          "latestTs": 1459143591,
-          "filename": "/--index-path--/001077879-001230970.bin",
-          "indexSizeBytes": 18369352,
-          "bloomSizeBytes": 262156
-        },
-        {
-          "type": "CIndexCacheItem",
-          "nAddresses": 62513,
-          "nAppearances": 2000003,
-          "firstAppearance": 1230971,
-          "latestAppearance": 1374120,
-          "firstTs": 1459143675,
-          "latestTs": 1461196987,
-          "filename": "/--index-path--/001230971-001374120.bin",
-          "indexSizeBytes": 17750432,
-          "bloomSizeBytes": 262156
-        },
-        {
-          "type": "CIndexCacheItem",
-          "nAddresses": 78767,
-          "nAppearances": 2000032,
-          "firstAppearance": 1374121,
-          "latestAppearance": 1506407,
-          "firstTs": 1461196999,
-          "latestTs": 1463094697,
-          "filename": "/--index-path--/001374121-001506407.bin",
-          "indexSizeBytes": 18205776,
-          "bloomSizeBytes": 262156
-        },
-        {
-          "type": "CIndexCacheItem",
-          "nAddresses": 117442,
-          "nAppearances": 2000303,
-          "firstAppearance": 1506408,
-          "latestAppearance": 1616999,
-          "firstTs": 1463094706,
-          "latestTs": 1464681676,
-          "filename": "/--index-path--/001506408-001616999.bin",
-          "indexSizeBytes": 19290844,
-          "bloomSizeBytes": 393232
-        },
-        {
-          "type": "CIndexCacheItem",
-          "nAddresses": 136906,
-          "nAppearances": 2000014,
-          "firstAppearance": 1617000,
-          "latestAppearance": 1733038,
-          "firstTs": 1464681699,
-          "latestTs": 1466345904,
-          "filename": "/--index-path--/001617000-001733038.bin",
-          "indexSizeBytes": 19833524,
-          "bloomSizeBytes": 393232
-        },
-        {
-          "type": "CIndexCacheItem",
-          "nAddresses": 123069,
-          "nAppearances": 2000007,
-          "firstAppearance": 1733039,
-          "latestAppearance": 1853082,
-          "firstTs": 1466345908,
-          "latestTs": 1468064730,
-          "filename": "/--index-path--/001733039-001853082.bin",
-          "indexSizeBytes": 19446032,
-          "bloomSizeBytes": 393232
-        },
-        {
-          "type": "CIndexCacheItem",
-          "nAddresses": 137856,
-          "nAppearances": 2000001,
-          "firstAppearance": 1853083,
-          "latestAppearance": 1968428,
-          "firstTs": 1468064738,
-          "latestTs": 1469717272,
-          "filename": "/--index-path--/001853083-001968428.bin",
-          "indexSizeBytes": 19860020,
-          "bloomSizeBytes": 393232
-        },
-        {
-          "type": "CIndexCacheItem",
-          "nAddresses": 102157,
-          "nAppearances": 2000372,
-          "firstAppearance": 1968429,
-          "latestAppearance": 2074047,
-          "firstTs": 1469717309,
-          "latestTs": 1471230427,
-          "filename": "/--index-path--/001968429-002074047.bin",
-          "indexSizeBytes": 18863416,
-          "bloomSizeBytes": 393232
-        },
-        {
-          "type": "CIndexCacheItem",
-          "nAddresses": 83214,
-          "nAppearances": 2000006,
-          "firstAppearance": 2074048,
-          "latestAppearance": 2178215,
-          "firstTs": 1471230438,
-          "latestTs": 1472717359,
-          "filename": "/--index-path--/002074048-002178215.bin",
-          "indexSizeBytes": 18330084,
-          "bloomSizeBytes": 262156
-        },
-        {
-          "type": "CIndexCacheItem",
-          "nAddresses": 89952,
-          "nAppearances": 2000000,
-          "firstAppearance": 2178216,
-          "latestAppearance": 2275701,
-          "firstTs": 1472717362,
-          "latestTs": 1474110954,
-          "filename": "/--index-path--/002178216-002275701.bin",
-          "indexSizeBytes": 18518700,
-          "bloomSizeBytes": 262156
-        }
-      ],
       "type": "CIndexCache",
       "path": "indexPath",
       "nFiles": 0,

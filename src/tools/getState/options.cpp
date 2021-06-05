@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -11,8 +11,8 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 /*
- * Parts of this file were generated with makeClass. Edit only those parts of the code
- * outside of the BEG_CODE/END_CODE sections
+ * Parts of this file were generated with makeClass --options. Edit only those parts of
+ * the code outside of the BEG_CODE/END_CODE sections
  */
 #include "options.h"
 
@@ -26,7 +26,7 @@ static const COption params[] = {
     COption("changes", "c", "", OPT_SWITCH, "only report a balance when it changes from one block to the next"),
     COption("no_zero", "n", "", OPT_SWITCH, "suppress the display of zero balance accounts"),
     COption("call", "a", "<string>", OPT_HIDDEN | OPT_FLAG, "a bang-separated string consisting of address!4-byte!bytes"),  // NOLINT
-    COption("", "", "", OPT_DESCRIPTION, "Retrieve the balance of one or more address at the given block(s)."),
+    COption("", "", "", OPT_DESCRIPTION, "Retrieve account balance(s) for one or more addresses at given block(s)."),
     // clang-format on
     // END_CODE_OPTIONS
 };
@@ -55,6 +55,8 @@ bool COptions::parseArguments(string_q& command) {
             if (!confirmEnum("parts", parts_tmp, arg))
                 return false;
             parts.push_back(parts_tmp);
+        } else if (arg == "-p" || arg == "--parts") {
+            return flag_required("parts");
 
         } else if (arg == "-c" || arg == "--changes") {
             changes = true;
@@ -64,15 +66,17 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (startsWith(arg, "-a:") || startsWith(arg, "--call:")) {
             call = substitute(substitute(arg, "-a:", ""), "--call:", "");
+        } else if (arg == "-a" || arg == "--call") {
+            return flag_required("call");
 
         } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
-                return usage("Invalid option: " + arg);
+                return invalid_option(arg);
             }
 
         } else if (isAddress(arg)) {
-            if (!parseAddressList2(this, addrs, arg))
+            if (!parseAddressList(this, addrs, arg))
                 return false;
 
         } else {
@@ -84,16 +88,19 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     // BEG_DEBUG_DISPLAY
-    // LOG_TEST("addrs", addrs, (addrs == NOPOS));
-    // LOG_TEST("blocks", blocks, (blocks == NOPOS));
-    // LOG_TEST("parts", parts, (parts == ""));
+    LOG_TEST_LIST("addrs", addrs, addrs.empty());
+    LOG_TEST_LIST("blocks", blocks, blocks.empty());
+    LOG_TEST_LIST("parts", parts, parts.empty());
     LOG_TEST_BOOL("changes", changes);
     LOG_TEST_BOOL("no_zero", no_zero);
     LOG_TEST("call", call, (call == ""));
     // END_DEBUG_DISPLAY
 
+    if (Mocked(""))
+        return false;
+
     // Data wrangling
-    if (!blocks.hasBlocks())
+    if (blocks.empty())
         blocks.numList.push_back(newestBlock);  // use 'latest'
 
     if (!call.empty() && !parts.empty())
@@ -206,22 +213,21 @@ void COptions::Init(void) {
 
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) : CHistoryOptions() {
-    setSorts(GETRUNTIME_CLASS(CBlock), GETRUNTIME_CLASS(CTransaction), GETRUNTIME_CLASS(CReceipt));
     Init();
-    first = true;
+
     // BEG_CODE_NOTES
     // clang-format off
-    notes.push_back("`addresses` must start with '0x' and be forty two characters long.");
+    notes.push_back("An `address` must start with '0x' and be forty-two characters long.");
     notes.push_back("`blocks` may be a space-separated list of values, a start-end range, a `special`, or any combination.");  // NOLINT
     notes.push_back("If the queried node does not store historical state, the results are undefined.");
-    notes.push_back("`special` blocks are detailed under `whenBlock --list`.");
+    notes.push_back("`special` blocks are detailed under `chifra when --list`.");
     notes.push_back("`balance` is the default mode. To select a single mode use `none` first, followed by that mode.");
     notes.push_back("You may specify multiple `modes` on a single line.");
     // clang-format on
     // END_CODE_NOTES
 
-    // BEG_ERROR_MSG
-    // END_ERROR_MSG
+    // BEG_ERROR_STRINGS
+    // END_ERROR_STRINGS
 }
 
 //--------------------------------------------------------------------------------

@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -14,7 +14,6 @@
 
 extern const char* STR_DECLARATION;
 extern const char* STR_DEFAULT_ASSIGNMENT;
-extern const char* STR_OPTION_ERRSTR;
 extern const char* STR_OPTION_NOTESTR;
 extern const char* STR_OPTION_STR;
 extern const char* STR_AUTO_SWITCH;
@@ -22,6 +21,8 @@ extern const char* STR_AUTO_TOGGLE;
 extern const char* STR_AUTO_FLAG;
 extern const char* STR_AUTO_FLAG_ENUM;
 extern const char* STR_AUTO_FLAG_ENUM_LIST;
+extern const char* STR_AUTO_FLAG_STRING_LIST;
+extern const char* STR_AUTO_FLAG_ADDRESS_LIST;
 extern const char* STR_AUTO_FLAG_BLOCKNUM;
 extern const char* STR_AUTO_FLAG_UINT;
 extern const char* STR_AUTO_FLAG_DOUBLE;
@@ -30,6 +31,7 @@ extern const char* STR_BLOCKLIST_PROCESSOR;
 extern const char* STR_TXLIST_PROCESSOR;
 extern const char* STR_ADDRLIST_PROCESSOR;
 extern const char* STR_TOPICLIST_PROCESSOR;
+extern const char* STR_FOURBYTELIST_PROCESSOR;
 extern const char* STR_STRINGLIST_PROCESSOR;
 extern const char* STR_ENUMLIST_PROCESSOR;
 extern const char* STR_ENUM_PROCESSOR;
@@ -39,12 +41,18 @@ bool COptions::handle_options(void) {
     LOG_INFO(cYellow, "handling options...", cOff);
     counter = CCounter();  // reset
 
-    if (!fileExists("../src/cmd-line-options.csv"))
-        return usage("Could not find cmd-line-options.csv file in folder " + getCWD());
+    // Look for local file first
+    string_q cmdFile = "./cmd-line-options.csv";
+    if (!fileExists(cmdFile))
+        cmdFile = "../src/cmd-line-options.csv";
+
+    if (!fileExists(cmdFile))
+        return usage("Could not find cmd-line-options.csv file at " + cmdFile);
+
     // read in and prepare the options for all tools
     CStringBoolMap tools;
     CStringArray lines;
-    asciiFileToLines("../src/cmd-line-options.csv", lines);
+    asciiFileToLines(cmdFile, lines);
     for (auto line : lines) {
         if (!startsWith(line, '#')) {
             CCommandOption opt(line);
@@ -56,11 +64,13 @@ bool COptions::handle_options(void) {
     }
 
     // For each tool...
+    size_t errCnt = 1;
     for (auto tool : tools) {
         bool allAuto = true;
 
-        option_stream << "    // clang-format off" << endl;
-        notes_stream << "    // clang-format off" << endl;
+        errCnt = 1;
+        optionStream << "    // clang-format off" << endl;
+        notesStream << "    // clang-format off" << endl;
         CStringArray warnings;
         for (auto option : optionArray) {
             option.verifyOptions(warnings);
@@ -73,101 +83,114 @@ bool COptions::handle_options(void) {
                     string_q note = option.Format(STR_OPTION_NOTESTR);
                     if (note.length() > 120)
                         note += "  // NOLINT";
-                    notes_stream << note << endl;
+                    notesStream << note << endl;
 
-                } else if (option.isError) {
-                    string_q err = option.Format(STR_OPTION_ERRSTR);
+                } else if (option.isErr) {
+                    string_q err = option.Format("    usageErrs[[{COMMAND}]] = \"[{DESCRIPTION}]\";");
                     if (err.length() > 120)
                         err += "  // NOLINT";
-                    errors_stream << err << endl;
+                    errorStrStream << err << endl;
+                    errorDefStream << option.Format("#define [{COMMAND}] " + uint_2_Str(errCnt++)) << endl;
 
                 } else {
                     string_q opt = option.Format(STR_OPTION_STR);
                     if (opt.length() > 120)
                         opt += "  // NOLINT";
-                    option_stream << opt << endl;
+                    optionStream << opt << endl;
                 }
 
+                bool oneOfEm = (option.isEnum || option.isEnumList || option.isStringList || option.isAddressList ||
+                                option.isTopicList);
                 // clang-format off
                 string_q initFmt = "    [{COMMAND}] = [{DEF_VAL}];";
                 if (option.is_customizable)
                     initFmt = substitute(STR_CUSTOM_INIT, "[CTYPE]",
-                                         ((option.isEnum || option.isEnumList) ? "String"
+                                         (oneOfEm ? "String"
                                           : (option.isBool)                    ? "Bool"
                                                                                : "Int"));
                 // clang-format on
 
-                if (option.option_kind == "switch") {
+                if (option.option_type == "switch") {
                     generate_switch(option);
 
-                } else if (option.option_kind == "toggle") {
+                } else if (option.option_type == "toggle") {
                     generate_toggle(option);
 
-                } else if (option.option_kind == "flag") {
+                } else if (option.option_type == "flag") {
                     generate_flag(option);
 
-                } else if (option.option_kind == "deprecated") {
+                } else if (option.option_type == "deprecated") {
                     generate_deprecated(option);
 
-                } else if (option.option_kind == "positional") {
+                } else if (option.option_type == "positional") {
                     generate_positional(option);
                 }
             }
         }
 
         if (allAuto) {
-            auto_stream << STR_CHECK_BUILTIN << endl;
+            autoStream << STR_CHECK_BUILTIN << endl;
             size_t cnt = 0;
             for (auto pos : positionals) {
-                auto_stream << "        } else {" << endl;  // positionals live in their own frame
+                autoStream << "        } else {" << endl;  // positionals live in their own frame
                 if (positionals.size() > 1) {
                     if (cnt == 0) {
                         // adjust the first positional to seperate addresses or dates from blocks
-                        string_q str = auto_stream.str();
+                        string_q str = autoStream.str();
                         if (contains(pos, "Address"))
                             replaceReverse(str, "else {\n",
-                                           "else if (isAddress(arg)) {\n            if (!parseAddressList2(this, "
+                                           "else if (isAddress(arg)) {\n            if (!parseAddressList(this, "
                                            "addrs, arg))\n                return false;\n\n");
                         else
                             replaceReverse(pos, "} else if", "if");
-                        auto_stream.str("");
-                        auto_stream.clear();
-                        auto_stream << str;
+                        autoStream.str("");
+                        autoStream.clear();
+                        autoStream << str;
                         pos = "";
                     } else {
-                        replace(pos, "} else if", "if");
-                        auto_stream << pos;
+                        if (contains(pos, "Topic")) {
+                            // adjust the first positional to seperate addresses or dates from blocks
+                            string_q str = autoStream.str();
+                            replaceReverse(str, "else {\n",
+                                           "else if (isTopic(arg)) {\n            if (!parseTopicList2(this, "
+                                           "topics, arg))\n                return false;\n\n");
+                            autoStream.str("");
+                            autoStream.clear();
+                            autoStream << str;
+                            pos = "";
+                        } else {
+                            replace(pos, "} else if", "if");
+                            autoStream << pos;
+                        }
                     }
                     cnt++;
                 } else {
                     replace(pos, "} else if", "if");
-                    auto_stream << pos;
+                    autoStream << pos;
                 }
             }
         }
-        notes_stream << "    // clang-format on" << endl;
-        option_stream << "    // clang-format on" << endl;
+        notesStream << "    // clang-format on" << endl;
+        optionStream << "    // clang-format on" << endl;
 
         if (warnings.size() > 0) {
             for (auto warning : warnings)
                 LOG_WARN(warning);
+
         } else {
             string_q fn = "../src/" + tool.first + "/options.cpp";
-            if (!test) {
-                writeCode(substitute(fn, ".cpp", ".h"));
-                writeCode(fn);
-            }
+            if (tool.first == "/./")
+                fn = "./options.cpp";
+            writeCode(substitute(fn, ".cpp", ".h"));
+            writeCode(fn);
         }
+
         clearStreams();
     }
-    if (test) {
-        counter.nProcessed = 0;
-        LOG_WARN("Testing only - no files written");
-    }
+
     LOG_INFO(cYellow, "makeClass --options", cOff, " processed ", counter.nVisited, " files (changed ",
              counter.nProcessed, ").", string_q(40, ' '));
 
-    writeApiFile();
     writeOpenApiFile();
 
     return true;
@@ -180,6 +203,7 @@ string_q replaceCode(const string_q& orig, const string_q& which, const string_q
     converted = substitute(converted, "\n// END_" + which, "</remove>\nX// END_" + which);
     converted = substitute(converted, "\n\t// END_" + which, "</remove>\nY// END_" + which);
     converted = substitute(converted, "\n    // END_" + which, "</remove>\n+// END_" + which);
+    converted = substitute(converted, "\n        // END_" + which, "</remove>\n-// END_" + which);
     converted = substitute(converted, "\n            // END_" + which, "</remove>\n-// END_" + which);
     snagFieldClear(converted, "remove");
     replace(converted, "[{NEW_CODE}]\n\n", new_code);
@@ -193,142 +217,171 @@ string_q replaceCode(const string_q& orig, const string_q& which, const string_q
 //---------------------------------------------------------------------------------------------------
 void COptions::generate_toggle(const CCommandOption& option) {
     string_q initFmt = "    [{COMMAND}] = [{DEF_VAL}];";
+    bool oneOfEm =
+        (option.isEnum || option.isEnumList || option.isStringList || option.isAddressList || option.isTopicList);
     // clang-format off
     if (option.is_customizable)
         initFmt = substitute(STR_CUSTOM_INIT, "[CTYPE]",
-                             ((option.isEnum || option.isEnumList) ? "String"
+                             (oneOfEm ? "String"
                               : (option.isBool)                    ? "Bool"
                                                                    : "Int"));
     // clang-format on
 
     if (option.generate == "local") {
-        local_stream << option.Format(STR_DEFAULT_ASSIGNMENT) << endl;
-        auto_stream << option.Format(STR_AUTO_TOGGLE) << endl;
+        localStream << option.Format(STR_DEFAULT_ASSIGNMENT) << endl;
+        autoStream << option.Format(STR_AUTO_TOGGLE) << endl;
 
     } else if (option.generate == "header") {
-        init_stream << option.Format(initFmt) << endl;
-        header_stream << option.Format(STR_DECLARATION) << endl;
-        auto_stream << option.Format(STR_AUTO_TOGGLE) << endl;
+        initStream << option.Format(initFmt) << endl;
+        headerStream << option.Format(STR_DECLARATION) << endl;
+        autoStream << option.Format(STR_AUTO_TOGGLE) << endl;
     }
-    debug_stream << option.debugCode() << endl;
+    debugStream << option.debugCode() << endl;
 }
 
 //---------------------------------------------------------------------------------------------------
 void COptions::generate_switch(const CCommandOption& option) {
     string_q initFmt = "    [{COMMAND}] = [{DEF_VAL}];";
+    bool oneOfEm =
+        (option.isEnum || option.isEnumList || option.isStringList || option.isAddressList || option.isTopicList);
     // clang-format off
     if (option.is_customizable)
         initFmt = substitute(STR_CUSTOM_INIT, "[CTYPE]",
-                             ((option.isEnum || option.isEnumList) ? "String"
+                             (oneOfEm ? "String"
                               : (option.isBool)                    ? "Bool"
                                                                    : "Int"));
     // clang-format on
 
     if (option.generate == "local") {
-        local_stream << option.Format(STR_DEFAULT_ASSIGNMENT) << endl;
-        auto_stream << option.Format(STR_AUTO_SWITCH) << endl;
+        localStream << option.Format(STR_DEFAULT_ASSIGNMENT) << endl;
+        autoStream << option.Format(STR_AUTO_SWITCH) << endl;
 
     } else if (option.generate == "header") {
-        init_stream << option.Format(initFmt) << endl;
-        header_stream << option.Format(STR_DECLARATION) << endl;
-        auto_stream << option.Format(STR_AUTO_SWITCH) << endl;
+        initStream << option.Format(initFmt) << endl;
+        headerStream << option.Format(STR_DECLARATION) << endl;
+        autoStream << option.Format(STR_AUTO_SWITCH) << endl;
     }
-    debug_stream << option.debugCode() << endl;
+    debugStream << option.debugCode() << endl;
 }
 
 //---------------------------------------------------------------------------------------------------
 void COptions::generate_flag(const CCommandOption& option) {
     string_q initFmt = "    [{COMMAND}] = [{DEF_VAL}];";
+    bool oneOfEm =
+        (option.isEnum || option.isEnumList || option.isStringList || option.isAddressList || option.isTopicList);
     // clang-format off
     if (option.is_customizable)
         initFmt = substitute(STR_CUSTOM_INIT, "[CTYPE]",
-                             ((option.isEnum || option.isEnumList) ? "String"
+                             (oneOfEm ? "String"
                               : (option.isBool)                    ? "Bool"
                                                                    : "Int"));
     // clang-format on
 
     if (option.generate == "local") {
         if (option.isEnumList) {
-            local_stream << option.Format("    CStringArray [{COMMAND}];") << endl;
-            auto_stream << option.Format(STR_AUTO_FLAG_ENUM_LIST) << endl;
-
+            localStream << option.Format("    CStringArray [{COMMAND}];") << endl;
+            autoStream << option.Format(STR_AUTO_FLAG_ENUM_LIST) << endl;
+        } else if (option.isStringList) {
+            localStream << option.Format("    CStringArray [{COMMAND}];") << endl;
+            autoStream << option.Format(STR_AUTO_FLAG_STRING_LIST) << endl;
+        } else if (option.isTopicList) {
+            localStream << option.Format("    CStringArray [{COMMAND}];") << endl;
+            autoStream << option.Format(STR_AUTO_FLAG_STRING_LIST) << endl;
+        } else if (option.isAddressList) {
+            localStream << option.Format("    CAddressArray [{COMMAND}];") << endl;
+            autoStream << option.Format(STR_AUTO_FLAG_ADDRESS_LIST) << endl;
         } else {
-            local_stream << option.Format(STR_DEFAULT_ASSIGNMENT) << endl;
+            localStream << option.Format(STR_DEFAULT_ASSIGNMENT) << endl;
             if (option.isEnum)
-                auto_stream << option.Format(STR_AUTO_FLAG_ENUM) << endl;
+                autoStream << option.Format(STR_AUTO_FLAG_ENUM) << endl;
             else if (option.isBlockNum)
-                auto_stream << option.Format(STR_AUTO_FLAG_BLOCKNUM) << endl;
+                autoStream << option.Format(STR_AUTO_FLAG_BLOCKNUM) << endl;
             else if (option.isUint32 || option.isUint64)
-                auto_stream << option.Format(STR_AUTO_FLAG_UINT) << endl;
+                autoStream << option.Format(STR_AUTO_FLAG_UINT) << endl;
             else if (option.isDouble)
-                auto_stream << option.Format(STR_AUTO_FLAG_DOUBLE) << endl;
+                autoStream << option.Format(STR_AUTO_FLAG_DOUBLE) << endl;
             else
-                auto_stream << substitute(option.Format(STR_AUTO_FLAG), "substitute(substitute(arg, \"-:\", )",
-                                          "substitute(arg")
-                            << endl;
+                autoStream << substitute(option.Format(STR_AUTO_FLAG), "substitute(substitute(arg, \"-:\", )",
+                                         "substitute(arg")
+                           << endl;
         }
 
     } else if (option.generate == "header") {
         if (option.isEnumList) {
-            init_stream << option.Format("    [{COMMAND}].clear();") << endl;
-            header_stream << option.Format("    CStringArray [{COMMAND}];") << endl;
-            auto_stream << option.Format(STR_AUTO_FLAG_ENUM_LIST) << endl;
-
+            initStream << option.Format("    [{COMMAND}].clear();") << endl;
+            headerStream << option.Format("    CStringArray [{COMMAND}];") << endl;
+            autoStream << option.Format(STR_AUTO_FLAG_ENUM_LIST) << endl;
+        } else if (option.isStringList) {
+            initStream << option.Format("    [{COMMAND}].clear();") << endl;
+            headerStream << option.Format("    CStringArray [{COMMAND}];") << endl;
+            autoStream << option.Format(STR_AUTO_FLAG_STRING_LIST) << endl;
+        } else if (option.isTopicList) {
+            initStream << option.Format("    [{COMMAND}].clear();") << endl;
+            headerStream << option.Format("    CTopicArray [{COMMAND}];") << endl;
+            autoStream << option.Format(STR_AUTO_FLAG_STRING_LIST) << endl;
+        } else if (option.isAddressList) {
+            initStream << option.Format("    [{COMMAND}].clear();") << endl;
+            headerStream << option.Format("    CAddressArray [{COMMAND}];") << endl;
+            autoStream << option.Format(STR_AUTO_FLAG_ADDRESS_LIST) << endl;
         } else {
-            init_stream << option.Format(initFmt) << endl;
-            header_stream << option.Format(STR_DECLARATION) << endl;
+            initStream << option.Format(initFmt) << endl;
+            headerStream << option.Format(STR_DECLARATION) << endl;
             if (option.isEnum)
-                auto_stream << option.Format(STR_AUTO_FLAG_ENUM) << endl;
+                autoStream << option.Format(STR_AUTO_FLAG_ENUM) << endl;
             else if (option.isBlockNum)
-                auto_stream << option.Format(STR_AUTO_FLAG_BLOCKNUM) << endl;
+                autoStream << option.Format(STR_AUTO_FLAG_BLOCKNUM) << endl;
             else if (option.isUint32 || option.isUint64)
-                auto_stream << option.Format(STR_AUTO_FLAG_UINT) << endl;
+                autoStream << option.Format(STR_AUTO_FLAG_UINT) << endl;
             else if (option.isDouble)
-                auto_stream << option.Format(STR_AUTO_FLAG_DOUBLE) << endl;
+                autoStream << option.Format(STR_AUTO_FLAG_DOUBLE) << endl;
             else
-                auto_stream << substitute(option.Format(STR_AUTO_FLAG), "substitute(substitute(arg, \"-:\", )",
-                                          "substitute(arg")
-                            << endl;
+                autoStream << substitute(option.Format(STR_AUTO_FLAG), "substitute(substitute(arg, \"-:\", )",
+                                         "substitute(arg")
+                           << endl;
         }
     }
-    debug_stream << option.debugCode() << endl;
+    debugStream << option.debugCode() << endl;
 }
 
 //---------------------------------------------------------------------------------------------------
 void COptions::generate_positional(const CCommandOption& option) {
-    ostringstream pos_stream;
+    ostringstream posStream;
     if (option.generate == "local") {
         if (option.data_type == "list<addr>") {
-            local_stream << substitute(option.Format("    CAddressArray [{COMMAND}];"), "addrs2", "addrs") << endl;
-            pos_stream << option.Format(STR_ADDRLIST_PROCESSOR) << endl;
+            localStream << substitute(option.Format("    CAddressArray [{COMMAND}];"), "addrs2", "addrs") << endl;
+            posStream << option.Format(STR_ADDRLIST_PROCESSOR) << endl;
 
         } else if (option.data_type == "list<topic>") {
-            local_stream << option.Format("    CTopicArray [{COMMAND}];") << endl;
-            pos_stream << option.Format(STR_TOPICLIST_PROCESSOR) << endl;
+            localStream << option.Format("    CTopicArray [{COMMAND}];") << endl;
+            posStream << option.Format(STR_TOPICLIST_PROCESSOR) << endl;
+
+        } else if (option.data_type == "list<fourbyte>") {
+            localStream << option.Format("    CFourbyteArray [{COMMAND}];") << endl;
+            posStream << option.Format(STR_FOURBYTELIST_PROCESSOR) << endl;
 
         } else if (startsWith(option.data_type, "list<enum[")) {
-            local_stream << option.Format("    CStringArray [{COMMAND}];") << endl;
-            pos_stream << option.Format(STR_ENUMLIST_PROCESSOR) << endl;
+            localStream << option.Format("    CStringArray [{COMMAND}];") << endl;
+            posStream << option.Format(STR_ENUMLIST_PROCESSOR) << endl;
 
         } else if (startsWith(option.data_type, "enum[")) {
-            header_stream << option.Format("    string_q [{COMMAND}];") << endl;
-            pos_stream << option.Format(STR_ENUM_PROCESSOR) << endl;
+            headerStream << option.Format("    string_q [{COMMAND}];") << endl;
+            posStream << option.Format(STR_ENUM_PROCESSOR) << endl;
 
         } else if (option.data_type == "list<string>" || option.data_type == "list<path>") {
-            local_stream << option.Format("    CStringArray [{COMMAND}];") << endl;
-            pos_stream << option.Format(STR_STRINGLIST_PROCESSOR) << endl;
+            localStream << option.Format("    CStringArray [{COMMAND}];") << endl;
+            posStream << option.Format(STR_STRINGLIST_PROCESSOR) << endl;
 
         } else if (option.data_type == "list<blknum>") {
-            // local_stream << "    CStringArray strings;" << endl;
-            pos_stream << STR_BLOCKLIST_PROCESSOR << endl;
+            // localStream << "    CStringArray strings;" << endl;
+            posStream << STR_BLOCKLIST_PROCESSOR << endl;
 
         } else if (option.data_type == "list<date>") {
-            // local_stream << "    CStringArray strings;" << endl;
-            pos_stream << STR_AUTO_FLAG_ENUM_LIST << endl;
+            // localStream << "    CStringArray strings;" << endl;
+            posStream << STR_AUTO_FLAG_ENUM_LIST << endl;
 
         } else if (option.data_type == "list<tx_id>") {
-            // local_stream << "    CStringArray strings;" << endl;
-            pos_stream << STR_TXLIST_PROCESSOR << endl;
+            // localStream << "    CStringArray strings;" << endl;
+            posStream << STR_TXLIST_PROCESSOR << endl;
 
         } else {
             // don't know type
@@ -336,71 +389,107 @@ void COptions::generate_positional(const CCommandOption& option) {
 
     } else if (option.generate == "header") {
         if (option.data_type == "list<addr>") {
-            header_stream << substitute(option.Format("    CAddressArray [{COMMAND}];"), "addrs2", "addrs") << endl;
-            pos_stream << option.Format(STR_ADDRLIST_PROCESSOR) << endl;
+            headerStream << substitute(option.Format("    CAddressArray [{COMMAND}];"), "addrs2", "addrs") << endl;
+            posStream << option.Format(STR_ADDRLIST_PROCESSOR) << endl;
 
         } else if (option.data_type == "list<topic>") {
-            header_stream << option.Format("    CTopicArray [{COMMAND}];") << endl;
-            pos_stream << option.Format(STR_TOPICLIST_PROCESSOR) << endl;
+            headerStream << option.Format("    CTopicArray [{COMMAND}];") << endl;
+            posStream << option.Format(STR_TOPICLIST_PROCESSOR) << endl;
+
+        } else if (option.data_type == "list<fourbyte>") {
+            headerStream << option.Format("    CFourbyteArray [{COMMAND}];") << endl;
+            posStream << option.Format(STR_FOURBYTELIST_PROCESSOR) << endl;
 
         } else if (startsWith(option.data_type, "list<enum[")) {
-            header_stream << option.Format("    CStringArray [{COMMAND}];") << endl;
-            pos_stream << option.Format(STR_ENUMLIST_PROCESSOR) << endl;
+            headerStream << option.Format("    CStringArray [{COMMAND}];") << endl;
+            posStream << option.Format(STR_ENUMLIST_PROCESSOR) << endl;
 
         } else if (startsWith(option.data_type, "enum[")) {
-            header_stream << option.Format("    string_q [{COMMAND}];") << endl;
-            pos_stream << option.Format(STR_ENUM_PROCESSOR) << endl;
+            headerStream << option.Format("    string_q [{COMMAND}];") << endl;
+            posStream << option.Format(STR_ENUM_PROCESSOR) << endl;
 
         } else if (option.data_type == "list<string>" || option.data_type == "list<path>") {
-            header_stream << option.Format("    CStringArray [{COMMAND}];") << endl;
-            pos_stream << option.Format(STR_STRINGLIST_PROCESSOR) << endl;
+            headerStream << option.Format("    CStringArray [{COMMAND}];") << endl;
+            posStream << option.Format(STR_STRINGLIST_PROCESSOR) << endl;
 
         } else if (option.data_type == "list<blknum>") {
-            // header_stream << "    CStringArray strings;" << endl;
-            pos_stream << STR_BLOCKLIST_PROCESSOR << endl;
+            // headerStream << "    CStringArray strings;" << endl;
+            posStream << STR_BLOCKLIST_PROCESSOR << endl;
 
         } else if (option.data_type == "list<date>") {
-            // header_stream << "    CStringArray strings;" << endl;
+            // headerStream << "    CStringArray strings;" << endl;
 
         } else if (option.data_type == "list<tx_id>") {
-            // header_stream << "    CStringArray strings;" << endl;
-            pos_stream << STR_TXLIST_PROCESSOR << endl;
+            // headerStream << "    CStringArray strings;" << endl;
+            posStream << STR_TXLIST_PROCESSOR << endl;
 
         } else {
             // unknown type
         }
     }
-    if (!pos_stream.str().empty())
-        positionals.push_back(pos_stream.str());
+    if (!posStream.str().empty())
+        positionals.push_back(posStream.str());
 
-    debug_stream << option.debugCode() << endl;
+    debugStream << option.debugCode() << endl;
 }
 
 //---------------------------------------------------------------------------------------------------
 void COptions::generate_deprecated(const CCommandOption& option) {
-    if (option.option_kind == "deprecated") {
-        local_stream << option.Format(STR_DEFAULT_ASSIGNMENT) << endl;
-        auto_stream << option.Format(STR_AUTO_FLAG_UINT) << endl;
+    if (option.option_type == "deprecated") {
+        localStream << option.Format(STR_DEFAULT_ASSIGNMENT) << endl;
+        autoStream << option.Format(STR_AUTO_FLAG_UINT) << endl;
     }
 }
 //---------------------------------------------------------------------------------------------------
 bool COptions::writeCode(const string_q& fn) {
+    if (contains(fn, "/stub/"))
+        return true;
+
     string_q orig = asciiFileToString(fn);
     string_q converted = orig;
     if (endsWith(fn, ".cpp")) {
-        converted = replaceCode(converted, "CODE_AUTO", auto_stream.str());
-        converted = replaceCode(converted, "CODE_OPTIONS", option_stream.str());
-        converted = replaceCode(converted, "CODE_LOCAL_INIT", local_stream.str());
-        converted = replaceCode(converted, "CODE_INIT", init_stream.str());
-        converted = replaceCode(converted, "CODE_NOTES", notes_stream.str());
-        converted = replaceCode(converted, "CODE_ERROR_MSG", errors_stream.str());
-        converted = replaceCode(converted, "DEBUG_DISPLAY", debug_stream.str());
+        CStringArray tokens = {"_CODE_AUTO",  "_CODE_OPTIONS", "_CODE_LOCAL_INIT", "_CODE_INIT",
+                               "_CODE_NOTES", "ERROR_STRINGS", "_DEBUG_DISPLAY"};
+
+        for (auto tok : tokens)
+            if (!contains(orig, tok) && !contains(orig, "_CHIFRA"))
+                LOG_WARN(fn, " does not contain token ", tok);
+
+        converted = replaceCode(converted, "CODE_AUTO", autoStream.str());
+        converted = replaceCode(converted, "CODE_OPTIONS", optionStream.str());
+        converted = replaceCode(converted, "CODE_LOCAL_INIT", localStream.str());
+        converted = replaceCode(converted, "CODE_INIT", initStream.str());
+        converted = replaceCode(converted, "CODE_NOTES", notesStream.str());
+        converted = replaceCode(converted, "ERROR_STRINGS", errorStrStream.str());
+        converted = replaceCode(converted, "DEBUG_DISPLAY", debugStream.str());
+        converted = replaceCode(converted, "CODE_CHIFRA_CMDMAP", chifraCmdStream.str());
+        converted = replaceCode(converted, "CODE_CHIFRA_HELP", chifraHelpStream.str());
+        converted = replaceCode(converted, "CODE_CHIFRA_PAIRMAP", pairMapStream.str());
         replaceAll(converted, "    // clang-format on\n    // clang-format off\n", "");
+
     } else if (endsWith(fn, ".go")) {
-        converted = replaceCode(converted, "ROUTE_CODE", apiStream.str());
+        converted = replaceCode(converted, "ROUTE_CODE", goCallStream.str());
         converted = replaceCode(converted, "ROUTE_ITEMS", goRouteStream.str());
+
+    } else if (endsWith(fn, ".yaml")) {
+        converted = asciiFileToString(configPath("makeClass/blank_openapi.yaml"));
+        replace(converted, "[{TAGS}]", apiTagStream.str());
+        replace(converted, "[{PATHS}]", apiPathStream.str());
+
+    } else if (endsWith(fn, ".html")) {
+        converted = asciiFileToString(configPath("makeClass/blank_api.html"));
+        replace(converted, "[{TAGS}]", htmlTagStream.str());
+        replace(converted, "[{PATHS}]", htmlPathStream.str());
+
+    } else if (endsWith(fn, ".h")) {
+        CStringArray tokens = {"ERROR_DEFINES", "_CODE_DECLARE"};
+        for (auto tok : tokens)
+            if (!contains(orig, tok))
+                LOG_WARN(fn, " does not contain token ", tok);
+        converted = replaceCode(converted, "CODE_DECLARE", headerStream.str());
+        converted = replaceCode(converted, "ERROR_DEFINES", errorDefStream.str());
     } else {
-        converted = replaceCode(converted, "CODE_DECLARE", header_stream.str());
+        cerr << "Unkown file type for " << fn << endl;
     }
 
     cerr << bBlue << "Processing " << cOff << fn << " ";
@@ -417,7 +506,6 @@ bool COptions::writeCode(const string_q& fn) {
 }
 
 //---------------------------------------------------------------------------------------------------
-const char* STR_OPTION_ERRSTR = "    errorStrs[[{COMMAND]] = \"[{OPTS}]\";";
 const char* STR_OPTION_NOTESTR = "    notes.push_back(\"[{OPTS}]\");";
 
 //---------------------------------------------------------------------------------------------------
@@ -437,13 +525,17 @@ const char* STR_AUTO_TOGGLE =
 //---------------------------------------------------------------------------------------------------
 const char* STR_AUTO_FLAG =
     "        } else if ([startsWith(arg, \"-{HOTKEY}:\") || ]startsWith(arg, \"--[{COMMAND}]:\")) {\n"
-    "            [{COMMAND}] = substitute(substitute(arg, \"-[{HOTKEY}]:\", \"\"), \"--[{COMMAND}]:\", \"\");\n";
+    "            [{COMMAND}] = substitute(substitute(arg, \"-[{HOTKEY}]:\", \"\"), \"--[{COMMAND}]:\", \"\");\n"
+    "        } else if ([arg == \"-{HOTKEY}\" || ]arg == \"--[{COMMAND}]\") {\n"
+    "            return flag_required(\"[{COMMAND}]\");\n";
 
 //---------------------------------------------------------------------------------------------------
 const char* STR_AUTO_FLAG_ENUM =
     "        } else if ([startsWith(arg, \"-{HOTKEY}:\") || ]startsWith(arg, \"--[{COMMAND}]:\")) {\n"
     "            if (!confirmEnum(\"[{COMMAND}]\", [{COMMAND}], arg))\n"
-    "                return false;\n";
+    "                return false;\n"
+    "        } else if ([arg == \"-{HOTKEY}\" || ]arg == \"--[{COMMAND}]\") {\n"
+    "            return flag_required(\"[{COMMAND}]\");\n";
 
 //---------------------------------------------------------------------------------------------------
 const char* STR_AUTO_FLAG_ENUM_LIST =
@@ -451,32 +543,57 @@ const char* STR_AUTO_FLAG_ENUM_LIST =
     "            string_q [{COMMAND}_tmp];\n"
     "            if (!confirmEnum(\"[{COMMAND}]\", [{COMMAND}]_tmp, arg))\n"
     "                return false;\n"
-    "            [{COMMAND}].push_back([{COMMAND}]_tmp);\n";
+    "            [{COMMAND}].push_back([{COMMAND}]_tmp);\n"
+    "        } else if ([arg == \"-{HOTKEY}\" || ]arg == \"--[{COMMAND}]\") {\n"
+    "            return flag_required(\"[{COMMAND}]\");\n";
+
+//---------------------------------------------------------------------------------------------------
+const char* STR_AUTO_FLAG_STRING_LIST =
+    "        } else if ([startsWith(arg, \"-{HOTKEY}:\") || ]startsWith(arg, \"--[{COMMAND}]:\")) {\n"
+    "            arg = substitute(substitute(arg, \"-[{HOTKEY}]:\", \"\"), \"--[{COMMAND}]:\", \"\");\n"
+    "            [{COMMAND}].push_back(arg);\n"
+    "        } else if ([arg == \"-{HOTKEY}\" || ]arg == \"--[{COMMAND}]\") {\n"
+    "            return flag_required(\"[{COMMAND}]\");\n";
+
+//---------------------------------------------------------------------------------------------------
+const char* STR_AUTO_FLAG_ADDRESS_LIST =
+    "        } else if ([startsWith(arg, \"-{HOTKEY}:\") || ]startsWith(arg, \"--[{COMMAND}]:\")) {\n"
+    "            arg = substitute(substitute(arg, \"-[{HOTKEY}]:\", \"\"), \"--[{COMMAND}]:\", \"\");\n"
+    "            if (!parseAddressList(this, [{COMMAND}], arg))\n"
+    "                return false;\n"
+    "        } else if ([arg == \"-{HOTKEY}\" || ]arg == \"--[{COMMAND}]\") {\n"
+    "            return flag_required(\"[{COMMAND}]\");\n";
 
 //---------------------------------------------------------------------------------------------------
 const char* STR_AUTO_FLAG_BLOCKNUM =
     "        } else if ([startsWith(arg, \"-{HOTKEY}:\") || ]startsWith(arg, \"--[{COMMAND}]:\")) {\n"
     "            if (!confirmBlockNum(\"[{COMMAND}]\", [{COMMAND}], arg, latest))\n"
-    "                return false;\n";
+    "                return false;\n"
+    "        } else if ([arg == \"-{HOTKEY}\" || ]arg == \"--[{COMMAND}]\") {\n"
+    "            return flag_required(\"[{COMMAND}]\");\n";
 
 //---------------------------------------------------------------------------------------------------
 const char* STR_AUTO_FLAG_UINT =
     "        } else if ([startsWith(arg, \"-{HOTKEY}:\") || ]startsWith(arg, \"--[{COMMAND}]:\")) {\n"
     "            if (!confirmUint(\"[{COMMAND}]\", [{COMMAND}], arg))\n"
-    "                return false;\n";
+    "                return false;\n"
+    "        } else if ([arg == \"-{HOTKEY}\" || ]arg == \"--[{COMMAND}]\") {\n"
+    "            return flag_required(\"[{COMMAND}]\");\n";
 
 //---------------------------------------------------------------------------------------------------
 const char* STR_AUTO_FLAG_DOUBLE =
     "        } else if ([startsWith(arg, \"-{HOTKEY}:\") || ]startsWith(arg, \"--[{COMMAND}]:\")) {\n"
     "            if (!confirmDouble(\"[{COMMAND}]\", [{COMMAND}], arg))\n"
-    "                return false;\n";
+    "                return false;\n"
+    "        } else if ([arg == \"-{HOTKEY}\" || ]arg == \"--[{COMMAND}]\") {\n"
+    "            return flag_required(\"[{COMMAND}]\");\n";
 
 //---------------------------------------------------------------------------------------------------
 const char* STR_CHECK_BUILTIN =
     "        } else if (startsWith(arg, '-')) {  // do not collapse\n"
     "\n"
     "            if (!builtInCmd(arg)) {\n"
-    "                return usage(\"Invalid option: \" + arg);\n"
+    "                return invalid_option(arg);\n"
     "            }\n";
 
 //---------------------------------------------------------------------------------------------------
@@ -491,12 +608,17 @@ const char* STR_TXLIST_PROCESSOR =
 
 //---------------------------------------------------------------------------------------------------
 const char* STR_ADDRLIST_PROCESSOR =
-    "            } else if (!parseAddressList2(this, [{COMMAND}], arg))\n"
+    "            } else if (!parseAddressList(this, [{COMMAND}], arg))\n"
     "                return false;\n";
 
 //---------------------------------------------------------------------------------------------------
 const char* STR_TOPICLIST_PROCESSOR =
     "            } else if (!parseTopicList2(this, [{COMMAND}], arg))\n"
+    "                return false;\n";
+
+//---------------------------------------------------------------------------------------------------
+const char* STR_FOURBYTELIST_PROCESSOR =
+    "            } else if (!parseFourbyteList(this, [{COMMAND}], arg))\n"
     "                return false;\n";
 
 //---------------------------------------------------------------------------------------------------

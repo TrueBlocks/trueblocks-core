@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  *
  * This program is free software: you may redistribute it and/or modify it under the terms
  * of the GNU General Public License as published by the Free Software Foundation, either
@@ -11,8 +11,8 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 /*
- * Parts of this file were generated with makeClass. Edit only those parts of the code
- * outside of the BEG_CODE/END_CODE sections
+ * Parts of this file were generated with makeClass --options. Edit only those parts of
+ * the code outside of the BEG_CODE/END_CODE sections
  */
 #include "options.h"
 
@@ -24,7 +24,6 @@ static const COption params[] = {
     COption("expand", "e", "", OPT_SWITCH, "expand search to include all fields (default searches name, address, and symbol only)"),  // NOLINT
     COption("match_case", "m", "", OPT_SWITCH, "do case-sensitive search"),
     COption("all", "l", "", OPT_SWITCH, "include all accounts in the search"),
-    COption("owned", "o", "", OPT_SWITCH, "include personal accounts in the search"),
     COption("custom", "c", "", OPT_SWITCH, "include your custom named accounts"),
     COption("prefund", "p", "", OPT_SWITCH, "include prefund accounts"),
     COption("named", "n", "", OPT_SWITCH, "include well know token and airdrop addresses in the search"),
@@ -34,7 +33,7 @@ static const COption params[] = {
     COption("tags", "g", "", OPT_SWITCH, "export the list of tags and subtags only"),
     COption("to_custom", "u", "", OPT_HIDDEN | OPT_SWITCH, "for editCmd only, is the edited name a custom name or not"),
     COption("clean", "C", "", OPT_HIDDEN | OPT_SWITCH, "clean the data (addrs to lower case, sort by addr)"),
-    COption("", "", "", OPT_DESCRIPTION, "Query addresses and/or names of well known accounts."),
+    COption("", "", "", OPT_DESCRIPTION, "Query addresses or names of well known accounts."),
     // clang-format on
     // END_CODE_OPTIONS
 };
@@ -51,7 +50,6 @@ bool COptions::parseArguments(string_q& command) {
     CStringArray terms;
     bool expand = false;
     bool all = false;
-    bool owned = false;
     bool custom = false;
     bool prefund = false;
     bool named = false;
@@ -81,9 +79,6 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-l" || arg == "--all") {
             all = true;
-
-        } else if (arg == "-o" || arg == "--owned") {
-            owned = true;
 
         } else if (arg == "-c" || arg == "--custom") {
             custom = true;
@@ -115,7 +110,7 @@ bool COptions::parseArguments(string_q& command) {
         } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
-                return usage("Invalid option: " + arg);
+                return invalid_option(arg);
             }
 
         } else {
@@ -127,11 +122,10 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     // BEG_DEBUG_DISPLAY
-    // LOG_TEST("terms", terms, (terms == NOPOS));
+    LOG_TEST_LIST("terms", terms, terms.empty());
     LOG_TEST_BOOL("expand", expand);
     LOG_TEST_BOOL("match_case", match_case);
     LOG_TEST_BOOL("all", all);
-    LOG_TEST_BOOL("owned", owned);
     LOG_TEST_BOOL("custom", custom);
     LOG_TEST_BOOL("prefund", prefund);
     LOG_TEST_BOOL("named", named);
@@ -142,6 +136,9 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST_BOOL("to_custom", to_custom);
     LOG_TEST_BOOL("clean", clean);
     // END_DEBUG_DISPLAY
+
+    if (Mocked((tags ? "tags" : entities ? "entities" : "names")))
+        return false;
 
     // for (auto& term : terms)
     //     if (endsWith(term, ".eth"))
@@ -201,13 +198,6 @@ bool COptions::parseArguments(string_q& command) {
         }
         types |= CUSTOM;
     }
-    if (owned) {
-        if (deflt) {
-            types = 0;
-            deflt = false;
-        }
-        types |= OWNED;
-    }
     if (other) {
         if (deflt) {
             types = 0;
@@ -218,7 +208,7 @@ bool COptions::parseArguments(string_q& command) {
 
     if (addr) {
         addr_only = true;
-        isNoHeader = true;
+        noHeader = true;
         format = "[{ADDRESS}]";
         searchFields = "[{ADDRESS}]\t[{NAME}]";
     }
@@ -234,7 +224,6 @@ bool COptions::parseArguments(string_q& command) {
         types |= NAMED;
         types |= PREFUND;
         types |= CUSTOM;
-        types |= OWNED;
         types |= OTHER;
     }
 
@@ -299,28 +288,30 @@ void COptions::Init(void) {
 
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
-    setSorts(GETRUNTIME_CLASS(CBlock), GETRUNTIME_CLASS(CTransaction), GETRUNTIME_CLASS(CReceipt));
-
     establishFolder(getCachePath("names/"));
     CAccountName acct;
     getNamedAccount(acct, "0x0");  // loads names database
     Init();
+
     // BEG_CODE_NOTES
     // clang-format off
-    notes.push_back("With a single search term, the tool searches both `name` and `address`.");
-    notes.push_back("With two search terms, the first term must match the `address` field, and the second term must match the `name` field.");  // NOLINT
-    notes.push_back("When there are two search terms, both must match.");
-    notes.push_back("The `--match_case` option requires case sensitive matching. It works with all other options.");
-    notes.push_back("To customize the list of names add a `custom` section to the config file (see documentation).");
+    notes.push_back("The tool will accept up to three terms, each of which must match against any field in the database.");  // NOLINT
+    notes.push_back("The `--match_case` option enables case sensitive matching.");
     // clang-format on
     // END_CODE_NOTES
-    ostringstream os;
-    os << "Name file: `" << configPathRelative("names/names.tab") << "` (";
-    os << (isTestMode() ? "--size--" : uint_2_Str(fileSize(configPath("names/names.tab")))) << ")";
-    notes.push_back(os.str());
 
-    // BEG_ERROR_MSG
-    // END_ERROR_MSG
+    string_q namesPath = configPathRelative("names/names.tab");
+    if (isTestMode())
+        namesPath = substitute(configPath("names/names.tab"), configPath(""), "$CONFIG/");
+
+    if (!isReadme && !isTestMode()) {
+        ostringstream os;
+        os << "Name file: `" << namesPath << "`";
+        notes.push_back(os.str());
+    }
+
+    // BEG_ERROR_STRINGS
+    // END_ERROR_STRINGS
 }
 
 //--------------------------------------------------------------------------------
@@ -391,29 +382,6 @@ bool COptions::addIfUnique(const CAccountName& item) {
 //-----------------------------------------------------------------------
 void COptions::applyFilter() {
     //------------------------
-    if (types & OWNED) {
-        if (isTestMode()) {
-            for (uint32_t i = 1; i < 5; i++) {
-                CAccountName item;
-                item.address = "0x000000000000000000000000000000000000000" + uint_2_Str(i);
-                addIfUnique(item);
-            }
-        } else {
-            nodeRequired();
-            CStringArray addrs;
-            getAccounts(addrs);
-            uint32_t cnt = 0;
-            for (auto addr : addrs) {
-                CAccountName item;
-                item.tags = "00-Active";
-                item.address = addr;
-                item.name = "Owned_" + padNum4(cnt++);
-                addIfUnique(item);
-            }
-        }
-    }
-
-    //------------------------
     if (types & CUSTOM) {
         if (isTestMode() && !isCrudCommand()) {
             for (uint32_t i = 1; i < 5; i++) {
@@ -429,7 +397,8 @@ void COptions::applyFilter() {
                 addIfUnique(item);
             }
         } else {
-            for (auto item : namedAccounts) {
+            for (auto mapItem : namesMap) {
+                CAccountName item = mapItem.second;
                 if (item.is_custom)
                     addIfUnique(item);
             }
@@ -438,7 +407,8 @@ void COptions::applyFilter() {
 
     //------------------------
     if (types & NAMED) {
-        for (auto item : namedAccounts) {
+        for (auto mapItem : namesMap) {
+            CAccountName item = mapItem.second;
             if (!item.is_custom && !item.is_prefund && !startsWith(item.tags, "81-Other"))
                 addIfUnique(item);
         }
@@ -446,7 +416,8 @@ void COptions::applyFilter() {
 
     //------------------------
     if (types & PREFUND) {
-        for (auto item : namedAccounts) {
+        for (auto mapItem : namesMap) {
+            CAccountName item = mapItem.second;
             if (item.is_prefund)
                 addIfUnique(item);
         }
@@ -454,7 +425,8 @@ void COptions::applyFilter() {
 
     //------------------------
     if (!isTestMode() && (types & OTHER)) {
-        for (auto item : namedAccounts) {
+        for (auto mapItem : namesMap) {
+            CAccountName item = mapItem.second;
             if (startsWith(item.tags, "81-Other"))
                 addIfUnique(item);
         }
