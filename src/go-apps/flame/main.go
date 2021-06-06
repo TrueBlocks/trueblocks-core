@@ -34,5 +34,4 @@ func main() {
 
 	// Start listening for requests
 	log.Fatal(http.ListenAndServe(tb.Options.Port, tb.NewRouter()))
-//	}
 }
