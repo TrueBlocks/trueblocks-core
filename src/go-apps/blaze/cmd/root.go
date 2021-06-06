@@ -82,12 +82,14 @@ func initConfig() {
 	}
 
 	configPath := "<unset>"
-	if (runtime.GOOS == "darwin") {
+	// TODO(tjayrush): This should read XDG_DATA_HOME and if the folder exists, use it
+	if runtime.GOOS == "darwin" {
 		configPath = home + "/Library/Application Support/TrueBlocks"
-	} else if (runtime.GOOS == "linux") {
+	} else if runtime.GOOS == "linux" {
 		configPath = home + "/.local/share/trueblocks"
 	} else {
 		fmt.Println("Windows not supported.")
+		// TODO(tjayrush): This should fail without proceeding
 	}
 	viper.AddConfigPath(configPath)
 	viper.SetConfigName("trueBlocks")
@@ -135,19 +137,19 @@ func initConfig() {
 		os.MkdirAll(Options.unripePath, 0777)
 	}
 
-	if (Options.verbose > 8) {
-		fmt.Println("blaze.rpcProvider: ", Options.rpcProvider);
-		fmt.Println("blaze.indexPath:   ", Options.indexPath);
-		fmt.Println("blaze.ripePath:    ", Options.ripePath);
-		fmt.Println("blaze.unripePath:  ", Options.unripePath);
+	if Options.verbose > 8 {
+		fmt.Println("blaze.rpcProvider: ", Options.rpcProvider)
+		fmt.Println("blaze.indexPath:   ", Options.indexPath)
+		fmt.Println("blaze.ripePath:    ", Options.ripePath)
+		fmt.Println("blaze.unripePath:  ", Options.unripePath)
 	}
 
-	if (Options.verbose > 4) {
-		fmt.Println("blaze.startBlock:  ", Options.startBlock);
-		fmt.Println("blaze.nBlocks:     ", Options.nBlocks);
-		fmt.Println("blaze.nBlockProcs: ", Options.nBlockProcs);
-		fmt.Println("blaze.nAddrProcs:  ", Options.nAddrProcs);
-		fmt.Println("blaze.ripeBlock:   ", Options.ripeBlock);
-		fmt.Println("blaze.verbose:     ", Options.verbose);
+	if Options.verbose > 4 {
+		fmt.Println("blaze.startBlock:  ", Options.startBlock)
+		fmt.Println("blaze.nBlocks:     ", Options.nBlocks)
+		fmt.Println("blaze.nBlockProcs: ", Options.nBlockProcs)
+		fmt.Println("blaze.nAddrProcs:  ", Options.nAddrProcs)
+		fmt.Println("blaze.ripeBlock:   ", Options.ripeBlock)
+		fmt.Println("blaze.verbose:     ", Options.verbose)
 	}
 }
