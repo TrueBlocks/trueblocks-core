@@ -14,7 +14,7 @@ import (
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
-	Use:   "blazescrape",
+	Use:   "blaze",
 	Short: "Build, query, or share an index of Ethereum addresses per block",
 	Long: `
 Description:
@@ -138,18 +138,18 @@ func initConfig() {
 	}
 
 	if Options.verbose > 8 {
-		fmt.Println("blazescrape.rpcProvider: ", Options.rpcProvider)
-		fmt.Println("blazescrape.indexPath:   ", Options.indexPath)
-		fmt.Println("blazescrape.ripePath:    ", Options.ripePath)
-		fmt.Println("blazescrape.unripePath:  ", Options.unripePath)
+		fmt.Println("blaze.rpcProvider: ", Options.rpcProvider)
+		fmt.Println("blaze.indexPath:   ", Options.indexPath)
+		fmt.Println("blaze.ripePath:    ", Options.ripePath)
+		fmt.Println("blaze.unripePath:  ", Options.unripePath)
 	}
 
 	if Options.verbose > 4 {
-		fmt.Println("blazescrape.startBlock:  ", Options.startBlock)
-		fmt.Println("blazescrape.nBlocks:     ", Options.nBlocks)
-		fmt.Println("blazescrape.nBlockProcs: ", Options.nBlockProcs)
-		fmt.Println("blazescrape.nAddrProcs:  ", Options.nAddrProcs)
-		fmt.Println("blazescrape.ripeBlock:   ", Options.ripeBlock)
-		fmt.Println("blazescrape.verbose:     ", Options.verbose)
+		fmt.Println("blaze.startBlock:  ", Options.startBlock)
+		fmt.Println("blaze.nBlocks:     ", Options.nBlocks)
+		fmt.Println("blaze.nBlockProcs: ", Options.nBlockProcs)
+		fmt.Println("blaze.nAddrProcs:  ", Options.nAddrProcs)
+		fmt.Println("blaze.ripeBlock:   ", Options.ripeBlock)
+		fmt.Println("blaze.verbose:     ", Options.verbose)
 	}
 }
