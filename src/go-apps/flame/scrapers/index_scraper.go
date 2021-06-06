@@ -1,6 +1,7 @@
 package scrapers
 
 import (
+	"fmt"
 	"log"
 	"time"
 
@@ -15,22 +16,31 @@ import (
 
 var IndexScraper Scraper
 
-func RunBlockScraper() {
+func RunIndexScraper() {
 	for true {
 		if !IndexScraper.Running {
 			if IndexScraper.WasRunning {
-				log.Print(utils.Yellow, "IndexScraper is paused: ", IndexScraper.Counter, " ", Counter, utils.Off, "\n")
+				log.Print(utils.Yellow, "IndexScraper   ", utils.Blue, "[running --> paused]", utils.Off, ": ", IndexScraper.Counter, utils.Off, "\n")
 			}
 			IndexScraper.WasRunning = false
-			time.Sleep(1000 * time.Millisecond)
+			time.Sleep(time.Duration(IndexScraper.Sleep) * time.Millisecond)
+
 		} else {
+			if !IndexScraper.WasRunning {
+				log.Print(utils.Yellow, "IndexScraper   ", utils.Blue, "[paused --> running]", utils.Off, ": ", IndexScraper.Counter, utils.Off, "\n")
+			}
 			IndexScraper.WasRunning = true
 			IndexScraper.Counter++
-			Counter++
-			log.Print(utils.Green, "IndexScraper awake", utils.Off, "\n")
-			time.Sleep(1 * time.Second)
-			log.Print(utils.Yellow, "IndexScraper sleeping: ", IndexScraper.Counter, " ", Counter, utils.Off, "\n")
-			time.Sleep(1 * time.Second)
+			log.Print(utils.Yellow, "IndexScraper   ", utils.Blue, "[sleep --> wake]", utils.Off, ": ", IndexScraper.Counter, utils.Off, "\n")
+			for i := 0; i < 10; i++ {
+				fmt.Println("I am here: ", i)
+				time.Sleep(1 * time.Second)
+				if !IndexScraper.Running {
+					break
+				}
+			}
+			log.Print(utils.Yellow, "IndexScraper   ", utils.Blue, "[wake --> sleep]", utils.Off, ": ", IndexScraper.Counter, utils.Off, "\n")
+			time.Sleep(time.Duration(IndexScraper.Sleep) * time.Millisecond)
 		}
 	}
 }

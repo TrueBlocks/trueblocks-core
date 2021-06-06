@@ -22,17 +22,16 @@ func RunMonitorScraper() {
 	for true {
 		if !MonitorScraper.Running {
 			if MonitorScraper.WasRunning {
-				log.Print(utils.Yellow, "MonitorScraper is paused: ", MonitorScraper.Counter, " ", Counter, utils.Off, "\n")
+				MonitorScraper.ChangeState("running", "paused")
 			}
 			MonitorScraper.WasRunning = false
-			time.Sleep(1000 * time.Millisecond)
+			time.Sleep(time.Duration(MonitorScraper.Sleep) * time.Millisecond)
 		} else {
 			MonitorScraper.WasRunning = true
 			MonitorScraper.Counter++
-			Counter += 100
-			log.Print(utils.Blue, "MonitorScraper awake", utils.Off, "\n")
+			log.Print(utils.Purple, "MonitorScraper ", utils.Blue, "[sleep --> wake]", utils.Off, ": ", MonitorScraper.Counter, utils.Off, "\n")
 			var files []string
-			root := "/Users/jrush/.quickBlocks/cache/monitors/"
+			root := "/Users/jrush/Library/Application Support/TrueBlocks/cache/monitors/"
 			err := filepath.Walk(root, func(path string, info os.FileInfo, err error) error {
 				files = append(files, path)
 				return nil
@@ -42,9 +41,13 @@ func RunMonitorScraper() {
 			}
 			for _, file := range files {
 				fmt.Println(file)
+				time.Sleep(500 * time.Millisecond)
+				if !MonitorScraper.Running {
+					break
+				}
 			}
-			log.Print(utils.Purple, "MonitorScraper sleeping: ", MonitorScraper.Counter, " ", Counter, utils.Off, "\n")
-			time.Sleep(300 * time.Millisecond)
+			log.Print(utils.Purple, "MonitorScraper ", utils.Blue, "[wake --> sleep]", utils.Off, ": ", MonitorScraper.Counter, utils.Off, "\n")
+			time.Sleep(time.Duration(MonitorScraper.Sleep) * time.Millisecond)
 		}
 	}
 }

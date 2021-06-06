@@ -11,27 +11,24 @@ import (
 	"net/http"
 
 	scrapers "github.com/TrueBlocks/trueblocks-core/src/go-apps/blaze/scrapers"
-	tb "github.com/TrueBlocks/trueblocks-core/src/go-apps/blaze/server"
+	server "github.com/TrueBlocks/trueblocks-core/src/go-apps/blaze/server"
 )
 
 func main() {
 	// Handle command line options
-	err := tb.ParseOptions()
+	err := server.ParseOptions()
 	if err != nil {
 		log.Println("Could not parse command line.")
 		return
 	}
 
-	// Let the user know what's going on...
-	tb.StartupMessage()
-
 	// Start listening on web sockets
-	tb.RunWebsocketPool()
+	server.RunWebsocketPool()
 
 	// We always start the scrapers...the user will tell us to turn them on
-	go scrapers.RunBlockScraper()
+	go scrapers.RunIndexScraper()
 	go scrapers.RunMonitorScraper()
 
 	// Start listening for requests
-	log.Fatal(http.ListenAndServe(tb.Options.Port, tb.NewRouter()))
+	log.Fatal(http.ListenAndServe(server.Options.Port, server.NewRouter()))
 }

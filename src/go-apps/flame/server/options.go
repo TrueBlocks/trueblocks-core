@@ -17,35 +17,45 @@ import (
 	flag "github.com/spf13/pflag"
 )
 
-// optionsType makes command line options available to the package
-type optionsType struct {
-	Scrape  bool
-	Monitor bool
-	Port    string
-	Verbose int
+// globalOptionsT makes command line options available to the package
+type globalOptionsT struct {
+	Scrape      bool
+	Monitor     bool
+	Port        string
+	Client      string
+	Version     string
+	ConfigPath  string
+	CachePath   string
+	IndexPath   string
+	RpcProvider string
+	Verbose     int
 }
 
 // Options carries command line options
-var Options optionsType
+var Options globalOptionsT
 
 func ParseOptions() error {
 	// Establish and parse the command line input...
 	flag.BoolVar(&Options.Scrape, "scrape", false, "enable block scraper mode")
-	flag.BoolVar(&Options.Monitor, "monitor", false, "enable monitor scraper mode")
-	flag.StringVar(&Options.Port, "port", ":8080", "specify the server's port")
-	flag.IntVar(&Options.Verbose, "verbose", 0, "verbose level (between 0 and 10 inclusive)")
-	flag.Lookup("verbose").NoOptDefVal = "1"
-	flag.Parse()
 
-	// ...cleanup
+	flag.BoolVar(&Options.Monitor, "monitor", false, "enable monitor scraper mode")
+
+	flag.StringVar(&Options.Port, "port", ":8080", "specify the server's port")
 	if !strings.HasPrefix(Options.Port, ":") {
 		Options.Port = ":" + Options.Port
 	}
 
+	flag.IntVar(&Options.Verbose, "verbose", 0, "verbose level (between 0 and 10 inclusive)")
+	flag.Lookup("verbose").NoOptDefVal = "0"
+
+	flag.Parse()
+
+	startupMessage()
+
 	return nil
 }
 
-func StartupMessage() {
+func startupMessage() {
 	out, err := exec.Command("cacheStatus", "--terse").Output()
 	if err != nil {
 		fmt.Printf("%s", err)
@@ -70,7 +80,6 @@ func StartupMessage() {
 		log.Print(utils.Green, "scraping:    ", utils.Off, Options.Scrape, "\n")
 		scrapers.IndexScraper.Running = true
 	}
-
 	if Options.Monitor {
 		scrapers.MonitorScraper.Running = true
 		log.Print(utils.Green, "monitoring:  ", utils.Off, Options.Monitor, "\n")
