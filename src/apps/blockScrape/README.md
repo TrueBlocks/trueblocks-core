@@ -25,7 +25,7 @@ The scraper can scrape either the index only, previously created monitors only, 
 
 `Notes:`
 
-- Certain options (`--cache_txs`, `--cache_traces`, `--load`) are passed through to `chifra export` 
+- Certain options (`--cache_txs`, `--cache_traces`, etc.) are passed through to `chifra export` 
   if `tool` includes `monitors`. See `chifra export --help`.
 
 ### explainer

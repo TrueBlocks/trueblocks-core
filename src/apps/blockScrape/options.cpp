@@ -20,6 +20,8 @@ static const COption params[] = {
     COption("n_addr_procs", "a", "<uint64>", OPT_HIDDEN | OPT_FLAG, "number of address channels for blaze"),
     COption("pin", "p", "", OPT_SWITCH, "pin new chunks (and blooms) to IPFS (requires Pinata key and running IPFS node)"),  // NOLINT
     COption("sleep", "s", "<double>", OPT_FLAG, "the number of seconds to sleep between passes (default 14)"),
+    COption("staging", "s", "", OPT_HIDDEN | OPT_SWITCH, "pass through to chifra export --freshen (see notes)"),
+    COption("unripe", "u", "", OPT_HIDDEN | OPT_SWITCH, "pass through to chifra export --freshen (see notes)"),
     COption("cache_txs", "i", "", OPT_HIDDEN | OPT_SWITCH, "pass through to chifra export --freshen (see notes)"),
     COption("cache_traces", "R", "", OPT_HIDDEN | OPT_SWITCH, "pass through to chifra export --freshen (see notes)"),
     COption("load", "", "<string>", OPT_HIDDEN | OPT_FLAG, "pass through to chifra export --freshen (see notes)"),
@@ -85,6 +87,12 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-s" || arg == "--sleep") {
             return flag_required("sleep");
 
+        } else if (arg == "-s" || arg == "--staging") {
+            staging = true;
+
+        } else if (arg == "-u" || arg == "--unripe") {
+            unripe = true;
+
         } else if (arg == "-i" || arg == "--cache_txs") {
             cache_txs = true;
 
@@ -120,6 +128,8 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST("n_addr_procs", n_addr_procs, (n_addr_procs == (isDockerMode() ? 10 : 20)));
     LOG_TEST_BOOL("pin", pin);
     LOG_TEST("sleep", sleep, (sleep == 14));
+    LOG_TEST_BOOL("staging", staging);
+    LOG_TEST_BOOL("unripe", unripe);
     LOG_TEST_BOOL("cache_txs", cache_txs);
     LOG_TEST_BOOL("cache_traces", cache_traces);
     LOG_TEST("load", load, (load == ""));
@@ -296,6 +306,8 @@ void COptions::Init(void) {
     // clang-format on
     pin = false;
     sleep = 14;
+    staging = false;
+    unripe = false;
     // clang-format off
     cache_txs = getGlobalConfig("blockScrape")->getConfigBool("settings", "cache_txs", false);
     cache_traces = getGlobalConfig("blockScrape")->getConfigBool("settings", "cache_traces", false);
@@ -310,7 +322,7 @@ COptions::COptions(void) {
 
     // BEG_CODE_NOTES
     // clang-format off
-    notes.push_back("Certain options (`--cache_txs`, `--cache_traces`, `--load`) are passed through to `chifra export` | if `tool` includes `monitors`. See `chifra export --help`.");  // NOLINT
+    notes.push_back("Certain options (`--cache_txs`, `--cache_traces`, etc.) are passed through to `chifra export` | if `tool` includes `monitors`. See `chifra export --help`.");  // NOLINT
     // clang-format on
     // END_CODE_NOTES
 

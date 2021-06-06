@@ -55,4 +55,9 @@ bool CTraverser::traverse(const CAppearanceArray_base& apps, void* data) {
     return true;
 }
 
+//-----------------------------------------------------------------------
+bool filterFunc(CTraverser* trav, void* data) {
+    return inRange(blknum_t(trav->app->blk), trav->travRange.first, trav->travRange.second);
+}
+
 }  // namespace qblocks

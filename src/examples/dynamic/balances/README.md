@@ -1,7 +1,6 @@
 ### Balances Dynamic Traverser
 
-A quick example of a [Dynamic Traverser](https://docs.trueblocks.io/blog/dynamic-traversers-for-trueblocks/) to extract
-balance histories for a the given address.
+A quick example of a [Dynamic Traverser](https://docs.trueblocks.io/blog/dynamic-traversers-for-trueblocks/) to extract balance histories for a given address.
 
 ### Building
 

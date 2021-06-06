@@ -17,6 +17,8 @@ blockScrape -th
 |####|Hidden options||
 | -b | --n_block_procs &lt;num&gt; | number of block channels for blaze |
 | -a | --n_addr_procs &lt;num&gt; | number of address channels for blaze |
+| -s | --staging | pass through to chifra export --freshen (see notes) |
+| -u | --unripe | pass through to chifra export --freshen (see notes) |
 | -i | --cache_txs | pass through to chifra export --freshen (see notes) |
 | -R | --cache_traces | pass through to chifra export --freshen (see notes) |
 |  | --load &lt;str&gt; | pass through to chifra export --freshen (see notes) |
@@ -26,6 +28,6 @@ blockScrape -th
 
 `Notes:`
 
-- Certain options (`--cache_txs`, `--cache_traces`, `--load`) are passed through to `chifra export` 
+- Certain options (`--cache_txs`, `--cache_traces`, etc.) are passed through to `chifra export` 
   if `tool` includes `monitors`. See `chifra export --help`.
 

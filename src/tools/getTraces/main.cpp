@@ -37,7 +37,7 @@ int main(int argc, const char* argv[]) {
                 }
             }
         } else {
-            forEveryTransactionInList(visitTransaction, &options, options.transList.queries);
+            forEveryTransaction(visitTransaction, &options, options.transList.queries);
         }
         once = false;
     }

@@ -39,34 +39,51 @@ int main(int argc, const char* argv[]) {
 
             if (options.appearances) {
                 CAppearanceTraverser at;
+                at.travRange = options.blockRange;
                 traversers.push_back(at);
             }
 
             if (options.receipts) {
                 CReceiptTraverser rt;
+                rt.travRange = options.blockRange;
                 traversers.push_back(rt);
             }
 
             if (options.logs) {
                 CLogTraverser lt;
+                lt.travRange = options.blockRange;
                 traversers.push_back(lt);
             }
 
             if (options.traces) {
                 CTraceTraverser tt;
+                tt.travRange = options.blockRange;
                 traversers.push_back(tt);
             }
 
             if (traversers.empty()) {
                 CTransactionTraverser tt;
+                tt.travRange = options.blockRange;
                 traversers.push_back(tt);
             }
 
             forEveryAppearance(traversers, options.apps, &options);
 
         } else {
-            string fileName = getCachePath("objs/" + options.load);
-            if (fileExists(fileName)) {
+            string_q fileName = getCachePath("objs/" + options.load);
+            cerr << fileName << endl;
+            if (!fileExists(fileName)) {
+                replace(fileName, "/objs/", "/objs/lib");
+                fileName = fileName + ".so";
+                cerr << fileName << endl;
+            }
+            if (!fileExists(fileName)) {
+                fileName = substitute(fileName, ".so", ".dylib");
+                cerr << fileName << endl;
+            }
+            if (!fileExists(fileName)) {
+                LOG_ERR("Could not load dynamic traverser for ", fileName, ".");
+            } else {
                 CDynamicTraverser lib(fileName);
                 if (lib.is_valid()) {
                     freshenTimestamps(getBlockProgress().client);
@@ -75,6 +92,7 @@ int main(int argc, const char* argv[]) {
                     CTraverser* trav = factory();
                     if (trav->dataFunc == noopFunc)
                         trav->dataFunc = loadTx_Func;
+                    trav->travRange = options.blockRange;
                     for (auto monitor : options.allMonitors) {
                         trav->accountedFor = monitor.address;
                         options.apps.clear();
@@ -82,9 +100,6 @@ int main(int argc, const char* argv[]) {
                         trav->traverse(options.apps, &options);
                     }
                 }
-
-            } else {
-                LOG_ERR("Could not load dynamic traverser for ", fileName);
             }
         }
 
@@ -115,11 +130,10 @@ int main(int argc, const char* argv[]) {
 }
 
 //-----------------------------------------------------------------------
-bool range_Filter(CTraverser* trav, void* data) {
-    const COptions* opt = (COptions*)data;
-    if (trav->app->blk > opt->blockRange.second || trav->app->blk >= expContext().tsCnt || shouldQuit())
+bool tsRangeFunc(CTraverser* trav, void* data) {
+    if (trav->app->blk >= expContext().tsCnt || shouldQuit())
         return false;
-    return inRange(blknum_t(trav->app->blk), opt->blockRange.first, opt->blockRange.second);
+    return inRange(blknum_t(trav->app->blk), trav->travRange.first, trav->travRange.second);
 }
 
 //-----------------------------------------------------------------------

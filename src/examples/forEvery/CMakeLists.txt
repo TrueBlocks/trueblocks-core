@@ -2,7 +2,7 @@
 cmake_minimum_required (VERSION 3.0)
 
 # application project
-project (visitAll)
+project (forEvery)
 
 # The sources to be used
 file(GLOB SOURCE_FILES "*.cpp")
@@ -11,7 +11,7 @@ file(GLOB SOURCE_FILES "*.cpp")
 set(EXECUTABLE_OUTPUT_PATH "${CMAKE_CURRENT_LIST_DIR}/bin")
 
 # Define the executable to be generated
-set(TOOL_NAME "visitAll")
+set(TOOL_NAME "forEvery")
 add_executable(${TOOL_NAME} ${SOURCE_FILES})
 
 # Add the project static libs at linking

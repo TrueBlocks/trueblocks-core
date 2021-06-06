@@ -39,7 +39,15 @@
               "0x000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b"
             ],
             "data": "0x000000000000000000000000000000000000000000000000869d529b714a0000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "9700000000000000000",
+                "_from": "0x054993ab0f2b1acc0fdc65405ee203b4271bebe6",
+                "_to": "0xf503017d7baf7fbc0fff7492b751025c6a78179b"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6, _to: 0xf503017d7baf7fbc0fff7492b751025c6a78179b, _amount: 9700000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -62,7 +70,15 @@
               "0x00000000000000000000000000de4b13153673bcae2616b67bf822500d325fc3"
             ],
             "data": "0x00000000000000000000000000000000000000000000000003782dace9d90000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "250000000000000000",
+                "_from": "0x054993ab0f2b1acc0fdc65405ee203b4271bebe6",
+                "_to": "0x00de4b13153673bcae2616b67bf822500d325fc3"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6, _to: 0x00de4b13153673bcae2616b67bf822500d325fc3, _amount: 250000000000000000 )"
           }
         ],
         "status": 1
@@ -160,13 +176,31 @@
               "0x0000000000000000000000007d655c57f71464b6f83811c55d84009cd9f5221c"
             ],
             "data": "0x0000000000000000000000000000000000000000000000004563918244f40000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Approval",
+              "inputs": {
+                "_amount": "5000000000000000000",
+                "_owner": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+                "_spender": "0x7d655c57f71464b6f83811c55d84009cd9f5221c"
+              }
+            },
+            "compressedLog": "Approval ( _owner: 0xf503017d7baf7fbc0fff7492b751025c6a78179b, _spender: 0x7d655c57f71464b6f83811c55d84009cd9f5221c, _amount: 5000000000000000000 )"
           }
         ],
         "status": 1
       },
       "traces": [],
-      "compressedTx": "0x095ea7b3 ( stub: 0000000000000000000000007d655c57f71464b6f83811c55d84009cd9f5221c0000000000000000000000000000000000000000000000004563918244f40000 )",
+      "articulatedTx": {
+        "name": "approve",
+        "inputs": {
+          "usr": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
+          "wad": "5000000000000000000"
+        },
+        "outputs": {
+          "val_0": ""
+        }
+      },
+      "compressedTx": "approve ( usr: 0x7d655c57f71464b6f83811c55d84009cd9f5221c, wad: 5000000000000000000 )",
       "statements": [
         {
           "blockNumber": 10279295,
@@ -198,7 +232,7 @@
       ],
       "gasCost": 1188918000000000,
       "etherGasCost": 0.001188918,
-      "function": "",
+      "function": "approve",
       "gasUsed": 44034,
       "date": "2020-06-16 21:46:15 UTC",
       "ether": 0,
@@ -243,7 +277,15 @@
               "0x000000000000000000000000a735cf11ed1228feb7c7bb18673a868455ffb16f"
             ],
             "data": "0x00000000000000000000000000000000000000000000000041eb63d55b1b0000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "4750000000000000000",
+                "_from": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+                "_to": "0xa735cf11ed1228feb7c7bb18673a868455ffb16f"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0xf503017d7baf7fbc0fff7492b751025c6a78179b, _to: 0xa735cf11ed1228feb7c7bb18673a868455ffb16f, _amount: 4750000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -266,7 +308,15 @@
               "0x00000000000000000000000000de4b13153673bcae2616b67bf822500d325fc3"
             ],
             "data": "0x00000000000000000000000000000000000000000000000003782dace9d90000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "250000000000000000",
+                "_from": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+                "_to": "0x00de4b13153673bcae2616b67bf822500d325fc3"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0xf503017d7baf7fbc0fff7492b751025c6a78179b, _to: 0x00de4b13153673bcae2616b67bf822500d325fc3, _amount: 250000000000000000 )"
           }
         ],
         "status": 1
@@ -376,7 +426,15 @@
               "0x000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b"
             ],
             "data": "0x00000000000000000000000000000000000000000000000041eb63d55b1b0000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "4750000000000000000",
+                "_from": "0x00de4b13153673bcae2616b67bf822500d325fc3",
+                "_to": "0xf503017d7baf7fbc0fff7492b751025c6a78179b"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x00de4b13153673bcae2616b67bf822500d325fc3, _to: 0xf503017d7baf7fbc0fff7492b751025c6a78179b, _amount: 4750000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -399,7 +457,15 @@
               "0x00000000000000000000000000de4b13153673bcae2616b67bf822500d325fc3"
             ],
             "data": "0x00000000000000000000000000000000000000000000000003782dace9d90000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "250000000000000000",
+                "_from": "0x00de4b13153673bcae2616b67bf822500d325fc3",
+                "_to": "0x00de4b13153673bcae2616b67bf822500d325fc3"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x00de4b13153673bcae2616b67bf822500d325fc3, _to: 0x00de4b13153673bcae2616b67bf822500d325fc3, _amount: 250000000000000000 )"
           }
         ],
         "status": 1
@@ -660,7 +726,15 @@
               "0x0000000000000000000000008df168a41c3a3c6be0e9208d5027ea80f2c5ba25"
             ],
             "data": "0x0000000000000000000000000000000000000000000000029331e6558f0e0000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "47500000000000000000",
+                "_from": "0x5b93ff82faaf241c15997ea3975419dddd8362c5",
+                "_to": "0x8df168a41c3a3c6be0e9208d5027ea80f2c5ba25"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x5b93ff82faaf241c15997ea3975419dddd8362c5, _to: 0x8df168a41c3a3c6be0e9208d5027ea80f2c5ba25, _amount: 47500000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -683,7 +757,15 @@
               "0x000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b"
             ],
             "data": "0x0000000000000000000000000000000000000000000000000d2f13f7789f0000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "950000000000000000",
+                "_from": "0x5b93ff82faaf241c15997ea3975419dddd8362c5",
+                "_to": "0xf503017d7baf7fbc0fff7492b751025c6a78179b"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x5b93ff82faaf241c15997ea3975419dddd8362c5, _to: 0xf503017d7baf7fbc0fff7492b751025c6a78179b, _amount: 950000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -706,7 +788,15 @@
               "0x000000000000000000000000b631e8650fb4befdae74ab9f86a9cb65bc134706"
             ],
             "data": "0x0000000000000000000000000000000000000000000000000d2f13f7789f0000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "950000000000000000",
+                "_from": "0x5b93ff82faaf241c15997ea3975419dddd8362c5",
+                "_to": "0xb631e8650fb4befdae74ab9f86a9cb65bc134706"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x5b93ff82faaf241c15997ea3975419dddd8362c5, _to: 0xb631e8650fb4befdae74ab9f86a9cb65bc134706, _amount: 950000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -729,7 +819,15 @@
               "0x000000000000000000000000bbbfc46566e5f0302cef913af8c8f423070ce6a1"
             ],
             "data": "0x00000000000000000000000000000000000000000000000041eb63d55b1b0000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "4750000000000000000",
+                "_from": "0x5b93ff82faaf241c15997ea3975419dddd8362c5",
+                "_to": "0xbbbfc46566e5f0302cef913af8c8f423070ce6a1"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x5b93ff82faaf241c15997ea3975419dddd8362c5, _to: 0xbbbfc46566e5f0302cef913af8c8f423070ce6a1, _amount: 4750000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -752,7 +850,15 @@
               "0x000000000000000000000000f8049c8425f9eab4e2ae9e1d950f9d3f71481882"
             ],
             "data": "0x0000000000000000000000000000000000000000000000000d2f13f7789f0000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "950000000000000000",
+                "_from": "0x5b93ff82faaf241c15997ea3975419dddd8362c5",
+                "_to": "0xf8049c8425f9eab4e2ae9e1d950f9d3f71481882"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x5b93ff82faaf241c15997ea3975419dddd8362c5, _to: 0xf8049c8425f9eab4e2ae9e1d950f9d3f71481882, _amount: 950000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -775,7 +881,15 @@
               "0x000000000000000000000000322d58b9e75a6918f7e7849aee0ff09369977e08"
             ],
             "data": "0x0000000000000000000000000000000000000000000000000d2f13f7789f0000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "950000000000000000",
+                "_from": "0x5b93ff82faaf241c15997ea3975419dddd8362c5",
+                "_to": "0x322d58b9e75a6918f7e7849aee0ff09369977e08"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x5b93ff82faaf241c15997ea3975419dddd8362c5, _to: 0x322d58b9e75a6918f7e7849aee0ff09369977e08, _amount: 950000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -798,7 +912,15 @@
               "0x000000000000000000000000d3e9d60e4e4de615124d5239219f32946d10151d"
             ],
             "data": "0x0000000000000000000000000000000000000000000000000d2f13f7789f0000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "950000000000000000",
+                "_from": "0x5b93ff82faaf241c15997ea3975419dddd8362c5",
+                "_to": "0xd3e9d60e4e4de615124d5239219f32946d10151d"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x5b93ff82faaf241c15997ea3975419dddd8362c5, _to: 0xd3e9d60e4e4de615124d5239219f32946d10151d, _amount: 950000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -821,7 +943,15 @@
               "0x000000000000000000000000d25185f8c3b9e38c3f014378ce58b362db568352"
             ],
             "data": "0x0000000000000000000000000000000000000000000000000d2f13f7789f0000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "950000000000000000",
+                "_from": "0x5b93ff82faaf241c15997ea3975419dddd8362c5",
+                "_to": "0xd25185f8c3b9e38c3f014378ce58b362db568352"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x5b93ff82faaf241c15997ea3975419dddd8362c5, _to: 0xd25185f8c3b9e38c3f014378ce58b362db568352, _amount: 950000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -844,7 +974,15 @@
               "0x000000000000000000000000d25185f8c3b9e38c3f014378ce58b362db568352"
             ],
             "data": "0x0000000000000000000000000000000000000000000000000d2f13f7789f0000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "950000000000000000",
+                "_from": "0x5b93ff82faaf241c15997ea3975419dddd8362c5",
+                "_to": "0xd25185f8c3b9e38c3f014378ce58b362db568352"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x5b93ff82faaf241c15997ea3975419dddd8362c5, _to: 0xd25185f8c3b9e38c3f014378ce58b362db568352, _amount: 950000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -867,7 +1005,15 @@
               "0x0000000000000000000000007058decc644317062f90525f4c1489aaf456e6b3"
             ],
             "data": "0x0000000000000000000000000000000000000000000000000d2f13f7789f0000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "950000000000000000",
+                "_from": "0x5b93ff82faaf241c15997ea3975419dddd8362c5",
+                "_to": "0x7058decc644317062f90525f4c1489aaf456e6b3"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x5b93ff82faaf241c15997ea3975419dddd8362c5, _to: 0x7058decc644317062f90525f4c1489aaf456e6b3, _amount: 950000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -890,7 +1036,15 @@
               "0x000000000000000000000000a735cf11ed1228feb7c7bb18673a868455ffb16f"
             ],
             "data": "0x00000000000000000000000000000000000000000000000041eb63d55b1b0000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "4750000000000000000",
+                "_from": "0x5b93ff82faaf241c15997ea3975419dddd8362c5",
+                "_to": "0xa735cf11ed1228feb7c7bb18673a868455ffb16f"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x5b93ff82faaf241c15997ea3975419dddd8362c5, _to: 0xa735cf11ed1228feb7c7bb18673a868455ffb16f, _amount: 4750000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -913,7 +1067,15 @@
               "0x0000000000000000000000000efe994201e2b0136dd40d5033b5f437e4c5f958"
             ],
             "data": "0x0000000000000000000000000000000000000000000000000d2f13f7789f0000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "950000000000000000",
+                "_from": "0x5b93ff82faaf241c15997ea3975419dddd8362c5",
+                "_to": "0x0efe994201e2b0136dd40d5033b5f437e4c5f958"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x5b93ff82faaf241c15997ea3975419dddd8362c5, _to: 0x0efe994201e2b0136dd40d5033b5f437e4c5f958, _amount: 950000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -936,7 +1098,15 @@
               "0x000000000000000000000000fdaae0c5a7a56c8265b9f86cf8cd934a494e3733"
             ],
             "data": "0x00000000000000000000000000000000000000000000000041eb63d55b1b0000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "4750000000000000000",
+                "_from": "0x5b93ff82faaf241c15997ea3975419dddd8362c5",
+                "_to": "0xfdaae0c5a7a56c8265b9f86cf8cd934a494e3733"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x5b93ff82faaf241c15997ea3975419dddd8362c5, _to: 0xfdaae0c5a7a56c8265b9f86cf8cd934a494e3733, _amount: 4750000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -959,7 +1129,15 @@
               "0x000000000000000000000000bf2935f259b375ea6714cbd97be767baaa26294c"
             ],
             "data": "0x0000000000000000000000000000000000000000000000000d2f13f7789f0000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "950000000000000000",
+                "_from": "0x5b93ff82faaf241c15997ea3975419dddd8362c5",
+                "_to": "0xbf2935f259b375ea6714cbd97be767baaa26294c"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x5b93ff82faaf241c15997ea3975419dddd8362c5, _to: 0xbf2935f259b375ea6714cbd97be767baaa26294c, _amount: 950000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -982,7 +1160,15 @@
               "0x0000000000000000000000002f71129b240080c638ac8d993bff52169e3551c3"
             ],
             "data": "0x0000000000000000000000000000000000000000000000000d2f13f7789f0000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "950000000000000000",
+                "_from": "0x5b93ff82faaf241c15997ea3975419dddd8362c5",
+                "_to": "0x2f71129b240080c638ac8d993bff52169e3551c3"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x5b93ff82faaf241c15997ea3975419dddd8362c5, _to: 0x2f71129b240080c638ac8d993bff52169e3551c3, _amount: 950000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -1005,7 +1191,15 @@
               "0x0000000000000000000000004f2350bc303ca6f01e2777d8c674ac561fdad1de"
             ],
             "data": "0x0000000000000000000000000000000000000000000000000d2f13f7789f0000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "950000000000000000",
+                "_from": "0x5b93ff82faaf241c15997ea3975419dddd8362c5",
+                "_to": "0x4f2350bc303ca6f01e2777d8c674ac561fdad1de"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x5b93ff82faaf241c15997ea3975419dddd8362c5, _to: 0x4f2350bc303ca6f01e2777d8c674ac561fdad1de, _amount: 950000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -1028,7 +1222,15 @@
               "0x000000000000000000000000d0aee284d4b8ee835c3c4a9e78dc72d360ed453a"
             ],
             "data": "0x0000000000000000000000000000000000000000000000000d2f13f7789f0000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "950000000000000000",
+                "_from": "0x5b93ff82faaf241c15997ea3975419dddd8362c5",
+                "_to": "0xd0aee284d4b8ee835c3c4a9e78dc72d360ed453a"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x5b93ff82faaf241c15997ea3975419dddd8362c5, _to: 0xd0aee284d4b8ee835c3c4a9e78dc72d360ed453a, _amount: 950000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -1051,7 +1253,15 @@
               "0x000000000000000000000000694c7ca85584d550b36c044e10d3a7b30d85e7f7"
             ],
             "data": "0x00000000000000000000000000000000000000000000000041eb63d55b1b0000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "4750000000000000000",
+                "_from": "0x5b93ff82faaf241c15997ea3975419dddd8362c5",
+                "_to": "0x694c7ca85584d550b36c044e10d3a7b30d85e7f7"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x5b93ff82faaf241c15997ea3975419dddd8362c5, _to: 0x694c7ca85584d550b36c044e10d3a7b30d85e7f7, _amount: 4750000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -1074,7 +1284,15 @@
               "0x00000000000000000000000054becc7560a7be76d72ed76a1f5fee6c5a2a7ab6"
             ],
             "data": "0x0000000000000000000000000000000000000000000000000d2f13f7789f0000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "950000000000000000",
+                "_from": "0x5b93ff82faaf241c15997ea3975419dddd8362c5",
+                "_to": "0x54becc7560a7be76d72ed76a1f5fee6c5a2a7ab6"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x5b93ff82faaf241c15997ea3975419dddd8362c5, _to: 0x54becc7560a7be76d72ed76a1f5fee6c5a2a7ab6, _amount: 950000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -1097,7 +1315,15 @@
               "0x000000000000000000000000865c2f85c9fea1c6ac7f53de07554d68cb92ed88"
             ],
             "data": "0x00000000000000000000000000000000000000000000000041eb63d55b1b0000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "4750000000000000000",
+                "_from": "0x5b93ff82faaf241c15997ea3975419dddd8362c5",
+                "_to": "0x865c2f85c9fea1c6ac7f53de07554d68cb92ed88"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x5b93ff82faaf241c15997ea3975419dddd8362c5, _to: 0x865c2f85c9fea1c6ac7f53de07554d68cb92ed88, _amount: 4750000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -1120,7 +1346,15 @@
               "0x0000000000000000000000000115f5ce3f986a35b1edb6f2c3815cebb2461e70"
             ],
             "data": "0x00000000000000000000000000000000000000000000000041eb63d55b1b0000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "4750000000000000000",
+                "_from": "0x5b93ff82faaf241c15997ea3975419dddd8362c5",
+                "_to": "0x0115f5ce3f986a35b1edb6f2c3815cebb2461e70"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x5b93ff82faaf241c15997ea3975419dddd8362c5, _to: 0x0115f5ce3f986a35b1edb6f2c3815cebb2461e70, _amount: 4750000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -1143,7 +1377,15 @@
               "0x00000000000000000000000000de4b13153673bcae2616b67bf822500d325fc3"
             ],
             "data": "0x0000000000000000000000000000000000000000000000004139c1192c55f63c",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "4699999999999997500",
+                "_from": "0x5b93ff82faaf241c15997ea3975419dddd8362c5",
+                "_to": "0x00de4b13153673bcae2616b67bf822500d325fc3"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x5b93ff82faaf241c15997ea3975419dddd8362c5, _to: 0x00de4b13153673bcae2616b67bf822500d325fc3, _amount: 4699999999999997500 )"
           }
         ],
         "status": 1
@@ -1253,7 +1495,15 @@
               "0x000000000000000000000000c9a872868afa68ba937f65a1c5b4b252dab15d85"
             ],
             "data": "0x00000000000000000000000000000000000000000000000f732b66015a540000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "285000000000000000000",
+                "_from": "0x89c65d0759a25ca4b4ae0fd1b4827d00018dc931",
+                "_to": "0xc9a872868afa68ba937f65a1c5b4b252dab15d85"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x89c65d0759a25ca4b4ae0fd1b4827d00018dc931, _to: 0xc9a872868afa68ba937f65a1c5b4b252dab15d85, _amount: 285000000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -1276,7 +1526,15 @@
               "0x0000000000000000000000003e947a271a37ae7b59921c57be0a3246ee0d887c"
             ],
             "data": "0x000000000000000000000000000000000000000000000014998f32ac78700000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "380000000000000000000",
+                "_from": "0x89c65d0759a25ca4b4ae0fd1b4827d00018dc931",
+                "_to": "0x3e947a271a37ae7b59921c57be0a3246ee0d887c"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x89c65d0759a25ca4b4ae0fd1b4827d00018dc931, _to: 0x3e947a271a37ae7b59921c57be0a3246ee0d887c, _amount: 380000000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -1299,7 +1557,15 @@
               "0x000000000000000000000000663d3947f03ef5b387992b880ac85940057c13e3"
             ],
             "data": "0x000000000000000000000000000000000000000000000005aa3a9455d4520000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "104500000000000000000",
+                "_from": "0x89c65d0759a25ca4b4ae0fd1b4827d00018dc931",
+                "_to": "0x663d3947f03ef5b387992b880ac85940057c13e3"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x89c65d0759a25ca4b4ae0fd1b4827d00018dc931, _to: 0x663d3947f03ef5b387992b880ac85940057c13e3, _amount: 104500000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -1322,7 +1588,15 @@
               "0x00000000000000000000000000de4b13153673bcae2616b67bf822500d325fc3"
             ],
             "data": "0x00000000000000000000000000000000000000000000000f732b66015a540000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "285000000000000000000",
+                "_from": "0x89c65d0759a25ca4b4ae0fd1b4827d00018dc931",
+                "_to": "0x00de4b13153673bcae2616b67bf822500d325fc3"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x89c65d0759a25ca4b4ae0fd1b4827d00018dc931, _to: 0x00de4b13153673bcae2616b67bf822500d325fc3, _amount: 285000000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -1345,7 +1619,15 @@
               "0x000000000000000000000000bcd768c566143714309afe87feb901da7543f470"
             ],
             "data": "0x0000000000000000000000000000000000000000000000052663ccab1e1c0000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "95000000000000000000",
+                "_from": "0x89c65d0759a25ca4b4ae0fd1b4827d00018dc931",
+                "_to": "0xbcd768c566143714309afe87feb901da7543f470"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x89c65d0759a25ca4b4ae0fd1b4827d00018dc931, _to: 0xbcd768c566143714309afe87feb901da7543f470, _amount: 95000000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -1368,7 +1650,15 @@
               "0x000000000000000000000000d1933df1c223ad7cb5716b066ca26bc24569e622"
             ],
             "data": "0x0000000000000000000000000000000000000000000000029331e6558f0e0000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "47500000000000000000",
+                "_from": "0x89c65d0759a25ca4b4ae0fd1b4827d00018dc931",
+                "_to": "0xd1933df1c223ad7cb5716b066ca26bc24569e622"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x89c65d0759a25ca4b4ae0fd1b4827d00018dc931, _to: 0xd1933df1c223ad7cb5716b066ca26bc24569e622, _amount: 47500000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -1391,7 +1681,15 @@
               "0x00000000000000000000000060e18f4971077412af2bd0297999093642f28e15"
             ],
             "data": "0x0000000000000000000000000000000000000000000000052663ccab1e1c0000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "95000000000000000000",
+                "_from": "0x89c65d0759a25ca4b4ae0fd1b4827d00018dc931",
+                "_to": "0x60e18f4971077412af2bd0297999093642f28e15"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x89c65d0759a25ca4b4ae0fd1b4827d00018dc931, _to: 0x60e18f4971077412af2bd0297999093642f28e15, _amount: 95000000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -1414,7 +1712,15 @@
               "0x0000000000000000000000009b984d5a03980d8dc0a24506c968465424c81dbe"
             ],
             "data": "0x000000000000000000000000000000000000000000000018b84570022a200000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "456000000000000000000",
+                "_from": "0x89c65d0759a25ca4b4ae0fd1b4827d00018dc931",
+                "_to": "0x9b984d5a03980d8dc0a24506c968465424c81dbe"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x89c65d0759a25ca4b4ae0fd1b4827d00018dc931, _to: 0x9b984d5a03980d8dc0a24506c968465424c81dbe, _amount: 456000000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -1437,7 +1743,15 @@
               "0x0000000000000000000000008ba1f109551bd432803012645ac136ddd64dba72"
             ],
             "data": "0x000000000000000000000000000000000000000000000014998f32ac78700000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "380000000000000000000",
+                "_from": "0x89c65d0759a25ca4b4ae0fd1b4827d00018dc931",
+                "_to": "0x8ba1f109551bd432803012645ac136ddd64dba72"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x89c65d0759a25ca4b4ae0fd1b4827d00018dc931, _to: 0x8ba1f109551bd432803012645ac136ddd64dba72, _amount: 380000000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -1460,7 +1774,15 @@
               "0x000000000000000000000000c95c558daa63b1a79331b2ab4a2a7af375384d3b"
             ],
             "data": "0x0000000000000000000000000000000000000000000000018b84570022a20000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "28500000000000000000",
+                "_from": "0x89c65d0759a25ca4b4ae0fd1b4827d00018dc931",
+                "_to": "0xc95c558daa63b1a79331b2ab4a2a7af375384d3b"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x89c65d0759a25ca4b4ae0fd1b4827d00018dc931, _to: 0xc95c558daa63b1a79331b2ab4a2a7af375384d3b, _amount: 28500000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -1483,7 +1805,15 @@
               "0x000000000000000000000000a19fcdad77c1f0fd184689aca88babcf68010347"
             ],
             "data": "0x0000000000000000000000000000000000000000000000029331e6558f0e0000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "47500000000000000000",
+                "_from": "0x89c65d0759a25ca4b4ae0fd1b4827d00018dc931",
+                "_to": "0xa19fcdad77c1f0fd184689aca88babcf68010347"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x89c65d0759a25ca4b4ae0fd1b4827d00018dc931, _to: 0xa19fcdad77c1f0fd184689aca88babcf68010347, _amount: 47500000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -1506,7 +1836,15 @@
               "0x000000000000000000000000bcede714283f348ebb3e5cbaf8a947cab3c8be8d"
             ],
             "data": "0x0000000000000000000000000000000000000000000000052663ccab1e1c0000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "95000000000000000000",
+                "_from": "0x89c65d0759a25ca4b4ae0fd1b4827d00018dc931",
+                "_to": "0xbcede714283f348ebb3e5cbaf8a947cab3c8be8d"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x89c65d0759a25ca4b4ae0fd1b4827d00018dc931, _to: 0xbcede714283f348ebb3e5cbaf8a947cab3c8be8d, _amount: 95000000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -1529,7 +1867,15 @@
               "0x0000000000000000000000003efcf2ddd54d841f253a95d8f30d97123568cd7b"
             ],
             "data": "0x00000000000000000000000000000000000000000000000107ad8f556c6c0000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "19000000000000000000",
+                "_from": "0x89c65d0759a25ca4b4ae0fd1b4827d00018dc931",
+                "_to": "0x3efcf2ddd54d841f253a95d8f30d97123568cd7b"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x89c65d0759a25ca4b4ae0fd1b4827d00018dc931, _to: 0x3efcf2ddd54d841f253a95d8f30d97123568cd7b, _amount: 19000000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -1552,7 +1898,15 @@
               "0x0000000000000000000000007056e70a5ca249ba88e9550eb22caec4c985bb8e"
             ],
             "data": "0x0000000000000000000000000000000000000000000000018b84570022a20000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "28500000000000000000",
+                "_from": "0x89c65d0759a25ca4b4ae0fd1b4827d00018dc931",
+                "_to": "0x7056e70a5ca249ba88e9550eb22caec4c985bb8e"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x89c65d0759a25ca4b4ae0fd1b4827d00018dc931, _to: 0x7056e70a5ca249ba88e9550eb22caec4c985bb8e, _amount: 28500000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -1575,7 +1929,15 @@
               "0x000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b"
             ],
             "data": "0x0000000000000000000000000000000000000000000000018b84570022a20000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "28500000000000000000",
+                "_from": "0x89c65d0759a25ca4b4ae0fd1b4827d00018dc931",
+                "_to": "0xf503017d7baf7fbc0fff7492b751025c6a78179b"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x89c65d0759a25ca4b4ae0fd1b4827d00018dc931, _to: 0xf503017d7baf7fbc0fff7492b751025c6a78179b, _amount: 28500000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -1598,7 +1960,15 @@
               "0x00000000000000000000000000de4b13153673bcae2616b67bf822500d325fc3"
             ],
             "data": "0x000000000000000000000000000000000000000000000006c6b935b8bbd40000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "125000000000000000000",
+                "_from": "0x89c65d0759a25ca4b4ae0fd1b4827d00018dc931",
+                "_to": "0x00de4b13153673bcae2616b67bf822500d325fc3"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x89c65d0759a25ca4b4ae0fd1b4827d00018dc931, _to: 0x00de4b13153673bcae2616b67bf822500d325fc3, _amount: 125000000000000000000 )"
           }
         ],
         "status": 1
@@ -1708,7 +2078,15 @@
               "0x000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b"
             ],
             "data": "0x00000000000000000000000000000000000000000000000041eb63d55b1b0000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "4750000000000000000",
+                "_from": "0x3564e17d5f6b7c9a3c6bd6248bf7b3eeb4927e50",
+                "_to": "0xf503017d7baf7fbc0fff7492b751025c6a78179b"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x3564e17d5f6b7c9a3c6bd6248bf7b3eeb4927e50, _to: 0xf503017d7baf7fbc0fff7492b751025c6a78179b, _amount: 4750000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -1731,7 +2109,15 @@
               "0x00000000000000000000000000de4b13153673bcae2616b67bf822500d325fc3"
             ],
             "data": "0x00000000000000000000000000000000000000000000000003782dace9d90000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "250000000000000000",
+                "_from": "0x3564e17d5f6b7c9a3c6bd6248bf7b3eeb4927e50",
+                "_to": "0x00de4b13153673bcae2616b67bf822500d325fc3"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x3564e17d5f6b7c9a3c6bd6248bf7b3eeb4927e50, _to: 0x00de4b13153673bcae2616b67bf822500d325fc3, _amount: 250000000000000000 )"
           }
         ],
         "status": 1
@@ -1841,7 +2227,15 @@
               "0x0000000000000000000000008ba1f109551bd432803012645ac136ddd64dba72"
             ],
             "data": "0x0000000000000000000000000000000000000000000000004563918244f40000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "5000000000000000000",
+                "_from": "0x4f1b01b761fc9347d5844c49abed5a235d34569e",
+                "_to": "0x8ba1f109551bd432803012645ac136ddd64dba72"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x4f1b01b761fc9347d5844c49abed5a235d34569e, _to: 0x8ba1f109551bd432803012645ac136ddd64dba72, _amount: 5000000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -1864,7 +2258,15 @@
               "0x00000000000000000000000000cf36853aa4024fb5bf5cc377dfd85844b411a0"
             ],
             "data": "0x0000000000000000000000000000000000000000000000004563918244f40000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "5000000000000000000",
+                "_from": "0x4f1b01b761fc9347d5844c49abed5a235d34569e",
+                "_to": "0x00cf36853aa4024fb5bf5cc377dfd85844b411a0"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x4f1b01b761fc9347d5844c49abed5a235d34569e, _to: 0x00cf36853aa4024fb5bf5cc377dfd85844b411a0, _amount: 5000000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -1887,7 +2289,15 @@
               "0x00000000000000000000000000de4b13153673bcae2616b67bf822500d325fc3"
             ],
             "data": "0x0000000000000000000000000000000000000000000000004563918244f40000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "5000000000000000000",
+                "_from": "0x4f1b01b761fc9347d5844c49abed5a235d34569e",
+                "_to": "0x00de4b13153673bcae2616b67bf822500d325fc3"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x4f1b01b761fc9347d5844c49abed5a235d34569e, _to: 0x00de4b13153673bcae2616b67bf822500d325fc3, _amount: 5000000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -1910,7 +2320,15 @@
               "0x000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b"
             ],
             "data": "0x0000000000000000000000000000000000000000000000004563918244f40000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "5000000000000000000",
+                "_from": "0x4f1b01b761fc9347d5844c49abed5a235d34569e",
+                "_to": "0xf503017d7baf7fbc0fff7492b751025c6a78179b"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x4f1b01b761fc9347d5844c49abed5a235d34569e, _to: 0xf503017d7baf7fbc0fff7492b751025c6a78179b, _amount: 5000000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -1933,7 +2351,15 @@
               "0x000000000000000000000000e6ec16383e225ae9166ccf1381e25491701f65d5"
             ],
             "data": "0x0000000000000000000000000000000000000000000000004563918244f40000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "5000000000000000000",
+                "_from": "0x4f1b01b761fc9347d5844c49abed5a235d34569e",
+                "_to": "0xe6ec16383e225ae9166ccf1381e25491701f65d5"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x4f1b01b761fc9347d5844c49abed5a235d34569e, _to: 0xe6ec16383e225ae9166ccf1381e25491701f65d5, _amount: 5000000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -1956,7 +2382,15 @@
               "0x0000000000000000000000004d37f28d2db99e8d35a6c725a5f1749a085850a3"
             ],
             "data": "0x0000000000000000000000000000000000000000000000000de0b6b3a7640000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "1000000000000000000",
+                "_from": "0x4f1b01b761fc9347d5844c49abed5a235d34569e",
+                "_to": "0x4d37f28d2db99e8d35a6c725a5f1749a085850a3"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x4f1b01b761fc9347d5844c49abed5a235d34569e, _to: 0x4d37f28d2db99e8d35a6c725a5f1749a085850a3, _amount: 1000000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -1979,7 +2413,15 @@
               "0x00000000000000000000000070e47c843e0f6ab0991a3189c28f2957eb6d3842"
             ],
             "data": "0x00000000000000000000000000000000000000000000000029a2241af62c0000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "3000000000000000000",
+                "_from": "0x4f1b01b761fc9347d5844c49abed5a235d34569e",
+                "_to": "0x70e47c843e0f6ab0991a3189c28f2957eb6d3842"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x4f1b01b761fc9347d5844c49abed5a235d34569e, _to: 0x70e47c843e0f6ab0991a3189c28f2957eb6d3842, _amount: 3000000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -2002,7 +2444,15 @@
               "0x00000000000000000000000032cefb2dc869bbfe636f7547cda43f561bf88d5a"
             ],
             "data": "0x00000000000000000000000000000000000000000000000029a2241af62c0000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "3000000000000000000",
+                "_from": "0x4f1b01b761fc9347d5844c49abed5a235d34569e",
+                "_to": "0x32cefb2dc869bbfe636f7547cda43f561bf88d5a"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x4f1b01b761fc9347d5844c49abed5a235d34569e, _to: 0x32cefb2dc869bbfe636f7547cda43f561bf88d5a, _amount: 3000000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -2025,7 +2475,15 @@
               "0x000000000000000000000000dd4c48c0b24039969fc16d1cdf626eab821d3384"
             ],
             "data": "0x0000000000000000000000000000000000000000000000004563918244f40000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "5000000000000000000",
+                "_from": "0x4f1b01b761fc9347d5844c49abed5a235d34569e",
+                "_to": "0xdd4c48c0b24039969fc16d1cdf626eab821d3384"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x4f1b01b761fc9347d5844c49abed5a235d34569e, _to: 0xdd4c48c0b24039969fc16d1cdf626eab821d3384, _amount: 5000000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -2048,7 +2506,15 @@
               "0x0000000000000000000000009492510bbcb93b6992d8b7bb67888558e12dcac4"
             ],
             "data": "0x0000000000000000000000000000000000000000000000000de0b6b3a7640000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "1000000000000000000",
+                "_from": "0x4f1b01b761fc9347d5844c49abed5a235d34569e",
+                "_to": "0x9492510bbcb93b6992d8b7bb67888558e12dcac4"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x4f1b01b761fc9347d5844c49abed5a235d34569e, _to: 0x9492510bbcb93b6992d8b7bb67888558e12dcac4, _amount: 1000000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -2071,7 +2537,15 @@
               "0x0000000000000000000000008bfbb529a9e85fdc4b70a4fcdc0d68bb298b8816"
             ],
             "data": "0x0000000000000000000000000000000000000000000000004563918244f40000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "5000000000000000000",
+                "_from": "0x4f1b01b761fc9347d5844c49abed5a235d34569e",
+                "_to": "0x8bfbb529a9e85fdc4b70a4fcdc0d68bb298b8816"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x4f1b01b761fc9347d5844c49abed5a235d34569e, _to: 0x8bfbb529a9e85fdc4b70a4fcdc0d68bb298b8816, _amount: 5000000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -2094,7 +2568,15 @@
               "0x000000000000000000000000396e0dcd35a534975bff6bf044ac0e373a29d231"
             ],
             "data": "0x0000000000000000000000000000000000000000000000000de0b6b3a7640000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "1000000000000000000",
+                "_from": "0x4f1b01b761fc9347d5844c49abed5a235d34569e",
+                "_to": "0x396e0dcd35a534975bff6bf044ac0e373a29d231"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x4f1b01b761fc9347d5844c49abed5a235d34569e, _to: 0x396e0dcd35a534975bff6bf044ac0e373a29d231, _amount: 1000000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -2117,7 +2599,15 @@
               "0x000000000000000000000000322d58b9e75a6918f7e7849aee0ff09369977e08"
             ],
             "data": "0x0000000000000000000000000000000000000000000000004563918244f40000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "5000000000000000000",
+                "_from": "0x4f1b01b761fc9347d5844c49abed5a235d34569e",
+                "_to": "0x322d58b9e75a6918f7e7849aee0ff09369977e08"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x4f1b01b761fc9347d5844c49abed5a235d34569e, _to: 0x322d58b9e75a6918f7e7849aee0ff09369977e08, _amount: 5000000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -2140,7 +2630,15 @@
               "0x000000000000000000000000bcd768c566143714309afe87feb901da7543f470"
             ],
             "data": "0x0000000000000000000000000000000000000000000000000de0b6b3a7640000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "1000000000000000000",
+                "_from": "0x4f1b01b761fc9347d5844c49abed5a235d34569e",
+                "_to": "0xbcd768c566143714309afe87feb901da7543f470"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x4f1b01b761fc9347d5844c49abed5a235d34569e, _to: 0xbcd768c566143714309afe87feb901da7543f470, _amount: 1000000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -2163,7 +2661,15 @@
               "0x00000000000000000000000086c91ab19e7a15577b4931ceb3e7de31ba27f844"
             ],
             "data": "0x0000000000000000000000000000000000000000000000000de0b6b3a7640000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "1000000000000000000",
+                "_from": "0x4f1b01b761fc9347d5844c49abed5a235d34569e",
+                "_to": "0x86c91ab19e7a15577b4931ceb3e7de31ba27f844"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x4f1b01b761fc9347d5844c49abed5a235d34569e, _to: 0x86c91ab19e7a15577b4931ceb3e7de31ba27f844, _amount: 1000000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -2186,7 +2692,15 @@
               "0x0000000000000000000000004bf66e52f3009cd138e48f142d47661037160001"
             ],
             "data": "0x0000000000000000000000000000000000000000000000000de0b6b3a7640000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "1000000000000000000",
+                "_from": "0x4f1b01b761fc9347d5844c49abed5a235d34569e",
+                "_to": "0x4bf66e52f3009cd138e48f142d47661037160001"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x4f1b01b761fc9347d5844c49abed5a235d34569e, _to: 0x4bf66e52f3009cd138e48f142d47661037160001, _amount: 1000000000000000000 )"
           }
         ],
         "status": 1
@@ -2296,7 +2810,15 @@
               "0x000000000000000000000000a19fcdad77c1f0fd184689aca88babcf68010347"
             ],
             "data": "0x000000000000000000000000000000000000000000000000278d3be669dd0000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "2850000000000000000",
+                "_from": "0x4535c6045343de2a1f307b00cae54ba1b42d904c",
+                "_to": "0xa19fcdad77c1f0fd184689aca88babcf68010347"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x4535c6045343de2a1f307b00cae54ba1b42d904c, _to: 0xa19fcdad77c1f0fd184689aca88babcf68010347, _amount: 2850000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -2319,7 +2841,15 @@
               "0x0000000000000000000000006b3999bb710e92701421c63ae4952301bef0ec98"
             ],
             "data": "0x0000000000000000000000000000000000000000000000001a5e27eef13e0000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "1900000000000000000",
+                "_from": "0x4535c6045343de2a1f307b00cae54ba1b42d904c",
+                "_to": "0x6b3999bb710e92701421c63ae4952301bef0ec98"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x4535c6045343de2a1f307b00cae54ba1b42d904c, _to: 0x6b3999bb710e92701421c63ae4952301bef0ec98, _amount: 1900000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -2342,7 +2872,15 @@
               "0x000000000000000000000000663d3947f03ef5b387992b880ac85940057c13e3"
             ],
             "data": "0x0000000000000000000000000000000000000000000000001a5e27eef13e0000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "1900000000000000000",
+                "_from": "0x4535c6045343de2a1f307b00cae54ba1b42d904c",
+                "_to": "0x663d3947f03ef5b387992b880ac85940057c13e3"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x4535c6045343de2a1f307b00cae54ba1b42d904c, _to: 0x663d3947f03ef5b387992b880ac85940057c13e3, _amount: 1900000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -2365,7 +2903,15 @@
               "0x000000000000000000000000cbec15583a21c3ddad5fab658be5b4fe85df730b"
             ],
             "data": "0x000000000000000000000000000000000000000000000000278d3be669dd0000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "2850000000000000000",
+                "_from": "0x4535c6045343de2a1f307b00cae54ba1b42d904c",
+                "_to": "0xcbec15583a21c3ddad5fab658be5b4fe85df730b"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x4535c6045343de2a1f307b00cae54ba1b42d904c, _to: 0xcbec15583a21c3ddad5fab658be5b4fe85df730b, _amount: 2850000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -2388,7 +2934,15 @@
               "0x000000000000000000000000396e0dcd35a534975bff6bf044ac0e373a29d231"
             ],
             "data": "0x0000000000000000000000000000000000000000000000000d2f13f7789f0000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "950000000000000000",
+                "_from": "0x4535c6045343de2a1f307b00cae54ba1b42d904c",
+                "_to": "0x396e0dcd35a534975bff6bf044ac0e373a29d231"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x4535c6045343de2a1f307b00cae54ba1b42d904c, _to: 0x396e0dcd35a534975bff6bf044ac0e373a29d231, _amount: 950000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -2411,7 +2965,15 @@
               "0x00000000000000000000000039e419ba25196794b595b2a595ea8e527ddc9856"
             ],
             "data": "0x00000000000000000000000000000000000000000000000041eb63d55b1b0000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "4750000000000000000",
+                "_from": "0x4535c6045343de2a1f307b00cae54ba1b42d904c",
+                "_to": "0x39e419ba25196794b595b2a595ea8e527ddc9856"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x4535c6045343de2a1f307b00cae54ba1b42d904c, _to: 0x39e419ba25196794b595b2a595ea8e527ddc9856, _amount: 4750000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -2434,7 +2996,15 @@
               "0x0000000000000000000000004bf66e52f3009cd138e48f142d47661037160001"
             ],
             "data": "0x000000000000000000000000000000000000000000000000278d3be669dd0000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "2850000000000000000",
+                "_from": "0x4535c6045343de2a1f307b00cae54ba1b42d904c",
+                "_to": "0x4bf66e52f3009cd138e48f142d47661037160001"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x4535c6045343de2a1f307b00cae54ba1b42d904c, _to: 0x4bf66e52f3009cd138e48f142d47661037160001, _amount: 2850000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -2457,7 +3027,15 @@
               "0x0000000000000000000000008110d1d04ac316fdcace8f24fd60c86b810ab15a"
             ],
             "data": "0x000000000000000000000000000000000000000000000000278d3be669dd0000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "2850000000000000000",
+                "_from": "0x4535c6045343de2a1f307b00cae54ba1b42d904c",
+                "_to": "0x8110d1d04ac316fdcace8f24fd60c86b810ab15a"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x4535c6045343de2a1f307b00cae54ba1b42d904c, _to: 0x8110d1d04ac316fdcace8f24fd60c86b810ab15a, _amount: 2850000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -2480,7 +3058,15 @@
               "0x0000000000000000000000008b3765eda5207fb21690874b722ae276b96260e0"
             ],
             "data": "0x000000000000000000000000000000000000000000000000278d3be669dd0000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "2850000000000000000",
+                "_from": "0x4535c6045343de2a1f307b00cae54ba1b42d904c",
+                "_to": "0x8b3765eda5207fb21690874b722ae276b96260e0"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x4535c6045343de2a1f307b00cae54ba1b42d904c, _to: 0x8b3765eda5207fb21690874b722ae276b96260e0, _amount: 2850000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -2503,7 +3089,15 @@
               "0x0000000000000000000000009ac9c636404c8d46d9eb966d7179983ba5a3941a"
             ],
             "data": "0x0000000000000000000000000000000000000000000000000d2f13f7789f0000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "950000000000000000",
+                "_from": "0x4535c6045343de2a1f307b00cae54ba1b42d904c",
+                "_to": "0x9ac9c636404c8d46d9eb966d7179983ba5a3941a"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x4535c6045343de2a1f307b00cae54ba1b42d904c, _to: 0x9ac9c636404c8d46d9eb966d7179983ba5a3941a, _amount: 950000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -2526,7 +3120,15 @@
               "0x000000000000000000000000f3047b2b495e31c1e39f198448ae5f382739264a"
             ],
             "data": "0x000000000000000000000000000000000000000000000000278d3be669dd0000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "2850000000000000000",
+                "_from": "0x4535c6045343de2a1f307b00cae54ba1b42d904c",
+                "_to": "0xf3047b2b495e31c1e39f198448ae5f382739264a"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x4535c6045343de2a1f307b00cae54ba1b42d904c, _to: 0xf3047b2b495e31c1e39f198448ae5f382739264a, _amount: 2850000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -2549,7 +3151,15 @@
               "0x00000000000000000000000020a5814b73ef3537c6e099a0d45c798f4bd6e1d6"
             ],
             "data": "0x000000000000000000000000000000000000000000000000278d3be669dd0000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "2850000000000000000",
+                "_from": "0x4535c6045343de2a1f307b00cae54ba1b42d904c",
+                "_to": "0x20a5814b73ef3537c6e099a0d45c798f4bd6e1d6"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x4535c6045343de2a1f307b00cae54ba1b42d904c, _to: 0x20a5814b73ef3537c6e099a0d45c798f4bd6e1d6, _amount: 2850000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -2572,7 +3182,15 @@
               "0x000000000000000000000000c5cdcd5470aef35fc33bddff3f8ecec027f95b1d"
             ],
             "data": "0x000000000000000000000000000000000000000000000000278d3be669dd0000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "2850000000000000000",
+                "_from": "0x4535c6045343de2a1f307b00cae54ba1b42d904c",
+                "_to": "0xc5cdcd5470aef35fc33bddff3f8ecec027f95b1d"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x4535c6045343de2a1f307b00cae54ba1b42d904c, _to: 0xc5cdcd5470aef35fc33bddff3f8ecec027f95b1d, _amount: 2850000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -2595,7 +3213,15 @@
               "0x000000000000000000000000bbbfc46566e5f0302cef913af8c8f423070ce6a1"
             ],
             "data": "0x000000000000000000000000000000000000000000000000278d3be669dd0000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "2850000000000000000",
+                "_from": "0x4535c6045343de2a1f307b00cae54ba1b42d904c",
+                "_to": "0xbbbfc46566e5f0302cef913af8c8f423070ce6a1"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x4535c6045343de2a1f307b00cae54ba1b42d904c, _to: 0xbbbfc46566e5f0302cef913af8c8f423070ce6a1, _amount: 2850000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -2618,7 +3244,15 @@
               "0x000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b"
             ],
             "data": "0x0000000000000000000000000000000000000000000000001a5e27eef13e0000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "1900000000000000000",
+                "_from": "0x4535c6045343de2a1f307b00cae54ba1b42d904c",
+                "_to": "0xf503017d7baf7fbc0fff7492b751025c6a78179b"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x4535c6045343de2a1f307b00cae54ba1b42d904c, _to: 0xf503017d7baf7fbc0fff7492b751025c6a78179b, _amount: 1900000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -2641,7 +3275,15 @@
               "0x00000000000000000000000066268791b55e1f5fa585d990326519f101407257"
             ],
             "data": "0x0000000000000000000000000000000000000000000000001a5e27eef13e0000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "1900000000000000000",
+                "_from": "0x4535c6045343de2a1f307b00cae54ba1b42d904c",
+                "_to": "0x66268791b55e1f5fa585d990326519f101407257"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x4535c6045343de2a1f307b00cae54ba1b42d904c, _to: 0x66268791b55e1f5fa585d990326519f101407257, _amount: 1900000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -2664,7 +3306,15 @@
               "0x0000000000000000000000002c82e14352e98c931852d9bb5f0760e36942cc3c"
             ],
             "data": "0x0000000000000000000000000000000000000000000000001a5e27eef13e0000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "1900000000000000000",
+                "_from": "0x4535c6045343de2a1f307b00cae54ba1b42d904c",
+                "_to": "0x2c82e14352e98c931852d9bb5f0760e36942cc3c"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x4535c6045343de2a1f307b00cae54ba1b42d904c, _to: 0x2c82e14352e98c931852d9bb5f0760e36942cc3c, _amount: 1900000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -2687,7 +3337,15 @@
               "0x0000000000000000000000007058decc644317062f90525f4c1489aaf456e6b3"
             ],
             "data": "0x0000000000000000000000000000000000000000000000000d2f13f7789f0000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "950000000000000000",
+                "_from": "0x4535c6045343de2a1f307b00cae54ba1b42d904c",
+                "_to": "0x7058decc644317062f90525f4c1489aaf456e6b3"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x4535c6045343de2a1f307b00cae54ba1b42d904c, _to: 0x7058decc644317062f90525f4c1489aaf456e6b3, _amount: 950000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -2710,7 +3368,15 @@
               "0x000000000000000000000000818ff73a5d881c27a945be944973156c01141232"
             ],
             "data": "0x0000000000000000000000000000000000000000000000000d2f13f7789f0000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "950000000000000000",
+                "_from": "0x4535c6045343de2a1f307b00cae54ba1b42d904c",
+                "_to": "0x818ff73a5d881c27a945be944973156c01141232"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x4535c6045343de2a1f307b00cae54ba1b42d904c, _to: 0x818ff73a5d881c27a945be944973156c01141232, _amount: 950000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -2733,7 +3399,15 @@
               "0x000000000000000000000000b28abfe2c14e2b36f8964ccc7c4dca17cfb95bde"
             ],
             "data": "0x0000000000000000000000000000000000000000000000001a5e27eef13e0000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "1900000000000000000",
+                "_from": "0x4535c6045343de2a1f307b00cae54ba1b42d904c",
+                "_to": "0xb28abfe2c14e2b36f8964ccc7c4dca17cfb95bde"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x4535c6045343de2a1f307b00cae54ba1b42d904c, _to: 0xb28abfe2c14e2b36f8964ccc7c4dca17cfb95bde, _amount: 1900000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -2756,7 +3430,15 @@
               "0x000000000000000000000000afdd1eb2511cd891acf2bff82dabf47e0c914d24"
             ],
             "data": "0x0000000000000000000000000000000000000000000000000d2f13f7789f0000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "950000000000000000",
+                "_from": "0x4535c6045343de2a1f307b00cae54ba1b42d904c",
+                "_to": "0xafdd1eb2511cd891acf2bff82dabf47e0c914d24"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x4535c6045343de2a1f307b00cae54ba1b42d904c, _to: 0xafdd1eb2511cd891acf2bff82dabf47e0c914d24, _amount: 950000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -2779,7 +3461,15 @@
               "0x0000000000000000000000005d7d257d97d8a81f51187a77c6dd226fb8424d90"
             ],
             "data": "0x0000000000000000000000000000000000000000000000000d2f13f7789f0000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "950000000000000000",
+                "_from": "0x4535c6045343de2a1f307b00cae54ba1b42d904c",
+                "_to": "0x5d7d257d97d8a81f51187a77c6dd226fb8424d90"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x4535c6045343de2a1f307b00cae54ba1b42d904c, _to: 0x5d7d257d97d8a81f51187a77c6dd226fb8424d90, _amount: 950000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -2802,7 +3492,15 @@
               "0x00000000000000000000000000de4b13153673bcae2616b67bf822500d325fc3"
             ],
             "data": "0x00000000000000000000000000000000000000000000000022b1c8c12279fe70",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "2499999999999999600",
+                "_from": "0x4535c6045343de2a1f307b00cae54ba1b42d904c",
+                "_to": "0x00de4b13153673bcae2616b67bf822500d325fc3"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x4535c6045343de2a1f307b00cae54ba1b42d904c, _to: 0x00de4b13153673bcae2616b67bf822500d325fc3, _amount: 2499999999999999600 )"
           }
         ],
         "status": 1
@@ -2912,7 +3610,15 @@
               "0x00000000000000000000000078f3c73f5500335aac51e4c2a79555d176b279da"
             ],
             "data": "0x00000000000000000000000000000000000000000000000044b1eec6162f0000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "4950000000000000000",
+                "_from": "0x6f620ba7907a3d9a6dda9821eeb4e59b3f69c367",
+                "_to": "0x78f3c73f5500335aac51e4c2a79555d176b279da"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x6f620ba7907a3d9a6dda9821eeb4e59b3f69c367, _to: 0x78f3c73f5500335aac51e4c2a79555d176b279da, _amount: 4950000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -2935,7 +3641,15 @@
               "0x000000000000000000000000a1b02d8c67b0fdcf4e379855868deb470e169cfb"
             ],
             "data": "0x00000000000000000000000000000000000000000000000044b1eec6162f0000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "4950000000000000000",
+                "_from": "0x6f620ba7907a3d9a6dda9821eeb4e59b3f69c367",
+                "_to": "0xa1b02d8c67b0fdcf4e379855868deb470e169cfb"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x6f620ba7907a3d9a6dda9821eeb4e59b3f69c367, _to: 0xa1b02d8c67b0fdcf4e379855868deb470e169cfb, _amount: 4950000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -2958,7 +3672,15 @@
               "0x0000000000000000000000008110d1d04ac316fdcace8f24fd60c86b810ab15a"
             ],
             "data": "0x0000000000000000000000000000000000000000000000001b7a5f826f460000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "1980000000000000000",
+                "_from": "0x6f620ba7907a3d9a6dda9821eeb4e59b3f69c367",
+                "_to": "0x8110d1d04ac316fdcace8f24fd60c86b810ab15a"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x6f620ba7907a3d9a6dda9821eeb4e59b3f69c367, _to: 0x8110d1d04ac316fdcace8f24fd60c86b810ab15a, _amount: 1980000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -2981,7 +3703,15 @@
               "0x000000000000000000000000865c2f85c9fea1c6ac7f53de07554d68cb92ed88"
             ],
             "data": "0x0000000000000000000000000000000000000000000000001b7a5f826f460000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "1980000000000000000",
+                "_from": "0x6f620ba7907a3d9a6dda9821eeb4e59b3f69c367",
+                "_to": "0x865c2f85c9fea1c6ac7f53de07554d68cb92ed88"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x6f620ba7907a3d9a6dda9821eeb4e59b3f69c367, _to: 0x865c2f85c9fea1c6ac7f53de07554d68cb92ed88, _amount: 1980000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -3004,7 +3734,15 @@
               "0x000000000000000000000000396e0dcd35a534975bff6bf044ac0e373a29d231"
             ],
             "data": "0x0000000000000000000000000000000000000000000000001b7a5f826f460000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "1980000000000000000",
+                "_from": "0x6f620ba7907a3d9a6dda9821eeb4e59b3f69c367",
+                "_to": "0x396e0dcd35a534975bff6bf044ac0e373a29d231"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x6f620ba7907a3d9a6dda9821eeb4e59b3f69c367, _to: 0x396e0dcd35a534975bff6bf044ac0e373a29d231, _amount: 1980000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -3027,7 +3765,15 @@
               "0x000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b"
             ],
             "data": "0x0000000000000000000000000000000000000000000000001b7a5f826f460000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "1980000000000000000",
+                "_from": "0x6f620ba7907a3d9a6dda9821eeb4e59b3f69c367",
+                "_to": "0xf503017d7baf7fbc0fff7492b751025c6a78179b"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x6f620ba7907a3d9a6dda9821eeb4e59b3f69c367, _to: 0xf503017d7baf7fbc0fff7492b751025c6a78179b, _amount: 1980000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -3050,7 +3796,15 @@
               "0x00000000000000000000000020d08e58952bb70ff0ec1271085ca969c14be2a3"
             ],
             "data": "0x0000000000000000000000000000000000000000000000001b7a5f826f460000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "1980000000000000000",
+                "_from": "0x6f620ba7907a3d9a6dda9821eeb4e59b3f69c367",
+                "_to": "0x20d08e58952bb70ff0ec1271085ca969c14be2a3"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x6f620ba7907a3d9a6dda9821eeb4e59b3f69c367, _to: 0x20d08e58952bb70ff0ec1271085ca969c14be2a3, _amount: 1980000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -3073,7 +3827,15 @@
               "0x00000000000000000000000070ccbe10f980d80b7ebaab7d2e3a73e87d67b775"
             ],
             "data": "0x0000000000000000000000000000000000000000000000001b7a5f826f460000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "1980000000000000000",
+                "_from": "0x6f620ba7907a3d9a6dda9821eeb4e59b3f69c367",
+                "_to": "0x70ccbe10f980d80b7ebaab7d2e3a73e87d67b775"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x6f620ba7907a3d9a6dda9821eeb4e59b3f69c367, _to: 0x70ccbe10f980d80b7ebaab7d2e3a73e87d67b775, _amount: 1980000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -3096,7 +3858,15 @@
               "0x0000000000000000000000004bf66e52f3009cd138e48f142d47661037160001"
             ],
             "data": "0x0000000000000000000000000000000000000000000000001b7a5f826f460000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "1980000000000000000",
+                "_from": "0x6f620ba7907a3d9a6dda9821eeb4e59b3f69c367",
+                "_to": "0x4bf66e52f3009cd138e48f142d47661037160001"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x6f620ba7907a3d9a6dda9821eeb4e59b3f69c367, _to: 0x4bf66e52f3009cd138e48f142d47661037160001, _amount: 1980000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -3119,7 +3889,15 @@
               "0x000000000000000000000000b64850fe701fb64667b6cc762aa2c12f2e02193c"
             ],
             "data": "0x0000000000000000000000000000000000000000000000001b7a5f826f460000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "1980000000000000000",
+                "_from": "0x6f620ba7907a3d9a6dda9821eeb4e59b3f69c367",
+                "_to": "0xb64850fe701fb64667b6cc762aa2c12f2e02193c"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x6f620ba7907a3d9a6dda9821eeb4e59b3f69c367, _to: 0xb64850fe701fb64667b6cc762aa2c12f2e02193c, _amount: 1980000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -3142,7 +3920,15 @@
               "0x0000000000000000000000008296df9a01299ee0a1ae9e5939f1a71998ea26fa"
             ],
             "data": "0x0000000000000000000000000000000000000000000000001b7a5f826f460000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "1980000000000000000",
+                "_from": "0x6f620ba7907a3d9a6dda9821eeb4e59b3f69c367",
+                "_to": "0x8296df9a01299ee0a1ae9e5939f1a71998ea26fa"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x6f620ba7907a3d9a6dda9821eeb4e59b3f69c367, _to: 0x8296df9a01299ee0a1ae9e5939f1a71998ea26fa, _amount: 1980000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -3165,7 +3951,15 @@
               "0x00000000000000000000000090dfc35e747ffcf9631ce75348f99632528e1704"
             ],
             "data": "0x0000000000000000000000000000000000000000000000001b7a5f826f460000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "1980000000000000000",
+                "_from": "0x6f620ba7907a3d9a6dda9821eeb4e59b3f69c367",
+                "_to": "0x90dfc35e747ffcf9631ce75348f99632528e1704"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x6f620ba7907a3d9a6dda9821eeb4e59b3f69c367, _to: 0x90dfc35e747ffcf9631ce75348f99632528e1704, _amount: 1980000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -3188,7 +3982,15 @@
               "0x000000000000000000000000c30a7cf3b1a09813f8b843c68b829fffba729c95"
             ],
             "data": "0x0000000000000000000000000000000000000000000000001b7a5f826f460000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "1980000000000000000",
+                "_from": "0x6f620ba7907a3d9a6dda9821eeb4e59b3f69c367",
+                "_to": "0xc30a7cf3b1a09813f8b843c68b829fffba729c95"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x6f620ba7907a3d9a6dda9821eeb4e59b3f69c367, _to: 0xc30a7cf3b1a09813f8b843c68b829fffba729c95, _amount: 1980000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -3211,7 +4013,15 @@
               "0x00000000000000000000000000de4b13153673bcae2616b67bf822500d325fc3"
             ],
             "data": "0x0000000000000000000000000000000000000000000000000470de4df8200000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "320000000000000000",
+                "_from": "0x6f620ba7907a3d9a6dda9821eeb4e59b3f69c367",
+                "_to": "0x00de4b13153673bcae2616b67bf822500d325fc3"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x6f620ba7907a3d9a6dda9821eeb4e59b3f69c367, _to: 0x00de4b13153673bcae2616b67bf822500d325fc3, _amount: 320000000000000000 )"
           }
         ],
         "status": 1
@@ -3309,13 +4119,31 @@
               "0x0000000000000000000000007d655c57f71464b6f83811c55d84009cd9f5221c"
             ],
             "data": "0x0000000000000000000000000000000000000000000000004563918244f40000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Approval",
+              "inputs": {
+                "_amount": "5000000000000000000",
+                "_owner": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+                "_spender": "0x7d655c57f71464b6f83811c55d84009cd9f5221c"
+              }
+            },
+            "compressedLog": "Approval ( _owner: 0xf503017d7baf7fbc0fff7492b751025c6a78179b, _spender: 0x7d655c57f71464b6f83811c55d84009cd9f5221c, _amount: 5000000000000000000 )"
           }
         ],
         "status": 1
       },
       "traces": [],
-      "compressedTx": "0x095ea7b3 ( stub: 0000000000000000000000007d655c57f71464b6f83811c55d84009cd9f5221c0000000000000000000000000000000000000000000000004563918244f40000 )",
+      "articulatedTx": {
+        "name": "approve",
+        "inputs": {
+          "usr": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
+          "wad": "5000000000000000000"
+        },
+        "outputs": {
+          "val_0": ""
+        }
+      },
+      "compressedTx": "approve ( usr: 0x7d655c57f71464b6f83811c55d84009cd9f5221c, wad: 5000000000000000000 )",
       "statements": [
         {
           "blockNumber": 10290317,
@@ -3374,7 +4202,7 @@
       ],
       "gasCost": 1739343000000000,
       "etherGasCost": 0.001739343,
-      "function": "",
+      "function": "approve",
       "gasUsed": 44034,
       "date": "2020-06-18 14:47:23 UTC",
       "ether": 0,
@@ -3419,7 +4247,15 @@
               "0x00000000000000000000000039e419ba25196794b595b2a595ea8e527ddc9856"
             ],
             "data": "0x0000000000000000000000000000000000000000000000004563918244f40000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "5000000000000000000",
+                "_from": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+                "_to": "0x39e419ba25196794b595b2a595ea8e527ddc9856"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0xf503017d7baf7fbc0fff7492b751025c6a78179b, _to: 0x39e419ba25196794b595b2a595ea8e527ddc9856, _amount: 5000000000000000000 )"
           }
         ],
         "status": 1
@@ -3502,7 +4338,15 @@
               "0x000000000000000000000000d1a8dd23e356b9fae27df5def9ea025a602ec81e"
             ],
             "data": "0x0000000000000000000000000000000000000000000000000d2f13f7789f0000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "950000000000000000",
+                "_from": "0x62051bfd3a4f7039a849142e6e5ea172cbda5949",
+                "_to": "0xd1a8dd23e356b9fae27df5def9ea025a602ec81e"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x62051bfd3a4f7039a849142e6e5ea172cbda5949, _to: 0xd1a8dd23e356b9fae27df5def9ea025a602ec81e, _amount: 950000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -3525,7 +4369,15 @@
               "0x0000000000000000000000003b067af83f540cb827825a6ee5480441a4237e77"
             ],
             "data": "0x0000000000000000000000000000000000000000000000000d2f13f7789f0000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "950000000000000000",
+                "_from": "0x62051bfd3a4f7039a849142e6e5ea172cbda5949",
+                "_to": "0x3b067af83f540cb827825a6ee5480441a4237e77"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x62051bfd3a4f7039a849142e6e5ea172cbda5949, _to: 0x3b067af83f540cb827825a6ee5480441a4237e77, _amount: 950000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -3548,7 +4400,15 @@
               "0x000000000000000000000000ed628e601012cc6fd57dc0cede2a527cdc86a221"
             ],
             "data": "0x0000000000000000000000000000000000000000000000000d2f13f7789f0000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "950000000000000000",
+                "_from": "0x62051bfd3a4f7039a849142e6e5ea172cbda5949",
+                "_to": "0xed628e601012cc6fd57dc0cede2a527cdc86a221"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x62051bfd3a4f7039a849142e6e5ea172cbda5949, _to: 0xed628e601012cc6fd57dc0cede2a527cdc86a221, _amount: 950000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -3571,7 +4431,15 @@
               "0x000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b"
             ],
             "data": "0x0000000000000000000000000000000000000000000000000d2f13f7789f0000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "950000000000000000",
+                "_from": "0x62051bfd3a4f7039a849142e6e5ea172cbda5949",
+                "_to": "0xf503017d7baf7fbc0fff7492b751025c6a78179b"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x62051bfd3a4f7039a849142e6e5ea172cbda5949, _to: 0xf503017d7baf7fbc0fff7492b751025c6a78179b, _amount: 950000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -3594,7 +4462,15 @@
               "0x00000000000000000000000000de4b13153673bcae2616b67bf822500d325fc3"
             ],
             "data": "0x00000000000000000000000000000000000000000000000002c68af0bb140000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "200000000000000000",
+                "_from": "0x62051bfd3a4f7039a849142e6e5ea172cbda5949",
+                "_to": "0x00de4b13153673bcae2616b67bf822500d325fc3"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x62051bfd3a4f7039a849142e6e5ea172cbda5949, _to: 0x00de4b13153673bcae2616b67bf822500d325fc3, _amount: 200000000000000000 )"
           }
         ],
         "status": 1
@@ -3692,13 +4568,31 @@
               "0x0000000000000000000000007d655c57f71464b6f83811c55d84009cd9f5221c"
             ],
             "data": "0x0000000000000000000000000000000000000000000000004563918244f40000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Approval",
+              "inputs": {
+                "_amount": "5000000000000000000",
+                "_owner": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+                "_spender": "0x7d655c57f71464b6f83811c55d84009cd9f5221c"
+              }
+            },
+            "compressedLog": "Approval ( _owner: 0xf503017d7baf7fbc0fff7492b751025c6a78179b, _spender: 0x7d655c57f71464b6f83811c55d84009cd9f5221c, _amount: 5000000000000000000 )"
           }
         ],
         "status": 1
       },
       "traces": [],
-      "compressedTx": "0x095ea7b3 ( stub: 0000000000000000000000007d655c57f71464b6f83811c55d84009cd9f5221c0000000000000000000000000000000000000000000000004563918244f40000 )",
+      "articulatedTx": {
+        "name": "approve",
+        "inputs": {
+          "usr": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
+          "wad": "5000000000000000000"
+        },
+        "outputs": {
+          "val_0": ""
+        }
+      },
+      "compressedTx": "approve ( usr: 0x7d655c57f71464b6f83811c55d84009cd9f5221c, wad: 5000000000000000000 )",
       "statements": [
         {
           "blockNumber": 10292014,
@@ -3757,7 +4651,7 @@
       ],
       "gasCost": 1232952000000000,
       "etherGasCost": 0.001232952,
-      "function": "",
+      "function": "approve",
       "gasUsed": 44034,
       "date": "2020-06-18 21:07:17 UTC",
       "ether": 0,
@@ -3802,7 +4696,15 @@
               "0x0000000000000000000000009531c059098e3d194ff87febb587ab07b30b1306"
             ],
             "data": "0x00000000000000000000000000000000000000000000000041eb63d55b1b0000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "4750000000000000000",
+                "_from": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+                "_to": "0x9531c059098e3d194ff87febb587ab07b30b1306"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0xf503017d7baf7fbc0fff7492b751025c6a78179b, _to: 0x9531c059098e3d194ff87febb587ab07b30b1306, _amount: 4750000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -3825,7 +4727,15 @@
               "0x00000000000000000000000000de4b13153673bcae2616b67bf822500d325fc3"
             ],
             "data": "0x00000000000000000000000000000000000000000000000003782dace9d90000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "250000000000000000",
+                "_from": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+                "_to": "0x00de4b13153673bcae2616b67bf822500d325fc3"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0xf503017d7baf7fbc0fff7492b751025c6a78179b, _to: 0x00de4b13153673bcae2616b67bf822500d325fc3, _amount: 250000000000000000 )"
           }
         ],
         "status": 1
@@ -4059,7 +4969,15 @@
               "0x000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b"
             ],
             "data": "0x0000000000000000000000000000000000000000000000029331e6558f0e0000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "47500000000000000000",
+                "_from": "0x5ca323d77930c84524e9b06b20c5027ec4e54480",
+                "_to": "0xf503017d7baf7fbc0fff7492b751025c6a78179b"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x5ca323d77930c84524e9b06b20c5027ec4e54480, _to: 0xf503017d7baf7fbc0fff7492b751025c6a78179b, _amount: 47500000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -4082,7 +5000,15 @@
               "0x00000000000000000000000000de4b13153673bcae2616b67bf822500d325fc3"
             ],
             "data": "0x00000000000000000000000000000000000000000000000022b1c8c1227a0000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "2500000000000000000",
+                "_from": "0x5ca323d77930c84524e9b06b20c5027ec4e54480",
+                "_to": "0x00de4b13153673bcae2616b67bf822500d325fc3"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x5ca323d77930c84524e9b06b20c5027ec4e54480, _to: 0x00de4b13153673bcae2616b67bf822500d325fc3, _amount: 2500000000000000000 )"
           }
         ],
         "status": 1
@@ -4180,13 +5106,31 @@
               "0x0000000000000000000000007d655c57f71464b6f83811c55d84009cd9f5221c"
             ],
             "data": "0x0000000000000000000000000000000000000000000000004563918244f40000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Approval",
+              "inputs": {
+                "_amount": "5000000000000000000",
+                "_owner": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+                "_spender": "0x7d655c57f71464b6f83811c55d84009cd9f5221c"
+              }
+            },
+            "compressedLog": "Approval ( _owner: 0xf503017d7baf7fbc0fff7492b751025c6a78179b, _spender: 0x7d655c57f71464b6f83811c55d84009cd9f5221c, _amount: 5000000000000000000 )"
           }
         ],
         "status": 1
       },
       "traces": [],
-      "compressedTx": "0x095ea7b3 ( stub: 0000000000000000000000007d655c57f71464b6f83811c55d84009cd9f5221c0000000000000000000000000000000000000000000000004563918244f40000 )",
+      "articulatedTx": {
+        "name": "approve",
+        "inputs": {
+          "usr": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
+          "wad": "5000000000000000000"
+        },
+        "outputs": {
+          "val_0": ""
+        }
+      },
+      "compressedTx": "approve ( usr: 0x7d655c57f71464b6f83811c55d84009cd9f5221c, wad: 5000000000000000000 )",
       "statements": [
         {
           "blockNumber": 10293554,
@@ -4245,7 +5189,7 @@
       ],
       "gasCost": 1321460340000000,
       "etherGasCost": 0.00132146034,
-      "function": "",
+      "function": "approve",
       "gasUsed": 44034,
       "date": "2020-06-19 02:52:22 UTC",
       "ether": 0,
@@ -4290,7 +5234,15 @@
               "0x000000000000000000000000bc11295936aa79d594139de1b2e12629414f3bdb"
             ],
             "data": "0x00000000000000000000000000000000000000000000000041eb63d55b1b0000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "4750000000000000000",
+                "_from": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+                "_to": "0xbc11295936aa79d594139de1b2e12629414f3bdb"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0xf503017d7baf7fbc0fff7492b751025c6a78179b, _to: 0xbc11295936aa79d594139de1b2e12629414f3bdb, _amount: 4750000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -4313,7 +5265,15 @@
               "0x00000000000000000000000000de4b13153673bcae2616b67bf822500d325fc3"
             ],
             "data": "0x00000000000000000000000000000000000000000000000003782dace9d90000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "250000000000000000",
+                "_from": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+                "_to": "0x00de4b13153673bcae2616b67bf822500d325fc3"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0xf503017d7baf7fbc0fff7492b751025c6a78179b, _to: 0x00de4b13153673bcae2616b67bf822500d325fc3, _amount: 250000000000000000 )"
           }
         ],
         "status": 1
@@ -4396,7 +5356,15 @@
               "0x000000000000000000000000663d3947f03ef5b387992b880ac85940057c13e3"
             ],
             "data": "0x00000000000000000000000000000000000000000000000107ad8f556c6c0000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "19000000000000000000",
+                "_from": "0xc8d61e23839794b162da78a5c927fd7b2cd92055",
+                "_to": "0x663d3947f03ef5b387992b880ac85940057c13e3"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0xc8d61e23839794b162da78a5c927fd7b2cd92055, _to: 0x663d3947f03ef5b387992b880ac85940057c13e3, _amount: 19000000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -4419,7 +5387,15 @@
               "0x000000000000000000000000a19fcdad77c1f0fd184689aca88babcf68010347"
             ],
             "data": "0x00000000000000000000000000000000000000000000000107ad8f556c6c0000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "19000000000000000000",
+                "_from": "0xc8d61e23839794b162da78a5c927fd7b2cd92055",
+                "_to": "0xa19fcdad77c1f0fd184689aca88babcf68010347"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0xc8d61e23839794b162da78a5c927fd7b2cd92055, _to: 0xa19fcdad77c1f0fd184689aca88babcf68010347, _amount: 19000000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -4442,7 +5418,15 @@
               "0x0000000000000000000000008df168a41c3a3c6be0e9208d5027ea80f2c5ba25"
             ],
             "data": "0x00000000000000000000000000000000000000000000000083d6c7aab6360000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "9500000000000000000",
+                "_from": "0xc8d61e23839794b162da78a5c927fd7b2cd92055",
+                "_to": "0x8df168a41c3a3c6be0e9208d5027ea80f2c5ba25"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0xc8d61e23839794b162da78a5c927fd7b2cd92055, _to: 0x8df168a41c3a3c6be0e9208d5027ea80f2c5ba25, _amount: 9500000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -4465,7 +5449,15 @@
               "0x0000000000000000000000006b3999bb710e92701421c63ae4952301bef0ec98"
             ],
             "data": "0x00000000000000000000000000000000000000000000000083d6c7aab6360000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "9500000000000000000",
+                "_from": "0xc8d61e23839794b162da78a5c927fd7b2cd92055",
+                "_to": "0x6b3999bb710e92701421c63ae4952301bef0ec98"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0xc8d61e23839794b162da78a5c927fd7b2cd92055, _to: 0x6b3999bb710e92701421c63ae4952301bef0ec98, _amount: 9500000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -4488,7 +5480,15 @@
               "0x0000000000000000000000002f71129b240080c638ac8d993bff52169e3551c3"
             ],
             "data": "0x00000000000000000000000000000000000000000000000083d6c7aab6360000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "9500000000000000000",
+                "_from": "0xc8d61e23839794b162da78a5c927fd7b2cd92055",
+                "_to": "0x2f71129b240080c638ac8d993bff52169e3551c3"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0xc8d61e23839794b162da78a5c927fd7b2cd92055, _to: 0x2f71129b240080c638ac8d993bff52169e3551c3, _amount: 9500000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -4511,7 +5511,15 @@
               "0x000000000000000000000000c9a872868afa68ba937f65a1c5b4b252dab15d85"
             ],
             "data": "0x00000000000000000000000000000000000000000000000107ad8f556c6c0000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "19000000000000000000",
+                "_from": "0xc8d61e23839794b162da78a5c927fd7b2cd92055",
+                "_to": "0xc9a872868afa68ba937f65a1c5b4b252dab15d85"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0xc8d61e23839794b162da78a5c927fd7b2cd92055, _to: 0xc9a872868afa68ba937f65a1c5b4b252dab15d85, _amount: 19000000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -4534,7 +5542,15 @@
               "0x00000000000000000000000000de4b13153673bcae2616b67bf822500d325fc3"
             ],
             "data": "0x0000000000000000000000000000000000000000000000029331e6558f0e0000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "47500000000000000000",
+                "_from": "0xc8d61e23839794b162da78a5c927fd7b2cd92055",
+                "_to": "0x00de4b13153673bcae2616b67bf822500d325fc3"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0xc8d61e23839794b162da78a5c927fd7b2cd92055, _to: 0x00de4b13153673bcae2616b67bf822500d325fc3, _amount: 47500000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -4557,7 +5573,15 @@
               "0x0000000000000000000000009b984d5a03980d8dc0a24506c968465424c81dbe"
             ],
             "data": "0x00000000000000000000000000000000000000000000000107ad8f556c6c0000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "19000000000000000000",
+                "_from": "0xc8d61e23839794b162da78a5c927fd7b2cd92055",
+                "_to": "0x9b984d5a03980d8dc0a24506c968465424c81dbe"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0xc8d61e23839794b162da78a5c927fd7b2cd92055, _to: 0x9b984d5a03980d8dc0a24506c968465424c81dbe, _amount: 19000000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -4580,7 +5604,15 @@
               "0x0000000000000000000000008ba1f109551bd432803012645ac136ddd64dba72"
             ],
             "data": "0x00000000000000000000000000000000000000000000000083d6c7aab6360000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "9500000000000000000",
+                "_from": "0xc8d61e23839794b162da78a5c927fd7b2cd92055",
+                "_to": "0x8ba1f109551bd432803012645ac136ddd64dba72"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0xc8d61e23839794b162da78a5c927fd7b2cd92055, _to: 0x8ba1f109551bd432803012645ac136ddd64dba72, _amount: 9500000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -4603,7 +5635,15 @@
               "0x000000000000000000000000d1933df1c223ad7cb5716b066ca26bc24569e622"
             ],
             "data": "0x00000000000000000000000000000000000000000000000083d6c7aab6360000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "9500000000000000000",
+                "_from": "0xc8d61e23839794b162da78a5c927fd7b2cd92055",
+                "_to": "0xd1933df1c223ad7cb5716b066ca26bc24569e622"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0xc8d61e23839794b162da78a5c927fd7b2cd92055, _to: 0xd1933df1c223ad7cb5716b066ca26bc24569e622, _amount: 9500000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -4626,7 +5666,15 @@
               "0x00000000000000000000000000cf36853aa4024fb5bf5cc377dfd85844b411a0"
             ],
             "data": "0x00000000000000000000000000000000000000000000000107ad8f556c6c0000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "19000000000000000000",
+                "_from": "0xc8d61e23839794b162da78a5c927fd7b2cd92055",
+                "_to": "0x00cf36853aa4024fb5bf5cc377dfd85844b411a0"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0xc8d61e23839794b162da78a5c927fd7b2cd92055, _to: 0x00cf36853aa4024fb5bf5cc377dfd85844b411a0, _amount: 19000000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -4649,7 +5697,15 @@
               "0x000000000000000000000000322d58b9e75a6918f7e7849aee0ff09369977e08"
             ],
             "data": "0x00000000000000000000000000000000000000000000000083d6c7aab6360000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "9500000000000000000",
+                "_from": "0xc8d61e23839794b162da78a5c927fd7b2cd92055",
+                "_to": "0x322d58b9e75a6918f7e7849aee0ff09369977e08"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0xc8d61e23839794b162da78a5c927fd7b2cd92055, _to: 0x322d58b9e75a6918f7e7849aee0ff09369977e08, _amount: 9500000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -4672,7 +5728,15 @@
               "0x000000000000000000000000bcede714283f348ebb3e5cbaf8a947cab3c8be8d"
             ],
             "data": "0x00000000000000000000000000000000000000000000000107ad8f556c6c0000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "19000000000000000000",
+                "_from": "0xc8d61e23839794b162da78a5c927fd7b2cd92055",
+                "_to": "0xbcede714283f348ebb3e5cbaf8a947cab3c8be8d"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0xc8d61e23839794b162da78a5c927fd7b2cd92055, _to: 0xbcede714283f348ebb3e5cbaf8a947cab3c8be8d, _amount: 19000000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -4695,7 +5759,15 @@
               "0x000000000000000000000000cbec15583a21c3ddad5fab658be5b4fe85df730b"
             ],
             "data": "0x00000000000000000000000000000000000000000000000083d6c7aab6360000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "9500000000000000000",
+                "_from": "0xc8d61e23839794b162da78a5c927fd7b2cd92055",
+                "_to": "0xcbec15583a21c3ddad5fab658be5b4fe85df730b"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0xc8d61e23839794b162da78a5c927fd7b2cd92055, _to: 0xcbec15583a21c3ddad5fab658be5b4fe85df730b, _amount: 9500000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -4718,7 +5790,15 @@
               "0x000000000000000000000000bc11295936aa79d594139de1b2e12629414f3bdb"
             ],
             "data": "0x00000000000000000000000000000000000000000000000083d6c7aab6360000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "9500000000000000000",
+                "_from": "0xc8d61e23839794b162da78a5c927fd7b2cd92055",
+                "_to": "0xbc11295936aa79d594139de1b2e12629414f3bdb"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0xc8d61e23839794b162da78a5c927fd7b2cd92055, _to: 0xbc11295936aa79d594139de1b2e12629414f3bdb, _amount: 9500000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -4741,7 +5821,15 @@
               "0x0000000000000000000000004f2350bc303ca6f01e2777d8c674ac561fdad1de"
             ],
             "data": "0x00000000000000000000000000000000000000000000000083d6c7aab6360000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "9500000000000000000",
+                "_from": "0xc8d61e23839794b162da78a5c927fd7b2cd92055",
+                "_to": "0x4f2350bc303ca6f01e2777d8c674ac561fdad1de"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0xc8d61e23839794b162da78a5c927fd7b2cd92055, _to: 0x4f2350bc303ca6f01e2777d8c674ac561fdad1de, _amount: 9500000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -4764,7 +5852,15 @@
               "0x000000000000000000000000dd4c48c0b24039969fc16d1cdf626eab821d3384"
             ],
             "data": "0x00000000000000000000000000000000000000000000000083d6c7aab6360000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "9500000000000000000",
+                "_from": "0xc8d61e23839794b162da78a5c927fd7b2cd92055",
+                "_to": "0xdd4c48c0b24039969fc16d1cdf626eab821d3384"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0xc8d61e23839794b162da78a5c927fd7b2cd92055, _to: 0xdd4c48c0b24039969fc16d1cdf626eab821d3384, _amount: 9500000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -4787,7 +5883,15 @@
               "0x0000000000000000000000004d37f28d2db99e8d35a6c725a5f1749a085850a3"
             ],
             "data": "0x00000000000000000000000000000000000000000000000083d6c7aab6360000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "9500000000000000000",
+                "_from": "0xc8d61e23839794b162da78a5c927fd7b2cd92055",
+                "_to": "0x4d37f28d2db99e8d35a6c725a5f1749a085850a3"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0xc8d61e23839794b162da78a5c927fd7b2cd92055, _to: 0x4d37f28d2db99e8d35a6c725a5f1749a085850a3, _amount: 9500000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -4810,7 +5914,15 @@
               "0x0000000000000000000000003e947a271a37ae7b59921c57be0a3246ee0d887c"
             ],
             "data": "0x00000000000000000000000000000000000000000000000083d6c7aab6360000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "9500000000000000000",
+                "_from": "0xc8d61e23839794b162da78a5c927fd7b2cd92055",
+                "_to": "0x3e947a271a37ae7b59921c57be0a3246ee0d887c"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0xc8d61e23839794b162da78a5c927fd7b2cd92055, _to: 0x3e947a271a37ae7b59921c57be0a3246ee0d887c, _amount: 9500000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -4833,7 +5945,15 @@
               "0x000000000000000000000000c95c558daa63b1a79331b2ab4a2a7af375384d3b"
             ],
             "data": "0x000000000000000000000000000000000000000000000000c5c22b8011510000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "14250000000000000000",
+                "_from": "0xc8d61e23839794b162da78a5c927fd7b2cd92055",
+                "_to": "0xc95c558daa63b1a79331b2ab4a2a7af375384d3b"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0xc8d61e23839794b162da78a5c927fd7b2cd92055, _to: 0xc95c558daa63b1a79331b2ab4a2a7af375384d3b, _amount: 14250000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -4856,7 +5976,15 @@
               "0x00000000000000000000000003c2bc72a3e007179e54ffb4563cc235bec8151a"
             ],
             "data": "0x00000000000000000000000000000000000000000000000083d6c7aab6360000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "9500000000000000000",
+                "_from": "0xc8d61e23839794b162da78a5c927fd7b2cd92055",
+                "_to": "0x03c2bc72a3e007179e54ffb4563cc235bec8151a"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0xc8d61e23839794b162da78a5c927fd7b2cd92055, _to: 0x03c2bc72a3e007179e54ffb4563cc235bec8151a, _amount: 9500000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -4879,7 +6007,15 @@
               "0x00000000000000000000000043a5c1331375f1f34bd774ecaee51501e9ca2db5"
             ],
             "data": "0x00000000000000000000000000000000000000000000000041eb63d55b1b0000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "4750000000000000000",
+                "_from": "0xc8d61e23839794b162da78a5c927fd7b2cd92055",
+                "_to": "0x43a5c1331375f1f34bd774ecaee51501e9ca2db5"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0xc8d61e23839794b162da78a5c927fd7b2cd92055, _to: 0x43a5c1331375f1f34bd774ecaee51501e9ca2db5, _amount: 4750000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -4902,7 +6038,15 @@
               "0x000000000000000000000000fdaae0c5a7a56c8265b9f86cf8cd934a494e3733"
             ],
             "data": "0x000000000000000000000000000000000000000000000000c5c22b8011510000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "14250000000000000000",
+                "_from": "0xc8d61e23839794b162da78a5c927fd7b2cd92055",
+                "_to": "0xfdaae0c5a7a56c8265b9f86cf8cd934a494e3733"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0xc8d61e23839794b162da78a5c927fd7b2cd92055, _to: 0xfdaae0c5a7a56c8265b9f86cf8cd934a494e3733, _amount: 14250000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -4925,7 +6069,15 @@
               "0x000000000000000000000000865c2f85c9fea1c6ac7f53de07554d68cb92ed88"
             ],
             "data": "0x00000000000000000000000000000000000000000000000083d6c7aab6360000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "9500000000000000000",
+                "_from": "0xc8d61e23839794b162da78a5c927fd7b2cd92055",
+                "_to": "0x865c2f85c9fea1c6ac7f53de07554d68cb92ed88"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0xc8d61e23839794b162da78a5c927fd7b2cd92055, _to: 0x865c2f85c9fea1c6ac7f53de07554d68cb92ed88, _amount: 9500000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -4948,7 +6100,15 @@
               "0x00000000000000000000000020d08e58952bb70ff0ec1271085ca969c14be2a3"
             ],
             "data": "0x00000000000000000000000000000000000000000000000083d6c7aab6360000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "9500000000000000000",
+                "_from": "0xc8d61e23839794b162da78a5c927fd7b2cd92055",
+                "_to": "0x20d08e58952bb70ff0ec1271085ca969c14be2a3"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0xc8d61e23839794b162da78a5c927fd7b2cd92055, _to: 0x20d08e58952bb70ff0ec1271085ca969c14be2a3, _amount: 9500000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -4971,7 +6131,15 @@
               "0x000000000000000000000000133d705a9696882228f6bb7fe008745aef7cdc93"
             ],
             "data": "0x00000000000000000000000000000000000000000000000041eb63d55b1b0000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "4750000000000000000",
+                "_from": "0xc8d61e23839794b162da78a5c927fd7b2cd92055",
+                "_to": "0x133d705a9696882228f6bb7fe008745aef7cdc93"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0xc8d61e23839794b162da78a5c927fd7b2cd92055, _to: 0x133d705a9696882228f6bb7fe008745aef7cdc93, _amount: 4750000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -4994,7 +6162,15 @@
               "0x000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b"
             ],
             "data": "0x00000000000000000000000000000000000000000000000083d6c7aab6360000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "9500000000000000000",
+                "_from": "0xc8d61e23839794b162da78a5c927fd7b2cd92055",
+                "_to": "0xf503017d7baf7fbc0fff7492b751025c6a78179b"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0xc8d61e23839794b162da78a5c927fd7b2cd92055, _to: 0xf503017d7baf7fbc0fff7492b751025c6a78179b, _amount: 9500000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -5017,7 +6193,15 @@
               "0x000000000000000000000000ac2a01c551401340e403dca79fb8b3e3f8d6d94a"
             ],
             "data": "0x00000000000000000000000000000000000000000000000083d6c7aab6360000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "9500000000000000000",
+                "_from": "0xc8d61e23839794b162da78a5c927fd7b2cd92055",
+                "_to": "0xac2a01c551401340e403dca79fb8b3e3f8d6d94a"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0xc8d61e23839794b162da78a5c927fd7b2cd92055, _to: 0xac2a01c551401340e403dca79fb8b3e3f8d6d94a, _amount: 9500000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -5040,7 +6224,15 @@
               "0x00000000000000000000000070e47c843e0f6ab0991a3189c28f2957eb6d3842"
             ],
             "data": "0x00000000000000000000000000000000000000000000000107ad8f556c6c0000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "19000000000000000000",
+                "_from": "0xc8d61e23839794b162da78a5c927fd7b2cd92055",
+                "_to": "0x70e47c843e0f6ab0991a3189c28f2957eb6d3842"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0xc8d61e23839794b162da78a5c927fd7b2cd92055, _to: 0x70e47c843e0f6ab0991a3189c28f2957eb6d3842, _amount: 19000000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -5063,7 +6255,15 @@
               "0x000000000000000000000000a8a4912938549d50ef3e7c698c890e18d73408ee"
             ],
             "data": "0x00000000000000000000000000000000000000000000000041eb63d55b1b0000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "4750000000000000000",
+                "_from": "0xc8d61e23839794b162da78a5c927fd7b2cd92055",
+                "_to": "0xa8a4912938549d50ef3e7c698c890e18d73408ee"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0xc8d61e23839794b162da78a5c927fd7b2cd92055, _to: 0xa8a4912938549d50ef3e7c698c890e18d73408ee, _amount: 4750000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -5086,7 +6286,15 @@
               "0x00000000000000000000000070ccbe10f980d80b7ebaab7d2e3a73e87d67b775"
             ],
             "data": "0x00000000000000000000000000000000000000000000000083d6c7aab6360000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "9500000000000000000",
+                "_from": "0xc8d61e23839794b162da78a5c927fd7b2cd92055",
+                "_to": "0x70ccbe10f980d80b7ebaab7d2e3a73e87d67b775"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0xc8d61e23839794b162da78a5c927fd7b2cd92055, _to: 0x70ccbe10f980d80b7ebaab7d2e3a73e87d67b775, _amount: 9500000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -5109,7 +6317,15 @@
               "0x00000000000000000000000066268791b55e1f5fa585d990326519f101407257"
             ],
             "data": "0x00000000000000000000000000000000000000000000000083d6c7aab6360000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "9500000000000000000",
+                "_from": "0xc8d61e23839794b162da78a5c927fd7b2cd92055",
+                "_to": "0x66268791b55e1f5fa585d990326519f101407257"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0xc8d61e23839794b162da78a5c927fd7b2cd92055, _to: 0x66268791b55e1f5fa585d990326519f101407257, _amount: 9500000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -5144,7 +6360,15 @@
               "0x00000000000000000000000000de4b13153673bcae2616b67bf822500d325fc3"
             ],
             "data": "0x00000000000000000000000000000000000000000000000126e72a69a50d0000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "21250000000000000000",
+                "_from": "0xc8d61e23839794b162da78a5c927fd7b2cd92055",
+                "_to": "0x00de4b13153673bcae2616b67bf822500d325fc3"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0xc8d61e23839794b162da78a5c927fd7b2cd92055, _to: 0x00de4b13153673bcae2616b67bf822500d325fc3, _amount: 21250000000000000000 )"
           },
           {
             "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",

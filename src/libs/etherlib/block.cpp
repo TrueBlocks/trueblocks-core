@@ -745,5 +745,43 @@ blknum_t bnFromPath(const string_q& path, blknum_t& endOut, timestamp_t& ts) {
     endOut = (e.empty() || !isNumeral(e) ? NOPOS : str_2_Uint(e));
     return (b.empty() || !isNumeral(b) ? NOPOS : str_2_Uint(b));
 }
+
+//-------------------------------------------------------------------------
+bool CBlock::forEveryTransaction(TRANSVISITFUNC func, void* data) const {
+    if (!func)
+        return false;
+
+    for (auto trans : transactions) {
+        if (!(*func)(trans, data))
+            return false;
+    }
+
+    return true;
+}
+
+//-------------------------------------------------------------------------
+bool CBlock::forEveryLog(LOGVISITFUNC func, void* data) const {
+    if (!func)
+        return false;
+
+    for (auto trans : transactions) {
+        if (!trans.forEveryLog(func, data))
+            return false;
+    }
+    return true;
+}
+
+//-------------------------------------------------------------------------
+bool CBlock::forEveryTrace(TRACEVISITFUNC func, void* data) const {
+    if (!func)
+        return false;
+
+    for (auto trans : transactions) {
+        if (!trans.forEveryTrace(func, data))
+            return false;
+    }
+
+    return true;
+}
 // EXISTING_CODE
 }  // namespace qblocks

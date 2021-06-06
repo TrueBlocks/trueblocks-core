@@ -1,4 +1,4 @@
-package trueblocks
+package server
 
 /*-------------------------------------------------------------------------
  * This source code is confidential proprietary information which is
@@ -141,4 +141,11 @@ func HandleWebsockets(pool *ConnectionPool, w http.ResponseWriter, r *http.Reque
 	pool.register <- connection
 
 	go connection.write()
+}
+
+var connectionPool = newConnectionPool()
+
+// RunWebsocketPool runs the websocket pool
+func RunWebsocketPool() {
+	go connectionPool.run()
 }

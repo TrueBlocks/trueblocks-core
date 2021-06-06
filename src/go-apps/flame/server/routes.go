@@ -1,4 +1,4 @@
-package trueblocks
+package server
 
 /*-------------------------------------------------------------------------
  * This source code is confidential proprietary information which is
@@ -12,9 +12,12 @@ package trueblocks
 
 import (
 	"fmt"
+	"log"
 	"net/http"
+	"time"
 
 	"github.com/gorilla/mux"
+	"golang.org/x/time/rate"
 )
 
 // Route A structure to hold the API's routes
@@ -45,12 +48,42 @@ func NewRouter() *mux.Router {
 	return router
 }
 
-// Index shows the home page
-func Index(w http.ResponseWriter, r *http.Request) {
-    fmt.Fprintf(w, "Users Manual")
+var nProcessed int
+
+// Logger sends information to the server's console
+func Logger(inner http.Handler, name string) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		var limiter = rate.NewLimiter(1, 3)
+		// fmt.Println("limiter.Limit: ", limiter.Limit())
+		if limiter.Allow() == false {
+			http.Error(w, http.StatusText(429), http.StatusTooManyRequests)
+			return
+		}
+		start := time.Now()
+		inner.ServeHTTP(w, r)
+		t := ""
+		if isTestMode(r) {
+			t = "-test"
+		}
+		log.Printf(
+			"%d %s%s %s %s %s",
+			nProcessed,
+			r.Method,
+			t,
+			r.RequestURI,
+			name,
+			time.Since(start),
+		)
+		nProcessed++
+	})
 }
 
-// AccountsList help text todo
+// Index shows the home page
+func Index(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, "Users Manual")
+}
+
+// Help help text todo
 func Help(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
@@ -168,6 +201,13 @@ var routes = Routes{
 		"GET",
 		"/",
 		Index,
+	},
+
+	Route{
+		"ManageScraper",
+		"GET",
+		"/scraper",
+		ManageScraper,
 	},
 
 	Route{

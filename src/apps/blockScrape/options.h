@@ -29,6 +29,8 @@ class COptions : public COptionsBase {
     uint64_t n_addr_procs;
     bool pin;
     double sleep;
+    bool staging;
+    bool unripe;
     bool cache_txs;
     bool cache_traces;
     string_q load;

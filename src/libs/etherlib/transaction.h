@@ -29,6 +29,8 @@ class CBlock;
 class CAppearance;
 typedef bool (*APPEARANCEFUNC)(const CAppearance& item, void* data);
 typedef bool (*TRANSFUNC)(const CTransaction* trans, void* data);
+typedef bool (*LOGVISITFUNC)(CLogEntry& log, void* data);
+typedef bool (*TRACEVISITFUNC)(CTrace& trace, void* data);
 typedef enum {
     CB_NONE = 0,
     CB_ARTICULATION = (1 << 0),
@@ -78,6 +80,8 @@ class CTransaction : public CBaseNode {
 
     // EXISTING_CODE
     const CBlock* pBlock;
+    bool forEveryLog(LOGVISITFUNC func, void* data) const;
+    bool forEveryTrace(TRACEVISITFUNC func, void* data) const;
     bool forEveryAppearanceInTx(APPEARANCEFUNC func, TRANSFUNC filt = NULL, void* data = NULL);
     bool forEveryUniqueAppearanceInTx(APPEARANCEFUNC func, TRANSFUNC filt = NULL, void* data = NULL);
     bool forEveryUniqueAppearanceInTxPerTx(APPEARANCEFUNC func, TRANSFUNC filt = NULL, void* data = NULL);

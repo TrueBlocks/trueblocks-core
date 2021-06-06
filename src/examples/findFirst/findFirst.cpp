@@ -12,29 +12,60 @@
  *-------------------------------------------------------------------------------------------*/
 #include "etherlib.h"
 
-extern bool visitAddress(const CAppearance& item, void* data);
 //-----------------------------------------------------------------------------------------------
-int main(int argc, const char* argv[]) {
-    etherlib_init(quickQuitHandler);
+// The following code shows an example of using one of TrueBlocks' forEvery features. forEvery
+// does as it sounds. It visits every item in a given data structure performing a particular
+// function. Here, we're showing an example of showing every address appearance in a block.
+// We're searching for the first transaction in which the infamous The DAO (0xbb9...)
+// appears. There are many forEvery functions such as forEveryTransaction,
+// forEveryTrace, forEveryLog, etc.
+//-----------------------------------------------------------------------------------------------
 
-    address_t search("0xbb9bc244d798123fde783fcc1c72d3bb8c189413");
-    blknum_t start = 1428000;
-    for (blknum_t bl = start; bl < getBlockProgress(BP_CLIENT).client; bl++) {
-        CBlock block;
-        getBlock(block, bl);
-        if (!block.forEveryUniqueAppearanceInBlock(visitAddress, NULL, &search))
-            return 0;
+//-----------------------------------------------------------------------------------------------
+// Each forEvery invocation accepts a pointer to a function and a void* to an arbitrary chunk
+// of memory. This memory may be of any type you wish. The function signature of the provided
+// function differs for each forEvery type. In this case, the signature is as follows.
+//-----------------------------------------------------------------------------------------------
+bool visitAddress(const CAppearance& item, void* data) {
+    // Have we found the address we're looking for?
+    if (item.addr == *reinterpret_cast<address_t*>(data)) {
+        cout << "\nFound address at: " << item;
+        // Return false to stop the scan
+        return false;
     }
-    return 0;
+
+    // We didn't find it, but let's report progress
+    cerr << item.addr << " ";
+    cerr << padNum9(item.bn) << " ";
+    cerr << padNum5(item.tx) << " ";
+    cerr << item.reason << "                \r";
+    cerr.flush();
+
+    // Return true to continue
+    return true;
 }
 
 //-----------------------------------------------------------------------------------------------
-bool visitAddress(const CAppearance& item, void* data) {
-    if (item.addr == *reinterpret_cast<address_t*>(data)) {
-        cout << "Found at " << item << "\n";
-        return false;  // we're done
+int main(int argc, const char* argv[]) {
+    // Initialize the library, provide a control+c handler
+    etherlib_init(quickQuitHandler);
+
+    // Best guess of where to start the scan
+    blknum_t startBlock = 1428700;
+
+    // The address we're searching for
+    address_t theDaoAddr("0xbb9bc244d798123fde783fcc1c72d3bb8c189413");
+
+    // Scan each block from the start until we find the address we're looking for
+    for (blknum_t bl = startBlock; bl < getBlockProgress(BP_CLIENT).client; bl++) {
+        CBlock block;
+        getBlock(block, bl);
+        if (!block.forEveryUniqueAppearanceInBlock(visitAddress /* func */, NULL /* filterFunc */,
+                                                   &theDaoAddr /* data */))
+            return 0;
     }
-    cerr << item << "                    \r";
-    cerr.flush();
-    return true;
+
+    etherlib_cleanup();
+
+    return 0;
 }

@@ -3,7 +3,7 @@
 #include "acctlib.h"
 
 //-----------------------------------------------------------------------
-extern bool range_Filter(CTraverser* trav, void* data);
+extern bool tsRangeFunc(CTraverser* trav, void* data);
 extern void start_Log(CTraverser* trav, void* data);
 extern void prog_Log(CTraverser* trav, void* data);
 extern void end_Log(CTraverser* trav, void* data);
@@ -16,7 +16,7 @@ extern bool app_Display(CTraverser* trav, void* data);
 class CAppearanceTraverser : public CTraverser {
   public:
     CAppearanceTraverser(void) : CTraverser(cout, "appearances") {
-        filterFunc = range_Filter;
+        filterFunc = tsRangeFunc;
         preFunc = pre_Func;
         postFunc = app_Post;
         dataFunc = noopFunc;
@@ -28,7 +28,7 @@ extern bool receipts_Display(CTraverser* trav, void* data);
 class CReceiptTraverser : public CTraverser {
   public:
     CReceiptTraverser(void) : CTraverser(cout, "receipts") {
-        filterFunc = range_Filter;
+        filterFunc = tsRangeFunc;
         preFunc = pre_Func;
         postFunc = post_Func;
         dataFunc = loadTx_Func;
@@ -42,7 +42,7 @@ extern size_t logs_Count(CTraverser* trav, void* data);
 class CLogTraverser : public CTraverser {
   public:
     CLogTraverser(void) : CTraverser(cout, "logs") {
-        filterFunc = range_Filter;
+        filterFunc = tsRangeFunc;
         preFunc = logs_Pre;
         postFunc = post_Func;
         dataFunc = loadTx_Func;
@@ -56,7 +56,7 @@ extern size_t traces_Count(CTraverser* trav, void* data);
 class CTraceTraverser : public CTraverser {
   public:
     CTraceTraverser(void) : CTraverser(cout, "traces") {
-        filterFunc = range_Filter;
+        filterFunc = tsRangeFunc;
         preFunc = pre_Func;
         postFunc = post_Func;
         dataFunc = loadTx_Func;
@@ -70,7 +70,7 @@ extern bool acct_Display(CTraverser* trav, void* data);
 class CTransactionTraverser : public CTraverser {
   public:
     CTransactionTraverser(void) : CTraverser(cout, "txs") {
-        filterFunc = range_Filter;
+        filterFunc = tsRangeFunc;
         preFunc = acct_Pre;
         postFunc = post_Func;
         dataFunc = loadTx_Func;

@@ -10,7 +10,7 @@ cflags=-std=c++11 -Werror -Wall -O2 -I. -I$(libraries)/utillib -I$(libraries)/et
 libs=$(libraries)/*.a -lcurl
 
 #-------------------------------------------------
-exec=visitAll
+exec=forEvery
 product=objs/$(exec)
 dest=$(bin)/$(exec)
 

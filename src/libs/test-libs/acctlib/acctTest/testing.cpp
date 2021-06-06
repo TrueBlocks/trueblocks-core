@@ -58,7 +58,7 @@ int main(int argc, const char* argv[]) {
                         ::remove(fn.getFullPath().c_str());
                 }
             } else {
-                forEveryBlockOnDisc(buildTree, &reporter, options.startBlock, options.nBlocks);
+                forEveryBlock(buildTree, &reporter, options.startBlock, options.nBlocks);
                 CArchive archive(WRITING_ARCHIVE);
                 if (archive.Lock(fn.getFullPath(), modeWriteCreate, LOCK_WAIT)) {
                     reporter.tree->Serialize(archive);

@@ -4,7 +4,6 @@
 ![GitHub contributors](https://img.shields.io/github/contributors/scottydocs/README-template.md)
 ![GitHub stars](https://img.shields.io/github/stars/TrueBlocks/trueblocks-core?style%3Dsocial)
 ![GitHub forks](https://img.shields.io/github/forks/TrueBlocks/trueblocks-core?style=social)
-![CI](https://github.com/TrueBlocks/trueblocks-core/.github/workflows/install.yml/badge.svg)
 ![Twitter Follow](https://img.shields.io/twitter/follow/trueblocks?style=social)
 
 ## Table of Contents
