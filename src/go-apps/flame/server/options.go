@@ -18,10 +18,10 @@ import (
 )
 
 // optionsType makes command line options available to the package
- type optionsType struct {
-	Scrape bool
+type optionsType struct {
+	Scrape  bool
 	Monitor bool
-	Port string
+	Port    string
 	Verbose int
 }
 
@@ -33,7 +33,7 @@ func ParseOptions() error {
 	flag.BoolVar(&Options.Scrape, "scrape", false, "enable block scraper mode")
 	flag.BoolVar(&Options.Monitor, "monitor", false, "enable monitor scraper mode")
 	flag.StringVar(&Options.Port, "port", ":8080", "specify the server's port")
-    flag.IntVar(&Options.Verbose, "verbose", 0, "verbose level (between 0 and 10 inclusive)")
+	flag.IntVar(&Options.Verbose, "verbose", 0, "verbose level (between 0 and 10 inclusive)")
 	flag.Lookup("verbose").NoOptDefVal = "1"
 	flag.Parse()
 
@@ -52,15 +52,20 @@ func StartupMessage() {
 	}
 
 	fmt.Println("")
-	log.Print(utils.Green, "Starting TrueBlocks API server on port " + Options.Port, utils.Off, "\n")
+	log.Print(utils.Green, "Starting TrueBlocks API server on port "+Options.Port, utils.Off, "\n")
 	str := string(out[:])
 	lines := strings.Split(str, "\n")
 	for _, line := range lines {
 		if line != "" {
-			parts := strings.Split(line, "=")
-			log.Print(utils.Green, parts[0], ": ", utils.Off, parts[1], "\n")
+			if strings.HasPrefix(line, "client") {
+				parts := strings.Split(line, " ")
+				log.Print(utils.Green, parts[0], " ", utils.Off, parts[1], "\n")
+			} else {
+				parts := strings.Split(line, " ")
+				log.Print(utils.Green, parts[2], " ", utils.Off, parts[3], "\n")
+			}
 		}
-	}		
+	}
 	if Options.Scrape {
 		log.Print(utils.Green, "scraping:    ", utils.Off, Options.Scrape, "\n")
 		scrapers.IndexScraper.Running = true

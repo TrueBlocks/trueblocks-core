@@ -45,15 +45,16 @@ func NewRouter() *mux.Router {
 }
 
 var nProcessed int
+
 // Logger sends information to the server's console
 func Logger(inner http.Handler, name string) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		var limiter = rate.NewLimiter(1, 3)
 		// fmt.Println("limiter.Limit: ", limiter.Limit())
 		if limiter.Allow() == false {
-            http.Error(w, http.StatusText(429), http.StatusTooManyRequests)
-            return
-        }
+			http.Error(w, http.StatusText(429), http.StatusTooManyRequests)
+			return
+		}
 		start := time.Now()
 		inner.ServeHTTP(w, r)
 		t := ""
@@ -78,9 +79,19 @@ func Index(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Users Manual")
 }
 
+// Help f text todo
+func Help(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
+	w.Header().Set("Access-Control-Allow-Methods", "PUT, POST, GET, DELETE, OPTIONS")
+	w.WriteHeader(http.StatusOK)
+	fmt.Fprint(w, "help page")
+}
+
 // BEG_ROUTE_CODE
 
-// AccountsExport help text todo
+// AccountsExport f text todo
 func AccountsExport(w http.ResponseWriter, r *http.Request) {
 	CallOne(w, r, "acctExport", "export")
 }
@@ -189,6 +200,7 @@ func OtherWhere(w http.ResponseWriter, r *http.Request) {
 func OtherDive(w http.ResponseWriter, r *http.Request) {
 	CallOne(w, r, "turboDive", "dive")
 }
+
 // END_ROUTE_CODE
 
 var routes = Routes{
@@ -213,6 +225,13 @@ var routes = Routes{
 		"GET",
 		"/scraper",
 		ManageScraper,
+	},
+
+	Route{
+		"Help",
+		"GET",
+		"/help",
+		Help,
 	},
 
 	// BEG_ROUTE_ITEMS

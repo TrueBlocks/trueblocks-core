@@ -14,7 +14,7 @@ import (
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
-	Use:   "blaze",
+	Use:   "blazescrape",
 	Short: "Build, query, or share an index of Ethereum addresses per block",
 	Long: `
 Description:
@@ -82,10 +82,10 @@ func initConfig() {
 	}
 
 	configPath := "<unset>"
-    // TODO(tjayrush): This should read XDG_DATA_HOME and if the folder exists, use it
-	if (runtime.GOOS == "darwin") {
+	// TODO(tjayrush): This should read XDG_DATA_HOME and if the folder exists, use it
+	if runtime.GOOS == "darwin" {
 		configPath = home + "/Library/Application Support/TrueBlocks"
-	} else if (runtime.GOOS == "linux") {
+	} else if runtime.GOOS == "linux" {
 		configPath = home + "/.local/share/trueblocks"
 	} else {
 		fmt.Println("Windows not supported.")
@@ -137,19 +137,19 @@ func initConfig() {
 		os.MkdirAll(Options.unripePath, 0777)
 	}
 
-	if (Options.verbose > 8) {
-		fmt.Println("blaze.rpcProvider: ", Options.rpcProvider);
-		fmt.Println("blaze.indexPath:   ", Options.indexPath);
-		fmt.Println("blaze.ripePath:    ", Options.ripePath);
-		fmt.Println("blaze.unripePath:  ", Options.unripePath);
+	if Options.verbose > 8 {
+		fmt.Println("blazescrape.rpcProvider: ", Options.rpcProvider)
+		fmt.Println("blazescrape.indexPath:   ", Options.indexPath)
+		fmt.Println("blazescrape.ripePath:    ", Options.ripePath)
+		fmt.Println("blazescrape.unripePath:  ", Options.unripePath)
 	}
 
-	if (Options.verbose > 4) {
-		fmt.Println("blaze.startBlock:  ", Options.startBlock);
-		fmt.Println("blaze.nBlocks:     ", Options.nBlocks);
-		fmt.Println("blaze.nBlockProcs: ", Options.nBlockProcs);
-		fmt.Println("blaze.nAddrProcs:  ", Options.nAddrProcs);
-		fmt.Println("blaze.ripeBlock:   ", Options.ripeBlock);
-		fmt.Println("blaze.verbose:     ", Options.verbose);
+	if Options.verbose > 4 {
+		fmt.Println("blazescrape.startBlock:  ", Options.startBlock)
+		fmt.Println("blazescrape.nBlocks:     ", Options.nBlocks)
+		fmt.Println("blazescrape.nBlockProcs: ", Options.nBlockProcs)
+		fmt.Println("blazescrape.nAddrProcs:  ", Options.nAddrProcs)
+		fmt.Println("blazescrape.ripeBlock:   ", Options.ripeBlock)
+		fmt.Println("blazescrape.verbose:     ", Options.verbose)
 	}
 }

@@ -21,8 +21,8 @@ var MonitorScraper Scraper
 func RunMonitorScraper() {
 	for true {
 		if !MonitorScraper.Running {
-			if (MonitorScraper.WasRunning) {
-				log.Print(utils.Blue, "MonitorScraper is paused: ", MonitorScraper.Counter, " ", Counter, utils.Off, "\n")
+			if MonitorScraper.WasRunning {
+				log.Print(utils.Yellow, "MonitorScraper is paused: ", MonitorScraper.Counter, " ", Counter, utils.Off, "\n")
 			}
 			MonitorScraper.WasRunning = false
 			time.Sleep(1000 * time.Millisecond)
@@ -43,7 +43,7 @@ func RunMonitorScraper() {
 			for _, file := range files {
 				fmt.Println(file)
 			}
-			log.Print(utils.Blue, "MonitorScraper sleeping: ", MonitorScraper.Counter, " ", Counter, utils.Off, "\n")
+			log.Print(utils.Purple, "MonitorScraper sleeping: ", MonitorScraper.Counter, " ", Counter, utils.Off, "\n")
 			time.Sleep(300 * time.Millisecond)
 		}
 	}

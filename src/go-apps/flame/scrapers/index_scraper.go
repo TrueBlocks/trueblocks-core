@@ -18,7 +18,7 @@ var IndexScraper Scraper
 func RunBlockScraper() {
 	for true {
 		if !IndexScraper.Running {
-			if (IndexScraper.WasRunning) {
+			if IndexScraper.WasRunning {
 				log.Print(utils.Yellow, "IndexScraper is paused: ", IndexScraper.Counter, " ", Counter, utils.Off, "\n")
 			}
 			IndexScraper.WasRunning = false
@@ -27,7 +27,7 @@ func RunBlockScraper() {
 			IndexScraper.WasRunning = true
 			IndexScraper.Counter++
 			Counter++
-			log.Print(utils.Yellow, "IndexScraper awake", utils.Off, "\n")
+			log.Print(utils.Green, "IndexScraper awake", utils.Off, "\n")
 			time.Sleep(1 * time.Second)
 			log.Print(utils.Yellow, "IndexScraper sleeping: ", IndexScraper.Counter, " ", Counter, utils.Off, "\n")
 			time.Sleep(1 * time.Second)
