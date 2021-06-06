@@ -2,7 +2,7 @@ package server
 
 /*-------------------------------------------------------------------------
  * This source code is confidential proprietary information which is
- * copyright (c) 2018, 2021 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  * All Rights Reserved
  *------------------------------------------------------------------------*/
 
@@ -46,6 +46,8 @@ func CallOneExtra(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd s
 			key != "transactions" &&
 			key != "block_list" &&
 			key != "mode" &&
+			key != "topics" &&
+			key != "fourbytes" &&
 			key != "names" &&
 			key != "addrs2" {
 			allDogs = append(allDogs, "--"+key)

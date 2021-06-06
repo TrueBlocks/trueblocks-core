@@ -2,9 +2,13 @@ package server
 
 /*-------------------------------------------------------------------------
  * This source code is confidential proprietary information which is
- * copyright (c) 2018, 2021 TrueBlocks, LLC (http://trueblocks.io)
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
  * All Rights Reserved
  *------------------------------------------------------------------------*/
+/*
+ * Parts of this file were generated with makeClass --openapi. Edit only those parts of
+ * the code outside of 'BEG_ROUTE/END_ROUTE' tags.
+ */
 
 import (
 	"fmt"
@@ -79,36 +83,31 @@ func Index(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Users Manual")
 }
 
-// Help f text todo
+// Help help text todo
 func Help(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
 	w.Header().Set("Access-Control-Allow-Methods", "PUT, POST, GET, DELETE, OPTIONS")
 	w.WriteHeader(http.StatusOK)
-	fmt.Fprint(w, "help page")
+	fmt.Fprint(w, "{ \"help\": \"Called help\" }" )
 }
 
 // BEG_ROUTE_CODE
-
-// AccountsExport f text todo
-func AccountsExport(w http.ResponseWriter, r *http.Request) {
-	CallOne(w, r, "acctExport", "export")
-}
 
 // AccountsList help text todo
 func AccountsList(w http.ResponseWriter, r *http.Request) {
 	CallOneExtra(w, r, "chifra", "list", "list")
 }
 
-// AccountsMonitor help text todo
-func AccountsMonitor(w http.ResponseWriter, r *http.Request) {
-	CallOneExtra(w, r, "chifra", "monitor", "monitor")
+// AccountsExport help text todo
+func AccountsExport(w http.ResponseWriter, r *http.Request) {
+	CallOne(w, r, "acctExport", "export")
 }
 
-// AccountsTags help text todo
-func AccountsTags(w http.ResponseWriter, r *http.Request) {
-	CallOne(w, r, "ethNames", "tags")
+// AccountsMonitors help text todo
+func AccountsMonitors(w http.ResponseWriter, r *http.Request) {
+	CallOneExtra(w, r, "chifra", "monitors", "monitors")
 }
 
 // AccountsNames help text todo
@@ -116,14 +115,49 @@ func AccountsNames(w http.ResponseWriter, r *http.Request) {
 	CallOne(w, r, "ethNames", "names")
 }
 
-// AccountsEntities help text todo
-func AccountsEntities(w http.ResponseWriter, r *http.Request) {
-	CallOne(w, r, "ethNames", "entities")
-}
-
 // AccountsAbis help text todo
 func AccountsAbis(w http.ResponseWriter, r *http.Request) {
 	CallOne(w, r, "grabABI", "abis")
+}
+
+// ChainDataBlocks help text todo
+func ChainDataBlocks(w http.ResponseWriter, r *http.Request) {
+	CallOne(w, r, "getBlocks", "blocks")
+}
+
+// ChainDataTransactions help text todo
+func ChainDataTransactions(w http.ResponseWriter, r *http.Request) {
+	CallOne(w, r, "getTrans", "transactions")
+}
+
+// ChainDataReceipts help text todo
+func ChainDataReceipts(w http.ResponseWriter, r *http.Request) {
+	CallOne(w, r, "getReceipts", "receipts")
+}
+
+// ChainDataLogs help text todo
+func ChainDataLogs(w http.ResponseWriter, r *http.Request) {
+	CallOne(w, r, "getLogs", "logs")
+}
+
+// ChainDataTraces help text todo
+func ChainDataTraces(w http.ResponseWriter, r *http.Request) {
+	CallOne(w, r, "getTraces", "traces")
+}
+
+// ChainDataWhen help text todo
+func ChainDataWhen(w http.ResponseWriter, r *http.Request) {
+	CallOne(w, r, "whenBlock", "when")
+}
+
+// ChainStateState help text todo
+func ChainStateState(w http.ResponseWriter, r *http.Request) {
+	CallOne(w, r, "getState", "state")
+}
+
+// ChainStateTokens help text todo
+func ChainStateTokens(w http.ResponseWriter, r *http.Request) {
+	CallOne(w, r, "getTokens", "tokens")
 }
 
 // AdminStatus help text todo
@@ -141,66 +175,15 @@ func AdminPins(w http.ResponseWriter, r *http.Request) {
 	CallOne(w, r, "pinMan", "pins")
 }
 
-// DataBlocks help text todo
-func DataBlocks(w http.ResponseWriter, r *http.Request) {
-	CallOne(w, r, "getBlock", "blocks")
-}
-
-// DataTransactions help text todo
-func DataTransactions(w http.ResponseWriter, r *http.Request) {
-	CallOne(w, r, "getTrans", "transactions")
-}
-
-// DataReceipts help text todo
-func DataReceipts(w http.ResponseWriter, r *http.Request) {
-	CallOne(w, r, "getReceipt", "receipts")
-}
-
-// DataLogs help text todo
-func DataLogs(w http.ResponseWriter, r *http.Request) {
-	CallOne(w, r, "getLogs", "logs")
-}
-
-// DataTraces help text todo
-func DataTraces(w http.ResponseWriter, r *http.Request) {
-	CallOne(w, r, "getTrace", "traces")
-}
-
-// DataWhen help text todo
-func DataWhen(w http.ResponseWriter, r *http.Request) {
-	CallOne(w, r, "whenBlock", "when")
-}
-
-// StateState help text todo
-func StateState(w http.ResponseWriter, r *http.Request) {
-	CallOne(w, r, "getState", "state")
-}
-
-// StateTokens help text todo
-func StateTokens(w http.ResponseWriter, r *http.Request) {
-	CallOne(w, r, "getTokenInfo", "tokens")
-}
-
 // OtherQuotes help text todo
 func OtherQuotes(w http.ResponseWriter, r *http.Request) {
-	CallOne(w, r, "ethQuote", "quotes")
+	CallOne(w, r, "getQuotes", "quotes")
 }
 
 // OtherSlurp help text todo
 func OtherSlurp(w http.ResponseWriter, r *http.Request) {
 	CallOne(w, r, "ethslurp", "slurp")
 }
-
-// OtherWhere help text todo
-func OtherWhere(w http.ResponseWriter, r *http.Request) {
-	CallOne(w, r, "whereBlock", "where")
-}
-
-// OtherDive help text todo
-func OtherDive(w http.ResponseWriter, r *http.Request) {
-	CallOne(w, r, "turboDive", "dive")
-}
-
 // END_ROUTE_CODE
 
 var routes = Routes{
@@ -237,13 +220,6 @@ var routes = Routes{
 	// BEG_ROUTE_ITEMS
 
 	Route{
-		"AccountsExport",
-		"GET",
-		"/export",
-		AccountsExport,
-	},
-
-	Route{
 		"AccountsList",
 		"GET",
 		"/list",
@@ -251,17 +227,17 @@ var routes = Routes{
 	},
 
 	Route{
-		"AccountsMonitor",
+		"AccountsExport",
 		"GET",
-		"/monitor",
-		AccountsMonitor,
+		"/export",
+		AccountsExport,
 	},
 
 	Route{
-		"AccountsTags",
+		"AccountsMonitors",
 		"GET",
-		"/tags",
-		AccountsTags,
+		"/monitors",
+		AccountsMonitors,
 	},
 
 	Route{
@@ -272,17 +248,66 @@ var routes = Routes{
 	},
 
 	Route{
-		"AccountsEntities",
-		"GET",
-		"/entities",
-		AccountsEntities,
-	},
-
-	Route{
 		"AccountsAbis",
 		"GET",
 		"/abis",
 		AccountsAbis,
+	},
+
+	Route{
+		"ChainDataBlocks",
+		"GET",
+		"/blocks",
+		ChainDataBlocks,
+	},
+
+	Route{
+		"ChainDataTransactions",
+		"GET",
+		"/transactions",
+		ChainDataTransactions,
+	},
+
+	Route{
+		"ChainDataReceipts",
+		"GET",
+		"/receipts",
+		ChainDataReceipts,
+	},
+
+	Route{
+		"ChainDataLogs",
+		"GET",
+		"/logs",
+		ChainDataLogs,
+	},
+
+	Route{
+		"ChainDataTraces",
+		"GET",
+		"/traces",
+		ChainDataTraces,
+	},
+
+	Route{
+		"ChainDataWhen",
+		"GET",
+		"/when",
+		ChainDataWhen,
+	},
+
+	Route{
+		"ChainStateState",
+		"GET",
+		"/state",
+		ChainStateState,
+	},
+
+	Route{
+		"ChainStateTokens",
+		"GET",
+		"/tokens",
+		ChainStateTokens,
 	},
 
 	Route{
@@ -307,62 +332,6 @@ var routes = Routes{
 	},
 
 	Route{
-		"DataBlocks",
-		"GET",
-		"/blocks",
-		DataBlocks,
-	},
-
-	Route{
-		"DataTransactions",
-		"GET",
-		"/transactions",
-		DataTransactions,
-	},
-
-	Route{
-		"DataReceipts",
-		"GET",
-		"/receipts",
-		DataReceipts,
-	},
-
-	Route{
-		"DataLogs",
-		"GET",
-		"/logs",
-		DataLogs,
-	},
-
-	Route{
-		"DataTraces",
-		"GET",
-		"/traces",
-		DataTraces,
-	},
-
-	Route{
-		"DataWhen",
-		"GET",
-		"/when",
-		DataWhen,
-	},
-
-	Route{
-		"StateState",
-		"GET",
-		"/state",
-		StateState,
-	},
-
-	Route{
-		"StateTokens",
-		"GET",
-		"/tokens",
-		StateTokens,
-	},
-
-	Route{
 		"OtherQuotes",
 		"GET",
 		"/quotes",
@@ -374,20 +343,6 @@ var routes = Routes{
 		"GET",
 		"/slurp",
 		OtherSlurp,
-	},
-
-	Route{
-		"OtherWhere",
-		"GET",
-		"/where",
-		OtherWhere,
-	},
-
-	Route{
-		"OtherDive",
-		"GET",
-		"/dive",
-		OtherDive,
 	},
 	// END_ROUTE_ITEMS
 }
