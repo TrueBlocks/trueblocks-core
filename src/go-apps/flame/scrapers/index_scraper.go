@@ -2,10 +2,7 @@ package scrapers
 
 import (
 	"fmt"
-	"log"
 	"time"
-
-	"github.com/TrueBlocks/trueblocks-core/src/go-apps/blaze/utils"
 )
 
 /*-------------------------------------------------------------------------
@@ -20,18 +17,17 @@ func RunIndexScraper() {
 	for true {
 		if !IndexScraper.Running {
 			if IndexScraper.WasRunning {
-				log.Print(utils.Yellow, "IndexScraper   ", utils.Blue, "[running --> paused]", utils.Off, ": ", IndexScraper.Counter, utils.Off, "\n")
+				IndexScraper.ShowStateChange("running", "paused")
 			}
 			IndexScraper.WasRunning = false
 			time.Sleep(time.Duration(IndexScraper.Sleep) * time.Millisecond)
-
 		} else {
 			if !IndexScraper.WasRunning {
-				log.Print(utils.Yellow, "IndexScraper   ", utils.Blue, "[paused --> running]", utils.Off, ": ", IndexScraper.Counter, utils.Off, "\n")
+				IndexScraper.ShowStateChange("paused", "running")
 			}
 			IndexScraper.WasRunning = true
 			IndexScraper.Counter++
-			log.Print(utils.Yellow, "IndexScraper   ", utils.Blue, "[sleep --> wake]", utils.Off, ": ", IndexScraper.Counter, utils.Off, "\n")
+			IndexScraper.ShowStateChange("sleep", "wake")
 			for i := 0; i < 10; i++ {
 				fmt.Println("I am here: ", i)
 				time.Sleep(1 * time.Second)
@@ -39,8 +35,10 @@ func RunIndexScraper() {
 					break
 				}
 			}
-			log.Print(utils.Yellow, "IndexScraper   ", utils.Blue, "[wake --> sleep]", utils.Off, ": ", IndexScraper.Counter, utils.Off, "\n")
-			time.Sleep(time.Duration(IndexScraper.Sleep) * time.Millisecond)
+			IndexScraper.ShowStateChange("wake", "sleep")
+			if IndexScraper.Running {
+				time.Sleep(time.Duration(IndexScraper.Sleep) * time.Millisecond)
+			}
 		}
 	}
 }

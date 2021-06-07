@@ -2,12 +2,9 @@ package scrapers
 
 import (
 	"fmt"
-	"log"
 	"os"
 	"path/filepath"
 	"time"
-
-	"github.com/TrueBlocks/trueblocks-core/src/go-apps/blaze/utils"
 )
 
 /*-------------------------------------------------------------------------
@@ -22,14 +19,17 @@ func RunMonitorScraper() {
 	for true {
 		if !MonitorScraper.Running {
 			if MonitorScraper.WasRunning {
-				MonitorScraper.ChangeState("running", "paused")
+				MonitorScraper.ShowStateChange("running", "paused")
 			}
 			MonitorScraper.WasRunning = false
 			time.Sleep(time.Duration(MonitorScraper.Sleep) * time.Millisecond)
 		} else {
+			if !MonitorScraper.WasRunning {
+				MonitorScraper.ShowStateChange("paused", "running")
+			}
 			MonitorScraper.WasRunning = true
 			MonitorScraper.Counter++
-			log.Print(utils.Purple, "MonitorScraper ", utils.Blue, "[sleep --> wake]", utils.Off, ": ", MonitorScraper.Counter, utils.Off, "\n")
+			MonitorScraper.ShowStateChange("sleep", "wake")
 			var files []string
 			root := "/Users/jrush/Library/Application Support/TrueBlocks/cache/monitors/"
 			err := filepath.Walk(root, func(path string, info os.FileInfo, err error) error {
@@ -41,13 +41,15 @@ func RunMonitorScraper() {
 			}
 			for _, file := range files {
 				fmt.Println(file)
-				time.Sleep(500 * time.Millisecond)
+				time.Sleep(250 * time.Millisecond)
 				if !MonitorScraper.Running {
 					break
 				}
 			}
-			log.Print(utils.Purple, "MonitorScraper ", utils.Blue, "[wake --> sleep]", utils.Off, ": ", MonitorScraper.Counter, utils.Off, "\n")
-			time.Sleep(time.Duration(MonitorScraper.Sleep) * time.Millisecond)
+			MonitorScraper.ShowStateChange("wake", "sleep")
+			if MonitorScraper.Running {
+				time.Sleep(time.Duration(MonitorScraper.Sleep) * time.Millisecond)
+			}
 		}
 	}
 }

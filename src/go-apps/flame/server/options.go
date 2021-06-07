@@ -50,12 +50,30 @@ func ParseOptions() error {
 
 	flag.Parse()
 
-	startupMessage()
+	scrapers.IndexScraper.Color = utils.Yellow
+	scrapers.IndexScraper.Name = "IndexScraper"
+	scrapers.IndexScraper.Sleep = 1000
+	if Options.Scrape {
+		log.Print(utils.Green, "scraping:    ", utils.Off, Options.Scrape, "\n")
+		scrapers.IndexScraper.Running = true
+	}
 
-	return nil
-}
+	scrapers.MonitorScraper.Color = utils.Purple
+	scrapers.MonitorScraper.Name = "MonitorScraper"
+	scrapers.MonitorScraper.Sleep = 3000
+	if Options.Monitor {
+		scrapers.MonitorScraper.Running = true
+		log.Print(utils.Green, "monitoring:  ", utils.Off, Options.Monitor, "\n")
+	}
 
-func startupMessage() {
+	if Options.Port != ":8080" {
+		log.Print(utils.Green, "port:        ", utils.Off, Options.Port, "\n")
+	}
+
+	if Options.Verbose > 0 {
+		log.Print(utils.Green, "verbose:     ", utils.Off, Options.Verbose, "\n")
+	}
+
 	out, err := exec.Command("cacheStatus", "--terse").Output()
 	if err != nil {
 		fmt.Printf("%s", err)
@@ -76,18 +94,6 @@ func startupMessage() {
 			}
 		}
 	}
-	if Options.Scrape {
-		log.Print(utils.Green, "scraping:    ", utils.Off, Options.Scrape, "\n")
-		scrapers.IndexScraper.Running = true
-	}
-	if Options.Monitor {
-		scrapers.MonitorScraper.Running = true
-		log.Print(utils.Green, "monitoring:  ", utils.Off, Options.Monitor, "\n")
-	}
-	if Options.Port != ":8080" {
-		log.Print(utils.Green, "port:        ", utils.Off, Options.Port, "\n")
-	}
-	if Options.Verbose > 0 {
-		log.Print(utils.Green, "verbose:     ", utils.Off, Options.Verbose, "\n")
-	}
+
+	return nil
 }

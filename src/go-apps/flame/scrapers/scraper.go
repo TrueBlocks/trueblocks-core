@@ -17,8 +17,10 @@ type Scraper struct {
 	Running    bool
 	WasRunning bool
 	Sleep      int64
+	Color      string
+	Name       string
 }
 
-func (scraper *Scraper) ChangeState(from, to string) {
-	log.Print(utils.Purple, "MonitorScraper ", utils.Blue, "[running --> paused]", utils.Off, ": ", scraper.Counter, utils.Off, "\n")
+func (scraper *Scraper) ShowStateChange(from, to string) {
+	log.Print(scraper.Color, scraper.Name, " ", utils.Blue, "[", from, " --> ", to, "]", utils.Off, ": ", scraper.Counter, "\n")
 }
