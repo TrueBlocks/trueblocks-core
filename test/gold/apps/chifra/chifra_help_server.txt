@@ -4,5 +4,5 @@ Usage of flame:
       --monitor           enable monitor scraper mode
       --port string       specify the server's port (default ":8080")
       --scrape            enable block scraper mode
-      --verbose int[=1]   verbose level (between 0 and 10 inclusive)
+      --verbose int[=0]   verbose level (between 0 and 10 inclusive)
 pflag: help requested
