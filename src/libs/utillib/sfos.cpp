@@ -303,16 +303,15 @@ bool isRunning(const string_q& progName) {
 
 #ifndef HOST_NAME_MAX
 #define HOST_NAME_MAX 64
+#endif
+#ifndef LOGIN_NAME_MAX
 #define LOGIN_NAME_MAX 64
 #endif
 //----------------------------------------------------------------------------
 string_q getUserName(void) {
-    char username[LOGIN_NAME_MAX];
-    getlogin_r(username, LOGIN_NAME_MAX);
-    if (isDockerMode()) {
-        memset(username, 0, LOGIN_NAME_MAX);
+    char username[LOGIN_NAME_MAX] = { 0 };
+    if (getlogin_r(username, LOGIN_NAME_MAX) != 0 || isDockerMode())
         strncpy(username, "nobody", 7);
-    }
     return username;
 }
 
