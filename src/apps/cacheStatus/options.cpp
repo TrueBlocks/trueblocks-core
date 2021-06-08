@@ -222,17 +222,16 @@ void COptions::Init(void) {
     mode = "";
 
 #ifndef HOST_NAME_MAX
-#define HOST_NAME_MAX 64
+#define HOST_NAME_MAX 256
+#endif
+#ifndef LOGIN_NAME_MAX
 #define LOGIN_NAME_MAX 64
 #endif
     char hostname[HOST_NAME_MAX];
     gethostname(hostname, HOST_NAME_MAX);
-    char username[LOGIN_NAME_MAX];
-    getlogin_r(username, LOGIN_NAME_MAX);
-    if (isDockerMode()) {
-        memset(username, 0, LOGIN_NAME_MAX);
+    char username[LOGIN_NAME_MAX] = { 0 };
+    if (getlogin_r(username, LOGIN_NAME_MAX) != 0 || isDockerMode())
         strncpy(username, "nobody", 7);
-    }
 
     if (isTestMode()) {
         status.host = "--hostname-- (--username--)";
