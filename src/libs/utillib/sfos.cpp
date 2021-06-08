@@ -302,7 +302,7 @@ bool isRunning(const string_q& progName) {
 }
 
 #ifndef HOST_NAME_MAX
-#define HOST_NAME_MAX 64
+#define HOST_NAME_MAX 256
 #endif
 #ifndef LOGIN_NAME_MAX
 #define LOGIN_NAME_MAX 64
