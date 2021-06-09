@@ -1,8 +1,8 @@
-blockScrape argc: 8 [1:--tool] [2:index] [3:--sleep] [4:.5] [5:--pin] [6:--verbose] [7:8] 
-blockScrape --tool index --sleep .5 --pin --verbose 8 
+blockScrape argc: 6 [1:--sleep] [2:.5] [3:--pin] [4:--verbose] [5:8] 
+blockScrape --sleep .5 --pin --verbose 8 
 TIME ~ CLOCK - : 4-----
 pgrep -lfa "blockScrape"
-blockScrape --tool index --sleep .5 --pin --verbose 8
+blockScrape --sleep .5 --pin --verbose 8
  1
 TIME ~ CLOCK - : 4-----
 pgrep -lfa "acctExport"
@@ -14,8 +14,6 @@ TIME ~ CLOCK - : 8------Current state running.
 {
   "message": "Testing only",
   "mode": "run",
-  "tool": "index",
-  "tools": 2,
   "n_blocks": 2000,
   "n_block_procs": 10,
   "n_addr_procs": 20,

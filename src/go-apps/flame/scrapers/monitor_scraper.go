@@ -53,3 +53,29 @@ func RunMonitorScraper() {
 		}
 	}
 }
+
+/*
+    if (!endsWith(path, ".acct.bin"))
+        return !shouldQuit();
+
+	CMonitor monitor;
+	monitor.address = substitute(substitute(path, monitor.getMonitorPath(""), ""), ".acct.bin", "");
+
+	ostringstream os;
+    os << "acctExport ";
+    os << (opt->cache_txs ? "--cache_txs " : "");
+    os << (opt->cache_traces ? "--cache_traces " : "");
+    os << (opt->staging ? "--staging " : "");
+    os << (opt->unripe ? "--unripe " : "");
+    os << (verbose ? ("--verbose " + uint_2_Str(verbose)) : "") << " ";
+    os << "--freshen ";
+    os << "--first_block " << monitor.getLastBlockInMonitor() << " ";
+    os << monitor.address;
+    if (opt->load.empty())
+        LOG_INFO("Calling: " + substitute(os.str(), "acctExport", "chifra export") + string_q(40, ' '));
+    else
+        os << "--load " + opt->load;
+
+    if (system(os.str().c_str()) != 0)
+        return false;
+*/

@@ -227,9 +227,9 @@ void COptions::Init(void) {
 #ifndef LOGIN_NAME_MAX
 #define LOGIN_NAME_MAX 64
 #endif
-    char hostname[HOST_NAME_MAX+1] = {0};
+    char hostname[HOST_NAME_MAX + 1] = {0};
     gethostname(hostname, HOST_NAME_MAX);
-    char username[LOGIN_NAME_MAX+1] = {0};
+    char username[LOGIN_NAME_MAX + 1] = {0};
     if (getlogin_r(username, LOGIN_NAME_MAX) != 0 || isDockerMode())
         strncpy(username, "nobody", 7);
 

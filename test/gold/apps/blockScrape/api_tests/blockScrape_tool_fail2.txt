@@ -1,1 +1,0 @@
-{ "errors": [ "chifra scrape - Invalid option 'index' for 'mode'. One of [run|quit|pause|restart] required." ] }

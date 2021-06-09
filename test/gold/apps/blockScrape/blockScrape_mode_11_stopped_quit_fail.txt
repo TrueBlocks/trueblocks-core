@@ -6,8 +6,6 @@ TIME ~ CLOCK - : 8------Current state stopped.
 {
   "message": "Testing only",
   "mode": "quit",
-  "tool": "index",
-  "tools": 2,
   "n_blocks": 2000,
   "n_block_procs": 10,
   "n_addr_procs": 20,

@@ -1,1 +1,0 @@
-{ "errors": [ "chifra scrape - Invalid option 'badtool' for 'tool'. One or more of [monitors|index|none|both] required." ] }
