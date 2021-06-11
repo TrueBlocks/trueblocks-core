@@ -83,16 +83,6 @@ func Index(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Users Manual")
 }
 
-// Help help text todo
-func Help(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
-	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
-	w.Header().Set("Access-Control-Allow-Methods", "PUT, POST, GET, DELETE, OPTIONS")
-	w.WriteHeader(http.StatusOK)
-	fmt.Fprint(w, "{ \"help\": \"Called help\" }" )
-}
-
 // BEG_ROUTE_CODE
 
 // AccountsList help text todo
@@ -208,13 +198,6 @@ var routes = Routes{
 		"GET",
 		"/scraper",
 		ManageScraper,
-	},
-
-	Route{
-		"Help",
-		"GET",
-		"/help",
-		Help,
 	},
 
 	// BEG_ROUTE_ITEMS

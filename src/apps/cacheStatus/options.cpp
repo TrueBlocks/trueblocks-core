@@ -227,9 +227,9 @@ void COptions::Init(void) {
 #ifndef LOGIN_NAME_MAX
 #define LOGIN_NAME_MAX 64
 #endif
-    char hostname[HOST_NAME_MAX+1] = {0};
+    char hostname[HOST_NAME_MAX + 1] = {0};
     gethostname(hostname, HOST_NAME_MAX);
-    char username[LOGIN_NAME_MAX+1] = {0};
+    char username[LOGIN_NAME_MAX + 1] = {0};
     if (getlogin_r(username, LOGIN_NAME_MAX) != 0 || isDockerMode())
         strncpy(username, "nobody", 7);
 
@@ -326,3 +326,43 @@ void loadPinMaps(CIndexStringMap& filenameMap, CIndexHashMap& bloomMap, CIndexHa
         indexMap[num] = pin.indexHash;
     }
 }
+
+#if 0
+map<string, string> uiHelpMap = {
+    make_pair("/", "You are on the dashboard page."),
+    make_pair("/dashboard", "You are on the dashboard page."),
+    make_pair("/dashboard/overview",
+              "The dashboard overview page gives you an overview of your holdings among other things."),
+    make_pair("/dashboard/collections", "Collections allow you to group together mutliple monitored addresses."),
+    make_pair("/dashboard/system-status", "This screen shows you the system's status"),
+    make_pair("/names",
+              "The names component allows you to manage and edit various named objects including addresses, function "
+              "signatures, and blocks"),
+    make_pair("/names/monitors",
+              "Monitors are named addresses that you've indicated are 'of interest' and should be monitored by the "
+              "scrapers."),
+    make_pair("/names/addresses",
+              "Named addresses are a convienient way to keep track of human-readable names for addresses."),
+    make_pair("/names/tags", "Tags are groupings used to collect together named addresses."),
+    make_pair("/names/signatures", "{}"),
+    make_pair("/names/blocks", "{}"),
+    make_pair("/explorer", "{}"),
+    make_pair("/explorer/indexes", "{}"),
+    make_pair("/explorer/blocks", "{}"),
+    make_pair("/explorer/transactions", "{}"),
+    make_pair("/explorer/receipts", "{}"),
+    make_pair("/explorer/logs", "{}"),
+    make_pair("/explorer/traces", "{}"),
+    make_pair("/settings", "{}"),
+    make_pair("/settings/scrapers", "{}"),
+    make_pair("/settings/caches", "{}"),
+    make_pair("/settings/skins", "{}"),
+    make_pair("/settings/schemas", "{}"),
+    make_pair("/support", "{}"),
+    make_pair("/support/contact-us", "{}"),
+    make_pair("/support/documentation", "{}"),
+    make_pair("/support/hot-keys", "{}"),
+    make_pair("/support/licensing", "{}"),
+    make_pair("/support/about-us", "{}"),
+};
+#endif
