@@ -66,8 +66,6 @@ bool COptions::call_command(int argc, const char* argv[]) {
             } else {
                 mode = arg;
             }
-        } else {
-            return usage("Unknown argument: " + arg);
         }
     }
 
