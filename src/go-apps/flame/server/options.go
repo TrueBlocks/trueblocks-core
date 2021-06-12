@@ -50,24 +50,22 @@ func ParseOptions() error {
 
 	flag.Parse()
 
-	scrapers.IndexScraper.Color = utils.Yellow
-	scrapers.IndexScraper.Name = "IndexScraper"
-	scrapers.IndexScraper.Sleep = 1000
+	scrapers.IndexScraper = scrapers.NewScraper(utils.Yellow, "IndexScraper", 14)
 	if Options.Scrape {
 		log.Print(utils.Green, "scraping:    ", utils.Off, Options.Scrape, "\n")
-		scrapers.IndexScraper.Running = true
+		scrapers.IndexScraper.ChangeState(true)
 	}
 
-	scrapers.MonitorScraper.Color = utils.Purple
-	scrapers.MonitorScraper.Name = "MonitorScraper"
-	scrapers.MonitorScraper.Sleep = 3000
+	scrapers.MonitorScraper = scrapers.NewScraper(utils.Purple, "MonitorScraper", 14)
 	if Options.Monitor {
-		scrapers.MonitorScraper.Running = true
 		log.Print(utils.Green, "monitoring:  ", utils.Off, Options.Monitor, "\n")
+		scrapers.MonitorScraper.ChangeState(true)
 	}
 
 	if Options.Port != ":8080" {
 		log.Print(utils.Green, "port:        ", utils.Off, Options.Port, "\n")
+	} else {
+		Options.Port = "127.0.0.1:8080"
 	}
 
 	if Options.Verbose > 0 {

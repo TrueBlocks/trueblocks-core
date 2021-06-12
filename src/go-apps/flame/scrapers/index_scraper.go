@@ -2,7 +2,6 @@ package scrapers
 
 import (
 	"fmt"
-	"time"
 )
 
 /*-------------------------------------------------------------------------
@@ -20,7 +19,7 @@ func RunIndexScraper() {
 				IndexScraper.ShowStateChange("running", "paused")
 			}
 			IndexScraper.WasRunning = false
-			time.Sleep(time.Duration(IndexScraper.Sleep) * time.Millisecond)
+			IndexScraper.Pause()
 		} else {
 			if !IndexScraper.WasRunning {
 				IndexScraper.ShowStateChange("paused", "running")
@@ -30,14 +29,13 @@ func RunIndexScraper() {
 			IndexScraper.ShowStateChange("sleep", "wake")
 			for i := 0; i < 10; i++ {
 				fmt.Println("I am here: ", i)
-				time.Sleep(1 * time.Second)
 				if !IndexScraper.Running {
 					break
 				}
 			}
 			IndexScraper.ShowStateChange("wake", "sleep")
 			if IndexScraper.Running {
-				time.Sleep(time.Duration(IndexScraper.Sleep) * time.Millisecond)
+				IndexScraper.Pause()
 			}
 		}
 	}

@@ -2,9 +2,11 @@ package scrapers
 
 import (
 	"fmt"
+	"log"
 	"os"
+	"os/exec"
 	"path/filepath"
-	"time"
+	"strings"
 )
 
 /*-------------------------------------------------------------------------
@@ -22,7 +24,7 @@ func RunMonitorScraper() {
 				MonitorScraper.ShowStateChange("running", "paused")
 			}
 			MonitorScraper.WasRunning = false
-			time.Sleep(time.Duration(MonitorScraper.Sleep) * time.Millisecond)
+			MonitorScraper.Pause()
 		} else {
 			if !MonitorScraper.WasRunning {
 				MonitorScraper.ShowStateChange("paused", "running")
@@ -33,34 +35,39 @@ func RunMonitorScraper() {
 			var files []string
 			root := "/Users/jrush/Library/Application Support/TrueBlocks/cache/monitors/"
 			err := filepath.Walk(root, func(path string, info os.FileInfo, err error) error {
-				files = append(files, path)
+				if strings.Contains(path, ".acct.bin") {
+					path = strings.Replace(path, ".acct.bin", "", -1)
+					parts := strings.Split(path, "/")
+					files = append(files, parts[len(parts)-1])
+				}
 				return nil
 			})
 			if err != nil {
 				panic(err)
 			}
 			for _, file := range files {
-				fmt.Println(file)
-				time.Sleep(250 * time.Millisecond)
 				if !MonitorScraper.Running {
 					break
 				}
+				options := " --freshen"
+				options += " --verbose 10"
+				options += " " + file
+				log.Println("acctExport", options)
+				out, err := exec.Command("acctExport", options).Output()
+				if err != nil {
+					fmt.Printf("%s", err)
+				}
+				log.Println("out: ", string(out))
 			}
 			MonitorScraper.ShowStateChange("wake", "sleep")
 			if MonitorScraper.Running {
-				time.Sleep(time.Duration(MonitorScraper.Sleep) * time.Millisecond)
+				MonitorScraper.Pause()
 			}
 		}
 	}
 }
 
 /*
-    if (!endsWith(path, ".acct.bin"))
-        return !shouldQuit();
-
-	CMonitor monitor;
-	monitor.address = substitute(substitute(path, monitor.getMonitorPath(""), ""), ".acct.bin", "");
-
 	ostringstream os;
     os << "acctExport ";
     os << (opt->cache_txs ? "--cache_txs " : "");

@@ -34,10 +34,10 @@ func ManageScraper(w http.ResponseWriter, r *http.Request) {
 		log.Println("mode: ", mode)
 
 		if toggle == "indexer" || toggle == "both" {
-			scrapers.IndexScraper.Running = (mode == "true")
+			scrapers.IndexScraper.ChangeState(mode == "true")
 		}
 		if toggle == "monitors" || toggle == "both" {
-			scrapers.MonitorScraper.Running = (mode == "true")
+			scrapers.MonitorScraper.ChangeState(mode == "true")
 		}
 		scraperStatus("toggle", w, r)
 
@@ -59,9 +59,9 @@ func scraperStatus(msg string, w http.ResponseWriter, r *http.Request) {
 	fmt.Fprint(w, msg)
 	fmt.Fprint(w, "\", ")
 	fmt.Fprint(w, "\"indexer\": ")
-	fmt.Fprint(w, scrapers.IndexScraper.Running)
+	fmt.Fprint(w, scrapers.IndexScraper.ToJson())
 	fmt.Fprint(w, ", ")
 	fmt.Fprint(w, "\"monitor\": ")
-	fmt.Fprint(w, scrapers.MonitorScraper.Running)
+	fmt.Fprint(w, scrapers.MonitorScraper.ToJson())
 	fmt.Fprint(w, " }")
 }
