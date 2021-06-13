@@ -163,6 +163,5 @@ func CallOneExtra(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd s
 	} else {
 		w.WriteHeader(http.StatusOK)
 	}
-
 	fmt.Fprint(w, output)
 }

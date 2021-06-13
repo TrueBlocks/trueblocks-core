@@ -18,15 +18,15 @@ import (
 	"github.com/spf13/viper"
 )
 
-// globalOptionsT Structure to carry command line and config file options
-type globalOptionsT struct {
+// OptionsType Structure to carry command line and config file options
+type OptionsType struct {
 	fmt            string
 	signaturesPath string
 	unused         bool
 }
 
 // Options Carries the configuration options (from both command line and config file)
-var Options globalOptionsT
+var Options OptionsType
 
 func prettyPrint(encoding string, signature interface{}) {
 	if Options.fmt == "json" {
@@ -154,9 +154,9 @@ func initConfig() {
 	}
 
 	configPath := "<unset>"
-	if (runtime.GOOS == "darwin") {
+	if runtime.GOOS == "darwin" {
 		configPath = home + "/Library/Application Support/TrueBlocks"
-	} else if (runtime.GOOS == "linux") {
+	} else if runtime.GOOS == "linux" {
 		configPath = home + "/.local/share/trueblocks"
 	} else {
 		fmt.Println("Windows not supported.")

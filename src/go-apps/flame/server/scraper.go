@@ -1,4 +1,4 @@
-package scrapers
+package server
 
 import (
 	"encoding/json"
@@ -16,13 +16,14 @@ import (
  * All Rights Reserved
  *------------------------------------------------------------------------*/
 
-type Scraper struct {
+ type Scraper struct {
 	Counter    uint64 `json:"Counter"`
 	Running    bool   `json:"Running"`
 	WasRunning bool   `json:""`
 	SleepSecs  int64  `json:"SleepSecs"`
 	Color      string `json:"Color"`
 	Name       string `json:"Name"`
+	Verbose    int64  `json:"Verbose"`
 }
 
 func NewScraper(color, name string, secs int64) Scraper {
@@ -31,11 +32,12 @@ func NewScraper(color, name string, secs int64) Scraper {
 	scraper.Name = name
 	scraper.SleepSecs = secs
 	scraper.Running = scraper.LoadStateFromCache()
+	scraper.Verbose = 4
 	return *scraper
 }
 
 func (scraper *Scraper) ShowStateChange(from, to string) {
-	log.Print(scraper.Color, scraper.Name, " [", from, " --> ", to, "]: ", scraper.Counter, utils.Off, "\n")
+	log.Print(scraper.Color, scraper.Name, ": [", from, " --> ", to, "]: ", scraper.Counter, utils.Off, "\n")
 }
 
 func (scraper *Scraper) ToJson() string {
@@ -75,7 +77,7 @@ func (scraper *Scraper) LoadStateFromCache() bool {
 }
 
 func (scraper *Scraper) Pause() {
-	halfSecs := scraper.SleepSecs / 2
+	halfSecs := scraper.SleepSecs * 2
 	state := scraper.Running
 	for i := 0; i < int(halfSecs); i++ {
 		if state != scraper.Running {

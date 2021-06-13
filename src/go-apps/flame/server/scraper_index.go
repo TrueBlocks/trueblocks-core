@@ -1,7 +1,8 @@
-package scrapers
+package server
 
 import (
-	"fmt"
+	"log"
+	utils "github.com/TrueBlocks/trueblocks-core/src/go-apps/blaze/utils"
 )
 
 /*-------------------------------------------------------------------------
@@ -28,7 +29,7 @@ func RunIndexScraper() {
 			IndexScraper.Counter++
 			IndexScraper.ShowStateChange("sleep", "wake")
 			for i := 0; i < 10; i++ {
-				fmt.Println("I am here: ", i)
+				log.Print(IndexScraper.Color, IndexScraper.Name, ": I am here ", i, utils.Off, "\n")
 				if !IndexScraper.Running {
 					break
 				}

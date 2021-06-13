@@ -1,4 +1,10 @@
-package scrapers
+/*-------------------------------------------------------------------------
+ * This source code is confidential proprietary information which is
+ * copyright (c) 2018, 2021 TrueBlocks, LLC (http://trueblocks.io)
+ * All Rights Reserved
+ *------------------------------------------------------------------------*/
+
+ package server
 
 import (
 	"fmt"
@@ -7,13 +13,9 @@ import (
 	"os/exec"
 	"path/filepath"
 	"strings"
+	"strconv"
+	utils "github.com/TrueBlocks/trueblocks-core/src/go-apps/blaze/utils"
 )
-
-/*-------------------------------------------------------------------------
- * This source code is confidential proprietary information which is
- * copyright (c) 2018, 2021 TrueBlocks, LLC (http://trueblocks.io)
- * All Rights Reserved
- *------------------------------------------------------------------------*/
 
 var MonitorScraper Scraper
 
@@ -32,32 +34,48 @@ func RunMonitorScraper() {
 			MonitorScraper.WasRunning = true
 			MonitorScraper.Counter++
 			MonitorScraper.ShowStateChange("sleep", "wake")
-			var files []string
-			root := "/Users/jrush/Library/Application Support/TrueBlocks/cache/monitors/"
+			var addresses []string
+			root := Options.Status.CachePath + "monitors/"
 			err := filepath.Walk(root, func(path string, info os.FileInfo, err error) error {
 				if strings.Contains(path, ".acct.bin") {
 					path = strings.Replace(path, ".acct.bin", "", -1)
 					parts := strings.Split(path, "/")
-					files = append(files, parts[len(parts)-1])
+					addresses = append(addresses, parts[len(parts)-1])
 				}
 				return nil
 			})
 			if err != nil {
 				panic(err)
 			}
-			for _, file := range files {
+			for _, addr := range addresses {
 				if !MonitorScraper.Running {
 					break
 				}
 				options := " --freshen"
-				options += " --verbose 10"
-				options += " " + file
-				log.Println("acctExport", options)
-				out, err := exec.Command("acctExport", options).Output()
+				if MonitorScraper.Verbose > 0 {
+					options += " --verbose " + strconv.Itoa(int(MonitorScraper.Verbose))
+				}
+				options += " " + addr
+				log.Print(MonitorScraper.Color, MonitorScraper.Name, ": acctExport", options, utils.Off, "\n")
+				cmd := exec.Command("acctExport", options)
+				stderrPipe, err := cmd.StderrPipe()
+				if err != nil {
+					log.Printf("%s", err)
+				} else {
+					go func() {
+						ScanForProgress(stderrPipe, func(msg string) {
+							connectionPool.broadcast <- &Message{
+								Action:  ProgressMessage,
+								ID:      "monitor-scrape",
+								Content: msg,
+							}
+						})
+					}()
+				}
+				_, err = cmd.Output()
 				if err != nil {
 					fmt.Printf("%s", err)
 				}
-				log.Println("out: ", string(out))
 			}
 			MonitorScraper.ShowStateChange("wake", "sleep")
 			if MonitorScraper.Running {
