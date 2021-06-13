@@ -38,8 +38,8 @@ func Execute() {
 	}
 }
 
-// globalOptionsT Structure to carry command line and config file options
-type globalOptionsT struct {
+// OptionsType Structure to carry command line and config file options
+type OptionsType struct {
 	rpcProvider string
 	indexPath   string
 	ripePath    string
@@ -53,7 +53,7 @@ type globalOptionsT struct {
 }
 
 // Options Carries the configuration options (from both command line and config file)
-var Options globalOptionsT
+var Options OptionsType
 
 // init Initalize options
 func init() {

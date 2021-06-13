@@ -2,8 +2,6 @@
 {
   "message": "Testing only",
   "mode": "pause",
-  "tool": "index",
-  "tools": 2,
   "n_blocks": 2000,
   "n_block_procs": 10,
   "n_addr_procs": 20,

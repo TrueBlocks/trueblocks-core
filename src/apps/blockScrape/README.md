@@ -8,25 +8,19 @@ The scraper can scrape either the index only, previously created monitors only, 
 
 ### Usage
 
-`Usage:`    chifra scrape [-t|-n|-p|-s|-v|-h] mode  
+`Usage:`    chifra scrape [-n|-p|-s|-v|-h] mode  
 `Purpose:`  Scan the chain and update the TrueBlocks index of appearances.
 
 `Where:`  
 
 | | Option | Description |
 | :----- | :----- | :---------- |
-|  | mode | control the block and account scrapers, one of *[ run \| quit \| pause \| restart ]* (required) |
-| -t | --tool &lt;val&gt; | process the index, monitors, or both (none means process timestamps only), one or more of *[ monitors \| index\* \| none \| both ]* |
+|  | mode | control the block scraper, one of *[ run \| quit \| pause \| restart ]* (required) |
 | -n | --n_blocks &lt;num&gt; | maximum number of blocks to process (defaults to 5000) |
 | -p | --pin | pin new chunks (and blooms) to IPFS (requires Pinata key and running IPFS node) |
 | -s | --sleep &lt;double&gt; | the number of seconds to sleep between passes (default 14) |
 | -v | --verbose | set verbose level (optional level defaults to 1) |
 | -h | --help | display this help screen |
-
-`Notes:`
-
-- Certain options (`--cache_txs`, `--cache_traces`, etc.) are passed through to `chifra export` 
-  if `tool` includes `monitors`. See `chifra export --help`.
 
 ### explainer
 

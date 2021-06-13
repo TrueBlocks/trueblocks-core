@@ -13,18 +13,13 @@
 static const COption params[] = {
     // BEG_CODE_OPTIONS
     // clang-format off
-    COption("mode", "", "enum[run|quit|pause|restart]", OPT_REQUIRED | OPT_POSITIONAL, "control the block and account scrapers"),  // NOLINT
-    COption("tool", "t", "list<enum[monitors|index*|none|both]>", OPT_FLAG, "process the index, monitors, or both (none means process timestamps only)"),  // NOLINT
+    COption("mode", "", "enum[run|quit|pause|restart]", OPT_REQUIRED | OPT_POSITIONAL, "control the block scraper"),
     COption("n_blocks", "n", "<uint64>", OPT_FLAG, "maximum number of blocks to process (defaults to 5000)"),
     COption("n_block_procs", "b", "<uint64>", OPT_HIDDEN | OPT_FLAG, "number of block channels for blaze"),
     COption("n_addr_procs", "a", "<uint64>", OPT_HIDDEN | OPT_FLAG, "number of address channels for blaze"),
     COption("pin", "p", "", OPT_SWITCH, "pin new chunks (and blooms) to IPFS (requires Pinata key and running IPFS node)"),  // NOLINT
     COption("sleep", "s", "<double>", OPT_FLAG, "the number of seconds to sleep between passes (default 14)"),
-    COption("staging", "s", "", OPT_HIDDEN | OPT_SWITCH, "pass through to chifra export --freshen (see notes)"),
-    COption("unripe", "u", "", OPT_HIDDEN | OPT_SWITCH, "pass through to chifra export --freshen (see notes)"),
-    COption("cache_txs", "i", "", OPT_HIDDEN | OPT_SWITCH, "pass through to chifra export --freshen (see notes)"),
-    COption("cache_traces", "R", "", OPT_HIDDEN | OPT_SWITCH, "pass through to chifra export --freshen (see notes)"),
-    COption("load", "", "<string>", OPT_HIDDEN | OPT_FLAG, "pass through to chifra export --freshen (see notes)"),
+    COption("once", "o", "", OPT_HIDDEN | OPT_SWITCH, "run the a single block scrape, do not behave as long running process"),  // NOLINT
     COption("", "", "", OPT_DESCRIPTION, "Scan the chain and update the TrueBlocks index of appearances."),
     // clang-format on
     // END_CODE_OPTIONS
@@ -52,14 +47,6 @@ bool COptions::parseArguments(string_q& command) {
         if (false) {
             // do nothing -- make auto code generation easier
             // BEG_CODE_AUTO
-        } else if (startsWith(arg, "-t:") || startsWith(arg, "--tool:")) {
-            string_q tool_tmp;
-            if (!confirmEnum("tool", tool_tmp, arg))
-                return false;
-            tool.push_back(tool_tmp);
-        } else if (arg == "-t" || arg == "--tool") {
-            return flag_required("tool");
-
         } else if (startsWith(arg, "-n:") || startsWith(arg, "--n_blocks:")) {
             if (!confirmUint("n_blocks", n_blocks, arg))
                 return false;
@@ -87,22 +74,8 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-s" || arg == "--sleep") {
             return flag_required("sleep");
 
-        } else if (arg == "-s" || arg == "--staging") {
-            staging = true;
-
-        } else if (arg == "-u" || arg == "--unripe") {
-            unripe = true;
-
-        } else if (arg == "-i" || arg == "--cache_txs") {
-            cache_txs = true;
-
-        } else if (arg == "-R" || arg == "--cache_traces") {
-            cache_traces = true;
-
-        } else if (startsWith(arg, "--load:")) {
-            load = substitute(substitute(arg, "-:", ""), "--load:", "");
-        } else if (arg == "--load") {
-            return flag_required("load");
+        } else if (arg == "-o" || arg == "--once") {
+            once = true;
 
         } else if (startsWith(arg, '-')) {  // do not collapse
 
@@ -122,17 +95,12 @@ bool COptions::parseArguments(string_q& command) {
 
     // BEG_DEBUG_DISPLAY
     LOG_TEST("mode", mode, (mode == ""));
-    LOG_TEST_LIST("tool", tool, tool.empty());
     LOG_TEST("n_blocks", n_blocks, (n_blocks == (isDockerMode() ? 100 : 2000)));
     LOG_TEST("n_block_procs", n_block_procs, (n_block_procs == (isDockerMode() ? 5 : 10)));
     LOG_TEST("n_addr_procs", n_addr_procs, (n_addr_procs == (isDockerMode() ? 10 : 20)));
     LOG_TEST_BOOL("pin", pin);
     LOG_TEST("sleep", sleep, (sleep == 14));
-    LOG_TEST_BOOL("staging", staging);
-    LOG_TEST_BOOL("unripe", unripe);
-    LOG_TEST_BOOL("cache_txs", cache_txs);
-    LOG_TEST_BOOL("cache_traces", cache_traces);
-    LOG_TEST("load", load, (load == ""));
+    LOG_TEST_BOOL("once", once);
     // END_DEBUG_DISPLAY
 
     if (Mocked(""))
@@ -140,21 +108,6 @@ bool COptions::parseArguments(string_q& command) {
 
     if (mode.empty())
         mode = "run";
-
-    if (tool.size() > 1)
-        return usage("Please specify only one of [ none | index | monitors | both].");
-    ASSERT(tool.empty());
-
-    if (tool.empty())
-        tool.push_back("index");
-    if (tool[0] == "none")
-        tools = TOOL_NONE;
-    else if (tool[0] == "both")
-        tools = TOOL_BOTH;
-    else if (tool[0] == "monitors")
-        tools = TOOL_MONITORS;
-    else
-        tools = TOOL_INDEX;
 
     // no less than one half second of sleep between runs
     if (sleep < .5)
@@ -191,8 +144,6 @@ bool COptions::parseArguments(string_q& command) {
         os << "{" << endl;
         os << "  \"message\": \"Testing only\"," << endl;
         os << "  \"mode\": \"" << mode << "\"," << endl;
-        os << "  \"tool\": \"" << tool[0] << "\"," << endl;
-        os << "  \"tools\": " << tools << "," << endl;
         os << "  \"n_blocks\": " << n_blocks << "," << endl;
         os << "  \"n_block_procs\": " << n_block_procs << "," << endl;
         os << "  \"n_addr_procs\": " << n_addr_procs << "," << endl;
@@ -298,7 +249,6 @@ void COptions::Init(void) {
     getNamedAccount(unused, "0x0");
 
     // BEG_CODE_INIT
-    tool.clear();
     // clang-format off
     n_blocks = getGlobalConfig("blockScrape")->getConfigInt("settings", "n_blocks", (isDockerMode() ? 100 : 2000));
     n_block_procs = getGlobalConfig("blockScrape")->getConfigInt("settings", "n_block_procs", (isDockerMode() ? 5 : 10));
@@ -306,13 +256,7 @@ void COptions::Init(void) {
     // clang-format on
     pin = false;
     sleep = 14;
-    staging = false;
-    unripe = false;
-    // clang-format off
-    cache_txs = getGlobalConfig("blockScrape")->getConfigBool("settings", "cache_txs", false);
-    cache_traces = getGlobalConfig("blockScrape")->getConfigBool("settings", "cache_traces", false);
-    // clang-format on
-    load = "";
+    once = false;
     // END_CODE_INIT
 }
 
@@ -322,7 +266,6 @@ COptions::COptions(void) {
 
     // BEG_CODE_NOTES
     // clang-format off
-    notes.push_back("Certain options (`--cache_txs`, `--cache_traces`, etc.) are passed through to `chifra export` | if `tool` includes `monitors`. See `chifra export --help`.");  // NOLINT
     // clang-format on
     // END_CODE_NOTES
 

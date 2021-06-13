@@ -11,7 +11,6 @@ import (
 	"log"
 	"net/http"
 
-	scrapers "github.com/TrueBlocks/trueblocks-core/src/go-apps/blaze/scrapers"
 	utils "github.com/TrueBlocks/trueblocks-core/src/go-apps/blaze/utils"
 )
 
@@ -30,14 +29,11 @@ func ManageScraper(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		log.Println("toggle: ", toggle)
-		log.Println("mode: ", mode)
-
 		if toggle == "indexer" || toggle == "both" {
-			scrapers.IndexScraper.Running = (mode == "true")
+			IndexScraper.ChangeState(mode == "true")
 		}
 		if toggle == "monitors" || toggle == "both" {
-			scrapers.MonitorScraper.Running = (mode == "true")
+			MonitorScraper.ChangeState(mode == "true")
 		}
 		scraperStatus("toggle", w, r)
 
@@ -59,9 +55,9 @@ func scraperStatus(msg string, w http.ResponseWriter, r *http.Request) {
 	fmt.Fprint(w, msg)
 	fmt.Fprint(w, "\", ")
 	fmt.Fprint(w, "\"indexer\": ")
-	fmt.Fprint(w, scrapers.IndexScraper.Running)
+	fmt.Fprint(w, IndexScraper.ToJson())
 	fmt.Fprint(w, ", ")
 	fmt.Fprint(w, "\"monitor\": ")
-	fmt.Fprint(w, scrapers.MonitorScraper.Running)
+	fmt.Fprint(w, MonitorScraper.ToJson())
 	fmt.Fprint(w, " }")
 }

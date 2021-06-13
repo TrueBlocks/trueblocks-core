@@ -3,12 +3,11 @@ blockScrape --publish --pin
 
   Invalid option: --publish
 
-  Usage:    blockScrape [-t|-n|-p|-s|-v|-h] mode  
+  Usage:    blockScrape [-n|-p|-s|-v|-h] mode  
   Purpose:  Scan the chain and update the TrueBlocks index of appearances.
 
   Where:  
-	mode                  control the block and account scrapers, one of [run|quit|pause|restart] (required)
-	-t  (--tool <val>)    process the index, monitors, or both (none means process timestamps only), one or more of [monitors|index*|none|both]
+	mode                  control the block scraper, one of [run|quit|pause|restart] (required)
 	-n  (--n_blocks <num>)maximum number of blocks to process (defaults to 5000)
 	-p  (--pin)           pin new chunks (and blooms) to IPFS (requires Pinata key and running IPFS node)
 	-s  (--sleep <double>)the number of seconds to sleep between passes (default 14)
@@ -16,11 +15,7 @@ blockScrape --publish --pin
 	#### Hidden options
 	-b  (--n_block_procs <num>)number of block channels for blaze
 	-a  (--n_addr_procs <num>)number of address channels for blaze
-	-s  (--staging)       pass through to chifra export --freshen (see notes)
-	-u  (--unripe)        pass through to chifra export --freshen (see notes)
-	-i  (--cache_txs)     pass through to chifra export --freshen (see notes)
-	-R  (--cache_traces)  pass through to chifra export --freshen (see notes)
-	    (--load <str>)    pass through to chifra export --freshen (see notes)
+	-o  (--once)          run the a single block scrape, do not behave as long running process
 	#### Hidden options
 
 	-v  (--verbose)       set verbose level (optional level defaults to 1)

@@ -30,25 +30,17 @@ int main(int argc, const char* argv[]) {
             LOG_INFO("Block scraper is paused: ", Now().Format(FMT_EXPORT), "\r");
 
         } else {
-            bool ret1 = true;
-            if (options.tools & TOOL_INDEX) {
-                LOG_INFO(cYellow, "Block scraper is running...", cOff);
-                ret1 = options.scrape_blocks();
-            }
-
-            bool ret2 = true;
-            if (options.tools & TOOL_MONITORS) {
-                LOG_INFO(cYellow, "Monitor scraper is running...", cOff);
-                ret2 = options.scrape_monitors();
-                LOG_INFO(cYellow, "   finished...", cOff);
-            }
-
-            LOG_INFO(ret1 && ret2 ? "  ...pass completed." : "  ...pass did not complete.");
+            LOG_INFO(cYellow, "Block scraper is running...", cOff);
+            bool ret1 = options.scrape_blocks();
+            LOG_INFO(ret1 ? "  ...pass completed." : "  ...pass did not complete.");
 
             // TODO(tjayrush): We should try to scrape timestamps with blaze while we're doing this scan
             // TODO(tjayrush): try to capture timestamps during blaze scraping
             freshenTimestamps(getBlockProgress(BP_RIPE).ripe);
         }
+
+        if (options.once)
+            break;
 
         // We need to sleep, but we want to wake up frequently enough to check to see if user has
         // told hit the control-C or sent pause, quit or restart. (The `sleep` value is in seconds.)

@@ -7,7 +7,6 @@ package utils
  *------------------------------------------------------------------------*/
 
 import (
-	"log"
 	"net/http"
 	"os"
 )
@@ -24,17 +23,13 @@ func FileExists(filename string) bool {
 // GetParam returns a single the 'key' parameter in the URL
 func GetParam(key string, def string, r *http.Request) (string, bool) {
 	values, exists := r.URL.Query()[key]
-	log.Println("key: ", key, "len(values): ", len(values), " exists: ", exists)
 	if exists {
 		if len(values) < 1 {
-			log.Println("len(values) < 1")
 			return def, true
 		}
 		if values[0] == "" {
-			log.Println("values[0] == \"\"")
 			return def, true
 		}
-		log.Println("returning values[0]: ", values[0])
 		return values[0], true
 	}
 	return def, false
