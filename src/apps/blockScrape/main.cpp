@@ -39,6 +39,9 @@ int main(int argc, const char* argv[]) {
             freshenTimestamps(getBlockProgress(BP_RIPE).ripe);
         }
 
+        if (options.once)
+            break;
+
         // We need to sleep, but we want to wake up frequently enough to check to see if user has
         // told hit the control-C or sent pause, quit or restart. (The `sleep` value is in seconds.)
         if (!isLiveTest()) {  // don't sleep if we're in live testing

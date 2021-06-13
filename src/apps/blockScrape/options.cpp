@@ -19,6 +19,7 @@ static const COption params[] = {
     COption("n_addr_procs", "a", "<uint64>", OPT_HIDDEN | OPT_FLAG, "number of address channels for blaze"),
     COption("pin", "p", "", OPT_SWITCH, "pin new chunks (and blooms) to IPFS (requires Pinata key and running IPFS node)"),  // NOLINT
     COption("sleep", "s", "<double>", OPT_FLAG, "the number of seconds to sleep between passes (default 14)"),
+    COption("once", "o", "", OPT_HIDDEN | OPT_SWITCH, "run the a single block scrape, do not behave as long running process"),  // NOLINT
     COption("", "", "", OPT_DESCRIPTION, "Scan the chain and update the TrueBlocks index of appearances."),
     // clang-format on
     // END_CODE_OPTIONS
@@ -73,6 +74,9 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-s" || arg == "--sleep") {
             return flag_required("sleep");
 
+        } else if (arg == "-o" || arg == "--once") {
+            once = true;
+
         } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
@@ -96,6 +100,7 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST("n_addr_procs", n_addr_procs, (n_addr_procs == (isDockerMode() ? 10 : 20)));
     LOG_TEST_BOOL("pin", pin);
     LOG_TEST("sleep", sleep, (sleep == 14));
+    LOG_TEST_BOOL("once", once);
     // END_DEBUG_DISPLAY
 
     if (Mocked(""))
@@ -251,6 +256,7 @@ void COptions::Init(void) {
     // clang-format on
     pin = false;
     sleep = 14;
+    once = false;
     // END_CODE_INIT
 }
 

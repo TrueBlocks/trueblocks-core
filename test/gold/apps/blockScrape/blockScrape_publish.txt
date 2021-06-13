@@ -15,6 +15,7 @@ blockScrape --publish
 	#### Hidden options
 	-b  (--n_block_procs <num>)number of block channels for blaze
 	-a  (--n_addr_procs <num>)number of address channels for blaze
+	-o  (--once)          run the a single block scrape, do not behave as long running process
 	#### Hidden options
 
 	-v  (--verbose)       set verbose level (optional level defaults to 1)

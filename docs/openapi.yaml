@@ -1275,6 +1275,14 @@ paths:
         explode: true
         schema:
           type: number
+      - name: once
+        in: query
+        description: run the a single block scrape, do not behave as long running process
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
       responses:
         "200":
           description: status of the scraper

@@ -1,7 +1,11 @@
 package server
 
 import (
+	"fmt"
 	"log"
+	"os/exec"
+	"strconv"
+
 	utils "github.com/TrueBlocks/trueblocks-core/src/go-apps/blaze/utils"
 )
 
@@ -28,12 +32,32 @@ func RunIndexScraper() {
 			IndexScraper.WasRunning = true
 			IndexScraper.Counter++
 			IndexScraper.ShowStateChange("sleep", "wake")
-			for i := 0; i < 10; i++ {
-				log.Print(IndexScraper.Color, IndexScraper.Name, ": I am here ", i, utils.Off, "\n")
-				if !IndexScraper.Running {
-					break
-				}
+			/*-----------*/
+			options := " run --once"
+			if IndexScraper.Verbose > 0 {
+				options += " --verbose " + strconv.Itoa(int(IndexScraper.Verbose))
 			}
+			log.Print(IndexScraper.Color, IndexScraper.Name, ": blockScrape", options, utils.Off, "\n")
+			cmd := exec.Command("blockScrape", options)
+			stderrPipe, err := cmd.StderrPipe()
+			if err != nil {
+				log.Printf("%s", err)
+			} else {
+				go func() {
+					ScanForProgress(stderrPipe, func(msg string) {
+						connectionPool.broadcast <- &Message{
+							Action:  ProgressMessage,
+							ID:      "block-scrape",
+							Content: msg,
+						}
+					})
+				}()
+			}
+			_, err = cmd.Output()
+			if err != nil {
+				fmt.Printf("%s", err)
+			}
+			/*-----------*/
 			IndexScraper.ShowStateChange("wake", "sleep")
 			if IndexScraper.Running {
 				IndexScraper.Pause()

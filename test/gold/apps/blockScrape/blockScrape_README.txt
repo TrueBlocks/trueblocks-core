@@ -16,6 +16,7 @@ blockScrape -th
 |####|Hidden options||
 | -b | --n_block_procs &lt;num&gt; | number of block channels for blaze |
 | -a | --n_addr_procs &lt;num&gt; | number of address channels for blaze |
+| -o | --once | run the a single block scrape, do not behave as long running process |
 |####|Hidden options||
 | -v | --verbose | set verbose level (optional level defaults to 1) |
 | -h | --help | display this help screen |

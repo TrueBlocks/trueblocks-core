@@ -27,6 +27,7 @@ class COptions : public COptionsBase {
     uint64_t n_addr_procs;
     bool pin;
     double sleep;
+    bool once;
     // END_CODE_DECLARE
 
     ScrapeState state;
