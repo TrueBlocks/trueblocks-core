@@ -18,7 +18,7 @@ import (
 	flag "github.com/spf13/pflag"
 )
 
-// ChifraStatus 
+// ChifraStatus
 type ChifraStatus struct {
 	Client     string `json:"client_version"`
 	TrueBlocks string `json:"trueblocks_version"`
@@ -37,17 +37,17 @@ type ChifraStatus struct {
 
 // ChifraMeta
 type ChifraMeta struct {
-	Client int64
+	Client    int64
 	Finalized int64
-	Staging int64
-	Ripe int64
-	Unripe int64
+	Staging   int64
+	Ripe      int64
+	Unripe    int64
 }
 
 // ChifraResponse is sent by the command line chifra
 type ChifraResponse struct {
 	Status []ChifraStatus `json:"data"`
-	Meta ChifraMeta `json:"meta"`
+	Meta   ChifraMeta     `json:"meta"`
 }
 
 func GetChifraResponse() (ChifraResponse, error) {
@@ -75,12 +75,17 @@ func GetChifraData() (ChifraStatus, error) {
 		var junk ChifraStatus
 		return junk, err
 	}
+	if len(response.Status) == 0 {
+		fmt.Printf("Empty response from chifra")
+		var junk ChifraStatus
+		return junk, err
+	}
 	return response.Status[0], nil
 }
 
 func GetChifraMeta() (ChifraMeta, error) {
 	response, err := GetChifraResponse()
-	if (err != nil) {
+	if err != nil {
 		var junk ChifraMeta
 		return junk, err
 	}
