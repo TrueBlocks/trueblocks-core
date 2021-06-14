@@ -55,3 +55,4 @@ on,both,fast,blocks,tools/getBlocks,fmt_json,y,blocks = 2222222 2332332 & fmt = 
 on,cmd,fast,blocks,tools/getBlocks,fmt_junk,y,blocks = 2222222 2332332 & fmt = junk
 on,both,fast,blocks,tools/getBlocks,to_file,y,blocks = 2222222 2332332 & fmt = json & to_file
 on,both,fast,blocks,tools/getBlocks,fmt_trace,y,blocks = 2222222 & trace & fmt = json
+on,both,fast,blocks,tools/getBlocks,block_list,y,list = 100

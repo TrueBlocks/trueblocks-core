@@ -36,6 +36,7 @@ class COptions : public CBlockOptions {
     uint64_t addrCounter;
     string_q filterType;
     timestamp_t secsFinal;
+    blknum_t listOffset;
 
     COptions(void);
     ~COptions(void);
@@ -44,7 +45,8 @@ class COptions : public CBlockOptions {
     void Init(void) override;
 
     bool isMulti(void) const;
-    void handle_appearances(blknum_t num, void* data);
+    bool handle_appearances(blknum_t num, void* data);
+    bool handle_block_summaries(blknum_t start, blknum_t count);
 };
 
 //-----------------------------------------------------------------------------

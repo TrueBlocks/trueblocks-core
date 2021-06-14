@@ -247,6 +247,12 @@ extern logger<log_policy_i>* eLogger;
             LOG_INFO((string_q(a) + ": "), (b));                                                                       \
         }                                                                                                              \
     }
+#define LOG_TEST_STR(str)                                                                                              \
+    {                                                                                                                  \
+        if (isTestMode()) {                                                                                            \
+            LOG_INFO(str);                                                                                             \
+        }                                                                                                              \
+    }
 #define LOG_TEST_BOOL(a, b)                                                                                            \
     {                                                                                                                  \
         if ((b))                                                                                                       \
@@ -270,6 +276,7 @@ extern logger<log_policy_i>* eLogger;
     { LOG4(bWhite, l_funcName, " ----> ", (isTestMode() ? substitute((a), getCachePath(""), "$CACHE/") : (a)), cOff); }
 #else
 #define LOG_TEST(a, b, is_default)
+#define LOG_TEST_STR(str)
 #define LOG_TEST_BOOL(a, b)
 #define LOG_TEST_LIST(a, b, is_default)
 #define LOG_TEST_CALL(a)

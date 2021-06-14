@@ -13,7 +13,7 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------
-void COptions::handle_appearances(blknum_t num, void* data) {
+bool COptions::handle_appearances(blknum_t num, void* data) {
     CBlock block;
     getBlock(block, num);
 
@@ -61,6 +61,7 @@ void COptions::handle_appearances(blknum_t num, void* data) {
         }
     }
     firstOut = false;
+    return true;
 }
 
 //----------------------------------------------------------------

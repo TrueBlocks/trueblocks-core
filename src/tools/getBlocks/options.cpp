@@ -29,6 +29,7 @@ static const COption params[] = {
     COption("uniq_tx", "n", "", OPT_SWITCH, "display only uniq address appearances per transaction"),
     COption("count", "c", "", OPT_SWITCH, "display counts of appearances (for --apps, --uniq, or --uniq_tx) or transactions"),  // NOLINT
     COption("cache", "o", "", OPT_SWITCH, "force a write of the block to the cache"),
+    COption("list", "l", "<blknum>", OPT_HIDDEN | OPT_FLAG, "summary list of blocks running backwards from latest block minus num"),  // NOLINT
     COption("", "", "", OPT_DESCRIPTION, "Retrieve one or more blocks from the chain or local cache."),
     // clang-format on
     // END_CODE_OPTIONS
@@ -40,6 +41,8 @@ extern const char* STR_FORMAT_COUNT_TXT;
 extern const char* STR_FORMAT_COUNT_TXT_VERBOSE;
 extern const char* STR_FORMAT_FILTER_JSON;
 extern const char* STR_FORMAT_FILTER_TXT;
+extern const char* STR_FORMAT_LIST_JSON;
+extern const char* STR_FORMAT_LIST;
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
@@ -49,6 +52,7 @@ bool COptions::parseArguments(string_q& command) {
     bool apps = false;
     bool uniq = false;
     bool uniq_tx = false;
+    blknum_t list = NOPOS;
     // END_CODE_LOCAL_INIT
 
     Init();
@@ -85,6 +89,12 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-o" || arg == "--cache") {
             cache = true;
 
+        } else if (startsWith(arg, "-l:") || startsWith(arg, "--list:")) {
+            if (!confirmBlockNum("list", list, arg, latest))
+                return false;
+        } else if (arg == "-l" || arg == "--list") {
+            return flag_required("list");
+
         } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
@@ -109,6 +119,7 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST_BOOL("uniq_tx", uniq_tx);
     LOG_TEST_BOOL("count", count);
     LOG_TEST_BOOL("cache", cache);
+    LOG_TEST("list", list, (list == NOPOS));
     // END_DEBUG_DISPLAY
 
     if (Mocked("blocks"))
@@ -117,6 +128,7 @@ bool COptions::parseArguments(string_q& command) {
     if (cache)
         etherlib_init(defaultQuitHandler);
 
+    listOffset = contains(command, "list") ? list : NOPOS;
     filterType = (uniq_tx ? "uniq_tx" : (uniq ? "uniq" : (apps ? "apps" : "")));
 
     if (cache && uncles)
@@ -134,7 +146,7 @@ bool COptions::parseArguments(string_q& command) {
     if (trace && hashes)
         return usage("The --hashes and --trace options are exclusive.");
 
-    if (blocks.empty())
+    if (blocks.empty() && listOffset == NOPOS)
         return usage("You must specify at least one block.");
 
     secsFinal =
@@ -173,6 +185,9 @@ bool COptions::parseArguments(string_q& command) {
             loadNames();
         }
 
+    } else if (listOffset != NOPOS) {
+        configureDisplay("", "CBlock", STR_FORMAT_LIST);
+
     } else if (trace) {
         configureDisplay("getBlocks", "CTrace", STR_DISPLAY_TRACE);
 
@@ -188,6 +203,9 @@ bool COptions::parseArguments(string_q& command) {
                 replace(ff, "\t[{ADDR_COUNT}]", "");
             }
             expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(ff);
+
+        } else if (listOffset != NOPOS) {
+            expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(STR_FORMAT_LIST_JSON);
 
         } else if (!filterType.empty()) {
             expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(STR_FORMAT_FILTER_JSON);
@@ -215,6 +233,7 @@ void COptions::Init(void) {
     filterType = "";
     secsFinal = (60 * 5);
     addrCounter = 0;
+    listOffset = NOPOS;
     blocks.Init();
     CBlockOptions::Init();
 }
@@ -276,3 +295,18 @@ const char* STR_FORMAT_FILTER_JSON =
 
 //--------------------------------------------------------------------------------
 const char* STR_FORMAT_FILTER_TXT = "[{BN}]\t[{TX}]\t[{TC}]\t[{ADDR}]\t[{REASON}]";
+
+//--------------------------------------------------------------------------------
+const char* STR_FORMAT_LIST_JSON =
+    "{\n"
+    " \"hash\": \"[{HASH}]\",\n"
+    " \"blockNumber\": [{BLOCKNUMBER}],\n"
+    " \"timestamp\": [{TIMESTAMP}],\n"
+    " \"date\": \"[{DATE}]\",\n"
+    " \"transactionsCnt\": [{TRANSACTIONSCNT}],\n"
+    " \"unclesCnt\": [{UNCLE_COUNT}]\n"
+    "}\n";
+
+//--------------------------------------------------------------------------------
+const char* STR_FORMAT_LIST =
+    "[{HASH}]\t[{BLOCKNUMBER}]\t[{TIMESTAMP}]\t[{DATE}]\t[{TRANSACTIONSCNT}]\t[{UNCLE_COUNT}]";

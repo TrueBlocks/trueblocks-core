@@ -634,6 +634,14 @@ paths:
         explode: true
         schema:
           type: boolean
+      - name: list
+        in: query
+        description: summary list of blocks running backwards from latest block minus num
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
       responses:
         "200":
           description: status of the scraper
