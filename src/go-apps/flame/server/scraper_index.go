@@ -1,3 +1,9 @@
+/*-------------------------------------------------------------------------
+ * This source code is confidential proprietary information which is
+ * copyright (c) 2018, 2021 TrueBlocks, LLC (http://trueblocks.io)
+ * All Rights Reserved
+ *------------------------------------------------------------------------*/
+
 package server
 
 import (
@@ -8,12 +14,6 @@ import (
 
 	utils "github.com/TrueBlocks/trueblocks-core/src/go-apps/blaze/utils"
 )
-
-/*-------------------------------------------------------------------------
- * This source code is confidential proprietary information which is
- * copyright (c) 2018, 2021 TrueBlocks, LLC (http://trueblocks.io)
- * All Rights Reserved
- *------------------------------------------------------------------------*/
 
 var IndexScraper Scraper
 

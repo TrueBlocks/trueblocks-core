@@ -55,14 +55,14 @@ func GetChifraResponse() (ChifraResponse, error) {
 	cmd.Env = append(os.Environ(), "API_MODE=true")
 	out, err := cmd.Output()
 	if err != nil {
-		fmt.Printf("%s", err)
+		fmt.Printf("ChifraResponse:cmd.Output() failed: %s", err)
 		var junk ChifraResponse
 		return junk, err
 	}
 	var response ChifraResponse
 	err = json.Unmarshal(out, &response)
 	if err != nil {
-		fmt.Printf("%s", err)
+		fmt.Printf("ChifraResponse:json.Unmarshal() failed: %s", err)
 		var junk ChifraResponse
 		return junk, err
 	}
@@ -76,7 +76,7 @@ func GetChifraData() (ChifraStatus, error) {
 		return junk, err
 	}
 	if len(response.Status) == 0 {
-		fmt.Printf("Empty response from chifra")
+		fmt.Printf("GetChifraData.len(response.Status) == 0")
 		var junk ChifraStatus
 		return junk, err
 	}
@@ -86,6 +86,7 @@ func GetChifraData() (ChifraStatus, error) {
 func GetChifraMeta() (ChifraMeta, error) {
 	response, err := GetChifraResponse()
 	if err != nil {
+		fmt.Printf("GetChifraMeta.GetChifraResponse failed with: %s", err)
 		var junk ChifraMeta
 		return junk, err
 	}

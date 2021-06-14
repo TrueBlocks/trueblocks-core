@@ -29,7 +29,7 @@ bool COptions::call_command(int argc, const char* argv[]) {
 
     setProgName("chifra");
 
-    string_q mode;
+    string_q mode, scrape_mode;
     bool has_help = false;
     for (int i = 1; i < argc; i++) {
         string_q arg = argv[i];
@@ -58,6 +58,7 @@ bool COptions::call_command(int argc, const char* argv[]) {
                     os << "Invalid submode '" << arg << "' provided to scrape mode.";
                     return usage(os.str());
                 }
+                scrape_mode = arg;
                 // pass it through
             } else if (!mode.empty()) {
                 ostringstream os;
@@ -98,9 +99,12 @@ bool COptions::call_command(int argc, const char* argv[]) {
 
     CAddressBoolMap addressMap;
 
+    string_q realCmd = chifraCmdMap[mode];
+    if (!has_help)
+        replace(realCmd, "blockScrape", "flame");
     string_q prev;
     ostringstream os;
-    os << chifraCmdMap[mode];
+    os << realCmd;
     for (int i = 2; i < argc; i++) {
         // If we're not removing it...
         if (!removeMap[argv[i]]) {
@@ -112,6 +116,12 @@ bool COptions::call_command(int argc, const char* argv[]) {
                 addressMap[arg] = isAddress(arg);
             prev = arg;
         }
+    }
+    if (mode == "scrape") {
+        if (scrape_mode == "index" || scrape_mode == "both" || scrape_mode.empty())
+            os << " --scrape";
+        if (scrape_mode == "monitors" || scrape_mode == "both")
+            os << " --monitor";
     }
 
     LOG_TEST_CALL(os.str());

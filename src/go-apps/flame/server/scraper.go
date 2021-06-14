@@ -1,3 +1,9 @@
+/*-------------------------------------------------------------------------
+ * This source code is confidential proprietary information which is
+ * copyright (c) 2018, 2021 TrueBlocks, LLC (http://trueblocks.io)
+ * All Rights Reserved
+ *------------------------------------------------------------------------*/
+
 package server
 
 import (
@@ -10,13 +16,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/go-apps/blaze/utils"
 )
 
-/*-------------------------------------------------------------------------
- * This source code is confidential proprietary information which is
- * copyright (c) 2018, 2021 TrueBlocks, LLC (http://trueblocks.io)
- * All Rights Reserved
- *------------------------------------------------------------------------*/
-
- type Scraper struct {
+type Scraper struct {
 	Counter    uint64 `json:"Counter"`
 	Running    bool   `json:"Running"`
 	WasRunning bool   `json:""`

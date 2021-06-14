@@ -7,6 +7,7 @@
  * Parts of this file were generated with makeClass --options. Edit only those parts of
  * the code outside of the BEG_CODE/END_CODE sections
  */
+#define LOGGING_LEVEL_TEST
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
@@ -316,7 +317,7 @@ bool COptions::changeState(void) {
                 stringToAsciiFile(controlFile, "running");
                 state = STATE_RUNNING;
                 cout << "{ \"status\": \"running\" }" << endl;
-                LOG4("changing state: stopped --> running");
+                LOG_TEST_STR("changing state: stopped --> running");
                 return false;
             } else {
                 if (!(stateStr == "stopped" && mode == "quit"))
@@ -328,12 +329,12 @@ bool COptions::changeState(void) {
                 stringToAsciiFile(controlFile, "paused");
                 state = STATE_PAUSED;
                 stateStr = "paused";
-                LOG4("changing state: running --> paused");
+                LOG_TEST_STR("changing state: running --> paused");
             } else if (mode == "quit") {
                 ::remove(controlFile.c_str());
                 state = STATE_STOPPED;
                 stateStr = "stopped";
-                LOG4("changing state: running --> stopped");
+                LOG_TEST_STR("changing state: running --> stopped");
             } else if (mode == "run") {
                 LOG_ERR("blockScrape is already ", stateStr, ". Cannot ", mode, ".");
                 LOG_ERR("If this is in error, remove the file ", (isTestMode() ? "--controlFile--" : controlFile));
@@ -348,12 +349,12 @@ bool COptions::changeState(void) {
                 stringToAsciiFile(controlFile, "running");
                 state = STATE_RUNNING;
                 stateStr = "running";
-                LOG4("changing state: paused --> running");
+                LOG_TEST_STR("changing state: paused --> running");
             } else if (mode == "quit") {
                 ::remove(controlFile.c_str());
                 state = STATE_STOPPED;
                 stateStr = "stopped";
-                LOG4("changing state: paused --> stopped");
+                LOG_TEST_STR("changing state: paused --> stopped");
             } else {
                 LOG_ERR("blockScrape is ", stateStr, ". Cannot ", mode, ".");
                 // state = STATE_PAUSED; // redunant, but okay
