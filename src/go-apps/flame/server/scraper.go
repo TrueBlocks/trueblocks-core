@@ -56,7 +56,7 @@ func (scraper *Scraper) ChangeState(onOff bool) bool {
 	if onOff {
 		str = "true"
 	}
-	fileName := scraper.Name + ".txt"
+	fileName := Options.Status.CachePath + "tmp/" + scraper.Name + ".txt"
 	err := ioutil.WriteFile(fileName, []byte(str), 0644)
 	if err != nil {
 		log.Fatal(err)
@@ -65,7 +65,7 @@ func (scraper *Scraper) ChangeState(onOff bool) bool {
 }
 
 func (scraper *Scraper) LoadStateFromCache() bool {
-	fileName := scraper.Name + ".txt"
+	fileName := Options.Status.CachePath + "tmp/" + scraper.Name + ".txt"
 	if !utils.FileExists(fileName) {
 		return false
 	}

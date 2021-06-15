@@ -122,6 +122,9 @@ func ParseOptions() error {
 
 	flag.Parse()
 
+	Options.Status, _ = GetChifraData()
+	Options.Meta, _ = GetChifraMeta()
+
 	IndexScraper = NewScraper(utils.Yellow, "IndexScraper", 14)
 	if Options.Scrape {
 		log.Print(utils.Green, "scraping:    ", utils.Off, Options.Scrape, "\n")
@@ -146,10 +149,6 @@ func ParseOptions() error {
 
 	fmt.Println("")
 	log.Print(utils.Green, "Starting API server on port "+Options.Port, utils.Off, "\n")
-
-	Options.Status, _ = GetChifraData()
-	Options.Meta, _ = GetChifraMeta()
-
 	log.Print(utils.Green, "Client:       ", utils.Off, Options.Status.Client)
 	log.Print(utils.Green, "TrueBlocks:   ", utils.Off, Options.Status.TrueBlocks)
 	log.Print(utils.Green, "Cache Path:   ", utils.Off, Options.Status.CachePath)
