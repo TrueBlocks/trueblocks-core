@@ -1,7 +1,8 @@
 blockScrape argc: 2 [1:quit] 
 blockScrape quit 
+TIME ~ CLOCK - <INFO>  : mode: quit
 TIME ~ CLOCK - : 8------Current state paused.
-TIME ~ CLOCK - : 4-----changing state: paused --> stopped
+TIME ~ CLOCK - <INFO>  : changing state: paused --> stopped
 { "status": "stopped" }
 TIME ~ CLOCK - : 8------Current state stopped.
 {

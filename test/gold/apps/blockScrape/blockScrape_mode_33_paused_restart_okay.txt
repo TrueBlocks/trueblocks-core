@@ -1,7 +1,8 @@
 blockScrape argc: 2 [1:restart] 
 blockScrape restart 
+TIME ~ CLOCK - <INFO>  : mode: restart
 TIME ~ CLOCK - : 8------Current state paused.
-TIME ~ CLOCK - : 4-----changing state: paused --> running
+TIME ~ CLOCK - <INFO>  : changing state: paused --> running
 { "status": "running" }
 TIME ~ CLOCK - : 8------Current state running.
 {

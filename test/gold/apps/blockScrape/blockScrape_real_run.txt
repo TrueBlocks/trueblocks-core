@@ -1,5 +1,7 @@
 blockScrape argc: 6 [1:--sleep] [2:.5] [3:--pin] [4:--verbose] [5:8] 
 blockScrape --sleep .5 --pin --verbose 8 
+TIME ~ CLOCK - <INFO>  : pin: true
+TIME ~ CLOCK - <INFO>  : sleep: 0.5
 TIME ~ CLOCK - : 4-----
 pgrep -lfa "blockScrape"
 blockScrape --sleep .5 --pin --verbose 8
@@ -9,7 +11,7 @@ pgrep -lfa "acctExport"
  0
 TIME ~ CLOCK - : 8------Current state stopped.
 { "status": "running" }
-TIME ~ CLOCK - : 4-----changing state: stopped --> running
+TIME ~ CLOCK - <INFO>  : changing state: stopped --> running
 TIME ~ CLOCK - : 8------Current state running.
 {
   "message": "Testing only",
@@ -21,7 +23,7 @@ TIME ~ CLOCK - : 8------Current state running.
   "current": running,
 }
 TIME ~ CLOCK - : 8------Current state running.
-TIME ~ CLOCK - : 4-----changing state: running --> stopped
+TIME ~ CLOCK - <INFO>  : changing state: running --> stopped
 { "status": "stopped" }
 TIME ~ CLOCK - : 8------Current state stopped.
 TIME ~ CLOCK - <INFO>  : file contents: 
