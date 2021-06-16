@@ -304,9 +304,12 @@ const char* STR_FORMAT_LIST_JSON =
     " \"timestamp\": [{TIMESTAMP}],\n"
     " \"date\": \"[{DATE}]\",\n"
     " \"transactionsCnt\": [{TRANSACTIONSCNT}],\n"
-    " \"unclesCnt\": [{UNCLE_COUNT}]\n"
+    " \"unclesCnt\": [{UNCLE_COUNT}],\n"
+    " \"gasLimit\": [{GASLIMIT}],\n"
+    " \"gasUsed\": [{GASUSED}]\n"
     "}\n";
 
 //--------------------------------------------------------------------------------
 const char* STR_FORMAT_LIST =
-    "[{HASH}]\t[{BLOCKNUMBER}]\t[{TIMESTAMP}]\t[{DATE}]\t[{TRANSACTIONSCNT}]\t[{UNCLE_COUNT}]";
+    "[{HASH}]\t[{BLOCKNUMBER}]\t[{TIMESTAMP}]\t[{DATE}]\t[{TRANSACTIONSCNT}]\t[{UNCLE_COUNT}]\t[{GASLIMIT}]\t[{GASUSED}"
+    "]";
