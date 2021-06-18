@@ -20,9 +20,9 @@ cacheStatus --details caches --types prices
         {
           "type": "CPriceCacheItem",
           "pair": "---pair---",
-          "nAppearances": 2020101,
-          "firstAppearance": 0,
-          "latestAppearance": 0,
+          "nApps": 2020101,
+          "firstApp": 0,
+          "latestApp": 0,
           "sizeInBytes": 1010202,
           "address": "0x0"
         }

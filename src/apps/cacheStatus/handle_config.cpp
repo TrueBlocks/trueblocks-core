@@ -8,7 +8,7 @@
 //--------------------------------------------------------------------------------
 bool COptions::handle_config(ostream& os) {
     ASSERT(mode.empty());
-    manageFields("CCacheBase:firstAppearance,latestAppearance,nAppearances,sizeInBytes", false);
+    manageFields("CCacheBase:firstApp,latestApp,nApps,sizeInBytes", false);
     GETRUNTIME_CLASS(CAccountName)->sortFieldList();
     return handle_config_get(os);
 }
@@ -160,7 +160,7 @@ bool COptions::handle_config_get(ostream& os) {
     }
 
     {
-        manageFields("CCacheBase:firstAppearance,latestAppearance,nAppearances,sizeInBytes", false);
+        manageFields("CCacheBase:firstApp,latestApp,nApps,sizeInBytes", false);
 
         // const CToml* cc = getGlobalConfig("ethNames");
         CConfigFile f("ethNames.toml");

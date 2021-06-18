@@ -34,9 +34,9 @@
             {
               "type": "",
               "deleted": false,
-              "nAppearances": 0,
-              "firstAppearance": 0,
-              "latestAppearance": 0,
+              "nApps": 0,
+              "firstApp": 0,
+              "latestApp": 0,
               "sizeInBytes": 0,
               "tags": "--tags--",
               "address": "---address---",
@@ -84,9 +84,9 @@
             {
               "type": "CPriceCacheItem",
               "pair": "---pair---",
-              "nAppearances": 2020101,
-              "firstAppearance": 0,
-              "latestAppearance": 0,
+              "nApps": 2020101,
+              "firstApp": 0,
+              "latestApp": 0,
               "sizeInBytes": 1010202,
               "tags": "",
               "address": "0x0",
@@ -220,15 +220,15 @@
           "type": "bool"
         },
         {
-          "name": "nAppearances",
+          "name": "nApps",
           "type": "blocknum"
         },
         {
-          "name": "firstAppearance",
+          "name": "firstApp",
           "type": "blocknum"
         },
         {
-          "name": "latestAppearance",
+          "name": "latestApp",
           "type": "blocknum"
         },
         {
@@ -367,15 +367,15 @@
           "type": "text"
         },
         {
-          "name": "nAppearances",
+          "name": "nApps",
           "type": "blocknum"
         },
         {
-          "name": "firstAppearance",
+          "name": "firstApp",
           "type": "blocknum"
         },
         {
-          "name": "latestAppearance",
+          "name": "latestApp",
           "type": "blocknum"
         },
         {

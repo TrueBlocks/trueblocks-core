@@ -88,7 +88,7 @@ string_q CPriceCacheItem::getValueByName(const string_q& fieldName) const {
     }
 
     // EXISTING_CODE
-    if (fieldName % "firstAppearance" || fieldName % "latestAppearance")
+    if (fieldName % "firstApp" || fieldName % "latestApp")
         return "";
     // EXISTING_CODE
 

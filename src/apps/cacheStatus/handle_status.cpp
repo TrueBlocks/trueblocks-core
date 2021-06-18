@@ -339,11 +339,11 @@ bool noteEntity(const string_q& path, void* data) {
         if (isTestMode()) {
             coi.name = "---name---";
             coi.sizeInBytes = 1010202;
-            coi.nAppearances = 2020101;
+            coi.nApps = 2020101;
         } else {
             coi.name = path;
             coi.sizeInBytes = fileSize(path);
-            coi.nAppearances = fileSize(path) / sizeof(CPriceQuote);
+            coi.nApps = fileSize(path) / sizeof(CPriceQuote);
         }
         counter->entityArray->push_back(coi);
     }
@@ -378,13 +378,13 @@ bool noteMonitor(const string_q& path, void* data) {
                 archive.Seek(-1 * (long)(2 * sizeof(uint32_t)), SEEK_END);  // NOLINT
                 archive.Read(last);
                 archive.Release();
-                mdi.firstAppearance = first;
-                mdi.latestAppearance = last;
+                mdi.firstApp = first;
+                mdi.latestApp = last;
             } else {
-                mdi.firstAppearance = NOPOS;
-                mdi.latestAppearance = NOPOS;
+                mdi.firstApp = NOPOS;
+                mdi.latestApp = NOPOS;
             }
-            mdi.nAppearances = fileSize(path) / sizeof(CAppearance_base);
+            mdi.nApps = fileSize(path) / sizeof(CAppearance_base);
             mdi.sizeInBytes = fileSize(path);
         } else {
             mdi = CMonitorCacheItem();
@@ -533,13 +533,13 @@ bool notePrice(const string_q& path, void* data) {
         if (isTestMode()) {
             pri.pair = "---pair---";
             pri.sizeInBytes = 1010202;
-            pri.nAppearances = 2020101;
+            pri.nApps = 2020101;
         } else {
             string_q pair = substitute(path, "/0x", "|");
             nextTokenClear(pair, '|');
             pri.pair = substitute(substitute(path, counter->cachePtr->path, ""), ".bin", "");
             pri.sizeInBytes = fileSize(path);
-            pri.nAppearances = fileSize(path) / sizeof(CPriceQuote);
+            pri.nApps = fileSize(path) / sizeof(CPriceQuote);
         }
         counter->priceArray->push_back(pri);
     }

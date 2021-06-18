@@ -29,9 +29,9 @@ PROG_NAME = [chifra status]
     {
       "items": [
         {
-          "nAppearances": 0,
-          "firstAppearance": 0,
-          "latestAppearance": 0,
+          "nApps": 0,
+          "firstApp": 0,
+          "latestApp": 0,
           "tags": "--tags--",
           "address": "---address---",
           "name": "--name--",
@@ -61,9 +61,9 @@ PROG_NAME = [chifra status]
           "nFunctions": 36963,
           "nEvents": 36963,
           "nOther": 36963,
-          "nAppearances": 0,
-          "firstAppearance": 0,
-          "latestAppearance": 0,
+          "nApps": 0,
+          "firstApp": 0,
+          "latestApp": 0,
           "sizeInBytes": 36963,
           "address": "---address---",
           "name": "--name--"
@@ -122,9 +122,9 @@ PROG_NAME = [chifra status]
         {
           "type": "CPriceCacheItem",
           "pair": "---pair---",
-          "nAppearances": 2020101,
-          "firstAppearance": 0,
-          "latestAppearance": 0,
+          "nApps": 2020101,
+          "firstApp": 0,
+          "latestApp": 0,
           "sizeInBytes": 1010202,
           "address": "0x0"
         }

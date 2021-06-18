@@ -25,9 +25,9 @@ namespace qblocks {
 //--------------------------------------------------------------------------
 class CCacheBase : public CAccountName {
   public:
-    blknum_t nAppearances;
-    blknum_t firstAppearance;
-    blknum_t latestAppearance;
+    blknum_t nApps;
+    blknum_t firstApp;
+    blknum_t latestApp;
     string_q path;
     uint64_t sizeInBytes;
 
@@ -92,9 +92,9 @@ inline void CCacheBase::clear(void) {
 inline void CCacheBase::initialize(void) {
     CAccountName::initialize();
 
-    nAppearances = 0;
-    firstAppearance = 0;
-    latestAppearance = 0;
+    nApps = 0;
+    firstApp = 0;
+    latestApp = 0;
     path = "";
     sizeInBytes = 0;
 
@@ -107,9 +107,9 @@ inline void CCacheBase::duplicate(const CCacheBase& ca) {
     clear();
     CAccountName::duplicate(ca);
 
-    nAppearances = ca.nAppearances;
-    firstAppearance = ca.firstAppearance;
-    latestAppearance = ca.latestAppearance;
+    nApps = ca.nApps;
+    firstApp = ca.firstApp;
+    latestApp = ca.latestApp;
     path = ca.path;
     sizeInBytes = ca.sizeInBytes;
 

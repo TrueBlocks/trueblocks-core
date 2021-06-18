@@ -385,9 +385,9 @@ bool CAccountName::readBackLevel(CArchive& archive) {
         archive >> unused2;  // used to be is_contract;
         archive >> unused3;  // used to be is_private;
         archive >> unused4;  // used to be is_shared;
-        // archive >> firstAppearance;
-        // archive >> latestAppearance;
-        // archive >> lastExport;
+        // archive >> first Appearance;
+        // archive >> latest Appearance;
+        // archive >> last Export;
         // archive >> nRecords;
         // archive >> sizeInBytes;
         if (!subtags.empty())

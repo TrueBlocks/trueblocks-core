@@ -25,9 +25,9 @@
             {
               "type": "",
               "deleted": false,
-              "nAppearances": 0,
-              "firstAppearance": 0,
-              "latestAppearance": 0,
+              "nApps": 0,
+              "firstApp": 0,
+              "latestApp": 0,
               "sizeInBytes": 0,
               "tags": "--tags--",
               "address": "---address---",
@@ -57,9 +57,9 @@
               "nFunctions": 36963,
               "nEvents": 36963,
               "nOther": 36963,
-              "nAppearances": 0,
-              "firstAppearance": 0,
-              "latestAppearance": 0,
+              "nApps": 0,
+              "firstApp": 0,
+              "latestApp": 0,
               "sizeInBytes": 36963,
               "tags": "",
               "address": "---address---",
@@ -150,15 +150,15 @@
           "type": "unumber"
         },
         {
-          "name": "nAppearances",
+          "name": "nApps",
           "type": "blocknum"
         },
         {
-          "name": "firstAppearance",
+          "name": "firstApp",
           "type": "blocknum"
         },
         {
-          "name": "latestAppearance",
+          "name": "latestApp",
           "type": "blocknum"
         },
         {
@@ -264,15 +264,15 @@
           "type": "bool"
         },
         {
-          "name": "nAppearances",
+          "name": "nApps",
           "type": "blocknum"
         },
         {
-          "name": "firstAppearance",
+          "name": "firstApp",
           "type": "blocknum"
         },
         {
-          "name": "latestAppearance",
+          "name": "latestApp",
           "type": "blocknum"
         },
         {

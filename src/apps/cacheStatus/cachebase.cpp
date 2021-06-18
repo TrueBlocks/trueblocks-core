@@ -74,18 +74,18 @@ string_q CCacheBase::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'f':
-            if (fieldName % "firstAppearance") {
-                return uint_2_Str(firstAppearance);
+            if (fieldName % "firstApp") {
+                return uint_2_Str(firstApp);
             }
             break;
         case 'l':
-            if (fieldName % "latestAppearance") {
-                return uint_2_Str(latestAppearance);
+            if (fieldName % "latestApp") {
+                return uint_2_Str(latestApp);
             }
             break;
         case 'n':
-            if (fieldName % "nAppearances") {
-                return uint_2_Str(nAppearances);
+            if (fieldName % "nApps") {
+                return uint_2_Str(nApps);
             }
             break;
         case 'p':
@@ -122,20 +122,20 @@ bool CCacheBase::setValueByName(const string_q& fieldNameIn, const string_q& fie
 
     switch (tolower(fieldName[0])) {
         case 'f':
-            if (fieldName % "firstAppearance") {
-                firstAppearance = str_2_Uint(fieldValue);
+            if (fieldName % "firstApp") {
+                firstApp = str_2_Uint(fieldValue);
                 return true;
             }
             break;
         case 'l':
-            if (fieldName % "latestAppearance") {
-                latestAppearance = str_2_Uint(fieldValue);
+            if (fieldName % "latestApp") {
+                latestApp = str_2_Uint(fieldValue);
                 return true;
             }
             break;
         case 'n':
-            if (fieldName % "nAppearances") {
-                nAppearances = str_2_Uint(fieldValue);
+            if (fieldName % "nApps") {
+                nApps = str_2_Uint(fieldValue);
                 return true;
             }
             break;
@@ -176,9 +176,9 @@ bool CCacheBase::Serialize(CArchive& archive) {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    // archive >> nAppearances;
-    // archive >> firstAppearance;
-    // archive >> latestAppearance;
+    // archive >> nApps;
+    // archive >> firstApp;
+    // archive >> latestApp;
     // archive >> path;
     // archive >> sizeInBytes;
     finishParse();
@@ -192,9 +192,9 @@ bool CCacheBase::SerializeC(CArchive& archive) const {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    // archive << nAppearances;
-    // archive << firstAppearance;
-    // archive << latestAppearance;
+    // archive << nApps;
+    // archive << firstApp;
+    // archive << latestApp;
     // archive << path;
     // archive << sizeInBytes;
 
@@ -235,12 +235,12 @@ void CCacheBase::registerClass(void) {
     ADD_FIELD(CCacheBase, "deleted", T_BOOL, ++fieldNum);
     ADD_FIELD(CCacheBase, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CCacheBase, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CCacheBase, "nAppearances", T_BLOCKNUM, ++fieldNum);
-    HIDE_FIELD(CCacheBase, "nAppearances");
-    ADD_FIELD(CCacheBase, "firstAppearance", T_BLOCKNUM, ++fieldNum);
-    HIDE_FIELD(CCacheBase, "firstAppearance");
-    ADD_FIELD(CCacheBase, "latestAppearance", T_BLOCKNUM, ++fieldNum);
-    HIDE_FIELD(CCacheBase, "latestAppearance");
+    ADD_FIELD(CCacheBase, "nApps", T_BLOCKNUM, ++fieldNum);
+    HIDE_FIELD(CCacheBase, "nApps");
+    ADD_FIELD(CCacheBase, "firstApp", T_BLOCKNUM, ++fieldNum);
+    HIDE_FIELD(CCacheBase, "firstApp");
+    ADD_FIELD(CCacheBase, "latestApp", T_BLOCKNUM, ++fieldNum);
+    HIDE_FIELD(CCacheBase, "latestApp");
     ADD_FIELD(CCacheBase, "path", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CCacheBase, "path");
     ADD_FIELD(CCacheBase, "sizeInBytes", T_UNUMBER | TS_OMITEMPTY, ++fieldNum);
@@ -302,8 +302,8 @@ ostream& operator<<(ostream& os, const CCacheBase& it) {
 //---------------------------------------------------------------------------
 const char* STR_DISPLAY_CACHEBASE =
     "[{DISPLAY_NAME}]\t"
-    "[{FIRSTAPPEARANCE}]\t"
-    "[{LASTAPPEARANCE}]\t"
+    "[{FIRSTAPP}]\t"
+    "[{LASTAPP}]\t"
     "[{APPEARANCERANGE}]\t"
     "[{NRECORDS}]\t"
     "[{APPEARANCEINTERVAL}]\t"
