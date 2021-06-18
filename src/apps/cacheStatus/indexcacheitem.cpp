@@ -82,8 +82,8 @@ string_q CIndexCacheItem::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 'f':
-            if (fieldName % "firstAppearance") {
-                return uint_2_Str(firstAppearance);
+            if (fieldName % "firstApp") {
+                return uint_2_Str(firstApp);
             }
             if (fieldName % "firstTs") {
                 return ts_2_Str(firstTs);
@@ -104,19 +104,19 @@ string_q CIndexCacheItem::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 'l':
-            if (fieldName % "latestAppearance") {
-                return uint_2_Str(latestAppearance);
+            if (fieldName % "latestApp") {
+                return uint_2_Str(latestApp);
             }
             if (fieldName % "latestTs") {
                 return ts_2_Str(latestTs);
             }
             break;
         case 'n':
-            if (fieldName % "nAddresses") {
-                return uint_2_Str(nAddresses);
+            if (fieldName % "nAddrs") {
+                return uint_2_Str(nAddrs);
             }
-            if (fieldName % "nAppearances") {
-                return uint_2_Str(nAppearances);
+            if (fieldName % "nApps") {
+                return uint_2_Str(nApps);
             }
             break;
         case 't':
@@ -155,8 +155,8 @@ bool CIndexCacheItem::setValueByName(const string_q& fieldNameIn, const string_q
             }
             break;
         case 'f':
-            if (fieldName % "firstAppearance") {
-                firstAppearance = str_2_Uint(fieldValue);
+            if (fieldName % "firstApp") {
+                firstApp = str_2_Uint(fieldValue);
                 return true;
             }
             if (fieldName % "firstTs") {
@@ -183,8 +183,8 @@ bool CIndexCacheItem::setValueByName(const string_q& fieldNameIn, const string_q
             }
             break;
         case 'l':
-            if (fieldName % "latestAppearance") {
-                latestAppearance = str_2_Uint(fieldValue);
+            if (fieldName % "latestApp") {
+                latestApp = str_2_Uint(fieldValue);
                 return true;
             }
             if (fieldName % "latestTs") {
@@ -193,12 +193,12 @@ bool CIndexCacheItem::setValueByName(const string_q& fieldNameIn, const string_q
             }
             break;
         case 'n':
-            if (fieldName % "nAddresses") {
-                nAddresses = (uint32_t)str_2_Uint(fieldValue);
+            if (fieldName % "nAddrs") {
+                nAddrs = (uint32_t)str_2_Uint(fieldValue);
                 return true;
             }
-            if (fieldName % "nAppearances") {
-                nAppearances = (uint32_t)str_2_Uint(fieldValue);
+            if (fieldName % "nApps") {
+                nApps = (uint32_t)str_2_Uint(fieldValue);
                 return true;
             }
             break;
@@ -235,10 +235,10 @@ bool CIndexCacheItem::Serialize(CArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     archive >> type;
-    archive >> nAddresses;
-    archive >> nAppearances;
-    archive >> firstAppearance;
-    archive >> latestAppearance;
+    archive >> nAddrs;
+    archive >> nApps;
+    archive >> firstApp;
+    archive >> latestApp;
     archive >> firstTs;
     archive >> latestTs;
     archive >> filename;
@@ -259,10 +259,10 @@ bool CIndexCacheItem::SerializeC(CArchive& archive) const {
     // EXISTING_CODE
     // EXISTING_CODE
     archive << type;
-    archive << nAddresses;
-    archive << nAppearances;
-    archive << firstAppearance;
-    archive << latestAppearance;
+    archive << nAddrs;
+    archive << nApps;
+    archive << firstApp;
+    archive << latestApp;
     archive << firstTs;
     archive << latestTs;
     archive << filename;
@@ -308,10 +308,10 @@ void CIndexCacheItem::registerClass(void) {
     ADD_FIELD(CIndexCacheItem, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CIndexCacheItem, "cname", T_TEXT, ++fieldNum);
     ADD_FIELD(CIndexCacheItem, "type", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CIndexCacheItem, "nAddresses", T_UNUMBER, ++fieldNum);
-    ADD_FIELD(CIndexCacheItem, "nAppearances", T_UNUMBER, ++fieldNum);
-    ADD_FIELD(CIndexCacheItem, "firstAppearance", T_BLOCKNUM, ++fieldNum);
-    ADD_FIELD(CIndexCacheItem, "latestAppearance", T_BLOCKNUM, ++fieldNum);
+    ADD_FIELD(CIndexCacheItem, "nAddrs", T_UNUMBER, ++fieldNum);
+    ADD_FIELD(CIndexCacheItem, "nApps", T_UNUMBER, ++fieldNum);
+    ADD_FIELD(CIndexCacheItem, "firstApp", T_BLOCKNUM, ++fieldNum);
+    ADD_FIELD(CIndexCacheItem, "latestApp", T_BLOCKNUM, ++fieldNum);
     ADD_FIELD(CIndexCacheItem, "firstTs", T_TIMESTAMP, ++fieldNum);
     ADD_FIELD(CIndexCacheItem, "latestTs", T_TIMESTAMP, ++fieldNum);
     ADD_FIELD(CIndexCacheItem, "filename", T_TEXT | TS_OMITEMPTY, ++fieldNum);
@@ -362,10 +362,10 @@ bool CIndexCacheItem::readBackLevel(CArchive& archive) {
     // EXISTING_CODE
     if (m_schema <= getVersionNum(0, 8, 4)) {
         archive >> type;
-        archive >> nAddresses;
-        archive >> nAppearances;
-        archive >> firstAppearance;
-        archive >> latestAppearance;
+        archive >> nAddrs;
+        archive >> nApps;
+        archive >> firstApp;
+        archive >> latestApp;
         archive >> firstTs;
         archive >> latestTs;
         archive >> filename;

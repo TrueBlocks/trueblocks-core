@@ -27,10 +27,10 @@ typedef vector<uint32_t> CUint32Array;
 class CIndexCacheItem : public CBaseNode {
   public:
     string_q type;
-    uint32_t nAddresses;
-    uint32_t nAppearances;
-    blknum_t firstAppearance;
-    blknum_t latestAppearance;
+    uint32_t nAddrs;
+    uint32_t nApps;
+    blknum_t firstApp;
+    blknum_t latestApp;
     timestamp_t firstTs;
     timestamp_t latestTs;
     string_q filename;
@@ -102,10 +102,10 @@ inline void CIndexCacheItem::initialize(void) {
     CBaseNode::initialize();
 
     type = "";
-    nAddresses = 0;
-    nAppearances = 0;
-    firstAppearance = 0;
-    latestAppearance = 0;
+    nAddrs = 0;
+    nApps = 0;
+    firstApp = 0;
+    latestApp = 0;
     firstTs = 0;
     latestTs = 0;
     filename = "";
@@ -125,10 +125,10 @@ inline void CIndexCacheItem::duplicate(const CIndexCacheItem& in) {
     CBaseNode::duplicate(in);
 
     type = in.type;
-    nAddresses = in.nAddresses;
-    nAppearances = in.nAppearances;
-    firstAppearance = in.firstAppearance;
-    latestAppearance = in.latestAppearance;
+    nAddrs = in.nAddrs;
+    nApps = in.nApps;
+    firstApp = in.firstApp;
+    latestApp = in.latestApp;
     firstTs = in.firstTs;
     latestTs = in.latestTs;
     filename = in.filename;

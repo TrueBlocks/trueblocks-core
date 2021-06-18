@@ -1,10 +1,10 @@
 [settings]
 class = CIndexCacheItem
 fields = string type|\
-        uint32 nAddresses|\
-        uint32 nAppearances|\
-        blknum firstAppearance|\
-        blknum latestAppearance|\
+        uint32 nAddrs|\
+        uint32 nApps|\
+        blknum firstApp|\
+        blknum latestApp|\
         timestamp firstTs|\
         timestamp latestTs|\
         string filename|\

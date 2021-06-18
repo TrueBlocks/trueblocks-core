@@ -442,8 +442,8 @@ bool noteIndex(const string_q& path, void* data) {
         if (isTestMode())
             aci.filename = substitute(aci.filename, indexFolder_finalized, "/--index-path--/");
         uint64_t tmp;
-        aci.firstAppearance = (uint32_t)bnFromPath(fn, tmp, unused);
-        aci.latestAppearance = (uint32_t)tmp;
+        aci.firstApp = (uint32_t)bnFromPath(fn, tmp, unused);
+        aci.latestApp = (uint32_t)tmp;
         CStringArray parts;
         explode(parts, path, '/');
         blknum_t num = str_2_Uint(nextTokenClear(parts[parts.size() - 1], '-'));
@@ -464,15 +464,15 @@ bool noteIndex(const string_q& path, void* data) {
         }
 
         if (counter->tsMemMap) {
-            if (aci.firstAppearance < counter->tsCnt && aci.latestAppearance < counter->tsCnt) {
-                aci.firstTs = (timestamp_t)counter->tsMemMap[(aci.firstAppearance * 2) + 1];
-                aci.latestTs = (timestamp_t)counter->tsMemMap[(aci.latestAppearance * 2) + 1];
+            if (aci.firstApp < counter->tsCnt && aci.latestApp < counter->tsCnt) {
+                aci.firstTs = (timestamp_t)counter->tsMemMap[(aci.firstApp * 2) + 1];
+                aci.latestTs = (timestamp_t)counter->tsMemMap[(aci.latestApp * 2) + 1];
             } else {
                 aci.firstTs = (timestamp_t)0;
                 aci.latestTs = (timestamp_t)0;
             }
         }
-        getIndexMetrics(path, aci.nAppearances, aci.nAddresses);
+        getIndexMetrics(path, aci.nApps, aci.nAddrs);
         counter->indexArray->push_back(aci);
     }
     return !shouldQuit();
