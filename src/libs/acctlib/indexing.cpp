@@ -28,7 +28,7 @@ void writeIndexAsAscii(const string_q& outFn, const CStringArray& lines) {
 
     address_t prev;
     uint32_t offset = 0, nAddrs = 0, cnt = 0;
-    CAppearanceArray_base blockTable;
+    CIndexedAppearanceArray blockTable;
 
     LOG_INFO(cYellow, STR_STEP1, cOff, "\r");
 
@@ -45,7 +45,7 @@ void writeIndexAsAscii(const string_q& outFn, const CStringArray& lines) {
         }
         CStringArray parts;
         explode(parts, line, '\t');
-        CAppearance_base rec(parts[1], parts[2]);
+        CIndexedAppearance rec(parts[1], parts[2]);
         blockTable.push_back(rec);
         if (!prev.empty() && parts[0] != prev) {
             addrStream << prev << "\t";
@@ -95,7 +95,7 @@ bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines, FILEVI
 
     address_t prev;
     uint32_t offset = 0, nAddrs = 0, cnt = 0;
-    CAppearanceArray_base blockTable;
+    CIndexedAppearanceArray blockTable;
 
     hashbytes_t hash = hash_2_Bytes(versionHash);
     LOG8("versionHash: ", versionHash);
@@ -125,7 +125,7 @@ bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines, FILEVI
         ASSERT(countOf(line, '\t') == 2);
         CStringArray parts;
         explode(parts, line, '\t');
-        CAppearance_base rec(parts[1], parts[2]);
+        CIndexedAppearance rec(parts[1], parts[2]);
         blockTable.push_back(rec);
         if (!prev.empty() && parts[0] != prev) {
             addToSet(blooms, prev);
@@ -293,7 +293,7 @@ bool forEverySmartContractInIndex(ADDRESSFUNC func, void* data) {
 //        for (uint64_t a = 0 ; a < chunk.nAddrs ; a++) {
 //            CIndexedAddress* addr = &chunk.addresses[a];
 //            for (uint64_t p = addr->offset ; p < (addr->offset + addr->cnt) ; p++) {
-//                CAppearance_base* app =&chunk.appearances[p];
+//                CIndexedAppearance* app =&chunk.appearances[p];
 //                if (app->txid == 99998) {
 //                    CAppearance aa;
 //                    aa.bn = app->blk;

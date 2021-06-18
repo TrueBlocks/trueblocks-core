@@ -204,33 +204,5 @@ class CUniqueState {
 };
 
 extern int findAddresses(const void* v1, const void* v2);
-
-//----------------------------------------------------------------
-struct CAppearance_base {
-    uint32_t blk;
-    uint32_t txid;
-    CAppearance_base(void) {
-        blk = txid = 0;
-    }
-    CAppearance_base(uint32_t b, uint32_t t) : blk(b), txid(t) {
-    }
-    CAppearance_base(const string_q& b, const string_q& t)
-        : blk((uint32_t)str_2_Uint(b)), txid((uint32_t)str_2_Uint(t)) {
-    }
-    CAppearance_base(string_q& line) {  // NOLINT
-        replaceAll(line, ".", "\t");
-        if (!contains(line, "\t"))
-            return;
-        blk = (uint32_t)str_2_Uint(nextTokenClear(line, '\t'));
-        txid = (uint32_t)str_2_Uint(nextTokenClear(line, '\t'));
-    }
-};
-typedef vector<CAppearance_base> CAppearanceArray_base;
-inline bool operator<(const CAppearance_base& v1, const CAppearance_base& v2) {
-    return ((v1.blk != v2.blk) ? v1.blk < v2.blk : v1.txid < v2.txid);
-}
-inline bool sortAppearanceBaseReverse(const CAppearance_base& v1, const CAppearance_base& v2) {
-    return !((v1.blk != v2.blk) ? v1.blk < v2.blk : v1.txid < v2.txid);
-}
 // EXISTING_CODE
 }  // namespace qblocks

@@ -74,7 +74,7 @@ bool CIndexArchive::ReadIndexFromBinary(const string_q& path) {
     size_t sizeOfARecs = aRecSize * nAddrs;
     size_t sizeOfHeader = sizeof(CIndexHeader);
     size_t size = sizeOfHeader + sizeOfARecs;
-    appearances = (CAppearance_base*)(rawData + size);  // NOLINT
+    appearances = (CIndexedAppearance*)(rawData + size);  // NOLINT
     Release();
     return true;
 }

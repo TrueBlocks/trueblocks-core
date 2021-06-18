@@ -155,7 +155,7 @@ bool COptions::visitBinaryFile(const string_q& path, void* data) {
                 options->stats.nPositive++;
                 hits += (monitor->address.substr(0, 6) + "...");
                 CIndexedAddress* addrsOnFile = reinterpret_cast<CIndexedAddress*>(rawData + sizeof(CIndexHeader));
-                CAppearance_base* blocksOnFile = reinterpret_cast<CAppearance_base*>(&addrsOnFile[nAddrs]);
+                CIndexedAppearance* blocksOnFile = reinterpret_cast<CIndexedAppearance*>(&addrsOnFile[nAddrs]);
                 options->stats.nTotalHits += found->cnt;
                 for (size_t i = found->offset; i < found->offset + found->cnt; i++) {
                     CAppearance_base2 item(blocksOnFile[i].blk, blocksOnFile[i].txid);

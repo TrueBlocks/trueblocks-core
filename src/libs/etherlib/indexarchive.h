@@ -34,7 +34,34 @@ struct CIndexedAddress {
     uint32_t cnt;
 };
 
-struct CAppearance_base;
+//----------------------------------------------------------------
+struct CIndexedAppearance {
+    uint32_t blk;
+    uint32_t txid;
+    CIndexedAppearance(void) {
+        blk = txid = 0;
+    }
+    CIndexedAppearance(uint32_t b, uint32_t t) : blk(b), txid(t) {
+    }
+    CIndexedAppearance(const string_q& b, const string_q& t)
+        : blk((uint32_t)str_2_Uint(b)), txid((uint32_t)str_2_Uint(t)) {
+    }
+    CIndexedAppearance(string_q& line) {  // NOLINT
+        replaceAll(line, ".", "\t");
+        if (!contains(line, "\t"))
+            return;
+        blk = (uint32_t)str_2_Uint(nextTokenClear(line, '\t'));
+        txid = (uint32_t)str_2_Uint(nextTokenClear(line, '\t'));
+    }
+};
+typedef vector<CIndexedAppearance> CIndexedAppearanceArray;
+inline bool operator<(const CIndexedAppearance& v1, const CIndexedAppearance& v2) {
+    return ((v1.blk != v2.blk) ? v1.blk < v2.blk : v1.txid < v2.txid);
+}
+inline bool sortAppearanceBaseReverse(const CIndexedAppearance& v1, const CIndexedAppearance& v2) {
+    return !((v1.blk != v2.blk) ? v1.blk < v2.blk : v1.txid < v2.txid);
+}
+
 //---------------------------------------------------------------------------
 class CIndexArchive : public CArchive {
   public:
@@ -42,7 +69,7 @@ class CIndexArchive : public CArchive {
     uint64_t nAddrs;
     CIndexedAddress* addresses;
     uint64_t nApps;
-    CAppearance_base* appearances;
+    CIndexedAppearance* appearances;
 
     explicit CIndexArchive(bool mode);
     ~CIndexArchive(void);
