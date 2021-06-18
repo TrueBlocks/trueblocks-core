@@ -11,6 +11,7 @@
 #include "pinlib.h"
 #include "status.h"
 #include "statusterse.h"
+#include "cachebase.h"
 #include "chaincache.h"
 #include "entitycache.h"
 #include "pricecache.h"

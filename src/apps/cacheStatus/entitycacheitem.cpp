@@ -19,7 +19,7 @@
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CEntityCacheItem, CAccountName);
+IMPLEMENT_NODE(CEntityCacheItem, CCacheBase);
 
 //---------------------------------------------------------------------------
 static string_q nextEntitycacheitemChunk(const string_q& fieldIn, const void* dataPtr);
@@ -86,7 +86,7 @@ string_q CEntityCacheItem::getValueByName(const string_q& fieldName) const {
     // EXISTING_CODE
 
     // Finally, give the parent class a chance
-    return CAccountName::getValueByName(fieldName);
+    return CCacheBase::getValueByName(fieldName);
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -97,7 +97,7 @@ bool CEntityCacheItem::setValueByName(const string_q& fieldNameIn, const string_
     // EXISTING_CODE
     // EXISTING_CODE
 
-    if (CAccountName::setValueByName(fieldName, fieldValue))
+    if (CCacheBase::setValueByName(fieldName, fieldValue))
         return true;
 
     switch (tolower(fieldName[0])) {
@@ -126,7 +126,7 @@ bool CEntityCacheItem::Serialize(CArchive& archive) {
 
     // Always read the base class (it will handle its own backLevels if any, then
     // read this object's back level (if any) or the current version.
-    CAccountName::Serialize(archive);
+    CCacheBase::Serialize(archive);
     if (readBackLevel(archive))
         return true;
 
@@ -140,7 +140,7 @@ bool CEntityCacheItem::Serialize(CArchive& archive) {
 //---------------------------------------------------------------------------------------------------
 bool CEntityCacheItem::SerializeC(CArchive& archive) const {
     // Writing always write the latest version of the data
-    CAccountName::SerializeC(archive);
+    CCacheBase::SerializeC(archive);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -176,7 +176,7 @@ void CEntityCacheItem::registerClass(void) {
     if (HAS_FIELD(CEntityCacheItem, "schema"))
         return;
 
-    CAccountName::registerClass();
+    CCacheBase::registerClass();
 
     size_t fieldNum = 1000;
     ADD_FIELD(CEntityCacheItem, "schema", T_NUMBER, ++fieldNum);

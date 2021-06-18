@@ -39,12 +39,6 @@ class CAccountName : public CBaseNode {
     bool is_contract;
     bool is_erc20;
     bool is_erc721;
-    blknum_t nAppearances;
-    blknum_t lastExport;
-    blknum_t firstAppearance;
-    blknum_t latestAppearance;
-    string_q path;
-    uint64_t sizeInBytes;
 
   public:
     CAccountName(void);
@@ -119,12 +113,6 @@ inline void CAccountName::initialize(void) {
     is_contract = false;
     is_erc20 = false;
     is_erc721 = false;
-    nAppearances = 0;
-    lastExport = 0;
-    firstAppearance = 0;
-    latestAppearance = 0;
-    path = "";
-    sizeInBytes = 0;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -147,12 +135,6 @@ inline void CAccountName::duplicate(const CAccountName& ac) {
     is_contract = ac.is_contract;
     is_erc20 = ac.is_erc20;
     is_erc721 = ac.is_erc721;
-    nAppearances = ac.nAppearances;
-    lastExport = ac.lastExport;
-    firstAppearance = ac.firstAppearance;
-    latestAppearance = ac.latestAppearance;
-    path = ac.path;
-    sizeInBytes = ac.sizeInBytes;
 
     // EXISTING_CODE
     // EXISTING_CODE

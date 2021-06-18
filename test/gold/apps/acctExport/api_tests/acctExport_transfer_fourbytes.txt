@@ -27,16 +27,34 @@
               "0x000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b"
             ],
             "data": "0x0000000000000000000000000000000000000000000000000de0b6b3a7640000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "1000000000000000000",
+                "_from": "0xeba60d324c2546459e1e9dd4c7e740ca80134588",
+                "_to": "0xf503017d7baf7fbc0fff7492b751025c6a78179b"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0xeba60d324c2546459e1e9dd4c7e740ca80134588, _to: 0xf503017d7baf7fbc0fff7492b751025c6a78179b, _amount: 1000000000000000000 )"
           }
         ],
         "status": 1
       },
       "traces": [],
-      "compressedTx": "0xa9059cbb ( stub: 000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b0000000000000000000000000000000000000000000000000de0b6b3a7640000 )",
+      "articulatedTx": {
+        "name": "transfer",
+        "inputs": {
+          "_to": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+          "_value": "1000000000000000000"
+        },
+        "outputs": {
+          "_success": ""
+        }
+      },
+      "compressedTx": "transfer ( _to: 0xf503017d7baf7fbc0fff7492b751025c6a78179b, _value: 1000000000000000000 )",
       "gasCost": 149192000000000,
       "etherGasCost": 0.000149192,
-      "function": "",
+      "function": "transfer",
       "gasUsed": 37298,
       "date": "2019-11-02 02:56:10 UTC",
       "ether": 0,
@@ -69,16 +87,34 @@
               "0x000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b"
             ],
             "data": "0x00000000000000000000000000000000000000000000010eff0fae29b1bc0000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "4999000000000000000000",
+                "_from": "0x8c492d5f763841767362d716e3e69511f0527791",
+                "_to": "0xf503017d7baf7fbc0fff7492b751025c6a78179b"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x8c492d5f763841767362d716e3e69511f0527791, _to: 0xf503017d7baf7fbc0fff7492b751025c6a78179b, _amount: 4999000000000000000000 )"
           }
         ],
         "status": 1
       },
       "traces": [],
-      "compressedTx": "0xa9059cbb ( stub: 000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b00000000000000000000000000000000000000000000010eff0fae29b1bc0000 )",
+      "articulatedTx": {
+        "name": "transfer",
+        "inputs": {
+          "_to": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+          "_value": "4999000000000000000000"
+        },
+        "outputs": {
+          "_success": ""
+        }
+      },
+      "compressedTx": "transfer ( _to: 0xf503017d7baf7fbc0fff7492b751025c6a78179b, _value: 4999000000000000000000 )",
       "gasCost": 112130000000000,
       "etherGasCost": 0.00011213,
-      "function": "",
+      "function": "transfer",
       "gasUsed": 22426,
       "date": "2019-11-02 03:04:19 UTC",
       "ether": 0,
@@ -111,16 +147,34 @@
               "0x000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b"
             ],
             "data": "0x0000000000000000000000000000000000000000000000878678326eac900000",
-            "compressedLog": ""
+            "articulatedLog": {
+              "name": "Transfer",
+              "inputs": {
+                "_amount": "2500000000000000000000",
+                "_from": "0x3f1c1e14fd919415010c03f9de29cbafd5866e81",
+                "_to": "0xf503017d7baf7fbc0fff7492b751025c6a78179b"
+              }
+            },
+            "compressedLog": "Transfer ( _from: 0x3f1c1e14fd919415010c03f9de29cbafd5866e81, _to: 0xf503017d7baf7fbc0fff7492b751025c6a78179b, _amount: 2500000000000000000000 )"
           }
         ],
         "status": 1
       },
       "traces": [],
-      "compressedTx": "0xa9059cbb ( stub: 000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b0000000000000000000000000000000000000000000000878678326eac900000 )",
+      "articulatedTx": {
+        "name": "transfer",
+        "inputs": {
+          "_to": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+          "_value": "2500000000000000000000"
+        },
+        "outputs": {
+          "_success": ""
+        }
+      },
+      "compressedTx": "transfer ( _to: 0xf503017d7baf7fbc0fff7492b751025c6a78179b, _value: 2500000000000000000000 )",
       "gasCost": 223620000000000,
       "etherGasCost": 0.00022362,
-      "function": "",
+      "function": "transfer",
       "gasUsed": 22362,
       "date": "2019-11-02 18:23:31 UTC",
       "ether": 0,

@@ -20,7 +20,7 @@ bool app_Display(CTraverser* trav, void* data) {
 //-----------------------------------------------------------------------
 const char* APP_FIELDS_ALL = "CAccountName:all";
 const char* APP_FIELDS_HIDE =
-    "CAccountName:schema,deleted,showing,cname,nAppearances,lastExport,firstAppearance,latestAppearance,path,"
+    "CAccountName:schema,deleted,showing,cname|CMonitor:nAppearances,lastExport,firstAppearance,latestAppearance,path,"
     "sizeInBytes";
 //-----------------------------------------------------------------------
 bool app_Post(CTraverser* trav, void* data) {

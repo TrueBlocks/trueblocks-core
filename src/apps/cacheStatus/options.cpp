@@ -293,10 +293,10 @@ COptions::COptions(void) {
     CConfigSection::registerClass();
     CConfigItem::registerClass();
 
-    UNHIDE_FIELD(CAccountName, "nAppearances");
-    UNHIDE_FIELD(CAccountName, "sizeInBytes");
-    UNHIDE_FIELD(CAccountName, "firstAppearance");
-    UNHIDE_FIELD(CAccountName, "latestAppearance");
+    UNHIDE_FIELD(CCacheBase, "nAppearances");
+    UNHIDE_FIELD(CCacheBase, "sizeInBytes");
+    UNHIDE_FIELD(CCacheBase, "firstAppearance");
+    UNHIDE_FIELD(CCacheBase, "latestAppearance");
 
     minArgs = 0;
 

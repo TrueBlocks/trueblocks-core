@@ -16,6 +16,7 @@
  * the code inside of 'EXISTING_CODE' tags.
  */
 #include "etherlib.h"
+#include "cachebase.h"
 
 namespace qblocks {
 
@@ -23,7 +24,7 @@ namespace qblocks {
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class CAbiCacheItem : public CAccountName {
+class CAbiCacheItem : public CCacheBase {
   public:
     string_q type;
     uint64_t nFunctions;
@@ -89,7 +90,7 @@ inline void CAbiCacheItem::clear(void) {
 
 //--------------------------------------------------------------------------
 inline void CAbiCacheItem::initialize(void) {
-    CAccountName::initialize();
+    CCacheBase::initialize();
 
     type = "";
     nFunctions = 0;
@@ -103,7 +104,7 @@ inline void CAbiCacheItem::initialize(void) {
 //--------------------------------------------------------------------------
 inline void CAbiCacheItem::duplicate(const CAbiCacheItem& ab) {
     clear();
-    CAccountName::duplicate(ab);
+    CCacheBase::duplicate(ab);
 
     type = ab.type;
     nFunctions = ab.nFunctions;

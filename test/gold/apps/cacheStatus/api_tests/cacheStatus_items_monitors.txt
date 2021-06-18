@@ -25,7 +25,10 @@
             {
               "type": "",
               "deleted": false,
-              "sizeInBytes2": 0,
+              "nAppearances": 0,
+              "firstAppearance": 0,
+              "latestAppearance": 0,
+              "sizeInBytes": 0,
               "tags": "--tags--",
               "address": "---address---",
               "name": "--name--",
@@ -37,11 +40,7 @@
               "is_prefund": false,
               "is_contract": false,
               "is_erc20": false,
-              "is_erc721": false,
-              "nAppearances": 0,
-              "firstAppearance": 0,
-              "latestAppearance": 0,
-              "sizeInBytes": 0
+              "is_erc721": false
             }
           ],
           "type": "CMonitorCache",
@@ -105,7 +104,19 @@
           "type": "bool"
         },
         {
-          "name": "sizeInBytes2",
+          "name": "nAppearances",
+          "type": "blocknum"
+        },
+        {
+          "name": "firstAppearance",
+          "type": "blocknum"
+        },
+        {
+          "name": "latestAppearance",
+          "type": "blocknum"
+        },
+        {
+          "name": "sizeInBytes",
           "type": "unumber"
         },
         {
@@ -155,22 +166,6 @@
         {
           "name": "is_erc721",
           "type": "bool"
-        },
-        {
-          "name": "nAppearances",
-          "type": "blocknum"
-        },
-        {
-          "name": "firstAppearance",
-          "type": "blocknum"
-        },
-        {
-          "name": "latestAppearance",
-          "type": "blocknum"
-        },
-        {
-          "name": "sizeInBytes",
-          "type": "unumber"
         }
       ]
     }

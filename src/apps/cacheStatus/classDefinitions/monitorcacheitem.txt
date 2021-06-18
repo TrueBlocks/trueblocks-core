@@ -1,9 +1,8 @@
 [settings]
 class = CMonitorCacheItem
-base_class = CAccountName
+base_class = CCacheBase
 fields = string type|\
-        bool deleted|\
-        uint64 sizeInBytes2
-includes = etherlib.h
+        bool deleted
+includes = etherlib.h|cachebase.h
 serialize = true
-display_str = display_name, firstAppearance, lastAppearance, appearanceRange, nRecords, appearanceInterval, sizeInBytes, sizeInBytes2
+display_str = display_name, firstAppearance, lastAppearance, appearanceRange, nRecords, appearanceInterval, sizeInBytes

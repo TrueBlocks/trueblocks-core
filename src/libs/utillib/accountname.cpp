@@ -89,11 +89,6 @@ string_q CAccountName::getValueByName(const string_q& fieldName) const {
                 return description;
             }
             break;
-        case 'f':
-            if (fieldName % "firstAppearance") {
-                return uint_2_Str(firstAppearance);
-            }
-            break;
         case 'i':
             if (fieldName % "is_custom") {
                 return bool_2_Str(is_custom);
@@ -111,25 +106,9 @@ string_q CAccountName::getValueByName(const string_q& fieldName) const {
                 return bool_2_Str(is_erc721);
             }
             break;
-        case 'l':
-            if (fieldName % "lastExport") {
-                return uint_2_Str(lastExport);
-            }
-            if (fieldName % "latestAppearance") {
-                return uint_2_Str(latestAppearance);
-            }
-            break;
         case 'n':
             if (fieldName % "name") {
                 return name;
-            }
-            if (fieldName % "nAppearances") {
-                return uint_2_Str(nAppearances);
-            }
-            break;
-        case 'p':
-            if (fieldName % "path") {
-                return path;
             }
             break;
         case 's':
@@ -138,9 +117,6 @@ string_q CAccountName::getValueByName(const string_q& fieldName) const {
             }
             if (fieldName % "source") {
                 return source;
-            }
-            if (fieldName % "sizeInBytes") {
-                return sizeInBytes == 0 ? "" : uint_2_Str(sizeInBytes);
             }
             break;
         case 't':
@@ -188,12 +164,6 @@ bool CAccountName::setValueByName(const string_q& fieldNameIn, const string_q& f
                 return true;
             }
             break;
-        case 'f':
-            if (fieldName % "firstAppearance") {
-                firstAppearance = str_2_Uint(fieldValue);
-                return true;
-            }
-            break;
         case 'i':
             if (fieldName % "is_custom") {
                 is_custom = str_2_Bool(fieldValue);
@@ -216,29 +186,9 @@ bool CAccountName::setValueByName(const string_q& fieldNameIn, const string_q& f
                 return true;
             }
             break;
-        case 'l':
-            if (fieldName % "lastExport") {
-                lastExport = str_2_Uint(fieldValue);
-                return true;
-            }
-            if (fieldName % "latestAppearance") {
-                latestAppearance = str_2_Uint(fieldValue);
-                return true;
-            }
-            break;
         case 'n':
             if (fieldName % "name") {
                 name = fieldValue;
-                return true;
-            }
-            if (fieldName % "nAppearances") {
-                nAppearances = str_2_Uint(fieldValue);
-                return true;
-            }
-            break;
-        case 'p':
-            if (fieldName % "path") {
-                path = fieldValue;
                 return true;
             }
             break;
@@ -249,10 +199,6 @@ bool CAccountName::setValueByName(const string_q& fieldNameIn, const string_q& f
             }
             if (fieldName % "source") {
                 source = fieldValue;
-                return true;
-            }
-            if (fieldName % "sizeInBytes") {
-                sizeInBytes = str_2_Uint(fieldValue);
                 return true;
             }
             break;
@@ -299,12 +245,6 @@ bool CAccountName::Serialize(CArchive& archive) {
     archive >> is_contract;
     archive >> is_erc20;
     archive >> is_erc721;
-    // archive >> nAppearances;
-    // archive >> lastExport;
-    // archive >> firstAppearance;
-    // archive >> latestAppearance;
-    // archive >> path;
-    // archive >> sizeInBytes;
     finishParse();
     return true;
 }
@@ -328,12 +268,6 @@ bool CAccountName::SerializeC(CArchive& archive) const {
     archive << is_contract;
     archive << is_erc20;
     archive << is_erc721;
-    // archive << nAppearances;
-    // archive << lastExport;
-    // archive << firstAppearance;
-    // archive << latestAppearance;
-    // archive << path;
-    // archive << sizeInBytes;
 
     return true;
 }
@@ -382,18 +316,6 @@ void CAccountName::registerClass(void) {
     ADD_FIELD(CAccountName, "is_contract", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CAccountName, "is_erc20", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CAccountName, "is_erc721", T_BOOL | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CAccountName, "nAppearances", T_BLOCKNUM, ++fieldNum);
-    HIDE_FIELD(CAccountName, "nAppearances");
-    ADD_FIELD(CAccountName, "lastExport", T_BLOCKNUM, ++fieldNum);
-    HIDE_FIELD(CAccountName, "lastExport");
-    ADD_FIELD(CAccountName, "firstAppearance", T_BLOCKNUM, ++fieldNum);
-    HIDE_FIELD(CAccountName, "firstAppearance");
-    ADD_FIELD(CAccountName, "latestAppearance", T_BLOCKNUM, ++fieldNum);
-    HIDE_FIELD(CAccountName, "latestAppearance");
-    ADD_FIELD(CAccountName, "path", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    HIDE_FIELD(CAccountName, "path");
-    ADD_FIELD(CAccountName, "sizeInBytes", T_UNUMBER | TS_OMITEMPTY, ++fieldNum);
-    HIDE_FIELD(CAccountName, "sizeInBytes");
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CAccountName, "schema");

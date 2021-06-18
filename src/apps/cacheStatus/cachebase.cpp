@@ -14,26 +14,26 @@
  * Parts of this file were generated with makeClass --run. Edit only those parts of
  * the code inside of 'EXISTING_CODE' tags.
  */
-#include "monitorcacheitem.h"
+#include "cachebase.h"
 
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CMonitorCacheItem, CCacheBase);
+IMPLEMENT_NODE(CCacheBase, CAccountName);
 
 //---------------------------------------------------------------------------
-static string_q nextMonitorcacheitemChunk(const string_q& fieldIn, const void* dataPtr);
-static string_q nextMonitorcacheitemChunk_custom(const string_q& fieldIn, const void* dataPtr);
+static string_q nextCachebaseChunk(const string_q& fieldIn, const void* dataPtr);
+static string_q nextCachebaseChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
-void CMonitorCacheItem::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
+void CCacheBase::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
     if (!m_showing)
         return;
 
     // EXISTING_CODE
     // EXISTING_CODE
 
-    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["monitorcacheitem_fmt"] : fmtIn);
+    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["cachebase_fmt"] : fmtIn);
     if (fmt.empty()) {
         if (expContext().exportFmt == YAML1) {
             toYaml(ctx);
@@ -47,13 +47,13 @@ void CMonitorCacheItem::Format(ostream& ctx, const string_q& fmtIn, void* dataPt
     // EXISTING_CODE
 
     while (!fmt.empty())
-        ctx << getNextChunk(fmt, nextMonitorcacheitemChunk, this);
+        ctx << getNextChunk(fmt, nextCachebaseChunk, this);
 }
 
 //---------------------------------------------------------------------------
-string_q nextMonitorcacheitemChunk(const string_q& fieldIn, const void* dataPtr) {
+string_q nextCachebaseChunk(const string_q& fieldIn, const void* dataPtr) {
     if (dataPtr)
-        return reinterpret_cast<const CMonitorCacheItem*>(dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CCacheBase*>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -62,9 +62,9 @@ string_q nextMonitorcacheitemChunk(const string_q& fieldIn, const void* dataPtr)
 }
 
 //---------------------------------------------------------------------------
-string_q CMonitorCacheItem::getValueByName(const string_q& fieldName) const {
+string_q CCacheBase::getValueByName(const string_q& fieldName) const {
     // Give customized code a chance to override first
-    string_q ret = nextMonitorcacheitemChunk_custom(fieldName, this);
+    string_q ret = nextCachebaseChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
@@ -73,14 +73,29 @@ string_q CMonitorCacheItem::getValueByName(const string_q& fieldName) const {
 
     // Return field values
     switch (tolower(fieldName[0])) {
-        case 'd':
-            if (fieldName % "deleted") {
-                return bool_2_Str(deleted);
+        case 'f':
+            if (fieldName % "firstAppearance") {
+                return uint_2_Str(firstAppearance);
             }
             break;
-        case 't':
-            if (fieldName % "type") {
-                return type;
+        case 'l':
+            if (fieldName % "latestAppearance") {
+                return uint_2_Str(latestAppearance);
+            }
+            break;
+        case 'n':
+            if (fieldName % "nAppearances") {
+                return uint_2_Str(nAppearances);
+            }
+            break;
+        case 'p':
+            if (fieldName % "path") {
+                return path;
+            }
+            break;
+        case 's':
+            if (fieldName % "sizeInBytes") {
+                return sizeInBytes == 0 ? "" : uint_2_Str(sizeInBytes);
             }
             break;
         default:
@@ -91,30 +106,48 @@ string_q CMonitorCacheItem::getValueByName(const string_q& fieldName) const {
     // EXISTING_CODE
 
     // Finally, give the parent class a chance
-    return CCacheBase::getValueByName(fieldName);
+    return CAccountName::getValueByName(fieldName);
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CMonitorCacheItem::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
+bool CCacheBase::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
     string_q fieldName = fieldNameIn;
     string_q fieldValue = fieldValueIn;
 
     // EXISTING_CODE
     // EXISTING_CODE
 
-    if (CCacheBase::setValueByName(fieldName, fieldValue))
+    if (CAccountName::setValueByName(fieldName, fieldValue))
         return true;
 
     switch (tolower(fieldName[0])) {
-        case 'd':
-            if (fieldName % "deleted") {
-                deleted = str_2_Bool(fieldValue);
+        case 'f':
+            if (fieldName % "firstAppearance") {
+                firstAppearance = str_2_Uint(fieldValue);
                 return true;
             }
             break;
-        case 't':
-            if (fieldName % "type") {
-                type = fieldValue;
+        case 'l':
+            if (fieldName % "latestAppearance") {
+                latestAppearance = str_2_Uint(fieldValue);
+                return true;
+            }
+            break;
+        case 'n':
+            if (fieldName % "nAppearances") {
+                nAppearances = str_2_Uint(fieldValue);
+                return true;
+            }
+            break;
+        case 'p':
+            if (fieldName % "path") {
+                path = fieldValue;
+                return true;
+            }
+            break;
+        case 's':
+            if (fieldName % "sizeInBytes") {
+                sizeInBytes = str_2_Uint(fieldValue);
                 return true;
             }
             break;
@@ -125,45 +158,51 @@ bool CMonitorCacheItem::setValueByName(const string_q& fieldNameIn, const string
 }
 
 //---------------------------------------------------------------------------------------------------
-void CMonitorCacheItem::finishParse() {
+void CCacheBase::finishParse() {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CMonitorCacheItem::Serialize(CArchive& archive) {
+bool CCacheBase::Serialize(CArchive& archive) {
     if (archive.isWriting())
         return SerializeC(archive);
 
     // Always read the base class (it will handle its own backLevels if any, then
     // read this object's back level (if any) or the current version.
-    CCacheBase::Serialize(archive);
+    CAccountName::Serialize(archive);
     if (readBackLevel(archive))
         return true;
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive >> type;
-    archive >> deleted;
+    // archive >> nAppearances;
+    // archive >> firstAppearance;
+    // archive >> latestAppearance;
+    // archive >> path;
+    // archive >> sizeInBytes;
     finishParse();
     return true;
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CMonitorCacheItem::SerializeC(CArchive& archive) const {
+bool CCacheBase::SerializeC(CArchive& archive) const {
     // Writing always write the latest version of the data
-    CCacheBase::SerializeC(archive);
+    CAccountName::SerializeC(archive);
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive << type;
-    archive << deleted;
+    // archive << nAppearances;
+    // archive << firstAppearance;
+    // archive << latestAppearance;
+    // archive << path;
+    // archive << sizeInBytes;
 
     return true;
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, CMonitorCacheItemArray& array) {
+CArchive& operator>>(CArchive& archive, CCacheBaseArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -175,7 +214,7 @@ CArchive& operator>>(CArchive& archive, CMonitorCacheItemArray& array) {
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator<<(CArchive& archive, const CMonitorCacheItemArray& array) {
+CArchive& operator<<(CArchive& archive, const CCacheBaseArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0; i < array.size(); i++)
@@ -184,44 +223,52 @@ CArchive& operator<<(CArchive& archive, const CMonitorCacheItemArray& array) {
 }
 
 //---------------------------------------------------------------------------
-void CMonitorCacheItem::registerClass(void) {
+void CCacheBase::registerClass(void) {
     // only do this once
-    if (HAS_FIELD(CMonitorCacheItem, "schema"))
+    if (HAS_FIELD(CCacheBase, "schema"))
         return;
 
-    CCacheBase::registerClass();
+    CAccountName::registerClass();
 
     size_t fieldNum = 1000;
-    ADD_FIELD(CMonitorCacheItem, "schema", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CMonitorCacheItem, "deleted", T_BOOL, ++fieldNum);
-    ADD_FIELD(CMonitorCacheItem, "showing", T_BOOL, ++fieldNum);
-    ADD_FIELD(CMonitorCacheItem, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CMonitorCacheItem, "type", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CMonitorCacheItem, "deleted", T_BOOL | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CCacheBase, "schema", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CCacheBase, "deleted", T_BOOL, ++fieldNum);
+    ADD_FIELD(CCacheBase, "showing", T_BOOL, ++fieldNum);
+    ADD_FIELD(CCacheBase, "cname", T_TEXT, ++fieldNum);
+    ADD_FIELD(CCacheBase, "nAppearances", T_BLOCKNUM, ++fieldNum);
+    HIDE_FIELD(CCacheBase, "nAppearances");
+    ADD_FIELD(CCacheBase, "firstAppearance", T_BLOCKNUM, ++fieldNum);
+    HIDE_FIELD(CCacheBase, "firstAppearance");
+    ADD_FIELD(CCacheBase, "latestAppearance", T_BLOCKNUM, ++fieldNum);
+    HIDE_FIELD(CCacheBase, "latestAppearance");
+    ADD_FIELD(CCacheBase, "path", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CCacheBase, "path");
+    ADD_FIELD(CCacheBase, "sizeInBytes", T_UNUMBER | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CCacheBase, "sizeInBytes");
 
     // Hide our internal fields, user can turn them on if they like
-    HIDE_FIELD(CMonitorCacheItem, "schema");
-    HIDE_FIELD(CMonitorCacheItem, "deleted");
-    HIDE_FIELD(CMonitorCacheItem, "showing");
-    HIDE_FIELD(CMonitorCacheItem, "cname");
+    HIDE_FIELD(CCacheBase, "schema");
+    HIDE_FIELD(CCacheBase, "deleted");
+    HIDE_FIELD(CCacheBase, "showing");
+    HIDE_FIELD(CCacheBase, "cname");
 
-    builtIns.push_back(_biCMonitorCacheItem);
+    builtIns.push_back(_biCCacheBase);
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------
-string_q nextMonitorcacheitemChunk_custom(const string_q& fieldIn, const void* dataPtr) {
-    const CMonitorCacheItem* mon = reinterpret_cast<const CMonitorCacheItem*>(dataPtr);
-    if (mon) {
+string_q nextCachebaseChunk_custom(const string_q& fieldIn, const void* dataPtr) {
+    const CCacheBase* cac = reinterpret_cast<const CCacheBase*>(dataPtr);
+    if (cac) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if (fieldIn % "parsed")
-                    return nextBasenodeChunk(fieldIn, mon);
+                    return nextBasenodeChunk(fieldIn, cac);
                 // EXISTING_CODE
                 // EXISTING_CODE
                 break;
@@ -235,7 +282,7 @@ string_q nextMonitorcacheitemChunk_custom(const string_q& fieldIn, const void* d
 }
 
 //---------------------------------------------------------------------------
-bool CMonitorCacheItem::readBackLevel(CArchive& archive) {
+bool CCacheBase::readBackLevel(CArchive& archive) {
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -243,7 +290,7 @@ bool CMonitorCacheItem::readBackLevel(CArchive& archive) {
 }
 
 //-------------------------------------------------------------------------
-ostream& operator<<(ostream& os, const CMonitorCacheItem& it) {
+ostream& operator<<(ostream& os, const CCacheBase& it) {
     // EXISTING_CODE
     // EXISTING_CODE
 
@@ -253,7 +300,7 @@ ostream& operator<<(ostream& os, const CMonitorCacheItem& it) {
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_MONITORCACHEITEM =
+const char* STR_DISPLAY_CACHEBASE =
     "[{DISPLAY_NAME}]\t"
     "[{FIRSTAPPEARANCE}]\t"
     "[{LASTAPPEARANCE}]\t"

@@ -16,6 +16,7 @@
  * the code inside of 'EXISTING_CODE' tags.
  */
 #include "etherlib.h"
+#include "cachebase.h"
 
 namespace qblocks {
 
@@ -25,11 +26,10 @@ namespace qblocks {
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class CMonitorCacheItem : public CAccountName {
+class CMonitorCacheItem : public CCacheBase {
   public:
     string_q type;
     bool deleted;
-    uint64_t sizeInBytes2;
 
   public:
     CMonitorCacheItem(void);
@@ -90,11 +90,10 @@ inline void CMonitorCacheItem::clear(void) {
 
 //--------------------------------------------------------------------------
 inline void CMonitorCacheItem::initialize(void) {
-    CAccountName::initialize();
+    CCacheBase::initialize();
 
     type = "";
     deleted = false;
-    sizeInBytes2 = 0;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -103,11 +102,10 @@ inline void CMonitorCacheItem::initialize(void) {
 //--------------------------------------------------------------------------
 inline void CMonitorCacheItem::duplicate(const CMonitorCacheItem& mo) {
     clear();
-    CAccountName::duplicate(mo);
+    CCacheBase::duplicate(mo);
 
     type = mo.type;
     deleted = mo.deleted;
-    sizeInBytes2 = mo.sizeInBytes2;
 
     // EXISTING_CODE
     // EXISTING_CODE

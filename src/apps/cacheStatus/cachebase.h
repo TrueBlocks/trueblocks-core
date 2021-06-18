@@ -16,7 +16,6 @@
  * the code inside of 'EXISTING_CODE' tags.
  */
 #include "etherlib.h"
-#include "cachebase.h"
 
 namespace qblocks {
 
@@ -24,31 +23,35 @@ namespace qblocks {
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class CEntityCacheItem : public CCacheBase {
+class CCacheBase : public CAccountName {
   public:
-    string_q type;
+    blknum_t nAppearances;
+    blknum_t firstAppearance;
+    blknum_t latestAppearance;
+    string_q path;
+    uint64_t sizeInBytes;
 
   public:
-    CEntityCacheItem(void);
-    CEntityCacheItem(const CEntityCacheItem& en);
-    virtual ~CEntityCacheItem(void);
-    CEntityCacheItem& operator=(const CEntityCacheItem& en);
+    CCacheBase(void);
+    CCacheBase(const CCacheBase& ca);
+    virtual ~CCacheBase(void);
+    CCacheBase& operator=(const CCacheBase& ca);
 
-    DECLARE_NODE(CEntityCacheItem);
+    DECLARE_NODE(CCacheBase);
 
     // EXISTING_CODE
     // EXISTING_CODE
-    bool operator==(const CEntityCacheItem& it) const;
-    bool operator!=(const CEntityCacheItem& it) const {
+    bool operator==(const CCacheBase& it) const;
+    bool operator!=(const CCacheBase& it) const {
         return !operator==(it);
     }
-    friend bool operator<(const CEntityCacheItem& v1, const CEntityCacheItem& v2);
-    friend ostream& operator<<(ostream& os, const CEntityCacheItem& it);
+    friend bool operator<(const CCacheBase& v1, const CCacheBase& v2);
+    friend ostream& operator<<(ostream& os, const CCacheBase& it);
 
   protected:
     void clear(void);
     void initialize(void);
-    void duplicate(const CEntityCacheItem& en);
+    void duplicate(const CCacheBase& ca);
     bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
@@ -56,66 +59,74 @@ class CEntityCacheItem : public CCacheBase {
 };
 
 //--------------------------------------------------------------------------
-inline CEntityCacheItem::CEntityCacheItem(void) {
+inline CCacheBase::CCacheBase(void) {
     initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CEntityCacheItem::CEntityCacheItem(const CEntityCacheItem& en) {
+inline CCacheBase::CCacheBase(const CCacheBase& ca) {
     // EXISTING_CODE
     // EXISTING_CODE
-    duplicate(en);
+    duplicate(ca);
 }
 
 // EXISTING_CODE
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline CEntityCacheItem::~CEntityCacheItem(void) {
+inline CCacheBase::~CCacheBase(void) {
     clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CEntityCacheItem::clear(void) {
+inline void CCacheBase::clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CEntityCacheItem::initialize(void) {
-    CCacheBase::initialize();
+inline void CCacheBase::initialize(void) {
+    CAccountName::initialize();
 
-    type = "";
+    nAppearances = 0;
+    firstAppearance = 0;
+    latestAppearance = 0;
+    path = "";
+    sizeInBytes = 0;
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CEntityCacheItem::duplicate(const CEntityCacheItem& en) {
+inline void CCacheBase::duplicate(const CCacheBase& ca) {
     clear();
-    CCacheBase::duplicate(en);
+    CAccountName::duplicate(ca);
 
-    type = en.type;
+    nAppearances = ca.nAppearances;
+    firstAppearance = ca.firstAppearance;
+    latestAppearance = ca.latestAppearance;
+    path = ca.path;
+    sizeInBytes = ca.sizeInBytes;
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CEntityCacheItem& CEntityCacheItem::operator=(const CEntityCacheItem& en) {
-    duplicate(en);
+inline CCacheBase& CCacheBase::operator=(const CCacheBase& ca) {
+    duplicate(ca);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
 //-------------------------------------------------------------------------
-inline bool CEntityCacheItem::operator==(const CEntityCacheItem& it) const {
+inline bool CCacheBase::operator==(const CCacheBase& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)
@@ -123,7 +134,7 @@ inline bool CEntityCacheItem::operator==(const CEntityCacheItem& it) const {
 }
 
 //-------------------------------------------------------------------------
-inline bool operator<(const CEntityCacheItem& v1, const CEntityCacheItem& v2) {
+inline bool operator<(const CCacheBase& v1, const CCacheBase& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default sort defined in class definition, assume already sorted, preserve ordering
@@ -131,12 +142,12 @@ inline bool operator<(const CEntityCacheItem& v1, const CEntityCacheItem& v2) {
 }
 
 //---------------------------------------------------------------------------
-typedef vector<CEntityCacheItem> CEntityCacheItemArray;
-extern CArchive& operator>>(CArchive& archive, CEntityCacheItemArray& array);
-extern CArchive& operator<<(CArchive& archive, const CEntityCacheItemArray& array);
+typedef vector<CCacheBase> CCacheBaseArray;
+extern CArchive& operator>>(CArchive& archive, CCacheBaseArray& array);
+extern CArchive& operator<<(CArchive& archive, const CCacheBaseArray& array);
 
 //---------------------------------------------------------------------------
-extern const char* STR_DISPLAY_ENTITYCACHEITEM;
+extern const char* STR_DISPLAY_CACHEBASE;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

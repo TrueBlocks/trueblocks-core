@@ -1,6 +1,6 @@
 [settings]
 class = CEntityCacheItem
-base_class = CAccountName
+base_class = CCacheBase
 fields = string type
-includes = etherlib.h
+includes = etherlib.h|cachebase.h
 serialize = true

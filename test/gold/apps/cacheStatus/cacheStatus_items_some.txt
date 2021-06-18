@@ -26,15 +26,14 @@ cacheStatus --details some --test_start 3000000 --test_end 3100000
     {
       "items": [
         {
-          "sizeInBytes2": 0,
+          "nAppearances": 0,
+          "firstAppearance": 0,
+          "latestAppearance": 0,
           "tags": "--tags--",
           "address": "---address---",
           "name": "--name--",
           "symbol": "--symbol--",
-          "source": "--source--",
-          "nAppearances": 0,
-          "firstAppearance": 0,
-          "latestAppearance": 0
+          "source": "--source--"
         }
       ],
       "type": "CMonitorCache",
@@ -65,11 +64,11 @@ cacheStatus --details some --test_start 3000000 --test_end 3100000
         {
           "type": "CPriceCacheItem",
           "pair": "---pair---",
-          "address": "0x0",
           "nAppearances": 2020101,
           "firstAppearance": 0,
           "latestAppearance": 0,
-          "sizeInBytes": 1010202
+          "sizeInBytes": 1010202,
+          "address": "0x0"
         }
       ],
       "type": "CPriceCache",

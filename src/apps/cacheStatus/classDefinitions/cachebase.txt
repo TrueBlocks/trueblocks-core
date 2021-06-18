@@ -1,0 +1,11 @@
+[settings]
+class = CCacheBase
+base_class = CAccountName
+fields = blknum nAppearances (nowrite)|\
+        blknum firstAppearance (nowrite)|\
+        blknum latestAppearance (nowrite)|\
+        string path (nowrite)|\
+        suint64 sizeInBytes (nowrite)
+includes = etherlib.h
+serialize = true
+display_str = display_name, firstAppearance, lastAppearance, appearanceRange, nRecords, appearanceInterval, sizeInBytes

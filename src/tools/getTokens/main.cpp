@@ -66,7 +66,7 @@ bool processPair(uint64_t blockNum, void* data) {
     if ((opt->modeBits & TOK_TOTALSUPPLY) || !opt->getNamedAccount(opt->curToken, opt->curToken.address)) {
         for (auto marker : base) {
             if (opt->modeBits & marker.bits) {
-                string_q value = getTokenState(marker.field, opt->abi_spec, opt->curToken, blockNum);
+                string_q value = getTokenState(opt->curToken, marker.field, opt->abi_spec, blockNum);
                 opt->curToken.setValueByName(marker.field, value);
                 if ((marker.field == "name" || marker.field == "symbol") && !value.empty())
                     opt->curToken.is_erc20 = true;

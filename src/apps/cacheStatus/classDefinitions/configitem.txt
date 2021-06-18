@@ -8,5 +8,5 @@ fields = string name|\
         bool required|\
         bool read_only|\
         CAccountNameArray named (nowrite)
-includes = etherlib.h
+includes = etherlib.h|cachebase.h
 serialize = true

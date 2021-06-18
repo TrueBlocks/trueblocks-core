@@ -19,7 +19,7 @@
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CPriceCacheItem, CAccountName);
+IMPLEMENT_NODE(CPriceCacheItem, CCacheBase);
 
 //---------------------------------------------------------------------------
 static string_q nextPricecacheitemChunk(const string_q& fieldIn, const void* dataPtr);
@@ -93,7 +93,7 @@ string_q CPriceCacheItem::getValueByName(const string_q& fieldName) const {
     // EXISTING_CODE
 
     // Finally, give the parent class a chance
-    return CAccountName::getValueByName(fieldName);
+    return CCacheBase::getValueByName(fieldName);
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -104,7 +104,7 @@ bool CPriceCacheItem::setValueByName(const string_q& fieldNameIn, const string_q
     // EXISTING_CODE
     // EXISTING_CODE
 
-    if (CAccountName::setValueByName(fieldName, fieldValue))
+    if (CCacheBase::setValueByName(fieldName, fieldValue))
         return true;
 
     switch (tolower(fieldName[0])) {
@@ -139,7 +139,7 @@ bool CPriceCacheItem::Serialize(CArchive& archive) {
 
     // Always read the base class (it will handle its own backLevels if any, then
     // read this object's back level (if any) or the current version.
-    CAccountName::Serialize(archive);
+    CCacheBase::Serialize(archive);
     if (readBackLevel(archive))
         return true;
 
@@ -154,7 +154,7 @@ bool CPriceCacheItem::Serialize(CArchive& archive) {
 //---------------------------------------------------------------------------------------------------
 bool CPriceCacheItem::SerializeC(CArchive& archive) const {
     // Writing always write the latest version of the data
-    CAccountName::SerializeC(archive);
+    CCacheBase::SerializeC(archive);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -191,7 +191,7 @@ void CPriceCacheItem::registerClass(void) {
     if (HAS_FIELD(CPriceCacheItem, "schema"))
         return;
 
-    CAccountName::registerClass();
+    CCacheBase::registerClass();
 
     size_t fieldNum = 1000;
     ADD_FIELD(CPriceCacheItem, "schema", T_NUMBER, ++fieldNum);

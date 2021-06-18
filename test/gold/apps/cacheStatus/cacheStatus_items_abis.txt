@@ -22,12 +22,12 @@ cacheStatus --details abis
           "nFunctions": 36963,
           "nEvents": 36963,
           "nOther": 36963,
-          "address": "---address---",
-          "name": "--name--",
           "nAppearances": 0,
           "firstAppearance": 0,
           "latestAppearance": 0,
-          "sizeInBytes": 36963
+          "sizeInBytes": 36963,
+          "address": "---address---",
+          "name": "--name--"
         }
       ],
       "type": "CAbiCache",

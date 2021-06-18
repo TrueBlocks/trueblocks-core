@@ -29,6 +29,12 @@ typedef enum { FM_PRODUCTION, FM_STAGING } freshen_e;
 //--------------------------------------------------------------------------
 class CMonitor : public CAccountName {
   public:
+    blknum_t nAppearances;
+    blknum_t lastExport;
+    blknum_t firstAppearance;
+    blknum_t latestAppearance;
+    string_q path;
+    uint64_t sizeInBytes;
     freshen_e fm_mode;
 
   public:
@@ -59,7 +65,6 @@ class CMonitor : public CAccountName {
     string_q getMonitorPath(const address_t& addr, freshen_e mode = FM_PRODUCTION) const;
     string_q getMonitorLast(const address_t& addr, freshen_e mode = FM_PRODUCTION) const;
     string_q getMonitorDels(const address_t& addr, freshen_e mode = FM_PRODUCTION) const;
-    string_q getMonitorCach(const address_t& addr, freshen_e mode = FM_PRODUCTION) const;
 
     bool monitorExists(void) const;
     bool isMonitorLocked(string_q& msg) const;
@@ -150,14 +155,20 @@ inline void CMonitor::clear(void) {
 inline void CMonitor::initialize(void) {
     CAccountName::initialize();
 
+    nAppearances = 0;
+    lastExport = 0;
+    firstAppearance = 0;
+    latestAppearance = 0;
+    path = "";
+    sizeInBytes = 0;
     fm_mode = FM_PRODUCTION;
 
     // EXISTING_CODE
     bloom = bloom_t();
-    latestAppearance = UINT_MAX;
     inBlock = false;
     tx_cache = NULL;
     lastVisitedBlock = NOPOS;
+    latestAppearance = UINT_MAX;
     // EXISTING_CODE
 }
 
@@ -166,14 +177,20 @@ inline void CMonitor::duplicate(const CMonitor& mo) {
     clear();
     CAccountName::duplicate(mo);
 
+    nAppearances = mo.nAppearances;
+    lastExport = mo.lastExport;
+    firstAppearance = mo.firstAppearance;
+    latestAppearance = mo.latestAppearance;
+    path = mo.path;
+    sizeInBytes = mo.sizeInBytes;
     fm_mode = mo.fm_mode;
 
     // EXISTING_CODE
     bloom = mo.bloom;
-    latestAppearance = mo.latestAppearance;
     inBlock = mo.inBlock;
     tx_cache = NULL;  // we do not copy the tx_cache
     lastVisitedBlock = mo.lastVisitedBlock;
+    latestAppearance = mo.latestAppearance;
     // EXISTING_CODE
 }
 
@@ -214,7 +231,8 @@ extern const char* STR_DISPLAY_MONITOR;
 typedef map<address_t, CMonitor> CMonitorMap;  // NOLINT
 extern string_q getTokenBalanceOf(const CMonitor& token, const address_t& holder, blknum_t blockNum);
 extern string_q getTokenSymbol(const CMonitor& token, blknum_t blockNum);
-extern string_q getTokenState(const string_q& what, const CAbi& abi_spec, const CMonitor& token, blknum_t blockNum);
+extern string_q getTokenState(const CMonitor& token, const string_q& whichState, const CAbi& abi_spec,
+                              blknum_t blockNum);
 extern void establishMonitorFolders(void);
 extern void cleanMonitorStage(void);
 // EXISTING_CODE

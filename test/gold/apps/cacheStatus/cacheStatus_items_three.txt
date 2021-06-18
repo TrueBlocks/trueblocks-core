@@ -18,15 +18,14 @@ cacheStatus --details abis caches monitors --types slurps
     {
       "items": [
         {
-          "sizeInBytes2": 0,
+          "nAppearances": 0,
+          "firstAppearance": 0,
+          "latestAppearance": 0,
           "tags": "--tags--",
           "address": "---address---",
           "name": "--name--",
           "symbol": "--symbol--",
-          "source": "--source--",
-          "nAppearances": 0,
-          "firstAppearance": 0,
-          "latestAppearance": 0
+          "source": "--source--"
         }
       ],
       "type": "CMonitorCache",
@@ -43,12 +42,12 @@ cacheStatus --details abis caches monitors --types slurps
           "nFunctions": 36963,
           "nEvents": 36963,
           "nOther": 36963,
-          "address": "---address---",
-          "name": "--name--",
           "nAppearances": 0,
           "firstAppearance": 0,
           "latestAppearance": 0,
-          "sizeInBytes": 36963
+          "sizeInBytes": 36963,
+          "address": "---address---",
+          "name": "--name--"
         }
       ],
       "type": "CAbiCache",

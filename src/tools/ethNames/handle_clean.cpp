@@ -56,9 +56,9 @@ bool COptions::isTokenContract(const CAccountName& account) {
     standards = CMonitor();  // reset
     standards.address = account.address;
 
-    string_q name = getTokenState("name", abi_spec, standards, latestBlock);
-    string_q symbol = getTokenState("symbol", abi_spec, standards, latestBlock);
-    uint64_t decimals = str_2_Uint(getTokenState("decimals", abi_spec, standards, latestBlock));
+    string_q name = getTokenState(standards, "name", abi_spec, latestBlock);
+    string_q symbol = getTokenState(standards, "symbol", abi_spec, latestBlock);
+    uint64_t decimals = str_2_Uint(getTokenState(standards, "decimals", abi_spec, latestBlock));
 
     standards.name = (name.empty() ? account.name : name);
     standards.symbol = (symbol.empty() ? account.symbol : symbol);

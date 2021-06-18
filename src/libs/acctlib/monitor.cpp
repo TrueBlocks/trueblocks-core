@@ -74,8 +74,34 @@ string_q CMonitor::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'f':
+            if (fieldName % "firstAppearance") {
+                return uint_2_Str(firstAppearance);
+            }
             if (fieldName % "fm_mode") {
                 return uint_2_Str(fm_mode);
+            }
+            break;
+        case 'l':
+            if (fieldName % "lastExport") {
+                return uint_2_Str(lastExport);
+            }
+            if (fieldName % "latestAppearance") {
+                return uint_2_Str(latestAppearance);
+            }
+            break;
+        case 'n':
+            if (fieldName % "nAppearances") {
+                return uint_2_Str(nAppearances);
+            }
+            break;
+        case 'p':
+            if (fieldName % "path") {
+                return path;
+            }
+            break;
+        case 's':
+            if (fieldName % "sizeInBytes") {
+                return sizeInBytes == 0 ? "" : uint_2_Str(sizeInBytes);
             }
             break;
         default:
@@ -102,8 +128,40 @@ bool CMonitor::setValueByName(const string_q& fieldNameIn, const string_q& field
 
     switch (tolower(fieldName[0])) {
         case 'f':
+            if (fieldName % "firstAppearance") {
+                firstAppearance = str_2_Uint(fieldValue);
+                return true;
+            }
             if (fieldName % "fm_mode") {
                 fm_mode = str_2_Enum(freshen_e, fieldValue);
+                return true;
+            }
+            break;
+        case 'l':
+            if (fieldName % "lastExport") {
+                lastExport = str_2_Uint(fieldValue);
+                return true;
+            }
+            if (fieldName % "latestAppearance") {
+                latestAppearance = str_2_Uint(fieldValue);
+                return true;
+            }
+            break;
+        case 'n':
+            if (fieldName % "nAppearances") {
+                nAppearances = str_2_Uint(fieldValue);
+                return true;
+            }
+            break;
+        case 'p':
+            if (fieldName % "path") {
+                path = fieldValue;
+                return true;
+            }
+            break;
+        case 's':
+            if (fieldName % "sizeInBytes") {
+                sizeInBytes = str_2_Uint(fieldValue);
                 return true;
             }
             break;
@@ -132,6 +190,12 @@ bool CMonitor::Serialize(CArchive& archive) {
 
     // EXISTING_CODE
     // EXISTING_CODE
+    // archive >> nAppearances;
+    // archive >> lastExport;
+    // archive >> firstAppearance;
+    // archive >> latestAppearance;
+    // archive >> path;
+    // archive >> sizeInBytes;
     // archive >> fm_mode;
     finishParse();
     return true;
@@ -144,6 +208,12 @@ bool CMonitor::SerializeC(CArchive& archive) const {
 
     // EXISTING_CODE
     // EXISTING_CODE
+    // archive << nAppearances;
+    // archive << lastExport;
+    // archive << firstAppearance;
+    // archive << latestAppearance;
+    // archive << path;
+    // archive << sizeInBytes;
     // archive << fm_mode;
 
     return true;
@@ -183,6 +253,18 @@ void CMonitor::registerClass(void) {
     ADD_FIELD(CMonitor, "deleted", T_BOOL, ++fieldNum);
     ADD_FIELD(CMonitor, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CMonitor, "cname", T_TEXT, ++fieldNum);
+    ADD_FIELD(CMonitor, "nAppearances", T_BLOCKNUM, ++fieldNum);
+    HIDE_FIELD(CMonitor, "nAppearances");
+    ADD_FIELD(CMonitor, "lastExport", T_BLOCKNUM, ++fieldNum);
+    HIDE_FIELD(CMonitor, "lastExport");
+    ADD_FIELD(CMonitor, "firstAppearance", T_BLOCKNUM, ++fieldNum);
+    HIDE_FIELD(CMonitor, "firstAppearance");
+    ADD_FIELD(CMonitor, "latestAppearance", T_BLOCKNUM, ++fieldNum);
+    HIDE_FIELD(CMonitor, "latestAppearance");
+    ADD_FIELD(CMonitor, "path", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CMonitor, "path");
+    ADD_FIELD(CMonitor, "sizeInBytes", T_UNUMBER | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CMonitor, "sizeInBytes");
     ADD_FIELD(CMonitor, "fm_mode", T_NUMBER, ++fieldNum);
     HIDE_FIELD(CMonitor, "fm_mode");
 
@@ -288,11 +370,6 @@ string_q CMonitor::getMonitorDels(const address_t& addr, freshen_e mode) const {
     return getMonitorPath(addr) + ".deleted";
 }
 
-//---------------------------------------------------------------------------
-string_q CMonitor::getMonitorCach(const address_t& addr, freshen_e mode) const {
-    return getMonitorPath(addr + ".txs.bin");
-}
-
 //--------------------------------------------------------------------------------
 blknum_t CMonitor::getLastVisited(bool fresh) const {
     if (lastVisitedBlock == NOPOS || fresh) {
@@ -326,8 +403,6 @@ bool CMonitor::monitorExists(void) const {
         return true;
     if (fileExists(getMonitorDels(address)))
         return true;
-    if (fileExists(getMonitorCach(address)))
-        return true;
     return false;
 }
 
@@ -343,7 +418,6 @@ bool CMonitor::isMonitorLocked(string_q& msg) const {
     checkLock(getMonitorPath(address), "cache");
     checkLock(getMonitorLast(address), "last block");
     checkLock(getMonitorDels(address), "marker");
-    checkLock(getMonitorCach(address), "cache");
     return false;
 }
 
@@ -352,7 +426,6 @@ bool CMonitor::clearMonitorLocks(void) {
     ::remove((getMonitorPath(address) + ".lck").c_str());
     ::remove((getMonitorLast(address) + ".lck").c_str());
     ::remove((getMonitorDels(address) + ".lck").c_str());
-    ::remove((getMonitorCach(address) + ".lck").c_str());
     return true;
 }
 
@@ -382,13 +455,11 @@ void CMonitor::moveToProduction(void) {
     if (binExists || lastExists) {
         doMoveFile(getMonitorPath(address, FM_STAGING), getMonitorPath(address));
         doMoveFile(getMonitorLast(address, FM_STAGING), getMonitorLast(address));
-        doMoveFile(getMonitorCach(address, FM_STAGING), getMonitorCach(address));
     } else {
         // For some reason (user quit, UI switched to adding a different address to monitor, something went
         // wrong...) the binary cache was not created. Cleanup everything. The user will have to start over.
         ::remove(getMonitorPath(address, FM_STAGING).c_str());
         ::remove(getMonitorLast(address, FM_STAGING).c_str());
-        ::remove(getMonitorCach(address, FM_STAGING).c_str());
     }
     unlockSection();
 }
@@ -419,7 +490,6 @@ void CMonitor::removeMonitor(void) {
     removeFile(getMonitorPath(address));
     removeFile(getMonitorLast(address));
     removeFile(getMonitorDels(address));
-    removeFile(getMonitorCach(address));
 }
 
 //-----------------------------------------------------------------------
@@ -471,7 +541,7 @@ string_q getTokenSymbol(const CMonitor& token, blknum_t blockNum) {
 }
 
 //-------------------------------------------------------------------------
-string_q getTokenState(const string_q& what, const CAbi& abi_spec, const CMonitor& token, blknum_t blockNum) {
+string_q getTokenState(const CMonitor& token, const string_q& what, const CAbi& abi_spec, blknum_t blockNum) {
     static map<string_q, string_q> sigMap;
     if (sigMap.size() == 0) {
         sigMap["totalSupply"] = "0x18160ddd";
