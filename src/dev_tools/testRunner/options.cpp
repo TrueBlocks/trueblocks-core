@@ -285,6 +285,7 @@ void establishTestData(void) {
     doCommand("grabABI 0x0000000000004946c0e9f43f4dee607b0ef1fa1c");
     doCommand("grabABI 0x7c66550c9c730b6fdd4c03bc2e73c5462c5f7acc");
     doCommand("grabABI 0xa478c2975ab1ea89e8196811f51a7b7ade33eb11");
+    doCommand("grabABI 0x7d655c57f71464b6f83811c55d84009cd9f5221c");
 
 // TODO(tjayrush): Not sure what this is about.
 #if 1

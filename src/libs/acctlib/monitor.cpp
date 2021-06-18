@@ -94,11 +94,6 @@ string_q CMonitor::getValueByName(const string_q& fieldName) const {
                 return uint_2_Str(nAppearances);
             }
             break;
-        case 'p':
-            if (fieldName % "path") {
-                return path;
-            }
-            break;
         case 's':
             if (fieldName % "sizeInBytes") {
                 return sizeInBytes == 0 ? "" : uint_2_Str(sizeInBytes);
@@ -153,12 +148,6 @@ bool CMonitor::setValueByName(const string_q& fieldNameIn, const string_q& field
                 return true;
             }
             break;
-        case 'p':
-            if (fieldName % "path") {
-                path = fieldValue;
-                return true;
-            }
-            break;
         case 's':
             if (fieldName % "sizeInBytes") {
                 sizeInBytes = str_2_Uint(fieldValue);
@@ -194,7 +183,6 @@ bool CMonitor::Serialize(CArchive& archive) {
     // archive >> lastExport;
     // archive >> firstAppearance;
     // archive >> latestAppearance;
-    // archive >> path;
     // archive >> sizeInBytes;
     // archive >> fm_mode;
     finishParse();
@@ -212,7 +200,6 @@ bool CMonitor::SerializeC(CArchive& archive) const {
     // archive << lastExport;
     // archive << firstAppearance;
     // archive << latestAppearance;
-    // archive << path;
     // archive << sizeInBytes;
     // archive << fm_mode;
 
@@ -261,8 +248,6 @@ void CMonitor::registerClass(void) {
     HIDE_FIELD(CMonitor, "firstAppearance");
     ADD_FIELD(CMonitor, "latestAppearance", T_BLOCKNUM, ++fieldNum);
     HIDE_FIELD(CMonitor, "latestAppearance");
-    ADD_FIELD(CMonitor, "path", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    HIDE_FIELD(CMonitor, "path");
     ADD_FIELD(CMonitor, "sizeInBytes", T_UNUMBER | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CMonitor, "sizeInBytes");
     ADD_FIELD(CMonitor, "fm_mode", T_NUMBER, ++fieldNum);

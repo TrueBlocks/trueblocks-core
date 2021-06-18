@@ -33,7 +33,6 @@ class CMonitor : public CAccountName {
     blknum_t lastExport;
     blknum_t firstAppearance;
     blknum_t latestAppearance;
-    string_q path;
     uint64_t sizeInBytes;
     freshen_e fm_mode;
 
@@ -49,7 +48,6 @@ class CMonitor : public CAccountName {
   public:
     bloom_t bloom;
     CArchive* tx_cache;
-    bool inBlock;
 
     CMonitor(const string_q& _addr, const string_q& _name, blknum_t fB, blknum_t lB);
     CMonitor(const address_t& _addr, const string_q& _name);
@@ -159,13 +157,11 @@ inline void CMonitor::initialize(void) {
     lastExport = 0;
     firstAppearance = 0;
     latestAppearance = 0;
-    path = "";
     sizeInBytes = 0;
     fm_mode = FM_PRODUCTION;
 
     // EXISTING_CODE
     bloom = bloom_t();
-    inBlock = false;
     tx_cache = NULL;
     lastVisitedBlock = NOPOS;
     latestAppearance = UINT_MAX;
@@ -181,13 +177,11 @@ inline void CMonitor::duplicate(const CMonitor& mo) {
     lastExport = mo.lastExport;
     firstAppearance = mo.firstAppearance;
     latestAppearance = mo.latestAppearance;
-    path = mo.path;
     sizeInBytes = mo.sizeInBytes;
     fm_mode = mo.fm_mode;
 
     // EXISTING_CODE
     bloom = mo.bloom;
-    inBlock = mo.inBlock;
     tx_cache = NULL;  // we do not copy the tx_cache
     lastVisitedBlock = mo.lastVisitedBlock;
     latestAppearance = mo.latestAppearance;
