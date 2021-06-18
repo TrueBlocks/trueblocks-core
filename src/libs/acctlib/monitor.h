@@ -25,18 +25,18 @@ namespace qblocks {
 // EXISTING_CODE
 typedef enum { FM_PRODUCTION, FM_STAGING } freshen_e;
 //----------------------------------------------------------------
-struct CAppearance_base2 {
+struct CMonitoredAppearance {
     uint32_t blk;
     uint32_t txid;
-    CAppearance_base2(void) {
+    CMonitoredAppearance(void) {
         blk = txid = 0;
     }
-    CAppearance_base2(uint32_t b, uint32_t t) : blk(b), txid(t) {
+    CMonitoredAppearance(uint32_t b, uint32_t t) : blk(b), txid(t) {
     }
-    CAppearance_base2(const string_q& b, const string_q& t)
+    CMonitoredAppearance(const string_q& b, const string_q& t)
         : blk((uint32_t)str_2_Uint(b)), txid((uint32_t)str_2_Uint(t)) {
     }
-    CAppearance_base2(string_q& line) {  // NOLINT
+    CMonitoredAppearance(string_q& line) {  // NOLINT
         replaceAll(line, ".", "\t");
         if (!contains(line, "\t"))
             return;
@@ -44,11 +44,11 @@ struct CAppearance_base2 {
         txid = (uint32_t)str_2_Uint(nextTokenClear(line, '\t'));
     }
 };
-typedef vector<CAppearance_base2> CAppearanceArray_base2;
-inline bool operator<(const CAppearance_base2& v1, const CAppearance_base2& v2) {
+typedef vector<CMonitoredAppearance> CMonitoredAppearanceArray;
+inline bool operator<(const CMonitoredAppearance& v1, const CMonitoredAppearance& v2) {
     return ((v1.blk != v2.blk) ? v1.blk < v2.blk : v1.txid < v2.txid);
 }
-inline bool sortAppearanceBaseReverse(const CAppearance_base2& v1, const CAppearance_base2& v2) {
+inline bool sortAppearanceBaseReverse(const CMonitoredAppearance& v1, const CMonitoredAppearance& v2) {
     return !((v1.blk != v2.blk) ? v1.blk < v2.blk : v1.txid < v2.txid);
 }
 // EXISTING_CODE
@@ -81,7 +81,7 @@ class CMonitor : public CAccountName {
 
     bool openForWriting(void);
 
-    void writeMonitorArray(const CAppearanceArray_base2& array);
+    void writeMonitorArray(const CMonitoredAppearanceArray& array);
     void writeLastBlockInMonitor(blknum_t bn);
 
     blknum_t getLastVisited(bool fresh = false) const;

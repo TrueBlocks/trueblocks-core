@@ -384,7 +384,7 @@ bool noteMonitor(const string_q& path, void* data) {
                 mdi.firstApp = NOPOS;
                 mdi.latestApp = NOPOS;
             }
-            mdi.nApps = fileSize(path) / sizeof(CAppearance_base2);
+            mdi.nApps = fileSize(path) / sizeof(CMonitoredAppearance);
             mdi.sizeInBytes = fileSize(path);
         } else {
             mdi = CMonitorCacheItem();

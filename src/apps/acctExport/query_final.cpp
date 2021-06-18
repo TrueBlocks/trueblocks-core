@@ -113,7 +113,7 @@ bool COptions::visitBinaryFile(const string_q& path, void* data) {
                 EXIT_FAIL("Could not open cache file " + monitor->getMonitorPath(monitor->address, monitor->fm_mode) +
                           ".");
 
-            CAppearanceArray_base2 items;
+            CMonitoredAppearanceArray items;
             items.reserve(300000);
 
             addrbytes_t array = addr_2_Bytes(monitor->address);
@@ -158,7 +158,7 @@ bool COptions::visitBinaryFile(const string_q& path, void* data) {
                 CIndexedAppearance* blocksOnFile = reinterpret_cast<CIndexedAppearance*>(&addrsOnFile[nAddrs]);
                 options->stats.nTotalHits += found->cnt;
                 for (size_t i = found->offset; i < found->offset + found->cnt; i++) {
-                    CAppearance_base2 item(blocksOnFile[i].blk, blocksOnFile[i].txid);
+                    CMonitoredAppearance item(blocksOnFile[i].blk, blocksOnFile[i].txid);
                     items.push_back(item);
                 }
 

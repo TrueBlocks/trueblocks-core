@@ -6,21 +6,21 @@
 #include "options.h"
 
 //-----------------------------------------------------------------------
-bool COptions::loadOneAddress(const CMonitor& monitor, CAppearanceArray_base2& arrayOut) {
+bool COptions::loadOneAddress(const CMonitor& monitor, CMonitoredAppearanceArray& arrayOut) {
     ENTER("loadOneAddress");
 
     string_q path = monitor.getMonitorPath(monitor.address);
-    size_t nRecords = (fileSize(path) / sizeof(CAppearance_base2));
+    size_t nRecords = (fileSize(path) / sizeof(CMonitoredAppearance));
     ASSERT(nRecords);
     stats.nFileRecords += nRecords;
 
-    CAppearance_base2* buffer = new CAppearance_base2[nRecords];
+    CMonitoredAppearance* buffer = new CMonitoredAppearance[nRecords];
     if (buffer) {
-        bzero((void*)buffer, nRecords * sizeof(CAppearance_base2));  // NOLINT
+        bzero((void*)buffer, nRecords * sizeof(CMonitoredAppearance));  // NOLINT
 
         CArchive txCache(READING_ARCHIVE);
         if (txCache.Lock(path, modeReadOnly, LOCK_NOWAIT)) {
-            txCache.Read(buffer, sizeof(CAppearance_base2), nRecords);
+            txCache.Read(buffer, sizeof(CMonitoredAppearance), nRecords);
             txCache.Release();
         } else {
             EXIT_FAIL("Could not open cache file.");
@@ -85,7 +85,7 @@ bool COptions::loadAllAppearances(void) {
 
     apps.push_back(tmp[0]);
     for (auto app : tmp) {
-        CAppearance_base2* prev = &apps[apps.size() - 1];
+        CMonitoredAppearance* prev = &apps[apps.size() - 1];
         // TODO(tjayrush): I think this removes dups. Is it really necessary?
         if (app.blk != prev->blk || app.txid != prev->txid) {
             if (app.blk > bp.client) {
