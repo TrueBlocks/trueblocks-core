@@ -16,7 +16,7 @@
  * the code inside of 'EXISTING_CODE' tags.
  */
 #include "etherlib.h"
-#include "appearance.h"
+#include "indexarchive.h"
 
 namespace qblocks {
 
@@ -203,14 +203,7 @@ class CUniqueState {
     bool insertUnique(const CAppearance& _value);
 };
 
-extern int findAppearance(const void* v1, const void* v2);
-
-//----------------------------------------------------------------
-struct CAddressRecord_base {
-    uint8_t bytes[20];
-    uint32_t offset;
-    uint32_t cnt;
-};
+extern int findAddresses(const void* v1, const void* v2);
 
 //----------------------------------------------------------------
 struct CAppearance_base {

@@ -20,26 +20,26 @@ bool cleanMonitorFile(const string_q& path, void* data) {
                     return false;
             }
 
-            size_t sizeThen = (fileSize(path) / sizeof(CAppearance_base));
-            blknum_t nRecords = (fileSize(path) / sizeof(CAppearance_base));
+            size_t sizeThen = (fileSize(path) / sizeof(CAppearance_base2));
+            blknum_t nRecords = (fileSize(path) / sizeof(CAppearance_base2));
             if (!nRecords)
                 EXIT_NOMSG(!shouldQuit());
 
-            CAppearance_base* buffer = new CAppearance_base[nRecords];
+            CAppearance_base2* buffer = new CAppearance_base2[nRecords];
             if (!buffer)
                 EXIT_NOMSG(!shouldQuit());  // continue anyway
 
-            bzero((void*)buffer, nRecords * sizeof(CAppearance_base));  // NOLINT
+            bzero((void*)buffer, nRecords * sizeof(CAppearance_base2));  // NOLINT
             CArchive archiveIn(READING_ARCHIVE);
             if (!archiveIn.Lock(path, modeReadOnly, LOCK_NOWAIT)) {
                 archiveIn.Release();
                 delete[] buffer;
                 EXIT_FAIL("Could not open cache file.");
             }
-            archiveIn.Read(buffer, sizeof(CAppearance_base), nRecords);
+            archiveIn.Read(buffer, sizeof(CAppearance_base2), nRecords);
             archiveIn.Release();
 
-            CAppearanceArray_base apps;
+            CAppearanceArray_base2 apps;
             apps.reserve(nRecords);
             for (size_t i = 0; i < nRecords; i++) {
                 apps.push_back(buffer[i]);
@@ -47,8 +47,8 @@ bool cleanMonitorFile(const string_q& path, void* data) {
             sort(apps.begin(), apps.end());
             delete[] buffer;
 
-            CAppearance_base prev;
-            CAppearanceArray_base deduped;
+            CAppearance_base2 prev;
+            CAppearanceArray_base2 deduped;
             for (auto a : apps) {
                 if (a.blk != prev.blk || a.txid != prev.txid) {
                     deduped.push_back(a);
@@ -67,7 +67,7 @@ bool cleanMonitorFile(const string_q& path, void* data) {
                 cout << ",";
             first = false;
             CMonitor m;
-            size_t sizeNow = (fileSize(path) / sizeof(CAppearance_base));
+            size_t sizeNow = (fileSize(path) / sizeof(CAppearance_base2));
             cout << "{ ";
             cout << "\"path\": \"" << substitute(path, m.getMonitorPath(""), "$CACHE/") << "\", ";
             cout << "\"sizeThen\": " << sizeThen << ", ";

@@ -20,19 +20,27 @@
 
 namespace qblocks {
 //----------------------------------------------------------------
-struct CHeaderRecord_base {
+struct CIndexHeader {
     uint32_t magic;
     uint8_t hash[32];
     uint32_t nAddrs;
     uint32_t nRows;
 };
 
+//----------------------------------------------------------------
+struct CIndexedAddress {
+    uint8_t bytes[20];
+    uint32_t offset;
+    uint32_t cnt;
+};
+
+struct CAppearance_base;
 //---------------------------------------------------------------------------
 class CIndexArchive : public CArchive {
   public:
-    CHeaderRecord_base* header;
+    CIndexHeader* header;
     uint64_t nAddrs;
-    CAddressRecord_base* addresses;
+    CIndexedAddress* addresses;
     uint64_t nApps;
     CAppearance_base* appearances;
 

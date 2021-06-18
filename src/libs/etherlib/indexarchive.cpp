@@ -64,15 +64,15 @@ bool CIndexArchive::ReadIndexFromBinary(const string_q& path) {
         return false;
     }
 
-    header = reinterpret_cast<CHeaderRecord_base*>(rawData);
+    header = reinterpret_cast<CIndexHeader*>(rawData);
     ASSERT(h->magic == MAGIC_NUMBER);
     ASSERT(bytes_2_Hash(h->hash) == versionHash);
     nAddrs = header->nAddrs;
     nApps = header->nRows;
-    addresses = (CAddressRecord_base*)(rawData + sizeof(CHeaderRecord_base));  // NOLINT
-    size_t aRecSize = sizeof(CAddressRecord_base);
+    addresses = (CIndexedAddress*)(rawData + sizeof(CIndexHeader));  // NOLINT
+    size_t aRecSize = sizeof(CIndexedAddress);
     size_t sizeOfARecs = aRecSize * nAddrs;
-    size_t sizeOfHeader = sizeof(CHeaderRecord_base);
+    size_t sizeOfHeader = sizeof(CIndexHeader);
     size_t size = sizeOfHeader + sizeOfARecs;
     appearances = (CAppearance_base*)(rawData + size);  // NOLINT
     Release();

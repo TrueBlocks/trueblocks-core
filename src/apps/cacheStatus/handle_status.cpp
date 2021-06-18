@@ -384,7 +384,7 @@ bool noteMonitor(const string_q& path, void* data) {
                 mdi.firstApp = NOPOS;
                 mdi.latestApp = NOPOS;
             }
-            mdi.nApps = fileSize(path) / sizeof(CAppearance_base);
+            mdi.nApps = fileSize(path) / sizeof(CAppearance_base2);
             mdi.sizeInBytes = fileSize(path);
         } else {
             mdi = CMonitorCacheItem();
@@ -568,7 +568,7 @@ void getIndexMetrics(const string_q& path, uint32_t& nAppearences, uint32_t& nAd
     if (!archive.Lock(path, modeReadOnly, LOCK_NOWAIT))
         return;
 
-    CHeaderRecord_base header;
+    CIndexHeader header;
     bzero(&header, sizeof(header));
     // size_t nRead =
     archive.Read(&header, sizeof(header), 1);

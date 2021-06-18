@@ -113,7 +113,7 @@ bool COptions::visitBinaryFile(const string_q& path, void* data) {
                 EXIT_FAIL("Could not open cache file " + monitor->getMonitorPath(monitor->address, monitor->fm_mode) +
                           ".");
 
-            CAppearanceArray_base items;
+            CAppearanceArray_base2 items;
             items.reserve(300000);
 
             addrbytes_t array = addr_2_Bytes(monitor->address);
@@ -137,30 +137,28 @@ bool COptions::visitBinaryFile(const string_q& path, void* data) {
                 if (nRead != sz)
                     EXIT_FAIL("Could not read entire file.");
 
-                CHeaderRecord_base* h = reinterpret_cast<CHeaderRecord_base*>(rawData);
+                CIndexHeader* h = reinterpret_cast<CIndexHeader*>(rawData);
                 ASSERT(h->magic == MAGIC_NUMBER);
                 ASSERT(bytes_2_Hash(h->hash) == versionHash);
                 nAddrs = h->nAddrs;
                 // uint32_t nRows = h->nRows; not used
             }
 
-            CAddressRecord_base search;
+            CIndexedAddress search;
             for (size_t i = 0; i < 20; i++)
                 search.bytes[i] = array[i];
-            CAddressRecord_base* found =
-                (CAddressRecord_base*)bsearch(&search, (rawData + sizeof(CHeaderRecord_base)),  // NOLINT
-                                              nAddrs, sizeof(CAddressRecord_base), findAppearance);
+            CIndexedAddress* found = (CIndexedAddress*)bsearch(&search, (rawData + sizeof(CIndexHeader)),  // NOLINT
+                                                               nAddrs, sizeof(CIndexedAddress), findAddresses);
 
             if (found) {
                 indexHit = true;
                 options->stats.nPositive++;
                 hits += (monitor->address.substr(0, 6) + "...");
-                CAddressRecord_base* addrsOnFile =
-                    reinterpret_cast<CAddressRecord_base*>(rawData + sizeof(CHeaderRecord_base));
+                CIndexedAddress* addrsOnFile = reinterpret_cast<CIndexedAddress*>(rawData + sizeof(CIndexHeader));
                 CAppearance_base* blocksOnFile = reinterpret_cast<CAppearance_base*>(&addrsOnFile[nAddrs]);
                 options->stats.nTotalHits += found->cnt;
                 for (size_t i = found->offset; i < found->offset + found->cnt; i++) {
-                    CAppearance_base item(blocksOnFile[i].blk, blocksOnFile[i].txid);
+                    CAppearance_base2 item(blocksOnFile[i].blk, blocksOnFile[i].txid);
                     items.push_back(item);
                 }
 

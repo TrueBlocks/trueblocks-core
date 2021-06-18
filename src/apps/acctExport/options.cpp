@@ -355,7 +355,7 @@ bool COptions::parseArguments(string_q& command) {
             CMonitorCount monCount;
             monCount.address = monitor.address;
             monCount.fileSize = fileSize(path);
-            monCount.nRecords = fileSize(path) / sizeof(CAppearance_base);
+            monCount.nRecords = fileSize(path) / sizeof(CAppearance_base2);
             cout << ((isJson() && !firstOut) ? ", " : "");
             cout << monCount;
             firstOut = false;
@@ -504,7 +504,7 @@ bool COptions::setDisplayFormatting(void) {
             expContext().fmtMap["trace_fmt"] = cleanFmt(format);
             manageFields("CTrace:" + format);
 
-            // This doesn't really work because CAppearance_base is not a subclass of CBaseNode. We phony it here for
+            // This doesn't really work because CAppearance_base2 is not a subclass of CBaseNode. We phony it here for
             // future reference.
             format =
                 getGlobalConfig("acctExport")->getConfigStr("display", "appearances", STR_DISPLAY_APPEARANCEDISPLAY);

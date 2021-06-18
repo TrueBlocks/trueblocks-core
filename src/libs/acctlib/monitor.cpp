@@ -322,7 +322,7 @@ bool CMonitor::openForWriting(void) {
 }
 
 //-------------------------------------------------------------------------
-void CMonitor::writeMonitorArray(const CAppearanceArray_base& items) {
+void CMonitor::writeMonitorArray(const CAppearanceArray_base2& items) {
     if (tx_cache == NULL)
         return;
     for (auto item : items)

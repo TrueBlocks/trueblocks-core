@@ -224,7 +224,7 @@ bool addressVisitFunc(const string_q& path, void* data) {
         CIndexArchive archive(READING_ARCHIVE);
         archive.ReadIndexFromBinary(path);
         for (uint64_t i = 0; i < archive.nAddrs; i++) {
-            CAddressRecord_base* rec = &archive.addresses[i];
+            CIndexedAddress* rec = &archive.addresses[i];
             address_t addr = bytes_2_Addr(rec->bytes);
             bool ret = (*visitor->addrFunc)(addr, visitor->callData);
             if (!ret)
@@ -261,7 +261,7 @@ bool smartContractVisitFunc(const string_q& path, void* data) {
         CIndexArchive archive(READING_ARCHIVE);
         archive.ReadIndexFromBinary(path);
         for (uint64_t i = 0; i < archive.nAddrs; i++) {
-            CAddressRecord_base* rec = &archive.addresses[i];
+            CIndexedAddress* rec = &archive.addresses[i];
             address_t addr = bytes_2_Addr(rec->bytes);
             if (hasCodeAt(addr, visitor->range.first)) {
                 bool ret = (*visitor->addrFunc)(addr, visitor->callData);
@@ -291,7 +291,7 @@ bool forEverySmartContractInIndex(ADDRESSFUNC func, void* data) {
 //        uint32_t cnt = 0;
 //        CAppearanceArray apps;
 //        for (uint64_t a = 0 ; a < chunk.nAddrs ; a++) {
-//            CAddressRecord_base* addr = &chunk.addresses[a];
+//            CIndexedAddress* addr = &chunk.addresses[a];
 //            for (uint64_t p = addr->offset ; p < (addr->offset + addr->cnt) ; p++) {
 //                CAppearance_base* app =&chunk.appearances[p];
 //                if (app->txid == 99998) {

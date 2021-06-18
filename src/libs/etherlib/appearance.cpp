@@ -408,9 +408,9 @@ bool foundPot(APPEARANCEFUNC func, void* data, blknum_t bn, blknum_t tx, blknum_
 }
 
 //----------------------------------------------------------------
-int findAppearance(const void* v1, const void* v2) {
-    const CAddressRecord_base* at1 = (CAddressRecord_base*)v1;  // NOLINT
-    const CAddressRecord_base* at2 = (CAddressRecord_base*)v2;  // NOLINT
+int findAddresses(const void* v1, const void* v2) {
+    const CIndexedAddress* at1 = (CIndexedAddress*)v1;  // NOLINT
+    const CIndexedAddress* at2 = (CIndexedAddress*)v2;  // NOLINT
     for (size_t i = 0; i < 20; i++) {
         int ret = at1->bytes[i] - at2->bytes[i];
         if (ret)

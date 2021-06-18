@@ -27,7 +27,7 @@ extern void writeIndexAsAscii(const string_q& outFn, const CStringArray& lines);
 extern bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines, FILEVISITOR pinFunc = nullptr,
                                void* pinFuncData = nullptr);
 extern size_t readIndexFromBinary(const string_q& inFn, uint64_t& nApps, const CStringArray& lines);
-extern bool readIndexHeaderFromBinary(const string_q& inFn, CHeaderRecord_base* header);
+extern bool readIndexHeaderFromBinary(const string_q& inFn, CIndexHeader* header);
 //--------------------------------------------------------------
 typedef bool (*INDEXCHUNKFUNC)(CIndexArchive& chunk, void* data);
 typedef bool (*INDEXBLOOMFUNC)(CBloomArray& blooms, void* data);

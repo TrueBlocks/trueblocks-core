@@ -5,5 +5,5 @@ fields = blknum bn|\
         blknum tc|\
         address addr|\
         string reason
-includes = etherlib.h|appearance.h
+includes = etherlib.h|indexarchive.h
 display_str = bn, tx, tc, addr, reason

@@ -45,8 +45,8 @@ class COptions : public CAbiOptions {
     string_q load;
     // END_CODE_DECLARE
 
-    CAppearanceArray_base apps;
-    CAppearanceArray_base tmp;
+    CAppearanceArray_base2 apps;
+    CAppearanceArray_base2 tmp;
     CMonitorArray allMonitors;
     CMonitorArray possibles;
     address_t accountedFor;
@@ -86,7 +86,7 @@ class COptions : public CAbiOptions {
     void Init(void);
 
     bool setDisplayFormatting(void);
-    bool loadOneAddress(const CMonitor& monitor, CAppearanceArray_base& arrayOut);
+    bool loadOneAddress(const CMonitor& monitor, CAppearanceArray_base2& arrayOut);
     bool loadAllAppearances(void);
 
     bool process_clean(void);
