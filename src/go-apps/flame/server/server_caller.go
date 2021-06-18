@@ -158,7 +158,7 @@ func CallOneExtra(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd s
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
 	w.Header().Set("Access-Control-Allow-Methods", "PUT, POST, GET, DELETE, OPTIONS")
-	if strings.Contains(output, "\"error\":") {
+	if strings.Contains(output, "\"errors\":") {
 		w.WriteHeader(http.StatusBadRequest)
 	} else {
 		w.WriteHeader(http.StatusOK)
