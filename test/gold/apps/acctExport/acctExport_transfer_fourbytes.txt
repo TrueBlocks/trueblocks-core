@@ -26,31 +26,12 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --max_records 10 0xa9059cb
           "0x000000000000000000000000eba60d324c2546459e1e9dd4c7e740ca80134588",
           "0x000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b"
         ],
-        "data": "0x0000000000000000000000000000000000000000000000000de0b6b3a7640000",
-        "articulatedLog": {
-          "name": "Transfer",
-          "inputs": {
-            "_amount": "1000000000000000000",
-            "_from": "0xeba60d324c2546459e1e9dd4c7e740ca80134588",
-            "_to": "0xf503017d7baf7fbc0fff7492b751025c6a78179b"
-          }
-        },
-        "compressedLog": "Transfer(0xeba60d324c2546459e1e9dd4c7e740ca80134588, 0xf503017d7baf7fbc0fff7492b751025c6a78179b, 1000000000000000000); "
+        "data": "0x0000000000000000000000000000000000000000000000000de0b6b3a7640000"
       }
     ],
     "status": 1
   },
-  "articulatedTx": {
-    "name": "transfer",
-    "inputs": {
-      "_to": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "_value": "1000000000000000000"
-    },
-    "outputs": {
-      "_success": ""
-    }
-  },
-  "compressedTx": "transfer(0xf503017d7baf7fbc0fff7492b751025c6a78179b, 1000000000000000000); ",
+  "compressedTx": "0xa9059cbb ( stub: 000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b0000000000000000000000000000000000000000000000000de0b6b3a7640000 )",
   "gasCost": 149192000000000,
   "gasUsed": 37298,
   "date": "2019-11-02 02:56:10 UTC",
@@ -81,31 +62,12 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --max_records 10 0xa9059cb
           "0x0000000000000000000000008c492d5f763841767362d716e3e69511f0527791",
           "0x000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b"
         ],
-        "data": "0x00000000000000000000000000000000000000000000010eff0fae29b1bc0000",
-        "articulatedLog": {
-          "name": "Transfer",
-          "inputs": {
-            "_amount": "4999000000000000000000",
-            "_from": "0x8c492d5f763841767362d716e3e69511f0527791",
-            "_to": "0xf503017d7baf7fbc0fff7492b751025c6a78179b"
-          }
-        },
-        "compressedLog": "Transfer(0x8c492d5f763841767362d716e3e69511f0527791, 0xf503017d7baf7fbc0fff7492b751025c6a78179b, 4999000000000000000000); "
+        "data": "0x00000000000000000000000000000000000000000000010eff0fae29b1bc0000"
       }
     ],
     "status": 1
   },
-  "articulatedTx": {
-    "name": "transfer",
-    "inputs": {
-      "_to": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "_value": "4999000000000000000000"
-    },
-    "outputs": {
-      "_success": ""
-    }
-  },
-  "compressedTx": "transfer(0xf503017d7baf7fbc0fff7492b751025c6a78179b, 4999000000000000000000); ",
+  "compressedTx": "0xa9059cbb ( stub: 000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b00000000000000000000000000000000000000000000010eff0fae29b1bc0000 )",
   "gasCost": 112130000000000,
   "gasUsed": 22426,
   "date": "2019-11-02 03:04:19 UTC",
@@ -136,31 +98,12 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --max_records 10 0xa9059cb
           "0x0000000000000000000000003f1c1e14fd919415010c03f9de29cbafd5866e81",
           "0x000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b"
         ],
-        "data": "0x0000000000000000000000000000000000000000000000878678326eac900000",
-        "articulatedLog": {
-          "name": "Transfer",
-          "inputs": {
-            "_amount": "2500000000000000000000",
-            "_from": "0x3f1c1e14fd919415010c03f9de29cbafd5866e81",
-            "_to": "0xf503017d7baf7fbc0fff7492b751025c6a78179b"
-          }
-        },
-        "compressedLog": "Transfer(0x3f1c1e14fd919415010c03f9de29cbafd5866e81, 0xf503017d7baf7fbc0fff7492b751025c6a78179b, 2500000000000000000000); "
+        "data": "0x0000000000000000000000000000000000000000000000878678326eac900000"
       }
     ],
     "status": 1
   },
-  "articulatedTx": {
-    "name": "transfer",
-    "inputs": {
-      "_to": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "_value": "2500000000000000000000"
-    },
-    "outputs": {
-      "_success": ""
-    }
-  },
-  "compressedTx": "transfer(0xf503017d7baf7fbc0fff7492b751025c6a78179b, 2500000000000000000000); ",
+  "compressedTx": "0xa9059cbb ( stub: 000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b0000000000000000000000000000000000000000000000878678326eac900000 )",
   "gasCost": 223620000000000,
   "gasUsed": 22362,
   "date": "2019-11-02 18:23:31 UTC",
