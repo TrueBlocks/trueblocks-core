@@ -32,6 +32,7 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,is_customizable
 10080,apps,Accounts,export,acctExport,unripe,u,,false,false,false,false,header,switch,<boolean>,enable search of unripe (neither staged nor finalized) folder|(assumes --staging)
 10092,apps,Accounts,export,acctExport,load,,,false,false,false,false,header,flag,<string>,a comma separated list of dynamic traversers to load
 10093,apps,Accounts,export,acctExport,reversed,,,false,false,false,false,header,switch,<boolean>,produce results in reverse chronological order
+10094,apps,Accounts,export,acctExport,by_date,y,,false,false,false,false,header,switch,<boolean>,produce results sorted by date (default is to report by address)
 10460,apps,Accounts,export,acctExport,,,,false,false,true,true,--,description,,Export full detail of transactions for one or more addresses.
 10470,apps,Accounts,export,acctExport,,,,false,false,false,false,--,note,,An `address` must start with '0x' and be forty-two characters long.
 

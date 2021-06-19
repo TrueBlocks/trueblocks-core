@@ -70,38 +70,7 @@ int main(int argc, const char* argv[]) {
             forEveryAppearance(traversers, options.apps, &options);
 
         } else {
-            string_q fileName = getCachePath("objs/" + options.load);
-            cerr << fileName << endl;
-            if (!fileExists(fileName)) {
-                replace(fileName, "/objs/", "/objs/lib");
-                fileName = fileName + ".so";
-                cerr << fileName << endl;
-            }
-            if (!fileExists(fileName)) {
-                fileName = substitute(fileName, ".so", ".dylib");
-                cerr << fileName << endl;
-            }
-            if (!fileExists(fileName)) {
-                LOG_ERR("Could not load dynamic traverser for ", fileName, ".");
-            } else {
-                CDynamicTraverser lib(fileName);
-                if (lib.is_valid()) {
-                    freshenTimestamps(getBlockProgress().client);
-                    loadTimestamps(&expContext().tsMemMap, expContext().tsCnt);
-                    auto factory = lib.get_function<CTraverser*(void)>("makeTraverser");
-                    CTraverser* trav = factory();
-                    if (trav->dataFunc == noopFunc)
-                        trav->dataFunc = loadTx_Func;
-                    trav->travRange = options.blockRange;
-                    for (auto monitor : options.allMonitors) {
-                        trav->accountedFor = monitor.address;
-                        options.apps.clear();
-                        options.curMonitor = &monitor;
-                        monitor.loadAppsFromPath(options.apps, "", visitOnLoad, &options);
-                        trav->traverse(options.apps, &options);
-                    }
-                }
-            }
+            options.handle_traversers();
         }
 
         if (shouldQuit())

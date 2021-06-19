@@ -44,6 +44,7 @@ class COptions : public CAbiOptions {
     bool unripe;
     string_q load;
     bool reversed;
+    bool by_date;
     // END_CODE_DECLARE
 
     CMonitoredAppearanceArray apps;
@@ -89,6 +90,8 @@ class COptions : public CAbiOptions {
 
     bool setDisplayFormatting(void);
     bool loadAllAppearances(void);
+
+    bool handle_traversers(void);
 
     bool process_clean(void);
     bool process_rm(const CAddressArray& addrs);

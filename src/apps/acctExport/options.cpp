@@ -42,6 +42,7 @@ static const COption params[] = {
     COption("unripe", "u", "", OPT_HIDDEN | OPT_SWITCH, "enable search of unripe (neither staged nor finalized) folder (assumes --staging)"),  // NOLINT
     COption("load", "", "<string>", OPT_HIDDEN | OPT_FLAG, "a comma separated list of dynamic traversers to load"),
     COption("reversed", "", "", OPT_HIDDEN | OPT_SWITCH, "produce results in reverse chronological order"),
+    COption("by_date", "y", "", OPT_HIDDEN | OPT_SWITCH, "produce results sorted by date (default is to report by address)"),  // NOLINT
     COption("", "", "", OPT_DESCRIPTION, "Export full detail of transactions for one or more addresses."),
     // clang-format on
     // END_CODE_OPTIONS
@@ -168,6 +169,9 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "--reversed") {
             reversed = true;
 
+        } else if (arg == "-y" || arg == "--by_date") {
+            by_date = true;
+
         } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
@@ -220,6 +224,7 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST_BOOL("unripe", unripe);
     LOG_TEST("load", load, (load == ""));
     LOG_TEST_BOOL("reversed", reversed);
+    LOG_TEST_BOOL("by_date", by_date);
     // END_DEBUG_DISPLAY
 
     if (Mocked(""))
@@ -370,8 +375,27 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
     } else {
-        if (load.empty() && !loadAllAppearances())
-            return false;
+        if (load.empty()) {
+            if (!loadAllAppearances())
+                return false;
+
+        } else {
+            string_q fileName = getCachePath("objs/" + load);
+            LOG_INFO("Trying to load dynamic library ", fileName);
+            if (!fileExists(fileName)) {
+                replace(fileName, "/objs/", "/objs/lib");
+                fileName = fileName + ".so";
+                LOG_INFO("Trying to load dynamic library ", fileName);
+            }
+            if (!fileExists(fileName)) {
+                fileName = substitute(fileName, ".so", ".dylib");
+                LOG_INFO("Trying to load dynamic library ", fileName);
+            }
+            if (fileExists(fileName))
+                load = fileName;
+            else
+                return usage("Could not load dynamic traverser for " + fileName + ".");
+        }
     }
 
     return true;
@@ -412,6 +436,7 @@ void COptions::Init(void) {
     unripe = false;
     load = "";
     reversed = false;
+    by_date = false;
     // END_CODE_INIT
 
     bp = getBlockProgress(BP_ALL);
