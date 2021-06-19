@@ -58,7 +58,7 @@ typedef vector<CIndexedAppearance> CIndexedAppearanceArray;
 inline bool operator<(const CIndexedAppearance& v1, const CIndexedAppearance& v2) {
     return ((v1.blk != v2.blk) ? v1.blk < v2.blk : v1.txid < v2.txid);
 }
-inline bool sortAppearanceBaseReverse(const CIndexedAppearance& v1, const CIndexedAppearance& v2) {
+inline bool sortIndexedAppearanceReverse(const CIndexedAppearance& v1, const CIndexedAppearance& v2) {
     return !((v1.blk != v2.blk) ? v1.blk < v2.blk : v1.txid < v2.txid);
 }
 

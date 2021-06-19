@@ -53,9 +53,9 @@ bool COptions::queryFlatFile(const string_q& path, bool sorted) {
             char* pos = &found[58];
             *pos = '\0';
             stats.nStageHits++;
-            CMonitoredAppearance app;
             string_q s = found;
             nextTokenClear(s, '\t');
+            CMonitoredAppearance app;
             app.blk = (uint32_t)str_2_Uint(nextTokenClear(s, '\t'));
             app.txid = (uint32_t)str_2_Uint(found);
             tmp.push_back(app);

@@ -74,7 +74,7 @@ bool COptions::handle_status(ostream& os) {
         LOG8("Reporting on monitors");
         if (!monitors.readBinaryCache("monitors", details)) {
             CMonitor m;
-            string_q thePath = m.getMonitorPath("");
+            string_q thePath = m.getMonitorPath("", FM_PRODUCTION);
             monitors.type = monitors.getRuntimeClass()->m_ClassName;
             expContext().types[monitors.type] = monitors.getRuntimeClass();
             monitors.path = pathName("monitors");
@@ -384,7 +384,8 @@ bool noteMonitor(const string_q& path, void* data) {
                 mdi.firstApp = NOPOS;
                 mdi.latestApp = NOPOS;
             }
-            mdi.nApps = fileSize(path) / sizeof(CMonitoredAppearance);
+            CMonitor m;
+            mdi.nApps = m.nRecords(path);
             mdi.sizeInBytes = fileSize(path);
         } else {
             mdi = CMonitorCacheItem();

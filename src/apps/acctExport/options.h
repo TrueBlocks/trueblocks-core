@@ -43,6 +43,7 @@ class COptions : public CAbiOptions {
     bool staging;
     bool unripe;
     string_q load;
+    bool reversed;
     // END_CODE_DECLARE
 
     CMonitoredAppearanceArray apps;

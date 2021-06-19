@@ -298,6 +298,14 @@ paths:
         explode: true
         schema:
           type: string
+      - name: reversed
+        in: query
+        description: produce results in reverse chronological order
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
       responses:
         "200":
           description: status of the scraper

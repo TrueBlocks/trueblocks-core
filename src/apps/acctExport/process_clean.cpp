@@ -16,36 +16,19 @@ bool cleanMonitorFile(const string_q& path, void* data) {
         if (endsWith(path, "acct.bin")) {
             if (isTestMode()) {
                 CMonitor m;
-                if (path > m.getMonitorPath("0x9"))
+                if (path > m.getMonitorPath("0x9", FM_PRODUCTION))
                     return false;
             }
 
-            size_t sizeThen = (fileSize(path) / sizeof(CMonitoredAppearance));
-            blknum_t nRecords = (fileSize(path) / sizeof(CMonitoredAppearance));
-            if (!nRecords)
+            CMonitor m;
+            size_t sizeThen = m.nRecords(path);
+            if (!sizeThen)
                 EXIT_NOMSG(!shouldQuit());
 
-            CMonitoredAppearance* buffer = new CMonitoredAppearance[nRecords];
-            if (!buffer)
-                EXIT_NOMSG(!shouldQuit());  // continue anyway
-
-            bzero((void*)buffer, nRecords * sizeof(CMonitoredAppearance));  // NOLINT
-            CArchive archiveIn(READING_ARCHIVE);
-            if (!archiveIn.Lock(path, modeReadOnly, LOCK_NOWAIT)) {
-                archiveIn.Release();
-                delete[] buffer;
-                EXIT_FAIL("Could not open cache file.");
-            }
-            archiveIn.Read(buffer, sizeof(CMonitoredAppearance), nRecords);
-            archiveIn.Release();
-
             CMonitoredAppearanceArray apps;
-            apps.reserve(nRecords);
-            for (size_t i = 0; i < nRecords; i++) {
-                apps.push_back(buffer[i]);
-            }
+            if (!m.loadAppearances(path, apps))
+                EXIT_FAIL("Could not open cache file.");
             sort(apps.begin(), apps.end());
-            delete[] buffer;
 
             CMonitoredAppearance prev;
             CMonitoredAppearanceArray deduped;
@@ -66,10 +49,9 @@ bool cleanMonitorFile(const string_q& path, void* data) {
             if (!first)
                 cout << ",";
             first = false;
-            CMonitor m;
-            size_t sizeNow = (fileSize(path) / sizeof(CMonitoredAppearance));
+            size_t sizeNow = m.nRecords(path);
             cout << "{ ";
-            cout << "\"path\": \"" << substitute(path, m.getMonitorPath(""), "$CACHE/") << "\", ";
+            cout << "\"path\": \"" << substitute(path, m.getMonitorPath("", FM_PRODUCTION), "$CACHE/") << "\", ";
             cout << "\"sizeThen\": " << sizeThen << ", ";
             cout << "\"sizeNow\": " << sizeNow;
             if (sizeThen > sizeNow)
@@ -85,7 +67,7 @@ bool cleanMonitorFile(const string_q& path, void* data) {
 bool COptions::process_clean(void) {
     CMonitor m;
     cout << "[";
-    bool ret = forEveryFileInFolder(m.getMonitorPath(""), cleanMonitorFile, NULL);
+    bool ret = forEveryFileInFolder(m.getMonitorPath("", FM_PRODUCTION), cleanMonitorFile, NULL);
     cout << "]";
     return ret;
 }

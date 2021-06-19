@@ -41,6 +41,7 @@ static const COption params[] = {
     COption("staging", "s", "", OPT_HIDDEN | OPT_SWITCH, "enable search of staging (not yet finalized) folder"),
     COption("unripe", "u", "", OPT_HIDDEN | OPT_SWITCH, "enable search of unripe (neither staged nor finalized) folder (assumes --staging)"),  // NOLINT
     COption("load", "", "<string>", OPT_HIDDEN | OPT_FLAG, "a comma separated list of dynamic traversers to load"),
+    COption("reversed", "", "", OPT_HIDDEN | OPT_SWITCH, "produce results in reverse chronological order"),
     COption("", "", "", OPT_DESCRIPTION, "Export full detail of transactions for one or more addresses."),
     // clang-format on
     // END_CODE_OPTIONS
@@ -164,6 +165,9 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "--load") {
             return flag_required("load");
 
+        } else if (arg == "--reversed") {
+            reversed = true;
+
         } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
@@ -215,6 +219,7 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST_BOOL("staging", staging);
     LOG_TEST_BOOL("unripe", unripe);
     LOG_TEST("load", load, (load == ""));
+    LOG_TEST_BOOL("reversed", reversed);
     // END_DEBUG_DISPLAY
 
     if (Mocked(""))
@@ -281,7 +286,8 @@ bool COptions::parseArguments(string_q& command) {
         monitor.setValueByName("name", toLower(addr));
         monitor.clearMonitorLocks();
         monitor.finishParse();
-        monitor.fm_mode = (fileExists(monitor.getMonitorPath(monitor.address)) ? FM_PRODUCTION : FM_STAGING);
+        monitor.fm_mode =
+            (fileExists(monitor.getMonitorPath(monitor.address, FM_PRODUCTION)) ? FM_PRODUCTION : FM_STAGING);
         if (monitor.monitorExists()) {
             string_q unused;
             if (monitor.isMonitorLocked(unused))
@@ -290,7 +296,7 @@ bool COptions::parseArguments(string_q& command) {
                     "running or it did not end cleanly the\n\tlast time it ran. "
                     "Quit the already running program or, if it is not running, "
                     "remove the lock\n\tfile: " +
-                    monitor.getMonitorPath(addr) + ".lck'. Proceeding anyway...");
+                    monitor.getMonitorPath(addr, FM_PRODUCTION) + ".lck'. Proceeding anyway...");
             string_q msg;
             if (monitor.isMonitorLocked(msg))  // If locked, we fail
                 return usage(msg);
@@ -351,11 +357,10 @@ bool COptions::parseArguments(string_q& command) {
     if (count) {
         cout << exportPreamble(expContext().fmtMap["header"], GETRUNTIME_CLASS(CMonitorCount)->m_ClassName);
         for (auto monitor : allMonitors) {
-            string_q path = monitor.getMonitorPath(monitor.address);
             CMonitorCount monCount;
             monCount.address = monitor.address;
-            monCount.fileSize = fileSize(path);
-            monCount.nRecords = fileSize(path) / sizeof(CMonitoredAppearance);
+            monCount.fileSize = monitor.fileSize();
+            monCount.nRecords = monitor.nRecords();
             cout << ((isJson() && !firstOut) ? ", " : "");
             cout << monCount;
             firstOut = false;
@@ -407,6 +412,7 @@ void COptions::Init(void) {
     staging = false;
     unripe = false;
     load = "";
+    reversed = false;
     // END_CODE_INIT
 
     bp = getBlockProgress(BP_ALL);

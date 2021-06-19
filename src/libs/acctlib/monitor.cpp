@@ -312,6 +312,22 @@ const char* STR_DISPLAY_MONITOR = "";
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 //---------------------------------------------------------------------------
+size_t CMonitor::fileSize(const string_q& path) const {
+    return ::fileSize(path);
+}
+
+size_t CMonitor::nRecords(const string_q& path) const {
+    return ::fileSize(path) / sizeof(CMonitoredAppearance);
+}
+
+size_t CMonitor::fileSize(void) const {
+    return this->fileSize(getMonitorPath(address, FM_PRODUCTION));
+}
+
+size_t CMonitor::nRecords(void) const {
+    return this->nRecords(getMonitorPath(address, FM_PRODUCTION));
+}
+
 bool CMonitor::openForWriting(void) {
     if (tx_cache != NULL)
         return true;
@@ -352,15 +368,16 @@ string_q CMonitor::getMonitorLast(const address_t& addr, freshen_e mode) const {
 
 //---------------------------------------------------------------------------
 string_q CMonitor::getMonitorDels(const address_t& addr, freshen_e mode) const {
-    return getMonitorPath(addr) + ".deleted";
+    return getMonitorPath(addr, FM_PRODUCTION) + ".deleted";
 }
 
 //--------------------------------------------------------------------------------
 blknum_t CMonitor::getLastVisited(bool fresh) const {
     if (lastVisitedBlock == NOPOS || fresh) {
         // If the monitor exists, the next block is stored in the database...
-        if (fileExists(getMonitorLast(address))) {
-            ((CMonitor*)this)->lastVisitedBlock = str_2_Uint(asciiFileToString(getMonitorLast(address)));  // NOLINT
+        if (fileExists(getMonitorLast(address, FM_PRODUCTION))) {
+            ((CMonitor*)this)->lastVisitedBlock =
+                str_2_Uint(asciiFileToString(getMonitorLast(address, FM_PRODUCTION)));  // NOLINT
 
         } else {
             // Accounts can receive ETH counter-factually. By default, we ignore
@@ -377,16 +394,16 @@ blknum_t CMonitor::getLastVisited(bool fresh) const {
 
 //-----------------------------------------------------------------------
 blknum_t CMonitor::getLastBlockInMonitor(void) const {
-    return str_2_Uint(asciiFileToString(getMonitorLast(address)));
+    return str_2_Uint(asciiFileToString(getMonitorLast(address, FM_PRODUCTION)));
 }
 
 //-----------------------------------------------------------------------
 bool CMonitor::monitorExists(void) const {
-    if (fileExists(getMonitorPath(address)))
+    if (fileExists(getMonitorPath(address, FM_PRODUCTION)))
         return true;
-    if (fileExists(getMonitorLast(address)))
+    if (fileExists(getMonitorLast(address, FM_PRODUCTION)))
         return true;
-    if (fileExists(getMonitorDels(address)))
+    if (fileExists(getMonitorDels(address, FM_PRODUCTION)))
         return true;
     return false;
 }
@@ -400,17 +417,17 @@ bool CMonitor::monitorExists(void) const {
 
 //--------------------------------------------------------------------------------
 bool CMonitor::isMonitorLocked(string_q& msg) const {
-    checkLock(getMonitorPath(address), "cache");
-    checkLock(getMonitorLast(address), "last block");
-    checkLock(getMonitorDels(address), "marker");
+    checkLock(getMonitorPath(address, FM_PRODUCTION), "cache");
+    checkLock(getMonitorLast(address, FM_PRODUCTION), "last block");
+    checkLock(getMonitorDels(address, FM_PRODUCTION), "marker");
     return false;
 }
 
 //--------------------------------------------------------------------------------
 bool CMonitor::clearMonitorLocks(void) {
-    ::remove((getMonitorPath(address) + ".lck").c_str());
-    ::remove((getMonitorLast(address) + ".lck").c_str());
-    ::remove((getMonitorDels(address) + ".lck").c_str());
+    ::remove((getMonitorPath(address, FM_PRODUCTION) + ".lck").c_str());
+    ::remove((getMonitorLast(address, FM_PRODUCTION) + ".lck").c_str());
+    ::remove((getMonitorDels(address, FM_PRODUCTION) + ".lck").c_str());
     return true;
 }
 
@@ -438,8 +455,8 @@ void CMonitor::moveToProduction(void) {
     bool lastExists = fileExists(getMonitorLast(address, FM_STAGING));
     lockSection();
     if (binExists || lastExists) {
-        doMoveFile(getMonitorPath(address, FM_STAGING), getMonitorPath(address));
-        doMoveFile(getMonitorLast(address, FM_STAGING), getMonitorLast(address));
+        doMoveFile(getMonitorPath(address, FM_STAGING), getMonitorPath(address, FM_PRODUCTION));
+        doMoveFile(getMonitorLast(address, FM_STAGING), getMonitorLast(address, FM_PRODUCTION));
     } else {
         // For some reason (user quit, UI switched to adding a different address to monitor, something went
         // wrong...) the binary cache was not created. Cleanup everything. The user will have to start over.
@@ -451,17 +468,17 @@ void CMonitor::moveToProduction(void) {
 
 //-----------------------------------------------------------------------
 bool CMonitor::isDeleted(void) const {
-    return fileExists(getMonitorDels(address));
+    return fileExists(getMonitorDels(address, FM_PRODUCTION));
 }
 
 //-----------------------------------------------------------------------
 void CMonitor::deleteMonitor(void) {
-    stringToAsciiFile(getMonitorDels(address), Now().Format(FMT_EXPORT));
+    stringToAsciiFile(getMonitorDels(address, FM_PRODUCTION), Now().Format(FMT_EXPORT));
 }
 
 //-----------------------------------------------------------------------
 void CMonitor::undeleteMonitor(void) {
-    ::remove(getMonitorDels(address).c_str());
+    ::remove(getMonitorDels(address, FM_PRODUCTION).c_str());
 }
 
 //---------------------------------------------------------------------------
@@ -472,9 +489,9 @@ void removeFile(const string_q& fn) {
 
 //-----------------------------------------------------------------------
 void CMonitor::removeMonitor(void) {
-    removeFile(getMonitorPath(address));
-    removeFile(getMonitorLast(address));
-    removeFile(getMonitorDels(address));
+    removeFile(getMonitorPath(address, FM_PRODUCTION));
+    removeFile(getMonitorLast(address, FM_PRODUCTION));
+    removeFile(getMonitorDels(address, FM_PRODUCTION));
 }
 
 //-----------------------------------------------------------------------
@@ -484,6 +501,34 @@ bloom_t CMonitor::getBloom(void) {
         bloom = addr_2_Bloom(address);
     }
     return bloom;
+}
+
+//----------------------------------------------------------------
+bool CMonitor::loadAppearances(const string_q& path, CMonitoredAppearanceArray& apps) const {
+    blknum_t nRecs = this->nRecords(path);
+    if (!nRecs)
+        return false;
+
+    CMonitoredAppearance* buffer = new CMonitoredAppearance[nRecs];
+    if (!buffer)
+        return false;
+
+    bzero((void*)buffer, nRecs * sizeof(CMonitoredAppearance));  // NOLINT
+    CArchive archiveIn(READING_ARCHIVE);
+    if (!archiveIn.Lock(path, modeReadOnly, LOCK_NOWAIT)) {
+        archiveIn.Release();
+        delete[] buffer;
+        return false;
+    }
+    archiveIn.Read(buffer, sizeof(CMonitoredAppearance), nRecs);
+    archiveIn.Release();
+
+    apps.reserve(apps.size() + nRecs);
+    for (size_t i = 0; i < nRecs; i++)
+        apps.push_back(buffer[i]);
+
+    delete[] buffer;
+    return true;
 }
 
 //----------------------------------------------------------------

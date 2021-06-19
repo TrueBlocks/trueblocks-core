@@ -7,4 +7,4 @@ fields = blknum nAppearances (nowrite)|\
         blknum latestAppearance (nowrite)|\
         suint64 sizeInBytes (nowrite)|\
         freshen_e fm_mode=FM_PRODUCTION (nowrite)
-includes = etherlib.h|transaction.h|reconciliation.h|ethstate.h
+includes = etherlib.h|transaction.h|reconciliation.h|ethstate.h|monitoredapp.h

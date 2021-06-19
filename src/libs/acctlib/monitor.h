@@ -19,38 +19,12 @@
 #include "transaction.h"
 #include "reconciliation.h"
 #include "ethstate.h"
+#include "monitoredapp.h"
 
 namespace qblocks {
 
 // EXISTING_CODE
 typedef enum { FM_PRODUCTION, FM_STAGING } freshen_e;
-//----------------------------------------------------------------
-struct CMonitoredAppearance {
-    uint32_t blk;
-    uint32_t txid;
-    CMonitoredAppearance(void) {
-        blk = txid = 0;
-    }
-    CMonitoredAppearance(uint32_t b, uint32_t t) : blk(b), txid(t) {
-    }
-    CMonitoredAppearance(const string_q& b, const string_q& t)
-        : blk((uint32_t)str_2_Uint(b)), txid((uint32_t)str_2_Uint(t)) {
-    }
-    CMonitoredAppearance(string_q& line) {  // NOLINT
-        replaceAll(line, ".", "\t");
-        if (!contains(line, "\t"))
-            return;
-        blk = (uint32_t)str_2_Uint(nextTokenClear(line, '\t'));
-        txid = (uint32_t)str_2_Uint(nextTokenClear(line, '\t'));
-    }
-};
-typedef vector<CMonitoredAppearance> CMonitoredAppearanceArray;
-inline bool operator<(const CMonitoredAppearance& v1, const CMonitoredAppearance& v2) {
-    return ((v1.blk != v2.blk) ? v1.blk < v2.blk : v1.txid < v2.txid);
-}
-inline bool sortAppearanceBaseReverse(const CMonitoredAppearance& v1, const CMonitoredAppearance& v2) {
-    return !((v1.blk != v2.blk) ? v1.blk < v2.blk : v1.txid < v2.txid);
-}
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
@@ -73,6 +47,7 @@ class CMonitor : public CAccountName {
 
     // EXISTING_CODE
   public:
+    blknum_t lastVisitedBlock;
     bloom_t bloom;
     CArchive* tx_cache;
 
@@ -87,9 +62,14 @@ class CMonitor : public CAccountName {
     blknum_t getLastVisited(bool fresh = false) const;
     blknum_t getLastBlockInMonitor(void) const;
 
-    string_q getMonitorPath(const address_t& addr, freshen_e mode = FM_PRODUCTION) const;
-    string_q getMonitorLast(const address_t& addr, freshen_e mode = FM_PRODUCTION) const;
-    string_q getMonitorDels(const address_t& addr, freshen_e mode = FM_PRODUCTION) const;
+    string_q getMonitorPath(const address_t& addr, freshen_e mode) const;
+    string_q getMonitorLast(const address_t& addr, freshen_e mode) const;
+    string_q getMonitorDels(const address_t& addr, freshen_e mode) const;
+    bool loadAppearances(const string_q& path, CMonitoredAppearanceArray& apps) const;
+    size_t fileSize(const string_q& path) const;
+    size_t nRecords(const string_q& path) const;
+    size_t fileSize(void) const;
+    size_t nRecords(void) const;
 
     bool monitorExists(void) const;
     bool isMonitorLocked(string_q& msg) const;
@@ -118,7 +98,6 @@ class CMonitor : public CAccountName {
     bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
-    blknum_t lastVisitedBlock;
     // EXISTING_CODE
 };
 

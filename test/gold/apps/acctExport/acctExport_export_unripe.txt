@@ -37,6 +37,7 @@ acctExport 0x001d14804b399c6ef80e64576f657660804fec0b --first_block 100000 --las
 	-s  (--staging)       enable search of staging (not yet finalized) folder
 	-u  (--unripe)        enable search of unripe (neither staged nor finalized) folder (assumes --staging)
 	    (--load <str>)    a comma separated list of dynamic traversers to load
+	    (--reversed)      produce results in reverse chronological order
 	#### Hidden options
 
 	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
