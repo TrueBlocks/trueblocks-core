@@ -96,7 +96,8 @@ int main(int argc, const char* argv[]) {
                     for (auto monitor : options.allMonitors) {
                         trav->accountedFor = monitor.address;
                         options.apps.clear();
-                        options.loadOneAddress(monitor, options.apps);
+                        options.curMonitor = &monitor;
+                        monitor.loadAppsFromPath(options.apps, "", visitOnLoad, &options);
                         trav->traverse(options.apps, &options);
                     }
                 }

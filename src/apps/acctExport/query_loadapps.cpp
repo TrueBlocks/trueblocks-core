@@ -6,22 +6,15 @@
 #include "options.h"
 
 //-----------------------------------------------------------------------
-bool COptions::loadOneAddress(const CMonitor& monitor, CMonitoredAppearanceArray& arrayOut) {
-    ENTER("loadOneAddress");
-
-    string_q path = monitor.getMonitorPathProduction(monitor.address);
-    if (!monitor.loadAppearances(path, arrayOut))
-        EXIT_FAIL("Could not load appearances for address " + monitor.address);
-    stats.nFileRecords += monitor.nRecords();
-
-    for (const CMonitoredAppearance& app : arrayOut) {
-        if (app.blk == 0)
-            prefundAddrMap[app.txid] = toLower(monitor.address);
-        if (app.txid == 99997 || app.txid == 99998 || app.txid == 99999)
-            blkRewardMap[app.blk] = monitor.address;
-    }
-
-    EXIT_NOMSG(true);
+bool visitOnLoad(CMonitoredAppearance& app, void* data) {
+    COptions* opt = (COptions*)data;
+    ASSERT(opt->curMonitor);
+    if (app.blk == 0)
+        opt->prefundAddrMap[app.txid] = opt->curMonitor->address;
+    if (app.txid == 99997 || app.txid == 99998 || app.txid == 99999)
+        opt->blkRewardMap[app.blk] = opt->curMonitor->address;
+    opt->stats.nFileRecords++;
+    return true;
 }
 
 //-----------------------------------------------------------------------
@@ -37,8 +30,9 @@ bool COptions::loadAllAppearances(void) {
 
     } else {
         for (auto monitor : allMonitors) {
-            if (!loadOneAddress(monitor, tmp)) {
-                LOG_ERR("Could not load monitor for address " + monitor.address);
+            curMonitor = &monitor;
+            if (!monitor.loadAppsFromPath(tmp, "", visitOnLoad, this)) {
+                LOG_ERR("Could not load appearances for address " + monitor.address);
                 return false;
             }
 

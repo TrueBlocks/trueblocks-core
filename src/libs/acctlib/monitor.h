@@ -50,29 +50,23 @@ class CMonitor : public CAccountName {
     bloom_t bloom;
     CArchive* tx_cache;
 
-    CMonitor(const string_q& _addr, const string_q& _name, blknum_t fB, blknum_t lB);
-    CMonitor(const address_t& _addr, const string_q& _name);
-
     bool openForWriting(bool staging);
     void writeMonitorArray(const CMonitoredAppearanceArray& array);
-    void writeLastBlockInMonitor(blknum_t bn, bool staging);
+    void writeMonitorLastBlock(blknum_t bn, bool staging);
 
+    string_q getMonitorPath(const address_t& addr, bool staging) const;
+    string_q getMonitorPathLast(const address_t& addr, bool staging) const;
+    string_q getMonitorPathDels(const address_t& addr) const;
+
+    blknum_t loadAppsFromPath(CMonitoredAppearanceArray& apps, const string_q& path = "", MAPPFUNC func = nullptr,
+                              void* data = nullptr) const;
     blknum_t getLastVisited(bool fresh = false) const;
     blknum_t getLastBlockInMonitor(void) const;
 
-    bool loadAppearances(const string_q& path, CMonitoredAppearanceArray& apps) const;
-    string_q getMonitorPath(const address_t& addr, bool staging) const;
-    string_q getMonitorPathProduction(const address_t& addr) const;
-    string_q getMonitorPathStaging(const address_t& addr) const;
-    string_q getMonitorPathLast(const address_t& addr, bool staging) const;
-    string_q getMonitorPathLastProduction(const address_t& addr) const;
-    string_q getMonitorPathLastStaging(const address_t& addr) const;
-    string_q getMonitorPathDels(const address_t& addr) const;
+    size_t getFileSize(const string_q& path) const;
+    size_t getRecordCnt(const string_q& path) const;
 
-    size_t fileSize(const string_q& path) const;
-    size_t nRecords(const string_q& path) const;
-    size_t fileSize(void) const;
-    size_t nRecords(void) const;
+    bloom_t getBloom(void);
 
     bool monitorExists(void) const;
     bool isMonitorLocked(string_q& msg) const;
@@ -83,8 +77,6 @@ class CMonitor : public CAccountName {
     void deleteMonitor(void);
     void undeleteMonitor(void);
     void removeMonitor(void);
-
-    bloom_t getBloom(void);
     // EXISTING_CODE
     bool operator==(const CMonitor& it) const;
     bool operator!=(const CMonitor& it) const {
@@ -119,23 +111,6 @@ inline CMonitor::CMonitor(const CMonitor& mo) {
 }
 
 // EXISTING_CODE
-//--------------------------------------------------------------------------
-inline CMonitor::CMonitor(const string_q& _addr, const string_q& _name, blknum_t fB, blknum_t lB) {
-    initialize();
-    address = toLower(_addr);
-    name = _name;
-    firstAppearance = fB;
-    latestAppearance = lB;
-}
-
-//--------------------------------------------------------------------------
-inline CMonitor::CMonitor(const address_t& _addr, const string_q& _name) {
-    initialize();
-    address = toLower(_addr);
-    name = _name;
-    firstAppearance = 0;
-    latestAppearance = 0;
-}
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------

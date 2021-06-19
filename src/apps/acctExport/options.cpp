@@ -286,7 +286,7 @@ bool COptions::parseArguments(string_q& command) {
         monitor.setValueByName("name", toLower(addr));
         monitor.clearMonitorLocks();
         monitor.finishParse();
-        monitor.isStaging = !fileExists(monitor.getMonitorPathProduction(monitor.address));
+        monitor.isStaging = !fileExists(monitor.getMonitorPath(monitor.address, false));
         if (monitor.monitorExists()) {
             string_q unused;
             if (monitor.isMonitorLocked(unused))
@@ -295,7 +295,7 @@ bool COptions::parseArguments(string_q& command) {
                     "running or it did not end cleanly the\n\tlast time it ran. "
                     "Quit the already running program or, if it is not running, "
                     "remove the lock\n\tfile: " +
-                    monitor.getMonitorPathProduction(addr) + ".lck'. Proceeding anyway...");
+                    monitor.getMonitorPath(addr, false) + ".lck'. Proceeding anyway...");
             string_q msg;
             if (monitor.isMonitorLocked(msg))  // If locked, we fail
                 return usage(msg);
@@ -358,8 +358,8 @@ bool COptions::parseArguments(string_q& command) {
         for (auto monitor : allMonitors) {
             CMonitorCount monCount;
             monCount.address = monitor.address;
-            monCount.fileSize = monitor.fileSize();
-            monCount.nRecords = monitor.nRecords();
+            monCount.fileSize = monitor.getFileSize(monitor.getMonitorPath(monitor.address, false));
+            monCount.nRecords = monitor.getRecordCnt(monitor.getMonitorPath(monitor.address, false));
             cout << ((isJson() && !firstOut) ? ", " : "");
             cout << monCount;
             firstOut = false;
@@ -607,7 +607,7 @@ bool COptions::setDisplayFormatting(void) {
 // TODO(tjayrush): What does blkRewardMap do? Needs testing
 // TODO(tjayrush): Reconciliation loads traces -- plus it reduplicates the isSuicide, isGeneration, isUncle shit
 // TODO(tjayrush): writeLastEncountered is weird (in fact removed -- used to keep freshen from revisiting blocks twice
-// TODO(tjayrush): writeLastBlockInMonitor is really weird
+// TODO(tjayrush): writeMonitorLastBlock is really weird
 // TODO(tjayrush): We used to write traces sometimes
 // TODO(tjayrush): We used to cache the monitored txs - I think it was pretty fast (we used the monitor staging folder)
 // TODO(tjayrush): We used to do a ten address thing that would scan the index for ten addrs at a time and then

@@ -65,7 +65,7 @@ bool COptions::queryFlatFile(const string_q& path, bool sorted) {
         // if (tmp.size()) {
         //     lockSection();
         //     monitor->writeMonitorArray(tmp);
-        //     monitor->writeLastBlockInMonitor(fileRange.first + 1, monitor.isStaging);
+        //     monitor->writeMonitorLastBlock(fileRange.first + 1, monitor.isStaging);
         //     unlockSection();
         // }
     }

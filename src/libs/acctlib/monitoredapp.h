@@ -40,6 +40,7 @@ struct CMonitoredAppearance {
 
 //----------------------------------------------------------------
 typedef vector<CMonitoredAppearance> CMonitoredAppearanceArray;
+typedef bool (*MAPPFUNC)(CMonitoredAppearance& app, void* data);
 
 //----------------------------------------------------------------
 inline bool operator<(const CMonitoredAppearance& v1, const CMonitoredAppearance& v2) {

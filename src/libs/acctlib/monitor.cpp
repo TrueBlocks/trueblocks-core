@@ -301,23 +301,13 @@ const char* STR_DISPLAY_MONITOR = "";
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 //---------------------------------------------------------------------------
-size_t CMonitor::fileSize(const string_q& path) const {
+size_t CMonitor::getFileSize(const string_q& path) const {
     return ::fileSize(path);
 }
 
 //-------------------------------------------------------------------------
-size_t CMonitor::nRecords(const string_q& path) const {
+size_t CMonitor::getRecordCnt(const string_q& path) const {
     return ::fileSize(path) / sizeof(CMonitoredAppearance);
-}
-
-//-------------------------------------------------------------------------
-size_t CMonitor::fileSize(void) const {
-    return this->fileSize(getMonitorPathProduction(address));
-}
-
-//-------------------------------------------------------------------------
-size_t CMonitor::nRecords(void) const {
-    return this->nRecords(getMonitorPathProduction(address));
 }
 
 //-------------------------------------------------------------------------
@@ -340,7 +330,7 @@ void CMonitor::writeMonitorArray(const CMonitoredAppearanceArray& items) {
 }
 
 //-------------------------------------------------------------------------
-void CMonitor::writeLastBlockInMonitor(blknum_t bn, bool staging) {
+void CMonitor::writeMonitorLastBlock(blknum_t bn, bool staging) {
     lastVisitedBlock = bn;
     stringToAsciiFile(getMonitorPathLast(address, staging), uint_2_Str(bn) + "\n");
 }
@@ -355,28 +345,8 @@ string_q CMonitor::getMonitorPath(const address_t& addr, bool staging) const {
 }
 
 //---------------------------------------------------------------------------
-string_q CMonitor::getMonitorPathProduction(const address_t& addr) const {
-    return getMonitorPath(addr, false);
-}
-
-//---------------------------------------------------------------------------
-string_q CMonitor::getMonitorPathStaging(const address_t& addr) const {
-    return getMonitorPath(addr, true);
-}
-
-//---------------------------------------------------------------------------
 string_q CMonitor::getMonitorPathLast(const address_t& addr, bool staging) const {
     return substitute(getMonitorPath(addr, staging), ".acct.bin", ".last.txt");
-}
-
-//---------------------------------------------------------------------------
-string_q CMonitor::getMonitorPathLastProduction(const address_t& addr) const {
-    return getMonitorPathLast(addr, false);
-}
-
-//---------------------------------------------------------------------------
-string_q CMonitor::getMonitorPathLastStaging(const address_t& addr) const {
-    return getMonitorPathLast(addr, true);
 }
 
 //---------------------------------------------------------------------------
@@ -388,9 +358,9 @@ string_q CMonitor::getMonitorPathDels(const address_t& addr) const {
 blknum_t CMonitor::getLastVisited(bool fresh) const {
     if (lastVisitedBlock == NOPOS || fresh) {
         // If the monitor exists, the next block is stored in the database...
-        if (fileExists(getMonitorPathLastProduction(address))) {
+        if (fileExists(getMonitorPathLast(address, false))) {
             ((CMonitor*)this)->lastVisitedBlock =
-                str_2_Uint(asciiFileToString(getMonitorPathLastProduction(address)));  // NOLINT
+                str_2_Uint(asciiFileToString(getMonitorPathLast(address, false)));  // NOLINT
 
         } else {
             // Accounts can receive ETH counter-factually. By default, we ignore
@@ -407,14 +377,14 @@ blknum_t CMonitor::getLastVisited(bool fresh) const {
 
 //-----------------------------------------------------------------------
 blknum_t CMonitor::getLastBlockInMonitor(void) const {
-    return str_2_Uint(asciiFileToString(getMonitorPathLastProduction(address)));
+    return str_2_Uint(asciiFileToString(getMonitorPathLast(address, false)));
 }
 
 //-----------------------------------------------------------------------
 bool CMonitor::monitorExists(void) const {
-    if (fileExists(getMonitorPathProduction(address)))
+    if (fileExists(getMonitorPath(address, false)))
         return true;
-    if (fileExists(getMonitorPathLastProduction(address)))
+    if (fileExists(getMonitorPathLast(address, false)))
         return true;
     if (fileExists(getMonitorPathDels(address)))
         return true;
@@ -430,16 +400,16 @@ bool CMonitor::monitorExists(void) const {
 
 //--------------------------------------------------------------------------------
 bool CMonitor::isMonitorLocked(string_q& msg) const {
-    checkLock(getMonitorPathProduction(address), "cache");
-    checkLock(getMonitorPathLastProduction(address), "last block");
+    checkLock(getMonitorPath(address, false), "cache");
+    checkLock(getMonitorPathLast(address, false), "last block");
     checkLock(getMonitorPathDels(address), "marker");
     return false;
 }
 
 //--------------------------------------------------------------------------------
 bool CMonitor::clearMonitorLocks(void) {
-    ::remove((getMonitorPathProduction(address) + ".lck").c_str());
-    ::remove((getMonitorPathLastProduction(address) + ".lck").c_str());
+    ::remove((getMonitorPath(address, false) + ".lck").c_str());
+    ::remove((getMonitorPathLast(address, false) + ".lck").c_str());
     ::remove((getMonitorPathDels(address) + ".lck").c_str());
     return true;
 }
@@ -464,17 +434,17 @@ void CMonitor::moveToProduction(bool staging) {
         delete tx_cache;
         tx_cache = NULL;
     }
-    bool binExists = fileExists(getMonitorPathStaging(address));
-    bool lastExists = fileExists(getMonitorPathLastStaging(address));
+    bool binExists = fileExists(getMonitorPath(address, true));
+    bool lastExists = fileExists(getMonitorPathLast(address, true));
     lockSection();
     if (binExists || lastExists) {
-        doMoveFile(getMonitorPathStaging(address), getMonitorPathProduction(address));
-        doMoveFile(getMonitorPathLastStaging(address), getMonitorPathLastProduction(address));
+        doMoveFile(getMonitorPath(address, true), getMonitorPath(address, false));
+        doMoveFile(getMonitorPathLast(address, true), getMonitorPathLast(address, false));
     } else {
         // For some reason (user quit, UI switched to adding a different address to monitor, something went
         // wrong...) the binary cache was not created. Cleanup everything. The user will have to start over.
-        ::remove(getMonitorPathStaging(address).c_str());
-        ::remove(getMonitorPathLastStaging(address).c_str());
+        ::remove(getMonitorPath(address, true).c_str());
+        ::remove(getMonitorPathLast(address, true).c_str());
     }
     unlockSection();
 }
@@ -502,8 +472,8 @@ void removeFile(const string_q& fn) {
 
 //-----------------------------------------------------------------------
 void CMonitor::removeMonitor(void) {
-    removeFile(getMonitorPathProduction(address));
-    removeFile(getMonitorPathLastProduction(address));
+    removeFile(getMonitorPath(address, false));
+    removeFile(getMonitorPathLast(address, false));
     removeFile(getMonitorPathDels(address));
 }
 
@@ -517,8 +487,10 @@ bloom_t CMonitor::getBloom(void) {
 }
 
 //----------------------------------------------------------------
-bool CMonitor::loadAppearances(const string_q& path, CMonitoredAppearanceArray& apps) const {
-    blknum_t nRecs = this->nRecords(path);
+blknum_t CMonitor::loadAppsFromPath(CMonitoredAppearanceArray& apps, const string_q& pathIn, MAPPFUNC func,
+                                    void* data) const {
+    string_q path = (pathIn.empty() ? getMonitorPath(address, false) : pathIn);
+    blknum_t nRecs = this->getRecordCnt(path);
     if (!nRecs)
         return false;
 
@@ -537,8 +509,11 @@ bool CMonitor::loadAppearances(const string_q& path, CMonitoredAppearanceArray& 
     archiveIn.Release();
 
     apps.reserve(apps.size() + nRecs);
-    for (size_t i = 0; i < nRecs; i++)
+    for (size_t i = 0; i < nRecs; i++) {
         apps.push_back(buffer[i]);
+        if (func && !(*func)(buffer[i], data))
+            return false;
+    }
 
     delete[] buffer;
     return true;
@@ -547,14 +522,14 @@ bool CMonitor::loadAppearances(const string_q& path, CMonitoredAppearanceArray& 
 //----------------------------------------------------------------
 void establishMonitorFolders(void) {
     CMonitor m;
-    establishFolder(m.getMonitorPathProduction(""));
-    establishFolder(m.getMonitorPathStaging(""));
+    establishFolder(m.getMonitorPath("", false));
+    establishFolder(m.getMonitorPath("", true));
 }
 
 //----------------------------------------------------------------
 void cleanMonitorStage(void) {
     CMonitor m;
-    cleanFolder(m.getMonitorPathStaging(""));
+    cleanFolder(m.getMonitorPath("", true));
 }
 
 //-------------------------------------------------------------------------

@@ -50,6 +50,7 @@ class COptions : public CAbiOptions {
     CMonitoredAppearanceArray tmp;
     CMonitorArray allMonitors;
     CMonitorArray possibles;
+    const CMonitor* curMonitor;
     address_t accountedFor;
     string_q accountedForName;
     blkrange_t blockRange;
@@ -87,7 +88,6 @@ class COptions : public CAbiOptions {
     void Init(void);
 
     bool setDisplayFormatting(void);
-    bool loadOneAddress(const CMonitor& monitor, CMonitoredAppearanceArray& arrayOut);
     bool loadAllAppearances(void);
 
     bool process_clean(void);
@@ -111,6 +111,7 @@ class COptions : public CAbiOptions {
 };
 
 //--------------------------------------------------------------------------------
+extern bool visitOnLoad(CMonitoredAppearance& app, void* data);
 extern bool visitFinalIndexFiles(const string_q& path, void* data);
 extern bool visitStagingIndexFiles(const string_q& path, void* data);
 extern bool visitUnripeIndexFiles(const string_q& path, void* data);

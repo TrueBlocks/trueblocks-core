@@ -16,17 +16,17 @@ bool cleanMonitorFile(const string_q& path, void* data) {
         if (endsWith(path, "acct.bin")) {
             if (isTestMode()) {
                 CMonitor m;
-                if (path > m.getMonitorPathProduction("0x9"))
+                if (path > m.getMonitorPath("0x9", false))
                     return false;
             }
 
             CMonitor m;
-            size_t sizeThen = m.nRecords(path);
+            size_t sizeThen = m.getRecordCnt(path);
             if (!sizeThen)
                 EXIT_NOMSG(!shouldQuit());
 
             CMonitoredAppearanceArray apps;
-            if (!m.loadAppearances(path, apps))
+            if (!m.loadAppsFromPath(apps, path))
                 EXIT_FAIL("Could not open cache file.");
             sort(apps.begin(), apps.end());
 
@@ -49,9 +49,9 @@ bool cleanMonitorFile(const string_q& path, void* data) {
             if (!first)
                 cout << ",";
             first = false;
-            size_t sizeNow = m.nRecords(path);
+            size_t sizeNow = m.getRecordCnt(path);
             cout << "{ ";
-            cout << "\"path\": \"" << substitute(path, m.getMonitorPathProduction(""), "$CACHE/") << "\", ";
+            cout << "\"path\": \"" << substitute(path, m.getMonitorPath("", false), "$CACHE/") << "\", ";
             cout << "\"sizeThen\": " << sizeThen << ", ";
             cout << "\"sizeNow\": " << sizeNow;
             if (sizeThen > sizeNow)
@@ -67,7 +67,7 @@ bool cleanMonitorFile(const string_q& path, void* data) {
 bool COptions::process_clean(void) {
     CMonitor m;
     cout << "[";
-    bool ret = forEveryFileInFolder(m.getMonitorPathProduction(""), cleanMonitorFile, NULL);
+    bool ret = forEveryFileInFolder(m.getMonitorPath(m.address, false), cleanMonitorFile, NULL);
     cout << "]";
     return ret;
 }
