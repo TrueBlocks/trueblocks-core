@@ -86,7 +86,7 @@ bool COptions::visitBinaryFile(const string_q& path, void* data) {
         if (!hit) {
             // none of them hit, so write last block for each of them
             for (auto monitor : possibles) {
-                monitor.writeLastBlockInMonitor(fileRange.second + 1);
+                monitor.writeLastBlockInMonitor(fileRange.second + 1, monitor.isStaging);
             }
             options->stats.nBloomMisses++;
             LOG_PROGRESS("Skipping", options->fileRange.first, options->listRange.second, " bloom miss\r");
@@ -109,9 +109,8 @@ bool COptions::visitBinaryFile(const string_q& path, void* data) {
     for (size_t mo = 0; mo < possibles.size() && !shouldQuit(); mo++) {
         CMonitor* monitor = &possibles[mo];
         if (hitMap[monitor->address]) {
-            if (!monitor->openForWriting())
-                EXIT_FAIL("Could not open cache file " + monitor->getMonitorPath(monitor->address, monitor->fm_mode) +
-                          ".");
+            if (!monitor->openForWriting(monitor->isStaging))
+                EXIT_FAIL("Could not open monitor file for " + monitor->address + ".");
 
             CMonitoredAppearanceArray items;
             items.reserve(300000);
@@ -174,7 +173,7 @@ bool COptions::visitBinaryFile(const string_q& path, void* data) {
     }
 
     for (auto monitor : possibles)
-        monitor.writeLastBlockInMonitor(fileRange.second + 1);
+        monitor.writeLastBlockInMonitor(fileRange.second + 1, monitor.isStaging);
 
     if (chunk) {
         chunk->Release();

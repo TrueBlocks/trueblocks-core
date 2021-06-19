@@ -286,8 +286,7 @@ bool COptions::parseArguments(string_q& command) {
         monitor.setValueByName("name", toLower(addr));
         monitor.clearMonitorLocks();
         monitor.finishParse();
-        monitor.fm_mode =
-            (fileExists(monitor.getMonitorPath(monitor.address, FM_PRODUCTION)) ? FM_PRODUCTION : FM_STAGING);
+        monitor.isStaging = !fileExists(monitor.getMonitorPathProduction(monitor.address));
         if (monitor.monitorExists()) {
             string_q unused;
             if (monitor.isMonitorLocked(unused))
@@ -296,7 +295,7 @@ bool COptions::parseArguments(string_q& command) {
                     "running or it did not end cleanly the\n\tlast time it ran. "
                     "Quit the already running program or, if it is not running, "
                     "remove the lock\n\tfile: " +
-                    monitor.getMonitorPath(addr, FM_PRODUCTION) + ".lck'. Proceeding anyway...");
+                    monitor.getMonitorPathProduction(addr) + ".lck'. Proceeding anyway...");
             string_q msg;
             if (monitor.isMonitorLocked(msg))  // If locked, we fail
                 return usage(msg);

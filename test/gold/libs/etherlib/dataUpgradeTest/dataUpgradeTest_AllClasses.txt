@@ -223,7 +223,6 @@ lastExport          	1006	1	1082130460	T_BLOCKNUM TS_NUMERAL TS_INTEGER
 firstAppearance     	1007	1	1082130460	T_BLOCKNUM TS_NUMERAL TS_INTEGER
 latestAppearance    	1008	1	1082130460	T_BLOCKNUM TS_NUMERAL TS_INTEGER
 sizeInBytes         	1009	1	12582939	T_UNUMBER TS_NUMERAL TS_OMITEMPTY
-fm_mode             	1010	1	8388633	T_NUMBER TS_NUMERAL
 {
   "address": "0x0"
 }
@@ -240,7 +239,6 @@ lastExport          	1006	1	1082130460	T_BLOCKNUM TS_NUMERAL TS_INTEGER
 firstAppearance     	1007	1	1082130460	T_BLOCKNUM TS_NUMERAL TS_INTEGER
 latestAppearance    	1008	1	1082130460	T_BLOCKNUM TS_NUMERAL TS_INTEGER
 sizeInBytes         	1009	1	12582939	T_UNUMBER TS_NUMERAL TS_OMITEMPTY
-fm_mode             	1010	1	8388633	T_NUMBER TS_NUMERAL
 {
   "address": "0x0"
 }
@@ -257,7 +255,6 @@ lastExport          	1006	0	1082130460	T_BLOCKNUM TS_NUMERAL TS_INTEGER
 firstAppearance     	1007	0	1082130460	T_BLOCKNUM TS_NUMERAL TS_INTEGER
 latestAppearance    	1008	0	1082130460	T_BLOCKNUM TS_NUMERAL TS_INTEGER
 sizeInBytes         	1009	0	12582939	T_UNUMBER TS_NUMERAL TS_OMITEMPTY
-fm_mode             	1010	0	8388633	T_NUMBER TS_NUMERAL
 {
   "schema": 9004,
   "deleted": false,
@@ -267,7 +264,6 @@ fm_mode             	1010	0	8388633	T_NUMBER TS_NUMERAL
   "lastExport": 0,
   "firstAppearance": 0,
   "latestAppearance": 4294967295,
-  "fm_mode": 0,
   "address": "0x0"
 }
 

@@ -9,7 +9,7 @@
 bool COptions::loadOneAddress(const CMonitor& monitor, CMonitoredAppearanceArray& arrayOut) {
     ENTER("loadOneAddress");
 
-    string_q path = monitor.getMonitorPath(monitor.address, FM_PRODUCTION);
+    string_q path = monitor.getMonitorPathProduction(monitor.address);
     if (!monitor.loadAppearances(path, arrayOut))
         EXIT_FAIL("Could not load appearances for address " + monitor.address);
     stats.nFileRecords += monitor.nRecords();

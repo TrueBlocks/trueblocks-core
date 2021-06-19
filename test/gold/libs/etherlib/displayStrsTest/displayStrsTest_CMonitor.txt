@@ -10,7 +10,6 @@ displayStrsTest CMonitor
   "lastExport": 0,
   "firstAppearance": 0,
   "latestAppearance": 4294967295,
-  "fm_mode": 0,
   "address": "0x0",
   "name": "monitor"
 }

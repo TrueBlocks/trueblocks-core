@@ -5,6 +5,5 @@ fields = blknum nAppearances (nowrite)|\
         blknum lastExport (nowrite)|\
         blknum firstAppearance (nowrite)|\
         blknum latestAppearance (nowrite)|\
-        suint64 sizeInBytes (nowrite)|\
-        freshen_e fm_mode=FM_PRODUCTION (nowrite)
+        suint64 sizeInBytes (nowrite)
 includes = etherlib.h|transaction.h|reconciliation.h|ethstate.h|monitoredapp.h

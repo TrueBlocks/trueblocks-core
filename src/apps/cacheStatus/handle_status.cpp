@@ -74,7 +74,7 @@ bool COptions::handle_status(ostream& os) {
         LOG8("Reporting on monitors");
         if (!monitors.readBinaryCache("monitors", details)) {
             CMonitor m;
-            string_q thePath = m.getMonitorPath("", FM_PRODUCTION);
+            string_q thePath = m.getMonitorPathProduction("");
             monitors.type = monitors.getRuntimeClass()->m_ClassName;
             expContext().types[monitors.type] = monitors.getRuntimeClass();
             monitors.path = pathName("monitors");

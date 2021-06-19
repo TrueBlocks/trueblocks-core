@@ -16,7 +16,7 @@ bool cleanMonitorFile(const string_q& path, void* data) {
         if (endsWith(path, "acct.bin")) {
             if (isTestMode()) {
                 CMonitor m;
-                if (path > m.getMonitorPath("0x9", FM_PRODUCTION))
+                if (path > m.getMonitorPathProduction("0x9"))
                     return false;
             }
 
@@ -51,7 +51,7 @@ bool cleanMonitorFile(const string_q& path, void* data) {
             first = false;
             size_t sizeNow = m.nRecords(path);
             cout << "{ ";
-            cout << "\"path\": \"" << substitute(path, m.getMonitorPath("", FM_PRODUCTION), "$CACHE/") << "\", ";
+            cout << "\"path\": \"" << substitute(path, m.getMonitorPathProduction(""), "$CACHE/") << "\", ";
             cout << "\"sizeThen\": " << sizeThen << ", ";
             cout << "\"sizeNow\": " << sizeNow;
             if (sizeThen > sizeNow)
@@ -67,7 +67,7 @@ bool cleanMonitorFile(const string_q& path, void* data) {
 bool COptions::process_clean(void) {
     CMonitor m;
     cout << "[";
-    bool ret = forEveryFileInFolder(m.getMonitorPath("", FM_PRODUCTION), cleanMonitorFile, NULL);
+    bool ret = forEveryFileInFolder(m.getMonitorPathProduction(""), cleanMonitorFile, NULL);
     cout << "]";
     return ret;
 }

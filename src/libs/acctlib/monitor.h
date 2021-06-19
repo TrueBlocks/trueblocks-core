@@ -24,7 +24,6 @@
 namespace qblocks {
 
 // EXISTING_CODE
-typedef enum { FM_PRODUCTION, FM_STAGING } freshen_e;
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
@@ -35,7 +34,6 @@ class CMonitor : public CAccountName {
     blknum_t firstAppearance;
     blknum_t latestAppearance;
     uint64_t sizeInBytes;
-    freshen_e fm_mode;
 
   public:
     CMonitor(void);
@@ -47,6 +45,7 @@ class CMonitor : public CAccountName {
 
     // EXISTING_CODE
   public:
+    bool isStaging;
     blknum_t lastVisitedBlock;
     bloom_t bloom;
     CArchive* tx_cache;
@@ -54,18 +53,22 @@ class CMonitor : public CAccountName {
     CMonitor(const string_q& _addr, const string_q& _name, blknum_t fB, blknum_t lB);
     CMonitor(const address_t& _addr, const string_q& _name);
 
-    bool openForWriting(void);
-
+    bool openForWriting(bool staging);
     void writeMonitorArray(const CMonitoredAppearanceArray& array);
-    void writeLastBlockInMonitor(blknum_t bn);
+    void writeLastBlockInMonitor(blknum_t bn, bool staging);
 
     blknum_t getLastVisited(bool fresh = false) const;
     blknum_t getLastBlockInMonitor(void) const;
 
-    string_q getMonitorPath(const address_t& addr, freshen_e mode) const;
-    string_q getMonitorLast(const address_t& addr, freshen_e mode) const;
-    string_q getMonitorDels(const address_t& addr, freshen_e mode) const;
     bool loadAppearances(const string_q& path, CMonitoredAppearanceArray& apps) const;
+    string_q getMonitorPath(const address_t& addr, bool staging) const;
+    string_q getMonitorPathProduction(const address_t& addr) const;
+    string_q getMonitorPathStaging(const address_t& addr) const;
+    string_q getMonitorPathLast(const address_t& addr, bool staging) const;
+    string_q getMonitorPathLastProduction(const address_t& addr) const;
+    string_q getMonitorPathLastStaging(const address_t& addr) const;
+    string_q getMonitorPathDels(const address_t& addr) const;
+
     size_t fileSize(const string_q& path) const;
     size_t nRecords(const string_q& path) const;
     size_t fileSize(void) const;
@@ -74,8 +77,7 @@ class CMonitor : public CAccountName {
     bool monitorExists(void) const;
     bool isMonitorLocked(string_q& msg) const;
     bool clearMonitorLocks(void);
-
-    void moveToProduction(void);
+    void moveToProduction(bool staging);
 
     bool isDeleted(void) const;
     void deleteMonitor(void);
@@ -164,9 +166,9 @@ inline void CMonitor::initialize(void) {
     firstAppearance = 0;
     latestAppearance = 0;
     sizeInBytes = 0;
-    fm_mode = FM_PRODUCTION;
 
     // EXISTING_CODE
+    isStaging = false;
     bloom = bloom_t();
     tx_cache = NULL;
     lastVisitedBlock = NOPOS;
@@ -184,9 +186,9 @@ inline void CMonitor::duplicate(const CMonitor& mo) {
     firstAppearance = mo.firstAppearance;
     latestAppearance = mo.latestAppearance;
     sizeInBytes = mo.sizeInBytes;
-    fm_mode = mo.fm_mode;
 
     // EXISTING_CODE
+    isStaging = mo.isStaging;
     bloom = mo.bloom;
     tx_cache = NULL;  // we do not copy the tx_cache
     lastVisitedBlock = mo.lastVisitedBlock;

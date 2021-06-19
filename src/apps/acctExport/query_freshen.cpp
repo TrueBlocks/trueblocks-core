@@ -28,7 +28,7 @@ bool COptions::process_freshen(void) {
     } else {
         forEveryFileInFolder(indexFolder_blooms, visitFinalIndexFiles, this);
         for (auto monitor : allMonitors) {
-            monitor.moveToProduction();
+            monitor.moveToProduction(monitor.isStaging);
             LOG4(monitor.address, " freshened to ", monitor.getLastVisited(true /* fresh */));
         }
     }

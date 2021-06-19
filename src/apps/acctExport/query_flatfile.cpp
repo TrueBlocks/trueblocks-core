@@ -39,10 +39,10 @@ bool COptions::queryFlatFile(const string_q& path, bool sorted) {
 
     for (size_t mo = 0; mo < allMonitors.size() && !shouldQuit(); mo++) {
         CMonitor* monitor = &allMonitors[mo];
-        if (!monitor->openForWriting()) {
+        if (!monitor->openForWriting(monitor->isStaging)) {
             delete rawData;
             rawData = NULL;
-            LOG_WARN("Could not open cache file " + monitor->getMonitorPath(monitor->address, monitor->fm_mode) + ".");
+            LOG_WARN("Could not open monitor file for " + monitor->address + ".");
             return !shouldQuit();
         }
         char search[70];
@@ -65,7 +65,7 @@ bool COptions::queryFlatFile(const string_q& path, bool sorted) {
         // if (tmp.size()) {
         //     lockSection();
         //     monitor->writeMonitorArray(tmp);
-        //     monitor->writeLastBlockInMonitor(fileRange.first + 1);
+        //     monitor->writeLastBlockInMonitor(fileRange.first + 1, monitor.isStaging);
         //     unlockSection();
         // }
     }
