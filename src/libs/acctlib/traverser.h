@@ -21,6 +21,7 @@ inline bool noopFunc(CTraverser* trav, void* data) {
 //-----------------------------------------------------------------------
 extern bool filterFunc(CTraverser* trav, void* data);
 
+typedef map<address_t, CMonitor> monitor_map_t;
 //-----------------------------------------------------------------------
 class CTraverser {
   public:
@@ -31,6 +32,7 @@ class CTraverser {
     string_q operation;
     string_q readStatus;
     CMonitor* curMonitor;
+    monitor_map_t monitorMap;
     blkrange_t travRange;
     CTraverser(ostream& osIn, const string_q& o) : os(osIn), index(0), nProcessed(0), operation(o) {
         logging = !isTestMode() || getEnvStr("FORCE_LOGGING") == "true";

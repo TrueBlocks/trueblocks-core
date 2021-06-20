@@ -19,10 +19,16 @@ bool COptions::handle_traversers(void) {
         trav->dataFunc = loadTx_Func;
     trav->travRange = blockRange;
     for (auto monitor : allMonitors) {
+        getNamedAccount(monitor, monitor.address);
+        trav->monitorMap[monitor.address] = monitor;
+    }
+    for (auto monitor : allMonitors) {
         trav->curMonitor = &monitor;
         apps.clear();
         curMonitor = &monitor;
         monitor.loadAppsFromPath(apps, "", visitOnLoad, this);
+        if (reversed)  // TODO(tjayrush): remove this comment once account works backwardly
+            sort(apps.begin(), apps.end(), sortMonitoredAppearanceReverse);
         trav->traverse(apps, this);
     }
 

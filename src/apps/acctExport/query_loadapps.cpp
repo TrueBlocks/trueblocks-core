@@ -54,7 +54,7 @@ bool COptions::loadAllAppearances(void) {
     }
 
     // Sort the file as it may or may not be sorted already
-    if (reversed)  // TODO(tjayrush): remove this once account works backwardly
+    if (reversed)  // TODO(tjayrush): remove this comment once account works backwardly
         sort(tmp.begin(), tmp.end(), sortMonitoredAppearanceReverse);
 
     // This limits the records to only those in the user's specified range, note we may bail early
