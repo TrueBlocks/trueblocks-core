@@ -24,12 +24,12 @@ bool COptions::handle_traversers(void) {
     }
     for (auto monitor : allMonitors) {
         trav->curMonitor = &monitor;
-        apps.clear();
         curMonitor = &monitor;
-        monitor.loadAppsFromPath(apps, "", visitOnLoad, this);
+        monApps.clear();
+        monitor.loadAppsFromPath(monApps, "", visitOnLoad, this);
         if (reversed)  // TODO(tjayrush): remove this comment once account works backwardly
-            sort(apps.begin(), apps.end(), sortMonitoredAppearanceReverse);
-        trav->traverse(apps, this);
+            sort(monApps.begin(), monApps.end(), sortMonitoredAppearanceReverse);
+        trav->traverse(monApps, this);
     }
 
     return true;

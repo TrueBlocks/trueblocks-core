@@ -31,7 +31,7 @@ bool COptions::loadAllAppearances(void) {
     } else {
         for (auto monitor : allMonitors) {
             curMonitor = &monitor;
-            if (!monitor.loadAppsFromPath(tmp, "", visitOnLoad, this)) {
+            if (!monitor.loadAppsFromPath(monTmp, "", visitOnLoad, this)) {
                 LOG_ERR("Could not load appearances for address " + monitor.address);
                 return false;
             }
@@ -47,7 +47,7 @@ bool COptions::loadAllAppearances(void) {
         }
     }
 
-    if (tmp.size() == 0) {
+    if (monTmp.size() == 0) {
         if (!freshenOnly)
             LOG_INFO("Nothing to export" + (allMonitors.size() ? (" from " + accountedFor) : "") + ".");
         return false;
@@ -55,13 +55,13 @@ bool COptions::loadAllAppearances(void) {
 
     // Sort the file as it may or may not be sorted already
     if (reversed)  // TODO(tjayrush): remove this comment once account works backwardly
-        sort(tmp.begin(), tmp.end(), sortMonitoredAppearanceReverse);
+        sort(monTmp.begin(), monTmp.end(), sortMonitoredAppearanceReverse);
 
     // This limits the records to only those in the user's specified range, note we may bail early
     // if the blockchain itself isn't caught up to the most recent block in the monitor which may
     // happen if we re-sync the index (and optionally the node) from scratch
-    for (size_t i = first_record; i < min(blknum_t(tmp.size()), (first_record + max_records)); i++) {
-        CMonitoredAppearance* app = &tmp[i];
+    for (size_t i = first_record; i < min(blknum_t(monTmp.size()), (first_record + max_records)); i++) {
+        CMonitoredAppearance* app = &monTmp[i];
         if (app->blk > bp.client) {
             static bool hasFuture = false;
             if (!hasFuture) {
@@ -70,14 +70,14 @@ bool COptions::loadAllAppearances(void) {
                 hasFuture = true;
             }
         } else {
-            apps.push_back(*app);
+            monApps.push_back(*app);
         }
     }
 
     // Make sure the timestamps column is at least as up to date as this monitor
-    if (apps.size()) {
+    if (monApps.size()) {
         // it's okay to not be able to freshen this. We'll just report less txs
-        freshenTimestamps(apps[apps.size() - 1].blk);
+        freshenTimestamps(monApps[monApps.size() - 1].blk);
         if (!loadTimestamps(&expContext().tsMemMap, expContext().tsCnt)) {
             LOG_ERR("Could not open timestamp file.");
             return false;

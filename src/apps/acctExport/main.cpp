@@ -67,7 +67,7 @@ int main(int argc, const char* argv[]) {
                 traversers.push_back(tt);
             }
 
-            forEveryAppearance(traversers, options.apps, &options);
+            forEveryAppearance(traversers, options.monApps, &options);
 
         } else {
             options.handle_traversers();

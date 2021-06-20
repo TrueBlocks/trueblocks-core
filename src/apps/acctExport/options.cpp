@@ -443,7 +443,7 @@ void COptions::Init(void) {
     listRange = make_pair(0, NOPOS);
 
     allMonitors.clear();
-    apps.clear();
+    monApps.clear();
 
     accountedFor = "";
 

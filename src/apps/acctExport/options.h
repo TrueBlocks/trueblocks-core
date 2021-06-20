@@ -47,8 +47,8 @@ class COptions : public CAbiOptions {
     bool by_date;
     // END_CODE_DECLARE
 
-    CMonitoredAppearanceArray apps;
-    CMonitoredAppearanceArray tmp;
+    CMonitoredAppearanceArray monApps;
+    CMonitoredAppearanceArray monTmp;
     CMonitorArray allMonitors;
     CMonitorArray possibles;
     const CMonitor* curMonitor;
