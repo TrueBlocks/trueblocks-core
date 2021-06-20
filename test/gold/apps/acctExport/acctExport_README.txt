@@ -39,6 +39,7 @@ acctExport -th
 | -u | --unripe | enable search of unripe (neither staged nor finalized) folder (assumes --staging) |
 |  | --load &lt;str&gt; | a comma separated list of dynamic traversers to load |
 |  | --reversed | produce results in reverse chronological order |
+| -y | --by_date | produce results sorted by date (default is to report by address) |
 |####|Hidden options||
 | -x | --fmt &lt;val&gt; | export format, one of *[ none \| json\* \| txt \| csv \| api ]* |
 | -v | --verbose | set verbose level (optional level defaults to 1) |
