@@ -200,6 +200,13 @@ var routes = Routes{
 		ManageScraper,
 	},
 
+	Route{
+		"EditName",
+		"POST",
+		"/names",
+		EditName,
+	},
+
 	// BEG_ROUTE_ITEMS
 
 	Route{

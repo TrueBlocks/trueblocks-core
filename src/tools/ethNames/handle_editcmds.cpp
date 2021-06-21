@@ -115,5 +115,12 @@ bool COptions::processEditCommand(CStringArray& terms, bool to_custom) {
     ::remove(getCachePath("names/names.bin").c_str());
     LOG4("Finished writing...");
 
+    CToml toml(configPath("ethNames.toml"));
+    string_q copyBack = toml.getConfigStr("settings", "copyBack", "<NOTSET>");
+    if (!to_custom && fileExists(copyBack)) {
+        copyFile(dest, copyBack);
+    }
+    toml.Release();
+
     EXIT_NOMSG(true);
 }
