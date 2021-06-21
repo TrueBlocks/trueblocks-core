@@ -49,11 +49,11 @@ class CTraverser {
     TRAVERSERFUNC postFunc = nullptr;
     TRAVERSERFUNC displayFunc = nullptr;
     TRAVERSERFUNC dataFunc = nullptr;
-    const CMonitoredAppearance* app = nullptr;
+    const CAppearance_mon* app = nullptr;
     CBlock block;
     CTransaction trans;
 
-    bool traverse(const CMonitoredAppearanceArray& apps, void* data);
+    bool traverse(const CAppearanceArray_mon& apps, void* data);
 
   private:
     CTraverser(void) = delete;
@@ -61,7 +61,7 @@ class CTraverser {
 typedef vector<CTraverser> CTraverserArray;
 
 //-----------------------------------------------------------------------
-extern bool forEveryAppearance(const CTraverserArray& traversers, const CMonitoredAppearanceArray& apps, void* data);
+extern bool forEveryAppearance(const CTraverserArray& traversers, const CAppearanceArray_mon& apps, void* data);
 
 class CDynamicTraverser {
   private:

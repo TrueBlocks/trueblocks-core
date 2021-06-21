@@ -6,7 +6,7 @@
 #include "options.h"
 
 //-----------------------------------------------------------------------
-bool visitOnLoad(CMonitoredAppearance& app, void* data) {
+bool visitOnLoad(CAppearance_mon& app, void* data) {
     COptions* opt = (COptions*)data;
     ASSERT(opt->curMonitor);
     if (app.blk == 0)
@@ -61,7 +61,7 @@ bool COptions::loadAllAppearances(void) {
     // if the blockchain itself isn't caught up to the most recent block in the monitor which may
     // happen if we re-sync the index (and optionally the node) from scratch
     for (size_t i = first_record; i < min(blknum_t(monTmp.size()), (first_record + max_records)); i++) {
-        CMonitoredAppearance* app = &monTmp[i];
+        CAppearance_mon* app = &monTmp[i];
         if (app->blk > bp.client) {
             static bool hasFuture = false;
             if (!hasFuture) {

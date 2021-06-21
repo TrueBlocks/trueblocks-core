@@ -307,7 +307,7 @@ size_t CMonitor::getFileSize(const string_q& path) const {
 
 //-------------------------------------------------------------------------
 size_t CMonitor::getRecordCnt(const string_q& path) const {
-    return ::fileSize(path) / sizeof(CMonitoredAppearance);
+    return ::fileSize(path) / sizeof(CAppearance_mon);
 }
 
 //-------------------------------------------------------------------------
@@ -321,7 +321,7 @@ bool CMonitor::openForWriting(bool staging) {
 }
 
 //-------------------------------------------------------------------------
-void CMonitor::writeMonitorArray(const CMonitoredAppearanceArray& items) {
+void CMonitor::writeMonitorArray(const CAppearanceArray_mon& items) {
     if (tx_cache == NULL)
         return;
     for (auto item : items)
@@ -487,25 +487,25 @@ bloom_t CMonitor::getBloom(void) {
 }
 
 //----------------------------------------------------------------
-blknum_t CMonitor::loadAppsFromPath(CMonitoredAppearanceArray& apps, const string_q& pathIn, MAPPFUNC func,
+blknum_t CMonitor::loadAppsFromPath(CAppearanceArray_mon& apps, const string_q& pathIn, MONAPPFUNC func,
                                     void* data) const {
     string_q path = (pathIn.empty() ? getMonitorPath(address, false) : pathIn);
     blknum_t nRecs = this->getRecordCnt(path);
     if (!nRecs)
         return false;
 
-    CMonitoredAppearance* buffer = new CMonitoredAppearance[nRecs];
+    CAppearance_mon* buffer = new CAppearance_mon[nRecs];
     if (!buffer)
         return false;
 
-    bzero((void*)buffer, nRecs * sizeof(CMonitoredAppearance));  // NOLINT
+    bzero((void*)buffer, nRecs * sizeof(CAppearance_mon));  // NOLINT
     CArchive archiveIn(READING_ARCHIVE);
     if (!archiveIn.Lock(path, modeReadOnly, LOCK_NOWAIT)) {
         archiveIn.Release();
         delete[] buffer;
         return false;
     }
-    archiveIn.Read(buffer, sizeof(CMonitoredAppearance), nRecs);
+    archiveIn.Read(buffer, sizeof(CAppearance_mon), nRecs);
     archiveIn.Release();
 
     apps.reserve(apps.size() + nRecs);

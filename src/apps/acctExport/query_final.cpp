@@ -112,7 +112,7 @@ bool COptions::visitBinaryFile(const string_q& path, void* data) {
             if (!monitor->openForWriting(monitor->isStaging))
                 EXIT_FAIL("Could not open monitor file for " + monitor->address + ".");
 
-            CMonitoredAppearanceArray items;
+            CAppearanceArray_mon items;
             items.reserve(300000);
 
             addrbytes_t array = addr_2_Bytes(monitor->address);
@@ -157,7 +157,7 @@ bool COptions::visitBinaryFile(const string_q& path, void* data) {
                 CIndexedAppearance* blocksOnFile = reinterpret_cast<CIndexedAppearance*>(&addrsOnFile[nAddrs]);
                 options->stats.nTotalHits += found->cnt;
                 for (size_t i = found->offset; i < found->offset + found->cnt; i++) {
-                    CMonitoredAppearance item(blocksOnFile[i].blk, blocksOnFile[i].txid);
+                    CAppearance_mon item(blocksOnFile[i].blk, blocksOnFile[i].txid);
                     items.push_back(item);
                 }
 

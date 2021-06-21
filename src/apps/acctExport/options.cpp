@@ -534,7 +534,7 @@ bool COptions::setDisplayFormatting(void) {
             expContext().fmtMap["trace_fmt"] = cleanFmt(format);
             manageFields("CTrace:" + format);
 
-            // This doesn't really work because CMonitoredAppearance is not a subclass of CBaseNode. We phony it here
+            // This doesn't really work because CAppearance_mon is not a subclass of CBaseNode. We phony it here
             // for future reference.
             format =
                 getGlobalConfig("acctExport")->getConfigStr("display", "appearances", STR_DISPLAY_APPEARANCEDISPLAY);

@@ -47,8 +47,8 @@ class COptions : public CAbiOptions {
     bool by_date;
     // END_CODE_DECLARE
 
-    CMonitoredAppearanceArray monApps;
-    CMonitoredAppearanceArray monTmp;
+    CAppearanceArray_mon monApps;
+    CAppearanceArray_mon monTmp;
     CMonitorArray allMonitors;
     CMonitorArray possibles;
     const CMonitor* curMonitor;
@@ -114,7 +114,7 @@ class COptions : public CAbiOptions {
 };
 
 //--------------------------------------------------------------------------------
-extern bool visitOnLoad(CMonitoredAppearance& app, void* data);
+extern bool visitOnLoad(CAppearance_mon& app, void* data);
 extern bool visitFinalIndexFiles(const string_q& path, void* data);
 extern bool visitStagingIndexFiles(const string_q& path, void* data);
 extern bool visitUnripeIndexFiles(const string_q& path, void* data);

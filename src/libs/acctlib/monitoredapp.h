@@ -16,20 +16,20 @@
 namespace qblocks {
 
 //----------------------------------------------------------------
-struct CMonitoredAppearance {
-    CMonitoredAppearance(void) {
+struct CAppearance_mon {
+    CAppearance_mon(void) {
         blk = txid = 0;
     }
 
   public:
     uint32_t blk;
     uint32_t txid;
-    CMonitoredAppearance(uint32_t b, uint32_t t) : blk(b), txid(t) {
+    CAppearance_mon(uint32_t b, uint32_t t) : blk(b), txid(t) {
     }
-    CMonitoredAppearance(const string_q& b, const string_q& t)
+    CAppearance_mon(const string_q& b, const string_q& t)
         : blk((uint32_t)str_2_Uint(b)), txid((uint32_t)str_2_Uint(t)) {
     }
-    CMonitoredAppearance(string_q& line) {  // NOLINT
+    CAppearance_mon(string_q& line) {  // NOLINT
         replaceAll(line, ".", "\t");
         if (!contains(line, "\t"))
             return;
@@ -39,16 +39,16 @@ struct CMonitoredAppearance {
 };
 
 //----------------------------------------------------------------
-typedef vector<CMonitoredAppearance> CMonitoredAppearanceArray;
-typedef bool (*MAPPFUNC)(CMonitoredAppearance& app, void* data);
+typedef vector<CAppearance_mon> CAppearanceArray_mon;
+typedef bool (*MONAPPFUNC)(CAppearance_mon& app, void* data);
 
 //----------------------------------------------------------------
-inline bool operator<(const CMonitoredAppearance& v1, const CMonitoredAppearance& v2) {
+inline bool operator<(const CAppearance_mon& v1, const CAppearance_mon& v2) {
     return ((v1.blk != v2.blk) ? v1.blk < v2.blk : v1.txid < v2.txid);
 }
 
 //----------------------------------------------------------------
-inline bool sortMonitoredAppearanceReverse(const CMonitoredAppearance& v1, const CMonitoredAppearance& v2) {
+inline bool sortMonitoredAppearanceReverse(const CAppearance_mon& v1, const CAppearance_mon& v2) {
     return !(v1 < v2);
 }
 
