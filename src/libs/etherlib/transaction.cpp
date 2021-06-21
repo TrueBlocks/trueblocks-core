@@ -952,7 +952,6 @@ const CBaseNode* CTransaction::getObjectAt(const string_q& fieldName, size_t ind
     // EXISTING_CODE
     if (fieldName % "receipt")
         return &receipt;
-
     if (fieldName % "traces") {
         if (index == NOPOS) {
             CTrace empty;
@@ -964,7 +963,6 @@ const CBaseNode* CTransaction::getObjectAt(const string_q& fieldName, size_t ind
     }
     if (fieldName % "articulatedTx")
         return &articulatedTx;
-
     if (fieldName % "statements") {
         if (index == NOPOS) {
             CReconciliation empty;

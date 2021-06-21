@@ -369,7 +369,6 @@ const CBaseNode* CPinataPin::getObjectAt(const string_q& fieldName, size_t index
     // EXISTING_CODE
     if (fieldName % "metadata")
         return &metadata;
-
     if (fieldName % "regions") {
         if (index == NOPOS) {
             CPinataRegion empty;

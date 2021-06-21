@@ -815,7 +815,7 @@ const char* STR_GETOBJ_CODE_FIELD =
 //------------------------------------------------------------------------------------------------------------
 const char* STR_GETOBJ_CODE_FIELD_OBJ =
     "`if (fieldName % \"[{FIELD}]\")\n"
-    "``return [PTR][{FIELD}];\n\n";
+    "``return [PTR][{FIELD}];\n";
 
 //------------------------------------------------------------------------------------------------------------
 const char* STR_GETOBJ_CODE =

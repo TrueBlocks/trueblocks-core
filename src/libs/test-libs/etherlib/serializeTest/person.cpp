@@ -288,7 +288,6 @@ const CBaseNode* CPerson::getObjectAt(const string_q& fieldName, size_t index) c
     // EXISTING_CODE
     if (fieldName % "next")
         return next;
-
     // EXISTING_CODE
     // EXISTING_CODE
 

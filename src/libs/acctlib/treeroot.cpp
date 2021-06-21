@@ -264,7 +264,6 @@ const CBaseNode* CTreeRoot::getObjectAt(const string_q& fieldName, size_t index)
     // EXISTING_CODE
     if (fieldName % "root")
         return root;
-
     // EXISTING_CODE
     // EXISTING_CODE
 

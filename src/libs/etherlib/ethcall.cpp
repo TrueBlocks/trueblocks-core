@@ -319,10 +319,8 @@ const CBaseNode* CEthCall::getObjectAt(const string_q& fieldName, size_t index) 
     // EXISTING_CODE
     if (fieldName % "abi_spec")
         return &abi_spec;
-
     if (fieldName % "result")
         return &result;
-
     // EXISTING_CODE
     // EXISTING_CODE
 

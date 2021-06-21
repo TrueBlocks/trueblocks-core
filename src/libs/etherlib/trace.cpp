@@ -484,13 +484,10 @@ const CBaseNode* CTrace::getObjectAt(const string_q& fieldName, size_t index) co
     // EXISTING_CODE
     if (fieldName % "action")
         return &action;
-
     if (fieldName % "result")
         return &result;
-
     if (fieldName % "articulatedTrace")
         return &articulatedTrace;
-
     // EXISTING_CODE
     // EXISTING_CODE
 

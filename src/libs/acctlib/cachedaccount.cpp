@@ -319,7 +319,6 @@ const CBaseNode* CCachedAccount::getObjectAt(const string_q& fieldName, size_t i
     // EXISTING_CODE
     if (fieldName % "latestTx")
         return &latestTx;
-
     if (fieldName % "transactions") {
         if (index == NOPOS) {
             CTransaction empty;
