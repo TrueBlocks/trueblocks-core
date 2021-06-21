@@ -363,6 +363,8 @@ bool CReconciliation::Serialize(CArchive& archive) {
     archive >> amountNet;
     archive >> reconciliationType;
     archive >> reconciled;
+    // EXISTING_CODE
+    // EXISTING_CODE
     finishParse();
     return true;
 }
@@ -399,7 +401,8 @@ bool CReconciliation::SerializeC(CArchive& archive) const {
     archive << amountNet;
     archive << reconciliationType;
     archive << reconciled;
-
+    // EXISTING_CODE
+    // EXISTING_CODE
     return true;
 }
 

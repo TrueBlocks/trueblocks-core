@@ -201,6 +201,8 @@ bool CPinManifest::Serialize(CArchive& archive) {
     archive >> firstPin;
     archive >> lastPin;
     archive >> pins;
+    // EXISTING_CODE
+    // EXISTING_CODE
     finishParse();
     return true;
 }
@@ -218,7 +220,8 @@ bool CPinManifest::SerializeC(CArchive& archive) const {
     archive << firstPin;
     archive << lastPin;
     archive << pins;
-
+    // EXISTING_CODE
+    // EXISTING_CODE
     return true;
 }
 

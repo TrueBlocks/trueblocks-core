@@ -208,6 +208,8 @@ bool CTraceFilter::Serialize(CArchive& archive) {
     archive >> toAddress;
     archive >> after;
     archive >> count;
+    // EXISTING_CODE
+    // EXISTING_CODE
     finishParse();
     return true;
 }
@@ -225,7 +227,8 @@ bool CTraceFilter::SerializeC(CArchive& archive) const {
     archive << toAddress;
     archive << after;
     archive << count;
-
+    // EXISTING_CODE
+    // EXISTING_CODE
     return true;
 }
 

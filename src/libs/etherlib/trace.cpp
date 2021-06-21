@@ -291,6 +291,8 @@ bool CTrace::Serialize(CArchive& archive) {
     archive >> result;
     archive >> articulatedTrace;
     // archive >> compressedTrace;
+    // EXISTING_CODE
+    // EXISTING_CODE
     finishParse();
     return true;
 }
@@ -314,7 +316,8 @@ bool CTrace::SerializeC(CArchive& archive) const {
     archive << result;
     archive << articulatedTrace;
     // archive << compressedTrace;
-
+    // EXISTING_CODE
+    // EXISTING_CODE
     return true;
 }
 

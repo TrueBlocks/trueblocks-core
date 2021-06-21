@@ -234,6 +234,8 @@ bool CMeasure::Serialize(CArchive& archive) {
     archive >> nTests;
     archive >> nPassed;
     archive >> totSecs;
+    // EXISTING_CODE
+    // EXISTING_CODE
     finishParse();
     return true;
 }
@@ -256,7 +258,8 @@ bool CMeasure::SerializeC(CArchive& archive) const {
     archive << nTests;
     archive << nPassed;
     archive << totSecs;
-
+    // EXISTING_CODE
+    // EXISTING_CODE
     return true;
 }
 

@@ -313,6 +313,8 @@ bool CPage::Serialize(CArchive& archive) {
     archive >> cmdUrl;
     archive >> schema;
     archive >> subpages;
+    // EXISTING_CODE
+    // EXISTING_CODE
     finishParse();
     return true;
 }
@@ -342,7 +344,8 @@ bool CPage::SerializeC(CArchive& archive) const {
     archive << cmdUrl;
     archive << schema;
     archive << subpages;
-
+    // EXISTING_CODE
+    // EXISTING_CODE
     return true;
 }
 

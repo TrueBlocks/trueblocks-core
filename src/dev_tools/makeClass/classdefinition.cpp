@@ -325,6 +325,8 @@ bool CClassDefinition::Serialize(CArchive& archive) {
     archive >> scope_str;
     archive >> serializable;
     // archive >> fieldArray;
+    // EXISTING_CODE
+    // EXISTING_CODE
     finishParse();
     return true;
 }
@@ -356,7 +358,8 @@ bool CClassDefinition::SerializeC(CArchive& archive) const {
     archive << scope_str;
     archive << serializable;
     // archive << fieldArray;
-
+    // EXISTING_CODE
+    // EXISTING_CODE
     return true;
 }
 

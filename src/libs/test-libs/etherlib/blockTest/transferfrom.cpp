@@ -149,6 +149,8 @@ bool QTransferFrom::Serialize(CArchive& archive) {
     archive >> _from;
     archive >> _to;
     archive >> _value;
+    // EXISTING_CODE
+    // EXISTING_CODE
     finishParse();
     return true;
 }
@@ -163,7 +165,8 @@ bool QTransferFrom::SerializeC(CArchive& archive) const {
     archive << _from;
     archive << _to;
     archive << _value;
-
+    // EXISTING_CODE
+    // EXISTING_CODE
     return true;
 }
 

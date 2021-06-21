@@ -189,6 +189,8 @@ bool CNewReceipt::Serialize(CArchive& archive) {
     archive >> logs;
     archive >> logsBloom;
     archive >> isErr;
+    // EXISTING_CODE
+    // EXISTING_CODE
     finishParse();
     return true;
 }
@@ -206,7 +208,8 @@ bool CNewReceipt::SerializeC(CArchive& archive) const {
     archive << logs;
     archive << logsBloom;
     archive << isErr;
-
+    // EXISTING_CODE
+    // EXISTING_CODE
     return true;
 }
 

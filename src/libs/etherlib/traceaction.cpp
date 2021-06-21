@@ -238,6 +238,8 @@ bool CTraceAction::Serialize(CArchive& archive) {
     archive >> refundAddress;
     archive >> to;
     archive >> value;
+    // EXISTING_CODE
+    // EXISTING_CODE
     finishParse();
     return true;
 }
@@ -259,7 +261,8 @@ bool CTraceAction::SerializeC(CArchive& archive) const {
     archive << refundAddress;
     archive << to;
     archive << value;
-
+    // EXISTING_CODE
+    // EXISTING_CODE
     return true;
 }
 

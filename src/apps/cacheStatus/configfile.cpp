@@ -157,6 +157,8 @@ bool CConfigFile::Serialize(CArchive& archive) {
     // EXISTING_CODE
     archive >> name;
     archive >> sections;
+    // EXISTING_CODE
+    // EXISTING_CODE
     finishParse();
     return true;
 }
@@ -170,7 +172,8 @@ bool CConfigFile::SerializeC(CArchive& archive) const {
     // EXISTING_CODE
     archive << name;
     archive << sections;
-
+    // EXISTING_CODE
+    // EXISTING_CODE
     return true;
 }
 

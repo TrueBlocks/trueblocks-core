@@ -322,6 +322,8 @@ bool CSchema::Serialize(CArchive& archive) {
     archive >> onDisplay;
     archive >> onAccept;
     archive >> onValidate;
+    // EXISTING_CODE
+    // EXISTING_CODE
     finishParse();
     return true;
 }
@@ -353,7 +355,8 @@ bool CSchema::SerializeC(CArchive& archive) const {
     archive << onDisplay;
     archive << onAccept;
     archive << onValidate;
-
+    // EXISTING_CODE
+    // EXISTING_CODE
     return true;
 }
 

@@ -5,5 +5,6 @@ fields = blknum nAppearances (nowrite)|\
         blknum lastExport (nowrite)|\
         blknum firstAppearance (nowrite)|\
         blknum latestAppearance (nowrite)|\
+        blknum lastVisitedBlock (nowrite)|\
         suint64 sizeInBytes (nowrite)
 includes = etherlib.h|transaction.h|reconciliation.h|ethstate.h|monitoredapp.h

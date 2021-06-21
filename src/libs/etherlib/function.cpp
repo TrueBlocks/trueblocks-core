@@ -355,6 +355,8 @@ bool CFunction::Serialize(CArchive& archive) {
     archive >> outputs;
     // archive >> inputs_dict;
     // archive >> outputs_dict;
+    // EXISTING_CODE
+    // EXISTING_CODE
     finishParse();
     return true;
 }
@@ -379,7 +381,8 @@ bool CFunction::SerializeC(CArchive& archive) const {
     archive << outputs;
     // archive << inputs_dict;
     // archive << outputs_dict;
-
+    // EXISTING_CODE
+    // EXISTING_CODE
     return true;
 }
 

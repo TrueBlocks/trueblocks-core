@@ -208,6 +208,8 @@ bool CSubpage::Serialize(CArchive& archive) {
     archive >> component;
     archive >> extract;
     archive >> icon;
+    // EXISTING_CODE
+    // EXISTING_CODE
     finishParse();
     return true;
 }
@@ -226,7 +228,8 @@ bool CSubpage::SerializeC(CArchive& archive) const {
     archive << component;
     archive << extract;
     archive << icon;
-
+    // EXISTING_CODE
+    // EXISTING_CODE
     return true;
 }
 

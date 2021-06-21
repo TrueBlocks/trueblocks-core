@@ -197,6 +197,8 @@ bool CEthCall::Serialize(CArchive& archive) {
     archive >> bytes;
     archive >> abi_spec;
     archive >> result;
+    // EXISTING_CODE
+    // EXISTING_CODE
     finishParse();
     return true;
 }
@@ -213,7 +215,8 @@ bool CEthCall::SerializeC(CArchive& archive) const {
     archive << bytes;
     archive << abi_spec;
     archive << result;
-
+    // EXISTING_CODE
+    // EXISTING_CODE
     return true;
 }
 

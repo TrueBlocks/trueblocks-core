@@ -157,6 +157,8 @@ bool CPinataMetadata::Serialize(CArchive& archive) {
     // EXISTING_CODE
     archive >> name;
     archive >> keyvalues;
+    // EXISTING_CODE
+    // EXISTING_CODE
     finishParse();
     return true;
 }
@@ -170,7 +172,8 @@ bool CPinataMetadata::SerializeC(CArchive& archive) const {
     // EXISTING_CODE
     archive << name;
     archive << keyvalues;
-
+    // EXISTING_CODE
+    // EXISTING_CODE
     return true;
 }
 

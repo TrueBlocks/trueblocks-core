@@ -213,6 +213,8 @@ bool CConfigItem::Serialize(CArchive& archive) {
     archive >> required;
     archive >> read_only;
     // archive >> named;
+    // EXISTING_CODE
+    // EXISTING_CODE
     finishParse();
     return true;
 }
@@ -231,7 +233,8 @@ bool CConfigItem::SerializeC(CArchive& archive) const {
     archive << required;
     archive << read_only;
     // archive << named;
-
+    // EXISTING_CODE
+    // EXISTING_CODE
     return true;
 }
 

@@ -296,6 +296,8 @@ bool CCommandOption::Serialize(CArchive& archive) {
     archive >> data_type;
     archive >> real_type;
     archive >> description;
+    // EXISTING_CODE
+    // EXISTING_CODE
     finishParse();
     return true;
 }
@@ -324,7 +326,8 @@ bool CCommandOption::SerializeC(CArchive& archive) const {
     archive << data_type;
     archive << real_type;
     archive << description;
-
+    // EXISTING_CODE
+    // EXISTING_CODE
     return true;
 }
 

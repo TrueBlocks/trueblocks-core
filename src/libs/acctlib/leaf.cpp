@@ -159,6 +159,8 @@ bool CLeaf::Serialize(CArchive& archive) {
     // EXISTING_CODE
     archive >> blocks;
     archive >> counter;
+    // EXISTING_CODE
+    // EXISTING_CODE
     finishParse();
     return true;
 }
@@ -172,7 +174,8 @@ bool CLeaf::SerializeC(CArchive& archive) const {
     // EXISTING_CODE
     archive << blocks;
     archive << counter;
-
+    // EXISTING_CODE
+    // EXISTING_CODE
     return true;
 }
 

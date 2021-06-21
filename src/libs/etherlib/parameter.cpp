@@ -252,6 +252,8 @@ bool CParameter::Serialize(CArchive& archive) {
     archive >> no_write;
     archive >> is_flags;
     // archive >> precision;
+    // EXISTING_CODE
+    // EXISTING_CODE
     finishParse();
     return true;
 }
@@ -273,7 +275,8 @@ bool CParameter::SerializeC(CArchive& archive) const {
     archive << no_write;
     archive << is_flags;
     // archive << precision;
-
+    // EXISTING_CODE
+    // EXISTING_CODE
     return true;
 }
 

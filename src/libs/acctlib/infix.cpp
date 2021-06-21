@@ -152,6 +152,8 @@ bool CInfix::Serialize(CArchive& archive) {
             return false;
         next->Serialize(archive);
     }
+    // EXISTING_CODE
+    // EXISTING_CODE
     finishParse();
     return true;
 }
@@ -168,7 +170,8 @@ bool CInfix::SerializeC(CArchive& archive) const {
         archive << next->getRuntimeClass()->getClassNamePtr();
         next->SerializeC(archive);
     }
-
+    // EXISTING_CODE
+    // EXISTING_CODE
     return true;
 }
 

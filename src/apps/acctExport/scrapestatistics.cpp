@@ -210,6 +210,8 @@ bool CScrapeStatistics::Serialize(CArchive& archive) {
     archive >> nStageHits;
     archive >> nTotalHits;
     archive >> nFileRecords;
+    // EXISTING_CODE
+    // EXISTING_CODE
     finishParse();
     return true;
 }
@@ -232,7 +234,8 @@ bool CScrapeStatistics::SerializeC(CArchive& archive) const {
     archive << nStageHits;
     archive << nTotalHits;
     archive << nFileRecords;
-
+    // EXISTING_CODE
+    // EXISTING_CODE
     return true;
 }
 

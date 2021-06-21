@@ -167,6 +167,8 @@ bool CAbi::Serialize(CArchive& archive) {
     // EXISTING_CODE
     archive >> address;
     archive >> interfaces;
+    // EXISTING_CODE
+    // EXISTING_CODE
     finishParse();
     return true;
 }
@@ -180,7 +182,8 @@ bool CAbi::SerializeC(CArchive& archive) const {
     // EXISTING_CODE
     archive << address;
     archive << interfaces;
-
+    // EXISTING_CODE
+    // EXISTING_CODE
     return true;
 }
 

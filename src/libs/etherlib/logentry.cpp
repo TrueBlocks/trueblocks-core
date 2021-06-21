@@ -265,6 +265,8 @@ bool CLogEntry::Serialize(CArchive& archive) {
     // archive >> transactionLogIndex;
     // archive >> type;
     // archive >> removed;
+    // EXISTING_CODE
+    // EXISTING_CODE
     finishParse();
     return true;
 }
@@ -285,7 +287,8 @@ bool CLogEntry::SerializeC(CArchive& archive) const {
     // archive << transactionLogIndex;
     // archive << type;
     // archive << removed;
-
+    // EXISTING_CODE
+    // EXISTING_CODE
     return true;
 }
 

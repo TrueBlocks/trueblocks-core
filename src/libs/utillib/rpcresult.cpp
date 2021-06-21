@@ -161,6 +161,8 @@ bool CRPCResult::Serialize(CArchive& archive) {
     archive >> jsonrpc;
     archive >> result;
     archive >> id;
+    // EXISTING_CODE
+    // EXISTING_CODE
     finishParse();
     return true;
 }
@@ -175,7 +177,8 @@ bool CRPCResult::SerializeC(CArchive& archive) const {
     archive << jsonrpc;
     archive << result;
     archive << id;
-
+    // EXISTING_CODE
+    // EXISTING_CODE
     return true;
 }
 

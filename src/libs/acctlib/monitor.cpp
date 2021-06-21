@@ -85,6 +85,9 @@ string_q CMonitor::getValueByName(const string_q& fieldName) const {
             if (fieldName % "latestAppearance") {
                 return uint_2_Str(latestAppearance);
             }
+            if (fieldName % "lastVisitedBlock") {
+                return uint_2_Str(lastVisitedBlock);
+            }
             break;
         case 'n':
             if (fieldName % "nAppearances") {
@@ -134,6 +137,10 @@ bool CMonitor::setValueByName(const string_q& fieldNameIn, const string_q& field
                 latestAppearance = str_2_Uint(fieldValue);
                 return true;
             }
+            if (fieldName % "lastVisitedBlock") {
+                lastVisitedBlock = str_2_Uint(fieldValue);
+                return true;
+            }
             break;
         case 'n':
             if (fieldName % "nAppearances") {
@@ -176,7 +183,10 @@ bool CMonitor::Serialize(CArchive& archive) {
     // archive >> lastExport;
     // archive >> firstAppearance;
     // archive >> latestAppearance;
+    // archive >> lastVisitedBlock;
     // archive >> sizeInBytes;
+    // EXISTING_CODE
+    // EXISTING_CODE
     finishParse();
     return true;
 }
@@ -192,8 +202,10 @@ bool CMonitor::SerializeC(CArchive& archive) const {
     // archive << lastExport;
     // archive << firstAppearance;
     // archive << latestAppearance;
+    // archive << lastVisitedBlock;
     // archive << sizeInBytes;
-
+    // EXISTING_CODE
+    // EXISTING_CODE
     return true;
 }
 
@@ -239,6 +251,8 @@ void CMonitor::registerClass(void) {
     HIDE_FIELD(CMonitor, "firstAppearance");
     ADD_FIELD(CMonitor, "latestAppearance", T_BLOCKNUM, ++fieldNum);
     HIDE_FIELD(CMonitor, "latestAppearance");
+    ADD_FIELD(CMonitor, "lastVisitedBlock", T_BLOCKNUM, ++fieldNum);
+    HIDE_FIELD(CMonitor, "lastVisitedBlock");
     ADD_FIELD(CMonitor, "sizeInBytes", T_UNUMBER | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CMonitor, "sizeInBytes");
 

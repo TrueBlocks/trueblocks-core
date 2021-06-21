@@ -147,6 +147,8 @@ bool CPriceCacheItem::Serialize(CArchive& archive) {
     // EXISTING_CODE
     archive >> type;
     archive >> pair;
+    // EXISTING_CODE
+    // EXISTING_CODE
     finishParse();
     return true;
 }
@@ -160,7 +162,8 @@ bool CPriceCacheItem::SerializeC(CArchive& archive) const {
     // EXISTING_CODE
     archive << type;
     archive << pair;
-
+    // EXISTING_CODE
+    // EXISTING_CODE
     return true;
 }
 

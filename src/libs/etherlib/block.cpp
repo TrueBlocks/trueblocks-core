@@ -336,6 +336,8 @@ bool CBlock::Serialize(CArchive& archive) {
     // archive >> tx_hashes;
     // archive >> name;
     // archive >> light;
+    // EXISTING_CODE
+    // EXISTING_CODE
     finishParse();
     return true;
 }
@@ -361,7 +363,8 @@ bool CBlock::SerializeC(CArchive& archive) const {
     // archive << tx_hashes;
     // archive << name;
     // archive << light;
-
+    // EXISTING_CODE
+    // EXISTING_CODE
     return true;
 }
 

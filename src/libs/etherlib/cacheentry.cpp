@@ -166,6 +166,8 @@ bool CCacheEntry::Serialize(CArchive& archive) {
     archive >> extra;
     archive >> cached;
     archive >> path;
+    // EXISTING_CODE
+    // EXISTING_CODE
     finishParse();
     return true;
 }
@@ -181,7 +183,8 @@ bool CCacheEntry::SerializeC(CArchive& archive) const {
     archive << extra;
     archive << cached;
     archive << path;
-
+    // EXISTING_CODE
+    // EXISTING_CODE
     return true;
 }
 

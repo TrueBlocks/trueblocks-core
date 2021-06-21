@@ -272,6 +272,8 @@ bool CNewBlock::Serialize(CArchive& archive) {
     archive >> finalized;
     archive >> timestamp;
     archive >> transactions;
+    // EXISTING_CODE
+    // EXISTING_CODE
     finishParse();
     return true;
 }
@@ -295,7 +297,8 @@ bool CNewBlock::SerializeC(CArchive& archive) const {
     archive << finalized;
     archive << timestamp;
     archive << transactions;
-
+    // EXISTING_CODE
+    // EXISTING_CODE
     return true;
 }
 

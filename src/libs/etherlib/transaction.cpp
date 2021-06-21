@@ -469,6 +469,8 @@ bool CTransaction::Serialize(CArchive& archive) {
     // archive >> compressedTx;
     // archive >> statements;
     // archive >> finalized;
+    // EXISTING_CODE
+    // EXISTING_CODE
     finishParse();
     return true;
 }
@@ -504,7 +506,8 @@ bool CTransaction::SerializeC(CArchive& archive) const {
     // archive << compressedTx;
     // archive << statements;
     // archive << finalized;
-
+    // EXISTING_CODE
+    // EXISTING_CODE
     return true;
 }
 

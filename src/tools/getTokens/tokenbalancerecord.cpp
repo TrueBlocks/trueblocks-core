@@ -211,6 +211,8 @@ bool CTokenBalanceRecord::Serialize(CArchive& archive) {
     archive >> priorBalance;
     archive >> balance;
     archive >> diff;
+    // EXISTING_CODE
+    // EXISTING_CODE
     finishParse();
     return true;
 }
@@ -230,7 +232,8 @@ bool CTokenBalanceRecord::SerializeC(CArchive& archive) const {
     archive << priorBalance;
     archive << balance;
     archive << diff;
-
+    // EXISTING_CODE
+    // EXISTING_CODE
     return true;
 }
 

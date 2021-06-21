@@ -231,6 +231,8 @@ bool CPinataPin::Serialize(CArchive& archive) {
     archive >> date_unpinned;
     archive >> metadata;
     archive >> regions;
+    // EXISTING_CODE
+    // EXISTING_CODE
     finishParse();
     return true;
 }
@@ -250,7 +252,8 @@ bool CPinataPin::SerializeC(CArchive& archive) const {
     archive << date_unpinned;
     archive << metadata;
     archive << regions;
-
+    // EXISTING_CODE
+    // EXISTING_CODE
     return true;
 }
 

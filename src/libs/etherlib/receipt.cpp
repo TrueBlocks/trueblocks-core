@@ -236,6 +236,8 @@ bool CReceipt::Serialize(CArchive& archive) {
     archive >> logs;
     // archive >> root;
     archive >> status;
+    // EXISTING_CODE
+    // EXISTING_CODE
     finishParse();
     return true;
 }
@@ -253,7 +255,8 @@ bool CReceipt::SerializeC(CArchive& archive) const {
     archive << logs;
     // archive << root;
     archive << status;
-
+    // EXISTING_CODE
+    // EXISTING_CODE
     return true;
 }
 

@@ -173,6 +173,8 @@ bool CMonitorCache::Serialize(CArchive& archive) {
     // EXISTING_CODE
     archive >> addrs;
     archive >> items;
+    // EXISTING_CODE
+    // EXISTING_CODE
     finishParse();
     return true;
 }
@@ -186,7 +188,8 @@ bool CMonitorCache::SerializeC(CArchive& archive) const {
     // EXISTING_CODE
     archive << addrs;
     archive << items;
-
+    // EXISTING_CODE
+    // EXISTING_CODE
     return true;
 }
 

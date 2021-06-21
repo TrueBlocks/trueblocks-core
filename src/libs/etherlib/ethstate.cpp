@@ -233,6 +233,8 @@ bool CEthState::Serialize(CArchive& archive) {
     // archive >> deployed;
     // archive >> accttype;
     // archive >> result;
+    // EXISTING_CODE
+    // EXISTING_CODE
     finishParse();
     return true;
 }
@@ -253,7 +255,8 @@ bool CEthState::SerializeC(CArchive& archive) const {
     // archive << deployed;
     // archive << accttype;
     // archive << result;
-
+    // EXISTING_CODE
+    // EXISTING_CODE
     return true;
 }
 

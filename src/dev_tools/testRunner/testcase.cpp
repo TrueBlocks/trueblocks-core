@@ -294,6 +294,8 @@ bool CTestCase::Serialize(CArchive& archive) {
     archive >> workPath;
     archive >> fileName;
     // archive >> test_id;
+    // EXISTING_CODE
+    // EXISTING_CODE
     finishParse();
     return true;
 }
@@ -321,7 +323,8 @@ bool CTestCase::SerializeC(CArchive& archive) const {
     archive << workPath;
     archive << fileName;
     // archive << test_id;
-
+    // EXISTING_CODE
+    // EXISTING_CODE
     return true;
 }
 

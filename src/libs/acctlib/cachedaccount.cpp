@@ -193,6 +193,8 @@ bool CCachedAccount::Serialize(CArchive& archive) {
     archive >> latestPage;
     archive >> latestTx;
     archive >> transactions;
+    // EXISTING_CODE
+    // EXISTING_CODE
     finishParse();
     return true;
 }
@@ -208,7 +210,8 @@ bool CCachedAccount::SerializeC(CArchive& archive) const {
     archive << latestPage;
     archive << latestTx;
     archive << transactions;
-
+    // EXISTING_CODE
+    // EXISTING_CODE
     return true;
 }
 

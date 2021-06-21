@@ -113,7 +113,9 @@ bool [{CLASS_NAME}]::Serialize(CArchive& archive) {
 
     // EXISTING_CODE
     // EXISTING_CODE
-[ARCHIVE_READ]	finishParse();
+[ARCHIVE_READ]    // EXISTING_CODE
+    // EXISTING_CODE
+	finishParse();
     return true;
 }
 
@@ -123,7 +125,8 @@ bool [{CLASS_NAME}]::SerializeC(CArchive& archive) const {
 [{PARENT_SER2}]
     // EXISTING_CODE
     // EXISTING_CODE
-[ARCHIVE_WRITE]
+[ARCHIVE_WRITE]    // EXISTING_CODE
+    // EXISTING_CODE
     return true;
 }
 
