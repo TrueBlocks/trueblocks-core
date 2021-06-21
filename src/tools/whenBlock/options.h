@@ -19,6 +19,11 @@
 
 // BEG_ERROR_DEFINES
 #define ERR_INVALIDSKIPVAL 1
+#define ERR_OPENINGTIMESTAMPS 2
+#define ERR_INVALIDDATE1 3
+#define ERR_INVALIDDATE2 4
+#define ERR_INVALIDDATE3 5
+#define ERR_INVALIDDATE4 6
 // END_ERROR_DEFINES
 
 //-----------------------------------------------------------------------------

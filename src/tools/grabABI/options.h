@@ -18,6 +18,9 @@
 #include "acctlib.h"
 
 // BEG_ERROR_DEFINES
+#define ERR_CANNOTFINDSOL 1
+#define ERR_SUPPLYONEADDR 2
+#define ERR_OPTIONNOTIMPL 3
 // END_ERROR_DEFINES
 
 class COptions : public CAbiOptions {

@@ -117,7 +117,7 @@ bool COptions::processEditCommand(CStringArray& terms, bool to_custom) {
 
     CToml toml(configPath("ethNames.toml"));
     string_q copyBack = toml.getConfigStr("settings", "copyBack", "<NOTSET>");
-    if (!to_custom && fileExists(copyBack)) {
+    if (!isTestMode() && !to_custom && fileExists(copyBack)) {
         copyFile(dest, copyBack);
     }
     toml.Release();
